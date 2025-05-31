@@ -71,7 +71,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
   }
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 bg-[#fff9f0]">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -203,10 +203,10 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                   {selectedSetlist.songs.map((song: any, index: number) => (
                     <div
                       key={song.id}
-                      className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                      className="flex items-center justify-between p-3 bg-[#F2EDE5] rounded-lg hover:bg-gray-100 transition-colors"
                     >
                       <div className="flex items-center space-x-3">
-                        <GripVertical className="w-4 h-4 text-gray-400 cursor-grab" />
+                        <GripVertical className="w-4 h-4 text-[#A69B8E] cursor-grab" />
                         <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-sm font-medium text-blue-600">
                           {index + 1}
                         </div>

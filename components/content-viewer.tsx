@@ -76,7 +76,7 @@ export function ContentViewer({ content, onBack, onEnterPerformance }: ContentVi
   return (
     <div className="h-screen flex flex-col bg-gray-900">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 p-4">
+      <div className="bg-F2EDE5 border-b border-A69B8E p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <Button variant="ghost" onClick={onBack}>
@@ -220,7 +220,7 @@ export function ContentViewer({ content, onBack, onEnterPerformance }: ContentVi
       {/* Content Area */}
       <div className="flex-1 flex">
         {/* Main Content */}
-        <div className="flex-1 p-6 overflow-auto bg-gray-100">
+        <div className="flex-1 p-6 overflow-auto bg-F2EDE5">
           <div className="max-w-4xl mx-auto">
             <Card className="shadow-2xl">
               <CardContent className="p-0">
@@ -302,7 +302,7 @@ export function ContentViewer({ content, onBack, onEnterPerformance }: ContentVi
         </div>
 
         {/* Side Panel */}
-        <div className="w-80 bg-white border-l border-gray-200 p-4">
+        <div className="w-80 bg-white border-l border-A69B8E p-4">
           <div className="space-y-6">
             <div>
               <h3 className="font-semibold text-gray-900 mb-3">Song Info</h3>

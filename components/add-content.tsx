@@ -132,7 +132,7 @@ export function AddContent({ onBack, onContentAdded }: AddContentProps) {
 
   if (currentStep === 3) {
     return (
-      <div className="p-6 max-w-2xl mx-auto">
+      <div className="p-6 max-w-2xl mx-auto bg-[#fff9f0]">
         <div className="text-center space-y-6">
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
             <Check className="w-8 h-8 text-green-600" />
@@ -157,7 +157,7 @@ export function AddContent({ onBack, onContentAdded }: AddContentProps) {
 
   if (currentStep === 2) {
     return (
-      <div className="p-6 max-w-4xl mx-auto">
+      <div className="p-6 max-w-4xl mx-auto bg-[#fff9f0]">
         <div className="flex items-center mb-6">
           <Button variant="ghost" onClick={() => setCurrentStep(1)}>
             <ArrowLeft className="w-4 h-4 mr-2" />
@@ -175,7 +175,7 @@ export function AddContent({ onBack, onContentAdded }: AddContentProps) {
                 <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto">
                   <Music className="w-6 h-6 text-blue-600 animate-pulse" />
                 </div>
-                <h3 className="text-lg font-medium">Processing Content...</h3>
+                <h3 className="text-lg font-medium text-gray-900">Processing Content...</h3>
                 <p className="text-gray-600">We're analyzing and organizing your content.</p>
                 <Progress value={75} className="w-full max-w-xs mx-auto" />
               </div>
@@ -194,7 +194,7 @@ export function AddContent({ onBack, onContentAdded }: AddContentProps) {
   }
 
   return (
-    <div className="p-6 max-w-6xl mx-auto">
+    <div className="p-6 max-w-6xl mx-auto bg-[#fff9f0]">
       <div className="flex items-center mb-6">
         <Button variant="ghost" onClick={onBack}>
           <ArrowLeft className="w-4 h-4 mr-2" />

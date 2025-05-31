@@ -134,7 +134,7 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
   }
 
   return (
-    <div className="h-screen flex flex-col bg-gray-50">
+    <div className="h-screen flex flex-col bg-[#fff9f0]">
       {/* Header */}
       <div className="bg-white border-b border-gray-200 p-4">
         <div className="flex items-center justify-between">

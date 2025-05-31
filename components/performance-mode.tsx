@@ -371,14 +371,14 @@ export function PerformanceMode({ onExitPerformance, selectedContent }: Performa
               Exit
             </Button>
             <div className="flex items-center space-x-2 text-sm">
-              <Clock className="w-4 h-4 text-[#AAB4C3]" />
-              <span className="text-[#AAB4C3]">{formatTime(elapsedTime)}</span>
+              <Clock className="w-4 h-4 text-[#A69B8E]" />
+              <span className="text-[#A69B8E]">{formatTime(elapsedTime)}</span>
             </div>
           </div>
 
           <div className="text-center">
             <h2 className="font-bold text-lg text-white">{currentSongData.title}</h2>
-            <p className="text-sm text-[#AAB4C3]">{currentSongData.artist}</p>
+            <p className="text-sm text-[#A69B8E]">{currentSongData.artist}</p>
           </div>
 
           <div className="flex items-center space-x-2">
@@ -399,7 +399,7 @@ export function PerformanceMode({ onExitPerformance, selectedContent }: Performa
 
       {/* Main Content Area */}
       <div className="flex-1 flex items-center justify-center p-4 pt-16 pb-16">
-        <Card className="bg-[#F7F9FA] text-[#1A1F36] shadow-2xl w-full max-w-4xl h-[calc(100vh-120px)] overflow-hidden border-[#AAB4C3]">
+        <Card className="bg-[#F7F9FA] text-[#1A1F36] shadow-2xl w-full max-w-4xl h-[calc(100vh-120px)] overflow-hidden border-[#A69B8E]">
           <div
             ref={contentRef}
             className="p-6 h-full overflow-auto"
@@ -409,14 +409,14 @@ export function PerformanceMode({ onExitPerformance, selectedContent }: Performa
             }}
           >
             {/* Song Header */}
-            <div className="text-center mb-6 border-b border-[#AAB4C3] pb-4">
+            <div className="text-center mb-6 border-b border-[#A69B8E] pb-4">
               <h1 className="text-3xl font-bold mb-2 text-[#1A1F36]">{currentSongData.title}</h1>
-              <p className="text-xl text-[#AAB4C3] mb-3">{currentSongData.artist}</p>
+              <p className="text-xl text-[#A69B8E] mb-3">{currentSongData.artist}</p>
               <div className="flex justify-center space-x-4">
-                <Badge variant="outline" className="text-sm px-3 py-1 border-[#295EFF] text-[#295EFF]">
+                <Badge variant="outline" className="text-sm px-3 py-1 border-[#2E7CE4] text-[#2E7CE4]">
                   Key: {currentSongData.key}
                 </Badge>
-                <Badge variant="outline" className="text-sm px-3 py-1 border-[#295EFF] text-[#295EFF]">
+                <Badge variant="outline" className="text-sm px-3 py-1 border-[#2E7CE4] text-[#2E7CE4]">
                   BPM: {currentSongData.bpm}
                 </Badge>
               </div>
@@ -426,12 +426,12 @@ export function PerformanceMode({ onExitPerformance, selectedContent }: Performa
             <div className="space-y-8 max-w-3xl mx-auto">
               {lyricsData[currentSong]?.sections.map((section, sectionIndex) => (
                 <div key={sectionIndex} className="mb-8">
-                  <h3 className="font-bold text-[#295EFF] text-xl mb-3">{section.title}</h3>
+                  <h3 className="font-bold text-[#2E7CE4] text-xl mb-3">{section.title}</h3>
                   <div className="mb-4 text-lg leading-relaxed">
                     {section.content.map((part, partIndex) => (
                       <span key={partIndex}>
                         {part.chord ? (
-                          <span className="font-mono bg-[#E8ECF4] px-2 py-1 rounded text-sm mr-1 inline-block text-[#295EFF] font-semibold">
+                          <span className="font-mono bg-[#E8ECF4] px-2 py-1 rounded text-sm mr-1 inline-block text-[#2E7CE4] font-semibold">
                             {part.chord}
                           </span>
                         ) : null}
@@ -441,7 +441,7 @@ export function PerformanceMode({ onExitPerformance, selectedContent }: Performa
                   </div>
                 </div>
               )) || (
-                <div className="text-center text-[#AAB4C3] py-10">
+                <div className="text-center text-[#A69B8E] py-10">
                   <p className="text-xl">No lyrics available for this song</p>
                 </div>
               )}
@@ -466,7 +466,7 @@ export function PerformanceMode({ onExitPerformance, selectedContent }: Performa
             >
               <ZoomOut className="w-4 h-4" />
             </Button>
-            <span className="text-sm min-w-[40px] text-center text-[#AAB4C3]">{zoom}%</span>
+            <span className="text-sm min-w-[40px] text-center text-[#A69B8E]">{zoom}%</span>
             <Button
               variant="ghost"
               size="sm"
@@ -494,7 +494,7 @@ export function PerformanceMode({ onExitPerformance, selectedContent }: Performa
                 <div
                   key={index}
                   className={`w-2 h-2 rounded-full cursor-pointer ${
-                    index === currentSong ? "bg-[#FF6B6B]" : "bg-[#AAB4C3]"
+                    index === currentSong ? "bg-[#FF6B6B]" : "bg-[#A69B8E]"
                   }`}
                   onClick={() => setCurrentSong(index)}
                 />

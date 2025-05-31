@@ -207,7 +207,7 @@ export function AnnotationTools({
             {/* Text input overlay */}
             {textInput.show && (
               <div
-                className="absolute bg-white border border-gray-300 rounded p-2 shadow-lg"
+                className="absolute bg-F2EDE5 border border-gray-300 rounded p-2 shadow-lg"
                 style={{ left: textInput.x, top: textInput.y }}
               >
                 <Input
@@ -230,7 +230,7 @@ export function AnnotationTools({
           <h3 className="font-medium mb-3">Annotations ({annotations.length})</h3>
           <div className="space-y-2 max-h-40 overflow-auto">
             {annotations.map((annotation, index) => (
-              <div key={index} className="flex items-center justify-between p-2 bg-gray-50 rounded">
+              <div key={index} className="flex items-center justify-between p-2 bg-F2EDE5 rounded">
                 <span className="text-sm">
                   {annotation.type === "text" ? `Text: "${annotation.text}"` : annotation.type}
                 </span>

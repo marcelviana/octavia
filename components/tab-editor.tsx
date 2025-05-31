@@ -236,7 +236,7 @@ export function TabEditor({ content, onChange }: TabEditorProps) {
           <CardTitle>Preview</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="bg-white p-6 border rounded-lg">
+          <div className="bg-[#F2EDE5] p-6 border rounded-lg">
             <div className="text-center mb-6">
               <h2 className="text-2xl font-bold">{tabData.title || "Untitled"}</h2>
               <p className="text-lg text-gray-600">{tabData.artist || "Unknown Artist"}</p>

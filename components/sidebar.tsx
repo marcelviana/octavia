@@ -17,21 +17,19 @@ export function Sidebar({ activeScreen, onNavigate }: SidebarProps) {
   ]
 
   return (
-    <div className="fixed left-0 top-0 h-full w-64 bg-[#F7F9FA] border-r border-[#AAB4C3] flex flex-col">
+    <div className="fixed left-0 top-0 h-full w-64 bg-[#fff9f0] border-r border-[#A69B8E] flex flex-col">
       {/* Logo */}
-      <div className="p-6 border-b border-[#AAB4C3]">
-        <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 bg-[#295EFF] rounded-lg flex items-center justify-center">
-            <Music className="w-5 h-5 text-white" />
-          </div>
-          <h1 className="text-xl font-bold text-[#1A1F36]">MusicSheet Pro</h1>
+      <div className="p-6 border-b border-[#A69B8E]">
+        <div className="flex items-center justify-center space-x-3">
+          <img src="/logos/octavia-icon.png" alt="Octavia" className="w-8 h-8" />
+          <img src="/logos/octavia-wordmark.png" alt="Octavia" className="h-6" />
         </div>
       </div>
 
       {/* Quick Actions */}
       <div className="p-4 space-y-2">
         <Button
-          className="w-full justify-start bg-[#295EFF] hover:bg-[#1E4BCC] text-white"
+          className="w-full justify-start bg-[#2E7CE4] hover:bg-[#1E5BB8] text-white"
           size="sm"
           onClick={() => onNavigate("add-content")}
         >
@@ -40,7 +38,7 @@ export function Sidebar({ activeScreen, onNavigate }: SidebarProps) {
         </Button>
         <Button
           variant="outline"
-          className="w-full justify-start border-[#AAB4C3] text-[#1A1F36] hover:bg-[#E8ECF4]"
+          className="w-full justify-start border-[#A69B8E] text-[#1A1F36] hover:bg-[#F2EDE5]"
           size="sm"
         >
           <Search className="w-4 h-4 mr-2" />
@@ -59,7 +57,7 @@ export function Sidebar({ activeScreen, onNavigate }: SidebarProps) {
                 <Button
                   variant="ghost"
                   className={`w-full justify-start ${
-                    isActive ? "bg-[#295EFF] text-white hover:bg-[#1E4BCC]" : "text-[#1A1F36] hover:bg-[#E8ECF4]"
+                    isActive ? "bg-[#2E7CE4] text-white hover:bg-[#1E5BB8]" : "text-[#1A1F36] hover:bg-[#F2EDE5]"
                   }`}
                   onClick={() => onNavigate(item.id)}
                 >
@@ -73,14 +71,14 @@ export function Sidebar({ activeScreen, onNavigate }: SidebarProps) {
       </nav>
 
       {/* Quick Content Types */}
-      <div className="p-4 border-t border-[#AAB4C3]">
-        <p className="text-sm font-medium text-[#AAB4C3] mb-3">Quick Create</p>
+      <div className="p-4 border-t border-[#A69B8E]">
+        <p className="text-sm font-medium text-[#A69B8E] mb-3">Quick Create</p>
         <div className="space-y-2">
-          <Button variant="ghost" size="sm" className="w-full justify-start text-[#1A1F36] hover:bg-[#E8ECF4]">
+          <Button variant="ghost" size="sm" className="w-full justify-start text-[#1A1F36] hover:bg-[#F2EDE5]">
             <FileText className="w-4 h-4 mr-2" />
             Lyrics Sheet
           </Button>
-          <Button variant="ghost" size="sm" className="w-full justify-start text-[#1A1F36] hover:bg-[#E8ECF4]">
+          <Button variant="ghost" size="sm" className="w-full justify-start text-[#1A1F36] hover:bg-[#F2EDE5]">
             <Guitar className="w-4 h-4 mr-2" />
             Chord Chart
           </Button>

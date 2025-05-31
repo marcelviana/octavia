@@ -211,9 +211,9 @@ export function ContentCreator({ onContentCreated }: ContentCreatorProps) {
                     onValueChange={(value) => setChordChart((prev) => ({ ...prev, key: value }))}
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Select key" />
+                      <SelectValue placeholder="Select key" className="bg-F2EDE5" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-F2EDE5">
                       {["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"].map((key) => (
                         <SelectItem key={key} value={key}>
                           {key}
@@ -243,7 +243,7 @@ export function ContentCreator({ onContentCreated }: ContentCreatorProps) {
                 </div>
 
                 {chordChart.sections.map((section, index) => (
-                  <Card key={index} className="p-4">
+                  <Card key={index} className="p-4 bg-F2EDE5">
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
                         <Input
@@ -309,10 +309,10 @@ export function ContentCreator({ onContentCreated }: ContentCreatorProps) {
                     value={tabContent.tuning}
                     onValueChange={(value) => setTabContent((prev) => ({ ...prev, tuning: value }))}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="bg-F2EDE5">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-F2EDE5">
                       <SelectItem value="Standard (EADGBE)">Standard (EADGBE)</SelectItem>
                       <SelectItem value="Drop D (DADGBE)">Drop D (DADGBE)</SelectItem>
                       <SelectItem value="Open G (DGDGBD)">Open G (DGDGBD)</SelectItem>
