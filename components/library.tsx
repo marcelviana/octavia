@@ -185,14 +185,14 @@ export function Library({ onSelectContent }: LibraryProps) {
   }
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 bg-[#F7F9FA] min-h-screen">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Music Library</h1>
-          <p className="text-gray-600">{filteredContent.length} items in your collection</p>
+          <h1 className="text-3xl font-bold text-[#1A1F36]">Music Library</h1>
+          <p className="text-[#AAB4C3]">{filteredContent.length} items in your collection</p>
         </div>
-        <Button>
+        <Button className="bg-[#295EFF] hover:bg-[#1E4BCC] text-white">
           <Plus className="w-4 h-4 mr-2" />
           Import Content
         </Button>
@@ -201,16 +201,16 @@ export function Library({ onSelectContent }: LibraryProps) {
       {/* Search and Filters */}
       <div className="flex flex-col md:flex-row gap-4">
         <div className="flex-1 relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[#AAB4C3]" />
           <Input
             placeholder="Search by title, artist, or tags..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10"
+            className="pl-10 border-[#AAB4C3] focus:border-[#295EFF] bg-white"
           />
         </div>
         <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-          <SelectTrigger className="w-48">
+          <SelectTrigger className="w-48 border-[#AAB4C3] bg-white">
             <SelectValue placeholder="Category" />
           </SelectTrigger>
           <SelectContent>
@@ -221,19 +221,29 @@ export function Library({ onSelectContent }: LibraryProps) {
             ))}
           </SelectContent>
         </Select>
-        <Button variant="outline">
+        <Button variant="outline" className="border-[#AAB4C3] text-[#1A1F36] hover:bg-[#E8ECF4]">
           <Filter className="w-4 h-4 mr-2" />
           Filters
         </Button>
-        <Button variant="outline">
+        <Button variant="outline" className="border-[#AAB4C3] text-[#1A1F36] hover:bg-[#E8ECF4]">
           <SortAsc className="w-4 h-4 mr-2" />
           Sort
         </Button>
-        <div className="flex border rounded-lg">
-          <Button variant={viewMode === "grid" ? "default" : "ghost"} size="sm" onClick={() => setViewMode("grid")}>
+        <div className="flex border border-[#AAB4C3] rounded-lg">
+          <Button
+            variant={viewMode === "grid" ? "default" : "ghost"}
+            size="sm"
+            onClick={() => setViewMode("grid")}
+            className={viewMode === "grid" ? "bg-[#295EFF] text-white" : "text-[#1A1F36] hover:bg-[#E8ECF4]"}
+          >
             <Grid className="w-4 h-4" />
           </Button>
-          <Button variant={viewMode === "list" ? "default" : "ghost"} size="sm" onClick={() => setViewMode("list")}>
+          <Button
+            variant={viewMode === "list" ? "default" : "ghost"}
+            size="sm"
+            onClick={() => setViewMode("list")}
+            className={viewMode === "list" ? "bg-[#295EFF] text-white" : "text-[#1A1F36] hover:bg-[#E8ECF4]"}
+          >
             <List className="w-4 h-4" />
           </Button>
         </div>
@@ -243,20 +253,27 @@ export function Library({ onSelectContent }: LibraryProps) {
       {viewMode === "grid" ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredContent.map((item) => (
-            <Card key={item.id} className="cursor-pointer hover:shadow-lg transition-shadow group">
+            <Card
+              key={item.id}
+              className="cursor-pointer hover:shadow-lg transition-shadow group bg-white border-[#AAB4C3]"
+            >
               <CardContent className="p-4">
                 <div className="relative">
                   <div onClick={() => onSelectContent(item)}>
                     <div className="absolute top-0 right-0 flex space-x-1">
-                      <Button size="sm" variant={item.isFavorite ? "default" : "secondary"} className="h-8 w-8 p-0">
-                        <Star className={`w-4 h-4 ${item.isFavorite ? "fill-current" : ""}`} />
+                      <Button
+                        size="sm"
+                        variant={item.isFavorite ? "default" : "secondary"}
+                        className={`h-8 w-8 p-0 ${item.isFavorite ? "bg-[#FF6B6B] hover:bg-[#E55555]" : "bg-[#E8ECF4] hover:bg-[#AAB4C3]"}`}
+                      >
+                        <Star className={`w-4 h-4 ${item.isFavorite ? "fill-current text-white" : "text-[#AAB4C3]"}`} />
                       </Button>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <Button
                             size="sm"
                             variant="secondary"
-                            className="h-8 w-8 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                            className="h-8 w-8 p-0 opacity-0 group-hover:opacity-100 transition-opacity bg-[#E8ECF4] hover:bg-[#AAB4C3]"
                           >
                             <MoreVertical className="w-4 h-4" />
                           </Button>
@@ -273,23 +290,23 @@ export function Library({ onSelectContent }: LibraryProps) {
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </div>
-                    <h3 className="font-semibold text-gray-900 truncate">{item.title}</h3>
-                    <p className="text-sm text-gray-600 truncate">{item.artist}</p>
+                    <h3 className="font-semibold text-[#1A1F36] truncate">{item.title}</h3>
+                    <p className="text-sm text-[#AAB4C3] truncate">{item.artist}</p>
                     <div className="mt-2">
-                      <Badge variant="secondary" className="text-xs">
+                      <Badge variant="secondary" className="text-xs bg-[#E8ECF4] text-[#295EFF]">
                         {getTypeIcon(item.type)}
                         <span className="ml-1">{item.type}</span>
                       </Badge>
                     </div>
                     <div className="flex items-center justify-between mt-2">
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs text-[#AAB4C3]">
                         {item.key} • {item.bpm} BPM
                       </span>
                       <Badge className={`text-xs ${getDifficultyColor(item.difficulty)}`}>{item.difficulty}</Badge>
                     </div>
                     <div className="flex flex-wrap gap-1 mt-2">
                       {item.tags.slice(0, 2).map((tag) => (
-                        <Badge key={tag} variant="outline" className="text-xs">
+                        <Badge key={tag} variant="outline" className="text-xs border-[#AAB4C3] text-[#AAB4C3]">
                           {tag}
                         </Badge>
                       ))}
@@ -303,7 +320,10 @@ export function Library({ onSelectContent }: LibraryProps) {
       ) : (
         <div className="space-y-2">
           {filteredContent.map((item) => (
-            <Card key={item.id} className="cursor-pointer hover:shadow-md transition-shadow group">
+            <Card
+              key={item.id}
+              className="cursor-pointer hover:shadow-md transition-shadow group bg-white border-[#AAB4C3]"
+            >
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-4" onClick={() => onSelectContent(item)}>
@@ -314,31 +334,35 @@ export function Library({ onSelectContent }: LibraryProps) {
                         className="w-16 h-16 object-cover rounded-lg"
                       />
                     ) : (
-                      <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center">
-                        {getTypeIcon(item.type)}
+                      <div className="w-16 h-16 bg-[#E8ECF4] rounded-lg flex items-center justify-center">
+                        <span className="text-[#295EFF]">{getTypeIcon(item.type)}</span>
                       </div>
                     )}
                     <div>
-                      <h3 className="font-semibold text-gray-900">{item.title}</h3>
-                      <p className="text-sm text-gray-600">{item.artist}</p>
+                      <h3 className="font-semibold text-[#1A1F36]">{item.title}</h3>
+                      <p className="text-sm text-[#AAB4C3]">{item.artist}</p>
                       <div className="flex items-center space-x-2 mt-1">
-                        <Badge variant="secondary" className="text-xs">
+                        <Badge variant="secondary" className="text-xs bg-[#E8ECF4] text-[#295EFF]">
                           {getTypeIcon(item.type)}
                           <span className="ml-1">{item.type}</span>
                         </Badge>
-                        <span className="text-xs text-gray-500">{item.key}</span>
-                        <span className="text-xs text-gray-500">{item.bpm} BPM</span>
+                        <span className="text-xs text-[#AAB4C3]">{item.key}</span>
+                        <span className="text-xs text-[#AAB4C3]">{item.bpm} BPM</span>
                         <Badge className={`text-xs ${getDifficultyColor(item.difficulty)}`}>{item.difficulty}</Badge>
                       </div>
                     </div>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <Button size="sm" variant={item.isFavorite ? "default" : "secondary"} className="h-8 w-8 p-0">
-                      <Star className={`w-4 h-4 ${item.isFavorite ? "fill-current" : ""}`} />
+                    <Button
+                      size="sm"
+                      variant={item.isFavorite ? "default" : "secondary"}
+                      className={`h-8 w-8 p-0 ${item.isFavorite ? "bg-[#FF6B6B] hover:bg-[#E55555]" : "bg-[#E8ECF4] hover:bg-[#AAB4C3]"}`}
+                    >
+                      <Star className={`w-4 h-4 ${item.isFavorite ? "fill-current text-white" : "text-[#AAB4C3]"}`} />
                     </Button>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button size="sm" variant="ghost" className="h-8 w-8 p-0">
+                        <Button size="sm" variant="ghost" className="h-8 w-8 p-0 text-[#AAB4C3] hover:bg-[#E8ECF4]">
                           <MoreVertical className="w-4 h-4" />
                         </Button>
                       </DropdownMenuTrigger>
@@ -362,18 +386,22 @@ export function Library({ onSelectContent }: LibraryProps) {
       )}
       {/* Delete Confirmation Dialog */}
       <Dialog open={deleteDialog.open} onOpenChange={(open) => setDeleteDialog({ open, content: null })}>
-        <DialogContent>
+        <DialogContent className="bg-white border-[#AAB4C3]">
           <DialogHeader>
-            <DialogTitle>Delete Content</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="text-[#1A1F36]">Delete Content</DialogTitle>
+            <DialogDescription className="text-[#AAB4C3]">
               Are you sure you want to delete "{deleteDialog.content?.title}"? This action cannot be undone.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setDeleteDialog({ open: false, content: null })}>
+            <Button
+              variant="outline"
+              onClick={() => setDeleteDialog({ open: false, content: null })}
+              className="border-[#AAB4C3] text-[#1A1F36] hover:bg-[#E8ECF4]"
+            >
               Cancel
             </Button>
-            <Button variant="destructive" onClick={confirmDelete}>
+            <Button variant="destructive" onClick={confirmDelete} className="bg-[#FF6B6B] hover:bg-[#E55555]">
               Delete
             </Button>
           </DialogFooter>

@@ -33,19 +33,19 @@ export function Dashboard({ onNavigate, onSelectContent, onEnterPerformance }: D
   ]
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 bg-[#F7F9FA] min-h-screen">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Welcome back!</h1>
-          <p className="text-gray-600">Ready to make some music?</p>
+          <h1 className="text-3xl font-bold text-[#1A1F36]">Welcome back!</h1>
+          <p className="text-[#AAB4C3]">Ready to make some music?</p>
         </div>
         <div className="flex space-x-3">
-          <Button onClick={onEnterPerformance}>
+          <Button onClick={onEnterPerformance} className="bg-[#FF6B6B] hover:bg-[#E55555] text-white">
             <Play className="w-4 h-4 mr-2" />
             Quick Performance
           </Button>
-          <Button variant="outline">
+          <Button variant="outline" className="border-[#295EFF] text-[#295EFF] hover:bg-[#E8ECF4]">
             <Plus className="w-4 h-4 mr-2" />
             Add Content
           </Button>
@@ -57,14 +57,14 @@ export function Dashboard({ onNavigate, onSelectContent, onEnterPerformance }: D
         {stats.map((stat, index) => {
           const Icon = stat.icon
           return (
-            <Card key={index}>
+            <Card key={index} className="bg-white border-[#AAB4C3] hover:shadow-lg transition-shadow">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
-                    <p className="text-sm text-gray-600">{stat.label}</p>
+                    <p className="text-2xl font-bold text-[#1A1F36]">{stat.value}</p>
+                    <p className="text-sm text-[#AAB4C3]">{stat.label}</p>
                   </div>
-                  <Icon className="w-8 h-8 text-blue-600" />
+                  <Icon className="w-8 h-8 text-[#295EFF]" />
                 </div>
               </CardContent>
             </Card>
@@ -74,10 +74,15 @@ export function Dashboard({ onNavigate, onSelectContent, onEnterPerformance }: D
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Content */}
-        <Card>
+        <Card className="bg-white border-[#AAB4C3]">
           <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle>Recent Content</CardTitle>
-            <Button variant="ghost" size="sm" onClick={() => onNavigate("library")}>
+            <CardTitle className="text-[#1A1F36]">Recent Content</CardTitle>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => onNavigate("library")}
+              className="text-[#295EFF] hover:bg-[#E8ECF4]"
+            >
               View All
             </Button>
           </CardHeader>
@@ -86,23 +91,25 @@ export function Dashboard({ onNavigate, onSelectContent, onEnterPerformance }: D
               {recentContent.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 cursor-pointer"
+                  className="flex items-center justify-between p-3 rounded-lg hover:bg-[#E8ECF4] cursor-pointer transition-colors"
                   onClick={() => onSelectContent?.(item)}
                 >
                   <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                      {item.type === "Guitar Tab" && <Guitar className="w-5 h-5 text-blue-600" />}
-                      {item.type === "Sheet Music" && <Music className="w-5 h-5 text-blue-600" />}
-                      {item.type === "Chord Chart" && <FileText className="w-5 h-5 text-blue-600" />}
+                    <div className="w-10 h-10 bg-[#E8ECF4] rounded-lg flex items-center justify-center">
+                      {item.type === "Guitar Tab" && <Guitar className="w-5 h-5 text-[#295EFF]" />}
+                      {item.type === "Sheet Music" && <Music className="w-5 h-5 text-[#295EFF]" />}
+                      {item.type === "Chord Chart" && <FileText className="w-5 h-5 text-[#295EFF]" />}
                     </div>
                     <div>
-                      <p className="font-medium text-gray-900">{item.title}</p>
-                      <p className="text-sm text-gray-500">{item.artist}</p>
+                      <p className="font-medium text-[#1A1F36]">{item.title}</p>
+                      <p className="text-sm text-[#AAB4C3]">{item.artist}</p>
                     </div>
                   </div>
                   <div className="text-right">
-                    <Badge variant="secondary">{item.type}</Badge>
-                    <p className="text-xs text-gray-500 mt-1">{item.lastOpened}</p>
+                    <Badge variant="secondary" className="bg-[#E8ECF4] text-[#295EFF]">
+                      {item.type}
+                    </Badge>
+                    <p className="text-xs text-[#AAB4C3] mt-1">{item.lastOpened}</p>
                   </div>
                 </div>
               ))}
@@ -111,28 +118,36 @@ export function Dashboard({ onNavigate, onSelectContent, onEnterPerformance }: D
         </Card>
 
         {/* Upcoming Gigs */}
-        <Card>
+        <Card className="bg-white border-[#AAB4C3]">
           <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle>Upcoming Gigs</CardTitle>
-            <Button variant="ghost" size="sm" onClick={() => onNavigate("setlists")}>
+            <CardTitle className="text-[#1A1F36]">Upcoming Gigs</CardTitle>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => onNavigate("setlists")}
+              className="text-[#295EFF] hover:bg-[#E8ECF4]"
+            >
               Manage
             </Button>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               {upcomingGigs.map((gig) => (
-                <div key={gig.id} className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50">
+                <div
+                  key={gig.id}
+                  className="flex items-center justify-between p-3 rounded-lg hover:bg-[#E8ECF4] transition-colors"
+                >
                   <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                      <Calendar className="w-5 h-5 text-green-600" />
+                    <div className="w-10 h-10 bg-[#FF6B6B]/10 rounded-lg flex items-center justify-center">
+                      <Calendar className="w-5 h-5 text-[#FF6B6B]" />
                     </div>
                     <div>
-                      <p className="font-medium text-gray-900">{gig.name}</p>
-                      <p className="text-sm text-gray-500">{gig.date}</p>
+                      <p className="font-medium text-[#1A1F36]">{gig.name}</p>
+                      <p className="text-sm text-[#AAB4C3]">{gig.date}</p>
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="flex items-center text-sm text-gray-500">
+                    <div className="flex items-center text-sm text-[#AAB4C3]">
                       <Music className="w-4 h-4 mr-1" />
                       {gig.songs} songs
                     </div>
@@ -145,25 +160,37 @@ export function Dashboard({ onNavigate, onSelectContent, onEnterPerformance }: D
       </div>
 
       {/* Quick Actions */}
-      <Card>
+      <Card className="bg-white border-[#AAB4C3]">
         <CardHeader>
-          <CardTitle>Quick Actions</CardTitle>
+          <CardTitle className="text-[#1A1F36]">Quick Actions</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <Button variant="outline" className="h-20 flex-col space-y-2">
+            <Button
+              variant="outline"
+              className="h-20 flex-col space-y-2 border-[#AAB4C3] text-[#1A1F36] hover:bg-[#E8ECF4]"
+            >
               <FileText className="w-6 h-6" />
               <span>Create Lyrics</span>
             </Button>
-            <Button variant="outline" className="h-20 flex-col space-y-2">
+            <Button
+              variant="outline"
+              className="h-20 flex-col space-y-2 border-[#AAB4C3] text-[#1A1F36] hover:bg-[#E8ECF4]"
+            >
               <Guitar className="w-6 h-6" />
               <span>Chord Chart</span>
             </Button>
-            <Button variant="outline" className="h-20 flex-col space-y-2">
+            <Button
+              variant="outline"
+              className="h-20 flex-col space-y-2 border-[#AAB4C3] text-[#1A1F36] hover:bg-[#E8ECF4]"
+            >
               <Music className="w-6 h-6" />
               <span>New Setlist</span>
             </Button>
-            <Button variant="outline" className="h-20 flex-col space-y-2">
+            <Button
+              variant="outline"
+              className="h-20 flex-col space-y-2 border-[#AAB4C3] text-[#1A1F36] hover:bg-[#E8ECF4]"
+            >
               <Users className="w-6 h-6" />
               <span>Band Practice</span>
             </Button>

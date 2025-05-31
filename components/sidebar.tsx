@@ -17,24 +17,32 @@ export function Sidebar({ activeScreen, onNavigate }: SidebarProps) {
   ]
 
   return (
-    <div className="fixed left-0 top-0 h-full w-64 bg-white border-r border-gray-200 flex flex-col">
+    <div className="fixed left-0 top-0 h-full w-64 bg-[#F7F9FA] border-r border-[#AAB4C3] flex flex-col">
       {/* Logo */}
-      <div className="p-6 border-b border-gray-200">
+      <div className="p-6 border-b border-[#AAB4C3]">
         <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+          <div className="w-8 h-8 bg-[#295EFF] rounded-lg flex items-center justify-center">
             <Music className="w-5 h-5 text-white" />
           </div>
-          <h1 className="text-xl font-bold text-gray-900">MusicSheet Pro</h1>
+          <h1 className="text-xl font-bold text-[#1A1F36]">MusicSheet Pro</h1>
         </div>
       </div>
 
       {/* Quick Actions */}
       <div className="p-4 space-y-2">
-        <Button className="w-full justify-start" size="sm" onClick={() => onNavigate("add-content")}>
+        <Button
+          className="w-full justify-start bg-[#295EFF] hover:bg-[#1E4BCC] text-white"
+          size="sm"
+          onClick={() => onNavigate("add-content")}
+        >
           <Plus className="w-4 h-4 mr-2" />
           Add Content
         </Button>
-        <Button variant="outline" className="w-full justify-start" size="sm">
+        <Button
+          variant="outline"
+          className="w-full justify-start border-[#AAB4C3] text-[#1A1F36] hover:bg-[#E8ECF4]"
+          size="sm"
+        >
           <Search className="w-4 h-4 mr-2" />
           Search
         </Button>
@@ -45,11 +53,14 @@ export function Sidebar({ activeScreen, onNavigate }: SidebarProps) {
         <ul className="space-y-2">
           {menuItems.map((item) => {
             const Icon = item.icon
+            const isActive = activeScreen === item.id
             return (
               <li key={item.id}>
                 <Button
-                  variant={activeScreen === item.id ? "default" : "ghost"}
-                  className="w-full justify-start"
+                  variant="ghost"
+                  className={`w-full justify-start ${
+                    isActive ? "bg-[#295EFF] text-white hover:bg-[#1E4BCC]" : "text-[#1A1F36] hover:bg-[#E8ECF4]"
+                  }`}
                   onClick={() => onNavigate(item.id)}
                 >
                   <Icon className="w-4 h-4 mr-3" />
@@ -62,14 +73,14 @@ export function Sidebar({ activeScreen, onNavigate }: SidebarProps) {
       </nav>
 
       {/* Quick Content Types */}
-      <div className="p-4 border-t border-gray-200">
-        <p className="text-sm font-medium text-gray-500 mb-3">Quick Create</p>
+      <div className="p-4 border-t border-[#AAB4C3]">
+        <p className="text-sm font-medium text-[#AAB4C3] mb-3">Quick Create</p>
         <div className="space-y-2">
-          <Button variant="ghost" size="sm" className="w-full justify-start">
+          <Button variant="ghost" size="sm" className="w-full justify-start text-[#1A1F36] hover:bg-[#E8ECF4]">
             <FileText className="w-4 h-4 mr-2" />
             Lyrics Sheet
           </Button>
-          <Button variant="ghost" size="sm" className="w-full justify-start">
+          <Button variant="ghost" size="sm" className="w-full justify-start text-[#1A1F36] hover:bg-[#E8ECF4]">
             <Guitar className="w-4 h-4 mr-2" />
             Chord Chart
           </Button>
