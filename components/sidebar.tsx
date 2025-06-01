@@ -2,6 +2,9 @@
 
 import { Button } from "@/components/ui/button"
 import { Home, Library, Music, Settings, Plus, Search, FileText, Guitar } from "lucide-react"
+import { UserHeader } from "@/components/user-header"
+import Image from "next/image"
+import { useAuth } from "@/contexts/auth-context"
 
 interface SidebarProps {
   activeScreen: string
@@ -9,6 +12,8 @@ interface SidebarProps {
 }
 
 export function Sidebar({ activeScreen, onNavigate }: SidebarProps) {
+  const { user } = useAuth()
+
   const menuItems = [
     { id: "dashboard", label: "Dashboard", icon: Home },
     { id: "library", label: "Library", icon: Library },
@@ -21,9 +26,14 @@ export function Sidebar({ activeScreen, onNavigate }: SidebarProps) {
       {/* Logo */}
       <div className="p-6 border-b border-[#A69B8E]">
         <div className="flex items-center justify-center space-x-3">
-          <img src="/logos/octavia-icon.png" alt="Octavia" className="w-8 h-8" />
-          <img src="/logos/octavia-wordmark.png" alt="Octavia" className="h-6" />
+          <Image src="/logos/octavia-icon.png" alt="Octavia" width={32} height={32} />
+          <Image src="/logos/octavia-wordmark.png" alt="Octavia" width={120} height={24} />
         </div>
+      </div>
+
+      {/* User Profile */}
+      <div className="p-4 border-b border-[#A69B8E] flex justify-center">
+        <UserHeader />
       </div>
 
       {/* Quick Actions */}
