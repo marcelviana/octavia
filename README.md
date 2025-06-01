@@ -1,4 +1,4 @@
-# MusicSheet Pro
+# Octavia
 
 *Automatically synced with your [v0.dev](https://v0.dev) deployments*
 
@@ -7,7 +7,7 @@
 
 ## 🎵 Overview
 
-MusicSheet Pro is a comprehensive digital music management application designed for musicians who want to replace physical folders of sheet music, tablatures, and lyrics. The app facilitates organization, visualization, and sharing of musical content during rehearsals and performances.
+Octavia is a comprehensive digital music management application designed for musicians who want to replace physical folders of sheet music, tablatures, and lyrics. The app facilitates organization, visualization, and sharing of musical content during rehearsals and performances.
 
 **Live Demo:** [https://vercel.com/marcelvianas-projects/v0-music-sheet-pro](https://vercel.com/marcelvianas-projects/v0-music-sheet-pro)
 
@@ -112,10 +112,10 @@ MusicSheet Pro is a comprehensive digital music management application designed 
 #### Option 2: Manual Setup
 \`\`\`bash
 # Clone the repository
-git clone https://github.com/your-username/musicsheet-pro.git
+git clone https://github.com/your-username/octavia.git
 
 # Navigate to project directory
-cd musicsheet-pro
+cd octavia
 
 # Install dependencies
 npm install
@@ -229,4 +229,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Made with ❤️ for musicians, by musicians**
 
-*Transform your musical workflow with MusicSheet Pro - where digital meets performance.*
+*Transform your musical workflow with Octavia - where digital meets performance.*
