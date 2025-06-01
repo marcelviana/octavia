@@ -136,7 +136,7 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
   return (
     <div className="h-screen flex flex-col bg-[#fff9f0]">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 p-4">
+      <div className="bg-white border-b border-stone-300 p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <div>
@@ -170,11 +170,11 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
 
       {/* Toolbar */}
       {(content.type === "Sheet Music" || content.type === "Guitar Tab") && (
-        <div className="bg-white border-b border-gray-200 p-3">
+        <div className="bg-white border-b border-stone-300 p-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               {/* Drawing Tools */}
-              <div className="flex items-center space-x-1 border-r pr-4">
+              <div className="flex items-center space-x-1 border-r border-stone-300 pr-4">
                 <Button
                   variant={selectedTool === "select" ? "default" : "ghost"}
                   size="sm"
@@ -213,7 +213,7 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
               </div>
 
               {/* Shapes */}
-              <div className="flex items-center space-x-1 border-r pr-4">
+              <div className="flex items-center space-x-1 border-r border-stone-300 pr-4">
                 <Button
                   variant={selectedTool === "circle" ? "default" : "ghost"}
                   size="sm"
@@ -284,7 +284,7 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
       <div className="flex-1 flex">
         <div className="flex-1 overflow-auto">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full">
-            <div className="bg-white border-b border-gray-200 px-4">
+            <div className="bg-white border-b border-stone-300 px-4">
               <TabsList>
                 <TabsTrigger value="content">Content</TabsTrigger>
                 <TabsTrigger value="metadata">Details</TabsTrigger>
@@ -331,7 +331,7 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
         </div>
 
         {/* Properties Panel */}
-        <div className="w-80 bg-white border-l border-gray-200 p-4">
+        <div className="w-80 bg-white border-l border-stone-300 p-4">
           <div className="space-y-6">
             <div>
               <h3 className="font-semibold text-gray-900 mb-3">Properties</h3>

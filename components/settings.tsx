@@ -28,7 +28,7 @@ export function Settings() {
   }
 
   return (
-    <div className="p-6 space-y-6 max-w-4xl bg-[#fff9f0]">
+    <div className="p-6 space-y-6 max-w-4xl bg-[#fff9f0] min-h-screen">
       <div>
         <h1 className="text-3xl font-bold text-gray-900">Settings</h1>
         <p className="text-gray-600">Customize your MusicSheet Pro experience</p>
@@ -235,23 +235,23 @@ export function Settings() {
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between">
                   <span>Next page/song</span>
-                  <code className="bg-gray-100 px-2 py-1 rounded">→ or Space</code>
+                  <code className="bg-stone-100 px-2 py-1 rounded">→ or Space</code>
                 </div>
                 <div className="flex justify-between">
                   <span>Previous page/song</span>
-                  <code className="bg-gray-100 px-2 py-1 rounded">←</code>
+                  <code className="bg-stone-100 px-2 py-1 rounded">←</code>
                 </div>
                 <div className="flex justify-between">
                   <span>Zoom in</span>
-                  <code className="bg-gray-100 px-2 py-1 rounded">Ctrl + +</code>
+                  <code className="bg-stone-100 px-2 py-1 rounded">Ctrl + +</code>
                 </div>
                 <div className="flex justify-between">
                   <span>Zoom out</span>
-                  <code className="bg-gray-100 px-2 py-1 rounded">Ctrl + -</code>
+                  <code className="bg-stone-100 px-2 py-1 rounded">Ctrl + -</code>
                 </div>
                 <div className="flex justify-between">
                   <span>Exit performance mode</span>
-                  <code className="bg-gray-100 px-2 py-1 rounded">Esc</code>
+                  <code className="bg-stone-100 px-2 py-1 rounded">Esc</code>
                 </div>
               </div>
             </CardContent>
@@ -361,7 +361,7 @@ export function Settings() {
                 <Label>Supported Formats</Label>
                 <div className="mt-2 flex flex-wrap gap-2">
                   {["PDF", "PNG", "JPG", "GP5", "GPX", "MusicXML", "MIDI"].map((format) => (
-                    <span key={format} className="px-2 py-1 bg-gray-100 rounded text-xs">
+                    <span key={format} className="px-2 py-1 bg-stone-100 rounded text-xs">
                       {format}
                     </span>
                   ))}

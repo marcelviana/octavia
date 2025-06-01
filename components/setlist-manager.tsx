@@ -128,7 +128,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
   )
 
   return (
-    <div className="p-6 space-y-6 bg-[#fff9f0]">
+    <div className="p-6 space-y-6 bg-[#fff9f0] min-h-screen">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -260,10 +260,10 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                   {selectedSetlist.songs.map((song: any, index: number) => (
                     <div
                       key={song.id}
-                      className="flex items-center justify-between p-3 bg-[#F2EDE5] rounded-lg hover:bg-gray-100 transition-colors"
+                      className="flex items-center justify-between p-3 bg-stone-100 rounded-lg hover:bg-stone-200 transition-colors"
                     >
                       <div className="flex items-center space-x-3">
-                        <GripVertical className="w-4 h-4 text-[#A69B8E] cursor-grab" />
+                        <GripVertical className="w-4 h-4 text-stone-500 cursor-grab" />
                         <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-sm font-medium text-blue-600">
                           {index + 1}
                         </div>
@@ -311,13 +311,13 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                       <DialogTitle>Add Songs to "{selectedSetlist?.name}"</DialogTitle>
                     </DialogHeader>
                     <div className="space-y-4">
-                      <div className="text-sm text-[#A69B8E]">
+                      <div className="text-sm text-stone-600">
                         Select songs from your library to add to this setlist
                       </div>
 
-                      <ScrollArea className="h-96 border border-[#A69B8E] rounded-lg p-4">
+                      <ScrollArea className="h-96 border border-stone-300 rounded-lg p-4">
                         {availableSongs.length === 0 ? (
-                          <div className="text-center py-8 text-[#A69B8E]">
+                          <div className="text-center py-8 text-stone-500">
                             <Music className="w-12 h-12 mx-auto mb-4 opacity-50" />
                             <p>No additional songs available to add.</p>
                             <p className="text-sm mt-1">All songs from your library are already in this setlist.</p>
@@ -327,7 +327,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                             {availableSongs.map((song) => (
                               <div
                                 key={song.id}
-                                className="flex items-center space-x-3 p-3 rounded-lg hover:bg-[#F2EDE5] transition-colors"
+                                className="flex items-center space-x-3 p-3 rounded-lg hover:bg-stone-100 transition-colors"
                               >
                                 <Checkbox
                                   id={`song-${song.id}`}
@@ -337,18 +337,18 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                                 <div className="flex-1">
                                   <div className="flex items-center justify-between">
                                     <div>
-                                      <p className="font-medium text-[#1A1F36]">{song.title}</p>
-                                      <p className="text-sm text-[#A69B8E]">{song.artist}</p>
+                                      <p className="font-medium text-gray-900">{song.title}</p>
+                                      <p className="text-sm text-stone-600">{song.artist}</p>
                                     </div>
-                                    <div className="flex items-center space-x-3 text-sm text-[#A69B8E]">
-                                      <Badge variant="secondary" className="bg-[#F2EDE5] text-[#2E7CE4]">
+                                    <div className="flex items-center space-x-3 text-sm text-stone-600">
+                                      <Badge variant="secondary" className="bg-stone-100 text-blue-600">
                                         {song.key}
                                       </Badge>
                                       <span>
                                         {Math.floor(song.duration)}:
                                         {String(Math.round((song.duration % 1) * 60)).padStart(2, "0")}
                                       </span>
-                                      <Badge variant="outline" className="border-[#A69B8E] text-[#A69B8E]">
+                                      <Badge variant="outline" className="border-stone-300 text-stone-600">
                                         {song.type}
                                       </Badge>
                                     </div>
@@ -361,8 +361,8 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                       </ScrollArea>
 
                       {selectedSongsToAdd.length > 0 && (
-                        <div className="p-3 bg-[#F2EDE5] rounded-lg">
-                          <p className="text-sm text-[#1A1F36]">
+                        <div className="p-3 bg-stone-100 rounded-lg">
+                          <p className="text-sm text-gray-900">
                             {selectedSongsToAdd.length} song{selectedSongsToAdd.length !== 1 ? "s" : ""} selected
                           </p>
                         </div>
@@ -375,14 +375,14 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                             setSelectedSongsToAdd([])
                             setIsAddSongsDialogOpen(false)
                           }}
-                          className="border-[#A69B8E] text-[#1A1F36] hover:bg-[#F2EDE5]"
+                          className="border-stone-300 text-gray-900 hover:bg-stone-100"
                         >
                           Cancel
                         </Button>
                         <Button
                           onClick={addSelectedSongs}
                           disabled={selectedSongsToAdd.length === 0}
-                          className="bg-[#2E7CE4] hover:bg-[#1E5BB8] text-white"
+                          className="bg-blue-600 hover:bg-blue-700 text-white"
                         >
                           Add {selectedSongsToAdd.length > 0 ? `${selectedSongsToAdd.length} ` : ""}Song
                           {selectedSongsToAdd.length !== 1 ? "s" : ""}

@@ -132,7 +132,7 @@ export function AddContent({ onBack, onContentAdded }: AddContentProps) {
 
   if (currentStep === 3) {
     return (
-      <div className="p-6 max-w-2xl mx-auto bg-[#fff9f0]">
+      <div className="p-6 max-w-2xl mx-auto bg-[#fff9f0] min-h-screen">
         <div className="text-center space-y-6">
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
             <Check className="w-8 h-8 text-green-600" />
@@ -157,7 +157,7 @@ export function AddContent({ onBack, onContentAdded }: AddContentProps) {
 
   if (currentStep === 2) {
     return (
-      <div className="p-6 max-w-4xl mx-auto bg-[#fff9f0]">
+      <div className="p-6 max-w-4xl mx-auto bg-[#fff9f0] min-h-screen">
         <div className="flex items-center mb-6">
           <Button variant="ghost" onClick={() => setCurrentStep(1)}>
             <ArrowLeft className="w-4 h-4 mr-2" />
@@ -194,7 +194,7 @@ export function AddContent({ onBack, onContentAdded }: AddContentProps) {
   }
 
   return (
-    <div className="p-6 max-w-6xl mx-auto bg-[#fff9f0]">
+    <div className="p-6 max-w-6xl mx-auto bg-[#fff9f0] min-h-screen">
       <div className="flex items-center mb-6">
         <Button variant="ghost" onClick={onBack}>
           <ArrowLeft className="w-4 h-4 mr-2" />
@@ -233,7 +233,7 @@ export function AddContent({ onBack, onContentAdded }: AddContentProps) {
                 {contentTypes.map((type) => {
                   const Icon = type.icon
                   return (
-                    <div key={type.id} className="p-4 border rounded-lg hover:bg-gray-50">
+                    <div key={type.id} className="p-4 border rounded-lg hover:bg-stone-50">
                       <div className="flex items-start space-x-3">
                         <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
                           <Icon className="w-5 h-5 text-blue-600" />
@@ -348,7 +348,7 @@ export function AddContent({ onBack, onContentAdded }: AddContentProps) {
                     { title: "Moonlight Sonata", source: "IMSLP", status: "completed" },
                     { title: "Stairway to Heaven Tab", source: "Ultimate Guitar", status: "processing" },
                   ].map((item, index) => (
-                    <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div key={index} className="flex items-center justify-between p-3 bg-stone-50 rounded-lg">
                       <div>
                         <p className="font-medium text-gray-900">{item.title}</p>
                         <p className="text-sm text-gray-600">{item.source}</p>
