@@ -1,8 +1,7 @@
 "use client"
 
 import type React from "react"
-
-import { createContext, useContext, useEffect, useState } from "react"
+import { createContext, useContext, useEffect, useState, useRef } from "react"
 import type { User } from "@supabase/supabase-js"
 import { createSupabaseBrowserClient } from "@/lib/supabase"
 import { useRouter } from "next/navigation"
@@ -34,22 +33,40 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [profile, setProfile] = useState<Profile | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
-  const supabase = createSupabaseBrowserClient()
+
+  // Use ref to store supabase client to prevent re-creation
+  const supabaseRef = useRef(createSupabaseBrowserClient())
+  const supabase = supabaseRef.current
 
   useEffect(() => {
+    let mounted = true
+
     const fetchUser = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession()
-      setUser(session?.user || null)
+      try {
+        const {
+          data: { session },
+        } = await supabase.auth.getSession()
 
-      if (session?.user) {
-        const { data: profileData } = await supabase.from("profiles").select("*").eq("id", session.user.id).single()
+        if (!mounted) return
 
-        setProfile(profileData)
+        if (session?.user) {
+          setUser(session.user)
+
+          const { data: profileData } = await supabase.from("profiles").select("*").eq("id", session.user.id).single()
+          if (mounted) {
+            setProfile(profileData)
+          }
+        } else {
+          setUser(null)
+          setProfile(null)
+        }
+      } catch (error) {
+        console.error("Error fetching auth user:", error)
+      } finally {
+        if (mounted) {
+          setIsLoading(false)
+        }
       }
-
-      setIsLoading(false)
     }
 
     fetchUser()
@@ -57,56 +74,80 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
-      setUser(session?.user || null)
+      if (!mounted) return
 
       if (session?.user) {
-        const { data: profileData } = await supabase.from("profiles").select("*").eq("id", session.user.id).single()
+        setUser(session.user)
 
-        setProfile(profileData)
+        const { data: profileData } = await supabase.from("profiles").select("*").eq("id", session.user.id).single()
+        if (mounted) {
+          setProfile(profileData)
+        }
       } else {
+        setUser(null)
         setProfile(null)
       }
 
       setIsLoading(false)
-      router.refresh()
+
+      // Only refresh if auth state actually changed
+      if (event !== "INITIAL_SESSION") {
+        router.refresh()
+      }
     })
 
     return () => {
+      mounted = false
       subscription.unsubscribe()
     }
   }, [router, supabase])
 
   const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    })
-    return { error }
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      })
+
+      if (!error) {
+        router.push("/dashboard")
+      }
+
+      return { error }
+    } catch (error) {
+      return { error }
+    }
   }
 
   const signUp = async (email: string, password: string, userData: Partial<Profile>) => {
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: userData,
-      },
-    })
-
-    if (!error && data.user) {
-      // Create profile record
-      const { error: profileError } = await supabase.from("profiles").insert({
-        id: data.user.id,
+    try {
+      const { data, error } = await supabase.auth.signUp({
         email,
-        ...userData,
+        password,
+        options: {
+          data: userData,
+        },
       })
 
-      if (profileError) {
-        return { error: profileError, data: null }
-      }
-    }
+      if (!error && data.user) {
+        // Create profile record
+        const { error: profileError } = await supabase.from("profiles").insert({
+          id: data.user.id,
+          email,
+          ...userData,
+        })
 
-    return { error, data }
+        if (profileError) {
+          return { error: profileError, data: null }
+        }
+
+        router.push("/dashboard")
+      }
+
+      return { error, data }
+    } catch (error) {
+      return { error, data: null }
+    }
   }
 
   const signOut = async () => {

@@ -1,13 +1,30 @@
-import { createClient } from "@supabase/supabase-js"
 import { createBrowserClient, createServerClient } from "@supabase/ssr"
 import type { Database } from "@/types/supabase"
 
-// Browser client for client-side operations
+// Declare global variable for TypeScript
+declare global {
+  var __supabaseClient: ReturnType<typeof createBrowserClient<Database>> | undefined
+}
+
+// Single browser client instance
 export function createSupabaseBrowserClient() {
-  return createBrowserClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-  )
+  if (typeof window === "undefined") {
+    // Server-side: create a new instance each time
+    return createBrowserClient<Database>(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    )
+  }
+
+  // Client-side: use global singleton
+  if (!globalThis.__supabaseClient) {
+    globalThis.__supabaseClient = createBrowserClient<Database>(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    )
+  }
+
+  return globalThis.__supabaseClient
 }
 
 // Server client for server-side operations
@@ -36,12 +53,24 @@ export const getSupabaseBrowserClient = createSupabaseBrowserClient
 
 // Server-side client with service role for admin operations
 export function getSupabaseServerClient() {
-  const supabaseUrl = process.env.SUPABASE_URL as string
-  const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY as string
+  if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    throw new Error("Missing Supabase server environment variables")
+  }
 
-  return createClient<Database>(supabaseUrl, supabaseServiceKey, {
+  return createServerClient<Database>(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY, {
     auth: {
       persistSession: false,
+    },
+    cookies: {
+      get(name: string) {
+        return undefined
+      },
+      set(name: string, value: string, options: any) {
+        // No-op for server-side
+      },
+      remove(name: string, options: any) {
+        // No-op for server-side
+      },
     },
   })
 }

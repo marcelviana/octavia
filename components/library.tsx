@@ -20,9 +20,11 @@ import { MoreVertical, Edit, Trash2 } from "lucide-react"
 
 interface LibraryProps {
   onSelectContent: (content: any) => void
+  onEditContent?: (content: any) => void
+  onNavigate?: (screen: string) => void
 }
 
-export function Library({ onSelectContent }: LibraryProps) {
+export function Library({ onSelectContent, onEditContent, onNavigate }: LibraryProps) {
   const [searchTerm, setSearchTerm] = useState("")
   const [viewMode, setViewMode] = useState("grid") // grid or list
   const [selectedCategory, setSelectedCategory] = useState("all")

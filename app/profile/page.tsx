@@ -1,14 +1,45 @@
-import { UserProfile } from "@/components/user-profile"
+"use client"
+
+import { useSession } from "next-auth/react"
+import { redirect } from "next/navigation"
+import { useEffect, useState } from "react"
+import { Skeleton } from "@/components/ui/skeleton"
+import ProfileForm from "@/components/ProfileForm"
 
 export default function ProfilePage() {
-  return (
-    <div className="p-6 space-y-6 bg-[#fff9f0] min-h-screen">
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">Account Settings</h1>
-        <p className="text-gray-600">Manage your profile and preferences</p>
-      </div>
+  const { data: session, status } = useSession()
+  const [isLoading, setIsLoading] = useState(true)
 
-      <UserProfile />
+  useEffect(() => {
+    if (status === "loading") {
+      setIsLoading(true)
+    } else {
+      setIsLoading(false)
+    }
+  }, [status])
+
+  if (status === "unauthenticated") {
+    redirect("/login")
+  }
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-[#fffcf7]">
+        <div className="animate-pulse space-y-4">
+          <Skeleton className="h-12 w-[250px]" />
+          <Skeleton className="h-10 w-[350px]" />
+          <Skeleton className="h-10 w-[350px]" />
+          <Skeleton className="h-10 w-[350px]" />
+          <Skeleton className="h-10 w-[350px]" />
+          <Skeleton className="h-10 w-[350px]" />
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="flex h-screen bg-[#fffcf7]">
+      <ProfileForm session={session} />
     </div>
   )
 }

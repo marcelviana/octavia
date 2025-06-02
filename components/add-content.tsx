@@ -117,13 +117,13 @@ export function AddContent({ onBack, onContentAdded }: AddContentProps) {
           <div key={step.number} className="flex items-center">
             <div
               className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
-                step.active ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-600"
+                step.active ? "bg-[#A69B8E] text-white" : "bg-[#F2EDE5] text-[#A69B8E]"
               }`}
             >
               {currentStep > step.number ? <Check className="w-4 h-4" /> : step.number}
             </div>
-            <span className={`ml-2 text-sm ${step.active ? "text-gray-900" : "text-gray-500"}`}>{step.title}</span>
-            {index < steps.length - 1 && <div className="w-8 h-px bg-gray-300 mx-4" />}
+            <span className={`ml-2 text-sm ${step.active ? "text-gray-900" : "text-[#A69B8E]"}`}>{step.title}</span>
+            {index < steps.length - 1 && <div className="w-8 h-px bg-[#A69B8E] mx-4" />}
           </div>
         ))}
       </div>
@@ -206,44 +206,68 @@ export function AddContent({ onBack, onContentAdded }: AddContentProps) {
       {renderStepIndicator()}
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="import">Import Files</TabsTrigger>
-          <TabsTrigger value="create">Create New</TabsTrigger>
-          <TabsTrigger value="scan">Scan/Photo</TabsTrigger>
-          <TabsTrigger value="url">From URL</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-4 bg-[#F2EDE5] border border-[#A69B8E]">
+          <TabsTrigger
+            value="import"
+            className="data-[state=active]:bg-[#fff9f0] data-[state=active]:text-gray-900 text-[#A69B8E] hover:bg-[#fff9f0]/50"
+          >
+            Import Files
+          </TabsTrigger>
+          <TabsTrigger
+            value="create"
+            className="data-[state=active]:bg-[#fff9f0] data-[state=active]:text-gray-900 text-[#A69B8E] hover:bg-[#fff9f0]/50"
+          >
+            Create New
+          </TabsTrigger>
+          <TabsTrigger
+            value="scan"
+            className="data-[state=active]:bg-[#fff9f0] data-[state=active]:text-gray-900 text-[#A69B8E] hover:bg-[#fff9f0]/50"
+          >
+            Scan/Photo
+          </TabsTrigger>
+          <TabsTrigger
+            value="url"
+            className="data-[state=active]:bg-[#fff9f0] data-[state=active]:text-gray-900 text-[#A69B8E] hover:bg-[#fff9f0]/50"
+          >
+            From URL
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="import" className="space-y-6">
-          <Card>
+          <Card className="bg-[#fff9f0] border-[#A69B8E]">
             <CardHeader>
-              <CardTitle>Import Music Files</CardTitle>
-              <p className="text-gray-600">Upload your existing sheet music, tablatures, and other musical content</p>
+              <CardTitle className="text-gray-900">Import Music Files</CardTitle>
+              <p className="text-[#A69B8E]">Upload your existing sheet music, tablatures, and other musical content</p>
             </CardHeader>
             <CardContent>
               <FileUpload onFilesUploaded={handleFilesUploaded} />
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="bg-[#fff9f0] border-[#A69B8E]">
             <CardHeader>
-              <CardTitle>Supported Content Types</CardTitle>
+              <CardTitle className="text-gray-900">Supported Content Types</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {contentTypes.map((type) => {
                   const Icon = type.icon
                   return (
-                    <div key={type.id} className="p-4 border rounded-lg hover:bg-stone-50">
+                    <div key={type.id} className="p-4 border border-[#A69B8E] rounded-lg hover:bg-[#F2EDE5]">
                       <div className="flex items-start space-x-3">
-                        <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                          <Icon className="w-5 h-5 text-blue-600" />
+                        <div className="w-10 h-10 bg-[#F2EDE5] rounded-lg flex items-center justify-center">
+                          <Icon className="w-5 h-5 text-[#A69B8E]" />
                         </div>
                         <div className="flex-1">
                           <h3 className="font-medium text-gray-900">{type.name}</h3>
-                          <p className="text-sm text-gray-600 mt-1">{type.description}</p>
+                          <p className="text-sm text-[#A69B8E] mt-1">{type.description}</p>
                           <div className="flex flex-wrap gap-1 mt-2">
                             {type.formats.map((format) => (
-                              <Badge key={format} variant="secondary" className="text-xs">
+                              <Badge
+                                key={format}
+                                variant="secondary"
+                                className="text-xs bg-[#F2EDE5] text-[#A69B8E] border-[#A69B8E]"
+                              >
                                 {format}
                               </Badge>
                             ))}
