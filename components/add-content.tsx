@@ -20,6 +20,10 @@ import {
   Mic,
   Piano,
   Drum,
+  Upload,
+  Sparkles,
+  Zap,
+  Star,
 } from "lucide-react"
 import { FileUpload } from "@/components/file-upload"
 import { ContentCreator } from "@/components/content-creator"
@@ -27,10 +31,10 @@ import { MetadataForm } from "@/components/metadata-form"
 
 interface AddContentProps {
   onBack: () => void
-  onContentAdded: () => void
+  onContentCreated: (content: any) => void
 }
 
-export function AddContent({ onBack, onContentAdded }: AddContentProps) {
+export function AddContent({ onBack, onContentCreated }: AddContentProps) {
   const [activeTab, setActiveTab] = useState("import")
   const [uploadedFiles, setUploadedFiles] = useState<any[]>([])
   const [currentStep, setCurrentStep] = useState(1)
@@ -44,6 +48,9 @@ export function AddContent({ onBack, onContentAdded }: AddContentProps) {
       icon: Music,
       description: "Traditional musical notation",
       formats: ["PDF", "PNG", "JPG", "MusicXML"],
+      gradient: "from-blue-500 to-purple-600",
+      bgColor: "bg-blue-50",
+      iconColor: "text-blue-600",
     },
     {
       id: "guitar-tab",
@@ -51,6 +58,9 @@ export function AddContent({ onBack, onContentAdded }: AddContentProps) {
       icon: Guitar,
       description: "Guitar tabs and fingering charts",
       formats: ["GP5", "GPX", "TXT", "PDF"],
+      gradient: "from-orange-500 to-red-600",
+      bgColor: "bg-orange-50",
+      iconColor: "text-orange-600",
     },
     {
       id: "chord-chart",
@@ -58,6 +68,9 @@ export function AddContent({ onBack, onContentAdded }: AddContentProps) {
       icon: FileText,
       description: "Chord progressions and lyrics",
       formats: ["TXT", "PDF", "ChordPro"],
+      gradient: "from-green-500 to-emerald-600",
+      bgColor: "bg-green-50",
+      iconColor: "text-green-600",
     },
     {
       id: "lyrics",
@@ -65,6 +78,9 @@ export function AddContent({ onBack, onContentAdded }: AddContentProps) {
       icon: Mic,
       description: "Song lyrics without chords",
       formats: ["TXT", "PDF", "DOC"],
+      gradient: "from-pink-500 to-rose-600",
+      bgColor: "bg-pink-50",
+      iconColor: "text-pink-600",
     },
     {
       id: "piano-score",
@@ -72,6 +88,9 @@ export function AddContent({ onBack, onContentAdded }: AddContentProps) {
       icon: Piano,
       description: "Piano sheet music and arrangements",
       formats: ["PDF", "MusicXML", "MIDI"],
+      gradient: "from-indigo-500 to-blue-600",
+      bgColor: "bg-indigo-50",
+      iconColor: "text-indigo-600",
     },
     {
       id: "drum-notation",
@@ -79,6 +98,9 @@ export function AddContent({ onBack, onContentAdded }: AddContentProps) {
       icon: Drum,
       description: "Drum patterns and notation",
       formats: ["PDF", "GP5", "MIDI"],
+      gradient: "from-amber-500 to-orange-600",
+      bgColor: "bg-amber-50",
+      iconColor: "text-amber-600",
     },
   ]
 
@@ -101,54 +123,91 @@ export function AddContent({ onBack, onContentAdded }: AddContentProps) {
   }
 
   const handleFinish = () => {
-    onContentAdded()
+    onContentCreated(createdContent || { files: uploadedFiles })
   }
 
   const renderStepIndicator = () => {
     const steps = [
-      { number: 1, title: "Add Content", active: currentStep >= 1 },
-      { number: 2, title: "Add Details", active: currentStep >= 2 },
-      { number: 3, title: "Complete", active: currentStep >= 3 },
+      { number: 1, title: "Add Content", active: currentStep >= 1, icon: Upload },
+      { number: 2, title: "Add Details", active: currentStep >= 2, icon: FileText },
+      { number: 3, title: "Complete", active: currentStep >= 3, icon: Check },
     ]
 
     return (
-      <div className="flex items-center justify-center space-x-4 mb-8">
-        {steps.map((step, index) => (
-          <div key={step.number} className="flex items-center">
-            <div
-              className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
-                step.active ? "bg-[#A69B8E] text-white" : "bg-[#F2EDE5] text-[#A69B8E]"
-              }`}
-            >
-              {currentStep > step.number ? <Check className="w-4 h-4" /> : step.number}
+      <div className="flex items-center justify-center space-x-4 mb-6">
+        {steps.map((step, index) => {
+          const Icon = step.icon
+          return (
+            <div key={step.number} className="flex items-center">
+              <div className="flex flex-col items-center">
+                <div
+                  className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium transition-all duration-300 ${
+                    step.active
+                      ? "bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-md"
+                      : "bg-white border-2 border-amber-200 text-amber-600"
+                  }`}
+                >
+                  {currentStep > step.number ? <Check className="w-4 h-4" /> : <Icon className="w-4 h-4" />}
+                </div>
+                <span
+                  className={`mt-2 text-xs font-medium transition-colors ${
+                    step.active ? "text-gray-900" : "text-amber-600"
+                  }`}
+                >
+                  {step.title}
+                </span>
+              </div>
+              {index < steps.length - 1 && (
+                <div
+                  className={`w-12 h-0.5 mx-1 rounded-full transition-colors ${
+                    currentStep > step.number ? "bg-gradient-to-r from-amber-500 to-orange-600" : "bg-amber-200"
+                  }`}
+                />
+              )}
             </div>
-            <span className={`ml-2 text-sm ${step.active ? "text-gray-900" : "text-[#A69B8E]"}`}>{step.title}</span>
-            {index < steps.length - 1 && <div className="w-8 h-px bg-[#A69B8E] mx-4" />}
-          </div>
-        ))}
+          )
+        })}
       </div>
     )
   }
 
   if (currentStep === 3) {
     return (
-      <div className="p-6 max-w-2xl mx-auto bg-[#fff9f0] min-h-screen">
-        <div className="text-center space-y-6">
-          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
-            <Check className="w-8 h-8 text-green-600" />
-          </div>
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">Content Added Successfully!</h1>
-            <p className="text-gray-600">
-              Your {uploadedFiles.length > 0 ? `${uploadedFiles.length} file(s)` : "content"} have been added to your
-              library.
-            </p>
-          </div>
-          <div className="flex justify-center space-x-4">
-            <Button variant="outline" onClick={() => setCurrentStep(1)}>
-              Add More Content
-            </Button>
-            <Button onClick={handleFinish}>Go to Library</Button>
+      <div className="p-4">
+        <div className="max-w-2xl mx-auto">
+          <div className="text-center space-y-6">
+            <div className="relative">
+              <div className="w-20 h-20 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center mx-auto shadow-lg">
+                <Check className="w-10 h-10 text-white" />
+              </div>
+              <div className="absolute -top-1 -right-1 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center">
+                <Sparkles className="w-3 h-3 text-yellow-800" />
+              </div>
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent mb-2">
+                Content Added Successfully!
+              </h1>
+              <p className="text-sm text-gray-600 max-w-md mx-auto">
+                Your {uploadedFiles.length > 0 ? `${uploadedFiles.length} file(s)` : "content"} have been added to your
+                library and are ready to use.
+              </p>
+            </div>
+            <div className="flex justify-center space-x-3">
+              <Button
+                variant="outline"
+                onClick={() => setCurrentStep(1)}
+                className="border-amber-300 text-amber-700 hover:bg-amber-50 px-4 py-2 text-sm"
+              >
+                Add More Content
+              </Button>
+              <Button
+                onClick={handleFinish}
+                className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-4 py-2 text-sm shadow"
+              >
+                Go to Library
+              </Button>
+            </div>
           </div>
         </div>
       </div>
@@ -157,235 +216,339 @@ export function AddContent({ onBack, onContentAdded }: AddContentProps) {
 
   if (currentStep === 2) {
     return (
-      <div className="p-6 max-w-4xl mx-auto bg-[#fff9f0] min-h-screen">
-        <div className="flex items-center mb-6">
-          <Button variant="ghost" onClick={() => setCurrentStep(1)}>
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back
-          </Button>
-          <h1 className="text-2xl font-bold text-gray-900 ml-4">Add Content Details</h1>
-        </div>
+      <div className="p-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex items-center mb-4">
+            <Button variant="ghost" onClick={() => setCurrentStep(1)} className="hover:bg-amber-100 text-amber-700">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Button>
+            <h1 className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent ml-2">
+              Add Content Details
+            </h1>
+          </div>
 
-        {renderStepIndicator()}
+          {renderStepIndicator()}
 
-        {isProcessing ? (
-          <Card>
-            <CardContent className="p-8 text-center">
-              <div className="space-y-4">
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto">
-                  <Music className="w-6 h-6 text-blue-600 animate-pulse" />
+          {isProcessing ? (
+            <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
+              <CardContent className="p-6 text-center">
+                <div className="space-y-4">
+                  <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto">
+                    <Music className="w-8 h-8 text-white animate-pulse" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900">Processing Content...</h3>
+                  <p className="text-gray-600 text-sm">We're analyzing and organizing your content with AI magic.</p>
+                  <Progress value={75} className="w-full max-w-md mx-auto h-2" />
+                  <div className="flex items-center justify-center space-x-2 text-xs text-gray-500">
+                    <Zap className="w-3 h-3" />
+                    <span>Extracting metadata and optimizing for performance</span>
+                  </div>
                 </div>
-                <h3 className="text-lg font-medium text-gray-900">Processing Content...</h3>
-                <p className="text-gray-600">We're analyzing and organizing your content.</p>
-                <Progress value={75} className="w-full max-w-xs mx-auto" />
-              </div>
-            </CardContent>
-          </Card>
-        ) : (
-          <MetadataForm
-            files={uploadedFiles}
-            createdContent={createdContent}
-            onComplete={handleMetadataComplete}
-            onBack={() => setCurrentStep(1)}
-          />
-        )}
+              </CardContent>
+            </Card>
+          ) : (
+            <MetadataForm
+              files={uploadedFiles}
+              createdContent={createdContent}
+              onComplete={handleMetadataComplete}
+              onBack={() => setCurrentStep(1)}
+            />
+          )}
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="p-6 max-w-6xl mx-auto bg-[#fff9f0] min-h-screen">
-      <div className="flex items-center mb-6">
-        <Button variant="ghost" onClick={onBack}>
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back
-        </Button>
-        <h1 className="text-3xl font-bold text-gray-900 ml-4">Add Content</h1>
-      </div>
+    <div className="p-4">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex items-center mb-4">
+          <Button variant="ghost" onClick={onBack} className="hover:bg-amber-100 text-amber-700">
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back
+          </Button>
+          <div className="ml-2">
+            <h1 className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+              Add Content
+            </h1>
+            <p className="text-gray-600 text-sm">Import, create, or scan your musical content</p>
+          </div>
+        </div>
 
-      {renderStepIndicator()}
+        {renderStepIndicator()}
 
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="grid w-full grid-cols-4 bg-[#F2EDE5] border border-[#A69B8E]">
-          <TabsTrigger
-            value="import"
-            className="data-[state=active]:bg-[#fff9f0] data-[state=active]:text-gray-900 text-[#A69B8E] hover:bg-[#fff9f0]/50"
-          >
-            Import Files
-          </TabsTrigger>
-          <TabsTrigger
-            value="create"
-            className="data-[state=active]:bg-[#fff9f0] data-[state=active]:text-gray-900 text-[#A69B8E] hover:bg-[#fff9f0]/50"
-          >
-            Create New
-          </TabsTrigger>
-          <TabsTrigger
-            value="scan"
-            className="data-[state=active]:bg-[#fff9f0] data-[state=active]:text-gray-900 text-[#A69B8E] hover:bg-[#fff9f0]/50"
-          >
-            Scan/Photo
-          </TabsTrigger>
-          <TabsTrigger
-            value="url"
-            className="data-[state=active]:bg-[#fff9f0] data-[state=active]:text-gray-900 text-[#A69B8E] hover:bg-[#fff9f0]/50"
-          >
-            From URL
-          </TabsTrigger>
-        </TabsList>
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
+          <TabsList className="grid w-full grid-cols-4 bg-white/80 backdrop-blur-sm border border-amber-200 p-1 rounded-lg shadow h-auto">
+            <TabsTrigger
+              value="import"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500 data-[state=active]:to-orange-600 data-[state=active]:text-white text-amber-700 hover:bg-amber-50 rounded-md font-medium py-1.5 text-sm flex items-center justify-center"
+            >
+              <Upload className="w-3 h-3 mr-1.5" />
+              Import Files
+            </TabsTrigger>
+            <TabsTrigger
+              value="create"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500 data-[state=active]:to-orange-600 data-[state=active]:text-white text-amber-700 hover:bg-amber-50 rounded-md font-medium py-1.5 text-sm flex items-center justify-center"
+            >
+              <FileText className="w-3 h-3 mr-1.5" />
+              Create New
+            </TabsTrigger>
+            <TabsTrigger
+              value="scan"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500 data-[state=active]:to-orange-600 data-[state=active]:text-white text-amber-700 hover:bg-amber-50 rounded-md font-medium py-1.5 text-sm flex items-center justify-center"
+            >
+              <Camera className="w-3 h-3 mr-1.5" />
+              Scan/Photo
+            </TabsTrigger>
+            <TabsTrigger
+              value="url"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500 data-[state=active]:to-orange-600 data-[state=active]:text-white text-amber-700 hover:bg-amber-50 rounded-md font-medium py-1.5 text-sm flex items-center justify-center"
+            >
+              <Download className="w-3 h-3 mr-1.5" />
+              From URL
+            </TabsTrigger>
+          </TabsList>
 
-        <TabsContent value="import" className="space-y-6">
-          <Card className="bg-[#fff9f0] border-[#A69B8E]">
-            <CardHeader>
-              <CardTitle className="text-gray-900">Import Music Files</CardTitle>
-              <p className="text-[#A69B8E]">Upload your existing sheet music, tablatures, and other musical content</p>
-            </CardHeader>
-            <CardContent>
-              <FileUpload onFilesUploaded={handleFilesUploaded} />
-            </CardContent>
-          </Card>
+          <TabsContent value="import" className="space-y-4">
+            <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
+              <CardHeader className="bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-t-lg py-3 px-4">
+                <CardTitle className="text-lg flex items-center">
+                  <Upload className="w-4 h-4 mr-2" />
+                  Import Music Files
+                </CardTitle>
+                <p className="text-amber-100 text-sm">
+                  Upload your existing sheet music, tablatures, and other musical content
+                </p>
+              </CardHeader>
+              <CardContent className="p-4">
+                <FileUpload onFilesUploaded={handleFilesUploaded} />
+              </CardContent>
+            </Card>
 
-          <Card className="bg-[#fff9f0] border-[#A69B8E]">
-            <CardHeader>
-              <CardTitle className="text-gray-900">Supported Content Types</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {contentTypes.map((type) => {
-                  const Icon = type.icon
-                  return (
-                    <div key={type.id} className="p-4 border border-[#A69B8E] rounded-lg hover:bg-[#F2EDE5]">
-                      <div className="flex items-start space-x-3">
-                        <div className="w-10 h-10 bg-[#F2EDE5] rounded-lg flex items-center justify-center">
-                          <Icon className="w-5 h-5 text-[#A69B8E]" />
-                        </div>
-                        <div className="flex-1">
-                          <h3 className="font-medium text-gray-900">{type.name}</h3>
-                          <p className="text-sm text-[#A69B8E] mt-1">{type.description}</p>
-                          <div className="flex flex-wrap gap-1 mt-2">
-                            {type.formats.map((format) => (
-                              <Badge
-                                key={format}
-                                variant="secondary"
-                                className="text-xs bg-[#F2EDE5] text-[#A69B8E] border-[#A69B8E]"
-                              >
-                                {format}
-                              </Badge>
-                            ))}
+            <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
+              <CardHeader className="py-3 px-4">
+                <CardTitle className="text-lg text-gray-900 flex items-center">
+                  <Star className="w-4 h-4 mr-2 text-amber-500" />
+                  Supported Content Types
+                </CardTitle>
+                <p className="text-gray-600 text-sm">Choose from our wide range of supported musical formats</p>
+              </CardHeader>
+              <CardContent className="p-4">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  {contentTypes.map((type) => {
+                    const Icon = type.icon
+                    return (
+                      <div
+                        key={type.id}
+                        className="group p-3 border border-amber-200 rounded-lg hover:shadow-md transition-all duration-300 bg-white/60 backdrop-blur-sm"
+                      >
+                        <div className="flex items-start space-x-3">
+                          <div
+                            className={`w-8 h-8 ${type.bgColor} rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform`}
+                          >
+                            <Icon className={`w-4 h-4 ${type.iconColor}`} />
+                          </div>
+                          <div className="flex-1">
+                            <h3 className="font-medium text-gray-900 text-sm mb-1">{type.name}</h3>
+                            <p className="text-gray-600 text-xs mb-2">{type.description}</p>
+                            <div className="flex flex-wrap gap-1">
+                              {type.formats.map((format) => (
+                                <Badge
+                                  key={format}
+                                  variant="secondary"
+                                  className="text-xs bg-amber-100 text-amber-700 border border-amber-300 hover:bg-amber-200 transition-colors px-1.5 py-0"
+                                >
+                                  {format}
+                                </Badge>
+                              ))}
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  )
-                })}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
+                    )
+                  })}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
 
-        <TabsContent value="create" className="space-y-6">
-          <ContentCreator onContentCreated={handleContentCreated} />
-        </TabsContent>
+          <TabsContent value="create" className="space-y-4">
+            <ContentCreator onContentCreated={handleContentCreated} />
+          </TabsContent>
 
-        <TabsContent value="scan" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Scan Physical Sheet Music</CardTitle>
-              <p className="text-gray-600">Use your device camera to capture physical sheet music</p>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-12 text-center">
-                <Camera className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Camera Scan</h3>
-                <p className="text-gray-600 mb-4">Position your sheet music in good lighting for best results</p>
-                <Button>
+          <TabsContent value="scan" className="space-y-4">
+            <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
+              <CardHeader className="bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-t-lg py-3 px-4">
+                <CardTitle className="text-lg flex items-center">
                   <Camera className="w-4 h-4 mr-2" />
-                  Open Camera
-                </Button>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Card>
-                  <CardContent className="p-4">
-                    <h4 className="font-medium mb-2">Scanning Tips</h4>
-                    <ul className="text-sm text-gray-600 space-y-1">
-                      <li>• Ensure good lighting</li>
-                      <li>• Keep the page flat</li>
-                      <li>• Fill the frame with the music</li>
-                      <li>• Avoid shadows and glare</li>
-                    </ul>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardContent className="p-4">
-                    <h4 className="font-medium mb-2">Auto-Processing</h4>
-                    <ul className="text-sm text-gray-600 space-y-1">
-                      <li>• Automatic crop and straighten</li>
-                      <li>• Text recognition (OCR)</li>
-                      <li>• Chord detection</li>
-                      <li>• Multi-page support</li>
-                    </ul>
-                  </CardContent>
-                </Card>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="url" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Import from URL</CardTitle>
-              <p className="text-gray-600">Import content from web links or online music libraries</p>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <Label htmlFor="url">Content URL</Label>
-                <div className="flex space-x-2 mt-2">
-                  <Input id="url" placeholder="https://example.com/sheet-music.pdf" className="flex-1" />
-                  <Button>
-                    <Download className="w-4 h-4 mr-2" />
-                    Import
+                  Scan Physical Sheet Music
+                </CardTitle>
+                <p className="text-purple-100 text-sm">Use your device camera to capture physical sheet music</p>
+              </CardHeader>
+              <CardContent className="p-4 space-y-4">
+                <div className="border-2 border-dashed border-amber-300 rounded-lg p-6 text-center bg-gradient-to-br from-amber-50 to-orange-50 hover:from-amber-100 hover:to-orange-100 transition-all duration-300">
+                  <Camera className="w-12 h-12 text-amber-500 mx-auto mb-3" />
+                  <h3 className="text-lg font-bold text-gray-900 mb-2">Camera Scan</h3>
+                  <p className="text-gray-600 mb-4 text-sm">
+                    Position your sheet music in good lighting for best results
+                  </p>
+                  <Button className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-4 py-2 text-sm shadow">
+                    <Camera className="w-4 h-4 mr-2" />
+                    Open Camera
                   </Button>
                 </div>
-              </div>
 
-              <div className="bg-blue-50 p-4 rounded-lg">
-                <div className="flex items-start space-x-3">
-                  <AlertCircle className="w-5 h-5 text-blue-600 mt-0.5" />
-                  <div>
-                    <h4 className="font-medium text-blue-900">Supported Sources</h4>
-                    <ul className="text-sm text-blue-800 mt-1 space-y-1">
-                      <li>• Direct PDF/image links</li>
-                      <li>• IMSLP (Petrucci Music Library)</li>
-                      <li>• MuseScore public scores</li>
-                      <li>• Ultimate Guitar tabs</li>
-                      <li>• Songsterr tablatures</li>
-                    </ul>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <Card className="border border-amber-200 bg-white/60 backdrop-blur-sm">
+                    <CardContent className="p-3">
+                      <h4 className="font-medium text-sm mb-2 text-gray-900 flex items-center">
+                        <Zap className="w-4 h-4 mr-1.5 text-amber-500" />
+                        Scanning Tips
+                      </h4>
+                      <ul className="text-gray-700 text-xs space-y-1.5">
+                        <li className="flex items-center">
+                          <div className="w-1.5 h-1.5 bg-amber-500 rounded-full mr-2"></div>
+                          Ensure good lighting
+                        </li>
+                        <li className="flex items-center">
+                          <div className="w-1.5 h-1.5 bg-amber-500 rounded-full mr-2"></div>
+                          Keep the page flat
+                        </li>
+                        <li className="flex items-center">
+                          <div className="w-1.5 h-1.5 bg-amber-500 rounded-full mr-2"></div>
+                          Fill the frame with the music
+                        </li>
+                        <li className="flex items-center">
+                          <div className="w-1.5 h-1.5 bg-amber-500 rounded-full mr-2"></div>
+                          Avoid shadows and glare
+                        </li>
+                      </ul>
+                    </CardContent>
+                  </Card>
+                  <Card className="border border-amber-200 bg-white/60 backdrop-blur-sm">
+                    <CardContent className="p-3">
+                      <h4 className="font-medium text-sm mb-2 text-gray-900 flex items-center">
+                        <Sparkles className="w-4 h-4 mr-1.5 text-amber-500" />
+                        Auto-Processing
+                      </h4>
+                      <ul className="text-gray-700 text-xs space-y-1.5">
+                        <li className="flex items-center">
+                          <div className="w-1.5 h-1.5 bg-amber-500 rounded-full mr-2"></div>
+                          Automatic crop and straighten
+                        </li>
+                        <li className="flex items-center">
+                          <div className="w-1.5 h-1.5 bg-amber-500 rounded-full mr-2"></div>
+                          Text recognition (OCR)
+                        </li>
+                        <li className="flex items-center">
+                          <div className="w-1.5 h-1.5 bg-amber-500 rounded-full mr-2"></div>
+                          Chord detection
+                        </li>
+                        <li className="flex items-center">
+                          <div className="w-1.5 h-1.5 bg-amber-500 rounded-full mr-2"></div>
+                          Multi-page support
+                        </li>
+                      </ul>
+                    </CardContent>
+                  </Card>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="url" className="space-y-4">
+            <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
+              <CardHeader className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-t-lg py-3 px-4">
+                <CardTitle className="text-lg flex items-center">
+                  <Download className="w-4 h-4 mr-2" />
+                  Import from URL
+                </CardTitle>
+                <p className="text-blue-100 text-sm">Import content from web links or online music libraries</p>
+              </CardHeader>
+              <CardContent className="p-4 space-y-4">
+                <div>
+                  <Label htmlFor="url" className="text-sm font-medium text-gray-900">
+                    Content URL
+                  </Label>
+                  <div className="flex space-x-2 mt-1.5">
+                    <Input
+                      id="url"
+                      placeholder="https://example.com/sheet-music.pdf"
+                      className="flex-1 border-amber-300 focus:border-amber-500 focus:ring-amber-500 text-sm py-2"
+                    />
+                    <Button className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-4 py-2 text-sm">
+                      <Download className="w-3 h-3 mr-1.5" />
+                      Import
+                    </Button>
                   </div>
                 </div>
-              </div>
 
-              <div className="space-y-3">
-                <h4 className="font-medium">Recent Imports</h4>
-                <div className="space-y-2">
-                  {[
-                    { title: "Moonlight Sonata", source: "IMSLP", status: "completed" },
-                    { title: "Stairway to Heaven Tab", source: "Ultimate Guitar", status: "processing" },
-                  ].map((item, index) => (
-                    <div key={index} className="flex items-center justify-between p-3 bg-stone-50 rounded-lg">
-                      <div>
-                        <p className="font-medium text-gray-900">{item.title}</p>
-                        <p className="text-sm text-gray-600">{item.source}</p>
-                      </div>
-                      <Badge variant={item.status === "completed" ? "default" : "secondary"}>{item.status}</Badge>
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-3 rounded-lg border border-blue-200">
+                  <div className="flex items-start space-x-3">
+                    <AlertCircle className="w-4 h-4 text-blue-600 mt-0.5" />
+                    <div>
+                      <h4 className="font-medium text-blue-900 text-sm mb-1.5">Supported Sources</h4>
+                      <ul className="text-blue-800 text-xs space-y-1">
+                        <li className="flex items-center">
+                          <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></div>
+                          Direct PDF/image links
+                        </li>
+                        <li className="flex items-center">
+                          <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></div>
+                          IMSLP (Petrucci Music Library)
+                        </li>
+                        <li className="flex items-center">
+                          <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></div>
+                          MuseScore public scores
+                        </li>
+                        <li className="flex items-center">
+                          <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></div>
+                          Ultimate Guitar tabs
+                        </li>
+                        <li className="flex items-center">
+                          <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></div>
+                          Songsterr tablatures
+                        </li>
+                      </ul>
                     </div>
-                  ))}
+                  </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+
+                <div className="space-y-2">
+                  <h4 className="font-medium text-sm text-gray-900">Recent Imports</h4>
+                  <div className="space-y-2">
+                    {[
+                      { title: "Moonlight Sonata", source: "IMSLP", status: "completed" },
+                      { title: "Stairway to Heaven Tab", source: "Ultimate Guitar", status: "processing" },
+                    ].map((item, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center justify-between p-2 bg-white/60 backdrop-blur-sm rounded-lg border border-amber-200 hover:shadow-sm transition-all"
+                      >
+                        <div>
+                          <p className="font-medium text-gray-900 text-sm">{item.title}</p>
+                          <p className="text-gray-600 text-xs">{item.source}</p>
+                        </div>
+                        <Badge
+                          variant={item.status === "completed" ? "default" : "secondary"}
+                          className={
+                            item.status === "completed"
+                              ? "bg-green-100 text-green-700 border-green-300 text-xs"
+                              : "bg-amber-100 text-amber-700 border-amber-300 text-xs"
+                          }
+                        >
+                          {item.status}
+                        </Badge>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
+      </div>
     </div>
   )
 }

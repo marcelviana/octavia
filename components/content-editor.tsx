@@ -24,12 +24,13 @@ import {
   RotateCw,
   Palette,
   Settings,
+  FileText,
+  Music,
+  Sparkles,
+  Clock,
 } from "lucide-react"
-import { AnnotationTools } from "@/components/annotation-tools"
-import { ChordEditor } from "@/components/chord-editor"
-import { LyricsEditor } from "@/components/lyrics-editor"
-import { TabEditor } from "@/components/tab-editor"
 import { MetadataEditor } from "@/components/metadata-editor"
+import { ContentTypeEditor } from "@/components/editors/content-type-editor"
 
 interface ContentEditorProps {
   content: any
@@ -39,7 +40,22 @@ interface ContentEditorProps {
 
 export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps) {
   const [activeTab, setActiveTab] = useState("content")
-  const [editedContent, setEditedContent] = useState(content)
+  const [editedContent, setEditedContent] = useState({
+    ...content,
+    // Map database fields to editor fields
+    title: content.title || "",
+    artist: content.artist || "",
+    album: content.album || "",
+    genre: content.genre || "",
+    key: content.key || "",
+    bpm: content.bpm || "",
+    difficulty: content.difficulty || "",
+    tags: content.tags || [],
+    notes: content.notes || "",
+    is_favorite: content.is_favorite || false,
+    is_public: content.is_public || false,
+    content_data: content.content_data || {},
+  })
   const [hasChanges, setHasChanges] = useState(false)
   const [zoom, setZoom] = useState(100)
   const [selectedTool, setSelectedTool] = useState("select")
@@ -54,11 +70,30 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
   }, [editedContent, content])
 
   const handleSave = () => {
-    onSave({
-      ...editedContent,
-      annotations,
-      lastModified: new Date().toISOString(),
-    })
+    const updatedContent = {
+      title: editedContent.title,
+      artist: editedContent.artist,
+      album: editedContent.album,
+      genre: editedContent.genre,
+      key: editedContent.key,
+      bpm: editedContent.bpm ? Number.parseInt(editedContent.bpm) : null,
+      difficulty: editedContent.difficulty,
+      tags: editedContent.tags,
+      notes: editedContent.notes,
+      is_favorite: editedContent.is_favorite,
+      is_public: editedContent.is_public,
+      content_data: {
+        ...editedContent.content_data,
+        annotations,
+        // Store editor-specific data
+        ...(content.content_type === "Chord Chart" && editedContent.sections && { sections: editedContent.sections }),
+        ...(content.content_type === "Lyrics" && editedContent.lyrics && { lyrics: editedContent.lyrics }),
+        ...(content.content_type === "Guitar Tab" && editedContent.measures && { measures: editedContent.measures }),
+      },
+      updated_at: new Date().toISOString(),
+    }
+
+    onSave(updatedContent)
   }
 
   const handleUndo = () => {
@@ -85,82 +120,96 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
   }
 
   const renderContentEditor = () => {
-    switch (content.type) {
-      case "Chord Chart":
-        return (
-          <ChordEditor
-            content={editedContent}
-            onChange={(newContent) => {
-              saveToUndoStack()
-              setEditedContent(newContent)
-            }}
-          />
-        )
-      case "Guitar Tab":
-        return (
-          <TabEditor
-            content={editedContent}
-            onChange={(newContent) => {
-              saveToUndoStack()
-              setEditedContent(newContent)
-            }}
-          />
-        )
-      case "Sheet Music":
-        return (
-          <AnnotationTools
-            content={editedContent}
-            annotations={annotations}
-            selectedTool={selectedTool}
-            zoom={zoom}
-            onAnnotationsChange={setAnnotations}
-            onContentChange={(newContent) => {
-              saveToUndoStack()
-              setEditedContent(newContent)
-            }}
-          />
-        )
-      default:
-        return (
-          <LyricsEditor
-            content={editedContent}
-            onChange={(newContent) => {
-              saveToUndoStack()
-              setEditedContent(newContent)
-            }}
-          />
-        )
-    }
+    return (
+      <ContentTypeEditor
+        content={editedContent}
+        onChange={(newContent) => {
+          saveToUndoStack()
+          setEditedContent(newContent)
+        }}
+      />
+    )
   }
 
+  const tools = [
+    { id: "select", icon: ArrowRight, label: "Select" },
+    { id: "pen", icon: Pen, label: "Pen" },
+    { id: "highlighter", icon: Highlighter, label: "Highlighter" },
+    { id: "text", icon: Type, label: "Text" },
+    { id: "eraser", icon: Eraser, label: "Eraser" },
+    { id: "circle", icon: Circle, label: "Circle" },
+    { id: "square", icon: Square, label: "Rectangle" },
+  ]
+
+  const colors = ["#000000", "#ff0000", "#00ff00", "#0000ff", "#ffff00", "#ff00ff", "#00ffff", "#ffa500"]
+
   return (
-    <div className="h-screen flex flex-col bg-[#fff9f0]">
+    <div className="h-screen flex flex-col bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
       {/* Header */}
-      <div className="bg-white border-b border-stone-300 p-4">
+      <div className="bg-white/90 backdrop-blur-sm border-b border-amber-200 p-6 shadow-lg">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-6">
+            <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-orange-600 rounded-xl flex items-center justify-center">
+              <Music className="w-6 h-6 text-white" />
+            </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900">Editing: {content.title}</h1>
-              <div className="flex items-center space-x-2 mt-1">
-                <Badge variant="secondary">{content.type}</Badge>
-                {hasChanges && <Badge variant="destructive">Unsaved Changes</Badge>}
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+                Editing: {content.title}
+              </h1>
+              <div className="flex items-center space-x-3 mt-2">
+                <Badge
+                  variant="secondary"
+                  className="bg-amber-100 text-amber-700 border-amber-300 font-medium px-3 py-1"
+                >
+                  {content.type}
+                </Badge>
+                {hasChanges && (
+                  <Badge variant="destructive" className="bg-red-100 text-red-700 border-red-300 font-medium px-3 py-1">
+                    <Sparkles className="w-3 h-3 mr-1" />
+                    Unsaved Changes
+                  </Badge>
+                )}
+                <div className="flex items-center text-sm text-gray-500">
+                  <Clock className="w-4 h-4 mr-1" />
+                  Last saved: {new Date().toLocaleTimeString()}
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="flex items-center space-x-2">
-            <Button variant="outline" size="sm" onClick={handleUndo} disabled={undoStack.length === 0}>
+          <div className="flex items-center space-x-3">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleUndo}
+              disabled={undoStack.length === 0}
+              className="border-amber-300 text-amber-700 hover:bg-amber-50"
+            >
               <Undo className="w-4 h-4" />
             </Button>
-            <Button variant="outline" size="sm" onClick={handleRedo} disabled={redoStack.length === 0}>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleRedo}
+              disabled={redoStack.length === 0}
+              className="border-amber-300 text-amber-700 hover:bg-amber-50"
+            >
               <Redo className="w-4 h-4" />
             </Button>
-            <Separator orientation="vertical" className="h-6" />
-            <Button variant="outline" onClick={onCancel}>
+            <Separator orientation="vertical" className="h-8" />
+            <Button
+              variant="outline"
+              onClick={onCancel}
+              className="border-gray-300 text-gray-700 hover:bg-gray-50 px-6"
+            >
               <X className="w-4 h-4 mr-2" />
               Cancel
             </Button>
-            <Button onClick={handleSave} disabled={!hasChanges}>
+            <Button
+              onClick={handleSave}
+              disabled={!hasChanges}
+              className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-6 shadow-lg"
+            >
               <Save className="w-4 h-4 mr-2" />
               Save Changes
             </Button>
@@ -170,77 +219,42 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
 
       {/* Toolbar */}
       {(content.type === "Sheet Music" || content.type === "Guitar Tab") && (
-        <div className="bg-white border-b border-stone-300 p-3">
+        <div className="bg-white/90 backdrop-blur-sm border-b border-amber-200 p-4 shadow-sm">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-6">
               {/* Drawing Tools */}
-              <div className="flex items-center space-x-1 border-r border-stone-300 pr-4">
-                <Button
-                  variant={selectedTool === "select" ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => setSelectedTool("select")}
-                >
-                  <ArrowRight className="w-4 h-4" />
-                </Button>
-                <Button
-                  variant={selectedTool === "pen" ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => setSelectedTool("pen")}
-                >
-                  <Pen className="w-4 h-4" />
-                </Button>
-                <Button
-                  variant={selectedTool === "highlighter" ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => setSelectedTool("highlighter")}
-                >
-                  <Highlighter className="w-4 h-4" />
-                </Button>
-                <Button
-                  variant={selectedTool === "text" ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => setSelectedTool("text")}
-                >
-                  <Type className="w-4 h-4" />
-                </Button>
-                <Button
-                  variant={selectedTool === "eraser" ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => setSelectedTool("eraser")}
-                >
-                  <Eraser className="w-4 h-4" />
-                </Button>
-              </div>
-
-              {/* Shapes */}
-              <div className="flex items-center space-x-1 border-r border-stone-300 pr-4">
-                <Button
-                  variant={selectedTool === "circle" ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => setSelectedTool("circle")}
-                >
-                  <Circle className="w-4 h-4" />
-                </Button>
-                <Button
-                  variant={selectedTool === "square" ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => setSelectedTool("square")}
-                >
-                  <Square className="w-4 h-4" />
-                </Button>
+              <div className="flex items-center space-x-2 bg-amber-50 rounded-xl p-2 border border-amber-200">
+                {tools.map((tool) => {
+                  const Icon = tool.icon
+                  return (
+                    <Button
+                      key={tool.id}
+                      variant={selectedTool === tool.id ? "default" : "ghost"}
+                      size="sm"
+                      onClick={() => setSelectedTool(tool.id)}
+                      className={
+                        selectedTool === tool.id
+                          ? "bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-md"
+                          : "hover:bg-amber-100 text-amber-700"
+                      }
+                      title={tool.label}
+                    >
+                      <Icon className="w-4 h-4" />
+                    </Button>
+                  )
+                })}
               </div>
 
               {/* Colors */}
-              <div className="flex items-center space-x-1">
-                <Button variant="ghost" size="sm">
-                  <Palette className="w-4 h-4" />
-                </Button>
+              <div className="flex items-center space-x-2 bg-amber-50 rounded-xl p-2 border border-amber-200">
+                <Palette className="w-4 h-4 text-amber-600 mr-1" />
                 <div className="flex space-x-1">
-                  {["#000000", "#ff0000", "#00ff00", "#0000ff", "#ffff00", "#ff00ff"].map((color) => (
+                  {colors.map((color) => (
                     <div
                       key={color}
-                      className="w-6 h-6 rounded border-2 border-gray-300 cursor-pointer"
+                      className="w-8 h-8 rounded-lg border-2 border-white shadow-sm cursor-pointer hover:scale-110 transition-transform"
                       style={{ backgroundColor: color }}
+                      title={color}
                     />
                   ))}
                 </div>
@@ -249,30 +263,32 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
 
             <div className="flex items-center space-x-4">
               {/* Zoom Controls */}
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 bg-amber-50 rounded-xl p-2 border border-amber-200">
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => setZoom(Math.max(50, zoom - 25))}
                   disabled={zoom <= 50}
+                  className="hover:bg-amber-100 text-amber-700"
                 >
                   <ZoomOut className="w-4 h-4" />
                 </Button>
-                <span className="text-sm w-12 text-center">{zoom}%</span>
+                <span className="text-sm font-medium w-16 text-center text-amber-700">{zoom}%</span>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => setZoom(Math.min(200, zoom + 25))}
                   disabled={zoom >= 200}
+                  className="hover:bg-amber-100 text-amber-700"
                 >
                   <ZoomIn className="w-4 h-4" />
                 </Button>
               </div>
 
-              <Button variant="ghost" size="sm">
+              <Button variant="ghost" size="sm" className="hover:bg-amber-100 text-amber-700">
                 <RotateCw className="w-4 h-4" />
               </Button>
-              <Button variant="ghost" size="sm">
+              <Button variant="ghost" size="sm" className="hover:bg-amber-100 text-amber-700">
                 <Settings className="w-4 h-4" />
               </Button>
             </div>
@@ -284,44 +300,78 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
       <div className="flex-1 flex">
         <div className="flex-1 overflow-auto">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full">
-            <div className="bg-white border-b border-stone-300 px-4">
-              <TabsList>
-                <TabsTrigger value="content">Content</TabsTrigger>
-                <TabsTrigger value="metadata">Details</TabsTrigger>
-                <TabsTrigger value="settings">Settings</TabsTrigger>
+            <div className="bg-white/90 backdrop-blur-sm border-b border-amber-200 px-6 py-2">
+              <TabsList className="bg-amber-50 border border-amber-200">
+                <TabsTrigger
+                  value="content"
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500 data-[state=active]:to-orange-600 data-[state=active]:text-white"
+                >
+                  <FileText className="w-4 h-4 mr-2" />
+                  Content
+                </TabsTrigger>
+                <TabsTrigger
+                  value="metadata"
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500 data-[state=active]:to-orange-600 data-[state=active]:text-white"
+                >
+                  <Music className="w-4 h-4 mr-2" />
+                  Details
+                </TabsTrigger>
+                <TabsTrigger
+                  value="settings"
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500 data-[state=active]:to-orange-600 data-[state=active]:text-white"
+                >
+                  <Settings className="w-4 h-4 mr-2" />
+                  Settings
+                </TabsTrigger>
               </TabsList>
             </div>
 
             <TabsContent value="content" className="flex-1 p-6">
-              {renderContentEditor()}
+              <div className="h-full bg-white/60 backdrop-blur-sm rounded-xl border border-amber-200 shadow-lg">
+                {renderContentEditor()}
+              </div>
             </TabsContent>
 
             <TabsContent value="metadata" className="flex-1 p-6">
-              <MetadataEditor
-                content={editedContent}
-                onChange={(newContent) => {
-                  saveToUndoStack()
-                  setEditedContent(newContent)
-                }}
-              />
+              <div className="h-full bg-white/60 backdrop-blur-sm rounded-xl border border-amber-200 shadow-lg p-6">
+                <MetadataEditor
+                  content={editedContent}
+                  onChange={(newContent) => {
+                    saveToUndoStack()
+                    setEditedContent(newContent)
+                  }}
+                />
+              </div>
             </TabsContent>
 
             <TabsContent value="settings" className="flex-1 p-6">
-              <Card>
-                <CardContent className="p-6">
-                  <h3 className="text-lg font-medium mb-4">Editor Settings</h3>
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <Label>Auto-save</Label>
-                      <input type="checkbox" defaultChecked />
+              <Card className="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+                <CardContent className="p-8">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                    <Settings className="w-6 h-6 mr-3 text-amber-500" />
+                    Editor Settings
+                  </h3>
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-between p-4 bg-amber-50 rounded-xl border border-amber-200">
+                      <div>
+                        <Label className="text-lg font-medium text-gray-900">Auto-save</Label>
+                        <p className="text-gray-600">Automatically save changes every 30 seconds</p>
+                      </div>
+                      <input type="checkbox" defaultChecked className="w-5 h-5 text-amber-600" />
                     </div>
-                    <div className="flex items-center justify-between">
-                      <Label>Show grid</Label>
-                      <input type="checkbox" />
+                    <div className="flex items-center justify-between p-4 bg-amber-50 rounded-xl border border-amber-200">
+                      <div>
+                        <Label className="text-lg font-medium text-gray-900">Show grid</Label>
+                        <p className="text-gray-600">Display alignment grid for precise editing</p>
+                      </div>
+                      <input type="checkbox" className="w-5 h-5 text-amber-600" />
                     </div>
-                    <div className="flex items-center justify-between">
-                      <Label>Snap to grid</Label>
-                      <input type="checkbox" />
+                    <div className="flex items-center justify-between p-4 bg-amber-50 rounded-xl border border-amber-200">
+                      <div>
+                        <Label className="text-lg font-medium text-gray-900">Snap to grid</Label>
+                        <p className="text-gray-600">Automatically align elements to grid</p>
+                      </div>
+                      <input type="checkbox" className="w-5 h-5 text-amber-600" />
                     </div>
                   </div>
                 </CardContent>
@@ -331,41 +381,72 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
         </div>
 
         {/* Properties Panel */}
-        <div className="w-80 bg-white border-l border-stone-300 p-4">
-          <div className="space-y-6">
+        <div className="w-80 bg-white/90 backdrop-blur-sm border-l border-amber-200 p-6 shadow-lg">
+          <div className="space-y-8">
             <div>
-              <h3 className="font-semibold text-gray-900 mb-3">Properties</h3>
+              <h3 className="font-bold text-xl text-gray-900 mb-4 flex items-center">
+                <Sparkles className="w-5 h-5 mr-2 text-amber-500" />
+                Properties
+              </h3>
+              <div className="space-y-4">
+                <div className="p-3 bg-amber-50 rounded-lg border border-amber-200">
+                  <Label className="text-sm font-medium text-gray-700">Active Tool</Label>
+                  <p className="text-lg font-bold text-amber-700 capitalize">{selectedTool}</p>
+                </div>
+                <div className="p-3 bg-amber-50 rounded-lg border border-amber-200">
+                  <Label className="text-sm font-medium text-gray-700">Zoom Level</Label>
+                  <p className="text-lg font-bold text-amber-700">{zoom}%</p>
+                </div>
+                <div className="p-3 bg-amber-50 rounded-lg border border-amber-200">
+                  <Label className="text-sm font-medium text-gray-700">Annotations</Label>
+                  <p className="text-lg font-bold text-amber-700">{annotations.length}</p>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="font-bold text-xl text-gray-900 mb-4 flex items-center">
+                <Clock className="w-5 h-5 mr-2 text-amber-500" />
+                Recent Changes
+              </h3>
+              <div className="p-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-lg border border-amber-200">
+                <p className="text-sm text-gray-600 mb-1">Last modified</p>
+                <p className="font-medium text-gray-900">{new Date().toLocaleTimeString()}</p>
+                <p className="text-sm text-gray-600 mt-2 mb-1">Status</p>
+                <p className={`font-medium ${hasChanges ? "text-red-600" : "text-green-600"}`}>
+                  {hasChanges ? "Unsaved changes" : "All changes saved"}
+                </p>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="font-bold text-xl text-gray-900 mb-4 flex items-center">
+                <Sparkles className="w-5 h-5 mr-2 text-amber-500" />
+                Quick Actions
+              </h3>
               <div className="space-y-3">
-                <div>
-                  <Label>Tool: {selectedTool}</Label>
-                </div>
-                <div>
-                  <Label>Zoom: {zoom}%</Label>
-                </div>
-                <div>
-                  <Label>Annotations: {annotations.length}</Label>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="font-semibold text-gray-900 mb-3">Recent Changes</h3>
-              <div className="text-sm text-gray-600">
-                <p>Last modified: {new Date().toLocaleTimeString()}</p>
-                <p>Changes: {hasChanges ? "Unsaved" : "Saved"}</p>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="font-semibold text-gray-900 mb-3">Quick Actions</h3>
-              <div className="space-y-2">
-                <Button variant="outline" size="sm" className="w-full">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full border-amber-300 text-amber-700 hover:bg-amber-50 justify-start"
+                >
+                  <Type className="w-4 h-4 mr-2" />
                   Add Text Box
                 </Button>
-                <Button variant="outline" size="sm" className="w-full">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full border-amber-300 text-amber-700 hover:bg-amber-50 justify-start"
+                >
+                  <Music className="w-4 h-4 mr-2" />
                   Insert Chord
                 </Button>
-                <Button variant="outline" size="sm" className="w-full">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full border-amber-300 text-amber-700 hover:bg-amber-50 justify-start"
+                >
+                  <Pen className="w-4 h-4 mr-2" />
                   Add Fingering
                 </Button>
               </div>

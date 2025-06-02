@@ -4,113 +4,285 @@ import type React from "react"
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { useAuth } from "@/contexts/auth-context"
+import { Music, User, Mail, Lock, UserPlus, ChevronLeft } from "lucide-react"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
-export default function Signup() {
+export default function SignupPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
-  const [error, setError] = useState("")
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
+  const [primaryInstrument, setPrimaryInstrument] = useState("")
+  const [error, setError] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const { signUp } = useAuth()
   const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setIsLoading(true)
+    setError(null)
 
     if (password !== confirmPassword) {
       setError("Passwords do not match")
+      setIsLoading(false)
       return
     }
 
     try {
-      const response = await fetch("/api/auth/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
+      const { error, data } = await signUp(email, password, {
+        first_name: firstName,
+        last_name: lastName,
+        full_name: `${firstName} ${lastName}`.trim(),
+        primary_instrument: primaryInstrument,
       })
 
-      const data = await response.json()
-
-      if (response.ok) {
-        // Signup successful, redirect to login page
-        router.push("/login")
-      } else {
-        // Signup failed, display error message
-        setError(data.message || "Signup failed")
+      if (error) {
+        setError(error.message)
+        return
       }
-    } catch (err: any) {
-      setError(err.message || "An error occurred")
+
+      // If email confirmation is required
+      if (data?.user && !data?.session) {
+        router.push("/signup/confirm-email")
+      } else {
+        router.push("/")
+      }
+    } catch (err) {
+      setError("An unexpected error occurred")
+      console.error(err)
+    } finally {
+      setIsLoading(false)
     }
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[#fffcf7]">
-      <div className="w-full max-w-md p-6 bg-white rounded-md shadow-md">
-        <h2 className="text-2xl font-semibold text-center text-gray-800 mb-4">Sign Up</h2>
-        {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
-            <strong className="font-bold">Error!</strong>
-            <span className="block sm:inline">{error}</span>
+    <div className="min-h-screen flex flex-col md:flex-row bg-gradient-to-br from-amber-50 to-orange-100">
+      <div className="flex-1 flex items-center justify-center p-6 md:p-12">
+        <div className="w-full max-w-md">
+          <div className="text-center mb-6">
+            <div className="relative w-32 h-32 mx-auto mb-4">
+              <div className="absolute inset-0 bg-amber-200 rounded-full opacity-20 animate-pulse"></div>
+              <div className="absolute inset-2 bg-amber-100 rounded-full flex items-center justify-center">
+                <Image
+                  src="/logos/octavia-icon.png"
+                  alt="Octavia"
+                  width={80}
+                  height={80}
+                  className="transform hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+            </div>
+            <h1 className="mt-4 text-3xl font-bold bg-gradient-to-r from-amber-700 to-orange-600 bg-clip-text text-transparent">
+              Join Octavia
+            </h1>
+            <p className="mt-2 text-amber-800 font-medium">Create your account to get started</p>
           </div>
-        )}
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+
+          <Card className="bg-white/80 backdrop-blur-sm border-amber-200 shadow-lg shadow-amber-100/50 overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-400 to-orange-500"></div>
+            <CardHeader className="pb-3">
+              <div className="flex items-center mb-2">
+                <UserPlus className="h-5 w-5 text-amber-500 mr-2" />
+                <CardTitle className="text-xl text-amber-900">Sign Up</CardTitle>
+              </div>
+              <CardDescription className="text-amber-700">Fill in your details to create your account</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                {error && (
+                  <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md text-sm">
+                    {error}
+                  </div>
+                )}
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="firstName" className="text-amber-800 font-medium">
+                      First Name
+                    </Label>
+                    <div className="relative">
+                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-amber-500 h-4 w-4" />
+                      <Input
+                        id="firstName"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        placeholder="John"
+                        required
+                        className="pl-10 bg-white border-amber-200 focus:border-amber-500 focus:ring-amber-500"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="lastName" className="text-amber-800 font-medium">
+                      Last Name
+                    </Label>
+                    <Input
+                      id="lastName"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      placeholder="Doe"
+                      required
+                      className="bg-white border-amber-200 focus:border-amber-500 focus:ring-amber-500"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="text-amber-800 font-medium">
+                    Email
+                  </Label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-amber-500 h-4 w-4" />
+                    <Input
+                      id="email"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="your.email@example.com"
+                      required
+                      className="pl-10 bg-white border-amber-200 focus:border-amber-500 focus:ring-amber-500"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="primaryInstrument" className="text-amber-800 font-medium">
+                    Primary Instrument
+                  </Label>
+                  <Select value={primaryInstrument} onValueChange={setPrimaryInstrument}>
+                    <SelectTrigger className="bg-white border-amber-200 focus:border-amber-500 focus:ring-amber-500">
+                      <SelectValue placeholder="Select your primary instrument" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="guitar">Guitar</SelectItem>
+                      <SelectItem value="piano">Piano</SelectItem>
+                      <SelectItem value="violin">Violin</SelectItem>
+                      <SelectItem value="drums">Drums</SelectItem>
+                      <SelectItem value="vocals">Vocals</SelectItem>
+                      <SelectItem value="bass">Bass</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="password" className="text-amber-800 font-medium">
+                    Password
+                  </Label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-amber-500 h-4 w-4" />
+                    <Input
+                      id="password"
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                      minLength={6}
+                      className="pl-10 bg-white border-amber-200 focus:border-amber-500 focus:ring-amber-500"
+                    />
+                  </div>
+                  <p className="text-xs text-amber-600">Password must be at least 6 characters</p>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="confirmPassword" className="text-amber-800 font-medium">
+                    Confirm Password
+                  </Label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-amber-500 h-4 w-4" />
+                    <Input
+                      id="confirmPassword"
+                      type="password"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      required
+                      className="pl-10 bg-white border-amber-200 focus:border-amber-500 focus:ring-amber-500"
+                    />
+                  </div>
+                </div>
+
+                <Button
+                  type="submit"
+                  className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-medium py-2 transition-all duration-300 shadow-md hover:shadow-lg"
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <div className="flex items-center justify-center">
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                      Creating account...
+                    </div>
+                  ) : (
+                    "Create Account"
+                  )}
+                </Button>
+
+                <div className="text-center">
+                  <Link
+                    href="/login"
+                    className="inline-flex items-center text-amber-600 hover:text-amber-800 font-medium text-sm transition-colors"
+                  >
+                    <ChevronLeft className="h-4 w-4 mr-1" />
+                    Back to login
+                  </Link>
+                </div>
+              </form>
+            </CardContent>
+          </Card>
+          <div className="mt-6 text-center text-amber-700 text-sm">
+            <p>© 2023 Octavia Music. All rights reserved.</p>
           </div>
-          <div>
-            <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+        </div>
+      </div>
+      <div className="hidden md:flex md:flex-1 bg-amber-600 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-amber-600/90 to-orange-700/90 z-10"></div>
+        <div className="absolute inset-0 bg-[url('/placeholder.svg?height=1080&width=1080')] bg-cover bg-center"></div>
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-12 z-20">
+          <div className="max-w-md">
+            <h2 className="text-4xl font-bold mb-6 leading-tight">Start your musical journey</h2>
+            <p className="text-lg mb-8">
+              Join thousands of musicians who use Octavia to organize their music and enhance their performances.
+            </p>
+            <div className="space-y-6">
+              <div className="flex items-start space-x-4">
+                <div className="bg-white/30 rounded-full p-2 mt-1">
+                  <Music className="h-5 w-5 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-xl">Organize Your Music</h3>
+                  <p className="text-white/80">Keep all your sheet music, tabs, and lyrics in one place.</p>
+                </div>
+              </div>
+              <div className="flex items-start space-x-4">
+                <div className="bg-white/30 rounded-full p-2 mt-1">
+                  <Music className="h-5 w-5 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-xl">Create Setlists</h3>
+                  <p className="text-white/80">Plan your performances with customizable setlists.</p>
+                </div>
+              </div>
+              <div className="flex items-start space-x-4">
+                <div className="bg-white/30 rounded-full p-2 mt-1">
+                  <Music className="h-5 w-5 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-xl">Access Anywhere</h3>
+                  <p className="text-white/80">Your music library is available on all your devices.</p>
+                </div>
+              </div>
+            </div>
           </div>
-          <div>
-            <label htmlFor="confirmPassword" className="block text-gray-700 text-sm font-bold mb-2">
-              Confirm Password
-            </label>
-            <input
-              type="password"
-              id="confirmPassword"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              placeholder="Confirm Password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-            />
-          </div>
-          <div className="flex items-center justify-between">
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="submit"
-            >
-              Sign Up
-            </button>
-            <a
-              className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-              href="/login"
-            >
-              Already have an account?
-            </a>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
   )

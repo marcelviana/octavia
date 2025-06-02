@@ -1,202 +1,305 @@
 "use client"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useState, useEffect } from "react"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Music, FileText, Guitar, Clock, Star, Play, Plus, Calendar, Users } from "lucide-react"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { getUserContent, getUserStats } from "@/lib/content-service"
+import { useAuth } from "@/contexts/auth-context"
+import { useRouter } from "next/navigation"
+import { AlertCircle, Music, FileText, Clock, Plus, Loader2 } from "lucide-react"
+import Link from "next/link"
 
-interface DashboardProps {
-  onNavigate: (screen: string) => void
-  onSelectContent?: (content: any) => void
-  onEnterPerformance?: () => void
+type ContentItem = {
+  id: string
+  title: string
+  type: string
+  created_at: string
+  updated_at: string
+  is_favorite: boolean
 }
 
-export function Dashboard({ onNavigate, onSelectContent, onEnterPerformance }: DashboardProps) {
-  const recentContent = [
-    { id: 1, title: "Hotel California", type: "Guitar Tab", artist: "Eagles", lastOpened: "2 hours ago" },
-    { id: 2, title: "Bohemian Rhapsody", type: "Sheet Music", artist: "Queen", lastOpened: "1 day ago" },
-    { id: 3, title: "Wonderwall", type: "Chord Chart", artist: "Oasis", lastOpened: "2 days ago" },
-    { id: 4, title: "Stairway to Heaven", type: "Guitar Tab", artist: "Led Zeppelin", lastOpened: "3 days ago" },
-  ]
+type UserStats = {
+  total_content: number
+  sheet_music_count: number
+  tablature_count: number
+  lyrics_count: number
+  recent_activity: {
+    date: string
+    count: number
+  }[]
+}
 
-  const upcomingGigs = [
-    { id: 1, name: "Coffee Shop Session", date: "Today, 7:00 PM", songs: 12 },
-    { id: 2, name: "Wedding Reception", date: "Saturday, 2:00 PM", songs: 25 },
-    { id: 3, name: "Open Mic Night", date: "Next Monday, 8:00 PM", songs: 8 },
-  ]
+export function Dashboard() {
+  const [activeTab, setActiveTab] = useState("overview")
+  const [recentContent, setRecentContent] = useState<ContentItem[]>([])
+  const [favoriteContent, setFavoriteContent] = useState<ContentItem[]>([])
+  const [stats, setStats] = useState<UserStats | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const { user, isInitialized } = useAuth()
+  const router = useRouter()
 
-  const stats = [
-    { label: "Total Songs", value: "247", icon: Music },
-    { label: "Setlists", value: "12", icon: FileText },
-    { label: "Practice Hours", value: "156", icon: Clock },
-    { label: "Favorites", value: "34", icon: Star },
-  ]
+  useEffect(() => {
+    const loadDashboardData = async () => {
+      if (!isInitialized) {
+        console.log("Auth not initialized yet, waiting...")
+        return
+      }
+
+      if (!user) {
+        console.log("User not authenticated, redirecting to login")
+        router.push("/login")
+        return
+      }
+
+      setIsLoading(true)
+      setError(null)
+
+      try {
+        console.log("Loading dashboard data for user:", user.id)
+
+        // Load content and stats in parallel
+        const [contentResult, statsResult] = await Promise.all([getUserContent(user.id), getUserStats(user.id)])
+
+        // Process content
+        if (contentResult.error) {
+          console.error("Error loading content:", contentResult.error)
+          setError("Failed to load your content. Please try again later.")
+        } else {
+          const content = contentResult.data || []
+
+          // Sort by date descending
+          const sortedContent = [...content].sort(
+            (a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime(),
+          )
+
+          setRecentContent(sortedContent.slice(0, 5))
+          setFavoriteContent(content.filter((item) => item.is_favorite).slice(0, 5))
+        }
+
+        // Process stats
+        if (statsResult.error) {
+          console.error("Error loading stats:", statsResult.error)
+        } else {
+          setStats(statsResult.data)
+        }
+      } catch (err) {
+        console.error("Error loading dashboard data:", err)
+        setError("An unexpected error occurred. Please try again later.")
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    loadDashboardData()
+  }, [user, router, isInitialized])
+
+  const getContentIcon = (type: string) => {
+    switch (type) {
+      case "sheet_music":
+        return <Music className="h-4 w-4" />
+      case "tablature":
+        return <FileText className="h-4 w-4" />
+      case "lyrics":
+        return <FileText className="h-4 w-4" />
+      default:
+        return <FileText className="h-4 w-4" />
+    }
+  }
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString)
+    return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
+  }
+
+  if (isLoading && !recentContent.length) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[400px]">
+        <Loader2 className="h-8 w-8 animate-spin text-amber-500 mb-4" />
+        <p className="text-gray-500">Loading your dashboard...</p>
+      </div>
+    )
+  }
 
   return (
-    <div className="p-6 space-y-6 bg-[#fff9f0] min-h-screen">
-      {/* Header */}
+    <div className="container mx-auto p-4 space-y-6">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-[#1A1F36]">Welcome back!</h1>
-          <p className="text-[#A69B8E]">Ready to make some music?</p>
-        </div>
-        <div className="flex space-x-3">
-          <Button onClick={onEnterPerformance} className="bg-[#FF6B6B] hover:bg-[#E55555] text-white">
-            <Play className="w-4 h-4 mr-2" />
-            Quick Performance
+        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+        <Link href="/add-content">
+          <Button className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700">
+            <Plus className="mr-2 h-4 w-4" /> Add Content
           </Button>
-          <Button variant="outline" className="border-[#2E7CE4] text-[#2E7CE4] hover:bg-[#E8ECF4]">
-            <Plus className="w-4 h-4 mr-2" />
-            Add Content
-          </Button>
-        </div>
+        </Link>
       </div>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {stats.map((stat, index) => {
-          const Icon = stat.icon
-          return (
-            <Card key={index} className="bg-white border-[#A69B8E] hover:shadow-lg transition-shadow">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-2xl font-bold text-[#1A1F36]">{stat.value}</p>
-                    <p className="text-sm text-[#A69B8E]">{stat.label}</p>
-                  </div>
-                  <Icon className="w-8 h-8 text-[#2E7CE4]" />
-                </div>
+      {error && (
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
+
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
+        <TabsList className="bg-white/80 backdrop-blur-sm border border-amber-200 p-1 rounded-xl shadow-md">
+          <TabsTrigger
+            value="overview"
+            className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500 data-[state=active]:to-orange-600 data-[state=active]:text-white text-amber-700 hover:bg-amber-50 rounded-lg"
+          >
+            Overview
+          </TabsTrigger>
+          <TabsTrigger
+            value="recent"
+            className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500 data-[state=active]:to-orange-600 data-[state=active]:text-white text-amber-700 hover:bg-amber-50 rounded-lg"
+          >
+            Recent
+          </TabsTrigger>
+          <TabsTrigger
+            value="favorites"
+            className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500 data-[state=active]:to-orange-600 data-[state=active]:text-white text-amber-700 hover:bg-amber-50 rounded-lg"
+          >
+            Favorites
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="overview" className="space-y-4">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <Card className="bg-white/90 backdrop-blur-sm border-amber-100 shadow-md">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-lg font-medium">Total Content</CardTitle>
+                <CardDescription>All your music content</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-3xl font-bold text-amber-600">{stats?.total_content || 0}</div>
               </CardContent>
             </Card>
-          )
-        })}
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Recent Content */}
-        <Card className="bg-white border-[#A69B8E]">
-          <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle className="text-[#1A1F36]">Recent Content</CardTitle>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => onNavigate("library")}
-              className="text-[#2E7CE4] hover:bg-[#F2EDE5]"
-            >
-              View All
-            </Button>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {recentContent.map((item) => (
-                <div
-                  key={item.id}
-                  className="flex items-center justify-between p-3 rounded-lg hover:bg-[#F2EDE5] cursor-pointer transition-colors"
-                  onClick={() => onSelectContent?.(item)}
-                >
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-[#F2EDE5] rounded-lg flex items-center justify-center">
-                      {item.type === "Guitar Tab" && <Guitar className="w-5 h-5 text-[#2E7CE4]" />}
-                      {item.type === "Sheet Music" && <Music className="w-5 h-5 text-[#2E7CE4]" />}
-                      {item.type === "Chord Chart" && <FileText className="w-5 h-5 text-[#2E7CE4]" />}
-                    </div>
-                    <div>
-                      <p className="font-medium text-[#1A1F36]">{item.title}</p>
-                      <p className="text-sm text-[#A69B8E]">{item.artist}</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <Badge variant="secondary" className="bg-[#F2EDE5] text-[#2E7CE4]">
-                      {item.type}
-                    </Badge>
-                    <p className="text-xs text-[#A69B8E] mt-1">{item.lastOpened}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Upcoming Gigs */}
-        <Card className="bg-white border-[#A69B8E]">
-          <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle className="text-[#1A1F36]">Upcoming Gigs</CardTitle>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => onNavigate("setlists")}
-              className="text-[#2E7CE4] hover:bg-[#F2EDE5]"
-            >
-              Manage
-            </Button>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {upcomingGigs.map((gig) => (
-                <div
-                  key={gig.id}
-                  className="flex items-center justify-between p-3 rounded-lg hover:bg-[#F2EDE5] transition-colors"
-                >
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-[#FF6B6B]/10 rounded-lg flex items-center justify-center">
-                      <Calendar className="w-5 h-5 text-[#FF6B6B]" />
-                    </div>
-                    <div>
-                      <p className="font-medium text-[#1A1F36]">{gig.name}</p>
-                      <p className="text-sm text-[#A69B8E]">{gig.date}</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="flex items-center text-sm text-[#A69B8E]">
-                      <Music className="w-4 h-4 mr-1" />
-                      {gig.songs} songs
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Quick Actions */}
-      <Card className="bg-white border-[#A69B8E]">
-        <CardHeader>
-          <CardTitle className="text-[#1A1F36]">Quick Actions</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <Button
-              variant="outline"
-              className="h-20 flex-col space-y-2 border-[#A69B8E] text-[#1A1F36] hover:bg-[#F2EDE5]"
-            >
-              <FileText className="w-6 h-6" />
-              <span>Create Lyrics</span>
-            </Button>
-            <Button
-              variant="outline"
-              className="h-20 flex-col space-y-2 border-[#A69B8E] text-[#1A1F36] hover:bg-[#F2EDE5]"
-            >
-              <Guitar className="w-6 h-6" />
-              <span>Chord Chart</span>
-            </Button>
-            <Button
-              variant="outline"
-              className="h-20 flex-col space-y-2 border-[#A69B8E] text-[#1A1F36] hover:bg-[#F2EDE5]"
-            >
-              <Music className="w-6 h-6" />
-              <span>New Setlist</span>
-            </Button>
-            <Button
-              variant="outline"
-              className="h-20 flex-col space-y-2 border-[#A69B8E] text-[#1A1F36] hover:bg-[#F2EDE5]"
-            >
-              <Users className="w-6 h-6" />
-              <span>Band Practice</span>
-            </Button>
+            <Card className="bg-white/90 backdrop-blur-sm border-amber-100 shadow-md">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-lg font-medium">Sheet Music</CardTitle>
+                <CardDescription>Your sheet music collection</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-3xl font-bold text-amber-600">{stats?.sheet_music_count || 0}</div>
+              </CardContent>
+            </Card>
+            <Card className="bg-white/90 backdrop-blur-sm border-amber-100 shadow-md">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-lg font-medium">Tablature</CardTitle>
+                <CardDescription>Your tablature collection</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-3xl font-bold text-amber-600">{stats?.tablature_count || 0}</div>
+              </CardContent>
+            </Card>
           </div>
-        </CardContent>
-      </Card>
+
+          <Card className="bg-white/90 backdrop-blur-sm border-amber-100 shadow-md">
+            <CardHeader>
+              <CardTitle>Recent Activity</CardTitle>
+              <CardDescription>Your content activity over time</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {stats?.recent_activity && stats.recent_activity.length > 0 ? (
+                <div className="h-[200px] flex items-end justify-between gap-2">
+                  {stats.recent_activity.map((activity, i) => (
+                    <div key={i} className="flex flex-col items-center gap-2">
+                      <div
+                        className="bg-gradient-to-t from-amber-500 to-orange-400 rounded-t-md w-12"
+                        style={{
+                          height: `${Math.max(20, activity.count / Math.max(...stats.recent_activity.map((a) => a.count))) * 150}px`,
+                        }}
+                      ></div>
+                      <span className="text-xs text-gray-500">
+                        {new Date(activity.date).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="flex flex-col items-center justify-center h-[200px] text-gray-400">
+                  <Clock className="h-12 w-12 mb-2 opacity-30" />
+                  <p>No recent activity data available</p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="recent" className="space-y-4">
+          <Card className="bg-white/90 backdrop-blur-sm border-amber-100 shadow-md">
+            <CardHeader>
+              <CardTitle>Recently Updated</CardTitle>
+              <CardDescription>Your most recently updated content</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {recentContent.length > 0 ? (
+                <div className="space-y-4">
+                  {recentContent.map((item) => (
+                    <Link key={item.id} href={`/content/${item.id}`}>
+                      <div className="flex items-center justify-between p-3 hover:bg-amber-50 rounded-lg transition-colors cursor-pointer">
+                        <div className="flex items-center gap-3">
+                          <div className="bg-amber-100 p-2 rounded-full">{getContentIcon(item.type)}</div>
+                          <div>
+                            <p className="font-medium">{item.title}</p>
+                            <p className="text-sm text-gray-500">{item.type.replace("_", " ")}</p>
+                          </div>
+                        </div>
+                        <div className="text-sm text-gray-500">{formatDate(item.updated_at)}</div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              ) : (
+                <div className="flex flex-col items-center justify-center py-8 text-gray-400">
+                  <FileText className="h-12 w-12 mb-2 opacity-30" />
+                  <p>No recent content found</p>
+                  <Link href="/add-content" className="mt-4">
+                    <Button variant="outline" className="border-amber-200 text-amber-700 hover:bg-amber-50">
+                      <Plus className="mr-2 h-4 w-4" /> Add Your First Content
+                    </Button>
+                  </Link>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="favorites" className="space-y-4">
+          <Card className="bg-white/90 backdrop-blur-sm border-amber-100 shadow-md">
+            <CardHeader>
+              <CardTitle>Favorites</CardTitle>
+              <CardDescription>Your favorite music content</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {favoriteContent.length > 0 ? (
+                <div className="space-y-4">
+                  {favoriteContent.map((item) => (
+                    <Link key={item.id} href={`/content/${item.id}`}>
+                      <div className="flex items-center justify-between p-3 hover:bg-amber-50 rounded-lg transition-colors cursor-pointer">
+                        <div className="flex items-center gap-3">
+                          <div className="bg-amber-100 p-2 rounded-full">{getContentIcon(item.type)}</div>
+                          <div>
+                            <p className="font-medium">{item.title}</p>
+                            <p className="text-sm text-gray-500">{item.type.replace("_", " ")}</p>
+                          </div>
+                        </div>
+                        <div className="text-sm text-gray-500">{formatDate(item.updated_at)}</div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              ) : (
+                <div className="flex flex-col items-center justify-center py-8 text-gray-400">
+                  <FileText className="h-12 w-12 mb-2 opacity-30" />
+                  <p>No favorites found</p>
+                  <p className="text-sm mt-1">Mark content as favorite to see it here</p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
     </div>
   )
 }

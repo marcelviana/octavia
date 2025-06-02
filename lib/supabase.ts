@@ -1,76 +1,147 @@
-import { createBrowserClient, createServerClient } from "@supabase/ssr"
+import { createClient } from "@supabase/supabase-js"
 import type { Database } from "@/types/supabase"
 
-// Declare global variable for TypeScript
-declare global {
-  var __supabaseClient: ReturnType<typeof createBrowserClient<Database>> | undefined
-}
+// Environment variables with validation
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-// Single browser client instance
-export function createSupabaseBrowserClient() {
-  if (typeof window === "undefined") {
-    // Server-side: create a new instance each time
-    return createBrowserClient<Database>(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    )
+// Check if Supabase is properly configured
+export const isSupabaseConfigured = Boolean(
+  supabaseUrl && supabaseAnonKey && supabaseUrl.startsWith("https://") && supabaseAnonKey.length > 20,
+)
+
+// Create a comprehensive mock client for development
+const createMockClient = () => ({
+  auth: {
+    getSession: () =>
+      Promise.resolve({
+        data: { session: null },
+        error: null,
+      }),
+    onAuthStateChange: (callback: any) => {
+      // Call callback immediately with no session
+      setTimeout(() => callback("INITIAL_SESSION", null), 0)
+      return {
+        data: {
+          subscription: {
+            unsubscribe: () => console.log("Mock auth subscription unsubscribed"),
+          },
+        },
+      }
+    },
+    signInWithPassword: () =>
+      Promise.resolve({
+        data: { user: null, session: null },
+        error: { message: "Demo mode - authentication disabled" },
+      }),
+    signUp: () =>
+      Promise.resolve({
+        data: { user: null, session: null },
+        error: { message: "Demo mode - authentication disabled" },
+      }),
+    signOut: () => Promise.resolve({ error: null }),
+    getUser: () =>
+      Promise.resolve({
+        data: { user: null },
+        error: null,
+      }),
+  },
+  from: (table: string) => ({
+    select: (columns?: string) => ({
+      eq: (column: string, value: any) => ({
+        single: () => Promise.resolve({ data: null, error: null }),
+        limit: (count: number) => Promise.resolve({ data: [], error: null }),
+      }),
+      limit: (count: number) => Promise.resolve({ data: [], error: null }),
+      order: (column: string, options?: any) => Promise.resolve({ data: [], error: null }),
+    }),
+    insert: (data: any) => Promise.resolve({ data: null, error: null }),
+    update: (data: any) => ({
+      eq: (column: string, value: any) => Promise.resolve({ data: null, error: null }),
+    }),
+    delete: () => ({
+      eq: (column: string, value: any) => Promise.resolve({ data: null, error: null }),
+    }),
+  }),
+})
+
+// Browser client with comprehensive error handling
+let supabaseBrowserClient: any = null
+
+export function getSupabaseBrowserClient() {
+  // Return mock client if not configured
+  if (!isSupabaseConfigured) {
+    console.warn("Supabase not configured - using mock client for demo mode")
+    return createMockClient()
   }
 
-  // Client-side: use global singleton
-  if (!globalThis.__supabaseClient) {
-    globalThis.__supabaseClient = createBrowserClient<Database>(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    )
+  // Return existing client if available
+  if (supabaseBrowserClient) {
+    return supabaseBrowserClient
   }
 
-  return globalThis.__supabaseClient
-}
-
-// Server client for server-side operations
-export function createSupabaseServerClient() {
-  return createServerClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        get(name: string) {
-          return undefined
-        },
-        set(name: string, value: string, options: any) {
-          // No-op for server-side
-        },
-        remove(name: string, options: any) {
-          // No-op for server-side
+  try {
+    supabaseBrowserClient = createClient<Database>(supabaseUrl!, supabaseAnonKey!, {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: false,
+        flowType: "pkce",
+      },
+      global: {
+        headers: {
+          "X-Client-Info": "musicsheet-pro",
         },
       },
-    },
-  )
+    })
+
+    console.log("Supabase client created successfully")
+    return supabaseBrowserClient
+  } catch (error) {
+    console.error("Failed to create Supabase client:", error)
+    return createMockClient()
+  }
 }
 
-// Legacy function for backward compatibility
-export const getSupabaseBrowserClient = createSupabaseBrowserClient
-
-// Server-side client with service role for admin operations
+// Server client with error handling
 export function getSupabaseServerClient() {
-  if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-    throw new Error("Missing Supabase server environment variables")
+  if (!isSupabaseConfigured) {
+    return createMockClient()
   }
 
-  return createServerClient<Database>(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY, {
-    auth: {
-      persistSession: false,
-    },
-    cookies: {
-      get(name: string) {
-        return undefined
+  try {
+    return createClient<Database>(supabaseUrl!, supabaseAnonKey!, {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
       },
-      set(name: string, value: string, options: any) {
-        // No-op for server-side
-      },
-      remove(name: string, options: any) {
-        // No-op for server-side
-      },
-    },
-  })
+    })
+  } catch (error) {
+    console.error("Failed to create Supabase server client:", error)
+    return createMockClient()
+  }
+}
+
+// Test connection with comprehensive error handling
+export async function testSupabaseConnection(): Promise<boolean> {
+  if (!isSupabaseConfigured) {
+    return false
+  }
+
+  try {
+    const supabase = getSupabaseBrowserClient()
+
+    // Simple test that doesn't require authentication
+    const { error } = await supabase.from("content").select("count").limit(1)
+
+    if (error && error.message.includes('relation "content" does not exist')) {
+      console.warn("Supabase connected but tables not set up")
+      return true // Connection works, just no tables
+    }
+
+    return !error
+  } catch (error) {
+    console.warn("Supabase connection test failed:", error)
+    return false
+  }
 }

@@ -7,6 +7,9 @@ import { Sidebar } from "@/components/sidebar"
 import { useAuth } from "@/contexts/auth-context"
 import { getContentById } from "@/lib/content-service"
 import type { Database } from "@/types/supabase"
+import { ContentEditor } from "@/components/content-editor"
+import { updateContent } from "@/lib/content-service"
+import { cn } from "@/lib/utils"
 
 type Content = Database["public"]["Tables"]["content"]["Row"]
 
@@ -18,6 +21,8 @@ export default function ContentPage() {
   const [content, setContent] = useState<Content | null>(null)
   const [contentLoading, setContentLoading] = useState(true)
   const [contentError, setContentError] = useState<string | null>(null)
+  const [isEditing, setIsEditing] = useState(false)
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
 
   useEffect(() => {
     if (params.id && user) {
@@ -54,6 +59,26 @@ export default function ContentPage() {
     router.push("/performance")
   }
 
+  // Handle edit mode toggle
+  const handleEdit = () => {
+    setIsEditing(true)
+  }
+
+  const handleSaveEdit = async (updatedContent: any) => {
+    try {
+      await updateContent(content.id, updatedContent)
+      setContent({ ...content, ...updatedContent })
+      setIsEditing(false)
+    } catch (err) {
+      console.error("Error saving content:", err)
+      // Handle error
+    }
+  }
+
+  const handleCancelEdit = () => {
+    setIsEditing(false)
+  }
+
   // Don't render anything while auth is loading
   if (isLoading) {
     return (
@@ -75,8 +100,13 @@ export default function ContentPage() {
   if (contentLoading) {
     return (
       <div className="flex h-screen bg-[#fffcf7]">
-        <Sidebar activeScreen={activeScreen} onNavigate={handleNavigate} />
-        <main className="flex-1 ml-64 overflow-auto">
+        <Sidebar activeScreen={activeScreen} onNavigate={handleNavigate} onCollapsedChange={setSidebarCollapsed} />
+        <main
+          className={cn(
+            "flex-1 overflow-auto transition-all duration-300 ease-in-out",
+            sidebarCollapsed ? "ml-20" : "ml-72",
+          )}
+        >
           <div className="flex items-center justify-center h-full">
             <div className="text-center">
               <div className="w-16 h-16 border-4 border-t-[#2E7CE4] border-[#F2EDE5] rounded-full animate-spin mx-auto"></div>
@@ -92,8 +122,13 @@ export default function ContentPage() {
   if (contentError || !content) {
     return (
       <div className="flex h-screen bg-[#fffcf7]">
-        <Sidebar activeScreen={activeScreen} onNavigate={handleNavigate} />
-        <main className="flex-1 ml-64 overflow-auto">
+        <Sidebar activeScreen={activeScreen} onNavigate={handleNavigate} onCollapsedChange={setSidebarCollapsed} />
+        <main
+          className={cn(
+            "flex-1 overflow-auto transition-all duration-300 ease-in-out",
+            sidebarCollapsed ? "ml-20" : "ml-72",
+          )}
+        >
           <div className="flex items-center justify-center h-full">
             <div className="text-center">
               <h1 className="text-2xl font-bold text-[#1A1F36] mb-4">Content Not Found</h1>
@@ -121,9 +156,23 @@ export default function ContentPage() {
 
   return (
     <div className="flex h-screen bg-[#fffcf7]">
-      <Sidebar activeScreen={activeScreen} onNavigate={handleNavigate} />
-      <main className="flex-1 ml-64 overflow-auto">
-        <ContentViewer content={content} onBack={handleBack} onEnterPerformance={handleEnterPerformance} />
+      <Sidebar activeScreen={activeScreen} onNavigate={handleNavigate} onCollapsedChange={setSidebarCollapsed} />
+      <main
+        className={cn(
+          "flex-1 overflow-auto transition-all duration-300 ease-in-out",
+          sidebarCollapsed ? "ml-20" : "ml-72",
+        )}
+      >
+        {isEditing ? (
+          <ContentEditor content={content} onSave={handleSaveEdit} onCancel={handleCancelEdit} />
+        ) : (
+          <ContentViewer
+            content={content}
+            onBack={handleBack}
+            onEnterPerformance={handleEnterPerformance}
+            onEdit={handleEdit}
+          />
+        )}
       </main>
     </div>
   )

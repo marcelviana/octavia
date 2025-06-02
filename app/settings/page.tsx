@@ -5,11 +5,13 @@ import { useRouter } from "next/navigation"
 import { Settings } from "@/components/settings"
 import { Sidebar } from "@/components/sidebar"
 import { useAuth } from "@/contexts/auth-context"
+import { cn } from "@/lib/utils"
 
 export default function SettingsPage() {
   const router = useRouter()
   const { user, isLoading } = useAuth()
   const [activeScreen, setActiveScreen] = useState("settings")
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
 
   // Handle navigation from sidebar
   const handleNavigate = (screen: string) => {
@@ -39,8 +41,13 @@ export default function SettingsPage() {
 
   return (
     <div className="flex h-screen bg-[#fffcf7]">
-      <Sidebar activeScreen={activeScreen} onNavigate={handleNavigate} />
-      <main className="flex-1 ml-64 overflow-auto">
+      <Sidebar activeScreen={activeScreen} onNavigate={handleNavigate} onCollapsedChange={setSidebarCollapsed} />
+      <main
+        className={cn(
+          "flex-1 overflow-auto transition-all duration-300 ease-in-out",
+          sidebarCollapsed ? "ml-20" : "ml-72",
+        )}
+      >
         <Settings onNavigate={handleNavigate} />
       </main>
     </div>

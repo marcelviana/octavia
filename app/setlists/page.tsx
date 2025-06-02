@@ -5,11 +5,13 @@ import { useRouter } from "next/navigation"
 import { SetlistManager } from "@/components/setlist-manager"
 import { Sidebar } from "@/components/sidebar"
 import { useAuth } from "@/contexts/auth-context"
+import { cn } from "@/lib/utils"
 
 export default function SetlistsPage() {
   const router = useRouter()
   const { user, isLoading } = useAuth()
   const [activeScreen, setActiveScreen] = useState("setlists")
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
 
   // Handle navigation from sidebar
   const handleNavigate = (screen: string) => {
@@ -44,8 +46,13 @@ export default function SetlistsPage() {
 
   return (
     <div className="flex h-screen bg-[#fffcf7]">
-      <Sidebar activeScreen={activeScreen} onNavigate={handleNavigate} />
-      <main className="flex-1 ml-64 overflow-auto">
+      <Sidebar activeScreen={activeScreen} onNavigate={handleNavigate} onCollapsedChange={setSidebarCollapsed} />
+      <main
+        className={cn(
+          "flex-1 overflow-auto transition-all duration-300 ease-in-out",
+          sidebarCollapsed ? "ml-20" : "ml-72",
+        )}
+      >
         <SetlistManager onSelectSetlist={handleSelectSetlist} onNavigate={handleNavigate} />
       </main>
     </div>
