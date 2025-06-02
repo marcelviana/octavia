@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -17,144 +17,100 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { MoreVertical, Edit, Trash2 } from "lucide-react"
+import { getUserContent, deleteContent, toggleFavorite } from "@/lib/content-service"
+import { useRouter } from "next/navigation"
+import type { Database } from "@/types/supabase"
+
+type Content = Database["public"]["Tables"]["content"]["Row"]
 
 interface LibraryProps {
-  onSelectContent: (content: any) => void
-  onEditContent?: (content: any) => void
+  onSelectContent?: (content: Content) => void
+  onEditContent?: (content: Content) => void
   onNavigate?: (screen: string) => void
 }
 
 export function Library({ onSelectContent, onEditContent, onNavigate }: LibraryProps) {
+  const router = useRouter()
+  const [content, setContent] = useState<Content[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const [searchTerm, setSearchTerm] = useState("")
   const [viewMode, setViewMode] = useState("grid") // grid or list
   const [selectedCategory, setSelectedCategory] = useState("all")
-  const [deleteDialog, setDeleteDialog] = useState({ open: false, content: null })
+  const [deleteDialog, setDeleteDialog] = useState<{ open: boolean; content: Content | null }>({
+    open: false,
+    content: null,
+  })
 
-  const handleEdit = (item: any) => {
-    onSelectContent(item)
-    // This will navigate to the content viewer which has edit functionality
+  // Load content on component mount
+  useEffect(() => {
+    loadContent()
+  }, [])
+
+  const loadContent = async () => {
+    try {
+      setLoading(true)
+      setError(null)
+      const data = await getUserContent()
+      setContent(data)
+    } catch (err) {
+      console.error("Error loading content:", err)
+      setError("Failed to load content. Please try again.")
+    } finally {
+      setLoading(false)
+    }
   }
 
-  const handleDelete = (item: any) => {
+  const handleSelectContent = (item: Content) => {
+    // Navigate to the content page using the database ID
+    router.push(`/content/${item.id}`)
+  }
+
+  const handleEdit = (item: Content) => {
+    // Navigate to content page for editing
+    router.push(`/content/${item.id}`)
+  }
+
+  const handleDelete = (item: Content) => {
     setDeleteDialog({ open: true, content: item })
   }
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (deleteDialog.content) {
-      // Handle delete logic here - remove from content array
-      console.log("Deleting content:", deleteDialog.content.title)
-      // In a real app, this would call an API to delete the content
+      try {
+        await deleteContent(deleteDialog.content.id)
+        setContent(content.filter((item) => item.id !== deleteDialog.content!.id))
+        setDeleteDialog({ open: false, content: null })
+      } catch (err) {
+        console.error("Error deleting content:", err)
+        setError("Failed to delete content. Please try again.")
+      }
     }
-    setDeleteDialog({ open: false, content: null })
   }
 
-  const content = [
-    {
-      id: 1,
-      title: "Hotel California",
-      artist: "Eagles",
-      type: "Guitar Tab",
-      genre: "Rock",
-      key: "Am",
-      bpm: 75,
-      difficulty: "Intermediate",
-      tags: ["classic", "fingerpicking"],
-      isFavorite: true,
-      thumbnail: "/placeholder.svg?height=150&width=200",
-    },
-    {
-      id: 2,
-      title: "Bohemian Rhapsody",
-      artist: "Queen",
-      type: "Sheet Music",
-      genre: "Rock",
-      key: "Bb",
-      bpm: 72,
-      difficulty: "Advanced",
-      tags: ["epic", "piano"],
-      isFavorite: false,
-      thumbnail: "/placeholder.svg?height=150&width=200",
-    },
-    {
-      id: 3,
-      title: "Wonderwall",
-      artist: "Oasis",
-      type: "Chord Chart",
-      genre: "Alternative",
-      key: "Em",
-      bpm: 87,
-      difficulty: "Beginner",
-      tags: ["acoustic", "strumming"],
-      isFavorite: true,
-      thumbnail: "/placeholder.svg?height=150&width=200",
-    },
-    {
-      id: 4,
-      title: "Stairway to Heaven",
-      artist: "Led Zeppelin",
-      type: "Guitar Tab",
-      genre: "Rock",
-      key: "Am",
-      bpm: 82,
-      difficulty: "Advanced",
-      tags: ["epic", "solo"],
-      isFavorite: false,
-      thumbnail: "/placeholder.svg?height=150&width=200",
-    },
-    {
-      id: 5,
-      title: "Blackbird",
-      artist: "The Beatles",
-      type: "Guitar Tab",
-      genre: "Folk",
-      key: "G",
-      bpm: 96,
-      difficulty: "Intermediate",
-      tags: ["fingerpicking", "classic"],
-      isFavorite: true,
-      thumbnail: "/placeholder.svg?height=150&width=200",
-    },
-    {
-      id: 6,
-      title: "Creep",
-      artist: "Radiohead",
-      type: "Chord Chart",
-      genre: "Alternative",
-      key: "G",
-      bpm: 92,
-      difficulty: "Beginner",
-      tags: ["emotional", "grunge"],
-      isFavorite: false,
-      thumbnail: "/placeholder.svg?height=150&width=200",
-    },
-    {
-      id: 7,
-      title: "Imagine",
-      artist: "John Lennon",
-      type: "Lyrics",
-      genre: "Pop",
-      key: "C",
-      bpm: 75,
-      difficulty: "Beginner",
-      tags: ["classic", "ballad", "vocals"],
-      isFavorite: true,
-      thumbnail: null,
-    },
-  ]
+  const handleToggleFavorite = async (item: Content) => {
+    try {
+      const updatedItem = await toggleFavorite(item.id, !item.is_favorite)
+      setContent(content.map((c) => (c.id === item.id ? updatedItem : c)))
+    } catch (err) {
+      console.error("Error toggling favorite:", err)
+      setError("Failed to update favorite status.")
+    }
+  }
 
   const categories = [
     { value: "all", label: "All Content" },
-    { value: "guitar-tab", label: "Guitar Tabs" },
-    { value: "sheet-music", label: "Sheet Music" },
-    { value: "chord-chart", label: "Chord Charts" },
-    { value: "lyrics", label: "Lyrics" },
+    { value: "Guitar Tab", label: "Guitar Tabs" },
+    { value: "Sheet Music", label: "Sheet Music" },
+    { value: "Chord Chart", label: "Chord Charts" },
+    { value: "Lyrics", label: "Lyrics" },
   ]
 
   const filteredContent = content.filter((item) => {
     const matchesSearch =
       item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.artist.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesCategory = selectedCategory === "all" || item.type.toLowerCase().replace(" ", "-") === selectedCategory
+      (item.artist && item.artist.toLowerCase().includes(searchTerm.toLowerCase()))
+    const matchesCategory = selectedCategory === "all" || item.content_type === selectedCategory
     return matchesSearch && matchesCategory
   })
 
@@ -173,7 +129,7 @@ export function Library({ onSelectContent, onEditContent, onNavigate }: LibraryP
     }
   }
 
-  const getDifficultyColor = (difficulty: string) => {
+  const getDifficultyColor = (difficulty: string | null) => {
     switch (difficulty) {
       case "Beginner":
         return "bg-green-100 text-green-800"
@@ -186,6 +142,34 @@ export function Library({ onSelectContent, onEditContent, onNavigate }: LibraryP
     }
   }
 
+  if (loading) {
+    return (
+      <div className="p-6 space-y-6 bg-[#fff9f0] min-h-screen">
+        <div className="flex items-center justify-center py-12">
+          <div className="text-center">
+            <div className="w-16 h-16 border-4 border-t-[#2E7CE4] border-[#F2EDE5] rounded-full animate-spin mx-auto"></div>
+            <p className="mt-4 text-[#1A1F36]">Loading your music library...</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="p-6 space-y-6 bg-[#fff9f0] min-h-screen">
+        <div className="flex items-center justify-center py-12">
+          <div className="text-center">
+            <p className="text-red-600 mb-4">{error}</p>
+            <Button onClick={loadContent} className="bg-[#2E7CE4] hover:bg-[#1E5BB8] text-white">
+              Try Again
+            </Button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="p-6 space-y-6 bg-[#fff9f0] min-h-screen">
       {/* Header */}
@@ -194,9 +178,9 @@ export function Library({ onSelectContent, onEditContent, onNavigate }: LibraryP
           <h1 className="text-3xl font-bold text-[#1A1F36]">Music Library</h1>
           <p className="text-[#A69B8E]">{filteredContent.length} items in your collection</p>
         </div>
-        <Button className="bg-[#2E7CE4] hover:bg-[#1E5BB8] text-white">
+        <Button className="bg-[#2E7CE4] hover:bg-[#1E5BB8] text-white" onClick={() => router.push("/add-content")}>
           <Plus className="w-4 h-4 mr-2" />
-          Import Content
+          Add Content
         </Button>
       </div>
 
@@ -252,7 +236,21 @@ export function Library({ onSelectContent, onEditContent, onNavigate }: LibraryP
       </div>
 
       {/* Content Grid */}
-      {viewMode === "grid" ? (
+      {filteredContent.length === 0 ? (
+        <div className="text-center py-12">
+          <Music className="w-16 h-16 text-[#A69B8E] mx-auto mb-4" />
+          <h3 className="text-lg font-medium text-[#1A1F36] mb-2">No content found</h3>
+          <p className="text-[#A69B8E] mb-4">
+            {searchTerm || selectedCategory !== "all"
+              ? "Try adjusting your search or filters"
+              : "Start building your music library by adding some content"}
+          </p>
+          <Button className="bg-[#2E7CE4] hover:bg-[#1E5BB8] text-white" onClick={() => router.push("/add-content")}>
+            <Plus className="w-4 h-4 mr-2" />
+            Add Your First Content
+          </Button>
+        </div>
+      ) : viewMode === "grid" ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredContent.map((item) => (
             <Card
@@ -261,14 +259,20 @@ export function Library({ onSelectContent, onEditContent, onNavigate }: LibraryP
             >
               <CardContent className="p-4">
                 <div className="relative">
-                  <div onClick={() => onSelectContent(item)}>
+                  <div onClick={() => handleSelectContent(item)}>
                     <div className="absolute top-0 right-0 flex space-x-1">
                       <Button
                         size="sm"
-                        variant={item.isFavorite ? "default" : "secondary"}
-                        className={`h-8 w-8 p-0 ${item.isFavorite ? "bg-[#FF6B6B] hover:bg-[#E55555]" : "bg-[#F2EDE5] hover:bg-[#A69B8E]"}`}
+                        variant={item.is_favorite ? "default" : "secondary"}
+                        className={`h-8 w-8 p-0 ${item.is_favorite ? "bg-[#FF6B6B] hover:bg-[#E55555]" : "bg-[#F2EDE5] hover:bg-[#A69B8E]"}`}
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          handleToggleFavorite(item)
+                        }}
                       >
-                        <Star className={`w-4 h-4 ${item.isFavorite ? "fill-current text-white" : "text-[#A69B8E]"}`} />
+                        <Star
+                          className={`w-4 h-4 ${item.is_favorite ? "fill-current text-white" : "text-[#A69B8E]"}`}
+                        />
                       </Button>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -276,6 +280,7 @@ export function Library({ onSelectContent, onEditContent, onNavigate }: LibraryP
                             size="sm"
                             variant="secondary"
                             className="h-8 w-8 p-0 opacity-0 group-hover:opacity-100 transition-opacity bg-[#F2EDE5] hover:bg-[#A69B8E]"
+                            onClick={(e) => e.stopPropagation()}
                           >
                             <MoreVertical className="w-4 h-4" />
                           </Button>
@@ -293,26 +298,30 @@ export function Library({ onSelectContent, onEditContent, onNavigate }: LibraryP
                       </DropdownMenu>
                     </div>
                     <h3 className="font-semibold text-[#1A1F36] truncate">{item.title}</h3>
-                    <p className="text-sm text-[#A69B8E] truncate">{item.artist}</p>
+                    <p className="text-sm text-[#A69B8E] truncate">{item.artist || "Unknown Artist"}</p>
                     <div className="mt-2">
                       <Badge variant="secondary" className="text-xs bg-[#F2EDE5] text-[#2E7CE4]">
-                        {getTypeIcon(item.type)}
-                        <span className="ml-1">{item.type}</span>
+                        {getTypeIcon(item.content_type)}
+                        <span className="ml-1">{item.content_type}</span>
                       </Badge>
                     </div>
                     <div className="flex items-center justify-between mt-2">
                       <span className="text-xs text-[#A69B8E]">
-                        {item.key} • {item.bpm} BPM
+                        {item.key || "N/A"} • {item.bpm || "N/A"} BPM
                       </span>
-                      <Badge className={`text-xs ${getDifficultyColor(item.difficulty)}`}>{item.difficulty}</Badge>
+                      <Badge className={`text-xs ${getDifficultyColor(item.difficulty)}`}>
+                        {item.difficulty || "N/A"}
+                      </Badge>
                     </div>
-                    <div className="flex flex-wrap gap-1 mt-2">
-                      {item.tags.slice(0, 2).map((tag) => (
-                        <Badge key={tag} variant="outline" className="text-xs border-[#A69B8E] text-[#A69B8E]">
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
+                    {item.tags && item.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mt-2">
+                        {item.tags.slice(0, 2).map((tag) => (
+                          <Badge key={tag} variant="outline" className="text-xs border-[#A69B8E] text-[#A69B8E]">
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
               </CardContent>
@@ -328,39 +337,37 @@ export function Library({ onSelectContent, onEditContent, onNavigate }: LibraryP
             >
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-4" onClick={() => onSelectContent(item)}>
-                    {item.type !== "Sheet Music" && item.type !== "Guitar Tab" && item.type !== "Chord Chart" ? (
-                      <img
-                        src={item.thumbnail || "/placeholder.svg"}
-                        alt={item.title}
-                        className="w-16 h-16 object-cover rounded-lg"
-                      />
-                    ) : (
-                      <div className="w-16 h-16 bg-[#F2EDE5] rounded-lg flex items-center justify-center">
-                        <span className="text-[#2E7CE4]">{getTypeIcon(item.type)}</span>
-                      </div>
-                    )}
+                  <div className="flex items-center space-x-4" onClick={() => handleSelectContent(item)}>
+                    <div className="w-16 h-16 bg-[#F2EDE5] rounded-lg flex items-center justify-center">
+                      <span className="text-[#2E7CE4]">{getTypeIcon(item.content_type)}</span>
+                    </div>
                     <div>
                       <h3 className="font-semibold text-[#1A1F36]">{item.title}</h3>
-                      <p className="text-sm text-[#A69B8E]">{item.artist}</p>
+                      <p className="text-sm text-[#A69B8E]">{item.artist || "Unknown Artist"}</p>
                       <div className="flex items-center space-x-2 mt-1">
                         <Badge variant="secondary" className="text-xs bg-[#F2EDE5] text-[#2E7CE4]">
-                          {getTypeIcon(item.type)}
-                          <span className="ml-1">{item.type}</span>
+                          {getTypeIcon(item.content_type)}
+                          <span className="ml-1">{item.content_type}</span>
                         </Badge>
-                        <span className="text-xs text-[#A69B8E]">{item.key}</span>
-                        <span className="text-xs text-[#A69B8E]">{item.bpm} BPM</span>
-                        <Badge className={`text-xs ${getDifficultyColor(item.difficulty)}`}>{item.difficulty}</Badge>
+                        <span className="text-xs text-[#A69B8E]">{item.key || "N/A"}</span>
+                        <span className="text-xs text-[#A69B8E]">{item.bpm || "N/A"} BPM</span>
+                        <Badge className={`text-xs ${getDifficultyColor(item.difficulty)}`}>
+                          {item.difficulty || "N/A"}
+                        </Badge>
                       </div>
                     </div>
                   </div>
                   <div className="flex items-center space-x-2">
                     <Button
                       size="sm"
-                      variant={item.isFavorite ? "default" : "secondary"}
-                      className={`h-8 w-8 p-0 ${item.isFavorite ? "bg-[#FF6B6B] hover:bg-[#E55555]" : "bg-[#F2EDE5] hover:bg-[#A69B8E]"}`}
+                      variant={item.is_favorite ? "default" : "secondary"}
+                      className={`h-8 w-8 p-0 ${item.is_favorite ? "bg-[#FF6B6B] hover:bg-[#E55555]" : "bg-[#F2EDE5] hover:bg-[#A69B8E]"}`}
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleToggleFavorite(item)
+                      }}
                     >
-                      <Star className={`w-4 h-4 ${item.isFavorite ? "fill-current text-white" : "text-[#A69B8E]"}`} />
+                      <Star className={`w-4 h-4 ${item.is_favorite ? "fill-current text-white" : "text-[#A69B8E]"}`} />
                     </Button>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
@@ -386,6 +393,7 @@ export function Library({ onSelectContent, onEditContent, onNavigate }: LibraryP
           ))}
         </div>
       )}
+
       {/* Delete Confirmation Dialog */}
       <Dialog open={deleteDialog.open} onOpenChange={(open) => setDeleteDialog({ open, content: null })}>
         <DialogContent className="bg-white border-[#A69B8E]">

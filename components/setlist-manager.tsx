@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -11,73 +11,81 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import {
+  getUserSetlists,
+  createSetlist,
+  deleteSetlist,
+  addSongToSetlist,
+  removeSongFromSetlist,
+} from "@/lib/setlist-service"
+import { getUserContent as getContentList } from "@/lib/content-service"
+import type { Database } from "@/types/supabase"
+import { useAuth } from "@/contexts/auth-context"
+
+type Setlist = Database["public"]["Tables"]["setlists"]["Row"]
+type Content = Database["public"]["Tables"]["content"]["Row"]
+type SetlistWithSongs = Setlist & {
+  setlist_songs: Array<{
+    id: string
+    position: number
+    notes: string | null
+    content: Content
+  }>
+}
 
 interface SetlistManagerProps {
   onEnterPerformance: () => void
 }
 
 export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
-  const [setlists, setSetlists] = useState([
-    {
-      id: 1,
-      name: "Coffee Shop Session",
-      description: "Acoustic set for intimate venue",
-      date: "2024-01-15",
-      duration: 90,
-      songs: [
-        { id: 1, title: "Wonderwall", artist: "Oasis", duration: 4.5, key: "Em" },
-        { id: 2, title: "Black", artist: "Pearl Jam", duration: 5.2, key: "E" },
-        { id: 3, title: "Dust in the Wind", artist: "Kansas", duration: 3.8, key: "C" },
-        { id: 4, title: "Mad World", artist: "Gary Jules", duration: 4.1, key: "Em" },
-        { id: 5, title: "Hallelujah", artist: "Jeff Buckley", duration: 6.3, key: "C" },
-      ],
-    },
-    {
-      id: 2,
-      name: "Wedding Reception",
-      description: "Mix of classics and modern hits",
-      date: "2024-01-20",
-      duration: 120,
-      songs: [
-        { id: 6, title: "Perfect", artist: "Ed Sheeran", duration: 4.2, key: "Ab" },
-        { id: 7, title: "All of Me", artist: "John Legend", duration: 4.5, key: "Ab" },
-        { id: 8, title: "Can't Help Myself", artist: "Four Tops", duration: 2.9, key: "C" },
-        { id: 9, title: "Sweet Child O' Mine", artist: "Guns N' Roses", duration: 5.6, key: "D" },
-      ],
-    },
-    {
-      id: 3,
-      name: "Open Mic Night",
-      description: "Short set for weekly open mic",
-      date: "2024-01-22",
-      duration: 30,
-      songs: [
-        { id: 10, title: "House of the Rising Sun", artist: "The Animals", duration: 4.3, key: "Am" },
-        { id: 11, title: "Creep", artist: "Radiohead", duration: 3.9, key: "G" },
-        { id: 12, title: "Zombie", artist: "The Cranberries", duration: 5.1, key: "Em" },
-      ],
-    },
-  ])
-
-  const [selectedSetlist, setSelectedSetlist] = useState<any>(null)
+  const { user } = useAuth()
+  const [setlists, setSetlists] = useState<SetlistWithSongs[]>([])
+  const [availableContent, setAvailableContent] = useState<Content[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [selectedSetlist, setSelectedSetlist] = useState<SetlistWithSongs | null>(null)
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
   const [isAddSongsDialogOpen, setIsAddSongsDialogOpen] = useState(false)
-  const [selectedSongsToAdd, setSelectedSongsToAdd] = useState<number[]>([])
+  const [selectedSongsToAdd, setSelectedSongsToAdd] = useState<string[]>([])
+  const [newSetlistData, setNewSetlistData] = useState({
+    name: "",
+    description: "",
+    performance_date: "",
+    venue: "",
+    notes: "",
+  })
 
-  // Mock library data - in a real app this would come from a shared state or API
-  const libraryContent = [
-    { id: 13, title: "Sweet Caroline", artist: "Neil Diamond", duration: 3.5, key: "C", type: "Chord Chart" },
-    { id: 14, title: "Don't Stop Believin'", artist: "Journey", duration: 4.1, key: "E", type: "Guitar Tab" },
-    { id: 15, title: "Piano Man", artist: "Billy Joel", duration: 5.8, key: "C", type: "Sheet Music" },
-    { id: 16, title: "Brown Eyed Girl", artist: "Van Morrison", duration: 3.1, key: "G", type: "Chord Chart" },
-    { id: 17, title: "Free Bird", artist: "Lynyrd Skynyrd", duration: 9.1, key: "G", type: "Guitar Tab" },
-    { id: 18, title: "Lean on Me", artist: "Bill Withers", duration: 4.2, key: "C", type: "Chord Chart" },
-    { id: 19, title: "Yesterday", artist: "The Beatles", duration: 2.1, key: "F", type: "Sheet Music" },
-    { id: 20, title: "Tears in Heaven", artist: "Eric Clapton", duration: 4.5, key: "A", type: "Guitar Tab" },
-  ]
+  // Load data on component mount
+  useEffect(() => {
+    loadData()
+  }, [])
+
+  const loadData = async () => {
+    try {
+      setLoading(true)
+      setError(null)
+
+      // Load setlists and content in parallel
+      const [setlistsData, contentData] = await Promise.all([getUserSetlists(), getContentList()])
+
+      console.log("Loaded setlists:", setlistsData)
+      console.log("Loaded content:", contentData)
+
+      setSetlists(setlistsData as SetlistWithSongs[])
+      setAvailableContent(contentData)
+    } catch (err) {
+      console.error("Error loading data:", err)
+      setError("Failed to load data. Please try again.")
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const calculateTotalDuration = (songs: any[]) => {
-    return songs.reduce((total, song) => total + song.duration, 0)
+    return songs.reduce((total, song) => {
+      const duration = song.content?.bpm ? (song.content.bpm / 60) * 3 : 4 // Estimate 3-4 minutes per song
+      return total + duration
+    }, 0)
   }
 
   const formatDuration = (minutes: number) => {
@@ -86,46 +94,138 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
     return hours > 0 ? `${hours}h ${mins}m` : `${mins}m`
   }
 
-  const handleSongSelection = (songId: number, checked: boolean) => {
-    if (checked) {
-      setSelectedSongsToAdd([...selectedSongsToAdd, songId])
-    } else {
-      setSelectedSongsToAdd(selectedSongsToAdd.filter((id) => id !== songId))
+  const handleCreateSetlist = async () => {
+    if (!user || !newSetlistData.name.trim()) return
+
+    try {
+      const setlistData = {
+        user_id: user.id,
+        name: newSetlistData.name,
+        description: newSetlistData.description || null,
+        performance_date: newSetlistData.performance_date || null,
+        venue: newSetlistData.venue || null,
+        notes: newSetlistData.notes || null,
+      }
+
+      const newSetlist = await createSetlist(setlistData)
+      const setlistWithSongs: SetlistWithSongs = {
+        ...newSetlist,
+        setlist_songs: [],
+      }
+
+      setSetlists([setlistWithSongs, ...setlists])
+      setNewSetlistData({ name: "", description: "", performance_date: "", venue: "", notes: "" })
+      setIsCreateDialogOpen(false)
+    } catch (err) {
+      console.error("Error creating setlist:", err)
+      setError("Failed to create setlist. Please try again.")
     }
   }
 
-  const addSelectedSongs = () => {
+  const handleDeleteSetlist = async (setlistId: string) => {
+    try {
+      await deleteSetlist(setlistId)
+      setSetlists(setlists.filter((s) => s.id !== setlistId))
+      if (selectedSetlist?.id === setlistId) {
+        setSelectedSetlist(null)
+      }
+    } catch (err) {
+      console.error("Error deleting setlist:", err)
+      setError("Failed to delete setlist. Please try again.")
+    }
+  }
+
+  const handleSongSelection = (contentId: string, checked: boolean) => {
+    if (checked) {
+      setSelectedSongsToAdd([...selectedSongsToAdd, contentId])
+    } else {
+      setSelectedSongsToAdd(selectedSongsToAdd.filter((id) => id !== contentId))
+    }
+  }
+
+  const addSelectedSongs = async () => {
     if (!selectedSetlist || selectedSongsToAdd.length === 0) return
 
-    const songsToAdd = libraryContent.filter((song) => selectedSongsToAdd.includes(song.id))
+    try {
+      const currentMaxPosition = selectedSetlist.setlist_songs.length
 
-    setSetlists(
-      setlists.map((setlist) => {
-        if (setlist.id === selectedSetlist.id) {
-          return {
-            ...setlist,
-            songs: [...setlist.songs, ...songsToAdd],
-          }
+      // Add songs to setlist
+      for (let i = 0; i < selectedSongsToAdd.length; i++) {
+        await addSongToSetlist(selectedSetlist.id, selectedSongsToAdd[i], currentMaxPosition + i + 1)
+      }
+
+      // Reload data to get updated setlist
+      await loadData()
+
+      // Find and select the updated setlist
+      const updatedSetlists = await getUserSetlists()
+      const updatedSetlist = updatedSetlists.find((s) => s.id === selectedSetlist.id)
+      if (updatedSetlist) {
+        setSelectedSetlist(updatedSetlist as SetlistWithSongs)
+      }
+
+      // Reset and close dialog
+      setSelectedSongsToAdd([])
+      setIsAddSongsDialogOpen(false)
+    } catch (err) {
+      console.error("Error adding songs to setlist:", err)
+      setError("Failed to add songs to setlist. Please try again.")
+    }
+  }
+
+  const handleRemoveSong = async (setlistSongId: string) => {
+    try {
+      await removeSongFromSetlist(setlistSongId)
+
+      // Reload data to get updated setlist
+      await loadData()
+
+      // Find and select the updated setlist
+      if (selectedSetlist) {
+        const updatedSetlists = await getUserSetlists()
+        const updatedSetlist = updatedSetlists.find((s) => s.id === selectedSetlist.id)
+        if (updatedSetlist) {
+          setSelectedSetlist(updatedSetlist as SetlistWithSongs)
         }
-        return setlist
-      }),
-    )
-
-    // Update selected setlist to reflect changes
-    setSelectedSetlist({
-      ...selectedSetlist,
-      songs: [...selectedSetlist.songs, ...songsToAdd],
-    })
-
-    // Reset and close dialog
-    setSelectedSongsToAdd([])
-    setIsAddSongsDialogOpen(false)
+      }
+    } catch (err) {
+      console.error("Error removing song from setlist:", err)
+      setError("Failed to remove song from setlist. Please try again.")
+    }
   }
 
   // Filter out songs that are already in the current setlist
-  const availableSongs = libraryContent.filter(
-    (song) => !selectedSetlist?.songs.some((setlistSong: any) => setlistSong.id === song.id),
+  const availableSongs = availableContent.filter(
+    (content) => !selectedSetlist?.setlist_songs.some((setlistSong) => setlistSong.content.id === content.id),
   )
+
+  if (loading) {
+    return (
+      <div className="p-6 space-y-6 bg-[#fff9f0] min-h-screen">
+        <div className="flex items-center justify-center py-12">
+          <div className="text-center">
+            <div className="w-16 h-16 border-4 border-t-[#2E7CE4] border-[#F2EDE5] rounded-full animate-spin mx-auto"></div>
+            <p className="mt-4 text-[#1A1F36]">Loading your setlists...</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="p-6 space-y-6 bg-[#fff9f0] min-h-screen">
+        <div className="flex items-center justify-center py-12">
+          <div className="text-center">
+            <p className="text-red-600 mb-4">{error}</p>
+            <Button onClick={loadData} className="bg-[#2E7CE4] hover:bg-[#1E5BB8] text-white">
+              Try Again
+            </Button>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="p-6 space-y-6 bg-[#fff9f0] min-h-screen">
@@ -149,21 +249,47 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
             <div className="space-y-4">
               <div>
                 <Label htmlFor="name">Setlist Name</Label>
-                <Input id="name" placeholder="Enter setlist name" />
+                <Input
+                  id="name"
+                  placeholder="Enter setlist name"
+                  value={newSetlistData.name}
+                  onChange={(e) => setNewSetlistData({ ...newSetlistData, name: e.target.value })}
+                />
               </div>
               <div>
                 <Label htmlFor="description">Description</Label>
-                <Textarea id="description" placeholder="Brief description" />
+                <Textarea
+                  id="description"
+                  placeholder="Brief description"
+                  value={newSetlistData.description}
+                  onChange={(e) => setNewSetlistData({ ...newSetlistData, description: e.target.value })}
+                />
               </div>
               <div>
                 <Label htmlFor="date">Performance Date</Label>
-                <Input id="date" type="date" />
+                <Input
+                  id="date"
+                  type="date"
+                  value={newSetlistData.performance_date}
+                  onChange={(e) => setNewSetlistData({ ...newSetlistData, performance_date: e.target.value })}
+                />
+              </div>
+              <div>
+                <Label htmlFor="venue">Venue</Label>
+                <Input
+                  id="venue"
+                  placeholder="Performance venue"
+                  value={newSetlistData.venue}
+                  onChange={(e) => setNewSetlistData({ ...newSetlistData, venue: e.target.value })}
+                />
               </div>
               <div className="flex justify-end space-x-2">
                 <Button variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
                   Cancel
                 </Button>
-                <Button onClick={() => setIsCreateDialogOpen(false)}>Create</Button>
+                <Button onClick={handleCreateSetlist} disabled={!newSetlistData.name.trim()}>
+                  Create
+                </Button>
               </div>
             </div>
           </DialogContent>
@@ -173,46 +299,69 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Setlists List */}
         <div className="lg:col-span-1 space-y-4">
-          {setlists.map((setlist) => (
-            <Card
-              key={setlist.id}
-              className={`cursor-pointer transition-all ${
-                selectedSetlist?.id === setlist.id ? "ring-2 ring-blue-500 bg-blue-50" : "hover:shadow-md"
-              }`}
-              onClick={() => setSelectedSetlist(setlist)}
-            >
-              <CardContent className="p-4">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-gray-900">{setlist.name}</h3>
-                    <p className="text-sm text-gray-600 mt-1">{setlist.description}</p>
-                    <div className="flex items-center space-x-4 mt-3 text-xs text-gray-500">
-                      <div className="flex items-center">
-                        <Calendar className="w-3 h-3 mr-1" />
-                        {new Date(setlist.date).toLocaleDateString()}
-                      </div>
-                      <div className="flex items-center">
-                        <Music className="w-3 h-3 mr-1" />
-                        {setlist.songs.length} songs
-                      </div>
-                      <div className="flex items-center">
-                        <Clock className="w-3 h-3 mr-1" />
-                        {formatDuration(calculateTotalDuration(setlist.songs))}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex space-x-1">
-                    <Button size="sm" variant="ghost">
-                      <Edit className="w-3 h-3" />
-                    </Button>
-                    <Button size="sm" variant="ghost">
-                      <Trash2 className="w-3 h-3" />
-                    </Button>
-                  </div>
-                </div>
+          {setlists.length === 0 ? (
+            <Card>
+              <CardContent className="p-8 text-center">
+                <Music className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-gray-900 mb-2">No Setlists Yet</h3>
+                <p className="text-gray-600 mb-4">Create your first setlist to get started.</p>
+                <Button onClick={() => setIsCreateDialogOpen(true)}>
+                  <Plus className="w-4 h-4 mr-2" />
+                  Create Setlist
+                </Button>
               </CardContent>
             </Card>
-          ))}
+          ) : (
+            setlists.map((setlist) => (
+              <Card
+                key={setlist.id}
+                className={`cursor-pointer transition-all ${
+                  selectedSetlist?.id === setlist.id ? "ring-2 ring-blue-500 bg-blue-50" : "hover:shadow-md"
+                }`}
+                onClick={() => setSelectedSetlist(setlist)}
+              >
+                <CardContent className="p-4">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-gray-900">{setlist.name}</h3>
+                      <p className="text-sm text-gray-600 mt-1">{setlist.description}</p>
+                      <div className="flex items-center space-x-4 mt-3 text-xs text-gray-500">
+                        {setlist.performance_date && (
+                          <div className="flex items-center">
+                            <Calendar className="w-3 h-3 mr-1" />
+                            {new Date(setlist.performance_date).toLocaleDateString()}
+                          </div>
+                        )}
+                        <div className="flex items-center">
+                          <Music className="w-3 h-3 mr-1" />
+                          {setlist.setlist_songs?.length || 0} songs
+                        </div>
+                        <div className="flex items-center">
+                          <Clock className="w-3 h-3 mr-1" />
+                          {formatDuration(calculateTotalDuration(setlist.setlist_songs || []))}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex space-x-1">
+                      <Button size="sm" variant="ghost">
+                        <Edit className="w-3 h-3" />
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          handleDeleteSetlist(setlist.id)
+                        }}
+                      >
+                        <Trash2 className="w-3 h-3" />
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))
+          )}
         </div>
 
         {/* Setlist Details */}
@@ -241,60 +390,72 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                   </div>
                 </div>
                 <div className="flex items-center space-x-6 text-sm text-gray-600">
-                  <div className="flex items-center">
-                    <Calendar className="w-4 h-4 mr-1" />
-                    {new Date(selectedSetlist.date).toLocaleDateString()}
-                  </div>
+                  {selectedSetlist.performance_date && (
+                    <div className="flex items-center">
+                      <Calendar className="w-4 h-4 mr-1" />
+                      {new Date(selectedSetlist.performance_date).toLocaleDateString()}
+                    </div>
+                  )}
                   <div className="flex items-center">
                     <Music className="w-4 h-4 mr-1" />
-                    {selectedSetlist.songs.length} songs
+                    {selectedSetlist.setlist_songs?.length || 0} songs
                   </div>
                   <div className="flex items-center">
                     <Clock className="w-4 h-4 mr-1" />
-                    {formatDuration(calculateTotalDuration(selectedSetlist.songs))}
+                    {formatDuration(calculateTotalDuration(selectedSetlist.setlist_songs || []))}
                   </div>
                 </div>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  {selectedSetlist.songs.map((song: any, index: number) => (
-                    <div
-                      key={song.id}
-                      className="flex items-center justify-between p-3 bg-stone-100 rounded-lg hover:bg-stone-200 transition-colors"
-                    >
-                      <div className="flex items-center space-x-3">
-                        <GripVertical className="w-4 h-4 text-stone-500 cursor-grab" />
-                        <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-sm font-medium text-blue-600">
-                          {index + 1}
-                        </div>
-                        <div>
-                          <p className="font-medium text-gray-900">{song.title}</p>
-                          <p className="text-sm text-gray-600">{song.artist}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center space-x-4">
-                        <Badge variant="secondary">{song.key}</Badge>
-                        <span className="text-sm text-gray-500">
-                          {Math.floor(song.duration)}:{String(Math.round((song.duration % 1) * 60)).padStart(2, "0")}
-                        </span>
-                        <div className="flex space-x-1">
-                          <Button size="sm" variant="ghost">
-                            <Edit className="w-3 h-3" />
-                          </Button>
-                          <Button size="sm" variant="ghost">
-                            <Trash2 className="w-3 h-3" />
-                          </Button>
-                        </div>
-                      </div>
+                  {!selectedSetlist.setlist_songs || selectedSetlist.setlist_songs.length === 0 ? (
+                    <div className="text-center py-8">
+                      <Music className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                      <h3 className="text-lg font-medium text-gray-900 mb-2">No Songs Yet</h3>
+                      <p className="text-gray-600 mb-4">Add some songs to this setlist to get started.</p>
                     </div>
-                  ))}
+                  ) : (
+                    selectedSetlist.setlist_songs
+                      .sort((a, b) => a.position - b.position)
+                      .map((setlistSong, index) => (
+                        <div
+                          key={setlistSong.id}
+                          className="flex items-center justify-between p-3 bg-stone-100 rounded-lg hover:bg-stone-200 transition-colors"
+                        >
+                          <div className="flex items-center space-x-3">
+                            <GripVertical className="w-4 h-4 text-stone-500 cursor-grab" />
+                            <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-sm font-medium text-blue-600">
+                              {index + 1}
+                            </div>
+                            <div>
+                              <p className="font-medium text-gray-900">{setlistSong.content.title}</p>
+                              <p className="text-sm text-gray-600">{setlistSong.content.artist || "Unknown Artist"}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center space-x-4">
+                            <Badge variant="secondary">{setlistSong.content.key || "N/A"}</Badge>
+                            <span className="text-sm text-gray-500">
+                              {setlistSong.content.bpm ? `${setlistSong.content.bpm} BPM` : "N/A"}
+                            </span>
+                            <div className="flex space-x-1">
+                              <Button size="sm" variant="ghost">
+                                <Edit className="w-3 h-3" />
+                              </Button>
+                              <Button size="sm" variant="ghost" onClick={() => handleRemoveSong(setlistSong.id)}>
+                                <Trash2 className="w-3 h-3" />
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                      ))
+                  )}
                 </div>
 
                 <div className="mt-6 p-4 bg-blue-50 rounded-lg">
                   <div className="flex items-center justify-between">
                     <span className="font-medium text-blue-900">Total Performance Time</span>
                     <span className="text-lg font-bold text-blue-900">
-                      {formatDuration(calculateTotalDuration(selectedSetlist.songs))}
+                      {formatDuration(calculateTotalDuration(selectedSetlist.setlist_songs || []))}
                     </span>
                   </div>
                 </div>
@@ -338,18 +499,15 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                                   <div className="flex items-center justify-between">
                                     <div>
                                       <p className="font-medium text-gray-900">{song.title}</p>
-                                      <p className="text-sm text-stone-600">{song.artist}</p>
+                                      <p className="text-sm text-stone-600">{song.artist || "Unknown Artist"}</p>
                                     </div>
                                     <div className="flex items-center space-x-3 text-sm text-stone-600">
                                       <Badge variant="secondary" className="bg-stone-100 text-blue-600">
-                                        {song.key}
+                                        {song.key || "N/A"}
                                       </Badge>
-                                      <span>
-                                        {Math.floor(song.duration)}:
-                                        {String(Math.round((song.duration % 1) * 60)).padStart(2, "0")}
-                                      </span>
+                                      <span>{song.bpm ? `${song.bpm} BPM` : "N/A"}</span>
                                       <Badge variant="outline" className="border-stone-300 text-stone-600">
-                                        {song.type}
+                                        {song.content_type}
                                       </Badge>
                                     </div>
                                   </div>

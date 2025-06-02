@@ -10,7 +10,31 @@ type SetlistSongInsert = Database["public"]["Tables"]["setlist_songs"]["Insert"]
 export async function getUserSetlists() {
   const supabase = getSupabaseBrowserClient()
 
-  const { data, error } = await supabase.from("setlists").select("*").order("created_at", { ascending: false })
+  const { data, error } = await supabase
+    .from("setlists")
+    .select(`
+      *,
+      setlist_songs (
+        id,
+        position,
+        notes,
+        content (
+          id,
+          title,
+          artist,
+          album,
+          genre,
+          content_type,
+          key,
+          bpm,
+          time_signature,
+          difficulty,
+          tags,
+          is_favorite
+        )
+      )
+    `)
+    .order("created_at", { ascending: false })
 
   if (error) {
     console.error("Error fetching setlists:", error)
@@ -28,8 +52,23 @@ export async function getSetlistById(id: string) {
     .select(`
       *,
       setlist_songs (
-        *,
-        content (*)
+        id,
+        position,
+        notes,
+        content (
+          id,
+          title,
+          artist,
+          album,
+          genre,
+          content_type,
+          key,
+          bpm,
+          time_signature,
+          difficulty,
+          tags,
+          is_favorite
+        )
       )
     `)
     .eq("id", id)

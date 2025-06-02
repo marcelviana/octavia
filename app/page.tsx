@@ -31,7 +31,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[#fffcf7]">
       {/* Header */}
-      <header className="border-b border-[#A69B8E]">
+      <header className="border-b border-[#A69B8E] bg-[#fff9f0]">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <Image src="/logos/octavia-icon.png" alt="Octavia" width={32} height={32} />
