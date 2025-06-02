@@ -19,10 +19,6 @@ const SessionContext = createContext<SessionContextValue>({
   update: async () => {},
 })
 
-export function useSession() {
-  return useContext(SessionContext)
-}
-
 export function SessionProvider({ children }: { children: React.ReactNode }) {
   const { session, user, loading } = useAuth()
   const [status, setStatus] = useState<"loading" | "authenticated" | "unauthenticated">("loading")
@@ -53,4 +49,8 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
       {children}
     </SessionContext.Provider>
   )
+}
+
+export function useSession() {
+  return useContext(SessionContext)
 }
