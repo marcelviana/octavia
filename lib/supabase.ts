@@ -1,12 +1,11 @@
-import { createBrowserClient, createServerClient } from "@supabase/ssr";
-import { cookies } from "next/headers";
-import type { Database } from "@/types/supabase";
+import { createBrowserClient } from "@supabase/ssr"
+import type { Database } from "@/types/supabase"
 
 // Environment variables with validation
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-let supabaseBrowserClient: ReturnType<typeof createBrowserClient> | null = null;
+let supabaseBrowserClient: ReturnType<typeof createBrowserClient> | null = null
 
 // Check if Supabase is properly configured
 export const isSupabaseConfigured = Boolean(
@@ -69,26 +68,15 @@ const createMockClient = () => ({
 })
 
 export function getSupabaseBrowserClient() {
-  if (!supabaseBrowserClient) {
-    supabaseBrowserClient = createBrowserClient<Database>(supabaseUrl!, supabaseAnonKey!);
+  if (!isSupabaseConfigured) {
+    console.warn("Supabase not configured - using mock client for demo mode")
+    return createMockClient()
   }
-  return supabaseBrowserClient;
-}
 
-export function getSupabaseServerClient() {
-  return createServerClient<Database>(supabaseUrl!, supabaseAnonKey!, {
-    cookies: {
-      get(name: string) {
-        return cookies().get(name)?.value;
-      },
-      set(name: string, value: string, options: any) {
-        cookies().set({ name, value, ...options });
-      },
-      remove(name: string, options: any) {
-        cookies().delete({ name, ...options });
-      },
-    },
-  });
+  if (!supabaseBrowserClient) {
+    supabaseBrowserClient = createBrowserClient<Database>(supabaseUrl!, supabaseAnonKey!)
+  }
+  return supabaseBrowserClient
 }
 
 // Test connection with comprehensive error handling
