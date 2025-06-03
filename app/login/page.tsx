@@ -4,7 +4,6 @@ import type React from "react"
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -19,7 +18,7 @@ export default function LoginPage() {
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
-  const { signIn } = useAuth()
+  const { signIn, isConfigured } = useAuth()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -27,6 +26,13 @@ export default function LoginPage() {
     setIsLoading(true)
 
     try {
+      // In demo mode, just redirect to dashboard
+      if (!isConfigured) {
+        console.log("Demo mode - redirecting to dashboard")
+        router.push("/dashboard")
+        return
+      }
+
       const { error: signInError } = await signIn(email, password)
 
       if (signInError) {
@@ -50,13 +56,7 @@ export default function LoginPage() {
             <div className="relative w-40 h-40 mx-auto mb-4">
               <div className="absolute inset-0 bg-amber-200 rounded-full opacity-20 animate-pulse"></div>
               <div className="absolute inset-2 bg-amber-100 rounded-full flex items-center justify-center">
-                <Image
-                  src="/logos/octavia-icon.png"
-                  alt="Octavia"
-                  width={100}
-                  height={100}
-                  className="transform hover:scale-105 transition-transform duration-300"
-                />
+                <Music className="h-16 w-16 text-amber-600" />
               </div>
             </div>
             <h1 className="mt-4 text-3xl font-bold bg-gradient-to-r from-amber-700 to-orange-600 bg-clip-text text-transparent">
@@ -73,7 +73,9 @@ export default function LoginPage() {
                 <CardTitle className="text-xl text-amber-900">Sign In</CardTitle>
               </div>
               <CardDescription className="text-amber-700">
-                Enter your credentials to access your music library
+                {!isConfigured
+                  ? "Demo mode - click Sign In to continue"
+                  : "Enter your credentials to access your music library"}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -87,11 +89,12 @@ export default function LoginPage() {
                     <Input
                       id="email"
                       placeholder="your.email@example.com"
-                      required
+                      required={isConfigured}
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       className="pl-10 bg-white border-amber-200 focus:border-amber-500 focus:ring-amber-500"
+                      disabled={!isConfigured}
                     />
                   </div>
                 </div>
@@ -100,23 +103,27 @@ export default function LoginPage() {
                     <Label htmlFor="password" className="text-amber-800 font-medium">
                       Password
                     </Label>
-                    <Link
-                      href="/forgot-password"
-                      className="text-sm text-amber-600 hover:text-amber-800 hover:underline transition-colors"
-                    >
-                      Forgot password?
-                    </Link>
+                    {isConfigured && (
+                      <button
+                        type="button"
+                        onClick={() => setError("Password reset not implemented in demo")}
+                        className="text-sm text-amber-600 hover:text-amber-800 hover:underline transition-colors"
+                      >
+                        Forgot password?
+                      </button>
+                    )}
                   </div>
                   <div className="relative">
                     <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-amber-500 h-4 w-4" />
                     <Input
                       id="password"
                       placeholder="Enter your password"
-                      required
+                      required={isConfigured}
                       type="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       className="pl-10 bg-white border-amber-200 focus:border-amber-500 focus:ring-amber-500"
+                      disabled={!isConfigured}
                     />
                   </div>
                 </div>
