@@ -147,10 +147,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 // Handle successful sign in - redirect to dashboard
                 if (event === "SIGNED_IN") {
                   console.log("User signed in, redirecting to dashboard...")
-                  // Use a small delay to ensure state is updated
-                  setTimeout(() => {
+                  try {
+                    // Try router navigation first
                     router.push("/dashboard")
-                  }, 100)
+
+                    // Fallback to direct navigation if router fails
+                    setTimeout(() => {
+                      if (window.location.pathname !== "/dashboard") {
+                        console.log("Router navigation may have failed, using direct location change")
+                        window.location.href = "/dashboard"
+                      }
+                    }, 1500)
+                  } catch (navError) {
+                    console.error("Navigation error:", navError)
+                    // Fallback to direct navigation
+                    window.location.href = "/dashboard"
+                  }
                 }
               } else {
                 setUser(null)
@@ -227,7 +239,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
 
         console.log("Sign in successful for:", email)
-        // Don't redirect here - let the auth state change handler do it
+        // Don't redirect here - the auth state change handler will handle it
         setIsLoading(false)
         return { error: null }
       } catch (error: any) {
@@ -311,14 +323,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       console.log("Sign out successful")
 
-      // Wait a moment for auth state to update
-      setTimeout(() => {
+      // Try router navigation first
+      try {
         router.push("/")
-        setIsLoading(false)
-      }, 300)
+      } catch (navError) {
+        console.error("Navigation error during signout:", navError)
+        // Fallback to direct navigation
+        window.location.href = "/"
+      }
+
+      setIsLoading(false)
     } catch (error) {
       console.warn("Sign out error:", error)
-      router.push("/")
+      // Fallback to direct navigation
+      window.location.href = "/"
       setIsLoading(false)
     }
   }, [router, isSupabaseConfigured])

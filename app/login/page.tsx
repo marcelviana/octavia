@@ -17,6 +17,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const [redirectAttempts, setRedirectAttempts] = useState(0)
   const router = useRouter()
   const { signIn, isConfigured, user, isInitialized } = useAuth()
 
@@ -24,9 +25,35 @@ export default function LoginPage() {
   useEffect(() => {
     if (isInitialized && user) {
       console.log("User already authenticated, redirecting to dashboard...")
+
+      // Try router.push first
       router.push("/dashboard")
+
+      // Set up a fallback with window.location if router doesn't work
+      const fallbackTimer = setTimeout(() => {
+        console.log("Router navigation may have failed, trying direct location change...")
+        window.location.href = "/dashboard"
+      }, 2000)
+
+      return () => clearTimeout(fallbackTimer)
     }
   }, [user, isInitialized, router])
+
+  // Safety net for redirect attempts
+  useEffect(() => {
+    if (redirectAttempts > 0 && redirectAttempts < 3) {
+      const timer = setTimeout(() => {
+        console.log(`Redirect attempt ${redirectAttempts}, trying again...`)
+        router.push("/dashboard")
+        setRedirectAttempts((prev) => prev + 1)
+      }, 1500)
+
+      return () => clearTimeout(timer)
+    } else if (redirectAttempts >= 3) {
+      console.log("Multiple redirect attempts failed, trying direct location change")
+      window.location.href = "/dashboard"
+    }
+  }, [redirectAttempts, router])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -38,6 +65,12 @@ export default function LoginPage() {
       if (!isConfigured) {
         console.log("Demo mode - redirecting to dashboard")
         router.push("/dashboard")
+
+        // Fallback if router navigation fails
+        setTimeout(() => {
+          window.location.href = "/dashboard"
+        }, 1500)
+
         return
       }
 
@@ -49,8 +82,9 @@ export default function LoginPage() {
         return
       }
 
-      // Don't redirect here - the auth context will handle it
-      console.log("Login request completed, waiting for auth state change...")
+      // Start redirect attempts if not already redirected by auth context
+      console.log("Login request completed, initiating redirect...")
+      setRedirectAttempts(1)
     } catch (err: any) {
       setError(err.message || "An error occurred during login")
       setIsLoading(false)
@@ -64,6 +98,12 @@ export default function LoginPage() {
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-t-amber-500 border-amber-200 rounded-full animate-spin mx-auto"></div>
           <p className="mt-4 text-amber-800">Redirecting to dashboard...</p>
+          <button
+            onClick={() => (window.location.href = "/dashboard")}
+            className="mt-4 text-sm text-amber-600 hover:text-amber-800 underline"
+          >
+            Click here if not redirected automatically
+          </button>
         </div>
       </div>
     )
