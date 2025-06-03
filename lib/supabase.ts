@@ -1,9 +1,12 @@
-import { createClient } from "@supabase/supabase-js"
-import type { Database } from "@/types/supabase"
+import { createBrowserClient, createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
+import type { Database } from "@/types/supabase";
 
 // Environment variables with validation
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+let supabaseBrowserClient: ReturnType<typeof createBrowserClient> | null = null;
 
 // Check if Supabase is properly configured
 export const isSupabaseConfigured = Boolean(
@@ -65,61 +68,27 @@ const createMockClient = () => ({
   }),
 })
 
-// Browser client with comprehensive error handling
-let supabaseBrowserClient: any = null
-
 export function getSupabaseBrowserClient() {
-  // Return mock client if not configured
-  if (!isSupabaseConfigured) {
-    console.warn("Supabase not configured - using mock client for demo mode")
-    return createMockClient()
+  if (!supabaseBrowserClient) {
+    supabaseBrowserClient = createBrowserClient<Database>(supabaseUrl!, supabaseAnonKey!);
   }
-
-  // Return existing client if available
-  if (supabaseBrowserClient) {
-    return supabaseBrowserClient
-  }
-
-  try {
-    supabaseBrowserClient = createClient<Database>(supabaseUrl!, supabaseAnonKey!, {
-      auth: {
-        persistSession: true,
-        autoRefreshToken: true,
-        detectSessionInUrl: false,
-        flowType: "pkce",
-      },
-      global: {
-        headers: {
-          "X-Client-Info": "musicsheet-pro",
-        },
-      },
-    })
-
-    console.log("Supabase client created successfully")
-    return supabaseBrowserClient
-  } catch (error) {
-    console.error("Failed to create Supabase client:", error)
-    return createMockClient()
-  }
+  return supabaseBrowserClient;
 }
 
-// Server client with error handling
 export function getSupabaseServerClient() {
-  if (!isSupabaseConfigured) {
-    return createMockClient()
-  }
-
-  try {
-    return createClient<Database>(supabaseUrl!, supabaseAnonKey!, {
-      auth: {
-        persistSession: false,
-        autoRefreshToken: false,
+  return createServerClient<Database>(supabaseUrl!, supabaseAnonKey!, {
+    cookies: {
+      get(name: string) {
+        return cookies().get(name)?.value;
       },
-    })
-  } catch (error) {
-    console.error("Failed to create Supabase server client:", error)
-    return createMockClient()
-  }
+      set(name: string, value: string, options: any) {
+        cookies().set({ name, value, ...options });
+      },
+      remove(name: string, options: any) {
+        cookies().delete({ name, ...options });
+      },
+    },
+  });
 }
 
 // Test connection with comprehensive error handling

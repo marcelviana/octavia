@@ -1,5 +1,9 @@
-import { createServerClient, type CookieOptions } from "@supabase/ssr"
-import { NextResponse, type NextRequest } from "next/server"
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
+import type { Database } from "@/types/supabase";
+
 
 // Cache the middleware client to prevent multiple instances
 let middlewareClient: ReturnType<typeof createServerClient> | null = null
@@ -46,38 +50,43 @@ function getMiddlewareSupabaseClient(request: NextRequest, response: NextRespons
 }
 
 export async function middleware(request: NextRequest) {
-  const response = NextResponse.next({
-    request: {
-      headers: request.headers,
-    },
-  })
+  const supabase = createServerClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) {
+          return request.cookies.get(name)?.value;
+        },
+        set(name: string, value: string, options: any) {
+          request.cookies.set(name, value, options);
+        },
+        remove(name: string, options: any) {
+          request.cookies.delete(name);
+        },
+      },
+    }
+  );
 
-  const supabase = getMiddlewareSupabaseClient(request, response)
+  const { data: { user } } = await supabase.auth.getUser();
 
-  const {
-    data: { session },
-  } = await supabase.auth.getSession()
+  const protectedRoutes = ["/dashboard", "/library", "/setlists"];
+  const isProtectedRoute = protectedRoutes.some((route) => request.nextUrl.pathname.startsWith(route));
 
-  // Define protected routes
-  const protectedRoutes = ["/dashboard", "/library", "/setlists", "/settings", "/profile", "/add-content", "/content"]
-  const isProtectedRoute = protectedRoutes.some((route) => request.nextUrl.pathname.startsWith(route))
+  const authRoutes = ["/login", "/signup"];
+  const isAuthRoute = authRoutes.includes(request.nextUrl.pathname);
 
-  // Check auth condition
-  const isAuthRoute = request.nextUrl.pathname.startsWith("/login") || request.nextUrl.pathname.startsWith("/signup")
-
-  // If user is signed in and tries to access auth routes, redirect to dashboard
-  if (session && isAuthRoute) {
-    return NextResponse.redirect(new URL("/dashboard", request.url))
+  if (user && isAuthRoute) {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
-  // If user is not signed in and the requested page is protected, redirect to login
-  if (!session && isProtectedRoute) {
-    return NextResponse.redirect(new URL("/login", request.url))
+  if (!user && isProtectedRoute) {
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  return response
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|.*\\.png$).*)"],
-}
+  matcher: ["/((?!_next|.*\..*).*)"],
+};
