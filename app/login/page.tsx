@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -18,7 +18,15 @@ export default function LoginPage() {
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
-  const { signIn, isConfigured } = useAuth()
+  const { signIn, isConfigured, user, isInitialized } = useAuth()
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (isInitialized && user) {
+      console.log("User already authenticated, redirecting to dashboard...")
+      router.push("/dashboard")
+    }
+  }, [user, isInitialized, router])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -37,15 +45,28 @@ export default function LoginPage() {
 
       if (signInError) {
         setError(signInError.message || "Invalid credentials")
+        setIsLoading(false)
         return
       }
 
-      // Successful login will redirect in the auth context
+      // Don't redirect here - the auth context will handle it
+      console.log("Login request completed, waiting for auth state change...")
     } catch (err: any) {
       setError(err.message || "An error occurred during login")
-    } finally {
       setIsLoading(false)
     }
+  }
+
+  // Don't render if user is already authenticated
+  if (isInitialized && user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 to-orange-100">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-t-amber-500 border-amber-200 rounded-full animate-spin mx-auto"></div>
+          <p className="mt-4 text-amber-800">Redirecting to dashboard...</p>
+        </div>
+      </div>
+    )
   }
 
   return (

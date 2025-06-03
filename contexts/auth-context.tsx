@@ -143,6 +143,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 if (profileData && mounted) {
                   setProfile(profileData)
                 }
+
+                // Handle successful sign in - redirect to dashboard
+                if (event === "SIGNED_IN") {
+                  console.log("User signed in, redirecting to dashboard...")
+                  // Use a small delay to ensure state is updated
+                  setTimeout(() => {
+                    router.push("/dashboard")
+                  }, 100)
+                }
               } else {
                 setUser(null)
                 setProfile(null)
@@ -193,7 +202,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
       }
     }
-  }, [fetchProfile])
+  }, [fetchProfile, router])
 
   const signIn = useCallback(
     async (email: string, password: string) => {
@@ -218,13 +227,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
 
         console.log("Sign in successful for:", email)
-
-        // Wait a moment for auth state to update
-        setTimeout(() => {
-          router.push("/dashboard")
-          setIsLoading(false)
-        }, 500)
-
+        // Don't redirect here - let the auth state change handler do it
+        setIsLoading(false)
         return { error: null }
       } catch (error: any) {
         console.error("Sign in exception:", error?.message || "Unknown error")
@@ -232,7 +236,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return { error: { message: error?.message || "Sign in failed" } }
       }
     },
-    [router, isSupabaseConfigured],
+    [isSupabaseConfigured],
   )
 
   const signUp = useCallback(
@@ -281,12 +285,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           return { error: profileError, data: null }
         }
 
-        // Wait a moment for auth state to update
-        setTimeout(() => {
-          router.push("/dashboard")
-          setIsLoading(false)
-        }, 500)
-
+        setIsLoading(false)
         return { error: null, data }
       } catch (error: any) {
         console.error("Sign up exception:", error?.message || "Unknown error")
@@ -294,7 +293,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return { error: { message: error?.message || "Sign up failed" }, data: null }
       }
     },
-    [router, isSupabaseConfigured],
+    [isSupabaseConfigured],
   )
 
   const signOut = useCallback(async () => {
