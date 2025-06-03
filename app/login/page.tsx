@@ -17,43 +17,20 @@ export default function LoginPage() {
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
-  const [redirectAttempts, setRedirectAttempts] = useState(0)
+  const [hasRedirected, setHasRedirected] = useState(false)
   const router = useRouter()
   const { signIn, isConfigured, user, isInitialized } = useAuth()
 
-  // Redirect if already authenticated
+  // Single redirect effect - only runs once when user is authenticated
   useEffect(() => {
-    if (isInitialized && user) {
-      console.log("User already authenticated, redirecting to dashboard...")
+    if (isInitialized && user && !hasRedirected) {
+      console.log("User authenticated, performing single redirect to dashboard...")
+      setHasRedirected(true)
 
-      // Try router.push first
-      router.push("/dashboard")
-
-      // Set up a fallback with window.location if router doesn't work
-      const fallbackTimer = setTimeout(() => {
-        console.log("Router navigation may have failed, trying direct location change...")
-        window.location.href = "/dashboard"
-      }, 2000)
-
-      return () => clearTimeout(fallbackTimer)
-    }
-  }, [user, isInitialized, router])
-
-  // Safety net for redirect attempts
-  useEffect(() => {
-    if (redirectAttempts > 0 && redirectAttempts < 3) {
-      const timer = setTimeout(() => {
-        console.log(`Redirect attempt ${redirectAttempts}, trying again...`)
-        router.push("/dashboard")
-        setRedirectAttempts((prev) => prev + 1)
-      }, 1500)
-
-      return () => clearTimeout(timer)
-    } else if (redirectAttempts >= 3) {
-      console.log("Multiple redirect attempts failed, trying direct location change")
+      // Use window.location for more reliable navigation in production
       window.location.href = "/dashboard"
     }
-  }, [redirectAttempts, router])
+  }, [user, isInitialized, hasRedirected])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -64,13 +41,7 @@ export default function LoginPage() {
       // In demo mode, just redirect to dashboard
       if (!isConfigured) {
         console.log("Demo mode - redirecting to dashboard")
-        router.push("/dashboard")
-
-        // Fallback if router navigation fails
-        setTimeout(() => {
-          window.location.href = "/dashboard"
-        }, 1500)
-
+        window.location.href = "/dashboard"
         return
       }
 
@@ -82,16 +53,15 @@ export default function LoginPage() {
         return
       }
 
-      // Start redirect attempts if not already redirected by auth context
-      console.log("Login request completed, initiating redirect...")
-      setRedirectAttempts(1)
+      // Don't redirect here - let the useEffect handle it after auth state updates
+      console.log("Login successful, waiting for auth state update...")
     } catch (err: any) {
       setError(err.message || "An error occurred during login")
       setIsLoading(false)
     }
   }
 
-  // Don't render if user is already authenticated
+  // Show loading state if user is authenticated but hasn't redirected yet
   if (isInitialized && user) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 to-orange-100">

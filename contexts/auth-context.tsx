@@ -4,7 +4,6 @@ import type React from "react"
 import { createContext, useContext, useEffect, useState, useCallback } from "react"
 import type { User } from "@supabase/supabase-js"
 import { getSupabaseBrowserClient, isSupabaseConfigured } from "@/lib/supabase"
-import { useRouter } from "next/navigation"
 
 type Profile = {
   id: string
@@ -40,7 +39,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<any>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [isInitialized, setIsInitialized] = useState(false)
-  const router = useRouter()
 
   // Fetch profile as a reusable function
   const fetchProfile = useCallback(async (userId: string) => {
@@ -143,27 +141,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 if (profileData && mounted) {
                   setProfile(profileData)
                 }
-
-                // Handle successful sign in - redirect to dashboard
-                if (event === "SIGNED_IN") {
-                  console.log("User signed in, redirecting to dashboard...")
-                  try {
-                    // Try router navigation first
-                    router.push("/dashboard")
-
-                    // Fallback to direct navigation if router fails
-                    setTimeout(() => {
-                      if (window.location.pathname !== "/dashboard") {
-                        console.log("Router navigation may have failed, using direct location change")
-                        window.location.href = "/dashboard"
-                      }
-                    }, 1500)
-                  } catch (navError) {
-                    console.error("Navigation error:", navError)
-                    // Fallback to direct navigation
-                    window.location.href = "/dashboard"
-                  }
-                }
               } else {
                 setUser(null)
                 setProfile(null)
@@ -214,7 +191,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
       }
     }
-  }, [fetchProfile, router])
+  }, [fetchProfile])
 
   const signIn = useCallback(
     async (email: string, password: string) => {
@@ -239,7 +216,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
 
         console.log("Sign in successful for:", email)
-        // Don't redirect here - the auth state change handler will handle it
         setIsLoading(false)
         return { error: null }
       } catch (error: any) {
@@ -310,7 +286,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signOut = useCallback(async () => {
     if (!isSupabaseConfigured) {
-      router.push("/")
+      window.location.href = "/"
       return
     }
 
@@ -322,24 +298,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       await supabase.auth.signOut()
 
       console.log("Sign out successful")
-
-      // Try router navigation first
-      try {
-        router.push("/")
-      } catch (navError) {
-        console.error("Navigation error during signout:", navError)
-        // Fallback to direct navigation
-        window.location.href = "/"
-      }
-
-      setIsLoading(false)
+      window.location.href = "/"
     } catch (error) {
       console.warn("Sign out error:", error)
-      // Fallback to direct navigation
       window.location.href = "/"
-      setIsLoading(false)
     }
-  }, [router, isSupabaseConfigured])
+  }, [isSupabaseConfigured])
 
   const updateProfile = useCallback(
     async (data: Partial<Profile>) => {
