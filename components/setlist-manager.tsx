@@ -245,19 +245,19 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 p-4">
-      <div className="max-w-7xl mx-auto space-y-6">
+      <div className="max-w-7xl mx-auto space-y-4">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
               Setlist Manager
             </h1>
-            <p className="text-lg text-gray-600 mt-2">Organize your performances with style</p>
+            <p className="text-base text-gray-600 mt-1">Organize your performances with style</p>
           </div>
           <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
             <DialogTrigger asChild>
-              <Button className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-8 py-4 text-lg shadow-lg">
-                <Plus className="w-5 h-5 mr-3" />
+              <Button className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-6 py-2 text-base shadow-lg">
+                <Plus className="w-4 h-4 mr-2" />
                 Create Setlist
               </Button>
             </DialogTrigger>
@@ -345,12 +345,12 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
           <div className="lg:col-span-1 space-y-6">
             {setlists.length === 0 ? (
               <Card className="border-0 shadow-2xl bg-white/80 backdrop-blur-sm">
-                <CardContent className="p-8 text-center">
-                  <div className="w-20 h-20 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <Music className="w-10 h-10 text-white" />
+                <CardContent className="p-6 text-center">
+                  <div className="w-16 h-16 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Music className="w-8 h-8 text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4">No Setlists Yet</h3>
-                  <p className="text-gray-600 mb-6 text-lg">
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">No Setlists Yet</h3>
+                  <p className="text-gray-600 mb-4 text-base">
                     Create your first setlist to get started organizing your performances.
                   </p>
                   <Button
@@ -373,27 +373,27 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                   }`}
                   onClick={() => setSelectedSetlist(setlist)}
                 >
-                  <CardContent className="p-6 overflow-hidden">
+                  <CardContent className="p-4 overflow-hidden">
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <div className="flex items-center mb-3">
                           <div className="w-3 h-3 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full mr-3"></div>
-                          <h3 className="font-bold text-gray-900 text-lg">{setlist.name}</h3>
+                          <h3 className="font-bold text-gray-900 text-base">{setlist.name}</h3>
                         </div>
-                        <p className="text-gray-600 mb-4 text-base">{setlist.description}</p>
-                        <div className="flex items-center flex-wrap gap-3 text-sm text-gray-500">
+                        <p className="text-gray-600 mb-3 text-sm">{setlist.description}</p>
+                        <div className="flex items-center flex-wrap gap-2 text-xs text-gray-500">
                           {setlist.performance_date && (
-                            <div className="flex items-center bg-amber-50 px-3 py-1 rounded-full">
-                              <Calendar className="w-4 h-4 mr-2 text-amber-600" />
+                            <div className="flex items-center bg-amber-50 px-2 py-1 rounded-full">
+                              <Calendar className="w-3 h-3 mr-1 text-amber-600" />
                               {new Date(setlist.performance_date).toLocaleDateString()}
                             </div>
                           )}
-                          <div className="flex items-center bg-blue-50 px-3 py-1 rounded-full">
-                            <Music className="w-4 h-4 mr-2 text-blue-600" />
+                          <div className="flex items-center bg-blue-50 px-2 py-1 rounded-full">
+                            <Music className="w-3 h-3 mr-1 text-blue-600" />
                             {setlist.setlist_songs?.length || 0} songs
                           </div>
-                          <div className="flex items-center bg-green-50 px-3 py-1 rounded-full">
-                            <Clock className="w-4 h-4 mr-2 text-green-600" />
+                          <div className="flex items-center bg-green-50 px-2 py-1 rounded-full">
+                            <Clock className="w-3 h-3 mr-1 text-green-600" />
                             {formatDuration(calculateTotalDuration(setlist.setlist_songs || []))}
                           </div>
                         </div>
@@ -425,15 +425,15 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
           <div className="lg:col-span-2">
             {selectedSetlist ? (
               <Card className="border-0 shadow-2xl bg-white/80 backdrop-blur-sm">
-                <CardHeader className="bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-t-lg p-6">
+                <CardHeader className="bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-t-lg p-4">
                   <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
                     <div className="flex-1">
-                      <CardTitle className="text-xl lg:text-2xl font-bold flex items-center mb-3">
-                        <Star className="w-8 h-8 mr-3 flex-shrink-0" />
+                      <CardTitle className="text-lg lg:text-xl font-bold flex items-center mb-2">
+                        <Star className="w-6 h-6 mr-2 flex-shrink-0" />
                         <span className="break-words">{selectedSetlist.name}</span>
                       </CardTitle>
                       {selectedSetlist.description && (
-                        <p className="text-amber-100 text-base lg:text-lg leading-relaxed">
+                        <p className="text-amber-100 text-sm lg:text-base leading-relaxed">
                           {selectedSetlist.description}
                         </p>
                       )}
@@ -442,58 +442,58 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="border-white/50 text-white hover:bg-white/20 transition-colors bg-white/10 px-3 py-2 text-sm"
+                        className="border-white/50 text-white hover:bg-white/20 transition-colors bg-white/10 px-2 py-1 text-xs"
                         title="Duplicate setlist"
                       >
-                        <Copy className="w-4 h-4 text-white" />
+                        <Copy className="w-3 h-3 text-white" />
                       </Button>
                       <Button
                         variant="outline"
                         size="sm"
-                        className="border-white/50 text-white hover:bg-white/20 transition-colors bg-white/10 px-3 py-2 text-sm"
+                        className="border-white/50 text-white hover:bg-white/20 transition-colors bg-white/10 px-2 py-1 text-xs"
                         title="Share setlist"
                       >
-                        <Share className="w-4 h-4 text-white" />
+                        <Share className="w-3 h-3 text-white" />
                       </Button>
                       <Button
                         onClick={onEnterPerformance}
-                        className="bg-white text-amber-700 hover:bg-amber-50 font-bold px-4 py-2 text-sm transition-colors shadow-sm"
+                        className="bg-white text-amber-700 hover:bg-amber-50 font-bold px-3 py-1 text-xs transition-colors shadow-sm"
                       >
-                        <Play className="w-4 h-4 mr-2" />
+                        <Play className="w-3 h-3 mr-1" />
                         <span className="text-amber-700">Start Performance</span>
                       </Button>
                     </div>
                   </div>
-                  <div className="flex flex-wrap items-center gap-6 text-amber-100 mt-6 pt-6 border-t border-white/20">
+                  <div className="flex flex-wrap items-center gap-4 text-amber-100 mt-4 pt-4 border-t border-white/20">
                     {selectedSetlist.performance_date && (
                       <div className="flex items-center">
-                        <Calendar className="w-5 h-5 mr-2" />
-                        <span className="font-medium">
+                        <Calendar className="w-4 h-4 mr-1" />
+                        <span className="font-medium text-sm">
                           {new Date(selectedSetlist.performance_date).toLocaleDateString()}
                         </span>
                       </div>
                     )}
                     <div className="flex items-center">
-                      <Music className="w-5 h-5 mr-2" />
-                      <span className="font-medium">{selectedSetlist.setlist_songs?.length || 0} songs</span>
+                      <Music className="w-4 h-4 mr-1" />
+                      <span className="font-medium text-sm">{selectedSetlist.setlist_songs?.length || 0} songs</span>
                     </div>
                     <div className="flex items-center">
-                      <Clock className="w-5 h-5 mr-2" />
-                      <span className="font-medium">
+                      <Clock className="w-4 h-4 mr-1" />
+                      <span className="font-medium text-sm">
                         {formatDuration(calculateTotalDuration(selectedSetlist?.setlist_songs || []))}
                       </span>
                     </div>
                   </div>
                 </CardHeader>
-                <CardContent className="p-6">
+                <CardContent className="p-4">
                   <div className="space-y-4">
                     {!selectedSetlist.setlist_songs || selectedSetlist.setlist_songs.length === 0 ? (
-                      <div className="text-center py-12">
-                        <div className="w-20 h-20 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                          <Music className="w-10 h-10 text-white" />
+                      <div className="text-center py-8">
+                        <div className="w-16 h-16 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                          <Music className="w-8 h-8 text-white" />
                         </div>
-                        <h3 className="text-2xl font-bold text-gray-900 mb-4">No Songs Yet</h3>
-                        <p className="text-gray-600 mb-8 text-lg">Add some songs to this setlist to get started.</p>
+                        <h3 className="text-xl font-bold text-gray-900 mb-3">No Songs Yet</h3>
+                        <p className="text-gray-600 mb-6 text-base">Add some songs to this setlist to get started.</p>
                       </div>
                     ) : (
                       (selectedSetlist.setlist_songs || [])
@@ -501,41 +501,45 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                         .map((setlistSong, index) => (
                           <div
                             key={setlistSong.id}
-                            className="flex items-center justify-between p-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl border border-amber-200 hover:shadow-lg transition-all duration-300 hover:scale-102"
+                            className="flex items-center justify-between p-3 bg-gradient-to-r from-amber-50 to-orange-50 rounded-lg border border-amber-200 hover:shadow-md transition-all duration-300"
                           >
-                            <div className="flex items-center space-x-4">
-                              <GripVertical className="w-5 h-5 text-amber-500 cursor-grab" />
-                              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                            <div className="flex items-center space-x-3">
+                              <GripVertical className="w-4 h-4 text-amber-500 cursor-grab" />
+                              <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
                                 {index + 1}
                               </div>
                               <div>
-                                <p className="font-bold text-gray-900 text-lg">{setlistSong.content.title}</p>
-                                <p className="text-gray-600 text-base">
+                                <p className="font-bold text-gray-900 text-base">{setlistSong.content.title}</p>
+                                <p className="text-gray-600 text-sm">
                                   {setlistSong.content.artist || "Unknown Artist"}
                                 </p>
                               </div>
                             </div>
-                            <div className="flex items-center space-x-6">
+                            <div className="flex items-center space-x-4">
                               <Badge
                                 variant="secondary"
-                                className="bg-amber-100 text-amber-700 border-amber-300 text-lg px-4 py-2"
+                                className="bg-amber-100 text-amber-700 border-amber-300 text-sm px-2 py-1"
                               >
                                 {setlistSong.content.key || "N/A"}
                               </Badge>
-                              <span className="text-gray-500 text-lg font-medium">
+                              <span className="text-gray-500 text-sm font-medium">
                                 {setlistSong.content.bpm ? `${setlistSong.content.bpm} BPM` : "N/A"}
                               </span>
-                              <div className="flex space-x-2">
-                                <Button size="sm" variant="ghost" className="hover:bg-amber-100 text-amber-600">
-                                  <Edit className="w-4 h-4" />
+                              <div className="flex space-x-1">
+                                <Button
+                                  size="sm"
+                                  variant="ghost"
+                                  className="hover:bg-amber-100 text-amber-600 h-7 w-7 p-0"
+                                >
+                                  <Edit className="w-3 h-3" />
                                 </Button>
                                 <Button
                                   size="sm"
                                   variant="ghost"
                                   onClick={() => handleRemoveSong(setlistSong.id)}
-                                  className="hover:bg-red-100 text-red-600"
+                                  className="hover:bg-red-100 text-red-600 h-7 w-7 p-0"
                                 >
-                                  <Trash2 className="w-4 h-4" />
+                                  <Trash2 className="w-3 h-3" />
                                 </Button>
                               </div>
                             </div>
@@ -544,10 +548,10 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                     )}
                   </div>
 
-                  <div className="mt-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-200">
+                  <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200">
                     <div className="flex items-center justify-between">
-                      <span className="font-bold text-blue-900 text-xl">Total Performance Time</span>
-                      <span className="text-3xl font-bold text-blue-900">
+                      <span className="font-bold text-blue-900 text-base">Total Performance Time</span>
+                      <span className="text-xl font-bold text-blue-900">
                         {formatDuration(calculateTotalDuration(selectedSetlist?.setlist_songs || []))}
                       </span>
                     </div>
@@ -555,8 +559,8 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
 
                   <Dialog open={isAddSongsDialogOpen} onOpenChange={setIsAddSongsDialogOpen}>
                     <DialogTrigger asChild>
-                      <Button className="w-full mt-6 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white py-4 text-lg shadow-lg">
-                        <Plus className="w-5 h-5 mr-3" />
+                      <Button className="w-full mt-4 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white py-2 text-base shadow-lg">
+                        <Plus className="w-4 h-4 mr-2" />
                         Add Songs to Setlist
                       </Button>
                     </DialogTrigger>
@@ -653,12 +657,12 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
               </Card>
             ) : (
               <Card className="border-0 shadow-2xl bg-white/80 backdrop-blur-sm">
-                <CardContent className="p-12 text-center">
-                  <div className="w-24 h-24 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-8">
-                    <Music className="w-12 h-12 text-white" />
+                <CardContent className="p-8 text-center">
+                  <div className="w-20 h-20 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <Music className="w-10 h-10 text-white" />
                   </div>
-                  <h3 className="text-3xl font-bold text-gray-900 mb-4">Select a Setlist</h3>
-                  <p className="text-gray-600 text-xl">Choose a setlist from the left to view and manage its songs.</p>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-3">Select a Setlist</h3>
+                  <p className="text-gray-600 text-lg">Choose a setlist from the left to view and manage its songs.</p>
                 </CardContent>
               </Card>
             )}
