@@ -14,12 +14,16 @@ type Profile = {
   last_name: string | null
   avatar_url: string | null
   primary_instrument: string | null
+  bio?: string | null
+  website?: string | null
 }
 
 type AuthContextType = {
   user: User | null
   profile: Profile | null
+  session: any
   isLoading: boolean
+  loading: boolean
   isConfigured: boolean
   isInitialized: boolean
   signIn: (email: string, password: string) => Promise<{ error: any }>
@@ -33,6 +37,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [profile, setProfile] = useState<Profile | null>(null)
+  const [session, setSession] = useState<any>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [isInitialized, setIsInitialized] = useState(false)
   const router = useRouter()
@@ -67,12 +72,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           console.log("Running in demo mode - Supabase not configured")
           if (mounted) {
             // Set a demo user for development
-            setUser({
+            const demoUser = {
               id: "demo-user",
               email: "demo@musicsheet.pro",
               user_metadata: { full_name: "Demo User" },
-            } as User)
-            setProfile({
+            } as User
+
+            const demoProfile = {
               id: "demo-user",
               email: "demo@musicsheet.pro",
               full_name: "Demo User",
@@ -80,7 +86,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
               last_name: "User",
               avatar_url: null,
               primary_instrument: "Guitar",
-            })
+              bio: "Demo user for MusicSheet Pro",
+              website: "https://musicsheet.pro",
+            }
+
+            setUser(demoUser)
+            setProfile(demoProfile)
+            setSession({ user: demoUser })
             setIsLoading(false)
             setIsInitialized(true)
           }
@@ -93,16 +105,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         // Get initial session with error handling
         try {
           const {
-            data: { session },
+            data: { session: initialSession },
             error,
           } = await supabase.auth.getSession()
 
           if (error) {
             console.warn("Error getting initial session:", error.message)
-          } else if (session?.user && mounted) {
-            console.log("Found existing session for user:", session.user.email)
-            setUser(session.user)
-            const profileData = await fetchProfile(session.user.id)
+          } else if (initialSession?.user && mounted) {
+            console.log("Found existing session for user:", initialSession.user.email)
+            setUser(initialSession.user)
+            setSession(initialSession)
+            const profileData = await fetchProfile(initialSession.user.id)
             if (profileData && mounted) {
               setProfile(profileData)
             }
@@ -117,21 +130,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         try {
           const {
             data: { subscription },
-          } = supabase.auth.onAuthStateChange(async (event, session) => {
+          } = supabase.auth.onAuthStateChange(async (event, currentSession) => {
             if (!mounted) return
 
-            console.log("Auth state changed:", event, session?.user?.email)
+            console.log("Auth state changed:", event, currentSession?.user?.email)
 
             try {
-              if (session?.user) {
-                setUser(session.user)
-                const profileData = await fetchProfile(session.user.id)
+              if (currentSession?.user) {
+                setUser(currentSession.user)
+                setSession(currentSession)
+                const profileData = await fetchProfile(currentSession.user.id)
                 if (profileData && mounted) {
                   setProfile(profileData)
                 }
               } else {
                 setUser(null)
                 setProfile(null)
+                setSession(null)
               }
             } catch (stateError) {
               console.warn("Auth state change error:", stateError)
@@ -340,7 +355,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const value = {
     user,
     profile,
+    session,
     isLoading,
+    loading: isLoading, // Alias for compatibility
     isConfigured: isSupabaseConfigured,
     isInitialized,
     signIn,
