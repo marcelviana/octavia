@@ -40,7 +40,7 @@ import { deleteContent } from "@/lib/content-service"
 interface ContentViewerProps {
   content: any
   onBack: () => void
-  onEnterPerformance: () => void
+  onEnterPerformance: (content: any) => void
   onEdit?: () => void
 }
 
@@ -136,7 +136,7 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
               </DropdownMenuContent>
             </DropdownMenu>
             <Button
-              onClick={onEnterPerformance}
+              onClick={() => onEnterPerformance(content)}
               className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow hover:shadow-md transition-all"
             >
               <Play className="w-4 h-4 mr-2" />

@@ -56,7 +56,7 @@ export default function ContentPage() {
 
   // Handle performance mode
   const handleEnterPerformance = () => {
-    router.push("/performance")
+    router.push(`/performance?contentId=${content.id}`)
   }
 
   // Handle edit mode toggle
