@@ -87,7 +87,7 @@ export default function LoginPage() {
             <div className="relative w-40 h-40 mx-auto mb-4">
               <div className="absolute inset-0 bg-amber-200 rounded-full opacity-20 animate-pulse"></div>
               <div className="absolute inset-2 bg-amber-100 rounded-full flex items-center justify-center">
-                <Music className="h-16 w-16 text-amber-600" />
+                <img src="/logos/octavia-icon.png" alt="Octavia Logo" className="h-16 w-16 object-contain" />
               </div>
             </div>
             <h1 className="mt-4 text-3xl font-bold bg-gradient-to-r from-amber-700 to-orange-600 bg-clip-text text-transparent">
