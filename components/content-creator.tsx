@@ -85,21 +85,21 @@ export function ContentCreator({ onContentCreated }: ContentCreatorProps) {
     switch (activeType) {
       case "lyrics":
         content = {
-          type: "lyrics",
+          type: "Lyrics",
           content: lyricsContent,
           title: "New Lyrics Sheet",
         }
         break
       case "chords":
         content = {
-          type: "chord-chart",
+          type: "Chord Chart",
           content: chordChart,
           title: chordChart.title || "New Chord Chart",
         }
         break
       case "tablature":
         content = {
-          type: "guitar-tab",
+          type: "Guitar Tab",
           content: tabContent,
           title: tabContent.title || "New Guitar Tab",
         }

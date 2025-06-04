@@ -145,7 +145,7 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
         artist: metadata.artist || null,
         album: metadata.album || null,
         genre: metadata.genre || null,
-        content_type: createdContent?.contentType || files?.[0]?.contentType || "unknown",
+        content_type: createdContent?.type || files?.[0]?.contentType || "unknown",
         key: metadata.key || null,
         bpm: metadata.bpm ? Number(metadata.bpm) : null,
         time_signature: metadata.timeSignature || "4/4",
