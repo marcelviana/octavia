@@ -155,6 +155,10 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
         is_favorite: !!metadata.isFavorite,
         is_public: !!metadata.isPublic,
       }
+
+      if (createdContent?.content) {
+        payload.content_data = createdContent.content
+      }
       console.log("Payload prepared:", payload)
 
       // Example: if you have files[0].url from uploads:
