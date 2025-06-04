@@ -10,6 +10,8 @@ import { Badge } from "@/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Music, Guitar, FileText, Star, Tag, Plus, X } from "lucide-react"
+import { getSupabaseBrowserClient } from "@/lib/supabase"
+
 
 interface MetadataFormProps {
   files?: any[]
@@ -19,6 +21,8 @@ interface MetadataFormProps {
 }
 
 export function MetadataForm({ files = [], createdContent, onComplete, onBack }: MetadataFormProps) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const [metadata, setMetadata] = useState({
     title: createdContent?.title || "",
     artist: "",
@@ -75,8 +79,109 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
     }))
   }
 
-  const handleSubmit = () => {
-    onComplete(metadata)
+  const handleSubmit = async () => {
+    try {
+      console.log("Starting handleSubmit...")
+      setIsSubmitting(true);
+      // Initialize fresh Supabase client
+      const supabase = getSupabaseBrowserClient()
+      console.log("Supabase client initialized")
+
+      // Test Supabase connection
+      console.log("Testing Supabase connection...")
+      try {
+        console.log("About to make Supabase query...")
+        const { data: testData, error: testError } = await supabase.from('content').select('count').limit(1)
+        console.log("Supabase query completed")
+        console.log("Test data:", testData)
+        console.log("Test error:", testError)
+
+        if (testError) {
+          console.error("Supabase connection test failed:", testError)
+          alert("Failed to connect to database: " + testError.message)
+          return
+        }
+
+        console.log("Supabase connection test successful")
+      } catch (connectionError: any) {
+        console.error("Unexpected error during Supabase connection test:", connectionError)
+        console.error("Error details:", {
+          name: connectionError?.name,
+          message: connectionError?.message,
+          stack: connectionError?.stack
+        })
+        alert("Failed to connect to database. Please try again.")
+        return
+      }
+
+      // Fetch current user
+      console.log("Fetching user...")
+      const { data: { user }, error: userError } = await supabase.auth.getUser()
+      console.log("Auth response:", { user, userError })
+
+      if (userError) {
+        console.error("Auth error:", userError)
+        alert("Authentication error: " + userError.message)
+        return
+      }
+
+      if (!user) {
+        console.log("No user found")
+        alert("Not logged in. Please log in first.")
+        return
+      }
+
+      // Basic validation
+      if (!metadata.title) {
+        console.log("No title provided")
+        alert("Title is required!")
+        return
+      }
+
+      // Build the insert payload
+      const payload: any = {
+        user_id: user.id,
+        title: metadata.title,
+        artist: metadata.artist || null,
+        album: metadata.album || null,
+        genre: metadata.genre || null,
+        content_type: createdContent?.contentType || files?.[0]?.contentType || "unknown",
+        key: metadata.key || null,
+        bpm: metadata.bpm ? Number(metadata.bpm) : null,
+        time_signature: metadata.timeSignature || "4/4",
+        difficulty: metadata.difficulty || null,
+        tags: metadata.tags.length ? metadata.tags : null,
+        notes: metadata.notes || null,
+        is_favorite: !!metadata.isFavorite,
+        is_public: !!metadata.isPublic,
+      }
+      console.log("Payload prepared:", payload)
+
+      // Example: if you have files[0].url from uploads:
+      if (files && files[0]?.url) {
+        payload.file_url = files[0].url
+      }
+
+      // Insert into Supabase
+      console.log("Attempting to insert into Supabase...")
+      const { data, error } = await supabase.from("content").insert([payload]).select()
+
+      if (error) {
+        console.error("Error saving content:", error)
+        alert("Error saving content: " + error.message)
+        setIsSubmitting(false)
+        return
+      }
+
+      console.log("Content saved successfully:", data[0])
+      // Success: return the new content
+      onComplete(data[0])
+    } catch (error) {
+      console.error("Unexpected error in handleSubmit:", error)
+      alert("An unexpected error occurred. Please try again.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const getContentIcon = (type: string) => {
@@ -262,7 +367,7 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
                   value={newTag}
                   onChange={(e) => setNewTag(e.target.value)}
                   placeholder="Add a tag"
-                  onKeyPress={(e) => e.key === "Enter" && addTag()}
+                  onKeyDown={(e) => e.key === "Enter" && addTag()}
                 />
                 <Button type="button" onClick={addTag} variant="outline">
                   <Plus className="w-4 h-4" />
@@ -326,8 +431,10 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
         <Button variant="outline" onClick={onBack}>
           Back
         </Button>
-        <Button onClick={handleSubmit} disabled={!metadata.title.trim()}>
-          Save Content
+        <Button
+          onClick={handleSubmit}
+          disabled={!metadata.title.trim() || isSubmitting}>
+          {isSubmitting ? "Saving..." : "Save Content"}
         </Button>
       </div>
     </div>

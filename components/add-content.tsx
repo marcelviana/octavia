@@ -28,13 +28,16 @@ import {
 import { FileUpload } from "@/components/file-upload"
 import { ContentCreator } from "@/components/content-creator"
 import { MetadataForm } from "@/components/metadata-form"
+import { createContent } from "@/lib/content-service"
+import { getSupabaseBrowserClient } from "@/lib/supabase"
 
 interface AddContentProps {
   onBack: () => void
   onContentCreated: (content: any) => void
+  onNavigate: (screen: string) => void
 }
 
-export function AddContent({ onBack, onContentCreated }: AddContentProps) {
+export function AddContent({ onBack, onContentCreated, onNavigate }: AddContentProps) {
   const [activeTab, setActiveTab] = useState("import")
   const [uploadedFiles, setUploadedFiles] = useState<any[]>([])
   const [currentStep, setCurrentStep] = useState(1)
@@ -115,16 +118,64 @@ export function AddContent({ onBack, onContentCreated }: AddContentProps) {
   }
 
   const handleMetadataComplete = async (metadata: any) => {
-    setIsProcessing(true)
-    // Simulate processing
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-    setIsProcessing(false)
-    setCurrentStep(3)
-  }
+    console.log("handleMetadataComplete called with:", metadata);
+    setIsProcessing(true);
+    
+    try {
+      // Verify content was actually saved
+      if (!metadata?.id) {
+        throw new Error("Content save failed - no ID returned");
+      }
+      
+      // Only proceed if we have a valid content ID
+      setCurrentStep(3);
+      setCreatedContent(metadata); // Ensure this is set for handleFinish
+    } catch (error) {
+      console.error("Error in metadata completion:", error);
+      alert("Failed to save content. Please try again.");
+      setCurrentStep(1) // Return to first step on error
+    } finally {
+      setIsProcessing(false);
+    }
+  };
 
-  const handleFinish = () => {
-    onContentCreated(createdContent || { files: uploadedFiles })
-  }
+  const handleFinish = async () => {
+    try {
+      setIsProcessing(true);
+      const contentToSave = createdContent || { files: uploadedFiles };
+      
+      if (!contentToSave?.id) {
+        // If no ID, we need to create the content
+        const supabase = getSupabaseBrowserClient();
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        if (!user) {
+          throw new Error("User not authenticated");
+        }
+  
+        const formattedContent = {
+          user_id: user.id,
+          title: contentToSave.title || "Untitled",
+          content_type: contentToSave.type || "unknown",
+          content_data: contentToSave.content || {},
+          file_url: contentToSave.files?.[0]?.url || null,
+          is_favorite: false,
+          is_public: false,
+        };
+  
+        const newContent = await createContent(formattedContent);
+        onContentCreated(newContent);
+      } else {
+        // If we have an ID, just navigate
+        onContentCreated(contentToSave);
+      }
+    } catch (error) {
+      console.error("Error in finish:", error);
+      alert("Error completing content addition. Please try again.");
+    } finally {
+      setIsProcessing(false);
+    }
+  };
 
   const renderStepIndicator = () => {
     const steps = [
@@ -196,13 +247,13 @@ export function AddContent({ onBack, onContentCreated }: AddContentProps) {
             <div className="flex justify-center space-x-3">
               <Button
                 variant="outline"
-                onClick={() => setCurrentStep(1)}
+                onClick={() => onNavigate("add-content ")}
                 className="border-amber-300 text-amber-700 hover:bg-amber-50 px-4 py-2 text-sm"
               >
                 Add More Content
               </Button>
               <Button
-                onClick={handleFinish}
+                onClick={() => onNavigate("library")}
                 className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-4 py-2 text-sm shadow"
               >
                 Go to Library

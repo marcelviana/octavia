@@ -24,6 +24,11 @@ export default function AddContentPage() {
 
   // Handle content creation completion
   const handleContentCreated = (content: any) => {
+    console.log("handleContentCreated called with:", content)
+    if (!content?.id) {
+      console.error("No content ID found:", content)
+      return
+    }
     router.push(`/content/${content.id}`)
   }
 
@@ -53,7 +58,7 @@ export default function AddContentPage() {
           sidebarCollapsed ? "ml-20" : "ml-72",
         )}
       >
-        <AddContent onNavigate={handleNavigate} onContentCreated={handleContentCreated} />
+        <AddContent onNavigate={handleNavigate} onContentCreated={handleContentCreated} onBack={() => router.back()} />
       </main>
     </div>
   )

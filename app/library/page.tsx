@@ -16,6 +16,7 @@ export default function LibraryPage() {
 
   // Handle initial loading and authentication
   useEffect(() => {
+    console.log("user", user, "isLoading", isLoading)
     if (!isLoading) {
       if (!user) {
         router.push("/login")
