@@ -35,6 +35,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
+import { deleteContent } from "@/lib/content-service"
 
 interface ContentViewerProps {
   content: any
@@ -56,10 +57,14 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
     setDeleteDialog(true)
   }
 
-  const confirmDelete = () => {
-    console.log("Deleting content:", content.title)
-    setDeleteDialog(false)
-    onBack()
+  const confirmDelete = async () => {
+    try {
+      await deleteContent(content.id)
+      setDeleteDialog(false)
+      onBack()
+    } catch (error) {
+      console.error("Error deleting content:", error)
+    }
   }
 
   const toggleFavorite = () => {

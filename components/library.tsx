@@ -33,9 +33,17 @@ import {
   ChevronDown,
   BookOpen,
 } from "lucide-react"
-import { getUserContent } from "@/lib/content-service"
+import { getUserContent, deleteContent } from "@/lib/content-service"
 import { useAuth } from "@/contexts/auth-context"
 import { useRouter } from "next/navigation"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 
 interface LibraryProps {
   onSelectContent: (content: any) => void
@@ -57,6 +65,8 @@ export function Library({ onSelectContent }: LibraryProps) {
     key: [],
     favorite: false,
   })
+  const [deleteDialog, setDeleteDialog] = useState(false)
+  const [contentToDelete, setContentToDelete] = useState<any>(null)
 
   useEffect(() => {
     const loadContent = async () => {
@@ -186,6 +196,26 @@ export function Library({ onSelectContent }: LibraryProps) {
 
   const handleEditContent = (content: any) => {
     router.push(`/content/${content.id}/edit`)
+  }
+
+  const handleDeleteContent = async (content: any) => {
+    setContentToDelete(content)
+    setDeleteDialog(true)
+  }
+
+  const confirmDelete = async () => {
+    if (!contentToDelete) return
+
+    try {
+      await deleteContent(contentToDelete.id)
+      const userContent = await getUserContent()
+      setContent(userContent)
+      setFilteredContent(userContent)
+      setDeleteDialog(false)
+      setContentToDelete(null)
+    } catch (error) {
+      console.error("Error deleting content:", error)
+    }
   }
 
   return (
@@ -471,7 +501,7 @@ export function Library({ onSelectContent }: LibraryProps) {
                         Download
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem className="text-red-600">
+                      <DropdownMenuItem className="text-red-600" onClick={() => handleDeleteContent(item)}>
                         <Trash2 className="w-4 h-4 mr-2" />
                         Delete
                       </DropdownMenuItem>
@@ -596,7 +626,7 @@ export function Library({ onSelectContent }: LibraryProps) {
                           Download
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem className="text-red-600">
+                        <DropdownMenuItem className="text-red-600" onClick={() => handleDeleteContent(item)}>
                           <Trash2 className="w-4 h-4 mr-2" />
                           Delete
                         </DropdownMenuItem>
@@ -609,6 +639,26 @@ export function Library({ onSelectContent }: LibraryProps) {
           </CardContent>
         </Card>
       )}
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={deleteDialog} onOpenChange={setDeleteDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete Content</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete "{contentToDelete?.title}"? This action cannot be undone.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setDeleteDialog(false)}>
+              Cancel
+            </Button>
+            <Button variant="destructive" onClick={confirmDelete}>
+              Delete
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
