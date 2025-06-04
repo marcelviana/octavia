@@ -247,7 +247,7 @@ export function AddContent({ onBack, onContentCreated, onNavigate }: AddContentP
             <div className="flex justify-center space-x-3">
               <Button
                 variant="outline"
-                onClick={() => onNavigate("add-content ")}
+                onClick={() => onNavigate("add-content")}
                 className="border-amber-300 text-amber-700 hover:bg-amber-50 px-4 py-2 text-sm"
               >
                 Add More Content
