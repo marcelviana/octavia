@@ -86,7 +86,7 @@ export function ContentCreator({ onContentCreated }: ContentCreatorProps) {
       case "lyrics":
         content = {
           type: "Lyrics",
-          content: lyricsContent,
+          content: { lyrics: lyricsContent },
           title: "New Lyrics Sheet",
         }
         break
