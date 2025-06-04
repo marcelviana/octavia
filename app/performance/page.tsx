@@ -1,12 +1,31 @@
 "use client"
+import { Suspense, useEffect, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
 import { PerformanceMode } from "@/components/performance-mode"
 import { useAuth } from "@/contexts/auth-context"
 import { getContentById } from "@/lib/content-service"
 import { getSetlistById } from "@/lib/setlist-service"
 
 export default function PerformancePage() {
+  return (
+    <Suspense fallback={<Loading />}> 
+      <PerformancePageInner />
+    </Suspense>
+  )
+}
+
+function Loading() {
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-[#fffcf7]">
+      <div className="text-center">
+        <div className="w-16 h-16 border-4 border-t-[#2E7CE4] border-[#F2EDE5] rounded-full animate-spin mx-auto"></div>
+        <p className="mt-4 text-[#1A1F36]">Loading performance mode...</p>
+      </div>
+    </div>
+  )
+}
+
+function PerformancePageInner() {
   const router = useRouter()
   const params = useSearchParams()
   const { user, isLoading } = useAuth()
