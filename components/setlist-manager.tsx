@@ -47,7 +47,7 @@ type SetlistWithSongs = Setlist & {
 }
 
 interface SetlistManagerProps {
-  onEnterPerformance: () => void
+  onEnterPerformance: (setlist: SetlistWithSongs) => void
 }
 
 export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
@@ -456,7 +456,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                         <Share className="w-3 h-3 text-white" />
                       </Button>
                       <Button
-                        onClick={onEnterPerformance}
+                        onClick={() => selectedSetlist && onEnterPerformance(selectedSetlist)}
                         className="bg-white text-amber-700 hover:bg-amber-50 font-bold px-3 py-1 text-xs transition-colors shadow-sm"
                       >
                         <Play className="w-3 h-3 mr-1" />

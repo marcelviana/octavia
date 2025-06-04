@@ -27,6 +27,10 @@ export default function SetlistsPage() {
     router.push(`/setlist/${setlist.id}`)
   }
 
+  const handleStartPerformance = (setlist: any) => {
+    router.push(`/performance?setlistId=${setlist.id}`)
+  }
+
   // Don't render anything while loading
   if (isLoading) {
     return (
@@ -53,7 +57,7 @@ export default function SetlistsPage() {
           sidebarCollapsed ? "ml-20" : "ml-72",
         )}
       >
-        <SetlistManager onSelectSetlist={handleSelectSetlist} onNavigate={handleNavigate} />
+        <SetlistManager onEnterPerformance={handleStartPerformance} />
       </main>
     </div>
   )
