@@ -18,30 +18,6 @@ export function FileUpload({ onFilesUploaded }: FileUploadProps) {
   const [uploadedFiles, setUploadedFiles] = useState<any[]>([])
   const [isUploading, setIsUploading] = useState(false)
 
-  const handleDragOver = useCallback((e: React.DragEvent) => {
-    e.preventDefault()
-    setIsDragOver(true)
-  }, [])
-
-  const handleDragLeave = useCallback((e: React.DragEvent) => {
-    e.preventDefault()
-    setIsDragOver(false)
-  }, [])
-
-  const handleDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault()
-    setIsDragOver(false)
-    const files = Array.from(e.dataTransfer.files)
-    handleFiles(files)
-  }, [])
-
-  const handleFileSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const files = Array.from(e.target.files)
-      handleFiles(files)
-    }
-  }, [])
-
   const handleFiles = async (files: File[]) => {
     setIsUploading(true)
 
@@ -69,6 +45,30 @@ export function FileUpload({ onFilesUploaded }: FileUploadProps) {
 
     setIsUploading(false)
   }
+
+  const handleDragOver = useCallback((e: React.DragEvent) => {
+    e.preventDefault()
+    setIsDragOver(true)
+  }, [])
+
+  const handleDragLeave = useCallback((e: React.DragEvent) => {
+    e.preventDefault()
+    setIsDragOver(false)
+  }, [])
+
+  const handleDrop = useCallback((e: React.DragEvent) => {
+    e.preventDefault()
+    setIsDragOver(false)
+    const files = Array.from(e.dataTransfer.files)
+    handleFiles(files)
+  }, [handleFiles])
+
+  const handleFileSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const files = Array.from(e.target.files)
+      handleFiles(files)
+    }
+  }, [handleFiles])
 
   const detectContentType = (filename: string) => {
     const ext = filename.split(".").pop()?.toLowerCase()

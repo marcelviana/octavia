@@ -289,7 +289,7 @@ export function AddContent({ onBack, onContentCreated, onNavigate }: AddContentP
                     <Music className="w-8 h-8 text-white animate-pulse" />
                   </div>
                   <h3 className="text-xl font-bold text-gray-900">Processing Content...</h3>
-                  <p className="text-gray-600 text-sm">We're analyzing and organizing your content with AI magic.</p>
+                  <p className="text-gray-600 text-sm">We&apos;re analyzing and organizing your content with AI magic.</p>
                   <Progress value={75} className="w-full max-w-md mx-auto h-2" />
                   <div className="flex items-center justify-center space-x-2 text-xs text-gray-500">
                     <Zap className="w-3 h-3" />

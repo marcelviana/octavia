@@ -198,7 +198,7 @@ export default function LandingPage() {
                 key={index}
                 className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-white/50"
               >
-                <p className="text-gray-700 italic mb-6 text-lg leading-relaxed">"{testimonial.quote}"</p>
+                <p className="text-gray-700 italic mb-6 text-lg leading-relaxed">&quot;{testimonial.quote}&quot;</p>
                 <div className="flex items-center">
                   <div
                     className={`w-12 h-12 bg-gradient-to-br ${testimonial.color} rounded-full flex items-center justify-center mr-4 shadow-lg`}

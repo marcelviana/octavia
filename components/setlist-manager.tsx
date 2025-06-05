@@ -114,7 +114,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
       const setlistData = {
         user_id: user.id,
         name: newSetlistData.name,
-        description: newSetlistData.description || null,
+        description: newSetlistData.description || undefined,
         performance_date: newSetlistData.performance_date || null,
         venue: newSetlistData.venue || null,
         notes: newSetlistData.notes || null,
@@ -568,7 +568,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                       <DialogHeader>
                         <DialogTitle className="text-2xl font-bold text-gray-900 flex items-center">
                           <Music className="w-6 h-6 mr-3 text-amber-500" />
-                          Add Songs to "{selectedSetlist?.name}"
+                          Add Songs to &quot;{selectedSetlist?.name}&quot;
                         </DialogTitle>
                       </DialogHeader>
                       <div className="space-y-6">

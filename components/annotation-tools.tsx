@@ -6,6 +6,7 @@ import { useState, useRef, useEffect } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import Image from "next/image"
 
 interface AnnotationToolsProps {
   content: any
@@ -133,7 +134,7 @@ export function AnnotationTools({
           width: 40,
           height: 40,
           color: "#000000",
-          width: 2,
+          strokeWidth: 2,
         }
         onAnnotationsChange([...annotations, newSquare])
         break
@@ -185,9 +186,11 @@ export function AnnotationTools({
             style={{ transform: `scale(${zoom / 100})`, transformOrigin: "top left" }}
           >
             {/* Background content (sheet music image) */}
-            <img
+            <Image
               src={content.thumbnail || "/placeholder.svg?height=800&width=600"}
               alt="Sheet music"
+              width={600}
+              height={800}
               className="w-full h-auto"
               draggable={false}
             />

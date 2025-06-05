@@ -36,6 +36,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { deleteContent } from "@/lib/content-service"
+import Image from "next/image"
 
 interface ContentViewerProps {
   content: any
@@ -404,9 +405,11 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
 
                               {content.file_url ? (
                                 <div className="border rounded-lg overflow-hidden">
-                                  <img
+                                  <Image
                                     src={content.file_url || "/placeholder.svg"}
                                     alt={`Sheet music for ${content.title}`}
+                                    width={800}
+                                    height={800}
                                     className="w-full h-auto"
                                     style={{ maxHeight: "800px", objectFit: "contain" }}
                                   />
@@ -691,7 +694,7 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
           <DialogHeader>
             <DialogTitle>Delete Content</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete "{content.title}"? This action cannot be undone.
+              Are you sure you want to delete &quot;{content.title}&quot;? This action cannot be undone.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>

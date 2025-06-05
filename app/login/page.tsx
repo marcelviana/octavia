@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useAuth } from "@/contexts/auth-context"
 import { Music, Lock, Mail } from "lucide-react"
+import Image from "next/image"
 
 export default function LoginPage() {
   const [email, setEmail] = useState("")
@@ -87,7 +88,7 @@ export default function LoginPage() {
             <div className="relative w-40 h-40 mx-auto mb-4">
               <div className="absolute inset-0 bg-amber-200 rounded-full opacity-20 animate-pulse"></div>
               <div className="absolute inset-2 bg-amber-100 rounded-full flex items-center justify-center">
-                <img src="/logos/octavia-icon.png" alt="Octavia Logo" className="h-16 w-16 object-contain" />
+                <Image src="/logos/octavia-icon.png" alt="Octavia Logo" width={64} height={64} className="object-contain" />
               </div>
             </div>
             <h1 className="mt-4 text-3xl font-bold bg-gradient-to-r from-amber-700 to-orange-600 bg-clip-text text-transparent">
@@ -187,7 +188,7 @@ export default function LoginPage() {
                 </div>
                 <div className="text-center">
                   <p className="text-amber-800">
-                    Don't have an account?{" "}
+                    Don&apos;t have an account?{" "}
                     <Link
                       href="/signup"
                       className="font-medium text-amber-600 hover:text-amber-800 hover:underline transition-colors"

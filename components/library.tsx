@@ -646,7 +646,7 @@ export function Library({ onSelectContent }: LibraryProps) {
           <DialogHeader>
             <DialogTitle>Delete Content</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete "{contentToDelete?.title}"? This action cannot be undone.
+              Are you sure you want to delete &quot;{contentToDelete?.title}&quot;? This action cannot be undone.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
