@@ -21,14 +21,10 @@ type ContentItem = {
 }
 
 type UserStats = {
-  total_content: number
-  sheet_music_count: number
-  tablature_count: number
-  lyrics_count: number
-  recent_activity: {
-    date: string
-    count: number
-  }[]
+  totalContent: number
+  totalSetlists: number
+  favoriteContent: number
+  recentlyViewed: number
 }
 
 export function Dashboard() {
@@ -61,14 +57,10 @@ export function Dashboard() {
         console.log("Loading dashboard data for user:", user.id)
 
         // Load content and stats in parallel
-        const [contentResult, statsResult] = await Promise.all([getUserContent(user.id), getUserStats(user.id)])
+        const [contentData, statsData] = await Promise.all([getUserContent(), getUserStats()])
 
         // Process content
-        if (contentResult.error) {
-          console.error("Error loading content:", contentResult.error)
-          setError("Failed to load your content. Please try again later.")
-        } else {
-          const content = contentResult.data || []
+        const content = contentData || []
 
           // Sort by date descending
           const sortedContent = [...content].sort(
@@ -77,14 +69,9 @@ export function Dashboard() {
 
           setRecentContent(sortedContent.slice(0, 5))
           setFavoriteContent(content.filter((item) => item.is_favorite).slice(0, 5))
-        }
-
+        
         // Process stats
-        if (statsResult.error) {
-          console.error("Error loading stats:", statsResult.error)
-        } else {
-          setStats(statsResult.data)
-        }
+        setStats(statsData)
       } catch (err) {
         console.error("Error loading dashboard data:", err)
         setError("An unexpected error occurred. Please try again later.")
@@ -171,57 +158,36 @@ export function Dashboard() {
                 <CardDescription>All your music content</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold text-amber-600">{stats?.total_content || 0}</div>
+                <div className="text-3xl font-bold text-amber-600">{stats?.totalContent || 0}</div>
               </CardContent>
             </Card>
             <Card className="bg-white/90 backdrop-blur-sm border-amber-100 shadow-md">
               <CardHeader className="pb-2">
-                <CardTitle className="text-lg font-medium">Sheet Music</CardTitle>
-                <CardDescription>Your sheet music collection</CardDescription>
+                <CardTitle className="text-lg font-medium">Favorites</CardTitle>
+                <CardDescription>Your favorite content</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold text-amber-600">{stats?.sheet_music_count || 0}</div>
+                <div className="text-3xl font-bold text-amber-600">{stats?.favoriteContent || 0}</div>
               </CardContent>
             </Card>
             <Card className="bg-white/90 backdrop-blur-sm border-amber-100 shadow-md">
               <CardHeader className="pb-2">
-                <CardTitle className="text-lg font-medium">Tablature</CardTitle>
-                <CardDescription>Your tablature collection</CardDescription>
+                <CardTitle className="text-lg font-medium">Setlists</CardTitle>
+                <CardDescription>Your created setlists</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold text-amber-600">{stats?.tablature_count || 0}</div>
+                <div className="text-3xl font-bold text-amber-600">{stats?.totalSetlists || 0}</div>
               </CardContent>
             </Card>
           </div>
 
           <Card className="bg-white/90 backdrop-blur-sm border-amber-100 shadow-md">
             <CardHeader>
-              <CardTitle>Recent Activity</CardTitle>
-              <CardDescription>Your content activity over time</CardDescription>
+              <CardTitle>Recently Viewed</CardTitle>
+              <CardDescription>Items you've accessed recently</CardDescription>
             </CardHeader>
             <CardContent>
-              {stats?.recent_activity && stats.recent_activity.length > 0 ? (
-                <div className="h-[200px] flex items-end justify-between gap-2">
-                  {stats.recent_activity.map((activity, i) => (
-                    <div key={i} className="flex flex-col items-center gap-2">
-                      <div
-                        className="bg-gradient-to-t from-amber-500 to-orange-400 rounded-t-md w-12"
-                        style={{
-                          height: `${Math.max(20, activity.count / Math.max(...stats.recent_activity.map((a) => a.count))) * 150}px`,
-                        }}
-                      ></div>
-                      <span className="text-xs text-gray-500">
-                        {new Date(activity.date).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="flex flex-col items-center justify-center h-[200px] text-gray-400">
-                  <Clock className="h-12 w-12 mb-2 opacity-30" />
-                  <p>No recent activity data available</p>
-                </div>
-              )}
+              <div className="text-3xl font-bold text-amber-600">{stats?.recentlyViewed || 0}</div>
             </CardContent>
           </Card>
         </TabsContent>
