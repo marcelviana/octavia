@@ -270,13 +270,7 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
                     >
                       {/* Sheet Music Content */}
                       <div className="space-y-6">
-                        <div className="text-center border-b border-amber-200 pb-4">
-                          <div className="flex justify-center space-x-4 text-sm text-gray-500">
-                            <span>Key: {content.key || "Not specified"}</span>
-                            <span>Tempo: {content.bpm ? `${content.bpm} BPM` : "Not specified"}</span>
-                            <span>Time: {content.time_signature || "4/4"}</span>
-                          </div>
-                        </div>
+                        {/* Technical summary removed to avoid duplication */}
 
                         {/* Dynamic Content Based on Type */}
                         <div className="space-y-8">
@@ -443,6 +437,43 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
                             <div className="space-y-6">
                               <h3 className="text-lg font-semibold">Lyrics</h3>
 
+                              {/* Technical Information */}
+                              <div className="bg-gray-50 p-4 rounded-lg">
+                                <h4 className="font-semibold mb-3">Technical Information</h4>
+                                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+                                  <div>
+                                    <span className="text-gray-600">Key:</span>
+                                    <span className="ml-2 font-mono">{content.key || "Not specified"}</span>
+                                  </div>
+                                  {content.bpm && (
+                                    <div>
+                                      <span className="text-gray-600">Tempo:</span>
+                                      <span className="ml-2 font-mono">{content.bpm} BPM</span>
+                                    </div>
+                                  )}
+                                  <div>
+                                    <span className="text-gray-600">Time:</span>
+                                    <span className="ml-2 font-mono">{content.time_signature || "4/4"}</span>
+                                  </div>
+                                  <div>
+                                    <span className="text-gray-600">Difficulty:</span>
+                                    <span className="ml-2">{content.difficulty || "Not specified"}</span>
+                                  </div>
+                                  {content.genre && (
+                                    <div>
+                                      <span className="text-gray-600">Genre:</span>
+                                      <span className="ml-2">{content.genre}</span>
+                                    </div>
+                                  )}
+                                  {content.album && (
+                                    <div>
+                                      <span className="text-gray-600">Album:</span>
+                                      <span className="ml-2">{content.album}</span>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+
                               {content.content_data?.lyrics ? (
                                 <div className="space-y-6">
                                   <pre className="bg-gray-50 p-4 rounded-lg whitespace-pre-wrap text-sm leading-relaxed font-sans">
@@ -485,42 +516,6 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
                             </div>
                           )}
 
-                          {/* Technical Information */}
-                          <div className="bg-gray-50 p-4 rounded-lg">
-                            <h4 className="font-semibold mb-3">Technical Information</h4>
-                            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
-                              <div>
-                                <span className="text-gray-600">Key:</span>
-                                <span className="ml-2 font-mono">{content.key || "Not specified"}</span>
-                              </div>
-                              {content.bpm && (
-                                <div>
-                                  <span className="text-gray-600">Tempo:</span>
-                                  <span className="ml-2 font-mono">{content.bpm} BPM</span>
-                                </div>
-                              )}
-                              <div>
-                                <span className="text-gray-600">Time:</span>
-                                <span className="ml-2 font-mono">{content.time_signature || "4/4"}</span>
-                              </div>
-                              <div>
-                                <span className="text-gray-600">Difficulty:</span>
-                                <span className="ml-2">{content.difficulty || "Not specified"}</span>
-                              </div>
-                              {content.genre && (
-                                <div>
-                                  <span className="text-gray-600">Genre:</span>
-                                  <span className="ml-2">{content.genre}</span>
-                                </div>
-                              )}
-                              {content.album && (
-                                <div>
-                                  <span className="text-gray-600">Album:</span>
-                                  <span className="ml-2">{content.album}</span>
-                                </div>
-                              )}
-                            </div>
-                          </div>
                         </div>
                       </div>
                     </div>
