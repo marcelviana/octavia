@@ -27,7 +27,13 @@ type UserStats = {
   recentlyViewed: number
 }
 
-export function Dashboard() {
+interface DashboardProps {
+  onNavigate: (screen: string) => void
+  onSelectContent: (content: ContentItem) => void
+  onEnterPerformance: () => void
+}
+
+export function Dashboard({ onNavigate, onSelectContent, onEnterPerformance }: DashboardProps) {
   const [activeTab, setActiveTab] = useState("overview")
   const [recentContent, setRecentContent] = useState<ContentItem[]>([])
   const [favoriteContent, setFavoriteContent] = useState<ContentItem[]>([])
@@ -68,7 +74,7 @@ export function Dashboard() {
           )
 
           setRecentContent(sortedContent.slice(0, 5))
-          setFavoriteContent(content.filter((item) => item.is_favorite).slice(0, 5))
+          setFavoriteContent(content.filter((item: ContentItem) => item.is_favorite).slice(0, 5))
         
         // Process stats
         setStats(statsData)
