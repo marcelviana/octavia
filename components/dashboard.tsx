@@ -14,7 +14,7 @@ import Link from "next/link"
 type ContentItem = {
   id: string
   title: string
-  type: string
+  content_type: string
   created_at: string
   updated_at: string
   is_favorite: boolean
@@ -91,12 +91,14 @@ export function Dashboard({ onNavigate, onSelectContent, onEnterPerformance }: D
 
   const getContentIcon = (type: string) => {
     switch (type) {
-      case "sheet_music":
+      case "Sheet Music":
         return <Music className="h-4 w-4" />
-      case "tablature":
+      case "Guitar Tab":
         return <FileText className="h-4 w-4" />
-      case "lyrics":
+      case "Lyrics":
         return <FileText className="h-4 w-4" />
+      case "Chord Chart":
+        return <Music className="h-4 w-4" />
       default:
         return <FileText className="h-4 w-4" />
     }
@@ -211,10 +213,10 @@ export function Dashboard({ onNavigate, onSelectContent, onEnterPerformance }: D
                     <Link key={item.id} href={`/content/${item.id}`}>
                       <div className="flex items-center justify-between p-3 hover:bg-amber-50 rounded-lg transition-colors cursor-pointer">
                         <div className="flex items-center gap-3">
-                          <div className="bg-amber-100 p-2 rounded-full">{getContentIcon(item.type)}</div>
+                          <div className="bg-amber-100 p-2 rounded-full">{getContentIcon(item.content_type)}</div>
                           <div>
                             <p className="font-medium">{item.title}</p>
-                            <p className="text-sm text-gray-500">{item.type.replace("_", " ")}</p>
+                            <p className="text-sm text-gray-500">{(item.content_type || '').replace("_", " ")}</p>
                           </div>
                         </div>
                         <div className="text-sm text-gray-500">{formatDate(item.updated_at)}</div>
@@ -250,10 +252,10 @@ export function Dashboard({ onNavigate, onSelectContent, onEnterPerformance }: D
                     <Link key={item.id} href={`/content/${item.id}`}>
                       <div className="flex items-center justify-between p-3 hover:bg-amber-50 rounded-lg transition-colors cursor-pointer">
                         <div className="flex items-center gap-3">
-                          <div className="bg-amber-100 p-2 rounded-full">{getContentIcon(item.type)}</div>
+                          <div className="bg-amber-100 p-2 rounded-full">{getContentIcon(item.content_type)}</div>
                           <div>
                             <p className="font-medium">{item.title}</p>
-                            <p className="text-sm text-gray-500">{item.type.replace("_", " ")}</p>
+                            <p className="text-sm text-gray-500">{(item.content_type || '').replace("_", " ")}</p>
                           </div>
                         </div>
                         <div className="text-sm text-gray-500">{formatDate(item.updated_at)}</div>
