@@ -271,9 +271,7 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
                       {/* Sheet Music Content */}
                       <div className="space-y-6">
                         <div className="text-center border-b border-amber-200 pb-4">
-                          <h2 className="text-2xl font-bold text-gray-900">{content.title}</h2>
-                          <p className="text-lg text-gray-600">{content.artist}</p>
-                          <div className="flex justify-center space-x-4 mt-2 text-sm text-gray-500">
+                          <div className="flex justify-center space-x-4 text-sm text-gray-500">
                             <span>Key: {content.key || "Not specified"}</span>
                             <span>Tempo: {content.bpm ? `${content.bpm} BPM` : "Not specified"}</span>
                             <span>Time: {content.time_signature || "4/4"}</span>
@@ -447,24 +445,9 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
 
                               {content.content_data?.lyrics ? (
                                 <div className="space-y-6">
-                                  {content.content_data.lyrics.split("\n\n").map((section: string, index: number) => {
-                                    const lines = section.split("\n")
-                                    const sectionTitle = lines[0].match(/^\[(.*)\]$/) ? lines[0] : null
-                                    const sectionContent = sectionTitle ? lines.slice(1).join("\n") : section
-
-                                    return (
-                                      <div key={index} className="bg-gray-50 p-4 rounded-lg">
-                                        {sectionTitle && (
-                                          <h4 className="font-semibold text-blue-600 mb-2">
-                                            {sectionTitle.replace(/[[\]]/g, "")}
-                                          </h4>
-                                        )}
-                                        <pre className="whitespace-pre-wrap text-sm leading-relaxed font-sans">
-                                          {sectionContent}
-                                        </pre>
-                                      </div>
-                                    )
-                                  })}
+                                  <pre className="bg-gray-50 p-4 rounded-lg whitespace-pre-wrap text-sm leading-relaxed font-sans">
+                                    {content.content_data.lyrics}
+                                  </pre>
                                 </div>
                               ) : (
                                 <div className="bg-gray-50 p-8 rounded-lg text-center">
@@ -637,64 +620,6 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
           </Tabs>
         </div>
 
-        {/* Side Panel */}
-        <div className="w-80 bg-white border-l border-amber-200 p-4 shadow-sm">
-          <div className="space-y-6">
-            <div>
-              <h3 className="font-semibold text-gray-900 mb-3">Quick Actions</h3>
-              <div className="space-y-2">
-                <Button variant="outline" size="sm" className="w-full justify-start">
-                  <Edit className="w-4 h-4 mr-2" />
-                  Edit Content
-                </Button>
-                <Button variant="outline" size="sm" className="w-full justify-start">
-                  <Download className="w-4 h-4 mr-2" />
-                  Download PDF
-                </Button>
-                <Button variant="outline" size="sm" className="w-full justify-start">
-                  <Share className="w-4 h-4 mr-2" />
-                  Share with Band
-                </Button>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="font-semibold text-gray-900 mb-3">Related Songs</h3>
-              <div className="space-y-2">
-                <div className="p-3 rounded-lg hover:bg-amber-50 cursor-pointer border border-amber-100">
-                  <p className="text-sm font-medium">Dust in the Wind</p>
-                  <p className="text-xs text-gray-500">Kansas • Guitar Tab</p>
-                </div>
-                <div className="p-3 rounded-lg hover:bg-amber-50 cursor-pointer border border-amber-100">
-                  <p className="text-sm font-medium">Tears in Heaven</p>
-                  <p className="text-xs text-gray-500">Eric Clapton • Chord Chart</p>
-                </div>
-                <div className="p-3 rounded-lg hover:bg-amber-50 cursor-pointer border border-amber-100">
-                  <p className="text-sm font-medium">Blackbird</p>
-                  <p className="text-xs text-gray-500">The Beatles • Guitar Tab</p>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="font-semibold text-gray-900 mb-3">Practice History</h3>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Last practiced:</span>
-                  <span>2 days ago</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Total sessions:</span>
-                  <span>12</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Practice time:</span>
-                  <span>3h 45m</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* Delete Confirmation Dialog */}
