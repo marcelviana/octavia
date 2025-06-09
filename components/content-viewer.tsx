@@ -36,6 +36,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { deleteContent } from "@/lib/content-service"
+import { MusicText } from "@/components/music-text"
 import Image from "next/image"
 
 interface ContentViewerProps {
@@ -417,9 +418,10 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
                                 </div>
                               ) : content.content_data?.notation ? (
                                 <div className="bg-gray-50 p-6 border rounded-lg">
-                                  <pre className="whitespace-pre-wrap text-sm font-mono leading-relaxed">
-                                    {content.content_data.notation}
-                                  </pre>
+                                  <MusicText
+                                    text={content.content_data.notation}
+                                    className="text-sm leading-relaxed"
+                                  />
                                 </div>
                               ) : (
                                 <div className="border-2 border-dashed border-gray-300 rounded-lg p-12 text-center">
@@ -476,9 +478,10 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
 
                               {content.content_data?.lyrics ? (
                                 <div className="space-y-6">
-                                  <pre className="bg-gray-50 p-4 rounded-lg whitespace-pre-wrap text-sm leading-relaxed font-sans">
-                                    {content.content_data.lyrics}
-                                  </pre>
+                                  <MusicText
+                                    text={content.content_data.lyrics}
+                                    className="bg-gray-50 p-4 rounded-lg text-sm leading-relaxed"
+                                  />
                                 </div>
                               ) : (
                                 <div className="bg-gray-50 p-8 rounded-lg text-center">
@@ -510,9 +513,11 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
                                 <span className="mr-2">📝</span>
                                 Performance Notes
                               </h4>
-                              <div className="text-sm text-gray-700 whitespace-pre-wrap leading-relaxed">
-                                {content.notes}
-                              </div>
+                              <MusicText
+                                text={content.notes}
+                                monospace={false}
+                                className="text-sm text-gray-700"
+                              />
                             </div>
                           )}
 
@@ -597,7 +602,11 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
                     <h3 className="text-lg font-semibold mb-4 text-green-800">Performance Notes</h3>
                     {content.notes ? (
                       <div className="bg-green-50 p-4 rounded-lg">
-                        <pre className="whitespace-pre-wrap text-sm text-gray-700 leading-relaxed">{content.notes}</pre>
+                        <MusicText
+                          text={content.notes}
+                          monospace={false}
+                          className="text-sm text-gray-700"
+                        />
                       </div>
                     ) : (
                       <div className="text-center py-8">

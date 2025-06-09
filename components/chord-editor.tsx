@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Plus, Trash2, GripVertical } from "lucide-react"
+import { MusicText } from "@/components/music-text"
 
 interface ChordEditorProps {
   content: any
@@ -196,7 +197,7 @@ export function ChordEditor({ content, onChange }: ChordEditorProps) {
                     placeholder="Enter lyrics for this section..."
                     value={section.lyrics}
                     onChange={(e) => updateSection(section.id, "lyrics", e.target.value)}
-                    className="min-h-[100px]"
+                    className="min-h-[100px] font-mono"
                   />
                 </div>
               </div>
@@ -227,7 +228,9 @@ export function ChordEditor({ content, onChange }: ChordEditorProps) {
                 <div key={section.id}>
                   {section.name && <h3 className="font-bold text-blue-600 mb-2">{section.name}:</h3>}
                   {section.chords && <p className="font-mono bg-gray-100 p-2 rounded mb-2">Chords: {section.chords}</p>}
-                  {section.lyrics && <p className="whitespace-pre-line">{section.lyrics}</p>}
+                  {section.lyrics && (
+                    <MusicText text={section.lyrics} monospace={false} />
+                  )}
                 </div>
               ))}
             </div>
