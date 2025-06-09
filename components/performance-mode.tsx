@@ -16,6 +16,8 @@ import {
   Settings,
   Clock,
   MoreHorizontal,
+  Maximize,
+  Minimize,
 } from "lucide-react"
 
 interface PerformanceModeProps {
@@ -34,8 +36,12 @@ export function PerformanceMode({
   const [showControls, setShowControls] = useState(true)
   const [elapsedTime, setElapsedTime] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
+  const [bpm, setBpm] = useState(80)
+  const [isFullScreen, setIsFullScreen] = useState(false)
   const contentRef = useRef<HTMLDivElement>(null)
   const controlsTimeout = useRef<NodeJS.Timeout | null>(null)
+  const scrollRef = useRef<number | null>(null)
+  const wakeLock = useRef<any>(null)
 
   const defaultSetlist = [
     { id: 1, title: "Wonderwall", artist: "Oasis", key: "Em", bpm: 87 },
@@ -51,6 +57,47 @@ export function PerformanceMode({
 
   const lyricsData = songs.map((song: any) => song?.content_data?.lyrics || "")
 
+  const toggleFullScreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(() => {})
+    } else {
+      document.exitFullscreen().catch(() => {})
+    }
+  }
+
+  useEffect(() => {
+    const updateFs = () => setIsFullScreen(!!document.fullscreenElement)
+    document.addEventListener("fullscreenchange", updateFs)
+    return () => document.removeEventListener("fullscreenchange", updateFs)
+  }, [])
+
+  useEffect(() => {
+    const requestLock = async () => {
+      try {
+        // @ts-ignore
+        if (navigator.wakeLock) {
+          // @ts-ignore
+          wakeLock.current = await navigator.wakeLock.request("screen")
+        }
+      } catch (err) {
+        console.error("Wake lock error", err)
+      }
+    }
+    requestLock()
+    const handleVisibility = () => {
+      if (wakeLock.current && document.visibilityState === "visible") {
+        requestLock()
+      }
+    }
+    document.addEventListener("visibilitychange", handleVisibility)
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibility)
+      if (wakeLock.current) {
+        wakeLock.current.release()
+      }
+    }
+  }, [])
+
   useEffect(() => {
     let interval: NodeJS.Timeout
     if (isPlaying) {
@@ -60,6 +107,42 @@ export function PerformanceMode({
     }
     return () => clearInterval(interval)
   }, [isPlaying])
+
+  useEffect(() => {
+    if (!isPlaying) {
+      if (scrollRef.current) cancelAnimationFrame(scrollRef.current)
+      return
+    }
+
+    const el = contentRef.current
+    if (!el) return
+
+    const total = el.scrollHeight - el.clientHeight
+    const lines = lyricsData[currentSong]?.split("\n").length || 1
+    const beats = lines * 4
+    const beatDuration = 60 / bpm
+    const scrollSpeed = total / (beats * beatDuration)
+    const start = performance.now() - (el.scrollTop / scrollSpeed) * 1000
+
+    const step = (now: number) => {
+      const elapsed = (now - start) / 1000
+      const y = scrollSpeed * elapsed
+      el.scrollTop = y
+      if (y < total && isPlaying) {
+        scrollRef.current = requestAnimationFrame(step)
+      } else {
+        el.scrollTop = total
+        scrollRef.current = null
+        setIsPlaying(false)
+      }
+    }
+
+    scrollRef.current = requestAnimationFrame(step)
+
+    return () => {
+      if (scrollRef.current) cancelAnimationFrame(scrollRef.current)
+    }
+  }, [isPlaying, bpm, currentSong])
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -78,10 +161,14 @@ export function PerformanceMode({
           onExitPerformance()
           break
         case "+":
-          setZoom((prev) => Math.min(150, prev + 10))
+          setBpm((prev) => prev + 5)
           break
         case "-":
-          setZoom((prev) => Math.max(70, prev - 10))
+          setBpm((prev) => Math.max(20, prev - 5))
+          break
+        case "f":
+        case "F":
+          toggleFullScreen()
           break
       }
     }
@@ -97,6 +184,13 @@ export function PerformanceMode({
   }
 
   const currentSongData: any = songs[currentSong] || {}
+
+  useEffect(() => {
+    setBpm(currentSongData.bpm || 80)
+    if (contentRef.current) {
+      contentRef.current.scrollTop = 0
+    }
+  }, [currentSong])
 
   const handleMouseMove = () => {
     setShowControls(true)
@@ -151,6 +245,18 @@ export function PerformanceMode({
             >
               {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
             </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={toggleFullScreen}
+              className="text-white hover:bg-white/20"
+            >
+              {isFullScreen ? (
+                <Minimize className="w-4 h-4" />
+              ) : (
+                <Maximize className="w-4 h-4" />
+              )}
+            </Button>
             <Button variant="ghost" size="sm" className="text-white hover:bg-white/20">
               <Settings className="w-4 h-4" />
             </Button>
@@ -174,7 +280,7 @@ export function PerformanceMode({
                   Key: {currentSongData.key || "N/A"}
                 </Badge>
                 <Badge variant="outline" className="text-sm px-3 py-1 border-[#2E7CE4] text-[#2E7CE4]">
-                  BPM: {currentSongData.bpm || "N/A"}
+                  BPM: {bpm}
                 </Badge>
               </div>
             </div>
