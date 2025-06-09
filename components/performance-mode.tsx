@@ -18,6 +18,8 @@ import {
   MoreHorizontal,
   Maximize,
   Minimize,
+  Plus,
+  Minus,
 } from "lucide-react"
 
 interface PerformanceModeProps {
@@ -296,6 +298,33 @@ export function PerformanceMode({
             </div>
           </div>
         </Card>
+      </div>
+
+      {/* Floating Scroll Speed Controls */}
+      <div
+        className={`absolute bottom-24 right-4 z-50 flex flex-col items-center space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2 transition-opacity duration-300 ${showControls ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+      >
+        <div className="text-xs bg-[#1A1F36]/80 rounded-md px-2 py-1 text-white">
+          Scroll Speed: {bpm} BPM
+        </div>
+        <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setBpm((prev) => Math.max(20, prev - 5))}
+            className="bg-white/20 hover:bg-white/30 text-white active:scale-95"
+          >
+            <Minus className="w-5 h-5" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setBpm((prev) => prev + 5)}
+            className="bg-white/20 hover:bg-white/30 text-white active:scale-95"
+          >
+            <Plus className="w-5 h-5" />
+          </Button>
+        </div>
       </div>
 
       {/* Bottom Navigation Controls */}
