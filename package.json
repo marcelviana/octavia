@@ -2,13 +2,13 @@
   "name": "my-v0-project",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "test": "vitest"
-  },
+"scripts": {
+  "dev": "pnpm exec next dev",
+  "build": "pnpm exec next build",
+  "start": "pnpm exec next start",
+  "lint": "pnpm exec next lint",
+  "test": "pnpm exec vitest"
+},
   "dependencies": {
     "@edge-runtime/vm": "latest",
     "@hookform/resolvers": "^3.9.1",
