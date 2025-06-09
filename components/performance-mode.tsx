@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { MusicText } from "@/components/music-text"
 import {
   X,
   ChevronLeft,
@@ -48,20 +49,7 @@ export function PerformanceMode({
     ? [selectedContent]
     : defaultSetlist
 
-  const parseLyrics = (lyrics: string) =>
-    lyrics
-      .split("\n\n")
-      .map((section) => ({
-        title: "",
-        content: section.split("\n").map((line) => ({ text: line })),
-      }))
-
-  const lyricsData = songs.map((song: any) => {
-    if (song?.content_data?.lyrics) {
-      return { sections: parseLyrics(song.content_data.lyrics) }
-    }
-    return { sections: [] }
-  })
+  const lyricsData = songs.map((song: any) => song?.content_data?.lyrics || "")
 
   useEffect(() => {
     let interval: NodeJS.Timeout
@@ -192,17 +180,8 @@ export function PerformanceMode({
             </div>
 
             <div className="space-y-8 max-w-3xl mx-auto">
-              {lyricsData[currentSong]?.sections.length ? (
-                lyricsData[currentSong].sections.map((section, sectionIndex) => (
-                  <div key={sectionIndex} className="mb-8">
-                    {section.title && <h3 className="font-bold text-[#2E7CE4] text-xl mb-3">{section.title}</h3>}
-                    <div className="mb-4 text-lg leading-relaxed">
-                      {section.content.map((part: any, partIndex: number) => (
-                        <span key={partIndex}>{part.text}</span>
-                      ))}
-                    </div>
-                  </div>
-                ))
+              {lyricsData[currentSong] ? (
+                <MusicText text={lyricsData[currentSong]} className="text-lg leading-relaxed" />
               ) : (
                 <div className="text-center text-[#A69B8E] py-10">
                   <p className="text-xl">No lyrics available for this song</p>

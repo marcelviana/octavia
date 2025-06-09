@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
 import { Plus, X, Tag } from "lucide-react"
+
 import { createContent } from "@/lib/content-service"
 import { getSupabaseBrowserClient } from "@/lib/supabase"
 
@@ -20,26 +21,11 @@ interface TextImportPreviewProps {
 
 export function TextImportPreview({ files, onComplete, onBack }: TextImportPreviewProps) {
   const genres = [
-    "Rock",
-    "Pop",
-    "Jazz",
-    "Classical",
-    "Blues",
-    "Country",
-    "Folk",
-    "Metal",
-    "Punk",
-    "Alternative",
-    "Indie",
-    "Electronic",
-    "Hip Hop",
-    "R&B",
-    "Reggae",
-    "Other",
+    "Rock", "Pop", "Jazz", "Classical", "Blues", "Country", "Folk", "Metal",
+    "Punk", "Alternative", "Indie", "Electronic", "Hip Hop", "R&B", "Reggae", "Other"
   ]
 
   const difficulties = ["Beginner", "Intermediate", "Advanced", "Expert"]
-
   const keys = ["C", "C#", "Db", "D", "D#", "Eb", "E", "F", "F#", "Gb", "G", "G#", "Ab", "A", "A#", "Bb", "B"]
 
   const [items, setItems] = useState(
@@ -135,98 +121,51 @@ export function TextImportPreview({ files, onComplete, onBack }: TextImportPrevi
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <Label>Title</Label>
-                <Input
-                  value={item.title}
-                  onChange={(e) => updateItem(index, "title", e.target.value)}
-                  placeholder="Title"
-                />
+                <Input value={item.title} onChange={(e) => updateItem(index, "title", e.target.value)} placeholder="Title" />
               </div>
               <div>
                 <Label>Band</Label>
-                <Input
-                  value={item.band}
-                  onChange={(e) => updateItem(index, "band", e.target.value)}
-                  placeholder="Band or artist"
-                />
+                <Input value={item.band} onChange={(e) => updateItem(index, "band", e.target.value)} placeholder="Band or artist" />
               </div>
               <div>
                 <Label>Genre</Label>
-                <Select
-                  value={item.genre}
-                  onValueChange={(value) => updateItem(index, "genre", value)}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select genre" />
-                  </SelectTrigger>
+                <Select value={item.genre} onValueChange={(value) => updateItem(index, "genre", value)}>
+                  <SelectTrigger><SelectValue placeholder="Select genre" /></SelectTrigger>
                   <SelectContent>
-                    {genres.map((g) => (
-                      <SelectItem key={g} value={g}>
-                        {g}
-                      </SelectItem>
-                    ))}
+                    {genres.map((g) => <SelectItem key={g} value={g}>{g}</SelectItem>)}
                   </SelectContent>
                 </Select>
               </div>
               <div>
                 <Label>Key</Label>
-                <Select
-                  value={item.key}
-                  onValueChange={(value) => updateItem(index, "key", value)}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select key" />
-                  </SelectTrigger>
+                <Select value={item.key} onValueChange={(value) => updateItem(index, "key", value)}>
+                  <SelectTrigger><SelectValue placeholder="Select key" /></SelectTrigger>
                   <SelectContent>
-                    {keys.map((k) => (
-                      <SelectItem key={k} value={k}>
-                        {k}
-                      </SelectItem>
-                    ))}
+                    {keys.map((k) => <SelectItem key={k} value={k}>{k}</SelectItem>)}
                   </SelectContent>
                 </Select>
               </div>
               <div>
                 <Label>BPM</Label>
-                <Input
-                  type="number"
-                  value={item.bpm}
-                  onChange={(e) => updateItem(index, "bpm", e.target.value)}
-                  placeholder="120"
-                />
+                <Input type="number" value={item.bpm} onChange={(e) => updateItem(index, "bpm", e.target.value)} placeholder="120" />
               </div>
               <div>
                 <Label>Time Signature</Label>
-                <Select
-                  value={item.timeSignature}
-                  onValueChange={(value) => updateItem(index, "timeSignature", value)}
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
+                <Select value={item.timeSignature} onValueChange={(value) => updateItem(index, "timeSignature", value)}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="4/4">4/4</SelectItem>
-                    <SelectItem value="3/4">3/4</SelectItem>
-                    <SelectItem value="2/4">2/4</SelectItem>
-                    <SelectItem value="6/8">6/8</SelectItem>
-                    <SelectItem value="12/8">12/8</SelectItem>
+                    {["4/4", "3/4", "2/4", "6/8", "12/8"].map((sig) => (
+                      <SelectItem key={sig} value={sig}>{sig}</SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
               <div>
                 <Label>Difficulty</Label>
-                <Select
-                  value={item.difficulty}
-                  onValueChange={(value) => updateItem(index, "difficulty", value)}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select difficulty" />
-                  </SelectTrigger>
+                <Select value={item.difficulty} onValueChange={(value) => updateItem(index, "difficulty", value)}>
+                  <SelectTrigger><SelectValue placeholder="Select difficulty" /></SelectTrigger>
                   <SelectContent>
-                    {difficulties.map((d) => (
-                      <SelectItem key={d} value={d}>
-                        {d}
-                      </SelectItem>
-                    ))}
+                    {difficulties.map((d) => <SelectItem key={d} value={d}>{d}</SelectItem>)}
                   </SelectContent>
                 </Select>
               </div>
@@ -234,27 +173,15 @@ export function TextImportPreview({ files, onComplete, onBack }: TextImportPrevi
 
             <div>
               <Label>Lyrics</Label>
-              <Textarea
-                value={item.body}
-                onChange={(e) => updateItem(index, "body", e.target.value)}
-                rows={10}
-                className="font-mono whitespace-pre"
-              />
+              <Textarea value={item.body} onChange={(e) => updateItem(index, "body", e.target.value)} rows={10} className="font-mono whitespace-pre" />
             </div>
 
             <div>
               <Label>Tags</Label>
               <div className="mt-2 space-y-2">
                 <div className="flex space-x-2">
-                  <Input
-                    value={item.newTag}
-                    onChange={(e) => updateItem(index, "newTag", e.target.value)}
-                    placeholder="Add a tag"
-                    onKeyDown={(e) => e.key === "Enter" && addTag(index)}
-                  />
-                  <Button type="button" variant="outline" onClick={() => addTag(index)}>
-                    <Plus className="w-4 h-4" />
-                  </Button>
+                  <Input value={item.newTag} onChange={(e) => updateItem(index, "newTag", e.target.value)} placeholder="Add a tag" onKeyDown={(e) => e.key === "Enter" && addTag(index)} />
+                  <Button type="button" variant="outline" onClick={() => addTag(index)}><Plus className="w-4 h-4" /></Button>
                 </div>
                 {item.tags.length > 0 && (
                   <div className="flex flex-wrap gap-2">
@@ -274,19 +201,13 @@ export function TextImportPreview({ files, onComplete, onBack }: TextImportPrevi
 
             <div>
               <Label>Notes</Label>
-              <Textarea
-                value={item.notes}
-                onChange={(e) => updateItem(index, "notes", e.target.value)}
-                className="min-h-[100px]"
-              />
+              <Textarea value={item.notes} onChange={(e) => updateItem(index, "notes", e.target.value)} className="min-h-[100px]" />
             </div>
           </CardContent>
         </Card>
       ))}
       <div className="flex justify-between">
-        <Button variant="outline" onClick={onBack}>
-          Back
-        </Button>
+        <Button variant="outline" onClick={onBack}>Back</Button>
         <Button onClick={handleSave} disabled={isSaving}>
           {isSaving ? "Saving..." : "Save Content"}
         </Button>
