@@ -21,15 +21,43 @@ export function FileUpload({ onFilesUploaded }: FileUploadProps) {
   const handleFiles = async (files: File[]) => {
     setIsUploading(true)
 
-    const processedFiles = files.map((file, index) => ({
-      id: Date.now() + index,
-      name: file.name,
-      size: file.size,
-      type: file.type,
-      status: "uploading",
-      progress: 0,
-      contentType: detectContentType(file.name),
-    }))
+    const processedFiles = await Promise.all(
+      files.map(async (file, index) => {
+        const base = {
+          id: Date.now() + index,
+          name: file.name,
+          size: file.size,
+          type: file.type,
+          status: "uploading",
+          progress: 0,
+          contentType: detectContentType(file.name),
+        }
+
+        // Parse text-based files for automatic content import
+        if (/(\.txt|\.md)$/i.test(file.name)) {
+          const text = await file.text()
+          const lines = text.split(/\r?\n/)
+          const firstIndex = lines.findIndex((l) => l.trim() !== "")
+          const firstLine = firstIndex >= 0 ? lines[firstIndex].trim() : ""
+          let title = firstLine
+          const marker = firstLine.match(/^#\s*(.*)/) || firstLine.match(/^Title:\s*(.*)/i)
+          if (marker) {
+            title = marker[1].trim()
+          }
+          const body = lines.slice(firstIndex + 1).join("\n")
+
+          return {
+            ...base,
+            isTextImport: true,
+            parsedTitle: title || file.name,
+            textBody: body,
+            originalText: text,
+          }
+        }
+
+        return base
+      }),
+    )
 
     setUploadedFiles(processedFiles)
 
