@@ -208,6 +208,10 @@ We welcome contributions! Here's how you can help:
 4. **Documentation**: Help improve guides and documentation
 5. **Testing**: Test new features and provide feedback
 
+## 🧪 Tests
+
+Automated unit tests live in `lib/__tests__` and are executed with [Vitest](https://vitest.dev). Run `npm test` to execute them.
+
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
