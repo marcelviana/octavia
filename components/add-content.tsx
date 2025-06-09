@@ -28,6 +28,7 @@ import {
 import { FileUpload } from "@/components/file-upload"
 import { ContentCreator } from "@/components/content-creator"
 import { MetadataForm } from "@/components/metadata-form"
+import { TextImportPreview } from "@/components/text-import-preview"
 import { createContent } from "@/lib/content-service"
 import { getSupabaseBrowserClient } from "@/lib/supabase"
 
@@ -43,6 +44,7 @@ export function AddContent({ onBack, onContentCreated, onNavigate }: AddContentP
   const [currentStep, setCurrentStep] = useState(1)
   const [isProcessing, setIsProcessing] = useState(false)
   const [createdContent, setCreatedContent] = useState<any>(null)
+  const [createdContents, setCreatedContents] = useState<any[]>([])
 
   const contentTypes = [
     {
@@ -138,6 +140,12 @@ export function AddContent({ onBack, onContentCreated, onNavigate }: AddContentP
       setIsProcessing(false);
     }
   };
+
+  const handleTextImportComplete = (contents: any[]) => {
+    setCreatedContents(contents)
+    setUploadedFiles(contents.map((c: any) => ({ name: c.title })))
+    setCurrentStep(3)
+  }
 
   const handleFinish = async () => {
     try {
@@ -298,6 +306,12 @@ export function AddContent({ onBack, onContentCreated, onNavigate }: AddContentP
                 </div>
               </CardContent>
             </Card>
+          ) : uploadedFiles.length > 0 && uploadedFiles.every((f) => f.isTextImport) ? (
+            <TextImportPreview
+              files={uploadedFiles}
+              onComplete={handleTextImportComplete}
+              onBack={() => setCurrentStep(1)}
+            />
           ) : (
             <MetadataForm
               files={uploadedFiles}
