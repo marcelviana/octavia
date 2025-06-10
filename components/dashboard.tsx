@@ -192,7 +192,7 @@ export function Dashboard({ onNavigate, onSelectContent, onEnterPerformance }: D
           <Card className="bg-white/90 backdrop-blur-sm border-amber-100 shadow-md">
             <CardHeader>
               <CardTitle>Recently Viewed</CardTitle>
-              <CardDescription>Items you've accessed recently</CardDescription>
+              <CardDescription>Items you&apos;ve accessed recently</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-amber-600">{stats?.recentlyViewed || 0}</div>
