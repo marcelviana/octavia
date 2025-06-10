@@ -20,6 +20,8 @@ import {
   Minimize,
   Plus,
   Minus,
+  Moon,
+  Sun,
 } from "lucide-react"
 
 interface PerformanceModeProps {
@@ -40,6 +42,10 @@ export function PerformanceMode({
   const [isPlaying, setIsPlaying] = useState(false)
   const [bpm, setBpm] = useState(80)
   const [isFullScreen, setIsFullScreen] = useState(false)
+  const [darkSheet, setDarkSheet] = useState(false)
+  const [bpmFeedback, setBpmFeedback] = useState<string | null>(null)
+  const pressTimeout = useRef<NodeJS.Timeout | null>(null)
+  const pressInterval = useRef<NodeJS.Timeout | null>(null)
   const contentRef = useRef<HTMLDivElement>(null)
   const controlsTimeout = useRef<NodeJS.Timeout | null>(null)
   const scrollRef = useRef<number | null>(null)
@@ -72,6 +78,35 @@ export function PerformanceMode({
     document.addEventListener("fullscreenchange", updateFs)
     return () => document.removeEventListener("fullscreenchange", updateFs)
   }, [])
+
+  const changeBpm = (delta: number, label: string) => {
+    setBpm((prev) => {
+      const val = Math.max(20, prev + delta)
+      setBpmFeedback(`${val} BPM (${label})`)
+      return val
+    })
+  }
+
+  const startPress = (type: "inc" | "dec") => {
+    pressTimeout.current = setTimeout(() => {
+      pressInterval.current = setInterval(() => {
+        changeBpm(type === "inc" ? 1 : -1, type === "inc" ? "+1" : "-1")
+      }, 100)
+    }, 400)
+  }
+
+  const endPress = (type: "inc" | "dec") => {
+    if (pressTimeout.current) {
+      clearTimeout(pressTimeout.current)
+      pressTimeout.current = null
+    }
+    if (pressInterval.current) {
+      clearInterval(pressInterval.current)
+      pressInterval.current = null
+    } else {
+      changeBpm(type === "inc" ? 5 : -5, type === "inc" ? "+5" : "-5")
+    }
+  }
 
   useEffect(() => {
     const requestLock = async () => {
@@ -163,10 +198,10 @@ export function PerformanceMode({
           onExitPerformance()
           break
         case "+":
-          setBpm((prev) => prev + 5)
+          changeBpm(5, "+5")
           break
         case "-":
-          setBpm((prev) => Math.max(20, prev - 5))
+          changeBpm(-5, "-5")
           break
         case "f":
         case "F":
@@ -193,6 +228,12 @@ export function PerformanceMode({
       contentRef.current.scrollTop = 0
     }
   }, [currentSong])
+
+  useEffect(() => {
+    if (!bpmFeedback) return
+    const t = setTimeout(() => setBpmFeedback(null), 800)
+    return () => clearTimeout(t)
+  }, [bpmFeedback])
 
   const handleMouseMove = () => {
     setShowControls(true)
@@ -259,6 +300,18 @@ export function PerformanceMode({
                 <Maximize className="w-4 h-4" />
               )}
             </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setDarkSheet(!darkSheet)}
+              className="text-white hover:bg-white/20"
+            >
+              {darkSheet ? (
+                <Sun className="w-4 h-4" />
+              ) : (
+                <Moon className="w-4 h-4" />
+              )}
+            </Button>
             <Button variant="ghost" size="sm" className="text-white hover:bg-white/20">
               <Settings className="w-4 h-4" />
             </Button>
@@ -268,14 +321,20 @@ export function PerformanceMode({
 
       {/* Main Content Area */}
       <div className="flex-1 flex items-center justify-center p-4 pt-16 pb-16">
-        <Card className="bg-[#F7F9FA] text-[#1A1F36] shadow-2xl w-full max-w-4xl h-[calc(100vh-120px)] overflow-hidden border-[#A69B8E]">
+        <Card
+          className={`shadow-2xl w-full max-w-4xl h-[calc(100vh-120px)] overflow-hidden border-[#A69B8E] ${darkSheet ? "bg-[#1A1F36] text-[#F7F9FA]" : "bg-[#F7F9FA] text-[#1A1F36]"}`}
+        >
           <div
             ref={contentRef}
             className="p-6 h-full overflow-auto"
             style={{ transform: `scale(${zoom / 100})`, transformOrigin: "top center" }}
           >
             <div className="text-center mb-6 border-b border-[#A69B8E] pb-4">
-              <h1 className="text-3xl font-bold mb-2 text-[#1A1F36]">{currentSongData.title}</h1>
+              <h1
+                className={`text-3xl font-bold mb-2 ${darkSheet ? "text-[#F7F9FA]" : "text-[#1A1F36]"}`}
+              >
+                {currentSongData.title}
+              </h1>
               <p className="text-xl text-[#A69B8E] mb-3">{currentSongData.artist}</p>
               <div className="flex justify-center space-x-4">
                 <Badge variant="outline" className="text-sm px-3 py-1 border-[#2E7CE4] text-[#2E7CE4]">
@@ -300,32 +359,6 @@ export function PerformanceMode({
         </Card>
       </div>
 
-      {/* Floating Scroll Speed Controls */}
-      <div
-        className={`absolute bottom-24 right-4 z-50 flex flex-col items-center space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2 transition-opacity duration-300 ${showControls ? "opacity-100" : "opacity-0 pointer-events-none"}`}
-      >
-        <div className="text-xs bg-[#1A1F36]/80 rounded-md px-2 py-1 text-white">
-          Scroll Speed: {bpm} BPM
-        </div>
-        <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setBpm((prev) => Math.max(20, prev - 5))}
-            className="bg-white/20 hover:bg-white/30 text-white active:scale-95"
-          >
-            <Minus className="w-5 h-5" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setBpm((prev) => prev + 5)}
-            className="bg-white/20 hover:bg-white/30 text-white active:scale-95"
-          >
-            <Plus className="w-5 h-5" />
-          </Button>
-        </div>
-      </div>
 
       {/* Bottom Navigation Controls */}
       <div
@@ -390,9 +423,41 @@ export function PerformanceMode({
             </Button>
           </div>
 
-          <Button variant="ghost" size="sm" className="text-white hover:bg-white/20">
-            <MoreHorizontal className="w-4 h-4" />
-          </Button>
+          <div className="flex items-center space-x-3">
+            <Button variant="ghost" size="sm" className="text-white hover:bg-white/20">
+              <MoreHorizontal className="w-4 h-4" />
+            </Button>
+            <div className="relative flex items-center space-x-1">
+              <Button
+                variant="ghost"
+                size="icon"
+                onPointerDown={() => startPress("dec")}
+                onPointerUp={() => endPress("dec")}
+                onPointerLeave={() => endPress("dec")}
+                onPointerCancel={() => endPress("dec")}
+                className="text-white hover:bg-white/20"
+              >
+                <Minus className="w-4 h-4" />
+              </Button>
+              <span className="text-sm text-[#A69B8E] min-w-[60px] text-center">{bpm} BPM</span>
+              <Button
+                variant="ghost"
+                size="icon"
+                onPointerDown={() => startPress("inc")}
+                onPointerUp={() => endPress("inc")}
+                onPointerLeave={() => endPress("inc")}
+                onPointerCancel={() => endPress("inc")}
+                className="text-white hover:bg-white/20"
+              >
+                <Plus className="w-4 h-4" />
+              </Button>
+              {bpmFeedback && (
+                <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-[#1A1F36] text-white text-xs px-2 py-1 rounded">
+                  {bpmFeedback}
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>
