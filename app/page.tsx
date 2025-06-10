@@ -313,8 +313,11 @@ export default function LandingPage() {
                 <h3 className="font-bold mb-4 text-amber-400">Legal</h3>
                 <ul className="space-y-3">
                   <li>
-                    <Link href="#" className="text-gray-300 hover:text-amber-400 transition-colors">
-                      Privacy
+                    <Link
+                      href="/privacy-policy"
+                      className="text-gray-300 hover:text-amber-400 transition-colors"
+                    >
+                      Privacy Policy
                     </Link>
                   </li>
                   <li>
