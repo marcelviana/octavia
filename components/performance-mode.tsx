@@ -13,9 +13,7 @@ import {
   ZoomOut,
   Pause,
   Play,
-  Settings,
   Clock,
-  MoreHorizontal,
   Maximize,
   Minimize,
   Plus,
@@ -46,6 +44,7 @@ export function PerformanceMode({
   const [bpmFeedback, setBpmFeedback] = useState<string | null>(null)
   const pressTimeout = useRef<NodeJS.Timeout | null>(null)
   const pressInterval = useRef<NodeJS.Timeout | null>(null)
+  const isPressing = useRef(false)
   const contentRef = useRef<HTMLDivElement>(null)
   const controlsTimeout = useRef<NodeJS.Timeout | null>(null)
   const scrollRef = useRef<number | null>(null)
@@ -88,6 +87,7 @@ export function PerformanceMode({
   }
 
   const startPress = (type: "inc" | "dec") => {
+    isPressing.current = true
     pressTimeout.current = setTimeout(() => {
       pressInterval.current = setInterval(() => {
         changeBpm(type === "inc" ? 1 : -1, type === "inc" ? "+1" : "-1")
@@ -95,7 +95,9 @@ export function PerformanceMode({
     }, 400)
   }
 
-  const endPress = (type: "inc" | "dec") => {
+  const endPress = (type: "inc" | "dec", trigger: boolean = true) => {
+    if (!isPressing.current) return
+    isPressing.current = false
     if (pressTimeout.current) {
       clearTimeout(pressTimeout.current)
       pressTimeout.current = null
@@ -103,7 +105,7 @@ export function PerformanceMode({
     if (pressInterval.current) {
       clearInterval(pressInterval.current)
       pressInterval.current = null
-    } else {
+    } else if (trigger) {
       changeBpm(type === "inc" ? 5 : -5, type === "inc" ? "+5" : "-5")
     }
   }
@@ -312,9 +314,6 @@ export function PerformanceMode({
                 <Moon className="w-4 h-4" />
               )}
             </Button>
-            <Button variant="ghost" size="sm" className="text-white hover:bg-white/20">
-              <Settings className="w-4 h-4" />
-            </Button>
           </div>
         </div>
       </div>
@@ -424,18 +423,15 @@ export function PerformanceMode({
           </div>
 
           <div className="flex items-center space-x-3">
-            <Button variant="ghost" size="sm" className="text-white hover:bg-white/20">
-              <MoreHorizontal className="w-4 h-4" />
-            </Button>
             <div className="relative flex items-center space-x-1">
               <Button
                 variant="ghost"
                 size="icon"
                 onPointerDown={() => startPress("dec")}
                 onPointerUp={() => endPress("dec")}
-                onPointerLeave={() => endPress("dec")}
-                onPointerCancel={() => endPress("dec")}
-                className="text-white hover:bg-white/20"
+                onPointerLeave={() => endPress("dec", false)}
+                onPointerCancel={() => endPress("dec", false)}
+                className="text-white hover:bg-white/30 active:scale-95 transition-transform"
               >
                 <Minus className="w-4 h-4" />
               </Button>
@@ -445,9 +441,9 @@ export function PerformanceMode({
                 size="icon"
                 onPointerDown={() => startPress("inc")}
                 onPointerUp={() => endPress("inc")}
-                onPointerLeave={() => endPress("inc")}
-                onPointerCancel={() => endPress("inc")}
-                className="text-white hover:bg-white/20"
+                onPointerLeave={() => endPress("inc", false)}
+                onPointerCancel={() => endPress("inc", false)}
+                className="text-white hover:bg-white/30 active:scale-95 transition-transform"
               >
                 <Plus className="w-4 h-4" />
               </Button>
