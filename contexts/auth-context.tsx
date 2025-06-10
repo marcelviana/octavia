@@ -27,6 +27,7 @@ type AuthContextType = {
   isInitialized: boolean
   signIn: (email: string, password: string) => Promise<{ error: any }>
   signUp: (email: string, password: string, userData: Partial<Profile>) => Promise<{ error: any; data: any }>
+  signInWithGoogle: () => Promise<{ error: any }>
   signOut: () => Promise<void>
   updateProfile: (data: Partial<Profile>) => Promise<{ error: any }>
 }
@@ -227,6 +228,38 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     [isSupabaseConfigured],
   )
 
+  const signInWithGoogle = useCallback(async () => {
+    if (!isSupabaseConfigured) {
+      return { error: { message: "Demo mode - authentication disabled" } }
+    }
+
+    try {
+      console.log("Attempting Google sign in")
+      setIsLoading(true)
+
+      const supabase = getSupabaseBrowserClient()
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/login`,
+        },
+      })
+
+      if (error) {
+        console.error("Google sign in error:", error.message)
+        setIsLoading(false)
+        return { error }
+      }
+
+      // Redirect handled by Supabase
+      return { error: null }
+    } catch (error: any) {
+      console.error("Google sign in exception:", error?.message || "Unknown error")
+      setIsLoading(false)
+      return { error: { message: error?.message || "Google sign in failed" } }
+    }
+  }, [isSupabaseConfigured])
+
   const signUp = useCallback(
     async (email: string, password: string, userData: Partial<Profile>) => {
       if (!isSupabaseConfigured) {
@@ -342,6 +375,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     isConfigured: isSupabaseConfigured,
     isInitialized,
     signIn,
+    signInWithGoogle,
     signUp,
     signOut,
     updateProfile,

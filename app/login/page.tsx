@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useAuth } from "@/contexts/auth-context"
 import { Music, Lock, Mail } from "lucide-react"
+import { getSupabaseBrowserClient } from "@/lib/supabase"
 import Image from "next/image"
 
 export default function LoginPage() {
@@ -20,18 +21,46 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [hasRedirected, setHasRedirected] = useState(false)
   const router = useRouter()
-  const { signIn, isConfigured, user, isInitialized } = useAuth()
+  const { signIn, signInWithGoogle, isConfigured, user, profile, isInitialized } = useAuth()
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const errorDesc = params.get("error_description")
+    if (errorDesc) {
+      setError(errorDesc)
+    }
+  }, [])
 
   // Single redirect effect - only runs once when user is authenticated
   useEffect(() => {
     if (isInitialized && user && !hasRedirected) {
-      console.log("User authenticated, performing single redirect to dashboard...")
       setHasRedirected(true)
 
-      // Use window.location for more reliable navigation in production
-      window.location.href = "/dashboard"
+      const handleRedirect = async () => {
+        if (isConfigured && !profile) {
+          try {
+            const supabase = getSupabaseBrowserClient()
+            await supabase.from("profiles").insert({
+              id: user.id,
+              email: user.email!,
+              full_name: user.user_metadata.full_name || user.user_metadata.name || null,
+              first_name: (user.user_metadata.full_name || "").split(" ")[0] || null,
+              last_name:
+                (user.user_metadata.full_name || "").split(" ").slice(1).join(" ") || null,
+              avatar_url: user.user_metadata.avatar_url || null,
+            })
+            window.location.href = "/profile"
+            return
+          } catch (err) {
+            console.error("Profile creation failed:", err)
+          }
+        }
+        window.location.href = "/dashboard"
+      }
+
+      handleRedirect()
     }
-  }, [user, isInitialized, hasRedirected])
+  }, [user, profile, isInitialized, hasRedirected, isConfigured])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -58,6 +87,27 @@ export default function LoginPage() {
       console.log("Login successful, waiting for auth state update...")
     } catch (err: any) {
       setError(err.message || "An error occurred during login")
+      setIsLoading(false)
+    }
+  }
+
+  const handleGoogleSignIn = async () => {
+    setError("")
+    setIsLoading(true)
+    try {
+      if (!isConfigured) {
+        window.location.href = "/dashboard"
+        return
+      }
+
+      const { error: googleError } = await signInWithGoogle()
+
+      if (googleError) {
+        setError(googleError.message || "Google sign in failed")
+        setIsLoading(false)
+      }
+    } catch (err: any) {
+      setError(err.message || "Google sign in failed")
       setIsLoading(false)
     }
   }
@@ -186,6 +236,21 @@ export default function LoginPage() {
                     <span className="bg-white/80 px-2 text-sm text-amber-600">or</span>
                   </div>
                 </div>
+                <Button
+                  type="button"
+                  onClick={handleGoogleSignIn}
+                  disabled={isLoading}
+                  className="w-full border border-amber-200 bg-white text-amber-800 hover:bg-amber-50"
+                >
+                  {isLoading ? (
+                    <div className="flex items-center justify-center">
+                      <div className="w-5 h-5 border-2 border-amber-800 border-t-transparent rounded-full animate-spin mr-2"></div>
+                      Loading...
+                    </div>
+                  ) : (
+                    "Continue with Google"
+                  )}
+                </Button>
                 <div className="text-center">
                   <p className="text-amber-800">
                     Don&apos;t have an account?{" "}
