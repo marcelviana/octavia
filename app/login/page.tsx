@@ -49,7 +49,7 @@ export default function LoginPage() {
                 (user.user_metadata.full_name || "").split(" ").slice(1).join(" ") || null,
               avatar_url: user.user_metadata.avatar_url || null,
             })
-            window.location.href = "/profile"
+            window.location.href = "/dashboard"
             return
           } catch (err) {
             console.error("Profile creation failed:", err)
