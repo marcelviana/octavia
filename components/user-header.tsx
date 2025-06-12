@@ -13,8 +13,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { User, Settings, LogOut } from "lucide-react"
+import { cn } from "@/lib/utils"
 
-export function UserHeader() {
+export function UserHeader({ compact = false }: { compact?: boolean } = {}) {
   const { user, profile, signOut, isLoading } = useAuth()
 
   if (isLoading) {
@@ -45,7 +46,10 @@ export function UserHeader() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+        <Button
+          variant="ghost"
+          className={cn("relative h-10 w-10 rounded-full", compact && "p-0")}
+        >
           <Avatar className="h-10 w-10">
             <AvatarImage src={profile?.avatar_url || ""} alt={profile?.full_name || user.email || "User"} />
             <AvatarFallback>{initials}</AvatarFallback>

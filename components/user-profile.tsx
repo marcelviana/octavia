@@ -13,7 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { AlertCircle, Check } from "lucide-react"
 
 export function UserProfile() {
-  const { profile, updateProfile, signOut } = useAuth()
+  const { user, profile, updateProfile, signOut } = useAuth()
   const [isEditing, setIsEditing] = useState(false)
   const [formData, setFormData] = useState({
     first_name: profile?.first_name || "",
@@ -167,8 +167,8 @@ export function UserProfile() {
           </div>
         )}
       </CardContent>
-      <CardFooter className="flex justify-between">
-        <p className="text-sm text-gray-500">Member since {new Date(profile.created_at).toLocaleDateString()}</p>
+        <CardFooter className="flex justify-between">
+          <p className="text-sm text-gray-500">Member since {user && new Date(user.created_at).toLocaleDateString()}</p>
         <Button variant="outline" onClick={signOut}>
           Sign Out
         </Button>
