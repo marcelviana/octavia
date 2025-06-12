@@ -8,6 +8,7 @@ export default defineConfig({
   esbuild: {
     jsx: 'automatic',
     jsxImportSource: 'react',
+    setupFiles: './vitest.setup.ts',
   },
   resolve: {
     alias: {

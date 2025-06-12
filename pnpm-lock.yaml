@@ -134,9 +134,6 @@ importers:
       input-otp:
         specifier: 1.4.1
         version: 1.4.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      jsdom:
-        specifier: latest
-        version: 26.1.0
       lucide-react:
         specifier: ^0.454.0
         version: 0.454.0(react@19.0.0)
@@ -183,6 +180,7 @@ importers:
         specifier: ^3.24.1
         version: 3.24.1
     devDependencies:
+<<<<<<< codex/test-loginform-and-signupform-components
       '@testing-library/jest-dom':
         specifier: ^6.6.3
         version: 6.6.3
@@ -192,6 +190,11 @@ importers:
       '@testing-library/user-event':
         specifier: ^14.6.1
         version: 14.6.1(@testing-library/dom@10.4.0)
+=======
+      '@testing-library/react':
+        specifier: ^16.3.0
+        version: 16.3.0(@testing-library/dom@10.4.0)(@types/react-dom@19.0.0)(@types/react@19.0.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+>>>>>>> main
       '@types/node':
         specifier: ^22
         version: 22.0.0
@@ -210,6 +213,9 @@ importers:
       eslint-config-next:
         specifier: ^15.3.3
         version: 15.3.3(eslint@9.28.0(jiti@1.21.7))(typescript@5.0.2)
+      jsdom:
+        specifier: ^26.1.0
+        version: 26.1.0
       postcss:
         specifier: ^8.5
         version: 8.5.0
@@ -1548,10 +1554,13 @@ packages:
     resolution: {integrity: sha512-pemlzrSESWbdAloYml3bAJMEfNh1Z7EduzqPKprCH5S341frlpYnUEW0H72dLxa6IsYr+mPno20GiSm+h9dEdQ==}
     engines: {node: '>=18'}
 
+<<<<<<< codex/test-loginform-and-signupform-components
   '@testing-library/jest-dom@6.6.3':
     resolution: {integrity: sha512-IteBhl4XqYNkM54f4ejhLRJiZNqcSCoXUOG2CPK7qbD322KjQozM4kHQOfkG2oln9b9HTYqs+Sae8vBATubxxA==}
     engines: {node: '>=14', npm: '>=6', yarn: '>=1'}
 
+=======
+>>>>>>> main
   '@testing-library/react@16.3.0':
     resolution: {integrity: sha512-kFSyxiEDwv1WLl2fgsq6pPBbw5aWKrsY2/noi1Id0TK0UParSF62oFQFGHXIyaG4pp2tEub/Zlel+fjjZILDsw==}
     engines: {node: '>=18'}
@@ -5060,6 +5069,7 @@ snapshots:
       lz-string: 1.5.0
       pretty-format: 27.5.1
 
+<<<<<<< codex/test-loginform-and-signupform-components
   '@testing-library/jest-dom@6.6.3':
     dependencies:
       '@adobe/css-tools': 4.4.3
@@ -5070,6 +5080,8 @@ snapshots:
       lodash: 4.17.21
       redent: 3.0.0
 
+=======
+>>>>>>> main
   '@testing-library/react@16.3.0(@testing-library/dom@10.4.0)(@types/react-dom@19.0.0)(@types/react@19.0.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
       '@babel/runtime': 7.27.6
