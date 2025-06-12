@@ -15,7 +15,7 @@ export default function ConfirmEmailPage() {
           </div>
           <CardTitle className="text-xl text-amber-900">Confirm Your Email</CardTitle>
           <CardDescription className="text-amber-700">
-            We've sent a confirmation link to your email. Click the link to activate your account.
+            We&apos;ve sent a confirmation link to your email. Click the link to activate your account.
           </CardDescription>
         </CardHeader>
         <CardContent>

@@ -48,7 +48,7 @@ export default function SettingsPage() {
           sidebarCollapsed ? "ml-20" : "ml-72",
         )}
       >
-        <Settings onNavigate={handleNavigate} />
+        <Settings />
       </main>
     </div>
   )

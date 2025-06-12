@@ -56,6 +56,7 @@ export default function ContentPage() {
 
   // Handle performance mode
   const handleEnterPerformance = () => {
+    if (!content) return
     router.push(`/performance?contentId=${content.id}`)
   }
 
@@ -66,6 +67,7 @@ export default function ContentPage() {
 
   const handleSaveEdit = async (updatedContent: any) => {
     try {
+      if (!content) return
       await updateContent(content.id, updatedContent)
       setContent({ ...content, ...updatedContent })
       setIsEditing(false)
