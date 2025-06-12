@@ -1,7 +1,9 @@
 import React from 'react'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, cleanup } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { expect, vi, describe, it, beforeEach, afterEach } from 'vitest'
+import * as matchers from '@testing-library/jest-dom/matchers'
+expect.extend(matchers)
 const push = vi.fn()
 const signUp = vi.fn()
 
@@ -18,8 +20,9 @@ beforeEach(() => {
   push.mockReset()
   signUp.mockReset()
 })
+afterEach(cleanup)
 
-describe.skip('SignupForm', () => {
+describe('SignupForm', () => {
   it('submits data and redirects to / on success', async () => {
     signUp.mockResolvedValue({ error: null, data: { user: {}, session: {} } })
     render(<SignupForm />)
