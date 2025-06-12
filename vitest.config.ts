@@ -3,13 +3,12 @@ import { resolve } from 'path'
 
 export default defineConfig({
   test: {
-    environment: 'happy-dom',
     environment: 'jsdom',
+    setupFiles: './vitest.setup.ts',
   },
   esbuild: {
     jsx: 'automatic',
     jsxImportSource: 'react',
-    setupFiles: './vitest.setup.ts',
   },
   resolve: {
     alias: {
