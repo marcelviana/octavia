@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState, useCallback } from "react"
+import { useState } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
@@ -74,29 +74,29 @@ export function FileUpload({ onFilesUploaded }: FileUploadProps) {
     setIsUploading(false)
   }
 
-  const handleDragOver = useCallback((e: React.DragEvent) => {
+  const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault()
     setIsDragOver(true)
-  }, [])
+  }
 
-  const handleDragLeave = useCallback((e: React.DragEvent) => {
+  const handleDragLeave = (e: React.DragEvent) => {
     e.preventDefault()
     setIsDragOver(false)
-  }, [])
+  }
 
-  const handleDrop = useCallback((e: React.DragEvent) => {
+  const handleDrop = (e: React.DragEvent) => {
     e.preventDefault()
     setIsDragOver(false)
     const files = Array.from(e.dataTransfer.files)
     handleFiles(files)
-  }, [handleFiles])
+  }
 
-  const handleFileSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const files = Array.from(e.target.files)
       handleFiles(files)
     }
-  }, [handleFiles])
+  }
 
   const detectContentType = (filename: string) => {
     const ext = filename.split(".").pop()?.toLowerCase()
