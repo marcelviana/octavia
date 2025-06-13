@@ -34,6 +34,7 @@ function PerformancePageInner() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    let mounted = true
     const contentId = params.get("contentId")
     const setlistId = params.get("setlistId")
 
@@ -41,7 +42,7 @@ function PerformancePageInner() {
       try {
         if (contentId) {
           const c = await getContentById(contentId)
-          setContent(c)
+          if (mounted) setContent(c)
         }
 
         if (setlistId) {
@@ -58,16 +59,20 @@ function PerformancePageInner() {
             sl.setlist_songs = songsWithContent
           }
 
-          setSetlist(sl)
+          if (mounted) setSetlist(sl)
         }
       } catch (err) {
         console.error("Failed to load performance data", err)
       } finally {
-        setLoading(false)
+        if (mounted) setLoading(false)
       }
     }
 
     load()
+
+    return () => {
+      mounted = false
+    }
   }, [params])
 
   // Handle exit performance mode

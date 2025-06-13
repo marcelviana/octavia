@@ -25,24 +25,33 @@ export default function ContentPage() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
 
   useEffect(() => {
+    let mounted = true
+
+    const loadContent = async (contentId: string) => {
+      try {
+        if (mounted) setContentLoading(true)
+        if (mounted) setContentError(null)
+        const data = await getContentById(contentId)
+        if (mounted) setContent(data)
+      } catch (err) {
+        console.error("Error loading content:", err)
+        if (mounted)
+          setContentError(
+            "Failed to load content. It may not exist or you don't have permission to view it.",
+          )
+      } finally {
+        if (mounted) setContentLoading(false)
+      }
+    }
+
     if (params.id && user) {
       loadContent(params.id as string)
     }
-  }, [params.id, user])
 
-  const loadContent = async (contentId: string) => {
-    try {
-      setContentLoading(true)
-      setContentError(null)
-      const data = await getContentById(contentId)
-      setContent(data)
-    } catch (err) {
-      console.error("Error loading content:", err)
-      setContentError("Failed to load content. It may not exist or you don't have permission to view it.")
-    } finally {
-      setContentLoading(false)
+    return () => {
+      mounted = false
     }
-  }
+  }, [params.id, user])
 
   // Handle navigation from sidebar
   const handleNavigate = (screen: string) => {
