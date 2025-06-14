@@ -8,6 +8,7 @@ const AddContent = dynamic(() => import("@/components/add-content"), {
   loading: () => <p>Loading add content...</p>,
 })
 import { Sidebar } from "@/components/sidebar"
+import { Header } from "@/components/header"
 import { useAuth } from "@/contexts/auth-context"
 import { cn } from "@/lib/utils"
 
@@ -16,6 +17,7 @@ export default function AddContentPage() {
   const { user, isLoading } = useAuth()
   const [activeScreen, setActiveScreen] = useState("add-content")
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
+  const [sidebarMobileOpen, setSidebarMobileOpen] = useState(false)
 
   // Handle navigation from sidebar
   const handleNavigate = (screen: string) => {
@@ -55,15 +57,24 @@ export default function AddContentPage() {
 
   return (
     <div className="flex h-screen bg-[#fffcf7]">
-      <Sidebar activeScreen={activeScreen} onNavigate={handleNavigate} onCollapsedChange={setSidebarCollapsed} />
-      <main
-        className={cn(
-          "flex-1 overflow-auto transition-all duration-300 ease-in-out",
-          sidebarCollapsed ? "md:ml-20" : "md:ml-72",
-        )}
+      <Sidebar
+        activeScreen={activeScreen}
+        onNavigate={handleNavigate}
+        onCollapsedChange={setSidebarCollapsed}
+        mobileOpen={sidebarMobileOpen}
+        onMobileOpenChange={setSidebarMobileOpen}
+      />
+      <div className={cn("flex-1 flex flex-col transition-all duration-300 ease-in-out", sidebarCollapsed ? "md:ml-20" : "md:ml-72")}
       >
-        <AddContent onNavigate={handleNavigate} onContentCreated={handleContentCreated} onBack={() => router.back()} />
-      </main>
+        <Header onMenuClick={() => setSidebarMobileOpen(true)} title="Add Content" />
+        <main className="flex-1 overflow-auto">
+          <AddContent
+            onNavigate={handleNavigate}
+            onContentCreated={handleContentCreated}
+            onBack={() => router.back()}
+          />
+        </main>
+      </div>
     </div>
   )
 }

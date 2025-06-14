@@ -5,6 +5,7 @@ import { redirect } from "next/navigation"
 import { useEffect, useState } from "react"
 import { Skeleton } from "@/components/ui/skeleton"
 import ProfileForm from "@/components/ProfileForm"
+import { Header } from "@/components/header"
 
 export default function ProfilePage() {
   const { user, isLoading, isInitialized } = useAuth()
@@ -52,8 +53,11 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="flex h-screen bg-[#fffcf7]">
-      <ProfileForm />
+    <div className="flex flex-col min-h-screen bg-[#fffcf7]">
+      <Header title="Profile" />
+      <main className="flex-1 overflow-auto">
+        <ProfileForm />
+      </main>
     </div>
   )
 }

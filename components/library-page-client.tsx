@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Library } from "@/components/library";
 import { Sidebar } from "@/components/sidebar";
+import { Header } from "@/components/header";
 import { cn } from "@/lib/utils";
 
 interface LibraryPageClientProps {
@@ -15,6 +16,7 @@ export default function LibraryPageClient({
   const router = useRouter();
   const [activeScreen, setActiveScreen] = useState("library");
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [sidebarMobileOpen, setSidebarMobileOpen] = useState(false);
 
   const handleNavigate = (screen: string) => {
     router.push(`/${screen}`);
@@ -30,18 +32,16 @@ export default function LibraryPageClient({
         activeScreen={activeScreen}
         onNavigate={handleNavigate}
         onCollapsedChange={setSidebarCollapsed}
+        mobileOpen={sidebarMobileOpen}
+        onMobileOpenChange={setSidebarMobileOpen}
       />
-      <main
-        className={cn(
-          "flex-1 overflow-auto transition-all duration-300 ease-in-out",
-          sidebarCollapsed ? "md:ml-20" : "md:ml-72",
-        )}
+      <div className={cn("flex-1 flex flex-col transition-all duration-300 ease-in-out", sidebarCollapsed ? "md:ml-20" : "md:ml-72")}
       >
-        <Library
-          onSelectContent={handleSelectContent}
-          initialContent={initialContent}
-        />
-      </main>
+        <Header onMenuClick={() => setSidebarMobileOpen(true)} title="Library" />
+        <main className="flex-1 overflow-auto">
+          <Library onSelectContent={handleSelectContent} initialContent={initialContent} />
+        </main>
+      </div>
     </div>
   );
 }
