@@ -1,5 +1,8 @@
 "use client"
 
+export const dynamic = "force-static"
+export const revalidate = 60
+
 import Link from "next/link"
 import { CheckCircle } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
