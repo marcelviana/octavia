@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { useRouter, useParams } from "next/navigation"
 import dynamic from "next/dynamic"
+import { toast } from "sonner"
 
 const ContentEditor = dynamic(() => import("@/components/content-editor"), {
   loading: () => <p>Loading editor...</p>,
@@ -52,6 +53,7 @@ export default function EditContentPage() {
 
     try {
       await updateContent(content.id, updatedContent)
+      toast.success("Changes saved successfully")
       // Navigate back to content view
       router.push(`/content/${content.id}`)
     } catch (err) {

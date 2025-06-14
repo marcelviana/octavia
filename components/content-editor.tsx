@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Separator } from "@/components/ui/separator"
+import { toast } from "sonner"
 import {
   Save,
   X,
@@ -177,7 +178,7 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
             </div>
           </div>
 
-          <div className="flex items-center space-x-3">
+          <div className="flex flex-col-reverse sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
             <Button
               variant="outline"
               size="sm"
@@ -199,8 +200,9 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
             <Separator orientation="vertical" className="h-8" />
             <Button
               variant="outline"
+              size="lg"
               onClick={onCancel}
-              className="border-gray-300 text-gray-700 hover:bg-gray-50 px-6"
+              className="border-gray-300 text-gray-700 hover:bg-gray-50 px-6 w-full sm:w-auto"
             >
               <X className="w-4 h-4 mr-2" />
               Cancel
@@ -208,7 +210,8 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
             <Button
               onClick={handleSave}
               disabled={!hasChanges}
-              className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-6 shadow-lg"
+              size="lg"
+              className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-6 shadow-lg w-full sm:w-auto"
             >
               <Save className="w-4 h-4 mr-2" />
               Save Changes
@@ -297,7 +300,7 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
       )}
 
       {/* Main Content */}
-      <div className="flex-1 flex">
+      <div className="flex-1">
         <div className="flex-1 overflow-auto">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full">
             <div className="bg-white/90 backdrop-blur-sm border-b border-amber-200 px-6 py-2">
@@ -315,13 +318,6 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
                 >
                   <Music className="w-4 h-4 mr-2" />
                   Details
-                </TabsTrigger>
-                <TabsTrigger
-                  value="settings"
-                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500 data-[state=active]:to-orange-600 data-[state=active]:text-white"
-                >
-                  <Settings className="w-4 h-4 mr-2" />
-                  Settings
                 </TabsTrigger>
               </TabsList>
             </div>
@@ -344,114 +340,7 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
               </div>
             </TabsContent>
 
-            <TabsContent value="settings" className="flex-1 p-6">
-              <Card className="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-                <CardContent className="p-8">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-                    <Settings className="w-6 h-6 mr-3 text-amber-500" />
-                    Editor Settings
-                  </h3>
-                  <div className="space-y-6">
-                    <div className="flex items-center justify-between p-4 bg-amber-50 rounded-xl border border-amber-200">
-                      <div>
-                        <Label className="text-lg font-medium text-gray-900">Auto-save</Label>
-                        <p className="text-gray-600">Automatically save changes every 30 seconds</p>
-                      </div>
-                      <input type="checkbox" defaultChecked className="w-5 h-5 text-amber-600" />
-                    </div>
-                    <div className="flex items-center justify-between p-4 bg-amber-50 rounded-xl border border-amber-200">
-                      <div>
-                        <Label className="text-lg font-medium text-gray-900">Show grid</Label>
-                        <p className="text-gray-600">Display alignment grid for precise editing</p>
-                      </div>
-                      <input type="checkbox" className="w-5 h-5 text-amber-600" />
-                    </div>
-                    <div className="flex items-center justify-between p-4 bg-amber-50 rounded-xl border border-amber-200">
-                      <div>
-                        <Label className="text-lg font-medium text-gray-900">Snap to grid</Label>
-                        <p className="text-gray-600">Automatically align elements to grid</p>
-                      </div>
-                      <input type="checkbox" className="w-5 h-5 text-amber-600" />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
           </Tabs>
-        </div>
-
-        {/* Properties Panel */}
-        <div className="w-80 bg-white/90 backdrop-blur-sm border-l border-amber-200 p-6 shadow-lg">
-          <div className="space-y-8">
-            <div>
-              <h3 className="font-bold text-xl text-gray-900 mb-4 flex items-center">
-                <Sparkles className="w-5 h-5 mr-2 text-amber-500" />
-                Properties
-              </h3>
-              <div className="space-y-4">
-                <div className="p-3 bg-amber-50 rounded-lg border border-amber-200">
-                  <Label className="text-sm font-medium text-gray-700">Active Tool</Label>
-                  <p className="text-lg font-bold text-amber-700 capitalize">{selectedTool}</p>
-                </div>
-                <div className="p-3 bg-amber-50 rounded-lg border border-amber-200">
-                  <Label className="text-sm font-medium text-gray-700">Zoom Level</Label>
-                  <p className="text-lg font-bold text-amber-700">{zoom}%</p>
-                </div>
-                <div className="p-3 bg-amber-50 rounded-lg border border-amber-200">
-                  <Label className="text-sm font-medium text-gray-700">Annotations</Label>
-                  <p className="text-lg font-bold text-amber-700">{annotations.length}</p>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="font-bold text-xl text-gray-900 mb-4 flex items-center">
-                <Clock className="w-5 h-5 mr-2 text-amber-500" />
-                Recent Changes
-              </h3>
-              <div className="p-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-lg border border-amber-200">
-                <p className="text-sm text-gray-600 mb-1">Last modified</p>
-                <p className="font-medium text-gray-900">{new Date().toLocaleTimeString()}</p>
-                <p className="text-sm text-gray-600 mt-2 mb-1">Status</p>
-                <p className={`font-medium ${hasChanges ? "text-red-600" : "text-green-600"}`}>
-                  {hasChanges ? "Unsaved changes" : "All changes saved"}
-                </p>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="font-bold text-xl text-gray-900 mb-4 flex items-center">
-                <Sparkles className="w-5 h-5 mr-2 text-amber-500" />
-                Quick Actions
-              </h3>
-              <div className="space-y-3">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full border-amber-300 text-amber-700 hover:bg-amber-50 justify-start"
-                >
-                  <Type className="w-4 h-4 mr-2" />
-                  Add Text Box
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full border-amber-300 text-amber-700 hover:bg-amber-50 justify-start"
-                >
-                  <Music className="w-4 h-4 mr-2" />
-                  Insert Chord
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full border-amber-300 text-amber-700 hover:bg-amber-50 justify-start"
-                >
-                  <Pen className="w-4 h-4 mr-2" />
-                  Add Fingering
-                </Button>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
