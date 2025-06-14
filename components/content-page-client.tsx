@@ -70,9 +70,16 @@ export default function ContentPageClient({
         mobileOpen={sidebarMobileOpen}
         onMobileOpenChange={setSidebarMobileOpen}
       />
-      <div className={cn("flex-1 flex flex-col transition-all duration-300 ease-in-out", sidebarCollapsed ? "md:ml-20" : "md:ml-72")}
+      <div
+        className={cn(
+          "flex-1 flex flex-col transition-all duration-300 ease-in-out",
+          sidebarCollapsed ? "md:ml-20" : "md:ml-72",
+        )}
       >
-        <Header onMenuClick={() => setSidebarMobileOpen(true)} title={isEditing ? "Edit Content" : "View Content"} />
+        <Header
+          onMenuClick={() => setSidebarMobileOpen(true)}
+          title={isEditing ? "Edit Content" : "View Content"}
+        />
         <main className="flex-1 overflow-auto">
           {isEditing ? (
             <ContentEditor
@@ -86,6 +93,7 @@ export default function ContentPageClient({
               onBack={handleBack}
               onEnterPerformance={handleEnterPerformance}
               onEdit={handleEdit}
+              showToolbar={false}
             />
           )}
         </main>
