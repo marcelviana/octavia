@@ -2,7 +2,11 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { AddContent } from "@/components/add-content"
+import dynamic from "next/dynamic"
+
+const AddContent = dynamic(() => import("@/components/add-content"), {
+  loading: () => <p>Loading add content...</p>,
+})
 import { Sidebar } from "@/components/sidebar"
 import { useAuth } from "@/contexts/auth-context"
 import { cn } from "@/lib/utils"
