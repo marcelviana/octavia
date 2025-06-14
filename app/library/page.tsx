@@ -1,69 +1,19 @@
-"use client"
+import { redirect } from "next/navigation";
+import { getSupabaseServerClient } from "@/lib/supabase-server";
+import { getUserContentServer } from "@/lib/content-service-server";
+import LibraryPageClient from "@/components/library-page-client";
 
-import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
-import { Library } from "@/components/library"
-import { Sidebar } from "@/components/sidebar"
-import { useAuth } from "@/contexts/auth-context"
-import { cn } from "@/lib/utils"
+export default async function LibraryPage() {
+  const supabase = await getSupabaseServerClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-export default function LibraryPage() {
-  const router = useRouter()
-  const { user, isLoading } = useAuth()
-  const [activeScreen, setActiveScreen] = useState("library")
-  const [isPageLoading, setIsPageLoading] = useState(true)
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
-
-  // Handle initial loading and authentication
-  useEffect(() => {
-    console.log("user", user, "isLoading", isLoading)
-    if (!isLoading) {
-      if (!user) {
-        router.push("/login")
-      } else {
-        setIsPageLoading(false)
-      }
-    }
-  }, [user, isLoading, router])
-
-  // Handle navigation from sidebar
-  const handleNavigate = (screen: string) => {
-    router.push(`/${screen}`)
-  }
-
-  // Handle content selection
-  const handleSelectContent = (content: any) => {
-    router.push(`/content/${content.id}`)
-  }
-
-  // Don't render anything while loading to prevent blinking
-  if (isLoading || isPageLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-[#fffcf7]">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-t-[#2E7CE4] border-[#F2EDE5] rounded-full animate-spin mx-auto"></div>
-          <p className="mt-4 text-[#1A1F36]">Loading your library...</p>
-        </div>
-      </div>
-    )
-  }
-
-  // Don't render anything if not authenticated (will redirect)
   if (!user) {
-    return null
+    redirect("/login");
   }
 
-  return (
-    <div className="flex h-screen bg-[#fffcf7]">
-      <Sidebar activeScreen={activeScreen} onNavigate={handleNavigate} onCollapsedChange={setSidebarCollapsed} />
-      <main
-        className={cn(
-          "flex-1 overflow-auto transition-all duration-300 ease-in-out",
-          sidebarCollapsed ? "ml-20" : "ml-72",
-        )}
-      >
-        <Library onSelectContent={handleSelectContent} />
-      </main>
-    </div>
-  )
+  const content = await getUserContentServer();
+
+  return <LibraryPageClient initialContent={content} />;
 }
