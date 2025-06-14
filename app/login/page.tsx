@@ -18,7 +18,8 @@ export default async function LoginPage({
     redirect("/dashboard")
   }
 
-  const error = typeof searchParams?.error_description === "string" ? searchParams?.error_description : ""
+  const errorDescription = await Promise.resolve(searchParams?.error_description)
+  const error = typeof errorDescription === "string" ? errorDescription : ""
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-gradient-to-br from-amber-50 to-orange-100">
