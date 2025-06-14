@@ -54,7 +54,7 @@ export default function SetlistsPage() {
       <main
         className={cn(
           "flex-1 overflow-auto transition-all duration-300 ease-in-out",
-          sidebarCollapsed ? "ml-20" : "ml-72",
+          sidebarCollapsed ? "md:ml-20" : "md:ml-72",
         )}
       >
         <SetlistManager onEnterPerformance={handleStartPerformance} />
