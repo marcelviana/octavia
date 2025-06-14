@@ -5,7 +5,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Select,
   SelectContent,
@@ -57,7 +56,6 @@ interface LibraryProps {
 
 export function Library({ onSelectContent, initialContent }: LibraryProps) {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState("recent");
   const [viewMode, setViewMode] = useState("grid");
@@ -74,21 +72,6 @@ export function Library({ onSelectContent, initialContent }: LibraryProps) {
 
   useEffect(() => {
     let filtered = [...content];
-
-    // Filter by tab
-    if (activeTab !== "all") {
-      filtered = filtered.filter((item) => {
-        if (activeTab === "guitar-tabs")
-          return item.content_type === "Guitar Tab";
-        if (activeTab === "chord-charts")
-          return item.content_type === "Chord Chart";
-        if (activeTab === "sheet-music")
-          return item.content_type === "Sheet Music";
-        if (activeTab === "lyrics") return item.content_type === "Lyrics";
-        if (activeTab === "favorites") return item.is_favorite;
-        return true;
-      });
-    }
 
     // Filter by search query
     if (searchQuery) {
@@ -137,7 +120,7 @@ export function Library({ onSelectContent, initialContent }: LibraryProps) {
     }
 
     setFilteredContent(filtered);
-  }, [content, activeTab, searchQuery, sortBy, selectedFilters]);
+  }, [content, searchQuery, sortBy, selectedFilters]);
 
   const getContentIcon = (type: string) => {
     switch (type) {
@@ -422,53 +405,6 @@ export function Library({ onSelectContent, initialContent }: LibraryProps) {
           </div>
         </div>
       </div>
-
-      {/* Content Tabs */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
-        <TabsList className="bg-white border border-amber-200 p-1 rounded-lg">
-          <TabsTrigger
-            value="all"
-            className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500 data-[state=active]:to-orange-500 data-[state=active]:text-white rounded-md transition-all"
-          >
-            All Content
-          </TabsTrigger>
-          <TabsTrigger
-            value="guitar-tabs"
-            className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-blue-600 data-[state=active]:text-white rounded-md transition-all"
-          >
-            <Guitar className="w-4 h-4 mr-2" />
-            Guitar Tabs
-          </TabsTrigger>
-          <TabsTrigger
-            value="chord-charts"
-            className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-purple-600 data-[state=active]:text-white rounded-md transition-all"
-          >
-            <Music className="w-4 h-4 mr-2" />
-            Chord Charts
-          </TabsTrigger>
-          <TabsTrigger
-            value="sheet-music"
-            className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500 data-[state=active]:to-amber-600 data-[state=active]:text-white rounded-md transition-all"
-          >
-            <FileText className="w-4 h-4 mr-2" />
-            Sheet Music
-          </TabsTrigger>
-          <TabsTrigger
-            value="lyrics"
-            className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500 data-[state=active]:to-green-600 data-[state=active]:text-white rounded-md transition-all"
-          >
-            <Mic className="w-4 h-4 mr-2" />
-            Lyrics
-          </TabsTrigger>
-          <TabsTrigger
-            value="favorites"
-            className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-red-500 data-[state=active]:to-red-600 data-[state=active]:text-white rounded-md transition-all"
-          >
-            <Star className="w-4 h-4 mr-2" />
-            Favorites
-          </TabsTrigger>
-        </TabsList>
-      </Tabs>
 
       {/* Content Display */}
       {filteredContent.length === 0 ? (
