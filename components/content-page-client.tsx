@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import type { Database } from "@/types/supabase";
 import { ContentViewer } from "@/components/content-viewer";
 import { Sidebar } from "@/components/sidebar";
+import { Header } from "@/components/header";
 import dynamic from "next/dynamic";
 
 const ContentEditor = dynamic(() => import("@/components/content-editor"), {
@@ -26,6 +27,7 @@ export default function ContentPageClient({
   const [isEditing, setIsEditing] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [activeScreen, setActiveScreen] = useState("library");
+  const [sidebarMobileOpen, setSidebarMobileOpen] = useState(false);
 
   const handleNavigate = (screen: string) => {
     router.push(`/${screen}`);
@@ -65,28 +67,29 @@ export default function ContentPageClient({
         activeScreen={activeScreen}
         onNavigate={handleNavigate}
         onCollapsedChange={setSidebarCollapsed}
+        mobileOpen={sidebarMobileOpen}
+        onMobileOpenChange={setSidebarMobileOpen}
       />
-      <main
-        className={cn(
-          "flex-1 overflow-auto transition-all duration-300 ease-in-out",
-          sidebarCollapsed ? "md:ml-20" : "md:ml-72",
-        )}
+      <div className={cn("flex-1 flex flex-col transition-all duration-300 ease-in-out", sidebarCollapsed ? "md:ml-20" : "md:ml-72")}
       >
-        {isEditing ? (
-          <ContentEditor
-            content={content}
-            onSave={handleSaveEdit}
-            onCancel={handleCancelEdit}
-          />
-        ) : (
-          <ContentViewer
-            content={content}
-            onBack={handleBack}
-            onEnterPerformance={handleEnterPerformance}
-            onEdit={handleEdit}
-          />
-        )}
-      </main>
+        <Header onMenuClick={() => setSidebarMobileOpen(true)} title={isEditing ? "Edit Content" : "View Content"} />
+        <main className="flex-1 overflow-auto">
+          {isEditing ? (
+            <ContentEditor
+              content={content}
+              onSave={handleSaveEdit}
+              onCancel={handleCancelEdit}
+            />
+          ) : (
+            <ContentViewer
+              content={content}
+              onBack={handleBack}
+              onEnterPerformance={handleEnterPerformance}
+              onEdit={handleEdit}
+            />
+          )}
+        </main>
+      </div>
     </div>
   );
 }

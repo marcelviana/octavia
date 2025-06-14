@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { SetlistManager } from "@/components/setlist-manager"
 import { Sidebar } from "@/components/sidebar"
+import { Header } from "@/components/header"
 import { useAuth } from "@/contexts/auth-context"
 import { cn } from "@/lib/utils"
 
@@ -12,6 +13,7 @@ export default function SetlistsPage() {
   const { user, isLoading } = useAuth()
   const [activeScreen, setActiveScreen] = useState("setlists")
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
+  const [sidebarMobileOpen, setSidebarMobileOpen] = useState(false)
 
   // Handle navigation from sidebar
   const handleNavigate = (screen: string) => {
@@ -50,15 +52,20 @@ export default function SetlistsPage() {
 
   return (
     <div className="flex h-screen bg-[#fffcf7]">
-      <Sidebar activeScreen={activeScreen} onNavigate={handleNavigate} onCollapsedChange={setSidebarCollapsed} />
-      <main
-        className={cn(
-          "flex-1 overflow-auto transition-all duration-300 ease-in-out",
-          sidebarCollapsed ? "md:ml-20" : "md:ml-72",
-        )}
+      <Sidebar
+        activeScreen={activeScreen}
+        onNavigate={handleNavigate}
+        onCollapsedChange={setSidebarCollapsed}
+        mobileOpen={sidebarMobileOpen}
+        onMobileOpenChange={setSidebarMobileOpen}
+      />
+      <div className={cn("flex-1 flex flex-col transition-all duration-300 ease-in-out", sidebarCollapsed ? "md:ml-20" : "md:ml-72")}
       >
-        <SetlistManager onEnterPerformance={handleStartPerformance} />
-      </main>
+        <Header onMenuClick={() => setSidebarMobileOpen(true)} title="Setlists" />
+        <main className="flex-1 overflow-auto">
+          <SetlistManager onEnterPerformance={handleStartPerformance} />
+        </main>
+      </div>
     </div>
   )
 }

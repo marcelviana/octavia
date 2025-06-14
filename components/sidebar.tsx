@@ -15,7 +15,6 @@ import {
   Star,
   Clock,
   LogOut,
-  Menu,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react"
@@ -30,12 +29,31 @@ interface SidebarProps {
   activeScreen: string
   onNavigate: (screen: string) => void
   onCollapsedChange?: (collapsed: boolean) => void
+  mobileOpen?: boolean
+  onMobileOpenChange?: (open: boolean) => void
 }
 
-export function Sidebar({ activeScreen, onNavigate, onCollapsedChange }: SidebarProps) {
+export function Sidebar({
+  activeScreen,
+  onNavigate,
+  onCollapsedChange,
+  mobileOpen: mobileOpenProp,
+  onMobileOpenChange,
+}: SidebarProps) {
   const { user, signOut } = useAuth()
   const [collapsed, setCollapsed] = useState(false)
-  const [mobileOpen, setMobileOpen] = useState(false)
+  const [internalMobileOpen, setInternalMobileOpen] = useState(false)
+  const isControlled = mobileOpenProp !== undefined
+  const mobileOpen = isControlled ? mobileOpenProp : internalMobileOpen
+
+  const setMobileOpen = (open: boolean) => {
+    if (!isControlled) {
+      setInternalMobileOpen(open)
+    }
+    if (onMobileOpenChange) {
+      onMobileOpenChange(open)
+    }
+  }
 
   // Notify parent component when collapsed state changes
   useEffect(() => {
@@ -70,21 +88,12 @@ export function Sidebar({ activeScreen, onNavigate, onCollapsedChange }: Sidebar
 
   return (
     <>
-      {/* Mobile Menu Button */}
-      <div className="fixed top-4 left-4 z-50 md:hidden">
-        <Button
-          variant="outline"
-          size="icon"
-          className="bg-white/80 backdrop-blur-sm border-amber-200 shadow-md"
-          onClick={() => setMobileOpen(!mobileOpen)}
-        >
-          <Menu className="h-5 w-5 text-amber-800" />
-        </Button>
-      </div>
-
       {/* Mobile Overlay */}
       {mobileOpen && (
-        <div className="fixed inset-0 bg-black/50 z-40 md:hidden" onClick={() => setMobileOpen(false)}></div>
+        <div
+          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          onClick={() => setMobileOpen(false)}
+        ></div>
       )}
 
       {/* Sidebar */}
