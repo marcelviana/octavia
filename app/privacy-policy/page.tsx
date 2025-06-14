@@ -1,5 +1,8 @@
 "use client"
 
+export const dynamic = "force-static"
+export const revalidate = 60
+
 export default function PrivacyPolicyPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-100 p-6">
