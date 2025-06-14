@@ -1,8 +1,8 @@
-"use client"
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+"use client";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import {
   ArrowLeft,
   Play,
@@ -23,10 +23,15 @@ import {
   ChevronRight,
   Info,
   MessageSquare,
-} from "lucide-react"
-import { Slider } from "@/components/ui/slider"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+} from "lucide-react";
+import { Slider } from "@/components/ui/slider";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Dialog,
   DialogContent,
@@ -34,56 +39,69 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
-import { deleteContent } from "@/lib/content-service"
-import { MusicText } from "@/components/music-text"
-import Image from "next/image"
+} from "@/components/ui/dialog";
+import { deleteContent } from "@/lib/content-service";
+import { MusicText } from "@/components/music-text";
+import Image from "next/image";
 
 interface ContentViewerProps {
-  content: any
-  onBack: () => void
-  onEnterPerformance: (content: any) => void
-  onEdit?: () => void
+  content: any;
+  onBack: () => void;
+  onEnterPerformance: (content: any) => void;
+  onEdit?: () => void;
+  /**
+   * Whether to display the toolbar with playback and zoom controls.
+   * Defaults to `true` so existing usages keep the current behaviour.
+   */
+  showToolbar?: boolean;
 }
 
-export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: ContentViewerProps) {
-  const [zoom, setZoom] = useState(100)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [currentPage, setCurrentPage] = useState(1)
-  const [activeTab, setActiveTab] = useState("content")
-  const totalPages = content?.content_data?.pages ? content.content_data.pages.length : 1
-  const [deleteDialog, setDeleteDialog] = useState(false)
-  const [isFavorite, setIsFavorite] = useState(content?.is_favorite || false)
+export function ContentViewer({
+  content,
+  onBack,
+  onEnterPerformance,
+  onEdit,
+  showToolbar = true,
+}: ContentViewerProps) {
+  const [zoom, setZoom] = useState(100);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [activeTab, setActiveTab] = useState("content");
+  const totalPages = content?.content_data?.pages
+    ? content.content_data.pages.length
+    : 1;
+  const [deleteDialog, setDeleteDialog] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(content?.is_favorite || false);
 
   const getOrdinalSuffix = (num: number) => {
-    const mod10 = num % 10
-    const mod100 = num % 100
-    if (mod10 === 1 && mod100 !== 11) return "st"
-    if (mod10 === 2 && mod100 !== 12) return "nd"
-    if (mod10 === 3 && mod100 !== 13) return "rd"
-    return "th"
-  }
+    const mod10 = num % 10;
+    const mod100 = num % 100;
+    if (mod10 === 1 && mod100 !== 11) return "st";
+    if (mod10 === 2 && mod100 !== 12) return "nd";
+    if (mod10 === 3 && mod100 !== 13) return "rd";
+    return "th";
+  };
 
   const handleDelete = () => {
-    setDeleteDialog(true)
-  }
+    setDeleteDialog(true);
+  };
 
   const confirmDelete = async () => {
     try {
-      await deleteContent(content.id)
-      setDeleteDialog(false)
-      onBack()
+      await deleteContent(content.id);
+      setDeleteDialog(false);
+      onBack();
     } catch (error) {
-      console.error("Error deleting content:", error)
+      console.error("Error deleting content:", error);
     }
-  }
+  };
 
   const toggleFavorite = () => {
-    setIsFavorite(!isFavorite)
+    setIsFavorite(!isFavorite);
     // In a real app, this would call an API to update the favorite status
-  }
+  };
 
-  if (!content) return null
+  if (!content) return null;
 
   return (
     <div className="h-screen flex flex-col bg-gradient-to-b from-[#fff9f0] to-[#fff5e5]">
@@ -91,12 +109,18 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
       <div className="bg-white border-b border-amber-200 p-4 shadow-sm">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
-            <Button variant="ghost" onClick={onBack} className="hover:bg-amber-50">
+            <Button
+              variant="ghost"
+              onClick={onBack}
+              className="hover:bg-amber-50"
+            >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Button>
             <div>
-              <h1 className="text-xl font-bold text-gray-900">{content.title}</h1>
+              <h1 className="text-xl font-bold text-gray-900">
+                {content.title}
+              </h1>
               <p className="text-sm text-[#A69B8E]">
                 {content.artist} • {content.content_type}
               </p>
@@ -105,7 +129,12 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
 
           <div className="flex items-center space-x-2">
             {onEdit && (
-              <Button variant="outline" size="sm" onClick={onEdit} className="border-amber-200 hover:bg-amber-50">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={onEdit}
+                className="border-amber-200 hover:bg-amber-50"
+              >
                 <Edit className="w-4 h-4 mr-2" />
                 Edit
               </Button>
@@ -115,15 +144,23 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
               size="sm"
               onClick={toggleFavorite}
               className={
-                isFavorite ? "bg-amber-50 border-amber-300 text-amber-700" : "border-amber-200 hover:bg-amber-50"
+                isFavorite
+                  ? "bg-amber-50 border-amber-300 text-amber-700"
+                  : "border-amber-200 hover:bg-amber-50"
               }
             >
-              <Star className={`w-4 h-4 ${isFavorite ? "fill-amber-500 text-amber-500" : ""}`} />
+              <Star
+                className={`w-4 h-4 ${isFavorite ? "fill-amber-500 text-amber-500" : ""}`}
+              />
               {isFavorite ? " Favorited" : ""}
             </Button>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm" className="border-amber-200 hover:bg-amber-50">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="border-amber-200 hover:bg-amber-50"
+                >
                   <MoreVertical className="w-4 h-4" />
                 </Button>
               </DropdownMenuTrigger>
@@ -140,7 +177,10 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
                   <Printer className="w-4 h-4 mr-2" />
                   Print
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={handleDelete} className="text-red-600">
+                <DropdownMenuItem
+                  onClick={handleDelete}
+                  className="text-red-600"
+                >
                   <Trash2 className="w-4 h-4 mr-2" />
                   Delete
                 </DropdownMenuItem>
@@ -158,80 +198,94 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
       </div>
 
       {/* Toolbar */}
-      <div className="bg-gray-800 text-white p-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2">
+      {showToolbar && (
+        <div className="bg-gray-800 text-white p-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setIsPlaying(!isPlaying)}
+                  className="text-white hover:bg-gray-700"
+                >
+                  {isPlaying ? (
+                    <Pause className="w-4 h-4" />
+                  ) : (
+                    <Play className="w-4 h-4" />
+                  )}
+                </Button>
+                <Volume2 className="w-4 h-4" />
+                <Slider value={[75]} max={100} step={1} className="w-20" />
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <span className="text-sm">Zoom:</span>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setZoom(Math.max(50, zoom - 25))}
+                  className="text-white hover:bg-gray-700"
+                >
+                  <ZoomOut className="w-4 h-4" />
+                </Button>
+                <span className="text-sm w-12 text-center">{zoom}%</span>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setZoom(Math.min(200, zoom + 25))}
+                  className="text-white hover:bg-gray-700"
+                >
+                  <ZoomIn className="w-4 h-4" />
+                </Button>
+              </div>
+
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => setIsPlaying(!isPlaying)}
                 className="text-white hover:bg-gray-700"
               >
-                {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+                <RotateCw className="w-4 h-4" />
               </Button>
-              <Volume2 className="w-4 h-4" />
-              <Slider value={[75]} max={100} step={1} className="w-20" />
             </div>
 
-            <div className="flex items-center space-x-2">
-              <span className="text-sm">Zoom:</span>
+            <div className="flex items-center space-x-4">
+              <span className="text-sm">
+                Page {currentPage} of {totalPages}
+              </span>
+              <div className="flex space-x-1">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  disabled={currentPage === 1}
+                  onClick={() => setCurrentPage(currentPage - 1)}
+                  className="text-white hover:bg-gray-700"
+                >
+                  <ChevronLeft className="w-4 h-4 mr-1" />
+                  Previous
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  disabled={currentPage === totalPages}
+                  onClick={() => setCurrentPage(currentPage + 1)}
+                  className="text-white hover:bg-gray-700"
+                >
+                  Next
+                  <ChevronRight className="w-4 h-4 ml-1" />
+                </Button>
+              </div>
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => setZoom(Math.max(50, zoom - 25))}
                 className="text-white hover:bg-gray-700"
               >
-                <ZoomOut className="w-4 h-4" />
-              </Button>
-              <span className="text-sm w-12 text-center">{zoom}%</span>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setZoom(Math.min(200, zoom + 25))}
-                className="text-white hover:bg-gray-700"
-              >
-                <ZoomIn className="w-4 h-4" />
-              </Button>
-            </div>
-
-            <Button variant="ghost" size="sm" className="text-white hover:bg-gray-700">
-              <RotateCw className="w-4 h-4" />
-            </Button>
-          </div>
-
-          <div className="flex items-center space-x-4">
-            <span className="text-sm">
-              Page {currentPage} of {totalPages}
-            </span>
-            <div className="flex space-x-1">
-              <Button
-                variant="ghost"
-                size="sm"
-                disabled={currentPage === 1}
-                onClick={() => setCurrentPage(currentPage - 1)}
-                className="text-white hover:bg-gray-700"
-              >
-                <ChevronLeft className="w-4 h-4 mr-1" />
-                Previous
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                disabled={currentPage === totalPages}
-                onClick={() => setCurrentPage(currentPage + 1)}
-                className="text-white hover:bg-gray-700"
-              >
-                Next
-                <ChevronRight className="w-4 h-4 ml-1" />
+                <Settings className="w-4 h-4" />
               </Button>
             </div>
-            <Button variant="ghost" size="sm" className="text-white hover:bg-gray-700">
-              <Settings className="w-4 h-4" />
-            </Button>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Content Area */}
       <div className="flex-1 flex">
@@ -267,7 +321,10 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
                   <CardContent className="p-0">
                     <div
                       className="bg-white p-8 min-h-[800px] relative"
-                      style={{ transform: `scale(${zoom / 100})`, transformOrigin: "top center" }}
+                      style={{
+                        transform: `scale(${zoom / 100})`,
+                        transformOrigin: "top center",
+                      }}
                     >
                       {/* Sheet Music Content */}
                       <div className="space-y-6">
@@ -280,25 +337,46 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
                             <div className="space-y-6">
                               {content.content_data?.tablature ? (
                                 <div className="space-y-4">
-                                  <h3 className="text-lg font-semibold">Tablature</h3>
+                                  <h3 className="text-lg font-semibold">
+                                    Tablature
+                                  </h3>
                                   <div className="font-mono text-sm space-y-1 bg-gray-50 p-4 rounded-lg overflow-x-auto">
-                                    {content.content_data.tablature.map((line: string, index: number) => (
-                                      <div key={index} className="whitespace-nowrap">
-                                        {line}
-                                      </div>
-                                    ))}
+                                    {content.content_data.tablature.map(
+                                      (line: string, index: number) => (
+                                        <div
+                                          key={index}
+                                          className="whitespace-nowrap"
+                                        >
+                                          {line}
+                                        </div>
+                                      ),
+                                    )}
                                   </div>
                                 </div>
                               ) : (
                                 <div className="space-y-4">
-                                  <h3 className="text-lg font-semibold">Tablature</h3>
+                                  <h3 className="text-lg font-semibold">
+                                    Tablature
+                                  </h3>
                                   <div className="font-mono text-sm space-y-1 bg-gray-50 p-4 rounded-lg">
-                                    <div>E|--0----3----0----2----0---------0----3----0----2----0---------|</div>
-                                    <div>B|----1----1----1----1----1---------1----1----1----1----1-------|</div>
-                                    <div>G|------0----0----0----0----0---------0----0----0----0----0-----|</div>
-                                    <div>D|--------2----2----2----2----2---------2----2----2----2----2---|</div>
-                                    <div>A|--3---------------------------3------------------------------|</div>
-                                    <div>E|--------------------------------------------------------------|</div>
+                                    <div>
+                                      E|--0----3----0----2----0---------0----3----0----2----0---------|
+                                    </div>
+                                    <div>
+                                      B|----1----1----1----1----1---------1----1----1----1----1-------|
+                                    </div>
+                                    <div>
+                                      G|------0----0----0----0----0---------0----0----0----0----0-----|
+                                    </div>
+                                    <div>
+                                      D|--------2----2----2----2----2---------2----2----2----2----2---|
+                                    </div>
+                                    <div>
+                                      A|--3---------------------------3------------------------------|
+                                    </div>
+                                    <div>
+                                      E|--------------------------------------------------------------|
+                                    </div>
                                   </div>
                                 </div>
                               )}
@@ -312,20 +390,28 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
                                     : "None"}
                                 </div>
                                 <div>
-                                  <strong>Tuning:</strong> {content.tuning || "Standard (EADGBE)"}
+                                  <strong>Tuning:</strong>{" "}
+                                  {content.tuning || "Standard (EADGBE)"}
                                 </div>
                               </div>
 
                               {/* Chord progression if available */}
                               {content.content_data?.chords && (
                                 <div className="space-y-3">
-                                  <h4 className="font-semibold">Chord Progression</h4>
+                                  <h4 className="font-semibold">
+                                    Chord Progression
+                                  </h4>
                                   <div className="flex flex-wrap gap-2">
-                                    {content.content_data.chords.map((chord: string, index: number) => (
-                                      <span key={index} className="px-3 py-1 bg-gray-200 rounded-md font-mono">
-                                        {chord}
-                                      </span>
-                                    ))}
+                                    {content.content_data.chords.map(
+                                      (chord: string, index: number) => (
+                                        <span
+                                          key={index}
+                                          className="px-3 py-1 bg-gray-200 rounded-md font-mono"
+                                        >
+                                          {chord}
+                                        </span>
+                                      ),
+                                    )}
                                   </div>
                                 </div>
                               )}
@@ -335,39 +421,62 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
                           {/* Chord Chart Content */}
                           {content.content_type === "Chord Chart" && (
                             <div className="space-y-6">
-                              <h3 className="text-lg font-semibold">Chord Chart</h3>
+                              <h3 className="text-lg font-semibold">
+                                Chord Chart
+                              </h3>
 
                               {/* Chord diagrams */}
                               {content.content_data?.chords ? (
                                 <div className="grid grid-cols-3 md:grid-cols-4 gap-6">
-                                  {content.content_data.chords.map((chord: any, index: number) => (
-                                    <div key={index} className="text-center p-4 border-2 rounded-lg bg-gray-50">
-                                      <div className="text-xl font-bold mb-3">{chord.name || chord}</div>
-                                      {chord.diagram ? (
-                                        <div className="text-xs font-mono space-y-1">
-                                          {chord.diagram.map((line: string, lineIndex: number) => (
-                                            <div key={lineIndex}>{line}</div>
-                                          ))}
+                                  {content.content_data.chords.map(
+                                    (chord: any, index: number) => (
+                                      <div
+                                        key={index}
+                                        className="text-center p-4 border-2 rounded-lg bg-gray-50"
+                                      >
+                                        <div className="text-xl font-bold mb-3">
+                                          {chord.name || chord}
                                         </div>
-                                      ) : (
-                                        <div className="text-xs font-mono space-y-1">
-                                          <div>●○○○○○</div>
-                                          <div>●●●●●●</div>
-                                          <div>○●○○●○</div>
-                                          <div>○○●●○○</div>
-                                        </div>
-                                      )}
-                                      {chord.fingering && (
-                                        <div className="text-xs mt-2 text-gray-600">{chord.fingering}</div>
-                                      )}
-                                    </div>
-                                  ))}
+                                        {chord.diagram ? (
+                                          <div className="text-xs font-mono space-y-1">
+                                            {chord.diagram.map(
+                                              (
+                                                line: string,
+                                                lineIndex: number,
+                                              ) => (
+                                                <div key={lineIndex}>
+                                                  {line}
+                                                </div>
+                                              ),
+                                            )}
+                                          </div>
+                                        ) : (
+                                          <div className="text-xs font-mono space-y-1">
+                                            <div>●○○○○○</div>
+                                            <div>●●●●●●</div>
+                                            <div>○●○○●○</div>
+                                            <div>○○●●○○</div>
+                                          </div>
+                                        )}
+                                        {chord.fingering && (
+                                          <div className="text-xs mt-2 text-gray-600">
+                                            {chord.fingering}
+                                          </div>
+                                        )}
+                                      </div>
+                                    ),
+                                  )}
                                 </div>
                               ) : (
                                 <div className="grid grid-cols-3 md:grid-cols-4 gap-6">
                                   {["Am", "F", "C", "G"].map((chord) => (
-                                    <div key={chord} className="text-center p-4 border-2 rounded-lg bg-gray-50">
-                                      <div className="text-xl font-bold mb-3">{chord}</div>
+                                    <div
+                                      key={chord}
+                                      className="text-center p-4 border-2 rounded-lg bg-gray-50"
+                                    >
+                                      <div className="text-xl font-bold mb-3">
+                                        {chord}
+                                      </div>
                                       <div className="text-xs font-mono space-y-1">
                                         <div>●○○○○○</div>
                                         <div>●●●●●●</div>
@@ -382,14 +491,22 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
                               {/* Song structure */}
                               {content.content_data?.progression && (
                                 <div className="space-y-3 bg-green-50 p-4 rounded-lg">
-                                  <h4 className="font-semibold">Song Structure</h4>
+                                  <h4 className="font-semibold">
+                                    Song Structure
+                                  </h4>
                                   <div className="space-y-2 text-sm">
-                                    {Object.entries(content.content_data.progression).map(
+                                    {Object.entries(
+                                      content.content_data.progression,
+                                    ).map(
                                       ([section, chords]: [string, any]) => (
                                         <div key={section} className="flex">
-                                          <span className="font-medium w-20">{section}:</span>
+                                          <span className="font-medium w-20">
+                                            {section}:
+                                          </span>
                                           <span className="font-mono">
-                                            {Array.isArray(chords) ? chords.join(" - ") : chords}
+                                            {Array.isArray(chords)
+                                              ? chords.join(" - ")
+                                              : chords}
                                           </span>
                                         </div>
                                       ),
@@ -403,7 +520,9 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
                           {/* Sheet Music Content */}
                           {content.content_type === "Sheet Music" && (
                             <div className="space-y-6">
-                              <h3 className="text-lg font-semibold">Sheet Music</h3>
+                              <h3 className="text-lg font-semibold">
+                                Sheet Music
+                              </h3>
 
                               {content.file_url ? (
                                 <div className="border rounded-lg overflow-hidden">
@@ -413,7 +532,10 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
                                     width={800}
                                     height={800}
                                     className="w-full h-auto"
-                                    style={{ maxHeight: "800px", objectFit: "contain" }}
+                                    style={{
+                                      maxHeight: "800px",
+                                      objectFit: "contain",
+                                    }}
                                   />
                                 </div>
                               ) : content.content_data?.notation ? (
@@ -425,9 +547,12 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
                                 </div>
                               ) : (
                                 <div className="border-2 border-dashed border-gray-300 rounded-lg p-12 text-center">
-                                  <p className="text-gray-500">No sheet music available</p>
+                                  <p className="text-gray-500">
+                                    No sheet music available
+                                  </p>
                                   <p className="text-sm text-gray-400 mt-2">
-                                    Upload a PDF or image file to display sheet music
+                                    Upload a PDF or image file to display sheet
+                                    music
                                   </p>
                                 </div>
                               )}
@@ -441,36 +566,58 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
 
                               {/* Technical Information */}
                               <div className="bg-gray-50 p-4 rounded-lg">
-                                <h4 className="font-semibold mb-3">Technical Information</h4>
+                                <h4 className="font-semibold mb-3">
+                                  Technical Information
+                                </h4>
                                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
                                   <div>
                                     <span className="text-gray-600">Key:</span>
-                                    <span className="ml-2 font-mono">{content.key || "Not specified"}</span>
+                                    <span className="ml-2 font-mono">
+                                      {content.key || "Not specified"}
+                                    </span>
                                   </div>
                                   {content.bpm && (
                                     <div>
-                                      <span className="text-gray-600">Tempo:</span>
-                                      <span className="ml-2 font-mono">{content.bpm} BPM</span>
+                                      <span className="text-gray-600">
+                                        Tempo:
+                                      </span>
+                                      <span className="ml-2 font-mono">
+                                        {content.bpm} BPM
+                                      </span>
                                     </div>
                                   )}
                                   <div>
                                     <span className="text-gray-600">Time:</span>
-                                    <span className="ml-2 font-mono">{content.time_signature || "4/4"}</span>
+                                    <span className="ml-2 font-mono">
+                                      {content.time_signature || "4/4"}
+                                    </span>
                                   </div>
                                   <div>
-                                    <span className="text-gray-600">Difficulty:</span>
-                                    <span className="ml-2">{content.difficulty || "Not specified"}</span>
+                                    <span className="text-gray-600">
+                                      Difficulty:
+                                    </span>
+                                    <span className="ml-2">
+                                      {content.difficulty || "Not specified"}
+                                    </span>
                                   </div>
                                   {content.genre && (
                                     <div>
-                                      <span className="text-gray-600">Genre:</span>
-                                      <span className="ml-2">{content.genre}</span>
+                                      <span className="text-gray-600">
+                                        Genre:
+                                      </span>
+                                      <span className="ml-2">
+                                        {content.genre}
+                                      </span>
                                     </div>
                                   )}
                                   {content.album && (
                                     <div>
-                                      <span className="text-gray-600">Album:</span>
-                                      <span className="ml-2">{content.album}</span>
+                                      <span className="text-gray-600">
+                                        Album:
+                                      </span>
+                                      <span className="ml-2">
+                                        {content.album}
+                                      </span>
                                     </div>
                                   )}
                                 </div>
@@ -485,8 +632,12 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
                                 </div>
                               ) : (
                                 <div className="bg-gray-50 p-8 rounded-lg text-center">
-                                  <p className="text-gray-500">No lyrics available</p>
-                                  <p className="text-sm text-gray-400 mt-2">Add lyrics to help with performance</p>
+                                  <p className="text-gray-500">
+                                    No lyrics available
+                                  </p>
+                                  <p className="text-sm text-gray-400 mt-2">
+                                    Add lyrics to help with performance
+                                  </p>
                                 </div>
                               )}
 
@@ -495,11 +646,16 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
                                 <div className="bg-blue-50 p-4 rounded-lg">
                                   <h4 className="font-semibold mb-2">Chords</h4>
                                   <div className="flex flex-wrap gap-2">
-                                    {content.content_data.chords.map((chord: string, index: number) => (
-                                      <span key={index} className="px-2 py-1 bg-white rounded font-mono text-sm">
-                                        {chord}
-                                      </span>
-                                    ))}
+                                    {content.content_data.chords.map(
+                                      (chord: string, index: number) => (
+                                        <span
+                                          key={index}
+                                          className="px-2 py-1 bg-white rounded font-mono text-sm"
+                                        >
+                                          {chord}
+                                        </span>
+                                      ),
+                                    )}
                                   </div>
                                 </div>
                               )}
@@ -520,7 +676,6 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
                               />
                             </div>
                           )}
-
                         </div>
                       </div>
                     </div>
@@ -533,44 +688,72 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
               <div className="max-w-2xl mx-auto">
                 <Card className="shadow-lg border border-blue-200">
                   <CardContent className="p-6">
-                    <h3 className="text-lg font-semibold mb-4 text-blue-800">Content Details</h3>
+                    <h3 className="text-lg font-semibold mb-4 text-blue-800">
+                      Content Details
+                    </h3>
                     <div className="space-y-4">
                       <div className="grid grid-cols-2 gap-4">
                         <div>
-                          <label className="text-sm font-medium text-gray-600">Title</label>
+                          <label className="text-sm font-medium text-gray-600">
+                            Title
+                          </label>
                           <p className="text-gray-900">{content.title}</p>
                         </div>
                         <div>
-                          <label className="text-sm font-medium text-gray-600">Artist</label>
+                          <label className="text-sm font-medium text-gray-600">
+                            Artist
+                          </label>
                           <p className="text-gray-900">{content.artist}</p>
                         </div>
                       </div>
                       <div className="grid grid-cols-2 gap-4">
                         <div>
-                          <label className="text-sm font-medium text-gray-600">Album</label>
-                          <p className="text-gray-900">{content.album || "Not specified"}</p>
+                          <label className="text-sm font-medium text-gray-600">
+                            Album
+                          </label>
+                          <p className="text-gray-900">
+                            {content.album || "Not specified"}
+                          </p>
                         </div>
                         <div>
-                          <label className="text-sm font-medium text-gray-600">Genre</label>
-                          <p className="text-gray-900">{content.genre || "Not specified"}</p>
+                          <label className="text-sm font-medium text-gray-600">
+                            Genre
+                          </label>
+                          <p className="text-gray-900">
+                            {content.genre || "Not specified"}
+                          </p>
                         </div>
                       </div>
                       <div className="grid grid-cols-3 gap-4">
                         <div>
-                          <label className="text-sm font-medium text-gray-600">Key</label>
-                          <p className="text-gray-900">{content.key || "Not specified"}</p>
+                          <label className="text-sm font-medium text-gray-600">
+                            Key
+                          </label>
+                          <p className="text-gray-900">
+                            {content.key || "Not specified"}
+                          </p>
                         </div>
                         <div>
-                          <label className="text-sm font-medium text-gray-600">BPM</label>
-                          <p className="text-gray-900">{content.bpm || "Not specified"}</p>
+                          <label className="text-sm font-medium text-gray-600">
+                            BPM
+                          </label>
+                          <p className="text-gray-900">
+                            {content.bpm || "Not specified"}
+                          </p>
                         </div>
                         <div>
-                          <label className="text-sm font-medium text-gray-600">Difficulty</label>
-                          <p className="text-gray-900">{content.difficulty || "Not specified"}</p>
+                          <label className="text-sm font-medium text-gray-600">
+                            Difficulty
+                          </label>
+                          <p className="text-gray-900">
+                            {content.difficulty || "Not specified"}
+                          </p>
                         </div>
                       </div>
                       <div>
-                        <label className="text-sm font-medium text-gray-600">Tags</label>
+                        <label className="text-sm font-medium text-gray-600">
+                          Tags
+                        </label>
                         <div className="flex flex-wrap gap-2 mt-1">
                           {content.tags?.map((tag: string) => (
                             <Badge key={tag} variant="secondary">
@@ -581,12 +764,20 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
                       </div>
                       <div className="grid grid-cols-2 gap-4">
                         <div>
-                          <label className="text-sm font-medium text-gray-600">Created</label>
-                          <p className="text-gray-900">{new Date(content.created_at).toLocaleDateString()}</p>
+                          <label className="text-sm font-medium text-gray-600">
+                            Created
+                          </label>
+                          <p className="text-gray-900">
+                            {new Date(content.created_at).toLocaleDateString()}
+                          </p>
                         </div>
                         <div>
-                          <label className="text-sm font-medium text-gray-600">Last Modified</label>
-                          <p className="text-gray-900">{new Date(content.updated_at).toLocaleDateString()}</p>
+                          <label className="text-sm font-medium text-gray-600">
+                            Last Modified
+                          </label>
+                          <p className="text-gray-900">
+                            {new Date(content.updated_at).toLocaleDateString()}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -599,7 +790,9 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
               <div className="max-w-2xl mx-auto">
                 <Card className="shadow-lg border border-green-200">
                   <CardContent className="p-6">
-                    <h3 className="text-lg font-semibold mb-4 text-green-800">Performance Notes</h3>
+                    <h3 className="text-lg font-semibold mb-4 text-green-800">
+                      Performance Notes
+                    </h3>
                     {content.notes ? (
                       <div className="bg-green-50 p-4 rounded-lg">
                         <MusicText
@@ -611,7 +804,9 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
                     ) : (
                       <div className="text-center py-8">
                         <MessageSquare className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                        <p className="text-gray-500">No performance notes available</p>
+                        <p className="text-gray-500">
+                          No performance notes available
+                        </p>
                         <p className="text-sm text-gray-400 mt-2">
                           Click Edit to add practice notes and performance tips
                         </p>
@@ -623,7 +818,6 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
             </TabsContent>
           </Tabs>
         </div>
-
       </div>
 
       {/* Delete Confirmation Dialog */}
@@ -632,7 +826,8 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
           <DialogHeader>
             <DialogTitle>Delete Content</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete &quot;{content.title}&quot;? This action cannot be undone.
+              Are you sure you want to delete &quot;{content.title}&quot;? This
+              action cannot be undone.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -646,5 +841,5 @@ export function ContentViewer({ content, onBack, onEnterPerformance, onEdit }: C
         </DialogContent>
       </Dialog>
     </div>
-  )
+  );
 }
