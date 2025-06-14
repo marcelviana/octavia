@@ -49,6 +49,7 @@ export function Dashboard({
   stats,
 }: DashboardProps) {
   const router = useRouter();
+  const [activeTab, setActiveTab] = useState("overview");
 
   const getContentIcon = (type: string) => {
     switch (type) {

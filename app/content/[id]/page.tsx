@@ -6,7 +6,7 @@ import ContentPageClient from "@/components/content-page-client";
 export default async function ContentPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const supabase = await getSupabaseServerClient();
   const {
@@ -17,7 +17,8 @@ export default async function ContentPage({
     redirect("/login");
   }
 
-  const content = await getContentByIdServer(params.id);
+  const resolvedParams = await params;
+  const content = await getContentByIdServer(resolvedParams.id);
 
   return <ContentPageClient content={content} />;
 }

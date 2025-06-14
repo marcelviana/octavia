@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 
-const PerformanceMode = dynamic(() => import("@/components/performance-mode"), {
+const PerformanceMode = dynamic(() => import("@/components/performance-mode").then(mod => ({ default: mod.PerformanceMode })), {
   loading: () => <p>Loading performance mode...</p>,
 });
 

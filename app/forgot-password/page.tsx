@@ -1,8 +1,5 @@
 "use client"
 
-export const dynamic = "force-static"
-export const revalidate = 60
-
 import type React from "react"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
