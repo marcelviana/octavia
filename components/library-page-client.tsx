@@ -37,7 +37,7 @@ export default function LibraryPageClient({
       />
       <div className={cn("flex-1 flex flex-col transition-all duration-300 ease-in-out", sidebarCollapsed ? "md:ml-20" : "md:ml-72")}
       >
-        <Header onMenuClick={() => setSidebarMobileOpen(true)} title="Library" />
+        <Header onMenuClick={() => setSidebarMobileOpen(true)} />
         <main className="flex-1 overflow-auto">
           <Library onSelectContent={handleSelectContent} initialContent={initialContent} />
         </main>

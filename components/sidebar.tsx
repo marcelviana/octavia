@@ -18,8 +18,6 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react"
-import { UserHeader } from "@/components/user-header"
-import Image from "next/image"
 import { useAuth } from "@/contexts/auth-context"
 import { useState, useEffect } from "react"
 import { cn } from "@/lib/utils"
@@ -105,36 +103,13 @@ export function Sidebar({
         )}
       >
         <div className="h-full flex flex-col bg-gradient-to-b from-amber-50 to-orange-50 border-r border-amber-200 shadow-lg overflow-hidden">
-          {/* Logo and Collapse Button */}
-          <div className="p-4 border-b border-amber-200 flex items-center justify-between">
-            <div
-              className={cn("flex items-center space-x-3 transition-opacity", collapsed ? "opacity-0" : "opacity-100")}
-            >
-              <Image src="/logos/octavia-icon.png" alt="Octavia" width={32} height={32} />
-              <Image src="/logos/octavia-wordmark.png" alt="Octavia" width={120} height={24} />
-            </div>
-            <div
-              className={cn(
-                "absolute left-1/2 transform -translate-x-1/2 transition-opacity",
-                collapsed ? "opacity-100" : "opacity-0",
-              )}
-            >
-              <Image src="/logos/octavia-icon.png" alt="Octavia" width={32} height={32} />
-            </div>
+          {/* Collapse Button */}
+          <div className="p-4 border-b border-amber-200 flex items-center justify-end">
             <Button variant="ghost" size="sm" className="text-amber-700 hover:bg-amber-100" onClick={toggleCollapsed}>
               {collapsed ? <ChevronRight className="h-5 w-5" /> : <ChevronLeft className="h-5 w-5" />}
             </Button>
           </div>
 
-          {/* User Profile */}
-          <div
-            className={cn(
-              "p-4 border-b border-amber-200 flex justify-center transition-all",
-              collapsed ? "opacity-70 hover:opacity-100" : "",
-            )}
-          >
-            <UserHeader compact={collapsed} />
-          </div>
 
           {/* Quick Actions */}
           <div className="p-4 space-y-2">

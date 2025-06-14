@@ -66,7 +66,7 @@ export default function AddContentPage() {
       />
       <div className={cn("flex-1 flex flex-col transition-all duration-300 ease-in-out", sidebarCollapsed ? "md:ml-20" : "md:ml-72")}
       >
-        <Header onMenuClick={() => setSidebarMobileOpen(true)} title="Add Content" />
+        <Header onMenuClick={() => setSidebarMobileOpen(true)} />
         <main className="flex-1 overflow-auto">
           <AddContent
             onNavigate={handleNavigate}
