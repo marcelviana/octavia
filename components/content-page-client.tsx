@@ -76,10 +76,7 @@ export default function ContentPageClient({
           sidebarCollapsed ? "md:ml-20" : "md:ml-72",
         )}
       >
-        <Header
-          onMenuClick={() => setSidebarMobileOpen(true)}
-          title={isEditing ? "Edit Content" : "View Content"}
-        />
+        <Header onMenuClick={() => setSidebarMobileOpen(true)} />
         <main className="flex-1 overflow-auto">
           {isEditing ? (
             <ContentEditor

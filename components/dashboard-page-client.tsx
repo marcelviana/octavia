@@ -49,7 +49,7 @@ export default function DashboardPageClient({
       />
       <div className={cn("flex-1 flex flex-col transition-all duration-300 ease-in-out", sidebarCollapsed ? "md:ml-20" : "md:ml-72")}
       >
-        <Header onMenuClick={() => setSidebarMobileOpen(true)} title="Dashboard" />
+        <Header onMenuClick={() => setSidebarMobileOpen(true)} />
         <main className="flex-1 overflow-auto">
           <Dashboard
             onNavigate={handleNavigate}
