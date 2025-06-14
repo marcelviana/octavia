@@ -61,17 +61,27 @@ export function FileUpload({ onFilesUploaded }: FileUploadProps) {
 
     setUploadedFiles(processedFiles)
 
-    // Simulate upload progress
-    for (let i = 0; i < processedFiles.length; i++) {
-      const file = processedFiles[i]
-      for (let progress = 0; progress <= 100; progress += 20) {
-        await new Promise((resolve) => setTimeout(resolve, 100))
-        setUploadedFiles((prev) => prev.map((f) => (f.id === file.id ? { ...f, progress } : f)))
-      }
-      setUploadedFiles((prev) => prev.map((f) => (f.id === file.id ? { ...f, status: "completed" } : f)))
-    }
-
-    setIsUploading(false)
+    // Simulate asynchronous upload progress without blocking the UI
+    let completed = 0
+    processedFiles.forEach((file) => {
+      let progress = 0
+      const interval = setInterval(() => {
+        progress += 20
+        setUploadedFiles((prev) =>
+          prev.map((f) => (f.id === file.id ? { ...f, progress: Math.min(progress, 100) } : f)),
+        )
+        if (progress >= 100) {
+          clearInterval(interval)
+          completed += 1
+          setUploadedFiles((prev) =>
+            prev.map((f) => (f.id === file.id ? { ...f, status: "completed" } : f)),
+          )
+          if (completed === processedFiles.length) {
+            setIsUploading(false)
+          }
+        }
+      }, 100)
+    })
   }
 
   const handleDragOver = (e: React.DragEvent) => {
