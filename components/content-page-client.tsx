@@ -7,7 +7,7 @@ import { Sidebar } from "@/components/sidebar";
 import { Header } from "@/components/header";
 import dynamic from "next/dynamic";
 
-const ContentEditor = dynamic(() => import("@/components/content-editor"), {
+const ContentEditor = dynamic(() => import("@/components/content-editor").then(mod => ({ default: mod.ContentEditor })), {
   loading: () => <p>Loading editor...</p>,
 });
 import { updateContent } from "@/lib/content-service";
