@@ -2,7 +2,11 @@
 
 import { useState, useEffect } from "react"
 import { useRouter, useParams } from "next/navigation"
-import { ContentEditor } from "@/components/content-editor"
+import dynamic from "next/dynamic"
+
+const ContentEditor = dynamic(() => import("@/components/content-editor"), {
+  loading: () => <p>Loading editor...</p>,
+})
 import { useAuth } from "@/contexts/auth-context"
 import { getContentById, updateContent } from "@/lib/content-service"
 import type { Database } from "@/types/supabase"

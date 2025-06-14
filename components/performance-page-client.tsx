@@ -1,6 +1,10 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { PerformanceMode } from "@/components/performance-mode";
+import dynamic from "next/dynamic";
+
+const PerformanceMode = dynamic(() => import("@/components/performance-mode"), {
+  loading: () => <p>Loading performance mode...</p>,
+});
 
 interface PerformancePageClientProps {
   content: any | null;

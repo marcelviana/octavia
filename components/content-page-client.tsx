@@ -4,7 +4,11 @@ import { useRouter } from "next/navigation";
 import type { Database } from "@/types/supabase";
 import { ContentViewer } from "@/components/content-viewer";
 import { Sidebar } from "@/components/sidebar";
-import { ContentEditor } from "@/components/content-editor";
+import dynamic from "next/dynamic";
+
+const ContentEditor = dynamic(() => import("@/components/content-editor"), {
+  loading: () => <p>Loading editor...</p>,
+});
 import { updateContent } from "@/lib/content-service";
 import { cn } from "@/lib/utils";
 
