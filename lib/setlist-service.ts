@@ -550,15 +550,17 @@ export async function addSongToSetlist(setlistId: string, contentId: string, pos
       throw fetchError
     }
 
-    // Shift to temporary high positions first
-    for (const song of songsToShift) {
+    // Shift to temporary high positions in a single query
+    if (songsToShift.length > 0) {
       const { error: tempShiftError } = await supabase
         .from("setlist_songs")
-        .update({ position: song.position + 1000 })
-        .eq("id", song.id)
+        .upsert(
+          songsToShift.map((s) => ({ id: s.id, position: s.position + 1000 })),
+          { onConflict: "id" },
+        )
 
       if (tempShiftError) {
-        console.error(`Error temp shifting song position for song ${song.id}:`, tempShiftError)
+        console.error("Error temp shifting song positions:", tempShiftError)
         throw tempShiftError
       }
     }
@@ -581,14 +583,16 @@ export async function addSongToSetlist(setlistId: string, contentId: string, pos
     }
 
     // Now shift the temporarily moved songs back to their correct positions
-    for (const songToShift of songsToShift) {
+    if (songsToShift.length > 0) {
       const { error: finalShiftError } = await supabase
         .from("setlist_songs")
-        .update({ position: songToShift.position + 1 })
-        .eq("id", songToShift.id)
+        .upsert(
+          songsToShift.map((s) => ({ id: s.id, position: s.position + 1 })),
+          { onConflict: "id" },
+        )
 
       if (finalShiftError) {
-        console.error(`Error final shifting song position for song ${songToShift.id}:`, finalShiftError)
+        console.error("Error final shifting song positions:", finalShiftError)
         throw finalShiftError
       }
     }
@@ -704,15 +708,17 @@ export async function removeSongFromSetlist(songId: string) {
       throw fetchError
     }
 
-    // Shift positions of remaining songs
-    for (const songToShift of songsToShift) {
+    // Shift positions of remaining songs in a single query
+    if (songsToShift.length > 0) {
       const { error: updateError } = await supabase
         .from("setlist_songs")
-        .update({ position: songToShift.position - 1 })
-        .eq("id", songToShift.id)
+        .upsert(
+          songsToShift.map((s) => ({ id: s.id, position: s.position - 1 })),
+          { onConflict: "id" },
+        )
 
       if (updateError) {
-        console.error(`Error shifting song position for song ${songToShift.id}:`, updateError)
+        console.error("Error shifting song positions:", updateError)
         throw updateError
       }
     }
@@ -809,15 +815,17 @@ export async function updateSongPosition(setlistId: string, songId: string, newP
         throw fetchError
       }
 
-      // Decrement positions of songs between current and new position
-      for (const songToShift of songsToShift) {
+      // Decrement positions of songs between current and new position in bulk
+      if (songsToShift.length > 0) {
         const { error: updateError } = await supabase
           .from("setlist_songs")
-          .update({ position: songToShift.position - 1 })
-          .eq("id", songToShift.id)
+          .upsert(
+            songsToShift.map((s) => ({ id: s.id, position: s.position - 1 })),
+            { onConflict: "id" },
+          )
 
         if (updateError) {
-          console.error(`Error shifting song position for song ${songToShift.id}:`, updateError)
+          console.error("Error shifting song positions:", updateError)
           throw updateError
         }
       }
@@ -836,15 +844,17 @@ export async function updateSongPosition(setlistId: string, songId: string, newP
         throw fetchError
       }
 
-      // Increment positions of songs between new and current position
-      for (const songToShift of songsToShift) {
+      // Increment positions of songs between new and current position in bulk
+      if (songsToShift.length > 0) {
         const { error: updateError } = await supabase
           .from("setlist_songs")
-          .update({ position: songToShift.position + 1 })
-          .eq("id", songToShift.id)
+          .upsert(
+            songsToShift.map((s) => ({ id: s.id, position: s.position + 1 })),
+            { onConflict: "id" },
+          )
 
         if (updateError) {
-          console.error(`Error shifting song position for song ${songToShift.id}:`, updateError)
+          console.error("Error shifting song positions:", updateError)
           throw updateError
         }
       }
