@@ -128,32 +128,6 @@ export function ContentViewer({
           </div>
 
           <div className="flex items-center space-x-2">
-            {onEdit && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={onEdit}
-                className="border-amber-200 hover:bg-amber-50"
-              >
-                <Edit className="w-4 h-4 mr-2" />
-                Edit
-              </Button>
-            )}
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={toggleFavorite}
-              className={
-                isFavorite
-                  ? "bg-amber-50 border-amber-300 text-amber-700"
-                  : "border-amber-200 hover:bg-amber-50"
-              }
-            >
-              <Star
-                className={`w-4 h-4 ${isFavorite ? "fill-amber-500 text-amber-500" : ""}`}
-              />
-              {isFavorite ? " Favorited" : ""}
-            </Button>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
@@ -165,6 +139,18 @@ export function ContentViewer({
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
+                {onEdit && (
+                  <DropdownMenuItem onClick={onEdit}>
+                    <Edit className="w-4 h-4 mr-2" />
+                    Edit
+                  </DropdownMenuItem>
+                )}
+                <DropdownMenuItem onClick={toggleFavorite}>
+                  <Star
+                    className={`w-4 h-4 mr-2 ${isFavorite ? "fill-amber-500 text-amber-500" : ""}`}
+                  />
+                  {isFavorite ? "Unfavorite" : "Favorite"}
+                </DropdownMenuItem>
                 <DropdownMenuItem>
                   <Download className="w-4 h-4 mr-2" />
                   Download
@@ -186,13 +172,6 @@ export function ContentViewer({
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <Button
-              onClick={() => onEnterPerformance(content)}
-              className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow hover:shadow-md transition-all"
-            >
-              <Play className="w-4 h-4 mr-2" />
-              Performance Mode
-            </Button>
           </div>
         </div>
       </div>
@@ -292,13 +271,14 @@ export function ContentViewer({
         {/* Main Content */}
         <div className="flex-1 p-6 overflow-auto">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
-            <TabsList className="bg-white border border-amber-200 p-1 rounded-lg">
-              <TabsTrigger
-                value="content"
-                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500 data-[state=active]:to-orange-500 data-[state=active]:text-white rounded-md transition-all"
-              >
-                Content
-              </TabsTrigger>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+              <TabsList className="bg-white border border-amber-200 p-1 rounded-lg">
+                <TabsTrigger
+                  value="content"
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500 data-[state=active]:to-orange-500 data-[state=active]:text-white rounded-md transition-all"
+                >
+                  Content
+                </TabsTrigger>
               <TabsTrigger
                 value="info"
                 className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-blue-600 data-[state=active]:text-white rounded-md transition-all"
@@ -313,7 +293,15 @@ export function ContentViewer({
                 <MessageSquare className="w-4 h-4 mr-2" />
                 Notes
               </TabsTrigger>
-            </TabsList>
+              </TabsList>
+              <Button
+                onClick={() => onEnterPerformance(content)}
+                className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow hover:shadow-md transition-all"
+              >
+                <Play className="w-4 h-4 mr-2" />
+                Performance Mode
+              </Button>
+            </div>
 
             <TabsContent value="content" className="mt-6">
               <div className="max-w-4xl mx-auto">
