@@ -12,7 +12,7 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: "/:path*.(?:png|jpg|jpeg|webp|svg|gif|ico|woff2?|ttf|eot|otf)",
+        source: "/:path*\\.(png|jpg|jpeg|webp|svg|gif|ico|woff2?|woff|ttf|eot|otf)$",
         headers: [
           {
             key: "Cache-Control",
