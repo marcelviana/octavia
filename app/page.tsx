@@ -1,31 +1,17 @@
-"use client"
-
-import { useEffect } from "react"
-import { useRouter } from "next/navigation"
-import { useAuth } from "@/contexts/auth-context"
+import { redirect } from "next/navigation"
+import { getSupabaseServerClient } from "@/lib/supabase-server"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import Link from "next/link"
 import { Music, FileText, Guitar, Users } from "lucide-react"
 
-export default function LandingPage() {
-  const { user, isLoading } = useAuth()
-  const router = useRouter()
-
-  useEffect(() => {
-    if (!isLoading && user) {
-      router.push("/dashboard")
-    }
-  }, [user, isLoading, router])
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-amber-50 to-orange-100">
-        <div className="animate-pulse">
-          <Image src="/logos/octavia-logo-full.png" alt="Octavia" width={200} height={80} />
-        </div>
-      </div>
-    )
+export default async function LandingPage() {
+  const supabase = await getSupabaseServerClient()
+  const {
+    data: { session },
+  } = await supabase.auth.getSession()
+  if (session) {
+    redirect("/dashboard")
   }
 
   return (
