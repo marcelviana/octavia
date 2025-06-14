@@ -1,81 +1,38 @@
-"use client"
+import { redirect } from "next/navigation";
+import { getSupabaseServerClient } from "@/lib/supabase-server";
+import {
+  getUserContentServer,
+  getUserStatsServer,
+} from "@/lib/content-service-server";
+import DashboardPageClient from "@/components/dashboard-page-client";
 
-import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
-import { Dashboard } from "@/components/dashboard"
-import { Sidebar } from "@/components/sidebar"
-import { useAuth } from "@/contexts/auth-context"
-import { cn } from "@/lib/utils"
+export default async function DashboardPage() {
+  const supabase = await getSupabaseServerClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-export default function DashboardPage() {
-  const router = useRouter()
-  const { user, isLoading } = useAuth()
-  const [activeScreen, setActiveScreen] = useState("dashboard")
-  const [isPageLoading, setIsPageLoading] = useState(true)
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
-
-  // Handle initial loading and authentication
-  useEffect(() => {
-    if (!isLoading) {
-      if (!user) {
-        router.push("/login")
-      } else {
-        setIsPageLoading(false)
-      }
-    }
-  }, [user, isLoading, router])
-
-  // Handle navigation from sidebar
-  const handleNavigate = (screen: string) => {
-    if (screen === "dashboard") {
-      setActiveScreen(screen)
-    } else {
-      router.push(`/${screen}`)
-    }
-  }
-
-  // Handle content selection
-  const handleSelectContent = (content: any) => {
-    router.push(`/content/${content.id}`)
-  }
-
-  // Handle performance mode
-  const handleEnterPerformance = () => {
-    router.push("/performance")
-  }
-
-  // Don't render anything while loading to prevent blinking
-  if (isLoading || isPageLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-[#fffcf7]">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-t-[#2E7CE4] border-[#F2EDE5] rounded-full animate-spin mx-auto"></div>
-          <p className="mt-4 text-[#1A1F36]">Loading your dashboard...</p>
-        </div>
-      </div>
-    )
-  }
-
-  // Don't render anything if not authenticated (will redirect)
   if (!user) {
-    return null
+    redirect("/login");
   }
+
+  const [contentData, stats] = await Promise.all([
+    getUserContentServer(),
+    getUserStatsServer(),
+  ]);
+
+  const sortedContent = [...contentData].sort(
+    (a, b) =>
+      new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime(),
+  );
+  const recentContent = sortedContent.slice(0, 5);
+  const favoriteContent = contentData.filter((c) => c.is_favorite).slice(0, 5);
 
   return (
-    <div className="flex h-screen bg-[#fffcf7]">
-      <Sidebar activeScreen={activeScreen} onNavigate={handleNavigate} onCollapsedChange={setSidebarCollapsed} />
-      <main
-        className={cn(
-          "flex-1 overflow-auto transition-all duration-300 ease-in-out",
-          sidebarCollapsed ? "ml-20" : "ml-72",
-        )}
-      >
-        <Dashboard
-          onNavigate={handleNavigate}
-          onSelectContent={handleSelectContent}
-          onEnterPerformance={handleEnterPerformance}
-        />
-      </main>
-    </div>
-  )
+    <DashboardPageClient
+      recentContent={recentContent}
+      favoriteContent={favoriteContent}
+      stats={stats}
+    />
+  );
 }

@@ -1,0 +1,47 @@
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Library } from "@/components/library";
+import { Sidebar } from "@/components/sidebar";
+import { cn } from "@/lib/utils";
+
+interface LibraryPageClientProps {
+  initialContent: any[];
+}
+
+export default function LibraryPageClient({
+  initialContent,
+}: LibraryPageClientProps) {
+  const router = useRouter();
+  const [activeScreen, setActiveScreen] = useState("library");
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+
+  const handleNavigate = (screen: string) => {
+    router.push(`/${screen}`);
+  };
+
+  const handleSelectContent = (content: any) => {
+    router.push(`/content/${content.id}`);
+  };
+
+  return (
+    <div className="flex h-screen bg-[#fffcf7]">
+      <Sidebar
+        activeScreen={activeScreen}
+        onNavigate={handleNavigate}
+        onCollapsedChange={setSidebarCollapsed}
+      />
+      <main
+        className={cn(
+          "flex-1 overflow-auto transition-all duration-300 ease-in-out",
+          sidebarCollapsed ? "ml-20" : "ml-72",
+        )}
+      >
+        <Library
+          onSelectContent={handleSelectContent}
+          initialContent={initialContent}
+        />
+      </main>
+    </div>
+  );
+}
