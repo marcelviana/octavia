@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import dynamic from "next/dynamic"
 
-const AddContent = dynamic(() => import("@/components/add-content"), {
+const AddContent = dynamic(() => import("@/components/add-content").then(mod => ({ default: mod.AddContent })), {
   loading: () => <p>Loading add content...</p>,
 })
 import { Sidebar } from "@/components/sidebar"
