@@ -24,7 +24,7 @@ interface BatchImportProps {
 
 export function BatchImport({ onComplete }: BatchImportProps) {
   const [songs, setSongs] = useState<(ParsedSong & { include: boolean })[]>([])
-  const [type, setType] = useState("Lyrics")
+  const [type, setType] = useState("lyrics")
   const [fileName, setFileName] = useState<string | null>(null)
   const [isParsing, setIsParsing] = useState(false)
   const [isImporting, setIsImporting] = useState(false)
@@ -80,9 +80,9 @@ export function BatchImport({ onComplete }: BatchImportProps) {
   }
 
   const contentTypes = [
-    { id: "Lyrics", name: "Lyrics Sheet", icon: FileText },
-    { id: "Chord Chart", name: "Chord Chart", icon: Music },
-    { id: "Guitar Tab", name: "Guitar Tablature", icon: Guitar },
+    { id: "lyrics", name: "Lyrics Sheet", icon: FileText },
+    { id: "chord_chart", name: "Chord Chart", icon: Music },
+    { id: "tablature", name: "Guitar Tablature", icon: Guitar },
   ]
 
   if (songs.length === 0) {
