@@ -3,6 +3,7 @@
 import type React from "react";
 
 import { useState } from "react";
+import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -29,10 +30,23 @@ export function FileUpload({
   const [isDragOver, setIsDragOver] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<any[]>([]);
   const [isUploading, setIsUploading] = useState(false);
+  const allowedExtensions = ["pdf", "docx", "txt"];
 
   const handleFiles = async (files: File[]) => {
     if (single) {
       files = files.slice(0, 1);
+    }
+    const unsupported = files.filter(
+      (f) =>
+        !allowedExtensions.some((ext) =>
+          f.name.toLowerCase().endsWith(`.${ext}`),
+        ),
+    );
+    if (unsupported.length > 0) {
+      toast.error(
+        `Unsupported file type: ${unsupported.map((f) => f.name).join(", ")}`,
+      );
+      files = files.filter((f) => !unsupported.includes(f));
     }
     setIsUploading(true);
 
@@ -134,6 +148,8 @@ export function FileUpload({
     switch (ext) {
       case "pdf":
         return "Sheet Music";
+      case "docx":
+        return "Document";
       case "gp5":
       case "gpx":
         return "Guitar Tab";
@@ -203,7 +219,7 @@ export function FileUpload({
         <input
           type="file"
           multiple={!single}
-          accept=".pdf,.png,.jpg,.jpeg,.gp5,.gpx,.txt,.mid,.midi,.xml,.musicxml"
+          accept=".pdf,.docx,.txt"
           onChange={handleFileSelect}
           className="hidden"
           id="file-upload"
@@ -214,7 +230,7 @@ export function FileUpload({
           </Button>
         </label>
         <p className="text-xs text-gray-500 mt-2">
-          Supports PDF, images, Guitar Pro, MIDI, MusicXML, and text files
+          Supports PDF, DOCX, and text files
         </p>
       </div>
 
