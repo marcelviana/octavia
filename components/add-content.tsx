@@ -51,6 +51,19 @@ export function AddContent({
   const [contentType, setContentType] = useState("Lyrics Sheet");
   const [batchArtist, setBatchArtist] = useState("");
 
+  const importModes = [
+    {
+      id: "single",
+      name: "Single Content",
+      subtitle: "Import a file with a single song.",
+    },
+    {
+      id: "batch",
+      name: "Batch Import",
+      subtitle: "Import multiple songs from one file.",
+    },
+  ];
+
   const contentTypes = [
     { id: "lyrics", name: "Lyrics Sheet", icon: FileText },
     { id: "chords", name: "Chord Chart", icon: Music },
@@ -405,6 +418,11 @@ export function AddContent({
               </CardHeader>
               <CardContent className="p-4">
                 <FileUpload single onFilesUploaded={handleFilesUploaded} />
+                {uploadedFile && (
+                  <p className="text-center text-sm text-gray-600 mt-2">
+                    {uploadedFile.name}
+                  </p>
+                )}
               </CardContent>
             </Card>
 
@@ -434,25 +452,29 @@ export function AddContent({
                       );
                     })}
                   </div>
-                  <div className="flex items-center space-x-4">
+                  <div className="space-y-2">
                     <Label className="text-sm">Import Mode</Label>
-                    <div className="flex space-x-3 text-sm">
-                      <label className="flex items-center space-x-1">
-                        <input
-                          type="radio"
-                          checked={importMode === "single"}
-                          onChange={() => setImportMode("single")}
-                        />
-                        <span>Single Content</span>
-                      </label>
-                      <label className="flex items-center space-x-1">
-                        <input
-                          type="radio"
-                          checked={importMode === "batch"}
-                          onChange={() => setImportMode("batch")}
-                        />
-                        <span>Batch Import</span>
-                      </label>
+                    <div className="grid grid-cols-2 gap-2">
+                      {importModes.map((mode) => (
+                        <Card
+                          key={mode.id}
+                          onClick={() =>
+                            setImportMode(mode.id as "single" | "batch")
+                          }
+                          className={`cursor-pointer ${
+                            importMode === mode.id
+                              ? "ring-2 ring-primary"
+                              : "hover:shadow"
+                          }`}
+                        >
+                          <CardContent className="p-2 text-center space-y-1">
+                            <p className="text-sm font-medium">{mode.name}</p>
+                            <p className="text-xs text-muted-foreground">
+                              {mode.subtitle}
+                            </p>
+                          </CardContent>
+                        </Card>
+                      ))}
                     </div>
                   </div>
                   {importMode === "batch" && (
