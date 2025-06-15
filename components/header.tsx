@@ -2,9 +2,8 @@
 
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
-import { Menu, PanelLeftClose, PanelLeftOpen, Plus, Search } from "lucide-react"
+import { Menu, PanelLeftClose, PanelLeftOpen, Search } from "lucide-react"
 import { UserHeader } from "@/components/user-header"
-import Link from "next/link"
 import { Input } from "@/components/ui/input"
 
 interface HeaderProps {
@@ -49,12 +48,6 @@ export function Header({ onMenuClick, onToggleCollapse, collapsed }: HeaderProps
           </div>
         </div>
         <div className="flex items-center space-x-3">
-          <Link href="/add-content">
-            <Button className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white">
-              <Plus className="w-4 h-4 mr-2" />
-              <span className="hidden sm:inline">Add Content</span>
-            </Button>
-          </Link>
           <div className="relative hidden md:block">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
             <Input
