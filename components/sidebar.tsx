@@ -6,8 +6,6 @@ import {
   Library,
   Music,
   Settings,
-  Plus,
-  Search,
   Guitar,
   BookOpen,
   Mic,
@@ -15,17 +13,16 @@ import {
   Star,
   Clock,
   LogOut,
-  ChevronLeft,
-  ChevronRight,
 } from "lucide-react"
 import { useAuth } from "@/contexts/auth-context"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { cn } from "@/lib/utils"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
 interface SidebarProps {
   activeScreen: string
   onNavigate: (screen: string) => void
+  collapsed?: boolean
   onCollapsedChange?: (collapsed: boolean) => void
   mobileOpen?: boolean
   onMobileOpenChange?: (open: boolean) => void
@@ -34,12 +31,13 @@ interface SidebarProps {
 export function Sidebar({
   activeScreen,
   onNavigate,
+  collapsed: collapsedProp,
   onCollapsedChange,
   mobileOpen: mobileOpenProp,
   onMobileOpenChange,
 }: SidebarProps) {
   const { user, signOut } = useAuth()
-  const [collapsed, setCollapsed] = useState(false)
+  const collapsed = collapsedProp ?? false
   const [internalMobileOpen, setInternalMobileOpen] = useState(false)
   const isControlled = mobileOpenProp !== undefined
   const mobileOpen = isControlled ? mobileOpenProp : internalMobileOpen
@@ -53,12 +51,7 @@ export function Sidebar({
     }
   }
 
-  // Notify parent component when collapsed state changes
-  useEffect(() => {
-    if (onCollapsedChange) {
-      onCollapsedChange(collapsed)
-    }
-  }, [collapsed, onCollapsedChange])
+
 
   const menuItems = [
     { id: "dashboard", label: "Dashboard", icon: Home, description: "Overview of your music" },
@@ -80,9 +73,6 @@ export function Sidebar({
     { id: "recent3", label: "Fly Me to the Moon", icon: Star },
   ]
 
-  const toggleCollapsed = () => {
-    setCollapsed(!collapsed)
-  }
 
   return (
     <>
@@ -97,58 +87,12 @@ export function Sidebar({
       {/* Sidebar */}
       <div
         className={cn(
-          "fixed left-0 top-0 h-full z-40 transition-all duration-300 ease-in-out",
+          "fixed left-0 top-14 h-[calc(100vh-3.5rem)] z-40 transition-all duration-300 ease-in-out",
           collapsed ? "w-20" : "w-72",
           mobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
         )}
       >
         <div className="h-full flex flex-col bg-gradient-to-b from-amber-50 to-orange-50 border-r border-amber-200 shadow-lg overflow-hidden">
-          {/* Collapse Button */}
-          <div className="p-4 border-b border-amber-200 flex items-center justify-end">
-            <Button variant="ghost" size="sm" className="text-amber-700 hover:bg-amber-100" onClick={toggleCollapsed}>
-              {collapsed ? <ChevronRight className="h-5 w-5" /> : <ChevronLeft className="h-5 w-5" />}
-            </Button>
-          </div>
-
-
-          {/* Quick Actions */}
-          <div className="p-4 space-y-2">
-            <TooltipProvider delayDuration={300}>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    className={cn(
-                      "w-full justify-start bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-md",
-                      collapsed && "justify-center px-0",
-                    )}
-                    size="sm"
-                    onClick={() => onNavigate("add-content")}
-                  >
-                    <Plus className="w-4 h-4 mr-2" />
-                    {!collapsed && <span>Add Content</span>}
-                  </Button>
-                </TooltipTrigger>
-                {collapsed && <TooltipContent side="right">Add Content</TooltipContent>}
-              </Tooltip>
-
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className={cn(
-                      "w-full justify-start border-amber-300 text-amber-800 hover:bg-amber-100",
-                      collapsed && "justify-center px-0",
-                    )}
-                    size="sm"
-                  >
-                    <Search className="w-4 h-4 mr-2" />
-                    {!collapsed && <span>Search</span>}
-                  </Button>
-                </TooltipTrigger>
-                {collapsed && <TooltipContent side="right">Search</TooltipContent>}
-              </Tooltip>
-            </TooltipProvider>
-          </div>
 
           {/* Navigation */}
           <nav className="flex-1 p-4 overflow-y-auto scrollbar-thin scrollbar-thumb-amber-300 scrollbar-track-transparent">
