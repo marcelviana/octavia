@@ -49,7 +49,7 @@ export function LyricsEditor({ content, onChange }: LyricsEditorProps) {
           <CardTitle>Formatting Options</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex items-center space-x-4">
+          <div className="flex flex-wrap items-center gap-4 overflow-x-auto">
             <div className="flex items-center space-x-2">
               <Label>Font Size:</Label>
               <Select value={fontSize} onValueChange={setFontSize}>

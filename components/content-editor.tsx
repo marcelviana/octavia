@@ -148,37 +148,31 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
     <div className="h-screen flex flex-col bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
       {/* Header */}
       <div className="bg-white/90 backdrop-blur-sm border-b border-amber-200 p-6 shadow-lg">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-6">
-            <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-orange-600 rounded-xl flex items-center justify-center">
-              <Music className="w-6 h-6 text-white" />
-            </div>
-            <div>
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
+            <div className="flex items-center space-x-4 flex-shrink-0">
+              <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-orange-600 rounded-xl flex items-center justify-center">
+                <Music className="w-6 h-6 text-white" />
+              </div>
               <h1 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
                 Editing: {content.title}
               </h1>
-              <div className="flex items-center space-x-3 mt-2">
-                <Badge
-                  variant="secondary"
-                  className="bg-amber-100 text-amber-700 border-amber-300 font-medium px-3 py-1"
-                >
-                  {content.type}
-                </Badge>
-                {hasChanges && (
-                  <Badge variant="destructive" className="bg-red-100 text-red-700 border-red-300 font-medium px-3 py-1">
-                    <Sparkles className="w-3 h-3 mr-1" />
-                    Unsaved Changes
-                  </Badge>
-                )}
-                <div className="flex items-center text-sm text-gray-500">
-                  <Clock className="w-4 h-4 mr-1" />
-                  Last saved: {new Date().toLocaleTimeString()}
-                </div>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge
+                variant="secondary"
+                className="bg-amber-100 text-amber-700 border-amber-300 font-medium px-3 py-1"
+              >
+                {content.type}
+              </Badge>
+              <div className="flex items-center text-sm text-gray-500">
+                <Clock className="w-4 h-4 mr-1" />
+                Last saved: {new Date().toLocaleTimeString()}
               </div>
             </div>
           </div>
 
-          <div className="flex flex-col-reverse sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
+          <div className="flex flex-wrap items-center gap-2 sm:flex-nowrap sm:space-x-4">
             <Button
               variant="outline"
               size="sm"
@@ -197,7 +191,7 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
             >
               <Redo className="w-4 h-4" />
             </Button>
-            <Separator orientation="vertical" className="h-8" />
+            <Separator orientation="vertical" className="hidden sm:block h-8" />
             <Button
               variant="outline"
               size="lg"
@@ -207,15 +201,28 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
               <X className="w-4 h-4 mr-2" />
               Cancel
             </Button>
-            <Button
-              onClick={handleSave}
-              disabled={!hasChanges}
-              size="lg"
-              className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-6 shadow-lg w-full sm:w-auto"
-            >
-              <Save className="w-4 h-4 mr-2" />
-              Save Changes
-            </Button>
+            <div className="relative">
+              <Button
+                onClick={handleSave}
+                disabled={!hasChanges}
+                size="lg"
+                className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-6 shadow-lg w-full sm:w-auto"
+              >
+                <Save className="w-4 h-4 mr-2" />
+                Save Changes
+              </Button>
+              {hasChanges && (
+                <Badge className="absolute -top-2 -right-2 sm:hidden" variant="destructive">
+                  !
+                </Badge>
+              )}
+            </div>
+            {hasChanges && (
+              <Badge variant="destructive" className="hidden sm:inline-flex bg-red-100 text-red-700 border-red-300 font-medium px-3 py-1">
+                <Sparkles className="w-3 h-3 mr-1" />
+                Unsaved Changes
+              </Badge>
+            )}
           </div>
         </div>
       </div>
@@ -223,8 +230,8 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
       {/* Toolbar */}
       {(content.type === "Sheet Music" || content.type === "Guitar Tab") && (
         <div className="bg-white/90 backdrop-blur-sm border-b border-amber-200 p-4 shadow-sm">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-6">
+          <div className="flex items-center justify-between flex-wrap gap-4 overflow-x-auto">
+            <div className="flex items-center space-x-6 flex-shrink-0">
               {/* Drawing Tools */}
               <div className="flex items-center space-x-2 bg-amber-50 rounded-xl p-2 border border-amber-200">
                 {tools.map((tool) => {
@@ -304,7 +311,7 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
         <div className="flex-1 overflow-auto">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full">
             <div className="bg-white/90 backdrop-blur-sm border-b border-amber-200 px-6 py-2">
-              <TabsList className="bg-amber-50 border border-amber-200">
+              <TabsList className="bg-amber-50 border border-amber-200 flex-wrap overflow-x-auto">
                 <TabsTrigger
                   value="content"
                   className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500 data-[state=active]:to-orange-600 data-[state=active]:text-white"
@@ -322,14 +329,14 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
               </TabsList>
             </div>
 
-            <TabsContent value="content" className="flex-1 p-6">
-              <div className="h-full bg-white/60 backdrop-blur-sm rounded-xl border border-amber-200 shadow-lg">
+            <TabsContent value="content" className="flex-1 p-4 sm:p-6 w-full">
+              <div className="h-full bg-white/60 backdrop-blur-sm rounded-xl border border-amber-200 shadow-lg p-4 sm:p-6">
                 {renderContentEditor()}
               </div>
             </TabsContent>
 
-            <TabsContent value="metadata" className="flex-1 p-6">
-              <div className="h-full bg-white/60 backdrop-blur-sm rounded-xl border border-amber-200 shadow-lg p-6">
+            <TabsContent value="metadata" className="flex-1 p-4 sm:p-6 w-full">
+              <div className="h-full bg-white/60 backdrop-blur-sm rounded-xl border border-amber-200 shadow-lg p-4 sm:p-6">
                 <MetadataEditor
                   content={editedContent}
                   onChange={(newContent) => {
