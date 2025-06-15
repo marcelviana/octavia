@@ -15,6 +15,7 @@ interface ContentCreatorProps {
 
 export function ContentCreator({ onContentCreated }: ContentCreatorProps) {
   const [activeType, setActiveType] = useState("lyrics")
+  const [lyricsTitle, setLyricsTitle] = useState("")
   const [lyricsContent, setLyricsContent] = useState("")
   const [chordChart, setChordChart] = useState({
     title: "",
@@ -84,24 +85,36 @@ export function ContentCreator({ onContentCreated }: ContentCreatorProps) {
     let content
     switch (activeType) {
       case "lyrics":
+        if (!lyricsTitle.trim()) {
+          alert("Title is required")
+          return
+        }
         content = {
           type: "Lyrics",
           content: { lyrics: lyricsContent },
-          title: "New Lyrics Sheet",
+          title: lyricsTitle.trim(),
         }
         break
       case "chords":
+        if (!chordChart.title.trim()) {
+          alert("Title is required")
+          return
+        }
         content = {
           type: "Chord Chart",
           content: chordChart,
-          title: chordChart.title || "New Chord Chart",
+          title: chordChart.title.trim(),
         }
         break
       case "tablature":
+        if (!tabContent.title.trim()) {
+          alert("Title is required")
+          return
+        }
         content = {
           type: "Guitar Tab",
           content: tabContent,
-          title: tabContent.title || "New Guitar Tab",
+          title: tabContent.title.trim(),
         }
         break
       default:
@@ -162,6 +175,15 @@ export function ContentCreator({ onContentCreated }: ContentCreatorProps) {
         <CardContent>
           {activeType === "lyrics" && (
             <div className="space-y-4">
+              <div>
+                <Label htmlFor="lyrics-title">Title</Label>
+                <Input
+                  id="lyrics-title"
+                  value={lyricsTitle}
+                  onChange={(e) => setLyricsTitle(e.target.value)}
+                  placeholder="Song title"
+                />
+              </div>
               <div>
                 <Label htmlFor="lyrics">Lyrics</Label>
                 <Textarea

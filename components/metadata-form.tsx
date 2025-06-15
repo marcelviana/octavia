@@ -24,7 +24,6 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [metadata, setMetadata] = useState({
-    title: createdContent?.title || "",
     artist: "",
     album: "",
     genre: "",
@@ -131,17 +130,10 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
         return
       }
 
-      // Basic validation
-      if (!metadata.title) {
-        console.log("No title provided")
-        alert("Title is required!")
-        return
-      }
-
       // Build the insert payload
       const payload: any = {
         user_id: user.id,
-        title: metadata.title,
+        title: createdContent?.title || files?.[0]?.name || "Untitled",
         artist: metadata.artist || null,
         album: metadata.album || null,
         genre: metadata.genre || null,
@@ -249,16 +241,6 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
         <CardContent className="space-y-6">
           {/* Basic Information */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="title">Title *</Label>
-              <Input
-                id="title"
-                value={metadata.title}
-                onChange={(e) => setMetadata((prev) => ({ ...prev, title: e.target.value }))}
-                placeholder="Song title"
-                required
-              />
-            </div>
             <div>
               <Label htmlFor="artist">Artist</Label>
               <Input
@@ -437,7 +419,7 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
         </Button>
         <Button
           onClick={handleSubmit}
-          disabled={!metadata.title.trim() || isSubmitting}>
+          disabled={isSubmitting}>
           {isSubmitting ? "Saving..." : "Save Content"}
         </Button>
       </div>
