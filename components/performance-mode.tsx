@@ -13,7 +13,6 @@ import {
   ZoomOut,
   Pause,
   Play,
-  Clock,
   Maximize,
   Minimize,
   Plus,
@@ -36,7 +35,6 @@ export function PerformanceMode({
   const [currentSong, setCurrentSong] = useState(0)
   const [zoom, setZoom] = useState(100)
   const [showControls, setShowControls] = useState(true)
-  const [elapsedTime, setElapsedTime] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
   const [bpm, setBpm] = useState(80)
   const [isFullScreen, setIsFullScreen] = useState(false)
@@ -137,15 +135,6 @@ export function PerformanceMode({
     }
   }, [])
 
-  useEffect(() => {
-    let interval: NodeJS.Timeout
-    if (isPlaying) {
-      interval = setInterval(() => {
-        setElapsedTime((prev) => prev + 1)
-      }, 1000)
-    }
-    return () => clearInterval(interval)
-  }, [isPlaying])
 
   useEffect(() => {
     if (!isPlaying) {
@@ -216,12 +205,6 @@ export function PerformanceMode({
     return () => window.removeEventListener("keydown", handleKeyPress)
   }, [currentSong, isPlaying, onExitPerformance, songs.length])
 
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60)
-    const secs = seconds % 60
-    return `${mins}:${secs.toString().padStart(2, "0")}`
-  }
-
   const currentSongData: any = songs[currentSong] || {}
 
   useEffect(() => {
@@ -265,16 +248,17 @@ export function PerformanceMode({
     <div className="h-screen bg-[#1A1F36] text-white flex flex-col relative" onMouseMove={handleMouseMove}>
       {/* Top Bar */}
       <div className="absolute top-0 left-0 right-0 z-50 bg-[#1A1F36]/90 backdrop-blur-sm">
-        <div className="flex items-center justify-between p-3">
-          <div className="flex items-center space-x-2">
-            <Button variant="ghost" size="sm" onClick={onExitPerformance} className="text-white hover:bg-white/20">
-              <X className="w-4 h-4" />
-            </Button>
-            <div className="flex items-center space-x-2 text-sm">
-              <Clock className="w-4 h-4 text-[#A69B8E]" />
-              <span className="text-[#A69B8E]">{formatTime(elapsedTime)}</span>
-            </div>
-          </div>
+        <div className="flex flex-wrap items-center justify-center gap-4 sm:justify-between p-3">
+        <div className="flex items-center">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onExitPerformance}
+            className="text-white hover:bg-white/20"
+          >
+            <X className="w-4 h-4" />
+          </Button>
+        </div>
 
           <div className="text-center">
             <h2 className="font-bold text-lg text-white">{currentSongData.title}</h2>
@@ -282,14 +266,6 @@ export function PerformanceMode({
           </div>
 
           <div className="flex items-center space-x-2">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsPlaying(!isPlaying)}
-              className={`${isPlaying ? "text-[#FF6B6B]" : "text-white"} hover:bg-white/20`}
-            >
-              {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-            </Button>
             <Button
               variant="ghost"
               size="sm"
@@ -308,11 +284,15 @@ export function PerformanceMode({
               onClick={() => setDarkSheet(!darkSheet)}
               className="text-white hover:bg-white/20"
             >
-              {darkSheet ? (
-                <Sun className="w-4 h-4" />
-              ) : (
-                <Moon className="w-4 h-4" />
-              )}
+              {darkSheet ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsPlaying(!isPlaying)}
+              className={`${isPlaying ? "text-[#FF6B6B]" : "text-white"} hover:bg-white/20`}
+            >
+              {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
             </Button>
           </div>
         </div>
@@ -328,22 +308,7 @@ export function PerformanceMode({
             className="p-6 h-full overflow-auto"
             style={{ transform: `scale(${zoom / 100})`, transformOrigin: "top center" }}
           >
-            <div className="text-center mb-6 border-b border-[#A69B8E] pb-4">
-              <h1
-                className={`text-3xl font-bold mb-2 ${darkSheet ? "text-[#F7F9FA]" : "text-[#1A1F36]"}`}
-              >
-                {currentSongData.title}
-              </h1>
-              <p className="text-xl text-[#A69B8E] mb-3">{currentSongData.artist}</p>
-              <div className="flex justify-center space-x-4">
-                <Badge variant="outline" className="text-sm px-3 py-1 border-[#2E7CE4] text-[#2E7CE4]">
-                  Key: {currentSongData.key || "N/A"}
-                </Badge>
-                <Badge variant="outline" className="text-sm px-3 py-1 border-[#2E7CE4] text-[#2E7CE4]">
-                  BPM: {bpm}
-                </Badge>
-              </div>
-            </div>
+
 
             <div className="space-y-8 max-w-3xl mx-auto">
               {lyricsData[currentSong] ? (
@@ -365,7 +330,7 @@ export function PerformanceMode({
           showControls ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       >
-        <div className="flex items-center justify-between p-3">
+        <div className="flex flex-wrap items-center justify-center gap-4 sm:justify-between p-3">
           <div className="flex items-center space-x-3">
             <Button
               variant="ghost"
@@ -420,10 +385,7 @@ export function PerformanceMode({
               Next
               <ChevronRight className="w-5 h-5 ml-1" />
             </Button>
-          </div>
-
-          <div className="flex items-center space-x-3">
-            <div className="relative flex items-center space-x-1">
+            <div className="relative flex items-center space-x-1 ml-4">
               <Button
                 variant="ghost"
                 size="icon"
