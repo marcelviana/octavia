@@ -1,25 +1,40 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Progress } from "@/components/ui/progress"
-import { Badge } from "@/components/ui/badge"
-import { Upload, FileText, Music, Guitar, X, Check, AlertCircle } from "lucide-react"
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { Badge } from "@/components/ui/badge";
+import {
+  Upload,
+  FileText,
+  Music,
+  Guitar,
+  X,
+  Check,
+  AlertCircle,
+} from "lucide-react";
 
 interface FileUploadProps {
-  onFilesUploaded: (files: any[]) => void
+  onFilesUploaded: (files: any[]) => void;
+  single?: boolean;
 }
 
-export function FileUpload({ onFilesUploaded }: FileUploadProps) {
-  const [isDragOver, setIsDragOver] = useState(false)
-  const [uploadedFiles, setUploadedFiles] = useState<any[]>([])
-  const [isUploading, setIsUploading] = useState(false)
+export function FileUpload({
+  onFilesUploaded,
+  single = false,
+}: FileUploadProps) {
+  const [isDragOver, setIsDragOver] = useState(false);
+  const [uploadedFiles, setUploadedFiles] = useState<any[]>([]);
+  const [isUploading, setIsUploading] = useState(false);
 
   const handleFiles = async (files: File[]) => {
-    setIsUploading(true)
+    if (single) {
+      files = files.slice(0, 1);
+    }
+    setIsUploading(true);
 
     const processedFiles = await Promise.all(
       files.map(async (file, index) => {
@@ -31,131 +46,141 @@ export function FileUpload({ onFilesUploaded }: FileUploadProps) {
           status: "uploading",
           progress: 0,
           contentType: detectContentType(file.name),
-        }
+        };
 
         // Parse text-based files for automatic content import
         if (/(\.txt|\.md)$/i.test(file.name)) {
-          const text = await file.text()
-          const lines = text.split(/\r?\n/)
-          const firstIndex = lines.findIndex((l) => l.trim() !== "")
-          const firstLine = firstIndex >= 0 ? lines[firstIndex].trim() : ""
-          let title = firstLine
-          const marker = firstLine.match(/^#\s*(.*)/) || firstLine.match(/^Title:\s*(.*)/i)
+          const text = await file.text();
+          const lines = text.split(/\r?\n/);
+          const firstIndex = lines.findIndex((l) => l.trim() !== "");
+          const firstLine = firstIndex >= 0 ? lines[firstIndex].trim() : "";
+          let title = firstLine;
+          const marker =
+            firstLine.match(/^#\s*(.*)/) || firstLine.match(/^Title:\s*(.*)/i);
           if (marker) {
-            title = marker[1].trim()
+            title = marker[1].trim();
           }
-          const body = lines.slice(firstIndex + 1).join("\n")
+          const body = lines.slice(firstIndex + 1).join("\n");
 
           return {
             ...base,
+            file,
             isTextImport: true,
             parsedTitle: title || file.name,
             textBody: body,
             originalText: text,
-          }
+          };
         }
 
-        return base
+        return { ...base, file };
       }),
-    )
+    );
 
-    setUploadedFiles(processedFiles)
+    setUploadedFiles(processedFiles);
 
     // Simulate asynchronous upload progress without blocking the UI
-    let completed = 0
+    let completed = 0;
     processedFiles.forEach((file) => {
-      let progress = 0
+      let progress = 0;
       const interval = setInterval(() => {
-        progress += 20
+        progress += 20;
         setUploadedFiles((prev) =>
-          prev.map((f) => (f.id === file.id ? { ...f, progress: Math.min(progress, 100) } : f)),
-        )
+          prev.map((f) =>
+            f.id === file.id ? { ...f, progress: Math.min(progress, 100) } : f,
+          ),
+        );
         if (progress >= 100) {
-          clearInterval(interval)
-          completed += 1
+          clearInterval(interval);
+          completed += 1;
           setUploadedFiles((prev) =>
-            prev.map((f) => (f.id === file.id ? { ...f, status: "completed" } : f)),
-          )
+            prev.map((f) =>
+              f.id === file.id ? { ...f, status: "completed" } : f,
+            ),
+          );
           if (completed === processedFiles.length) {
-            setIsUploading(false)
+            setIsUploading(false);
           }
         }
-      }, 100)
-    })
-  }
+      }, 100);
+    });
+  };
 
   const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault()
-    setIsDragOver(true)
-  }
+    e.preventDefault();
+    setIsDragOver(true);
+  };
 
   const handleDragLeave = (e: React.DragEvent) => {
-    e.preventDefault()
-    setIsDragOver(false)
-  }
+    e.preventDefault();
+    setIsDragOver(false);
+  };
 
   const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault()
-    setIsDragOver(false)
-    const files = Array.from(e.dataTransfer.files)
-    handleFiles(files)
-  }
+    e.preventDefault();
+    setIsDragOver(false);
+    const files = Array.from(e.dataTransfer.files);
+    handleFiles(files);
+  };
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const files = Array.from(e.target.files)
-      handleFiles(files)
+      const files = Array.from(e.target.files);
+      handleFiles(files);
     }
-  }
+  };
 
   const detectContentType = (filename: string) => {
-    const ext = filename.split(".").pop()?.toLowerCase()
+    const ext = filename.split(".").pop()?.toLowerCase();
     switch (ext) {
       case "pdf":
-        return "Sheet Music"
+        return "Sheet Music";
       case "gp5":
       case "gpx":
-        return "Guitar Tab"
+        return "Guitar Tab";
       case "txt":
-        return "Chord Chart"
+        return "Chord Chart";
       case "mid":
       case "midi":
-        return "MIDI File"
+        return "MIDI File";
       case "xml":
       case "musicxml":
-        return "MusicXML"
+        return "MusicXML";
       default:
-        return "Unknown"
+        return "Unknown";
     }
-  }
+  };
 
   const getFileIcon = (contentType: string) => {
     switch (contentType) {
       case "Guitar Tab":
-        return <Guitar className="w-5 h-5 text-orange-600" />
+        return <Guitar className="w-5 h-5 text-orange-600" />;
       case "Sheet Music":
-        return <Music className="w-5 h-5 text-blue-600" />
+        return <Music className="w-5 h-5 text-blue-600" />;
       default:
-        return <FileText className="w-5 h-5 text-gray-600" />
+        return <FileText className="w-5 h-5 text-gray-600" />;
     }
-  }
+  };
 
   const formatFileSize = (bytes: number) => {
-    if (bytes === 0) return "0 Bytes"
-    const k = 1024
-    const sizes = ["Bytes", "KB", "MB", "GB"]
-    const i = Math.floor(Math.log(bytes) / Math.log(k))
-    return Number.parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i]
-  }
+    if (bytes === 0) return "0 Bytes";
+    const k = 1024;
+    const sizes = ["Bytes", "KB", "MB", "GB"];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return (
+      Number.parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i]
+    );
+  };
 
   const removeFile = (fileId: number) => {
-    setUploadedFiles((prev) => prev.filter((f) => f.id !== fileId))
-  }
+    setUploadedFiles((prev) => prev.filter((f) => f.id !== fileId));
+  };
 
   const handleContinue = () => {
-    const completedFiles = uploadedFiles.filter((f) => f.status === "completed")
-    onFilesUploaded(completedFiles)
-  }
+    const completedFiles = uploadedFiles.filter(
+      (f) => f.status === "completed",
+    );
+    onFilesUploaded(completedFiles);
+  };
 
   return (
     <div className="space-y-6">
@@ -172,10 +197,12 @@ export function FileUpload({ onFilesUploaded }: FileUploadProps) {
         <h3 className="text-lg font-medium text-gray-900 mb-2">
           {isDragOver ? "Drop files here" : "Upload your music files"}
         </h3>
-        <p className="text-gray-600 mb-4">Drag and drop files here, or click to browse</p>
+        <p className="text-gray-600 mb-4">
+          Drag and drop files here, or click to browse
+        </p>
         <input
           type="file"
-          multiple
+          multiple={!single}
           accept=".pdf,.png,.jpg,.jpeg,.gp5,.gpx,.txt,.mid,.midi,.xml,.musicxml"
           onChange={handleFileSelect}
           className="hidden"
@@ -183,10 +210,12 @@ export function FileUpload({ onFilesUploaded }: FileUploadProps) {
         />
         <label htmlFor="file-upload">
           <Button asChild>
-            <span>Choose Files</span>
+            <span>{single ? "Choose File" : "Choose Files"}</span>
           </Button>
         </label>
-        <p className="text-xs text-gray-500 mt-2">Supports PDF, images, Guitar Pro, MIDI, MusicXML, and text files</p>
+        <p className="text-xs text-gray-500 mt-2">
+          Supports PDF, images, Guitar Pro, MIDI, MusicXML, and text files
+        </p>
       </div>
 
       {/* Uploaded Files */}
@@ -194,33 +223,51 @@ export function FileUpload({ onFilesUploaded }: FileUploadProps) {
         <Card>
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-medium text-gray-900">Uploaded Files ({uploadedFiles.length})</h3>
-              {!isUploading && uploadedFiles.every((f) => f.status === "completed") && (
-                <Button onClick={handleContinue}>
-                  Continue
-                  <Check className="w-4 h-4 ml-2" />
-                </Button>
-              )}
+              <h3 className="font-medium text-gray-900">
+                Uploaded Files ({uploadedFiles.length})
+              </h3>
+              {!isUploading &&
+                uploadedFiles.every((f) => f.status === "completed") && (
+                  <Button onClick={handleContinue}>
+                    Continue
+                    <Check className="w-4 h-4 ml-2" />
+                  </Button>
+                )}
             </div>
             <div className="space-y-3">
               {uploadedFiles.map((file) => (
-                <div key={file.id} className="flex items-center space-x-4 p-3 bg-gray-50 rounded-lg">
-                  <div className="flex-shrink-0">{getFileIcon(file.contentType)}</div>
+                <div
+                  key={file.id}
+                  className="flex items-center space-x-4 p-3 bg-gray-50 rounded-lg"
+                >
+                  <div className="flex-shrink-0">
+                    {getFileIcon(file.contentType)}
+                  </div>
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium text-gray-900 truncate">{file.name}</p>
+                    <p className="font-medium text-gray-900 truncate">
+                      {file.name}
+                    </p>
                     <div className="flex items-center space-x-2 mt-1">
                       <Badge variant="secondary" className="text-xs">
                         {file.contentType}
                       </Badge>
-                      <span className="text-xs text-gray-500">{formatFileSize(file.size)}</span>
+                      <span className="text-xs text-gray-500">
+                        {formatFileSize(file.size)}
+                      </span>
                     </div>
-                    {file.status === "uploading" && <Progress value={file.progress} className="w-full mt-2" />}
+                    {file.status === "uploading" && (
+                      <Progress value={file.progress} className="w-full mt-2" />
+                    )}
                   </div>
                   <div className="flex-shrink-0">
                     {file.status === "completed" ? (
                       <div className="flex items-center space-x-2">
                         <Check className="w-4 h-4 text-green-600" />
-                        <Button variant="ghost" size="sm" onClick={() => removeFile(file.id)}>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => removeFile(file.id)}
+                        >
                           <X className="w-4 h-4" />
                         </Button>
                       </div>
@@ -237,5 +284,5 @@ export function FileUpload({ onFilesUploaded }: FileUploadProps) {
         </Card>
       )}
     </div>
-  )
+  );
 }
