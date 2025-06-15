@@ -77,21 +77,21 @@ export function ContentCreator({ onContentCreated }: ContentCreatorProps) {
           <p className="text-gray-600">Choose the type of musical content you want to create</p>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-3 gap-2 md:gap-4">
             {contentTypes.map((type) => {
               const Icon = type.icon
               return (
                 <Card
                   key={type.id}
-                  className={`cursor-pointer transition-all ${
+                  className={`cursor-pointer transition-all min-h-[44px] ${
                     activeType === type.id ? "ring-2 ring-blue-500 bg-blue-50" : "hover:shadow-md"
                   }`}
                   onClick={() => setActiveType(type.id)}
                 >
-                  <CardContent className="p-4 text-center">
-                    <Icon className="w-8 h-8 mx-auto mb-3 text-blue-600" />
-                    <h3 className="font-medium text-gray-900">{type.name}</h3>
-                    <p className="text-sm text-gray-600 mt-1">{type.description}</p>
+                  <CardContent className="p-2 md:p-4 text-center">
+                    <Icon className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-2 md:mb-3 text-blue-600" />
+                    <h3 className="text-sm md:text-base font-medium text-gray-900">{type.name}</h3>
+                    <p className="text-xs md:text-sm text-gray-600 mt-1">{type.description}</p>
                   </CardContent>
                 </Card>
               )
