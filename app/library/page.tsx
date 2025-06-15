@@ -3,7 +3,11 @@ import { getSupabaseServerClient } from "@/lib/supabase-server";
 import { getUserContentServer } from "@/lib/content-service-server";
 import LibraryPageClient from "@/components/library-page-client";
 
-export default async function LibraryPage() {
+export default async function LibraryPage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ [key: string]: string }>
+}) {
   const supabase = await getSupabaseServerClient();
   const {
     data: { user },
@@ -14,6 +18,8 @@ export default async function LibraryPage() {
   }
 
   const content = await getUserContentServer();
+  const resolved = await searchParams;
+  const search = resolved?.search || "";
 
-  return <LibraryPageClient initialContent={content} />;
+  return <LibraryPageClient initialContent={content} initialSearch={search} />;
 }
