@@ -14,12 +14,12 @@ export function TextImportPreview({ files, onComplete, onBack }: TextImportPrevi
   const [index, setIndex] = useState(0)
   const [results, setResults] = useState<any[]>([])
 
-  const handleCreate = (text: string) => {
+  const handleCreate = ({ title, text }: { title: string; text: string }) => {
     const file = files[index]
     setResults((prev) => [
       ...prev,
       {
-        title: file.parsedTitle || file.name,
+        title,
         body: text,
         content_type: "Lyrics",
       },
@@ -29,7 +29,7 @@ export function TextImportPreview({ files, onComplete, onBack }: TextImportPrevi
     } else {
       onComplete(results.concat([
         {
-          title: file.parsedTitle || file.name,
+          title,
           body: text,
           content_type: "Lyrics",
         },
@@ -46,6 +46,7 @@ export function TextImportPreview({ files, onComplete, onBack }: TextImportPrevi
       <SimpleEditor
         title={`${file.name} (${index + 1}/${files.length})`}
         defaultValue={file.textBody || file.originalText || ""}
+        defaultTitle={file.parsedTitle || file.name}
         onCreate={handleCreate}
       />
       <div className="flex justify-between">
