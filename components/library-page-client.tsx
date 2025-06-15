@@ -7,11 +7,13 @@ import { Header } from "@/components/header";
 import { cn } from "@/lib/utils";
 
 interface LibraryPageClientProps {
-  initialContent: any[];
+  initialContent: any[]
+  initialSearch?: string
 }
 
 export default function LibraryPageClient({
   initialContent,
+  initialSearch,
 }: LibraryPageClientProps) {
   const router = useRouter();
   const [activeScreen, setActiveScreen] = useState("library");
@@ -32,6 +34,7 @@ export default function LibraryPageClient({
         onMenuClick={() => setSidebarMobileOpen(true)}
         onToggleCollapse={() => setSidebarCollapsed((c) => !c)}
         collapsed={sidebarCollapsed}
+        initialSearch={initialSearch}
       />
       <div className="flex flex-1">
         <Sidebar
@@ -48,7 +51,11 @@ export default function LibraryPageClient({
             sidebarCollapsed ? "md:ml-20" : "md:ml-72",
           )}
         >
-          <Library onSelectContent={handleSelectContent} initialContent={initialContent} />
+          <Library
+            onSelectContent={handleSelectContent}
+            initialContent={initialContent}
+            initialSearch={initialSearch}
+          />
         </main>
       </div>
     </div>

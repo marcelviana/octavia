@@ -52,11 +52,12 @@ import {
 interface LibraryProps {
   onSelectContent: (content: any) => void;
   initialContent: any[];
+  initialSearch?: string;
 }
 
-export function Library({ onSelectContent, initialContent }: LibraryProps) {
+export function Library({ onSelectContent, initialContent, initialSearch }: LibraryProps) {
   const router = useRouter();
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(initialSearch || "");
   const [sortBy, setSortBy] = useState("recent");
   const [viewMode, setViewMode] = useState("grid");
   const [content, setContent] = useState<any[]>(initialContent);
@@ -69,6 +70,10 @@ export function Library({ onSelectContent, initialContent }: LibraryProps) {
   });
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [contentToDelete, setContentToDelete] = useState<any>(null);
+
+  useEffect(() => {
+    setSearchQuery(initialSearch || "");
+  }, [initialSearch]);
 
   useEffect(() => {
     let filtered = [...content];
