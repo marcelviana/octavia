@@ -47,6 +47,11 @@ export function TextImportPreview({ files, onComplete, onBack }: TextImportPrevi
         title={`${file.name} (${index + 1}/${files.length})`}
         defaultValue={file.textBody || file.originalText || ""}
         defaultTitle={file.parsedTitle || file.name}
+        placeholder="Type your content here..."
+        tips={[
+          "Use blank lines to separate verses and choruses.",
+          "Add labels like [Verse], [Chorus], [Bridge] for better structure.",
+        ]}
         onCreate={handleCreate}
       />
       <div className="flex justify-between">

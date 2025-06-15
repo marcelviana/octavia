@@ -11,18 +11,19 @@ interface SimpleEditorProps {
   defaultValue?: string
   title?: string
   defaultTitle?: string
+  placeholder?: string
+  tips?: string[]
   onCreate: (data: { title: string; text: string }) => void
 }
 
-export function SimpleEditor({ defaultValue = "", title, defaultTitle = "", onCreate }: SimpleEditorProps) {
+export function SimpleEditor({ defaultValue = "", title, defaultTitle = "", placeholder = "", tips = [], onCreate }: SimpleEditorProps) {
   const [text, setText] = useState(defaultValue)
   const [songTitle, setSongTitle] = useState(defaultTitle)
-  const [preview, setPreview] = useState(false)
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{title || (preview ? "Preview" : "Edit Content")}</CardTitle>
+        <CardTitle>{title || "Edit Content"}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <div>
@@ -34,22 +35,21 @@ export function SimpleEditor({ defaultValue = "", title, defaultTitle = "", onCr
             placeholder="Song title"
           />
         </div>
-        {preview ? (
-          <div className="whitespace-pre-wrap p-4 border rounded bg-white">
-            {text}
+        <Textarea
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          rows={12}
+          className="font-mono"
+          placeholder={placeholder}
+        />
+        {tips.length > 0 && (
+          <div className="text-sm text-gray-500 space-y-1">
+            {tips.map((tip) => (
+              <p key={tip}>• {tip}</p>
+            ))}
           </div>
-        ) : (
-          <Textarea
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            rows={12}
-            className="font-mono"
-          />
         )}
-        <div className="flex space-x-2">
-          <Button variant="outline" onClick={() => setPreview(!preview)}>
-            Preview
-          </Button>
+        <div>
           <Button onClick={() => songTitle.trim() && onCreate({ title: songTitle.trim(), text })} disabled={!songTitle.trim()}>
             Create Content
           </Button>
