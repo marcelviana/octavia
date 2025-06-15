@@ -36,9 +36,8 @@ export async function parseDocxFile(file: File): Promise<ParsedSong[]> {
 }
 
 export async function parsePdfFile(file: File): Promise<ParsedSong[]> {
-  const pdfjsLib = await import('pdfjs-dist/build/pdf')
-  const worker = await import('pdfjs-dist/build/pdf.worker')
-  ;(pdfjsLib as any).GlobalWorkerOptions.workerSrc = worker
+  const pdfjsLib = await import('pdfjs-dist')
+  pdfjsLib.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.js`
   const arrayBuffer = await file.arrayBuffer()
   const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise
   const lines: { text: string; bold: boolean }[] = []
