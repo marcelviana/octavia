@@ -91,10 +91,16 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
   ].filter(Boolean).length
 
   const renderSummary = (completed: number, total: number) => {
-    if (completed === 0) return null
-    if (completed === total)
-      return <Check className="w-4 h-4 text-green-600" />
-    return <span className="text-xs text-gray-600">{`${completed} of ${total} completed`}</span>
+    const summary = `${completed} of ${total} completed`
+    if (completed === total) {
+      return (
+        <span className="flex items-center gap-1 text-xs text-gray-600 whitespace-nowrap">
+          <Check className="w-4 h-4 text-green-600" />
+          {summary}
+        </span>
+      )
+    }
+    return <span className="text-xs text-gray-600 whitespace-nowrap">{summary}</span>
   }
 
   const addTag = () => {
