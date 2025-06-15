@@ -114,6 +114,30 @@ export function AddContent({ onBack, onContentCreated, onNavigate }: AddContentP
     setCurrentStep(2)
   }
 
+  const handleScanCapture = (text: string) => {
+    const file = {
+      id: Date.now(),
+      name: "Scanned Sheet",
+      textBody: text,
+      parsedTitle: "Scanned Sheet",
+      isTextImport: true,
+    }
+    setUploadedFiles([file])
+    setCurrentStep(2)
+  }
+
+  const handleUrlImport = (text: string) => {
+    const file = {
+      id: Date.now(),
+      name: "Imported URL",
+      textBody: text,
+      parsedTitle: "Imported URL",
+      isTextImport: true,
+    }
+    setUploadedFiles([file])
+    setCurrentStep(2)
+  }
+
   const handleContentCreated = (content: any) => {
     setCreatedContent(content)
     setCurrentStep(2)
@@ -443,173 +467,23 @@ export function AddContent({ onBack, onContentCreated, onNavigate }: AddContentP
           </TabsContent>
 
           <TabsContent value="scan" className="space-y-4">
-            <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
-              <CardHeader className="bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-t-lg py-3 px-4">
-                <CardTitle className="text-lg flex items-center">
-                  <Camera className="w-4 h-4 mr-2" />
-                  Scan Physical Sheet Music
-                </CardTitle>
-                <p className="text-purple-100 text-sm">Use your device camera to capture physical sheet music</p>
-              </CardHeader>
-              <CardContent className="p-4 space-y-4">
-                <div className="border-2 border-dashed border-amber-300 rounded-lg p-6 text-center bg-gradient-to-br from-amber-50 to-orange-50 hover:from-amber-100 hover:to-orange-100 transition-all duration-300">
-                  <Camera className="w-12 h-12 text-amber-500 mx-auto mb-3" />
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">Camera Scan</h3>
-                  <p className="text-gray-600 mb-4 text-sm">
-                    Position your sheet music in good lighting for best results
-                  </p>
-                  <Button className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-4 py-2 text-sm shadow">
-                    <Camera className="w-4 h-4 mr-2" />
-                    Open Camera
-                  </Button>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <Card className="border border-amber-200 bg-white/60 backdrop-blur-sm">
-                    <CardContent className="p-3">
-                      <h4 className="font-medium text-sm mb-2 text-gray-900 flex items-center">
-                        <Zap className="w-4 h-4 mr-1.5 text-amber-500" />
-                        Scanning Tips
-                      </h4>
-                      <ul className="text-gray-700 text-xs space-y-1.5">
-                        <li className="flex items-center">
-                          <div className="w-1.5 h-1.5 bg-amber-500 rounded-full mr-2"></div>
-                          Ensure good lighting
-                        </li>
-                        <li className="flex items-center">
-                          <div className="w-1.5 h-1.5 bg-amber-500 rounded-full mr-2"></div>
-                          Keep the page flat
-                        </li>
-                        <li className="flex items-center">
-                          <div className="w-1.5 h-1.5 bg-amber-500 rounded-full mr-2"></div>
-                          Fill the frame with the music
-                        </li>
-                        <li className="flex items-center">
-                          <div className="w-1.5 h-1.5 bg-amber-500 rounded-full mr-2"></div>
-                          Avoid shadows and glare
-                        </li>
-                      </ul>
-                    </CardContent>
-                  </Card>
-                  <Card className="border border-amber-200 bg-white/60 backdrop-blur-sm">
-                    <CardContent className="p-3">
-                      <h4 className="font-medium text-sm mb-2 text-gray-900 flex items-center">
-                        <Sparkles className="w-4 h-4 mr-1.5 text-amber-500" />
-                        Auto-Processing
-                      </h4>
-                      <ul className="text-gray-700 text-xs space-y-1.5">
-                        <li className="flex items-center">
-                          <div className="w-1.5 h-1.5 bg-amber-500 rounded-full mr-2"></div>
-                          Automatic crop and straighten
-                        </li>
-                        <li className="flex items-center">
-                          <div className="w-1.5 h-1.5 bg-amber-500 rounded-full mr-2"></div>
-                          Text recognition (OCR)
-                        </li>
-                        <li className="flex items-center">
-                          <div className="w-1.5 h-1.5 bg-amber-500 rounded-full mr-2"></div>
-                          Chord detection
-                        </li>
-                        <li className="flex items-center">
-                          <div className="w-1.5 h-1.5 bg-amber-500 rounded-full mr-2"></div>
-                          Multi-page support
-                        </li>
-                      </ul>
-                    </CardContent>
-                  </Card>
-                </div>
-              </CardContent>
+            <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm p-6 text-center space-y-4">
+              <CardTitle className="text-lg flex items-center justify-center">
+                <Camera className="w-4 h-4 mr-2" /> Scan/Photo
+              </CardTitle>
+              <Button onClick={() => handleScanCapture("Scanned content")}>Open Camera</Button>
             </Card>
           </TabsContent>
 
           <TabsContent value="url" className="space-y-4">
-            <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
-              <CardHeader className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-t-lg py-3 px-4">
-                <CardTitle className="text-lg flex items-center">
-                  <Download className="w-4 h-4 mr-2" />
-                  Import from URL
-                </CardTitle>
-                <p className="text-blue-100 text-sm">Import content from web links or online music libraries</p>
-              </CardHeader>
-              <CardContent className="p-4 space-y-4">
-                <div>
-                  <Label htmlFor="url" className="text-sm font-medium text-gray-900">
-                    Content URL
-                  </Label>
-                  <div className="flex space-x-2 mt-1.5">
-                    <Input
-                      id="url"
-                      placeholder="https://example.com/sheet-music.pdf"
-                      className="flex-1 border-amber-300 focus:border-amber-500 focus:ring-amber-500 text-sm py-2"
-                    />
-                    <Button className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-4 py-2 text-sm">
-                      <Download className="w-3 h-3 mr-1.5" />
-                      Import
-                    </Button>
-                  </div>
-                </div>
-
-                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-3 rounded-lg border border-blue-200">
-                  <div className="flex items-start space-x-3">
-                    <AlertCircle className="w-4 h-4 text-blue-600 mt-0.5" />
-                    <div>
-                      <h4 className="font-medium text-blue-900 text-sm mb-1.5">Supported Sources</h4>
-                      <ul className="text-blue-800 text-xs space-y-1">
-                        <li className="flex items-center">
-                          <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></div>
-                          Direct PDF/image links
-                        </li>
-                        <li className="flex items-center">
-                          <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></div>
-                          IMSLP (Petrucci Music Library)
-                        </li>
-                        <li className="flex items-center">
-                          <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></div>
-                          MuseScore public scores
-                        </li>
-                        <li className="flex items-center">
-                          <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></div>
-                          Ultimate Guitar tabs
-                        </li>
-                        <li className="flex items-center">
-                          <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></div>
-                          Songsterr tablatures
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <h4 className="font-medium text-sm text-gray-900">Recent Imports</h4>
-                  <div className="space-y-2">
-                    {[
-                      { title: "Moonlight Sonata", source: "IMSLP", status: "completed" },
-                      { title: "Stairway to Heaven Tab", source: "Ultimate Guitar", status: "processing" },
-                    ].map((item, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center justify-between p-2 bg-white/60 backdrop-blur-sm rounded-lg border border-amber-200 hover:shadow-sm transition-all"
-                      >
-                        <div>
-                          <p className="font-medium text-gray-900 text-sm">{item.title}</p>
-                          <p className="text-gray-600 text-xs">{item.source}</p>
-                        </div>
-                        <Badge
-                          variant={item.status === "completed" ? "default" : "secondary"}
-                          className={
-                            item.status === "completed"
-                              ? "bg-green-100 text-green-700 border-green-300 text-xs"
-                              : "bg-amber-100 text-amber-700 border-amber-300 text-xs"
-                          }
-                        >
-                          {item.status}
-                        </Badge>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </CardContent>
+            <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm p-6 space-y-4 text-center">
+              <CardTitle className="text-lg flex items-center justify-center">
+                <Download className="w-4 h-4 mr-2" /> From URL
+              </CardTitle>
+              <div className="flex space-x-2 justify-center">
+                <Input id="url" placeholder="https://example.com/file.txt" className="flex-1" />
+                <Button onClick={() => handleUrlImport("Imported text")}>Import</Button>
+              </div>
             </Card>
           </TabsContent>
         </Tabs>
