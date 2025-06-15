@@ -9,7 +9,19 @@ import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Music, Guitar, FileText, Star, Tag, Plus, X } from "lucide-react"
+import {
+  Music,
+  Guitar,
+  FileText,
+  Star,
+  Tag,
+  Plus,
+  X,
+  Info,
+  Sliders,
+  Folder,
+  Check,
+} from "lucide-react"
 import {
   Accordion,
   AccordionContent,
@@ -44,6 +56,7 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
     isPublic: false,
   })
   const [newTag, setNewTag] = useState("")
+  const [openSections, setOpenSections] = useState<string[]>(["basic"])
 
   const genres = [
     "Rock",
@@ -67,6 +80,22 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
   const difficulties = ["Beginner", "Intermediate", "Advanced", "Expert"]
 
   const keys = ["C", "C#", "Db", "D", "D#", "Eb", "E", "F", "F#", "Gb", "G", "G#", "Ab", "A", "A#", "Bb", "B"]
+
+  const basicCompleted = [metadata.artist, metadata.album, metadata.genre].filter(Boolean).length
+  const musicalCompleted = [metadata.key, metadata.bpm, metadata.timeSignature, metadata.difficulty].filter(Boolean).length
+  const organizationCompleted = [
+    metadata.tags.length > 0 ? "tags" : "",
+    metadata.notes,
+    metadata.isFavorite ? "fav" : "",
+    metadata.isPublic ? "pub" : "",
+  ].filter(Boolean).length
+
+  const renderSummary = (completed: number, total: number) => {
+    if (completed === 0) return null
+    if (completed === total)
+      return <Check className="w-4 h-4 text-green-600" />
+    return <span className="text-xs text-gray-600">{`${completed} of ${total} completed`}</span>
+  }
 
   const addTag = () => {
     if (newTag.trim() && !metadata.tags.includes(newTag.trim())) {
@@ -284,10 +313,24 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
           <p className="text-gray-600">Provide information to help organize and find your content</p>
         </CardHeader>
         <CardContent className="space-y-4">
-          <Accordion type="multiple" className="space-y-4">
-            <AccordionItem value="basic">
-              <AccordionTrigger className="text-left text-sm font-medium">Basic Info</AccordionTrigger>
-              <AccordionContent>
+          <Accordion
+            type="multiple"
+            value={openSections}
+            onValueChange={setOpenSections}
+            className="space-y-4"
+          >
+            <AccordionItem
+              value="basic"
+              className="rounded-md border shadow-sm bg-blue-50 data-[state=open]:bg-blue-100"
+            >
+              <AccordionTrigger className="px-4 py-2 text-left text-sm font-semibold">
+                <div className="flex items-center w-full gap-2">
+                  <Info className="w-4 h-4 text-blue-600" />
+                  <span className="flex-1">Basic Info</span>
+                  {!openSections.includes("basic") && renderSummary(basicCompleted, 3)}
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-4 pb-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="artist">Artist</Label>
@@ -329,9 +372,18 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="musical">
-              <AccordionTrigger className="text-left text-sm font-medium">Musical Info</AccordionTrigger>
-              <AccordionContent>
+            <AccordionItem
+              value="musical"
+              className="rounded-md border shadow-sm bg-yellow-50 data-[state=open]:bg-yellow-100"
+            >
+              <AccordionTrigger className="px-4 py-2 text-left text-sm font-semibold">
+                <div className="flex items-center w-full gap-2">
+                  <Sliders className="w-4 h-4 text-yellow-600" />
+                  <span className="flex-1">Musical Info</span>
+                  {!openSections.includes("musical") && renderSummary(musicalCompleted, 4)}
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-4 pb-4">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div>
                     <Label htmlFor="key">Key</Label>
@@ -398,9 +450,18 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="organization">
-              <AccordionTrigger className="text-left text-sm font-medium">Organization</AccordionTrigger>
-              <AccordionContent>
+            <AccordionItem
+              value="organization"
+              className="rounded-md border shadow-sm bg-gray-50 data-[state=open]:bg-gray-100"
+            >
+              <AccordionTrigger className="px-4 py-2 text-left text-sm font-semibold">
+                <div className="flex items-center w-full gap-2">
+                  <Folder className="w-4 h-4 text-gray-600" />
+                  <span className="flex-1">Organization</span>
+                  {!openSections.includes("organization") && renderSummary(organizationCompleted, 4)}
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-4 pb-4">
                 <div className="space-y-6">
                   <div>
                     <Label>Tags</Label>
