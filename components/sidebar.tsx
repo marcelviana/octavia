@@ -12,9 +12,7 @@ import {
   List,
   Star,
   Clock,
-  LogOut,
 } from "lucide-react"
-import { useAuth } from "@/contexts/auth-context"
 import { useState } from "react"
 import { cn } from "@/lib/utils"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
@@ -36,7 +34,6 @@ export function Sidebar({
   mobileOpen: mobileOpenProp,
   onMobileOpenChange,
 }: SidebarProps) {
-  const { user, signOut } = useAuth()
   const collapsed = collapsedProp ?? false
   const [internalMobileOpen, setInternalMobileOpen] = useState(false)
   const isControlled = mobileOpenProp !== undefined
@@ -192,28 +189,6 @@ export function Sidebar({
             </div>
           </nav>
 
-          {/* Footer */}
-          <div className="p-4 border-t border-amber-200">
-            <TooltipProvider delayDuration={300}>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    className={cn(
-                      "w-full justify-start text-amber-700 hover:bg-amber-100",
-                      collapsed && "justify-center px-0",
-                    )}
-                    size="sm"
-                    onClick={() => signOut()}
-                  >
-                    <LogOut className="w-4 h-4 mr-2" />
-                    {!collapsed && <span>Sign Out</span>}
-                  </Button>
-                </TooltipTrigger>
-                {collapsed && <TooltipContent side="right">Sign Out</TooltipContent>}
-              </Tooltip>
-            </TooltipProvider>
-          </div>
         </div>
       </div>
     </>
