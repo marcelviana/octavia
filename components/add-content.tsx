@@ -29,6 +29,7 @@ import { FileUpload } from "@/components/file-upload"
 import { ContentCreator } from "@/components/content-creator"
 import { MetadataForm } from "@/components/metadata-form"
 import { TextImportPreview } from "@/components/text-import-preview"
+import { BatchImport } from "@/components/batch-import"
 import { createContent } from "@/lib/content-service"
 import { getSupabaseBrowserClient } from "@/lib/supabase"
 
@@ -168,6 +169,12 @@ export function AddContent({ onBack, onContentCreated, onNavigate }: AddContentP
   const handleTextImportComplete = (contents: any[]) => {
     setCreatedContents(contents)
     setUploadedFiles(contents.map((c: any) => ({ name: c.title })))
+    setCurrentStep(3)
+  }
+
+  const handleBatchImportComplete = (contents: any[]) => {
+    setCreatedContents(contents)
+    setUploadedFiles(contents.map((c: any) => ({ name: c.title, isTextImport: true })))
     setCurrentStep(3)
   }
 
@@ -368,7 +375,7 @@ export function AddContent({ onBack, onContentCreated, onNavigate }: AddContentP
         {renderStepIndicator()}
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-          <TabsList className="grid w-full grid-cols-4 bg-white/80 backdrop-blur-sm border border-amber-200 p-1 rounded-lg shadow h-auto">
+          <TabsList className="grid w-full grid-cols-5 bg-white/80 backdrop-blur-sm border border-amber-200 p-1 rounded-lg shadow h-auto">
             <TabsTrigger
               value="import"
               className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500 data-[state=active]:to-orange-600 data-[state=active]:text-white text-amber-700 hover:bg-amber-50 rounded-md font-medium py-1.5 text-sm flex items-center justify-center"
@@ -396,6 +403,13 @@ export function AddContent({ onBack, onContentCreated, onNavigate }: AddContentP
             >
               <Download className="w-3 h-3 mr-1.5" />
               From URL
+            </TabsTrigger>
+            <TabsTrigger
+              value="batch"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500 data-[state=active]:to-orange-600 data-[state=active]:text-white text-amber-700 hover:bg-amber-50 rounded-md font-medium py-1.5 text-sm flex items-center justify-center"
+            >
+              <Sparkles className="w-3 h-3 mr-1.5" />
+              Batch Import
             </TabsTrigger>
           </TabsList>
 
@@ -485,6 +499,10 @@ export function AddContent({ onBack, onContentCreated, onNavigate }: AddContentP
                 <Button onClick={() => handleUrlImport("Imported text")}>Import</Button>
               </div>
             </Card>
+          </TabsContent>
+
+          <TabsContent value="batch" className="space-y-4">
+            <BatchImport onComplete={handleBatchImportComplete} />
           </TabsContent>
         </Tabs>
       </div>
