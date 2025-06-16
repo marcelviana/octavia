@@ -15,21 +15,28 @@ export async function parseDocxFile(file: File): Promise<ParsedSong[]> {
   let current: ParsedSong | null = null;
 
   for (const p of paragraphs) {
-    const text = p.textContent?.trim() || "";
-    if (!text) continue;
+    let text = p.innerHTML.replace(/<br\s*\/?>/gi, "\n");
+    text = text.replace(/<[^>]+>/g, "");
+    text = text.replace(/\u00A0/g, " ");
+    const trimmed = text.trim();
+
     const boldEl = p.querySelector("strong, b");
     const isBold =
       !!boldEl &&
-      boldEl.textContent?.trim() === text &&
+      boldEl.textContent?.trim() === trimmed &&
       boldEl.parentElement === p;
 
-    if (isBold) {
+    if (isBold && trimmed) {
       if (current) {
         songs.push(current);
       }
-      current = { title: text, body: "" };
+      current = { title: trimmed, body: "" };
     } else if (current) {
-      current.body += text + "\n";
+      if (trimmed === "") {
+        current.body += "\n";
+      } else {
+        current.body += text + "\n";
+      }
     }
   }
 

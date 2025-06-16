@@ -148,7 +148,7 @@ export function FileUpload({
     const ext = filename.split(".").pop()?.toLowerCase();
     switch (ext) {
       case "pdf":
-        return "Sheet Music";
+        return "Document";
       case "docx":
         return "Document";
       case "gp5":
