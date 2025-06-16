@@ -17,6 +17,7 @@ import { parseDocxFile, parsePdfFile, ParsedSong } from "@/lib/batch-import"
 import { createContent } from "@/lib/content-service"
 import { toast } from "sonner"
 import { FileText, Music, Guitar, Upload } from "lucide-react"
+import { getContentTypeStyle } from "@/lib/content-type-styles"
 
 interface BatchImportProps {
   onComplete: (contents: any[]) => void
@@ -124,14 +125,20 @@ export function BatchImport({ onComplete }: BatchImportProps) {
           <div className="grid grid-cols-3 gap-2">
             {contentTypes.map((ct) => {
               const Icon = ct.icon
+              const styles = getContentTypeStyle(ct.id)
+              const selected = type === ct.id
               return (
                 <Card
                   key={ct.id}
                   onClick={() => setType(ct.id)}
-                  className={`cursor-pointer ${type === ct.id ? "ring-2 ring-primary" : "hover:shadow"}`}
+                  className={`cursor-pointer border ${styles.border} ${
+                    selected
+                      ? `ring-2 ${styles.ring} ${styles.bg}`
+                      : `hover:${styles.bg} hover:${styles.border}`
+                  }`}
                 >
                   <CardContent className="p-2 text-center space-y-1">
-                    <Icon className="w-6 h-6 mx-auto" />
+                    <Icon className={`w-6 h-6 mx-auto ${styles.icon}`} />
                     <p className="text-sm">{ct.name}</p>
                   </CardContent>
                 </Card>
