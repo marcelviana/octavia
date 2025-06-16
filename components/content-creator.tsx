@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { FileText, Music, Guitar, Plus } from "lucide-react"
+import { getContentTypeStyle } from "@/lib/content-type-styles"
 
 interface ContentCreatorProps {
   onContentCreated: (content: any) => void
@@ -92,16 +93,20 @@ export function ContentCreator({
             <div className="grid grid-cols-3 gap-2 md:gap-4">
               {contentTypes.map((type) => {
                 const Icon = type.icon
+                const styles = getContentTypeStyle(type.id)
+                const selected = activeType === type.id
                 return (
                   <Card
                     key={type.id}
-                    className={`cursor-pointer transition-all min-h-[44px] ${
-                      activeType === type.id ? "ring-2 ring-blue-500 bg-blue-50" : "hover:shadow-md"
+                    className={`cursor-pointer transition-all min-h-[44px] border ${styles.border} ${
+                      selected
+                        ? `ring-2 ${styles.ring} ${styles.bg}`
+                        : `hover:${styles.bg} hover:${styles.border}`
                     }`}
                     onClick={() => setActiveType(type.id)}
                   >
                     <CardContent className="p-2 md:p-4 text-center">
-                      <Icon className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-2 md:mb-3 text-blue-600" />
+                      <Icon className={`w-6 h-6 md:w-8 md:h-8 mx-auto mb-2 md:mb-3 ${styles.icon}`} />
                       <h3 className="text-sm md:text-base font-medium text-gray-900">{type.name}</h3>
                       <p className="text-xs md:text-sm text-gray-600 mt-1">{type.description}</p>
                     </CardContent>

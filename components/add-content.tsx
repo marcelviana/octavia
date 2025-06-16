@@ -25,6 +25,7 @@ import { BatchPreview } from "@/components/batch-preview";
 import { createContent } from "@/lib/content-service";
 import { getSupabaseBrowserClient } from "@/lib/supabase";
 import { parseDocxFile, parsePdfFile, parseTextFile } from "@/lib/batch-import";
+import { getContentTypeStyle } from "@/lib/content-type-styles";
 
 interface AddContentProps {
   onBack: () => void;
@@ -390,14 +391,20 @@ export function AddContent({
               <div className="grid grid-cols-3 gap-2">
                 {contentTypes.map((type) => {
                   const Icon = type.icon;
+                  const styles = getContentTypeStyle(type.id);
+                  const selected = contentType === type.name;
                   return (
                     <Card
                       key={type.id}
                       onClick={() => setContentType(type.name)}
-                      className={`cursor-pointer ${contentType === type.name ? "ring-2 ring-primary" : "hover:shadow"}`}
+                      className={`cursor-pointer border ${styles.border} ${
+                        selected
+                          ? `ring-2 ${styles.ring} ${styles.bg}`
+                          : `hover:${styles.bg} hover:${styles.border}`
+                      }`}
                     >
                       <CardContent className="p-2 text-center space-y-1">
-                        <Icon className="w-6 h-6 mx-auto" />
+                        <Icon className={`w-6 h-6 mx-auto ${styles.icon}`} />
                         <p className="text-sm">{type.name}</p>
                       </CardContent>
                     </Card>

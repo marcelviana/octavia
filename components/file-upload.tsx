@@ -17,6 +17,7 @@ import {
   Check,
   AlertCircle,
 } from "lucide-react";
+import { getContentTypeStyle } from "@/lib/content-type-styles";
 
 interface FileUploadProps {
   onFilesUploaded: (files: any[]) => void;
@@ -167,11 +168,17 @@ export function FileUpload({
   };
 
   const getFileIcon = (contentType: string) => {
+    const styles = getContentTypeStyle(contentType);
     switch (contentType) {
       case "Guitar Tab":
-        return <Guitar className="w-5 h-5 text-orange-600" />;
+      case "Guitar Tablature":
+        return <Guitar className={`w-5 h-5 ${styles.icon}`} />;
+      case "Chord Chart":
+        return <Music className={`w-5 h-5 ${styles.icon}`} />;
       case "Sheet Music":
-        return <Music className="w-5 h-5 text-blue-600" />;
+        return <FileText className={`w-5 h-5 ${styles.icon}`} />;
+      case "Lyrics":
+        return <FileText className={`w-5 h-5 ${styles.icon}`} />;
       default:
         return <FileText className="w-5 h-5 text-gray-600" />;
     }
