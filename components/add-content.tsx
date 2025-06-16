@@ -79,12 +79,21 @@ export function AddContent({
     { id: "lyrics", name: ContentType.LYRICS, icon: FileText },
     { id: "chords", name: ContentType.CHORD_CHART, icon: Music },
     { id: "tabs", name: ContentType.GUITAR_TAB, icon: Guitar },
-    { id: "sheet", name: ContentType.SHEET_MUSIC, icon: FileText },
+    {
+      id: "sheet",
+      name: ContentType.SHEET_MUSIC,
+      icon: FileText,
+      tooltip: "Add Sheet Music by uploading a PDF or image file.",
+    },
   ];
 
   const handleFilesUploaded = (files: any[]) => {
     if (files.length > 0) {
-      setUploadedFile(files[0]);
+      const file = { ...files[0], contentType };
+      setUploadedFile(file);
+      if (contentType === ContentType.SHEET_MUSIC) {
+        setCurrentStep(2);
+      }
     }
   };
 
@@ -176,8 +185,14 @@ export function AddContent({
         const formattedContent = {
           user_id: user.id,
           title: contentToSave.title || "Untitled",
-          content_type: contentToSave.type || "unknown",
-          content_data: contentToSave.content || {},
+          content_type:
+            contentToSave.type === ContentType.SHEET_MUSIC
+              ? "sheet_music"
+              : contentToSave.type || "unknown",
+          content_data:
+            contentToSave.type === ContentType.SHEET_MUSIC
+              ? { file: contentToSave.files?.[0]?.url || null }
+              : contentToSave.content || {},
           file_url: contentToSave.files?.[0]?.url || null,
           is_favorite: false,
           is_public: false,
@@ -317,6 +332,11 @@ export function AddContent({
             <h1 className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent ml-2">
               Add Content Details
             </h1>
+            {contentType === ContentType.SHEET_MUSIC && (
+              <p className="text-sm text-gray-600 ml-4">
+                Fill in the details to help organize and find your Sheet Music in your library.
+              </p>
+            )}
           </div>
 
           {renderStepIndicator()}
@@ -402,15 +422,16 @@ export function AddContent({
               <CardTitle className="text-lg text-gray-900">Select Content Type</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-4 gap-2">
                 {contentTypes.map((type) => {
                   const Icon = type.icon;
-                  const styles = getContentTypeStyle(type.id);
+                  const styles = getContentTypeStyle(type.name);
                   const selected = contentType === type.name;
                   return (
                     <Card
                       key={type.id}
                       onClick={() => setContentType(type.name)}
+                      title={type.tooltip}
                       className={`cursor-pointer border ${styles.border} ${
                         selected
                           ? `ring-2 ${styles.ring} ${styles.bg}`
@@ -481,6 +502,11 @@ export function AddContent({
                 </CardHeader>
                 <CardContent className="p-4">
                   <FileUpload single onFilesUploaded={handleFilesUploaded} />
+                  {contentType === ContentType.SHEET_MUSIC && (
+                    <p className="text-sm text-gray-600 mt-2 text-center">
+                      Upload your Sheet Music file. Only file upload is supported for Sheet Music — manual creation is not available.
+                    </p>
+                  )}
                   {uploadedFile && (
                     <p className="text-center text-sm text-gray-600 mt-2">
                       {uploadedFile.name}
@@ -489,7 +515,7 @@ export function AddContent({
                 </CardContent>
               </Card>
 
-              {uploadedFile && (
+              {uploadedFile && contentType !== ContentType.SHEET_MUSIC && (
                 <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
                   <CardHeader className="py-3 px-4">
                     <CardTitle className="text-lg text-gray-900 flex items-center">
