@@ -4,6 +4,7 @@ import { ChordEditor } from "@/components/chord-editor"
 import { LyricsEditor } from "@/components/lyrics-editor"
 import { TabEditor } from "@/components/tab-editor"
 import { AnnotationTools } from "@/components/annotation-tools"
+import { ContentType } from "@/types/content"
 
 interface ContentTypeEditorProps {
   content: any
@@ -22,7 +23,7 @@ export function ContentTypeEditor({ content, onChange }: ContentTypeEditorProps)
   }
 
   switch (content.content_type) {
-    case "Chord Chart":
+    case ContentType.CHORD_CHART:
       return (
         <ChordEditor
           content={{
@@ -32,7 +33,7 @@ export function ContentTypeEditor({ content, onChange }: ContentTypeEditorProps)
           onChange={handleContentChange}
         />
       )
-    case "Guitar Tab":
+    case ContentType.GUITAR_TAB:
       return (
         <TabEditor
           content={{
@@ -42,7 +43,7 @@ export function ContentTypeEditor({ content, onChange }: ContentTypeEditorProps)
           onChange={handleContentChange}
         />
       )
-    case "Sheet Music":
+    case ContentType.SHEET_MUSIC:
       return (
         <AnnotationTools
           content={{
@@ -56,7 +57,7 @@ export function ContentTypeEditor({ content, onChange }: ContentTypeEditorProps)
           onContentChange={handleContentChange}
         />
       )
-    case "Lyrics":
+    case ContentType.LYRICS:
       return (
         <LyricsEditor
           content={{

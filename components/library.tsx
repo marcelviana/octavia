@@ -48,6 +48,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { ContentType } from "@/types/content"
 
 interface LibraryProps {
   onSelectContent: (content: any) => void;
@@ -129,13 +130,13 @@ export function Library({ onSelectContent, initialContent, initialSearch }: Libr
 
   const getContentIcon = (type: string) => {
     switch (type) {
-      case "Guitar Tab":
+      case ContentType.GUITAR_TAB:
         return <Guitar className="w-5 h-5 text-blue-600" />;
-      case "Chord Chart":
+      case ContentType.CHORD_CHART:
         return <Music className="w-5 h-5 text-purple-600" />;
-      case "Sheet Music":
+      case ContentType.SHEET_MUSIC:
         return <FileText className="w-5 h-5 text-amber-600" />;
-      case "Lyrics":
+      case ContentType.LYRICS:
         return <Mic className="w-5 h-5 text-green-600" />;
       default:
         return <FileText className="w-5 h-5 text-gray-600" />;
@@ -144,13 +145,13 @@ export function Library({ onSelectContent, initialContent, initialSearch }: Libr
 
   const getContentColor = (type: string) => {
     switch (type) {
-      case "Guitar Tab":
+      case ContentType.GUITAR_TAB:
         return "from-blue-500 to-blue-600";
-      case "Chord Chart":
+      case ContentType.CHORD_CHART:
         return "from-purple-500 to-purple-600";
-      case "Sheet Music":
+      case ContentType.SHEET_MUSIC:
         return "from-amber-500 to-amber-600";
-      case "Lyrics":
+      case ContentType.LYRICS:
         return "from-green-500 to-green-600";
       default:
         return "from-gray-500 to-gray-600";
@@ -159,13 +160,13 @@ export function Library({ onSelectContent, initialContent, initialSearch }: Libr
 
   const getContentBg = (type: string) => {
     switch (type) {
-      case "Guitar Tab":
+      case ContentType.GUITAR_TAB:
         return "bg-blue-50 border-blue-200";
-      case "Chord Chart":
+      case ContentType.CHORD_CHART:
         return "bg-purple-50 border-purple-200";
-      case "Sheet Music":
+      case ContentType.SHEET_MUSIC:
         return "bg-amber-50 border-amber-200";
-      case "Lyrics":
+      case ContentType.LYRICS:
         return "bg-green-50 border-green-200";
       default:
         return "bg-gray-50 border-gray-200";

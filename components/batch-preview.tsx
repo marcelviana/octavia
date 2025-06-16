@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
 import { createContent } from "@/lib/content-service";
+import { ContentType, CONTENT_TYPE_KEYS } from "@/types/content";
 
 interface SongItem {
   title: string;
@@ -32,13 +33,11 @@ export function BatchPreview({
   const [songs, setSongs] = useState<SongItem[]>(initialSongs);
   const [isImporting, setIsImporting] = useState(false);
 
-  const typeMap: Record<string, { type: string; key: string }> = {
-    "Lyrics Sheet": { type: "lyrics", key: "lyrics" },
-    "Chord Chart": { type: "chord_chart", key: "chords" },
-    "Guitar Tablature": { type: "tablature", key: "tablature" },
-    lyrics: { type: "lyrics", key: "lyrics" },
-    chord_chart: { type: "chord_chart", key: "chords" },
-    tablature: { type: "tablature", key: "tablature" },
+  const typeMap: Record<string, { type: ContentType; key: string }> = {
+    "Lyrics": { type: ContentType.LYRICS, key: CONTENT_TYPE_KEYS[ContentType.LYRICS] },
+    "Chord Chart": { type: ContentType.CHORD_CHART, key: CONTENT_TYPE_KEYS[ContentType.CHORD_CHART] },
+    "Guitar Tab": { type: ContentType.GUITAR_TAB, key: CONTENT_TYPE_KEYS[ContentType.GUITAR_TAB] },
+    "Sheet Music": { type: ContentType.SHEET_MUSIC, key: CONTENT_TYPE_KEYS[ContentType.SHEET_MUSIC] }
   };
 
   const handleImport = async () => {

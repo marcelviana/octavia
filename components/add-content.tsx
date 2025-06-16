@@ -26,6 +26,7 @@ import { createContent } from "@/lib/content-service";
 import { getSupabaseBrowserClient } from "@/lib/supabase";
 import { parseDocxFile, parsePdfFile, parseTextFile } from "@/lib/batch-import";
 import { getContentTypeStyle } from "@/lib/content-type-styles";
+import { ContentType } from "@/types/content";
 
 interface AddContentProps {
   onBack: () => void;
@@ -46,7 +47,7 @@ export function AddContent({
   const [createdContent, setCreatedContent] = useState<any>(null);
   const [parsedSongs, setParsedSongs] = useState<any[]>([]);
   const [importMode, setImportMode] = useState<"single" | "batch">("single");
-  const [contentType, setContentType] = useState("Lyrics Sheet");
+  const [contentType, setContentType] = useState(ContentType.LYRICS);
   const [batchArtist, setBatchArtist] = useState("");
 
   const importModes = [
@@ -63,9 +64,9 @@ export function AddContent({
   ];
 
   const contentTypes = [
-    { id: "lyrics", name: "Lyrics Sheet", icon: FileText },
-    { id: "chords", name: "Chord Chart", icon: Music },
-    { id: "tabs", name: "Guitar Tablature", icon: Guitar },
+    { id: "lyrics", name: ContentType.LYRICS, icon: FileText },
+    { id: "chords", name: ContentType.CHORD_CHART, icon: Music },
+    { id: "tabs", name: ContentType.GUITAR_TAB, icon: Guitar },
   ];
 
   const handleFilesUploaded = (files: any[]) => {
@@ -446,9 +447,9 @@ export function AddContent({
             <ContentCreator
               onContentCreated={handleContentCreated}
               initialType={
-                contentType === "Chord Chart"
-                  ? "chords"
-                  : contentType === "Guitar Tablature"
+                contentType === ContentType.CHORD_CHART
+                  ? "chord_chart"
+                  : contentType === ContentType.GUITAR_TAB
                   ? "tablature"
                   : "lyrics"
               }

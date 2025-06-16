@@ -18,6 +18,7 @@ import { createContent } from "@/lib/content-service"
 import { toast } from "sonner"
 import { FileText, Music, Guitar, Upload } from "lucide-react"
 import { getContentTypeStyle } from "@/lib/content-type-styles"
+import { ContentType, CONTENT_TYPE_KEYS, ContentTypeId, CONTENT_TYPE_IDS } from "@/types/content"
 
 interface BatchImportProps {
   onComplete: (contents: any[]) => void
@@ -25,19 +26,17 @@ interface BatchImportProps {
 
 export function BatchImport({ onComplete }: BatchImportProps) {
   const [songs, setSongs] = useState<(ParsedSong & { include: boolean })[]>([])
-  const [type, setType] = useState("lyrics")
+  const [type, setType] = useState<ContentTypeId>("lyrics")
   const [fileName, setFileName] = useState<string | null>(null)
   const [isParsing, setIsParsing] = useState(false)
   const [isImporting, setIsImporting] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const typeMap: Record<string, { type: string; key: string }> = {
-    lyrics: { type: "lyrics", key: "lyrics" },
-    chord_chart: { type: "chord_chart", key: "chords" },
-    tablature: { type: "tablature", key: "tablature" },
-    "Lyrics Sheet": { type: "lyrics", key: "lyrics" },
-    "Chord Chart": { type: "chord_chart", key: "chords" },
-    "Guitar Tablature": { type: "tablature", key: "tablature" },
+  const typeMap: Record<ContentTypeId, { type: ContentType; key: string }> = {
+    lyrics: { type: ContentType.LYRICS, key: CONTENT_TYPE_KEYS[ContentType.LYRICS] },
+    chord_chart: { type: ContentType.CHORD_CHART, key: CONTENT_TYPE_KEYS[ContentType.CHORD_CHART] },
+    tablature: { type: ContentType.GUITAR_TAB, key: CONTENT_TYPE_KEYS[ContentType.GUITAR_TAB] },
+    sheet: { type: ContentType.SHEET_MUSIC, key: CONTENT_TYPE_KEYS[ContentType.SHEET_MUSIC] }
   }
 
   const handleFile = async (file: File) => {
@@ -95,9 +94,10 @@ export function BatchImport({ onComplete }: BatchImportProps) {
   }
 
   const contentTypes = [
-    { id: "lyrics", name: "Lyrics Sheet", icon: FileText },
-    { id: "chord_chart", name: "Chord Chart", icon: Music },
-    { id: "tablature", name: "Guitar Tablature", icon: Guitar },
+    { id: "lyrics" as ContentTypeId, name: ContentType.LYRICS, icon: FileText },
+    { id: "chord_chart" as ContentTypeId, name: ContentType.CHORD_CHART, icon: Music },
+    { id: "tablature" as ContentTypeId, name: ContentType.GUITAR_TAB, icon: Guitar },
+    { id: "sheet" as ContentTypeId, name: ContentType.SHEET_MUSIC, icon: FileText }
   ]
 
   if (songs.length === 0) {

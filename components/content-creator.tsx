@@ -8,10 +8,11 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { FileText, Music, Guitar, Plus } from "lucide-react"
 import { getContentTypeStyle } from "@/lib/content-type-styles"
+import { ContentType, ContentTypeId } from "@/types/content"
 
 interface ContentCreatorProps {
   onContentCreated: (content: any) => void
-  initialType?: "lyrics" | "chords" | "tablature"
+  initialType?: ContentTypeId
   hideTypeSelection?: boolean
 }
 
@@ -20,7 +21,7 @@ export function ContentCreator({
   initialType = "lyrics",
   hideTypeSelection = false,
 }: ContentCreatorProps) {
-  const [activeType, setActiveType] = useState(initialType)
+  const [activeType, setActiveType] = useState<ContentTypeId>(initialType)
   const [title, setTitle] = useState("")
   const [text, setText] = useState("")
 
@@ -34,18 +35,19 @@ export function ContentCreator({
     setActiveType(initialType)
   }, [initialType])
 
-  const placeholders: Record<string, string> = {
+  const placeholders: Record<ContentTypeId, string> = {
     lyrics: "Write your lyrics here...",
-    chords: "Write your chord chart here...",
+    chord_chart: "Write your chord chart here...",
     tablature: "Write your guitar tab here...",
+    sheet: "Write your sheet music here..."
   }
 
-  const tips: Record<string, string[]> = {
+  const tips: Record<ContentTypeId, string[]> = {
     lyrics: [
       "Use blank lines to separate verses and choruses.",
       "Add labels like [Verse], [Chorus], [Bridge] for better structure.",
     ],
-    chords: [
+    chord_chart: [
       "Write chord progressions inline or above lyrics.",
       "Align chords with lyrics using spacing or line breaks.",
     ],
@@ -55,18 +57,24 @@ export function ContentCreator({
       "Align notes vertically for chords.",
       "Use | for measure separators.",
     ],
+    sheet: [
+      "Add musical notation or sheet music content.",
+      "Include tempo, key signature, and other musical markings."
+    ]
   }
 
-  const typeNames: Record<string, string> = {
-    lyrics: "Lyrics",
-    chords: "Chord Chart",
-    tablature: "Guitar Tab",
+  const typeNames: Record<ContentTypeId, ContentType> = {
+    lyrics: ContentType.LYRICS,
+    chord_chart: ContentType.CHORD_CHART,
+    tablature: ContentType.GUITAR_TAB,
+    sheet: ContentType.SHEET_MUSIC
   }
 
-  const contentTypes = [
-    { id: "lyrics", name: "Lyrics Sheet", icon: FileText, description: "Create lyrics-only sheets" },
-    { id: "chords", name: "Chord Chart", icon: Music, description: "Lyrics with chord progressions" },
-    { id: "tablature", name: "Guitar Tablature", icon: Guitar, description: "Create simple guitar tabs" },
+  const contentTypes: { id: ContentTypeId; name: ContentType; icon: any; description: string }[] = [
+    { id: "lyrics", name: ContentType.LYRICS, icon: FileText, description: "Create lyrics-only sheets" },
+    { id: "chord_chart", name: ContentType.CHORD_CHART, icon: Music, description: "Lyrics with chord progressions" },
+    { id: "tablature", name: ContentType.GUITAR_TAB, icon: Guitar, description: "Create simple guitar tabs" },
+    { id: "sheet", name: ContentType.SHEET_MUSIC, icon: FileText, description: "Create sheet music" }
   ]
 
   const handleCreate = () => {

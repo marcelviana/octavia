@@ -1,3 +1,5 @@
+import { ContentType } from "@/types/content"
+
 export interface ContentTypeStyle {
   ring: string
   border: string
@@ -7,35 +9,28 @@ export interface ContentTypeStyle {
 
 export function getContentTypeStyle(type: string): ContentTypeStyle {
   switch (type) {
-    case "lyrics":
-    case "Lyrics":
-    case "Lyrics Sheet":
+    case ContentType.LYRICS:
       return {
         ring: "ring-green-500",
         border: "border-green-200",
         bg: "bg-green-50",
         icon: "text-green-600",
       }
-    case "tabs":
-    case "tablature":
-    case "Guitar Tab":
-    case "Guitar Tablature":
+    case ContentType.GUITAR_TAB:
       return {
         ring: "ring-blue-500",
         border: "border-blue-200",
         bg: "bg-blue-50",
         icon: "text-blue-600",
       }
-    case "chords":
-    case "Chord Chart":
+    case ContentType.CHORD_CHART:
       return {
         ring: "ring-purple-500",
         border: "border-purple-200",
         bg: "bg-purple-50",
         icon: "text-purple-600",
       }
-    case "sheet":
-    case "Sheet Music":
+    case ContentType.SHEET_MUSIC:
       return {
         ring: "ring-orange-500",
         border: "border-orange-200",
