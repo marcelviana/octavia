@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { FileText, Music, Guitar, Plus } from "lucide-react"
 import { getContentTypeStyle } from "@/lib/content-type-styles"
-import { ContentType, ContentTypeId } from "@/types/content"
+import { ContentType, ContentTypeId, CONTENT_TYPE_KEYS } from "@/types/content"
 
 interface ContentCreatorProps {
   onContentCreated: (content: any) => void
@@ -82,9 +82,12 @@ export function ContentCreator({
       alert("Title is required")
       return
     }
+    
+    const contentKey = CONTENT_TYPE_KEYS[typeNames[activeType]]
+    
     onContentCreated({
       type: typeNames[activeType],
-      content: { text },
+      content: { [contentKey]: text },
       title: title.trim(),
     })
   }
