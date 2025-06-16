@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -50,6 +50,13 @@ export function AddContent({
   const [contentType, setContentType] = useState(ContentType.LYRICS);
   const [batchArtist, setBatchArtist] = useState("");
 
+  useEffect(() => {
+    if (contentType === ContentType.SHEET_MUSIC) {
+      setMode("import");
+      setImportMode("single");
+    }
+  }, [contentType]);
+
   const importModes = [
     {
       id: "single",
@@ -63,10 +70,16 @@ export function AddContent({
     },
   ];
 
+  const availableImportModes =
+    contentType === ContentType.SHEET_MUSIC
+      ? importModes.filter((m) => m.id === "single")
+      : importModes;
+
   const contentTypes = [
     { id: "lyrics", name: ContentType.LYRICS, icon: FileText },
     { id: "chords", name: ContentType.CHORD_CHART, icon: Music },
     { id: "tabs", name: ContentType.GUITAR_TAB, icon: Guitar },
+    { id: "sheet", name: ContentType.SHEET_MUSIC, icon: FileText },
   ];
 
   const handleFilesUploaded = (files: any[]) => {
@@ -415,33 +428,35 @@ export function AddContent({
             </CardContent>
           </Card>
 
-          <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
-            <CardHeader className="py-3 px-4">
-              <CardTitle className="text-lg text-gray-900">Choose How to Add</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 gap-2">
-                <Card
-                  onClick={() => setMode("create")}
-                  className={`cursor-pointer ${mode === "create" ? "ring-2 ring-primary" : "hover:shadow"}`}
-                >
-                  <CardContent className="p-2 text-center space-y-1">
-                    <FileText className="w-6 h-6 mx-auto" />
-                    <p className="text-sm">Create Manually</p>
-                  </CardContent>
-                </Card>
-                <Card
-                  onClick={() => setMode("import")}
-                  className={`cursor-pointer ${mode === "import" ? "ring-2 ring-primary" : "hover:shadow"}`}
-                >
-                  <CardContent className="p-2 text-center space-y-1">
-                    <Upload className="w-6 h-6 mx-auto" />
-                    <p className="text-sm">Import From File</p>
-                  </CardContent>
-                </Card>
-              </div>
-            </CardContent>
-          </Card>
+          {contentType !== ContentType.SHEET_MUSIC && (
+            <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
+              <CardHeader className="py-3 px-4">
+                <CardTitle className="text-lg text-gray-900">Choose How to Add</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 gap-2">
+                  <Card
+                    onClick={() => setMode("create")}
+                    className={`cursor-pointer ${mode === "create" ? "ring-2 ring-primary" : "hover:shadow"}`}
+                  >
+                    <CardContent className="p-2 text-center space-y-1">
+                      <FileText className="w-6 h-6 mx-auto" />
+                      <p className="text-sm">Create Manually</p>
+                    </CardContent>
+                  </Card>
+                  <Card
+                    onClick={() => setMode("import")}
+                    className={`cursor-pointer ${mode === "import" ? "ring-2 ring-primary" : "hover:shadow"}`}
+                  >
+                    <CardContent className="p-2 text-center space-y-1">
+                      <Upload className="w-6 h-6 mx-auto" />
+                      <p className="text-sm">Import From File</p>
+                    </CardContent>
+                  </Card>
+                </div>
+              </CardContent>
+            </Card>
+          )}
 
           {mode === "create" ? (
             <ContentCreator
@@ -486,7 +501,7 @@ export function AddContent({
                     <div className="space-y-2">
                       <Label className="text-sm">Import Mode</Label>
                       <div className="grid grid-cols-2 gap-2">
-                        {importModes.map((m) => (
+                        {availableImportModes.map((m) => (
                           <Card
                             key={m.id}
                             onClick={() => setImportMode(m.id as "single" | "batch")}

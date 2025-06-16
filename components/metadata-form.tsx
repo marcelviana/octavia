@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
+import { ContentType } from "@/types/content"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
@@ -199,6 +200,9 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
       // Example: if you have files[0].url from uploads:
       if (files && files[0]?.url) {
         payload.file_url = files[0].url
+        if (!payload.content_data && payload.content_type === ContentType.SHEET_MUSIC) {
+          payload.content_data = { file: files[0].url }
+        }
       }
 
       // Insert into Supabase
@@ -249,6 +253,10 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
         file_url: files && files[0]?.url ? files[0].url : null,
         is_favorite: false,
         is_public: false,
+      }
+
+      if (!payload.content_data && payload.content_type === ContentType.SHEET_MUSIC && payload.file_url) {
+        payload.content_data = { file: payload.file_url }
       }
 
       const newContent = await createContent(payload)
