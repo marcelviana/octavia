@@ -32,6 +32,21 @@ export function BatchPreview({
   const [songs, setSongs] = useState<SongItem[]>(initialSongs);
   const [isImporting, setIsImporting] = useState(false);
 
+  const typeMap: Record<string, string> = {
+    "Lyrics Sheet": "lyrics",
+    "Chord Chart": "chord_chart",
+    "Guitar Tablature": "tablature",
+    lyrics: "lyrics",
+    chord_chart: "chord_chart",
+    tablature: "tablature",
+  };
+
+  const keyMap: Record<string, string> = {
+    lyrics: "lyrics",
+    chord_chart: "chords",
+    tablature: "tablature",
+  };
+
   const handleImport = async () => {
     const selected = songs.filter((s) => s.include);
     if (selected.length === 0) return;
@@ -39,11 +54,17 @@ export function BatchPreview({
     try {
       const created = [];
       for (const song of selected) {
+        const mappedType = typeMap[contentType];
+        if (!mappedType) {
+          toast.error("Invalid content type");
+          continue;
+        }
+        const key = keyMap[mappedType];
         const item = await createContent({
           title: song.title,
           artist: song.artist || null,
-          content_type: contentType,
-          content_data: { text: song.body.trim() },
+          content_type: mappedType,
+          content_data: { [key]: song.body.trim() },
         } as any);
         created.push(item);
       }
