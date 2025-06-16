@@ -18,6 +18,12 @@ import {
   Star,
 } from "lucide-react";
 import { FileUpload } from "@/components/file-upload";
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+  TooltipProvider,
+} from "@/components/ui/tooltip";
 import { ContentCreator } from "@/components/content-creator";
 import { MetadataForm } from "@/components/metadata-form";
 import { TextImportPreview } from "@/components/text-import-preview";
@@ -49,6 +55,7 @@ export function AddContent({
   const [importMode, setImportMode] = useState<"single" | "batch">("single");
   const [contentType, setContentType] = useState(ContentType.LYRICS);
   const [batchArtist, setBatchArtist] = useState("");
+  const [batchImported, setBatchImported] = useState(false);
 
   useEffect(() => {
     if (contentType === ContentType.SHEET_MUSIC) {
@@ -83,7 +90,8 @@ export function AddContent({
       id: "sheet",
       name: ContentType.SHEET_MUSIC,
       icon: FileText,
-      tooltip: "Add Sheet Music by uploading a PDF or image file.",
+      tooltip:
+        "Add Sheet Music by uploading PDF or image files. Manual creation is not available for this type.",
     },
   ];
 
@@ -127,6 +135,13 @@ export function AddContent({
   const handleContentCreated = (content: any) => {
     setCreatedContent(content);
     setCurrentStep(2);
+  };
+
+  const handleBatchPreviewComplete = (contents: any[]) => {
+    if (contents.length > 0) {
+      setBatchImported(true);
+    }
+    setCurrentStep(3);
   };
 
   const handleMetadataComplete = async (metadata: any) => {
@@ -274,6 +289,24 @@ export function AddContent({
   };
 
   if (currentStep === 3) {
+    const isSheetMusic = contentType === ContentType.SHEET_MUSIC
+    const isBatch = importMode === "batch" || batchImported
+    const title = isBatch
+      ? "All songs were successfully added to your library."
+      : isSheetMusic
+      ? "Your sheet music has been added to your library."
+      : "Content Added Successfully!"
+    const subtitle = isBatch
+      ? "Check them in your music library to edit details or start building setlists."
+      : isSheetMusic
+      ? "You can now access it anytime from your music library."
+      : "Ready to create setlists, perform, or edit whenever you need."
+    const secondaryLabel = isBatch
+      ? "Add More Songs"
+      : isSheetMusic
+      ? "Add Another Sheet Music"
+      : "Add More Music"
+
     return (
       <div className="p-4">
         <div className="max-w-2xl mx-auto">
@@ -287,13 +320,9 @@ export function AddContent({
               </div>
             </div>
             <div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent mb-2">
-                Content Added Successfully!
-              </h1>
-              <p className="text-sm text-gray-600 max-w-md mx-auto">
-                Your {uploadedFile ? "file" : "content"} has been added to your
-                library and is ready to use.
-              </p>
+              <h1 className="text-2xl font-bold mb-2">🎉 Done! Your music is now part of your library.</h1>
+              <p className="text-sm text-gray-600 max-w-md mx-auto mb-1">{title}</p>
+              <p className="text-sm text-gray-600 max-w-md mx-auto">{subtitle}</p>
             </div>
             <div className="flex justify-center space-x-3">
               <Button
@@ -301,7 +330,7 @@ export function AddContent({
                 onClick={() => onNavigate("add-content")}
                 className="border-amber-300 text-amber-700 hover:bg-amber-50 px-4 py-2 text-sm"
               >
-                Add More Content
+                {secondaryLabel}
               </Button>
               <Button
                 onClick={() => onNavigate("library")}
@@ -372,7 +401,7 @@ export function AddContent({
             <BatchPreview
               songs={parsedSongs}
               contentType={contentType}
-              onComplete={() => onNavigate("library")}
+              onComplete={handleBatchPreviewComplete}
               onBack={() => setCurrentStep(1)}
             />
           ) : uploadedFile && uploadedFile.isTextImport ? (
@@ -501,7 +530,22 @@ export function AddContent({
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="p-4">
-                  <FileUpload single onFilesUploaded={handleFilesUploaded} />
+                  <TooltipProvider delayDuration={300}>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div>
+                          <FileUpload
+                            single
+                            onFilesUploaded={handleFilesUploaded}
+                          />
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent side="right" className="max-w-xs">
+                        Drag and drop your music file here. Supported formats:
+                        PDF, PNG, JPG. Only one file per sheet music.
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                   {contentType === ContentType.SHEET_MUSIC && (
                     <p className="text-sm text-gray-600 mt-2 text-center">
                       Upload your Sheet Music file. Only file upload is supported for Sheet Music — manual creation is not available.
@@ -552,7 +596,17 @@ export function AddContent({
                       </div>
                     )}
                     <div className="text-right">
-                      <Button onClick={handleImportNext}>Next</Button>
+                      <TooltipProvider delayDuration={300}>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button onClick={handleImportNext}>Next</Button>
+                          </TooltipTrigger>
+                          <TooltipContent side="top" className="max-w-xs">
+                            Proceed to add details like title, artist, and tags
+                            for this sheet music.
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </div>
                   </CardContent>
                 </Card>
