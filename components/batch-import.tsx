@@ -30,10 +30,13 @@ export function BatchImport({ onComplete }: BatchImportProps) {
   const [isImporting, setIsImporting] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const keyMap: Record<string, string> = {
-    lyrics: "lyrics",
-    chord_chart: "chords",
-    tablature: "tablature",
+  const typeMap: Record<string, { type: string; key: string }> = {
+    lyrics: { type: "lyrics", key: "lyrics" },
+    chord_chart: { type: "chord_chart", key: "chords" },
+    tablature: { type: "tablature", key: "tablature" },
+    "Lyrics Sheet": { type: "lyrics", key: "lyrics" },
+    "Chord Chart": { type: "chord_chart", key: "chords" },
+    "Guitar Tablature": { type: "tablature", key: "tablature" },
   }
 
   const handleFile = async (file: File) => {
@@ -66,15 +69,15 @@ export function BatchImport({ onComplete }: BatchImportProps) {
     try {
       const created = []
       for (const song of selected) {
-        const key = keyMap[type]
-        if (!key) {
+        const mapping = typeMap[type]
+        if (!mapping) {
           toast.error("Invalid content type")
           continue
         }
         const item = await createContent({
           title: song.title,
-          content_type: type,
-          content_data: { [key]: song.body.trim() },
+          content_type: mapping.type,
+          content_data: { [mapping.key]: song.body.trim() },
         } as any)
         created.push(item)
       }
