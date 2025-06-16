@@ -18,6 +18,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { getContentTypeStyle } from "@/lib/content-type-styles";
+import { uploadFileToStorage } from "@/lib/storage-service";
 
 interface FileUploadProps {
   onFilesUploaded: (files: any[]) => void;
@@ -63,7 +64,6 @@ export function FileUpload({
           contentType: detectContentType(file.name),
         };
 
-        // Parse text-based files for automatic content import
         if (/(\.txt|\.md)$/i.test(file.name)) {
           const text = await file.text();
           const lines = text.split(/\r?\n/);
@@ -93,31 +93,29 @@ export function FileUpload({
 
     setUploadedFiles(processedFiles);
 
-    // Simulate asynchronous upload progress without blocking the UI
-    let completed = 0;
-    processedFiles.forEach((file) => {
-      let progress = 0;
-      const interval = setInterval(() => {
-        progress += 20;
+    for (const file of processedFiles) {
+      try {
+        const { url } = await uploadFileToStorage(
+          file.file,
+          `${Date.now()}-${file.name}`,
+        );
         setUploadedFiles((prev) =>
           prev.map((f) =>
-            f.id === file.id ? { ...f, progress: Math.min(progress, 100) } : f,
+            f.id === file.id
+              ? { ...f, url, status: "completed", progress: 100 }
+              : f,
           ),
         );
-        if (progress >= 100) {
-          clearInterval(interval);
-          completed += 1;
-          setUploadedFiles((prev) =>
-            prev.map((f) =>
-              f.id === file.id ? { ...f, status: "completed" } : f,
-            ),
-          );
-          if (completed === processedFiles.length) {
-            setIsUploading(false);
-          }
-        }
-      }, 100);
-    });
+      } catch (e) {
+        console.error("Upload failed", e);
+        toast.error(`Failed to upload ${file.name}`);
+        setUploadedFiles((prev) =>
+          prev.map((f) => (f.id === file.id ? { ...f, status: "error" } : f)),
+        );
+      }
+    }
+
+    setIsUploading(false);
   };
 
   const handleDragOver = (e: React.DragEvent) => {
