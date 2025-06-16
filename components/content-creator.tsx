@@ -10,10 +10,16 @@ import { FileText, Music, Guitar, Plus } from "lucide-react"
 
 interface ContentCreatorProps {
   onContentCreated: (content: any) => void
+  initialType?: "lyrics" | "chords" | "tablature"
+  hideTypeSelection?: boolean
 }
 
-export function ContentCreator({ onContentCreated }: ContentCreatorProps) {
-  const [activeType, setActiveType] = useState("lyrics")
+export function ContentCreator({
+  onContentCreated,
+  initialType = "lyrics",
+  hideTypeSelection = false,
+}: ContentCreatorProps) {
+  const [activeType, setActiveType] = useState(initialType)
   const [title, setTitle] = useState("")
   const [text, setText] = useState("")
 
@@ -21,6 +27,11 @@ export function ContentCreator({ onContentCreated }: ContentCreatorProps) {
     setText("")
     setTitle("")
   }, [activeType])
+
+  // Update active type if the prop changes
+  useEffect(() => {
+    setActiveType(initialType)
+  }, [initialType])
 
   const placeholders: Record<string, string> = {
     lyrics: "Write your lyrics here...",
@@ -71,34 +82,36 @@ export function ContentCreator({ onContentCreated }: ContentCreatorProps) {
 
   return (
     <div className="space-y-6">
-      <Card>
-        <CardHeader>
-          <CardTitle>Create New Content</CardTitle>
-          <p className="text-gray-600">Choose the type of musical content you want to create</p>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-3 gap-2 md:gap-4">
-            {contentTypes.map((type) => {
-              const Icon = type.icon
-              return (
-                <Card
-                  key={type.id}
-                  className={`cursor-pointer transition-all min-h-[44px] ${
-                    activeType === type.id ? "ring-2 ring-blue-500 bg-blue-50" : "hover:shadow-md"
-                  }`}
-                  onClick={() => setActiveType(type.id)}
-                >
-                  <CardContent className="p-2 md:p-4 text-center">
-                    <Icon className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-2 md:mb-3 text-blue-600" />
-                    <h3 className="text-sm md:text-base font-medium text-gray-900">{type.name}</h3>
-                    <p className="text-xs md:text-sm text-gray-600 mt-1">{type.description}</p>
-                  </CardContent>
-                </Card>
-              )
-            })}
-          </div>
-        </CardContent>
-      </Card>
+      {!hideTypeSelection && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Create New Content</CardTitle>
+            <p className="text-gray-600">Choose the type of musical content you want to create</p>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-3 gap-2 md:gap-4">
+              {contentTypes.map((type) => {
+                const Icon = type.icon
+                return (
+                  <Card
+                    key={type.id}
+                    className={`cursor-pointer transition-all min-h-[44px] ${
+                      activeType === type.id ? "ring-2 ring-blue-500 bg-blue-50" : "hover:shadow-md"
+                    }`}
+                    onClick={() => setActiveType(type.id)}
+                  >
+                    <CardContent className="p-2 md:p-4 text-center">
+                      <Icon className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-2 md:mb-3 text-blue-600" />
+                      <h3 className="text-sm md:text-base font-medium text-gray-900">{type.name}</h3>
+                      <p className="text-xs md:text-sm text-gray-600 mt-1">{type.description}</p>
+                    </CardContent>
+                  </Card>
+                )
+              })}
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       <Card>
         <CardHeader>

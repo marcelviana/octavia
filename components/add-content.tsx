@@ -5,16 +5,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   ArrowLeft,
   FileText,
   Guitar,
   Music,
   Check,
-  AlertCircle,
   Upload,
   Sparkles,
   Zap,
@@ -40,7 +37,7 @@ export function AddContent({
   onContentCreated,
   onNavigate,
 }: AddContentProps) {
-  const [activeTab, setActiveTab] = useState("import");
+  const [mode, setMode] = useState<"create" | "import">("create");
   const [uploadedFile, setUploadedFile] = useState<any | null>(null);
   const [currentStep, setCurrentStep] = useState(1);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -78,6 +75,7 @@ export function AddContent({
 
   const handleImportNext = async () => {
     if (!uploadedFile) return;
+    setUploadedFile({ ...uploadedFile, contentType });
     if (importMode === "single") {
       setCurrentStep(2);
       return;
@@ -130,18 +128,17 @@ export function AddContent({
   };
 
   const handleTextImportComplete = (contents: any[]) => {
-    setCreatedContents(contents);
-    setUploadedFiles(contents.map((c: any) => ({ name: c.title })));
-    setCurrentStep(3);
+    if (contents.length > 0) {
+      setCreatedContent({
+        title: contents[0].title,
+        type: contents[0].content_type,
+        content: { lyrics: contents[0].body },
+      });
+      setUploadedFile({ ...uploadedFile, contentType });
+      setCurrentStep(2);
+    }
   };
 
-  const handleBatchImportComplete = (contents: any[]) => {
-    setCreatedContents(contents);
-    setUploadedFiles(
-      contents.map((c: any) => ({ name: c.title, isTextImport: true })),
-    );
-    setCurrentStep(3);
-  };
 
   const handleFinish = async () => {
     try {
@@ -378,129 +375,142 @@ export function AddContent({
             <h1 className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
               Add Content
             </h1>
-            <p className="text-gray-600 text-sm">
-              Import or create your musical content
-            </p>
+            <p className="text-gray-600 text-sm">Create or import new music</p>
           </div>
         </div>
 
         {renderStepIndicator()}
 
-        <Tabs
-          value={activeTab}
-          onValueChange={setActiveTab}
-          className="space-y-4"
-        >
-          <TabsList className="grid w-full grid-cols-2 bg-white/80 backdrop-blur-sm border border-amber-200 p-1 rounded-lg shadow h-auto">
-            <TabsTrigger
-              value="import"
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500 data-[state=active]:to-orange-600 data-[state=active]:text-white text-amber-700 hover:bg-amber-50 rounded-md font-medium py-1.5 text-sm flex items-center justify-center"
-            >
-              <Upload className="w-3 h-3 mr-1.5" />
-              Import Files
-            </TabsTrigger>
-            <TabsTrigger
-              value="create"
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500 data-[state=active]:to-orange-600 data-[state=active]:text-white text-amber-700 hover:bg-amber-50 rounded-md font-medium py-1.5 text-sm flex items-center justify-center"
-            >
-              <FileText className="w-3 h-3 mr-1.5" />
-              Create New
-            </TabsTrigger>
-          </TabsList>
+        <div className="space-y-4">
+          <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
+            <CardHeader className="py-3 px-4">
+              <CardTitle className="text-lg text-gray-900">Select Content Type</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-3 gap-2">
+                {contentTypes.map((type) => {
+                  const Icon = type.icon;
+                  return (
+                    <Card
+                      key={type.id}
+                      onClick={() => setContentType(type.name)}
+                      className={`cursor-pointer ${contentType === type.name ? "ring-2 ring-primary" : "hover:shadow"}`}
+                    >
+                      <CardContent className="p-2 text-center space-y-1">
+                        <Icon className="w-6 h-6 mx-auto" />
+                        <p className="text-sm">{type.name}</p>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
+              </div>
+            </CardContent>
+          </Card>
 
-          <TabsContent value="import" className="space-y-4">
-            <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
-              <CardHeader className="bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-t-lg py-3 px-4">
-                <CardTitle className="text-lg flex items-center">
-                  <Upload className="w-4 h-4 mr-2" />
-                  Import Music File
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-4">
-                <FileUpload single onFilesUploaded={handleFilesUploaded} />
-                {uploadedFile && (
-                  <p className="text-center text-sm text-gray-600 mt-2">
-                    {uploadedFile.name}
-                  </p>
-                )}
-              </CardContent>
-            </Card>
+          <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
+            <CardHeader className="py-3 px-4">
+              <CardTitle className="text-lg text-gray-900">Choose How to Add</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-2 gap-2">
+                <Card
+                  onClick={() => setMode("create")}
+                  className={`cursor-pointer ${mode === "create" ? "ring-2 ring-primary" : "hover:shadow"}`}
+                >
+                  <CardContent className="p-2 text-center space-y-1">
+                    <FileText className="w-6 h-6 mx-auto" />
+                    <p className="text-sm">Create Manually</p>
+                  </CardContent>
+                </Card>
+                <Card
+                  onClick={() => setMode("import")}
+                  className={`cursor-pointer ${mode === "import" ? "ring-2 ring-primary" : "hover:shadow"}`}
+                >
+                  <CardContent className="p-2 text-center space-y-1">
+                    <Upload className="w-6 h-6 mx-auto" />
+                    <p className="text-sm">Import From File</p>
+                  </CardContent>
+                </Card>
+              </div>
+            </CardContent>
+          </Card>
 
-            {uploadedFile && (
+          {mode === "create" ? (
+            <ContentCreator
+              onContentCreated={handleContentCreated}
+              initialType={
+                contentType === "Chord Chart"
+                  ? "chords"
+                  : contentType === "Guitar Tablature"
+                  ? "tablature"
+                  : "lyrics"
+              }
+              hideTypeSelection
+            />
+          ) : (
+            <>
               <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
-                <CardHeader className="py-3 px-4">
-                  <CardTitle className="text-lg text-gray-900 flex items-center">
-                    <Star className="w-4 h-4 mr-2 text-amber-500" />
-                    Import Options
+                <CardHeader className="bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-t-lg py-3 px-4">
+                  <CardTitle className="text-lg flex items-center">
+                    <Upload className="w-4 h-4 mr-2" />
+                    Import Music File
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-3 gap-2">
-                    {contentTypes.map((type) => {
-                      const Icon = type.icon;
-                      return (
-                        <Card
-                          key={type.id}
-                          onClick={() => setContentType(type.name)}
-                          className={`cursor-pointer ${contentType === type.name ? "ring-2 ring-primary" : "hover:shadow"}`}
-                        >
-                          <CardContent className="p-2 text-center space-y-1">
-                            <Icon className="w-6 h-6 mx-auto" />
-                            <p className="text-sm">{type.name}</p>
-                          </CardContent>
-                        </Card>
-                      );
-                    })}
-                  </div>
-                  <div className="space-y-2">
-                    <Label className="text-sm">Import Mode</Label>
-                    <div className="grid grid-cols-2 gap-2">
-                      {importModes.map((mode) => (
-                        <Card
-                          key={mode.id}
-                          onClick={() =>
-                            setImportMode(mode.id as "single" | "batch")
-                          }
-                          className={`cursor-pointer ${
-                            importMode === mode.id
-                              ? "ring-2 ring-primary"
-                              : "hover:shadow"
-                          }`}
-                        >
-                          <CardContent className="p-2 text-center space-y-1">
-                            <p className="text-sm font-medium">{mode.name}</p>
-                            <p className="text-xs text-muted-foreground">
-                              {mode.subtitle}
-                            </p>
-                          </CardContent>
-                        </Card>
-                      ))}
-                    </div>
-                  </div>
-                  {importMode === "batch" && (
-                    <div>
-                      <Label htmlFor="artist" className="text-sm">
-                        Artist Name (optional)
-                      </Label>
-                      <Input
-                        id="artist"
-                        value={batchArtist}
-                        onChange={(e) => setBatchArtist(e.target.value)}
-                      />
-                    </div>
+                <CardContent className="p-4">
+                  <FileUpload single onFilesUploaded={handleFilesUploaded} />
+                  {uploadedFile && (
+                    <p className="text-center text-sm text-gray-600 mt-2">
+                      {uploadedFile.name}
+                    </p>
                   )}
-                  <div className="text-right">
-                    <Button onClick={handleImportNext}>Next</Button>
-                  </div>
                 </CardContent>
               </Card>
-            )}
-          </TabsContent>
 
-          <TabsContent value="create" className="space-y-4">
-            <ContentCreator onContentCreated={handleContentCreated} />
-          </TabsContent>
-        </Tabs>
+              {uploadedFile && (
+                <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
+                  <CardHeader className="py-3 px-4">
+                    <CardTitle className="text-lg text-gray-900 flex items-center">
+                      <Star className="w-4 h-4 mr-2 text-amber-500" />
+                      Import Options
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-2">
+                      <Label className="text-sm">Import Mode</Label>
+                      <div className="grid grid-cols-2 gap-2">
+                        {importModes.map((m) => (
+                          <Card
+                            key={m.id}
+                            onClick={() => setImportMode(m.id as "single" | "batch")}
+                            className={`cursor-pointer ${importMode === m.id ? "ring-2 ring-primary" : "hover:shadow"}`}
+                          >
+                            <CardContent className="p-2 text-center space-y-1">
+                              <p className="text-sm font-medium">{m.name}</p>
+                              <p className="text-xs text-muted-foreground">{m.subtitle}</p>
+                            </CardContent>
+                          </Card>
+                        ))}
+                      </div>
+                    </div>
+                    {importMode === "batch" && (
+                      <div>
+                        <Label htmlFor="artist" className="text-sm">Artist Name (optional)</Label>
+                        <Input
+                          id="artist"
+                          value={batchArtist}
+                          onChange={(e) => setBatchArtist(e.target.value)}
+                        />
+                      </div>
+                    )}
+                    <div className="text-right">
+                      <Button onClick={handleImportNext}>Next</Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
