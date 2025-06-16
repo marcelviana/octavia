@@ -45,10 +45,10 @@ export async function parseDocxFile(file: File): Promise<ParsedSong[]> {
 }
 
 export async function parsePdfFile(file: File): Promise<ParsedSong[]> {
-  const pdfjsLib = await import("pdfjs-dist");
-  pdfjsLib.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.js`;
+  const { getPdfDocument } = await import("./pdf-utils");
+  
   const arrayBuffer = await file.arrayBuffer();
-  const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+  const pdf = await getPdfDocument(arrayBuffer);
   const lines: { text: string; bold: boolean }[] = [];
 
   for (let i = 1; i <= pdf.numPages; i++) {
