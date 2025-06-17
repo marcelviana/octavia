@@ -199,7 +199,7 @@ export function AddContent({
 
         const formattedContent = {
           user_id: user.id,
-          title: contentToSave.title || "Untitled",
+          title: contentToSave.title,
           content_type:
             contentToSave.type === ContentType.SHEET_MUSIC
               ? "sheet_music"
