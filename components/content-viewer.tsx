@@ -323,8 +323,8 @@ export function ContentViewer({
         {/* Main Content */}
         <div className="flex-1 p-6 overflow-auto">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
-            <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center sm:justify-between gap-2">
-              <TabsList className="bg-white/80 backdrop-blur-sm border border-amber-200 p-1 rounded-xl shadow-md flex flex-col sm:flex-row flex-wrap gap-2 w-full h-auto">
+            <div className="flex flex-row flex-wrap items-center justify-between gap-2">
+              <TabsList className="bg-white/80 backdrop-blur-sm border border-amber-200 p-1 rounded-xl shadow-md flex flex-row flex-wrap gap-2 w-full h-auto">
                 <TabsTrigger
                   value="content"
                   className={`flex-1 sm:flex-none px-4 py-2 text-sm font-medium rounded-lg text-amber-700 hover:bg-amber-50 data-[state=active]:text-white data-[state=active]:bg-gradient-to-r ${getHeaderGradient(content.content_type)}`}

@@ -168,7 +168,7 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
     <div className="h-screen flex flex-col bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
       {/* Header */}
       <div className="sticky top-0 z-30 bg-white/90 backdrop-blur-sm border-b border-amber-200 px-4 py-2 shadow-md">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <div className="flex flex-row flex-wrap items-center justify-between gap-2">
           <div className="flex items-center flex-wrap gap-2">
             <Button variant="ghost" size="icon" onClick={onCancel} className="sm:mr-2">
               <ArrowLeft className="w-5 h-5" />
@@ -329,7 +329,7 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
         <div className="flex-1 overflow-auto">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full">
             <div className="border-b border-gray-200 bg-gray-50 px-4">
-              <TabsList className="bg-white/80 backdrop-blur-sm border border-amber-200 p-1 rounded-xl shadow-md flex flex-col sm:flex-row flex-wrap gap-2 w-full h-auto">
+              <TabsList className="bg-white/80 backdrop-blur-sm border border-amber-200 p-1 rounded-xl shadow-md flex flex-row flex-wrap gap-2 w-full h-auto">
                 <TabsTrigger
                   value="content"
                   className={`flex-1 sm:flex-none px-4 py-2 text-sm font-medium rounded-lg text-amber-700 hover:bg-amber-50 data-[state=active]:text-white data-[state=active]:bg-gradient-to-r ${headerGradient}`}
