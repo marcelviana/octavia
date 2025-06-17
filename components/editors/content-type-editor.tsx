@@ -4,6 +4,7 @@ import { ChordEditor } from "@/components/chord-editor"
 import { LyricsEditor } from "@/components/lyrics-editor"
 import { TabEditor } from "@/components/tab-editor"
 import { AnnotationTools } from "@/components/annotation-tools"
+import PdfViewer from "@/components/pdf-viewer"
 import { ContentType } from "@/types/content"
 
 interface ContentTypeEditorProps {
@@ -44,6 +45,9 @@ export function ContentTypeEditor({ content, onChange }: ContentTypeEditorProps)
         />
       )
     case ContentType.SHEET_MUSIC:
+      if (content.file_url && content.file_url.toLowerCase().endsWith(".pdf")) {
+        return <PdfViewer url={content.file_url} className="h-[800px]" fullscreen />
+      }
       return (
         <AnnotationTools
           content={{
