@@ -20,7 +20,7 @@ const nextConfig = {
     
     // Allow loading of PDF.js worker
     config.module.rules.push({
-      test: /pdf\.worker\.(min\.)?js/,
+      test: /pdf\.worker\.(min\.)?(js|mjs)$/,
       type: "asset/resource",
       generator: {
         filename: "static/worker/[hash][ext][query]",
@@ -54,7 +54,7 @@ const nextConfig = {
         ],
       },
       {
-        source: "/pdf.worker.min.js",
+        source: "/pdf.worker.min.(js|mjs)",
         headers: [
           {
             key: "Content-Type",

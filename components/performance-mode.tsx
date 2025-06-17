@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { MusicText } from "@/components/music-text"
 import Image from "next/image"
 import PdfViewer from "@/components/pdf-viewer"
+import { ContentType } from "@/types/content"
 import {
   X,
   ChevronLeft,
@@ -316,7 +317,7 @@ export function PerformanceMode({
 
 
             <div className="space-y-8 max-w-3xl mx-auto">
-              {currentSongData.content_type === "Sheet Music" ? (
+              {currentSongData.content_type === ContentType.SHEET_MUSIC ? (
                 sheetUrls[currentSong] ? (
                   sheetUrls[currentSong].toLowerCase().endsWith(".pdf") ? (
                     <PdfViewer
@@ -395,7 +396,7 @@ export function PerformanceMode({
             </Button>
 
             <div className="flex space-x-1 mx-2">
-              {songs.map((_, index) => (
+              {songs.map((_: any, index: number) => (
                 <div
                   key={index}
                   className={`w-2 h-2 rounded-full cursor-pointer ${

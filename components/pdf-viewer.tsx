@@ -15,11 +15,19 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-import "react-pdf/dist/esm/Page/TextLayer.css";
-import "react-pdf/dist/esm/Page/AnnotationLayer.css";
+import "react-pdf/dist/Page/TextLayer.css";
+import "react-pdf/dist/Page/AnnotationLayer.css";
 
 // Use local worker to avoid cross-origin issues in production
-pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.js";
+try {
+  pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+    'pdfjs-dist/build/pdf.worker.min.mjs',
+    import.meta.url,
+  ).toString();
+} catch (error) {
+  // Fallback to local worker file
+  pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
+}
 
 interface PdfViewerProps {
   url: string;
@@ -37,6 +45,11 @@ export function PdfViewer({ url, className, fullscreen = false }: PdfViewerProps
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages);
+    console.log("PDF loaded successfully with", numPages, "pages");
+  };
+
+  const onDocumentLoadError = (error: Error) => {
+    console.error("PDF load error:", error);
   };
 
   const changePage = (offset: number) => {
@@ -132,7 +145,13 @@ export function PdfViewer({ url, className, fullscreen = false }: PdfViewerProps
         </div>
       </div>
       <div className="flex-1 overflow-auto flex justify-center">
-        <Document file={url} onLoadSuccess={onDocumentLoadSuccess} loading={<p className="p-4">Loading PDF...</p>} error={<p className="p-4">Unable to display PDF. <a href={url} target="_blank" rel="noopener noreferrer">Download</a></p>}>
+        <Document 
+          file={url} 
+          onLoadSuccess={onDocumentLoadSuccess} 
+          onLoadError={onDocumentLoadError}
+          loading={<p className="p-4">Loading PDF...</p>} 
+          error={<p className="p-4">Unable to display PDF. <a href={url} target="_blank" rel="noopener noreferrer">Download</a></p>}
+        >
           <Page pageNumber={pageNumber} scale={scale} width={800} />
         </Document>
       </div>

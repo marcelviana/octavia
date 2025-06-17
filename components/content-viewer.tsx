@@ -44,6 +44,7 @@ import { deleteContent } from "@/lib/content-service";
 import { MusicText } from "@/components/music-text";
 import Image from "next/image";
 import PdfViewer from "@/components/pdf-viewer";
+import { ContentType } from "@/types/content";
 
 interface ContentViewerProps {
   content: any;
@@ -507,7 +508,7 @@ export function ContentViewer({
                           )}
 
                           {/* Sheet Music Content */}
-                          {content.content_type === "Sheet Music" && (
+                          {content.content_type === ContentType.SHEET_MUSIC && (
                             <div className="space-y-6">
                               <h3 className="text-lg font-semibold">
                                 Sheet Music

@@ -58,6 +58,7 @@ const MOCK_CONTENT = [
     title: "Bohemian Rhapsody",
     artist: "Queen",
     content_type: "Sheet Music",
+    file_url: "https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf",
     content_data: {
       pages: 8,
       instruments: ["piano", "vocals"],
