@@ -514,17 +514,29 @@ export function ContentViewer({
 
                               {content.file_url ? (
                                 <div className="border rounded-lg overflow-hidden">
-                                  <Image
-                                    src={content.file_url || "/placeholder.svg"}
-                                    alt={`Sheet music for ${content.title}`}
-                                    width={800}
-                                    height={800}
-                                    className="w-full h-auto"
-                                    style={{
-                                      maxHeight: "800px",
-                                      objectFit: "contain",
-                                    }}
-                                  />
+                                  {content.file_url.toLowerCase().endsWith(".pdf") ? (
+                                    <object
+                                      data={content.file_url}
+                                      type="application/pdf"
+                                      className="w-full h-[800px]"
+                                    >
+                                      <p className="p-4">
+                                        Unable to display PDF.{' '}
+                                        <a href={content.file_url} target="_blank" rel="noopener noreferrer">
+                                          Download
+                                        </a>
+                                      </p>
+                                    </object>
+                                  ) : (
+                                    <Image
+                                      src={content.file_url || "/placeholder.svg"}
+                                      alt={`Sheet music for ${content.title}`}
+                                      width={800}
+                                      height={800}
+                                      className="w-full h-auto"
+                                      style={{ maxHeight: "800px", objectFit: "contain" }}
+                                    />
+                                  )}
                                 </div>
                               ) : content.content_data?.notation ? (
                                 <div className="bg-gray-50 p-6 border rounded-lg">

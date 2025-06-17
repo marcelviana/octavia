@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { MusicText } from "@/components/music-text"
+import Image from "next/image"
 import {
   X,
   ChevronLeft,
@@ -61,6 +62,9 @@ export function PerformanceMode({
     : defaultSetlist
 
   const lyricsData = songs.map((song: any) => song?.content_data?.lyrics || "")
+  const sheetUrls = songs.map(
+    (song: any) => song?.file_url || song?.content_data?.file || null,
+  )
 
   const toggleFullScreen = () => {
     if (!document.fullscreenElement) {
@@ -311,8 +315,45 @@ export function PerformanceMode({
 
 
             <div className="space-y-8 max-w-3xl mx-auto">
-              {lyricsData[currentSong] ? (
-                <MusicText text={lyricsData[currentSong]} className="text-lg leading-relaxed" />
+              {currentSongData.content_type === "Sheet Music" ? (
+                sheetUrls[currentSong] ? (
+                  sheetUrls[currentSong].toLowerCase().endsWith(".pdf") ? (
+                    <object
+                      data={sheetUrls[currentSong] as string}
+                      type="application/pdf"
+                      className="w-full h-[calc(100vh-200px)]"
+                    >
+                      <p className="p-4">
+                        Unable to display PDF.{' '}
+                        <a
+                          href={sheetUrls[currentSong] as string}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Download
+                        </a>
+                      </p>
+                    </object>
+                  ) : (
+                    <Image
+                      src={sheetUrls[currentSong] as string}
+                      alt={currentSongData.title}
+                      width={800}
+                      height={800}
+                      className="w-full h-auto"
+                      style={{ maxHeight: "100%", objectFit: "contain" }}
+                    />
+                  )
+                ) : (
+                  <div className="text-center text-[#A69B8E] py-10">
+                    <p className="text-xl">No sheet music available</p>
+                  </div>
+                )
+              ) : lyricsData[currentSong] ? (
+                <MusicText
+                  text={lyricsData[currentSong]}
+                  className="text-lg leading-relaxed"
+                />
               ) : (
                 <div className="text-center text-[#A69B8E] py-10">
                   <p className="text-xl">No lyrics available for this song</p>

@@ -45,6 +45,7 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [metadata, setMetadata] = useState({
+    title: "",
     artist: "",
     album: "",
     genre: "",
@@ -83,7 +84,7 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
 
   const keys = ["C", "C#", "Db", "D", "D#", "Eb", "E", "F", "F#", "Gb", "G", "G#", "Ab", "A", "A#", "Bb", "B"]
 
-  const basicCompleted = [metadata.artist, metadata.album, metadata.genre].filter(Boolean).length
+  const basicCompleted = [metadata.title, metadata.artist, metadata.album, metadata.genre].filter(Boolean).length
   const musicalCompleted = [metadata.key, metadata.bpm, metadata.timeSignature, metadata.difficulty].filter(Boolean).length
   const organizationCompleted = [
     metadata.tags.length > 0 ? "tags" : "",
@@ -174,10 +175,15 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
         return
       }
 
+      if (!metadata.title.trim()) {
+        alert("Title is required");
+        return;
+      }
+
       // Build the insert payload
       const payload: any = {
         user_id: user.id,
-        title: createdContent?.title || files?.[0]?.name || "Untitled",
+        title: metadata.title.trim(),
         artist: metadata.artist || null,
         album: metadata.album || null,
         genre: metadata.genre || null,
@@ -245,9 +251,15 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
         return
       }
 
+      if (!metadata.title.trim()) {
+        alert("Title is required")
+        setIsSubmitting(false)
+        return
+      }
+
       const payload: any = {
         user_id: user.id,
-        title: createdContent?.title || files?.[0]?.name || "Untitled",
+        title: metadata.title.trim(),
         content_type: createdContent?.type || files?.[0]?.contentType || "unknown",
         content_data: createdContent?.content || {},
         file_url: files && files[0]?.url ? files[0].url : null,
@@ -348,11 +360,20 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
                 <div className="flex items-center w-full gap-2">
                   <Info className="w-4 h-4 text-blue-600" />
                   <span className="flex-1">Basic Info</span>
-                  {!openSections.includes("basic") && renderSummary(basicCompleted, 3)}
+                  {!openSections.includes("basic") && renderSummary(basicCompleted, 4)}
                 </div>
               </AccordionTrigger>
               <AccordionContent className="px-4 pb-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="md:col-span-2">
+                    <Label htmlFor="title">Title *</Label>
+                    <Input
+                      id="title"
+                      value={metadata.title}
+                      onChange={(e) => setMetadata((prev) => ({ ...prev, title: e.target.value }))}
+                      placeholder="Song title"
+                    />
+                  </div>
                   <div>
                     <Label htmlFor="artist">Artist</Label>
                     <Input
