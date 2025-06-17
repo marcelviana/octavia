@@ -172,6 +172,14 @@ export function ContentViewer({
           </div>
 
           <div className="flex items-center space-x-2">
+            <Button
+              onClick={() => onEnterPerformance(content)}
+              size="icon"
+              className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white shadow-lg w-10 sm:w-auto sm:px-4 transition-all"
+            >
+              <Play className="w-4 h-4" />
+              <span className="hidden sm:ml-2 sm:inline">Performance Mode</span>
+            </Button>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
@@ -338,13 +346,6 @@ export function ContentViewer({
                   Notes
                 </TabsTrigger>
               </TabsList>
-              <Button
-                onClick={() => onEnterPerformance(content)}
-                className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white shadow-lg"
-              >
-                <Play className="w-4 h-4 mr-2" />
-                Performance Mode
-              </Button>
             </div>
 
             <TabsContent value="content" className="mt-6">
