@@ -274,23 +274,23 @@ export function ContentViewer({
         <div className="flex-1 p-6 overflow-auto">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-              <TabsList className="flex flex-col sm:flex-row gap-2">
+              <TabsList className="flex flex-col sm:flex-row gap-2 w-full">
                 <TabsTrigger
                   value="content"
-                  className="px-4 py-2 text-sm font-medium border border-gray-200 rounded-t-md bg-gray-100 hover:bg-white data-[state=active]:bg-white data-[state=active]:font-bold data-[state=active]:border-b-transparent"
+                  className="flex-1 sm:flex-none px-4 py-2 text-sm font-medium border border-gray-300 rounded-xl bg-[#f9fafb] hover:bg-white transition-colors data-[state=active]:bg-white data-[state=active]:font-bold data-[state=active]:shadow"
                 >
                   Content
                 </TabsTrigger>
               <TabsTrigger
                 value="info"
-                className="px-4 py-2 text-sm font-medium border border-gray-200 rounded-t-md bg-gray-100 hover:bg-white data-[state=active]:bg-white data-[state=active]:font-bold data-[state=active]:border-b-transparent"
+                className="flex-1 sm:flex-none px-4 py-2 text-sm font-medium border border-gray-300 rounded-xl bg-[#f9fafb] hover:bg-white transition-colors data-[state=active]:bg-white data-[state=active]:font-bold data-[state=active]:shadow"
               >
                 <Info className="w-4 h-4 mr-2" />
                 Details
               </TabsTrigger>
               <TabsTrigger
                 value="notes"
-                className="px-4 py-2 text-sm font-medium border border-gray-200 rounded-t-md bg-gray-100 hover:bg-white data-[state=active]:bg-white data-[state=active]:font-bold data-[state=active]:border-b-transparent"
+                className="flex-1 sm:flex-none px-4 py-2 text-sm font-medium border border-gray-300 rounded-xl bg-[#f9fafb] hover:bg-white transition-colors data-[state=active]:bg-white data-[state=active]:font-bold data-[state=active]:shadow"
               >
                 <MessageSquare className="w-4 h-4 mr-2" />
                 Notes
