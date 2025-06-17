@@ -309,7 +309,7 @@ export function ContentViewer({
                 <Card className="shadow-xl border border-amber-200 overflow-hidden">
                   <CardContent className="p-0">
                     <div
-                      className="bg-white p-8 min-h-[800px] relative"
+                      className="bg-white p-8 min-h-[calc(100vh-250px)] relative"
                       style={{
                         transform: `scale(${zoom / 100})`,
                         transformOrigin: "top center",
@@ -516,7 +516,11 @@ export function ContentViewer({
                               {content.file_url ? (
                                 <div className="border rounded-lg overflow-hidden">
                                   {content.file_url.toLowerCase().endsWith(".pdf") ? (
-                                    <PdfViewer url={content.file_url} fullscreen className="h-[800px]" />
+                                    <PdfViewer
+                                      url={content.file_url}
+                                      fullscreen
+                                      className="w-full h-[calc(100vh-250px)]"
+                                    />
                                   ) : (
                                     <Image
                                       src={content.file_url || "/placeholder.svg"}
@@ -524,7 +528,10 @@ export function ContentViewer({
                                       width={800}
                                       height={800}
                                       className="w-full h-auto"
-                                      style={{ maxHeight: "800px", objectFit: "contain" }}
+                                      style={{
+                                        maxHeight: "calc(100vh - 250px)",
+                                        objectFit: "contain",
+                                      }}
                                     />
                                   )}
                                 </div>
