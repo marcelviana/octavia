@@ -273,32 +273,32 @@ export function ContentViewer({
         {/* Main Content */}
         <div className="flex-1 p-6 overflow-auto">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-              <TabsList className="flex flex-col sm:flex-row gap-2 w-full">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center sm:justify-between gap-2">
+              <TabsList className="flex flex-col sm:flex-row flex-wrap gap-2 w-full h-auto">
                 <TabsTrigger
                   value="content"
-                  className="flex-1 sm:flex-none px-4 py-2 text-sm font-medium border border-gray-300 rounded-xl bg-[#f9fafb] hover:bg-white transition-colors data-[state=active]:bg-white data-[state=active]:font-bold data-[state=active]:shadow"
+                  className="flex-1 sm:flex-none px-4 py-2 text-sm font-medium border border-gray-300 rounded-lg bg-[#FFFFFF] hover:bg-[#FDF9F3] transition-colors data-[state=active]:bg-[#FF8800] data-[state=active]:text-white"
                 >
                   Content
                 </TabsTrigger>
-              <TabsTrigger
-                value="info"
-                className="flex-1 sm:flex-none px-4 py-2 text-sm font-medium border border-gray-300 rounded-xl bg-[#f9fafb] hover:bg-white transition-colors data-[state=active]:bg-white data-[state=active]:font-bold data-[state=active]:shadow"
-              >
-                <Info className="w-4 h-4 mr-2" />
-                Details
-              </TabsTrigger>
-              <TabsTrigger
-                value="notes"
-                className="flex-1 sm:flex-none px-4 py-2 text-sm font-medium border border-gray-300 rounded-xl bg-[#f9fafb] hover:bg-white transition-colors data-[state=active]:bg-white data-[state=active]:font-bold data-[state=active]:shadow"
-              >
-                <MessageSquare className="w-4 h-4 mr-2" />
-                Notes
-              </TabsTrigger>
+                <TabsTrigger
+                  value="info"
+                  className="flex-1 sm:flex-none px-4 py-2 text-sm font-medium border border-gray-300 rounded-lg bg-[#FFFFFF] hover:bg-[#FDF9F3] transition-colors data-[state=active]:bg-[#FF8800] data-[state=active]:text-white"
+                >
+                  <Info className="w-4 h-4 mr-2" />
+                  Details
+                </TabsTrigger>
+                <TabsTrigger
+                  value="notes"
+                  className="flex-1 sm:flex-none px-4 py-2 text-sm font-medium border border-gray-300 rounded-lg bg-[#FFFFFF] hover:bg-[#FDF9F3] transition-colors data-[state=active]:bg-[#FF8800] data-[state=active]:text-white"
+                >
+                  <MessageSquare className="w-4 h-4 mr-2" />
+                  Notes
+                </TabsTrigger>
               </TabsList>
               <Button
                 onClick={() => onEnterPerformance(content)}
-                className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow hover:shadow-md transition-all"
+                className="bg-gradient-to-r from-[#002366] to-purple-700 hover:from-[#002366] hover:to-purple-800 text-white shadow hover:shadow-md transition-all"
               >
                 <Play className="w-4 h-4 mr-2" />
                 Performance Mode
