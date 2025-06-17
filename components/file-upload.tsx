@@ -45,6 +45,24 @@ export function FileUpload({
   const [isUploading, setIsUploading] = useState(false);
   const allowedExtensions = ["pdf", "docx", "txt"];
 
+  // Function to sanitize filename for storage
+  const sanitizeFilename = (filename: string): string => {
+    // Get the file extension
+    const lastDotIndex = filename.lastIndexOf('.');
+    const name = lastDotIndex > 0 ? filename.substring(0, lastDotIndex) : filename;
+    const extension = lastDotIndex > 0 ? filename.substring(lastDotIndex) : '';
+    
+    // Remove or replace problematic characters
+    const sanitizedName = name
+      .normalize('NFD') // Decompose accented characters
+      .replace(/[\u0300-\u036f]/g, '') // Remove accent marks
+      .replace(/[^a-zA-Z0-9._-]/g, '_') // Replace invalid characters with underscore
+      .replace(/_{2,}/g, '_') // Replace multiple underscores with single
+      .replace(/^_+|_+$/g, ''); // Remove leading/trailing underscores
+    
+    return sanitizedName + extension;
+  };
+
   const handleFiles = async (files: File[]) => {
     if (single) {
       files = files.slice(0, 1);
@@ -106,9 +124,12 @@ export function FileUpload({
 
     for (const file of processedFiles) {
       try {
+        const sanitizedFilename = sanitizeFilename(file.name);
+        const storageFilename = `${Date.now()}-${sanitizedFilename}`;
+        
         const { url } = await uploadFileToStorage(
           file.file,
-          `${Date.now()}-${file.name}`,
+          storageFilename,
         );
         setUploadedFiles((prev) =>
           prev.map((f) =>
