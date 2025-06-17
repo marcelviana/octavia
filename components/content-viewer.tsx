@@ -43,6 +43,7 @@ import {
 import { deleteContent } from "@/lib/content-service";
 import { MusicText } from "@/components/music-text";
 import Image from "next/image";
+import PdfViewer from "@/components/pdf-viewer";
 
 interface ContentViewerProps {
   content: any;
@@ -515,18 +516,7 @@ export function ContentViewer({
                               {content.file_url ? (
                                 <div className="border rounded-lg overflow-hidden">
                                   {content.file_url.toLowerCase().endsWith(".pdf") ? (
-                                    <object
-                                      data={content.file_url}
-                                      type="application/pdf"
-                                      className="w-full h-[800px]"
-                                    >
-                                      <p className="p-4">
-                                        Unable to display PDF.{' '}
-                                        <a href={content.file_url} target="_blank" rel="noopener noreferrer">
-                                          Download
-                                        </a>
-                                      </p>
-                                    </object>
+                                    <PdfViewer url={content.file_url} fullscreen className="h-[800px]" />
                                   ) : (
                                     <Image
                                       src={content.file_url || "/placeholder.svg"}
