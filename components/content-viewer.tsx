@@ -329,21 +329,22 @@ export function ContentViewer({
                   value="content"
                   className={`flex-1 sm:flex-none px-4 py-2 text-sm font-medium rounded-lg text-amber-700 hover:bg-amber-50 data-[state=active]:text-white data-[state=active]:bg-gradient-to-r ${getHeaderGradient(content.content_type)}`}
                 >
-                  Content
+                  <FileText className="w-4 h-4 sm:mr-2" />
+                  <span className="hidden sm:inline">Content</span>
                 </TabsTrigger>
                 <TabsTrigger
                   value="info"
                   className={`flex-1 sm:flex-none px-4 py-2 text-sm font-medium rounded-lg text-amber-700 hover:bg-amber-50 data-[state=active]:text-white data-[state=active]:bg-gradient-to-r ${getHeaderGradient(content.content_type)}`}
                 >
-                  <Info className="w-4 h-4 mr-2" />
-                  Details
+                  <Info className="w-4 h-4 sm:mr-2" />
+                  <span className="hidden sm:inline">Details</span>
                 </TabsTrigger>
                 <TabsTrigger
                   value="notes"
                   className={`flex-1 sm:flex-none px-4 py-2 text-sm font-medium rounded-lg text-amber-700 hover:bg-amber-50 data-[state=active]:text-white data-[state=active]:bg-gradient-to-r ${getHeaderGradient(content.content_type)}`}
                 >
-                  <MessageSquare className="w-4 h-4 mr-2" />
-                  Notes
+                  <MessageSquare className="w-4 h-4 sm:mr-2" />
+                  <span className="hidden sm:inline">Notes</span>
                 </TabsTrigger>
               </TabsList>
             </div>
