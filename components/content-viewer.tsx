@@ -274,23 +274,23 @@ export function ContentViewer({
         <div className="flex-1 p-6 overflow-auto">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-              <TabsList className="bg-white border border-amber-200 p-1 rounded-lg">
+              <TabsList className="flex flex-col sm:flex-row gap-2">
                 <TabsTrigger
                   value="content"
-                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500 data-[state=active]:to-orange-500 data-[state=active]:text-white rounded-md transition-all"
+                  className="px-4 py-2 text-sm font-medium border border-gray-200 rounded-t-md bg-gray-100 hover:bg-white data-[state=active]:bg-white data-[state=active]:font-bold data-[state=active]:border-b-transparent"
                 >
                   Content
                 </TabsTrigger>
               <TabsTrigger
                 value="info"
-                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-blue-600 data-[state=active]:text-white rounded-md transition-all"
+                className="px-4 py-2 text-sm font-medium border border-gray-200 rounded-t-md bg-gray-100 hover:bg-white data-[state=active]:bg-white data-[state=active]:font-bold data-[state=active]:border-b-transparent"
               >
                 <Info className="w-4 h-4 mr-2" />
                 Details
               </TabsTrigger>
               <TabsTrigger
                 value="notes"
-                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500 data-[state=active]:to-green-600 data-[state=active]:text-white rounded-md transition-all"
+                className="px-4 py-2 text-sm font-medium border border-gray-200 rounded-t-md bg-gray-100 hover:bg-white data-[state=active]:bg-white data-[state=active]:font-bold data-[state=active]:border-b-transparent"
               >
                 <MessageSquare className="w-4 h-4 mr-2" />
                 Notes
