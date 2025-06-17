@@ -185,7 +185,7 @@ export function FileUpload({
       case "gpx":
         return "Guitar Tab";
       case "txt":
-        return "Chord Chart";
+        return "Document";
       case "mid":
       case "midi":
         return "MIDI File";
