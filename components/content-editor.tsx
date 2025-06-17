@@ -309,18 +309,18 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
       <div className="flex-1">
         <div className="flex-1 overflow-auto">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full">
-            <div className="border-b border-amber-200 bg-white/90 backdrop-blur-sm px-4">
-              <TabsList className="bg-amber-50 border border-amber-200 flex-wrap overflow-x-auto">
+            <div className="border-b border-gray-200 bg-gray-50 px-4">
+              <TabsList className="flex flex-col sm:flex-row gap-2">
                 <TabsTrigger
                   value="content"
-                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500 data-[state=active]:to-orange-600 data-[state=active]:text-white"
+                  className="px-4 py-2 text-sm font-medium border border-gray-200 rounded-t-md bg-gray-100 hover:bg-white data-[state=active]:bg-white data-[state=active]:font-bold data-[state=active]:border-b-transparent"
                 >
                   <FileText className="w-4 h-4 mr-2" />
                   Content
                 </TabsTrigger>
                 <TabsTrigger
                   value="metadata"
-                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500 data-[state=active]:to-orange-600 data-[state=active]:text-white"
+                  className="px-4 py-2 text-sm font-medium border border-gray-200 rounded-t-md bg-gray-100 hover:bg-white data-[state=active]:bg-white data-[state=active]:font-bold data-[state=active]:border-b-transparent"
                 >
                   <Music className="w-4 h-4 mr-2" />
                   Details
