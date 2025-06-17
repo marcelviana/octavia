@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { MusicText } from "@/components/music-text"
 import Image from "next/image"
+import PdfViewer from "@/components/pdf-viewer"
 import {
   X,
   ChevronLeft,
@@ -318,22 +319,11 @@ export function PerformanceMode({
               {currentSongData.content_type === "Sheet Music" ? (
                 sheetUrls[currentSong] ? (
                   sheetUrls[currentSong].toLowerCase().endsWith(".pdf") ? (
-                    <object
-                      data={sheetUrls[currentSong] as string}
-                      type="application/pdf"
-                      className="w-full h-[calc(100vh-200px)]"
-                    >
-                      <p className="p-4">
-                        Unable to display PDF.{' '}
-                        <a
-                          href={sheetUrls[currentSong] as string}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Download
-                        </a>
-                      </p>
-                    </object>
+                    <PdfViewer
+                      url={sheetUrls[currentSong] as string}
+                      fullscreen
+                      className="h-[calc(100vh-200px)]"
+                    />
                   ) : (
                     <Image
                       src={sheetUrls[currentSong] as string}
