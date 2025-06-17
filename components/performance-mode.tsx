@@ -176,7 +176,7 @@ export function PerformanceMode({
     return () => {
       if (scrollRef.current) cancelAnimationFrame(scrollRef.current)
     }
-  }, [isPlaying, bpm, currentSong])
+  }, [isPlaying, bpm, currentSong, lyricsData])
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -218,7 +218,7 @@ export function PerformanceMode({
     if (contentRef.current) {
       contentRef.current.scrollTop = 0
     }
-  }, [currentSong])
+  }, [currentSong, currentSongData.bpm])
 
   useEffect(() => {
     if (!bpmFeedback) return

@@ -53,7 +53,7 @@ export default function SetupPage() {
           <CardContent className="space-y-6">
             <div className="text-sm text-gray-700 space-y-2">
               <p>
-                <strong>What this does:</strong> Creates a storage bucket called "content-files" 
+                <strong>What this does:</strong> Creates a storage bucket called &ldquo;content-files&rdquo; 
                 in your Supabase project to store uploaded sheet music files.
               </p>
               <p>
@@ -106,12 +106,12 @@ export default function SetupPage() {
                 <ol className="text-sm text-gray-700 space-y-1 list-decimal list-inside mb-4">
                   <li>Go to your Supabase project dashboard</li>
                   <li>Navigate to <strong>Storage</strong> → <strong>Policies</strong></li>
-                  <li>Click <strong>"New Policy"</strong> for the <strong>Objects</strong> table</li>
-                  <li>Select <strong>"Create a policy from template"</strong></li>
-                  <li>Choose <strong>"Allow access to uploads for authenticated users"</strong></li>
-                  <li>Click <strong>"Use this template"</strong></li>
+                  <li>Click <strong>&ldquo;New Policy&rdquo;</strong> for the <strong>Objects</strong> table</li>
+                  <li>Select <strong>&ldquo;Create a policy from template&rdquo;</strong></li>
+                  <li>Choose <strong>&ldquo;Allow access to uploads for authenticated users&rdquo;</strong></li>
+                  <li>Click <strong>&ldquo;Use this template&rdquo;</strong></li>
                   <li>Update the policy to target the <code className="bg-gray-100 px-1 rounded">content-files</code> bucket</li>
-                  <li>Click <strong>"Save Policy"</strong></li>
+                  <li>Click <strong>&ldquo;Save Policy&rdquo;</strong></li>
                 </ol>
                 
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
@@ -137,15 +137,15 @@ FOR SELECT USING (bucket_id = 'content-files');`}
               <div>
                 <h3 className="font-semibold mb-2">Manual Bucket Setup (Alternative)</h3>
                 <p className="text-sm text-gray-600 mb-3">
-                  If the automatic bucket creation doesn't work:
+                  If the automatic bucket creation doesn&apos;t work:
                 </p>
                 <ol className="text-sm text-gray-700 space-y-1 list-decimal list-inside">
                   <li>Go to your Supabase project dashboard</li>
                   <li>Navigate to <strong>Storage</strong> in the sidebar</li>
-                  <li>Click <strong>"New Bucket"</strong></li>
+                  <li>Click <strong>&ldquo;New Bucket&rdquo;</strong></li>
                   <li>Name it <code className="bg-gray-100 px-1 rounded">content-files</code></li>
                   <li>Set it to <strong>Public</strong></li>
-                  <li>Click <strong>"Create Bucket"</strong></li>
+                  <li>Click <strong>&ldquo;Create Bucket&rdquo;</strong></li>
                 </ol>
               </div>
             </div>
