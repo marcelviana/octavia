@@ -21,6 +21,8 @@ import {
   Printer,
   ChevronLeft,
   ChevronRight,
+  FileText,
+  Music,
   Info,
   MessageSquare,
 } from "lucide-react";
@@ -45,6 +47,7 @@ import { MusicText } from "@/components/music-text";
 import Image from "next/image";
 import PdfViewer from "@/components/pdf-viewer";
 import { ContentType } from "@/types/content";
+import { getContentTypeStyle } from "@/lib/content-type-styles";
 
 interface ContentViewerProps {
   content: any;
@@ -74,6 +77,38 @@ export function ContentViewer({
     : 1;
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [isFavorite, setIsFavorite] = useState(content?.is_favorite || false);
+
+  const styles = getContentTypeStyle(content.content_type);
+
+  const getHeaderGradient = (type: string) => {
+    switch (type) {
+      case ContentType.LYRICS:
+        return "from-green-500 to-green-600";
+      case ContentType.GUITAR_TAB:
+        return "from-blue-500 to-blue-600";
+      case ContentType.CHORD_CHART:
+        return "from-purple-500 to-purple-600";
+      case ContentType.SHEET_MUSIC:
+        return "from-orange-500 to-orange-600";
+      default:
+        return "from-amber-500 to-orange-600";
+    }
+  };
+
+  const getContentIcon = (type: string) => {
+    switch (type) {
+      case ContentType.GUITAR_TAB:
+        return <Music className="w-4 h-4 text-white" />;
+      case ContentType.CHORD_CHART:
+        return <Music className="w-4 h-4 text-white" />;
+      case ContentType.SHEET_MUSIC:
+        return <FileText className="w-4 h-4 text-white" />;
+      case ContentType.LYRICS:
+        return <FileText className="w-4 h-4 text-white" />;
+      default:
+        return <FileText className="w-4 h-4 text-white" />;
+    }
+  };
 
   const getOrdinalSuffix = (num: number) => {
     const mod10 = num % 10;
@@ -108,9 +143,9 @@ export function ContentViewer({
   return (
     <div className="h-screen flex flex-col bg-gradient-to-b from-[#fff9f0] to-[#fff5e5]">
       {/* Header */}
-      <div className="bg-white border-b border-amber-200 p-4 shadow-sm">
+      <div className="bg-white/90 backdrop-blur-sm border-b border-amber-200 px-4 py-2 shadow-md">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center gap-3">
             <Button
               variant="ghost"
               onClick={onBack}
@@ -119,11 +154,18 @@ export function ContentViewer({
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Button>
+            <div
+              className={`w-8 h-8 rounded-lg flex items-center justify-center bg-gradient-to-r ${getHeaderGradient(
+                content.content_type,
+              )}`}
+            >
+              {getContentIcon(content.content_type)}
+            </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900">
+              <h1 className="font-bold text-lg sm:text-xl text-gray-900">
                 {content.title}
               </h1>
-              <p className="text-sm text-[#A69B8E]">
+              <p className="text-sm text-gray-500">
                 {content.artist} • {content.content_type}
               </p>
             </div>
@@ -274,23 +316,23 @@ export function ContentViewer({
         <div className="flex-1 p-6 overflow-auto">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
             <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center sm:justify-between gap-2">
-              <TabsList className="flex flex-col sm:flex-row flex-wrap gap-2 w-full h-auto">
+              <TabsList className="bg-white/80 backdrop-blur-sm border border-amber-200 p-1 rounded-xl shadow-md flex flex-col sm:flex-row flex-wrap gap-2 w-full h-auto">
                 <TabsTrigger
                   value="content"
-                  className="flex-1 sm:flex-none px-4 py-2 text-sm font-medium border border-gray-300 rounded-lg bg-[#FFFFFF] hover:bg-[#FDF9F3] transition-colors data-[state=active]:bg-[#FF8800] data-[state=active]:text-white"
+                  className={`flex-1 sm:flex-none px-4 py-2 text-sm font-medium rounded-lg text-amber-700 hover:bg-amber-50 data-[state=active]:text-white data-[state=active]:bg-gradient-to-r ${getHeaderGradient(content.content_type)}`}
                 >
                   Content
                 </TabsTrigger>
                 <TabsTrigger
                   value="info"
-                  className="flex-1 sm:flex-none px-4 py-2 text-sm font-medium border border-gray-300 rounded-lg bg-[#FFFFFF] hover:bg-[#FDF9F3] transition-colors data-[state=active]:bg-[#FF8800] data-[state=active]:text-white"
+                  className={`flex-1 sm:flex-none px-4 py-2 text-sm font-medium rounded-lg text-amber-700 hover:bg-amber-50 data-[state=active]:text-white data-[state=active]:bg-gradient-to-r ${getHeaderGradient(content.content_type)}`}
                 >
                   <Info className="w-4 h-4 mr-2" />
                   Details
                 </TabsTrigger>
                 <TabsTrigger
                   value="notes"
-                  className="flex-1 sm:flex-none px-4 py-2 text-sm font-medium border border-gray-300 rounded-lg bg-[#FFFFFF] hover:bg-[#FDF9F3] transition-colors data-[state=active]:bg-[#FF8800] data-[state=active]:text-white"
+                  className={`flex-1 sm:flex-none px-4 py-2 text-sm font-medium rounded-lg text-amber-700 hover:bg-amber-50 data-[state=active]:text-white data-[state=active]:bg-gradient-to-r ${getHeaderGradient(content.content_type)}`}
                 >
                   <MessageSquare className="w-4 h-4 mr-2" />
                   Notes
@@ -298,7 +340,7 @@ export function ContentViewer({
               </TabsList>
               <Button
                 onClick={() => onEnterPerformance(content)}
-                className="bg-gradient-to-r from-[#002366] to-purple-700 hover:from-[#002366] hover:to-purple-800 text-white shadow hover:shadow-md transition-all"
+                className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white shadow-lg"
               >
                 <Play className="w-4 h-4 mr-2" />
                 Performance Mode
@@ -372,7 +414,7 @@ export function ContentViewer({
                               )}
 
                               {/* Guitar-specific info */}
-                              <div className="grid grid-cols-2 gap-4 text-sm bg-blue-50 p-4 rounded-lg">
+                              <div className="grid grid-cols-2 gap-4 text-sm p-4 bg-white/80 backdrop-blur-sm border border-blue-200 rounded-xl shadow">
                                 <div>
                                   <strong>Capo:</strong>{" "}
                                   {content.capo
@@ -422,7 +464,7 @@ export function ContentViewer({
                                     (chord: any, index: number) => (
                                       <div
                                         key={index}
-                                        className="text-center p-4 border-2 rounded-lg bg-gray-50"
+                                        className="text-center p-4 bg-white/80 backdrop-blur-sm border border-purple-200 rounded-xl shadow"
                                       >
                                         <div className="text-xl font-bold mb-3">
                                           {chord.name || chord}
@@ -462,7 +504,7 @@ export function ContentViewer({
                                   {["Am", "F", "C", "G"].map((chord) => (
                                     <div
                                       key={chord}
-                                      className="text-center p-4 border-2 rounded-lg bg-gray-50"
+                                      className="text-center p-4 bg-white/80 backdrop-blur-sm border border-purple-200 rounded-xl shadow"
                                     >
                                       <div className="text-xl font-bold mb-3">
                                         {chord}
@@ -480,7 +522,7 @@ export function ContentViewer({
 
                               {/* Song structure */}
                               {content.content_data?.progression && (
-                                <div className="space-y-3 bg-green-50 p-4 rounded-lg">
+                                <div className="space-y-3 p-4 bg-white/80 backdrop-blur-sm border border-green-200 rounded-xl shadow">
                                   <h4 className="font-semibold">
                                     Song Structure
                                   </h4>
@@ -515,7 +557,7 @@ export function ContentViewer({
                               </h3>
 
                               {content.file_url ? (
-                                <div className="border rounded-lg overflow-hidden">
+                                <div className="overflow-hidden bg-white/80 backdrop-blur-sm border border-orange-200 rounded-xl shadow">
                                   {content.file_url.toLowerCase().endsWith(".pdf") ? (
                                     <PdfViewer
                                       url={content.file_url}
@@ -537,14 +579,14 @@ export function ContentViewer({
                                   )}
                                 </div>
                               ) : content.content_data?.notation ? (
-                                <div className="bg-gray-50 p-6 border rounded-lg">
+                                <div className="p-6 bg-white/80 backdrop-blur-sm border border-orange-200 rounded-xl shadow">
                                   <MusicText
                                     text={content.content_data.notation}
                                     className="text-sm leading-relaxed"
                                   />
                                 </div>
                               ) : (
-                                <div className="border-2 border-dashed border-gray-300 rounded-lg p-12 text-center">
+                                <div className="p-12 text-center border-2 border-dashed border-gray-300 rounded-xl bg-white/80 backdrop-blur-sm">
                                   <p className="text-gray-500">
                                     No sheet music available
                                   </p>
@@ -563,7 +605,7 @@ export function ContentViewer({
                               <h3 className="text-lg font-semibold">Lyrics</h3>
 
                               {/* Technical Information */}
-                              <div className="bg-gray-50 p-4 rounded-lg">
+                              <div className="p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200">
                                 <h4 className="font-semibold mb-3">
                                   Technical Information
                                 </h4>
@@ -625,11 +667,11 @@ export function ContentViewer({
                                 <div className="space-y-6">
                                   <MusicText
                                     text={content.content_data.lyrics}
-                                    className="bg-gray-50 p-4 rounded-lg text-sm leading-relaxed"
+                                    className="p-4 bg-white/80 backdrop-blur-sm rounded-xl border border-amber-200 shadow text-sm leading-relaxed"
                                   />
                                 </div>
                               ) : (
-                                <div className="bg-gray-50 p-8 rounded-lg text-center">
+                                <div className="p-8 bg-white/80 backdrop-blur-sm border border-amber-200 rounded-xl text-center">
                                   <p className="text-gray-500">
                                     No lyrics available
                                   </p>
@@ -641,7 +683,7 @@ export function ContentViewer({
 
                               {/* Chord progression for lyrics */}
                               {content.content_data?.chords && (
-                                <div className="bg-blue-50 p-4 rounded-lg">
+                                <div className="p-4 bg-white/80 backdrop-blur-sm border border-blue-200 rounded-xl shadow">
                                   <h4 className="font-semibold mb-2">Chords</h4>
                                   <div className="flex flex-wrap gap-2">
                                     {content.content_data.chords.map(
@@ -684,7 +726,7 @@ export function ContentViewer({
 
             <TabsContent value="info" className="mt-6">
               <div className="max-w-2xl mx-auto">
-                <Card className="shadow-lg border border-blue-200">
+                <Card className="bg-white/80 backdrop-blur-sm shadow-lg border border-blue-200">
                   <CardContent className="p-6">
                     <h3 className="text-lg font-semibold mb-4 text-blue-800">
                       Content Details
@@ -786,13 +828,13 @@ export function ContentViewer({
 
             <TabsContent value="notes" className="mt-6">
               <div className="max-w-2xl mx-auto">
-                <Card className="shadow-lg border border-green-200">
+                <Card className="bg-white/80 backdrop-blur-sm shadow-lg border border-green-200">
                   <CardContent className="p-6">
                     <h3 className="text-lg font-semibold mb-4 text-green-800">
                       Performance Notes
                     </h3>
                     {content.notes ? (
-                      <div className="bg-green-50 p-4 rounded-lg">
+                      <div className="p-4 bg-white/80 backdrop-blur-sm border border-green-200 rounded-xl">
                         <MusicText
                           text={content.notes}
                           monospace={false}
@@ -800,7 +842,7 @@ export function ContentViewer({
                         />
                       </div>
                     ) : (
-                      <div className="text-center py-8">
+                      <div className="text-center py-8 bg-white/80 backdrop-blur-sm border border-green-200 rounded-xl">
                         <MessageSquare className="w-12 h-12 text-gray-400 mx-auto mb-4" />
                         <p className="text-gray-500">
                           No performance notes available
