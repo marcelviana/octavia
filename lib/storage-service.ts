@@ -15,6 +15,9 @@ export async function uploadFileToStorage(file: File | Blob, filename: string) {
   const supabase = getSupabaseBrowserClient()
   const { error } = await supabase.storage.from(BUCKET).upload(filename, file, { upsert: true })
   if (error) {
+    if (error.message?.includes("Bucket not found")) {
+      throw new Error(`Storage bucket "${BUCKET}" not found. Please create the bucket in your Supabase project dashboard under Storage section, or run the setup script to create it automatically.`)
+    }
     throw error
   }
   const { data } = supabase.storage.from(BUCKET).getPublicUrl(filename)
