@@ -3,13 +3,13 @@
 import { useState, useEffect } from "react"
 import { useRouter, useParams } from "next/navigation"
 import dynamic from "next/dynamic"
-import { toast } from "sonner"
 
-const ContentEditor = dynamic(() => import("@/components/content-editor"), {
-  loading: () => <p>Loading editor...</p>,
-})
+const ContentEditPageClient = dynamic(
+  () => import("@/components/content-edit-page-client"),
+  { loading: () => <p>Loading editor...</p> }
+)
 import { useAuth } from "@/contexts/auth-context"
-import { getContentById, updateContent } from "@/lib/content-service"
+import { getContentById } from "@/lib/content-service"
 import type { Database } from "@/types/supabase"
 
 type Content = Database["public"]["Tables"]["content"]["Row"]
@@ -48,23 +48,6 @@ export default function EditContentPage() {
     }
   }, [params.id, user])
 
-  const handleSave = async (updatedContent: any) => {
-    if (!content) return
-
-    try {
-      await updateContent(content.id, updatedContent)
-      toast.success("Changes saved successfully")
-      // Navigate back to content view
-      router.push(`/content/${content.id}`)
-    } catch (err) {
-      console.error("Error saving content:", err)
-      // Handle error - could show toast notification
-    }
-  }
-
-  const handleCancel = () => {
-    router.push(`/content/${content?.id}`)
-  }
 
   // Don't render anything while auth is loading
   if (isLoading) {
@@ -121,5 +104,5 @@ export default function EditContentPage() {
     )
   }
 
-  return <ContentEditor content={content} onSave={handleSave} onCancel={handleCancel} />
+  return <ContentEditPageClient content={content} />
 }
