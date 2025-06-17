@@ -28,8 +28,19 @@ export async function parseDocxFile(file: File): Promise<ParsedSong[]> {
     }
   }
 
-  // Use the raw text from Mammoth for accurate line breaks
-  const textLines = textResult.value.split(/\r?\n/);
+  // Use the raw text from Mammoth for accurate line breaks. When Mammoth outputs
+  // four consecutive newlines it represents an empty paragraph. In that case we
+  // collapse the normal double newlines inserted after each paragraph so that
+  // line breaks are not duplicated while still preserving intentional blank
+  // lines.
+  let normalized = textResult.value.replace(/\r/g, "");
+  if (normalized.includes("\n\n\n\n")) {
+    normalized = normalized
+      .replace(/\n{4}/g, "<BLANK>")
+      .replace(/\n{2}/g, "\n")
+      .replace(/<BLANK>/g, "\n\n");
+  }
+  const textLines = normalized.split("\n");
 
   const songs: ParsedSong[] = [];
   let current: ParsedSong | null = null;
