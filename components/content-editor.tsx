@@ -33,6 +33,7 @@ import {
 } from "lucide-react"
 import { MetadataEditor } from "@/components/metadata-editor"
 import { ContentTypeEditor } from "@/components/editors/content-type-editor"
+import { getContentTypeStyle } from "@/lib/content-type-styles"
 
 interface ContentEditorProps {
   content: any
@@ -66,6 +67,23 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
   const [redoStack, setRedoStack] = useState<any[]>([])
 
   const canvasRef = useRef<HTMLCanvasElement>(null)
+
+  const contentType = content.type || content.content_type
+  const styles = getContentTypeStyle(contentType)
+  const headerGradient = (() => {
+    switch (contentType) {
+      case "Lyrics":
+        return "from-green-500 to-green-600"
+      case "Guitar Tab":
+        return "from-blue-500 to-blue-600"
+      case "Chord Chart":
+        return "from-purple-500 to-purple-600"
+      case "Sheet Music":
+        return "from-orange-500 to-orange-600"
+      default:
+        return "from-amber-500 to-orange-600"
+    }
+  })()
 
   useEffect(() => {
     setHasChanges(JSON.stringify(editedContent) !== JSON.stringify(content))
@@ -155,14 +173,14 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
               <ArrowLeft className="w-5 h-5" />
             </Button>
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-r from-amber-500 to-orange-600 rounded-lg flex items-center justify-center">
+              <div className={`w-8 h-8 rounded-lg flex items-center justify-center bg-gradient-to-r ${headerGradient}`}>
                 <Music className="w-4 h-4 text-white" />
               </div>
               <h1 className="font-semibold text-lg sm:text-xl bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
                 Editing: {content.title}
               </h1>
             </div>
-            <Badge variant="secondary" className="bg-amber-100 text-amber-700 border-amber-300 font-medium px-2 py-0.5">
+            <Badge variant="outline" className={`${styles.bg} ${styles.border} ${styles.icon} font-medium px-2 py-0.5`}>
               {content.type}
             </Badge>
             <div className="flex items-center text-xs text-gray-500">
@@ -310,17 +328,17 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
         <div className="flex-1 overflow-auto">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full">
             <div className="border-b border-gray-200 bg-gray-50 px-4">
-              <TabsList className="flex flex-col sm:flex-row flex-wrap gap-2 w-full h-auto">
+              <TabsList className="bg-white/80 backdrop-blur-sm border border-amber-200 p-1 rounded-xl shadow-md flex flex-col sm:flex-row flex-wrap gap-2 w-full h-auto">
                 <TabsTrigger
                   value="content"
-                  className="flex-1 sm:flex-none px-4 py-2 text-sm font-medium border border-gray-300 rounded-lg bg-[#FFFFFF] hover:bg-[#FDF9F3] transition-colors data-[state=active]:bg-[#FF8800] data-[state=active]:text-white"
+                  className={`flex-1 sm:flex-none px-4 py-2 text-sm font-medium rounded-lg text-amber-700 hover:bg-amber-50 data-[state=active]:text-white data-[state=active]:bg-gradient-to-r ${headerGradient}`}
                 >
                   <FileText className="w-4 h-4 mr-2" />
                   Content
                 </TabsTrigger>
                 <TabsTrigger
                   value="metadata"
-                  className="flex-1 sm:flex-none px-4 py-2 text-sm font-medium border border-gray-300 rounded-lg bg-[#FFFFFF] hover:bg-[#FDF9F3] transition-colors data-[state=active]:bg-[#FF8800] data-[state=active]:text-white"
+                  className={`flex-1 sm:flex-none px-4 py-2 text-sm font-medium rounded-lg text-amber-700 hover:bg-amber-50 data-[state=active]:text-white data-[state=active]:bg-gradient-to-r ${headerGradient}`}
                 >
                   <Music className="w-4 h-4 mr-2" />
                   Details
@@ -329,13 +347,13 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
             </div>
 
             <TabsContent value="content" className="flex-1 p-4 sm:p-6 w-full">
-              <div className="h-full bg-white/60 backdrop-blur-sm rounded-xl border border-amber-200 shadow-lg p-4 sm:p-6">
+              <div className="h-full bg-white/80 backdrop-blur-sm rounded-xl border border-amber-200 shadow-lg p-4 sm:p-6">
                 {renderContentEditor()}
               </div>
             </TabsContent>
 
           <TabsContent value="metadata" className="flex-1 p-4 sm:p-6 w-full">
-            <div className="h-full bg-white/60 backdrop-blur-sm rounded-xl border border-amber-200 shadow-lg p-4 sm:p-6">
+            <div className="h-full bg-white/80 backdrop-blur-sm rounded-xl border border-amber-200 shadow-lg p-4 sm:p-6">
               <MetadataEditor
                 content={editedContent}
                 onChange={(newContent) => {
