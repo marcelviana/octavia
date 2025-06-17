@@ -46,7 +46,13 @@ export function ContentTypeEditor({ content, onChange }: ContentTypeEditorProps)
       )
     case ContentType.SHEET_MUSIC:
       if (content.file_url && content.file_url.toLowerCase().endsWith(".pdf")) {
-        return <PdfViewer url={content.file_url} className="h-[800px]" fullscreen />
+        return (
+          <PdfViewer
+            url={content.file_url}
+            className="w-full h-[calc(100vh-250px)]"
+            fullscreen
+          />
+        )
       }
       return (
         <AnnotationTools
