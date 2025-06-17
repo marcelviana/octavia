@@ -20,6 +20,7 @@ import {
   Circle,
   Square,
   ArrowRight,
+  ArrowLeft,
   ZoomIn,
   ZoomOut,
   RotateCw,
@@ -147,35 +148,33 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
   return (
     <div className="h-screen flex flex-col bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
       {/* Header */}
-      <div className="bg-white/90 backdrop-blur-sm border-b border-amber-200 p-6 shadow-lg">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
-            <div className="flex items-center space-x-4 flex-shrink-0">
-              <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-orange-600 rounded-xl flex items-center justify-center">
-                <Music className="w-6 h-6 text-white" />
+      <div className="sticky top-0 z-30 bg-white/90 backdrop-blur-sm border-b border-amber-200 px-4 py-2 shadow-md">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <div className="flex items-center flex-wrap gap-2">
+            <Button variant="ghost" size="icon" onClick={onCancel} className="sm:mr-2">
+              <ArrowLeft className="w-5 h-5" />
+            </Button>
+            <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-gradient-to-r from-amber-500 to-orange-600 rounded-lg flex items-center justify-center">
+                <Music className="w-4 h-4 text-white" />
               </div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+              <h1 className="font-semibold text-lg sm:text-xl bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
                 Editing: {content.title}
               </h1>
             </div>
-            <div className="flex flex-wrap items-center gap-2">
-              <Badge
-                variant="secondary"
-                className="bg-amber-100 text-amber-700 border-amber-300 font-medium px-3 py-1"
-              >
-                {content.type}
-              </Badge>
-              <div className="flex items-center text-sm text-gray-500">
-                <Clock className="w-4 h-4 mr-1" />
-                Last saved: {new Date().toLocaleTimeString()}
-              </div>
+            <Badge variant="secondary" className="bg-amber-100 text-amber-700 border-amber-300 font-medium px-2 py-0.5">
+              {content.type}
+            </Badge>
+            <div className="flex items-center text-xs text-gray-500">
+              <Clock className="w-3 h-3 mr-1" />
+              Last saved: {new Date().toLocaleTimeString()}
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2 sm:flex-nowrap sm:space-x-4">
+          <div className="flex items-center flex-wrap gap-2">
             <Button
               variant="outline"
-              size="sm"
+              size="icon"
               onClick={handleUndo}
               disabled={undoStack.length === 0}
               className="border-amber-300 text-amber-700 hover:bg-amber-50"
@@ -184,19 +183,19 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
             </Button>
             <Button
               variant="outline"
-              size="sm"
+              size="icon"
               onClick={handleRedo}
               disabled={redoStack.length === 0}
               className="border-amber-300 text-amber-700 hover:bg-amber-50"
             >
               <Redo className="w-4 h-4" />
             </Button>
-            <Separator orientation="vertical" className="hidden sm:block h-8" />
+            <Separator orientation="vertical" className="hidden sm:block h-6" />
             <Button
               variant="outline"
-              size="lg"
+              size="sm"
               onClick={onCancel}
-              className="border-gray-300 text-gray-700 hover:bg-gray-50 px-6 w-full sm:w-auto"
+              className="border-gray-300 text-gray-700 hover:bg-gray-50"
             >
               <X className="w-4 h-4 mr-2" />
               Cancel
@@ -205,8 +204,8 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
               <Button
                 onClick={handleSave}
                 disabled={!hasChanges}
-                size="lg"
-                className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-6 shadow-lg w-full sm:w-auto"
+                size="sm"
+                className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white shadow-md"
               >
                 <Save className="w-4 h-4 mr-2" />
                 Save Changes
@@ -310,7 +309,7 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
       <div className="flex-1">
         <div className="flex-1 overflow-auto">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full">
-            <div className="bg-white/90 backdrop-blur-sm border-b border-amber-200 px-6 py-2">
+            <div className="border-b border-amber-200 bg-white/90 backdrop-blur-sm px-4">
               <TabsList className="bg-amber-50 border border-amber-200 flex-wrap overflow-x-auto">
                 <TabsTrigger
                   value="content"
@@ -335,21 +334,32 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
               </div>
             </TabsContent>
 
-            <TabsContent value="metadata" className="flex-1 p-4 sm:p-6 w-full">
-              <div className="h-full bg-white/60 backdrop-blur-sm rounded-xl border border-amber-200 shadow-lg p-4 sm:p-6">
-                <MetadataEditor
-                  content={editedContent}
-                  onChange={(newContent) => {
-                    saveToUndoStack()
-                    setEditedContent(newContent)
-                  }}
-                />
-              </div>
-            </TabsContent>
+          <TabsContent value="metadata" className="flex-1 p-4 sm:p-6 w-full">
+            <div className="h-full bg-white/60 backdrop-blur-sm rounded-xl border border-amber-200 shadow-lg p-4 sm:p-6">
+              <MetadataEditor
+                content={editedContent}
+                onChange={(newContent) => {
+                  saveToUndoStack()
+                  setEditedContent(newContent)
+                }}
+              />
+            </div>
+          </TabsContent>
 
-          </Tabs>
-        </div>
+        </Tabs>
       </div>
     </div>
-  )
+    {/* Footer */}
+    <div className="sticky bottom-0 z-20 flex justify-end p-2 bg-white/80 backdrop-blur-sm border-t border-amber-200">
+      <Button variant="outline" size="sm" className="mr-2">
+        Preview
+      </Button>
+      {hasChanges && (
+        <span className="text-xs text-red-700 flex items-center gap-1">
+          <Sparkles className="w-3 h-3" /> Unsaved changes
+        </span>
+      )}
+    </div>
+  </div>
+  );
 }
