@@ -53,7 +53,7 @@ export default function OfflinePage() {
             <div className="mx-auto w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mb-4">
               <WifiOff className="w-8 h-8 text-amber-600" />
             </div>
-            <CardTitle className="text-amber-900">You're Offline</CardTitle>
+            <CardTitle className="text-amber-900">You&apos;re Offline</CardTitle>
           </CardHeader>
           <CardContent className="text-center space-y-4">
             <p className="text-amber-700">
