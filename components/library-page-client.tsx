@@ -8,11 +8,17 @@ import { cn } from "@/lib/utils";
 
 interface LibraryPageClientProps {
   initialContent: any[]
+  initialTotal: number
+  initialPage: number
+  pageSize: number
   initialSearch?: string
 }
 
 export default function LibraryPageClient({
   initialContent,
+  initialTotal,
+  initialPage,
+  pageSize,
   initialSearch,
 }: LibraryPageClientProps) {
   const router = useRouter();
@@ -54,6 +60,9 @@ export default function LibraryPageClient({
           <Library
             onSelectContent={handleSelectContent}
             initialContent={initialContent}
+            initialTotal={initialTotal}
+            initialPage={initialPage}
+            initialPageSize={pageSize}
             initialSearch={initialSearch}
           />
         </main>

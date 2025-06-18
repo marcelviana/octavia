@@ -5,6 +5,19 @@ type Content = Database["public"]["Tables"]["content"]["Row"]
 type ContentInsert = Database["public"]["Tables"]["content"]["Insert"]
 type ContentUpdate = Database["public"]["Tables"]["content"]["Update"]
 
+export interface ContentQueryParams {
+  page?: number
+  pageSize?: number
+  search?: string
+  sortBy?: "recent" | "title" | "artist"
+  filters?: {
+    contentType?: string[]
+    difficulty?: string[]
+    key?: string[]
+    favorite?: boolean
+  }
+}
+
 // Mock data for demo mode
 const MOCK_CONTENT = [
   {
@@ -122,6 +135,108 @@ export async function getUserContent() {
     console.error("Error in getUserContent:", error)
     // Return mock data as fallback in case of errors
     return isSupabaseConfigured ? [] : MOCK_CONTENT
+  }
+}
+
+export async function getUserContentPage({
+  page = 1,
+  pageSize = 20,
+  search = "",
+  sortBy = "recent",
+  filters = {},
+}: ContentQueryParams = {}) {
+  try {
+    if (!isSupabaseConfigured) {
+      let data = [...MOCK_CONTENT]
+      if (search) {
+        const q = search.toLowerCase()
+        data = data.filter(
+          (item) =>
+            item.title.toLowerCase().includes(q) ||
+            (item.artist && item.artist.toLowerCase().includes(q)) ||
+            (item.album && item.album.toLowerCase().includes(q)),
+        )
+      }
+      if (filters.contentType?.length) {
+        data = data.filter((item) => filters.contentType!.includes(item.content_type))
+      }
+      if (filters.difficulty?.length) {
+        data = data.filter((item) => filters.difficulty!.includes(item.difficulty))
+      }
+      if (filters.key?.length) {
+        data = data.filter((item) => filters.key!.includes(item.key))
+      }
+      if (filters.favorite) {
+        data = data.filter((item) => item.is_favorite)
+      }
+      if (sortBy === "recent") {
+        data.sort(
+          (a, b) =>
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
+        )
+      } else if (sortBy === "title") {
+        data.sort((a, b) => a.title.localeCompare(b.title))
+      } else if (sortBy === "artist") {
+        data.sort((a, b) => (a.artist || "").localeCompare(b.artist || ""))
+      }
+      const total = data.length
+      const start = (page - 1) * pageSize
+      return { data: data.slice(start, start + pageSize), total }
+    }
+
+    const supabase = getSupabaseBrowserClient()
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser()
+    if (authError || !user) {
+      return { data: [], total: 0 }
+    }
+
+    let query = supabase
+      .from("content")
+      .select("*", { count: "exact" })
+      .eq("user_id", user.id)
+
+    if (search) {
+      query = query.or(
+        `title.ilike.%${search}%,artist.ilike.%${search}%,album.ilike.%${search}%`,
+      )
+    }
+    if (filters.contentType?.length) {
+      query = query.in("content_type", filters.contentType)
+    }
+    if (filters.difficulty?.length) {
+      query = query.in("difficulty", filters.difficulty)
+    }
+    if (filters.key?.length) {
+      query = query.in("key", filters.key)
+    }
+    if (filters.favorite) {
+      query = query.eq("is_favorite", true)
+    }
+
+    if (sortBy === "recent") {
+      query = query.order("created_at", { ascending: false })
+    } else if (sortBy === "title") {
+      query = query.order("title", { ascending: true })
+    } else if (sortBy === "artist") {
+      query = query.order("artist", { ascending: true })
+    }
+
+    const from = (page - 1) * pageSize
+    const to = from + pageSize - 1
+    const { data, error, count } = await query.range(from, to)
+
+    if (error) {
+      console.error("Error fetching content:", error)
+      return { data: [], total: 0 }
+    }
+
+    return { data: data || [], total: count || 0 }
+  } catch (error) {
+    console.error("Error in getUserContentPage:", error)
+    return { data: [], total: 0 }
   }
 }
 

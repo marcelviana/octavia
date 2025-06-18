@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { getSupabaseServerClient } from "@/lib/supabase-server";
-import { getUserContentServer } from "@/lib/content-service-server";
+import { getUserContentPageServer } from "@/lib/content-service-server";
 import LibraryPageClient from "@/components/library-page-client";
 
 export default async function LibraryPage({
@@ -17,9 +17,23 @@ export default async function LibraryPage({
     redirect("/login");
   }
 
-  const content = await getUserContentServer();
   const resolved = await searchParams;
   const search = resolved?.search || "";
+  const page = resolved?.page ? parseInt(resolved.page, 10) : 1;
+  const pageSize = 20;
+  const { data, total } = await getUserContentPageServer({
+    page,
+    pageSize,
+    search,
+  });
 
-  return <LibraryPageClient initialContent={content} initialSearch={search} />;
+  return (
+    <LibraryPageClient
+      initialContent={data}
+      initialTotal={total}
+      initialPage={page}
+      pageSize={pageSize}
+      initialSearch={search}
+    />
+  );
 }

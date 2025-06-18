@@ -4,6 +4,8 @@ import {
   getUserContent,
   getContentById,
   getUserStats,
+  getUserContentPage,
+  ContentQueryParams,
 } from "@/lib/content-service";
 import { getSetlistById } from "@/lib/setlist-service";
 
@@ -34,6 +36,68 @@ export async function getUserContentServer() {
   }
 
   return data || [];
+}
+
+export async function getUserContentPageServer(params: ContentQueryParams) {
+  if (!isSupabaseConfigured) {
+    // reuse browser implementation in demo mode
+    return getUserContentPage(params)
+  }
+
+  const { page = 1, pageSize = 20, search = "", sortBy = "recent", filters = {} } =
+    params || {}
+
+  const supabase = await getSupabaseServerClient()
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser()
+
+  if (authError || !user) {
+    return { data: [], total: 0 }
+  }
+
+  let query = supabase
+    .from("content")
+    .select("*", { count: "exact" })
+    .eq("user_id", user.id)
+
+  if (search) {
+    query = query.or(
+      `title.ilike.%${search}%,artist.ilike.%${search}%,album.ilike.%${search}%`,
+    )
+  }
+  if (filters.contentType?.length) {
+    query = query.in("content_type", filters.contentType)
+  }
+  if (filters.difficulty?.length) {
+    query = query.in("difficulty", filters.difficulty)
+  }
+  if (filters.key?.length) {
+    query = query.in("key", filters.key)
+  }
+  if (filters.favorite) {
+    query = query.eq("is_favorite", true)
+  }
+
+  if (sortBy === "recent") {
+    query = query.order("created_at", { ascending: false })
+  } else if (sortBy === "title") {
+    query = query.order("title", { ascending: true })
+  } else if (sortBy === "artist") {
+    query = query.order("artist", { ascending: true })
+  }
+
+  const from = (page - 1) * pageSize
+  const to = from + pageSize - 1
+  const { data, error, count } = await query.range(from, to)
+
+  if (error) {
+    console.error("Error fetching content:", error)
+    return { data: [], total: 0 }
+  }
+
+  return { data: data || [], total: count || 0 }
 }
 
 export async function getContentByIdServer(id: string) {

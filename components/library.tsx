@@ -38,7 +38,16 @@ import {
   ChevronDown,
   BookOpen,
 } from "lucide-react";
-import { getUserContent, deleteContent } from "@/lib/content-service";
+import { getUserContentPage, deleteContent } from "@/lib/content-service";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import {
   Dialog,
@@ -53,16 +62,29 @@ import { ContentType } from "@/types/content"
 interface LibraryProps {
   onSelectContent: (content: any) => void;
   initialContent: any[];
+  initialTotal: number;
+  initialPage: number;
+  initialPageSize: number;
   initialSearch?: string;
 }
 
-export function Library({ onSelectContent, initialContent, initialSearch }: LibraryProps) {
+export function Library({
+  onSelectContent,
+  initialContent,
+  initialTotal,
+  initialPage,
+  initialPageSize,
+  initialSearch,
+}: LibraryProps) {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState(initialSearch || "");
   const [sortBy, setSortBy] = useState("recent");
   const [viewMode, setViewMode] = useState("grid");
   const [content, setContent] = useState<any[]>(initialContent);
-  const [filteredContent, setFilteredContent] = useState<any[]>(initialContent);
+  const [totalCount, setTotalCount] = useState(initialTotal);
+  const [page, setPage] = useState(initialPage);
+  const [pageSize, setPageSize] = useState(initialPageSize);
+  const [loading, setLoading] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState<Record<string, any>>({
     contentType: [],
     difficulty: [],
@@ -71,62 +93,28 @@ export function Library({ onSelectContent, initialContent, initialSearch }: Libr
   });
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [contentToDelete, setContentToDelete] = useState<any>(null);
+  const totalPages = Math.ceil(totalCount / pageSize);
 
   useEffect(() => {
     setSearchQuery(initialSearch || "");
   }, [initialSearch]);
 
   useEffect(() => {
-    let filtered = [...content];
-
-    // Filter by search query
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(
-        (item) =>
-          item.title.toLowerCase().includes(query) ||
-          (item.artist && item.artist.toLowerCase().includes(query)) ||
-          (item.album && item.album.toLowerCase().includes(query)),
-      );
+    async function fetchData() {
+      setLoading(true);
+      const { data, total } = await getUserContentPage({
+        page,
+        pageSize,
+        search: searchQuery,
+        sortBy,
+        filters: selectedFilters,
+      });
+      setContent(data);
+      setTotalCount(total);
+      setLoading(false);
     }
-
-    // Apply additional filters
-    if (selectedFilters.contentType.length > 0) {
-      filtered = filtered.filter((item) =>
-        selectedFilters.contentType.includes(item.content_type),
-      );
-    }
-
-    if (selectedFilters.difficulty.length > 0) {
-      filtered = filtered.filter((item) =>
-        selectedFilters.difficulty.includes(item.difficulty),
-      );
-    }
-
-    if (selectedFilters.key.length > 0) {
-      filtered = filtered.filter((item) =>
-        selectedFilters.key.includes(item.key),
-      );
-    }
-
-    if (selectedFilters.favorite) {
-      filtered = filtered.filter((item) => item.is_favorite);
-    }
-
-    // Apply sorting
-    if (sortBy === "recent") {
-      filtered.sort(
-        (a, b) =>
-          new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
-      );
-    } else if (sortBy === "title") {
-      filtered.sort((a, b) => a.title.localeCompare(b.title));
-    } else if (sortBy === "artist") {
-      filtered.sort((a, b) => (a.artist || "").localeCompare(b.artist || ""));
-    }
-
-    setFilteredContent(filtered);
-  }, [content, searchQuery, sortBy, selectedFilters]);
+    fetchData();
+  }, [searchQuery, sortBy, selectedFilters, page, pageSize]);
 
   const getContentIcon = (type: string) => {
     switch (type) {
@@ -200,9 +188,15 @@ export function Library({ onSelectContent, initialContent, initialSearch }: Libr
 
     try {
       await deleteContent(contentToDelete.id);
-      const userContent = await getUserContent();
-      setContent(userContent);
-      setFilteredContent(userContent);
+      const { data, total } = await getUserContentPage({
+        page,
+        pageSize,
+        search: searchQuery,
+        sortBy,
+        filters: selectedFilters,
+      });
+      setContent(data);
+      setTotalCount(total);
       setDeleteDialog(false);
       setContentToDelete(null);
     } catch (error) {
@@ -413,7 +407,7 @@ export function Library({ onSelectContent, initialContent, initialSearch }: Libr
       </div>
 
       {/* Content Display */}
-      {filteredContent.length === 0 ? (
+      {content.length === 0 ? (
         <Card className="bg-white/80 backdrop-blur-sm border border-amber-100 shadow-lg">
           <CardContent className="p-8 text-center">
             <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -441,7 +435,7 @@ export function Library({ onSelectContent, initialContent, initialSearch }: Libr
         </Card>
       ) : viewMode === "grid" ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredContent.map((item) => (
+          {content.map((item) => (
             <Card
               key={item.id}
               className="bg-white/90 backdrop-blur-sm border border-amber-100 shadow-md hover:shadow-lg transition-all overflow-hidden group"
@@ -550,7 +544,7 @@ export function Library({ onSelectContent, initialContent, initialSearch }: Libr
         <Card className="bg-white/90 backdrop-blur-sm border border-amber-100 shadow-lg overflow-hidden">
           <CardContent className="p-0">
             <div className="divide-y divide-amber-100">
-              {filteredContent.map((item) => (
+              {content.map((item) => (
                 <div
                   key={item.id}
                   className="p-4 hover:bg-amber-50 transition-colors flex items-center"
@@ -651,6 +645,51 @@ export function Library({ onSelectContent, initialContent, initialSearch }: Libr
           </CardContent>
         </Card>
       )}
+
+      <div className="mt-6 flex items-center justify-between">
+        <Select
+          value={String(pageSize)}
+          onValueChange={(v) => {
+            setPageSize(Number(v));
+            setPage(1);
+          }}
+        >
+          <SelectTrigger className="w-[100px] border-amber-200 bg-white hover:bg-amber-50">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="20">20</SelectItem>
+            <SelectItem value="50">50</SelectItem>
+            <SelectItem value="100">100</SelectItem>
+          </SelectContent>
+        </Select>
+        <Pagination className="ml-auto">
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious
+                className={cn(page === 1 && "pointer-events-none opacity-50")}
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+              />
+            </PaginationItem>
+            {Array.from({ length: totalPages }).map((_, i) => (
+              <PaginationItem key={i}>
+                <PaginationLink
+                  isActive={page === i + 1}
+                  onClick={() => setPage(i + 1)}
+                >
+                  {i + 1}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+            <PaginationItem>
+              <PaginationNext
+                className={cn(page === totalPages && "pointer-events-none opacity-50")}
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      </div>
 
       {/* Delete Confirmation Dialog */}
       <Dialog open={deleteDialog} onOpenChange={setDeleteDialog}>
