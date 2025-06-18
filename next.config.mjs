@@ -4,10 +4,12 @@ import runtimeCaching from 'next-pwa/cache.js'
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   eslint: {
-    ignoreDuringBuilds: true,
+    // Run ESLint during builds to catch issues
+    ignoreDuringBuilds: false,
   },
   typescript: {
-    ignoreBuildErrors: true,
+    // Fail the build on TypeScript errors
+    ignoreBuildErrors: false,
   },
   images: {
     unoptimized: true,

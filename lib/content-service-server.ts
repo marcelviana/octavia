@@ -234,7 +234,7 @@ export async function getSetlistByIdServer(id: string) {
     return { ...setlist, setlist_songs: [] };
   }
 
-  const formattedSongs = songs.map((song) => ({
+  const formattedSongs = songs.map((song: any) => ({
     id: song.id,
     setlist_id: song.setlist_id,
     content_id: song.content_id,
