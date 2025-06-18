@@ -4,18 +4,19 @@ import "./globals.css"
 import { AuthProvider } from "@/contexts/auth-context"
 import { SessionProvider } from "@/components/providers/session-provider"
 import { Toaster } from "@/components/ui/sonner"
-import { PwaInstallPrompt } from "@/components/pwa-install-prompt"
+import { EnhancedPwaInstallPrompt } from "@/components/pwa-install-prompt"
 
+// Update app/layout.tsx metadata
 export const metadata: Metadata = {
   title: "Octavia - Digital Music Management",
   description: "Organize, visualize, and share your musical content",
   generator: "v0.dev",
   manifest: "/manifest.json",
-  themeColor: "#ffffff",
+  themeColor: "#f59e0b", // Changed from white to amber
   icons: {
-    icon: "/logos/octavia-icon.png",
-    apple: "/logos/octavia-icon.png",
-    shortcut: "/logos/octavia-icon.png",
+    icon: "/icons/icon-192x192.png", // Updated path
+    apple: "/icons/icon-192x192.png",
+    shortcut: "/icons/icon-192x192.png",
   },
 }
 
@@ -30,7 +31,7 @@ export default function RootLayout({
         <AuthProvider>
           <SessionProvider>{children}</SessionProvider>
           <Toaster richColors position="top-right" />
-          <PwaInstallPrompt />
+          <EnhancedPwaInstallPrompt />
         </AuthProvider>
       </body>
     </html>
