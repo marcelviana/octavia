@@ -18,8 +18,37 @@ export interface ContentQueryParams {
   }
 }
 
+export interface AlbumField {
+  album?: string | null
+}
+
+export interface DifficultyField {
+  difficulty?: string | null
+}
+
+export interface KeyField {
+  key?: string | null
+}
+
+export interface ContentRecord
+  extends AlbumField,
+    DifficultyField,
+    KeyField {
+  id: string
+  title: string
+  artist?: string
+  content_type: string
+  file_url?: string
+  content_data?: Record<string, unknown>
+  created_at: string
+  updated_at: string
+  user_id: string
+  is_favorite: boolean
+  tags: string[]
+}
+
 // Mock data for demo mode
-const MOCK_CONTENT = [
+const MOCK_CONTENT: ContentRecord[] = [
   {
     id: "mock-1",
     title: "Wonderwall",
@@ -154,20 +183,21 @@ export async function getUserContentPage({
           (item) =>
             item.title.toLowerCase().includes(q) ||
             (item.artist && item.artist.toLowerCase().includes(q)) ||
-            ((item as any).album &&
-              (item as any).album.toLowerCase().includes(q)),
+            (item.album && item.album.toLowerCase().includes(q)),
         )
       }
       if (filters.contentType?.length) {
         data = data.filter((item) => filters.contentType!.includes(item.content_type))
       }
       if (filters.difficulty?.length) {
-        data = data.filter((item) =>
-          filters.difficulty!.includes((item as any).difficulty)
+        data = data.filter(
+          (item) => item.difficulty && filters.difficulty!.includes(item.difficulty)
         )
       }
       if (filters.key?.length) {
-        data = data.filter((item) => filters.key!.includes((item as any).key))
+        data = data.filter(
+          (item) => item.key && filters.key!.includes(item.key)
+        )
       }
       if (filters.favorite) {
         data = data.filter((item) => item.is_favorite)
