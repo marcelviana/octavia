@@ -31,7 +31,7 @@ import {
   createSetlist,
   deleteSetlist,
   addSongToSetlist,
-  removeSongFromSetlist,
+  removeSongFromSetlist as removeSongFromSetlistService,
 } from "@/lib/setlist-service"
 import { getUserContent as getContentList } from "@/lib/content-service"
 import type { Database } from "@/types/supabase"
@@ -230,8 +230,8 @@ function useSetlistOperations() {
     setOperationInProgress(prev => ({ ...prev, [`remove-${setlistSongId}`]: true }))
     try {
       logger.log("Removing song from setlist:", setlistSongId)
-      
-      await removeSongFromSetlist(setlistSongId)
+
+      await removeSongFromSetlistService(setlistSongId)
       await loadData() // Reload to get updated positions
       
       logger.log("Song removed successfully")
