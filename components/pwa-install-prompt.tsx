@@ -204,8 +204,8 @@ export function EnhancedPwaInstallPrompt() {
               <h4 className="font-medium text-blue-900 mb-2">iOS Installation:</h4>
               <ol className="text-sm text-blue-800 space-y-1">
                 <li>1. Tap the Share button in Safari</li>
-                <li>2. Scroll down and tap "Add to Home Screen"</li>
-                <li>3. Tap "Add" to install Octavia</li>
+                <li>2. Scroll down and tap &quot;Add to Home Screen&quot;</li>
+                <li>3. Tap &quot;Add&quot; to install Octavia</li>
               </ol>
             </div>
           )}
