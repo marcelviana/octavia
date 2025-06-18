@@ -1,4 +1,5 @@
 import { createBrowserClient } from "@supabase/ssr"
+import logger from "@/lib/logger"
 import type { Database } from "@/types/supabase"
 
 // Environment variables with validation
@@ -26,7 +27,7 @@ const createMockClient = () => ({
       return {
         data: {
           subscription: {
-            unsubscribe: () => console.log("Mock auth subscription unsubscribed"),
+            unsubscribe: () => logger.log("Mock auth subscription unsubscribed"),
           },
         },
       }
@@ -69,7 +70,7 @@ const createMockClient = () => ({
 
 export function getSupabaseBrowserClient() {
   if (!isSupabaseConfigured) {
-    console.warn("Supabase not configured - using mock client for demo mode")
+    logger.warn("Supabase not configured - using mock client for demo mode")
     return createMockClient()
   }
 
@@ -92,13 +93,13 @@ export async function testSupabaseConnection(): Promise<boolean> {
     const { error } = await supabase.from("content").select("count").limit(1)
 
     if (error && error.message.includes('relation "content" does not exist')) {
-      console.warn("Supabase connected but tables not set up")
+      logger.warn("Supabase connected but tables not set up")
       return true // Connection works, just no tables
     }
 
     return !error
   } catch (error) {
-    console.warn("Supabase connection test failed:", error)
+    logger.warn("Supabase connection test failed:", error)
     return false
   }
 }

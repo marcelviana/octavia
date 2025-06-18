@@ -1,4 +1,5 @@
 import { getSupabaseBrowserClient, isSupabaseConfigured } from "@/lib/supabase"
+import logger from "@/lib/logger"
 import type { Database } from "@/types/supabase"
 
 type Content = Database["public"]["Tables"]["content"]["Row"]
@@ -132,7 +133,7 @@ export async function getUserContent() {
   try {
     // Return mock data in demo mode
     if (!isSupabaseConfigured) {
-      console.log("Demo mode: Returning mock content")
+      logger.log("Demo mode: Returning mock content")
       return MOCK_CONTENT
     }
 
@@ -144,7 +145,7 @@ export async function getUserContent() {
       error: authError,
     } = await supabase.auth.getUser()
     if (authError || !user) {
-      console.log("User not authenticated, returning empty content")
+      logger.log("User not authenticated, returning empty content")
       return []
     }
 
@@ -155,13 +156,13 @@ export async function getUserContent() {
       .order("created_at", { ascending: false })
 
     if (error) {
-      console.error("Error fetching content:", error)
+      logger.error("Error fetching content:", error)
       return []
     }
 
     return data || []
   } catch (error) {
-    console.error("Error in getUserContent:", error)
+    logger.error("Error in getUserContent:", error)
     // Return mock data as fallback in case of errors
     return isSupabaseConfigured ? [] : MOCK_CONTENT
   }
@@ -262,13 +263,13 @@ export async function getUserContentPage({
     const { data, error, count } = await query.range(from, to)
 
     if (error) {
-      console.error("Error fetching content:", error)
+      logger.error("Error fetching content:", error)
       return { data: [], total: 0 }
     }
 
     return { data: data || [], total: count || 0 }
   } catch (error) {
-    console.error("Error in getUserContentPage:", error)
+    logger.error("Error in getUserContentPage:", error)
     return { data: [], total: 0 }
   }
 }
@@ -299,13 +300,13 @@ export async function getContentById(id: string) {
     const { data, error } = await supabase.from("content").select("*").eq("id", id).eq("user_id", user.id).single()
 
     if (error) {
-      console.error("Error fetching content:", error)
+      logger.error("Error fetching content:", error)
       throw error
     }
 
     return data
   } catch (error) {
-    console.error("Error in getContentById:", error)
+    logger.error("Error in getContentById:", error)
     // In case of error in production, throw the error
     // In demo mode, return mock data
     if (isSupabaseConfigured) {
@@ -332,7 +333,7 @@ export async function createContent(content: ContentInsert) {
 
       // In a real app, we would add this to the mock data array
       // For demo purposes, we'll just return it
-      console.log("Demo mode: Created mock content", newContent)
+      logger.log("Demo mode: Created mock content", newContent)
       return newContent
     }
 
@@ -356,13 +357,13 @@ export async function createContent(content: ContentInsert) {
     const { data, error } = await supabase.from("content").insert(contentWithUser).select().single()
 
     if (error) {
-      console.error("Error creating content:", error)
+      logger.error("Error creating content:", error)
       throw error
     }
 
     return data
   } catch (error) {
-    console.error("Error in createContent:", error)
+    logger.error("Error in createContent:", error)
     if (isSupabaseConfigured) {
       throw error
     }
@@ -390,7 +391,7 @@ export async function updateContent(id: string, content: ContentUpdate) {
           ...content,
           updated_at: new Date().toISOString(),
         }
-        console.log("Demo mode: Updated mock content", updatedContent)
+        logger.log("Demo mode: Updated mock content", updatedContent)
         return updatedContent
       }
       return MOCK_CONTENT[0]
@@ -422,13 +423,13 @@ export async function updateContent(id: string, content: ContentUpdate) {
       .single()
 
     if (error) {
-      console.error("Error updating content:", error)
+      logger.error("Error updating content:", error)
       throw error
     }
 
     return data
   } catch (error) {
-    console.error("Error in updateContent:", error)
+    logger.error("Error in updateContent:", error)
     if (isSupabaseConfigured) {
       throw error
     }
@@ -447,7 +448,7 @@ export async function deleteContent(id: string) {
   try {
     // Mock delete in demo mode
     if (!isSupabaseConfigured) {
-      console.log("Demo mode: Deleted mock content with id", id)
+      logger.log("Demo mode: Deleted mock content with id", id)
       return true
     }
 
@@ -465,13 +466,13 @@ export async function deleteContent(id: string) {
     const { error } = await supabase.from("content").delete().eq("id", id).eq("user_id", user.id)
 
     if (error) {
-      console.error("Error deleting content:", error)
+      logger.error("Error deleting content:", error)
       throw error
     }
 
     return true
   } catch (error) {
-    console.error("Error in deleteContent:", error)
+    logger.error("Error in deleteContent:", error)
     if (isSupabaseConfigured) {
       throw error
     }
@@ -503,7 +504,7 @@ export async function getUserStats() {
       error: authError,
     } = await supabase.auth.getUser()
     if (authError || !user) {
-      console.log("User not authenticated for stats")
+      logger.log("User not authenticated for stats")
       return {
         totalContent: 0,
         totalSetlists: 0,
@@ -535,7 +536,7 @@ export async function getUserStats() {
 
       totalSetlists = count || 0
     } catch (error) {
-      console.log("Setlists table not available yet")
+      logger.log("Setlists table not available yet")
       totalSetlists = 0
     }
 
@@ -549,7 +550,7 @@ export async function getUserStats() {
       recentlyViewed,
     }
   } catch (error) {
-    console.error("Error getting user stats:", error)
+    logger.error("Error getting user stats:", error)
     // Return default values if there's an error
     if (isSupabaseConfigured) {
       return {

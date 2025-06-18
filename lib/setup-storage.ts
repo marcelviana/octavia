@@ -1,4 +1,5 @@
 import { getSupabaseBrowserClient } from "@/lib/supabase"
+import logger from "@/lib/logger"
 
 const BUCKET_NAME = "content-files"
 
@@ -9,14 +10,14 @@ export async function createContentFilesBucket() {
   const { data: buckets, error: listError } = await supabase.storage.listBuckets()
   
   if (listError) {
-    console.error("Error listing buckets:", listError)
+    logger.error("Error listing buckets:", listError)
     return { success: false, error: listError }
   }
   
   const existingBucket = buckets?.find((bucket: any) => bucket.name === BUCKET_NAME)
   
   if (existingBucket) {
-    console.log(`Bucket "${BUCKET_NAME}" already exists`)
+    logger.log(`Bucket "${BUCKET_NAME}" already exists`)
     return { success: true, bucket: existingBucket }
   }
   
@@ -28,11 +29,11 @@ export async function createContentFilesBucket() {
   })
   
   if (error) {
-    console.error("Error creating bucket:", error)
+    logger.error("Error creating bucket:", error)
     return { success: false, error }
   }
   
-  console.log(`Bucket "${BUCKET_NAME}" created successfully`)
+  logger.log(`Bucket "${BUCKET_NAME}" created successfully`)
   
   // Create storage policies for the bucket
   await createStoragePolicies()
@@ -43,6 +44,6 @@ export async function createContentFilesBucket() {
 export async function createStoragePolicies() {
   // Storage policies need to be created manually in Supabase dashboard
   // or via direct SQL execution with elevated permissions
-  console.log('Storage policies need to be created manually - see setup instructions')
+  logger.log('Storage policies need to be created manually - see setup instructions')
   return { success: true, needsManualSetup: true }
 } 
