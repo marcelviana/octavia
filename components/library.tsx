@@ -78,7 +78,7 @@ export function Library({
 }: LibraryProps) {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState(initialSearch || "");
-  const [sortBy, setSortBy] = useState("recent");
+  const [sortBy, setSortBy] = useState<"recent" | "title" | "artist">("recent");
   const [viewMode, setViewMode] = useState("grid");
   const [content, setContent] = useState<any[]>(initialContent);
   const [totalCount, setTotalCount] = useState(initialTotal);
@@ -333,7 +333,12 @@ export function Library({
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <Select value={sortBy} onValueChange={setSortBy}>
+            <Select
+              value={sortBy}
+              onValueChange={(value) =>
+                setSortBy(value as "recent" | "title" | "artist")
+              }
+            >
               <SelectTrigger className="w-[180px] border-amber-200 bg-white hover:bg-amber-50">
                 <SelectValue placeholder="Sort by" />
               </SelectTrigger>

@@ -130,7 +130,7 @@ export async function getUserSetlists() {
 
     // For each setlist, get the songs
     const setlistsWithSongs = await Promise.all(
-      setlists.map(async (setlist) => {
+      setlists.map(async (setlist: any) => {
         const { data: songs, error: songsError } = await supabase
           .from("setlist_songs")
           .select(
@@ -159,7 +159,7 @@ export async function getUserSetlists() {
         }
 
         // Format the songs to match the expected structure
-        const formattedSongs = songs.map((song) => ({
+        const formattedSongs = songs.map((song: any) => ({
           id: song.id,
           setlist_id: song.setlist_id,
           content_id: song.content_id,
@@ -252,7 +252,7 @@ export async function getSetlistById(id: string) {
     }
 
     // Format the songs to match the expected structure
-    const formattedSongs = songs.map((song) => ({
+    const formattedSongs = songs.map((song: any) => ({
       id: song.id,
       setlist_id: song.setlist_id,
       content_id: song.content_id,
@@ -417,7 +417,7 @@ export async function updateSetlist(id: string, updates: { name?: string; descri
     }
 
     // Format the songs to match the expected structure
-    const formattedSongs = songs.map((song) => ({
+    const formattedSongs = songs.map((song: any) => ({
       id: song.id,
       setlist_id: song.setlist_id,
       content_id: song.content_id,
@@ -555,7 +555,7 @@ export async function addSongToSetlist(setlistId: string, contentId: string, pos
       const { error: tempShiftError } = await supabase
         .from("setlist_songs")
         .upsert(
-          songsToShift.map((s) => ({ id: s.id, position: s.position + 1000 })),
+          songsToShift.map((s: any) => ({ id: s.id, position: s.position + 1000 })),
           { onConflict: "id" },
         )
 
@@ -587,7 +587,7 @@ export async function addSongToSetlist(setlistId: string, contentId: string, pos
       const { error: finalShiftError } = await supabase
         .from("setlist_songs")
         .upsert(
-          songsToShift.map((s) => ({ id: s.id, position: s.position + 1 })),
+          songsToShift.map((s: any) => ({ id: s.id, position: s.position + 1 })),
           { onConflict: "id" },
         )
 
@@ -713,7 +713,7 @@ export async function removeSongFromSetlist(songId: string) {
       const { error: updateError } = await supabase
         .from("setlist_songs")
         .upsert(
-          songsToShift.map((s) => ({ id: s.id, position: s.position - 1 })),
+          songsToShift.map((s: any) => ({ id: s.id, position: s.position - 1 })),
           { onConflict: "id" },
         )
 
@@ -820,7 +820,7 @@ export async function updateSongPosition(setlistId: string, songId: string, newP
         const { error: updateError } = await supabase
           .from("setlist_songs")
           .upsert(
-            songsToShift.map((s) => ({ id: s.id, position: s.position - 1 })),
+            songsToShift.map((s: any) => ({ id: s.id, position: s.position - 1 })),
             { onConflict: "id" },
           )
 
@@ -849,7 +849,7 @@ export async function updateSongPosition(setlistId: string, songId: string, newP
         const { error: updateError } = await supabase
           .from("setlist_songs")
           .upsert(
-            songsToShift.map((s) => ({ id: s.id, position: s.position + 1 })),
+            songsToShift.map((s: any) => ({ id: s.id, position: s.position + 1 })),
             { onConflict: "id" },
           )
 

@@ -2,7 +2,7 @@
 
 import type React from "react"
 import { createContext, useContext, useEffect, useState, useCallback } from "react"
-import type { User } from "@supabase/supabase-js"
+import type { User, AuthChangeEvent, Session } from "@supabase/supabase-js"
 import { getSupabaseBrowserClient, isSupabaseConfigured } from "@/lib/supabase"
 
 type Profile = {
@@ -75,7 +75,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
               id: "demo-user",
               email: "demo@musicsheet.pro",
               user_metadata: { full_name: "Demo User" },
-            } as User
+            } as unknown as User
 
             const demoProfile = {
               id: "demo-user",
@@ -129,7 +129,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         try {
           const {
             data: { subscription },
-          } = supabase.auth.onAuthStateChange(async (event, currentSession) => {
+          } = supabase.auth.onAuthStateChange(
+            async (event: AuthChangeEvent, currentSession: Session | null) => {
             if (!mounted) return
 
             console.log("Auth state changed:", event, currentSession?.user?.email)

@@ -154,17 +154,20 @@ export async function getUserContentPage({
           (item) =>
             item.title.toLowerCase().includes(q) ||
             (item.artist && item.artist.toLowerCase().includes(q)) ||
-            (item.album && item.album.toLowerCase().includes(q)),
+            ((item as any).album &&
+              (item as any).album.toLowerCase().includes(q)),
         )
       }
       if (filters.contentType?.length) {
         data = data.filter((item) => filters.contentType!.includes(item.content_type))
       }
       if (filters.difficulty?.length) {
-        data = data.filter((item) => filters.difficulty!.includes(item.difficulty))
+        data = data.filter((item) =>
+          filters.difficulty!.includes((item as any).difficulty)
+        )
       }
       if (filters.key?.length) {
-        data = data.filter((item) => filters.key!.includes(item.key))
+        data = data.filter((item) => filters.key!.includes((item as any).key))
       }
       if (filters.favorite) {
         data = data.filter((item) => item.is_favorite)
