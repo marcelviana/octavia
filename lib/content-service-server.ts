@@ -1,5 +1,6 @@
 import { getSupabaseServerClient } from "@/lib/supabase-server";
 import { isSupabaseConfigured } from "@/lib/supabase";
+import logger from "@/lib/logger";
 import {
   getUserContent,
   getContentById,
@@ -31,7 +32,7 @@ export async function getUserContentServer() {
     .order("created_at", { ascending: false });
 
   if (error) {
-    console.error("Error fetching content:", error);
+    logger.error("Error fetching content:", error);
     return [];
   }
 
@@ -93,7 +94,7 @@ export async function getUserContentPageServer(params: ContentQueryParams) {
   const { data, error, count } = await query.range(from, to)
 
   if (error) {
-    console.error("Error fetching content:", error)
+    logger.error("Error fetching content:", error)
     return { data: [], total: 0 }
   }
 
@@ -230,7 +231,7 @@ export async function getSetlistByIdServer(id: string) {
     .order("position", { ascending: true });
 
   if (songsError) {
-    console.error(`Error fetching songs for setlist ${id}:`, songsError);
+    logger.error(`Error fetching songs for setlist ${id}:`, songsError);
     return { ...setlist, setlist_songs: [] };
   }
 

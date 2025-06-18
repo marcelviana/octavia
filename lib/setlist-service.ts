@@ -1,4 +1,5 @@
 import { getSupabaseBrowserClient, isSupabaseConfigured } from "@/lib/supabase"
+import logger from "@/lib/logger"
 import type { Database } from "@/types/supabase"
 
 // Mock data for demo mode
@@ -100,7 +101,7 @@ export async function getUserSetlists() {
   try {
     // Return mock data in demo mode
     if (!isSupabaseConfigured) {
-      console.log("Demo mode: Returning mock setlists")
+      logger.log("Demo mode: Returning mock setlists")
       return MOCK_SETLISTS
     }
 
@@ -112,7 +113,7 @@ export async function getUserSetlists() {
       error: authError,
     } = await supabase.auth.getUser()
     if (authError || !user) {
-      console.log("User not authenticated, returning empty setlists")
+      logger.log("User not authenticated, returning empty setlists")
       return []
     }
 
@@ -124,7 +125,7 @@ export async function getUserSetlists() {
       .order("created_at", { ascending: false })
 
     if (setlistsError) {
-      console.error("Error fetching setlists:", setlistsError)
+      logger.error("Error fetching setlists:", setlistsError)
       return []
     }
 
@@ -154,7 +155,7 @@ export async function getUserSetlists() {
           .order("position", { ascending: true })
 
         if (songsError) {
-          console.error(`Error fetching songs for setlist ${setlist.id}:`, songsError)
+          logger.error(`Error fetching songs for setlist ${setlist.id}:`, songsError)
           return { ...setlist, setlist_songs: [] }
         }
 
@@ -181,7 +182,7 @@ export async function getUserSetlists() {
 
     return setlistsWithSongs
   } catch (error) {
-    console.error("Error in getUserSetlists:", error)
+    logger.error("Error in getUserSetlists:", error)
     // Return mock data as fallback in case of errors
     return isSupabaseConfigured ? [] : MOCK_SETLISTS
   }
@@ -219,7 +220,7 @@ export async function getSetlistById(id: string) {
       .single()
 
     if (setlistError) {
-      console.error("Error fetching setlist:", setlistError)
+      logger.error("Error fetching setlist:", setlistError)
       throw setlistError
     }
 
@@ -247,7 +248,7 @@ export async function getSetlistById(id: string) {
       .order("position", { ascending: true })
 
     if (songsError) {
-      console.error(`Error fetching songs for setlist ${id}:`, songsError)
+      logger.error(`Error fetching songs for setlist ${id}:`, songsError)
       return { ...setlist, setlist_songs: [] }
     }
 
@@ -270,7 +271,7 @@ export async function getSetlistById(id: string) {
 
     return { ...setlist, setlist_songs: formattedSongs }
   } catch (error) {
-    console.error("Error in getSetlistById:", error)
+    logger.error("Error in getSetlistById:", error)
     // In case of error in production, throw the error
     // In demo mode, return mock data
     if (isSupabaseConfigured) {
@@ -294,7 +295,7 @@ export async function createSetlist(setlist: { name: string; description?: strin
         setlist_songs: [],
       }
 
-      console.log("Demo mode: Created mock setlist", newSetlist)
+      logger.log("Demo mode: Created mock setlist", newSetlist)
       return newSetlist
     }
 
@@ -320,13 +321,13 @@ export async function createSetlist(setlist: { name: string; description?: strin
       .single()
 
     if (error) {
-      console.error("Error creating setlist:", error)
+      logger.error("Error creating setlist:", error)
       throw error
     }
 
     return { ...data, setlist_songs: [] }
   } catch (error) {
-    console.error("Error in createSetlist:", error)
+    logger.error("Error in createSetlist:", error)
     if (isSupabaseConfigured) {
       throw error
     }
@@ -354,7 +355,7 @@ export async function updateSetlist(id: string, updates: { name?: string; descri
           ...updates,
           updated_at: new Date().toISOString(),
         }
-        console.log("Demo mode: Updated mock setlist", updatedSetlist)
+        logger.log("Demo mode: Updated mock setlist", updatedSetlist)
         return updatedSetlist
       }
       return MOCK_SETLISTS[0]
@@ -384,7 +385,7 @@ export async function updateSetlist(id: string, updates: { name?: string; descri
       .single()
 
     if (error) {
-      console.error("Error updating setlist:", error)
+      logger.error("Error updating setlist:", error)
       throw error
     }
 
@@ -412,7 +413,7 @@ export async function updateSetlist(id: string, updates: { name?: string; descri
       .order("position", { ascending: true })
 
     if (songsError) {
-      console.error(`Error fetching songs for setlist ${id}:`, songsError)
+      logger.error(`Error fetching songs for setlist ${id}:`, songsError)
       return { ...data, setlist_songs: [] }
     }
 
@@ -435,7 +436,7 @@ export async function updateSetlist(id: string, updates: { name?: string; descri
 
     return { ...data, setlist_songs: formattedSongs }
   } catch (error) {
-    console.error("Error in updateSetlist:", error)
+    logger.error("Error in updateSetlist:", error)
     if (isSupabaseConfigured) {
       throw error
     }
@@ -454,7 +455,7 @@ export async function deleteSetlist(id: string) {
   try {
     // Mock delete in demo mode
     if (!isSupabaseConfigured) {
-      console.log("Demo mode: Deleted mock setlist with id", id)
+      logger.log("Demo mode: Deleted mock setlist with id", id)
       return true
     }
 
@@ -473,7 +474,7 @@ export async function deleteSetlist(id: string) {
     const { error: songsError } = await supabase.from("setlist_songs").delete().eq("setlist_id", id)
 
     if (songsError) {
-      console.error("Error deleting setlist songs:", songsError)
+      logger.error("Error deleting setlist songs:", songsError)
       throw songsError
     }
 
@@ -481,13 +482,13 @@ export async function deleteSetlist(id: string) {
     const { error } = await supabase.from("setlists").delete().eq("id", id).eq("user_id", user.id)
 
     if (error) {
-      console.error("Error deleting setlist:", error)
+      logger.error("Error deleting setlist:", error)
       throw error
     }
 
     return true
   } catch (error) {
-    console.error("Error in deleteSetlist:", error)
+    logger.error("Error in deleteSetlist:", error)
     if (isSupabaseConfigured) {
       throw error
     }
@@ -499,7 +500,7 @@ export async function addSongToSetlist(setlistId: string, contentId: string, pos
   try {
     // Mock add song in demo mode
     if (!isSupabaseConfigured) {
-      console.log("Demo mode: Added mock song to setlist", { setlistId, contentId, position, notes })
+      logger.log("Demo mode: Added mock song to setlist", { setlistId, contentId, position, notes })
       return {
         id: `mock-song-${Date.now()}`,
         setlist_id: setlistId,
@@ -532,7 +533,7 @@ export async function addSongToSetlist(setlistId: string, contentId: string, pos
       .single()
 
     if (setlistError) {
-      console.error("Error verifying setlist ownership:", setlistError)
+      logger.error("Error verifying setlist ownership:", setlistError)
       throw setlistError
     }
 
@@ -546,7 +547,7 @@ export async function addSongToSetlist(setlistId: string, contentId: string, pos
       .order("position", { ascending: true })
 
     if (fetchError) {
-      console.error("Error fetching songs to shift:", fetchError)
+      logger.error("Error fetching songs to shift:", fetchError)
       throw fetchError
     }
 
@@ -560,7 +561,7 @@ export async function addSongToSetlist(setlistId: string, contentId: string, pos
         )
 
       if (tempShiftError) {
-        console.error("Error temp shifting song positions:", tempShiftError)
+        logger.error("Error temp shifting song positions:", tempShiftError)
         throw tempShiftError
       }
     }
@@ -578,7 +579,7 @@ export async function addSongToSetlist(setlistId: string, contentId: string, pos
       .single()
 
     if (songError) {
-      console.error("Error adding song to setlist:", songError)
+      logger.error("Error adding song to setlist:", songError)
       throw songError
     }
 
@@ -592,7 +593,7 @@ export async function addSongToSetlist(setlistId: string, contentId: string, pos
         )
 
       if (finalShiftError) {
-        console.error("Error final shifting song positions:", finalShiftError)
+        logger.error("Error final shifting song positions:", finalShiftError)
         throw finalShiftError
       }
     }
@@ -605,7 +606,7 @@ export async function addSongToSetlist(setlistId: string, contentId: string, pos
       .single()
 
     if (contentError) {
-      console.error("Error fetching content details:", contentError)
+      logger.error("Error fetching content details:", contentError)
       return {
         ...song,
         title: "Unknown Title",
@@ -621,7 +622,7 @@ export async function addSongToSetlist(setlistId: string, contentId: string, pos
       content_type: content.content_type,
     }
   } catch (error) {
-    console.error("Error in addSongToSetlist:", error)
+    logger.error("Error in addSongToSetlist:", error)
     if (isSupabaseConfigured) {
       throw error
     }
@@ -644,7 +645,7 @@ export async function removeSongFromSetlist(songId: string) {
   try {
     // Mock remove song in demo mode
     if (!isSupabaseConfigured) {
-      console.log("Demo mode: Removed mock song from setlist", { songId })
+      logger.log("Demo mode: Removed mock song from setlist", { songId })
       return true
     }
 
@@ -675,7 +676,7 @@ export async function removeSongFromSetlist(songId: string) {
       .single()
 
     if (songError) {
-      console.error("Error getting song details:", songError)
+      logger.error("Error getting song details:", songError)
       throw songError
     }
 
@@ -691,7 +692,7 @@ export async function removeSongFromSetlist(songId: string) {
     const { error: removeError } = await supabase.from("setlist_songs").delete().eq("id", songId)
 
     if (removeError) {
-      console.error("Error removing song from setlist:", removeError)
+      logger.error("Error removing song from setlist:", removeError)
       throw removeError
     }
 
@@ -704,7 +705,7 @@ export async function removeSongFromSetlist(songId: string) {
       .order("position", { ascending: true })
 
     if (fetchError) {
-      console.error("Error fetching songs to shift:", fetchError)
+      logger.error("Error fetching songs to shift:", fetchError)
       throw fetchError
     }
 
@@ -718,14 +719,14 @@ export async function removeSongFromSetlist(songId: string) {
         )
 
       if (updateError) {
-        console.error("Error shifting song positions:", updateError)
+        logger.error("Error shifting song positions:", updateError)
         throw updateError
       }
     }
 
     return true
   } catch (error) {
-    console.error("Error in removeSongFromSetlist:", error)
+    logger.error("Error in removeSongFromSetlist:", error)
     if (isSupabaseConfigured) {
       throw error
     }
@@ -737,7 +738,7 @@ export async function updateSongPosition(setlistId: string, songId: string, newP
   try {
     // Mock update position in demo mode
     if (!isSupabaseConfigured) {
-      console.log("Demo mode: Updated mock song position", { setlistId, songId, newPosition })
+      logger.log("Demo mode: Updated mock song position", { setlistId, songId, newPosition })
       return true
     }
 
@@ -761,7 +762,7 @@ export async function updateSongPosition(setlistId: string, songId: string, newP
       .single()
 
     if (setlistError) {
-      console.error("Error verifying setlist ownership:", setlistError)
+      logger.error("Error verifying setlist ownership:", setlistError)
       throw setlistError
     }
 
@@ -774,7 +775,7 @@ export async function updateSongPosition(setlistId: string, songId: string, newP
       .single()
 
     if (songError) {
-      console.error("Error getting song position:", songError)
+      logger.error("Error getting song position:", songError)
       throw songError
     }
 
@@ -795,7 +796,7 @@ export async function updateSongPosition(setlistId: string, songId: string, newP
       .eq("id", songId)
 
     if (tempMoveError) {
-      console.error("Error moving song to temporary position:", tempMoveError)
+      logger.error("Error moving song to temporary position:", tempMoveError)
       throw tempMoveError
     }
 
@@ -811,7 +812,7 @@ export async function updateSongPosition(setlistId: string, songId: string, newP
         .order("position", { ascending: true })
 
       if (fetchError) {
-        console.error("Error fetching songs to shift down:", fetchError)
+        logger.error("Error fetching songs to shift down:", fetchError)
         throw fetchError
       }
 
@@ -825,7 +826,7 @@ export async function updateSongPosition(setlistId: string, songId: string, newP
           )
 
         if (updateError) {
-          console.error("Error shifting song positions:", updateError)
+          logger.error("Error shifting song positions:", updateError)
           throw updateError
         }
       }
@@ -840,7 +841,7 @@ export async function updateSongPosition(setlistId: string, songId: string, newP
         .order("position", { ascending: true })
 
       if (fetchError) {
-        console.error("Error fetching songs to shift up:", fetchError)
+        logger.error("Error fetching songs to shift up:", fetchError)
         throw fetchError
       }
 
@@ -854,7 +855,7 @@ export async function updateSongPosition(setlistId: string, songId: string, newP
           )
 
         if (updateError) {
-          console.error("Error shifting song positions:", updateError)
+          logger.error("Error shifting song positions:", updateError)
           throw updateError
         }
       }
@@ -867,13 +868,13 @@ export async function updateSongPosition(setlistId: string, songId: string, newP
       .eq("id", songId)
 
     if (finalMoveError) {
-      console.error("Error moving song to final position:", finalMoveError)
+      logger.error("Error moving song to final position:", finalMoveError)
       throw finalMoveError
     }
 
     return true
   } catch (error) {
-    console.error("Error in updateSongPosition:", error)
+    logger.error("Error in updateSongPosition:", error)
     if (isSupabaseConfigured) {
       throw error
     }

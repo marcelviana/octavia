@@ -1,3 +1,5 @@
+import logger from "@/lib/logger"
+
 let pdfjsLib: any = null;
 let workerConfigured = false;
 
@@ -12,9 +14,9 @@ async function initializePdfJs() {
       pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
       workerConfigured = true;
       
-      console.log('PDF.js worker configured with local source: /pdf.worker.min.mjs');
+      logger.log('PDF.js worker configured with local source: /pdf.worker.min.mjs');
     } catch (error) {
-      console.warn('Failed to configure PDF.js worker:', error);
+      logger.warn('Failed to configure PDF.js worker:', error);
       throw new Error('PDF.js worker configuration failed');
     }
   }
