@@ -117,11 +117,17 @@ git clone https://github.com/your-username/octavia.git
 # Navigate to project directory
 cd octavia
 
+# Install pnpm if it's not already installed
+npm install -g pnpm
+
 # Install dependencies
-npm install
+pnpm install
+
+# Copy environment variables and fill in your Supabase credentials
+cp .env.example .env
 
 # Run development server
-npm run dev
+pnpm run dev
 \`\`\`
 
 ### First Steps

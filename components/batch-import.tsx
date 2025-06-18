@@ -35,7 +35,8 @@ export function BatchImport({ onComplete }: BatchImportProps) {
   const typeMap: Record<ContentTypeId, { type: ContentType; key: string }> = {
     lyrics: { type: ContentType.LYRICS, key: CONTENT_TYPE_KEYS[ContentType.LYRICS] },
     chord_chart: { type: ContentType.CHORD_CHART, key: CONTENT_TYPE_KEYS[ContentType.CHORD_CHART] },
-    tablature: { type: ContentType.GUITAR_TAB, key: CONTENT_TYPE_KEYS[ContentType.GUITAR_TAB] }
+    tablature: { type: ContentType.GUITAR_TAB, key: CONTENT_TYPE_KEYS[ContentType.GUITAR_TAB] },
+    sheet: { type: ContentType.SHEET_MUSIC, key: CONTENT_TYPE_KEYS[ContentType.SHEET_MUSIC] }
   }
 
   const handleFile = async (file: File) => {

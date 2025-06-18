@@ -38,7 +38,8 @@ export function ContentCreator({
   const placeholders: Record<ContentTypeId, string> = {
     lyrics: "Write your lyrics here...",
     chord_chart: "Write your chord chart here...",
-    tablature: "Write your guitar tab here..."
+    tablature: "Write your guitar tab here...",
+    sheet: "Upload your sheet music or provide a link..."
   }
 
   const tips: Record<ContentTypeId, string[]> = {
@@ -55,19 +56,25 @@ export function ContentCreator({
       "Use dashes (-) or empty beats for rhythm.",
       "Align notes vertically for chords.",
       "Use | for measure separators."
+    ],
+    sheet: [
+      "Upload PDF files for best rendering.",
+      "Ensure pages are properly cropped for display."
     ]
   }
 
   const typeNames: Record<ContentTypeId, ContentType> = {
     lyrics: ContentType.LYRICS,
     chord_chart: ContentType.CHORD_CHART,
-    tablature: ContentType.GUITAR_TAB
+    tablature: ContentType.GUITAR_TAB,
+    sheet: ContentType.SHEET_MUSIC
   }
 
   const contentTypes: { id: ContentTypeId; name: ContentType; icon: any; description: string }[] = [
     { id: "lyrics", name: ContentType.LYRICS, icon: FileText, description: "Create lyrics-only sheets" },
     { id: "chord_chart", name: ContentType.CHORD_CHART, icon: Music, description: "Lyrics with chord progressions" },
-    { id: "tablature", name: ContentType.GUITAR_TAB, icon: Guitar, description: "Create simple guitar tabs" }
+    { id: "tablature", name: ContentType.GUITAR_TAB, icon: Guitar, description: "Create simple guitar tabs" },
+    { id: "sheet", name: ContentType.SHEET_MUSIC, icon: Music, description: "Upload or manage sheet music" }
   ]
 
   const handleCreate = () => {
