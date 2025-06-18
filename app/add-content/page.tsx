@@ -3,6 +3,9 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import dynamic from "next/dynamic"
+import type { Database } from "@/types/supabase"
+
+type Content = Database["public"]["Tables"]["content"]["Row"]
 
 const AddContent = dynamic(() => import("@/components/add-content").then(mod => ({ default: mod.AddContent })), {
   loading: () => <p>Loading add content...</p>,
@@ -29,7 +32,7 @@ export default function AddContentPage() {
   }
 
   // Handle content creation completion
-  const handleContentCreated = (content: any) => {
+  const handleContentCreated = (content: Content) => {
     console.log("handleContentCreated called with:", content)
     if (!content?.id) {
       console.error("No content ID found:", content)

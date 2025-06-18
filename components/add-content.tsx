@@ -30,13 +30,53 @@ import { TextImportPreview } from "@/components/text-import-preview";
 import { BatchPreview } from "@/components/batch-preview";
 import { createContent } from "@/lib/content-service";
 import { getSupabaseBrowserClient } from "@/lib/supabase";
-import { parseDocxFile, parsePdfFile, parseTextFile } from "@/lib/batch-import";
+import {
+  parseDocxFile,
+  parsePdfFile,
+  parseTextFile,
+  type ParsedSong,
+} from "@/lib/batch-import";
 import { getContentTypeStyle } from "@/lib/content-type-styles";
 import { ContentType } from "@/types/content";
+import type { Database } from "@/types/supabase";
+
+type Content = Database["public"]["Tables"]["content"]["Row"];
+
+interface UploadedFile {
+  id: number;
+  name: string;
+  size: number;
+  type: string;
+  contentType: string;
+  file: File;
+  url?: string;
+  status?: string;
+  progress?: number;
+  isTextImport?: boolean;
+  parsedTitle?: string;
+  textBody?: string;
+  originalText?: string;
+}
+
+interface DraftContent {
+  title: string;
+  type: ContentType | string;
+  content: Record<string, unknown>;
+  files?: UploadedFile[];
+  id?: string;
+}
+
+type CreatedContent = DraftContent | Content;
+
+interface TextImportResult {
+  title: string;
+  body: string;
+  content_type: string;
+}
 
 interface AddContentProps {
   onBack: () => void;
-  onContentCreated: (content: any) => void;
+  onContentCreated: (content: Content) => void;
   onNavigate: (screen: string) => void;
 }
 
@@ -46,12 +86,12 @@ export function AddContent({
   onNavigate,
 }: AddContentProps) {
   const [mode, setMode] = useState<"create" | "import">("create");
-  const [uploadedFile, setUploadedFile] = useState<any | null>(null);
+  const [uploadedFile, setUploadedFile] = useState<UploadedFile | null>(null);
   const [currentStep, setCurrentStep] = useState(1);
   const [isProcessing, setIsProcessing] = useState(false);
   const [isParsing, setIsParsing] = useState(false);
-  const [createdContent, setCreatedContent] = useState<any>(null);
-  const [parsedSongs, setParsedSongs] = useState<any[]>([]);
+  const [createdContent, setCreatedContent] = useState<CreatedContent | null>(null);
+  const [parsedSongs, setParsedSongs] = useState<(ParsedSong & { artist: string; include: boolean })[]>([]);
   const [importMode, setImportMode] = useState<"single" | "batch">("single");
   const [contentType, setContentType] = useState(ContentType.LYRICS);
   const [batchArtist, setBatchArtist] = useState("");
@@ -95,7 +135,7 @@ export function AddContent({
     },
   ];
 
-  const handleFilesUploaded = (files: any[]) => {
+  const handleFilesUploaded = (files: UploadedFile[]) => {
     if (files.length > 0) {
       const file = { ...files[0], contentType };
       setUploadedFile(file);
@@ -114,7 +154,7 @@ export function AddContent({
     }
     setIsParsing(true);
     try {
-      let songs: any[] = [];
+      let songs: ParsedSong[] = [];
       const file: File = uploadedFile.file;
       if (file.name.toLowerCase().endsWith(".docx")) {
         songs = await parseDocxFile(file);
@@ -132,19 +172,19 @@ export function AddContent({
     }
   };
 
-  const handleContentCreated = (content: any) => {
+  const handleContentCreated = (content: DraftContent) => {
     setCreatedContent(content);
     setCurrentStep(2);
   };
 
-  const handleBatchPreviewComplete = (contents: any[]) => {
+  const handleBatchPreviewComplete = (contents: Content[]) => {
     if (contents.length > 0) {
       setBatchImported(true);
     }
     setCurrentStep(3);
   };
 
-  const handleMetadataComplete = async (metadata: any) => {
+  const handleMetadataComplete = async (metadata: Content) => {
     console.log("handleMetadataComplete called with:", metadata);
     setIsProcessing(true);
 
@@ -166,7 +206,7 @@ export function AddContent({
     }
   };
 
-  const handleTextImportComplete = (contents: any[]) => {
+  const handleTextImportComplete = (contents: TextImportResult[]) => {
     if (contents.length > 0) {
       setCreatedContent({
         title: contents[0].title,
