@@ -7,7 +7,7 @@
     "build": "pnpm exec next build",
     "start": "pnpm exec next start",
     "lint": "pnpm exec next lint",
-    "test": "pnpm exec vitest"
+    "test": "pnpm exec vitest run"
   },
   "dependencies": {
     "@edge-runtime/vm": "latest",
