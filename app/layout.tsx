@@ -1,5 +1,5 @@
 import type React from "react"
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import "./globals.css"
 import { AuthProvider } from "@/contexts/auth-context"
 import { SessionProvider } from "@/components/providers/session-provider"
@@ -13,12 +13,15 @@ export const metadata: Metadata = {
   description: "Organize, visualize, and share your musical content",
   generator: "v0.dev",
   manifest: "/manifest.json",
-  themeColor: "#f59e0b", // Changed from white to amber
   icons: {
     icon: "/icons/icon-192x192.png", // Updated path
     apple: "/icons/icon-192x192.png",
     shortcut: "/icons/icon-192x192.png",
   },
+}
+
+export const viewport: Viewport = {
+  themeColor: "#f59e0b", // Moved from metadata to viewport
 }
 
 export default function RootLayout({
