@@ -213,7 +213,9 @@ export function AddContent({
         type: contents[0].content_type,
         content: { lyrics: contents[0].body },
       });
-      setUploadedFile({ ...uploadedFile, contentType });
+      if (uploadedFile) {
+        setUploadedFile({ ...uploadedFile, contentType });
+      }
       setCurrentStep(2);
     }
   };
@@ -226,7 +228,7 @@ export function AddContent({
         files: uploadedFile ? [uploadedFile] : [],
       };
 
-      if (!contentToSave?.id) {
+      if (!createdContent?.id) {
         // If no ID, we need to create the content
         const supabase = getSupabaseBrowserClient();
         const {
@@ -239,16 +241,16 @@ export function AddContent({
 
         const formattedContent = {
           user_id: user.id,
-          title: contentToSave.title,
+          title: createdContent?.title || uploadedFile?.name || "Untitled",
           content_type:
-            contentToSave.type === ContentType.SHEET_MUSIC
+            contentType === ContentType.SHEET_MUSIC
               ? "sheet_music"
-              : contentToSave.type || "unknown",
+              : contentType || "unknown",
           content_data:
-            contentToSave.type === ContentType.SHEET_MUSIC
-              ? { file: contentToSave.files?.[0]?.url || null }
-              : contentToSave.content || {},
-          file_url: contentToSave.files?.[0]?.url || null,
+            contentType === ContentType.SHEET_MUSIC
+              ? { file: uploadedFile?.url || null }
+              : (createdContent && 'content' in createdContent ? createdContent.content : {}) as any,
+          file_url: uploadedFile?.url || null,
           is_favorite: false,
           is_public: false,
         };
@@ -257,7 +259,7 @@ export function AddContent({
         onContentCreated(newContent);
       } else {
         // If we have an ID, just navigate
-        onContentCreated(contentToSave);
+        onContentCreated(createdContent as Content);
       }
     } catch (error) {
       console.error("Error in finish:", error);
