@@ -1,18 +1,37 @@
 import { defineConfig } from 'vitest/config'
-import { resolve } from 'path'
+import react from '@vitejs/plugin-react'
+import path from 'path'
 
 export default defineConfig({
+  plugins: [react()],
   test: {
     environment: 'jsdom',
-    setupFiles: './vitest.setup.ts',
-  },
-  esbuild: {
-    jsx: 'automatic',
-    jsxImportSource: 'react',
+    setupFiles: ['./src/test-setup.ts'],
+    globals: true,
+    css: true,
+    coverage: {
+      reporter: ['text', 'json', 'html'],
+      exclude: [
+        'node_modules/',
+        'src/test-setup.ts',
+        '**/*.d.ts',
+        '**/*.config.*',
+        '**/coverage/**',
+        'src/__tests__/**',
+      ],
+      thresholds: {
+        global: {
+          branches: 70,
+          functions: 70,
+          lines: 70,
+          statements: 70
+        }
+      }
+    }
   },
   resolve: {
     alias: {
-      '@': resolve(__dirname, './'),
-    },
-  },
+      '@': path.resolve(__dirname, '.')
+    }
+  }
 })

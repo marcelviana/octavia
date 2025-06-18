@@ -6,6 +6,7 @@ import { ContentViewer } from "@/components/content-viewer";
 import { Sidebar } from "@/components/sidebar";
 import { Header } from "@/components/header";
 import dynamic from "next/dynamic";
+import { ErrorBoundary } from "@/lib/error-boundary"
 
 const ContentEditor = dynamic(() => import("@/components/content-editor").then(mod => ({ default: mod.ContentEditor })), {
   loading: () => <p>Loading editor...</p>,
@@ -62,6 +63,7 @@ export default function ContentPageClient({
   };
 
   return (
+    <ErrorBoundary>
     <div className="flex flex-col h-screen bg-[#fffcf7]">
       <Header
         onMenuClick={() => setSidebarMobileOpen(true)}
@@ -74,7 +76,7 @@ export default function ContentPageClient({
           onNavigate={handleNavigate}
           collapsed={sidebarCollapsed}
           onCollapsedChange={setSidebarCollapsed}
-          mobileOpen={sidebarMobileOpen}
+          mobileOpen={sidebarMobileOpen}  
           onMobileOpenChange={setSidebarMobileOpen}
         />
         <main
@@ -99,7 +101,8 @@ export default function ContentPageClient({
             />
           )}
         </main>
+        </div>
       </div>
-    </div>
+    </ErrorBoundary>
   );
 }

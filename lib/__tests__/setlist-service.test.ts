@@ -42,12 +42,12 @@ it('uses bulk updates when adding a song', async () => {
     from: vi.fn((table: string) => {
       if (table === 'setlists') {
         return {
-          select: () => ({ eq: () => ({ eq: () => ({ single: () => Promise.resolve({ data: { id: 'l1' }, error: null }) }) }) })
+          select: (): any => ({ eq: () => ({ eq: () => ({ single: () => Promise.resolve({ data: { id: 'l1' }, error: null }) }) }) })
         }
       }
       if (table === 'setlist_songs') {
         return {
-          select: () => ({ eq: () => ({ gte: () => ({ order: () => Promise.resolve({ data: songsToShift, error: null }) }) }) }),
+          select: (): any => ({ eq: () => ({ gte: () => ({ order: () => Promise.resolve({ data: songsToShift, error: null }) }) }) }),
           upsert,
           insert
         }
@@ -119,7 +119,7 @@ it('uses bulk updates when moving a song', async () => {
     from: vi.fn((table: string) => {
       if (table === 'setlists') {
         return {
-          select: () => ({ eq: () => ({ eq: () => ({ single: () => Promise.resolve({ data: { id: 'l1' }, error: null }) }) }) })
+          select: (): any => ({ eq: () => ({ eq: () => ({ single: () => Promise.resolve({ data: { id: 'l1' }, error: null }) }) }) })
         }
       }
       if (table === 'setlist_songs') {

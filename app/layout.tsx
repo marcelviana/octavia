@@ -5,6 +5,7 @@ import { AuthProvider } from "@/contexts/auth-context"
 import { SessionProvider } from "@/components/providers/session-provider"
 import { Toaster } from "@/components/ui/sonner"
 import { EnhancedPwaInstallPrompt } from "@/components/pwa-install-prompt"
+import { ErrorBoundary } from "@/lib/error-boundary"
 
 // Update app/layout.tsx metadata
 export const metadata: Metadata = {
@@ -28,11 +29,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <AuthProvider>
-          <SessionProvider>{children}</SessionProvider>
-          <Toaster richColors position="top-right" />
-          <EnhancedPwaInstallPrompt />
-        </AuthProvider>
+        <ErrorBoundary>
+          <AuthProvider>
+            <SessionProvider>{children}</SessionProvider>
+            <Toaster richColors position="top-right" />
+            <EnhancedPwaInstallPrompt />
+          </AuthProvider>
+        </ErrorBoundary>
       </body>
     </html>
   )

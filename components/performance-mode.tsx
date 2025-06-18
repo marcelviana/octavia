@@ -60,8 +60,8 @@ export function PerformanceMode({
   const songs = selectedSetlist
     ? (selectedSetlist.setlist_songs || []).map((s: any) => s.content)
     : selectedContent
-    ? [selectedContent]
-    : defaultSetlist
+      ? [selectedContent]
+      : defaultSetlist
 
   const lyricsData = songs.map((song: any) => song?.content_data?.lyrics || "")
   const sheetUrls = songs.map(
@@ -70,9 +70,9 @@ export function PerformanceMode({
 
   const toggleFullScreen = () => {
     if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch(() => {})
+      document.documentElement.requestFullscreen().catch(() => { })
     } else {
-      document.exitFullscreen().catch(() => {})
+      document.exitFullscreen().catch(() => { })
     }
   }
 
@@ -250,21 +250,40 @@ export function PerformanceMode({
     }
   }, [])
 
+  // Add this at the end of your component, before the return statement
+  useEffect(() => {
+    return () => {
+      // Clean up timers and intervals
+      if (scrollRef.current) {
+        cancelAnimationFrame(scrollRef.current)
+      }
+      if (pressTimeout.current) {
+        clearTimeout(pressTimeout.current)
+      }
+      if (pressInterval.current) {
+        clearInterval(pressInterval.current)
+      }
+      // Release wake lock
+      if (wakeLock.current) {
+        wakeLock.current.release()
+      }
+    }
+  }, [])
   return (
     <div className="h-screen bg-[#1A1F36] text-white flex flex-col relative" onMouseMove={handleMouseMove}>
       {/* Top Bar */}
       <div className="absolute top-0 left-0 right-0 z-50 bg-[#1A1F36]/90 backdrop-blur-sm">
         <div className="flex flex-wrap items-center justify-center gap-4 sm:justify-between p-3">
-        <div className="flex items-center">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onExitPerformance}
-            className="text-white hover:bg-white/20"
-          >
-            <X className="w-4 h-4" />
-          </Button>
-        </div>
+          <div className="flex items-center">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onExitPerformance}
+              className="text-white hover:bg-white/20"
+            >
+              <X className="w-4 h-4" />
+            </Button>
+          </div>
 
           <div className="text-center">
             <h2 className="font-bold text-lg text-white">{currentSongData.title}</h2>
@@ -358,9 +377,8 @@ export function PerformanceMode({
 
       {/* Bottom Navigation Controls */}
       <div
-        className={`absolute bottom-0 left-0 right-0 z-50 bg-[#1A1F36]/90 backdrop-blur-sm transition-opacity duration-300 ${
-          showControls ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
+        className={`absolute bottom-0 left-0 right-0 z-50 bg-[#1A1F36]/90 backdrop-blur-sm transition-opacity duration-300 ${showControls ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
       >
         <div className="flex flex-wrap items-center justify-center gap-4 sm:justify-between p-3">
           <div className="flex items-center space-x-3">
@@ -399,9 +417,8 @@ export function PerformanceMode({
               {songs.map((_: any, index: number) => (
                 <div
                   key={index}
-                  className={`w-2 h-2 rounded-full cursor-pointer ${
-                    index === currentSong ? "bg-[#FF6B6B]" : "bg-[#A69B8E]"
-                  }`}
+                  className={`w-2 h-2 rounded-full cursor-pointer ${index === currentSong ? "bg-[#FF6B6B]" : "bg-[#A69B8E]"
+                    }`}
                   onClick={() => setCurrentSong(index)}
                 />
               ))}

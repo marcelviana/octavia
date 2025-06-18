@@ -10,7 +10,8 @@ export interface ContentQueryParams {
   page?: number
   pageSize?: number
   search?: string
-  sortBy?: "recent" | "title" | "artist"
+  sortBy?: "recent" | "title" | "artist" | "updated"
+  useCache?: boolean
   filters?: {
     contentType?: string[]
     difficulty?: string[]
@@ -168,63 +169,83 @@ export async function getUserContent() {
   }
 }
 
-export async function getUserContentPage({
-  page = 1,
-  pageSize = 20,
-  search = "",
-  sortBy = "recent",
-  filters = {},
-}: ContentQueryParams = {}) {
+// Simple in-memory cache for content queries
+const contentCache = new Map<string, { data: any; timestamp: number; ttl: number }>()
+
+// Cache cleanup function
+function cleanupCache() {
+  const now = Date.now()
+  for (const [key, value] of contentCache.entries()) {
+    if (now > value.timestamp + value.ttl) {
+      contentCache.delete(key)
+    }
+  }
+}
+
+// Clean cache every 5 minutes
+setInterval(cleanupCache, 5 * 60 * 1000)
+
+export async function getUserContentPage(params: ContentQueryParams = {}) {
+  const {
+    page = 1,
+    pageSize = 20,
+    search = "",
+    sortBy = "recent",
+    filters = {},
+    useCache = true
+  } = params
+
+  // Create cache key
+  const cacheKey = `content-page:${JSON.stringify({ page, pageSize, search, sortBy, filters })}`
+
+  // Check cache first
+  if (useCache) {
+    const cached = contentCache.get(cacheKey)
+    if (cached && Date.now() < cached.timestamp + cached.ttl) {
+      logger.log("Returning cached content page result")
+      return cached.data
+    }
+  }
+
   try {
+    // Return mock data in demo mode
     if (!isSupabaseConfigured) {
-      let data = [...MOCK_CONTENT]
-      if (search) {
-        const q = search.toLowerCase()
-        data = data.filter(
-          (item) =>
-            item.title.toLowerCase().includes(q) ||
-            (item.artist && item.artist.toLowerCase().includes(q)) ||
-            (item.album && item.album.toLowerCase().includes(q)),
-        )
+      const result = getMockContentPage(params)
+      if (useCache) {
+        contentCache.set(cacheKey, {
+          data: result,
+          timestamp: Date.now(),
+          ttl: 2 * 60 * 1000 // 2 minutes for demo data
+        })
       }
-      if (filters.contentType?.length) {
-        data = data.filter((item) => filters.contentType!.includes(item.content_type))
-      }
-      if (filters.difficulty?.length) {
-        data = data.filter(
-          (item) => item.difficulty && filters.difficulty!.includes(item.difficulty)
-        )
-      }
-      if (filters.key?.length) {
-        data = data.filter(
-          (item) => item.key && filters.key!.includes(item.key)
-        )
-      }
-      if (filters.favorite) {
-        data = data.filter((item) => item.is_favorite)
-      }
-      if (sortBy === "recent") {
-        data.sort(
-          (a, b) =>
-            new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
-        )
-      } else if (sortBy === "title") {
-        data.sort((a, b) => a.title.localeCompare(b.title))
-      } else if (sortBy === "artist") {
-        data.sort((a, b) => (a.artist || "").localeCompare(b.artist || ""))
-      }
-      const total = data.length
-      const start = (page - 1) * pageSize
-      return { data: data.slice(start, start + pageSize), total }
+      return result
     }
 
     const supabase = getSupabaseBrowserClient()
-    const {
-      data: { user },
-      error: authError,
-    } = await supabase.auth.getUser()
-    if (authError || !user) {
-      return { data: [], total: 0 }
+
+    // Check if user is authenticated with retry logic
+    let authAttempts = 0
+    let user = null
+    
+    while (authAttempts < 3) {
+      try {
+        const { data: authData, error: authError } = await supabase.auth.getUser()
+        if (authError) throw authError
+        user = authData.user
+        break
+      } catch (authError) {
+        authAttempts++
+        if (authAttempts >= 3) {
+          logger.error("Authentication failed after 3 attempts:", authError)
+          throw new Error("Authentication failed. Please log in again.")
+        }
+        // Wait 1 second before retry
+        await new Promise(resolve => setTimeout(resolve, 1000))
+      }
+    }
+
+    if (!user) {
+      throw new Error("User not authenticated")
     }
 
     let query = supabase
@@ -232,45 +253,194 @@ export async function getUserContentPage({
       .select("*", { count: "exact" })
       .eq("user_id", user.id)
 
+    // Apply search with better text matching
     if (search) {
+      // Use ilike for case-insensitive search across multiple fields
       query = query.or(
-        `title.ilike.%${search}%,artist.ilike.%${search}%,album.ilike.%${search}%`,
+        `title.ilike.%${search}%,artist.ilike.%${search}%,album.ilike.%${search}%,tags.ilike.%${search}%`
       )
     }
+
+    // Apply filters with validation
     if (filters.contentType?.length) {
-      query = query.in("content_type", filters.contentType)
+      const validTypes = ['LYRICS', 'CHORDS', 'GUITAR_TAB', 'SHEET_MUSIC', 'NOTES']
+      const filteredTypes = filters.contentType.filter((type: string) => validTypes.includes(type))
+      if (filteredTypes.length > 0) {
+        query = query.in("content_type", filteredTypes)
+      }
     }
+
     if (filters.difficulty?.length) {
-      query = query.in("difficulty", filters.difficulty)
+      const validDifficulties = ['BEGINNER', 'INTERMEDIATE', 'ADVANCED']
+      const filteredDifficulties = filters.difficulty.filter((diff: string) => validDifficulties.includes(diff))
+      if (filteredDifficulties.length > 0) {
+        query = query.in("difficulty", filteredDifficulties)
+      }
     }
+
     if (filters.key?.length) {
       query = query.in("key", filters.key)
     }
+
     if (filters.favorite) {
       query = query.eq("is_favorite", true)
     }
 
-    if (sortBy === "recent") {
-      query = query.order("created_at", { ascending: false })
-    } else if (sortBy === "title") {
-      query = query.order("title", { ascending: true })
-    } else if (sortBy === "artist") {
-      query = query.order("artist", { ascending: true })
-    }
+    // Apply sorting with validation
+    const sortMap = {
+      recent: ["created_at", false],
+      title: ["title", true],
+      artist: ["artist", true],
+      updated: ["updated_at", false]
+    } as const
 
-    const from = (page - 1) * pageSize
-    const to = from + pageSize - 1
-    const { data, error, count } = await query.range(from, to)
+    const [sortColumn, ascending] = sortMap[sortBy as keyof typeof sortMap] || sortMap.recent
+    query = query.order(sortColumn, { ascending })
+
+    // Apply pagination with bounds checking
+    const safePage = Math.max(1, page)
+    const safePageSize = Math.min(Math.max(1, pageSize), 100) // Max 100 items per page
+    const from = (safePage - 1) * safePageSize
+    const to = from + safePageSize - 1
+
+    // Execute query with timeout
+    const queryPromise = query.range(from, to)
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('Database query timed out')), 15000)
+    )
+
+    const { data, error, count } = await Promise.race([queryPromise, timeoutPromise]) as any
 
     if (error) {
-      logger.error("Error fetching content:", error)
-      return { data: [], total: 0 }
+      logger.error("Database query error:", error)
+      
+      // Provide helpful error messages
+      if (error.message?.includes('relation "content" does not exist')) {
+        throw new Error("Database tables not set up. Please run the setup process.")
+      }
+      if (error.message?.includes('permission denied')) {
+        throw new Error("Database access denied. Please check your permissions.")
+      }
+      
+      throw new Error(`Database error: ${error.message}`)
     }
 
-    return { data: data || [], total: count || 0 }
+    const result = {
+      data: data || [],
+      total: count || 0,
+      page: safePage,
+      pageSize: safePageSize,
+      hasMore: (count || 0) > safePage * safePageSize,
+      totalPages: Math.ceil((count || 0) / safePageSize)
+    }
+
+    // Cache successful results
+    if (useCache && result.data.length > 0) {
+      contentCache.set(cacheKey, {
+        data: result,
+        timestamp: Date.now(),
+        ttl: 5 * 60 * 1000 // Cache for 5 minutes
+      })
+    }
+
+    logger.log("Content page loaded successfully", {
+      page: safePage,
+      pageSize: safePageSize,
+      total: count,
+      itemsReturned: data?.length || 0
+    })
+
+    return result
+
   } catch (error) {
     logger.error("Error in getUserContentPage:", error)
-    return { data: [], total: 0 }
+    
+    // Return cached data if available during errors
+    if (useCache) {
+      const cached = contentCache.get(cacheKey)
+      if (cached) {
+        logger.log("Returning stale cached data due to error")
+        return cached.data
+      }
+    }
+    
+    // Return empty result rather than throwing in some cases
+    if (error instanceof Error && error.message.includes('timeout')) {
+      return {
+        data: [],
+        total: 0,
+        page,
+        pageSize,
+        hasMore: false,
+        totalPages: 0,
+        error: 'Request timed out - please try again'
+      }
+    }
+    
+    throw error
+  }
+}
+
+// Helper function for mock data pagination
+function getMockContentPage(params: ContentQueryParams) {
+  const { page = 1, pageSize = 20, search = "", sortBy = "recent", filters = {} } = params
+  
+  let filteredData = [...MOCK_CONTENT]
+  
+  // Apply search filter
+  if (search) {
+    const searchLower = search.toLowerCase()
+    filteredData = filteredData.filter(item =>
+      item.title.toLowerCase().includes(searchLower) ||
+      item.artist?.toLowerCase().includes(searchLower) ||
+      item.album?.toLowerCase().includes(searchLower)
+    )
+  }
+  
+  // Apply content type filter
+  if (filters.contentType?.length) {
+    filteredData = filteredData.filter(item => filters.contentType!.includes(item.content_type))
+  }
+  
+  // Apply difficulty filter
+  if (filters.difficulty?.length) {
+    filteredData = filteredData.filter(item => 
+      item.difficulty && filters.difficulty!.includes(item.difficulty)
+    )
+  }
+  
+  // Apply favorite filter
+  if (filters.favorite) {
+    filteredData = filteredData.filter(item => item.is_favorite)
+  }
+  
+  // Apply sorting
+  filteredData.sort((a, b) => {
+    switch (sortBy) {
+      case "title":
+        return a.title.localeCompare(b.title)
+      case "artist":
+        return (a.artist || "").localeCompare(b.artist || "")
+      case "updated":
+        return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+      case "recent":
+      default:
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    }
+  })
+  
+  // Apply pagination
+  const start = (page - 1) * pageSize
+  const end = start + pageSize
+  const paginatedData = filteredData.slice(start, end)
+  
+  return {
+    data: paginatedData,
+    total: filteredData.length,
+    page,
+    pageSize,
+    hasMore: end < filteredData.length,
+    totalPages: Math.ceil(filteredData.length / pageSize)
   }
 }
 

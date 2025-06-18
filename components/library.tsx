@@ -96,25 +96,38 @@ export function Library({
   const totalPages = Math.ceil(totalCount / pageSize);
 
   useEffect(() => {
-    setSearchQuery(initialSearch || "");
-  }, [initialSearch]);
-
-  useEffect(() => {
     async function fetchData() {
-      setLoading(true);
-      const { data, total } = await getUserContentPage({
-        page,
-        pageSize,
-        search: searchQuery,
-        sortBy,
-        filters: selectedFilters,
-      });
-      setContent(data);
-      setTotalCount(total);
-      setLoading(false);
+      try {
+        setLoading(true)
+        const result = await getUserContentPage({
+          page,
+          pageSize,
+          search: searchQuery,
+          sortBy,
+          filters: selectedFilters,
+        })
+        
+        if (result.error) {
+          console.error('Content loading error:', result.error)
+          // Still show the content but with a warning
+          setContent(result.data || [])
+          setTotalCount(result.total || 0)
+        } else {
+          setContent(result.data)
+          setTotalCount(result.total)
+        }
+      } catch (error) {
+        console.error('Failed to load content:', error)
+        // Show error state but don't crash
+        setContent([])
+        setTotalCount(0)
+      } finally {
+        setLoading(false)
+      }
     }
-    fetchData();
-  }, [searchQuery, sortBy, selectedFilters, page, pageSize]);
+    
+    fetchData()
+  }, [searchQuery, sortBy, selectedFilters, page, pageSize])
 
   const getContentIcon = (type: string) => {
     switch (type) {
