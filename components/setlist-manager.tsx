@@ -203,7 +203,7 @@ function useSetlistOperations() {
     } finally {
       setOperationInProgress(prev => ({ ...prev, create: false }))
     }
-  }, [user])
+  }, [user, setlists])
 
   const deleteExistingSetlist = useCallback(async (setlistId: string) => {
     setOperationInProgress(prev => ({ ...prev, [setlistId]: true }))
@@ -227,7 +227,7 @@ function useSetlistOperations() {
     } finally {
       setOperationInProgress(prev => ({ ...prev, [setlistId]: false }))
     }
-  }, [])
+  }, [setlists])
 
   const addSongsToSetlist = useCallback(async (setlistId: string, songIds: string[]) => {
     const operationKey = `add-${setlistId}`
