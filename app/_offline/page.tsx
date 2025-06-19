@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { getCachedContent } from "@/lib/offline-cache"
+import { getCachedSetlists } from "@/lib/offline-setlist-cache"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Wifi, WifiOff, RefreshCw, Music, Download } from "lucide-react"
@@ -9,14 +10,17 @@ import { Wifi, WifiOff, RefreshCw, Music, Download } from "lucide-react"
 export default function OfflinePage() {
   const [isRetrying, setIsRetrying] = useState(false)
   const [cachedContent, setCachedContent] = useState<any[]>([])
+  const [cachedSetlists, setCachedSetlists] = useState<any[]>([])
 
   useEffect(() => {
-    const loadCachedContent = async () => {
-      const cached = await getCachedContent()
-      setCachedContent(cached)
+    const loadCached = async () => {
+      const content = await getCachedContent()
+      setCachedContent(content)
+      const sets = await getCachedSetlists()
+      setCachedSetlists(sets)
     }
 
-    loadCachedContent()
+    loadCached()
   }, [])
 
   const handleRetry = async () => {
@@ -102,6 +106,32 @@ export default function OfflinePage() {
                 {cachedContent.length > 5 && (
                   <p className="text-sm text-amber-600 text-center pt-2">
                     +{cachedContent.length - 5} more items available offline
+                  </p>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Cached Setlists */}
+        {cachedSetlists.length > 0 && (
+          <Card className="border-amber-200 shadow-lg">
+            <CardHeader>
+              <CardTitle className="flex items-center text-amber-900">
+                <Download className="w-5 h-5 mr-2" />
+                Offline Setlists
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2">
+                {cachedSetlists.slice(0, 5).map((set, index) => (
+                  <div key={index} className="p-2 bg-amber-50 rounded border border-amber-200">
+                    <p className="font-medium text-amber-900">{set.name}</p>
+                  </div>
+                ))}
+                {cachedSetlists.length > 5 && (
+                  <p className="text-sm text-amber-600 text-center pt-2">
+                    +{cachedSetlists.length - 5} more setlists available offline
                   </p>
                 )}
               </div>
