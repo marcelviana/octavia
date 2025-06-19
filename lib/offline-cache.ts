@@ -80,6 +80,11 @@ export async function cacheFilesForContent(items: any[]): Promise<void> {
   }
 }
 
+export async function cacheFileForContent(item: any): Promise<void> {
+  if (!item) return
+  await cacheFilesForContent([item])
+}
+
 export async function getCachedFileUrl(id: string): Promise<string | null> {
   try {
     const stored = await localforage.getItem<any>(`${FILE_PREFIX}${id}`)
