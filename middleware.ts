@@ -47,28 +47,9 @@ export async function middleware(request: NextRequest) {
     },
   )
 
-  const userCookie = request.cookies.get("sb-user")?.value
-  let user
-
-  if (userCookie) {
-    try {
-      user = JSON.parse(userCookie)
-    } catch {
-      user = null
-    }
-  }
-
-  if (!user) {
-    const {
-      data: { user: fetchedUser },
-    } = await supabase.auth.getUser()
-    user = fetchedUser
-    if (user) {
-      response.cookies.set("sb-user", JSON.stringify(user), { path: "/" })
-    } else {
-      response.cookies.set("sb-user", "", { path: "/", maxAge: 0 })
-    }
-  }
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
 
   const protectedRoutes = ["/dashboard", "/library", "/setlists", "/settings", "/profile", "/add-content", "/content"]
   const isProtectedRoute = protectedRoutes.some((route) => request.nextUrl.pathname.startsWith(route))
