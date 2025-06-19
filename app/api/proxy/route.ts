@@ -5,7 +5,17 @@ const allowedHosts = (process.env.ALLOWED_PROXY_HOSTS ?? new URL(process.env.NEX
 
 const RATE_LIMIT_WINDOW_MS = 60_000
 const RATE_LIMIT_MAX = 20
-const rateLimitMap = new Map<string, { count: number, timestamp: number }>()
+const rateLimitMap = new Map<string, { count: number; timestamp: number }>()
+
+// Periodically remove stale rate limit entries to avoid unbounded memory usage
+setInterval(() => {
+  const now = Date.now()
+  for (const [ip, entry] of rateLimitMap) {
+    if (now - entry.timestamp > RATE_LIMIT_WINDOW_MS) {
+      rateLimitMap.delete(ip)
+    }
+  }
+}, RATE_LIMIT_WINDOW_MS).unref()
 
 export async function GET(req: NextRequest) {
   const urlParam = req.nextUrl.searchParams.get('url')
