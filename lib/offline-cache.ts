@@ -1,19 +1,44 @@
 import localforage from 'localforage'
+import { getSupabaseBrowserClient } from './supabase'
 
-const FILE_PREFIX = 'octavia-offline-file-'
+const FILE_PREFIX = 'octavia-offline-file'
 
-const STORE_KEY = 'octavia-offline-content'
-const INDEX_KEY = 'octavia-offline-index'
+const STORE_KEY_BASE = 'octavia-offline-content'
+const INDEX_KEY_BASE = 'octavia-offline-index'
 const MAX_CACHE_BYTES = 50 * 1024 * 1024 // 50MB
+
+async function getUserId(): Promise<string | null> {
+  try {
+    const supabase = getSupabaseBrowserClient()
+    const { data } = await supabase.auth.getSession()
+    return data.session?.user?.id || null
+  } catch {
+    return null
+  }
+}
+
+function getStoreKey(userId: string | null) {
+  return `${STORE_KEY_BASE}-${userId || 'anon'}`
+}
+
+function getIndexKey(userId: string | null) {
+  return `${INDEX_KEY_BASE}-${userId || 'anon'}`
+}
+
+function getFileKey(userId: string | null, id: string) {
+  return `${FILE_PREFIX}-${userId || 'anon'}-${id}`
+}
 
 type IndexEntry = { id: string; size: number; lastAccess: number }
 
 async function getIndex(): Promise<IndexEntry[]> {
-  return (await localforage.getItem<IndexEntry[]>(INDEX_KEY)) || []
+  const userId = await getUserId()
+  return (await localforage.getItem<IndexEntry[]>(getIndexKey(userId))) || []
 }
 
 async function saveIndex(index: IndexEntry[]): Promise<void> {
-  await localforage.setItem(INDEX_KEY, index)
+  const userId = await getUserId()
+  await localforage.setItem(getIndexKey(userId), index)
 }
 
 function totalSize(index: IndexEntry[]) {
@@ -26,7 +51,8 @@ async function enforceQuota(index: IndexEntry[]): Promise<IndexEntry[]> {
   current.sort((a, b) => a.lastAccess - b.lastAccess)
   while (totalSize(current) > MAX_CACHE_BYTES && current.length) {
     const victim = current.shift()!
-    await localforage.removeItem(`${FILE_PREFIX}${victim.id}`)
+    const userId = await getUserId()
+    await localforage.removeItem(getFileKey(userId, victim.id))
   }
   await saveIndex(current)
   return current
@@ -34,7 +60,8 @@ async function enforceQuota(index: IndexEntry[]): Promise<IndexEntry[]> {
 
 export async function getCachedContent(): Promise<any[]> {
   try {
-    const data = await localforage.getItem<any[]>(STORE_KEY)
+    const userId = await getUserId()
+    const data = await localforage.getItem<any[]>(getStoreKey(userId))
     return data || []
   } catch (err) {
     console.error('Failed to load cached content:', err)
@@ -44,12 +71,13 @@ export async function getCachedContent(): Promise<any[]> {
 
 export async function saveContent(items: any[]): Promise<void> {
   try {
-    const existing = (await localforage.getItem<any[]>(STORE_KEY)) || []
+    const userId = await getUserId()
+    const existing = (await localforage.getItem<any[]>(getStoreKey(userId))) || []
     const merged = [
       ...existing.filter((ex: any) => !items.some((it: any) => it.id === ex.id)),
       ...items,
     ]
-    await localforage.setItem(STORE_KEY, merged)
+    await localforage.setItem(getStoreKey(userId), merged)
   } catch (err) {
     console.error('Failed to cache offline content', err)
   }
@@ -58,7 +86,8 @@ export async function saveContent(items: any[]): Promise<void> {
 export async function cacheFilesForContent(items: any[]): Promise<void> {
   for (const item of items) {
     if (!item?.id || !item?.file_url) continue
-    const key = `${FILE_PREFIX}${item.id}`
+    const userId = await getUserId()
+    const key = getFileKey(userId, item.id)
     try {
       const existing = await localforage.getItem<any>(key)
       if (!existing) {
@@ -91,7 +120,8 @@ export async function cacheFileForContent(item: any): Promise<void> {
 
 export async function getCachedFileUrl(id: string): Promise<string | null> {
   try {
-    const stored = await localforage.getItem<any>(`${FILE_PREFIX}${id}`)
+    const userId = await getUserId()
+    const stored = await localforage.getItem<any>(getFileKey(userId, id))
     if (!stored) return null
     let index = await getIndex()
     const entry = index.find(e => e.id === id)
@@ -111,4 +141,16 @@ export async function getCachedFileUrl(id: string): Promise<string | null> {
     console.error('Failed to load cached file', err)
     return null
   }
+}
+
+export async function clearOfflineContent(userIdArg?: string): Promise<void> {
+  const userId = userIdArg ?? (await getUserId())
+  const indexKey = getIndexKey(userId)
+  const storeKey = getStoreKey(userId)
+  const index = (await localforage.getItem<IndexEntry[]>(indexKey)) || []
+  for (const entry of index) {
+    await localforage.removeItem(getFileKey(userId, entry.id))
+  }
+  await localforage.removeItem(indexKey)
+  await localforage.removeItem(storeKey)
 }
