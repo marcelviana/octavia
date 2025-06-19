@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useDebounce } from "@/hooks/use-debounce";
 import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -79,6 +80,7 @@ export function Library({
 }: LibraryProps) {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState(initialSearch || "");
+  const debouncedSearch = useDebounce(searchQuery, 300);
   const [sortBy, setSortBy] = useState<"recent" | "title" | "artist">("recent");
   const [viewMode, setViewMode] = useState("grid");
   const [content, setContent] = useState<any[]>(initialContent);
@@ -105,7 +107,7 @@ export function Library({
         const result = await getUserContentPage({
           page,
           pageSize,
-          search: searchQuery,
+          search: debouncedSearch,
           sortBy,
           filters: selectedFilters,
         })
@@ -158,7 +160,7 @@ export function Library({
     return () => {
       cancelled = true
     }
-  }, [searchQuery, sortBy, selectedFilters, page, pageSize])
+  }, [debouncedSearch, sortBy, selectedFilters, page, pageSize])
 
   const getContentIcon = (type: string) => {
     switch (type) {
