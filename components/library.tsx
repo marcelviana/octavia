@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useDebounce } from "@/hooks/use-debounce";
 import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
@@ -97,8 +97,13 @@ export function Library({
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [contentToDelete, setContentToDelete] = useState<any>(null);
   const totalPages = Math.ceil(totalCount / pageSize);
+  const initialLoadRef = useRef(true)
 
   useEffect(() => {
+    if (initialLoadRef.current) {
+      initialLoadRef.current = false
+      return
+    }
     let cancelled = false
 
     async function fetchData() {
