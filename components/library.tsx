@@ -115,6 +115,23 @@ export function Library({
         } else {
           setContent(result.data)
           setTotalCount(result.total)
+          try {
+            const existing = JSON.parse(
+              localStorage.getItem('octavia-offline-content') || '[]'
+            ) as any[]
+            const merged = [
+              ...existing.filter(
+                (item) => !result.data.some((c: any) => c.id === item.id)
+              ),
+              ...result.data,
+            ]
+            localStorage.setItem(
+              'octavia-offline-content',
+              JSON.stringify(merged)
+            )
+          } catch (err) {
+            console.error('Failed to cache offline content', err)
+          }
         }
       } catch (error) {
         console.error('Failed to load content:', error)
@@ -210,6 +227,18 @@ export function Library({
       });
       setContent(data);
       setTotalCount(total);
+      try {
+        const existing = JSON.parse(
+          localStorage.getItem('octavia-offline-content') || '[]'
+        ) as any[]
+        const merged = [
+          ...existing.filter((item) => !data.some((c: any) => c.id === item.id)),
+          ...data,
+        ]
+        localStorage.setItem('octavia-offline-content', JSON.stringify(merged))
+      } catch (err) {
+        console.error('Failed to cache offline content', err)
+      }
       setDeleteDialog(false);
       setContentToDelete(null);
     } catch (error) {
