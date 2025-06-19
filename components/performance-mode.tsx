@@ -64,9 +64,29 @@ export function PerformanceMode({
       : defaultSetlist
 
   const lyricsData = songs.map((song: any) => song?.content_data?.lyrics || "")
-  const sheetUrls = songs.map(
-    (song: any) => song?.file_url || song?.content_data?.file || null,
-  )
+  const [sheetUrls, setSheetUrls] = useState<(string | null)[]>([])
+
+  useEffect(() => {
+    let toRevoke: string[] = []
+    const load = async () => {
+      const { getCachedFileUrl } = await import('../lib/offline-cache')
+      const urls = await Promise.all(
+        songs.map(async (song: any) => {
+          const cached = song?.id ? await getCachedFileUrl(song.id) : null
+          if (cached) {
+            toRevoke.push(cached)
+            return cached
+          }
+          return song?.file_url || song?.content_data?.file || null
+        })
+      )
+      setSheetUrls(urls)
+    }
+    load()
+    return () => {
+      toRevoke.forEach(url => URL.revokeObjectURL(url))
+    }
+  }, [songs])
 
   const toggleFullScreen = () => {
     if (!document.fullscreenElement) {
@@ -338,7 +358,7 @@ export function PerformanceMode({
             <div className="space-y-8 max-w-3xl mx-auto">
               {currentSongData.content_type === ContentType.SHEET_MUSIC ? (
                 sheetUrls[currentSong] ? (
-                  sheetUrls[currentSong].toLowerCase().endsWith(".pdf") ? (
+                  sheetUrls[currentSong]!.toLowerCase().endsWith(".pdf") ? (
                     <PdfViewer
                       url={sheetUrls[currentSong] as string}
                       fullscreen
