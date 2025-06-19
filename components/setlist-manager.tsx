@@ -84,6 +84,13 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
       console.log("Loaded setlists:", setlistsData)
       console.log("Loaded content:", contentData)
 
+      try {
+        const { saveSetlists } = await import('../lib/offline-setlist-cache')
+        await saveSetlists(setlistsData as any[])
+      } catch (err) {
+        console.error('Failed to cache offline setlists', err)
+      }
+
       setSetlists(setlistsData as SetlistWithSongs[])
       setAvailableContent(contentData)
     } catch (err) {
@@ -126,7 +133,14 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
         setlist_songs: [],
       }
 
-      setSetlists([setlistWithSongs, ...setlists])
+      const updated = [setlistWithSongs, ...setlists]
+      setSetlists(updated)
+      try {
+        const { saveSetlists } = await import('../lib/offline-setlist-cache')
+        await saveSetlists(updated as any[])
+      } catch (err) {
+        console.error('Failed to cache offline setlists', err)
+      }
       setNewSetlistData({ name: "", description: "", performance_date: "", venue: "", notes: "" })
       setIsCreateDialogOpen(false)
     } catch (err) {
@@ -138,7 +152,14 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
   const handleDeleteSetlist = async (setlistId: string) => {
     try {
       await deleteSetlist(setlistId)
-      setSetlists(setlists.filter((s) => s.id !== setlistId))
+      const updated = setlists.filter((s) => s.id !== setlistId)
+      setSetlists(updated)
+      try {
+        const { saveSetlists } = await import('../lib/offline-setlist-cache')
+        await saveSetlists(updated as any[])
+      } catch (err) {
+        console.error('Failed to cache offline setlists', err)
+      }
       if (selectedSetlist?.id === setlistId) {
         setSelectedSetlist(null)
       }
