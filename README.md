@@ -220,7 +220,7 @@ Automated unit tests live in `lib/__tests__` and are executed with [Vitest](http
 
 ### Offline Support
 
-The application includes a basic offline mode backed by IndexedDB. A health check endpoint (`/api/health`) lets the client detect when connectivity returns. Library data and setlists viewed while online are cached locally so they can be accessed from the dedicated offline page when the network is unavailable.
+The application includes an offline mode backed by IndexedDB. A health check endpoint (`/api/health`) lets the client detect when connectivity returns. Library data and setlists viewed while online are cached locally so they can be accessed from the dedicated offline page when the network is unavailable. Cached files are stored as binary Blobs and an LRU policy keeps the total size under 50 MB to avoid quota errors.
 
 ## 📄 License
 
