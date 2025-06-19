@@ -126,9 +126,17 @@ pnpm install
 # Copy environment variables and fill in your Supabase credentials
 cp .env.example .env
 
+# Update `ALLOWED_PROXY_HOSTS` if you plan to import files from
+# external URLs. This variable accepts a comma-separated list of
+# hostnames that the `/api/proxy` endpoint will allow.
+
 # Run development server
 pnpm run dev
 \`\`\`
+
+The `ALLOWED_PROXY_HOSTS` variable controls which domains the
+offline cache proxy will fetch from. Add any additional hosts
+you need for external imports (comma‑separated).
 
 ### First Steps
 1. **Import Content**: Start by uploading your existing sheet music and tabs

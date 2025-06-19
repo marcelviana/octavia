@@ -222,7 +222,8 @@ export function Library({
       toast.success('Content cached for offline use')
     } catch (err) {
       console.error('Failed to cache content', err)
-      toast.error('Download failed')
+      const message = err instanceof Error ? err.message : 'Download failed'
+      toast.error(message)
     }
   };
 

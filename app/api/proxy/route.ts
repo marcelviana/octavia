@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
   }
 
   if (!allowedHosts.includes(target.host)) {
-    return new Response('URL not allowed', { status: 400 })
+    return new Response('URL not allowed. Configure ALLOWED_PROXY_HOSTS.', { status: 400 })
   }
 
   const supabase = await getSupabaseServerClient()
