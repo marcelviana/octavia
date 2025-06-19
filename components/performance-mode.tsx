@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useMemo } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -23,6 +23,12 @@ import {
   Moon,
   Sun,
 } from "lucide-react"
+
+const defaultSetlist = [
+  { id: 1, title: "Wonderwall", artist: "Oasis", key: "Em", bpm: 87 },
+  { id: 2, title: "Black", artist: "Pearl Jam", key: "E", bpm: 85 },
+  { id: 3, title: "Dust in the Wind", artist: "Kansas", key: "C", bpm: 78 },
+]
 
 interface PerformanceModeProps {
   onExitPerformance: () => void
@@ -51,17 +57,14 @@ export function PerformanceMode({
   const scrollRef = useRef<number | null>(null)
   const wakeLock = useRef<any>(null)
 
-  const defaultSetlist = [
-    { id: 1, title: "Wonderwall", artist: "Oasis", key: "Em", bpm: 87 },
-    { id: 2, title: "Black", artist: "Pearl Jam", key: "E", bpm: 85 },
-    { id: 3, title: "Dust in the Wind", artist: "Kansas", key: "C", bpm: 78 },
-  ]
 
-  const songs = selectedSetlist
-    ? (selectedSetlist.setlist_songs || []).map((s: any) => s.content)
-    : selectedContent
-      ? [selectedContent]
-      : defaultSetlist
+  const songs = useMemo(() => {
+    if (selectedSetlist) {
+      return (selectedSetlist.setlist_songs || []).map((s: any) => s.content)
+    }
+    if (selectedContent) return [selectedContent]
+    return defaultSetlist
+  }, [selectedSetlist, selectedContent])
 
   const lyricsData = songs.map((song: any) => song?.content_data?.lyrics || "")
   const [sheetUrls, setSheetUrls] = useState<(string | null)[]>([])
