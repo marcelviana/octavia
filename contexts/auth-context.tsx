@@ -329,7 +329,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setIsLoading(true)
 
       const supabase = getSupabaseBrowserClient()
+      const uid = user?.id
       await supabase.auth.signOut()
+
+      try {
+        const { clearOfflineContent } = await import("../lib/offline-cache")
+        const { clearOfflineSetlists } = await import("../lib/offline-setlist-cache")
+        await Promise.all([
+          clearOfflineContent(uid),
+          clearOfflineSetlists(uid),
+        ])
+      } catch (err) {
+        console.warn("Failed to clear offline data:", err)
+      }
 
       console.log("Sign out successful")
       window.location.href = "/"
@@ -337,7 +349,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       console.warn("Sign out error:", error)
       window.location.href = "/"
     }
-  }, [isSupabaseConfigured])
+  }, [isSupabaseConfigured, user])
 
   const updateProfile = useCallback(
     async (data: Partial<Profile>) => {
