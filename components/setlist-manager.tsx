@@ -135,17 +135,35 @@ function useSetlistOperations() {
         timeoutPromise
       ]) as [SetlistWithSongs[], Content[]]
 
-      logger.log("Loaded data successfully", { 
-        setlistsCount: setlistsData.length, 
-        contentCount: contentData.length 
+      logger.log("Loaded data successfully", {
+        setlistsCount: setlistsData.length,
+        contentCount: contentData.length
       })
 
       setSetlists(setlistsData)
       setAvailableContent(contentData)
+      try {
+        const { saveSetlists } = await import('../lib/offline-setlist-cache')
+        await saveSetlists(setlistsData)
+      } catch (err) {
+        console.error('Failed to cache offline setlists', err)
+      }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to load data'
       logger.error("Error loading setlist data:", err)
-      setError(errorMessage)
+      try {
+        const { getCachedSetlists } = await import('../lib/offline-setlist-cache')
+        const cached = await getCachedSetlists()
+        if (cached.length > 0) {
+          setSetlists(cached)
+          setAvailableContent([])
+          setError('Offline data loaded')
+        } else {
+          setError(errorMessage)
+        }
+      } catch (cacheErr) {
+        setError(errorMessage)
+      }
     } finally {
       setLoading(false)
     }
@@ -168,7 +186,14 @@ function useSetlistOperations() {
         setlist_songs: [],
       }
 
-      setSetlists(prev => [setlistWithSongs, ...prev])
+      const updatedSetlists = [setlistWithSongs, ...setlists]
+      setSetlists(updatedSetlists)
+      try {
+        const { saveSetlists } = await import('../lib/offline-setlist-cache')
+        await saveSetlists(updatedSetlists)
+      } catch (err) {
+        console.error('Failed to cache offline setlists', err)
+      }
       logger.log("Setlist created successfully:", newSetlist.id)
       
       return setlistWithSongs
@@ -186,7 +211,14 @@ function useSetlistOperations() {
       logger.log("Deleting setlist:", setlistId)
       
       await deleteSetlist(setlistId)
-      setSetlists(prev => prev.filter(s => s.id !== setlistId))
+      const updated = setlists.filter(s => s.id !== setlistId)
+      setSetlists(updated)
+      try {
+        const { saveSetlists } = await import('../lib/offline-setlist-cache')
+        await saveSetlists(updated)
+      } catch (err) {
+        console.error('Failed to cache offline setlists', err)
+      }
       
       logger.log("Setlist deleted successfully")
     } catch (err) {
