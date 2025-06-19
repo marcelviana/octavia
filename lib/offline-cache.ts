@@ -62,7 +62,8 @@ export async function cacheFilesForContent(items: any[]): Promise<void> {
     try {
       const existing = await localforage.getItem<any>(key)
       if (!existing) {
-        const res = await fetch(item.file_url)
+        const proxyUrl = `/api/proxy?url=${encodeURIComponent(item.file_url)}`
+        const res = await fetch(proxyUrl)
         if (!res.ok) throw new Error('fetch failed')
         const array = await res.arrayBuffer()
         const mime = res.headers.get('Content-Type') || 'application/octet-stream'

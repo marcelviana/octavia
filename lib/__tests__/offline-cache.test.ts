@@ -25,12 +25,13 @@ describe('offline cache', () => {
 
   it('caches file blobs and returns url', async () => {
     const buffer = new TextEncoder().encode('hello')
-    global.fetch = vi.fn(async () => ({
+    global.fetch = vi.fn(async (input: RequestInfo) => ({
       ok: true,
       arrayBuffer: async () => buffer,
       headers: { get: () => 'text/plain' }
     })) as any
     await cache.cacheFilesForContent([{ id: '1', file_url: 'https://x.test/a.txt' }])
+    expect((global.fetch as any).mock.calls[0][0]).toBe('/api/proxy?url=' + encodeURIComponent('https://x.test/a.txt'))
     const url = await cache.getCachedFileUrl('1')
     expect(typeof url).toBe('string')
     expect(url!.startsWith('blob:') || url!.startsWith('data:')).toBe(true)
