@@ -7,6 +7,17 @@ const STORE_KEY_BASE = 'octavia-offline-content'
 const INDEX_KEY_BASE = 'octavia-offline-index'
 const MAX_CACHE_BYTES = 50 * 1024 * 1024 // 50MB
 
+function encodeBase64(data: Uint8Array): string {
+  if (typeof btoa === 'function') {
+    let binary = ''
+    for (let i = 0; i < data.length; i++) {
+      binary += String.fromCharCode(data[i])
+    }
+    return btoa(binary)
+  }
+  return Buffer.from(data).toString('base64')
+}
+
 async function getUserId(): Promise<string | null> {
   try {
     const supabase = getSupabaseBrowserClient()
@@ -135,7 +146,7 @@ export async function getCachedFileUrl(id: string): Promise<string | null> {
     if (typeof URL.createObjectURL === 'function') {
       return URL.createObjectURL(blob)
     }
-    const base64 = Buffer.from(dataArray).toString('base64')
+    const base64 = encodeBase64(dataArray)
     return `data:${stored.mime};base64,${base64}`
   } catch (err) {
     console.error('Failed to load cached file', err)
