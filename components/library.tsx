@@ -117,8 +117,9 @@ export function Library({
           setContent(result.data)
           setTotalCount(result.total)
           try {
-            const { saveContent } = await import('../lib/offline-cache')
+            const { saveContent, cacheFilesForContent } = await import('../lib/offline-cache')
             await saveContent(result.data)
+            await cacheFilesForContent(result.data)
           } catch (err) {
             console.error('Failed to cache offline content', err)
           }
@@ -230,8 +231,9 @@ export function Library({
       setContent(data);
       setTotalCount(total);
       try {
-        const { saveContent } = await import('../lib/offline-cache')
+        const { saveContent, cacheFilesForContent } = await import('../lib/offline-cache')
         await saveContent(data)
+        await cacheFilesForContent(data)
       } catch (err) {
         console.error('Failed to cache offline content', err)
       }

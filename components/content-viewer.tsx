@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -77,6 +77,20 @@ export function ContentViewer({
     : 1;
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [isFavorite, setIsFavorite] = useState(content?.is_favorite || false);
+  const [offlineUrl, setOfflineUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    let url: string | null = null;
+    const load = async () => {
+      const { getCachedFileUrl } = await import('../lib/offline-cache');
+      url = await getCachedFileUrl(content.id);
+      if (url) setOfflineUrl(url);
+    };
+    load();
+    return () => {
+      if (url) URL.revokeObjectURL(url);
+    };
+  }, [content.id]);
 
   const styles = getContentTypeStyle(content.content_type);
 
@@ -558,17 +572,17 @@ export function ContentViewer({
                                 Sheet Music
                               </h3>
 
-                              {content.file_url ? (
+                              {offlineUrl || content.file_url ? (
                                 <div className="overflow-hidden bg-white/80 backdrop-blur-sm border border-orange-200 rounded-xl shadow">
-                                  {content.file_url.toLowerCase().endsWith(".pdf") ? (
+                                  {(offlineUrl || content.file_url)!.toLowerCase().endsWith(".pdf") ? (
                                     <PdfViewer
-                                      url={content.file_url}
+                                      url={(offlineUrl || content.file_url) as string}
                                       fullscreen
                                       className="w-full h-[calc(100vh-250px)]"
                                     />
                                   ) : (
                                     <Image
-                                      src={content.file_url || "/placeholder.svg"}
+                                      src={(offlineUrl || content.file_url) || "/placeholder.svg"}
                                       alt={`Sheet music for ${content.title}`}
                                       width={800}
                                       height={800}
