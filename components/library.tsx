@@ -97,6 +97,8 @@ export function Library({
   const totalPages = Math.ceil(totalCount / pageSize);
 
   useEffect(() => {
+    let cancelled = false
+
     async function fetchData() {
       try {
         setLoading(true)
@@ -107,45 +109,55 @@ export function Library({
           sortBy,
           filters: selectedFilters,
         })
-        
-        if (result.error) {
-          console.error('Content loading error:', result.error)
-          // Still show the content but with a warning
-          setContent(result.data || [])
-          setTotalCount(result.total || 0)
-        } else {
-          setContent(result.data)
-          setTotalCount(result.total)
-          try {
-            const { saveContent } = await import('../lib/offline-cache')
-            await saveContent(result.data)
-          } catch (err) {
-            console.error('Failed to cache offline content', err)
+
+        if (!cancelled) {
+          if (result.error) {
+            console.error('Content loading error:', result.error)
+            // Still show the content but with a warning
+            setContent(result.data || [])
+            setTotalCount(result.total || 0)
+          } else {
+            setContent(result.data)
+            setTotalCount(result.total)
+            try {
+              const { saveContent } = await import('../lib/offline-cache')
+              await saveContent(result.data)
+            } catch (err) {
+              console.error('Failed to cache offline content', err)
+            }
           }
         }
       } catch (error) {
-        console.error('Failed to load content:', error)
-        try {
-          const { getCachedContent } = await import('../lib/offline-cache')
-          const cached = await getCachedContent()
-          if (cached.length > 0) {
-            setContent(cached)
-            setTotalCount(cached.length)
-            toast.warning('Offline data loaded')
-          } else {
+        if (!cancelled) {
+          console.error('Failed to load content:', error)
+          try {
+            const { getCachedContent } = await import('../lib/offline-cache')
+            const cached = await getCachedContent()
+            if (cached.length > 0) {
+              setContent(cached)
+              setTotalCount(cached.length)
+              toast.warning('Offline data loaded')
+            } else {
+              setContent([])
+              setTotalCount(0)
+            }
+          } catch (cacheErr) {
             setContent([])
             setTotalCount(0)
           }
-        } catch (cacheErr) {
-          setContent([])
-          setTotalCount(0)
         }
       } finally {
-        setLoading(false)
+        if (!cancelled) {
+          setLoading(false)
+        }
       }
     }
-    
+
     fetchData()
+
+    return () => {
+      cancelled = true
+    }
   }, [searchQuery, sortBy, selectedFilters, page, pageSize])
 
   const getContentIcon = (type: string) => {
