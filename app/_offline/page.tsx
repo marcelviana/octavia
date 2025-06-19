@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { getCachedContent } from "@/lib/offline-cache"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Wifi, WifiOff, RefreshCw, Music, Download } from "lucide-react"
@@ -10,32 +11,27 @@ export default function OfflinePage() {
   const [cachedContent, setCachedContent] = useState<any[]>([])
 
   useEffect(() => {
-    // Check for cached content in localStorage or IndexedDB
     const loadCachedContent = async () => {
-      try {
-        // This would load from your offline storage
-        const cached = localStorage.getItem('octavia-offline-content')
-        if (cached) {
-          setCachedContent(JSON.parse(cached))
-        }
-      } catch (error) {
-        console.error('Failed to load cached content:', error)
-      }
+      const cached = await getCachedContent()
+      setCachedContent(cached)
     }
-    
+
     loadCachedContent()
   }, [])
 
   const handleRetry = async () => {
     setIsRetrying(true)
     try {
-      // Check if we're back online
-      const response = await fetch('/api/health', { 
-        method: 'HEAD',
-        cache: 'no-cache' 
-      })
-      if (response.ok) {
-        window.location.reload()
+      if (navigator.onLine) {
+        const response = await fetch('/api/health', {
+          method: 'HEAD',
+          cache: 'no-cache'
+        })
+        if (response.ok) {
+          window.location.reload()
+        }
+      } else {
+        throw new Error('offline')
       }
     } catch (error) {
       // Still offline

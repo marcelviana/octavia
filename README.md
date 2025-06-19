@@ -218,6 +218,10 @@ We welcome contributions! Here's how you can help:
 
 Automated unit tests live in `lib/__tests__` and are executed with [Vitest](https://vitest.dev). Run `npm test` to execute them.
 
+### Offline Support
+
+The application includes a basic offline mode backed by IndexedDB. A health check endpoint (`/api/health`) lets the client detect when connectivity returns. Library data viewed while online is cached locally so it can be accessed from the dedicated offline page when the network is unavailable.
+
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
