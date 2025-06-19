@@ -148,13 +148,6 @@ function useSetlistOperations() {
       } catch (err) {
         console.error('Failed to cache offline setlists', err)
       }
-      try {
-        const { cacheFilesForContent } = await import('../lib/offline-cache')
-        const songs = setlistsData.flatMap(s => s.setlist_songs?.map((ss: any) => ss.content) || [])
-        await cacheFilesForContent([...contentData, ...songs])
-      } catch (err) {
-        console.error('Failed to cache files for offline', err)
-      }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to load data'
       logger.error("Error loading setlist data:", err)

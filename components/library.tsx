@@ -117,9 +117,8 @@ export function Library({
           setContent(result.data)
           setTotalCount(result.total)
           try {
-            const { saveContent, cacheFilesForContent } = await import('../lib/offline-cache')
+            const { saveContent } = await import('../lib/offline-cache')
             await saveContent(result.data)
-            await cacheFilesForContent(result.data)
           } catch (err) {
             console.error('Failed to cache offline content', err)
           }
@@ -216,6 +215,17 @@ export function Library({
     setDeleteDialog(true);
   };
 
+  const handleDownloadContent = async (content: any) => {
+    try {
+      const { cacheFileForContent } = await import('../lib/offline-cache')
+      await cacheFileForContent(content)
+      toast.success('Content cached for offline use')
+    } catch (err) {
+      console.error('Failed to cache content', err)
+      toast.error('Download failed')
+    }
+  };
+
   const confirmDelete = async () => {
     if (!contentToDelete) return;
 
@@ -231,9 +241,8 @@ export function Library({
       setContent(data);
       setTotalCount(total);
       try {
-        const { saveContent, cacheFilesForContent } = await import('../lib/offline-cache')
+        const { saveContent } = await import('../lib/offline-cache')
         await saveContent(data)
-        await cacheFilesForContent(data)
       } catch (err) {
         console.error('Failed to cache offline content', err)
       }
@@ -520,7 +529,7 @@ export function Library({
                         <Share className="w-4 h-4 mr-2" />
                         Share
                       </DropdownMenuItem>
-                      <DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handleDownloadContent(item)}>
                         <Download className="w-4 h-4 mr-2" />
                         Download
                       </DropdownMenuItem>
@@ -669,7 +678,7 @@ export function Library({
                           <Share className="w-4 h-4 mr-2" />
                           Share
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => handleDownloadContent(item)}>
                           <Download className="w-4 h-4 mr-2" />
                           Download
                         </DropdownMenuItem>
