@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -124,9 +125,21 @@ export function Library({
         }
       } catch (error) {
         console.error('Failed to load content:', error)
-        // Show error state but don't crash
-        setContent([])
-        setTotalCount(0)
+        try {
+          const { getCachedContent } = await import('../lib/offline-cache')
+          const cached = await getCachedContent()
+          if (cached.length > 0) {
+            setContent(cached)
+            setTotalCount(cached.length)
+            toast.warning('Offline data loaded')
+          } else {
+            setContent([])
+            setTotalCount(0)
+          }
+        } catch (cacheErr) {
+          setContent([])
+          setTotalCount(0)
+        }
       } finally {
         setLoading(false)
       }
