@@ -3,6 +3,34 @@ import localforage from 'localforage'
 const FILE_PREFIX = 'octavia-offline-file-'
 
 const STORE_KEY = 'octavia-offline-content'
+const INDEX_KEY = 'octavia-offline-index'
+const MAX_CACHE_BYTES = 50 * 1024 * 1024 // 50MB
+
+type IndexEntry = { id: string; size: number; lastAccess: number }
+
+async function getIndex(): Promise<IndexEntry[]> {
+  return (await localforage.getItem<IndexEntry[]>(INDEX_KEY)) || []
+}
+
+async function saveIndex(index: IndexEntry[]): Promise<void> {
+  await localforage.setItem(INDEX_KEY, index)
+}
+
+function totalSize(index: IndexEntry[]) {
+  return index.reduce((sum, e) => sum + e.size, 0)
+}
+
+async function enforceQuota(index: IndexEntry[]): Promise<IndexEntry[]> {
+  let current = [...index]
+  if (totalSize(current) <= MAX_CACHE_BYTES) return current
+  current.sort((a, b) => a.lastAccess - b.lastAccess)
+  while (totalSize(current) > MAX_CACHE_BYTES && current.length) {
+    const victim = current.shift()!
+    await localforage.removeItem(`${FILE_PREFIX}${victim.id}`)
+  }
+  await saveIndex(current)
+  return current
+}
 
 export async function getCachedContent(): Promise<any[]> {
   try {
@@ -38,11 +66,16 @@ export async function cacheFilesForContent(items: any[]): Promise<void> {
         if (!res.ok) throw new Error('fetch failed')
         const array = await res.arrayBuffer()
         const mime = res.headers.get('Content-Type') || 'application/octet-stream'
-        const base64 = Buffer.from(array).toString('base64')
-        await localforage.setItem(key, { mime, data: base64 })
+        await localforage.setItem(key, { mime, data: array })
+        const size = array.byteLength
+        let index = await getIndex()
+        index.push({ id: item.id, size, lastAccess: Date.now() })
+        index = await enforceQuota(index)
+        await saveIndex(index)
       }
     } catch (err) {
       console.error(`Failed to cache file for ${item.id}`, err)
+      throw err
     }
   }
 }
@@ -51,12 +84,20 @@ export async function getCachedFileUrl(id: string): Promise<string | null> {
   try {
     const stored = await localforage.getItem<any>(`${FILE_PREFIX}${id}`)
     if (!stored) return null
-    const buffer = Buffer.from(stored.data, 'base64')
-    const blob = new Blob([buffer], { type: stored.mime })
+    let index = await getIndex()
+    const entry = index.find(e => e.id === id)
+    if (entry) {
+      entry.lastAccess = Date.now()
+      await saveIndex(index)
+    }
+    const BlobCtor: typeof Blob = (typeof window !== 'undefined' && (window as any).Blob) || Blob
+    const dataArray = stored.data instanceof ArrayBuffer ? new Uint8Array(stored.data) : new Uint8Array(stored.data)
+    const blob = new BlobCtor([dataArray], { type: stored.mime })
     if (typeof URL.createObjectURL === 'function') {
       return URL.createObjectURL(blob)
     }
-    return `data:${stored.mime};base64,${stored.data}`
+    const base64 = Buffer.from(dataArray).toString('base64')
+    return `data:${stored.mime};base64,${base64}`
   } catch (err) {
     console.error('Failed to load cached file', err)
     return null
