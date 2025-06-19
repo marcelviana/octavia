@@ -1,7 +1,16 @@
 import { NextRequest } from 'next/server'
 import { getSupabaseServerClient } from '@/lib/supabase-server'
 
-const allowedHosts = (process.env.ALLOWED_PROXY_HOSTS ?? new URL(process.env.NEXT_PUBLIC_SUPABASE_URL || '').host).split(',').map(h => h.trim()).filter(Boolean)
+const baseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+if (!baseUrl) {
+  console.error('NEXT_PUBLIC_SUPABASE_URL not set')
+  throw new Error('Server misconfiguration')
+}
+const defaultHost = new URL(baseUrl).host
+const allowedHosts = (process.env.ALLOWED_PROXY_HOSTS ?? defaultHost)
+  .split(',')
+  .map(h => h.trim())
+  .filter(Boolean)
 
 const RATE_LIMIT_WINDOW_MS = 60_000
 const RATE_LIMIT_MAX = 20
