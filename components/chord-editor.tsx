@@ -95,7 +95,46 @@ export function ChordEditor({ content, onChange }: ChordEditorProps) {
                   <SelectValue placeholder="Select key" />
                 </SelectTrigger>
                 <SelectContent>
-                  {["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"].map((key) => (
+                  {[
+                    "C",
+                    "Cm",
+                    "C#",
+                    "C#m",
+                    "Db",
+                    "Dbm",
+                    "D",
+                    "Dm",
+                    "D#",
+                    "D#m",
+                    "Eb",
+                    "Ebm",
+                    "E",
+                    "Em",
+                    "Fb",
+                    "Fbm",
+                    "F",
+                    "Fm",
+                    "F#",
+                    "F#m",
+                    "Gb",
+                    "Gbm",
+                    "G",
+                    "Gm",
+                    "G#",
+                    "G#m",
+                    "Ab",
+                    "Abm",
+                    "A",
+                    "Am",
+                    "A#",
+                    "A#m",
+                    "Bb",
+                    "Bbm",
+                    "B",
+                    "Bm",
+                    "Cb",
+                    "Cbm",
+                  ].map((key) => (
                     <SelectItem key={key} value={key}>
                       {key}
                     </SelectItem>

@@ -82,7 +82,46 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
 
   const difficulties = ["Beginner", "Intermediate", "Advanced", "Expert"]
 
-  const keys = ["C", "C#", "Db", "D", "D#", "Eb", "E", "F", "F#", "Gb", "G", "G#", "Ab", "A", "A#", "Bb", "B"]
+  const keys = [
+    "C",
+    "Cm",
+    "C#",
+    "C#m",
+    "Db",
+    "Dbm",
+    "D",
+    "Dm",
+    "D#",
+    "D#m",
+    "Eb",
+    "Ebm",
+    "E",
+    "Em",
+    "Fb",
+    "Fbm",
+    "F",
+    "Fm",
+    "F#",
+    "F#m",
+    "Gb",
+    "Gbm",
+    "G",
+    "Gm",
+    "G#",
+    "G#m",
+    "Ab",
+    "Abm",
+    "A",
+    "Am",
+    "A#",
+    "A#m",
+    "Bb",
+    "Bbm",
+    "B",
+    "Bm",
+    "Cb",
+    "Cbm",
+  ]
 
   const basicCompleted = [metadata.title, metadata.artist, metadata.album, metadata.genre].filter(Boolean).length
   const musicalCompleted = [metadata.key, metadata.bpm, metadata.timeSignature, metadata.difficulty].filter(Boolean).length
