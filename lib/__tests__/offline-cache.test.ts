@@ -53,4 +53,18 @@ describe('offline cache', () => {
     const url = await cache.getCachedFileUrl('1')
     expect(url).toBeNull()
   })
+
+  it('skips caching when file exceeds quota', async () => {
+    const big = new Uint8Array(50 * 1024 * 1024 + 1)
+    global.fetch = vi.fn(async () => ({
+      ok: true,
+      arrayBuffer: async () => big,
+      headers: { get: () => 'application/pdf' }
+    })) as any
+    await cache.cacheFilesForContent([
+      { id: 'big', file_url: 'https://x.test/big.pdf' }
+    ])
+    const url = await cache.getCachedFileUrl('big')
+    expect(url).toBeNull()
+  })
 })
