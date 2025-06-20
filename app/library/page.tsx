@@ -6,7 +6,7 @@ import LibraryPageClient from "@/components/library-page-client";
 export default async function LibraryPage({
   searchParams,
 }: {
-  searchParams?: Promise<{ [key: string]: string }>
+  searchParams?: { [key: string]: string | string[] | undefined }
 }) {
   const supabase = await getSupabaseServerClient();
   const {
@@ -17,9 +17,13 @@ export default async function LibraryPage({
     redirect("/login");
   }
 
-  const resolved = await searchParams;
-  const search = resolved?.search || "";
-  const page = resolved?.page ? parseInt(resolved.page, 10) : 1;
+  const searchParam = searchParams?.search;
+  const search = Array.isArray(searchParam)
+    ? searchParam[0]
+    : searchParam ?? "";
+
+  const pageParam = searchParams?.page;
+  const page = pageParam ? parseInt(Array.isArray(pageParam) ? pageParam[0] : pageParam, 10) : 1;
   const pageSize = 20;
   const { data, total } = await getUserContentPageServer({
     page,

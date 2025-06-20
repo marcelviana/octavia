@@ -7,7 +7,7 @@ import { Music } from "lucide-react"
 export default async function LoginPage({
   searchParams,
 }: {
-  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
+  searchParams?: { [key: string]: string | string[] | undefined }
 }) {
   const supabase = await getSupabaseServerClient()
   const {
@@ -18,8 +18,7 @@ export default async function LoginPage({
     redirect("/dashboard")
   }
 
-  const resolvedSearchParams = await searchParams
-  const errorDescription = resolvedSearchParams?.error_description
+  const errorDescription = searchParams?.error_description
   const error = typeof errorDescription === "string" ? errorDescription : ""
 
   return (

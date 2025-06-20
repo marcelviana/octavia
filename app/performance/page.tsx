@@ -9,7 +9,7 @@ import PerformancePageClient from "@/components/performance-page-client";
 export default async function PerformancePage({
   searchParams,
 }: {
-  searchParams?: Promise<{ [key: string]: string }>;
+  searchParams?: { [key: string]: string | string[] | undefined };
 }) {
   const supabase = await getSupabaseServerClient();
   const {
@@ -20,9 +20,8 @@ export default async function PerformancePage({
     redirect("/login");
   }
 
-  const resolvedSearchParams = await searchParams;
-  const contentId = resolvedSearchParams?.contentId;
-  const setlistId = resolvedSearchParams?.setlistId;
+  const contentId = searchParams?.contentId as string | undefined;
+  const setlistId = searchParams?.setlistId as string | undefined;
 
   let content: any | null = null;
   let setlist: any | null = null;
