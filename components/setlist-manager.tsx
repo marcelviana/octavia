@@ -20,7 +20,15 @@ import {
   Star,
   Sparkles,
 } from "lucide-react"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -63,6 +71,8 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
   const [isAddSongsDialogOpen, setIsAddSongsDialogOpen] = useState(false)
   const [selectedSongsToAdd, setSelectedSongsToAdd] = useState<string[]>([])
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+  const [setlistToDelete, setSetlistToDelete] = useState<SetlistWithSongs | null>(null)
   const [newSetlistData, setNewSetlistData] = useState({
     name: "",
     description: "",
@@ -172,6 +182,13 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
       console.error("Error deleting setlist:", err)
       setError("Failed to delete setlist. Please try again.")
     }
+  }
+
+  const confirmDeleteSetlist = async () => {
+    if (!setlistToDelete) return
+    await handleDeleteSetlist(setlistToDelete.id)
+    setDeleteDialogOpen(false)
+    setSetlistToDelete(null)
   }
 
   const handleSongSelection = (contentId: string, checked: boolean) => {
@@ -508,7 +525,8 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                             variant="ghost"
                             onClick={(e) => {
                               e.stopPropagation()
-                              handleDeleteSetlist(setlist.id)
+                              setSetlistToDelete(setlist)
+                              setDeleteDialogOpen(true)
                             }}
                             className={cn(
                               expanded
@@ -548,7 +566,8 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                               size="sm"
                               onClick={(e) => {
                                 e.stopPropagation()
-                                handleDeleteSetlist(setlist.id)
+                                setSetlistToDelete(setlist)
+                                setDeleteDialogOpen(true)
                               }}
                               className="border-white/50 text-white bg-white/10 hover:bg-white/20 transition-colors px-2 py-1 text-xs"
                             >
@@ -735,6 +754,24 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
             </div>
 
         </div>
+        <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Delete Setlist</DialogTitle>
+              <DialogDescription>
+                Are you sure you want to delete this setlist? This action cannot be undone.
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setDeleteDialogOpen(false)}>
+                Cancel
+              </Button>
+              <Button variant="destructive" onClick={confirmDeleteSetlist}>
+                Delete
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
       </div>
   )
