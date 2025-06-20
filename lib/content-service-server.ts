@@ -84,7 +84,9 @@ export async function getSetlistByIdServer(id: string) {
           artist,
           content_type,
           key,
-          bpm
+          bpm,
+          file_url,
+          content_data
         )
       `,
     )
@@ -109,6 +111,8 @@ export async function getSetlistByIdServer(id: string) {
       content_type: song.content?.content_type || "Unknown Type",
       key: song.content?.key || null,
       bpm: song.content?.bpm || null,
+      file_url: song.content?.file_url || null,
+      content_data: song.content?.content_data || null,
     },
   }));
 

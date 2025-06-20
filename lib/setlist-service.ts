@@ -1,5 +1,6 @@
 import { getSupabaseBrowserClient, isSupabaseConfigured } from "@/lib/supabase"
 import logger from "@/lib/logger"
+import { getContentById } from "@/lib/content-service"
 import type { Database } from "@/types/supabase"
 
 // Mock data for demo mode
@@ -102,7 +103,17 @@ export async function getUserSetlists() {
     // Return mock data in demo mode
     if (!isSupabaseConfigured) {
       logger.log("Demo mode: Returning mock setlists")
-      return MOCK_SETLISTS
+      return Promise.all(
+        MOCK_SETLISTS.map(async (sl) => ({
+          ...sl,
+          setlist_songs: await Promise.all(
+            sl.setlist_songs.map(async (song: any) => ({
+              ...song,
+              content: await getContentById(song.content.id || song.content_id),
+            }))
+          ),
+        }))
+      )
     }
 
     const supabase = getSupabaseBrowserClient()
@@ -147,7 +158,9 @@ export async function getUserSetlists() {
               artist,
               content_type,
               key,
-              bpm
+              bpm,
+              file_url,
+              content_data
             )
           `,
           )
@@ -173,6 +186,8 @@ export async function getUserSetlists() {
             content_type: song.content?.content_type || "Unknown Type",
             key: song.content?.key || null,
             bpm: song.content?.bpm || null,
+            file_url: song.content?.file_url || null,
+            content_data: song.content?.content_data || null,
           },
         }))
 
@@ -192,12 +207,17 @@ export async function getSetlistById(id: string) {
   try {
     // Return mock data in demo mode
     if (!isSupabaseConfigured) {
-      const mockSetlist = MOCK_SETLISTS.find((setlist) => setlist.id === id)
-      if (mockSetlist) {
-        return mockSetlist
+      const mockSetlist =
+        MOCK_SETLISTS.find((setlist) => setlist.id === id) || MOCK_SETLISTS[0]
+      return {
+        ...mockSetlist,
+        setlist_songs: await Promise.all(
+          mockSetlist.setlist_songs.map(async (song: any) => ({
+            ...song,
+            content: await getContentById(song.content.id || song.content_id),
+          }))
+        ),
       }
-      // If ID not found in mock data, return the first item
-      return MOCK_SETLISTS[0]
     }
 
     const supabase = getSupabaseBrowserClient()
@@ -240,7 +260,9 @@ export async function getSetlistById(id: string) {
           artist,
           content_type,
           key,
-          bpm
+          bpm,
+          file_url,
+          content_data
         )
       `,
       )
@@ -266,6 +288,8 @@ export async function getSetlistById(id: string) {
         content_type: song.content?.content_type || "Unknown Type",
         key: song.content?.key || null,
         bpm: song.content?.bpm || null,
+        file_url: song.content?.file_url || null,
+        content_data: song.content?.content_data || null,
       },
     }))
 
@@ -405,7 +429,9 @@ export async function updateSetlist(id: string, updates: { name?: string; descri
           artist,
           content_type,
           key,
-          bpm
+          bpm,
+          file_url,
+          content_data
         )
       `,
       )
@@ -431,6 +457,8 @@ export async function updateSetlist(id: string, updates: { name?: string; descri
         content_type: song.content?.content_type || "Unknown Type",
         key: song.content?.key || null,
         bpm: song.content?.bpm || null,
+        file_url: song.content?.file_url || null,
+        content_data: song.content?.content_data || null,
       },
     }))
 
