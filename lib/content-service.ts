@@ -248,8 +248,9 @@ export async function getUserContentPage(
     // Apply search with better text matching
     if (search) {
       // Use ilike for case-insensitive search across multiple fields
+      // Note: We exclude tags from the main OR query since it's an array field
       query = query.or(
-        `title.ilike.%${search}%,artist.ilike.%${search}%,album.ilike.%${search}%,tags.ilike.%${search}%`
+        `title.ilike.%${search}%,artist.ilike.%${search}%,album.ilike.%${search}%`
       )
     }
 
@@ -357,7 +358,7 @@ export async function getUserContentPage(
     }
     
     // Return empty result rather than throwing in some cases
-    if (error instanceof Error && error.message.includes('timeout')) {
+    if (error instanceof Error && (error.message.includes('timeout') || error.message.includes('timed out'))) {
       return {
         data: [],
         total: 0,
