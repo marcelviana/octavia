@@ -1,5 +1,6 @@
 import localforage from 'localforage'
 import { getSupabaseBrowserClient } from './supabase'
+import { toast } from '@/hooks/use-toast'
 
 const FILE_PREFIX = 'octavia-offline-file'
 
@@ -126,6 +127,13 @@ export async function cacheFilesForContent(items: any[]): Promise<void> {
           throw new Error(text || 'fetch failed')
         }
         const array = await res.arrayBuffer()
+        if (array.byteLength > MAX_CACHE_BYTES) {
+          toast({
+            title: 'File too large to cache',
+            description: 'This file exceeds the 50MB offline cache limit.'
+          })
+          continue
+        }
         const mime = res.headers.get('Content-Type') || 'application/octet-stream'
         await localforage.setItem(key, { mime, data: array })
         const size = array.byteLength
