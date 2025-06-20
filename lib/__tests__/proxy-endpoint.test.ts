@@ -14,6 +14,15 @@ afterEach(() => {
 })
 
 describe('proxy endpoint', () => {
+  it('returns 500 when NEXT_PUBLIC_SUPABASE_URL missing', async () => {
+    delete process.env.NEXT_PUBLIC_SUPABASE_URL
+
+    const { GET } = await import('../../app/api/proxy/route')
+    const req = new NextRequest('https://site.test/api/proxy?url=' + encodeURIComponent('https://demo.supabase.co/file'))
+    const res = await GET(req as any)
+    expect(res.status).toBe(500)
+  })
+
   it('rejects url not on whitelist', async () => {
     process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://demo.supabase.co'
     process.env.ALLOWED_PROXY_HOSTS = 'demo.supabase.co'

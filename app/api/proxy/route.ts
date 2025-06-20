@@ -1,17 +1,6 @@
 import { NextRequest } from 'next/server'
 import { getSupabaseServerClient } from '@/lib/supabase-server'
 
-const baseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-if (!baseUrl) {
-  console.error('NEXT_PUBLIC_SUPABASE_URL not set')
-  throw new Error('Server misconfiguration')
-}
-const defaultHost = new URL(baseUrl).host
-const allowedHosts = (process.env.ALLOWED_PROXY_HOSTS ?? defaultHost)
-  .split(',')
-  .map(h => h.trim())
-  .filter(Boolean)
-
 const RATE_LIMIT_WINDOW_MS = 60_000
 const RATE_LIMIT_MAX = 20
 const rateLimitMap = new Map<string, { count: number; timestamp: number }>()
@@ -27,6 +16,17 @@ setInterval(() => {
 }, RATE_LIMIT_WINDOW_MS).unref()
 
 export async function GET(req: NextRequest) {
+  const baseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  if (!baseUrl) {
+    console.error('NEXT_PUBLIC_SUPABASE_URL not set')
+    return new Response('Server misconfiguration', { status: 500 })
+  }
+  const defaultHost = new URL(baseUrl).host
+  const allowedHosts = (process.env.ALLOWED_PROXY_HOSTS ?? defaultHost)
+    .split(',')
+    .map(h => h.trim())
+    .filter(Boolean)
+
   const urlParam = req.nextUrl.searchParams.get('url')
   if (!urlParam) {
     return new Response('Missing url', { status: 400 })
