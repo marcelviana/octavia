@@ -364,9 +364,9 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
           </Dialog>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="space-y-6">
           {/* Setlists List */}
-          <div className="lg:col-span-1 space-y-6">
+          <div className="space-y-6">
             {setlists.length === 0 ? (
               <Card className="border-0 shadow-2xl bg-white/80 backdrop-blur-sm">
                 <CardContent className="p-6 text-center">
@@ -388,311 +388,299 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
               </Card>
             ) : (
               setlists.map((setlist) => (
-                <Card
-                  key={setlist.id}
-                  className={`cursor-pointer transition-all duration-300 border-0 shadow-lg hover:shadow-2xl hover:scale-105 ${
-                    selectedSetlist?.id === setlist.id
-                      ? "ring-2 ring-amber-500 bg-gradient-to-r from-amber-50 to-orange-50 shadow-2xl scale-105"
-                      : "bg-white/80 backdrop-blur-sm hover:bg-white/90"
-                  }`}
-                  onClick={() => setSelectedSetlist(setlist)}
-                >
-                  <CardContent className="p-4 overflow-hidden">
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center mb-3">
-                          <div className="w-3 h-3 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full mr-3"></div>
-                          <h3 className="font-bold text-gray-900 text-base">{setlist.name}</h3>
+                <div key={setlist.id} className="space-y-2">
+                  <Card
+                    className={`cursor-pointer transition-all duration-300 border-0 shadow-lg hover:shadow-2xl hover:scale-105 ${
+                      selectedSetlist?.id === setlist.id
+                        ? "ring-2 ring-amber-500 bg-gradient-to-r from-amber-50 to-orange-50 shadow-2xl scale-105"
+                        : "bg-white/80 backdrop-blur-sm hover:bg-white/90"
+                    }`}
+                    onClick={() =>
+                      setSelectedSetlist(
+                        selectedSetlist?.id === setlist.id ? null : setlist,
+                      )
+                    }
+                  >
+                    <CardContent className="p-4 overflow-hidden">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <div className="flex items-center mb-3">
+                            <div className="w-3 h-3 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full mr-3"></div>
+                            <h3 className="font-bold text-gray-900 text-base">{setlist.name}</h3>
+                          </div>
+                          <p className="text-gray-600 mb-3 text-sm">{setlist.description}</p>
+                          <div className="flex items-center flex-wrap gap-2 text-xs text-gray-500">
+                            {setlist.performance_date && (
+                              <div className="flex items-center bg-amber-50 px-2 py-1 rounded-full">
+                                <Calendar className="w-3 h-3 mr-1 text-amber-600" />
+                                {new Date(setlist.performance_date).toLocaleDateString()}
+                              </div>
+                            )}
+                            <div className="flex items-center bg-blue-50 px-2 py-1 rounded-full">
+                              <Music className="w-3 h-3 mr-1 text-blue-600" />
+                              {setlist.setlist_songs?.length || 0} songs
+                            </div>
+                            <div className="flex items-center bg-green-50 px-2 py-1 rounded-full">
+                              <Clock className="w-3 h-3 mr-1 text-green-600" />
+                              {formatDuration(calculateTotalDuration(setlist.setlist_songs || []))}
+                            </div>
+                          </div>
                         </div>
-                        <p className="text-gray-600 mb-3 text-sm">{setlist.description}</p>
-                        <div className="flex items-center flex-wrap gap-2 text-xs text-gray-500">
-                          {setlist.performance_date && (
-                            <div className="flex items-center bg-amber-50 px-2 py-1 rounded-full">
-                              <Calendar className="w-3 h-3 mr-1 text-amber-600" />
-                              {new Date(setlist.performance_date).toLocaleDateString()}
+                        <div className="flex space-x-2">
+                          <Button size="sm" variant="ghost" className="hover:bg-amber-100 text-amber-600">
+                            <Edit className="w-4 h-4" />
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              handleDeleteSetlist(setlist.id)
+                            }}
+                            className="hover:bg-red-100 text-red-600"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                  {selectedSetlist?.id === setlist.id && (
+                    <Card className="border-0 shadow-2xl bg-white/80 backdrop-blur-sm">
+                      <CardHeader className="bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-t-lg p-4">
+                        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+                          <div className="flex-1">
+                            <CardTitle className="text-lg lg:text-xl font-bold flex items-center mb-2">
+                              <Star className="w-6 h-6 mr-2 flex-shrink-0" />
+                              <span className="break-words">{selectedSetlist.name}</span>
+                            </CardTitle>
+                            {selectedSetlist.description && (
+                              <p className="text-amber-100 text-sm lg:text-base leading-relaxed">
+                                {selectedSetlist.description}
+                              </p>
+                            )}
+                          </div>
+                          <div className="flex flex-wrap items-center gap-3">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="border-white/50 text-white hover:bg-white/20 transition-colors bg-white/10 px-2 py-1 text-xs"
+                              title="Duplicate setlist"
+                            >
+                              <Copy className="w-3 h-3 text-white" />
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="border-white/50 text-white hover:bg-white/20 transition-colors bg-white/10 px-2 py-1 text-xs"
+                              title="Share setlist"
+                            >
+                              <Share className="w-3 h-3 text-white" />
+                            </Button>
+                            <Button
+                              onClick={() => selectedSetlist && onEnterPerformance(selectedSetlist)}
+                              className="bg-white text-amber-700 hover:bg-amber-50 font-bold px-3 py-1 text-xs transition-colors shadow-sm"
+                            >
+                              <Play className="w-3 h-3 mr-1" />
+                              <span className="text-amber-700">Start Performance</span>
+                            </Button>
+                          </div>
+                        </div>
+                        <div className="flex flex-wrap items-center gap-4 text-amber-100 mt-4 pt-4 border-t border-white/20">
+                          {selectedSetlist.performance_date && (
+                            <div className="flex items-center">
+                              <Calendar className="w-4 h-4 mr-1" />
+                              <span className="font-medium text-sm">
+                                {new Date(selectedSetlist.performance_date).toLocaleDateString()}
+                              </span>
                             </div>
                           )}
-                          <div className="flex items-center bg-blue-50 px-2 py-1 rounded-full">
-                            <Music className="w-3 h-3 mr-1 text-blue-600" />
-                            {setlist.setlist_songs?.length || 0} songs
+                          <div className="flex items-center">
+                            <Music className="w-4 h-4 mr-1" />
+                            <span className="font-medium text-sm">{selectedSetlist.setlist_songs?.length || 0} songs</span>
                           </div>
-                          <div className="flex items-center bg-green-50 px-2 py-1 rounded-full">
-                            <Clock className="w-3 h-3 mr-1 text-green-600" />
-                            {formatDuration(calculateTotalDuration(setlist.setlist_songs || []))}
+                          <div className="flex items-center">
+                            <Clock className="w-4 h-4 mr-1" />
+                            <span className="font-medium text-sm">
+                              {formatDuration(calculateTotalDuration(selectedSetlist?.setlist_songs || []))}
+                            </span>
                           </div>
                         </div>
-                      </div>
-                      <div className="flex space-x-2">
-                        <Button size="sm" variant="ghost" className="hover:bg-amber-100 text-amber-600">
-                          <Edit className="w-4 h-4" />
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            handleDeleteSetlist(setlist.id)
-                          }}
-                          className="hover:bg-red-100 text-red-600"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))
-            )}
-          </div>
-
-          {/* Setlist Details */}
-          <div className="lg:col-span-2">
-            {selectedSetlist ? (
-              <Card className="border-0 shadow-2xl bg-white/80 backdrop-blur-sm">
-                <CardHeader className="bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-t-lg p-4">
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-                    <div className="flex-1">
-                      <CardTitle className="text-lg lg:text-xl font-bold flex items-center mb-2">
-                        <Star className="w-6 h-6 mr-2 flex-shrink-0" />
-                        <span className="break-words">{selectedSetlist.name}</span>
-                      </CardTitle>
-                      {selectedSetlist.description && (
-                        <p className="text-amber-100 text-sm lg:text-base leading-relaxed">
-                          {selectedSetlist.description}
-                        </p>
-                      )}
-                    </div>
-                    <div className="flex flex-wrap items-center gap-3">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="border-white/50 text-white hover:bg-white/20 transition-colors bg-white/10 px-2 py-1 text-xs"
-                        title="Duplicate setlist"
-                      >
-                        <Copy className="w-3 h-3 text-white" />
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="border-white/50 text-white hover:bg-white/20 transition-colors bg-white/10 px-2 py-1 text-xs"
-                        title="Share setlist"
-                      >
-                        <Share className="w-3 h-3 text-white" />
-                      </Button>
-                      <Button
-                        onClick={() => selectedSetlist && onEnterPerformance(selectedSetlist)}
-                        className="bg-white text-amber-700 hover:bg-amber-50 font-bold px-3 py-1 text-xs transition-colors shadow-sm"
-                      >
-                        <Play className="w-3 h-3 mr-1" />
-                        <span className="text-amber-700">Start Performance</span>
-                      </Button>
-                    </div>
-                  </div>
-                  <div className="flex flex-wrap items-center gap-4 text-amber-100 mt-4 pt-4 border-t border-white/20">
-                    {selectedSetlist.performance_date && (
-                      <div className="flex items-center">
-                        <Calendar className="w-4 h-4 mr-1" />
-                        <span className="font-medium text-sm">
-                          {new Date(selectedSetlist.performance_date).toLocaleDateString()}
-                        </span>
-                      </div>
-                    )}
-                    <div className="flex items-center">
-                      <Music className="w-4 h-4 mr-1" />
-                      <span className="font-medium text-sm">{selectedSetlist.setlist_songs?.length || 0} songs</span>
-                    </div>
-                    <div className="flex items-center">
-                      <Clock className="w-4 h-4 mr-1" />
-                      <span className="font-medium text-sm">
-                        {formatDuration(calculateTotalDuration(selectedSetlist?.setlist_songs || []))}
-                      </span>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent className="p-4">
-                  <div className="space-y-4">
-                    {!selectedSetlist.setlist_songs || selectedSetlist.setlist_songs.length === 0 ? (
-                      <div className="text-center py-8">
-                        <div className="w-16 h-16 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                          <Music className="w-8 h-8 text-white" />
-                        </div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-3">No Songs Yet</h3>
-                        <p className="text-gray-600 mb-6 text-base">Add some songs to this setlist to get started.</p>
-                      </div>
-                    ) : (
-                      (selectedSetlist.setlist_songs || [])
-                        .sort((a, b) => a.position - b.position)
-                        .map((setlistSong, index) => (
-                          <div
-                            key={setlistSong.id}
-                            className="flex items-center justify-between p-3 bg-gradient-to-r from-amber-50 to-orange-50 rounded-lg border border-amber-200 hover:shadow-md transition-all duration-300"
-                          >
-                            <div className="flex items-center space-x-3">
-                              <GripVertical className="w-4 h-4 text-amber-500 cursor-grab" />
-                              <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
-                                {index + 1}
+                      </CardHeader>
+                      <CardContent className="p-4">
+                        <div className="space-y-4 max-h-72 overflow-y-auto scroll-smooth">
+                          {!selectedSetlist.setlist_songs || selectedSetlist.setlist_songs.length === 0 ? (
+                            <div className="text-center py-8">
+                              <div className="w-16 h-16 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <Music className="w-8 h-8 text-white" />
                               </div>
-                              <div>
-                                <p className="font-bold text-gray-900 text-base">{setlistSong.content.title}</p>
-                                <p className="text-gray-600 text-sm">
-                                  {setlistSong.content.artist || "Unknown Artist"}
-                                </p>
-                              </div>
-                            </div>
-                            <div className="flex items-center space-x-4">
-                              <Badge
-                                variant="secondary"
-                                className="bg-amber-100 text-amber-700 border-amber-300 text-sm px-2 py-1"
-                              >
-                                {setlistSong.content.key || "N/A"}
-                              </Badge>
-                              <span className="text-gray-500 text-sm font-medium">
-                                {setlistSong.content.bpm ? `${setlistSong.content.bpm} BPM` : "N/A"}
-                              </span>
-                              <div className="flex space-x-1">
-                                <Button
-                                  size="sm"
-                                  variant="ghost"
-                                  className="hover:bg-amber-100 text-amber-600 h-7 w-7 p-0"
-                                >
-                                  <Edit className="w-3 h-3" />
-                                </Button>
-                                <Button
-                                  size="sm"
-                                  variant="ghost"
-                                  onClick={() => handleRemoveSong(setlistSong.id)}
-                                  className="hover:bg-red-100 text-red-600 h-7 w-7 p-0"
-                                >
-                                  <Trash2 className="w-3 h-3" />
-                                </Button>
-                              </div>
-                            </div>
-                          </div>
-                        ))
-                    )}
-                  </div>
-
-                  <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200">
-                    <div className="flex items-center justify-between">
-                      <span className="font-bold text-blue-900 text-base">Total Performance Time</span>
-                      <span className="text-xl font-bold text-blue-900">
-                        {formatDuration(calculateTotalDuration(selectedSetlist?.setlist_songs || []))}
-                      </span>
-                    </div>
-                  </div>
-
-                  <Dialog open={isAddSongsDialogOpen} onOpenChange={setIsAddSongsDialogOpen}>
-                    <DialogTrigger asChild>
-                      <Button className="w-full mt-4 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white py-2 text-base shadow-lg">
-                        <Plus className="w-4 h-4 mr-2" />
-                        Add Songs to Setlist
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="max-w-4xl max-h-[80vh] bg-white/95 backdrop-blur-sm border border-amber-200">
-                      <DialogHeader>
-                        <DialogTitle className="text-2xl font-bold text-gray-900 flex items-center">
-                          <Music className="w-6 h-6 mr-3 text-amber-500" />
-                          Add Songs to &quot;{selectedSetlist?.name}&quot;
-                        </DialogTitle>
-                      </DialogHeader>
-                      <div className="space-y-6">
-                        <div className="text-gray-600 text-lg">
-                          Select songs from your library to add to this setlist
-                        </div>
-
-                        <ScrollArea className="h-96 border border-amber-300 rounded-xl p-6 bg-amber-50/50">
-                          {availableSongs.length === 0 ? (
-                            <div className="text-center py-16 text-gray-500">
-                              <Music className="w-16 h-16 mx-auto mb-6 opacity-50" />
-                              <p className="text-xl">No additional songs available to add.</p>
-                              <p className="text-lg mt-2">All songs from your library are already in this setlist.</p>
+                              <h3 className="text-xl font-bold text-gray-900 mb-3">No Songs Yet</h3>
+                              <p className="text-gray-600 mb-6 text-base">Add some songs to this setlist to get started.</p>
                             </div>
                           ) : (
-                            <div className="space-y-4">
-                              {availableSongs.map((song) => (
+                            (selectedSetlist.setlist_songs || [])
+                              .sort((a, b) => a.position - b.position)
+                              .map((setlistSong, index) => (
                                 <div
-                                  key={song.id}
-                                  className="flex items-center space-x-4 p-4 rounded-xl hover:bg-white/60 transition-all duration-300 border border-amber-200"
+                                  key={setlistSong.id}
+                                  className="flex items-center justify-between p-3 bg-gradient-to-r from-amber-50 to-orange-50 rounded-lg border border-amber-200 hover:shadow-md transition-all duration-300"
                                 >
-                                  <Checkbox
-                                    id={`song-${song.id}`}
-                                    checked={selectedSongsToAdd.includes(song.id)}
-                                    onCheckedChange={(checked) => handleSongSelection(song.id, checked as boolean)}
-                                    className="w-5 h-5"
-                                  />
-                                  <div className="flex-1">
-                                    <div className="flex items-center justify-between">
-                                      <div>
-                                        <p className="font-bold text-gray-900 text-lg">{song.title}</p>
-                                        <p className="text-gray-600">{song.artist || "Unknown Artist"}</p>
-                                      </div>
-                                      <div className="flex items-center space-x-4 text-gray-600">
-                                        <Badge
-                                          variant="secondary"
-                                          className="bg-blue-100 text-blue-600 border-blue-300"
-                                        >
-                                          {song.key || "N/A"}
-                                        </Badge>
-                                        <span>{song.bpm ? `${song.bpm} BPM` : "N/A"}</span>
-                                        <Badge variant="outline" className="border-amber-300 text-amber-600">
-                                          {song.content_type}
-                                        </Badge>
-                                      </div>
+                                  <div className="flex items-center space-x-3">
+                                    <GripVertical className="w-4 h-4 text-amber-500 cursor-grab" />
+                                    <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                                      {index + 1}
+                                    </div>
+                                    <div>
+                                      <p className="font-bold text-gray-900 text-base">{setlistSong.content.title}</p>
+                                      <p className="text-gray-600 text-sm">
+                                        {setlistSong.content.artist || "Unknown Artist"}
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <div className="flex items-center space-x-4">
+                                    <Badge
+                                      variant="secondary"
+                                      className="bg-amber-100 text-amber-700 border-amber-300 text-sm px-2 py-1"
+                                    >
+                                      {setlistSong.content.key || "N/A"}
+                                    </Badge>
+                                    <span className="text-gray-500 text-sm font-medium">
+                                      {setlistSong.content.bpm ? `${setlistSong.content.bpm} BPM` : "N/A"}
+                                    </span>
+                                    <div className="flex space-x-1">
+                                      <Button size="sm" variant="ghost" className="hover:bg-amber-100 text-amber-600 h-7 w-7 p-0">
+                                        <Edit className="w-3 h-3" />
+                                      </Button>
+                                      <Button
+                                        size="sm"
+                                        variant="ghost"
+                                        onClick={() => handleRemoveSong(setlistSong.id)}
+                                        className="hover:bg-red-100 text-red-600 h-7 w-7 p-0"
+                                      >
+                                        <Trash2 className="w-3 h-3" />
+                                      </Button>
                                     </div>
                                   </div>
                                 </div>
-                              ))}
-                            </div>
+                              ))
                           )}
-                        </ScrollArea>
-
-                        {selectedSongsToAdd.length > 0 && (
-                          <div className="p-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl border border-amber-200">
-                            <p className="text-gray-900 font-medium text-lg">
-                              {selectedSongsToAdd.length} song{selectedSongsToAdd.length !== 1 ? "s" : ""} selected
-                            </p>
-                          </div>
-                        )}
-
-                        <div className="flex justify-end space-x-3">
-                          <Button
-                            variant="outline"
-                            onClick={() => {
-                              setSelectedSongsToAdd([])
-                              setIsAddSongsDialogOpen(false)
-                            }}
-                            className="border-amber-300 text-amber-700 hover:bg-amber-50 px-6 py-2 text-base"
-                          >
-                            Cancel
-                          </Button>
-                          <Button
-                            onClick={addSelectedSongs}
-                            disabled={selectedSongsToAdd.length === 0}
-                            className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-6 py-2 text-base"
-                          >
-                            Add {selectedSongsToAdd.length > 0 ? `${selectedSongsToAdd.length} ` : ""}Song
-                            {selectedSongsToAdd.length !== 1 ? "s" : ""}
-                          </Button>
                         </div>
-                      </div>
-                    </DialogContent>
-                  </Dialog>
-                </CardContent>
-              </Card>
-            ) : (
-              <Card className="border-0 shadow-2xl bg-white/80 backdrop-blur-sm">
-                <CardContent className="p-8 text-center">
-                  <div className="w-20 h-20 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <Music className="w-10 h-10 text-white" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3">Select a Setlist</h3>
-                  <p className="text-gray-600 text-lg">Choose a setlist from the left to view and manage its songs.</p>
-                </CardContent>
-              </Card>
+
+                        <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200">
+                          <div className="flex items-center justify-between">
+                            <span className="font-bold text-blue-900 text-base">Total Performance Time</span>
+                            <span className="text-xl font-bold text-blue-900">
+                              {formatDuration(calculateTotalDuration(selectedSetlist?.setlist_songs || []))}
+                            </span>
+                          </div>
+                        </div>
+
+                        <Dialog open={isAddSongsDialogOpen} onOpenChange={setIsAddSongsDialogOpen}>
+                          <DialogTrigger asChild>
+                            <Button className="w-full mt-4 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white py-2 text-base shadow-lg">
+                              <Plus className="w-4 h-4 mr-2" />
+                              Add Songs to Setlist
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="max-w-4xl max-h-[80vh] bg-white/95 backdrop-blur-sm border border-amber-200">
+                            <DialogHeader>
+                              <DialogTitle className="text-2xl font-bold text-gray-900 flex items-center">
+                                <Music className="w-6 h-6 mr-3 text-amber-500" />
+                                Add Songs to &quot;{selectedSetlist?.name}&quot;
+                              </DialogTitle>
+                            </DialogHeader>
+                            <div className="space-y-6">
+                              <div className="text-gray-600 text-lg">
+                                Select songs from your library to add to this setlist
+                              </div>
+
+                              <ScrollArea className="h-96 border border-amber-300 rounded-xl p-6 bg-amber-50/50">
+                                {availableSongs.length === 0 ? (
+                                  <div className="text-center py-16 text-gray-500">
+                                    <Music className="w-16 h-16 mx-auto mb-6 opacity-50" />
+                                    <p className="text-xl">No additional songs available to add.</p>
+                                    <p className="text-lg mt-2">All songs from your library are already in this setlist.</p>
+                                  </div>
+                                ) : (
+                                  <div className="space-y-4">
+                                    {availableSongs.map((song) => (
+                                      <div
+                                        key={song.id}
+                                        className="flex items-center space-x-4 p-4 rounded-xl hover:bg-white/60 transition-all duration-300 border border-amber-200"
+                                      >
+                                        <Checkbox
+                                          id={`song-${song.id}`}
+                                          checked={selectedSongsToAdd.includes(song.id)}
+                                          onCheckedChange={(checked) => handleSongSelection(song.id, checked as boolean)}
+                                          className="w-5 h-5"
+                                        />
+                                        <div className="flex-1">
+                                          <div className="flex items-center justify-between">
+                                            <div>
+                                              <p className="font-bold text-gray-900 text-lg">{song.title}</p>
+                                              <p className="text-gray-600">{song.artist || "Unknown Artist"}</p>
+                                            </div>
+                                            <div className="flex items-center space-x-4 text-gray-600">
+                                              <Badge
+                                                variant="secondary"
+                                                className="bg-blue-100 text-blue-600 border-blue-300"
+                                              >
+                                                {song.key || "N/A"}
+                                              </Badge>
+                                              <span>{song.bpm ? `${song.bpm} BPM` : "N/A"}</span>
+                                              <Badge variant="outline" className="border-amber-300 text-amber-600">
+                                                {song.content_type}
+                                              </Badge>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                )}
+                              </ScrollArea>
+
+                              {selectedSongsToAdd.length > 0 && (
+                                <div className="p-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl border border-amber-200">
+                                  <p className="text-gray-900 font-medium text-lg">
+                                    {selectedSongsToAdd.length} song{selectedSongsToAdd.length !== 1 ? "s" : ""} selected
+                                  </p>
+                                </div>
+                              )}
+
+                              <div className="flex justify-end space-x-3">
+                                <Button
+                                  variant="outline"
+                                  onClick={() => {
+                                    setSelectedSongsToAdd([])
+                                    setIsAddSongsDialogOpen(false)
+                                  }}
+                                  className="border-amber-300 text-amber-700 hover:bg-amber-50 px-6 py-2 text-base"
+                                >
+                                  Cancel
+                                </Button>
+                                <Button
+                                  onClick={addSelectedSongs}
+                                  disabled={selectedSongsToAdd.length === 0}
+                                  className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-6 py-2 text-base"
+                                >
+                                  Add {selectedSongsToAdd.length > 0 ? `${selectedSongsToAdd.length} ` : ""}Song
+                                  {selectedSongsToAdd.length !== 1 ? "s" : ""}
+                                </Button>
+                              </div>
+                            </div>
+                          </DialogContent>
+                        </Dialog>
+                      </CardContent>
+                    </Card>
+                  )}
+                </div>
+              ))
             )}
-          </div>
+            </div>
+
         </div>
       </div>
-    </div>
+      </div>
   )
 }
