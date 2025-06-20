@@ -35,6 +35,8 @@ import {
 import { getUserContent as getContentList } from "@/lib/content-service"
 import type { Database } from "@/types/supabase"
 import { useAuth } from "@/contexts/auth-context"
+import { cn } from "@/lib/utils"
+
 
 type Setlist = Database["public"]["Tables"]["setlists"]["Row"]
 type Content = Database["public"]["Tables"]["content"]["Row"]
