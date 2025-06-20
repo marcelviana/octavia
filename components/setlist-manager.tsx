@@ -231,6 +231,18 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
     }
   }
 
+  const handleExportSetlist = (list: SetlistWithSongs) => {
+    const data = new Blob([JSON.stringify(list, null, 2)], {
+      type: "application/json",
+    })
+    const url = URL.createObjectURL(data)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = `${list.name}.json`
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
   // Filter out songs that are already in the current setlist
   const availableSongs = availableContent.filter(
     (content) => !selectedSetlist?.setlist_songs?.some((setlistSong) => setlistSong.content?.id === content.id),
@@ -387,18 +399,18 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                 </CardContent>
               </Card>
             ) : (
-              setlists.map((setlist) => (
-                <div key={setlist.id} className="space-y-2">
+              setlists.map((setlist) => {
+                const expanded = selectedSetlist?.id === setlist.id
+                return (
                   <Card
+                    key={setlist.id}
                     className={`cursor-pointer transition-all duration-300 border-0 shadow-lg hover:shadow-2xl hover:scale-105 ${
-                      selectedSetlist?.id === setlist.id
+                      expanded
                         ? "ring-2 ring-amber-500 bg-gradient-to-r from-amber-50 to-orange-50 shadow-2xl scale-105"
                         : "bg-white/80 backdrop-blur-sm hover:bg-white/90"
                     }`}
                     onClick={() =>
-                      setSelectedSetlist(
-                        selectedSetlist?.id === setlist.id ? null : setlist,
-                      )
+                      setSelectedSetlist(expanded ? null : setlist)
                     }
                   >
                     <CardContent className="p-4 overflow-hidden">
@@ -427,7 +439,12 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                           </div>
                         </div>
                         <div className="flex space-x-2">
-                          <Button size="sm" variant="ghost" className="hover:bg-amber-100 text-amber-600">
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={(e) => e.stopPropagation()}
+                            className="hover:bg-amber-100 text-amber-600"
+                          >
                             <Edit className="w-4 h-4" />
                           </Button>
                           <Button
@@ -443,239 +460,223 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                           </Button>
                         </div>
                       </div>
-                    </CardContent>
-                  </Card>
-                  {selectedSetlist?.id === setlist.id && (
-                    <Card className="border-0 shadow-2xl bg-white/80 backdrop-blur-sm">
-                      <CardHeader className="bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-t-lg p-4">
-                        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-                          <div className="flex-1">
-                            <CardTitle className="text-lg lg:text-xl font-bold flex items-center mb-2">
-                              <Star className="w-6 h-6 mr-2 flex-shrink-0" />
-                              <span className="break-words">{selectedSetlist.name}</span>
-                            </CardTitle>
-                            {selectedSetlist.description && (
-                              <p className="text-amber-100 text-sm lg:text-base leading-relaxed">
-                                {selectedSetlist.description}
-                              </p>
-                            )}
-                          </div>
+
+                      {expanded && (
+                        <div className="mt-4 space-y-4">
                           <div className="flex flex-wrap items-center gap-3">
                             <Button
-                              variant="outline"
-                              size="sm"
-                              className="border-white/50 text-white hover:bg-white/20 transition-colors bg-white/10 px-2 py-1 text-xs"
-                              title="Duplicate setlist"
-                            >
-                              <Copy className="w-3 h-3 text-white" />
-                            </Button>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              className="border-white/50 text-white hover:bg-white/20 transition-colors bg-white/10 px-2 py-1 text-xs"
-                              title="Share setlist"
-                            >
-                              <Share className="w-3 h-3 text-white" />
-                            </Button>
-                            <Button
-                              onClick={() => selectedSetlist && onEnterPerformance(selectedSetlist)}
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                onEnterPerformance(setlist)
+                              }}
                               className="bg-white text-amber-700 hover:bg-amber-50 font-bold px-3 py-1 text-xs transition-colors shadow-sm"
                             >
                               <Play className="w-3 h-3 mr-1" />
                               <span className="text-amber-700">Start Performance</span>
                             </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                handleExportSetlist(setlist)
+                              }}
+                              className="border-white/50 text-white bg-white/10 hover:bg-white/20 transition-colors px-2 py-1 text-xs"
+                            >
+                              <Share className="w-3 h-3" />
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={(e) => e.stopPropagation()}
+                              className="border-white/50 text-white bg-white/10 hover:bg-white/20 transition-colors px-2 py-1 text-xs"
+                            >
+                              <Edit className="w-3 h-3" />
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                handleDeleteSetlist(setlist.id)
+                              }}
+                              className="border-white/50 text-white bg-white/10 hover:bg-white/20 transition-colors px-2 py-1 text-xs"
+                            >
+                              <Trash2 className="w-3 h-3" />
+                            </Button>
                           </div>
-                        </div>
-                        <div className="flex flex-wrap items-center gap-4 text-amber-100 mt-4 pt-4 border-t border-white/20">
-                          {selectedSetlist.performance_date && (
-                            <div className="flex items-center">
-                              <Calendar className="w-4 h-4 mr-1" />
-                              <span className="font-medium text-sm">
-                                {new Date(selectedSetlist.performance_date).toLocaleDateString()}
+                          <div className="space-y-4 max-h-72 overflow-y-auto scroll-smooth">
+                            {!setlist.setlist_songs || setlist.setlist_songs.length === 0 ? (
+                              <div className="text-center py-8">
+                                <div className="w-16 h-16 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                                  <Music className="w-8 h-8 text-white" />
+                                </div>
+                                <h3 className="text-xl font-bold text-gray-900 mb-3">No Songs Yet</h3>
+                                <p className="text-gray-600 mb-6 text-base">Add some songs to this setlist to get started.</p>
+                              </div>
+                            ) : (
+                              (setlist.setlist_songs || [])
+                                .sort((a, b) => a.position - b.position)
+                                .map((setlistSong, index) => (
+                                  <div
+                                    key={setlistSong.id}
+                                    className="flex items-center justify-between p-3 bg-gradient-to-r from-amber-50 to-orange-50 rounded-lg border border-amber-200 hover:shadow-md transition-all duration-300"
+                                  >
+                                    <div className="flex items-center space-x-3">
+                                      <GripVertical className="w-4 h-4 text-amber-500 cursor-grab" />
+                                      <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                                        {index + 1}
+                                      </div>
+                                      <div>
+                                        <p className="font-bold text-gray-900 text-base">{setlistSong.content.title}</p>
+                                        <p className="text-gray-600 text-sm">
+                                          {setlistSong.content.artist || "Unknown Artist"}
+                                        </p>
+                                      </div>
+                                    </div>
+                                    <div className="flex items-center space-x-4">
+                                      <Badge
+                                        variant="secondary"
+                                        className="bg-amber-100 text-amber-700 border-amber-300 text-sm px-2 py-1"
+                                      >
+                                        {setlistSong.content.key || "N/A"}
+                                      </Badge>
+                                      <span className="text-gray-500 text-sm font-medium">
+                                        {setlistSong.content.bpm ? `${setlistSong.content.bpm} BPM` : "N/A"}
+                                      </span>
+                                      <div className="flex space-x-1">
+                                        <Button size="sm" variant="ghost" className="hover:bg-amber-100 text-amber-600 h-7 w-7 p-0">
+                                          <Edit className="w-3 h-3" />
+                                        </Button>
+                                        <Button
+                                          size="sm"
+                                          variant="ghost"
+                                          onClick={() => handleRemoveSong(setlistSong.id)}
+                                          className="hover:bg-red-100 text-red-600 h-7 w-7 p-0"
+                                        >
+                                          <Trash2 className="w-3 h-3" />
+                                        </Button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                ))
+                            )}
+                          </div>
+
+                          <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200">
+                            <div className="flex items-center justify-between">
+                              <span className="font-bold text-blue-900 text-base">Total Performance Time</span>
+                              <span className="text-xl font-bold text-blue-900">
+                                {formatDuration(calculateTotalDuration(setlist.setlist_songs || []))}
                               </span>
                             </div>
-                          )}
-                          <div className="flex items-center">
-                            <Music className="w-4 h-4 mr-1" />
-                            <span className="font-medium text-sm">{selectedSetlist.setlist_songs?.length || 0} songs</span>
                           </div>
-                          <div className="flex items-center">
-                            <Clock className="w-4 h-4 mr-1" />
-                            <span className="font-medium text-sm">
-                              {formatDuration(calculateTotalDuration(selectedSetlist?.setlist_songs || []))}
-                            </span>
-                          </div>
-                        </div>
-                      </CardHeader>
-                      <CardContent className="p-4">
-                        <div className="space-y-4 max-h-72 overflow-y-auto scroll-smooth">
-                          {!selectedSetlist.setlist_songs || selectedSetlist.setlist_songs.length === 0 ? (
-                            <div className="text-center py-8">
-                              <div className="w-16 h-16 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <Music className="w-8 h-8 text-white" />
-                              </div>
-                              <h3 className="text-xl font-bold text-gray-900 mb-3">No Songs Yet</h3>
-                              <p className="text-gray-600 mb-6 text-base">Add some songs to this setlist to get started.</p>
-                            </div>
-                          ) : (
-                            (selectedSetlist.setlist_songs || [])
-                              .sort((a, b) => a.position - b.position)
-                              .map((setlistSong, index) => (
-                                <div
-                                  key={setlistSong.id}
-                                  className="flex items-center justify-between p-3 bg-gradient-to-r from-amber-50 to-orange-50 rounded-lg border border-amber-200 hover:shadow-md transition-all duration-300"
-                                >
-                                  <div className="flex items-center space-x-3">
-                                    <GripVertical className="w-4 h-4 text-amber-500 cursor-grab" />
-                                    <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
-                                      {index + 1}
-                                    </div>
-                                    <div>
-                                      <p className="font-bold text-gray-900 text-base">{setlistSong.content.title}</p>
-                                      <p className="text-gray-600 text-sm">
-                                        {setlistSong.content.artist || "Unknown Artist"}
-                                      </p>
-                                    </div>
-                                  </div>
-                                  <div className="flex items-center space-x-4">
-                                    <Badge
-                                      variant="secondary"
-                                      className="bg-amber-100 text-amber-700 border-amber-300 text-sm px-2 py-1"
-                                    >
-                                      {setlistSong.content.key || "N/A"}
-                                    </Badge>
-                                    <span className="text-gray-500 text-sm font-medium">
-                                      {setlistSong.content.bpm ? `${setlistSong.content.bpm} BPM` : "N/A"}
-                                    </span>
-                                    <div className="flex space-x-1">
-                                      <Button size="sm" variant="ghost" className="hover:bg-amber-100 text-amber-600 h-7 w-7 p-0">
-                                        <Edit className="w-3 h-3" />
-                                      </Button>
-                                      <Button
-                                        size="sm"
-                                        variant="ghost"
-                                        onClick={() => handleRemoveSong(setlistSong.id)}
-                                        className="hover:bg-red-100 text-red-600 h-7 w-7 p-0"
-                                      >
-                                        <Trash2 className="w-3 h-3" />
-                                      </Button>
-                                    </div>
-                                  </div>
+
+                          <Dialog open={isAddSongsDialogOpen} onOpenChange={setIsAddSongsDialogOpen}>
+                            <DialogTrigger asChild>
+                              <Button
+                                onClick={(e) => e.stopPropagation()}
+                                className="w-full mt-4 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white py-2 text-base shadow-lg"
+                              >
+                                <Plus className="w-4 h-4 mr-2" />
+                                Add Songs to Setlist
+                              </Button>
+                            </DialogTrigger>
+                            <DialogContent className="max-w-4xl max-h-[80vh] bg-white/95 backdrop-blur-sm border border-amber-200">
+                              <DialogHeader>
+                                <DialogTitle className="text-2xl font-bold text-gray-900 flex items-center">
+                                  <Music className="w-6 h-6 mr-3 text-amber-500" />
+                                  Add Songs to &quot;{selectedSetlist?.name}&quot;
+                                </DialogTitle>
+                              </DialogHeader>
+                              <div className="space-y-6">
+                                <div className="text-gray-600 text-lg">
+                                  Select songs from your library to add to this setlist
                                 </div>
-                              ))
-                          )}
-                        </div>
 
-                        <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200">
-                          <div className="flex items-center justify-between">
-                            <span className="font-bold text-blue-900 text-base">Total Performance Time</span>
-                            <span className="text-xl font-bold text-blue-900">
-                              {formatDuration(calculateTotalDuration(selectedSetlist?.setlist_songs || []))}
-                            </span>
-                          </div>
-                        </div>
-
-                        <Dialog open={isAddSongsDialogOpen} onOpenChange={setIsAddSongsDialogOpen}>
-                          <DialogTrigger asChild>
-                            <Button className="w-full mt-4 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white py-2 text-base shadow-lg">
-                              <Plus className="w-4 h-4 mr-2" />
-                              Add Songs to Setlist
-                            </Button>
-                          </DialogTrigger>
-                          <DialogContent className="max-w-4xl max-h-[80vh] bg-white/95 backdrop-blur-sm border border-amber-200">
-                            <DialogHeader>
-                              <DialogTitle className="text-2xl font-bold text-gray-900 flex items-center">
-                                <Music className="w-6 h-6 mr-3 text-amber-500" />
-                                Add Songs to &quot;{selectedSetlist?.name}&quot;
-                              </DialogTitle>
-                            </DialogHeader>
-                            <div className="space-y-6">
-                              <div className="text-gray-600 text-lg">
-                                Select songs from your library to add to this setlist
-                              </div>
-
-                              <ScrollArea className="h-96 border border-amber-300 rounded-xl p-6 bg-amber-50/50">
-                                {availableSongs.length === 0 ? (
-                                  <div className="text-center py-16 text-gray-500">
-                                    <Music className="w-16 h-16 mx-auto mb-6 opacity-50" />
-                                    <p className="text-xl">No additional songs available to add.</p>
-                                    <p className="text-lg mt-2">All songs from your library are already in this setlist.</p>
-                                  </div>
-                                ) : (
-                                  <div className="space-y-4">
-                                    {availableSongs.map((song) => (
-                                      <div
-                                        key={song.id}
-                                        className="flex items-center space-x-4 p-4 rounded-xl hover:bg-white/60 transition-all duration-300 border border-amber-200"
-                                      >
-                                        <Checkbox
-                                          id={`song-${song.id}`}
-                                          checked={selectedSongsToAdd.includes(song.id)}
-                                          onCheckedChange={(checked) => handleSongSelection(song.id, checked as boolean)}
-                                          className="w-5 h-5"
-                                        />
-                                        <div className="flex-1">
-                                          <div className="flex items-center justify-between">
-                                            <div>
-                                              <p className="font-bold text-gray-900 text-lg">{song.title}</p>
-                                              <p className="text-gray-600">{song.artist || "Unknown Artist"}</p>
-                                            </div>
-                                            <div className="flex items-center space-x-4 text-gray-600">
-                                              <Badge
-                                                variant="secondary"
-                                                className="bg-blue-100 text-blue-600 border-blue-300"
-                                              >
-                                                {song.key || "N/A"}
-                                              </Badge>
-                                              <span>{song.bpm ? `${song.bpm} BPM` : "N/A"}</span>
-                                              <Badge variant="outline" className="border-amber-300 text-amber-600">
-                                                {song.content_type}
-                                              </Badge>
+                                <ScrollArea className="h-96 border border-amber-300 rounded-xl p-6 bg-amber-50/50">
+                                  {availableSongs.length === 0 ? (
+                                    <div className="text-center py-16 text-gray-500">
+                                      <Music className="w-16 h-16 mx-auto mb-6 opacity-50" />
+                                      <p className="text-xl">No additional songs available to add.</p>
+                                      <p className="text-lg mt-2">All songs from your library are already in this setlist.</p>
+                                    </div>
+                                  ) : (
+                                    <div className="space-y-4">
+                                      {availableSongs.map((song) => (
+                                        <div
+                                          key={song.id}
+                                          className="flex items-center space-x-4 p-4 rounded-xl hover:bg-white/60 transition-all duration-300 border border-amber-200"
+                                        >
+                                          <Checkbox
+                                            id={`song-${song.id}`}
+                                            checked={selectedSongsToAdd.includes(song.id)}
+                                            onCheckedChange={(checked) => handleSongSelection(song.id, checked as boolean)}
+                                            className="w-5 h-5"
+                                          />
+                                          <div className="flex-1">
+                                            <div className="flex items-center justify-between">
+                                              <div>
+                                                <p className="font-bold text-gray-900 text-lg">{song.title}</p>
+                                                <p className="text-gray-600">{song.artist || "Unknown Artist"}</p>
+                                              </div>
+                                              <div className="flex items-center space-x-4 text-gray-600">
+                                                <Badge
+                                                  variant="secondary"
+                                                  className="bg-blue-100 text-blue-600 border-blue-300"
+                                                >
+                                                  {song.key || "N/A"}
+                                                </Badge>
+                                                <span>{song.bpm ? `${song.bpm} BPM` : "N/A"}</span>
+                                                <Badge variant="outline" className="border-amber-300 text-amber-600">
+                                                  {song.content_type}
+                                                </Badge>
+                                              </div>
                                             </div>
                                           </div>
                                         </div>
-                                      </div>
-                                    ))}
+                                      ))}
+                                    </div>
+                                  )}
+                                </ScrollArea>
+
+                                {selectedSongsToAdd.length > 0 && (
+                                  <div className="p-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl border border-amber-200">
+                                    <p className="text-gray-900 font-medium text-lg">
+                                      {selectedSongsToAdd.length} song{selectedSongsToAdd.length !== 1 ? "s" : ""} selected
+                                    </p>
                                   </div>
                                 )}
-                              </ScrollArea>
 
-                              {selectedSongsToAdd.length > 0 && (
-                                <div className="p-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl border border-amber-200">
-                                  <p className="text-gray-900 font-medium text-lg">
-                                    {selectedSongsToAdd.length} song{selectedSongsToAdd.length !== 1 ? "s" : ""} selected
-                                  </p>
+                                <div className="flex justify-end space-x-3">
+                                  <Button
+                                    variant="outline"
+                                    onClick={() => {
+                                      setSelectedSongsToAdd([])
+                                      setIsAddSongsDialogOpen(false)
+                                    }}
+                                    className="border-amber-300 text-amber-700 hover:bg-amber-50 px-6 py-2 text-base"
+                                  >
+                                    Cancel
+                                  </Button>
+                                  <Button
+                                    onClick={addSelectedSongs}
+                                    disabled={selectedSongsToAdd.length === 0}
+                                    className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-6 py-2 text-base"
+                                  >
+                                    Add {selectedSongsToAdd.length > 0 ? `${selectedSongsToAdd.length} ` : ""}Song
+                                    {selectedSongsToAdd.length !== 1 ? "s" : ""}
+                                  </Button>
                                 </div>
-                              )}
-
-                              <div className="flex justify-end space-x-3">
-                                <Button
-                                  variant="outline"
-                                  onClick={() => {
-                                    setSelectedSongsToAdd([])
-                                    setIsAddSongsDialogOpen(false)
-                                  }}
-                                  className="border-amber-300 text-amber-700 hover:bg-amber-50 px-6 py-2 text-base"
-                                >
-                                  Cancel
-                                </Button>
-                                <Button
-                                  onClick={addSelectedSongs}
-                                  disabled={selectedSongsToAdd.length === 0}
-                                  className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-6 py-2 text-base"
-                                >
-                                  Add {selectedSongsToAdd.length > 0 ? `${selectedSongsToAdd.length} ` : ""}Song
-                                  {selectedSongsToAdd.length !== 1 ? "s" : ""}
-                                </Button>
                               </div>
-                            </div>
-                          </DialogContent>
-                        </Dialog>
-                      </CardContent>
-                    </Card>
-                  )}
-                </div>
-              ))
+                            </DialogContent>
+                          </Dialog>
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+                )
+              })
             )}
             </div>
 
