@@ -36,4 +36,21 @@ describe('offline cache', () => {
     expect(typeof url).toBe('string')
     expect(url!.startsWith('blob:') || url!.startsWith('data:')).toBe(true)
   })
+
+  it('removes cached content and files', async () => {
+    await cache.saveContent([{ id: 1, title: 'A' }, { id: 2, title: 'B' }])
+    const buffer = new TextEncoder().encode('bye')
+    global.fetch = vi.fn(async () => ({
+      ok: true,
+      arrayBuffer: async () => buffer,
+      headers: { get: () => 'text/plain' }
+    })) as any
+    await cache.cacheFilesForContent([{ id: '1', file_url: 'https://x.test/b.txt' }])
+    await cache.removeCachedContent('1')
+    const data = await cache.getCachedContent()
+    expect(data.some((d: any) => d.id === 1)).toBe(false)
+    expect(data.some((d: any) => d.id === 2)).toBe(true)
+    const url = await cache.getCachedFileUrl('1')
+    expect(url).toBeNull()
+  })
 })

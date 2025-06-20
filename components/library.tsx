@@ -251,6 +251,12 @@ export function Library({
 
     try {
       await deleteContent(contentToDelete.id);
+      try {
+        const { removeCachedContent } = await import('../lib/offline-cache')
+        await removeCachedContent(contentToDelete.id)
+      } catch (err) {
+        console.error('Failed to remove cached content', err)
+      }
       const { data, total } = await getUserContentPage({
         page,
         pageSize,

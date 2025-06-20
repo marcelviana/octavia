@@ -18,4 +18,11 @@ describe('offline setlist cache', () => {
     const data = await cache.getCachedSetlists()
     expect(data).toHaveLength(2)
   })
+
+  it('removes cached setlist by id', async () => {
+    await cache.saveSetlists([{ id: 1, name: 'A' }, { id: 2, name: 'B' }])
+    await cache.removeCachedSetlist(1 as any)
+    const data = await cache.getCachedSetlists()
+    expect(data).toEqual([{ id: 2, name: 'B' }])
+  })
 })
