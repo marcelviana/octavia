@@ -520,7 +520,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                       </div>
 
                       {expanded && (
-                        <div className="p-4 space-y-4">
+                        <div className="px-4 pb-4 pt-0 space-y-4">
                           <div className="flex flex-wrap items-center gap-3">
                             <Button
                               variant="outline"
@@ -553,7 +553,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                               <Trash2 className="w-3 h-3" />
                             </Button>
                           </div>
-                          <div className="space-y-4 max-h-72 overflow-y-auto scroll-smooth">
+                          <div className="space-y-4 max-h-80 md:max-h-96 overflow-y-auto scroll-smooth">
                             {!setlist.setlist_songs || setlist.setlist_songs.length === 0 ? (
                               <div className="text-center py-8">
                                 <div className="w-16 h-16 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -633,6 +633,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                             <DialogContent
                               className="max-w-4xl max-h-[80vh] bg-white/95 backdrop-blur-sm border border-amber-200"
                               onInteractOutside={(e) => e.preventDefault()}
+                              onClick={(e) => e.stopPropagation()}
                             >
                               <DialogHeader>
                                 <DialogTitle className="text-2xl font-bold text-gray-900 flex items-center">
