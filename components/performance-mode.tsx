@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef, useMemo } from "react"
+import { toast } from "sonner"
 import { getCachedFileUrl } from "@/lib/offline-cache"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -144,9 +145,16 @@ export function PerformanceMode({
         if (navigator.wakeLock) {
           // @ts-ignore
           wakeLock.current = await navigator.wakeLock.request("screen")
+        } else {
+          toast.warning(
+            "Heads up! Your browser does not support preventing screen sleep. Please adjust your device settings to avoid screen timeout during your performance."
+          )
         }
       } catch (err) {
         console.error("Wake lock error", err)
+        toast.warning(
+          "Heads up! Your browser does not support preventing screen sleep. Please adjust your device settings to avoid screen timeout during your performance."
+        )
       }
     }
     requestLock()
