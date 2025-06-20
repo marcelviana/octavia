@@ -75,7 +75,46 @@ export function MetadataEditor({ content, onChange }: MetadataEditorProps) {
   ]
 
   const difficulties = ["Beginner", "Intermediate", "Advanced", "Expert"]
-  const keys = ["C", "C#", "Db", "D", "D#", "Eb", "E", "F", "F#", "Gb", "G", "G#", "Ab", "A", "A#", "Bb", "B"]
+  const keys = [
+    "C",
+    "Cm",
+    "C#",
+    "C#m",
+    "Db",
+    "Dbm",
+    "D",
+    "Dm",
+    "D#",
+    "D#m",
+    "Eb",
+    "Ebm",
+    "E",
+    "Em",
+    "Fb",
+    "Fbm",
+    "F",
+    "Fm",
+    "F#",
+    "F#m",
+    "Gb",
+    "Gbm",
+    "G",
+    "Gm",
+    "G#",
+    "G#m",
+    "Ab",
+    "Abm",
+    "A",
+    "Am",
+    "A#",
+    "A#m",
+    "Bb",
+    "Bbm",
+    "B",
+    "Bm",
+    "Cb",
+    "Cbm",
+  ]
 
   return (
     <div className="space-y-6">
