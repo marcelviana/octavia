@@ -69,6 +69,8 @@ export async function GET(req: NextRequest) {
       return new Response('Fetch failed', { status: res.status })
     }
     const headers = new Headers(res.headers)
+    headers.delete('set-cookie')
+    headers.delete('transfer-encoding')
     return new Response(res.body, { status: res.status, headers })
   } catch (err) {
     console.error('Proxy error', err)
