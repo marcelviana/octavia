@@ -406,44 +406,98 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                     key={setlist.id}
                     className={`cursor-pointer transition-all duration-300 border-0 shadow-lg hover:shadow-2xl hover:scale-105 ${
                       expanded
-                        ? "ring-2 ring-amber-500 bg-gradient-to-r from-amber-50 to-orange-50 shadow-2xl scale-105"
+                        ? "ring-2 ring-amber-500 shadow-2xl scale-105"
                         : "bg-white/80 backdrop-blur-sm hover:bg-white/90"
                     }`}
                     onClick={() =>
                       setSelectedSetlist(expanded ? null : setlist)
                     }
                   >
-                    <CardContent className="p-4 overflow-hidden">
-                      <div className="flex items-start justify-between">
+                    <CardContent className="p-0 overflow-hidden">
+                      <div
+                        className={cn(
+                          "flex items-start justify-between p-4 flex-col gap-3 sm:flex-row sm:gap-0",
+                          expanded &&
+                            "bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-t-lg",
+                        )}
+                      >
                         <div className="flex-1">
-                          <div className="flex items-center mb-3">
-                            <div className="w-3 h-3 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full mr-3"></div>
-                            <h3 className="font-bold text-gray-900 text-base">{setlist.name}</h3>
+                          <div className="flex items-center mb-2">
+                            <div
+                              className={cn(
+                                "w-3 h-3 rounded-full mr-3",
+                                expanded
+                                  ? "bg-white/80"
+                                  : "bg-gradient-to-r from-amber-500 to-orange-600",
+                              )}
+                            ></div>
+                            <h3
+                              className={cn(
+                                "font-bold text-base",
+                                expanded ? "" : "text-gray-900",
+                              )}
+                            >
+                              {setlist.name}
+                            </h3>
                           </div>
-                          <p className="text-gray-600 mb-3 text-sm">{setlist.description}</p>
-                          <div className="flex items-center flex-wrap gap-2 text-xs text-gray-500">
+                          <p className={cn("text-sm", expanded ? "mb-2 opacity-90" : "text-gray-600 mb-3")}>{setlist.description}</p>
+                          <div
+                            className={cn(
+                              "flex items-center flex-wrap gap-2 text-xs",
+                              expanded ? "opacity-90" : "text-gray-500",
+                            )}
+                          >
                             {setlist.performance_date && (
-                              <div className="flex items-center bg-amber-50 px-2 py-1 rounded-full">
-                                <Calendar className="w-3 h-3 mr-1 text-amber-600" />
+                              <div className={cn(
+                                "flex items-center px-2 py-1 rounded-full",
+                                expanded ? "bg-white/10" : "bg-amber-50",
+                              )}
+                              >
+                                <Calendar className={cn("w-3 h-3 mr-1", expanded ? "" : "text-amber-600")} />
                                 {new Date(setlist.performance_date).toLocaleDateString()}
                               </div>
                             )}
-                            <div className="flex items-center bg-blue-50 px-2 py-1 rounded-full">
-                              <Music className="w-3 h-3 mr-1 text-blue-600" />
+                            <div className={cn(
+                              "flex items-center px-2 py-1 rounded-full",
+                              expanded ? "bg-white/10" : "bg-blue-50",
+                            )}
+                            >
+                              <Music className={cn("w-3 h-3 mr-1", expanded ? "" : "text-blue-600")} />
                               {setlist.setlist_songs?.length || 0} songs
                             </div>
-                            <div className="flex items-center bg-green-50 px-2 py-1 rounded-full">
-                              <Clock className="w-3 h-3 mr-1 text-green-600" />
+                            <div className={cn(
+                              "flex items-center px-2 py-1 rounded-full",
+                              expanded ? "bg-white/10" : "bg-green-50",
+                            )}
+                            >
+                              <Clock className={cn("w-3 h-3 mr-1", expanded ? "" : "text-green-600")} />
                               {formatDuration(calculateTotalDuration(setlist.setlist_songs || []))}
                             </div>
                           </div>
                         </div>
-                        <div className="flex space-x-2">
+                        <div className="flex space-x-2 self-start">
+                          {expanded && (
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                onEnterPerformance(setlist)
+                              }}
+                              className="text-white hover:bg-white/20"
+                            >
+                              <Play className="w-4 h-4" />
+                            </Button>
+                          )}
                           <Button
                             size="sm"
                             variant="ghost"
                             onClick={(e) => e.stopPropagation()}
-                            className="hover:bg-amber-100 text-amber-600"
+                            className={cn(
+                              expanded
+                                ? "text-white hover:bg-white/20"
+                                : "hover:bg-amber-100 text-amber-600",
+                            )}
                           >
                             <Edit className="w-4 h-4" />
                           </Button>
@@ -454,7 +508,11 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                               e.stopPropagation()
                               handleDeleteSetlist(setlist.id)
                             }}
-                            className="hover:bg-red-100 text-red-600"
+                            className={cn(
+                              expanded
+                                ? "text-white hover:bg-white/20"
+                                : "hover:bg-red-100 text-red-600",
+                            )}
                           >
                             <Trash2 className="w-4 h-4" />
                           </Button>
@@ -462,18 +520,8 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                       </div>
 
                       {expanded && (
-                        <div className="mt-4 space-y-4">
+                        <div className="p-4 space-y-4">
                           <div className="flex flex-wrap items-center gap-3">
-                            <Button
-                              onClick={(e) => {
-                                e.stopPropagation()
-                                onEnterPerformance(setlist)
-                              }}
-                              className="bg-white text-amber-700 hover:bg-amber-50 font-bold px-3 py-1 text-xs transition-colors shadow-sm"
-                            >
-                              <Play className="w-3 h-3 mr-1" />
-                              <span className="text-amber-700">Start Performance</span>
-                            </Button>
                             <Button
                               variant="outline"
                               size="sm"
@@ -582,7 +630,10 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                                 Add Songs to Setlist
                               </Button>
                             </DialogTrigger>
-                            <DialogContent className="max-w-4xl max-h-[80vh] bg-white/95 backdrop-blur-sm border border-amber-200">
+                            <DialogContent
+                              className="max-w-4xl max-h-[80vh] bg-white/95 backdrop-blur-sm border border-amber-200"
+                              onInteractOutside={(e) => e.preventDefault()}
+                            >
                               <DialogHeader>
                                 <DialogTitle className="text-2xl font-bold text-gray-900 flex items-center">
                                   <Music className="w-6 h-6 mr-3 text-amber-500" />
