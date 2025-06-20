@@ -8,6 +8,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import {
+  saveContent,
+  getCachedContent,
+  cacheFileForContent,
+  removeCachedContent,
+} from "@/lib/offline-cache";
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -127,7 +133,6 @@ export function Library({
             setContent(result.data)
             setTotalCount(result.total)
             try {
-              const { saveContent } = await import('../lib/offline-cache')
               await saveContent(result.data)
             } catch (err) {
               console.error('Failed to cache offline content', err)
@@ -138,7 +143,6 @@ export function Library({
         if (!cancelled) {
           console.error('Failed to load content:', error)
           try {
-            const { getCachedContent } = await import('../lib/offline-cache')
             const cached = await getCachedContent()
             if (cached.length > 0) {
               setContent(cached)
@@ -236,7 +240,6 @@ export function Library({
 
   const handleDownloadContent = async (content: any) => {
     try {
-      const { cacheFileForContent } = await import('../lib/offline-cache')
       await cacheFileForContent(content)
       toast.success('Content cached for offline use')
     } catch (err) {
@@ -252,7 +255,6 @@ export function Library({
     try {
       await deleteContent(contentToDelete.id);
       try {
-        const { removeCachedContent } = await import('../lib/offline-cache')
         await removeCachedContent(contentToDelete.id)
       } catch (err) {
         console.error('Failed to remove cached content', err)
@@ -267,7 +269,6 @@ export function Library({
       setContent(data);
       setTotalCount(total);
       try {
-        const { saveContent } = await import('../lib/offline-cache')
         await saveContent(data)
       } catch (err) {
         console.error('Failed to cache offline content', err)

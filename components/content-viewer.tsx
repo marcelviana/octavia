@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { getCachedFileUrl } from "@/lib/offline-cache";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -82,7 +83,6 @@ export function ContentViewer({
   useEffect(() => {
     let url: string | null = null;
     const load = async () => {
-      const { getCachedFileUrl } = await import('../lib/offline-cache');
       url = await getCachedFileUrl(content.id);
       if (url) setOfflineUrl(url);
     };

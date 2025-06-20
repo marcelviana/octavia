@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef, useMemo } from "react"
+import { getCachedFileUrl } from "@/lib/offline-cache"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -72,7 +73,6 @@ export function PerformanceMode({
   useEffect(() => {
     let toRevoke: string[] = []
     const load = async () => {
-      const { getCachedFileUrl } = await import('../lib/offline-cache')
       const urls = await Promise.all(
         songs.map(async (song: any) => {
           const cached = song?.id ? await getCachedFileUrl(song.id) : null

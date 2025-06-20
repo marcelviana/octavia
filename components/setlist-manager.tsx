@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { saveSetlists, removeCachedSetlist } from "@/lib/offline-setlist-cache"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -85,7 +86,6 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
       console.log("Loaded content:", contentData)
 
       try {
-        const { saveSetlists } = await import('../lib/offline-setlist-cache')
         await saveSetlists(setlistsData as any[])
       } catch (err) {
         console.error('Failed to cache offline setlists', err)
@@ -136,7 +136,6 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
       const updated = [setlistWithSongs, ...setlists]
       setSetlists(updated)
       try {
-        const { saveSetlists } = await import('../lib/offline-setlist-cache')
         await saveSetlists(updated as any[])
       } catch (err) {
         console.error('Failed to cache offline setlists', err)
@@ -153,7 +152,6 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
     try {
       await deleteSetlist(setlistId)
       try {
-        const { removeCachedSetlist } = await import('../lib/offline-setlist-cache')
         await removeCachedSetlist(setlistId)
       } catch (err) {
         console.error('Failed to remove cached setlist', err)
@@ -161,7 +159,6 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
       const updated = setlists.filter((s) => s.id !== setlistId)
       setSetlists(updated)
       try {
-        const { saveSetlists } = await import('../lib/offline-setlist-cache')
         await saveSetlists(updated as any[])
       } catch (err) {
         console.error('Failed to cache offline setlists', err)

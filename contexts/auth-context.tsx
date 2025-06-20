@@ -4,6 +4,8 @@ import type React from "react"
 import { createContext, useContext, useEffect, useState, useCallback } from "react"
 import type { User, AuthChangeEvent, Session } from "@supabase/supabase-js"
 import { getSupabaseBrowserClient, isSupabaseConfigured } from "@/lib/supabase"
+import { clearOfflineContent } from "@/lib/offline-cache"
+import { clearOfflineSetlists } from "@/lib/offline-setlist-cache"
 
 type Profile = {
   id: string
@@ -333,8 +335,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       await supabase.auth.signOut()
 
       try {
-        const { clearOfflineContent } = await import("../lib/offline-cache")
-        const { clearOfflineSetlists } = await import("../lib/offline-setlist-cache")
         await Promise.all([
           clearOfflineContent(uid),
           clearOfflineSetlists(uid),
