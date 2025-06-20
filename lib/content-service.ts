@@ -1,24 +1,13 @@
 import { getSupabaseBrowserClient, isSupabaseConfigured } from "@/lib/supabase"
 import logger from "@/lib/logger"
 import type { Database } from "@/types/supabase"
+import type { SupabaseClient } from "@supabase/supabase-js"
+import type { ContentQueryParams } from "./content-types"
 
 type Content = Database["public"]["Tables"]["content"]["Row"]
 type ContentInsert = Database["public"]["Tables"]["content"]["Insert"]
 type ContentUpdate = Database["public"]["Tables"]["content"]["Update"]
 
-export interface ContentQueryParams {
-  page?: number
-  pageSize?: number
-  search?: string
-  sortBy?: "recent" | "title" | "artist" | "updated"
-  useCache?: boolean
-  filters?: {
-    contentType?: string[]
-    difficulty?: string[]
-    key?: string[]
-    favorite?: boolean
-  }
-}
 
 export interface AlbumField {
   album?: string | null
@@ -130,7 +119,7 @@ const MOCK_CONTENT: ContentRecord[] = [
   },
 ]
 
-export async function getUserContent() {
+export async function getUserContent(supabase?: SupabaseClient) {
   try {
     // Return mock data in demo mode
     if (!isSupabaseConfigured) {
@@ -138,19 +127,19 @@ export async function getUserContent() {
       return MOCK_CONTENT
     }
 
-    const supabase = getSupabaseBrowserClient()
+    const client = supabase ?? getSupabaseBrowserClient()
 
     // Check if user is authenticated
     const {
       data: { user },
       error: authError,
-    } = await supabase.auth.getUser()
+    } = await client.auth.getUser()
     if (authError || !user) {
       logger.log("User not authenticated, returning empty content")
       return []
     }
 
-    const { data, error } = await supabase
+    const { data, error } = await client
       .from("content")
       .select("*")
       .eq("user_id", user.id)
@@ -185,7 +174,10 @@ function cleanupCache() {
 // Clean cache every 5 minutes
 setInterval(cleanupCache, 5 * 60 * 1000)
 
-export async function getUserContentPage(params: ContentQueryParams = {}) {
+export async function getUserContentPage(
+  params: ContentQueryParams = {},
+  supabase?: SupabaseClient
+) {
   const {
     page = 1,
     pageSize = 20,
@@ -221,7 +213,7 @@ export async function getUserContentPage(params: ContentQueryParams = {}) {
       return result
     }
 
-    const supabase = getSupabaseBrowserClient()
+    const client = supabase ?? getSupabaseBrowserClient()
 
     // Check if user is authenticated with retry logic
     let authAttempts = 0
@@ -229,7 +221,7 @@ export async function getUserContentPage(params: ContentQueryParams = {}) {
     
     while (authAttempts < 3) {
       try {
-        const { data: authData, error: authError } = await supabase.auth.getUser()
+        const { data: authData, error: authError } = await client.auth.getUser()
         if (authError) throw authError
         user = authData.user
         break
@@ -248,7 +240,7 @@ export async function getUserContentPage(params: ContentQueryParams = {}) {
       throw new Error("User not authenticated")
     }
 
-    let query = supabase
+    let query = client
       .from("content")
       .select("*", { count: "exact" })
       .eq("user_id", user.id)
@@ -444,7 +436,7 @@ function getMockContentPage(params: ContentQueryParams) {
   }
 }
 
-export async function getContentById(id: string) {
+export async function getContentById(id: string, supabase?: SupabaseClient) {
   try {
     // Return mock data in demo mode
     if (!isSupabaseConfigured) {
@@ -456,18 +448,18 @@ export async function getContentById(id: string) {
       return MOCK_CONTENT[0]
     }
 
-    const supabase = getSupabaseBrowserClient()
+    const client = supabase ?? getSupabaseBrowserClient()
 
     // Check if user is authenticated
     const {
       data: { user },
       error: authError,
-    } = await supabase.auth.getUser()
+    } = await client.auth.getUser()
     if (authError || !user) {
       throw new Error("User not authenticated")
     }
 
-    const { data, error } = await supabase.from("content").select("*").eq("id", id).eq("user_id", user.id).single()
+    const { data, error } = await client.from("content").select("*").eq("id", id).eq("user_id", user.id).single()
 
     if (error) {
       logger.error("Error fetching content:", error)
@@ -654,7 +646,7 @@ export async function toggleFavorite(id: string, isFavorite: boolean) {
   return updateContent(id, { is_favorite: isFavorite })
 }
 
-export async function getUserStats() {
+export async function getUserStats(supabase?: SupabaseClient) {
   try {
     // Return mock stats in demo mode
     if (!isSupabaseConfigured) {
@@ -666,13 +658,13 @@ export async function getUserStats() {
       }
     }
 
-    const supabase = getSupabaseBrowserClient()
+    const client = supabase ?? getSupabaseBrowserClient()
 
     // Check if user is authenticated
     const {
       data: { user },
       error: authError,
-    } = await supabase.auth.getUser()
+    } = await client.auth.getUser()
     if (authError || !user) {
       logger.log("User not authenticated for stats")
       return {
@@ -684,13 +676,13 @@ export async function getUserStats() {
     }
 
     // Get total content count
-    const { count: totalContent } = await supabase
+    const { count: totalContent } = await client
       .from("content")
       .select("*", { count: "exact", head: true })
       .eq("user_id", user.id)
 
     // Get favorite content count
-    const { count: favoriteContent } = await supabase
+    const { count: favoriteContent } = await client
       .from("content")
       .select("*", { count: "exact", head: true })
       .eq("user_id", user.id)
@@ -699,7 +691,7 @@ export async function getUserStats() {
     // Get setlists count (if table exists)
     let totalSetlists = 0
     try {
-      const { count } = await supabase
+      const { count } = await client
         .from("setlists")
         .select("*", { count: "exact", head: true })
         .eq("user_id", user.id)

@@ -16,9 +16,12 @@ describe('getUserContentServer', () => {
     expect(getUserContent).toHaveBeenCalled()
     expect(res).toEqual(['demo'])
     vi.resetModules()
+    vi.doUnmock('../content-service')
+    vi.doUnmock('../supabase')
   })
 
   it('returns empty array when user not authenticated', async () => {
+    vi.doUnmock('../content-service')
     const mockClient = {
       auth: { getUser: vi.fn().mockResolvedValue({ data: { user: null }, error: null }) },
       from: vi.fn(),
@@ -29,6 +32,8 @@ describe('getUserContentServer', () => {
     const res = await getUserContentServer()
     expect(res).toEqual([])
     vi.resetModules()
+    vi.doUnmock('../supabase')
+    vi.doUnmock('../supabase-server')
   })
 })
 
@@ -56,5 +61,7 @@ describe('getSetlistByIdServer', () => {
     expect(getSetlistById).toHaveBeenCalledWith('mock')
     expect(res).toEqual({ id: 'mock' })
     vi.resetModules()
+    vi.doUnmock('../supabase')
+    vi.doUnmock('../setlist-service')
   })
 })
