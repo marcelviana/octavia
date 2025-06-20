@@ -42,6 +42,18 @@ export async function saveSetlists(items: any[]): Promise<void> {
   }
 }
 
+export async function removeCachedSetlist(id: string): Promise<void> {
+  try {
+    const userId = await getUserId()
+    const storeKey = getStoreKey(userId)
+  const existing = (await localforage.getItem<any[]>(storeKey)) || []
+  const filtered = existing.filter((it: any) => String(it.id) !== String(id))
+    await localforage.setItem(storeKey, filtered)
+  } catch (err) {
+    console.error('Failed to remove cached setlist', err)
+  }
+}
+
 export async function clearOfflineSetlists(userIdArg?: string): Promise<void> {
   const userId = userIdArg ?? (await getUserId())
   await localforage.removeItem(getStoreKey(userId))

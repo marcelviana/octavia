@@ -94,6 +94,23 @@ export async function saveContent(items: any[]): Promise<void> {
   }
 }
 
+export async function removeCachedContent(id: string): Promise<void> {
+  try {
+    const userId = await getUserId()
+    const storeKey = getStoreKey(userId)
+    const indexKey = getIndexKey(userId)
+  const existing = (await localforage.getItem<any[]>(storeKey)) || []
+  const filtered = existing.filter((it: any) => String(it.id) !== String(id))
+    await localforage.setItem(storeKey, filtered)
+    await localforage.removeItem(getFileKey(userId, id))
+    const index = (await localforage.getItem<IndexEntry[]>(indexKey)) || []
+    const updated = index.filter(e => String(e.id) !== String(id))
+    await saveIndex(updated)
+  } catch (err) {
+    console.error('Failed to remove cached content', err)
+  }
+}
+
 export async function cacheFilesForContent(items: any[]): Promise<void> {
   for (const item of items) {
     if (!item?.id || !item?.file_url) continue

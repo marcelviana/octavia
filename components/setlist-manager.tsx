@@ -152,6 +152,12 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
   const handleDeleteSetlist = async (setlistId: string) => {
     try {
       await deleteSetlist(setlistId)
+      try {
+        const { removeCachedSetlist } = await import('../lib/offline-setlist-cache')
+        await removeCachedSetlist(setlistId)
+      } catch (err) {
+        console.error('Failed to remove cached setlist', err)
+      }
       const updated = setlists.filter((s) => s.id !== setlistId)
       setSetlists(updated)
       try {
