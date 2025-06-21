@@ -43,7 +43,14 @@ export function FileUpload({
   const [isDragOver, setIsDragOver] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<any[]>([]);
   const [isUploading, setIsUploading] = useState(false);
-  const allowedExtensions = ["pdf", "docx", "txt"];
+  const allowedExtensions = [
+    "pdf",
+    "docx",
+    "txt",
+    "png",
+    "jpg",
+    "jpeg",
+  ];
 
   // Function to sanitize filename for storage
   const sanitizeFilename = (filename: string): string => {
@@ -186,6 +193,10 @@ export function FileUpload({
         return "Guitar Tab";
       case "txt":
         return "Document";
+      case "png":
+      case "jpg":
+      case "jpeg":
+        return "Sheet Music";
       case "mid":
       case "midi":
         return "MIDI File";
@@ -256,7 +267,7 @@ export function FileUpload({
         <input
           type="file"
           multiple={!single}
-          accept=".pdf,.docx,.txt"
+          accept=".pdf,.docx,.txt,.png,.jpg,.jpeg"
           onChange={handleFileSelect}
           className="hidden"
           id="file-upload"
@@ -267,7 +278,7 @@ export function FileUpload({
           </Button>
         </label>
         <p className="text-xs text-gray-500 mt-2">
-          Supports PDF, DOCX, and text files
+          Supports PDF, DOCX, text, and image files
         </p>
       </div>
 
