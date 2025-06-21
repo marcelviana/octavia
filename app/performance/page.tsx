@@ -6,11 +6,7 @@ import {
 } from "@/lib/content-service-server";
 import PerformancePageClient from "@/components/performance-page-client";
 
-export default async function PerformancePage({
-  searchParams,
-}: {
-  searchParams?: { [key: string]: string | string[] | undefined };
-}) {
+export default async function PerformancePage({ searchParams }: { searchParams?: any }) {
   const supabase = await getSupabaseServerClient();
   const {
     data: { user },

@@ -4,11 +4,7 @@ import { getSupabaseServerClient } from "@/lib/supabase-server"
 import { LoginPanel } from "@/components/auth/login-panel"
 import { Music } from "lucide-react"
 
-export default async function LoginPage({
-  searchParams,
-}: {
-  searchParams?: { [key: string]: string | string[] | undefined }
-}) {
+export default async function LoginPage({ searchParams }: { searchParams?: any }) {
   const supabase = await getSupabaseServerClient()
   const {
     data: { session },
