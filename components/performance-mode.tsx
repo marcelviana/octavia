@@ -369,22 +369,33 @@ export function PerformanceMode({
             <div className="space-y-8 max-w-3xl mx-auto">
               {currentSongData.content_type === ContentType.SHEET_MUSIC ? (
                 sheetUrls[currentSong] ? (
-                  sheetUrls[currentSong]!.toLowerCase().endsWith(".pdf") ? (
-                    <PdfViewer
-                      url={sheetUrls[currentSong] as string}
-                      fullscreen
-                      className="h-[calc(100vh-200px)]"
-                    />
-                  ) : (
-                    <Image
-                      src={sheetUrls[currentSong] as string}
-                      alt={currentSongData.title}
-                      width={800}
-                      height={800}
-                      className="w-full h-auto"
-                      style={{ maxHeight: "100%", objectFit: "contain" }}
-                    />
-                  )
+                  (() => {
+                    const url = sheetUrls[currentSong]!.toLowerCase()
+                    const isPdf = url.endsWith(".pdf")
+                    const isImage = url.endsWith(".png") || url.endsWith(".jpg") || url.endsWith(".jpeg")
+                    if (isPdf) {
+                      return (
+                        <PdfViewer
+                          url={sheetUrls[currentSong] as string}
+                          fullscreen
+                          className="h-[calc(100vh-200px)]"
+                        />
+                      )
+                    }
+                    if (isImage) {
+                      return (
+                        <Image
+                          src={sheetUrls[currentSong] as string}
+                          alt={currentSongData.title}
+                          width={800}
+                          height={800}
+                          className="w-full h-auto"
+                          style={{ maxHeight: "100%", objectFit: "contain" }}
+                        />
+                      )
+                    }
+                    return null
+                  })()
                 ) : (
                   <div className="text-center text-[#A69B8E] py-10">
                     <p className="text-xl">No sheet music available</p>

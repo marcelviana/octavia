@@ -574,25 +574,33 @@ export function ContentViewer({
 
                               {offlineUrl || content.file_url ? (
                                 <div className="overflow-hidden bg-white/80 backdrop-blur-sm border border-orange-200 rounded-xl shadow">
-                                  {(offlineUrl || content.file_url)!.toLowerCase().endsWith(".pdf") ? (
-                                    <PdfViewer
-                                      url={(offlineUrl || content.file_url) as string}
-                                      fullscreen
-                                      className="w-full h-[calc(100vh-250px)]"
-                                    />
-                                  ) : (
-                                    <Image
-                                      src={(offlineUrl || content.file_url) || "/placeholder.svg"}
-                                      alt={`Sheet music for ${content.title}`}
-                                      width={800}
-                                      height={800}
-                                      className="w-full h-auto"
-                                      style={{
-                                        maxHeight: "calc(100vh - 250px)",
-                                        objectFit: "contain",
-                                      }}
-                                    />
-                                  )}
+                                  {(() => {
+                                    const url = (offlineUrl || content.file_url)!.toLowerCase()
+                                    const isPdf = url.endsWith(".pdf")
+                                    const isImage = url.endsWith(".png") || url.endsWith(".jpg") || url.endsWith(".jpeg")
+                                    if (isPdf) {
+                                      return (
+                                        <PdfViewer
+                                          url={(offlineUrl || content.file_url) as string}
+                                          fullscreen
+                                          className="w-full h-[calc(100vh-250px)]"
+                                        />
+                                      )
+                                    }
+                                    if (isImage) {
+                                      return (
+                                        <Image
+                                          src={(offlineUrl || content.file_url) as string}
+                                          alt={`Sheet music for ${content.title}`}
+                                          width={800}
+                                          height={800}
+                                          className="w-full h-auto"
+                                          style={{ maxHeight: "calc(100vh - 250px)", objectFit: "contain" }}
+                                        />
+                                      )
+                                    }
+                                    return null
+                                  })()}
                                 </div>
                               ) : content.content_data?.notation ? (
                                 <div className="p-6 bg-white/80 backdrop-blur-sm border border-orange-200 rounded-xl shadow">
