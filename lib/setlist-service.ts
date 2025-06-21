@@ -904,39 +904,35 @@ export async function updateSongPosition(setlistId: string, songId: string, newP
     const maxPosition = Math.max(...allSongs.map((s: any) => s.position))
     const tempOffset = maxPosition + 1000
 
-    const { error: tempError } = await supabase
-      .from("setlist_songs")
-      .upsert(
-        actualUpdates.map((u: any, i: number) => ({
-          id: u.id,
-          position: tempOffset + i,
-        })),
-        { onConflict: "id" },
-      )
+    // Use individual updates to avoid constraint violations
+    for (let i = 0; i < actualUpdates.length; i++) {
+      const update = actualUpdates[i]
+      const { error: tempError } = await supabase
+        .from("setlist_songs")
+        .update({ position: tempOffset + i })
+        .eq("id", update.id)
 
-    if (tempError) {
-      logger.error("Error setting temporary positions:", tempError)
-      throw new Error(
-        `Failed to set temporary positions: ${tempError.message || tempError.details || 'Unknown database error'}`,
-      )
+      if (tempError) {
+        logger.error("Error setting temporary position:", tempError)
+        throw new Error(
+          `Failed to set temporary positions: ${tempError.message || tempError.details || 'Unknown database error'}`,
+        )
+      }
     }
 
     // Phase 2: update to final positions
-    const { error: updateError } = await supabase
-      .from("setlist_songs")
-      .upsert(
-        actualUpdates.map((u: any) => ({
-          id: u.id,
-          position: u.position,
-        })),
-        { onConflict: "id" },
-      )
+    for (const update of actualUpdates) {
+      const { error: updateError } = await supabase
+        .from("setlist_songs")
+        .update({ position: update.position })
+        .eq("id", update.id)
 
-    if (updateError) {
-      logger.error("Error updating final song positions:", updateError)
-      throw new Error(
-        `Failed to update song positions: ${updateError.message || updateError.details || 'Unknown database error'}`,
-      )
+      if (updateError) {
+        logger.error("Error updating final song position:", updateError)
+        throw new Error(
+          `Failed to update song positions: ${updateError.message || updateError.details || 'Unknown database error'}`,
+        )
+      }
     }
 
     return true
