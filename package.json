@@ -45,6 +45,8 @@
     "@supabase/ssr": "latest",
     "@supabase/supabase-js": "latest",
     "@types/debug": "latest",
+    "@upstash/ratelimit": "^2.0.5",
+    "@upstash/redis": "^1.35.0",
     "@vitest/browser": "latest",
     "@vitest/ui": "latest",
     "autoprefixer": "^10.4.20",
