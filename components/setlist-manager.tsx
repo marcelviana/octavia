@@ -425,7 +425,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                     key={setlist.id}
                     className={`cursor-pointer transition-all duration-300 border-0 shadow-lg hover:shadow-2xl hover:scale-105 ${
                       expanded
-                        ? "ring-2 ring-amber-500 shadow-2xl scale-105"
+                        ? "ring-2 ring-amber-500 shadow-2xl"
                         : "bg-white/80 backdrop-blur-sm hover:bg-white/90"
                     }`}
                     onClick={() =>
@@ -435,7 +435,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                     <CardContent className="p-0 overflow-hidden">
                       <div
                         className={cn(
-                          "flex items-start justify-between p-4 flex-col gap-2 sm:flex-row sm:gap-0",
+                          "flex items-start justify-between px-4 py-3 flex-col gap-2 sm:flex-row sm:gap-0",
                           expanded &&
                             "bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-t-lg",
                         )}
@@ -540,7 +540,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                       </div>
 
                       {expanded && (
-                        <div className="px-4 pt-2 pb-3 space-y-3">
+                        <div className="px-4 py-2 space-y-2">
                           <div className="flex flex-wrap items-center gap-3">
                             <Button
                               variant="outline"
