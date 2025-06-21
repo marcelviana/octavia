@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { saveSetlists, removeCachedSetlist } from "@/lib/offline-setlist-cache"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -39,6 +39,7 @@ import {
   deleteSetlist,
   addSongToSetlist,
   removeSongFromSetlist,
+  updateSongPosition,
 } from "@/lib/setlist-service"
 import { getUserContent as getContentList } from "@/lib/content-service"
 import type { Database } from "@/types/supabase"
@@ -80,6 +81,8 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
     venue: "",
     notes: "",
   })
+
+  const [draggedSongId, setDraggedSongId] = useState<string | null>(null)
 
   // Load data on component mount
   useEffect(() => {
@@ -233,10 +236,14 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
     try {
       await removeSongFromSetlist(setlistSongId)
 
-      // Reload data to get updated setlist
+      if (selectedSetlist) {
+        const updatedSongs = selectedSetlist.setlist_songs.filter((s) => s.id !== setlistSongId)
+        setSelectedSetlist({ ...selectedSetlist, setlist_songs: updatedSongs })
+      }
+
+      // Reload data to sync with backend
       await loadData()
 
-      // Find and select the updated setlist
       if (selectedSetlist) {
         const updatedSetlists = await getUserSetlists()
         const updatedSetlist = updatedSetlists.find((s) => s.id === selectedSetlist.id)
@@ -247,6 +254,39 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
     } catch (err) {
       console.error("Error removing song from setlist:", err)
       setError("Failed to remove song from setlist. Please try again.")
+    }
+  }
+
+  const handleDragStart = (songId: string) => {
+    setDraggedSongId(songId)
+  }
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+  }
+
+  const handleDrop = async (targetId: string) => {
+    if (!draggedSongId || !selectedSetlist) return
+    if (draggedSongId === targetId) {
+      setDraggedSongId(null)
+      return
+    }
+    const targetIndex = selectedSetlist.setlist_songs.findIndex((s) => s.id === targetId)
+    if (targetIndex === -1) {
+      setDraggedSongId(null)
+      return
+    }
+    try {
+      await updateSongPosition(selectedSetlist.id, draggedSongId, targetIndex + 1)
+      const updatedSetlists = await getUserSetlists()
+      const updated = updatedSetlists.find((s) => s.id === selectedSetlist.id)
+      if (updated) {
+        setSelectedSetlist(updated as SetlistWithSongs)
+      }
+    } catch (err) {
+      console.error('Error updating song position:', err)
+    } finally {
+      setDraggedSongId(null)
     }
   }
 
@@ -586,11 +626,16 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                             ) : (
                               (setlist.setlist_songs || [])
                                 .sort((a, b) => a.position - b.position)
-                                .map((setlistSong, index) => (
-                                  <div
-                                    key={setlistSong.id}
-                                    className="flex items-center justify-between p-3 bg-gradient-to-r from-amber-50 to-orange-50 rounded-lg border border-amber-200 hover:shadow-md transition-all duration-300"
-                                  >
+                                  .map((setlistSong, index) => (
+                                    <div
+                                      key={setlistSong.id}
+                                      draggable
+                                      onDragStart={() => handleDragStart(setlistSong.id)}
+                                      onDragOver={handleDragOver}
+                                      onDrop={() => handleDrop(setlistSong.id)}
+                                      onDragEnd={() => setDraggedSongId(null)}
+                                      className="flex items-center justify-between p-3 bg-gradient-to-r from-amber-50 to-orange-50 rounded-lg border border-amber-200 hover:shadow-md transition-all duration-300"
+                                    >
                                     <div className="flex items-center space-x-3">
                                       <GripVertical className="w-4 h-4 text-amber-500 cursor-grab" />
                                       <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
@@ -617,12 +662,15 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                                         <Button size="sm" variant="ghost" className="hover:bg-amber-100 text-amber-600 h-7 w-7 p-0">
                                           <Edit className="w-3 h-3" />
                                         </Button>
-                                        <Button
-                                          size="sm"
-                                          variant="ghost"
-                                          onClick={() => handleRemoveSong(setlistSong.id)}
-                                          className="hover:bg-red-100 text-red-600 h-7 w-7 p-0"
-                                        >
+                                          <Button
+                                            size="sm"
+                                            variant="ghost"
+                                            onClick={(e) => {
+                                              e.stopPropagation()
+                                              handleRemoveSong(setlistSong.id)
+                                            }}
+                                            className="hover:bg-red-100 text-red-600 h-7 w-7 p-0"
+                                          >
                                           <Trash2 className="w-3 h-3" />
                                         </Button>
                                       </div>
