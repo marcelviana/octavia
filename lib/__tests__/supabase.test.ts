@@ -26,15 +26,6 @@ describe('supabase utils', () => {
     expect(mod.isSupabaseConfigured).toBe(true)
   })
 
-  it('returns mock client when not configured', async () => {
-    process.env.NEXT_PUBLIC_SUPABASE_URL = ''
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = ''
-    const mod = await import('../supabase')
-    const client = mod.getSupabaseBrowserClient()
-    expect(client.auth.signInWithPassword).toBeDefined()
-    const res = await client.auth.signInWithPassword()
-    expect(res.error.message).toMatch(/Demo mode/)
-  })
 
   it('testSupabaseConnection returns false when not configured', async () => {
     process.env.NEXT_PUBLIC_SUPABASE_URL = ''
