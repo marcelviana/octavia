@@ -300,7 +300,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 p-4">
-      <div className="max-w-7xl mx-auto space-y-4">
+      <div className="max-w-7xl mx-auto space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
@@ -395,7 +395,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
           </Dialog>
         </div>
 
-        <div className="space-y-6">
+        <div className="mt-6 space-y-6">
           {/* Setlists List */}
           <div className="space-y-6">
             {setlists.length === 0 ? (
@@ -423,10 +423,10 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                 return (
                   <Card
                     key={setlist.id}
-                    className={`cursor-pointer transition-all duration-300 border-0 shadow-lg hover:shadow-2xl hover:scale-105 ${
+                    className={`cursor-pointer transition-all duration-300 border-0 shadow-lg hover:shadow-2xl ${
                       expanded
                         ? "ring-2 ring-amber-500 shadow-2xl"
-                        : "bg-white/80 backdrop-blur-sm hover:bg-white/90"
+                        : "bg-white/80 backdrop-blur-sm hover:bg-white/90 hover:scale-105"
                     }`}
                     onClick={() =>
                       setSelectedSetlist(expanded ? null : setlist)
@@ -435,7 +435,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                     <CardContent className="p-0 overflow-hidden">
                       <div
                         className={cn(
-                          "flex items-start justify-between px-4 py-3 flex-col gap-2 sm:flex-row sm:gap-0",
+                          "flex items-start justify-between px-4 py-4 flex-col gap-2 sm:flex-row sm:items-center sm:gap-4",
                           expanded &&
                             "bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-t-lg",
                         )}
@@ -540,7 +540,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                       </div>
 
                       {expanded && (
-                        <div className="px-4 py-2 space-y-2">
+                        <div className="px-4 pt-3 pb-4 space-y-2">
                           <div className="flex flex-wrap items-center gap-3">
                             <Button
                               variant="outline"
@@ -574,7 +574,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                               <Trash2 className="w-3 h-3" />
                             </Button>
                           </div>
-                          <div className="space-y-2 max-h-80 md:max-h-96 overflow-y-auto scroll-smooth">
+                          <div className="space-y-2 max-h-96 md:max-h-[32rem] overflow-y-auto scroll-smooth">
                             {!setlist.setlist_songs || setlist.setlist_songs.length === 0 ? (
                               <div className="text-center py-6">
                                 <div className="w-16 h-16 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
