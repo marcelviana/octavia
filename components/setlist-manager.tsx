@@ -631,39 +631,6 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
 
                       {expanded && (
                         <div className="px-4 pt-3 pb-4 space-y-2">
-                          <div className="flex flex-wrap items-center gap-3">
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={(e) => {
-                                e.stopPropagation()
-                                handleExportSetlist(setlist)
-                              }}
-                              className="border-white/50 text-white bg-white/10 hover:bg-white/20 transition-colors px-2 py-1 text-xs"
-                            >
-                              <Share className="w-3 h-3" />
-                            </Button>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={(e) => e.stopPropagation()}
-                              className="border-white/50 text-white bg-white/10 hover:bg-white/20 transition-colors px-2 py-1 text-xs"
-                            >
-                              <Edit className="w-3 h-3" />
-                            </Button>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={(e) => {
-                                e.stopPropagation()
-                                setSetlistToDelete(setlist)
-                                setDeleteDialogOpen(true)
-                              }}
-                              className="border-white/50 text-white bg-white/10 hover:bg-white/20 transition-colors px-2 py-1 text-xs"
-                            >
-                              <Trash2 className="w-3 h-3" />
-                            </Button>
-                          </div>
                           <div className="space-y-2 max-h-96 md:max-h-[32rem] overflow-y-auto scroll-smooth">
                             {!setlist.setlist_songs || setlist.setlist_songs.length === 0 ? (
                               <div className="text-center py-6">
