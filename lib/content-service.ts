@@ -171,8 +171,8 @@ function cleanupCache() {
   }
 }
 
-// Clean cache every 5 minutes
-setInterval(cleanupCache, 5 * 60 * 1000)
+// Clean cache every 5 minutes without keeping the Node.js process alive
+setInterval(cleanupCache, 5 * 60 * 1000).unref()
 
 export async function getUserContentPage(
   params: ContentQueryParams = {},
