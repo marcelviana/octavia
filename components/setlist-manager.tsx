@@ -435,7 +435,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                     <CardContent className="p-0 overflow-hidden">
                       <div
                         className={cn(
-                          "flex items-start justify-between p-4 flex-col gap-3 sm:flex-row sm:gap-0",
+                          "flex items-start justify-between p-4 flex-col gap-2 sm:flex-row sm:gap-0",
                           expanded &&
                             "bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-t-lg",
                         )}
@@ -540,7 +540,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                       </div>
 
                       {expanded && (
-                        <div className="px-4 pb-4 pt-0 space-y-4">
+                        <div className="px-4 pt-2 pb-3 space-y-3">
                           <div className="flex flex-wrap items-center gap-3">
                             <Button
                               variant="outline"
@@ -574,14 +574,14 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                               <Trash2 className="w-3 h-3" />
                             </Button>
                           </div>
-                          <div className="space-y-4 max-h-80 md:max-h-96 overflow-y-auto scroll-smooth">
+                          <div className="space-y-2 max-h-80 md:max-h-96 overflow-y-auto scroll-smooth">
                             {!setlist.setlist_songs || setlist.setlist_songs.length === 0 ? (
-                              <div className="text-center py-8">
+                              <div className="text-center py-6">
                                 <div className="w-16 h-16 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
                                   <Music className="w-8 h-8 text-white" />
                                 </div>
                                 <h3 className="text-xl font-bold text-gray-900 mb-3">No Songs Yet</h3>
-                                <p className="text-gray-600 mb-6 text-base">Add some songs to this setlist to get started.</p>
+                                <p className="text-gray-600 mb-4 text-base">Add some songs to this setlist to get started.</p>
                               </div>
                             ) : (
                               (setlist.setlist_songs || [])
@@ -632,7 +632,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                             )}
                           </div>
 
-                          <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200">
+                          <div className="mt-4 p-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200">
                             <div className="flex items-center justify-between">
                               <span className="font-bold text-blue-900 text-base">Total Performance Time</span>
                               <span className="text-xl font-bold text-blue-900">
@@ -645,7 +645,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                             <DialogTrigger asChild>
                               <Button
                                 onClick={(e) => e.stopPropagation()}
-                                className="w-full mt-4 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white py-2 text-base shadow-lg"
+                                className="w-full mt-3 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white py-2 text-base shadow-lg"
                               >
                                 <Plus className="w-4 h-4 mr-2" />
                                 Add Songs to Setlist
