@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { getSupabaseServerClient } from "@/lib/supabase-server";
+import { isSupabaseConfigured } from "@/lib/supabase";
 import {
   getUserContentServer,
   getUserStatsServer,
@@ -8,13 +9,16 @@ import DashboardPageClient from "@/components/dashboard-page-client";
 import type { ContentItem } from "@/components/dashboard";
 
 export default async function DashboardPage() {
-  const supabase = await getSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    redirect("/login");
+  let user = null
+  if (isSupabaseConfigured) {
+    const supabase = await getSupabaseServerClient()
+    const {
+      data: { user: supabaseUser },
+    } = await supabase.auth.getUser()
+    user = supabaseUser
+    if (!user) {
+      redirect("/login")
+    }
   }
 
   const [rawContentData, stats] = await Promise.all([

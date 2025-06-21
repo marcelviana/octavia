@@ -1,16 +1,20 @@
 import { redirect } from "next/navigation";
 import { getSupabaseServerClient } from "@/lib/supabase-server";
+import { isSupabaseConfigured } from "@/lib/supabase";
 import { getUserContentPageServer } from "@/lib/content-service-server";
 import LibraryPageClient from "@/components/library-page-client";
 
 export default async function LibraryPage({ searchParams }: { searchParams?: any }) {
-  const supabase = await getSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    redirect("/login");
+  let user = null;
+  if (isSupabaseConfigured) {
+    const supabase = await getSupabaseServerClient();
+    const {
+      data: { user: supabaseUser },
+    } = await supabase.auth.getUser();
+    user = supabaseUser;
+    if (!user) {
+      redirect("/login");
+    }
   }
 
   const searchParam = searchParams?.search;
