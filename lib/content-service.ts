@@ -85,7 +85,11 @@ function cleanupCache() {
 }
 
 // Clean cache every 5 minutes without keeping the Node.js process alive
-setInterval(cleanupCache, 5 * 60 * 1000).unref()
+const cleanupInterval = setInterval(cleanupCache, 5 * 60 * 1000)
+// Only call unref() in Node.js environment (not in browser)
+if (typeof cleanupInterval.unref === 'function') {
+  cleanupInterval.unref()
+}
 
 export async function getUserContentPage(
   params: ContentQueryParams = {},
