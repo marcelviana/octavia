@@ -5,6 +5,7 @@ import { LyricsEditor } from "@/components/lyrics-editor"
 import { TabEditor } from "@/components/tab-editor"
 import { AnnotationTools } from "@/components/annotation-tools"
 import PdfViewer from "@/components/pdf-viewer"
+import Image from "next/image"
 import { ContentType } from "@/types/content"
 
 interface ContentTypeEditorProps {
@@ -45,14 +46,31 @@ export function ContentTypeEditor({ content, onChange }: ContentTypeEditorProps)
         />
       )
     case ContentType.SHEET_MUSIC:
-      if (content.file_url && content.file_url.toLowerCase().endsWith(".pdf")) {
-        return (
-          <PdfViewer
-            url={content.file_url}
-            className="w-full h-[calc(100vh-250px)]"
-            fullscreen
-          />
-        )
+      if (content.file_url) {
+        const url = content.file_url.toLowerCase()
+        if (url.endsWith(".pdf")) {
+          return (
+            <PdfViewer
+              url={content.file_url}
+              className="w-full h-[calc(100vh-250px)]"
+              fullscreen
+            />
+          )
+        }
+        if (url.endsWith(".png") || url.endsWith(".jpg") || url.endsWith(".jpeg")) {
+          return (
+            <div className="flex justify-center">
+              <Image
+                src={content.file_url}
+                alt="Sheet music"
+                width={800}
+                height={800}
+                className="w-full h-auto"
+                style={{ maxHeight: "calc(100vh - 250px)", objectFit: "contain" }}
+              />
+            </div>
+          )
+        }
       }
       return (
         <AnnotationTools
