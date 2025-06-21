@@ -900,50 +900,43 @@ export async function updateSongPosition(setlistId: string, songId: string, newP
       })
     
         // Update songs using a safe two-phase approach to avoid constraint conflicts
-    // Phase 1: Move all affected songs to temporary high positions to clear conflicts
+    // Phase 1: move all affected songs to temporary high positions
     const maxPosition = Math.max(...allSongs.map((s: any) => s.position))
     const tempOffset = maxPosition + 1000
-    
-    for (let i = 0; i < actualUpdates.length; i++) {
-      const update = actualUpdates[i]
-      const { error: tempError } = await supabase
-        .from("setlist_songs")
-        .update({ position: tempOffset + i })
-        .eq("id", update.id)
 
-      if (tempError) {
-        logger.error("Error setting temporary position:", {
-          error: tempError,
-          message: tempError.message,
-          details: tempError.details,
-          hint: tempError.hint,
-          code: tempError.code,
-          songId: update.id,
-          tempPosition: tempOffset + i
-        })
-        throw new Error(`Failed to set temporary position: ${tempError.message || tempError.details || 'Unknown database error'}`)
-      }
+    const { error: tempError } = await supabase
+      .from("setlist_songs")
+      .upsert(
+        actualUpdates.map((u: any, i: number) => ({
+          id: u.id,
+          position: tempOffset + i,
+        })),
+        { onConflict: "id" },
+      )
+
+    if (tempError) {
+      logger.error("Error setting temporary positions:", tempError)
+      throw new Error(
+        `Failed to set temporary positions: ${tempError.message || tempError.details || 'Unknown database error'}`,
+      )
     }
 
-    // Phase 2: Update to final positions
-    for (const update of actualUpdates) {
-      const { error: updateError } = await supabase
-        .from("setlist_songs")
-        .update({ position: update.position })
-        .eq("id", update.id)
+    // Phase 2: update to final positions
+    const { error: updateError } = await supabase
+      .from("setlist_songs")
+      .upsert(
+        actualUpdates.map((u: any) => ({
+          id: u.id,
+          position: u.position,
+        })),
+        { onConflict: "id" },
+      )
 
-      if (updateError) {
-        logger.error("Error updating final song position:", {
-          error: updateError,
-          message: updateError.message,
-          details: updateError.details,
-          hint: updateError.hint,
-          code: updateError.code,
-          songId: update.id,
-          newPosition: update.position
-        })
-        throw new Error(`Failed to update song position: ${updateError.message || updateError.details || 'Unknown database error'}`)
-      }
+    if (updateError) {
+      logger.error("Error updating final song positions:", updateError)
+      throw new Error(
+        `Failed to update song positions: ${updateError.message || updateError.details || 'Unknown database error'}`,
+      )
     }
 
     return true
