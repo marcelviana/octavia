@@ -1,5 +1,6 @@
 import { NextRequest } from 'next/server'
 import { getSupabaseServerClient } from '@/lib/supabase-server'
+import { isSupabaseConfigured } from '@/lib/supabase'
 
 const RATE_LIMIT_WINDOW_MS = 60_000
 const RATE_LIMIT_MAX = 20
@@ -43,12 +44,14 @@ export async function GET(req: NextRequest) {
     return new Response('URL not allowed. Configure ALLOWED_PROXY_HOSTS.', { status: 400 })
   }
 
-  const supabase = await getSupabaseServerClient()
-  const {
-    data: { session },
-  } = await supabase.auth.getSession()
-  if (!session) {
-    return new Response('Authentication required', { status: 401 })
+  if (isSupabaseConfigured) {
+    const supabase = await getSupabaseServerClient()
+    const {
+      data: { session },
+    } = await supabase.auth.getSession()
+    if (!session) {
+      return new Response('Authentication required', { status: 401 })
+    }
   }
 
   const ip = req.headers.get('x-forwarded-for') || 'unknown'
