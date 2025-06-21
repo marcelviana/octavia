@@ -63,7 +63,7 @@ export function Header({ onMenuClick, onToggleCollapse, collapsed, initialSearch
               alt="Octavia"
               width={120}
               height={24}
-              className="hidden sm:block"
+              className="hidden sm:block w-[120px] h-auto"
             />
           </div>
         </div>

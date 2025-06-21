@@ -266,25 +266,75 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
   }
 
   const handleDrop = async (targetId: string) => {
-    if (!draggedSongId || !selectedSetlist) return
+    if (!draggedSongId || !selectedSetlist) {
+      setDraggedSongId(null)
+      return
+    }
+    
     if (draggedSongId === targetId) {
       setDraggedSongId(null)
       return
     }
-    const targetIndex = selectedSetlist.setlist_songs.findIndex((s) => s.id === targetId)
-    if (targetIndex === -1) {
+    
+    // Find the dragged song and target song positions
+    const draggedSong = selectedSetlist.setlist_songs.find((s) => s.id === draggedSongId)
+    const targetSong = selectedSetlist.setlist_songs.find((s) => s.id === targetId)
+    
+    if (!draggedSong || !targetSong) {
       setDraggedSongId(null)
       return
     }
+    
+    // Don't update if the position would be the same
+    if (draggedSong.position === targetSong.position) {
+      setDraggedSongId(null)
+      return
+    }
+    
     try {
-      await updateSongPosition(selectedSetlist.id, draggedSongId, targetIndex + 1)
-      const updatedSetlists = await getUserSetlists()
-      const updated = updatedSetlists.find((s) => s.id === selectedSetlist.id)
-      if (updated) {
-        setSelectedSetlist(updated as SetlistWithSongs)
+      // First, optimistically update the UI immediately for instant feedback
+      const currentSongs = [...selectedSetlist.setlist_songs]
+      const draggedIndex = currentSongs.findIndex(s => s.id === draggedSongId)
+      const targetIndex = currentSongs.findIndex(s => s.id === targetId)
+      
+      if (draggedIndex !== -1 && targetIndex !== -1) {
+        // Remove the dragged song and insert it at the target position
+        const [draggedSongData] = currentSongs.splice(draggedIndex, 1)
+        currentSongs.splice(targetIndex, 0, draggedSongData)
+        
+        // Update positions to be sequential
+        const updatedSongs = currentSongs.map((song, index) => ({
+          ...song,
+          position: index + 1
+        }))
+        
+        // Update the selected setlist immediately
+        const optimisticSetlist = {
+          ...selectedSetlist,
+          setlist_songs: updatedSongs
+        }
+        setSelectedSetlist(optimisticSetlist)
+        
+        // Update the main setlists array as well
+        const updatedSetlists = setlists.map(setlist => 
+          setlist.id === selectedSetlist.id ? optimisticSetlist : setlist
+        )
+        setSetlists(updatedSetlists)
       }
+      
+      // Then perform the backend update
+      await updateSongPosition(selectedSetlist.id, draggedSongId, targetSong.position)
+      
     } catch (err) {
       console.error('Error updating song position:', err)
+      setError("Failed to reorder songs. Please try again.")
+      
+      // Revert the optimistic update by reloading from server
+      try {
+        await loadData()
+      } catch (reloadErr) {
+        console.error('Failed to reload data after error:', reloadErr)
+      }
     } finally {
       setDraggedSongId(null)
     }
@@ -632,9 +682,16 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                                       draggable
                                       onDragStart={() => handleDragStart(setlistSong.id)}
                                       onDragOver={handleDragOver}
-                                      onDrop={() => handleDrop(setlistSong.id)}
+                                      onDrop={(e) => {
+                                        e.preventDefault()
+                                        handleDrop(setlistSong.id)
+                                      }}
                                       onDragEnd={() => setDraggedSongId(null)}
-                                      className="flex items-center justify-between p-3 bg-gradient-to-r from-amber-50 to-orange-50 rounded-lg border border-amber-200 hover:shadow-md transition-all duration-300"
+                                      className={`flex items-center justify-between p-3 bg-gradient-to-r from-amber-50 to-orange-50 rounded-lg border border-amber-200 hover:shadow-md transition-all duration-300 ${
+                                        draggedSongId === setlistSong.id ? 'opacity-50' : ''
+                                      } ${
+                                        draggedSongId && draggedSongId !== setlistSong.id ? 'border-dashed border-amber-400' : ''
+                                      }`}
                                     >
                                     <div className="flex items-center space-x-3">
                                       <GripVertical className="w-4 h-4 text-amber-500 cursor-grab" />

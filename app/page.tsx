@@ -26,7 +26,7 @@ export default async function LandingPage() {
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <Image src="/logos/octavia-icon.png" alt="Octavia" width={32} height={32} />
-            <Image src="/logos/octavia-wordmark.png" alt="Octavia" width={120} height={24} />
+            <Image src="/logos/octavia-wordmark.png" alt="Octavia" width={120} height={24} className="w-[120px] h-auto" />
           </div>
           <div className="flex items-center space-x-4">
             <Button variant="ghost" className="text-amber-700 hover:text-amber-900 hover:bg-amber-100" asChild>
@@ -252,7 +252,7 @@ export default async function LandingPage() {
                   alt="Octavia"
                   width={120}
                   height={24}
-                  className="brightness-200"
+                  className="brightness-200 w-[120px] h-auto"
                 />
               </div>
               <p className="text-gray-300 max-w-xs leading-relaxed">

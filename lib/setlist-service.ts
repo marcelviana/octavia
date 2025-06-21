@@ -814,97 +814,145 @@ export async function updateSongPosition(setlistId: string, songId: string, newP
       return true
     }
 
-    // Use temporary positions to avoid constraint violations
-    const tempPosition = -1 // Use negative position as temporary
-
-    // Move the song to temporary position first
-    const { error: tempMoveError } = await supabase
+    // Get all songs in the setlist ordered by position
+    const { data: allSongs, error: fetchAllError } = await supabase
       .from("setlist_songs")
-      .update({ position: tempPosition })
-      .eq("id", songId)
+      .select("id, position")
+      .eq("setlist_id", setlistId)
+      .order("position", { ascending: true })
 
-    if (tempMoveError) {
-      logger.error("Error moving song to temporary position:", tempMoveError)
-      throw tempMoveError
+    if (fetchAllError) {
+      logger.error("Error fetching all songs:", fetchAllError)
+      throw fetchAllError
     }
 
-    // Update positions of other songs
+    // Find the song to move
+    const songToMove = allSongs.find((s: any) => s.id === songId)
+    if (!songToMove) {
+      throw new Error("Song not found in setlist")
+    }
+
+    // Create a reordered list by moving the song to the new position
+    // First, create an ordered list of all songs by their current positions
+    const orderedSongs = [...allSongs].sort((a: any, b: any) => a.position - b.position)
+    
+    // Remove the song to move from its current position
+    const songsWithoutMoved = orderedSongs.filter((s: any) => s.id !== songId)
+    
+    // Calculate the target index (0-based) for insertion
+    // If moving to position N, we want to insert at index N-1
+    let targetIndex = newPosition - 1
+    
+    // Adjust target index if we're moving a song from an earlier position
+    // because removing it shifts all later positions down by 1
     if (currentPosition < newPosition) {
-      // Moving down: get songs between current and new position
-      const { data: songsToShift, error: fetchError } = await supabase
-        .from("setlist_songs")
-        .select("id, position")
-        .eq("setlist_id", setlistId)
-        .gt("position", currentPosition)
-        .lte("position", newPosition)
-        .order("position", { ascending: true })
-
-      if (fetchError) {
-        logger.error("Error fetching songs to shift down:", fetchError)
-        throw fetchError
-      }
-
-      // Decrement positions of songs between current and new position in bulk
-      if (songsToShift.length > 0) {
-        const { error: updateError } = await supabase
-          .from("setlist_songs")
-          .upsert(
-            songsToShift.map((s: any) => ({ id: s.id, position: s.position - 1 })),
-            { onConflict: "id" },
-          )
-
-        if (updateError) {
-          logger.error("Error shifting song positions:", updateError)
-          throw updateError
-        }
-      }
+      targetIndex = Math.min(targetIndex, songsWithoutMoved.length)
     } else {
-      // Moving up: get songs between new and current position
-      const { data: songsToShift, error: fetchError } = await supabase
+      targetIndex = Math.max(0, Math.min(targetIndex, songsWithoutMoved.length))
+    }
+    
+    // Insert the song at the target position
+    const reorderedSongs = [...songsWithoutMoved]
+    reorderedSongs.splice(targetIndex, 0, songToMove)
+    
+    // Create updates with sequential positions
+    const updates = reorderedSongs.map((song: any, index: number) => ({
+      id: song.id,
+      position: index + 1
+    }))
+    
+    // Validate updates before sending to database
+    if (!updates.length) {
+      throw new Error("No songs to update")
+    }
+    
+    // Check for duplicate positions or invalid IDs
+    const positions = updates.map((u: any) => u.position)
+    const ids = updates.map((u: any) => u.id)
+    
+    if (new Set(positions).size !== positions.length) {
+      throw new Error("Duplicate positions detected in updates")
+    }
+    
+    if (ids.some((id: any) => !id)) {
+      throw new Error("Invalid song ID detected in updates")
+    }
+    
+    // Filter out updates that don't actually change the position
+    const originalPositions = new Map(allSongs.map((s: any) => [s.id, s.position]))
+    const actualUpdates = updates.filter((u: any) => originalPositions.get(u.id) !== u.position)
+    
+    if (actualUpdates.length === 0) {
+      logger.log("No position changes needed, skipping database update")
+      return true
+    }
+    
+    // Log the updates for debugging
+          logger.log("Updating song positions with:", { 
+        setlistId, 
+        songId, 
+        newPosition, 
+        currentPosition, 
+        totalSongs: allSongs.length,
+        allSongPositions: allSongs.map((s: any) => ({ id: s.id, position: s.position })),
+        allUpdates: updates,
+        actualUpdates: actualUpdates
+      })
+    
+        // Update songs using a safe two-phase approach to avoid constraint conflicts
+    // Phase 1: Move all affected songs to temporary high positions to clear conflicts
+    const maxPosition = Math.max(...allSongs.map((s: any) => s.position))
+    const tempOffset = maxPosition + 1000
+    
+    for (let i = 0; i < actualUpdates.length; i++) {
+      const update = actualUpdates[i]
+      const { error: tempError } = await supabase
         .from("setlist_songs")
-        .select("id, position")
-        .eq("setlist_id", setlistId)
-        .gte("position", newPosition)
-        .lt("position", currentPosition)
-        .order("position", { ascending: true })
+        .update({ position: tempOffset + i })
+        .eq("id", update.id)
 
-      if (fetchError) {
-        logger.error("Error fetching songs to shift up:", fetchError)
-        throw fetchError
-      }
-
-      // Increment positions of songs between new and current position in bulk
-      if (songsToShift.length > 0) {
-        const { error: updateError } = await supabase
-          .from("setlist_songs")
-          .upsert(
-            songsToShift.map((s: any) => ({ id: s.id, position: s.position + 1 })),
-            { onConflict: "id" },
-          )
-
-        if (updateError) {
-          logger.error("Error shifting song positions:", updateError)
-          throw updateError
-        }
+      if (tempError) {
+        logger.error("Error setting temporary position:", {
+          error: tempError,
+          message: tempError.message,
+          details: tempError.details,
+          hint: tempError.hint,
+          code: tempError.code,
+          songId: update.id,
+          tempPosition: tempOffset + i
+        })
+        throw new Error(`Failed to set temporary position: ${tempError.message || tempError.details || 'Unknown database error'}`)
       }
     }
 
-    // Finally, move the song to its new position
-    const { error: finalMoveError } = await supabase
-      .from("setlist_songs")
-      .update({ position: newPosition })
-      .eq("id", songId)
+    // Phase 2: Update to final positions
+    for (const update of actualUpdates) {
+      const { error: updateError } = await supabase
+        .from("setlist_songs")
+        .update({ position: update.position })
+        .eq("id", update.id)
 
-    if (finalMoveError) {
-      logger.error("Error moving song to final position:", finalMoveError)
-      throw finalMoveError
+      if (updateError) {
+        logger.error("Error updating final song position:", {
+          error: updateError,
+          message: updateError.message,
+          details: updateError.details,
+          hint: updateError.hint,
+          code: updateError.code,
+          songId: update.id,
+          newPosition: update.position
+        })
+        throw new Error(`Failed to update song position: ${updateError.message || updateError.details || 'Unknown database error'}`)
+      }
     }
 
     return true
   } catch (error) {
     logger.error("Error in updateSongPosition:", error)
     if (isSupabaseConfigured) {
-      throw error
+      // Provide a more descriptive error message
+      const errorMessage = error instanceof Error ? error.message : "Unknown error occurred"
+      throw new Error(`Failed to update song position: ${errorMessage}`)
     }
     return true // Return success in demo mode
   }

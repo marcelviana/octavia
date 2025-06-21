@@ -95,13 +95,13 @@ it('uses bulk updates when removing a song', async () => {
   vi.resetModules()
 })
 
-it('uses bulk updates when moving a song', async () => {
-  const songsToShift = [
+it('uses individual updates when moving a song', async () => {
+  const allSongs = [
+    { id: 'a', position: 1 },
     { id: 'b', position: 2 },
     { id: 'c', position: 3 }
   ]
-  const upsert = vi.fn().mockResolvedValue({ data: null, error: null })
-  const update = vi.fn(() => ({ eq: () => Promise.resolve({ data: null, error: null }) }))
+  const update = vi.fn().mockReturnValue({ eq: vi.fn().mockResolvedValue({ data: null, error: null }) })
   const mockClient = {
     auth: { getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'u1' } }, error: null }) },
     from: vi.fn((table: string) => {
@@ -116,10 +116,10 @@ it('uses bulk updates when moving a song', async () => {
             if (cols === 'position') {
               return { eq: () => ({ eq: () => ({ single: () => Promise.resolve({ data: { position: 1 }, error: null }) }) }) }
             }
-            return { eq: () => ({ gt: () => ({ lte: () => ({ order: () => Promise.resolve({ data: songsToShift, error: null }) }) }) }) }
+            // Return all songs for the new individual update approach
+            return { eq: () => ({ order: () => Promise.resolve({ data: allSongs, error: null }) }) }
           },
-          update,
-          upsert
+          update
         }
       }
       return {}
@@ -131,6 +131,7 @@ it('uses bulk updates when moving a song', async () => {
   }))
   const { updateSongPosition } = await import('../setlist-service')
   await updateSongPosition('l1', 'a', 3)
-  expect(upsert).toHaveBeenCalledWith(songsToShift.map(s => ({ id: s.id, position: s.position - 1 })), { onConflict: 'id' })
+  // Expect individual update calls: 3 temp updates + 3 final updates = 6 total
+  expect(update).toHaveBeenCalledTimes(6)
   vi.resetModules()
 })
