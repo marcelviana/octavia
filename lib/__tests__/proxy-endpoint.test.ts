@@ -43,6 +43,7 @@ describe('proxy endpoint', () => {
 
   it('rejects unauthenticated user', async () => {
     process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://demo.supabase.co'
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRlbW8iLCJyb2xlIjoiYW5vbiJ9.test'
     process.env.ALLOWED_PROXY_HOSTS = 'demo.supabase.co'
 
     vi.doMock('../supabase-server', () => ({
@@ -62,6 +63,7 @@ describe('proxy endpoint', () => {
 
   it('proxies allowed url when authenticated', async () => {
     process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://demo.supabase.co'
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRlbW8iLCJyb2xlIjoiYW5vbiJ9.test'
     process.env.ALLOWED_PROXY_HOSTS = 'demo.supabase.co'
 
     vi.doMock('../supabase-server', () => ({
@@ -84,6 +86,7 @@ describe('proxy endpoint', () => {
 
   it('strips disallowed response headers', async () => {
     process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://demo.supabase.co'
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRlbW8iLCJyb2xlIjoiYW5vbiJ9.test'
     process.env.ALLOWED_PROXY_HOSTS = 'demo.supabase.co'
 
     vi.doMock('../supabase-server', () => ({
