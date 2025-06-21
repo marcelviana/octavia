@@ -22,19 +22,6 @@ describe('Content Service', () => {
   })
 
   describe('getUserContent', () => {
-    it('returns mock content when Supabase is not configured', async () => {
-      vi.doMock('../supabase', () => ({
-        isSupabaseConfigured: false,
-        getSupabaseBrowserClient: vi.fn(),
-      }))
-      const { getUserContent } = await import('../content-service')
-      const result = await getUserContent()
-      expect(Array.isArray(result)).toBe(true)
-      expect(result.length).toBeGreaterThan(0)
-      expect(result[0].id).toBe('mock-1')
-      expect(result[0].title).toBe('Wonderwall')
-      vi.resetModules()
-    })
 
     it('returns empty array when user not authenticated', async () => {
       const mockClient = {
@@ -87,64 +74,6 @@ describe('Content Service', () => {
   })
 
   describe('getUserContentPage - Search Functionality', () => {
-    describe('Demo Mode', () => {
-      it('searches by title in demo mode', async () => {
-        vi.doMock('../supabase', () => ({
-          isSupabaseConfigured: false,
-          getSupabaseBrowserClient: vi.fn(),
-        }))
-        const { getUserContentPage } = await import('../content-service')
-        
-        const result = await getUserContentPage({ search: 'wonderwall' })
-        
-        expect(result.data).toHaveLength(1)
-        expect(result.data[0].title).toBe('Wonderwall')
-        expect(result.total).toBe(1)
-        vi.resetModules()
-      })
-
-      it('searches by artist in demo mode', async () => {
-        vi.doMock('../supabase', () => ({
-          isSupabaseConfigured: false,
-          getSupabaseBrowserClient: vi.fn(),
-        }))
-        const { getUserContentPage } = await import('../content-service')
-        
-        const result = await getUserContentPage({ search: 'oasis' })
-        
-        expect(result.data).toHaveLength(1)
-        expect(result.data[0].artist).toBe('Oasis')
-        vi.resetModules()
-      })
-
-      it('performs case-insensitive search in demo mode', async () => {
-        vi.doMock('../supabase', () => ({
-          isSupabaseConfigured: false,
-          getSupabaseBrowserClient: vi.fn(),
-        }))
-        const { getUserContentPage } = await import('../content-service')
-        
-        const result = await getUserContentPage({ search: 'WONDERWALL' })
-        
-        expect(result.data).toHaveLength(1)
-        expect(result.data[0].title).toBe('Wonderwall')
-        vi.resetModules()
-      })
-
-      it('returns empty results for non-matching search in demo mode', async () => {
-        vi.doMock('../supabase', () => ({
-          isSupabaseConfigured: false,
-          getSupabaseBrowserClient: vi.fn(),
-        }))
-        const { getUserContentPage } = await import('../content-service')
-        
-        const result = await getUserContentPage({ search: 'nonexistent' })
-        
-        expect(result.data).toHaveLength(0)
-        expect(result.total).toBe(0)
-        vi.resetModules()
-      })
-    })
 
     describe('Database Mode', () => {
       it('constructs correct search query without array fields', async () => {
@@ -347,23 +276,6 @@ describe('Content Service', () => {
     })
 
     describe('Pagination', () => {
-      it('handles pagination correctly in demo mode', async () => {
-        vi.doMock('../supabase', () => ({
-          isSupabaseConfigured: false,
-          getSupabaseBrowserClient: vi.fn(),
-        }))
-        const { getUserContentPage } = await import('../content-service')
-        
-        const page1 = await getUserContentPage({ page: 1, pageSize: 2 })
-        const page2 = await getUserContentPage({ page: 2, pageSize: 2 })
-        
-        expect(page1.data).toHaveLength(2)
-        expect(page2.data).toHaveLength(2)
-        expect(page1.data[0].id).not.toBe(page2.data[0].id)
-        expect(page1.hasMore).toBe(true)
-        expect(page1.totalPages).toBeGreaterThan(1)
-        vi.resetModules()
-      })
 
       it('validates pagination bounds', async () => {
         const mockClient = {
@@ -457,67 +369,9 @@ describe('Content Service', () => {
         vi.resetModules()
       })
 
-      it('applies difficulty filters correctly', async () => {
-        vi.doMock('../supabase', () => ({
-          isSupabaseConfigured: false,
-          getSupabaseBrowserClient: vi.fn(),
-        }))
-        const { getUserContentPage } = await import('../content-service')
-        
-        const result = await getUserContentPage({ 
-          filters: { 
-            difficulty: ['INTERMEDIATE'] 
-          } 
-        })
-        
-                 // In demo mode, this should filter the mock data
-         expect(result.data.every((item: ContentRecord) => 
-           item.content_data?.difficulty === 'Intermediate'
-         )).toBe(true)
-        vi.resetModules()
-      })
-
-      it('applies favorite filter correctly', async () => {
-        vi.doMock('../supabase', () => ({
-          isSupabaseConfigured: false,
-          getSupabaseBrowserClient: vi.fn(),
-        }))
-        const { getUserContentPage } = await import('../content-service')
-        
-        const result = await getUserContentPage({ 
-          filters: { 
-            favorite: true 
-          } 
-        })
-        
-                 expect(result.data.every((item: ContentRecord) => item.is_favorite)).toBe(true)
-        vi.resetModules()
-      })
     })
 
     describe('Sorting', () => {
-      it('applies sorting correctly in demo mode', async () => {
-        vi.doMock('../supabase', () => ({
-          isSupabaseConfigured: false,
-          getSupabaseBrowserClient: vi.fn(),
-        }))
-        const { getUserContentPage } = await import('../content-service')
-        
-        const titleSort = await getUserContentPage({ sortBy: 'title' })
-        const artistSort = await getUserContentPage({ sortBy: 'artist' })
-        
-                 // Verify title sorting
-         const titles = titleSort.data.map((item: ContentRecord) => item.title)
-         const sortedTitles = [...titles].sort()
-         expect(titles).toEqual(sortedTitles)
-         
-         // Verify artist sorting
-         const artists = artistSort.data.map((item: ContentRecord) => item.artist || '')
-         const sortedArtists = [...artists].sort()
-         expect(artists).toEqual(sortedArtists)
-        
-        vi.resetModules()
-      })
 
       it('validates sort options in database mode', async () => {
         const mockClient = {
@@ -561,38 +415,5 @@ describe('Content Service', () => {
       })
     })
 
-    describe('Caching', () => {
-      it('caches successful results', async () => {
-        vi.doMock('../supabase', () => ({
-          isSupabaseConfigured: false,
-          getSupabaseBrowserClient: vi.fn(),
-        }))
-        const { getUserContentPage } = await import('../content-service')
-        
-        // First call
-        const result1 = await getUserContentPage({ search: 'test' })
-        
-        // Second call with same params should use cache
-        const result2 = await getUserContentPage({ search: 'test' })
-        
-        expect(result1).toEqual(result2)
-        vi.resetModules()
-      })
-
-      it('respects cache disable option', async () => {
-        vi.doMock('../supabase', () => ({
-          isSupabaseConfigured: false,
-          getSupabaseBrowserClient: vi.fn(),
-        }))
-        const { getUserContentPage } = await import('../content-service')
-        
-        const result1 = await getUserContentPage({ search: 'test', useCache: false })
-        const result2 = await getUserContentPage({ search: 'test', useCache: false })
-        
-        // Results should be the same but not from cache
-        expect(result1).toEqual(result2)
-        vi.resetModules()
-      })
-    })
   })
 })

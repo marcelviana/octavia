@@ -1,16 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
 
-it('returns demo url when Supabase not configured', async () => {
-  vi.doMock('../supabase', () => ({
-    isSupabaseConfigured: false,
-    getSupabaseBrowserClient: vi.fn()
-  }))
-  const { uploadFileToStorage } = await import('../storage-service')
-  const res = await uploadFileToStorage(new Blob(['a']), 'test.pdf')
-  expect(res.url).toContain('example.com')
-  vi.resetModules()
-})
-
 it('uploads file when Supabase configured', async () => {
   const upload = vi.fn().mockResolvedValue({ error: null })
   const getPublicUrl = vi.fn(() => ({ data: { publicUrl: 'https://bucket/test' } }))

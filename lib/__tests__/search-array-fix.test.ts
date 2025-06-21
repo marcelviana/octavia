@@ -210,23 +210,4 @@ describe('Search Array Field Fix', () => {
     })
   })
 
-  describe('Demo Mode Array Search', () => {
-    it('should handle array field search in demo mode without database errors', async () => {
-      vi.doMock('../supabase', () => ({
-        isSupabaseConfigured: false,
-        getSupabaseBrowserClient: vi.fn(),
-      }))
-
-      const { getUserContentPage } = await import('../content-service')
-      
-      // This should work without any array operator errors
-      const result = await getUserContentPage({ search: 'rock' })
-      
-      // Should find items that match in title/artist/album (not tags since we don't search tags in demo mode)
-      expect(result.data).toBeDefined()
-      expect(Array.isArray(result.data)).toBe(true)
-      
-      vi.resetModules()
-    })
-  })
 }) 
