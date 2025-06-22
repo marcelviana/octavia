@@ -15,6 +15,23 @@ async function getAuthenticatedUser(supabase?: SupabaseClient): Promise<any | nu
   console.log("🔍 getAuthenticatedUser: Starting auth check...")
   
   try {
+    // If a server client is provided, use getUser() directly
+    if (supabase) {
+      console.log("🔍 getAuthenticatedUser: Using server client")
+      const { data: { user }, error } = await client.auth.getUser()
+      if (error) {
+        console.log("🔍 getAuthenticatedUser: Server auth error:", error)
+        return null
+      }
+      if (user) {
+        console.log(`🔍 getAuthenticatedUser: Server user found: ${user.email}`)
+        return user
+      }
+      console.log("🔍 getAuthenticatedUser: No server user found")
+      return null
+    }
+    
+    // For browser client, use getSessionSafe
     const session = await getSessionSafe(2000)
     if (session?.user) {
       console.log(`🔍 getAuthenticatedUser: Session valid! User: ${session.user.email}`)
@@ -305,11 +322,8 @@ export async function getContentById(id: string, supabase?: SupabaseClient) {
     const client = supabase ?? getSupabaseBrowserClient()
 
     // Check if user is authenticated
-    const {
-      data: { user },
-      error: authError,
-    } = await client.auth.getUser()
-    if (authError || !user) {
+    const user = await getAuthenticatedUser(client)
+    if (!user) {
       throw new Error("User not authenticated")
     }
 
@@ -333,11 +347,8 @@ export async function createContent(content: ContentInsert) {
     const supabase = getSupabaseBrowserClient()
 
     // Check if user is authenticated
-    const {
-      data: { user },
-      error: authError,
-    } = await supabase.auth.getUser()
-    if (authError || !user) {
+    const user = await getAuthenticatedUser(supabase)
+    if (!user) {
       throw new Error("User not authenticated")
     }
 
@@ -367,11 +378,8 @@ export async function updateContent(id: string, content: ContentUpdate) {
     const supabase = getSupabaseBrowserClient()
 
     // Check if user is authenticated
-    const {
-      data: { user },
-      error: authError,
-    } = await supabase.auth.getUser()
-    if (authError || !user) {
+    const user = await getAuthenticatedUser(supabase)
+    if (!user) {
       throw new Error("User not authenticated")
     }
 
@@ -406,11 +414,8 @@ export async function deleteContent(id: string) {
     const supabase = getSupabaseBrowserClient()
 
     // Check if user is authenticated
-    const {
-      data: { user },
-      error: authError,
-    } = await supabase.auth.getUser()
-    if (authError || !user) {
+    const user = await getAuthenticatedUser(supabase)
+    if (!user) {
       throw new Error("User not authenticated")
     }
 
@@ -437,11 +442,8 @@ export async function getUserStats(supabase?: SupabaseClient) {
     const client = supabase ?? getSupabaseBrowserClient()
 
     // Check if user is authenticated
-    const {
-      data: { user },
-      error: authError,
-    } = await client.auth.getUser()
-    if (authError || !user) {
+    const user = await getAuthenticatedUser(client)
+    if (!user) {
       logger.log("User not authenticated for stats")
       return {
         totalContent: 0,
