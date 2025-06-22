@@ -67,4 +67,22 @@ describe('offline cache', () => {
     const url = await cache.getCachedFileUrl('big')
     expect(url).toBeNull()
   })
+
+  it('checks Content-Length before downloading large file', async () => {
+    const arrayBuffer = vi.fn(async () => new Uint8Array())
+    const cancel = vi.fn()
+    global.fetch = vi.fn(async () => ({
+      ok: true,
+      arrayBuffer,
+      headers: { get: (name: string) => name === 'Content-Length' ? String(50 * 1024 * 1024 + 1) : 'application/pdf' },
+      body: { cancel }
+    })) as any
+    await cache.cacheFilesForContent([
+      { id: 'huge', file_url: 'https://x.test/huge.pdf' }
+    ])
+    expect(arrayBuffer).not.toHaveBeenCalled()
+    expect(cancel).toHaveBeenCalled()
+    const url = await cache.getCachedFileUrl('huge')
+    expect(url).toBeNull()
+  })
 })

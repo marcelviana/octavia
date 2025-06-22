@@ -126,6 +126,15 @@ export async function cacheFilesForContent(items: any[]): Promise<void> {
           const text = await res.text().catch(() => '')
           throw new Error(text || 'fetch failed')
         }
+        const lengthHeader = res.headers.get('Content-Length')
+        if (lengthHeader && Number(lengthHeader) > MAX_CACHE_BYTES) {
+          toast({
+            title: 'File too large to cache',
+            description: 'This file exceeds the 50MB offline cache limit.'
+          })
+          res.body?.cancel?.()
+          continue
+        }
         const array = await res.arrayBuffer()
         if (array.byteLength > MAX_CACHE_BYTES) {
           toast({
