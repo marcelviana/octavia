@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -27,7 +27,6 @@ import {
 } from "@/components/ui/tooltip";
 import { ContentCreator } from "@/components/content-creator";
 import { MetadataForm } from "@/components/metadata-form";
-import { TextImportPreview } from "@/components/text-import-preview";
 import { BatchPreview } from "@/components/batch-preview";
 import { createContent } from "@/lib/content-service";
 import { getSupabaseBrowserClient } from "@/lib/supabase";
@@ -69,11 +68,7 @@ interface DraftContent {
 
 type CreatedContent = DraftContent | Content;
 
-interface TextImportResult {
-  title: string;
-  body: string;
-  content_type: string;
-}
+
 
 interface AddContentProps {
   onBack: () => void;
@@ -97,13 +92,39 @@ export function AddContent({
   const [contentType, setContentType] = useState(ContentType.LYRICS);
   const [batchArtist, setBatchArtist] = useState("");
   const [batchImported, setBatchImported] = useState(false);
+  const isAutoDetectingContentType = useRef(false);
 
   useEffect(() => {
+    // Don't reset if we're auto-detecting content type from file upload
+    if (isAutoDetectingContentType.current) {
+      isAutoDetectingContentType.current = false;
+      return;
+    }
+    
+    // Reset all form state when content type changes
+    setUploadedFile(null);
+    setCurrentStep(1);
+    setIsProcessing(false);
+    setIsParsing(false);
+    setCreatedContent(null);
+    setParsedSongs([]);
+    setBatchArtist("");
+    setBatchImported(false);
+    
+    // Set mode and import mode based on content type
     if (contentType === ContentType.SHEET_MUSIC) {
       setMode("import");
       setImportMode("single");
+    } else {
+      setMode("create");
+      setImportMode("single");
     }
   }, [contentType]);
+
+  // Reset createdContent when switching between create and import modes
+  useEffect(() => {
+    setCreatedContent(null);
+  }, [mode]);
 
   const importModes = [
     {
@@ -142,12 +163,15 @@ export function AddContent({
       
       // Auto-detect if this is an image file and set content type to Sheet Music
       const isImageFile = /\.(png|jpg|jpeg)$/i.test(file.name);
-      if (isImageFile) {
-        setContentType(ContentType.SHEET_MUSIC);
+      if (isImageFile && contentType !== ContentType.SHEET_MUSIC) {
+        // Set flag to prevent reset when auto-detecting content type
+        isAutoDetectingContentType.current = true;
         const updatedFile = { ...file, contentType: ContentType.SHEET_MUSIC };
+        setContentType(ContentType.SHEET_MUSIC);
         setUploadedFile(updatedFile);
         setCurrentStep(2);
       } else {
+        // Normal file upload flow
         const updatedFile = { ...file, contentType };
         setUploadedFile(updatedFile);
         if (contentType === ContentType.SHEET_MUSIC) {
@@ -157,10 +181,30 @@ export function AddContent({
     }
   };
 
+  const handleFilesRemoved = () => {
+    setUploadedFile(null);
+  };
+
   const handleImportNext = async () => {
     if (!uploadedFile) return;
     setUploadedFile({ ...uploadedFile, contentType });
     if (importMode === "single") {
+      // For single import, create a basic content structure and go to metadata form
+      if (uploadedFile.isTextImport) {
+        // For text files, use the parsed content
+        setCreatedContent({
+          title: uploadedFile.parsedTitle || uploadedFile.name,
+          type: contentType,
+          content: { [getContentKey(contentType)]: uploadedFile.textBody || uploadedFile.originalText || "" },
+        });
+      } else {
+        // For other files (PDF, etc.), create minimal content structure
+        setCreatedContent({
+          title: uploadedFile.name.replace(/\.[^/.]+$/, ""), // Remove file extension
+          type: contentType,
+          content: {},
+        });
+      }
       setCurrentStep(2);
       return;
     }
@@ -181,6 +225,20 @@ export function AddContent({
       setCurrentStep(2);
     } finally {
       setIsParsing(false);
+    }
+  };
+
+  // Helper function to get the content key based on content type
+  const getContentKey = (type: ContentType) => {
+    switch (type) {
+      case ContentType.LYRICS:
+        return "lyrics";
+      case ContentType.CHORD_CHART:
+        return "chords";
+      case ContentType.GUITAR_TAB:
+        return "tablature";
+      default:
+        return "content";
     }
   };
 
@@ -218,19 +276,7 @@ export function AddContent({
     }
   };
 
-  const handleTextImportComplete = (contents: TextImportResult[]) => {
-    if (contents.length > 0) {
-      setCreatedContent({
-        title: contents[0].title,
-        type: contents[0].content_type,
-        content: { lyrics: contents[0].body },
-      });
-      if (uploadedFile) {
-        setUploadedFile({ ...uploadedFile, contentType });
-      }
-      setCurrentStep(2);
-    }
-  };
+
 
 
   const handleFinish = async () => {
@@ -458,15 +504,9 @@ export function AddContent({
               onComplete={handleBatchPreviewComplete}
               onBack={() => setCurrentStep(1)}
             />
-          ) : uploadedFile && uploadedFile.isTextImport ? (
-            <TextImportPreview
-              files={[uploadedFile]}
-              onComplete={handleTextImportComplete}
-              onBack={() => setCurrentStep(1)}
-            />
           ) : (
             <MetadataForm
-              files={uploadedFile ? [uploadedFile] : []}
+              files={mode === "import" && uploadedFile ? [uploadedFile] : []}
               createdContent={createdContent}
               onComplete={handleMetadataComplete}
               onBack={() => setCurrentStep(1)}
@@ -629,44 +669,9 @@ export function AddContent({
                   <FileUpload
                     single
                     onFilesUploaded={handleFilesUploaded}
+                    onFilesRemoved={handleFilesRemoved}
                     contentType={contentType}
                   />
-                  
-                  <div className="mt-3 text-center">
-                    {contentType === ContentType.SHEET_MUSIC ? (
-                      <div className="space-y-1">
-                        <p className="text-sm text-gray-700 font-medium">
-                          Sheet Music files only
-                        </p>
-                        <p className="text-xs text-gray-600">
-                          Supported formats: PDF, PNG, JPG, JPEG
-                        </p>
-                        <p className="text-xs text-gray-500">
-                          Manual creation is not available for Sheet Music
-                        </p>
-                      </div>
-                    ) : (
-                      <div className="space-y-1">
-                        <p className="text-sm text-gray-700 font-medium">
-                          Text and document files
-                        </p>
-                        <p className="text-xs text-gray-600">
-                          Supported formats: TXT, DOCX, PDF
-                        </p>
-                        <p className="text-xs text-gray-500">
-                          Perfect for lyrics, chord charts, and guitar tabs
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                  
-                  {uploadedFile && (
-                    <div className="mt-3 p-2 bg-green-50 border border-green-200 rounded-lg">
-                      <p className="text-center text-sm text-green-800 font-medium">
-                        ✓ {uploadedFile.name}
-                      </p>
-                    </div>
-                  )}
                 </CardContent>
               </Card>
 
@@ -706,8 +711,14 @@ export function AddContent({
                         />
                       </div>
                     )}
-                    <div className="text-right">
-                      <Button onClick={handleImportNext}>Next</Button>
+                    <div className="flex justify-end pt-2">
+                      <Button 
+                        onClick={handleImportNext}
+                        className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-6 py-3 text-base font-medium shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
+                        size="lg"
+                      >
+                        Next
+                      </Button>
                     </div>
                   </CardContent>
                 </Card>

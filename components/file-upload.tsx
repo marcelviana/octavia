@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -36,12 +36,14 @@ import { ContentType } from "@/types/content";
 
 interface FileUploadProps {
   onFilesUploaded: (files: any[]) => void;
+  onFilesRemoved?: () => void;
   single?: boolean;
   contentType?: ContentType;
 }
 
 export function FileUpload({
   onFilesUploaded,
+  onFilesRemoved,
   single = false,
   contentType,
 }: FileUploadProps) {
@@ -49,6 +51,30 @@ export function FileUpload({
   const [uploadedFiles, setUploadedFiles] = useState<any[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const [storageStatus, setStorageStatus] = useState<{ canUpload: boolean; error?: string } | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const hasTriggeredCallback = useRef(false);
+  
+  // Reset internal state when content type changes
+  useEffect(() => {
+    setUploadedFiles([]);
+    setIsUploading(false);
+    setIsDragOver(false);
+    setStorageStatus(null);
+    hasTriggeredCallback.current = false;
+    // Clear file input value
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  }, [contentType]);
+
+  // Automatically trigger onFilesUploaded when files are completed
+  useEffect(() => {
+    const completedFiles = uploadedFiles.filter(f => f.status === "completed");
+    if (completedFiles.length > 0 && !isUploading && !hasTriggeredCallback.current) {
+      hasTriggeredCallback.current = true;
+      onFilesUploaded(completedFiles);
+    }
+  }, [uploadedFiles, isUploading, onFilesUploaded]);
   
   // Dynamic allowed extensions based on content type
   const getAllowedExtensions = () => {
@@ -186,6 +212,11 @@ export function FileUpload({
 
     setIsUploading(false);
     console.log("Upload process completed");
+    
+    // Clear file input value so user can select the same files again if needed
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
   };
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -267,55 +298,25 @@ export function FileUpload({
   };
 
   const removeFile = (fileId: number) => {
-    setUploadedFiles((prev) => prev.filter((f) => f.id !== fileId));
+    setUploadedFiles([]);
+    hasTriggeredCallback.current = false;
+    // Clear file input value so user can select files again
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+    // Notify parent that files were removed
+    if (onFilesRemoved) {
+      onFilesRemoved();
+    }
   };
 
-  const handleContinue = () => {
-    const completedFiles = uploadedFiles.filter(
-      (f) => f.status === "completed",
-    );
-    onFilesUploaded(completedFiles);
-  };
+
+
+  // Show file preview if there are uploaded files, otherwise show upload area
+  const hasUploadedFiles = uploadedFiles.length > 0;
 
   return (
     <div className="space-y-6">
-      {/* Upload Area */}
-      <div
-        className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
-          isDragOver ? "border-blue-500 bg-blue-50" : "border-gray-300"
-        }`}
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
-      >
-        <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-        <h3 className="text-lg font-medium text-gray-900 mb-2">
-          {isDragOver ? "Drop files here" : "Upload your music files"}
-        </h3>
-        <p className="text-gray-600 mb-4">
-          Drag and drop files here, or click to browse
-        </p>
-        <input
-          type="file"
-          multiple={!single}
-          accept={allowedExtensions.map(ext => `.${ext}`).join(",")}
-          onChange={handleFileSelect}
-          className="hidden"
-          id="file-upload"
-        />
-        <label htmlFor="file-upload">
-          <Button asChild>
-            <span>{single ? "Choose File" : "Choose Files"}</span>
-          </Button>
-        </label>
-        <p className="text-xs text-gray-500 mt-2">
-          {contentType === ContentType.SHEET_MUSIC 
-            ? "Supports PDF and image files (PNG, JPG, JPEG)"
-            : "Supports PDF, DOCX, and text files"
-          }
-        </p>
-      </div>
-
       {/* Storage Status Warning */}
       {storageStatus && !storageStatus.canUpload && (
         <Card className="border-orange-200 bg-orange-50">
@@ -336,87 +337,103 @@ export function FileUpload({
         </Card>
       )}
 
-      {/* Uploaded Files */}
-      {uploadedFiles.length > 0 && (
-        <Card>
+      {!hasUploadedFiles ? (
+        /* Upload Area */
+        <div
+          className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
+            isDragOver ? "border-blue-500 bg-blue-50" : "border-gray-300"
+          }`}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+        >
+          <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+          <h3 className="text-lg font-medium text-gray-900 mb-2">
+            {isDragOver ? "Drop files here" : "Upload your music files"}
+          </h3>
+          <p className="text-gray-600 mb-4">
+            Drag and drop files here, or click to browse
+          </p>
+          <input
+            ref={fileInputRef}
+            type="file"
+            multiple={!single}
+            accept={allowedExtensions.map(ext => `.${ext}`).join(",")}
+            onChange={handleFileSelect}
+            className="hidden"
+            id="file-upload"
+          />
+          <label htmlFor="file-upload">
+            <Button asChild>
+              <span>{single ? "Choose File" : "Choose Files"}</span>
+            </Button>
+          </label>
+          <p className="text-xs text-gray-500 mt-2">
+            {contentType === ContentType.SHEET_MUSIC 
+              ? "Supports PDF and image files (PNG, JPG, JPEG)"
+              : "Supports PDF, DOCX, and text files"
+            }
+          </p>
+        </div>
+      ) : (
+        /* File Preview Area */
+        <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
           <CardContent className="p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="font-medium text-gray-900">
-                Uploaded Files ({uploadedFiles.length})
-              </h3>
-              {!isUploading &&
-                uploadedFiles.every((f) => f.status === "completed") && (
-                  <Button onClick={handleContinue}>
-                    Continue
-                    <Check className="w-4 h-4 ml-2" />
-                  </Button>
-                )}
-            </div>
-            <div className="space-y-3">
-              {uploadedFiles.map((file) => (
-                <div
-                  key={file.id}
-                  className="flex items-center space-x-4 p-3 bg-gray-50 rounded-lg"
-                >
+            {uploadedFiles.map((file) => (
+              <div key={file.id} className="space-y-4">
+                {/* File Info */}
+                <div className="flex items-center space-x-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg">
                   <div className="flex-shrink-0">
                     {getFileIcon(file.contentType)}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium text-gray-900 truncate">
+                    <p className="font-semibold text-gray-900 text-lg truncate">
                       {file.name}
                     </p>
-                    <div className="flex items-center space-x-2 mt-1">
-                      <Badge variant="secondary" className="text-xs">
+                    <div className="flex items-center space-x-3 mt-2">
+                      <Badge className="text-xs font-medium bg-green-100 text-green-800 border border-green-200">
                         {file.contentType}
                       </Badge>
-                      <span className="text-xs text-gray-500">
+                      <span className="text-sm text-gray-600 bg-white/60 px-2 py-1 rounded-full">
                         {formatFileSize(file.size)}
                       </span>
+                      {file.status === "completed" && (
+                        <div className="flex items-center space-x-1 text-green-700">
+                          <Check className="w-4 h-4" />
+                          <span className="text-sm font-medium">Ready</span>
+                        </div>
+                      )}
                     </div>
                     {file.status === "uploading" && (
-                      <Progress value={file.progress} className="w-full mt-2" />
-                    )}
-                  </div>
-                  <div className="flex-shrink-0">
-                    {file.status === "completed" ? (
-                      <div className="flex items-center space-x-2">
-                        <Check className="w-4 h-4 text-green-600" />
-                        <AlertDialog>
-                          <AlertDialogTrigger asChild>
-                            <Button variant="ghost" size="sm">
-                              <X className="w-4 h-4" />
-                            </Button>
-                          </AlertDialogTrigger>
-                          <AlertDialogContent className="max-w-sm">
-                            <AlertDialogHeader>
-                              <AlertDialogTitle>
-                                Are you sure you want to remove this file?
-                              </AlertDialogTitle>
-                              <AlertDialogDescription>
-                                This will cancel the current sheet music creation
-                                process.
-                              </AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                              <AlertDialogCancel>Cancel</AlertDialogCancel>
-                              <AlertDialogAction
-                                onClick={() => removeFile(file.id)}
-                              >
-                                Remove File
-                              </AlertDialogAction>
-                            </AlertDialogFooter>
-                          </AlertDialogContent>
-                        </AlertDialog>
+                      <div className="mt-3">
+                        <Progress value={file.progress} className="w-full h-2" />
+                        <p className="text-sm text-blue-600 mt-1">Uploading...</p>
                       </div>
-                    ) : file.status === "uploading" ? (
-                      <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
-                    ) : (
-                      <AlertCircle className="w-4 h-4 text-red-600" />
+                    )}
+                    {file.status === "error" && (
+                      <div className="flex items-center space-x-1 text-red-600 mt-2">
+                        <AlertCircle className="w-4 h-4" />
+                        <span className="text-sm">Upload failed</span>
+                      </div>
                     )}
                   </div>
                 </div>
-              ))}
-            </div>
+
+                                 {/* Action Buttons */}
+                 {file.status === "completed" && (
+                   <div className="flex justify-center">
+                     <Button
+                       variant="outline"
+                       onClick={() => removeFile(file.id)}
+                       className="border-red-300 text-red-700 hover:bg-red-50 px-4 py-2"
+                     >
+                       <X className="w-4 h-4 mr-2" />
+                       Remove
+                     </Button>
+                   </div>
+                 )}
+              </div>
+            ))}
           </CardContent>
         </Card>
       )}
