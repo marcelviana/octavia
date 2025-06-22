@@ -1,7 +1,12 @@
 "use client"
 
 import React, { useState, useEffect } from "react"
-import { saveSetlists, removeCachedSetlist } from "@/lib/offline-setlist-cache"
+import {
+  saveSetlists,
+  removeCachedSetlist,
+  getCachedSetlists,
+} from "@/lib/offline-setlist-cache"
+import { getCachedContent } from "@/lib/offline-cache"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -123,8 +128,19 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
     try {
       setLoading(true)
       setError(null)
-      
       console.log("🔄 Starting to load setlists and content...")
+
+      if (typeof navigator !== "undefined" && !navigator.onLine) {
+        console.log("⚠️ Offline detected, loading cached data")
+        const [cachedSets, cachedContent] = await Promise.all([
+          getCachedSetlists(),
+          getCachedContent(),
+        ])
+        setSetlists(cachedSets as SetlistWithSongs[])
+        setAvailableContent(cachedContent)
+        setLoading(false)
+        return
+      }
       
       // Test Supabase connection with aggressive timeout
       try {
@@ -165,41 +181,36 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
       const withTimeout = (promise: Promise<any>, timeoutMs: number, operationName: string) => {
         return Promise.race([
           promise,
-          new Promise((_, reject) => 
+          new Promise((_, reject) =>
             setTimeout(() => reject(new Error(`${operationName} timed out after ${timeoutMs}ms`)), timeoutMs)
           )
         ])
       }
 
       try {
-        console.log("📋 Loading setlists...")
-        const setlistsStart = Date.now()
-        
-        // Try setlists first with a reasonable timeout
+        console.log("📋 Loading setlists and content in parallel...")
+
+        const [setlistsResult, contentResult] = await Promise.allSettled([
+          withTimeout(getUserSetlists(), 5000, "Setlists loading"),
+          withTimeout(getContentList(), 5000, "Content loading"),
+        ])
+
         let setlistsData: any[] = []
-        try {
-          console.log("⏳ Calling getUserSetlists()...")
-          setlistsData = await withTimeout(getUserSetlists(), 10000, "Setlists loading") // 10 second timeout
-          console.log(`✅ Setlists loaded in ${Date.now() - setlistsStart}ms:`, setlistsData?.length || 0)
-        } catch (setlistError) {
-          console.warn("⚠️ Setlists loading failed:", setlistError)
-          // Continue with empty setlists
-          setlistsData = []
+        if (setlistsResult.status === "fulfilled") {
+          setlistsData = setlistsResult.value
+          console.log(`✅ Setlists loaded:`, setlistsData?.length || 0)
+        } else {
+          console.warn("⚠️ Setlists loading failed:", setlistsResult.reason)
+          setlistsData = await getCachedSetlists()
         }
-        
-        console.log("🎵 Loading content...")
-        const contentStart = Date.now()
-        
-        // Try content loading with independent timeout
+
         let contentData: any[] = []
-        try {
-          console.log("⏳ Calling getContentList()...")
-          contentData = await withTimeout(getContentList(), 10000, "Content loading") // 10 second timeout
-          console.log(`✅ Content loaded in ${Date.now() - contentStart}ms:`, contentData?.length || 0)
-        } catch (contentError) {
-          console.warn("⚠️ Content loading failed:", contentError)
-          // Continue with empty content
-          contentData = []
+        if (contentResult.status === "fulfilled") {
+          contentData = contentResult.value
+          console.log(`✅ Content loaded:`, contentData?.length || 0)
+        } else {
+          console.warn("⚠️ Content loading failed:", contentResult.reason)
+          contentData = await getCachedContent()
         }
 
         // Cache setlists if we have any
@@ -207,6 +218,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
           try {
             console.log("💾 Saving setlists to cache...")
             await saveSetlists(setlistsData as any[])
+            localStorage.setItem('octavia-setlists-last-load', new Date().toISOString())
             console.log("✅ Setlists cached successfully")
           } catch (err) {
             console.error('❌ Failed to cache offline setlists', err)
