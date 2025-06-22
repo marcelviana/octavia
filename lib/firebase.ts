@@ -21,25 +21,26 @@ export const isFirebaseConfigured = Boolean(
   firebaseConfig.appId
 );
 
-// Initialize Firebase
-let app;
-if (getApps().length === 0) {
-  if (isFirebaseConfigured) {
-    app = initializeApp(firebaseConfig);
-    logger.log('Firebase client initialized');
-  } else {
-    logger.warn('Firebase not configured - missing environment variables');
-  }
-} else {
-  app = getApp();
-}
+export const app = getApps().length === 0
+  ? isFirebaseConfigured
+    ? (() => {
+        const initializedApp = initializeApp(firebaseConfig);
+        logger.log('Firebase client initialized');
+        return initializedApp;
+      })()
+    : (() => {
+        logger.warn('Firebase not configured - missing environment variables');
+        return undefined;
+      })()
+  : getApp();
 
-// Initialize Firebase services
 export const auth = app ? getAuth(app) : null;
 export const db = app ? getFirestore(app) : null;
 
-// Connect to emulators in development
 if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
+  if (!process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN?.includes('localhost')) {
+    logger.warn('⚠️ You are connected to production Firebase Auth in development!');
+  }
   if (auth) {
     try {
       connectAuthEmulator(auth, 'http://localhost:9099');
@@ -51,7 +52,7 @@ if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
   
   if (db) {
     try {
-      connectFirestoreEmulator(db, 'localhost', 8080);
+      connectFirestoreEmulator(db, 'localhost', 8080); 
       logger.log('Connected to Firestore emulator');
     } catch (error) {
       // Emulator might not be running, that's ok
@@ -59,5 +60,4 @@ if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
   }
 }
 
-export { app };
-export default app; 
+export default app;
