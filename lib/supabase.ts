@@ -1,4 +1,4 @@
-import { createClient } from "@supabase/supabase-js"
+import { createBrowserClient } from "@supabase/ssr"
 import logger from "@/lib/logger"
 import type { Database } from "@/types/supabase"
 
@@ -66,7 +66,7 @@ const createMockClient = () => ({
   }),
 })
 
-let supabaseBrowserClient: ReturnType<typeof createClient> | null = null
+let supabaseBrowserClient: ReturnType<typeof createBrowserClient> | null = null
 
 export function getSupabaseBrowserClient() {
   if (!supabaseBrowserClient) {
@@ -74,11 +74,11 @@ export function getSupabaseBrowserClient() {
       logger.warn("Supabase not configured - using mock client for demo mode")
       supabaseBrowserClient = createMockClient() as any
     } else {
-      supabaseBrowserClient = createClient<Database>(supabaseUrl!, supabaseAnonKey!, {
+      supabaseBrowserClient = createBrowserClient<Database>(supabaseUrl!, supabaseAnonKey!, {
+        isSingleton: true,
         auth: {
           persistSession: true,
           autoRefreshToken: true,
-          detectSessionInUrl: true,
         },
       })
     }

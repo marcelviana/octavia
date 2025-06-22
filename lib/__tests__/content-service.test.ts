@@ -33,6 +33,7 @@ describe('Content Service', () => {
       vi.doMock('../supabase', () => ({
         isSupabaseConfigured: true,
         getSupabaseBrowserClient: () => mockClient,
+        getSessionSafe: vi.fn().mockResolvedValue(null),
       }))
       const { getUserContent } = await import('../content-service')
       const data = await getUserContent()
@@ -65,6 +66,7 @@ describe('Content Service', () => {
       vi.doMock('../supabase', () => ({
         isSupabaseConfigured: true,
         getSupabaseBrowserClient: () => mockClient,
+        getSessionSafe: vi.fn().mockResolvedValue({ user: { id: 'user1' } }),
       }))
       const { getUserContent } = await import('../content-service')
       const data = await getUserContent()
@@ -104,6 +106,7 @@ describe('Content Service', () => {
         vi.doMock('../supabase', () => ({
           isSupabaseConfigured: true,
           getSupabaseBrowserClient: () => mockClient,
+          getSessionSafe: vi.fn().mockResolvedValue({ user: { id: 'user1' } }),
         }))
 
         const { getUserContentPage } = await import('../content-service')
@@ -155,6 +158,7 @@ describe('Content Service', () => {
         vi.doMock('../supabase', () => ({
           isSupabaseConfigured: true,
           getSupabaseBrowserClient: () => mockClient,
+          getSessionSafe: vi.fn().mockResolvedValue({ user: { id: 'user1' } }),
         }))
 
         const { getUserContentPage } = await import('../content-service')
@@ -176,6 +180,7 @@ describe('Content Service', () => {
         vi.doMock('../supabase', () => ({
           isSupabaseConfigured: true,
           getSupabaseBrowserClient: () => mockClient,
+          getSessionSafe: vi.fn().mockResolvedValue({ user: { id: 'user1' } }),
         }))
 
         const { getUserContentPage } = await import('../content-service')
@@ -212,6 +217,7 @@ describe('Content Service', () => {
          vi.doMock('../supabase', () => ({
            isSupabaseConfigured: true,
            getSupabaseBrowserClient: () => mockClient,
+           getSessionSafe: vi.fn().mockResolvedValue({ user: { id: 'user1' } }),
          }))
 
          const { getUserContentPage } = await import('../content-service')
@@ -265,6 +271,7 @@ describe('Content Service', () => {
           vi.doMock('../supabase', () => ({
             isSupabaseConfigured: true,
             getSupabaseBrowserClient: () => mockClient,
+            getSessionSafe: vi.fn().mockResolvedValue({ user: { id: 'user1' } }),
           }))
 
           const { getUserContentPage } = await import('../content-service')
@@ -303,6 +310,7 @@ describe('Content Service', () => {
         vi.doMock('../supabase', () => ({
           isSupabaseConfigured: true,
           getSupabaseBrowserClient: () => mockClient,
+          getSessionSafe: vi.fn().mockResolvedValue({ user: { id: 'user1' } }),
         }))
 
         const { getUserContentPage } = await import('../content-service')
@@ -351,6 +359,7 @@ describe('Content Service', () => {
         vi.doMock('../supabase', () => ({
           isSupabaseConfigured: true,
           getSupabaseBrowserClient: () => mockClient,
+          getSessionSafe: vi.fn().mockResolvedValue({ user: { id: 'user1' } }),
         }))
 
         const { getUserContentPage } = await import('../content-service')
@@ -399,6 +408,7 @@ describe('Content Service', () => {
         vi.doMock('../supabase', () => ({
           isSupabaseConfigured: true,
           getSupabaseBrowserClient: () => mockClient,
+          getSessionSafe: vi.fn().mockResolvedValue({ user: { id: 'user1' } }),
         }))
 
         const { getUserContentPage } = await import('../content-service')
