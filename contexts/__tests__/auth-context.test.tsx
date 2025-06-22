@@ -52,6 +52,7 @@ describe('AuthProvider', () => {
     vi.doMock('@/lib/supabase', () => ({
       isSupabaseConfigured: true,
       getSupabaseBrowserClient: () => mockClient,
+      getSessionSafe: vi.fn().mockResolvedValue(null),
     }))
     const mod = await import('../auth-context')
     const wrapper = ({ children }: any) => <mod.AuthProvider>{children}</mod.AuthProvider>
