@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef, useCallback } from "react"
 import {
   saveSetlists,
   removeCachedSetlist,
@@ -111,77 +111,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
     notes: "",
   })
 
-  // Load data when auth is ready and user is available
-  useEffect(() => {
-    if (isInitialized && user) {
-      console.log("🔄 Auth ready, loading data...")
-      loadData()
-    } else if (isInitialized && !user) {
-      console.log("⚠️ Auth initialized but no user found")
-      setLoading(false)
-    }
-  }, [user, isInitialized]) // Depend on both user and auth initialization
-
-  // Add visibility change handler to prevent unnecessary reloads
-  useEffect(() => {
-    let lastLoad = Date.now()
-    const RELOAD_COOLDOWN = 30000 // 30 seconds between reloads
-
-    const handleVisibilityChange = () => {
-      if (!document.hidden && !loading && !loadInProgressRef.current && user) {
-        const now = Date.now()
-        if ((now - lastLoad) > RELOAD_COOLDOWN) {
-          console.log('🔄 SetlistManager: Tab became visible, checking if reload needed...')
-          lastLoad = now
-          
-          // Don't reload if we already have data and it's not too old
-          const hasRecentData = setlists.length > 0 || availableContent.length > 0
-          const lastLoadTime = localStorage.getItem('octavia-setlists-last-load')
-          const dataIsRecent = lastLoadTime && (now - new Date(lastLoadTime).getTime()) < 300000 // 5 minutes
-          
-          if (hasRecentData && dataIsRecent) {
-            console.log('📋 SetlistManager: Skipping reload - have recent data')
-            return
-          }
-          
-          console.log('🔄 SetlistManager: Reloading data after visibility change')
-          // Add a small delay to let auth context refresh first
-          setTimeout(() => {
-            if (user && !loading && !loadInProgressRef.current) {
-              loadData()
-            }
-          }, 1000)
-        }
-      }
-    }
-
-    document.addEventListener('visibilitychange', handleVisibilityChange)
-
-    return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange)
-    }
-  }, [loading, user])
-
-  // Add a separate effect to check Supabase configuration
-  useEffect(() => {
-    const checkConfiguration = async () => {
-      try {
-        console.log("🔧 Checking Supabase configuration...")
-        const { isSupabaseConfigured } = await import("@/lib/supabase")
-        console.log("📊 Supabase configured:", isSupabaseConfigured)
-        
-        if (!isSupabaseConfigured) {
-          console.log("⚠️ Running in demo mode")
-        }
-      } catch (err) {
-        console.error("❌ Error checking configuration:", err)
-      }
-    }
-    
-    checkConfiguration()
-  }, [])
-
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     // Prevent concurrent loads
     if (loadInProgressRef.current) {
       console.log('⏳ SetlistManager: Load already in progress, skipping...')
@@ -318,7 +248,77 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
       setLoading(false)
       console.log("🏁 Loading process finished")
     }
-  }
+  }, [user])
+
+  // Load data when auth is ready and user is available
+  useEffect(() => {
+    if (isInitialized && user) {
+      console.log("🔄 Auth ready, loading data...")
+      loadData()
+    } else if (isInitialized && !user) {
+      console.log("⚠️ Auth initialized but no user found")
+      setLoading(false)
+    }
+  }, [user, isInitialized, loadData]) // Depend on both user and auth initialization
+
+  // Add visibility change handler to prevent unnecessary reloads
+  useEffect(() => {
+    let lastLoad = Date.now()
+    const RELOAD_COOLDOWN = 30000 // 30 seconds between reloads
+
+    const handleVisibilityChange = () => {
+      if (!document.hidden && !loading && !loadInProgressRef.current && user) {
+        const now = Date.now()
+        if ((now - lastLoad) > RELOAD_COOLDOWN) {
+          console.log('🔄 SetlistManager: Tab became visible, checking if reload needed...')
+          lastLoad = now
+          
+          // Don't reload if we already have data and it's not too old
+          const hasRecentData = setlists.length > 0 || availableContent.length > 0
+          const lastLoadTime = localStorage.getItem('octavia-setlists-last-load')
+          const dataIsRecent = lastLoadTime && (now - new Date(lastLoadTime).getTime()) < 300000 // 5 minutes
+          
+          if (hasRecentData && dataIsRecent) {
+            console.log('📋 SetlistManager: Skipping reload - have recent data')
+            return
+          }
+          
+          console.log('🔄 SetlistManager: Reloading data after visibility change')
+          // Add a small delay to let auth context refresh first
+          setTimeout(() => {
+            if (user && !loading && !loadInProgressRef.current) {
+              loadData()
+            }
+          }, 1000)
+        }
+      }
+    }
+
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+    }
+  }, [loading, user, setlists.length, availableContent.length, loadData])
+
+  // Add a separate effect to check Supabase configuration
+  useEffect(() => {
+    const checkConfiguration = async () => {
+      try {
+        console.log("🔧 Checking Supabase configuration...")
+        const { isSupabaseConfigured } = await import("@/lib/supabase")
+        console.log("📊 Supabase configured:", isSupabaseConfigured)
+        
+        if (!isSupabaseConfigured) {
+          console.log("⚠️ Running in demo mode")
+        }
+      } catch (err) {
+        console.error("❌ Error checking configuration:", err)
+      }
+    }
+    
+    checkConfiguration()
+  }, [])
 
   const calculateTotalDuration = (songs: any[]) => {
     return songs.reduce((total, song) => {
@@ -347,10 +347,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
       }
 
       const newSetlist = await createSetlist(setlistData)
-      const setlistWithSongs: SetlistWithSongs = {
-        ...newSetlist,
-        setlist_songs: [],
-      }
+      const setlistWithSongs = newSetlist as unknown as SetlistWithSongs
 
       const updated = [setlistWithSongs, ...setlists]
       setSetlists(updated)

@@ -237,7 +237,7 @@ export function Library({
         clearTimeout(fetchTimeoutId)
       }
     }
-  }, [debouncedSearch, sortBy, selectedFilters, page, pageSize, refreshTrigger])
+  }, [debouncedSearch, sortBy, selectedFilters, page, pageSize, refreshTrigger, content.length, initialPage, initialPageSize, initialSearch])
 
   // Add focus listener to refresh data when returning to the library with improved throttling
   useEffect(() => {
