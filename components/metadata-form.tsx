@@ -273,53 +273,7 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
     }
   }
 
-  const handleSkip = async () => {
-    try {
-      setIsSubmitting(true)
-      if (createdContent?.id) {
-        onComplete(createdContent)
-        return
-      }
 
-      const supabase = getSupabaseBrowserClient()
-      const {
-        data: { user },
-      } = await supabase.auth.getUser()
-
-      if (!user) {
-        alert("Not logged in. Please log in first.")
-        return
-      }
-
-      if (!metadata.title.trim()) {
-        alert("Title is required")
-        setIsSubmitting(false)
-        return
-      }
-
-      const payload: any = {
-        user_id: user.id,
-        title: metadata.title.trim(),
-        content_type: createdContent?.type || files?.[0]?.contentType || "unknown",
-        content_data: createdContent?.content || {},
-        file_url: files && files[0]?.url ? files[0].url : null,
-        is_favorite: false,
-        is_public: false,
-      }
-
-      if (!payload.content_data && payload.content_type === ContentType.SHEET_MUSIC && payload.file_url) {
-        payload.content_data = { file: payload.file_url }
-      }
-
-      const newContent = await createContent(payload)
-      onComplete(newContent)
-    } catch (error) {
-      console.error("Error skipping metadata:", error)
-      alert("Failed to save content. Please try again.")
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
 
   const getContentIcon = (type: string) => {
     const styles = getContentTypeStyle(type)
@@ -640,14 +594,21 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
       </Card>
 
       {/* Actions */}
-      <div className="flex flex-col sm:flex-row justify-between gap-2">
-        <Button variant="outline" onClick={onBack}>Back</Button>
-        <div className="flex gap-2 justify-end">
-          <Button variant="ghost" onClick={handleSkip}>Skip</Button>
-          <Button onClick={handleSubmit} disabled={isSubmitting}>
-            {isSubmitting ? "Saving..." : "Save Content"}
-          </Button>
-        </div>
+      <div className="flex flex-col sm:flex-row justify-between gap-3">
+        <Button 
+          variant="outline" 
+          onClick={onBack}
+          className="border-amber-300 text-amber-700 hover:bg-amber-50 px-6 py-2 font-medium"
+        >
+          Back
+        </Button>
+        <Button 
+          onClick={handleSubmit} 
+          disabled={isSubmitting}
+          className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-6 py-2 font-medium shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isSubmitting ? "Saving..." : "Save Content"}
+        </Button>
       </div>
     </div>
   )
