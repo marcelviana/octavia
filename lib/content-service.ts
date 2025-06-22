@@ -1,4 +1,4 @@
-import { getSupabaseBrowserClient } from "@/lib/supabase"
+import { getSupabaseBrowserClient, getSessionSafe } from "@/lib/supabase"
 import logger from "@/lib/logger"
 import type { Database } from "@/types/supabase"
 import type { SupabaseClient } from "@supabase/supabase-js"
@@ -15,43 +15,11 @@ async function getAuthenticatedUser(supabase?: SupabaseClient): Promise<any | nu
   console.log("🔍 getAuthenticatedUser: Starting auth check...")
   
   try {
-    // Use a much shorter timeout and simpler approach
-    const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(() => reject(new Error('Auth check timeout')), 2000) // 2 second timeout
-    })
-    
-    // Try to get the session with timeout
-    const sessionPromise = client.auth.getSession()
-    const { data: { session }, error: sessionError } = await Promise.race([sessionPromise, timeoutPromise]) as any
-    
-    if (sessionError) {
-      console.log("🔍 getAuthenticatedUser: Session error:", sessionError.message)
-      
-      // If session is expired, try to refresh it
-      if (sessionError.message.includes("expired") || sessionError.message.includes("invalid")) {
-        console.log("🔍 getAuthenticatedUser: Attempting to refresh session...")
-        try {
-          const { data: { session: refreshedSession }, error: refreshError } = await client.auth.refreshSession()
-          if (!refreshError && refreshedSession?.user) {
-            console.log(`🔍 getAuthenticatedUser: Session refreshed! User: ${refreshedSession.user.email}`)
-            return refreshedSession.user
-          }
-        } catch (refreshErr) {
-          console.log("🔍 getAuthenticatedUser: Session refresh failed:", refreshErr)
-        }
-      }
-      
-      return null
-    }
-    
+    const session = await getSessionSafe(2000)
     if (session?.user) {
       console.log(`🔍 getAuthenticatedUser: Session valid! User: ${session.user.email}`)
       return session.user
     }
-    
-    // If no session, check if we have a stored session in localStorage
-
-    
     console.log("🔍 getAuthenticatedUser: No valid session found")
     return null
     
