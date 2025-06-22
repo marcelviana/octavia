@@ -88,7 +88,7 @@ export function Library({
   const [searchQuery, setSearchQuery] = useState(initialSearch || "");
   const debouncedSearch = useDebounce(searchQuery, 300);
   const [sortBy, setSortBy] = useState<"recent" | "title" | "artist">("recent");
-  const [viewMode, setViewMode] = useState("grid");
+
   const [content, setContent] = useState<any[]>(initialContent);
   const [totalCount, setTotalCount] = useState(initialTotal);
   const [page, setPage] = useState(initialPage);
@@ -104,6 +104,7 @@ export function Library({
   const [contentToDelete, setContentToDelete] = useState<any>(null);
   const totalPages = Math.ceil(totalCount / pageSize);
   const initialLoadRef = useRef(true)
+  const [refreshTrigger, setRefreshTrigger] = useState(0)
 
   useEffect(() => {
     if (initialLoadRef.current) {
@@ -169,7 +170,31 @@ export function Library({
     return () => {
       cancelled = true
     }
-  }, [debouncedSearch, sortBy, selectedFilters, page, pageSize])
+  }, [debouncedSearch, sortBy, selectedFilters, page, pageSize, refreshTrigger])
+
+  // Add focus listener to refresh data when returning to the library
+  useEffect(() => {
+    const handleFocus = () => {
+      // Only refresh if we're not on the initial load and not currently loading
+      if (!initialLoadRef.current && !loading) {
+        setRefreshTrigger(prev => prev + 1)
+      }
+    }
+
+    const handleVisibilityChange = () => {
+      if (!document.hidden && !initialLoadRef.current && !loading) {
+        setRefreshTrigger(prev => prev + 1)
+      }
+    }
+
+    window.addEventListener('focus', handleFocus)
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+
+    return () => {
+      window.removeEventListener('focus', handleFocus)
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+    }
+  }, [loading])
 
   const getContentIcon = (type: string) => {
     switch (type) {
@@ -186,35 +211,7 @@ export function Library({
     }
   };
 
-  const getContentColor = (type: string) => {
-    switch (type) {
-      case ContentType.GUITAR_TAB:
-        return "from-blue-500 to-blue-600";
-      case ContentType.CHORD_CHART:
-        return "from-purple-500 to-purple-600";
-      case ContentType.SHEET_MUSIC:
-        return "from-amber-500 to-amber-600";
-      case ContentType.LYRICS:
-        return "from-green-500 to-green-600";
-      default:
-        return "from-gray-500 to-gray-600";
-    }
-  };
 
-  const getContentBg = (type: string) => {
-    switch (type) {
-      case ContentType.GUITAR_TAB:
-        return "bg-blue-50 border-blue-200";
-      case ContentType.CHORD_CHART:
-        return "bg-purple-50 border-purple-200";
-      case ContentType.SHEET_MUSIC:
-        return "bg-amber-50 border-amber-200";
-      case ContentType.LYRICS:
-        return "bg-green-50 border-green-200";
-      default:
-        return "bg-gray-50 border-gray-200";
-    }
-  };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -228,6 +225,8 @@ export function Library({
   const handleAddContent = () => {
     router.push("/add-content");
   };
+
+
 
   const handleEditContent = (content: any) => {
     router.push(`/content/${content.id}/edit`);
@@ -425,70 +424,25 @@ export function Library({
               </SelectContent>
             </Select>
 
-            <div className="flex border rounded-md overflow-hidden border-amber-200">
-              <Button
-                variant={viewMode === "grid" ? "default" : "ghost"}
-                size="icon"
-                onClick={() => setViewMode("grid")}
-                className={
-                  viewMode === "grid"
-                    ? "bg-amber-100 text-amber-800"
-                    : "bg-white text-gray-600"
-                }
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <rect x="3" y="3" width="7" height="7" />
-                  <rect x="14" y="3" width="7" height="7" />
-                  <rect x="3" y="14" width="7" height="7" />
-                  <rect x="14" y="14" width="7" height="7" />
-                </svg>
-              </Button>
-              <Button
-                variant={viewMode === "list" ? "default" : "ghost"}
-                size="icon"
-                onClick={() => setViewMode("list")}
-                className={
-                  viewMode === "list"
-                    ? "bg-amber-100 text-amber-800"
-                    : "bg-white text-gray-600"
-                }
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <line x1="8" y1="6" x2="21" y2="6" />
-                  <line x1="8" y1="12" x2="21" y2="12" />
-                  <line x1="8" y1="18" x2="21" y2="18" />
-                  <line x1="3" y1="6" x2="3.01" y2="6" />
-                  <line x1="3" y1="12" x2="3.01" y2="12" />
-                  <line x1="3" y1="18" x2="3.01" y2="18" />
-                </svg>
-              </Button>
-            </div>
+
           </div>
         </div>
       </div>
 
       {/* Content Display */}
-      {content.length === 0 ? (
+      {loading && content.length === 0 ? (
+        <Card className="bg-white/80 backdrop-blur-sm border border-amber-100 shadow-lg">
+          <CardContent className="p-8 text-center">
+            <div className="w-16 h-16 border-4 border-t-amber-600 border-amber-200 rounded-full animate-spin mx-auto mb-4"></div>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">
+              Loading your music library...
+            </h3>
+            <p className="text-[#A69B8E]">
+              Please wait while we fetch your content
+            </p>
+          </CardContent>
+        </Card>
+      ) : content.length === 0 ? (
         <Card className="bg-white/80 backdrop-blur-sm border border-amber-100 shadow-lg">
           <CardContent className="p-8 text-center">
             <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -514,115 +468,17 @@ export function Library({
             </Button>
           </CardContent>
         </Card>
-      ) : viewMode === "grid" ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {content.map((item) => (
-            <Card
-              key={item.id}
-              className="bg-white/90 backdrop-blur-sm border border-amber-100 shadow-md hover:shadow-lg transition-all overflow-hidden group"
-            >
-              <div
-                className={`h-3 w-full bg-gradient-to-r ${getContentColor(item.content_type)}`}
-              ></div>
-              <CardContent className="p-5 pt-4">
-                <div className="flex items-start justify-between">
-                  <div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center ${getContentBg(
-                      item.content_type,
-                    )}`}
-                  >
-                    {getContentIcon(item.content_type)}
-                  </div>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity"
-                      >
-                        <MoreVertical className="w-4 h-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem onClick={() => onSelectContent(item)}>
-                        <BookOpen className="w-4 h-4 mr-2" />
-                        View
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => handleEditContent(item)}>
-                        <Edit className="w-4 h-4 mr-2" />
-                        Edit
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <Share className="w-4 h-4 mr-2" />
-                        Share
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => handleDownloadContent(item)}>
-                        <Download className="w-4 h-4 mr-2" />
-                        Download
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem
-                        className="text-red-600"
-                        onClick={() => handleDeleteContent(item)}
-                      >
-                        <Trash2 className="w-4 h-4 mr-2" />
-                        Delete
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </div>
-                <div
-                  className="mt-3 cursor-pointer"
-                  onClick={() => onSelectContent(item)}
-                >
-                  <h3 className="font-semibold text-gray-900 line-clamp-1">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm text-[#A69B8E] line-clamp-1">
-                    {item.artist || "Unknown Artist"}
-                  </p>
-                  <div className="flex items-center mt-3 space-x-2">
-                    <Badge variant="outline" className="bg-white">
-                      {item.key || "No Key"}
-                    </Badge>
-                    {item.difficulty && (
-                      <Badge
-                        className={
-                          item.difficulty === "Beginner"
-                            ? "bg-green-100 text-green-800 border-green-200"
-                            : item.difficulty === "Intermediate"
-                              ? "bg-amber-100 text-amber-800 border-amber-200"
-                              : "bg-red-100 text-red-800 border-red-200"
-                        }
-                      >
-                        {item.difficulty}
-                      </Badge>
-                    )}
-                    {item.is_favorite && (
-                      <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
-                    )}
-                  </div>
-                  <div className="flex items-center justify-between mt-4 text-xs text-[#A69B8E]">
-                    <div className="flex items-center">
-                      <Clock className="w-3 h-3 mr-1" />
-                      {formatDate(item.created_at)}
-                    </div>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-7 px-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50"
-                      onClick={() => onSelectContent(item)}
-                    >
-                      View
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
       ) : (
-        <Card className="bg-white/90 backdrop-blur-sm border border-amber-100 shadow-lg overflow-hidden">
+        <div className="relative">
+          {loading && content.length > 0 && (
+            <div className="absolute inset-0 bg-white/50 backdrop-blur-sm z-10 flex items-center justify-center rounded-lg">
+              <div className="bg-white p-4 rounded-lg shadow-lg flex items-center gap-2">
+                <div className="w-4 h-4 border-2 border-t-amber-600 border-amber-200 rounded-full animate-spin"></div>
+                <span className="text-sm text-gray-700">Refreshing...</span>
+              </div>
+            </div>
+          )}
+          <Card className="bg-white/90 backdrop-blur-sm border border-amber-100 shadow-lg overflow-hidden">
           <CardContent className="p-0">
             <div className="divide-y divide-amber-100">
               {content.map((item) => (
@@ -632,9 +488,7 @@ export function Library({
                 >
                   <div className="mr-4">
                     <div
-                      className={`w-10 h-10 rounded-full flex items-center justify-center ${getContentBg(
-                        item.content_type,
-                      )}`}
+                      className="w-10 h-10 rounded-full flex items-center justify-center bg-gray-50 border-gray-200 border"
                     >
                       {getContentIcon(item.content_type)}
                     </div>
@@ -725,6 +579,7 @@ export function Library({
             </div>
           </CardContent>
         </Card>
+        </div>
       )}
 
       <div className="mt-6 flex items-center justify-between">

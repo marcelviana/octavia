@@ -26,6 +26,8 @@ import {
   Music,
   Info,
   MessageSquare,
+  Guitar,
+  Mic,
 } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import {
@@ -112,13 +114,13 @@ export function ContentViewer({
   const getContentIcon = (type: string) => {
     switch (type) {
       case ContentType.GUITAR_TAB:
-        return <Music className="w-4 h-4 text-white" />;
+        return <Guitar className="w-4 h-4 text-white" />;
       case ContentType.CHORD_CHART:
         return <Music className="w-4 h-4 text-white" />;
       case ContentType.SHEET_MUSIC:
         return <FileText className="w-4 h-4 text-white" />;
       case ContentType.LYRICS:
-        return <FileText className="w-4 h-4 text-white" />;
+        return <Mic className="w-4 h-4 text-white" />;
       default:
         return <FileText className="w-4 h-4 text-white" />;
     }

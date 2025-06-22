@@ -11,8 +11,6 @@ import { toast } from "sonner"
 import {
   Save,
   X,
-  Undo,
-  Redo,
   Type,
   Pen,
   Highlighter,
@@ -31,6 +29,8 @@ import {
   Music,
   Sparkles,
   Clock,
+  Guitar,
+  Mic,
 } from "lucide-react"
 import { MetadataEditor } from "@/components/metadata-editor"
 import { ContentTypeEditor } from "@/components/editors/content-type-editor"
@@ -64,8 +64,6 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
   const [zoom, setZoom] = useState(100)
   const [selectedTool, setSelectedTool] = useState("select")
   const [annotations, setAnnotations] = useState<any[]>([])
-  const [undoStack, setUndoStack] = useState<any[]>([])
-  const [redoStack, setRedoStack] = useState<any[]>([])
 
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -85,6 +83,21 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
         return "from-amber-500 to-orange-600"
     }
   })()
+
+  const getContentIcon = (type: string) => {
+    switch (type) {
+      case "Guitar Tab":
+        return <Guitar className="w-4 h-4 text-white" />;
+      case "Chord Chart":
+        return <Music className="w-4 h-4 text-white" />;
+      case "Sheet Music":
+        return <FileText className="w-4 h-4 text-white" />;
+      case "Lyrics":
+        return <Mic className="w-4 h-4 text-white" />;
+      default:
+        return <FileText className="w-4 h-4 text-white" />;
+    }
+  }
 
   useEffect(() => {
     setHasChanges(JSON.stringify(editedContent) !== JSON.stringify(content))
@@ -117,35 +130,13 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
     onSave(updatedContent)
   }
 
-  const handleUndo = () => {
-    if (undoStack.length > 0) {
-      const previousState = undoStack[undoStack.length - 1]
-      setRedoStack([...redoStack, editedContent])
-      setEditedContent(previousState)
-      setUndoStack(undoStack.slice(0, -1))
-    }
-  }
 
-  const handleRedo = () => {
-    if (redoStack.length > 0) {
-      const nextState = redoStack[redoStack.length - 1]
-      setUndoStack([...undoStack, editedContent])
-      setEditedContent(nextState)
-      setRedoStack(redoStack.slice(0, -1))
-    }
-  }
-
-  const saveToUndoStack = () => {
-    setUndoStack([...undoStack, editedContent])
-    setRedoStack([]) // Clear redo stack when new action is performed
-  }
 
   const renderContentEditor = () => {
     return (
       <ContentTypeEditor
         content={editedContent}
         onChange={(newContent) => {
-          saveToUndoStack()
           setEditedContent(newContent)
         }}
       />
@@ -175,7 +166,7 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
             </Button>
             <div className="flex items-center space-x-2">
               <div className={`w-8 h-8 rounded-lg flex items-center justify-center bg-gradient-to-r ${headerGradient}`}>
-                <Music className="w-4 h-4 text-white" />
+                {getContentIcon(contentType)}
               </div>
               <h1 className="font-semibold text-lg sm:text-xl bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
                 Editing: {content.title}
@@ -191,25 +182,6 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
           </div>
 
           <div className="flex items-center flex-wrap gap-2">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={handleUndo}
-              disabled={undoStack.length === 0}
-              className="border-amber-300 text-amber-700 hover:bg-amber-50"
-            >
-              <Undo className="w-4 h-4" />
-            </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={handleRedo}
-              disabled={redoStack.length === 0}
-              className="border-amber-300 text-amber-700 hover:bg-amber-50"
-            >
-              <Redo className="w-4 h-4" />
-            </Button>
-            <Separator orientation="vertical" className="hidden sm:block h-6" />
             <Button
               variant="outline"
               size="sm"
@@ -358,7 +330,6 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
               <MetadataEditor
                 content={editedContent}
                 onChange={(newContent) => {
-                  saveToUndoStack()
                   setEditedContent(newContent)
                 }}
               />

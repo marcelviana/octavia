@@ -16,6 +16,7 @@ import {
   Sparkles,
   Zap,
   Star,
+  Mic,
 } from "lucide-react";
 import { FileUpload } from "@/components/file-upload";
 import {
@@ -123,7 +124,7 @@ export function AddContent({
       : importModes;
 
   const contentTypes = [
-    { id: "lyrics", name: ContentType.LYRICS, icon: FileText },
+    { id: "lyrics", name: ContentType.LYRICS, icon: Mic },
     { id: "chords", name: ContentType.CHORD_CHART, icon: Music },
     { id: "tabs", name: ContentType.GUITAR_TAB, icon: Guitar },
     {

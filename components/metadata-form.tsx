@@ -22,6 +22,7 @@ import {
   Sliders,
   Folder,
   Check,
+  Mic,
 } from "lucide-react"
 import { getContentTypeStyle } from "@/lib/content-type-styles"
 import {
@@ -45,7 +46,7 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [metadata, setMetadata] = useState({
-    title: "",
+    title: createdContent?.title || "",
     artist: "",
     album: "",
     genre: "",
@@ -323,57 +324,82 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
   const getContentIcon = (type: string) => {
     const styles = getContentTypeStyle(type)
     switch (type) {
+      case ContentType.GUITAR_TAB:
       case "Guitar Tab":
       case "Guitar Tablature":
-        return <Guitar className={`w-5 h-5 ${styles.icon}`} />
+      case "tablature":
+        return <Guitar className={`w-6 h-6 ${styles.icon}`} />
+      case ContentType.CHORD_CHART:
       case "Chord Chart":
-        return <Music className={`w-5 h-5 ${styles.icon}`} />
+      case "chord_chart":
+        return <Music className={`w-6 h-6 ${styles.icon}`} />
+      case ContentType.SHEET_MUSIC:
       case "Sheet Music":
-        return <FileText className={`w-5 h-5 ${styles.icon}`} />
+      case "sheet_music":
+        return <FileText className={`w-6 h-6 ${styles.icon}`} />
+      case ContentType.LYRICS:
       case "Lyrics":
-        return <FileText className={`w-5 h-5 ${styles.icon}`} />
+      case "lyrics":
+        return <Mic className={`w-6 h-6 ${styles.icon}`} />
       default:
-        return <FileText className="w-5 h-5 text-gray-600" />
+        return <FileText className={`w-6 h-6 ${styles.icon}`} />
     }
   }
 
   return (
     <div className="space-y-6">
       {/* Content Summary */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Content Summary</CardTitle>
+      <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-lg text-gray-900">Content Summary</CardTitle>
         </CardHeader>
         <CardContent>
           {files.length > 0 ? (
             <div className="space-y-3">
-              {files.map((file, index) => (
-                <div key={index} className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-                  {getContentIcon(file.contentType)}
+              {files.map((file, index) => {
+                const styles = getContentTypeStyle(file.contentType)
+                return (
+                  <div key={index} className={`flex items-center space-x-4 p-4 rounded-lg border-2 ${styles.border} ${styles.bg} transition-all duration-200`}>
+                    <div className={`w-12 h-12 rounded-full flex items-center justify-center ${styles.bg} border-2 ${styles.border}`}>
+                      {getContentIcon(file.contentType)}
+                    </div>
+                    <div className="flex-1">
+                      <p className="font-semibold text-gray-900 text-base">{file.name}</p>
+                      <div className="flex items-center space-x-3 mt-2">
+                        <Badge className={`text-xs font-medium ${styles.bg} ${styles.icon} border ${styles.border}`}>
+                          {file.contentType}
+                        </Badge>
+                        <span className="text-xs text-gray-600 bg-white/60 px-2 py-1 rounded-full">
+                          {(file.size / 1024 / 1024).toFixed(2)} MB
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          ) : createdContent ? (
+            (() => {
+              const styles = getContentTypeStyle(createdContent.type)
+              return (
+                <div className={`flex items-center space-x-4 p-4 rounded-lg border-2 ${styles.border} ${styles.bg} transition-all duration-200`}>
+                  <div className={`w-12 h-12 rounded-full flex items-center justify-center ${styles.bg} border-2 ${styles.border}`}>
+                    {getContentIcon(createdContent.type)}
+                  </div>
                   <div className="flex-1">
-                    <p className="font-medium text-gray-900">{file.name}</p>
-                    <div className="flex items-center space-x-2 mt-1">
-                      <Badge variant="secondary" className="text-xs">
-                        {file.contentType}
+                    <p className="font-semibold text-gray-900 text-base">{createdContent.title}</p>
+                    <div className="flex items-center space-x-3 mt-2">
+                      <Badge className={`text-xs font-medium ${styles.bg} ${styles.icon} border ${styles.border}`}>
+                        {createdContent.type.replace("-", " ").replace(/\b\w/g, (l: string) => l.toUpperCase())}
                       </Badge>
-                      <span className="text-xs text-gray-500">{(file.size / 1024 / 1024).toFixed(2)} MB</span>
+                      <span className="text-xs text-gray-600 bg-white/60 px-2 py-1 rounded-full">
+                        Created manually
+                      </span>
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
-          ) : createdContent ? (
-            <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-              {createdContent.type === "guitar-tab" && <Guitar className="w-5 h-5 text-orange-600" />}
-              {createdContent.type === "chord-chart" && <Music className="w-5 h-5 text-blue-600" />}
-              {createdContent.type === "lyrics" && <FileText className="w-5 h-5 text-gray-600" />}
-              <div>
-                <p className="font-medium text-gray-900">{createdContent.title}</p>
-                <Badge variant="secondary" className="text-xs mt-1">
-                  {createdContent.type.replace("-", " ").replace(/\b\w/g, (l: string) => l.toUpperCase())}
-                </Badge>
-              </div>
-            </div>
+              )
+            })()
           ) : null}
         </CardContent>
       </Card>

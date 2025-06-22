@@ -12,7 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 
 import { useRouter } from "next/navigation";
-import { Music, FileText, Clock, Plus } from "lucide-react";
+import { Music, FileText, Clock, Plus, Guitar, Mic } from "lucide-react";
 import Link from "next/link";
 
 export type ContentItem = {
@@ -54,11 +54,11 @@ export function Dashboard({
   const getContentIcon = (type: string) => {
     switch (type) {
       case "Sheet Music":
-        return <Music className="h-4 w-4" />;
+        return <FileText className="h-4 w-4" />;
       case "Guitar Tab":
-        return <FileText className="h-4 w-4" />;
+        return <Guitar className="h-4 w-4" />;
       case "Lyrics":
-        return <FileText className="h-4 w-4" />;
+        return <Mic className="h-4 w-4" />;
       case "Chord Chart":
         return <Music className="h-4 w-4" />;
       default:

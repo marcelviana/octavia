@@ -40,7 +40,7 @@ export default function ContentEditPageClient({ content }: ContentEditPageClient
   };
 
   const handleCancel = () => {
-    router.push(`/content/${content.id}`);
+    router.back();
   };
 
   return (

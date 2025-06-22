@@ -28,6 +28,7 @@ import {
   Check,
   AlertCircle,
   Settings,
+  Mic,
 } from "lucide-react";
 import { getContentTypeStyle } from "@/lib/content-type-styles";
 import { uploadFileToStorage, testStoragePermissions } from "@/lib/storage-service";
@@ -249,7 +250,7 @@ export function FileUpload({
       case "Sheet Music":
         return <FileText className={`w-5 h-5 ${styles.icon}`} />;
       case "Lyrics":
-        return <FileText className={`w-5 h-5 ${styles.icon}`} />;
+        return <Mic className={`w-5 h-5 ${styles.icon}`} />;
       default:
         return <FileText className="w-5 h-5 text-gray-600" />;
     }
