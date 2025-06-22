@@ -103,7 +103,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         console.log("Initializing auth context...")
         const supabase = getSupabaseBrowserClient()
 
-        // Get initial session with error handling
+        // Get initial session
         try {
           const {
             data: { session: initialSession },
@@ -116,6 +116,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             console.log("Found existing session for user:", initialSession.user.email)
             setUser(initialSession.user)
             setSession(initialSession)
+            
             const profileData = await fetchProfile(initialSession.user.id)
             if (profileData && mounted) {
               setProfile(profileData)
@@ -141,6 +142,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
               if (currentSession?.user) {
                 setUser(currentSession.user)
                 setSession(currentSession)
+                
                 const profileData = await fetchProfile(currentSession.user.id)
                 if (profileData && mounted) {
                   setProfile(profileData)
@@ -168,6 +170,81 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             setIsInitialized(true)
           }
         }
+
+        // Add visibility change listener to refresh session when returning to tab
+        const handleVisibilityChange = async () => {
+          if (!document.hidden && mounted && isSupabaseConfigured) {
+            try {
+              console.log("Tab became visible, refreshing session...")
+              
+              // First try to get the current session
+              const { data: { session: currentSession }, error: sessionError } = await supabase.auth.getSession()
+              
+              if (sessionError) {
+                console.warn("Session error on tab focus:", sessionError.message)
+                
+                // If session is expired, try to refresh it
+                if (sessionError.message.includes("expired") || sessionError.message.includes("invalid")) {
+                  console.log("Session expired, attempting to refresh...")
+                  try {
+                    const { data: { session: refreshedSession }, error: refreshError } = await supabase.auth.refreshSession()
+                    if (!refreshError && refreshedSession?.user && mounted) {
+                      console.log("Session refreshed successfully on tab focus")
+                      setUser(refreshedSession.user)
+                      setSession(refreshedSession)
+                      
+                      // Also refresh the profile
+                      const profileData = await fetchProfile(refreshedSession.user.id)
+                      if (profileData && mounted) {
+                        setProfile(profileData)
+                      }
+                      return
+                    }
+                  } catch (refreshErr) {
+                    console.warn("Session refresh failed:", refreshErr)
+                  }
+                }
+                
+
+                
+                // If all else fails, clear the session
+                console.log("No valid session found, clearing auth state")
+                if (mounted) {
+                  setUser(null)
+                  setSession(null)
+                  setProfile(null)
+                }
+                return
+              }
+              
+              // If we have a valid session, update the state
+              if (currentSession?.user && mounted) {
+                console.log("Session is valid on tab focus")
+                setUser(currentSession.user)
+                setSession(currentSession)
+                
+                // Refresh profile if needed
+                const profileData = await fetchProfile(currentSession.user.id)
+                if (profileData && mounted) {
+                  setProfile(profileData)
+                }
+              }
+              
+            } catch (refreshError) {
+              console.warn("Session refresh on visibility change failed:", refreshError)
+            }
+          }
+        }
+
+        document.addEventListener('visibilitychange', handleVisibilityChange)
+
+        // Store the cleanup function for the visibility listener
+        const cleanupVisibilityListener = () => {
+          document.removeEventListener('visibilitychange', handleVisibilityChange)
+        }
+
+        // Return cleanup function that includes visibility listener cleanup
+        return cleanupVisibilityListener
       } catch (initError) {
         console.error("Auth initialization failed:", initError)
         if (mounted) {
@@ -183,7 +260,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
     }
 
-    initializeAuth()
+    let cleanupVisibilityListener: (() => void) | undefined
+
+    initializeAuth().then((cleanup) => {
+      cleanupVisibilityListener = cleanup
+    })
 
     return () => {
       mounted = false
@@ -193,6 +274,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         } catch (error) {
           console.warn("Error unsubscribing from auth:", error)
         }
+      }
+      if (cleanupVisibilityListener) {
+        cleanupVisibilityListener()
       }
     }
   }, [fetchProfile])

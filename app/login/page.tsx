@@ -5,7 +5,7 @@ import { isSupabaseConfigured } from "@/lib/supabase"
 import { LoginPanel } from "@/components/auth/login-panel"
 import { Music } from "lucide-react"
 
-export default async function LoginPage({ searchParams }: { searchParams?: any }) {
+export default async function LoginPage({ searchParams }: { searchParams?: Promise<any> }) {
   let session = null
   if (isSupabaseConfigured) {
     const supabase = await getSupabaseServerClient()
@@ -19,7 +19,8 @@ export default async function LoginPage({ searchParams }: { searchParams?: any }
     redirect("/dashboard")
   }
 
-  const errorDescription = searchParams?.error_description
+  const params = await searchParams
+  const errorDescription = params?.error_description
   const error = typeof errorDescription === "string" ? errorDescription : ""
 
   return (

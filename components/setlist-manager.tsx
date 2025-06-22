@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import {
   saveSetlists,
   removeCachedSetlist,
@@ -69,11 +69,22 @@ interface SetlistManagerProps {
 }
 
 export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
-  const { user } = useAuth()
+  const { user, isLoading: authLoading, isInitialized } = useAuth()
   const [setlists, setSetlists] = useState<SetlistWithSongs[]>([])
   const [availableContent, setAvailableContent] = useState<Content[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const loadInProgressRef = useRef(false)
+  
+  // Debug logging for auth state
+  useEffect(() => {
+    console.log("🔍 SetlistManager Auth State:", {
+      user: user ? `${user.email} (${user.id})` : "null",
+      authLoading,
+      isInitialized,
+      componentLoading: loading
+    })
+  }, [user, authLoading, isInitialized, loading])
   const [selectedSetlist, setSelectedSetlist] = useState<SetlistWithSongs | null>(null)
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
   const [isAddSongsDialogOpen, setIsAddSongsDialogOpen] = useState(false)
@@ -100,10 +111,56 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
     notes: "",
   })
 
-  // Load data on component mount
+  // Load data when auth is ready and user is available
   useEffect(() => {
-    loadData()
-  }, [])
+    if (isInitialized && user) {
+      console.log("🔄 Auth ready, loading data...")
+      loadData()
+    } else if (isInitialized && !user) {
+      console.log("⚠️ Auth initialized but no user found")
+      setLoading(false)
+    }
+  }, [user, isInitialized]) // Depend on both user and auth initialization
+
+  // Add visibility change handler to prevent unnecessary reloads
+  useEffect(() => {
+    let lastLoad = Date.now()
+    const RELOAD_COOLDOWN = 30000 // 30 seconds between reloads
+
+    const handleVisibilityChange = () => {
+      if (!document.hidden && !loading && !loadInProgressRef.current && user) {
+        const now = Date.now()
+        if ((now - lastLoad) > RELOAD_COOLDOWN) {
+          console.log('🔄 SetlistManager: Tab became visible, checking if reload needed...')
+          lastLoad = now
+          
+          // Don't reload if we already have data and it's not too old
+          const hasRecentData = setlists.length > 0 || availableContent.length > 0
+          const lastLoadTime = localStorage.getItem('octavia-setlists-last-load')
+          const dataIsRecent = lastLoadTime && (now - new Date(lastLoadTime).getTime()) < 300000 // 5 minutes
+          
+          if (hasRecentData && dataIsRecent) {
+            console.log('📋 SetlistManager: Skipping reload - have recent data')
+            return
+          }
+          
+          console.log('🔄 SetlistManager: Reloading data after visibility change')
+          // Add a small delay to let auth context refresh first
+          setTimeout(() => {
+            if (user && !loading && !loadInProgressRef.current) {
+              loadData()
+            }
+          }, 1000)
+        }
+      }
+    }
+
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+    }
+  }, [loading, user])
 
   // Add a separate effect to check Supabase configuration
   useEffect(() => {
@@ -125,7 +182,14 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
   }, [])
 
   const loadData = async () => {
+    // Prevent concurrent loads
+    if (loadInProgressRef.current) {
+      console.log('⏳ SetlistManager: Load already in progress, skipping...')
+      return
+    }
+    
     try {
+      loadInProgressRef.current = true
       setLoading(true)
       setError(null)
       console.log("🔄 Starting to load setlists and content...")
@@ -142,79 +206,76 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
         return
       }
       
-      // Test Supabase connection with shorter timeout
-      try {
-        console.log("🔗 Testing Supabase connection...")
-        const { getSupabaseBrowserClient, isSupabaseConfigured } = await import("@/lib/supabase")
-        
-        // Skip auth check if not configured
-        if (!isSupabaseConfigured) {
-          console.log("⚠️ Supabase not configured, using demo mode")
-        } else {
-          const supabase = getSupabaseBrowserClient()
-          
-          // Use a shorter timeout for auth check
-          const authTimeout = new Promise((_, reject) => 
-            setTimeout(() => reject(new Error("Auth check timeout")), 1500)
-          )
-          
-          try {
-            const authPromise = supabase.auth.getUser()
-            const authResult = await Promise.race([authPromise, authTimeout])
-            
-            if (authResult.error && !authResult.error.message.includes("session_not_found")) {
-              console.warn("⚠️ Auth warning:", authResult.error.message)
-            }
-            
-            console.log("✅ Supabase connection OK, user:", authResult.data?.user?.email || 'anonymous')
-          } catch (authError) {
-            console.warn("⚠️ Auth check failed, continuing anyway:", authError)
-            // Don't throw here, just continue with data loading
-          }
-        }
-      } catch (connectionError) {
-        console.warn("⚠️ Connection test failed, trying to load data anyway:", connectionError)
-        // Don't throw here, attempt to load data
-      }
-      
-      // Add timeout wrapper function with shorter timeouts
+      // Skip the redundant auth check - let the service functions handle authentication
+      console.log("📋 Loading setlists and content in parallel...")
+
+      // Add timeout wrapper function
       const withTimeout = (promise: Promise<any>, timeoutMs: number, operationName: string) => {
+        console.log(`⏱️ Starting ${operationName} with ${timeoutMs}ms timeout`)
         return Promise.race([
           promise,
           new Promise((_, reject) =>
-            setTimeout(() => reject(new Error(`${operationName} timed out after ${timeoutMs}ms`)), timeoutMs)
+            setTimeout(() => {
+              console.log(`⏰ ${operationName} timed out after ${timeoutMs}ms`)
+              reject(new Error(`${operationName} timed out after ${timeoutMs}ms`))
+            }, timeoutMs)
           )
         ])
       }
 
       try {
-        console.log("📋 Loading setlists and content in parallel...")
-
+        console.log("🚀 Starting Promise.allSettled...")
         const [setlistsResult, contentResult] = await Promise.allSettled([
-          withTimeout(getUserSetlists(), 3000, "Setlists loading"),
-          withTimeout(getContentList(), 3000, "Content loading"),
+          withTimeout(getUserSetlists(user), 8000, "Setlists loading"),
+          withTimeout(getContentList(undefined, user), 8000, "Content loading"),
         ])
+        console.log("🎯 Promise.allSettled completed")
 
         let setlistsData: any[] = []
+        let setlistsFromCache = false
         if (setlistsResult.status === "fulfilled") {
           setlistsData = setlistsResult.value
           console.log(`✅ Setlists loaded:`, setlistsData?.length || 0)
         } else {
           console.warn("⚠️ Setlists loading failed:", setlistsResult.reason)
+          console.log("📦 Loading cached setlists as fallback...")
           setlistsData = await getCachedSetlists()
+          setlistsFromCache = true
+          console.log(`📦 Cached setlists loaded:`, setlistsData?.length || 0)
         }
 
         let contentData: any[] = []
+        let contentFromCache = false
         if (contentResult.status === "fulfilled") {
           contentData = contentResult.value
           console.log(`✅ Content loaded:`, contentData?.length || 0)
         } else {
           console.warn("⚠️ Content loading failed:", contentResult.reason)
+          console.log("📦 Loading cached content as fallback...")
           contentData = await getCachedContent()
+          contentFromCache = true
+          console.log(`📦 Cached content loaded:`, contentData?.length || 0)
         }
 
-        // Cache setlists if we have any
-        if (setlistsData.length > 0) {
+        // If both API calls succeeded but returned empty data, and we have cached data, prefer cached data
+        if (setlistsResult.status === "fulfilled" && contentResult.status === "fulfilled" && 
+            setlistsData.length === 0 && contentData.length === 0) {
+          console.log("📦 API returned empty data, checking for cached data...")
+          const [cachedSets, cachedContent] = await Promise.all([
+            getCachedSetlists(),
+            getCachedContent(),
+          ])
+          if (cachedSets.length > 0 || cachedContent.length > 0) {
+            console.log("📦 Using cached data instead of empty API results")
+            setlistsData = cachedSets
+            contentData = cachedContent
+            setlistsFromCache = true
+            contentFromCache = true
+          }
+        }
+
+        // Cache setlists if we have any and they're not from cache
+        if (setlistsData.length > 0 && !setlistsFromCache) {
           try {
             console.log("💾 Saving setlists to cache...")
             await saveSetlists(setlistsData as any[])
@@ -223,6 +284,8 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
           } catch (err) {
             console.error('❌ Failed to cache offline setlists', err)
           }
+        } else if (setlistsFromCache) {
+          console.log("📦 Skipping cache save - data is from cache")
         }
 
         setSetlists(setlistsData as SetlistWithSongs[])
@@ -231,13 +294,27 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
         
       } catch (criticalError) {
         console.error("❌ Critical error during data loading:", criticalError)
-        throw new Error("Unable to load data. Please check your internet connection and try again.")
+        // Load cached data as fallback instead of throwing
+        console.log("📦 Loading cached data as fallback...")
+        try {
+          const [cachedSets, cachedContent] = await Promise.all([
+            getCachedSetlists(),
+            getCachedContent(),
+          ])
+          setSetlists(cachedSets as SetlistWithSongs[])
+          setAvailableContent(cachedContent)
+          console.log("✅ Cached data loaded successfully")
+        } catch (cacheError) {
+          console.error("❌ Failed to load cached data:", cacheError)
+          setError("Unable to load data. Please check your internet connection and try again.")
+        }
       }
       
     } catch (err) {
       console.error("❌ Error loading data:", err)
       setError(err instanceof Error ? err.message : "Failed to load data. Please try again.")
     } finally {
+      loadInProgressRef.current = false
       setLoading(false)
       console.log("🏁 Loading process finished")
     }

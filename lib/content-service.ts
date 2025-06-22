@@ -8,6 +8,69 @@ type Content = Database["public"]["Tables"]["content"]["Row"]
 type ContentInsert = Database["public"]["Tables"]["content"]["Insert"]
 type ContentUpdate = Database["public"]["Tables"]["content"]["Update"]
 
+// Helper function to get authenticated user with improved session handling
+async function getAuthenticatedUser(supabase?: SupabaseClient): Promise<any | null> {
+  const client = supabase ?? getSupabaseBrowserClient()
+  
+  console.log("🔍 getAuthenticatedUser: Starting auth check...")
+  
+  try {
+    // Use a much shorter timeout and simpler approach
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error('Auth check timeout')), 2000) // 2 second timeout
+    })
+    
+    // Try to get the session with timeout
+    const sessionPromise = client.auth.getSession()
+    const { data: { session }, error: sessionError } = await Promise.race([sessionPromise, timeoutPromise]) as any
+    
+    if (sessionError) {
+      console.log("🔍 getAuthenticatedUser: Session error:", sessionError.message)
+      
+      // If session is expired, try to refresh it
+      if (sessionError.message.includes("expired") || sessionError.message.includes("invalid")) {
+        console.log("🔍 getAuthenticatedUser: Attempting to refresh session...")
+        try {
+          const { data: { session: refreshedSession }, error: refreshError } = await client.auth.refreshSession()
+          if (!refreshError && refreshedSession?.user) {
+            console.log(`🔍 getAuthenticatedUser: Session refreshed! User: ${refreshedSession.user.email}`)
+            return refreshedSession.user
+          }
+        } catch (refreshErr) {
+          console.log("🔍 getAuthenticatedUser: Session refresh failed:", refreshErr)
+        }
+      }
+      
+      return null
+    }
+    
+    if (session?.user) {
+      console.log(`🔍 getAuthenticatedUser: Session valid! User: ${session.user.email}`)
+      return session.user
+    }
+    
+    // If no session, check if we have a stored session in localStorage
+
+    
+    console.log("🔍 getAuthenticatedUser: No valid session found")
+    return null
+    
+  } catch (error) {
+    if (error instanceof Error && error.message === 'Auth check timeout') {
+      console.log("🔍 getAuthenticatedUser: Auth check timed out")
+    } else {
+      console.log("🔍 getAuthenticatedUser: Auth check failed:", error)
+    }
+    return null
+  }
+}
+
+// Helper function to check if user is authenticated without timeout issues
+export async function checkAuthState(supabase?: SupabaseClient): Promise<{ user: any | null; isAuthenticated: boolean }> {
+  const user = await getAuthenticatedUser(supabase)
+  return { user, isAuthenticated: !!user }
+}
+
 
 export interface AlbumField {
   album?: string | null
@@ -39,40 +102,21 @@ export interface ContentRecord
 }
 
 
-export async function getUserContent(supabase?: SupabaseClient) {
+export async function getUserContent(supabase?: SupabaseClient, providedUser?: any) {
   try {
     const client = supabase ?? getSupabaseBrowserClient()
 
-    // Check if user is authenticated with shorter timeout and no retries
-    let user = null
-    try {
-      const authTimeout = new Promise((_, reject) => 
-        setTimeout(() => reject(new Error("Auth timeout")), 2000)
-      )
-      
-      const authResult = await Promise.race([
-        client.auth.getUser(),
-        authTimeout
-      ])
-      
-      if (authResult.error) {
-        if (authResult.error.message.includes("session_not_found")) {
-          logger.log("No active session, returning empty content")
-          return []
-        }
-        logger.warn("Auth error:", authResult.error.message)
-        return []
-      }
-      
-      user = authResult.data?.user
-    } catch (authError) {
-      logger.warn("Auth check failed, returning empty content:", authError)
-      return []
+    // Use provided user or check authentication
+    let user = providedUser
+    if (!user) {
+      user = await getAuthenticatedUser(client)
+    } else {
+      console.log("🔍 getUserContent: Using provided user:", user.email)
     }
     
     if (!user) {
       logger.log("User not authenticated, returning empty content")
-      return []
+      throw new Error("User not authenticated")
     }
 
     const { data, error } = await client
@@ -126,6 +170,8 @@ export async function getUserContentPage(
     useCache = true
   } = params
 
+  console.log('getUserContentPage called with filters:', filters)
+
   // Create cache key
   const cacheKey = `content-page:${JSON.stringify({ page, pageSize, search, sortBy, filters })}`
 
@@ -141,50 +187,12 @@ export async function getUserContentPage(
   try {
     const client = supabase ?? getSupabaseBrowserClient()
 
-    // Check if user is authenticated with retry logic
-    let user = null
-    let authAttempts = 0
-    const maxAuthAttempts = 3
-    
-    while (authAttempts < maxAuthAttempts && !user) {
-      authAttempts++
-      try {
-        const authTimeout = new Promise((_, reject) => 
-          setTimeout(() => reject(new Error("Auth timeout")), 2000)
-        )
-        
-        const authResult = await Promise.race([
-          client.auth.getUser(),
-          authTimeout
-        ])
-        
-        if (authResult.error) {
-          if (authResult.error.message.includes("session_not_found")) {
-            logger.log("No active session, returning empty content page")
-            return { data: [], total: 0, page, pageSize, hasMore: false, totalPages: 0 }
-          }
-          logger.warn(`Auth error attempt ${authAttempts}:`, authResult.error.message)
-          if (authAttempts >= maxAuthAttempts) {
-            throw new Error("Authentication failed. Please log in again.")
-          }
-          continue
-        }
-        
-        user = authResult.data?.user
-        if (!user && authAttempts >= maxAuthAttempts) {
-          throw new Error("Authentication failed. Please log in again.")
-        }
-      } catch (authError) {
-        logger.warn(`Auth check failed attempt ${authAttempts}:`, authError)
-        if (authAttempts >= maxAuthAttempts) {
-          throw new Error("Authentication failed. Please log in again.")
-        }
-      }
-    }
+    // Check if user is authenticated with retry logic and longer timeout for tab switching
+    const user = await getAuthenticatedUser(client)
     
     if (!user) {
       logger.log("User not authenticated, returning empty content page")
-      return { data: [], total: 0, page, pageSize, hasMore: false, totalPages: 0 }
+      throw new Error("User not authenticated")
     }
 
     let query = client
@@ -203,7 +211,7 @@ export async function getUserContentPage(
 
     // Apply filters with validation
     if (filters.contentType?.length) {
-      const validTypes = ['LYRICS', 'CHORDS', 'GUITAR_TAB', 'SHEET_MUSIC', 'NOTES']
+      const validTypes = ['Lyrics', 'Chord Chart', 'Guitar Tab', 'Sheet Music']
       const filteredTypes = filters.contentType.filter((type: string) => validTypes.includes(type))
       if (filteredTypes.length > 0) {
         query = query.in("content_type", filteredTypes)
@@ -211,7 +219,7 @@ export async function getUserContentPage(
     }
 
     if (filters.difficulty?.length) {
-      const validDifficulties = ['BEGINNER', 'INTERMEDIATE', 'ADVANCED']
+      const validDifficulties = ['Beginner', 'Intermediate', 'Advanced']
       const filteredDifficulties = filters.difficulty.filter((diff: string) => validDifficulties.includes(diff))
       if (filteredDifficulties.length > 0) {
         query = query.in("difficulty", filteredDifficulties)
@@ -264,6 +272,8 @@ export async function getUserContentPage(
       
       throw new Error(`Database error: ${error.message}`)
     }
+
+    console.log('Query results - content types found:', data?.map((item: any) => item.content_type).filter((type: any, index: number, arr: any[]) => arr.indexOf(type) === index))
 
     const result = {
       data: data || [],

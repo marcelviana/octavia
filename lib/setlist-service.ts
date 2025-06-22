@@ -3,6 +3,60 @@ import logger from "@/lib/logger"
 import { getContentById } from "@/lib/content-service"
 import type { Database } from "@/types/supabase"
 
+// Helper function to get authenticated user with improved session handling
+async function getAuthenticatedUser(supabase: any): Promise<any | null> {
+  console.log("🔍 setlist-service getAuthenticatedUser: Starting auth check...")
+  
+  try {
+    // Use a much shorter timeout
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error('Auth check timeout')), 2000) // 2 second timeout
+    })
+    
+    // Try to get the session with timeout
+    const sessionPromise = supabase.auth.getSession()
+    const { data: { session }, error: sessionError } = await Promise.race([sessionPromise, timeoutPromise]) as any
+    
+    if (sessionError) {
+      console.log("🔍 setlist-service: Session error:", sessionError.message)
+      
+      // If session is expired, try to refresh it
+      if (sessionError.message.includes("expired") || sessionError.message.includes("invalid")) {
+        console.log("🔍 setlist-service: Attempting to refresh session...")
+        try {
+          const { data: { session: refreshedSession }, error: refreshError } = await supabase.auth.refreshSession()
+          if (!refreshError && refreshedSession?.user) {
+            console.log(`🔍 setlist-service: Session refreshed! User: ${refreshedSession.user.email}`)
+            return refreshedSession.user
+          }
+        } catch (refreshErr) {
+          console.log("🔍 setlist-service: Session refresh failed:", refreshErr)
+        }
+      }
+      
+      return null
+    }
+    
+    if (session?.user) {
+      console.log(`🔍 setlist-service: Session valid! User: ${session.user.email}`)
+      return session.user
+    }
+    
+
+    
+    console.log("🔍 setlist-service: No valid session found")
+    return null
+    
+  } catch (error) {
+    if (error instanceof Error && error.message === 'Auth check timeout') {
+      console.log("🔍 setlist-service: Auth check timed out")
+    } else {
+      console.log("🔍 setlist-service: Auth check failed:", error)
+    }
+    return null
+  }
+}
+
 // Mock data for demo mode
 const MOCK_SETLISTS = [
   {
@@ -98,7 +152,7 @@ type SetlistUpdate = Database["public"]["Tables"]["setlists"]["Update"]
 type SetlistSong = Database["public"]["Tables"]["setlist_songs"]["Row"]
 type SetlistSongInsert = Database["public"]["Tables"]["setlist_songs"]["Insert"]
 
-export async function getUserSetlists() {
+export async function getUserSetlists(providedUser?: any) {
   try {
     console.log("🔍 getUserSetlists: Starting...")
     
@@ -122,39 +176,18 @@ export async function getUserSetlists() {
     console.log("🔍 getUserSetlists: Getting Supabase client...")
     const supabase = getSupabaseBrowserClient()
 
-    // Check if user is authenticated with shorter timeout
-    console.log("🔍 getUserSetlists: Checking authentication...")
-    let user = null
-    try {
-      const authTimeout = new Promise((_, reject) => 
-        setTimeout(() => reject(new Error("Auth timeout")), 2000)
-      )
-      
-      console.log("🔍 getUserSetlists: Calling auth.getUser()...")
-      const authResult = await Promise.race([
-        supabase.auth.getUser(),
-        authTimeout
-      ])
-      console.log("🔍 getUserSetlists: Auth call completed")
-      
-      if (authResult.error) {
-        if (authResult.error.message.includes("session_not_found")) {
-          logger.log("No active session, returning empty setlists")
-          return []
-        }
-        logger.warn("Auth error:", authResult.error.message)
-        return []
-      }
-      
-      user = authResult.data?.user
-    } catch (authError) {
-      logger.warn("Auth check failed, returning empty setlists:", authError)
-      return []
+    // Use provided user or check authentication
+    let user = providedUser
+    if (!user) {
+      console.log("🔍 getUserSetlists: Checking authentication...")
+      user = await getAuthenticatedUser(supabase)
+    } else {
+      console.log("🔍 getUserSetlists: Using provided user:", user.email)
     }
     
     if (!user) {
       logger.log("User not authenticated, returning empty setlists")
-      return []
+      throw new Error("User not authenticated")
     }
 
     // Get all setlists for the user

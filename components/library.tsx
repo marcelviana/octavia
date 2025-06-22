@@ -105,17 +105,52 @@ export function Library({
   const totalPages = Math.ceil(totalCount / pageSize);
   const initialLoadRef = useRef(true)
   const [refreshTrigger, setRefreshTrigger] = useState(0)
+  const fetchInProgressRef = useRef(false)
 
   useEffect(() => {
     if (initialLoadRef.current) {
       initialLoadRef.current = false
       return
     }
+    
+    // Don't fetch if we're still on the initial state (same page, pageSize, search, and default filters/sort)
+    const isInitialState = (
+      page === initialPage && 
+      pageSize === initialPageSize && 
+      debouncedSearch === (initialSearch || "") &&
+      sortBy === "recent" &&
+      selectedFilters.contentType.length === 0 &&
+      selectedFilters.difficulty.length === 0 &&
+      selectedFilters.key.length === 0 &&
+      selectedFilters.favorite === false
+    )
+    
+    if (isInitialState && content.length > 0) {
+      console.log('📋 Skipping fetch - using initial server data')
+      return
+    }
+    
     let cancelled = false
+    let fetchTimeoutId: NodeJS.Timeout | null = null
 
     async function fetchData() {
+      // Prevent concurrent fetches
+      if (fetchInProgressRef.current) {
+        console.log('Fetch already in progress, skipping...')
+        return
+      }
+      
       try {
+        fetchInProgressRef.current = true
         setLoading(true)
+        console.log('Fetching content with filters:', selectedFilters)
+        
+        // Add timeout wrapper to prevent infinite loading
+        const controller = new AbortController()
+        fetchTimeoutId = setTimeout(() => {
+          controller.abort()
+        }, 10000) // 10 second timeout
+        
         const result = await getUserContentPage({
           page,
           pageSize,
@@ -123,6 +158,11 @@ export function Library({
           sortBy,
           filters: selectedFilters,
         })
+        
+        if (fetchTimeoutId) {
+          clearTimeout(fetchTimeoutId)
+          fetchTimeoutId = null
+        }
 
         if (!cancelled) {
           if (result.error) {
@@ -131,6 +171,7 @@ export function Library({
             setContent(result.data || [])
             setTotalCount(result.total || 0)
           } else {
+            console.log('✅ Content loaded successfully:', result.data?.length, 'items')
             setContent(result.data || [])
             setTotalCount(result.total || 0)
             try {
@@ -144,13 +185,42 @@ export function Library({
         }
       } catch (error) {
         if (!cancelled) {
-          console.error('Failed to load content:', error)
-          // Don't show cached data immediately on error to prevent confusion
-          setContent([])
-          setTotalCount(0)
+          const isAbortError = error instanceof Error && error.name === 'AbortError'
+          const isTimeoutError = error instanceof Error && error.message.includes('timeout')
+          
+          if (isAbortError || isTimeoutError) {
+            console.warn('Content fetch timed out, loading cached content')
+          } else {
+            console.error('Failed to load content:', error)
+          }
+          
+          // Load cached content as fallback
+          try {
+            const cachedContent = await getCachedContent()
+            if (cachedContent && cachedContent.length > 0) {
+              console.log('Loading cached content as fallback:', cachedContent.length, 'items')
+              setContent(cachedContent)
+              setTotalCount(cachedContent.length)
+              if (isAbortError || isTimeoutError) {
+                toast.info('Loading cached content due to slow connection')
+              }
+            } else {
+              setContent([])
+              setTotalCount(0)
+              if (isAbortError || isTimeoutError) {
+                toast.warning('Request timed out and no cached content available')
+              }
+            }
+          } catch (cacheError) {
+            console.error('Failed to load cached content:', cacheError)
+            setContent([])
+            setTotalCount(0)
+          }
         }
       } finally {
+        fetchInProgressRef.current = false
         if (!cancelled) {
+          console.log('🏁 Setting loading to false')
           setLoading(false)
         }
       }
@@ -161,29 +231,54 @@ export function Library({
 
     return () => {
       cancelled = true
+      fetchInProgressRef.current = false
       clearTimeout(timeoutId)
+      if (fetchTimeoutId) {
+        clearTimeout(fetchTimeoutId)
+      }
     }
   }, [debouncedSearch, sortBy, selectedFilters, page, pageSize, refreshTrigger])
 
-  // Add focus listener to refresh data when returning to the library with throttling
+  // Add focus listener to refresh data when returning to the library with improved throttling
   useEffect(() => {
     let lastRefresh = 0
-    const REFRESH_COOLDOWN = 5000 // 5 seconds between refreshes
+    const REFRESH_COOLDOWN = 10000 // Increased from 5 seconds to 10 seconds between refreshes
+    let refreshTimeout: NodeJS.Timeout | null = null
 
     const handleFocus = () => {
       const now = Date.now()
-      // Only refresh if we're not on the initial load, not currently loading, and enough time has passed
-      if (!initialLoadRef.current && !loading && (now - lastRefresh) > REFRESH_COOLDOWN) {
-        lastRefresh = now
-        setRefreshTrigger(prev => prev + 1)
+      // Only refresh if we're not on the initial load, not currently loading, no fetch in progress, and enough time has passed
+      if (!initialLoadRef.current && !loading && !fetchInProgressRef.current && (now - lastRefresh) > REFRESH_COOLDOWN) {
+        // Clear any existing timeout
+        if (refreshTimeout) {
+          clearTimeout(refreshTimeout)
+        }
+        
+        // Add a small delay to prevent rapid successive calls
+        refreshTimeout = setTimeout(() => {
+          lastRefresh = now
+          console.log('🔄 Library: Refreshing data after focus event', { loading, fetchInProgress: fetchInProgressRef.current })
+          setRefreshTrigger(prev => prev + 1)
+          refreshTimeout = null
+        }, 500) // 500ms delay
       }
     }
 
     const handleVisibilityChange = () => {
       const now = Date.now()
-      if (!document.hidden && !initialLoadRef.current && !loading && (now - lastRefresh) > REFRESH_COOLDOWN) {
-        lastRefresh = now
-        setRefreshTrigger(prev => prev + 1)
+      if (!document.hidden && !initialLoadRef.current && !loading && !fetchInProgressRef.current && (now - lastRefresh) > REFRESH_COOLDOWN) {
+        // Clear any existing timeout
+        if (refreshTimeout) {
+          clearTimeout(refreshTimeout)
+        }
+        
+        // Add a small delay to prevent rapid successive calls
+        refreshTimeout = setTimeout(() => {
+          lastRefresh = now
+          console.log('🔄 Library: Refreshing data after visibility change', { loading, fetchInProgress: fetchInProgressRef.current })
+          setRefreshTrigger(prev => prev + 1)
+          refreshTimeout = null
+        }, 1000) // 1 second delay for visibility change
       }
     }
 
@@ -193,6 +288,9 @@ export function Library({
     return () => {
       window.removeEventListener('focus', handleFocus)
       document.removeEventListener('visibilitychange', handleVisibilityChange)
+      if (refreshTimeout) {
+        clearTimeout(refreshTimeout)
+      }
     }
   }, [loading])
 
@@ -333,12 +431,17 @@ export function Library({
                 <div className="p-2">
                   <p className="text-sm font-medium mb-1">Content Type</p>
                   <div className="flex flex-wrap gap-1 mb-2">
-                    {["Guitar Tab", "Chord Chart", "Sheet Music", "Lyrics"].map(
+                    {[
+                      { display: "Guitar Tab", value: ContentType.GUITAR_TAB },
+                      { display: "Chord Chart", value: ContentType.CHORD_CHART },
+                      { display: "Sheet Music", value: ContentType.SHEET_MUSIC },
+                      { display: "Lyrics", value: ContentType.LYRICS }
+                    ].map(
                       (type) => (
                         <Badge
-                          key={type}
+                          key={type.value}
                           variant={
-                            selectedFilters.contentType.includes(type)
+                            selectedFilters.contentType.includes(type.value)
                               ? "default"
                               : "outline"
                           }
@@ -346,27 +449,31 @@ export function Library({
                           onClick={() => {
                             setSelectedFilters((prev) => ({
                               ...prev,
-                              contentType: prev.contentType.includes(type)
+                              contentType: prev.contentType.includes(type.value)
                                 ? prev.contentType.filter(
-                                    (t: string) => t !== type,
+                                    (t: string) => t !== type.value,
                                   )
-                                : [...prev.contentType, type],
+                                : [...prev.contentType, type.value],
                             }));
                           }}
                         >
-                          {type}
+                          {type.display}
                         </Badge>
                       ),
                     )}
                   </div>
                   <p className="text-sm font-medium mb-1 mt-3">Difficulty</p>
                   <div className="flex flex-wrap gap-1 mb-2">
-                    {["Beginner", "Intermediate", "Advanced"].map(
+                    {[
+                      { display: "Beginner", value: "Beginner" },
+                      { display: "Intermediate", value: "Intermediate" },
+                      { display: "Advanced", value: "Advanced" }
+                    ].map(
                       (difficulty) => (
                         <Badge
-                          key={difficulty}
+                          key={difficulty.value}
                           variant={
-                            selectedFilters.difficulty.includes(difficulty)
+                            selectedFilters.difficulty.includes(difficulty.value)
                               ? "default"
                               : "outline"
                           }
@@ -374,15 +481,15 @@ export function Library({
                           onClick={() => {
                             setSelectedFilters((prev) => ({
                               ...prev,
-                              difficulty: prev.difficulty.includes(difficulty)
+                              difficulty: prev.difficulty.includes(difficulty.value)
                                 ? prev.difficulty.filter(
-                                    (d: string) => d !== difficulty,
+                                    (d: string) => d !== difficulty.value,
                                   )
-                                : [...prev.difficulty, difficulty],
+                                : [...prev.difficulty, difficulty.value],
                             }));
                           }}
                         >
-                          {difficulty}
+                          {difficulty.display}
                         </Badge>
                       ),
                     )}
