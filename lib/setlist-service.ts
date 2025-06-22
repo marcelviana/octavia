@@ -122,12 +122,12 @@ export async function getUserSetlists() {
     console.log("🔍 getUserSetlists: Getting Supabase client...")
     const supabase = getSupabaseBrowserClient()
 
-    // Check if user is authenticated with timeout
+    // Check if user is authenticated with shorter timeout
     console.log("🔍 getUserSetlists: Checking authentication...")
     let user = null
     try {
       const authTimeout = new Promise((_, reject) => 
-        setTimeout(() => reject(new Error("Auth timeout")), 5000)
+        setTimeout(() => reject(new Error("Auth timeout")), 2000)
       )
       
       console.log("🔍 getUserSetlists: Calling auth.getUser()...")
@@ -148,7 +148,7 @@ export async function getUserSetlists() {
       
       user = authResult.data?.user
     } catch (authError) {
-      logger.warn("Auth check failed with timeout, returning empty setlists:", authError)
+      logger.warn("Auth check failed, returning empty setlists:", authError)
       return []
     }
     

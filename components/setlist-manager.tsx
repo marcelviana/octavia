@@ -142,7 +142,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
         return
       }
       
-      // Test Supabase connection with aggressive timeout
+      // Test Supabase connection with shorter timeout
       try {
         console.log("🔗 Testing Supabase connection...")
         const { getSupabaseBrowserClient, isSupabaseConfigured } = await import("@/lib/supabase")
@@ -153,9 +153,9 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
         } else {
           const supabase = getSupabaseBrowserClient()
           
-          // Use a very short timeout for auth check
+          // Use a shorter timeout for auth check
           const authTimeout = new Promise((_, reject) => 
-            setTimeout(() => reject(new Error("Auth check timeout")), 3000)
+            setTimeout(() => reject(new Error("Auth check timeout")), 1500)
           )
           
           try {
@@ -177,7 +177,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
         // Don't throw here, attempt to load data
       }
       
-      // Add timeout wrapper function with better error messages
+      // Add timeout wrapper function with shorter timeouts
       const withTimeout = (promise: Promise<any>, timeoutMs: number, operationName: string) => {
         return Promise.race([
           promise,
@@ -191,8 +191,8 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
         console.log("📋 Loading setlists and content in parallel...")
 
         const [setlistsResult, contentResult] = await Promise.allSettled([
-          withTimeout(getUserSetlists(), 5000, "Setlists loading"),
-          withTimeout(getContentList(), 5000, "Content loading"),
+          withTimeout(getUserSetlists(), 3000, "Setlists loading"),
+          withTimeout(getContentList(), 3000, "Content loading"),
         ])
 
         let setlistsData: any[] = []

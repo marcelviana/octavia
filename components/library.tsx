@@ -131,10 +131,12 @@ export function Library({
             setContent(result.data || [])
             setTotalCount(result.total || 0)
           } else {
-            setContent(result.data)
-            setTotalCount(result.total)
+            setContent(result.data || [])
+            setTotalCount(result.total || 0)
             try {
-              await saveContent(result.data)
+              if (result.data && result.data.length > 0) {
+                await saveContent(result.data)
+              }
             } catch (err) {
               console.error('Failed to cache offline content', err)
             }
@@ -143,20 +145,9 @@ export function Library({
       } catch (error) {
         if (!cancelled) {
           console.error('Failed to load content:', error)
-          try {
-            const cached = await getCachedContent()
-            if (cached.length > 0) {
-              setContent(cached)
-              setTotalCount(cached.length)
-              toast.warning('Offline data loaded')
-            } else {
-              setContent([])
-              setTotalCount(0)
-            }
-          } catch (cacheErr) {
-            setContent([])
-            setTotalCount(0)
-          }
+          // Don't show cached data immediately on error to prevent confusion
+          setContent([])
+          setTotalCount(0)
         }
       } finally {
         if (!cancelled) {
@@ -165,24 +156,33 @@ export function Library({
       }
     }
 
-    fetchData()
+    // Add a small delay to prevent rapid successive calls
+    const timeoutId = setTimeout(fetchData, 100)
 
     return () => {
       cancelled = true
+      clearTimeout(timeoutId)
     }
   }, [debouncedSearch, sortBy, selectedFilters, page, pageSize, refreshTrigger])
 
-  // Add focus listener to refresh data when returning to the library
+  // Add focus listener to refresh data when returning to the library with throttling
   useEffect(() => {
+    let lastRefresh = 0
+    const REFRESH_COOLDOWN = 5000 // 5 seconds between refreshes
+
     const handleFocus = () => {
-      // Only refresh if we're not on the initial load and not currently loading
-      if (!initialLoadRef.current && !loading) {
+      const now = Date.now()
+      // Only refresh if we're not on the initial load, not currently loading, and enough time has passed
+      if (!initialLoadRef.current && !loading && (now - lastRefresh) > REFRESH_COOLDOWN) {
+        lastRefresh = now
         setRefreshTrigger(prev => prev + 1)
       }
     }
 
     const handleVisibilityChange = () => {
-      if (!document.hidden && !initialLoadRef.current && !loading) {
+      const now = Date.now()
+      if (!document.hidden && !initialLoadRef.current && !loading && (now - lastRefresh) > REFRESH_COOLDOWN) {
+        lastRefresh = now
         setRefreshTrigger(prev => prev + 1)
       }
     }
