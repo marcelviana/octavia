@@ -1,4 +1,4 @@
-import { getSupabaseBrowserClient, isSupabaseConfigured } from "@/lib/supabase"
+import { getSupabaseBrowserClient, isSupabaseConfigured, getSessionSafe } from "@/lib/supabase"
 import logger from "@/lib/logger"
 import { getContentById } from "@/lib/content-service"
 import type { Database } from "@/types/supabase"
@@ -8,42 +8,11 @@ async function getAuthenticatedUser(supabase: any): Promise<any | null> {
   console.log("🔍 setlist-service getAuthenticatedUser: Starting auth check...")
   
   try {
-    // Use a much shorter timeout
-    const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(() => reject(new Error('Auth check timeout')), 2000) // 2 second timeout
-    })
-    
-    // Try to get the session with timeout
-    const sessionPromise = supabase.auth.getSession()
-    const { data: { session }, error: sessionError } = await Promise.race([sessionPromise, timeoutPromise]) as any
-    
-    if (sessionError) {
-      console.log("🔍 setlist-service: Session error:", sessionError.message)
-      
-      // If session is expired, try to refresh it
-      if (sessionError.message.includes("expired") || sessionError.message.includes("invalid")) {
-        console.log("🔍 setlist-service: Attempting to refresh session...")
-        try {
-          const { data: { session: refreshedSession }, error: refreshError } = await supabase.auth.refreshSession()
-          if (!refreshError && refreshedSession?.user) {
-            console.log(`🔍 setlist-service: Session refreshed! User: ${refreshedSession.user.email}`)
-            return refreshedSession.user
-          }
-        } catch (refreshErr) {
-          console.log("🔍 setlist-service: Session refresh failed:", refreshErr)
-        }
-      }
-      
-      return null
-    }
-    
+    const session = await getSessionSafe(2000)
     if (session?.user) {
       console.log(`🔍 setlist-service: Session valid! User: ${session.user.email}`)
       return session.user
     }
-    
-
-    
     console.log("🔍 setlist-service: No valid session found")
     return null
     

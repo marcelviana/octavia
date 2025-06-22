@@ -1,5 +1,5 @@
 import localforage from 'localforage'
-import { getSupabaseBrowserClient } from './supabase'
+import { getSupabaseBrowserClient, getSessionSafe } from './supabase'
 import { toast } from '@/hooks/use-toast'
 
 const FILE_PREFIX = 'octavia-offline-file'
@@ -22,8 +22,8 @@ function encodeBase64(data: Uint8Array): string {
 async function getUserId(): Promise<string | null> {
   try {
     const supabase = getSupabaseBrowserClient()
-    const { data } = await supabase.auth.getSession()
-    return data.session?.user?.id || null
+    const session = await getSessionSafe()
+    return session?.user?.id || null
   } catch {
     return null
   }

@@ -3,7 +3,7 @@
 import type React from "react"
 import { createContext, useContext, useEffect, useState, useCallback } from "react"
 import type { User, AuthChangeEvent, Session } from "@supabase/supabase-js"
-import { getSupabaseBrowserClient, isSupabaseConfigured } from "@/lib/supabase"
+import { getSupabaseBrowserClient, isSupabaseConfigured, getSessionSafe } from "@/lib/supabase"
 import { clearOfflineContent } from "@/lib/offline-cache"
 import { clearOfflineSetlists } from "@/lib/offline-setlist-cache"
 
@@ -105,14 +105,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         // Get initial session
         try {
-          const {
-            data: { session: initialSession },
-            error,
-          } = await supabase.auth.getSession()
+          const initialSession = await getSessionSafe()
 
-          if (error) {
-            console.warn("Error getting initial session:", error.message)
-          } else if (initialSession?.user && mounted) {
+          if (initialSession?.user && mounted) {
             console.log("Found existing session for user:", initialSession.user.email)
             setUser(initialSession.user)
             setSession(initialSession)
@@ -177,37 +172,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             try {
               console.log("Tab became visible, refreshing session...")
               
-              // First try to get the current session
-              const { data: { session: currentSession }, error: sessionError } = await supabase.auth.getSession()
-              
-              if (sessionError) {
-                console.warn("Session error on tab focus:", sessionError.message)
-                
-                // If session is expired, try to refresh it
-                if (sessionError.message.includes("expired") || sessionError.message.includes("invalid")) {
-                  console.log("Session expired, attempting to refresh...")
-                  try {
-                    const { data: { session: refreshedSession }, error: refreshError } = await supabase.auth.refreshSession()
-                    if (!refreshError && refreshedSession?.user && mounted) {
-                      console.log("Session refreshed successfully on tab focus")
-                      setUser(refreshedSession.user)
-                      setSession(refreshedSession)
-                      
-                      // Also refresh the profile
-                      const profileData = await fetchProfile(refreshedSession.user.id)
-                      if (profileData && mounted) {
-                        setProfile(profileData)
-                      }
-                      return
-                    }
-                  } catch (refreshErr) {
-                    console.warn("Session refresh failed:", refreshErr)
-                  }
-                }
-                
-
-                
-                // If all else fails, clear the session
+              // First try to get the current session safely
+              const currentSession = await getSessionSafe()
+              if (!currentSession) {
                 console.log("No valid session found, clearing auth state")
                 if (mounted) {
                   setUser(null)
@@ -238,9 +205,31 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         document.addEventListener('visibilitychange', handleVisibilityChange)
 
+        const handleStorage = async (e: StorageEvent) => {
+          if (e.key && e.key.includes('sb-') && e.key.endsWith('-auth-token')) {
+            const newSession = await getSessionSafe()
+            if (!mounted) return
+            if (newSession?.user) {
+              setUser(newSession.user)
+              setSession(newSession)
+              const profileData = await fetchProfile(newSession.user.id)
+              if (profileData && mounted) {
+                setProfile(profileData)
+              }
+            } else {
+              setUser(null)
+              setSession(null)
+              setProfile(null)
+            }
+          }
+        }
+
+        window.addEventListener('storage', handleStorage)
+
         // Store the cleanup function for the visibility listener
         const cleanupVisibilityListener = () => {
           document.removeEventListener('visibilitychange', handleVisibilityChange)
+          window.removeEventListener('storage', handleStorage)
         }
 
         // Return cleanup function that includes visibility listener cleanup

@@ -1,4 +1,4 @@
-import { createBrowserClient } from "@supabase/ssr"
+import { createClient } from "@supabase/supabase-js"
 import logger from "@/lib/logger"
 import type { Database } from "@/types/supabase"
 
@@ -66,7 +66,7 @@ const createMockClient = () => ({
   }),
 })
 
-let supabaseBrowserClient: ReturnType<typeof createBrowserClient> | null = null
+let supabaseBrowserClient: ReturnType<typeof createClient> | null = null
 
 export function getSupabaseBrowserClient() {
   if (!supabaseBrowserClient) {
@@ -74,7 +74,13 @@ export function getSupabaseBrowserClient() {
       logger.warn("Supabase not configured - using mock client for demo mode")
       supabaseBrowserClient = createMockClient() as any
     } else {
-      supabaseBrowserClient = createBrowserClient<Database>(supabaseUrl!, supabaseAnonKey!)
+      supabaseBrowserClient = createClient<Database>(supabaseUrl!, supabaseAnonKey!, {
+        auth: {
+          persistSession: true,
+          autoRefreshToken: true,
+          detectSessionInUrl: true,
+        },
+      })
     }
   }
   return supabaseBrowserClient
@@ -100,5 +106,41 @@ export async function testSupabaseConnection(): Promise<boolean> {
   } catch (error) {
     logger.warn("Supabase connection test failed:", error)
     return false
+  }
+}
+
+export async function getSessionSafe(timeoutMs = 4000) {
+  try {
+    const supabase = getSupabaseBrowserClient()
+
+    const timeout = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('getSession timeout')), timeoutMs),
+    )
+
+    const { data: { session }, error } = (await Promise.race([
+      supabase.auth.getSession(),
+      timeout,
+    ])) as any
+
+    if (error) {
+      if (
+        error.message?.includes('expired') ||
+        error.message?.includes('invalid')
+      ) {
+        try {
+          const { data: { session: refreshed }, error: refreshError } =
+            await supabase.auth.refreshSession()
+          if (!refreshError) return refreshed
+        } catch (err) {
+          logger.warn('Session refresh failed:', err)
+        }
+      }
+      return null
+    }
+
+    return session
+  } catch (err) {
+    logger.warn('getSessionSafe failed:', err)
+    return null
   }
 }
