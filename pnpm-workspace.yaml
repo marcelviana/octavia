@@ -1,5 +1,7 @@
 packages:
-  - '.'
-
+  - .
+ignoredBuiltDependencies:
+  - '@firebase/util'
+  - protobufjs
 onlyBuiltDependencies:
   - msw
