@@ -162,7 +162,7 @@ FOR DELETE USING (
                   </div>
                   <div className="mt-3 p-2 bg-amber-50 border border-amber-200 rounded">
                     <p className="text-xs text-amber-800">
-                      <strong>💡 Tip:</strong> If you get "policy already exists" errors, that's normal - it means the policies are already set up.
+                      <strong>💡 Tip:</strong> If you get &ldquo;policy already exists&rdquo; errors, that&apos;s normal - it means the policies are already set up.
                     </p>
                   </div>
                 </div>

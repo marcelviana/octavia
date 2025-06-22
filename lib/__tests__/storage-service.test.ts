@@ -4,7 +4,15 @@ it('uploads file when Supabase configured', async () => {
   const upload = vi.fn().mockResolvedValue({ error: null })
   const getPublicUrl = vi.fn(() => ({ data: { publicUrl: 'https://bucket/test' } }))
   const from = vi.fn(() => ({ upload, getPublicUrl }))
-  const client = { storage: { from } }
+  const client = { 
+    storage: { from },
+    auth: {
+      getUser: vi.fn().mockResolvedValue({ 
+        data: { user: { id: 'user1', email: 'test@example.com' } }, 
+        error: null 
+      })
+    }
+  }
   vi.doMock('../supabase', () => ({
     isSupabaseConfigured: true,
     getSupabaseBrowserClient: () => client

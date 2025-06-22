@@ -141,31 +141,55 @@ export async function getUserContentPage(
   try {
     const client = supabase ?? getSupabaseBrowserClient()
 
-    // Check if user is authenticated with timeout
+    // Check if user is authenticated with retry logic
     let user = null
-    try {
-      const authTimeout = new Promise((_, reject) => 
-        setTimeout(() => reject(new Error("Auth timeout")), 5000)
-      )
-      
-      const authResult = await Promise.race([
-        client.auth.getUser(),
-        authTimeout
-      ])
-      
-      if (authResult.error) {
-        if (authResult.error.message.includes("session_not_found")) {
-          logger.log("No active session, returning empty content page")
+    let authAttempts = 0
+    const maxAuthAttempts = 3
+    
+    while (authAttempts < maxAuthAttempts) {
+      try {
+        authAttempts++
+        const authTimeout = new Promise((_, reject) => 
+          setTimeout(() => reject(new Error("Auth timeout")), 5000)
+        )
+        
+        const authResult = await Promise.race([
+          client.auth.getUser(),
+          authTimeout
+        ])
+        
+        if (authResult.error) {
+          if (authResult.error.message.includes("session_not_found")) {
+            logger.log("No active session, returning empty content page")
+            return { data: [], count: 0, page, pageSize, totalPages: 0 }
+          }
+          // If it's not the last attempt, continue to retry
+          if (authAttempts < maxAuthAttempts) {
+            logger.warn(`Auth error on attempt ${authAttempts}:`, authResult.error.message)
+            continue
+          }
+          logger.warn("Auth error:", authResult.error.message)
           return { data: [], count: 0, page, pageSize, totalPages: 0 }
         }
-        logger.warn("Auth error:", authResult.error.message)
-        return { data: [], count: 0, page, pageSize, totalPages: 0 }
+        
+        user = authResult.data?.user
+        break // Success, exit retry loop
+      } catch (authError) {
+        // If it's not the last attempt, continue to retry
+        if (authAttempts < maxAuthAttempts) {
+          logger.warn(`Auth check failed on attempt ${authAttempts}:`, authError)
+          continue
+        }
+        
+        // After max attempts, throw error or return empty based on error type
+        if (authError instanceof Error && authError.message.includes("timeout")) {
+          logger.warn("Auth check failed with timeout, returning empty content page:", authError)
+          return { data: [], count: 0, page, pageSize, totalPages: 0 }
+        }
+        
+        // For persistent auth errors, throw a user-friendly error
+        throw new Error("Authentication failed. Please log in again.")
       }
-      
-      user = authResult.data?.user
-    } catch (authError) {
-      logger.warn("Auth check failed with timeout, returning empty content page:", authError)
-      return { data: [], count: 0, page, pageSize, totalPages: 0 }
     }
     
     if (!user) {

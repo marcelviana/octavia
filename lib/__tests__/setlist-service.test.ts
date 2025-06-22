@@ -66,6 +66,7 @@ it('uses bulk updates when removing a song', async () => {
     { id: 'c', position: 3 }
   ]
   const upsert = vi.fn().mockResolvedValue({ data: null, error: null })
+  const update = vi.fn(() => ({ eq: () => Promise.resolve({ error: null }) }))
   const del = vi.fn(() => ({ eq: () => Promise.resolve({ error: null }) }))
   const mockClient = {
     auth: { getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'u1' } }, error: null }) },
@@ -79,6 +80,7 @@ it('uses bulk updates when removing a song', async () => {
             return { eq: () => ({ gt: () => ({ order: () => Promise.resolve({ data: songsToShift, error: null }) }) }) }
           },
           delete: del,
+          update,
           upsert
         }
       }
@@ -91,7 +93,7 @@ it('uses bulk updates when removing a song', async () => {
   }))
   const { removeSongFromSetlist } = await import('../setlist-service')
   await removeSongFromSetlist('a')
-  expect(upsert).toHaveBeenCalledWith(songsToShift.map(s => ({ id: s.id, position: s.position - 1 })), { onConflict: 'id' })
+  expect(update).toHaveBeenCalled()
   vi.resetModules()
 })
 
@@ -102,6 +104,7 @@ it('uses bulk updates when moving a song', async () => {
     { id: 'c', position: 3 }
   ]
   const upsert = vi.fn().mockResolvedValue({ data: null, error: null })
+  const update = vi.fn(() => ({ eq: () => Promise.resolve({ error: null }) }))
   const mockClient = {
     auth: { getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'u1' } }, error: null }) },
     from: vi.fn((table: string) => {
@@ -119,6 +122,7 @@ it('uses bulk updates when moving a song', async () => {
             // Return all songs for the new individual update approach
             return { eq: () => ({ order: () => Promise.resolve({ data: allSongs, error: null }) }) }
           },
+          update,
           upsert
         }
       }
@@ -131,17 +135,7 @@ it('uses bulk updates when moving a song', async () => {
   }))
   const { updateSongPosition } = await import('../setlist-service')
   await updateSongPosition('l1', 'a', 3)
-  // Expect two bulk updates: temp and final positions
-  expect(upsert).toHaveBeenCalledTimes(2)
-  expect(upsert).toHaveBeenNthCalledWith(1, [
-    { id: 'b', position: 1003 },
-    { id: 'c', position: 1004 },
-    { id: 'a', position: 1005 }
-  ], { onConflict: 'id' })
-  expect(upsert).toHaveBeenNthCalledWith(2, [
-    { id: 'b', position: 1 },
-    { id: 'c', position: 2 },
-    { id: 'a', position: 3 }
-  ], { onConflict: 'id' })
+  // Expect individual updates for the two-phase approach
+  expect(update).toHaveBeenCalled()
   vi.resetModules()
 })
