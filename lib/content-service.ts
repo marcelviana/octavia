@@ -43,12 +43,34 @@ export async function getUserContent(supabase?: SupabaseClient) {
   try {
     const client = supabase ?? getSupabaseBrowserClient()
 
-    // Check if user is authenticated
-    const {
-      data: { user },
-      error: authError,
-    } = await client.auth.getUser()
-    if (authError || !user) {
+    // Check if user is authenticated with timeout
+    let user = null
+    try {
+      const authTimeout = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error("Auth timeout")), 5000)
+      )
+      
+      const authResult = await Promise.race([
+        client.auth.getUser(),
+        authTimeout
+      ])
+      
+      if (authResult.error) {
+        if (authResult.error.message.includes("session_not_found")) {
+          logger.log("No active session, returning empty content")
+          return []
+        }
+        logger.warn("Auth error:", authResult.error.message)
+        return []
+      }
+      
+      user = authResult.data?.user
+    } catch (authError) {
+      logger.warn("Auth check failed with timeout, returning empty content:", authError)
+      return []
+    }
+    
+    if (!user) {
       logger.log("User not authenticated, returning empty content")
       return []
     }
@@ -119,29 +141,36 @@ export async function getUserContentPage(
   try {
     const client = supabase ?? getSupabaseBrowserClient()
 
-    // Check if user is authenticated with retry logic
-    let authAttempts = 0
+    // Check if user is authenticated with timeout
     let user = null
-    
-    while (authAttempts < 3) {
-      try {
-        const { data: authData, error: authError } = await client.auth.getUser()
-        if (authError) throw authError
-        user = authData.user
-        break
-      } catch (authError) {
-        authAttempts++
-        if (authAttempts >= 3) {
-          logger.error("Authentication failed after 3 attempts:", authError)
-          throw new Error("Authentication failed. Please log in again.")
+    try {
+      const authTimeout = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error("Auth timeout")), 5000)
+      )
+      
+      const authResult = await Promise.race([
+        client.auth.getUser(),
+        authTimeout
+      ])
+      
+      if (authResult.error) {
+        if (authResult.error.message.includes("session_not_found")) {
+          logger.log("No active session, returning empty content page")
+          return { data: [], count: 0, page, pageSize, totalPages: 0 }
         }
-        // Wait 1 second before retry
-        await new Promise(resolve => setTimeout(resolve, 1000))
+        logger.warn("Auth error:", authResult.error.message)
+        return { data: [], count: 0, page, pageSize, totalPages: 0 }
       }
+      
+      user = authResult.data?.user
+    } catch (authError) {
+      logger.warn("Auth check failed with timeout, returning empty content page:", authError)
+      return { data: [], count: 0, page, pageSize, totalPages: 0 }
     }
-
+    
     if (!user) {
-      throw new Error("User not authenticated")
+      logger.log("User not authenticated, returning empty content page")
+      return { data: [], count: 0, page, pageSize, totalPages: 0 }
     }
 
     let query = client

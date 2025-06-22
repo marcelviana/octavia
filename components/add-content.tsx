@@ -137,10 +137,21 @@ export function AddContent({
 
   const handleFilesUploaded = (files: UploadedFile[]) => {
     if (files.length > 0) {
-      const file = { ...files[0], contentType };
-      setUploadedFile(file);
-      if (contentType === ContentType.SHEET_MUSIC) {
+      const file = files[0];
+      
+      // Auto-detect if this is an image file and set content type to Sheet Music
+      const isImageFile = /\.(png|jpg|jpeg)$/i.test(file.name);
+      if (isImageFile) {
+        setContentType(ContentType.SHEET_MUSIC);
+        const updatedFile = { ...file, contentType: ContentType.SHEET_MUSIC };
+        setUploadedFile(updatedFile);
         setCurrentStep(2);
+      } else {
+        const updatedFile = { ...file, contentType };
+        setUploadedFile(updatedFile);
+        if (contentType === ContentType.SHEET_MUSIC) {
+          setCurrentStep(2);
+        }
       }
     }
   };
@@ -496,21 +507,63 @@ export function AddContent({
               <div className="grid grid-cols-4 gap-2">
                 {contentTypes.map((type) => {
                   const Icon = type.icon;
-                  const styles = getContentTypeStyle(type.name);
                   const selected = contentType === type.name;
+                  
+                  // Define explicit classes for each content type to ensure Tailwind includes them
+                  const getTypeClasses = (typeName: string, isSelected: boolean) => {
+                    if (isSelected) {
+                      switch (typeName) {
+                        case ContentType.LYRICS:
+                          return "border-green-200 ring-2 ring-green-500 bg-green-50";
+                        case ContentType.GUITAR_TAB:
+                          return "border-blue-200 ring-2 ring-blue-500 bg-blue-50";
+                        case ContentType.CHORD_CHART:
+                          return "border-purple-200 ring-2 ring-purple-500 bg-purple-50";
+                        case ContentType.SHEET_MUSIC:
+                          return "border-orange-200 ring-2 ring-orange-500 bg-orange-50";
+                        default:
+                          return "border-gray-200 ring-2 ring-gray-500 bg-gray-50";
+                      }
+                    } else {
+                      switch (typeName) {
+                        case ContentType.LYRICS:
+                          return "border-gray-200 hover:bg-green-50 hover:border-green-200";
+                        case ContentType.GUITAR_TAB:
+                          return "border-gray-200 hover:bg-blue-50 hover:border-blue-200";
+                        case ContentType.CHORD_CHART:
+                          return "border-gray-200 hover:bg-purple-50 hover:border-purple-200";
+                        case ContentType.SHEET_MUSIC:
+                          return "border-gray-200 hover:bg-orange-50 hover:border-orange-200";
+                        default:
+                          return "border-gray-200 hover:bg-gray-50 hover:border-gray-200";
+                      }
+                    }
+                  };
+
+                  const getIconClasses = (typeName: string) => {
+                    switch (typeName) {
+                      case ContentType.LYRICS:
+                        return "text-green-600";
+                      case ContentType.GUITAR_TAB:
+                        return "text-blue-600";
+                      case ContentType.CHORD_CHART:
+                        return "text-purple-600";
+                      case ContentType.SHEET_MUSIC:
+                        return "text-orange-600";
+                      default:
+                        return "text-gray-600";
+                    }
+                  };
+
                   return (
                     <Card
                       key={type.id}
                       onClick={() => setContentType(type.name)}
                       title={type.tooltip}
-                      className={`cursor-pointer border ${styles.border} ${
-                        selected
-                          ? `ring-2 ${styles.ring} ${styles.bg}`
-                          : `hover:${styles.bg} hover:${styles.border}`
-                      }`}
+                      className={`cursor-pointer transition-all duration-200 ${getTypeClasses(type.name, selected)}`}
                     >
                       <CardContent className="p-2 text-center space-y-1">
-                        <Icon className={`w-6 h-6 mx-auto ${styles.icon}`} />
+                        <Icon className={`w-6 h-6 mx-auto ${getIconClasses(type.name)}`} />
                         <p className="text-sm">{type.name}</p>
                       </CardContent>
                     </Card>
@@ -572,31 +625,46 @@ export function AddContent({
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="p-4">
-                  <TooltipProvider delayDuration={300}>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <div>
-                          <FileUpload
-                            single
-                            onFilesUploaded={handleFilesUploaded}
-                          />
-                        </div>
-                      </TooltipTrigger>
-                      <TooltipContent side="right" className="max-w-xs">
-                        Drag and drop your music file here. Supported formats:
-                        PDF, PNG, JPG. Only one file per sheet music.
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                  {contentType === ContentType.SHEET_MUSIC && (
-                    <p className="text-sm text-gray-600 mt-2 text-center">
-                      Upload your Sheet Music file. Only file upload is supported for Sheet Music — manual creation is not available.
-                    </p>
-                  )}
+                  <FileUpload
+                    single
+                    onFilesUploaded={handleFilesUploaded}
+                    contentType={contentType}
+                  />
+                  
+                  <div className="mt-3 text-center">
+                    {contentType === ContentType.SHEET_MUSIC ? (
+                      <div className="space-y-1">
+                        <p className="text-sm text-gray-700 font-medium">
+                          Sheet Music files only
+                        </p>
+                        <p className="text-xs text-gray-600">
+                          Supported formats: PDF, PNG, JPG, JPEG
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          Manual creation is not available for Sheet Music
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="space-y-1">
+                        <p className="text-sm text-gray-700 font-medium">
+                          Text and document files
+                        </p>
+                        <p className="text-xs text-gray-600">
+                          Supported formats: TXT, DOCX, PDF
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          Perfect for lyrics, chord charts, and guitar tabs
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                  
                   {uploadedFile && (
-                    <p className="text-center text-sm text-gray-600 mt-2">
-                      {uploadedFile.name}
-                    </p>
+                    <div className="mt-3 p-2 bg-green-50 border border-green-200 rounded-lg">
+                      <p className="text-center text-sm text-green-800 font-medium">
+                        ✓ {uploadedFile.name}
+                      </p>
+                    </div>
                   )}
                 </CardContent>
               </Card>
@@ -638,17 +706,7 @@ export function AddContent({
                       </div>
                     )}
                     <div className="text-right">
-                      <TooltipProvider delayDuration={300}>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <Button onClick={handleImportNext}>Next</Button>
-                          </TooltipTrigger>
-                          <TooltipContent side="top" className="max-w-xs">
-                            Proceed to add details like title, artist, and tags
-                            for this sheet music.
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
+                      <Button onClick={handleImportNext}>Next</Button>
                     </div>
                   </CardContent>
                 </Card>

@@ -29,8 +29,9 @@ export default function SetlistsPage() {
     router.push(`/setlist/${setlist.id}`)
   }
 
-  const handleStartPerformance = (setlist: any) => {
-    router.push(`/performance?setlistId=${setlist.id}`)
+  const handleStartPerformance = (setlist: any, startingSongIndex?: number) => {
+    const url = `/performance?setlistId=${setlist.id}${startingSongIndex !== undefined ? `&startingSongIndex=${startingSongIndex}` : ''}`
+    router.push(url)
   }
 
   // Don't render anything while loading

@@ -27,30 +27,38 @@ import {
   X,
   Check,
   AlertCircle,
+  Settings,
 } from "lucide-react";
 import { getContentTypeStyle } from "@/lib/content-type-styles";
-import { uploadFileToStorage } from "@/lib/storage-service";
+import { uploadFileToStorage, testStoragePermissions } from "@/lib/storage-service";
+import { ContentType } from "@/types/content";
 
 interface FileUploadProps {
   onFilesUploaded: (files: any[]) => void;
   single?: boolean;
+  contentType?: ContentType;
 }
 
 export function FileUpload({
   onFilesUploaded,
   single = false,
+  contentType,
 }: FileUploadProps) {
   const [isDragOver, setIsDragOver] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<any[]>([]);
   const [isUploading, setIsUploading] = useState(false);
-  const allowedExtensions = [
-    "pdf",
-    "docx",
-    "txt",
-    "png",
-    "jpg",
-    "jpeg",
-  ];
+  const [storageStatus, setStorageStatus] = useState<{ canUpload: boolean; error?: string } | null>(null);
+  
+  // Dynamic allowed extensions based on content type
+  const getAllowedExtensions = () => {
+    if (contentType === ContentType.SHEET_MUSIC) {
+      return ["pdf", "png", "jpg", "jpeg"];
+    }
+    // For other content types (Lyrics, Chord Chart, Guitar Tab)
+    return ["pdf", "docx", "txt"];
+  };
+  
+  const allowedExtensions = getAllowedExtensions();
 
   // Function to sanitize filename for storage
   const sanitizeFilename = (filename: string): string => {
@@ -86,6 +94,22 @@ export function FileUpload({
       );
       files = files.filter((f) => !unsupported.includes(f));
     }
+    
+    if (files.length === 0) {
+      return;
+    }
+    
+    // Check storage permissions before starting upload
+    console.log("Checking storage permissions...");
+    const permissionCheck = await testStoragePermissions();
+    setStorageStatus(permissionCheck);
+    if (!permissionCheck.canUpload) {
+      console.error("Storage permission check failed:", permissionCheck.error);
+      toast.error(permissionCheck.error || "Storage not configured properly");
+      return;
+    }
+    console.log("Storage permissions OK");
+    
     setIsUploading(true);
 
     const processedFiles = await Promise.all(
@@ -95,7 +119,7 @@ export function FileUpload({
           name: file.name,
           size: file.size,
           type: file.type,
-          status: "uploading",
+          status: "uploading" as const,
           progress: 0,
           contentType: detectContentType(file.name),
         };
@@ -129,8 +153,10 @@ export function FileUpload({
 
     setUploadedFiles(processedFiles);
 
+    // Upload files one by one to avoid overwhelming the system
     for (const file of processedFiles) {
       try {
+        console.log(`Starting upload for ${file.name}...`);
         const sanitizedFilename = sanitizeFilename(file.name);
         const storageFilename = `${Date.now()}-${sanitizedFilename}`;
         
@@ -138,23 +164,27 @@ export function FileUpload({
           file.file,
           storageFilename,
         );
+        
+        console.log(`Upload successful for ${file.name}:`, url);
+        
         setUploadedFiles((prev) =>
           prev.map((f) =>
             f.id === file.id
-              ? { ...f, url, status: "completed", progress: 100 }
+              ? { ...f, url, status: "completed" as const, progress: 100 }
               : f,
           ),
         );
       } catch (e) {
-        console.error("Upload failed", e);
-        toast.error(`Failed to upload ${file.name}`);
+        console.error("Upload failed for", file.name, ":", e);
+        toast.error(`Failed to upload ${file.name}: ${e instanceof Error ? e.message : 'Unknown error'}`);
         setUploadedFiles((prev) =>
-          prev.map((f) => (f.id === file.id ? { ...f, status: "error" } : f)),
+          prev.map((f) => (f.id === file.id ? { ...f, status: "error" as const } : f)),
         );
       }
     }
 
     setIsUploading(false);
+    console.log("Upload process completed");
   };
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -267,7 +297,7 @@ export function FileUpload({
         <input
           type="file"
           multiple={!single}
-          accept=".pdf,.docx,.txt,.png,.jpg,.jpeg"
+          accept={allowedExtensions.map(ext => `.${ext}`).join(",")}
           onChange={handleFileSelect}
           className="hidden"
           id="file-upload"
@@ -278,9 +308,32 @@ export function FileUpload({
           </Button>
         </label>
         <p className="text-xs text-gray-500 mt-2">
-          Supports PDF, DOCX, text, and image files
+          {contentType === ContentType.SHEET_MUSIC 
+            ? "Supports PDF and image files (PNG, JPG, JPEG)"
+            : "Supports PDF, DOCX, and text files"
+          }
         </p>
       </div>
+
+      {/* Storage Status Warning */}
+      {storageStatus && !storageStatus.canUpload && (
+        <Card className="border-orange-200 bg-orange-50">
+          <CardContent className="p-4">
+            <div className="flex items-start space-x-3">
+              <Settings className="w-5 h-5 text-orange-600 mt-0.5" />
+              <div>
+                <h4 className="font-medium text-orange-800">Storage Setup Required</h4>
+                <p className="text-sm text-orange-700 mt-1">
+                  {storageStatus.error}
+                </p>
+                <p className="text-sm text-orange-700 mt-2">
+                  Please visit the <a href="/setup" className="underline font-medium">setup page</a> to configure storage properly.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Uploaded Files */}
       {uploadedFiles.length > 0 && (

@@ -14,10 +14,20 @@ export async function getSupabaseServerClient() {
         return cookieStore.get(name)?.value
       },
       set(name: string, value: string, options: any) {
-        cookieStore.set({ name, value, ...options })
+        try {
+          cookieStore.set({ name, value, ...options })
+        } catch {
+          // Silently fail if we can't set cookies (e.g., in Server Components)
+          // This is expected behavior when called from page components
+        }
       },
       remove(name: string, options: any) {
-        cookieStore.delete({ name, ...options })
+        try {
+          cookieStore.delete({ name, ...options })
+        } catch {
+          // Silently fail if we can't remove cookies (e.g., in Server Components)
+          // This is expected behavior when called from page components
+        }
       },
     },
   })

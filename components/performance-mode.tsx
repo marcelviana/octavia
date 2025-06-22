@@ -36,12 +36,14 @@ interface PerformanceModeProps {
   onExitPerformance: () => void
   selectedContent?: any
   selectedSetlist?: any
+  startingSongIndex?: number
 }
 
 export function PerformanceMode({
   onExitPerformance,
   selectedContent,
   selectedSetlist,
+  startingSongIndex,
 }: PerformanceModeProps) {
   const [currentSong, setCurrentSong] = useState(0)
   const [zoom, setZoom] = useState(100)
@@ -242,7 +244,21 @@ export function PerformanceMode({
     return () => window.removeEventListener("keydown", handleKeyPress)
   }, [currentSong, isPlaying, onExitPerformance, songs.length])
 
-  const currentSongData: any = songs[currentSong] || {}
+  // Set initial song based on startingSongIndex
+  useEffect(() => {
+    if (startingSongIndex !== undefined && songs.length > 0 && startingSongIndex < songs.length) {
+      setCurrentSong(startingSongIndex)
+    }
+  }, [startingSongIndex, songs.length])
+
+  // Ensure currentSong index is valid
+  useEffect(() => {
+    if (songs.length > 0 && currentSong >= songs.length) {
+      setCurrentSong(0)
+    }
+  }, [songs.length, currentSong])
+
+  const currentSongData: any = songs[currentSong] || { title: "Unknown Song", artist: "Unknown Artist" }
 
   useEffect(() => {
     setBpm(currentSongData.bpm || 80)
@@ -300,6 +316,18 @@ export function PerformanceMode({
       }
     }
   }, [])
+
+  // Show loading if no songs are available
+  if (!songs || songs.length === 0) {
+    return (
+      <div className="h-screen bg-[#1A1F36] text-white flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-xl">Loading performance mode...</p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="h-screen bg-[#1A1F36] text-white flex flex-col relative" onMouseMove={handleMouseMove}>
       {/* Top Bar */}
@@ -317,8 +345,8 @@ export function PerformanceMode({
           </div>
 
           <div className="text-center">
-            <h2 className="font-bold text-lg text-white">{currentSongData.title}</h2>
-            <p className="text-sm text-[#A69B8E]">{currentSongData.artist}</p>
+            <h2 className="font-bold text-lg text-white">{currentSongData.title || "Unknown Song"}</h2>
+            <p className="text-sm text-[#A69B8E]">{currentSongData.artist || "Unknown Artist"}</p>
           </div>
 
           <div className="flex items-center space-x-2">
@@ -386,7 +414,7 @@ export function PerformanceMode({
                       return (
                         <Image
                           src={sheetUrls[currentSong] as string}
-                          alt={currentSongData.title}
+                          alt={currentSongData.title || "Sheet Music"}
                           width={800}
                           height={800}
                           className="w-full h-auto"

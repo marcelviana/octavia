@@ -4,14 +4,9 @@ import { Button } from "@/components/ui/button"
 import {
   Home,
   Library,
-  Music,
   Settings,
-  Guitar,
-  BookOpen,
-  Mic,
-  List,
-  Star,
-  Clock,
+  Disc3,
+  MusicIcon,
 } from "lucide-react"
 import { useState } from "react"
 import { cn } from "@/lib/utils"
@@ -53,22 +48,12 @@ export function Sidebar({
   const menuItems = [
     { id: "dashboard", label: "Dashboard", icon: Home, description: "Overview of your music" },
     { id: "library", label: "Library", icon: Library, description: "Browse all your content" },
-    { id: "setlists", label: "Setlists", icon: Music, description: "Organize performances" },
+    { id: "setlists", label: "Setlists", icon: Disc3, description: "Organize performances" },
+    { id: "add-content", label: "Add Song", icon: MusicIcon, description: "Add new music content" },
     { id: "settings", label: "Settings", icon: Settings, description: "Customize your experience" },
   ]
 
-  const quickCreateItems = [
-    { id: "lyrics", label: "Lyrics Sheet", icon: Mic, description: "Create a new lyrics sheet" },
-    { id: "chords", label: "Chord Chart", icon: Guitar, description: "Create a new chord chart" },
-    { id: "tab", label: "Tablature", icon: List, description: "Create a new tab" },
-    { id: "sheet", label: "Sheet Music", icon: BookOpen, description: "Create a new sheet music" },
-  ]
 
-  const recentItems = [
-    { id: "recent1", label: "Autumn Leaves", icon: Star },
-    { id: "recent2", label: "All of Me", icon: Clock },
-    { id: "recent3", label: "Fly Me to the Moon", icon: Star },
-  ]
 
 
   return (
@@ -130,63 +115,7 @@ export function Sidebar({
               </ul>
             </div>
 
-            {/* Recent Items */}
-            {!collapsed && (
-              <div className="mb-6 px-2">
-                <h3 className="text-xs font-semibold text-amber-800 uppercase tracking-wider mb-2">Recent</h3>
-                <ul className="space-y-1">
-                  {recentItems.map((item) => {
-                    const Icon = item.icon
-                    return (
-                      <li key={item.id}>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="w-full justify-start text-amber-700 hover:bg-amber-100/80 h-8"
-                        >
-                          <Icon className="w-4 h-4 mr-2 text-amber-500" />
-                          <span className="truncate">{item.label}</span>
-                        </Button>
-                      </li>
-                    )
-                  })}
-                </ul>
-              </div>
-            )}
 
-            {/* Quick Create */}
-            <div className={cn("mb-6", collapsed ? "px-0" : "px-2")}>
-              {!collapsed && (
-                <h3 className="text-xs font-semibold text-amber-800 uppercase tracking-wider mb-2">Quick Create</h3>
-              )}
-              <ul className="space-y-1">
-                {quickCreateItems.map((item) => {
-                  const Icon = item.icon
-                  return (
-                    <li key={item.id}>
-                      <TooltipProvider delayDuration={300}>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <Button
-                              variant="ghost"
-                              className={cn(
-                                "w-full justify-start text-amber-700 hover:bg-amber-100/80",
-                                collapsed && "justify-center p-2",
-                              )}
-                              size={collapsed ? "icon" : "sm"}
-                            >
-                              <Icon className={cn("w-4 h-4", collapsed ? "" : "mr-2")} />
-                              {!collapsed && <span>{item.label}</span>}
-                            </Button>
-                          </TooltipTrigger>
-                          {collapsed && <TooltipContent side="right">{item.label}</TooltipContent>}
-                        </Tooltip>
-                      </TooltipProvider>
-                    </li>
-                  )
-                })}
-              </ul>
-            </div>
           </nav>
 
         </div>

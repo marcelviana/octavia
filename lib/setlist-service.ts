@@ -100,8 +100,11 @@ type SetlistSongInsert = Database["public"]["Tables"]["setlist_songs"]["Insert"]
 
 export async function getUserSetlists() {
   try {
+    console.log("🔍 getUserSetlists: Starting...")
+    
     // Return mock data in demo mode
     if (!isSupabaseConfigured) {
+      console.log("🔍 getUserSetlists: Demo mode detected")
       logger.log("Demo mode: Returning mock setlists")
       return Promise.all(
         MOCK_SETLISTS.map(async (sl) => ({
@@ -116,14 +119,40 @@ export async function getUserSetlists() {
       )
     }
 
+    console.log("🔍 getUserSetlists: Getting Supabase client...")
     const supabase = getSupabaseBrowserClient()
 
-    // Check if user is authenticated
-    const {
-      data: { user },
-      error: authError,
-    } = await supabase.auth.getUser()
-    if (authError || !user) {
+    // Check if user is authenticated with timeout
+    console.log("🔍 getUserSetlists: Checking authentication...")
+    let user = null
+    try {
+      const authTimeout = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error("Auth timeout")), 5000)
+      )
+      
+      console.log("🔍 getUserSetlists: Calling auth.getUser()...")
+      const authResult = await Promise.race([
+        supabase.auth.getUser(),
+        authTimeout
+      ])
+      console.log("🔍 getUserSetlists: Auth call completed")
+      
+      if (authResult.error) {
+        if (authResult.error.message.includes("session_not_found")) {
+          logger.log("No active session, returning empty setlists")
+          return []
+        }
+        logger.warn("Auth error:", authResult.error.message)
+        return []
+      }
+      
+      user = authResult.data?.user
+    } catch (authError) {
+      logger.warn("Auth check failed with timeout, returning empty setlists:", authError)
+      return []
+    }
+    
+    if (!user) {
       logger.log("User not authenticated, returning empty setlists")
       return []
     }
@@ -368,7 +397,7 @@ export async function createSetlist(setlist: { name: string; description?: strin
   }
 }
 
-export async function updateSetlist(id: string, updates: { name?: string; description?: string }) {
+export async function updateSetlist(id: string, updates: { name?: string; description?: string | null; performance_date?: string | null; venue?: string | null; notes?: string | null }) {
   try {
     // Mock update in demo mode
     if (!isSupabaseConfigured) {
@@ -737,18 +766,18 @@ export async function removeSongFromSetlist(songId: string) {
       throw fetchError
     }
 
-    // Shift positions of remaining songs in a single query
+    // Shift positions of remaining songs using individual updates
     if (songsToShift.length > 0) {
-      const { error: updateError } = await supabase
-        .from("setlist_songs")
-        .upsert(
-          songsToShift.map((s: any) => ({ id: s.id, position: s.position - 1 })),
-          { onConflict: "id" },
-        )
+      for (const song of songsToShift) {
+        const { error: updateError } = await supabase
+          .from("setlist_songs")
+          .update({ position: song.position - 1 })
+          .eq("id", song.id)
 
-      if (updateError) {
-        logger.error("Error shifting song positions:", updateError)
-        throw updateError
+        if (updateError) {
+          logger.error("Error shifting song position:", updateError)
+          throw updateError
+        }
       }
     }
 

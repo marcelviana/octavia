@@ -60,6 +60,13 @@ export default function SetupPage() {
                 <strong>Requirements:</strong> You need to be connected to your Supabase project 
                 with proper credentials.
               </p>
+              <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
+                <p className="text-amber-800 font-medium">⚠️ Important</p>
+                <p className="text-amber-700 text-sm">
+                  File uploads (including sheet music images) will not work until you complete this setup process.
+                  If you see uploads getting stuck with a spinning loader, this is likely the cause.
+                </p>
+              </div>
             </div>
 
             <Button 
@@ -115,22 +122,49 @@ export default function SetupPage() {
                 </ol>
                 
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                  <h4 className="font-medium text-blue-800 mb-2">Quick SQL Setup (Advanced)</h4>
-                  <p className="text-sm text-blue-700 mb-2">
-                    Alternatively, run this SQL in your Supabase SQL Editor:
+                  <h4 className="font-medium text-blue-800 mb-2">Quick SQL Setup (Recommended)</h4>
+                  <p className="text-sm text-blue-700 mb-3">
+                    Copy and paste these SQL commands in your Supabase SQL Editor to set up storage policies:
                   </p>
-                  <pre className="bg-blue-100 p-3 rounded text-xs overflow-x-auto">
-{`-- Allow authenticated users to upload to content-files bucket
-CREATE POLICY "Allow authenticated uploads" ON storage.objects
+                  <div className="bg-blue-100 p-3 rounded text-xs overflow-x-auto">
+                    <pre className="whitespace-pre-wrap">
+{`-- Enable RLS on storage.objects if not already enabled
+ALTER TABLE storage.objects ENABLE ROW LEVEL SECURITY;
+
+-- Allow authenticated users to upload files to content-files bucket
+CREATE POLICY "Allow authenticated uploads to content-files" ON storage.objects
 FOR INSERT WITH CHECK (
   auth.role() = 'authenticated' AND 
   bucket_id = 'content-files'
 );
 
--- Allow public access to view files
-CREATE POLICY "Allow public access" ON storage.objects
-FOR SELECT USING (bucket_id = 'content-files');`}
-                  </pre>
+-- Allow authenticated users to view their own files
+CREATE POLICY "Allow authenticated users to view content-files" ON storage.objects
+FOR SELECT USING (
+  bucket_id = 'content-files' AND
+  (auth.role() = 'authenticated' OR auth.role() = 'anon')
+);
+
+-- Allow authenticated users to update their own files
+CREATE POLICY "Allow authenticated users to update content-files" ON storage.objects
+FOR UPDATE USING (
+  auth.role() = 'authenticated' AND 
+  bucket_id = 'content-files'
+);
+
+-- Allow authenticated users to delete their own files
+CREATE POLICY "Allow authenticated users to delete content-files" ON storage.objects
+FOR DELETE USING (
+  auth.role() = 'authenticated' AND 
+  bucket_id = 'content-files'
+);`}
+                    </pre>
+                  </div>
+                  <div className="mt-3 p-2 bg-amber-50 border border-amber-200 rounded">
+                    <p className="text-xs text-amber-800">
+                      <strong>💡 Tip:</strong> If you get "policy already exists" errors, that's normal - it means the policies are already set up.
+                    </p>
+                  </div>
                 </div>
               </div>
 

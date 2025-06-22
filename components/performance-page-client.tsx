@@ -9,11 +9,13 @@ const PerformanceMode = dynamic(() => import("@/components/performance-mode").th
 interface PerformancePageClientProps {
   content: any | null;
   setlist: any | null;
+  startingSongIndex?: number;
 }
 
 export default function PerformancePageClient({
   content,
   setlist,
+  startingSongIndex,
 }: PerformancePageClientProps) {
   const router = useRouter();
 
@@ -26,6 +28,7 @@ export default function PerformancePageClient({
       onExitPerformance={handleExitPerformance}
       selectedContent={content || undefined}
       selectedSetlist={setlist || undefined}
+      startingSongIndex={startingSongIndex}
     />
   );
 }
