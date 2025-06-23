@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
+import { verifyFirebaseToken } from "@/lib/firebase-admin"
+
+export const runtime = 'nodejs'
 
 export async function middleware(request: NextRequest) {
   const response = NextResponse.next({
@@ -30,21 +33,17 @@ export async function middleware(request: NextRequest) {
     token = firebaseSessionCookie
   }
 
-  // Validate token via API route if we have one
+  // Validate token directly using Firebase Admin if we have one
   if (token) {
     try {
-      // Call our API route to verify the token
-      const verifyResponse = await fetch(new URL('/api/auth/verify', request.url), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ token }),
-      });
-
-      if (verifyResponse.ok) {
-        const result = await verifyResponse.json();
-        isAuthenticated = result.success;
+      if (token === 'demo-token') {
+        // Allow demo token only in development
+        if (process.env.NODE_ENV === 'development') {
+          isAuthenticated = true;
+        }
+      } else {
+        await verifyFirebaseToken(token);
+        isAuthenticated = true;
       }
     } catch (error) {
       console.error('Token verification failed in middleware:', error);
@@ -67,5 +66,15 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next|.*..*).*)"],
+  matcher: [
+    '/dashboard/:path*',
+    '/library/:path*',
+    '/setlists/:path*',
+    '/settings/:path*',
+    '/profile/:path*',
+    '/add-content/:path*',
+    '/content/:path*',
+    '/login',
+    '/signup',
+  ],
 }

@@ -1,9 +1,10 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { NextRequest, NextResponse } from 'next/server'
 
-// Mock fetch globally
-const mockFetch = vi.fn()
-global.fetch = mockFetch
+const mockVerifyFirebaseToken = vi.fn()
+vi.mock('../firebase-admin', () => ({
+  verifyFirebaseToken: mockVerifyFirebaseToken,
+}))
 
 describe('middleware auth', () => {
   beforeEach(() => {
@@ -15,11 +16,7 @@ describe('middleware auth', () => {
   })
 
   it('redirects to login when session cookie is invalid', async () => {
-    // Mock fetch to return invalid token response
-    mockFetch.mockResolvedValue({
-      ok: true,
-      json: () => Promise.resolve({ success: false, error: 'Invalid token' })
-    })
+    mockVerifyFirebaseToken.mockRejectedValue(new Error('Invalid token'))
 
     vi.spyOn(NextResponse, 'next').mockImplementation(() => new NextResponse())
 
@@ -33,25 +30,11 @@ describe('middleware auth', () => {
     const res = await middleware(req as any)
 
     expect(res.headers.get('location')).toBe('https://site.test/login')
-    expect(mockFetch).toHaveBeenCalledWith(
-      new URL('/api/auth/verify', 'https://site.test'),
-      expect.objectContaining({
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token: 'expired' })
-      })
-    )
+    expect(mockVerifyFirebaseToken).toHaveBeenCalledWith('expired')
   })
 
   it('allows request when session cookie is valid', async () => {
-    // Mock fetch to return valid token response
-    mockFetch.mockResolvedValue({
-      ok: true,
-      json: () => Promise.resolve({ 
-        success: true, 
-        user: { uid: 'test-uid', email: 'test@example.com' }
-      })
-    })
+    mockVerifyFirebaseToken.mockResolvedValue({ uid: 'test-uid' })
 
     vi.spyOn(NextResponse, 'next').mockImplementation(() => new NextResponse())
 
@@ -65,22 +48,11 @@ describe('middleware auth', () => {
     const res = await middleware(req as any)
 
     expect(res.headers.get('location')).toBeNull()
-    expect(mockFetch).toHaveBeenCalledWith(
-      new URL('/api/auth/verify', 'https://site.test'),
-      expect.objectContaining({
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token: 'valid' })
-      })
-    )
+    expect(mockVerifyFirebaseToken).toHaveBeenCalledWith('valid')
   })
 
   it('redirects to login when bearer token is invalid', async () => {
-    // Mock fetch to return invalid token response
-    mockFetch.mockResolvedValue({
-      ok: true,
-      json: () => Promise.resolve({ success: false, error: 'Invalid token' })
-    })
+    mockVerifyFirebaseToken.mockRejectedValue(new Error('Invalid token'))
 
     vi.spyOn(NextResponse, 'next').mockImplementation(() => new NextResponse())
 
@@ -94,25 +66,11 @@ describe('middleware auth', () => {
     const res = await middleware(req as any)
 
     expect(res.headers.get('location')).toBe('https://site.test/login')
-    expect(mockFetch).toHaveBeenCalledWith(
-      new URL('/api/auth/verify', 'https://site.test'),
-      expect.objectContaining({
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token: 'badtoken' })
-      })
-    )
+    expect(mockVerifyFirebaseToken).toHaveBeenCalledWith('badtoken')
   })
 
   it('allows request when bearer token is valid', async () => {
-    // Mock fetch to return valid token response
-    mockFetch.mockResolvedValue({
-      ok: true,
-      json: () => Promise.resolve({ 
-        success: true, 
-        user: { uid: 'test-uid', email: 'test@example.com' }
-      })
-    })
+    mockVerifyFirebaseToken.mockResolvedValue({ uid: 'test-uid' })
 
     vi.spyOn(NextResponse, 'next').mockImplementation(() => new NextResponse())
 
@@ -126,19 +84,11 @@ describe('middleware auth', () => {
     const res = await middleware(req as any)
 
     expect(res.headers.get('location')).toBeNull()
-    expect(mockFetch).toHaveBeenCalledWith(
-      new URL('/api/auth/verify', 'https://site.test'),
-      expect.objectContaining({
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token: 'goodtoken' })
-      })
-    )
+    expect(mockVerifyFirebaseToken).toHaveBeenCalledWith('goodtoken')
   })
 
-  it('redirects to login when fetch fails', async () => {
-    // Mock fetch to throw an error
-    mockFetch.mockRejectedValue(new Error('Network error'))
+  it('redirects to login when verification fails', async () => {
+    mockVerifyFirebaseToken.mockRejectedValue(new Error('Network error'))
 
     vi.spyOn(NextResponse, 'next').mockImplementation(() => new NextResponse())
 
