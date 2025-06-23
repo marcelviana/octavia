@@ -1,4 +1,4 @@
-import { getSupabaseBrowserClient, getSessionSafe } from "@/lib/supabase"
+import { getSupabaseBrowserClient } from "@/lib/supabase"
 import logger from "@/lib/logger"
 import type { Database } from "@/types/supabase"
 import type { SupabaseClient } from "@supabase/supabase-js"
@@ -8,96 +8,30 @@ type Content = Database["public"]["Tables"]["content"]["Row"]
 type ContentInsert = Database["public"]["Tables"]["content"]["Insert"]
 type ContentUpdate = Database["public"]["Tables"]["content"]["Update"]
 
-// Helper function to get authenticated user with improved session handling
-async function getAuthenticatedUser(supabase?: SupabaseClient, maxRetries: number = 3): Promise<any | null> {
-  console.log("🔍 getAuthenticatedUser: Starting auth check...")
-  
-  // Check if running in browser and try Firebase first
-  if (typeof window !== 'undefined' && !supabase) {
-    try {
-      console.log("🔍 getAuthenticatedUser: Checking Firebase auth in browser")
+// Helper function to get the current Firebase user
+async function getAuthenticatedUser(): Promise<any | null> {
+  try {
+    if (typeof window !== 'undefined') {
       const { auth } = await import('@/lib/firebase')
-      
       if (auth && auth.currentUser) {
-        console.log(`🔍 getAuthenticatedUser: Firebase user found: ${auth.currentUser.email}`)
-        // Convert Firebase user to Supabase-compatible format
-        return {
-          id: auth.currentUser.uid,
-          email: auth.currentUser.email,
-        }
+        return { id: auth.currentUser.uid, email: auth.currentUser.email }
       }
-      console.log("🔍 getAuthenticatedUser: No Firebase user found")
-    } catch (error) {
-      console.log("🔍 getAuthenticatedUser: Firebase auth check failed:", error)
+    } else {
+      const { getServerSideUser } = await import('@/lib/firebase-server-utils')
+      const user = await getServerSideUser()
+      if (user) {
+        return { id: user.uid, email: user.email }
+      }
     }
+  } catch (err) {
+    logger.warn('getAuthenticatedUser failed:', err)
   }
-  
-  const client = supabase ?? getSupabaseBrowserClient()
-  let lastError: Error | null = null
-  
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    try {
-      // If a server client is provided, use getUser() directly
-      if (supabase) {
-        console.log("🔍 getAuthenticatedUser: Using server client")
-        const { data: { user }, error } = await client.auth.getUser()
-        if (error) {
-          console.log("🔍 getAuthenticatedUser: Server auth error:", error)
-          lastError = error
-          if (attempt < maxRetries) {
-            console.log(`🔍 getAuthenticatedUser: Retry attempt ${attempt}/${maxRetries}`)
-            await new Promise(resolve => setTimeout(resolve, 100 * attempt)) // Exponential backoff
-            continue
-          }
-          return null
-        }
-        if (user) {
-          console.log(`🔍 getAuthenticatedUser: Server user found: ${user.email}`)
-          return user
-        }
-        console.log("🔍 getAuthenticatedUser: No server user found")
-        return null
-      }
-      
-      // For browser client, use getSessionSafe
-      const session = await getSessionSafe(2000)
-      if (session?.user) {
-        console.log(`🔍 getAuthenticatedUser: Session valid! User: ${session.user.email}`)
-        return session.user
-      }
-      console.log("🔍 getAuthenticatedUser: No valid session found")
-      return null
-      
-    } catch (error) {
-      lastError = error as Error
-      console.log(`🔍 getAuthenticatedUser: Auth check failed (attempt ${attempt}/${maxRetries}):`, error)
-      
-      if (attempt < maxRetries) {
-        console.log(`🔍 getAuthenticatedUser: Retrying in ${100 * attempt}ms...`)
-        await new Promise(resolve => setTimeout(resolve, 100 * attempt)) // Exponential backoff
-        continue
-      }
-      
-      if (error instanceof Error && error.message === 'Auth check timeout') {
-        console.log("🔍 getAuthenticatedUser: Auth check timed out")
-      }
-      
-      // If all retries failed, throw the authentication error
-      throw new Error("Authentication failed. Please log in again.")
-    }
-  }
-  
-  // If we reach here and no error was thrown but also no user found, throw an auth error
-  if (lastError) {
-    throw new Error("Authentication failed. Please log in again.")
-  }
-  
   return null
 }
 
 // Helper function to check if user is authenticated without timeout issues
-export async function checkAuthState(supabase?: SupabaseClient): Promise<{ user: any | null; isAuthenticated: boolean }> {
-  const user = await getAuthenticatedUser(supabase)
+export async function checkAuthState(): Promise<{ user: any | null; isAuthenticated: boolean }> {
+  const user = await getAuthenticatedUser()
   return { user, isAuthenticated: !!user }
 }
 
@@ -139,7 +73,7 @@ export async function getUserContent(supabase?: SupabaseClient, providedUser?: a
     // Use provided user or check authentication
     let user = providedUser
     if (!user) {
-      user = await getAuthenticatedUser(client)
+      user = await getAuthenticatedUser()
     } else {
       console.log("🔍 getUserContent: Using provided user:", user.email)
     }
@@ -221,7 +155,7 @@ export async function getUserContentPage(
     // Use provided user or check authentication
     let user = providedUser
     if (!user) {
-      user = await getAuthenticatedUser(client)
+      user = await getAuthenticatedUser()
     } else {
       console.log("🔍 getUserContentPage: Using provided user:", user.email)
     }
@@ -375,7 +309,7 @@ export async function getContentById(id: string, supabase?: SupabaseClient, prov
     // Use provided user or check authentication
     let user = providedUser
     if (!user) {
-      user = await getAuthenticatedUser(client)
+      user = await getAuthenticatedUser()
     } else {
       console.log("🔍 getContentById: Using provided user:", user.email)
     }
@@ -400,61 +334,29 @@ export async function getContentById(id: string, supabase?: SupabaseClient, prov
 
 export async function createContent(content: ContentInsert) {
   try {
-    const supabase = getSupabaseBrowserClient()
-
-    // Try to authenticate via Supabase or Firebase
-    const user = await getAuthenticatedUser(supabase)
-
-    if (user) {
-      const contentWithUser = {
-        ...content,
-        user_id: user.id,
-      }
-
-      const { data, error } = await supabase
-        .from("content")
-        .insert(contentWithUser)
-        .select()
-        .single()
-
-      if (error) {
-        logger.error("Error creating content:", error)
-        throw error
-      }
-
-      return data
+    if (typeof window === 'undefined') {
+      throw new Error('createContent can only be called from the browser')
     }
-
-    // Fallback to API route using Firebase ID token
-    if (typeof window !== "undefined") {
-      try {
-        const { auth } = await import("@/lib/firebase")
-        if (auth?.currentUser) {
-          const token = await auth.currentUser.getIdToken()
-          const response = await fetch("/api/content", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(content),
-          })
-
-          if (!response.ok) {
-            const err = await response.json().catch(() => ({}))
-            throw new Error(err.error || "Failed to create content")
-          }
-
-          return await response.json()
-        }
-      } catch (apiError) {
-        logger.error("API content creation failed:", apiError)
-      }
+    const { auth } = await import('@/lib/firebase')
+    if (!auth?.currentUser) {
+      throw new Error('User not authenticated')
     }
-
-    throw new Error("User not authenticated")
+    const token = await auth.currentUser.getIdToken()
+    const response = await fetch('/api/content', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(content),
+    })
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({}))
+      throw new Error(err.error || 'Failed to create content')
+    }
+    return await response.json()
   } catch (error) {
-    logger.error("Error in createContent:", error)
+    logger.error('Error in createContent:', error)
     throw error
   }
 }
@@ -465,7 +367,7 @@ export async function updateContent(id: string, content: ContentUpdate) {
     const supabase = getSupabaseBrowserClient()
 
     // Check if user is authenticated
-    const user = await getAuthenticatedUser(supabase)
+    const user = await getAuthenticatedUser()
     if (!user) {
       throw new Error("User not authenticated")
     }
@@ -501,7 +403,7 @@ export async function deleteContent(id: string) {
     const supabase = getSupabaseBrowserClient()
 
     // Check if user is authenticated
-    const user = await getAuthenticatedUser(supabase)
+    const user = await getAuthenticatedUser()
     if (!user) {
       throw new Error("User not authenticated")
     }
@@ -531,7 +433,7 @@ export async function getUserStats(supabase?: SupabaseClient, providedUser?: any
     // Use provided user or check authentication
     let user = providedUser
     if (!user) {
-      user = await getAuthenticatedUser(client)
+      user = await getAuthenticatedUser()
     } else {
       console.log("🔍 getUserStats: Using provided user:", user.email)
     }

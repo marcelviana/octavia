@@ -1,29 +1,15 @@
-import { getSupabaseBrowserClient, isSupabaseConfigured, getSessionSafe } from "@/lib/supabase"
+import { getSupabaseBrowserClient, isSupabaseConfigured } from "@/lib/supabase"
 import logger from "@/lib/logger"
 import { getContentById } from "@/lib/content-service"
+import { auth } from "@/lib/firebase"
 import type { Database } from "@/types/supabase"
 
-// Helper function to get authenticated user with improved session handling
-async function getAuthenticatedUser(supabase: any): Promise<any | null> {
-  console.log("🔍 setlist-service getAuthenticatedUser: Starting auth check...")
-  
-  try {
-    const session = await getSessionSafe(2000)
-    if (session?.user) {
-      console.log(`🔍 setlist-service: Session valid! User: ${session.user.email}`)
-      return session.user
-    }
-    console.log("🔍 setlist-service: No valid session found")
-    return null
-    
-  } catch (error) {
-    if (error instanceof Error && error.message === 'Auth check timeout') {
-      console.log("🔍 setlist-service: Auth check timed out")
-    } else {
-      console.log("🔍 setlist-service: Auth check failed:", error)
-    }
-    return null
+// Helper to get the current Firebase user
+function getAuthenticatedUser() {
+  if (auth && auth.currentUser) {
+    return { id: auth.currentUser.uid, email: auth.currentUser.email }
   }
+  return null
 }
 
 // Mock data for demo mode
@@ -253,12 +239,8 @@ export async function getSetlistById(id: string) {
 
     const supabase = getSupabaseBrowserClient()
 
-    // Check if user is authenticated
-    const {
-      data: { user },
-      error: authError,
-    } = await supabase.auth.getUser()
-    if (authError || !user) {
+    const user = getAuthenticatedUser()
+    if (!user) {
       throw new Error("User not authenticated")
     }
 
@@ -357,11 +339,8 @@ export async function createSetlist(setlist: { name: string; description?: strin
     const supabase = getSupabaseBrowserClient()
 
     // Check if user is authenticated
-    const {
-      data: { user },
-      error: authError,
-    } = await supabase.auth.getUser()
-    if (authError || !user) {
+    const user = getAuthenticatedUser()
+    if (!user) {
       throw new Error("User not authenticated")
     }
 
@@ -418,12 +397,8 @@ export async function updateSetlist(id: string, updates: { name?: string; descri
 
     const supabase = getSupabaseBrowserClient()
 
-    // Check if user is authenticated
-    const {
-      data: { user },
-      error: authError,
-    } = await supabase.auth.getUser()
-    if (authError || !user) {
+    const user = getAuthenticatedUser()
+    if (!user) {
       throw new Error("User not authenticated")
     }
 
@@ -520,12 +495,8 @@ export async function deleteSetlist(id: string) {
 
     const supabase = getSupabaseBrowserClient()
 
-    // Check if user is authenticated
-    const {
-      data: { user },
-      error: authError,
-    } = await supabase.auth.getUser()
-    if (authError || !user) {
+    const user = getAuthenticatedUser()
+    if (!user) {
       throw new Error("User not authenticated")
     }
 
@@ -575,11 +546,8 @@ export async function addSongToSetlist(setlistId: string, contentId: string, pos
     const supabase = getSupabaseBrowserClient()
 
     // Check if user is authenticated
-    const {
-      data: { user },
-      error: authError,
-    } = await supabase.auth.getUser()
-    if (authError || !user) {
+    const user = getAuthenticatedUser()
+    if (!user) {
       throw new Error("User not authenticated")
     }
 
@@ -711,11 +679,8 @@ export async function removeSongFromSetlist(songId: string) {
     const supabase = getSupabaseBrowserClient()
 
     // Check if user is authenticated
-    const {
-      data: { user },
-      error: authError,
-    } = await supabase.auth.getUser()
-    if (authError || !user) {
+    const user = getAuthenticatedUser()
+    if (!user) {
       throw new Error("User not authenticated")
     }
 
@@ -803,12 +768,8 @@ export async function updateSongPosition(setlistId: string, songId: string, newP
 
     const supabase = getSupabaseBrowserClient()
 
-    // Check if user is authenticated
-    const {
-      data: { user },
-      error: authError,
-    } = await supabase.auth.getUser()
-    if (authError || !user) {
+    const user = getAuthenticatedUser()
+    if (!user) {
       throw new Error("User not authenticated")
     }
 

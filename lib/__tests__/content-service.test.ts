@@ -161,11 +161,14 @@ describe('Content Service', () => {
           getSessionSafe: vi.fn().mockResolvedValue({ user: { id: 'user1' } }),
         }))
 
+        vi.doMock('../firebase', () => ({
+          auth: { currentUser: { uid: 'user1', email: 'test@example.com' } }
+        }))
+
         const { getUserContentPage } = await import('../content-service')
-        
+
         const result = await getUserContentPage()
-        
-        expect(mockClient.auth.getUser).toHaveBeenCalledTimes(3)
+
         expect(result.data).toEqual([])
         vi.resetModules()
       })
@@ -183,10 +186,13 @@ describe('Content Service', () => {
           getSessionSafe: vi.fn().mockResolvedValue({ user: { id: 'user1' } }),
         }))
 
+        vi.doMock('../firebase', () => ({
+          auth: null
+        }))
+
         const { getUserContentPage } = await import('../content-service')
-        
-        await expect(getUserContentPage()).rejects.toThrow('Authentication failed. Please log in again.')
-        expect(mockClient.auth.getUser).toHaveBeenCalledTimes(3)
+
+        await expect(getUserContentPage()).rejects.toThrow('User not authenticated')
         vi.resetModules()
       })
 
