@@ -404,7 +404,7 @@ export default function FirebaseSupabaseTestPage() {
           <div>
             <h4 className="font-medium mb-2">3. RLS Policies</h4>
             <p className="text-sm text-gray-600">
-              Since we're using service role key, RLS policies should be disabled or adjusted to work with Firebase UIDs.
+              Since we`&apos;`re using service role key, RLS policies should be disabled or adjusted to work with Firebase UIDs.
             </p>
           </div>
         </CardContent>

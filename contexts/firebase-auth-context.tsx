@@ -161,9 +161,23 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
               await setSessionCookie(firebaseUser)
               
               // Fetch profile from Supabase
-              const profileData = await fetchProfile(firebaseUser.uid, token)
-              if (profileData && mounted) {
-                setProfile(profileData)
+              try {
+                const response = await fetch('/api/profile', {
+                  headers: {
+                    'Authorization': `Bearer ${token}`,
+                  },
+                })
+                
+                if (response.ok) {
+                  const profileData = await response.json()
+                  if (profileData && mounted) {
+                    setProfile(profileData)
+                  }
+                } else if (response.status !== 401) {
+                  logger.warn("Failed to fetch profile:", response.status)
+                }
+              } catch (profileError) {
+                logger.warn("Error fetching profile:", profileError)
               }
             } else {
               setUser(null)
@@ -185,9 +199,14 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
 
         // Handle visibility change to refresh token
         const handleVisibilityChange = async () => {
-          if (!document.hidden && mounted && user) {
+          if (!document.hidden && mounted && auth?.currentUser) {
             logger.log("Tab became visible, refreshing token...")
-            await refreshToken()
+            try {
+              const token = await getIdToken(auth.currentUser, true)
+              setIdToken(token)
+            } catch (error) {
+              logger.warn("Error refreshing token on visibility change:", error)
+            }
           }
         }
 
@@ -214,7 +233,7 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
         unsubscribe()
       }
     }
-  }, [fetchProfile, refreshToken, user])
+  }, [])
 
   const signIn = useCallback(
     async (email: string, password: string) => {

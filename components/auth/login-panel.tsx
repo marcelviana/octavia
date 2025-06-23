@@ -26,6 +26,25 @@ export function LoginPanel({ initialError = "" }: { initialError?: string }) {
     if (isInitialized && user && !hasRedirected) {
       setHasRedirected(true)
       const handleRedirect = async () => {
+        // Wait for the session cookie to be set properly
+        const waitForSessionCookie = async (maxAttempts = 10) => {
+          for (let i = 0; i < maxAttempts; i++) {
+            const cookies = document.cookie.split(';')
+            const sessionCookie = cookies.find(cookie => 
+              cookie.trim().startsWith('firebase-session=')
+            )
+            if (sessionCookie) {
+              console.log("Session cookie found, safe to redirect")
+              return true
+            }
+            await new Promise(resolve => setTimeout(resolve, 100))
+          }
+          console.log("Session cookie not found after waiting, proceeding anyway")
+          return false
+        }
+        
+        await waitForSessionCookie()
+        
         if (isConfigured && !profile) {
           try {
             const supabase = getSupabaseBrowserClient()

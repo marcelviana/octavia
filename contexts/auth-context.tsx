@@ -268,7 +268,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         cleanupVisibilityListener()
       }
     }
-  }, [fetchProfile])
+  }, [])
 
   const signIn = useCallback(
     async (email: string, password: string) => {

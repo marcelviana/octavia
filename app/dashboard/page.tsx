@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation";
-import { getSupabaseServerClient } from "@/lib/supabase-server";
-import { isSupabaseConfigured } from "@/lib/supabase";
+import { getServerSideUser } from "@/lib/firebase-server-utils";
 import {
   getUserContentServer,
   getUserStatsServer,
@@ -9,16 +8,11 @@ import DashboardPageClient from "@/components/dashboard-page-client";
 import type { ContentItem } from "@/components/dashboard";
 
 export default async function DashboardPage() {
-  let user = null
-  if (isSupabaseConfigured) {
-    const supabase = await getSupabaseServerClient()
-    const {
-      data: { user: supabaseUser },
-    } = await supabase.auth.getUser()
-    user = supabaseUser
-    if (!user) {
-      redirect("/login")
-    }
+  // Check for Firebase authentication instead of Supabase
+  const user = await getServerSideUser()
+  
+  if (!user) {
+    redirect("/login")
   }
 
   const [rawContentData, stats] = await Promise.all([

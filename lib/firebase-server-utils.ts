@@ -104,4 +104,33 @@ export async function requireAuthServer(request: Request): Promise<{
   }
   
   return validation.user
+}
+
+export async function getServerSideUser(): Promise<{
+  uid: string
+  email?: string
+  emailVerified?: boolean
+} | null> {
+  // In Next.js 13+ app router, we need to get the session cookie from headers or cookies
+  const { cookies } = await import('next/headers')
+  
+  try {
+    const cookieStore = await cookies()
+    const sessionCookie = cookieStore.get('firebase-session')
+    
+    if (!sessionCookie?.value) {
+      return null
+    }
+
+    const validation = await validateFirebaseTokenServer(sessionCookie.value)
+    
+    if (!validation.isValid || !validation.user) {
+      return null
+    }
+    
+    return validation.user
+  } catch (error) {
+    logger.warn('Error getting server-side user:', error)
+    return null
+  }
 } 

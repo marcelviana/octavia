@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation";
-import { getSupabaseServerClient } from "@/lib/supabase-server";
-import { isSupabaseConfigured } from "@/lib/supabase";
+import { getServerSideUser } from "@/lib/firebase-server-utils";
 import { getUserContentPageServer } from "@/lib/content-service-server";
 import LibraryPageClient from "@/components/library-page-client";
 
@@ -9,16 +8,11 @@ export default async function LibraryPage({
 }: { 
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }> 
 }) {
-  let user = null;
-  if (isSupabaseConfigured) {
-    const supabase = await getSupabaseServerClient();
-    const {
-      data: { user: supabaseUser },
-    } = await supabase.auth.getUser();
-    user = supabaseUser;
-    if (!user) {
-      redirect("/login");
-    }
+  // Check for Firebase authentication instead of Supabase
+  const user = await getServerSideUser();
+  
+  if (!user) {
+    redirect("/login");
   }
 
   const resolvedSearchParams = await searchParams;
