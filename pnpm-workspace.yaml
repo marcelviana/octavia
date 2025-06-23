@@ -4,4 +4,8 @@ ignoredBuiltDependencies:
   - '@firebase/util'
   - protobufjs
 onlyBuiltDependencies:
+  - canvas
+  - esbuild
   - msw
+  - sharp
+  - unrs-resolver

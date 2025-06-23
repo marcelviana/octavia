@@ -332,6 +332,32 @@ describe('Content Service', () => {
 
     describe('Filtering', () => {
       it('applies content type filters correctly', async () => {
+        const mockRange = vi.fn().mockResolvedValue({
+          data: [],
+          error: null,
+          count: 0
+        });
+        
+        const mockOrder = vi.fn().mockReturnValue({
+          range: mockRange
+        });
+        
+        const mockIn = vi.fn().mockReturnValue({
+          order: mockOrder
+        });
+        
+        const mockEq = vi.fn().mockReturnValue({
+          in: mockIn
+        });
+        
+        const mockSelect = vi.fn().mockReturnValue({
+          eq: mockEq
+        });
+        
+        const mockFrom = vi.fn().mockReturnValue({
+          select: mockSelect
+        });
+        
         const mockClient = {
           auth: {
             getUser: vi.fn().mockResolvedValue({ 
@@ -339,21 +365,7 @@ describe('Content Service', () => {
               error: null 
             })
           },
-          from: vi.fn().mockReturnValue({
-            select: vi.fn().mockReturnValue({
-              eq: vi.fn().mockReturnValue({
-                in: vi.fn().mockReturnValue({
-                  order: vi.fn().mockReturnValue({
-                    range: vi.fn().mockResolvedValue({
-                      data: [],
-                      error: null,
-                      count: 0
-                    })
-                  })
-                })
-              })
-            })
-          })
+          from: mockFrom
         }
 
         vi.doMock('../supabase', () => ({
@@ -366,14 +378,14 @@ describe('Content Service', () => {
         
         await getUserContentPage({ 
           filters: { 
-            contentType: ['LYRICS', 'CHORDS', 'INVALID_TYPE'] 
+            contentType: ['Lyrics', 'Chord Chart', 'INVALID_TYPE'] 
           } 
         })
         
         // Verify only valid types are used
-        expect(mockClient.from().select().eq().in).toHaveBeenCalledWith(
+        expect(mockIn).toHaveBeenCalledWith(
           'content_type', 
-          ['LYRICS', 'CHORDS']
+          ['Lyrics', 'Chord Chart']
         )
         vi.resetModules()
       })

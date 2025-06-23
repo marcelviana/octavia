@@ -5,14 +5,28 @@ import { expect, vi, describe, it, beforeEach, afterEach } from 'vitest'
 import * as matchers from '@testing-library/jest-dom/matchers'
 expect.extend(matchers)
 import { cleanup } from '@testing-library/react'
+
 const push = vi.fn()
 const signIn = vi.fn()
 
 vi.mock('next/navigation', () => ({
   useRouter: () => ({ push })
 }))
-vi.mock('@/contexts/auth-context', () => ({
-  useAuth: () => ({ signIn })
+
+// Mock both exports from the Firebase auth context
+vi.mock('@/contexts/firebase-auth-context', () => ({
+  useFirebaseAuth: () => ({ 
+    signIn,
+    user: null,
+    loading: false,
+    error: null
+  }),
+  useAuth: () => ({ 
+    signIn,
+    user: null,
+    loading: false,
+    error: null
+  })
 }))
 
 import { LoginForm } from '../login-form'

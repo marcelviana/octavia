@@ -36,6 +36,14 @@ const mockEnv = {
 describe('Firebase Client', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.resetModules();
+    
+    // Clear all env vars first
+    Object.keys(process.env).forEach(key => {
+      if (key.startsWith('NEXT_PUBLIC_FIREBASE_')) {
+        delete process.env[key];
+      }
+    });
     
     // Mock environment variables
     Object.entries(mockEnv).forEach(([key, value]) => {
@@ -80,10 +88,11 @@ describe('Firebase Client', () => {
     mockGetAuth.mockReturnValue({ config: {} });
     mockGetFirestore.mockReturnValue({ _settings: {} });
     
-    await import('../firebase');
+    const firebase = await import('../firebase');
     
     expect(mockInitializeApp).not.toHaveBeenCalled();
     expect(mockGetApp).toHaveBeenCalled();
+    expect(firebase.isFirebaseConfigured).toBe(true);
   });
 
   it('should export null services when not configured', async () => {
@@ -94,5 +103,6 @@ describe('Firebase Client', () => {
     
     expect(firebase.auth).toBeNull();
     expect(firebase.db).toBeNull();
+    expect(firebase.isFirebaseConfigured).toBe(false);
   });
 }); 

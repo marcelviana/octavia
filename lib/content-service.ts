@@ -9,45 +9,71 @@ type ContentInsert = Database["public"]["Tables"]["content"]["Insert"]
 type ContentUpdate = Database["public"]["Tables"]["content"]["Update"]
 
 // Helper function to get authenticated user with improved session handling
-async function getAuthenticatedUser(supabase?: SupabaseClient): Promise<any | null> {
+async function getAuthenticatedUser(supabase?: SupabaseClient, maxRetries: number = 3): Promise<any | null> {
   const client = supabase ?? getSupabaseBrowserClient()
   
   console.log("🔍 getAuthenticatedUser: Starting auth check...")
   
-  try {
-    // If a server client is provided, use getUser() directly
-    if (supabase) {
-      console.log("🔍 getAuthenticatedUser: Using server client")
-      const { data: { user }, error } = await client.auth.getUser()
-      if (error) {
-        console.log("🔍 getAuthenticatedUser: Server auth error:", error)
+  let lastError: Error | null = null
+  
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      // If a server client is provided, use getUser() directly
+      if (supabase) {
+        console.log("🔍 getAuthenticatedUser: Using server client")
+        const { data: { user }, error } = await client.auth.getUser()
+        if (error) {
+          console.log("🔍 getAuthenticatedUser: Server auth error:", error)
+          lastError = error
+          if (attempt < maxRetries) {
+            console.log(`🔍 getAuthenticatedUser: Retry attempt ${attempt}/${maxRetries}`)
+            await new Promise(resolve => setTimeout(resolve, 100 * attempt)) // Exponential backoff
+            continue
+          }
+          return null
+        }
+        if (user) {
+          console.log(`🔍 getAuthenticatedUser: Server user found: ${user.email}`)
+          return user
+        }
+        console.log("🔍 getAuthenticatedUser: No server user found")
         return null
       }
-      if (user) {
-        console.log(`🔍 getAuthenticatedUser: Server user found: ${user.email}`)
-        return user
+      
+      // For browser client, use getSessionSafe
+      const session = await getSessionSafe(2000)
+      if (session?.user) {
+        console.log(`🔍 getAuthenticatedUser: Session valid! User: ${session.user.email}`)
+        return session.user
       }
-      console.log("🔍 getAuthenticatedUser: No server user found")
+      console.log("🔍 getAuthenticatedUser: No valid session found")
       return null
+      
+    } catch (error) {
+      lastError = error as Error
+      console.log(`🔍 getAuthenticatedUser: Auth check failed (attempt ${attempt}/${maxRetries}):`, error)
+      
+      if (attempt < maxRetries) {
+        console.log(`🔍 getAuthenticatedUser: Retrying in ${100 * attempt}ms...`)
+        await new Promise(resolve => setTimeout(resolve, 100 * attempt)) // Exponential backoff
+        continue
+      }
+      
+      if (error instanceof Error && error.message === 'Auth check timeout') {
+        console.log("🔍 getAuthenticatedUser: Auth check timed out")
+      }
+      
+      // If all retries failed, throw the authentication error
+      throw new Error("Authentication failed. Please log in again.")
     }
-    
-    // For browser client, use getSessionSafe
-    const session = await getSessionSafe(2000)
-    if (session?.user) {
-      console.log(`🔍 getAuthenticatedUser: Session valid! User: ${session.user.email}`)
-      return session.user
-    }
-    console.log("🔍 getAuthenticatedUser: No valid session found")
-    return null
-    
-  } catch (error) {
-    if (error instanceof Error && error.message === 'Auth check timeout') {
-      console.log("🔍 getAuthenticatedUser: Auth check timed out")
-    } else {
-      console.log("🔍 getAuthenticatedUser: Auth check failed:", error)
-    }
-    return null
   }
+  
+  // If we reach here and no error was thrown but also no user found, throw an auth error
+  if (lastError) {
+    throw new Error("Authentication failed. Please log in again.")
+  }
+  
+  return null
 }
 
 // Helper function to check if user is authenticated without timeout issues
