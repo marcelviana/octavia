@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { verifyFirebaseToken } from '@/lib/firebase-admin';
+import { validateFirebaseTokenServer } from '@/lib/firebase-server-utils';
 
 export async function GET() {
   try {
@@ -40,16 +40,16 @@ export async function POST(request: NextRequest) {
     }
 
     // Test token verification
-    const decodedToken = await verifyFirebaseToken(idToken);
+    const validation = await validateFirebaseTokenServer(idToken);
+
+    if (!validation.isValid) {
+      throw new Error(validation.error || 'Token validation failed');
+    }
 
     return NextResponse.json({
       success: true,
       message: 'Token verified successfully',
-      user: {
-        uid: decodedToken.uid,
-        email: decodedToken.email,
-        emailVerified: decodedToken.email_verified
-      },
+      user: validation.user,
       timestamp: new Date().toISOString()
     });
   } catch (error: any) {

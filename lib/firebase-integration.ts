@@ -1,5 +1,4 @@
 import { auth, db, isFirebaseConfigured } from './firebase';
-import { verifyFirebaseToken } from './firebase-admin';
 import logger from './logger';
 import { 
   signInWithEmailAndPassword, 
@@ -81,35 +80,28 @@ export async function testFirebaseClient(): Promise<FirebaseTestResult> {
 }
 
 /**
- * Test Firebase admin configuration
+ * Test Firebase admin configuration via API
  */
 export async function testFirebaseAdmin(): Promise<FirebaseTestResult> {
   try {
-    // Test with a mock token (this will fail but confirms admin setup)
-    const mockToken = 'mock-token-for-testing';
+    // Test admin configuration via API endpoint
+    const response = await fetch('/api/firebase-test');
+    const result = await response.json();
     
-    try {
-      await verifyFirebaseToken(mockToken);
+    if (response.ok && result.success) {
+      return {
+        success: true,
+        details: {
+          message: 'Firebase Admin SDK is properly configured',
+          configured: result.configured,
+          projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID
+        }
+      };
+    } else {
       return {
         success: false,
-        error: 'Unexpected success with mock token'
+        error: result.error || 'Firebase Admin API test failed'
       };
-    } catch (error: any) {
-      // Expected to fail with mock token
-      if (error.message.includes('Firebase ID token')) {
-        return {
-          success: true,
-          details: {
-            message: 'Firebase Admin SDK is properly configured',
-            projectId: process.env.FIREBASE_PROJECT_ID
-          }
-        };
-      } else {
-        return {
-          success: false,
-          error: `Firebase Admin SDK error: ${error.message}`
-        };
-      }
     }
   } catch (error: any) {
     return {

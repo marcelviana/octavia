@@ -1,6 +1,6 @@
 "use client"
 
-import { useAuth } from "@/contexts/auth-context"
+import { useAuth } from "@/contexts/firebase-auth-context"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"

@@ -3,12 +3,12 @@
 import type React from "react"
 
 import { createContext, useContext, useEffect, useState } from "react"
-import { useAuth } from "@/contexts/auth-context"
-import type { Session } from "@supabase/supabase-js"
+import { useAuth } from "@/contexts/firebase-auth-context"
+import type { User } from "firebase/auth"
 
 // Create a context that mimics NextAuth's SessionContext
 type SessionContextValue = {
-  data: Session | null
+  data: { user: User } | null
   status: "loading" | "authenticated" | "unauthenticated"
   update: () => Promise<void>
 }
@@ -20,18 +20,18 @@ const SessionContext = createContext<SessionContextValue>({
 })
 
 export function SessionProvider({ children }: { children: React.ReactNode }) {
-  const { session, user, loading } = useAuth()
+  const { user, loading } = useAuth()
   const [status, setStatus] = useState<"loading" | "authenticated" | "unauthenticated">("loading")
 
   useEffect(() => {
     if (loading) {
       setStatus("loading")
-    } else if (session && user) {
+    } else if (user) {
       setStatus("authenticated")
     } else {
       setStatus("unauthenticated")
     }
-  }, [session, user, loading])
+  }, [user, loading])
 
   const update = async () => {
     // This function would typically refresh the session
@@ -41,7 +41,7 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
   return (
     <SessionContext.Provider
       value={{
-        data: session,
+        data: user ? { user } : null,
         status,
         update,
       }}

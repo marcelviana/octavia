@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useAuth } from "@/contexts/auth-context"
+import { useAuth } from "@/contexts/firebase-auth-context"
 import { Music, Lock, Mail } from "lucide-react"
 import { getSupabaseBrowserClient } from "@/lib/supabase"
 import Image from "next/image"
@@ -30,12 +30,12 @@ export function LoginPanel({ initialError = "" }: { initialError?: string }) {
           try {
             const supabase = getSupabaseBrowserClient()
             await supabase.from("profiles").insert({
-              id: user.id,
+              id: user.uid,
               email: user.email!,
-              full_name: user.user_metadata.full_name || user.user_metadata.name || null,
-              first_name: (user.user_metadata.full_name || "").split(" ")[0] || null,
-              last_name: (user.user_metadata.full_name || "").split(" ").slice(1).join(" ") || null,
-              avatar_url: user.user_metadata.avatar_url || null,
+              full_name: user.displayName || null,
+              first_name: user.displayName ? user.displayName.split(" ")[0] : null,
+              last_name: user.displayName ? user.displayName.split(" ").slice(1).join(" ") : null,
+              avatar_url: user.photoURL || null,
             })
             window.location.href = "/dashboard"
             return

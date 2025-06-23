@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { requireAuth } from '@/lib/firebase-auth-middleware'
+import { requireAuthServer } from '@/lib/firebase-server-utils'
 import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
 
 // GET /api/content - Get user's content
 export async function GET(request: NextRequest) {
   try {
-    const user = await requireAuth(request)
+    const user = await requireAuthServer(request)
     
     if (!user) {
       return NextResponse.json(
@@ -40,7 +40,7 @@ export async function GET(request: NextRequest) {
 // POST /api/content - Create new content
 export async function POST(request: NextRequest) {
   try {
-    const user = await requireAuth(request)
+    const user = await requireAuthServer(request)
     
     if (!user) {
       return NextResponse.json(

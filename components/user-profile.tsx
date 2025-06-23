@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { useState } from "react"
-import { useAuth } from "@/contexts/auth-context"
+import { useAuth } from "@/contexts/firebase-auth-context"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -168,7 +168,7 @@ export function UserProfile() {
         )}
       </CardContent>
         <CardFooter className="flex justify-between">
-          <p className="text-sm text-gray-500">Member since {user && new Date(user.created_at).toLocaleDateString()}</p>
+          <p className="text-sm text-gray-500">Member since {user && user.metadata?.creationTime ? new Date(user.metadata.creationTime).toLocaleDateString() : 'Unknown'}</p>
         <Button variant="outline" onClick={signOut}>
           Sign Out
         </Button>

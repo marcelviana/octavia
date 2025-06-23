@@ -1,6 +1,6 @@
 "use client"
 
-import { useAuth } from "@/contexts/auth-context"
+import { useAuth } from "@/contexts/firebase-auth-context"
 import { redirect } from "next/navigation"
 import { useEffect, useState } from "react"
 import { Skeleton } from "@/components/ui/skeleton"

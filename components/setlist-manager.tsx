@@ -49,7 +49,7 @@ import {
 } from "@/lib/setlist-service"
 import { getUserContent as getContentList } from "@/lib/content-service"
 import type { Database } from "@/types/supabase"
-import { useAuth } from "@/contexts/auth-context"
+import { useAuth } from "@/contexts/firebase-auth-context"
 import { cn } from "@/lib/utils"
 
 
@@ -79,7 +79,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
   // Debug logging for auth state
   useEffect(() => {
     console.log("🔍 SetlistManager Auth State:", {
-      user: user ? `${user.email} (${user.id})` : "null",
+      user: user ? `${user.email} (${user.uid})` : "null",
       authLoading,
       isInitialized,
       componentLoading: loading
@@ -338,7 +338,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
 
     try {
       const setlistData = {
-        user_id: user.id,
+        user_id: user.uid,
         name: newSetlistData.name,
         description: newSetlistData.description || undefined,
         performance_date: newSetlistData.performance_date || null,

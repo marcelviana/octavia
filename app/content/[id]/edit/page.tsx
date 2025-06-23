@@ -8,7 +8,7 @@ const ContentEditPageClient = dynamic(
   () => import("@/components/content-edit-page-client"),
   { loading: () => <p>Loading editor...</p> }
 )
-import { useAuth } from "@/contexts/auth-context"
+import { useAuth } from "@/contexts/firebase-auth-context"
 import { getContentById } from "@/lib/content-service"
 import type { Database } from "@/types/supabase"
 

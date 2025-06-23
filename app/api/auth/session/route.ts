@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { verifyFirebaseToken } from '@/lib/firebase-admin'
+import { validateFirebaseTokenServer } from '@/lib/firebase-server-utils'
 import logger from '@/lib/logger'
 
 const SESSION_COOKIE_NAME = 'firebase-session'
@@ -18,9 +18,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Verify the token
-    const decodedToken = await verifyFirebaseToken(idToken)
+    const validation = await validateFirebaseTokenServer(idToken)
     
-    if (!decodedToken) {
+    if (!validation.isValid) {
       return NextResponse.json(
         { error: 'Invalid token' },
         { status: 401 }

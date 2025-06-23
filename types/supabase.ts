@@ -5,24 +5,28 @@ export interface Database {
     Tables: {
       profiles: {
         Row: {
-          id: string
+          id: string // Firebase UID (text format)
           email: string
           full_name: string | null
           first_name: string | null
           last_name: string | null
           avatar_url: string | null
           primary_instrument: string | null
+          bio: string | null
+          website: string | null
           created_at: string
           updated_at: string
         }
         Insert: {
-          id: string
+          id: string // Firebase UID (text format)
           email: string
           full_name?: string | null
           first_name?: string | null
           last_name?: string | null
           avatar_url?: string | null
           primary_instrument?: string | null
+          bio?: string | null
+          website?: string | null
           created_at?: string
           updated_at?: string
         }
@@ -34,6 +38,8 @@ export interface Database {
           last_name?: string | null
           avatar_url?: string | null
           primary_instrument?: string | null
+          bio?: string | null
+          website?: string | null
           created_at?: string
           updated_at?: string
         }
@@ -41,7 +47,7 @@ export interface Database {
       content: {
         Row: {
           id: string
-          user_id: string
+          user_id: string // Firebase UID (text format)
           title: string
           artist: string | null
           album: string | null
@@ -65,7 +71,7 @@ export interface Database {
         }
         Insert: {
           id?: string
-          user_id: string
+          user_id: string // Firebase UID (text format)
           title: string
           artist?: string | null
           album?: string | null
@@ -89,7 +95,7 @@ export interface Database {
         }
         Update: {
           id?: string
-          user_id?: string
+          user_id?: string // Firebase UID (text format)
           title?: string
           artist?: string | null
           album?: string | null
@@ -115,7 +121,7 @@ export interface Database {
       setlists: {
         Row: {
           id: string
-          user_id: string
+          user_id: string // Firebase UID (text format)
           name: string
           description: string | null
           performance_date: string | null
@@ -127,7 +133,7 @@ export interface Database {
         }
         Insert: {
           id?: string
-          user_id: string
+          user_id: string // Firebase UID (text format)
           name: string
           description?: string | null
           performance_date?: string | null
@@ -139,7 +145,7 @@ export interface Database {
         }
         Update: {
           id?: string
-          user_id?: string
+          user_id?: string // Firebase UID (text format)
           name?: string
           description?: string | null
           performance_date?: string | null
@@ -180,7 +186,7 @@ export interface Database {
         Row: {
           id: string
           content_id: string
-          user_id: string
+          user_id: string // Firebase UID (text format)
           annotation_data: Json
           created_at: string
           updated_at: string
@@ -188,7 +194,7 @@ export interface Database {
         Insert: {
           id?: string
           content_id: string
-          user_id: string
+          user_id: string // Firebase UID (text format)
           annotation_data: Json
           created_at?: string
           updated_at?: string
@@ -196,7 +202,7 @@ export interface Database {
         Update: {
           id?: string
           content_id?: string
-          user_id?: string
+          user_id?: string // Firebase UID (text format)
           annotation_data?: Json
           created_at?: string
           updated_at?: string

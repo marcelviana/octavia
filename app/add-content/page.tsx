@@ -12,7 +12,7 @@ const AddContent = dynamic(() => import("@/components/add-content").then(mod => 
 })
 import { Sidebar } from "@/components/sidebar"
 import { Header } from "@/components/header"
-import { useAuth } from "@/contexts/auth-context"
+import { useAuth } from "@/contexts/firebase-auth-context"
 import { cn } from "@/lib/utils"
 
 export default function AddContentPage() {
