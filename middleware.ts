@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
+import { validateFirebaseTokenServer } from "@/lib/firebase-server-utils"
 
 export async function middleware(request: NextRequest) {
   const response = NextResponse.next({
@@ -31,8 +32,16 @@ export async function middleware(request: NextRequest) {
   
   // Check for session cookie (for page requests)
   if (!isAuthenticated && firebaseSessionCookie) {
-    // Basic cookie presence check (actual validation happens server-side)
-    isAuthenticated = firebaseSessionCookie.length > 10
+    const validation = await validateFirebaseTokenServer(firebaseSessionCookie)
+    if (validation.isValid) {
+      isAuthenticated = true
+    } else {
+      response.cookies.set('firebase-session', '', {
+        httpOnly: true,
+        maxAge: 0,
+        path: '/',
+      })
+    }
   }
 
   // If user is authenticated and trying to access auth routes, redirect to dashboard
