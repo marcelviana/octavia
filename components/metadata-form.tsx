@@ -31,8 +31,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
-import { getSupabaseBrowserClient } from "@/lib/supabase"
 import { createContent } from "@/lib/content-service"
+import { useAuth } from "@/contexts/firebase-auth-context"
 
 
 interface MetadataFormProps {
@@ -61,6 +61,7 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
   })
   const [newTag, setNewTag] = useState("")
   const [openSections, setOpenSections] = useState<string[]>(["basic"])
+  const { user } = useAuth()
 
   const genres = [
     "Rock",
@@ -165,52 +166,9 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
 
   const handleSubmit = async () => {
     try {
-      console.log("Starting handleSubmit...")
-      setIsSubmitting(true);
-      // Initialize fresh Supabase client
-      const supabase = getSupabaseBrowserClient()
-      console.log("Supabase client initialized")
-
-      // Test Supabase connection
-      console.log("Testing Supabase connection...")
-      try {
-        console.log("About to make Supabase query...")
-        const { data: testData, error: testError } = await supabase.from('content').select('count').limit(1)
-        console.log("Supabase query completed")
-        console.log("Test data:", testData)
-        console.log("Test error:", testError)
-
-        if (testError) {
-          console.error("Supabase connection test failed:", testError)
-          alert("Failed to connect to database: " + testError.message)
-          return
-        }
-
-        console.log("Supabase connection test successful")
-      } catch (connectionError: any) {
-        console.error("Unexpected error during Supabase connection test:", connectionError)
-        console.error("Error details:", {
-          name: connectionError?.name,
-          message: connectionError?.message,
-          stack: connectionError?.stack
-        })
-        alert("Failed to connect to database. Please try again.")
-        return
-      }
-
-      // Fetch current user
-      console.log("Fetching user...")
-      const { data: { user }, error: userError } = await supabase.auth.getUser()
-      console.log("Auth response:", { user, userError })
-
-      if (userError) {
-        console.error("Auth error:", userError)
-        alert("Authentication error: " + userError.message)
-        return
-      }
+      setIsSubmitting(true)
 
       if (!user) {
-        console.log("No user found")
         alert("Not logged in. Please log in first.")
         return
       }
@@ -222,7 +180,6 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
 
       // Build the insert payload
       const payload: any = {
-        user_id: user.id,
         title: metadata.title.trim(),
         artist: metadata.artist || null,
         album: metadata.album || null,
@@ -251,23 +208,12 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
         }
       }
 
-      // Insert into Supabase
-      console.log("Attempting to insert into Supabase...")
-      const { data, error } = await supabase.from("content").insert([payload]).select()
-
-      if (error) {
-        console.error("Error saving content:", error)
-        alert("Error saving content: " + error.message)
-        setIsSubmitting(false)
-        return
-      }
-
-      console.log("Content saved successfully:", data[0])
-      // Success: return the new content
-      onComplete(data[0])
+      const newContent = await createContent(payload as any)
+      onComplete(newContent)
     } catch (error) {
       console.error("Unexpected error in handleSubmit:", error)
-      alert("An unexpected error occurred. Please try again.")
+      const message = error instanceof Error ? error.message : "An unexpected error occurred. Please try again."
+      alert(message)
     } finally {
       setIsSubmitting(false)
     }

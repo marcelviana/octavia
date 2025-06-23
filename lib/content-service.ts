@@ -400,29 +400,59 @@ export async function getContentById(id: string, supabase?: SupabaseClient, prov
 
 export async function createContent(content: ContentInsert) {
   try {
-
     const supabase = getSupabaseBrowserClient()
 
-    // Check if user is authenticated
+    // Try to authenticate via Supabase or Firebase
     const user = await getAuthenticatedUser(supabase)
-    if (!user) {
-      throw new Error("User not authenticated")
+
+    if (user) {
+      const contentWithUser = {
+        ...content,
+        user_id: user.id,
+      }
+
+      const { data, error } = await supabase
+        .from("content")
+        .insert(contentWithUser)
+        .select()
+        .single()
+
+      if (error) {
+        logger.error("Error creating content:", error)
+        throw error
+      }
+
+      return data
     }
 
-    // Ensure user_id is set
-    const contentWithUser = {
-      ...content,
-      user_id: user.id,
+    // Fallback to API route using Firebase ID token
+    if (typeof window !== "undefined") {
+      try {
+        const { auth } = await import("@/lib/firebase")
+        if (auth?.currentUser) {
+          const token = await auth.currentUser.getIdToken()
+          const response = await fetch("/api/content", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(content),
+          })
+
+          if (!response.ok) {
+            const err = await response.json().catch(() => ({}))
+            throw new Error(err.error || "Failed to create content")
+          }
+
+          return await response.json()
+        }
+      } catch (apiError) {
+        logger.error("API content creation failed:", apiError)
+      }
     }
 
-    const { data, error } = await supabase.from("content").insert(contentWithUser).select().single()
-
-    if (error) {
-      logger.error("Error creating content:", error)
-      throw error
-    }
-
-    return data
+    throw new Error("User not authenticated")
   } catch (error) {
     logger.error("Error in createContent:", error)
     throw error
