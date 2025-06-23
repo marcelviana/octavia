@@ -1,21 +1,13 @@
 import Image from "next/image"
 import { redirect } from "next/navigation"
-import { getSupabaseServerClient } from "@/lib/supabase-server"
-import { isSupabaseConfigured } from "@/lib/supabase"
+import { getServerSideUser } from "@/lib/firebase-server-utils"
 import { SignupPanel } from "@/components/auth/signup-panel"
 import { Music } from "lucide-react"
 
 export default async function SignupPage() {
-  let session = null
-  if (isSupabaseConfigured) {
-    const supabase = await getSupabaseServerClient()
-    const {
-      data: { session: supabaseSession },
-    } = await supabase.auth.getSession()
-    session = supabaseSession
-  }
+  const user = await getServerSideUser()
 
-  if (session) {
+  if (user) {
     redirect("/dashboard")
   }
 

@@ -1,21 +1,13 @@
 import { redirect } from "next/navigation"
-import { getSupabaseServerClient } from "@/lib/supabase-server"
-import { isSupabaseConfigured } from "@/lib/supabase"
+import { getServerSideUser } from "@/lib/firebase-server-utils"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import Link from "next/link"
 import { Music, FileText, Guitar, Users } from "lucide-react"
 
 export default async function LandingPage() {
-  let session = null
-  if (isSupabaseConfigured) {
-    const supabase = await getSupabaseServerClient()
-    const {
-      data: { session: supabaseSession },
-    } = await supabase.auth.getSession()
-    session = supabaseSession
-  }
-  if (session) {
+  const user = await getServerSideUser()
+  if (user) {
     redirect("/dashboard")
   }
 
