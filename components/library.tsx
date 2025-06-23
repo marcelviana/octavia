@@ -253,7 +253,9 @@ export function Library({
         clearTimeout(fetchTimeoutId)
       }
     }
-  }, [debouncedSearch, sortBy, selectedFilters, page, pageSize, refreshTrigger, content.length, initialPage, initialPageSize, initialSearch, user, authLoading])
+  // We intentionally exclude `content.length` to avoid unnecessary refetches when content changes locally
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedSearch, sortBy, selectedFilters, page, pageSize, refreshTrigger, initialPage, initialPageSize, initialSearch, user, authLoading])
 
   // Add focus listener to refresh data when returning to the library with improved throttling
   useEffect(() => {
