@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useMemo } from "react"
 import { toast } from "sonner"
-import { getCachedFileUrl } from "@/lib/offline-cache"
+import { getCachedFileUrl, cacheFilesForContent } from "@/lib/offline-cache"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -92,6 +92,12 @@ export function PerformanceMode({
     return () => {
       toRevoke.forEach(url => URL.revokeObjectURL(url))
     }
+  }, [songs])
+
+  useEffect(() => {
+    cacheFilesForContent(songs).catch(err => {
+      console.error('Failed to cache files for performance', err)
+    })
   }, [songs])
 
   const toggleFullScreen = () => {
