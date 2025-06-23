@@ -50,7 +50,6 @@ Octavia is a comprehensive digital music management application designed for mus
 
 ### 📱 **Content Import Options**
 - **File Upload**: Drag-and-drop or browse for local files
-- **Camera Scanning**: Capture physical sheet music with device camera
 - **URL Import**: Import from online music libraries (IMSLP, MuseScore, Ultimate Guitar)
 - **Batch Processing**: Upload multiple files simultaneously
 - **Auto-Detection**: Automatically categorize content by file type
@@ -104,35 +103,10 @@ Octavia is a comprehensive digital music management application designed for mus
 
 ### Installation Options
 
-#### Option 1: Use the Built-in Installation (Recommended)
+#### Use the Built-in Installation (Recommended)
 1. Visit the [live demo](https://vercel.com/marcelvianas-projects/v0-music-sheet-pro)
 2. Click "Download Code" in the top right corner
 3. Follow the shadcn CLI setup instructions
-
-#### Option 2: Manual Setup
-\`\`\`bash
-# Clone the repository
-git clone https://github.com/your-username/octavia.git
-
-# Navigate to project directory
-cd octavia
-
-# Install pnpm if it's not already installed
-npm install -g pnpm
-
-# Install dependencies
-pnpm install
-
-# Copy environment variables and fill in your Supabase credentials
-cp .env.example .env
-
-# Update `ALLOWED_PROXY_HOSTS` if you plan to import files from
-# external URLs. This variable accepts a comma-separated list of
-# hostnames that the `/api/proxy` endpoint will allow.
-
-# Run development server
-pnpm run dev
-\`\`\`
 
 The `ALLOWED_PROXY_HOSTS` variable controls which domains the
 offline cache proxy will fetch from. Add any additional hosts
@@ -206,7 +180,6 @@ the absolute URL for `/api/auth/verify`.
 ## 🔮 Roadmap
 
 ### **Planned Features**
-- [ ] **OCR Functionality**: Automatic text recognition from scanned sheets
 - [ ] **Batch Import**: Process multiple files simultaneously
 - [ ] **Audio Integration**: Sync backing tracks with sheet music
 - [ ] **Template System**: Pre-built templates for common song structures
