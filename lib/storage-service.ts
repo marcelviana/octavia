@@ -1,4 +1,5 @@
 import { getSupabaseBrowserClient, isSupabaseConfigured } from "@/lib/supabase"
+import { auth } from "@/lib/firebase"
 
 const BUCKET = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET || "content-files"
 
@@ -9,23 +10,15 @@ export async function testStoragePermissions(): Promise<{ canUpload: boolean; er
 
   try {
     const supabase = getSupabaseBrowserClient();
-    
-    // First check if user is authenticated
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
-    if (authError) {
-      return { 
-        canUpload: false, 
-        error: `Authentication error: ${authError.message}` 
-      };
-    }
-    
+
+    const user = auth?.currentUser;
     if (!user) {
-      return { 
-        canUpload: false, 
-        error: 'User not authenticated. Please log in to upload files.' 
+      return {
+        canUpload: false,
+        error: 'User not authenticated. Please log in to upload files.'
       };
     }
-    
+
     console.log('User authenticated:', user.email);
     
     // Try to upload a small test file
@@ -83,17 +76,12 @@ export async function uploadFileToStorage(file: File | Blob, filename: string) {
 
   try {
     const supabase = getSupabaseBrowserClient()
-    
-    // Check authentication before upload
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
-    if (authError) {
-      throw new Error(`Authentication error: ${authError.message}`);
-    }
-    
+
+    const user = auth?.currentUser;
     if (!user) {
       throw new Error('User not authenticated. Please log in to upload files.');
     }
-    
+
     console.log(`User authenticated (${user.email}), uploading to bucket: ${BUCKET}`);
     
     const { data, error } = await supabase.storage.from(BUCKET).upload(filename, file, { upsert: true })

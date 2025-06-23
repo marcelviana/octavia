@@ -117,21 +117,18 @@ export async function getSetlistByIdServer(id: string) {
     return getSetlistById(id);
   }
 
-  const supabase = await getSupabaseServerClient();
-  const {
-    data: { user },
-    error: authError,
-  } = await supabase.auth.getUser();
-
-  if (authError || !user) {
+  const firebaseUser = await getServerSideUser();
+  if (!firebaseUser) {
     throw new Error("User not authenticated");
   }
+
+  const supabase = await getSupabaseServerClient();
 
   const { data: setlist, error: setlistError } = await supabase
     .from("setlists")
     .select("*")
     .eq("id", id)
-    .eq("user_id", user.id)
+    .eq("user_id", firebaseUser.uid)
     .single();
 
   if (setlistError) {
