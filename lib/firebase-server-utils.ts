@@ -47,9 +47,13 @@ export async function validateFirebaseTokenServer(idToken: string): Promise<Serv
       }
     }
 
-    // For server-side usage, we need to construct the full URL
-    // This will work in both API routes and middleware
-    const baseUrl = process.env.NEXTAUTH_URL || process.env.VERCEL_URL || 'http://localhost:3000'
+    // For server-side usage, we need to construct the full URL. Vercel's
+    // `VERCEL_URL` does not include a protocol, so we normalize it to ensure we
+    // always fetch using an absolute URL.
+    let baseUrl = process.env.NEXTAUTH_URL || process.env.VERCEL_URL || 'http://localhost:3000'
+    if (!/^https?:\/\//.test(baseUrl)) {
+      baseUrl = `https://${baseUrl}`
+    }
     const apiUrl = `${baseUrl}/api/auth/verify`
 
     const response = await fetch(apiUrl, {
