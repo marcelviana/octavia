@@ -169,7 +169,7 @@ export function UserProfile() {
       </CardContent>
         <CardFooter className="flex justify-between">
           <p className="text-sm text-gray-500">Member since {user && user.metadata?.creationTime ? new Date(user.metadata.creationTime).toLocaleDateString() : 'Unknown'}</p>
-        <Button variant="outline" onClick={signOut}>
+        <Button variant="outline" onClick={() => signOut()}>
           Sign Out
         </Button>
       </CardFooter>

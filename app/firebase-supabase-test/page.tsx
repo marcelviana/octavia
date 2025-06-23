@@ -309,7 +309,7 @@ export default function FirebaseSupabaseTestPage() {
               <Button 
                 variant="outline" 
                 size="sm"
-                onClick={signOut} 
+                onClick={() => signOut()} 
                 disabled={isLoading || !user}
               >
                 <LogOut className="h-4 w-4 mr-1" />

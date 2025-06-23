@@ -1,5 +1,6 @@
-// This file should only be imported in server-side code (API routes, middleware)
-import { verifyFirebaseToken } from './firebase-admin'
+// Server-side Firebase utilities that work with the API-based architecture
+// This file is safe to use in Edge Runtime as it doesn't import Firebase Admin directly
+
 import logger from './logger'
 
 export interface ServerAuthResult {
@@ -12,6 +13,10 @@ export interface ServerAuthResult {
   error?: string
 }
 
+/**
+ * Validate Firebase token via API route (safe for Edge Runtime)
+ * This replaces the direct Firebase Admin usage
+ */
 export async function validateFirebaseTokenServer(idToken: string): Promise<ServerAuthResult> {
   try {
     if (!idToken) {
@@ -42,27 +47,42 @@ export async function validateFirebaseTokenServer(idToken: string): Promise<Serv
       }
     }
 
-    // Check if Firebase is properly configured
-    const projectId = process.env.FIREBASE_PROJECT_ID;
-    const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
-    const privateKey = process.env.FIREBASE_PRIVATE_KEY;
+    // For server-side usage, we need to construct the full URL
+    // This will work in both API routes and middleware
+    const baseUrl = process.env.NEXTAUTH_URL || process.env.VERCEL_URL || 'http://localhost:3000'
+    const apiUrl = `${baseUrl}/api/auth/verify`
 
-    if (!projectId || !clientEmail || !privateKey) {
-      logger.error('Firebase Admin not configured - missing required environment variables')
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ token: idToken }),
+    })
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
       return {
         isValid: false,
-        error: 'Authentication service not properly configured'
+        error: errorData.error || `HTTP ${response.status}: ${response.statusText}`
       }
     }
 
-    const decodedToken = await verifyFirebaseToken(idToken)
+    const result = await response.json()
     
-    return {
-      isValid: true,
-      user: {
-        uid: decodedToken.uid,
-        email: decodedToken.email,
-        emailVerified: decodedToken.email_verified
+    if (result.success && result.user) {
+      return {
+        isValid: true,
+        user: {
+          uid: result.user.uid,
+          email: result.user.email,
+          emailVerified: result.user.emailVerified
+        }
+      }
+    } else {
+      return {
+        isValid: false,
+        error: result.error || 'Token validation failed'
       }
     }
   } catch (error: any) {
@@ -74,6 +94,12 @@ export async function validateFirebaseTokenServer(idToken: string): Promise<Serv
     }
   }
 }
+
+/**
+ * Legacy function for backward compatibility
+ * @deprecated Use validateFirebaseTokenServer instead
+ */
+export const validateFirebaseTokenServerLegacy = validateFirebaseTokenServer
 
 export async function requireAuthServer(request: Request): Promise<{
   uid: string

@@ -292,7 +292,12 @@ export function AddContent({
 
       if (!createdContent?.id) {
         // If no ID, we need to create the content
+        if (!user?.uid) {
+          throw new Error("User not authenticated");
+        }
+
         const formattedContent = {
+          user_id: user.uid,
           title: createdContent?.title || uploadedFile?.name || "Untitled",
           content_type:
             contentType === ContentType.SHEET_MUSIC

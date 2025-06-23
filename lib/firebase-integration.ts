@@ -94,6 +94,7 @@ export async function testFirebaseAdmin(): Promise<FirebaseTestResult> {
         details: {
           message: 'Firebase Admin SDK is properly configured',
           configured: result.configured,
+          initialization: result.initialization,
           projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID
         }
       };
@@ -185,41 +186,41 @@ export async function testFirestore(): Promise<FirebaseTestResult> {
       };
     }
 
-    const testDocId = `test-${Date.now()}`;
-    const testData = {
-      message: 'Firebase integration test',
+    // Test document write
+    const testDocRef = doc(db, 'health-check', 'test-doc');
+    await setDoc(testDocRef, {
       timestamp: new Date().toISOString(),
-      success: true
-    };
+      test: true
+    });
 
-    // Write test document
-    const testDocRef = doc(db, 'integration-tests', testDocId);
-    await setDoc(testDocRef, testData);
-
-    // Read test document
+    // Test document read
     const docSnap = await getDoc(testDocRef);
-    
     if (!docSnap.exists()) {
-      return {
-        success: false,
-        error: 'Test document was not created'
-      };
+      throw new Error('Failed to read test document');
     }
 
-    const retrievedData = docSnap.data();
-    
+    // Test collection query
+    const testCollection = collection(db, 'health-check');
+    const testQuery = query(testCollection, where('test', '==', true), limit(1));
+    const querySnapshot = await getDocs(testQuery);
+
+    if (querySnapshot.empty) {
+      throw new Error('Failed to query test collection');
+    }
+
     return {
       success: true,
       details: {
-        documentId: testDocId,
-        dataMatch: retrievedData.message === testData.message,
-        retrievedData
+        writeTest: 'passed',
+        readTest: 'passed',
+        queryTest: 'passed',
+        documentId: docSnap.id
       }
     };
   } catch (error: any) {
     return {
       success: false,
-      error: error.message || 'Firestore test failed'
+      error: error.message || 'Unknown error during Firestore test'
     };
   }
 }
@@ -248,6 +249,78 @@ export async function signOutUser(): Promise<FirebaseTestResult> {
     return {
       success: false,
       error: error.message || 'Failed to sign out user'
+    };
+  }
+}
+
+/**
+ * Test Firebase authentication (client-side)
+ */
+export async function testFirebaseAuth(email: string, password: string): Promise<FirebaseTestResult> {
+  try {
+    if (!auth) {
+      return {
+        success: false,
+        error: 'Firebase Auth not initialized'
+      };
+    }
+
+    // Test user creation
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    if (!user) {
+      throw new Error('User creation failed - no user returned');
+    }
+
+    // Test getting ID token
+    const idToken = await user.getIdToken();
+    
+    if (!idToken) {
+      throw new Error('Failed to get ID token');
+    }
+
+    // Test token verification via API
+    const verifyResponse = await fetch('/api/auth/verify', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ token: idToken }),
+    });
+
+    const verifyResult = await verifyResponse.json();
+    
+    if (!verifyResult.success) {
+      throw new Error(`Token verification failed: ${verifyResult.error}`);
+    }
+
+    // Clean up - sign out and delete user
+    await firebaseSignOut(auth);
+
+    return {
+      success: true,
+      details: {
+        userCreated: true,
+        tokenGenerated: true,
+        tokenVerified: true,
+        userId: user.uid,
+        userEmail: user.email
+      }
+    };
+  } catch (error: any) {
+    // Try to clean up on error
+    try {
+      if (auth?.currentUser) {
+        await firebaseSignOut(auth);
+      }
+    } catch (cleanupError) {
+      logger.warn('Failed to clean up after auth test error:', cleanupError);
+    }
+
+    return {
+      success: false,
+      error: error.message || 'Unknown error during Firebase auth test'
     };
   }
 }

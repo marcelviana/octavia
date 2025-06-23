@@ -135,7 +135,7 @@ export async function getUserSetlists(providedUser?: any) {
     let user = providedUser
     if (!user) {
       console.log("🔍 getUserSetlists: Checking authentication...")
-      user = await getAuthenticatedUser(supabase)
+      user = getAuthenticatedUser()
     } else {
       console.log("🔍 getUserSetlists: Using provided user:", user.email)
     }

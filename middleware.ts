@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
-import { validateFirebaseTokenServer } from "@/lib/firebase-server-utils"
 
 export async function middleware(request: NextRequest) {
   const response = NextResponse.next({
@@ -23,13 +22,35 @@ export async function middleware(request: NextRequest) {
 
   // Check for Authorization header (for API requests)
   const authHeader = request.headers.get('authorization')
+  let token: string | null = null
+  
   if (authHeader && authHeader.startsWith('Bearer ')) {
-    const token = authHeader.substring(7)
-    const validation = await validateFirebaseTokenServer(token)
-    isAuthenticated = validation.isValid
+    token = authHeader.substring(7)
   } else if (firebaseSessionCookie) {
-    const validation = await validateFirebaseTokenServer(firebaseSessionCookie)
-    isAuthenticated = validation.isValid
+    token = firebaseSessionCookie
+  }
+
+  // Validate token via API route if we have one
+  if (token) {
+    try {
+      // Call our API route to verify the token
+      const verifyResponse = await fetch(new URL('/api/auth/verify', request.url), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token }),
+      });
+
+      if (verifyResponse.ok) {
+        const result = await verifyResponse.json();
+        isAuthenticated = result.success;
+      }
+    } catch (error) {
+      console.error('Token verification failed in middleware:', error);
+      // If verification fails, treat as unauthenticated
+      isAuthenticated = false;
+    }
   }
 
   // If user is authenticated and trying to access auth routes, redirect to dashboard
