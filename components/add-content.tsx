@@ -29,7 +29,7 @@ import { ContentCreator } from "@/components/content-creator";
 import { MetadataForm } from "@/components/metadata-form";
 import { BatchPreview } from "@/components/batch-preview";
 import { createContent } from "@/lib/content-service";
-import { getSupabaseBrowserClient } from "@/lib/supabase";
+import { useAuth } from "@/contexts/firebase-auth-context";
 import {
   parseDocxFile,
   parsePdfFile,
@@ -90,6 +90,7 @@ export function AddContent({
   const [parsedSongs, setParsedSongs] = useState<(ParsedSong & { artist: string; include: boolean })[]>([]);
   const [importMode, setImportMode] = useState<"single" | "batch">("single");
   const [contentType, setContentType] = useState(ContentType.LYRICS);
+  const { user } = useAuth();
   const [batchArtist, setBatchArtist] = useState("");
   const [batchImported, setBatchImported] = useState(false);
   const isAutoDetectingContentType = useRef(false);
@@ -282,23 +283,16 @@ export function AddContent({
   const handleFinish = async () => {
     try {
       setIsProcessing(true);
+      if (!user) {
+        throw new Error("User not authenticated");
+      }
       const contentToSave = createdContent || {
         files: uploadedFile ? [uploadedFile] : [],
       };
 
       if (!createdContent?.id) {
         // If no ID, we need to create the content
-        const supabase = getSupabaseBrowserClient();
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
-
-        if (!user) {
-          throw new Error("User not authenticated");
-        }
-
         const formattedContent = {
-          user_id: user.id,
           title: createdContent?.title || uploadedFile?.name || "Untitled",
           content_type:
             contentType === ContentType.SHEET_MUSIC
@@ -321,7 +315,8 @@ export function AddContent({
       }
     } catch (error) {
       console.error("Error in finish:", error);
-      alert("Error completing content addition. Please try again.");
+      const message = error instanceof Error ? error.message : "Error completing content addition. Please try again.";
+      alert(message);
     } finally {
       setIsProcessing(false);
     }
