@@ -79,7 +79,7 @@ export function LoginPanel({ initialError = "" }: { initialError?: string }) {
       }
       handleRedirect()
     }
-  }, [user, profile, isInitialized, hasRedirected, isConfigured])
+  }, [user, profile, isInitialized, hasRedirected, isConfigured, signOut])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

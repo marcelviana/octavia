@@ -11,6 +11,12 @@ it('throws when Supabase is configured but user is missing', async () => {
     isSupabaseConfigured: true,
     getSupabaseBrowserClient: () => mockClient,
   }))
+  
+  // Mock Firebase auth to return no user
+  vi.doMock('../firebase', () => ({
+    auth: { currentUser: null }
+  }))
+  
   const { createSetlist } = await import('../setlist-service')
   await expect(createSetlist({ name: 'Demo' })).rejects.toThrow('User not authenticated')
   vi.resetModules()
@@ -52,6 +58,12 @@ it('uses bulk updates when adding a song', async () => {
     isSupabaseConfigured: true,
     getSupabaseBrowserClient: () => mockClient
   }))
+  
+  // Mock Firebase auth to return authenticated user
+  vi.doMock('../firebase', () => ({
+    auth: { currentUser: { uid: 'u1', email: 'test@example.com' } }
+  }))
+  
   const { addSongToSetlist } = await import('../setlist-service')
   await addSongToSetlist('l1', 'c1', 1)
   expect(upsert).toHaveBeenCalledTimes(2)
@@ -91,6 +103,12 @@ it('uses bulk updates when removing a song', async () => {
     isSupabaseConfigured: true,
     getSupabaseBrowserClient: () => mockClient
   }))
+  
+  // Mock Firebase auth to return authenticated user
+  vi.doMock('../firebase', () => ({
+    auth: { currentUser: { uid: 'u1', email: 'test@example.com' } }
+  }))
+  
   const { removeSongFromSetlist } = await import('../setlist-service')
   await removeSongFromSetlist('a')
   expect(update).toHaveBeenCalled()
@@ -133,6 +151,12 @@ it('uses bulk updates when moving a song', async () => {
     isSupabaseConfigured: true,
     getSupabaseBrowserClient: () => mockClient
   }))
+  
+  // Mock Firebase auth to return authenticated user
+  vi.doMock('../firebase', () => ({
+    auth: { currentUser: { uid: 'u1', email: 'test@example.com' } }
+  }))
+  
   const { updateSongPosition } = await import('../setlist-service')
   await updateSongPosition('l1', 'a', 3)
   // Expect individual updates for the two-phase approach

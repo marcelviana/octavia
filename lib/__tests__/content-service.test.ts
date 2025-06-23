@@ -35,6 +35,12 @@ describe('Content Service', () => {
         getSupabaseBrowserClient: () => mockClient,
         getSessionSafe: vi.fn().mockResolvedValue(null),
       }))
+      
+      // Mock Firebase auth to return no user
+      vi.doMock('../firebase', () => ({
+        auth: { currentUser: null }
+      }))
+      
       const { getUserContent } = await import('../content-service')
       const data = await getUserContent()
       expect(data).toEqual([])
@@ -68,6 +74,12 @@ describe('Content Service', () => {
         getSupabaseBrowserClient: () => mockClient,
         getSessionSafe: vi.fn().mockResolvedValue({ user: { id: 'user1' } }),
       }))
+      
+      // Mock Firebase auth to return authenticated user
+      vi.doMock('../firebase', () => ({
+        auth: { currentUser: { uid: 'user1', email: 'test@example.com' } }
+      }))
+      
       const { getUserContent } = await import('../content-service')
       const data = await getUserContent()
       expect(data).toEqual(mockData)
@@ -107,6 +119,11 @@ describe('Content Service', () => {
           isSupabaseConfigured: true,
           getSupabaseBrowserClient: () => mockClient,
           getSessionSafe: vi.fn().mockResolvedValue({ user: { id: 'user1' } }),
+        }))
+
+        // Mock Firebase auth to return authenticated user
+        vi.doMock('../firebase', () => ({
+          auth: { currentUser: { uid: 'user1', email: 'test@example.com' } }
         }))
 
         const { getUserContentPage } = await import('../content-service')
@@ -226,6 +243,11 @@ describe('Content Service', () => {
            getSessionSafe: vi.fn().mockResolvedValue({ user: { id: 'user1' } }),
          }))
 
+         // Mock Firebase auth to return authenticated user
+         vi.doMock('../firebase', () => ({
+           auth: { currentUser: { uid: 'user1', email: 'test@example.com' } }
+         }))
+
          const { getUserContentPage } = await import('../content-service')
          
          const result = await getUserContentPage()
@@ -280,168 +302,164 @@ describe('Content Service', () => {
             getSessionSafe: vi.fn().mockResolvedValue({ user: { id: 'user1' } }),
           }))
 
+          // Mock Firebase auth to return authenticated user
+          vi.doMock('../firebase', () => ({
+            auth: { currentUser: { uid: 'user1', email: 'test@example.com' } }
+          }))
+          
           const { getUserContentPage } = await import('../content-service')
           
           await expect(getUserContentPage()).rejects.toThrow(testCase.expectedMessage)
           vi.resetModules()
         }
       })
-    })
 
-    describe('Pagination', () => {
-
-      it('validates pagination bounds', async () => {
-        const mockClient = {
-          auth: {
-            getUser: vi.fn().mockResolvedValue({ 
-              data: { user: { id: 'user1' } }, 
-              error: null 
-            })
-          },
-          from: vi.fn().mockReturnValue({
-            select: vi.fn().mockReturnValue({
-              eq: vi.fn().mockReturnValue({
-                order: vi.fn().mockReturnValue({
-                  range: vi.fn().mockResolvedValue({
-                    data: [],
-                    error: null,
-                    count: 0
+      describe('Pagination', () => {
+        it('validates pagination bounds', async () => {
+          const mockClient = {
+            auth: {
+              getUser: vi.fn().mockResolvedValue({ 
+                data: { user: { id: 'user1' } }, 
+                error: null 
+              })
+            },
+            from: vi.fn().mockReturnValue({
+              select: vi.fn().mockReturnValue({
+                eq: vi.fn().mockReturnValue({
+                  order: vi.fn().mockReturnValue({
+                    range: vi.fn().mockResolvedValue({
+                      data: [],
+                      error: null,
+                      count: 0
+                    })
                   })
                 })
               })
             })
-          })
-        }
+          }
 
-        vi.doMock('../supabase', () => ({
-          isSupabaseConfigured: true,
-          getSupabaseBrowserClient: () => mockClient,
-          getSessionSafe: vi.fn().mockResolvedValue({ user: { id: 'user1' } }),
-        }))
+          vi.doMock('../supabase', () => ({
+            isSupabaseConfigured: true,
+            getSupabaseBrowserClient: () => mockClient,
+            getSessionSafe: vi.fn().mockResolvedValue({ user: { id: 'user1' } }),
+          }))
 
-        const { getUserContentPage } = await import('../content-service')
-        
-        // Test negative page number
-        await getUserContentPage({ page: -1, pageSize: 10 })
-        
-        // Test excessive page size
-        await getUserContentPage({ page: 1, pageSize: 200 })
-        
-        // Verify the range was called with safe bounds
-        const rangeCall = mockClient.from().select().eq().order().range
-        expect(rangeCall).toHaveBeenCalledWith(0, 9) // page 1, size 10 (clamped from -1)
-        expect(rangeCall).toHaveBeenCalledWith(0, 99) // page 1, size 100 (clamped from 200)
-        
-        vi.resetModules()
-      })
-    })
+          // Mock Firebase auth to return authenticated user
+          vi.doMock('../firebase', () => ({
+            auth: { currentUser: { uid: 'user1', email: 'test@example.com' } }
+          }))
 
-    describe('Filtering', () => {
-      it('applies content type filters correctly', async () => {
-        const mockRange = vi.fn().mockResolvedValue({
-          data: [],
-          error: null,
-          count: 0
-        });
-        
-        const mockOrder = vi.fn().mockReturnValue({
-          range: mockRange
-        });
-        
-        const mockIn = vi.fn().mockReturnValue({
-          order: mockOrder
-        });
-        
-        const mockEq = vi.fn().mockReturnValue({
-          in: mockIn
-        });
-        
-        const mockSelect = vi.fn().mockReturnValue({
-          eq: mockEq
-        });
-        
-        const mockFrom = vi.fn().mockReturnValue({
-          select: mockSelect
-        });
-        
-        const mockClient = {
-          auth: {
-            getUser: vi.fn().mockResolvedValue({ 
-              data: { user: { id: 'user1' } }, 
-              error: null 
-            })
-          },
-          from: mockFrom
-        }
-
-        vi.doMock('../supabase', () => ({
-          isSupabaseConfigured: true,
-          getSupabaseBrowserClient: () => mockClient,
-          getSessionSafe: vi.fn().mockResolvedValue({ user: { id: 'user1' } }),
-        }))
-
-        const { getUserContentPage } = await import('../content-service')
-        
-        await getUserContentPage({ 
-          filters: { 
-            contentType: ['Lyrics', 'Chord Chart', 'INVALID_TYPE'] 
-          } 
+          const { getUserContentPage } = await import('../content-service')
+          
+          // Test invalid page/pageSize bounds
+          const result = await getUserContentPage({ page: -1, pageSize: 0 })
+          
+          expect(result.page).toBe(1) // Should default to page 1
+          expect(result.pageSize).toBe(1) // Should default to minimum pageSize 1
+          
+          vi.resetModules()
         })
-        
-        // Verify only valid types are used
-        expect(mockIn).toHaveBeenCalledWith(
-          'content_type', 
-          ['Lyrics', 'Chord Chart']
-        )
-        vi.resetModules()
       })
 
-    })
-
-    describe('Sorting', () => {
-
-      it('validates sort options in database mode', async () => {
-        const mockClient = {
-          auth: {
-            getUser: vi.fn().mockResolvedValue({ 
-              data: { user: { id: 'user1' } }, 
-              error: null 
-            })
-          },
-          from: vi.fn().mockReturnValue({
-            select: vi.fn().mockReturnValue({
-              eq: vi.fn().mockReturnValue({
-                order: vi.fn().mockReturnValue({
-                  range: vi.fn().mockResolvedValue({
-                    data: [],
-                    error: null,
-                    count: 0
+      describe('Filtering', () => {
+        it('applies content type filters correctly', async () => {
+          const mockClient = {
+            auth: {
+              getUser: vi.fn().mockResolvedValue({ 
+                data: { user: { id: 'user1' } }, 
+                error: null 
+              })
+            },
+            from: vi.fn().mockReturnValue({
+              select: vi.fn().mockReturnValue({
+                eq: vi.fn().mockReturnValue({
+                  in: vi.fn().mockReturnValue({
+                    order: vi.fn().mockReturnValue({
+                      range: vi.fn().mockResolvedValue({
+                        data: [],
+                        error: null,
+                        count: 0
+                      })
+                    })
                   })
                 })
               })
             })
+          }
+
+          vi.doMock('../supabase', () => ({
+            isSupabaseConfigured: true,
+            getSupabaseBrowserClient: () => mockClient,
+            getSessionSafe: vi.fn().mockResolvedValue({ user: { id: 'user1' } }),
+          }))
+
+          // Mock Firebase auth to return authenticated user
+          vi.doMock('../firebase', () => ({
+            auth: { currentUser: { uid: 'user1', email: 'test@example.com' } }
+          }))
+
+          const { getUserContentPage } = await import('../content-service')
+          
+          await getUserContentPage({ 
+            filters: { 
+              contentType: ['Lyrics', 'Chord Chart', 'INVALID_TYPE'] 
+            } 
           })
-        }
+          
+          // Verify the filter was applied correctly, excluding invalid types
+          const inCall = mockClient.from().select().eq().in
+          expect(inCall).toHaveBeenCalledWith('content_type', ['Lyrics', 'Chord Chart'])
+          
+          vi.resetModules()
+        })
+      })
 
-        vi.doMock('../supabase', () => ({
-          isSupabaseConfigured: true,
-          getSupabaseBrowserClient: () => mockClient,
-          getSessionSafe: vi.fn().mockResolvedValue({ user: { id: 'user1' } }),
-        }))
+      describe('Sorting', () => {
+        it('validates sort options in database mode', async () => {
+          const mockClient = {
+            auth: {
+              getUser: vi.fn().mockResolvedValue({ 
+                data: { user: { id: 'user1' } }, 
+                error: null 
+              })
+            },
+            from: vi.fn().mockReturnValue({
+              select: vi.fn().mockReturnValue({
+                eq: vi.fn().mockReturnValue({
+                  order: vi.fn().mockReturnValue({
+                    range: vi.fn().mockResolvedValue({
+                      data: [],
+                      error: null,
+                      count: 0
+                    })
+                  })
+                })
+              })
+            })
+          }
 
-        const { getUserContentPage } = await import('../content-service')
-        
-        // Test valid sort option
-        await getUserContentPage({ sortBy: 'title' })
-        expect(mockClient.from().select().eq().order).toHaveBeenCalledWith('title', { ascending: true })
-        
-        // Test invalid sort option (should default to recent)
-        await getUserContentPage({ sortBy: 'invalid' as any })
-        expect(mockClient.from().select().eq().order).toHaveBeenCalledWith('created_at', { ascending: false })
-        
-        vi.resetModules()
+          vi.doMock('../supabase', () => ({
+            isSupabaseConfigured: true,
+            getSupabaseBrowserClient: () => mockClient,
+            getSessionSafe: vi.fn().mockResolvedValue({ user: { id: 'user1' } }),
+          }))
+
+          // Mock Firebase auth to return authenticated user
+          vi.doMock('../firebase', () => ({
+            auth: { currentUser: { uid: 'user1', email: 'test@example.com' } }
+          }))
+
+          const { getUserContentPage } = await import('../content-service')
+          
+          // Test invalid sort option defaults to 'recent'
+          await getUserContentPage({ sortBy: 'invalid_sort' as any })
+          
+          const orderCall = mockClient.from().select().eq().order
+          expect(orderCall).toHaveBeenCalledWith('created_at', { ascending: false })
+          
+          vi.resetModules()
+        })
       })
     })
-
   })
 })

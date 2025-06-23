@@ -50,6 +50,11 @@ describe('Search Array Field Fix', () => {
         getSupabaseBrowserClient: () => mockClient,
       }))
 
+      // Mock Firebase auth to return authenticated user
+      vi.doMock('../firebase', () => ({
+        auth: { currentUser: { uid: 'user1', email: 'test@example.com' } }
+      }))
+
       const { getUserContentPage } = await import('../content-service')
       
       await getUserContentPage({ search: 'test search' })
@@ -97,6 +102,11 @@ describe('Search Array Field Fix', () => {
         getSupabaseBrowserClient: () => mockClient,
       }))
 
+      // Mock Firebase auth to return authenticated user
+      vi.doMock('../firebase', () => ({
+        auth: { currentUser: { uid: 'user1', email: 'test@example.com' } }
+      }))
+
       const { getUserContentPage } = await import('../content-service')
       
       await expect(getUserContentPage({ search: 'test' })).rejects.toThrow(
@@ -134,6 +144,11 @@ describe('Search Array Field Fix', () => {
       vi.doMock('../supabase', () => ({
         isSupabaseConfigured: true,
         getSupabaseBrowserClient: () => mockClient,
+      }))
+
+      // Mock Firebase auth to return authenticated user
+      vi.doMock('../firebase', () => ({
+        auth: { currentUser: { uid: 'user1', email: 'test@example.com' } }
       }))
 
       const { getUserContentPage } = await import('../content-service')
@@ -193,6 +208,11 @@ describe('Search Array Field Fix', () => {
         getSupabaseBrowserClient: () => mockClient,
       }))
 
+      // Mock Firebase auth to return authenticated user
+      vi.doMock('../firebase', () => ({
+        auth: { currentUser: { uid: 'user1', email: 'test@example.com' } }
+      }))
+
       const { getUserContentPage } = await import('../content-service')
       
       const result = await getUserContentPage({ search: 'test' })
@@ -200,7 +220,7 @@ describe('Search Array Field Fix', () => {
       expect(result.data).toEqual(mockData)
       expect(result.total).toBe(1)
       
-      // Verify search query was constructed correctly
+      // Verify the search query excluded array fields
       const orCall = mockClient.from().select().eq().or
       expect(orCall).toHaveBeenCalledWith(
         'title.ilike.%test%,artist.ilike.%test%,album.ilike.%test%'
@@ -209,5 +229,4 @@ describe('Search Array Field Fix', () => {
       vi.resetModules()
     })
   })
-
 }) 
