@@ -21,8 +21,9 @@ export async function validateFirebaseTokenServer(idToken: string): Promise<Serv
       }
     }
 
-    // Handle demo mode
-    if (idToken === 'demo-token') {
+    // Handle demo mode (only in development)
+    if (idToken === 'demo-token' && process.env.NODE_ENV === 'development') {
+      logger.warn('Using demo token in development mode')
       return {
         isValid: true,
         user: {
@@ -32,6 +33,14 @@ export async function validateFirebaseTokenServer(idToken: string): Promise<Serv
         }
       }
     }
+    
+    // Reject demo token in production
+    if (idToken === 'demo-token') {
+      return {
+        isValid: false,
+        error: 'Demo authentication not allowed in production'
+      }
+    }
 
     // Check if Firebase is properly configured
     const projectId = process.env.FIREBASE_PROJECT_ID;
@@ -39,14 +48,10 @@ export async function validateFirebaseTokenServer(idToken: string): Promise<Serv
     const privateKey = process.env.FIREBASE_PRIVATE_KEY;
 
     if (!projectId || !clientEmail || !privateKey) {
-      logger.warn('Firebase Admin not configured, falling back to demo mode')
+      logger.error('Firebase Admin not configured - missing required environment variables')
       return {
-        isValid: true,
-        user: {
-          uid: 'demo-user',
-          email: 'demo@musicsheet.pro',
-          emailVerified: true
-        }
+        isValid: false,
+        error: 'Authentication service not properly configured'
       }
     }
 
@@ -61,22 +66,7 @@ export async function validateFirebaseTokenServer(idToken: string): Promise<Serv
       }
     }
   } catch (error: any) {
-    logger.warn('Firebase token validation failed:', error.message)
-    
-    // If it's a configuration error, fall back to demo mode
-    if (error.message.includes('Firebase Admin is not initialized') || 
-        error.message.includes('Invalid private key format') ||
-        error.message.includes('Failed to parse private key')) {
-      logger.warn('Firebase configuration issue, falling back to demo mode')
-      return {
-        isValid: true,
-        user: {
-          uid: 'demo-user',
-          email: 'demo@musicsheet.pro',
-          emailVerified: true
-        }
-      }
-    }
+    logger.error('Firebase token validation failed:', error.message)
     
     return {
       isValid: false,

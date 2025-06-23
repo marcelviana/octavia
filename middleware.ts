@@ -26,7 +26,7 @@ export async function middleware(request: NextRequest) {
   if (authHeader && authHeader.startsWith('Bearer ')) {
     const token = authHeader.substring(7)
     // Basic token presence check (actual validation happens in API routes)
-    isAuthenticated = token.length > 10 && token !== 'demo-token' ? true : token === 'demo-token'
+    isAuthenticated = token.length > 10
   }
   
   // Check for session cookie (for page requests)
