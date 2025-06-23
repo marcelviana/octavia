@@ -42,7 +42,7 @@ type AuthContextType = {
   signIn: (email: string, password: string) => Promise<{ error: any }>
   signUp: (email: string, password: string, userData: Partial<Profile>) => Promise<{ error: any; data: any }>
   signInWithGoogle: () => Promise<{ error: any }>
-  signOut: () => Promise<void>
+  signOut: (redirectToHome?: boolean) => Promise<void>
   updateProfile: (data: Partial<Profile>) => Promise<{ error: any }>
   refreshToken: () => Promise<string | null>
 }
@@ -333,9 +333,11 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
     [isFirebaseConfigured],
   )
 
-  const signOut = useCallback(async () => {
+  const signOut = useCallback(async (redirectToHome: boolean = true) => {
     if (!isFirebaseConfigured || !auth) {
-      window.location.href = "/"
+      if (redirectToHome) {
+        window.location.href = "/"
+      }
       return
     }
 
@@ -359,10 +361,16 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
       }
 
       logger.log("Firebase sign out successful")
-      window.location.href = "/"
+      if (redirectToHome) {
+        window.location.href = "/"
+      }
     } catch (error) {
       logger.warn("Firebase sign out error:", error)
-      window.location.href = "/"
+      if (redirectToHome) {
+        window.location.href = "/"
+      }
+    } finally {
+      setIsLoading(false)
     }
   }, [isFirebaseConfigured, user])
 

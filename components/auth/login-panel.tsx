@@ -20,7 +20,7 @@ export function LoginPanel({ initialError = "" }: { initialError?: string }) {
   const [isLoading, setIsLoading] = useState(false)
   const [hasRedirected, setHasRedirected] = useState(false)
   const router = useRouter()
-  const { signIn, signInWithGoogle, isConfigured, user, profile, isInitialized } = useAuth()
+  const { signIn, signInWithGoogle, signOut, isConfigured, user, profile, isInitialized } = useAuth()
 
   useEffect(() => {
     if (isInitialized && user && !hasRedirected) {
@@ -43,7 +43,20 @@ export function LoginPanel({ initialError = "" }: { initialError?: string }) {
           return false
         }
         
-        await waitForSessionCookie()
+        const cookieReady = await waitForSessionCookie()
+
+        if (!cookieReady) {
+          console.error("Session cookie not found after waiting, aborting redirect")
+          setError("Failed to establish session. Please sign in again.")
+          setHasRedirected(false)
+          try {
+            await signOut(false)
+          } catch (err) {
+            console.error("Error signing out after cookie failure", err)
+          }
+          setIsLoading(false)
+          return
+        }
         
         if (isConfigured && !profile) {
           try {

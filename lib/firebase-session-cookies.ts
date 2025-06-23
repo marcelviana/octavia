@@ -25,6 +25,7 @@ export async function setSessionCookie(user: User): Promise<void> {
     logger.log('Session cookie set successfully')
   } catch (error) {
     logger.warn('Failed to set session cookie:', error)
+    throw error
   }
 }
 
@@ -41,6 +42,7 @@ export async function clearSessionCookie(): Promise<void> {
     logger.log('Session cookie cleared successfully')
   } catch (error) {
     logger.warn('Failed to clear session cookie:', error)
+    throw error
   }
 }
 
