@@ -1,8 +1,9 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import type { Database } from "@/types/supabase";
 import { ContentViewer } from "@/components/content-viewer";
+import { cacheFileForContent } from "@/lib/offline-cache";
 import { Sidebar } from "@/components/sidebar";
 import { Header } from "@/components/header";
 import dynamic from "next/dynamic";
@@ -29,6 +30,13 @@ export default function ContentPageClient({
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [activeScreen, setActiveScreen] = useState("library");
   const [sidebarMobileOpen, setSidebarMobileOpen] = useState(false);
+
+  useEffect(() => {
+    if (!initialContent) return
+    cacheFileForContent(initialContent).catch(err => {
+      console.error('Failed to cache file for content', err)
+    })
+  }, [initialContent])
 
   const handleNavigate = (screen: string) => {
     router.push(`/${screen}`);

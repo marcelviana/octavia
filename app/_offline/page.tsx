@@ -57,7 +57,7 @@ export default function OfflinePage() {
           </CardHeader>
           <CardContent className="text-center space-y-4">
             <p className="text-amber-700">
-              No internet connection detected. Some features may be limited, but you can still access your cached content.
+              No internet connection detected. Some features may be limited, but recently opened files are cached for offline access.
             </p>
             
             <Button 
@@ -148,7 +148,7 @@ export default function OfflinePage() {
             <ul className="space-y-2 text-amber-700">
               <li className="flex items-center">
                 <div className="w-2 h-2 bg-amber-600 rounded-full mr-3"></div>
-                View cached sheet music and lyrics
+                View automatically cached sheet music and lyrics
               </li>
               <li className="flex items-center">
                 <div className="w-2 h-2 bg-amber-600 rounded-full mr-3"></div>
