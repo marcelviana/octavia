@@ -30,7 +30,7 @@ type AuthContextType = {
   signIn: (email: string, password: string) => Promise<{ error: any }>
   signUp: (email: string, password: string, userData: Partial<Profile>) => Promise<{ error: any; data: any }>
   signInWithGoogle: () => Promise<{ error: any }>
-  signOut: () => Promise<void>
+  signOut: (redirectToHome?: boolean) => Promise<void>
   updateProfile: (data: Partial<Profile>) => Promise<{ error: any }>
 }
 
@@ -393,9 +393,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     [isSupabaseConfigured],
   )
 
-  const signOut = useCallback(async () => {
+  const signOut = useCallback(async (redirectToHome: boolean = true) => {
     if (!isSupabaseConfigured) {
-      window.location.href = "/"
+      if (redirectToHome) {
+        window.location.href = "/"
+      }
       return
     }
 
@@ -417,10 +419,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
 
       console.log("Sign out successful")
-      window.location.href = "/"
+      if (redirectToHome) {
+        window.location.href = "/"
+      }
     } catch (error) {
       console.warn("Sign out error:", error)
-      window.location.href = "/"
+      if (redirectToHome) {
+        window.location.href = "/"
+      }
+    } finally {
+      setIsLoading(false)
     }
   }, [isSupabaseConfigured, user])
 
