@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
-import { createServerClient } from "@supabase/ssr"
-import type { Database } from "@/types/supabase"
-import type { CookieOptions } from "@supabase/ssr"
+import { validateFirebaseToken } from "@/lib/firebase-auth-middleware"
 
 export async function middleware(request: NextRequest) {
   const response = NextResponse.next({
@@ -11,45 +9,9 @@ export async function middleware(request: NextRequest) {
     },
   })
 
-  const supabase = createServerClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        get(name: string) {
-          return request.cookies.get(name)?.value
-        },
-        set(name: string, value: string, options: CookieOptions) {
-          request.cookies.set({
-            name,
-            value,
-            ...options,
-          })
-          response.cookies.set({
-            name,
-            value,
-            ...options,
-          })
-        },
-        remove(name: string, options: CookieOptions) {
-          request.cookies.set({
-            name,
-            value: "",
-            ...options,
-          })
-          response.cookies.set({
-            name,
-            value: "",
-            ...options,
-          })
-        },
-      },
-    },
-  )
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  // Check for Firebase authentication
+  const validation = await validateFirebaseToken(request)
+  const user = validation.isValid ? validation.user : null
 
   const protectedRoutes = ["/dashboard", "/library", "/setlists", "/settings", "/profile", "/add-content", "/content"]
   const isProtectedRoute = protectedRoutes.some((route) => request.nextUrl.pathname.startsWith(route))
@@ -57,11 +19,35 @@ export async function middleware(request: NextRequest) {
   const authRoutes = ["/login", "/signup"]
   const isAuthRoute = authRoutes.includes(request.nextUrl.pathname)
 
-  if (user && isAuthRoute) {
+  // Check for Firebase session cookie
+  const firebaseSessionCookie = request.cookies.get('firebase-session')?.value
+  
+  // If we have a session cookie but no user from header auth, try to validate the cookie
+  let isAuthenticated = !!user
+  if (!isAuthenticated && firebaseSessionCookie) {
+    try {
+      // Create a mock request with the cookie token in the header for validation
+      const mockRequest = new Request(request.url, {
+        headers: {
+          'authorization': `Bearer ${firebaseSessionCookie}`
+        }
+      }) as NextRequest
+      
+      const cookieValidation = await validateFirebaseToken(mockRequest)
+      isAuthenticated = cookieValidation.isValid
+    } catch (error) {
+      // Cookie validation failed, continue as unauthenticated
+      isAuthenticated = false
+    }
+  }
+
+  // If user is authenticated and trying to access auth routes, redirect to dashboard
+  if (isAuthenticated && isAuthRoute) {
     return NextResponse.redirect(new URL("/dashboard", request.url))
   }
 
-  if (!user && isProtectedRoute) {
+  // If user is not authenticated and trying to access protected routes, redirect to login
+  if (!isAuthenticated && isProtectedRoute) {
     return NextResponse.redirect(new URL("/login", request.url))
   }
 

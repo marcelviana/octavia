@@ -1,7 +1,7 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
 import "./globals.css"
-import { AuthProvider } from "@/contexts/auth-context"
+import { FirebaseAuthProvider } from "@/contexts/firebase-auth-context"
 import { SessionProvider } from "@/components/providers/session-provider"
 import { Toaster } from "@/components/ui/sonner"
 import { EnhancedPwaInstallPrompt } from "@/components/pwa-install-prompt"
@@ -33,11 +33,11 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ErrorBoundary>
-          <AuthProvider>
+          <FirebaseAuthProvider>
             <SessionProvider>{children}</SessionProvider>
             <Toaster richColors position="top-right" />
             <EnhancedPwaInstallPrompt />
-          </AuthProvider>
+          </FirebaseAuthProvider>
         </ErrorBoundary>
       </body>
     </html>
