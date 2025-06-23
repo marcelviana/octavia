@@ -1,5 +1,6 @@
 import { getSupabaseServerClient } from "@/lib/supabase-server";
 import { isSupabaseConfigured } from "@/lib/supabase";
+import { getServerSideUser } from "@/lib/firebase-server-utils";
 import logger from "@/lib/logger";
 import {
   getUserContent,
@@ -11,6 +12,23 @@ import type { ContentQueryParams } from "@/lib/content-types";
 import { getSetlistById } from "@/lib/setlist-service";
 
 export async function getUserContentServer() {
+  // Check Firebase authentication first
+  const firebaseUser = await getServerSideUser();
+  if (firebaseUser) {
+    // User is authenticated with Firebase, but we need to use Supabase for data
+    if (!isSupabaseConfigured) {
+      return getUserContent();
+    }
+    const supabase = await getSupabaseServerClient();
+    // Convert Firebase user to match Supabase format for content service
+    const supabaseCompatibleUser = {
+      id: firebaseUser.uid,
+      email: firebaseUser.email,
+    };
+    return getUserContent(supabase, supabaseCompatibleUser);
+  }
+  
+  // Fallback to original Supabase authentication
   if (!isSupabaseConfigured) {
     return getUserContent();
   }
@@ -19,15 +37,49 @@ export async function getUserContentServer() {
 }
 
 export async function getUserContentPageServer(params: ContentQueryParams) {
+  // Check Firebase authentication first
+  const firebaseUser = await getServerSideUser();
+  if (firebaseUser) {
+    // User is authenticated with Firebase, but we need to use Supabase for data
+    if (!isSupabaseConfigured) {
+      return getUserContentPage(params);
+    }
+    const supabase = await getSupabaseServerClient();
+    // Convert Firebase user to match Supabase format for content service
+    const supabaseCompatibleUser = {
+      id: firebaseUser.uid,
+      email: firebaseUser.email,
+    };
+    return getUserContentPage(params, supabase, supabaseCompatibleUser);
+  }
+  
+  // Fallback to original Supabase authentication
   if (!isSupabaseConfigured) {
     // reuse browser implementation in demo mode
-    return getUserContentPage(params)
+    return getUserContentPage(params);
   }
-  const supabase = await getSupabaseServerClient()
-  return getUserContentPage(params, supabase)
+  const supabase = await getSupabaseServerClient();
+  return getUserContentPage(params, supabase);
 }
 
 export async function getContentByIdServer(id: string) {
+  // Check Firebase authentication first
+  const firebaseUser = await getServerSideUser();
+  if (firebaseUser) {
+    // User is authenticated with Firebase, but we need to use Supabase for data
+    if (!isSupabaseConfigured) {
+      return getContentById(id);
+    }
+    const supabase = await getSupabaseServerClient();
+    // Convert Firebase user to match Supabase format for content service
+    const supabaseCompatibleUser = {
+      id: firebaseUser.uid,
+      email: firebaseUser.email,
+    };
+    return getContentById(id, supabase, supabaseCompatibleUser);
+  }
+  
+  // Fallback to original Supabase authentication
   if (!isSupabaseConfigured) {
     return getContentById(id);
   }
@@ -36,6 +88,23 @@ export async function getContentByIdServer(id: string) {
 }
 
 export async function getUserStatsServer() {
+  // Check Firebase authentication first
+  const firebaseUser = await getServerSideUser();
+  if (firebaseUser) {
+    // User is authenticated with Firebase, but we need to use Supabase for data
+    if (!isSupabaseConfigured) {
+      return getUserStats();
+    }
+    const supabase = await getSupabaseServerClient();
+    // Convert Firebase user to match Supabase format for content service
+    const supabaseCompatibleUser = {
+      id: firebaseUser.uid,
+      email: firebaseUser.email,
+    };
+    return getUserStats(supabase, supabaseCompatibleUser);
+  }
+  
+  // Fallback to original Supabase authentication
   if (!isSupabaseConfigured) {
     return getUserStats();
   }

@@ -10,10 +10,29 @@ type ContentUpdate = Database["public"]["Tables"]["content"]["Update"]
 
 // Helper function to get authenticated user with improved session handling
 async function getAuthenticatedUser(supabase?: SupabaseClient, maxRetries: number = 3): Promise<any | null> {
-  const client = supabase ?? getSupabaseBrowserClient()
-  
   console.log("🔍 getAuthenticatedUser: Starting auth check...")
   
+  // Check if running in browser and try Firebase first
+  if (typeof window !== 'undefined' && !supabase) {
+    try {
+      console.log("🔍 getAuthenticatedUser: Checking Firebase auth in browser")
+      const { auth } = await import('@/lib/firebase')
+      
+      if (auth && auth.currentUser) {
+        console.log(`🔍 getAuthenticatedUser: Firebase user found: ${auth.currentUser.email}`)
+        // Convert Firebase user to Supabase-compatible format
+        return {
+          id: auth.currentUser.uid,
+          email: auth.currentUser.email,
+        }
+      }
+      console.log("🔍 getAuthenticatedUser: No Firebase user found")
+    } catch (error) {
+      console.log("🔍 getAuthenticatedUser: Firebase auth check failed:", error)
+    }
+  }
+  
+  const client = supabase ?? getSupabaseBrowserClient()
   let lastError: Error | null = null
   
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
@@ -170,7 +189,8 @@ if (typeof cleanupInterval.unref === 'function') {
 
 export async function getUserContentPage(
   params: ContentQueryParams = {},
-  supabase?: SupabaseClient
+  supabase?: SupabaseClient,
+  providedUser?: any
 ) {
   const {
     page = 1,
@@ -198,8 +218,13 @@ export async function getUserContentPage(
   try {
     const client = supabase ?? getSupabaseBrowserClient()
 
-    // Check if user is authenticated with retry logic and longer timeout for tab switching
-    const user = await getAuthenticatedUser(client)
+    // Use provided user or check authentication
+    let user = providedUser
+    if (!user) {
+      user = await getAuthenticatedUser(client)
+    } else {
+      console.log("🔍 getUserContentPage: Using provided user:", user.email)
+    }
     
     if (!user) {
       logger.log("User not authenticated, returning empty content page")
@@ -343,12 +368,18 @@ export async function getUserContentPage(
 }
 
 
-export async function getContentById(id: string, supabase?: SupabaseClient) {
+export async function getContentById(id: string, supabase?: SupabaseClient, providedUser?: any) {
   try {
     const client = supabase ?? getSupabaseBrowserClient()
 
-    // Check if user is authenticated
-    const user = await getAuthenticatedUser(client)
+    // Use provided user or check authentication
+    let user = providedUser
+    if (!user) {
+      user = await getAuthenticatedUser(client)
+    } else {
+      console.log("🔍 getContentById: Using provided user:", user.email)
+    }
+    
     if (!user) {
       throw new Error("User not authenticated")
     }
@@ -463,12 +494,18 @@ export async function toggleFavorite(id: string, isFavorite: boolean) {
   return updateContent(id, { is_favorite: isFavorite })
 }
 
-export async function getUserStats(supabase?: SupabaseClient) {
+export async function getUserStats(supabase?: SupabaseClient, providedUser?: any) {
   try {
     const client = supabase ?? getSupabaseBrowserClient()
 
-    // Check if user is authenticated
-    const user = await getAuthenticatedUser(client)
+    // Use provided user or check authentication
+    let user = providedUser
+    if (!user) {
+      user = await getAuthenticatedUser(client)
+    } else {
+      console.log("🔍 getUserStats: Using provided user:", user.email)
+    }
+    
     if (!user) {
       logger.log("User not authenticated for stats")
       return {

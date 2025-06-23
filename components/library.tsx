@@ -47,6 +47,7 @@ import {
   BookOpen,
 } from "lucide-react";
 import { getUserContentPage, deleteContent } from "@/lib/content-service";
+import { useFirebaseAuth } from "@/contexts/firebase-auth-context";
 import {
   Pagination,
   PaginationContent,
@@ -85,6 +86,7 @@ export function Library({
   initialSearch,
 }: LibraryProps) {
   const router = useRouter();
+  const { user, isLoading: authLoading } = useFirebaseAuth();
   const [searchQuery, setSearchQuery] = useState(initialSearch || "");
   const debouncedSearch = useDebounce(searchQuery, 300);
   const [sortBy, setSortBy] = useState<"recent" | "title" | "artist">("recent");
@@ -140,10 +142,23 @@ export function Library({
         return
       }
       
+      // Wait for Firebase authentication to be ready
+      if (authLoading) {
+        console.log('Waiting for Firebase auth to be ready...')
+        return
+      }
+      
+      if (!user) {
+        console.log('No authenticated user, skipping fetch')
+        setContent([])
+        setTotalCount(0)
+        return
+      }
+      
       try {
         fetchInProgressRef.current = true
         setLoading(true)
-        console.log('Fetching content with filters:', selectedFilters)
+        console.log('Fetching content with filters:', selectedFilters, 'for user:', user.email)
         
         // Add timeout wrapper to prevent infinite loading
         const controller = new AbortController()
@@ -151,13 +166,14 @@ export function Library({
           controller.abort()
         }, 10000) // 10 second timeout
         
+        // Pass Firebase user information to the content service
         const result = await getUserContentPage({
           page,
           pageSize,
           search: debouncedSearch,
           sortBy,
           filters: selectedFilters,
-        })
+        }, undefined, { id: user.uid, email: user.email })
         
         if (fetchTimeoutId) {
           clearTimeout(fetchTimeoutId)
@@ -237,7 +253,7 @@ export function Library({
         clearTimeout(fetchTimeoutId)
       }
     }
-  }, [debouncedSearch, sortBy, selectedFilters, page, pageSize, refreshTrigger, content.length, initialPage, initialPageSize, initialSearch])
+  }, [debouncedSearch, sortBy, selectedFilters, page, pageSize, refreshTrigger, content.length, initialPage, initialPageSize, initialSearch, user, authLoading])
 
   // Add focus listener to refresh data when returning to the library with improved throttling
   useEffect(() => {
@@ -347,7 +363,7 @@ export function Library({
   };
 
   const confirmDelete = async () => {
-    if (!contentToDelete) return;
+    if (!contentToDelete || !user) return;
 
     try {
       await deleteContent(contentToDelete.id);
@@ -362,7 +378,7 @@ export function Library({
         search: searchQuery,
         sortBy,
         filters: selectedFilters,
-      });
+      }, undefined, { id: user.uid, email: user.email });
       setContent(data);
       setTotalCount(total);
       try {
