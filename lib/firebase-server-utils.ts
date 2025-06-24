@@ -15,6 +15,41 @@ export interface ServerAuthResult {
 }
 
 /**
+ * Validate Firebase token using Firebase Admin directly (for server-side use)
+ * This is more reliable than API-based validation for middleware and SSR
+ */
+export async function validateFirebaseTokenDirect(idToken: string): Promise<ServerAuthResult> {
+  try {
+    if (!idToken) {
+      return {
+        isValid: false,
+        error: 'Missing ID token'
+      }
+    }
+
+    // Use Firebase Admin directly
+    const { verifyFirebaseToken } = await import('./firebase-admin')
+    const decodedToken = await verifyFirebaseToken(idToken)
+    
+    return {
+      isValid: true,
+      user: {
+        uid: decodedToken.uid,
+        email: decodedToken.email,
+        emailVerified: decodedToken.email_verified
+      }
+    }
+  } catch (error: any) {
+    logger.warn('Direct Firebase token validation failed:', error.message)
+    
+    return {
+      isValid: false,
+      error: error.message || 'Token validation failed'
+    }
+  }
+}
+
+/**
  * Validate Firebase token via API route (safe for Edge Runtime)
  * This replaces the direct Firebase Admin usage
  */
@@ -154,25 +189,8 @@ export async function getServerSideUser(cookieStore: ReadonlyRequestCookies): Pr
       return null
     }
 
-    // Attempt to determine the request origin when environment variables are
-    // not configured. This helps in production deployments where NEXTAUTH_URL
-    // or VERCEL_URL might be missing (e.g. custom domains).
-    let origin: string | undefined = process.env.NEXTAUTH_URL || process.env.VERCEL_URL
-
-    if (!origin) {
-      try {
-        const hdrs = (await import('next/headers')).headers
-        const host = (await hdrs()).get('host')
-        if (host) {
-          const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http'
-          origin = `${protocol}://${host}`
-        }
-      } catch {
-        // ignore, we'll fall back to localhost below
-      }
-    }
-
-    const validation = await validateFirebaseTokenServer(sessionCookie.value, origin)
+    // Use direct Firebase Admin validation for better reliability
+    const validation = await validateFirebaseTokenDirect(sessionCookie.value)
     
     if (!validation.isValid || !validation.user) {
       return null
@@ -181,6 +199,36 @@ export async function getServerSideUser(cookieStore: ReadonlyRequestCookies): Pr
     return validation.user
   } catch (error) {
     logger.warn('Error getting server-side user:', error)
+    return null
+  }
+}
+
+/**
+ * Get server-side user using direct Firebase Admin validation
+ * This is more reliable for middleware and SSR contexts
+ */
+export async function getServerSideUserDirect(cookieStore: ReadonlyRequestCookies): Promise<{
+  uid: string
+  email?: string
+  emailVerified?: boolean
+} | null> {
+  try {
+    const sessionCookie = cookieStore.get('firebase-session')
+
+    if (!sessionCookie?.value) {
+      return null
+    }
+
+    // Use direct Firebase Admin validation
+    const validation = await validateFirebaseTokenDirect(sessionCookie.value)
+    
+    if (!validation.isValid || !validation.user) {
+      return null
+    }
+    
+    return validation.user
+  } catch (error) {
+    logger.warn('Error getting server-side user (direct):', error)
     return null
   }
 } 

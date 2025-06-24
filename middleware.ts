@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
-import { validateFirebaseTokenServer } from '@/lib/firebase-server-utils'
+import { validateFirebaseTokenDirect } from '@/lib/firebase-server-utils'
+
+export const runtime = 'nodejs' // Use Node.js runtime for Firebase Admin
 
 export async function middleware(request: NextRequest) {
   const response = NextResponse.next({
@@ -31,10 +33,10 @@ export async function middleware(request: NextRequest) {
     token = firebaseSessionCookie
   }
 
-  // Validate token using server-side utility
+  // Validate token using direct Firebase Admin (more reliable than API calls)
   if (token) {
     try {
-      const validation = await validateFirebaseTokenServer(token, request.url)
+      const validation = await validateFirebaseTokenDirect(token)
       if (validation.isValid) {
         isAuthenticated = true
       }
