@@ -70,11 +70,13 @@ export function SignupPanel() {
             <div className="absolute inset-0 bg-amber-200 rounded-full opacity-20 animate-pulse"></div>
             <div className="absolute inset-2 bg-amber-100 rounded-full flex items-center justify-center">
               <Image
-                src="/logos/octavia-icon.png"
+                src="/logos/octavia-icon.webp"
                 alt="Octavia"
                 width={80}
                 height={80}
-                className="transform hover:scale-105 transition-transform duration-300"
+                priority
+                sizes="80px"
+                className="transform hover:scale-105 transition-transform duration-300 object-contain"
               />
             </div>
           </div>

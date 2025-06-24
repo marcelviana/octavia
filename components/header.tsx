@@ -57,13 +57,23 @@ export function Header({ onMenuClick, onToggleCollapse, collapsed, initialSearch
             </Button>
           )}
           <div className="flex items-center space-x-2">
-            <Image src="/logos/octavia-icon.png" alt="Octavia" width={32} height={32} />
+            <Image 
+              src="/logos/octavia-icon.webp" 
+              alt="Octavia" 
+              width={32} 
+              height={32}
+              priority
+              sizes="32px"
+              className="object-contain"
+            />
             <Image
-              src="/logos/octavia-wordmark.png"
+              src="/logos/octavia-wordmark.webp"
               alt="Octavia"
               width={120}
               height={24}
-              className="hidden sm:block w-[120px] h-auto"
+              priority
+              sizes="120px"
+              className="hidden sm:block object-contain"
             />
           </div>
         </div>

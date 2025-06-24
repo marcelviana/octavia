@@ -18,8 +18,24 @@ export default async function LandingPage() {
       <header className="border-b border-amber-200 bg-white/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <Image src="/logos/octavia-icon.png" alt="Octavia" width={32} height={32} />
-            <Image src="/logos/octavia-wordmark.png" alt="Octavia" width={120} height={24} className="w-[120px] h-auto" />
+            <Image 
+              src="/logos/octavia-icon.webp" 
+              alt="Octavia" 
+              width={32} 
+              height={32}
+              priority
+              sizes="32px"
+              className="object-contain"
+            />
+            <Image 
+              src="/logos/octavia-wordmark.webp" 
+              alt="Octavia" 
+              width={120} 
+              height={24}
+              priority
+              sizes="120px"
+              className="object-contain"
+            />
           </div>
           <div className="flex items-center space-x-4">
             <Button variant="ghost" className="text-amber-700 hover:text-amber-900 hover:bg-amber-100" asChild>
@@ -84,6 +100,8 @@ export default async function LandingPage() {
                   alt="Musician performing with digital sheet music on tablet"
                   width={600}
                   height={400}
+                  priority
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="rounded-2xl shadow-2xl object-cover relative z-10 border-4 border-white/50"
                 />
               </div>
@@ -113,22 +131,22 @@ export default async function LandingPage() {
                 Import and organize all your sheet music, tabs, and lyrics in one beautiful, searchable library.
               </p>
             </div>
-            <div className="bg-gradient-to-br from-green-50 to-emerald-100 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-green-200">
-              <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+            <div className="bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-green-200">
+              <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
                 <FileText className="w-8 h-8 text-white" />
               </div>
-              <h3 className="text-xl font-bold mb-3 text-gray-900">Setlist Management</h3>
+              <h3 className="text-xl font-bold mb-3 text-gray-900">Smart Annotations</h3>
               <p className="text-gray-700 leading-relaxed">
-                Create and manage dynamic setlists for different venues, audiences, and performance styles.
+                Add notes, highlights, and markings directly onto your digital sheet music for better rehearsals.
               </p>
             </div>
             <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-purple-200">
               <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
                 <Guitar className="w-8 h-8 text-white" />
               </div>
-              <h3 className="text-xl font-bold mb-3 text-gray-900">Performance Mode</h3>
+              <h3 className="text-xl font-bold mb-3 text-gray-900">Guitar Tabs & More</h3>
               <p className="text-gray-700 leading-relaxed">
-                Distraction-free interface optimized for live performances with large, readable text.
+                Support for multiple music formats including guitar tabs, chord charts, and traditional notation.
               </p>
             </div>
             <div className="bg-gradient-to-br from-orange-50 to-red-100 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-orange-200">
@@ -150,52 +168,58 @@ export default async function LandingPage() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-amber-800 bg-clip-text text-transparent mb-4">
-              What Musicians Say
+              Loved by Musicians Everywhere
             </h2>
-            <p className="text-xl text-gray-700">Real feedback from real musicians</p>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              See what our community is saying about their experience with Octavia
+            </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                quote:
-                  "Octavia has completely transformed how I prepare for gigs. No more heavy binders of sheet music!",
-                name: "Sarah Johnson",
-                role: "Professional Guitarist",
-                color: "from-blue-500 to-purple-500",
-              },
-              {
-                quote:
-                  "The performance mode is a game-changer for live shows. Easy navigation between songs with no distractions.",
-                name: "Michael Chen",
-                role: "Keyboard Player",
-                color: "from-green-500 to-emerald-500",
-              },
-              {
-                quote:
-                  "I can access all my music on any device. Perfect for last-minute rehearsals and impromptu jam sessions.",
-                name: "David Rodriguez",
-                role: "Band Director",
-                color: "from-orange-500 to-red-500",
-              },
-            ].map((testimonial, index) => (
-              <div
-                key={index}
-                className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-white/50"
-              >
-                <p className="text-gray-700 italic mb-6 text-lg leading-relaxed">&quot;{testimonial.quote}&quot;</p>
-                <div className="flex items-center">
-                  <div
-                    className={`w-12 h-12 bg-gradient-to-br ${testimonial.color} rounded-full flex items-center justify-center mr-4 shadow-lg`}
-                  >
-                    <span className="font-bold text-white text-lg">{testimonial.name.charAt(0)}</span>
-                  </div>
-                  <div>
-                    <p className="font-bold text-gray-900">{testimonial.name}</p>
-                    <p className="text-gray-600">{testimonial.role}</p>
-                  </div>
+            <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-white/50">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold">
+                  S
+                </div>
+                <div className="ml-4">
+                  <h4 className="font-bold text-gray-900">Sarah M.</h4>
+                  <p className="text-gray-600 text-sm">Classical Guitarist</p>
                 </div>
               </div>
-            ))}
+                             <p className="text-gray-700 leading-relaxed italic">
+                 &ldquo;Octavia has revolutionized how I organize my sheet music. The annotation feature is incredibly useful
+                 for marking fingerings and performance notes.&rdquo;
+               </p>
+            </div>
+            <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-white/50">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold">
+                  M
+                </div>
+                <div className="ml-4">
+                  <h4 className="font-bold text-gray-900">Mike R.</h4>
+                  <p className="text-gray-600 text-sm">Band Leader</p>
+                </div>
+              </div>
+                             <p className="text-gray-700 leading-relaxed italic">
+                 &ldquo;Perfect for managing our band&apos;s repertoire. Being able to access everything from my tablet during
+                 rehearsals is a game-changer.&rdquo;
+               </p>
+            </div>
+            <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-white/50">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
+                  A
+                </div>
+                <div className="ml-4">
+                  <h4 className="font-bold text-gray-900">Alex K.</h4>
+                  <p className="text-gray-600 text-sm">Music Teacher</p>
+                </div>
+              </div>
+                             <p className="text-gray-700 leading-relaxed italic">
+                 &ldquo;My students love how organized and accessible all our learning materials are now. The search function
+                 saves so much time.&rdquo;
+               </p>
+            </div>
           </div>
         </div>
       </section>
@@ -239,13 +263,21 @@ export default async function LandingPage() {
           <div className="flex flex-col md:flex-row justify-between">
             <div className="mb-8 md:mb-0">
               <div className="flex items-center space-x-2 mb-6">
-                <Image src="/logos/octavia-icon.png" alt="Octavia" width={32} height={32} />
+                <Image 
+                  src="/logos/octavia-icon.webp" 
+                  alt="Octavia" 
+                  width={32} 
+                  height={32}
+                  sizes="32px"
+                  className="object-contain"
+                />
                 <Image
-                  src="/logos/octavia-wordmark.png"
+                  src="/logos/octavia-wordmark.webp"
                   alt="Octavia"
                   width={120}
                   height={24}
-                  className="brightness-200 w-[120px] h-auto"
+                  sizes="120px"
+                  className="brightness-200 object-contain"
                 />
               </div>
               <p className="text-gray-300 max-w-xs leading-relaxed">

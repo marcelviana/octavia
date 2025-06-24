@@ -21,7 +21,12 @@ export default async function LoginPage({ searchParams }: { searchParams?: Promi
       <LoginPanel initialError={error} />
       <div className="hidden md:flex md:flex-1 bg-amber-600 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-amber-600/90 to-orange-700/90 z-10"></div>
-        <div className="absolute inset-0 bg-[url('/placeholder.svg?height=1080&width=1080')] bg-cover bg-center"></div>
+        <div className="absolute inset-0">
+          <div className="absolute top-20 left-20 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-40 right-20 w-48 h-48 bg-orange-300/20 rounded-full blur-2xl"></div>
+          <div className="absolute bottom-20 left-32 w-72 h-72 bg-amber-300/15 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-32 right-40 w-56 h-56 bg-yellow-300/10 rounded-full blur-2xl"></div>
+        </div>
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-12 z-20">
           <div className="max-w-md text-center">
             <h2 className="text-4xl font-bold mb-6 leading-tight">Your music, organized and accessible</h2>

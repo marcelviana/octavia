@@ -589,18 +589,21 @@ export function ContentViewer({
                                         />
                                       )
                                     }
-                                    if (isImage) {
-                                      return (
-                                        <Image
-                                          src={(offlineUrl || content.file_url) as string}
-                                          alt={`Sheet music for ${content.title}`}
-                                          width={800}
-                                          height={800}
-                                          className="w-full h-auto"
-                                          style={{ maxHeight: "calc(100vh - 250px)", objectFit: "contain" }}
-                                        />
-                                      )
-                                    }
+                                                        if (isImage) {
+                      return (
+                        <Image
+                          src={(offlineUrl || content.file_url) as string}
+                          alt={`Sheet music for ${content.title}`}
+                          width={800}
+                          height={800}
+                          className="w-full h-auto"
+                          style={{ maxHeight: "calc(100vh - 250px)", objectFit: "contain" }}
+                          sizes="(max-width: 768px) 100vw, 800px"
+                          placeholder="blur"
+                          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                        />
+                      )
+                    }
                                     return null
                                   })()}
                                 </div>

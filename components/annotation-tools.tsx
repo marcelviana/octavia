@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Image from "next/image"
+import { Music } from "lucide-react"
 
 interface AnnotationToolsProps {
   content: any
@@ -186,14 +187,27 @@ export function AnnotationTools({
             style={{ transform: `scale(${zoom / 100})`, transformOrigin: "top left" }}
           >
             {/* Background content (sheet music image) */}
-            <Image
-              src={content.thumbnail || "/placeholder.svg?height=800&width=600"}
-              alt="Sheet music"
-              width={600}
-              height={800}
-              className="w-full h-auto"
-              draggable={false}
-            />
+            {content.thumbnail ? (
+              <Image
+                src={content.thumbnail}
+                alt="Sheet music"
+                width={600}
+                height={800}
+                className="w-full h-auto"
+                draggable={false}
+                placeholder="blur"
+                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+              />
+            ) : (
+              <div className="w-full h-[800px] bg-gray-100 flex items-center justify-center">
+                <div className="text-center text-gray-500">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gray-200 rounded-lg flex items-center justify-center">
+                    <Music className="w-8 h-8" />
+                  </div>
+                  <p>No sheet music image available</p>
+                </div>
+              </div>
+            )}
 
             {/* Annotation canvas overlay */}
             <canvas
