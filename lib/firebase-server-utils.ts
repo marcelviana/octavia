@@ -52,6 +52,9 @@ export async function validateFirebaseTokenServer(
 
     const apiUrl = new URL('/api/auth/verify', baseUrl).toString()
 
+    // Add debug logging
+    logger.log(`Token validation - requestUrl: ${requestUrl}, baseUrl: ${baseUrl}, apiUrl: ${apiUrl}`)
+
     const response = await fetch(apiUrl, {
       method: 'POST',
       headers: {
@@ -62,6 +65,7 @@ export async function validateFirebaseTokenServer(
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}))
+      logger.warn(`Token validation failed - status: ${response.status}, error: ${JSON.stringify(errorData)}`)
       return {
         isValid: false,
         error: errorData.error || `HTTP ${response.status}: ${response.statusText}`
@@ -71,6 +75,7 @@ export async function validateFirebaseTokenServer(
     const result = await response.json()
     
     if (result.success && result.user) {
+      logger.log('Token validation successful')
       return {
         isValid: true,
         user: {
@@ -80,6 +85,7 @@ export async function validateFirebaseTokenServer(
         }
       }
     } else {
+      logger.warn(`Token validation failed - result: ${JSON.stringify(result)}`)
       return {
         isValid: false,
         error: result.error || 'Token validation failed'
@@ -111,6 +117,7 @@ export async function requireAuthServer(request: Request): Promise<{
   const authHeader = request.headers.get('authorization')
   if (authHeader && authHeader.startsWith('Bearer ')) {
     idToken = authHeader.substring(7)
+    logger.log('Found Bearer token in Authorization header')
   } else {
     // Fall back to session cookie if no Authorization header
     const cookieHeader = request.headers.get('cookie')
@@ -120,20 +127,25 @@ export async function requireAuthServer(request: Request): Promise<{
         .find(c => c.trim().startsWith('firebase-session='))
       if (cookie) {
         idToken = cookie.trim().substring('firebase-session='.length)
+        logger.log('Found token in firebase-session cookie')
       }
     }
   }
 
   if (!idToken) {
+    logger.warn('No authentication token found in request')
     return null
   }
 
+  logger.log('Validating authentication token...')
   const validation = await validateFirebaseTokenServer(idToken, request.url)
 
   if (!validation.isValid || !validation.user) {
+    logger.warn(`Token validation failed: ${validation.error}`)
     return null
   }
 
+  logger.log('Authentication successful')
   return validation.user
 }
 
