@@ -129,12 +129,30 @@ export async function getServerSideUser(cookieStore: ReadonlyRequestCookies): Pr
 } | null> {
   try {
     const sessionCookie = cookieStore.get('firebase-session')
-    
+
     if (!sessionCookie?.value) {
       return null
     }
 
-    const validation = await validateFirebaseTokenServer(sessionCookie.value)
+    // Attempt to determine the request origin when environment variables are
+    // not configured. This helps in production deployments where NEXTAUTH_URL
+    // or VERCEL_URL might be missing (e.g. custom domains).
+    let origin: string | undefined = process.env.NEXTAUTH_URL || process.env.VERCEL_URL
+
+    if (!origin) {
+      try {
+        const hdrs = (await import('next/headers')).headers
+        const host = hdrs().get('host')
+        if (host) {
+          const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http'
+          origin = `${protocol}://${host}`
+        }
+      } catch {
+        // ignore, we'll fall back to localhost below
+      }
+    }
+
+    const validation = await validateFirebaseTokenServer(sessionCookie.value, origin)
     
     if (!validation.isValid || !validation.user) {
       return null
