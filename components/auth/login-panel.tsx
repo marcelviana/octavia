@@ -10,7 +10,6 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useAuth } from "@/contexts/firebase-auth-context"
 import { Music, Lock, Mail } from "lucide-react"
-import { getSupabaseBrowserClient } from "@/lib/supabase"
 import Image from "next/image"
 
 export function LoginPanel({ initialError = "" }: { initialError?: string }) {
@@ -20,35 +19,63 @@ export function LoginPanel({ initialError = "" }: { initialError?: string }) {
   const [isLoading, setIsLoading] = useState(false)
   const [hasRedirected, setHasRedirected] = useState(false)
   const router = useRouter()
-  const { signIn, signInWithGoogle, signOut, user, profile, isInitialized } = useAuth()
+  const { signIn, signInWithGoogle, signOut, user, profile, isInitialized, idToken, refreshToken } = useAuth()
 
   useEffect(() => {
     if (isInitialized && user && !hasRedirected) {
       setHasRedirected(true)
       const handleRedirect = async () => {
-        // If we have a user but no profile, create profile
-        if (!profile) {
-          try {
-            const supabase = getSupabaseBrowserClient()
-            await supabase.from("profiles").insert({
-              id: user.uid,
-              email: user.email!,
-              full_name: user.displayName || null,
-              first_name: user.displayName ? user.displayName.split(" ")[0] : null,
-              last_name: user.displayName ? user.displayName.split(" ").slice(1).join(" ") : null,
-              avatar_url: user.photoURL || null,
-            })
-          } catch (err) {
-            console.error("Profile creation failed:", err)
+        try {
+          const token = idToken || (await refreshToken())
+          if (!token) {
+            setError('Unable to obtain authentication token')
+            return
           }
+
+          const res = await fetch('/api/profile', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+
+          if (res.ok) {
+            const profileData = await res.json()
+            if (profileData === null) {
+              const createRes = await fetch('/api/profile', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                  id: user.uid,
+                  email: user.email,
+                  full_name: user.displayName || null,
+                  first_name: user.displayName ? user.displayName.split(' ')[0] : null,
+                  last_name: user.displayName ? user.displayName.split(' ').slice(1).join(' ') : null,
+                  avatar_url: user.photoURL || null,
+                }),
+              })
+
+              if (!createRes.ok) {
+                throw new Error('Failed to create profile')
+              }
+            }
+
+            window.location.href = '/dashboard'
+          } else if (res.status === 401) {
+            setError('Authentication failed. Please sign in again.')
+          } else {
+            setError('Failed to fetch profile')
+          }
+        } catch (err: any) {
+          console.error('Profile setup error:', err)
+          setError(err.message || 'An unexpected error occurred')
         }
-        
-        // Redirect to dashboard
-        window.location.href = "/dashboard"
       }
       handleRedirect()
     }
-  }, [user, profile, isInitialized, hasRedirected])
+  }, [user, isInitialized, hasRedirected, idToken, refreshToken])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -98,6 +125,11 @@ export function LoginPanel({ initialError = "" }: { initialError?: string }) {
           >
             Click here if not redirected automatically
           </button>
+          {error && (
+            <div className="mt-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md text-sm">
+              {error}
+            </div>
+          )}
         </div>
       </div>
     )
