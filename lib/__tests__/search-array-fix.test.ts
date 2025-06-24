@@ -33,6 +33,7 @@ describe('Search Array Field Fix', () => {
             eq: vi.fn().mockReturnValue({
               or: vi.fn().mockReturnValue({
                 order: vi.fn().mockReturnValue({
+                  abortSignal: vi.fn().mockReturnThis(),
                   range: vi.fn().mockResolvedValue({
                     data: [],
                     error: null,
@@ -85,6 +86,7 @@ describe('Search Array Field Fix', () => {
             eq: vi.fn().mockReturnValue({
               or: vi.fn().mockReturnValue({
                 order: vi.fn().mockReturnValue({
+                  abortSignal: vi.fn().mockReturnThis(),
                   range: vi.fn().mockResolvedValue({
                     data: null,
                     error: { message: 'operator does not exist: text[] ~~* unknown' },
@@ -129,6 +131,7 @@ describe('Search Array Field Fix', () => {
             eq: vi.fn().mockReturnValue({
               or: vi.fn().mockReturnValue({
                 order: vi.fn().mockReturnValue({
+                  abortSignal: vi.fn().mockReturnThis(),
                   range: vi.fn().mockResolvedValue({
                     data: null,
                     error: { message: 'operator does not exist: text[] ~~* text' },
@@ -191,6 +194,7 @@ describe('Search Array Field Fix', () => {
             eq: vi.fn().mockReturnValue({
               or: vi.fn().mockReturnValue({
                 order: vi.fn().mockReturnValue({
+                  abortSignal: vi.fn().mockReturnThis(),
                   range: vi.fn().mockResolvedValue({
                     data: mockData,
                     error: null,
