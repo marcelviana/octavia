@@ -1,16 +1,11 @@
-import { redirect } from "next/navigation"
-import { getServerSideUser } from "@/lib/firebase-server-utils"
-import { cookies } from "next/headers"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import Link from "next/link"
 import { Music, FileText, Guitar, Users } from "lucide-react"
 
-export default async function LandingPage() {
-  const user = await getServerSideUser(await cookies())
-  if (user) {
-    redirect("/dashboard")
-  }
+export default function LandingPage() {
+  // Landing page is now static - authentication will be handled client-side
+  // if needed, or users can just navigate to login/signup
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50">

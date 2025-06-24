@@ -15,41 +15,6 @@ export interface ServerAuthResult {
 }
 
 /**
- * Validate Firebase token using Firebase Admin directly (for server-side use)
- * This is more reliable than API-based validation for middleware and SSR
- */
-export async function validateFirebaseTokenDirect(idToken: string): Promise<ServerAuthResult> {
-  try {
-    if (!idToken) {
-      return {
-        isValid: false,
-        error: 'Missing ID token'
-      }
-    }
-
-    // Use Firebase Admin directly
-    const { verifyFirebaseToken } = await import('./firebase-admin')
-    const decodedToken = await verifyFirebaseToken(idToken)
-    
-    return {
-      isValid: true,
-      user: {
-        uid: decodedToken.uid,
-        email: decodedToken.email,
-        emailVerified: decodedToken.email_verified
-      }
-    }
-  } catch (error: any) {
-    logger.warn('Direct Firebase token validation failed:', error.message)
-    
-    return {
-      isValid: false,
-      error: error.message || 'Token validation failed'
-    }
-  }
-}
-
-/**
  * Validate Firebase token via API route (safe for Edge Runtime)
  * This replaces the direct Firebase Admin usage
  */
@@ -65,13 +30,17 @@ export async function validateFirebaseTokenServer(
       }
     }
 
-
     // Construct the verification URL. Prefer environment variables but fall
     // back to the current request origin when available.
     let baseUrl = process.env.NEXTAUTH_URL || process.env.VERCEL_URL
 
     if (!baseUrl && requestUrl) {
-      baseUrl = new URL(requestUrl.toString()).origin
+      try {
+        baseUrl = new URL(requestUrl.toString()).origin
+      } catch {
+        // If URL parsing fails, use fallback
+        baseUrl = undefined
+      }
     }
 
     if (!baseUrl) {
@@ -190,7 +159,7 @@ export async function getServerSideUser(cookieStore: ReadonlyRequestCookies): Pr
     }
 
     // Use direct Firebase Admin validation for better reliability
-    const validation = await validateFirebaseTokenDirect(sessionCookie.value)
+    const validation = await validateFirebaseTokenServer(sessionCookie.value)
     
     if (!validation.isValid || !validation.user) {
       return null
@@ -220,7 +189,7 @@ export async function getServerSideUserDirect(cookieStore: ReadonlyRequestCookie
     }
 
     // Use direct Firebase Admin validation
-    const validation = await validateFirebaseTokenDirect(sessionCookie.value)
+    const validation = await validateFirebaseTokenServer(sessionCookie.value)
     
     if (!validation.isValid || !validation.user) {
       return null

@@ -60,11 +60,15 @@ export default function SetupPage() {
                 <strong>Requirements:</strong> You need to be connected to your Supabase project 
                 with proper credentials.
               </p>
-              <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
-                <p className="text-amber-800 font-medium">⚠️ Important</p>
+                              <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
+                <p className="text-amber-800 font-medium">🔒 Secure Firebase Auth + Supabase Storage</p>
+                <p className="text-amber-700 text-sm mb-2">
+                  This app uses <strong>Firebase Auth</strong> for user authentication and <strong>Supabase Storage</strong> for file storage.
+                  All uploads go through secure API endpoints that validate Firebase tokens server-side before uploading to Supabase.
+                </p>
                 <p className="text-amber-700 text-sm">
-                  File uploads (including sheet music images) will not work until you complete this setup process.
-                  If you see uploads getting stuck with a spinning loader, this is likely the cause.
+                  File uploads will not work until you complete this setup process.
+                  If you see 400 errors or permission errors when uploading, this is the cause.
                 </p>
               </div>
             </div>
@@ -131,38 +135,26 @@ export default function SetupPage() {
 {`-- Enable RLS on storage.objects if not already enabled
 ALTER TABLE storage.objects ENABLE ROW LEVEL SECURITY;
 
--- Allow authenticated users to upload files to content-files bucket
-CREATE POLICY "Allow authenticated uploads to content-files" ON storage.objects
-FOR INSERT WITH CHECK (
-  auth.role() = 'authenticated' AND 
-  bucket_id = 'content-files'
+-- Since we're using Firebase Auth with secure API endpoints,
+-- we allow service role access (API routes authenticate users server-side)
+CREATE POLICY "Allow service role access to content-files" ON storage.objects
+FOR ALL USING (
+  bucket_id = 'content-files' AND auth.role() = 'service_role'
 );
 
--- Allow authenticated users to view their own files
-CREATE POLICY "Allow authenticated users to view content-files" ON storage.objects
+-- Allow public read access to files (so uploaded content can be viewed)
+CREATE POLICY "Allow public read access to content-files" ON storage.objects
 FOR SELECT USING (
-  bucket_id = 'content-files' AND
-  (auth.role() = 'authenticated' OR auth.role() = 'anon')
-);
-
--- Allow authenticated users to update their own files
-CREATE POLICY "Allow authenticated users to update content-files" ON storage.objects
-FOR UPDATE USING (
-  auth.role() = 'authenticated' AND 
-  bucket_id = 'content-files'
-);
-
--- Allow authenticated users to delete their own files
-CREATE POLICY "Allow authenticated users to delete content-files" ON storage.objects
-FOR DELETE USING (
-  auth.role() = 'authenticated' AND 
   bucket_id = 'content-files'
 );`}
                     </pre>
                   </div>
                   <div className="mt-3 p-2 bg-amber-50 border border-amber-200 rounded">
-                    <p className="text-xs text-amber-800">
+                    <p className="text-xs text-amber-800 mb-2">
                       <strong>💡 Tip:</strong> If you get &ldquo;policy already exists&rdquo; errors, that&apos;s normal - it means the policies are already set up.
+                    </p>
+                    <p className="text-xs text-amber-800">
+                      <strong>🔑 Service Key:</strong> Make sure your <code className="bg-amber-100 px-1 rounded">SUPABASE_SERVICE_ROLE_KEY</code> environment variable is set for server-side storage operations.
                     </p>
                   </div>
                 </div>

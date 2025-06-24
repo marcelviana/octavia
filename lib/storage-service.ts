@@ -1,13 +1,7 @@
-import { getSupabaseBrowserClient } from "@/lib/supabase"
 import { auth } from "@/lib/firebase"
 
-const BUCKET = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET || "content-files"
-
 export async function testStoragePermissions(): Promise<{ canUpload: boolean; error?: string }> {
-
   try {
-    const supabase = getSupabaseBrowserClient();
-
     const user = auth?.currentUser;
     if (!user) {
       return {
@@ -18,38 +12,67 @@ export async function testStoragePermissions(): Promise<{ canUpload: boolean; er
 
     console.log('User authenticated:', user.email);
     
-    // Try to upload a small test file
+    // Try to upload a small test file via secure API
     const testFile = new Blob(['test'], { type: 'text/plain' });
     const testFilename = `test-${Date.now()}.txt`;
     
-    const { error } = await supabase.storage.from(BUCKET).upload(testFilename, testFile);
-    
-    if (error) {
-      // Clean up test file if it was created
-      await supabase.storage.from(BUCKET).remove([testFilename]);
+    try {
+      const firebaseToken = await user.getIdToken();
       
-      if (error.message?.includes('Bucket not found')) {
-        return { 
-          canUpload: false, 
-          error: 'Storage bucket not found. Please run the setup process to create the storage bucket.' 
-        };
-      } else if (error.message?.includes('permission') || error.message?.includes('policy') || error.message?.includes('row-level security')) {
-        return { 
-          canUpload: false, 
-          error: 'Storage permissions not configured. Please set up storage policies in your Supabase dashboard to allow authenticated users to upload files.' 
-        };
-      } else {
-        return { 
-          canUpload: false, 
-          error: `Storage test failed: ${error.message}` 
-        };
+      const formData = new FormData();
+      formData.append('file', testFile);
+      formData.append('filename', testFilename);
+
+      const response = await fetch('/api/storage/upload', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${firebaseToken}`
+        },
+        body: formData
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        if (response.status === 401) {
+          return { 
+            canUpload: false, 
+            error: 'Authentication failed. Please try logging out and back in.' 
+          };
+        } else if (response.status === 500 && errorData.error?.includes('Bucket not found')) {
+          return { 
+            canUpload: false, 
+            error: 'Storage bucket not found. Please run the setup process to create the storage bucket.' 
+          };
+        } else {
+          return { 
+            canUpload: false, 
+            error: errorData.error || `Storage test failed with status ${response.status}` 
+          };
+        }
       }
+
+      // Clean up test file by trying to delete it
+      try {
+        await fetch('/api/storage/delete', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${firebaseToken}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ filename: testFilename })
+        });
+      } catch (deleteError) {
+        console.warn('Could not clean up test file:', deleteError);
+      }
+
+      return { canUpload: true };
+    } catch (tokenError) {
+      return {
+        canUpload: false,
+        error: 'Failed to get authentication token. Please try logging out and back in.'
+      };
     }
     
-    // Clean up test file
-    await supabase.storage.from(BUCKET).remove([testFilename]);
-    
-    return { canUpload: true };
   } catch (error) {
     return { 
       canUpload: false, 
@@ -64,38 +87,51 @@ export async function uploadFileToStorage(file: File | Blob, filename: string) {
   if (!file) throw new Error("No file provided")
   if (!filename) filename = `${Date.now()}`
 
-
   try {
-    const supabase = getSupabaseBrowserClient()
-
     const user = auth?.currentUser;
     if (!user) {
       throw new Error('User not authenticated. Please log in to upload files.');
     }
 
-    console.log(`User authenticated (${user.email}), uploading to bucket: ${BUCKET}`);
+    console.log(`User authenticated (${user.email}), uploading: ${filename}`);
     
-    const { data, error } = await supabase.storage.from(BUCKET).upload(filename, file, { upsert: true })
+    // Get Firebase auth token
+    const firebaseToken = await user.getIdToken();
     
-    if (error) {
-      console.error("Storage upload error:", error);
-      if (error.message?.includes("Bucket not found")) {
-        throw new Error(`Storage bucket "${BUCKET}" not found. Please create the bucket in your Supabase project dashboard under Storage section, or run the setup script to create it automatically.`)
-      } else if (error.message?.includes("permission") || error.message?.includes("policy") || error.message?.includes("row-level security")) {
-        throw new Error(`Upload failed due to missing storage policies. Please set up Row Level Security (RLS) policies in your Supabase dashboard. Go to Storage → Policies and create policies to allow authenticated users to upload files to the 'content-files' bucket.`)
+    // Prepare form data
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('filename', filename);
+
+    // Upload via secure API
+    const response = await fetch('/api/storage/upload', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${firebaseToken}`
+      },
+      body: formData
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      if (response.status === 401) {
+        throw new Error('Authentication failed. Please try logging out and back in.');
+      } else if (response.status === 500 && errorData.error?.includes('Bucket not found')) {
+        throw new Error(`Storage bucket not found. Please create the bucket in your Supabase project dashboard under Storage section, or run the setup script to create it automatically.`);
+      } else {
+        throw new Error(errorData.error || `Upload failed with status ${response.status}`);
       }
-      throw new Error(`Upload failed: ${error.message}`)
+    }
+
+    const result = await response.json();
+    
+    if (!result.url) {
+      throw new Error("Failed to get public URL for uploaded file");
     }
     
-    console.log("Upload successful, getting public URL...");
-    const { data: urlData } = supabase.storage.from(BUCKET).getPublicUrl(filename)
+    console.log(`Upload completed successfully: ${result.url}`);
+    return { url: result.url, path: result.path };
     
-    if (!urlData?.publicUrl) {
-      throw new Error("Failed to get public URL for uploaded file")
-    }
-    
-    console.log(`Upload completed successfully: ${urlData.publicUrl}`);
-    return { url: urlData.publicUrl, path: filename }
   } catch (error) {
     console.error("Upload error:", error);
     throw error;
