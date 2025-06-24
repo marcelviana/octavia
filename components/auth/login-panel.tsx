@@ -29,7 +29,7 @@ export function LoginPanel({ initialError = "" }: { initialError?: string }) {
           // Always get a fresh token to avoid expiration issues
           let token = await refreshToken()
           if (!token) {
-            // If refreshToken fails, try to get token directly from user
+            // If refreshToken fails, try to get token directly from user.
             if (user) {
               const { getIdToken } = await import('firebase/auth')
               token = await getIdToken(user, true) // Force refresh
