@@ -30,7 +30,10 @@ describe('middleware auth', () => {
     const res = await middleware(req as any)
 
     expect(res.headers.get('location')).toBe('https://site.test/login')
-    expect(mockValidateFirebaseTokenServer).toHaveBeenCalledWith('expired')
+    expect(mockValidateFirebaseTokenServer).toHaveBeenCalledWith(
+      'expired',
+      baseReq.url
+    )
   })
 
   it('allows request when session cookie is valid', async () => {
@@ -48,7 +51,7 @@ describe('middleware auth', () => {
     const res = await middleware(req as any)
 
     expect(res.headers.get('location')).toBeNull()
-    expect(mockValidateFirebaseTokenServer).toHaveBeenCalledWith('valid')
+    expect(mockValidateFirebaseTokenServer).toHaveBeenCalledWith('valid', baseReq.url)
   })
 
   it('redirects to login when bearer token is invalid', async () => {
@@ -66,7 +69,10 @@ describe('middleware auth', () => {
     const res = await middleware(req as any)
 
     expect(res.headers.get('location')).toBe('https://site.test/login')
-    expect(mockValidateFirebaseTokenServer).toHaveBeenCalledWith('badtoken')
+    expect(mockValidateFirebaseTokenServer).toHaveBeenCalledWith(
+      'badtoken',
+      baseReq.url
+    )
   })
 
   it('allows request when bearer token is valid', async () => {
@@ -84,7 +90,10 @@ describe('middleware auth', () => {
     const res = await middleware(req as any)
 
     expect(res.headers.get('location')).toBeNull()
-    expect(mockValidateFirebaseTokenServer).toHaveBeenCalledWith('goodtoken')
+    expect(mockValidateFirebaseTokenServer).toHaveBeenCalledWith(
+      'goodtoken',
+      baseReq.url
+    )
   })
 
   it('redirects to login when verification fails', async () => {
