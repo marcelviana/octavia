@@ -3,6 +3,8 @@ import { requireAuthServer } from '@/lib/firebase-server-utils'
 import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
 
+export const runtime = 'nodejs' // Explicitly use Node.js runtime
+
 // GET /api/profile - Get user profile
 export async function GET(request: NextRequest) {
   try {

@@ -40,9 +40,14 @@ export async function validateFirebaseTokenServer(
     }
 
     if (!baseUrl) {
-      baseUrl = 'http://localhost:3000'
+      // Hardcode production URL for now to avoid issues
+      if (process.env.NODE_ENV === 'production') {
+        baseUrl = 'https://octavia.rocks'
+      } else {
+        baseUrl = 'http://localhost:3000'
+      }
       logger.warn(
-        'Falling back to localhost for token verification; set NEXTAUTH_URL or VERCEL_URL'
+        'Using hardcoded base URL for token verification; set NEXTAUTH_URL or VERCEL_URL for better reliability'
       )
     }
 
