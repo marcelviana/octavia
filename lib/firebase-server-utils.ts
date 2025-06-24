@@ -142,7 +142,7 @@ export async function getServerSideUser(cookieStore: ReadonlyRequestCookies): Pr
     if (!origin) {
       try {
         const hdrs = (await import('next/headers')).headers
-        const host = hdrs().get('host')
+        const host = (await hdrs()).get('host')
         if (host) {
           const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http'
           origin = `${protocol}://${host}`
