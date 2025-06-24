@@ -1,14 +1,50 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { requireAuthServer } from '@/lib/firebase-server-utils'
+import { verifyFirebaseToken } from '@/lib/firebase-admin'
 import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
 
 export const runtime = 'nodejs' // Explicitly use Node.js runtime
 
+async function getAuthenticatedUser(request: NextRequest) {
+  let idToken: string | null = null
+
+  const authHeader = request.headers.get('authorization')
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    idToken = authHeader.substring(7)
+  } else {
+    // Fall back to session cookie if no Authorization header
+    const cookieHeader = request.headers.get('cookie')
+    if (cookieHeader) {
+      const cookie = cookieHeader
+        .split(';')
+        .find(c => c.trim().startsWith('firebase-session='))
+      if (cookie) {
+        idToken = cookie.trim().substring('firebase-session='.length)
+      }
+    }
+  }
+
+  if (!idToken) {
+    return null
+  }
+
+  try {
+    const decodedToken = await verifyFirebaseToken(idToken)
+    return {
+      uid: decodedToken.uid,
+      email: decodedToken.email,
+      emailVerified: decodedToken.email_verified
+    }
+  } catch (error) {
+    logger.warn('Token verification failed:', error)
+    return null
+  }
+}
+
 // GET /api/profile - Get user profile
 export async function GET(request: NextRequest) {
   try {
-    const user = await requireAuthServer(request)
+    const user = await getAuthenticatedUser(request)
     
     if (!user) {
       return NextResponse.json(
@@ -46,7 +82,7 @@ export async function GET(request: NextRequest) {
 // POST /api/profile - Create user profile
 export async function POST(request: NextRequest) {
   try {
-    const user = await requireAuthServer(request)
+    const user = await getAuthenticatedUser(request)
     
     if (!user) {
       return NextResponse.json(
@@ -95,7 +131,7 @@ export async function POST(request: NextRequest) {
 // PATCH /api/profile - Update user profile
 export async function PATCH(request: NextRequest) {
   try {
-    const user = await requireAuthServer(request)
+    const user = await getAuthenticatedUser(request)
     
     if (!user) {
       return NextResponse.json(
