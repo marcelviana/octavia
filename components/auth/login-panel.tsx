@@ -26,7 +26,16 @@ export function LoginPanel({ initialError = "" }: { initialError?: string }) {
       setHasRedirected(true)
       const handleRedirect = async () => {
         try {
-          const token = idToken || (await refreshToken())
+          // Always get a fresh token to avoid expiration issues
+          let token = await refreshToken()
+          if (!token) {
+            // If refreshToken fails, try to get token directly from user
+            if (user) {
+              const { getIdToken } = await import('firebase/auth')
+              token = await getIdToken(user, true) // Force refresh
+            }
+          }
+          
           if (!token) {
             setError('Unable to obtain authentication token')
             return
@@ -64,7 +73,48 @@ export function LoginPanel({ initialError = "" }: { initialError?: string }) {
 
             window.location.href = '/dashboard'
           } else if (res.status === 401) {
-            setError('Authentication failed. Please sign in again.')
+            // Token expired, try once more with a fresh token
+            try {
+              const { getIdToken } = await import('firebase/auth')
+              const freshToken = await getIdToken(user, true)
+              
+              const retryRes = await fetch('/api/profile', {
+                headers: {
+                  Authorization: `Bearer ${freshToken}`,
+                },
+              })
+              
+              if (retryRes.ok) {
+                const profileData = await retryRes.json()
+                if (profileData === null) {
+                  const createRes = await fetch('/api/profile', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                      Authorization: `Bearer ${freshToken}`,
+                    },
+                    body: JSON.stringify({
+                      id: user.uid,
+                      email: user.email,
+                      full_name: user.displayName || null,
+                      first_name: user.displayName ? user.displayName.split(' ')[0] : null,
+                      last_name: user.displayName ? user.displayName.split(' ').slice(1).join(' ') : null,
+                      avatar_url: user.photoURL || null,
+                    }),
+                  })
+
+                  if (!createRes.ok) {
+                    throw new Error('Failed to create profile')
+                  }
+                }
+                window.location.href = '/dashboard'
+              } else {
+                setError('Authentication failed. Please sign in again.')
+              }
+            } catch (retryError) {
+              console.error('Token refresh retry failed:', retryError)
+              setError('Authentication failed. Please sign in again.')
+            }
           } else {
             setError('Failed to fetch profile')
           }

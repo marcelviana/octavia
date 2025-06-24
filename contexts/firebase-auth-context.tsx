@@ -92,8 +92,10 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
     if (!user || !auth) return null
     
     try {
+      // Always force refresh to get a fresh token
       const token = await getIdToken(user, true)
       setIdToken(token)
+      logger.log("Token refreshed successfully")
       return token
     } catch (error) {
       logger.warn("Error getting ID token:", error)
@@ -144,7 +146,30 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
                   if (profileData && mounted) {
                     setProfile(profileData)
                   }
-                } else if (response.status !== 401) {
+                } else if (response.status === 401) {
+                  // Token might be expired, try refreshing once
+                  logger.warn("Profile fetch unauthorized, attempting token refresh...")
+                  try {
+                    const freshToken = await getIdToken(firebaseUser, true)
+                    const retryResponse = await fetch('/api/profile', {
+                      headers: {
+                        'Authorization': `Bearer ${freshToken}`,
+                      },
+                    })
+                    
+                    if (retryResponse.ok) {
+                      const profileData = await retryResponse.json()
+                      if (profileData && mounted) {
+                        setProfile(profileData)
+                        setIdToken(freshToken) // Update the stored token
+                      }
+                    } else {
+                      logger.warn("Profile fetch failed after token refresh:", retryResponse.status)
+                    }
+                  } catch (refreshError) {
+                    logger.warn("Token refresh failed during profile fetch:", refreshError)
+                  }
+                } else {
                   logger.warn("Failed to fetch profile:", response.status)
                 }
               } catch (profileError) {
@@ -183,8 +208,22 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
 
         document.addEventListener('visibilitychange', handleVisibilityChange)
 
+        // Set up periodic token refresh (every 50 minutes to stay ahead of 1-hour expiration)
+        const tokenRefreshInterval = setInterval(async () => {
+          if (mounted && auth?.currentUser) {
+            logger.log("Periodic token refresh...")
+            try {
+              const token = await getIdToken(auth.currentUser, true)
+              setIdToken(token)
+            } catch (error) {
+              logger.warn("Error during periodic token refresh:", error)
+            }
+          }
+        }, 50 * 60 * 1000) // 50 minutes
+
         return () => {
           document.removeEventListener('visibilitychange', handleVisibilityChange)
+          clearInterval(tokenRefreshInterval)
         }
 
       } catch (error) {
