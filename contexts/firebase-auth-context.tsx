@@ -147,7 +147,7 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
                     setProfile(profileData)
                   }
                 } else if (response.status === 401) {
-                  // Token might be expired, try refreshing once
+                  // Token might be expired, try refreshing once.
                   logger.warn("Profile fetch unauthorized, attempting token refresh...")
                   try {
                     const freshToken = await getIdToken(firebaseUser, true)
