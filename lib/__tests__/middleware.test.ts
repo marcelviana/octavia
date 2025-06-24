@@ -1,9 +1,9 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { NextRequest, NextResponse } from 'next/server'
 
-const mockVerifyFirebaseToken = vi.fn()
-vi.mock('../firebase-admin', () => ({
-  verifyFirebaseToken: mockVerifyFirebaseToken,
+const mockValidateFirebaseTokenServer = vi.fn()
+vi.mock('../firebase-server-utils', () => ({
+  validateFirebaseTokenServer: mockValidateFirebaseTokenServer,
 }))
 
 describe('middleware auth', () => {
@@ -16,7 +16,7 @@ describe('middleware auth', () => {
   })
 
   it('redirects to login when session cookie is invalid', async () => {
-    mockVerifyFirebaseToken.mockRejectedValue(new Error('Invalid token'))
+    mockValidateFirebaseTokenServer.mockResolvedValue({ isValid: false })
 
     vi.spyOn(NextResponse, 'next').mockImplementation(() => new NextResponse())
 
@@ -30,11 +30,11 @@ describe('middleware auth', () => {
     const res = await middleware(req as any)
 
     expect(res.headers.get('location')).toBe('https://site.test/login')
-    expect(mockVerifyFirebaseToken).toHaveBeenCalledWith('expired')
+    expect(mockValidateFirebaseTokenServer).toHaveBeenCalledWith('expired')
   })
 
   it('allows request when session cookie is valid', async () => {
-    mockVerifyFirebaseToken.mockResolvedValue({ uid: 'test-uid' })
+    mockValidateFirebaseTokenServer.mockResolvedValue({ isValid: true })
 
     vi.spyOn(NextResponse, 'next').mockImplementation(() => new NextResponse())
 
@@ -48,11 +48,11 @@ describe('middleware auth', () => {
     const res = await middleware(req as any)
 
     expect(res.headers.get('location')).toBeNull()
-    expect(mockVerifyFirebaseToken).toHaveBeenCalledWith('valid')
+    expect(mockValidateFirebaseTokenServer).toHaveBeenCalledWith('valid')
   })
 
   it('redirects to login when bearer token is invalid', async () => {
-    mockVerifyFirebaseToken.mockRejectedValue(new Error('Invalid token'))
+    mockValidateFirebaseTokenServer.mockResolvedValue({ isValid: false })
 
     vi.spyOn(NextResponse, 'next').mockImplementation(() => new NextResponse())
 
@@ -66,11 +66,11 @@ describe('middleware auth', () => {
     const res = await middleware(req as any)
 
     expect(res.headers.get('location')).toBe('https://site.test/login')
-    expect(mockVerifyFirebaseToken).toHaveBeenCalledWith('badtoken')
+    expect(mockValidateFirebaseTokenServer).toHaveBeenCalledWith('badtoken')
   })
 
   it('allows request when bearer token is valid', async () => {
-    mockVerifyFirebaseToken.mockResolvedValue({ uid: 'test-uid' })
+    mockValidateFirebaseTokenServer.mockResolvedValue({ isValid: true })
 
     vi.spyOn(NextResponse, 'next').mockImplementation(() => new NextResponse())
 
@@ -84,11 +84,11 @@ describe('middleware auth', () => {
     const res = await middleware(req as any)
 
     expect(res.headers.get('location')).toBeNull()
-    expect(mockVerifyFirebaseToken).toHaveBeenCalledWith('goodtoken')
+    expect(mockValidateFirebaseTokenServer).toHaveBeenCalledWith('goodtoken')
   })
 
   it('redirects to login when verification fails', async () => {
-    mockVerifyFirebaseToken.mockRejectedValue(new Error('Network error'))
+    mockValidateFirebaseTokenServer.mockRejectedValue(new Error('Network error'))
 
     vi.spyOn(NextResponse, 'next').mockImplementation(() => new NextResponse())
 

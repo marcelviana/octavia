@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
+import { validateFirebaseTokenServer } from '@/lib/firebase-server-utils'
 
 export async function middleware(request: NextRequest) {
   const response = NextResponse.next({
@@ -30,21 +31,16 @@ export async function middleware(request: NextRequest) {
     token = firebaseSessionCookie
   }
 
-  // Simple token validation for middleware (detailed validation happens in API routes)
+  // Validate token using server-side utility
   if (token) {
     try {
-      if (token === 'demo-token') {
-        // Allow demo token only in development
-        if (process.env.NODE_ENV === 'development') {
-          isAuthenticated = true;
-        }
-      } else if (token.length > 10) {
-        // Basic token format check - detailed validation happens server-side
-        isAuthenticated = true;
+      const validation = await validateFirebaseTokenServer(token)
+      if (validation.isValid) {
+        isAuthenticated = true
       }
     } catch (error) {
-      console.error('Token validation failed in middleware:', error);
-      isAuthenticated = false;
+      console.error('Token validation failed in middleware:', error)
+      isAuthenticated = false
     }
   }
 
