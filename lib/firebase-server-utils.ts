@@ -106,19 +106,34 @@ export async function requireAuthServer(request: Request): Promise<{
   email?: string
   emailVerified?: boolean
 } | null> {
+  let idToken: string | null = null
+
   const authHeader = request.headers.get('authorization')
-  
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    idToken = authHeader.substring(7)
+  } else {
+    // Fall back to session cookie if no Authorization header
+    const cookieHeader = request.headers.get('cookie')
+    if (cookieHeader) {
+      const cookie = cookieHeader
+        .split(';')
+        .find(c => c.trim().startsWith('firebase-session='))
+      if (cookie) {
+        idToken = cookie.trim().substring('firebase-session='.length)
+      }
+    }
+  }
+
+  if (!idToken) {
     return null
   }
 
-  const idToken = authHeader.substring(7)
   const validation = await validateFirebaseTokenServer(idToken, request.url)
-  
+
   if (!validation.isValid || !validation.user) {
     return null
   }
-  
+
   return validation.user
 }
 
