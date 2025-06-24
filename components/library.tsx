@@ -108,6 +108,7 @@ export function Library({
   const initialLoadRef = useRef(true)
   const [refreshTrigger, setRefreshTrigger] = useState(0)
   const fetchInProgressRef = useRef(false)
+  const hasNavigatedRef = useRef(false) // Track if user has navigated away from initial state
 
   useEffect(() => {
     if (initialLoadRef.current) {
@@ -115,7 +116,7 @@ export function Library({
       return
     }
     
-    // Don't fetch if we're still on the initial state (same page, pageSize, search, and default filters/sort)
+    // Check if we're still on the initial state (same page, pageSize, search, and default filters/sort)
     const isInitialState = (
       page === initialPage && 
       pageSize === initialPageSize && 
@@ -127,7 +128,13 @@ export function Library({
       selectedFilters.favorite === false
     )
     
-    if (isInitialState && content.length > 0) {
+    // Mark that user has navigated if they're not in initial state
+    if (!isInitialState) {
+      hasNavigatedRef.current = true
+    }
+    
+    // Only skip fetch if we're in initial state AND user has never navigated away AND we have content
+    if (isInitialState && !hasNavigatedRef.current && content.length > 0) {
       console.log('📋 Skipping fetch - using initial server data')
       return
     }
