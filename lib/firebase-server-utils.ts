@@ -18,7 +18,10 @@ export interface ServerAuthResult {
  * Validate Firebase token via API route (safe for Edge Runtime)
  * This replaces the direct Firebase Admin usage
  */
-export async function validateFirebaseTokenServer(idToken: string): Promise<ServerAuthResult> {
+export async function validateFirebaseTokenServer(
+  idToken: string,
+  requestUrl?: string | URL
+): Promise<ServerAuthResult> {
   try {
     if (!idToken) {
       return {
@@ -28,14 +31,26 @@ export async function validateFirebaseTokenServer(idToken: string): Promise<Serv
     }
 
 
-    // For server-side usage, we need to construct the full URL. Vercel's
-    // `VERCEL_URL` does not include a protocol, so we normalize it to ensure we
-    // always fetch using an absolute URL.
-    let baseUrl = process.env.NEXTAUTH_URL || process.env.VERCEL_URL || 'http://localhost:3000'
+    // Construct the verification URL. Prefer environment variables but fall
+    // back to the current request origin when available.
+    let baseUrl = process.env.NEXTAUTH_URL || process.env.VERCEL_URL
+
+    if (!baseUrl && requestUrl) {
+      baseUrl = new URL(requestUrl.toString()).origin
+    }
+
+    if (!baseUrl) {
+      baseUrl = 'http://localhost:3000'
+      logger.warn(
+        'Falling back to localhost for token verification; set NEXTAUTH_URL or VERCEL_URL'
+      )
+    }
+
     if (!/^https?:\/\//.test(baseUrl)) {
       baseUrl = `https://${baseUrl}`
     }
-    const apiUrl = `${baseUrl}/api/auth/verify`
+
+    const apiUrl = new URL('/api/auth/verify', baseUrl).toString()
 
     const response = await fetch(apiUrl, {
       method: 'POST',
@@ -98,7 +113,7 @@ export async function requireAuthServer(request: Request): Promise<{
   }
 
   const idToken = authHeader.substring(7)
-  const validation = await validateFirebaseTokenServer(idToken)
+  const validation = await validateFirebaseTokenServer(idToken, request.url)
   
   if (!validation.isValid || !validation.user) {
     return null

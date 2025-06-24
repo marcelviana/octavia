@@ -34,7 +34,7 @@ export async function middleware(request: NextRequest) {
   // Validate token using server-side utility
   if (token) {
     try {
-      const validation = await validateFirebaseTokenServer(token)
+      const validation = await validateFirebaseTokenServer(token, request.url)
       if (validation.isValid) {
         isAuthenticated = true
       }
