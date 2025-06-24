@@ -33,29 +33,6 @@ export async function POST(request: NextRequest): Promise<NextResponse<VerifyTok
       );
     }
 
-    // Handle demo mode (only in development)
-    if (token === 'demo-token' && process.env.NODE_ENV === 'development') {
-      return NextResponse.json({
-        success: true,
-        user: {
-          uid: 'demo-user',
-          email: 'demo@musicsheet.pro',
-          emailVerified: true,
-          displayName: 'Demo User'
-        }
-      });
-    }
-
-    // Reject demo token in production
-    if (token === 'demo-token') {
-      return NextResponse.json(
-        { 
-          success: false, 
-          error: 'Demo authentication not allowed in production' 
-        },
-        { status: 401 }
-      );
-    }
 
     // Verify the Firebase token
     const decodedToken = await verifyFirebaseToken(token);

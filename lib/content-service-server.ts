@@ -1,5 +1,4 @@
 import { getSupabaseServerClient } from "@/lib/supabase-server";
-import { isSupabaseConfigured } from "@/lib/supabase";
 import { getServerSideUser } from "@/lib/firebase-server-utils";
 import type { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
 import logger from "@/lib/logger";
@@ -16,10 +15,6 @@ export async function getUserContentServer(cookieStore: ReadonlyRequestCookies) 
   // Check Firebase authentication first
   const firebaseUser = await getServerSideUser(cookieStore);
   if (firebaseUser) {
-    // User is authenticated with Firebase, but we need to use Supabase for data
-    if (!isSupabaseConfigured) {
-      return getUserContent();
-    }
     const supabase = await getSupabaseServerClient();
     // Convert Firebase user to match Supabase format for content service
     const supabaseCompatibleUser = {
@@ -28,11 +23,7 @@ export async function getUserContentServer(cookieStore: ReadonlyRequestCookies) 
     };
     return getUserContent(supabase, supabaseCompatibleUser);
   }
-  
-  // Fallback to original Supabase authentication
-  if (!isSupabaseConfigured) {
-    return getUserContent();
-  }
+
   const supabase = await getSupabaseServerClient();
   return getUserContent(supabase);
 }
@@ -44,10 +35,6 @@ export async function getUserContentPageServer(
   // Check Firebase authentication first
   const firebaseUser = await getServerSideUser(cookieStore);
   if (firebaseUser) {
-    // User is authenticated with Firebase, but we need to use Supabase for data
-    if (!isSupabaseConfigured) {
-      return getUserContentPage(params);
-    }
     const supabase = await getSupabaseServerClient();
     // Convert Firebase user to match Supabase format for content service
     const supabaseCompatibleUser = {
@@ -56,12 +43,7 @@ export async function getUserContentPageServer(
     };
     return getUserContentPage(params, supabase, supabaseCompatibleUser);
   }
-  
-  // Fallback to original Supabase authentication
-  if (!isSupabaseConfigured) {
-    // reuse browser implementation in demo mode
-    return getUserContentPage(params);
-  }
+
   const supabase = await getSupabaseServerClient();
   return getUserContentPage(params, supabase);
 }
@@ -74,9 +56,6 @@ export async function getContentByIdServer(
   const firebaseUser = await getServerSideUser(cookieStore);
   if (firebaseUser) {
     // User is authenticated with Firebase, but we need to use Supabase for data
-    if (!isSupabaseConfigured) {
-      return getContentById(id);
-    }
     const supabase = await getSupabaseServerClient();
     // Convert Firebase user to match Supabase format for content service
     const supabaseCompatibleUser = {
@@ -85,11 +64,7 @@ export async function getContentByIdServer(
     };
     return getContentById(id, supabase, supabaseCompatibleUser);
   }
-  
-  // Fallback to original Supabase authentication
-  if (!isSupabaseConfigured) {
-    return getContentById(id);
-  }
+
   const supabase = await getSupabaseServerClient();
   return getContentById(id, supabase);
 }
@@ -98,10 +73,6 @@ export async function getUserStatsServer(cookieStore: ReadonlyRequestCookies) {
   // Check Firebase authentication first
   const firebaseUser = await getServerSideUser(cookieStore);
   if (firebaseUser) {
-    // User is authenticated with Firebase, but we need to use Supabase for data
-    if (!isSupabaseConfigured) {
-      return getUserStats();
-    }
     const supabase = await getSupabaseServerClient();
     // Convert Firebase user to match Supabase format for content service
     const supabaseCompatibleUser = {
@@ -110,11 +81,7 @@ export async function getUserStatsServer(cookieStore: ReadonlyRequestCookies) {
     };
     return getUserStats(supabase, supabaseCompatibleUser);
   }
-  
-  // Fallback to original Supabase authentication
-  if (!isSupabaseConfigured) {
-    return getUserStats();
-  }
+
   const supabase = await getSupabaseServerClient();
   return getUserStats(supabase);
 }
@@ -123,9 +90,6 @@ export async function getSetlistByIdServer(
   id: string,
   cookieStore: ReadonlyRequestCookies
 ) {
-  if (!isSupabaseConfigured) {
-    return getSetlistById(id);
-  }
 
   const firebaseUser = await getServerSideUser(cookieStore);
   if (!firebaseUser) {

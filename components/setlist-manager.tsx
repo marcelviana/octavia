@@ -301,24 +301,6 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
     }
   }, [loading, user, setlists.length, availableContent.length, loadData])
 
-  // Add a separate effect to check Supabase configuration
-  useEffect(() => {
-    const checkConfiguration = async () => {
-      try {
-        console.log("🔧 Checking Supabase configuration...")
-        const { isSupabaseConfigured } = await import("@/lib/supabase")
-        console.log("📊 Supabase configured:", isSupabaseConfigured)
-        
-        if (!isSupabaseConfigured) {
-          console.log("⚠️ Running in demo mode")
-        }
-      } catch (err) {
-        console.error("❌ Error checking configuration:", err)
-      }
-    }
-    
-    checkConfiguration()
-  }, [])
 
   const calculateTotalDuration = (songs: any[]) => {
     return songs.reduce((total, song) => {

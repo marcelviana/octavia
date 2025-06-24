@@ -1,12 +1,9 @@
-import { getSupabaseBrowserClient, isSupabaseConfigured } from "@/lib/supabase"
+import { getSupabaseBrowserClient } from "@/lib/supabase"
 import { auth } from "@/lib/firebase"
 
 const BUCKET = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET || "content-files"
 
 export async function testStoragePermissions(): Promise<{ canUpload: boolean; error?: string }> {
-  if (!isSupabaseConfigured) {
-    return { canUpload: true }; // Demo mode
-  }
 
   try {
     const supabase = getSupabaseBrowserClient();
@@ -67,12 +64,6 @@ export async function uploadFileToStorage(file: File | Blob, filename: string) {
   if (!file) throw new Error("No file provided")
   if (!filename) filename = `${Date.now()}`
 
-  if (!isSupabaseConfigured) {
-    console.log("Supabase not configured - using demo mode");
-    // Demo mode - pretend upload succeeded
-    const url = `https://example.com/${filename}`
-    return { url, path: filename }
-  }
 
   try {
     const supabase = getSupabaseBrowserClient()

@@ -108,36 +108,7 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
 
     const initializeAuth = async () => {
       try {
-        // If Firebase is not configured, set demo user and finish loading
         if (!isFirebaseConfigured || !auth) {
-          logger.log("Running in demo mode - Firebase not configured")
-          if (mounted) {
-            // Set a demo user for development
-            const demoUser = {
-              uid: "demo-user",
-              email: "demo@musicsheet.pro",
-              displayName: "Demo User",
-              emailVerified: true,
-            } as FirebaseUser
-
-            const demoProfile = {
-              id: "demo-user",
-              email: "demo@musicsheet.pro",
-              full_name: "Demo User",
-              first_name: "Demo",
-              last_name: "User",
-              avatar_url: null,
-              primary_instrument: "Guitar",
-              bio: "Demo user for MusicSheet Pro",
-              website: "https://musicsheet.pro",
-            }
-
-            setUser(demoUser)
-            setProfile(demoProfile)
-            setIdToken("demo-token")
-            setIsLoading(false)
-            setIsInitialized(true)
-          }
           return
         }
 
@@ -238,7 +209,7 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
   const signIn = useCallback(
     async (email: string, password: string) => {
       if (!isFirebaseConfigured || !auth) {
-        return { error: { message: "Demo mode - authentication disabled" } }
+        return { error: { message: "Authentication not configured" } }
       }
 
       try {
@@ -261,7 +232,7 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
 
   const signInWithGoogle = useCallback(async () => {
     if (!isFirebaseConfigured || !auth) {
-      return { error: { message: "Demo mode - authentication disabled" } }
+      return { error: { message: "Authentication not configured" } }
     }
 
     try {
@@ -284,7 +255,7 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
   const signUp = useCallback(
     async (email: string, password: string, userData: Partial<Profile>) => {
       if (!isFirebaseConfigured || !auth) {
-        return { error: { message: "Demo mode - authentication disabled" }, data: null }
+        return { error: { message: "Authentication not configured" }, data: null }
       }
 
       try {
@@ -376,8 +347,8 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
 
   const updateProfile = useCallback(
     async (data: Partial<Profile>) => {
-      if (!user || !isFirebaseConfigured || !idToken) {
-        return { error: new Error("Not authenticated or not configured") }
+      if (!user || !idToken) {
+        return { error: new Error("Not authenticated") }
       }
 
       try {
@@ -406,7 +377,7 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
         return { error }
       }
     },
-    [user, isFirebaseConfigured, idToken],
+    [user, idToken],
   )
 
   const value = {

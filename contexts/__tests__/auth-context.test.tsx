@@ -19,24 +19,6 @@ it('throws when useAuth is called outside provider', async () => {
 })
 
 describe('AuthProvider', () => {
-  it('initializes demo user when not configured', async () => {
-    vi.doMock('@/lib/supabase', () => ({
-      isSupabaseConfigured: false,
-      getSupabaseBrowserClient: vi.fn(),
-    }))
-    const mod = await import('../auth-context')
-    const wrapper = ({ children }: any) => <mod.AuthProvider>{children}</mod.AuthProvider>
-    const { result } = renderHook(() => mod.useAuth(), { wrapper })
-    await waitFor(() => result.current.isInitialized)
-    expect(result.current.isConfigured).toBe(false)
-    expect(result.current.user?.email).toBe('demo@musicsheet.pro')
-    let res: any
-    await act(async () => {
-      res = await result.current.signIn('a', 'b')
-    })
-    expect(res.error.message).toMatch(/Demo mode/)
-  })
-
   it('initializes with no session when configured', async () => {
     const getSession = vi.fn().mockResolvedValue({ data: { session: null }, error: null })
     const onAuthStateChange = vi.fn().mockImplementation((callback) => {
@@ -69,7 +51,6 @@ describe('AuthProvider', () => {
     // Wait for getSession to be called (it's called via getSessionSafe)
     await waitFor(() => expect(getSessionSafe).toHaveBeenCalled(), { timeout: 5000 })
     
-    expect(result.current.isConfigured).toBe(true)
     expect(result.current.user).toBe(null)
   })
 })
