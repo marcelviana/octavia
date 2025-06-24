@@ -173,7 +173,7 @@ export function Library({
           search: debouncedSearch,
           sortBy,
           filters: selectedFilters,
-        }, undefined, { id: user.uid, email: user.email })
+        }, undefined, { id: user.uid, email: user.email }, controller.signal)
         
         if (fetchTimeoutId) {
           clearTimeout(fetchTimeoutId)
@@ -374,13 +374,14 @@ export function Library({
       } catch (err) {
         console.error('Failed to remove cached content', err)
       }
+      const controller = new AbortController()
       const { data, total } = await getUserContentPage({
         page,
         pageSize,
         search: searchQuery,
         sortBy,
         filters: selectedFilters,
-      }, undefined, { id: user.uid, email: user.email });
+      }, undefined, { id: user.uid, email: user.email }, controller.signal);
       setContent(data);
       setTotalCount(total);
       try {

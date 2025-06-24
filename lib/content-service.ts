@@ -138,7 +138,8 @@ if (typeof cleanupInterval.unref === 'function') {
 export async function getUserContentPage(
   params: ContentQueryParams = {},
   supabase?: SupabaseClient,
-  providedUser?: any
+  providedUser?: any,
+  signal?: AbortSignal
 ) {
   const {
     page = 1,
@@ -236,7 +237,7 @@ export async function getUserContentPage(
     const to = from + safePageSize - 1
 
     // Execute query with timeout
-    const queryPromise = query.range(from, to)
+    const queryPromise = query.abortSignal(signal).range(from, to)
     const timeoutPromise = new Promise((_, reject) =>
       setTimeout(() => reject(new Error('Database query timed out')), 15000)
     )
