@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { getServerSideUser } from "@/lib/firebase-server-utils";
+import { cookies } from "next/headers";
 import {
   getUserContentServer,
   getUserStatsServer,
@@ -9,16 +10,17 @@ import type { ContentItem } from "@/components/dashboard";
 
 export default async function DashboardPage() {
   // Check for Firebase authentication instead of Supabase
-  const user = await getServerSideUser()
+  const cookieStore = await cookies()
+  const user = await getServerSideUser(cookieStore)
   
   if (!user) {
     redirect("/login")
   }
 
   const [rawContentData, stats] = await Promise.all([
-    getUserContentServer(),
-    getUserStatsServer(),
-  ]);
+    getUserContentServer(cookieStore),
+    getUserStatsServer(cookieStore),
+  ])
   const contentData = rawContentData as ContentItem[];
 
   const sortedContent = [...contentData].sort(

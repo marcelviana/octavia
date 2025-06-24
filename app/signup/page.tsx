@@ -1,11 +1,12 @@
 import Image from "next/image"
 import { redirect } from "next/navigation"
 import { getServerSideUser } from "@/lib/firebase-server-utils"
+import { cookies } from "next/headers"
 import { SignupPanel } from "@/components/auth/signup-panel"
 import { Music } from "lucide-react"
 
 export default async function SignupPage() {
-  const user = await getServerSideUser()
+  const user = await getServerSideUser(await cookies())
 
   if (user) {
     redirect("/dashboard")

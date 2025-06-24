@@ -1,12 +1,13 @@
 import { redirect } from "next/navigation"
 import { getServerSideUser } from "@/lib/firebase-server-utils"
+import { cookies } from "next/headers"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import Link from "next/link"
 import { Music, FileText, Guitar, Users } from "lucide-react"
 
 export default async function LandingPage() {
-  const user = await getServerSideUser()
+  const user = await getServerSideUser(await cookies())
   if (user) {
     redirect("/dashboard")
   }
