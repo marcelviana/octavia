@@ -3,6 +3,7 @@ import runtimeCaching from 'next-pwa/cache.js'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  serverExternalPackages: ['firebase-admin'],
   eslint: {
     // Run ESLint during builds to catch issues
     ignoreDuringBuilds: false,

@@ -26,38 +26,7 @@ export function LoginPanel({ initialError = "" }: { initialError?: string }) {
     if (isInitialized && user && !hasRedirected) {
       setHasRedirected(true)
       const handleRedirect = async () => {
-        // Wait for the session cookie to be set properly
-        const waitForSessionCookie = async (maxAttempts = 10) => {
-          for (let i = 0; i < maxAttempts; i++) {
-            const cookies = document.cookie.split(';')
-            const sessionCookie = cookies.find(cookie => 
-              cookie.trim().startsWith('firebase-session=')
-            )
-            if (sessionCookie) {
-              console.log("Session cookie found, safe to redirect")
-              return true
-            }
-            await new Promise(resolve => setTimeout(resolve, 100))
-          }
-          console.log("Session cookie not found after waiting, proceeding anyway")
-          return false
-        }
-        
-        const cookieReady = await waitForSessionCookie()
-
-        if (!cookieReady) {
-          console.error("Session cookie not found after waiting, aborting redirect")
-          setError("Failed to establish session. Please sign in again.")
-          setHasRedirected(false)
-          try {
-            await signOut(false)
-          } catch (err) {
-            console.error("Error signing out after cookie failure", err)
-          }
-          setIsLoading(false)
-          return
-        }
-        
+        // If we have a user but no profile and supabase is configured, create profile
         if (isConfigured && !profile) {
           try {
             const supabase = getSupabaseBrowserClient()
@@ -69,17 +38,17 @@ export function LoginPanel({ initialError = "" }: { initialError?: string }) {
               last_name: user.displayName ? user.displayName.split(" ").slice(1).join(" ") : null,
               avatar_url: user.photoURL || null,
             })
-            window.location.href = "/dashboard"
-            return
           } catch (err) {
             console.error("Profile creation failed:", err)
           }
         }
+        
+        // Redirect to dashboard
         window.location.href = "/dashboard"
       }
       handleRedirect()
     }
-  }, [user, profile, isInitialized, hasRedirected, isConfigured, signOut])
+  }, [user, profile, isInitialized, hasRedirected, isConfigured])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
