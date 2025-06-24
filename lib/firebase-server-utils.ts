@@ -55,6 +55,10 @@ export async function validateFirebaseTokenServer(
       )
     }
 
+    // Log the base URL being used for debugging
+    logger.log(`Using base URL for token verification: ${baseUrl}`)
+    logger.log(`Environment: NODE_ENV=${process.env.NODE_ENV}, NEXTAUTH_URL=${process.env.NEXTAUTH_URL}, VERCEL_URL=${process.env.VERCEL_URL}`)
+
     if (!/^https?:\/\//.test(baseUrl)) {
       baseUrl = `https://${baseUrl}`
     }
@@ -162,6 +166,7 @@ export async function getServerSideUser(cookieStore: ReadonlyRequestCookies): Pr
     const validation = await validateFirebaseTokenServer(sessionCookie.value)
     
     if (!validation.isValid || !validation.user) {
+      logger.warn('Server-side user validation failed:', validation.error)
       return null
     }
     

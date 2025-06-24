@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import { getServerSideUser } from "@/lib/firebase-server-utils";
 import { cookies } from "next/headers";
 import { getUserContentPageServer } from "@/lib/content-service-server";
@@ -9,12 +8,21 @@ export default async function LibraryPage({
 }: { 
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }> 
 }) {
-  // Check for Firebase authentication instead of Supabase
+  // Get user info - middleware already handles authentication, so this should always succeed
   const cookieStore = await cookies();
   const user = await getServerSideUser(cookieStore);
   
+  // If no user despite middleware check, something is wrong with token validation
   if (!user) {
-    redirect("/login");
+    console.error('Library: User not found despite middleware authentication check')
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-amber-600 mx-auto mb-4"></div>
+          <p>Loading your library...</p>
+        </div>
+      </div>
+    )
   }
 
   const resolvedSearchParams = await searchParams;

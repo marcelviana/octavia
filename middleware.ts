@@ -37,11 +37,16 @@ export async function middleware(request: NextRequest) {
       const validation = await validateFirebaseTokenServer(token, request.url)
       if (validation.isValid) {
         isAuthenticated = true
+        console.log('Middleware: Token validation successful for', request.nextUrl.pathname)
+      } else {
+        console.log('Middleware: Token validation failed:', validation.error)
       }
     } catch (error) {
       console.error('Token validation failed in middleware:', error)
       isAuthenticated = false
     }
+  } else {
+    console.log('Middleware: No token found for', request.nextUrl.pathname)
   }
 
   // If user is authenticated and trying to access auth routes, redirect to dashboard
