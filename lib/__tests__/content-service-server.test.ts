@@ -12,7 +12,8 @@ describe('getUserContentServer', () => {
     vi.doMock('../supabase', () => ({ isSupabaseConfigured: true }))
     vi.doMock('../supabase-server', () => ({ getSupabaseServerClient: () => mockClient }))
     const { getUserContentServer } = await import('../content-service-server')
-    const res = await getUserContentServer()
+    const mockCookies = { get: vi.fn() } as any
+    const res = await getUserContentServer(mockCookies)
     expect(res).toEqual([])
     vi.resetModules()
     vi.doUnmock('../supabase')
@@ -29,7 +30,8 @@ describe('getContentByIdServer', () => {
     vi.doMock('../supabase', () => ({ isSupabaseConfigured: true }))
     vi.doMock('../supabase-server', () => ({ getSupabaseServerClient: () => mockClient }))
     const { getContentByIdServer } = await import('../content-service-server')
-    await expect(getContentByIdServer('1')).rejects.toThrow('User not authenticated')
+    const mockCookies = { get: vi.fn() } as any
+    await expect(getContentByIdServer('1', mockCookies)).rejects.toThrow('User not authenticated')
     vi.resetModules()
   })
 })

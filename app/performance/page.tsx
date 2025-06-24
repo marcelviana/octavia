@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { getServerSideUser } from "@/lib/firebase-server-utils";
+import { cookies } from "next/headers";
 import {
   getContentByIdServer,
   getSetlistByIdServer,
@@ -8,7 +9,8 @@ import PerformancePageClient from "@/components/performance-page-client";
 
 export default async function PerformancePage({ searchParams }: { searchParams?: Promise<any> }) {
   // Check for Firebase authentication instead of Supabase
-  const user = await getServerSideUser();
+  const cookieStore = await cookies();
+  const user = await getServerSideUser(cookieStore);
   
   if (!user) {
     redirect("/login");
@@ -23,11 +25,11 @@ export default async function PerformancePage({ searchParams }: { searchParams?:
   let setlist: any | null = null;
 
   if (contentId) {
-    content = await getContentByIdServer(contentId);
+    content = await getContentByIdServer(contentId, cookieStore);
   }
 
   if (setlistId) {
-    setlist = await getSetlistByIdServer(setlistId);
+    setlist = await getSetlistByIdServer(setlistId, cookieStore);
   }
 
   return <PerformancePageClient content={content} setlist={setlist} startingSongIndex={startingSongIndex} />;

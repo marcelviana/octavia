@@ -2,6 +2,7 @@
 // This file is safe to use in Edge Runtime as it doesn't import Firebase Admin directly
 
 import logger from './logger'
+import type { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies'
 
 export interface ServerAuthResult {
   isValid: boolean
@@ -126,16 +127,12 @@ export async function requireAuthServer(request: Request): Promise<{
   return validation.user
 }
 
-export async function getServerSideUser(): Promise<{
+export async function getServerSideUser(cookieStore: ReadonlyRequestCookies): Promise<{
   uid: string
   email?: string
   emailVerified?: boolean
 } | null> {
-  // In Next.js 13+ app router, we need to get the session cookie from headers or cookies
-  const { cookies } = await import('next/headers')
-  
   try {
-    const cookieStore = await cookies()
     const sessionCookie = cookieStore.get('firebase-session')
     
     if (!sessionCookie?.value) {

@@ -9,7 +9,10 @@ type ContentInsert = Database["public"]["Tables"]["content"]["Insert"]
 type ContentUpdate = Database["public"]["Tables"]["content"]["Update"]
 
 // Helper function to get the current Firebase user
-async function getAuthenticatedUser(): Promise<any | null> {
+import type { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies'
+import { cookies as nextCookies } from 'next/headers'
+
+async function getAuthenticatedUser(cookieStore?: ReadonlyRequestCookies): Promise<any | null> {
   try {
     if (typeof window !== 'undefined') {
       const { auth } = await import('@/lib/firebase')
@@ -18,9 +21,19 @@ async function getAuthenticatedUser(): Promise<any | null> {
       }
     } else {
       const { getServerSideUser } = await import('@/lib/firebase-server-utils')
-      const user = await getServerSideUser()
-      if (user) {
-        return { id: user.uid, email: user.email }
+      let store = cookieStore
+      if (!store) {
+        try {
+          store = await nextCookies()
+        } catch {
+          store = undefined
+        }
+      }
+      if (store) {
+        const user = await getServerSideUser(store)
+        if (user) {
+          return { id: user.uid, email: user.email }
+        }
       }
     }
   } catch (err) {

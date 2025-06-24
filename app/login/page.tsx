@@ -1,11 +1,12 @@
 import Image from "next/image"
 import { redirect } from "next/navigation"
 import { getServerSideUser } from "@/lib/firebase-server-utils"
+import { cookies } from "next/headers"
 import { LoginPanel } from "@/components/auth/login-panel"
 import { Music } from "lucide-react"
 
 export default async function LoginPage({ searchParams }: { searchParams?: Promise<any> }) {
-  const user = await getServerSideUser()
+  const user = await getServerSideUser(await cookies())
 
   if (user) {
     redirect("/dashboard")
