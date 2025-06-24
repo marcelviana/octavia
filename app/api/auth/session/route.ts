@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { verifyFirebaseToken } from '@/lib/firebase-admin'
 import logger from '@/lib/logger'
 
+export const runtime = 'nodejs' // Explicitly use Node.js runtime
+
 const SESSION_COOKIE_NAME = 'firebase-session'
 const SESSION_COOKIE_MAX_AGE = 60 * 60 * 24 * 7 // 7 days
 
