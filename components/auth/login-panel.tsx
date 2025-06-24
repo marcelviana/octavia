@@ -20,14 +20,14 @@ export function LoginPanel({ initialError = "" }: { initialError?: string }) {
   const [isLoading, setIsLoading] = useState(false)
   const [hasRedirected, setHasRedirected] = useState(false)
   const router = useRouter()
-  const { signIn, signInWithGoogle, signOut, isConfigured, user, profile, isInitialized } = useAuth()
+  const { signIn, signInWithGoogle, signOut, user, profile, isInitialized } = useAuth()
 
   useEffect(() => {
     if (isInitialized && user && !hasRedirected) {
       setHasRedirected(true)
       const handleRedirect = async () => {
-        // If we have a user but no profile and supabase is configured, create profile
-        if (isConfigured && !profile) {
+        // If we have a user but no profile, create profile
+        if (!profile) {
           try {
             const supabase = getSupabaseBrowserClient()
             await supabase.from("profiles").insert({
@@ -48,7 +48,7 @@ export function LoginPanel({ initialError = "" }: { initialError?: string }) {
       }
       handleRedirect()
     }
-  }, [user, profile, isInitialized, hasRedirected, isConfigured])
+  }, [user, profile, isInitialized, hasRedirected])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -56,11 +56,6 @@ export function LoginPanel({ initialError = "" }: { initialError?: string }) {
     setIsLoading(true)
 
     try {
-      if (!isConfigured) {
-        console.log("Demo mode - redirecting to dashboard")
-        window.location.href = "/dashboard"
-        return
-      }
 
       const { error: signInError } = await signIn(email, password)
       if (signInError) {
@@ -79,10 +74,6 @@ export function LoginPanel({ initialError = "" }: { initialError?: string }) {
     setError("")
     setIsLoading(true)
     try {
-      if (!isConfigured) {
-        window.location.href = "/dashboard"
-        return
-      }
 
       const { error: googleError } = await signInWithGoogle()
       if (googleError) {
@@ -144,7 +135,7 @@ export function LoginPanel({ initialError = "" }: { initialError?: string }) {
               <CardTitle className="text-xl text-amber-900">Sign In</CardTitle>
             </div>
             <CardDescription className="text-amber-700">
-              {!isConfigured ? "Demo mode - click Sign In to continue" : "Enter your credentials to access your music library"}
+              Enter your credentials to access your music library
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -158,12 +149,11 @@ export function LoginPanel({ initialError = "" }: { initialError?: string }) {
                   <Input
                     id="email"
                     placeholder="your.email@example.com"
-                    required={isConfigured}
+                    required
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="pl-10 bg-white border-amber-200 focus:border-amber-500 focus:ring-amber-500"
-                    disabled={!isConfigured}
                   />
                 </div>
               </div>
@@ -172,27 +162,24 @@ export function LoginPanel({ initialError = "" }: { initialError?: string }) {
                   <Label htmlFor="password" className="text-amber-800 font-medium">
                     Password
                   </Label>
-                  {isConfigured && (
-                    <button
-                      type="button"
-                      onClick={() => setError("Password reset not implemented in demo")}
-                      className="text-sm text-amber-600 hover:text-amber-800 hover:underline transition-colors"
-                    >
-                      Forgot password?
-                    </button>
-                  )}
+                  <button
+                    type="button"
+                    onClick={() => setError("Password reset not implemented yet")}
+                    className="text-sm text-amber-600 hover:text-amber-800 hover:underline transition-colors"
+                  >
+                    Forgot password?
+                  </button>
                 </div>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-amber-500 h-4 w-4" />
                   <Input
                     id="password"
                     placeholder="Enter your password"
-                    required={isConfigured}
+                    required
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="pl-10 bg-white border-amber-200 focus:border-amber-500 focus:ring-amber-500"
-                    disabled={!isConfigured}
                   />
                 </div>
               </div>

@@ -3,7 +3,7 @@
 import type React from "react"
 import { createContext, useContext, useEffect, useState, useCallback } from "react"
 import type { User, AuthChangeEvent, Session } from "@supabase/supabase-js"
-import { getSupabaseBrowserClient, isSupabaseConfigured, getSessionSafe } from "@/lib/supabase"
+import { getSupabaseBrowserClient, getSessionSafe } from "@/lib/supabase"
 import { clearOfflineContent } from "@/lib/offline-cache"
 import { clearOfflineSetlists } from "@/lib/offline-setlist-cache"
 
@@ -25,7 +25,6 @@ type AuthContextType = {
   session: any
   isLoading: boolean
   loading: boolean
-  isConfigured: boolean
   isInitialized: boolean
   signIn: (email: string, password: string) => Promise<{ error: any }>
   signUp: (email: string, password: string, userData: Partial<Profile>) => Promise<{ error: any; data: any }>
@@ -68,37 +67,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const initializeAuth = async () => {
       try {
-        // If Supabase is not configured, set demo user and finish loading
-        if (!isSupabaseConfigured) {
-          console.log("Running in demo mode - Supabase not configured")
-          if (mounted) {
-            // Set a demo user for development
-            const demoUser = {
-              id: "demo-user",
-              email: "demo@musicsheet.pro",
-              user_metadata: { full_name: "Demo User" },
-            } as unknown as User
 
-            const demoProfile = {
-              id: "demo-user",
-              email: "demo@musicsheet.pro",
-              full_name: "Demo User",
-              first_name: "Demo",
-              last_name: "User",
-              avatar_url: null,
-              primary_instrument: "Guitar",
-              bio: "Demo user for MusicSheet Pro",
-              website: "https://musicsheet.pro",
-            }
-
-            setUser(demoUser)
-            setProfile(demoProfile)
-            setSession({ user: demoUser })
-            setIsLoading(false)
-            setIsInitialized(true)
-          }
-          return
-        }
 
         console.log("Initializing auth context...")
         const supabase = getSupabaseBrowserClient()
@@ -168,7 +137,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         // Add visibility change listener to refresh session when returning to tab
         const handleVisibilityChange = async () => {
-          if (!document.hidden && mounted && isSupabaseConfigured) {
+          if (!document.hidden && mounted) {
             try {
               console.log("Tab became visible, refreshing session...")
               
@@ -272,9 +241,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signIn = useCallback(
     async (email: string, password: string) => {
-      if (!isSupabaseConfigured) {
-        return { error: { message: "Demo mode - authentication disabled" } }
-      }
 
       try {
         console.log("Attempting sign in for:", email)
@@ -301,13 +267,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return { error: { message: error?.message || "Sign in failed" } }
       }
     },
-    [isSupabaseConfigured],
+    [],
   )
 
   const signInWithGoogle = useCallback(async () => {
-    if (!isSupabaseConfigured) {
-      return { error: { message: "Demo mode - authentication disabled" } }
-    }
 
     try {
       console.log("Attempting Google sign in")
@@ -334,13 +297,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setIsLoading(false)
       return { error: { message: error?.message || "Google sign in failed" } }
     }
-  }, [isSupabaseConfigured])
+  }, [])
 
   const signUp = useCallback(
     async (email: string, password: string, userData: Partial<Profile>) => {
-      if (!isSupabaseConfigured) {
-        return { error: { message: "Demo mode - authentication disabled" }, data: null }
-      }
 
       try {
         console.log("Attempting sign up for:", email)
@@ -390,16 +350,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return { error: { message: error?.message || "Sign up failed" }, data: null }
       }
     },
-    [isSupabaseConfigured],
+    [],
   )
 
   const signOut = useCallback(async (redirectToHome: boolean = true) => {
-    if (!isSupabaseConfigured) {
-      if (redirectToHome) {
-        window.location.href = "/"
-      }
-      return
-    }
 
     try {
       console.log("Signing out user")
@@ -430,12 +384,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } finally {
       setIsLoading(false)
     }
-  }, [isSupabaseConfigured, user])
+  }, [user])
 
   const updateProfile = useCallback(
     async (data: Partial<Profile>) => {
-      if (!user || !isSupabaseConfigured) {
-        return { error: new Error("Not authenticated or not configured") }
+      if (!user) {
+        return { error: new Error("Not authenticated") }
       }
 
       try {
@@ -457,7 +411,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return { error }
       }
     },
-    [user, isSupabaseConfigured],
+    [user],
   )
 
   const value = {
@@ -466,7 +420,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     session,
     isLoading,
     loading: isLoading, // Alias for compatibility
-    isConfigured: isSupabaseConfigured,
     isInitialized,
     signIn,
     signInWithGoogle,
