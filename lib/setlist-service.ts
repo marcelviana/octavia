@@ -1,4 +1,4 @@
-import { getSupabaseBrowserClient, isSupabaseConfigured } from "@/lib/supabase"
+import { getSupabaseBrowserClient } from "@/lib/supabase"
 import logger from "@/lib/logger"
 import { getContentById } from "@/lib/content-service"
 import { auth } from "@/lib/firebase"
@@ -12,95 +12,6 @@ function getAuthenticatedUser() {
   return null
 }
 
-// Mock data for demo mode
-const MOCK_SETLISTS = [
-  {
-    id: "mock-setlist-1",
-    name: "Weekend Gig",
-    description: "Songs for the Saturday night show",
-    user_id: "demo-user",
-    created_at: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(), // 2 days ago
-    updated_at: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(),
-    setlist_songs: [
-      {
-        id: "mock-song-1",
-        setlist_id: "mock-setlist-1",
-        content_id: "mock-1",
-        position: 1,
-        notes: "Start with this one to warm up the crowd",
-        content: {
-          id: "mock-1",
-          title: "Wonderwall",
-          artist: "Oasis",
-          content_type: "Chord Chart",
-        },
-      },
-      {
-        id: "mock-song-2",
-        setlist_id: "mock-setlist-1",
-        content_id: "mock-3",
-        position: 2,
-        notes: "Slow it down a bit",
-        content: {
-          id: "mock-3",
-          title: "Hallelujah",
-          artist: "Leonard Cohen",
-          content_type: "Lyrics",
-        },
-      },
-      {
-        id: "mock-song-3",
-        setlist_id: "mock-setlist-1",
-        content_id: "mock-5",
-        position: 3,
-        notes: "End with a bang!",
-        content: {
-          id: "mock-5",
-          title: "Sweet Child O' Mine",
-          artist: "Guns N' Roses",
-          content_type: "Guitar Tab",
-        },
-      },
-    ],
-  },
-  {
-    id: "mock-setlist-2",
-    name: "Acoustic Set",
-    description: "Mellow songs for the coffee shop",
-    user_id: "demo-user",
-    created_at: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7).toISOString(), // 1 week ago
-    updated_at: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7).toISOString(),
-    setlist_songs: [
-      {
-        id: "mock-song-4",
-        setlist_id: "mock-setlist-2",
-        content_id: "mock-3",
-        position: 1,
-        notes: "Start with this classic",
-        content: {
-          id: "mock-3",
-          title: "Hallelujah",
-          artist: "Leonard Cohen",
-          content_type: "Lyrics",
-        },
-      },
-      {
-        id: "mock-song-5",
-        setlist_id: "mock-setlist-2",
-        content_id: "mock-1",
-        position: 2,
-        notes: "Always a crowd pleaser",
-        content: {
-          id: "mock-1",
-          title: "Wonderwall",
-          artist: "Oasis",
-          content_type: "Chord Chart",
-        },
-      },
-    ],
-  },
-]
-
 type Setlist = Database["public"]["Tables"]["setlists"]["Row"]
 type SetlistInsert = Database["public"]["Tables"]["setlists"]["Insert"]
 type SetlistUpdate = Database["public"]["Tables"]["setlists"]["Update"]
@@ -111,22 +22,6 @@ export async function getUserSetlists(providedUser?: any) {
   try {
     console.log("🔍 getUserSetlists: Starting...")
     
-    // Return mock data in demo mode
-    if (!isSupabaseConfigured) {
-      console.log("🔍 getUserSetlists: Demo mode detected")
-      logger.log("Demo mode: Returning mock setlists")
-      return Promise.all(
-        MOCK_SETLISTS.map(async (sl) => ({
-          ...sl,
-          setlist_songs: await Promise.all(
-            sl.setlist_songs.map(async (song: any) => ({
-              ...song,
-              content: await getContentById(song.content.id || song.content_id),
-            }))
-          ),
-        }))
-      )
-    }
 
     console.log("🔍 getUserSetlists: Getting Supabase client...")
     const supabase = getSupabaseBrowserClient()
@@ -215,27 +110,12 @@ export async function getUserSetlists(providedUser?: any) {
     return setlistsWithSongs
   } catch (error) {
     logger.error("Error in getUserSetlists:", error)
-    // Return mock data as fallback in case of errors
-    return isSupabaseConfigured ? [] : MOCK_SETLISTS
+    return []
   }
 }
 
 export async function getSetlistById(id: string) {
   try {
-    // Return mock data in demo mode
-    if (!isSupabaseConfigured) {
-      const mockSetlist =
-        MOCK_SETLISTS.find((setlist) => setlist.id === id) || MOCK_SETLISTS[0]
-      return {
-        ...mockSetlist,
-        setlist_songs: await Promise.all(
-          mockSetlist.setlist_songs.map(async (song: any) => ({
-            ...song,
-            content: await getContentById(song.content.id || song.content_id),
-          }))
-        ),
-      }
-    }
 
     const supabase = getSupabaseBrowserClient()
 
@@ -309,32 +189,13 @@ export async function getSetlistById(id: string) {
     return { ...setlist, setlist_songs: formattedSongs }
   } catch (error) {
     logger.error("Error in getSetlistById:", error)
-    // In case of error in production, throw the error
-    // In demo mode, return mock data
-    if (isSupabaseConfigured) {
-      throw error
-    }
-    return MOCK_SETLISTS[0]
+    throw error
   }
 }
 
 export async function createSetlist(setlist: { name: string; description?: string }) {
   try {
-    // Mock creation in demo mode
-    if (!isSupabaseConfigured) {
-      const newId = `mock-setlist-${Date.now()}`
-      const newSetlist = {
-        id: newId,
-        ...setlist,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-        user_id: "demo-user",
-        setlist_songs: [],
-      }
 
-      logger.log("Demo mode: Created mock setlist", newSetlist)
-      return newSetlist
-    }
 
     const supabase = getSupabaseBrowserClient()
 
@@ -362,38 +223,12 @@ export async function createSetlist(setlist: { name: string; description?: strin
     return { ...data, setlist_songs: [] }
   } catch (error) {
     logger.error("Error in createSetlist:", error)
-    if (isSupabaseConfigured) {
-      throw error
-    }
-
-    // Return mock data in demo mode
-    return {
-      id: `mock-setlist-${Date.now()}`,
-      ...setlist,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-      user_id: "demo-user",
-      setlist_songs: [],
-    }
+    throw error
   }
 }
 
 export async function updateSetlist(id: string, updates: { name?: string; description?: string | null; performance_date?: string | null; venue?: string | null; notes?: string | null }) {
   try {
-    // Mock update in demo mode
-    if (!isSupabaseConfigured) {
-      const mockSetlist = MOCK_SETLISTS.find((setlist) => setlist.id === id)
-      if (mockSetlist) {
-        const updatedSetlist = {
-          ...mockSetlist,
-          ...updates,
-          updated_at: new Date().toISOString(),
-        }
-        logger.log("Demo mode: Updated mock setlist", updatedSetlist)
-        return updatedSetlist
-      }
-      return MOCK_SETLISTS[0]
-    }
 
     const supabase = getSupabaseBrowserClient()
 
@@ -471,27 +306,12 @@ export async function updateSetlist(id: string, updates: { name?: string; descri
     return { ...data, setlist_songs: formattedSongs }
   } catch (error) {
     logger.error("Error in updateSetlist:", error)
-    if (isSupabaseConfigured) {
-      throw error
-    }
-
-    // Return mock data in demo mode
-    const mockSetlist = MOCK_SETLISTS.find((setlist) => setlist.id === id) || MOCK_SETLISTS[0]
-    return {
-      ...mockSetlist,
-      ...updates,
-      updated_at: new Date().toISOString(),
-    }
+    throw error
   }
 }
 
 export async function deleteSetlist(id: string) {
   try {
-    // Mock delete in demo mode
-    if (!isSupabaseConfigured) {
-      logger.log("Demo mode: Deleted mock setlist with id", id)
-      return true
-    }
 
     const supabase = getSupabaseBrowserClient()
 
@@ -519,29 +339,12 @@ export async function deleteSetlist(id: string) {
     return true
   } catch (error) {
     logger.error("Error in deleteSetlist:", error)
-    if (isSupabaseConfigured) {
-      throw error
-    }
-    return true // Return success in demo mode
+    throw error
   }
 }
 
 export async function addSongToSetlist(setlistId: string, contentId: string, position: number, notes = "") {
   try {
-    // Mock add song in demo mode
-    if (!isSupabaseConfigured) {
-      logger.log("Demo mode: Added mock song to setlist", { setlistId, contentId, position, notes })
-      return {
-        id: `mock-song-${Date.now()}`,
-        setlist_id: setlistId,
-        content_id: contentId,
-        position,
-        notes,
-        title: "New Song",
-        artist: "Demo Artist",
-        content_type: "Chord Chart",
-      }
-    }
 
     const supabase = getSupabaseBrowserClient()
 
@@ -650,31 +453,13 @@ export async function addSongToSetlist(setlistId: string, contentId: string, pos
     }
   } catch (error) {
     logger.error("Error in addSongToSetlist:", error)
-    if (isSupabaseConfigured) {
-      throw error
-    }
-
-    // Return mock data in demo mode
-    return {
-      id: `mock-song-${Date.now()}`,
-      setlist_id: setlistId,
-      content_id: contentId,
-      position,
-      notes,
-      title: "New Song",
-      artist: "Demo Artist",
-      content_type: "Chord Chart",
-    }
+    throw error
   }
 }
 
 export async function removeSongFromSetlist(songId: string) {
   try {
-    // Mock remove song in demo mode
-    if (!isSupabaseConfigured) {
-      logger.log("Demo mode: Removed mock song from setlist", { songId })
-      return true
-    }
+
 
     const supabase = getSupabaseBrowserClient()
 
@@ -751,20 +536,13 @@ export async function removeSongFromSetlist(songId: string) {
     return true
   } catch (error) {
     logger.error("Error in removeSongFromSetlist:", error)
-    if (isSupabaseConfigured) {
-      throw error
-    }
-    return true // Return success in demo mode
+    throw error
   }
 }
 
 export async function updateSongPosition(setlistId: string, songId: string, newPosition: number) {
   try {
-    // Mock update position in demo mode
-    if (!isSupabaseConfigured) {
-      logger.log("Demo mode: Updated mock song position", { setlistId, songId, newPosition })
-      return true
-    }
+
 
     const supabase = getSupabaseBrowserClient()
 
@@ -930,11 +708,7 @@ export async function updateSongPosition(setlistId: string, songId: string, newP
     return true
   } catch (error) {
     logger.error("Error in updateSongPosition:", error)
-    if (isSupabaseConfigured) {
-      // Provide a more descriptive error message
-      const errorMessage = error instanceof Error ? error.message : "Unknown error occurred"
-      throw new Error(`Failed to update song position: ${errorMessage}`)
-    }
-    return true // Return success in demo mode
+    const errorMessage = error instanceof Error ? error.message : "Unknown error occurred"
+    throw new Error(`Failed to update song position: ${errorMessage}`)
   }
 }

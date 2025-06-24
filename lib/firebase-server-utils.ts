@@ -27,26 +27,6 @@ export async function validateFirebaseTokenServer(idToken: string): Promise<Serv
       }
     }
 
-    // Handle demo mode (only in development)
-    if (idToken === 'demo-token' && process.env.NODE_ENV === 'development') {
-      logger.warn('Using demo token in development mode')
-      return {
-        isValid: true,
-        user: {
-          uid: 'demo-user',
-          email: 'demo@musicsheet.pro',
-          emailVerified: true
-        }
-      }
-    }
-    
-    // Reject demo token in production
-    if (idToken === 'demo-token') {
-      return {
-        isValid: false,
-        error: 'Demo authentication not allowed in production'
-      }
-    }
 
     // For server-side usage, we need to construct the full URL. Vercel's
     // `VERCEL_URL` does not include a protocol, so we normalize it to ensure we
