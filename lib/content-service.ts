@@ -10,7 +10,6 @@ type ContentUpdate = Database["public"]["Tables"]["content"]["Update"]
 
 // Helper function to get the current Firebase user
 import type { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies'
-import { cookies as nextCookies } from 'next/headers'
 
 async function getAuthenticatedUser(cookieStore?: ReadonlyRequestCookies): Promise<any | null> {
   try {
@@ -24,6 +23,8 @@ async function getAuthenticatedUser(cookieStore?: ReadonlyRequestCookies): Promi
       let store = cookieStore
       if (!store) {
         try {
+          // Dynamically import next/headers only when needed in server environment
+          const { cookies: nextCookies } = await import('next/headers')
           store = await nextCookies()
         } catch {
           store = undefined
