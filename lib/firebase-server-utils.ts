@@ -143,7 +143,10 @@ export async function requireAuthServer(request: Request): Promise<{
   return validation.user
 }
 
-export async function getServerSideUser(cookieStore: ReadonlyRequestCookies): Promise<{
+export async function getServerSideUser(
+  cookieStore: ReadonlyRequestCookies, 
+  requestUrl?: string
+): Promise<{
   uid: string
   email?: string
   emailVerified?: boolean
@@ -152,11 +155,13 @@ export async function getServerSideUser(cookieStore: ReadonlyRequestCookies): Pr
     const sessionCookie = cookieStore.get('firebase-session')
 
     if (!sessionCookie?.value) {
+      logger.warn('Server-side user: No session cookie found')
       return null
     }
 
     // Use direct Firebase Admin validation for better reliability
-    const validation = await validateFirebaseTokenServer(sessionCookie.value)
+    // Pass the request URL for proper base URL construction
+    const validation = await validateFirebaseTokenServer(sessionCookie.value, requestUrl)
     
     if (!validation.isValid || !validation.user) {
       logger.warn('Server-side user validation failed:', validation.error)

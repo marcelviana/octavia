@@ -1,5 +1,5 @@
 import { getServerSideUser } from "@/lib/firebase-server-utils";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { getUserContentPageServer } from "@/lib/content-service-server";
 import LibraryPageClient from "@/components/library-page-client";
 
@@ -10,7 +10,14 @@ export default async function LibraryPage({
 }) {
   // Get user info - middleware already handles authentication, so this should always succeed
   const cookieStore = await cookies();
-  const user = await getServerSideUser(cookieStore);
+  const headersList = await headers();
+  
+  // Construct the request URL for proper token validation
+  const host = headersList.get('host');
+  const protocol = headersList.get('x-forwarded-proto') || 'https';
+  const requestUrl = host ? `${protocol}://${host}/library` : undefined;
+  
+  const user = await getServerSideUser(cookieStore, requestUrl);
   
   // If no user despite middleware check, something is wrong with token validation
   if (!user) {
@@ -40,7 +47,8 @@ export default async function LibraryPage({
       pageSize,
       search,
     },
-    cookieStore
+    cookieStore,
+    requestUrl
   );
 
   return (
