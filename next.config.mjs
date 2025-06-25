@@ -33,6 +33,34 @@ const nextConfig = {
         ...config.resolve.alias,
         canvas: false,
       };
+      
+      // Prevent Node.js built-in modules from being bundled on the client
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+        crypto: false,
+        path: false,
+        os: false,
+        stream: false,
+        util: false,
+        url: false,
+        buffer: false,
+        process: false,
+        // Add node: prefixed modules
+        'node:process': false,
+        'node:stream': false,
+        'node:crypto': false,
+        'node:util': false,
+        'node:url': false,
+        'node:buffer': false,
+        'node:path': false,
+        'node:os': false,
+        'node:fs': false,
+        'node:net': false,
+        'node:tls': false,
+      };
     }
     
     // Allow loading of PDF.js worker

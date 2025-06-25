@@ -1,8 +1,30 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
-import { validateFirebaseTokenServer } from '@/lib/firebase-server-utils'
 
-export const runtime = 'nodejs'
+export const runtime = 'edge' // Use Edge Runtime for better performance
+
+// Simple token validation via API endpoint
+async function validateTokenViaAPI(token: string, baseUrl: string): Promise<boolean> {
+  try {
+    const response = await fetch(`${baseUrl}/api/auth/verify`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ token }),
+    })
+    
+    if (response.ok) {
+      const result = await response.json()
+      return result.success === true
+    }
+    
+    return false
+  } catch (error) {
+    console.error('Token validation failed in middleware:', error)
+    return false
+  }
+}
 
 export async function middleware(request: NextRequest) {
   const response = NextResponse.next({
@@ -36,12 +58,13 @@ export async function middleware(request: NextRequest) {
   // Validate token using API-based validation (Edge Runtime compatible)
   if (token) {
     try {
-      const validation = await validateFirebaseTokenServer(token, request.url)
-      if (validation.isValid) {
-        isAuthenticated = true
+      const baseUrl = new URL(request.url).origin
+      isAuthenticated = await validateTokenViaAPI(token, baseUrl)
+      
+      if (isAuthenticated) {
         console.log('Middleware: Token validation successful for', request.nextUrl.pathname)
       } else {
-        console.log('Middleware: Token validation failed:', validation.error)
+        console.log('Middleware: Token validation failed')
       }
     } catch (error) {
       console.error('Token validation failed in middleware:', error)

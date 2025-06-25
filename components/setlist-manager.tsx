@@ -19,6 +19,7 @@ import {
   GripVertical,
   Star,
   Sparkles,
+  Search,
 } from "lucide-react"
 import {
   Dialog,
@@ -81,6 +82,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
   const [selectedSongsToAdd, setSelectedSongsToAdd] = useState<string[]>([])
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
   const [setlistToDelete, setSetlistToDelete] = useState<SetlistWithSongs | null>(null)
+  const [songFilter, setSongFilter] = useState("")
   const [newSetlistData, setNewSetlistData] = useState({
     name: "",
     description: "",
@@ -282,6 +284,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
       // Close dialog and reset selection after successful addition
       setIsAddSongsDialogOpen(false)
       setSelectedSongsToAdd([])
+      setSongFilter("")
 
       // Reload data to get updated setlist without showing loading screen
       const [updatedSetlists, updatedContent] = await Promise.all([
@@ -484,6 +487,14 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
   const availableSongs = availableContent.filter(
     (content) => !selectedSetlist?.setlist_songs?.some((setlistSong) => setlistSong.content?.id === content.id),
   )
+
+  // Filter songs based on search term
+  const filteredSongs = availableSongs.filter((song) => {
+    const searchTerm = songFilter.toLowerCase()
+    const titleMatch = song.title?.toLowerCase().includes(searchTerm)
+    const artistMatch = song.artist?.toLowerCase().includes(searchTerm)
+    return titleMatch || artistMatch
+  })
 
   if (loading) {
     return (
@@ -874,85 +885,112 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                               </Button>
                             </DialogTrigger>
                             <DialogContent
-                              className="max-w-4xl max-h-[85vh] w-[95vw] sm:w-full bg-white/95 backdrop-blur-sm border border-amber-200"
+                              className="max-w-4xl h-[90vh] w-[95vw] sm:w-full bg-white/95 backdrop-blur-sm border border-amber-200 flex flex-col"
                               onInteractOutside={(e) => e.preventDefault()}
                               onClick={(e) => e.stopPropagation()}
                             >
-                                            <DialogHeader>
-                <DialogTitle className="text-2xl font-bold text-gray-900 flex items-center">
-                  <Music className="w-6 h-6 mr-3 text-amber-500" />
-                  Add Songs to &quot;{selectedSetlist?.name}&quot;
-                </DialogTitle>
-                <DialogDescription className="text-gray-600 text-lg">
-                  Select songs to add to this setlist
-                </DialogDescription>
-              </DialogHeader>
-              <div className="space-y-6">
+                              <DialogHeader className="flex-shrink-0 pb-4">
+                                <DialogTitle className="text-xl sm:text-2xl font-bold text-gray-900 flex items-center">
+                                  <Music className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-3 text-amber-500" />
+                                  Add Songs to &quot;{selectedSetlist?.name}&quot;
+                                </DialogTitle>
+                                <DialogDescription className="text-sm sm:text-base text-gray-600">
+                                  Select songs to add to this setlist
+                                </DialogDescription>
+                              </DialogHeader>
+              
+                              <div className="flex-1 flex flex-col space-y-4 min-h-0">
+                                {/* Search/Filter Input */}
+                                <div className="flex-shrink-0">
+                                  <div className="relative">
+                                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                                    <Input
+                                      placeholder="Search songs by title or artist..."
+                                      value={songFilter}
+                                      onChange={(e) => setSongFilter(e.target.value)}
+                                      className="pl-10 border-amber-300 focus:border-amber-500 focus:ring-amber-500"
+                                    />
+                                  </div>
+                                </div>
 
-                                <ScrollArea className="h-64 sm:h-96 border border-amber-300 rounded-xl p-3 sm:p-6 bg-amber-50/50">
-                                  {availableSongs.length === 0 ? (
-                                                                          <div className="text-center py-8 sm:py-16 text-gray-500">
-                                        <Music className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4 sm:mb-6 opacity-50" />
-                                        <p className="text-lg sm:text-xl">No additional songs available to add.</p>
-                                        <p className="text-sm sm:text-lg mt-2">All songs from your library are already in this setlist.</p>
-                                      </div>
-                                  ) : (
-                                    <div className="space-y-4">
-                                      {availableSongs.map((song) => (
-                                        <div
-                                          key={song.id}
-                                          className="flex items-center space-x-3 sm:space-x-4 p-3 sm:p-4 rounded-xl hover:bg-white/60 transition-all duration-300 border border-amber-200"
-                                        >
-                                          <Checkbox
-                                            id={`song-${song.id}`}
-                                            checked={selectedSongsToAdd.includes(song.id)}
-                                            onCheckedChange={(checked) => handleSongSelection(song.id, checked as boolean)}
-                                            className="w-5 h-5"
-                                          />
-                                          <div className="flex-1 min-w-0">
-                                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                                              <div className="min-w-0">
-                                                <p className="font-bold text-gray-900 text-base sm:text-lg truncate">{song.title}</p>
-                                                <p className="text-gray-600 text-sm truncate">{song.artist || "Unknown Artist"}</p>
-                                              </div>
-                                              <div className="flex items-center space-x-2 sm:space-x-4 text-gray-600 flex-shrink-0">
-                                                <Badge
-                                                  variant="secondary"
-                                                  className="bg-blue-100 text-blue-600 border-blue-300 text-xs sm:text-sm"
-                                                >
-                                                  {song.key || "N/A"}
-                                                </Badge>
-                                                <span className="text-xs sm:text-sm">{song.bpm ? `${song.bpm} BPM` : "N/A"}</span>
-                                                <Badge variant="outline" className="border-amber-300 text-amber-600 text-xs sm:text-sm">
-                                                  {song.content_type}
-                                                </Badge>
+                                {/* Scrollable Song List */}
+                                <div className="flex-1 min-h-0">
+                                  <ScrollArea className="h-full border border-amber-300 rounded-xl bg-amber-50/50">
+                                    <div className="p-3 sm:p-4">
+                                      {availableSongs.length === 0 ? (
+                                        <div className="text-center py-8 sm:py-16 text-gray-500">
+                                          <Music className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4 sm:mb-6 opacity-50" />
+                                          <p className="text-lg sm:text-xl">No additional songs available to add.</p>
+                                          <p className="text-sm sm:text-lg mt-2">All songs from your library are already in this setlist.</p>
+                                        </div>
+                                      ) : filteredSongs.length === 0 ? (
+                                        <div className="text-center py-8 sm:py-16 text-gray-500">
+                                          <Search className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4 sm:mb-6 opacity-50" />
+                                          <p className="text-lg sm:text-xl">No songs match your search.</p>
+                                          <p className="text-sm sm:text-lg mt-2">Try adjusting your search terms.</p>
+                                        </div>
+                                      ) : (
+                                        <div className="space-y-3">
+                                          {filteredSongs.map((song) => (
+                                            <div
+                                              key={song.id}
+                                              className="flex items-center space-x-3 sm:space-x-4 p-3 sm:p-4 rounded-xl hover:bg-white/60 transition-all duration-300 border border-amber-200"
+                                            >
+                                              <Checkbox
+                                                id={`song-${song.id}`}
+                                                checked={selectedSongsToAdd.includes(song.id)}
+                                                onCheckedChange={(checked) => handleSongSelection(song.id, checked as boolean)}
+                                                className="w-5 h-5"
+                                              />
+                                              <div className="flex-1 min-w-0">
+                                                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                                                  <div className="min-w-0">
+                                                    <p className="font-bold text-gray-900 text-base sm:text-lg truncate">{song.title}</p>
+                                                    <p className="text-gray-600 text-sm truncate">{song.artist || "Unknown Artist"}</p>
+                                                  </div>
+                                                  <div className="flex items-center space-x-2 sm:space-x-4 text-gray-600 flex-shrink-0">
+                                                    <Badge
+                                                      variant="secondary"
+                                                      className="bg-blue-100 text-blue-600 border-blue-300 text-xs sm:text-sm"
+                                                    >
+                                                      {song.key || "N/A"}
+                                                    </Badge>
+                                                    <span className="text-xs sm:text-sm">{song.bpm ? `${song.bpm} BPM` : "N/A"}</span>
+                                                    <Badge variant="outline" className="border-amber-300 text-amber-600 text-xs sm:text-sm">
+                                                      {song.content_type}
+                                                    </Badge>
+                                                  </div>
+                                                </div>
                                               </div>
                                             </div>
-                                          </div>
+                                          ))}
                                         </div>
-                                      ))}
+                                      )}
                                     </div>
-                                  )}
-                                </ScrollArea>
+                                  </ScrollArea>
+                                </div>
 
+                                {/* Selected Songs Summary */}
                                 {selectedSongsToAdd.length > 0 && (
-                                  <div className="p-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl border border-amber-200">
-                                    <p className="text-gray-900 font-medium text-lg">
+                                  <div className="flex-shrink-0 p-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl border border-amber-200">
+                                    <p className="text-gray-900 font-medium text-base sm:text-lg">
                                       {selectedSongsToAdd.length} song{selectedSongsToAdd.length !== 1 ? "s" : ""} selected
                                     </p>
                                   </div>
                                 )}
 
-                                <div className="flex justify-end space-x-3">
+                                {/* Action Buttons */}
+                                <div className="flex-shrink-0 flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-3">
                                   <Button
                                     variant="outline"
                                     onClick={(e) => {
                                       e.preventDefault()
                                       e.stopPropagation()
                                       setSelectedSongsToAdd([])
+                                      setSongFilter("")
                                       setIsAddSongsDialogOpen(false)
                                     }}
-                                    className="border-amber-300 text-amber-700 hover:bg-amber-50 px-6 py-2 text-base"
+                                    className="border-amber-300 text-amber-700 hover:bg-amber-50 px-6 py-2 text-base w-full sm:w-auto"
                                   >
                                     Cancel
                                   </Button>
@@ -963,7 +1001,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                                       addSelectedSongs()
                                     }}
                                     disabled={selectedSongsToAdd.length === 0 || addingSongs}
-                                    className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-6 py-2 text-base"
+                                    className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-6 py-2 text-base w-full sm:w-auto"
                                   >
                                     {addingSongs ? (
                                       <>
