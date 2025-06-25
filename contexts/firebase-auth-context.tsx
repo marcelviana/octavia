@@ -365,6 +365,8 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
         await Promise.all([
           clearOfflineContent(uid),
           clearOfflineSetlists(uid),
+          clearOfflineContent('anon'),
+          clearOfflineSetlists('anon'),
         ])
       } catch (err) {
         logger.warn("Failed to clear offline data:", err)

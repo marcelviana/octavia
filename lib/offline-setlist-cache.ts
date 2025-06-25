@@ -1,13 +1,11 @@
 import localforage from 'localforage'
-import { getSupabaseBrowserClient, getSessionSafe } from './supabase'
+import { auth } from './firebase'
 
 const STORE_KEY_BASE = 'octavia-offline-setlists'
 
 async function getUserId(): Promise<string | null> {
   try {
-    const supabase = getSupabaseBrowserClient()
-    const session = await getSessionSafe()
-    return session?.user?.id || null
+    return auth?.currentUser?.uid || null
   } catch {
     return null
   }
