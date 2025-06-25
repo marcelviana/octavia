@@ -53,9 +53,14 @@ export function useSetlistData(user: any | null, ready: boolean): UseSetlistData
         return
       }
 
+      const supabaseUser =
+        user && typeof (user as any).uid === "string"
+          ? { id: (user as any).uid, email: (user as any).email }
+          : undefined
+
       const [setsResult, contentResult] = await Promise.allSettled([
-        getUserSetlists(user),
-        getUserContent(undefined, user),
+        getUserSetlists(supabaseUser),
+        getUserContent(undefined, supabaseUser),
       ])
 
       const setsData =
