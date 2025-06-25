@@ -30,28 +30,21 @@ export async function validateFirebaseTokenServer(
       }
     }
 
-    // Construct the verification URL. Prefer environment variables but fall
-    // back to the current request origin when available.
+    // Construct the verification URL. Prefer environment variables but
+    // fall back to the current request origin when available.
     let baseUrl = process.env.NEXTAUTH_URL || process.env.VERCEL_URL
 
     if (!baseUrl && requestUrl) {
       try {
         baseUrl = new URL(requestUrl.toString()).origin
       } catch {
-        // If URL parsing fails, use fallback
         baseUrl = undefined
       }
     }
 
     if (!baseUrl) {
-      // Hardcode production URL for now to avoid issues
-      if (process.env.NODE_ENV === 'production') {
-        baseUrl = 'https://octavia.rocks'
-      } else {
-        baseUrl = 'http://localhost:3000'
-      }
-      logger.warn(
-        'Using hardcoded base URL for token verification; set NEXTAUTH_URL or VERCEL_URL for better reliability'
+      throw new Error(
+        'Base URL for token verification not configured; set NEXTAUTH_URL or VERCEL_URL'
       )
     }
 
