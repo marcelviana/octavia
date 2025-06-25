@@ -169,36 +169,24 @@ export function Library({
   };
 
   const confirmDelete = async () => {
-    if (!contentToDelete || !user) return;
+    if (!contentToDelete || !user) return
 
     try {
-      await deleteContent(contentToDelete.id);
+      await deleteContent(contentToDelete.id)
       try {
         await removeCachedContent(contentToDelete.id)
       } catch (err) {
         console.error('Failed to remove cached content', err)
       }
-      const controller = new AbortController()
-      const { data, total } = await getUserContentPage({
-        page,
-        pageSize,
-        search: searchQuery,
-        sortBy,
-        filters: selectedFilters,
-      }, undefined, { id: user.uid, email: user.email }, controller.signal);
-      setContent(data);
-      setTotalCount(total);
-      try {
-        await saveContent(data)
-      } catch (err) {
-        console.error('Failed to cache offline content', err)
-      }
-      setDeleteDialog(false);
-      setContentToDelete(null);
+
+      await reload()
+
+      setDeleteDialog(false)
+      setContentToDelete(null)
     } catch (error) {
-      console.error("Error deleting content:", error);
+      console.error('Error deleting content:', error)
     }
-  };
+  }
 
   return (
     <div className="p-6 bg-gradient-to-b from-[#fff9f0] to-[#fff5e5] min-h-screen">

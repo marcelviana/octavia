@@ -40,7 +40,9 @@ import {
   removeSongFromSetlist,
   updateSongPosition,
   updateSetlist,
+  getUserSetlists,
 } from "@/lib/setlist-service"
+import { getUserContent as getContentList } from "@/lib/content-service"
 import type { Database } from "@/types/supabase"
 import { useAuth } from "@/contexts/firebase-auth-context"
 import { cn } from "@/lib/utils"
@@ -167,7 +169,6 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
       setIsCreateDialogOpen(false)
     } catch (err) {
       console.error("Error creating setlist:", err)
-      setError("Failed to create setlist. Please try again.")
     }
   }
 
@@ -191,7 +192,6 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
       }
     } catch (err) {
       console.error("Error deleting setlist:", err)
-      setError("Failed to delete setlist. Please try again.")
     }
   }
 
@@ -255,7 +255,6 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
 
     } catch (err) {
       console.error("Error updating setlist:", err)
-      setError("Failed to update setlist. Please try again.")
     }
   }
 
@@ -309,7 +308,6 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
 
     } catch (err) {
       console.error("Error adding songs to setlist:", err)
-      setError("Failed to add songs to setlist. Please try again.")
     } finally {
       setAddingSongs(false)
     }
@@ -360,7 +358,6 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
 
     } catch (err) {
       console.error("Error removing song from setlist:", err)
-      setError("Failed to remove song from setlist. Please try again.")
       
       // Revert the optimistic update by reloading from server
       try {
@@ -453,11 +450,10 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
       
     } catch (err) {
       console.error('Error updating song position:', err)
-      setError("Failed to reorder songs. Please try again.")
       
       // Revert the optimistic update by reloading from server
       try {
-        await reload()
+      await reload()
       } catch (reloadErr) {
         console.error('Failed to reload data after error:', reloadErr)
       }

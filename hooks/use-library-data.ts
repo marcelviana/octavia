@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useCallback, useRef, type Dispatch, type SetStateAction } from 'react'
 import { useDebounce } from '@/hooks/use-debounce'
 import { getUserContentPage } from '@/lib/content-service'
 import { saveContent, getCachedContent } from '@/lib/offline-cache'
@@ -25,15 +25,15 @@ export interface UseLibraryDataResult {
   content: any[]
   totalCount: number
   page: number
-  setPage: (n: number) => void
+  setPage: Dispatch<SetStateAction<number>>
   pageSize: number
-  setPageSize: (n: number) => void
+  setPageSize: Dispatch<SetStateAction<number>>
   searchQuery: string
   setSearchQuery: (v: string) => void
   sortBy: 'recent' | 'title' | 'artist'
   setSortBy: (v: 'recent' | 'title' | 'artist') => void
   selectedFilters: Filters
-  setSelectedFilters: (f: Filters) => void
+  setSelectedFilters: Dispatch<SetStateAction<Filters>>
   loading: boolean
   reload: () => Promise<void>
 }
