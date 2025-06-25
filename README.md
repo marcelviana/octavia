@@ -112,10 +112,9 @@ The `ALLOWED_PROXY_HOSTS` variable controls which domains the
 offline cache proxy will fetch from. Add any additional hosts
 you need for external imports (comma‑separated).
 
-For server-side Firebase token validation, set `NEXTAUTH_URL` to your site's
-base URL (including `https://`). When deploying on Vercel you can rely on the
-`VERCEL_URL` environment variable instead. These values are used to construct
-the absolute URL for `/api/auth/verify`.
+Authentication tokens are now verified directly using the Firebase Admin SDK in
+middleware. No additional URLs are required, and results are cached to allow
+offline access.
 
 ### First Steps
 1. **Import Content**: Start by uploading your existing sheet music and tabs

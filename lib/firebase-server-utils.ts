@@ -4,6 +4,18 @@
 import logger from './logger'
 import type { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies'
 
+// Simple runtime check so we only use firebase-admin on Node.js
+function isNodeJsRuntime(): boolean {
+  try {
+    return typeof process !== 'undefined' && !!process.versions?.node
+  } catch {
+    return false
+  }
+}
+
+// Cache verification results to avoid repeated validation and allow offline use
+const tokenCache = new Map<string, { result: ServerAuthResult; exp: number }>()
+
 export interface ServerAuthResult {
   isValid: boolean
   user?: {
@@ -24,14 +36,39 @@ export async function validateFirebaseTokenServer(
 ): Promise<ServerAuthResult> {
   try {
     if (!idToken) {
-      return {
-        isValid: false,
-        error: 'Missing ID token'
+      return { isValid: false, error: 'Missing ID token' }
+    }
+
+    const now = Date.now()
+    const cached = tokenCache.get(idToken)
+    if (cached && cached.exp > now) {
+      return cached.result
+    }
+
+    if (isNodeJsRuntime()) {
+      try {
+        const { verifyFirebaseToken } = await import('./firebase-admin')
+        const decoded = await verifyFirebaseToken(idToken)
+        const result: ServerAuthResult = {
+          isValid: true,
+          user: {
+            uid: decoded.uid,
+            email: decoded.email,
+            emailVerified: decoded.email_verified
+          }
+        }
+        const exp = (decoded.exp ?? Math.floor(now / 1000 + 3600)) * 1000
+        tokenCache.set(idToken, { result, exp })
+        return result
+      } catch (err: any) {
+        logger.error('Direct token verification failed:', err.message)
+        if (cached) {
+          return cached.result
+        }
       }
     }
 
-    // Construct the verification URL. Prefer environment variables but
-    // fall back to the current request origin when available.
+    // Fallback to API-based verification (used when running on Edge)
     let baseUrl = process.env.NEXTAUTH_URL || process.env.VERCEL_URL
 
     if (!baseUrl && requestUrl) {
@@ -42,62 +79,54 @@ export async function validateFirebaseTokenServer(
       }
     }
 
-    if (!baseUrl) {
-      throw new Error(
-        'Base URL for token verification not configured; set NEXTAUTH_URL or VERCEL_URL'
-      )
-    }
-
-    // Log the base URL being used for debugging
-    logger.log(`Using base URL for token verification: ${baseUrl}`)
-    logger.log(`Environment: NODE_ENV=${process.env.NODE_ENV}, NEXTAUTH_URL=${process.env.NEXTAUTH_URL}, VERCEL_URL=${process.env.VERCEL_URL}`)
-
-    if (!/^https?:\/\//.test(baseUrl)) {
-      baseUrl = `https://${baseUrl}`
-    }
-
-    const apiUrl = new URL('/api/auth/verify', baseUrl).toString()
-
-    const response = await fetch(apiUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ token: idToken }),
-    })
-
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}))
-      return {
-        isValid: false,
-        error: errorData.error || `HTTP ${response.status}: ${response.statusText}`
+    if (baseUrl) {
+      if (!/^https?:\/\//.test(baseUrl)) {
+        baseUrl = `https://${baseUrl}`
       }
-    }
 
-    const result = await response.json()
-    
-    if (result.success && result.user) {
-      return {
-        isValid: true,
-        user: {
-          uid: result.user.uid,
-          email: result.user.email,
-          emailVerified: result.user.emailVerified
+      const apiUrl = new URL('/api/auth/verify', baseUrl).toString()
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token: idToken })
+        })
+
+        if (response.ok) {
+          const result = await response.json()
+          if (result.success && result.user) {
+            const res: ServerAuthResult = {
+              isValid: true,
+              user: {
+                uid: result.user.uid,
+                email: result.user.email,
+                emailVerified: result.user.emailVerified
+              }
+            }
+            tokenCache.set(idToken, {
+              result: res,
+              exp: now + 60 * 60 * 1000 // cache 1h when using API
+            })
+            return res
+          }
+          return { isValid: false, error: result.error || 'Token validation failed' }
+        }
+
+        const errorData = await response.json().catch(() => ({}))
+        return { isValid: false, error: errorData.error || `HTTP ${response.status}: ${response.statusText}` }
+      } catch (err: any) {
+        logger.error('Token verification fetch failed:', err.message)
+        if (cached) {
+          return cached.result
         }
       }
-    } else {
-      return {
-        isValid: false,
-        error: result.error || 'Token validation failed'
-      }
     }
+
+    return { isValid: false, error: 'Token validation failed' }
   } catch (error: any) {
     logger.error('Firebase token validation failed:', error.message)
-    
-    return {
-      isValid: false,
-      error: error.message || 'Token validation failed'
-    }
+    return { isValid: false, error: error.message || 'Token validation failed' }
   }
 }
 
