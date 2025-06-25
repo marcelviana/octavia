@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 import { Sidebar } from "@/components/sidebar";
 import { Header } from "@/components/header";
 import { cn } from "@/lib/utils";
-import { updateContent } from "@/lib/content-service";
+import { updateContent, clearContentCache } from "@/lib/content-service";
 import { toast } from "sonner";
 import { cacheFileForContent } from "@/lib/offline-cache";
 
@@ -39,11 +39,15 @@ export default function ContentEditPageClient({ content }: ContentEditPageClient
 
   const handleSave = async (updatedContent: any) => {
     try {
+      console.log('Starting save process for:', content.title)
       await updateContent(content.id, updatedContent);
+      clearContentCache();
+      console.log('Content cache cleared after update')
       toast.success("Changes saved successfully");
-      router.push(`/content/${content.id}`);
+      router.push("/library");
     } catch (err) {
       console.error("Error saving content:", err);
+      toast.error("Failed to save changes");
     }
   };
 

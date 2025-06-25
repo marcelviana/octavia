@@ -45,12 +45,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { deleteContent } from "@/lib/content-service";
+import { deleteContent, clearContentCache } from "@/lib/content-service";
 import { MusicText } from "@/components/music-text";
 import Image from "next/image";
 import PdfViewer from "@/components/pdf-viewer";
 import { ContentType } from "@/types/content";
 import { getContentTypeStyle } from "@/lib/content-type-styles";
+import { toast } from "sonner";
 
 interface ContentViewerProps {
   content: any;
@@ -142,10 +143,13 @@ export function ContentViewer({
   const confirmDelete = async () => {
     try {
       await deleteContent(content.id);
+              clearContentCache();
+      toast.success(`"${content.title}" has been deleted`);
       setDeleteDialog(false);
       onBack();
     } catch (error) {
       console.error("Error deleting content:", error);
+      toast.error("Failed to delete content. Please try again.");
     }
   };
 

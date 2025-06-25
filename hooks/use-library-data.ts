@@ -64,8 +64,9 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
   })
   const [loading, setLoading] = useState(false)
   const inProgressRef = useRef(false)
+  const lastFocusTimeRef = useRef(Date.now())
 
-  const load = useCallback(async () => {
+  const load = useCallback(async (forceRefresh = false) => {
     if (!user || inProgressRef.current) return
     inProgressRef.current = true
     try {
@@ -76,6 +77,7 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
         search: debouncedSearch,
         sortBy,
         filters: selectedFilters,
+        useCache: !forceRefresh,
       }, undefined, { id: user.uid, email: user.email })
 
       setContent(data || [])
@@ -104,6 +106,34 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
     }
   }, [ready, load])
 
+  // Add window focus listener to refresh data when user returns to the tab
+  useEffect(() => {
+    const handleWindowFocus = () => {
+      const now = Date.now()
+      // Only refresh if it's been more than 5 seconds since last focus
+      // This prevents excessive refreshing when quickly switching tabs
+      if (ready && user && (now - lastFocusTimeRef.current) > 5000) {
+        console.log('Window focused, refreshing library data...')
+        load(true) // Force refresh to bypass cache
+      }
+      lastFocusTimeRef.current = now
+    }
+
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        handleWindowFocus()
+      }
+    }
+
+    window.addEventListener('focus', handleWindowFocus)
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+
+    return () => {
+      window.removeEventListener('focus', handleWindowFocus)
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+    }
+  }, [ready, user, load])
+
   return {
     content,
     totalCount,
@@ -118,6 +148,6 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
     selectedFilters,
     setSelectedFilters,
     loading,
-    reload: load,
+    reload: () => load(true), // Force refresh to bypass cache
   }
 }

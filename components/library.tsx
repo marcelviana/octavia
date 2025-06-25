@@ -42,8 +42,9 @@ import {
   Clock,
   ChevronDown,
   BookOpen,
+  RefreshCw,
 } from "lucide-react";
-import { getUserContentPage, deleteContent } from "@/lib/content-service";
+import { getUserContentPage, deleteContent, clearContentCache } from "@/lib/content-service";
 import { useFirebaseAuth } from "@/contexts/firebase-auth-context";
 import {
   Pagination,
@@ -172,6 +173,7 @@ export function Library({
     if (!contentToDelete || !user) return
 
     try {
+      console.log('Starting delete process for:', contentToDelete.title)
       await deleteContent(contentToDelete.id)
       try {
         await removeCachedContent(contentToDelete.id)
@@ -179,40 +181,62 @@ export function Library({
         console.error('Failed to remove cached content', err)
       }
 
+      // Clear the content cache to ensure fresh data on reload
+      clearContentCache()
+      
+      toast.success(`"${contentToDelete.title}" has been deleted`)
+      console.log('Reloading library after delete...')
       await reload()
+      console.log('Library reload completed')
 
       setDeleteDialog(false)
       setContentToDelete(null)
     } catch (error) {
       console.error('Error deleting content:', error)
+      toast.error('Failed to delete content. Please try again.')
     }
   }
 
   return (
-    <div className="p-6 bg-gradient-to-b from-[#fff9f0] to-[#fff5e5] min-h-screen">
+    <div className="p-3 sm:p-6 bg-gradient-to-b from-[#fff9f0] to-[#fff5e5] min-h-screen">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
-        <div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
-            Your Music Library
-          </h1>
-          <p className="text-[#A69B8E] mt-1">
-            Manage and organize all your musical content
-          </p>
+      <div className="flex flex-col gap-4 mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
+              Your Music Library
+            </h1>
+            <p className="text-[#A69B8E] mt-1 text-sm sm:text-base">
+              Manage and organize all your musical content
+            </p>
+          </div>
+          <div className="flex gap-2 self-start sm:self-auto">
+            <Button
+              onClick={reload}
+              variant="outline"
+              className="border-amber-200 bg-white hover:bg-amber-50 text-sm"
+              disabled={loading}
+              size="sm"
+            >
+              <RefreshCw className={`w-4 h-4 sm:mr-2 ${loading ? 'animate-spin' : ''}`} />
+              <span className="hidden sm:inline">Refresh</span>
+            </Button>
+            <Button
+              onClick={handleAddContent}
+              className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 text-sm"
+              size="sm"
+            >
+              <Plus className="w-4 h-4 sm:mr-2" />
+              <span className="hidden sm:inline">Add Content</span>
+            </Button>
+          </div>
         </div>
-        <Button
-          onClick={handleAddContent}
-          className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-        >
-          <Plus className="w-4 h-4 mr-2" />
-          Add Content
-        </Button>
       </div>
 
       {/* Search and Filters */}
       <div className="mb-6">
-        <div className="flex flex-col md:flex-row gap-4">
-          <div className="relative flex-1">
+        <div className="flex flex-col gap-3">
+          <div className="relative">
             <Search
               className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
               size={18}
@@ -224,16 +248,17 @@ export function Library({
               className="pl-10 bg-white border-amber-200 focus:border-amber-400 focus:ring focus:ring-amber-200 focus:ring-opacity-50"
             />
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-col sm:flex-row gap-2">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="outline"
-                  className="border-amber-200 bg-white hover:bg-amber-50"
+                  className="border-amber-200 bg-white hover:bg-amber-50 justify-start text-sm"
+                  size="sm"
                 >
                   <Filter className="w-4 h-4 mr-2" />
                   Filters
-                  <ChevronDown className="w-4 h-4 ml-2" />
+                  <ChevronDown className="w-4 h-4 ml-auto" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56">
@@ -256,7 +281,7 @@ export function Library({
                               ? "default"
                               : "outline"
                           }
-                          className="cursor-pointer"
+                          className="cursor-pointer text-xs"
                           onClick={() => {
                             setSelectedFilters((prev) => ({
                               ...prev,
@@ -288,7 +313,7 @@ export function Library({
                               ? "default"
                               : "outline"
                           }
-                          className="cursor-pointer"
+                          className="cursor-pointer text-xs"
                           onClick={() => {
                             setSelectedFilters((prev) => ({
                               ...prev,
@@ -332,7 +357,7 @@ export function Library({
                 setSortBy(value as "recent" | "title" | "artist")
               }
             >
-              <SelectTrigger className="w-[180px] border-amber-200 bg-white hover:bg-amber-50">
+              <SelectTrigger className="w-full sm:w-[180px] border-amber-200 bg-white hover:bg-amber-50 text-sm">
                 <SelectValue placeholder="Sort by" />
               </SelectTrigger>
               <SelectContent>
@@ -341,8 +366,6 @@ export function Library({
                 <SelectItem value="artist">Artist (A-Z)</SelectItem>
               </SelectContent>
             </Select>
-
-
           </div>
         </div>
       </div>
@@ -387,7 +410,7 @@ export function Library({
         />
       )}
 
-      <div className="mt-6 flex items-center justify-between">
+      <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
         <Select
           value={String(pageSize)}
           onValueChange={(v) => {
@@ -395,7 +418,7 @@ export function Library({
             setPage(1);
           }}
         >
-          <SelectTrigger className="w-[100px] border-amber-200 bg-white hover:bg-amber-50">
+          <SelectTrigger className="w-full sm:w-[100px] border-amber-200 bg-white hover:bg-amber-50 text-sm">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -404,27 +427,42 @@ export function Library({
             <SelectItem value="100">100</SelectItem>
           </SelectContent>
         </Select>
-        <Pagination className="ml-auto">
-          <PaginationContent>
+        <Pagination className="w-full sm:w-auto">
+          <PaginationContent className="flex-wrap justify-center">
             <PaginationItem>
               <PaginationPrevious
-                className={cn(page === 1 && "pointer-events-none opacity-50")}
+                className={cn(page === 1 && "pointer-events-none opacity-50", "text-sm")}
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
               />
             </PaginationItem>
-            {Array.from({ length: totalPages }).map((_, i) => (
-              <PaginationItem key={i}>
-                <PaginationLink
-                  isActive={page === i + 1}
-                  onClick={() => setPage(i + 1)}
-                >
-                  {i + 1}
-                </PaginationLink>
-              </PaginationItem>
-            ))}
+            {Array.from({ length: Math.min(totalPages, 5) }).map((_, i) => {
+              // Show first, last, and current page with 2 pages around current
+              let pageNum;
+              if (totalPages <= 5) {
+                pageNum = i + 1;
+              } else if (page <= 3) {
+                pageNum = i + 1;
+              } else if (page >= totalPages - 2) {
+                pageNum = totalPages - 4 + i;
+              } else {
+                pageNum = page - 2 + i;
+              }
+              
+              return (
+                <PaginationItem key={pageNum}>
+                  <PaginationLink
+                    isActive={page === pageNum}
+                    onClick={() => setPage(pageNum)}
+                    className="text-sm"
+                  >
+                    {pageNum}
+                  </PaginationLink>
+                </PaginationItem>
+              );
+            })}
             <PaginationItem>
               <PaginationNext
-                className={cn(page === totalPages && "pointer-events-none opacity-50")}
+                className={cn(page === totalPages && "pointer-events-none opacity-50", "text-sm")}
                 onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               />
             </PaginationItem>

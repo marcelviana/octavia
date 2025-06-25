@@ -118,6 +118,12 @@ export async function getUserContent(supabase?: SupabaseClient, providedUser?: a
 // Simple in-memory cache for content queries
 const contentCache = new Map<string, { data: any; timestamp: number; ttl: number }>()
 
+// Function to clear content cache
+export function clearContentCache() {
+  contentCache.clear()
+  console.log('Content cache cleared')
+}
+
 // Cache cleanup function
 function cleanupCache() {
   const now = Date.now()
@@ -159,9 +165,15 @@ export async function getUserContentPage(
   if (useCache) {
     const cached = contentCache.get(cacheKey)
     if (cached && Date.now() < cached.timestamp + cached.ttl) {
-      logger.log("Returning cached content page result")
+      console.log("Returning cached content page result")
       return cached.data
+    } else if (cached) {
+      console.log("Cache expired, fetching fresh data")
+    } else {
+      console.log("No cache found, fetching fresh data")
     }
+  } else {
+    console.log("Cache disabled, fetching fresh data")
   }
 
   try {
@@ -274,7 +286,7 @@ export async function getUserContentPage(
       contentCache.set(cacheKey, {
         data: result,
         timestamp: Date.now(),
-        ttl: 5 * 60 * 1000 // Cache for 5 minutes
+        ttl: 30 * 1000 // Cache for 30 seconds instead of 5 minutes
       })
     }
 
@@ -406,6 +418,9 @@ export async function updateContent(id: string, content: ContentUpdate) {
       throw error
     }
 
+    // Clear cache after update
+    clearContentCache()
+
     return data
   } catch (error) {
     logger.error("Error in updateContent:", error)
@@ -429,6 +444,9 @@ export async function deleteContent(id: string) {
       logger.error("Error deleting content:", error)
       throw error
     }
+
+    // Clear cache after delete
+    clearContentCache()
 
     return true
   } catch (error) {
