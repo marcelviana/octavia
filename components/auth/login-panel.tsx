@@ -244,13 +244,12 @@ export function LoginPanel({ initialError = "" }: { initialError?: string }) {
                   <Label htmlFor="password" className="text-amber-800 font-medium">
                     Password
                   </Label>
-                  <button
-                    type="button"
-                    onClick={() => setError("Password reset not implemented yet")}
+                  <Link
+                    href="/forgot-password"
                     className="text-sm text-amber-600 hover:text-amber-800 hover:underline transition-colors"
                   >
                     Forgot password?
-                  </button>
+                  </Link>
                 </div>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-amber-500 h-4 w-4" />
