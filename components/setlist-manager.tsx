@@ -1,12 +1,7 @@
 "use client"
 
-import React, { useState, useEffect, useRef, useCallback } from "react"
-import {
-  saveSetlists,
-  removeCachedSetlist,
-  getCachedSetlists,
-} from "@/lib/offline-setlist-cache"
-import { getCachedContent } from "@/lib/offline-cache"
+import React, { useState, useEffect, useRef } from "react"
+import { saveSetlists, removeCachedSetlist } from "@/lib/offline-setlist-cache"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -39,18 +34,19 @@ import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import {
-  getUserSetlists,
   createSetlist,
   deleteSetlist,
   addSongToSetlist,
   removeSongFromSetlist,
   updateSongPosition,
   updateSetlist,
+  getUserSetlists,
 } from "@/lib/setlist-service"
 import { getUserContent as getContentList } from "@/lib/content-service"
 import type { Database } from "@/types/supabase"
 import { useAuth } from "@/contexts/firebase-auth-context"
 import { cn } from "@/lib/utils"
+import { useSetlistData } from "@/hooks/use-setlist-data"
 
 
 type Setlist = Database["public"]["Tables"]["setlists"]["Row"]
@@ -70,21 +66,15 @@ interface SetlistManagerProps {
 
 export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
   const { user, isLoading: authLoading, isInitialized } = useAuth()
-  const [setlists, setSetlists] = useState<SetlistWithSongs[]>([])
-  const [availableContent, setAvailableContent] = useState<Content[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const loadInProgressRef = useRef(false)
-  
-  // Debug logging for auth state
-  useEffect(() => {
-    console.log("🔍 SetlistManager Auth State:", {
-      user: user ? `${user.email} (${user.uid})` : "null",
-      authLoading,
-      isInitialized,
-      componentLoading: loading
-    })
-  }, [user, authLoading, isInitialized, loading])
+  const {
+    setlists,
+    setSetlists,
+    content: availableContent,
+    setContent: setAvailableContent,
+    loading,
+    error,
+    reload,
+  } = useSetlistData(user, isInitialized)
   const [selectedSetlist, setSelectedSetlist] = useState<SetlistWithSongs | null>(null)
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
   const [isAddSongsDialogOpen, setIsAddSongsDialogOpen] = useState(false)
@@ -111,183 +101,23 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
     notes: "",
   })
 
-  const loadData = useCallback(async () => {
-    // Prevent concurrent loads
-    if (loadInProgressRef.current) {
-      console.log('⏳ SetlistManager: Load already in progress, skipping...')
-      return
-    }
-    
-    try {
-      loadInProgressRef.current = true
-      setLoading(true)
-      setError(null)
-      console.log("🔄 Starting to load setlists and content...")
-
-      if (typeof navigator !== "undefined" && !navigator.onLine) {
-        console.log("⚠️ Offline detected, loading cached data")
-        const [cachedSets, cachedContent] = await Promise.all([
-          getCachedSetlists(),
-          getCachedContent(),
-        ])
-        setSetlists(cachedSets as SetlistWithSongs[])
-        setAvailableContent(cachedContent)
-        setLoading(false)
-        return
-      }
-      
-      // Skip the redundant auth check - let the service functions handle authentication
-      console.log("📋 Loading setlists and content in parallel...")
-
-      // Add timeout wrapper function
-      const withTimeout = (promise: Promise<any>, timeoutMs: number, operationName: string) => {
-        console.log(`⏱️ Starting ${operationName} with ${timeoutMs}ms timeout`)
-        return Promise.race([
-          promise,
-          new Promise((_, reject) =>
-            setTimeout(() => {
-              console.log(`⏰ ${operationName} timed out after ${timeoutMs}ms`)
-              reject(new Error(`${operationName} timed out after ${timeoutMs}ms`))
-            }, timeoutMs)
-          )
-        ])
-      }
-
-      try {
-        console.log("🚀 Starting Promise.allSettled...")
-        const [setlistsResult, contentResult] = await Promise.allSettled([
-          withTimeout(getUserSetlists(user), 8000, "Setlists loading"),
-          withTimeout(getContentList(undefined, user), 8000, "Content loading"),
-        ])
-        console.log("🎯 Promise.allSettled completed")
-
-        let setlistsData: any[] = []
-        let setlistsFromCache = false
-        if (setlistsResult.status === "fulfilled") {
-          setlistsData = setlistsResult.value
-          console.log(`✅ Setlists loaded:`, setlistsData?.length || 0)
-        } else {
-          console.warn("⚠️ Setlists loading failed:", setlistsResult.reason)
-          console.log("📦 Loading cached setlists as fallback...")
-          setlistsData = await getCachedSetlists()
-          setlistsFromCache = true
-          console.log(`📦 Cached setlists loaded:`, setlistsData?.length || 0)
-        }
-
-        let contentData: any[] = []
-        let contentFromCache = false
-        if (contentResult.status === "fulfilled") {
-          contentData = contentResult.value
-          console.log(`✅ Content loaded:`, contentData?.length || 0)
-        } else {
-          console.warn("⚠️ Content loading failed:", contentResult.reason)
-          console.log("📦 Loading cached content as fallback...")
-          contentData = await getCachedContent()
-          contentFromCache = true
-          console.log(`📦 Cached content loaded:`, contentData?.length || 0)
-        }
-
-        // If both API calls succeeded but returned empty data, and we have cached data, prefer cached data
-        if (setlistsResult.status === "fulfilled" && contentResult.status === "fulfilled" && 
-            setlistsData.length === 0 && contentData.length === 0) {
-          console.log("📦 API returned empty data, checking for cached data...")
-          const [cachedSets, cachedContent] = await Promise.all([
-            getCachedSetlists(),
-            getCachedContent(),
-          ])
-          if (cachedSets.length > 0 || cachedContent.length > 0) {
-            console.log("📦 Using cached data instead of empty API results")
-            setlistsData = cachedSets
-            contentData = cachedContent
-            setlistsFromCache = true
-            contentFromCache = true
-          }
-        }
-
-        // Cache setlists if we have any and they're not from cache
-        if (setlistsData.length > 0 && !setlistsFromCache) {
-          try {
-            console.log("💾 Saving setlists to cache...")
-            await saveSetlists(setlistsData as any[])
-            localStorage.setItem('octavia-setlists-last-load', new Date().toISOString())
-            console.log("✅ Setlists cached successfully")
-          } catch (err) {
-            console.error('❌ Failed to cache offline setlists', err)
-          }
-        } else if (setlistsFromCache) {
-          console.log("📦 Skipping cache save - data is from cache")
-        }
-
-        setSetlists(setlistsData as SetlistWithSongs[])
-        setAvailableContent(contentData)
-        console.log("✅ Data loading completed successfully")
-        
-      } catch (criticalError) {
-        console.error("❌ Critical error during data loading:", criticalError)
-        // Load cached data as fallback instead of throwing
-        console.log("📦 Loading cached data as fallback...")
-        try {
-          const [cachedSets, cachedContent] = await Promise.all([
-            getCachedSetlists(),
-            getCachedContent(),
-          ])
-          setSetlists(cachedSets as SetlistWithSongs[])
-          setAvailableContent(cachedContent)
-          console.log("✅ Cached data loaded successfully")
-        } catch (cacheError) {
-          console.error("❌ Failed to load cached data:", cacheError)
-          setError("Unable to load data. Please check your internet connection and try again.")
-        }
-      }
-      
-    } catch (err) {
-      console.error("❌ Error loading data:", err)
-      setError(err instanceof Error ? err.message : "Failed to load data. Please try again.")
-    } finally {
-      loadInProgressRef.current = false
-      setLoading(false)
-      console.log("🏁 Loading process finished")
-    }
-  }, [user])
-
-  // Load data when auth is ready and user is available
-  useEffect(() => {
-    if (isInitialized && user) {
-      console.log("🔄 Auth ready, loading data...")
-      loadData()
-    } else if (isInitialized && !user) {
-      console.log("⚠️ Auth initialized but no user found")
-      setLoading(false)
-    }
-  }, [user, isInitialized, loadData]) // Depend on both user and auth initialization
-
-  // Add visibility change handler to prevent unnecessary reloads
   useEffect(() => {
     let lastLoad = Date.now()
-    const RELOAD_COOLDOWN = 30000 // 30 seconds between reloads
+    const RELOAD_COOLDOWN = 30000
 
     const handleVisibilityChange = () => {
-      if (!document.hidden && !loading && !loadInProgressRef.current && user) {
+      if (!document.hidden && !loading && user) {
         const now = Date.now()
-        if ((now - lastLoad) > RELOAD_COOLDOWN) {
-          console.log('🔄 SetlistManager: Tab became visible, checking if reload needed...')
+        if (now - lastLoad > RELOAD_COOLDOWN) {
           lastLoad = now
-          
-          // Don't reload if we already have data and it's not too old
-          const hasRecentData = setlists.length > 0 || availableContent.length > 0
+          const hasRecent = setlists.length > 0 || availableContent.length > 0
           const lastLoadTime = localStorage.getItem('octavia-setlists-last-load')
-          const dataIsRecent = lastLoadTime && (now - new Date(lastLoadTime).getTime()) < 300000 // 5 minutes
-          
-          if (hasRecentData && dataIsRecent) {
-            console.log('📋 SetlistManager: Skipping reload - have recent data')
-            return
-          }
-          
-          console.log('🔄 SetlistManager: Reloading data after visibility change')
-          // Add a small delay to let auth context refresh first
+          const dataIsRecent =
+            lastLoadTime && now - new Date(lastLoadTime).getTime() < 300000
+          if (hasRecent && dataIsRecent) return
           setTimeout(() => {
-            if (user && !loading && !loadInProgressRef.current) {
-              loadData()
+            if (user && !loading) {
+              reload()
             }
           }, 1000)
         }
@@ -295,16 +125,13 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
     }
 
     document.addEventListener('visibilitychange', handleVisibilityChange)
-
-    return () => {
+    return () =>
       document.removeEventListener('visibilitychange', handleVisibilityChange)
-    }
-  }, [loading, user, setlists.length, availableContent.length, loadData])
-
+  }, [loading, user, setlists.length, availableContent.length, reload])
 
   const calculateTotalDuration = (songs: any[]) => {
     return songs.reduce((total, song) => {
-      const duration = song.content?.bpm ? (song.content.bpm / 60) * 3 : 4 // Estimate 3-4 minutes per song
+      const duration = song.content?.bpm ? (song.content.bpm / 60) * 3 : 4
       return total + duration
     }, 0)
   }
@@ -342,7 +169,6 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
       setIsCreateDialogOpen(false)
     } catch (err) {
       console.error("Error creating setlist:", err)
-      setError("Failed to create setlist. Please try again.")
     }
   }
 
@@ -366,7 +192,6 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
       }
     } catch (err) {
       console.error("Error deleting setlist:", err)
-      setError("Failed to delete setlist. Please try again.")
     }
   }
 
@@ -430,7 +255,6 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
 
     } catch (err) {
       console.error("Error updating setlist:", err)
-      setError("Failed to update setlist. Please try again.")
     }
   }
 
@@ -484,7 +308,6 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
 
     } catch (err) {
       console.error("Error adding songs to setlist:", err)
-      setError("Failed to add songs to setlist. Please try again.")
     } finally {
       setAddingSongs(false)
     }
@@ -535,7 +358,6 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
 
     } catch (err) {
       console.error("Error removing song from setlist:", err)
-      setError("Failed to remove song from setlist. Please try again.")
       
       // Revert the optimistic update by reloading from server
       try {
@@ -628,11 +450,10 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
       
     } catch (err) {
       console.error('Error updating song position:', err)
-      setError("Failed to reorder songs. Please try again.")
       
       // Revert the optimistic update by reloading from server
       try {
-        await loadData()
+      await reload()
       } catch (reloadErr) {
         console.error('Failed to reload data after error:', reloadErr)
       }
@@ -673,7 +494,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
             <p className="mt-6 text-xl text-gray-700">Loading your setlists...</p>
             <p className="mt-2 text-sm text-gray-500">This may take a few moments while we connect to the database</p>
             <Button
-              onClick={loadData}
+              onClick={reload}
               variant="outline"
               className="mt-4 border-amber-300 text-amber-700 hover:bg-amber-50"
               disabled={loading}
@@ -700,7 +521,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
           <div className="text-center">
             <p className="text-red-600 mb-6 text-xl">{error}</p>
             <Button
-              onClick={loadData}
+              onClick={reload}
               className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-8 py-3"
             >
               Try Again
