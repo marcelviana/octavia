@@ -200,6 +200,7 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
             try {
               const token = await getIdToken(auth.currentUser, true)
               setIdToken(token)
+              await setSessionCookie(auth.currentUser)
             } catch (error) {
               logger.warn("Error refreshing token on visibility change:", error)
             }
@@ -215,6 +216,7 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
             try {
               const token = await getIdToken(auth.currentUser, true)
               setIdToken(token)
+              await setSessionCookie(auth.currentUser)
             } catch (error) {
               logger.warn("Error during periodic token refresh:", error)
             }
