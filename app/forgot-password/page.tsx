@@ -9,6 +9,8 @@ import { Label } from "@/components/ui/label"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import Link from "next/link"
 import { ArrowLeft, Mail, CheckCircle } from "lucide-react"
+import { auth, isFirebaseConfigured } from "@/lib/firebase"
+import { sendPasswordResetEmail } from "firebase/auth"
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("")
@@ -21,12 +23,17 @@ export default function ForgotPasswordPage() {
     setError("")
     setIsLoading(true)
 
+    if (!isFirebaseConfigured || !auth) {
+      setError("Password reset is not available")
+      setIsLoading(false)
+      return
+    }
+
     try {
-      // Simulate password reset request
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+      await sendPasswordResetEmail(auth, email)
       setIsSubmitted(true)
     } catch (err: any) {
-      setError("Failed to send reset email. Please try again.")
+      setError(err?.message || "Failed to send reset email. Please try again.")
     } finally {
       setIsLoading(false)
     }

@@ -12,11 +12,22 @@ it('uploads file when Supabase configured', async () => {
     getSupabaseBrowserClient: () => client
   }))
   vi.doMock('../firebase', () => ({
-    auth: { currentUser: { uid: 'user1', email: 'test@example.com' } }
+    auth: {
+      currentUser: {
+        uid: 'user1',
+        email: 'test@example.com',
+        getIdToken: vi.fn().mockResolvedValue('token')
+      }
+    }
   }))
+  global.fetch = vi.fn().mockResolvedValue({
+    ok: true,
+    json: () => Promise.resolve({ url: 'https://bucket/test', path: 'test' })
+  })
   const { uploadFileToStorage } = await import('../storage-service')
   const res = await uploadFileToStorage(new Blob(['a']), 'test.pdf')
-  expect(upload).toHaveBeenCalled()
+  expect(fetch).toHaveBeenCalledWith('/api/storage/upload', expect.any(Object))
   expect(res.url).toBe('https://bucket/test')
+  vi.restoreAllMocks()
   vi.resetModules()
 })
