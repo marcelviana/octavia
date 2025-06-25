@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { useDebounce } from "@/hooks/use-debounce";
+import { useState } from "react";
+import { useLibraryData } from "@/hooks/use-library-data";
 import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -9,7 +9,6 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import {
   saveContent,
-  getCachedContent,
   cacheFileForContent,
   removeCachedContent,
 } from "@/lib/offline-cache";
@@ -34,10 +33,8 @@ import {
   FileText,
   Guitar,
   Filter,
-  MoreVertical,
   Star,
   Edit,
-  Trash2,
   Download,
   Share,
   Plus,
@@ -58,6 +55,8 @@ import {
 } from "@/components/ui/pagination";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import { LibraryList } from "@/components/library-list";
+import { DeleteContentDialog } from "@/components/delete-content-dialog";
 import {
   Dialog,
   DialogContent,
@@ -87,237 +86,35 @@ export function Library({
 }: LibraryProps) {
   const router = useRouter();
   const { user, isLoading: authLoading } = useFirebaseAuth();
-  const [searchQuery, setSearchQuery] = useState(initialSearch || "");
-  const debouncedSearch = useDebounce(searchQuery, 300);
-  const [sortBy, setSortBy] = useState<"recent" | "title" | "artist">("recent");
-
-  const [content, setContent] = useState<any[]>(initialContent);
-  const [totalCount, setTotalCount] = useState(initialTotal);
-  const [page, setPage] = useState(initialPage);
-  const [pageSize, setPageSize] = useState(initialPageSize);
-  const [loading, setLoading] = useState(false);
-  const [selectedFilters, setSelectedFilters] = useState<Record<string, any>>({
-    contentType: [],
-    difficulty: [],
-    key: [],
-    favorite: false,
-  });
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [contentToDelete, setContentToDelete] = useState<any>(null);
+
+  const {
+    content,
+    totalCount,
+    page,
+    setPage,
+    pageSize,
+    setPageSize,
+    searchQuery,
+    setSearchQuery,
+    sortBy,
+    setSortBy,
+    selectedFilters,
+    setSelectedFilters,
+    loading,
+    reload,
+  } = useLibraryData({
+    user,
+    ready: !authLoading,
+    initialContent,
+    initialTotal,
+    initialPage,
+    initialPageSize,
+    initialSearch,
+  })
+
   const totalPages = Math.ceil(totalCount / pageSize);
-  const initialLoadRef = useRef(true)
-  const [refreshTrigger, setRefreshTrigger] = useState(0)
-  const fetchInProgressRef = useRef(false)
-  const hasNavigatedRef = useRef(false) // Track if user has navigated away from initial state
-
-  useEffect(() => {
-    if (initialLoadRef.current) {
-      initialLoadRef.current = false
-      return
-    }
-    
-    // Check if we're still on the initial state (same page, pageSize, search, and default filters/sort)
-    const isInitialState = (
-      page === initialPage && 
-      pageSize === initialPageSize && 
-      debouncedSearch === (initialSearch || "") &&
-      sortBy === "recent" &&
-      selectedFilters.contentType.length === 0 &&
-      selectedFilters.difficulty.length === 0 &&
-      selectedFilters.key.length === 0 &&
-      selectedFilters.favorite === false
-    )
-    
-    // Mark that user has navigated if they're not in initial state
-    if (!isInitialState) {
-      hasNavigatedRef.current = true
-    }
-    
-    // Only skip fetch if we're in initial state AND user has never navigated away AND we have content
-    if (isInitialState && !hasNavigatedRef.current && content.length > 0) {
-      console.log('📋 Skipping fetch - using initial server data')
-      return
-    }
-    
-    let cancelled = false
-    let fetchTimeoutId: NodeJS.Timeout | null = null
-
-    async function fetchData() {
-      // Prevent concurrent fetches
-      if (fetchInProgressRef.current) {
-        console.log('Fetch already in progress, skipping...')
-        return
-      }
-      
-      // Wait for Firebase authentication to be ready
-      if (authLoading) {
-        console.log('Waiting for Firebase auth to be ready...')
-        return
-      }
-      
-      if (!user) {
-        console.log('No authenticated user, skipping fetch')
-        setContent([])
-        setTotalCount(0)
-        return
-      }
-      
-      try {
-        fetchInProgressRef.current = true
-        setLoading(true)
-        console.log('Fetching content with filters:', selectedFilters, 'for user:', user.email)
-        
-        // Add timeout wrapper to prevent infinite loading
-        const controller = new AbortController()
-        fetchTimeoutId = setTimeout(() => {
-          controller.abort()
-        }, 10000) // 10 second timeout
-        
-        // Pass Firebase user information to the content service
-        const result = await getUserContentPage({
-          page,
-          pageSize,
-          search: debouncedSearch,
-          sortBy,
-          filters: selectedFilters,
-        }, undefined, { id: user.uid, email: user.email }, controller.signal)
-        
-        if (fetchTimeoutId) {
-          clearTimeout(fetchTimeoutId)
-          fetchTimeoutId = null
-        }
-
-        if (!cancelled) {
-          if (result.error) {
-            console.error('Content loading error:', result.error)
-            // Still show the content but with a warning
-            setContent(result.data || [])
-            setTotalCount(result.total || 0)
-          } else {
-            console.log('✅ Content loaded successfully:', result.data?.length, 'items')
-            setContent(result.data || [])
-            setTotalCount(result.total || 0)
-            try {
-              if (result.data && result.data.length > 0) {
-                await saveContent(result.data)
-              }
-            } catch (err) {
-              console.error('Failed to cache offline content', err)
-            }
-          }
-        }
-      } catch (error) {
-        if (!cancelled) {
-          const isAbortError = error instanceof Error && error.name === 'AbortError'
-          const isTimeoutError = error instanceof Error && error.message.includes('timeout')
-          
-          if (isAbortError || isTimeoutError) {
-            console.warn('Content fetch timed out, loading cached content')
-          } else {
-            console.error('Failed to load content:', error)
-          }
-          
-          // Load cached content as fallback
-          try {
-            const cachedContent = await getCachedContent()
-            if (cachedContent && cachedContent.length > 0) {
-              console.log('Loading cached content as fallback:', cachedContent.length, 'items')
-              setContent(cachedContent)
-              setTotalCount(cachedContent.length)
-              if (isAbortError || isTimeoutError) {
-                toast.info('Loading cached content due to slow connection')
-              }
-            } else {
-              setContent([])
-              setTotalCount(0)
-              if (isAbortError || isTimeoutError) {
-                toast.warning('Request timed out and no cached content available')
-              }
-            }
-          } catch (cacheError) {
-            console.error('Failed to load cached content:', cacheError)
-            setContent([])
-            setTotalCount(0)
-          }
-        }
-      } finally {
-        fetchInProgressRef.current = false
-        if (!cancelled) {
-          console.log('🏁 Setting loading to false')
-          setLoading(false)
-        }
-      }
-    }
-
-    // Add a small delay to prevent rapid successive calls
-    const timeoutId = setTimeout(fetchData, 100)
-
-    return () => {
-      cancelled = true
-      fetchInProgressRef.current = false
-      clearTimeout(timeoutId)
-      if (fetchTimeoutId) {
-        clearTimeout(fetchTimeoutId)
-      }
-    }
-  // We intentionally exclude `content.length` to avoid unnecessary refetches when content changes locally
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debouncedSearch, sortBy, selectedFilters, page, pageSize, refreshTrigger, initialPage, initialPageSize, initialSearch, user, authLoading])
-
-  // Add focus listener to refresh data when returning to the library with improved throttling
-  useEffect(() => {
-    let lastRefresh = 0
-    const REFRESH_COOLDOWN = 10000 // Increased from 5 seconds to 10 seconds between refreshes
-    let refreshTimeout: NodeJS.Timeout | null = null
-
-    const handleFocus = () => {
-      const now = Date.now()
-      // Only refresh if we're not on the initial load, not currently loading, no fetch in progress, and enough time has passed
-      if (!initialLoadRef.current && !loading && !fetchInProgressRef.current && (now - lastRefresh) > REFRESH_COOLDOWN) {
-        // Clear any existing timeout
-        if (refreshTimeout) {
-          clearTimeout(refreshTimeout)
-        }
-        
-        // Add a small delay to prevent rapid successive calls
-        refreshTimeout = setTimeout(() => {
-          lastRefresh = now
-          console.log('🔄 Library: Refreshing data after focus event', { loading, fetchInProgress: fetchInProgressRef.current })
-          setRefreshTrigger(prev => prev + 1)
-          refreshTimeout = null
-        }, 500) // 500ms delay
-      }
-    }
-
-    const handleVisibilityChange = () => {
-      const now = Date.now()
-      if (!document.hidden && !initialLoadRef.current && !loading && !fetchInProgressRef.current && (now - lastRefresh) > REFRESH_COOLDOWN) {
-        // Clear any existing timeout
-        if (refreshTimeout) {
-          clearTimeout(refreshTimeout)
-        }
-        
-        // Add a small delay to prevent rapid successive calls
-        refreshTimeout = setTimeout(() => {
-          lastRefresh = now
-          console.log('🔄 Library: Refreshing data after visibility change', { loading, fetchInProgress: fetchInProgressRef.current })
-          setRefreshTrigger(prev => prev + 1)
-          refreshTimeout = null
-        }, 1000) // 1 second delay for visibility change
-      }
-    }
-
-    window.addEventListener('focus', handleFocus)
-    document.addEventListener('visibilitychange', handleVisibilityChange)
-
-    return () => {
-      window.removeEventListener('focus', handleFocus)
-      document.removeEventListener('visibilitychange', handleVisibilityChange)
-      if (refreshTimeout) {
-        clearTimeout(refreshTimeout)
-      }
-    }
-  }, [loading])
 
   const getContentIcon = (type: string) => {
     switch (type) {
@@ -567,12 +364,8 @@ export function Library({
         <Card className="bg-white/80 backdrop-blur-sm border border-amber-100 shadow-lg">
           <CardContent className="p-8 text-center">
             <div className="w-16 h-16 border-4 border-t-amber-600 border-amber-200 rounded-full animate-spin mx-auto mb-4"></div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
-              Loading your music library...
-            </h3>
-            <p className="text-[#A69B8E]">
-              Please wait while we fetch your content
-            </p>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">Loading your music library...</h3>
+            <p className="text-[#A69B8E]">Please wait while we fetch your content</p>
           </CardContent>
         </Card>
       ) : content.length === 0 ? (
@@ -581,138 +374,29 @@ export function Library({
             <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <BookOpen className="w-8 h-8 text-amber-600" />
             </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
-              No content found
-            </h3>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">No content found</h3>
             <p className="text-[#A69B8E] mb-4">
-              {searchQuery ||
-              Object.values(selectedFilters).some((v) =>
-                Array.isArray(v) ? v.length > 0 : v,
-              )
+              {searchQuery || Object.values(selectedFilters).some((v) => (Array.isArray(v) ? v.length > 0 : v))
                 ? "Try adjusting your search or filters"
                 : "Add your first piece of music content to get started"}
             </p>
-            <Button
-              onClick={handleAddContent}
-              className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
-            >
+            <Button onClick={handleAddContent} className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
               <Plus className="w-4 h-4 mr-2" />
               Add Content
             </Button>
           </CardContent>
         </Card>
       ) : (
-        <div className="relative">
-          {loading && content.length > 0 && (
-            <div className="absolute inset-0 bg-white/50 backdrop-blur-sm z-10 flex items-center justify-center rounded-lg">
-              <div className="bg-white p-4 rounded-lg shadow-lg flex items-center gap-2">
-                <div className="w-4 h-4 border-2 border-t-amber-600 border-amber-200 rounded-full animate-spin"></div>
-                <span className="text-sm text-gray-700">Refreshing...</span>
-              </div>
-            </div>
-          )}
-          <Card className="bg-white/90 backdrop-blur-sm border border-amber-100 shadow-lg overflow-hidden">
-          <CardContent className="p-0">
-            <div className="divide-y divide-amber-100">
-              {content.map((item) => (
-                <div
-                  key={item.id}
-                  className="p-4 hover:bg-amber-50 transition-colors flex items-center"
-                >
-                  <div className="mr-4">
-                    <div
-                      className="w-10 h-10 rounded-full flex items-center justify-center bg-gray-50 border-gray-200 border"
-                    >
-                      {getContentIcon(item.content_type)}
-                    </div>
-                  </div>
-                  <div
-                    className="flex-1 min-w-0 cursor-pointer"
-                    onClick={() => onSelectContent(item)}
-                  >
-                    <h3 className="font-medium text-gray-900">{item.title}</h3>
-                    <div className="flex items-center text-sm text-[#A69B8E]">
-                      <span className="truncate">
-                        {item.artist || "Unknown Artist"}
-                      </span>
-                      {item.album && (
-                        <>
-                          <span className="mx-1">•</span>
-                          <span className="truncate">{item.album}</span>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-2 ml-4">
-                    {item.key && (
-                      <Badge variant="outline" className="bg-white">
-                        {item.key}
-                      </Badge>
-                    )}
-                    {item.difficulty && (
-                      <Badge
-                        className={
-                          item.difficulty === "Beginner"
-                            ? "bg-green-100 text-green-800 border-green-200"
-                            : item.difficulty === "Intermediate"
-                              ? "bg-amber-100 text-amber-800 border-amber-200"
-                              : "bg-red-100 text-red-800 border-red-200"
-                        }
-                      >
-                        {item.difficulty}
-                      </Badge>
-                    )}
-                    {item.is_favorite && (
-                      <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
-                    )}
-                  </div>
-                  <div className="ml-4 hidden md:flex items-center text-sm text-[#A69B8E]">
-                    <Clock className="w-3 h-3 mr-1" />
-                    {formatDate(item.created_at)}
-                  </div>
-                  <div className="ml-4">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
-                          <MoreVertical className="w-4 h-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => onSelectContent(item)}>
-                          <BookOpen className="w-4 h-4 mr-2" />
-                          View
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          onClick={() => handleEditContent(item)}
-                        >
-                          <Edit className="w-4 h-4 mr-2" />
-                          Edit
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          <Share className="w-4 h-4 mr-2" />
-                          Share
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => handleDownloadContent(item)}>
-                          <Download className="w-4 h-4 mr-2" />
-                          Download
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem
-                          className="text-red-600"
-                          onClick={() => handleDeleteContent(item)}
-                        >
-                          <Trash2 className="w-4 h-4 mr-2" />
-                          Delete
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-        </div>
+        <LibraryList
+          content={content}
+          loading={loading}
+          onSelect={onSelectContent}
+          onEdit={handleEditContent}
+          onDownload={handleDownloadContent}
+          onDelete={handleDeleteContent}
+          getContentIcon={getContentIcon}
+          formatDate={formatDate}
+        />
       )}
 
       <div className="mt-6 flex items-center justify-between">
@@ -761,25 +445,12 @@ export function Library({
       </div>
 
       {/* Delete Confirmation Dialog */}
-      <Dialog open={deleteDialog} onOpenChange={setDeleteDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Delete Content</DialogTitle>
-            <DialogDescription>
-              Are you sure you want to delete &quot;{contentToDelete?.title}
-              &quot;? This action cannot be undone.
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setDeleteDialog(false)}>
-              Cancel
-            </Button>
-            <Button variant="destructive" onClick={confirmDelete}>
-              Delete
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <DeleteContentDialog
+        open={deleteDialog}
+        onOpenChange={setDeleteDialog}
+        content={contentToDelete}
+        onConfirm={confirmDelete}
+      />
     </div>
   );
 }
