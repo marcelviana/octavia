@@ -2,7 +2,7 @@ import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 import { validateFirebaseTokenServer } from '@/lib/firebase-server-utils'
 
-export const runtime = 'experimental-edge' // Use Edge Runtime for better performance
+export const runtime = 'nodejs'
 
 
 export async function middleware(request: NextRequest) {
