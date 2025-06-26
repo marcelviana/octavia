@@ -437,7 +437,7 @@ export function Library({
             </PaginationItem>
             {Array.from({ length: Math.min(totalPages, 5) }).map((_, i) => {
               // Show first, last, and current page with 2 pages around current
-              let pageNum;
+              let pageNum: number;
               if (totalPages <= 5) {
                 pageNum = i + 1;
               } else if (page <= 3) {
