@@ -1,13 +1,14 @@
 "use client"
 
 import { useAuth } from "@/contexts/firebase-auth-context"
-import { redirect } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { Skeleton } from "@/components/ui/skeleton"
 import ProfileForm from "@/components/ProfileForm"
 import { Header } from "@/components/header"
 
 export default function ProfilePage() {
+  const router = useRouter()
   const { user, isLoading, isInitialized } = useAuth()
   const [mounted, setMounted] = useState(false)
 
@@ -49,7 +50,8 @@ export default function ProfilePage() {
 
   // Redirect if not authenticated
   if (!user) {
-    redirect("/login")
+    router.replace("/login")
+    return null
   }
 
   return (
