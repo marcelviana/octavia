@@ -207,6 +207,11 @@ Automated unit tests live in `lib/__tests__` and are executed with [Vitest](http
 
 The application includes an offline mode backed by IndexedDB. A health check endpoint (`/api/health`) lets the client detect when connectivity returns. Library data and setlists viewed while online are cached locally so they can be accessed from the dedicated offline page when the network is unavailable. Cached files are stored as binary Blobs and an LRU policy keeps the total size under 50 MB to avoid quota errors.
 
+## 🔧 Configuration
+
+Create a `.env` file in the project root with the variables listed in `.env.example`. These include Firebase credentials and the Supabase service role key required for server-side database access.
+If you plan to enforce row level security, run the SQL in `supabase/rls-policies.sql` on your database.
+
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

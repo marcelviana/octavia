@@ -77,6 +77,7 @@ NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET=content-files
 1. Keep your existing Supabase project
 2. Get the service role key from Settings → API
 3. Update database schema to use Firebase UIDs
+4. Run the policies in `supabase/rls-policies.sql` to enable row level security
 
 ### 3. Database Schema Updates
 
@@ -92,13 +93,12 @@ ALTER TABLE profiles
 ALTER TABLE content
   ADD COLUMN IF NOT EXISTS user_id TEXT REFERENCES profiles(id);
 
--- Disable RLS or update policies to work with service role
-ALTER TABLE profiles DISABLE ROW LEVEL SECURITY;
-ALTER TABLE content DISABLE ROW LEVEL SECURITY;
+-- Enable RLS and apply policies for Firebase UIDs
+ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
+ALTER TABLE content ENABLE ROW LEVEL SECURITY;
 
--- Or create new RLS policies for service role access
-CREATE POLICY "Service role access" ON profiles
-  FOR ALL USING (auth.role() = 'service_role');
+-- Policies in supabase/rls-policies.sql restrict rows to the authenticated UID
+-- and still allow full access when using the service role key
 ```
 
 ## 🔐 Authentication Flow
