@@ -32,10 +32,21 @@ images: {
   deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
   imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   remotePatterns: [
-    {
-      protocol: 'https',
-      hostname: '**',
-    },
+    // Only allow images from your storage bucket and any
+    // additional hosts specified in ALLOWED_PROXY_HOSTS
+    ...(process.env.NEXT_PUBLIC_SUPABASE_URL
+      ? [
+          {
+            protocol: 'https',
+            hostname: new URL(process.env.NEXT_PUBLIC_SUPABASE_URL).hostname,
+          },
+        ]
+      : []),
+    ...((process.env.ALLOWED_PROXY_HOSTS || '')
+      .split(',')
+      .map(h => h.trim())
+      .filter(Boolean)
+      .map(hostname => ({ protocol: 'https', hostname }))),
   ],
 }
 ```
