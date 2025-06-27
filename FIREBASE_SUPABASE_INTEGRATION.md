@@ -14,8 +14,7 @@ This project has been successfully migrated from Supabase Auth to Firebase Auth 
 ### New Firebase Files
 ```
 contexts/
-├── firebase-auth-context.tsx      # New Firebase auth context
-└── auth-context.tsx               # Old Supabase auth context (can be removed)
+└── firebase-auth-context.tsx      # Firebase auth context
 
 lib/
 ├── firebase.ts                    # Firebase client configuration
@@ -159,8 +158,7 @@ pnpm test lib/__tests__/firebase.test.ts
    - `lib/firebase-admin.ts` - Server configuration
 
 3. **Replace auth context** ✅
-   - Old: `contexts/auth-context.tsx` (Supabase)
-   - New: `contexts/firebase-auth-context.tsx` (Firebase)
+   - `contexts/firebase-auth-context.tsx` now provides authentication
 
 4. **Update middleware** ✅
    - Replace Supabase auth check with Firebase token validation
@@ -259,15 +257,14 @@ If needed, you can rollback by:
 1. Reverting `app/layout.tsx` to use `AuthProvider`
 2. Reverting `middleware.ts` to use Supabase auth
 3. Updating API routes to use Supabase RLS
-4. The old auth context is preserved for reference
+4. Retrieve the old auth context from version control if needed
 
 ## 📈 Next Steps
 
 1. **Test thoroughly** with the provided test pages
 2. **Update existing components** to use the new auth context
 3. **Migrate user data** if needed (Supabase UID → Firebase UID)
-4. **Remove old auth context** once everything is working
-5. **Update documentation** for your team
+4. **Update documentation** for your team
 
 ---
 
