@@ -16,6 +16,17 @@ function isNodeJsRuntime(): boolean {
 // Cache verification results to avoid repeated validation and allow offline use
 const tokenCache = new Map<string, { result: ServerAuthResult; exp: number }>()
 
+// Periodically remove expired tokens to avoid unbounded memory usage
+const TOKEN_CACHE_CLEANUP_MS = 5 * 60 * 1000
+if (typeof setInterval === 'function') {
+  setInterval(() => {
+    const now = Date.now()
+    for (const [key, { exp }] of tokenCache) {
+      if (exp <= now) tokenCache.delete(key)
+    }
+  }, TOKEN_CACHE_CLEANUP_MS).unref?.()
+}
+
 export interface ServerAuthResult {
   isValid: boolean
   user?: {
