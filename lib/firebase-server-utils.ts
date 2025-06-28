@@ -39,7 +39,7 @@ export interface ServerAuthResult {
 
 /**
  * Validate Firebase token via API route (safe for Edge Runtime)
- * This replaces the direct Firebase Admin usage
+ * This replaces the direct Firebase Admin usage to avoid client-side bundling issues
  */
 export async function validateFirebaseTokenServer(
   idToken: string,
@@ -56,30 +56,7 @@ export async function validateFirebaseTokenServer(
       return cached.result
     }
 
-    if (isNodeJsRuntime()) {
-      try {
-        const { verifyFirebaseToken } = await import('./firebase-admin')
-        const decoded = await verifyFirebaseToken(idToken)
-        const result: ServerAuthResult = {
-          isValid: true,
-          user: {
-            uid: decoded.uid,
-            email: decoded.email,
-            emailVerified: decoded.email_verified
-          }
-        }
-        const exp = (decoded.exp ?? Math.floor(now / 1000 + 3600)) * 1000
-        tokenCache.set(idToken, { result, exp })
-        return result
-      } catch (err: any) {
-        logger.error('Direct token verification failed:', err.message)
-        if (cached) {
-          return cached.result
-        }
-      }
-    }
-
-    // Fallback to API-based verification (used when running on Edge)
+    // Always use API-based verification to avoid any client-side bundling issues
     let baseUrl = process.env.NEXTAUTH_URL || process.env.VERCEL_URL
 
     if (!baseUrl && requestUrl) {
@@ -88,6 +65,13 @@ export async function validateFirebaseTokenServer(
       } catch {
         baseUrl = undefined
       }
+    }
+
+    // Fallback to localhost for development
+    if (!baseUrl && typeof window === 'undefined') {
+      // Try to detect the port from environment or use default
+      const port = process.env.PORT || '3000'
+      baseUrl = `http://localhost:${port}`
     }
 
     if (baseUrl) {

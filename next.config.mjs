@@ -35,12 +35,16 @@ const nextConfig = {
       return Array.from(hosts).map(hostname => ({ protocol: 'https', hostname }))
     })(),
   },
-  webpack: (config, { isServer }) => {
+  webpack: (config, { isServer, dev }) => {
     // Handle PDF.js worker
     if (!isServer) {
       config.resolve.alias = {
         ...config.resolve.alias,
         canvas: false,
+        // Completely prevent firebase-admin from being resolved on client-side
+        './firebase-admin': false,
+        './firebase-admin.js': false,
+        './firebase-admin.ts': false,
       };
       
       // Prevent Node.js built-in modules from being bundled on the client
@@ -70,6 +74,18 @@ const nextConfig = {
         'node:net': false,
         'node:tls': false,
       };
+
+      // Externalize firebase-admin and related modules for client-side
+      config.externals = config.externals || [];
+      config.externals.push({
+        'firebase-admin': 'commonjs firebase-admin',
+        'firebase-admin/auth': 'commonjs firebase-admin/auth',
+        'firebase-admin/firestore': 'commonjs firebase-admin/firestore',
+        'firebase-admin/storage': 'commonjs firebase-admin/storage',
+        'google-auth-library': 'commonjs google-auth-library',
+        'gcp-metadata': 'commonjs gcp-metadata',
+        'google-logging-utils': 'commonjs google-logging-utils',
+      });
     }
     
     // Allow loading of PDF.js worker
