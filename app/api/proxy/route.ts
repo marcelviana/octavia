@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server'
-import { getSupabaseServerClient } from '@/lib/supabase-server'
+import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import { isSupabaseConfigured } from '@/lib/supabase'
+import { requireAuthServer } from '@/lib/firebase-server-utils'
 
 const RATE_LIMIT_WINDOW_MS = 60_000
 const RATE_LIMIT_MAX = 20
@@ -45,11 +46,8 @@ export async function GET(req: NextRequest) {
   }
 
   if (isSupabaseConfigured) {
-    const supabase = await getSupabaseServerClient()
-    const {
-      data: { session },
-    } = await supabase.auth.getSession()
-    if (!session) {
+    const user = await requireAuthServer(req)
+    if (!user) {
       return new Response('Authentication required', { status: 401 })
     }
   }

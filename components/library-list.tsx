@@ -19,7 +19,18 @@ interface Props {
 }
 
 export function LibraryList({ content, loading, onSelect, onEdit, onDownload, onDelete, getContentIcon, formatDate }: Props) {
-  if (content.length === 0) return null
+  // Debug logging
+  console.log('🔍 LibraryList: Rendering with', {
+    contentLength: content.length,
+    loading,
+    contentArray: content,
+    firstItem: content[0]?.title || 'N/A'
+  });
+  
+  if (content.length === 0) {
+    console.log('🔍 LibraryList: Returning null due to empty content array');
+    return null;
+  }
   return (
     <div className="relative">
       {loading && (

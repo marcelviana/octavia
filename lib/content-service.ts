@@ -18,18 +18,30 @@ async function getAuthenticatedUser(cookieStore?: ReadonlyRequestCookies): Promi
       if (auth && auth.currentUser) {
         return { id: auth.currentUser.uid, email: auth.currentUser.email }
       }
+      
+      // If no current user, wait a bit for Firebase Auth to initialize
+      // This helps with timing issues during page loads/refreshes
+      if (auth) {
+        return new Promise((resolve) => {
+          const unsubscribe = auth.onAuthStateChanged((user) => {
+            unsubscribe()
+            if (user) {
+              resolve({ id: user.uid, email: user.email })
+            } else {
+              resolve(null)
+            }
+          })
+          
+          // Don't wait forever - timeout after 2 seconds
+          setTimeout(() => {
+            unsubscribe()
+            resolve(null)
+          }, 2000)
+        })
+      }
     } else {
       const { getServerSideUser } = await import('@/lib/firebase-server-utils')
       let store = cookieStore
-      if (!store) {
-        try {
-          // Dynamically import next/headers only when needed in server environment
-          const { cookies: nextCookies } = await import('next/headers')
-          store = await nextCookies()
-        } catch {
-          store = undefined
-        }
-      }
       if (store) {
         const user = await getServerSideUser(store)
         if (user) {
@@ -182,15 +194,26 @@ export async function getUserContentPage(
     // Use provided user or check authentication
     let user = providedUser
     if (!user) {
+      console.log("🔍 getUserContentPage: No provided user, checking authentication...")
       user = await getAuthenticatedUser()
+      if (!user) {
+        console.warn("🔍 getUserContentPage: No authenticated user found")
+        logger.log("User not authenticated, returning empty content page")
+        throw new Error("User not authenticated")
+      }
+      console.log("🔍 getUserContentPage: Found authenticated user:", user.email)
     } else {
       console.log("🔍 getUserContentPage: Using provided user:", user.email)
     }
-    
-    if (!user) {
-      logger.log("User not authenticated, returning empty content page")
-      throw new Error("User not authenticated")
-    }
+
+    console.log("🔍 getUserContentPage: Starting database query", {
+      userId: user.id,
+      page,
+      pageSize,
+      search,
+      sortBy,
+      filters
+    })
 
     let query = client
       .from("content")
@@ -281,6 +304,15 @@ export async function getUserContentPage(
       totalPages: Math.ceil((count || 0) / safePageSize)
     }
 
+    console.log('🔍 getUserContentPage: Query result created', {
+      dataLength: result.data.length,
+      total: result.total,
+      page: result.page,
+      pageSize: result.pageSize,
+      hasData: result.data.length > 0,
+      firstItemTitle: result.data[0]?.title || 'N/A'
+    })
+
     // Cache successful results
     if (useCache && result.data.length > 0) {
       contentCache.set(cacheKey, {
@@ -297,6 +329,7 @@ export async function getUserContentPage(
       itemsReturned: data?.length || 0
     })
 
+    console.log('🔍 getUserContentPage: Returning result to caller')
     return result
 
   } catch (error) {

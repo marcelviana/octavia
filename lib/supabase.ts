@@ -19,8 +19,10 @@ export function getSupabaseBrowserClient() {
     supabaseBrowserClient = createBrowserClient<Database>(supabaseUrl, supabaseAnonKey, {
       isSingleton: true,
       auth: {
-        persistSession: true,
-        autoRefreshToken: true,
+        persistSession: false,
+        autoRefreshToken: false,
+        detectSessionInUrl: false,
+        flowType: 'implicit'
       },
     })
   }
@@ -46,38 +48,9 @@ export async function testSupabaseConnection(): Promise<boolean> {
   }
 }
 
+// Legacy function - no longer used since we switched to Firebase Auth
+// Kept for backward compatibility but always returns null
 export async function getSessionSafe(timeoutMs = 4000) {
-  try {
-    const supabase = getSupabaseBrowserClient()
-
-    const timeout = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error('getSession timeout')), timeoutMs),
-    )
-
-    const { data: { session }, error } = (await Promise.race([
-      supabase.auth.getSession(),
-      timeout,
-    ])) as any
-
-    if (error) {
-      if (
-        error.message?.includes('expired') ||
-        error.message?.includes('invalid')
-      ) {
-        try {
-          const { data: { session: refreshed }, error: refreshError } =
-            await supabase.auth.refreshSession()
-          if (!refreshError) return refreshed
-        } catch (err) {
-          logger.warn('Session refresh failed:', err)
-        }
-      }
-      return null
-    }
-
-    return session
-  } catch (err) {
-    logger.warn('getSessionSafe failed:', err)
-    return null
-  }
+  logger.warn('getSessionSafe called but Supabase auth is disabled - using Firebase Auth instead')
+  return null
 }

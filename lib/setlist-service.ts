@@ -4,12 +4,19 @@ import { getContentById } from "@/lib/content-service"
 import { auth } from "@/lib/firebase"
 import type { Database } from "@/types/supabase"
 
-// Helper to get the current Firebase user
+// Helper to get the current Firebase user with better error handling
 function getAuthenticatedUser() {
-  if (auth && auth.currentUser) {
-    return { id: auth.currentUser.uid, email: auth.currentUser.email }
+  try {
+    if (auth && auth.currentUser) {
+      console.log("🔍 getAuthenticatedUser: Firebase user found:", auth.currentUser.email)
+      return { id: auth.currentUser.uid, email: auth.currentUser.email }
+    }
+    console.log("🔍 getAuthenticatedUser: No Firebase user found")
+    return null
+  } catch (error) {
+    console.error("🔍 getAuthenticatedUser: Error getting Firebase user:", error)
+    return null
   }
-  return null
 }
 
 type Setlist = Database["public"]["Tables"]["setlists"]["Row"]
@@ -22,7 +29,6 @@ export async function getUserSetlists(providedUser?: any) {
   try {
     console.log("🔍 getUserSetlists: Starting...")
     
-
     console.log("🔍 getUserSetlists: Getting Supabase client...")
     const supabase = getSupabaseBrowserClient()
 
@@ -36,9 +42,12 @@ export async function getUserSetlists(providedUser?: any) {
     }
     
     if (!user) {
+      console.log("🔍 getUserSetlists: User not authenticated, returning empty setlists")
       logger.log("User not authenticated, returning empty setlists")
-      throw new Error("User not authenticated")
+      return []
     }
+
+    console.log("🔍 getUserSetlists: Fetching setlists for user:", user.id)
 
     // Get all setlists for the user
     const { data: setlists, error: setlistsError } = await supabase
@@ -48,13 +57,18 @@ export async function getUserSetlists(providedUser?: any) {
       .order("created_at", { ascending: false })
 
     if (setlistsError) {
+      console.error("🔍 getUserSetlists: Error fetching setlists:", setlistsError)
       logger.error("Error fetching setlists:", setlistsError)
       return []
     }
 
+    console.log("🔍 getUserSetlists: Found", setlists?.length || 0, "setlists")
+
     // For each setlist, get the songs
     const setlistsWithSongs = await Promise.all(
       setlists.map(async (setlist: any) => {
+        console.log("🔍 getUserSetlists: Fetching songs for setlist:", setlist.name)
+        
         const { data: songs, error: songsError } = await supabase
           .from("setlist_songs")
           .select(
@@ -80,35 +94,63 @@ export async function getUserSetlists(providedUser?: any) {
           .order("position", { ascending: true })
 
         if (songsError) {
+          console.error("🔍 getUserSetlists: Error fetching songs for setlist", setlist.id, ":", songsError)
           logger.error(`Error fetching songs for setlist ${setlist.id}:`, songsError)
           return { ...setlist, setlist_songs: [] }
         }
 
+        console.log("🔍 getUserSetlists: Found", songs?.length || 0, "songs for setlist:", setlist.name)
+        
+        // Debug the first song if available
+        if (songs && songs.length > 0) {
+          console.log("🔍 getUserSetlists: First song data:", {
+            id: songs[0].id,
+            content_id: songs[0].content_id,
+            content: songs[0].content,
+            title: songs[0].content?.title,
+            artist: songs[0].content?.artist
+          })
+        }
+
         // Format the songs to match the expected structure
-        const formattedSongs = songs.map((song: any) => ({
-          id: song.id,
-          setlist_id: song.setlist_id,
-          content_id: song.content_id,
-          position: song.position,
-          notes: song.notes,
-          content: {
-            id: song.content?.id || song.content_id,
-            title: song.content?.title || "Unknown Title",
-            artist: song.content?.artist || "Unknown Artist",
-            content_type: song.content?.content_type || "Unknown Type",
-            key: song.content?.key || null,
-            bpm: song.content?.bpm || null,
-            file_url: song.content?.file_url || null,
-            content_data: song.content?.content_data || null,
-          },
-        }))
+        const formattedSongs = songs.map((song: any) => {
+          const formattedSong = {
+            id: song.id,
+            setlist_id: song.setlist_id,
+            content_id: song.content_id,
+            position: song.position,
+            notes: song.notes,
+            content: {
+              id: song.content?.id || song.content_id,
+              title: song.content?.title || "Unknown Title",
+              artist: song.content?.artist || "Unknown Artist",
+              content_type: song.content?.content_type || "Unknown Type",
+              key: song.content?.key || null,
+              bpm: song.content?.bpm || null,
+              file_url: song.content?.file_url || null,
+              content_data: song.content?.content_data || null,
+            },
+          }
+          
+          // Log when we're falling back to "Unknown"
+          if (!song.content?.title) {
+            console.log("🔍 getUserSetlists: Missing title for song:", song.content_id, "content data:", song.content)
+          }
+          if (!song.content?.artist) {
+            console.log("🔍 getUserSetlists: Missing artist for song:", song.content_id, "content data:", song.content)
+          }
+          
+          return formattedSong
+        })
 
         return { ...setlist, setlist_songs: formattedSongs }
       }),
     )
 
+    console.log("🔍 getUserSetlists: Returning", setlistsWithSongs.length, "setlists with songs")
     return setlistsWithSongs
   } catch (error) {
+    console.error("🔍 getUserSetlists: Error:", error)
     logger.error("Error in getUserSetlists:", error)
     return []
   }

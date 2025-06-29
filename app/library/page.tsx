@@ -51,6 +51,15 @@ export default async function LibraryPage({
     requestUrl
   );
 
+  console.log('🔍 LibraryPage: Server sending data to client', {
+    dataLength: data?.length || 0,
+    total,
+    page,
+    pageSize,
+    search,
+    firstItem: data?.[0]?.title || 'N/A'
+  });
+
   return (
     <LibraryPageClient
       initialContent={data}

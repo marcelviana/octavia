@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLibraryData } from "@/hooks/use-library-data";
 import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
@@ -90,6 +90,30 @@ export function Library({
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [contentToDelete, setContentToDelete] = useState<any>(null);
 
+  // Debug logging for authentication state
+  useEffect(() => {
+    console.log('🔍 Library: Auth state changed', {
+      user: user ? {
+        uid: user.uid,
+        email: user.email,
+        emailVerified: user.emailVerified
+      } : null,
+      isLoading: authLoading,
+    });
+  }, [user, authLoading]);
+
+  // Debug logging for initial props
+  useEffect(() => {
+    console.log('🔍 Library: Component mounted with props', {
+      initialContentLength: initialContent.length,
+      initialTotal,
+      initialPage,
+      initialPageSize,
+      initialSearch,
+      firstItem: initialContent[0]?.title || 'N/A'
+    });
+  }, []); // Only run once on mount
+
   const {
     content,
     totalCount,
@@ -114,6 +138,17 @@ export function Library({
     initialPageSize,
     initialSearch,
   })
+
+  // Debug logging for content state
+  useEffect(() => {
+    console.log('🔍 Library: Content state changed', {
+      contentLength: content.length,
+      totalCount,
+      loading,
+      hasInitialContent: initialContent.length,
+      firstItem: content[0]?.title || 'N/A'
+    });
+  }, [content, totalCount, loading, initialContent.length]);
 
   const totalPages = Math.ceil(totalCount / pageSize);
 
