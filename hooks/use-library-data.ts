@@ -65,6 +65,9 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
   const [loading, setLoading] = useState(false)
   const inProgressRef = useRef(false)
   const lastFocusTimeRef = useRef(Date.now())
+  
+  // Track whether we've moved away from the initial state
+  const hasNavigatedAwayRef = useRef(false)
 
   // Debug logging for state initialization
   useEffect(() => {
@@ -225,8 +228,7 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
   // Effect to reload data when pagination, search, or filters change
   useEffect(() => {
     if (ready && user && user.uid) {
-      // Skip the initial load if we have initial content and we're on the initial page
-      // with no search or filters applied
+      // Check if current state matches initial state
       const isInitialState = page === initialPage && 
                             debouncedSearch === initialSearch && 
                             selectedFilters.contentType.length === 0 &&
@@ -235,7 +237,14 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
                             !selectedFilters.favorite &&
                             sortBy === 'recent'
       
-      if (initialContent.length > 0 && isInitialState) {
+      // If we're not in initial state, mark that we've navigated away
+      if (!isInitialState) {
+        hasNavigatedAwayRef.current = true
+      }
+      
+      // Only skip reload if we have initial content, we're in initial state, 
+      // AND we haven't navigated away yet
+      if (initialContent.length > 0 && isInitialState && !hasNavigatedAwayRef.current) {
         console.log('🔍 useLibraryData: Skipping reload for initial state with initial content')
         return
       }
@@ -245,7 +254,10 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
         pageSize,
         debouncedSearch,
         sortBy,
-        selectedFilters
+        selectedFilters,
+        hasNavigatedAway: hasNavigatedAwayRef.current,
+        isInitialState,
+        hasInitialContent: initialContent.length > 0
       })
       load()
     }
