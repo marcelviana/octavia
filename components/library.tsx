@@ -42,7 +42,6 @@ import {
   Clock,
   ChevronDown,
   BookOpen,
-  RefreshCw,
 } from "lucide-react";
 import { getUserContentPage, deleteContent, clearContentCache } from "@/lib/content-service";
 import { useFirebaseAuth } from "@/contexts/firebase-auth-context";
@@ -246,16 +245,6 @@ export function Library({
             </p>
           </div>
           <div className="flex gap-2 self-start sm:self-auto">
-            <Button
-              onClick={reload}
-              variant="outline"
-              className="border-amber-200 bg-white hover:bg-amber-50 text-sm"
-              disabled={loading}
-              size="sm"
-            >
-              <RefreshCw className={`w-4 h-4 sm:mr-2 ${loading ? 'animate-spin' : ''}`} />
-              <span className="hidden sm:inline">Refresh</span>
-            </Button>
             <Button
               onClick={handleAddContent}
               className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 text-sm"
