@@ -135,7 +135,6 @@ export function Library({
     page,
     setPage,
     pageSize,
-    setPageSize,
     searchQuery,
     setSearchQuery,
     sortBy,
@@ -150,7 +149,7 @@ export function Library({
     initialContent,
     initialTotal,
     initialPage,
-    initialPageSize,
+    initialPageSize: 20, // Fixed page size
     initialSearch,
   });
 
@@ -246,8 +245,8 @@ export function Library({
     <div className="p-3 sm:p-6 bg-gradient-to-b from-[#fff9f0] to-[#fff5e5] min-h-screen">
       {/* Header */}
       <div className="flex flex-col gap-4 mb-6">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <div>
+        <div className="flex items-start justify-between gap-3 min-h-[60px]">
+          <div className="flex-1 min-w-0">
             <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
               Your Music Library
             </h1>
@@ -255,7 +254,7 @@ export function Library({
               Manage and organize all your musical content
             </p>
           </div>
-          <div className="flex gap-2 self-start sm:self-auto">
+          <div className="flex gap-2 flex-shrink-0">
             <Button
               onClick={handleAddContent}
               className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 text-sm"
@@ -270,7 +269,7 @@ export function Library({
 
       {/* Search and Filters */}
       <div className="mb-6">
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-4">
           <div className="relative">
             <Search
               className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
@@ -283,12 +282,12 @@ export function Library({
               className="pl-10 bg-white border-amber-200 focus:border-amber-400 focus:ring focus:ring-amber-200 focus:ring-opacity-50"
             />
           </div>
-          <div className="flex flex-col sm:flex-row gap-2">
+          <div className="flex gap-2 overflow-x-auto">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="outline"
-                  className="border-amber-200 bg-white hover:bg-amber-50 justify-start text-sm"
+                  className="border-amber-200 bg-white hover:bg-amber-50 justify-start text-sm flex-shrink-0 h-9"
                   size="sm"
                 >
                   <Filter className="w-4 h-4 mr-2" />
@@ -396,7 +395,7 @@ export function Library({
                 setSortBy(value as "recent" | "title" | "artist")
               }
             >
-              <SelectTrigger className="w-full sm:w-[180px] border-amber-200 bg-white hover:bg-amber-50 text-sm">
+              <SelectTrigger className="w-[140px] sm:w-[180px] border-amber-200 bg-white hover:bg-amber-50 text-sm flex-shrink-0 h-9">
                 <SelectValue placeholder="Sort by" />
               </SelectTrigger>
               <SelectContent>
@@ -462,73 +461,55 @@ export function Library({
       )}
 
       {/* Pagination Controls - Only show when there's data */}
-      {totalCount > 0 && (
-        <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <Select
-            value={String(pageSize)}
-            onValueChange={(v) => {
-              setPageSize(Number(v));
-              setPage(1);
-            }}
-          >
-            <SelectTrigger className="w-full sm:w-[100px] border-amber-200 bg-white hover:bg-amber-50 text-sm">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="20">20</SelectItem>
-              <SelectItem value="50">50</SelectItem>
-              <SelectItem value="100">100</SelectItem>
-            </SelectContent>
-          </Select>
-          {totalPages > 1 && (
-            <Pagination className="w-full sm:w-auto">
-              <PaginationContent className="flex-wrap justify-center">
-                <PaginationItem>
-                  <PaginationPrevious
-                    className={cn(
-                      page === 1 && "pointer-events-none opacity-50",
-                      "text-sm",
-                    )}
-                    onClick={() => setPage((p) => Math.max(1, p - 1))}
-                  />
-                </PaginationItem>
-                {Array.from({ length: Math.min(totalPages, 5) }).map((_, i) => {
-                  // Show first, last, and current page with 2 pages around current
-                  let pageNum: number;
-                  if (totalPages <= 5) {
-                    pageNum = i + 1;
-                  } else if (page <= 3) {
-                    pageNum = i + 1;
-                  } else if (page >= totalPages - 2) {
-                    pageNum = totalPages - 4 + i;
-                  } else {
-                    pageNum = page - 2 + i;
-                  }
+      {totalCount > 0 && totalPages > 1 && (
+        <div className="mt-6 flex justify-center">
+          <Pagination>
+            <PaginationContent className="flex-wrap justify-center">
+              <PaginationItem>
+                <PaginationPrevious
+                  className={cn(
+                    page === 1 && "pointer-events-none opacity-50",
+                    "text-sm",
+                  )}
+                  onClick={() => setPage((p) => Math.max(1, p - 1))}
+                />
+              </PaginationItem>
+              {Array.from({ length: Math.min(totalPages, 5) }).map((_, i) => {
+                // Show first, last, and current page with 2 pages around current
+                let pageNum: number;
+                if (totalPages <= 5) {
+                  pageNum = i + 1;
+                } else if (page <= 3) {
+                  pageNum = i + 1;
+                } else if (page >= totalPages - 2) {
+                  pageNum = totalPages - 4 + i;
+                } else {
+                  pageNum = page - 2 + i;
+                }
 
-                  return (
-                    <PaginationItem key={pageNum}>
-                      <PaginationLink
-                        isActive={page === pageNum}
-                        onClick={() => setPage(pageNum)}
-                        className="text-sm"
-                      >
-                        {pageNum}
-                      </PaginationLink>
-                    </PaginationItem>
-                  );
-                })}
-                <PaginationItem>
-                  <PaginationNext
-                    className={cn(
-                      page === totalPages && "pointer-events-none opacity-50",
-                      "text-sm",
-                    )}
-                    onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                  />
-                </PaginationItem>
-              </PaginationContent>
-            </Pagination>
-          )}
+                return (
+                  <PaginationItem key={pageNum}>
+                    <PaginationLink
+                      isActive={page === pageNum}
+                      onClick={() => setPage(pageNum)}
+                      className="text-sm"
+                    >
+                      {pageNum}
+                    </PaginationLink>
+                  </PaginationItem>
+                );
+              })}
+              <PaginationItem>
+                <PaginationNext
+                  className={cn(
+                    page === totalPages && "pointer-events-none opacity-50",
+                    "text-sm",
+                  )}
+                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
         </div>
       )}
 
