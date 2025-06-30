@@ -117,7 +117,7 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
         pageSize
       })
       
-      const { data, total } = await getUserContentPage({
+      const result = await getUserContentPage({
         page,
         pageSize,
         search: debouncedSearch,
@@ -127,25 +127,54 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
       }, undefined, userForQuery)
 
       console.log('🔍 useLibraryData.load: Query completed', {
-        dataLength: data?.length || 0,
-        total,
-        hasData: !!(data && data.length > 0)
+        dataLength: result.data?.length || 0,
+        total: result.total,
+        requestedPage: page,
+        returnedPage: result.page,
+        totalPages: result.totalPages,
+        hasData: !!(result.data && result.data.length > 0)
       })
+
+      // Handle different scenarios for empty results
+      if (result.data.length === 0) {
+        if (result.total === 0) {
+          // No data at all - this is fine, just show empty state
+          console.log('🔍 useLibraryData.load: No data in database, showing empty state')
+          setContent([])
+          setTotalCount(0)
+          // Reset to page 1 if we're on a higher page with no data
+          if (page > 1) {
+            setPage(1)
+          }
+          return
+        } else if (result.total > 0 && page > result.totalPages) {
+          // Requested page beyond available pages
+          console.log('🔍 useLibraryData.load: Requested page out of bounds, adjusting to last page')
+          const lastPage = Math.max(1, result.totalPages)
+          setPage(lastPage)
+          return
+        } else if (result.total > 0 && page > 1) {
+          // Has data but current page is empty (shouldn't happen with proper pagination)
+          console.log('🔍 useLibraryData.load: Empty data but total > 0, adjusting to page 1')
+          setPage(1)
+          return
+        }
+      }
 
       console.log('🔍 useLibraryData.load: About to set content', {
-        dataIsArray: Array.isArray(data),
-        dataLength: data?.length || 0,
-        dataFirstItem: data?.[0]?.title || 'N/A',
-        willSetEmptyArray: !(data && data.length > 0)
+        dataIsArray: Array.isArray(result.data),
+        dataLength: result.data?.length || 0,
+        dataFirstItem: result.data?.[0]?.title || 'N/A',
+        willSetEmptyArray: !(result.data && result.data.length > 0)
       })
 
-      setContent(data || [])
-      setTotalCount(total || 0)
+      setContent(result.data || [])
+      setTotalCount(result.total || 0)
       
       console.log('🔍 useLibraryData.load: Content set successfully')
       
-      if (data && data.length > 0) {
-        try { await saveContent(data) } catch {}
+      if (result.data && result.data.length > 0) {
+        try { await saveContent(result.data) } catch {}
       }
     } catch (err) {
       console.error('🔍 useLibraryData.load: Error loading library data:', err)
@@ -192,6 +221,35 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
       }
     }
   }, [ready, load, initialContent.length])
+
+  // Effect to reload data when pagination, search, or filters change
+  useEffect(() => {
+    if (ready && user && user.uid) {
+      // Skip the initial load if we have initial content and we're on the initial page
+      // with no search or filters applied
+      const isInitialState = page === initialPage && 
+                            debouncedSearch === initialSearch && 
+                            selectedFilters.contentType.length === 0 &&
+                            selectedFilters.difficulty.length === 0 &&
+                            selectedFilters.key.length === 0 &&
+                            !selectedFilters.favorite &&
+                            sortBy === 'recent'
+      
+      if (initialContent.length > 0 && isInitialState) {
+        console.log('🔍 useLibraryData: Skipping reload for initial state with initial content')
+        return
+      }
+      
+      console.log('🔍 useLibraryData: Reloading due to parameter change', {
+        page,
+        pageSize,
+        debouncedSearch,
+        sortBy,
+        selectedFilters
+      })
+      load()
+    }
+  }, [ready, user, page, pageSize, debouncedSearch, sortBy, selectedFilters, load, initialPage, initialSearch, initialContent.length])
 
   // Add window focus listener to refresh data when user returns to the tab
   useEffect(() => {

@@ -189,147 +189,90 @@ export async function getUserContentPage(
   }
 
   try {
-    const client = supabase ?? getSupabaseBrowserClient()
-
-    // Use provided user or check authentication
-    let user = providedUser
-    if (!user) {
-      console.log("🔍 getUserContentPage: No provided user, checking authentication...")
-      user = await getAuthenticatedUser()
-      if (!user) {
-        console.warn("🔍 getUserContentPage: No authenticated user found")
-        logger.log("User not authenticated, returning empty content page")
-        throw new Error("User not authenticated")
-      }
-      console.log("🔍 getUserContentPage: Found authenticated user:", user.email)
-    } else {
-      console.log("🔍 getUserContentPage: Using provided user:", user.email)
+    // If we have a provided user (server-side), use the original Supabase query logic
+    if (providedUser && supabase) {
+      console.log("🔍 getUserContentPage: Using server-side Supabase query")
+      return await getUserContentPageDirect(params, supabase, providedUser, signal)
     }
 
-    console.log("🔍 getUserContentPage: Starting database query", {
-      userId: user.id,
-      page,
-      pageSize,
+    // For client-side queries, use the API route to avoid RLS issues
+    console.log("🔍 getUserContentPage: Using client-side API route")
+    
+    // Check authentication first
+    const user = await getAuthenticatedUser()
+    if (!user) {
+      console.warn("🔍 getUserContentPage: No authenticated user found")
+      throw new Error("User not authenticated")
+    }
+
+    // Get Firebase auth token
+    let token: string
+    try {
+      if (typeof window === 'undefined') {
+        throw new Error('Client-side API calls should only happen in browser')
+      }
+      const { auth } = await import('@/lib/firebase')
+      if (!auth?.currentUser) {
+        throw new Error('User not authenticated')
+      }
+      token = await auth.currentUser.getIdToken()
+    } catch (error) {
+      console.error('Failed to get Firebase auth token:', error)
+      throw new Error('Authentication failed')
+    }
+
+    // Build query parameters
+    const queryParams = new URLSearchParams({
+      page: String(page),
+      pageSize: String(pageSize),
       search,
       sortBy,
-      filters
+      favorite: String(filters.favorite || false)
     })
 
-    let query = client
-      .from("content")
-      .select("*", { count: "exact" })
-      .eq("user_id", user.id)
-
-    // Apply search with better text matching
-    if (search) {
-      // Use ilike for case-insensitive search across multiple fields
-      // Note: We exclude tags from the main OR query since it's an array field
-      query = query.or(
-        `title.ilike.%${search}%,artist.ilike.%${search}%,album.ilike.%${search}%`
-      )
-    }
-
-    // Apply filters with validation
     if (filters.contentType?.length) {
-      const validTypes = ['Lyrics', 'Chord Chart', 'Guitar Tab', 'Sheet Music']
-      const filteredTypes = filters.contentType.filter((type: string) => validTypes.includes(type))
-      if (filteredTypes.length > 0) {
-        query = query.in("content_type", filteredTypes)
-      }
+      queryParams.set('contentType', filters.contentType.join(','))
     }
-
     if (filters.difficulty?.length) {
-      const validDifficulties = ['Beginner', 'Intermediate', 'Advanced']
-      const filteredDifficulties = filters.difficulty.filter((diff: string) => validDifficulties.includes(diff))
-      if (filteredDifficulties.length > 0) {
-        query = query.in("difficulty", filteredDifficulties)
-      }
+      queryParams.set('difficulty', filters.difficulty.join(','))
     }
-
     if (filters.key?.length) {
-      query = query.in("key", filters.key)
+      queryParams.set('key', filters.key.join(','))
     }
 
-    if (filters.favorite) {
-      query = query.eq("is_favorite", true)
+    console.log('🔍 getUserContentPage: Making API request with params:', Object.fromEntries(queryParams))
+
+    const response = await fetch(`/api/content?${queryParams.toString()}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+      signal
+    })
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
+      throw new Error(errorData.error || `API request failed: ${response.status}`)
     }
 
-    // Apply sorting with validation
-    const sortMap = {
-      recent: ["created_at", false],
-      title: ["title", true],
-      artist: ["artist", true],
-      updated: ["updated_at", false]
-    } as const
+    const result = await response.json()
 
-    const [sortColumn, ascending] = sortMap[sortBy as keyof typeof sortMap] || sortMap.recent
-    query = query.order(sortColumn, { ascending })
-
-    // Apply pagination with bounds checking
-    const safePage = Math.max(1, page)
-    const safePageSize = Math.min(Math.max(1, pageSize), 100) // Max 100 items per page
-    const from = (safePage - 1) * safePageSize
-    const to = from + safePageSize - 1
-
-    // Execute query with timeout
-    const queryPromise = query.abortSignal(signal).range(from, to)
-    const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error('Database query timed out')), 15000)
-    )
-
-    const { data, error, count } = await Promise.race([queryPromise, timeoutPromise]) as any
-
-    if (error) {
-      logger.error("Database query error:", error)
-      
-      // Provide helpful error messages
-      if (error.message?.includes('relation "content" does not exist')) {
-        throw new Error("Database tables not set up. Please run the setup process.")
-      }
-      if (error.message?.includes('permission denied')) {
-        throw new Error("Database access denied. Please check your permissions.")
-      }
-      
-      throw new Error(`Database error: ${error.message}`)
-    }
-
-    console.log('Query results - content types found:', data?.map((item: any) => item.content_type).filter((type: any, index: number, arr: any[]) => arr.indexOf(type) === index))
-
-    const result = {
-      data: data || [],
-      total: count || 0,
-      page: safePage,
-      pageSize: safePageSize,
-      hasMore: (count || 0) > safePage * safePageSize,
-      totalPages: Math.ceil((count || 0) / safePageSize)
-    }
-
-    console.log('🔍 getUserContentPage: Query result created', {
-      dataLength: result.data.length,
+    console.log('🔍 getUserContentPage: API response received', {
+      dataLength: result.data?.length || 0,
       total: result.total,
       page: result.page,
       pageSize: result.pageSize,
-      hasData: result.data.length > 0,
-      firstItemTitle: result.data[0]?.title || 'N/A'
+      hasData: !!(result.data && result.data.length > 0)
     })
 
     // Cache successful results
-    if (useCache && result.data.length > 0) {
+    if (useCache && result.data?.length > 0) {
       contentCache.set(cacheKey, {
         data: result,
         timestamp: Date.now(),
-        ttl: 30 * 1000 // Cache for 30 seconds instead of 5 minutes
+        ttl: 30 * 1000 // Cache for 30 seconds
       })
     }
 
-    logger.log("Content page loaded successfully", {
-      page: safePage,
-      pageSize: safePageSize,
-      total: count,
-      itemsReturned: data?.length || 0
-    })
-
-    console.log('🔍 getUserContentPage: Returning result to caller')
     return result
 
   } catch (error) {
@@ -359,6 +302,111 @@ export async function getUserContentPage(
     
     throw error
   }
+}
+
+// Direct Supabase query function for server-side use
+async function getUserContentPageDirect(
+  params: ContentQueryParams,
+  supabase: SupabaseClient,
+  providedUser: any,
+  signal?: AbortSignal
+) {
+  const {
+    page = 1,
+    pageSize = 20,
+    search = "",
+    sortBy = "recent",
+    filters = {}
+  } = params
+
+  console.log("🔍 getUserContentPageDirect: Starting server-side query")
+
+  let query = supabase
+    .from("content")
+    .select("*", { count: "exact" })
+    .eq("user_id", providedUser.id)
+
+  // Apply search with better text matching
+  if (search) {
+    query = query.or(
+      `title.ilike.%${search}%,artist.ilike.%${search}%,album.ilike.%${search}%`
+    )
+  }
+
+  // Apply filters with validation
+  if (filters.contentType?.length) {
+    const validTypes = ['Lyrics', 'Chord Chart', 'Guitar Tab', 'Sheet Music']
+    const filteredTypes = filters.contentType.filter((type: string) => validTypes.includes(type))
+    if (filteredTypes.length > 0) {
+      query = query.in("content_type", filteredTypes)
+    }
+  }
+
+  if (filters.difficulty?.length) {
+    const validDifficulties = ['Beginner', 'Intermediate', 'Advanced']
+    const filteredDifficulties = filters.difficulty.filter((diff: string) => validDifficulties.includes(diff))
+    if (filteredDifficulties.length > 0) {
+      query = query.in("difficulty", filteredDifficulties)
+    }
+  }
+
+  if (filters.key?.length) {
+    query = query.in("key", filters.key)
+  }
+
+  if (filters.favorite) {
+    query = query.eq("is_favorite", true)
+  }
+
+  // Apply sorting with validation
+  const sortMap = {
+    recent: ["created_at", false],
+    title: ["title", true],
+    artist: ["artist", true],
+    updated: ["updated_at", false]
+  } as const
+
+  const [sortColumn, ascending] = sortMap[sortBy as keyof typeof sortMap] || sortMap.recent
+  query = query.order(sortColumn, { ascending })
+
+  // Apply pagination with bounds checking
+  const safePage = Math.max(1, page)
+  const safePageSize = Math.min(Math.max(1, pageSize), 100)
+  const from = (safePage - 1) * safePageSize
+  const to = from + safePageSize - 1
+
+  // Execute query with timeout
+  const queryPromise = signal ? query.abortSignal(signal).range(from, to) : query.range(from, to)
+  const timeoutPromise = new Promise((_, reject) =>
+    setTimeout(() => reject(new Error('Database query timed out')), 15000)
+  )
+
+  const { data, error, count } = await Promise.race([queryPromise, timeoutPromise]) as any
+
+  if (error) {
+    logger.error("Database query error:", error)
+    throw new Error(`Database error: ${error.message}`)
+  }
+
+  const totalItems = count || 0
+  const totalPages = Math.ceil(totalItems / safePageSize)
+
+  const result = {
+    data: data || [],
+    total: totalItems,
+    page: safePage,
+    pageSize: safePageSize,
+    hasMore: totalItems > safePage * safePageSize,
+    totalPages
+  }
+
+  console.log('🔍 getUserContentPageDirect: Server-side query completed', {
+    dataLength: result.data.length,
+    total: result.total,
+    page: result.page
+  })
+
+  return result
 }
 
 

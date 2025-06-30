@@ -445,65 +445,70 @@ export function Library({
         />
       )}
 
-      <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-        <Select
-          value={String(pageSize)}
-          onValueChange={(v) => {
-            setPageSize(Number(v));
-            setPage(1);
-          }}
-        >
-          <SelectTrigger className="w-full sm:w-[100px] border-amber-200 bg-white hover:bg-amber-50 text-sm">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="20">20</SelectItem>
-            <SelectItem value="50">50</SelectItem>
-            <SelectItem value="100">100</SelectItem>
-          </SelectContent>
-        </Select>
-        <Pagination className="w-full sm:w-auto">
-          <PaginationContent className="flex-wrap justify-center">
-            <PaginationItem>
-              <PaginationPrevious
-                className={cn(page === 1 && "pointer-events-none opacity-50", "text-sm")}
-                onClick={() => setPage((p) => Math.max(1, p - 1))}
-              />
-            </PaginationItem>
-            {Array.from({ length: Math.min(totalPages, 5) }).map((_, i) => {
-              // Show first, last, and current page with 2 pages around current
-              let pageNum: number;
-              if (totalPages <= 5) {
-                pageNum = i + 1;
-              } else if (page <= 3) {
-                pageNum = i + 1;
-              } else if (page >= totalPages - 2) {
-                pageNum = totalPages - 4 + i;
-              } else {
-                pageNum = page - 2 + i;
-              }
-              
-              return (
-                <PaginationItem key={pageNum}>
-                  <PaginationLink
-                    isActive={page === pageNum}
-                    onClick={() => setPage(pageNum)}
-                    className="text-sm"
-                  >
-                    {pageNum}
-                  </PaginationLink>
+      {/* Pagination Controls - Only show when there's data */}
+      {totalCount > 0 && (
+        <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <Select
+            value={String(pageSize)}
+            onValueChange={(v) => {
+              setPageSize(Number(v));
+              setPage(1);
+            }}
+          >
+            <SelectTrigger className="w-full sm:w-[100px] border-amber-200 bg-white hover:bg-amber-50 text-sm">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="20">20</SelectItem>
+              <SelectItem value="50">50</SelectItem>
+              <SelectItem value="100">100</SelectItem>
+            </SelectContent>
+          </Select>
+          {totalPages > 1 && (
+            <Pagination className="w-full sm:w-auto">
+              <PaginationContent className="flex-wrap justify-center">
+                <PaginationItem>
+                  <PaginationPrevious
+                    className={cn(page === 1 && "pointer-events-none opacity-50", "text-sm")}
+                    onClick={() => setPage((p) => Math.max(1, p - 1))}
+                  />
                 </PaginationItem>
-              );
-            })}
-            <PaginationItem>
-              <PaginationNext
-                className={cn(page === totalPages && "pointer-events-none opacity-50", "text-sm")}
-                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-              />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
-      </div>
+                {Array.from({ length: Math.min(totalPages, 5) }).map((_, i) => {
+                  // Show first, last, and current page with 2 pages around current
+                  let pageNum: number;
+                  if (totalPages <= 5) {
+                    pageNum = i + 1;
+                  } else if (page <= 3) {
+                    pageNum = i + 1;
+                  } else if (page >= totalPages - 2) {
+                    pageNum = totalPages - 4 + i;
+                  } else {
+                    pageNum = page - 2 + i;
+                  }
+                  
+                  return (
+                    <PaginationItem key={pageNum}>
+                      <PaginationLink
+                        isActive={page === pageNum}
+                        onClick={() => setPage(pageNum)}
+                        className="text-sm"
+                      >
+                        {pageNum}
+                      </PaginationLink>
+                    </PaginationItem>
+                  );
+                })}
+                <PaginationItem>
+                  <PaginationNext
+                    className={cn(page === totalPages && "pointer-events-none opacity-50", "text-sm")}
+                    onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          )}
+        </div>
+      )}
 
       {/* Delete Confirmation Dialog */}
       <DeleteContentDialog
