@@ -42,9 +42,12 @@ import {
   Clock,
   ChevronDown,
   BookOpen,
-  RefreshCw,
 } from "lucide-react";
-import { getUserContentPage, deleteContent, clearContentCache } from "@/lib/content-service";
+import {
+  getUserContentPage,
+  deleteContent,
+  clearContentCache,
+} from "@/lib/content-service";
 import { useFirebaseAuth } from "@/contexts/firebase-auth-context";
 import {
   Pagination,
@@ -66,7 +69,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { ContentType } from "@/types/content"
+import { ContentType } from "@/types/content";
 
 interface LibraryProps {
   onSelectContent: (content: any) => void;
@@ -90,29 +93,41 @@ export function Library({
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [contentToDelete, setContentToDelete] = useState<any>(null);
 
-  // Debug logging for authentication state
+  // Track auth state, but avoid verbose logging in production
   useEffect(() => {
-    console.log('🔍 Library: Auth state changed', {
-      user: user ? {
-        uid: user.uid,
-        email: user.email,
-        emailVerified: user.emailVerified
-      } : null,
-      isLoading: authLoading,
-    });
+    if (process.env.NODE_ENV === "development") {
+      console.log("🔍 Library: Auth state changed", {
+        user: user
+          ? {
+              uid: user.uid,
+              email: user.email,
+              emailVerified: user.emailVerified,
+            }
+          : null,
+        isLoading: authLoading,
+      });
+    }
   }, [user, authLoading]);
 
-  // Debug logging for initial props
+  // Log initial props only during development
   useEffect(() => {
-    console.log('🔍 Library: Component mounted with props', {
-      initialContentLength: initialContent.length,
-      initialTotal,
-      initialPage,
-      initialPageSize,
-      initialSearch,
-      firstItem: initialContent[0]?.title || 'N/A'
-    });
-  }, []); // Only run once on mount
+    if (process.env.NODE_ENV === "development") {
+      console.log("🔍 Library: Component mounted with props", {
+        initialContentLength: initialContent.length,
+        initialTotal,
+        initialPage,
+        initialPageSize,
+        initialSearch,
+        firstItem: initialContent[0]?.title || "N/A",
+      });
+    }
+  }, [
+    initialContent,
+    initialTotal,
+    initialPage,
+    initialPageSize,
+    initialSearch,
+  ]);
 
   const {
     content,
@@ -137,17 +152,19 @@ export function Library({
     initialPage,
     initialPageSize,
     initialSearch,
-  })
+  });
 
-  // Debug logging for content state
+  // Log content state updates during development
   useEffect(() => {
-    console.log('🔍 Library: Content state changed', {
-      contentLength: content.length,
-      totalCount,
-      loading,
-      hasInitialContent: initialContent.length,
-      firstItem: content[0]?.title || 'N/A'
-    });
+    if (process.env.NODE_ENV === "development") {
+      console.log("🔍 Library: Content state changed", {
+        contentLength: content.length,
+        totalCount,
+        loading,
+        hasInitialContent: initialContent.length,
+        firstItem: content[0]?.title || "N/A",
+      });
+    }
   }, [content, totalCount, loading, initialContent.length]);
 
   const totalPages = Math.ceil(totalCount / pageSize);
@@ -167,8 +184,6 @@ export function Library({
     }
   };
 
-
-
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
@@ -182,8 +197,6 @@ export function Library({
     router.push("/add-content");
   };
 
-
-
   const handleEditContent = (content: any) => {
     router.push(`/content/${content.id}/edit`);
   };
@@ -195,42 +208,39 @@ export function Library({
 
   const handleDownloadContent = async (content: any) => {
     try {
-      await cacheFileForContent(content)
-      toast.success('Content cached for offline use')
+      await cacheFileForContent(content);
+      toast.success("Content cached for offline use");
     } catch (err) {
-      console.error('Failed to cache content', err)
-      const message = err instanceof Error ? err.message : 'Download failed'
-      toast.error(message)
+      console.error("Failed to cache content", err);
+      const message = err instanceof Error ? err.message : "Download failed";
+      toast.error(message);
     }
   };
 
   const confirmDelete = async () => {
-    if (!contentToDelete || !user) return
+    if (!contentToDelete || !user) return;
 
     try {
-      console.log('Starting delete process for:', contentToDelete.title)
-      await deleteContent(contentToDelete.id)
+      await deleteContent(contentToDelete.id);
       try {
-        await removeCachedContent(contentToDelete.id)
+        await removeCachedContent(contentToDelete.id);
       } catch (err) {
-        console.error('Failed to remove cached content', err)
+        console.error("Failed to remove cached content", err);
       }
 
       // Clear the content cache to ensure fresh data on reload
-      clearContentCache()
-      
-      toast.success(`"${contentToDelete.title}" has been deleted`)
-      console.log('Reloading library after delete...')
-      await reload()
-      console.log('Library reload completed')
+      clearContentCache();
 
-      setDeleteDialog(false)
-      setContentToDelete(null)
+      toast.success(`"${contentToDelete.title}" has been deleted`);
+      await reload();
+
+      setDeleteDialog(false);
+      setContentToDelete(null);
     } catch (error) {
-      console.error('Error deleting content:', error)
-      toast.error('Failed to delete content. Please try again.')
+      console.error("Error deleting content:", error);
+      toast.error("Failed to delete content. Please try again.");
     }
-  }
+  };
 
   return (
     <div className="p-3 sm:p-6 bg-gradient-to-b from-[#fff9f0] to-[#fff5e5] min-h-screen">
@@ -246,16 +256,6 @@ export function Library({
             </p>
           </div>
           <div className="flex gap-2 self-start sm:self-auto">
-            <Button
-              onClick={reload}
-              variant="outline"
-              className="border-amber-200 bg-white hover:bg-amber-50 text-sm"
-              disabled={loading}
-              size="sm"
-            >
-              <RefreshCw className={`w-4 h-4 sm:mr-2 ${loading ? 'animate-spin' : ''}`} />
-              <span className="hidden sm:inline">Refresh</span>
-            </Button>
             <Button
               onClick={handleAddContent}
               className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 text-sm"
@@ -304,66 +304,70 @@ export function Library({
                   <div className="flex flex-wrap gap-1 mb-2">
                     {[
                       { display: "Guitar Tab", value: ContentType.GUITAR_TAB },
-                      { display: "Chord Chart", value: ContentType.CHORD_CHART },
-                      { display: "Sheet Music", value: ContentType.SHEET_MUSIC },
-                      { display: "Lyrics", value: ContentType.LYRICS }
-                    ].map(
-                      (type) => (
-                        <Badge
-                          key={type.value}
-                          variant={
-                            selectedFilters.contentType.includes(type.value)
-                              ? "default"
-                              : "outline"
-                          }
-                          className="cursor-pointer text-xs"
-                          onClick={() => {
-                            setSelectedFilters((prev) => ({
-                              ...prev,
-                              contentType: prev.contentType.includes(type.value)
-                                ? prev.contentType.filter(
-                                    (t: string) => t !== type.value,
-                                  )
-                                : [...prev.contentType, type.value],
-                            }));
-                          }}
-                        >
-                          {type.display}
-                        </Badge>
-                      ),
-                    )}
+                      {
+                        display: "Chord Chart",
+                        value: ContentType.CHORD_CHART,
+                      },
+                      {
+                        display: "Sheet Music",
+                        value: ContentType.SHEET_MUSIC,
+                      },
+                      { display: "Lyrics", value: ContentType.LYRICS },
+                    ].map((type) => (
+                      <Badge
+                        key={type.value}
+                        variant={
+                          selectedFilters.contentType.includes(type.value)
+                            ? "default"
+                            : "outline"
+                        }
+                        className="cursor-pointer text-xs"
+                        onClick={() => {
+                          setSelectedFilters((prev) => ({
+                            ...prev,
+                            contentType: prev.contentType.includes(type.value)
+                              ? prev.contentType.filter(
+                                  (t: string) => t !== type.value,
+                                )
+                              : [...prev.contentType, type.value],
+                          }));
+                        }}
+                      >
+                        {type.display}
+                      </Badge>
+                    ))}
                   </div>
                   <p className="text-sm font-medium mb-1 mt-3">Difficulty</p>
                   <div className="flex flex-wrap gap-1 mb-2">
                     {[
                       { display: "Beginner", value: "Beginner" },
                       { display: "Intermediate", value: "Intermediate" },
-                      { display: "Advanced", value: "Advanced" }
-                    ].map(
-                      (difficulty) => (
-                        <Badge
-                          key={difficulty.value}
-                          variant={
-                            selectedFilters.difficulty.includes(difficulty.value)
-                              ? "default"
-                              : "outline"
-                          }
-                          className="cursor-pointer text-xs"
-                          onClick={() => {
-                            setSelectedFilters((prev) => ({
-                              ...prev,
-                              difficulty: prev.difficulty.includes(difficulty.value)
-                                ? prev.difficulty.filter(
-                                    (d: string) => d !== difficulty.value,
-                                  )
-                                : [...prev.difficulty, difficulty.value],
-                            }));
-                          }}
-                        >
-                          {difficulty.display}
-                        </Badge>
-                      ),
-                    )}
+                      { display: "Advanced", value: "Advanced" },
+                    ].map((difficulty) => (
+                      <Badge
+                        key={difficulty.value}
+                        variant={
+                          selectedFilters.difficulty.includes(difficulty.value)
+                            ? "default"
+                            : "outline"
+                        }
+                        className="cursor-pointer text-xs"
+                        onClick={() => {
+                          setSelectedFilters((prev) => ({
+                            ...prev,
+                            difficulty: prev.difficulty.includes(
+                              difficulty.value,
+                            )
+                              ? prev.difficulty.filter(
+                                  (d: string) => d !== difficulty.value,
+                                )
+                              : [...prev.difficulty, difficulty.value],
+                          }));
+                        }}
+                      >
+                        {difficulty.display}
+                      </Badge>
+                    ))}
                   </div>
                   <div className="flex items-center mt-3">
                     <input
@@ -410,8 +414,12 @@ export function Library({
         <Card className="bg-white/80 backdrop-blur-sm border border-amber-100 shadow-lg">
           <CardContent className="p-8 text-center">
             <div className="w-16 h-16 border-4 border-t-amber-600 border-amber-200 rounded-full animate-spin mx-auto mb-4"></div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">Loading your music library...</h3>
-            <p className="text-[#A69B8E]">Please wait while we fetch your content</p>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">
+              Loading your music library...
+            </h3>
+            <p className="text-[#A69B8E]">
+              Please wait while we fetch your content
+            </p>
           </CardContent>
         </Card>
       ) : content.length === 0 ? (
@@ -420,13 +428,21 @@ export function Library({
             <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <BookOpen className="w-8 h-8 text-amber-600" />
             </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No content found</h3>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">
+              No content found
+            </h3>
             <p className="text-[#A69B8E] mb-4">
-              {searchQuery || Object.values(selectedFilters).some((v) => (Array.isArray(v) ? v.length > 0 : v))
+              {searchQuery ||
+              Object.values(selectedFilters).some((v) =>
+                Array.isArray(v) ? v.length > 0 : v,
+              )
                 ? "Try adjusting your search or filters"
                 : "Add your first piece of music content to get started"}
             </p>
-            <Button onClick={handleAddContent} className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
+            <Button
+              onClick={handleAddContent}
+              className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+            >
               <Plus className="w-4 h-4 mr-2" />
               Add Content
             </Button>
@@ -469,7 +485,10 @@ export function Library({
               <PaginationContent className="flex-wrap justify-center">
                 <PaginationItem>
                   <PaginationPrevious
-                    className={cn(page === 1 && "pointer-events-none opacity-50", "text-sm")}
+                    className={cn(
+                      page === 1 && "pointer-events-none opacity-50",
+                      "text-sm",
+                    )}
                     onClick={() => setPage((p) => Math.max(1, p - 1))}
                   />
                 </PaginationItem>
@@ -485,7 +504,7 @@ export function Library({
                   } else {
                     pageNum = page - 2 + i;
                   }
-                  
+
                   return (
                     <PaginationItem key={pageNum}>
                       <PaginationLink
@@ -500,7 +519,10 @@ export function Library({
                 })}
                 <PaginationItem>
                   <PaginationNext
-                    className={cn(page === totalPages && "pointer-events-none opacity-50", "text-sm")}
+                    className={cn(
+                      page === totalPages && "pointer-events-none opacity-50",
+                      "text-sm",
+                    )}
                     onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                   />
                 </PaginationItem>
