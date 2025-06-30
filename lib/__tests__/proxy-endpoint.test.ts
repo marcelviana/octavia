@@ -27,12 +27,9 @@ describe('proxy endpoint', () => {
     process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://demo.supabase.co'
     process.env.ALLOWED_PROXY_HOSTS = 'demo.supabase.co'
 
-    vi.doMock('../supabase-server', () => ({
-      getSupabaseServerClient: async () => ({
-        auth: {
-          getSession: vi.fn().mockResolvedValue({ data: { session: {} }, error: null })
-        }
-      })
+    // Mock Firebase server authentication
+    vi.doMock('../firebase-server-utils', () => ({
+      requireAuthServer: vi.fn().mockResolvedValue({ uid: 'user1', email: 'test@example.com' })
     }))
 
     const { GET } = await import('../../app/api/proxy/route')
@@ -46,12 +43,9 @@ describe('proxy endpoint', () => {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRlbW8iLCJyb2xlIjoiYW5vbiJ9.test'
     process.env.ALLOWED_PROXY_HOSTS = 'demo.supabase.co'
 
-    vi.doMock('../supabase-server', () => ({
-      getSupabaseServerClient: async () => ({
-        auth: {
-          getSession: vi.fn().mockResolvedValue({ data: { session: null }, error: null })
-        }
-      })
+    // Mock Firebase server authentication to return null (unauthenticated)
+    vi.doMock('../firebase-server-utils', () => ({
+      requireAuthServer: vi.fn().mockResolvedValue(null)
     }))
 
     const { GET } = await import('../../app/api/proxy/route')
@@ -66,12 +60,9 @@ describe('proxy endpoint', () => {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRlbW8iLCJyb2xlIjoiYW5vbiJ9.test'
     process.env.ALLOWED_PROXY_HOSTS = 'demo.supabase.co'
 
-    vi.doMock('../supabase-server', () => ({
-      getSupabaseServerClient: async () => ({
-        auth: {
-          getSession: vi.fn().mockResolvedValue({ data: { session: {} }, error: null })
-        }
-      })
+    // Mock Firebase server authentication
+    vi.doMock('../firebase-server-utils', () => ({
+      requireAuthServer: vi.fn().mockResolvedValue({ uid: 'user1', email: 'test@example.com' })
     }))
 
     global.fetch = vi.fn().mockResolvedValue(new Response('ok', { status: 200 })) as any
@@ -89,12 +80,9 @@ describe('proxy endpoint', () => {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRlbW8iLCJyb2xlIjoiYW5vbiJ9.test'
     process.env.ALLOWED_PROXY_HOSTS = 'demo.supabase.co'
 
-    vi.doMock('../supabase-server', () => ({
-      getSupabaseServerClient: async () => ({
-        auth: {
-          getSession: vi.fn().mockResolvedValue({ data: { session: {} }, error: null })
-        }
-      })
+    // Mock Firebase server authentication
+    vi.doMock('../firebase-server-utils', () => ({
+      requireAuthServer: vi.fn().mockResolvedValue({ uid: 'user1', email: 'test@example.com' })
     }))
 
     const upstreamHeaders = new Headers({ 'set-cookie': 'a=b', 'x-test': '1' })

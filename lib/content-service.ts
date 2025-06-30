@@ -437,6 +437,15 @@ async function getUserContentPageDirect(
 
   if (error) {
     logger.error("Database query error:", error);
+    
+    // Map specific database errors to user-friendly messages
+    if (error.message.includes('relation "content" does not exist')) {
+      throw new Error('Database tables not set up. Please run the setup process.');
+    }
+    if (error.message.includes('permission denied for table content')) {
+      throw new Error('Database access denied. Please check your permissions.');
+    }
+    
     throw new Error(`Database error: ${error.message}`);
   }
 

@@ -53,12 +53,19 @@ describe('Search Array Field Fix', () => {
 
       // Mock Firebase auth to return authenticated user
       vi.doMock('../firebase', () => ({
-        auth: { currentUser: { uid: 'user1', email: 'test@example.com' } }
+        auth: { 
+          currentUser: { 
+            uid: 'user1', 
+            email: 'test@example.com',
+            getIdToken: vi.fn().mockResolvedValue('mock-firebase-token')
+          } 
+        }
       }))
 
       const { getUserContentPage } = await import('../content-service')
       
-      await getUserContentPage({ search: 'test search' })
+      // Pass supabase client and user to force server-side query path
+      await getUserContentPage({ search: 'test search' }, mockClient as any, { id: 'user1' })
       
       // Verify the OR query does NOT include tags field (which is an array)
       const orCall = mockClient.from().select().eq().or
@@ -106,12 +113,18 @@ describe('Search Array Field Fix', () => {
 
       // Mock Firebase auth to return authenticated user
       vi.doMock('../firebase', () => ({
-        auth: { currentUser: { uid: 'user1', email: 'test@example.com' } }
+        auth: { 
+          currentUser: { 
+            uid: 'user1', 
+            email: 'test@example.com',
+            getIdToken: vi.fn().mockResolvedValue('mock-firebase-token')
+          } 
+        }
       }))
 
       const { getUserContentPage } = await import('../content-service')
       
-      await expect(getUserContentPage({ search: 'test' })).rejects.toThrow(
+      await expect(getUserContentPage({ search: 'test' }, mockClient as any, { id: 'user1' })).rejects.toThrow(
         'Database error: operator does not exist: text[] ~~* unknown'
       )
       
@@ -151,13 +164,19 @@ describe('Search Array Field Fix', () => {
 
       // Mock Firebase auth to return authenticated user
       vi.doMock('../firebase', () => ({
-        auth: { currentUser: { uid: 'user1', email: 'test@example.com' } }
+        auth: { 
+          currentUser: { 
+            uid: 'user1', 
+            email: 'test@example.com',
+            getIdToken: vi.fn().mockResolvedValue('mock-firebase-token')
+          } 
+        }
       }))
 
       const { getUserContentPage } = await import('../content-service')
       
       try {
-        await getUserContentPage({ search: 'test' })
+        await getUserContentPage({ search: 'test' }, mockClient as any, { id: 'user1' })
         expect.fail('Should have thrown an error')
       } catch (error) {
         expect(error).toBeInstanceOf(Error)
@@ -214,12 +233,18 @@ describe('Search Array Field Fix', () => {
 
       // Mock Firebase auth to return authenticated user
       vi.doMock('../firebase', () => ({
-        auth: { currentUser: { uid: 'user1', email: 'test@example.com' } }
+        auth: { 
+          currentUser: { 
+            uid: 'user1', 
+            email: 'test@example.com',
+            getIdToken: vi.fn().mockResolvedValue('mock-firebase-token')
+          } 
+        }
       }))
 
       const { getUserContentPage } = await import('../content-service')
       
-      const result = await getUserContentPage({ search: 'test' })
+      const result = await getUserContentPage({ search: 'test' }, mockClient as any, { id: 'user1' })
       
       expect(result.data).toEqual(mockData)
       expect(result.total).toBe(1)

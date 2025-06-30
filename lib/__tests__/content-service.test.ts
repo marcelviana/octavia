@@ -77,7 +77,13 @@ describe('Content Service', () => {
       
       // Mock Firebase auth to return authenticated user
       vi.doMock('../firebase', () => ({
-        auth: { currentUser: { uid: 'user1', email: 'test@example.com' } }
+                  auth: { 
+            currentUser: { 
+              uid: 'user1', 
+              email: 'test@example.com',
+              getIdToken: vi.fn().mockResolvedValue('mock-firebase-token')
+            } 
+          }
       }))
       
       const { getUserContent } = await import('../content-service')
@@ -124,12 +130,18 @@ describe('Content Service', () => {
 
         // Mock Firebase auth to return authenticated user
         vi.doMock('../firebase', () => ({
-          auth: { currentUser: { uid: 'user1', email: 'test@example.com' } }
+          auth: { 
+            currentUser: { 
+              uid: 'user1', 
+              email: 'test@example.com',
+              getIdToken: vi.fn().mockResolvedValue('mock-firebase-token')
+            } 
+          }
         }))
 
         const { getUserContentPage } = await import('../content-service')
         
-        await getUserContentPage({ search: 'test search' })
+        await getUserContentPage({ search: 'test search' }, mockClient as any, { id: 'user1' })
         
         // Verify the query was constructed correctly
         expect(mockClient.from).toHaveBeenCalledWith('content')
@@ -181,12 +193,18 @@ describe('Content Service', () => {
         }))
 
         vi.doMock('../firebase', () => ({
-          auth: { currentUser: { uid: 'user1', email: 'test@example.com' } }
+          auth: { 
+            currentUser: { 
+              uid: 'user1', 
+              email: 'test@example.com',
+              getIdToken: vi.fn().mockResolvedValue('mock-firebase-token')
+            } 
+          }
         }))
 
         const { getUserContentPage } = await import('../content-service')
 
-        const result = await getUserContentPage()
+        const result = await getUserContentPage({}, mockClient as any, { id: 'user1' })
 
         expect(result.data).toEqual([])
         vi.resetModules()
@@ -248,12 +266,18 @@ describe('Content Service', () => {
 
          // Mock Firebase auth to return authenticated user
          vi.doMock('../firebase', () => ({
-           auth: { currentUser: { uid: 'user1', email: 'test@example.com' } }
+           auth: { 
+             currentUser: { 
+               uid: 'user1', 
+               email: 'test@example.com',
+               getIdToken: vi.fn().mockResolvedValue('mock-firebase-token')
+             } 
+           }
          }))
 
-         const { getUserContentPage } = await import('../content-service')
-         
-         const result = await getUserContentPage()
+                 const { getUserContentPage } = await import('../content-service')
+
+        const result = await getUserContentPage({}, mockClient as any, { id: 'user1' })
          
          expect(result.error).toBe('Request timed out - please try again')
          expect(result.data).toEqual([])
@@ -308,12 +332,18 @@ describe('Content Service', () => {
 
           // Mock Firebase auth to return authenticated user
           vi.doMock('../firebase', () => ({
-            auth: { currentUser: { uid: 'user1', email: 'test@example.com' } }
+            auth: { 
+              currentUser: { 
+                uid: 'user1', 
+                email: 'test@example.com',
+                getIdToken: vi.fn().mockResolvedValue('mock-firebase-token')
+              } 
+            }
           }))
           
           const { getUserContentPage } = await import('../content-service')
           
-          await expect(getUserContentPage()).rejects.toThrow(testCase.expectedMessage)
+          await expect(getUserContentPage({}, mockClient as any, { id: 'user1' })).rejects.toThrow(testCase.expectedMessage)
           vi.resetModules()
         }
       })
@@ -351,13 +381,19 @@ describe('Content Service', () => {
 
           // Mock Firebase auth to return authenticated user
           vi.doMock('../firebase', () => ({
-            auth: { currentUser: { uid: 'user1', email: 'test@example.com' } }
+            auth: { 
+              currentUser: { 
+                uid: 'user1', 
+                email: 'test@example.com',
+                getIdToken: vi.fn().mockResolvedValue('mock-firebase-token')
+              } 
+            }
           }))
 
           const { getUserContentPage } = await import('../content-service')
           
           // Test invalid page/pageSize bounds
-          const result = await getUserContentPage({ page: -1, pageSize: 0 })
+          const result = await getUserContentPage({ page: -1, pageSize: 0 }, mockClient as any, { id: 'user1' })
           
           expect(result.page).toBe(1) // Should default to page 1
           expect(result.pageSize).toBe(1) // Should default to minimum pageSize 1
@@ -401,7 +437,13 @@ describe('Content Service', () => {
 
           // Mock Firebase auth to return authenticated user
           vi.doMock('../firebase', () => ({
-            auth: { currentUser: { uid: 'user1', email: 'test@example.com' } }
+            auth: { 
+              currentUser: { 
+                uid: 'user1', 
+                email: 'test@example.com',
+                getIdToken: vi.fn().mockResolvedValue('mock-firebase-token')
+              } 
+            }
           }))
 
           const { getUserContentPage } = await import('../content-service')
@@ -410,7 +452,7 @@ describe('Content Service', () => {
             filters: { 
               contentType: ['Lyrics', 'Chord Chart', 'INVALID_TYPE'] 
             } 
-          })
+          }, mockClient as any, { id: 'user1' })
           
           // Verify the filter was applied correctly, excluding invalid types
           const inCall = mockClient.from().select().eq().in
@@ -453,13 +495,19 @@ describe('Content Service', () => {
 
           // Mock Firebase auth to return authenticated user
           vi.doMock('../firebase', () => ({
-            auth: { currentUser: { uid: 'user1', email: 'test@example.com' } }
+            auth: { 
+              currentUser: { 
+                uid: 'user1', 
+                email: 'test@example.com',
+                getIdToken: vi.fn().mockResolvedValue('mock-firebase-token')
+              } 
+            }
           }))
 
           const { getUserContentPage } = await import('../content-service')
           
           // Test invalid sort option defaults to 'recent'
-          await getUserContentPage({ sortBy: 'invalid_sort' as any })
+          await getUserContentPage({ sortBy: 'invalid_sort' as any }, mockClient as any, { id: 'user1' })
           
           const orderCall = mockClient.from().select().eq().order
           expect(orderCall).toHaveBeenCalledWith('created_at', { ascending: false })
@@ -490,12 +538,18 @@ describe('Content Service', () => {
           }))
 
           vi.doMock('../firebase', () => ({
-            auth: { currentUser: { uid: 'user1', email: 'test@example.com' } }
+            auth: { 
+              currentUser: { 
+                uid: 'user1', 
+                email: 'test@example.com',
+                getIdToken: vi.fn().mockResolvedValue('mock-firebase-token')
+              } 
+            }
           }))
 
           const { getUserContentPage } = await import('../content-service')
           const controller = new AbortController()
-          await getUserContentPage({}, undefined, undefined, controller.signal)
+          await getUserContentPage({}, mockClient as any, { id: 'user1' }, controller.signal)
 
           expect(abortSignalFn).toHaveBeenCalledWith(controller.signal)
           vi.resetModules()
