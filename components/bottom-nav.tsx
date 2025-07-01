@@ -25,8 +25,8 @@ export function BottomNav({ activeScreen, onNavigate }: BottomNavProps) {
   ]
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-t border-amber-200 shadow-2xl">
-      <div className="flex items-center justify-around px-1 py-1 safe-area-pb">
+    <nav className="fixed left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-t border-amber-200 shadow-2xl" style={{ bottom: 'env(safe-area-inset-bottom, 0px)' }}>
+      <div className="flex items-center justify-center px-2 py-2 gap-1">
         {menuItems.map((item) => {
           const Icon = item.icon
           const isActive = activeScreen === item.id
@@ -35,16 +35,16 @@ export function BottomNav({ activeScreen, onNavigate }: BottomNavProps) {
               key={item.id}
               variant="ghost"
               className={cn(
-                "flex flex-col items-center justify-center h-16 min-w-[60px] flex-1 p-1 transition-all duration-200 rounded-xl",
+                "flex flex-col items-center justify-center h-16 w-16 px-1 py-2 transition-all duration-200 rounded-xl mx-1",
                 isActive
-                  ? "bg-gradient-to-r from-amber-500/90 to-orange-500/90 text-white shadow-lg scale-105"
+                  ? "bg-gradient-to-r from-amber-500/90 to-orange-500/90 text-white shadow-lg"
                   : "text-amber-800 hover:bg-amber-100/80 hover:scale-105"
               )}
               onClick={() => onNavigate(item.id)}
             >
-              <Icon className={cn("w-6 h-6 mb-1", isActive && "drop-shadow-sm")} />
+              <Icon className={cn("w-9 h-9 mb-0.5", isActive && "drop-shadow-sm")} />
               <span className={cn(
-                "text-xs font-medium leading-none",
+                "text-xs font-medium leading-tight",
                 isActive && "font-semibold drop-shadow-sm"
               )}>
                 {item.label}

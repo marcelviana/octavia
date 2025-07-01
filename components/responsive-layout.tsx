@@ -45,7 +45,7 @@ export function ResponsiveLayout({ children, activeScreen, onNavigate, initialSe
   return (
     <div className="flex flex-col h-screen bg-[#fffcf7]">
       <Header
-        onMenuClick={() => setSidebarMobileOpen(true)}
+        onMenuClick={shouldShowBottomNav ? undefined : () => setSidebarMobileOpen(true)}
         onToggleCollapse={() => setSidebarCollapsed((c) => !c)}
         collapsed={sidebarCollapsed}
         initialSearch={initialSearch}
