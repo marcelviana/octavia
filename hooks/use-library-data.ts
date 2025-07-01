@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback, useRef, type Dispatch, type SetStateA
 import { useDebounce } from '@/hooks/use-debounce'
 import { getUserContentPage } from '@/lib/content-service'
 import { saveContent, getCachedContent } from '@/lib/offline-cache'
+import { useSearchParams } from 'next/navigation'
 
 interface Options {
   user: any | null
@@ -48,7 +49,19 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
     initialPageSize,
     initialSearch = ''
   } = options
+  
+  const searchParams = useSearchParams()
   const [searchQuery, setSearchQuery] = useState(initialSearch)
+  
+  // Sync search query with URL changes
+  useEffect(() => {
+    const urlSearch = searchParams.get('search') || ''
+    if (urlSearch !== searchQuery) {
+      console.log('🔍 useLibraryData: Syncing search from URL', { urlSearch, currentSearch: searchQuery })
+      setSearchQuery(urlSearch)
+    }
+  }, [searchParams, searchQuery])
+  
   const debouncedSearch = useDebounce(searchQuery, 300)
   const [sortBy, setSortBy] = useState<'recent' | 'title' | 'artist'>('recent')
 
