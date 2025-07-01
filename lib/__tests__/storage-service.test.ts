@@ -11,6 +11,9 @@ it('uploads file when Supabase configured', async () => {
     isSupabaseConfigured: true,
     getSupabaseBrowserClient: () => client
   }))
+  vi.doMock('../supabase-service', () => ({
+    isSupabaseServiceConfigured: true
+  }))
   vi.doMock('../firebase', () => ({
     auth: {
       currentUser: {
@@ -18,7 +21,8 @@ it('uploads file when Supabase configured', async () => {
         email: 'test@example.com',
         getIdToken: vi.fn().mockResolvedValue('token')
       }
-    }
+    },
+    isFirebaseConfigured: true
   }))
   global.fetch = vi.fn().mockResolvedValue({
     ok: true,
