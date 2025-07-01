@@ -242,22 +242,22 @@ export function Library({
   };
 
   return (
-    <div className="p-3 sm:p-6 bg-gradient-to-b from-[#fff9f0] to-[#fff5e5] min-h-screen">
+    <div className="p-4 sm:p-6 bg-gradient-to-b from-[#fff9f0] to-[#fff5e5] min-h-full">
       {/* Header */}
-      <div className="flex flex-col gap-4 mb-6">
-        <div className="flex items-start justify-between gap-3 min-h-[60px]">
+      <div className="flex flex-col gap-2 sm:gap-4 mb-3 sm:mb-6">
+        <div className="flex items-start justify-between gap-3 min-h-[50px] sm:min-h-[60px]">
           <div className="flex-1 min-w-0">
-            <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
               Your Music Library
             </h1>
-            <p className="text-[#A69B8E] mt-1 text-sm sm:text-base">
+            <p className="text-[#A69B8E] mt-0.5 sm:mt-1 text-xs sm:text-sm md:text-base">
               Manage and organize all your musical content
             </p>
           </div>
           <div className="flex gap-2 flex-shrink-0">
             <Button
               onClick={handleAddContent}
-              className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 text-sm"
+              className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 text-xs sm:text-sm"
               size="sm"
             >
               <Plus className="w-4 h-4 sm:mr-2" />
@@ -267,32 +267,36 @@ export function Library({
         </div>
       </div>
 
-      {/* Search and Filters */}
-      <div className="mb-6">
-        <div className="flex flex-col gap-4">
-          <div className="relative">
+      {/* Search and Filters - Single Row Layout */}
+      <div className="mb-3 sm:mb-6">
+        <div className="flex gap-2 items-center">
+          {/* Search Bar - Takes remaining space */}
+          <div className="relative flex-1 min-w-0">
             <Search
               className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-              size={18}
+              size={16}
             />
             <Input
-              placeholder="Search by title, artist, or album..."
+              placeholder="Search..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 bg-white border-amber-200 focus:border-amber-400 focus:ring focus:ring-amber-200 focus:ring-opacity-50"
+              className="pl-9 h-9 sm:h-10 bg-white border-amber-200 focus:border-amber-400 focus:ring focus:ring-amber-200 focus:ring-opacity-50 text-sm"
             />
           </div>
-          <div className="flex gap-2 overflow-x-auto">
+          
+          {/* Filters and Sort - Fixed width */}
+          <div className="flex gap-1.5 flex-shrink-0">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button
-                  variant="outline"
-                  className="border-amber-200 bg-white hover:bg-amber-50 justify-start text-sm flex-shrink-0 h-9"
-                  size="sm"
-                >
-                  <Filter className="w-4 h-4 mr-2" />
-                  Filters
-                  <ChevronDown className="w-4 h-4 ml-auto" />
+                                  <Button
+                    variant="outline"
+                    className="border-amber-200 bg-white hover:bg-amber-50 justify-start text-xs sm:text-sm flex-shrink-0 h-8 sm:h-9 px-2 sm:px-3"
+                    size="sm"
+                  >
+                    <Filter className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                    <span className="hidden sm:inline">Filters</span>
+                    <span className="sm:hidden">F</span>
+                    <ChevronDown className="w-3 h-3 sm:w-4 sm:h-4 ml-1 sm:ml-auto" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56">
@@ -395,8 +399,8 @@ export function Library({
                 setSortBy(value as "recent" | "title" | "artist")
               }
             >
-              <SelectTrigger className="w-[140px] sm:w-[180px] border-amber-200 bg-white hover:bg-amber-50 text-sm flex-shrink-0 h-9">
-                <SelectValue placeholder="Sort by" />
+              <SelectTrigger className="w-[80px] sm:w-[120px] md:w-[180px] border-amber-200 bg-white hover:bg-amber-50 text-xs sm:text-sm flex-shrink-0 h-8 sm:h-9">
+                <SelectValue placeholder="Sort" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="recent">Most Recent</SelectItem>
@@ -411,26 +415,26 @@ export function Library({
       {/* Content Display */}
       {loading && content.length === 0 ? (
         <Card className="bg-white/80 backdrop-blur-sm border border-amber-100 shadow-lg">
-          <CardContent className="p-8 text-center">
-            <div className="w-16 h-16 border-4 border-t-amber-600 border-amber-200 rounded-full animate-spin mx-auto mb-4"></div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
+          <CardContent className="p-4 sm:p-8 text-center">
+            <div className="w-12 h-12 sm:w-16 sm:h-16 border-4 border-t-amber-600 border-amber-200 rounded-full animate-spin mx-auto mb-3 sm:mb-4"></div>
+            <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-1 sm:mb-2">
               Loading your music library...
             </h3>
-            <p className="text-[#A69B8E]">
+            <p className="text-[#A69B8E] text-sm">
               Please wait while we fetch your content
             </p>
           </CardContent>
         </Card>
       ) : content.length === 0 ? (
         <Card className="bg-white/80 backdrop-blur-sm border border-amber-100 shadow-lg">
-          <CardContent className="p-8 text-center">
-            <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <BookOpen className="w-8 h-8 text-amber-600" />
+          <CardContent className="p-4 sm:p-8 text-center">
+            <div className="w-12 h-12 sm:w-16 sm:h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+              <BookOpen className="w-6 h-6 sm:w-8 sm:h-8 text-amber-600" />
             </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
+            <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-1 sm:mb-2">
               No content found
             </h3>
-            <p className="text-[#A69B8E] mb-4">
+            <p className="text-[#A69B8E] mb-3 sm:mb-4 text-sm">
               {searchQuery ||
               Object.values(selectedFilters).some((v) =>
                 Array.isArray(v) ? v.length > 0 : v,
@@ -440,7 +444,8 @@ export function Library({
             </p>
             <Button
               onClick={handleAddContent}
-              className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+              className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-sm"
+              size="sm"
             >
               <Plus className="w-4 h-4 mr-2" />
               Add Content
@@ -462,14 +467,14 @@ export function Library({
 
       {/* Pagination Controls - Only show when there's data */}
       {totalCount > 0 && totalPages > 1 && (
-        <div className="mt-6 flex justify-center">
+        <div className="mt-3 sm:mt-6 mb-2 flex justify-center">
           <Pagination>
-            <PaginationContent className="flex-wrap justify-center">
+            <PaginationContent className="flex-wrap justify-center gap-1">
               <PaginationItem>
                 <PaginationPrevious
                   className={cn(
                     page === 1 && "pointer-events-none opacity-50",
-                    "text-sm",
+                    "text-xs sm:text-sm h-8 px-2 sm:h-9 sm:px-3",
                   )}
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
                 />
@@ -492,7 +497,7 @@ export function Library({
                     <PaginationLink
                       isActive={page === pageNum}
                       onClick={() => setPage(pageNum)}
-                      className="text-sm"
+                      className="text-xs sm:text-sm h-8 w-8 sm:h-9 sm:w-9"
                     >
                       {pageNum}
                     </PaginationLink>
@@ -503,7 +508,7 @@ export function Library({
                 <PaginationNext
                   className={cn(
                     page === totalPages && "pointer-events-none opacity-50",
-                    "text-sm",
+                    "text-xs sm:text-sm h-8 px-2 sm:h-9 sm:px-3",
                   )}
                   onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                 />
