@@ -182,6 +182,13 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
     } catch (err) {
       console.error('🔍 useLibraryData.load: Error loading library data:', err)
       
+      // Check if this is a pagination error (offset out of range)
+      if (err && typeof err === 'object' && 'code' in err && err.code === 'PGRST103') {
+        console.log('🔍 useLibraryData.load: Pagination offset error, resetting to page 1')
+        setPage(1)
+        return
+      }
+      
       // Only fall back to cached content if this is not just a refresh
       // and we don't already have content displayed
       if (!forceRefresh || content.length === 0) {
@@ -224,6 +231,13 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
       }
     }
   }, [ready, load, initialContent.length])
+
+  // Reset page to 1 when search or filters change
+  useEffect(() => {
+    if (ready && hasNavigatedAwayRef.current) {
+      setPage(1)
+    }
+  }, [ready, debouncedSearch, selectedFilters, sortBy])
 
   // Effect to reload data when pagination, search, or filters change
   useEffect(() => {
