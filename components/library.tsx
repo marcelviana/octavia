@@ -402,7 +402,6 @@ export function Library({
                 <div className="flex items-center">
                   <ArrowUpDown className="w-3 h-3 sm:w-4 sm:h-4" />
                   <span className="hidden md:inline md:ml-2">Sort</span>
-                  <ChevronDown className="w-3 h-3 sm:w-4 sm:h-4 ml-1" />
                 </div>
               </SelectTrigger>
               <SelectContent>
