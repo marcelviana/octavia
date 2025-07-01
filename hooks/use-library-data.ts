@@ -225,7 +225,7 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
       inProgressRef.current = false
       setLoading(false)
     }
-  }, [user, page, pageSize, debouncedSearch, sortBy, selectedFilters, content.length])
+  }, [user, page, pageSize, debouncedSearch, sortBy, selectedFilters])
 
   useEffect(() => {
     if (ready) {
