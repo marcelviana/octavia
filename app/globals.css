@@ -10,6 +10,23 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+  
+  /* Safe area support for mobile devices */
+  .safe-area-pb {
+    padding-bottom: env(safe-area-inset-bottom, 0.5rem);
+  }
+  
+  /* Hide sidebar on mobile/tablet portrait */
+  @media (max-width: 1024px) and (orientation: portrait) {
+    .sidebar-hidden {
+      display: none !important;
+    }
+  }
+  
+  /* Add transition animations for orientation changes */
+  .nav-transition {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
 }
 
 @layer base {

@@ -3,9 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import type { Database } from "@/types/supabase";
 import dynamic from "next/dynamic";
-import { Sidebar } from "@/components/sidebar";
-import { Header } from "@/components/header";
-import { cn } from "@/lib/utils";
+import { ResponsiveLayout } from "@/components/responsive-layout";
 import { updateContent, clearContentCache } from "@/lib/content-service";
 import { toast } from "sonner";
 import { cacheFileForContent } from "@/lib/offline-cache";
@@ -22,9 +20,7 @@ interface ContentEditPageClientProps {
 
 export default function ContentEditPageClient({ content }: ContentEditPageClientProps) {
   const router = useRouter();
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [activeScreen, setActiveScreen] = useState("library");
-  const [sidebarMobileOpen, setSidebarMobileOpen] = useState(false);
 
   useEffect(() => {
     if (!content) return
@@ -56,30 +52,8 @@ export default function ContentEditPageClient({ content }: ContentEditPageClient
   };
 
   return (
-    <div className="flex flex-col h-screen bg-[#fffcf7]">
-      <Header
-        onMenuClick={() => setSidebarMobileOpen(true)}
-        onToggleCollapse={() => setSidebarCollapsed(c => !c)}
-        collapsed={sidebarCollapsed}
-      />
-      <div className="flex flex-1">
-        <Sidebar
-          activeScreen={activeScreen}
-          onNavigate={handleNavigate}
-          collapsed={sidebarCollapsed}
-          onCollapsedChange={setSidebarCollapsed}
-          mobileOpen={sidebarMobileOpen}
-          onMobileOpenChange={setSidebarMobileOpen}
-        />
-        <main
-          className={cn(
-            "flex-1 overflow-auto transition-all duration-300 ease-in-out",
-            sidebarCollapsed ? "md:ml-20" : "md:ml-72"
-          )}
-        >
-          <ContentEditor content={content} onSave={handleSave} onCancel={handleCancel} />
-        </main>
-      </div>
-    </div>
+    <ResponsiveLayout activeScreen={activeScreen} onNavigate={handleNavigate}>
+      <ContentEditor content={content} onSave={handleSave} onCancel={handleCancel} />
+    </ResponsiveLayout>
   );
 }

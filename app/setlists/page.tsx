@@ -3,17 +3,13 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { SetlistManager } from "@/components/setlist-manager"
-import { Sidebar } from "@/components/sidebar"
-import { Header } from "@/components/header"
+import { ResponsiveLayout } from "@/components/responsive-layout"
 import { useAuth } from "@/contexts/firebase-auth-context"
-import { cn } from "@/lib/utils"
 
 export default function SetlistsPage() {
   const router = useRouter()
   const { user, isLoading } = useAuth()
   const [activeScreen, setActiveScreen] = useState("setlists")
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
-  const [sidebarMobileOpen, setSidebarMobileOpen] = useState(false)
 
   // Handle navigation from sidebar
   const handleNavigate = (screen: string) => {
@@ -52,30 +48,8 @@ export default function SetlistsPage() {
   }
 
   return (
-    <div className="flex flex-col h-screen bg-[#fffcf7]">
-      <Header
-        onMenuClick={() => setSidebarMobileOpen(true)}
-        onToggleCollapse={() => setSidebarCollapsed((c) => !c)}
-        collapsed={sidebarCollapsed}
-      />
-      <div className="flex flex-1">
-        <Sidebar
-          activeScreen={activeScreen}
-          onNavigate={handleNavigate}
-          collapsed={sidebarCollapsed}
-          onCollapsedChange={setSidebarCollapsed}
-          mobileOpen={sidebarMobileOpen}
-          onMobileOpenChange={setSidebarMobileOpen}
-        />
-        <main
-          className={cn(
-            "flex-1 overflow-auto transition-all duration-300 ease-in-out",
-            sidebarCollapsed ? "md:ml-20" : "md:ml-72",
-          )}
-        >
-          <SetlistManager onEnterPerformance={handleStartPerformance} />
-        </main>
-      </div>
-    </div>
+    <ResponsiveLayout activeScreen={activeScreen} onNavigate={handleNavigate}>
+      <SetlistManager onEnterPerformance={handleStartPerformance} />
+    </ResponsiveLayout>
   )
 }

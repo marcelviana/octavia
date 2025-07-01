@@ -2,9 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Dashboard, ContentItem, UserStats } from "@/components/dashboard";
-import { Sidebar } from "@/components/sidebar";
-import { Header } from "@/components/header";
-import { cn } from "@/lib/utils";
+import { ResponsiveLayout } from "@/components/responsive-layout";
 
 interface DashboardPageClientProps {
   recentContent: ContentItem[];
@@ -19,8 +17,6 @@ export default function DashboardPageClient({
 }: DashboardPageClientProps) {
   const router = useRouter();
   const [activeScreen, setActiveScreen] = useState("dashboard");
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [sidebarMobileOpen, setSidebarMobileOpen] = useState(false);
 
   const handleNavigate = (screen: string) => {
     if (screen === "dashboard") {
@@ -39,37 +35,15 @@ export default function DashboardPageClient({
   };
 
   return (
-    <div className="flex flex-col h-screen bg-[#fffcf7]">
-      <Header
-        onMenuClick={() => setSidebarMobileOpen(true)}
-        onToggleCollapse={() => setSidebarCollapsed((c) => !c)}
-        collapsed={sidebarCollapsed}
+    <ResponsiveLayout activeScreen={activeScreen} onNavigate={handleNavigate}>
+      <Dashboard
+        onNavigate={handleNavigate}
+        onSelectContent={handleSelectContent}
+        onEnterPerformance={handleEnterPerformance}
+        recentContent={recentContent}
+        favoriteContent={favoriteContent}
+        stats={stats}
       />
-      <div className="flex flex-1">
-        <Sidebar
-          activeScreen={activeScreen}
-          onNavigate={handleNavigate}
-          collapsed={sidebarCollapsed}
-          onCollapsedChange={setSidebarCollapsed}
-          mobileOpen={sidebarMobileOpen}
-          onMobileOpenChange={setSidebarMobileOpen}
-        />
-        <main
-          className={cn(
-            "flex-1 overflow-auto transition-all duration-300 ease-in-out",
-            sidebarCollapsed ? "md:ml-20" : "md:ml-72",
-          )}
-        >
-          <Dashboard
-            onNavigate={handleNavigate}
-            onSelectContent={handleSelectContent}
-            onEnterPerformance={handleEnterPerformance}
-            recentContent={recentContent}
-            favoriteContent={favoriteContent}
-            stats={stats}
-          />
-        </main>
-      </div>
-    </div>
+    </ResponsiveLayout>
   );
 }

@@ -10,17 +10,13 @@ type Content = Database["public"]["Tables"]["content"]["Row"]
 const AddContent = dynamic(() => import("@/components/add-content").then(mod => ({ default: mod.AddContent })), {
   loading: () => <p>Loading add content...</p>,
 })
-import { Sidebar } from "@/components/sidebar"
-import { Header } from "@/components/header"
+import { ResponsiveLayout } from "@/components/responsive-layout"
 import { useAuth } from "@/contexts/firebase-auth-context"
-import { cn } from "@/lib/utils"
 
 export default function AddContentPage() {
   const router = useRouter()
   const { user, isLoading } = useAuth()
   const [activeScreen, setActiveScreen] = useState("add-content")
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
-  const [sidebarMobileOpen, setSidebarMobileOpen] = useState(false)
 
   // Handle navigation from sidebar
   const handleNavigate = (screen: string) => {
@@ -59,34 +55,12 @@ export default function AddContentPage() {
   }
 
   return (
-    <div className="flex flex-col h-screen bg-[#fffcf7]">
-      <Header
-        onMenuClick={() => setSidebarMobileOpen(true)}
-        onToggleCollapse={() => setSidebarCollapsed((c) => !c)}
-        collapsed={sidebarCollapsed}
+    <ResponsiveLayout activeScreen={activeScreen} onNavigate={handleNavigate}>
+      <AddContent
+        onNavigate={handleNavigate}
+        onContentCreated={handleContentCreated}
+        onBack={() => router.back()}
       />
-      <div className="flex flex-1">
-        <Sidebar
-          activeScreen={activeScreen}
-          onNavigate={handleNavigate}
-          collapsed={sidebarCollapsed}
-          onCollapsedChange={setSidebarCollapsed}
-          mobileOpen={sidebarMobileOpen}
-          onMobileOpenChange={setSidebarMobileOpen}
-        />
-        <main
-          className={cn(
-            "flex-1 overflow-auto transition-all duration-300 ease-in-out",
-            sidebarCollapsed ? "md:ml-20" : "md:ml-72",
-          )}
-        >
-          <AddContent
-            onNavigate={handleNavigate}
-            onContentCreated={handleContentCreated}
-            onBack={() => router.back()}
-          />
-        </main>
-      </div>
-    </div>
+    </ResponsiveLayout>
   )
 }
