@@ -8,7 +8,7 @@ const ContentEditPageClient = dynamic(
   () => import("@/components/content-edit-page-client"),
   { loading: () => <p>Loading editor...</p> }
 )
-import { useAuth } from "@/contexts/firebase-auth-context"
+import { useFirebaseAuth } from "@/contexts/firebase-auth-context"
 import { getContentById } from "@/lib/content-service"
 import type { Database } from "@/types/supabase"
 
@@ -17,7 +17,7 @@ type Content = Database["public"]["Tables"]["content"]["Row"]
 export default function EditContentPage() {
   const router = useRouter()
   const params = useParams()
-  const { user, isLoading } = useAuth()
+  const { user, isLoading } = useFirebaseAuth()
   const [content, setContent] = useState<Content | null>(null)
   const [contentLoading, setContentLoading] = useState(true)
   const [contentError, setContentError] = useState<string | null>(null)
@@ -27,9 +27,19 @@ export default function EditContentPage() {
 
     const loadContent = async (contentId: string) => {
       try {
+        if (process.env.NODE_ENV === "development") {
+          console.log("🔍 EditContentPage: Loading content with ID:", contentId);
+          console.log("🔍 EditContentPage: User:", user?.email || "No user");
+        }
+        
         if (mounted) setContentLoading(true)
         if (mounted) setContentError(null)
         const data = await getContentById(contentId)
+        
+        if (process.env.NODE_ENV === "development") {
+          console.log("🔍 EditContentPage: Content loaded successfully:", data?.title || "No title");
+        }
+        
         if (mounted) setContent(data)
       } catch (err) {
         console.error("Error loading content:", err)
@@ -41,6 +51,13 @@ export default function EditContentPage() {
 
     if (params.id && user) {
       loadContent(params.id as string)
+    } else {
+      if (process.env.NODE_ENV === "development") {
+        console.log("🔍 EditContentPage: Not loading content - missing params or user:", {
+          hasParams: !!params.id,
+          hasUser: !!user
+        });
+      }
     }
 
     return () => {

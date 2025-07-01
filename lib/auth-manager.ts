@@ -28,8 +28,11 @@ interface TokenResult {
 }
 
 export async function getValidToken(): Promise<TokenResult> {
-  if (!ensureAuthConfigured()) {
-    return { token: null, error: 'Authentication not configured' }
+  // For delete operations and other client-side operations, we primarily need Firebase auth
+  // Don't fail if Supabase service role is not configured for client-side operations
+  if (!isFirebaseConfigured) {
+    logger.warn('Firebase not configured - authentication disabled')
+    return { token: null, error: 'Firebase authentication not configured' }
   }
 
   const now = Date.now()
@@ -41,10 +44,18 @@ export async function getValidToken(): Promise<TokenResult> {
     if (typeof window === 'undefined') {
       return { token: null, error: 'Token unavailable in server environment' }
     }
-    const { auth } = await import('./firebase')
-    if (!auth?.currentUser) {
+    
+    const { auth, isFirebaseConfigured: dynamicFirebaseCheck } = await import('./firebase')
+    
+    // Double-check Firebase configuration dynamically
+    if (!dynamicFirebaseCheck || !auth) {
+      return { token: null, error: 'Firebase authentication not properly initialized' }
+    }
+    
+    if (!auth.currentUser) {
       return { token: null, error: 'User not authenticated' }
     }
+    
     const token = await auth.currentUser.getIdToken(true)
     currentToken = token
     tokenExpiry = now + TOKEN_LIFETIME_MS
@@ -54,5 +65,26 @@ export async function getValidToken(): Promise<TokenResult> {
     currentToken = null
     tokenExpiry = null
     return { token: null, error: err?.message || 'Failed to get auth token' }
+  }
+}
+
+export async function debugAuthConfig(): Promise<void> {
+  if (process.env.NODE_ENV !== 'development') return;
+  
+  console.log('🔍 Auth Configuration Debug:');
+  console.log('- Firebase configured:', isFirebaseConfigured);
+  console.log('- Supabase configured:', isSupabaseConfigured);
+  console.log('- Supabase service configured:', isSupabaseServiceConfigured);
+  
+  if (typeof window !== 'undefined') {
+    try {
+      const { auth, isFirebaseConfigured: dynamicCheck } = await import('./firebase');
+      console.log('- Firebase dynamic check:', dynamicCheck);
+      console.log('- Firebase auth instance:', !!auth);
+      console.log('- Current user:', !!auth?.currentUser);
+      console.log('- User email:', auth?.currentUser?.email || 'Not authenticated');
+    } catch (err) {
+      console.log('- Firebase import error:', err);
+    }
   }
 }

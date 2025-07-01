@@ -169,4 +169,105 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     )
   }
+}
+
+// PUT /api/content - Update existing content
+export async function PUT(request: NextRequest) {
+  try {
+    const user = await requireAuthServer(request)
+    
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      )
+    }
+
+    const body = await request.json()
+    const { id, ...updateData } = body
+    
+    if (!id) {
+      return NextResponse.json(
+        { error: 'Content ID is required' },
+        { status: 400 }
+      )
+    }
+
+    const supabase = getSupabaseServiceClient()
+    
+    const contentData = {
+      ...updateData,
+      updated_at: new Date().toISOString(),
+    }
+
+    const { data: content, error } = await supabase
+      .from('content')
+      .update(contentData)
+      .eq('id', id)
+      .eq('user_id', user.uid)
+      .select()
+      .single()
+
+    if (error) {
+      if (error.code === 'PGRST116') {
+        return NextResponse.json(
+          { error: 'Content not found or access denied' },
+          { status: 404 }
+        )
+      }
+      throw error
+    }
+
+    return NextResponse.json(content)
+  } catch (error: any) {
+    logger.error('Error updating content:', error)
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    )
+  }
+}
+
+// DELETE /api/content - Delete content
+export async function DELETE(request: NextRequest) {
+  try {
+    const user = await requireAuthServer(request)
+    
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      )
+    }
+
+    const { searchParams } = new URL(request.url)
+    const id = searchParams.get('id')
+    
+    if (!id) {
+      return NextResponse.json(
+        { error: 'Content ID is required' },
+        { status: 400 }
+      )
+    }
+
+    const supabase = getSupabaseServiceClient()
+    
+    const { error } = await supabase
+      .from('content')
+      .delete()
+      .eq('id', id)
+      .eq('user_id', user.uid)
+
+    if (error) {
+      throw error
+    }
+
+    return NextResponse.json({ success: true })
+  } catch (error: any) {
+    logger.error('Error deleting content:', error)
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    )
+  }
 } 

@@ -11,10 +11,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import {
   BookOpen,
-  Download,
   Edit,
   MoreVertical,
-  Share,
   Star,
   Clock,
   Trash2,
@@ -27,7 +25,6 @@ interface Props {
   loading: boolean;
   onSelect: (c: any) => void;
   onEdit: (c: any) => void;
-  onDownload: (c: any) => void;
   onDelete: (c: any) => void;
   getContentIcon: (type: string) => React.ReactNode;
   formatDate: (d: string) => string;
@@ -38,7 +35,6 @@ export function LibraryList({
   loading,
   onSelect,
   onEdit,
-  onDownload,
   onDelete,
   getContentIcon,
   formatDate,
@@ -177,31 +173,37 @@ export function LibraryList({
                               variant="ghost"
                               size="icon"
                               className="h-8 w-8"
+                              onClick={(e) => e.stopPropagation()}
                             >
                               <MoreVertical className="w-4 h-4" />
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
-                            <DropdownMenuItem onClick={() => onSelect(item)}>
+                            <DropdownMenuItem 
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                onSelect(item);
+                              }}
+                            >
                               <BookOpen className="w-4 h-4 mr-2" />
                               View
                             </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => onEdit(item)}>
+                            <DropdownMenuItem 
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                onEdit(item);
+                              }}
+                            >
                               <Edit className="w-4 h-4 mr-2" />
                               Edit
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
-                              <Share className="w-4 h-4 mr-2" />
-                              Share
-                            </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => onDownload(item)}>
-                              <Download className="w-4 h-4 mr-2" />
-                              Download
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem
                               className="text-red-600"
-                              onClick={() => onDelete(item)}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                onDelete(item);
+                              }}
                             >
                               <Trash2 className="w-4 h-4 mr-2" />
                               Delete

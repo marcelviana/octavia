@@ -470,35 +470,60 @@ export async function getContentById(
   providedUser?: any,
 ) {
   try {
-    const client = supabase ?? getSupabaseBrowserClient();
-
-    // Use provided user or check authentication
-    let user = providedUser;
-    if (!user) {
-      user = await getAuthenticatedUser();
-    } else {
+    // If we have a provided user and supabase (server-side), use direct query
+    if (providedUser && supabase) {
       if (process.env.NODE_ENV === "development") {
-        console.log("🔍 getContentById: Using provided user:", user.email);
+        console.log("🔍 getContentById: Using server-side Supabase query");
       }
+      
+      const { data, error } = await supabase
+        .from("content")
+        .select("*")
+        .eq("id", id)
+        .eq("user_id", providedUser.id)
+        .single();
+
+      if (error) {
+        logger.error("Error fetching content:", error);
+        throw error;
+      }
+
+      return data;
     }
 
+    // For client-side queries, use the API route
+    if (process.env.NODE_ENV === "development") {
+      console.log("🔍 getContentById: Using client-side API route");
+    }
+
+    // Check authentication first
+    const user = await getAuthenticatedUser();
     if (!user) {
       throw new Error("User not authenticated");
     }
 
-    const { data, error } = await client
-      .from("content")
-      .select("*")
-      .eq("id", id)
-      .eq("user_id", user.id)
-      .single();
-
-    if (error) {
-      logger.error("Error fetching content:", error);
-      throw error;
+    // Get Firebase auth token
+    const { getValidToken } = await import("@/lib/auth-manager");
+    const { token, error: tokenError } = await getValidToken();
+    if (!token) {
+      throw new Error(tokenError || "Authentication failed");
     }
 
-    return data;
+    const response = await fetch(`/api/content/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        throw new Error("Content not found");
+      }
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.error || `API request failed: ${response.status}`);
+    }
+
+    return await response.json();
   } catch (error) {
     logger.error("Error in getContentById:", error);
     throw error;
@@ -536,6 +561,43 @@ export async function createContent(content: ContentInsert) {
 
 export async function updateContent(id: string, content: ContentUpdate) {
   try {
+    // For client-side operations, use the API route
+    if (typeof window !== "undefined") {
+      if (process.env.NODE_ENV === "development") {
+        console.log("🔍 updateContent: Using client-side API route");
+      }
+
+      // Get Firebase auth token
+      const { getValidToken } = await import("@/lib/auth-manager");
+      const { token, error: tokenError } = await getValidToken();
+      if (!token) {
+        throw new Error(tokenError || "Authentication failed");
+      }
+
+      const response = await fetch("/api/content", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ id, ...content }),
+      });
+
+      if (!response.ok) {
+        if (response.status === 404) {
+          throw new Error("Content not found");
+        }
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `Update failed: ${response.status}`);
+      }
+
+      // Clear cache after update
+      clearContentCache();
+
+      return await response.json();
+    }
+
+    // Fallback to direct Supabase call for server-side operations
     const supabase = getSupabaseBrowserClient();
 
     // Check if user is authenticated
@@ -575,6 +637,41 @@ export async function updateContent(id: string, content: ContentUpdate) {
 
 export async function deleteContent(id: string) {
   try {
+    // For client-side operations, use the API route
+    if (typeof window !== "undefined") {
+      if (process.env.NODE_ENV === "development") {
+        console.log("🔍 deleteContent: Using client-side API route");
+      }
+
+      // Get Firebase auth token
+      const { getValidToken } = await import("@/lib/auth-manager");
+      const { token, error: tokenError } = await getValidToken();
+      if (!token) {
+        throw new Error(tokenError || "Authentication failed");
+      }
+
+      const response = await fetch(`/api/content?id=${encodeURIComponent(id)}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        if (response.status === 404) {
+          throw new Error("Content not found");
+        }
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `Delete failed: ${response.status}`);
+      }
+
+      // Clear cache after delete
+      clearContentCache();
+
+      return true;
+    }
+
+    // Fallback to direct Supabase call for server-side operations
     const supabase = getSupabaseBrowserClient();
 
     // Check if user is authenticated

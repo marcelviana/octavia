@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
   saveContent,
-  cacheFileForContent,
   removeCachedContent,
 } from "@/lib/offline-cache";
 import {
@@ -33,8 +32,6 @@ import {
   Filter,
   Star,
   Edit,
-  Download,
-  Share,
   Plus,
   Mic,
   Clock,
@@ -204,19 +201,25 @@ export function Library({
     setDeleteDialog(true);
   };
 
-  const handleDownloadContent = async (content: any) => {
-    try {
-      await cacheFileForContent(content);
-      toast.success("Content cached for offline use");
-    } catch (err) {
-      console.error("Failed to cache content", err);
-      const message = err instanceof Error ? err.message : "Download failed";
-      toast.error(message);
-    }
-  };
-
   const confirmDelete = async () => {
     if (!contentToDelete || !user) return;
+
+    // Debug logging in development
+    if (process.env.NODE_ENV === "development") {
+      console.log("🔍 Delete operation starting:", {
+        contentId: contentToDelete.id,
+        contentTitle: contentToDelete.title,
+        userEmail: user.email,
+      });
+      
+      // Debug auth configuration
+      try {
+        const { debugAuthConfig } = await import("@/lib/auth-manager");
+        await debugAuthConfig();
+      } catch (err) {
+        console.warn("Failed to debug auth config:", err);
+      }
+    }
 
     try {
       await deleteContent(contentToDelete.id);
@@ -230,13 +233,40 @@ export function Library({
       clearContentCache();
 
       toast.success(`"${contentToDelete.title}" has been deleted`);
-      await reload();
+      
+      // Try to reload the content, but don't fail if it doesn't work
+      try {
+        await reload();
+      } catch (reloadError) {
+        console.warn("Failed to reload content after delete:", reloadError);
+        // Still close the dialog even if reload fails
+      }
 
       setDeleteDialog(false);
       setContentToDelete(null);
     } catch (error) {
       console.error("Error deleting content:", error);
-      toast.error("Failed to delete content. Please try again.");
+      
+      // Provide more specific error messages based on the error type
+      if (error instanceof Error) {
+        if (error.message.includes("Authentication") || error.message.includes("not configured")) {
+          toast.error("Authentication error. Please try logging out and back in.");
+        } else if (error.message.includes("not found")) {
+          toast.error("Content not found. It may have already been deleted.");
+          // Still close the dialog and try to reload
+          setDeleteDialog(false);
+          setContentToDelete(null);
+          try {
+            await reload();
+          } catch (reloadError) {
+            console.warn("Failed to reload after delete error:", reloadError);
+          }
+        } else {
+          toast.error(`Failed to delete content: ${error.message}`);
+        }
+      } else {
+        toast.error("Failed to delete content. Please try again.");
+      }
     }
   };
 
@@ -443,7 +473,6 @@ export function Library({
           loading={loading}
           onSelect={onSelectContent}
           onEdit={handleEditContent}
-          onDownload={handleDownloadContent}
           onDelete={handleDeleteContent}
           getContentIcon={getContentIcon}
           formatDate={formatDate}
