@@ -70,7 +70,7 @@ export function LibraryList({
       )}
       <Card className="bg-white/90 backdrop-blur-sm border border-amber-100 shadow-lg overflow-hidden">
         <CardContent className="p-0">
-          <ScrollArea className="divide-y divide-amber-100 h-[65vh] sm:h-[68vh]">
+          <ScrollArea className="divide-y divide-amber-100 h-[72vh] sm:h-[75vh] md:h-[78vh]">
             {content.map((item) => (
               <div
                 key={item.id}

@@ -5,7 +5,6 @@ import { useLibraryData } from "@/hooks/use-library-data";
 import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import {
   saveContent,
@@ -28,7 +27,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
-  Search,
   Music,
   FileText,
   Guitar,
@@ -40,6 +38,7 @@ import {
   Plus,
   Mic,
   Clock,
+  ArrowUpDown,
   ChevronDown,
   BookOpen,
 } from "lucide-react";
@@ -242,61 +241,30 @@ export function Library({
   };
 
   return (
-    <div className="p-4 sm:p-6 bg-gradient-to-b from-[#fff9f0] to-[#fff5e5] min-h-full">
+    <div className="p-4 sm:p-4 md:p-6 bg-gradient-to-b from-[#fff9f0] to-[#fff5e5] min-h-full">
       {/* Header */}
-      <div className="flex flex-col gap-2 sm:gap-4 mb-3 sm:mb-6">
-        <div className="flex items-start justify-between gap-3 min-h-[50px] sm:min-h-[60px]">
+      <div className="flex flex-col gap-1 sm:gap-2 md:gap-4 mb-2 sm:mb-4 md:mb-6">
+        <div className="flex items-start justify-between gap-2 sm:gap-3 min-h-[45px] sm:min-h-[50px] md:min-h-[60px]">
           <div className="flex-1 min-w-0">
             <h1 className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
               Your Music Library
             </h1>
-            <p className="text-[#A69B8E] mt-0.5 sm:mt-1 text-xs sm:text-sm md:text-base">
+            <p className="text-[#A69B8E] mt-0 sm:mt-0.5 md:mt-1 text-xs sm:text-sm md:text-base">
               Manage and organize all your musical content
             </p>
           </div>
-          <div className="flex gap-2 flex-shrink-0">
-            <Button
-              onClick={handleAddContent}
-              className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 text-xs sm:text-sm"
-              size="sm"
-            >
-              <Plus className="w-4 h-4 sm:mr-2" />
-              <span className="hidden sm:inline">Add Content</span>
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      {/* Search and Filters - Single Row Layout */}
-      <div className="mb-3 sm:mb-6">
-        <div className="flex gap-2 items-center">
-          {/* Search Bar - Takes remaining space */}
-          <div className="relative flex-1 min-w-0">
-            <Search
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-              size={16}
-            />
-            <Input
-              placeholder="Search..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9 h-9 sm:h-10 bg-white border-amber-200 focus:border-amber-400 focus:ring focus:ring-amber-200 focus:ring-opacity-50 text-sm"
-            />
-          </div>
-          
-          {/* Filters and Sort - Fixed width */}
-          <div className="flex gap-1.5 flex-shrink-0">
+          <div className="flex gap-1 sm:gap-1.5 md:gap-2 flex-shrink-0">
+            {/* Filter Button */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                                  <Button
-                    variant="outline"
-                    className="border-amber-200 bg-white hover:bg-amber-50 justify-start text-xs sm:text-sm flex-shrink-0 h-8 sm:h-9 px-2 sm:px-3"
-                    size="sm"
-                  >
-                    <Filter className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-                    <span className="hidden sm:inline">Filters</span>
-                    <span className="sm:hidden">F</span>
-                    <ChevronDown className="w-3 h-3 sm:w-4 sm:h-4 ml-1 sm:ml-auto" />
+                <Button
+                  variant="outline"
+                  className="border-amber-200 bg-white hover:bg-amber-50 text-xs sm:text-sm flex-shrink-0 h-7 sm:h-8 md:h-9 px-1.5 sm:px-2 md:px-3"
+                  size="sm"
+                >
+                  <Filter className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span className="hidden md:inline ml-1 sm:ml-2">Filters</span>
+                  <ChevronDown className="w-3 h-3 sm:w-4 sm:h-4 ml-1" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56">
@@ -393,14 +361,19 @@ export function Library({
               </DropdownMenuContent>
             </DropdownMenu>
 
+            {/* Sort Button */}
             <Select
               value={sortBy}
               onValueChange={(value) =>
                 setSortBy(value as "recent" | "title" | "artist")
               }
             >
-              <SelectTrigger className="w-[80px] sm:w-[120px] md:w-[180px] border-amber-200 bg-white hover:bg-amber-50 text-xs sm:text-sm flex-shrink-0 h-8 sm:h-9">
-                <SelectValue placeholder="Sort" />
+              <SelectTrigger className="w-9 sm:w-10 md:w-[120px] border-amber-200 bg-white hover:bg-amber-50 text-xs sm:text-sm flex-shrink-0 h-7 sm:h-8 md:h-9 justify-center md:justify-start px-1.5 sm:px-2 md:px-3">
+                <div className="flex items-center">
+                  <ArrowUpDown className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span className="hidden md:inline md:ml-2">Sort</span>
+                  <ChevronDown className="w-3 h-3 sm:w-4 sm:h-4 ml-1" />
+                </div>
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="recent">Most Recent</SelectItem>
@@ -408,9 +381,21 @@ export function Library({
                 <SelectItem value="artist">Artist (A-Z)</SelectItem>
               </SelectContent>
             </Select>
+
+            {/* Add Content Button */}
+            <Button
+              onClick={handleAddContent}
+              className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 text-xs sm:text-sm h-7 sm:h-8 md:h-9 px-1.5 sm:px-2 md:px-3"
+              size="sm"
+            >
+              <Plus className="w-4 h-4 sm:mr-2" />
+              <span className="hidden sm:inline">Add</span>
+            </Button>
           </div>
         </div>
       </div>
+
+
 
       {/* Content Display */}
       {loading && content.length === 0 ? (
