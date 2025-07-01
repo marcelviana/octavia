@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 import { validateFirebaseTokenServer } from '@/lib/firebase-server-utils'
+import '@/lib/logger'
 
 export const runtime = 'nodejs'
 

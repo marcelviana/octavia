@@ -1,6 +1,7 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
 import "./globals.css"
+import "@/lib/logger"
 import { FirebaseAuthProvider } from "@/contexts/firebase-auth-context"
 import { SessionProvider } from "@/components/providers/session-provider"
 import { Toaster } from "@/components/ui/sonner"
