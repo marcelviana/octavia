@@ -17,7 +17,14 @@ export async function testStoragePermissions(): Promise<{ canUpload: boolean; er
     const testFilename = `test-${Date.now()}.txt`;
     
     try {
-      const firebaseToken = await user.getIdToken();
+      const { getValidToken } = await import("@/lib/auth-manager");
+      const { token: firebaseToken, error } = await getValidToken();
+      if (!firebaseToken) {
+        return {
+          canUpload: false,
+          error: error || 'Authentication failed. Please try logging out and back in.'
+        };
+      }
       
       const formData = new FormData();
       formData.append('file', testFile);
@@ -96,7 +103,11 @@ export async function uploadFileToStorage(file: File | Blob, filename: string) {
     console.log(`User authenticated (${user.email}), uploading: ${filename}`);
     
     // Get Firebase auth token
-    const firebaseToken = await user.getIdToken();
+    const { getValidToken } = await import("@/lib/auth-manager");
+    const { token: firebaseToken, error } = await getValidToken();
+    if (!firebaseToken) {
+      throw new Error(error || 'Authentication failed. Please try logging out and back in.');
+    }
     
     // Prepare form data
     const formData = new FormData();

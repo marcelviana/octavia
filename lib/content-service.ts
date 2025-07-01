@@ -234,19 +234,11 @@ export async function getUserContentPage(
       throw new Error("User not authenticated");
     }
 
-    // Get Firebase auth token
-    let token: string;
-    try {
-      if (typeof window === "undefined") {
-        throw new Error("Client-side API calls should only happen in browser");
-      }
-      const { auth } = await import("@/lib/firebase");
-      if (!auth?.currentUser) {
-        throw new Error("User not authenticated");
-      }
-      token = await auth.currentUser.getIdToken();
-    } catch (error) {
-      console.error("Failed to get Firebase auth token:", error);
+    // Get Firebase auth token via auth manager
+    const { getValidToken } = await import("@/lib/auth-manager");
+    const { token, error: tokenError } = await getValidToken();
+    if (!token) {
+      console.error("Failed to get Firebase auth token:", tokenError);
       throw new Error("Authentication failed");
     }
 
@@ -518,11 +510,11 @@ export async function createContent(content: ContentInsert) {
     if (typeof window === "undefined") {
       throw new Error("createContent can only be called from the browser");
     }
-    const { auth } = await import("@/lib/firebase");
-    if (!auth?.currentUser) {
-      throw new Error("User not authenticated");
+    const { getValidToken } = await import("@/lib/auth-manager");
+    const { token, error: tokenError } = await getValidToken();
+    if (!token) {
+      throw new Error(tokenError || "Authentication failed");
     }
-    const token = await auth.currentUser.getIdToken();
     const response = await fetch("/api/content", {
       method: "POST",
       headers: {
