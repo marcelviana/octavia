@@ -6,7 +6,7 @@ import logger from '@/lib/logger'
 // GET /api/content/[id] - Get specific content by ID
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await requireAuthServer(request)
@@ -18,7 +18,7 @@ export async function GET(
       )
     }
 
-    const { id } = params
+    const { id } = await params
     
     if (!id) {
       return NextResponse.json(
