@@ -81,6 +81,8 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
   
   // Track whether we've moved away from the initial state
   const hasNavigatedAwayRef = useRef(false)
+  // Track if we need to refresh on the next load (e.g., after returning from navigation)
+  const needsRefreshRef = useRef(false)
 
   // Debug logging for state initialization
   useEffect(() => {
@@ -228,22 +230,20 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
   }, [user, page, pageSize, debouncedSearch, sortBy, selectedFilters])
 
   useEffect(() => {
-    if (ready) {
-      // Only load if we don't have initial content or if we need to refresh
-      // This prevents overriding server-rendered content with empty results
-      if (initialContent.length === 0) {
-        console.log('🔍 useLibraryData: No initial content, loading from API...')
-        // Add a small delay to ensure Firebase Auth is fully initialized
-        const timeoutId = setTimeout(() => {
-          load()
-        }, 100)
-        
-        return () => clearTimeout(timeoutId)
-      } else {
-        console.log('🔍 useLibraryData: Initial content available, skipping initial load')
-      }
+    if (ready && user && user.uid) {
+      // Always refresh data when the component is ready and we have a user
+      // This ensures we get the latest data from the server, preventing deleted
+      // items from reappearing due to stale server-rendered content
+      console.log('🔍 useLibraryData: Component ready, loading fresh data...')
+      
+      // Use a small delay to ensure Firebase Auth is fully initialized
+      const timeoutId = setTimeout(() => {
+        load(true) // Force refresh to bypass cache
+      }, 100)
+      
+      return () => clearTimeout(timeoutId)
     }
-  }, [ready, load, initialContent.length])
+  }, [ready, user?.uid, load]) // Only depend on ready and user.uid to avoid excessive reloads
 
   // Reset page to 1 when search or filters change
   useEffect(() => {
@@ -255,7 +255,15 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
   // Effect to reload data when pagination, search, or filters change
   useEffect(() => {
     if (ready && user && user.uid) {
-      // Check if current state matches initial state
+      // Always reload if we need a refresh (e.g., returning from navigation)
+      if (needsRefreshRef.current) {
+        console.log('🔍 useLibraryData: Force reloading due to refresh flag')
+        needsRefreshRef.current = false
+        load(true) // Force refresh
+        return
+      }
+      
+      // Mark that we've navigated away from initial state if parameters changed
       const isInitialState = page === initialPage && 
                             debouncedSearch === initialSearch && 
                             selectedFilters.contentType.length === 0 &&
@@ -264,16 +272,8 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
                             !selectedFilters.favorite &&
                             sortBy === 'recent'
       
-      // If we're not in initial state, mark that we've navigated away
       if (!isInitialState) {
         hasNavigatedAwayRef.current = true
-      }
-      
-      // Only skip reload if we have initial content, we're in initial state, 
-      // AND we haven't navigated away yet
-      if (initialContent.length > 0 && isInitialState && !hasNavigatedAwayRef.current) {
-        console.log('🔍 useLibraryData: Skipping reload for initial state with initial content')
-        return
       }
       
       console.log('🔍 useLibraryData: Reloading due to parameter change', {
@@ -281,24 +281,28 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
         pageSize,
         debouncedSearch,
         sortBy,
-        selectedFilters,
-        hasNavigatedAway: hasNavigatedAwayRef.current,
-        isInitialState,
-        hasInitialContent: initialContent.length > 0
+        selectedFilters
       })
       load()
     }
-  }, [ready, user, page, pageSize, debouncedSearch, sortBy, selectedFilters, load, initialPage, initialSearch, initialContent.length])
+  }, [ready, user, page, pageSize, debouncedSearch, sortBy, selectedFilters, load])
 
   // Add window focus listener to refresh data when user returns to the tab
   useEffect(() => {
     const handleWindowFocus = () => {
       const now = Date.now()
-      // Only refresh if it's been more than 30 seconds since last focus
-      // and we have a valid user - this prevents excessive refreshing
-      if (ready && user && user.uid && (now - lastFocusTimeRef.current) > 30000) {
-        console.log('Window focused after 30+ seconds, refreshing library data...')
-        load(true) // Force refresh to bypass cache
+      // Always mark for refresh when user returns to the page
+      // This ensures deleted items don't reappear from stale data
+      if (ready && user && user.uid) {
+        console.log('🔍 useLibraryData: Window focused, marking for refresh...')
+        needsRefreshRef.current = true
+        
+        // Only refresh immediately if it's been more than 30 seconds since last focus
+        // Otherwise, let the next effect cycle handle it
+        if ((now - lastFocusTimeRef.current) > 30000) {
+          console.log('🔍 useLibraryData: Window focused after 30+ seconds, refreshing immediately...')
+          load(true) // Force refresh to bypass cache
+        }
       }
       lastFocusTimeRef.current = now
     }

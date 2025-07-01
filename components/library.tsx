@@ -425,8 +425,6 @@ export function Library({
         </div>
       </div>
 
-
-
       {/* Content Display */}
       {loading && content.length === 0 ? (
         <Card className="bg-white/80 backdrop-blur-sm border border-amber-100 shadow-lg">
@@ -481,7 +479,7 @@ export function Library({
 
       {/* Pagination Controls - Only show when there's data */}
       {totalCount > 0 && totalPages > 1 && (
-        <div className="mt-3 sm:mt-6 mb-2 flex justify-center">
+        <div className="mt-3 sm:mt-6 mb-4 flex justify-center">
           <Pagination>
             <PaginationContent className="flex-wrap justify-center gap-1">
               <PaginationItem>
