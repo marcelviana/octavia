@@ -35,8 +35,8 @@ export function Header({ onMenuClick, onToggleCollapse, collapsed, initialSearch
 
   return (
     <header className="sticky top-0 z-40 w-full bg-white/80 backdrop-blur-sm border-b border-amber-200">
-      <div className="px-4 py-2 flex items-center justify-between">
-        <div className="flex items-center space-x-3">
+      <div className="px-4 py-2 flex items-center justify-between gap-3">
+        <div className="flex items-center space-x-3 flex-shrink-0">
           {onToggleCollapse && (
             <Button
               variant="ghost"
@@ -77,15 +77,15 @@ export function Header({ onMenuClick, onToggleCollapse, collapsed, initialSearch
             />
           </div>
         </div>
-        <div className="flex items-center space-x-3">
-          <form onSubmit={handleSubmit} className="relative w-32 sm:w-48 md:w-64">
+        <div className="flex items-center space-x-3 flex-1 justify-end min-w-0">
+          <form onSubmit={handleSubmit} className="relative flex-1 max-w-xs sm:max-w-sm md:max-w-md">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
             <Input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search..."
-              className="pl-8 bg-white border-amber-200 focus:border-amber-400 focus:ring focus:ring-amber-200 focus:ring-opacity-50"
+              className="pl-8 bg-white border-amber-200 focus:border-amber-400 focus:ring focus:ring-amber-200 focus:ring-opacity-50 w-full"
             />
           </form>
           <UserHeader />
