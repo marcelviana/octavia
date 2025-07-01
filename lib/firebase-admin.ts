@@ -1,5 +1,6 @@
 import * as admin from 'firebase-admin';
 import { getAuth } from 'firebase-admin/auth';
+import '@/lib/logger'
 
 // Helper function to properly format the private key
 function formatPrivateKey(privateKey: string): string {
