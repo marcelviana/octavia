@@ -19,7 +19,6 @@ contexts/
 lib/
 ├── firebase.ts                    # Firebase client configuration
 ├── firebase-admin.ts              # Firebase admin configuration
-├── firebase-integration.ts        # Firebase testing utilities
 ├── firebase-server-utils.ts       # Server-side auth utilities
 ├── firebase-session-cookies.ts    # Session cookie utilities
 ├── supabase-service.ts            # Supabase service client (no auth)
@@ -30,11 +29,8 @@ app/api/
 ├── auth/session/route.ts          # Session cookie management
 ├── profile/route.ts               # User profile CRUD
 ├── content/route.ts               # Content CRUD example
-└── firebase-test/route.ts         # Firebase admin testing
 
 app/
-├── firebase-test/page.tsx         # Firebase testing page
-├── firebase-supabase-test/page.tsx # Integration testing page
 └── layout.tsx                     # Updated to use FirebaseAuthProvider
 
 middleware.ts                      # Updated for Firebase auth
@@ -116,24 +112,6 @@ ALTER TABLE content ENABLE ROW LEVEL SECURITY;
 4. Supabase service client performs database operations
 
 ## 🧪 Testing
-
-### Test Pages
-- `/firebase-test` - Firebase configuration and basic auth testing
-- `/firebase-supabase-test` - Complete integration testing
-
-### API Testing
-```bash
-# Test Firebase admin configuration
-curl http://localhost:3000/api/firebase-test
-
-# Test profile API (requires auth)
-curl -H "Authorization: Bearer YOUR_ID_TOKEN" \
-     http://localhost:3000/api/profile
-
-# Test content API (requires auth)  
-curl -H "Authorization: Bearer YOUR_ID_TOKEN" \
-     http://localhost:3000/api/content
-```
 
 ### Unit Tests
 ```bash
