@@ -18,9 +18,8 @@ export default function ServiceWorkerWrapper() {
       const clearProblematicCaches = async () => {
         try {
           const cacheNames = await caches.keys();
-          const problematicCaches = cacheNames.filter(name => 
-            name.includes('precache') || 
-            name.includes('workbox') ||
+          const problematicCaches = cacheNames.filter(name =>
+            name.includes('precache') ||
             name.includes('manifest')
           );
           
