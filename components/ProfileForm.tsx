@@ -3,6 +3,7 @@
 import type React from "react"
 
 import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -10,9 +11,11 @@ import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useAuth } from "@/contexts/firebase-auth-context"
+import { toast } from "sonner"
 import { User, Mail, Globe, FileText } from "lucide-react"
 
 export default function ProfileForm() {
+  const router = useRouter()
   const { user, profile, updateProfile } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
@@ -39,11 +42,17 @@ export default function ProfileForm() {
       const { error } = await updateProfile(formData)
       if (error) {
         console.error("Error updating profile:", error)
+        toast.error("Failed to update profile. Please try again.")
       } else {
-        console.log("Profile updated successfully")
+        toast.success("Profile updated successfully!")
+        // Redirect to dashboard after a brief delay to show the toast
+        setTimeout(() => {
+          router.push("/dashboard")
+        }, 1000)
       }
     } catch (error) {
       console.error("Error updating profile:", error)
+      toast.error("Failed to update profile. Please try again.")
     } finally {
       setIsLoading(false)
     }
