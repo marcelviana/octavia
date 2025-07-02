@@ -153,6 +153,26 @@ module.exports = [
       const isSameOrigin = self.origin === url.origin
       if (!isSameOrigin) return false
       const pathname = url.pathname
+      if (pathname.startsWith('/api/auth/')) return false
+      if (pathname.startsWith('/api/')) return true
+      return false
+    },
+    handler: 'NetworkFirst',
+    method: 'HEAD',
+    options: {
+      cacheName: 'api-head',
+      expiration: {
+        maxEntries: 16,
+        maxAgeSeconds: 24 * 60 * 60
+      },
+      networkTimeoutSeconds: 10
+    }
+  },
+  {
+    urlPattern: ({ url }) => {
+      const isSameOrigin = self.origin === url.origin
+      if (!isSameOrigin) return false
+      const pathname = url.pathname
       if (pathname.startsWith('/api/')) return false
       return true
     },

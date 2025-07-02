@@ -143,12 +143,16 @@ const nextConfig = {
 const withPWANextConfig = withPWA({
   dest: 'public',
   runtimeCaching,
-  register: false,
+  register: true,
   skipWaiting: true,
   disable: process.env.NODE_ENV === 'development',
   fallbacks: {
     document: '/_offline',
   },
+  additionalManifestEntries: [
+    { url: '/library', revision: null },
+    { url: '/performance', revision: null },
+  ],
 })(nextConfig)
 
 export default withPWANextConfig

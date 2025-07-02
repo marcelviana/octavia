@@ -4,6 +4,7 @@ import { useEffect } from "react"
 import { Workbox } from "workbox-window"
 import { toast } from "@/hooks/use-toast"
 import { ToastAction } from "@/components/ui/toast"
+import { processQueue } from "@/lib/offline-queue"
 
 export function useServiceWorker() {
   useEffect(() => {
@@ -33,8 +34,13 @@ export function useServiceWorker() {
 
     wb.addEventListener("waiting", handleWaiting)
 
-    wb.register().catch(err => {
-      console.error("Service worker registration failed", err)
-    })
+    wb.register()
+      .then(() => {
+        wb.update()
+        processQueue()
+      })
+      .catch(err => {
+        console.error("Service worker registration failed", err)
+      })
   }, [])
 }
