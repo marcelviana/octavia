@@ -60,6 +60,25 @@ export function useServiceWorker() {
           }
         })
 
+        navigator.serviceWorker.addEventListener("message", event => {
+          if (event.data?.type === "OFFLINE_FALLBACK") {
+            toast({
+              title: "Offline Mode",
+              description: "Showing cached content while offline.",
+              action: (
+                <ToastAction
+                  altText="Offline"
+                  onClick={() => {
+                    window.location.href = "/_offline"
+                  }}
+                >
+                  Offline Page
+                </ToastAction>
+              ),
+            })
+          }
+        })
+
         processQueue()
       })
       .catch(err => {
