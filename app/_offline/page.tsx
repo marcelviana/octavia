@@ -28,7 +28,7 @@ export default function OfflinePage() {
     try {
       if (navigator.onLine) {
         const response = await fetch('/api/health', {
-          method: 'HEAD',
+          method: 'GET',
           cache: 'no-cache'
         })
         if (response.ok) {
