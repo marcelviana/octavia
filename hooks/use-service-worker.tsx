@@ -8,7 +8,12 @@ import { processQueue } from "@/lib/offline-queue"
 
 export function useServiceWorker() {
   useEffect(() => {
-    if (typeof window === "undefined" || !("serviceWorker" in navigator)) return
+    // Only register service worker in production or when PWA is enabled
+    if (typeof window === "undefined" || 
+        !("serviceWorker" in navigator) || 
+        process.env.NODE_ENV === 'development') {
+      return
+    }
 
     const wb = new Workbox("/sw.js")
 

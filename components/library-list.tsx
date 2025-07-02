@@ -54,6 +54,10 @@ export function LibraryList({
     }
     return null;
   }
+
+  // Determine if we should use dynamic height for small lists
+  const isSmallList = content.length <= 4;
+
   return (
     <div className="relative">
       {loading && (
@@ -66,7 +70,13 @@ export function LibraryList({
       )}
       <Card className="bg-white/90 backdrop-blur-sm border border-amber-100 shadow-lg overflow-hidden">
         <CardContent className="p-0">
-          <ScrollArea className="divide-y divide-amber-100 h-[72vh] sm:h-[70vh] md:h-[72vh]">
+          <ScrollArea 
+            className={`divide-y divide-amber-100 ${
+              isSmallList 
+                ? 'h-auto max-h-[400px] sm:max-h-[450px] md:max-h-[500px]' 
+                : 'h-[70vh] sm:h-[70vh] md:h-[72vh]'
+            }`}
+          >
             {content.map((item) => (
               <div
                 key={item.id}
