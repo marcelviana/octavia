@@ -28,9 +28,8 @@ self.addEventListener('activate', (event) => {
     (async () => {
       // Clean up old caches
       const cacheNames = await caches.keys();
-      const oldCaches = cacheNames.filter(name => 
-        name.includes('precache') || 
-        name.includes('workbox') ||
+      const oldCaches = cacheNames.filter(name =>
+        name.includes('precache') ||
         name.includes('manifest')
       );
       
