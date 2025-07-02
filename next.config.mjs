@@ -153,6 +153,24 @@ const withPWANextConfig = withPWA({
     { url: '/library', revision: null },
     { url: '/performance', revision: null },
   ],
+  // Exclude problematic files that cause 404 errors in production
+  exclude: [
+    // Default exclusions
+    /\.map$/,
+    /^manifest.*\.js$/,
+    // Additional exclusions to prevent 404 errors
+    /\/_next\/app-build-manifest\.json$/,
+    /\/server\/middleware-build-manifest\.json$/,
+    /\/_next\/static\/.*\/_buildManifest\.js$/,
+    /\/_next\/static\/.*\/_ssgManifest\.js$/,
+    // Exclude server-side files
+    ({ asset, compilation }) => {
+      if (asset.name.includes('/server/')) return true;
+      if (asset.name.includes('middleware-build-manifest')) return true;
+      if (asset.name.includes('app-build-manifest')) return true;
+      return false;
+    },
+  ],
 })(nextConfig)
 
 export default withPWANextConfig
