@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect } from "react"
-import { Workbox } from "workbox-window"
 import { toast } from "@/hooks/use-toast"
 import { ToastAction } from "@/components/ui/toast"
 import { processQueue } from "@/lib/offline-queue"
@@ -15,9 +14,7 @@ export function useServiceWorker() {
       return
     }
 
-    const wb = new Workbox("/sw.js")
-
-    const handleWaiting = () => {
+    const showUpdateToast = (registration: ServiceWorkerRegistration) => {
       toast({
         title: "Update Available",
         description: "A new version is ready.",
@@ -25,10 +22,13 @@ export function useServiceWorker() {
           <ToastAction
             altText="Reload"
             onClick={() => {
-              wb.addEventListener("controlling", () => {
-                window.location.reload()
-              })
-              wb.messageSkipWaiting()
+              const waiting = registration.waiting
+              if (waiting) {
+                waiting.postMessage({ type: "SKIP_WAITING" })
+                registration.addEventListener("controllerchange", () => {
+                  window.location.reload()
+                })
+              }
             }}
           >
             Reload
@@ -37,11 +37,29 @@ export function useServiceWorker() {
       })
     }
 
-    wb.addEventListener("waiting", handleWaiting)
+    navigator.serviceWorker
+      .register("/sw.js")
+      .then(registration => {
+        registration.update()
 
-    wb.register()
-      .then(() => {
-        wb.update()
+        if (registration.waiting) {
+          showUpdateToast(registration)
+        }
+
+        registration.addEventListener("updatefound", () => {
+          const newWorker = registration.installing
+          if (newWorker) {
+            newWorker.addEventListener("statechange", () => {
+              if (
+                newWorker.state === "installed" &&
+                navigator.serviceWorker.controller
+              ) {
+                showUpdateToast(registration)
+              }
+            })
+          }
+        })
+
         processQueue()
       })
       .catch(err => {
@@ -49,3 +67,4 @@ export function useServiceWorker() {
       })
   }, [])
 }
+

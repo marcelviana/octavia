@@ -1,1 +1,44 @@
-if(!self.define){let e,s={};const n=(n,r)=>(n=new URL(n+".js",r).href,s[n]||new Promise(s=>{if("document"in self){const e=document.createElement("script");e.src=n,e.onload=s,document.head.appendChild(e)}else e=n,importScripts(n),s()}).then(()=>{let e=s[n];if(!e)throw new Error(`Module ${n} didn’t register its module`);return e}));self.define=(r,a)=>{const i=e||("document"in self?document.currentScript.src:"")||location.href;if(s[i])return;let c={};const o=e=>n(e,i),t={module:{uri:i},exports:c,require:o};s[i]=Promise.all(r.map(e=>t[e]||o(e))).then(e=>(a(...e),c))}}define(["./workbox-e9849328"],function(e){"use strict";importScripts("fallback-Lly2iP2WqVu2-Ejj6-E9L.js","worker-Lly2iP2WqVu2-Ejj6-E9L.js"),self.skipWaiting(),e.clientsClaim(),e.precacheAndRoute([{url:"/_offline",revision:"Lly2iP2WqVu2-Ejj6-E9L"},{url:"/clear-cache.js",revision:"e96ccf2e7f0d5417bfdfffea37e675db"},{url:"/icons/icon-144x144.png",revision:"1ee9c836d8cdac84d3b2f6e7262669ff"},{url:"/icons/icon-192x192.png",revision:"4a1b6705aeefc7ff446cfbd703d2634b"},{url:"/icons/icon-256x256.png",revision:"59e0aa9460c6ba124cf871311aafd9ab"},{url:"/icons/icon-256x256.webp",revision:"8d6224a56ecb4e5cc22e8984dec4a21d"},{url:"/icons/icon-384x384.png",revision:"8c37769d1c6b7c6f6be9bdd863280e47"},{url:"/icons/icon-384x384.webp",revision:"459d94b4420d9213f068f3748b0b13d9"},{url:"/icons/icon-48x48.png",revision:"e9b443fc4e1a23211a401d2efd70c78a"},{url:"/icons/icon-512x512-maskable.png",revision:"5d14a0f70407ae7c665c9caf21a0e089"},{url:"/icons/icon-512x512.png",revision:"8fb0ed2d1c3c61f84f4879c7791edab8"},{url:"/icons/icon-512x512.webp",revision:"3335fc585805b2845a0843e966ca6e13"},{url:"/icons/icon-72x72.png",revision:"d1207d8e3743ff7ab5e0dca56a7c470f"},{url:"/icons/icon-96x96.png",revision:"480292b58cc375662f8c333b84c1c59b"},{url:"/images/band-hero.webp",revision:"c70442533496b748e68472a575e5c640"},{url:"/logos/octavia-icon.png",revision:"40ca4a5de96889d7366400a86be35c73"},{url:"/logos/octavia-icon.webp",revision:"3c00cba6d186565039de57446d676366"},{url:"/logos/octavia-logo-full.png",revision:"d529f177f47c2180452b126894dbbb2b"},{url:"/logos/octavia-logo-full.webp",revision:"94e273d85e5f54a0ec8b84b3599dc68a"},{url:"/logos/octavia-word.png",revision:"631a1250d8c8191db714598b84bfd56e"},{url:"/logos/octavia-word.webp",revision:"b39d58e3ac0fa5bbeb0e17dfe00dcb20"},{url:"/logos/octavia-wordmark.png",revision:"8c450500308fed11b210ce3d84e23504"},{url:"/logos/octavia-wordmark.webp",revision:"0bc99b6ff95609d5bb92286f110c3a6f"},{url:"/manifest.json",revision:"00bd72832b8608f7d520fd1b09a4f8a0"},{url:"/pdf.worker.min.mjs",revision:"f7ae3fe3cc9c326175ba6815547a71fa"},{url:"/placeholder-logo.png",revision:"b7d4c7dd55cf683c956391f9c2ce3f5b"},{url:"/placeholder-logo.svg",revision:"1e16dc7df824652c5906a2ab44aef78c"},{url:"/placeholder-user.jpg",revision:"82c9573f1276f9683ba7d92d8a8c6edd"},{url:"/placeholder.jpg",revision:"887632fd67dd19a0d58abde79d8e2640"},{url:"/placeholder.svg",revision:"35707bd9960ba5281c72af927b79291f"}],{ignoreURLParametersMatching:[]}),e.cleanupOutdatedCaches(),e.registerRoute("/",new e.NetworkFirst({cacheName:"start-url",plugins:[{cacheWillUpdate:async({request:e,response:s,event:n,state:r})=>s&&"opaqueredirect"===s.type?new Response(s.body,{status:200,statusText:"OK",headers:s.headers}):s},{handlerDidError:async({request:e})=>self.fallback(e)}]}),"GET"),e.registerRoute(/^https:\/\/fonts\.(?:gstatic)\.com\/.*/i,new e.CacheFirst({cacheName:"google-fonts-webfonts",plugins:[new e.ExpirationPlugin({maxEntries:4,maxAgeSeconds:31536e3}),{handlerDidError:async({request:e})=>self.fallback(e)}]}),"GET"),e.registerRoute(/^https:\/\/fonts\.(?:googleapis)\.com\/.*/i,new e.StaleWhileRevalidate({cacheName:"google-fonts-stylesheets",plugins:[new e.ExpirationPlugin({maxEntries:4,maxAgeSeconds:604800}),{handlerDidError:async({request:e})=>self.fallback(e)}]}),"GET"),e.registerRoute(/\.(?:eot|otf|ttc|ttf|woff|woff2|font.css)$/i,new e.StaleWhileRevalidate({cacheName:"static-font-assets",plugins:[new e.ExpirationPlugin({maxEntries:4,maxAgeSeconds:604800}),{handlerDidError:async({request:e})=>self.fallback(e)}]}),"GET"),e.registerRoute(/\.(?:jpg|jpeg|gif|png|svg|ico|webp)$/i,new e.StaleWhileRevalidate({cacheName:"static-image-assets",plugins:[new e.ExpirationPlugin({maxEntries:64,maxAgeSeconds:86400}),{handlerDidError:async({request:e})=>self.fallback(e)}]}),"GET"),e.registerRoute(/\/_next\/image\?url=.+$/i,new e.StaleWhileRevalidate({cacheName:"next-image",plugins:[new e.ExpirationPlugin({maxEntries:64,maxAgeSeconds:86400}),{handlerDidError:async({request:e})=>self.fallback(e)}]}),"GET"),e.registerRoute(/\.(?:mp3|wav|ogg)$/i,new e.CacheFirst({cacheName:"static-audio-assets",plugins:[new e.RangeRequestsPlugin,new e.ExpirationPlugin({maxEntries:32,maxAgeSeconds:86400}),{handlerDidError:async({request:e})=>self.fallback(e)}]}),"GET"),e.registerRoute(/\.(?:mp4)$/i,new e.CacheFirst({cacheName:"static-video-assets",plugins:[new e.RangeRequestsPlugin,new e.ExpirationPlugin({maxEntries:32,maxAgeSeconds:86400}),{handlerDidError:async({request:e})=>self.fallback(e)}]}),"GET"),e.registerRoute(/\.(?:js)$/i,new e.StaleWhileRevalidate({cacheName:"static-js-assets",plugins:[new e.ExpirationPlugin({maxEntries:32,maxAgeSeconds:86400}),{handlerDidError:async({request:e})=>self.fallback(e)}]}),"GET"),e.registerRoute(/\.(?:css|less)$/i,new e.StaleWhileRevalidate({cacheName:"static-style-assets",plugins:[new e.ExpirationPlugin({maxEntries:32,maxAgeSeconds:86400}),{handlerDidError:async({request:e})=>self.fallback(e)}]}),"GET"),e.registerRoute(/\/_next\/data\/.+\/.+\.json$/i,new e.StaleWhileRevalidate({cacheName:"next-data",plugins:[new e.ExpirationPlugin({maxEntries:32,maxAgeSeconds:86400}),{handlerDidError:async({request:e})=>self.fallback(e)}]}),"GET"),e.registerRoute(/\.(?:json|xml|csv)$/i,new e.NetworkFirst({cacheName:"static-data-assets",plugins:[new e.ExpirationPlugin({maxEntries:32,maxAgeSeconds:86400}),{handlerDidError:async({request:e})=>self.fallback(e)}]}),"GET"),e.registerRoute(({url:e})=>{if(!(self.origin===e.origin))return!1;const s=e.pathname;return!s.startsWith("/api/auth/")&&!!s.startsWith("/api/")},new e.NetworkFirst({cacheName:"apis",networkTimeoutSeconds:10,plugins:[new e.ExpirationPlugin({maxEntries:16,maxAgeSeconds:86400}),{handlerDidError:async({request:e})=>self.fallback(e)}]}),"GET"),e.registerRoute(({url:e})=>{if(!(self.origin===e.origin))return!1;const s=e.pathname;return!s.startsWith("/api/auth/")&&!!s.startsWith("/api/")},new e.NetworkFirst({cacheName:"api-head",networkTimeoutSeconds:10,plugins:[new e.ExpirationPlugin({maxEntries:16,maxAgeSeconds:86400}),{handlerDidError:async({request:e})=>self.fallback(e)}]}),"HEAD"),e.registerRoute(({url:e})=>{if(!(self.origin===e.origin))return!1;return!e.pathname.startsWith("/api/")},new e.NetworkFirst({cacheName:"others",networkTimeoutSeconds:10,plugins:[new e.ExpirationPlugin({maxEntries:32,maxAgeSeconds:86400}),{handlerDidError:async({request:e})=>self.fallback(e)}]}),"GET"),e.registerRoute(({url:e})=>!(self.origin===e.origin),new e.StaleWhileRevalidate({cacheName:"cross-origin",plugins:[new e.ExpirationPlugin({maxEntries:32,maxAgeSeconds:900}),{handlerDidError:async({request:e})=>self.fallback(e)}]}),"GET")});
+// Custom worker to handle service worker logic without problematic precaching
+console.log('Custom worker loaded');
+
+// Handle any errors during service worker lifecycle
+self.addEventListener('error', (event) => {
+  console.error('Service worker error:', event.error);
+});
+
+// Handle unhandled promise rejections (like precaching errors)
+self.addEventListener('unhandledrejection', (event) => {
+  console.error('Service worker unhandled rejection:', event.reason);
+  // Prevent the error from bubbling up
+  event.preventDefault();
+});
+
+// Skip waiting for activation
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
+
+// Clean up old caches
+self.addEventListener('activate', (event) => {
+  console.log('Service worker activated');
+  
+  event.waitUntil(
+    (async () => {
+      // Clean up old caches
+      const cacheNames = await caches.keys();
+      const oldCaches = cacheNames.filter(name => 
+        name.includes('precache') || 
+        name.includes('workbox') ||
+        name.includes('manifest')
+      );
+      
+      await Promise.all(
+        oldCaches.map(name => caches.delete(name))
+      );
+      
+      console.log('Cleaned up old caches:', oldCaches);
+    })()
+  );
+}); 

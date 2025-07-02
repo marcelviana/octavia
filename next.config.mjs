@@ -1,5 +1,3 @@
-import withPWA from 'next-pwa'
-import runtimeCaching from './runtime-caching.js'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -140,47 +138,4 @@ const nextConfig = {
   },
 }
 
-const withPWANextConfig = withPWA({
-  dest: 'public',
-  runtimeCaching,
-  register: true,
-  skipWaiting: true,
-  disable: process.env.NODE_ENV === 'development',
-  // Add cleanup for outdated caches to help with production issues
-  cleanupOutdatedCaches: true,
-  // Disable precaching of all assets to avoid 404 errors
-  mode: 'production',
-  fallbacks: {
-    document: '/_offline',
-  },
-  // Remove additional manifest entries that might cause issues
-  // additionalManifestEntries: [
-  //   { url: '/library', revision: null },
-  //   { url: '/performance', revision: null },
-  // ],
-  // Use a custom workbox configuration to avoid precaching problematic files
-  customWorkerDir: 'worker',
-  // Exclude everything from precaching initially
-  exclude: [/./],
-  publicExcludes: ['!manifest.json'],
-  // Only precache specific safe files
-  include: [
-    // Only include static files that we know exist
-    /\.(?:js|css|html)$/,
-    // Exclude server files explicitly
-    ({ asset }) => {
-      const name = asset.name;
-      // Only include client-side static files
-      if (name.includes('/_next/static/') && !name.includes('/server/')) {
-        return true;
-      }
-      // Include essential pages
-      if (name === '/_offline' || name === '/') {
-        return true;
-      }
-      return false;
-    }
-  ],
-})(nextConfig)
-
-export default withPWANextConfig
+export default nextConfig
