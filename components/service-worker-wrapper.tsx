@@ -14,6 +14,18 @@ export default function ServiceWorkerWrapper() {
       'serviceWorker' in navigator &&
       process.env.NODE_ENV === 'production'
     ) {
+      // Remove any leftover caches from old service workers
+      caches.keys().then(cacheNames => {
+        return Promise.all(
+          cacheNames.map(cacheName => {
+            if (cacheName.includes('precache')) {
+              return caches.delete(cacheName)
+            }
+            return Promise.resolve()
+          })
+        )
+      })
+
       // Listen for unhandled service worker errors (like precaching failures)
       window.addEventListener('unhandledrejection', (event) => {
         if (event.reason?.message?.includes('bad-precaching-response')) {
