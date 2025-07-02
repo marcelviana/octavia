@@ -162,6 +162,7 @@ const withPWANextConfig = withPWA({
   customWorkerDir: 'worker',
   // Exclude everything from precaching initially
   exclude: [/./],
+  publicExcludes: ['!manifest.json'],
   // Only precache specific safe files
   include: [
     // Only include static files that we know exist
