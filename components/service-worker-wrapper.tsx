@@ -7,49 +7,58 @@ export default function ServiceWorkerWrapper() {
   // Use the existing service worker hook
   useServiceWorker()
 
-  // Add additional error handling for precaching issues
+  // Add enhanced error handling and cache management for production issues
   useEffect(() => {
     if (
       typeof window !== 'undefined' &&
       'serviceWorker' in navigator &&
       process.env.NODE_ENV === 'production'
     ) {
-      // Remove any leftover caches from old service workers
-      caches.keys().then(cacheNames => {
-        return Promise.all(
-          cacheNames.map(cacheName => {
-            if (cacheName.includes('precache')) {
-              return caches.delete(cacheName)
-            }
-            return Promise.resolve()
-          })
-        )
-      })
+      // Force clear problematic caches on load
+      const clearProblematicCaches = async () => {
+        try {
+          const cacheNames = await caches.keys();
+          const problematicCaches = cacheNames.filter(name => 
+            name.includes('precache') || 
+            name.includes('workbox') ||
+            name.includes('manifest')
+          );
+          
+          if (problematicCaches.length > 0) {
+            console.log('Clearing potentially problematic caches:', problematicCaches);
+            await Promise.all(problematicCaches.map(name => caches.delete(name)));
+          }
+        } catch (error) {
+          console.error('Error clearing caches:', error);
+        }
+      };
 
       // Listen for unhandled service worker errors (like precaching failures)
-      window.addEventListener('unhandledrejection', (event) => {
+      window.addEventListener('unhandledrejection', async (event) => {
         if (event.reason?.message?.includes('bad-precaching-response')) {
           console.error('Precaching error detected:', event.reason);
           
-          // Clear problematic caches
-          caches.keys().then((cacheNames) => {
-            return Promise.all(
-              cacheNames.map((cacheName) => {
-                if (cacheName.includes('precache')) {
-                  console.log('Clearing problematic precache:', cacheName);
-                  return caches.delete(cacheName);
-                }
-                return Promise.resolve();
-              })
-            );
-          }).then(() => {
-            console.log('Problematic cache cleared. Reloading page...');
-            // Optionally reload the page after cache cleanup
-            // window.location.reload();
-          });
-          
           // Prevent the error from being logged to console
           event.preventDefault();
+          
+          // Clear all caches and unregister service worker
+          try {
+            await clearProblematicCaches();
+            
+            // Unregister all service workers
+            const registrations = await navigator.serviceWorker.getRegistrations();
+            await Promise.all(registrations.map(reg => reg.unregister()));
+            
+            console.log('Service workers unregistered due to precaching errors');
+            
+            // Optionally reload after a short delay to re-register with clean state
+            setTimeout(() => {
+              console.log('Reloading to re-register service worker...');
+              window.location.reload();
+            }, 1000);
+          } catch (error) {
+            console.error('Error during cache cleanup:', error);
+          }
         }
       });
 
@@ -57,6 +66,9 @@ export default function ServiceWorkerWrapper() {
       navigator.serviceWorker.addEventListener('error', (event) => {
         console.error('Service Worker runtime error:', event);
       });
+
+      // Initial cache cleanup on first load
+      clearProblematicCaches();
     }
   }, []);
 

@@ -146,6 +146,8 @@ const withPWANextConfig = withPWA({
   register: true,
   skipWaiting: true,
   disable: process.env.NODE_ENV === 'development',
+  // Add cleanup for outdated caches to help with production issues
+  cleanupOutdatedCaches: true,
   fallbacks: {
     document: '/_offline',
   },
@@ -153,26 +155,38 @@ const withPWANextConfig = withPWA({
     { url: '/library', revision: null },
     { url: '/performance', revision: null },
   ],
-  // Exclude problematic files that cause 404 errors in production
-  buildExcludes: [
+  // More aggressive exclude configuration
+  exclude: [
     // Default exclusions
     /\.map$/,
     /^manifest.*\.js$/,
-    // Additional exclusions to prevent caching internal Next.js manifests
+    // Exclude all manifest files that commonly cause 404s
+    /\/_next\/.*manifest.*\.json$/,
+    /\/_next\/server\/.*manifest.*\.js$/,
+    /\/_next\/server\/.*manifest.*\.json$/,
+    // Exclude specific problematic files
     /\/_next\/build-manifest\.json$/,
-    /\/_next\/react-loadable-manifest\.json$/,
-    /\/_next\/.*routes-manifest\.json$/,
-    /\/_next\/.*prerender-manifest\.json$/,
     /\/_next\/app-build-manifest\.json$/,
-    /\/server\/middleware-build-manifest\.json$/,
-    /\/_next\/static\/.*\/_buildManifest\.js$/,
-    /\/_next\/static\/.*\/_ssgManifest\.js$/,
-    // Exclude server-side files
-    ({ asset }) => {
-      if (asset.name.includes('/server/')) return true;
-      if (asset.name.includes('middleware-build-manifest')) return true;
-      if (asset.name.includes('app-build-manifest')) return true;
-      if (asset.name.includes('client-reference-manifest')) return true;
+    /\/_next\/react-loadable-manifest\.json$/,
+    /\/_next\/prerender-manifest\.json$/,
+    /\/_next\/routes-manifest\.json$/,
+    // Exclude all server directory content
+    /\/_next\/server\//,
+    // Function-based exclusion for additional safety
+    ({ asset, compilation }) => {
+      const name = asset.name;
+      // Exclude any file with 'manifest' in the name that might cause issues
+      if (name.includes('manifest') && (
+        name.includes('.json') || 
+        name.includes('/server/') ||
+        name.includes('build-manifest') ||
+        name.includes('app-build-manifest') ||
+        name.includes('middleware')
+      )) {
+        return true;
+      }
+      // Exclude all server-side files
+      if (name.includes('/server/')) return true;
       return false;
     },
   ],
