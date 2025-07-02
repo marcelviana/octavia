@@ -197,6 +197,9 @@ importers:
       vitest:
         specifier: latest
         version: 3.2.2(@edge-runtime/vm@5.0.0)(@types/debug@4.1.12)(@types/node@22.0.0)(@vitest/browser@3.2.2)(@vitest/ui@3.2.2)(happy-dom@17.6.3)(jiti@1.21.7)(jsdom@26.1.0(canvas@3.1.0))(msw@2.10.2(@types/node@22.0.0)(typescript@5.0.2))(terser@5.43.0)(yaml@2.8.0)
+      workbox-window:
+        specifier: ^6.5.4
+        version: 6.6.0
       zod:
         specifier: ^3.24.1
         version: 3.24.1

@@ -7,6 +7,7 @@ import { SessionProvider } from "@/components/providers/session-provider"
 import { Toaster } from "@/components/ui/sonner"
 import { EnhancedPwaInstallPrompt } from "@/components/pwa-install-prompt"
 import { ErrorBoundary } from "@/lib/error-boundary"
+import ServiceWorkerWrapper from "@/components/service-worker-wrapper"
 
 // Update app/layout.tsx metadata
 export const metadata: Metadata = {
@@ -38,6 +39,7 @@ export default function RootLayout({
             <SessionProvider>{children}</SessionProvider>
             <Toaster richColors position="top-right" />
             <EnhancedPwaInstallPrompt />
+            <ServiceWorkerWrapper />
           </FirebaseAuthProvider>
         </ErrorBoundary>
       </body>

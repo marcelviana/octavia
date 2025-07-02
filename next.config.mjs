@@ -1,5 +1,5 @@
 import withPWA from 'next-pwa'
-import runtimeCaching from 'next-pwa/cache.js'
+import runtimeCaching from './runtime-caching.js'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -143,7 +143,7 @@ const nextConfig = {
 const withPWANextConfig = withPWA({
   dest: 'public',
   runtimeCaching,
-  register: true,
+  register: false,
   skipWaiting: true,
   disable: process.env.NODE_ENV === 'development',
   fallbacks: {
