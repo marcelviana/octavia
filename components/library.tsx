@@ -43,6 +43,7 @@ import {
   getUserContentPage,
   deleteContent,
   clearContentCache,
+  toggleFavorite,
 } from "@/lib/content-service";
 import { useFirebaseAuth } from "@/contexts/firebase-auth-context";
 import {
@@ -270,6 +271,31 @@ export function Library({
     }
   };
 
+  const handleToggleFavorite = async (contentItem: any) => {
+    if (!user) return;
+
+    const newFavoriteStatus = !contentItem.is_favorite;
+    
+    try {
+      // Call the API to update the backend first
+      await toggleFavorite(contentItem.id, newFavoriteStatus);
+      
+      // Show success message
+      toast.success(
+        newFavoriteStatus 
+          ? `"${contentItem.title}" added to favorites` 
+          : `"${contentItem.title}" removed from favorites`
+      );
+      
+      // Force reload to ensure UI is immediately updated with fresh data
+      await reload();
+      
+    } catch (error) {
+      console.error("Error toggling favorite:", error);
+      toast.error("Failed to update favorite status. Please try again.");
+    }
+  };
+
   return (
     <div className="p-4 sm:p-4 md:p-6 bg-gradient-to-b from-[#fff9f0] to-[#fff5e5] min-h-full">
       {/* Header */}
@@ -471,6 +497,7 @@ export function Library({
           onSelect={onSelectContent}
           onEdit={handleEditContent}
           onDelete={handleDeleteContent}
+          onToggleFavorite={handleToggleFavorite}
           getContentIcon={getContentIcon}
           formatDate={formatDate}
         />

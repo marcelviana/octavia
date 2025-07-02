@@ -26,6 +26,7 @@ interface Props {
   onSelect: (c: any) => void;
   onEdit: (c: any) => void;
   onDelete: (c: any) => void;
+  onToggleFavorite: (c: any) => void;
   getContentIcon: (type: string) => React.ReactNode;
   formatDate: (d: string) => string;
 }
@@ -36,6 +37,7 @@ export function LibraryList({
   onSelect,
   onEdit,
   onDelete,
+  onToggleFavorite,
   getContentIcon,
   formatDate,
 }: Props) {
@@ -138,9 +140,6 @@ export function LibraryList({
                               {item.difficulty}
                             </Badge>
                           )}
-                          {item.is_favorite && (
-                            <Star className="w-3 h-3 text-amber-500 fill-amber-500" />
-                          )}
                         </div>
                       </div>
 
@@ -164,9 +163,6 @@ export function LibraryList({
                             {item.difficulty}
                           </Badge>
                         )}
-                        {item.is_favorite && (
-                          <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
-                        )}
                       </div>
 
                       {/* Desktop: Date */}
@@ -175,8 +171,29 @@ export function LibraryList({
                         {formatDate(item.created_at)}
                       </div>
 
+                      {/* Favorite Star Button */}
+                      <div className="flex-shrink-0 ml-2">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 p-0 hover:bg-amber-100"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onToggleFavorite(item);
+                          }}
+                        >
+                          <Star 
+                            className={`w-4 h-4 transition-colors ${
+                              item.is_favorite 
+                                ? "text-amber-500 fill-amber-500" 
+                                : "text-gray-400 hover:text-amber-500"
+                            }`} 
+                          />
+                        </Button>
+                      </div>
+
                       {/* Actions Menu */}
-                      <div className="flex-shrink-0 ml-2 sm:ml-4">
+                      <div className="flex-shrink-0">
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
                             <Button
