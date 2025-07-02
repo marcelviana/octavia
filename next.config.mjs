@@ -148,47 +148,37 @@ const withPWANextConfig = withPWA({
   disable: process.env.NODE_ENV === 'development',
   // Add cleanup for outdated caches to help with production issues
   cleanupOutdatedCaches: true,
+  // Disable precaching of all assets to avoid 404 errors
+  mode: 'production',
   fallbacks: {
     document: '/_offline',
   },
-  additionalManifestEntries: [
-    { url: '/library', revision: null },
-    { url: '/performance', revision: null },
-  ],
-  // More aggressive exclude configuration
-  exclude: [
-    // Default exclusions
-    /\.map$/,
-    /^manifest.*\.js$/,
-    // Exclude all manifest files that commonly cause 404s
-    /\/_next\/.*manifest.*\.json$/,
-    /\/_next\/server\/.*manifest.*\.js$/,
-    /\/_next\/server\/.*manifest.*\.json$/,
-    // Exclude specific problematic files
-    /\/_next\/build-manifest\.json$/,
-    /\/_next\/app-build-manifest\.json$/,
-    /\/_next\/react-loadable-manifest\.json$/,
-    /\/_next\/prerender-manifest\.json$/,
-    /\/_next\/routes-manifest\.json$/,
-    // Exclude all server directory content
-    /\/_next\/server\//,
-    // Function-based exclusion for additional safety
-    ({ asset, compilation }) => {
+  // Remove additional manifest entries that might cause issues
+  // additionalManifestEntries: [
+  //   { url: '/library', revision: null },
+  //   { url: '/performance', revision: null },
+  // ],
+  // Use a custom workbox configuration to avoid precaching problematic files
+  customWorkerDir: 'worker',
+  // Exclude everything from precaching initially
+  exclude: [/./],
+  // Only precache specific safe files
+  include: [
+    // Only include static files that we know exist
+    /\.(?:js|css|html)$/,
+    // Exclude server files explicitly
+    ({ asset }) => {
       const name = asset.name;
-      // Exclude any file with 'manifest' in the name that might cause issues
-      if (name.includes('manifest') && (
-        name.includes('.json') || 
-        name.includes('/server/') ||
-        name.includes('build-manifest') ||
-        name.includes('app-build-manifest') ||
-        name.includes('middleware')
-      )) {
+      // Only include client-side static files
+      if (name.includes('/_next/static/') && !name.includes('/server/')) {
         return true;
       }
-      // Exclude all server-side files
-      if (name.includes('/server/')) return true;
+      // Include essential pages
+      if (name === '/_offline' || name === '/') {
+        return true;
+      }
       return false;
-    },
+    }
   ],
 })(nextConfig)
 
