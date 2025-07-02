@@ -20,6 +20,15 @@ self.addEventListener('message', (event) => {
   }
 });
 
+const OFFLINE_CACHE = 'offline-cache';
+
+// Cache the offline page during install
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(OFFLINE_CACHE).then(cache => cache.add('/_offline'))
+  );
+});
+
 // Clean up old caches
 self.addEventListener('activate', (event) => {
   console.log('Service worker activated');
@@ -40,4 +49,24 @@ self.addEventListener('activate', (event) => {
       console.log('Cleaned up old caches:', oldCaches);
     })()
   );
-}); 
+});
+
+// Respond with offline page on navigation failures
+self.addEventListener('fetch', event => {
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      (async () => {
+        try {
+          return await fetch(event.request);
+        } catch (err) {
+          if (err instanceof TypeError) {
+            const cache = await caches.open(OFFLINE_CACHE);
+            const offline = await cache.match('/_offline');
+            if (offline) return offline;
+          }
+          throw err;
+        }
+      })()
+    );
+  }
+});
