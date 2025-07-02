@@ -3,6 +3,7 @@
 import { useEffect } from "react"
 import { Workbox } from "workbox-window"
 import { toast } from "@/hooks/use-toast"
+import { ToastAction } from "@/components/ui/toast"
 
 export function useServiceWorker() {
   useEffect(() => {
@@ -11,18 +12,22 @@ export function useServiceWorker() {
     const wb = new Workbox("/sw.js")
 
     const handleWaiting = () => {
-      const t = toast({
+      toast({
         title: "Update Available",
         description: "A new version is ready.",
-        action: {
-          label: "Reload",
-          onClick: () => {
-            wb.addEventListener("controlling", () => {
-              window.location.reload()
-            })
-            wb.messageSkipWaiting()
-          },
-        },
+        action: (
+          <ToastAction
+            altText="Reload"
+            onClick={() => {
+              wb.addEventListener("controlling", () => {
+                window.location.reload()
+              })
+              wb.messageSkipWaiting()
+            }}
+          >
+            Reload
+          </ToastAction>
+        ),
       })
     }
 
