@@ -17,8 +17,6 @@ export default function ProfileForm() {
   const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
     full_name: "",
-    first_name: "",
-    last_name: "",
     bio: "",
     website: "",
   })
@@ -27,8 +25,6 @@ export default function ProfileForm() {
     if (profile) {
       setFormData({
         full_name: profile.full_name || "",
-        first_name: profile.first_name || "",
-        last_name: profile.last_name || "",
         bio: profile.bio || "",
         website: profile.website || "",
       })
@@ -109,10 +105,10 @@ export default function ProfileForm() {
                 />
               </div>
 
-              {/* Full Name */}
+              {/* Display Name */}
               <div className="space-y-2">
                 <Label htmlFor="full_name" className="text-sm font-medium text-gray-700">
-                  Full Name
+                  Display Name
                 </Label>
                 <Input
                   id="full_name"
@@ -120,36 +116,7 @@ export default function ProfileForm() {
                   type="text"
                   value={formData.full_name}
                   onChange={handleInputChange}
-                  className="border-amber-200 focus:border-amber-500 focus:ring-amber-500"
-                />
-              </div>
-
-              {/* First Name */}
-              <div className="space-y-2">
-                <Label htmlFor="first_name" className="text-sm font-medium text-gray-700">
-                  First Name
-                </Label>
-                <Input
-                  id="first_name"
-                  name="first_name"
-                  type="text"
-                  value={formData.first_name}
-                  onChange={handleInputChange}
-                  className="border-amber-200 focus:border-amber-500 focus:ring-amber-500"
-                />
-              </div>
-
-              {/* Last Name */}
-              <div className="space-y-2">
-                <Label htmlFor="last_name" className="text-sm font-medium text-gray-700">
-                  Last Name
-                </Label>
-                <Input
-                  id="last_name"
-                  name="last_name"
-                  type="text"
-                  value={formData.last_name}
-                  onChange={handleInputChange}
+                  placeholder="Enter your display name"
                   className="border-amber-200 focus:border-amber-500 focus:ring-amber-500"
                 />
               </div>

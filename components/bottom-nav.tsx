@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button"
 import {
   Home,
   Library,
-  Settings,
   Disc3,
   MusicIcon,
 } from "lucide-react"
@@ -21,7 +20,6 @@ export function BottomNav({ activeScreen, onNavigate }: BottomNavProps) {
     { id: "library", label: "Library", icon: Library },
     { id: "setlists", label: "Setlists", icon: Disc3 },
     { id: "add-content", label: "Add", icon: MusicIcon },
-    { id: "settings", label: "Settings", icon: Settings },
   ]
 
   return (

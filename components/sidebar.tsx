@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button"
 import {
   Home,
   Library,
-  Settings,
   Disc3,
   MusicIcon,
 } from "lucide-react"
@@ -50,7 +49,6 @@ export function Sidebar({
     { id: "library", label: "Library", icon: Library, description: "Browse all your content" },
     { id: "setlists", label: "Setlists", icon: Disc3, description: "Organize performances" },
     { id: "add-content", label: "Add Song", icon: MusicIcon, description: "Add new music content" },
-    { id: "settings", label: "Settings", icon: Settings, description: "Customize your experience" },
   ]
 
 
