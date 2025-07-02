@@ -6,7 +6,9 @@
 # next.js
 /.next/
 /out/
-fallback-*
+# allow service worker fallback script
+# fallback-* is generated at build time, but we keep the versioned file in repo
+!fallback-*.js
 
 # production
 /build
