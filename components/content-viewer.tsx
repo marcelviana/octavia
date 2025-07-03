@@ -207,8 +207,8 @@ export function ContentViewer({
               onClick={() => onEnterPerformance(content)}
               className="bg-gradient-to-r from-green-500 to-green-600 text-white hover:from-green-600 hover:to-green-700"
             >
-              <Play className="w-4 h-4 mr-2" />
-              Performance
+              <Play className="w-4 h-4 mr-2 md:mr-2 mr-0" />
+              <span className="hidden md:inline">Performance</span>
             </Button>
 
             {onEdit && (
