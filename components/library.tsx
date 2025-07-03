@@ -444,7 +444,7 @@ export function Library({
               size="sm"
             >
               <Plus className="w-4 h-4 sm:mr-2" />
-              <span className="hidden sm:inline">Add</span>
+              <span className="hidden sm:inline">Add Content</span>
             </Button>
           </div>
         </div>
