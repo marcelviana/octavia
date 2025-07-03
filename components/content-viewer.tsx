@@ -212,15 +212,7 @@ export function ContentViewer({
             </Button>
 
             {onEdit && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={onEdit}
-                className="hover:bg-amber-50"
-              >
-                <Edit className="w-4 h-4 mr-2" />
-                Edit
-              </Button>
+              null
             )}
 
             <DropdownMenu>
@@ -230,18 +222,12 @@ export function ContentViewer({
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem>
-                  <Share className="w-4 h-4 mr-2" />
-                  Share
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Download className="w-4 h-4 mr-2" />
-                  Download
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Printer className="w-4 h-4 mr-2" />
-                  Print
-                </DropdownMenuItem>
+                {onEdit && (
+                  <DropdownMenuItem onClick={onEdit}>
+                    <Edit className="w-4 h-4 mr-2" />
+                    Edit
+                  </DropdownMenuItem>
+                )}
                 <DropdownMenuItem
                   onClick={handleDelete}
                   className="text-red-600"
@@ -656,10 +642,10 @@ export function ContentViewer({
                   {/* 1. Album - Prominent First */}
                   {content.album && (
                     <div>
-                      <label className="text-xs font-medium text-gray-600 block">
+                      <label className="text-xs font-medium text-gray-500 block">
                         Album
                       </label>
-                      <p className="text-sm font-medium text-gray-900 mt-0">{content.album}</p>
+                      <p className="text-sm font-medium text-blue-800 mt-0">{content.album}</p>
                     </div>
                   )}
 
@@ -668,18 +654,18 @@ export function ContentViewer({
                     <div className="grid grid-cols-2 gap-4">
                       {content.difficulty && (
                         <div>
-                          <label className="text-xs font-medium text-gray-600 block">
+                          <label className="text-xs font-medium text-gray-500 block">
                             Difficulty
                           </label>
-                          <p className="text-sm font-medium text-gray-900 mt-0">{content.difficulty}</p>
+                          <p className="text-sm font-medium text-blue-800 mt-0">{content.difficulty}</p>
                         </div>
                       )}
                       {content.genre && (
                         <div>
-                          <label className="text-xs font-medium text-gray-600 block">
+                          <label className="text-xs font-medium text-gray-500 block">
                             Genre
                           </label>
-                          <p className="text-sm font-medium text-gray-900 mt-0">{content.genre}</p>
+                          <p className="text-sm font-medium text-blue-800 mt-0">{content.genre}</p>
                         </div>
                       )}
                     </div>
@@ -690,30 +676,30 @@ export function ContentViewer({
                     <div className="grid grid-cols-3 gap-4">
                       {content.key && (
                         <div>
-                          <label className="text-xs font-medium text-gray-600 block">
+                          <label className="text-xs font-medium text-gray-500 block">
                             Key
                           </label>
-                          <p className="text-sm font-medium text-gray-900 mt-0">
+                          <p className="text-sm font-medium text-blue-800 mt-0">
                             {content.key}
                           </p>
                         </div>
                       )}
                       {content.time_signature && (
                         <div>
-                          <label className="text-xs font-medium text-gray-600 block">
+                          <label className="text-xs font-medium text-gray-500 block">
                             Time Signature
                           </label>
-                          <p className="text-sm font-medium text-gray-900 mt-0">
+                          <p className="text-sm font-medium text-blue-800 mt-0">
                             {content.time_signature}
                           </p>
                         </div>
                       )}
                       {content.bpm && (
                         <div>
-                          <label className="text-xs font-medium text-gray-600 block">
+                          <label className="text-xs font-medium text-gray-500 block">
                             Tempo
                           </label>
-                          <p className="text-sm font-medium text-gray-900 mt-0">
+                          <p className="text-sm font-medium text-blue-800 mt-0">
                             {content.bpm} BPM
                           </p>
                         </div>
@@ -724,12 +710,12 @@ export function ContentViewer({
                   {/* Tags */}
                   {content.tags && content.tags.length > 0 && (
                     <div>
-                      <label className="text-xs font-medium text-gray-600 block">
+                      <label className="text-xs font-medium text-gray-500 block">
                         Tags
                       </label>
                       <div className="flex flex-wrap gap-1 mt-1">
                         {content.tags.map((tag: string) => (
-                          <Badge key={tag} variant="secondary" className="text-xs">
+                          <Badge key={tag} variant="secondary" className="text-xs bg-blue-100 text-blue-800">
                             {tag}
                           </Badge>
                         ))}
@@ -756,12 +742,10 @@ export function ContentViewer({
                   Performance Notes
                 </h3>
                 {content.notes ? (
-                  <div className="p-3 bg-yellow-50/80 backdrop-blur-sm border border-yellow-200 rounded-lg">
-                    <MusicText
-                      text={content.notes}
-                      monospace={false}
-                      className="text-sm text-gray-700"
-                    />
+                  <div className="text-center py-6 bg-green-50/50 backdrop-blur-sm border border-green-200 rounded-lg">
+                    <p className="p-2 text-green-800 text-sm text-left">
+                    {content.notes}
+                    </p>
                   </div>
                 ) : (
                   <div className="text-center py-6 bg-green-50/50 backdrop-blur-sm border border-green-200 rounded-lg">
@@ -770,7 +754,7 @@ export function ContentViewer({
                       No performance notes available
                     </p>
                     <p className="text-xs text-gray-400 mt-1">
-                      Click Edit to add practice notes and performance tips
+                      Click Edit to add notes and performance tips
                     </p>
                   </div>
                 )}
