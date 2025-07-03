@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 
 interface LyricsEditorProps {
@@ -46,29 +45,6 @@ Use consistent formatting for better readability"
                 <li>Add timing notes in parentheses if needed</li>
               </ul>
             </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Quick Actions */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Quick Actions</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-            <Button variant="outline" size="sm" onClick={() => updateLyrics(lyrics + "\n[Verse]\n")}>
-              Add Verse
-            </Button>
-            <Button variant="outline" size="sm" onClick={() => updateLyrics(lyrics + "\n[Chorus]\n")}>
-              Add Chorus
-            </Button>
-            <Button variant="outline" size="sm" onClick={() => updateLyrics(lyrics + "\n[Bridge]\n")}>
-              Add Bridge
-            </Button>
-            <Button variant="outline" size="sm" onClick={() => updateLyrics(lyrics + "\n[Outro]\n")}>
-              Add Outro
-            </Button>
           </div>
         </CardContent>
       </Card>
