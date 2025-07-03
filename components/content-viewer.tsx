@@ -172,7 +172,6 @@ export function ContentViewer({
               className="hover:bg-amber-50"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
             </Button>
             <div
               className={`w-8 h-8 rounded-lg flex items-center justify-center bg-gradient-to-r ${getHeaderGradient(
