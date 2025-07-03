@@ -66,31 +66,5 @@
       "type": "image/png",
       "purpose": "maskable"
     }
-  ],
-  "shortcuts": [
-    {
-      "name": "Performance Mode",
-      "short_name": "Perform",
-      "description": "Launch directly into performance mode",
-      "url": "/performance",
-      "icons": [
-        {
-          "src": "/icons/performance-96x96.png",
-          "sizes": "96x96"
-        }
-      ]
-    },
-    {
-      "name": "Library",
-      "short_name": "Library",
-      "description": "Access your music library",
-      "url": "/library",
-      "icons": [
-        {
-          "src": "/icons/library-96x96.png",
-          "sizes": "96x96"
-        }
-      ]
-    }
   ]
 }

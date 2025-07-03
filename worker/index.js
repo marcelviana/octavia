@@ -16,8 +16,6 @@ const ASSETS = [
   '/logos/octavia-wordmark.webp',
   '/icons/icon-192x192.png',
   '/icons/icon-512x512.png',
-  '/placeholder-logo.png',
-  '/placeholder-user.jpg',
 ];
 
 // Handle any errors during service worker lifecycle
