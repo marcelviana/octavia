@@ -207,6 +207,10 @@ Automated unit tests live in `lib/__tests__` and are executed with [Vitest](http
 
 The application includes an offline mode backed by IndexedDB. A health check endpoint (`/api/health`) lets the client detect when connectivity returns. Library data and setlists viewed while online are cached locally so they can be accessed from the dedicated offline page when the network is unavailable. Cached files are stored as binary Blobs and an LRU policy keeps the total size under 50 MB to avoid quota errors. In addition to IndexedDB, a custom service worker caches key pages and static assets so previously visited screens load even without a network connection.
 
+### Service Worker Updates
+
+The service worker code lives in `worker/index.js`. A small build script copies this file to `public/sw.js` during `pnpm build`, ensuring the deployed worker always matches the source. When a new worker version is available, the app displays an update toast; clicking **Reload** activates the fresh worker immediately.
+
 ## 🔧 Configuration
 
 Create a `.env` file in the project root with the variables listed in `.env.example`. These include Firebase credentials and the Supabase service role key required for server-side database access.
