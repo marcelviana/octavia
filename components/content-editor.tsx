@@ -156,7 +156,7 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
   const colors = ["#000000", "#ff0000", "#00ff00", "#0000ff", "#ffff00", "#ff00ff", "#00ffff", "#ffa500"]
 
   return (
-    <div className="h-screen flex flex-col bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
+    <div className="flex flex-col bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
       {/* Header */}
       <div className="sticky top-0 z-30 bg-white/90 backdrop-blur-sm border-b border-amber-200 px-4 py-2 shadow-md">
         <div className="flex flex-row flex-wrap items-center justify-between gap-2">
@@ -298,7 +298,7 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
 
       {/* Main Content */}
       <div className="flex-1">
-        <div className="flex-1 overflow-auto">
+        <div className="flex-1">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full">
             <div className="border-b border-gray-200 bg-gray-50 px-4">
               <TabsList className="bg-white/80 backdrop-blur-sm border border-amber-200 p-1 rounded-xl shadow-md flex flex-row flex-wrap gap-2 w-full h-auto">
@@ -319,37 +319,37 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
               </TabsList>
             </div>
 
-            <TabsContent value="content" className="flex-1 p-4 sm:p-6 w-full">
-              <div className="h-full bg-white/80 backdrop-blur-sm rounded-xl border border-amber-200 shadow-lg p-4 sm:p-6">
+            <TabsContent value="content" className="p-4 sm:p-6 w-full">
+              <div className="bg-white/80 backdrop-blur-sm rounded-xl border border-amber-200 shadow-lg p-4 sm:p-6">
                 {renderContentEditor()}
               </div>
             </TabsContent>
 
-          <TabsContent value="metadata" className="flex-1 p-4 sm:p-6 w-full">
-            <div className="h-full bg-white/80 backdrop-blur-sm rounded-xl border border-amber-200 shadow-lg p-4 sm:p-6">
-              <MetadataEditor
-                content={editedContent}
-                onChange={(newContent) => {
-                  setEditedContent(newContent)
-                }}
-              />
-            </div>
-          </TabsContent>
+            <TabsContent value="metadata" className="p-4 sm:p-6 w-full">
+              <div className="bg-white/80 backdrop-blur-sm rounded-xl border border-amber-200 shadow-lg p-4 sm:p-6">
+                <MetadataEditor
+                  content={editedContent}
+                  onChange={(newContent) => {
+                    setEditedContent(newContent)
+                  }}
+                />
+              </div>
+            </TabsContent>
+          </Tabs>
+        </div>
 
-        </Tabs>
+        {/* Footer */}
+        <div className="sticky bottom-0 z-20 flex justify-end p-2 bg-white/80 backdrop-blur-sm border-t border-amber-200">
+          <Button variant="outline" size="sm" className="mr-2">
+            Preview
+          </Button>
+          {hasChanges && (
+            <span className="text-xs text-red-700 flex items-center gap-1">
+              <Sparkles className="w-3 h-3" /> Unsaved changes
+            </span>
+          )}
+        </div>
       </div>
     </div>
-    {/* Footer */}
-    <div className="sticky bottom-0 z-20 flex justify-end p-2 bg-white/80 backdrop-blur-sm border-t border-amber-200">
-      <Button variant="outline" size="sm" className="mr-2">
-        Preview
-      </Button>
-      {hasChanges && (
-        <span className="text-xs text-red-700 flex items-center gap-1">
-          <Sparkles className="w-3 h-3" /> Unsaved changes
-        </span>
-      )}
-    </div>
-  </div>
   );
 }

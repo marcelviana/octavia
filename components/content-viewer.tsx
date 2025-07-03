@@ -161,7 +161,7 @@ export function ContentViewer({
   if (!content) return null;
 
   return (
-    <div className="h-screen flex flex-col bg-gradient-to-b from-[#fff9f0] to-[#fff5e5]">
+    <div className="flex flex-col bg-gradient-to-b from-[#fff9f0] to-[#fff5e5]">
       {/* Header */}
       <div className="bg-white/90 backdrop-blur-sm border-b border-amber-200 px-4 py-2 shadow-md">
         <div className="flex items-center justify-between">
@@ -339,9 +339,9 @@ export function ContentViewer({
       )}
 
       {/* Content Area */}
-      <div className="flex-1 flex">
+      <div className="flex">
         {/* Main Content */}
-        <div className="flex-1 p-6 overflow-auto">
+        <div className="flex-1 p-6">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
             <div className="flex flex-row flex-wrap items-center justify-between gap-2">
               <TabsList className="bg-white/80 backdrop-blur-sm border border-amber-200 p-1 rounded-xl shadow-md flex flex-row flex-wrap gap-2 w-full h-auto">
