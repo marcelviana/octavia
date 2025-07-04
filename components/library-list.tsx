@@ -82,7 +82,7 @@ export function LibraryList({
             {content.map((item) => (
               <div
                 key={item.id}
-                className="p-3 sm:p-4 hover:bg-amber-50 transition-colors"
+                className="p-3 sm:p-4 hover:bg-amber-50 transition-colors border-b border-yellow-100"
               >
                 <div className="flex items-start gap-3">
                   {/* Icon */}
