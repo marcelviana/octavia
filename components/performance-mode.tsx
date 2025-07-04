@@ -18,8 +18,6 @@ import {
   ZoomOut,
   Pause,
   Play,
-  Maximize,
-  Minimize,
   Plus,
   Minus,
   Moon,
@@ -50,7 +48,6 @@ export function PerformanceMode({
   const [showControls, setShowControls] = useState(true)
   const [isPlaying, setIsPlaying] = useState(false)
   const [bpm, setBpm] = useState(80)
-  const [isFullScreen, setIsFullScreen] = useState(false)
   const [darkSheet, setDarkSheet] = useState(false)
   const [bpmFeedback, setBpmFeedback] = useState<string | null>(null)
   const pressTimeout = useRef<NodeJS.Timeout | null>(null)
@@ -99,20 +96,6 @@ export function PerformanceMode({
       console.error('Failed to cache files for performance', err)
     })
   }, [songs])
-
-  const toggleFullScreen = () => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch(() => { })
-    } else {
-      document.exitFullscreen().catch(() => { })
-    }
-  }
-
-  useEffect(() => {
-    const updateFs = () => setIsFullScreen(!!document.fullscreenElement)
-    document.addEventListener("fullscreenchange", updateFs)
-    return () => document.removeEventListener("fullscreenchange", updateFs)
-  }, [])
 
   const changeBpm = (delta: number, label: string) => {
     setBpm((prev) => {
@@ -239,10 +222,6 @@ export function PerformanceMode({
         case "-":
           changeBpm(-5, "-5")
           break
-        case "f":
-        case "F":
-          toggleFullScreen()
-          break
       }
     }
 
@@ -356,18 +335,6 @@ export function PerformanceMode({
           </div>
 
           <div className="flex items-center space-x-2">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={toggleFullScreen}
-              className="text-white hover:bg-white/20"
-            >
-              {isFullScreen ? (
-                <Minimize className="w-4 h-4" />
-              ) : (
-                <Maximize className="w-4 h-4" />
-              )}
-            </Button>
             <Button
               variant="ghost"
               size="sm"
