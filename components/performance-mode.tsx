@@ -317,7 +317,7 @@ export function PerformanceMode({
     <div className="h-screen bg-[#1A1F36] text-white flex flex-col relative" onMouseMove={handleMouseMove}>
       {/* Header Line 1 - Title/Artist with X and Dark mode buttons */}
       <div className="absolute top-0 left-0 right-0 z-50 bg-[#1A1F36]/90 backdrop-blur-sm">
-        <div className="flex items-center justify-between p-3">
+        <div className="flex items-center justify-between p-2">
           <div className="flex items-center">
             <Button
               variant="ghost"
@@ -348,8 +348,8 @@ export function PerformanceMode({
       </div>
 
       {/* Header Line 2 - Functional Controls */}
-      <div className="absolute top-[72px] left-0 right-0 z-50 bg-[#1A1F36]/90 backdrop-blur-sm">
-        <div className="flex items-center justify-center gap-6 p-1">
+      <div className="absolute top-[60px] left-0 right-0 z-50 bg-[#1A1F36]/90 backdrop-blur-sm">
+        <div className="flex items-center justify-center gap-6 py-2">
           {/* Zoom Controls */}
           <div className="flex items-center space-x-2">
             <Button
@@ -364,7 +364,7 @@ export function PerformanceMode({
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => setZoom(Math.min(150, zoom + 10))}
+              onClick={() => setZoom(Math.min(200, zoom + 10))}
               className="text-white hover:bg-white/20"
             >
               <ZoomIn className="w-4 h-4" />
@@ -418,18 +418,23 @@ export function PerformanceMode({
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex items-center justify-center p-4 pt-[144px] pb-16">
+      <div className="flex-1 flex items-center justify-center p-3 pt-[108px] pb-12">
         <Card
-          className={`shadow-2xl w-full max-w-4xl h-[calc(100vh-200px)] overflow-hidden border-[#A69B8E] ${darkSheet ? "bg-[#1A1F36] text-[#F7F9FA]" : "bg-[#F7F9FA] text-[#1A1F36]"}`}
+          className={`shadow-2xl w-full max-w-4xl h-[calc(100vh-168px)] overflow-hidden border-[#A69B8E] ${darkSheet ? "bg-[#1A1F36] text-[#F7F9FA]" : "bg-[#F7F9FA] text-[#1A1F36]"}`}
         >
           <div
             ref={contentRef}
-            className="p-6 h-full overflow-auto"
-            style={{ transform: `scale(${zoom / 100})`, transformOrigin: "top center" }}
+            className="p-4 h-full overflow-auto"
           >
-
-
-            <div className="space-y-8 max-w-3xl mx-auto">
+            <div 
+              className="space-y-6 max-w-3xl mx-auto w-full"
+              style={{ 
+                transform: `scale(${zoom / 100})`,
+                transformOrigin: "top center",
+                width: zoom >= 100 ? `${10000 / zoom}%` : '100%',
+                maxWidth: zoom >= 100 ? `${10000 / zoom}%` : '100%'
+              }}
+            >
               {currentSongData.content_type === ContentType.SHEET_MUSIC ? (
                 sheetUrls[currentSong] ? (
                   (() => {
@@ -438,11 +443,13 @@ export function PerformanceMode({
                     const isImage = url.endsWith(".png") || url.endsWith(".jpg") || url.endsWith(".jpeg")
                     if (isPdf) {
                       return (
-                        <PdfViewer
-                          url={sheetUrls[currentSong] as string}
-                          fullscreen
-                          className="h-[calc(100vh-280px)]"
-                        />
+                        <div>
+                          <PdfViewer
+                            url={sheetUrls[currentSong] as string}
+                            fullscreen
+                            className="h-[calc(100vh-220px)]"
+                          />
+                        </div>
                       )
                     }
                     if (isImage) {
@@ -453,7 +460,10 @@ export function PerformanceMode({
                           width={800}
                           height={800}
                           className="w-full h-auto"
-                          style={{ maxHeight: "100%", objectFit: "contain" }}
+                          style={{ 
+                            maxHeight: "100%", 
+                            objectFit: "contain"
+                          }}
                           sizes="(max-width: 768px) 100vw, 800px"
                           priority={currentSong === 0}
                           placeholder="blur"
@@ -464,7 +474,7 @@ export function PerformanceMode({
                     return null
                   })()
                 ) : (
-                  <div className="text-center text-[#A69B8E] py-10">
+                  <div className="text-center text-[#A69B8E] py-8">
                     <p className="text-xl">No sheet music available</p>
                   </div>
                 )
@@ -474,7 +484,7 @@ export function PerformanceMode({
                   className="text-lg leading-relaxed"
                 />
               ) : (
-                <div className="text-center text-[#A69B8E] py-10">
+                <div className="text-center text-[#A69B8E] py-8">
                   <p className="text-xl">No lyrics available for this song</p>
                 </div>
               )}
@@ -489,7 +499,7 @@ export function PerformanceMode({
         className={`absolute bottom-0 left-0 right-0 z-50 bg-[#1A1F36]/90 backdrop-blur-sm transition-opacity duration-300 ${showControls ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}
       >
-        <div className="flex items-center justify-center gap-4 p-3">
+        <div className="flex items-center justify-center gap-4 p-2">
           <Button
             variant="ghost"
             size="sm"
