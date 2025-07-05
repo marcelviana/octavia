@@ -315,9 +315,9 @@ export function PerformanceMode({
 
   return (
     <div className="h-screen bg-[#1A1F36] text-white flex flex-col relative" onMouseMove={handleMouseMove}>
-      {/* Top Bar */}
+      {/* Header Line 1 - Title/Artist with X and Dark mode buttons */}
       <div className="absolute top-0 left-0 right-0 z-50 bg-[#1A1F36]/90 backdrop-blur-sm">
-        <div className="flex flex-wrap items-center justify-center gap-4 sm:justify-between p-3">
+        <div className="flex items-center justify-between p-3">
           <div className="flex items-center">
             <Button
               variant="ghost"
@@ -329,12 +329,12 @@ export function PerformanceMode({
             </Button>
           </div>
 
-          <div className="text-center">
+          <div className="text-center flex-1">
             <h2 className="font-bold text-lg text-white">{currentSongData.title || "Unknown Song"}</h2>
             <p className="text-sm text-[#A69B8E]">{currentSongData.artist || "Unknown Artist"}</p>
           </div>
 
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center">
             <Button
               variant="ghost"
               size="sm"
@@ -343,6 +343,36 @@ export function PerformanceMode({
             >
               {darkSheet ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Header Line 2 - Functional Controls */}
+      <div className="absolute top-[72px] left-0 right-0 z-50 bg-[#1A1F36]/90 backdrop-blur-sm">
+        <div className="flex items-center justify-center gap-6 p-1">
+          {/* Zoom Controls */}
+          <div className="flex items-center space-x-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setZoom(Math.max(70, zoom - 10))}
+              className="text-white hover:bg-white/20"
+            >
+              <ZoomOut className="w-4 h-4" />
+            </Button>
+            <span className="text-sm min-w-[40px] text-center text-[#A69B8E]">{zoom}%</span>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setZoom(Math.min(150, zoom + 10))}
+              className="text-white hover:bg-white/20"
+            >
+              <ZoomIn className="w-4 h-4" />
+            </Button>
+          </div>
+
+          {/* Play/Pause Control */}
+          <div className="flex items-center">
             <Button
               variant="ghost"
               size="sm"
@@ -352,13 +382,45 @@ export function PerformanceMode({
               {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
             </Button>
           </div>
+
+          {/* BPM Controls */}
+          <div className="relative flex items-center space-x-1">
+            <Button
+              variant="ghost"
+              size="icon"
+              onPointerDown={() => startPress("dec")}
+              onPointerUp={() => endPress("dec")}
+              onPointerLeave={() => endPress("dec", false)}
+              onPointerCancel={() => endPress("dec", false)}
+              className="text-white hover:bg-white/30 active:scale-95 transition-transform"
+            >
+              <Minus className="w-4 h-4" />
+            </Button>
+            <span className="text-sm text-[#A69B8E] min-w-[60px] text-center">{bpm} BPM</span>
+            <Button
+              variant="ghost"
+              size="icon"
+              onPointerDown={() => startPress("inc")}
+              onPointerUp={() => endPress("inc")}
+              onPointerLeave={() => endPress("inc", false)}
+              onPointerCancel={() => endPress("inc", false)}
+              className="text-white hover:bg-white/30 active:scale-95 transition-transform"
+            >
+              <Plus className="w-4 h-4" />
+            </Button>
+            {bpmFeedback && (
+              <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-[#1A1F36] text-white text-xs px-2 py-1 rounded">
+                {bpmFeedback}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex items-center justify-center p-4 pt-16 pb-16">
+      <div className="flex-1 flex items-center justify-center p-4 pt-[144px] pb-16">
         <Card
-          className={`shadow-2xl w-full max-w-4xl h-[calc(100vh-120px)] overflow-hidden border-[#A69B8E] ${darkSheet ? "bg-[#1A1F36] text-[#F7F9FA]" : "bg-[#F7F9FA] text-[#1A1F36]"}`}
+          className={`shadow-2xl w-full max-w-4xl h-[calc(100vh-200px)] overflow-hidden border-[#A69B8E] ${darkSheet ? "bg-[#1A1F36] text-[#F7F9FA]" : "bg-[#F7F9FA] text-[#1A1F36]"}`}
         >
           <div
             ref={contentRef}
@@ -379,7 +441,7 @@ export function PerformanceMode({
                         <PdfViewer
                           url={sheetUrls[currentSong] as string}
                           fullscreen
-                          className="h-[calc(100vh-200px)]"
+                          className="h-[calc(100vh-280px)]"
                         />
                       )
                     }
@@ -427,91 +489,39 @@ export function PerformanceMode({
         className={`absolute bottom-0 left-0 right-0 z-50 bg-[#1A1F36]/90 backdrop-blur-sm transition-opacity duration-300 ${showControls ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}
       >
-        <div className="flex flex-wrap items-center justify-center gap-4 sm:justify-between p-3">
-          <div className="flex items-center space-x-3">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setZoom(Math.max(70, zoom - 10))}
-              className="text-white hover:bg-white/20"
-            >
-              <ZoomOut className="w-4 h-4" />
-            </Button>
-            <span className="text-sm min-w-[40px] text-center text-[#A69B8E]">{zoom}%</span>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setZoom(Math.min(150, zoom + 10))}
-              className="text-white hover:bg-white/20"
-            >
-              <ZoomIn className="w-4 h-4" />
-            </Button>
+        <div className="flex items-center justify-center gap-4 p-3">
+          <Button
+            variant="ghost"
+            size="sm"
+            disabled={currentSong === 0}
+            onClick={() => setCurrentSong(currentSong - 1)}
+            className="text-white hover:bg-white/20 disabled:opacity-50"
+          >
+            <ChevronLeft className="w-5 h-5 mr-1" />
+            Prev
+          </Button>
+
+          <div className="flex space-x-1 mx-4">
+            {songs.map((_: any, index: number) => (
+              <div
+                key={index}
+                className={`w-2 h-2 rounded-full cursor-pointer ${index === currentSong ? "bg-[#FF6B6B]" : "bg-[#A69B8E]"
+                  }`}
+                onClick={() => setCurrentSong(index)}
+              />
+            ))}
           </div>
 
-          <div className="flex items-center space-x-2">
-            <Button
-              variant="ghost"
-              size="sm"
-              disabled={currentSong === 0}
-              onClick={() => setCurrentSong(currentSong - 1)}
-              className="text-white hover:bg-white/20 disabled:opacity-50"
-            >
-              <ChevronLeft className="w-5 h-5 mr-1" />
-              Prev
-            </Button>
-
-            <div className="flex space-x-1 mx-2">
-              {songs.map((_: any, index: number) => (
-                <div
-                  key={index}
-                  className={`w-2 h-2 rounded-full cursor-pointer ${index === currentSong ? "bg-[#FF6B6B]" : "bg-[#A69B8E]"
-                    }`}
-                  onClick={() => setCurrentSong(index)}
-                />
-              ))}
-            </div>
-
-            <Button
-              variant="ghost"
-              size="sm"
-              disabled={currentSong === songs.length - 1}
-              onClick={() => setCurrentSong(currentSong + 1)}
-              className="text-white hover:bg-white/20 disabled:opacity-50"
-            >
-              Next
-              <ChevronRight className="w-5 h-5 ml-1" />
-            </Button>
-            <div className="relative flex items-center space-x-1 ml-4">
-              <Button
-                variant="ghost"
-                size="icon"
-                onPointerDown={() => startPress("dec")}
-                onPointerUp={() => endPress("dec")}
-                onPointerLeave={() => endPress("dec", false)}
-                onPointerCancel={() => endPress("dec", false)}
-                className="text-white hover:bg-white/30 active:scale-95 transition-transform"
-              >
-                <Minus className="w-4 h-4" />
-              </Button>
-              <span className="text-sm text-[#A69B8E] min-w-[60px] text-center">{bpm} BPM</span>
-              <Button
-                variant="ghost"
-                size="icon"
-                onPointerDown={() => startPress("inc")}
-                onPointerUp={() => endPress("inc")}
-                onPointerLeave={() => endPress("inc", false)}
-                onPointerCancel={() => endPress("inc", false)}
-                className="text-white hover:bg-white/30 active:scale-95 transition-transform"
-              >
-                <Plus className="w-4 h-4" />
-              </Button>
-              {bpmFeedback && (
-                <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-[#1A1F36] text-white text-xs px-2 py-1 rounded">
-                  {bpmFeedback}
-                </div>
-              )}
-            </div>
-          </div>
+          <Button
+            variant="ghost"
+            size="sm"
+            disabled={currentSong === songs.length - 1}
+            onClick={() => setCurrentSong(currentSong + 1)}
+            className="text-white hover:bg-white/20 disabled:opacity-50"
+          >
+            Next
+            <ChevronRight className="w-5 h-5 ml-1" />
+          </Button>
         </div>
       </div>
     </div>
