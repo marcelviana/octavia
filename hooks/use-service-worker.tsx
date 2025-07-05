@@ -113,15 +113,42 @@ export function useServiceWorker() {
           console.log("🎉 Service Worker registered successfully:", registration)
         }
 
-        // Check for updates periodically
+        // Track registration state to prevent invalid state errors
+        let isRegistrationValid = true
+        
+        // Check for updates with proper error handling
         const checkForUpdates = () => {
+          // Only check for updates if registration is still valid
+          if (!isRegistrationValid) {
+            if (isDev) {
+              console.log("⚠️ Skipping update check - registration is no longer valid")
+            }
+            return
+          }
+
+          // Additional check for registration state
+          if (!registration || registration.installing || registration.waiting) {
+            if (isDev) {
+              console.log("⚠️ Skipping update check - registration is in transition state")
+            }
+            return
+          }
+
           registration.update().catch(err => {
-            console.warn("Failed to check for SW updates:", err)
+            // Check if this is an expected error during page unload/navigation
+            if (err.name === 'InvalidStateError' || err.name === 'DOMException') {
+              if (isDev) {
+                console.log("⚠️ Update check failed due to invalid state (likely during navigation):", err.message)
+              }
+              isRegistrationValid = false
+            } else {
+              console.warn("Failed to check for SW updates:", err)
+            }
           })
         }
 
-        // Check for updates every 30 seconds in development, 5 minutes in production
-        const updateInterval = setInterval(checkForUpdates, isDev ? 30000 : 300000)
+        // Check for updates periodically, but with longer intervals to reduce errors
+        const updateInterval = setInterval(checkForUpdates, isDev ? 60000 : 600000) // 1 min dev, 10 min prod
 
         // Handle waiting service worker
         if (registration.waiting) {
@@ -149,7 +176,7 @@ export function useServiceWorker() {
         })
 
         // Handle service worker messages
-        navigator.serviceWorker.addEventListener("message", event => {
+        const handleMessage = (event: MessageEvent) => {
           if (isDev) {
             console.log("📨 Message from Service Worker:", event.data)
           }
@@ -163,7 +190,7 @@ export function useServiceWorker() {
                   <ToastAction
                     altText="Offline Page"
                     onClick={() => {
-                      window.location.href = "/_offline"
+                      window.location.href = "/offline"
                     }}
                   >
                     Offline Page
@@ -187,7 +214,9 @@ export function useServiceWorker() {
               })
               break
           }
-        })
+        }
+
+        navigator.serviceWorker.addEventListener("message", handleMessage)
 
         // Handle service worker errors
         navigator.serviceWorker.addEventListener("error", handleServiceWorkerError)
@@ -202,10 +231,32 @@ export function useServiceWorker() {
           console.error("Failed to process offline queue:", err)
         }
 
+        // Handle page visibility changes to prevent errors during navigation
+        const handleVisibilityChange = () => {
+          if (document.visibilityState === 'hidden') {
+            // Page is being hidden/navigated away, mark registration as invalid
+            isRegistrationValid = false
+          }
+        }
+
+        document.addEventListener('visibilitychange', handleVisibilityChange)
+
+        // Handle page unload to prevent errors
+        const handleBeforeUnload = () => {
+          isRegistrationValid = false
+          clearInterval(updateInterval)
+        }
+
+        window.addEventListener('beforeunload', handleBeforeUnload)
+
         // Cleanup function
         return () => {
+          isRegistrationValid = false
           clearInterval(updateInterval)
+          navigator.serviceWorker.removeEventListener("message", handleMessage)
           navigator.serviceWorker.removeEventListener("error", handleServiceWorkerError)
+          document.removeEventListener('visibilitychange', handleVisibilityChange)
+          window.removeEventListener('beforeunload', handleBeforeUnload)
           window.removeEventListener('online', updateOnlineStatus)
           window.removeEventListener('offline', updateOnlineStatus)
         }

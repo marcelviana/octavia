@@ -5,7 +5,7 @@ const CACHE_VERSION = 'v1';
 const CACHE_NAME = `octavia-${CACHE_VERSION}`;
 const STATIC_CACHE = `octavia-static-${CACHE_VERSION}`;
 const PAGE_CACHE = `octavia-pages-${CACHE_VERSION}`;
-const OFFLINE_URL = '/_offline';
+const OFFLINE_URL = '/offline';
 // Assets that should be available offline
 const ASSETS = [
   '/',
