@@ -54,17 +54,18 @@ export async function parseDocxFile(file: File): Promise<ParsedSong[]> {
     }
 
     if (boldTitles.has(line)) {
+      // Only bold lines can start a new song
       if (current) {
         current.body = current.body.replace(/\n+$/, "\n");
         songs.push(current);
       }
       current = { title: line, body: "" };
     } else {
-      if (!current) {
-        current = { title: line, body: "" };
-      } else {
+      // Non-bold lines are only added to existing songs, never start new ones
+      if (current) {
         current.body += raw + "\n";
       }
+      // If there's no current song, ignore non-bold lines (they're not song titles)
     }
   }
 
@@ -122,14 +123,15 @@ export async function parsePdfFile(file: File): Promise<ParsedSong[]> {
     }
 
     if (ln.bold) {
+      // Only bold lines can start a new song
       if (current) songs.push(current);
       current = { title: text, body: "" };
     } else {
-      if (!current) {
-        current = { title: text, body: "" };
-      } else {
+      // Non-bold lines are only added to existing songs, never start new ones
+      if (current) {
         current.body += text + "\n";
       }
+      // If there's no current song, ignore non-bold lines (they're not song titles)
     }
   }
 
