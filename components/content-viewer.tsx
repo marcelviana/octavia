@@ -158,7 +158,7 @@ export function ContentViewer({
   return (
     <div className="flex flex-col bg-gradient-to-b from-[#fff9f0] to-[#fff5e5]">
       {/* Header */}
-      <div className="bg-white/90 backdrop-blur-sm border-b border-amber-200 px-4 py-2 shadow-md">
+      <div className="bg-white/90 backdrop-blur-sm border-b border-amber-200 px-0 py-2 shadow-md">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Button
@@ -207,7 +207,7 @@ export function ContentViewer({
               onClick={() => onEnterPerformance(content)}
               className="bg-gradient-to-r from-green-500 to-green-600 text-white hover:from-green-600 hover:to-green-700"
             >
-              <Play className="w-4 h-4 mr-2 md:mr-2 mr-0" />
+              <Play className="w-4 h-4 mr-0 md:mr-2 mr-0" />
               <span className="hidden md:inline">Performance</span>
             </Button>
 
