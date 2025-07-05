@@ -32,12 +32,19 @@ export function EnhancedPwaInstallPrompt() {
   const [platform, setPlatform] = useState<string>('')
 
   useEffect(() => {
-    // Check if user previously dismissed the prompt
-    const dismissed = localStorage.getItem('octavia-install-dismissed')
-    if (dismissed) {
-      const dismissedDate = new Date(dismissed)
-      const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
-      if (dismissedDate > weekAgo) {
+    // Check if user permanently dismissed the prompt
+    const permanentlyDismissed = localStorage.getItem('octavia_install_dismissed')
+    if (permanentlyDismissed === 'true') {
+      setInstallDismissed(true)
+      return
+    }
+
+    // Check if user postponed the prompt (24-hour delay)
+    const postponedTimestamp = localStorage.getItem('octavia_install_postponed')
+    if (postponedTimestamp) {
+      const postponedDate = new Date(parseInt(postponedTimestamp))
+      const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000)
+      if (postponedDate > twentyFourHoursAgo) {
         setInstallDismissed(true)
         return
       }
@@ -104,14 +111,14 @@ export function EnhancedPwaInstallPrompt() {
     }
   }
 
-  const handleDismiss = () => {
+  const handleNeverInstall = () => {
     setShowPrompt(false)
     setInstallDismissed(true)
-    localStorage.setItem('octavia-install-dismissed', new Date().toISOString())
+    localStorage.setItem('octavia_install_dismissed', 'true')
     
-    // Track dismissal
+    // Track permanent dismissal
     if (typeof gtag !== 'undefined') {
-      gtag('event', 'pwa_install_dismissed', {
+      gtag('event', 'pwa_install_never', {
         platform: platform
       })
     }
@@ -119,7 +126,15 @@ export function EnhancedPwaInstallPrompt() {
 
   const handleLater = () => {
     setShowPrompt(false)
-    // Don't mark as dismissed, will show again later
+    setInstallDismissed(true)
+    localStorage.setItem('octavia_install_postponed', Date.now().toString())
+    
+    // Track postponement
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'pwa_install_postponed', {
+        platform: platform
+      })
+    }
   }
 
   if (!showPrompt || !deferredPrompt) return null
@@ -131,8 +146,9 @@ export function EnhancedPwaInstallPrompt() {
         {/* Header with gradient */}
         <div className="bg-gradient-to-r from-amber-500 to-orange-500 p-6 text-white relative">
           <button
-            onClick={handleDismiss}
+            onClick={handleLater}
             className="absolute top-4 right-4 text-white/80 hover:text-white transition-colors"
+            aria-label="Remind me later"
           >
             <X className="w-5 h-5" />
           </button>
@@ -211,7 +227,7 @@ export function EnhancedPwaInstallPrompt() {
           )}
 
           {/* Action buttons */}
-          <div className="flex space-x-3">
+          <div className="flex flex-col sm:flex-row gap-3">
             <Button 
               onClick={handleInstall}
               disabled={isInstalling}
@@ -230,13 +246,23 @@ export function EnhancedPwaInstallPrompt() {
               )}
             </Button>
             
-            <Button 
-              onClick={handleLater}
-              variant="outline"
-              className="px-6 py-3 border-gray-300 text-gray-700 hover:bg-gray-50"
-            >
-              Later
-            </Button>
+            <div className="flex gap-2 sm:gap-3">
+              <Button 
+                onClick={handleLater}
+                variant="outline"
+                className="flex-1 px-4 py-3 border-gray-300 text-gray-700 hover:bg-gray-50"
+              >
+                Later
+              </Button>
+              
+              <Button 
+                onClick={handleNeverInstall}
+                variant="ghost"
+                className="flex-1 px-4 py-3 text-gray-500 hover:text-gray-700 hover:bg-gray-50"
+              >
+                Never Install
+              </Button>
+            </div>
           </div>
 
           <p className="text-xs text-gray-500 text-center">
