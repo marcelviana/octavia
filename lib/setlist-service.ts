@@ -90,10 +90,18 @@ export async function getSetlistById(id: string) {
       throw new Error("User not authenticated")
     }
 
-    const idToken = await auth.currentUser?.getIdToken()
-    if (!idToken) {
-      throw new Error("Authentication failed")
+    // Get Firebase ID token
+    const { auth } = await import("@/lib/firebase")
+    if (!auth) {
+      throw new Error("Firebase auth not initialized")
     }
+    
+    const firebaseUser = auth.currentUser
+    if (!firebaseUser) {
+      throw new Error("Firebase user not found")
+    }
+    
+    const idToken = await firebaseUser.getIdToken()
 
     const response = await fetch(`/api/setlists/${id}`, {
       headers: { Authorization: `Bearer ${idToken}` }
@@ -174,10 +182,18 @@ export async function updateSetlist(id: string, updates: { name?: string; descri
       throw new Error("User not authenticated")
     }
 
-    const idToken = await auth.currentUser?.getIdToken()
-    if (!idToken) {
-      throw new Error("Authentication failed")
+    // Get Firebase ID token
+    const { auth } = await import("@/lib/firebase")
+    if (!auth) {
+      throw new Error("Firebase auth not initialized")
     }
+    
+    const firebaseUser = auth.currentUser
+    if (!firebaseUser) {
+      throw new Error("Firebase user not found")
+    }
+    
+    const idToken = await firebaseUser.getIdToken()
 
     const response = await fetch(`/api/setlists/${id}`, {
       method: 'PUT',
@@ -206,10 +222,18 @@ export async function deleteSetlist(id: string) {
       throw new Error("User not authenticated")
     }
 
-    const idToken = await auth.currentUser?.getIdToken()
-    if (!idToken) {
-      throw new Error("Authentication failed")
+    // Get Firebase ID token
+    const { auth } = await import("@/lib/firebase")
+    if (!auth) {
+      throw new Error("Firebase auth not initialized")
     }
+    
+    const firebaseUser = auth.currentUser
+    if (!firebaseUser) {
+      throw new Error("Firebase user not found")
+    }
+    
+    const idToken = await firebaseUser.getIdToken()
 
     const response = await fetch(`/api/setlists/${id}`, {
       method: 'DELETE',
@@ -323,10 +347,18 @@ export async function updateSongPosition(setlistId: string, songId: string, newP
       throw new Error("User not authenticated")
     }
 
-    const idToken = await auth.currentUser?.getIdToken()
-    if (!idToken) {
-      throw new Error("Authentication failed")
+    // Get Firebase ID token
+    const { auth } = await import("@/lib/firebase")
+    if (!auth) {
+      throw new Error("Firebase auth not initialized")
     }
+    
+    const firebaseUser = auth.currentUser
+    if (!firebaseUser) {
+      throw new Error("Firebase user not found")
+    }
+    
+    const idToken = await firebaseUser.getIdToken()
 
     const response = await fetch(`/api/setlists/songs/${songId}`, {
       method: 'PUT',
