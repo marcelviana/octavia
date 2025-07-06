@@ -14,6 +14,9 @@ export const isSupabaseConfigured = Boolean(
 
 let supabaseBrowserClient: ReturnType<typeof createBrowserClient> | null = null
 
+// ⚠️ WARNING: This browser client should NOT be used for database operations
+// It's only available for compatibility and testing purposes.
+// All database operations should go through secure API routes using the service role key.
 export function getSupabaseBrowserClient() {
   if (!supabaseBrowserClient) {
     supabaseBrowserClient = createBrowserClient<Database>(supabaseUrl, supabaseAnonKey, {
@@ -29,24 +32,9 @@ export function getSupabaseBrowserClient() {
   return supabaseBrowserClient
 }
 
-// Test connection with comprehensive error handling
-export async function testSupabaseConnection(): Promise<boolean> {
-  try {
-    const supabase = getSupabaseBrowserClient()
-
-    // Simple test that doesn't require authentication
-    const { error } = await supabase.from("content").select("count").limit(1)
-
-    if (error && error.message.includes('relation "content" does not exist')) {
-      return true
-    }
-
-    return !error
-  } catch (error) {
-    logger.warn("Supabase connection test failed:", error)
-    return false
-  }
-}
+// Connection testing is now handled server-side via API routes
+// This function has been removed to comply with security guidelines
+// that prohibit direct client-side Supabase database access
 
 // Legacy function - no longer used since we switched to Firebase Auth
 // Kept for backward compatibility but always returns null
