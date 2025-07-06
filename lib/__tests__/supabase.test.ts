@@ -11,41 +11,67 @@ afterEach(() => {
   vi.resetModules()
 })
 
-describe('supabase utils', () => {
-  it('isSupabaseConfigured false when env vars missing', async () => {
+describe('supabase service utils', () => {
+  it('isSupabaseServiceConfigured false when service role env vars missing', async () => {
     process.env.NEXT_PUBLIC_SUPABASE_URL = ''
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = ''
-    const mod = await import('../supabase')
-    expect(mod.isSupabaseConfigured).toBe(false)
+    process.env.SUPABASE_SERVICE_ROLE_KEY = ''
+    const mod = await import('../supabase-service')
+    expect(mod.isSupabaseServiceConfigured).toBe(false)
   })
 
-  it('isSupabaseConfigured true with valid env', async () => {
+  it('isSupabaseServiceConfigured true with valid service role env', async () => {
     process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://demo.supabase.co'
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'a'.repeat(21)
-    const mod = await import('../supabase')
-    expect(mod.isSupabaseConfigured).toBe(true)
+    process.env.SUPABASE_SERVICE_ROLE_KEY = 'a'.repeat(50)
+    const mod = await import('../supabase-service')
+    expect(mod.isSupabaseServiceConfigured).toBe(true)
   })
 
-
-  it('testSupabaseConnection returns false when not configured', async () => {
+  it('getSupabaseServiceClient throws error when not configured', async () => {
     process.env.NEXT_PUBLIC_SUPABASE_URL = ''
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = ''
-    const mod = await import('../supabase')
-    expect(await mod.testSupabaseConnection()).toBe(false)
+    process.env.SUPABASE_SERVICE_ROLE_KEY = ''
+    const mod = await import('../supabase-service')
+    expect(() => mod.getSupabaseServiceClient()).toThrow('Supabase service role key not configured')
   })
 
-  it('testSupabaseConnection true when configured and query succeeds', async () => {
+  it('getSupabaseServiceClient returns client when configured', async () => {
     process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://demo.supabase.co'
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'a'.repeat(21)
-    vi.doMock('@supabase/ssr', () => ({
-      createBrowserClient: () => ({
+    process.env.SUPABASE_SERVICE_ROLE_KEY = 'a'.repeat(50)
+    
+    vi.doMock('@supabase/supabase-js', () => ({
+      createClient: vi.fn(() => ({
         from: () => ({
           select: () => ({ limit: () => Promise.resolve({ error: null }) })
         })
-      })
+      }))
     }))
-    const mod = await import('../supabase')
-    expect(await mod.testSupabaseConnection()).toBe(true)
+    
+    const mod = await import('../supabase-service')
+    const client = mod.getSupabaseServiceClient()
+    expect(client).toBeDefined()
+    vi.resetModules()
+  })
+
+  it('testSupabaseServiceConnection returns false when not configured', async () => {
+    process.env.NEXT_PUBLIC_SUPABASE_URL = ''
+    process.env.SUPABASE_SERVICE_ROLE_KEY = ''
+    const mod = await import('../supabase-service')
+    expect(await mod.testSupabaseServiceConnection()).toBe(false)
+  })
+
+  it('testSupabaseServiceConnection true when configured and query succeeds', async () => {
+    process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://demo.supabase.co'
+    process.env.SUPABASE_SERVICE_ROLE_KEY = 'a'.repeat(50)
+    
+    vi.doMock('@supabase/supabase-js', () => ({
+      createClient: vi.fn(() => ({
+        from: () => ({
+          select: () => ({ limit: () => Promise.resolve({ error: null }) })
+        })
+      }))
+    }))
+    
+    const mod = await import('../supabase-service')
+    expect(await mod.testSupabaseServiceConnection()).toBe(true)
     vi.resetModules()
   })
 })
