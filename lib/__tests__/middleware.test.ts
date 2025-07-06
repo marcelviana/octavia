@@ -36,8 +36,11 @@ describe('middleware auth', () => {
     )
   })
 
-  it('allows request when session cookie is valid', async () => {
-    mockValidateFirebaseTokenServer.mockResolvedValue({ isValid: true })
+  it('allows request when session cookie is valid and email is verified', async () => {
+    mockValidateFirebaseTokenServer.mockResolvedValue({ 
+      isValid: true, 
+      user: { uid: 'user1', email: 'test@example.com', emailVerified: true }
+    })
 
     vi.spyOn(NextResponse, 'next').mockImplementation(() => new NextResponse())
 
@@ -51,6 +54,27 @@ describe('middleware auth', () => {
     const res = await middleware(req as any)
 
     expect(res.headers.get('location')).toBeNull()
+    expect(mockValidateFirebaseTokenServer).toHaveBeenCalledWith('valid', baseReq.url)
+  })
+
+  it('redirects to verify-email when session cookie is valid but email is not verified', async () => {
+    mockValidateFirebaseTokenServer.mockResolvedValue({ 
+      isValid: true, 
+      user: { uid: 'user1', email: 'test@example.com', emailVerified: false }
+    })
+
+    vi.spyOn(NextResponse, 'next').mockImplementation(() => new NextResponse())
+
+    const { middleware } = await import('../../middleware')
+
+    const baseReq = new Request('https://site.test/dashboard', {
+      headers: new Headers({ cookie: 'firebase-session=valid' })
+    })
+    const req = new NextRequest(baseReq)
+
+    const res = await middleware(req as any)
+
+    expect(res.headers.get('location')).toBe('https://site.test/verify-email')
     expect(mockValidateFirebaseTokenServer).toHaveBeenCalledWith('valid', baseReq.url)
   })
 
@@ -75,8 +99,11 @@ describe('middleware auth', () => {
     )
   })
 
-  it('allows request when bearer token is valid', async () => {
-    mockValidateFirebaseTokenServer.mockResolvedValue({ isValid: true })
+  it('allows request when bearer token is valid and email is verified', async () => {
+    mockValidateFirebaseTokenServer.mockResolvedValue({ 
+      isValid: true, 
+      user: { uid: 'user1', email: 'test@example.com', emailVerified: true }
+    })
 
     vi.spyOn(NextResponse, 'next').mockImplementation(() => new NextResponse())
 
@@ -90,6 +117,30 @@ describe('middleware auth', () => {
     const res = await middleware(req as any)
 
     expect(res.headers.get('location')).toBeNull()
+    expect(mockValidateFirebaseTokenServer).toHaveBeenCalledWith(
+      'goodtoken',
+      baseReq.url
+    )
+  })
+
+  it('redirects to verify-email when bearer token is valid but email is not verified', async () => {
+    mockValidateFirebaseTokenServer.mockResolvedValue({ 
+      isValid: true, 
+      user: { uid: 'user1', email: 'test@example.com', emailVerified: false }
+    })
+
+    vi.spyOn(NextResponse, 'next').mockImplementation(() => new NextResponse())
+
+    const { middleware } = await import('../../middleware')
+
+    const baseReq = new Request('https://site.test/dashboard', {
+      headers: new Headers({ authorization: 'Bearer goodtoken' })
+    })
+    const req = new NextRequest(baseReq)
+
+    const res = await middleware(req as any)
+
+    expect(res.headers.get('location')).toBe('https://site.test/verify-email')
     expect(mockValidateFirebaseTokenServer).toHaveBeenCalledWith(
       'goodtoken',
       baseReq.url

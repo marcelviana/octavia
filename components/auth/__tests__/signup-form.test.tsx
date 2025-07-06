@@ -38,8 +38,8 @@ beforeEach(() => {
 afterEach(cleanup)
 
 describe('SignupForm', () => {
-  it('submits data and redirects to / on success', async () => {
-    signUp.mockResolvedValue({ error: null, data: { user: { id: 'user1' }, session: {} } })
+  it('submits data and redirects to / on success when email is verified', async () => {
+    signUp.mockResolvedValue({ error: null, data: { user: { id: 'user1', emailVerified: true } } })
     render(<SignupForm />)
     
     // Fill required fields
@@ -62,8 +62,8 @@ describe('SignupForm', () => {
     })
   })
 
-  it('redirects to confirm-email when no session returned', async () => {
-    signUp.mockResolvedValue({ error: null, data: { user: { id: 'user1' }, session: null } })
+  it('redirects to confirm-email when email is not verified', async () => {
+    signUp.mockResolvedValue({ error: null, data: { user: { id: 'user1', emailVerified: false } } })
     render(<SignupForm />)
     
     // Fill required fields
