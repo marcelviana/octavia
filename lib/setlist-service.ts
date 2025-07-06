@@ -470,29 +470,8 @@ export async function addSongToSetlist(setlistId: string, contentId: string, pos
       }
     }
 
-    // Get the content details
-    const { data: content, error: contentError } = await supabase
-      .from("content")
-      .select("title, artist, content_type")
-      .eq("id", contentId)
-      .single()
-
-    if (contentError) {
-      logger.error("Error fetching content details:", contentError)
-      return {
-        ...song,
-        title: "Unknown Title",
-        artist: "Unknown Artist",
-        content_type: "Unknown Type",
-      }
-    }
-
-    return {
-      ...song,
-      title: content.title,
-      artist: content.artist,
-      content_type: content.content_type,
-    }
+    // No need to fetch content details here; client will reload setlist and content from API
+    return song
   } catch (error) {
     logger.error("Error in addSongToSetlist:", error)
     throw error

@@ -3,9 +3,9 @@ import type React from "react"
 
 import { useState, useEffect, useRef, useCallback } from "react"
 import { getUserSetlists } from "@/lib/setlist-service"
-import { getUserContent } from "@/lib/content-service"
+import { getUserContentPage } from "@/lib/content-service"
 import { saveSetlists, getCachedSetlists } from "@/lib/offline-setlist-cache"
-import { getCachedContent } from "@/lib/offline-cache"
+import { saveContent, getCachedContent } from "@/lib/offline-cache"
 import type { Database } from "@/types/supabase"
 
 export type Setlist = Database["public"]["Tables"]["setlists"]["Row"]
@@ -35,10 +35,19 @@ export function useSetlistData(user: any | null, ready: boolean): UseSetlistData
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const inProgressRef = useRef(false)
+  const lastFocusTimeRef = useRef(Date.now())
 
-  const load = useCallback(async () => {
-    if (inProgressRef.current) return
+  const load = useCallback(async (forceRefresh = false) => {
+    if (!user || inProgressRef.current) {
+      console.log("🔍 useSetlistData: Skipping load", { 
+        hasUser: !!user, 
+        userUid: user?.uid,
+        inProgress: inProgressRef.current 
+      })
+      return
+    }
     inProgressRef.current = true
+    
     try {
       console.log("🔍 useSetlistData: Starting load, user:", user?.email, "ready:", ready)
       setLoading(true)
@@ -55,51 +64,66 @@ export function useSetlistData(user: any | null, ready: boolean): UseSetlistData
         return
       }
 
-      const supabaseUser =
-        user && typeof (user as any).uid === "string"
-          ? { id: (user as any).uid, email: (user as any).email }
-          : undefined
+      // Ensure we have a valid user with proper authentication
+      const userForQuery = user && user.uid ? { id: user.uid, email: user.email } : null
+      if (!userForQuery) {
+        console.warn("🔍 useSetlistData: No valid user found for query")
+        setError("Authentication required")
+        return
+      }
 
-      console.log("🔍 useSetlistData: Supabase user:", supabaseUser?.email)
+      console.log("🔍 useSetlistData: Loading data for user:", userForQuery.email)
 
-      // Use server-side API for setlists and client-side service for content
+      // Load setlists and content using proper service functions
       const [setsResult, contentResult] = await Promise.allSettled([
-        fetch('/api/setlists', {
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }).then(res => {
-          if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`)
-          return res.json().then(data => data.setlists || [])
-        }),
-        getUserContent(undefined, supabaseUser),
+        getUserSetlists(userForQuery),
+        getUserContentPage({
+          page: 1,
+          pageSize: 1000, // Get all content for setlist management
+          search: "",
+          sortBy: "recent",
+          filters: {},
+          useCache: !forceRefresh,
+        }, undefined, userForQuery)
       ])
 
       console.log("🔍 useSetlistData: Sets result status:", setsResult.status)
       console.log("🔍 useSetlistData: Content result status:", contentResult.status)
 
-      if (setsResult.status === "rejected") {
+      let setsData: SetlistWithSongs[] = []
+      let contentData: Content[] = []
+
+      if (setsResult.status === "fulfilled") {
+        setsData = setsResult.value as SetlistWithSongs[]
+        console.log("🔍 useSetlistData: Loaded", setsData.length, "setlists")
+      } else {
         console.error("🔍 useSetlistData: Sets loading failed:", setsResult.reason)
+        // Try to load from cache
+        try {
+          setsData = await getCachedSetlists() as SetlistWithSongs[]
+          console.log("🔍 useSetlistData: Using cached setlists:", setsData.length)
+        } catch (cacheErr) {
+          console.error("🔍 useSetlistData: Failed to load cached setlists:", cacheErr)
+        }
       }
-      if (contentResult.status === "rejected") {
+
+      if (contentResult.status === "fulfilled") {
+        contentData = contentResult.value.data || []
+        console.log("🔍 useSetlistData: Loaded", contentData.length, "content items")
+      } else {
         console.error("🔍 useSetlistData: Content loading failed:", contentResult.reason)
+        // Try to load from cache
+        try {
+          contentData = await getCachedContent()
+          console.log("🔍 useSetlistData: Using cached content:", contentData.length)
+        } catch (cacheErr) {
+          console.error("🔍 useSetlistData: Failed to load cached content:", cacheErr)
+        }
       }
-
-      const setsData =
-        setsResult.status === "fulfilled"
-          ? setsResult.value
-          : await getCachedSetlists()
-      const contentData =
-        contentResult.status === "fulfilled"
-          ? contentResult.value
-          : await getCachedContent()
-
-      console.log("🔍 useSetlistData: Loaded", setsData.length, "setlists and", contentData.length, "content items")
 
       // Debug first setlist if available
       if (setsData.length > 0) {
-        const firstSetlist = setsData[0] as SetlistWithSongs
+        const firstSetlist = setsData[0]
         console.log("🔍 useSetlistData: First setlist:", firstSetlist.name, "with", firstSetlist.setlist_songs?.length || 0, "songs")
         if (firstSetlist.setlist_songs && firstSetlist.setlist_songs.length > 0) {
           const firstSong = firstSetlist.setlist_songs[0]
@@ -111,32 +135,97 @@ export function useSetlistData(user: any | null, ready: boolean): UseSetlistData
         }
       }
 
-      setSetlists(setsData as SetlistWithSongs[])
+      // Debug first content item if available
+      if (contentData.length > 0) {
+        const firstContent = contentData[0]
+        console.log("🔍 useSetlistData: First content:", {
+          id: firstContent.id,
+          title: firstContent.title,
+          artist: firstContent.artist
+        })
+      }
+
+      setSetlists(setsData)
       setAvailableContent(contentData)
 
-      if (setsData.length > 0) {
-        try {
+      // Cache the data
+      try {
+        if (setsData.length > 0) {
           await saveSetlists(setsData as any[])
-        } catch {
-          // ignore cache errors
         }
+        if (contentData.length > 0) {
+          await saveContent(contentData)
+        }
+      } catch (cacheErr) {
+        console.warn("🔍 useSetlistData: Failed to cache data:", cacheErr)
       }
+
     } catch (err: any) {
       console.error("🔍 useSetlistData: Error:", err)
       setError(err?.message ?? "Failed to load data")
+      
+      // Try to load from cache as fallback
+      try {
+        const [cachedSets, cachedContent] = await Promise.all([
+          getCachedSetlists(),
+          getCachedContent(),
+        ])
+        console.log("🔍 useSetlistData: Using cached data as fallback")
+        setSetlists(cachedSets as SetlistWithSongs[])
+        setAvailableContent(cachedContent)
+      } catch (cacheErr) {
+        console.error("🔍 useSetlistData: Failed to load cached data:", cacheErr)
+      }
     } finally {
       inProgressRef.current = false
       setLoading(false)
     }
-  }, [user])
+  }, [user, ready])
 
   useEffect(() => {
     console.log("🔍 useSetlistData: Effect triggered, ready:", ready, "user:", user?.email)
-    if (ready && user) {
-      load()
+    if (ready && user && user.uid) {
+      // Use a small delay to ensure Firebase Auth is fully initialized
+      const timeoutId = setTimeout(() => {
+        load(true) // Force refresh to get latest data
+      }, 100)
+      
+      return () => clearTimeout(timeoutId)
     } else if (ready && !user) {
       console.log("🔍 useSetlistData: No user, setting loading to false")
       setLoading(false)
+      setSetlists([])
+      setAvailableContent([])
+      setError(null)
+    }
+  }, [ready, user?.uid, load])
+
+  // Add window focus listener to refresh data when user returns to the tab
+  useEffect(() => {
+    const handleWindowFocus = () => {
+      const now = Date.now()
+      if (ready && user && user.uid && (now - lastFocusTimeRef.current) > 30000) {
+        console.log("🔍 useSetlistData: Window focused after 30+ seconds, refreshing...")
+        load(true) // Force refresh to bypass cache
+      }
+      lastFocusTimeRef.current = now
+    }
+
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        handleWindowFocus()
+      }
+    }
+
+    // Only add listeners if we have a valid user
+    if (user && user.uid) {
+      window.addEventListener('focus', handleWindowFocus)
+      document.addEventListener('visibilitychange', handleVisibilityChange)
+    }
+
+    return () => {
+      window.removeEventListener('focus', handleWindowFocus)
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
     }
   }, [ready, user, load])
 
@@ -147,6 +236,6 @@ export function useSetlistData(user: any | null, ready: boolean): UseSetlistData
     setContent: setAvailableContent,
     loading,
     error,
-    reload: load,
+    reload: () => load(true), // Force refresh to bypass cache
   }
 }

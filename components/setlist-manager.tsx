@@ -45,7 +45,7 @@ import {
 } from "@/lib/setlist-service"
 import { getUserContent as getContentList } from "@/lib/content-service"
 import type { Database } from "@/types/supabase"
-import { useAuth } from "@/contexts/firebase-auth-context"
+import { useFirebaseAuth } from "@/contexts/firebase-auth-context"
 import { cn } from "@/lib/utils"
 import { useSetlistData } from "@/hooks/use-setlist-data"
 
@@ -66,7 +66,8 @@ interface SetlistManagerProps {
 }
 
 export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
-  const { user, isLoading: authLoading, isInitialized } = useAuth()
+  const { user, isLoading: authLoading } = useFirebaseAuth()
+  const isInitialized = !authLoading
   const {
     setlists,
     setSetlists,
@@ -269,45 +270,37 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
   }
 
   const addSelectedSongs = async () => {
-    if (!selectedSetlist || selectedSongsToAdd.length === 0) return
+    if (!selectedSetlist || selectedSongsToAdd.length === 0 || !user) return
 
     try {
       setAddingSongs(true)
       
       const currentMaxPosition = selectedSetlist.setlist_songs?.length || 0
 
-      // Add songs to setlist
+      console.log("🔍 Adding songs to setlist:", {
+        setlistId: selectedSetlist.id,
+        songsToAdd: selectedSongsToAdd,
+        currentMaxPosition
+      })
+
+      // Add songs to setlist one by one
       for (let i = 0; i < selectedSongsToAdd.length; i++) {
-        await addSongToSetlist(selectedSetlist.id, selectedSongsToAdd[i], currentMaxPosition + i + 1)
+        const songId = selectedSongsToAdd[i]
+        const position = currentMaxPosition + i + 1
+        
+        console.log("🔍 Adding song:", { songId, position })
+        await addSongToSetlist(selectedSetlist.id, songId, position)
       }
+
+      console.log("🔍 Successfully added all songs, reloading data...")
 
       // Close dialog and reset selection after successful addition
       setIsAddSongsDialogOpen(false)
       setSelectedSongsToAdd([])
       setSongFilter("")
 
-      // Reload data to get updated setlist without showing loading screen
-      const [updatedSetlists, updatedContent] = await Promise.all([
-        getUserSetlists(),
-        getContentList()
-      ])
-
-      // Update state with new data
-      setSetlists(updatedSetlists as SetlistWithSongs[])
-      setAvailableContent(updatedContent)
-
-      // Find and select the updated setlist
-      const updatedSetlist = updatedSetlists.find((s) => s.id === selectedSetlist.id)
-      if (updatedSetlist) {
-        setSelectedSetlist(updatedSetlist as SetlistWithSongs)
-      }
-
-      // Cache the updated setlists
-      try {
-        await saveSetlists(updatedSetlists as any[])
-      } catch (err) {
-        console.error('Failed to cache offline setlists', err)
-      }
+      // Reload data using the hook's reload function
+      await reload()
 
     } catch (err) {
       console.error("Error adding songs to setlist:", err)
@@ -317,66 +310,36 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
   }
 
   const handleRemoveSong = async (setlistSongId: string) => {
+    if (!user || !selectedSetlist) return
+
     try {
+      console.log("🔍 Removing song from setlist:", { setlistSongId, setlistId: selectedSetlist.id })
+
       // Optimistically update UI first for immediate feedback
-      if (selectedSetlist) {
-        const updatedSongs = selectedSetlist.setlist_songs.filter((s) => s.id !== setlistSongId)
-        const optimisticSetlist = { ...selectedSetlist, setlist_songs: updatedSongs }
-        setSelectedSetlist(optimisticSetlist)
-        
-        // Update the main setlists array as well
-        const updatedSetlists = setlists.map(setlist => 
-          setlist.id === selectedSetlist.id ? optimisticSetlist : setlist
-        )
-        setSetlists(updatedSetlists)
-      }
+      const updatedSongs = selectedSetlist.setlist_songs.filter((s) => s.id !== setlistSongId)
+      const optimisticSetlist = { ...selectedSetlist, setlist_songs: updatedSongs }
+      setSelectedSetlist(optimisticSetlist)
+      
+      // Update the main setlists array as well
+      const updatedSetlists = setlists.map(setlist => 
+        setlist.id === selectedSetlist.id ? optimisticSetlist : setlist
+      )
+      setSetlists(updatedSetlists)
 
       // Then perform the backend update
       await removeSongFromSetlist(setlistSongId)
 
-      // Reload data to sync with backend without showing loading screen
-      const [updatedSetlists, updatedContent] = await Promise.all([
-        getUserSetlists(),
-        getContentList()
-      ])
+      console.log("🔍 Successfully removed song, reloading data...")
 
-      // Update state with fresh data from backend
-      setSetlists(updatedSetlists as SetlistWithSongs[])
-      setAvailableContent(updatedContent)
-
-      // Find and select the updated setlist
-      if (selectedSetlist) {
-        const updatedSetlist = updatedSetlists.find((s) => s.id === selectedSetlist.id)
-        if (updatedSetlist) {
-          setSelectedSetlist(updatedSetlist as SetlistWithSongs)
-        }
-      }
-
-      // Cache the updated setlists
-      try {
-        await saveSetlists(updatedSetlists as any[])
-      } catch (err) {
-        console.error('Failed to cache offline setlists', err)
-      }
+      // Reload data using the hook's reload function
+      await reload()
 
     } catch (err) {
       console.error("Error removing song from setlist:", err)
       
       // Revert the optimistic update by reloading from server
       try {
-        const [updatedSetlists, updatedContent] = await Promise.all([
-          getUserSetlists(),
-          getContentList()
-        ])
-        setSetlists(updatedSetlists as SetlistWithSongs[])
-        setAvailableContent(updatedContent)
-        
-        if (selectedSetlist) {
-          const updatedSetlist = updatedSetlists.find((s) => s.id === selectedSetlist.id)
-          if (updatedSetlist) {
-            setSelectedSetlist(updatedSetlist as SetlistWithSongs)
-          }
-        }
+        await reload()
       } catch (reloadErr) {
         console.error('Failed to reload data after error:', reloadErr)
       }
@@ -484,9 +447,17 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
   }
 
   // Filter out songs that are already in the current setlist
-  const availableSongs = availableContent.filter(
-    (content) => !selectedSetlist?.setlist_songs?.some((setlistSong) => setlistSong.content?.id === content.id),
-  )
+  const availableSongs = availableContent.filter((content) => {
+    if (!selectedSetlist?.setlist_songs || !content?.id) return true
+    
+    // Check if this content is already in the setlist
+    const isInSetlist = selectedSetlist.setlist_songs.some((setlistSong) => {
+      // The setlist song content should have an id property
+      return setlistSong.content?.id === content.id
+    })
+    
+    return !isInSetlist
+  })
 
   // Filter songs based on search term
   const filteredSongs = availableSongs.filter((song) => {
@@ -495,6 +466,10 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
     const artistMatch = song.artist?.toLowerCase().includes(searchTerm)
     return titleMatch || artistMatch
   })
+
+
+
+
 
   if (loading) {
     return (
@@ -530,12 +505,24 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
       <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 p-4">
         <div className="flex items-center justify-center py-20">
           <div className="text-center">
-            <p className="text-red-600 mb-6 text-xl">{error}</p>
+            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Music className="w-8 h-8 text-red-600" />
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 mb-3">Unable to Load Setlists</h3>
+            <p className="text-red-600 mb-6 text-base">{error}</p>
             <Button
               onClick={reload}
               className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-8 py-3"
+              disabled={loading}
             >
-              Try Again
+              {loading ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                  Retrying...
+                </>
+              ) : (
+                "Try Again"
+              )}
             </Button>
           </div>
         </div>
