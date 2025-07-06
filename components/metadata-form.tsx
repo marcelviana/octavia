@@ -203,7 +203,7 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
       // Example: if you have files[0].url from uploads:
       if (files && files[0]?.url) {
         payload.file_url = files[0].url
-        if (!payload.content_data && payload.content_type === ContentType.SHEET_MUSIC) {
+        if (!payload.content_data && payload.content_type === ContentType.SHEET) {
           payload.content_data = { file: files[0].url }
         }
       }
@@ -224,16 +224,16 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
   const getContentIcon = (type: string) => {
     const styles = getContentTypeStyle(type)
     switch (type) {
-      case ContentType.GUITAR_TAB:
+      case ContentType.TAB:
       case "Guitar Tab":
       case "Guitar Tablature":
       case "tablature":
         return <Guitar className={`w-6 h-6 ${styles.icon}`} />
-      case ContentType.CHORD_CHART:
+      case ContentType.CHORDS:
       case "Chord Chart":
       case "chord_chart":
         return <Music className={`w-6 h-6 ${styles.icon}`} />
-      case ContentType.SHEET_MUSIC:
+      case ContentType.SHEET:
       case "Sheet Music":
       case "sheet_music":
         return <FileText className={`w-6 h-6 ${styles.icon}`} />

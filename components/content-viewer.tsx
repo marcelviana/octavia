@@ -99,11 +99,11 @@ export function ContentViewer({
     switch (type) {
       case ContentType.LYRICS:
         return "from-green-500 to-green-600";
-      case ContentType.GUITAR_TAB:
+      case ContentType.TAB:
         return "from-blue-500 to-blue-600";
-      case ContentType.CHORD_CHART:
+      case ContentType.CHORDS:
         return "from-purple-500 to-purple-600";
-      case ContentType.SHEET_MUSIC:
+      case ContentType.SHEET:
         return "from-orange-500 to-orange-600";
       default:
         return "from-amber-500 to-orange-600";
@@ -112,11 +112,11 @@ export function ContentViewer({
 
   const getContentIcon = (type: string) => {
     switch (type) {
-      case ContentType.GUITAR_TAB:
+      case ContentType.TAB:
         return <Guitar className="w-4 h-4 text-white" />;
-      case ContentType.CHORD_CHART:
+      case ContentType.CHORDS:
         return <Music className="w-4 h-4 text-white" />;
-      case ContentType.SHEET_MUSIC:
+      case ContentType.SHEET:
         return <FileText className="w-4 h-4 text-white" />;
       case ContentType.LYRICS:
         return <Mic className="w-4 h-4 text-white" />;
@@ -522,7 +522,7 @@ export function ContentViewer({
                     )}
 
                     {/* Sheet Music Content */}
-                    {content.content_type === ContentType.SHEET_MUSIC && (
+                    {content.content_type === ContentType.SHEET && (
                       <div className="space-y-6">
                         <h3 className="text-lg font-semibold">
                           Sheet Music

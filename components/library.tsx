@@ -167,11 +167,11 @@ export function Library({
 
   const getContentIcon = (type: string) => {
     switch (type) {
-      case ContentType.GUITAR_TAB:
+      case ContentType.TAB:
         return <Guitar className="w-5 h-5 text-blue-600" />;
-      case ContentType.CHORD_CHART:
+      case ContentType.CHORDS:
         return <Music className="w-5 h-5 text-purple-600" />;
-      case ContentType.SHEET_MUSIC:
+      case ContentType.SHEET:
         return <FileText className="w-5 h-5 text-amber-600" />;
       case ContentType.LYRICS:
         return <Mic className="w-5 h-5 text-green-600" />;
@@ -330,14 +330,14 @@ export function Library({
                   <p className="text-sm font-medium mb-1">Content Type</p>
                   <div className="flex flex-wrap gap-1 mb-2">
                     {[
-                      { display: "Guitar Tab", value: ContentType.GUITAR_TAB },
+                      { display: "Guitar Tab", value: ContentType.TAB },
                       {
                         display: "Chord Chart",
-                        value: ContentType.CHORD_CHART,
+                        value: ContentType.CHORDS,
                       },
                       {
                         display: "Sheet Music",
-                        value: ContentType.SHEET_MUSIC,
+                        value: ContentType.SHEET,
                       },
                       { display: "Lyrics", value: ContentType.LYRICS },
                     ].map((type) => (

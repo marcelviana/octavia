@@ -25,7 +25,7 @@ export function ContentTypeEditor({ content, onChange }: ContentTypeEditorProps)
   }
 
   switch (content.content_type) {
-    case ContentType.CHORD_CHART:
+    case ContentType.CHORDS:
       return (
         <ChordEditor
           content={{
@@ -35,7 +35,7 @@ export function ContentTypeEditor({ content, onChange }: ContentTypeEditorProps)
           onChange={handleContentChange}
         />
       )
-    case ContentType.GUITAR_TAB:
+    case ContentType.TAB:
       return (
         <TabEditor
           content={{
@@ -45,7 +45,7 @@ export function ContentTypeEditor({ content, onChange }: ContentTypeEditorProps)
           onChange={handleContentChange}
         />
       )
-    case ContentType.SHEET_MUSIC:
+    case ContentType.SHEET:
       if (content.file_url) {
         const url = content.file_url.toLowerCase()
         if (url.endsWith(".pdf")) {

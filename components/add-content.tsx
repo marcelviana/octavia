@@ -17,6 +17,9 @@ import {
   Zap,
   Star,
   Mic,
+  FileMusic,
+  AlignLeft,
+  Grid,
 } from "lucide-react";
 import { FileUpload } from "@/components/file-upload";
 import {
@@ -113,7 +116,7 @@ export function AddContent({
     setBatchImported(false);
     
     // Set mode and import mode based on content type
-    if (contentType === ContentType.SHEET_MUSIC) {
+    if (contentType === ContentType.SHEET) {
       setMode("import");
       setImportMode("single");
     } else {
@@ -141,18 +144,18 @@ export function AddContent({
   ];
 
   const availableImportModes =
-    contentType === ContentType.SHEET_MUSIC
+    contentType === ContentType.SHEET
       ? importModes.filter((m) => m.id === "single")
       : importModes;
 
   const contentTypes = [
     { id: "lyrics", name: ContentType.LYRICS, icon: Mic },
-    { id: "chords", name: ContentType.CHORD_CHART, icon: Music },
-    { id: "tabs", name: ContentType.GUITAR_TAB, icon: Guitar },
+    { id: "chords", name: ContentType.CHORDS, icon: Grid },
+    { id: "tabs", name: ContentType.TAB, icon: AlignLeft},
     {
       id: "sheet",
-      name: ContentType.SHEET_MUSIC,
-      icon: FileText,
+      name: ContentType.SHEET,
+      icon: FileMusic,
       tooltip:
         "Add Sheet Music by uploading PDF or image files. Manual creation is not available for this type.",
     },
@@ -164,18 +167,18 @@ export function AddContent({
       
       // Auto-detect if this is an image file and set content type to Sheet Music
       const isImageFile = /\.(png|jpg|jpeg)$/i.test(file.name);
-      if (isImageFile && contentType !== ContentType.SHEET_MUSIC) {
+      if (isImageFile && contentType !== ContentType.SHEET) {
         // Set flag to prevent reset when auto-detecting content type
         isAutoDetectingContentType.current = true;
-        const updatedFile = { ...file, contentType: ContentType.SHEET_MUSIC };
-        setContentType(ContentType.SHEET_MUSIC);
+        const updatedFile = { ...file, contentType: ContentType.SHEET };
+        setContentType(ContentType.SHEET);
         setUploadedFile(updatedFile);
         setCurrentStep(2);
       } else {
         // Normal file upload flow
         const updatedFile = { ...file, contentType };
         setUploadedFile(updatedFile);
-        if (contentType === ContentType.SHEET_MUSIC) {
+        if (contentType === ContentType.SHEET) {
           setCurrentStep(2);
         }
       }
@@ -234,9 +237,9 @@ export function AddContent({
     switch (type) {
       case ContentType.LYRICS:
         return "lyrics";
-      case ContentType.CHORD_CHART:
+      case ContentType.CHORDS:
         return "chords";
-      case ContentType.GUITAR_TAB:
+      case ContentType.TAB:
         return "tablature";
       default:
         return "content";
@@ -300,11 +303,11 @@ export function AddContent({
           user_id: user.uid,
           title: createdContent?.title || uploadedFile?.name || "Untitled",
           content_type:
-            contentType === ContentType.SHEET_MUSIC
+            contentType === ContentType.SHEET
               ? "sheet_music"
               : contentType || "unknown",
           content_data:
-            contentType === ContentType.SHEET_MUSIC
+            contentType === ContentType.SHEET
               ? { file: uploadedFile?.url || null }
               : (createdContent && 'content' in createdContent ? createdContent.content : {}) as any,
           file_url: uploadedFile?.url || null,
@@ -389,7 +392,7 @@ export function AddContent({
   };
 
   if (currentStep === 3) {
-    const isSheetMusic = contentType === ContentType.SHEET_MUSIC
+    const isSheetMusic = contentType === ContentType.SHEET
     const isBatch = importMode === "batch" || batchImported
     const title = isBatch
       ? "All songs were successfully added to your library."
@@ -461,7 +464,7 @@ export function AddContent({
             <h1 className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent ml-2">
               Add Content Details
             </h1>
-            {contentType === ContentType.SHEET_MUSIC && (
+            {contentType === ContentType.SHEET && (
               <p className="text-sm text-gray-600 ml-4">
                 Fill in the details to help organize and find your Sheet Music in your library.
               </p>
@@ -556,11 +559,11 @@ export function AddContent({
                       switch (typeName) {
                         case ContentType.LYRICS:
                           return "border-green-200 ring-2 ring-green-500 bg-green-50";
-                        case ContentType.GUITAR_TAB:
+                        case ContentType.TAB:
                           return "border-blue-200 ring-2 ring-blue-500 bg-blue-50";
-                        case ContentType.CHORD_CHART:
+                        case ContentType.CHORDS:
                           return "border-purple-200 ring-2 ring-purple-500 bg-purple-50";
-                        case ContentType.SHEET_MUSIC:
+                        case ContentType.SHEET:
                           return "border-orange-200 ring-2 ring-orange-500 bg-orange-50";
                         default:
                           return "border-gray-200 ring-2 ring-gray-500 bg-gray-50";
@@ -569,11 +572,11 @@ export function AddContent({
                       switch (typeName) {
                         case ContentType.LYRICS:
                           return "border-gray-200 hover:bg-green-50 hover:border-green-200";
-                        case ContentType.GUITAR_TAB:
+                        case ContentType.TAB:
                           return "border-gray-200 hover:bg-blue-50 hover:border-blue-200";
-                        case ContentType.CHORD_CHART:
+                        case ContentType.CHORDS:
                           return "border-gray-200 hover:bg-purple-50 hover:border-purple-200";
-                        case ContentType.SHEET_MUSIC:
+                        case ContentType.SHEET:
                           return "border-gray-200 hover:bg-orange-50 hover:border-orange-200";
                         default:
                           return "border-gray-200 hover:bg-gray-50 hover:border-gray-200";
@@ -585,11 +588,11 @@ export function AddContent({
                     switch (typeName) {
                       case ContentType.LYRICS:
                         return "text-green-600";
-                      case ContentType.GUITAR_TAB:
+                      case ContentType.TAB:
                         return "text-blue-600";
-                      case ContentType.CHORD_CHART:
+                      case ContentType.CHORDS:
                         return "text-purple-600";
-                      case ContentType.SHEET_MUSIC:
+                      case ContentType.SHEET:
                         return "text-orange-600";
                       default:
                         return "text-gray-600";
@@ -614,7 +617,7 @@ export function AddContent({
             </CardContent>
           </Card>
 
-          {contentType !== ContentType.SHEET_MUSIC && (
+          {contentType !== ContentType.SHEET && (
             <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
               <CardHeader className="py-3 px-4">
                 <CardTitle className="text-lg text-gray-900">Choose How to Add</CardTitle>
@@ -648,9 +651,9 @@ export function AddContent({
             <ContentCreator
               onContentCreated={handleContentCreated}
               initialType={
-                contentType === ContentType.CHORD_CHART
+                contentType === ContentType.CHORDS
                   ? "chord_chart"
-                  : contentType === ContentType.GUITAR_TAB
+                  : contentType === ContentType.TAB
                   ? "tablature"
                   : "lyrics"
               }
@@ -675,7 +678,7 @@ export function AddContent({
                 </CardContent>
               </Card>
 
-              {uploadedFile && contentType !== ContentType.SHEET_MUSIC && (
+              {uploadedFile && contentType !== ContentType.SHEET && (
                 <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
                   <CardHeader className="py-3 px-4">
                     <CardTitle className="text-lg text-gray-900 flex items-center">

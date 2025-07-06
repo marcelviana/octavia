@@ -435,7 +435,7 @@ export function PerformanceMode({
                 maxWidth: zoom >= 100 ? `${10000 / zoom}%` : '100%'
               }}
             >
-              {currentSongData.content_type === ContentType.SHEET_MUSIC ? (
+              {currentSongData.content_type === ContentType.SHEET ? (
                 sheetUrls[currentSong] ? (
                   (() => {
                     const url = sheetUrls[currentSong]!.toLowerCase()

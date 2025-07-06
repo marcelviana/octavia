@@ -78,7 +78,7 @@ export function FileUpload({
   
   // Dynamic allowed extensions based on content type
   const getAllowedExtensions = () => {
-    if (contentType === ContentType.SHEET_MUSIC) {
+    if (contentType === ContentType.SHEET) {
       return ["pdf", "png", "jpg", "jpeg"];
     }
     // For other content types (Lyrics, Chord Chart, Guitar Tab)
@@ -369,7 +369,7 @@ export function FileUpload({
             </Button>
           </label>
           <p className="text-xs text-gray-500 mt-2">
-            {contentType === ContentType.SHEET_MUSIC 
+            {contentType === ContentType.SHEET 
               ? "Supports PDF and image files (PNG, JPG, JPEG)"
               : "Supports PDF, DOCX, and text files"
             }

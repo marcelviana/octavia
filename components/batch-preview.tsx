@@ -35,9 +35,9 @@ export function BatchPreview({
 
   const typeMap: Record<string, { type: ContentType; key: string }> = {
     "Lyrics": { type: ContentType.LYRICS, key: CONTENT_TYPE_KEYS[ContentType.LYRICS] },
-    "Chord Chart": { type: ContentType.CHORD_CHART, key: CONTENT_TYPE_KEYS[ContentType.CHORD_CHART] },
-    "Guitar Tab": { type: ContentType.GUITAR_TAB, key: CONTENT_TYPE_KEYS[ContentType.GUITAR_TAB] },
-    "Sheet Music": { type: ContentType.SHEET_MUSIC, key: CONTENT_TYPE_KEYS[ContentType.SHEET_MUSIC] }
+    "Chord Chart": { type: ContentType.CHORDS, key: CONTENT_TYPE_KEYS[ContentType.CHORDS] },
+    "Guitar Tab": { type: ContentType.TAB, key: CONTENT_TYPE_KEYS[ContentType.TAB] },
+    "Sheet Music": { type: ContentType.SHEET, key: CONTENT_TYPE_KEYS[ContentType.SHEET] }
   };
 
   const handleImport = async () => {

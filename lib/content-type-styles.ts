@@ -16,21 +16,21 @@ export function getContentTypeStyle(type: string): ContentTypeStyle {
         bg: "bg-green-50",
         icon: "text-green-600",
       }
-    case ContentType.GUITAR_TAB:
+    case ContentType.TAB:
       return {
         ring: "ring-blue-500",
         border: "border-blue-200",
         bg: "bg-blue-50",
         icon: "text-blue-600",
       }
-    case ContentType.CHORD_CHART:
+    case ContentType.CHORDS:
       return {
         ring: "ring-purple-500",
         border: "border-purple-200",
         bg: "bg-purple-50",
         icon: "text-purple-600",
       }
-    case ContentType.SHEET_MUSIC:
+    case ContentType.SHEET:
       return {
         ring: "ring-orange-500",
         border: "border-orange-200",

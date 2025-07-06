@@ -65,16 +65,16 @@ export function ContentCreator({
 
   const typeNames: Record<ContentTypeId, ContentType> = {
     lyrics: ContentType.LYRICS,
-    chord_chart: ContentType.CHORD_CHART,
-    tablature: ContentType.GUITAR_TAB,
-    sheet: ContentType.SHEET_MUSIC
+    chord_chart: ContentType.CHORDS,
+    tablature: ContentType.TAB,
+    sheet: ContentType.SHEET
   }
 
   const contentTypes: { id: ContentTypeId; name: ContentType; icon: any; description: string }[] = [
     { id: "lyrics", name: ContentType.LYRICS, icon: FileText, description: "Create lyrics-only sheets" },
-    { id: "chord_chart", name: ContentType.CHORD_CHART, icon: Music, description: "Lyrics with chord progressions" },
-    { id: "tablature", name: ContentType.GUITAR_TAB, icon: Guitar, description: "Create simple guitar tabs" },
-    { id: "sheet", name: ContentType.SHEET_MUSIC, icon: Music, description: "Upload or manage sheet music" }
+    { id: "chord_chart", name: ContentType.CHORDS, icon: Music, description: "Lyrics with chord progressions" },
+    { id: "tablature", name: ContentType.TAB, icon: Guitar, description: "Create simple guitar tabs" },
+    { id: "sheet", name: ContentType.SHEET, icon: Music, description: "Upload or manage sheet music" }
   ]
 
   const handleCreate = () => {

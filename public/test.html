@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lucide Icons Preview - Music App</title>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      gap: 40px;
+      padding: 40px;
+    }
+    .icon-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .icon-box svg {
+      width: 48px;
+      height: 48px;
+      stroke-width: 1.5;
+    }
+    .label {
+      font-size: 14px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="icon-box">
+    <i data-lucide="message-circle"></i>
+    <div class="label">Lyrics</div>
+  </div>
+  <div class="icon-box">
+    <i data-lucide="grid"></i>
+    <div class="label">Chords</div>
+  </div>
+  <div class="icon-box">
+    <i data-lucide="align-left"></i>
+    <div class="label">Tab</div>
+  </div>
+  <div class="icon-box">
+    <i data-lucide="file-music"></i>
+    <div class="label">Sheet Music</div>
+  </div>
+
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
