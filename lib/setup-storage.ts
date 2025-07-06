@@ -1,10 +1,10 @@
-import { getSupabaseBrowserClient } from "@/lib/supabase"
+import { getSupabaseServiceClient } from "@/lib/supabase-service"
 import logger from "@/lib/logger"
 
 const BUCKET_NAME = "content-files"
 
 export async function createContentFilesBucket() {
-  const supabase = getSupabaseBrowserClient()
+  const supabase = getSupabaseServiceClient()
   
   // Check if bucket already exists
   const { data: buckets, error: listError } = await supabase.storage.listBuckets()

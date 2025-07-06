@@ -1,4 +1,3 @@
-import { getSupabaseBrowserClient } from "@/lib/supabase";
 import logger from "@/lib/logger";
 import type { Database } from "@/types/supabase";
 import type { SupabaseClient } from "@supabase/supabase-js";
@@ -98,7 +97,15 @@ export async function getUserContent(
   providedUser?: any,
 ) {
   try {
-    const client = supabase ?? getSupabaseBrowserClient();
+    if (!supabase) {
+      const pageData = await getUserContentPage(
+        { page: 1, pageSize: 1000, useCache: false },
+        undefined,
+        undefined,
+      );
+      return pageData.data || [];
+    }
+    const client = supabase;
 
     // Use provided user or check authentication
     let user = providedUser;
@@ -570,74 +577,36 @@ export async function createContent(content: ContentInsert) {
 
 export async function updateContent(id: string, content: ContentUpdate) {
   try {
-    // For client-side operations, use the API route
-    if (typeof window !== "undefined") {
-      if (process.env.NODE_ENV === "development") {
-        console.log("🔍 updateContent: Using client-side API route");
-      }
-
-      // Get Firebase auth token
-      const { getValidToken } = await import("@/lib/auth-manager");
-      const { token, error: tokenError } = await getValidToken();
-      if (!token) {
-        throw new Error(tokenError || "Authentication failed");
-      }
-
-      const response = await fetch("/api/content", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ id, ...content }),
-      });
-
-      if (!response.ok) {
-        if (response.status === 404) {
-          throw new Error("Content not found");
-        }
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || `Update failed: ${response.status}`);
-      }
-
-      // Clear cache after update
-      clearContentCache();
-
-      return await response.json();
+    if (process.env.NODE_ENV === "development") {
+      console.log("🔍 updateContent: Using API route");
     }
 
-    // Fallback to direct Supabase call for server-side operations
-    const supabase = getSupabaseBrowserClient();
-
-    // Check if user is authenticated
-    const user = await getAuthenticatedUser();
-    if (!user) {
-      throw new Error("User not authenticated");
+    const { getValidToken } = await import("@/lib/auth-manager");
+    const { token, error: tokenError } = await getValidToken();
+    if (!token) {
+      throw new Error(tokenError || "Authentication failed");
     }
 
-    // Ensure content_data is properly formatted
-    const updateData = {
-      ...content,
-      updated_at: new Date().toISOString(),
-    };
+    const response = await fetch("/api/content", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ id, ...content }),
+    });
 
-    const { data, error } = await supabase
-      .from("content")
-      .update(updateData)
-      .eq("id", id)
-      .eq("user_id", user.id)
-      .select()
-      .single();
-
-    if (error) {
-      logger.error("Error updating content:", error);
-      throw error;
+    if (!response.ok) {
+      if (response.status === 404) {
+        throw new Error("Content not found");
+      }
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.error || `Update failed: ${response.status}`);
     }
 
-    // Clear cache after update
     clearContentCache();
 
-    return data;
+    return await response.json();
   } catch (error) {
     logger.error("Error in updateContent:", error);
     if (typeof window !== "undefined" && !navigator.onLine) {
@@ -654,11 +623,9 @@ export async function updateContent(id: string, content: ContentUpdate) {
 
 export async function deleteContent(id: string) {
   try {
-    // For client-side operations, use the API route
-    if (typeof window !== "undefined") {
-      if (process.env.NODE_ENV === "development") {
-        console.log("🔍 deleteContent: Using client-side API route");
-      }
+    if (process.env.NODE_ENV === "development") {
+      console.log("🔍 deleteContent: Using API route");
+    }
 
       // Get Firebase auth token
       const { getValidToken } = await import("@/lib/auth-manager");
@@ -686,32 +653,6 @@ export async function deleteContent(id: string) {
       clearContentCache();
 
       return true;
-    }
-
-    // Fallback to direct Supabase call for server-side operations
-    const supabase = getSupabaseBrowserClient();
-
-    // Check if user is authenticated
-    const user = await getAuthenticatedUser();
-    if (!user) {
-      throw new Error("User not authenticated");
-    }
-
-    const { error } = await supabase
-      .from("content")
-      .delete()
-      .eq("id", id)
-      .eq("user_id", user.id);
-
-    if (error) {
-      logger.error("Error deleting content:", error);
-      throw error;
-    }
-
-    // Clear cache after delete
-    clearContentCache();
-
-    return true;
   } catch (error) {
     logger.error("Error in deleteContent:", error);
     if (typeof window !== "undefined" && !navigator.onLine) {
@@ -734,7 +675,10 @@ export async function getUserStats(
   providedUser?: any,
 ) {
   try {
-    const client = supabase ?? getSupabaseBrowserClient();
+    if (!supabase) {
+      throw new Error("Supabase client required for getUserStats");
+    }
+    const client = supabase;
 
     // Use provided user or check authentication
     let user = providedUser;

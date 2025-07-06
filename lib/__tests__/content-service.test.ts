@@ -42,7 +42,7 @@ describe('Content Service', () => {
       }))
       
       const { getUserContent } = await import('../content-service')
-      const data = await getUserContent()
+      const data = await getUserContent(mockClient as unknown as SupabaseClient)
       expect(data).toEqual([])
       vi.resetModules()
     })
@@ -87,7 +87,7 @@ describe('Content Service', () => {
       }))
       
       const { getUserContent } = await import('../content-service')
-      const data = await getUserContent()
+      const data = await getUserContent(mockClient as unknown as SupabaseClient)
       expect(data).toEqual(mockData)
       vi.resetModules()
     })

@@ -1,4 +1,4 @@
-import { getSupabaseBrowserClient } from "@/lib/supabase"
+import { getSupabaseServiceClient } from "@/lib/supabase-service"
 import logger from "@/lib/logger"
 import type { Database } from "@/types/supabase"
 
@@ -25,7 +25,7 @@ export async function validateSetlistIntegrity(userId: string): Promise<Validati
   }
 
   try {
-    const supabase = getSupabaseBrowserClient()
+    const supabase = getSupabaseServiceClient()
 
     // Get all setlist songs for the user
     const { data: setlistSongs, error: songsError } = await supabase
@@ -119,7 +119,7 @@ export async function cleanupOrphanedSongs(userId: string): Promise<{
       return result
     }
 
-    const supabase = getSupabaseBrowserClient()
+    const supabase = getSupabaseServiceClient()
     const orphanedSongIds = validation.orphanedSongs.map(song => song.id)
 
     logger.log(`Cleaning up ${orphanedSongIds.length} orphaned setlist songs for user ${userId}`)
@@ -153,7 +153,7 @@ export async function cleanupOrphanedSongs(userId: string): Promise<{
  */
 export async function validateContentExists(contentId: string, userId: string): Promise<boolean> {
   try {
-    const supabase = getSupabaseBrowserClient()
+    const supabase = getSupabaseServiceClient()
 
     const { data, error } = await supabase
       .from("content")
@@ -185,7 +185,7 @@ export async function getSetlistIntegritySummary(userId: string): Promise<{
   isHealthy: boolean
 }> {
   try {
-    const supabase = getSupabaseBrowserClient()
+    const supabase = getSupabaseServiceClient()
 
     // Get total setlists count
     const { count: setlistCount } = await supabase
