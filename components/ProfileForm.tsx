@@ -14,7 +14,11 @@ import { useAuth } from "@/contexts/firebase-auth-context"
 import { toast } from "sonner"
 import { User, Mail, Globe, FileText } from "lucide-react"
 
-export default function ProfileForm() {
+interface ProfileFormProps {
+  prevPath?: string | null;
+}
+
+export default function ProfileForm({ prevPath }: ProfileFormProps) {
   const router = useRouter()
   const { user, profile, updateProfile } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
@@ -47,7 +51,11 @@ export default function ProfileForm() {
         toast.success("Profile updated successfully!")
         // Redirect to dashboard after a brief delay to show the toast
         setTimeout(() => {
-          router.push("/dashboard")
+          if (prevPath) {
+            window.location.href = prevPath;
+          } else {
+            router.back();
+          }
         }, 1000)
       }
     } catch (error) {
@@ -163,14 +171,31 @@ export default function ProfileForm() {
                 />
               </div>
 
-              {/* Submit Button */}
-              <Button
-                type="submit"
-                disabled={isLoading}
-                className="w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200"
-              >
-                {isLoading ? "Updating..." : "Update Profile"}
-              </Button>
+              {/* Submit and Cancel Buttons */}
+              <div className="flex gap-4">
+                <Button
+                  type="submit"
+                  disabled={isLoading}
+                  className="flex-1 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200"
+                >
+                  {isLoading ? "Updating..." : "Update Profile"}
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="flex-1 border-amber-300 text-amber-700 hover:bg-amber-50"
+                  onClick={() => {
+                    if (prevPath) {
+                      window.location.href = prevPath;
+                    } else {
+                      router.back();
+                    }
+                  }}
+                  disabled={isLoading}
+                >
+                  Cancel
+                </Button>
+              </div>
             </form>
           </CardContent>
         </Card>

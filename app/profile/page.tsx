@@ -12,9 +12,21 @@ export default function ProfilePage() {
   const { user, isLoading, isInitialized } = useAuth()
   const [mounted, setMounted] = useState(false)
   const [activeScreen, setActiveScreen] = useState("profile")
+  const [prevPath, setPrevPath] = useState<string | null>(null)
 
   useEffect(() => {
     setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    // Try to get the previous path from document.referrer (client-side only)
+    if (typeof window !== "undefined") {
+      // Only set if not coming from /profile itself
+      const ref = document.referrer
+      if (ref && !ref.endsWith("/profile")) {
+        setPrevPath(ref)
+      }
+    }
   }, [])
 
   // Handle navigation from sidebar/bottom nav
@@ -66,7 +78,7 @@ export default function ProfilePage() {
 
   return (
     <ResponsiveLayout activeScreen={activeScreen} onNavigate={handleNavigate}>
-      <ProfileForm />
+      <ProfileForm prevPath={prevPath} />
     </ResponsiveLayout>
   )
 }
