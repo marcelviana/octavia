@@ -22,8 +22,9 @@ export async function middleware(request: NextRequest) {
   // Check for Firebase session cookie
   const firebaseSessionCookie = request.cookies.get('firebase-session')?.value
   
-  // Track authentication status
+  // Track authentication status and user info
   let isAuthenticated = false
+  let userInfo: { uid: string; email?: string; emailVerified?: boolean } | null = null
 
   // Check for Authorization header (for API requests)
   const authHeader = request.headers.get('authorization')
@@ -38,10 +39,12 @@ export async function middleware(request: NextRequest) {
   // Validate token using server-side verification with caching
   if (token) {
     try {
-      isAuthenticated = (await validateFirebaseTokenServer(token, request.url)).isValid;
+      const validation = await validateFirebaseTokenServer(token, request.url)
+      isAuthenticated = validation.isValid
+      userInfo = validation.user || null
       
       if (isAuthenticated) {
-        console.log('Middleware: Token validation successful for', request.nextUrl.pathname)
+        console.log('Middleware: Token validation successful for', request.nextUrl.pathname, 'Email verified:', userInfo?.emailVerified)
       } else {
         console.log('Middleware: Token validation failed')
       }
@@ -63,6 +66,13 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/login", request.url))
   }
 
+  // If user is authenticated but email is not verified, redirect to verify-email page
+  // (except for the verify-email page itself and some public routes)
+  if (isAuthenticated && userInfo && !userInfo.emailVerified && isProtectedRoute) {
+    console.log('Middleware: User not verified, redirecting to verify-email')
+    return NextResponse.redirect(new URL("/verify-email", request.url))
+  }
+
   return response
 }
 
@@ -77,5 +87,6 @@ export const config = {
     '/content/:path*',
     '/login',
     '/signup',
+    '/verify-email',
   ],
 }

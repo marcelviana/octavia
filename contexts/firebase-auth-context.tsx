@@ -11,7 +11,8 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   getIdToken,
-  updateProfile as updateFirebaseProfile
+  updateProfile as updateFirebaseProfile,
+  sendEmailVerification
 } from "firebase/auth"
 import { auth, isFirebaseConfigured } from "@/lib/firebase"
 import { clearOfflineContent } from "@/lib/offline-cache"
@@ -45,6 +46,7 @@ type AuthContextType = {
   signOut: (redirectToHome?: boolean) => Promise<void>
   updateProfile: (data: Partial<Profile>) => Promise<{ error: any }>
   refreshToken: () => Promise<string | null>
+  resendVerificationEmail: () => Promise<{ error: any }>
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -314,6 +316,9 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
           })
         }
 
+        // Send email verification
+        await sendEmailVerification(firebaseUser)
+
         // Create profile in Supabase
         const token = await getIdToken(firebaseUser)
         const response = await fetch('/api/profile', {
@@ -335,7 +340,7 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
 
         logger.log("Firebase sign up successful for:", email)
         setIsLoading(false)
-        return { error: null, data: userCredential }
+        return { error: null, data: { user: firebaseUser } }
       } catch (error: any) {
         logger.error("Firebase sign up error:", error.message)
         setIsLoading(false)
@@ -423,6 +428,22 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
     [user, idToken],
   )
 
+  const resendVerificationEmail = useCallback(async () => {
+    if (!user || !isFirebaseConfigured || !auth) {
+      return { error: { message: "Not authenticated or Firebase not configured" } }
+    }
+
+    try {
+      logger.log("Resending verification email for:", user.email)
+      await sendEmailVerification(user)
+      logger.log("Verification email sent successfully")
+      return { error: null }
+    } catch (error: any) {
+      logger.error("Failed to resend verification email:", error.message)
+      return { error: { message: error.message || "Failed to resend verification email" } }
+    }
+  }, [user, isFirebaseConfigured])
+
   const value = {
     user,
     profile,
@@ -437,6 +458,7 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
     signOut,
     updateProfile,
     refreshToken,
+    resendVerificationEmail,
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

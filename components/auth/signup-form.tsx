@@ -50,8 +50,8 @@ export function SignupForm() {
         return
       }
 
-      // If email confirmation is required
-      if (data?.user && !data?.session) {
+      // Check if email verification is required (Firebase Auth)
+      if (data?.user && !data.user.emailVerified) {
         router.push("/signup/confirm-email")
       } else {
         router.push("/")

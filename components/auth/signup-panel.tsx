@@ -49,7 +49,8 @@ export function SignupPanel() {
         return
       }
 
-      if (data?.user && !data?.session) {
+      // Check if email verification is required (Firebase Auth)
+      if (data?.user && !data.user.emailVerified) {
         router.push("/signup/confirm-email")
       } else {
         router.push("/")
