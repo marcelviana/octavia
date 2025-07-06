@@ -117,7 +117,7 @@ export default function VerifyEmailPage() {
                 ) : (
                   <>
                     <CheckCircle className="h-4 w-4 mr-2" />
-                    I've Verified My Email
+                    I&apos;ve Verified My Email
                   </>
                 )}
               </Button>
