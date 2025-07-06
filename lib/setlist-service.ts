@@ -28,9 +28,6 @@ type SetlistSongInsert = Database["public"]["Tables"]["setlist_songs"]["Insert"]
 export async function getUserSetlists(providedUser?: any) {
   try {
     console.log("🔍 getUserSetlists: Starting...")
-    
-    console.log("🔍 getUserSetlists: Getting Supabase client...")
-    const supabase = getSupabaseBrowserClient()
 
     // Use provided user or check authentication
     let user = providedUser
@@ -49,106 +46,37 @@ export async function getUserSetlists(providedUser?: any) {
 
     console.log("🔍 getUserSetlists: Fetching setlists for user:", user.id)
 
-    // Get all setlists for the user
-    const { data: setlists, error: setlistsError } = await supabase
-      .from("setlists")
-      .select("*")
-      .eq("user_id", user.id)
-      .order("created_at", { ascending: false })
+    // Get Firebase ID token
+    const { auth } = await import("@/lib/firebase")
+    if (!auth) {
+      throw new Error("Firebase auth not initialized")
+    }
+    
+    const firebaseUser = auth.currentUser
+    if (!firebaseUser) {
+      throw new Error("Firebase user not found")
+    }
+    
+    const idToken = await firebaseUser.getIdToken()
 
-    if (setlistsError) {
-      console.error("🔍 getUserSetlists: Error fetching setlists:", setlistsError)
-      logger.error("Error fetching setlists:", setlistsError)
+    // Get setlists via API
+    const response = await fetch('/api/setlists', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${idToken}`,
+      },
+    })
+
+    if (!response.ok) {
+      const errorData = await response.json()
+      console.error("🔍 getUserSetlists: API error:", errorData)
+      logger.error("Error fetching setlists:", errorData)
       return []
     }
 
-    console.log("🔍 getUserSetlists: Found", setlists?.length || 0, "setlists")
-
-    // For each setlist, get the songs
-    const setlistsWithSongs = await Promise.all(
-      setlists.map(async (setlist: any) => {
-        console.log("🔍 getUserSetlists: Fetching songs for setlist:", setlist.name)
-        
-        const { data: songs, error: songsError } = await supabase
-          .from("setlist_songs")
-          .select(
-            `
-            id,
-            setlist_id,
-            content_id,
-            position,
-            notes,
-            content:content_id (
-              id,
-              title,
-              artist,
-              content_type,
-              key,
-              bpm,
-              file_url,
-              content_data
-            )
-          `,
-          )
-          .eq("setlist_id", setlist.id)
-          .order("position", { ascending: true })
-
-        if (songsError) {
-          console.error("🔍 getUserSetlists: Error fetching songs for setlist", setlist.id, ":", songsError)
-          logger.error(`Error fetching songs for setlist ${setlist.id}:`, songsError)
-          return { ...setlist, setlist_songs: [] }
-        }
-
-        console.log("🔍 getUserSetlists: Found", songs?.length || 0, "songs for setlist:", setlist.name)
-        
-        // Debug the first song if available
-        if (songs && songs.length > 0) {
-          console.log("🔍 getUserSetlists: First song data:", {
-            id: songs[0].id,
-            content_id: songs[0].content_id,
-            content: songs[0].content,
-            title: songs[0].content?.title,
-            artist: songs[0].content?.artist
-          })
-        }
-
-        // Format the songs to match the expected structure
-        const formattedSongs = songs.map((song: any) => {
-          const formattedSong = {
-            id: song.id,
-            setlist_id: song.setlist_id,
-            content_id: song.content_id,
-            position: song.position,
-            notes: song.notes,
-            content: {
-              id: song.content?.id || song.content_id,
-              title: song.content?.title || "Unknown Title",
-              artist: song.content?.artist || "Unknown Artist",
-              content_type: song.content?.content_type || "Unknown Type",
-              key: song.content?.key || null,
-              bpm: song.content?.bpm || null,
-              file_url: song.content?.file_url || null,
-              content_data: song.content?.content_data || null,
-            },
-          }
-          
-          // Log when we're falling back to "Unknown"
-          if (!song.content?.title) {
-            console.log("🔍 getUserSetlists: Missing title for song:", song.content_id, "content data:", song.content)
-          }
-          if (!song.content?.artist) {
-            console.log("🔍 getUserSetlists: Missing artist for song:", song.content_id, "content data:", song.content)
-          }
-          
-          return formattedSong
-        })
-
-        return { ...setlist, setlist_songs: formattedSongs }
-      }),
-    )
-
-    console.log("🔍 getUserSetlists: Returning", setlistsWithSongs.length, "setlists with songs")
-    return setlistsWithSongs
+    const setlists = await response.json()
+    console.log("🔍 getUserSetlists: Returning", setlists.length, "setlists with songs")
+    return setlists
   } catch (error) {
     console.error("🔍 getUserSetlists: Error:", error)
     logger.error("Error in getUserSetlists:", error)
@@ -158,7 +86,6 @@ export async function getUserSetlists(providedUser?: any) {
 
 export async function getSetlistById(id: string) {
   try {
-
     const supabase = getSupabaseBrowserClient()
 
     const user = getAuthenticatedUser()
@@ -179,28 +106,10 @@ export async function getSetlistById(id: string) {
       throw setlistError
     }
 
-    // Get the songs for this setlist
-    const { data: songs, error: songsError } = await supabase
+    // Get the setlist_songs using the same robust approach
+    const { data: setlistSongs, error: songsError } = await supabase
       .from("setlist_songs")
-      .select(
-        `
-        id,
-        setlist_id,
-        content_id,
-        position,
-        notes,
-        content:content_id (
-          id,
-          title,
-          artist,
-          content_type,
-          key,
-          bpm,
-          file_url,
-          content_data
-        )
-      `,
-      )
+      .select("id, setlist_id, content_id, position, notes")
       .eq("setlist_id", id)
       .order("position", { ascending: true })
 
@@ -209,24 +118,59 @@ export async function getSetlistById(id: string) {
       return { ...setlist, setlist_songs: [] }
     }
 
-    // Format the songs to match the expected structure
-    const formattedSongs = songs.map((song: any) => ({
-      id: song.id,
-      setlist_id: song.setlist_id,
-      content_id: song.content_id,
-      position: song.position,
-      notes: song.notes,
-      content: {
-        id: song.content?.id || song.content_id,
-        title: song.content?.title || "Unknown Title",
-        artist: song.content?.artist || "Unknown Artist",
-        content_type: song.content?.content_type || "Unknown Type",
-        key: song.content?.key || null,
-        bpm: song.content?.bpm || null,
-        file_url: song.content?.file_url || null,
-        content_data: song.content?.content_data || null,
-      },
-    }))
+    if (!setlistSongs || setlistSongs.length === 0) {
+      return { ...setlist, setlist_songs: [] }
+    }
+
+    // Get all unique content IDs
+    const contentIds = [...new Set(setlistSongs.map((song: SetlistSong) => song.content_id))]
+
+    // Fetch content separately to avoid RLS issues with joins
+    const { data: contentData, error: contentError } = await supabase
+      .from("content")
+      .select("id, title, artist, content_type, key, bpm, file_url, content_data")
+      .in("id", contentIds)
+      .eq("user_id", user.id)
+
+    if (contentError) {
+      logger.error(`Error fetching content for setlist ${id}:`, contentError)
+      // Continue with empty content rather than failing completely
+    }
+
+    // Create a map of content by ID for efficient lookup
+    const contentMap = new Map<string, any>()
+    if (contentData) {
+      contentData.forEach((content: any) => {
+        contentMap.set(content.id, content)
+      })
+    }
+
+    // Format the songs with proper content data
+    const formattedSongs = setlistSongs.map((song: SetlistSong) => {
+      const content = contentMap.get(song.content_id)
+      
+      if (!content) {
+        logger.warn(`Missing content for setlist song: ${song.content_id}`)
+      }
+
+      return {
+        id: song.id,
+        setlist_id: song.setlist_id,
+        content_id: song.content_id,
+        position: song.position,
+        notes: song.notes,
+        content: {
+          id: content?.id || song.content_id,
+          title: content?.title || "Unknown Title",
+          artist: content?.artist || "Unknown Artist",
+          content_type: content?.content_type || "Unknown Type",
+          key: content?.key || null,
+          bpm: content?.bpm || null,
+          file_url: content?.file_url || null,
+          content_data: content?.content_data || null,
+        },
+      }
+    })
 
     return { ...setlist, setlist_songs: formattedSongs }
   } catch (error) {
@@ -235,34 +179,57 @@ export async function getSetlistById(id: string) {
   }
 }
 
-export async function createSetlist(setlist: { name: string; description?: string }) {
+export async function createSetlist(setlist: { 
+  name: string; 
+  description?: string | null; 
+  performance_date?: string | null; 
+  venue?: string | null; 
+  notes?: string | null; 
+  user_id?: string;
+}) {
   try {
-
-
-    const supabase = getSupabaseBrowserClient()
-
     // Check if user is authenticated
     const user = getAuthenticatedUser()
     if (!user) {
       throw new Error("User not authenticated")
     }
 
-    // Create the setlist
-    const { data, error } = await supabase
-      .from("setlists")
-      .insert({
-        ...setlist,
-        user_id: user.id,
-      })
-      .select()
-      .single()
+    // Get Firebase ID token from the auth object
+    const { auth } = await import("@/lib/firebase")
+    if (!auth) {
+      throw new Error("Firebase auth not initialized")
+    }
+    
+    const firebaseUser = auth.currentUser
+    if (!firebaseUser) {
+      throw new Error("Firebase user not found")
+    }
+    
+    const idToken = await firebaseUser.getIdToken()
 
-    if (error) {
-      logger.error("Error creating setlist:", error)
-      throw error
+    // Create the setlist via API
+    const response = await fetch('/api/setlists', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${idToken}`,
+      },
+      body: JSON.stringify({
+        name: setlist.name,
+        description: setlist.description || null,
+        performance_date: setlist.performance_date || null,
+        venue: setlist.venue || null,
+        notes: setlist.notes || null,
+      }),
+    })
+
+    if (!response.ok) {
+      const errorData = await response.json()
+      throw new Error(errorData.error || 'Failed to create setlist')
     }
 
-    return { ...data, setlist_songs: [] }
+    const data = await response.json()
+    return data
   } catch (error) {
     logger.error("Error in createSetlist:", error)
     throw error
@@ -387,90 +354,45 @@ export async function deleteSetlist(id: string) {
 
 export async function addSongToSetlist(setlistId: string, contentId: string, position: number, notes = "") {
   try {
-
-    const supabase = getSupabaseBrowserClient()
-
     // Check if user is authenticated
     const user = getAuthenticatedUser()
     if (!user) {
       throw new Error("User not authenticated")
     }
 
-    // Verify the setlist belongs to the user
-    const { data: setlist, error: setlistError } = await supabase
-      .from("setlists")
-      .select("id")
-      .eq("id", setlistId)
-      .eq("user_id", user.id)
-      .single()
-
-    if (setlistError) {
-      logger.error("Error verifying setlist ownership:", setlistError)
-      throw setlistError
+    // Get Firebase ID token
+    const { auth } = await import("@/lib/firebase")
+    if (!auth) {
+      throw new Error("Firebase auth not initialized")
     }
-
-    // Use a different approach to avoid constraint violations
-    // First, shift all positions to a higher range (add 1000 to avoid conflicts)
-    const { data: songsToShift, error: fetchError } = await supabase
-      .from("setlist_songs")
-      .select("id, position")
-      .eq("setlist_id", setlistId)
-      .gte("position", position)
-      .order("position", { ascending: true })
-
-    if (fetchError) {
-      logger.error("Error fetching songs to shift:", fetchError)
-      throw fetchError
+    
+    const firebaseUser = auth.currentUser
+    if (!firebaseUser) {
+      throw new Error("Firebase user not found")
     }
+    
+    const idToken = await firebaseUser.getIdToken()
 
-    // Shift to temporary high positions in a single query
-    if (songsToShift.length > 0) {
-      const { error: tempShiftError } = await supabase
-        .from("setlist_songs")
-        .upsert(
-          songsToShift.map((s: any) => ({ id: s.id, position: s.position + 1000 })),
-          { onConflict: "id" },
-        )
-
-      if (tempShiftError) {
-        logger.error("Error temp shifting song positions:", tempShiftError)
-        throw tempShiftError
-      }
-    }
-
-    // Add the new song at the desired position
-    const { data: song, error: songError } = await supabase
-      .from("setlist_songs")
-      .insert({
-        setlist_id: setlistId,
-        content_id: contentId,
+    // Add song to setlist via API
+    const response = await fetch(`/api/setlists/${setlistId}/songs`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${idToken}`,
+      },
+      body: JSON.stringify({
+        contentId,
         position,
         notes,
-      })
-      .select()
-      .single()
+      }),
+    })
 
-    if (songError) {
-      logger.error("Error adding song to setlist:", songError)
-      throw songError
+    if (!response.ok) {
+      const errorData = await response.json()
+      throw new Error(errorData.error || 'Failed to add song to setlist')
     }
 
-    // Now shift the temporarily moved songs back to their correct positions
-    if (songsToShift.length > 0) {
-      const { error: finalShiftError } = await supabase
-        .from("setlist_songs")
-        .upsert(
-          songsToShift.map((s: any) => ({ id: s.id, position: s.position + 1 })),
-          { onConflict: "id" },
-        )
-
-      if (finalShiftError) {
-        logger.error("Error final shifting song positions:", finalShiftError)
-        throw finalShiftError
-      }
-    }
-
-    // No need to fetch content details here; client will reload setlist and content from API
+    const song = await response.json()
     return song
   } catch (error) {
     logger.error("Error in addSongToSetlist:", error)
@@ -480,78 +402,36 @@ export async function addSongToSetlist(setlistId: string, contentId: string, pos
 
 export async function removeSongFromSetlist(songId: string) {
   try {
-
-
-    const supabase = getSupabaseBrowserClient()
-
     // Check if user is authenticated
     const user = getAuthenticatedUser()
     if (!user) {
       throw new Error("User not authenticated")
     }
 
-    // Get the song details including setlist_id
-    const { data: song, error: songError } = await supabase
-      .from("setlist_songs")
-      .select(`
-        id,
-        position,
-        setlist_id,
-        setlists!inner (
-          id,
-          user_id
-        )
-      `)
-      .eq("id", songId)
-      .single()
-
-    if (songError) {
-      logger.error("Error getting song details:", songError)
-      throw songError
+    // Get Firebase ID token
+    const { auth } = await import("@/lib/firebase")
+    if (!auth) {
+      throw new Error("Firebase auth not initialized")
     }
-
-    // Verify the setlist belongs to the user
-    if (song.setlists.user_id !== user.id) {
-      throw new Error("Unauthorized: Setlist does not belong to user")
+    
+    const firebaseUser = auth.currentUser
+    if (!firebaseUser) {
+      throw new Error("Firebase user not found")
     }
+    
+    const idToken = await firebaseUser.getIdToken()
 
-    const setlistId = song.setlist_id
-    const songPosition = song.position
+    // Remove song from setlist via API
+    const response = await fetch(`/api/setlists/songs/${songId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${idToken}`,
+      },
+    })
 
-    // Remove the song
-    const { error: removeError } = await supabase.from("setlist_songs").delete().eq("id", songId)
-
-    if (removeError) {
-      logger.error("Error removing song from setlist:", removeError)
-      throw removeError
-    }
-
-    // Get all songs with position > the removed song's position
-    const { data: songsToShift, error: fetchError } = await supabase
-      .from("setlist_songs")
-      .select("id, position")
-      .eq("setlist_id", setlistId)
-      .gt("position", songPosition)
-      .order("position", { ascending: true })
-
-    if (fetchError) {
-      logger.error("Error fetching songs to shift:", fetchError)
-      throw fetchError
-    }
-
-    // Shift positions of remaining songs using individual updates
-    if (songsToShift.length > 0) {
-      for (const song of songsToShift) {
-        const { error: updateError } = await supabase
-          .from("setlist_songs")
-          .update({ position: song.position - 1 })
-          .eq("id", song.id)
-
-        if (updateError) {
-          logger.error("Error shifting song position:", updateError)
-          throw updateError
-        }
-      }
+    if (!response.ok) {
+      const errorData = await response.json()
+      throw new Error(errorData.error || 'Failed to remove song from setlist')
     }
 
     return true

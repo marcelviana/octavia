@@ -33,3 +33,15 @@ CREATE POLICY "User owns setlist songs" ON setlist_songs
   );
 CREATE POLICY "Service role access to setlist songs" ON setlist_songs
   FOR ALL USING (auth.role() = 'service_role');
+
+-- Additional policy to allow content access when referenced in user's setlists
+CREATE POLICY "User can read content referenced in setlists" ON content
+  FOR SELECT USING (
+    user_id = auth.jwt()->> 'uid' OR
+    EXISTS (
+      SELECT 1 FROM setlist_songs 
+      JOIN setlists ON setlists.id = setlist_songs.setlist_id
+      WHERE setlist_songs.content_id = content.id 
+      AND setlists.user_id = auth.jwt()->> 'uid'
+    )
+  );

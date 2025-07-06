@@ -283,24 +283,54 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
         currentMaxPosition
       })
 
-      // Add songs to setlist one by one
+      // Add songs to setlist one by one and update the selected setlist immediately
+      let updatedSetlist = { ...selectedSetlist }
+      
       for (let i = 0; i < selectedSongsToAdd.length; i++) {
         const songId = selectedSongsToAdd[i]
         const position = currentMaxPosition + i + 1
         
         console.log("🔍 Adding song:", { songId, position })
-        await addSongToSetlist(selectedSetlist.id, songId, position)
+        const addedSong = await addSongToSetlist(selectedSetlist.id, songId, position)
+        
+        // Find the content for this song
+        const content = availableContent.find(c => c.id === songId)
+        if (content && addedSong) {
+          // Add the song to the selected setlist immediately
+          const newSetlistSong = {
+            id: addedSong.id,
+            position: addedSong.position,
+            notes: addedSong.notes,
+            content: content
+          }
+          
+          updatedSetlist = {
+            ...updatedSetlist,
+            setlist_songs: [...(updatedSetlist.setlist_songs || []), newSetlistSong]
+          }
+        }
       }
 
-      console.log("🔍 Successfully added all songs, reloading data...")
+      // Update the selected setlist immediately
+      setSelectedSetlist(updatedSetlist)
+      
+      // Update the main setlists array as well
+      const updatedSetlists = setlists.map(setlist => 
+        setlist.id === selectedSetlist.id ? updatedSetlist : setlist
+      )
+      setSetlists(updatedSetlists)
+
+      console.log("🔍 Successfully added all songs, updated UI immediately")
 
       // Close dialog and reset selection after successful addition
       setIsAddSongsDialogOpen(false)
       setSelectedSongsToAdd([])
       setSongFilter("")
 
-      // Reload data using the hook's reload function
-      await reload()
+      // Reload data in the background to ensure everything is in sync
+      setTimeout(() => {
+        reload().catch(err => console.warn('Background reload failed:', err))
+      }, 1000)
 
     } catch (err) {
       console.error("Error adding songs to setlist:", err)
@@ -455,6 +485,11 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
       // The setlist song content should have an id property
       return setlistSong.content?.id === content.id
     })
+    
+    // Debug logging
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`🔍 Filtering song ${content.title}: isInSetlist = ${isInSetlist}`)
+    }
     
     return !isInSetlist
   })
