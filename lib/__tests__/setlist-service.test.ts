@@ -43,7 +43,8 @@ describe('Setlist Service', () => {
       auth: {
         currentUser: {
           uid: 'test-user-id',
-          email: 'test@example.com'
+          email: 'test@example.com',
+          getIdToken: vi.fn().mockResolvedValue('mock-token')
         }
       }
     }))

@@ -42,7 +42,8 @@ describe('Setlist Integration Tests', () => {
       auth: {
         currentUser: {
           uid: 'integration-test-user',
-          email: 'test@integration.com'
+          email: 'test@integration.com',
+          getIdToken: vi.fn().mockResolvedValue('mock-token')
         }
       }
     }))
