@@ -88,6 +88,25 @@ const config: Config = {
     },
   },
   plugins: [require("tailwindcss-animate")],
+  safelist: [
+    // Ensure all content type colors are included in build
+    'text-purple-600', 'text-purple-500',
+    'border-purple-200', 'bg-purple-50',
+    'hover:bg-purple-50', 'hover:border-purple-200',
+    'ring-purple-500',
+    'text-green-600', 'text-green-500',
+    'border-green-200', 'bg-green-50',
+    'hover:bg-green-50', 'hover:border-green-200',
+    'ring-green-500',
+    'text-blue-600', 'text-blue-500',
+    'border-blue-200', 'bg-blue-50',
+    'hover:bg-blue-50', 'hover:border-blue-200',
+    'ring-blue-500',
+    'text-orange-600', 'text-orange-500',
+    'border-orange-200', 'bg-orange-50',
+    'hover:bg-orange-50', 'hover:border-orange-200',
+    'ring-orange-500',
+  ],
 } satisfies Config
 
 export default config

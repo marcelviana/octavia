@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { getContentTypeColors } from "@/types/content";
 
 interface Props {
   content: any[];
@@ -87,9 +88,14 @@ export function LibraryList({
                 <div className="flex items-start gap-3">
                   {/* Icon */}
                   <div className="flex-shrink-0">
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center bg-gray-50 border-gray-200 border">
-                      {getContentIcon(item.content_type)}
-                    </div>
+                    {(() => {
+                      const colors = getContentTypeColors(item.content_type);
+                      return (
+                        <div className={`w-10 h-10 rounded-full flex items-center justify-center ${colors.bg} ${colors.border} border`}>
+                          {getContentIcon(item.content_type)}
+                        </div>
+                      );
+                    })()}
                   </div>
 
                   {/* Content Info */}
