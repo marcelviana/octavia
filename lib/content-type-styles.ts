@@ -1,4 +1,4 @@
-import { ContentType } from "@/types/content"
+import { ContentType, normalizeContentType } from "@/types/content"
 
 export interface ContentTypeStyle {
   ring: string
@@ -8,7 +8,8 @@ export interface ContentTypeStyle {
 }
 
 export function getContentTypeStyle(type: string): ContentTypeStyle {
-  switch (type) {
+  const t = normalizeContentType(type)
+  switch (t) {
     case ContentType.LYRICS:
       return {
         ring: "ring-green-500",

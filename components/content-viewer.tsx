@@ -44,7 +44,7 @@ import { deleteContent, clearContentCache } from "@/lib/content-service";
 import { MusicText } from "@/components/music-text";
 import Image from "next/image";
 import PdfViewer from "@/components/pdf-viewer";
-import { ContentType, getContentTypeIcon } from "@/types/content";
+import { ContentType, getContentTypeIcon, normalizeContentType } from "@/types/content";
 import { getContentTypeStyle } from "@/lib/content-type-styles";
 import { toast } from "sonner";
 
@@ -92,7 +92,8 @@ export function ContentViewer({
   const styles = getContentTypeStyle(content.content_type);
 
   const getHeaderGradient = (type: string) => {
-    switch (type) {
+    const t = normalizeContentType(type)
+    switch (t) {
       case ContentType.LYRICS:
         return "from-green-500 to-green-600";
       case ContentType.TAB:
@@ -332,7 +333,7 @@ export function ContentViewer({
                   {/* Content Based on Type */}
                   <div className="space-y-6">
                     {/* Sheet Music Content */}
-                    {content.content_type === ContentType.SHEET && (
+                    {normalizeContentType(content.content_type) === ContentType.SHEET && (
                       <div className="space-y-6">
                         <h3 className="text-lg font-semibold">Sheet Music</h3>
                         {/* Loading spinner while fetching offlineUrl */}
@@ -407,7 +408,7 @@ export function ContentViewer({
                     )}
 
                     {/* Guitar Tab Content */}
-                    {content.content_type === ContentType.TAB && (
+                    {normalizeContentType(content.content_type) === ContentType.TAB && (
                       <div className="space-y-6">
                         <h3 className="text-lg font-semibold">Tablature</h3>
                         {Array.isArray(content.content_data?.tablature) ? (
@@ -488,7 +489,7 @@ export function ContentViewer({
                     )}
 
                     {/* Chord Chart Content */}
-                    {content.content_type === ContentType.CHORDS && (
+                    {normalizeContentType(content.content_type) === ContentType.CHORDS && (
                       <div className="space-y-6">
                         <h3 className="text-lg font-semibold">
                           Chord Chart
@@ -591,7 +592,7 @@ export function ContentViewer({
                     )}
 
                     {/* Lyrics Content */}
-                    {content.content_type === ContentType.LYRICS && (
+                    {normalizeContentType(content.content_type) === ContentType.LYRICS && (
                       <div className="space-y-6">
                         <h3 className="text-lg font-semibold">Lyrics</h3>
 

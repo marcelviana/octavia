@@ -6,7 +6,7 @@ import { TabEditor } from "@/components/tab-editor"
 import { AnnotationTools } from "@/components/annotation-tools"
 import PdfViewer from "@/components/pdf-viewer"
 import Image from "next/image"
-import { ContentType } from "@/types/content"
+import { ContentType, normalizeContentType } from "@/types/content"
 
 interface ContentTypeEditorProps {
   content: any
@@ -24,7 +24,9 @@ export function ContentTypeEditor({ content, onChange }: ContentTypeEditorProps)
     })
   }
 
-  switch (content.content_type) {
+  const type = normalizeContentType(content.content_type)
+
+  switch (type) {
     case ContentType.CHORDS:
       return (
         <ChordEditor

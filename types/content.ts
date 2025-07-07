@@ -117,7 +117,7 @@ export function getContentTypeColors(contentType: ContentType | string) {
  * Normalize content type strings to ContentType enum values
  * Handles legacy formats like "Guitar Tab", "Chord Chart", etc.
  */
-function normalizeContentType(contentType: ContentType | string): ContentType {
+export function normalizeContentType(contentType: ContentType | string): ContentType {
   if (Object.values(ContentType).includes(contentType as ContentType)) {
     return contentType as ContentType
   }
