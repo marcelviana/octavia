@@ -69,22 +69,6 @@ export async function getValidToken(): Promise<TokenResult> {
 }
 
 export async function debugAuthConfig(): Promise<void> {
-  if (process.env.NODE_ENV !== 'development') return;
-  
-  console.log('🔍 Auth Configuration Debug:');
-  console.log('- Firebase configured:', isFirebaseConfigured);
-  console.log('- Supabase configured:', isSupabaseConfigured);
-  console.log('- Supabase service configured:', isSupabaseServiceConfigured);
-  
-  if (typeof window !== 'undefined') {
-    try {
-      const { auth, isFirebaseConfigured: dynamicCheck } = await import('./firebase');
-      console.log('- Firebase dynamic check:', dynamicCheck);
-      console.log('- Firebase auth instance:', !!auth);
-      console.log('- Current user:', !!auth?.currentUser);
-      console.log('- User email:', auth?.currentUser?.email || 'Not authenticated');
-    } catch (err) {
-      console.log('- Firebase import error:', err);
-    }
-  }
+  // Debug function removed to clean up console output
+  return;
 }

@@ -27,18 +27,13 @@ export default function EditContentPage() {
 
     const loadContent = async (contentId: string) => {
       try {
-        if (process.env.NODE_ENV === "development") {
-          console.log("🔍 EditContentPage: Loading content with ID:", contentId);
-          console.log("🔍 EditContentPage: User:", user?.email || "No user");
-        }
+
         
         if (mounted) setContentLoading(true)
         if (mounted) setContentError(null)
         const data = await getContentById(contentId)
         
-        if (process.env.NODE_ENV === "development") {
-          console.log("🔍 EditContentPage: Content loaded successfully:", data?.title || "No title");
-        }
+
         
         if (mounted) setContent(data)
       } catch (err) {
@@ -52,12 +47,7 @@ export default function EditContentPage() {
     if (params.id && user) {
       loadContent(params.id as string)
     } else {
-      if (process.env.NODE_ENV === "development") {
-        console.log("🔍 EditContentPage: Not loading content - missing params or user:", {
-          hasParams: !!params.id,
-          hasUser: !!user
-        });
-      }
+
     }
 
     return () => {

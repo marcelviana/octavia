@@ -86,42 +86,6 @@ export function Library({
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [contentToDelete, setContentToDelete] = useState<any>(null);
 
-  // Track auth state, but avoid verbose logging in production
-  useEffect(() => {
-    if (process.env.NODE_ENV === "development") {
-      console.log("🔍 Library: Auth state changed", {
-        user: user
-          ? {
-              uid: user.uid,
-              email: user.email,
-              emailVerified: user.emailVerified,
-            }
-          : null,
-        isLoading: authLoading,
-      });
-    }
-  }, [user, authLoading]);
-
-  // Log initial props only during development
-  useEffect(() => {
-    if (process.env.NODE_ENV === "development") {
-      console.log("🔍 Library: Component mounted with props", {
-        initialContentLength: initialContent.length,
-        initialTotal,
-        initialPage,
-        initialPageSize,
-        initialSearch,
-        firstItem: initialContent[0]?.title || "N/A",
-      });
-    }
-  }, [
-    initialContent,
-    initialTotal,
-    initialPage,
-    initialPageSize,
-    initialSearch,
-  ]);
-
   const {
     content,
     totalCount,
@@ -145,19 +109,6 @@ export function Library({
     initialPageSize: 20, // Fixed page size
     initialSearch,
   });
-
-  // Log content state updates during development
-  useEffect(() => {
-    if (process.env.NODE_ENV === "development") {
-      console.log("🔍 Library: Content state changed", {
-        contentLength: content.length,
-        totalCount,
-        loading,
-        hasInitialContent: initialContent.length,
-        firstItem: content[0]?.title || "N/A",
-      });
-    }
-  }, [content, totalCount, loading, initialContent.length]);
 
   const totalPages = Math.ceil(totalCount / pageSize);
 
@@ -191,23 +142,6 @@ export function Library({
 
   const confirmDelete = async () => {
     if (!contentToDelete || !user) return;
-
-    // Debug logging in development
-    if (process.env.NODE_ENV === "development") {
-      console.log("🔍 Delete operation starting:", {
-        contentId: contentToDelete.id,
-        contentTitle: contentToDelete.title,
-        userEmail: user.email,
-      });
-      
-      // Debug auth configuration
-      try {
-        const { debugAuthConfig } = await import("@/lib/auth-manager");
-        await debugAuthConfig();
-      } catch (err) {
-        console.warn("Failed to debug auth config:", err);
-      }
-    }
 
     try {
       await deleteContent(contentToDelete.id);

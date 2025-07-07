@@ -277,11 +277,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
       
       const currentMaxPosition = selectedSetlist.setlist_songs?.length || 0
 
-      console.log("🔍 Adding songs to setlist:", {
-        setlistId: selectedSetlist.id,
-        songsToAdd: selectedSongsToAdd,
-        currentMaxPosition
-      })
+
 
       // Add songs to setlist one by one and update the selected setlist immediately
       let updatedSetlist = { ...selectedSetlist }
@@ -290,7 +286,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
         const songId = selectedSongsToAdd[i]
         const position = currentMaxPosition + i + 1
         
-        console.log("🔍 Adding song:", { songId, position })
+
         const addedSong = await addSongToSetlist(selectedSetlist.id, songId, position)
         
         // Find the content for this song
@@ -320,7 +316,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
       )
       setSetlists(updatedSetlists)
 
-      console.log("🔍 Successfully added all songs, updated UI immediately")
+
 
       // Close dialog and reset selection after successful addition
       setIsAddSongsDialogOpen(false)
@@ -343,7 +339,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
     if (!user || !selectedSetlist) return
 
     try {
-      console.log("🔍 Removing song from setlist:", { setlistSongId, setlistId: selectedSetlist.id })
+
 
       // Optimistically update UI first for immediate feedback
       const updatedSongs = selectedSetlist.setlist_songs.filter((s) => s.id !== setlistSongId)
@@ -359,7 +355,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
       // Then perform the backend update
       await removeSongFromSetlist(setlistSongId)
 
-      console.log("🔍 Successfully removed song, reloading data...")
+
 
       // Reload data using the hook's reload function
       await reload()
@@ -486,10 +482,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
       return setlistSong.content?.id === content.id
     })
     
-    // Debug logging
-    if (process.env.NODE_ENV === 'development') {
-      console.log(`🔍 Filtering song ${content.title}: isInSetlist = ${isInSetlist}`)
-    }
+
     
     return !isInSetlist
   })

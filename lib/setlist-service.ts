@@ -7,13 +7,11 @@ import type { Database } from "@/types/supabase"
 function getAuthenticatedUser() {
   try {
     if (auth && auth.currentUser) {
-      console.log("🔍 getAuthenticatedUser: Firebase user found:", auth.currentUser.email)
       return { id: auth.currentUser.uid, email: auth.currentUser.email }
     }
-    console.log("🔍 getAuthenticatedUser: No Firebase user found")
     return null
   } catch (error) {
-    console.error("🔍 getAuthenticatedUser: Error getting Firebase user:", error)
+    console.error("getAuthenticatedUser: Error getting Firebase user:", error)
     return null
   }
 }
@@ -26,24 +24,16 @@ type SetlistSongInsert = Database["public"]["Tables"]["setlist_songs"]["Insert"]
 
 export async function getUserSetlists(providedUser?: any) {
   try {
-    console.log("🔍 getUserSetlists: Starting...")
-
     // Use provided user or check authentication
     let user = providedUser
     if (!user) {
-      console.log("🔍 getUserSetlists: Checking authentication...")
       user = getAuthenticatedUser()
-    } else {
-      console.log("🔍 getUserSetlists: Using provided user:", user.email)
     }
     
     if (!user) {
-      console.log("🔍 getUserSetlists: User not authenticated, returning empty setlists")
       logger.log("User not authenticated, returning empty setlists")
       return []
     }
-
-    console.log("🔍 getUserSetlists: Fetching setlists for user:", user.id)
 
     // Get Firebase ID token
     const { auth } = await import("@/lib/firebase")
@@ -68,16 +58,13 @@ export async function getUserSetlists(providedUser?: any) {
 
     if (!response.ok) {
       const errorData = await response.json()
-      console.error("🔍 getUserSetlists: API error:", errorData)
       logger.error("Error fetching setlists:", errorData)
       return []
     }
 
     const setlists = await response.json()
-    console.log("🔍 getUserSetlists: Returning", setlists.length, "setlists with songs")
     return setlists
   } catch (error) {
-    console.error("🔍 getUserSetlists: Error:", error)
     logger.error("Error in getUserSetlists:", error)
     return []
   }

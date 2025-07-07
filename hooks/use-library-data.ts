@@ -57,7 +57,6 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
   useEffect(() => {
     const urlSearch = searchParams.get('search') || ''
     if (urlSearch !== searchQuery) {
-      console.log('🔍 useLibraryData: Syncing search from URL', { urlSearch, currentSearch: searchQuery })
       setSearchQuery(urlSearch)
     }
   }, [searchParams, searchQuery])
@@ -84,36 +83,8 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
   // Track if we need to refresh on the next load (e.g., after returning from navigation)
   const needsRefreshRef = useRef(false)
 
-  // Debug logging for state initialization
-  useEffect(() => {
-    console.log('🔍 useLibraryData: State initialized', {
-      initialContentLength: initialContent.length,
-      contentLength: content.length,
-      initialTotal,
-      totalCount,
-      ready,
-      hasUser: !!user,
-      userUid: user?.uid
-    });
-  }, []) // Only run once on mount
-
-  // Debug logging for content state changes
-  useEffect(() => {
-    console.log('🔍 useLibraryData: Content state changed', {
-      contentLength: content.length,
-      totalCount,
-      loading,
-      firstItem: content[0]?.title || 'N/A'
-    });
-  }, [content, totalCount, loading])
-
   const load = useCallback(async (forceRefresh = false) => {
     if (!user || inProgressRef.current) {
-      console.log('🔍 useLibraryData.load: Skipping load', { 
-        hasUser: !!user, 
-        userUid: user?.uid,
-        inProgress: inProgressRef.current 
-      })
       return
     }
     inProgressRef.current = true
@@ -123,17 +94,9 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
       // Ensure we have a valid user with proper authentication
       const userForQuery = user && user.uid ? { id: user.uid, email: user.email } : null
       if (!userForQuery) {
-        console.warn('🔍 useLibraryData.load: No valid user found for content query')
+        console.warn('useLibraryData.load: No valid user found for content query')
         return
       }
-      
-      console.log('🔍 useLibraryData.load: Starting query', {
-        userId: userForQuery.id,
-        userEmail: userForQuery.email,
-        forceRefresh,
-        page,
-        pageSize
-      })
       
       const result = await getUserContentPage({
         page,
@@ -144,20 +107,10 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
         useCache: !forceRefresh,
       }, undefined, userForQuery)
 
-      console.log('🔍 useLibraryData.load: Query completed', {
-        dataLength: result.data?.length || 0,
-        total: result.total,
-        requestedPage: page,
-        returnedPage: result.page,
-        totalPages: result.totalPages,
-        hasData: !!(result.data && result.data.length > 0)
-      })
-
       // Handle different scenarios for empty results
       if (result.data.length === 0) {
         if (result.total === 0) {
           // No data at all - this is fine, just show empty state
-          console.log('🔍 useLibraryData.load: No data in database, showing empty state')
           setContent([])
           setTotalCount(0)
           // Reset to page 1 if we're on a higher page with no data
@@ -167,39 +120,27 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
           return
         } else if (result.total > 0 && page > result.totalPages) {
           // Requested page beyond available pages
-          console.log('🔍 useLibraryData.load: Requested page out of bounds, adjusting to last page')
           const lastPage = Math.max(1, result.totalPages)
           setPage(lastPage)
           return
         } else if (result.total > 0 && page > 1) {
           // Has data but current page is empty (shouldn't happen with proper pagination)
-          console.log('🔍 useLibraryData.load: Empty data but total > 0, adjusting to page 1')
           setPage(1)
           return
         }
       }
 
-      console.log('🔍 useLibraryData.load: About to set content', {
-        dataIsArray: Array.isArray(result.data),
-        dataLength: result.data?.length || 0,
-        dataFirstItem: result.data?.[0]?.title || 'N/A',
-        willSetEmptyArray: !(result.data && result.data.length > 0)
-      })
-
       setContent(result.data || [])
       setTotalCount(result.total || 0)
-      
-      console.log('🔍 useLibraryData.load: Content set successfully')
       
       if (result.data && result.data.length > 0) {
         try { await saveContent(result.data) } catch {}
       }
     } catch (err) {
-      console.error('🔍 useLibraryData.load: Error loading library data:', err)
+      console.error('useLibraryData.load: Error loading library data:', err)
       
       // Check if this is a pagination error (offset out of range)
       if (err && typeof err === 'object' && 'code' in err && err.code === 'PGRST103') {
-        console.log('🔍 useLibraryData.load: Pagination offset error, resetting to page 1')
         setPage(1)
         return
       }
@@ -209,13 +150,11 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
       if (!forceRefresh || content.length === 0) {
         try {
           const cached = await getCachedContent()
-          console.log('🔍 useLibraryData.load: Using cached content', { cachedLength: cached.length })
           setContent(cached)
           setTotalCount(cached.length)
         } catch {
           // Only clear content if we have no fallback and no existing content
           if (content.length === 0) {
-            console.log('🔍 useLibraryData.load: Clearing content due to no fallback')
             setContent([])
             setTotalCount(0)
           }
@@ -234,7 +173,6 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
       // Always refresh data when the component is ready and we have a user
       // This ensures we get the latest data from the server, preventing deleted
       // items from reappearing due to stale server-rendered content
-      console.log('🔍 useLibraryData: Component ready, loading fresh data...')
       
       // Use a small delay to ensure Firebase Auth is fully initialized
       const timeoutId = setTimeout(() => {
@@ -257,7 +195,6 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
     if (ready && user && user.uid) {
       // Always reload if we need a refresh (e.g., returning from navigation)
       if (needsRefreshRef.current) {
-        console.log('🔍 useLibraryData: Force reloading due to refresh flag')
         needsRefreshRef.current = false
         load(true) // Force refresh
         return
@@ -276,13 +213,6 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
         hasNavigatedAwayRef.current = true
       }
       
-      console.log('🔍 useLibraryData: Reloading due to parameter change', {
-        page,
-        pageSize,
-        debouncedSearch,
-        sortBy,
-        selectedFilters
-      })
       load()
     }
   }, [ready, user, page, pageSize, debouncedSearch, sortBy, selectedFilters, load])
@@ -294,13 +224,11 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
       // Always mark for refresh when user returns to the page
       // This ensures deleted items don't reappear from stale data
       if (ready && user && user.uid) {
-        console.log('🔍 useLibraryData: Window focused, marking for refresh...')
         needsRefreshRef.current = true
         
         // Only refresh immediately if it's been more than 30 seconds since last focus
         // Otherwise, let the next effect cycle handle it
         if ((now - lastFocusTimeRef.current) > 30000) {
-          console.log('🔍 useLibraryData: Window focused after 30+ seconds, refreshing immediately...')
           load(true) // Force refresh to bypass cache
         }
       }

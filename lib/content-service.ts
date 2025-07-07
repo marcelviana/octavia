@@ -111,10 +111,6 @@ export async function getUserContent(
     let user = providedUser;
     if (!user) {
       user = await getAuthenticatedUser();
-    } else {
-      if (process.env.NODE_ENV === "development") {
-        console.log("🔍 getUserContent: Using provided user:", user.email);
-      }
     }
 
     if (!user) {
@@ -219,9 +215,6 @@ export async function getUserContentPage(
   try {
     // If we have a provided user (server-side), use the original Supabase query logic
     if (providedUser && supabase) {
-      if (process.env.NODE_ENV === "development") {
-        console.log("🔍 getUserContentPage: Using server-side Supabase query");
-      }
       return await getUserContentPageDirect(
         params,
         supabase,
@@ -231,14 +224,11 @@ export async function getUserContentPage(
     }
 
     // For client-side queries, use the API route to avoid RLS issues
-    if (process.env.NODE_ENV === "development") {
-      console.log("🔍 getUserContentPage: Using client-side API route");
-    }
 
     // Check authentication first
     const user = await getAuthenticatedUser();
     if (!user) {
-      console.warn("🔍 getUserContentPage: No authenticated user found");
+      console.warn("getUserContentPage: No authenticated user found");
       throw new Error("User not authenticated");
     }
 
@@ -269,13 +259,6 @@ export async function getUserContentPage(
       queryParams.set("key", filters.key.join(","));
     }
 
-    if (process.env.NODE_ENV === "development") {
-      console.log(
-        "🔍 getUserContentPage: Making API request with params:",
-        Object.fromEntries(queryParams),
-      );
-    }
-
     const response = await fetch(`/api/content?${queryParams.toString()}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -291,16 +274,6 @@ export async function getUserContentPage(
     }
 
     const result = await response.json();
-
-    if (process.env.NODE_ENV === "development") {
-      console.log("🔍 getUserContentPage: API response received", {
-        dataLength: result.data?.length || 0,
-        total: result.total,
-        page: result.page,
-        pageSize: result.pageSize,
-        hasData: !!(result.data && result.data.length > 0),
-      });
-    }
 
     // Cache successful results
     if (useCache && result.data?.length > 0) {
@@ -358,10 +331,6 @@ async function getUserContentPageDirect(
     sortBy = "recent",
     filters = {},
   } = params;
-
-  if (process.env.NODE_ENV === "development") {
-    console.log("🔍 getUserContentPageDirect: Starting server-side query");
-  }
 
   let query = supabase
     .from("content")
@@ -461,14 +430,6 @@ async function getUserContentPageDirect(
     totalPages,
   };
 
-  if (process.env.NODE_ENV === "development") {
-    console.log("🔍 getUserContentPageDirect: Server-side query completed", {
-      dataLength: result.data.length,
-      total: result.total,
-      page: result.page,
-    });
-  }
-
   return result;
 }
 
@@ -480,10 +441,6 @@ export async function getContentById(
   try {
     // If we have a provided user and supabase (server-side), use direct query
     if (providedUser && supabase) {
-      if (process.env.NODE_ENV === "development") {
-        console.log("🔍 getContentById: Using server-side Supabase query");
-      }
-      
       const { data, error } = await supabase
         .from("content")
         .select("*")
@@ -500,9 +457,6 @@ export async function getContentById(
     }
 
     // For client-side queries, use the API route
-    if (process.env.NODE_ENV === "development") {
-      console.log("🔍 getContentById: Using client-side API route");
-    }
 
     // Check authentication first
     const user = await getAuthenticatedUser();
@@ -577,10 +531,6 @@ export async function createContent(content: ContentInsert) {
 
 export async function updateContent(id: string, content: ContentUpdate) {
   try {
-    if (process.env.NODE_ENV === "development") {
-      console.log("🔍 updateContent: Using API route");
-    }
-
     const { getValidToken } = await import("@/lib/auth-manager");
     const { token, error: tokenError } = await getValidToken();
     if (!token) {
@@ -623,10 +573,6 @@ export async function updateContent(id: string, content: ContentUpdate) {
 
 export async function deleteContent(id: string) {
   try {
-    if (process.env.NODE_ENV === "development") {
-      console.log("🔍 deleteContent: Using API route");
-    }
-
       // Get Firebase auth token
       const { getValidToken } = await import("@/lib/auth-manager");
       const { token, error: tokenError } = await getValidToken();
@@ -684,10 +630,6 @@ export async function getUserStats(
     let user = providedUser;
     if (!user) {
       user = await getAuthenticatedUser();
-    } else {
-      if (process.env.NODE_ENV === "development") {
-        console.log("🔍 getUserStats: Using provided user:", user.email);
-      }
     }
 
     if (!user) {

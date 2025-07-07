@@ -42,19 +42,7 @@ export function LibraryList({
   getContentIcon,
   formatDate,
 }: Props) {
-  if (process.env.NODE_ENV === "development") {
-    console.log("🔍 LibraryList: Rendering with", {
-      contentLength: content.length,
-      loading,
-      contentArray: content,
-      firstItem: content[0]?.title || "N/A",
-    });
-  }
-
   if (content.length === 0) {
-    if (process.env.NODE_ENV === "development") {
-      console.log("🔍 LibraryList: Returning null due to empty content array");
-    }
     return null;
   }
 

@@ -12,18 +12,6 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || '',
 };
 
-// Debug logging to see what we actually have
-if (typeof window !== 'undefined') {
-  console.log('Firebase Config Values:', {
-    apiKey: firebaseConfig.apiKey ? firebaseConfig.apiKey.substring(0, 10) + '...' : 'EMPTY',
-    authDomain: firebaseConfig.authDomain || 'EMPTY',
-    projectId: firebaseConfig.projectId || 'EMPTY',
-    storageBucket: firebaseConfig.storageBucket || 'EMPTY',
-    messagingSenderId: firebaseConfig.messagingSenderId || 'EMPTY',
-    appId: firebaseConfig.appId || 'EMPTY',
-  });
-}
-
 export const isFirebaseConfigured = Boolean(
   firebaseConfig.apiKey &&
   firebaseConfig.authDomain &&
@@ -32,19 +20,6 @@ export const isFirebaseConfigured = Boolean(
   firebaseConfig.messagingSenderId &&
   firebaseConfig.appId
 );
-
-// Debug logging for Firebase configuration
-if (typeof window !== 'undefined') {
-  logger.log('Firebase Config Check:', {
-    apiKey: firebaseConfig.apiKey ? 'SET' : 'MISSING',
-    authDomain: firebaseConfig.authDomain ? 'SET' : 'MISSING',
-    projectId: firebaseConfig.projectId ? 'SET' : 'MISSING',
-    storageBucket: firebaseConfig.storageBucket ? 'SET' : 'MISSING',
-    messagingSenderId: firebaseConfig.messagingSenderId ? 'SET' : 'MISSING',
-    appId: firebaseConfig.appId ? 'SET' : 'MISSING',
-    isConfigured: isFirebaseConfigured
-  });
-}
 
 export const app = getApps().length === 0
   ? isFirebaseConfigured
