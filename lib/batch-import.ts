@@ -11,28 +11,72 @@ export async function parseDocxFile(file: File): Promise<ParsedSong[]> {
   const htmlResult = await mammoth.convertToHtml({ arrayBuffer });
   const textResult = await mammoth.extractRawText({ arrayBuffer });
 
-  // Parse HTML to find bold paragraphs which represent song titles
+  // Parse HTML to build a map of text content to their bold status
   const parser = new DOMParser();
   const doc = parser.parseFromString(htmlResult.value, "text/html");
   const paragraphs = Array.from(doc.body.querySelectorAll("p"));
 
-  const boldTitles = new Set<string>();
-  for (const p of paragraphs) {
+  // Create a map that tracks the exact position and bold status of each paragraph
+  const paragraphData: Array<{ text: string; isBold: boolean; isValidTitle: boolean }> = [];
+  
+  for (let i = 0; i < paragraphs.length; i++) {
+    const p = paragraphs[i];
     const text = (p.textContent || "").replace(/\u00A0/g, " ").trim();
+    
+    if (!text) {
+      paragraphData.push({ text: "", isBold: false, isValidTitle: false });
+      continue;
+    }
+    
+    // Check if the entire paragraph is bold
     const boldEl = p.querySelector("strong, b");
     const isBold = !!boldEl && boldEl.textContent?.trim() === text && boldEl.parentElement === p;
     const paragraphStyle = p.style.fontWeight || "";
     const isStyledBold = paragraphStyle.includes("bold") || paragraphStyle.includes("700");
-    if ((isBold || isStyledBold) && text.length > 0) {
-      boldTitles.add(text);
+    const actuallyBold = isBold || isStyledBold;
+    
+    let isValidTitle = false;
+    if (actuallyBold) {
+      // Additional heuristics to determine if this is likely a title:
+      
+      // 1. Title should be relatively short (not a long paragraph)
+      if (text.length > 100) {
+        isValidTitle = false;
+      }
+      // 2. Title should not contain line breaks or multiple sentences
+      else if (text.includes('\n') || text.split('.').length > 2) {
+        isValidTitle = false;
+      }
+      // 3. Title should be followed by non-bold content (lyrics)
+      else {
+        let hasFollowingContent = false;
+        for (let j = i + 1; j < Math.min(i + 5, paragraphs.length); j++) {
+          const nextP = paragraphs[j];
+          const nextText = (nextP.textContent || "").trim();
+          if (nextText) {
+            const nextBoldEl = nextP.querySelector("strong, b");
+            const nextIsBold = !!nextBoldEl && nextBoldEl.textContent?.trim() === nextText && nextBoldEl.parentElement === nextP;
+            const nextIsStyledBold = (nextP.style.fontWeight || "").includes("bold") || (nextP.style.fontWeight || "").includes("700");
+            
+            if (!nextIsBold && !nextIsStyledBold) {
+              hasFollowingContent = true;
+              break;
+            }
+          }
+        }
+        
+        // 4. Don't treat single common words as titles
+        const commonWords = ['verse', 'chorus', 'bridge', 'intro', 'outro', 'refrain', 'pre-chorus', 'tag', 'coda'];
+        const isCommonWord = commonWords.some(word => text.toLowerCase().includes(word.toLowerCase()));
+        
+        isValidTitle = hasFollowingContent && !isCommonWord;
+      }
     }
+    
+    paragraphData.push({ text, isBold: actuallyBold, isValidTitle });
   }
 
-  // Use the raw text from Mammoth for accurate line breaks. When Mammoth outputs
-  // four consecutive newlines it represents an empty paragraph. In that case we
-  // collapse the normal double newlines inserted after each paragraph so that
-  // line breaks are not duplicated while still preserving intentional blank
-  // lines.
+  // Use the raw text from Mammoth for accurate line breaks
   let normalized = textResult.value.replace(/\r/g, "");
   if (normalized.includes("\n\n\n\n")) {
     normalized = normalized
@@ -44,6 +88,7 @@ export async function parseDocxFile(file: File): Promise<ParsedSong[]> {
 
   const songs: ParsedSong[] = [];
   let current: ParsedSong | null = null;
+  let paragraphIndex = 0;
 
   for (const raw of textLines) {
     const line = raw.trim();
@@ -53,19 +98,43 @@ export async function parseDocxFile(file: File): Promise<ParsedSong[]> {
       continue;
     }
 
-    if (boldTitles.has(line)) {
-      // Only bold lines can start a new song
-      if (current) {
-        current.body = current.body.replace(/\n+$/, "\n");
-        songs.push(current);
+    // Find the corresponding paragraph data for this line
+    const correspondingParagraph = paragraphData[paragraphIndex];
+    const isActuallyBoldTitle = correspondingParagraph && 
+                               correspondingParagraph.text === line && 
+                               correspondingParagraph.isBold && 
+                               correspondingParagraph.isValidTitle;
+
+    if (isActuallyBoldTitle) {
+      // Additional validation before treating as a title
+      const isValidTitle = line.length >= 2 && line.length <= 80 && 
+                          !line.match(/^[^\w\s]+$/) && // Not just punctuation
+                          !line.toLowerCase().match(/^(verse|chorus|bridge|intro|outro|refrain|pre-chorus|tag|coda)\s*\d*$/); // Not structure markers
+      
+      if (isValidTitle) {
+        // Only bold lines can start a new song
+        if (current) {
+          current.body = current.body.replace(/\n+$/, "\n");
+          songs.push(current);
+        }
+        current = { title: line, body: "" };
+      } else {
+        // Treat as regular content, not a title
+        if (current) {
+          current.body += raw + "\n";
+        }
       }
-      current = { title: line, body: "" };
     } else {
       // Non-bold lines are only added to existing songs, never start new ones
       if (current) {
         current.body += raw + "\n";
       }
       // If there's no current song, ignore non-bold lines (they're not song titles)
+    }
+    
+    // Move to next paragraph if this line corresponds to one
+    if (correspondingParagraph && correspondingParagraph.text === line) {
+      paragraphIndex++;
     }
   }
 
