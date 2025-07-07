@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState } from "react"
 import { useRouter } from "next/navigation"
 import dynamic from "next/dynamic"
 import type { Database } from "@/types/supabase"
@@ -17,14 +17,13 @@ export default function AddContentPage() {
   const router = useRouter()
   const { user, isLoading } = useAuth()
   const [activeScreen, setActiveScreen] = useState("add-content")
-  const resetKeyRef = useRef(0)
+  const [resetKey, setResetKey] = useState(0)
 
   // Handle navigation from sidebar
   const handleNavigate = (screen: string) => {
     if (screen === "add-content") {
       setActiveScreen(screen)
-      // Increment reset key to force component remount and reset state
-      resetKeyRef.current += 1
+      setResetKey((k) => k + 1) // Use setState to force re-render
     } else {
       router.push(`/${screen}`)
     }
@@ -60,7 +59,7 @@ export default function AddContentPage() {
   return (
     <ResponsiveLayout activeScreen={activeScreen} onNavigate={handleNavigate}>
       <AddContent
-        key={resetKeyRef.current} // This key forces component remount when incremented
+        key={resetKey} // This key forces component remount when incremented
         onNavigate={handleNavigate}
         onContentCreated={handleContentCreated}
         onBack={() => router.back()}
