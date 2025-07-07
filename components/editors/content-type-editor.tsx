@@ -7,6 +7,7 @@ import { AnnotationTools } from "@/components/annotation-tools"
 import PdfViewer from "@/components/pdf-viewer"
 import Image from "next/image"
 import { ContentType, normalizeContentType } from "@/types/content"
+import { urlHasExtension } from "@/lib/utils"
 
 interface ContentTypeEditorProps {
   content: any
@@ -49,8 +50,8 @@ export function ContentTypeEditor({ content, onChange }: ContentTypeEditorProps)
       )
     case ContentType.SHEET:
       if (content.file_url) {
-        const url = content.file_url.toLowerCase()
-        if (url.endsWith(".pdf")) {
+        const url = content.file_url
+        if (urlHasExtension(url, ".pdf")) {
           return (
             <PdfViewer
               url={content.file_url}
@@ -59,7 +60,11 @@ export function ContentTypeEditor({ content, onChange }: ContentTypeEditorProps)
             />
           )
         }
-        if (url.endsWith(".png") || url.endsWith(".jpg") || url.endsWith(".jpeg")) {
+        if (
+          urlHasExtension(url, ".png") ||
+          urlHasExtension(url, ".jpg") ||
+          urlHasExtension(url, ".jpeg")
+        ) {
           return (
             <div className="flex justify-center">
               <Image
