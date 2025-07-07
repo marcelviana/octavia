@@ -377,7 +377,7 @@ async function getUserContentPageDirect(
 
   // Apply filters with validation
   if (filters.contentType?.length) {
-    const validTypes = ["Lyrics", "Chord Chart", "Guitar Tab", "Sheet Music"];
+    const validTypes = ["Lyrics", "Chords", "Tab", "Sheet"];
     const filteredTypes = filters.contentType.filter((type: string) =>
       validTypes.includes(type),
     );

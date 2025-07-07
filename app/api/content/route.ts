@@ -63,7 +63,7 @@ export async function GET(request: NextRequest) {
 
     // Apply filters
     if (filters.contentType?.length) {
-      const validTypes = ['Lyrics', 'Chord Chart', 'Guitar Tab', 'Sheet Music']
+      const validTypes = ['Lyrics', 'Chords', 'Tab', 'Sheet']
       const filteredTypes = filters.contentType.filter((type: string) => validTypes.includes(type))
       if (filteredTypes.length > 0) {
         query = query.in('content_type', filteredTypes)

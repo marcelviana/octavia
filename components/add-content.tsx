@@ -303,10 +303,7 @@ export function AddContent({
         const formattedContent = {
           user_id: user.uid,
           title: createdContent?.title || uploadedFile?.name || "Untitled",
-          content_type:
-            contentType === ContentType.SHEET
-              ? "sheet_music"
-              : contentType || "unknown",
+          content_type: contentType || "unknown",
           content_data:
             contentType === ContentType.SHEET
               ? { file: uploadedFile?.url || null }
