@@ -331,11 +331,86 @@ export function ContentViewer({
                 >
                   {/* Content Based on Type */}
                   <div className="space-y-6">
+                    {/* Sheet Music Content */}
+                    {content.content_type === ContentType.SHEET && (
+                      <div className="space-y-6">
+                        <h3 className="text-lg font-semibold">Sheet Music</h3>
+                        {/* Loading spinner while fetching offlineUrl */}
+                        {offlineUrl === null && content.file_url === undefined ? (
+                          <div className="flex items-center justify-center h-40">
+                            <span className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-400"></span>
+                            <span className="ml-2 text-orange-500">Loading...</span>
+                          </div>
+                        ) : offlineUrl || content.file_url ? (
+                          <div className="overflow-hidden bg-white/80 backdrop-blur-sm border border-orange-200 rounded-xl shadow">
+                            {(() => {
+                              const url = offlineUrl || content.file_url;
+                              if (!url) return null;
+                              const urlLower = url.toLowerCase();
+                              const isPdf = urlLower.endsWith(".pdf");
+                              const isImage = urlLower.endsWith(".png") || urlLower.endsWith(".jpg") || urlLower.endsWith(".jpeg");
+                              if (isPdf) {
+                                return (
+                                  <PdfViewer
+                                    url={url}
+                                    fullscreen
+                                    className="w-full h-[calc(100vh-250px)]"
+                                  />
+                                );
+                              }
+                              if (isImage) {
+                                return (
+                                  <Image
+                                    src={url}
+                                    alt="Sheet music"
+                                    width={800}
+                                    height={600}
+                                    className="w-full h-auto"
+                                  />
+                                );
+                              }
+                              return null;
+                            })()}
+                            {/* Fallback error message if url exists but nothing rendered */}
+                            {(() => {
+                              const url = offlineUrl || content.file_url;
+                              if (!url) return null;
+                              const urlLower = url.toLowerCase();
+                              const isPdf = urlLower.endsWith(".pdf");
+                              const isImage = urlLower.endsWith(".png") || urlLower.endsWith(".jpg") || urlLower.endsWith(".jpeg");
+                              if ((offlineUrl || content.file_url) && !isPdf && !isImage) {
+                                return (
+                                  <div className="text-center text-red-500 mt-4">Failed to load file. Please check the file format or try again later.</div>
+                                );
+                              }
+                              return null;
+                            })()}
+                          </div>
+                        ) : content.content_data?.notation ? (
+                          <div className="p-6 bg-white/80 backdrop-blur-sm border border-orange-200 rounded-xl shadow">
+                            <MusicText
+                              text={content.content_data.notation}
+                              className="text-sm leading-relaxed"
+                            />
+                          </div>
+                        ) : (
+                          <div className="p-12 text-center border-2 border-dashed border-gray-300 rounded-xl bg-white/80 backdrop-blur-sm">
+                            <p className="text-gray-500">
+                              No sheet music available
+                            </p>
+                            <p className="text-sm text-gray-400 mt-2">
+                              Upload a PDF or image file to display sheet music
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
                     {/* Guitar Tab Content */}
-                    {content.content_type === "Guitar Tab" && (
+                    {content.content_type === ContentType.TAB && (
                       <div className="space-y-6">
                         <h3 className="text-lg font-semibold">Tablature</h3>
-                        {content.content_data?.tablature ? (
+                        {Array.isArray(content.content_data?.tablature) ? (
                           <div className="font-mono text-sm space-y-1 bg-gray-50 p-4 rounded-lg overflow-x-auto">
                             {content.content_data.tablature.map(
                               (line: string, index: number) => (
@@ -347,6 +422,10 @@ export function ContentViewer({
                                 </div>
                               ),
                             )}
+                          </div>
+                        ) : typeof content.content_data?.tablature === "string" ? (
+                          <div className="font-mono text-sm bg-gray-50 p-4 rounded-lg">
+                            {content.content_data.tablature}
                           </div>
                         ) : (
                           <div className="font-mono text-sm space-y-1 bg-gray-50 p-4 rounded-lg">
@@ -409,14 +488,14 @@ export function ContentViewer({
                     )}
 
                     {/* Chord Chart Content */}
-                    {content.content_type === "Chord Chart" && (
+                    {content.content_type === ContentType.CHORDS && (
                       <div className="space-y-6">
                         <h3 className="text-lg font-semibold">
                           Chord Chart
                         </h3>
 
                         {/* Chord diagrams */}
-                        {content.content_data?.chords ? (
+                        {Array.isArray(content.content_data?.chords) ? (
                           <div className="grid grid-cols-3 md:grid-cols-4 gap-6">
                             {content.content_data.chords.map(
                               (chord: any, index: number) => (
@@ -427,7 +506,7 @@ export function ContentViewer({
                                   <div className="text-xl font-bold mb-3">
                                     {chord.name || chord}
                                   </div>
-                                  {chord.diagram ? (
+                                  {Array.isArray(chord.diagram) ? (
                                     <div className="text-xs font-mono space-y-1">
                                       {chord.diagram.map(
                                         (
@@ -456,6 +535,10 @@ export function ContentViewer({
                                 </div>
                               ),
                             )}
+                          </div>
+                        ) : typeof content.content_data?.chords === "string" ? (
+                          <div className="font-mono text-sm bg-gray-50 p-4 rounded-lg">
+                            {content.content_data.chords}
                           </div>
                         ) : (
                           <div className="grid grid-cols-3 md:grid-cols-4 gap-6">
@@ -507,67 +590,8 @@ export function ContentViewer({
                       </div>
                     )}
 
-                    {/* Sheet Music Content */}
-                    {content.content_type === ContentType.SHEET && (
-                      <div className="space-y-6">
-                        <h3 className="text-lg font-semibold">
-                          Sheet Music
-                        </h3>
-
-                        {offlineUrl || content.file_url ? (
-                          <div className="overflow-hidden bg-white/80 backdrop-blur-sm border border-orange-200 rounded-xl shadow">
-                            {(() => {
-                              const url = (offlineUrl || content.file_url)!.toLowerCase()
-                              const isPdf = url.endsWith(".pdf")
-                              const isImage = url.endsWith(".png") || url.endsWith(".jpg") || url.endsWith(".jpeg")
-                              if (isPdf) {
-                                return (
-                                  <PdfViewer
-                                    url={(offlineUrl || content.file_url) as string}
-                                    fullscreen
-                                    className="w-full h-[calc(100vh-250px)]"
-                                  />
-                                )
-                              }
-                              if (isImage) {
-                                return (
-                                  <Image
-                                    src={(offlineUrl || content.file_url) as string}
-                                    alt="Sheet music"
-                                    width={800}
-                                    height={600}
-                                    className="w-full h-auto"
-                                  />
-                                )
-                              }
-                              return null
-                            })()}
-                          </div>
-                        ) : (
-                          content.content_data?.notation ? (
-                            <div className="p-6 bg-white/80 backdrop-blur-sm border border-orange-200 rounded-xl shadow">
-                              <MusicText
-                                text={content.content_data.notation}
-                                className="text-sm leading-relaxed"
-                              />
-                            </div>
-                          ) : (
-                            <div className="p-12 text-center border-2 border-dashed border-gray-300 rounded-xl bg-white/80 backdrop-blur-sm">
-                              <p className="text-gray-500">
-                                No sheet music available
-                              </p>
-                              <p className="text-sm text-gray-400 mt-2">
-                                Upload a PDF or image file to display sheet
-                                music
-                              </p>
-                            </div>
-                          )
-                        )}
-                      </div>
-                    )}
-
                     {/* Lyrics Content */}
-                    {content.content_type === "Lyrics" && (
+                    {content.content_type === ContentType.LYRICS && (
                       <div className="space-y-6">
                         <h3 className="text-lg font-semibold">Lyrics</h3>
 
@@ -590,7 +614,7 @@ export function ContentViewer({
                         )}
 
                         {/* Chord progression for lyrics */}
-                        {content.content_data?.chords && (
+                        {Array.isArray(content.content_data?.chords) && content.content_data.chords.length > 0 && (
                           <div className="p-4 bg-white/80 backdrop-blur-sm border border-blue-200 rounded-xl shadow">
                             <h4 className="font-semibold mb-2">Chords</h4>
                             <div className="flex flex-wrap gap-2">
@@ -604,6 +628,14 @@ export function ContentViewer({
                                   </span>
                                 ),
                               )}
+                            </div>
+                          </div>
+                        )}
+                        {typeof content.content_data?.chords === "string" && content.content_data.chords && (
+                          <div className="p-4 bg-white/80 backdrop-blur-sm border border-blue-200 rounded-xl shadow">
+                            <h4 className="font-semibold mb-2">Chords</h4>
+                            <div className="font-mono text-sm bg-gray-50 p-4 rounded-lg">
+                              {content.content_data.chords}
                             </div>
                           </div>
                         )}

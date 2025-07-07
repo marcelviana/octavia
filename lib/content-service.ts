@@ -145,7 +145,7 @@ const contentCache = new Map<
 // Function to clear content cache
 export function clearContentCache() {
   contentCache.clear();
-  if (process.env.NODE_ENV === "development") {
+  if (typeof window !== "undefined" && window.location.hostname === "localhost") {
     console.log("Content cache cleared");
   }
 }
@@ -160,11 +160,11 @@ function cleanupCache() {
   }
 }
 
-// Clean cache every 5 minutes without keeping the Node.js process alive
+// Clean cache every 5 minutes
 const cleanupInterval = setInterval(cleanupCache, 5 * 60 * 1000);
 // Only call unref() in Node.js environment (not in browser)
-if (typeof cleanupInterval.unref === "function") {
-  cleanupInterval.unref();
+if (typeof window === "undefined" && typeof (cleanupInterval as any).unref === "function") {
+  (cleanupInterval as any).unref();
 }
 
 export async function getUserContentPage(
@@ -182,7 +182,7 @@ export async function getUserContentPage(
     useCache = true,
   } = params;
 
-  if (process.env.NODE_ENV === "development") {
+  if (typeof window !== "undefined" && window.location.hostname === "localhost") {
     console.log("getUserContentPage called with filters:", filters);
   }
 
@@ -193,21 +193,21 @@ export async function getUserContentPage(
   if (useCache) {
     const cached = contentCache.get(cacheKey);
     if (cached && Date.now() < cached.timestamp + cached.ttl) {
-      if (process.env.NODE_ENV === "development") {
+      if (typeof window !== "undefined" && window.location.hostname === "localhost") {
         console.log("Returning cached content page result");
       }
       return cached.data;
     } else if (cached) {
-      if (process.env.NODE_ENV === "development") {
+      if (typeof window !== "undefined" && window.location.hostname === "localhost") {
         console.log("Cache expired, fetching fresh data");
       }
     } else {
-      if (process.env.NODE_ENV === "development") {
+      if (typeof window !== "undefined" && window.location.hostname === "localhost") {
         console.log("No cache found, fetching fresh data");
       }
     }
   } else {
-    if (process.env.NODE_ENV === "development") {
+    if (typeof window !== "undefined" && window.location.hostname === "localhost") {
       console.log("Cache disabled, fetching fresh data");
     }
   }
