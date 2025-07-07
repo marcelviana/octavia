@@ -19,6 +19,7 @@ import { clearOfflineContent } from "@/lib/offline-cache"
 import { clearOfflineSetlists } from "@/lib/offline-setlist-cache"
 import { setSessionCookie, clearSessionCookie } from "@/lib/firebase-session-cookies"
 import logger from "@/lib/logger"
+import { getErrorMessage } from "@/lib/firebase-errors"
 
 type Profile = {
   id: string
@@ -267,7 +268,7 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
       } catch (error: any) {
         logger.error("Firebase sign in error:", error.message)
         setIsLoading(false)
-        return { error: { message: error.message || "Sign in failed" } }
+        return { error: { message: getErrorMessage(error) } }
       }
     },
     [isFirebaseConfigured],
@@ -291,7 +292,7 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
     } catch (error: any) {
       logger.error("Google sign in error:", error.message)
       setIsLoading(false)
-      return { error: { message: error.message || "Google sign in failed" } }
+      return { error: { message: getErrorMessage(error) } }
     }
   }, [isFirebaseConfigured])
 
@@ -344,7 +345,7 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
       } catch (error: any) {
         logger.error("Firebase sign up error:", error.message)
         setIsLoading(false)
-        return { error: { message: error.message || "Sign up failed" }, data: null }
+        return { error: { message: getErrorMessage(error) }, data: null }
       }
     },
     [isFirebaseConfigured],
@@ -440,7 +441,7 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
       return { error: null }
     } catch (error: any) {
       logger.error("Failed to resend verification email:", error.message)
-      return { error: { message: error.message || "Failed to resend verification email" } }
+      return { error: { message: getErrorMessage(error) } }
     }
   }, [user, isFirebaseConfigured])
 
