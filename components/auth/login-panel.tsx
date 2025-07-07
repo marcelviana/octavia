@@ -321,7 +321,7 @@ export function LoginPanel({ initialError = "" }: { initialError?: string }) {
           </CardContent>
         </Card>
         <div className="mt-8 text-center text-amber-700 text-sm">
-          <p>© 2023 Octavia Music. All rights reserved.</p>
+          <p>© 2025 Octavia Music. All rights reserved.</p>
         </div>
       </div>
     </div>
