@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge"
 import { MusicText } from "@/components/music-text"
 import Image from "next/image"
 import PdfViewer from "@/components/pdf-viewer"
-import { ContentType } from "@/types/content"
+import { ContentType, normalizeContentType } from "@/types/content"
 import {
   X,
   ChevronLeft,
@@ -435,7 +435,7 @@ export function PerformanceMode({
                 maxWidth: zoom >= 100 ? `${10000 / zoom}%` : '100%'
               }}
             >
-              {currentSongData.content_type === ContentType.SHEET ? (
+              {normalizeContentType(currentSongData.content_type) === ContentType.SHEET ? (
                 sheetUrls[currentSong] ? (
                   (() => {
                     const url = sheetUrls[currentSong]!.toLowerCase()
