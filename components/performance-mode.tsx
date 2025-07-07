@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge"
 import { MusicText } from "@/components/music-text"
 import Image from "next/image"
 import PdfViewer from "@/components/pdf-viewer"
+import { urlHasExtension } from "@/lib/utils"
 import { ContentType, normalizeContentType } from "@/types/content"
 import {
   X,
@@ -438,9 +439,12 @@ export function PerformanceMode({
               {normalizeContentType(currentSongData.content_type) === ContentType.SHEET ? (
                 sheetUrls[currentSong] ? (
                   (() => {
-                    const url = sheetUrls[currentSong]!.toLowerCase()
-                    const isPdf = url.endsWith(".pdf")
-                    const isImage = url.endsWith(".png") || url.endsWith(".jpg") || url.endsWith(".jpeg")
+                    const url = sheetUrls[currentSong]!
+                    const isPdf = urlHasExtension(url, ".pdf")
+                    const isImage =
+                      urlHasExtension(url, ".png") ||
+                      urlHasExtension(url, ".jpg") ||
+                      urlHasExtension(url, ".jpeg")
                     if (isPdf) {
                       return (
                         <div>

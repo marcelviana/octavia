@@ -44,6 +44,7 @@ import { deleteContent, clearContentCache } from "@/lib/content-service";
 import { MusicText } from "@/components/music-text";
 import Image from "next/image";
 import PdfViewer from "@/components/pdf-viewer";
+import { urlHasExtension } from "@/lib/utils";
 import { ContentType, getContentTypeIcon, normalizeContentType } from "@/types/content";
 import { getContentTypeStyle } from "@/lib/content-type-styles";
 import { toast } from "sonner";
@@ -347,9 +348,11 @@ export function ContentViewer({
                             {(() => {
                               const url = offlineUrl || content.file_url;
                               if (!url) return null;
-                              const urlLower = url.toLowerCase();
-                              const isPdf = urlLower.endsWith(".pdf");
-                              const isImage = urlLower.endsWith(".png") || urlLower.endsWith(".jpg") || urlLower.endsWith(".jpeg");
+                              const isPdf = urlHasExtension(url, ".pdf");
+                              const isImage =
+                                urlHasExtension(url, ".png") ||
+                                urlHasExtension(url, ".jpg") ||
+                                urlHasExtension(url, ".jpeg");
                               if (isPdf) {
                                 return (
                                   <PdfViewer
@@ -376,9 +379,11 @@ export function ContentViewer({
                             {(() => {
                               const url = offlineUrl || content.file_url;
                               if (!url) return null;
-                              const urlLower = url.toLowerCase();
-                              const isPdf = urlLower.endsWith(".pdf");
-                              const isImage = urlLower.endsWith(".png") || urlLower.endsWith(".jpg") || urlLower.endsWith(".jpeg");
+                              const isPdf = urlHasExtension(url, ".pdf");
+                              const isImage =
+                                urlHasExtension(url, ".png") ||
+                                urlHasExtension(url, ".jpg") ||
+                                urlHasExtension(url, ".jpeg");
                               if ((offlineUrl || content.file_url) && !isPdf && !isImage) {
                                 return (
                                   <div className="text-center text-red-500 mt-4">Failed to load file. Please check the file format or try again later.</div>
