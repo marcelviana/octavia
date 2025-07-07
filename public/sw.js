@@ -37,56 +37,10 @@ self.addEventListener('message', (event) => {
   }
 });
 
-// Helper function to cache assets individually with error handling
-async function cacheAssetsIndividually(cache, assets) {
-  const results = await Promise.allSettled(
-    assets.map(async (asset) => {
-      try {
-        const response = await fetch(asset);
-        if (response.ok) {
-          await cache.put(asset, response);
-          console.log(`✅ Cached: ${asset}`);
-        } else {
-          console.warn(`⚠️ Failed to cache ${asset}: ${response.status} ${response.statusText}`);
-        }
-      } catch (error) {
-        console.warn(`⚠️ Failed to cache ${asset}:`, error.message);
-      }
-    })
-  );
-  
-  const failed = results.filter(r => r.status === 'rejected').length;
-  if (failed > 0) {
-    console.warn(`${failed} assets failed to cache, but service worker will continue`);
-  }
-}
-
 // Pre-cache core assets on install
 self.addEventListener('install', (event) => {
-  console.log('Service worker installing...');
-  
   event.waitUntil(
-    (async () => {
-      try {
-        const cache = await caches.open(CACHE_NAME);
-        
-        // Try to cache all assets at once first (faster)
-        try {
-          await cache.addAll(ASSETS);
-          console.log('✅ All assets cached successfully');
-        } catch (error) {
-          console.warn('⚠️ Batch caching failed, falling back to individual caching:', error.message);
-          // Fall back to individual caching if batch fails
-          await cacheAssetsIndividually(cache, ASSETS);
-        }
-        
-        // Force the waiting service worker to become the active service worker
-        self.skipWaiting();
-      } catch (error) {
-        console.error('Failed to cache assets during install:', error);
-        // Don't prevent installation, just log the error
-      }
-    })()
+    caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS))
   );
 });
 
@@ -96,16 +50,12 @@ self.addEventListener('activate', (event) => {
 
   event.waitUntil(
     (async () => {
-      try {
-        const cacheNames = await caches.keys();
-        const keep = [CACHE_NAME, STATIC_CACHE, PAGE_CACHE];
-        const oldCaches = cacheNames.filter(name => !keep.includes(name));
-        await Promise.all(oldCaches.map(name => caches.delete(name)));
-        console.log('Cleaned up old caches:', oldCaches);
-        await self.clients.claim();
-      } catch (error) {
-        console.error('Error during activation:', error);
-      }
+      const cacheNames = await caches.keys();
+      const keep = [CACHE_NAME, STATIC_CACHE, PAGE_CACHE];
+      const oldCaches = cacheNames.filter(name => !keep.includes(name));
+      await Promise.all(oldCaches.map(name => caches.delete(name)));
+      console.log('Cleaned up old caches:', oldCaches);
+      await self.clients.claim();
     })()
   );
 });
@@ -114,91 +64,59 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   if (request.method !== 'GET') return;
-  
-  try {
-    const url = new URL(request.url);
+  const url = new URL(request.url);
 
-    // Cache-first for predefined assets
-    if (ASSETS.includes(url.pathname)) {
-      event.respondWith(
-        caches.match(request).then(res => res || fetch(request).catch(() => {
-          console.warn(`Failed to fetch asset: ${request.url}`);
-          return new Response('Asset not available offline', { status: 404 });
-        }))
-      );
-      return;
-    }
+  // Cache-first for predefined assets
+  if (ASSETS.includes(url.pathname)) {
+    event.respondWith(
+      caches.match(request).then(res => res || fetch(request))
+    );
+    return;
+  }
 
-    // Cache static resources like JS, CSS and images from Next.js
-    if (url.origin === self.location.origin && (url.pathname.startsWith('/_next/static') || url.pathname.startsWith('/_next/image'))) {
-      event.respondWith(
-        (async () => {
-          try {
-            const cache = await caches.open(STATIC_CACHE);
-            const cached = await cache.match(request);
-            if (cached) return cached;
-            
-            const res = await fetch(request);
-            if (res.ok) {
-              cache.put(request, res.clone());
-            }
-            return res;
-          } catch (error) {
-            console.warn(`Failed to handle static resource: ${request.url}`, error);
-            return fetch(request);
+  // Cache static resources like JS, CSS and images from Next.js
+  if (url.origin === self.location.origin && (url.pathname.startsWith('/_next/static') || url.pathname.startsWith('/_next/image'))) {
+    event.respondWith(
+      (async () => {
+        const cache = await caches.open(STATIC_CACHE);
+        const cached = await cache.match(request);
+        if (cached) return cached;
+        try {
+          const res = await fetch(request);
+          cache.put(request, res.clone());
+          return res;
+        } catch {
+          return fetch(request);
+        }
+      })()
+    );
+    return;
+  }
+
+  // Network-first for navigation requests with offline fallback
+  if (request.mode === 'navigate') {
+    event.respondWith(
+      (async () => {
+        try {
+          const res = await fetch(request);
+          const cache = await caches.open(PAGE_CACHE);
+          cache.put(request, res.clone());
+          return res;
+        } catch (err) {
+          const cache = await caches.open(PAGE_CACHE);
+          const cached = await cache.match(request);
+          if (cached) return cached;
+          const offline = await caches.match(OFFLINE_URL);
+          if (event.clientId) {
+            const client = await self.clients.get(event.clientId);
+            client?.postMessage({ type: 'OFFLINE_FALLBACK', url: request.url });
+          } else {
+            const clients = await self.clients.matchAll();
+            clients.forEach(c => c.postMessage({ type: 'OFFLINE_FALLBACK', url: request.url }));
           }
-        })()
-      );
-      return;
-    }
-
-    // Network-first for navigation requests with offline fallback
-    if (request.mode === 'navigate') {
-      event.respondWith(
-        (async () => {
-          try {
-            const res = await fetch(request);
-            if (res.ok) {
-              const cache = await caches.open(PAGE_CACHE);
-              cache.put(request, res.clone()).catch(err => {
-                console.warn('Failed to cache page:', err);
-              });
-            }
-            return res;
-          } catch (err) {
-            console.log('Network failed, trying cache...');
-            try {
-              const cache = await caches.open(PAGE_CACHE);
-              const cached = await cache.match(request);
-              if (cached) return cached;
-              
-              const offline = await caches.match(OFFLINE_URL);
-              if (offline) {
-                // Notify client about offline fallback
-                if (event.clientId) {
-                  const client = await self.clients.get(event.clientId);
-                  client?.postMessage({ type: 'OFFLINE_FALLBACK', url: request.url });
-                } else {
-                  const clients = await self.clients.matchAll();
-                  clients.forEach(c => c.postMessage({ type: 'OFFLINE_FALLBACK', url: request.url }));
-                }
-                return offline;
-              }
-            } catch (cacheError) {
-              console.error('Cache lookup failed:', cacheError);
-            }
-            
-            // Final fallback - return a basic offline response
-            return new Response('You are offline and this page is not cached', {
-              status: 503,
-              statusText: 'Service Unavailable',
-              headers: { 'Content-Type': 'text/plain' }
-            });
-          }
-        })()
-      );
-    }
-  } catch (error) {
-    console.error('Error in fetch event:', error);
+          return offline;
+        }
+      })()
+    );
   }
 });

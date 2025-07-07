@@ -9,17 +9,11 @@ import { Progress } from "@/components/ui/progress";
 import {
   ArrowLeft,
   FileText,
-  Guitar,
-  Music,
   Check,
   Upload,
   Sparkles,
   Zap,
   Star,
-  Mic,
-  FileMusic,
-  AlignLeft,
-  Grid,
 } from "lucide-react";
 import { FileUpload } from "@/components/file-upload";
 import {
@@ -40,7 +34,7 @@ import {
   type ParsedSong,
 } from "@/lib/batch-import";
 import { getContentTypeStyle } from "@/lib/content-type-styles";
-import { ContentType } from "@/types/content";
+import { ContentType, getContentTypeIcon, getContentTypeColors } from "@/types/content";
 import type { Database } from "@/types/supabase";
 
 type Content = Database["public"]["Tables"]["content"]["Row"];
@@ -148,14 +142,13 @@ export function AddContent({
       ? importModes.filter((m) => m.id === "single")
       : importModes;
 
-  const contentTypes = [
-    { id: "lyrics", name: ContentType.LYRICS, icon: Mic },
-    { id: "chords", name: ContentType.CHORDS, icon: Grid },
-    { id: "tabs", name: ContentType.TAB, icon: AlignLeft},
+                    const contentTypes = [
+    { id: "lyrics", name: ContentType.LYRICS },
+    { id: "chords", name: ContentType.CHORDS },
+    { id: "tabs", name: ContentType.TAB },
     {
       id: "sheet",
       name: ContentType.SHEET,
-      icon: FileMusic,
       tooltip:
         "Add Sheet Music by uploading PDF or image files. Manual creation is not available for this type.",
     },
@@ -478,7 +471,7 @@ export function AddContent({
               <CardContent className="p-6 text-center">
                 <div className="space-y-4">
                   <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto">
-                    <Music className="w-8 h-8 text-white animate-pulse" />
+                    <FileText className="w-8 h-8 text-white animate-pulse" />
                   </div>
                   <h3 className="text-xl font-bold text-gray-900">
                     Processing Content...
@@ -550,54 +543,22 @@ export function AddContent({
             <CardContent>
               <div className="grid grid-cols-4 gap-2">
                 {contentTypes.map((type) => {
-                  const Icon = type.icon;
                   const selected = contentType === type.name;
                   
-                  // Define explicit classes for each content type to ensure Tailwind includes them
+                  // Get type-specific classes using centralized color system
                   const getTypeClasses = (typeName: string, isSelected: boolean) => {
+                    const colors = getContentTypeColors(typeName);
                     if (isSelected) {
-                      switch (typeName) {
-                        case ContentType.LYRICS:
-                          return "border-green-200 ring-2 ring-green-500 bg-green-50";
-                        case ContentType.TAB:
-                          return "border-blue-200 ring-2 ring-blue-500 bg-blue-50";
-                        case ContentType.CHORDS:
-                          return "border-purple-200 ring-2 ring-purple-500 bg-purple-50";
-                        case ContentType.SHEET:
-                          return "border-orange-200 ring-2 ring-orange-500 bg-orange-50";
-                        default:
-                          return "border-gray-200 ring-2 ring-gray-500 bg-gray-50";
-                      }
+                      return `${colors.border} ring-2 ${colors.ring} ${colors.bg}`;
                     } else {
-                      switch (typeName) {
-                        case ContentType.LYRICS:
-                          return "border-gray-200 hover:bg-green-50 hover:border-green-200";
-                        case ContentType.TAB:
-                          return "border-gray-200 hover:bg-blue-50 hover:border-blue-200";
-                        case ContentType.CHORDS:
-                          return "border-gray-200 hover:bg-purple-50 hover:border-purple-200";
-                        case ContentType.SHEET:
-                          return "border-gray-200 hover:bg-orange-50 hover:border-orange-200";
-                        default:
-                          return "border-gray-200 hover:bg-gray-50 hover:border-gray-200";
-                      }
+                      return `border-gray-200 ${colors.hoverBg} ${colors.hoverBorder}`;
                     }
                   };
 
-                  const getIconClasses = (typeName: string) => {
-                    switch (typeName) {
-                      case ContentType.LYRICS:
-                        return "text-green-600";
-                      case ContentType.TAB:
-                        return "text-blue-600";
-                      case ContentType.CHORDS:
-                        return "text-purple-600";
-                      case ContentType.SHEET:
-                        return "text-orange-600";
-                      default:
-                        return "text-gray-600";
-                    }
-                  };
+
+
+                  const Icon = getContentTypeIcon(type.name);
+                  const colors = getContentTypeColors(type.name);
 
                   return (
                     <Card
@@ -607,7 +568,7 @@ export function AddContent({
                       className={`cursor-pointer transition-all duration-200 ${getTypeClasses(type.name, selected)}`}
                     >
                       <CardContent className="p-2 text-center space-y-1">
-                        <Icon className={`w-6 h-6 mx-auto ${getIconClasses(type.name)}`} />
+                        <Icon className={`w-6 h-6 mx-auto ${colors.primary}`} />
                         <p className="text-sm">{type.name}</p>
                       </CardContent>
                     </Card>

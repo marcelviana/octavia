@@ -26,14 +26,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
-  Music,
-  FileText,
-  Guitar,
   Filter,
   Star,
   Edit,
   Plus,
-  Mic,
   Clock,
   ArrowUpDown,
   ChevronDown,
@@ -66,7 +62,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { ContentType } from "@/types/content";
+import { ContentType, getContentTypeIcon, getContentTypeColors } from "@/types/content";
 
 interface LibraryProps {
   onSelectContent: (content: any) => void;
@@ -166,18 +162,9 @@ export function Library({
   const totalPages = Math.ceil(totalCount / pageSize);
 
   const getContentIcon = (type: string) => {
-    switch (type) {
-      case ContentType.TAB:
-        return <Guitar className="w-5 h-5 text-blue-600" />;
-      case ContentType.CHORDS:
-        return <Music className="w-5 h-5 text-purple-600" />;
-      case ContentType.SHEET:
-        return <FileText className="w-5 h-5 text-amber-600" />;
-      case ContentType.LYRICS:
-        return <Mic className="w-5 h-5 text-green-600" />;
-      default:
-        return <FileText className="w-5 h-5 text-gray-600" />;
-    }
+    const IconComponent = getContentTypeIcon(type);
+    const colors = getContentTypeColors(type);
+    return <IconComponent className={`w-5 h-5 ${colors.primary}`} />;
   };
 
   const formatDate = (dateString: string) => {
@@ -330,13 +317,13 @@ export function Library({
                   <p className="text-sm font-medium mb-1">Content Type</p>
                   <div className="flex flex-wrap gap-1 mb-2">
                     {[
-                      { display: "Guitar Tab", value: ContentType.TAB },
+                      { display: "Tab", value: ContentType.TAB },
                       {
-                        display: "Chord Chart",
+                        display: "Chords",
                         value: ContentType.CHORDS,
                       },
                       {
-                        display: "Sheet Music",
+                        display: "Sheet",
                         value: ContentType.SHEET,
                       },
                       { display: "Lyrics", value: ContentType.LYRICS },

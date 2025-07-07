@@ -23,17 +23,14 @@ import {
   RotateCw,
   Palette,
   Settings,
-  FileText,
   Info,
-  Music,
   Sparkles,
   Clock,
-  Guitar,
-  Mic,
 } from "lucide-react"
 import { ContentTypeEditor } from "@/components/editors/content-type-editor"
 import { getContentTypeStyle } from "@/lib/content-type-styles"
 import { UnifiedMetadataEditor } from "@/components/unified-metadata-editor"
+import { getContentTypeIcon } from "@/types/content"
 
 interface ContentEditorProps {
   content: any
@@ -83,18 +80,8 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
   })()
 
   const getContentIcon = (type: string) => {
-    switch (type) {
-      case "Guitar Tab":
-        return <Guitar className="w-4 h-4 text-white" />;
-      case "Chord Chart":
-        return <Music className="w-4 h-4 text-white" />;
-      case "Sheet Music":
-        return <FileText className="w-4 h-4 text-white" />;
-      case "Lyrics":
-        return <Mic className="w-4 h-4 text-white" />;
-      default:
-        return <FileText className="w-4 h-4 text-white" />;
-    }
+    const IconComponent = getContentTypeIcon(type);
+    return <IconComponent className="w-4 h-4 text-white" />;
   }
 
   useEffect(() => {

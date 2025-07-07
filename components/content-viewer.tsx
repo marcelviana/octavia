@@ -22,12 +22,8 @@ import {
   Printer,
   ChevronLeft,
   ChevronRight,
-  FileText,
-  Music,
   Info,
   MessageSquare,
-  Guitar,
-  Mic,
 } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import {
@@ -48,7 +44,7 @@ import { deleteContent, clearContentCache } from "@/lib/content-service";
 import { MusicText } from "@/components/music-text";
 import Image from "next/image";
 import PdfViewer from "@/components/pdf-viewer";
-import { ContentType } from "@/types/content";
+import { ContentType, getContentTypeIcon } from "@/types/content";
 import { getContentTypeStyle } from "@/lib/content-type-styles";
 import { toast } from "sonner";
 
@@ -111,18 +107,8 @@ export function ContentViewer({
   };
 
   const getContentIcon = (type: string) => {
-    switch (type) {
-      case ContentType.TAB:
-        return <Guitar className="w-4 h-4 text-white" />;
-      case ContentType.CHORDS:
-        return <Music className="w-4 h-4 text-white" />;
-      case ContentType.SHEET:
-        return <FileText className="w-4 h-4 text-white" />;
-      case ContentType.LYRICS:
-        return <Mic className="w-4 h-4 text-white" />;
-      default:
-        return <FileText className="w-4 h-4 text-white" />;
-    }
+    const IconComponent = getContentTypeIcon(type);
+    return <IconComponent className="w-4 h-4 text-white" />;
   };
 
   const getOrdinalSuffix = (num: number) => {
