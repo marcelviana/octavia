@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { FileText, Music, Guitar, Plus } from "lucide-react"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { FileText, Music, Guitar, Plus, AlertCircle } from "lucide-react"
 import { getContentTypeStyle } from "@/lib/content-type-styles"
 import { ContentType, ContentTypeId, CONTENT_TYPE_KEYS } from "@/types/content"
 
@@ -24,10 +25,12 @@ export function ContentCreator({
   const [activeType, setActiveType] = useState<ContentTypeId>(initialType)
   const [title, setTitle] = useState("")
   const [text, setText] = useState("")
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     setText("")
     setTitle("")
+    setError(null)
   }, [activeType])
 
   // Update active type if the prop changes
@@ -78,8 +81,10 @@ export function ContentCreator({
   ]
 
   const handleCreate = () => {
+    setError(null)
+    
     if (!title.trim()) {
-      alert("Title is required")
+      setError("Title is required")
       return
     }
     
@@ -129,6 +134,14 @@ export function ContentCreator({
         </Card>
       )}
 
+      {/* Error Message */}
+      {error && (
+        <Alert variant="destructive" className="border-red-200 bg-red-50">
+          <AlertCircle className="h-4 w-4" />
+          <AlertDescription className="text-red-800">{error}</AlertDescription>
+        </Alert>
+      )}
+
       <Card>
         <CardHeader>
           <CardTitle>{contentTypes.find((t) => t.id === activeType)?.name} Editor</CardTitle>
@@ -139,7 +152,10 @@ export function ContentCreator({
             <Input
               id="content-title"
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e) => {
+                setTitle(e.target.value)
+                if (error) setError(null) // Clear error when user starts typing
+              }}
               placeholder="Song title"
             />
           </div>

@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 import { ContentType } from "@/types/content"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -23,6 +24,7 @@ import {
   Folder,
   Check,
   Mic,
+  AlertCircle,
 } from "lucide-react"
 import { getContentTypeStyle } from "@/lib/content-type-styles"
 import {
@@ -44,6 +46,8 @@ interface MetadataFormProps {
 
 export function MetadataForm({ files = [], createdContent, onComplete, onBack }: MetadataFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
 
   const [metadata, setMetadata] = useState({
     title: createdContent?.title || "",
@@ -167,15 +171,17 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
   const handleSubmit = async () => {
     try {
       setIsSubmitting(true)
+      setError(null)
+      setSuccess(null)
 
       if (!user) {
-        alert("Not logged in. Please log in first.")
+        setError("Not logged in. Please log in first.")
         return
       }
 
       if (!metadata.title.trim()) {
-        alert("Title is required");
-        return;
+        setError("Title is required")
+        return
       }
 
       // Build the insert payload
@@ -213,7 +219,7 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
     } catch (error) {
       console.error("Unexpected error in handleSubmit:", error)
       const message = error instanceof Error ? error.message : "An unexpected error occurred. Please try again."
-      alert(message)
+      setError(message)
     } finally {
       setIsSubmitting(false)
     }
@@ -248,6 +254,21 @@ export function MetadataForm({ files = [], createdContent, onComplete, onBack }:
 
   return (
     <div className="space-y-6">
+      {/* Error and Success Messages */}
+      {error && (
+        <Alert variant="destructive" className="border-red-200 bg-red-50">
+          <AlertCircle className="h-4 w-4" />
+          <AlertDescription className="text-red-800">{error}</AlertDescription>
+        </Alert>
+      )}
+
+      {success && (
+        <Alert className="border-green-200 bg-green-50">
+          <Check className="h-4 w-4 text-green-600" />
+          <AlertDescription className="text-green-800">{success}</AlertDescription>
+        </Alert>
+      )}
+
       {/* Content Summary */}
       <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
         <CardHeader className="pb-3">

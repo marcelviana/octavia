@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
   ArrowLeft,
   FileText,
@@ -14,6 +15,7 @@ import {
   Sparkles,
   Zap,
   Star,
+  AlertCircle,
 } from "lucide-react";
 import { FileUpload } from "@/components/file-upload";
 import {
@@ -91,6 +93,7 @@ export function AddContent({
   const [batchArtist, setBatchArtist] = useState("");
   const [batchImported, setBatchImported] = useState(false);
   const isAutoDetectingContentType = useRef(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     // Don't reset if we're auto-detecting content type from file upload
@@ -108,6 +111,7 @@ export function AddContent({
     setParsedSongs([]);
     setBatchArtist("");
     setBatchImported(false);
+    setError(null);
     
     // Set mode and import mode based on content type
     if (contentType === ContentType.SHEET) {
@@ -122,6 +126,7 @@ export function AddContent({
   // Reset createdContent when switching between create and import modes
   useEffect(() => {
     setCreatedContent(null);
+    setError(null);
   }, [mode]);
 
   const importModes = [
@@ -184,6 +189,7 @@ export function AddContent({
 
   const handleImportNext = async () => {
     if (!uploadedFile) return;
+    setError(null);
     setUploadedFile({ ...uploadedFile, contentType });
     if (importMode === "single") {
       // For single import, create a basic content structure and go to metadata form
@@ -254,6 +260,7 @@ export function AddContent({
   const handleMetadataComplete = async (metadata: Content) => {
     console.log("handleMetadataComplete called with:", metadata);
     setIsProcessing(true);
+    setError(null);
 
     try {
       // Verify content was actually saved
@@ -266,7 +273,7 @@ export function AddContent({
       setCreatedContent(metadata); // Ensure this is set for handleFinish
     } catch (error) {
       console.error("Error in metadata completion:", error);
-      alert("Failed to save content. Please try again.");
+      setError("Failed to save content. Please try again.");
       setCurrentStep(1); // Return to first step on error
     } finally {
       setIsProcessing(false);
@@ -279,6 +286,7 @@ export function AddContent({
   const handleFinish = async () => {
     try {
       setIsProcessing(true);
+      setError(null);
       if (!user) {
         throw new Error("User not authenticated");
       }
@@ -317,7 +325,7 @@ export function AddContent({
     } catch (error) {
       console.error("Error in finish:", error);
       const message = error instanceof Error ? error.message : "Error completing content addition. Please try again.";
-      alert(message);
+      setError(message);
     } finally {
       setIsProcessing(false);
     }
@@ -534,6 +542,14 @@ export function AddContent({
         </div>
 
         {renderStepIndicator()}
+
+        {/* Error Message */}
+        {error && (
+          <Alert variant="destructive" className="border-red-200 bg-red-50">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription className="text-red-800">{error}</AlertDescription>
+          </Alert>
+        )}
 
         <div className="space-y-4">
           <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
