@@ -83,14 +83,14 @@ class PdfDebugger {
         cacheStatus: 'network',
         responseTime,
         contentLength: contentLength ? parseInt(contentLength) : undefined,
-        contentType,
+        contentType: contentType || undefined,
       });
 
       return {
         success: true,
         responseTime,
         contentLength: contentLength ? parseInt(contentLength) : undefined,
-        contentType,
+        contentType: contentType || undefined,
       };
     } catch (error) {
       const responseTime = Date.now() - startTime;
