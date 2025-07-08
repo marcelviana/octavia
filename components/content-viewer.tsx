@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { getCachedFileUrl } from "@/lib/offline-cache";
+import { getCachedFileUrl, getCachedFileInfo } from "@/lib/offline-cache";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -44,7 +44,7 @@ import { deleteContent, clearContentCache } from "@/lib/content-service";
 import { MusicText } from "@/components/music-text";
 import Image from "next/image";
 import PdfViewer from "@/components/pdf-viewer";
-import { urlHasExtension } from "@/lib/utils";
+import { urlHasExtension, isPdfFile, isImageFile } from "@/lib/utils";
 import { ContentType, getContentTypeIcon, normalizeContentType } from "@/types/content";
 import { getContentTypeStyle } from "@/lib/content-type-styles";
 import { toast } from "sonner";
@@ -74,19 +74,53 @@ export function ContentViewer({
   const totalPages = content?.content_data?.pages
     ? content.content_data.pages.length
     : 1;
-  const [deleteDialog, setDeleteDialog] = useState(false);
+    const [deleteDialog, setDeleteDialog] = useState(false);
   const [isFavorite, setIsFavorite] = useState(content?.is_favorite || false);
   const [offlineUrl, setOfflineUrl] = useState<string | null>(null);
+  const [offlineMimeType, setOfflineMimeType] = useState<string | null>(null);
+  const [isLoadingUrl, setIsLoadingUrl] = useState(true);
+  const [urlError, setUrlError] = useState<string | null>(null);
 
   useEffect(() => {
+    let isMounted = true;
     let url: string | null = null;
+    
     const load = async () => {
-      url = await getCachedFileUrl(content.id);
-      if (url) setOfflineUrl(url);
+      try {
+        setIsLoadingUrl(true);
+        setUrlError(null);
+        console.log(`Loading cached file info for content ${content.id}`);
+        
+        const fileInfo = await getCachedFileInfo(content.id);
+        
+        if (isMounted) {
+          if (fileInfo) {
+            setOfflineUrl(fileInfo.url);
+            setOfflineMimeType(fileInfo.mimeType);
+            url = fileInfo.url;
+            console.log(`Successfully loaded cached file for content ${content.id}, MIME: ${fileInfo.mimeType}`);
+          } else {
+            console.log(`No cached file found for content ${content.id}, will use file_url`);
+          }
+          setIsLoadingUrl(false);
+        }
+      } catch (error) {
+        console.error(`Error loading cached file for content ${content.id}:`, error);
+        if (isMounted) {
+          setUrlError(error instanceof Error ? error.message : 'Failed to load cached file');
+          setIsLoadingUrl(false);
+        }
+      }
     };
+    
     load();
+    
     return () => {
-      if (url) URL.revokeObjectURL(url);
+      isMounted = false;
+      if (url) {
+        console.log(`Revoking blob URL for content ${content.id}`);
+        URL.revokeObjectURL(url);
+      }
     };
   }, [content.id]);
 
@@ -338,21 +372,26 @@ export function ContentViewer({
                       <div className="space-y-6">
                         <h3 className="text-lg font-semibold">Sheet Music</h3>
                         {/* Loading spinner while fetching offlineUrl */}
-                        {offlineUrl === null && content.file_url === undefined ? (
+                        {isLoadingUrl ? (
                           <div className="flex items-center justify-center h-40">
                             <span className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-400"></span>
                             <span className="ml-2 text-orange-500">Loading...</span>
+                          </div>
+                        ) : urlError ? (
+                          <div className="text-center text-red-500 mt-4">
+                            {urlError}
                           </div>
                         ) : offlineUrl || content.file_url ? (
                           <div className="overflow-hidden bg-white/80 backdrop-blur-sm border border-orange-200 rounded-xl shadow">
                             {(() => {
                               const url = offlineUrl || content.file_url;
                               if (!url) return null;
-                              const isPdf = urlHasExtension(url, ".pdf");
-                              const isImage =
-                                urlHasExtension(url, ".png") ||
-                                urlHasExtension(url, ".jpg") ||
-                                urlHasExtension(url, ".jpeg");
+                              
+                              // Use enhanced file type detection that considers MIME types
+                              const mimeType = offlineUrl ? (offlineMimeType || undefined) : undefined;
+                              const isPdf = isPdfFile(url, mimeType);
+                              const isImage = isImageFile(url, mimeType);
+                              
                               if (isPdf) {
                                 return (
                                   <PdfViewer
@@ -379,11 +418,12 @@ export function ContentViewer({
                             {(() => {
                               const url = offlineUrl || content.file_url;
                               if (!url) return null;
-                              const isPdf = urlHasExtension(url, ".pdf");
-                              const isImage =
-                                urlHasExtension(url, ".png") ||
-                                urlHasExtension(url, ".jpg") ||
-                                urlHasExtension(url, ".jpeg");
+                              
+                              // Use enhanced file type detection that considers MIME types
+                              const mimeType = offlineUrl ? (offlineMimeType || undefined) : undefined;
+                              const isPdf = isPdfFile(url, mimeType);
+                              const isImage = isImageFile(url, mimeType);
+                              
                               if ((offlineUrl || content.file_url) && !isPdf && !isImage) {
                                 return (
                                   <div className="text-center text-red-500 mt-4">Failed to load file. Please check the file format or try again later.</div>

@@ -8,6 +8,20 @@ const STORE_KEY_BASE = 'octavia-offline-content'
 const INDEX_KEY_BASE = 'octavia-offline-index'
 const MAX_CACHE_BYTES = 50 * 1024 * 1024 // 50MB
 
+// Helper: Detect if a URL is a public Supabase Storage URL
+function isPublicSupabaseUrl(url: string): boolean {
+  try {
+    // You may want to make this more robust for your project
+    // e.g., check against process.env.NEXT_PUBLIC_SUPABASE_URL
+    return url.includes('/storage/v1/object/public/');
+  } catch {
+    return false;
+  }
+}
+
+// Track ongoing cache operations to prevent race conditions
+const ongoingOperations = new Map<string, Promise<string | null>>()
+
 function encodeBase64(data: Uint8Array): string {
   if (typeof btoa === 'function') {
     let binary = ''
@@ -39,20 +53,34 @@ function getFileKey(userId: string | null, id: string) {
   return `${FILE_PREFIX}-${userId || 'anon'}-${id}`
 }
 
-type IndexEntry = { id: string; size: number; lastAccess: number }
+interface IndexEntry {
+  id: string
+  size: number
+  lastAccess: number
+}
 
 async function getIndex(): Promise<IndexEntry[]> {
-  const userId = await getUserId()
-  return (await localforage.getItem<IndexEntry[]>(getIndexKey(userId))) || []
+  try {
+    const userId = await getUserId()
+    const data = await localforage.getItem<IndexEntry[]>(getIndexKey(userId))
+    return data || []
+  } catch (err) {
+    console.error('Failed to load cache index:', err)
+    return []
+  }
 }
 
 async function saveIndex(index: IndexEntry[]): Promise<void> {
-  const userId = await getUserId()
-  await localforage.setItem(getIndexKey(userId), index)
+  try {
+    const userId = await getUserId()
+    await localforage.setItem(getIndexKey(userId), index)
+  } catch (err) {
+    console.error('Failed to save cache index:', err)
+  }
 }
 
-function totalSize(index: IndexEntry[]) {
-  return index.reduce((sum, e) => sum + e.size, 0)
+function totalSize(index: IndexEntry[]): number {
+  return index.reduce((sum, entry) => sum + entry.size, 0)
 }
 
 async function enforceQuota(index: IndexEntry[]): Promise<IndexEntry[]> {
@@ -113,45 +141,73 @@ export async function removeCachedContent(id: string): Promise<void> {
 export async function cacheFilesForContent(items: any[]): Promise<void> {
   for (const item of items) {
     if (!item?.id || !item?.file_url) continue
-    const userId = await getUserId()
-    const key = getFileKey(userId, item.id)
-    try {
-      const existing = await localforage.getItem<any>(key)
-      if (!existing) {
-        const proxyUrl = `/api/proxy?url=${encodeURIComponent(item.file_url)}`
-        const res = await fetch(proxyUrl)
-        if (!res.ok) {
-          const text = await res.text().catch(() => '')
-          throw new Error(text || 'fetch failed')
+    
+    // Check if operation is already in progress
+    const operationKey = `cache-${item.id}`
+    if (ongoingOperations.has(operationKey)) {
+      console.log(`Cache operation already in progress for ${item.id}, skipping`)
+      continue
+    }
+    
+    const cachePromise = (async (): Promise<string | null> => {
+      const userId = await getUserId()
+      const key = getFileKey(userId, item.id)
+      try {
+        const existing = await localforage.getItem<any>(key)
+        if (!existing) {
+          // Use direct public URL if available, otherwise use proxy
+          const fetchUrl = isPublicSupabaseUrl(item.file_url)
+            ? item.file_url
+            : `/api/proxy?url=${encodeURIComponent(item.file_url)}`;
+          console.log(`Caching file for content ${item.id} from ${fetchUrl}`)
+          const res = await fetch(fetchUrl)
+          if (!res.ok) {
+            const text = await res.text().catch(() => '')
+            throw new Error(text || `fetch failed with status ${res.status}`)
+          }
+          const lengthHeader = res.headers.get('Content-Length')
+          if (lengthHeader && Number(lengthHeader) > MAX_CACHE_BYTES) {
+            toast({
+              title: 'File too large to cache',
+              description: 'This file exceeds the 50MB offline cache limit.'
+            })
+            res.body?.cancel?.()
+            return null
+          }
+          const array = await res.arrayBuffer()
+          if (array.byteLength === 0) {
+            console.error('Fetched file is empty, not caching')
+            return null
+          }
+          if (array.byteLength > MAX_CACHE_BYTES) {
+            toast({
+              title: 'File too large to cache',
+              description: 'This file exceeds the 50MB offline cache limit.'
+            })
+            return null
+          }
+          const mime = res.headers.get('Content-Type') || 'application/octet-stream'
+          await localforage.setItem(key, { mime, data: array })
+          const size = array.byteLength
+          let index = await getIndex()
+          index.push({ id: item.id, size, lastAccess: Date.now() })
+          index = await enforceQuota(index)
+          await saveIndex(index)
+          console.log(`Successfully cached file for content ${item.id}, size: ${size} bytes`)
         }
-        const lengthHeader = res.headers.get('Content-Length')
-        if (lengthHeader && Number(lengthHeader) > MAX_CACHE_BYTES) {
-          toast({
-            title: 'File too large to cache',
-            description: 'This file exceeds the 50MB offline cache limit.'
-          })
-          res.body?.cancel?.()
-          continue
-        }
-        const array = await res.arrayBuffer()
-        if (array.byteLength > MAX_CACHE_BYTES) {
-          toast({
-            title: 'File too large to cache',
-            description: 'This file exceeds the 50MB offline cache limit.'
-          })
-          continue
-        }
-        const mime = res.headers.get('Content-Type') || 'application/octet-stream'
-        await localforage.setItem(key, { mime, data: array })
-        const size = array.byteLength
-        let index = await getIndex()
-        index.push({ id: item.id, size, lastAccess: Date.now() })
-        index = await enforceQuota(index)
-        await saveIndex(index)
+        return null // Return null for cache operations (not URL operations)
+      } catch (err) {
+        console.error(`Failed to cache file for ${item.id}:`, err)
+        throw err
       }
-    } catch (err) {
-      console.error(`Failed to cache file for ${item.id}`, err)
-      throw err
+    })()
+    
+    ongoingOperations.set(operationKey, cachePromise)
+    
+    try {
+      await cachePromise
+    } finally {
+      ongoingOperations.delete(operationKey)
     }
   }
 }
@@ -162,27 +218,109 @@ export async function cacheFileForContent(item: any): Promise<void> {
 }
 
 export async function getCachedFileUrl(id: string): Promise<string | null> {
+  // Check if operation is already in progress
+  const operationKey = `get-${id}`
+  if (ongoingOperations.has(operationKey)) {
+    console.log(`Get operation already in progress for ${id}, waiting...`)
+    return ongoingOperations.get(operationKey)!
+  }
+  
+  const getPromise = (async () => {
+    try {
+      const userId = await getUserId()
+      const stored = await localforage.getItem<any>(getFileKey(userId, id))
+      if (!stored) {
+        console.log(`No cached file found for content ${id}`)
+        return null
+      }
+      
+      let index = await getIndex()
+      const entry = index.find(e => e.id === id)
+      if (entry) {
+        entry.lastAccess = Date.now()
+        await saveIndex(index)
+      }
+      
+      const BlobCtor: typeof Blob = (typeof window !== 'undefined' && (window as any).Blob) || Blob
+      const dataArray = stored.data instanceof ArrayBuffer ? new Uint8Array(stored.data) : new Uint8Array(stored.data)
+      const blob = new BlobCtor([dataArray], { type: stored.mime })
+      
+      if (typeof URL.createObjectURL === 'function') {
+        const url = URL.createObjectURL(blob)
+        console.log(`Created blob URL for content ${id}: ${url.substring(0, 50)}...`)
+        return url
+      }
+      
+      const base64 = encodeBase64(dataArray)
+      const dataUrl = `data:${stored.mime};base64,${base64}`
+      console.log(`Created data URL for content ${id}: ${dataUrl.substring(0, 50)}...`)
+      return dataUrl
+    } catch (err) {
+      console.error('Failed to load cached file for', id, ':', err)
+      return null
+    }
+  })()
+  
+  ongoingOperations.set(operationKey, getPromise)
+  
   try {
-    const userId = await getUserId()
-    const stored = await localforage.getItem<any>(getFileKey(userId, id))
-    if (!stored) return null
-    let index = await getIndex()
-    const entry = index.find(e => e.id === id)
-    if (entry) {
-      entry.lastAccess = Date.now()
-      await saveIndex(index)
+    return await getPromise
+  } finally {
+    ongoingOperations.delete(operationKey)
+  }
+}
+
+// New function to get both URL and MIME type for better file type detection
+export async function getCachedFileInfo(id: string): Promise<{ url: string; mimeType: string } | null> {
+  // Check if operation is already in progress
+  const operationKey = `get-info-${id}`
+  if (ongoingOperations.has(operationKey)) {
+    console.log(`Get info operation already in progress for ${id}, waiting...`)
+    return ongoingOperations.get(operationKey)! as Promise<{ url: string; mimeType: string } | null>
+  }
+  
+  const getPromise = (async () => {
+    try {
+      const userId = await getUserId()
+      const stored = await localforage.getItem<any>(getFileKey(userId, id))
+      if (!stored) {
+        console.log(`No cached file found for content ${id}`)
+        return null
+      }
+      
+      let index = await getIndex()
+      const entry = index.find(e => e.id === id)
+      if (entry) {
+        entry.lastAccess = Date.now()
+        await saveIndex(index)
+      }
+      
+      const BlobCtor: typeof Blob = (typeof window !== 'undefined' && (window as any).Blob) || Blob
+      const dataArray = stored.data instanceof ArrayBuffer ? new Uint8Array(stored.data) : new Uint8Array(stored.data)
+      const blob = new BlobCtor([dataArray], { type: stored.mime })
+      
+      if (typeof URL.createObjectURL === 'function') {
+        const url = URL.createObjectURL(blob)
+        console.log(`Created blob URL for content ${id}: ${url.substring(0, 50)}...`)
+        return { url, mimeType: stored.mime }
+      }
+      
+      const base64 = encodeBase64(dataArray)
+      const dataUrl = `data:${stored.mime};base64,${base64}`
+      console.log(`Created data URL for content ${id}: ${dataUrl.substring(0, 50)}...`)
+      return { url: dataUrl, mimeType: stored.mime }
+    } catch (err) {
+      console.error('Failed to load cached file for', id, ':', err)
+      return null
     }
-    const BlobCtor: typeof Blob = (typeof window !== 'undefined' && (window as any).Blob) || Blob
-    const dataArray = stored.data instanceof ArrayBuffer ? new Uint8Array(stored.data) : new Uint8Array(stored.data)
-    const blob = new BlobCtor([dataArray], { type: stored.mime })
-    if (typeof URL.createObjectURL === 'function') {
-      return URL.createObjectURL(blob)
-    }
-    const base64 = encodeBase64(dataArray)
-    return `data:${stored.mime};base64,${base64}`
-  } catch (err) {
-    console.error('Failed to load cached file', err)
-    return null
+  })()
+  
+  ongoingOperations.set(operationKey, getPromise as Promise<any>)
+  
+  try {
+    return await getPromise
+  } finally {
+    ongoingOperations.delete(operationKey)
   }
 }
 

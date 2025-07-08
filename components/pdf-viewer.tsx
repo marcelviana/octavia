@@ -12,22 +12,32 @@ import {
   Minimize,
   StretchHorizontal,
   StretchVertical,
+  RefreshCw,
+  AlertCircle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 import "react-pdf/dist/Page/TextLayer.css";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 
-// Use local worker to avoid cross-origin issues in production
-try {
-  pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-    'pdfjs-dist/build/pdf.worker.min.mjs',
-    import.meta.url,
-  ).toString();
-} catch (error) {
-  // Fallback to local worker file
-  pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
-}
+// Enhanced PDF worker setup with better error handling
+const setupPdfWorker = () => {
+  try {
+    // Try to use the local worker first
+    pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+      'pdfjs-dist/build/pdf.worker.min.mjs',
+      import.meta.url,
+    ).toString();
+    console.log("PDF worker set to local build");
+  } catch (error) {
+    console.warn("Failed to set local PDF worker, using fallback:", error);
+    // Fallback to local worker file
+    pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
+  }
+};
+
+// Initialize worker setup
+setupPdfWorker();
 
 interface PdfViewerProps {
   url: string;
@@ -40,18 +50,41 @@ export function PdfViewer({ url, className, fullscreen = false }: PdfViewerProps
   const [pageNumber, setPageNumber] = useState(1);
   const [scale, setScale] = useState(1);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [retryCount, setRetryCount] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
+  const abortControllerRef = useRef<AbortController | null>(null);
 
+  // Enhanced document load success handler
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages);
-    console.log("PDF loaded successfully with", numPages, "pages");
+    setIsLoading(false);
+    setHasError(false);
+    setErrorMessage("");
+    console.log("PDF loaded successfully with", numPages, "pages from URL:", url);
   };
 
+  // Enhanced document load error handler
   const onDocumentLoadError = (error: Error) => {
-    console.error("PDF load error:", error);
+    console.error("PDF load error for URL:", url, error);
+    setIsLoading(false);
+    setHasError(true);
+    setErrorMessage(error.message || "Failed to load PDF");
   };
 
+  // Retry function
+  const handleRetry = () => {
+    setRetryCount(prev => prev + 1);
+    setHasError(false);
+    setErrorMessage("");
+    setIsLoading(true);
+    console.log("Retrying PDF load, attempt:", retryCount + 1);
+  };
+
+  // Enhanced page change function
   const changePage = (offset: number) => {
     setPageNumber((prev) => Math.min(Math.max(prev + offset, 1), numPages));
   };
@@ -79,6 +112,17 @@ export function PdfViewer({ url, className, fullscreen = false }: PdfViewerProps
     }
   };
 
+  // Reset state when URL changes
+  useEffect(() => {
+    console.log("PDF viewer URL changed to:", url);
+    setIsLoading(true);
+    setHasError(false);
+    setErrorMessage("");
+    setRetryCount(0);
+    setPageNumber(1);
+    setNumPages(0);
+  }, [url]);
+
   useEffect(() => {
     const handleFsChange = () => {
       setIsFullscreen(!!document.fullscreenElement);
@@ -99,6 +143,47 @@ export function PdfViewer({ url, className, fullscreen = false }: PdfViewerProps
       document.removeEventListener("fullscreenchange", handleFsChange);
     };
   }, []);
+
+  // Enhanced loading component
+  const LoadingComponent = () => (
+    <div className="flex flex-col items-center justify-center p-8 space-y-4">
+      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+      <p className="text-sm text-gray-600">Loading PDF...</p>
+      <p className="text-xs text-gray-400">URL: {url.substring(0, 50)}...</p>
+    </div>
+  );
+
+  // Enhanced error component
+  const ErrorComponent = () => (
+    <div className="flex flex-col items-center justify-center p-8 space-y-4">
+      <AlertCircle className="w-12 h-12 text-red-500" />
+      <div className="text-center">
+        <p className="text-sm font-medium text-gray-900">Failed to load PDF</p>
+        <p className="text-xs text-gray-500 mt-1">{errorMessage}</p>
+        <p className="text-xs text-gray-400 mt-2">URL: {url.substring(0, 50)}...</p>
+      </div>
+      <div className="flex space-x-2">
+        <Button 
+          variant="outline" 
+          size="sm" 
+          onClick={handleRetry}
+          className="flex items-center space-x-1"
+        >
+          <RefreshCw className="w-4 h-4" />
+          <span>Retry</span>
+        </Button>
+        <Button 
+          variant="outline" 
+          size="sm" 
+          asChild
+        >
+          <a href={url} target="_blank" rel="noopener noreferrer">
+            Download
+          </a>
+        </Button>
+      </div>
+    </div>
+  );
 
   return (
     <div ref={containerRef} className={cn("w-full h-full flex flex-col", className)}>
@@ -124,7 +209,11 @@ export function PdfViewer({ url, className, fullscreen = false }: PdfViewerProps
             <ZoomOut className="w-4 h-4" />
           </Button>
           <span className="text-sm w-12 text-center">{Math.round(scale * 100)}%</span>
-          <Button variant="ghost" size="sm" onClick={() => setScale(Math.min(scale + 0.2, 3))}>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setScale(Math.min(scale + 0.2, 3))}
+          >
             <ZoomIn className="w-4 h-4" />
           </Button>
           <Button variant="ghost" size="sm" onClick={fitWidth} title="Fit width">
@@ -149,8 +238,9 @@ export function PdfViewer({ url, className, fullscreen = false }: PdfViewerProps
           file={url} 
           onLoadSuccess={onDocumentLoadSuccess} 
           onLoadError={onDocumentLoadError}
-          loading={<p className="p-4">Loading PDF...</p>} 
-          error={<p className="p-4">Unable to display PDF. <a href={url} target="_blank" rel="noopener noreferrer">Download</a></p>}
+          loading={<LoadingComponent />} 
+          error={<ErrorComponent />}
+          key={`${url}-${retryCount}`} // Force re-render on retry
         >
           <Page pageNumber={pageNumber} scale={scale} width={800} />
         </Document>

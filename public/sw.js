@@ -51,7 +51,7 @@ self.addEventListener('activate', (event) => {
   event.waitUntil(
     (async () => {
       const cacheNames = await caches.keys();
-      const keep = [CACHE_NAME, STATIC_CACHE, PAGE_CACHE];
+      const keep = [CACHE_NAME, STATIC_CACHE, PAGE_CACHE, 'octavia-pdf-cache-v1'];
       const oldCaches = cacheNames.filter(name => !keep.includes(name));
       await Promise.all(oldCaches.map(name => caches.delete(name)));
       console.log('Cleaned up old caches:', oldCaches);
@@ -87,6 +87,54 @@ self.addEventListener('fetch', (event) => {
           return res;
         } catch {
           return fetch(request);
+        }
+      })()
+    );
+    return;
+  }
+
+  // Enhanced PDF handling - avoid conflicts with offline cache
+  if (url.pathname.endsWith('.pdf')) {
+    event.respondWith(
+      (async () => {
+        // Don't cache PDFs that come from our proxy API (these are handled by offline cache)
+        if (url.pathname.startsWith('/api/proxy')) {
+          console.log('[SW] PDF request from proxy API, passing through');
+          return fetch(request);
+        }
+
+        // For direct PDF requests, use network-first with cache fallback
+        const cache = await caches.open('octavia-pdf-cache-v1');
+        
+        try {
+          console.log('[SW] Fetching PDF from network:', url.pathname);
+          const networkResponse = await fetch(request);
+          
+          // Only cache successful responses
+          if (networkResponse.ok && networkResponse.status === 200) {
+            console.log('[SW] Caching successful PDF response');
+            cache.put(request, networkResponse.clone());
+          } else {
+            console.log('[SW] PDF fetch failed, not caching:', networkResponse.status);
+          }
+          
+          return networkResponse;
+        } catch (err) {
+          console.error('[SW] PDF network fetch failed:', err);
+          
+          // Try to serve from cache as fallback
+          const cachedResponse = await cache.match(request);
+          if (cachedResponse) {
+            console.log('[SW] Serving PDF from cache fallback');
+            return cachedResponse;
+          }
+          
+          // If no cache and network failed, return error response
+          console.error('[SW] No cached PDF available, returning error');
+          return new Response('PDF not available offline', { 
+            status: 503,
+            headers: { 'Content-Type': 'text/plain' }
+          });
         }
       })()
     );
