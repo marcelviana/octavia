@@ -1,11 +1,23 @@
-// Nonce generation utility
-import { randomBytes } from 'crypto';
+// Nonce generation utility for Edge Runtime
 import { NextRequest } from 'next/server';
 
 const nonces = new Map<string, string>();
 
 export function generateNonce(): string {
-  return randomBytes(16).toString('base64');
+  // Use Web Crypto API for Edge Runtime compatibility
+  const array = new Uint8Array(16);
+  if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
+    crypto.getRandomValues(array);
+  } else {
+    // Fallback for environments without crypto.getRandomValues
+    for (let i = 0; i < array.length; i++) {
+      array[i] = Math.floor(Math.random() * 256);
+    }
+  }
+  
+  // Convert to base64
+  const binaryString = Array.from(array, byte => String.fromCharCode(byte)).join('');
+  return btoa(binaryString);
 }
 
 export function getNonce(req: NextRequest): string {
@@ -21,4 +33,4 @@ export function getNonce(req: NextRequest): string {
 // Clean up old nonces periodically
 setInterval(() => {
   nonces.clear();
-}, 5 * 60 * 1000); // Clear every 5 minutes
+}, 5 * 60 * 1000);

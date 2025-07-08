@@ -36,8 +36,10 @@ const setupPdfWorker = () => {
   }
 };
 
-// Initialize worker setup
-setupPdfWorker();
+// Initialize worker setup only once
+if (typeof window !== 'undefined' && !pdfjs.GlobalWorkerOptions.workerSrc) {
+  setupPdfWorker();
+}
 
 interface PdfViewerProps {
   url: string;
@@ -72,7 +74,19 @@ export function PdfViewer({ url, className, fullscreen = false }: PdfViewerProps
     console.error("PDF load error for URL:", url, error);
     setIsLoading(false);
     setHasError(true);
-    setErrorMessage(error.message || "Failed to load PDF");
+    
+    // Provide more specific error messages for common issues
+    let message = error.message || "Failed to load PDF";
+    
+    if (error.message?.includes("UnexpectedResponseException")) {
+      message = "PDF file is corrupted or inaccessible. Please try again.";
+    } else if (error.message?.includes("Invalid name")) {
+      message = "PDF file format error. Please try again.";
+    } else if (error.message?.includes("blob:")) {
+      message = "Cached PDF file is corrupted. Please refresh the page.";
+    }
+    
+    setErrorMessage(message);
   };
 
   // Retry function
@@ -82,6 +96,11 @@ export function PdfViewer({ url, className, fullscreen = false }: PdfViewerProps
     setErrorMessage("");
     setIsLoading(true);
     console.log("Retrying PDF load, attempt:", retryCount + 1);
+    
+    // If it's a blob URL and we've retried multiple times, suggest refreshing
+    if (url.startsWith('blob:') && retryCount >= 2) {
+      console.warn("Multiple retries with blob URL, suggesting page refresh");
+    }
   };
 
   // Enhanced page change function
@@ -161,6 +180,11 @@ export function PdfViewer({ url, className, fullscreen = false }: PdfViewerProps
         <p className="text-sm font-medium text-gray-900">Failed to load PDF</p>
         <p className="text-xs text-gray-500 mt-1">{errorMessage}</p>
         <p className="text-xs text-gray-400 mt-2">URL: {url.substring(0, 50)}...</p>
+        {url.startsWith('blob:') && retryCount >= 2 && (
+          <p className="text-xs text-amber-600 mt-2">
+            💡 Try refreshing the page to reload the cached file
+          </p>
+        )}
       </div>
       <div className="flex space-x-2">
         <Button 
@@ -172,15 +196,26 @@ export function PdfViewer({ url, className, fullscreen = false }: PdfViewerProps
           <RefreshCw className="w-4 h-4" />
           <span>Retry</span>
         </Button>
-        <Button 
-          variant="outline" 
-          size="sm" 
-          asChild
-        >
-          <a href={url} target="_blank" rel="noopener noreferrer">
-            Download
-          </a>
-        </Button>
+        {!url.startsWith('blob:') && (
+          <Button 
+            variant="outline" 
+            size="sm" 
+            asChild
+          >
+            <a href={url} target="_blank" rel="noopener noreferrer">
+              Download
+            </a>
+          </Button>
+        )}
+        {url.startsWith('blob:') && (
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={() => window.location.reload()}
+          >
+            Refresh Page
+          </Button>
+        )}
       </div>
     </div>
   );

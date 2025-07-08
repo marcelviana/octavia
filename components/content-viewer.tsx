@@ -80,6 +80,7 @@ export function ContentViewer({
   const [offlineMimeType, setOfflineMimeType] = useState<string | null>(null);
   const [isLoadingUrl, setIsLoadingUrl] = useState(true);
   const [urlError, setUrlError] = useState<string | null>(null);
+  const [blobUrlToRevoke, setBlobUrlToRevoke] = useState<string | null>(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -98,6 +99,10 @@ export function ContentViewer({
             setOfflineUrl(fileInfo.url);
             setOfflineMimeType(fileInfo.mimeType);
             url = fileInfo.url;
+            // Track blob URLs for cleanup
+            if (fileInfo.url.startsWith('blob:')) {
+              setBlobUrlToRevoke(fileInfo.url);
+            }
             console.log(`Successfully loaded cached file for content ${content.id}, MIME: ${fileInfo.mimeType}`);
           } else {
             console.log(`No cached file found for content ${content.id}, will use file_url`);
@@ -117,12 +122,18 @@ export function ContentViewer({
     
     return () => {
       isMounted = false;
-      if (url) {
-        console.log(`Revoking blob URL for content ${content.id}`);
-        URL.revokeObjectURL(url);
-      }
     };
   }, [content.id]);
+
+  // Cleanup blob URLs when component unmounts
+  useEffect(() => {
+    return () => {
+      if (blobUrlToRevoke) {
+        console.log(`Revoking blob URL for content ${content.id} on unmount`);
+        URL.revokeObjectURL(blobUrlToRevoke);
+      }
+    };
+  }, [blobUrlToRevoke, content.id]);
 
   const styles = getContentTypeStyle(content.content_type);
 

@@ -2,14 +2,14 @@
 
 import { useState, useEffect, useRef, useMemo } from "react"
 import { toast } from "sonner"
-import { getCachedFileUrl, cacheFilesForContent } from "@/lib/offline-cache"
+import { getCachedFileInfo, cacheFilesForContent } from "@/lib/offline-cache"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { MusicText } from "@/components/music-text"
 import Image from "next/image"
 import PdfViewer from "@/components/pdf-viewer"
-import { urlHasExtension } from "@/lib/utils"
+import { isPdfFile, isImageFile } from "@/lib/utils"
 import { ContentType, normalizeContentType } from "@/types/content"
 import {
   X,
@@ -70,21 +70,31 @@ export function PerformanceMode({
 
   const lyricsData = songs.map((song: any) => song?.content_data?.lyrics || "")
   const [sheetUrls, setSheetUrls] = useState<(string | null)[]>([])
+  const [sheetMimeTypes, setSheetMimeTypes] = useState<(string | null)[]>([])
 
   useEffect(() => {
     let toRevoke: string[] = []
     const load = async () => {
-      const urls = await Promise.all(
-        songs.map(async (song: any) => {
-          const cached = song?.id ? await getCachedFileUrl(song.id) : null
-          if (cached) {
-            toRevoke.push(cached)
-            return cached
+      console.log('Loading sheet URLs for performance mode, songs:', songs.length)
+      const results = await Promise.all(
+        songs.map(async (song: any, index: number) => {
+          if (song?.id) {
+            console.log(`Loading cached file info for song ${index}: ${song.title} (ID: ${song.id})`)
+            const fileInfo = await getCachedFileInfo(song.id)
+            if (fileInfo) {
+              console.log(`Found cached file for song ${index}: ${fileInfo.url.substring(0, 50)}... (MIME: ${fileInfo.mimeType})`)
+              toRevoke.push(fileInfo.url)
+              return { url: fileInfo.url, mimeType: fileInfo.mimeType }
+            } else {
+              console.log(`No cached file found for song ${index}, using file_url: ${song.file_url}`)
+            }
           }
-          return song?.file_url || song?.content_data?.file || null
+          return { url: song?.file_url || song?.content_data?.file || null, mimeType: null }
         })
       )
-      setSheetUrls(urls)
+      console.log('Sheet URLs loaded:', results.map((r, i) => `${i}: ${r.url?.substring(0, 50)}... (MIME: ${r.mimeType})`))
+      setSheetUrls(results.map(r => r.url))
+      setSheetMimeTypes(results.map(r => r.mimeType))
     }
     load()
     return () => {
@@ -440,11 +450,18 @@ export function PerformanceMode({
                 sheetUrls[currentSong] ? (
                   (() => {
                     const url = sheetUrls[currentSong]!
-                    const isPdf = urlHasExtension(url, ".pdf")
-                    const isImage =
-                      urlHasExtension(url, ".png") ||
-                      urlHasExtension(url, ".jpg") ||
-                      urlHasExtension(url, ".jpeg")
+                    const mimeType = sheetMimeTypes[currentSong] || undefined
+                    const isPdf = isPdfFile(url, mimeType)
+                    const isImage = isImageFile(url, mimeType)
+                    
+                    console.log(`File type detection for song ${currentSong}:`, {
+                      url: url.substring(0, 50) + '...',
+                      mimeType,
+                      isPdf,
+                      isImage,
+                      contentType: currentSongData.content_type
+                    })
+                    
                     if (isPdf) {
                       return (
                         <div>
@@ -475,7 +492,13 @@ export function PerformanceMode({
                         />
                       )
                     }
-                    return null
+                    return (
+                      <div className="text-center text-[#A69B8E] py-8">
+                        <p className="text-xl">Unsupported file format</p>
+                        <p className="text-sm mt-2">Please check that the file is a valid PDF or image</p>
+                        <p className="text-xs mt-2 text-gray-500">URL: {url.substring(0, 50)}... | MIME: {mimeType || 'unknown'}</p>
+                      </div>
+                    )
                   })()
                 ) : (
                   <div className="text-center text-[#A69B8E] py-8">

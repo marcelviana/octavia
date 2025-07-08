@@ -177,33 +177,59 @@ const updateSongPositionHandler = async (
       return NextResponse.json({ success: true })
     }
 
+    // Use a two-step approach to avoid unique constraint violations
+    // Step 1: Move all songs to temporary positions (using large offsets)
+    const tempOffset = 10000
+    
+    // First, move all songs to temporary positions
+    for (let i = 0; i < allSongs.length; i++) {
+      const songRow = allSongs[i]
+      const tempPosition = tempOffset + i
+      
+      const { error: tempError } = await supabase
+        .from('setlist_songs')
+        .update({ position: tempPosition })
+        .eq('id', songRow.id)
+
+      if (tempError) {
+        logger.error('Error moving song to temporary position:', tempError)
+        throw tempError
+      }
+    }
+
+    // Step 2: Calculate the new order and move to final positions
     const ordered = [...allSongs].sort((a: any, b: any) => a.position - b.position)
     const without = ordered.filter((s: any) => s.id !== songId)
+    
+    // Insert the moving song at the target position
+    const reordered = [...without]
+    const moving = ordered.find((s: any) => s.id === songId)
+    if (!moving) {
+      return NextResponse.json({ error: 'Song not found' }, { status: 404 })
+    }
+    
     let targetIndex = newPosition - 1
     if (currentPosition < newPosition) {
       targetIndex = Math.min(targetIndex, without.length)
     } else {
       targetIndex = Math.max(0, Math.min(targetIndex, without.length))
     }
-    const reordered = [...without]
-    const moving = ordered.find((s: any) => s.id === songId)
-    if (!moving) {
-      return NextResponse.json({ error: 'Song not found' }, { status: 404 })
-    }
+    
     reordered.splice(targetIndex, 0, moving)
 
+    // Update all positions to their final values
     for (let i = 0; i < reordered.length; i++) {
       const songRow = reordered[i]
-      if (songRow.position !== i + 1) {
-        const { error: updError } = await supabase
-          .from('setlist_songs')
-          .update({ position: i + 1 })
-          .eq('id', songRow.id)
+      const newPos = i + 1
+      
+      const { error: updError } = await supabase
+        .from('setlist_songs')
+        .update({ position: newPos })
+        .eq('id', songRow.id)
 
-        if (updError) {
-          logger.error('Error updating position:', updError)
-          throw updError
-        }
+      if (updError) {
+        logger.error('Error updating position:', updError)
+        throw updError
       }
     }
 
