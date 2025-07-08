@@ -4,44 +4,34 @@ import { cleanup } from '@testing-library/react'
 
 // Set up test environment variables
 beforeAll(() => {
-  // Supabase Test Configuration
-  process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://demo.supabase.co'
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRlbW8iLCJyb2xlIjoiYW5vbiJ9.test'
-  process.env.SUPABASE_SERVICE_ROLE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRlbW8iLCJyb2xlIjoic2VydmljZV9yb2xlIn0.test'
-  process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET = 'content-files'
+  // Supabase Test Configuration - use environment variables with secure fallbacks
+  process.env.NEXT_PUBLIC_SUPABASE_URL = process.env.TEST_SUPABASE_URL || 'https://test-mock.supabase.co'
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = process.env.TEST_SUPABASE_ANON_KEY || 'mock-anon-key-for-testing-only'
+  process.env.SUPABASE_SERVICE_ROLE_KEY = process.env.TEST_SUPABASE_SERVICE_KEY || 'mock-service-key-for-testing-only'
+  process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET = process.env.TEST_SUPABASE_BUCKET || 'test-content-files'
 
-  // Firebase Test Configuration
-  process.env.NEXT_PUBLIC_FIREBASE_API_KEY = 'test-api-key'
-  process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN = 'test-project.firebaseapp.com'
-  process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID = 'test-project'
-  process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET = 'test-project.appspot.com'
-  process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID = '123456789'
-  process.env.NEXT_PUBLIC_FIREBASE_APP_ID = '1:123456789:web:abcdef'
+  // Firebase Test Configuration - use environment variables with secure fallbacks
+  process.env.NEXT_PUBLIC_FIREBASE_API_KEY = process.env.TEST_FIREBASE_API_KEY || 'mock-api-key-for-testing'
+  process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN = process.env.TEST_FIREBASE_AUTH_DOMAIN || 'test-mock.firebaseapp.com'
+  process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID = process.env.TEST_FIREBASE_PROJECT_ID || 'test-mock-project'
+  process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET = process.env.TEST_FIREBASE_STORAGE_BUCKET || 'test-mock-project.appspot.com'
+  process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID = process.env.TEST_FIREBASE_SENDER_ID || '000000000'
+  process.env.NEXT_PUBLIC_FIREBASE_APP_ID = process.env.TEST_FIREBASE_APP_ID || '1:000000000:web:mock-app-id'
 
-  // Firebase Admin Test Configuration
-  process.env.FIREBASE_PROJECT_ID = 'test-project'
-  process.env.FIREBASE_CLIENT_EMAIL = 'test@test-project.iam.gserviceaccount.com'
-  process.env.FIREBASE_PRIVATE_KEY = `-----BEGIN PRIVATE KEY-----
-MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC7VJTUt9Us8cKB
-UIQ6rQ6V3c9YVZVnUSYJKBKUc6Qjf7Vt7a8L4qkFgOBJBNQXGCQGW8HQS6Zo7Md
-bEK6pqzN6JcJdQjXoE1OHh6Qjf7Vt7a8L4qkFgOBJBNQXGCQGW8HQS6Zo7MdbEK
-6pqzN6JcJdQjXoE1OHh6Qjf7Vt7a8L4qkFgOBJBNQXGCQGW8HQS6Zo7MdbEK6pq
-zN6JcJdQjXoE1OHh6Qjf7Vt7a8L4qkFgOBJBNQXGCQGW8HQS6Zo7MdbEK6pqzN6J
-cJdQjXoE1OHh6Qjf7Vt7a8L4qkFgOBJBNQXGCQGW8HQS6Zo7MdbEK6pqzN6JcJd
-QjXoE1OHh6Qjf7Vt7a8L4qkFgOBJBNQXGCQGW8HQS6Zo7MdbEK6pqzN6JcJdQjX
-oE1OHh6Qjf7Vt7a8L4qkFgOBJBNQXGCQGW8HQS6Zo7MdbEK6pqzN6JcJdQjXoE1
-OHh6Qjf7Vt7a8L4qkFgOBJBNQXGCQGW8HQS6Zo7MdbEK6pqzN6JcJdQjXoE1OHh
-6Qjf7Vt7a8L4qkFgOBJBNQXGCQGW8HQS6Zo7MdbEK6pqzN6JcJdQjXoE1OHh6Qj
-f7Vt7a8L4qkFgOBJBNQXGCQGW8HQS6Zo7MdbEK6pqzN6JcJdQjXoE1OHh6Qjf7V
-t7a8L4qkFgOBJBNQXGCQGW8HQS6Zo7MdbEK6pqzN6JcJdQjXoE1OHh6
------END PRIVATE KEY-----`
+  // Firebase Admin Test Configuration - use environment variables with secure fallbacks
+  process.env.FIREBASE_PROJECT_ID = process.env.TEST_FIREBASE_PROJECT_ID || 'test-mock-project'
+  process.env.FIREBASE_CLIENT_EMAIL = process.env.TEST_FIREBASE_CLIENT_EMAIL || 'test-mock@test-project.iam.gserviceaccount.com'
+  
+  // Use a mock private key for testing - never put real keys in code!
+  process.env.FIREBASE_PRIVATE_KEY = process.env.TEST_FIREBASE_PRIVATE_KEY || 
+    '-----BEGIN PRIVATE KEY-----\nMOCK_PRIVATE_KEY_FOR_TESTING_ONLY_DO_NOT_USE_IN_PRODUCTION\n-----END PRIVATE KEY-----'
 
   // Proxy Configuration
-  process.env.ALLOWED_PROXY_HOSTS = 'demo.supabase.co,imslp.org,uploads.musescore.com'
+  process.env.ALLOWED_PROXY_HOSTS = process.env.TEST_ALLOWED_PROXY_HOSTS || 'localhost,127.0.0.1'
 
   // Additional test environment variables
-  process.env.NEXTAUTH_SECRET = 'test-secret'
-  process.env.NEXTAUTH_URL = 'http://localhost:3000'
+  process.env.NEXTAUTH_SECRET = process.env.TEST_NEXTAUTH_SECRET || 'mock-test-secret-key-change-in-production'
+  process.env.NEXTAUTH_URL = process.env.TEST_NEXTAUTH_URL || 'http://localhost:3000'
 })
 
 // Mock IntersectionObserver
