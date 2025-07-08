@@ -2,6 +2,13 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import { validateFirebaseTokenServer } from '@/lib/firebase-server-utils'
 import '@/lib/logger'
+import { fileDeleteSchema } from '@/lib/validation-schemas'
+import { 
+  validateRequestBody,
+  createValidationErrorResponse,
+  createUnauthorizedResponse,
+  createServerErrorResponse
+} from '@/lib/validation-utils'
 
 const BUCKET = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET || 'content-files'
 
@@ -10,30 +17,34 @@ export async function POST(request: NextRequest) {
     // Verify Firebase authentication
     const authHeader = request.headers.get('authorization')
     if (!authHeader?.startsWith('Bearer ')) {
-      return NextResponse.json(
-        { error: 'Missing or invalid authorization header' },
-        { status: 401 }
-      )
+      return createUnauthorizedResponse('Missing or invalid authorization header')
     }
 
     const firebaseToken = authHeader.substring(7)
     const validation = await validateFirebaseTokenServer(firebaseToken, request.url)
     
     if (!validation.isValid || !validation.user) {
-      return NextResponse.json(
-        { error: 'Invalid or expired Firebase token' },
-        { status: 401 }
-      )
+      return createUnauthorizedResponse('Invalid or expired Firebase token')
     }
 
-    // Parse request body
-    const { filename } = await request.json()
+    // Parse and validate request body
+    const body = await request.json()
+    const bodyValidation = await validateRequestBody(body, fileDeleteSchema)
+    
+    if (!bodyValidation.success) {
+      return createValidationErrorResponse(bodyValidation.errors)
+    }
 
-    if (!filename) {
-      return NextResponse.json(
-        { error: 'No filename provided' },
-        { status: 400 }
-      )
+    const { filename } = bodyValidation.data
+
+    // Additional security checks for path traversal
+    if (filename.includes('..') || filename.includes('/') || filename.includes('\\')) {
+      return createValidationErrorResponse(['Invalid filename: path traversal detected'])
+    }
+
+    // Only allow deletion of files that follow our naming convention (timestamp-filename)
+    if (!filename.match(/^\d+-[a-zA-Z0-9._-]+\.[a-zA-Z0-9]+$/)) {
+      return createValidationErrorResponse(['Invalid filename format'])
     }
 
     // Delete from Supabase using service client
@@ -45,10 +56,7 @@ export async function POST(request: NextRequest) {
 
     if (error) {
       console.error('Supabase delete error:', error)
-      return NextResponse.json(
-        { error: `Delete failed: ${error.message}` },
-        { status: 500 }
-      )
+      return createServerErrorResponse(`Delete failed: ${error.message}`)
     }
 
     console.log(`File deleted successfully: ${filename}`)
@@ -60,9 +68,6 @@ export async function POST(request: NextRequest) {
 
   } catch (error) {
     console.error('Delete API error:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    return createServerErrorResponse('File deletion failed')
   }
 } 

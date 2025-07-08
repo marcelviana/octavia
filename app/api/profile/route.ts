@@ -2,6 +2,13 @@ import { NextRequest, NextResponse } from 'next/server'
 import { verifyFirebaseToken } from '@/lib/firebase-admin'
 import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
+import { createProfileSchema, updateProfileSchema } from '@/lib/validation-schemas'
+import { 
+  validateRequestBody,
+  createValidationErrorResponse,
+  createUnauthorizedResponse,
+  createServerErrorResponse
+} from '@/lib/validation-utils'
 
 export const runtime = 'nodejs' // Explicitly use Node.js runtime
 
@@ -85,25 +92,24 @@ export async function POST(request: NextRequest) {
     const user = await getAuthenticatedUser(request)
     
     if (!user) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      )
+      return createUnauthorizedResponse()
     }
 
     const body = await request.json()
+    
+    // Validate request body
+    const bodyValidation = await validateRequestBody(body, createProfileSchema)
+    if (!bodyValidation.success) {
+      return createValidationErrorResponse(bodyValidation.errors)
+    }
+
+    const validatedData = bodyValidation.data
     const supabase = getSupabaseServiceClient()
     
     const profileData = {
       id: user.uid,
-      email: user.email || body.email,
-      full_name: body.full_name || null,
-      first_name: body.first_name || null,
-      last_name: body.last_name || null,
-      avatar_url: body.avatar_url || null,
-      primary_instrument: body.primary_instrument || null,
-      bio: body.bio || null,
-      website: body.website || null,
+      ...validatedData,
+      email: user.email || validatedData.email, // Use Firebase email if available, otherwise validated email
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     }
@@ -121,10 +127,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(profile)
   } catch (error: any) {
     logger.error('Error creating profile:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    return createServerErrorResponse('Failed to create profile')
   }
 }
 
@@ -134,23 +137,24 @@ export async function PATCH(request: NextRequest) {
     const user = await getAuthenticatedUser(request)
     
     if (!user) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      )
+      return createUnauthorizedResponse()
     }
 
     const body = await request.json()
+    
+    // Validate request body
+    const bodyValidation = await validateRequestBody(body, updateProfileSchema)
+    if (!bodyValidation.success) {
+      return createValidationErrorResponse(bodyValidation.errors)
+    }
+
+    const validatedData = bodyValidation.data
     const supabase = getSupabaseServiceClient()
     
     const updateData = {
-      ...body,
+      ...validatedData,
       updated_at: new Date().toISOString(),
     }
-
-    // Remove id and email from update data as they shouldn't be changed
-    delete updateData.id
-    delete updateData.email
 
     const { data: profile, error } = await supabase
       .from('profiles')
@@ -166,9 +170,6 @@ export async function PATCH(request: NextRequest) {
     return NextResponse.json(profile)
   } catch (error: any) {
     logger.error('Error updating profile:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    return createServerErrorResponse('Failed to update profile')
   }
 } 

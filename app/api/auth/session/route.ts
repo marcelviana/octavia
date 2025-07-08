@@ -1,6 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { verifyFirebaseToken } from '@/lib/firebase-admin'
 import logger from '@/lib/logger'
+import { sessionSchema } from '@/lib/validation-schemas'
+import { 
+  validateRequestBody,
+  createValidationErrorResponse,
+  createUnauthorizedResponse,
+  createServerErrorResponse
+} from '@/lib/validation-utils'
 
 export const runtime = 'nodejs' // Explicitly use Node.js runtime
 
@@ -10,23 +17,21 @@ const SESSION_COOKIE_MAX_AGE = 60 * 60 * 24 * 7 // 7 days
 // POST /api/auth/session - Set session cookie
 export async function POST(request: NextRequest) {
   try {
-    const { idToken } = await request.json()
+    const body = await request.json()
     
-    if (!idToken) {
-      return NextResponse.json(
-        { error: 'ID token is required' },
-        { status: 400 }
-      )
+    // Validate request body
+    const bodyValidation = await validateRequestBody(body, sessionSchema)
+    if (!bodyValidation.success) {
+      return createValidationErrorResponse(bodyValidation.errors)
     }
+
+    const { idToken } = bodyValidation.data
 
     // Verify the token using Firebase Admin directly
     try {
       await verifyFirebaseToken(idToken)
     } catch (err) {
-      return NextResponse.json(
-        { error: 'Invalid token' },
-        { status: 401 }
-      )
+      return createUnauthorizedResponse('Invalid or expired token')
     }
 
     // Create response with session cookie
@@ -43,10 +48,7 @@ export async function POST(request: NextRequest) {
     return response
   } catch (error: any) {
     logger.error('Error setting session cookie:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    return createServerErrorResponse('Failed to set session cookie')
   }
 }
 
