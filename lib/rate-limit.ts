@@ -86,3 +86,26 @@ export function createRateLimitResponse(
     }
   );
 }
+// Helper function to apply rate limiting to API routes
+export function withRateLimit<T extends NextRequest>(
+    handler: (req: T) => Promise<NextResponse>,
+    limit: number = 100,
+    useStrictLimiter: boolean = false
+  ) {
+    return async (req: T): Promise<NextResponse> => {
+      const result = rateLimit(req, limit, useStrictLimiter);
+      
+      if (!result.success) {
+        return createRateLimitResponse(result.limit, result.remaining, result.reset);
+      }
+  
+      const response = await handler(req);
+      
+      // Add rate limit headers to successful responses
+      response.headers.set('X-RateLimit-Limit', result.limit.toString());
+      response.headers.set('X-RateLimit-Remaining', result.remaining.toString());
+      response.headers.set('X-RateLimit-Reset', result.reset.toISOString());
+      
+      return response;
+    };
+  }
