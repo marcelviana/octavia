@@ -12,12 +12,15 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL(request.url.replace('http://', 'https://')));
   }
 
-
   const response = NextResponse.next({
     request: {
       headers: request.headers,
     },
   })
+  response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  response.headers.set('X-Content-Type-Options', 'nosniff');
+  response.headers.set('X-Frame-Options', 'DENY');
+  response.headers.set('X-XSS-Protection', '1; mode=block');
 
   const protectedRoutes = ["/dashboard", "/library", "/setlists", "/settings", "/profile", "/add-content", "/content"]
   const isProtectedRoute = protectedRoutes.some((route) => request.nextUrl.pathname.startsWith(route))
@@ -27,7 +30,7 @@ export async function middleware(request: NextRequest) {
 
   // Check for Firebase session cookie
   const firebaseSessionCookie = request.cookies.get('firebase-session')?.value
-  
+
   // Track authentication status and user info
   let isAuthenticated = false
   let userInfo: { uid: string; email?: string; emailVerified?: boolean } | null = null
@@ -35,7 +38,7 @@ export async function middleware(request: NextRequest) {
   // Check for Authorization header (for API requests)
   const authHeader = request.headers.get('authorization')
   let token: string | null = null
-  
+
   if (authHeader && authHeader.startsWith('Bearer ')) {
     token = authHeader.substring(7)
   } else if (firebaseSessionCookie) {
@@ -48,7 +51,7 @@ export async function middleware(request: NextRequest) {
       const validation = await validateFirebaseTokenServer(token, request.url)
       isAuthenticated = validation.isValid
       userInfo = validation.user || null
-      
+
       if (isAuthenticated) {
         console.log('Middleware: Token validation successful for', request.nextUrl.pathname, 'Email verified:', userInfo?.emailVerified)
       } else {
