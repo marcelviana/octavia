@@ -8,6 +8,7 @@ import {
   createUnauthorizedResponse,
   createServerErrorResponse
 } from '@/lib/validation-utils'
+import { withRateLimit } from '@/lib/rate-limit'
 
 export const runtime = 'nodejs' // Explicitly use Node.js runtime
 
@@ -15,7 +16,7 @@ const SESSION_COOKIE_NAME = 'firebase-session'
 const SESSION_COOKIE_MAX_AGE = 60 * 60 * 24 * 7 // 7 days
 
 // POST /api/auth/session - Set session cookie
-export async function POST(request: NextRequest) {
+const postSessionHandler = async (request: NextRequest) => {
   try {
     const body = await request.json()
     
@@ -52,8 +53,10 @@ export async function POST(request: NextRequest) {
   }
 }
 
+export const POST = withRateLimit(postSessionHandler, 5, true)
+
 // DELETE /api/auth/session - Clear session cookie
-export async function DELETE() {
+const deleteSessionHandler = async (request: NextRequest) => {
   try {
     const response = NextResponse.json({ success: true })
     
@@ -73,4 +76,6 @@ export async function DELETE() {
       { status: 500 }
     )
   }
-} 
+}
+
+export const DELETE = withRateLimit(deleteSessionHandler, 5, true) 

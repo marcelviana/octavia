@@ -2,12 +2,13 @@ import { NextRequest, NextResponse } from 'next/server'
 import { requireAuthServer } from '@/lib/firebase-server-utils'
 import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
+import { withRateLimit } from '@/lib/rate-limit'
 
 // DELETE /api/setlists/songs/[songId] - Remove song from setlist
-export async function DELETE(
+const removeSongFromSetlistHandler = async (
   request: NextRequest,
   { params }: { params: Promise<{ songId: string }> }
-) {
+) => {
   try {
     const user = await requireAuthServer(request)
     
@@ -100,11 +101,25 @@ export async function DELETE(
   }
 }
 
+// Wrapper for DELETE handler
+const wrappedRemoveSongHandler = async (request: NextRequest) => {
+  const url = new URL(request.url)
+  const songId = url.pathname.split('/').pop()
+  if (!songId) {
+    return NextResponse.json({ error: 'Song ID is required' }, { status: 400 })
+  }
+  
+  const params = Promise.resolve({ songId })
+  return removeSongFromSetlistHandler(request, { params })
+}
+
+export const DELETE = withRateLimit(wrappedRemoveSongHandler, 50)
+
 // PUT /api/setlists/songs/[songId] - Update song position
-export async function PUT(
+const updateSongPositionHandler = async (
   request: NextRequest,
   { params }: { params: Promise<{ songId: string }> }
-) {
+) => {
   try {
     const user = await requireAuthServer(request)
 
@@ -201,3 +216,17 @@ export async function PUT(
     )
   }
 }
+
+// Wrapper for PUT handler
+const wrappedUpdateSongPositionHandler = async (request: NextRequest) => {
+  const url = new URL(request.url)
+  const songId = url.pathname.split('/').pop()
+  if (!songId) {
+    return NextResponse.json({ error: 'Song ID is required' }, { status: 400 })
+  }
+  
+  const params = Promise.resolve({ songId })
+  return updateSongPositionHandler(request, { params })
+}
+
+export const PUT = withRateLimit(wrappedUpdateSongPositionHandler, 50)

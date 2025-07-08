@@ -2,12 +2,13 @@ import { NextRequest, NextResponse } from 'next/server'
 import { requireAuthServer } from '@/lib/firebase-server-utils'
 import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
+import { withRateLimit } from '@/lib/rate-limit'
 
 // GET /api/content/[id] - Get specific content by ID
-export async function GET(
+const getContentByIdHandler = async (
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
-) {
+) => {
   try {
     const user = await requireAuthServer(request)
     
@@ -54,4 +55,19 @@ export async function GET(
       { status: 500 }
     )
   }
-} 
+}
+
+// Wrapper to handle the dynamic route parameters
+const wrappedGetHandler = async (request: NextRequest) => {
+  const url = new URL(request.url)
+  const id = url.pathname.split('/').pop()
+  if (!id) {
+    return NextResponse.json({ error: 'Content ID is required' }, { status: 400 })
+  }
+  
+  // Create params object to match the expected signature
+  const params = Promise.resolve({ id })
+  return getContentByIdHandler(request, { params })
+}
+
+export const GET = withRateLimit(wrappedGetHandler, 100) 

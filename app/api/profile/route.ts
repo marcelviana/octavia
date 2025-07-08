@@ -9,6 +9,7 @@ import {
   createUnauthorizedResponse,
   createServerErrorResponse
 } from '@/lib/validation-utils'
+import { withRateLimit } from '@/lib/rate-limit'
 
 export const runtime = 'nodejs' // Explicitly use Node.js runtime
 
@@ -49,7 +50,7 @@ async function getAuthenticatedUser(request: NextRequest) {
 }
 
 // GET /api/profile - Get user profile
-export async function GET(request: NextRequest) {
+const getProfileHandler = async (request: NextRequest) => {
   try {
     const user = await getAuthenticatedUser(request)
     
@@ -86,8 +87,10 @@ export async function GET(request: NextRequest) {
   }
 }
 
+export const GET = withRateLimit(getProfileHandler, 25)
+
 // POST /api/profile - Create user profile
-export async function POST(request: NextRequest) {
+const createProfileHandler = async (request: NextRequest) => {
   try {
     const user = await getAuthenticatedUser(request)
     
@@ -131,8 +134,10 @@ export async function POST(request: NextRequest) {
   }
 }
 
+export const POST = withRateLimit(createProfileHandler, 25)
+
 // PATCH /api/profile - Update user profile
-export async function PATCH(request: NextRequest) {
+const updateProfileHandler = async (request: NextRequest) => {
   try {
     const user = await getAuthenticatedUser(request)
     
@@ -172,4 +177,6 @@ export async function PATCH(request: NextRequest) {
     logger.error('Error updating profile:', error)
     return createServerErrorResponse('Failed to update profile')
   }
-} 
+}
+
+export const PATCH = withRateLimit(updateProfileHandler, 25) 

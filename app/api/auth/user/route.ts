@@ -6,6 +6,7 @@ import {
   getUserByUid,
   verifyFirebaseToken 
 } from '@/lib/firebase-admin';
+import { withRateLimit } from '@/lib/rate-limit';
 
 export const runtime = 'nodejs'; // Explicitly use Node.js runtime
 
@@ -66,7 +67,7 @@ async function verifyAdminToken(request: NextRequest): Promise<{ uid: string; em
 }
 
 // GET - Get user by UID
-export async function GET(request: NextRequest): Promise<NextResponse<UserResponse>> {
+const getUserHandler = async (request: NextRequest): Promise<NextResponse<UserResponse>> => {
   try {
     // Verify admin token
     const admin = await verifyAdminToken(request);
@@ -111,8 +112,10 @@ export async function GET(request: NextRequest): Promise<NextResponse<UserRespon
   }
 }
 
+export const GET = withRateLimit(getUserHandler, 2, true)
+
 // POST - Create new user
-export async function POST(request: NextRequest): Promise<NextResponse<UserResponse>> {
+const createUserHandler = async (request: NextRequest): Promise<NextResponse<UserResponse>> => {
   try {
     // Verify admin token
     const admin = await verifyAdminToken(request);
@@ -162,8 +165,10 @@ export async function POST(request: NextRequest): Promise<NextResponse<UserRespo
   }
 }
 
+export const POST = withRateLimit(createUserHandler, 2, true)
+
 // PUT - Update user
-export async function PUT(request: NextRequest): Promise<NextResponse<UserResponse>> {
+const updateUserHandler = async (request: NextRequest): Promise<NextResponse<UserResponse>> => {
   try {
     // Verify admin token
     const admin = await verifyAdminToken(request);
@@ -213,8 +218,10 @@ export async function PUT(request: NextRequest): Promise<NextResponse<UserRespon
   }
 }
 
+export const PUT = withRateLimit(updateUserHandler, 2, true)
+
 // DELETE - Delete user
-export async function DELETE(request: NextRequest): Promise<NextResponse<UserResponse>> {
+const deleteUserHandler = async (request: NextRequest): Promise<NextResponse<UserResponse>> => {
   try {
     // Verify admin token
     const admin = await verifyAdminToken(request);
@@ -248,4 +255,6 @@ export async function DELETE(request: NextRequest): Promise<NextResponse<UserRes
       { status: 500 }
     );
   }
-} 
+}
+
+export const DELETE = withRateLimit(deleteUserHandler, 2, true) 

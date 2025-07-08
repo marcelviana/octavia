@@ -9,10 +9,11 @@ import {
   createUnauthorizedResponse,
   createServerErrorResponse
 } from '@/lib/validation-utils'
+import { withRateLimit } from '@/lib/rate-limit'
 
 const BUCKET = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET || 'content-files'
 
-export async function POST(request: NextRequest) {
+const deleteFileHandler = async (request: NextRequest) => {
   try {
     // Verify Firebase authentication
     const authHeader = request.headers.get('authorization')
@@ -70,4 +71,6 @@ export async function POST(request: NextRequest) {
     console.error('Delete API error:', error)
     return createServerErrorResponse('File deletion failed')
   }
-} 
+}
+
+export const POST = withRateLimit(deleteFileHandler, 10, true) 

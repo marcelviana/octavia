@@ -1,6 +1,7 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
+import { withRateLimit } from '@/lib/rate-limit'
 
-export async function GET() {
+const getFirebaseConfigHandler = async (request: NextRequest) => {
   try {
     const config = {
       client: {
@@ -38,4 +39,6 @@ export async function GET() {
       { status: 500 }
     )
   }
-} 
+}
+
+export const GET = withRateLimit(getFirebaseConfigHandler, 200) 

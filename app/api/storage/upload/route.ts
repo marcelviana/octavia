@@ -14,11 +14,12 @@ import {
   createUnauthorizedResponse,
   createServerErrorResponse
 } from '@/lib/validation-utils'
+import { withRateLimit } from '@/lib/rate-limit'
 
 const BUCKET = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET || 'content-files'
 const MAX_FILE_SIZE = 50 * 1024 * 1024 // 50MB
 
-export async function POST(request: NextRequest) {
+const uploadFileHandler = async (request: NextRequest) => {
   try {
     // Verify Firebase authentication
     const authHeader = request.headers.get('authorization')
@@ -139,4 +140,6 @@ export async function POST(request: NextRequest) {
     console.error('Upload API error:', error)
     return createServerErrorResponse('File upload failed')
   }
-} 
+}
+
+export const POST = withRateLimit(uploadFileHandler, 5, true) 

@@ -6,6 +6,7 @@ import {
   createValidationErrorResponse,
   createServerErrorResponse
 } from '@/lib/validation-utils';
+import { withRateLimit } from '@/lib/rate-limit';
 
 export const runtime = 'nodejs'; // Explicitly use Node.js runtime
 
@@ -24,7 +25,7 @@ export interface VerifyTokenResponse {
   error?: string;
 }
 
-export async function POST(request: NextRequest): Promise<NextResponse<VerifyTokenResponse>> {
+const verifyTokenHandler = async (request: NextRequest): Promise<NextResponse<VerifyTokenResponse>> => {
   try {
     const body = await request.json();
     
@@ -80,4 +81,6 @@ export async function POST(request: NextRequest): Promise<NextResponse<VerifyTok
       { status: 500 }
     );
   }
-} 
+}
+
+export const POST = withRateLimit(verifyTokenHandler, 20, true) 

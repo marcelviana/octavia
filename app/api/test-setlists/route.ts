@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
+import { withRateLimit } from "@/lib/rate-limit"
 
-export async function GET(req: NextRequest) {
+const testSetlistsHandler = async (req: NextRequest) => {
   try {
     // Forward the request to our setlists API
     const setlistsResponse = await fetch(`${req.nextUrl.origin}/api/setlists`, {
@@ -19,4 +20,6 @@ export async function GET(req: NextRequest) {
   } catch (error) {
     return NextResponse.json({ error: "Test failed", details: error }, { status: 500 })
   }
-} 
+}
+
+export const GET = withRateLimit(testSetlistsHandler, 50) 

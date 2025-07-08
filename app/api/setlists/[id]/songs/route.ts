@@ -2,12 +2,13 @@ import { NextRequest, NextResponse } from 'next/server'
 import { requireAuthServer } from '@/lib/firebase-server-utils'
 import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
+import { withRateLimit } from '@/lib/rate-limit'
 
 // POST /api/setlists/[id]/songs - Add song to setlist
-export async function POST(
+const addSongToSetlistHandler = async (
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
-) {
+) => {
   try {
     const user = await requireAuthServer(request)
     
@@ -104,4 +105,19 @@ export async function POST(
       { status: 500 }
     )
   }
-} 
+}
+
+// Wrapper for POST handler
+const wrappedAddSongHandler = async (request: NextRequest) => {
+  const url = new URL(request.url)
+  const pathParts = url.pathname.split('/')
+  const id = pathParts[pathParts.length - 2] // Get the setlist ID from the path
+  if (!id) {
+    return NextResponse.json({ error: 'Setlist ID is required' }, { status: 400 })
+  }
+  
+  const params = Promise.resolve({ id })
+  return addSongToSetlistHandler(request, { params })
+}
+
+export const POST = withRateLimit(wrappedAddSongHandler, 50) 

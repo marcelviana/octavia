@@ -16,9 +16,10 @@ import {
   createNotFoundResponse
 } from '@/lib/validation-utils'
 import { z } from 'zod'
+import { withRateLimit } from '@/lib/rate-limit'
 
 // GET /api/content - Get user's content with pagination support
-export async function GET(request: NextRequest) {
+const getContentHandler = async (request: NextRequest) => {
   try {
     const user = await requireAuthServer(request)
     
@@ -149,8 +150,10 @@ export async function GET(request: NextRequest) {
   }
 }
 
+export const GET = withRateLimit(getContentHandler, 100)
+
 // POST /api/content - Create new content
-export async function POST(request: NextRequest) {
+const createContentHandler = async (request: NextRequest) => {
   try {
     const user = await requireAuthServer(request)
     
@@ -194,8 +197,10 @@ export async function POST(request: NextRequest) {
   }
 }
 
+export const POST = withRateLimit(createContentHandler, 100)
+
 // PUT /api/content - Update existing content
-export async function PUT(request: NextRequest) {
+const updateContentHandler = async (request: NextRequest) => {
   try {
     const user = await requireAuthServer(request)
     
@@ -243,8 +248,10 @@ export async function PUT(request: NextRequest) {
   }
 }
 
+export const PUT = withRateLimit(updateContentHandler, 100)
+
 // DELETE /api/content - Delete content
-export async function DELETE(request: NextRequest) {
+const deleteContentHandler = async (request: NextRequest) => {
   try {
     const user = await requireAuthServer(request)
     
@@ -277,4 +284,6 @@ export async function DELETE(request: NextRequest) {
     logger.error('Error deleting content:', error)
     return createServerErrorResponse('Failed to delete content')
   }
-} 
+}
+
+export const DELETE = withRateLimit(deleteContentHandler, 100) 

@@ -2,12 +2,13 @@ import { NextRequest, NextResponse } from 'next/server'
 import { requireAuthServer } from '@/lib/firebase-server-utils'
 import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
+import { withRateLimit } from '@/lib/rate-limit'
 
 // GET /api/setlists/[id] - Get specific setlist
-export async function GET(
+const getSetlistByIdHandler = async (
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
-) {
+) => {
   try {
     const user = await requireAuthServer(request)
     
@@ -107,11 +108,25 @@ export async function GET(
   }
 }
 
+// Wrapper for GET handler
+const wrappedGetSetlistHandler = async (request: NextRequest) => {
+  const url = new URL(request.url)
+  const id = url.pathname.split('/').pop()
+  if (!id) {
+    return NextResponse.json({ error: 'Setlist ID is required' }, { status: 400 })
+  }
+  
+  const params = Promise.resolve({ id })
+  return getSetlistByIdHandler(request, { params })
+}
+
+export const GET = withRateLimit(wrappedGetSetlistHandler, 100)
+
 // PUT /api/setlists/[id] - Update setlist
-export async function PUT(
+const updateSetlistHandler = async (
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
-) {
+) => {
   try {
     const user = await requireAuthServer(request)
     
@@ -222,11 +237,25 @@ export async function PUT(
   }
 }
 
+// Wrapper for PUT handler
+const wrappedUpdateSetlistHandler = async (request: NextRequest) => {
+  const url = new URL(request.url)
+  const id = url.pathname.split('/').pop()
+  if (!id) {
+    return NextResponse.json({ error: 'Setlist ID is required' }, { status: 400 })
+  }
+  
+  const params = Promise.resolve({ id })
+  return updateSetlistHandler(request, { params })
+}
+
+export const PUT = withRateLimit(wrappedUpdateSetlistHandler, 100)
+
 // DELETE /api/setlists/[id] - Delete setlist
-export async function DELETE(
+const deleteSetlistHandler = async (
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
-) {
+) => {
   try {
     const user = await requireAuthServer(request)
     
@@ -273,4 +302,18 @@ export async function DELETE(
       { status: 500 }
     )
   }
-} 
+}
+
+// Wrapper for DELETE handler
+const wrappedDeleteSetlistHandler = async (request: NextRequest) => {
+  const url = new URL(request.url)
+  const id = url.pathname.split('/').pop()
+  if (!id) {
+    return NextResponse.json({ error: 'Setlist ID is required' }, { status: 400 })
+  }
+  
+  const params = Promise.resolve({ id })
+  return deleteSetlistHandler(request, { params })
+}
+
+export const DELETE = withRateLimit(wrappedDeleteSetlistHandler, 100) 

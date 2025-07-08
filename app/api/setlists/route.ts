@@ -2,9 +2,10 @@ import { NextRequest, NextResponse } from "next/server"
 import { requireAuthServer } from "@/lib/firebase-server-utils"
 import { getSupabaseServiceClient } from "@/lib/supabase-service"
 import logger from "@/lib/logger"
+import { withRateLimit } from "@/lib/rate-limit"
 
 // GET /api/setlists - Get user's setlists
-export async function GET(request: NextRequest) {
+const getSetlistsHandler = async (request: NextRequest) => {
   try {
     const user = await requireAuthServer(request)
     
@@ -107,8 +108,10 @@ export async function GET(request: NextRequest) {
   }
 }
 
+export const GET = withRateLimit(getSetlistsHandler, 100)
+
 // POST /api/setlists - Create new setlist
-export async function POST(request: NextRequest) {
+const createSetlistHandler = async (request: NextRequest) => {
   try {
     const user = await requireAuthServer(request)
     
@@ -152,4 +155,6 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     )
   }
-} 
+}
+
+export const POST = withRateLimit(createSetlistHandler, 100) 
