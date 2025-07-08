@@ -52,6 +52,7 @@
     "firebase-admin": "^13.4.0",
     "happy-dom": "latest",
     "localforage": "1.10.0",
+    "lru-cache": "^11.1.0",
     "lucide-react": "^0.454.0",
     "mammoth": "^1.9.1",
     "next": "15.2.4",

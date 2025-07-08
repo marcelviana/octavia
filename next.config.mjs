@@ -23,7 +23,7 @@ const nextConfig = {
       if (base) {
         try {
           hosts.add(new URL(base).hostname)
-        } catch {}
+        } catch { }
       }
       const extra = process.env.ALLOWED_PROXY_HOSTS?.split(',') || []
       for (const h of extra) {
@@ -44,7 +44,7 @@ const nextConfig = {
         './firebase-admin.js': false,
         './firebase-admin.ts': false,
       };
-      
+
       // Prevent Node.js built-in modules from being bundled on the client
       config.resolve.fallback = {
         ...config.resolve.fallback,
@@ -85,7 +85,7 @@ const nextConfig = {
         'google-logging-utils': 'commonjs google-logging-utils',
       });
     }
-    
+
     // Allow loading of PDF.js worker
     config.module.rules.push({
       test: /pdf\.worker\.(min\.)?(js|mjs)$/,
@@ -94,7 +94,7 @@ const nextConfig = {
         filename: "static/worker/[hash][ext][query]",
       },
     });
-    
+
     return config;
   },
   async headers() {
@@ -136,6 +136,37 @@ const nextConfig = {
       },
     ]
   },
+
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY'
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff'
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin'
+          },
+          {
+            key: 'X-XSS-Protection',
+            value: '1; mode=block'
+          },
+          {
+            key: 'Content-Security-Policy',
+            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://*.supabase.co https://*.firebase.com https://*.googleapis.com;"
+          }
+        ]
+      }
+    ];
+  },
+
 }
 
 export default nextConfig
