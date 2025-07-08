@@ -1,54 +1,88 @@
-import { NextRequest, NextResponse } from 'next/server';
 import { LRUCache } from 'lru-cache';
+import { NextRequest, NextResponse } from 'next/server';
 
-type RateLimitConfig = {
-  maxRequests: number;
-  windowMs: number;
-  message?: string;
-};
-
-// Global rate limit cache
-const rateLimitCache = new LRUCache<string, number>({
-  max: 1000,
-  ttl: 60000, // 1 minute default
-});
-
-export function createRateLimit(config: RateLimitConfig) {
-  return async (request: NextRequest): Promise<NextResponse | null> => {
-    const ip = request.headers.get('x-forwarded-for') ?? request.headers.get('x-real-ip') ?? '127.0.0.1';
-    const key = `${ip}:${request.nextUrl.pathname}`;
-    
-    const currentCount = rateLimitCache.get(key) || 0;
-    if (currentCount >= config.maxRequests) {
-      return NextResponse.json(
-        { 
-          error: config.message || 'Rate limit exceeded',
-          retryAfter: Math.ceil(config.windowMs / 1000)
-        },
-        { status: 429 }
-      );
-    }
-    
-    rateLimitCache.set(key, currentCount + 1);
-    return null; // Allow request to proceed
-  };
+interface RateLimitConfig {
+  interval: number; // Time window in milliseconds
+  uniqueTokenPerInterval: number; // Max requests per interval
 }
 
-// Pre-configured rate limiters
-export const apiRateLimit = createRateLimit({
-  maxRequests: 100,
-  windowMs: 60000, // 1 minute
-  message: 'Too many API requests'
+class RateLimiter {
+  private cache: LRUCache<string, number>;
+  private config: RateLimitConfig;
+
+  constructor(config: RateLimitConfig) {
+    this.config = config;
+    this.cache = new LRUCache({
+      max: config.uniqueTokenPerInterval,
+      ttl: config.interval,
+    });
+  }
+
+  check(limit: number, token: string): { success: boolean; limit: number; remaining: number; reset: Date } {
+    const tokenCount = (this.cache.get(token) as number) || 0;
+    const hit = tokenCount + 1;
+    const isRateLimited = hit > limit;
+    const reset = new Date(Date.now() + this.config.interval);
+
+    if (!isRateLimited) {
+      this.cache.set(token, hit);
+    }
+
+    return {
+      success: !isRateLimited,
+      limit,
+      remaining: Math.max(0, limit - hit),
+      reset,
+    };
+  }
+}
+
+// Default rate limiter instances
+const defaultLimiter = new RateLimiter({
+  interval: 60 * 1000, // 1 minute
+  uniqueTokenPerInterval: 500,
 });
 
-export const uploadRateLimit = createRateLimit({
-  maxRequests: 10,
-  windowMs: 60000, // 1 minute
-  message: 'Too many upload attempts'
+const strictLimiter = new RateLimiter({
+  interval: 60 * 1000, // 1 minute
+  uniqueTokenPerInterval: 100,
 });
 
-export const authRateLimit = createRateLimit({
-  maxRequests: 5,
-  windowMs: 60000, // 1 minute
-  message: 'Too many authentication attempts'
-});
+export function rateLimit(
+  req: NextRequest,
+  limit: number = 100,
+  useStrictLimiter: boolean = false
+): { success: boolean; limit: number; remaining: number; reset: Date } {
+  const limiter = useStrictLimiter ? strictLimiter : defaultLimiter;
+  const token = getIdentifierToken(req);
+  return limiter.check(limit, token);
+}
+
+function getIdentifierToken(req: NextRequest): string {
+  const forwarded = req.headers.get('x-forwarded-for');
+  const realIP = req.headers.get('x-real-ip');
+  const ip = forwarded ? forwarded.split(',')[0].trim() : realIP;
+  return ip || 'anonymous';
+}
+
+export function createRateLimitResponse(
+  limit: number,
+  remaining: number,
+  reset: Date
+): NextResponse {
+  return NextResponse.json(
+    {
+      error: 'Rate limit exceeded',
+      message: `Too many requests. Try again in ${Math.ceil((reset.getTime() - Date.now()) / 1000)} seconds.`,
+    },
+    {
+      status: 429,
+      headers: {
+        'X-RateLimit-Limit': limit.toString(),
+        'X-RateLimit-Remaining': remaining.toString(),
+        'X-RateLimit-Reset': reset.toISOString(),
+        'Retry-After': Math.ceil((reset.getTime() - Date.now()) / 1000).toString(),
+      },
+    }
+  );
+}
