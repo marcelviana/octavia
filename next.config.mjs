@@ -100,46 +100,6 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: "/:path*\\.(png|jpg|jpeg|webp|svg|gif|ico|woff2?|woff|ttf|eot|otf)$",
-        headers: [
-          {
-            key: "Cache-Control",
-            value: "public, max-age=31536000, immutable",
-          },
-        ],
-      },
-      {
-        source: "/static/worker/:path*",
-        headers: [
-          {
-            key: "Cache-Control",
-            value: "public, max-age=31536000, immutable",
-          },
-          {
-            key: "Content-Type",
-            value: "application/javascript",
-          },
-        ],
-      },
-      {
-        source: "/pdf.worker.min.(js|mjs)",
-        headers: [
-          {
-            key: "Content-Type",
-            value: "application/javascript",
-          },
-          {
-            key: "Cache-Control",
-            value: "public, max-age=3600",
-          },
-        ],
-      },
-    ]
-  },
-
-  async headers() {
-    return [
-      {
         source: '/(.*)',
         headers: [
           {
@@ -159,14 +119,38 @@ const nextConfig = {
             value: '1; mode=block'
           },
           {
+            key: 'Strict-Transport-Security',
+            value: 'max-age=31536000; includeSubDomains'
+          },
+          {
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=(), payment=()'
+          },
+          {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://*.supabase.co https://*.firebase.com https://*.googleapis.com;"
+            value: [
+              "default-src 'self'",
+              "script-src 'self' 'nonce-{NONCE}' https://www.gstatic.com https://apis.google.com",
+              "style-src 'self' 'nonce-{NONCE}' https://fonts.googleapis.com",
+              "img-src 'self' data: https:",
+              "font-src 'self' https://fonts.gstatic.com",
+              "connect-src 'self' https://*.supabase.co https://*.firebase.com https://*.googleapis.com wss://*.supabase.co",
+              "media-src 'self' https://*.supabase.co",
+              "object-src 'none'",
+              "base-uri 'self'",
+              "form-action 'self'",
+              "frame-ancestors 'none'",
+              "upgrade-insecure-requests"
+            ].join('; ')
           }
         ]
       }
     ];
   },
-
+  // Add nonce generation for CSP
+  experimental: {
+    instrumentationHook: true,
+  },
 }
 
 export default nextConfig
