@@ -7,6 +7,12 @@ export const runtime = 'nodejs'
 
 
 export async function middleware(request: NextRequest) {
+
+  if (process.env.NODE_ENV === 'production' && !request.url.startsWith('https://')) {
+    return NextResponse.redirect(new URL(request.url.replace('http://', 'https://')));
+  }
+
+
   const response = NextResponse.next({
     request: {
       headers: request.headers,
