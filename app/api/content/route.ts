@@ -190,7 +190,7 @@ const createContentHandler = async (request: NextRequest) => {
       throw error
     }
 
-    return NextResponse.json(content)
+    return NextResponse.json(content, { status: 201 })
   } catch (error: any) {
     logger.error('Error creating content:', error)
     return createServerErrorResponse('Failed to create content')
