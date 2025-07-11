@@ -25,26 +25,57 @@ export function NavigationContainer({
 
   useEffect(() => {
     const checkNavType = () => {
-      const isPortrait = window.matchMedia("(orientation: portrait)").matches
-      const isMobileOrTablet = window.matchMedia("(max-width: 1024px)").matches
-      
-      // Show bottom nav for mobile/tablet in portrait orientation
-      setShouldShowBottomNav(isMobileOrTablet && isPortrait)
+      // Defensive check for window.matchMedia availability (helps with testing and SSR)
+      if (typeof window === 'undefined' || !window.matchMedia) {
+        // Default to desktop layout in test/SSR environments
+        setShouldShowBottomNav(false)
+        return
+      }
+
+      try {
+        const orientationQuery = window.matchMedia("(orientation: portrait)")
+        const sizeQuery = window.matchMedia("(max-width: 1024px)")
+        
+        // Check if the MediaQueryList objects are valid
+        if (!orientationQuery || !sizeQuery) {
+          setShouldShowBottomNav(false)
+          return
+        }
+        
+        const isPortrait = orientationQuery.matches
+        const isMobileOrTablet = sizeQuery.matches
+        
+        // Show bottom nav for mobile/tablet in portrait orientation
+        setShouldShowBottomNav(isMobileOrTablet && isPortrait)
+      } catch (error) {
+        // Fallback to desktop layout if matchMedia fails
+        setShouldShowBottomNav(false)
+      }
     }
 
     // Check on mount
     checkNavType()
 
-    // Listen for orientation and resize changes
-    const orientationQuery = window.matchMedia("(orientation: portrait)")
-    const sizeQuery = window.matchMedia("(max-width: 1024px)")
-    
-    orientationQuery.addEventListener("change", checkNavType)
-    sizeQuery.addEventListener("change", checkNavType)
+    // Only set up listeners if matchMedia is available
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      try {
+        // Listen for orientation and resize changes
+        const orientationQuery = window.matchMedia("(orientation: portrait)")
+        const sizeQuery = window.matchMedia("(max-width: 1024px)")
+        
+        // Only add listeners if queries are valid
+        if (orientationQuery && sizeQuery) {
+          orientationQuery.addEventListener("change", checkNavType)
+          sizeQuery.addEventListener("change", checkNavType)
 
-    return () => {
-      orientationQuery.removeEventListener("change", checkNavType)
-      sizeQuery.removeEventListener("change", checkNavType)
+          return () => {
+            orientationQuery.removeEventListener("change", checkNavType)
+            sizeQuery.removeEventListener("change", checkNavType)
+          }
+        }
+      } catch (error) {
+        // Silently fail if event listener setup fails
+      }
     }
   }, [])
 

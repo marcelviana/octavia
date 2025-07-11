@@ -2,6 +2,19 @@ import '@testing-library/jest-dom'
 import { expect, afterEach, vi, beforeAll } from 'vitest'
 import { cleanup } from '@testing-library/react'
 
+// Polyfill Promise.withResolvers for older Node.js versions
+if (!Promise.withResolvers) {
+  (Promise as any).withResolvers = function <T>() {
+    let resolve: (value: T | PromiseLike<T>) => void;
+    let reject: (reason?: any) => void;
+    const promise = new Promise<T>((res, rej) => {
+      resolve = res;
+      reject = rej;
+    });
+    return { promise, resolve: resolve!, reject: reject! };
+  };
+}
+
 // Set up test environment variables
 beforeAll(() => {
   // Supabase Test Configuration - use environment variables with secure fallbacks
@@ -58,7 +71,33 @@ global.ResizeObserver = class ResizeObserver {
 // Mock matchMedia
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
-  value: vi.fn().mockImplementation(query => ({
+  value: vi.fn().mockImplementation(query => {
+    const mockMatchMedia = {
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+    };
+    
+    // Ensure matches property is always accessible
+    Object.defineProperty(mockMatchMedia, 'matches', {
+      value: false,
+      writable: true,
+      enumerable: true,
+      configurable: true
+    });
+    
+    return mockMatchMedia;
+  }),
+})
+
+// Also set up a global mock for situations where window.matchMedia might be called before setup
+if (typeof window !== 'undefined') {
+  (window as any).matchMedia = window.matchMedia || vi.fn().mockImplementation(query => ({
     matches: false,
     media: query,
     onchange: null,
@@ -67,8 +106,8 @@ Object.defineProperty(window, 'matchMedia', {
     addEventListener: vi.fn(),
     removeEventListener: vi.fn(),
     dispatchEvent: vi.fn(),
-  })),
-})
+  }));
+}
 
 // Clean up after each test
 afterEach(() => {
