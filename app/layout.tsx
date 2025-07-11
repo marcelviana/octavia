@@ -61,11 +61,9 @@ export default async function RootLayout({
                       style.setAttribute('nonce', nonce);
                     });
                     
-                    // Add nonce to elements with style attributes
-                    const elementsWithStyleAttr = document.querySelectorAll('[style]:not([nonce])');
-                    elementsWithStyleAttr.forEach(function(element) {
-                      element.setAttribute('nonce', nonce);
-                    });
+                    // Don't add nonces to elements with style attributes since we've added
+                    // the specific CSP hashes that Next.js needs. This prevents hydration mismatches
+                    // with React components that don't expect nonces.
                   }
                   
                   // Wait for DOM to be ready before setting up observers
@@ -83,11 +81,11 @@ export default async function RootLayout({
                           mutation.addedNodes.forEach(function(node) {
                             if (node.nodeType === 1) { // Element node
                               const element = node;
-                              if (element.tagName === 'SCRIPT' || element.tagName === 'STYLE' || element.hasAttribute('style')) {
+                              if (element.tagName === 'SCRIPT' || element.tagName === 'STYLE') {
                                 hasNewElements = true;
                               } else if (element.querySelector) {
-                                // Check if any child elements are scripts, styles, or have style attributes
-                                const childElements = element.querySelectorAll('script, style, [style]');
+                                // Check if any child elements are scripts or styles
+                                const childElements = element.querySelectorAll('script, style');
                                 if (childElements.length > 0) {
                                   hasNewElements = true;
                                 }
@@ -95,10 +93,7 @@ export default async function RootLayout({
                             }
                           });
                           
-                          // Check for attribute changes (when style attribute is added)
-                          if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-                            hasNewElements = true;
-                          }
+                          // No need to watch for style attribute changes since we're not applying nonces to them
                         });
                         
                         if (hasNewElements) {
@@ -106,9 +101,9 @@ export default async function RootLayout({
                         }
                       });
                       
-                      // Observe both head and body for child additions and attribute changes
-                      observer.observe(document.head, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
-                      observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+                      // Observe both head and body for child additions
+                      observer.observe(document.head, { childList: true, subtree: true });
+                      observer.observe(document.body, { childList: true, subtree: true });
                     }
                   }
                   
