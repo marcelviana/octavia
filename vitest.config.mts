@@ -9,6 +9,10 @@ export default defineConfig({
     setupFiles: ['./src/test-setup.ts', './vitest.setup.ts'],
     globals: true,
     css: true,
+    env: {
+      NODE_ENV: 'test',
+      VITEST: 'true'
+    },
     coverage: {
       reporter: ['text', 'json', 'html'],
       exclude: [
