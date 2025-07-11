@@ -1,5 +1,6 @@
 // Nonce generation utility for Edge Runtime
 import { NextRequest } from 'next/server';
+import { headers } from 'next/headers';
 
 const nonces = new Map<string, string>();
 
@@ -30,7 +31,31 @@ export function getNonce(req: NextRequest): string {
   return nonces.get(requestId)!;
 }
 
-// Clean up old nonces periodically
-setInterval(() => {
-  nonces.clear();
-}, 5 * 60 * 1000);
+/**
+ * Get the CSP nonce from request headers in server components
+ * This is used to apply nonces to inline scripts and styles
+ */
+export async function getCSPNonce(): Promise<string | null> {
+  try {
+    const headersList = await headers();
+    return headersList.get('x-csp-nonce');
+  } catch (error) {
+    // Headers might not be available in all contexts
+    return null;
+  }
+}
+
+// Clean up old nonces periodically to prevent memory leaks
+// Simple cleanup that works in both Node.js and Edge Runtime
+try {
+  if (typeof setInterval !== 'undefined') {
+    setInterval(() => {
+      // Only keep the map small by clearing it periodically
+      if (nonces.size > 100) {
+        nonces.clear();
+      }
+    }, 60000); // Check every minute
+  }
+} catch (error) {
+  // Ignore cleanup errors in Edge Runtime
+}

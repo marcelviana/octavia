@@ -13,14 +13,17 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL(request.url.replace('http://', 'https://')));
   }
 
+  // Generate a nonce for CSP
+  const nonce = generateNonce()
+  
   const response = NextResponse.next({
     request: {
-      headers: request.headers,
+      headers: new Headers(request.headers),
     },
   })
   
-  // Generate a nonce for CSP
-  const nonce = generateNonce()
+  // Pass the nonce to the page via a custom header
+  response.headers.set('x-csp-nonce', nonce)
   
   // Set security headers including CSP with proper nonce
   response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
