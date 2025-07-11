@@ -43,7 +43,7 @@ export async function middleware(request: NextRequest) {
       : `script-src 'self' 'nonce-${nonce}' https://www.gstatic.com https://apis.google.com`,
     isDevelopment
       ? `style-src 'self' 'unsafe-inline' https://fonts.googleapis.com`
-      : `style-src 'self' 'nonce-${nonce}' https://fonts.googleapis.com`,
+      : `style-src 'self' 'nonce-${nonce}' 'unsafe-hashes' https://fonts.googleapis.com`,
     "img-src 'self' blob: data: https:",
     "font-src 'self' https://fonts.gstatic.com",
     "connect-src 'self' blob: data: https://*.supabase.co https://*.firebase.com https://*.googleapis.com wss://*.supabase.co",

@@ -60,6 +60,12 @@ export default async function RootLayout({
                     inlineStyles.forEach(function(style) {
                       style.setAttribute('nonce', nonce);
                     });
+                    
+                    // Add nonce to elements with style attributes
+                    const elementsWithStyleAttr = document.querySelectorAll('[style]:not([nonce])');
+                    elementsWithStyleAttr.forEach(function(element) {
+                      element.setAttribute('nonce', nonce);
+                    });
                   }
                   
                   // Wait for DOM to be ready before setting up observers
@@ -73,20 +79,26 @@ export default async function RootLayout({
                       const observer = new MutationObserver(function(mutations) {
                         let hasNewElements = false;
                         mutations.forEach(function(mutation) {
+                          // Check for added nodes
                           mutation.addedNodes.forEach(function(node) {
                             if (node.nodeType === 1) { // Element node
                               const element = node;
-                              if (element.tagName === 'SCRIPT' || element.tagName === 'STYLE') {
+                              if (element.tagName === 'SCRIPT' || element.tagName === 'STYLE' || element.hasAttribute('style')) {
                                 hasNewElements = true;
                               } else if (element.querySelector) {
-                                // Check if any child elements are scripts or styles
-                                const childScriptsOrStyles = element.querySelectorAll('script, style');
-                                if (childScriptsOrStyles.length > 0) {
+                                // Check if any child elements are scripts, styles, or have style attributes
+                                const childElements = element.querySelectorAll('script, style, [style]');
+                                if (childElements.length > 0) {
                                   hasNewElements = true;
                                 }
                               }
                             }
                           });
+                          
+                          // Check for attribute changes (when style attribute is added)
+                          if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+                            hasNewElements = true;
+                          }
                         });
                         
                         if (hasNewElements) {
@@ -94,9 +106,9 @@ export default async function RootLayout({
                         }
                       });
                       
-                      // Observe both head and body
-                      observer.observe(document.head, { childList: true, subtree: true });
-                      observer.observe(document.body, { childList: true, subtree: true });
+                      // Observe both head and body for child additions and attribute changes
+                      observer.observe(document.head, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+                      observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
                     }
                   }
                   
