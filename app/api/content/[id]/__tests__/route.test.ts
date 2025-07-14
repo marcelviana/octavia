@@ -99,9 +99,6 @@ describe('/api/content/[id]', () => {
       const pathParts = pathname.split('/').filter(Boolean)
       const expectedId = pathParts[pathParts.length - 1]
       
-      console.log('URL pathname:', pathname)
-      console.log('Path parts:', pathParts)
-      console.log('Extracted ID:', expectedId)
       
       expect(expectedId).toBe('content-123')
     })
@@ -121,16 +118,7 @@ describe('/api/content/[id]', () => {
         'http://localhost/api/content/content-123'
       )
 
-      console.log('About to call GET handler')
       const response = await GET(request)
-      
-      console.log('Response status:', response.status)
-      console.log('Mock calls:')
-      console.log('requireAuthServer called:', mockRequireAuthServer.mock.calls.length)
-      console.log('supabase.from called:', mockFrom.mock.calls.length)
-      console.log('supabase.select called:', mockSelect.mock.calls.length)
-      console.log('supabase.eq called:', mockEq.mock.calls.length)
-      console.log('supabase.single called:', mockSingle.mock.calls.length)
       
       expectSuccess(response)
       
@@ -211,18 +199,7 @@ describe('/api/content/[id]', () => {
         }
       )
 
-      console.log('About to call PUT handler with data:', updateData)
       const response = await PUT(request)
-      
-      console.log('PUT Response status:', response.status)
-      console.log('PUT Response body:', await response.clone().text())
-      console.log('PUT Mock calls:')
-      console.log('requireAuthServer called:', mockRequireAuthServer.mock.calls.length)
-      console.log('supabase.from called:', mockFrom.mock.calls.length)
-      console.log('supabase.update called:', mockUpdate.mock.calls.length)
-      console.log('supabase.eq called:', mockEq.mock.calls.length)
-      console.log('supabase.select called:', mockSelect.mock.calls.length)
-      console.log('supabase.single called:', mockSingle.mock.calls.length)
       
       expectSuccess(response)
       
