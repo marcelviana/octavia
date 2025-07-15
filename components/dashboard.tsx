@@ -78,7 +78,7 @@ export function Dashboard({
   return (
     <div className="container mx-auto p-4 space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+        <h1 className="text-3xl font-bold tracking-tight" aria-label="Dashboard">Dashboard</h1>
         <Link href="/add-content">
           <Button className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700">
             <Plus className="mr-2 h-4 w-4" /> Add Content
@@ -112,149 +112,284 @@ export function Dashboard({
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="overview" className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            <Card className="bg-white/90 backdrop-blur-sm border-amber-100 shadow-md">
+        <TabsContent value="overview" className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <Card className="bg-white/90 backdrop-blur-sm border border-amber-100 shadow-lg">
               <CardHeader className="pb-2">
-                <CardTitle className="text-lg font-medium">
+                <CardTitle className="text-sm font-medium text-amber-800">
                   Total Content
                 </CardTitle>
-                <CardDescription>All your music content</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold text-amber-600">
+                <div className="text-2xl font-bold text-amber-900">
                   {stats?.totalContent || 0}
                 </div>
+                <p className="text-xs text-amber-600">pieces in your library</p>
               </CardContent>
             </Card>
-            <Card className="bg-white/90 backdrop-blur-sm border-amber-100 shadow-md">
+
+            <Card className="bg-white/90 backdrop-blur-sm border border-amber-100 shadow-lg">
               <CardHeader className="pb-2">
-                <CardTitle className="text-lg font-medium">Favorites</CardTitle>
-                <CardDescription>Your favorite content</CardDescription>
+                <CardTitle className="text-sm font-medium text-amber-800">
+                  Setlists
+                </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold text-amber-600">
-                  {stats?.favoriteContent || 0}
-                </div>
-              </CardContent>
-            </Card>
-            <Card className="bg-white/90 backdrop-blur-sm border-amber-100 shadow-md">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-lg font-medium">Setlists</CardTitle>
-                <CardDescription>Your created setlists</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold text-amber-600">
+                <div className="text-2xl font-bold text-amber-900">
                   {stats?.totalSetlists || 0}
                 </div>
+                <p className="text-xs text-amber-600">ready for performance</p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white/90 backdrop-blur-sm border border-amber-100 shadow-lg">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm font-medium text-amber-800">
+                  Favorites
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold text-amber-900">
+                  {stats?.favoriteContent || 0}
+                </div>
+                <p className="text-xs text-amber-600">marked as favorites</p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white/90 backdrop-blur-sm border border-amber-100 shadow-lg">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm font-medium text-amber-800">
+                  Recent
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold text-amber-900">
+                  {stats?.recentlyViewed || 0}
+                </div>
+                <p className="text-xs text-amber-600">viewed recently</p>
               </CardContent>
             </Card>
           </div>
 
-          <Card className="bg-white/90 backdrop-blur-sm border-amber-100 shadow-md">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <Card className="bg-white/90 backdrop-blur-sm border border-amber-100 shadow-lg">
+              <CardHeader>
+                <CardTitle className="text-amber-800">Recent Content</CardTitle>
+                <CardDescription className="text-amber-600">
+                  Your recently viewed music
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  {recentContent && recentContent.length > 0 ? (
+                    recentContent.slice(0, 5).map((item) => (
+                      <div
+                        key={item.id}
+                        className="flex items-center space-x-3 p-2 rounded-lg hover:bg-amber-50 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+                        onClick={() => onSelectContent(item)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            onSelectContent(item);
+                          }
+                        }}
+                        tabIndex={0}
+                        role="button"
+                        aria-label={`View ${item.title} content`}
+                      >
+                        <div className="flex-shrink-0">
+                          <div className="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center">
+                            {getContentIcon(item.content_type)}
+                          </div>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-gray-900 truncate">
+                            {item.title}
+                          </p>
+                          <p className="text-xs text-gray-500 truncate">
+                            {item.content_type}
+                          </p>
+                        </div>
+                        <div className="flex-shrink-0">
+                          <Clock className="w-4 h-4 text-gray-400" />
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="text-center py-8 text-gray-500">
+                      <FileText className="w-12 h-12 mx-auto mb-4 text-gray-300" />
+                      <p>No recent content</p>
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white/90 backdrop-blur-sm border border-amber-100 shadow-lg">
+              <CardHeader>
+                <CardTitle className="text-amber-800">Favorite Content</CardTitle>
+                <CardDescription className="text-amber-600">
+                  Your starred music pieces
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  {favoriteContent && favoriteContent.length > 0 ? (
+                    favoriteContent.slice(0, 5).map((item) => (
+                      <div
+                        key={item.id}
+                        className="flex items-center space-x-3 p-2 rounded-lg hover:bg-amber-50 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+                        onClick={() => onSelectContent(item)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            onSelectContent(item);
+                          }
+                        }}
+                        tabIndex={0}
+                        role="button"
+                        aria-label={`View ${item.title} content`}
+                      >
+                        <div className="flex-shrink-0">
+                          <div className="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center">
+                            {getContentIcon(item.content_type)}
+                          </div>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-gray-900 truncate">
+                            {item.title}
+                          </p>
+                          <p className="text-xs text-gray-500 truncate">
+                            {item.content_type}
+                          </p>
+                        </div>
+                        <div className="flex-shrink-0">
+                          <div className="w-4 h-4 text-amber-500 fill-current">
+                            ⭐
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="text-center py-8 text-gray-500">
+                      <div className="w-12 h-12 mx-auto mb-4 text-gray-300">⭐</div>
+                      <p>No favorite content</p>
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="recent" className="space-y-4">
+          <Card className="bg-white/90 backdrop-blur-sm border border-amber-100 shadow-lg">
             <CardHeader>
-              <CardTitle>Recently Viewed</CardTitle>
-              <CardDescription>
-                Items you&apos;ve accessed recently
+              <CardTitle className="text-amber-800">Recent Content</CardTitle>
+              <CardDescription className="text-amber-600">
+                Your recently accessed music pieces
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-amber-600">
-                {stats?.recentlyViewed || 0}
+              <div className="space-y-3">
+                {recentContent && recentContent.length > 0 ? (
+                  recentContent.map((item) => (
+                    <div
+                      key={item.id}
+                      className="flex items-center space-x-3 p-3 rounded-lg hover:bg-amber-50 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+                      onClick={() => onSelectContent(item)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          onSelectContent(item);
+                        }
+                      }}
+                      tabIndex={0}
+                      role="button"
+                      aria-label={`View ${item.title} content`}
+                    >
+                      <div className="flex-shrink-0">
+                        <div className="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center">
+                          {getContentIcon(item.content_type)}
+                        </div>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-gray-900 truncate">
+                          {item.title}
+                        </p>
+                        <p className="text-xs text-gray-500 truncate">
+                          {item.content_type} • {formatDate(item.updated_at)}
+                        </p>
+                      </div>
+                      <div className="flex-shrink-0">
+                        <Clock className="w-4 h-4 text-gray-400" />
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="text-center py-8 text-gray-500">
+                    <FileText className="w-12 h-12 mx-auto mb-4 text-gray-300" />
+                    <p>No recent content</p>
+                  </div>
+                )}
               </div>
             </CardContent>
           </Card>
         </TabsContent>
 
-        <TabsContent value="recent" className="space-y-4">
-          <Card className="bg-white/90 backdrop-blur-sm border-amber-100 shadow-md">
+        <TabsContent value="favorites" className="space-y-4">
+          <Card className="bg-white/90 backdrop-blur-sm border border-amber-100 shadow-lg">
             <CardHeader>
-              <CardTitle>Recently Updated</CardTitle>
-              <CardDescription>
-                Your most recently updated content
+              <CardTitle className="text-amber-800">Favorite Content</CardTitle>
+              <CardDescription className="text-amber-600">
+                Your starred music pieces
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {recentContent.length > 0 ? (
-                <div className="space-y-4">
-                  {recentContent.map((item) => (
-                    <Link key={item.id} href={`/content/${item.id}`}>
-                      <div className="flex items-center justify-between p-3 hover:bg-amber-50 rounded-lg transition-colors cursor-pointer">
-                        <div className="flex items-center gap-3">
-                          <div className="bg-amber-100 p-2 rounded-full">
-                            {getContentIcon(item.content_type)}
-                          </div>
-                          <div>
-                            <p className="font-medium">{item.title}</p>
-                            <p className="text-sm text-gray-500">
-                              {(item.content_type || "").replace("_", " ")}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="text-sm text-gray-500">
-                          {formatDate(item.updated_at)}
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              ) : (
-                <div className="flex flex-col items-center justify-center py-8 text-gray-400">
-                  <FileText className="h-12 w-12 mb-2 opacity-30" />
-                  <p>No recent content found</p>
-                  <Link href="/add-content" className="mt-4">
-                    <Button
-                      variant="outline"
-                      className="border-amber-200 text-amber-700 hover:bg-amber-50"
+              <div className="space-y-3">
+                {favoriteContent && favoriteContent.length > 0 ? (
+                  favoriteContent.map((item) => (
+                    <div
+                      key={item.id}
+                      className="flex items-center space-x-3 p-3 rounded-lg hover:bg-amber-50 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+                      onClick={() => onSelectContent(item)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          onSelectContent(item);
+                        }
+                      }}
+                      tabIndex={0}
+                      role="button"
+                      aria-label={`View ${item.title} content`}
                     >
-                      <Plus className="mr-2 h-4 w-4" /> Add Your First Content
-                    </Button>
-                  </Link>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="favorites" className="space-y-4">
-          <Card className="bg-white/90 backdrop-blur-sm border-amber-100 shadow-md">
-            <CardHeader>
-              <CardTitle>Favorites</CardTitle>
-              <CardDescription>Your favorite music content</CardDescription>
-            </CardHeader>
-            <CardContent>
-              {favoriteContent.length > 0 ? (
-                <div className="space-y-4">
-                  {favoriteContent.map((item) => (
-                    <Link key={item.id} href={`/content/${item.id}`}>
-                      <div className="flex items-center justify-between p-3 hover:bg-amber-50 rounded-lg transition-colors cursor-pointer">
-                        <div className="flex items-center gap-3">
-                          <div className="bg-amber-100 p-2 rounded-full">
-                            {getContentIcon(item.content_type)}
-                          </div>
-                          <div>
-                            <p className="font-medium">{item.title}</p>
-                            <p className="text-sm text-gray-500">
-                              {(item.content_type || "").replace("_", " ")}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="text-sm text-gray-500">
-                          {formatDate(item.updated_at)}
+                      <div className="flex-shrink-0">
+                        <div className="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center">
+                          {getContentIcon(item.content_type)}
                         </div>
                       </div>
-                    </Link>
-                  ))}
-                </div>
-              ) : (
-                <div className="flex flex-col items-center justify-center py-8 text-gray-400">
-                  <FileText className="h-12 w-12 mb-2 opacity-30" />
-                  <p>No favorites found</p>
-                  <p className="text-sm mt-1">
-                    Mark content as favorite to see it here
-                  </p>
-                </div>
-              )}
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-gray-900 truncate">
+                          {item.title}
+                        </p>
+                        <p className="text-xs text-gray-500 truncate">
+                          {item.content_type} • {formatDate(item.created_at)}
+                        </p>
+                      </div>
+                      <div className="flex-shrink-0">
+                        <div className="w-4 h-4 text-amber-500 fill-current">
+                          ⭐
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="text-center py-8 text-gray-500">
+                    <div className="w-12 h-12 mx-auto mb-4 text-gray-300">⭐</div>
+                    <p>No favorite content</p>
+                  </div>
+                )}
+              </div>
             </CardContent>
           </Card>
         </TabsContent>

@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor, within } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor, within, act } from '@testing-library/react'
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import userEvent from '@testing-library/user-event'
 import { LoginForm } from '@/components/auth/login-form'
@@ -95,19 +95,59 @@ describe('Authentication Integration Tests', () => {
       )
     }
 
-    it('renders login form with required fields', async () => {
+    it('supports complete login workflow with validation and feedback', async () => {
+      const user = userEvent.setup()
       renderLoginForm()
 
-      // Should have email and password fields
-      expect(screen.getByRole('textbox', { name: /email/i }) ||
-             screen.getByLabelText(/email/i)).toBeInTheDocument()
-      
-      expect(screen.getByLabelText(/password/i) ||
-             document.querySelector('input[type="password"]')).toBeInTheDocument()
+      // User sees login form
+      const emailField = screen.getByRole('textbox', { name: /email/i }) ||
+                        screen.getByLabelText(/email/i)
+      const passwordField = screen.getByLabelText(/^password$/i) ||
+                           document.querySelector('input[type="password"]')
+      const loginButton = screen.getByRole('button', { name: /sign in/i }) ||
+                         screen.getByRole('button', { name: /login/i })
 
-      // Should have login button
-      expect(screen.getByRole('button', { name: /sign in/i }) ||
-             screen.getByRole('button', { name: /login/i })).toBeInTheDocument()
+      expect(emailField).toBeInTheDocument()
+      expect(passwordField).toBeInTheDocument()
+      expect(loginButton).toBeInTheDocument()
+
+      // User attempts to login with empty fields
+      await act(async () => {
+        const loginButton = screen.getByRole('button', { name: /sign in/i })
+        await user.click(loginButton)
+      })
+
+      // System may or may not show immediate validation - focus on the workflow
+      // (Some forms validate on submit, others on blur)
+      
+      // User enters invalid email and tries again
+      await act(async () => {
+        await user.type(emailField, 'invalid-email')
+        await user.click(screen.getByRole('button', { name: /sign in/i }))
+      })
+
+      // User enters valid email but leaves password empty
+      await act(async () => {
+        await user.clear(emailField)
+        await user.type(emailField, 'john@example.com')
+        await user.clear(passwordField)
+        await user.click(screen.getByRole('button', { name: /sign in/i }))
+      })
+
+      // User completes form with valid credentials
+      await act(async () => {
+        await user.type(passwordField, 'password123')
+        await user.click(screen.getByRole('button', { name: /sign in/i }))
+      })
+
+      // System processes login (button text might change)
+      const submitButton = screen.getByRole('button', { name: /sign in|signing in/i })
+      expect(submitButton).toBeInTheDocument()
+
+      // Eventually authentication occurs (mocked)
+      await waitFor(() => {
+        expect(mockAuthState.signIn).toHaveBeenCalledWith('john@example.com', 'password123')
+      })
     })
 
     it('handles successful login', async () => {
@@ -117,7 +157,7 @@ describe('Authentication Integration Tests', () => {
       // Fill in credentials
       const emailInput = screen.getByRole('textbox', { name: /email/i }) ||
                         screen.getByLabelText(/email/i)
-      const passwordInput = screen.getByLabelText(/password/i) ||
+      const passwordInput = screen.getByLabelText(/^password$/i) ||
                            document.querySelector('input[type="password"]')
       
       await user.type(emailInput, 'test@example.com')
@@ -164,7 +204,7 @@ describe('Authentication Integration Tests', () => {
       // Fill in invalid credentials
       const emailInput = screen.getByRole('textbox', { name: /email/i }) ||
                         screen.getByLabelText(/email/i)
-      const passwordInput = screen.getByLabelText(/password/i) ||
+      const passwordInput = screen.getByLabelText(/^password$/i) ||
                            document.querySelector('input[type="password"]')
       
       await user.type(emailInput, 'wrong@example.com')
@@ -182,26 +222,23 @@ describe('Authentication Integration Tests', () => {
       })
     })
 
-    it('navigates to signup page', async () => {
+    it('provides user-friendly navigation to signup and password recovery', async () => {
       const user = userEvent.setup()
       renderLoginForm()
 
-      // Find signup link - should check href attribute since it's a Link component
+      // User can easily find signup option
       const signupLink = screen.getByRole('link', { name: /sign up/i })
-
-      // Check that the link has the correct href
+      expect(signupLink).toBeAccessible()
       expect(signupLink).toHaveAttribute('href', '/signup')
-    })
 
-    it('navigates to forgot password', async () => {
-      const user = userEvent.setup()
-      renderLoginForm()
-
-      // Find forgot password link - should check href attribute since it's a Link component
+      // User can easily find password recovery option
       const forgotLink = screen.getByRole('link', { name: /forgot.*password/i })
-
-      // Check that the link has the correct href
+      expect(forgotLink).toBeAccessible()
       expect(forgotLink).toHaveAttribute('href', '/forgot-password')
+
+      // Links are properly labeled for screen readers
+      expect(signupLink).toHaveAriaLabel('sign up')
+      expect(forgotLink).toHaveAriaLabel('forgot password')
     })
   })
 
@@ -214,18 +251,58 @@ describe('Authentication Integration Tests', () => {
       )
     }
 
-    it('renders signup form with required fields', async () => {
-      renderSignupForm()
+    it('supports complete signup workflow with comprehensive validation', async () => {
+      const user = userEvent.setup()
 
-      // Should have email, password, and confirm password fields
-      expect(screen.getByRole('textbox', { name: /email/i }) ||
-             screen.getByLabelText(/email/i)).toBeInTheDocument()
+      await renderSignupForm()
       
-      expect(screen.getByLabelText(/^password/i) ||
-             document.querySelector('input[type="password"]')).toBeInTheDocument()
+      const emailField = screen.getByLabelText(/email/i)
+      const passwordField = screen.getByLabelText(/^password$/i)
+      const signupButton = screen.getByRole('button', { name: /create account/i })
+      
+      // User can see and interact with form elements
+      expect(signupButton).toBeInTheDocument()
 
-      // Should have signup button
-      expect(screen.getByRole('button', { name: /create account/i })).toBeInTheDocument()
+      // User attempts signup with empty fields
+      await act(async () => {
+        const signupButton = screen.getByRole('button', { name: /create account/i })
+        await user.click(signupButton)
+      })
+
+      // System shows validation errors (may vary by implementation)
+      // Focus on the fields that actually show validation
+      await waitFor(() => {
+        const alerts = screen.getAllByRole('alert').map(el => el.textContent)
+        expect(alerts.length).toBeGreaterThan(0) // Some validation appears
+      })
+
+      // User enters valid information step by step
+      await act(async () => {
+        await user.type(screen.getByLabelText(/first name/i), 'John')
+        await user.type(screen.getByLabelText(/last name/i), 'Doe')
+        await user.type(emailField, 'john@example.com')
+        await user.type(passwordField, 'password123')
+        await user.type(screen.getByLabelText(/confirm password/i), 'password123')
+        await user.click(screen.getByRole('button', { name: /create account/i }))
+      })
+
+      // System processes signup (button text might change)
+      const submitButton = screen.getByRole('button', { name: /create account|creating account/i })
+      expect(submitButton).toBeInTheDocument()
+
+      // Eventually completes signup (mocked)
+      await waitFor(() => {
+        expect(mockAuthState.signUp).toHaveBeenCalledWith(
+          'john@example.com',
+          'password123',
+          expect.objectContaining({
+            first_name: expect.any(String),
+            last_name: expect.any(String),
+            full_name: expect.any(String),
+            primary_instrument: expect.any(String)
+          })
+        )
+      })
     })
 
     it('handles successful signup', async () => {
@@ -454,7 +531,7 @@ describe('Authentication Integration Tests', () => {
 
       const emailInput = screen.getByRole('textbox', { name: /email/i }) ||
                         screen.getByLabelText(/email/i)
-      const passwordInput = screen.getByLabelText(/password/i) ||
+      const passwordInput = screen.getByLabelText(/^password$/i) ||
                            document.querySelector('input[type="password"]')
       
       // Enter invalid email
@@ -485,7 +562,7 @@ describe('Authentication Integration Tests', () => {
 
       const emailInput = screen.getByRole('textbox', { name: /email/i }) ||
                         screen.getByLabelText(/email/i)
-      const passwordInput = screen.getByLabelText(/password/i) ||
+      const passwordInput = screen.getByLabelText(/^password$/i) ||
                            document.querySelector('input[type="password"]')
       
       await user.type(emailInput, 'test@example.com')

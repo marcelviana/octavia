@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom'
 import { expect, afterEach, vi, beforeAll } from 'vitest'
-import { cleanup } from '@testing-library/react'
+import { cleanup, act } from '@testing-library/react'
+import { setupCustomMatchers } from '@/lib/__tests__/custom-matchers'
 
 // Polyfill Promise.withResolvers for older Node.js versions
 if (!Promise.withResolvers) {
@@ -14,6 +15,31 @@ if (!Promise.withResolvers) {
     return { promise, resolve: resolve!, reject: reject! };
   };
 }
+
+// Suppress React DevTools warnings in tests
+if (typeof window !== 'undefined') {
+  (window as any).__REACT_DEVTOOLS_GLOBAL_HOOK__ = {
+    isDisabled: true,
+    supportsFiber: true,
+    inject: () => {},
+    onCommitFiberRoot: () => {},
+    onCommitFiberUnmount: () => {},
+  };
+}
+
+// Helper function to wrap component rendering in act()
+export const renderWithAct = async (renderFn: () => void) => {
+  await act(async () => {
+    renderFn();
+  });
+};
+
+// Helper function to wrap user interactions in act()
+export const actUserEvent = async (interactionFn: () => Promise<void>) => {
+  await act(async () => {
+    await interactionFn();
+  });
+};
 
 // Set up test environment variables
 beforeAll(() => {
@@ -113,3 +139,6 @@ if (typeof window !== 'undefined') {
 afterEach(() => {
   cleanup()
 })
+
+// Setup custom matchers for behavioral testing
+setupCustomMatchers()

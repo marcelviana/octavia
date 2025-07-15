@@ -28,6 +28,8 @@ export const mockContent = [
   }
 ]
 
+export let currentTestContent: any[] = mockContent
+
 vi.mock('@/lib/content-service', () => ({
   createContent: vi.fn(),
   updateContent: vi.fn(),
@@ -85,15 +87,22 @@ export const setupTestMocks = async () => {
 
   ;(createContent as any).mockResolvedValue(mockContent[0])
   ;(updateContent as any).mockResolvedValue(mockContent[0])
-  ;(getUserContentPage as any).mockResolvedValue({
-    content: mockContent,
-    totalCount: mockContent.length,
-    totalPages: 1,
+  ;(getUserContentPage as any).mockImplementation(() => {
+    return Promise.resolve({
+      data: currentTestContent,
+      total: currentTestContent.length,
+      totalPages: Math.ceil(currentTestContent.length / 20),
+    })
   })
   ;(toggleFavorite as any).mockResolvedValue(undefined)
   ;(uploadFileToStorage as any).mockResolvedValue('https://example.com/file.pdf')
 }
 
+export const setTestContent = (content: any[]) => {
+  currentTestContent = content
+}
+
 export const resetTestMocks = () => {
   vi.resetAllMocks()
+  currentTestContent = mockContent
 }

@@ -16,6 +16,8 @@ import {
   Star,
   Clock,
   Trash2,
+  Plus,
+  FileText,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -42,8 +44,41 @@ export function LibraryList({
   getContentIcon,
   formatDate,
 }: Props) {
-  if (content.length === 0) {
-    return null;
+  // Handle empty state
+  if (content.length === 0 && !loading) {
+    return (
+      <Card className="bg-white/90 backdrop-blur-sm border border-amber-100 shadow-lg">
+        <CardContent className="p-8 text-center">
+          <div className="flex flex-col items-center space-y-4">
+            <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center">
+              <FileText className="w-8 h-8 text-amber-600" />
+            </div>
+            <h3 className="text-lg font-medium text-gray-900">No content found</h3>
+            <p className="text-sm text-gray-500 max-w-sm">
+              Your library is empty. Add some content to get started with your music collection.
+            </p>
+            <Button className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700">
+              <Plus className="mr-2 h-4 w-4" />
+              Add your first content
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  // Handle loading state
+  if (loading) {
+    return (
+      <Card className="bg-white/90 backdrop-blur-sm border border-amber-100 shadow-lg">
+        <CardContent className="p-8 text-center">
+          <div className="flex flex-col items-center space-y-4">
+            <div className="w-8 h-8 border-2 border-t-amber-600 border-amber-200 rounded-full animate-spin" />
+            <p className="text-sm text-gray-600">Loading your library...</p>
+          </div>
+        </CardContent>
+      </Card>
+    );
   }
 
   // Determine if we should use dynamic height for small lists
@@ -51,14 +86,6 @@ export function LibraryList({
 
   return (
     <div className="relative">
-      {loading && (
-        <div className="absolute inset-0 bg-white/50 backdrop-blur-sm z-10 flex items-center justify-center rounded-lg">
-          <div className="bg-white p-4 rounded-lg shadow-lg flex items-center gap-2">
-            <div className="w-4 h-4 border-2 border-t-amber-600 border-amber-200 rounded-full animate-spin" />
-            <span className="text-sm text-gray-700">Refreshing...</span>
-          </div>
-        </div>
-      )}
       <Card className="bg-white/90 backdrop-blur-sm border border-amber-100 shadow-lg overflow-hidden">
         <CardContent className="p-0">
           <ScrollArea 
@@ -88,8 +115,17 @@ export function LibraryList({
 
                   {/* Content Info */}
                   <div
-                    className="flex-1 min-w-0 cursor-pointer"
+                    className="flex-1 min-w-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 rounded-md"
                     onClick={() => onSelect(item)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        onSelect(item);
+                      }
+                    }}
+                    tabIndex={0}
+                    role="button"
+                    aria-label={`View ${item.title} by ${item.artist || 'Unknown Artist'}`}
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex-1 min-w-0">
@@ -175,6 +211,8 @@ export function LibraryList({
                             e.stopPropagation();
                             onToggleFavorite(item);
                           }}
+                          aria-label={`${item.is_favorite ? 'Remove from' : 'Add to'} favorites`}
+                          aria-pressed={item.is_favorite}
                         >
                           <Star 
                             className={`w-4 h-4 transition-colors ${
@@ -195,6 +233,7 @@ export function LibraryList({
                               size="icon"
                               className="h-8 w-8"
                               onClick={(e) => e.stopPropagation()}
+                              aria-label="More options"
                             >
                               <MoreVertical className="w-4 h-4" />
                             </Button>
@@ -225,6 +264,7 @@ export function LibraryList({
                                 e.stopPropagation();
                                 onDelete(item);
                               }}
+                              aria-label={`Delete ${item.title}`}
                             >
                               <Trash2 className="w-4 h-4 mr-2" />
                               Delete
