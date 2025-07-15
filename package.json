@@ -12,7 +12,11 @@
     "test": "pnpm exec vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "test:integration": "pnpm exec vitest run --config vitest.config.integration.mts",
+    "test:integration:watch": "pnpm exec vitest --config vitest.config.integration.mts",
+    "test:unit": "pnpm exec vitest run --exclude '**/*.integration.test.{ts,tsx}'",
+    "test:all": "pnpm run test:unit && pnpm run test:integration"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
