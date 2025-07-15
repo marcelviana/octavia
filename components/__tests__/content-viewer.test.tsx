@@ -6,6 +6,7 @@ import { ContentViewer } from '../content-viewer'
 // Mock Next.js Image component
 vi.mock('next/image', () => ({
   default: ({ src, alt, ...props }: any) => (
+    // eslint-disable-next-line @next/next/no-img-element
     <img src={src} alt={alt} {...props} />
   ),
 }))
@@ -59,7 +60,11 @@ vi.mock('@/types/content', () => ({
     CHORDS: 'chords',
     SHEET: 'sheet',
   },
-  getContentTypeIcon: vi.fn(() => () => <div data-testid="content-icon">Icon</div>),
+  getContentTypeIcon: vi.fn(() => {
+    const MockIcon = () => <div data-testid="content-icon">Icon</div>
+    MockIcon.displayName = 'MockContentTypeIcon'
+    return MockIcon
+  }),
   normalizeContentType: vi.fn((type) => type),
 }))
 
