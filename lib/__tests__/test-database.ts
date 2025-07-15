@@ -2,11 +2,14 @@ import { createClient } from '@supabase/supabase-js'
 import type { Database } from '@/types/supabase'
 
 // Test database configuration
-const TEST_SUPABASE_URL = process.env.TEST_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL!
-const TEST_SUPABASE_SERVICE_KEY = process.env.TEST_SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY!
+const TEST_SUPABASE_URL = process.env.TEST_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL
+const TEST_SUPABASE_SERVICE_KEY = process.env.TEST_SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY
 
-if (!TEST_SUPABASE_URL || !TEST_SUPABASE_SERVICE_KEY) {
-  throw new Error('Test database configuration missing. Set TEST_SUPABASE_URL and TEST_SUPABASE_SERVICE_ROLE_KEY environment variables.')
+// Only throw error if we're actually trying to use the database
+let databaseConfigured = false
+
+if (TEST_SUPABASE_URL && TEST_SUPABASE_SERVICE_KEY) {
+  databaseConfigured = true
 }
 
 /**
@@ -14,7 +17,11 @@ if (!TEST_SUPABASE_URL || !TEST_SUPABASE_SERVICE_KEY) {
  * Uses service role key for full database access during tests
  */
 export function createTestSupabaseClient() {
-  return createClient<Database>(TEST_SUPABASE_URL, TEST_SUPABASE_SERVICE_KEY, {
+  if (!databaseConfigured) {
+    throw new Error('Test database configuration missing. Set TEST_SUPABASE_URL and TEST_SUPABASE_SERVICE_ROLE_KEY environment variables.')
+  }
+  
+  return createClient<Database>(TEST_SUPABASE_URL!, TEST_SUPABASE_SERVICE_KEY!, {
     auth: {
       autoRefreshToken: false,
       persistSession: false

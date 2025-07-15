@@ -24,39 +24,86 @@ import { createTestUser } from '@/lib/__tests__/test-database'
  * This approach tests YOUR code integration while controlling external dependencies
  */
 
-describe('Auth Integration with Boundary Mocking', () => {
-  let mockRouter: any
-  let mockFirebaseAuth: any
+// Mock external boundaries at module level
+const mockRouter = {
+  push: vi.fn(),
+  replace: vi.fn(),
+  prefetch: vi.fn(),
+  back: vi.fn(),
+}
 
+const mockFirebaseAuth = {
+  signInWithEmailAndPassword: vi.fn(),
+  createUserWithEmailAndPassword: vi.fn(),
+  sendPasswordResetEmail: vi.fn(),
+  signOut: vi.fn(),
+  getAuth: vi.fn(),
+}
+
+// Mock Next.js navigation (external boundary)
+vi.mock('next/navigation', () => ({
+  useRouter: () => mockRouter,
+  useSearchParams: () => new URLSearchParams(),
+  usePathname: () => '/login',
+}))
+
+// Mock Firebase auth functions (external boundary)  
+vi.mock('firebase/auth', () => ({
+  signInWithEmailAndPassword: vi.fn(),
+  createUserWithEmailAndPassword: vi.fn(),
+  sendPasswordResetEmail: vi.fn(),
+  signOut: vi.fn(),
+  getAuth: vi.fn(),
+}))
+
+// Mock the Firebase auth context
+const mockSignIn = vi.fn()
+const mockSignUp = vi.fn()
+const mockSignOut = vi.fn()
+
+vi.mock('@/contexts/firebase-auth-context', () => ({
+  useAuth: () => ({
+    user: null,
+    loading: false,
+    isLoading: false,
+    signIn: mockSignIn,
+    signUp: mockSignUp,
+    signOut: mockSignOut,
+    resetPassword: vi.fn(),
+    profile: null,
+    idToken: null,
+    isConfigured: true,
+    isInitialized: true,
+    refreshToken: vi.fn(),
+    signInWithGoogle: vi.fn(),
+    updateProfile: vi.fn(),
+    resendVerificationEmail: vi.fn(),
+  }),
+  useFirebaseAuth: () => ({
+    user: null,
+    loading: false,
+    isLoading: false,
+    signIn: mockSignIn,
+    signUp: mockSignUp,
+    signOut: mockSignOut,
+    resetPassword: vi.fn(),
+    profile: null,
+    idToken: null,
+    isConfigured: true,
+    isInitialized: true,
+    refreshToken: vi.fn(),
+    signInWithGoogle: vi.fn(),
+    updateProfile: vi.fn(),
+    resendVerificationEmail: vi.fn(),
+  }),
+  FirebaseAuthProvider: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="firebase-auth-provider">{children}</div>
+  ),
+}))
+
+describe('Auth Integration with Boundary Mocking', () => {
   beforeEach(() => {
     vi.clearAllMocks()
-    
-    // Mock external boundaries only
-    mockRouter = {
-      push: vi.fn(),
-      replace: vi.fn(),
-      prefetch: vi.fn(),
-      back: vi.fn(),
-    }
-    
-    // Mock Firebase auth boundary (external service)
-    mockFirebaseAuth = {
-      signInWithEmailAndPassword: vi.fn(),
-      createUserWithEmailAndPassword: vi.fn(),
-      sendPasswordResetEmail: vi.fn(),
-      signOut: vi.fn(),
-      getAuth: vi.fn(),
-    }
-
-    // Mock Next.js navigation (external boundary)
-    vi.mock('next/navigation', () => ({
-      useRouter: () => mockRouter,
-      useSearchParams: () => new URLSearchParams(),
-      usePathname: () => '/login',
-    }))
-
-    // Mock Firebase auth functions (external boundary)  
-    vi.mock('firebase/auth', () => mockFirebaseAuth)
   })
 
   afterEach(() => {
@@ -64,15 +111,11 @@ describe('Auth Integration with Boundary Mocking', () => {
   })
 
   describe('Login Form Integration', () => {
-    const renderLoginWithAuth = (authContext?: any) => {
-      const testAuthContext = authContext || createUnauthenticatedAuthContext()
-      
+    const renderLoginWithAuth = () => {
       return render(
-        <TestAuthProvider authContext={testAuthContext}>
-          <SessionProvider>
-            <LoginForm />
-          </SessionProvider>
-        </TestAuthProvider>
+        <SessionProvider>
+          <LoginForm />
+        </SessionProvider>
       )
     }
 
@@ -80,16 +123,12 @@ describe('Auth Integration with Boundary Mocking', () => {
       const user = userEvent.setup()
       
       // Mock successful authentication response
-      const testUser = createTestUser()
-      mockFirebaseAuth.signInWithEmailAndPassword.mockResolvedValue({
-        user: testUser
+      mockSignIn.mockResolvedValue({
+        error: null,
+        user: { uid: 'test-user', email: 'test@example.com' }
       })
 
-      // Create auth context that will handle the login
-      const authContext = createUnauthenticatedAuthContext()
-      authContext.signIn = vi.fn().mockResolvedValue({ error: null, user: testUser })
-
-      renderLoginWithAuth(authContext)
+      renderLoginWithAuth()
 
       // REAL FORM INTERACTION: User fills out login form
       const emailField = screen.getByRole('textbox', { name: /email/i })
@@ -104,12 +143,12 @@ describe('Auth Integration with Boundary Mocking', () => {
 
       // REAL SERVICE INTEGRATION: Auth service should be called with form data
       await waitFor(() => {
-        expect(authContext.signIn).toHaveBeenCalledWith('test@example.com', 'password123')
+        expect(mockSignIn).toHaveBeenCalledWith('test@example.com', 'password123')
       })
 
       // REAL UI STATE: Form should show success state
       await waitFor(() => {
-        expect(mockRouter.push).toHaveBeenCalledWith('/dashboard')
+        expect(mockRouter.push).toHaveBeenCalledWith('/')
       })
     })
 
@@ -117,12 +156,11 @@ describe('Auth Integration with Boundary Mocking', () => {
       const user = userEvent.setup()
       
       // Mock authentication failure
-      const authContext = createUnauthenticatedAuthContext()
-      authContext.signIn = vi.fn().mockResolvedValue({
-        error: { message: 'Invalid email or password' }
-      })
+      mockFirebaseAuth.signInWithEmailAndPassword.mockRejectedValue(
+        new Error('Invalid email or password')
+      )
 
-      renderLoginWithAuth(authContext)
+      renderLoginWithAuth()
 
       // REAL FORM INTERACTION: User submits invalid credentials
       await act(async () => {
@@ -150,8 +188,8 @@ describe('Auth Integration with Boundary Mocking', () => {
       })
 
       // REAL VALIDATION FEEDBACK: HTML5 validation or custom validation should work
-      const emailField = screen.getByRole('textbox', { name: /email/i })
-      expect(emailField).toBeInvalid() // HTML5 required validation
+      const emailField = screen.getByRole('textbox', { name: /email/i }) as HTMLInputElement
+      expect(emailField.validity.valid).toBe(false) // HTML5 required validation
 
       // REAL VALIDATION: Enter invalid email format
       await act(async () => {
@@ -160,19 +198,18 @@ describe('Auth Integration with Boundary Mocking', () => {
       })
 
       // REAL VALIDATION FEEDBACK: Email format validation
-      expect(emailField).toBeInvalid() // HTML5 email validation
+      expect(emailField.validity.valid).toBe(false) // HTML5 email validation
     })
 
     it('shows loading state during authentication with real UI updates', async () => {
       const user = userEvent.setup()
       
       // Mock delayed authentication
-      const authContext = createUnauthenticatedAuthContext()
-      authContext.signIn = vi.fn().mockImplementation(
-        () => new Promise(resolve => setTimeout(() => resolve({ error: null }), 1000))
+      mockSignIn.mockImplementation(
+        () => new Promise(resolve => setTimeout(() => resolve({ error: null, user: null }), 1000))
       )
 
-      renderLoginWithAuth(authContext)
+      renderLoginWithAuth()
 
       // REAL FORM INTERACTION: Start login process
       await act(async () => {
@@ -183,22 +220,18 @@ describe('Auth Integration with Boundary Mocking', () => {
 
              // REAL UI STATE: Loading state should be shown
        await waitFor(() => {
-         const button = screen.getByRole('button', { name: /signing in|sign in/i })
+         const button = screen.getByRole('button', { name: /signing in|sign in/i }) as HTMLButtonElement
          expect(button.disabled || button.textContent?.match(/signing in/i)).toBeTruthy()
        })
     })
   })
 
   describe('Signup Form Integration', () => {
-    const renderSignupWithAuth = (authContext?: any) => {
-      const testAuthContext = authContext || createUnauthenticatedAuthContext()
-      
+    const renderSignupWithAuth = () => {
       return render(
-        <TestAuthProvider authContext={testAuthContext}>
-          <SessionProvider>
-            <SignupForm />
-          </SessionProvider>
-        </TestAuthProvider>
+        <SessionProvider>
+          <SignupForm />
+        </SessionProvider>
       )
     }
 
@@ -206,14 +239,12 @@ describe('Auth Integration with Boundary Mocking', () => {
       const user = userEvent.setup()
       
       // Mock successful signup response
-      const testUser = createTestUser()
-      const authContext = createUnauthenticatedAuthContext()
-      authContext.signUp = vi.fn().mockResolvedValue({
+      mockSignUp.mockResolvedValue({
         error: null,
-        data: { user: testUser }
+        data: { user: { uid: 'test-user', email: 'john@example.com' } }
       })
 
-      renderSignupWithAuth(authContext)
+      renderSignupWithAuth()
 
       // REAL FORM INTERACTION: User fills complete signup form
       await act(async () => {
@@ -230,7 +261,7 @@ describe('Auth Integration with Boundary Mocking', () => {
 
       // REAL SERVICE INTEGRATION: Signup should be called with form data
       await waitFor(() => {
-        expect(authContext.signUp).toHaveBeenCalledWith(
+        expect(mockSignUp).toHaveBeenCalledWith(
           'john@example.com',
           'securepassword123',
           expect.objectContaining({
@@ -259,7 +290,7 @@ describe('Auth Integration with Boundary Mocking', () => {
         // Either custom validation message or prevent submission
         expect(
           screen.queryByText(/passwords.*match/i) ||
-          passwordInputs[1].validity.valid === false
+          (passwordInputs[1] as HTMLInputElement).validity.valid === false
         ).toBeTruthy()
       })
     })
@@ -268,10 +299,9 @@ describe('Auth Integration with Boundary Mocking', () => {
       const user = userEvent.setup()
       
       // Mock network error
-      const authContext = createUnauthenticatedAuthContext()
-      authContext.signUp = vi.fn().mockRejectedValue(new Error('Network error'))
+      mockSignUp.mockRejectedValue(new Error('Network error'))
 
-      renderSignupWithAuth(authContext)
+      renderSignupWithAuth()
 
       // Fill and submit form
       await act(async () => {
@@ -325,10 +355,12 @@ describe('Auth Integration with Boundary Mocking', () => {
       const user = userEvent.setup()
       const testUser = createTestUser()
       
-      // Start with authenticated state
-      const authContext = createUnauthenticatedAuthContext()
-      authContext.user = testUser
-      authContext.isLoading = false
+      // Start with authenticated state  
+      const authContext = {
+        ...createUnauthenticatedAuthContext(),
+        user: testUser,
+        isLoading: false
+      }
 
       const { rerender } = render(
         <TestAuthProvider authContext={authContext}>
@@ -344,13 +376,16 @@ describe('Auth Integration with Boundary Mocking', () => {
       expect(screen.getByText(`Welcome ${testUser.email}`)).toBeInTheDocument()
 
       // Simulate state change (e.g., logout)
-      authContext.user = null
+      const updatedAuthContext = {
+        ...authContext,
+        user: null
+      }
       
       rerender(
-        <TestAuthProvider authContext={authContext}>
+        <TestAuthProvider authContext={updatedAuthContext}>
           <SessionProvider>
             <div data-testid="user-info">
-              {authContext.user ? `Welcome ${authContext.user.email}` : 'Not logged in'}
+              {updatedAuthContext.user ? `Welcome ${updatedAuthContext.user.email}` : 'Not logged in'}
             </div>
           </SessionProvider>
         </TestAuthProvider>

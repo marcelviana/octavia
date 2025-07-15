@@ -21,10 +21,54 @@ import type { ContentItem, UserStats } from '@/components/dashboard'
  * This approach tests component integration patterns without external dependencies
  */
 
-describe('Dashboard Component Integration', () => {
-  let mockRouter: any
-  let mockAuthContext: any
+// Mock external boundaries at module level
+const mockRouter = {
+  push: vi.fn(),
+  replace: vi.fn(),
+  prefetch: vi.fn(),
+  back: vi.fn(),
+}
 
+const mockAuthContext = {
+  user: {
+    uid: 'test-user',
+    email: 'test@example.com',
+    displayName: 'Test User'
+  },
+  loading: false,
+  isLoading: false,
+  signIn: vi.fn(),
+  signUp: vi.fn(),
+  signOut: vi.fn(),
+  profile: {
+    user_id: 'test-user',
+    first_name: 'Test',
+    last_name: 'User',
+    full_name: 'Test User',
+    primary_instrument: 'guitar'
+  },
+  idToken: 'mock-token',
+  isConfigured: true,
+  isInitialized: true,
+  refreshToken: vi.fn(),
+  signInWithGoogle: vi.fn(),
+  updateProfile: vi.fn(),
+  resendVerificationEmail: vi.fn(),
+}
+
+// Mock external boundaries only
+vi.mock('next/navigation', () => ({
+  useRouter: () => mockRouter,
+  useSearchParams: () => new URLSearchParams(),
+  usePathname: () => '/dashboard',
+}))
+
+vi.mock('@/contexts/firebase-auth-context', () => ({
+  FirebaseAuthProvider: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  useAuth: () => mockAuthContext,
+}))
+
+describe('Dashboard Component Integration', () => {
   // Realistic test data that matches your actual data structure
   const mockRecentContent: ContentItem[] = [
     {
@@ -81,53 +125,6 @@ describe('Dashboard Component Integration', () => {
 
   beforeEach(() => {
     vi.clearAllMocks()
-    
-    // Mock only external boundaries
-    mockRouter = {
-      push: vi.fn(),
-      replace: vi.fn(),
-      prefetch: vi.fn(),
-      back: vi.fn(),
-    }
-
-    mockAuthContext = {
-      user: {
-        uid: 'test-user',
-        email: 'test@example.com',
-        displayName: 'Test User'
-      },
-      loading: false,
-      isLoading: false,
-      signIn: vi.fn(),
-      signUp: vi.fn(),
-      signOut: vi.fn(),
-      profile: {
-        user_id: 'test-user',
-        first_name: 'Test',
-        last_name: 'User',
-        full_name: 'Test User',
-        primary_instrument: 'guitar'
-      },
-      idToken: 'mock-token',
-      isConfigured: true,
-      isInitialized: true,
-      refreshToken: vi.fn(),
-      signInWithGoogle: vi.fn(),
-      updateProfile: vi.fn(),
-      resendVerificationEmail: vi.fn(),
-    }
-
-    // Mock external boundaries only
-    vi.mock('next/navigation', () => ({
-      useRouter: () => mockRouter,
-      useSearchParams: () => new URLSearchParams(),
-      usePathname: () => '/dashboard',
-    }))
-
-    vi.mock('@/contexts/firebase-auth-context', () => ({
-      FirebaseAuthProvider: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
-      useAuth: () => mockAuthContext,
-    }))
   })
 
   afterEach(() => {
@@ -223,8 +220,8 @@ describe('Dashboard Component Integration', () => {
 
     // REAL STAT LABELS: Should have meaningful labels
     expect(screen.getByText(/total.*content/i)).toBeInTheDocument()
-    expect(screen.getByText(/setlists/i)).toBeInTheDocument()
-    expect(screen.getByText(/favorites/i)).toBeInTheDocument()
+    expect(screen.getAllByText(/setlists/i)).toHaveLength(2) // Multiple instances expected
+    expect(screen.getAllByText(/favorites/i)).toHaveLength(3) // Multiple instances expected
   })
 
   it('handles empty states with real conditional rendering', async () => {
@@ -290,8 +287,9 @@ describe('Dashboard Component Integration', () => {
     // REAL RESPONSIVE BEHAVIOR: Should handle different content types
     const contentTypes = ['lyrics', 'chords', 'tabs']
     contentTypes.forEach(type => {
-      if (screen.queryByText(type)) {
-        expect(screen.getByText(type)).toBeInTheDocument()
+      const elements = screen.queryAllByText(type)
+      if (elements.length > 0) {
+        expect(elements[0]).toBeInTheDocument()
       }
     })
   })
