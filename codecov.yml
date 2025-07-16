@@ -1,0 +1,97 @@
+# Codecov configuration for Octavia
+# https://docs.codecov.io/docs/codecov-yaml
+
+codecov: 
+ token: c4016457-cfdb-4df4-8e9a-3eab5b3708fa
+ 
+coverage:
+  # Set minimum coverage thresholds
+  status:
+    project:
+      default:
+        # Basic coverage thresholds
+        target: 70%
+        threshold: 5%
+        base: auto
+    patch:
+      default:
+        # Coverage for new/changed code
+        target: 80%
+        threshold: 5%
+        base: auto
+
+# Coverage precision
+precision: 2
+
+# Ignore coverage for certain files/directories
+ignore:
+  - "**/*.d.ts"
+  - "**/*.config.*"
+  - "**/coverage/**"
+  - "**/node_modules/**"
+  - "**/dist/**"
+  - "**/.next/**"
+  - "**/public/**"
+  - "**/scripts/**"
+  - "**/src/test-setup.ts"
+  - "**/src/test-setup-integration.ts"
+  - "**/vitest.setup.ts"
+  - "**/__tests__/**"
+  - "**/*.test.{ts,tsx}"
+  - "**/*.spec.{ts,tsx}"
+  - "**/test-utils/**"
+  - "**/test-helpers/**"
+  - "**/mocks/**"
+  - "**/stubs/**"
+  - "**/fixtures/**"
+
+# Comment settings
+comment:
+  layout: "reach, diff, flags, files"
+  behavior: default
+  require_changes: false
+
+# GitHub integration settings
+github_checks:
+  annotations: true
+
+# Coverage report settings
+parsers:
+  gcov:
+    branch_detection:
+      conditional: yes
+      loop: yes
+      method: no
+      macro: no
+
+# File upload settings
+upload:
+  coverage:
+    - coverage-final.json
+  flags:
+    unittests:
+      paths:
+        - "lib/"
+        - "components/"
+        - "hooks/"
+        - "contexts/"
+        - "app/"
+      carryforward: true
+    integration:
+      paths:
+        - "**/*.integration.test.{ts,tsx}"
+        - "**/integration/**"
+      carryforward: true
+
+# Status checks
+status:
+  project:
+    default:
+      target: 70%
+      threshold: 5%
+      base: auto
+  patch:
+    default:
+      target: 80%
+      threshold: 5%
+      base: auto 

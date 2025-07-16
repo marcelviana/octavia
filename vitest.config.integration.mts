@@ -8,12 +8,18 @@ export default defineConfig({
     name: 'integration',
     environment: 'jsdom',
     setupFiles: ['./src/test-setup-integration.ts'],
-    include: ['**/*.integration.test.{ts,tsx}'],
+    include: [
+      '**/*.integration.test.{ts,tsx}',
+      '**/integration/*.test.{ts,tsx}',
+      '**/__tests__/integration/*.test.{ts,tsx}',
+      '**/integration/*.integration.test.{ts,tsx}'
+    ],
     exclude: [
       '**/node_modules/**',
       '**/dist/**',
       '**/*.unit.test.{ts,tsx}',
-      '**/*.test.{ts,tsx}' // Exclude regular unit tests
+      // Remove the overly broad exclusion that was preventing integration tests from running
+      // '**/*.test.{ts,tsx}' // This was excluding ALL test files
     ],
     globals: true,
     // Longer timeout for integration tests

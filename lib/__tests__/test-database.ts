@@ -1,14 +1,14 @@
 import { createClient } from '@supabase/supabase-js'
 import type { Database } from '@/types/supabase'
 
-// Test database configuration
-const TEST_SUPABASE_URL = process.env.TEST_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL
-const TEST_SUPABASE_SERVICE_KEY = process.env.TEST_SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY
+// Test database configuration - use actual system environment variables
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL
+const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY
 
 // Only throw error if we're actually trying to use the database
 let databaseConfigured = false
 
-if (TEST_SUPABASE_URL && TEST_SUPABASE_SERVICE_KEY) {
+if (SUPABASE_URL && SUPABASE_SERVICE_KEY) {
   databaseConfigured = true
 }
 
@@ -18,10 +18,10 @@ if (TEST_SUPABASE_URL && TEST_SUPABASE_SERVICE_KEY) {
  */
 export function createTestSupabaseClient() {
   if (!databaseConfigured) {
-    throw new Error('Test database configuration missing. Set TEST_SUPABASE_URL and TEST_SUPABASE_SERVICE_ROLE_KEY environment variables.')
+    throw new Error('Test database configuration missing. Set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY environment variables.')
   }
   
-  return createClient<Database>(TEST_SUPABASE_URL!, TEST_SUPABASE_SERVICE_KEY!, {
+  return createClient<Database>(SUPABASE_URL!, SUPABASE_SERVICE_KEY!, {
     auth: {
       autoRefreshToken: false,
       persistSession: false

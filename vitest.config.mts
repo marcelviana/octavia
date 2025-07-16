@@ -14,14 +14,29 @@ export default defineConfig({
       VITEST: 'true'
     },
     coverage: {
-      reporter: ['text', 'json', 'html'],
+      provider: 'v8',
+      reporter: ['text', 'json', 'html', 'lcov'],
+      reportsDirectory: './coverage',
       exclude: [
         'node_modules/',
         'src/test-setup.ts',
+        'src/test-setup-integration.ts',
+        'vitest.setup.ts',
         '**/*.d.ts',
         '**/*.config.*',
         '**/coverage/**',
-        'src/__tests__/**',
+        '**/__tests__/**',
+        '**/*.test.{ts,tsx}',
+        '**/*.spec.{ts,tsx}',
+        '**/test-utils/**',
+        '**/test-helpers/**',
+        '**/mocks/**',
+        '**/stubs/**',
+        '**/fixtures/**',
+        'scripts/**',
+        'public/**',
+        '.next/**',
+        'dist/**'
       ],
       thresholds: {
         global: {

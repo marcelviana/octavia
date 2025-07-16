@@ -19,10 +19,19 @@ jobs:
     - name: Lint
       run: pnpm lint
     - name: Test
-      run: pnpm exec vitest run
+      run: pnpm test:unit
     - name: Test coverage
-      run: pnpm exec vitest run --coverage
-    - name: Upload coverage
+      run: pnpm test:ci
+    - name: Upload coverage to Codecov
+      if: always()
+      uses: codecov/codecov-action@v4
+      with:
+        file: ./coverage/coverage-final.json
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+        verbose: true
+    - name: Upload coverage artifacts
       if: always()
       uses: actions/upload-artifact@v4
       with:

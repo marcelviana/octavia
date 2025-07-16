@@ -1,3 +1,23 @@
+// Set up mock environment variables for integration tests (must be before any imports)
+(function setupMockEnvironment() {
+  // Supabase Configuration - use actual system environment variables
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://test-mock.supabase.co';
+  const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || 'mock-service-key-for-testing-only';
+  process.env.NEXT_PUBLIC_SUPABASE_URL = supabaseUrl;
+  process.env.SUPABASE_SERVICE_ROLE_KEY = supabaseServiceKey;
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'mock-anon-key-for-testing-only';
+  process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET || 'test-content';
+  
+  // Firebase Configuration
+  process.env.FIREBASE_PROJECT_ID = process.env.FIREBASE_PROJECT_ID || 'test-project-id';
+  process.env.FIREBASE_CLIENT_EMAIL = process.env.FIREBASE_CLIENT_EMAIL || 'test@test-project.iam.gserviceaccount.com';
+  process.env.FIREBASE_PRIVATE_KEY = process.env.FIREBASE_PRIVATE_KEY || '-----BEGIN PRIVATE KEY-----\nMOCK_KEY_FOR_TESTING_ONLY\n-----END PRIVATE KEY-----';
+  
+  // Other required environment variables
+  process.env.NEXTAUTH_SECRET = process.env.NEXTAUTH_SECRET || 'test-secret-key';
+  process.env.NEXTAUTH_URL = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+})();
+
 import '@testing-library/jest-dom'
 import { vi, beforeAll, afterEach, afterAll } from 'vitest'
 import { setupTestDatabase, cleanupTestData } from '@/lib/__tests__/test-database'
@@ -100,20 +120,7 @@ function setupBoundaryMocks() {
   vi.spyOn(console, 'error').mockImplementation(() => {})
 }
 
-/**
- * Environment variables for integration tests
- * These should point to test instances of your services
- */
 // NODE_ENV should already be 'test' when running tests
 if (process.env.NODE_ENV !== 'test') {
   console.warn('Integration tests should run with NODE_ENV=test')
-}
-
-// Ensure test database URLs are set
-if (!process.env.TEST_SUPABASE_URL && !process.env.NEXT_PUBLIC_SUPABASE_URL) {
-  throw new Error('TEST_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_URL must be set for integration tests')
-}
-
-if (!process.env.TEST_SUPABASE_SERVICE_ROLE_KEY && !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-  throw new Error('TEST_SUPABASE_SERVICE_ROLE_KEY or SUPABASE_SERVICE_ROLE_KEY must be set for integration tests')
 } 

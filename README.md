@@ -4,6 +4,7 @@
 
 [![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/marcelvianas-projects/v0-music-sheet-pro)
 [![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/T2dv1h11MUJ)
+[![codecov](https://codecov.io/gh/marcelvianas-projects/octavia/branch/main/graph/badge.svg)](https://codecov.io/gh/marcelvianas-projects/octavia)
 
 ## 🎵 Overview
 
@@ -97,6 +98,8 @@ Octavia is a comprehensive digital music management application designed for mus
 - **Icons**: Lucide React icon set
 - **State Management**: React hooks and context
 - **File Handling**: Multi-format support with drag-and-drop
+- **Testing**: Vitest with React Testing Library
+- **Coverage**: Codecov integration for test coverage tracking
 - **Deployment**: Vercel with automatic deployments
 
 ## 🚀 Getting Started
@@ -188,6 +191,47 @@ offline access.
 - [ ] **MIDI Support**: Import and export MIDI files
 - [ ] **Transposition Tools**: Automatic key changes
 - [ ] **Practice Mode**: Metronome and tempo adjustment features
+
+## 🧪 Testing
+
+Octavia uses a comprehensive testing strategy with Vitest and React Testing Library:
+
+### Test Commands
+
+```bash
+# Run all tests
+pnpm test
+
+# Run tests with coverage
+pnpm test:coverage
+
+# Run unit tests only
+pnpm test:unit
+
+# Run integration tests
+pnpm test:integration
+
+# Run tests in watch mode
+pnpm test:watch
+
+# Open test UI
+pnpm test:ui
+```
+
+### Coverage
+
+- **Current Coverage**: 34.84% overall
+- **Coverage Reports**: Available locally and on [Codecov](https://codecov.io/gh/marcelvianas-projects/octavia)
+- **Coverage Scripts**: Use `./scripts/coverage.sh` for local coverage management
+
+### Test Types
+
+- **Unit Tests**: Individual component and function testing
+- **Integration Tests**: End-to-end component interaction testing
+- **API Tests**: Backend route and service testing
+- **Behavioral Tests**: User interaction and workflow testing
+
+For detailed testing information, see [TESTING_STRATEGY.md](./TESTING_STRATEGY.md) and [CODECOV_INTEGRATION.md](./CODECOV_INTEGRATION.md).
 
 ## 🤝 Contributing
 
