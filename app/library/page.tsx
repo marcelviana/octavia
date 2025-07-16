@@ -39,7 +39,8 @@ export default async function LibraryPage({
     : searchParam ?? "";
 
   const pageParam = resolvedSearchParams?.page;
-  const page = pageParam ? parseInt(Array.isArray(pageParam) ? pageParam[0] : pageParam, 10) : 1;
+  const parsedPage = pageParam ? parseInt(Array.isArray(pageParam) ? pageParam[0] : pageParam, 10) : 1;
+  const page = isNaN(parsedPage) ? 1 : parsedPage;
   const pageSize = 20;
   const { data, total } = await getUserContentPageServer(
     {

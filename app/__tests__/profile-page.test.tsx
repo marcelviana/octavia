@@ -21,11 +21,34 @@ const mockUser = {
   email: 'test@example.com',
   emailVerified: true,
   reload: vi.fn(),
-}
+} as any // Cast as any to avoid full User type requirements
 
 vi.mock('@/contexts/firebase-auth-context', () => ({
   useAuth: vi.fn(),
 }))
+
+// Get the mocked function after the mock is defined
+import { useAuth } from '@/contexts/firebase-auth-context'
+const mockUseAuth = vi.mocked(useAuth)
+
+// Create a complete mock auth context
+const createMockAuthContext = (overrides: Partial<any> = {}) => ({
+  user: mockUser,
+  profile: null,
+  idToken: 'mock-token',
+  isLoading: false,
+  loading: false,
+  isConfigured: true,
+  isInitialized: true,
+  signIn: vi.fn(),
+  signUp: vi.fn(),
+  signInWithGoogle: vi.fn(),
+  signOut: mockSignOut,
+  updateProfile: vi.fn(),
+  refreshToken: vi.fn(),
+  resendVerificationEmail: mockResendVerificationEmail,
+  ...overrides,
+})
 
 // Mock components
 vi.mock('@/components/ProfileForm', () => ({
@@ -61,8 +84,6 @@ Object.defineProperty(document, 'referrer', {
 })
 
 describe('Profile Page', () => {
-  const mockUseAuth = vi.mocked(require('@/contexts/firebase-auth-context').useAuth)
-
   beforeEach(() => {
     vi.clearAllMocks()
     // Reset document.referrer
@@ -77,25 +98,21 @@ describe('Profile Page', () => {
   })
 
   it('renders loading skeleton when not mounted', () => {
-    mockUseAuth.mockReturnValue({
-      user: mockUser,
-      isLoading: false,
-      isInitialized: true,
-    })
+    mockUseAuth.mockReturnValue(createMockAuthContext())
 
     render(<ProfilePage />)
 
-    // Should show loading skeleton initially
+    // Should show loading skeleton initially when not mounted
     const skeletons = screen.getAllByTestId('skeleton')
     expect(skeletons).toHaveLength(6)
   })
 
   it('renders loading skeleton when auth is initializing', async () => {
-    mockUseAuth.mockReturnValue({
+    mockUseAuth.mockReturnValue(createMockAuthContext({
       user: null,
       isLoading: true,
       isInitialized: false,
-    })
+    }))
 
     render(<ProfilePage />)
 
@@ -114,7 +131,7 @@ describe('Profile Page', () => {
       user: null,
       isLoading: false,
       isInitialized: true,
-    })
+    } as any)
 
     render(<ProfilePage />)
 
@@ -127,11 +144,7 @@ describe('Profile Page', () => {
   })
 
   it('renders profile form when user is authenticated', async () => {
-    mockUseAuth.mockReturnValue({
-      user: mockUser,
-      isLoading: false,
-      isInitialized: true,
-    })
+    mockUseAuth.mockReturnValue(createMockAuthContext())
 
     render(<ProfilePage />)
 
@@ -152,11 +165,7 @@ describe('Profile Page', () => {
       writable: true,
     })
 
-    mockUseAuth.mockReturnValue({
-      user: mockUser,
-      isLoading: false,
-      isInitialized: true,
-    })
+    mockUseAuth.mockReturnValue(createMockAuthContext())
 
     render(<ProfilePage />)
 
@@ -177,11 +186,7 @@ describe('Profile Page', () => {
       writable: true,
     })
 
-    mockUseAuth.mockReturnValue({
-      user: mockUser,
-      isLoading: false,
-      isInitialized: true,
-    })
+    mockUseAuth.mockReturnValue(createMockAuthContext())
 
     render(<ProfilePage />)
 
@@ -196,11 +201,7 @@ describe('Profile Page', () => {
   })
 
   it('handles navigation to other screens', async () => {
-    mockUseAuth.mockReturnValue({
-      user: mockUser,
-      isLoading: false,
-      isInitialized: true,
-    })
+    mockUseAuth.mockReturnValue(createMockAuthContext())
 
     const user = userEvent.setup()
     render(<ProfilePage />)
@@ -211,7 +212,7 @@ describe('Profile Page', () => {
     })
 
     // Click dashboard button
-    const dashboardButton = screen.getByText('Dashboard')
+    const dashboardButton = screen.getByRole('button', { name: /dashboard/i })
     await act(async () => {
       await user.click(dashboardButton)
     })
@@ -220,11 +221,7 @@ describe('Profile Page', () => {
   })
 
   it('handles navigation to library', async () => {
-    mockUseAuth.mockReturnValue({
-      user: mockUser,
-      isLoading: false,
-      isInitialized: true,
-    })
+    mockUseAuth.mockReturnValue(createMockAuthContext())
 
     const user = userEvent.setup()
     render(<ProfilePage />)
@@ -235,7 +232,7 @@ describe('Profile Page', () => {
     })
 
     // Click library button
-    const libraryButton = screen.getByText('Library')
+    const libraryButton = screen.getByRole('button', { name: /library/i })
     await act(async () => {
       await user.click(libraryButton)
     })
@@ -244,11 +241,7 @@ describe('Profile Page', () => {
   })
 
   it('sets active screen to profile when navigating to profile', async () => {
-    mockUseAuth.mockReturnValue({
-      user: mockUser,
-      isLoading: false,
-      isInitialized: true,
-    })
+    mockUseAuth.mockReturnValue(createMockAuthContext())
 
     render(<ProfilePage />)
 
@@ -269,11 +262,7 @@ describe('Profile Page', () => {
       writable: true,
     })
 
-    mockUseAuth.mockReturnValue({
-      user: mockUser,
-      isLoading: false,
-      isInitialized: true,
-    })
+    mockUseAuth.mockReturnValue(createMockAuthContext())
 
     render(<ProfilePage />)
 
@@ -289,11 +278,11 @@ describe('Profile Page', () => {
 
   it('handles auth loading state transition', async () => {
     // Start with loading state
-    mockUseAuth.mockReturnValue({
+    mockUseAuth.mockReturnValue(createMockAuthContext({
       user: null,
       isLoading: true,
       isInitialized: false,
-    })
+    }))
 
     const { rerender } = render(<ProfilePage />)
 
@@ -301,11 +290,7 @@ describe('Profile Page', () => {
     expect(screen.getAllByTestId('skeleton')).toHaveLength(6)
 
     // Transition to authenticated state
-    mockUseAuth.mockReturnValue({
-      user: mockUser,
-      isLoading: false,
-      isInitialized: true,
-    })
+    mockUseAuth.mockReturnValue(createMockAuthContext())
 
     rerender(<ProfilePage />)
 
@@ -320,11 +305,11 @@ describe('Profile Page', () => {
 
   it('handles auth loading to unauthenticated transition', async () => {
     // Start with loading state
-    mockUseAuth.mockReturnValue({
+    mockUseAuth.mockReturnValue(createMockAuthContext({
       user: null,
       isLoading: true,
       isInitialized: false,
-    })
+    }))
 
     const { rerender } = render(<ProfilePage />)
 
@@ -332,11 +317,11 @@ describe('Profile Page', () => {
     expect(screen.getAllByTestId('skeleton')).toHaveLength(6)
 
     // Transition to unauthenticated state
-    mockUseAuth.mockReturnValue({
+    mockUseAuth.mockReturnValue(createMockAuthContext({
       user: null,
       isLoading: false,
       isInitialized: true,
-    })
+    }))
 
     rerender(<ProfilePage />)
 
@@ -354,11 +339,7 @@ describe('Profile Page', () => {
     const originalWindow = global.window
     delete (global as any).window
 
-    mockUseAuth.mockReturnValue({
-      user: mockUser,
-      isLoading: false,
-      isInitialized: true,
-    })
+    mockUseAuth.mockReturnValue(createMockAuthContext())
 
     render(<ProfilePage />)
 
@@ -381,11 +362,7 @@ describe('Profile Page', () => {
       writable: true,
     })
 
-    mockUseAuth.mockReturnValue({
-      user: mockUser,
-      isLoading: false,
-      isInitialized: true,
-    })
+    mockUseAuth.mockReturnValue(createMockAuthContext())
 
     render(<ProfilePage />)
 
