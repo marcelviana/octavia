@@ -15,44 +15,51 @@ export default defineConfig({
       '**/integration/*.integration.test.{ts,tsx}'
     ],
     exclude: [
-      '**/node_modules/**',
-      '**/dist/**',
+      'node_modules/**',
       '**/*.unit.test.{ts,tsx}',
-      // Remove the overly broad exclusion that was preventing integration tests from running
-      // '**/*.test.{ts,tsx}' // This was excluding ALL test files
+      // Exclude Playwright E2E tests from integration tests
+      'tests/e2e/**/*',
+      '**/*.e2e.{ts,tsx}',
+      '**/e2e/**/*'
     ],
-    globals: true,
-    // Longer timeout for integration tests
-    testTimeout: 30000,
-    hookTimeout: 30000,
-    // Pool options for integration tests
-    pool: 'forks', // Use forks for better isolation
-    poolOptions: {
-      forks: {
-        singleFork: false // Allow parallel execution
-      }
+    env: {
+      NODE_ENV: 'test',
+      VITEST: 'true'
     },
-    // Coverage configuration for integration tests
     coverage: {
       provider: 'v8',
-      reporter: ['text', 'json', 'html'],
+      reporter: ['text', 'json', 'html', 'lcov'],
+      reportsDirectory: './coverage',
       exclude: [
-        'coverage/**',
-        'dist/**',
-        '**/node_modules/**',
-        '**/test-setup*',
+        'node_modules/',
+        'src/test-setup.ts',
+        'src/test-setup-integration.ts',
+        'vitest.setup.ts',
         '**/*.d.ts',
+        '**/*.config.*',
+        '**/coverage/**',
         '**/__tests__/**',
-        '**/test-*'
+        '**/*.test.{ts,tsx}',
+        '**/*.spec.{ts,tsx}',
+        '**/test-utils/**',
+        '**/test-helpers/**',
+        '**/mocks/**',
+        '**/stubs/**',
+        '**/fixtures/**',
+        'scripts/**',
+        'public/**',
+        '.next/**',
+        'dist/**',
+        // Exclude E2E tests from coverage
+        'tests/e2e/**/*',
+        '**/*.e2e.{ts,tsx}',
+        '**/e2e/**/*'
       ]
     }
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './'),
-    },
-  },
-  esbuild: {
-    target: 'node14'
+      '@': path.resolve(__dirname, '.')
+    }
   }
 }) 

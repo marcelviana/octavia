@@ -9,6 +9,13 @@ export default defineConfig({
     setupFiles: ['./src/test-setup.ts', './vitest.setup.ts'],
     globals: true,
     css: true,
+    // Only exclude Playwright E2E tests, not all .spec.ts files
+    exclude: [
+      'node_modules/**',
+      'tests/e2e/**/*',
+      '**/*.e2e.{ts,tsx}',
+      '**/e2e/**/*'
+    ],
     env: {
       NODE_ENV: 'test',
       VITEST: 'true'
@@ -36,7 +43,11 @@ export default defineConfig({
         'scripts/**',
         'public/**',
         '.next/**',
-        'dist/**'
+        'dist/**',
+        // Exclude E2E tests from coverage
+        'tests/e2e/**/*',
+        '**/*.e2e.{ts,tsx}',
+        '**/e2e/**/*'
       ],
       thresholds: {
         global: {
