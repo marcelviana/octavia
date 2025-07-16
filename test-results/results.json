@@ -1,0 +1,457 @@
+{
+  "config": {
+    "configFile": "/Users/marcel.viana/projects/octavia/playwright.config.ts",
+    "rootDir": "/Users/marcel.viana/projects/octavia/tests/e2e",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "/Users/marcel.viana/projects/octavia/tests/e2e/global-setup.ts",
+    "globalTeardown": "/Users/marcel.viana/projects/octavia/tests/e2e/global-teardown.ts",
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 4
+    },
+    "preserveOutput": "failures-only",
+    "reporter": [
+      [
+        "html",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/results.json"
+        }
+      ],
+      [
+        "junit",
+        {
+          "outputFile": "test-results/results.xml"
+        }
+      ],
+      [
+        "list",
+        null
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/Users/marcel.viana/projects/octavia/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/marcel.viana/projects/octavia/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/marcel.viana/projects/octavia/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "/Users/marcel.viana/projects/octavia/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/marcel.viana/projects/octavia/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/marcel.viana/projects/octavia/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/marcel.viana/projects/octavia/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "Mobile Chrome",
+        "name": "Mobile Chrome",
+        "testDir": "/Users/marcel.viana/projects/octavia/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/marcel.viana/projects/octavia/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "Mobile Safari",
+        "name": "Mobile Safari",
+        "testDir": "/Users/marcel.viana/projects/octavia/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.54.1",
+    "workers": 4,
+    "webServer": {
+      "command": "pnpm dev",
+      "url": "http://localhost:3000",
+      "reuseExistingServer": true,
+      "timeout": 120000
+    }
+  },
+  "suites": [
+    {
+      "title": "basic.spec.ts",
+      "file": "basic.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Basic App Functionality",
+          "file": "basic.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should load the home page",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 5346,
+                      "error": {
+                        "message": "Error: expect.toBeVisible: Error: strict mode violation: locator('img[alt=\"Octavia\"]') resolved to 4 elements:\n    1) <img width=\"32\" height=\"32\" sizes=\"32px\" alt=\"Octavia\" data-nimg=\"1\" decoding=\"async\" class=\"object-contain\" src=\"/_next/image?url=%2Flogos%2Foctavia-icon.webp&w=3840&q=75\" srcset=\"/_next/image?url=%2Flogos%2Foctavia-icon.webp&w=16&q=75 16w, /_next/image?url=%2Flogos%2Foctavia-icon.webp&w=32&q=75 32w, /_next/image?url=%2Flogos%2Foctavia-icon.webp&w=48&q=75 48w, /_next/image?url=%2Flogos%2Foctavia-icon.webp&w=64&q=75 64w, /_next/image?url=%2Flogos%2Foctavia-icon.webp&w=96&q=75 96w, /_next/image?url=…/> aka getByRole('img', { name: 'Octavia' }).first()\n    2) <img width=\"120\" height=\"24\" alt=\"Octavia\" data-nimg=\"1\" sizes=\"120px\" decoding=\"async\" class=\"object-contain\" src=\"/_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=3840&q=75\" srcset=\"/_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=16&q=75 16w, /_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=32&q=75 32w, /_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=48&q=75 48w, /_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=64&q=75 64w, /_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=96&q…/> aka getByRole('img', { name: 'Octavia' }).nth(1)\n    3) <img width=\"32\" height=\"32\" sizes=\"32px\" alt=\"Octavia\" data-nimg=\"1\" loading=\"lazy\" decoding=\"async\" class=\"object-contain\" src=\"/_next/image?url=%2Flogos%2Foctavia-icon.webp&w=3840&q=75\" srcset=\"/_next/image?url=%2Flogos%2Foctavia-icon.webp&w=16&q=75 16w, /_next/image?url=%2Flogos%2Foctavia-icon.webp&w=32&q=75 32w, /_next/image?url=%2Flogos%2Foctavia-icon.webp&w=48&q=75 48w, /_next/image?url=%2Flogos%2Foctavia-icon.webp&w=64&q=75 64w, /_next/image?url=%2Flogos%2Foctavia-icon.webp&w=96&q=75 96w, /_…/> aka getByRole('img', { name: 'Octavia' }).nth(2)\n    4) <img width=\"120\" height=\"24\" alt=\"Octavia\" data-nimg=\"1\" sizes=\"120px\" loading=\"lazy\" decoding=\"async\" class=\"brightness-200 object-contain\" src=\"/_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=3840&q=75\" srcset=\"/_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=16&q=75 16w, /_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=32&q=75 32w, /_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=48&q=75 48w, /_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=64&q=75 64w, /_next/image?url=%2Flogos%…/> aka getByRole('img', { name: 'Octavia' }).nth(3)\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('img[alt=\"Octavia\"]')\u001b[22m\n",
+                        "stack": "Error: expect.toBeVisible: Error: strict mode violation: locator('img[alt=\"Octavia\"]') resolved to 4 elements:\n    1) <img width=\"32\" height=\"32\" sizes=\"32px\" alt=\"Octavia\" data-nimg=\"1\" decoding=\"async\" class=\"object-contain\" src=\"/_next/image?url=%2Flogos%2Foctavia-icon.webp&w=3840&q=75\" srcset=\"/_next/image?url=%2Flogos%2Foctavia-icon.webp&w=16&q=75 16w, /_next/image?url=%2Flogos%2Foctavia-icon.webp&w=32&q=75 32w, /_next/image?url=%2Flogos%2Foctavia-icon.webp&w=48&q=75 48w, /_next/image?url=%2Flogos%2Foctavia-icon.webp&w=64&q=75 64w, /_next/image?url=%2Flogos%2Foctavia-icon.webp&w=96&q=75 96w, /_next/image?url=…/> aka getByRole('img', { name: 'Octavia' }).first()\n    2) <img width=\"120\" height=\"24\" alt=\"Octavia\" data-nimg=\"1\" sizes=\"120px\" decoding=\"async\" class=\"object-contain\" src=\"/_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=3840&q=75\" srcset=\"/_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=16&q=75 16w, /_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=32&q=75 32w, /_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=48&q=75 48w, /_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=64&q=75 64w, /_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=96&q…/> aka getByRole('img', { name: 'Octavia' }).nth(1)\n    3) <img width=\"32\" height=\"32\" sizes=\"32px\" alt=\"Octavia\" data-nimg=\"1\" loading=\"lazy\" decoding=\"async\" class=\"object-contain\" src=\"/_next/image?url=%2Flogos%2Foctavia-icon.webp&w=3840&q=75\" srcset=\"/_next/image?url=%2Flogos%2Foctavia-icon.webp&w=16&q=75 16w, /_next/image?url=%2Flogos%2Foctavia-icon.webp&w=32&q=75 32w, /_next/image?url=%2Flogos%2Foctavia-icon.webp&w=48&q=75 48w, /_next/image?url=%2Flogos%2Foctavia-icon.webp&w=64&q=75 64w, /_next/image?url=%2Flogos%2Foctavia-icon.webp&w=96&q=75 96w, /_…/> aka getByRole('img', { name: 'Octavia' }).nth(2)\n    4) <img width=\"120\" height=\"24\" alt=\"Octavia\" data-nimg=\"1\" sizes=\"120px\" loading=\"lazy\" decoding=\"async\" class=\"brightness-200 object-contain\" src=\"/_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=3840&q=75\" srcset=\"/_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=16&q=75 16w, /_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=32&q=75 32w, /_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=48&q=75 48w, /_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=64&q=75 64w, /_next/image?url=%2Flogos%…/> aka getByRole('img', { name: 'Octavia' }).nth(3)\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('img[alt=\"Octavia\"]')\u001b[22m\n\n    at /Users/marcel.viana/projects/octavia/tests/e2e/basic.spec.ts:18:54",
+                        "location": {
+                          "file": "/Users/marcel.viana/projects/octavia/tests/e2e/basic.spec.ts",
+                          "column": 54,
+                          "line": 18
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 16 |\u001b[39m     \n \u001b[90m 17 |\u001b[39m     \u001b[90m// Check for Octavia logo/branding\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 18 |\u001b[39m     \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mlocator(\u001b[32m'img[alt=\"Octavia\"]'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 19 |\u001b[39m     \n \u001b[90m 20 |\u001b[39m     \u001b[90m// Take a screenshot for verification\u001b[39m\n \u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mscreenshot({ path\u001b[33m:\u001b[39m \u001b[32m'test-results/screenshots/home-page.png'\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/marcel.viana/projects/octavia/tests/e2e/basic.spec.ts",
+                            "column": 54,
+                            "line": 18
+                          },
+                          "message": "Error: expect.toBeVisible: Error: strict mode violation: locator('img[alt=\"Octavia\"]') resolved to 4 elements:\n    1) <img width=\"32\" height=\"32\" sizes=\"32px\" alt=\"Octavia\" data-nimg=\"1\" decoding=\"async\" class=\"object-contain\" src=\"/_next/image?url=%2Flogos%2Foctavia-icon.webp&w=3840&q=75\" srcset=\"/_next/image?url=%2Flogos%2Foctavia-icon.webp&w=16&q=75 16w, /_next/image?url=%2Flogos%2Foctavia-icon.webp&w=32&q=75 32w, /_next/image?url=%2Flogos%2Foctavia-icon.webp&w=48&q=75 48w, /_next/image?url=%2Flogos%2Foctavia-icon.webp&w=64&q=75 64w, /_next/image?url=%2Flogos%2Foctavia-icon.webp&w=96&q=75 96w, /_next/image?url=…/> aka getByRole('img', { name: 'Octavia' }).first()\n    2) <img width=\"120\" height=\"24\" alt=\"Octavia\" data-nimg=\"1\" sizes=\"120px\" decoding=\"async\" class=\"object-contain\" src=\"/_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=3840&q=75\" srcset=\"/_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=16&q=75 16w, /_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=32&q=75 32w, /_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=48&q=75 48w, /_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=64&q=75 64w, /_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=96&q…/> aka getByRole('img', { name: 'Octavia' }).nth(1)\n    3) <img width=\"32\" height=\"32\" sizes=\"32px\" alt=\"Octavia\" data-nimg=\"1\" loading=\"lazy\" decoding=\"async\" class=\"object-contain\" src=\"/_next/image?url=%2Flogos%2Foctavia-icon.webp&w=3840&q=75\" srcset=\"/_next/image?url=%2Flogos%2Foctavia-icon.webp&w=16&q=75 16w, /_next/image?url=%2Flogos%2Foctavia-icon.webp&w=32&q=75 32w, /_next/image?url=%2Flogos%2Foctavia-icon.webp&w=48&q=75 48w, /_next/image?url=%2Flogos%2Foctavia-icon.webp&w=64&q=75 64w, /_next/image?url=%2Flogos%2Foctavia-icon.webp&w=96&q=75 96w, /_…/> aka getByRole('img', { name: 'Octavia' }).nth(2)\n    4) <img width=\"120\" height=\"24\" alt=\"Octavia\" data-nimg=\"1\" sizes=\"120px\" loading=\"lazy\" decoding=\"async\" class=\"brightness-200 object-contain\" src=\"/_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=3840&q=75\" srcset=\"/_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=16&q=75 16w, /_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=32&q=75 32w, /_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=48&q=75 48w, /_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=64&q=75 64w, /_next/image?url=%2Flogos%…/> aka getByRole('img', { name: 'Octavia' }).nth(3)\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('img[alt=\"Octavia\"]')\u001b[22m\n\n\n\u001b[0m \u001b[90m 16 |\u001b[39m     \n \u001b[90m 17 |\u001b[39m     \u001b[90m// Check for Octavia logo/branding\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 18 |\u001b[39m     \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mlocator(\u001b[32m'img[alt=\"Octavia\"]'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 19 |\u001b[39m     \n \u001b[90m 20 |\u001b[39m     \u001b[90m// Take a screenshot for verification\u001b[39m\n \u001b[90m 21 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mscreenshot({ path\u001b[33m:\u001b[39m \u001b[32m'test-results/screenshots/home-page.png'\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at /Users/marcel.viana/projects/octavia/tests/e2e/basic.spec.ts:18:54\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-16T18:02:55.869Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/marcel.viana/projects/octavia/test-results/basic-Basic-App-Functionality-should-load-the-home-page-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/marcel.viana/projects/octavia/test-results/basic-Basic-App-Functionality-should-load-the-home-page-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/marcel.viana/projects/octavia/test-results/basic-Basic-App-Functionality-should-load-the-home-page-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/marcel.viana/projects/octavia/tests/e2e/basic.spec.ts",
+                        "column": 54,
+                        "line": 18
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "8946741c555a0c4515d8-d646fe789bfe4a320e4d",
+              "file": "basic.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "should have accessible navigation",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 5008,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-16T18:02:56.647Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8946741c555a0c4515d8-23c128f72444dd67d577",
+              "file": "basic.spec.ts",
+              "line": 24,
+              "column": 7
+            },
+            {
+              "title": "should be responsive",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 5220,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-16T18:02:57.756Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8946741c555a0c4515d8-2ba30ba39489ed54479c",
+              "file": "basic.spec.ts",
+              "line": 56,
+              "column": 7
+            },
+            {
+              "title": "should handle page navigation",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 11136,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "✅ Successfully navigated to /dashboard\n"
+                        },
+                        {
+                          "text": "✅ Successfully navigated to /library\n"
+                        },
+                        {
+                          "text": "✅ Successfully navigated to /setlists\n"
+                        },
+                        {
+                          "text": "✅ Successfully navigated to /profile\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-16T18:02:57.898Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8946741c555a0c4515d8-a5903b959c1ea9d65a44",
+              "file": "basic.spec.ts",
+              "line": 73,
+              "column": 7
+            },
+            {
+              "title": "should have proper meta tags",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1340,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-16T18:03:02.139Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8946741c555a0c4515d8-4a149c47afe3f0762ba4",
+              "file": "basic.spec.ts",
+              "line": 96,
+              "column": 7
+            },
+            {
+              "title": "should have search functionality",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2477,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-16T18:03:03.405Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8946741c555a0c4515d8-27f4c525c6d28e9dd792",
+              "file": "basic.spec.ts",
+              "line": 109,
+              "column": 7
+            },
+            {
+              "title": "should show user authentication state",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 2781,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-16T18:03:03.247Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8946741c555a0c4515d8-056a67439e309aa2254d",
+              "file": "basic.spec.ts",
+              "line": 126,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2025-07-16T18:02:28.121Z",
+    "duration": 41317.094000000005,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

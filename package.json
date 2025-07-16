@@ -13,6 +13,13 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:ci": "vitest run --coverage --reporter=verbose",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:debug": "playwright test --debug",
+    "test:e2e:codegen": "playwright codegen",
+    "test:e2e:install": "playwright install",
+    "test:e2e:report": "playwright show-report",
     "test:ui": "vitest --ui",
     "test:integration": "NEXT_PUBLIC_SUPABASE_URL=https://test-mock.supabase.co SUPABASE_SERVICE_ROLE_KEY=mock-service-key-for-testing-only pnpm exec vitest run --config vitest.config.integration.mts",
     "test:integration:watch": "NEXT_PUBLIC_SUPABASE_URL=https://test-mock.supabase.co SUPABASE_SERVICE_ROLE_KEY=mock-service-key-for-testing-only pnpm exec vitest --config vitest.config.integration.mts",
@@ -76,6 +83,7 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.54.1",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/react-hooks": "^8.0.1",

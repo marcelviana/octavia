@@ -1,0 +1,68 @@
+<testsuites id="" name="" tests="7" failures="1" skipped="0" errors="0" time="41.317094000000004">
+<testsuite name="basic.spec.ts" timestamp="2025-07-16T18:02:54.668Z" hostname="chromium" tests="7" failures="1" skipped="0" time="33.308" errors="0">
+<testcase name="Basic App Functionality › should load the home page" classname="basic.spec.ts" time="5.346">
+<failure message="basic.spec.ts:4:7 should load the home page" type="FAILURE">
+<![CDATA[  [chromium] › basic.spec.ts:4:7 › Basic App Functionality › should load the home page ─────────────
+
+    Error: expect.toBeVisible: Error: strict mode violation: locator('img[alt="Octavia"]') resolved to 4 elements:
+        1) <img width="32" height="32" sizes="32px" alt="Octavia" data-nimg="1" decoding="async" class="object-contain" src="/_next/image?url=%2Flogos%2Foctavia-icon.webp&w=3840&q=75" srcset="/_next/image?url=%2Flogos%2Foctavia-icon.webp&w=16&q=75 16w, /_next/image?url=%2Flogos%2Foctavia-icon.webp&w=32&q=75 32w, /_next/image?url=%2Flogos%2Foctavia-icon.webp&w=48&q=75 48w, /_next/image?url=%2Flogos%2Foctavia-icon.webp&w=64&q=75 64w, /_next/image?url=%2Flogos%2Foctavia-icon.webp&w=96&q=75 96w, /_next/image?url=…/> aka getByRole('img', { name: 'Octavia' }).first()
+        2) <img width="120" height="24" alt="Octavia" data-nimg="1" sizes="120px" decoding="async" class="object-contain" src="/_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=3840&q=75" srcset="/_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=16&q=75 16w, /_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=32&q=75 32w, /_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=48&q=75 48w, /_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=64&q=75 64w, /_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=96&q…/> aka getByRole('img', { name: 'Octavia' }).nth(1)
+        3) <img width="32" height="32" sizes="32px" alt="Octavia" data-nimg="1" loading="lazy" decoding="async" class="object-contain" src="/_next/image?url=%2Flogos%2Foctavia-icon.webp&w=3840&q=75" srcset="/_next/image?url=%2Flogos%2Foctavia-icon.webp&w=16&q=75 16w, /_next/image?url=%2Flogos%2Foctavia-icon.webp&w=32&q=75 32w, /_next/image?url=%2Flogos%2Foctavia-icon.webp&w=48&q=75 48w, /_next/image?url=%2Flogos%2Foctavia-icon.webp&w=64&q=75 64w, /_next/image?url=%2Flogos%2Foctavia-icon.webp&w=96&q=75 96w, /_…/> aka getByRole('img', { name: 'Octavia' }).nth(2)
+        4) <img width="120" height="24" alt="Octavia" data-nimg="1" sizes="120px" loading="lazy" decoding="async" class="brightness-200 object-contain" src="/_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=3840&q=75" srcset="/_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=16&q=75 16w, /_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=32&q=75 32w, /_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=48&q=75 48w, /_next/image?url=%2Flogos%2Foctavia-wordmark.webp&w=64&q=75 64w, /_next/image?url=%2Flogos%…/> aka getByRole('img', { name: 'Octavia' }).nth(3)
+
+    Call log:
+      - Expect "toBeVisible" with timeout 10000ms
+      - waiting for locator('img[alt="Octavia"]')
+
+
+      16 |     
+      17 |     // Check for Octavia logo/branding
+    > 18 |     await expect(page.locator('img[alt="Octavia"]')).toBeVisible();
+         |                                                      ^
+      19 |     
+      20 |     // Take a screenshot for verification
+      21 |     await page.screenshot({ path: 'test-results/screenshots/home-page.png' });
+        at /Users/marcel.viana/projects/octavia/tests/e2e/basic.spec.ts:18:54
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/basic-Basic-App-Functionality-should-load-the-home-page-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/basic-Basic-App-Functionality-should-load-the-home-page-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/basic-Basic-App-Functionality-should-load-the-home-page-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|basic-Basic-App-Functionality-should-load-the-home-page-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|basic-Basic-App-Functionality-should-load-the-home-page-chromium/video.webm]]
+
+[[ATTACHMENT|basic-Basic-App-Functionality-should-load-the-home-page-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Basic App Functionality › should have accessible navigation" classname="basic.spec.ts" time="5.008">
+</testcase>
+<testcase name="Basic App Functionality › should be responsive" classname="basic.spec.ts" time="5.22">
+</testcase>
+<testcase name="Basic App Functionality › should handle page navigation" classname="basic.spec.ts" time="11.136">
+<system-out>
+<![CDATA[✅ Successfully navigated to /dashboard
+✅ Successfully navigated to /library
+✅ Successfully navigated to /setlists
+✅ Successfully navigated to /profile
+]]>
+</system-out>
+</testcase>
+<testcase name="Basic App Functionality › should have proper meta tags" classname="basic.spec.ts" time="1.34">
+</testcase>
+<testcase name="Basic App Functionality › should have search functionality" classname="basic.spec.ts" time="2.477">
+</testcase>
+<testcase name="Basic App Functionality › should show user authentication state" classname="basic.spec.ts" time="2.781">
+</testcase>
+</testsuite>
+</testsuites>

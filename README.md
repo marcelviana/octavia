@@ -98,7 +98,7 @@ Octavia is a comprehensive digital music management application designed for mus
 - **Icons**: Lucide React icon set
 - **State Management**: React hooks and context
 - **File Handling**: Multi-format support with drag-and-drop
-- **Testing**: Vitest with React Testing Library
+- **Testing**: Vitest with React Testing Library + Playwright for E2E testing
 - **Coverage**: Codecov integration for test coverage tracking
 - **Deployment**: Vercel with automatic deployments
 
@@ -211,6 +211,12 @@ pnpm test:unit
 # Run integration tests
 pnpm test:integration
 
+# Run E2E tests
+pnpm test:e2e
+
+# Run E2E tests with UI mode
+pnpm test:e2e:ui
+
 # Run tests in watch mode
 pnpm test:watch
 
@@ -230,8 +236,9 @@ pnpm test:ui
 - **Integration Tests**: End-to-end component interaction testing
 - **API Tests**: Backend route and service testing
 - **Behavioral Tests**: User interaction and workflow testing
+- **E2E Tests**: Full browser testing with Playwright
 
-For detailed testing information, see [TESTING_STRATEGY.md](./TESTING_STRATEGY.md) and [CODECOV_INTEGRATION.md](./CODECOV_INTEGRATION.md).
+For detailed testing information, see [TESTING_STRATEGY.md](./TESTING_STRATEGY.md), [CODECOV_INTEGRATION.md](./CODECOV_INTEGRATION.md), and [PLAYWRIGHT_SETUP.md](./PLAYWRIGHT_SETUP.md).
 
 ## 🤝 Contributing
 

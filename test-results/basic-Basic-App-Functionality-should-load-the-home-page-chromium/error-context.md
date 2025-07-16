@@ -1,0 +1,89 @@
+# Page snapshot
+
+```yaml
+- banner:
+  - img "Octavia"
+  - img "Octavia"
+  - link "Sign In":
+    - /url: /login
+  - link "Sign Up":
+    - /url: /signup
+- text: 🎵 Digital Music Revolution
+- heading "Your Music Library, Digitized" [level=1]
+- paragraph: Organize, visualize, and share your sheet music, tabs, and lyrics. Perfect for rehearsals and performances with a modern, intuitive interface.
+- link "Get Started Free":
+  - /url: /signup
+- link "Sign In":
+  - /url: /login
+- img "Musician performing with digital sheet music on tablet"
+- heading "Why Musicians Choose Octavia" [level=2]
+- paragraph: Powerful features designed by musicians, for musicians
+- img
+- heading "Digital Sheet Music" [level=3]
+- paragraph: Import and organize all your sheet music, tabs, and lyrics in one beautiful, searchable library.
+- img
+- heading "Smart Annotations" [level=3]
+- paragraph: Add notes, highlights, and markings directly onto your digital sheet music for better rehearsals.
+- img
+- heading "Guitar Tabs & More" [level=3]
+- paragraph: Support for multiple music formats including guitar tabs, chord charts, and traditional notation.
+- img
+- heading "Multi-User Access" [level=3]
+- paragraph: Secure, cloud-based access to your personal music library from any device, anywhere.
+- heading "Loved by Musicians Everywhere" [level=2]
+- paragraph: See what our community is saying about their experience with Octavia
+- text: S
+- heading "Sarah M." [level=4]
+- paragraph: Classical Guitarist
+- paragraph: “Octavia has revolutionized how I organize my sheet music. The annotation feature is incredibly useful for marking fingerings and performance notes.”
+- text: M
+- heading "Mike R." [level=4]
+- paragraph: Band Leader
+- paragraph: “Perfect for managing our band's repertoire. Being able to access everything from my tablet during rehearsals is a game-changer.”
+- text: A
+- heading "Alex K." [level=4]
+- paragraph: Music Teacher
+- paragraph: “My students love how organized and accessible all our learning materials are now. The search function saves so much time.”
+- heading "Ready to Organize Your Music?" [level=2]
+- paragraph: Join thousands of musicians who use Octavia to manage their sheet music, tabs, and lyrics with style and efficiency.
+- link "Create Free Account":
+  - /url: /signup
+- link "Sign In":
+  - /url: /login
+- contentinfo:
+  - img "Octavia"
+  - img "Octavia"
+  - paragraph: Your digital music companion for rehearsals and performances.
+  - heading "Product" [level=3]
+  - list:
+    - listitem:
+      - link "Features":
+        - /url: "#"
+    - listitem:
+      - link "Pricing":
+        - /url: "#"
+    - listitem:
+      - link "FAQ":
+        - /url: "#"
+  - heading "Company" [level=3]
+  - list:
+    - listitem:
+      - link "About":
+        - /url: "#"
+    - listitem:
+      - link "Blog":
+        - /url: "#"
+    - listitem:
+      - link "Contact":
+        - /url: "#"
+  - heading "Legal" [level=3]
+  - list:
+    - listitem:
+      - link "Privacy Policy":
+        - /url: /privacy-policy
+    - listitem:
+      - link "Terms":
+        - /url: "#"
+  - paragraph: © 2025 Octavia. All rights reserved.
+- region "Notifications alt+T"
+```
