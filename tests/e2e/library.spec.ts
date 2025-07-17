@@ -7,8 +7,8 @@ test.describe('Library', () => {
   });
 
   test('should display library page correctly', async ({ page }) => {
-    // Check if we're authenticated
-    const isAuthenticated = await page.locator('text=Welcome to Octavia').isHidden();
+    // Check if we're authenticated by looking for authenticated navigation elements
+    const isAuthenticated = await page.locator('text=Dashboard, text=Library, text=Setlists').isVisible();
     
     if (isAuthenticated) {
       // Check page title
@@ -27,7 +27,7 @@ test.describe('Library', () => {
   });
 
   test('should handle empty library state', async ({ page }) => {
-    const isAuthenticated = await page.locator('text=Welcome to Octavia').isHidden();
+    const isAuthenticated = await page.locator('text=Dashboard, text=Library, text=Setlists').isVisible();
     
     if (isAuthenticated) {
       // Check for empty state message
@@ -43,7 +43,7 @@ test.describe('Library', () => {
   });
 
   test('should navigate to add content page', async ({ page }) => {
-    const isAuthenticated = await page.locator('text=Welcome to Octavia').isHidden();
+    const isAuthenticated = await page.locator('text=Dashboard, text=Library, text=Setlists').isVisible();
     
     if (isAuthenticated) {
       // Click add content button
@@ -58,7 +58,7 @@ test.describe('Library', () => {
   });
 
   test('should handle search functionality', async ({ page }) => {
-    const isAuthenticated = await page.locator('text=Welcome to Octavia').isHidden();
+    const isAuthenticated = await page.locator('text=Dashboard, text=Library, text=Setlists').isVisible();
     
     if (isAuthenticated) {
       // Look for search input
@@ -79,7 +79,7 @@ test.describe('Library', () => {
   });
 
   test('should handle filters', async ({ page }) => {
-    const isAuthenticated = await page.locator('text=Welcome to Octavia').isHidden();
+    const isAuthenticated = await page.locator('text=Dashboard, text=Library, text=Setlists').isVisible();
     
     if (isAuthenticated) {
       // Click filters button
@@ -97,7 +97,7 @@ test.describe('Library', () => {
   });
 
   test('should handle sorting', async ({ page }) => {
-    const isAuthenticated = await page.locator('text=Welcome to Octavia').isHidden();
+    const isAuthenticated = await page.locator('text=Dashboard, text=Library, text=Setlists').isVisible();
     
     if (isAuthenticated) {
       // Click sort button
@@ -118,7 +118,7 @@ test.describe('Library', () => {
     // Set mobile viewport
     await page.setViewportSize({ width: 375, height: 667 });
     
-    const isAuthenticated = await page.locator('text=Welcome to Octavia').isHidden();
+    const isAuthenticated = await page.locator('text=Dashboard, text=Library, text=Setlists').isVisible();
     
     if (isAuthenticated) {
       // Check if page is still functional
@@ -137,7 +137,7 @@ test.describe('Library', () => {
   });
 
   test('should handle content interactions', async ({ page }) => {
-    const isAuthenticated = await page.locator('text=Welcome to Octavia').isHidden();
+    const isAuthenticated = await page.locator('text=Dashboard, text=Library, text=Setlists').isVisible();
     
     if (isAuthenticated) {
       // Look for content items
@@ -157,7 +157,7 @@ test.describe('Library', () => {
   });
 
   test('should handle pagination', async ({ page }) => {
-    const isAuthenticated = await page.locator('text=Welcome to Octavia').isHidden();
+    const isAuthenticated = await page.locator('text=Dashboard, text=Library, text=Setlists').isVisible();
     
     if (isAuthenticated) {
       // Look for pagination controls
@@ -179,7 +179,7 @@ test.describe('Library', () => {
   });
 
   test('should handle content actions', async ({ page }) => {
-    const isAuthenticated = await page.locator('text=Welcome to Octavia').isHidden();
+    const isAuthenticated = await page.locator('text=Dashboard, text=Library, text=Setlists').isVisible();
     
     if (isAuthenticated) {
       // Look for content action buttons

@@ -25,8 +25,8 @@ test.describe('Basic App Functionality', () => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
     
-    // Check if we're authenticated
-    const isAuthenticated = await page.locator('text=Welcome to Octavia').isHidden();
+    // Check if we're authenticated by looking for authenticated navigation elements
+    const isAuthenticated = await page.locator('text=Dashboard, text=Library, text=Setlists').isVisible();
     
     if (isAuthenticated) {
       // Check for authenticated navigation elements
@@ -97,8 +97,8 @@ test.describe('Basic App Functionality', () => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
     
-    // Check if we're authenticated
-    const isAuthenticated = await page.locator('text=Welcome to Octavia').isHidden();
+    // Check if we're authenticated by looking for authenticated navigation elements
+    const isAuthenticated = await page.locator('text=Dashboard, text=Library, text=Setlists').isVisible();
     
     if (isAuthenticated) {
       // Try to navigate to authenticated pages
@@ -156,8 +156,8 @@ test.describe('Basic App Functionality', () => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
     
-    // Check if we're authenticated
-    const isAuthenticated = await page.locator('text=Welcome to Octavia').isHidden();
+    // Check if we're authenticated by looking for authenticated navigation elements
+    const isAuthenticated = await page.locator('text=Dashboard, text=Library, text=Setlists').isVisible();
     
     if (isAuthenticated) {
       // Look for search input in authenticated interface

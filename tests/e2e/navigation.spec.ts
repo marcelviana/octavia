@@ -6,8 +6,8 @@ test.describe('Navigation', () => {
   });
 
   test('should navigate to main pages', async ({ page }) => {
-    // Check if we're authenticated
-    const isAuthenticated = await page.locator('text=Welcome to Octavia').isHidden();
+    // Check if we're authenticated by looking for authenticated navigation elements
+    const isAuthenticated = await page.locator('text=Dashboard, text=Library, text=Setlists').isVisible();
     
     if (isAuthenticated) {
       // Test navigation to dashboard
@@ -30,8 +30,8 @@ test.describe('Navigation', () => {
   });
 
   test('should handle responsive navigation', async ({ page }) => {
-    // Check if we're authenticated
-    const isAuthenticated = await page.locator('text=Welcome to Octavia').isHidden();
+    // Check if we're authenticated by looking for authenticated navigation elements
+    const isAuthenticated = await page.locator('text=Dashboard, text=Library, text=Setlists').isVisible();
     
     if (isAuthenticated) {
       // Test mobile navigation
@@ -57,8 +57,8 @@ test.describe('Navigation', () => {
   });
 
   test('should maintain navigation state', async ({ page }) => {
-    // Check if we're authenticated
-    const isAuthenticated = await page.locator('text=Welcome to Octavia').isHidden();
+    // Check if we're authenticated by looking for authenticated navigation elements
+    const isAuthenticated = await page.locator('text=Dashboard, text=Library, text=Setlists').isVisible();
     
     if (isAuthenticated) {
       // Navigate to library
@@ -77,8 +77,8 @@ test.describe('Navigation', () => {
   });
 
   test('should handle sidebar collapse', async ({ page }) => {
-    // Check if we're authenticated
-    const isAuthenticated = await page.locator('text=Welcome to Octavia').isHidden();
+    // Check if we're authenticated by looking for authenticated navigation elements
+    const isAuthenticated = await page.locator('text=Dashboard, text=Library, text=Setlists').isVisible();
     
     if (isAuthenticated) {
       // Look for sidebar collapse button
@@ -98,8 +98,8 @@ test.describe('Navigation', () => {
   });
 
   test('should have working search navigation', async ({ page }) => {
-    // Check if we're authenticated
-    const isAuthenticated = await page.locator('text=Welcome to Octavia').isHidden();
+    // Check if we're authenticated by looking for authenticated navigation elements
+    const isAuthenticated = await page.locator('text=Dashboard, text=Library, text=Setlists').isVisible();
     
     if (isAuthenticated) {
       // Look for search input
@@ -119,8 +119,8 @@ test.describe('Navigation', () => {
   });
 
   test('should show user menu when authenticated', async ({ page }) => {
-    // Check if we're authenticated
-    const isAuthenticated = await page.locator('text=Welcome to Octavia').isHidden();
+    // Check if we're authenticated by looking for authenticated navigation elements
+    const isAuthenticated = await page.locator('text=Dashboard, text=Library, text=Setlists').isVisible();
     
     if (isAuthenticated) {
       // Look for user menu button

@@ -7,8 +7,8 @@ test.describe('Dashboard', () => {
   });
 
   test('should display dashboard correctly', async ({ page }) => {
-    // Check if we're authenticated by looking for dashboard content
-    const isAuthenticated = await page.locator('text=Welcome to Octavia').isHidden();
+    // Check if we're authenticated by looking for authenticated navigation elements
+    const isAuthenticated = await page.locator('text=Dashboard, text=Library, text=Setlists').isVisible();
     
     if (isAuthenticated) {
       // User is authenticated - check dashboard content
@@ -28,7 +28,7 @@ test.describe('Dashboard', () => {
   });
 
   test('should show recent content section', async ({ page }) => {
-    const isAuthenticated = await page.locator('text=Welcome to Octavia').isHidden();
+    const isAuthenticated = await page.locator('text=Dashboard, text=Library, text=Setlists').isVisible();
     
     if (isAuthenticated) {
       // Check for recent content
@@ -48,7 +48,7 @@ test.describe('Dashboard', () => {
   });
 
   test('should show quick actions', async ({ page }) => {
-    const isAuthenticated = await page.locator('text=Welcome to Octavia').isHidden();
+    const isAuthenticated = await page.locator('text=Dashboard, text=Library, text=Setlists').isVisible();
     
     if (isAuthenticated) {
       // Check for add content button
@@ -66,7 +66,7 @@ test.describe('Dashboard', () => {
   });
 
   test('should navigate from quick actions', async ({ page }) => {
-    const isAuthenticated = await page.locator('text=Welcome to Octavia').isHidden();
+    const isAuthenticated = await page.locator('text=Dashboard, text=Library, text=Setlists').isVisible();
     
     if (isAuthenticated) {
       // Test add content quick action
@@ -89,7 +89,7 @@ test.describe('Dashboard', () => {
   });
 
   test('should show user stats', async ({ page }) => {
-    const isAuthenticated = await page.locator('text=Welcome to Octavia').isHidden();
+    const isAuthenticated = await page.locator('text=Dashboard, text=Library, text=Setlists').isVisible();
     
     if (isAuthenticated) {
       // Check for stats cards
@@ -112,7 +112,7 @@ test.describe('Dashboard', () => {
   });
 
   test('should handle content interactions', async ({ page }) => {
-    const isAuthenticated = await page.locator('text=Welcome to Octavia').isHidden();
+    const isAuthenticated = await page.locator('text=Dashboard, text=Library, text=Setlists').isVisible();
     
     if (isAuthenticated) {
       // Look for content items in recent content section
@@ -135,7 +135,7 @@ test.describe('Dashboard', () => {
     // Set mobile viewport
     await page.setViewportSize({ width: 375, height: 667 });
     
-    const isAuthenticated = await page.locator('text=Welcome to Octavia').isHidden();
+    const isAuthenticated = await page.locator('text=Dashboard, text=Library, text=Setlists').isVisible();
     
     if (isAuthenticated) {
       // Check if dashboard is still functional
@@ -156,7 +156,7 @@ test.describe('Dashboard', () => {
     // Reload page to see loading states
     await page.reload();
     
-    const isAuthenticated = await page.locator('text=Welcome to Octavia').isHidden();
+    const isAuthenticated = await page.locator('text=Dashboard, text=Library, text=Setlists').isVisible();
     
     if (isAuthenticated) {
       // Should show loading indicators
@@ -175,7 +175,7 @@ test.describe('Dashboard', () => {
   });
 
   test('should handle tab navigation', async ({ page }) => {
-    const isAuthenticated = await page.locator('text=Welcome to Octavia').isHidden();
+    const isAuthenticated = await page.locator('text=Dashboard, text=Library, text=Setlists').isVisible();
     
     if (isAuthenticated) {
       // Check for tabs
