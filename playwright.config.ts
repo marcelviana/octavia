@@ -39,27 +39,47 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: { 
+        ...devices['Desktop Chrome'],
+        // Use authentication state from global setup
+        storageState: 'tests/e2e/.auth/user.json',
+      },
     },
 
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      use: { 
+        ...devices['Desktop Firefox'],
+        // Use authentication state from global setup
+        storageState: 'tests/e2e/.auth/user.json',
+      },
     },
 
     {
       name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      use: { 
+        ...devices['Desktop Safari'],
+        // Use authentication state from global setup
+        storageState: 'tests/e2e/.auth/user.json',
+      },
     },
 
     /* Test against mobile viewports. */
     {
       name: 'Mobile Chrome',
-      use: { ...devices['Pixel 5'] },
+      use: { 
+        ...devices['Pixel 5'],
+        // Use authentication state from global setup
+        storageState: 'tests/e2e/.auth/user.json',
+      },
     },
     {
       name: 'Mobile Safari',
-      use: { ...devices['iPhone 12'] },
+      use: { 
+        ...devices['iPhone 12'],
+        // Use authentication state from global setup
+        storageState: 'tests/e2e/.auth/user.json',
+      },
     },
 
     /* Test against branded browsers. */

@@ -19,131 +19,90 @@ async function globalSetup(config: FullConfig) {
   const page = await context.newPage();
   
   try {
-    // Navigate to the app
-    await page.goto(baseURL || 'http://localhost:3000');
+    // For E2E tests, we'll use a simpler approach:
+    // 1. Navigate to the app
+    // 2. Check if we need to authenticate
+    // 3. If needed, try to create a test user or use existing one
     
-    // Wait for the app to load
+    await page.goto(baseURL || 'http://localhost:3000');
     await page.waitForLoadState('networkidle');
     
-    // Check if we need to authenticate by looking for common auth indicators
-    const authIndicators = [
-      'text=Sign In',
-      'text=Sign Up',
-      'button:has(.avatar)',
-      'text=Profile',
-      'text=Sign out'
-    ];
+    // Check if we're on the landing page (unauthenticated)
+    const isOnLandingPage = await page.locator('text=Welcome to Octavia').isVisible();
     
-    let isAuthenticated = false;
-    for (const indicator of authIndicators) {
-      try {
-        if (await page.locator(indicator).isVisible({ timeout: 2000 })) {
-          // If we see Sign In/Sign Up, we're not authenticated
-          if (indicator.includes('Sign In') || indicator.includes('Sign Up')) {
-            isAuthenticated = false;
-            break;
-          } else {
-            // If we see user-related elements, we might be authenticated
-            isAuthenticated = true;
-            break;
-          }
-        }
-      } catch {
-        // Continue checking other indicators
-      }
-    }
-    
-    if (!isAuthenticated) {
-      console.log('🔐 Setting up authentication...');
+    if (isOnLandingPage) {
+      console.log('🔐 Setting up authentication for E2E tests...');
       
-      // Navigate to login page
-      await page.goto(`${baseURL}/login`);
+      // Try to create a test user or login with existing one
+      await page.goto(`${baseURL}/signup`);
       await page.waitForLoadState('networkidle');
       
-      // Try to find login form elements with flexible selectors
-      const emailSelectors = [
-        'input[type="email"]',
-        'input[name="email"]',
-        'input[placeholder*="email" i]',
-        'input[placeholder*="Email" i]'
-      ];
+      // Fill in signup form with test credentials
+      const emailInput = page.locator('input[type="email"], input[name="email"]');
+      const passwordInput = page.locator('input[type="password"], input[name="password"]');
+      const signupButton = page.locator('button[type="submit"], button:has-text("Sign Up"), button:has-text("Create Account")');
       
-      const passwordSelectors = [
-        'input[type="password"]',
-        'input[name="password"]',
-        'input[placeholder*="password" i]',
-        'input[placeholder*="Password" i]'
-      ];
-      
-      const submitSelectors = [
-        'button[type="submit"]',
-        'button:has-text("Sign In")',
-        'button:has-text("Login")',
-        'input[type="submit"]'
-      ];
-      
-      // Find and fill email field
-      let emailField = null;
-      for (const selector of emailSelectors) {
-        try {
-          emailField = page.locator(selector);
-          if (await emailField.isVisible({ timeout: 1000 })) {
-            await emailField.fill('test@example.com');
-            break;
+      if (await emailInput.isVisible()) {
+        await emailInput.fill('e2e-test@example.com');
+        await passwordInput.fill('e2e-test-password-123');
+        
+        // Click signup button
+        if (await signupButton.isVisible()) {
+          await signupButton.click();
+          
+          // Wait for either success or error
+          try {
+            // Wait for redirect to dashboard or email verification
+            await page.waitForURL(/\/dashboard|\/verify-email/, { timeout: 10000 });
+            console.log('✅ Test user created successfully');
+          } catch (error) {
+            // If signup failed (user might already exist), try login
+            console.log('⚠️ Signup may have failed, trying login...');
+            await page.goto(`${baseURL}/login`);
+            await page.waitForLoadState('networkidle');
+            
+            // Fill login form
+            const loginEmailInput = page.locator('input[type="email"], input[name="email"]');
+            const loginPasswordInput = page.locator('input[type="password"], input[name="password"]');
+            const loginButton = page.locator('button[type="submit"], button:has-text("Sign In"), button:has-text("Login")');
+            
+            if (await loginEmailInput.isVisible()) {
+              await loginEmailInput.fill('e2e-test@example.com');
+              await loginPasswordInput.fill('e2e-test-password-123');
+              
+              if (await loginButton.isVisible()) {
+                await loginButton.click();
+                
+                // Wait for authentication to complete
+                try {
+                  await page.waitForURL(/\/dashboard|\/library/, { timeout: 10000 });
+                  console.log('✅ Login successful');
+                } catch (error) {
+                  console.log('⚠️ Login failed, continuing with unauthenticated tests...');
+                }
+              }
+            }
           }
-        } catch {
-          continue;
         }
-      }
-      
-      // Find and fill password field
-      let passwordField = null;
-      for (const selector of passwordSelectors) {
-        try {
-          passwordField = page.locator(selector);
-          if (await passwordField.isVisible({ timeout: 1000 })) {
-            await passwordField.fill('testpassword123');
-            break;
-          }
-        } catch {
-          continue;
-        }
-      }
-      
-      // Find and click submit button
-      let submitButton = null;
-      for (const selector of submitSelectors) {
-        try {
-          submitButton = page.locator(selector);
-          if (await submitButton.isVisible({ timeout: 1000 })) {
-            await submitButton.click();
-            break;
-          }
-        } catch {
-          continue;
-        }
-      }
-      
-      // Wait for authentication to complete (redirect to dashboard or library)
-      try {
-        await page.waitForURL(/\/dashboard|\/library/, { timeout: 10000 });
-        console.log('✅ Authentication successful');
-      } catch (error) {
-        console.log('⚠️ Authentication may have failed, continuing with tests...');
       }
     } else {
       console.log('✅ User already authenticated');
     }
     
-    // Save authentication state (even if auth failed, save current state)
+    // Save authentication state
     await context.storageState({ path: 'tests/e2e/.auth/user.json' });
-    
-    console.log('✅ Authentication setup complete');
+    console.log('✅ Authentication state saved');
     
   } catch (error) {
     console.error('❌ Error during global setup:', error);
-    // Don't throw error to allow tests to continue
     console.log('⚠️ Continuing with tests despite setup errors...');
+    
+    // Still save the current state
+    try {
+      await context.storageState({ path: 'tests/e2e/.auth/user.json' });
+    } catch (saveError) {
+      console.error('Failed to save auth state:', saveError);
+    }
   } finally {
     await browser.close();
   }

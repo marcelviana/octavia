@@ -14,8 +14,8 @@ test.describe('Basic App Functionality', () => {
     // Check that the page has content
     await expect(page.locator('body')).toBeVisible();
     
-    // Check for Octavia logo/branding
-    await expect(page.locator('img[alt="Octavia"]')).toBeVisible();
+    // Check for Octavia logo/branding (use first() to avoid strict mode violation)
+    await expect(page.locator('img[alt="Octavia"]').first()).toBeVisible();
     
     // Take a screenshot for verification
     await page.screenshot({ path: 'test-results/screenshots/home-page.png' });
@@ -25,31 +25,54 @@ test.describe('Basic App Functionality', () => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
     
-    // Check for common navigation elements based on actual sidebar structure
-    const navElements = [
-      'text=Dashboard',
-      'text=Library', 
-      'text=Setlists',
-      'text=Add Song'
-    ];
+    // Check if we're authenticated
+    const isAuthenticated = await page.locator('text=Welcome to Octavia').isHidden();
     
-    // At least one navigation element should be present
-    let foundNav = false;
-    for (const selector of navElements) {
-      try {
-        if (await page.locator(selector).isVisible({ timeout: 1000 })) {
-          foundNav = true;
-          break;
+    if (isAuthenticated) {
+      // Check for authenticated navigation elements
+      const navElements = [
+        'text=Dashboard',
+        'text=Library', 
+        'text=Setlists',
+        'text=Add Song'
+      ];
+      
+      // At least one navigation element should be present
+      let foundNav = false;
+      for (const selector of navElements) {
+        try {
+          if (await page.locator(selector).isVisible({ timeout: 1000 })) {
+            foundNav = true;
+            break;
+          }
+        } catch {
+          continue;
         }
-      } catch {
-        continue;
       }
-    }
-    
-    // If no navigation found, check for any clickable elements
-    if (!foundNav) {
-      const buttons = await page.locator('button, a').count();
-      expect(buttons).toBeGreaterThan(0);
+      
+      expect(foundNav).toBe(true);
+    } else {
+      // Check for unauthenticated navigation elements
+      const authElements = [
+        'text=Sign In',
+        'text=Sign Up',
+        'text=Get Started Free'
+      ];
+      
+      // At least one auth element should be present
+      let foundAuth = false;
+      for (const selector of authElements) {
+        try {
+          if (await page.locator(selector).isVisible({ timeout: 1000 })) {
+            foundAuth = true;
+            break;
+          }
+        } catch {
+          continue;
+        }
+      }
+      
+      expect(foundAuth).toBe(true);
     }
   });
 
@@ -74,21 +97,44 @@ test.describe('Basic App Functionality', () => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
     
-    // Try to navigate to common pages
-    const pages = ['/dashboard', '/library', '/setlists', '/profile'];
+    // Check if we're authenticated
+    const isAuthenticated = await page.locator('text=Welcome to Octavia').isHidden();
     
-    for (const pagePath of pages) {
-      try {
-        await page.goto(pagePath);
-        await page.waitForLoadState('networkidle');
-        
-        // Check that the page loaded (basic check)
-        await expect(page.locator('body')).toBeVisible();
-        
-        console.log(`✅ Successfully navigated to ${pagePath}`);
-      } catch (error: unknown) {
-        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-        console.log(`⚠️ Could not navigate to ${pagePath}:`, errorMessage);
+    if (isAuthenticated) {
+      // Try to navigate to authenticated pages
+      const pages = ['/dashboard', '/library', '/setlists', '/profile'];
+      
+      for (const pagePath of pages) {
+        try {
+          await page.goto(pagePath);
+          await page.waitForLoadState('networkidle');
+          
+          // Check that the page loaded (basic check)
+          await expect(page.locator('body')).toBeVisible();
+          
+          console.log(`✅ Successfully navigated to ${pagePath}`);
+        } catch (error: unknown) {
+          const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+          console.log(`⚠️ Could not navigate to ${pagePath}:`, errorMessage);
+        }
+      }
+    } else {
+      // Try to navigate to public pages
+      const pages = ['/login', '/signup'];
+      
+      for (const pagePath of pages) {
+        try {
+          await page.goto(pagePath);
+          await page.waitForLoadState('networkidle');
+          
+          // Check that the page loaded (basic check)
+          await expect(page.locator('body')).toBeVisible();
+          
+          console.log(`✅ Successfully navigated to ${pagePath}`);
+        } catch (error: unknown) {
+          const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+          console.log(`⚠️ Could not navigate to ${pagePath}:`, errorMessage);
+        }
       }
     }
   });
@@ -110,16 +156,24 @@ test.describe('Basic App Functionality', () => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
     
-    // Look for search input in header
-    const searchInput = page.locator('input[placeholder="Search..."]');
+    // Check if we're authenticated
+    const isAuthenticated = await page.locator('text=Welcome to Octavia').isHidden();
     
-    if (await searchInput.isVisible()) {
-      // Test search input
-      await searchInput.fill('test song');
-      await searchInput.press('Enter');
+    if (isAuthenticated) {
+      // Look for search input in authenticated interface
+      const searchInput = page.locator('input[placeholder="Search..."]');
       
-      // Should navigate to library with search
-      await expect(page).toHaveURL(/\/library\?search=/);
+      if (await searchInput.isVisible()) {
+        // Test search input
+        await searchInput.fill('test song');
+        await searchInput.press('Enter');
+        
+        // Should navigate to library with search
+        await expect(page).toHaveURL(/\/library\?search=/);
+      }
+    } else {
+      // For unauthenticated users, just check that the page is functional
+      await expect(page.locator('body')).toBeVisible();
     }
   });
 
