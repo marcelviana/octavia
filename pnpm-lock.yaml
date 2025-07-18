@@ -201,6 +201,9 @@ importers:
       '@vitest/coverage-v8':
         specifier: 3.2.2
         version: 3.2.2(@vitest/browser@3.2.4)(vitest@3.2.4)
+      dotenv:
+        specifier: ^17.2.0
+        version: 17.2.0
       eslint:
         specifier: ^9.28.0
         version: 9.31.0(jiti@1.21.7)
@@ -2694,6 +2697,10 @@ packages:
 
   dom-accessibility-api@0.6.3:
     resolution: {integrity: sha512-7ZgogeTnjuHbo+ct10G9Ffp0mif17idi0IyWNVA/wcwcm7NPOD/WEHVP3n7n3MhXqxoIYm8d6MuZohYWIZ4T3w==}
+
+  dotenv@17.2.0:
+    resolution: {integrity: sha512-Q4sgBT60gzd0BB0lSyYD3xM4YxrXA9y4uBDof1JNYGzOXrQdQ6yX+7XIAqoFOGQFOTK1D3Hts5OllpxMDZFONQ==}
+    engines: {node: '>=12'}
 
   duck@0.1.12:
     resolution: {integrity: sha512-wkctla1O6VfP89gQ+J/yDesM0S7B7XLXjKGzXxMDVFg7uEn706niAtyYovKbyq1oT9YwDcly721/iUWoc8MVRg==}
@@ -7379,6 +7386,8 @@ snapshots:
   dom-accessibility-api@0.5.16: {}
 
   dom-accessibility-api@0.6.3: {}
+
+  dotenv@17.2.0: {}
 
   duck@0.1.12:
     dependencies:

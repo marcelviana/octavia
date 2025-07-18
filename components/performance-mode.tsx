@@ -335,6 +335,7 @@ export function PerformanceMode({
               size="sm"
               onClick={onExitPerformance}
               className="text-white hover:bg-white/20"
+              data-testid="exit-button"
             >
               <X className="w-4 h-4" />
             </Button>
@@ -351,6 +352,7 @@ export function PerformanceMode({
               size="sm"
               onClick={() => setDarkSheet(!darkSheet)}
               className="text-white hover:bg-white/20"
+              data-testid="dark-mode-toggle"
             >
               {darkSheet ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </Button>
@@ -368,6 +370,7 @@ export function PerformanceMode({
               size="sm"
               onClick={() => setZoom(Math.max(70, zoom - 10))}
               className="text-white hover:bg-white/20"
+              aria-label="Zoom out"
             >
               <ZoomOut className="w-4 h-4" />
             </Button>
@@ -377,6 +380,7 @@ export function PerformanceMode({
               size="sm"
               onClick={() => setZoom(Math.min(200, zoom + 10))}
               className="text-white hover:bg-white/20"
+              aria-label="Zoom in"
             >
               <ZoomIn className="w-4 h-4" />
             </Button>
@@ -389,6 +393,7 @@ export function PerformanceMode({
               size="sm"
               onClick={() => setIsPlaying(!isPlaying)}
               className={`${isPlaying ? "text-[#FF6B6B]" : "text-white"} hover:bg-white/20`}
+              data-testid="play-pause-button"
             >
               {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
             </Button>
@@ -404,6 +409,7 @@ export function PerformanceMode({
               onPointerLeave={() => endPress("dec", false)}
               onPointerCancel={() => endPress("dec", false)}
               className="text-white hover:bg-white/30 active:scale-95 transition-transform"
+              aria-label="Decrease BPM"
             >
               <Minus className="w-4 h-4" />
             </Button>
@@ -416,6 +422,7 @@ export function PerformanceMode({
               onPointerLeave={() => endPress("inc", false)}
               onPointerCancel={() => endPress("inc", false)}
               className="text-white hover:bg-white/30 active:scale-95 transition-transform"
+              aria-label="Increase BPM"
             >
               <Plus className="w-4 h-4" />
             </Button>
@@ -525,6 +532,7 @@ export function PerformanceMode({
       <div
         className={`absolute bottom-0 left-0 right-0 z-50 bg-[#1A1F36]/90 backdrop-blur-sm transition-opacity duration-300 ${showControls ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}
+        data-testid="bottom-controls"
       >
         <div className="flex items-center justify-center gap-4 p-2">
           <Button

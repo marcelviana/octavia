@@ -18,8 +18,9 @@
   process.env.NEXTAUTH_URL = process.env.NEXTAUTH_URL || 'http://localhost:3000';
 })();
 
-import '@testing-library/jest-dom'
+// Import vitest globals first so expect is available
 import { vi, beforeAll, afterEach, afterAll } from 'vitest'
+import '@testing-library/jest-dom'
 import { setupTestDatabase, cleanupTestData } from '@/lib/__tests__/test-database'
 import { cleanupTestAuth } from '@/lib/__tests__/test-auth'
 

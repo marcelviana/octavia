@@ -9,12 +9,14 @@ export default defineConfig({
     setupFiles: ['./src/test-setup.ts', './vitest.setup.ts'],
     globals: true,
     css: true,
-    // Only exclude Playwright E2E tests, not all .spec.ts files
+    // Exclude integration tests and E2E tests from unit test runs
     exclude: [
       'node_modules/**',
       'tests/e2e/**/*',
       '**/*.e2e.{ts,tsx}',
-      '**/e2e/**/*'
+      '**/e2e/**/*',
+      '**/*integration*.test.{ts,tsx}',
+      '**/integration/**/*.test.{ts,tsx}'
     ],
     env: {
       NODE_ENV: 'test',

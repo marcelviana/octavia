@@ -8,6 +8,8 @@ export default defineConfig({
     name: 'integration',
     environment: 'jsdom',
     setupFiles: ['./src/test-setup-integration.ts'],
+    globals: true,
+    css: true,
     include: [
       '**/*.integration.test.{ts,tsx}',
       '**/integration/*.test.{ts,tsx}',
@@ -26,6 +28,7 @@ export default defineConfig({
       NODE_ENV: 'test',
       VITEST: 'true'
     },
+    // Environment variables are loaded via test-setup-integration.ts
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html', 'lcov'],
@@ -60,6 +63,6 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, '.')
-    }
+    },
   }
 }) 

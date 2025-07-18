@@ -770,6 +770,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                                 ? "text-white hover:bg-white/20"
                                 : "hover:bg-green-100 text-green-600",
                             )}
+                            aria-label="Play setlist"
                           >
                             <Play className="w-4 h-4" />
                           </Button>
@@ -785,6 +786,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                                 ? "text-white hover:bg-white/20"
                                 : "hover:bg-amber-100 text-amber-600",
                             )}
+                            aria-label="Edit setlist"
                           >
                             <Edit className="w-4 h-4" />
                           </Button>
@@ -801,6 +803,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                                 ? "text-white hover:bg-white/20"
                                 : "hover:bg-red-100 text-red-600",
                             )}
+                            aria-label="Delete setlist"
                           >
                             <Trash2 className="w-4 h-4" />
                           </Button>
@@ -839,7 +842,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                                       }`}
                                     >
                                     <div className="flex items-center space-x-3">
-                                      <GripVertical className="w-4 h-4 text-amber-500 cursor-grab" />
+                                      <GripVertical className="w-4 h-4 text-amber-500 cursor-grab" aria-label="Drag handle" />
                                       <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
                                         {index + 1}
                                       </div>
@@ -871,6 +874,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                                           handleRemoveSong(setlistSong.id)
                                         }}
                                         className="hover:bg-red-100 text-red-600 h-7 w-7 p-0"
+                                        aria-label="Remove song"
                                       >
                                         <Trash2 className="w-3 h-3" />
                                       </Button>
