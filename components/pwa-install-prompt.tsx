@@ -28,14 +28,12 @@ export function EnhancedPwaInstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null)
   const [showPrompt, setShowPrompt] = useState(false)
   const [isInstalling, setIsInstalling] = useState(false)
-  const [installDismissed, setInstallDismissed] = useState(false)
   const [platform, setPlatform] = useState<string>('')
 
   useEffect(() => {
     // Check if user permanently dismissed the prompt
     const permanentlyDismissed = localStorage.getItem('octavia_install_dismissed')
     if (permanentlyDismissed === 'true') {
-      setInstallDismissed(true)
       return
     }
 
@@ -45,7 +43,6 @@ export function EnhancedPwaInstallPrompt() {
       const postponedDate = new Date(parseInt(postponedTimestamp))
       const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000)
       if (postponedDate > twentyFourHoursAgo) {
-        setInstallDismissed(true)
         return
       }
     }
@@ -69,17 +66,31 @@ export function EnhancedPwaInstallPrompt() {
       setDeferredPrompt(e)
       
       // Show prompt after user has been on the site for 30 seconds
+      // but only if user hasn't dismissed it
       setTimeout(() => {
-        if (!installDismissed) {
-          setShowPrompt(true)
+        const currentlyDismissed = localStorage.getItem('octavia_install_dismissed')
+        const currentlyPostponed = localStorage.getItem('octavia_install_postponed')
+        
+        if (currentlyDismissed === 'true') {
+          return
         }
+        
+        if (currentlyPostponed) {
+          const postponedDate = new Date(parseInt(currentlyPostponed))
+          const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000)
+          if (postponedDate > twentyFourHoursAgo) {
+            return
+          }
+        }
+        
+        setShowPrompt(true)
       }, 30000)
     }
 
     window.addEventListener("beforeinstallprompt", handler as any)
     
     return () => window.removeEventListener("beforeinstallprompt", handler as any)
-  }, [installDismissed])
+  }, [])
 
   const handleInstall = async () => {
     if (!deferredPrompt) return
@@ -113,7 +124,6 @@ export function EnhancedPwaInstallPrompt() {
 
   const handleNeverInstall = () => {
     setShowPrompt(false)
-    setInstallDismissed(true)
     localStorage.setItem('octavia_install_dismissed', 'true')
     
     // Track permanent dismissal
@@ -126,7 +136,6 @@ export function EnhancedPwaInstallPrompt() {
 
   const handleLater = () => {
     setShowPrompt(false)
-    setInstallDismissed(true)
     localStorage.setItem('octavia_install_postponed', Date.now().toString())
     
     // Track postponement
