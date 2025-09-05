@@ -104,6 +104,18 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
     notes: "",
   })
 
+  // Track timeouts for cleanup
+  const timeoutsRef = useRef<NodeJS.Timeout[]>([])
+
+  // Cleanup function for timeouts
+  useEffect(() => {
+    return () => {
+      // Clear all pending timeouts on unmount
+      timeoutsRef.current.forEach(clearTimeout)
+      timeoutsRef.current = []
+    }
+  }, [])
+
   useEffect(() => {
     let lastLoad = Date.now()
     const RELOAD_COOLDOWN = 30000
@@ -118,11 +130,19 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
           const dataIsRecent =
             lastLoadTime && now - new Date(lastLoadTime).getTime() < 300000
           if (hasRecent && dataIsRecent) return
-          setTimeout(() => {
+          const timeoutId = setTimeout(() => {
             if (user && !loading && typeof reload === 'function') {
-              reload()
+              try {
+                const reloadPromise = reload()
+                if (reloadPromise && typeof reloadPromise.catch === 'function') {
+                  reloadPromise.catch(err => console.warn('Visibility reload failed:', err))
+                }
+              } catch (err) {
+                console.warn('Visibility reload failed:', err)
+              }
             }
           }, 1000)
+          timeoutsRef.current.push(timeoutId)
         }
       }
     }
@@ -324,11 +344,19 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
       setSongFilter("")
 
       // Reload data in the background to ensure everything is in sync
-      setTimeout(() => {
+      const timeoutId = setTimeout(() => {
         if (typeof reload === 'function') {
-          reload().catch(err => console.warn('Background reload failed:', err))
+          try {
+            const reloadPromise = reload()
+            if (reloadPromise && typeof reloadPromise.catch === 'function') {
+              reloadPromise.catch(err => console.warn('Background reload failed:', err))
+            }
+          } catch (err) {
+            console.warn('Background reload failed:', err)
+          }
         }
       }, 1000)
+      timeoutsRef.current.push(timeoutId)
 
     } catch (err) {
       console.error("Error adding songs to setlist:", err)
