@@ -119,7 +119,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
             lastLoadTime && now - new Date(lastLoadTime).getTime() < 300000
           if (hasRecent && dataIsRecent) return
           setTimeout(() => {
-            if (user && !loading) {
+            if (user && !loading && typeof reload === 'function') {
               reload()
             }
           }, 1000)
@@ -325,7 +325,9 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
 
       // Reload data in the background to ensure everything is in sync
       setTimeout(() => {
-        reload().catch(err => console.warn('Background reload failed:', err))
+        if (typeof reload === 'function') {
+          reload().catch(err => console.warn('Background reload failed:', err))
+        }
       }, 1000)
 
     } catch (err) {
@@ -358,14 +360,18 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
 
 
       // Reload data using the hook's reload function
-      await reload()
+      if (typeof reload === 'function') {
+        await reload()
+      }
 
     } catch (err) {
       console.error("Error removing song from setlist:", err)
       
       // Revert the optimistic update by reloading from server
       try {
-        await reload()
+        if (typeof reload === 'function') {
+          await reload()
+        }
       } catch (reloadErr) {
         console.error('Failed to reload data after error:', reloadErr)
       }
@@ -445,7 +451,9 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
       
       // Revert the optimistic update by reloading from server
       try {
-      await reload()
+        if (typeof reload === 'function') {
+          await reload()
+        }
       } catch (reloadErr) {
         console.error('Failed to reload data after error:', reloadErr)
       }
