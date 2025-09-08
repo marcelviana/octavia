@@ -17,9 +17,9 @@ export const metadata: Metadata = {
   generator: "v0.dev",
   manifest: "/manifest.json",
   icons: {
-    icon: "/icons/icon-192x192.png", // Updated path
-    apple: "/icons/icon-192x192.png",
-    shortcut: "/icons/icon-192x192.png",
+    icon: "/icons/icon-192x192.webp", // Updated path
+    apple: "/icons/icon-192x192.webp",
+    shortcut: "/icons/icon-192x192.webp",
   },
 }
 

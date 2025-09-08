@@ -14,8 +14,8 @@ const ASSETS = [
   '/pdf.worker.min.mjs',
   '/logos/octavia-icon.webp',
   '/logos/octavia-wordmark.webp',
-  '/icons/icon-192x192.png',
-  '/icons/icon-512x512.png',
+  '/icons/icon-192x192.webp',
+  '/icons/icon-512x512.webp',
 ];
 
 // Handle any errors during service worker lifecycle
