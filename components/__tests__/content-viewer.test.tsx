@@ -5,10 +5,25 @@ import { ContentViewer } from '../content-viewer'
 
 // Mock Next.js Image component
 vi.mock('next/image', () => ({
-  default: ({ src, alt, ...props }: any) => (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img src={src} alt={alt} {...props} />
-  ),
+  default: ({ src, alt, width, height, priority, sizes, className, style, placeholder, blurDataURL, ...props }: any) => {
+    // Mock Image component without using img tag to avoid ESLint warnings
+    return (
+      <div 
+        data-testid="next-image-mock"
+        data-src={src}
+        data-alt={alt}
+        data-width={width}
+        data-height={height}
+        data-priority={priority}
+        data-sizes={sizes}
+        className={className}
+        style={style}
+        {...props}
+      >
+        {alt || 'Image'}
+      </div>
+    )
+  }
 }))
 
 // Mock offline cache - declare mock functions first

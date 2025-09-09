@@ -24,9 +24,25 @@ vi.mock('@/lib/utils', () => ({
 global.URL.revokeObjectURL = vi.fn()
 
 vi.mock('next/image', () => ({
-  default: ({ src, alt, ...props }: any) => (
-    <img src={src} alt={alt} {...props} />
-  )
+  default: ({ src, alt, width, height, priority, sizes, className, style, placeholder, blurDataURL, ...props }: any) => {
+    // Mock Image component without using img tag to avoid ESLint warnings
+    return (
+      <div 
+        data-testid="next-image-mock"
+        data-src={src}
+        data-alt={alt}
+        data-width={width}
+        data-height={height}
+        data-priority={priority}
+        data-sizes={sizes}
+        className={className}
+        style={style}
+        {...props}
+      >
+        {alt || 'Image'}
+      </div>
+    )
+  }
 }))
 
 // Mock PDF and lyrics rendering components

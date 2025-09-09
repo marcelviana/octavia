@@ -58,7 +58,15 @@ const RefactoredLibrary = memo<LibraryProps>(function RefactoredLibrary({
   });
 
   // Content actions (delete, favorite, edit, select)
-  const contentActions = useContentActions(onSelectContent, { onReload: reload });
+  const contentActionsHook = useContentActions(onSelectContent, { onReload: reload });
+  
+  // Adapt hook result to ContentActions interface
+  const contentActions = useMemo(() => ({
+    onSelect: contentActionsHook.selectItem,
+    onEdit: contentActionsHook.editItem,
+    onDelete: contentActionsHook.deleteDialog.open,
+    onToggleFavorite: contentActionsHook.toggleFavoriteItem,
+  }), [contentActionsHook]);
 
   // Memoized calculations
   const totalPages = useMemo(() => 
@@ -82,9 +90,13 @@ const RefactoredLibrary = memo<LibraryProps>(function RefactoredLibrary({
   );
 
   // Memoized content icon function
-  const getContentIcon = useMemo(() => (type: string) => {
-    const { IconComponent, className } = getLibraryContentIconData(type);
-    return <IconComponent className={className} />;
+  const getContentIcon = useMemo(() => {
+    const ContentIcon = (type: string) => {
+      const { IconComponent, className } = getLibraryContentIconData(type);
+      return <IconComponent className={className} />;
+    };
+    ContentIcon.displayName = 'ContentIcon';
+    return ContentIcon;
   }, []);
 
   // Header props
@@ -147,10 +159,10 @@ const RefactoredLibrary = memo<LibraryProps>(function RefactoredLibrary({
 
         {/* Delete Confirmation Dialog */}
         <DeleteContentDialog
-          open={contentActions.deleteDialog.isOpen}
-          onOpenChange={contentActions.deleteDialog.close}
-          content={contentActions.deleteDialog.content}
-          onConfirm={contentActions.deleteDialog.confirm}
+          open={contentActionsHook.deleteDialog.isOpen}
+          onOpenChange={contentActionsHook.deleteDialog.close}
+          content={contentActionsHook.deleteDialog.content}
+          onConfirm={contentActionsHook.deleteDialog.confirm}
         />
       </div>
     </LibraryErrorBoundary>
