@@ -772,7 +772,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
                               )}
                               >
                                 <Calendar className={cn("w-3 h-3 mr-1", expanded ? "" : "text-amber-600")} />
-                                <span className="whitespace-nowrap">{new Date(setlist.performance_date).toLocaleDateString()}</span>
+                                <span className="whitespace-nowrap">{new Date(setlist.performance_date + 'T00:00:00').toLocaleDateString()}</span>
                               </div>
                             )}
                             <div className={cn(

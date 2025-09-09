@@ -79,7 +79,7 @@ const mockSetlists = [
     id: 'setlist-1',
     name: 'Test Setlist 1',
     description: 'A test setlist',
-    performance_date: '2024-01-15',
+    performance_date: '2024-01-14',
     venue: 'Test Venue',
               notes: 'Test Notes',
     user_id: 'test-user-id',
@@ -217,7 +217,7 @@ describe('SetlistManager', () => {
       id: 'setlist1',
       name: 'Test Setlist 1',
       description: 'Test Description',
-      performance_date: '2024-01-15',
+      performance_date: '2024-01-14',
       venue: 'Test Venue',
       notes: 'Test Notes',
       user_id: 'user1',
@@ -510,7 +510,7 @@ describe('SetlistManager', () => {
         expect(mockUpdateSetlist).toHaveBeenCalledWith('setlist1', {
           name: 'Updated Setlist',
           description: 'Test Description',
-          performance_date: '2024-01-15',
+          performance_date: '2024-01-14',
           venue: 'Test Venue',
           notes: 'Test Notes'
         })
