@@ -1,0 +1,255 @@
+"use client";
+
+import React, { memo, useCallback } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
+  BookOpen,
+  Edit,
+  MoreVertical,
+  Star,
+  Clock,
+  Trash2,
+} from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { ContentItem, ContentActions } from '@/types/library';
+import { getContentTypeColors } from '@/types/content';
+import { formatLibraryDate, getDifficultyBadgeClass } from '@/lib/library-utils';
+
+interface OptimizedLibraryListProps {
+  content: ContentItem[];
+  loading: boolean;
+  contentActions: ContentActions;
+  getContentIcon: (type: string) => React.ReactNode;
+}
+
+// Memoized individual content item component
+const ContentItemCard = memo<{
+  item: ContentItem;
+  contentActions: ContentActions;
+  getContentIcon: (type: string) => React.ReactNode;
+}>(function ContentItemCard({ item, contentActions, getContentIcon }) {
+  const colors = getContentTypeColors(item.content_type);
+
+  const handleSelect = useCallback(() => {
+    contentActions.onSelect(item);
+  }, [contentActions, item]);
+
+  const handleEdit = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    contentActions.onEdit(item);
+  }, [contentActions, item]);
+
+  const handleDelete = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    contentActions.onDelete(item);
+  }, [contentActions, item]);
+
+  const handleToggleFavorite = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    contentActions.onToggleFavorite(item);
+  }, [contentActions, item]);
+
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleSelect();
+    }
+  }, [handleSelect]);
+
+  return (
+    <div className="p-3 sm:p-4 hover:bg-amber-50 transition-colors border-b border-yellow-100">
+      <div className="flex items-start gap-3">
+        {/* Icon */}
+        <div className="flex-shrink-0">
+          <div className={`w-10 h-10 rounded-full flex items-center justify-center ${colors.bg} ${colors.border} border`}>
+            {getContentIcon(item.content_type)}
+          </div>
+        </div>
+
+        {/* Content Info */}
+        <div
+          className="flex-1 min-w-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 rounded-md"
+          onClick={handleSelect}
+          onKeyDown={handleKeyDown}
+          tabIndex={0}
+          role="button"
+          aria-label={`View ${item.title} by ${item.artist || 'Unknown Artist'}`}
+        >
+          <div className="flex items-start justify-between gap-2">
+            <div className="flex-1 min-w-0">
+              <h3 className="font-medium text-gray-900 truncate text-sm sm:text-base">
+                {item.title}
+              </h3>
+              <div className="flex items-center text-xs sm:text-sm text-[#A69B8E] mt-0.5">
+                <span className="truncate max-w-[120px] sm:max-w-none">
+                  {item.artist || "Unknown Artist"}
+                </span>
+                {item.album && (
+                  <>
+                    <span className="mx-1 hidden sm:inline">•</span>
+                    <span className="truncate max-w-[100px] sm:max-w-none hidden sm:inline">
+                      {item.album}
+                    </span>
+                  </>
+                )}
+              </div>
+
+              {/* Mobile: Show album on second line if it exists */}
+              {item.album && (
+                <div className="text-xs text-[#A69B8E] truncate mt-0.5 sm:hidden">
+                  {item.album}
+                </div>
+              )}
+
+              {/* Mobile: Show badges and metadata in a compact row */}
+              <div className="flex items-center gap-1.5 mt-2 sm:hidden">
+                {item.key && (
+                  <Badge
+                    variant="outline"
+                    className="bg-white text-xs px-1.5 py-0.5"
+                  >
+                    {item.key}
+                  </Badge>
+                )}
+                {item.difficulty && (
+                  <Badge
+                    className={`text-xs px-1.5 py-0.5 ${getDifficultyBadgeClass(item.difficulty)}`}
+                  >
+                    {item.difficulty}
+                  </Badge>
+                )}
+              </div>
+            </div>
+
+            {/* Desktop: Badges and metadata */}
+            <div className="hidden sm:flex items-center space-x-2 ml-4">
+              {item.key && (
+                <Badge variant="outline" className="bg-white">
+                  {item.key}
+                </Badge>
+              )}
+              {item.difficulty && (
+                <Badge className={getDifficultyBadgeClass(item.difficulty)}>
+                  {item.difficulty}
+                </Badge>
+              )}
+            </div>
+
+            {/* Desktop: Date */}
+            <div className="hidden md:flex items-center text-sm text-[#A69B8E] ml-4">
+              <Clock className="w-3 h-3 mr-1" />
+              {formatLibraryDate(item.created_at)}
+            </div>
+
+            {/* Favorite Star Button */}
+            <div className="flex-shrink-0 ml-2">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 p-0 hover:bg-amber-100"
+                onClick={handleToggleFavorite}
+                aria-label={`${item.is_favorite ? 'Remove from' : 'Add to'} favorites`}
+                aria-pressed={item.is_favorite}
+              >
+                <Star 
+                  className={`w-4 h-4 transition-colors ${
+                    item.is_favorite 
+                      ? "text-amber-500 fill-amber-500" 
+                      : "text-gray-400 hover:text-amber-500"
+                  }`} 
+                />
+              </Button>
+            </div>
+
+            {/* Actions Menu */}
+            <div className="flex-shrink-0">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8"
+                    onClick={(e) => e.stopPropagation()}
+                    aria-label="More options"
+                  >
+                    <MoreVertical className="w-4 h-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem onClick={handleSelect}>
+                    <BookOpen className="w-4 h-4 mr-2" />
+                    View
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleEdit}>
+                    <Edit className="w-4 h-4 mr-2" />
+                    Edit
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    className="text-red-600"
+                    onClick={handleDelete}
+                    aria-label={`Delete ${item.title}`}
+                  >
+                    <Trash2 className="w-4 h-4 mr-2" />
+                    Delete
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+});
+
+const OptimizedLibraryList = memo<OptimizedLibraryListProps>(function OptimizedLibraryList({
+  content,
+  loading,
+  contentActions,
+  getContentIcon,
+}) {
+  // Handle loading state
+  if (loading && content.length === 0) {
+    return null; // Let parent handle loading state
+  }
+
+  // Determine if we should use dynamic height for small lists
+  const isSmallList = content.length <= 4;
+
+  return (
+    <div className="relative">
+      <Card className="bg-white/90 backdrop-blur-sm border border-amber-100 shadow-lg overflow-hidden">
+        <CardContent className="p-0">
+          <ScrollArea 
+            className={`divide-y divide-amber-100 ${
+              isSmallList 
+                ? 'h-auto max-h-[400px] sm:max-h-[450px] md:max-h-[500px]' 
+                : 'h-[70vh] sm:h-[70vh] md:h-[72vh]'
+            }`}
+          >
+            {content.map((item) => (
+              <ContentItemCard
+                key={item.id}
+                item={item}
+                contentActions={contentActions}
+                getContentIcon={getContentIcon}
+              />
+            ))}
+          </ScrollArea>
+        </CardContent>
+      </Card>
+    </div>
+  );
+});
+
+export default OptimizedLibraryList;
