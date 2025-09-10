@@ -2,9 +2,7 @@ import { vi, afterEach } from 'vitest'
 import { cleanup } from '@testing-library/react'
 
 // Add garbage collection to global if available
-declare global {
-  var gc: (() => void) | undefined
-}
+// Note: gc is exposed via NODE_OPTIONS="--expose-gc" and typed in Node.js types
 
 vi.mock('next/link', async () => {
   const React = await import('react')
@@ -53,7 +51,7 @@ afterEach(() => {
   cleanup()
   
   // Force garbage collection if available (helps with memory issues)
-  if (global.gc) {
-    global.gc()
+  if (typeof global !== 'undefined' && (global as any).gc) {
+    (global as any).gc()
   }
 })

@@ -19,7 +19,7 @@ export interface UsePerformanceControlsProps {
   currentSong: number
   lyricsData: string[]
   currentSongData: any
-  contentRef: React.RefObject<HTMLDivElement>
+  contentRef: React.RefObject<HTMLDivElement | null>
 }
 
 export interface PerformanceControlsState {
