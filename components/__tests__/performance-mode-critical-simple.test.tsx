@@ -125,10 +125,19 @@ const liveSetlist = {
 }
 
 describe('Performance Mode - Critical Live Performance Tests', () => {
+  let timeoutIds: Set<NodeJS.Timeout> = new Set()
+  let intervalIds: Set<NodeJS.Timeout> = new Set()
+  let animationFrameIds: Set<number> = new Set()
+
   beforeEach(async () => {
     // Clear and reset all mocks for test isolation
     vi.clearAllMocks()
     vi.resetAllMocks()
+    
+    // Clear tracking sets
+    timeoutIds.clear()
+    intervalIds.clear()
+    animationFrameIds.clear()
     
     // Re-establish default mock behavior
     const { getCachedFileInfo, cacheFilesForContent } = await import('@/lib/offline-cache')
@@ -151,15 +160,65 @@ describe('Performance Mode - Critical Live Performance Tests', () => {
     })
     vi.mocked(isImageFile).mockReturnValue(false)
     
-    // Mock animation frame
-    vi.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => {
-      setTimeout(cb, 16)
-      return 1
+    // Mock timers with tracking
+    const originalSetTimeout = global.setTimeout
+    const originalSetInterval = global.setInterval
+    const originalClearTimeout = global.clearTimeout
+    const originalClearInterval = global.clearInterval
+    
+    vi.spyOn(global, 'setTimeout').mockImplementation((fn, delay) => {
+      const id = originalSetTimeout(fn, delay) as NodeJS.Timeout
+      timeoutIds.add(id)
+      return id
     })
-    vi.spyOn(window, 'cancelAnimationFrame').mockImplementation(() => {})
+    
+    vi.spyOn(global, 'setInterval').mockImplementation((fn, delay) => {
+      const id = originalSetInterval(fn, delay) as NodeJS.Timeout
+      intervalIds.add(id)
+      return id
+    })
+    
+    vi.spyOn(global, 'clearTimeout').mockImplementation((id) => {
+      timeoutIds.delete(id as NodeJS.Timeout)
+      return originalClearTimeout(id)
+    })
+    
+    vi.spyOn(global, 'clearInterval').mockImplementation((id) => {
+      intervalIds.delete(id as NodeJS.Timeout)
+      return originalClearInterval(id)
+    })
+    
+    // Mock animation frame with tracking
+    vi.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => {
+      const id = Math.floor(Math.random() * 1000000)
+      animationFrameIds.add(id)
+      // Use immediate execution instead of setTimeout to avoid timing issues
+      cb(performance.now())
+      return id
+    })
+    
+    vi.spyOn(window, 'cancelAnimationFrame').mockImplementation((id) => {
+      animationFrameIds.delete(id)
+    })
   })
 
   afterEach(() => {
+    // Clean up any remaining timers and animation frames
+    timeoutIds.forEach(id => {
+      try { clearTimeout(id) } catch (e) {}
+    })
+    intervalIds.forEach(id => {
+      try { clearInterval(id) } catch (e) {}
+    })
+    animationFrameIds.forEach(id => {
+      try { cancelAnimationFrame(id) } catch (e) {}
+    })
+    
+    // Clear tracking sets
+    timeoutIds.clear()
+    intervalIds.clear()
+    animationFrameIds.clear()
+    
     vi.restoreAllMocks()
   })
 
@@ -207,16 +266,21 @@ describe('Performance Mode - Critical Live Performance Tests', () => {
       // Simulate rapid key presses (musician nervously navigating)
       // Add small delays to avoid race conditions between state updates
       fireEvent.keyDown(window, { key: 'ArrowRight' })
-      await new Promise(resolve => setTimeout(resolve, 10))
+      await waitFor(() => {
+        expect(screen.getByText('Main Set Song')).toBeInTheDocument()
+      })
       
       fireEvent.keyDown(window, { key: 'ArrowRight' })
-      await new Promise(resolve => setTimeout(resolve, 10))
+      await waitFor(() => {
+        expect(screen.getByText('Closing Song')).toBeInTheDocument()
+      })
       
       fireEvent.keyDown(window, { key: 'ArrowLeft' })
-      await new Promise(resolve => setTimeout(resolve, 10))
+      await waitFor(() => {
+        expect(screen.getByText('Main Set Song')).toBeInTheDocument()
+      })
       
       fireEvent.keyDown(window, { key: 'ArrowRight' })
-
       await waitFor(() => {
         expect(screen.getByText('Closing Song')).toBeInTheDocument()
       })
@@ -432,8 +496,14 @@ describe('Performance Mode - Critical Live Performance Tests', () => {
       const playButton = screen.getByTestId('play-pause-button')
       await userEvent.click(playButton)
 
+      // Wait for any pending state updates to complete
+      await new Promise(resolve => setTimeout(resolve, 50))
+
       // Unmount component
       unmount()
+
+      // Wait a bit more to ensure cleanup completes
+      await new Promise(resolve => setTimeout(resolve, 50))
 
       // Verify cleanup (basic check that unmount doesn't throw)
       // Note: URL.revokeObjectURL may or may not be called depending on whether blob URLs were created
