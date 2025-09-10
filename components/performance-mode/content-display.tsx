@@ -1,16 +1,17 @@
+import { memo } from "react"
 import Image from "next/image"
 import PdfViewer from "@/components/pdf-viewer"
 import { MusicText } from "@/components/music-text"
-import { ContentRenderInfo } from "@/hooks/use-content-renderer"
+import type { SongData, ContentRenderInfo } from "@/types/performance"
 
 interface ContentDisplayProps {
   renderInfo: ContentRenderInfo
-  currentSongData: any
+  currentSongData: SongData
   currentSong: number
   zoom: number
 }
 
-export function ContentDisplay({ 
+export const ContentDisplay = memo(function ContentDisplay({ 
   renderInfo, 
   currentSongData, 
   currentSong, 
@@ -85,4 +86,4 @@ export function ContentDisplay({
       )}
     </div>
   )
-}
+})

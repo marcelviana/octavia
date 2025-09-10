@@ -1,5 +1,7 @@
+import { memo, useCallback } from "react"
 import { Button } from "@/components/ui/button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import type { SongData } from "@/types/performance"
 
 interface NavigationControlsProps {
   showControls: boolean
@@ -7,12 +9,12 @@ interface NavigationControlsProps {
   canGoNext: boolean
   goToPrevious: () => void
   goToNext: () => void
-  songs: any[]
+  songs: SongData[]
   currentSong: number
   goToSong: (index: number) => void
 }
 
-export function NavigationControls({
+export const NavigationControls = memo(function NavigationControls({
   showControls,
   canGoPrevious,
   canGoNext,
@@ -42,7 +44,7 @@ export function NavigationControls({
         </Button>
 
         <div className="flex space-x-1 mx-4">
-          {songs.map((_: any, index: number) => (
+          {songs.map((_, index: number) => (
             <div
               key={index}
               className={`w-2 h-2 rounded-full cursor-pointer ${
@@ -66,4 +68,4 @@ export function NavigationControls({
       </div>
     </div>
   )
-}
+})

@@ -19,7 +19,16 @@ import { toast } from 'sonner'
 // Mock offline cache with controlled responses
 vi.mock('@/lib/offline-cache', () => ({
   getCachedFileInfo: vi.fn(),
-  cacheFilesForContent: vi.fn()
+  cacheFilesForContent: vi.fn(),
+  warmCache: vi.fn(() => Promise.resolve()),
+  getCacheMetrics: vi.fn(() => ({
+    hitRate: 0.8,
+    missCount: 5,
+    hitCount: 20,
+    totalRequests: 25,
+    hitRatePercent: 80
+  })),
+  preloadContent: vi.fn(() => Promise.resolve())
 }))
 
 // Mock utils with controllable file type detection
@@ -331,9 +340,19 @@ describe('Performance Mode - CRITICAL Live Performance Tests', () => {
 
       // Verify cache was used, not network
       expect(getCachedFileInfo).toHaveBeenCalled()
-      expect(cacheFilesForContent).toHaveBeenCalledWith(
-        liveSetlist.setlist_songs.map(s => s.content)
+      
+      // Wait for background caching to complete
+      await waitFor(() => {
+        expect(cacheFilesForContent).toHaveBeenCalled()
+      }, { timeout: 3000 })
+      
+      // Cache should have been called with content (either from cache warming or content caching)
+      const cacheFilesForContentCalls = vi.mocked(cacheFilesForContent).mock.calls
+      const contentIds = liveSetlist.setlist_songs.map(s => s.content.id)
+      const hasMatchingCall = cacheFilesForContentCalls.some(call => 
+        call[0] && call[0].some && call[0].some((item: any) => contentIds.includes(item.id))
       )
+      expect(hasMatchingCall).toBe(true)
     })
 
     it('should handle missing cache gracefully during performance', async () => {

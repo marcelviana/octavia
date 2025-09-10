@@ -2,9 +2,22 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { SetlistManager } from "@/components/setlist-manager"
+import dynamic from "next/dynamic"
 import { ResponsiveLayout } from "@/components/responsive-layout"
 import { useAuth } from "@/contexts/firebase-auth-context"
+
+// Bundle splitting: Lazy load setlist management features
+const SetlistManager = dynamic(() => import("@/components/setlist-manager").then(mod => ({ default: mod.SetlistManager })), {
+  loading: () => (
+    <div className="flex items-center justify-center min-h-[400px]">
+      <div className="text-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-600 mx-auto mb-2"></div>
+        <p className="text-sm text-muted-foreground">Loading setlists...</p>
+      </div>
+    </div>
+  ),
+  ssr: false // Client-side only for better performance
+})
 
 export default function SetlistsPage() {
   const router = useRouter()

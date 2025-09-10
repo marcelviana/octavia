@@ -12,7 +12,15 @@ import { useContentCaching } from '../use-content-caching'
 // Mock offline cache functions
 vi.mock('@/lib/offline-cache', () => ({
   getCachedFileInfo: vi.fn(),
-  cacheFilesForContent: vi.fn()
+  cacheFilesForContent: vi.fn(),
+  warmCache: vi.fn(() => Promise.resolve()),
+  getCacheMetrics: vi.fn(() => ({
+    hitRate: 0.8,
+    missCount: 5,
+    hitCount: 20,
+    totalRequests: 25,
+    hitRatePercent: 80
+  }))
 }))
 
 // Mock URL.revokeObjectURL

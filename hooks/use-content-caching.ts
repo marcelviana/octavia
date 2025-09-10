@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from 'react'
-import { getCachedFileInfo, cacheFilesForContent } from '@/lib/offline-cache'
+import { getCachedFileInfo, cacheFilesForContent, warmCache } from '@/lib/offline-cache'
+import type { SongData, ContentCacheState } from '@/types/performance'
 
 /**
  * Content Caching Hook
@@ -16,17 +17,10 @@ import { getCachedFileInfo, cacheFilesForContent } from '@/lib/offline-cache'
  */
 
 export interface UseContentCachingProps {
-  songs: any[]
+  songs: SongData[]
 }
 
-export interface ContentCachingState {
-  sheetUrls: (string | null)[]
-  sheetMimeTypes: (string | null)[]
-  lyricsData: string[]
-  isLoading: boolean
-}
-
-export function useContentCaching({ songs }: UseContentCachingProps): ContentCachingState {
+export function useContentCaching({ songs }: UseContentCachingProps): ContentCacheState {
   const [sheetUrls, setSheetUrls] = useState<(string | null)[]>([])
   const [sheetMimeTypes, setSheetMimeTypes] = useState<(string | null)[]>([])
   const [isLoading, setIsLoading] = useState(false)
@@ -131,7 +125,7 @@ export function useContentCaching({ songs }: UseContentCachingProps): ContentCac
     }
   }, [songsHash])
 
-  // Background caching for performance
+  // Background caching and cache warming for performance
   useEffect(() => {
     if (songsHash === 'empty') return
 
@@ -141,6 +135,10 @@ export function useContentCaching({ songs }: UseContentCachingProps): ContentCac
     const cacheContent = async () => {
       try {
         if (isMounted) {
+          // First, warm the cache for better performance on first load
+          await warmCache('high')
+          
+          // Then cache the current songs in background
           await cacheFilesForContent(songsRef.current)
         }
       } catch (error) {
@@ -161,6 +159,14 @@ export function useContentCaching({ songs }: UseContentCachingProps): ContentCac
       clearTimeout(timeoutId)
     }
   }, [songsHash])
+
+  // Warm cache on component mount for immediate performance benefit
+  useEffect(() => {
+    // Warm cache immediately for better first-load experience
+    warmCache('normal').catch(() => {
+      // Silently continue if cache warming fails
+    })
+  }, [])
 
   return {
     sheetUrls,

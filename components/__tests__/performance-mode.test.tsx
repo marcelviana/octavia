@@ -10,7 +10,15 @@ vi.mock('@/lib/offline-cache', () => ({
     url: 'blob:test-file-url',
     mimeType: 'application/pdf'
   }),
-  cacheFilesForContent: vi.fn(() => Promise.resolve())
+  cacheFilesForContent: vi.fn(() => Promise.resolve()),
+  warmCache: vi.fn(() => Promise.resolve()),
+  getCacheMetrics: vi.fn(() => ({
+    hitRate: 0.8,
+    missCount: 5,
+    hitCount: 20,
+    totalRequests: 25,
+    hitRatePercent: 80
+  }))
 }))
 
 // Fix: Mock isPdfFile and isImageFile to control rendering path

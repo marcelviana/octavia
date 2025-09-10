@@ -1,3 +1,4 @@
+import { memo, useCallback } from "react"
 import { Button } from "@/components/ui/button"
 import {
   X,
@@ -10,10 +11,11 @@ import {
   Moon,
   Sun,
 } from "lucide-react"
+import type { SongData } from "@/types/performance"
 
 interface HeaderControlsProps {
   // Title and Exit
-  currentSongData: any
+  currentSongData: SongData
   onExitPerformance: () => void
   
   // Dark mode
@@ -35,7 +37,7 @@ interface HeaderControlsProps {
   endPress: (type: "inc" | "dec", trigger?: boolean) => void
 }
 
-export function HeaderControls({
+export const HeaderControls = memo(function HeaderControls({
   currentSongData,
   onExitPerformance,
   darkSheet,
@@ -161,4 +163,4 @@ export function HeaderControls({
       </div>
     </>
   )
-}
+})

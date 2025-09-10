@@ -4,6 +4,7 @@ import { useRef, useMemo } from "react"
 import { Card } from "@/components/ui/card"
 import { usePerformanceNavigation } from "@/hooks/use-performance-navigation"
 import { useContentCaching } from "@/hooks/use-content-caching"
+import { useContentPreloader } from "@/hooks/use-content-preloader"
 import { usePerformanceControls } from "@/hooks/use-performance-controls"
 import { useWakeLock } from "@/hooks/use-wake-lock"
 import { useContentRenderer } from "@/hooks/use-content-renderer"
@@ -11,19 +12,18 @@ import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts"
 import { HeaderControls } from "./performance-mode/header-controls"
 import { ContentDisplay } from "./performance-mode/content-display"
 import { NavigationControls } from "./performance-mode/navigation-controls"
+import type { 
+  PerformanceModeProps, 
+  SongData, 
+  SetlistWithSongs,
+  Content
+} from "@/types/performance"
 
-const defaultSetlist = [
-  { id: 1, title: "Wonderwall", artist: "Oasis", key: "Em", bpm: 87 },
-  { id: 2, title: "Black", artist: "Pearl Jam", key: "E", bpm: 85 },
-  { id: 3, title: "Dust in the Wind", artist: "Kansas", key: "C", bpm: 78 },
+const defaultSetlist: SongData[] = [
+  { id: "1", title: "Wonderwall", artist: "Oasis", key: "Em", bpm: 87 },
+  { id: "2", title: "Black", artist: "Pearl Jam", key: "E", bpm: 85 },
+  { id: "3", title: "Dust in the Wind", artist: "Kansas", key: "C", bpm: 78 },
 ]
-
-interface PerformanceModeProps {
-  onExitPerformance: () => void
-  selectedContent?: any
-  selectedSetlist?: any
-  startingSongIndex?: number
-}
 
 export function PerformanceMode({
   onExitPerformance,
@@ -33,9 +33,13 @@ export function PerformanceMode({
 }: PerformanceModeProps) {
   const contentRef = useRef<HTMLDivElement>(null)
 
-  const songs = useMemo(() => {
-    if (selectedSetlist) return (selectedSetlist.setlist_songs || []).map((s: any) => s.content)
-    if (selectedContent) return [selectedContent]
+  const songs: SongData[] = useMemo(() => {
+    if (selectedSetlist?.setlist_songs) {
+      return selectedSetlist.setlist_songs.map(s => s.content)
+    }
+    if (selectedContent) {
+      return [selectedContent]
+    }
     return defaultSetlist
   }, [selectedSetlist, selectedContent])
 
@@ -43,10 +47,18 @@ export function PerformanceMode({
     usePerformanceNavigation({ songs, onExitPerformance, startingSongIndex })
 
   const { sheetUrls, sheetMimeTypes, lyricsData } = useContentCaching({ songs })
-
+  
   const { zoom, isPlaying, bpm, darkSheet, bpmFeedback, showControls, setZoom, setIsPlaying, 
     setDarkSheet, changeBpm, startPress, endPress, handleMouseMove } = 
     usePerformanceControls({ currentSong, lyricsData, currentSongData, contentRef })
+
+  // Intelligent preloading for seamless live performance
+  useContentPreloader({ 
+    songs, 
+    currentSongIndex: currentSong, 
+    isPlaying, 
+    enablePreloading: true 
+  })
 
   const contentRenderInfo = useContentRenderer({
     currentSong, currentSongData, sheetUrls, sheetMimeTypes, lyricsData

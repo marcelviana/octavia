@@ -46,6 +46,42 @@ const nextConfig = {
         './firebase-admin.ts': false,
       };
 
+      // Optimize bundle splitting for performance vs management features
+      if (!dev) {
+        config.optimization = config.optimization || {};
+        config.optimization.splitChunks = {
+          ...config.optimization.splitChunks,
+          chunks: 'all',
+          cacheGroups: {
+            ...config.optimization.splitChunks?.cacheGroups,
+            // Performance mode bundle - critical for live performance
+            performance: {
+              name: 'performance-mode',
+              test: /[\\/](components[\\/]performance-mode|hooks[\\/]use-(performance|content|wake))/,
+              chunks: 'all',
+              priority: 30,
+              enforce: true,
+            },
+            // Management features bundle - loaded only when needed
+            management: {
+              name: 'management-features', 
+              test: /[\\/](components[\\/](library|setlist|add-content)|hooks[\\/]use-(library|setlist))/,
+              chunks: 'all',
+              priority: 25,
+              enforce: true,
+            },
+            // Offline caching bundle - shared between performance and management
+            offline: {
+              name: 'offline-cache',
+              test: /[\\/](lib[\\/]offline-cache|hooks[\\/]use-content-(caching|preloader))/,
+              chunks: 'all',
+              priority: 20,
+              enforce: true,
+            },
+          },
+        };
+      }
+
       // Prevent Node.js built-in modules from being bundled on the client
       config.resolve.fallback = {
         ...config.resolve.fallback,

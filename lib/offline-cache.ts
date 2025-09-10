@@ -23,6 +23,14 @@ function isPublicSupabaseUrl(url: string): boolean {
 // Track ongoing cache operations to prevent race conditions
 const ongoingOperations = new Map<string, Promise<string | null>>()
 
+// Cache performance metrics for optimization
+const cacheMetrics = {
+  hitRate: 0,
+  missCount: 0,
+  hitCount: 0,
+  lastOptimization: Date.now()
+}
+
 function encodeBase64(data: Uint8Array): string {
   if (typeof btoa === 'function') {
     let binary = ''
@@ -285,9 +293,15 @@ export async function getCachedFileInfo(id: string): Promise<{ url: string; mime
       const userId = await getUserId()
       const stored = await localforage.getItem<any>(getFileKey(userId, id))
       if (!stored) {
+        // Track cache miss for performance metrics
+        cacheMetrics.missCount++
         debug.log(`No cached file found for content ${id}`)
         return null
       }
+
+      // Track cache hit for performance metrics
+      cacheMetrics.hitCount++
+      cacheMetrics.hitRate = cacheMetrics.hitCount / (cacheMetrics.hitCount + cacheMetrics.missCount)
       
       let index = await getIndex()
       const entry = index.find(e => e.id === id)
@@ -325,6 +339,76 @@ export async function getCachedFileInfo(id: string): Promise<{ url: string; mime
   }
 }
 
+export async function preloadContent(items: any[], signal?: AbortSignal): Promise<void> {
+  if (!items || items.length === 0) return
+  
+  for (const item of items) {
+    // Check for abort signal
+    if (signal?.aborted) {
+      debug.log('Preload operation aborted')
+      return
+    }
+    
+    if (!item?.id || !item?.file_url) continue
+    
+    try {
+      // Check if already cached to avoid unnecessary work
+      const userId = await getUserId()
+      const cached = await localforage.getItem(getFileKey(userId, item.id))
+      if (cached) {
+        debug.log(`Content ${item.id} already cached, skipping preload`)
+        continue
+      }
+      
+      // Use the existing caching mechanism
+      await cacheFileForContent(item)
+      
+      // Small delay to prevent overwhelming the system
+      if (!signal?.aborted) {
+        await new Promise(resolve => setTimeout(resolve, 50))
+      }
+    } catch (error) {
+      // Don't let preload failures break the system
+      debug.warn(`Failed to preload content ${item.id}:`, error)
+    }
+  }
+}
+
+export async function warmCache(priority: 'high' | 'normal' | 'low' = 'normal'): Promise<void> {
+  try {
+    const content = await getCachedContent()
+    if (content.length === 0) return
+    
+    // Sort by priority: recently accessed first, then by creation date
+    const sorted = content.sort((a, b) => {
+      const aAccess = a.lastAccess || a.created_at || 0
+      const bAccess = b.lastAccess || b.created_at || 0
+      return new Date(bAccess).getTime() - new Date(aAccess).getTime()
+    })
+    
+    // Limit based on priority level
+    const limit = priority === 'high' ? 5 : priority === 'normal' ? 3 : 1
+    const toWarm = sorted.slice(0, limit)
+    
+    debug.log(`Warming cache for ${toWarm.length} items (priority: ${priority})`)
+    
+    // Warm cache in background without waiting
+    cacheFilesForContent(toWarm).catch(error => {
+      debug.warn('Cache warming failed:', error)
+    })
+  } catch (error) {
+    debug.warn('Failed to warm cache:', error)
+  }
+}
+
+export function getCacheMetrics() {
+  return {
+    ...cacheMetrics,
+    totalRequests: cacheMetrics.hitCount + cacheMetrics.missCount,
+    hitRatePercent: Math.round(cacheMetrics.hitRate * 100)
+  }
+}
+
 export async function clearOfflineContent(userIdArg?: string): Promise<void> {
   const userId = userIdArg ?? (await getUserId())
   const indexKey = getIndexKey(userId)
@@ -335,4 +419,10 @@ export async function clearOfflineContent(userIdArg?: string): Promise<void> {
   }
   await localforage.removeItem(indexKey)
   await localforage.removeItem(storeKey)
+  
+  // Reset cache metrics on clear
+  cacheMetrics.hitCount = 0
+  cacheMetrics.missCount = 0
+  cacheMetrics.hitRate = 0
+  cacheMetrics.lastOptimization = Date.now()
 }

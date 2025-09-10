@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { isPdfFile, isImageFile } from '@/lib/utils'
 import { ContentType, normalizeContentType } from '@/types/content'
+import type { SongData, ContentRenderInfo } from '@/types/performance'
 
 /**
  * Content Renderer Hook
@@ -17,21 +18,10 @@ import { ContentType, normalizeContentType } from '@/types/content'
 
 export interface UseContentRendererProps {
   currentSong: number
-  currentSongData: any
+  currentSongData: SongData
   sheetUrls: (string | null)[]
   sheetMimeTypes: (string | null)[]
   lyricsData: string[]
-}
-
-export interface ContentRenderInfo {
-  renderType: 'pdf' | 'image' | 'lyrics' | 'no-sheet' | 'no-lyrics' | 'unsupported'
-  url?: string
-  mimeType?: string
-  lyricsText?: string
-  errorInfo?: {
-    url: string
-    mimeType: string | null
-  }
 }
 
 export function useContentRenderer({
