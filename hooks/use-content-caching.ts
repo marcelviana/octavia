@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { getCachedFileInfo, cacheFilesForContent } from '@/lib/offline-cache'
 
 /**
@@ -31,6 +31,24 @@ export function useContentCaching({ songs }: UseContentCachingProps): ContentCac
   const [sheetMimeTypes, setSheetMimeTypes] = useState<(string | null)[]>([])
   const [isLoading, setIsLoading] = useState(false)
 
+  // Create stable references to prevent infinite loops
+  const songsRef = useRef(songs)
+  
+  // Use a memoized hash to detect actual changes
+  const songsHash = useMemo(() => {
+    if (!songs || songs.length === 0) return 'empty'
+    return JSON.stringify(songs.map(song => ({ 
+      id: song?.id, 
+      file_url: song?.file_url,
+      content_file: song?.content_data?.file 
+    })))
+  }, [songs])
+
+  // Update ref when songs actually change
+  useEffect(() => {
+    songsRef.current = songs
+  }, [songsHash])
+
   // Extract lyrics data from songs
   const lyricsData = useMemo(() => 
     songs.map((song: any) => song?.content_data?.lyrics || ""),
@@ -39,35 +57,32 @@ export function useContentCaching({ songs }: UseContentCachingProps): ContentCac
 
   // Load sheet URLs from cache or fallback to original URLs
   useEffect(() => {
-    if (songs.length === 0) {
+    const currentSongs = songsRef.current
+    
+    if (songsHash === 'empty') {
       setSheetUrls([])
       setSheetMimeTypes([])
+      setIsLoading(false)
       return
     }
 
-    let toRevoke: string[] = []
+    let isMounted = true
+    const toRevoke: string[] = []
     setIsLoading(true)
 
     const loadSheetUrls = async () => {
-      try {
-        console.log('Loading sheet URLs for performance mode, songs:', songs.length)
-        
+      try {        
         const results = await Promise.all(
-          songs.map(async (song: any, index: number) => {
-            if (song?.id) {
-              console.log(`Loading cached file info for song ${index}: ${song.title} (ID: ${song.id})`)
-              
+          currentSongs.map(async (song: any) => {
+            if (song?.id && isMounted) {
               try {
                 const fileInfo = await getCachedFileInfo(song.id)
-                if (fileInfo) {
-                  console.log(`Found cached file for song ${index}: ${fileInfo.url.substring(0, 50)}... (MIME: ${fileInfo.mimeType})`)
+                if (fileInfo && isMounted) {
                   toRevoke.push(fileInfo.url)
                   return { url: fileInfo.url, mimeType: fileInfo.mimeType }
-                } else {
-                  console.log(`No cached file found for song ${index}, using file_url: ${song.file_url}`)
                 }
               } catch (error) {
-                console.warn(`Cache lookup failed for song ${index}:`, error)
+                // Silently continue with fallback
               }
             }
             
@@ -79,51 +94,73 @@ export function useContentCaching({ songs }: UseContentCachingProps): ContentCac
           })
         )
         
-        console.log('Sheet URLs loaded:', results.map((r, i) => 
-          `${i}: ${r.url?.substring(0, 50)}... (MIME: ${r.mimeType})`
-        ))
-        
-        setSheetUrls(results.map(r => r.url))
-        setSheetMimeTypes(results.map(r => r.mimeType))
+        if (isMounted) {
+          setSheetUrls(results.map(r => r.url))
+          setSheetMimeTypes(results.map(r => r.mimeType))
+        }
       } catch (error) {
-        console.error('Failed to load sheet URLs:', error)
-        // Set fallback URLs
-        setSheetUrls(songs.map(song => song?.file_url || song?.content_data?.file || null))
-        setSheetMimeTypes(songs.map(() => null))
+        if (isMounted) {
+          // Set fallback URLs
+          setSheetUrls(currentSongs.map(song => song?.file_url || song?.content_data?.file || null))
+          setSheetMimeTypes(currentSongs.map(() => null))
+        }
       } finally {
-        setIsLoading(false)
+        if (isMounted) {
+          setIsLoading(false)
+        }
       }
     }
 
     loadSheetUrls()
 
-    // Cleanup function to revoke blob URLs
+    // Enhanced cleanup function
     return () => {
+      isMounted = false
+      // Revoke blob URLs for memory management
       toRevoke.forEach(url => {
         try {
-          URL.revokeObjectURL(url)
+          if (url && typeof url === 'string' && url.startsWith('blob:')) {
+            URL.revokeObjectURL(url)
+          }
         } catch (error) {
-          console.warn('Failed to revoke blob URL:', error)
+          // Silently continue - browser may have already cleaned up
         }
       })
+      // Clear references to help GC
+      toRevoke.length = 0
     }
-  }, [songs])
+  }, [songsHash])
 
   // Background caching for performance
   useEffect(() => {
-    if (songs.length === 0) return
+    if (songsHash === 'empty') return
+
+    let isMounted = true
+    const abortController = new AbortController()
 
     const cacheContent = async () => {
       try {
-        await cacheFilesForContent(songs)
+        if (isMounted) {
+          await cacheFilesForContent(songsRef.current)
+        }
       } catch (error) {
-        console.error('Failed to cache files for performance:', error)
         // Don't throw - caching failure shouldn't break performance mode
+        // Only log in development
+        if (process.env.NODE_ENV === 'development') {
+          console.warn('Background caching failed:', error)
+        }
       }
     }
 
-    cacheContent()
-  }, [songs])
+    // Use a small delay to prevent overwhelming the system
+    const timeoutId = setTimeout(cacheContent, 10)
+
+    return () => {
+      isMounted = false
+      abortController.abort()
+      clearTimeout(timeoutId)
+    }
+  }, [songsHash])
 
   return {
     sheetUrls,

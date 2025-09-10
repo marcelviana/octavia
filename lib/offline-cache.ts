@@ -1,6 +1,7 @@
 import localforage from 'localforage'
 import { auth } from './firebase'
 import { toast } from '@/hooks/use-toast'
+import { debug } from '@/lib/debug'
 
 const FILE_PREFIX = 'octavia-offline-file'
 
@@ -65,7 +66,7 @@ async function getIndex(): Promise<IndexEntry[]> {
     const data = await localforage.getItem<IndexEntry[]>(getIndexKey(userId))
     return data || []
   } catch (err) {
-    console.error('Failed to load cache index:', err)
+    debug.error('Failed to load cache index:', err)
     return []
   }
 }
@@ -75,7 +76,7 @@ async function saveIndex(index: IndexEntry[]): Promise<void> {
     const userId = await getUserId()
     await localforage.setItem(getIndexKey(userId), index)
   } catch (err) {
-    console.error('Failed to save cache index:', err)
+    debug.error('Failed to save cache index:', err)
   }
 }
 
@@ -102,7 +103,7 @@ export async function getCachedContent(): Promise<any[]> {
     const data = await localforage.getItem<any[]>(getStoreKey(userId))
     return data || []
   } catch (err) {
-    console.error('Failed to load cached content:', err)
+    debug.error('Failed to load cached content:', err)
     return []
   }
 }
@@ -117,7 +118,7 @@ export async function saveContent(items: any[]): Promise<void> {
     ]
     await localforage.setItem(getStoreKey(userId), merged)
   } catch (err) {
-    console.error('Failed to cache offline content', err)
+    debug.error('Failed to cache offline content', err)
   }
 }
 
@@ -134,7 +135,7 @@ export async function removeCachedContent(id: string): Promise<void> {
     const updated = index.filter(e => String(e.id) !== String(id))
     await saveIndex(updated)
   } catch (err) {
-    console.error('Failed to remove cached content', err)
+    debug.error('Failed to remove cached content', err)
   }
 }
 
@@ -145,7 +146,7 @@ export async function cacheFilesForContent(items: any[]): Promise<void> {
     // Check if operation is already in progress
     const operationKey = `cache-${item.id}`
     if (ongoingOperations.has(operationKey)) {
-      console.log(`Cache operation already in progress for ${item.id}, skipping`)
+      debug.log(`Cache operation already in progress for ${item.id}, skipping`)
       continue
     }
     
@@ -159,7 +160,7 @@ export async function cacheFilesForContent(items: any[]): Promise<void> {
           const fetchUrl = isPublicSupabaseUrl(item.file_url)
             ? item.file_url
             : `/api/proxy?url=${encodeURIComponent(item.file_url)}`;
-          console.log(`Caching file for content ${item.id} from ${fetchUrl}`)
+          debug.log(`Caching file for content ${item.id} from ${fetchUrl}`)
           const res = await fetch(fetchUrl)
           if (!res.ok) {
             const text = await res.text().catch(() => '')
@@ -176,7 +177,7 @@ export async function cacheFilesForContent(items: any[]): Promise<void> {
           }
           const array = await res.arrayBuffer()
           if (array.byteLength === 0) {
-            console.error('Fetched file is empty, not caching')
+            debug.error('Fetched file is empty, not caching')
             return null
           }
           if (array.byteLength > MAX_CACHE_BYTES) {
@@ -193,11 +194,11 @@ export async function cacheFilesForContent(items: any[]): Promise<void> {
           index.push({ id: item.id, size, lastAccess: Date.now() })
           index = await enforceQuota(index)
           await saveIndex(index)
-          console.log(`Successfully cached file for content ${item.id}, size: ${size} bytes`)
+          debug.log(`Successfully cached file for content ${item.id}, size: ${size} bytes`)
         }
         return null // Return null for cache operations (not URL operations)
       } catch (err) {
-        console.error(`Failed to cache file for ${item.id}:`, err)
+        debug.error(`Failed to cache file for ${item.id}:`, err)
         throw err
       }
     })()
@@ -221,7 +222,7 @@ export async function getCachedFileUrl(id: string): Promise<string | null> {
   // Check if operation is already in progress
   const operationKey = `get-${id}`
   if (ongoingOperations.has(operationKey)) {
-    console.log(`Get operation already in progress for ${id}, waiting...`)
+    debug.log(`Get operation already in progress for ${id}, waiting...`)
     return ongoingOperations.get(operationKey)!
   }
   
@@ -230,7 +231,7 @@ export async function getCachedFileUrl(id: string): Promise<string | null> {
       const userId = await getUserId()
       const stored = await localforage.getItem<any>(getFileKey(userId, id))
       if (!stored) {
-        console.log(`No cached file found for content ${id}`)
+        debug.log(`No cached file found for content ${id}`)
         return null
       }
       
@@ -247,16 +248,16 @@ export async function getCachedFileUrl(id: string): Promise<string | null> {
       
       if (typeof URL.createObjectURL === 'function') {
         const url = URL.createObjectURL(blob)
-        console.log(`Created blob URL for content ${id}: ${url.substring(0, 50)}...`)
+        debug.log(`Created blob URL for content ${id}: ${url.substring(0, 50)}...`)
         return url
       }
       
       const base64 = encodeBase64(dataArray)
       const dataUrl = `data:${stored.mime};base64,${base64}`
-      console.log(`Created data URL for content ${id}: ${dataUrl.substring(0, 50)}...`)
+      debug.log(`Created data URL for content ${id}: ${dataUrl.substring(0, 50)}...`)
       return dataUrl
     } catch (err) {
-      console.error('Failed to load cached file for', id, ':', err)
+      debug.error('Failed to load cached file for', id, ':', err)
       return null
     }
   })()
@@ -275,7 +276,7 @@ export async function getCachedFileInfo(id: string): Promise<{ url: string; mime
   // Check if operation is already in progress
   const operationKey = `get-info-${id}`
   if (ongoingOperations.has(operationKey)) {
-    console.log(`Get info operation already in progress for ${id}, waiting...`)
+    debug.log(`Get info operation already in progress for ${id}, waiting...`)
     return ongoingOperations.get(operationKey)! as Promise<{ url: string; mimeType: string } | null>
   }
   
@@ -284,7 +285,7 @@ export async function getCachedFileInfo(id: string): Promise<{ url: string; mime
       const userId = await getUserId()
       const stored = await localforage.getItem<any>(getFileKey(userId, id))
       if (!stored) {
-        console.log(`No cached file found for content ${id}`)
+        debug.log(`No cached file found for content ${id}`)
         return null
       }
       
@@ -301,16 +302,16 @@ export async function getCachedFileInfo(id: string): Promise<{ url: string; mime
       
       if (typeof URL.createObjectURL === 'function') {
         const url = URL.createObjectURL(blob)
-        console.log(`Created blob URL for content ${id}: ${url.substring(0, 50)}...`)
+        debug.log(`Created blob URL for content ${id}: ${url.substring(0, 50)}...`)
         return { url, mimeType: stored.mime }
       }
       
       const base64 = encodeBase64(dataArray)
       const dataUrl = `data:${stored.mime};base64,${base64}`
-      console.log(`Created data URL for content ${id}: ${dataUrl.substring(0, 50)}...`)
+      debug.log(`Created data URL for content ${id}: ${dataUrl.substring(0, 50)}...`)
       return { url: dataUrl, mimeType: stored.mime }
     } catch (err) {
-      console.error('Failed to load cached file for', id, ':', err)
+      debug.error('Failed to load cached file for', id, ':', err)
       return null
     }
   })()

@@ -54,7 +54,13 @@ describe('useLibraryData', () => {
   })
 
   afterEach(() => {
+    vi.restoreAllMocks()
+    vi.clearAllMocks()
     vi.resetAllMocks()
+    // Force garbage collection if available
+    if (global.gc) {
+      global.gc()
+    }
   })
 
   it('initializes with correct default values', () => {
@@ -156,6 +162,11 @@ describe('useLibraryData', () => {
     // Initial content should be present
     expect(result.current.content).toHaveLength(1)
     expect(result.current.content[0].title).toBe('Initial Song')
+    
+    // Should have other expected properties
+    expect(typeof result.current.setSearchQuery).toBe('function')
+    expect(typeof result.current.setSelectedFilters).toBe('function')
+    expect(result.current.totalCount).toBe(1)
   })
 
   it('handles filter changes correctly', () => {

@@ -4,6 +4,7 @@ import { useDebounce } from '@/hooks/use-debounce'
 import { getUserContentPage } from '@/lib/content-service'
 import { saveContent, getCachedContent } from '@/lib/offline-cache'
 import { useSearchParams } from 'next/navigation'
+import { debug } from '@/lib/debug'
 
 interface Options {
   user: any | null
@@ -94,7 +95,7 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
       // Ensure we have a valid user with proper authentication
       const userForQuery = user && user.uid ? { id: user.uid, email: user.email } : null
       if (!userForQuery) {
-        console.warn('useLibraryData.load: No valid user found for content query')
+        debug.warn('useLibraryData.load: No valid user found for content query')
         return
       }
       

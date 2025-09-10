@@ -9,6 +9,21 @@ export default defineConfig({
     setupFiles: ['./src/test-setup.ts', './vitest.setup.ts'],
     globals: true,
     css: true,
+    // Memory optimization settings
+    pool: 'threads',
+    poolOptions: {
+      threads: {
+        minThreads: 1,
+        maxThreads: 2, // Limit concurrent threads to reduce memory pressure
+      },
+    },
+    // Run memory-intensive tests sequentially
+    sequence: {
+      concurrent: false, // Disable concurrent execution for stability
+    },
+    // Increase timeouts for slower memory-optimized execution
+    testTimeout: 30000,
+    hookTimeout: 10000,
     // Exclude integration tests and E2E tests from unit test runs
     exclude: [
       'node_modules/**',
@@ -20,7 +35,8 @@ export default defineConfig({
     ],
     env: {
       NODE_ENV: 'test',
-      VITEST: 'true'
+      VITEST: 'true',
+      DEBUG_TESTS: 'false' // Disable debug logging in tests
     },
     coverage: {
       provider: 'v8',

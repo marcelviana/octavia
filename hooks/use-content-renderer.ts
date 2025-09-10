@@ -57,14 +57,7 @@ export function useContentRenderer({
       const isPdf = isPdfFile(url, mimeType)
       const isImage = isImageFile(url, mimeType)
       
-      // Log for debugging (matches existing behavior)
-      console.log(`File type detection for song ${currentSong}:`, {
-        url: url.substring(0, 50) + '...',
-        mimeType,
-        isPdf,
-        isImage,
-        contentType: currentSongData.content_type
-      })
+      // File type detection (logging removed for performance)
       
       if (isPdf) {
         return { 

@@ -3,6 +3,7 @@ import type { Database } from "@/types/supabase";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { ContentQueryParams } from "./content-types";
 import { enqueueRequest } from "@/lib/offline-queue";
+import { debug } from "@/lib/debug";
 
 type Content = Database["public"]["Tables"]["content"]["Row"];
 type ContentInsert = Database["public"]["Tables"]["content"]["Insert"];
@@ -146,7 +147,7 @@ const contentCache = new Map<
 export function clearContentCache() {
   contentCache.clear();
   if (typeof window !== "undefined" && window.location.hostname === "localhost") {
-    console.log("Content cache cleared");
+    debug.log("Content cache cleared");
   }
 }
 
@@ -183,7 +184,7 @@ export async function getUserContentPage(
   } = params;
 
   if (typeof window !== "undefined" && window.location.hostname === "localhost") {
-    console.log("getUserContentPage called with filters:", filters);
+    debug.log("getUserContentPage called with filters:", filters);
   }
 
   // Create cache key
@@ -194,21 +195,21 @@ export async function getUserContentPage(
     const cached = contentCache.get(cacheKey);
     if (cached && Date.now() < cached.timestamp + cached.ttl) {
       if (typeof window !== "undefined" && window.location.hostname === "localhost") {
-        console.log("Returning cached content page result");
+        debug.log("Returning cached content page result");
       }
       return cached.data;
     } else if (cached) {
       if (typeof window !== "undefined" && window.location.hostname === "localhost") {
-        console.log("Cache expired, fetching fresh data");
+        debug.log("Cache expired, fetching fresh data");
       }
     } else {
       if (typeof window !== "undefined" && window.location.hostname === "localhost") {
-        console.log("No cache found, fetching fresh data");
+        debug.log("No cache found, fetching fresh data");
       }
     }
   } else {
     if (typeof window !== "undefined" && window.location.hostname === "localhost") {
-      console.log("Cache disabled, fetching fresh data");
+      debug.log("Cache disabled, fetching fresh data");
     }
   }
 
@@ -228,7 +229,7 @@ export async function getUserContentPage(
     // Check authentication first
     const user = await getAuthenticatedUser();
     if (!user) {
-      console.warn("getUserContentPage: No authenticated user found");
+      debug.warn("getUserContentPage: No authenticated user found");
       throw new Error("User not authenticated");
     }
 
@@ -236,7 +237,7 @@ export async function getUserContentPage(
     const { getValidToken } = await import("@/lib/auth-manager");
     const { token, error: tokenError } = await getValidToken();
     if (!token) {
-      console.error("Failed to get Firebase auth token:", tokenError);
+      debug.error("Failed to get Firebase auth token:", tokenError);
       throw new Error("Authentication failed");
     }
 

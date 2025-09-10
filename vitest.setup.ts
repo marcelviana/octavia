@@ -1,4 +1,10 @@
-import { vi } from 'vitest'
+import { vi, afterEach } from 'vitest'
+import { cleanup } from '@testing-library/react'
+
+// Add garbage collection to global if available
+declare global {
+  var gc: (() => void) | undefined
+}
 
 vi.mock('next/link', async () => {
   const React = await import('react')
@@ -39,5 +45,15 @@ vi.mock('next/image', async () => {
     default: React.forwardRef<HTMLImageElement, any>(function Image(props, ref) {
       return React.createElement('img', { ref, ...props })
     })
+  }
+})
+
+// Global cleanup after each test
+afterEach(() => {
+  cleanup()
+  
+  // Force garbage collection if available (helps with memory issues)
+  if (global.gc) {
+    global.gc()
   }
 })
