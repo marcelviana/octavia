@@ -16,7 +16,7 @@ import {
   createNotFoundResponse
 } from '@/lib/validation-utils'
 import { z } from 'zod'
-import { withRateLimit } from '@/lib/rate-limit'
+import { withRateLimit, RATE_LIMIT_CONFIGS } from '@/lib/rate-limiter'
 
 // GET /api/content - Get user's content with pagination support
 const getContentHandler = async (request: NextRequest) => {
@@ -150,7 +150,7 @@ const getContentHandler = async (request: NextRequest) => {
   }
 }
 
-export const GET = withRateLimit(getContentHandler, 100)
+export const GET = withRateLimit(RATE_LIMIT_CONFIGS.CONTENT_READ)(getContentHandler)
 
 // POST /api/content - Create new content
 const createContentHandler = async (request: NextRequest) => {
@@ -197,7 +197,7 @@ const createContentHandler = async (request: NextRequest) => {
   }
 }
 
-export const POST = withRateLimit(createContentHandler, 100)
+export const POST = withRateLimit(RATE_LIMIT_CONFIGS.CONTENT_CREATE)(createContentHandler)
 
 // PUT /api/content - Update existing content
 const updateContentHandler = async (request: NextRequest) => {
@@ -248,7 +248,7 @@ const updateContentHandler = async (request: NextRequest) => {
   }
 }
 
-export const PUT = withRateLimit(updateContentHandler, 100)
+export const PUT = withRateLimit(RATE_LIMIT_CONFIGS.CONTENT_CREATE)(updateContentHandler)
 
 // DELETE /api/content - Delete content
 const deleteContentHandler = async (request: NextRequest) => {
@@ -286,4 +286,4 @@ const deleteContentHandler = async (request: NextRequest) => {
   }
 }
 
-export const DELETE = withRateLimit(deleteContentHandler, 100) 
+export const DELETE = withRateLimit(RATE_LIMIT_CONFIGS.API)(deleteContentHandler) 

@@ -14,7 +14,7 @@ import {
   createUnauthorizedResponse,
   createServerErrorResponse
 } from '@/lib/validation-utils'
-import { withRateLimit } from '@/lib/rate-limit'
+import { withRateLimit, RATE_LIMIT_CONFIGS } from '@/lib/rate-limiter'
 
 const BUCKET = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET || 'content-files'
 const MAX_FILE_SIZE = 50 * 1024 * 1024 // 50MB
@@ -142,4 +142,4 @@ const uploadFileHandler = async (request: NextRequest) => {
   }
 }
 
-export const POST = withRateLimit(uploadFileHandler, 5, true) 
+export const POST = withRateLimit(RATE_LIMIT_CONFIGS.UPLOAD)(uploadFileHandler) 

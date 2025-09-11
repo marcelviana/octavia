@@ -8,7 +8,7 @@ import {
   createUnauthorizedResponse,
   createServerErrorResponse
 } from '@/lib/validation-utils'
-import { withRateLimit } from '@/lib/rate-limit'
+import { withRateLimit, RATE_LIMIT_CONFIGS } from '@/lib/rate-limiter'
 
 export const runtime = 'nodejs' // Explicitly use Node.js runtime
 
@@ -53,7 +53,7 @@ const postSessionHandler = async (request: NextRequest) => {
   }
 }
 
-export const POST = withRateLimit(postSessionHandler, 5, true)
+export const POST = withRateLimit(RATE_LIMIT_CONFIGS.AUTH)(postSessionHandler)
 
 // DELETE /api/auth/session - Clear session cookie
 const deleteSessionHandler = async (request: NextRequest) => {
@@ -78,4 +78,4 @@ const deleteSessionHandler = async (request: NextRequest) => {
   }
 }
 
-export const DELETE = withRateLimit(deleteSessionHandler, 5, true) 
+export const DELETE = withRateLimit(RATE_LIMIT_CONFIGS.AUTH)(deleteSessionHandler) 

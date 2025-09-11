@@ -3,6 +3,7 @@ import type { NextRequest } from "next/server"
 import { validateFirebaseTokenServer } from '@/lib/firebase-server-utils'
 import '@/lib/logger'
 import { generateNonce } from '@/lib/csp-nonce'
+import { applySecurityHeaders, getEnvironmentCSPConfig } from '@/lib/security-headers'
 
 export const runtime = 'nodejs'
 
@@ -25,38 +26,24 @@ export async function middleware(request: NextRequest) {
   // Pass the nonce to the page via a custom header
   response.headers.set('x-csp-nonce', nonce)
   
-  // Set security headers including CSP with proper nonce
-  response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
-  response.headers.set('X-Content-Type-Options', 'nosniff');
-  response.headers.set('X-Frame-Options', 'DENY');
-  response.headers.set('X-XSS-Protection', '1; mode=block');
-  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-  response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), payment=()');
+  // Apply comprehensive security headers
+  const securityConfig = getEnvironmentCSPConfig()
   
-  // Set CSP with actual nonce - more permissive for development
-  const isDevelopment = process.env.NODE_ENV === 'development';
+  // Replace nonce placeholder in CSP config
+  const processedConfig = {
+    ...securityConfig,
+    contentSecurityPolicy: {
+      ...securityConfig.contentSecurityPolicy,
+      directives: Object.fromEntries(
+        Object.entries(securityConfig.contentSecurityPolicy.directives).map(([key, value]) => [
+          key,
+          value.map(v => v.replace('{{NONCE}}', nonce))
+        ])
+      )
+    }
+  }
   
-  const csp = [
-    "default-src 'self'",
-    isDevelopment 
-      ? `script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.gstatic.com https://apis.google.com`
-      : `script-src 'self' 'nonce-${nonce}' https://www.gstatic.com https://apis.google.com`,
-    isDevelopment
-      ? `style-src 'self' 'unsafe-inline' https://fonts.googleapis.com`
-      : `style-src 'self' 'nonce-${nonce}' 'unsafe-hashes' 'sha256-Od9mHMH7x2G6QuoV3hsPkDCwIyqbg2DX3F5nLeCYQBc=' 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=' 'sha256-zlqnbDt84zf1iSefLU/ImC54isoprH/MRiVZGskwexk=' https://fonts.googleapis.com`,
-    "img-src 'self' blob: data: https:",
-    "font-src 'self' https://fonts.gstatic.com",
-    "connect-src 'self' blob: data: https://*.supabase.co https://*.firebase.com https://*.googleapis.com wss://*.supabase.co",
-    "media-src 'self' blob: data: https://*.supabase.co",
-    "frame-src 'self' https://*.firebaseapp.com https://*.firebase.com https://accounts.google.com",
-    "object-src 'none'",
-    "base-uri 'self'",
-    "form-action 'self'",
-    "frame-ancestors 'none'",
-    "upgrade-insecure-requests"
-  ].join('; ');
-  
-  response.headers.set('Content-Security-Policy', csp);
+  applySecurityHeaders(response, processedConfig)
 
   const protectedRoutes = ["/dashboard", "/library", "/setlists", "/settings", "/profile", "/add-content", "/content"]
   const isProtectedRoute = protectedRoutes.some((route) => request.nextUrl.pathname.startsWith(route))
