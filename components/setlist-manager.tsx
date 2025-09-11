@@ -87,7 +87,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
             setSelectedSetlist(prev => prev ? { ...prev, ...updatedSetlist } : null)
           }
 
-          await saveSetlists(setlists, user.uid)
+          await saveSetlists(setlists)
           toast({ title: "Setlist updated successfully" })
         }
       } else {
@@ -107,7 +107,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
           }
           
           setSetlists(prev => [setlistWithSongs, ...prev])
-          await saveSetlists([setlistWithSongs, ...setlists], user.uid)
+          await saveSetlists([setlistWithSongs, ...setlists])
           toast({ title: "Setlist created successfully" })
         }
       }
@@ -127,7 +127,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
     try {
       await deleteSetlist(setlist.id)
       setSetlists(prev => prev.filter(s => s.id !== setlist.id))
-      await removeCachedSetlist(setlist.id, user.uid)
+      await removeCachedSetlist(setlist.id)
       
       if (selectedSetlist?.id === setlist.id) {
         setSelectedSetlist(null)
@@ -171,7 +171,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
 
       setSelectedSetlist(updatedSetlist)
       setSetlists(prev => prev.map(s => s.id === selectedSetlist.id ? updatedSetlist : s))
-      await saveSetlists(setlists.map(s => s.id === selectedSetlist.id ? updatedSetlist : s), user.uid)
+      await saveSetlists(setlists.map(s => s.id === selectedSetlist.id ? updatedSetlist : s))
       
       toast({ 
         title: `Added ${songIds.length} song${songIds.length !== 1 ? 's' : ''} to setlist` 
@@ -202,7 +202,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
       
       setSelectedSetlist(updatedSetlist)
       setSetlists(prev => prev.map(s => s.id === selectedSetlist.id ? updatedSetlist : s))
-      await saveSetlists(setlists.map(s => s.id === selectedSetlist.id ? updatedSetlist : s), user.uid)
+      await saveSetlists(setlists.map(s => s.id === selectedSetlist.id ? updatedSetlist : s))
       
       toast({ title: "Song removed from setlist" })
     } catch (error) {

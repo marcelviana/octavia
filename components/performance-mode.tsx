@@ -35,10 +35,42 @@ export function PerformanceMode({
 
   const songs: SongData[] = useMemo(() => {
     if (selectedSetlist?.setlist_songs) {
-      return selectedSetlist.setlist_songs.map(s => s.content)
+      return selectedSetlist.setlist_songs.map(s => ({
+        id: s.content.id,
+        title: s.content.title,
+        artist: s.content.artist,
+        key: s.content.key,
+        bpm: s.content.bpm,
+        content_type: s.content.content_type,
+        file_url: s.content.file_url,
+        content_data: s.content.content_data ? {
+          lyrics: typeof s.content.content_data === 'object' && s.content.content_data !== null && 'lyrics' in s.content.content_data 
+            ? s.content.content_data.lyrics as string 
+            : undefined,
+          file: typeof s.content.content_data === 'object' && s.content.content_data !== null && 'file' in s.content.content_data 
+            ? s.content.content_data.file as string 
+            : undefined
+        } : null
+      }))
     }
     if (selectedContent) {
-      return [selectedContent]
+      return [{
+        id: selectedContent.id,
+        title: selectedContent.title,
+        artist: selectedContent.artist,
+        key: selectedContent.key,
+        bpm: selectedContent.bpm,
+        content_type: selectedContent.content_type,
+        file_url: selectedContent.file_url,
+        content_data: selectedContent.content_data ? {
+          lyrics: typeof selectedContent.content_data === 'object' && selectedContent.content_data !== null && 'lyrics' in selectedContent.content_data 
+            ? selectedContent.content_data.lyrics as string 
+            : undefined,
+          file: typeof selectedContent.content_data === 'object' && selectedContent.content_data !== null && 'file' in selectedContent.content_data 
+            ? selectedContent.content_data.file as string 
+            : undefined
+        } : null
+      }]
     }
     return defaultSetlist
   }, [selectedSetlist, selectedContent])

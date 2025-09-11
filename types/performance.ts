@@ -76,6 +76,10 @@ export interface ContentRenderInfo {
   sheetUrl: string | null
   lyricsContent: string
   contentType: string | null
+  errorInfo?: {
+    url: string
+    mimeType?: string
+  }
 }
 
 // Navigation state

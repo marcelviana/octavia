@@ -56,7 +56,7 @@ export const SetlistListRefactored = memo(function SetlistListRefactored({
       <ActionCard
         key={setlist.id}
         title={setlist.name}
-        subtitle={setlist.artist || undefined}
+        subtitle={setlist.venue || undefined}
         description={setlist.description || undefined}
         isSelected={isSelected}
         onClick={() => onSelectSetlist(setlist)}
@@ -134,7 +134,7 @@ export const SetlistListRefactored = memo(function SetlistListRefactored({
       onCreateNew={onCreateSetlist}
       createButtonText="Create Setlist"
       renderHeader={renderHeader}
-      renderItem={renderSetlistItem}
+      renderItem={renderSetlistItem as (item: any, index: number) => React.ReactNode}
       className="space-y-4"
       itemClassName="w-full"
       testId="setlist-list"

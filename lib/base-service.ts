@@ -82,6 +82,10 @@ export abstract class BaseService {
         throw new Error("getServerUser called on client side")
       }
 
+      if (!cookieStore) {
+        return null
+      }
+
       const { getServerSideUser } = await import("@/lib/firebase-server-utils")
       const user = await getServerSideUser(cookieStore, requestUrl)
       

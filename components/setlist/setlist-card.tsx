@@ -24,6 +24,7 @@ type SetlistWithSongs = Database["public"]["Tables"]["setlists"]["Row"] & {
     notes: string | null
     content: Content
   }>
+  is_favorite?: boolean
 }
 
 interface SetlistCardProps {

@@ -33,14 +33,20 @@ export function useContentRenderer({
 }: UseContentRendererProps): ContentRenderInfo {
   
   return useMemo(() => {
-    const normalizedContentType = normalizeContentType(currentSongData.content_type)
+    const normalizedContentType = normalizeContentType(currentSongData.content_type || '')
     
     // Handle sheet music content
     if (normalizedContentType === ContentType.SHEET) {
       const url = sheetUrls[currentSong]
       
       if (!url) {
-        return { renderType: 'no-sheet' }
+        return { 
+          renderType: 'no-sheet',
+          hasContent: false,
+          sheetUrl: null,
+          lyricsContent: '',
+          contentType: currentSongData.content_type || null
+        }
       }
       
       const mimeType = sheetMimeTypes[currentSong] || undefined
@@ -53,7 +59,11 @@ export function useContentRenderer({
         return { 
           renderType: 'pdf', 
           url,
-          mimeType 
+          mimeType,
+          hasContent: true,
+          sheetUrl: url,
+          lyricsContent: '',
+          contentType: currentSongData.content_type || null
         }
       }
       
@@ -61,16 +71,24 @@ export function useContentRenderer({
         return { 
           renderType: 'image', 
           url,
-          mimeType 
+          mimeType,
+          hasContent: true,
+          sheetUrl: url,
+          lyricsContent: '',
+          contentType: currentSongData.content_type || null
         }
       }
       
       // Unsupported file format
       return { 
         renderType: 'unsupported',
+        hasContent: false,
+        sheetUrl: url,
+        lyricsContent: '',
+        contentType: currentSongData.content_type || null,
         errorInfo: {
           url,
-          mimeType: mimeType || null
+          mimeType: mimeType
         }
       }
     }
@@ -81,12 +99,22 @@ export function useContentRenderer({
     if (lyrics) {
       return {
         renderType: 'lyrics',
-        lyricsText: lyrics
+        lyricsText: lyrics,
+        hasContent: true,
+        sheetUrl: null,
+        lyricsContent: lyrics,
+        contentType: currentSongData.content_type || null
       }
     }
     
     // No lyrics available
-    return { renderType: 'no-lyrics' }
+    return { 
+      renderType: 'no-lyrics',
+      hasContent: false,
+      sheetUrl: null,
+      lyricsContent: '',
+      contentType: currentSongData.content_type || null
+    }
     
   }, [currentSong, currentSongData, sheetUrls, sheetMimeTypes, lyricsData])
 }

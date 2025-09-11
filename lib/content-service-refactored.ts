@@ -62,11 +62,10 @@ class ContentService extends BaseService {
       
       const {
         page = 1,
-        limit = 20,
+        pageSize = 20,
         search,
-        sortBy = "created_at",
-        sortOrder = "desc",
-        contentType,
+        sortBy = "recent",
+        filters,
       } = params
 
       const supabase = context.isServer
@@ -85,16 +84,17 @@ class ContentService extends BaseService {
         )
       }
 
-      if (contentType) {
-        query = query.eq("content_type", contentType)
+      if (filters?.contentType?.length) {
+        query = query.in("content_type", filters.contentType)
       }
 
       // Apply sorting
-      query = query.order(sortBy, { ascending: sortOrder === "asc" })
+      const orderColumn = sortBy === "recent" ? "created_at" : sortBy
+      query = query.order(orderColumn, { ascending: false })
 
       // Apply pagination
-      const offset = (page - 1) * limit
-      query = query.range(offset, offset + limit - 1)
+      const offset = (page - 1) * pageSize
+      query = query.range(offset, offset + pageSize - 1)
 
       const { data, error, count } = await query
 
@@ -106,7 +106,7 @@ class ContentService extends BaseService {
         content: data || [],
         total: count || 0,
         page,
-        hasMore: (count || 0) > page * limit,
+        hasMore: (count || 0) > page * pageSize,
       }
     }, context)
   }
@@ -193,7 +193,11 @@ class ContentService extends BaseService {
       // Queue for offline sync if on client
       if (typeof window !== "undefined") {
         try {
-          await enqueueRequest("POST", "/api/content", insertData)
+          await enqueueRequest({
+            method: "POST",
+            url: "/api/content", 
+            body: insertData
+          })
         } catch (error) {
           this.logError("Failed to queue content creation for offline sync", error)
         }
@@ -249,7 +253,11 @@ class ContentService extends BaseService {
       // Queue for offline sync if on client
       if (typeof window !== "undefined") {
         try {
-          await enqueueRequest("PATCH", `/api/content/${id}`, updateData)
+          await enqueueRequest({
+            method: "PUT",
+            url: `/api/content/${id}`, 
+            body: updateData
+          })
         } catch (error) {
           this.logError("Failed to queue content update for offline sync", error)
         }
@@ -293,7 +301,10 @@ class ContentService extends BaseService {
       // Queue for offline sync if on client
       if (typeof window !== "undefined") {
         try {
-          await enqueueRequest("DELETE", `/api/content/${id}`, {})
+          await enqueueRequest({
+            method: "DELETE",
+            url: `/api/content/${id}`
+          })
         } catch (error) {
           this.logError("Failed to queue content deletion for offline sync", error)
         }
