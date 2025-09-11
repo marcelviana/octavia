@@ -47,7 +47,7 @@ const MemoizedZoomControls = memo(function ZoomControls({
   onResetZoom: () => void
 }) {
   // Debounce zoom operations for performance
-  const debounceTimeoutRef = useRef<NodeJS.Timeout>()
+  const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   
   const debouncedZoomIn = useCallback(() => {
     if (debounceTimeoutRef.current) {
@@ -113,7 +113,7 @@ const MemoizedBPMControls = memo(function BPMControls({
   onBPMDecrease: () => void
 }) {
   // Use refs for rapid BPM adjustments
-  const bpmTimeoutRef = useRef<NodeJS.Timeout>()
+  const bpmTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const isAdjustingRef = useRef(false)
 
   const handleBPMIncrease = useCallback(() => {

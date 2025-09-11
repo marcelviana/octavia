@@ -5,7 +5,7 @@
  * with automatic cleanup, leak detection, and memory optimization.
  */
 
-import { useEffect, useRef, useCallback } from 'react'
+import { useEffect, useRef, useCallback, useState } from 'react'
 
 // Memory thresholds and configuration
 const MEMORY_CONFIG = {

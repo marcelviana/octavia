@@ -49,7 +49,7 @@ export const OptimizedPerformanceMode = memo(function OptimizedPerformanceMode({
   const { preloadForCurrentSetlist, getCachedContent } = useAdvancedContentCache()
   
   // Wake lock to prevent screen from sleeping
-  const { isSupported: wakeLockSupported, isActive: wakeLockActive } = useWakeLock()
+  const { isActive: wakeLockActive } = useWakeLock()
   
   // Container ref for focus management
   const containerRef = useRef<HTMLDivElement>(null)
@@ -114,13 +114,18 @@ export const OptimizedPerformanceMode = memo(function OptimizedPerformanceMode({
     currentSongData 
   } = navigation
 
-  // Performance controls
-  const controlsState = usePerformanceControls()
-  
   // Content rendering with caching
   const [sheetUrls, setSheetUrls] = useState<(string | null)[]>([])
   const [sheetMimeTypes, setSheetMimeTypes] = useState<(string | null)[]>([])
   const [lyricsData, setLyricsData] = useState<string[]>([])
+
+  // Performance controls (requires parameters)
+  const controlsState = usePerformanceControls({
+    currentSong,
+    lyricsData,
+    currentSongData,
+    contentRef: containerRef
+  })
   
   // Content renderer
   const renderInfo: ContentRenderInfo = useContentRenderer({
@@ -221,11 +226,9 @@ export const OptimizedPerformanceMode = memo(function OptimizedPerformanceMode({
 
   // Keyboard shortcuts
   useKeyboardShortcuts({
-    onNext: handleGoToNext,
-    onPrevious: handleGoToPrevious,
-    onExit: onExitPerformance,
-    onTogglePlay: controlsState.togglePlayPause,
-    enabled: true,
+    isPlaying: controlsState.isPlaying,
+    setIsPlaying: controlsState.setIsPlaying,
+    changeBpm: controlsState.changeBpm
   })
 
   // Focus management
@@ -301,10 +304,17 @@ export const OptimizedPerformanceMode = memo(function OptimizedPerformanceMode({
       {/* Header Controls */}
       <MemoizedHeaderControls
         currentSongData={currentSongData}
-        songs={songs}
-        currentSong={currentSong}
         onExitPerformance={onExitPerformance}
-        wakeLockActive={wakeLockActive && wakeLockSupported}
+        darkSheet={controlsState.darkSheet}
+        setDarkSheet={controlsState.setDarkSheet}
+        zoom={controlsState.zoom}
+        setZoom={controlsState.setZoom}
+        isPlaying={controlsState.isPlaying}
+        setIsPlaying={controlsState.setIsPlaying}
+        bpm={controlsState.bpm}
+        bpmFeedback={controlsState.bpmFeedback}
+        startPress={controlsState.startPress}
+        endPress={controlsState.endPress}
       />
 
       {/* Main Content Area */}
@@ -313,36 +323,36 @@ export const OptimizedPerformanceMode = memo(function OptimizedPerformanceMode({
           <MemoizedOptimizedContentDisplay
             renderInfo={renderInfo}
             currentSongData={currentSongData}
-            darkSheet={controlsState.state.darkSheet}
-            zoom={controlsState.state.zoom}
+            darkSheet={controlsState.darkSheet}
+            zoom={controlsState.zoom}
           />
         </div>
 
         {/* Performance Controls */}
         <div className="flex-shrink-0 p-4">
           <MemoizedOptimizedPerformanceControls
-            state={controlsState.state}
-            onZoomIn={controlsState.zoomIn}
-            onZoomOut={controlsState.zoomOut}
-            onTogglePlayPause={controlsState.togglePlayPause}
-            onBPMIncrease={controlsState.increaseBPM}
-            onBPMDecrease={controlsState.decreaseBPM}
-            onToggleDarkSheet={controlsState.toggleDarkSheet}
-            onResetZoom={controlsState.resetZoom}
+            state={controlsState}
+            onZoomIn={() => controlsState.setZoom(controlsState.zoom + 0.1)}
+            onZoomOut={() => controlsState.setZoom(controlsState.zoom - 0.1)}
+            onTogglePlayPause={() => controlsState.setIsPlaying(!controlsState.isPlaying)}
+            onBPMIncrease={() => controlsState.changeBpm(1, '+1')}
+            onBPMDecrease={() => controlsState.changeBpm(-1, '-1')}
+            onToggleDarkSheet={() => controlsState.setDarkSheet(!controlsState.darkSheet)}
+            onResetZoom={() => controlsState.setZoom(1)}
           />
         </div>
       </div>
 
       {/* Navigation Controls */}
       <MemoizedNavigationControls
-        currentSong={currentSong}
-        totalSongs={songs.length}
-        canGoNext={canGoNext}
+        showControls={controlsState.showControls}
         canGoPrevious={canGoPrevious}
-        onNext={handleGoToNext}
-        onPrevious={handleGoToPrevious}
-        onGoToSong={handleGoToSong}
+        canGoNext={canGoNext}
+        goToPrevious={handleGoToPrevious}
+        goToNext={handleGoToNext}
         songs={songs}
+        currentSong={currentSong}
+        goToSong={handleGoToSong}
       />
 
       {/* Memory Stats (Development Only) */}

@@ -6,6 +6,7 @@
  */
 
 import localforage from 'localforage'
+import { useCallback } from 'react'
 import type { SongData } from '@/types/performance'
 
 // Cache configuration
@@ -167,7 +168,7 @@ class AdvancedContentCache {
         }
       }
     } catch (error) {
-      if (error.name !== 'AbortError') {
+      if (error instanceof Error && error.name !== 'AbortError') {
         console.error('Preload operation failed:', error)
       }
     } finally {
@@ -388,7 +389,7 @@ class AdvancedContentCache {
         await this.setCachedContent(url, networkData.data, networkData.mimeType, songId, priority, preloadScore)
       }
     } catch (error) {
-      if (error.name !== 'AbortError') {
+      if (error instanceof Error && error.name !== 'AbortError') {
         console.error('Preload failed for:', url, error)
       }
     } finally {

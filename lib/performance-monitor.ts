@@ -379,7 +379,7 @@ class RealTimePerformanceMonitor {
         for (const entry of list.getEntries()) {
           if (entry.entryType === 'navigation') {
             const navEntry = entry as PerformanceNavigationTiming
-            this.recordMetric('page-load-time', navEntry.loadEventEnd - navEntry.navigationStart, 'navigation', 'ms')
+            this.recordMetric('page-load-time', navEntry.loadEventEnd - navEntry.startTime, 'navigation', 'ms')
           }
         }
       })

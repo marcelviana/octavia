@@ -2,8 +2,19 @@
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 
-const PerformanceMode = dynamic(() => import("@/components/performance-mode").then(mod => ({ default: mod.PerformanceMode })), {
-  loading: () => <p>Loading performance mode...</p>,
+const OptimizedPerformanceMode = dynamic(() => import("@/components/optimized-performance-mode"), {
+  loading: () => (
+    <div className="flex items-center justify-center h-screen bg-white">
+      <div className="text-center">
+        <div className="text-lg font-semibold text-gray-900 mb-2">
+          Loading high-performance mode...
+        </div>
+        <div className="text-sm text-gray-600">
+          Optimizing for best live performance experience
+        </div>
+      </div>
+    </div>
+  ),
 });
 
 interface PerformancePageClientProps {
@@ -24,7 +35,7 @@ export default function PerformancePageClient({
   };
 
   return (
-    <PerformanceMode
+    <OptimizedPerformanceMode
       onExitPerformance={handleExitPerformance}
       selectedContent={content || undefined}
       selectedSetlist={setlist || undefined}

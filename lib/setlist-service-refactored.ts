@@ -335,7 +335,8 @@ class SetlistService extends BaseService {
       }
 
       // Check ownership through the setlist
-      if (setlistSong.setlists.user_id !== user.id) {
+      const setlist = setlistSong.setlists as any
+      if (setlist?.user_id !== user.id) {
         throw new Error("Unauthorized to modify this setlist")
       }
 
@@ -384,7 +385,8 @@ class SetlistService extends BaseService {
       }
 
       // Check ownership through the setlist
-      if (setlistSong.setlists.user_id !== user.id) {
+      const setlist = setlistSong.setlists as any
+      if (setlist?.user_id !== user.id) {
         throw new Error("Unauthorized to modify this setlist")
       }
 
