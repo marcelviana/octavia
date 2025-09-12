@@ -17,7 +17,16 @@ import { ContentType } from '@/types/content'
 // Mock all external dependencies with proper factories
 vi.mock('@/lib/offline-cache', () => ({
   getCachedFileInfo: vi.fn(),
-  cacheFilesForContent: vi.fn()
+  cacheFilesForContent: vi.fn(),
+  warmCache: vi.fn(() => Promise.resolve()),
+  getCachedContent: vi.fn(() => Promise.resolve([])),
+  saveContent: vi.fn(() => Promise.resolve()),
+  removeCachedContent: vi.fn(() => Promise.resolve()),
+  cacheFileForContent: vi.fn(() => Promise.resolve()),
+  getCachedFileUrl: vi.fn(() => Promise.resolve('blob:cached-url')),
+  preloadContent: vi.fn(() => Promise.resolve()),
+  getCacheMetrics: vi.fn(() => ({ hitRate: 0.8, missCount: 10, hitCount: 40 })),
+  clearOfflineContent: vi.fn(() => Promise.resolve()),
 }))
 
 vi.mock('@/lib/utils', () => ({
