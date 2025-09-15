@@ -43,7 +43,7 @@ export type RepositoryResponse<T> = RepositoryResult<T> | RepositoryError
 export abstract class BaseRepository<T extends BaseEntity> {
   protected tableName: string
   protected options: RepositoryOptions
-  private cache = new Map<string, { data: T; timestamp: number }>()
+  protected cache = new Map<string, { data: T; timestamp: number }>()
 
   constructor(tableName: string, options: RepositoryOptions = {}) {
     this.tableName = tableName
@@ -84,7 +84,7 @@ export abstract class BaseRepository<T extends BaseEntity> {
     return cached.data
   }
 
-  protected clearCache(pattern?: string): void {
+  public clearCache(pattern?: string): void {
     if (pattern) {
       for (const key of this.cache.keys()) {
         if (key.includes(pattern)) {

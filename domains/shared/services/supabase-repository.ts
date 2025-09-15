@@ -9,7 +9,7 @@ import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import { BaseRepository, BaseEntity, QueryOptions, RepositoryResponse } from './base-repository'
 
 export class SupabaseRepository<T extends BaseEntity> extends BaseRepository<T> {
-  private supabase = getSupabaseServiceClient()
+  protected supabase = getSupabaseServiceClient()
 
   async findById(id: string): Promise<RepositoryResponse<T | null>> {
     try {

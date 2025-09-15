@@ -57,9 +57,11 @@ export function ImportOptions({
     },
   ]
 
-  const availableImportModes = contentType === ContentType.SHEET
-    ? importModes.filter((m) => m.id === "single")
-    : importModes
+  // For most content types, all import modes are available
+  // For sheet music, only single import is supported
+  const availableImportModes = importModes.filter((m) => 
+    (contentType as ContentType) === ContentType.SHEET ? m.id === "single" : true
+  )
 
   return (
     <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">

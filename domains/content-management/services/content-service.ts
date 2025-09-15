@@ -97,14 +97,37 @@ export class ContentService {
       throw new Error('Missing required fields: user_id, title, or content_type')
     }
 
-    const result = await this.repository.create(data)
+    // Sanitize data - convert undefined to null to match database schema
+    const sanitizedData: Omit<ContentRow, 'id' | 'created_at' | 'updated_at'> = {
+      user_id: data.user_id,
+      title: data.title,
+      content_type: data.content_type,
+      content_data: data.content_data ?? {},
+      artist: data.artist ?? null,
+      album: data.album ?? null,
+      genre: data.genre ?? null,
+      key: data.key ?? null,
+      bpm: data.bpm ?? null,
+      time_signature: data.time_signature ?? null,
+      difficulty: data.difficulty ?? null,
+      notes: data.notes ?? null,
+      is_favorite: data.is_favorite ?? false,
+      is_public: data.is_public ?? false,
+      capo: data.capo ?? null,
+      tuning: data.tuning ?? null,
+      thumbnail_url: data.thumbnail_url ?? null,
+      file_url: data.file_url ?? null,
+      tags: data.tags ?? null,
+    }
+
+    const result = await this.repository.create(sanitizedData)
     
     if (result.error) {
       logger.error('Failed to create content', { data, error: result.error })
       throw new Error(result.error.message)
     }
 
-    logger.info('Content created successfully', { id: result.data.id, title: result.data.title })
+    logger.log('Content created successfully', { id: result.data.id, title: result.data.title })
     return result.data
   }
 
@@ -116,7 +139,7 @@ export class ContentService {
       throw new Error(result.error.message)
     }
 
-    logger.info('Content updated successfully', { id })
+    logger.log('Content updated successfully', { id })
     return result.data
   }
 
@@ -128,7 +151,7 @@ export class ContentService {
       throw new Error(result.error.message)
     }
 
-    logger.info('Content deleted successfully', { id })
+    logger.log('Content deleted successfully', { id })
   }
 
   // Specialized operations
@@ -184,7 +207,7 @@ export class ContentService {
       throw new Error(result.error.message)
     }
 
-    logger.info('Bulk content created successfully', { count: result.data.length })
+    logger.log('Bulk content created successfully', { count: result.data.length })
     return result.data
   }
 
@@ -200,13 +223,13 @@ export class ContentService {
       throw new Error(result.error.message)
     }
 
-    logger.info('Bulk content deleted successfully', { count: ids.length })
+    logger.log('Bulk content deleted successfully', { count: ids.length })
   }
 
   // Cache management
   clearCache(): void {
     this.repository.clearCache()
-    logger.info('Content cache cleared')
+    logger.log('Content cache cleared')
   }
 }
 

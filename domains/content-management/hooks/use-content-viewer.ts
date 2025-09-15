@@ -154,7 +154,7 @@ export function useContentViewer({ content, onBack }: UseContentViewerProps) {
     } catch (error) {
       console.error("Error updating favorite status:", error)
       // Revert local state on error
-      setIsFavorite(prev => !prev)
+      setIsFavorite((prev: boolean) => !prev)
       addNotification({
         type: 'error',
         message: 'Failed to update favorite status'

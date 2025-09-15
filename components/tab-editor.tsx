@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -34,6 +34,30 @@ export function TabEditor({ content, onChange }: TabEditorProps) {
       },
     ],
   })
+
+  // Update state when content props change
+  useEffect(() => {
+    setTabData({
+      title: content.title || "",
+      artist: content.artist || "",
+      tuning: content.tuning || "Standard (EADGBE)",
+      capo: content.capo || "",
+      bpm: content.bpm || "",
+      measures: content.measures || [
+        {
+          id: 1,
+          strings: [
+            "E|--0--3--0--2--0--|",
+            "B|--1--1--1--1--1--|",
+            "G|--0--0--0--0--0--|",
+            "D|--2--2--2--2--2--|",
+            "A|--3-------------|",
+            "E|----------------|",
+          ],
+        },
+      ],
+    })
+  }, [content])
 
   const stringNames = ["E", "B", "G", "D", "A", "E"]
 

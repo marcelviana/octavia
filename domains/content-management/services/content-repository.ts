@@ -217,7 +217,7 @@ export class ContentRepository extends SupabaseRepository<ContentRow> {
   }
 
   // Override to clear related cache patterns
-  protected clearCache(pattern?: string): void {
+  public clearCache(pattern?: string): void {
     super.clearCache(pattern || this.tableName)
   }
 }
