@@ -20,7 +20,7 @@ const addSongToSetlistHandler = async (
     }
 
     const body = await request.json()
-    const { contentId, position, notes = "" } = body
+    const { content_id: contentId, position, notes = "" } = body
     
     if (!contentId || !position) {
       return NextResponse.json(

@@ -44,6 +44,7 @@ export function ContentViewerHeader({
             variant="ghost"
             onClick={onBack}
             className="hover:bg-amber-50"
+            aria-label="Go back"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
           </Button>
@@ -72,6 +73,7 @@ export function ContentViewerHeader({
             className={`hover:bg-amber-50 ${
               isFavorite ? "text-yellow-500" : "text-gray-400"
             }`}
+            aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
           >
             <Star
               className={`w-5 h-5 ${
@@ -92,7 +94,7 @@ export function ContentViewerHeader({
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" className="hover:bg-amber-50">
+              <Button variant="ghost" size="sm" className="hover:bg-amber-50" aria-label="More options">
                 <MoreVertical className="w-4 h-4" />
               </Button>
             </DropdownMenuTrigger>

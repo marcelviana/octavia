@@ -21,6 +21,15 @@ import {
   type SetlistWithSongs,
   type SetlistFormData,
 } from "./setlist"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
 
 interface SetlistManagerProps {
   onEnterPerformance: (setlist: SetlistWithSongs, startingSongIndex?: number) => void
@@ -121,18 +130,23 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
     }
   }, [user?.uid, editingSetlist, selectedSetlist, setlists, setSetlists])
 
-  const handleDeleteSetlist = useCallback(async (setlist: SetlistWithSongs) => {
-    if (!user?.uid) return
+  const handleDeleteSetlist = useCallback((setlist: SetlistWithSongs) => {
+    setDeleteDialogSetlist(setlist)
+  }, [])
+
+  const confirmDeleteSetlist = useCallback(async () => {
+    if (!user?.uid || !deleteDialogSetlist) return
 
     try {
-      await deleteSetlist(setlist.id)
-      setSetlists(prev => prev.filter(s => s.id !== setlist.id))
-      await removeCachedSetlist(setlist.id)
+      await deleteSetlist(deleteDialogSetlist.id)
+      setSetlists(prev => prev.filter(s => s.id !== deleteDialogSetlist.id))
+      await removeCachedSetlist(deleteDialogSetlist.id)
       
-      if (selectedSetlist?.id === setlist.id) {
+      if (selectedSetlist?.id === deleteDialogSetlist.id) {
         setSelectedSetlist(null)
       }
       
+      setDeleteDialogSetlist(null)
       toast({ title: "Setlist deleted successfully" })
     } catch (error) {
       console.error('Failed to delete setlist:', error)
@@ -142,7 +156,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
         variant: "destructive",
       })
     }
-  }, [user?.uid, selectedSetlist, setSetlists])
+  }, [user?.uid, deleteDialogSetlist, selectedSetlist, setSetlists])
 
   const handleAddSongsToSetlist = useCallback(async (songIds: string[]) => {
     if (!selectedSetlist || !user?.uid || songIds.length === 0) return
@@ -298,6 +312,26 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
         onAddSongs={handleAddSongsToSetlist}
         excludeSongIds={selectedSetlist?.setlist_songs?.map(s => s.content.id) || []}
       />
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={!!deleteDialogSetlist} onOpenChange={() => setDeleteDialogSetlist(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete Setlist</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete "{deleteDialogSetlist?.name}"? This action cannot be undone.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setDeleteDialogSetlist(null)}>
+              Cancel
+            </Button>
+            <Button variant="destructive" onClick={confirmDeleteSetlist}>
+              Delete
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

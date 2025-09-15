@@ -128,6 +128,7 @@ export const SetlistCard = memo(function SetlistCard({
                 e.stopPropagation()
                 onDelete(setlist)
               }}
+              aria-label="Delete setlist"
             >
               <Trash2 className="w-3.5 h-3.5" />
             </Button>

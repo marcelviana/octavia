@@ -197,7 +197,12 @@ export function TabEditor({ content, onChange }: TabEditorProps) {
                 <div className="flex items-center justify-between">
                   <h4 className="font-medium">Measure {measureIndex + 1}</h4>
                   <div className="flex space-x-2">
-                    <Button variant="outline" size="sm" onClick={() => duplicateMeasure(measure.id)}>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={() => duplicateMeasure(measure.id)}
+                      data-testid="copy-measure-button"
+                    >
                       <Copy className="w-4 h-4" />
                     </Button>
                     {tabData.measures.length > 1 && (

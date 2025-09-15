@@ -33,6 +33,13 @@ const getSetlistByIdHandler = async (
       .single()
 
     if (setlistError) {
+      if (setlistError.code === 'PGRST116') {
+        // No rows found - setlist doesn't exist
+        return NextResponse.json(
+          { error: 'Setlist not found' },
+          { status: 404 }
+        )
+      }
       logger.error("Error fetching setlist:", setlistError)
       throw setlistError
     }

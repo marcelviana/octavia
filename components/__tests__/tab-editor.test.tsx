@@ -531,18 +531,9 @@ describe('TabEditor', () => {
       const user = userEvent.setup()
       render(<TabEditor {...defaultProps} />)
       
-      // Find the copy button (it has Copy icon but no accessible name)
-      const copyButton = screen.getByTestId('copy-measure-button') || 
-                        document.querySelector('button svg[class*="lucide-copy"]')?.closest('button') ||
-                        screen.getAllByRole('button').find(btn => 
-                          btn.querySelector('svg[class*="lucide-copy"]')
-                        )
-      
-      if (!copyButton) {
-        throw new Error('Copy button not found')
-      }
-      
-      await user.click(copyButton as HTMLElement)
+      // Find the copy button using the test id
+      const copyButton = screen.getByTestId('copy-measure-button')
+      await user.click(copyButton)
       
       expect(mockOnChange).toHaveBeenCalled()
       const updatedContent = mockOnChange.mock.calls[0][0]

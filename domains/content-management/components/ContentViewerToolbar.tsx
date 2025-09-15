@@ -68,6 +68,7 @@ export function ContentViewerToolbar({
               size="sm"
               onClick={onZoomOut}
               className="text-white hover:bg-gray-700"
+              aria-label="Zoom out"
             >
               <ZoomOut className="w-4 h-4" />
             </Button>
@@ -77,6 +78,7 @@ export function ContentViewerToolbar({
               size="sm"
               onClick={onZoomIn}
               className="text-white hover:bg-gray-700"
+              aria-label="Zoom in"
             >
               <ZoomIn className="w-4 h-4" />
             </Button>
@@ -113,6 +115,7 @@ export function ContentViewerToolbar({
             variant="ghost"
             size="sm"
             className="text-white hover:bg-gray-700"
+            aria-label="Settings"
           >
             <Settings className="w-4 h-4" />
           </Button>
