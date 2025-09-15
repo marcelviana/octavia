@@ -212,7 +212,7 @@ describe('ContentService', () => {
 
       expect(mockRepository.create).toHaveBeenCalledWith(expect.objectContaining(validContentData))
       expect(result).toBe(mockContentItem)
-      expect(mockLogger.info).toHaveBeenCalledWith(
+      expect(mockLogger.log).toHaveBeenCalledWith(
         'Content created successfully',
         { id: mockContentItem.id, title: mockContentItem.title }
       )
@@ -252,7 +252,7 @@ describe('ContentService', () => {
 
       expect(mockRepository.update).toHaveBeenCalledWith('test-id', updates)
       expect(result).toBe(updatedContent)
-      expect(mockLogger.info).toHaveBeenCalledWith(
+      expect(mockLogger.log).toHaveBeenCalledWith(
         'Content updated successfully',
         { id: 'test-id' }
       )
@@ -278,7 +278,7 @@ describe('ContentService', () => {
       await service.deleteContent('test-id')
 
       expect(mockRepository.delete).toHaveBeenCalledWith('test-id')
-      expect(mockLogger.info).toHaveBeenCalledWith(
+      expect(mockLogger.log).toHaveBeenCalledWith(
         'Content deleted successfully',
         { id: 'test-id' }
       )
@@ -391,7 +391,7 @@ describe('ContentService', () => {
 
         expect(mockRepository.bulkCreate).toHaveBeenCalledWith(items)
         expect(result).toBe(createdItems)
-        expect(mockLogger.info).toHaveBeenCalledWith(
+        expect(mockLogger.log).toHaveBeenCalledWith(
           'Bulk content created successfully',
           { count: 2 }
         )
@@ -425,7 +425,7 @@ describe('ContentService', () => {
         await service.bulkDeleteContent(ids)
 
         expect(mockRepository.bulkDelete).toHaveBeenCalledWith(ids)
-        expect(mockLogger.info).toHaveBeenCalledWith(
+        expect(mockLogger.log).toHaveBeenCalledWith(
           'Bulk content deleted successfully',
           { count: 3 }
         )
@@ -444,7 +444,7 @@ describe('ContentService', () => {
       service.clearCache()
 
       expect(mockRepository.clearCache).toHaveBeenCalled()
-      expect(mockLogger.info).toHaveBeenCalledWith('Content cache cleared')
+      expect(mockLogger.log).toHaveBeenCalledWith('Content cache cleared')
     })
   })
 

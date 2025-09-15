@@ -381,7 +381,7 @@ if (typeof URL !== 'undefined') {
     URL.revokeObjectURL = vi.fn()
   }
   if (!URL.createObjectURL) {
-    URL.createObjectURL = vi.fn(() => 'mock-blob-url')
+    URL.createObjectURL = vi.fn(() => 'blob:mock-object-url')
   }
 }
 

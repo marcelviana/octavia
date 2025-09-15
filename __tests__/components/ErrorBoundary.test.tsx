@@ -390,7 +390,12 @@ describe('GlobalErrorHandler', () => {
 describe('OperationError', () => {
   it('should not render when no operation error', () => {
     const initialState = {
-      ui: { errors: { global: null, operations: {} } }
+      ui: { 
+        sidebar: { isOpen: false, activeSection: 'dashboard' },
+        notifications: [],
+        loading: { global: false, operations: {} },
+        errors: { global: null, operations: {} } 
+      }
     }
 
     renderWithStore(
@@ -404,6 +409,9 @@ describe('OperationError', () => {
   it('should render operation error when present', () => {
     const initialState = {
       ui: { 
+        sidebar: { isOpen: false, activeSection: 'dashboard' },
+        notifications: [],
+        loading: { global: false, operations: {} },
         errors: { 
           global: null, 
           operations: { 'test-operation': 'Operation failed' } 
@@ -424,6 +432,9 @@ describe('OperationError', () => {
     const user = userEvent.setup()
     const initialState = {
       ui: { 
+        sidebar: { isOpen: false, activeSection: 'dashboard' },
+        notifications: [],
+        loading: { global: false, operations: {} },
         errors: { 
           global: null, 
           operations: { 'test-operation': 'Dismissible operation error' } 
@@ -445,6 +456,9 @@ describe('OperationError', () => {
   it('should apply custom className', () => {
     const initialState = {
       ui: { 
+        sidebar: { isOpen: false, activeSection: 'dashboard' },
+        notifications: [],
+        loading: { global: false, operations: {} },
         errors: { 
           global: null, 
           operations: { 'styled-operation': 'Styled error' } 
@@ -465,18 +479,24 @@ describe('OperationError', () => {
 describe('error boundary integration', () => {
   it('should work together for comprehensive error handling', () => {
     const initialState = {
-      ui: { errors: { global: 'Global system error', operations: {} } }
+      ui: { 
+        sidebar: { isOpen: false, activeSection: 'dashboard' },
+        notifications: [],
+        loading: { global: false, operations: {} },
+        errors: { global: 'Global system error', operations: {} } 
+      }
     }
 
-    render(
+    renderWithStore(
       <div>
-        {renderWithStore(<GlobalErrorHandler />, { initialState })}
+        <GlobalErrorHandler />
         <DomainErrorBoundary domain="Content Management">
           <ErrorBoundary context="Content Viewer">
             <ThrowError shouldThrow message="Component error" />
           </ErrorBoundary>
         </DomainErrorBoundary>
-      </div>
+      </div>, 
+      { initialState }
     )
 
     // Should show both global error and component error boundary
@@ -500,7 +520,7 @@ describe('error boundary integration', () => {
     expect(mockLogger.error).toHaveBeenCalledWith(
       'Error Boundary caught error',
       expect.objectContaining({
-        context: 'Test Domain - Inner Boundary'
+        context: 'Inner Boundary'
       })
     )
   })

@@ -109,7 +109,8 @@ describe('ContentRepository', () => {
   describe('findMany', () => {
     it('should find multiple content items', async () => {
       const contentList = [mockContentItem, { ...mockContentItem, id: 'test-2' }]
-      mockQuery.single.mockResolvedValue({ data: contentList, error: null })
+      // For findMany, the query chain should resolve directly (no .single())
+      mockQuery.select.mockResolvedValue({ data: contentList, error: null })
 
       const result = await repository.findMany()
 
@@ -120,26 +121,30 @@ describe('ContentRepository', () => {
 
     it('should apply filters correctly', async () => {
       const contentList = [mockContentItem]
-      mockQuery.single.mockResolvedValue({ data: contentList, error: null })
+      // Set up the final query resolution after applying filters
+      mockQuery.eq.mockResolvedValue({ data: contentList, error: null })
 
-      await repository.findMany({
+      const result = await repository.findMany({
         filters: { user_id: 'test-user', content_type: 'Lyrics' },
       })
 
       expect(mockQuery.eq).toHaveBeenCalledWith('user_id', 'test-user')
       expect(mockQuery.eq).toHaveBeenCalledWith('content_type', 'Lyrics')
+      expect(result).toEqual({ data: contentList })
     })
 
     it('should apply ordering', async () => {
       const contentList = [mockContentItem]
-      mockQuery.single.mockResolvedValue({ data: contentList, error: null })
+      // Set up the final query resolution after applying ordering
+      mockQuery.order.mockResolvedValue({ data: contentList, error: null })
 
-      await repository.findMany({
+      const result = await repository.findMany({
         orderBy: 'created_at',
         orderDirection: 'desc',
       })
 
       expect(mockQuery.order).toHaveBeenCalledWith('created_at', { ascending: false })
+      expect(result).toEqual({ data: contentList })
     })
 
     it('should apply pagination', async () => {
@@ -236,7 +241,7 @@ describe('ContentRepository', () => {
 
     it('should handle delete errors', async () => {
       const dbError = { code: 'PGRST000', message: 'Delete failed' }
-      mockQuery.single.mockResolvedValue({ data: null, error: dbError })
+      mockQuery.eq.mockResolvedValue({ data: null, error: dbError })
 
       const result = await repository.delete('test-id')
 
@@ -249,7 +254,8 @@ describe('ContentRepository', () => {
     describe('findByContentType', () => {
       it('should find content by type for user', async () => {
         const contentList = [mockContentItem]
-        mockQuery.single.mockResolvedValue({ data: contentList, error: null })
+        // findByContentType calls findMany internally, so resolve at query chain end
+        mockQuery.eq.mockResolvedValue({ data: contentList, error: null })
 
         const result = await repository.findByContentType('test-user', 'Lyrics')
 
@@ -391,8 +397,8 @@ describe('ContentRepository', () => {
       mockQuery.single.mockResolvedValueOnce({ data: mockContentItem, error: null })
       await repository.findById('test-id')
 
-      // Then delete
-      mockQuery.single.mockResolvedValueOnce({ data: null, error: null })
+      // Then delete (uses .eq() as final method)
+      mockQuery.eq.mockResolvedValueOnce({ data: null, error: null })
       await repository.delete('test-id')
 
       // Next findById should not use cache
@@ -400,7 +406,7 @@ describe('ContentRepository', () => {
       const result = await repository.findById('test-id')
 
       expect(result).toEqual({ data: null })
-      expect(mockQuery.single).toHaveBeenCalledTimes(3) // populate + delete + findById after delete
+      expect(mockQuery.single).toHaveBeenCalledTimes(2) // populate + findById after delete (delete uses .eq)
     })
   })
 
