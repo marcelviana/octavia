@@ -262,7 +262,8 @@ describe('ContentRepository', () => {
     describe('findFavorites', () => {
       it('should find user favorites', async () => {
         const favorites = [{ ...mockContentItem, is_favorite: true }]
-        mockQuery.single.mockResolvedValue({ data: favorites, error: null })
+        // Set up the chain to resolve at the end - for list queries, it shouldn't use single()
+        mockQuery.order.mockResolvedValue({ data: favorites, error: null })
 
         const result = await repository.findFavorites('test-user')
 
@@ -276,7 +277,8 @@ describe('ContentRepository', () => {
     describe('searchContent', () => {
       it('should search content by term', async () => {
         const searchResults = [mockContentItem]
-        mockQuery.single.mockResolvedValue({ data: searchResults, error: null })
+        // Set up the chain to resolve at the end - for search queries, it shouldn't use single()
+        mockQuery.or.mockResolvedValue({ data: searchResults, error: null })
 
         const result = await repository.searchContent('test-user', 'test song')
 
@@ -293,8 +295,8 @@ describe('ContentRepository', () => {
           .mockResolvedValueOnce(mockRepositorySuccess(5)) // total
           .mockResolvedValueOnce(mockRepositorySuccess(2)) // favorites
 
-        // Mock content by type query
-        mockQuery.single.mockResolvedValue({
+        // Mock content by type query - this should resolve at the end of the chain
+        mockQuery.eq.mockResolvedValue({
           data: [
             { content_type: 'Lyrics' },
             { content_type: 'Lyrics' },
@@ -331,7 +333,8 @@ describe('ContentRepository', () => {
           { ...mockContentItem, title: 'Song 2' },
         ]
 
-        mockQuery.single.mockResolvedValue({ data: createdItems, error: null })
+        // For bulk create, the chain is insert().select() so select should resolve
+        mockQuery.select.mockResolvedValue({ data: createdItems, error: null })
 
         const result = await repository.bulkCreate(items as any)
 

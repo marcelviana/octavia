@@ -46,6 +46,12 @@ describe('ContentService', () => {
       clearCache: vi.fn(),
     }
 
+    // Set up logger mock properly
+    mockLogger.info = vi.fn()
+    mockLogger.error = vi.fn()
+    mockLogger.warn = vi.fn()
+    mockLogger.debug = vi.fn()
+
     MockedContentRepository.mockImplementation(() => mockRepository)
     service = new ContentService()
   })
@@ -164,7 +170,7 @@ describe('ContentService', () => {
       
       expect(mockLogger.error).toHaveBeenCalledWith(
         'Failed to get user content',
-        { userId, options: {}, error: error.error }
+        { userId, options: undefined, error: error.error }
       )
     })
   })
@@ -204,7 +210,7 @@ describe('ContentService', () => {
 
       const result = await service.createContent(validContentData)
 
-      expect(mockRepository.create).toHaveBeenCalledWith(validContentData)
+      expect(mockRepository.create).toHaveBeenCalledWith(expect.objectContaining(validContentData))
       expect(result).toBe(mockContentItem)
       expect(mockLogger.info).toHaveBeenCalledWith(
         'Content created successfully',

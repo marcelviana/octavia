@@ -375,6 +375,16 @@ vi.mock('@supabase/ssr', () => {
   }
 })
 
+// Mock URL APIs for jsdom environment
+if (typeof URL !== 'undefined') {
+  if (!URL.revokeObjectURL) {
+    URL.revokeObjectURL = vi.fn()
+  }
+  if (!URL.createObjectURL) {
+    URL.createObjectURL = vi.fn(() => 'mock-blob-url')
+  }
+}
+
 // Global cleanup after each test
 afterEach(() => {
   cleanup()

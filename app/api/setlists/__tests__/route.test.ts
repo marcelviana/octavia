@@ -11,30 +11,22 @@ const mockSingle = vi.fn()
 const mockIn = vi.fn()
 
 // Set up the chain properly to include all methods used by setlists API
-mockSelect.mockReturnValue({ 
-  eq: mockEq, 
-  order: mockOrder,
-  in: mockIn
-})
-mockEq.mockReturnValue({ 
-  eq: mockEq, 
-  select: mockSelect, 
-  order: mockOrder,
-  in: mockIn
-})
-mockOrder.mockReturnValue({ 
-  eq: mockEq, 
-  select: mockSelect, 
-  order: mockOrder
-})
-mockIn.mockReturnValue({
+const createChainedQuery = () => ({
   eq: mockEq,
-  select: mockSelect
+  order: mockOrder,
+  in: mockIn,
+  select: mockSelect,
+  single: mockSingle,
+  then: vi.fn().mockResolvedValue({ data: [], error: null })
 })
-mockInsert.mockReturnValue({ 
-  select: mockSelect, 
-  single: mockSingle 
-})
+
+mockSelect.mockReturnValue(createChainedQuery())
+mockEq.mockReturnValue(createChainedQuery())
+mockOrder.mockReturnValue(createChainedQuery())
+mockIn.mockReturnValue(createChainedQuery())
+mockInsert.mockReturnValue(createChainedQuery())
+mockSingle.mockResolvedValue({ data: null, error: null })
+
 mockFrom.mockReturnValue({
   select: mockSelect,
   insert: mockInsert
