@@ -10,7 +10,8 @@ vi.mock('@/lib/content-service', () => ({
 // Mock offline cache functions
 vi.mock('@/lib/offline-cache', () => ({
   saveContent: vi.fn(),
-  getCachedContent: vi.fn()
+  getCachedContent: vi.fn(),
+  warmCache: vi.fn().mockResolvedValue(undefined)
 }))
 
 // Mock Next.js navigation

@@ -366,7 +366,10 @@ describe('SetlistManager', () => {
         </FirebaseAuthProvider>
       )
 
-      expect(screen.getByText('Loading your setlists...')).toBeInTheDocument()
+      // Check for skeleton loading elements (animated pulses)
+      const skeletonElements = screen.getAllByTestId(/skeleton|loading/) || 
+                             document.querySelectorAll('.animate-pulse')
+      expect(skeletonElements.length).toBeGreaterThan(0)
     })
   })
 

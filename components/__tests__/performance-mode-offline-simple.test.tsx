@@ -15,7 +15,8 @@ import { ContentType } from '@/types/content'
 // Mock all dependencies
 vi.mock('@/lib/offline-cache', () => ({
   getCachedFileInfo: vi.fn(),
-  cacheFilesForContent: vi.fn()
+  cacheFilesForContent: vi.fn(),
+  warmCache: vi.fn().mockResolvedValue(undefined)
 }))
 
 vi.mock('@/lib/utils', () => ({

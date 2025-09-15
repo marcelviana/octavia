@@ -24,6 +24,10 @@ export async function createTestAuthUser(
 ): Promise<TestAuthUser> {
   const testUser = createTestUser({ email })
   
+  if (!auth) {
+    throw new Error('Firebase auth not initialized for tests')
+  }
+  
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, testUser.email, password)
     
@@ -49,6 +53,10 @@ export async function createTestAuthUser(
  * Use this for tests that need authenticated state
  */
 export async function signInTestUser(email: string, password: string = 'testpassword123'): Promise<User> {
+  if (!auth) {
+    throw new Error('Firebase auth not initialized for tests')
+  }
+  
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password)
     return userCredential.user
@@ -63,7 +71,9 @@ export async function signInTestUser(email: string, password: string = 'testpass
  */
 export async function signOutTestUser(): Promise<void> {
   try {
-    await signOut(auth)
+    if (auth && auth.currentUser) {
+      await signOut(auth)
+    }
   } catch (error) {
     console.warn('Failed to sign out test user:', error)
   }

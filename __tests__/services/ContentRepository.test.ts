@@ -49,7 +49,9 @@ describe('ContentRepository', () => {
     
     // Chain all query methods to return themselves for method chaining
     Object.values(mockQuery).forEach(method => {
-      method.mockReturnValue(mockQuery)
+      if (vi.isMockFunction(method)) {
+        method.mockReturnValue(mockQuery)
+      }
     })
 
     repository = new ContentRepository()

@@ -50,12 +50,12 @@ beforeAll(() => {
   process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET = process.env.TEST_SUPABASE_BUCKET || 'test-content-files'
 
   // Firebase Test Configuration - use environment variables with secure fallbacks
-  process.env.NEXT_PUBLIC_FIREBASE_API_KEY = process.env.TEST_FIREBASE_API_KEY || 'mock-api-key-for-testing'
-  process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN = process.env.TEST_FIREBASE_AUTH_DOMAIN || 'test-mock.firebaseapp.com'
-  process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID = process.env.TEST_FIREBASE_PROJECT_ID || 'test-mock-project'
-  process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET = process.env.TEST_FIREBASE_STORAGE_BUCKET || 'test-mock-project.appspot.com'
-  process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID = process.env.TEST_FIREBASE_SENDER_ID || '000000000'
-  process.env.NEXT_PUBLIC_FIREBASE_APP_ID = process.env.TEST_FIREBASE_APP_ID || '1:000000000:web:mock-app-id'
+  process.env.NEXT_PUBLIC_FIREBASE_API_KEY = process.env.TEST_FIREBASE_API_KEY || 'mock-test-api-key-for-testing-only'
+  process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN = process.env.TEST_FIREBASE_AUTH_DOMAIN || 'test-octavia.firebaseapp.com'
+  process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID = process.env.TEST_FIREBASE_PROJECT_ID || 'test-octavia-project'
+  process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET = process.env.TEST_FIREBASE_STORAGE_BUCKET || 'test-octavia-project.appspot.com'
+  process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID = process.env.TEST_FIREBASE_SENDER_ID || '123456789012'
+  process.env.NEXT_PUBLIC_FIREBASE_APP_ID = process.env.TEST_FIREBASE_APP_ID || '1:123456789012:web:abcdef123456789012345678'
 
   // Firebase Admin Test Configuration - use environment variables with secure fallbacks
   process.env.FIREBASE_PROJECT_ID = process.env.TEST_FIREBASE_PROJECT_ID || 'test-mock-project'

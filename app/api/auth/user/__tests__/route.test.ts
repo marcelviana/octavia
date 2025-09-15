@@ -2,27 +2,21 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { NextRequest } from 'next/server'
 
 // Mock Firebase admin functions
-const mockCreateUser = vi.fn()
-const mockUpdateUser = vi.fn()
-const mockDeleteUser = vi.fn()
-const mockGetUserByUid = vi.fn()
-const mockVerifyFirebaseToken = vi.fn()
-
-vi.mock('@/lib/firebase-admin', () => ({
-  createUser: mockCreateUser,
-  updateUser: mockUpdateUser,
-  deleteUser: mockDeleteUser,
-  getUserByUid: mockGetUserByUid,
-  verifyFirebaseToken: mockVerifyFirebaseToken
-}))
-
-// Mock rate limiting
+vi.mock('@/lib/firebase-admin')
 vi.mock('@/lib/rate-limit', () => ({
   withRateLimit: vi.fn((handler) => handler)
 }))
 
-// Import the actual route handlers
+// Import the actual route handlers and Firebase admin functions
 import { GET, POST, PUT, DELETE } from '../route'
+import * as firebaseAdmin from '@/lib/firebase-admin'
+
+// Get access to the mocked functions
+const mockCreateUser = vi.mocked(firebaseAdmin.createUser)
+const mockUpdateUser = vi.mocked(firebaseAdmin.updateUser)
+const mockDeleteUser = vi.mocked(firebaseAdmin.deleteUser)
+const mockGetUserByUid = vi.mocked(firebaseAdmin.getUserByUid)
+const mockVerifyFirebaseToken = vi.mocked(firebaseAdmin.verifyFirebaseToken)
 
 // Mock console to suppress error logs during tests
 const originalConsoleError = console.error

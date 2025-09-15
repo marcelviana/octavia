@@ -24,7 +24,8 @@ vi.mock('@/lib/offline-cache', () => ({
     }
     return Promise.resolve(null)
   }),
-  cacheFilesForContent: vi.fn().mockResolvedValue(undefined)
+  cacheFilesForContent: vi.fn().mockResolvedValue(undefined),
+  warmCache: vi.fn().mockResolvedValue(undefined)
 }))
 
 vi.mock('@/lib/utils', () => ({

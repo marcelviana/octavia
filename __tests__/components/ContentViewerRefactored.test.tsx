@@ -6,7 +6,7 @@
  */
 
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest'
-import { screen, waitFor } from '@testing-library/react'
+import { screen, waitFor, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { ContentViewer } from '@/components/content-viewer-refactored'
 import { 
@@ -58,14 +58,18 @@ describe('ContentViewer (Refactored)', () => {
   })
 
   describe('rendering', () => {
-    it('should render content viewer with error boundary', () => {
-      renderWithStore(<ContentViewer {...defaultProps} />)
+    it('should render content viewer with error boundary', async () => {
+      await act(async () => {
+        renderWithStore(<ContentViewer {...defaultProps} />)
+      })
 
       expect(screen.getByTestId('error-boundary')).toBeInTheDocument()
     })
 
-    it('should render content header with title and artist', () => {
-      renderWithStore(<ContentViewer {...defaultProps} />)
+    it('should render content header with title and artist', async () => {
+      await act(async () => {
+        renderWithStore(<ContentViewer {...defaultProps} />)
+      })
 
       expect(screen.getByText(mockContentItem.title)).toBeInTheDocument()
       expect(screen.getByText(`${mockContentItem.artist} • ${mockContentItem.content_type}`)).toBeInTheDocument()

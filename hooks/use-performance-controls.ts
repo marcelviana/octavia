@@ -63,6 +63,7 @@ export function usePerformanceControls({
   const isPressing = useRef(false)
   const controlsTimeout = useRef<NodeJS.Timeout | null>(null)
   const scrollRef = useRef<number | null>(null)
+  const isMountedRef = useRef(true)
 
   // BPM change function
   const changeBpm = (delta: number, label: string) => {
@@ -137,7 +138,12 @@ export function usePerformanceControls({
       } else {
         el.scrollTop = total
         scrollRef.current = null
-        setIsPlaying(false)
+        // Use a timeout to ensure component is still mounted before state update
+        setTimeout(() => {
+          if (isMountedRef.current) { // Component still mounted
+            setIsPlaying(false)
+          }
+        }, 0)
       }
     }
 
@@ -191,6 +197,30 @@ export function usePerformanceControls({
       }
       if (controlsTimeout.current) {
         clearTimeout(controlsTimeout.current)
+      }
+    }
+  }, [])
+
+  // Cleanup effect to prevent memory leaks and state updates after unmount
+  useEffect(() => {
+    isMountedRef.current = true
+    return () => {
+      isMountedRef.current = false
+      if (scrollRef.current) {
+        cancelAnimationFrame(scrollRef.current)
+        scrollRef.current = null
+      }
+      if (pressTimeout.current) {
+        clearTimeout(pressTimeout.current)
+        pressTimeout.current = null
+      }
+      if (pressInterval.current) {
+        clearInterval(pressInterval.current)
+        pressInterval.current = null
+      }
+      if (controlsTimeout.current) {
+        clearTimeout(controlsTimeout.current)
+        controlsTimeout.current = null
       }
     }
   }, [])

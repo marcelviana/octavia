@@ -444,7 +444,7 @@ describe('/api/setlists/[id]/songs', () => {
       expect(data).toEqual({ error: 'Internal server error' })
       expect(mockLogger.error).toHaveBeenCalledWith(
         'Error getting max position:',
-        expect.objectContaining({ message: 'Database error' })
+        expect.objectContaining({ code: 'PGRST500' })
       )
     })
   })

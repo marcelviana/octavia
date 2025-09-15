@@ -5,32 +5,54 @@ import { NextRequest } from 'next/server'
 const mockFrom = vi.fn()
 const mockSelect = vi.fn()
 const mockInsert = vi.fn()
+const mockUpdate = vi.fn()
+const mockDelete = vi.fn()
 const mockEq = vi.fn()
 const mockOrder = vi.fn()
 const mockSingle = vi.fn()
 const mockIn = vi.fn()
 
-// Set up the chain properly to include all methods used by setlists API
-const createChainedQuery = () => ({
-  eq: mockEq,
-  order: mockOrder,
-  in: mockIn,
-  select: mockSelect,
-  single: mockSingle,
-  then: vi.fn().mockResolvedValue({ data: [], error: null })
-})
+// Create a chainable query builder that returns itself for all chaining operations
+const createChainedQuery = () => {
+  const chain: any = {}
+  
+  // Define all methods that return chain
+  chain.eq = vi.fn().mockReturnValue(chain)
+  chain.neq = vi.fn().mockReturnValue(chain)
+  chain.gt = vi.fn().mockReturnValue(chain)
+  chain.gte = vi.fn().mockReturnValue(chain)
+  chain.lt = vi.fn().mockReturnValue(chain)
+  chain.lte = vi.fn().mockReturnValue(chain)
+  chain.like = vi.fn().mockReturnValue(chain)
+  chain.ilike = vi.fn().mockReturnValue(chain)
+  chain.is = vi.fn().mockReturnValue(chain)
+  chain.in = vi.fn().mockReturnValue(chain)
+  chain.contains = vi.fn().mockReturnValue(chain)
+  chain.order = vi.fn().mockReturnValue(chain)
+  chain.limit = vi.fn().mockReturnValue(chain)
+  chain.range = vi.fn().mockReturnValue(chain)
+  chain.select = vi.fn().mockReturnValue(chain)
+  chain.insert = vi.fn().mockReturnValue(chain)
+  chain.update = vi.fn().mockReturnValue(chain)
+  chain.delete = vi.fn().mockReturnValue(chain)
+  chain.single = vi.fn().mockResolvedValue({ data: null, error: null })
+  chain.maybeSingle = vi.fn().mockResolvedValue({ data: null, error: null })
+  chain.then = vi.fn().mockResolvedValue({ data: [], error: null })
+  return chain
+}
 
-mockSelect.mockReturnValue(createChainedQuery())
-mockEq.mockReturnValue(createChainedQuery())
-mockOrder.mockReturnValue(createChainedQuery())
-mockIn.mockReturnValue(createChainedQuery())
-mockInsert.mockReturnValue(createChainedQuery())
+// Setup the chain for main mock functions
+const queryChain = createChainedQuery()
+mockSelect.mockReturnValue(queryChain)
+mockEq.mockReturnValue(queryChain)
+mockOrder.mockReturnValue(queryChain)
+mockIn.mockReturnValue(queryChain)
+mockInsert.mockReturnValue(queryChain)
+mockUpdate.mockReturnValue(queryChain)
+mockDelete.mockReturnValue(queryChain)
 mockSingle.mockResolvedValue({ data: null, error: null })
 
-mockFrom.mockReturnValue({
-  select: mockSelect,
-  insert: mockInsert
-})
+mockFrom.mockReturnValue(queryChain)
 
 vi.mock('@/lib/supabase-service', () => ({
   getSupabaseServiceClient: () => ({ from: mockFrom })
