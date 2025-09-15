@@ -121,17 +121,22 @@ export const createMockStore = (initialState = {}) => {
   return mockStore
 }
 
-// Mock the Zustand store
+// Mock the Zustand store with custom state
 export const mockAppStore = (initialState = {}) => {
   const mockStore = createMockStore(initialState)
   
-  // Mock all the selector hooks
-  vi.mocked(useAppStore).mockImplementation((selector) => {
+  // Since the store is already mocked at the module level,
+  // we just need to update the mock implementation
+  const mockImplementation = vi.fn((selector) => {
     if (typeof selector === 'function') {
       return selector(mockStore)
     }
     return mockStore
   })
+  
+  // Get the mocked store and update its implementation
+  const mockedStore = vi.mocked(useAppStore)
+  mockedStore.mockImplementation(mockImplementation)
 
   return mockStore
 }
