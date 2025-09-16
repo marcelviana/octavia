@@ -1,8 +1,9 @@
 # Codecov configuration for Octavia
 # https://docs.codecov.io/docs/codecov-yaml
 
-codecov: 
- token: c4016457-cfdb-4df4-8e9a-3eab5b3708fa
+codecov:
+  # Token should be set via environment variable or GitHub secrets
+  # token: ${CODECOV_TOKEN}
  
 coverage:
   # Set minimum coverage thresholds
