@@ -3,6 +3,7 @@ import { requireAuthServer } from '@/lib/firebase-server-utils'
 import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
 import { withRateLimit } from '@/lib/rate-limit'
+import type { Database } from '@/types/supabase'
 
 // GET /api/content/[id] - Get specific content by ID
 const getContentByIdHandler = async (
@@ -105,7 +106,7 @@ const updateContentByIdHandler = async (
     }
 
     // Add timestamp for update
-    const dataToUpdate = {
+    const dataToUpdate: Database['public']['Tables']['content']['Update'] = {
       ...updateData,
       updated_at: new Date().toISOString(),
     }
@@ -114,7 +115,7 @@ const updateContentByIdHandler = async (
     
     const { data: content, error } = await supabase
       .from('content')
-      .update(dataToUpdate)
+      .update(dataToUpdate as any)
       .eq('id', id)
       .eq('user_id', user.uid)
       .select()
