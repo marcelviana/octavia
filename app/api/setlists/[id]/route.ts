@@ -3,6 +3,8 @@ import { requireAuthServer } from '@/lib/firebase-server-utils'
 import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
 import { withRateLimit } from '@/lib/rate-limit'
+import { withBodyValidation, setlistSchemas } from '@/lib/api-validation-middleware'
+import type { SetlistSong, ContentData, FormattedSetlistSong } from '@/types/setlist'
 
 // GET /api/setlists/[id] - Get specific setlist
 const getSetlistByIdHandler = async (
@@ -77,13 +79,13 @@ const getSetlistByIdHandler = async (
     // Create a map of content by ID for efficient lookup
     const contentMap = new Map<string, any>()
     if (contentData) {
-      contentData.forEach((content: any) => {
+      contentData.forEach((content: ContentData) => {
         contentMap.set(content.id, content)
       })
     }
 
     // Format the songs with proper content data
-    const formattedSongs = setlistSongs.map((song: any) => {
+    const formattedSongs = setlistSongs.map((song: SetlistSong): FormattedSetlistSong => {
       const content = contentMap.get(song.content_id)
       
       return {
@@ -106,7 +108,7 @@ const getSetlistByIdHandler = async (
     })
 
     return NextResponse.json({ ...setlist, setlist_songs: formattedSongs })
-  } catch (error: any) {
+  } catch (error: unknown) {
     logger.error('Error in setlist API:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
@@ -130,34 +132,20 @@ const wrappedGetSetlistHandler = async (request: NextRequest) => {
 export const GET = withRateLimit(wrappedGetSetlistHandler, 100)
 
 // PUT /api/setlists/[id] - Update setlist
-const updateSetlistHandler = async (
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) => {
-  try {
-    const user = await requireAuthServer(request)
-    
-    if (!user) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      )
-    }
+const updateSetlistHandler = withBodyValidation(setlistSchemas.update)(
+  async (request: NextRequest, validatedData: unknown, user: { uid: string }, params: { id: string }) => {
+    try {
+      const setlistId = params.id
+      const supabase = getSupabaseServiceClient()
 
-    // Await params for Next.js 15
-    const { id: setlistId } = await params
-
-    const body = await request.json()
-    const supabase = getSupabaseServiceClient()
-    
-    const updateData = {
-      name: body.name,
-      description: body.description || null,
-      performance_date: body.performance_date || null,
-      venue: body.venue || null,
-      notes: body.notes || null,
-      updated_at: new Date().toISOString(),
-    }
+      const updateData = {
+        name: validatedData.name,
+        description: validatedData.description || null,
+        performance_date: validatedData.performance_date || null,
+        venue: validatedData.venue || null,
+        notes: validatedData.notes || null,
+        updated_at: new Date().toISOString(),
+      }
 
     // Update the setlist
     const { data: setlist, error } = await supabase
@@ -173,75 +161,83 @@ const updateSetlistHandler = async (
       throw error
     }
 
-    // Get the songs for this setlist
-    const { data: setlistSongs, error: songsError } = await supabase
-      .from("setlist_songs")
-      .select("id, setlist_id, content_id, position, notes")
-      .eq("setlist_id", setlistId)
-      .order("position", { ascending: true })
+      // Get the songs for this setlist
+      const { data: setlistSongs, error: songsError } = await supabase
+        .from("setlist_songs")
+        .select("id, setlist_id, content_id, position, notes")
+        .eq("setlist_id", setlistId)
+        .order("position", { ascending: true })
 
-    if (songsError) {
-      logger.error(`Error fetching songs for setlist ${setlistId}:`, songsError)
-      return NextResponse.json({ ...setlist, setlist_songs: [] })
-    }
-
-    if (!setlistSongs || setlistSongs.length === 0) {
-      return NextResponse.json({ ...setlist, setlist_songs: [] })
-    }
-
-    // Get all unique content IDs
-    const contentIds = [...new Set(setlistSongs.map((song: any) => song.content_id))]
-
-    // Fetch content separately
-    const { data: contentData, error: contentError } = await supabase
-      .from("content")
-      .select("id, title, artist, content_type, key, bpm, file_url, content_data")
-      .in("id", contentIds)
-      .eq("user_id", user.uid)
-
-    if (contentError) {
-      logger.error(`Error fetching content for setlist ${setlistId}:`, contentError)
-    }
-
-    // Create a map of content by ID for efficient lookup
-    const contentMap = new Map<string, any>()
-    if (contentData) {
-      contentData.forEach((content: any) => {
-        contentMap.set(content.id, content)
-      })
-    }
-
-    // Format the songs with proper content data
-    const formattedSongs = setlistSongs.map((song: any) => {
-      const content = contentMap.get(song.content_id)
-      
-      return {
-        id: song.id,
-        setlist_id: song.setlist_id,
-        content_id: song.content_id,
-        position: song.position,
-        notes: song.notes,
-        content: {
-          id: content?.id || song.content_id,
-          title: content?.title || "Unknown Title",
-          artist: content?.artist || "Unknown Artist",
-          content_type: content?.content_type || "Unknown Type",
-          key: content?.key || null,
-          bpm: content?.bpm || null,
-          file_url: content?.file_url || null,
-          content_data: content?.content_data || null,
-        },
+      if (songsError) {
+        logger.error(`Error fetching songs for setlist ${setlistId}:`, songsError)
+        return new Response(JSON.stringify({ ...setlist, setlist_songs: [] }), {
+          headers: { 'Content-Type': 'application/json' }
+        })
       }
-    })
 
-    return NextResponse.json({ ...setlist, setlist_songs: formattedSongs })
-  } catch (error: any) {
-    logger.error('Error updating setlist:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+      if (!setlistSongs || setlistSongs.length === 0) {
+        return new Response(JSON.stringify({ ...setlist, setlist_songs: [] }), {
+          headers: { 'Content-Type': 'application/json' }
+        })
+      }
+
+      // Get all unique content IDs
+      const contentIds = [...new Set(setlistSongs.map((song: any) => song.content_id))]
+
+      // Fetch content separately
+      const { data: contentData, error: contentError } = await supabase
+        .from("content")
+        .select("id, title, artist, content_type, key, bpm, file_url, content_data")
+        .in("id", contentIds)
+        .eq("user_id", user.uid)
+
+      if (contentError) {
+        logger.error(`Error fetching content for setlist ${setlistId}:`, contentError)
+      }
+
+      // Create a map of content by ID for efficient lookup
+      const contentMap = new Map<string, any>()
+      if (contentData) {
+        contentData.forEach((content: ContentData) => {
+          contentMap.set(content.id, content)
+        })
+      }
+
+      // Format the songs with proper content data
+      const formattedSongs = setlistSongs.map((song: any) => {
+        const content = contentMap.get(song.content_id)
+
+        return {
+          id: song.id,
+          setlist_id: song.setlist_id,
+          content_id: song.content_id,
+          position: song.position,
+          notes: song.notes,
+          content: {
+            id: content?.id || song.content_id,
+            title: content?.title || "Unknown Title",
+            artist: content?.artist || "Unknown Artist",
+            content_type: content?.content_type || "Unknown Type",
+            key: content?.key || null,
+            bpm: content?.bpm || null,
+            file_url: content?.file_url || null,
+            content_data: content?.content_data || null,
+          },
+        }
+      })
+
+      return new Response(JSON.stringify({ ...setlist, setlist_songs: formattedSongs }), {
+        headers: { 'Content-Type': 'application/json' }
+      })
+    } catch (error: unknown) {
+      logger.error('Error updating setlist:', error)
+      return new Response(
+        JSON.stringify({ error: 'Internal server error' }),
+        { status: 500, headers: { 'Content-Type': 'application/json' } }
+      )
+    }
   }
+)
 }
 
 // Wrapper for PUT handler
@@ -249,11 +245,13 @@ const wrappedUpdateSetlistHandler = async (request: NextRequest) => {
   const url = new URL(request.url)
   const id = url.pathname.split('/').pop()
   if (!id) {
-    return NextResponse.json({ error: 'Setlist ID is required' }, { status: 400 })
+    return new Response(JSON.stringify({ error: 'Setlist ID is required' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' }
+    })
   }
-  
-  const params = Promise.resolve({ id })
-  return updateSetlistHandler(request, { params })
+
+  return updateSetlistHandler(request, { id })
 }
 
 export const PUT = withRateLimit(wrappedUpdateSetlistHandler, 100)
@@ -302,7 +300,7 @@ const deleteSetlistHandler = async (
     }
 
     return NextResponse.json({ success: true })
-  } catch (error: any) {
+  } catch (error: unknown) {
     logger.error('Error deleting setlist:', error)
     return NextResponse.json(
       { error: 'Internal server error' },

@@ -8,14 +8,15 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Image from "next/image"
 import { Music } from "lucide-react"
+import type { Annotation, Content, TextInputState, Point } from "@/types/annotations"
 
 interface AnnotationToolsProps {
-  content: any
-  annotations: any[]
+  content: Content
+  annotations: Annotation[]
   selectedTool: string
   zoom: number
-  onAnnotationsChange: (annotations: any[]) => void
-  onContentChange: (content: any) => void
+  onAnnotationsChange: (annotations: Annotation[]) => void
+  onContentChange: (content: Content) => void
 }
 
 export function AnnotationTools({
@@ -28,8 +29,8 @@ export function AnnotationTools({
 }: AnnotationToolsProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [isDrawing, setIsDrawing] = useState(false)
-  const [currentPath, setCurrentPath] = useState<any[]>([])
-  const [textInput, setTextInput] = useState({ show: false, x: 0, y: 0, text: "" })
+  const [currentPath, setCurrentPath] = useState<Point[]>([])
+  const [textInput, setTextInput] = useState<TextInputState>({ show: false, x: 0, y: 0, text: "" })
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -48,7 +49,7 @@ export function AnnotationTools({
           ctx.strokeStyle = annotation.color || "#000000"
           ctx.lineWidth = annotation.width || 2
           ctx.beginPath()
-          annotation.path.forEach((point: any, index: number) => {
+          annotation.path.forEach((point: Point, index: number) => {
             if (index === 0) {
               ctx.moveTo(point.x, point.y)
             } else {
@@ -62,7 +63,7 @@ export function AnnotationTools({
           ctx.strokeStyle = annotation.color || "#ffff00"
           ctx.lineWidth = annotation.width || 10
           ctx.beginPath()
-          annotation.path.forEach((point: any, index: number) => {
+          annotation.path.forEach((point: Point, index: number) => {
             if (index === 0) {
               ctx.moveTo(point.x, point.y)
             } else {

@@ -1,59 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { verifyFirebaseToken } from '@/lib/firebase-admin'
+import { requireAuthServerSecure } from '@/lib/secure-auth-utils'
 import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
-import { createProfileSchema, updateProfileSchema } from '@/lib/validation-schemas'
-import { 
-  validateRequestBody,
-  createValidationErrorResponse,
-  createUnauthorizedResponse,
-  createServerErrorResponse
-} from '@/lib/validation-utils'
+import { withBodyValidation, authSchemas } from '@/lib/api-validation-middleware'
 import { withRateLimit } from '@/lib/rate-limit'
 
 export const runtime = 'nodejs' // Explicitly use Node.js runtime
 
-async function getAuthenticatedUser(request: NextRequest) {
-  let idToken: string | null = null
-
-  const authHeader = request.headers.get('authorization')
-  if (authHeader && authHeader.startsWith('Bearer ')) {
-    idToken = authHeader.substring(7)
-  } else {
-    // Fall back to session cookie if no Authorization header
-    const cookieHeader = request.headers.get('cookie')
-    if (cookieHeader) {
-      const cookie = cookieHeader
-        .split(';')
-        .find(c => c.trim().startsWith('firebase-session='))
-      if (cookie) {
-        idToken = cookie.trim().substring('firebase-session='.length)
-      }
-    }
-  }
-
-  if (!idToken) {
-    return null
-  }
-
-  try {
-    const decodedToken = await verifyFirebaseToken(idToken)
-    return {
-      uid: decodedToken.uid,
-      email: decodedToken.email,
-      emailVerified: decodedToken.email_verified
-    }
-  } catch (error) {
-    logger.warn('Token verification failed:', error)
-    return null
-  }
-}
+// Use the secure authentication utilities instead of custom auth function
 
 // GET /api/profile - Get user profile
 const getProfileHandler = async (request: NextRequest) => {
   try {
-    const user = await getAuthenticatedUser(request)
-    
+    const user = await requireAuthServerSecure(request)
+
     if (!user) {
       return NextResponse.json(
         { error: 'Unauthorized' },
@@ -90,93 +50,78 @@ const getProfileHandler = async (request: NextRequest) => {
 export const GET = withRateLimit(getProfileHandler, 25)
 
 // POST /api/profile - Create user profile
-const createProfileHandler = async (request: NextRequest) => {
-  try {
-    const user = await getAuthenticatedUser(request)
-    
-    if (!user) {
-      return createUnauthorizedResponse()
+const createProfileHandler = withBodyValidation(authSchemas.profileUpdate)(
+  async (request: Request, validatedData: any, user: any) => {
+    try {
+      const supabase = getSupabaseServiceClient()
+
+      const profileData = {
+        id: user.uid,
+        ...validatedData,
+        email: user.email || validatedData.email,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      }
+
+      const { data: profile, error } = await supabase
+        .from('profiles')
+        .insert(profileData)
+        .select()
+        .single()
+
+      if (error) {
+        throw error
+      }
+
+      return new Response(JSON.stringify(profile), {
+        status: 201,
+        headers: { 'Content-Type': 'application/json' }
+      })
+    } catch (error: any) {
+      logger.error('Error creating profile:', error)
+      return new Response(
+        JSON.stringify({ error: 'Failed to create profile' }),
+        { status: 500, headers: { 'Content-Type': 'application/json' } }
+      )
     }
-
-    const body = await request.json()
-    
-    // Validate request body
-    const bodyValidation = await validateRequestBody(body, createProfileSchema)
-    if (!bodyValidation.success) {
-      return createValidationErrorResponse(bodyValidation.errors)
-    }
-
-    const validatedData = bodyValidation.data
-    const supabase = getSupabaseServiceClient()
-    
-    const profileData = {
-      id: user.uid,
-      ...validatedData,
-      email: user.email || validatedData.email, // Use Firebase email if available, otherwise validated email
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    }
-
-    const { data: profile, error } = await supabase
-      .from('profiles')
-      .insert(profileData)
-      .select()
-      .single()
-
-    if (error) {
-      throw error
-    }
-
-    return NextResponse.json(profile)
-  } catch (error: any) {
-    logger.error('Error creating profile:', error)
-    return createServerErrorResponse('Failed to create profile')
   }
-}
+)
 
 export const POST = withRateLimit(createProfileHandler, 25)
 
 // PATCH /api/profile - Update user profile
-const updateProfileHandler = async (request: NextRequest) => {
-  try {
-    const user = await getAuthenticatedUser(request)
-    
-    if (!user) {
-      return createUnauthorizedResponse()
+const updateProfileHandler = withBodyValidation(authSchemas.profileUpdate)(
+  async (request: Request, validatedData: any, user: any) => {
+    try {
+      const supabase = getSupabaseServiceClient()
+
+      const updateData = {
+        ...validatedData,
+        updated_at: new Date().toISOString(),
+      }
+
+      const { data: profile, error } = await supabase
+        .from('profiles')
+        .update(updateData)
+        .eq('id', user.uid)
+        .select()
+        .single()
+
+      if (error) {
+        throw error
+      }
+
+      return new Response(JSON.stringify(profile), {
+        headers: { 'Content-Type': 'application/json' }
+      })
+    } catch (error: any) {
+      logger.error('Error updating profile:', error)
+      return new Response(
+        JSON.stringify({ error: 'Failed to update profile' }),
+        { status: 500, headers: { 'Content-Type': 'application/json' } }
+      )
     }
-
-    const body = await request.json()
-    
-    // Validate request body
-    const bodyValidation = await validateRequestBody(body, updateProfileSchema)
-    if (!bodyValidation.success) {
-      return createValidationErrorResponse(bodyValidation.errors)
-    }
-
-    const validatedData = bodyValidation.data
-    const supabase = getSupabaseServiceClient()
-    
-    const updateData = {
-      ...validatedData,
-      updated_at: new Date().toISOString(),
-    }
-
-    const { data: profile, error } = await supabase
-      .from('profiles')
-      .update(updateData)
-      .eq('id', user.uid)
-      .select()
-      .single()
-
-    if (error) {
-      throw error
-    }
-
-    return NextResponse.json(profile)
-  } catch (error: any) {
-    logger.error('Error updating profile:', error)
-    return createServerErrorResponse('Failed to update profile')
   }
-}
+)
 
 export const PATCH = withRateLimit(updateProfileHandler, 25) 

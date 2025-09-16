@@ -4,6 +4,7 @@ import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
 import { withRateLimit } from '@/lib/rate-limit'
 import type { Database } from '@/types/supabase'
+import { withBodyValidation, contentSchemas, commonSchemas } from '@/lib/api-validation-middleware'
 
 // GET /api/content/[id] - Get specific content by ID
 const getContentByIdHandler = async (
@@ -12,7 +13,7 @@ const getContentByIdHandler = async (
 ) => {
   try {
     const user = await requireAuthServer(request)
-    
+
     if (!user) {
       return NextResponse.json(
         { error: 'Unauthorized' },
@@ -21,10 +22,12 @@ const getContentByIdHandler = async (
     }
 
     const { id } = await params
-    
-    if (!id) {
+
+    // Validate the ID parameter
+    const idValidation = commonSchemas.objectId.safeParse(id)
+    if (!idValidation.success) {
       return NextResponse.json(
-        { error: 'Content ID is required' },
+        { error: 'Invalid content ID format' },
         { status: 400 }
       )
     }
@@ -72,74 +75,58 @@ const wrappedGetHandler = async (request: NextRequest) => {
 }
 
 // PUT /api/content/[id] - Update specific content by ID
-const updateContentByIdHandler = async (
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) => {
-  try {
-    const user = await requireAuthServer(request)
-    
-    if (!user) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      )
-    }
+const updateContentByIdHandler = withBodyValidation(contentSchemas.update)(
+  async (request: Request, validatedData: any, user: any, params: { id: string }) => {
+    try {
+      const { id } = params
 
-    const { id } = await params
-    
-    if (!id) {
-      return NextResponse.json(
-        { error: 'Content ID is required' },
-        { status: 400 }
-      )
-    }
-
-    const updateData = await request.json()
-    
-    // Validate update data
-    if (!updateData || Object.keys(updateData).length === 0) {
-      return NextResponse.json(
-        { error: 'Validation failed' },
-        { status: 400 }
-      )
-    }
-
-    // Add timestamp for update
-    const dataToUpdate: Database['public']['Tables']['content']['Update'] = {
-      ...updateData,
-      updated_at: new Date().toISOString(),
-    }
-
-    const supabase = getSupabaseServiceClient()
-    
-    const { data: content, error } = await supabase
-      .from('content')
-      .update(dataToUpdate as any)
-      .eq('id', id)
-      .eq('user_id', user.uid)
-      .select()
-      .single()
-
-    if (error) {
-      if (error.code === 'PGRST116') {
-        return NextResponse.json(
-          { error: 'Content not found or access denied' },
-          { status: 404 }
+      // Validate the ID parameter
+      const idValidation = commonSchemas.objectId.safeParse(id)
+      if (!idValidation.success) {
+        return new Response(
+          JSON.stringify({ error: 'Invalid content ID format' }),
+          { status: 400, headers: { 'Content-Type': 'application/json' } }
         )
       }
-      throw error
-    }
 
-    return NextResponse.json(content)
-  } catch (error: any) {
-    logger.error('Error updating content by ID:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+      // Add timestamp for update
+      const dataToUpdate: Database['public']['Tables']['content']['Update'] = {
+        ...validatedData,
+        updated_at: new Date().toISOString(),
+      }
+
+      const supabase = getSupabaseServiceClient()
+
+      const { data: content, error } = await supabase
+        .from('content')
+        .update(dataToUpdate as any)
+        .eq('id', id)
+        .eq('user_id', user.uid)
+        .select()
+        .single()
+
+      if (error) {
+        if (error.code === 'PGRST116') {
+          return new Response(
+            JSON.stringify({ error: 'Content not found or access denied' }),
+            { status: 404, headers: { 'Content-Type': 'application/json' } }
+          )
+        }
+        throw error
+      }
+
+      return new Response(JSON.stringify(content), {
+        headers: { 'Content-Type': 'application/json' }
+      })
+    } catch (error: any) {
+      logger.error('Error updating content by ID:', error)
+      return new Response(
+        JSON.stringify({ error: 'Internal server error' }),
+        { status: 500, headers: { 'Content-Type': 'application/json' } }
+      )
+    }
   }
-}
+)
 
 // DELETE /api/content/[id] - Delete specific content by ID
 const deleteContentByIdHandler = async (
@@ -204,11 +191,13 @@ const wrappedPutHandler = async (request: NextRequest) => {
   const url = new URL(request.url)
   const id = url.pathname.split('/').pop()
   if (!id) {
-    return NextResponse.json({ error: 'Content ID is required' }, { status: 400 })
+    return new Response(JSON.stringify({ error: 'Content ID is required' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' }
+    })
   }
-  
-  const params = Promise.resolve({ id })
-  return updateContentByIdHandler(request, { params })
+
+  return updateContentByIdHandler(request, { id })
 }
 
 // Wrapper to handle the dynamic route parameters for DELETE

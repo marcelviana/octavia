@@ -27,7 +27,7 @@ export const createContentSchema = z.object({
     .optional()
     .nullable(),
   content_type: contentTypeSchema,
-  content_data: z.record(z.any()).optional().nullable(),
+  content_data: z.record(z.unknown()).optional().nullable(),
   file_url: z.string().url().optional().nullable(),
   key: z.string().max(10, 'Key must be less than 10 characters').optional().nullable(),
   bpm: z.number().int().min(1).max(999).optional().nullable(),
@@ -68,7 +68,7 @@ export const updateContentSchema = z.object({
     .transform(sanitizeString)
     .optional()
     .nullable(),
-  content_data: z.record(z.any()).optional().nullable(),
+  content_data: z.record(z.unknown()).optional().nullable(),
   file_url: z.string().url().optional().nullable(),
   key: z.string().max(10, 'Key must be less than 10 characters').optional().nullable(),
   bpm: z.number().int().min(1).max(999).optional().nullable(),

@@ -1,19 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSupabaseServiceClient } from '@/lib/supabase-service'
-import { validateFirebaseTokenServer } from '@/lib/firebase-server-utils'
-import '@/lib/logger'
-import { 
-  allowedMimeTypes, 
-  allowedExtensions,
-  fileUploadSchema 
-} from '@/lib/validation-schemas'
-import { 
-  validateFileUpload,
-  sanitizeFilename,
-  createValidationErrorResponse,
-  createUnauthorizedResponse,
-  createServerErrorResponse
-} from '@/lib/validation-utils'
+import { requireAuthServerSecure } from '@/lib/secure-auth-utils'
+import logger from '@/lib/logger'
+import { storageSchemas } from '@/lib/api-validation-middleware'
 import { withRateLimit, RATE_LIMIT_CONFIGS } from '@/lib/rate-limiter'
 
 const BUCKET = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET || 'content-files'
@@ -21,20 +10,16 @@ const MAX_FILE_SIZE = 50 * 1024 * 1024 // 50MB
 
 const uploadFileHandler = async (request: NextRequest) => {
   try {
-    // Verify Firebase authentication
-    const authHeader = request.headers.get('authorization')
-    if (!authHeader?.startsWith('Bearer ')) {
-      return createUnauthorizedResponse('Missing or invalid authorization header')
+    // Verify Firebase authentication using secure utilities
+    const user = await requireAuthServerSecure(request)
+    if (!user) {
+      return new Response(
+        JSON.stringify({ error: 'Authentication required' }),
+        { status: 401, headers: { 'Content-Type': 'application/json' } }
+      )
     }
 
-    const firebaseToken = authHeader.substring(7)
-    const validation = await validateFirebaseTokenServer(firebaseToken, request.url)
-    
-    if (!validation.isValid || !validation.user) {
-      return createUnauthorizedResponse('Invalid or expired Firebase token')
-    }
-
-    console.log(`Upload request from authenticated user: ${validation.user.email}`)
+    logger.log(`Upload request from authenticated user: ${user.email}`)
 
     // Parse the multipart form data
     const formData = await request.formData()
@@ -42,30 +27,43 @@ const uploadFileHandler = async (request: NextRequest) => {
     const filename = formData.get('filename') as string
 
     if (!file) {
-      return createValidationErrorResponse(['No file provided'])
+      return new Response(
+        JSON.stringify({ error: 'No file provided' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      )
     }
 
     if (!filename) {
-      return createValidationErrorResponse(['No filename provided'])
+      return new Response(
+        JSON.stringify({ error: 'No filename provided' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      )
     }
 
-    // Comprehensive file validation
-    const fileValidation = validateFileUpload(
-      file,
+    // Validate file using storage schema
+    const fileValidation = storageSchemas.upload.safeParse({
       filename,
-      allowedMimeTypes,
-      allowedExtensions,
-      MAX_FILE_SIZE
-    )
+      contentType: file.type,
+      size: file.size
+    })
 
-    if (!fileValidation.valid) {
-      return createValidationErrorResponse(fileValidation.errors)
+    if (!fileValidation.success) {
+      return new Response(
+        JSON.stringify({
+          error: 'File validation failed',
+          details: fileValidation.error.issues.map(issue => issue.message)
+        }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      )
     }
 
-    // Additional security checks
-    const sanitizedFilename = sanitizeFilename(filename)
+    // Additional security checks - basic filename sanitization
+    const sanitizedFilename = filename.replace(/[<>:"/\\|?*]/g, '_').trim()
     if (sanitizedFilename.length === 0) {
-      return createValidationErrorResponse(['Invalid filename after sanitization'])
+      return new Response(
+        JSON.stringify({ error: 'Invalid filename after sanitization' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      )
     }
 
     // Check file content consistency (MIME type vs file extension)
@@ -89,7 +87,10 @@ const uploadFileHandler = async (request: NextRequest) => {
     })()
 
     if (!mimeTypeValid) {
-      return createValidationErrorResponse(['File extension does not match MIME type'])
+      return new Response(
+        JSON.stringify({ error: 'File extension does not match MIME type' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      )
     }
 
     // Convert File to ArrayBuffer then to Uint8Array for Supabase
@@ -112,8 +113,11 @@ const uploadFileHandler = async (request: NextRequest) => {
       })
 
     if (error) {
-      console.error('Supabase upload error:', error)
-      return createServerErrorResponse(`Upload failed: ${error.message}`)
+      logger.error('Supabase upload error:', error)
+      return new Response(
+        JSON.stringify({ error: `Upload failed: ${error.message}` }),
+        { status: 500, headers: { 'Content-Type': 'application/json' } }
+      )
     }
 
     // Get public URL
@@ -122,23 +126,32 @@ const uploadFileHandler = async (request: NextRequest) => {
       .getPublicUrl(uniqueFilename)
 
     if (!urlData?.publicUrl) {
-      return createServerErrorResponse('Failed to get public URL')
+      return new Response(
+        JSON.stringify({ error: 'Failed to get public URL' }),
+        { status: 500, headers: { 'Content-Type': 'application/json' } }
+      )
     }
 
-    console.log(`Upload successful: ${urlData.publicUrl}`)
+    logger.log(`Upload successful: ${urlData.publicUrl}`)
 
-    return NextResponse.json({
+    return new Response(JSON.stringify({
       url: urlData.publicUrl,
       path: uniqueFilename,
       originalFilename: filename,
       size: file.size,
       type: file.type,
       success: true
+    }), {
+      status: 201,
+      headers: { 'Content-Type': 'application/json' }
     })
 
   } catch (error) {
-    console.error('Upload API error:', error)
-    return createServerErrorResponse('File upload failed')
+    logger.error('Upload API error:', error)
+    return new Response(
+      JSON.stringify({ error: 'File upload failed' }),
+      { status: 500, headers: { 'Content-Type': 'application/json' } }
+    )
   }
 }
 

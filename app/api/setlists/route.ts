@@ -3,6 +3,7 @@ import { requireAuthServer } from "@/lib/firebase-server-utils"
 import { getSupabaseServiceClient } from "@/lib/supabase-service"
 import logger from "@/lib/logger"
 import { withRateLimit } from "@/lib/rate-limit"
+import { withBodyValidation, setlistSchemas } from "@/lib/api-validation-middleware"
 
 // GET /api/setlists - Get user's setlists
 const getSetlistsHandler = async (request: NextRequest) => {
@@ -111,50 +112,45 @@ const getSetlistsHandler = async (request: NextRequest) => {
 export const GET = withRateLimit(getSetlistsHandler, 100)
 
 // POST /api/setlists - Create new setlist
-const createSetlistHandler = async (request: NextRequest) => {
-  try {
-    const user = await requireAuthServer(request)
-    
-    if (!user) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
+const createSetlistHandler = withBodyValidation(setlistSchemas.create)(
+  async (request: Request, validatedData: any, user: any) => {
+    try {
+      const supabase = getSupabaseServiceClient()
+
+      const setlistData = {
+        name: validatedData.name,
+        description: validatedData.description || null,
+        performance_date: validatedData.performance_date || null,
+        venue: validatedData.venue || null,
+        notes: validatedData.notes || null,
+        user_id: user.uid,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      }
+
+      const { data: setlist, error } = await supabase
+        .from('setlists')
+        .insert(setlistData)
+        .select()
+        .single()
+
+      if (error) {
+        logger.error("Error creating setlist:", error)
+        throw error
+      }
+
+      return new Response(JSON.stringify({ ...setlist, setlist_songs: [] }), {
+        status: 201,
+        headers: { 'Content-Type': 'application/json' }
+      })
+    } catch (error: any) {
+      logger.error('Error creating setlist:', error)
+      return new Response(
+        JSON.stringify({ error: 'Internal server error' }),
+        { status: 500, headers: { 'Content-Type': 'application/json' } }
       )
     }
-
-    const body = await request.json()
-    const supabase = getSupabaseServiceClient()
-    
-    const setlistData = {
-      name: body.name,
-      description: body.description || null,
-      performance_date: body.performance_date || null,
-      venue: body.venue || null,
-      notes: body.notes || null,
-      user_id: user.uid,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    }
-
-    const { data: setlist, error } = await supabase
-      .from('setlists')
-      .insert(setlistData)
-      .select()
-      .single()
-
-    if (error) {
-      logger.error("Error creating setlist:", error)
-      throw error
-    }
-
-    return NextResponse.json({ ...setlist, setlist_songs: [] })
-  } catch (error: any) {
-    logger.error('Error creating setlist:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
   }
-}
+)
 
 export const POST = withRateLimit(createSetlistHandler, 100) 

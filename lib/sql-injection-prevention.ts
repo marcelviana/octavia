@@ -207,7 +207,7 @@ export function detectSQLInjection(
     }
   }
 
-  result.riskLevel = highestRiskLevel as any
+  result.riskLevel = highestRiskLevel as SQLInjectionScanResult['riskLevel']
 
   // Determine if query is safe based on risk level and configuration
   if (config.strictMode) {
@@ -279,8 +279,8 @@ export function sanitizeSQLInput(input: string): string {
  * Validate parameterized query structure
  */
 export function validateParameterizedQuery(
-  query: string, 
-  parameters: any[]
+  query: string,
+  parameters: unknown[]
 ): { valid: boolean; issues: string[] } {
   const issues: string[] = []
   
@@ -318,7 +318,7 @@ export function validateParameterizedQuery(
  */
 export class SafeQueryBuilder {
   private query: string = ''
-  private parameters: any[] = []
+  private parameters: unknown[] = []
   private parameterIndex: number = 1
   
   select(columns: string[]): this {
@@ -343,7 +343,7 @@ export class SafeQueryBuilder {
     return this
   }
   
-  where(column: string, operator: string, value: any): this {
+  where(column: string, operator: string, value: unknown): this {
     // Validate column and operator
     if (!/^[a-zA-Z0-9_.]+$/.test(column)) {
       throw new Error('Invalid column name')
@@ -384,7 +384,7 @@ export class SafeQueryBuilder {
     return this
   }
   
-  build(): { query: string; parameters: any[] } {
+  build(): { query: string; parameters: unknown[] } {
     // Final validation
     const scanResult = detectSQLInjection(this.query, { strictMode: true })
     
@@ -402,9 +402,9 @@ export class SafeQueryBuilder {
 /**
  * Database connection wrapper with injection protection
  */
-export function createSecureDBWrapper(originalDB: any) {
+export function createSecureDBWrapper(originalDB: { query: (sql: string, params: unknown[]) => Promise<unknown> }) {
   return {
-    query: async (sql: string, params: any[] = []) => {
+    query: async (sql: string, params: unknown[] = []) => {
       // Validate query before execution
       const scanResult = detectSQLInjection(sql, { strictMode: true })
       
@@ -436,7 +436,18 @@ export function createSecureDBWrapper(originalDB: any) {
 /**
  * Middleware to scan request parameters for SQL injection
  */
-export function sqlInjectionMiddleware(req: any, res: any, next: any) {
+interface Request {
+  query?: Record<string, unknown>
+  body?: Record<string, unknown>
+  params?: Record<string, unknown>
+}
+
+interface Response {
+  status: (code: number) => Response
+  json: (data: unknown) => void
+}
+
+export function sqlInjectionMiddleware(req: Request, res: Response, next: () => void) {
   const parametersToCheck = [
     ...Object.values(req.query || {}),
     ...Object.values(req.body || {}),
