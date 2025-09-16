@@ -376,6 +376,36 @@ export function clearAllAuthCaches(): void {
   logger.warn('All authentication caches cleared - emergency action')
 }
 
+export function clearExpiredTokens(): void {
+  const now = Date.now()
+
+  // Clear expired blacklisted tokens
+  for (const [token, expiry] of tokenBlacklist.entries()) {
+    if (now > expiry) {
+      tokenBlacklist.delete(token)
+    }
+  }
+
+  // Clear expired cached tokens
+  for (const [token, entry] of tokenCache.entries()) {
+    if (now > entry.expires) {
+      tokenCache.delete(token)
+    }
+  }
+}
+
+export { isTokenBlacklisted }
+
+export function getUserSessions(userId: string): string[] {
+  return userSessionMap.get(userId) || []
+}
+
+export function invalidateUserSessions(userId: string): void {
+  const sessions = userSessionMap.get(userId) || []
+  sessions.forEach(token => blacklistToken(token))
+  userSessionMap.delete(userId)
+}
+
 // Export legacy functions for backward compatibility
 export const validateFirebaseTokenServer = validateFirebaseTokenSecure
 export const requireAuthServer = requireAuthServerSecure
