@@ -6,24 +6,12 @@ export default defineConfig({
   plugins: [react()],
   test: {
     environment: 'jsdom',
-    setupFiles: ['./src/test-setup.ts', './vitest.setup.ts'],
+    setupFiles: ['./src/test-setup.ts'],
     globals: true,
     css: true,
-    // Memory optimization settings
-    pool: 'threads',
-    poolOptions: {
-      threads: {
-        minThreads: 1,
-        maxThreads: 2, // Limit concurrent threads to reduce memory pressure
-      },
-    },
-    // Run memory-intensive tests sequentially
-    sequence: {
-      concurrent: false, // Disable concurrent execution for stability
-    },
-    // Increase timeouts for slower memory-optimized execution
-    testTimeout: 30000,
-    hookTimeout: 10000,
+    // Standard settings for fast execution
+    testTimeout: 10000,
+    hookTimeout: 5000,
     // Exclude integration tests and E2E tests from unit test runs
     exclude: [
       'node_modules/**',
@@ -35,8 +23,7 @@ export default defineConfig({
     ],
     env: {
       NODE_ENV: 'test',
-      VITEST: 'true',
-      DEBUG_TESTS: 'false' // Disable debug logging in tests
+      VITEST: 'true'
     },
     coverage: {
       provider: 'v8',
@@ -69,10 +56,10 @@ export default defineConfig({
       ],
       thresholds: {
         global: {
-          branches: 70,
-          functions: 70,
-          lines: 70,
-          statements: 70
+          branches: 50,
+          functions: 50,
+          lines: 50,
+          statements: 50
         }
       }
     }

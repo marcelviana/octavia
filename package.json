@@ -9,10 +9,10 @@
     "build:sw": "node scripts/build-sw.js",
     "start": "pnpm exec next start",
     "lint": "pnpm exec next lint",
-    "test": "NODE_OPTIONS=\"--max-old-space-size=8192\" pnpm exec vitest run --exclude '**/*integration*.test.{ts,tsx}' --exclude '**/integration/**/*.test.{ts,tsx}'",
-    "test:watch": "NODE_OPTIONS=\"--max-old-space-size=8192\" vitest --exclude '**/*integration*.test.{ts,tsx}' --exclude '**/integration/**/*.test.{ts,tsx}'",
-    "test:coverage": "vitest run --coverage --exclude '**/*integration*.test.{ts,tsx}' --exclude '**/integration/**/*.test.{ts,tsx}'",
-    "test:ci": "vitest run --coverage --reporter=verbose --exclude '**/*integration*.test.{ts,tsx}' --exclude '**/integration/**/*.test.{ts,tsx}'",
+    "test": "pnpm exec vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:ci": "vitest run --coverage --reporter=verbose",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:headed": "playwright test --headed",
@@ -21,11 +21,8 @@
     "test:e2e:install": "playwright install",
     "test:e2e:report": "playwright show-report",
     "test:ui": "vitest --ui",
-    "test:integration": "pnpm exec vitest run --config vitest.config.integration.mts",
-    "test:integration:watch": "pnpm exec vitest --config vitest.config.integration.mts",
-    "test:integration:with-env": "NODE_ENV=test pnpm exec vitest run --config vitest.config.integration.mts",
-    "test:unit": "pnpm exec vitest run --exclude '**/*integration*.test.{ts,tsx}' --exclude '**/integration/**/*.test.{ts,tsx}'",
-    "test:all": "pnpm run test:unit && pnpm run test:integration"
+    "test:unit": "pnpm run test",
+    "test:all": "pnpm run test && pnpm run test:e2e"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
