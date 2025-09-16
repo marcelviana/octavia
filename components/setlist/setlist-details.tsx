@@ -285,6 +285,7 @@ export const SetlistDetails = memo(function SetlistDetails({
                               size="icon"
                               className="h-7 w-7 opacity-0 group-hover:opacity-100 transition-opacity text-[#6B7280] hover:text-red-600 hover:bg-red-50"
                               onClick={() => onRemoveSong(song.id)}
+                              aria-label="Remove song"
                             >
                               <Trash2 className="w-3.5 h-3.5" />
                             </Button>

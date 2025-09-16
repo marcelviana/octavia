@@ -117,6 +117,7 @@ export const SetlistCard = memo(function SetlistCard({
                 e.stopPropagation()
                 onEdit(setlist)
               }}
+              aria-label="Edit setlist"
             >
               <Edit className="w-3.5 h-3.5" />
             </Button>

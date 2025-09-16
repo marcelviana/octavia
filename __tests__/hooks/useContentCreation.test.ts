@@ -22,7 +22,9 @@ import {
 // Mock external dependencies
 vi.mock('@/lib/content-service')
 vi.mock('@/lib/batch-import')
-vi.mock('@/contexts/firebase-auth-context')
+vi.mock('@/contexts/firebase-auth-context', () => ({
+  useAuth: vi.fn()
+}))
 vi.mock('@/domains/shared/state-management/app-store')
 
 const mockCreateContent = vi.mocked(createContent)
@@ -37,7 +39,8 @@ const mockAuthContext = {
   error: null,
 }
 
-vi.mocked(require('@/contexts/firebase-auth-context').useAuth).mockReturnValue(mockAuthContext)
+const { useAuth } = await import('@/contexts/firebase-auth-context')
+vi.mocked(useAuth).mockReturnValue(mockAuthContext)
 
 describe('useContentCreation', () => {
   const mockOnContentCreated = vi.fn()

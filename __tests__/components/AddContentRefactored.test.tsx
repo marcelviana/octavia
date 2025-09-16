@@ -21,7 +21,9 @@ import {
 // Mock external dependencies
 vi.mock('@/lib/content-service')
 vi.mock('@/lib/batch-import')
-vi.mock('@/contexts/firebase-auth-context')
+vi.mock('@/contexts/firebase-auth-context', () => ({
+  useAuth: vi.fn()
+}))
 vi.mock('@/domains/shared/components/DomainErrorBoundary', () => ({
   DomainErrorBoundary: ({ children }: { children: React.ReactNode }) => <div data-testid="error-boundary">{children}</div>
 }))
@@ -73,7 +75,8 @@ const mockAuthContext = {
   error: null,
 }
 
-vi.mocked(require('@/contexts/firebase-auth-context').useAuth).mockReturnValue(mockAuthContext)
+const { useAuth } = await import('@/contexts/firebase-auth-context')
+vi.mocked(useAuth).mockReturnValue(mockAuthContext)
 
 describe('AddContent (Refactored)', () => {
   const mockOnBack = vi.fn()

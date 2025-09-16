@@ -12,9 +12,9 @@ import { performance } from 'perf_hooks'
 import { renderHook } from '@testing-library/react'
 import { ContentViewer } from '@/components/content-viewer-refactored'
 import { AddContent } from '@/components/add-content-refactored'
-import { useContentViewer } from '@/domains/content-management/hooks/useContentViewer'
-import { useContentCreation } from '@/domains/content-management/hooks/useContentCreation'
-import { useAppStore } from '@/stores/useAppStore'
+import { useContentViewer } from '@/domains/content-management/hooks/use-content-viewer'
+import { useContentCreation } from '@/domains/content-management/hooks/use-content-creation'
+import { useAppStore } from '@/domains/shared/state-management/app-store'
 import { 
   mockContentItem, 
   mockUser,

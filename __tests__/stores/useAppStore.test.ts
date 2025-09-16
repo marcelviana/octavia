@@ -7,7 +7,7 @@
 
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest'
 import { act, renderHook } from '@testing-library/react'
-import { useAppStore } from '@/stores/useAppStore'
+import { useAppStore } from '@/domains/shared/state-management/app-store'
 import { mockContentItem, mockUser } from '../utils/test-utils'
 
 // Mock external dependencies
