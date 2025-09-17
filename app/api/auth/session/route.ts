@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { validateFirebaseTokenSecure } from '@/lib/secure-auth-utils'
 import logger from '@/lib/logger'
 import { authSchemas } from '@/lib/api-validation-middleware'
-import { withBodyValidation } from '@/lib/api-validation-middleware'
+import { withPublicBodyValidation } from '@/lib/api-validation-middleware'
 import { withRateLimit, RATE_LIMIT_CONFIGS } from '@/lib/rate-limiter'
 
 export const runtime = 'nodejs' // Explicitly use Node.js runtime
@@ -11,7 +11,7 @@ const SESSION_COOKIE_NAME = 'firebase-session'
 const SESSION_COOKIE_MAX_AGE = 60 * 60 * 24 * 7 // 7 days
 
 // POST /api/auth/session - Set session cookie
-const postSessionHandler = withBodyValidation(authSchemas.sessionCreate)(
+const postSessionHandler = withPublicBodyValidation(authSchemas.sessionCreate)(
   async (request: Request, validatedData: any) => {
     try {
       const { idToken } = validatedData

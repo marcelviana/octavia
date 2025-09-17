@@ -34,9 +34,12 @@ describe('Platform Utilities Tests', () => {
       global.window = {
         location: { href: 'http://localhost:3000' },
         navigator: {
-          clipboard: { writeText: vi.fn() },
-          share: vi.fn(),
-          vibrate: vi.fn(),
+          clipboard: {
+            writeText: vi.fn().mockResolvedValue(undefined),
+            readText: vi.fn().mockResolvedValue('test-content')
+          },
+          share: vi.fn().mockResolvedValue(undefined),
+          vibrate: vi.fn().mockReturnValue(true),
           userAgent: 'Mozilla/5.0'
         },
         localStorage: {
@@ -56,6 +59,15 @@ describe('Platform Utilities Tests', () => {
         }))
       } as any
       global.navigator = global.window.navigator as any
+      global.document = {
+        activeElement: {
+          blur: vi.fn(),
+          focus: vi.fn()
+        },
+        createElement: vi.fn(),
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn()
+      } as any
     }
 
     // Mock browser APIs that aren't available in JSDOM
@@ -83,6 +95,38 @@ describe('Platform Utilities Tests', () => {
       removeEventListener: vi.fn(),
     }))
 
+    // Mock AudioContext for music applications
+    global.AudioContext = vi.fn().mockImplementation(() => ({
+      createAnalyser: vi.fn(),
+      createGain: vi.fn(),
+      createMediaElementSource: vi.fn(),
+      destination: {},
+      state: 'running',
+      close: vi.fn(),
+      suspend: vi.fn(),
+      resume: vi.fn()
+    }))
+    global.webkitAudioContext = global.AudioContext
+
+    // Mock missing navigator APIs
+    Object.defineProperty(navigator, 'share', {
+      writable: true,
+      value: vi.fn().mockResolvedValue(undefined)
+    })
+
+    Object.defineProperty(navigator, 'vibrate', {
+      writable: true,
+      value: vi.fn().mockReturnValue(true)
+    })
+
+    Object.defineProperty(navigator, 'clipboard', {
+      writable: true,
+      value: {
+        writeText: vi.fn().mockResolvedValue(undefined),
+        readText: vi.fn().mockResolvedValue('test-content')
+      }
+    })
+
     // Mock navigator.mediaDevices
     Object.defineProperty(navigator, 'mediaDevices', {
       writable: true,
@@ -92,29 +136,38 @@ describe('Platform Utilities Tests', () => {
       },
     })
 
-    // Mock navigator.clipboard
-    Object.defineProperty(navigator, 'clipboard', {
+    // Mock Notification API
+    global.Notification = vi.fn().mockImplementation(() => ({
+      close: vi.fn(),
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn()
+    }))
+    Object.defineProperty(Notification, 'permission', {
       writable: true,
-      configurable: true,
-      value: {
-        writeText: vi.fn(),
-        readText: vi.fn(),
-      },
+      value: 'granted'
+    })
+    Object.defineProperty(Notification, 'requestPermission', {
+      writable: true,
+      value: vi.fn().mockResolvedValue('granted')
     })
 
-    // Mock navigator.share
-    Object.defineProperty(navigator, 'share', {
-      writable: true,
-      configurable: true,
-      value: vi.fn(),
-    })
+    // Mock navigator.share (only if not already defined)
+    if (!navigator.share) {
+      Object.defineProperty(navigator, 'share', {
+        writable: true,
+        configurable: true,
+        value: vi.fn().mockResolvedValue(undefined),
+      })
+    }
 
-    // Mock navigator.vibrate
-    Object.defineProperty(navigator, 'vibrate', {
-      writable: true,
-      configurable: true,
-      value: vi.fn(),
-    })
+    // Mock navigator.vibrate (only if not already defined)
+    if (!navigator.vibrate) {
+      Object.defineProperty(navigator, 'vibrate', {
+        writable: true,
+        configurable: true,
+        value: vi.fn().mockReturnValue(true),
+      })
+    }
 
     // Mock window.Notification
     global.Notification = vi.fn() as any

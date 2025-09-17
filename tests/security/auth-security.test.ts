@@ -8,9 +8,9 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { NextRequest } from 'next/server'
 import {
-  requireAuthServer,
+  requireAuthServerSecure as requireAuthServer,
   blacklistToken,
-  verifyIdTokenSecure,
+  validateFirebaseTokenSecure,
   getUserSessions,
   invalidateUserSessions,
   isTokenBlacklisted,

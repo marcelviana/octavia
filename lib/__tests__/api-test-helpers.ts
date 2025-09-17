@@ -279,6 +279,12 @@ export const mockFirebaseServerUtils = () => {
     validateFirebaseTokenServerLegacy: mockValidateFirebaseTokenServerLegacy,
   }))
 
+  // Mock secure auth utils
+  vi.doMock('@/lib/secure-auth-utils', () => ({
+    validateFirebaseTokenSecure: mockValidateFirebaseTokenServer,
+    requireAuthServerSecure: mockRequireAuthServer,
+  }))
+
   return {
     mockRequireAuthServer,
     mockValidateFirebaseTokenServer,

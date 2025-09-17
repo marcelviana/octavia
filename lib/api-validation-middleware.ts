@@ -40,6 +40,17 @@ export const commonSchemas = {
     'Potentially unsafe content detected'
   ),
 
+  // Factory function for creating safe text schemas with min/max constraints
+  createSafeText: (minLength?: number, maxLength?: number) => {
+    let schema = z.string()
+    if (minLength !== undefined) schema = schema.min(minLength)
+    if (maxLength !== undefined) schema = schema.max(maxLength)
+    return schema.refine(
+      (text) => !/<script|javascript:|data:|vbscript:/i.test(text),
+      'Potentially unsafe content detected'
+    )
+  },
+
   // Security: Safe HTML content (for lyrics, etc.)
   safeHtml: z.string().max(50000).refine(
     (html) => {
@@ -68,7 +79,7 @@ export const authSchemas = {
 
   // User profile update
   profileUpdate: z.object({
-    displayName: commonSchemas.safeText.optional(),
+    displayName: commonSchemas.createSafeText(0, 1000).optional(),
     preferences: z.object({
       theme: z.enum(['light', 'dark', 'system']).optional(),
       autoSync: z.boolean().optional(),
@@ -81,7 +92,7 @@ export const authSchemas = {
 export const contentSchemas = {
   // Content creation
   create: z.object({
-    title: commonSchemas.safeText.min(1, 'Title is required'),
+    title: commonSchemas.createSafeText(1, 1000),
     artist: commonSchemas.safeText.optional(),
     album: commonSchemas.safeText.optional(),
     content_type: commonSchemas.contentType,
@@ -96,7 +107,7 @@ export const contentSchemas = {
 
   // Content update
   update: z.object({
-    title: commonSchemas.safeText.min(1).optional(),
+    title: commonSchemas.createSafeText(1, 1000).optional(),
     artist: commonSchemas.safeText.optional(),
     album: commonSchemas.safeText.optional(),
     content_type: commonSchemas.contentType.optional(),
@@ -128,7 +139,7 @@ export const contentSchemas = {
 export const setlistSchemas = {
   // Setlist creation
   create: z.object({
-    name: commonSchemas.safeText.min(1, 'Setlist name is required').max(100),
+    name: commonSchemas.createSafeText(1, 100),
     description: commonSchemas.safeHtml.optional(),
     songs: z.array(z.object({
       content_id: commonSchemas.objectId,
@@ -139,7 +150,7 @@ export const setlistSchemas = {
 
   // Setlist update
   update: z.object({
-    name: commonSchemas.safeText.min(1).max(100).optional(),
+    name: commonSchemas.createSafeText(1, 100).optional(),
     description: commonSchemas.safeHtml.optional(),
     songs: z.array(z.object({
       content_id: commonSchemas.objectId,

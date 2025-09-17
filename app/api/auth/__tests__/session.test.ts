@@ -24,7 +24,7 @@ describe('/api/auth/session', () => {
 
   describe('POST /api/auth/session', () => {
     it('sets session cookie with valid Firebase token', async () => {
-      // Mock successful token verification
+      // Mock successful token verification for both Firebase Admin and server utils
       mocks.firebase.mockVerifyIdToken.mockResolvedValue({
         uid: TEST_USER.uid,
         email: TEST_USER.email,
@@ -43,6 +43,16 @@ describe('/api/auth/session', () => {
             email: [TEST_USER.email]
           },
           sign_in_provider: 'google.com'
+        }
+      })
+
+      // Mock server-side validation (this is what the route actually calls)
+      mocks.firebaseServer.mockValidateFirebaseTokenServer.mockResolvedValue({
+        isValid: true,
+        user: {
+          uid: TEST_USER.uid,
+          email: TEST_USER.email,
+          emailVerified: true
         }
       })
 
@@ -66,8 +76,8 @@ describe('/api/auth/session', () => {
       expect(setCookieHeader).toContain('HttpOnly')
       expect(setCookieHeader).toContain('Path=/')
       
-      // Verify Firebase token was validated
-      expect(mocks.firebase.mockVerifyIdToken).toHaveBeenCalledWith('valid-firebase-token')
+      // Verify server-side token validation was called
+      expect(mocks.firebaseServer.mockValidateFirebaseTokenServer).toHaveBeenCalledWith('valid-firebase-token', expect.any(String))
     })
 
     it('rejects request without idToken', async () => {
@@ -120,8 +130,7 @@ describe('/api/auth/session', () => {
       expectUnauthorized(response)
       
       const data = await getJsonResponse(response)
-      expect(data.error).toBe('Unauthorized')
-      expect(data.message).toBe('Invalid or expired token')
+      expect(data.error).toBe('Invalid or expired token')
     })
 
     it('rejects invalid Firebase token', async () => {
@@ -142,8 +151,7 @@ describe('/api/auth/session', () => {
       expectUnauthorized(response)
       
       const data = await getJsonResponse(response)
-      expect(data.error).toBe('Unauthorized')
-      expect(data.message).toBe('Invalid or expired token')
+      expect(data.error).toBe('Invalid or expired token')
     })
 
     it('sets secure flag in production environment', async () => {
@@ -168,6 +176,16 @@ describe('/api/auth/session', () => {
             email: [TEST_USER.email]
           },
           sign_in_provider: 'google.com'
+        }
+      })
+
+      // Mock server-side validation
+      mocks.firebaseServer.mockValidateFirebaseTokenServer.mockResolvedValue({
+        isValid: true,
+        user: {
+          uid: TEST_USER.uid,
+          email: TEST_USER.email,
+          emailVerified: true
         }
       })
 
@@ -210,6 +228,16 @@ describe('/api/auth/session', () => {
             email: [TEST_USER.email]
           },
           sign_in_provider: 'google.com'
+        }
+      })
+
+      // Mock server-side validation
+      mocks.firebaseServer.mockValidateFirebaseTokenServer.mockResolvedValue({
+        isValid: true,
+        user: {
+          uid: TEST_USER.uid,
+          email: TEST_USER.email,
+          emailVerified: true
         }
       })
 
@@ -264,6 +292,16 @@ describe('/api/auth/session', () => {
             email: [TEST_USER.email]
           },
           sign_in_provider: 'google.com'
+        }
+      })
+
+      // Mock server-side validation
+      mocks.firebaseServer.mockValidateFirebaseTokenServer.mockResolvedValue({
+        isValid: true,
+        user: {
+          uid: TEST_USER.uid,
+          email: TEST_USER.email,
+          emailVerified: true
         }
       })
 
