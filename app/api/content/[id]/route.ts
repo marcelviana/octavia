@@ -90,7 +90,7 @@ const updateContentByIdHandler = withBodyValidation(contentSchemas.update)(
       }
 
       // Add timestamp for update
-      const dataToUpdate: Database['public']['Tables']['content']['Update'] = {
+      const dataToUpdate = {
         ...validatedData,
         updated_at: new Date().toISOString(),
       }
@@ -99,7 +99,7 @@ const updateContentByIdHandler = withBodyValidation(contentSchemas.update)(
 
       const { data: content, error } = await supabase
         .from('content')
-        .update(dataToUpdate as any)
+        .update(dataToUpdate as Database['public']['Tables']['content']['Update'])
         .eq('id', id)
         .eq('user_id', user.uid)
         .select()
@@ -187,17 +187,17 @@ const deleteContentByIdHandler = async (
 }
 
 // Wrapper to handle the dynamic route parameters for PUT
-const wrappedPutHandler = async (request: NextRequest) => {
+const wrappedPutHandler = async (request: NextRequest): Promise<NextResponse> => {
   const url = new URL(request.url)
   const id = url.pathname.split('/').pop()
   if (!id) {
-    return new Response(JSON.stringify({ error: 'Content ID is required' }), {
-      status: 400,
-      headers: { 'Content-Type': 'application/json' }
-    })
+    return NextResponse.json({ error: 'Content ID is required' }, { status: 400 })
   }
 
-  return updateContentByIdHandler(request, { id })
+  const response = await updateContentByIdHandler(request, { id })
+  // Convert Response to NextResponse
+  const data = await response.json()
+  return NextResponse.json(data, { status: response.status })
 }
 
 // Wrapper to handle the dynamic route parameters for DELETE

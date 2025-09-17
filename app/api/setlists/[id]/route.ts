@@ -238,7 +238,6 @@ const updateSetlistHandler = withBodyValidation(setlistSchemas.update)(
     }
   }
 )
-}
 
 // Wrapper for PUT handler
 const wrappedUpdateSetlistHandler = async (request: NextRequest) => {

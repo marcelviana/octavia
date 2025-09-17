@@ -108,9 +108,9 @@ export const PRODUCTION_SECURITY_CONFIG: EnhancedSecurityConfig = {
     accelerometer: ["'none'"],
     "ambient-light-sensor": ["'none'"],
     autoplay: ["'self'"],
-    encrypted-media: ["'none'"],
+    "encrypted-media": ["'none'"],
     fullscreen: ["'self'"],
-    picture-in-picture: ["'none'"]
+    "picture-in-picture": ["'none'"]
   },
   crossOriginPolicies: {
     embedderPolicy: 'require-corp',
@@ -355,3 +355,8 @@ export function withEnhancedSecurity(handler: any) {
     return nextResponse
   }
 }
+
+// Export aliases for backward compatibility with tests
+export const applySecurityHeaders = applyEnhancedSecurityHeaders
+export const generateCSPNonce = generateSecurityNonce
+export const createSecurityHeadersMiddleware = withEnhancedSecurity

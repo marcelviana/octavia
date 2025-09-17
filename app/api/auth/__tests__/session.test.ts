@@ -28,8 +28,22 @@ describe('/api/auth/session', () => {
       mocks.firebase.mockVerifyIdToken.mockResolvedValue({
         uid: TEST_USER.uid,
         email: TEST_USER.email,
+        email_verified: true,
         name: TEST_USER.displayName,
-        picture: 'https://example.com/avatar.png' 
+        picture: 'https://example.com/avatar.png',
+        iss: 'https://securetoken.google.com/test-project',
+        aud: 'test-project',
+        auth_time: Date.now() / 1000,
+        user_id: TEST_USER.uid,
+        sub: TEST_USER.uid,
+        iat: Date.now() / 1000,
+        exp: Date.now() / 1000 + 3600,
+        firebase: {
+          identities: {
+            email: [TEST_USER.email]
+          },
+          sign_in_provider: 'google.com'
+        }
       })
 
       const { POST } = await import('../session/route')
@@ -139,8 +153,22 @@ describe('/api/auth/session', () => {
       mocks.firebase.mockVerifyIdToken.mockResolvedValue({
         uid: TEST_USER.uid,
         email: TEST_USER.email,
+        email_verified: true,
         name: TEST_USER.displayName,
-        picture: 'https://example.com/avatar.png'
+        picture: 'https://example.com/avatar.png',
+        iss: 'https://securetoken.google.com/test-project',
+        aud: 'test-project',
+        auth_time: Math.floor(Date.now() / 1000),
+        user_id: TEST_USER.uid,
+        sub: TEST_USER.uid,
+        iat: Math.floor(Date.now() / 1000),
+        exp: Math.floor(Date.now() / 1000) + 3600,
+        firebase: {
+          identities: {
+            email: [TEST_USER.email]
+          },
+          sign_in_provider: 'google.com'
+        }
       })
 
       const { POST } = await import('../session/route')
@@ -167,8 +195,22 @@ describe('/api/auth/session', () => {
       mocks.firebase.mockVerifyIdToken.mockResolvedValue({
         uid: TEST_USER.uid,
         email: TEST_USER.email,
+        email_verified: true,
         name: TEST_USER.displayName,
-        picture: 'https://example.com/avatar.png'
+        picture: 'https://example.com/avatar.png',
+        iss: 'https://securetoken.google.com/test-project',
+        aud: 'test-project',
+        auth_time: Math.floor(Date.now() / 1000),
+        user_id: TEST_USER.uid,
+        sub: TEST_USER.uid,
+        iat: Math.floor(Date.now() / 1000),
+        exp: Math.floor(Date.now() / 1000) + 3600,
+        firebase: {
+          identities: {
+            email: [TEST_USER.email]
+          },
+          sign_in_provider: 'google.com'
+        }
       })
 
       const { POST } = await import('../session/route')
@@ -207,8 +249,22 @@ describe('/api/auth/session', () => {
       mocks.firebase.mockVerifyIdToken.mockResolvedValue({
         uid: TEST_USER.uid,
         email: TEST_USER.email,
+        email_verified: true,
         name: TEST_USER.displayName,
-        picture: 'https://example.com/avatar.png'
+        picture: 'https://example.com/avatar.png',
+        iss: 'https://securetoken.google.com/test-project',
+        aud: 'test-project',
+        auth_time: Math.floor(Date.now() / 1000),
+        user_id: TEST_USER.uid,
+        sub: TEST_USER.uid,
+        iat: Math.floor(Date.now() / 1000),
+        exp: Math.floor(Date.now() / 1000) + 3600,
+        firebase: {
+          identities: {
+            email: [TEST_USER.email]
+          },
+          sign_in_provider: 'google.com'
+        }
       })
 
       const { POST } = await import('../session/route')

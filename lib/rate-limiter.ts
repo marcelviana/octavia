@@ -336,11 +336,22 @@ export const createSecurityRateLimiter = () => {
     onLimitReached: (req, key) => {
       const clientIP = getClientIP(req)
       console.error(`SECURITY: Rate limit exceeded for ${key} from IP ${clientIP} at ${req.nextUrl.pathname}`)
-      
+
       // In production, you might want to:
       // - Log to security system
       // - Trigger IP blocking
       // - Send alerts
     }
   })
+}
+
+/**
+ * Simple rate limit checker for testing
+ */
+export async function checkRateLimit(
+  req: NextRequest,
+  config: RateLimitConfig = RATE_LIMIT_CONFIGS.API
+) {
+  const limiter = createRateLimiter(config)
+  return limiter(req)
 }

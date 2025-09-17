@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { NextRequest } from 'next/server'
 
 // Mock Firebase admin functions
@@ -32,7 +32,18 @@ describe('/api/auth/user', () => {
   const mockAdmin = {
     uid: 'admin-user-123',
     email: 'admin@example.com',
-    email_verified: true
+    email_verified: true,
+    iss: 'https://securetoken.google.com/test-project',
+    aud: 'test-project',
+    auth_time: Math.floor(Date.now() / 1000),
+    user_id: 'admin-user-123',
+    sub: 'admin-user-123',
+    iat: Math.floor(Date.now() / 1000),
+    exp: Math.floor(Date.now() / 1000) + 3600,
+    firebase: {
+      identities: { email: ['admin@example.com'] },
+      sign_in_provider: 'google.com'
+    }
   }
 
   const mockUserRecord = {
@@ -43,8 +54,20 @@ describe('/api/auth/user', () => {
     disabled: false,
     metadata: {
       creationTime: '2024-01-01T00:00:00Z',
-      lastSignInTime: '2024-01-02T00:00:00Z'
-    }
+      lastSignInTime: '2024-01-02T00:00:00Z',
+      toJSON: () => ({
+        creationTime: '2024-01-01T00:00:00Z',
+        lastSignInTime: '2024-01-02T00:00:00Z'
+      })
+    },
+    providerData: [],
+    toJSON: () => ({
+      uid: 'test-user-456',
+      email: 'test@example.com',
+      displayName: 'Test User',
+      emailVerified: true,
+      disabled: false
+    })
   }
 
   beforeEach(() => {
@@ -199,8 +222,20 @@ describe('/api/auth/user', () => {
         disabled: false,
         metadata: {
           creationTime: '2024-01-03T00:00:00Z',
-          lastSignInTime: null
-        }
+          lastSignInTime: '2024-01-03T00:00:00Z',
+          toJSON: () => ({
+            creationTime: '2024-01-03T00:00:00Z',
+            lastSignInTime: '2024-01-03T00:00:00Z'
+          })
+        },
+        providerData: [],
+        toJSON: () => ({
+          uid: 'new-user-789',
+          email: 'newuser@example.com',
+          displayName: 'New User',
+          emailVerified: true,
+          disabled: false
+        })
       }
 
       mockVerifyFirebaseToken.mockResolvedValue(mockAdmin)
@@ -224,7 +259,7 @@ describe('/api/auth/user', () => {
           emailVerified: true,
           disabled: false,
           creationTime: '2024-01-03T00:00:00Z',
-          lastSignInTime: null
+          lastSignInTime: '2024-01-03T00:00:00Z'
         }
       })
       expect(mockCreateUser).toHaveBeenCalledWith({
@@ -248,8 +283,15 @@ describe('/api/auth/user', () => {
         disabled: false,
         metadata: {
           creationTime: '2024-01-03T00:00:00Z',
-          lastSignInTime: null
-        }
+          lastSignInTime: '2024-01-03T00:00:00Z'
+        },
+        providerData: [],
+        toJSON: () => ({
+          uid: 'minimal-user-101',
+          email: 'minimal@example.com',
+          emailVerified: false,
+          disabled: false
+        })
       }
 
       mockVerifyFirebaseToken.mockResolvedValue(mockAdmin)

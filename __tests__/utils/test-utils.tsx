@@ -11,7 +11,7 @@ import { vi } from 'vitest'
 import { useAppStore } from '@/domains/shared/state-management/app-store'
 
 // Mock the app store for testing
-export const createMockStore = (initialState = {}) => {
+export const createMockStore = (initialState: any = {}) => {
   const mockStore = {
     // Auth state
     auth: {
@@ -20,8 +20,8 @@ export const createMockStore = (initialState = {}) => {
       isAuthenticated: false,
       sessionCookie: null,
       ...initialState.auth,
-    },
-    // Content state  
+    } as any,
+    // Content state
     content: {
       content: [],
       selectedContent: null,
@@ -37,7 +37,7 @@ export const createMockStore = (initialState = {}) => {
         total: 0,
       },
       ...initialState.content,
-    },
+    } as any,
     // Setlists state
     setlists: {
       setlists: [],
@@ -45,7 +45,7 @@ export const createMockStore = (initialState = {}) => {
       isCreating: false,
       isEditing: false,
       ...initialState.setlists,
-    },
+    } as any,
     // Performance state
     performance: {
       isActive: false,
@@ -61,7 +61,7 @@ export const createMockStore = (initialState = {}) => {
       },
       cache: new Map(),
       ...initialState.performance,
-    },
+    } as any,
     // UI state
     ui: {
       sidebar: {
@@ -78,44 +78,46 @@ export const createMockStore = (initialState = {}) => {
         operations: {},
       },
       ...initialState.ui,
-    },
-    
+    } as any,
+
     // Mock actions
-    setUser: vi.fn(),
-    setAuthLoading: vi.fn(),
-    setSessionCookie: vi.fn(),
-    logout: vi.fn(),
-    setContent: vi.fn(),
-    addContent: vi.fn(),
-    updateContent: vi.fn(),
-    removeContent: vi.fn(),
-    setSelectedContent: vi.fn(),
-    setContentFilters: vi.fn(),
-    setContentPagination: vi.fn(),
-    setSetlists: vi.fn(),
-    addSetlist: vi.fn(),
-    updateSetlist: vi.fn(),
-    removeSetlist: vi.fn(),
-    setSelectedSetlist: vi.fn(),
-    setSetlistCreating: vi.fn(),
-    setSetlistEditing: vi.fn(),
-    startPerformance: vi.fn(),
-    stopPerformance: vi.fn(),
-    navigateToSong: vi.fn(),
-    updatePerformanceControls: vi.fn(),
-    cachePerformanceData: vi.fn(),
-    getCachedPerformanceData: vi.fn(),
-    toggleSidebar: vi.fn(),
-    setSidebarSection: vi.fn(),
-    addNotification: vi.fn(),
-    removeNotification: vi.fn(),
-    setGlobalLoading: vi.fn(),
-    setOperationLoading: vi.fn(),
-    setGlobalError: vi.fn(),
-    setOperationError: vi.fn(),
-    clearAllErrors: vi.fn(),
-    reset: vi.fn(),
-    ...initialState.actions,
+    actions: {
+      setUser: vi.fn(),
+      setAuthLoading: vi.fn(),
+      setSessionCookie: vi.fn(),
+      logout: vi.fn(),
+      setContent: vi.fn(),
+      addContent: vi.fn(),
+      updateContent: vi.fn(),
+      removeContent: vi.fn(),
+      setSelectedContent: vi.fn(),
+      setContentFilters: vi.fn(),
+      setContentPagination: vi.fn(),
+      setSetlists: vi.fn(),
+      addSetlist: vi.fn(),
+      updateSetlist: vi.fn(),
+      removeSetlist: vi.fn(),
+      setSelectedSetlist: vi.fn(),
+      setSetlistCreating: vi.fn(),
+      setSetlistEditing: vi.fn(),
+      startPerformance: vi.fn(),
+      stopPerformance: vi.fn(),
+      navigateToSong: vi.fn(),
+      updatePerformanceControls: vi.fn(),
+      cachePerformanceData: vi.fn(),
+      getCachedPerformanceData: vi.fn(),
+      toggleSidebar: vi.fn(),
+      setSidebarSection: vi.fn(),
+      addNotification: vi.fn(),
+      removeNotification: vi.fn(),
+      setGlobalLoading: vi.fn(),
+      setOperationLoading: vi.fn(),
+      setGlobalError: vi.fn(),
+      setOperationError: vi.fn(),
+      clearAllErrors: vi.fn(),
+      reset: vi.fn(),
+      ...initialState.actions,
+    } as any,
   }
 
   return mockStore
@@ -190,6 +192,9 @@ export const mockContentItem = {
   is_public: false,
   file_url: null,
   user_id: 'test-user',
+  capo: null,
+  tuning: null,
+  thumbnail_url: null,
   created_at: '2023-01-01T00:00:00.000Z',
   updated_at: '2023-01-01T00:00:00.000Z',
 }

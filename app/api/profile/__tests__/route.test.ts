@@ -90,7 +90,17 @@ describe('/api/profile', () => {
   const mockUser = {
     uid: 'test-user-123',
     email: 'test@example.com',
-    email_verified: true
+    email_verified: true,
+    aud: 'test-project',
+    auth_time: Math.floor(Date.now() / 1000),
+    exp: Math.floor(Date.now() / 1000) + 3600,
+    firebase: {
+      identities: { email: ['test@example.com'] },
+      sign_in_provider: 'google.com'
+    },
+    iss: 'https://securetoken.google.com/test-project',
+    sub: 'test-user-123',
+    iat: Math.floor(Date.now() / 1000)
   }
 
   beforeEach(() => {
@@ -226,8 +236,7 @@ describe('/api/profile', () => {
       mockVerifyFirebaseToken.mockResolvedValue(mockUser)
       mockValidateRequestBody.mockResolvedValue({
         success: true,
-        data: profileInput,
-        errors: []
+        data: profileInput
       })
       mockSingle.mockResolvedValue({ data: mockProfile, error: null })
 
@@ -253,8 +262,8 @@ describe('/api/profile', () => {
       mockVerifyFirebaseToken.mockResolvedValue(mockUser)
       mockValidateRequestBody.mockResolvedValue({
         success: false,
-        data: null,
-        errors: ['Display name is required']
+        errors: ['Display name is required'],
+        details: {} as any
       })
 
       const request = new NextRequest('http://localhost:3000/api/profile', {
@@ -275,8 +284,7 @@ describe('/api/profile', () => {
       mockVerifyFirebaseToken.mockResolvedValue(mockUser)
       mockValidateRequestBody.mockResolvedValue({
         success: true,
-        data: profileInput,
-        errors: []
+        data: profileInput
       })
       mockSingle.mockResolvedValue({ 
         data: null, 

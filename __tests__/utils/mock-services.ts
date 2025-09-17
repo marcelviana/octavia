@@ -188,12 +188,12 @@ export const setupServiceMocks = () => {
     mimeType: 'application/pdf',
   })
   
-  mockOfflineCacheService.cacheFile.mockResolvedValue()
-  mockOfflineCacheService.removeCachedFile.mockResolvedValue()
-  mockOfflineCacheService.clearCache.mockResolvedValue()
-  mockOfflineCacheService.warmCache.mockResolvedValue()
-  mockOfflineCacheService.initializeCache.mockResolvedValue()
-  mockOfflineCacheService.cleanup.mockResolvedValue()
+  mockOfflineCacheService.cacheFile.mockResolvedValue(undefined)
+  mockOfflineCacheService.removeCachedFile.mockResolvedValue(undefined)
+  mockOfflineCacheService.clearCache.mockResolvedValue(undefined)
+  mockOfflineCacheService.warmCache.mockResolvedValue(undefined)
+  mockOfflineCacheService.initializeCache.mockResolvedValue(undefined)
+  mockOfflineCacheService.cleanup.mockResolvedValue(undefined)
   
   mockOfflineCacheService.getCacheStats.mockResolvedValue({
     totalSize: 1024 * 1024, // 1MB

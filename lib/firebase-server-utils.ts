@@ -13,6 +13,21 @@ function isNodeJsRuntime(): boolean {
   }
 }
 
+// Token blacklist for security testing
+const tokenBlacklist = new Set<string>()
+
+export function blacklistToken(token: string): void {
+  tokenBlacklist.add(token)
+}
+
+export function isTokenBlacklisted(token: string): boolean {
+  return tokenBlacklist.has(token)
+}
+
+export function clearTokenBlacklist(): void {
+  tokenBlacklist.clear()
+}
+
 // Cache verification results to avoid repeated validation and allow offline use
 const tokenCache = new Map<string, { result: ServerAuthResult; exp: number }>()
 
