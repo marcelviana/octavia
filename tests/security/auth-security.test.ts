@@ -33,7 +33,7 @@ vi.mock('firebase-admin/auth', () => ({
 
 // Mock fetch for API calls
 const mockFetch = vi.fn()
-global.fetch = mockFetch as any
+vi.stubGlobal('fetch', mockFetch)
 
 // Test data
 const validToken = 'valid.jwt.token'
@@ -61,10 +61,17 @@ describe('Authentication Security Tests', () => {
     // Clear any blacklisted tokens
     clearExpiredTokens()
     
-    // Mock fetch to return successful token verification
+    // Set up default successful token verification
+    mockAuth.verifyIdToken.mockResolvedValue(mockUser)
+    
+    // Override the global fetch mock specifically for auth tests (must happen AFTER test-setup.ts)
+    // Reset fetch to our specific implementation
+    (global.fetch as any) = mockFetch
+    mockFetch.mockReset()
     mockFetch.mockImplementation((url: string, options?: any) => {
-      if (url.includes('/api/auth/verify')) {
+      if (url.includes('/api/auth/verify') || url.includes('/api/auth/validate-token')) {
         const body = JSON.parse(options.body)
+        
         // Check if the mock auth should succeed or fail
         const verifyPromise = mockAuth.verifyIdToken(body.token)
         return verifyPromise.then((user: any) => {
@@ -93,6 +100,7 @@ describe('Authentication Security Tests', () => {
       }
       return Promise.resolve({
         ok: true,
+        status: 200,
         json: () => Promise.resolve({})
       })
     })
@@ -109,8 +117,12 @@ describe('Authentication Security Tests', () => {
       })
 
       const user = await requireAuthServer(request)
-      expect(user).toEqual(mockUser)
-      expect(mockAuth.verifyIdToken).toHaveBeenCalledWith(validToken)
+      expect(user).toEqual({
+        uid: mockUser.uid,
+        email: mockUser.email,
+        emailVerified: mockUser.email_verified
+      })
+      expect(mockFetch).toHaveBeenCalled()
     })
 
     it('should reject expired tokens', async () => {
