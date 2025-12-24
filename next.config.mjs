@@ -3,9 +3,6 @@
 
 const nextConfig = {
   serverExternalPackages: ['firebase-admin'],
-  experimental: {
-    nodeMiddleware: true,
-  },
   eslint: {
     // Run ESLint during builds to catch issues
     ignoreDuringBuilds: false,
