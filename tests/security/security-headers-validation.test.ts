@@ -7,26 +7,9 @@
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { NextRequest, NextResponse } from 'next/server'
-import { middleware } from '@/middleware'
 
-describe('Security Headers Validation Tests', () => {
-  let mockEnvironment: any
-
-  beforeEach(() => {
-    vi.clearAllMocks()
-
-    // Mock environment variables
-    mockEnvironment = {
-      NODE_ENV: 'production',
-      NEXT_PUBLIC_APP_URL: 'https://octavia-music.com'
-    }
-
-    Object.entries(mockEnvironment).forEach(([key, value]) => {
-      process.env[key] = value as string
-    })
-
-    // Mock security headers modules
-    vi.mock('@/lib/security-headers', () => ({
+// Mock security headers modules at module level BEFORE importing middleware
+vi.mock('@/lib/security-headers', () => ({
       applySecurityHeaders: vi.fn().mockImplementation((response: NextResponse, config: any) => {
         // Content Security Policy
         response.headers.set('Content-Security-Policy',
@@ -70,9 +53,28 @@ describe('Security Headers Validation Tests', () => {
       })
     }))
 
-    vi.mock('@/lib/csp-nonce', () => ({
-      generateNonce: vi.fn().mockReturnValue('test-nonce-12345')
-    }))
+vi.mock('@/lib/csp-nonce', () => ({
+  generateNonce: vi.fn().mockReturnValue('test-nonce-12345')
+}))
+
+// Now import middleware after mocks are set up
+import { middleware } from '@/middleware'
+
+describe('Security Headers Validation Tests', () => {
+  let mockEnvironment: any
+
+  beforeEach(() => {
+    vi.clearAllMocks()
+
+    // Mock environment variables
+    mockEnvironment = {
+      NODE_ENV: 'production',
+      NEXT_PUBLIC_APP_URL: 'https://octavia-music.com'
+    }
+
+    Object.entries(mockEnvironment).forEach(([key, value]) => {
+      process.env[key] = value as string
+    })
   })
 
   afterEach(() => {

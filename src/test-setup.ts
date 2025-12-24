@@ -106,6 +106,32 @@ vi.mock('@/domains/shared/state-management/app-store', async () => {
   }
 })
 
+// Mock Firebase Server Utils for API route authentication
+vi.mock('@/lib/firebase-server-utils', async () => {
+  const actual = await vi.importActual('@/lib/firebase-server-utils')
+  return {
+    ...actual,
+    requireAuthServer: vi.fn().mockResolvedValue({
+      uid: 'test-user-123',
+      email: 'test@example.com',
+      emailVerified: true
+    })
+  }
+})
+
+// Mock Secure Auth Utils for API route authentication
+vi.mock('@/lib/secure-auth-utils', async () => {
+  const actual = await vi.importActual('@/lib/secure-auth-utils')
+  return {
+    ...actual,
+    requireAuthServerSecure: vi.fn().mockResolvedValue({
+      uid: 'test-user-123',
+      email: 'test@example.com',
+      emailVerified: true
+    })
+  }
+})
+
 // Mock Supabase client with query builder chain
 const createMockQueryBuilder = (mockData: any[] = []) => {
   const mockBuilder: any = {

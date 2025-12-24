@@ -3,13 +3,14 @@ import {
   validateFirebaseTokenServer,
   requireAuthServer,
   getServerSideUser,
-  getServerSideUserDirect
+  getServerSideUserDirect,
+  clearTokenCache,
+  clearTokenBlacklist
 } from '../firebase-server-utils'
 import type { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies'
 
 // Mock fetch globally
 const mockFetch = vi.fn()
-global.fetch = mockFetch
 
 // Mock logger
 vi.mock('../logger', () => ({
@@ -25,6 +26,13 @@ describe('Firebase Server Utils', () => {
   beforeEach(() => {
     vi.clearAllMocks()
     vi.resetModules()
+    
+    // Clear caches to ensure clean state
+    clearTokenCache()
+    clearTokenBlacklist()
+    
+    // Mock fetch globally using vi.stubGlobal for proper interception
+    vi.stubGlobal('fetch', mockFetch)
     
     // Set up environment variables to ensure API calls are made
     vi.stubEnv('NODE_ENV', 'development')

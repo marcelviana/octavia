@@ -14,14 +14,23 @@ import { ContentToolbar } from '@/components/content-viewer/ContentToolbar'
 
 // Mock the extracted hooks and components
 vi.mock('@/hooks/useContentFile')
-vi.mock('@/components/content-viewer/ContentHeader')
-vi.mock('@/components/content-viewer/ContentToolbar')
+
+// Create mock functions for the components
+const mockContentHeaderImpl = vi.fn()
+const mockContentToolbarImpl = vi.fn()
+
+vi.mock('@/components/content-viewer/ContentHeader', () => ({
+  ContentHeader: (props: any) => mockContentHeaderImpl(props)
+}))
+vi.mock('@/components/content-viewer/ContentToolbar', () => ({
+  ContentToolbar: (props: any) => mockContentToolbarImpl(props)
+}))
 // Note: useAuth is mocked globally in test-setup.ts - don't override it here
 vi.mock('@/lib/firebase-storage')
 
 const mockUseContentFile = vi.mocked(useContentFile)
-const mockContentHeader = vi.mocked(ContentHeader)
-const mockContentToolbar = vi.mocked(ContentToolbar)
+const mockContentHeader = mockContentHeaderImpl
+const mockContentToolbar = mockContentToolbarImpl
 
 // Test data matching original ContentViewer functionality
 const mockContent = {
