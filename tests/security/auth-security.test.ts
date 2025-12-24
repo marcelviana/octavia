@@ -31,6 +31,10 @@ vi.mock('firebase-admin/auth', () => ({
   getAuth: () => mockAuth
 }))
 
+// Mock fetch for API calls
+const mockFetch = vi.fn()
+global.fetch = mockFetch as any
+
 // Test data
 const validToken = 'valid.jwt.token'
 const expiredToken = 'expired.jwt.token'
@@ -56,6 +60,42 @@ describe('Authentication Security Tests', () => {
     vi.clearAllMocks()
     // Clear any blacklisted tokens
     clearExpiredTokens()
+    
+    // Mock fetch to return successful token verification
+    mockFetch.mockImplementation((url: string, options?: any) => {
+      if (url.includes('/api/auth/verify')) {
+        const body = JSON.parse(options.body)
+        // Check if the mock auth should succeed or fail
+        const verifyPromise = mockAuth.verifyIdToken(body.token)
+        return verifyPromise.then((user: any) => {
+          return Promise.resolve({
+            ok: true,
+            status: 200,
+            json: () => Promise.resolve({
+              success: true,
+              user: {
+                uid: user.uid,
+                email: user.email,
+                emailVerified: user.email_verified
+              }
+            })
+          })
+        }).catch(() => {
+          return Promise.resolve({
+            ok: false,
+            status: 401,
+            json: () => Promise.resolve({
+              success: false,
+              error: 'Invalid token'
+            })
+          })
+        })
+      }
+      return Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve({})
+      })
+    })
   })
 
   describe('Token Validation', () => {
