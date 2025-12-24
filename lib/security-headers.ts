@@ -164,6 +164,15 @@ export function applySecurityHeaders(
 
   // X-DNS-Prefetch-Control
   response.headers.set('X-DNS-Prefetch-Control', 'off')
+  
+  // X-XSS-Protection (legacy but still useful)
+  response.headers.set('X-XSS-Protection', '1; mode=block')
+  
+  // X-Download-Options (IE specific)
+  response.headers.set('X-Download-Options', 'noopen')
+  
+  // X-Permitted-Cross-Domain-Policies (Adobe products)
+  response.headers.set('X-Permitted-Cross-Domain-Policies', 'none')
 
   // Cross-Origin-Embedder-Policy (COEP) - Restrictive for security
   response.headers.set('Cross-Origin-Embedder-Policy', 'require-corp')

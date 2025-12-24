@@ -23,15 +23,56 @@ interface RateLimitEntry {
   firstRequestTime: number
 }
 
+interface AttackPattern {
+  type: 'distributed' | 'slowloris' | 'bot'
+  confidence: number
+  ips: string[]
+  timestamp: number
+}
+
+interface ViolationRecord {
+  count: number
+  lastViolation: number
+  backoffUntil: number
+}
+
 // In-memory store for rate limiting (use Redis in production)
 const rateLimitStore = new Map<string, RateLimitEntry>()
+
+// Track request patterns for attack detection
+const requestPatterns = new Map<string, {
+  timestamps: number[]
+  userAgents: Set<string>
+  endpoints: Set<string>
+}>()
+
+// Track violations for exponential backoff
+const violations = new Map<string, ViolationRecord>()
 
 // Cleanup interval to prevent memory leaks
 setInterval(() => {
   const now = Date.now()
+  const maxAge = 3600000 // 1 hour
+  
+  // Clean up rate limit store
   for (const [key, entry] of rateLimitStore.entries()) {
     if (now > entry.resetTime) {
       rateLimitStore.delete(key)
+    }
+  }
+  
+  // Clean up request patterns
+  for (const [key, pattern] of requestPatterns.entries()) {
+    if (pattern.timestamps.length === 0 || 
+        now - pattern.timestamps[pattern.timestamps.length - 1] > maxAge) {
+      requestPatterns.delete(key)
+    }
+  }
+  
+  // Clean up violations
+  for (const [key, record] of violations.entries()) {
+    if (now > record.backoffUntil + maxAge) {
+      violations.delete(key)
     }
   }
 }, 60000) // Cleanup every minute
@@ -126,6 +167,99 @@ function getClientIP(req: NextRequest): string {
 
   // Fallback to request IP (might be proxy)
   return req.ip || '127.0.0.1'
+}
+
+/**
+ * Detect attack patterns
+ */
+export async function detectAttackPatterns(
+  req: NextRequest
+): Promise<AttackPattern | null> {
+  const ip = getClientIP(req)
+  const now = Date.now()
+  const pattern = requestPatterns.get(ip) || {
+    timestamps: [],
+    userAgents: new Set(),
+    endpoints: new Set()
+  }
+  
+  // Update pattern
+  pattern.timestamps.push(now)
+  pattern.userAgents.add(req.headers.get('user-agent') || '')
+  pattern.endpoints.add(req.nextUrl.pathname)
+  
+  // Keep only last 60 seconds
+  pattern.timestamps = pattern.timestamps.filter(t => now - t < 60000)
+  requestPatterns.set(ip, pattern)
+  
+  // Detect slowloris (many connections, slow requests)
+  if (pattern.timestamps.length > 50 && pattern.endpoints.size === 1) {
+    return {
+      type: 'slowloris',
+      confidence: 0.9,
+      ips: [ip],
+      timestamp: now
+    }
+  }
+  
+  // Detect bot (same user agent, rapid requests)
+  if (pattern.timestamps.length > 100 && pattern.userAgents.size === 1) {
+    return {
+      type: 'bot',
+      confidence: 0.85,
+      ips: [ip],
+      timestamp: now
+    }
+  }
+  
+  // Detect distributed attack (check for coordinated IPs)
+  const recentIPs = Array.from(requestPatterns.entries())
+    .filter(([_, p]) => p.timestamps.some(t => now - t < 10000))
+    .map(([ip]) => ip)
+  
+  if (recentIPs.length > 20) {
+    return {
+      type: 'distributed',
+      confidence: 0.8,
+      ips: recentIPs,
+      timestamp: now
+    }
+  }
+  
+  return null
+}
+
+/**
+ * Apply exponential backoff for repeat offenders
+ */
+export function applyExponentialBackoff(ip: string): number {
+  const record = violations.get(ip) || {
+    count: 0,
+    lastViolation: 0,
+    backoffUntil: 0
+  }
+  
+  const now = Date.now()
+  
+  // Check if still in backoff period
+  if (now < record.backoffUntil) {
+    return record.backoffUntil - now
+  }
+  
+  // Increment violation count
+  record.count++
+  record.lastViolation = now
+  
+  // Calculate exponential backoff: 2^count seconds
+  const backoffMs = Math.min(
+    Math.pow(2, record.count) * 1000,
+    3600000 // Max 1 hour
+  )
+  record.backoffUntil = now + backoffMs
+  
+  violations.set(ip, record)
+  
+  return backoffMs
 }
 
 /**
