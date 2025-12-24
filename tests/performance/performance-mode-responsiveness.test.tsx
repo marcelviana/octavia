@@ -155,9 +155,11 @@ const MockHeavyContentDisplay = ({
 describe('Performance Mode Responsiveness Tests', () => {
   let profiler: PerformanceProfiler
   let mockSetlist: any
+  let isMounted: boolean
 
   beforeEach(() => {
     profiler = new PerformanceProfiler()
+    isMounted = true
 
     // Create mock setlist with realistic content
     mockSetlist = {
@@ -185,6 +187,7 @@ describe('Performance Mode Responsiveness Tests', () => {
   })
 
   afterEach(() => {
+    isMounted = false
     cleanup()
     profiler.clear()
   })
@@ -222,12 +225,14 @@ describe('Performance Mode Responsiveness Tests', () => {
           await new Promise(resolve => setTimeout(resolve, 1))
         })
 
-        rerender(React.createElement(MockPerformanceMode, {
-          setlist: mockSetlist,
-          currentSongIndex: currentIndex,
-          onNavigate,
-          onMeasure
-        }))
+        await act(async () => {
+          rerender(React.createElement(MockPerformanceMode, {
+            setlist: mockSetlist,
+            currentSongIndex: currentIndex,
+            onNavigate,
+            onMeasure
+          }))
+        })
 
         const navEnd = performance.now()
         measurements.push(navEnd - navStart)
@@ -277,12 +282,14 @@ describe('Performance Mode Responsiveness Tests', () => {
           await new Promise(resolve => setTimeout(resolve, 1))
         })
 
-        rerender(React.createElement(MockPerformanceMode, {
-          setlist: mockSetlist,
-          currentSongIndex: currentIndex,
-          onNavigate,
-          onMeasure
-        }))
+        await act(async () => {
+          rerender(React.createElement(MockPerformanceMode, {
+            setlist: mockSetlist,
+            currentSongIndex: currentIndex,
+            onNavigate,
+            onMeasure
+          }))
+        })
 
         const clickEnd = performance.now()
         measurements.push(clickEnd - clickStart)
@@ -354,7 +361,7 @@ describe('Performance Mode Responsiveness Tests', () => {
       console.log(`Heavy Content Rendering: Max=${maxRenderTime.toFixed(2)}ms, Avg=${avgRenderTime.toFixed(2)}ms`)
     })
 
-    it('should handle content switching with consistent performance', () => {
+    it('should handle content switching with consistent performance', async () => {
       const renderTimes: number[] = []
       let currentContent = mockSetlist.songs[0].content
 
@@ -377,10 +384,12 @@ describe('Performance Mode Responsiveness Tests', () => {
 
         const switchStart = performance.now()
 
-        rerender(React.createElement(MockHeavyContentDisplay, {
-          content: currentContent,
-          onMeasure
-        }))
+        await act(async () => {
+          rerender(React.createElement(MockHeavyContentDisplay, {
+            content: currentContent,
+            onMeasure
+          }))
+        })
 
         const switchEnd = performance.now()
         renderTimes.push(switchEnd - switchStart)
@@ -397,7 +406,7 @@ describe('Performance Mode Responsiveness Tests', () => {
   })
 
   describe('Performance Under Load Tests', () => {
-    it('should maintain responsiveness with large setlist', () => {
+    it('should maintain responsiveness with large setlist', async () => {
       // Create very large setlist (100 songs)
       const largeSetlist = {
         ...mockSetlist,
@@ -438,7 +447,7 @@ describe('Performance Mode Responsiveness Tests', () => {
       // Navigate through large setlist
       const testPositions = [0, 25, 50, 75, 99, 50, 25, 0] // Jump around the setlist
 
-      testPositions.forEach(async (position) => {
+      for (const position of testPositions) {
         const navStart = performance.now()
 
         await act(async () => {
@@ -446,16 +455,18 @@ describe('Performance Mode Responsiveness Tests', () => {
           await new Promise(resolve => setTimeout(resolve, 1))
         })
 
-        rerender(React.createElement(MockPerformanceMode, {
-          setlist: largeSetlist,
-          currentSongIndex: position,
-          onNavigate,
-          onMeasure
-        }))
+        await act(async () => {
+          rerender(React.createElement(MockPerformanceMode, {
+            setlist: largeSetlist,
+            currentSongIndex: position,
+            onNavigate,
+            onMeasure
+          }))
+        })
 
         const navEnd = performance.now()
         navigationTimes.push(navEnd - navStart)
-      })
+      }
 
       const maxTime = Math.max(...navigationTimes)
       const avgTime = navigationTimes.reduce((a, b) => a + b, 0) / navigationTimes.length
@@ -570,6 +581,8 @@ describe('Performance Mode Responsiveness Tests', () => {
       ]
 
       for (const songIndex of navigationPattern) {
+        if (!isMounted) break // Stop if component unmounted
+        
         const navStart = performance.now()
 
         await act(async () => {
@@ -577,12 +590,16 @@ describe('Performance Mode Responsiveness Tests', () => {
           await new Promise(resolve => setTimeout(resolve, Math.random() * 10 + 5)) // 5-15ms delay
         })
 
-        rerender(React.createElement(MockPerformanceMode, {
-          setlist: mockSetlist,
-          currentSongIndex: currentIndex,
-          onNavigate,
-          onMeasure
-        }))
+        if (!isMounted) break // Check again before rerender
+
+        await act(async () => {
+          rerender(React.createElement(MockPerformanceMode, {
+            setlist: mockSetlist,
+            currentSongIndex: currentIndex,
+            onNavigate,
+            onMeasure
+          }))
+        })
 
         const navEnd = performance.now()
         sessionMetrics.navigationTimes.push(navEnd - navStart)

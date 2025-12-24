@@ -10,10 +10,8 @@ import { renderHook, act } from '@testing-library/react'
 import { useAddContentState } from '@/hooks/useAddContentState'
 import { ContentType } from '@/types/content'
 
-// Mock dependencies
-vi.mock('@/contexts/firebase-auth-context', () => ({
-  useAuth: () => ({ user: { uid: 'test-user' } })
-}))
+// Note: Auth context is mocked globally in test-setup.ts
+// No need for local mocking here
 
 describe('useAddContentState Hook', () => {
   beforeEach(() => {

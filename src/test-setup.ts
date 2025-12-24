@@ -1,7 +1,8 @@
 import '@testing-library/jest-dom'
-import { expect, afterEach, vi, beforeAll } from 'vitest'
+import { expect, afterEach, vi, beforeAll, beforeEach } from 'vitest'
 import { cleanup, act } from '@testing-library/react'
 import { setupCustomMatchers } from '@/lib/__tests__/custom-matchers'
+import type React from 'react'
 
 // Polyfill Promise.withResolvers for older Node.js versions
 if (!Promise.withResolvers) {
@@ -16,6 +17,88 @@ if (!Promise.withResolvers) {
   };
 }
 
+// Global mock user for consistent testing
+export const mockUser = {
+  uid: 'test-user-123',
+  email: 'test@example.com',
+  displayName: 'Test User',
+  emailVerified: true,
+  photoURL: null,
+  phoneNumber: null,
+  isAnonymous: false,
+  metadata: {
+    creationTime: new Date().toISOString(),
+    lastSignInTime: new Date().toISOString(),
+  },
+  providerData: [],
+  refreshToken: 'mock-refresh-token',
+  tenantId: null,
+  delete: vi.fn(),
+  getIdToken: vi.fn().mockResolvedValue('mock-id-token'),
+  getIdTokenResult: vi.fn(),
+  reload: vi.fn(),
+  toJSON: vi.fn(),
+  providerId: 'firebase'
+}
+
+// Global mock profile
+export const mockProfile = {
+  id: 'test-user-123',
+  email: 'test@example.com',
+  full_name: 'Test User',
+  first_name: 'Test',
+  last_name: 'User',
+  avatar_url: null,
+  primary_instrument: 'Guitar',
+  bio: 'Test bio',
+  website: 'https://test.com'
+}
+
+// Global mock auth context value
+export const mockAuthContextValue = {
+  user: mockUser,
+  profile: mockProfile,
+  idToken: 'mock-id-token',
+  isLoading: false,
+  loading: false,
+  isConfigured: true,
+  isInitialized: true,
+  signIn: vi.fn().mockResolvedValue({ error: null }),
+  signUp: vi.fn().mockResolvedValue({ error: null, data: mockUser }),
+  signInWithGoogle: vi.fn().mockResolvedValue({ error: null }),
+  signOut: vi.fn().mockResolvedValue(undefined),
+  updateProfile: vi.fn().mockResolvedValue({ error: null }),
+  refreshToken: vi.fn().mockResolvedValue('mock-id-token'),
+  resendVerificationEmail: vi.fn().mockResolvedValue({ error: null })
+}
+
+// Mock Firebase Auth Context globally
+vi.mock('@/contexts/firebase-auth-context', () => ({
+  useFirebaseAuth: () => mockAuthContextValue,
+  useAuth: () => mockAuthContextValue,
+  FirebaseAuthProvider: ({ children }: { children: React.ReactNode }) => children
+}))
+
+// Mock app store auth hooks
+vi.mock('@/domains/shared/state-management/app-store', async () => {
+  const actual = await vi.importActual('@/domains/shared/state-management/app-store')
+  return {
+    ...actual,
+    useAuth: () => ({
+      user: mockUser,
+      isAuthenticated: true,
+      isLoading: false,
+      sessionCookie: 'mock-session-cookie'
+    }),
+    useAuthActions: () => ({
+      setUser: vi.fn(),
+      setAuthLoading: vi.fn(),
+      setSessionCookie: vi.fn(),
+      logout: vi.fn()
+    })
+  }
+})
+
 // Suppress React DevTools warnings in tests
 if (typeof window !== 'undefined') {
   (window as any).__REACT_DEVTOOLS_GLOBAL_HOOK__ = {
@@ -26,6 +109,34 @@ if (typeof window !== 'undefined') {
     onCommitFiberUnmount: () => {},
   };
 }
+
+// Mock Fetch API with blob support for testing
+const originalFetch = global.fetch
+beforeEach(() => {
+  global.fetch = vi.fn((url, options) => {
+    return Promise.resolve({
+      ok: true,
+      status: 200,
+      statusText: 'OK',
+      headers: new Headers(),
+      redirected: false,
+      type: 'basic',
+      url: typeof url === 'string' ? url : url.toString(),
+      clone: vi.fn(),
+      body: null,
+      bodyUsed: false,
+      arrayBuffer: vi.fn().mockResolvedValue(new ArrayBuffer(0)),
+      blob: vi.fn().mockResolvedValue(new Blob(['mock content'], { type: 'application/octet-stream' })),
+      formData: vi.fn().mockResolvedValue(new FormData()),
+      json: vi.fn().mockResolvedValue({}),
+      text: vi.fn().mockResolvedValue('mock text'),
+    } as Response)
+  }) as any
+})
+
+afterEach(() => {
+  global.fetch = originalFetch
+})
 
 // Helper function to wrap component rendering in act()
 export const renderWithAct = async (renderFn: () => void) => {

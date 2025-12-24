@@ -30,8 +30,8 @@ describe('React Native Compatibility Tests', () => {
   beforeEach(() => {
     vi.clearAllMocks()
 
-    // Mock minimal APIs
-    global.fetch = vi.fn()
+    // Note: fetch is mocked globally in test-setup.ts with blob support
+    // Mock Audio API
     global.Audio = vi.fn().mockImplementation(() => ({
       play: vi.fn(),
       pause: vi.fn(),

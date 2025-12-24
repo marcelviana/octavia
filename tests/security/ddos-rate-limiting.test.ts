@@ -8,9 +8,28 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { NextRequest, NextResponse } from 'next/server'
 
+// Store for tracking rate limits across tests
+let rateLimitStore: Map<string, { count: number; resetTime: number; blocked: boolean }>
+let ipRequestCounts: Map<string, number[]>
+
+// Mock checkRateLimit function
+const mockCheckRateLimit = vi.fn()
+
+// Mock enforceRateLimit function
+const mockEnforceRateLimit = vi.fn()
+
+// Mock the rate-limiter module at the top level
+vi.mock('@/lib/rate-limiter', () => ({
+  checkRateLimit: mockCheckRateLimit,
+  enforceRateLimit: mockEnforceRateLimit,
+  RATE_LIMIT_CONFIGS: {
+    AUTH: { windowMs: 60000, maxRequests: 5 },
+    API: { windowMs: 60000, maxRequests: 100 },
+    PERFORMANCE: { windowMs: 60000, maxRequests: 500 }
+  }
+}))
+
 describe('DDoS Protection and Rate Limiting Tests', () => {
-  let rateLimitStore: Map<string, { count: number; resetTime: number; blocked: boolean }>
-  let ipRequestCounts: Map<string, number[]>
   let mockLogger: any
 
   beforeEach(() => {
@@ -25,85 +44,80 @@ describe('DDoS Protection and Rate Limiting Tests', () => {
       security: vi.fn()
     }
 
-    // Mock rate limiter implementation
-    vi.mock('@/lib/rate-limiter', () => ({
-      checkRateLimit: vi.fn().mockImplementation(async (identifier: string, limit: number, windowMs: number) => {
-        const now = Date.now()
-        const key = `${identifier}:${Math.floor(now / windowMs)}`
+    // Implement mock checkRateLimit behavior
+    mockCheckRateLimit.mockImplementation(async (identifier: string, limit: number, windowMs: number) => {
+      const now = Date.now()
+      const key = `${identifier}:${Math.floor(now / windowMs)}`
 
-        const current = rateLimitStore.get(key) || { count: 0, resetTime: now + windowMs, blocked: false }
+      const current = rateLimitStore.get(key) || { count: 0, resetTime: now + windowMs, blocked: false }
 
-        if (current.count >= limit) {
-          current.blocked = true
-          mockLogger.warn(`Rate limit exceeded for ${identifier}`)
-          return {
-            success: false,
-            remaining: 0,
-            resetTime: current.resetTime,
-            blocked: true
-          }
-        }
-
-        current.count++
-        rateLimitStore.set(key, current)
-
+      if (current.count >= limit) {
+        current.blocked = true
+        mockLogger.warn(`Rate limit exceeded for ${identifier}`)
         return {
-          success: true,
-          remaining: Math.max(0, limit - current.count),
+          success: false,
+          remaining: 0,
           resetTime: current.resetTime,
-          blocked: false
+          blocked: true
         }
-      }),
+      }
 
-      enforceRateLimit: vi.fn().mockImplementation(async (request: NextRequest) => {
-        const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown'
-        const userAgent = request.headers.get('user-agent') || 'unknown'
+      current.count++
+      rateLimitStore.set(key, current)
 
-        // Different limits for different endpoints
-        const { pathname } = new URL(request.url)
-        let limit = 100
-        let windowMs = 60000 // 1 minute
+      return {
+        success: true,
+        remaining: Math.max(0, limit - current.count),
+        resetTime: current.resetTime,
+        blocked: false
+      }
+    })
 
-        if (pathname.includes('/auth/')) {
-          limit = 5 // Strict limit for auth endpoints
-          windowMs = 60000 // 1 minute
-        } else if (pathname.includes('/api/')) {
-          limit = 60 // API endpoints
-          windowMs = 60000 // 1 minute
-        }
+    // Implement mock enforceRateLimit behavior
+    mockEnforceRateLimit.mockImplementation(async (request: NextRequest) => {
+      const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown'
 
-        const rateLimitResult = await vi.mocked(require('@/lib/rate-limiter').checkRateLimit)(ip, limit, windowMs)
+      // Different limits for different endpoints
+      const { pathname } = new URL(request.url)
+      let limit = 100
+      let windowMs = 60000 // 1 minute
 
-        if (!rateLimitResult.success) {
-          return NextResponse.json(
-            { error: 'Rate limit exceeded' },
-            {
-              status: 429,
-              headers: {
-                'Retry-After': String(Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000)),
-                'X-RateLimit-Limit': String(limit),
-                'X-RateLimit-Remaining': String(rateLimitResult.remaining),
-                'X-RateLimit-Reset': String(rateLimitResult.resetTime)
-              }
+      if (pathname.includes('/auth/')) {
+        limit = 5 // Strict limit for auth endpoints
+        windowMs = 60000 // 1 minute
+      } else if (pathname.includes('/api/')) {
+        limit = 60 // API endpoints
+        windowMs = 60000 // 1 minute
+      }
+
+      const rateLimitResult = await mockCheckRateLimit(ip, limit, windowMs)
+
+      if (!rateLimitResult.success) {
+        return NextResponse.json(
+          { error: 'Rate limit exceeded' },
+          {
+            status: 429,
+            headers: {
+              'Retry-After': String(Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000)),
+              'X-RateLimit-Limit': String(limit),
+              'X-RateLimit-Remaining': String(rateLimitResult.remaining),
+              'X-RateLimit-Reset': String(rateLimitResult.resetTime)
             }
-          )
-        }
+          }
+        )
+      }
 
-        return null
-      })
-    }))
+      return null
+    })
   })
 
   afterEach(() => {
-    vi.restoreAllMocks()
     rateLimitStore.clear()
     ipRequestCounts.clear()
   })
 
   describe('Rate Limiting Functionality', () => {
     it('should enforce rate limits on authentication endpoints', async () => {
-      const { enforceRateLimit } = await import('@/lib/rate-limiter')
-
       const requests = []
       const attackerIP = '192.168.1.100'
 
@@ -122,7 +136,7 @@ describe('DDoS Protection and Rate Limiting Tests', () => {
           })
         })
 
-        requests.push(enforceRateLimit(request))
+        requests.push(mockEnforceRateLimit(request))
       }
 
       const responses = await Promise.all(requests)
@@ -141,14 +155,13 @@ describe('DDoS Protection and Rate Limiting Tests', () => {
     })
 
     it('should apply different rate limits to different endpoints', async () => {
-      const { enforceRateLimit } = await import('@/lib/rate-limiter')
       const attackerIP = '192.168.1.101'
 
       // Test auth endpoint (5 requests/minute limit)
       const authRequests = []
       for (let i = 0; i < 8; i++) {
         authRequests.push(
-          enforceRateLimit(new NextRequest('http://localhost:3000/api/auth/session', {
+          mockEnforceRateLimit(new NextRequest('http://localhost:3000/api/auth/session', {
             method: 'POST',
             headers: { 'x-forwarded-for': attackerIP }
           }))
@@ -166,7 +179,7 @@ describe('DDoS Protection and Rate Limiting Tests', () => {
       const apiRequests = []
       for (let i = 0; i < 70; i++) {
         apiRequests.push(
-          enforceRateLimit(new NextRequest('http://localhost:3000/api/content', {
+          mockEnforceRateLimit(new NextRequest('http://localhost:3000/api/content', {
             method: 'GET',
             headers: { 'x-forwarded-for': attackerIP }
           }))
@@ -179,7 +192,7 @@ describe('DDoS Protection and Rate Limiting Tests', () => {
     })
 
     it('should include proper rate limit headers', async () => {
-      const { enforceRateLimit } = await import('@/lib/rate-limiter')
+      // Use mocked enforceRateLimit
       const clientIP = '192.168.1.102'
 
       const request = new NextRequest('http://localhost:3000/api/auth/session', {
@@ -191,7 +204,7 @@ describe('DDoS Protection and Rate Limiting Tests', () => {
       let response = null
       let attempts = 0
       while (response === null && attempts < 10) {
-        response = await enforceRateLimit(request)
+        response = await mockEnforceRateLimit(request)
         attempts++
       }
 
@@ -208,7 +221,7 @@ describe('DDoS Protection and Rate Limiting Tests', () => {
 
   describe('DDoS Protection Mechanisms', () => {
     it('should detect and block distributed attacks', async () => {
-      const { enforceRateLimit } = await import('@/lib/rate-limiter')
+      // Use mocked enforceRateLimit
 
       // Simulate distributed attack from multiple IPs
       const attackerIPs = Array.from({ length: 20 }, (_, i) => `192.168.1.${i + 1}`)
@@ -218,7 +231,7 @@ describe('DDoS Protection and Rate Limiting Tests', () => {
       for (const ip of attackerIPs) {
         for (let i = 0; i < 10; i++) {
           allRequests.push(
-            enforceRateLimit(new NextRequest('http://localhost:3000/api/auth/session', {
+            mockEnforceRateLimit(new NextRequest('http://localhost:3000/api/auth/session', {
               method: 'POST',
               headers: {
                 'x-forwarded-for': ip,
@@ -237,7 +250,7 @@ describe('DDoS Protection and Rate Limiting Tests', () => {
     })
 
     it('should handle burst traffic patterns', async () => {
-      const { checkRateLimit } = await import('@/lib/rate-limiter')
+      // Use mocked checkRateLimit
 
       const clientIP = '192.168.1.200'
       const results = []
@@ -245,7 +258,7 @@ describe('DDoS Protection and Rate Limiting Tests', () => {
       // Simulate burst of 50 requests in quick succession
       const burstPromises = []
       for (let i = 0; i < 50; i++) {
-        burstPromises.push(checkRateLimit(clientIP, 10, 60000)) // 10 requests per minute
+        burstPromises.push(mockCheckRateLimit(clientIP, 10, 60000)) // 10 requests per minute
       }
 
       const burstResults = await Promise.all(burstPromises)
@@ -261,7 +274,7 @@ describe('DDoS Protection and Rate Limiting Tests', () => {
     })
 
     it('should implement exponential backoff for repeated violations', async () => {
-      const { enforceRateLimit } = await import('@/lib/rate-limiter')
+      // Use mocked enforceRateLimit
 
       // Mock enhanced rate limiter with exponential backoff
       const violationCounts = new Map<string, number>()
@@ -271,7 +284,7 @@ describe('DDoS Protection and Rate Limiting Tests', () => {
         const violations = violationCounts.get(ip) || 0
 
         // Base rate limit
-        const baseResult = await enforceRateLimit(request)
+        const baseResult = await mockEnforceRateLimit(request)
 
         if (baseResult?.status === 429) {
           violationCounts.set(ip, violations + 1)
@@ -335,7 +348,7 @@ describe('DDoS Protection and Rate Limiting Tests', () => {
 
   describe('Advanced Attack Pattern Detection', () => {
     it('should detect slowloris attacks', async () => {
-      const { enforceRateLimit } = await import('@/lib/rate-limiter')
+      // Use mocked enforceRateLimit
 
       // Simulate slowloris - many connections from same IP with slow requests
       const slowlorisIP = '192.168.1.300'
@@ -347,7 +360,7 @@ describe('DDoS Protection and Rate Limiting Tests', () => {
           // Simulate slow request processing
           await new Promise(r => setTimeout(r, Math.random() * 1000))
 
-          const result = await enforceRateLimit(new NextRequest('http://localhost:3000/api/content', {
+          const result = await mockEnforceRateLimit(new NextRequest('http://localhost:3000/api/content', {
             method: 'GET',
             headers: {
               'x-forwarded-for': slowlorisIP,
@@ -367,7 +380,7 @@ describe('DDoS Protection and Rate Limiting Tests', () => {
     })
 
     it('should detect bot traffic patterns', async () => {
-      const { enforceRateLimit } = await import('@/lib/rate-limiter')
+      // Use mocked enforceRateLimit
 
       const suspiciousPatterns = [
         { userAgent: 'python-requests/2.25.1', expectedBlocked: true },
@@ -384,7 +397,7 @@ describe('DDoS Protection and Rate Limiting Tests', () => {
         // Make multiple requests with suspicious user agent
         for (let i = 0; i < 20; i++) {
           requests.push(
-            enforceRateLimit(new NextRequest('http://localhost:3000/api/content', {
+            mockEnforceRateLimit(new NextRequest('http://localhost:3000/api/content', {
               method: 'GET',
               headers: {
                 'x-forwarded-for': botIP,
@@ -406,7 +419,7 @@ describe('DDoS Protection and Rate Limiting Tests', () => {
     })
 
     it('should implement geographic rate limiting', async () => {
-      const { enforceRateLimit } = await import('@/lib/rate-limiter')
+      // Use mocked enforceRateLimit
 
       // Mock geographic IP detection
       const geoLimiter = vi.fn().mockImplementation(async (request: NextRequest) => {
@@ -425,7 +438,7 @@ describe('DDoS Protection and Rate Limiting Tests', () => {
 
         if (restrictedCountryCodes.includes(countryCode)) {
           // Apply stricter rate limits for restricted regions
-          const strictResult = await enforceRateLimit(request)
+          const strictResult = await mockEnforceRateLimit(request)
           if (strictResult === null) {
             // Even if under normal rate limit, apply geographic restriction
             return NextResponse.json(
@@ -442,7 +455,7 @@ describe('DDoS Protection and Rate Limiting Tests', () => {
           return strictResult
         }
 
-        return enforceRateLimit(request)
+        return mockEnforceRateLimit(request)
       })
 
       // Test requests from different geographic regions
@@ -472,7 +485,7 @@ describe('DDoS Protection and Rate Limiting Tests', () => {
 
   describe('Performance Under Load', () => {
     it('should maintain performance during DDoS attack', async () => {
-      const { checkRateLimit } = await import('@/lib/rate-limiter')
+      // Use mocked checkRateLimit
 
       const startTime = Date.now()
 
@@ -486,7 +499,7 @@ describe('DDoS Protection and Rate Limiting Tests', () => {
 
         for (let request = 0; request < requestsPerAttacker; request++) {
           attackPromises.push(
-            checkRateLimit(attackerIP, 5, 60000)
+            mockCheckRateLimit(attackerIP, 5, 60000)
           )
         }
       }
@@ -511,7 +524,7 @@ describe('DDoS Protection and Rate Limiting Tests', () => {
     })
 
     it('should implement efficient memory usage for rate limiting', async () => {
-      const { checkRateLimit } = await import('@/lib/rate-limiter')
+      // Use mocked checkRateLimit
 
       const initialMemory = process.memoryUsage().heapUsed
 
@@ -520,7 +533,7 @@ describe('DDoS Protection and Rate Limiting Tests', () => {
 
       // Make requests for each identifier
       const promises = uniqueIdentifiers.map(id =>
-        checkRateLimit(id, 10, 60000)
+        mockCheckRateLimit(id, 10, 60000)
       )
 
       await Promise.all(promises)
@@ -534,21 +547,21 @@ describe('DDoS Protection and Rate Limiting Tests', () => {
       expect(memoryIncrease).toBeLessThan(50 * 1024 * 1024)
 
       // Verify rate limiting still works efficiently
-      const testResult = await checkRateLimit('user-1', 10, 60000)
+      const testResult = await mockCheckRateLimit('user-1', 10, 60000)
       expect(testResult.success).toBe(false) // Should be at limit
     })
   })
 
   describe('Recovery and Cleanup', () => {
     it('should reset rate limits after time window expires', async () => {
-      const { checkRateLimit } = await import('@/lib/rate-limiter')
+      // Use mocked checkRateLimit
 
       const userIP = '192.168.1.400'
 
       // Exhaust rate limit
       const initialRequests = []
       for (let i = 0; i < 10; i++) {
-        initialRequests.push(checkRateLimit(userIP, 5, 1000)) // 1 second window for testing
+        initialRequests.push(mockCheckRateLimit(userIP, 5, 1000)) // 1 second window for testing
       }
 
       const initialResults = await Promise.all(initialRequests)
@@ -560,19 +573,19 @@ describe('DDoS Protection and Rate Limiting Tests', () => {
       await new Promise(resolve => setTimeout(resolve, 1100))
 
       // Should be able to make requests again
-      const recoveryResult = await checkRateLimit(userIP, 5, 1000)
+      const recoveryResult = await mockCheckRateLimit(userIP, 5, 1000)
       expect(recoveryResult.success).toBe(true)
     })
 
     it('should implement automatic cleanup of expired entries', async () => {
-      const { checkRateLimit } = await import('@/lib/rate-limiter')
+      // Use mocked checkRateLimit
 
       // Create many entries that will expire
       const expiredUsers = Array.from({ length: 1000 }, (_, i) => `expired-user-${i}`)
 
       // Make requests to create entries
       const createPromises = expiredUsers.map(user =>
-        checkRateLimit(user, 10, 1000) // 1 second window
+        mockCheckRateLimit(user, 10, 1000) // 1 second window
       )
 
       await Promise.all(createPromises)
@@ -584,7 +597,7 @@ describe('DDoS Protection and Rate Limiting Tests', () => {
       await new Promise(resolve => setTimeout(resolve, 1100))
 
       // Trigger cleanup by making new request
-      await checkRateLimit('cleanup-trigger', 10, 60000)
+      await mockCheckRateLimit('cleanup-trigger', 10, 60000)
 
       // Simulate cleanup process (in production this would be automatic)
       const now = Date.now()
