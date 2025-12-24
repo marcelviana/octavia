@@ -1,10 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { NextRequest } from 'next/server'
-
-// Mock Firebase server utils
-vi.mock('@/lib/firebase-server-utils', () => ({
-  requireAuthServer: vi.fn()
-}))
+import { mockRequireAuthServerSecure } from '@/src/test-setup'
 
 // Mock logger
 vi.mock('@/lib/logger', () => ({
@@ -23,13 +19,11 @@ vi.mock('@/lib/supabase-service', () => ({
 
 // Import the actual route handlers and utilities after mocks
 import { GET, PUT, DELETE } from '../route'
-import { requireAuthServer } from '@/lib/firebase-server-utils'
 import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
 import { createAPIMockData, createErrorScenarios } from '@/lib/test-utils/api-test-helpers'
 
 // Get mocked functions for type safety
-const mockRequireAuthServer = vi.mocked(requireAuthServer)
 const mockGetSupabaseServiceClient = vi.mocked(getSupabaseServiceClient)
 const mockLogger = vi.mocked(logger)
 
@@ -65,7 +59,7 @@ describe('/api/setlists/[id]', () => {
 
   describe('GET /api/setlists/[id]', () => {
     it('returns 401 when user is not authenticated', async () => {
-      mockRequireAuthServer.mockResolvedValue(null)
+      mockRequireAuthServerSecure.mockResolvedValue(null)
 
       const request = new NextRequest(`http://localhost:3000/api/setlists/${setlistId}`)
       const response = await GET(request, { params: { id: setlistId } })
@@ -74,7 +68,7 @@ describe('/api/setlists/[id]', () => {
     })
 
     it('returns 404 when setlist is not found', async () => {
-      mockRequireAuthServer.mockResolvedValue(mockUser)
+      mockRequireAuthServerSecure.mockResolvedValue(mockUser)
       
       // Setup PGRST116 error for not found
       const errorScenarios = createErrorScenarios(factory)
@@ -87,7 +81,7 @@ describe('/api/setlists/[id]', () => {
     })
 
     it('returns 404 when setlist belongs to different user', async () => {
-      mockRequireAuthServer.mockResolvedValue({ uid: 'different-user' })
+      mockRequireAuthServerSecure.mockResolvedValue({ uid: 'different-user' })
       
       // Setup empty setlists for different user (simulates not found due to user_id filter)
       factory.setMockData('setlists', [])
@@ -99,7 +93,7 @@ describe('/api/setlists/[id]', () => {
     })
 
     it('returns setlist with songs for authenticated user', async () => {
-      mockRequireAuthServer.mockResolvedValue(mockUser)
+      mockRequireAuthServerSecure.mockResolvedValue(mockUser)
 
       const request = new NextRequest(`http://localhost:3000/api/setlists/${setlistId}`)
       const response = await GET(request, { params: { id: setlistId } })
@@ -114,7 +108,7 @@ describe('/api/setlists/[id]', () => {
     })
 
     it('returns setlist without songs when no songs exist', async () => {
-      mockRequireAuthServer.mockResolvedValue(mockUser)
+      mockRequireAuthServerSecure.mockResolvedValue(mockUser)
       
       // Setup scenario with no songs
       factory.setMockData('setlist_songs', [])
@@ -129,7 +123,7 @@ describe('/api/setlists/[id]', () => {
     })
 
     it('handles missing content gracefully', async () => {
-      mockRequireAuthServer.mockResolvedValue(mockUser)
+      mockRequireAuthServerSecure.mockResolvedValue(mockUser)
       
       // Setup scenario where content is missing
       factory.setMockData('content', [])
@@ -145,7 +139,7 @@ describe('/api/setlists/[id]', () => {
     })
 
     it('handles database errors gracefully', async () => {
-      mockRequireAuthServer.mockResolvedValue(mockUser)
+      mockRequireAuthServerSecure.mockResolvedValue(mockUser)
       
       // Setup database error scenario
       const errorScenarios = createErrorScenarios(factory)
@@ -158,7 +152,7 @@ describe('/api/setlists/[id]', () => {
     })
 
     it('handles setlist songs query errors gracefully', async () => {
-      mockRequireAuthServer.mockResolvedValue(mockUser)
+      mockRequireAuthServerSecure.mockResolvedValue(mockUser)
       
       // Setup scenario where setlist_songs query fails
       factory.setMockError('setlist_songs', {
@@ -178,7 +172,7 @@ describe('/api/setlists/[id]', () => {
 
   describe('PUT /api/setlists/[id]', () => {
     it('returns 401 when user is not authenticated', async () => {
-      mockRequireAuthServer.mockResolvedValue(null)
+      mockRequireAuthServerSecure.mockResolvedValue(null)
 
       const request = new NextRequest(`http://localhost:3000/api/setlists/${setlistId}`, {
         method: 'PUT',
@@ -190,7 +184,7 @@ describe('/api/setlists/[id]', () => {
     })
 
     it('returns 404 when setlist is not found', async () => {
-      mockRequireAuthServer.mockResolvedValue(mockUser)
+      mockRequireAuthServerSecure.mockResolvedValue(mockUser)
       
       // Setup scenario where setlist is not found
       const errorScenarios = createErrorScenarios(factory)
@@ -207,7 +201,7 @@ describe('/api/setlists/[id]', () => {
     })
 
     it('updates setlist successfully with valid data', async () => {
-      mockRequireAuthServer.mockResolvedValue(mockUser)
+      mockRequireAuthServerSecure.mockResolvedValue(mockUser)
 
       // Setup mock to return updated setlist
       const updatedSetlist = {
@@ -234,7 +228,7 @@ describe('/api/setlists/[id]', () => {
     })
 
     it('handles partial updates correctly', async () => {
-      mockRequireAuthServer.mockResolvedValue(mockUser)
+      mockRequireAuthServerSecure.mockResolvedValue(mockUser)
 
       // Setup mock to return partially updated setlist
       const partiallyUpdatedSetlist = {
@@ -257,7 +251,7 @@ describe('/api/setlists/[id]', () => {
     })
 
     it('handles invalid JSON request body', async () => {
-      mockRequireAuthServer.mockResolvedValue(mockUser)
+      mockRequireAuthServerSecure.mockResolvedValue(mockUser)
 
       const request = new NextRequest(`http://localhost:3000/api/setlists/${setlistId}`, {
         method: 'PUT',
@@ -270,7 +264,7 @@ describe('/api/setlists/[id]', () => {
     })
 
     it('handles database errors during update', async () => {
-      mockRequireAuthServer.mockResolvedValue(mockUser)
+      mockRequireAuthServerSecure.mockResolvedValue(mockUser)
       
       // Setup database error scenario
       factory.setMockError('setlists', {
@@ -291,7 +285,7 @@ describe('/api/setlists/[id]', () => {
 
   describe('DELETE /api/setlists/[id]', () => {
     it('returns 401 when user is not authenticated', async () => {
-      mockRequireAuthServer.mockResolvedValue(null)
+      mockRequireAuthServerSecure.mockResolvedValue(null)
 
       const request = new NextRequest(`http://localhost:3000/api/setlists/${setlistId}`, {
         method: 'DELETE'
@@ -302,7 +296,7 @@ describe('/api/setlists/[id]', () => {
     })
 
     it('returns 404 when setlist is not found', async () => {
-      mockRequireAuthServer.mockResolvedValue(mockUser)
+      mockRequireAuthServerSecure.mockResolvedValue(mockUser)
       
       // Setup scenario where setlist is not found
       const errorScenarios = createErrorScenarios(factory)
@@ -317,7 +311,7 @@ describe('/api/setlists/[id]', () => {
     })
 
     it('deletes setlist and its songs successfully', async () => {
-      mockRequireAuthServer.mockResolvedValue(mockUser)
+      mockRequireAuthServerSecure.mockResolvedValue(mockUser)
 
       const request = new NextRequest(`http://localhost:3000/api/setlists/${setlistId}`, {
         method: 'DELETE'
@@ -330,7 +324,7 @@ describe('/api/setlists/[id]', () => {
     })
 
     it('handles errors when deleting setlist', async () => {
-      mockRequireAuthServer.mockResolvedValue(mockUser)
+      mockRequireAuthServerSecure.mockResolvedValue(mockUser)
       
       // Setup database error scenario for deletion
       factory.setMockError('setlists', {
@@ -347,7 +341,7 @@ describe('/api/setlists/[id]', () => {
     })
 
     it('only deletes setlists owned by the authenticated user', async () => {
-      mockRequireAuthServer.mockResolvedValue({ uid: 'different-user' })
+      mockRequireAuthServerSecure.mockResolvedValue({ uid: 'different-user' })
       
       // Setup empty setlists for different user (simulates not found due to user_id filter)
       factory.setMockData('setlists', [])

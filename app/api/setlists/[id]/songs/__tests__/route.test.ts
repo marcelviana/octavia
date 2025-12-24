@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { NextRequest } from 'next/server'
+import { mockRequireAuthServerSecure } from '@/src/test-setup'
 
 // Create a comprehensive mock for Supabase query builder
 let mockQueryResult = { data: null, error: null }
@@ -59,7 +60,6 @@ import { requireAuthServer } from '@/lib/firebase-server-utils'
 import logger from '@/lib/logger'
 
 // Get mocked functions for type safety
-const mockRequireAuthServer = vi.mocked(requireAuthServer)
 const mockLogger = vi.mocked(logger)
 
 describe('/api/setlists/[id]/songs', () => {
@@ -78,7 +78,7 @@ describe('/api/setlists/[id]/songs', () => {
 
   describe('POST /api/setlists/[id]/songs', () => {
     it('returns 401 when user is not authenticated', async () => {
-      mockRequireAuthServer.mockResolvedValue(null)
+      mockRequireAuthServerSecure.mockResolvedValue(null)
 
       const request = new NextRequest(`http://localhost:3000/api/setlists/${setlistId}/songs`, {
         method: 'POST',
@@ -100,7 +100,7 @@ describe('/api/setlists/[id]/songs', () => {
         notes: 'Great opener!'
       }
 
-      mockRequireAuthServer.mockResolvedValue(mockUser)
+      mockRequireAuthServerSecure.mockResolvedValue(mockUser)
       
       let callCount = 0
       mockSupabaseClient.from = vi.fn(() => {
@@ -160,7 +160,7 @@ describe('/api/setlists/[id]/songs', () => {
         notes: ''
       }
 
-      mockRequireAuthServer.mockResolvedValue(mockUser)
+      mockRequireAuthServerSecure.mockResolvedValue(mockUser)
       
       let callCount = 0
       mockSupabaseClient.from = vi.fn(() => {
@@ -215,7 +215,7 @@ describe('/api/setlists/[id]/songs', () => {
         notes: ''
       }
 
-      mockRequireAuthServer.mockResolvedValue(mockUser)
+      mockRequireAuthServerSecure.mockResolvedValue(mockUser)
       
       let callCount = 0
       mockSupabaseClient.from = vi.fn(() => {
@@ -269,7 +269,7 @@ describe('/api/setlists/[id]/songs', () => {
         notes: ''
       }
 
-      mockRequireAuthServer.mockResolvedValue(mockUser)
+      mockRequireAuthServerSecure.mockResolvedValue(mockUser)
       
       let callCount = 0
       mockSupabaseClient.from = vi.fn(() => {
@@ -317,7 +317,7 @@ describe('/api/setlists/[id]/songs', () => {
     })
 
     it('returns 500 when setlist does not belong to user', async () => {
-      mockRequireAuthServer.mockResolvedValue(mockUser)
+      mockRequireAuthServerSecure.mockResolvedValue(mockUser)
       
       mockSupabaseClient.from = vi.fn(() => {
         const builder = createMockQueryBuilder()
@@ -347,7 +347,7 @@ describe('/api/setlists/[id]/songs', () => {
     })
 
     it('returns 500 when content does not belong to user', async () => {
-      mockRequireAuthServer.mockResolvedValue(mockUser)
+      mockRequireAuthServerSecure.mockResolvedValue(mockUser)
       
       let callCount = 0
       mockSupabaseClient.from = vi.fn(() => {
@@ -388,7 +388,7 @@ describe('/api/setlists/[id]/songs', () => {
     })
 
     it('handles database errors during song creation', async () => {
-      mockRequireAuthServer.mockResolvedValue(mockUser)
+      mockRequireAuthServerSecure.mockResolvedValue(mockUser)
       
       let callCount = 0
       mockSupabaseClient.from = vi.fn(() => {
@@ -439,7 +439,7 @@ describe('/api/setlists/[id]/songs', () => {
     })
 
     it('handles database errors during max position query', async () => {
-      mockRequireAuthServer.mockResolvedValue(mockUser)
+      mockRequireAuthServerSecure.mockResolvedValue(mockUser)
       
       let callCount = 0
       mockSupabaseClient.from = vi.fn(() => {

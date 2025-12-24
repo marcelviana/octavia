@@ -9,15 +9,20 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { ContentViewer } from '@/components/content-viewer'
 import { useContentFile } from '@/hooks/useContentFile'
+import { useContentActions } from '@/hooks/useContentActions'
 import { ContentHeader } from '@/components/content-viewer/ContentHeader'
 import { ContentToolbar } from '@/components/content-viewer/ContentToolbar'
 
 // Mock the extracted hooks and components
 vi.mock('@/hooks/useContentFile')
+vi.mock('@/hooks/useContentActions')
 
 // Create mock functions for the components
 const mockContentHeaderImpl = vi.fn()
 const mockContentToolbarImpl = vi.fn()
+const mockContentDisplayImpl = vi.fn()
+const mockContentSidebarImpl = vi.fn()
+const mockDeleteDialogImpl = vi.fn()
 
 vi.mock('@/components/content-viewer/ContentHeader', () => ({
   ContentHeader: (props: any) => mockContentHeaderImpl(props)
@@ -25,12 +30,26 @@ vi.mock('@/components/content-viewer/ContentHeader', () => ({
 vi.mock('@/components/content-viewer/ContentToolbar', () => ({
   ContentToolbar: (props: any) => mockContentToolbarImpl(props)
 }))
+vi.mock('@/components/content-viewer/ContentDisplay', () => ({
+  ContentDisplay: (props: any) => mockContentDisplayImpl(props)
+}))
+vi.mock('@/components/content-viewer/ContentSidebar', () => ({
+  ContentSidebar: (props: any) => mockContentSidebarImpl(props)
+}))
+vi.mock('@/components/content-viewer/DeleteDialog', () => ({
+  DeleteDialog: (props: any) => mockDeleteDialogImpl(props)
+}))
 // Note: useAuth is mocked globally in test-setup.ts - don't override it here
 vi.mock('@/lib/firebase-storage')
 
 const mockUseContentFile = vi.mocked(useContentFile)
+const mockUseContentActions = vi.mocked(useContentActions)
+
 const mockContentHeader = mockContentHeaderImpl
 const mockContentToolbar = mockContentToolbarImpl
+const mockContentDisplay = mockContentDisplayImpl
+const mockContentSidebar = mockContentSidebarImpl
+const mockDeleteDialog = mockDeleteDialogImpl
 
 // Test data matching original ContentViewer functionality
 const mockContent = {
@@ -74,29 +93,80 @@ describe('ContentViewer Refactoring Tests', () => {
   beforeEach(() => {
     vi.clearAllMocks()
 
-    // Mock useContentFile hook
+    // Mock useContentFile hook with correct return values
     mockUseContentFile.mockReturnValue({
       offlineUrl: null,
-      isLoading: false,
-      error: null,
+      offlineMimeType: null,
+      isLoadingUrl: false,
+      urlError: null,
       loadOfflineUrl: vi.fn()
     })
 
-    // Mock sub-components
-    mockContentHeader.mockImplementation(({ title, artist, onBack }) => (
+    // Mock useContentActions hook
+    mockUseContentActions.mockReturnValue({
+      deleteDialog: false,
+      setDeleteDialog: vi.fn(),
+      isFavorite: false,
+      handleDelete: vi.fn(),
+      confirmDelete: vi.fn(),
+      toggleFavorite: vi.fn()
+    })
+
+    // Mock sub-components with correct prop signatures
+    mockContentHeader.mockImplementation(({ content, onBack, onEnterPerformance, onToggleFavorite, isFavorite }) => (
       <div data-testid="content-header">
         <button onClick={onBack} data-testid="back-button">Back</button>
-        <h1>{title}</h1>
-        <p>{artist}</p>
+        <h1>{content.title}</h1>
+        <p>{content.artist}</p>
+        <p>{content.content_type}</p>
+        <button onClick={() => onEnterPerformance(content)} data-testid="performance-button">Performance</button>
+        <button onClick={onToggleFavorite} data-testid="favorite-button">Favorite</button>
       </div>
     ))
 
-    mockContentToolbar.mockImplementation(({ onEdit, onDelete }) => (
+    mockContentToolbar.mockImplementation(({ zoom, currentPage, totalPages, onZoomChange, onPageChange, onPlayPause }) => (
       <div data-testid="content-toolbar">
-        <button onClick={onEdit} data-testid="edit-button">Edit</button>
-        <button onClick={onDelete} data-testid="delete-button">Delete</button>
+        <span>Zoom: {zoom}%</span>
+        <span>Page {currentPage} of {totalPages}</span>
+        <button onClick={() => onZoomChange(zoom + 25)} data-testid="zoom-in">Zoom In</button>
+        <button onClick={() => onZoomChange(zoom - 25)} data-testid="zoom-out">Zoom Out</button>
+        <button onClick={() => onPageChange(currentPage + 1)} data-testid="next-page">Next</button>
+        <button onClick={() => onPageChange(currentPage - 1)} data-testid="prev-page">Prev</button>
+        <button onClick={onPlayPause} data-testid="play-pause">Play/Pause</button>
       </div>
     ))
+
+    mockContentDisplay.mockImplementation(({ content, isLoadingUrl, urlError }) => (
+      <div data-testid="content-display">
+        {isLoadingUrl && <div>Loading...</div>}
+        {urlError && <div>Failed to load file: {urlError}</div>}
+        {!isLoadingUrl && !urlError && (
+          <div>
+            <div>{content.title}</div>
+            <div>{content.content_data?.lyrics}</div>
+          </div>
+        )}
+      </div>
+    ))
+
+    mockContentSidebar.mockImplementation(({ content, onEdit, onDelete }) => (
+      <div data-testid="content-sidebar">
+        <div>Key: {content.key}</div>
+        <div>BPM: {content.bpm}</div>
+        <div>Chords: {content.content_data?.chords?.join(', ')}</div>
+        {onEdit && <button onClick={onEdit} data-testid="edit-button">Edit</button>}
+        {onDelete && <button onClick={onDelete} data-testid="delete-button">Delete</button>}
+      </div>
+    ))
+
+    mockDeleteDialog.mockImplementation(({ open, onClose, onConfirm }) => 
+      open ? (
+        <div data-testid="delete-dialog">
+          <button onClick={onConfirm} data-testid="confirm-delete">Confirm</button>
+          <button onClick={onClose} data-testid="cancel-delete">Cancel</button>
+        </div>
+      ) : null
+    )
   })
 
   describe('Core Functionality Preservation', () => {

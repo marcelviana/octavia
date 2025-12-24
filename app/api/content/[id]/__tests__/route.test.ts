@@ -1,4 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
+import { mockRequireAuthServerSecure } from '@/src/test-setup'
 
 // Mock Supabase service at the top level - this must be before any other imports
 const mockFrom = vi.fn()

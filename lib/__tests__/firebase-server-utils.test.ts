@@ -1,4 +1,8 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+
+// Unmock the global firebase-server-utils mock for this test file
+vi.unmock('@/lib/firebase-server-utils')
+
 import {
   validateFirebaseTokenServer,
   requireAuthServer,

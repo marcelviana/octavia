@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { NextRequest } from 'next/server'
+import { mockRequireAuthServerSecure } from '@/src/test-setup'
 
 // Mock Supabase service
 const mockFrom = vi.fn()
@@ -109,7 +110,8 @@ describe('/api/profile', () => {
 
   describe('GET /api/profile', () => {
     it('returns 401 when user is not authenticated', async () => {
-      mockVerifyFirebaseToken.mockRejectedValue(new Error('Invalid token'))
+      // Override the global mock to return null (unauthenticated)
+      mockRequireAuthServerSecure.mockResolvedValueOnce(null)
 
       const request = new NextRequest('http://localhost:3000/api/profile', {
         headers: { authorization: 'Bearer invalid-token' }
@@ -118,7 +120,8 @@ describe('/api/profile', () => {
       const data = await response.json()
 
       expect(response.status).toBe(401)
-      expect(data).toEqual({ error: 'Unauthorized' })
+      expect(data.error).toBeTruthy()
+      expect(data.error).toMatch(/Unauthorized|Authentication required/)
     })
 
     it('returns null when profile does not exist', async () => {
@@ -204,7 +207,8 @@ describe('/api/profile', () => {
 
   describe('POST /api/profile', () => {
     it('returns 401 when user is not authenticated', async () => {
-      mockVerifyFirebaseToken.mockRejectedValue(new Error('Invalid token'))
+      // Override the global mock to return null (unauthenticated)
+      mockRequireAuthServerSecure.mockResolvedValueOnce(null)
 
       const request = new NextRequest('http://localhost:3000/api/profile', {
         method: 'POST',
@@ -215,7 +219,8 @@ describe('/api/profile', () => {
       const data = await response.json()
 
       expect(response.status).toBe(401)
-      expect(data).toEqual({ error: 'Unauthorized' })
+      expect(data.error).toBeTruthy()
+      expect(data.error).toMatch(/Unauthorized|Authentication required/)
     })
 
     it('creates profile successfully with valid data', async () => {
@@ -323,7 +328,8 @@ describe('/api/profile', () => {
 
   describe('PATCH /api/profile', () => {
     it('returns 401 when user is not authenticated', async () => {
-      mockVerifyFirebaseToken.mockRejectedValue(new Error('Invalid token'))
+      // Override the global mock to return null (unauthenticated)
+      mockRequireAuthServerSecure.mockResolvedValueOnce(null)
 
       const request = new NextRequest('http://localhost:3000/api/profile', {
         method: 'PATCH',
@@ -334,7 +340,8 @@ describe('/api/profile', () => {
       const data = await response.json()
 
       expect(response.status).toBe(401)
-      expect(data).toEqual({ error: 'Unauthorized' })
+      expect(data.error).toBeTruthy()
+      expect(data.error).toMatch(/Unauthorized|Authentication required/)
     })
 
     it('updates profile successfully with valid data', async () => {

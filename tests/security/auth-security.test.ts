@@ -7,6 +7,10 @@
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { NextRequest } from 'next/server'
+
+// Unmock the global secure-auth-utils mock for this test file
+vi.unmock('@/lib/secure-auth-utils')
+
 import {
   requireAuthServerSecure as requireAuthServer,
   blacklistToken,

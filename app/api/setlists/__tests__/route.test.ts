@@ -1,10 +1,8 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { NextRequest } from 'next/server'
 
-// Mock Firebase server utils
-vi.mock('@/lib/firebase-server-utils', () => ({
-  requireAuthServer: vi.fn()
-}))
+// Use the global mock from test-setup
+import { mockRequireAuthServerSecure } from '@/src/test-setup'
 
 // Mock logger
 vi.mock('@/lib/logger', () => ({
@@ -23,13 +21,11 @@ vi.mock('@/lib/supabase-service', () => ({
 
 // Import the actual route handlers and utilities after mocks
 import { GET, POST } from '../route'
-import { requireAuthServer } from '@/lib/firebase-server-utils'
 import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
 import { createAPIMockData, createErrorScenarios } from '@/lib/test-utils/api-test-helpers'
 
 // Get mocked functions for type safety
-const mockRequireAuthServer = vi.mocked(requireAuthServer)
 const mockGetSupabaseServiceClient = vi.mocked(getSupabaseServiceClient)
 const mockLogger = vi.mocked(logger)
 
@@ -63,7 +59,7 @@ describe('/api/setlists', () => {
 
   describe('GET /api/setlists', () => {
     it('returns 401 when user is not authenticated', async () => {
-      mockRequireAuthServer.mockResolvedValue(null)
+      mockRequireAuthServerSecure.mockResolvedValueOnce(null)
 
       const request = new NextRequest('http://localhost:3000/api/setlists')
       const response = await GET(request)
@@ -72,7 +68,7 @@ describe('/api/setlists', () => {
     })
 
     it('returns empty array when user has no setlists', async () => {
-      mockRequireAuthServer.mockResolvedValue(mockUser)
+      mockRequireAuthServerSecure.mockResolvedValueOnce(mockUser)
       
       // Setup empty setlists scenario
       factory.setMockData('setlists', [])
@@ -86,7 +82,7 @@ describe('/api/setlists', () => {
     })
 
     it('returns setlists with songs for authenticated user', async () => {
-      mockRequireAuthServer.mockResolvedValue(mockUser)
+      mockRequireAuthServerSecure.mockResolvedValueOnce(mockUser)
 
       const request = new NextRequest('http://localhost:3000/api/setlists')
       const response = await GET(request)
@@ -102,7 +98,7 @@ describe('/api/setlists', () => {
     })
 
     it('handles missing content gracefully', async () => {
-      mockRequireAuthServer.mockResolvedValue(mockUser)
+      mockRequireAuthServerSecure.mockResolvedValueOnce(mockUser)
       
       // Setup scenario where content is missing
       factory.setMockData('content', [])
@@ -119,7 +115,7 @@ describe('/api/setlists', () => {
     })
 
     it('handles database errors gracefully', async () => {
-      mockRequireAuthServer.mockResolvedValue(mockUser)
+      mockRequireAuthServerSecure.mockResolvedValueOnce(mockUser)
       
       // Setup database error scenario
       const errorScenarios = createErrorScenarios(factory)
@@ -132,7 +128,7 @@ describe('/api/setlists', () => {
     })
 
     it('handles setlist songs query errors gracefully', async () => {
-      mockRequireAuthServer.mockResolvedValue(mockUser)
+      mockRequireAuthServerSecure.mockResolvedValueOnce(mockUser)
       
       // Setup scenario where setlist_songs query fails
       factory.setMockError('setlist_songs', {
@@ -153,7 +149,7 @@ describe('/api/setlists', () => {
 
   describe('POST /api/setlists', () => {
     it('returns 401 when user is not authenticated', async () => {
-      mockRequireAuthServer.mockResolvedValue(null)
+      mockRequireAuthServerSecure.mockResolvedValueOnce(null)
 
       const request = new NextRequest('http://localhost:3000/api/setlists', {
         method: 'POST',
@@ -165,7 +161,7 @@ describe('/api/setlists', () => {
     })
 
     it('creates a setlist successfully with minimal data', async () => {
-      mockRequireAuthServer.mockResolvedValue(mockUser)
+      mockRequireAuthServerSecure.mockResolvedValueOnce(mockUser)
 
       // Setup mock to return created setlist
       const createdSetlist = {
@@ -190,7 +186,7 @@ describe('/api/setlists', () => {
     })
 
     it('creates a setlist successfully with full data', async () => {
-      mockRequireAuthServer.mockResolvedValue(mockUser)
+      mockRequireAuthServerSecure.mockResolvedValueOnce(mockUser)
 
       const fullSetlistData = {
         name: 'Full Setlist',
@@ -224,7 +220,7 @@ describe('/api/setlists', () => {
     })
 
     it('handles invalid JSON request body', async () => {
-      mockRequireAuthServer.mockResolvedValue(mockUser)
+      mockRequireAuthServerSecure.mockResolvedValueOnce(mockUser)
 
       const request = new NextRequest('http://localhost:3000/api/setlists', {
         method: 'POST',
@@ -237,7 +233,7 @@ describe('/api/setlists', () => {
     })
 
     it('handles database errors during creation', async () => {
-      mockRequireAuthServer.mockResolvedValue(mockUser)
+      mockRequireAuthServerSecure.mockResolvedValueOnce(mockUser)
       
       // Setup database error scenario
       factory.setMockError('setlists', {
@@ -256,7 +252,7 @@ describe('/api/setlists', () => {
     })
 
     it('handles missing name field gracefully', async () => {
-      mockRequireAuthServer.mockResolvedValue(mockUser)
+      mockRequireAuthServerSecure.mockResolvedValueOnce(mockUser)
 
       const request = new NextRequest('http://localhost:3000/api/setlists', {
         method: 'POST',
