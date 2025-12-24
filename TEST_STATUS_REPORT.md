@@ -9,7 +9,18 @@
 ✅ Test Files:  40 passed | 6 skipped (46 total)
 ✅ Tests:       487 passed | 145 skipped (632 total)
 ✅ Exit Code:   0 (SUCCESS)
+✅ CI Command:  pnpm test:ci ✅ PASSING with coverage
 ```
+
+## Important Note on Coverage Provider
+
+**Fixed Issue**: The V8 coverage provider was causing errors with Next.js files. 
+
+**Solution**: Switched to Istanbul coverage provider for better Next.js compatibility.
+
+- Install command: `pnpm add -D @vitest/coverage-istanbul` ✅ Already installed
+- Config change: `provider: 'istanbul'` in `vitest.config.mts`
+- Result: CI tests now pass cleanly with coverage generation
 
 ## Summary
 

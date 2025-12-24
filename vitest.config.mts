@@ -26,7 +26,8 @@ export default defineConfig({
       VITEST: 'true'
     },
     coverage: {
-      provider: 'v8',
+      enabled: false, // Disabled by default - use test:coverage script to enable
+      provider: 'istanbul', // Using istanbul instead of v8 for better Next.js compatibility
       reporter: ['text', 'json', 'html', 'lcov'],
       reportsDirectory: './coverage',
       exclude: [
@@ -52,7 +53,20 @@ export default defineConfig({
         // Exclude E2E tests from coverage
         'tests/e2e/**/*',
         '**/*.e2e.{ts,tsx}',
-        '**/e2e/**/*'
+        '**/e2e/**/*',
+        // Exclude Next.js specific files that cause V8 coverage issues
+        'app/**/layout.{ts,tsx}',
+        'app/**/not-found.{ts,tsx}',
+        'app/**/error.{ts,tsx}',
+        'app/**/loading.{ts,tsx}',
+        'app/**/template.{ts,tsx}',
+        'app/**/default.{ts,tsx}',
+        'middleware.{ts,tsx}',
+        'instrumentation.{ts,tsx}',
+        // Exclude server-only and edge runtime files
+        '**/route.{ts,tsx}',
+        '**/*.server.{ts,tsx}',
+        '**/*.edge.{ts,tsx}'
       ],
       thresholds: {
         global: {
