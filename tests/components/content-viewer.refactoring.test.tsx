@@ -16,7 +16,7 @@ import { ContentToolbar } from '@/components/content-viewer/ContentToolbar'
 vi.mock('@/hooks/useContentFile')
 vi.mock('@/components/content-viewer/ContentHeader')
 vi.mock('@/components/content-viewer/ContentToolbar')
-vi.mock('@/contexts/firebase-auth-context')
+// Note: useAuth is mocked globally in test-setup.ts - don't override it here
 vi.mock('@/lib/firebase-storage')
 
 const mockUseContentFile = vi.mocked(useContentFile)

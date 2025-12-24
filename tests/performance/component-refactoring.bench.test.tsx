@@ -15,7 +15,7 @@ import { ContentViewer } from '@/components/content-viewer'
 import { AddContent } from '@/components/add-content-refactored'
 
 // Mock all dependencies
-vi.mock('@/contexts/firebase-auth-context')
+// Note: useAuth is mocked globally in test-setup.ts - don't override it here
 vi.mock('@/hooks/useContentFile')
 vi.mock('@/hooks/useAddContentState')
 vi.mock('@/hooks/useFileHandling')

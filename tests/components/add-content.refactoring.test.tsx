@@ -27,7 +27,7 @@ vi.mock('@/components/file-upload')
 vi.mock('@/components/content-creator')
 vi.mock('@/components/metadata-form')
 vi.mock('@/components/batch-preview')
-vi.mock('@/contexts/firebase-auth-context')
+// Note: useAuth is mocked globally in test-setup.ts - don't override it here
 
 const mockUseAddContentState = vi.mocked(useAddContentState)
 const mockUseFileHandling = vi.mocked(useFileHandling)

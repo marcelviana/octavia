@@ -5,6 +5,7 @@ import { z } from 'zod'
 import { NextRequest, NextResponse } from 'next/server'
 import logger from './logger'
 import { requireAuthServerSecure } from './secure-auth-utils'
+import { sanitizeInput } from './input-sanitizer'
 
 // Common validation schemas
 export const commonSchemas = {
@@ -34,25 +35,34 @@ export const commonSchemas = {
   // File validation
   filename: z.string().min(1).max(255).regex(/^[^<>:"/\\|?*]+$/, 'Invalid filename'),
 
-  // Security: Prevent XSS in text fields
-  safeText: z.string().max(1000).refine(
+  // Security: Prevent XSS in text fields with sanitization
+  safeText: z.string().max(1000).transform(val => {
+    const result = sanitizeInput(val, { level: 'strict' as any, allowHTML: false })
+    return result.sanitized
+  }).refine(
     (text) => !/<script|javascript:|data:|vbscript:/i.test(text),
     'Potentially unsafe content detected'
   ),
 
-  // Factory function for creating safe text schemas with min/max constraints
+  // Factory function for creating safe text schemas with min/max constraints and sanitization
   createSafeText: (minLength?: number, maxLength?: number) => {
     let schema = z.string()
     if (minLength !== undefined) schema = schema.min(minLength)
     if (maxLength !== undefined) schema = schema.max(maxLength)
-    return schema.refine(
+    return schema.transform(val => {
+      const result = sanitizeInput(val, { level: 'strict' as any, allowHTML: false })
+      return result.sanitized
+    }).refine(
       (text) => !/<script|javascript:|data:|vbscript:/i.test(text),
       'Potentially unsafe content detected'
     )
   },
 
-  // Security: Safe HTML content (for lyrics, etc.)
-  safeHtml: z.string().max(50000).refine(
+  // Security: Safe HTML content (for lyrics, etc.) with sanitization
+  safeHtml: z.string().max(50000).transform(val => {
+    const result = sanitizeInput(val, { level: 'moderate' as any, allowHTML: true })
+    return result.sanitized
+  }).refine(
     (html) => {
       // Basic XSS prevention
       const dangerous = /<script|javascript:|data:|vbscript:|on\w+\s*=/i
@@ -85,6 +95,38 @@ export const authSchemas = {
       autoSync: z.boolean().optional(),
       performanceMode: z.boolean().optional()
     }).optional()
+  })
+} as const
+
+// User profile validation schemas
+export const userSchemas = {
+  // User creation
+  create: z.object({
+    email: commonSchemas.email,
+    full_name: commonSchemas.createSafeText(1, 200),
+    first_name: commonSchemas.createSafeText(1, 100).optional(),
+    last_name: commonSchemas.createSafeText(1, 100).optional(),
+    avatar_url: z.string().url().optional(),
+    primary_instrument: commonSchemas.safeText.optional(),
+    bio: commonSchemas.createSafeText(0, 2000).optional(),
+    website: z.string().url().optional()
+  }),
+
+  // User profile update
+  update: z.object({
+    full_name: commonSchemas.createSafeText(1, 200).optional(),
+    first_name: commonSchemas.createSafeText(1, 100).optional(),
+    last_name: commonSchemas.createSafeText(1, 100).optional(),
+    avatar_url: z.string().url().optional(),
+    primary_instrument: commonSchemas.safeText.optional(),
+    bio: commonSchemas.createSafeText(0, 2000).optional(),
+    website: z.string().url().optional()
+  }),
+
+  // User query
+  query: z.object({
+    search: commonSchemas.search,
+    ...commonSchemas.pagination.shape
   })
 } as const
 

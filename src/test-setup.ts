@@ -17,66 +17,73 @@ if (!Promise.withResolvers) {
   };
 }
 
-// Global mock user for consistent testing
-export const mockUser = {
-  uid: 'test-user-123',
-  email: 'test@example.com',
-  displayName: 'Test User',
-  emailVerified: true,
-  photoURL: null,
-  phoneNumber: null,
-  isAnonymous: false,
-  metadata: {
-    creationTime: new Date().toISOString(),
-    lastSignInTime: new Date().toISOString(),
-  },
-  providerData: [],
-  refreshToken: 'mock-refresh-token',
-  tenantId: null,
-  delete: vi.fn(),
-  getIdToken: vi.fn().mockResolvedValue('mock-id-token'),
-  getIdTokenResult: vi.fn(),
-  reload: vi.fn(),
-  toJSON: vi.fn(),
-  providerId: 'firebase'
-}
+// Hoisted mocks to ensure they run before any module imports
+const mocks = vi.hoisted(() => {
+  const mockUser = {
+    uid: 'test-user-123',
+    email: 'test@example.com',
+    displayName: 'Test User',
+    emailVerified: true,
+    photoURL: null,
+    phoneNumber: null,
+    isAnonymous: false,
+    metadata: {
+      creationTime: new Date().toISOString(),
+      lastSignInTime: new Date().toISOString(),
+    },
+    providerData: [],
+    refreshToken: 'mock-refresh-token',
+    tenantId: null,
+    delete: vi.fn(),
+    getIdToken: vi.fn().mockResolvedValue('mock-id-token'),
+    getIdTokenResult: vi.fn(),
+    reload: vi.fn(),
+    toJSON: vi.fn(),
+    providerId: 'firebase'
+  }
 
-// Global mock profile
-export const mockProfile = {
-  id: 'test-user-123',
-  email: 'test@example.com',
-  full_name: 'Test User',
-  first_name: 'Test',
-  last_name: 'User',
-  avatar_url: null,
-  primary_instrument: 'Guitar',
-  bio: 'Test bio',
-  website: 'https://test.com'
-}
+  const mockProfile = {
+    id: 'test-user-123',
+    email: 'test@example.com',
+    full_name: 'Test User',
+    first_name: 'Test',
+    last_name: 'User',
+    avatar_url: null,
+    primary_instrument: 'Guitar',
+    bio: 'Test bio',
+    website: 'https://test.com'
+  }
 
-// Global mock auth context value
-export const mockAuthContextValue = {
-  user: mockUser,
-  profile: mockProfile,
-  idToken: 'mock-id-token',
-  isLoading: false,
-  loading: false,
-  isConfigured: true,
-  isInitialized: true,
-  signIn: vi.fn().mockResolvedValue({ error: null }),
-  signUp: vi.fn().mockResolvedValue({ error: null, data: mockUser }),
-  signInWithGoogle: vi.fn().mockResolvedValue({ error: null }),
-  signOut: vi.fn().mockResolvedValue(undefined),
-  updateProfile: vi.fn().mockResolvedValue({ error: null }),
-  refreshToken: vi.fn().mockResolvedValue('mock-id-token'),
-  resendVerificationEmail: vi.fn().mockResolvedValue({ error: null })
-}
+  const mockAuthContext = {
+    user: mockUser,
+    profile: mockProfile,
+    idToken: 'mock-id-token',
+    isLoading: false,
+    loading: false,
+    isConfigured: true,
+    isInitialized: true,
+    signIn: vi.fn().mockResolvedValue({ error: null }),
+    signUp: vi.fn().mockResolvedValue({ error: null, data: mockUser }),
+    signInWithGoogle: vi.fn().mockResolvedValue({ error: null }),
+    signOut: vi.fn().mockResolvedValue(undefined),
+    updateProfile: vi.fn().mockResolvedValue({ error: null }),
+    refreshToken: vi.fn().mockResolvedValue('mock-id-token'),
+    resendVerificationEmail: vi.fn().mockResolvedValue({ error: null })
+  }
 
-// Mock Firebase Auth Context globally
+  return { mockUser, mockProfile, mockAuthContext }
+})
+
+// Export mock values for use in tests
+export const mockUser = mocks.mockUser
+export const mockProfile = mocks.mockProfile
+export const mockAuthContextValue = mocks.mockAuthContext
+
+// Mock Firebase Auth Context globally with hoisted factory
 vi.mock('@/contexts/firebase-auth-context', () => ({
-  useFirebaseAuth: () => mockAuthContextValue,
-  useAuth: () => mockAuthContextValue,
-  FirebaseAuthProvider: ({ children }: { children: React.ReactNode }) => children
+  useFirebaseAuth: () => mocks.mockAuthContext,
+  useAuth: () => mocks.mockAuthContext,
+  FirebaseAuthProvider: ({ children }: { children: any }) => children
 }))
 
 // Mock app store auth hooks
@@ -85,7 +92,7 @@ vi.mock('@/domains/shared/state-management/app-store', async () => {
   return {
     ...actual,
     useAuth: () => ({
-      user: mockUser,
+      user: mocks.mockUser,
       isAuthenticated: true,
       isLoading: false,
       sessionCookie: 'mock-session-cookie'
@@ -98,6 +105,71 @@ vi.mock('@/domains/shared/state-management/app-store', async () => {
     })
   }
 })
+
+// Mock Supabase client with query builder chain
+const createMockQueryBuilder = (mockData: any[] = []) => {
+  const mockBuilder: any = {
+    select: vi.fn().mockReturnThis(),
+    insert: vi.fn().mockReturnThis(),
+    update: vi.fn().mockReturnThis(),
+    delete: vi.fn().mockReturnThis(),
+    upsert: vi.fn().mockReturnThis(),
+    from: vi.fn().mockReturnThis(),
+    eq: vi.fn().mockReturnThis(),
+    neq: vi.fn().mockReturnThis(),
+    gt: vi.fn().mockReturnThis(),
+    gte: vi.fn().mockReturnThis(),
+    lt: vi.fn().mockReturnThis(),
+    lte: vi.fn().mockReturnThis(),
+    like: vi.fn().mockReturnThis(),
+    ilike: vi.fn().mockReturnThis(),
+    is: vi.fn().mockReturnThis(),
+    in: vi.fn().mockReturnThis(),
+    contains: vi.fn().mockReturnThis(),
+    containedBy: vi.fn().mockReturnThis(),
+    range: vi.fn().mockReturnThis(),
+    order: vi.fn().mockReturnThis(),
+    limit: vi.fn().mockReturnThis(),
+    offset: vi.fn().mockReturnThis(),
+    single: vi.fn().mockResolvedValue({ data: mockData[0] || null, error: null }),
+    maybeSingle: vi.fn().mockResolvedValue({ data: mockData[0] || null, error: null }),
+    then: vi.fn((resolve) => resolve({ data: mockData, error: null }))
+  }
+  return mockBuilder
+}
+
+vi.mock('@supabase/supabase-js', () => ({
+  createClient: vi.fn(() => ({
+    from: vi.fn((table) => createMockQueryBuilder([])),
+    auth: {
+      getSession: vi.fn().mockResolvedValue({
+        data: { session: { user: mockUser } },
+        error: null
+      }),
+      getUser: vi.fn().mockResolvedValue({
+        data: { user: mockUser },
+        error: null
+      }),
+      signInWithPassword: vi.fn().mockResolvedValue({
+        data: { user: mockUser, session: {} },
+        error: null
+      }),
+      signOut: vi.fn().mockResolvedValue({ error: null }),
+      onAuthStateChange: vi.fn(() => ({
+        data: { subscription: { unsubscribe: vi.fn() } }
+      }))
+    },
+    storage: {
+      from: vi.fn(() => ({
+        upload: vi.fn().mockResolvedValue({ data: { path: 'test/path' }, error: null }),
+        download: vi.fn().mockResolvedValue({ data: new Blob(), error: null }),
+        remove: vi.fn().mockResolvedValue({ data: null, error: null }),
+        getPublicUrl: vi.fn(() => ({ data: { publicUrl: 'https://test.url' } }))
+      }))
+    },
+    rpc: vi.fn().mockResolvedValue({ data: null, error: null })
+  }))
+}))
 
 // Suppress React DevTools warnings in tests
 if (typeof window !== 'undefined') {
