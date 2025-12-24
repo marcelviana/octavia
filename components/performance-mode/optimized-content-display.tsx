@@ -6,6 +6,7 @@
  */
 
 import React, { memo, useMemo, useCallback } from 'react'
+import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import type { ContentRenderInfo, SongData } from '@/types/performance'
 
@@ -70,14 +71,17 @@ const MemoizedImageDisplay = memo(function ImageDisplay({
 
   return (
     <div className="w-full h-full overflow-auto flex justify-center">
-      <img
-        src={url}
-        alt={title || 'Sheet Music'}
-        style={imageStyle}
-        className="block"
-        loading="eager" // Critical for performance
-        decoding="sync" // Synchronous decoding for immediate display
-      />
+      <div style={imageStyle} className="block">
+        <Image
+          src={url}
+          alt={title || 'Sheet Music'}
+          width={800}
+          height={600}
+          priority // Critical for performance
+          unoptimized // For performance mode, skip optimization
+          className="max-w-none h-auto"
+        />
+      </div>
     </div>
   )
 })

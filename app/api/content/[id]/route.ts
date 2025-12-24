@@ -89,8 +89,8 @@ const updateContentByIdHandler = withBodyValidation(contentSchemas.update)(
         )
       }
 
-      // Add timestamp for update
-      const dataToUpdate = {
+      // Add timestamp for update and ensure proper typing
+      const dataToUpdate: Database['public']['Tables']['content']['Update'] = {
         ...validatedData,
         updated_at: new Date().toISOString(),
       }
@@ -99,7 +99,7 @@ const updateContentByIdHandler = withBodyValidation(contentSchemas.update)(
 
       const { data: content, error } = await supabase
         .from('content')
-        .update(dataToUpdate as Database['public']['Tables']['content']['Update'])
+        .update(dataToUpdate)
         .eq('id', id)
         .eq('user_id', user.uid)
         .select()
