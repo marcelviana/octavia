@@ -37,6 +37,22 @@ coverage/
 test-results/
 playwright-report/
 
+# backup files
+*.backup
+*.bak
+*.old
+*~
+
 # macOS
 .DS_Store
 **/.DS_Store
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.temp
