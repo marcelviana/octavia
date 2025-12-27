@@ -1,6 +1,8 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { NextRequest } from 'next/server'
 import { mockRequireAuthServerSecure } from '@/src/test-setup'
+import type { SupabaseClient } from '@supabase/supabase-js'
+import type { Database } from '@/types/supabase'
 
 // Mock logger
 vi.mock('@/lib/logger', () => ({
@@ -45,7 +47,7 @@ describe('/api/setlists/[id]', () => {
     vi.clearAllMocks()
     
     // Configure the Supabase mock
-    mockGetSupabaseServiceClient.mockReturnValue(supabaseMock)
+    mockGetSupabaseServiceClient.mockReturnValue(supabaseMock as unknown as SupabaseClient<Database>)
     
     // Clear previous test state
     factory.clear()
@@ -62,7 +64,7 @@ describe('/api/setlists/[id]', () => {
       mockRequireAuthServerSecure.mockResolvedValue(null)
 
       const request = new NextRequest(`http://localhost:3000/api/setlists/${setlistId}`)
-      const response = await GET(request, { params: { id: setlistId } })
+      const response = await GET(request)
 
       expect(response.status).toBe(401)
     })
@@ -75,7 +77,7 @@ describe('/api/setlists/[id]', () => {
       errorScenarios.setlistNotFound()
 
       const request = new NextRequest(`http://localhost:3000/api/setlists/${setlistId}`)
-      const response = await GET(request, { params: { id: setlistId } })
+      const response = await GET(request)
 
       expect(response.status).toBe(404)
     })
@@ -83,20 +85,21 @@ describe('/api/setlists/[id]', () => {
     it('returns 404 when setlist belongs to different user', async () => {
       mockRequireAuthServerSecure.mockResolvedValue({ uid: 'different-user' })
       
-      // Setup empty setlists for different user (simulates not found due to user_id filter)
-      factory.setMockData('setlists', [])
+      // Setup PGRST116 error for different user (simulates not found due to user_id filter)
+      const errorScenarios = createErrorScenarios(factory)
+      errorScenarios.setlistNotFound()
 
       const request = new NextRequest(`http://localhost:3000/api/setlists/${setlistId}`)
-      const response = await GET(request, { params: { id: setlistId } })
+      const response = await GET(request)
 
-      expect(response.status).toBe(200) // API returns empty result instead of 404
+      expect(response.status).toBe(404)
     })
 
     it('returns setlist with songs for authenticated user', async () => {
       mockRequireAuthServerSecure.mockResolvedValue(mockUser)
 
       const request = new NextRequest(`http://localhost:3000/api/setlists/${setlistId}`)
-      const response = await GET(request, { params: { id: setlistId } })
+      const response = await GET(request)
       const data = await response.json()
 
       expect(response.status).toBe(200)
@@ -114,7 +117,7 @@ describe('/api/setlists/[id]', () => {
       factory.setMockData('setlist_songs', [])
 
       const request = new NextRequest(`http://localhost:3000/api/setlists/${setlistId}`)
-      const response = await GET(request, { params: { id: setlistId } })
+      const response = await GET(request)
       const data = await response.json()
 
       expect(response.status).toBe(200)
@@ -129,7 +132,7 @@ describe('/api/setlists/[id]', () => {
       factory.setMockData('content', [])
 
       const request = new NextRequest(`http://localhost:3000/api/setlists/${setlistId}`)
-      const response = await GET(request, { params: { id: setlistId } })
+      const response = await GET(request)
       const data = await response.json()
 
       expect(response.status).toBe(200)
@@ -146,7 +149,7 @@ describe('/api/setlists/[id]', () => {
       errorScenarios.databaseError()
 
       const request = new NextRequest(`http://localhost:3000/api/setlists/${setlistId}`)
-      const response = await GET(request, { params: { id: setlistId } })
+      const response = await GET(request)
 
       expect(response.status).toBe(500)
     })
@@ -161,7 +164,7 @@ describe('/api/setlists/[id]', () => {
       })
 
       const request = new NextRequest(`http://localhost:3000/api/setlists/${setlistId}`)
-      const response = await GET(request, { params: { id: setlistId } })
+      const response = await GET(request)
       const data = await response.json()
 
       expect(response.status).toBe(200)
@@ -178,7 +181,7 @@ describe('/api/setlists/[id]', () => {
         method: 'PUT',
         body: JSON.stringify({ name: 'Updated Setlist' })
       })
-      const response = await PUT(request, { params: { id: setlistId } })
+      const response = await PUT(request)
 
       expect(response.status).toBe(401)
     })
@@ -195,7 +198,7 @@ describe('/api/setlists/[id]', () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: 'Updated Setlist' })
       })
-      const response = await PUT(request, { params: { id: setlistId } })
+      const response = await PUT(request)
 
       expect(response.status).toBe(500)
     })
@@ -219,7 +222,7 @@ describe('/api/setlists/[id]', () => {
           description: 'Updated description'
         })
       })
-      const response = await PUT(request, { params: { id: setlistId } })
+      const response = await PUT(request)
       const data = await response.json()
 
       expect(response.status).toBe(200)
@@ -242,7 +245,7 @@ describe('/api/setlists/[id]', () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ venue: 'Updated Venue' })
       })
-      const response = await PUT(request, { params: { id: setlistId } })
+      const response = await PUT(request)
       const data = await response.json()
 
       expect(response.status).toBe(200)
@@ -258,7 +261,7 @@ describe('/api/setlists/[id]', () => {
         headers: { 'Content-Type': 'application/json' },
         body: 'invalid json'
       })
-      const response = await PUT(request, { params: { id: setlistId } })
+      const response = await PUT(request)
 
       expect(response.status).toBe(500)
     })
@@ -277,7 +280,7 @@ describe('/api/setlists/[id]', () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: 'Updated Setlist' })
       })
-      const response = await PUT(request, { params: { id: setlistId } })
+      const response = await PUT(request)
 
       expect(response.status).toBe(500)
     })
@@ -290,7 +293,7 @@ describe('/api/setlists/[id]', () => {
       const request = new NextRequest(`http://localhost:3000/api/setlists/${setlistId}`, {
         method: 'DELETE'
       })
-      const response = await DELETE(request, { params: { id: setlistId } })
+      const response = await DELETE(request)
 
       expect(response.status).toBe(401)
     })
@@ -305,7 +308,7 @@ describe('/api/setlists/[id]', () => {
       const request = new NextRequest(`http://localhost:3000/api/setlists/${setlistId}`, {
         method: 'DELETE'
       })
-      const response = await DELETE(request, { params: { id: setlistId } })
+      const response = await DELETE(request)
 
       expect(response.status).toBe(500)
     })
@@ -316,7 +319,7 @@ describe('/api/setlists/[id]', () => {
       const request = new NextRequest(`http://localhost:3000/api/setlists/${setlistId}`, {
         method: 'DELETE'
       })
-      const response = await DELETE(request, { params: { id: setlistId } })
+      const response = await DELETE(request)
 
       expect(response.status).toBe(200)
       // API might not return a message in the response
@@ -335,7 +338,7 @@ describe('/api/setlists/[id]', () => {
       const request = new NextRequest(`http://localhost:3000/api/setlists/${setlistId}`, {
         method: 'DELETE'
       })
-      const response = await DELETE(request, { params: { id: setlistId } })
+      const response = await DELETE(request)
 
       expect(response.status).toBe(500)
     })
@@ -349,7 +352,7 @@ describe('/api/setlists/[id]', () => {
       const request = new NextRequest(`http://localhost:3000/api/setlists/${setlistId}`, {
         method: 'DELETE'
       })
-      const response = await DELETE(request, { params: { id: setlistId } })
+      const response = await DELETE(request)
 
       expect(response.status).toBe(200) // API handles this gracefully
     })

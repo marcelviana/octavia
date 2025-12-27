@@ -189,6 +189,17 @@ export class SupabaseMockFactory {
 
     // Return single item or array
     if (single) {
+      if (data.length === 0) {
+        // Supabase returns PGRST116 error when .single() finds no rows
+        return { 
+          data: null, 
+          error: { 
+            code: 'PGRST116', 
+            message: 'No rows found',
+            details: 'The result contains 0 rows'
+          } 
+        }
+      }
       return { data: data[0] || null, error: null }
     }
 
