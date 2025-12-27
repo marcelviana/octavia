@@ -263,6 +263,8 @@ export function useServiceWorker() {
 
       } catch (error) {
         handleRegistrationError(error as Error)
+        // Return no-op cleanup function when registration fails
+        return () => {}
       }
     }
 

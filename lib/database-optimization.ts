@@ -71,7 +71,11 @@ export class BatchQueryManager {
     return new Promise<T | null>((resolve, reject) => {
       // Add to pending queries
       const pending = this.pendingQueries.get(queryKey) || []
-      pending.push({ resolve, reject, timestamp: Date.now() })
+      pending.push({ 
+        resolve: resolve as (value: unknown) => void, 
+        reject, 
+        timestamp: Date.now() 
+      })
       this.pendingQueries.set(queryKey, pending)
 
       // Clear existing timeout
@@ -212,6 +216,7 @@ export class OptimizedContentQueries {
         .single()
 
       if (setlistError) throw setlistError
+      if (!setlist) throw new Error('Setlist not found')
 
       // Then get all setlist songs with content in a single query
       const { data: setlistSongs, error: songsError } = await this.supabase
@@ -237,7 +242,7 @@ export class OptimizedContentQueries {
       if (songsError) throw songsError
 
       const result = {
-        ...setlist,
+        ...(setlist as Record<string, unknown>),
         setlist_songs: setlistSongs || []
       }
 
@@ -383,26 +388,39 @@ export class OptimizedContentQueries {
       ])
 
       const activities = [
-        ...(recentContent.data || []).map(item => ({
-          type: 'content_created',
-          ...item,
-          timestamp: item.created_at
-        })),
-        ...(recentSetlists.data || []).map(item => ({
-          type: 'setlist_updated',
-          ...item,
-          timestamp: item.updated_at
-        })),
-        ...(recentEdits.data || []).map(item => ({
-          type: 'content_edited',
-          ...item,
-          timestamp: item.updated_at
-        }))
+        ...(recentContent.data || []).map(item => {
+          const itemObj = item as Record<string, unknown>
+          return {
+            type: 'content_created',
+            ...itemObj,
+            timestamp: itemObj.created_at
+          }
+        }),
+        ...(recentSetlists.data || []).map(item => {
+          const itemObj = item as Record<string, unknown>
+          return {
+            type: 'setlist_updated',
+            ...itemObj,
+            timestamp: itemObj.updated_at
+          }
+        }),
+        ...(recentEdits.data || []).map(item => {
+          const itemObj = item as Record<string, unknown>
+          return {
+            type: 'content_edited',
+            ...itemObj,
+            timestamp: itemObj.updated_at
+          }
+        })
       ]
 
       // Sort by timestamp and limit
       const sortedActivities = activities
-        .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+        .sort((a, b) => {
+          const aTime = new Date(a.timestamp as string | number | Date).getTime()
+          const bTime = new Date(b.timestamp as string | number | Date).getTime()
+          return bTime - aTime
+        })
         .slice(0, limit)
 
       QueryCache.set(cacheKey, sortedActivities, 5 * 60 * 1000) // 5 minutes
@@ -484,6 +502,3 @@ export class DatabaseOptimizer {
     }
   }
 }
-
-// Export utilities for global access
-export { QueryCache, BatchQueryManager, OptimizedContentQueries, DatabaseOptimizer }

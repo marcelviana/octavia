@@ -111,8 +111,12 @@ describe('End-to-End User Workflow Integration Tests', () => {
     mockReplace.mockClear()
 
     // Setup default API responses
-    vi.mocked(fetch).mockImplementation(async (url: string | URL) => {
-      const urlString = url.toString()
+    vi.mocked(fetch).mockImplementation(async (input: string | Request | URL) => {
+      const urlString = typeof input === 'string' 
+        ? input 
+        : input instanceof URL 
+          ? input.toString() 
+          : input.url
 
       if (urlString.includes('/api/setlists')) {
         if (urlString.includes('POST')) {
@@ -513,7 +517,7 @@ describe('End-to-End User Workflow Integration Tests', () => {
       // 4. PERFORMANCE MODE WORKFLOW
       const PerformanceModeFlow = () => {
         const [isPerformanceMode, setIsPerformanceMode] = React.useState(false)
-        const [currentSetlist] = React.useState(mockSetlists[0])
+        const [currentSetlist] = React.useState(mockSetlists[0]!)
         const [currentSongIndex, setCurrentSongIndex] = React.useState(0)
         const [songs] = React.useState(mockSongs)
 
@@ -773,7 +777,7 @@ describe('End-to-End User Workflow Integration Tests', () => {
 
     it('should handle collaborative setlist sharing', async () => {
       const CollaborativeFlow = () => {
-        const [setlist] = React.useState(mockSetlists[0])
+        const [setlist] = React.useState(mockSetlists[0]!)
         const [shareLink, setShareLink] = React.useState('')
         const [isSharing, setIsSharing] = React.useState(false)
 
@@ -1011,7 +1015,17 @@ describe('End-to-End User Workflow Integration Tests', () => {
 
       // Mock 401 response for expired token
       vi.mocked(fetch).mockImplementation(async (url, options) => {
-        const authHeader = options?.headers?.['Authorization']
+        let authHeader: string | undefined
+        if (options?.headers) {
+          if (options.headers instanceof Headers) {
+            authHeader = options.headers.get('Authorization') || undefined
+          } else if (Array.isArray(options.headers)) {
+            const headerEntry = options.headers.find(([key]) => key.toLowerCase() === 'authorization')
+            authHeader = headerEntry?.[1]
+          } else {
+            authHeader = options.headers['Authorization'] as string | undefined
+          }
+        }
         if (authHeader === 'Bearer expired-token') {
           return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401 })
         }

@@ -173,6 +173,7 @@ export const OptimizedPerformanceMode = memo(function OptimizedPerformanceMode({
 
       for (let i = 0; i < songs.length; i++) {
         const song = songs[i]
+        if (!song) continue
         
         // Load file content if available
         if (song.file_url) {
@@ -249,6 +250,7 @@ export const OptimizedPerformanceMode = memo(function OptimizedPerformanceMode({
       const timer = setTimeout(() => setShowPerformanceWarning(false), 10000)
       return () => clearTimeout(timer)
     }
+    return undefined
   }, [summary])
 
   // Measure render performance for this component

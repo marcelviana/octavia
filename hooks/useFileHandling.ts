@@ -34,6 +34,7 @@ export function useFileHandling({
   const handleFilesUploaded = (files: UploadedFile[]) => {
     if (files.length > 0) {
       const file = files[0]
+      if (!file) return
 
       // Auto-detect if this is an image file and set content type to Sheet Music
       const isImageFile = /\.(png|jpg|jpeg)$/i.test(file.name)

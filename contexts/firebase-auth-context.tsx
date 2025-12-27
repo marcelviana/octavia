@@ -237,6 +237,7 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
           setIsLoading(false)
           setIsInitialized(true)
         }
+        return undefined
       }
     }
 

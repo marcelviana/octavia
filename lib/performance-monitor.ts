@@ -456,15 +456,19 @@ class RealTimePerformanceMonitor {
 
     // Check for consistent degradation
     const isConsistentlyDegrading = recentMetrics.every((metric, i) => 
-      i === 0 || metric.value >= recentMetrics[i - 1].value
+      i === 0 || (recentMetrics[i - 1] !== undefined && metric.value >= recentMetrics[i - 1]!.value)
     )
 
     if (isConsistentlyDegrading) {
-      const trend = recentMetrics[recentMetrics.length - 1].value - recentMetrics[0].value
-      this.createAlert('warning', category, 
-        `Performance degrading: ${name} increased by ${trend.toFixed(2)} over last 30s`,
-        trend, 0
-      )
+      const lastMetric = recentMetrics[recentMetrics.length - 1]
+      const firstMetric = recentMetrics[0]
+      if (lastMetric !== undefined && firstMetric !== undefined) {
+        const trend = lastMetric.value - firstMetric.value
+        this.createAlert('warning', category, 
+          `Performance degrading: ${name} increased by ${trend.toFixed(2)} over last 30s`,
+          trend, 0
+        )
+      }
     }
   }
 

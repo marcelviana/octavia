@@ -48,8 +48,15 @@ Object.defineProperty(globalThis, 'performance', {
 })
 
 // Simulate memory usage tracking
+interface MemoryMeasurement {
+  timestamp: number
+  usedJSHeapSize: number
+  totalJSHeapSize: number
+  label: string
+}
+
 class MemoryTracker {
-  private measurements: number[] = []
+  private measurements: MemoryMeasurement[] = []
   private startTime: number = Date.now()
 
   measure(label: string) {
@@ -60,7 +67,7 @@ class MemoryTracker {
         usedJSHeapSize: memory.usedJSHeapSize,
         totalJSHeapSize: memory.totalJSHeapSize,
         label
-      } as any)
+      })
     }
   }
 
@@ -68,7 +75,7 @@ class MemoryTracker {
     return {
       initialMemory: this.measurements[0]?.usedJSHeapSize || 0,
       finalMemory: this.measurements[this.measurements.length - 1]?.usedJSHeapSize || 0,
-      peakMemory: Math.max(...this.measurements.map((m: any) => m.usedJSHeapSize)),
+      peakMemory: Math.max(...this.measurements.map((m: MemoryMeasurement) => m.usedJSHeapSize)),
       measurements: this.measurements
     }
   }
@@ -76,8 +83,8 @@ class MemoryTracker {
   detectLeaks() {
     if (this.measurements.length < 10) return { hasLeak: false }
 
-    const recent = this.measurements.slice(-5).map((m: any) => m.usedJSHeapSize)
-    const earlier = this.measurements.slice(5, 10).map((m: any) => m.usedJSHeapSize)
+    const recent = this.measurements.slice(-5).map((m: MemoryMeasurement) => m.usedJSHeapSize)
+    const earlier = this.measurements.slice(5, 10).map((m: MemoryMeasurement) => m.usedJSHeapSize)
 
     const recentAvg = recent.reduce((a, b) => a + b, 0) / recent.length
     const earlierAvg = earlier.reduce((a, b) => a + b, 0) / earlier.length
@@ -101,7 +108,7 @@ const PerformanceModeSimulator = ({ duration, onMemoryMeasure }: {
 }) => {
   const [currentSong, setCurrentSong] = useState(0)
   const [content, setContent] = useState<any[]>([])
-  const intervalRef = useRef<NodeJS.Timeout>()
+  const intervalRef = useRef<NodeJS.Timeout | undefined>(undefined)
   const componentsRef = useRef<Map<string, any>>(new Map())
 
   // Simulate loading large content
@@ -134,7 +141,9 @@ const PerformanceModeSimulator = ({ duration, onMemoryMeasure }: {
       // Clean up old components (testing cleanup)
       if (componentsRef.current.size > 10) {
         const oldestKey = componentsRef.current.keys().next().value
-        componentsRef.current.delete(oldestKey)
+        if (oldestKey) {
+          componentsRef.current.delete(oldestKey)
+        }
       }
     }, duration / 50) // Change song 50 times during test
 
@@ -195,8 +204,8 @@ const TimerComponent = ({ interval, onTick }: {
   interval: number
   onTick: () => void
 }) => {
-  const intervalRef = useRef<NodeJS.Timeout>()
-  const timeoutRef = useRef<NodeJS.Timeout>()
+  const intervalRef = useRef<NodeJS.Timeout | undefined>(undefined)
+  const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined)
 
   useEffect(() => {
     intervalRef.current = setInterval(onTick, interval)

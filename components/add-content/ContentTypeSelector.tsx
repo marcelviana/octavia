@@ -42,18 +42,18 @@ export function ContentTypeSelector({ selectedType, onTypeChange }: ContentTypeS
                   <CardContent className="p-4 text-center">
                     <div
                       className={`w-12 h-12 mx-auto mb-2 rounded-xl flex items-center justify-center ${
-                        isSelected ? colors.iconBg : "bg-gray-100"
+                        isSelected ? colors.bg : "bg-gray-100"
                       }`}
                     >
                       <IconComponent
                         className={`w-6 h-6 ${
-                          isSelected ? colors.iconColor : "text-gray-600"
+                          isSelected ? colors.primary : "text-gray-600"
                         }`}
                       />
                     </div>
                     <div
                       className={`text-sm font-medium ${
-                        isSelected ? colors.textColor : "text-gray-700"
+                        isSelected ? colors.primary : "text-gray-700"
                       }`}
                     >
                       {type.name}

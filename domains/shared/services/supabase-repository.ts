@@ -90,7 +90,7 @@ export class SupabaseRepository<T extends BaseEntity> extends BaseRepository<T> 
     try {
       const { data: result, error } = await this.supabase
         .from(this.tableName)
-        .insert(data)
+        .insert(data as any)
         .select()
         .single()
 
@@ -99,10 +99,11 @@ export class SupabaseRepository<T extends BaseEntity> extends BaseRepository<T> 
       }
 
       // Cache the new item
-      const cacheKey = this.getCacheKey(result.id)
-      this.setCache(cacheKey, result)
+      const typedResult = result as T
+      const cacheKey = this.getCacheKey(typedResult.id)
+      this.setCache(cacheKey, typedResult)
 
-      return { data: result }
+      return { data: typedResult }
     } catch (error) {
       return this.handleError(error, 'create')
     }
@@ -110,8 +111,8 @@ export class SupabaseRepository<T extends BaseEntity> extends BaseRepository<T> 
 
   async update(id: string, data: Partial<Omit<T, 'id' | 'created_at' | 'updated_at'>>): Promise<RepositoryResponse<T>> {
     try {
-      const { data: result, error } = await this.supabase
-        .from(this.tableName)
+      const { data: result, error } = await (this.supabase
+        .from(this.tableName) as any)
         .update(data)
         .eq('id', id)
         .select()
@@ -122,10 +123,11 @@ export class SupabaseRepository<T extends BaseEntity> extends BaseRepository<T> 
       }
 
       // Update cache
+      const typedResult = result as T
       const cacheKey = this.getCacheKey(id)
-      this.setCache(cacheKey, result)
+      this.setCache(cacheKey, typedResult)
 
-      return { data: result }
+      return { data: typedResult }
     } catch (error) {
       return this.handleError(error, 'update')
     }

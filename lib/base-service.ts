@@ -15,6 +15,8 @@
 import logger from "@/lib/logger"
 import { debug } from "@/lib/debug"
 import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies"
+import type { Database } from "@/types/supabase"
+import type { SupabaseClient } from "@supabase/supabase-js"
 
 // Standard service operation result
 export interface ServiceResult<T = any> {
@@ -211,7 +213,7 @@ export abstract class BaseService {
   /**
    * Get Supabase client for database operations
    */
-  protected async getSupabaseClient() {
+  protected async getSupabaseClient(): Promise<SupabaseClient<Database>> {
     const { createClient } = await import("@supabase/supabase-js")
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
@@ -220,13 +222,13 @@ export abstract class BaseService {
       throw new Error('Supabase configuration missing')
     }
 
-    return createClient(supabaseUrl, supabaseKey)
+    return createClient<Database>(supabaseUrl, supabaseKey)
   }
 
   /**
    * Get Supabase service client for server-side operations
    */
-  protected async getSupabaseServiceClient() {
+  protected async getSupabaseServiceClient(): Promise<SupabaseClient<Database>> {
     const { getSupabaseServiceClient } = await import("@/lib/supabase-service")
     return getSupabaseServiceClient()
   }

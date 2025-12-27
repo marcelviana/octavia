@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js"
 import type { Database } from "@/types/supabase"
+import type { SupabaseClient } from "@supabase/supabase-js"
 import logger from "@/lib/logger"
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
@@ -12,9 +13,9 @@ export const isSupabaseServiceConfigured = Boolean(
   supabaseServiceKey.length > 20,
 )
 
-let supabaseServiceClient: ReturnType<typeof createClient<Database>> | null = null
+let supabaseServiceClient: SupabaseClient<Database> | null = null
 
-export function getSupabaseServiceClient() {
+export function getSupabaseServiceClient(): SupabaseClient<Database> {
   if (!supabaseServiceClient) {
     if (!isSupabaseServiceConfigured) {
       logger.warn("Supabase service role not configured - operations will fail")

@@ -9,6 +9,7 @@ import { BaseService, type ServiceResult, type ServiceContext } from "./base-ser
 import { enqueueRequest } from "@/lib/offline-queue"
 import type { Database } from "@/types/supabase"
 import type { ContentQueryParams } from "./content-types"
+import type { SupabaseClient } from "@supabase/supabase-js"
 
 // Content types from Supabase
 type Content = Database["public"]["Tables"]["content"]["Row"]
@@ -160,7 +161,7 @@ class ContentService extends BaseService {
       this.validateRequired(contentData.title, "title")
       this.validateRequired(contentData.content_type, "content_type")
 
-      const insertData: ContentInsert = {
+      const insertData = {
         user_id: user.id,
         title: contentData.title,
         artist: contentData.artist || null,
@@ -170,15 +171,20 @@ class ContentService extends BaseService {
         key: contentData.key || null,
         bpm: contentData.bpm || null,
         notes: contentData.notes || null,
+      } satisfies ContentInsert
+
+      let supabase: SupabaseClient<Database>
+      if (context.isServer) {
+        supabase = await this.getSupabaseServiceClient()
+      } else {
+        supabase = await this.getSupabaseClient()
       }
 
-      const supabase = context.isServer
-        ? await this.getSupabaseServiceClient()
-        : await this.getSupabaseClient()
-
+      // Type assertion needed due to TypeScript inference issue with Supabase client
+      // The Database type is correctly defined, but TS can't infer it through the client chain
       const { data, error } = await supabase
         .from("content")
-        .insert(insertData)
+        .insert(insertData as any)
         .select()
         .single()
 
@@ -230,12 +236,16 @@ class ContentService extends BaseService {
         updated_at: new Date().toISOString(),
       }
 
-      const supabase = context.isServer
-        ? await this.getSupabaseServiceClient()
-        : await this.getSupabaseClient()
+      let supabase: SupabaseClient<Database>
+      if (context.isServer) {
+        supabase = await this.getSupabaseServiceClient()
+      } else {
+        supabase = await this.getSupabaseClient()
+      }
 
-      const { data, error } = await supabase
-        .from("content")
+      // Type assertion needed due to TypeScript inference issue with Supabase client
+      const { data, error } = await (supabase
+        .from("content") as any)
         .update(updateData)
         .eq("id", id)
         .eq("user_id", user.id)
@@ -342,7 +352,7 @@ class ContentService extends BaseService {
         .eq("user_id", user.id)
 
       const contentTypeBreakdown: Record<string, number> = {}
-      contentTypes?.forEach((item) => {
+      contentTypes?.forEach((item: any) => {
         const type = item.content_type || "unknown"
         contentTypeBreakdown[type] = (contentTypeBreakdown[type] || 0) + 1
       })

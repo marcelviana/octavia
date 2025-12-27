@@ -6,6 +6,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server'
+import { generateNonce } from './csp-nonce'
 
 export interface EnhancedSecurityConfig {
   contentSecurityPolicy: {
@@ -330,7 +331,7 @@ export function logSecurityEvent(
     event,
     details,
     userAgent: request?.headers.get('user-agent'),
-    ip: request?.ip || request?.headers.get('x-forwarded-for'),
+    ip: request?.headers.get('x-forwarded-for') || request?.headers.get('x-real-ip') || request?.headers.get('cf-connecting-ip'),
     url: request?.url
   }
 
@@ -358,5 +359,5 @@ export function withEnhancedSecurity(handler: any) {
 
 // Export aliases for backward compatibility with tests
 export const applySecurityHeaders = applyEnhancedSecurityHeaders
-export const generateCSPNonce = generateSecurityNonce
+export const generateCSPNonce = generateNonce
 export const createSecurityHeadersMiddleware = withEnhancedSecurity

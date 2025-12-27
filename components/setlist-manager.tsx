@@ -170,6 +170,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
 
       for (let i = 0; i < songIds.length; i++) {
         const songId = songIds[i]
+        if (!songId) continue
         const content = availableContent.find(c => c.id === songId)
         if (!content) continue
 

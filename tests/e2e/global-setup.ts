@@ -5,7 +5,7 @@ import { chromium, FullConfig } from '@playwright/test';
  * This runs once before all tests and sets up authentication state
  */
 async function globalSetup(config: FullConfig) {
-  const { baseURL } = config.projects[0].use;
+  const { baseURL } = config.projects[0]?.use ?? { baseURL: 'http://localhost:3000' };
   
   console.log('🎵 Setting up Octavia E2E test environment...');
   

@@ -37,10 +37,11 @@ export const StyleSheet: StyleSheet = {
   create<T extends Record<string, unknown>>(styles: T): T {
     if (Platform.isWeb) {
       // Convert React Native styles to CSS-in-JS
-      return Object.entries(styles).reduce((acc, [key, style]) => {
+      const result = Object.entries(styles).reduce((acc, [key, style]) => {
         acc[key] = convertToWebStyles(style as Record<string, unknown>)
         return acc
-      }, {} as T)
+      }, {} as Record<string, unknown>)
+      return result as T
     }
     return styles
   }
@@ -130,9 +131,13 @@ function convertToWebStyles(style: Record<string, unknown>): Record<string, unkn
       case 'transform':
         if (Array.isArray(value)) {
           webStyle.transform = value.map(transform => {
-            const [key, val] = Object.entries(transform)[0]
-            return `${key}(${val})`
-          }).join(' ')
+            const entry = Object.entries(transform)[0]
+            if (entry) {
+              const [key, val] = entry
+              return `${key}(${val})`
+            }
+            return ''
+          }).filter(Boolean).join(' ')
         }
         break
 
@@ -188,7 +193,7 @@ export const NetInfo = {
   fetch(): Promise<{ isConnected: boolean; type: string }> {
     return Promise.resolve({
       isConnected: NetworkInfo.isConnected,
-      connectionType: NetworkInfo.connectionType || 'unknown'
+      type: NetworkInfo.connectionType || 'unknown'
     })
   },
 

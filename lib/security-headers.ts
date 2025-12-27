@@ -251,27 +251,39 @@ export function getEnvironmentCSPConfig(): SecurityConfig {
 
   if (process.env.NODE_ENV === 'development') {
     // Allow webpack dev server in development
-    config.contentSecurityPolicy.directives['connect-src'].push(
-      'ws://localhost:*',
-      'http://localhost:*'
-    )
+    const connectSrc = config.contentSecurityPolicy.directives['connect-src']
+    if (connectSrc) {
+      connectSrc.push(
+        'ws://localhost:*',
+        'http://localhost:*'
+      )
+    }
     
     // Allow hot reload
-    config.contentSecurityPolicy.directives['script-src'].push(
-      'http://localhost:*'
-    )
+    const scriptSrc = config.contentSecurityPolicy.directives['script-src']
+    if (scriptSrc) {
+      scriptSrc.push(
+        'http://localhost:*'
+      )
+    }
   }
 
   if (process.env.NODE_ENV === 'production') {
     // Remove unsafe directives in production
-    config.contentSecurityPolicy.directives['script-src'] = 
-      config.contentSecurityPolicy.directives['script-src'].filter(
+    const scriptSrc = config.contentSecurityPolicy.directives['script-src']
+    if (scriptSrc) {
+      const filtered = scriptSrc.filter(
         src => src !== "'unsafe-eval'" && src !== "'unsafe-inline'"
       )
-      
+      filtered.push("'nonce-{{NONCE}}'")
+      config.contentSecurityPolicy.directives['script-src'] = filtered
+    }
+    
     // Add nonce support for production
-    config.contentSecurityPolicy.directives['script-src'].push("'nonce-{{NONCE}}'")
-    config.contentSecurityPolicy.directives['style-src'].push("'nonce-{{NONCE}}'")
+    const styleSrc = config.contentSecurityPolicy.directives['style-src']
+    if (styleSrc) {
+      styleSrc.push("'nonce-{{NONCE}}'")
+    }
   }
 
   return config

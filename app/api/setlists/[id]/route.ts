@@ -5,6 +5,7 @@ import logger from '@/lib/logger'
 import { withRateLimit } from '@/lib/rate-limit'
 import { withBodyValidation, setlistSchemas } from '@/lib/api-validation-middleware'
 import type { SetlistSong, ContentData, FormattedSetlistSong } from '@/types/setlist'
+import { z } from 'zod'
 
 // GET /api/setlists/[id] - Get specific setlist
 const getSetlistByIdHandler = async (
@@ -46,6 +47,16 @@ const getSetlistByIdHandler = async (
       throw setlistError
     }
 
+    if (!setlist) {
+      return NextResponse.json(
+        { error: 'Setlist not found' },
+        { status: 404 }
+      )
+    }
+
+    // TypeScript type narrowing - setlist is guaranteed to be non-null here
+    const setlistData = setlist as Record<string, unknown>
+
     // Get the setlist_songs
     const { data: setlistSongs, error: songsError } = await supabase
       .from("setlist_songs")
@@ -55,11 +66,11 @@ const getSetlistByIdHandler = async (
 
     if (songsError) {
       logger.error(`Error fetching songs for setlist ${setlistId}:`, songsError)
-      return NextResponse.json({ ...setlist, setlist_songs: [] })
+      return NextResponse.json({ ...setlistData, setlist_songs: [] })
     }
 
     if (!setlistSongs || setlistSongs.length === 0) {
-      return NextResponse.json({ ...setlist, setlist_songs: [] })
+      return NextResponse.json({ ...setlistData, setlist_songs: [] })
     }
 
     // Get all unique content IDs
@@ -107,7 +118,7 @@ const getSetlistByIdHandler = async (
       }
     })
 
-    return NextResponse.json({ ...setlist, setlist_songs: formattedSongs })
+    return NextResponse.json({ ...setlistData, setlist_songs: formattedSongs })
   } catch (error: unknown) {
     logger.error('Error in setlist API:', error)
     return NextResponse.json(
@@ -133,23 +144,39 @@ export const GET = withRateLimit(wrappedGetSetlistHandler, 100)
 
 // PUT /api/setlists/[id] - Update setlist
 const updateSetlistHandler = withBodyValidation(setlistSchemas.update)(
-  async (request: NextRequest, validatedData: unknown, user: { uid: string }, params: { id: string }) => {
+  async (request: Request, validatedData: z.infer<typeof setlistSchemas.update>, user?: { uid: string }, params?: { id: string }) => {
     try {
+      if (!user) {
+        return new Response(
+          JSON.stringify({ error: 'Unauthorized' }),
+          { status: 401, headers: { 'Content-Type': 'application/json' } }
+        )
+      }
+
+      if (!params?.id) {
+        return new Response(
+          JSON.stringify({ error: 'Setlist ID is required' }),
+          { status: 400, headers: { 'Content-Type': 'application/json' } }
+        )
+      }
+
       const setlistId = params.id
       const supabase = getSupabaseServiceClient()
 
-      const updateData = {
-        name: validatedData.name,
-        description: validatedData.description || null,
-        performance_date: validatedData.performance_date || null,
-        venue: validatedData.venue || null,
-        notes: validatedData.notes || null,
+      const updateData: Record<string, unknown> = {
         updated_at: new Date().toISOString(),
       }
 
+      if (validatedData.name !== undefined) {
+        updateData.name = validatedData.name
+      }
+      if (validatedData.description !== undefined) {
+        updateData.description = validatedData.description || null
+      }
+
     // Update the setlist
-    const { data: setlist, error } = await supabase
-      .from("setlists")
+    const { data: setlist, error } = await (supabase
+      .from("setlists") as any)
       .update(updateData)
       .eq("id", setlistId)
       .eq("user_id", user.uid)
@@ -161,6 +188,16 @@ const updateSetlistHandler = withBodyValidation(setlistSchemas.update)(
       throw error
     }
 
+    if (!setlist) {
+      return new Response(
+        JSON.stringify({ error: 'Setlist not found' }),
+        { status: 404, headers: { 'Content-Type': 'application/json' } }
+      )
+    }
+
+    // TypeScript type narrowing - setlist is guaranteed to be non-null here
+    const setlistData = setlist as Record<string, unknown>
+
       // Get the songs for this setlist
       const { data: setlistSongs, error: songsError } = await supabase
         .from("setlist_songs")
@@ -170,13 +207,13 @@ const updateSetlistHandler = withBodyValidation(setlistSchemas.update)(
 
       if (songsError) {
         logger.error(`Error fetching songs for setlist ${setlistId}:`, songsError)
-        return new Response(JSON.stringify({ ...setlist, setlist_songs: [] }), {
+        return new Response(JSON.stringify({ ...setlistData, setlist_songs: [] }), {
           headers: { 'Content-Type': 'application/json' }
         })
       }
 
       if (!setlistSongs || setlistSongs.length === 0) {
-        return new Response(JSON.stringify({ ...setlist, setlist_songs: [] }), {
+        return new Response(JSON.stringify({ ...setlistData, setlist_songs: [] }), {
           headers: { 'Content-Type': 'application/json' }
         })
       }
@@ -226,7 +263,7 @@ const updateSetlistHandler = withBodyValidation(setlistSchemas.update)(
         }
       })
 
-      return new Response(JSON.stringify({ ...setlist, setlist_songs: formattedSongs }), {
+      return new Response(JSON.stringify({ ...setlistData, setlist_songs: formattedSongs }), {
         headers: { 'Content-Type': 'application/json' }
       })
     } catch (error: unknown) {
@@ -244,13 +281,13 @@ const wrappedUpdateSetlistHandler = async (request: NextRequest) => {
   const url = new URL(request.url)
   const id = url.pathname.split('/').pop()
   if (!id) {
-    return new Response(JSON.stringify({ error: 'Setlist ID is required' }), {
-      status: 400,
-      headers: { 'Content-Type': 'application/json' }
-    })
+    return NextResponse.json({ error: 'Setlist ID is required' }, { status: 400 })
   }
 
-  return updateSetlistHandler(request, { id })
+  // Convert NextRequest to Request for the middleware, then convert Response back to NextResponse
+  const response = await updateSetlistHandler(request as unknown as Request, { id })
+  const data = await response.json()
+  return NextResponse.json(data, { status: response.status, headers: response.headers })
 }
 
 export const PUT = withRateLimit(wrappedUpdateSetlistHandler, 100)

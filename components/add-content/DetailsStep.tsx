@@ -60,20 +60,32 @@ export function DetailsStep({
 
         {isMultipleFiles ? (
           <BatchPreview
-            files={uploadedFiles}
-            onNext={onNext}
-            draftContent={draftContent}
-            setDraftContent={setDraftContent}
-            handleSaveContent={handleSaveContent}
-            isUploading={isUploading}
+            songs={uploadedFiles}
+            contentType={
+              contentType === ContentType.CHORDS
+                ? "Chord Chart"
+                : contentType === ContentType.TAB
+                ? "Guitar Tab"
+                : contentType === ContentType.SHEET
+                ? "Sheet Music"
+                : "Lyrics"
+            }
+            onComplete={(contents) => {
+              // Handle batch import completion
+              if (contents.length > 0) {
+                onNext();
+              }
+            }}
+            onBack={onBack}
           />
         ) : (
           <MetadataForm
-            metadata={metadata}
-            onChange={onMetadataChange}
-            onNext={onNext}
-            contentType={contentType}
-            isUploading={isUploading}
+            createdContent={draftContent}
+            onComplete={(metadata) => {
+              // Handle metadata completion
+              onNext();
+            }}
+            onBack={onBack}
           />
         )}
       </div>

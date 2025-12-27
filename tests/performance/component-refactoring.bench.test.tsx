@@ -57,11 +57,8 @@ const mockSetlist = {
 const contentViewerProps = {
   content: mockContent,
   onBack: vi.fn(),
-  onEdit: vi.fn(),
-  onDelete: vi.fn(),
-  onNavigate: vi.fn(),
-  setlist: mockSetlist,
-  currentSongIndex: 0
+  onEnterPerformance: vi.fn(),
+  onEdit: vi.fn()
 }
 
 const addContentProps = {
@@ -111,7 +108,7 @@ describe.skip('TODO: Fix performance benchmarks - Component Refactoring Performa
 
     // Mock sub-components
     vi.mocked(require('@/components/content-viewer/ContentHeader')).ContentHeader.mockImplementation(
-      ({ title, artist }) => React.createElement('div', { 'data-testid': 'content-header' }, `${title} - ${artist}`)
+      ({ title, artist }: { title: string; artist: string }) => React.createElement('div', { 'data-testid': 'content-header' }, `${title} - ${artist}`)
     )
 
     vi.mocked(require('@/components/content-viewer/ContentToolbar')).ContentToolbar.mockImplementation(
@@ -131,7 +128,7 @@ describe.skip('TODO: Fix performance benchmarks - Component Refactoring Performa
     )
 
     vi.mocked(require('@/components/add-content/StepIndicator')).StepIndicator.mockImplementation(
-      ({ currentStep, totalSteps }) => React.createElement('div', { 'data-testid': 'step-indicator' }, `Step ${currentStep} of ${totalSteps}`)
+      ({ currentStep, totalSteps }: { currentStep: number; totalSteps: number }) => React.createElement('div', { 'data-testid': 'step-indicator' }, `Step ${currentStep} of ${totalSteps}`)
     )
   })
 
@@ -168,7 +165,6 @@ describe.skip('TODO: Fix performance benchmarks - Component Refactoring Performa
         rerender(
           <ContentViewer
             {...contentViewerProps}
-            currentSongIndex={i}
           />
         )
       }
@@ -194,7 +190,6 @@ describe.skip('TODO: Fix performance benchmarks - Component Refactoring Performa
         rerender(
           <ContentViewer
             {...contentViewerProps}
-            currentSongIndex={i % mockSetlist.songs.length}
           />
         )
       }

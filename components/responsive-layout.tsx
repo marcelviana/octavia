@@ -71,6 +71,7 @@ export function ResponsiveLayout({ children, activeScreen, onNavigate, initialSe
         // Silently fail if event listener setup fails
       }
     }
+    return undefined
   }, [])
 
   return (

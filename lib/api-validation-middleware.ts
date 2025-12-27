@@ -289,7 +289,13 @@ export async function parseRequestBody(request: Request): Promise<unknown> {
   } catch (error) {
     logger.error('Failed to parse request body:', error)
     throw new ValidationError(
-      [{ code: 'invalid_type', message: 'Invalid request body format', path: [] }],
+      [{ 
+        code: 'invalid_type', 
+        message: 'Invalid request body format', 
+        path: [],
+        expected: 'object',
+        received: 'unknown'
+      }],
       400
     )
   }

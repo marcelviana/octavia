@@ -209,18 +209,28 @@ export function AddContent({
                 importMode === "batch" ? (
                   <BatchPreview
                     songs={parsedSongs}
-                    onImport={async () => {
-                      // Handle batch import
+                    contentType={
+                      contentType === ContentType.CHORDS
+                        ? "Chord Chart"
+                        : contentType === ContentType.TAB
+                        ? "Guitar Tab"
+                        : contentType === ContentType.SHEET
+                        ? "Sheet Music"
+                        : "Lyrics"
+                    }
+                    onComplete={(contents) => {
+                      // Handle batch import completion
+                      if (contents.length > 0) {
+                        handleContentCreated(contents[0])
+                      }
                     }}
-                    onCancel={() => setCurrentStep(4)}
-                    isProcessing={isProcessing}
+                    onBack={() => setCurrentStep(4)}
                   />
                 ) : (
                   <MetadataForm
-                    initialData={createdContent}
-                    onSave={handleContentCreated}
-                    onCancel={() => setCurrentStep(4)}
-                    isProcessing={isProcessing}
+                    createdContent={createdContent}
+                    onComplete={handleContentCreated}
+                    onBack={() => setCurrentStep(4)}
                   />
                 )
               ) : null}

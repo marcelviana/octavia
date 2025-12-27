@@ -144,7 +144,8 @@ export class ContentRepository extends SupabaseRepository<ContentRow> {
       }
 
       const contentByType: Record<string, number> = {}
-      contentByTypeData?.forEach((item) => {
+      const typedData = contentByTypeData as Array<{ content_type: string }> | null
+      typedData?.forEach((item) => {
         const type = item.content_type || 'unknown'
         contentByType[type] = (contentByType[type] || 0) + 1
       })
@@ -173,8 +174,8 @@ export class ContentRepository extends SupabaseRepository<ContentRow> {
   async bulkCreate(items: ContentInsert[]): Promise<RepositoryResponse<ContentRow[]>> {
     try {
       const { data, error } = await this.supabase
-        .from(this.tableName)
-        .insert(items)
+        .from('content')
+        .insert(items as any)
         .select()
 
       if (error) {
@@ -182,12 +183,12 @@ export class ContentRepository extends SupabaseRepository<ContentRow> {
       }
 
       // Cache all new items
-      data?.forEach(item => {
+      (data as ContentRow[] | null)?.forEach(item => {
         const cacheKey = this.getCacheKey(item.id)
         this.setCache(cacheKey, item)
       })
 
-      return { data: data || [] }
+      return { data: (data as ContentRow[]) || [] }
     } catch (error) {
       return this.handleError(error, 'bulkCreate')
     }

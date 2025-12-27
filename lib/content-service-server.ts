@@ -112,6 +112,13 @@ export async function getSetlistByIdServer(
     throw setlistError;
   }
 
+  if (!setlist) {
+    throw new Error("Setlist not found");
+  }
+
+  // TypeScript type narrowing - setlist is guaranteed to be non-null here
+  const setlistData = setlist as Record<string, unknown>;
+
   const { data: songs, error: songsError } = await supabase
     .from("setlist_songs")
     .select(
@@ -138,7 +145,7 @@ export async function getSetlistByIdServer(
 
   if (songsError) {
     logger.error(`Error fetching songs for setlist ${id}:`, songsError);
-    return { ...setlist, setlist_songs: [] };
+    return { ...setlistData, setlist_songs: [] };
   }
 
   const formattedSongs = songs.map((song: any) => ({
@@ -159,5 +166,5 @@ export async function getSetlistByIdServer(
     },
   }));
 
-  return { ...setlist, setlist_songs: formattedSongs };
+  return { ...setlistData, setlist_songs: formattedSongs };
 }

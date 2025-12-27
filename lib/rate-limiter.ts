@@ -63,8 +63,9 @@ setInterval(() => {
   
   // Clean up request patterns
   for (const [key, pattern] of requestPatterns.entries()) {
+    const lastTimestamp = pattern.timestamps[pattern.timestamps.length - 1]
     if (pattern.timestamps.length === 0 || 
-        now - pattern.timestamps[pattern.timestamps.length - 1] > maxAge) {
+        (lastTimestamp !== undefined && now - lastTimestamp > maxAge)) {
       requestPatterns.delete(key)
     }
   }
@@ -152,7 +153,7 @@ function getClientIP(req: NextRequest): string {
   // Try various headers that might contain the real IP
   const forwarded = req.headers.get('x-forwarded-for')
   if (forwarded) {
-    return forwarded.split(',')[0].trim()
+    return forwarded.split(',')[0]?.trim() || forwarded.trim()
   }
 
   const realIP = req.headers.get('x-real-ip')
@@ -165,8 +166,8 @@ function getClientIP(req: NextRequest): string {
     return cfConnectingIP
   }
 
-  // Fallback to request IP (might be proxy)
-  return req.ip || '127.0.0.1'
+  // Fallback if no IP headers found
+  return '127.0.0.1'
 }
 
 /**
@@ -352,7 +353,7 @@ export function withRateLimit(config: RateLimitConfig) {
       return response
     }
 
-    return wrappedHandler as T
+    return wrappedHandler as unknown as T
   }
 }
 

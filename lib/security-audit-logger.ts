@@ -116,7 +116,7 @@ const suspiciousIPs = new Set<string>()
 const failedAttempts = new Map<string, number>()
 
 // Risk scoring weights
-const RISK_WEIGHTS = {
+const RISK_WEIGHTS: Partial<Record<SecurityEventType, number>> = {
   [SecurityEventType.LOGIN_FAILURE]: 2,
   [SecurityEventType.LOGIN_BLOCKED]: 5,
   [SecurityEventType.ACCESS_DENIED]: 3,
@@ -422,12 +422,14 @@ class SecurityAuditLogger {
     // Try various headers for real IP
     const forwarded = request.headers.get('x-forwarded-for')
     if (forwarded) {
-      return forwarded.split(',')[0].trim()
+      const firstIP = forwarded.split(',')[0]?.trim()
+      if (firstIP) {
+        return firstIP
+      }
     }
     
     return request.headers.get('x-real-ip') || 
            request.headers.get('cf-connecting-ip') || 
-           request.ip || 
            'unknown'
   }
 

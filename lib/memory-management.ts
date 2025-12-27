@@ -264,7 +264,7 @@ class MemoryManager {
 
     const recent = this.memoryHistory.slice(-3)
     const increases = recent.filter((stats, i) => 
-      i > 0 && stats.usedJSHeapSize > recent[i - 1].usedJSHeapSize
+      i > 0 && recent[i - 1] !== undefined && stats.usedJSHeapSize > recent[i - 1]!.usedJSHeapSize
     ).length
 
     if (increases >= 2) return 'increasing'
@@ -291,7 +291,7 @@ class MemoryManager {
     if (this.memoryHistory.length >= MEMORY_CONFIG.LEAK_DETECTION_THRESHOLD) {
       const recentHistory = this.memoryHistory.slice(-MEMORY_CONFIG.LEAK_DETECTION_THRESHOLD)
       const isConsistentlyGrowing = recentHistory.every((stats, i) => 
-        i === 0 || stats.usedJSHeapSize >= recentHistory[i - 1].usedJSHeapSize
+        i === 0 || (recentHistory[i - 1] !== undefined && stats.usedJSHeapSize >= recentHistory[i - 1]!.usedJSHeapSize)
       )
 
       if (isConsistentlyGrowing) {
@@ -319,8 +319,11 @@ class MemoryManager {
 
     // Clean up in batches
     for (let i = 0; i < Math.min(toCleanup.length, MEMORY_CONFIG.CLEANUP_BATCH_SIZE); i++) {
-      this.untrackResource(toCleanup[i])
-      cleanedCount++
+      const resourceId = toCleanup[i]
+      if (resourceId) {
+        this.untrackResource(resourceId)
+        cleanedCount++
+      }
     }
 
     // Clean up caches

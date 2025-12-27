@@ -9,7 +9,7 @@ import { ImportModeSelector } from "./ImportModeSelector";
 import { ModeSelector } from "./ModeSelector";
 import { ContentTypeSelector } from "./ContentTypeSelector";
 import { useAddContentLogic } from "@/hooks/useAddContentLogic";
-import { ContentType } from "@/types/content";
+import { ContentType, type ContentTypeId } from "@/types/content";
 import type { Database } from "@/types/supabase";
 
 type Content = Database["public"]["Tables"]["content"]["Row"];
@@ -101,14 +101,13 @@ export function RefactoredAddContent({
           <StepIndicator currentStep={currentStep} />
 
           <ContentTypeSelector
-            contentTypes={contentTypes}
             selectedType={contentType}
             onTypeChange={setContentType}
           />
 
           {contentType !== ContentType.SHEET && (
             <ModeSelector
-              mode={mode}
+              selectedMode={mode}
               onModeChange={setMode}
               contentType={contentType}
             />
@@ -116,16 +115,24 @@ export function RefactoredAddContent({
 
           {mode === "import" && (
             <ImportModeSelector
-              importModes={availableImportModes}
-              selectedMode={importMode}
-              onModeChange={setImportMode}
+              selectedImportMode={importMode}
+              contentType={contentType}
+              onImportModeChange={setImportMode}
             />
           )}
 
           {mode === "create" ? (
             <ContentCreator
-              contentType={contentType}
-              onBack={onBack}
+              initialType={
+                contentType === ContentType.LYRICS
+                  ? "lyrics"
+                  : contentType === ContentType.CHORDS
+                  ? "chord_chart"
+                  : contentType === ContentType.TAB
+                  ? "tablature"
+                  : "sheet"
+              }
+              hideTypeSelection={true}
               onContentCreated={(content) => {
                 setDraftContent(content);
                 onContentCreated(content);

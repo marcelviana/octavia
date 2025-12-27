@@ -106,15 +106,15 @@ export function useFileUpload({
 
     try {
       const uploadPromises = validFiles.map(async (file, index) => {
-        const fileId = newFiles[index].id;
+        const fileData = newFiles[index];
+        if (!fileData) {
+          throw new Error(`File data not found for index ${index}`);
+        }
+        const fileId = fileData.id;
         const sanitizedName = sanitizeFilename(file.name);
 
         try {
-          const result = await uploadFileToStorage(file, sanitizedName, (progress) => {
-            setUploadedFiles(prev => prev.map(f =>
-              f.id === fileId ? { ...f, progress } : f
-            ));
-          });
+          const result = await uploadFileToStorage(file, sanitizedName);
 
           setUploadedFiles(prev => prev.map(f =>
             f.id === fileId
@@ -122,7 +122,7 @@ export function useFileUpload({
               : f
           ));
 
-          return { ...newFiles[index], status: 'completed', url: result.url };
+          return { ...fileData, status: 'completed', url: result.url };
         } catch (error) {
           const errorMessage = error instanceof Error ? error.message : 'Upload failed';
           setUploadedFiles(prev => prev.map(f =>

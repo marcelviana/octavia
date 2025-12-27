@@ -4,6 +4,7 @@ import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
 import { withRateLimit } from '@/lib/rate-limit'
 import { withBodyValidation, setlistSchemas } from '@/lib/api-validation-middleware'
+import type { Database } from '@/types/supabase'
 
 // POST /api/setlists/[id]/songs - Add song to setlist
 const addSongToSetlistHandler = withBodyValidation(setlistSchemas.addSong)(
@@ -47,15 +48,15 @@ const addSongToSetlistHandler = withBodyValidation(setlistSchemas.addSong)(
         .eq("setlist_id", setlistId)
         .order("position", { ascending: false })
         .limit(1)
-        .single()
+        .maybeSingle()
 
-      if (maxPositionError && maxPositionError.code !== 'PGRST116') { // PGRST116 is "no rows returned"
+      if (maxPositionError) {
         logger.error("Error getting max position:", maxPositionError)
         throw maxPositionError
       }
 
       // Calculate the actual position to insert at
-      const currentMaxPosition = maxPositionResult?.position || 0
+      const currentMaxPosition = (maxPositionResult as { position: number } | null)?.position || 0
       const actualPosition = Math.max(position, currentMaxPosition + 1)
 
       // Add the new song at the calculated position
@@ -63,12 +64,12 @@ const addSongToSetlistHandler = withBodyValidation(setlistSchemas.addSong)(
         setlist_id: setlistId,
         content_id: contentId,
         position: actualPosition,
-        notes,
+        notes: notes || null,
       }
 
       const { data: song, error: songError } = await supabase
         .from("setlist_songs")
-        .insert(insertData)
+        .insert(insertData as any)
         .select()
         .single()
 
@@ -77,33 +78,28 @@ const addSongToSetlistHandler = withBodyValidation(setlistSchemas.addSong)(
         throw songError
       }
 
-      return new Response(JSON.stringify(song), {
-        status: 201,
-        headers: { 'Content-Type': 'application/json' }
-      })
+      return NextResponse.json(song, { status: 201 })
     } catch (error: any) {
       logger.error('Error adding song to setlist:', error)
-      return new Response(
-        JSON.stringify({ error: 'Internal server error' }),
-        { status: 500, headers: { 'Content-Type': 'application/json' } }
+      return NextResponse.json(
+        { error: 'Internal server error' },
+        { status: 500 }
       )
     }
   }
 )
 
 // Wrapper for POST handler
-const wrappedAddSongHandler = async (request: NextRequest) => {
+const wrappedAddSongHandler = async (request: NextRequest): Promise<NextResponse> => {
   const url = new URL(request.url)
   const pathParts = url.pathname.split('/')
   const id = pathParts[pathParts.length - 2] // Get the setlist ID from the path
   if (!id) {
-    return new Response(JSON.stringify({ error: 'Setlist ID is required' }), {
-      status: 400,
-      headers: { 'Content-Type': 'application/json' }
-    })
+    return NextResponse.json({ error: 'Setlist ID is required' }, { status: 400 })
   }
 
-  return addSongToSetlistHandler(request, { id })
+  const response = await addSongToSetlistHandler(request, { id })
+  return response as NextResponse
 }
 
 export const POST = withRateLimit(wrappedAddSongHandler, 50) 

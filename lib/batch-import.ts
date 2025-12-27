@@ -21,6 +21,8 @@ export async function parseDocxFile(file: File): Promise<ParsedSong[]> {
   
   for (let i = 0; i < paragraphs.length; i++) {
     const p = paragraphs[i];
+    if (!p) continue;
+    
     const text = (p.textContent || "").replace(/\u00A0/g, " ").trim();
     
     if (!text) {
@@ -52,6 +54,8 @@ export async function parseDocxFile(file: File): Promise<ParsedSong[]> {
         let hasFollowingContent = false;
         for (let j = i + 1; j < Math.min(i + 5, paragraphs.length); j++) {
           const nextP = paragraphs[j];
+          if (!nextP) continue;
+          
           const nextText = (nextP.textContent || "").trim();
           if (nextText) {
             const nextBoldEl = nextP.querySelector("strong, b");
@@ -221,6 +225,7 @@ export function parseTextContent(text: string): ParsedSong[] {
 
   for (let i = 0; i < lines.length; i++) {
     const raw = lines[i];
+    if (raw === undefined) continue;
     const line = raw.trim();
     
     // Check for separator lines

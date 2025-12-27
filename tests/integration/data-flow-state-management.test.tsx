@@ -209,11 +209,13 @@ const MockPerformanceModeComponent = () => {
             </button>
           </div>
 
-          <div data-testid="current-song-display">
-            <h3 data-testid="current-song-title">{currentSong.title}</h3>
-            <p data-testid="current-song-artist">{currentSong.artist}</p>
-            <div data-testid="current-song-content">{currentSong.content}</div>
-          </div>
+          {currentSong && (
+            <div data-testid="current-song-display">
+              <h3 data-testid="current-song-title">{currentSong.title}</h3>
+              <p data-testid="current-song-artist">{currentSong.artist}</p>
+              <div data-testid="current-song-content">{currentSong.content}</div>
+            </div>
+          )}
         </div>
       )}
     </div>

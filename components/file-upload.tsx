@@ -155,11 +155,11 @@ export function FileUpload({
           const text = await file.text();
           const lines = text.split(/\r?\n/);
           const firstIndex = lines.findIndex((l) => l.trim() !== "");
-          const firstLine = firstIndex >= 0 ? lines[firstIndex].trim() : "";
+          const firstLine = firstIndex >= 0 && lines[firstIndex] ? lines[firstIndex].trim() : "";
           let title = firstLine;
           const marker =
             firstLine.match(/^#\s*(.*)/) || firstLine.match(/^Title:\s*(.*)/i);
-          if (marker) {
+          if (marker && marker[1]) {
             title = marker[1].trim();
           }
           const body = lines.slice(firstIndex + 1).join("\n");

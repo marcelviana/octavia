@@ -8,7 +8,7 @@
  * - Performance mode responsiveness (<100ms requirement)
  */
 
-import { describe, bench, beforeEach, afterEach, vi } from 'vitest'
+import { describe, bench, beforeEach, afterEach, vi, expect } from 'vitest'
 import { render, cleanup, act } from '@testing-library/react'
 import React from 'react'
 
@@ -37,11 +37,15 @@ const generateLargeDataset = (songCount: number, setlistCount: number) => {
     id: `setlist-${i}`,
     name: `Setlist ${i}`,
     description: `Performance setlist for event ${i}`,
-    songs: Array.from({ length: 15 + (i % 10) }, (_, j) => ({
-      content_id: songs[(i * 15 + j) % songs.length].id,
-      position: j + 1,
-      notes: j % 3 === 0 ? `Special note for song ${j}` : null
-    })),
+    songs: Array.from({ length: 15 + (i % 10) }, (_, j) => {
+      const songIndex = (i * 15 + j) % songs.length
+      const song = songs[songIndex]
+      return {
+        content_id: song?.id ?? `song-${songIndex}`,
+        position: j + 1,
+        notes: j % 3 === 0 ? `Special note for song ${j}` : null
+      }
+    }),
     performance_date: new Date(Date.now() + i * 1000 * 60 * 60 * 24).toISOString(),
     venue: `Venue ${i % 5}`,
     user_id: 'test-user',
@@ -165,9 +169,12 @@ describe('Live Music Performance Benchmarks', () => {
 
     bench('Setlist with Songs - Joined Query Simulation', () => {
       // Simulate optimized query that joins setlist_songs with content
+      const firstSetlist = largeDataset.setlists[0]
+      if (!firstSetlist) return
+      
       const setlistWithContent = {
-        ...largeDataset.setlists[0],
-        songs: largeDataset.setlists[0].songs.map(setlistSong => {
+        ...firstSetlist,
+        songs: firstSetlist.songs.map(setlistSong => {
           const content = largeDataset.songs.find(s => s.id === setlistSong.content_id)
           return {
             ...setlistSong,
@@ -190,9 +197,12 @@ describe('Live Music Performance Benchmarks', () => {
 
     bench('Performance Mode - Preloaded Content Navigation', () => {
       // Test rapid navigation through preloaded content
+      const firstSetlist = largeDataset.setlists[0]
+      if (!firstSetlist) return
+      
       const setlist = {
-        ...largeDataset.setlists[0],
-        songs: largeDataset.setlists[0].songs.slice(0, 25).map(setlistSong => ({
+        ...firstSetlist,
+        songs: firstSetlist.songs.slice(0, 25).map(setlistSong => ({
           ...setlistSong,
           content: largeDataset.songs.find(s => s.id === setlistSong.content_id)
         }))
@@ -294,9 +304,12 @@ describe('Live Music Performance Benchmarks', () => {
 
     bench('Performance Mode - Extended Session Simulation', () => {
       // Simulate 2-hour performance session with frequent navigation
+      const firstSetlist = largeDataset.setlists[0]
+      if (!firstSetlist) return
+      
       const setlist = {
-        ...largeDataset.setlists[0],
-        songs: largeDataset.setlists[0].songs.map(setlistSong => ({
+        ...firstSetlist,
+        songs: firstSetlist.songs.map(setlistSong => ({
           ...setlistSong,
           content: largeDataset.songs.find(s => s.id === setlistSong.content_id)
         }))
@@ -337,9 +350,12 @@ describe('Live Music Performance Benchmarks', () => {
 
   describe('Performance Mode Responsiveness Tests (<100ms requirement)', () => {
     bench('Song Navigation Response Time', () => {
+      const firstSetlist = largeDataset.setlists[0]
+      if (!firstSetlist) return
+      
       const setlist = {
-        ...largeDataset.setlists[0],
-        songs: largeDataset.setlists[0].songs.map(setlistSong => ({
+        ...firstSetlist,
+        songs: firstSetlist.songs.map(setlistSong => ({
           ...setlistSong,
           content: largeDataset.songs.find(s => s.id === setlistSong.content_id)
         }))
@@ -435,9 +451,12 @@ describe('Live Music Performance Benchmarks', () => {
       const startPrep = performance.now()
 
       // Simulate full setlist loading with all optimizations
+      const firstSetlist = largeDataset.setlists[0]
+      if (!firstSetlist) return
+      
       const preparedSetlist = {
-        ...largeDataset.setlists[0],
-        songs: largeDataset.setlists[0].songs.map(setlistSong => {
+        ...firstSetlist,
+        songs: firstSetlist.songs.map(setlistSong => {
           const content = largeDataset.songs.find(s => s.id === setlistSong.content_id)
           return {
             ...setlistSong,
@@ -476,7 +495,9 @@ describe('Live Music Performance Benchmarks', () => {
 
       // Test cache hit performance
       for (let i = 0; i < 100; i++) {
-        const songId = largeDataset.songs[i % 50].id
+        const song = largeDataset.songs[i % 50]
+        if (!song) continue
+        const songId = song.id
         const cached = cachedContent.get(songId)
         if (cached) {
           cached.lastAccessed = Date.now()
@@ -501,6 +522,8 @@ describe('Live Music Performance Benchmarks', () => {
 
       // Check availability for entire setlist
       const setlist = largeDataset.setlists[0]
+      if (!setlist) return
+      
       const availableOffline = setlist.songs.map(song => ({
         ...song,
         isAvailableOffline: offlineCache.has(song.content_id)

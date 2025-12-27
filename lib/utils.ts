@@ -6,7 +6,8 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function urlHasExtension(url: string, ext: string): boolean {
-  const clean = url.split('?')[0].split('#')[0]
+  const clean = url.split('?')[0]?.split('#')[0]
+  if (!clean) return false
   return clean.toLowerCase().endsWith(ext.toLowerCase())
 }
 

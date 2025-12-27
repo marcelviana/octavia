@@ -129,8 +129,8 @@ export function useVirtualList<T>({
 // Intersection Observer hook for lazy loading
 export function useIntersectionObserver(
   options: IntersectionObserverInit = {}
-): [React.RefObject<HTMLElement>, boolean] {
-  const elementRef = useRef<HTMLElement>(null)
+): [React.RefObject<HTMLElement | null>, boolean] {
+  const elementRef = useRef<HTMLElement | null>(null)
   const [isIntersecting, setIsIntersecting] = useState(false)
 
   useEffect(() => {
@@ -138,8 +138,11 @@ export function useIntersectionObserver(
     if (!element) return
 
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsIntersecting(entry.isIntersecting)
+      (entries) => {
+        const entry = entries[0]
+        if (entry) {
+          setIsIntersecting(entry.isIntersecting)
+        }
       },
       {
         threshold: 0.1,
@@ -272,11 +275,8 @@ export const dynamicImports = {
   LyricsEditor: () => import('@/components/lyrics-editor'),
 
   // Library components (lazy load)
-  LibraryGrid: () => import('@/components/library/library-grid'),
-  LibrarySearch: () => import('@/components/library/library-search'),
-
-  // Admin components (rarely used)
-  AdminPanel: () => import('@/components/admin/admin-panel'),
+  // Note: library-grid and library-search components don't exist yet
+  // LibraryList: () => import('@/components/library-list'),
 }
 
 // Preloading utilities for performance mode

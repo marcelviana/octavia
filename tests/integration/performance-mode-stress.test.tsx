@@ -122,10 +122,13 @@ const PerformanceModeStress = ({ setlist, initialIndex = 0 }: { setlist: any[], 
 
   // Touch/swipe handling for mobile
   const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStartY(e.touches[0].clientY)
+    if (e.touches[0]) {
+      setTouchStartY(e.touches[0].clientY)
+    }
   }
 
   const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!e.changedTouches[0]) return
     const touchEndY = e.changedTouches[0].clientY
     const deltaY = touchStartY - touchEndY
 

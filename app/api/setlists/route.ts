@@ -130,7 +130,7 @@ const createSetlistHandler = withBodyValidation(setlistSchemas.create)(
 
       const { data: setlist, error } = await supabase
         .from('setlists')
-        .insert(setlistData)
+        .insert(setlistData as any)
         .select()
         .single()
 
@@ -139,18 +139,26 @@ const createSetlistHandler = withBodyValidation(setlistSchemas.create)(
         throw error
       }
 
-      return new Response(JSON.stringify({ ...setlist, setlist_songs: [] }), {
-        status: 201,
-        headers: { 'Content-Type': 'application/json' }
-      })
+      if (!setlist) {
+        throw new Error('Failed to create setlist: no data returned')
+      }
+
+      const responseData = { ...(setlist as Record<string, any>), setlist_songs: [] }
+      return NextResponse.json(responseData, { status: 201 })
     } catch (error: any) {
       logger.error('Error creating setlist:', error)
-      return new Response(
-        JSON.stringify({ error: 'Internal server error' }),
-        { status: 500, headers: { 'Content-Type': 'application/json' } }
+      return NextResponse.json(
+        { error: 'Internal server error' },
+        { status: 500 }
       )
     }
   }
 )
 
-export const POST = withRateLimit(createSetlistHandler, 100) 
+// Wrap handler to match withRateLimit signature
+const createSetlistHandlerWrapped = async (request: NextRequest): Promise<NextResponse> => {
+  const response = await createSetlistHandler(request)
+  return response as NextResponse
+}
+
+export const POST = withRateLimit(createSetlistHandlerWrapped, 100) 

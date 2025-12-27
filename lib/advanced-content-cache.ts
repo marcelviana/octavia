@@ -144,7 +144,7 @@ class AdvancedContentCache {
         if (signal.aborted) break
 
         const song = songs[i]
-        if (!song.file_url) continue
+        if (!song || !song.file_url) continue
 
         const priority = this.calculatePriority(i, currentIndex, options.priority)
         const preloadScore = this.calculatePreloadScore(i, currentIndex, songs.length)

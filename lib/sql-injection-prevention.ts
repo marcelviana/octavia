@@ -5,6 +5,7 @@
  * with parameterized query enforcement and query sanitization.
  */
 
+import { NextRequest, NextResponse } from 'next/server'
 import { auditLogger } from './security-audit-logger'
 
 // SQL injection patterns organized by risk level
@@ -436,22 +437,21 @@ export function createSecureDBWrapper(originalDB: { query: (sql: string, params:
 /**
  * Middleware to scan request parameters for SQL injection
  */
-interface Request {
-  query?: Record<string, unknown>
-  body?: Record<string, unknown>
-  params?: Record<string, unknown>
-}
-
-interface Response {
-  status: (code: number) => Response
-  json: (data: unknown) => void
-}
-
-export function sqlInjectionMiddleware(req: Request, res: Response, next: () => void) {
+export async function sqlInjectionMiddleware(req: NextRequest) {
+  // Extract parameters from URL search params and body
+  const urlParams = Object.fromEntries(req.nextUrl.searchParams.entries())
+  let bodyParams: Record<string, unknown> = {}
+  
+  try {
+    const body = await req.json().catch(() => ({}))
+    bodyParams = typeof body === 'object' && body !== null ? body : {}
+  } catch {
+    // Body parsing failed, continue with empty object
+  }
+  
   const parametersToCheck = [
-    ...Object.values(req.query || {}),
-    ...Object.values(req.body || {}),
-    ...Object.values(req.params || {})
+    ...Object.values(urlParams),
+    ...Object.values(bodyParams)
   ]
   
   for (const param of parametersToCheck) {
@@ -465,15 +465,15 @@ export function sqlInjectionMiddleware(req: Request, res: Response, next: () => 
           patterns: scanResult.detectedPatterns.length
         }, req)
         
-        return res.status(400).json({
+        return NextResponse.json({
           error: 'Invalid input detected',
           code: 'SECURITY_VIOLATION'
-        })
+        }, { status: 400 })
       }
     }
   }
   
-  next()
+  return null // Continue to next middleware/handler
 }
 
 /**

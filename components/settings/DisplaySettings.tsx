@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Slider } from "@/components/ui/slider";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Display, Palette } from "lucide-react";
+import { Monitor, Palette } from "lucide-react";
 
 interface DisplaySettingsProps {
   settings: {
@@ -22,7 +22,7 @@ export function DisplaySettings({ settings, onUpdate }: DisplaySettingsProps) {
     <Card className="border-amber-200 shadow-lg hover:shadow-xl transition-shadow">
       <CardHeader className="bg-gradient-to-r from-amber-50 to-orange-50 border-b border-amber-200">
         <CardTitle className="flex items-center text-amber-800">
-          <Display className="w-5 h-5 mr-2" />
+          <Monitor className="w-5 h-5 mr-2" />
           Display & Theme
         </CardTitle>
       </CardHeader>

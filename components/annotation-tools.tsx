@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Image from "next/image"
 import { Music } from "lucide-react"
-import type { Annotation, Content, TextInputState, Point } from "@/types/annotations"
+import type { Annotation, Content, TextInputState, Point, CircleAnnotation, SquareAnnotation, PathAnnotation, TextAnnotation } from "@/types/annotations"
 
 interface AnnotationToolsProps {
   content: Content
@@ -118,7 +118,7 @@ export function AnnotationTools({
         setTextInput({ show: true, x: pos.x, y: pos.y, text: "" })
         break
       case "circle":
-        const newCircle = {
+        const newCircle: CircleAnnotation = {
           type: "circle",
           x: pos.x,
           y: pos.y,
@@ -129,7 +129,7 @@ export function AnnotationTools({
         onAnnotationsChange([...annotations, newCircle])
         break
       case "square":
-        const newSquare = {
+        const newSquare: SquareAnnotation = {
           type: "square",
           x: pos.x,
           y: pos.y,
@@ -152,8 +152,8 @@ export function AnnotationTools({
 
   const handleMouseUp = () => {
     if (isDrawing && currentPath.length > 0) {
-      const newAnnotation = {
-        type: selectedTool,
+      const newAnnotation: PathAnnotation = {
+        type: selectedTool as "pen" | "highlighter",
         path: currentPath,
         color: selectedTool === "highlighter" ? "#ffff00" : "#000000",
         width: selectedTool === "highlighter" ? 10 : 2,
@@ -166,7 +166,7 @@ export function AnnotationTools({
 
   const handleTextSubmit = () => {
     if (textInput.text.trim()) {
-      const newTextAnnotation = {
+      const newTextAnnotation: TextAnnotation = {
         type: "text",
         x: textInput.x,
         y: textInput.y,

@@ -61,7 +61,7 @@ export function rateLimit(
 function getIdentifierToken(req: NextRequest): string {
   const forwarded = req.headers.get('x-forwarded-for');
   const realIP = req.headers.get('x-real-ip');
-  const ip = forwarded ? forwarded.split(',')[0].trim() : realIP;
+  const ip = forwarded ? forwarded.split(',')[0]?.trim() : realIP;
   return ip || 'anonymous';
 }
 

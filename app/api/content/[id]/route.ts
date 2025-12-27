@@ -5,6 +5,7 @@ import logger from '@/lib/logger'
 import { withRateLimit } from '@/lib/rate-limit'
 import type { Database } from '@/types/supabase'
 import { withBodyValidation, contentSchemas, commonSchemas } from '@/lib/api-validation-middleware'
+import { z } from 'zod'
 
 // GET /api/content/[id] - Get specific content by ID
 const getContentByIdHandler = async (
@@ -76,7 +77,7 @@ const wrappedGetHandler = async (request: NextRequest) => {
 
 // PUT /api/content/[id] - Update specific content by ID
 const updateContentByIdHandler = withBodyValidation(contentSchemas.update)(
-  async (request: Request, validatedData: any, user: any, params: { id: string }) => {
+  async (request: Request, validatedData: unknown, user: any, params: { id: string }) => {
     try {
       const { id } = params
 
@@ -90,16 +91,27 @@ const updateContentByIdHandler = withBodyValidation(contentSchemas.update)(
       }
 
       // Add timestamp for update and ensure proper typing
-      const dataToUpdate: Database['public']['Tables']['content']['Update'] = {
-        ...validatedData,
-        updated_at: new Date().toISOString(),
-      }
-
       const supabase = getSupabaseServiceClient()
+      const v = validatedData as z.infer<typeof contentSchemas.update>
 
-      const { data: content, error } = await supabase
-        .from('content')
-        .update(dataToUpdate)
+      const updateData = {
+        ...(v.title !== undefined && { title: v.title }),
+        ...(v.artist !== undefined && { artist: v.artist ?? null }),
+        ...(v.album !== undefined && { album: v.album ?? null }),
+        ...(v.content_type !== undefined && { content_type: v.content_type }),
+        ...(v.content_data !== undefined && { content_data: v.content_data as Database['public']['Tables']['content']['Update']['content_data'] }),
+        ...(v.key !== undefined && { key: v.key ?? null }),
+        ...(v.bpm !== undefined && { bpm: v.bpm ?? null }),
+        ...(v.difficulty !== undefined && { difficulty: v.difficulty ?? null }),
+        ...(v.tags !== undefined && { tags: v.tags ?? null }),
+        ...(v.is_favorite !== undefined && { is_favorite: v.is_favorite }),
+        ...(v.notes !== undefined && { notes: v.notes ?? null }),
+        updated_at: new Date().toISOString(),
+      } as Database['public']['Tables']['content']['Update'];
+
+      const { data: content, error } = await (supabase
+        .from('content') as any)
+        .update(updateData as Database['public']['Tables']['content']['Update'])
         .eq('id', id)
         .eq('user_id', user.uid)
         .select()

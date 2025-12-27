@@ -155,6 +155,8 @@ export function useSetlistData(user: any | null, ready: boolean): UseSetlistData
       setAvailableContent([])
       setError(null)
     }
+    // Explicit return for all code paths
+    return undefined
   }, [ready, user?.uid, load])
 
   // Add window focus listener to refresh data when user returns to the tab

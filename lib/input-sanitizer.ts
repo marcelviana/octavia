@@ -426,7 +426,7 @@ function sanitizeHTML(input: string, level: SanitizationLevel): string {
       break
   }
 
-  return DOMPurify.sanitize(input, config) as string
+  return DOMPurify.sanitize(input, config) as unknown as string
 }
 
 /**

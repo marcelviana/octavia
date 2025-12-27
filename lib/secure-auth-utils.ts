@@ -258,7 +258,7 @@ export async function requireAuthServerSecure(request: Request): Promise<{
     // Extract from Authorization header
     if (authHeader) {
       const bearerMatch = authHeader.match(/^Bearer\s+(.+)$/i)
-      if (bearerMatch) {
+      if (bearerMatch && bearerMatch[1]) {
         token = bearerMatch[1]
       } else {
         logger.warn('Invalid Authorization header format')
@@ -268,7 +268,7 @@ export async function requireAuthServerSecure(request: Request): Promise<{
     // Extract from session cookie
     else if (cookieHeader) {
       const sessionMatch = cookieHeader.match(/firebase-session=([^;]+)/)
-      if (sessionMatch) {
+      if (sessionMatch && sessionMatch[1]) {
         token = decodeURIComponent(sessionMatch[1])
       }
     }
@@ -388,7 +388,7 @@ export function clearExpiredTokens(): void {
 
   // Clear expired cached tokens
   for (const [token, entry] of tokenCache.entries()) {
-    if (now > entry.expires) {
+    if (now > entry.exp) {
       tokenCache.delete(token)
     }
   }
@@ -397,7 +397,8 @@ export function clearExpiredTokens(): void {
 export { isTokenBlacklisted }
 
 export function getUserSessions(userId: string): string[] {
-  return userSessionMap.get(userId) || []
+  const sessions = userSessionMap.get(userId)
+  return sessions ? Array.from(sessions) : []
 }
 
 export function invalidateUserSessions(userId: string): void {

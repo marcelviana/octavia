@@ -92,17 +92,17 @@ export function useContentCreation({ onContentCreated }: UseContentCreationProps
 
   const handleFilesUploaded = (files: UploadedFile[]) => {
     if (files.length > 0) {
-      const file = files[0]
+      const file = files[0]!
       
       const isImageFile = /\.(png|jpg|jpeg)$/i.test(file.name)
       if (isImageFile && contentType !== ContentType.SHEET) {
         isAutoDetectingContentType.current = true
-        const updatedFile = { ...file, contentType: ContentType.SHEET }
+        const updatedFile = { ...file, contentType: ContentType.SHEET } as UploadedFile
         setContentType(ContentType.SHEET)
         setUploadedFile(updatedFile)
         setCurrentStep(2)
       } else {
-        const updatedFile = { ...file, contentType }
+        const updatedFile = { ...file, contentType } as UploadedFile
         setUploadedFile(updatedFile)
         if (contentType === ContentType.SHEET) {
           setCurrentStep(2)

@@ -9,6 +9,7 @@ import { BaseService, type ServiceResult, type ServiceContext } from "./base-ser
 import { contentService } from "./content-service-refactored"
 import type { Database } from "@/types/supabase"
 import type { SetlistWithSongs, SetlistFormData } from "@/types/performance"
+import type { SupabaseClient } from "@supabase/supabase-js"
 
 // Setlist types from Supabase
 type Setlist = Database["public"]["Tables"]["setlists"]["Row"]
@@ -146,13 +147,13 @@ class SetlistService extends BaseService {
         notes: setlistData.notes || null,
       }
 
-      const supabase = context.isServer
+      const supabase: SupabaseClient<Database> = context.isServer
         ? await this.getSupabaseServiceClient()
         : await this.getSupabaseClient()
 
       const { data, error } = await supabase
         .from("setlists")
-        .insert(insertData)
+        .insert(insertData as any)
         .select()
         .single()
 
@@ -191,12 +192,13 @@ class SetlistService extends BaseService {
         updated_at: new Date().toISOString(),
       }
 
-      const supabase = context.isServer
+      const supabase: SupabaseClient<Database> = context.isServer
         ? await this.getSupabaseServiceClient()
         : await this.getSupabaseClient()
 
       const { data, error } = await supabase
         .from("setlists")
+        // @ts-expect-error - Supabase type inference issue with Database schema
         .update(updateData)
         .eq("id", id)
         .eq("user_id", user.id)
@@ -282,13 +284,13 @@ class SetlistService extends BaseService {
         notes: songData.notes || null,
       }
 
-      const supabase = context.isServer
+      const supabase: SupabaseClient<Database> = context.isServer
         ? await this.getSupabaseServiceClient()
         : await this.getSupabaseClient()
 
       const { data, error } = await supabase
         .from("setlist_songs")
-        .insert(insertData)
+        .insert(insertData as any)
         .select()
         .single()
 
@@ -315,7 +317,7 @@ class SetlistService extends BaseService {
       const user = await this.requireAuth(context)
       this.validateRequired(setlistSongId, "setlist song ID")
 
-      const supabase = context.isServer
+      const supabase: SupabaseClient<Database> = context.isServer
         ? await this.getSupabaseServiceClient()
         : await this.getSupabaseClient()
 
@@ -328,14 +330,14 @@ class SetlistService extends BaseService {
           setlists!inner (user_id)
         `)
         .eq("id", setlistSongId)
-        .single()
+        .single() as any
 
       if (fetchError || !setlistSong) {
         throw new Error("Setlist song not found")
       }
 
       // Check ownership through the setlist
-      const setlist = setlistSong.setlists as any
+      const setlist = (setlistSong as any).setlists
       if (setlist?.user_id !== user.id) {
         throw new Error("Unauthorized to modify this setlist")
       }
@@ -364,7 +366,7 @@ class SetlistService extends BaseService {
       this.validateRequired(setlistSongId, "setlist song ID")
       this.validateRequired(newPosition, "new position")
 
-      const supabase = context.isServer
+      const supabase: SupabaseClient<Database> = context.isServer
         ? await this.getSupabaseServiceClient()
         : await this.getSupabaseClient()
 
@@ -378,14 +380,14 @@ class SetlistService extends BaseService {
           setlists!inner (user_id)
         `)
         .eq("id", setlistSongId)
-        .single()
+        .single() as any
 
       if (fetchError || !setlistSong) {
         throw new Error("Setlist song not found")
       }
 
       // Check ownership through the setlist
-      const setlist = setlistSong.setlists as any
+      const setlist = (setlistSong as any).setlists
       if (setlist?.user_id !== user.id) {
         throw new Error("Unauthorized to modify this setlist")
       }
@@ -393,6 +395,7 @@ class SetlistService extends BaseService {
       // Update the position
       const { error } = await supabase
         .from("setlist_songs")
+        // @ts-expect-error - Supabase type inference issue with Database schema
         .update({ position: newPosition })
         .eq("id", setlistSongId)
 

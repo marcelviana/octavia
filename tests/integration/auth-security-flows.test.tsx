@@ -11,9 +11,17 @@ import React from 'react'
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react'
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest'
 
+// Type for Firebase User in tests
+type FirebaseUser = {
+  uid: string
+  email: string | null
+  getIdToken: () => Promise<string>
+  [key: string]: any
+}
+
 // Mock Firebase Auth
 const mockFirebaseAuth = {
-  currentUser: null,
+  currentUser: null as FirebaseUser | null,
   signInWithEmailAndPassword: vi.fn(),
   createUserWithEmailAndPassword: vi.fn(),
   signOut: vi.fn(),
@@ -48,7 +56,7 @@ const mockSecurityLogger = {
 
 // Authentication component with security measures
 const SecureAuthComponent = () => {
-  const [user, setUser] = React.useState(null)
+  const [user, setUser] = React.useState<FirebaseUser | null>(null)
   const [isSigningIn, setIsSigningIn] = React.useState(false)
   const [authError, setAuthError] = React.useState('')
   const [remainingAttempts, setRemainingAttempts] = React.useState(5)

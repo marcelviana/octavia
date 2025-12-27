@@ -4,6 +4,23 @@ import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
 import { withRateLimit } from '@/lib/rate-limit'
 
+// Type for song with joined setlist data
+type SongWithSetlist = {
+  id: string
+  position: number
+  setlist_id: string
+  setlists: {
+    id: string
+    user_id: string
+  }
+}
+
+// Type for song row from database
+type SongRow = {
+  id: string
+  position: number
+}
+
 // DELETE /api/setlists/songs/[songId] - Remove song from setlist
 const removeSongFromSetlistHandler = async (
   request: NextRequest,
@@ -44,13 +61,22 @@ const removeSongFromSetlistHandler = async (
       throw songError
     }
 
+    if (!song) {
+      return NextResponse.json(
+        { error: 'Song not found' },
+        { status: 404 }
+      )
+    }
+
+    const songData = song as SongWithSetlist
+
     // Verify the setlist belongs to the user
-    if ((song.setlists as any).user_id !== user.uid) {
+    if (songData.setlists.user_id !== user.uid) {
       throw new Error("Unauthorized: Setlist does not belong to user")
     }
 
-    const setlistId = song.setlist_id
-    const songPosition = song.position
+    const setlistId = songData.setlist_id
+    const songPosition = songData.position
 
     // Remove the song
     const { error: removeError } = await supabase
@@ -77,12 +103,14 @@ const removeSongFromSetlistHandler = async (
     }
 
     // Shift positions of remaining songs using individual updates
-    if (songsToShift.length > 0) {
+    if (songsToShift && songsToShift.length > 0) {
       for (const song of songsToShift) {
-        const { error: updateError } = await supabase
-          .from("setlist_songs")
-          .update({ position: song.position - 1 })
-          .eq("id", song.id)
+        const songRow = song as SongRow
+        const updateData: { position: number } = { position: songRow.position - 1 }
+        const { error: updateError } = await (supabase
+          .from("setlist_songs") as any)
+          .update(updateData)
+          .eq("id", songRow.id)
 
         if (updateError) {
           logger.error("Error shifting song position:", updateError)
@@ -154,7 +182,16 @@ const updateSongPositionHandler = async (
       throw songError
     }
 
-    if ((song.setlists as any).user_id !== user.uid || song.setlist_id !== setlistId) {
+    if (!song) {
+      return NextResponse.json(
+        { error: 'Song not found' },
+        { status: 404 }
+      )
+    }
+
+    const songData = song as SongWithSetlist
+
+    if (songData.setlists.user_id !== user.uid || songData.setlist_id !== setlistId) {
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 403 }
@@ -172,7 +209,7 @@ const updateSongPositionHandler = async (
       throw fetchError
     }
 
-    const currentPosition = song.position
+    const currentPosition = songData.position
     if (currentPosition === newPosition) {
       return NextResponse.json({ success: true })
     }
@@ -182,13 +219,22 @@ const updateSongPositionHandler = async (
     const tempOffset = 10000
     
     // First, move all songs to temporary positions
-    for (let i = 0; i < allSongs.length; i++) {
-      const songRow = allSongs[i]
-      const tempPosition = tempOffset + i
+    if (!allSongs) {
+      return NextResponse.json({ error: 'Failed to fetch songs' }, { status: 500 })
+    }
+
+    const typedAllSongs = allSongs as SongRow[]
+
+    for (let i = 0; i < typedAllSongs.length; i++) {
+      const songRow = typedAllSongs[i]
+      if (!songRow) continue
       
-      const { error: tempError } = await supabase
-        .from('setlist_songs')
-        .update({ position: tempPosition })
+      const tempPosition = tempOffset + i
+      const updateData: { position: number } = { position: tempPosition }
+      
+      const { error: tempError } = await (supabase
+        .from('setlist_songs') as any)
+        .update(updateData)
         .eq('id', songRow.id)
 
       if (tempError) {
@@ -198,12 +244,12 @@ const updateSongPositionHandler = async (
     }
 
     // Step 2: Calculate the new order and move to final positions
-    const ordered = [...allSongs].sort((a: any, b: any) => a.position - b.position)
+    const ordered = [...typedAllSongs].sort((a: any, b: any) => a.position - b.position)
     const without = ordered.filter((s: any) => s.id !== songId)
     
     // Insert the moving song at the target position
-    const reordered = [...without]
-    const moving = ordered.find((s: any) => s.id === songId)
+    const reordered: SongRow[] = [...without]
+    const moving = ordered.find((s: any) => s.id === songId) as SongRow | undefined
     if (!moving) {
       return NextResponse.json({ error: 'Song not found' }, { status: 404 })
     }
@@ -220,11 +266,14 @@ const updateSongPositionHandler = async (
     // Update all positions to their final values
     for (let i = 0; i < reordered.length; i++) {
       const songRow = reordered[i]
-      const newPos = i + 1
+      if (!songRow) continue
       
-      const { error: updError } = await supabase
-        .from('setlist_songs')
-        .update({ position: newPos })
+      const newPos = i + 1
+      const updateData: { position: number } = { position: newPos }
+      
+      const { error: updError } = await (supabase
+        .from('setlist_songs') as any)
+        .update(updateData)
         .eq('id', songRow.id)
 
       if (updError) {

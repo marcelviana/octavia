@@ -236,6 +236,7 @@ beforeEach(() => {
       formData: vi.fn().mockResolvedValue(new FormData()),
       json: vi.fn().mockResolvedValue({}),
       text: vi.fn().mockResolvedValue('mock text'),
+      bytes: vi.fn().mockResolvedValue(new Uint8Array(0)),
     } as Response)
   }) as any
 })

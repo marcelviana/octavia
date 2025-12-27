@@ -221,14 +221,15 @@ const updateContentHandler = async (request: NextRequest) => {
     
     const supabase = getSupabaseServiceClient()
     
-    const contentData = {
+    const contentData: Database['public']['Tables']['content']['Update'] = {
       ...updateData,
+      content_data: updateData.content_data as Database['public']['Tables']['content']['Update']['content_data'],
       updated_at: new Date().toISOString(),
     }
 
-    const { data: content, error } = await supabase
-      .from('content')
-      .update(contentData as Database['public']['Tables']['content']['Update'])
+    const { data: content, error } = await (supabase
+      .from('content') as any)
+      .update(contentData)
       .eq('id', id)
       .eq('user_id', user.uid)
       .select()

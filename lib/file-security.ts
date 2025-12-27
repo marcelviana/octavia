@@ -336,7 +336,10 @@ function calculateEntropy(buffer: Buffer): number {
   const frequency = new Array(256).fill(0);
   
   for (let i = 0; i < buffer.length; i++) {
-    frequency[buffer[i]]++;
+    const byte = buffer[i];
+    if (byte !== undefined) {
+      frequency[byte]++;
+    }
   }
   
   let entropy = 0;

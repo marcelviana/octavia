@@ -31,7 +31,7 @@ export function useAddContentLogic() {
   const [currentStep, setCurrentStep] = useState(1);
   const [isProcessing, setIsProcessing] = useState(false);
   const [isParsing, setIsParsing] = useState(false);
-  const [createdContent, setCreatedContent] = useState<CreatedContent | null>(null);
+  const [createdContent, setCreatedContent] = useState<CreatedContent | CreatedContent[] | null>(null);
   const [parsedSongs, setParsedSongs] = useState<(ParsedSong & { artist: string; include: boolean })[]>([]);
   const [importMode, setImportMode] = useState<"single" | "batch">("single");
   const [contentType, setContentType] = useState(ContentType.LYRICS);
@@ -109,6 +109,7 @@ export function useAddContentLogic() {
   const handleFilesUploaded = (files: UploadedFile[]) => {
     if (files.length > 0) {
       const file = files[0];
+      if (!file) return;
 
       // Auto-detect if this is an image file and set content type to Sheet Music
       const isImageFile = /\.(png|jpg|jpeg)$/i.test(file.name);
@@ -176,14 +177,14 @@ export function useAddContentLogic() {
       if (parsedSongs.length > 0) {
         // Handle batch import
         const songsToImport = parsedSongs.filter(song => song.include);
-        const createdSongs = [];
+        const createdSongs: CreatedContent[] = [];
 
         for (const song of songsToImport) {
           const content = await createContent({
             title: song.title,
             artist: song.artist,
             content_type: contentType,
-            content_data: song.content,
+            content_data: song.body,
             user_id: user.uid
           });
           createdSongs.push(content);

@@ -56,5 +56,5 @@ export function getSessionCookieFromBrowser(): string | null {
   
   if (!sessionCookie) return null
   
-  return sessionCookie.split('=')[1]
+  return sessionCookie.split('=')[1] ?? null
 } 

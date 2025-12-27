@@ -35,7 +35,10 @@ function encodeBase64(data: Uint8Array): string {
   if (typeof btoa === 'function') {
     let binary = ''
     for (let i = 0; i < data.length; i++) {
-      binary += String.fromCharCode(data[i])
+      const byte = data[i]
+      if (byte !== undefined) {
+        binary += String.fromCharCode(byte)
+      }
     }
     return btoa(binary)
   }

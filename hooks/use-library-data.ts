@@ -182,6 +182,7 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
       
       return () => clearTimeout(timeoutId)
     }
+    return undefined
   }, [ready, user?.uid, load]) // Only depend on ready and user.uid to avoid excessive reloads
 
   // Reset page to 1 when search or filters change

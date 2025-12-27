@@ -77,6 +77,9 @@ export function NavigationContainer({
         // Silently fail if event listener setup fails
       }
     }
+    
+    // Explicitly return undefined for all other code paths
+    return undefined
   }, [])
 
   if (shouldShowBottomNav) {
