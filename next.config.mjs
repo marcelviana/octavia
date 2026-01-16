@@ -34,7 +34,20 @@ const nextConfig = {
       return Array.from(hosts).map(hostname => ({ protocol: 'https', hostname }))
     })(),
   },
-  webpack: (config, { isServer, dev }) => {
+  webpack: (config, { isServer, dev, webpack }) => {
+    // Ignore test utilities and vitest from client bundles
+    if (!isServer) {
+      config.plugins = config.plugins || [];
+      config.plugins.push(
+        new webpack.IgnorePlugin({
+          resourceRegExp: /^@\/lib\/test-utils/,
+        }),
+        new webpack.IgnorePlugin({
+          resourceRegExp: /^vitest$/,
+        })
+      );
+    }
+
     // Handle PDF.js worker
     if (!isServer) {
       config.resolve.alias = {
@@ -44,6 +57,11 @@ const nextConfig = {
         './firebase-admin': false,
         './firebase-admin.js': false,
         './firebase-admin.ts': false,
+        // Prevent test utilities from being bundled on client-side
+        '@/lib/test-utils': false,
+        '@/lib/test-utils/api-test-helpers': false,
+        '@/lib/test-utils/supabase-mock-factory': false,
+        'vitest': false,
       };
 
       // Optimize bundle splitting for performance vs management features
@@ -120,6 +138,9 @@ const nextConfig = {
         'google-auth-library': 'commonjs google-auth-library',
         'gcp-metadata': 'commonjs gcp-metadata',
         'google-logging-utils': 'commonjs google-logging-utils',
+        // Prevent test utilities from being bundled
+        'vitest': 'commonjs vitest',
+        '@vitest/ui': 'commonjs @vitest/ui',
       });
     }
 
