@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dialog"
 import { Search, Music, Clock, Loader2 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { ContentType, normalizeContentType } from "@/types/content"
 import type { Database } from "@/types/supabase"
 
 type Content = Database["public"]["Tables"]["content"]["Row"]
@@ -30,19 +31,20 @@ interface SongSelectionDialogProps {
 }
 
 function getContentTypeDisplay(contentType: string): { label: string; color: string } {
-  switch (contentType) {
-    case 'LYRICS':
+  // Normalize the content type to handle various formats
+  const normalized = normalizeContentType(contentType)
+  
+  switch (normalized) {
+    case ContentType.LYRICS:
       return { label: 'Lyrics', color: 'bg-green-100 text-green-800' }
-    case 'CHORDS':
-      return { label: 'Chords', color: 'bg-blue-100 text-blue-800' }
-    case 'TABS':
-      return { label: 'Tabs', color: 'bg-purple-100 text-purple-800' }
-    case 'PIANO':
-      return { label: 'Piano', color: 'bg-indigo-100 text-indigo-800' }
-    case 'DRUMS':
-      return { label: 'Drums', color: 'bg-orange-100 text-orange-800' }
+    case ContentType.CHORDS:
+      return { label: 'Chords', color: 'bg-purple-100 text-purple-800' }
+    case ContentType.TAB:
+      return { label: 'Tab', color: 'bg-blue-100 text-blue-800' }
+    case ContentType.SHEET:
+      return { label: 'Sheet', color: 'bg-orange-100 text-orange-800' }
     default:
-      return { label: 'Sheet Music', color: 'bg-gray-100 text-gray-800' }
+      return { label: 'Sheet', color: 'bg-gray-100 text-gray-800' }
   }
 }
 
@@ -115,17 +117,17 @@ export const SongSelectionDialog = memo(function SongSelectionDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[600px] h-[80vh] flex flex-col">
-        <DialogHeader>
+      <DialogContent className="sm:max-w-[600px] h-[80vh] flex flex-col p-0">
+        <DialogHeader className="px-6 pt-6 pb-4">
           <DialogTitle className="text-[#1A1F36]">Add Songs to Setlist</DialogTitle>
           <DialogDescription>
             Select songs from your library to add to this setlist.
           </DialogDescription>
         </DialogHeader>
 
-        <div className="flex-1 flex flex-col space-y-4">
+        <div className="flex-1 flex flex-col space-y-4 min-h-0 px-6">
           {/* Search */}
-          <div className="relative">
+          <div className="relative flex-shrink-0">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[#6B7280]" />
             <Input
               placeholder="Search by title, artist, or content type..."
@@ -137,7 +139,7 @@ export const SongSelectionDialog = memo(function SongSelectionDialog({
 
           {/* Select All */}
           {filteredContent.length > 0 && (
-            <div className="flex items-center space-x-2 py-2 border-b border-[#E8E3DA]">
+            <div className="flex items-center space-x-2 py-2 border-b border-[#E8E3DA] flex-shrink-0">
               <Checkbox
                 id="select-all"
                 checked={isAllSelected}
@@ -156,7 +158,7 @@ export const SongSelectionDialog = memo(function SongSelectionDialog({
           )}
 
           {/* Song List */}
-          <ScrollArea className="flex-1">
+          <ScrollArea className="flex-1 min-h-0 -mx-6 px-6">
             {loading ? (
               <div className="flex items-center justify-center py-8">
                 <Loader2 className="w-6 h-6 animate-spin text-[#6B7280]" />
@@ -179,7 +181,7 @@ export const SongSelectionDialog = memo(function SongSelectionDialog({
               <div className="space-y-2">
                 {filteredContent.map((content) => {
                   const isSelected = selectedSongs.includes(content.id)
-                  const contentTypeInfo = getContentTypeDisplay(content.content_type || 'SHEET')
+                  const contentTypeInfo = getContentTypeDisplay(content.content_type || ContentType.SHEET)
 
                   return (
                     <div
@@ -227,7 +229,7 @@ export const SongSelectionDialog = memo(function SongSelectionDialog({
           </ScrollArea>
         </div>
 
-        <DialogFooter>
+        <DialogFooter className="px-6 py-4 border-t border-[#E8E3DA]">
           <Button
             variant="outline"
             onClick={() => onOpenChange(false)}

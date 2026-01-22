@@ -15,6 +15,7 @@ import {
   FileText,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { ContentType, normalizeContentType } from "@/types/content"
 import type { Database } from "@/types/supabase"
 
 type Content = Database["public"]["Tables"]["content"]["Row"]
@@ -32,25 +33,26 @@ interface SetlistDetailsProps {
   onAddSongs: () => void
   onEditSetlist: () => void
   onEnterPerformance: (startingSongIndex?: number) => void
-  onRemoveSong: (songId: string) => void
+  onRemoveSong: (contentId: string) => void // Content ID, not setlist_songs ID
   onReorderSongs: (songId: string, newPosition: number) => void
   className?: string
 }
 
 function getContentTypeDisplay(contentType: string): { label: string; color: string } {
-  switch (contentType) {
-    case 'LYRICS':
+  // Normalize the content type to handle various formats
+  const normalized = normalizeContentType(contentType)
+  
+  switch (normalized) {
+    case ContentType.LYRICS:
       return { label: 'Lyrics', color: 'bg-green-100 text-green-800' }
-    case 'CHORDS':
-      return { label: 'Chords', color: 'bg-blue-100 text-blue-800' }
-    case 'TABS':
-      return { label: 'Tabs', color: 'bg-purple-100 text-purple-800' }
-    case 'PIANO':
-      return { label: 'Piano', color: 'bg-indigo-100 text-indigo-800' }
-    case 'DRUMS':
-      return { label: 'Drums', color: 'bg-orange-100 text-orange-800' }
+    case ContentType.CHORDS:
+      return { label: 'Chords', color: 'bg-purple-100 text-purple-800' }
+    case ContentType.TAB:
+      return { label: 'Tab', color: 'bg-blue-100 text-blue-800' }
+    case ContentType.SHEET:
+      return { label: 'Sheet', color: 'bg-orange-100 text-orange-800' }
     default:
-      return { label: 'Sheet Music', color: 'bg-gray-100 text-gray-800' }
+      return { label: 'Sheet', color: 'bg-gray-100 text-gray-800' }
   }
 }
 
@@ -212,7 +214,7 @@ export const SetlistDetails = memo(function SetlistDetails({
               {songs
                 .sort((a, b) => a.position - b.position)
                 .map((song, index) => {
-                  const contentTypeInfo = getContentTypeDisplay(song.content.content_type || 'SHEET')
+                  const contentTypeInfo = getContentTypeDisplay(song.content.content_type || ContentType.SHEET)
                   const isDragging = draggedSongId === song.id
 
                   return (
@@ -284,7 +286,7 @@ export const SetlistDetails = memo(function SetlistDetails({
                               variant="ghost"
                               size="icon"
                               className="h-7 w-7 opacity-0 group-hover:opacity-100 transition-opacity text-[#6B7280] hover:text-red-600 hover:bg-red-50"
-                              onClick={() => onRemoveSong(song.id)}
+                              onClick={() => onRemoveSong(song.content.id)}
                               aria-label="Remove song"
                             >
                               <Trash2 className="w-3.5 h-3.5" />

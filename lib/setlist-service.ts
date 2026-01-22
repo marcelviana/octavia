@@ -267,7 +267,7 @@ export async function addSongToSetlist(setlistId: string, contentId: string, pos
         'Authorization': `Bearer ${idToken}`,
       },
       body: JSON.stringify({
-        contentId,
+        content_id: contentId,
         position,
         notes,
       }),
