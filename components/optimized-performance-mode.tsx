@@ -7,7 +7,6 @@
 
 import React, { memo, useEffect, useRef, useState, useMemo, useCallback } from 'react'
 import { OptimizedContentDisplay } from './performance-mode/optimized-content-display'
-import { OptimizedPerformanceControls } from './performance-mode/optimized-performance-controls'
 import { HeaderControls } from './performance-mode/header-controls'
 import { NavigationControls } from './performance-mode/navigation-controls'
 import { usePerformanceNavigation } from '@/hooks/use-performance-navigation'
@@ -29,7 +28,6 @@ import type {
 // Memoized sub-components for maximum performance
 const MemoizedHeaderControls = memo(HeaderControls)
 const MemoizedOptimizedContentDisplay = memo(OptimizedContentDisplay)
-const MemoizedOptimizedPerformanceControls = memo(OptimizedPerformanceControls)
 const MemoizedNavigationControls = memo(NavigationControls)
 
 export const OptimizedPerformanceMode = memo(function OptimizedPerformanceMode({
@@ -320,27 +318,13 @@ export const OptimizedPerformanceMode = memo(function OptimizedPerformanceMode({
       />
 
       {/* Main Content Area */}
-      <div className="flex-1 min-h-0 flex flex-col">
+      <div className="flex-1 min-h-0 flex flex-col pt-[110px] pb-[60px]">
         <div className="flex-1 min-h-0 overflow-hidden">
           <MemoizedOptimizedContentDisplay
             renderInfo={renderInfo}
             currentSongData={currentSongData}
             darkSheet={controlsState.darkSheet}
             zoom={controlsState.zoom}
-          />
-        </div>
-
-        {/* Performance Controls */}
-        <div className="flex-shrink-0 p-4">
-          <MemoizedOptimizedPerformanceControls
-            state={controlsState}
-            onZoomIn={() => controlsState.setZoom(controlsState.zoom + 0.1)}
-            onZoomOut={() => controlsState.setZoom(controlsState.zoom - 0.1)}
-            onTogglePlayPause={() => controlsState.setIsPlaying(!controlsState.isPlaying)}
-            onBPMIncrease={() => controlsState.changeBpm(1, '+1')}
-            onBPMDecrease={() => controlsState.changeBpm(-1, '-1')}
-            onToggleDarkSheet={() => controlsState.setDarkSheet(!controlsState.darkSheet)}
-            onResetZoom={() => controlsState.setZoom(1)}
           />
         </div>
       </div>

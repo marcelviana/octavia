@@ -110,7 +110,7 @@ const MemoizedLyricsDisplay = memo(function LyricsDisplay({
 
   return (
     <div 
-      className="p-8 w-full h-full overflow-auto"
+      className="px-8 py-8 w-full h-full overflow-auto"
       style={textStyle}
     >
       <div className="max-w-2xl mx-auto font-mono leading-relaxed">

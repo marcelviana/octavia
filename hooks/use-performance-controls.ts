@@ -61,7 +61,6 @@ export function usePerformanceControls({
   const pressTimeout = useRef<NodeJS.Timeout | null>(null)
   const pressInterval = useRef<NodeJS.Timeout | null>(null)
   const isPressing = useRef(false)
-  const controlsTimeout = useRef<NodeJS.Timeout | null>(null)
   const scrollRef = useRef<number | null>(null)
   const isMountedRef = useRef(true)
 
@@ -102,14 +101,6 @@ export function usePerformanceControls({
   // Control visibility management
   const handleMouseMove = () => {
     setShowControls(true)
-
-    if (controlsTimeout.current) {
-      clearTimeout(controlsTimeout.current)
-    }
-
-    controlsTimeout.current = setTimeout(() => {
-      setShowControls(false)
-    }, 3000)
   }
 
   // Auto-scroll functionality with BPM synchronization
@@ -169,19 +160,6 @@ export function usePerformanceControls({
     return () => clearTimeout(t)
   }, [bpmFeedback])
 
-  // Initialize control hiding timeout
-  useEffect(() => {
-    controlsTimeout.current = setTimeout(() => {
-      setShowControls(false)
-    }, 3000)
-
-    return () => {
-      if (controlsTimeout.current) {
-        clearTimeout(controlsTimeout.current)
-      }
-    }
-  }, [])
-
   // Cleanup function
   useEffect(() => {
     return () => {
@@ -194,9 +172,6 @@ export function usePerformanceControls({
       }
       if (pressInterval.current) {
         clearInterval(pressInterval.current)
-      }
-      if (controlsTimeout.current) {
-        clearTimeout(controlsTimeout.current)
       }
     }
   }, [])
@@ -217,10 +192,6 @@ export function usePerformanceControls({
       if (pressInterval.current) {
         clearInterval(pressInterval.current)
         pressInterval.current = null
-      }
-      if (controlsTimeout.current) {
-        clearTimeout(controlsTimeout.current)
-        controlsTimeout.current = null
       }
     }
   }, [])
