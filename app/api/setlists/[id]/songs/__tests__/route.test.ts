@@ -68,8 +68,8 @@ describe('/api/setlists/[id]/songs', () => {
     email: 'test@example.com'
   }
   
-  const setlistId = 'setlist-123'
-  const contentId = 'content-456'
+  const setlistId = '7c9e6679-7425-40de-944b-e07fc1f90ae7' // Valid UUID
+  const contentId = '550e8400-e29b-41d4-a716-446655440000' // Valid UUID
 
   beforeEach(() => {
     vi.clearAllMocks()

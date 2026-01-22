@@ -36,11 +36,12 @@ const {
   mockSetlists, 
   mockSetlistSongs, 
   mockContent,
+  TEST_IDS,
   supabaseMock 
 } = createAPIMockData()
 
 describe('/api/setlists/[id]', () => {
-  const setlistId = 'setlist-1'
+  const setlistId = TEST_IDS.SETLIST_1
 
   beforeEach(() => {
     // Clear all mocks first

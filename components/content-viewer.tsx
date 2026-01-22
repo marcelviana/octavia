@@ -61,7 +61,7 @@ export function ContentViewer({
   }
 
   return (
-    <div className="flex flex-col bg-gradient-to-b from-[#fff9f0] to-[#fff5e5]">
+    <div className="flex flex-col bg-gradient-to-b from-[#fff9f0] to-[#fff5e5] min-h-full">
       {/* Header */}
       <ContentHeader
         content={content}

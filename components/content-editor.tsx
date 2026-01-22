@@ -30,7 +30,7 @@ import {
 import { ContentTypeEditor } from "@/components/editors/content-type-editor"
 import { getContentTypeStyle } from "@/lib/content-type-styles"
 import { UnifiedMetadataEditor } from "@/components/unified-metadata-editor"
-import { getContentTypeIcon } from "@/types/content"
+import { getContentTypeIcon, getContentTypeColors } from "@/types/content"
 
 interface ContentEditorProps {
   content: any
@@ -64,24 +64,11 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
 
   const contentType = content.type || content.content_type
   const styles = getContentTypeStyle(contentType)
-  const headerGradient = (() => {
-    switch (contentType) {
-      case "Lyrics":
-        return "from-green-500 to-green-600"
-      case "Guitar Tab":
-        return "from-blue-500 to-blue-600"
-      case "Chord Chart":
-        return "from-purple-500 to-purple-600"
-      case "Sheet Music":
-        return "from-orange-500 to-orange-600"
-      default:
-        return "from-amber-500 to-orange-600"
-    }
-  })()
+  const typeColors = getContentTypeColors(contentType)
 
   const getContentIcon = (type: string) => {
     const IconComponent = getContentTypeIcon(type);
-    return <IconComponent className="w-4 h-4 text-white" />;
+    return <IconComponent className={`w-4 h-4 ${typeColors.primary}`} />;
   }
 
   useEffect(() => {
@@ -139,7 +126,7 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
   const colors = ["#000000", "#ff0000", "#00ff00", "#0000ff", "#ffff00", "#ff00ff", "#00ffff", "#ffa500"]
 
   return (
-    <div className="flex flex-col bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 min-h-screen">
+    <div className="flex flex-col bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 min-h-full">
       {/* Header */}
       <div className="sticky top-0 z-30 bg-white/90 backdrop-blur-sm border-b border-amber-200 px-4 py-3 shadow-md">
         <div className="flex flex-row flex-wrap items-center justify-between gap-4">
@@ -148,12 +135,12 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
               <ArrowLeft className="w-5 h-5" />
             </Button>
             <div className="flex items-center space-x-3">
-              <div className={`w-8 h-8 rounded-lg flex items-center justify-center bg-gradient-to-r ${headerGradient}`}>
+              <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${typeColors.bg}`}>
                 {getContentIcon(contentType)}
               </div>
               <div>
                 <h1 className="font-semibold text-lg sm:text-xl bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-                  Editing: {content.title}
+                  {content.title}
                 </h1>
                 <div className="flex items-center space-x-2">
                   <Badge variant="outline" className={`${styles.bg} ${styles.border} ${styles.icon} font-medium px-2 py-0.5 text-xs`}>
@@ -179,8 +166,8 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
               disabled={!hasChanges}
               className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white"
             >
-              <Save className="w-4 h-4 mr-2" />
-              Save Changes
+              <Save className="w-4 h-4 sm:mr-2" />
+              <span className="hidden sm:inline">Save Changes</span>
             </Button>
           </div>
         </div>

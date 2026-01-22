@@ -94,14 +94,14 @@ describe('/api/content/[id]', () => {
 
   describe('Debug URL parsing', () => {
     it('should extract ID correctly from URL', async () => {
-      const testUrl = 'http://localhost/api/content/content-123'
+      const testUrl = `http://localhost/api/content/${TEST_CONTENT.id}`
       const url = new URL(testUrl)
       const pathname = url.pathname
       const pathParts = pathname.split('/').filter(Boolean)
       const expectedId = pathParts[pathParts.length - 1]
       
       
-      expect(expectedId).toBe('content-123')
+      expect(expectedId).toBe(TEST_CONTENT.id)
     })
   })
 
@@ -116,7 +116,7 @@ describe('/api/content/[id]', () => {
       const { GET } = await import('../route')
       
       const request = createValidAuthenticatedRequest(
-        'http://localhost/api/content/content-123'
+        `http://localhost/api/content/${TEST_CONTENT.id}`
       )
 
       const response = await GET(request)
@@ -151,7 +151,7 @@ describe('/api/content/[id]', () => {
     it.skip('TODO: Fix auth rejection - rejects unauthenticated requests', async () => {
       const { GET } = await import('../route')
       
-      const request = createMockRequest('http://localhost/api/content/content-123')
+      const request = createMockRequest(`http://localhost/api/content/${TEST_CONTENT.id}`)
 
       const response = await GET(request)
       
@@ -168,7 +168,7 @@ describe('/api/content/[id]', () => {
       const { GET } = await import('../route')
       
       const request = createValidAuthenticatedRequest(
-        'http://localhost/api/content/content-123'
+        `http://localhost/api/content/${TEST_CONTENT.id}`
       )
 
       const response = await GET(request)
@@ -193,7 +193,7 @@ describe('/api/content/[id]', () => {
       const { PUT } = await import('../route')
       
       const request = createValidAuthenticatedRequest(
-        'http://localhost/api/content/content-123',
+        `http://localhost/api/content/${TEST_CONTENT.id}`,
         {
           method: 'PUT',
           body: updateData
@@ -210,14 +210,14 @@ describe('/api/content/[id]', () => {
       
       // Verify update was called with proper filters
       expect(mockUpdate).toHaveBeenCalled()
-      expect(mockEq).toHaveBeenCalledWith('id', 'content-123')
+      expect(mockEq).toHaveBeenCalledWith('id', TEST_CONTENT.id)
       expect(mockEq).toHaveBeenCalledWith('user_id', TEST_USER.uid)
     })
 
     it.skip('TODO: Fix auth rejection - rejects unauthenticated requests', async () => {
       const { PUT } = await import('../route')
       
-      const request = createMockRequest('http://localhost/api/content/content-123', {
+      const request = createMockRequest(`http://localhost/api/content/${TEST_CONTENT.id}`, {
         method: 'PUT',
         body: { title: 'Updated' }
       })
@@ -231,7 +231,7 @@ describe('/api/content/[id]', () => {
       const { PUT } = await import('../route')
       
       const request = createValidAuthenticatedRequest(
-        'http://localhost/api/content/content-123',
+        `http://localhost/api/content/${TEST_CONTENT.id}`,
         {
           method: 'PUT',
           body: {}
@@ -283,7 +283,7 @@ describe('/api/content/[id]', () => {
       const { PUT } = await import('../route')
       
       const request = createValidAuthenticatedRequest(
-        'http://localhost/api/content/content-123',
+        `http://localhost/api/content/${TEST_CONTENT.id}`,
         {
           method: 'PUT',
           body: updateData
@@ -307,7 +307,7 @@ describe('/api/content/[id]', () => {
       const { DELETE } = await import('../route')
       
       const request = createValidAuthenticatedRequest(
-        'http://localhost/api/content/content-123',
+        `http://localhost/api/content/${TEST_CONTENT.id}`,
         {
           method: 'DELETE'
         }
@@ -323,14 +323,14 @@ describe('/api/content/[id]', () => {
       
       // Verify delete was called with proper filters
       expect(mockDelete).toHaveBeenCalled()
-      expect(mockEq).toHaveBeenCalledWith('id', 'content-123')
+      expect(mockEq).toHaveBeenCalledWith('id', TEST_CONTENT.id)
       expect(mockEq).toHaveBeenCalledWith('user_id', TEST_USER.uid)
     })
 
     it.skip('TODO: Fix auth rejection - rejects unauthenticated requests', async () => {
       const { DELETE } = await import('../route')
       
-      const request = createMockRequest('http://localhost/api/content/content-123', {
+      const request = createMockRequest(`http://localhost/api/content/${TEST_CONTENT.id}`, {
         method: 'DELETE'
       })
 
@@ -370,7 +370,7 @@ describe('/api/content/[id]', () => {
       const { DELETE } = await import('../route')
       
       const request = createValidAuthenticatedRequest(
-        'http://localhost/api/content/content-123',
+        `http://localhost/api/content/${TEST_CONTENT.id}`,
         {
           method: 'DELETE'
         }

@@ -524,9 +524,19 @@ export const TEST_UNVERIFIED_USER = {
   displayName: 'Unverified User'
 }
 
+// Common test IDs (valid UUIDs)
+export const TEST_IDS = {
+  CONTENT_1: '550e8400-e29b-41d4-a716-446655440000',
+  CONTENT_2: '6ba7b810-9dad-11d1-80b4-00c04fd430c8',
+  SETLIST_1: '7c9e6679-7425-40de-944b-e07fc1f90ae7',
+  SETLIST_2: '8f8e5c52-5e8e-4f5c-8c5e-5e8e4f5c8c5e',
+  NEW_CONTENT: '9d8e7c6b-5a4b-3c2d-1e0f-1a2b3c4d5e6f',
+  NEW_SETLIST: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890'
+}
+
 // Common test content data
 export const TEST_CONTENT = {
-  id: 'content-123',
+  id: TEST_IDS.CONTENT_1,
   title: 'Test Song',
   artist: 'Test Artist',
   album: 'Test Album',
@@ -535,6 +545,17 @@ export const TEST_CONTENT = {
   user_id: TEST_USER.uid,
   created_at: '2024-01-01T00:00:00Z',
   updated_at: '2024-01-01T00:00:00Z'
+}
+
+// Common test setlist data
+export const TEST_SETLIST = {
+  id: TEST_IDS.SETLIST_1,
+  name: 'Test Setlist',
+  description: 'A test setlist',
+  user_id: TEST_USER.uid,
+  created_at: '2024-01-01T00:00:00Z',
+  updated_at: '2024-01-01T00:00:00Z',
+  is_public: false
 }
 
 // Response assertion helpers with better error messages

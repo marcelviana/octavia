@@ -250,9 +250,18 @@ export class SupabaseMockFactory {
 export function createSetlistAPIMock() {
   const mockUser = { uid: 'test-user-123' }
   
+  // Valid UUID test IDs
+  const TEST_IDS = {
+    SETLIST_1: '7c9e6679-7425-40de-944b-e07fc1f90ae7',
+    SONG_1: '1a2b3c4d-5e6f-7890-abcd-ef1234567890',
+    SONG_2: '2b3c4d5e-6f78-9012-bcde-f12345678901',
+    CONTENT_1: '550e8400-e29b-41d4-a716-446655440000',
+    CONTENT_2: '6ba7b810-9dad-11d1-80b4-00c04fd430c8'
+  }
+  
   const mockSetlists = [
     {
-      id: 'setlist-1',
+      id: TEST_IDS.SETLIST_1,
       name: 'Test Setlist',
       description: 'A test setlist',
       user_id: mockUser.uid,
@@ -264,16 +273,16 @@ export function createSetlistAPIMock() {
 
   const mockSetlistSongs = [
     {
-      id: 'song-1',
-      setlist_id: 'setlist-1',
-      content_id: 'content-1',
+      id: TEST_IDS.SONG_1,
+      setlist_id: TEST_IDS.SETLIST_1,
+      content_id: TEST_IDS.CONTENT_1,
       position: 1,
       notes: 'Opening song'
     },
     {
-      id: 'song-2', 
-      setlist_id: 'setlist-1',
-      content_id: 'content-2',
+      id: TEST_IDS.SONG_2, 
+      setlist_id: TEST_IDS.SETLIST_1,
+      content_id: TEST_IDS.CONTENT_2,
       position: 2,
       notes: 'Second song'
     }
@@ -281,7 +290,7 @@ export function createSetlistAPIMock() {
 
   const mockContent = [
     {
-      id: 'content-1',
+      id: TEST_IDS.CONTENT_1,
       title: 'Wonderwall',
       artist: 'Oasis',
       content_type: 'Chords',
@@ -292,7 +301,7 @@ export function createSetlistAPIMock() {
       user_id: mockUser.uid
     },
     {
-      id: 'content-2',
+      id: TEST_IDS.CONTENT_2,
       title: 'Champagne Supernova',
       artist: 'Oasis', 
       content_type: 'Tabs',
@@ -315,6 +324,7 @@ export function createSetlistAPIMock() {
     mockSetlists,
     mockSetlistSongs,
     mockContent,
+    TEST_IDS,
     supabaseMock: factory.createSupabaseMock()
   }
 }

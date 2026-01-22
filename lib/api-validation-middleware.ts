@@ -9,8 +9,8 @@ import { sanitizeInput } from './input-sanitizer'
 
 // Common validation schemas
 export const commonSchemas = {
-  // MongoDB ObjectId pattern
-  objectId: z.string().regex(/^[a-f\d]{24}$/i, 'Invalid ID format'),
+  // UUID pattern (Supabase default)
+  objectId: z.string().uuid('Invalid ID format'),
 
   // Firebase UID pattern
   firebaseUid: z.string().min(1).max(128),

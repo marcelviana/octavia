@@ -36,6 +36,7 @@ const {
   mockSetlists, 
   mockSetlistSongs, 
   mockContent,
+  TEST_IDS,
   supabaseMock 
 } = createAPIMockData()
 
@@ -90,7 +91,7 @@ describe('/api/setlists', () => {
 
       expect(response.status).toBe(200)
       expect(data).toHaveLength(1)
-      expect(data[0].id).toBe('setlist-1')
+      expect(data[0].id).toBe(TEST_IDS.SETLIST_1)
       expect(data[0].name).toBe('Test Setlist')
       expect(data[0].setlist_songs).toHaveLength(2)
       expect(data[0].setlist_songs[0].content.title).toBe('Wonderwall')
@@ -165,7 +166,7 @@ describe('/api/setlists', () => {
 
       // Setup mock to return created setlist
       const createdSetlist = {
-        id: 'new-setlist-id',
+        id: '9d8e7c6b-5a4b-3c2d-1e0f-1a2b3c4d5e6f', // Valid UUID
         name: 'Minimal Setlist',
         description: null,
         user_id: mockUser.uid,
@@ -198,7 +199,7 @@ describe('/api/setlists', () => {
 
       // Setup mock to return created setlist
       const createdSetlist = {
-        id: 'full-setlist-id',
+        id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890', // Valid UUID
         ...fullSetlistData,
         user_id: mockUser.uid,
         created_at: '2024-01-01T00:00:00Z'

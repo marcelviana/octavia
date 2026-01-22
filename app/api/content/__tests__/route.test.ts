@@ -251,7 +251,8 @@ describe('/api/content', () => {
 
     it('creates new content when authenticated', async () => {
       // Mock successful insert
-      const newContent = { id: 'new-content-123', ...validContentData, user_id: TEST_USER.uid }
+      const newContentId = '9d8e7c6b-5a4b-3c2d-1e0f-1a2b3c4d5e6f' // Valid UUID
+      const newContent = { id: newContentId, ...validContentData, user_id: TEST_USER.uid }
       mockSingle.mockResolvedValue({ data: newContent, error: null })
 
       const { POST } = await import('../route')
@@ -266,7 +267,7 @@ describe('/api/content', () => {
       expectCreated(response)
       
       const data = await getJsonResponse(response)
-      expect(data.id).toBe('new-content-123')
+      expect(data.id).toBe(newContentId)
       expect(data.user_id).toBe(TEST_USER.uid)
       
       // Verify content was inserted with expected fields
@@ -311,8 +312,9 @@ describe('/api/content', () => {
 
     it('sanitizes content before saving', async () => {
       // Mock successful insert
+      const newContentId = 'b1c2d3e4-f5a6-7890-bcde-f12345678901' // Valid UUID
       mockSingle.mockResolvedValue({ 
-        data: { id: 'new-content-123' }, 
+        data: { id: newContentId }, 
         error: null 
       })
 

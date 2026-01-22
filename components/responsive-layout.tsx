@@ -75,14 +75,14 @@ export function ResponsiveLayout({ children, activeScreen, onNavigate, initialSe
   }, [])
 
   return (
-    <div className="flex flex-col h-screen bg-[#fffcf7]">
+    <div className="flex flex-col h-screen bg-[#fffcf7] overflow-hidden">
       <Header
         onMenuClick={shouldShowBottomNav ? undefined : () => setSidebarMobileOpen(true)}
         onToggleCollapse={() => setSidebarCollapsed((c) => !c)}
         collapsed={sidebarCollapsed}
         initialSearch={initialSearch}
       />
-      <div className="flex flex-1 relative">
+      <div className="flex flex-1 min-h-0 relative">
         <NavigationContainer
           activeScreen={activeScreen}
           onNavigate={onNavigate}
