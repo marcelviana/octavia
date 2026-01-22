@@ -21,29 +21,30 @@ interface MetadataFormData {
 
 interface UseMetadataFormProps {
   onComplete: (metadata: any) => void;
+  initialData?: Partial<MetadataFormData>;
 }
 
-export function useMetadataForm({ onComplete }: UseMetadataFormProps) {
+export function useMetadataForm({ onComplete, initialData }: UseMetadataFormProps) {
   const { user } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
   const [formData, setFormData] = useState<MetadataFormData>({
-    title: "",
-    artist: "",
-    album: "",
-    genre: "",
-    year: "",
-    notes: "",
-    key: "",
-    bpm: "",
-    difficulty: "",
-    capo: "",
-    tuning: "Standard (EADGBE)",
-    timeSignature: "4/4",
-    isFavorite: false,
-    tags: []
+    title: initialData?.title || "",
+    artist: initialData?.artist || "",
+    album: initialData?.album || "",
+    genre: initialData?.genre || "",
+    year: initialData?.year || "",
+    notes: initialData?.notes || "",
+    key: initialData?.key || "",
+    bpm: initialData?.bpm || "",
+    difficulty: initialData?.difficulty || "",
+    capo: initialData?.capo || "",
+    tuning: initialData?.tuning || "Standard (EADGBE)",
+    timeSignature: initialData?.timeSignature || "4/4",
+    isFavorite: initialData?.isFavorite || false,
+    tags: initialData?.tags || []
   });
 
   const updateField = (field: string, value: string | boolean | string[]) => {

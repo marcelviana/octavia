@@ -167,7 +167,7 @@ export function useAddContentLogic() {
     }
   };
 
-  const handleSaveContent = async () => {
+  const handleSaveContent = async (customMetadata?: any) => {
     if (!user) return;
 
     setIsUploading(true);
@@ -191,6 +191,27 @@ export function useAddContentLogic() {
         }
 
         setCreatedContent(createdSongs);
+      } else if (draftContent) {
+        // Handle created content from ContentCreator
+        const metadataToUse = customMetadata || metadata;
+        const content = await createContent({
+          title: metadataToUse.title || draftContent.title,
+          artist: metadataToUse.artist || "Unknown Artist",
+          content_type: draftContent.type,
+          content_data: draftContent.content,
+          album: metadataToUse.album || null,
+          genre: metadataToUse.genre || null,
+          notes: metadataToUse.notes || null,
+          key: metadataToUse.key || null,
+          bpm: metadataToUse.bpm ? parseInt(metadataToUse.bpm) : null,
+          difficulty: metadataToUse.difficulty || null,
+          time_signature: metadataToUse.timeSignature || null,
+          is_favorite: metadataToUse.isFavorite || false,
+          tags: metadataToUse.tags || null,
+          user_id: user.uid
+        });
+        setCreatedContent(content);
+        return content;
       } else if (uploadedFile) {
         // Handle single file upload
         const content = await createContent({
@@ -201,11 +222,13 @@ export function useAddContentLogic() {
           user_id: user.uid
         });
         setCreatedContent(content);
+        return content;
       }
 
       setCurrentStep(3);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to save content");
+      throw err;
     } finally {
       setIsUploading(false);
     }

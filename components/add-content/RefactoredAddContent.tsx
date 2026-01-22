@@ -89,6 +89,7 @@ export function RefactoredAddContent({
         setDraftContent={setDraftContent}
         handleSaveContent={handleSaveContent}
         isUploading={isUploading}
+        onContentCreated={onContentCreated}
       />
     );
   }
@@ -97,29 +98,31 @@ export function RefactoredAddContent({
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50">
       <div className="p-4">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto space-y-4">
           <StepIndicator currentStep={currentStep} />
 
-          <ContentTypeSelector
-            selectedType={contentType}
-            onTypeChange={setContentType}
-          />
-
-          {contentType !== ContentType.SHEET && (
-            <ModeSelector
-              selectedMode={mode}
-              onModeChange={setMode}
-              contentType={contentType}
+          <div className="bg-white rounded-lg shadow-sm border border-amber-200 p-4">
+            <ContentTypeSelector
+              selectedType={contentType}
+              onTypeChange={setContentType}
             />
-          )}
 
-          {mode === "import" && (
-            <ImportModeSelector
-              selectedImportMode={importMode}
-              contentType={contentType}
-              onImportModeChange={setImportMode}
-            />
-          )}
+            {contentType !== ContentType.SHEET && (
+              <ModeSelector
+                selectedMode={mode}
+                onModeChange={setMode}
+                contentType={contentType}
+              />
+            )}
+
+            {mode === "import" && (
+              <ImportModeSelector
+                selectedImportMode={importMode}
+                contentType={contentType}
+                onImportModeChange={setImportMode}
+              />
+            )}
+          </div>
 
           {mode === "create" ? (
             <ContentCreator
@@ -135,8 +138,7 @@ export function RefactoredAddContent({
               hideTypeSelection={true}
               onContentCreated={(content) => {
                 setDraftContent(content);
-                onContentCreated(content);
-                setCurrentStep(3);
+                setCurrentStep(2);
               }}
             />
           ) : (

@@ -1,5 +1,5 @@
 "use client"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { FileText, Upload } from "lucide-react"
 import { ContentType } from "@/types/content"
 
@@ -32,50 +32,53 @@ export function ImportModeSelector({
     : importModes
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {availableImportModes.map((mode) => (
-        <Card
-          key={mode.id}
-          className={`cursor-pointer transition-all hover:scale-105 ${
-            selectedImportMode === mode.id
-              ? "ring-2 ring-offset-2 ring-orange-500 bg-orange-50 border-orange-200"
-              : "hover:shadow-md border-gray-200"
-          }`}
-          onClick={() => onImportModeChange(mode.id as "single" | "batch")}
-        >
-          <CardHeader className="text-center pb-2">
-            <div
-              className={`w-12 h-12 mx-auto mb-2 rounded-lg flex items-center justify-center ${
-                selectedImportMode === mode.id
-                  ? "bg-orange-500 text-white"
-                  : "bg-gray-100 text-gray-600"
-              }`}
-            >
-              {mode.id === "single" ? (
-                <FileText className="w-6 h-6" />
-              ) : (
-                <Upload className="w-6 h-6" />
-              )}
-            </div>
-            <CardTitle
-              className={`text-base ${
-                selectedImportMode === mode.id ? "text-orange-700" : "text-gray-700"
-              }`}
-            >
-              {mode.name}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="text-center">
-            <p
-              className={`text-xs ${
-                selectedImportMode === mode.id ? "text-orange-600" : "text-gray-500"
-              }`}
-            >
-              {mode.subtitle}
-            </p>
-          </CardContent>
-        </Card>
-      ))}
+    <div className="mb-4">
+      <h3 className="text-sm font-medium text-gray-700 mb-2">Import Type</h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+        {availableImportModes.map((mode) => (
+          <Card
+            key={mode.id}
+            className={`cursor-pointer transition-all hover:scale-102 ${
+              selectedImportMode === mode.id
+                ? "ring-2 ring-offset-1 ring-orange-500 bg-orange-50 border-orange-200"
+                : "hover:shadow-sm border-gray-200"
+            }`}
+            onClick={() => onImportModeChange(mode.id as "single" | "batch")}
+          >
+            <CardContent className="p-3 flex items-center gap-3">
+              <div
+                className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                  selectedImportMode === mode.id
+                    ? "bg-orange-500 text-white"
+                    : "bg-gray-100 text-gray-600"
+                }`}
+              >
+                {mode.id === "single" ? (
+                  <FileText className="w-5 h-5" />
+                ) : (
+                  <Upload className="w-5 h-5" />
+                )}
+              </div>
+              <div className="text-left">
+                <h4
+                  className={`text-sm font-semibold ${
+                    selectedImportMode === mode.id ? "text-orange-700" : "text-gray-700"
+                  }`}
+                >
+                  {mode.name}
+                </h4>
+                <p
+                  className={`text-xs ${
+                    selectedImportMode === mode.id ? "text-orange-600" : "text-gray-500"
+                  }`}
+                >
+                  {mode.subtitle}
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
     </div>
   )
 }

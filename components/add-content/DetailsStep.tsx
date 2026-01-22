@@ -19,8 +19,9 @@ interface DetailsStepProps {
   onNext: () => void;
   draftContent: any;
   setDraftContent: (content: any) => void;
-  handleSaveContent: () => Promise<void>;
+  handleSaveContent: (metadata?: any) => Promise<Content | void>;
   isUploading: boolean;
+  onContentCreated: (content: Content) => void;
 }
 
 export function DetailsStep({
@@ -34,7 +35,8 @@ export function DetailsStep({
   draftContent,
   setDraftContent,
   handleSaveContent,
-  isUploading
+  isUploading,
+  onContentCreated
 }: DetailsStepProps) {
   return (
     <div className="p-4">
@@ -81,9 +83,17 @@ export function DetailsStep({
         ) : (
           <MetadataForm
             createdContent={draftContent}
-            onComplete={(metadata) => {
-              // Handle metadata completion
-              onNext();
+            onComplete={async (metadata) => {
+              // Save the content with metadata
+              try {
+                const savedContent = await handleSaveContent(metadata);
+                if (savedContent && 'id' in savedContent) {
+                  onContentCreated(savedContent);
+                }
+                onNext();
+              } catch (error) {
+                console.error("Failed to save content:", error);
+              }
             }}
             onBack={onBack}
           />

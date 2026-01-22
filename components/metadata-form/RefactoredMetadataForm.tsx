@@ -30,7 +30,13 @@ export function RefactoredMetadataForm({
     success,
     updateField,
     handleSubmit
-  } = useMetadataForm({ onComplete });
+  } = useMetadataForm({ 
+    onComplete,
+    initialData: createdContent ? {
+      title: createdContent.title || "",
+      artist: createdContent.artist || ""
+    } : undefined
+  });
 
   return (
     <div className="max-w-2xl mx-auto p-6">

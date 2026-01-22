@@ -19,16 +19,16 @@ export function StepIndicator({ currentStep }: StepIndicatorProps) {
   ];
 
   return (
-    <div className="flex items-center justify-center space-x-4 mb-6">
+    <div className="flex items-center justify-center space-x-3 mb-4">
       {steps.map((step, index) => {
         const Icon = step.icon;
         return (
           <div key={step.number} className="flex items-center">
             <div className="flex flex-col items-center">
               <div
-                className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium transition-all duration-300 ${
+                className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium transition-all duration-300 ${
                   step.active
-                    ? "bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-md"
+                    ? "bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-sm"
                     : "bg-white border-2 border-amber-200 text-amber-600"
                 }`}
               >
@@ -39,7 +39,7 @@ export function StepIndicator({ currentStep }: StepIndicatorProps) {
                 )}
               </div>
               <span
-                className={`mt-2 text-xs font-medium transition-colors ${
+                className={`mt-1 text-xs font-medium transition-colors ${
                   step.active ? "text-amber-800" : "text-amber-600"
                 }`}
               >
@@ -48,7 +48,7 @@ export function StepIndicator({ currentStep }: StepIndicatorProps) {
             </div>
             {index < steps.length - 1 && (
               <div
-                className={`w-16 h-1 mx-4 rounded-full transition-colors ${
+                className={`w-12 h-0.5 mx-3 rounded-full transition-colors ${
                   currentStep > step.number ? "bg-amber-500" : "bg-amber-200"
                 }`}
               />

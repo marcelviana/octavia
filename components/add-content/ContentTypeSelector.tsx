@@ -21,55 +21,58 @@ const contentTypes = [
 
 export function ContentTypeSelector({ selectedType, onTypeChange }: ContentTypeSelectorProps) {
   return (
-    <TooltipProvider>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        {contentTypes.map((type) => {
-          const IconComponent = getContentTypeIcon(type.name)
-          const colors = getContentTypeColors(type.name)
-          const isSelected = selectedType === type.name
+    <div className="mb-4">
+      <h3 className="text-sm font-medium text-gray-700 mb-2">Content Type</h3>
+      <TooltipProvider>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+          {contentTypes.map((type) => {
+            const IconComponent = getContentTypeIcon(type.name)
+            const colors = getContentTypeColors(type.name)
+            const isSelected = selectedType === type.name
 
-          return (
-            <Tooltip key={type.id}>
-              <TooltipTrigger asChild>
-                <Card
-                  className={`cursor-pointer transition-all hover:scale-105 ${
-                    isSelected
-                      ? `ring-2 ring-offset-2 ring-${colors.ring} bg-${colors.bg} border-${colors.border}`
-                      : "hover:shadow-md border-gray-200"
-                  }`}
-                  onClick={() => onTypeChange(type.name)}
-                >
-                  <CardContent className="p-4 text-center">
-                    <div
-                      className={`w-12 h-12 mx-auto mb-2 rounded-xl flex items-center justify-center ${
-                        isSelected ? colors.bg : "bg-gray-100"
-                      }`}
-                    >
-                      <IconComponent
-                        className={`w-6 h-6 ${
-                          isSelected ? colors.primary : "text-gray-600"
+            return (
+              <Tooltip key={type.id}>
+                <TooltipTrigger asChild>
+                  <Card
+                    className={`cursor-pointer transition-all hover:scale-102 ${
+                      isSelected
+                        ? `ring-2 ring-offset-1 ring-${colors.ring} bg-${colors.bg} border-${colors.border}`
+                        : "hover:shadow-sm border-gray-200"
+                    }`}
+                    onClick={() => onTypeChange(type.name)}
+                  >
+                    <CardContent className="p-3 text-center">
+                      <div
+                        className={`w-10 h-10 mx-auto mb-1 rounded-lg flex items-center justify-center ${
+                          isSelected ? colors.bg : "bg-gray-50"
                         }`}
-                      />
-                    </div>
-                    <div
-                      className={`text-sm font-medium ${
-                        isSelected ? colors.primary : "text-gray-700"
-                      }`}
-                    >
-                      {type.name}
-                    </div>
-                  </CardContent>
-                </Card>
-              </TooltipTrigger>
-              {type.tooltip && (
-                <TooltipContent>
-                  <p className="max-w-xs">{type.tooltip}</p>
-                </TooltipContent>
-              )}
-            </Tooltip>
-          )
-        })}
-      </div>
-    </TooltipProvider>
+                      >
+                        <IconComponent
+                          className={`w-5 h-5 ${
+                            isSelected ? colors.primary : "text-gray-600"
+                          }`}
+                        />
+                      </div>
+                      <div
+                        className={`text-xs font-medium ${
+                          isSelected ? colors.primary : "text-gray-700"
+                        }`}
+                      >
+                        {type.name}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </TooltipTrigger>
+                {type.tooltip && (
+                  <TooltipContent>
+                    <p className="max-w-xs">{type.tooltip}</p>
+                  </TooltipContent>
+                )}
+              </Tooltip>
+            )
+          })}
+        </div>
+      </TooltipProvider>
+    </div>
   )
 }
