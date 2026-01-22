@@ -69,6 +69,12 @@ export const OptimizedPerformanceMode = memo(function OptimizedPerformanceMode({
             : undefined,
           file: typeof s.content.content_data === 'object' && s.content.content_data !== null && 'file' in s.content.content_data 
             ? s.content.content_data.file as string 
+            : undefined,
+          chords: typeof s.content.content_data === 'object' && s.content.content_data !== null && 'chords' in s.content.content_data 
+            ? s.content.content_data.chords 
+            : undefined,
+          sections: typeof s.content.content_data === 'object' && s.content.content_data !== null && 'sections' in s.content.content_data 
+            ? s.content.content_data.sections 
             : undefined
         } : null
       }))
@@ -88,6 +94,12 @@ export const OptimizedPerformanceMode = memo(function OptimizedPerformanceMode({
             : undefined,
           file: typeof selectedContent.content_data === 'object' && selectedContent.content_data !== null && 'file' in selectedContent.content_data 
             ? selectedContent.content_data.file as string 
+            : undefined,
+          chords: typeof selectedContent.content_data === 'object' && selectedContent.content_data !== null && 'chords' in selectedContent.content_data 
+            ? selectedContent.content_data.chords 
+            : undefined,
+          sections: typeof selectedContent.content_data === 'object' && selectedContent.content_data !== null && 'sections' in selectedContent.content_data 
+            ? selectedContent.content_data.sections 
             : undefined
         } : null
       }]

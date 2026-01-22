@@ -11,7 +11,7 @@ import { useEffect, useRef, useCallback, useState } from 'react'
 const PERFORMANCE_THRESHOLDS = {
   NAVIGATION_TIME_MS: 100, // Song navigation should be under 100ms
   RENDER_TIME_MS: 50, // Component renders should be under 50ms
-  MEMORY_USAGE_MB: 150, // Memory usage should stay under 150MB
+  MEMORY_USAGE_MB: 250, // Memory usage should stay under 250MB (increased for dev mode)
   FPS_TARGET: 60, // Target 60fps for smooth experience
   FPS_WARNING: 45, // Warn if FPS drops below 45
   CACHE_HIT_RATE: 0.8, // Target 80% cache hit rate
@@ -134,9 +134,18 @@ class RealTimePerformanceMonitor {
     }
 
     // Check for threshold violations
-    if (threshold && value > threshold) {
+    // Lower is better for: battery-level, fps (warn when TOO LOW)
+    // Higher is better for: memory, rtt, etc. (warn when TOO HIGH)
+    const lowerIsBetterMetrics = ['battery-level', 'fps']
+    const shouldWarnOnLow = lowerIsBetterMetrics.includes(name)
+    const thresholdViolated = shouldWarnOnLow
+      ? (threshold && value < threshold)
+      : (threshold && value > threshold)
+    
+    if (thresholdViolated) {
+      const comparison = shouldWarnOnLow ? '<' : '>'
       this.createAlert('warning', category, 
-        `${name} exceeded threshold: ${value}${unit} > ${threshold}${unit}`,
+        `${name} ${shouldWarnOnLow ? 'below' : 'exceeded'} threshold: ${value}${unit} ${comparison} ${threshold}${unit}`,
         value, threshold
       )
     }
@@ -454,21 +463,45 @@ class RealTimePerformanceMonitor {
 
     if (recentMetrics.length < 3) return
 
-    // Check for consistent degradation
-    const isConsistentlyDegrading = recentMetrics.every((metric, i) => 
-      i === 0 || (recentMetrics[i - 1] !== undefined && metric.value >= recentMetrics[i - 1]!.value)
-    )
-
-    if (isConsistentlyDegrading) {
-      const lastMetric = recentMetrics[recentMetrics.length - 1]
-      const firstMetric = recentMetrics[0]
-      if (lastMetric !== undefined && firstMetric !== undefined) {
-        const trend = lastMetric.value - firstMetric.value
-        this.createAlert('warning', category, 
-          `Performance degrading: ${name} increased by ${trend.toFixed(2)} over last 30s`,
-          trend, 0
-        )
-      }
+    // Define which metrics improve when they increase vs decrease
+    const increaseIsGood = ['fps', 'battery-level', 'network-downlink']
+    const increaseIsBad = ['memory-usage', 'network-rtt', 'navigation-time']
+    
+    // Define significance thresholds per metric to avoid alert spam
+    const significanceThresholds: Record<string, number> = {
+      'fps': 10, // Only warn if FPS drops by 10+ over 30s
+      'battery-level': 10, // Only warn if battery drops by 10%+
+      'memory-usage': 50, // Only warn if memory increases by 50MB+
+      'network-rtt': 100, // Only warn if RTT increases by 100ms+
+      'network-downlink': 5, // Only warn if bandwidth drops by 5Mbps+
+    }
+    
+    // Check for consistent degradation based on metric type
+    const lastMetric = recentMetrics[recentMetrics.length - 1]
+    const firstMetric = recentMetrics[0]
+    
+    if (lastMetric === undefined || firstMetric === undefined) return
+    
+    const trend = lastMetric.value - firstMetric.value
+    const threshold = significanceThresholds[name] || 0.01
+    const significantChange = Math.abs(trend) > threshold
+    
+    if (!significantChange) return
+    
+    // Determine if this trend is bad
+    let isDegrading = false
+    let message = ''
+    
+    if (increaseIsGood.includes(name) && trend < 0) {
+      isDegrading = true
+      message = `Performance degrading: ${name} decreased by ${Math.abs(trend).toFixed(2)} over last 30s`
+    } else if (increaseIsBad.includes(name) && trend > 0) {
+      isDegrading = true
+      message = `Performance degrading: ${name} increased by ${trend.toFixed(2)} over last 30s`
+    }
+    
+    if (isDegrading) {
+      this.createAlert('warning', category, message, Math.abs(trend), 0)
     }
   }
 
@@ -479,6 +512,16 @@ class RealTimePerformanceMonitor {
     value: number,
     threshold: number
   ): void {
+    // Deduplicate: Don't create alert if same message was logged in last 60 seconds
+    const recentDuplicate = this.alerts.find(
+      a => a.message === message && 
+      performance.now() - a.timestamp < 60000
+    )
+    
+    if (recentDuplicate) {
+      return // Skip duplicate alert
+    }
+
     const alert: PerformanceAlert = {
       id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       type,

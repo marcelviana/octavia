@@ -34,21 +34,8 @@ export function PerformanceMode({
   const contentRef = useRef<HTMLDivElement>(null)
 
   const songs: SongData[] = useMemo(() => {
-    console.log('[PerformanceMode] Building songs array:', {
-      hasSetlist: !!selectedSetlist,
-      hasContent: !!selectedContent,
-      selectedContent
-    })
-    
     if (selectedSetlist?.setlist_songs) {
-      console.log('[PerformanceMode] Processing setlist songs:', selectedSetlist.setlist_songs)
-      return selectedSetlist.setlist_songs.map(s => {
-        console.log('[PerformanceMode] Setlist song content_data:', {
-          id: s.content.id,
-          title: s.content.title,
-          content_data: s.content.content_data
-        })
-        return ({
+      return selectedSetlist.setlist_songs.map(s => ({
         id: s.content.id,
         title: s.content.title,
         artist: s.content.artist,
@@ -70,12 +57,9 @@ export function PerformanceMode({
             ? s.content.content_data.sections 
             : undefined
         } : null
-      })})
+      }))
     }
     if (selectedContent) {
-      console.log('[PerformanceMode] selectedContent.content_data:', selectedContent.content_data)
-      console.log('[PerformanceMode] Full selectedContent:', selectedContent)
-      
       return [{
         id: selectedContent.id,
         title: selectedContent.title,
@@ -100,9 +84,7 @@ export function PerformanceMode({
         } : null
       }]
     }
-    const result = defaultSetlist
-    console.log('[PerformanceMode] Final songs array:', result)
-    return result
+    return defaultSetlist
   }, [selectedSetlist, selectedContent])
 
   const { currentSong, canGoNext, canGoPrevious, goToNext, goToPrevious, goToSong, currentSongData } = 

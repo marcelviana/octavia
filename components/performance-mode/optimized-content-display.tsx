@@ -140,36 +140,26 @@ const MemoizedChordsDisplay = memo(function ChordsDisplay({
     backgroundColor: darkSheet ? '#000000' : 'transparent'
   }), [zoom, darkSheet])
 
-  const bgColor = darkSheet ? 'bg-gray-800' : 'bg-white/90'
-  const borderColor = darkSheet ? 'border-purple-400' : 'border-purple-300'
   const textColor = darkSheet ? 'text-purple-300' : 'text-purple-600'
-  const accentBg = darkSheet ? 'bg-gray-700' : 'bg-purple-50'
+  const chordsColor = darkSheet ? 'text-purple-400' : 'text-purple-700'
 
   return (
     <div 
       className="px-8 py-8 w-full h-full overflow-auto"
       style={containerStyle}
     >
-      <div className="max-w-2xl mx-auto space-y-8">
+      <div className="max-w-2xl mx-auto space-y-6">
         {Array.isArray(chordsData) ? (
           chordsData.map((section: any, index: number) => (
-            <div 
-              key={section.id || index} 
-              className={cn(
-                "p-6 backdrop-blur-sm border-2 rounded-2xl shadow-lg",
-                bgColor,
-                borderColor
-              )}
-            >
-              {section.name && (
-                <h3 className={cn("text-2xl font-bold mb-4", textColor)}>
+            <div key={section.id || index} className="space-y-3">
+              {section.name && section.name !== 'Content' && (
+                <h3 className={cn("text-xl font-bold", textColor)}>
                   {section.name}
                 </h3>
               )}
               {section.chords && (
-                <div className={cn("mb-4 p-4 rounded-lg", accentBg)}>
-                  <span className={cn("text-lg font-semibold", textColor)}>Chords: </span>
-                  <span className="font-mono text-lg font-medium">{section.chords}</span>
+                <div className={cn("font-semibold text-lg", chordsColor)}>
+                  {section.chords}
                 </div>
               )}
               {section.lyrics && (
@@ -180,10 +170,8 @@ const MemoizedChordsDisplay = memo(function ChordsDisplay({
             </div>
           ))
         ) : (
-          <div className={cn("p-6 backdrop-blur-sm border-2 rounded-2xl shadow-lg", bgColor, borderColor)}>
-            <div className="font-mono leading-relaxed whitespace-pre-wrap">
-              {String(chordsData)}
-            </div>
+          <div className="font-mono leading-relaxed whitespace-pre-wrap">
+            {String(chordsData)}
           </div>
         )}
       </div>

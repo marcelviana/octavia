@@ -37,15 +37,6 @@ export function useContentRenderer({
   return useMemo(() => {
     const normalizedContentType = normalizeContentType(currentSongData.content_type || '')
     
-    // Debug logging
-    console.log('[Performance Mode Debug] Content Type:', {
-      raw: currentSongData.content_type,
-      normalized: normalizedContentType,
-      currentSong,
-      chordsData: chordsData[currentSong],
-      title: currentSongData.title
-    })
-    
     // Handle sheet music content
     if (normalizedContentType === ContentType.SHEET) {
       const url = sheetUrls[currentSong]
@@ -107,12 +98,6 @@ export function useContentRenderer({
     // Handle chords/tabs content
     if (normalizedContentType === ContentType.CHORDS || normalizedContentType === ContentType.TAB) {
       const chordInfo = chordsData[currentSong]
-      
-      console.log('[Performance Mode Debug] Chords detected:', {
-        chordInfo,
-        hasSections: chordInfo?.sections,
-        hasChords: chordInfo?.chords
-      })
       
       // Check for sections format (from ChordEditor)
       if (chordInfo?.sections && Array.isArray(chordInfo.sections) && chordInfo.sections.length > 0) {

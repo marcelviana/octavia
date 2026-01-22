@@ -50,23 +50,13 @@ export function useContentCaching({ songs }: UseContentCachingProps): ContentCac
   )
 
   // Extract chords/sections data from songs
-  const chordsData = useMemo(() => {
-    const result = songs.map((song: any) => {
-      console.log('[use-content-caching] Processing song:', {
-        id: song?.id,
-        title: song?.title,
-        content_data: song?.content_data,
-        chords: song?.content_data?.chords,
-        sections: song?.content_data?.sections
-      })
-      return {
-        chords: song?.content_data?.chords || null,
-        sections: song?.content_data?.sections || null
-      }
-    })
-    console.log('[use-content-caching] Final chordsData:', result)
-    return result
-  }, [songs])
+  const chordsData = useMemo(() => 
+    songs.map((song: any) => ({
+      chords: song?.content_data?.chords || null,
+      sections: song?.content_data?.sections || null
+    })),
+    [songs]
+  )
 
   // Load sheet URLs from cache or fallback to original URLs
   useEffect(() => {
