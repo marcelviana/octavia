@@ -116,6 +116,7 @@ export const OptimizedPerformanceMode = memo(function OptimizedPerformanceMode({
   const [sheetUrls, setSheetUrls] = useState<(string | null)[]>([])
   const [sheetMimeTypes, setSheetMimeTypes] = useState<(string | null)[]>([])
   const [lyricsData, setLyricsData] = useState<string[]>([])
+  const [chordsData, setChordsData] = useState<Array<{ chords: any; sections: any }>>([])
 
   // Performance controls (requires parameters)
   const controlsState = usePerformanceControls({
@@ -131,7 +132,8 @@ export const OptimizedPerformanceMode = memo(function OptimizedPerformanceMode({
     currentSongData,
     sheetUrls,
     sheetMimeTypes,
-    lyricsData
+    lyricsData,
+    chordsData
   })
 
   // Optimized navigation handlers with measurement
@@ -168,6 +170,7 @@ export const OptimizedPerformanceMode = memo(function OptimizedPerformanceMode({
       const newSheetUrls: (string | null)[] = []
       const newMimeTypes: (string | null)[] = []
       const newLyricsData: string[] = []
+      const newChordsData: Array<{ chords: any; sections: any }> = []
 
       for (let i = 0; i < songs.length; i++) {
         const song = songs[i]
@@ -207,12 +210,19 @@ export const OptimizedPerformanceMode = memo(function OptimizedPerformanceMode({
         } else {
           newLyricsData[i] = ''
         }
+
+        // Load chords/sections from content_data
+        newChordsData[i] = {
+          chords: song.content_data?.chords || null,
+          sections: song.content_data?.sections || null
+        }
       }
 
       if (isMounted) {
         setSheetUrls(newSheetUrls)
         setSheetMimeTypes(newMimeTypes)
         setLyricsData(newLyricsData)
+        setChordsData(newChordsData)
       }
     }
 

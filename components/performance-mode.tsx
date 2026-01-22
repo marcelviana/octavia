@@ -34,8 +34,21 @@ export function PerformanceMode({
   const contentRef = useRef<HTMLDivElement>(null)
 
   const songs: SongData[] = useMemo(() => {
+    console.log('[PerformanceMode] Building songs array:', {
+      hasSetlist: !!selectedSetlist,
+      hasContent: !!selectedContent,
+      selectedContent
+    })
+    
     if (selectedSetlist?.setlist_songs) {
-      return selectedSetlist.setlist_songs.map(s => ({
+      console.log('[PerformanceMode] Processing setlist songs:', selectedSetlist.setlist_songs)
+      return selectedSetlist.setlist_songs.map(s => {
+        console.log('[PerformanceMode] Setlist song content_data:', {
+          id: s.content.id,
+          title: s.content.title,
+          content_data: s.content.content_data
+        })
+        return ({
         id: s.content.id,
         title: s.content.title,
         artist: s.content.artist,
@@ -49,11 +62,20 @@ export function PerformanceMode({
             : undefined,
           file: typeof s.content.content_data === 'object' && s.content.content_data !== null && 'file' in s.content.content_data 
             ? s.content.content_data.file as string 
+            : undefined,
+          chords: typeof s.content.content_data === 'object' && s.content.content_data !== null && 'chords' in s.content.content_data 
+            ? s.content.content_data.chords 
+            : undefined,
+          sections: typeof s.content.content_data === 'object' && s.content.content_data !== null && 'sections' in s.content.content_data 
+            ? s.content.content_data.sections 
             : undefined
         } : null
-      }))
+      })})
     }
     if (selectedContent) {
+      console.log('[PerformanceMode] selectedContent.content_data:', selectedContent.content_data)
+      console.log('[PerformanceMode] Full selectedContent:', selectedContent)
+      
       return [{
         id: selectedContent.id,
         title: selectedContent.title,
@@ -68,17 +90,25 @@ export function PerformanceMode({
             : undefined,
           file: typeof selectedContent.content_data === 'object' && selectedContent.content_data !== null && 'file' in selectedContent.content_data 
             ? selectedContent.content_data.file as string 
+            : undefined,
+          chords: typeof selectedContent.content_data === 'object' && selectedContent.content_data !== null && 'chords' in selectedContent.content_data 
+            ? selectedContent.content_data.chords 
+            : undefined,
+          sections: typeof selectedContent.content_data === 'object' && selectedContent.content_data !== null && 'sections' in selectedContent.content_data 
+            ? selectedContent.content_data.sections 
             : undefined
         } : null
       }]
     }
-    return defaultSetlist
+    const result = defaultSetlist
+    console.log('[PerformanceMode] Final songs array:', result)
+    return result
   }, [selectedSetlist, selectedContent])
 
   const { currentSong, canGoNext, canGoPrevious, goToNext, goToPrevious, goToSong, currentSongData } = 
     usePerformanceNavigation({ songs, onExitPerformance, startingSongIndex })
 
-  const { sheetUrls, sheetMimeTypes, lyricsData } = useContentCaching({ songs })
+  const { sheetUrls, sheetMimeTypes, lyricsData, chordsData } = useContentCaching({ songs })
   
   const { zoom, isPlaying, bpm, darkSheet, bpmFeedback, showControls, setZoom, setIsPlaying, 
     setDarkSheet, changeBpm, startPress, endPress, handleMouseMove } = 
@@ -93,7 +123,7 @@ export function PerformanceMode({
   })
 
   const contentRenderInfo = useContentRenderer({
-    currentSong, currentSongData, sheetUrls, sheetMimeTypes, lyricsData
+    currentSong, currentSongData, sheetUrls, sheetMimeTypes, lyricsData, chordsData
   })
 
   useWakeLock()

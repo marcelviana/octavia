@@ -16,13 +16,50 @@ interface ChordEditorProps {
 }
 
 export function ChordEditor({ content, onChange }: ChordEditorProps) {
-  const [chordData, setChordData] = useState({
-    title: content.title || "",
-    artist: content.artist || "",
-    key: content.key || "",
-    capo: content.capo || "",
-    bpm: content.bpm || "",
-    sections: content.sections || [{ id: 1, name: "Verse 1", chords: "Am F C G", lyrics: "Sample lyrics here..." }],
+  const [chordData, setChordData] = useState(() => {
+    // Priority 1: Use sections if available (structured format)
+    if (content.sections && Array.isArray(content.sections) && content.sections.length > 0) {
+      return {
+        title: content.title || "",
+        artist: content.artist || "",
+        key: content.key || "",
+        capo: content.capo || "",
+        bpm: content.bpm || "",
+        sections: content.sections,
+      }
+    }
+    
+    // Priority 2: Convert chords string to sections (legacy format)
+    if (content.chords && typeof content.chords === 'string' && content.chords.trim()) {
+      return {
+        title: content.title || "",
+        artist: content.artist || "",
+        key: content.key || "",
+        capo: content.capo || "",
+        bpm: content.bpm || "",
+        sections: [{
+          id: Date.now(),
+          name: "Content",
+          chords: "",
+          lyrics: content.chords,
+        }],
+      }
+    }
+    
+    // Priority 3: Empty editor for new content
+    return {
+      title: content.title || "",
+      artist: content.artist || "",
+      key: content.key || "",
+      capo: content.capo || "",
+      bpm: content.bpm || "",
+      sections: [{
+        id: Date.now(),
+        name: "Verse 1",
+        chords: "",
+        lyrics: "",
+      }],
+    }
   })
 
   const updateChordData = (newData: any) => {
@@ -57,6 +94,19 @@ export function ChordEditor({ content, onChange }: ChordEditorProps) {
         section.id === sectionId ? { ...section, [field]: value } : section,
       ),
     })
+  }
+
+  const [focusedSection, setFocusedSection] = useState<number | null>(null)
+
+  const addChordToSection = (chord: string) => {
+    if (focusedSection !== null) {
+      const section = chordData.sections.find((s: any) => s.id === focusedSection)
+      if (section) {
+        const existingChords = section.chords || ""
+        const newChords = existingChords ? `${existingChords} ${chord}` : chord
+        updateSection(focusedSection, "chords", newChords)
+      }
+    }
   }
 
   const commonChords = ["C", "G", "Am", "F", "D", "Em", "A", "E", "Dm", "B7"]
@@ -169,6 +219,9 @@ export function ChordEditor({ content, onChange }: ChordEditorProps) {
       <Card>
         <CardHeader>
           <CardTitle>Quick Chords</CardTitle>
+          <p className="text-sm text-gray-500 mt-1">
+            {focusedSection ? "Click to add chords to the focused section" : "Focus on a chord input to use quick chords"}
+          </p>
         </CardHeader>
         <CardContent>
           <div className="flex flex-wrap gap-2">
@@ -177,9 +230,8 @@ export function ChordEditor({ content, onChange }: ChordEditorProps) {
                 key={chord}
                 variant="outline"
                 size="sm"
-                onClick={() => {
-                  // Add chord to current section logic
-                }}
+                onClick={() => addChordToSection(chord)}
+                disabled={!focusedSection}
               >
                 {chord}
               </Button>
@@ -226,6 +278,8 @@ export function ChordEditor({ content, onChange }: ChordEditorProps) {
                     placeholder="Am F C G"
                     value={section.chords}
                     onChange={(e) => updateSection(section.id, "chords", e.target.value)}
+                    onFocus={() => setFocusedSection(section.id)}
+                    onBlur={() => setFocusedSection(null)}
                     className="font-mono"
                   />
                 </div>

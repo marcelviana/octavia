@@ -22,6 +22,7 @@ export interface UseContentRendererProps {
   sheetUrls: (string | null)[]
   sheetMimeTypes: (string | null)[]
   lyricsData: string[]
+  chordsData: Array<{ chords: any; sections: any }>
 }
 
 export function useContentRenderer({
@@ -29,11 +30,21 @@ export function useContentRenderer({
   currentSongData,
   sheetUrls,
   sheetMimeTypes,
-  lyricsData
+  lyricsData,
+  chordsData
 }: UseContentRendererProps): ContentRenderInfo {
   
   return useMemo(() => {
     const normalizedContentType = normalizeContentType(currentSongData.content_type || '')
+    
+    // Debug logging
+    console.log('[Performance Mode Debug] Content Type:', {
+      raw: currentSongData.content_type,
+      normalized: normalizedContentType,
+      currentSong,
+      chordsData: chordsData[currentSong],
+      title: currentSongData.title
+    })
     
     // Handle sheet music content
     if (normalizedContentType === ContentType.SHEET) {
@@ -93,6 +104,41 @@ export function useContentRenderer({
       }
     }
     
+    // Handle chords/tabs content
+    if (normalizedContentType === ContentType.CHORDS || normalizedContentType === ContentType.TAB) {
+      const chordInfo = chordsData[currentSong]
+      
+      console.log('[Performance Mode Debug] Chords detected:', {
+        chordInfo,
+        hasSections: chordInfo?.sections,
+        hasChords: chordInfo?.chords
+      })
+      
+      // Check for sections format (from ChordEditor)
+      if (chordInfo?.sections && Array.isArray(chordInfo.sections) && chordInfo.sections.length > 0) {
+        return {
+          renderType: 'chords',
+          chordsData: chordInfo.sections,
+          hasContent: true,
+          sheetUrl: null,
+          lyricsContent: '',
+          contentType: currentSongData.content_type || null
+        }
+      }
+      
+      // Check for simple chords string format
+      if (chordInfo?.chords && typeof chordInfo.chords === 'string' && chordInfo.chords.trim()) {
+        return {
+          renderType: 'chords',
+          chordsData: chordInfo.chords,
+          hasContent: true,
+          sheetUrl: null,
+          lyricsContent: '',
+          contentType: currentSongData.content_type || null
+        }
+      }
+    }
+    
     // Handle lyrics content (default case)
     const lyrics = lyricsData[currentSong]
     
@@ -107,7 +153,7 @@ export function useContentRenderer({
       }
     }
     
-    // No lyrics available
+    // No content available
     return { 
       renderType: 'no-lyrics',
       hasContent: false,
@@ -116,5 +162,5 @@ export function useContentRenderer({
       contentType: currentSongData.content_type || null
     }
     
-  }, [currentSong, currentSongData, sheetUrls, sheetMimeTypes, lyricsData])
+  }, [currentSong, currentSongData, sheetUrls, sheetMimeTypes, lyricsData, chordsData])
 }

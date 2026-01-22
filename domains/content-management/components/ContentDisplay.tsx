@@ -131,6 +131,37 @@ export function ContentDisplay({
   }
 
   const renderChords = () => {
+    // Section-based display (structured format from ChordEditor)
+    if (Array.isArray(content.content_data?.sections) && content.content_data.sections.length > 0) {
+      return (
+        <div className="space-y-6">
+          {content.content_data.sections.map((section: any) => (
+            <div
+              key={section.id}
+              className="p-6 bg-white/80 backdrop-blur-sm border border-purple-200 rounded-xl shadow"
+            >
+              {section.name && (
+                <h4 className="text-lg font-bold text-purple-600 mb-4">
+                  {section.name}
+                </h4>
+              )}
+              {section.chords && (
+                <div className="mb-4 p-3 bg-purple-50 rounded-lg">
+                  <span className="text-sm font-semibold text-purple-700">Chords: </span>
+                  <span className="font-mono text-sm">{section.chords}</span>
+                </div>
+              )}
+              {section.lyrics && (
+                <pre className="whitespace-pre-wrap font-mono text-sm leading-relaxed">
+                  {section.lyrics}
+                </pre>
+              )}
+            </div>
+          ))}
+        </div>
+      )
+    }
+    
     if (Array.isArray(content.content_data?.chords)) {
       return (
         <div className="grid grid-cols-3 md:grid-cols-4 gap-6">

@@ -62,6 +62,46 @@ export const ContentDisplay = memo(function ContentDisplay({
         />
       )}
 
+      {renderInfo.renderType === 'chords' && (
+        <div className="space-y-8">
+          {/* Section-based format from ChordEditor */}
+          {Array.isArray(renderInfo.chordsData) ? (
+            renderInfo.chordsData.map((section: any, index: number) => (
+              <div 
+                key={section.id || index} 
+                className="p-6 bg-white/90 backdrop-blur-sm border-2 border-purple-300 rounded-2xl shadow-lg"
+              >
+                {section.name && (
+                  <h3 className="text-2xl font-bold text-purple-600 mb-4">
+                    {section.name}
+                  </h3>
+                )}
+                {section.chords && (
+                  <div className="mb-4 p-4 bg-purple-50 rounded-lg">
+                    <span className="text-lg font-semibold text-purple-700">Chords: </span>
+                    <span className="font-mono text-lg font-medium">{section.chords}</span>
+                  </div>
+                )}
+                {section.lyrics && (
+                  <MusicText
+                    text={section.lyrics}
+                    className="text-lg leading-relaxed font-mono"
+                  />
+                )}
+              </div>
+            ))
+          ) : (
+            /* Simple string format */
+            <div className="p-6 bg-white/90 backdrop-blur-sm border-2 border-purple-300 rounded-2xl shadow-lg">
+              <MusicText
+                text={renderInfo.chordsData as string}
+                className="text-lg leading-relaxed font-mono"
+              />
+            </div>
+          )}
+        </div>
+      )}
+
       {renderInfo.renderType === 'unsupported' && (
         <div className="text-center text-[#A69B8E] py-8">
           <p className="text-xl">Unsupported file format</p>

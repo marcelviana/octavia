@@ -224,7 +224,7 @@ describe('ContentViewer Refactoring Tests', () => {
       expect(screen.getByText(/Test lyrics/)).toBeInTheDocument()
     })
 
-    it.skip('TODO: Fix chord charts test - should handle chord charts', () => {
+    it('should handle chord charts', () => {
       const chordContent = {
         ...mockContent,
         content_type: 'Chords',
@@ -236,7 +236,9 @@ describe('ContentViewer Refactoring Tests', () => {
 
       render(<ContentViewer {...defaultProps} content={chordContent} />)
 
-      expect(screen.getByText(/Chords/)).toBeInTheDocument()
+      // Check that chord content is displayed - should have "Chords:" in sidebar
+      expect(screen.getByText(/Chords:/)).toBeInTheDocument()
+      expect(screen.getByText(/C, F, G, Am/)).toBeInTheDocument()
     })
 
     it('should handle tablature content', () => {

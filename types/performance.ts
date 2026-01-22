@@ -45,6 +45,8 @@ export interface SongData {
   content_data?: {
     lyrics?: string
     file?: string
+    chords?: any
+    sections?: any
   } | null
 }
 
@@ -63,15 +65,17 @@ export interface ContentCacheState {
   sheetUrls: (string | null)[]
   sheetMimeTypes: (string | null)[]
   lyricsData: string[]
+  chordsData: Array<{ chords: any; sections: any }>
   isLoading: boolean
 }
 
 // Content render information
 export interface ContentRenderInfo {
-  renderType: 'pdf' | 'image' | 'lyrics' | 'no-sheet' | 'no-lyrics' | 'unsupported'
+  renderType: 'pdf' | 'image' | 'lyrics' | 'chords' | 'no-sheet' | 'no-lyrics' | 'unsupported'
   url?: string
   mimeType?: string
   lyricsText?: string
+  chordsData?: any
   hasContent: boolean
   sheetUrl: string | null
   lyricsContent: string

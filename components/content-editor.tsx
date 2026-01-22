@@ -30,7 +30,7 @@ import {
 import { ContentTypeEditor } from "@/components/editors/content-type-editor"
 import { getContentTypeStyle } from "@/lib/content-type-styles"
 import { UnifiedMetadataEditor } from "@/components/unified-metadata-editor"
-import { getContentTypeIcon, getContentTypeColors } from "@/types/content"
+import { getContentTypeIcon, getContentTypeColors, ContentType, normalizeContentType } from "@/types/content"
 
 interface ContentEditorProps {
   content: any
@@ -92,9 +92,9 @@ export function ContentEditor({ content, onSave, onCancel }: ContentEditorProps)
         ...editedContent.content_data,
         annotations,
         // Store editor-specific data
-        ...(content.content_type === "Chord Chart" && editedContent.sections && { sections: editedContent.sections }),
-        ...(content.content_type === "Lyrics" && editedContent.lyrics && { lyrics: editedContent.lyrics }),
-        ...(content.content_type === "Guitar Tab" && editedContent.measures && { measures: editedContent.measures }),
+        ...(normalizeContentType(content.content_type) === ContentType.CHORDS && editedContent.sections && { sections: editedContent.sections }),
+        ...(normalizeContentType(content.content_type) === ContentType.LYRICS && editedContent.lyrics && { lyrics: editedContent.lyrics }),
+        ...(normalizeContentType(content.content_type) === ContentType.TAB && editedContent.measures && { measures: editedContent.measures }),
       },
       updated_at: new Date().toISOString(),
     }

@@ -36,6 +36,10 @@ const mockModeSelector = vi.mocked(ModeSelector)
 const mockImportModeSelector = vi.mocked(ImportModeSelector)
 const mockStepIndicator = vi.mocked(StepIndicator)
 
+// Import the mocked components to set up implementations
+const { ContentCreator } = await import('@/components/content-creator')
+const mockContentCreator = vi.mocked(ContentCreator)
+
 // Mock implementations
 const mockState = {
   mode: 'create',
@@ -116,6 +120,14 @@ describe('AddContent Refactoring Tests', () => {
     mockStepIndicator.mockImplementation(({ currentStep, steps }) => (
       <div data-testid="step-indicator">
         Step {currentStep} of {steps.length}
+      </div>
+    ))
+
+    mockContentCreator.mockImplementation(({ onContentCreated }) => (
+      <div data-testid="content-creator">
+        <button onClick={() => onContentCreated({ title: 'Test', content: {} })}>
+          Create Content
+        </button>
       </div>
     ))
   })
@@ -515,7 +527,7 @@ describe('AddContent Refactoring Tests', () => {
       })
     })
 
-    it.skip('TODO: Fix chords workflow - should handle Chords content workflow', () => {
+    it('should handle Chords content workflow', () => {
       mockUseAddContentState.mockReturnValue({
         ...mockState,
         currentStep: 5,

@@ -124,6 +124,73 @@ const MemoizedLyricsDisplay = memo(function LyricsDisplay({
   )
 })
 
+// Memoized Chords display component
+const MemoizedChordsDisplay = memo(function ChordsDisplay({
+  chordsData,
+  zoom,
+  darkSheet
+}: {
+  chordsData: any
+  zoom: number
+  darkSheet: boolean
+}) {
+  const containerStyle = useMemo(() => ({
+    fontSize: `${zoom}%`,
+    color: darkSheet ? '#ffffff' : '#000000',
+    backgroundColor: darkSheet ? '#000000' : 'transparent'
+  }), [zoom, darkSheet])
+
+  const bgColor = darkSheet ? 'bg-gray-800' : 'bg-white/90'
+  const borderColor = darkSheet ? 'border-purple-400' : 'border-purple-300'
+  const textColor = darkSheet ? 'text-purple-300' : 'text-purple-600'
+  const accentBg = darkSheet ? 'bg-gray-700' : 'bg-purple-50'
+
+  return (
+    <div 
+      className="px-8 py-8 w-full h-full overflow-auto"
+      style={containerStyle}
+    >
+      <div className="max-w-2xl mx-auto space-y-8">
+        {Array.isArray(chordsData) ? (
+          chordsData.map((section: any, index: number) => (
+            <div 
+              key={section.id || index} 
+              className={cn(
+                "p-6 backdrop-blur-sm border-2 rounded-2xl shadow-lg",
+                bgColor,
+                borderColor
+              )}
+            >
+              {section.name && (
+                <h3 className={cn("text-2xl font-bold mb-4", textColor)}>
+                  {section.name}
+                </h3>
+              )}
+              {section.chords && (
+                <div className={cn("mb-4 p-4 rounded-lg", accentBg)}>
+                  <span className={cn("text-lg font-semibold", textColor)}>Chords: </span>
+                  <span className="font-mono text-lg font-medium">{section.chords}</span>
+                </div>
+              )}
+              {section.lyrics && (
+                <div className="font-mono leading-relaxed whitespace-pre-wrap">
+                  {section.lyrics}
+                </div>
+              )}
+            </div>
+          ))
+        ) : (
+          <div className={cn("p-6 backdrop-blur-sm border-2 rounded-2xl shadow-lg", bgColor, borderColor)}>
+            <div className="font-mono leading-relaxed whitespace-pre-wrap">
+              {String(chordsData)}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+})
+
 // Memoized empty state component
 const MemoizedEmptyState = memo(function EmptyState({
   message,
@@ -175,6 +242,15 @@ export const OptimizedContentDisplay = memo(function OptimizedContentDisplay({
         return (
           <MemoizedLyricsDisplay
             lyrics={renderInfo.lyricsText!}
+            zoom={zoom}
+            darkSheet={darkSheet}
+          />
+        )
+
+      case 'chords':
+        return (
+          <MemoizedChordsDisplay
+            chordsData={renderInfo.chordsData!}
             zoom={zoom}
             darkSheet={darkSheet}
           />
