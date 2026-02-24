@@ -49,10 +49,10 @@ Plans:
 
 **Goal**: Fix duplicate rendering of Chords content sections by correcting data flow integration layer
 
-**Plans:** 1/1 plans complete
+**Plans:** 1/1 plans complete ✓ Complete
 
 Plans:
-- [ ] 02-01-PLAN.md — Debug and fix chords sections duplication in integration layer
+- [x] 02-01-PLAN.md — Debug and fix chords sections duplication in integration layer ✓ Completed
 
 **Deliverables**:
 - Data flow debugging to identify exact duplication point
@@ -61,13 +61,13 @@ Plans:
 - Regression verification for all content types
 
 **Success Criteria**:
-- [ ] Chords content displays full chord chart in performance mode
-- [ ] Each section (Verse 1, Chorus, etc.) renders exactly once
-- [ ] Chord progressions display correctly without duplication
-- [ ] Other content types (Lyrics, Tabs, Piano, Drums) unaffected
-- [ ] Integration tests pass (3/3, currently 2/3 failing)
-- [ ] Unit tests remain passing (12/12)
-- [ ] Performance remains <100ms
+- [x] Chords content displays full chord chart in performance mode
+- [x] Each section (Verse 1, Chorus, etc.) renders exactly once
+- [x] Chord progressions display correctly without duplication
+- [x] Other content types (Lyrics, Tabs, Piano, Drums) unaffected
+- [x] Integration tests pass (3/3)
+- [x] Unit tests remain passing (12/12)
+- [x] Performance remains <100ms
 
 **Requirements Addressed**:
 - BUG-01: Fix Chords content display in performance mode
@@ -83,18 +83,23 @@ Plans:
 
 **Goal**: Make auto-scroll play button respond to clicks and trigger scrolling
 
+**Plans:** 1 plan
+
+Plans:
+- [ ] 03-01-PLAN.md — Fix stale closure with useCallback and stable callback pattern
+
 **Deliverables**:
-- Fix event handler binding in performance mode controls
-- Address React.memo stale closure issues if present
-- Add useCallback wrapping for event handlers
-- Integration test for auto-scroll functionality
+- Wrap setIsPlaying in useCallback with functional state update
+- Update HeaderControls to use stable onTogglePlay callback prop
+- Remove inline arrow function from button onClick handler
+- Test for stale closure scenario passes
 
 **Success Criteria**:
 - [ ] Play button responds to clicks
 - [ ] Auto-scroll activates when play button clicked
 - [ ] Auto-scroll can be paused/stopped
-- [ ] Test from Phase 1 now passes
-- [ ] No inline event handlers introduced
+- [ ] Test from Phase 1 now passes (stale closure test)
+- [ ] No inline event handlers in HeaderControls
 - [ ] Performance remains <100ms
 
 **Requirements Addressed**:
@@ -187,6 +192,6 @@ Phase 4 (Optimization) ←┘
 ---
 
 *Roadmap created: 2026-02-24*
-*Roadmap updated: 2026-02-24 (Phase 2 planned)*
+*Roadmap updated: 2026-02-24 (Phase 3 planned)*
 *Estimated phases: 4*
 *Estimated duration: Based on complexity, not time*
