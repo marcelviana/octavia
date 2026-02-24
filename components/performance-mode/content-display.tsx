@@ -17,12 +17,6 @@ export const ContentDisplay = memo(function ContentDisplay({
   currentSong,
   zoom
 }: ContentDisplayProps) {
-  // DEBUG: Log rendering and chordsData structure
-  if (renderInfo.renderType === 'chords' && Array.isArray(renderInfo.chordsData)) {
-    console.log('[content-display.tsx] Rendering chords with', renderInfo.chordsData.length, 'sections')
-    console.log('[content-display.tsx] Section names:', renderInfo.chordsData.map((s: any) => s.name))
-  }
-
   return (
     <div
       className="space-y-6 max-w-3xl mx-auto w-full"

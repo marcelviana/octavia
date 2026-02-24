@@ -101,9 +101,6 @@ export function useContentRenderer({
 
       // Check for sections format (from ChordEditor)
       if (chordInfo?.sections && Array.isArray(chordInfo.sections) && chordInfo.sections.length > 0) {
-        // DEBUG: Log what's being returned
-        console.log('[use-content-renderer.ts] Returning chordsData with', chordInfo.sections.length, 'sections')
-        console.log('[use-content-renderer.ts] Section names:', chordInfo.sections.map((s: any) => s.name))
         return {
           renderType: 'chords',
           chordsData: chordInfo.sections,

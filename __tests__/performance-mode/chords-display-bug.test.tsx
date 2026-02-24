@@ -48,8 +48,9 @@ describe('Bug #1: Chords Display Missing Chart', () => {
     expect(screen.getByText(/Verse 2/i)).toBeInTheDocument()
 
     // Verify chord progressions render
-    // Mock data has "C F G Am" chords in Verse 1
-    expect(screen.getByText(/C.*F.*G.*Am/)).toBeInTheDocument()
+    // Note: Mock data has "C F G Am" in both Verse 1 and Verse 2 (realistic for repeating chord progressions)
+    const chordsMatches = screen.getAllByText(/C F G Am/)
+    expect(chordsMatches.length).toBe(2) // Verse 1 and Verse 2
   })
 
   it('should display section lyrics along with chords', async () => {
@@ -109,14 +110,23 @@ describe('Bug #1: Chords Display Missing Chart', () => {
 
     // Assert: All sections render (currently FAILING)
     await waitFor(() => {
-      expect(screen.getByText(/Intro/i)).toBeInTheDocument()
+      // Note: "Intro" appears in both section name AND lyrics text "Instrumental intro"
+      // Using getAllByText to handle both occurrences
+      const introMatches = screen.getAllByText(/Intro/i)
+      expect(introMatches.length).toBeGreaterThan(0)
     }, { timeout: 3000 })
 
     expect(screen.getByText(/Verse 1/i)).toBeInTheDocument()
-    expect(screen.getByText(/Bridge/i)).toBeInTheDocument()
+    // Note: "Bridge" appears in both section name AND lyrics "Bridge section lyrics"
+    const bridgeMatches = screen.getAllByText(/Bridge/i)
+    expect(bridgeMatches.length).toBeGreaterThan(0)
 
     // Verify different chord progressions render
-    expect(screen.getByText(/Em.*G.*D.*A/)).toBeInTheDocument()
+    // Note: "Em G D A" appears twice (Intro and Verse 1 both have this progression)
+    const emChordsMatches = screen.getAllByText(/Em.*G.*D.*A/)
+    expect(emChordsMatches.length).toBe(2)
+
+    // "C G Am F" is unique to Bridge section
     expect(screen.getByText(/C.*G.*Am.*F/)).toBeInTheDocument()
   })
 })

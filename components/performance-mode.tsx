@@ -60,7 +60,7 @@ export function PerformanceMode({
       }))
     }
     if (selectedContent) {
-      const constructedSong = {
+      return [{
         id: selectedContent.id,
         title: selectedContent.title,
         artist: selectedContent.artist,
@@ -82,13 +82,7 @@ export function PerformanceMode({
             ? selectedContent.content_data.sections
             : undefined
         } : null
-      }
-      // DEBUG: Log sections structure in performance-mode.tsx
-      console.log('[performance-mode.tsx] Constructed song sections:', constructedSong.content_data?.sections?.length, 'sections')
-      if (constructedSong.content_data?.sections) {
-        console.log('[performance-mode.tsx] Section names:', constructedSong.content_data.sections.map((s: any) => s.name))
-      }
-      return [constructedSong]
+      }]
     }
     return defaultSetlist
   }, [selectedSetlist, selectedContent])
@@ -156,6 +150,7 @@ export function PerformanceMode({
         >
           <div ref={contentRef} className="p-4 h-full overflow-auto">
             <ContentDisplay
+              key={`content-${currentSong}`}
               renderInfo={contentRenderInfo}
               currentSongData={currentSongData}
               currentSong={currentSong}
