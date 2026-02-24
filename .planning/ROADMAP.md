@@ -49,7 +49,7 @@ Plans:
 
 **Goal**: Fix duplicate rendering of Chords content sections by correcting data flow integration layer
 
-**Plans:** 1 plan
+**Plans:** 1/1 plans complete
 
 Plans:
 - [ ] 02-01-PLAN.md — Debug and fix chords sections duplication in integration layer
