@@ -44,23 +44,23 @@ export function PerformanceMode({
         content_type: s.content.content_type,
         file_url: s.content.file_url,
         content_data: s.content.content_data ? {
-          lyrics: typeof s.content.content_data === 'object' && s.content.content_data !== null && 'lyrics' in s.content.content_data 
-            ? s.content.content_data.lyrics as string 
+          lyrics: typeof s.content.content_data === 'object' && s.content.content_data !== null && 'lyrics' in s.content.content_data
+            ? s.content.content_data.lyrics as string
             : undefined,
-          file: typeof s.content.content_data === 'object' && s.content.content_data !== null && 'file' in s.content.content_data 
-            ? s.content.content_data.file as string 
+          file: typeof s.content.content_data === 'object' && s.content.content_data !== null && 'file' in s.content.content_data
+            ? s.content.content_data.file as string
             : undefined,
-          chords: typeof s.content.content_data === 'object' && s.content.content_data !== null && 'chords' in s.content.content_data 
-            ? s.content.content_data.chords 
+          chords: typeof s.content.content_data === 'object' && s.content.content_data !== null && 'chords' in s.content.content_data
+            ? s.content.content_data.chords
             : undefined,
-          sections: typeof s.content.content_data === 'object' && s.content.content_data !== null && 'sections' in s.content.content_data 
-            ? s.content.content_data.sections 
+          sections: typeof s.content.content_data === 'object' && s.content.content_data !== null && 'sections' in s.content.content_data
+            ? s.content.content_data.sections
             : undefined
         } : null
       }))
     }
     if (selectedContent) {
-      return [{
+      const constructedSong = {
         id: selectedContent.id,
         title: selectedContent.title,
         artist: selectedContent.artist,
@@ -69,20 +69,26 @@ export function PerformanceMode({
         content_type: selectedContent.content_type,
         file_url: selectedContent.file_url,
         content_data: selectedContent.content_data ? {
-          lyrics: typeof selectedContent.content_data === 'object' && selectedContent.content_data !== null && 'lyrics' in selectedContent.content_data 
-            ? selectedContent.content_data.lyrics as string 
+          lyrics: typeof selectedContent.content_data === 'object' && selectedContent.content_data !== null && 'lyrics' in selectedContent.content_data
+            ? selectedContent.content_data.lyrics as string
             : undefined,
-          file: typeof selectedContent.content_data === 'object' && selectedContent.content_data !== null && 'file' in selectedContent.content_data 
-            ? selectedContent.content_data.file as string 
+          file: typeof selectedContent.content_data === 'object' && selectedContent.content_data !== null && 'file' in selectedContent.content_data
+            ? selectedContent.content_data.file as string
             : undefined,
-          chords: typeof selectedContent.content_data === 'object' && selectedContent.content_data !== null && 'chords' in selectedContent.content_data 
-            ? selectedContent.content_data.chords 
+          chords: typeof selectedContent.content_data === 'object' && selectedContent.content_data !== null && 'chords' in selectedContent.content_data
+            ? selectedContent.content_data.chords
             : undefined,
-          sections: typeof selectedContent.content_data === 'object' && selectedContent.content_data !== null && 'sections' in selectedContent.content_data 
-            ? selectedContent.content_data.sections 
+          sections: typeof selectedContent.content_data === 'object' && selectedContent.content_data !== null && 'sections' in selectedContent.content_data
+            ? selectedContent.content_data.sections
             : undefined
         } : null
-      }]
+      }
+      // DEBUG: Log sections structure in performance-mode.tsx
+      console.log('[performance-mode.tsx] Constructed song sections:', constructedSong.content_data?.sections?.length, 'sections')
+      if (constructedSong.content_data?.sections) {
+        console.log('[performance-mode.tsx] Section names:', constructedSong.content_data.sections.map((s: any) => s.name))
+      }
+      return [constructedSong]
     }
     return defaultSetlist
   }, [selectedSetlist, selectedContent])

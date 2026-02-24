@@ -11,16 +11,22 @@ interface ContentDisplayProps {
   zoom: number
 }
 
-export const ContentDisplay = memo(function ContentDisplay({ 
-  renderInfo, 
-  currentSongData, 
-  currentSong, 
-  zoom 
+export const ContentDisplay = memo(function ContentDisplay({
+  renderInfo,
+  currentSongData,
+  currentSong,
+  zoom
 }: ContentDisplayProps) {
+  // DEBUG: Log rendering and chordsData structure
+  if (renderInfo.renderType === 'chords' && Array.isArray(renderInfo.chordsData)) {
+    console.log('[content-display.tsx] Rendering chords with', renderInfo.chordsData.length, 'sections')
+    console.log('[content-display.tsx] Section names:', renderInfo.chordsData.map((s: any) => s.name))
+  }
+
   return (
-    <div 
+    <div
       className="space-y-6 max-w-3xl mx-auto w-full"
-      style={{ 
+      style={{
         transform: `scale(${zoom / 100})`,
         transformOrigin: "top center",
         width: zoom >= 100 ? `${10000 / zoom}%` : '100%',
