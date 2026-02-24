@@ -24,8 +24,8 @@
 **Plans:** 2/3 plans executed
 
 Plans:
-- [ ] 01-01-PLAN.md — Create failing test for Chords display bug with test helpers
-- [ ] 01-02-PLAN.md — Create failing test for auto-scroll button bug
+- [x] 01-01-PLAN.md — Create failing test for Chords display bug with test helpers ✓ Completed
+- [x] 01-02-PLAN.md — Create failing test for auto-scroll button bug ✓ Completed
 - [ ] 01-03-PLAN.md — Create unit tests isolating root cause (hook vs component)
 
 **Deliverables**:
