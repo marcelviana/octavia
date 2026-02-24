@@ -47,24 +47,30 @@ Plans:
 
 ### Phase 2: Fix Chords Content Display
 
-**Goal**: Fix Chords content type to display complete chord chart in performance mode
+**Goal**: Fix duplicate rendering of Chords content sections by correcting data flow integration layer
+
+**Plans:** 1 plan
+
+Plans:
+- [ ] 02-01-PLAN.md — Debug and fix chords sections duplication in integration layer
 
 **Deliverables**:
-- Fix conditional rendering logic in `use-content-renderer.ts` (likely lines 99-125)
-- Handle data structure mismatches between database format and component expectations
-- Verify IndexedDB cache → performance mode data flow
-- Regression tests for all content types (Lyrics, Chords, Tabs, Piano, Drums)
+- Data flow debugging to identify exact duplication point
+- Fix in performance-mode.tsx or use-content-caching.ts (integration layer)
+- Clean sections extraction without duplication
+- Regression verification for all content types
 
 **Success Criteria**:
 - [ ] Chords content displays full chord chart in performance mode
-- [ ] Title and band/artist still display correctly
+- [ ] Each section (Verse 1, Chorus, etc.) renders exactly once
+- [ ] Chord progressions display correctly without duplication
 - [ ] Other content types (Lyrics, Tabs, Piano, Drums) unaffected
-- [ ] Test from Phase 1 now passes
-- [ ] No conditional rendering "0" bug introduced
+- [ ] Integration tests pass (3/3, currently 2/3 failing)
+- [ ] Unit tests remain passing (12/12)
 - [ ] Performance remains <100ms
 
 **Requirements Addressed**:
-- Fix Chords content display in performance mode (currently only shows title/band, chord chart is missing)
+- BUG-01: Fix Chords content display in performance mode
 
 **Known Risks**:
 - Breaking other content types (Pitfall #2 from research)
@@ -181,6 +187,6 @@ Phase 4 (Optimization) ←┘
 ---
 
 *Roadmap created: 2026-02-24*
-*Roadmap updated: 2026-02-24 (Phase 1 planned)*
+*Roadmap updated: 2026-02-24 (Phase 2 planned)*
 *Estimated phases: 4*
 *Estimated duration: Based on complexity, not time*
