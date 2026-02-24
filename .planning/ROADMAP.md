@@ -21,6 +21,13 @@
 
 **Goal**: Set up debugging environment and create failing tests that reproduce both bugs
 
+**Plans:** 3 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Create failing test for Chords display bug with test helpers
+- [ ] 01-02-PLAN.md — Create failing test for auto-scroll button bug
+- [ ] 01-03-PLAN.md — Create unit tests isolating root cause (hook vs component)
+
 **Deliverables**:
 - Failing test for Chords display bug (reproduces missing chord chart)
 - Failing test for auto-scroll button bug (reproduces no-click-response)
@@ -174,5 +181,6 @@ Phase 4 (Optimization) ←┘
 ---
 
 *Roadmap created: 2026-02-24*
+*Roadmap updated: 2026-02-24 (Phase 1 planned)*
 *Estimated phases: 4*
 *Estimated duration: Based on complexity, not time*
