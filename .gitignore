@@ -56,3 +56,7 @@ playwright-report/
 # Temporary files
 *.tmp
 *.temp
+
+# Development and planning artifacts
+.claude/
+.planning/research/
