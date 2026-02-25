@@ -91,9 +91,9 @@ export function PerformanceMode({
     usePerformanceNavigation({ songs, onExitPerformance, startingSongIndex })
 
   const { sheetUrls, sheetMimeTypes, lyricsData, chordsData } = useContentCaching({ songs })
-  
-  const { zoom, isPlaying, bpm, darkSheet, bpmFeedback, showControls, setZoom, setIsPlaying, 
-    setDarkSheet, changeBpm, startPress, endPress, handleMouseMove } = 
+
+  const { zoom, isPlaying, bpm, darkSheet, bpmFeedback, showControls, setZoom, setIsPlaying,
+    handleTogglePlay, setDarkSheet, changeBpm, startPress, endPress, handleMouseMove } =
     usePerformanceControls({ currentSong, lyricsData, currentSongData, contentRef })
 
   // Intelligent preloading for seamless live performance
@@ -134,7 +134,7 @@ export function PerformanceMode({
         zoom={zoom}
         setZoom={setZoom}
         isPlaying={isPlaying}
-        setIsPlaying={setIsPlaying}
+        onTogglePlay={handleTogglePlay}
         bpm={bpm}
         bpmFeedback={bpmFeedback}
         startPress={startPress}
