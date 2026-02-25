@@ -116,20 +116,30 @@ Plans:
 
 **Goal**: Address known memory leaks and optimize performance mode for extended sessions
 
+**Plans:** 2 plans
+
+Plans:
+- [ ] 04-01-PLAN.md — Consolidate duplicate cleanup hooks and verify timer cleanup
+- [ ] 04-02-PLAN.md — Refactor oversized component by extracting business logic to hooks
+
 **Deliverables**:
 - Fix setTimeout/setInterval cleanup in `use-performance-controls.ts`
-- Add React.memo optimization for hot path components
-- Verify component size <150 lines (refactor `optimized-performance-mode.tsx` if needed)
-- Memory profiling during extended sessions (30+ minutes)
+- Consolidate duplicate cleanup useEffect hooks (lines 169-203)
+- Memory leak detection tests for 30+ minute sessions
+- Extract data loading logic to `useContentLoading` hook (~68 lines)
+- Extract monitoring UI state to `usePerformanceMonitoringUI` hook (~30 lines)
+- Verify component size <150 lines (`optimized-performance-mode.tsx` currently 378 lines)
 
 **Success Criteria**:
 - [ ] No memory leaks during 30+ minute sessions
 - [ ] All setInterval/setTimeout have cleanup in useEffect
 - [ ] Components under 150 lines
-- [ ] React.memo applied to performance-critical components
+- [ ] React.memo optimization preserved (already applied)
 - [ ] Performance remains <100ms even after extended use
 
 **Requirements Addressed**:
+- PERF-01: Eliminate memory leaks from timer cleanup issues
+- PERF-02: Comply with <150 line component architecture requirement
 - Addresses known issues from CONCERNS.md
 - Ensures long-term stability for live performances
 
@@ -192,6 +202,6 @@ Phase 4 (Optimization) ←┘
 ---
 
 *Roadmap created: 2026-02-24*
-*Roadmap updated: 2026-02-24 (Phase 3 planned)*
+*Roadmap updated: 2026-02-25 (Phase 4 planned)*
 *Estimated phases: 4*
 *Estimated duration: Based on complexity, not time*
