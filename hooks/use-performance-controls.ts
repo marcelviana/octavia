@@ -166,35 +166,34 @@ export function usePerformanceControls({
     return () => clearTimeout(t)
   }, [bpmFeedback])
 
-  // Cleanup function
-  useEffect(() => {
-    return () => {
-      // Clean up timers and intervals
-      if (scrollRef.current) {
-        cancelAnimationFrame(scrollRef.current)
-      }
-      if (pressTimeout.current) {
-        clearTimeout(pressTimeout.current)
-      }
-      if (pressInterval.current) {
-        clearInterval(pressInterval.current)
-      }
-    }
-  }, [])
-
-  // Cleanup effect to prevent memory leaks and state updates after unmount
+  /**
+   * Consolidated cleanup effect to prevent memory leaks
+   *
+   * Pattern: Single cleanup hook with ref nulling (Research Pattern 1)
+   * - Prevents race conditions from duplicate cleanup attempts
+   * - Nulls refs after cleanup to prevent double-cleanup errors
+   * - Manages isMountedRef to prevent state updates after unmount
+   *
+   * Cleans up:
+   * - Animation frames (scrollRef)
+   * - Timeouts (pressTimeout)
+   * - Intervals (pressInterval)
+   */
   useEffect(() => {
     isMountedRef.current = true
     return () => {
       isMountedRef.current = false
+      // Cancel animation frame
       if (scrollRef.current) {
         cancelAnimationFrame(scrollRef.current)
         scrollRef.current = null
       }
+      // Clear timeout
       if (pressTimeout.current) {
         clearTimeout(pressTimeout.current)
         pressTimeout.current = null
       }
+      // Clear interval
       if (pressInterval.current) {
         clearInterval(pressInterval.current)
         pressInterval.current = null
