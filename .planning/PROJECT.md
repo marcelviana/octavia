@@ -25,12 +25,17 @@ Performance mode must work reliably during live performances. Musicians depend o
 - ✓ Server-side authentication with Firebase Admin SDK — existing
 - ✓ Supabase database with service role for secure operations — existing
 
+<!-- Milestone v1.0 achievements (2026-02-25) -->
+
+- ✓ Chords content displays complete chord chart in performance mode — v1.0
+- ✓ Auto-scroll play button triggers scrolling when clicked — v1.0
+- ✓ Performance mode optimized for 30+ minute sessions (no memory leaks) — v1.0
+- ✓ Component architecture compliant (<150 lines per CLAUDE.md) — v1.0
+- ✓ Performance navigation under 100ms (avg 10.91ms) — v1.0
+
 ### Active
 
-<!-- Current scope: fixing performance mode bugs -->
-
-- [ ] Fix Chords content display in performance mode (currently only shows title/band, chord chart is missing)
-- [ ] Fix auto-scroll play button functionality (button does not respond to clicks)
+<!-- No active requirements - ready for next milestone -->
 
 ### Out of Scope
 
@@ -57,10 +62,10 @@ Performance mode must work reliably during live performances. Musicians depend o
 - Full-screen interface with touch controls
 - Auto-scroll feature for hands-free performance
 
-**Known Performance Mode Issues:**
-- Memory leaks during extended sessions (>30 mins) from setTimeout/setInterval cleanup
-- Oversized components (378 lines) violate <150 line architecture requirement
-- Missing React.memo optimization for hot path rendering
+**Performance Mode Status (v1.0):**
+- ✅ Memory leaks resolved (consolidated cleanup with ref nulling)
+- ✅ Component size compliant (149 lines, within 150 limit)
+- ✅ React.memo optimizations applied and preserved
 
 **Testing:**
 - Current coverage: ~35% (target: 85%)
@@ -87,8 +92,27 @@ Performance mode must work reliably during live performances. Musicians depend o
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Focus on performance mode bugs only | Performance mode is mission-critical; stability takes priority over new features | — Pending |
-| Fix Chords display first, then auto-scroll | Display bugs are more critical than UX enhancements | — Pending |
+| Focus on performance mode bugs only (2026-02-23) | Performance mode is mission-critical; stability takes priority over new features | ✅ v1.0 Complete - Both bugs fixed |
+| Fix Chords display first, then auto-scroll (2026-02-23) | Display bugs are more critical than UX enhancements | ✅ v1.0 Complete - Sequential fixes successful |
+| Use TDD approach with failing tests first (2026-02-24) | Progressive isolation debugging best practice for React bugs | ✅ v1.0 - Tests guided all fixes |
+| Stable React keys for component identity (2026-02-24) | Prevent duplicate mounting during re-renders | ✅ v1.0 - Chords display fixed |
+| useCallback with functional state updates (2026-02-24) | Eliminate stale closures in React.memo components | ✅ v1.0 - Auto-scroll button fixed |
+| Hook composition for business logic extraction (2026-02-25) | Achieve <150 line component compliance | ✅ v1.0 - 5 hooks created, 149 lines achieved |
+| Consolidate cleanup with ref nulling (2026-02-25) | Prevent memory leaks during extended sessions | ✅ v1.0 - 0 pending timers after unmount |
+
+## Milestones Completed
+
+### v1.0 - Performance Mode Bug Fixes (2026-02-25)
+**Duration:** 3 days | **Phases:** 4 | **Plans:** 8 | **Commits:** 40
+
+Fixed critical performance mode bugs and optimized for extended live music sessions:
+- Fixed Chords content display (stable React keys)
+- Fixed auto-scroll play button (useCallback pattern)
+- Eliminated memory leaks (consolidated cleanup)
+- Achieved component architecture compliance (149 lines)
+- Performance: avg 10.91ms navigation (target <100ms)
+
+**See:** `.planning/milestones/v1.0-ROADMAP.md` for complete details
 
 ---
-*Last updated: 2026-02-23 after project initialization*
+*Last updated: 2026-02-25 after v1.0 milestone completion*
