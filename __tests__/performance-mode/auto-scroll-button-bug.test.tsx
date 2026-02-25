@@ -42,14 +42,14 @@ describe('Bug #2: Auto-scroll Play Button Non-Responsive', () => {
 
   it('should use current isPlaying prop value, not stale memoized value', async () => {
     const user = userEvent.setup()
-    const setIsPlaying = vi.fn()
+    const onTogglePlay = vi.fn()
 
     // Initial render with isPlaying=false
     const { rerender } = render(
       <HeaderControls
         currentSongData={mockSongData}
         isPlaying={false}
-        setIsPlaying={setIsPlaying}
+        onTogglePlay={onTogglePlay}
         bpm={80}
         onExitPerformance={vi.fn()}
         darkSheet={false}
@@ -68,7 +68,7 @@ describe('Bug #2: Auto-scroll Play Button Non-Responsive', () => {
       <HeaderControls
         currentSongData={mockSongData}
         isPlaying={true} // Now playing
-        setIsPlaying={setIsPlaying}
+        onTogglePlay={onTogglePlay}
         bpm={80}
         onExitPerformance={vi.fn()}
         darkSheet={false}
@@ -83,24 +83,23 @@ describe('Bug #2: Auto-scroll Play Button Non-Responsive', () => {
 
     const pauseButton = screen.getByTestId('play-pause-button')
 
-    // Click to pause - should call setIsPlaying(false)
+    // Click to pause - should call onTogglePlay (which uses functional update internally)
     await user.click(pauseButton)
 
-    // BUG: Due to stale closure, onClick still uses old isPlaying=false value
-    // So it calls setIsPlaying(!false) = setIsPlaying(true) instead of setIsPlaying(false)
-    // THIS ASSERTION WILL FAIL - expected setIsPlaying(false), got setIsPlaying(true)
-    expect(setIsPlaying).toHaveBeenCalledWith(false)
+    // FIX: onTogglePlay uses functional update, so it always operates on current state
+    // Should be called exactly once regardless of rerender
+    expect(onTogglePlay).toHaveBeenCalledTimes(1)
   })
 
-  it('should trigger setIsPlaying when play button clicked', async () => {
+  it('should trigger onTogglePlay when play button clicked', async () => {
     const user = userEvent.setup()
-    const setIsPlaying = vi.fn()
+    const onTogglePlay = vi.fn()
 
     render(
       <HeaderControls
         currentSongData={mockSongData}
         isPlaying={false}
-        setIsPlaying={setIsPlaying}
+        onTogglePlay={onTogglePlay}
         bpm={80}
         onExitPerformance={vi.fn()}
         darkSheet={false}
@@ -120,22 +119,21 @@ describe('Bug #2: Auto-scroll Play Button Non-Responsive', () => {
     expect(playButton).toBeVisible()
     expect(playButton).toBeInTheDocument()
 
-    // Click button - this should trigger setIsPlaying(true)
+    // Click button - this should trigger onTogglePlay
     await user.click(playButton)
 
-    // Verify handler was called with correct arguments
-    expect(setIsPlaying).toHaveBeenCalledTimes(1)
-    expect(setIsPlaying).toHaveBeenCalledWith(true)
+    // Verify handler was called (functional update handles state internally)
+    expect(onTogglePlay).toHaveBeenCalledTimes(1)
   })
 
   it('should be accessible and clickable', () => {
-    const setIsPlaying = vi.fn()
+    const onTogglePlay = vi.fn()
 
     render(
       <HeaderControls
         currentSongData={mockSongData}
         isPlaying={false}
-        setIsPlaying={setIsPlaying}
+        onTogglePlay={onTogglePlay}
         bpm={80}
         onExitPerformance={vi.fn()}
         darkSheet={false}

@@ -17,19 +17,19 @@ interface HeaderControlsProps {
   // Title and Exit
   currentSongData: SongData
   onExitPerformance: () => void
-  
+
   // Dark mode
   darkSheet: boolean
   setDarkSheet: (dark: boolean) => void
-  
+
   // Zoom controls
   zoom: number
   setZoom: (zoom: number) => void
-  
+
   // Play/Pause
   isPlaying: boolean
-  setIsPlaying: (playing: boolean) => void
-  
+  onTogglePlay: () => void
+
   // BPM controls
   bpm: number
   bpmFeedback: string | null
@@ -45,7 +45,7 @@ export const HeaderControls = memo(function HeaderControls({
   zoom,
   setZoom,
   isPlaying,
-  setIsPlaying,
+  onTogglePlay,
   bpm,
   bpmFeedback,
   startPress,
@@ -118,7 +118,7 @@ export const HeaderControls = memo(function HeaderControls({
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => setIsPlaying(!isPlaying)}
+              onClick={onTogglePlay}
               className={`${isPlaying ? "text-[#FF6B6B]" : "text-white"} hover:bg-white/20`}
               data-testid="play-pause-button"
             >
