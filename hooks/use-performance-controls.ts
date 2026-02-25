@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 
 /**
  * Performance Controls Hook
@@ -34,6 +34,7 @@ export interface PerformanceControlsState {
 export interface PerformanceControlsActions {
   setZoom: (zoom: number) => void
   setIsPlaying: (playing: boolean) => void
+  handleTogglePlay: () => void
   setBpm: (bpm: number) => void
   setDarkSheet: (dark: boolean) => void
   setShowControls: (show: boolean) => void
@@ -56,6 +57,11 @@ export function usePerformanceControls({
   const [darkSheet, setDarkSheet] = useState(false)
   const [bpmFeedback, setBpmFeedback] = useState<string | null>(null)
   const [showControls, setShowControls] = useState(true)
+
+  // Stable toggle handler - never changes reference
+  const handleTogglePlay = useCallback(() => {
+    setIsPlaying(prev => !prev)  // Functional update avoids closure
+  }, [])  // Empty deps - function logic doesn't depend on any variables
 
   // Refs for BPM control and scroll management
   const pressTimeout = useRef<NodeJS.Timeout | null>(null)
@@ -204,10 +210,11 @@ export function usePerformanceControls({
     darkSheet,
     bpmFeedback,
     showControls,
-    
+
     // Actions
     setZoom,
     setIsPlaying,
+    handleTogglePlay,
     setBpm,
     setDarkSheet,
     setShowControls,
