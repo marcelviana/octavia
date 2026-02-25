@@ -1,28 +1,27 @@
 /**
  * Optimized Performance Mode
- * 
- * High-performance version of the performance mode component integrating
- * all optimization strategies for production-ready live music performances.
+ * High-performance version integrating all optimization strategies for live performances.
  */
 
-import React, { memo, useEffect, useRef, useMemo, useCallback } from 'react'
+import React, { memo, useRef } from 'react'
 import { OptimizedContentDisplay } from './performance-mode/optimized-content-display'
 import { HeaderControls } from './performance-mode/header-controls'
 import { NavigationControls } from './performance-mode/navigation-controls'
+import { LoadingState } from './performance-mode/loading-state'
+import { PerformanceWarning } from './performance-mode/performance-warning'
+import { MemoryStats } from './performance-mode/memory-stats'
 import { usePerformanceNavigation } from '@/hooks/use-performance-navigation'
 import { usePerformanceControls } from '@/hooks/use-performance-controls'
 import { useContentRenderer } from '@/hooks/use-content-renderer'
 import { useContentLoading } from '@/hooks/use-content-loading'
 import { usePerformanceMonitoringUI } from '@/hooks/use-performance-monitoring-ui'
-import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts'
+import { useSongsTransformation } from '@/hooks/use-songs-transformation'
+import { usePerformanceEffects } from '@/hooks/use-performance-effects'
 import { useWakeLock } from '@/hooks/use-wake-lock'
 import { useMemoryManagement } from '@/lib/memory-management'
-import { usePerformanceMonitoring, useNavigationTiming } from '@/lib/performance-monitor'
-import { useAdvancedContentCache } from '@/lib/advanced-content-cache'
-import { Card } from '@/components/ui/card'
+import { usePerformanceMonitoring } from '@/lib/performance-monitor'
 import type {
   PerformanceModeProps,
-  SongData,
   ContentRenderInfo
 } from '@/types/performance'
 
@@ -37,83 +36,12 @@ export const OptimizedPerformanceMode = memo(function OptimizedPerformanceMode({
   selectedSetlist,
   startingSongIndex = 0,
 }: PerformanceModeProps) {
-  // Performance monitoring
-  const { measureNavigation, measureRender, summary, alerts } = usePerformanceMonitoring()
-  const { measureNavigation: measureNav } = useNavigationTiming()
-  
-  // Memory management
-  const { trackResource, getMemoryStats } = useMemoryManagement()
-  
-  // Advanced caching
-  const { preloadForCurrentSetlist, getCachedContent } = useAdvancedContentCache()
-  
-  // Wake lock to prevent screen from sleeping
+  const { summary, alerts } = usePerformanceMonitoring()
+  const { getMemoryStats } = useMemoryManagement()
   const { isActive: wakeLockActive } = useWakeLock()
-  
-  // Container ref for focus management
   const containerRef = useRef<HTMLDivElement>(null)
-  
-  // Memoized songs array with performance optimization
-  const songs: SongData[] = useMemo(() => {
-    if (selectedSetlist?.setlist_songs) {
-      return selectedSetlist.setlist_songs.map(s => ({
-        id: s.content.id,
-        title: s.content.title,
-        artist: s.content.artist,
-        key: s.content.key,
-        bpm: s.content.bpm,
-        content_type: s.content.content_type,
-        file_url: s.content.file_url,
-        content_data: s.content.content_data ? {
-          lyrics: typeof s.content.content_data === 'object' && s.content.content_data !== null && 'lyrics' in s.content.content_data 
-            ? s.content.content_data.lyrics as string 
-            : undefined,
-          file: typeof s.content.content_data === 'object' && s.content.content_data !== null && 'file' in s.content.content_data 
-            ? s.content.content_data.file as string 
-            : undefined,
-          chords: typeof s.content.content_data === 'object' && s.content.content_data !== null && 'chords' in s.content.content_data 
-            ? s.content.content_data.chords 
-            : undefined,
-          sections: typeof s.content.content_data === 'object' && s.content.content_data !== null && 'sections' in s.content.content_data 
-            ? s.content.content_data.sections 
-            : undefined
-        } : null
-      }))
-    }
-    if (selectedContent) {
-      return [{
-        id: selectedContent.id,
-        title: selectedContent.title,
-        artist: selectedContent.artist,
-        key: selectedContent.key,
-        bpm: selectedContent.bpm,
-        content_type: selectedContent.content_type,
-        file_url: selectedContent.file_url,
-        content_data: selectedContent.content_data ? {
-          lyrics: typeof selectedContent.content_data === 'object' && selectedContent.content_data !== null && 'lyrics' in selectedContent.content_data 
-            ? selectedContent.content_data.lyrics as string 
-            : undefined,
-          file: typeof selectedContent.content_data === 'object' && selectedContent.content_data !== null && 'file' in selectedContent.content_data 
-            ? selectedContent.content_data.file as string 
-            : undefined,
-          chords: typeof selectedContent.content_data === 'object' && selectedContent.content_data !== null && 'chords' in selectedContent.content_data 
-            ? selectedContent.content_data.chords 
-            : undefined,
-          sections: typeof selectedContent.content_data === 'object' && selectedContent.content_data !== null && 'sections' in selectedContent.content_data 
-            ? selectedContent.content_data.sections 
-            : undefined
-        } : null
-      }]
-    }
-    return []
-  }, [selectedSetlist, selectedContent])
 
-  // Navigation with performance measurement
-  const navigation = usePerformanceNavigation({ 
-    songs, 
-    onExitPerformance, 
-    startingSongIndex 
-  })
+  const songs = useSongsTransformation({ selectedSetlist, selectedContent })
 
   const {
     currentSong,
@@ -123,26 +51,22 @@ export const OptimizedPerformanceMode = memo(function OptimizedPerformanceMode({
     goToPrevious,
     goToSong,
     currentSongData
-  } = navigation
+  } = usePerformanceNavigation({
+    songs,
+    onExitPerformance,
+    startingSongIndex,
+    measureNavigation: true
+  })
 
-  // Content loading with extracted hook
-  const {
-    sheetUrls,
-    sheetMimeTypes,
-    lyricsData,
-    chordsData,
-    isLoading: contentLoading
-  } = useContentLoading(songs)
+  const { sheetUrls, sheetMimeTypes, lyricsData, chordsData } = useContentLoading(songs)
 
-  // Performance controls (requires parameters)
   const controlsState = usePerformanceControls({
     currentSong,
     lyricsData,
     currentSongData,
     contentRef: containerRef
   })
-  
-  // Content renderer
+
   const renderInfo: ContentRenderInfo = useContentRenderer({
     currentSong,
     currentSongData,
@@ -152,100 +76,30 @@ export const OptimizedPerformanceMode = memo(function OptimizedPerformanceMode({
     chordsData
   })
 
-  // Optimized navigation handlers with measurement
-  const handleGoToNext = useCallback(() => {
-    measureNav('next-song', () => {
-      goToNext()
-    })
-  }, [measureNav, goToNext])
-
-  const handleGoToPrevious = useCallback(() => {
-    measureNav('previous-song', () => {
-      goToPrevious()
-    })
-  }, [measureNav, goToPrevious])
-
-  const handleGoToSong = useCallback((index: number) => {
-    measureNav('jump-to-song', () => {
-      goToSong(index)
-    })
-  }, [measureNav, goToSong])
-
-  // Preload content when song changes
-  useEffect(() => {
-    if (songs.length > 0) {
-      preloadForCurrentSetlist(songs, currentSong)
-    }
-  }, [songs, currentSong, preloadForCurrentSetlist])
-
-  // Keyboard shortcuts
-  useKeyboardShortcuts({
+  usePerformanceEffects({
+    songs,
+    currentSong,
     isPlaying: controlsState.isPlaying,
     setIsPlaying: controlsState.setIsPlaying,
-    changeBpm: controlsState.changeBpm
+    changeBpm: controlsState.changeBpm,
+    containerRef
   })
 
-  // Focus management
-  useEffect(() => {
-    if (containerRef.current) {
-      containerRef.current.focus()
-    }
-  }, [])
+  const { showWarning, dismissWarning } = usePerformanceMonitoringUI(summary)
 
-  // Performance monitoring UI with extracted hook
-  const { showWarning: showPerformanceWarning, dismissWarning } = usePerformanceMonitoringUI(summary)
-
-  // Measure render performance for this component
-  useEffect(() => {
-    measureRender('OptimizedPerformanceMode', () => {
-      // Component rendered
-    })
-  })
-
-  // Loading state
-  if (!currentSongData) {
-    return (
-      <div className="flex items-center justify-center h-screen bg-white">
-        <div className="text-center">
-          <div className="text-lg font-semibold text-gray-900 mb-2">
-            Loading performance mode...
-          </div>
-          <div className="text-sm text-gray-600">
-            Optimizing for best performance
-          </div>
-        </div>
-      </div>
-    )
-  }
+  if (!currentSongData) return <LoadingState />
 
   return (
-    <div 
+    <div
       ref={containerRef}
       className="h-screen bg-white flex flex-col focus:outline-none"
       tabIndex={-1}
       data-testid="optimized-performance-mode"
     >
-      {/* Performance Warning */}
-      {showPerformanceWarning && (
-        <Card className="mx-4 mt-4 p-3 bg-orange-50 border-orange-200">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="text-orange-600 font-medium">Performance Notice</div>
-              <div className="text-sm text-orange-700">
-                {summary?.recommendations[0] || 'Performance could be improved'}
-              </div>
-            </div>
-            <button
-              onClick={dismissWarning}
-              className="text-orange-600 hover:text-orange-800 px-2 py-1 text-sm"
-            >
-              Dismiss
-            </button>
-          </div>
-        </Card>
+      {showWarning && (
+        <PerformanceWarning summary={summary} onDismiss={dismissWarning} />
       )}
 
-      {/* Header Controls */}
       <MemoizedHeaderControls
         currentSongData={currentSongData}
         onExitPerformance={onExitPerformance}
@@ -254,14 +108,13 @@ export const OptimizedPerformanceMode = memo(function OptimizedPerformanceMode({
         zoom={controlsState.zoom}
         setZoom={controlsState.setZoom}
         isPlaying={controlsState.isPlaying}
-        setIsPlaying={controlsState.setIsPlaying}
+        onTogglePlay={controlsState.handleTogglePlay}
         bpm={controlsState.bpm}
         bpmFeedback={controlsState.bpmFeedback}
         startPress={controlsState.startPress}
         endPress={controlsState.endPress}
       />
 
-      {/* Main Content Area */}
       <div className="flex-1 min-h-0 flex flex-col pt-[110px] pb-[60px]">
         <div className="flex-1 min-h-0 overflow-hidden">
           <MemoizedOptimizedContentDisplay
@@ -273,27 +126,22 @@ export const OptimizedPerformanceMode = memo(function OptimizedPerformanceMode({
         </div>
       </div>
 
-      {/* Navigation Controls */}
       <MemoizedNavigationControls
         showControls={controlsState.showControls}
         canGoPrevious={canGoPrevious}
         canGoNext={canGoNext}
-        goToPrevious={handleGoToPrevious}
-        goToNext={handleGoToNext}
+        goToPrevious={goToPrevious}
+        goToNext={goToNext}
         songs={songs}
         currentSong={currentSong}
-        goToSong={handleGoToSong}
+        goToSong={goToSong}
       />
 
-      {/* Memory Stats (Development Only) */}
-      {process.env.NODE_ENV === 'development' && (
-        <div className="fixed top-4 right-4 bg-black bg-opacity-75 text-white p-2 rounded text-xs font-mono">
-          <div>Performance: {summary?.overall || 'measuring...'}</div>
-          <div>Score: {summary?.score || 0}/100</div>
-          <div>Alerts: {alerts.length}</div>
-          <div>Memory: {getMemoryStats().trackedResources} resources</div>
-        </div>
-      )}
+      <MemoryStats
+        summary={summary}
+        alerts={alerts}
+        memoryStats={getMemoryStats()}
+      />
     </div>
   )
 })

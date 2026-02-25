@@ -18,11 +18,12 @@ const MEMORY_CONFIG = {
   BLOB_CACHE_LIMIT_MB: 50, // Maximum blob cache size
 } as const
 
-interface MemoryStats {
+export interface MemoryStats {
   usedJSHeapSize: number
   totalJSHeapSize: number
   jsHeapSizeLimit: number
   timestamp: number
+  trackedResources?: number
 }
 
 interface ResourceTracker {

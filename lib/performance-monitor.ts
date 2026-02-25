@@ -28,7 +28,7 @@ interface PerformanceMetric {
   category: 'navigation' | 'render' | 'memory' | 'network' | 'battery' | 'user'
 }
 
-interface PerformanceAlert {
+export interface PerformanceAlert {
   id: string
   type: 'warning' | 'error' | 'info'
   category: string
@@ -39,7 +39,7 @@ interface PerformanceAlert {
   acknowledged: boolean
 }
 
-interface PerformanceSummary {
+export interface PerformanceSummary {
   overall: 'excellent' | 'good' | 'fair' | 'poor'
   score: number
   issues: number

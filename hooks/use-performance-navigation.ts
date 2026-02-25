@@ -1,11 +1,12 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
+import { useNavigationTiming } from '@/lib/performance-monitor'
 
 /**
  * Performance Navigation Hook
- * 
+ *
  * Handles all song navigation logic for live performance mode.
  * Critical requirement: Navigation must complete in <100ms for live shows.
- * 
+ *
  * Features:
  * - Song index management with bounds checking
  * - Keyboard shortcuts (Arrow keys, Escape)
@@ -13,12 +14,14 @@ import { useState, useEffect, useMemo, useCallback } from 'react'
  * - Song indicator dots navigation
  * - Starting song index support
  * - Performance-optimized state updates
+ * - Navigation timing measurement
  */
 
 export interface UsePerformanceNavigationProps {
   songs: any[]
   onExitPerformance: () => void
   startingSongIndex?: number
+  measureNavigation?: boolean // Enable navigation timing measurement
 }
 
 export interface NavigationState {
@@ -38,9 +41,13 @@ export interface NavigationActions {
 export function usePerformanceNavigation({
   songs,
   onExitPerformance,
-  startingSongIndex
+  startingSongIndex,
+  measureNavigation = false
 }: UsePerformanceNavigationProps) {
   const [currentSong, setCurrentSong] = useState(0)
+
+  // Optional performance measurement
+  const { measureNavigation: measureNav } = useNavigationTiming()
 
   // Memoize computed navigation state for performance
   const navigationState: NavigationState = useMemo(() => ({
@@ -50,23 +57,47 @@ export function usePerformanceNavigation({
     totalSongs: songs.length
   }), [currentSong, songs.length])
 
-  // Performance-optimized navigation functions
+  // Performance-optimized navigation functions with optional measurement
   const navigationActions: NavigationActions = useMemo(() => {
     const goToNext = () => {
-      if (currentSong < songs.length - 1) {
-        setCurrentSong(prev => prev + 1)
+      const navigate = () => {
+        if (currentSong < songs.length - 1) {
+          setCurrentSong(prev => prev + 1)
+        }
+      }
+
+      if (measureNavigation) {
+        measureNav('next-song', navigate)
+      } else {
+        navigate()
       }
     }
 
     const goToPrevious = () => {
-      if (currentSong > 0) {
-        setCurrentSong(prev => prev - 1)
+      const navigate = () => {
+        if (currentSong > 0) {
+          setCurrentSong(prev => prev - 1)
+        }
+      }
+
+      if (measureNavigation) {
+        measureNav('previous-song', navigate)
+      } else {
+        navigate()
       }
     }
 
     const goToSong = (index: number) => {
-      if (index >= 0 && index < songs.length) {
-        setCurrentSong(index)
+      const navigate = () => {
+        if (index >= 0 && index < songs.length) {
+          setCurrentSong(index)
+        }
+      }
+
+      if (measureNavigation) {
+        measureNav('jump-to-song', navigate)
+      } else {
+        navigate()
       }
     }
 
@@ -92,7 +123,7 @@ export function usePerformanceNavigation({
       goToSong,
       handleKeyNavigation
     }
-  }, [currentSong, songs.length, onExitPerformance])
+  }, [currentSong, songs.length, onExitPerformance, measureNavigation, measureNav])
 
   // Set initial song based on startingSongIndex
   useEffect(() => {
