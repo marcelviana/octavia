@@ -5,23 +5,24 @@
  * all optimization strategies for production-ready live music performances.
  */
 
-import React, { memo, useEffect, useRef, useState, useMemo, useCallback } from 'react'
+import React, { memo, useEffect, useRef, useMemo, useCallback } from 'react'
 import { OptimizedContentDisplay } from './performance-mode/optimized-content-display'
 import { HeaderControls } from './performance-mode/header-controls'
 import { NavigationControls } from './performance-mode/navigation-controls'
 import { usePerformanceNavigation } from '@/hooks/use-performance-navigation'
 import { usePerformanceControls } from '@/hooks/use-performance-controls'
 import { useContentRenderer } from '@/hooks/use-content-renderer'
+import { useContentLoading } from '@/hooks/use-content-loading'
+import { usePerformanceMonitoringUI } from '@/hooks/use-performance-monitoring-ui'
 import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts'
 import { useWakeLock } from '@/hooks/use-wake-lock'
 import { useMemoryManagement } from '@/lib/memory-management'
 import { usePerformanceMonitoring, useNavigationTiming } from '@/lib/performance-monitor'
 import { useAdvancedContentCache } from '@/lib/advanced-content-cache'
 import { Card } from '@/components/ui/card'
-import type { 
-  PerformanceModeProps, 
-  SongData, 
-  PerformanceControlsState,
+import type {
+  PerformanceModeProps,
+  SongData,
   ContentRenderInfo
 } from '@/types/performance'
 
@@ -114,21 +115,24 @@ export const OptimizedPerformanceMode = memo(function OptimizedPerformanceMode({
     startingSongIndex 
   })
 
-  const { 
-    currentSong, 
-    canGoNext, 
-    canGoPrevious, 
-    goToNext, 
-    goToPrevious, 
-    goToSong, 
-    currentSongData 
+  const {
+    currentSong,
+    canGoNext,
+    canGoPrevious,
+    goToNext,
+    goToPrevious,
+    goToSong,
+    currentSongData
   } = navigation
 
-  // Content rendering with caching
-  const [sheetUrls, setSheetUrls] = useState<(string | null)[]>([])
-  const [sheetMimeTypes, setSheetMimeTypes] = useState<(string | null)[]>([])
-  const [lyricsData, setLyricsData] = useState<string[]>([])
-  const [chordsData, setChordsData] = useState<Array<{ chords: any; sections: any }>>([])
+  // Content loading with extracted hook
+  const {
+    sheetUrls,
+    sheetMimeTypes,
+    lyricsData,
+    chordsData,
+    isLoading: contentLoading
+  } = useContentLoading(songs)
 
   // Performance controls (requires parameters)
   const controlsState = usePerformanceControls({
@@ -174,77 +178,6 @@ export const OptimizedPerformanceMode = memo(function OptimizedPerformanceMode({
     }
   }, [songs, currentSong, preloadForCurrentSetlist])
 
-  // Load content with caching
-  useEffect(() => {
-    let isMounted = true
-    
-    const loadContent = async () => {
-      const newSheetUrls: (string | null)[] = []
-      const newMimeTypes: (string | null)[] = []
-      const newLyricsData: string[] = []
-      const newChordsData: Array<{ chords: any; sections: any }> = []
-
-      for (let i = 0; i < songs.length; i++) {
-        const song = songs[i]
-        if (!song) continue
-        
-        // Load file content if available
-        if (song.file_url) {
-          try {
-            const cached = await getCachedContent(song.file_url, song.id)
-            if (cached && isMounted) {
-              const blobUrl = URL.createObjectURL(cached.data)
-              newSheetUrls[i] = blobUrl
-              newMimeTypes[i] = cached.mimeType
-              
-              // Track blob URL for cleanup
-              trackResource(`blob-url-${song.id}`, 'blob', { 
-                url: blobUrl, 
-                revoke: () => URL.revokeObjectURL(blobUrl) 
-              })
-            } else {
-              newSheetUrls[i] = null
-              newMimeTypes[i] = null
-            }
-          } catch (error) {
-            console.warn(`Failed to load content for song ${song.id}:`, error)
-            newSheetUrls[i] = null
-            newMimeTypes[i] = null
-          }
-        } else {
-          newSheetUrls[i] = null
-          newMimeTypes[i] = null
-        }
-
-        // Load lyrics from content_data
-        if (song.content_data?.lyrics) {
-          newLyricsData[i] = song.content_data.lyrics
-        } else {
-          newLyricsData[i] = ''
-        }
-
-        // Load chords/sections from content_data
-        newChordsData[i] = {
-          chords: song.content_data?.chords || null,
-          sections: song.content_data?.sections || null
-        }
-      }
-
-      if (isMounted) {
-        setSheetUrls(newSheetUrls)
-        setSheetMimeTypes(newMimeTypes)
-        setLyricsData(newLyricsData)
-        setChordsData(newChordsData)
-      }
-    }
-
-    loadContent()
-
-    return () => {
-      isMounted = false
-    }
-  }, [songs, getCachedContent, trackResource])
-
   // Keyboard shortcuts
   useKeyboardShortcuts({
     isPlaying: controlsState.isPlaying,
@@ -259,19 +192,8 @@ export const OptimizedPerformanceMode = memo(function OptimizedPerformanceMode({
     }
   }, [])
 
-  // Performance alerts handling
-  const [showPerformanceWarning, setShowPerformanceWarning] = useState(false)
-  
-  useEffect(() => {
-    if (summary && (summary.overall === 'poor' || summary.overall === 'fair')) {
-      setShowPerformanceWarning(true)
-      
-      // Auto-hide warning after 10 seconds
-      const timer = setTimeout(() => setShowPerformanceWarning(false), 10000)
-      return () => clearTimeout(timer)
-    }
-    return undefined
-  }, [summary])
+  // Performance monitoring UI with extracted hook
+  const { showWarning: showPerformanceWarning, dismissWarning } = usePerformanceMonitoringUI(summary)
 
   // Measure render performance for this component
   useEffect(() => {
@@ -313,8 +235,8 @@ export const OptimizedPerformanceMode = memo(function OptimizedPerformanceMode({
                 {summary?.recommendations[0] || 'Performance could be improved'}
               </div>
             </div>
-            <button 
-              onClick={() => setShowPerformanceWarning(false)}
+            <button
+              onClick={dismissWarning}
               className="text-orange-600 hover:text-orange-800 px-2 py-1 text-sm"
             >
               Dismiss
