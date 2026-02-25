@@ -83,10 +83,10 @@ Plans:
 
 **Goal**: Make auto-scroll play button respond to clicks and trigger scrolling
 
-**Plans:** 1 plan
+**Plans:** 1/1 plans complete ✓ Complete
 
 Plans:
-- [ ] 03-01-PLAN.md — Fix stale closure with useCallback and stable callback pattern
+- [x] 03-01-PLAN.md — Fix stale closure with useCallback and stable callback pattern ✓ Completed
 
 **Deliverables**:
 - Wrap setIsPlaying in useCallback with functional state update
@@ -95,12 +95,12 @@ Plans:
 - Test for stale closure scenario passes
 
 **Success Criteria**:
-- [ ] Play button responds to clicks
-- [ ] Auto-scroll activates when play button clicked
-- [ ] Auto-scroll can be paused/stopped
-- [ ] Test from Phase 1 now passes (stale closure test)
-- [ ] No inline event handlers in HeaderControls
-- [ ] Performance remains <100ms
+- [x] Play button responds to clicks
+- [x] Auto-scroll activates when play button clicked
+- [x] Auto-scroll can be paused/stopped
+- [x] Test from Phase 1 now passes (stale closure test)
+- [x] No inline event handlers in HeaderControls
+- [x] Performance remains <100ms
 
 **Requirements Addressed**:
 - Fix auto-scroll play button functionality (button does not respond to clicks)

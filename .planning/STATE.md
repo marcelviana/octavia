@@ -15,9 +15,9 @@
 ## Current Position
 
 **Milestone**: 1 - Performance Mode Bug Fixes (v1.0)
-**Phase**: 2 of 4 - Fix Chords Content Display (✅ Complete)
+**Phase**: 3 of 4 - Fix Auto-scroll Play Button (✅ Complete)
 **Plan**: 1/1 complete
-**Status**: Phase 2 complete - Ready for Phase 3
+**Status**: Phase 3 complete - Ready for Phase 4
 
 ---
 
@@ -25,13 +25,13 @@
 
 **Overall Progress**:
 ```
-[████░░░░░░] 50% (2/4 phases completed)
+[███████░░░] 75% (3/4 phases completed)
 ```
 
 **Milestone 1 Progress**:
 - Phase 1: Diagnostic & Test Foundation — ✅ Complete (3/3 plans complete)
 - Phase 2: Fix Chords Content Display — ✅ Complete (1/1 plans complete)
-- Phase 3: Fix Auto-scroll Play Button — ⏸️ Not started
+- Phase 3: Fix Auto-scroll Play Button — ✅ Complete (1/1 plans complete)
 - Phase 4: Memory Leak & Performance Optimization — ⏸️ Not started
 
 ---
@@ -47,6 +47,7 @@
 | 2026-02-24 | HeaderControls component works correctly in isolation | Test passed showing event binding works - bug must be in parent integration or auto-scroll effect | Phase 3 should focus on use-performance-controls.ts and parent component |
 | 2026-02-24 | Hook and component both work correctly in isolation - bug must be in integration layer | Unit tests show useContentRenderer and ContentDisplay work correctly when tested alone | Phase 2 should investigate parent component data flow and cache-to-hook integration |
 | 2026-02-24 | Key prop essential for stable React component identity during re-renders | Without stable key, ContentDisplay was mounting multiple times creating duplicate DOM elements | Phase 2 fix complete - key prop based on currentSong ensures proper reconciliation |
+| 2026-02-24 | Use useCallback with functional state update for play button | React.memo stale closure bug fixed with stable callback reference and prev => !prev pattern | Phase 3 fix eliminates dependency on captured isPlaying value |
 
 ---
 
@@ -79,18 +80,18 @@
 ## Session Continuity
 
 **Last Session**: 2026-02-24
-**Stopped At**: Phase 2 complete - Chords display bug fixed
+**Stopped At**: Phase 3 complete - Auto-scroll play button fixed
 **Resume File**: None
-**Next Action**: Plan Phase 3 (/gsd:plan-phase 3)
+**Next Action**: Plan Phase 4 (/gsd:plan-phase 4)
 
 **Session Notes**:
-- Executed Phase 2 Plan 01: Fix Chords Content Display
-- Added key prop to ContentDisplay component for stable React reconciliation
-- Fixed integration test assertions to handle realistic duplicate text patterns
-- All 3 integration tests now passing (was 1/3)
-- All 12 unit tests still passing (no regressions)
-- Duration: 13.5 minutes
-- Ready to plan Phase 3: Fix Auto-scroll Play Button
+- Executed Phase 3 Plan 01: Fix Auto-scroll Play Button
+- Created handleTogglePlay with useCallback and functional update pattern
+- Updated HeaderControls to use onTogglePlay callback prop
+- Wired stable callback from hook through parent to child component
+- All 6 performance mode tests now passing (3 auto-scroll + 3 chords)
+- Duration: 3 minutes
+- Ready to plan Phase 4: Memory Leak & Performance Optimization
 
 ---
 
