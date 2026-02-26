@@ -42,7 +42,8 @@ export const PRODUCTION_SECURITY_CONFIG: EnhancedSecurityConfig = {
         'https://*.googleapis.com',
         'https://*.gstatic.com',
         'https://www.google.com',
-        'https://cdn.jsdelivr.net'
+        'https://cdn.jsdelivr.net',
+        'https://vercel.live' // Vercel Live feedback widget
       ],
       'style-src': [
         "'self'",
@@ -87,7 +88,6 @@ export const PRODUCTION_SECURITY_CONFIG: EnhancedSecurityConfig = {
         'blob:' // For PDF.js and service workers
       ]
     },
-    reportUri: '/api/security/csp-report',
     reportOnly: false
   },
   hsts: {
@@ -99,22 +99,22 @@ export const PRODUCTION_SECURITY_CONFIG: EnhancedSecurityConfig = {
   contentTypeOptions: true,
   referrerPolicy: 'strict-origin-when-cross-origin',
   permissionsPolicy: {
-    camera: ["'none'"],
-    microphone: ["'none'"],
-    geolocation: ["'none'"],
-    payment: ["'none'"],
-    usb: ["'none'"],
-    gyroscope: ["'none'"],
-    magnetometer: ["'none'"],
-    accelerometer: ["'none'"],
-    "ambient-light-sensor": ["'none'"],
-    autoplay: ["'self'"],
-    "encrypted-media": ["'none'"],
-    fullscreen: ["'self'"],
-    "picture-in-picture": ["'none'"]
+    camera: [],
+    microphone: [],
+    geolocation: [],
+    payment: [],
+    usb: [],
+    gyroscope: [],
+    magnetometer: [],
+    accelerometer: [],
+    "ambient-light-sensor": [],
+    autoplay: ["self"],
+    "encrypted-media": [],
+    fullscreen: ["self"],
+    "picture-in-picture": []
   },
   crossOriginPolicies: {
-    embedderPolicy: 'require-corp',
+    embedderPolicy: 'unsafe-none',  // Allow cross-origin resources like Google avatars
     openerPolicy: 'same-origin',
     resourcePolicy: 'cross-origin'  // Allow cross-origin resources (Firebase/Supabase Storage)
   },
@@ -122,8 +122,8 @@ export const PRODUCTION_SECURITY_CONFIG: EnhancedSecurityConfig = {
     'X-Robots-Tag': 'noindex, nofollow', // Prevent indexing in production
     'X-Permitted-Cross-Domain-Policies': 'none',
     'Cross-Origin-Opener-Policy': 'same-origin',
-    'Cross-Origin-Embedder-Policy': 'require-corp',
-    'Cross-Origin-Resource-Policy': 'same-origin'
+    'Cross-Origin-Embedder-Policy': 'unsafe-none',  // Allow cross-origin resources
+    'Cross-Origin-Resource-Policy': 'cross-origin'
   }
 }
 
