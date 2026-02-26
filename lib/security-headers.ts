@@ -46,7 +46,7 @@ export const PRODUCTION_SECURITY_CONFIG: EnhancedSecurityConfig = {
       ],
       'style-src': [
         "'self'",
-        "'nonce-{NONCE}'", // Dynamic nonce for inline styles
+        "'unsafe-inline'", // Required for Next.js and Tailwind inline style attributes
         'https://fonts.googleapis.com',
         'https://*.googleapis.com'
       ],
