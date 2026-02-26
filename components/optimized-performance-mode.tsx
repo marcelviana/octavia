@@ -40,6 +40,7 @@ export const OptimizedPerformanceMode = memo(function OptimizedPerformanceMode({
   const { getMemoryStats } = useMemoryManagement()
   const { isActive: wakeLockActive } = useWakeLock()
   const containerRef = useRef<HTMLDivElement>(null)
+  const contentScrollRef = useRef<HTMLDivElement>(null)
 
   const songs = useSongsTransformation({ selectedSetlist, selectedContent })
 
@@ -64,7 +65,7 @@ export const OptimizedPerformanceMode = memo(function OptimizedPerformanceMode({
     currentSong,
     lyricsData,
     currentSongData,
-    contentRef: containerRef
+    contentRef: contentScrollRef
   })
 
   const renderInfo: ContentRenderInfo = useContentRenderer({
@@ -122,6 +123,7 @@ export const OptimizedPerformanceMode = memo(function OptimizedPerformanceMode({
             currentSongData={currentSongData}
             darkSheet={controlsState.darkSheet}
             zoom={controlsState.zoom}
+            contentRef={contentScrollRef}
           />
         </div>
       </div>

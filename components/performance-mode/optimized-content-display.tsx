@@ -16,6 +16,7 @@ interface OptimizedContentDisplayProps {
   darkSheet: boolean
   zoom: number
   className?: string
+  contentRef?: React.RefObject<HTMLDivElement | null>
 }
 
 // Memoized PDF display component
@@ -35,8 +36,8 @@ const MemoizedPDFDisplay = memo(function PDFDisplay({
   }), [zoom, darkSheet])
 
   return (
-    <div 
-      className="w-full h-full overflow-auto"
+    <div
+      className="w-full h-full"
       style={transformStyle}
     >
       <iframe
@@ -70,7 +71,7 @@ const MemoizedImageDisplay = memo(function ImageDisplay({
   }), [zoom, darkSheet])
 
   return (
-    <div className="w-full h-full overflow-auto flex justify-center">
+    <div className="w-full h-full flex justify-center">
       <div style={imageStyle} className="block">
         <Image
           src={url}
@@ -109,8 +110,8 @@ const MemoizedLyricsDisplay = memo(function LyricsDisplay({
   )
 
   return (
-    <div 
-      className="px-8 py-8 w-full h-full overflow-auto"
+    <div
+      className="px-8 py-8 w-full h-full"
       style={textStyle}
     >
       <div className="max-w-2xl mx-auto font-mono leading-relaxed">
@@ -144,8 +145,8 @@ const MemoizedChordsDisplay = memo(function ChordsDisplay({
   const chordsColor = darkSheet ? 'text-purple-400' : 'text-purple-700'
 
   return (
-    <div 
-      className="px-8 py-8 w-full h-full overflow-auto"
+    <div
+      className="px-8 py-8 w-full h-full"
       style={containerStyle}
     >
       <div className="max-w-2xl mx-auto space-y-6">
@@ -201,9 +202,10 @@ export const OptimizedContentDisplay = memo(function OptimizedContentDisplay({
   currentSongData,
   darkSheet,
   zoom,
-  className
+  className,
+  contentRef
 }: OptimizedContentDisplayProps) {
-  
+
   // Memoize render content to avoid unnecessary recalculations
   const renderedContent = useMemo(() => {
     switch (renderInfo.renderType) {
@@ -285,8 +287,9 @@ export const OptimizedContentDisplay = memo(function OptimizedContentDisplay({
   }, [renderInfo, currentSongData.title, darkSheet, zoom])
 
   return (
-    <div 
-      className={cn("w-full h-full", className)}
+    <div
+      ref={contentRef}
+      className={cn("w-full h-full overflow-auto", className)}
       data-testid="optimized-content-display"
     >
       {renderedContent}
