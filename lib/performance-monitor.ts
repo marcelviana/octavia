@@ -142,9 +142,9 @@ class RealTimePerformanceMonitor {
       ? (threshold && value < threshold)
       : (threshold && value > threshold)
     
-    if (thresholdViolated) {
+    if (thresholdViolated && threshold !== undefined) {
       const comparison = shouldWarnOnLow ? '<' : '>'
-      this.createAlert('warning', category, 
+      this.createAlert('warning', category,
         `${name} ${shouldWarnOnLow ? 'below' : 'exceeded'} threshold: ${value}${unit} ${comparison} ${threshold}${unit}`,
         value, threshold
       )
@@ -555,7 +555,7 @@ export const performanceMonitor = new RealTimePerformanceMonitor()
 // React hooks for performance monitoring
 
 export const usePerformanceMonitoring = () => {
-  const [summary, setSummary] = useState<PerformanceSummary>()
+  const [summary, setSummary] = useState<PerformanceSummary | null>(null)
   const [alerts, setAlerts] = useState<PerformanceAlert[]>([])
 
   useEffect(() => {

@@ -6,12 +6,19 @@
 
 import React, { memo } from 'react'
 import type { PerformanceSummary, PerformanceAlert } from '@/lib/performance-monitor'
-import type { MemoryStats } from '@/lib/memory-management'
+import type { MemoryStats as MemoryStatsType } from '@/lib/memory-management'
+
+interface MemoryStatsData {
+  current: MemoryStatsType | null
+  trend: 'increasing' | 'stable' | 'decreasing'
+  trackedResources: number
+  potentialLeaks: string[]
+}
 
 interface MemoryStatsProps {
   summary: PerformanceSummary | null
   alerts: PerformanceAlert[]
-  memoryStats: MemoryStats
+  memoryStats: MemoryStatsData
 }
 
 export const MemoryStats = memo(function MemoryStats({

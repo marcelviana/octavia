@@ -20,7 +20,7 @@ interface PerformanceMonitoringUIResult {
 }
 
 export function usePerformanceMonitoringUI(
-  summary?: PerformanceSummary
+  summary: PerformanceSummary | null | undefined
 ): PerformanceMonitoringUIResult {
   const [showWarning, setShowWarning] = useState(false)
 

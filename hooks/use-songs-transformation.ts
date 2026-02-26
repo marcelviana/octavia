@@ -6,18 +6,10 @@
  */
 
 import { useMemo } from 'react'
-import type { SongData } from '@/types/performance'
-import type { Content } from '@/types/content'
-
-// Simplified Setlist type for transformation
-interface Setlist {
-  setlist_songs?: Array<{
-    content: Content
-  }>
-}
+import type { SongData, SetlistWithSongs, Content } from '@/types/performance'
 
 interface UseSongsTransformationProps {
-  selectedSetlist?: Setlist | null
+  selectedSetlist?: SetlistWithSongs | null
   selectedContent?: Content | null
 }
 
