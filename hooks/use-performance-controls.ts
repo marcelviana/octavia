@@ -121,9 +121,15 @@ export function usePerformanceControls({
 
     const total = el.scrollHeight - el.clientHeight
     const lines = lyricsData[currentSong]?.split("\n").length || 1
-    const beats = lines * 4
-    const beatDuration = 60 / bpm
-    const scrollSpeed = total / (beats * beatDuration)
+
+    // More realistic calculation: assume each line spans 2 measures (8 beats)
+    // This provides smoother, more natural scrolling that respects song tempo
+    const beatsPerLine = 8  // 2 measures per line
+    const beats = lines * beatsPerLine
+    const beatDuration = 60 / bpm  // seconds per beat
+    const totalDuration = beats * beatDuration  // total song duration in seconds
+    const scrollSpeed = total / totalDuration  // pixels per second
+
     const start = performance.now() - (el.scrollTop / scrollSpeed) * 1000
 
     const step = (now: number) => {
