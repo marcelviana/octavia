@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server"
 import { validateFirebaseTokenServer } from '@/lib/firebase-server-utils'
 import '@/lib/logger'
 import { generateNonce } from '@/lib/csp-nonce'
-import { applySecurityHeaders, getEnvironmentCSPConfig } from '@/lib/security-headers'
+import { applySecurityHeaders } from '@/lib/security-headers'
 
 export const runtime = 'nodejs'
 
@@ -25,25 +25,9 @@ export async function middleware(request: NextRequest) {
   
   // Pass the nonce to the page via a custom header
   response.headers.set('x-csp-nonce', nonce)
-  
-  // Apply comprehensive security headers
-  const securityConfig = getEnvironmentCSPConfig()
-  
-  // Replace nonce placeholder in CSP config
-  const processedConfig = {
-    ...securityConfig,
-    contentSecurityPolicy: {
-      ...securityConfig.contentSecurityPolicy,
-      directives: Object.fromEntries(
-        Object.entries(securityConfig.contentSecurityPolicy.directives).map(([key, value]) => [
-          key,
-          value.map(v => v.replace('{{NONCE}}', nonce))
-        ])
-      )
-    }
-  }
-  
-  applySecurityHeaders(response, processedConfig)
+
+  // Apply comprehensive security headers (handles config and nonce internally)
+  applySecurityHeaders(response, request, nonce)
 
   const protectedRoutes = ["/dashboard", "/library", "/setlists", "/settings", "/profile", "/add-content", "/content"]
   const isProtectedRoute = protectedRoutes.some((route) => request.nextUrl.pathname.startsWith(route))
