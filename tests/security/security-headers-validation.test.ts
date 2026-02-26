@@ -69,7 +69,7 @@ describe('Security Headers Validation Tests', () => {
     // Mock environment variables
     mockEnvironment = {
       NODE_ENV: 'production',
-      NEXT_PUBLIC_APP_URL: 'https://octavia-music.com'
+      NEXT_PUBLIC_APP_URL: 'https://octavia.rocks'
     }
 
     Object.entries(mockEnvironment).forEach(([key, value]) => {
@@ -88,7 +88,7 @@ describe('Security Headers Validation Tests', () => {
 
   describe('Content Security Policy (CSP) Headers', () => {
     it.skip('TODO: Fix CSP headers test - should apply comprehensive CSP headers', async () => {
-      const request = new NextRequest('https://octavia-music.com/dashboard')
+      const request = new NextRequest('https://octavia.rocks/dashboard')
       const response = await middleware(request)
 
       const cspHeader = response.headers.get('Content-Security-Policy')
@@ -103,7 +103,7 @@ describe('Security Headers Validation Tests', () => {
     })
 
     it.skip('TODO: Fix CSP nonce test - should include nonce for inline scripts', async () => {
-      const request = new NextRequest('https://octavia-music.com/dashboard')
+      const request = new NextRequest('https://octavia.rocks/dashboard')
       const response = await middleware(request)
 
       const nonceHeader = response.headers.get('x-csp-nonce')
@@ -114,7 +114,7 @@ describe('Security Headers Validation Tests', () => {
     })
 
     it('should prevent inline script execution without nonce', async () => {
-      const request = new NextRequest('https://octavia-music.com/dashboard')
+      const request = new NextRequest('https://octavia.rocks/dashboard')
       const response = await middleware(request)
 
       const cspHeader = response.headers.get('Content-Security-Policy')
@@ -127,7 +127,7 @@ describe('Security Headers Validation Tests', () => {
     })
 
     it.skip('TODO: Fix CSP domains test - should allow necessary external domains for music app', async () => {
-      const request = new NextRequest('https://octavia-music.com/dashboard')
+      const request = new NextRequest('https://octavia.rocks/dashboard')
       const response = await middleware(request)
 
       const cspHeader = response.headers.get('Content-Security-Policy')
@@ -145,7 +145,7 @@ describe('Security Headers Validation Tests', () => {
     })
 
     it.skip('TODO: Fix frame embedding test - should prevent frame embedding attacks', async () => {
-      const request = new NextRequest('https://octavia-music.com/dashboard')
+      const request = new NextRequest('https://octavia.rocks/dashboard')
       const response = await middleware(request)
 
       const cspHeader = response.headers.get('Content-Security-Policy')
@@ -161,7 +161,7 @@ describe('Security Headers Validation Tests', () => {
 
   describe('HTTP Strict Transport Security (HSTS)', () => {
     it.skip('TODO: Fix HSTS config test - should enforce HSTS with proper configuration', async () => {
-      const request = new NextRequest('https://octavia-music.com/dashboard')
+      const request = new NextRequest('https://octavia.rocks/dashboard')
       const response = await middleware(request)
 
       const hstsHeader = response.headers.get('Strict-Transport-Security')
@@ -174,11 +174,11 @@ describe('Security Headers Validation Tests', () => {
     it('should redirect HTTP to HTTPS in production', async () => {
       process.env.NODE_ENV = 'production'
 
-      const httpRequest = new NextRequest('http://octavia-music.com/dashboard')
+      const httpRequest = new NextRequest('http://octavia.rocks/dashboard')
       const response = await middleware(httpRequest)
 
       expect(response.status).toBe(307) // Temporary redirect
-      expect(response.headers.get('Location')).toBe('https://octavia-music.com/dashboard')
+      expect(response.headers.get('Location')).toBe('https://octavia.rocks/dashboard')
     })
 
     it.skip('TODO: Fix HSTS dev test - should not redirect in development environment', async () => {
@@ -194,7 +194,7 @@ describe('Security Headers Validation Tests', () => {
 
   describe('Content Type and XSS Protection Headers', () => {
     it.skip('TODO: Fix MIME sniffing test - should prevent MIME type sniffing', async () => {
-      const request = new NextRequest('https://octavia-music.com/dashboard')
+      const request = new NextRequest('https://octavia.rocks/dashboard')
       const response = await middleware(request)
 
       const contentTypeOptions = response.headers.get('X-Content-Type-Options')
@@ -202,7 +202,7 @@ describe('Security Headers Validation Tests', () => {
     })
 
     it.skip('TODO: Fix XSS protection test - should enable XSS protection', async () => {
-      const request = new NextRequest('https://octavia-music.com/dashboard')
+      const request = new NextRequest('https://octavia.rocks/dashboard')
       const response = await middleware(request)
 
       const xssProtection = response.headers.get('X-XSS-Protection')
@@ -210,7 +210,7 @@ describe('Security Headers Validation Tests', () => {
     })
 
     it.skip('TODO: Fix referrer policy test - should set secure referrer policy', async () => {
-      const request = new NextRequest('https://octavia-music.com/dashboard')
+      const request = new NextRequest('https://octavia.rocks/dashboard')
       const response = await middleware(request)
 
       const referrerPolicy = response.headers.get('Referrer-Policy')
@@ -220,7 +220,7 @@ describe('Security Headers Validation Tests', () => {
 
   describe('Permissions Policy Headers', () => {
     it.skip('TODO: Fix permissions policy test - should restrict dangerous browser features', async () => {
-      const request = new NextRequest('https://octavia-music.com/dashboard')
+      const request = new NextRequest('https://octavia.rocks/dashboard')
       const response = await middleware(request)
 
       const permissionsPolicy = response.headers.get('Permissions-Policy')
@@ -234,7 +234,7 @@ describe('Security Headers Validation Tests', () => {
 
     it('should allow necessary features for music app', async () => {
       // For a music app, we might need certain permissions
-      const request = new NextRequest('https://octavia-music.com/record')
+      const request = new NextRequest('https://octavia.rocks/record')
       const response = await middleware(request)
 
       // This test would verify that necessary features are allowed
@@ -246,7 +246,7 @@ describe('Security Headers Validation Tests', () => {
 
   describe('Additional Security Headers', () => {
     it.skip('TODO: Fix DNS prefetch test - should disable DNS prefetching', async () => {
-      const request = new NextRequest('https://octavia-music.com/dashboard')
+      const request = new NextRequest('https://octavia.rocks/dashboard')
       const response = await middleware(request)
 
       const dnsPrefetch = response.headers.get('X-DNS-Prefetch-Control')
@@ -254,7 +254,7 @@ describe('Security Headers Validation Tests', () => {
     })
 
     it.skip('TODO: Fix file download test - should prevent automatic file downloads', async () => {
-      const request = new NextRequest('https://octavia-music.com/dashboard')
+      const request = new NextRequest('https://octavia.rocks/dashboard')
       const response = await middleware(request)
 
       const downloadOptions = response.headers.get('X-Download-Options')
@@ -262,7 +262,7 @@ describe('Security Headers Validation Tests', () => {
     })
 
     it.skip('TODO: Fix cross-domain test - should restrict cross-domain policies', async () => {
-      const request = new NextRequest('https://octavia-music.com/dashboard')
+      const request = new NextRequest('https://octavia.rocks/dashboard')
       const response = await middleware(request)
 
       const crossDomainPolicy = response.headers.get('X-Permitted-Cross-Domain-Policies')
@@ -270,7 +270,7 @@ describe('Security Headers Validation Tests', () => {
     })
 
     it('should not expose server information', async () => {
-      const request = new NextRequest('https://octavia-music.com/api/health')
+      const request = new NextRequest('https://octavia.rocks/api/health')
       const response = await middleware(request)
 
       // Should not reveal server technology
@@ -281,7 +281,7 @@ describe('Security Headers Validation Tests', () => {
 
   describe('API Endpoint Security Headers', () => {
     it('should apply security headers to API routes', async () => {
-      const apiRequest = new NextRequest('https://octavia-music.com/api/content')
+      const apiRequest = new NextRequest('https://octavia.rocks/api/content')
       const response = await middleware(apiRequest)
 
       // API routes should also have security headers
@@ -291,10 +291,10 @@ describe('Security Headers Validation Tests', () => {
     })
 
     it('should set appropriate CORS headers for API', async () => {
-      const corsRequest = new NextRequest('https://octavia-music.com/api/content', {
+      const corsRequest = new NextRequest('https://octavia.rocks/api/content', {
         method: 'OPTIONS',
         headers: {
-          'Origin': 'https://octavia-music.com',
+          'Origin': 'https://octavia.rocks',
           'Access-Control-Request-Method': 'POST'
         }
       })
@@ -311,7 +311,7 @@ describe('Security Headers Validation Tests', () => {
     it.skip('TODO: Fix production headers test - should use production-grade headers in production', async () => {
       process.env.NODE_ENV = 'production'
 
-      const request = new NextRequest('https://octavia-music.com/dashboard')
+      const request = new NextRequest('https://octavia.rocks/dashboard')
       const response = await middleware(request)
 
       const hstsHeader = response.headers.get('Strict-Transport-Security')
@@ -339,7 +339,7 @@ describe('Security Headers Validation Tests', () => {
 
   describe('Security Headers for Static Assets', () => {
     it('should apply appropriate headers to static assets', async () => {
-      const imageRequest = new NextRequest('https://octavia-music.com/images/logo.png')
+      const imageRequest = new NextRequest('https://octavia.rocks/images/logo.png')
       const response = await middleware(imageRequest)
 
       // Static assets should have basic security headers
@@ -347,7 +347,7 @@ describe('Security Headers Validation Tests', () => {
     })
 
     it('should handle font files securely', async () => {
-      const fontRequest = new NextRequest('https://octavia-music.com/fonts/music-icons.woff2')
+      const fontRequest = new NextRequest('https://octavia.rocks/fonts/music-icons.woff2')
       const response = await middleware(fontRequest)
 
       // Font files should have security headers
@@ -357,7 +357,7 @@ describe('Security Headers Validation Tests', () => {
 
   describe('Header Injection Prevention', () => {
     it.skip('TODO: Fix header injection test - should prevent header injection attacks', async () => {
-      const maliciousRequest = new NextRequest('https://octavia-music.com/dashboard', {
+      const maliciousRequest = new NextRequest('https://octavia.rocks/dashboard', {
         headers: {
           'X-Forwarded-Host': 'evil.com\r\nX-Injected-Header: malicious',
           'User-Agent': 'Normal\r\nX-Another-Injection: attack'
@@ -375,7 +375,7 @@ describe('Security Headers Validation Tests', () => {
     })
 
     it('should sanitize response headers', async () => {
-      const request = new NextRequest('https://octavia-music.com/dashboard')
+      const request = new NextRequest('https://octavia.rocks/dashboard')
       const response = await middleware(request)
 
       // Verify no CRLF injection in headers
@@ -397,7 +397,7 @@ describe('Security Headers Validation Tests', () => {
       // Create 100 concurrent requests
       for (let i = 0; i < 100; i++) {
         requests.push(
-          middleware(new NextRequest(`https://octavia-music.com/dashboard?req=${i}`))
+          middleware(new NextRequest(`https://octavia.rocks/dashboard?req=${i}`))
         )
       }
 
@@ -422,7 +422,7 @@ describe('Security Headers Validation Tests', () => {
 
   describe('Mobile and PWA Security Headers', () => {
     it('should include PWA-specific security headers', async () => {
-      const pwaRequest = new NextRequest('https://octavia-music.com/app', {
+      const pwaRequest = new NextRequest('https://octavia.rocks/app', {
         headers: {
           'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15'
         }
@@ -440,7 +440,7 @@ describe('Security Headers Validation Tests', () => {
     })
 
     it.skip('TODO: Fix mobile security test - should handle mobile-specific security considerations', async () => {
-      const mobileRequest = new NextRequest('https://octavia-music.com/dashboard', {
+      const mobileRequest = new NextRequest('https://octavia.rocks/dashboard', {
         headers: {
           'User-Agent': 'Mozilla/5.0 (Android 11; Mobile; rv:68.0) Gecko/68.0 Firefox/88.0'
         }
@@ -459,7 +459,7 @@ describe('Security Headers Validation Tests', () => {
 
   describe('Error Handling and Edge Cases', () => {
     it.skip('TODO: Fix malformed request test - should handle malformed requests gracefully', async () => {
-      const malformedRequest = new NextRequest('https://octavia-music.com/dashboard%00%01%02')
+      const malformedRequest = new NextRequest('https://octavia.rocks/dashboard%00%01%02')
 
       const response = await middleware(malformedRequest)
 
@@ -470,7 +470,7 @@ describe('Security Headers Validation Tests', () => {
 
     it.skip('TODO: Fix long URL test - should handle very long URLs', async () => {
       const longPath = '/dashboard/' + 'a'.repeat(2000)
-      const longUrlRequest = new NextRequest(`https://octavia-music.com${longPath}`)
+      const longUrlRequest = new NextRequest(`https://octavia.rocks${longPath}`)
 
       const response = await middleware(longUrlRequest)
 
@@ -479,7 +479,7 @@ describe('Security Headers Validation Tests', () => {
     })
 
     it.skip('TODO: Fix missing headers test - should handle missing headers gracefully', async () => {
-      const minimalRequest = new NextRequest('https://octavia-music.com/dashboard')
+      const minimalRequest = new NextRequest('https://octavia.rocks/dashboard')
 
       // Remove some headers that might normally be present
       minimalRequest.headers.delete('User-Agent')
