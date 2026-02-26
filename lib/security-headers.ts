@@ -1,13 +1,14 @@
 /**
- * Security Headers Configuration
- * 
- * Comprehensive security headers for production deployment
- * protecting against common web vulnerabilities.
+ * ENHANCED Security Headers Configuration
+ *
+ * Production-ready security headers with enhanced protection
+ * against XSS, CSRF, clickjacking, and other attacks.
  */
 
 import { NextRequest, NextResponse } from 'next/server'
+import { generateNonce } from './csp-nonce'
 
-export interface SecurityConfig {
+export interface EnhancedSecurityConfig {
   contentSecurityPolicy: {
     directives: Record<string, string[]>
     reportUri?: string
@@ -22,23 +23,32 @@ export interface SecurityConfig {
   contentTypeOptions: boolean
   referrerPolicy: string
   permissionsPolicy: Record<string, string[]>
+  crossOriginPolicies: {
+    embedderPolicy: string
+    openerPolicy: string
+    resourcePolicy: string
+  }
+  additionalHeaders: Record<string, string>
 }
 
-export const DEFAULT_SECURITY_CONFIG: SecurityConfig = {
+// PRODUCTION Security Configuration
+export const PRODUCTION_SECURITY_CONFIG: EnhancedSecurityConfig = {
   contentSecurityPolicy: {
     directives: {
       'default-src': ["'self'"],
       'script-src': [
         "'self'",
-        "'unsafe-inline'", // Next.js requires this for _next/static
-        "'unsafe-eval'", // Required for development and some Next.js features
-        'https://www.googletagmanager.com',
-        'https://www.google-analytics.com'
+        "'nonce-{NONCE}'", // Dynamic nonce for inline scripts
+        'https://*.googleapis.com',
+        'https://*.gstatic.com',
+        'https://www.google.com',
+        'https://cdn.jsdelivr.net'
       ],
       'style-src': [
         "'self'",
-        "'unsafe-inline'", // Required for CSS-in-JS and Tailwind
-        'https://fonts.googleapis.com'
+        "'nonce-{NONCE}'", // Dynamic nonce for inline styles
+        'https://fonts.googleapis.com',
+        'https://*.googleapis.com'
       ],
       'font-src': [
         "'self'",
@@ -49,36 +59,36 @@ export const DEFAULT_SECURITY_CONFIG: SecurityConfig = {
         "'self'",
         'data:',
         'blob:',
-        'https:', // Allow images from Firebase Storage and other CDNs
-        '*.googleapis.com',
-        '*.firebaseapp.com'
+        'https://*.supabase.co', // Supabase storage
+        'https://*.firebaseapp.com', // Firebase storage
+        'https://*.googleusercontent.com' // User avatars
       ],
       'media-src': [
         "'self'",
         'blob:',
-        'https:', // For audio/video content
-        '*.firebaseapp.com',
-        '*.googleapis.com'
+        'https://*.supabase.co'
       ],
       'connect-src': [
         "'self'",
-        'https://api.supabase.io',
         'https://*.supabase.co',
-        'https://identitytoolkit.googleapis.com', // Firebase Auth
-        'https://securetoken.googleapis.com', // Firebase Auth tokens
-        'https://www.googleapis.com', // Firebase APIs
-        'https://firestore.googleapis.com', // Firestore
-        'https://storage.googleapis.com', // Firebase Storage
-        'https://*.firebaseio.com', // Realtime Database
-        'wss://*.supabase.co' // Supabase realtime
+        'https://*.firebaseio.com',
+        'https://*.googleapis.com',
+        'wss://*.supabase.co' // WebSocket connections
+      ],
+      'frame-src': [
+        "'none'" // Prevent any iframe embedding
       ],
       'object-src': ["'none'"],
       'base-uri': ["'self'"],
       'form-action': ["'self'"],
-      'frame-ancestors': ["'none'"], // Prevent embedding in frames
-      'upgrade-insecure-requests': []
+      'manifest-src': ["'self'"],
+      'worker-src': [
+        "'self'",
+        'blob:' // For PDF.js and service workers
+      ]
     },
-    reportOnly: process.env.NODE_ENV === 'development'
+    reportUri: '/api/security/csp-report',
+    reportOnly: false
   },
   hsts: {
     maxAge: 31536000, // 1 year
@@ -89,62 +99,118 @@ export const DEFAULT_SECURITY_CONFIG: SecurityConfig = {
   contentTypeOptions: true,
   referrerPolicy: 'strict-origin-when-cross-origin',
   permissionsPolicy: {
-    'accelerometer': ["'none'"],
-    'camera': ["'none'"],
-    'geolocation': ["'none'"],
-    'gyroscope': ["'none'"],
-    'magnetometer': ["'none'"],
-    'microphone': ["'none'"],
-    'payment': ["'none'"],
-    'usb': ["'none'"]
+    camera: ["'none'"],
+    microphone: ["'none'"],
+    geolocation: ["'none'"],
+    payment: ["'none'"],
+    usb: ["'none'"],
+    gyroscope: ["'none'"],
+    magnetometer: ["'none'"],
+    accelerometer: ["'none'"],
+    "ambient-light-sensor": ["'none'"],
+    autoplay: ["'self'"],
+    "encrypted-media": ["'none'"],
+    fullscreen: ["'self'"],
+    "picture-in-picture": ["'none'"]
+  },
+  crossOriginPolicies: {
+    embedderPolicy: 'require-corp',
+    openerPolicy: 'same-origin',
+    resourcePolicy: 'cross-origin'  // Allow cross-origin resources (Firebase/Supabase Storage)
+  },
+  additionalHeaders: {
+    'X-Robots-Tag': 'noindex, nofollow', // Prevent indexing in production
+    'X-Permitted-Cross-Domain-Policies': 'none',
+    'Cross-Origin-Opener-Policy': 'same-origin',
+    'Cross-Origin-Embedder-Policy': 'require-corp',
+    'Cross-Origin-Resource-Policy': 'same-origin'
   }
 }
 
-/**
- * Generate Content Security Policy string from configuration
- */
-export function generateCSPHeader(config: SecurityConfig['contentSecurityPolicy']): string {
-  const directives = Object.entries(config.directives)
-    .map(([directive, sources]) => {
-      if (sources.length === 0) {
-        return directive
-      }
-      return `${directive} ${sources.join(' ')}`
-    })
-    .join('; ')
-
-  return directives
+// DEVELOPMENT Security Configuration (less restrictive)
+export const DEVELOPMENT_SECURITY_CONFIG: EnhancedSecurityConfig = {
+  ...PRODUCTION_SECURITY_CONFIG,
+  contentSecurityPolicy: {
+    directives: {
+      ...PRODUCTION_SECURITY_CONFIG.contentSecurityPolicy.directives,
+      'script-src': [
+        "'self'",
+        "'unsafe-inline'", // Allow for development
+        "'unsafe-eval'", // Allow for HMR
+        'https://*.googleapis.com',
+        'https://*.gstatic.com',
+        'localhost:*',
+        '127.0.0.1:*'
+      ],
+      'style-src': [
+        "'self'",
+        "'unsafe-inline'", // Allow for development
+        'https://fonts.googleapis.com'
+      ],
+      'connect-src': [
+        ...PRODUCTION_SECURITY_CONFIG.contentSecurityPolicy.directives['connect-src']!,
+        'localhost:*',
+        '127.0.0.1:*',
+        'ws://localhost:*',
+        'ws://127.0.0.1:*'
+      ]
+    },
+    reportOnly: true // Don't block in development
+  },
+  additionalHeaders: {
+    'X-Robots-Tag': 'noindex, nofollow, noarchive, nosnippet'
+  }
 }
 
-/**
- * Generate Permissions Policy string from configuration
- */
-export function generatePermissionsPolicyHeader(permissions: Record<string, string[]>): string {
-  return Object.entries(permissions)
-    .map(([feature, allowlist]) => `${feature}=(${allowlist.join(' ')})`)
-    .join(', ')
+// Environment-specific configuration
+export function getEnvironmentSecurityConfig(): EnhancedSecurityConfig {
+  return process.env.NODE_ENV === 'production'
+    ? PRODUCTION_SECURITY_CONFIG
+    : DEVELOPMENT_SECURITY_CONFIG
 }
 
-/**
- * Apply security headers to response
- */
-export function applySecurityHeaders(
-  response: NextResponse, 
-  config: SecurityConfig = DEFAULT_SECURITY_CONFIG
+// Generate CSP header with nonce support
+export function generateEnhancedCSPHeader(
+  config: EnhancedSecurityConfig['contentSecurityPolicy'],
+  nonce?: string
+): string {
+  const directives = Object.entries(config.directives).map(([key, values]) => {
+    const processedValues = values.map(value =>
+      nonce && value.includes('{NONCE}') ? value.replace('{NONCE}', nonce) : value
+    )
+    return `${key} ${processedValues.join(' ')}`
+  })
+
+  let header = directives.join('; ')
+
+  if (config.reportUri) {
+    header += `; report-uri ${config.reportUri}`
+  }
+
+  return header
+}
+
+// Apply enhanced security headers to response
+export function applyEnhancedSecurityHeaders(
+  response: NextResponse,
+  request?: NextRequest,
+  nonce?: string
 ): NextResponse {
+  const config = getEnvironmentSecurityConfig()
+
   // Content Security Policy
-  const cspValue = generateCSPHeader(config.contentSecurityPolicy)
-  const cspHeader = config.contentSecurityPolicy.reportOnly 
-    ? 'Content-Security-Policy-Report-Only' 
+  const cspHeader = generateEnhancedCSPHeader(config.contentSecurityPolicy, nonce)
+  const cspHeaderName = config.contentSecurityPolicy.reportOnly
+    ? 'Content-Security-Policy-Report-Only'
     : 'Content-Security-Policy'
-  response.headers.set(cspHeader, cspValue)
+  response.headers.set(cspHeaderName, cspHeader)
 
   // HTTP Strict Transport Security
   if (process.env.NODE_ENV === 'production') {
-    const hstsValue = `max-age=${config.hsts.maxAge}${
-      config.hsts.includeSubDomains ? '; includeSubDomains' : ''
-    }${config.hsts.preload ? '; preload' : ''}`
-    response.headers.set('Strict-Transport-Security', hstsValue)
+    response.headers.set(
+      'Strict-Transport-Security',
+      `max-age=${config.hsts.maxAge}${config.hsts.includeSubDomains ? '; includeSubDomains' : ''}${config.hsts.preload ? '; preload' : ''}`
+    )
   }
 
   // X-Frame-Options
@@ -159,132 +225,140 @@ export function applySecurityHeaders(
   response.headers.set('Referrer-Policy', config.referrerPolicy)
 
   // Permissions Policy
-  const permissionsPolicyValue = generatePermissionsPolicyHeader(config.permissionsPolicy)
-  response.headers.set('Permissions-Policy', permissionsPolicyValue)
+  const permissionsDirectives = Object.entries(config.permissionsPolicy).map(
+    ([key, values]) => `${key}=(${values.join(' ')})`
+  )
+  response.headers.set('Permissions-Policy', permissionsDirectives.join(', '))
 
-  // X-DNS-Prefetch-Control
-  response.headers.set('X-DNS-Prefetch-Control', 'off')
-  
-  // X-XSS-Protection (legacy but still useful)
+  // Cross-Origin Policies
+  response.headers.set('Cross-Origin-Embedder-Policy', config.crossOriginPolicies.embedderPolicy)
+  response.headers.set('Cross-Origin-Opener-Policy', config.crossOriginPolicies.openerPolicy)
+  response.headers.set('Cross-Origin-Resource-Policy', config.crossOriginPolicies.resourcePolicy)
+
+  // Additional security headers
+  Object.entries(config.additionalHeaders).forEach(([key, value]) => {
+    response.headers.set(key, value)
+  })
+
+  // Request-specific headers
+  if (request) {
+    // Vary header for proper caching
+    response.headers.set('Vary', 'Accept-Encoding, User-Agent')
+
+    // Cache control for sensitive pages
+    if (request.nextUrl.pathname.includes('/api/') ||
+        request.nextUrl.pathname.includes('/dashboard') ||
+        request.nextUrl.pathname.includes('/performance')) {
+      response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate')
+      response.headers.set('Pragma', 'no-cache')
+      response.headers.set('Expires', '0')
+    }
+  }
+
+  // Security monitoring headers
   response.headers.set('X-XSS-Protection', '1; mode=block')
-  
-  // X-Download-Options (IE specific)
-  response.headers.set('X-Download-Options', 'noopen')
-  
-  // X-Permitted-Cross-Domain-Policies (Adobe products)
-  response.headers.set('X-Permitted-Cross-Domain-Policies', 'none')
-
-  // Cross-Origin-Embedder-Policy (COEP) - Restrictive for security
-  response.headers.set('Cross-Origin-Embedder-Policy', 'require-corp')
-
-  // Cross-Origin-Opener-Policy (COOP) - Prevent window references
-  response.headers.set('Cross-Origin-Opener-Policy', 'same-origin')
-
-  // Cross-Origin-Resource-Policy (CORP) - Prevent cross-origin loads
-  response.headers.set('Cross-Origin-Resource-Policy', 'same-origin')
+  response.headers.set('X-DNS-Prefetch-Control', 'off')
 
   return response
 }
 
-/**
- * Security headers middleware for API routes
- */
-export function withSecurityHeaders(handler: Function) {
-  return async (request: NextRequest, context?: any) => {
-    const response = await handler(request, context)
-    
-    // Apply security headers to NextResponse objects
-    if (response instanceof NextResponse) {
-      return applySecurityHeaders(response)
-    }
-    
-    // For Response objects, create new NextResponse with security headers
-    if (response instanceof Response) {
-      const nextResponse = NextResponse.json(
-        response.body ? await response.json() : null,
-        { status: response.status, statusText: response.statusText }
-      )
-      return applySecurityHeaders(nextResponse)
+// CORS configuration for API routes
+export interface CORSConfig {
+  origin: string[] | string | boolean
+  methods: string[]
+  allowedHeaders: string[]
+  credentials: boolean
+  maxAge: number
+}
+
+export const PRODUCTION_CORS_CONFIG: CORSConfig = {
+  origin: process.env.NODE_ENV === 'production'
+    ? [process.env.NEXTAUTH_URL || 'https://your-domain.com']
+    : ['http://localhost:3000', 'http://127.0.0.1:3000'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: [
+    'Content-Type',
+    'Authorization',
+    'X-Requested-With',
+    'Accept',
+    'Origin'
+  ],
+  credentials: true,
+  maxAge: 86400 // 24 hours
+}
+
+// Apply CORS headers
+export function applyCORSHeaders(
+  response: NextResponse,
+  request: NextRequest,
+  config: CORSConfig = PRODUCTION_CORS_CONFIG
+): NextResponse {
+  const origin = request.headers.get('origin')
+
+  // Check if origin is allowed
+  let allowOrigin = false
+  if (typeof config.origin === 'boolean') {
+    allowOrigin = config.origin
+  } else if (typeof config.origin === 'string') {
+    allowOrigin = origin === config.origin
+  } else if (Array.isArray(config.origin)) {
+    allowOrigin = origin ? config.origin.includes(origin) : false
+  }
+
+  if (allowOrigin && origin) {
+    response.headers.set('Access-Control-Allow-Origin', origin)
+  }
+
+  response.headers.set('Access-Control-Allow-Methods', config.methods.join(', '))
+  response.headers.set('Access-Control-Allow-Headers', config.allowedHeaders.join(', '))
+  response.headers.set('Access-Control-Max-Age', config.maxAge.toString())
+
+  if (config.credentials) {
+    response.headers.set('Access-Control-Allow-Credentials', 'true')
+  }
+
+  return response
+}
+
+// Security event logging
+export function logSecurityEvent(
+  event: string,
+  details: Record<string, any>,
+  request?: NextRequest
+): void {
+  const logData = {
+    timestamp: new Date().toISOString(),
+    event,
+    details,
+    userAgent: request?.headers.get('user-agent'),
+    ip: request?.headers.get('x-forwarded-for') || request?.headers.get('x-real-ip') || request?.headers.get('cf-connecting-ip'),
+    url: request?.url
+  }
+
+  // In production, this should go to a security monitoring system
+  console.warn('[SECURITY EVENT]', logData)
+}
+
+// Middleware for enhanced security
+export function withEnhancedSecurity(handler: any) {
+  return async (request: NextRequest): Promise<Response> => {
+    const response = await handler(request)
+    const nextResponse = NextResponse.next(response)
+
+    // Apply security headers
+    applyEnhancedSecurityHeaders(nextResponse, request)
+
+    // Apply CORS if needed
+    if (request.nextUrl.pathname.startsWith('/api/')) {
+      applyCORSHeaders(nextResponse, request)
     }
 
-    return response
+    return nextResponse
   }
 }
 
-/**
- * Validate CSP configuration for common issues
- */
-export function validateCSPConfig(config: SecurityConfig['contentSecurityPolicy']): string[] {
-  const warnings: string[] = []
-
-  // Check for unsafe-inline in script-src (development only)
-  if (config.directives['script-src']?.includes("'unsafe-inline'") && process.env.NODE_ENV === 'production') {
-    warnings.push("WARNING: 'unsafe-inline' in script-src should not be used in production")
-  }
-
-  // Check for unsafe-eval in script-src
-  if (config.directives['script-src']?.includes("'unsafe-eval'") && process.env.NODE_ENV === 'production') {
-    warnings.push("WARNING: 'unsafe-eval' in script-src should be avoided in production if possible")
-  }
-
-  // Ensure default-src is restrictive
-  if (config.directives['default-src']?.includes('*')) {
-    warnings.push("WARNING: Wildcard (*) in default-src is too permissive")
-  }
-
-  // Check for missing important directives
-  const importantDirectives = ['script-src', 'style-src', 'img-src', 'connect-src']
-  for (const directive of importantDirectives) {
-    if (!config.directives[directive]) {
-      warnings.push(`WARNING: Missing important directive: ${directive}`)
-    }
-  }
-
-  return warnings
-}
-
-/**
- * Environment-specific CSP adjustments
- */
-export function getEnvironmentCSPConfig(): SecurityConfig {
-  const config = { ...DEFAULT_SECURITY_CONFIG }
-
-  if (process.env.NODE_ENV === 'development') {
-    // Allow webpack dev server in development
-    const connectSrc = config.contentSecurityPolicy.directives['connect-src']
-    if (connectSrc) {
-      connectSrc.push(
-        'ws://localhost:*',
-        'http://localhost:*'
-      )
-    }
-    
-    // Allow hot reload
-    const scriptSrc = config.contentSecurityPolicy.directives['script-src']
-    if (scriptSrc) {
-      scriptSrc.push(
-        'http://localhost:*'
-      )
-    }
-  }
-
-  if (process.env.NODE_ENV === 'production') {
-    // Remove unsafe directives in production
-    const scriptSrc = config.contentSecurityPolicy.directives['script-src']
-    if (scriptSrc) {
-      const filtered = scriptSrc.filter(
-        src => src !== "'unsafe-eval'" && src !== "'unsafe-inline'"
-      )
-      filtered.push("'nonce-{{NONCE}}'")
-      config.contentSecurityPolicy.directives['script-src'] = filtered
-    }
-    
-    // Add nonce support for production
-    const styleSrc = config.contentSecurityPolicy.directives['style-src']
-    if (styleSrc) {
-      styleSrc.push("'nonce-{{NONCE}}'")
-    }
-  }
-
-  return config
-}
+// Export aliases for backward compatibility with tests and middleware
+export const applySecurityHeaders = applyEnhancedSecurityHeaders
+export const generateCSPNonce = generateNonce
+export const createSecurityHeadersMiddleware = withEnhancedSecurity
+export const getEnvironmentCSPConfig = getEnvironmentSecurityConfig  // Alias for middleware compatibility
