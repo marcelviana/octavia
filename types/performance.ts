@@ -40,6 +40,7 @@ export interface SongData {
   artist?: string | null
   key?: string | null
   bpm?: number | null
+  time_signature?: string | null
   content_type?: string | null
   file_url?: string | null
   content_data?: {

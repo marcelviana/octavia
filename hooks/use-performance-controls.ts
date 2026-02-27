@@ -2,10 +2,10 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 
 /**
  * Performance Controls Hook
- * 
+ *
  * Manages all control states and actions for performance mode.
  * Critical requirement: Responsive controls for live performance scenarios.
- * 
+ *
  * Features:
  * - BPM control with press-and-hold functionality
  * - Zoom level management
@@ -14,6 +14,58 @@ import { useState, useEffect, useRef, useCallback } from 'react'
  * - Auto-scroll functionality with BPM synchronization
  * - Control visibility management
  */
+
+/**
+ * Helper Functions for BPM Calculation
+ */
+
+/**
+ * Parse time signature to extract beats per measure
+ * @param timeSignature - e.g., "4/4", "3/4", "6/8"
+ * @returns Number of beats per measure (defaults to 4 for 4/4 time)
+ */
+const parseTimeSignature = (timeSignature?: string | null): number => {
+  if (!timeSignature) return 4  // Default to 4/4
+
+  const match = timeSignature.match(/^(\d+)\/\d+$/)
+  if (!match || !match[1]) return 4
+
+  return parseInt(match[1], 10)
+}
+
+/**
+ * Get scroll speed multiplier based on content type
+ * Different content types have different reading densities
+ * @param contentType - Type of content (Lyrics, Chords, Tab, Sheet)
+ * @returns Multiplier for scroll speed (0.75-1.0)
+ */
+const getContentTypeMultiplier = (contentType?: string | null): number => {
+  switch (contentType) {
+    case 'Chords': return 0.75  // Chords scroll slightly faster
+    case 'Lyrics': return 1.0   // Standard pacing
+    case 'Tab': return 0.85     // Tabs slightly faster
+    default: return 1.0
+  }
+}
+
+/**
+ * Calculate beats per line based on song structure
+ * Accounts for instrumental sections, time signature, and content type
+ * @param timeSignature - Musical time signature
+ * @param contentType - Type of content being displayed
+ * @returns Number of beats per line of content
+ */
+const calculateBeatsPerLine = (
+  timeSignature?: string | null,
+  contentType?: string | null
+): number => {
+  // Base assumption: 4 measures per line (more realistic for songs with instrumental sections)
+  const measuresPerLine = 4
+  const beatsPerMeasure = parseTimeSignature(timeSignature)
+  const contentMultiplier = getContentTypeMultiplier(contentType)
+
+  return measuresPerLine * beatsPerMeasure * contentMultiplier
+}
 
 export interface UsePerformanceControlsProps {
   currentSong: number
@@ -122,9 +174,14 @@ export function usePerformanceControls({
     const total = el.scrollHeight - el.clientHeight
     const lines = lyricsData[currentSong]?.split("\n").length || 1
 
-    // More realistic calculation: assume each line spans 2 measures (8 beats)
-    // This provides smoother, more natural scrolling that respects song tempo
-    const beatsPerLine = 8  // 2 measures per line
+    // Realistic calculation based on song structure:
+    // - Assumes 4 measures per line (accounts for instrumental sections)
+    // - Adjusts for time signature (3/4, 4/4, 6/8, etc.)
+    // - Content-type multiplier for different display densities
+    const beatsPerLine = calculateBeatsPerLine(
+      currentSongData.time_signature,
+      currentSongData.content_type
+    )
     const beats = lines * beatsPerLine
     const beatDuration = 60 / bpm  // seconds per beat
     const totalDuration = beats * beatDuration  // total song duration in seconds

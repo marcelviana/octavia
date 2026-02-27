@@ -29,6 +29,7 @@ export function useSongsTransformation({
         artist: s.content.artist,
         key: s.content.key,
         bpm: s.content.bpm,
+        time_signature: s.content.time_signature,
         content_type: s.content.content_type,
         file_url: s.content.file_url,
         content_data: s.content.content_data ? {
@@ -56,6 +57,7 @@ export function useSongsTransformation({
         artist: selectedContent.artist,
         key: selectedContent.key,
         bpm: selectedContent.bpm,
+        time_signature: selectedContent.time_signature,
         content_type: selectedContent.content_type,
         file_url: selectedContent.file_url,
         content_data: selectedContent.content_data ? {
