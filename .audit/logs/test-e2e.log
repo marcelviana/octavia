@@ -1,0 +1,37 @@
+
+> octavia@0.1.0 test:e2e /Users/marcelviana/projects/octavia
+> playwright test
+
+[WebServer]  [33m[1m⚠[22m[39m nodejs runtime support for middleware requires experimental.nodeMiddleware be enabled in your next.config
+🎵 Setting up Octavia E2E test environment...
+Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/chromium_headless_shell-1187/chrome-mac/headless_shell
+╔═════════════════════════════════════════════════════════════════════════╗
+║ Looks like Playwright Test or Playwright was just installed or updated. ║
+║ Please run the following command to download new browsers:              ║
+║                                                                         ║
+║     pnpm exec playwright install                                        ║
+║                                                                         ║
+║ <3 Playwright Team                                                      ║
+╚═════════════════════════════════════════════════════════════════════════╝
+
+   at global-setup.ts:17
+
+  15 |   
+  16 |   // Create a browser context for authentication
+> 17 |   const browser = await chromium.launch();
+     |                                  ^
+  18 |   const context = await browser.newContext();
+  19 |   const page = await context.newPage();
+  20 |   
+    at globalSetup (/Users/marcelviana/projects/octavia/tests/e2e/global-setup.ts:17:34)
+🧹 Cleaning up Octavia E2E test environment...
+✅ Authentication state cleaned up
+✅ Global teardown complete
+
+
+To open last HTML report run:
+
+  pnpm exec playwright show-report
+
+ ELIFECYCLE  Command failed with exit code 1.
+EXIT: 1

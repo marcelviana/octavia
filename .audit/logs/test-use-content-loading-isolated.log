@@ -1,0 +1,106 @@
+
+[1m[46m RUN [49m[22m [36mv4.0.16 [39m[90m/Users/marcelviana/projects/octavia[39m
+
+
+<--- Last few GCs --->
+
+[66263:0x81680c000]    46302 ms: Scavenge (interleaved) 4061.5 (4080.9) -> 4056.4 (4119.2) MB, pooled: 0 MB, 96.71 / 0.00 ms  (average mu = 0.367, current mu = 0.384) allocation failure; 
+[66263:0x81680c000]    49868 ms: Mark-Compact (reduce) 4057.3 (4119.2) -> 4056.7 (4061.4) MB, pooled: 0 MB, 2462.21 / 0.00 ms  (+ 67.6 ms in 14 steps since start of marking, biggest step 5.7 ms, walltime since start of marking 2683 ms) (average mu = 0.375
+FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory
+----- Native stack trace -----
+
+ 1: 0x1021de0fc node::OOMErrorHandler(char const*, v8::OOMDetails const&) [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+ 2: 0x10243a4b8 v8::internal::V8::FatalProcessOutOfMemory(v8::internal::Isolate*, char const*, v8::OOMDetails const&) [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+ 3: 0x1026998a4 v8::internal::Heap::stack() [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+ 4: 0x10269cc78 v8::internal::Heap::HasLowYoungGenerationAllocationRate() [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+ 5: 0x1026ade6c v8::internal::Heap::CollectGarbage(v8::internal::AllocationSpace, v8::internal::GarbageCollectionReason, v8::GCCallbackFlags)::$_1::operator()() const [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+ 6: 0x1026ad740 void heap::base::Stack::SetMarkerAndCallbackImpl<v8::internal::Heap::CollectGarbage(v8::internal::AllocationSpace, v8::internal::GarbageCollectionReason, v8::GCCallbackFlags)::$_1>(heap::base::Stack*, void*, void const*) [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+ 7: 0x103062538 PushAllRegistersAndIterateStack [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+ 8: 0x1026975a8 v8::internal::Heap::CollectGarbage(v8::internal::AllocationSpace, v8::internal::GarbageCollectionReason, v8::GCCallbackFlags) [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+ 9: 0x10260ef6c v8::internal::StackGuard::HandleInterrupts(v8::internal::StackGuard::InterruptLevel) [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+10: 0x102afd3ec v8::internal::Runtime_StackGuardWithGap(int, unsigned long*, v8::internal::Isolate*) [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+11: 0x103152234 Builtins_CEntry_Return1_ArgvOnStack_NoBuiltinExit [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+12: 0x1268a4000 
+13: 0x12685ad84 
+14: 0x1268982f8 
+15: 0x1266a276c 
+16: 0x12685dfd0 
+17: 0x1266e9954 
+18: 0x1268860fc 
+19: 0x126897aa4 
+20: 0x12689dfa8 
+21: 0x1030b4bec Builtins_InterpreterEntryTrampoline [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+22: 0x1030b4bec Builtins_InterpreterEntryTrampoline [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+23: 0x1030b4bec Builtins_InterpreterEntryTrampoline [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+24: 0x1030b4bec Builtins_InterpreterEntryTrampoline [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+25: 0x1030b4bec Builtins_InterpreterEntryTrampoline [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+26: 0x1030b4bec Builtins_InterpreterEntryTrampoline [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+27: 0x1030b4bec Builtins_InterpreterEntryTrampoline [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+28: 0x1030b4bec Builtins_InterpreterEntryTrampoline [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+29: 0x1030b4bec Builtins_InterpreterEntryTrampoline [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+30: 0x1031c73dc Builtins_PromiseConstructor [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+31: 0x1030b5550 Builtins_InterpreterPushArgsThenFastConstructFunction [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+32: 0x103245628 Builtins_ConstructHandler [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+33: 0x1030b4bec Builtins_InterpreterEntryTrampoline [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+34: 0x1030b4bec Builtins_InterpreterEntryTrampoline [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+35: 0x1267227cc 
+36: 0x1030b4bec Builtins_InterpreterEntryTrampoline [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+37: 0x1030b4bec Builtins_InterpreterEntryTrampoline [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+38: 0x1030f37e8 Builtins_AsyncFunctionAwaitResolveClosure [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+39: 0x1031c8e58 Builtins_PromiseFulfillReactionJob [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+40: 0x1030e2bd0 Builtins_RunMicrotasks [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+41: 0x1030b27b0 Builtins_JSRunMicrotasksEntry [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+42: 0x1025dda4c v8::internal::(anonymous namespace)::Invoke(v8::internal::Isolate*, v8::internal::(anonymous namespace)::InvokeParams const&) [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+43: 0x1025de2c0 v8::internal::(anonymous namespace)::InvokeWithTryCatch(v8::internal::Isolate*, v8::internal::(anonymous namespace)::InvokeParams const&) [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+44: 0x1025de3fc v8::internal::Execution::TryRunMicrotasks(v8::internal::Isolate*, v8::internal::MicrotaskQueue*) [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+45: 0x10260d1d0 v8::internal::MicrotaskQueue::RunMicrotasks(v8::internal::Isolate*) [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+46: 0x10260db30 v8::internal::MicrotaskQueue::PerformCheckpoint(v8::Isolate*) [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+47: 0x1030b6818 Builtins_CallApiCallbackGeneric [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+48: 0x1267007d4 
+49: 0x1030b28cc Builtins_JSEntryTrampoline [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+50: 0x1030b2570 Builtins_JSEntry [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+51: 0x1025dda94 v8::internal::(anonymous namespace)::Invoke(v8::internal::Isolate*, v8::internal::(anonymous namespace)::InvokeParams const&) [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+52: 0x1025dd3f8 v8::internal::Execution::Call(v8::internal::Isolate*, v8::internal::DirectHandle<v8::internal::Object>, v8::internal::DirectHandle<v8::internal::Object>, v8::base::Vector<v8::internal::DirectHandle<v8::internal::Object> const>) [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+53: 0x102451e78 v8::Function::Call(v8::Isolate*, v8::Local<v8::Context>, v8::Local<v8::Value>, int, v8::Local<v8::Value>*) [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+54: 0x1020bf180 node::InternalCallbackScope::Close() [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+55: 0x1020bf3b0 node::InternalMakeCallback(node::Environment*, v8::Local<v8::Object>, v8::Local<v8::Object>, v8::Local<v8::Function>, int, v8::Local<v8::Value>*, node::async_context, v8::Local<v8::Value>) [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+56: 0x1020d7dd0 node::AsyncWrap::MakeCallback(v8::Local<v8::Function>, int, v8::Local<v8::Value>*) [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+57: 0x102335e70 node::StreamBase::CallJSOnreadMethod(long, v8::Local<v8::ArrayBuffer>, unsigned long, node::StreamBase::StreamBaseJSChecks) [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+58: 0x102337604 node::EmitToJSStreamListener::OnStreamRead(long, uv_buf_t const&) [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+59: 0x10233ced4 node::LibuvStreamWrap::OnUvRead(long, uv_buf_t const*) [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+60: 0x10233d604 node::LibuvStreamWrap::ReadStart()::$_1::__invoke(uv_stream_s*, long, uv_buf_t const*) [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+61: 0x10309e760 uv__stream_io [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+62: 0x1030a5f94 uv__io_poll [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+63: 0x1030921c8 uv_run [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+64: 0x1020c06a8 node::SpinEventLoopInternal(node::Environment*) [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+65: 0x10223700c node::NodeMainInstance::Run() [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+66: 0x10218ad14 node::Start(int, char**) [/Users/marcelviana/.nvm/versions/node/v24.16.0/bin/node]
+67: 0x185bc7e00 start [/usr/lib/dyld]
+[31m⎯⎯⎯⎯⎯⎯[39m[1m[41m Unhandled Errors [49m[22m[31m⎯⎯⎯⎯⎯⎯[39m
+[31m[1m
+Vitest caught 1 unhandled error during the test run.
+This might cause false positive tests. Resolve unhandled errors to make sure your tests are not affected.[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯[39m[1m[41m Unhandled Error [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+[31m[1mError[22m: [vitest-pool]: Worker forks emitted error.[39m
+[90m [2m❯[22m EventEmitter.<anonymous> node_modules/.pnpm/vitest@4.0.16_@opentelemetry+api@1.9.0_@types+node@22.18.3_@vitest+ui@4.0.16_happy-dom@_8158c742d56f1d0edf616ae6ddefcb04/node_modules/vitest/dist/chunks/cli-api.BKg19Fvw.js:[2m8015:22[22m[39m
+[90m [2m❯[22m EventEmitter.emit node:events:[2m509:28[22m[39m
+[90m [2m❯[22m ChildProcess.emitUnexpectedExit node_modules/.pnpm/vitest@4.0.16_@opentelemetry+api@1.9.0_@types+node@22.18.3_@vitest+ui@4.0.16_happy-dom@_8158c742d56f1d0edf616ae6ddefcb04/node_modules/vitest/dist/chunks/cli-api.BKg19Fvw.js:[2m7588:22[22m[39m
+[90m [2m❯[22m ChildProcess.emit node:events:[2m509:28[22m[39m
+[90m [2m❯[22m Process.ChildProcess._handle.onexit node:internal/child_process:[2m295:12[22m[39m
+
+[31m[1mCaused by: Error[22m: Worker exited unexpectedly[39m
+[90m [2m❯[22m ChildProcess.emitUnexpectedExit node_modules/.pnpm/vitest@4.0.16_@opentelemetry+api@1.9.0_@types+node@22.18.3_@vitest+ui@4.0.16_happy-dom@_8158c742d56f1d0edf616ae6ddefcb04/node_modules/vitest/dist/chunks/cli-api.BKg19Fvw.js:[2m7587:33[22m[39m
+[90m [2m❯[22m ChildProcess.emit node:events:[2m509:28[22m[39m
+[90m [2m❯[22m Process.ChildProcess._handle.onexit node:internal/child_process:[2m295:12[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[39m
+
+
+[2m Test Files [22m [90m (1)[39m
+[2m      Tests [22m [90m (3)[39m
+[2m     Errors [22m [1m[31m1 error[39m[22m
+[2m   Start at [22m 17:42:16
+[2m   Duration [22m 50.18s[2m (transform 94ms, setup 311ms, import 58ms, tests 0ms, environment 432ms)[22m
+
+EXIT: 1
