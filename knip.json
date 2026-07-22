@@ -1,0 +1,27 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "entry": [
+    "middleware.ts",
+    "worker/index.js",
+    "scripts/build-sw.js",
+    "scripts/setup-database.js",
+    "scripts/check-supabase.js",
+    "tests/**/*.{ts,tsx}",
+    "__tests__/**/*.{ts,tsx}"
+  ],
+  "project": [
+    "app/**/*.{ts,tsx}",
+    "components/**/*.{ts,tsx}",
+    "contexts/**/*.{ts,tsx}",
+    "domains/**/*.{ts,tsx}",
+    "hooks/**/*.{ts,tsx}",
+    "lib/**/*.{ts,tsx}",
+    "types/**/*.{ts,tsx}",
+    "worker/**/*.js",
+    "scripts/**/*.{js,ts}",
+    "src/**/*.ts"
+  ],
+  "ignore": [
+    "components/ui/**"
+  ]
+}

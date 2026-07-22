@@ -103,6 +103,7 @@
     "eslint": "^9.28.0",
     "eslint-config-next": "^15.3.3",
     "jsdom": "^26.1.0",
+    "knip": "^6.29.0",
     "msw": "^2.0.0",
     "postcss": "^8.5",
     "tailwindcss": "^3.4.17",
