@@ -6,7 +6,7 @@
  */
 
 import { describe, it, expect } from 'vitest'
-import type { Database } from '@/types/database'
+import type { Database } from '@/types/database.types'
 import { ContentType } from '@/types/content'
 
 // Test autocomplete and type safety improvements

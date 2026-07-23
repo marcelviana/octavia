@@ -7,7 +7,6 @@
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { NextRequest, NextResponse } from 'next/server'
-import { createMocks } from 'node-mocks-http'
 
 // Import API routes for testing
 import { POST as ContentPost, GET as ContentGet } from '@/app/api/content/route'

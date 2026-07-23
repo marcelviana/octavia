@@ -4,24 +4,35 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import type { SongData } from '@/types/performance'
 
 // Mock dependencies
-vi.mock('@/lib/advanced-content-cache', () => ({
-  useAdvancedContentCache: () => ({
+// As APIs mockadas precisam de identidade estável entre renders: o hook real
+// as coloca nas deps do useEffect (o real usa useCallback([]) — estável).
+// Retornar vi.fn() novos a cada render re-dispara o effect em loop até OOM.
+vi.mock('@/lib/advanced-content-cache', () => {
+  const cacheApi = {
     getCachedContent: vi.fn().mockResolvedValue({
       data: new Blob(['test content'], { type: 'application/pdf' }),
       mimeType: 'application/pdf'
     }),
     preloadForCurrentSetlist: vi.fn()
-  })
-}))
+  }
+  return { useAdvancedContentCache: () => cacheApi }
+})
 
-vi.mock('@/lib/memory-management', () => ({
-  useMemoryManagement: () => ({
+vi.mock('@/lib/memory-management', () => {
+  const memoryApi = {
     trackResource: vi.fn(),
     getMemoryStats: vi.fn().mockReturnValue({ trackedResources: 0 })
-  })
-}))
+  }
+  return { useMemoryManagement: () => memoryApi }
+})
 
 describe('useContentLoading', () => {
+  // Referência estável: `[]` inline criaria um array novo por render e, como
+  // `songs` está nas deps do useEffect (que sempre faz setState com arrays
+  // novos), o render loop nunca estabiliza. Em produção o caller memoiza
+  // (useSongsTransformation usa useMemo).
+  const emptySongs: SongData[] = []
+
   const mockSongs: SongData[] = [
     {
       id: 'song-1',
@@ -45,7 +56,7 @@ describe('useContentLoading', () => {
   })
 
   it('should initialize with correct default values', () => {
-    const { result } = renderHook(() => useContentLoading([]))
+    const { result } = renderHook(() => useContentLoading(emptySongs))
 
     expect(result.current.sheetUrls).toEqual([])
     expect(result.current.sheetMimeTypes).toEqual([])
@@ -65,7 +76,7 @@ describe('useContentLoading', () => {
   })
 
   it('should handle empty songs array', () => {
-    const { result } = renderHook(() => useContentLoading([]))
+    const { result } = renderHook(() => useContentLoading(emptySongs))
 
     expect(result.current.sheetUrls).toEqual([])
     expect(result.current.lyricsData).toEqual([])

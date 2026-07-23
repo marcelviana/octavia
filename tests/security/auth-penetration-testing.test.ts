@@ -7,7 +7,6 @@
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { NextRequest, NextResponse } from 'next/server'
-import { createMocks } from 'node-mocks-http'
 
 // Import auth-related modules
 import { POST as AuthSessionPost } from '@/app/api/auth/session/route'
