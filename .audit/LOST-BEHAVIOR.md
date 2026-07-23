@@ -1,5 +1,14 @@
 # P1-B — Comportamento perdido na migração dos gêmeos
 
+> **Revisado sob Node 22 (P1-V, 2026-07-23): NENHUM veredito mudou.**
+> Os vereditos abaixo foram produzidos sob Node 24; o P1-V re-executou os
+> 4 arquivos sob Node v22.23.1: os 45 [PASSA] passam
+> (`.audit/logs/test-node22-p1b-files.log`) e os 10 [FALHA-COMPORTAMENTO]
+> foram re-executados des-skipados em worktree descartável e falham com as
+> MESMAS mensagens de erro documentadas
+> (`.audit/logs/test-node22-p1b-unskipped.log` — 10 failed / 15 passed /
+> 13 skipped). Vereditos 100% revalidados.
+
 Especificações dos gêmeos mortos executadas contra os gêmeos vivos (em rota).
 Método: retarget em-lugar (imports + mínimo de setup); **nenhuma asserção foi
 afrouxada**. Its que falharam contra o vivo ficaram `it.skip` com comentário

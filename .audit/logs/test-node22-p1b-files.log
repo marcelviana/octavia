@@ -1,0 +1,40 @@
+
+[1m[46m RUN [49m[22m [36mv4.0.16 [39m[90m/Users/marcelviana/projects/octavia[39m
+
+ [32m✓[39m components/__tests__/content-display.test.tsx [2m([22m[2m7 tests[22m[2m)[22m[32m 119[2mms[22m[39m
+ [32m✓[39m tests/hooks/useAddContentState.test.ts [2m([22m[2m32 tests[22m[2m | [22m[33m12 skipped[39m[2m)[22m[32m 82[2mms[22m[39m
+ [32m✓[39m tests/components/add-content.refactoring.test.tsx [2m([22m[2m38 tests[22m[2m | [22m[33m23 skipped[39m[2m)[22m[32m 70[2mms[22m[39m
+[90mstdout[2m | __tests__/performance-mode/chords-display-bug.test.tsx[2m > [22m[2mBug #1: Chords Display Missing Chart[2m > [22m[2mshould display full chord chart in performance mode
+[22m[39mReal-time performance monitoring started
+Memory monitoring started for performance mode
+
+[90mstdout[2m | __tests__/performance-mode/chords-display-bug.test.tsx[2m > [22m[2mBug #1: Chords Display Missing Chart[2m > [22m[2mshould display full chord chart in performance mode
+[22m[39mPerformance monitoring stopped
+Force cleanup completed
+Memory monitoring stopped
+
+[90mstdout[2m | __tests__/performance-mode/chords-display-bug.test.tsx[2m > [22m[2mBug #1: Chords Display Missing Chart[2m > [22m[2mshould display section lyrics along with chords
+[22m[39mReal-time performance monitoring started
+Memory monitoring started for performance mode
+
+[90mstdout[2m | __tests__/performance-mode/chords-display-bug.test.tsx[2m > [22m[2mBug #1: Chords Display Missing Chart[2m > [22m[2mshould display section lyrics along with chords
+[22m[39mPerformance monitoring stopped
+Force cleanup completed
+Memory monitoring stopped
+
+[90mstdout[2m | __tests__/performance-mode/chords-display-bug.test.tsx[2m > [22m[2mBug #1: Chords Display Missing Chart[2m > [22m[2mshould handle multiple chord chart sections
+[22m[39mReal-time performance monitoring started
+Memory monitoring started for performance mode
+
+[90mstdout[2m | __tests__/performance-mode/chords-display-bug.test.tsx[2m > [22m[2mBug #1: Chords Display Missing Chart[2m > [22m[2mshould handle multiple chord chart sections
+[22m[39mPerformance monitoring stopped
+Force cleanup completed
+Memory monitoring stopped
+
+ [32m✓[39m __tests__/performance-mode/chords-display-bug.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[32m 87[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m4 passed[39m[22m[90m (4)[39m
+[2m      Tests [22m [1m[32m45 passed[39m[22m[2m | [22m[33m35 skipped[39m[90m (80)[39m
+[2m   Start at [22m 11:18:54
+[2m   Duration [22m 2.22s[2m (transform 1.12s, setup 1.93s, import 1.63s, tests 358ms, environment 3.49s)[22m
+
