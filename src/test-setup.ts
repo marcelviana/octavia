@@ -86,26 +86,6 @@ vi.mock('@/contexts/firebase-auth-context', () => ({
   FirebaseAuthProvider: ({ children }: { children: any }) => children
 }))
 
-// Mock app store auth hooks
-vi.mock('@/domains/shared/state-management/app-store', async () => {
-  const actual = await vi.importActual('@/domains/shared/state-management/app-store')
-  return {
-    ...actual,
-    useAuth: () => ({
-      user: mocks.mockUser,
-      isAuthenticated: true,
-      isLoading: false,
-      sessionCookie: 'mock-session-cookie'
-    }),
-    useAuthActions: () => ({
-      setUser: vi.fn(),
-      setAuthLoading: vi.fn(),
-      setSessionCookie: vi.fn(),
-      logout: vi.fn()
-    })
-  }
-})
-
 // Mock Firebase Server Utils for API route authentication
 vi.mock('@/lib/firebase-server-utils', async () => {
   const actual = await vi.importActual('@/lib/firebase-server-utils')
