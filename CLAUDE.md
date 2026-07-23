@@ -139,7 +139,7 @@ const supabase = getSupabaseServiceClient(); // Service role client
 **Error Handling**:
 - Generic error messages to clients
 - Detailed logging server-side via `logger.ts`
-- Security events logged via `security-logger.ts`
+- Logging de eventos de segurança dedicado: item em aberto — `security-logger.ts` era órfão nunca ligado e foi removido no P1-E (ver `.audit/`)
 
 ## CODE QUALITY STANDARDS
 
