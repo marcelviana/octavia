@@ -102,7 +102,7 @@ export async function POST(request: NextRequest) {
 3. **Service Role Database**: All server operations use Supabase service role client
 4. **Input Validation**: All user inputs validated with Zod schemas
 5. **Error Sanitization**: Generic error messages to clients, detailed logging server-side
-6. **File Security**: Upload validation via `file-security.ts`
+6. **File Security**: validação dedicada de upload é item em aberto — não há camada `file-security` ligada ao fluxo (ver `.audit/`)
 
 ### Security Rules (NON-NEGOTIABLE)
 
@@ -134,7 +134,7 @@ const supabase = getSupabaseServiceClient(); // Service role client
 **Content Management**:
 - Use `content-service.ts` for CRUD operations
 - All operations require authentication
-- Files validated for security via `file-security.ts`
+- Validação de segurança de arquivos de upload: item em aberto (ver `.audit/`)
 
 **Error Handling**:
 - Generic error messages to clients
