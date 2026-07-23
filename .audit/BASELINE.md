@@ -1,5 +1,30 @@
 # BASELINE — Estado real do repositório
 
+## ATUALIZAÇÃO P1-D (2026-07-23) — pós-deleção da dupla condenação
+
+Medição em: Node v22.23.1, pnpm 10.28.0. Três commits (`b6292ff` lote 1,
+`11b3665` lote 2, `eb63ea7` lote 3), cada um com `pnpm test` e `pnpm build`
+em exit 0 e grep de importadores limpo.
+
+**Deletados: 63 arquivos, ≈317 KB** — 60 dos 61 da kill-list (≈301 KB) +
+3 complementos (app-store.ts 14.7 KB [D1] e tests/utils/{test-utils.tsx,
+mock-services.ts}, cadeia morta do app-store). **1 poupado por divergência**:
+`components/library/index.ts` é vivo via dynamic import não resolvido pelo
+grafo/knip — ver `.audit/P1D-DIVERGENCES.md`.
+
+| Comando | Exit | Contagem |
+|---|---|---|
+| `pnpm test` | **0** ✅ | 504 passed / 165 skipped (669) — idêntico ao P1-V nos 3 lotes |
+| `pnpm build` | **0** ✅ | inalterado |
+| `pnpm test:integration` | 1 ⚠️ | runner vazio (pendência D5, inalterado) |
+
+Estrutura: `domains/` **não existe mais**; CLAUDE.md sem o claim falso de
+file-security. Grafo pós-deleção: `.audit/graph-post-p1d.json` (273 módulos;
+antes 335). Órfãos do universo do grafo: 120 → 59, **zero órfãos novos de
+cascata** (`.audit/CASCADE-ORPHANS.md`) — insumo do P1-E.
+
+---
+
 ## ATUALIZAÇÃO P1-A (2026-07-23) — contagens atuais dos três runners
 
 Medição em: macOS (Darwin 25.5.0), **Node v22.23.1** (pinado via `.nvmrc`,
