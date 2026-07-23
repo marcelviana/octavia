@@ -1,0 +1,1536 @@
+
+> octavia@0.1.0 test:e2e /Users/marcelviana/projects/octavia
+> playwright test
+
+[WebServer]  [33m[1m⚠[22m[39m nodejs runtime support for middleware requires experimental.nodeMiddleware be enabled in your next.config
+🎵 Setting up Octavia E2E test environment...
+[WebServer] objc[12201]: Class GNotificationCenterDelegate is implemented in both /Users/marcelviana/projects/octavia/node_modules/.pnpm/@img+sharp-libvips-darwin-arm64@1.0.4/node_modules/@img/sharp-libvips-darwin-arm64/lib/libvips-cpp.42.dylib (0x128619a28) and /Users/marcelviana/projects/octavia/node_modules/.pnpm/canvas@3.2.0/node_modules/canvas/build/Release/libgio-2.0.0.dylib (0x12733c4b8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+✅ User already authenticated
+✅ Authentication state saved
+
+Running 165 tests using 4 workers
+
+  ✓    1 [chromium] › tests/e2e/basic.spec.ts:24:7 › Basic App Functionality › should have accessible navigation (3.5s)
+  ✓    2 [chromium] › tests/e2e/basic.spec.ts:79:7 › Basic App Functionality › should be responsive (3.6s)
+  ✓    4 [chromium] › tests/e2e/basic.spec.ts:4:7 › Basic App Functionality › should load the home page (3.7s)
+[WebServer] Server-side user: No session cookie found
+✅ Successfully navigated to /login
+  ✓    5 [chromium] › tests/e2e/basic.spec.ts:142:7 › Basic App Functionality › should have proper meta tags (3.5s)
+  ✓    7 [chromium] › tests/e2e/basic.spec.ts:180:7 › Basic App Functionality › should show user authentication state (3.4s)
+  ✓    6 [chromium] › tests/e2e/basic.spec.ts:155:7 › Basic App Functionality › should have search functionality (3.7s)
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+  ✓    9 [chromium] › tests/e2e/dashboard.spec.ts:30:7 › Dashboard › should show recent content section (5.5s)
+  ✓    8 [chromium] › tests/e2e/dashboard.spec.ts:9:7 › Dashboard › should display dashboard correctly (5.7s)
+  ✓   10 [chromium] › tests/e2e/dashboard.spec.ts:50:7 › Dashboard › should show quick actions (5.6s)
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+  ✓   11 [chromium] › tests/e2e/dashboard.spec.ts:68:7 › Dashboard › should navigate from quick actions (3.4s)
+  ✓   12 [chromium] › tests/e2e/dashboard.spec.ts:91:7 › Dashboard › should show user stats (3.4s)
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+  ✓   13 [chromium] › tests/e2e/dashboard.spec.ts:114:7 › Dashboard › should handle content interactions (3.8s)
+[WebServer] Server-side user: No session cookie found
+  ✓   14 [chromium] › tests/e2e/dashboard.spec.ts:134:7 › Dashboard › should be responsive on mobile (2.6s)
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+  ✓   16 [chromium] › tests/e2e/dashboard.spec.ts:177:7 › Dashboard › should handle tab navigation (3.4s)
+[WebServer] Server-side user: No session cookie found
+  ✓   15 [chromium] › tests/e2e/dashboard.spec.ts:155:7 › Dashboard › should handle loading states (5.8s)
+  ✓   17 [chromium] › tests/e2e/dashboard.spec.ts:201:7 › Dashboard › should show empty states appropriately (3.8s)
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+  ✓   18 [chromium] › tests/e2e/library.spec.ts:9:7 › Library › should display library page correctly (3.6s)
+[WebServer] Server-side user: No session cookie found
+  ✓   19 [chromium] › tests/e2e/library.spec.ts:29:7 › Library › should handle empty library state (3.2s)
+  ✓   20 [chromium] › tests/e2e/library.spec.ts:45:7 › Library › should navigate to add content page (3.8s)
+  ✓   21 [chromium] › tests/e2e/library.spec.ts:60:7 › Library › should handle search functionality (3.5s)
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+⚠️ Could not navigate to /signup: page.waitForLoadState: Test timeout of 30000ms exceeded.
+  ✘    3 [chromium] › tests/e2e/basic.spec.ts:96:7 › Basic App Functionality › should handle page navigation (36.9s)
+  ✓   22 [chromium] › tests/e2e/library.spec.ts:81:7 › Library › should handle filters (11.5s)
+  ✓   24 [chromium] › tests/e2e/library.spec.ts:117:7 › Library › should be responsive on mobile (9.7s)
+  ✓   23 [chromium] › tests/e2e/library.spec.ts:99:7 › Library › should handle sorting (10.6s)
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+  ✓   27 [chromium] › tests/e2e/navigation.spec.ts:8:7 › Navigation › should navigate to main pages (1.8s)
+  ✓   26 [chromium] › tests/e2e/library.spec.ts:181:7 › Library › should handle content actions (1.9s)
+  ✓   25 [chromium] › tests/e2e/library.spec.ts:159:7 › Library › should handle pagination (1.9s)
+[WebServer] Server-side user: No session cookie found
+  ✓   28 [chromium] › tests/e2e/library.spec.ts:139:7 › Library › should handle content interactions (2.5s)
+  ✓   30 [chromium] › tests/e2e/navigation.spec.ts:59:7 › Navigation › should maintain navigation state (2.0s)
+  ✓   31 [chromium] › tests/e2e/navigation.spec.ts:79:7 › Navigation › should handle sidebar collapse (2.0s)
+  ✓   29 [chromium] › tests/e2e/navigation.spec.ts:32:7 › Navigation › should handle responsive navigation (2.1s)
+  ✘   34 [firefox] › tests/e2e/basic.spec.ts:4:7 › Basic App Functionality › should load the home page (6ms)
+  ✘   35 [firefox] › tests/e2e/basic.spec.ts:24:7 › Basic App Functionality › should have accessible navigation (12ms)
+  ✓   32 [chromium] › tests/e2e/navigation.spec.ts:100:7 › Navigation › should have working search navigation (1.4s)
+  ✓   33 [chromium] › tests/e2e/navigation.spec.ts:121:7 › Navigation › should show user menu when authenticated (1.3s)
+  ✘   36 [firefox] › tests/e2e/basic.spec.ts:79:7 › Basic App Functionality › should be responsive (3ms)
+  ✘   37 [firefox] › tests/e2e/basic.spec.ts:96:7 › Basic App Functionality › should handle page navigation (3ms)
+  ✘   38 [firefox] › tests/e2e/basic.spec.ts:142:7 › Basic App Functionality › should have proper meta tags (4ms)
+  ✘   39 [firefox] › tests/e2e/basic.spec.ts:155:7 › Basic App Functionality › should have search functionality (3ms)
+  ✘   40 [firefox] › tests/e2e/dashboard.spec.ts:9:7 › Dashboard › should display dashboard correctly (4ms)
+  ✘   41 [firefox] › tests/e2e/basic.spec.ts:180:7 › Basic App Functionality › should show user authentication state (3ms)
+  ✘   43 [firefox] › tests/e2e/dashboard.spec.ts:30:7 › Dashboard › should show recent content section (4ms)
+  ✘   42 [firefox] › tests/e2e/dashboard.spec.ts:50:7 › Dashboard › should show quick actions (4ms)
+  ✘   44 [firefox] › tests/e2e/dashboard.spec.ts:68:7 › Dashboard › should navigate from quick actions (4ms)
+  ✘   45 [firefox] › tests/e2e/dashboard.spec.ts:91:7 › Dashboard › should show user stats (6ms)
+  ✘   46 [firefox] › tests/e2e/dashboard.spec.ts:114:7 › Dashboard › should handle content interactions (4ms)
+  ✘   47 [firefox] › tests/e2e/dashboard.spec.ts:134:7 › Dashboard › should be responsive on mobile (4ms)
+  ✘   48 [firefox] › tests/e2e/dashboard.spec.ts:155:7 › Dashboard › should handle loading states (2ms)
+  ✘   49 [firefox] › tests/e2e/dashboard.spec.ts:177:7 › Dashboard › should handle tab navigation (4ms)
+  ✘   50 [firefox] › tests/e2e/dashboard.spec.ts:201:7 › Dashboard › should show empty states appropriately (5ms)
+  ✘   51 [firefox] › tests/e2e/library.spec.ts:9:7 › Library › should display library page correctly (3ms)
+  ✘   52 [firefox] › tests/e2e/library.spec.ts:29:7 › Library › should handle empty library state (6ms)
+  ✘   53 [firefox] › tests/e2e/library.spec.ts:45:7 › Library › should navigate to add content page (4ms)
+  ✘   54 [firefox] › tests/e2e/library.spec.ts:81:7 › Library › should handle filters (3ms)
+  ✘   55 [firefox] › tests/e2e/library.spec.ts:60:7 › Library › should handle search functionality (5ms)
+  ✘   56 [firefox] › tests/e2e/library.spec.ts:99:7 › Library › should handle sorting (4ms)
+  ✘   57 [firefox] › tests/e2e/library.spec.ts:117:7 › Library › should be responsive on mobile (6ms)
+  ✘   58 [firefox] › tests/e2e/library.spec.ts:139:7 › Library › should handle content interactions (4ms)
+  ✘   59 [firefox] › tests/e2e/library.spec.ts:159:7 › Library › should handle pagination (2ms)
+  ✘   60 [firefox] › tests/e2e/library.spec.ts:181:7 › Library › should handle content actions (3ms)
+  ✘   61 [firefox] › tests/e2e/navigation.spec.ts:8:7 › Navigation › should navigate to main pages (3ms)
+  ✘   62 [firefox] › tests/e2e/navigation.spec.ts:32:7 › Navigation › should handle responsive navigation (2ms)
+  ✘   63 [firefox] › tests/e2e/navigation.spec.ts:59:7 › Navigation › should maintain navigation state (2ms)
+  ✘   65 [firefox] › tests/e2e/navigation.spec.ts:79:7 › Navigation › should handle sidebar collapse (4ms)
+  ✘   64 [firefox] › tests/e2e/navigation.spec.ts:100:7 › Navigation › should have working search navigation (5ms)
+  ✘   66 [firefox] › tests/e2e/navigation.spec.ts:121:7 › Navigation › should show user menu when authenticated (4ms)
+  ✘   67 [webkit] › tests/e2e/basic.spec.ts:4:7 › Basic App Functionality › should load the home page (4ms)
+  ✘   68 [webkit] › tests/e2e/basic.spec.ts:24:7 › Basic App Functionality › should have accessible navigation (2ms)
+  ✘   69 [webkit] › tests/e2e/basic.spec.ts:79:7 › Basic App Functionality › should be responsive (3ms)
+  ✘   70 [webkit] › tests/e2e/basic.spec.ts:96:7 › Basic App Functionality › should handle page navigation (3ms)
+  ✘   71 [webkit] › tests/e2e/basic.spec.ts:142:7 › Basic App Functionality › should have proper meta tags (4ms)
+  ✘   72 [webkit] › tests/e2e/basic.spec.ts:180:7 › Basic App Functionality › should show user authentication state (2ms)
+  ✘   73 [webkit] › tests/e2e/basic.spec.ts:155:7 › Basic App Functionality › should have search functionality (4ms)
+  ✘   74 [webkit] › tests/e2e/dashboard.spec.ts:30:7 › Dashboard › should show recent content section (2ms)
+  ✘   75 [webkit] › tests/e2e/dashboard.spec.ts:9:7 › Dashboard › should display dashboard correctly (3ms)
+  ✘   76 [webkit] › tests/e2e/dashboard.spec.ts:68:7 › Dashboard › should navigate from quick actions (3ms)
+  ✘   77 [webkit] › tests/e2e/dashboard.spec.ts:50:7 › Dashboard › should show quick actions (3ms)
+  ✘   78 [webkit] › tests/e2e/dashboard.spec.ts:91:7 › Dashboard › should show user stats (3ms)
+  ✘   79 [webkit] › tests/e2e/dashboard.spec.ts:114:7 › Dashboard › should handle content interactions (3ms)
+  ✘   80 [webkit] › tests/e2e/dashboard.spec.ts:155:7 › Dashboard › should handle loading states (2ms)
+  ✘   81 [webkit] › tests/e2e/dashboard.spec.ts:134:7 › Dashboard › should be responsive on mobile (3ms)
+  ✘   82 [webkit] › tests/e2e/dashboard.spec.ts:177:7 › Dashboard › should handle tab navigation (3ms)
+  ✘   83 [webkit] › tests/e2e/dashboard.spec.ts:201:7 › Dashboard › should show empty states appropriately (3ms)
+  ✘   85 [webkit] › tests/e2e/library.spec.ts:29:7 › Library › should handle empty library state (3ms)
+  ✘   84 [webkit] › tests/e2e/library.spec.ts:9:7 › Library › should display library page correctly (3ms)
+  ✘   86 [webkit] › tests/e2e/library.spec.ts:45:7 › Library › should navigate to add content page (3ms)
+  ✘   87 [webkit] › tests/e2e/library.spec.ts:60:7 › Library › should handle search functionality (2ms)
+  ✘   88 [webkit] › tests/e2e/library.spec.ts:99:7 › Library › should handle sorting (3ms)
+  ✘   89 [webkit] › tests/e2e/library.spec.ts:81:7 › Library › should handle filters (3ms)
+  ✘   90 [webkit] › tests/e2e/library.spec.ts:117:7 › Library › should be responsive on mobile (3ms)
+  ✘   91 [webkit] › tests/e2e/library.spec.ts:139:7 › Library › should handle content interactions (3ms)
+  ✘   92 [webkit] › tests/e2e/library.spec.ts:159:7 › Library › should handle pagination (3ms)
+  ✘   93 [webkit] › tests/e2e/library.spec.ts:181:7 › Library › should handle content actions (4ms)
+  ✘   94 [webkit] › tests/e2e/navigation.spec.ts:8:7 › Navigation › should navigate to main pages (2ms)
+  ✘   95 [webkit] › tests/e2e/navigation.spec.ts:32:7 › Navigation › should handle responsive navigation (3ms)
+  ✘   96 [webkit] › tests/e2e/navigation.spec.ts:59:7 › Navigation › should maintain navigation state (2ms)
+  ✘   97 [webkit] › tests/e2e/navigation.spec.ts:79:7 › Navigation › should handle sidebar collapse (2ms)
+  ✘   98 [webkit] › tests/e2e/navigation.spec.ts:100:7 › Navigation › should have working search navigation (3ms)
+  ✘   99 [webkit] › tests/e2e/navigation.spec.ts:121:7 › Navigation › should show user menu when authenticated (2ms)
+  ✓  101 [Mobile Chrome] › tests/e2e/basic.spec.ts:4:7 › Basic App Functionality › should load the home page (3.9s)
+  ✓  102 [Mobile Chrome] › tests/e2e/basic.spec.ts:79:7 › Basic App Functionality › should be responsive (4.3s)
+  ✓  100 [Mobile Chrome] › tests/e2e/basic.spec.ts:24:7 › Basic App Functionality › should have accessible navigation (4.8s)
+[WebServer] Server-side user: No session cookie found
+  ✓  104 [Mobile Chrome] › tests/e2e/basic.spec.ts:142:7 › Basic App Functionality › should have proper meta tags (3.6s)
+  ✓  105 [Mobile Chrome] › tests/e2e/basic.spec.ts:155:7 › Basic App Functionality › should have search functionality (3.1s)
+  ✓  106 [Mobile Chrome] › tests/e2e/basic.spec.ts:180:7 › Basic App Functionality › should show user authentication state (2.8s)
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+✅ Successfully navigated to /login
+  ✓  107 [Mobile Chrome] › tests/e2e/dashboard.spec.ts:9:7 › Dashboard › should display dashboard correctly (2.9s)
+  ✓  109 [Mobile Chrome] › tests/e2e/dashboard.spec.ts:50:7 › Dashboard › should show quick actions (3.1s)
+  ✓  108 [Mobile Chrome] › tests/e2e/dashboard.spec.ts:30:7 › Dashboard › should show recent content section (3.2s)
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+✅ Successfully navigated to /signup
+  ✓  111 [Mobile Chrome] › tests/e2e/dashboard.spec.ts:91:7 › Dashboard › should show user stats (2.8s)
+  ✓  112 [Mobile Chrome] › tests/e2e/dashboard.spec.ts:114:7 › Dashboard › should handle content interactions (2.7s)
+  ✓  110 [Mobile Chrome] › tests/e2e/dashboard.spec.ts:68:7 › Dashboard › should navigate from quick actions (2.9s)
+  ✓  103 [Mobile Chrome] › tests/e2e/basic.spec.ts:96:7 › Basic App Functionality › should handle page navigation (13.2s)
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+  ✓  115 [Mobile Chrome] › tests/e2e/dashboard.spec.ts:177:7 › Dashboard › should handle tab navigation (2.4s)
+  ✓  113 [Mobile Chrome] › tests/e2e/dashboard.spec.ts:134:7 › Dashboard › should be responsive on mobile (2.5s)
+[WebServer] Server-side user: No session cookie found
+  ✓  116 [Mobile Chrome] › tests/e2e/dashboard.spec.ts:201:7 › Dashboard › should show empty states appropriately (2.4s)
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+  ✓  114 [Mobile Chrome] › tests/e2e/dashboard.spec.ts:155:7 › Dashboard › should handle loading states (4.6s)
+  ✓  117 [Mobile Chrome] › tests/e2e/library.spec.ts:9:7 › Library › should display library page correctly (2.6s)
+  ✓  118 [Mobile Chrome] › tests/e2e/library.spec.ts:29:7 › Library › should handle empty library state (2.5s)
+  ✓  119 [Mobile Chrome] › tests/e2e/library.spec.ts:45:7 › Library › should navigate to add content page (2.5s)
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+  ✓  121 [Mobile Chrome] › tests/e2e/library.spec.ts:81:7 › Library › should handle filters (2.7s)
+  ✓  122 [Mobile Chrome] › tests/e2e/library.spec.ts:99:7 › Library › should handle sorting (2.8s)
+  ✓  123 [Mobile Chrome] › tests/e2e/library.spec.ts:117:7 › Library › should be responsive on mobile (2.8s)
+  ✓  120 [Mobile Chrome] › tests/e2e/library.spec.ts:60:7 › Library › should handle search functionality (3.2s)
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+  ✓  125 [Mobile Chrome] › tests/e2e/library.spec.ts:159:7 › Library › should handle pagination (2.2s)
+  ✓  126 [Mobile Chrome] › tests/e2e/library.spec.ts:181:7 › Library › should handle content actions (2.2s)
+  ✓  124 [Mobile Chrome] › tests/e2e/library.spec.ts:139:7 › Library › should handle content interactions (2.3s)
+  ✓  127 [Mobile Chrome] › tests/e2e/navigation.spec.ts:8:7 › Navigation › should navigate to main pages (2.3s)
+  ✓  128 [Mobile Chrome] › tests/e2e/navigation.spec.ts:32:7 › Navigation › should handle responsive navigation (3.0s)
+  ✓  129 [Mobile Chrome] › tests/e2e/navigation.spec.ts:59:7 › Navigation › should maintain navigation state (3.0s)
+  ✓  131 [Mobile Chrome] › tests/e2e/navigation.spec.ts:100:7 › Navigation › should have working search navigation (2.9s)
+  ✓  130 [Mobile Chrome] › tests/e2e/navigation.spec.ts:79:7 › Navigation › should handle sidebar collapse (3.1s)
+  ✘  133 [Mobile Safari] › tests/e2e/basic.spec.ts:24:7 › Basic App Functionality › should have accessible navigation (3ms)
+  ✘  134 [Mobile Safari] › tests/e2e/basic.spec.ts:4:7 › Basic App Functionality › should load the home page (3ms)
+  ✘  135 [Mobile Safari] › tests/e2e/basic.spec.ts:79:7 › Basic App Functionality › should be responsive (3ms)
+  ✓  132 [Mobile Chrome] › tests/e2e/navigation.spec.ts:121:7 › Navigation › should show user menu when authenticated (1.5s)
+  ✘  136 [Mobile Safari] › tests/e2e/basic.spec.ts:96:7 › Basic App Functionality › should handle page navigation (3ms)
+  ✘  137 [Mobile Safari] › tests/e2e/basic.spec.ts:155:7 › Basic App Functionality › should have search functionality (2ms)
+  ✘  138 [Mobile Safari] › tests/e2e/basic.spec.ts:142:7 › Basic App Functionality › should have proper meta tags (3ms)
+  ✘  139 [Mobile Safari] › tests/e2e/basic.spec.ts:180:7 › Basic App Functionality › should show user authentication state (2ms)
+  ✘  140 [Mobile Safari] › tests/e2e/dashboard.spec.ts:9:7 › Dashboard › should display dashboard correctly (3ms)
+  ✘  141 [Mobile Safari] › tests/e2e/dashboard.spec.ts:30:7 › Dashboard › should show recent content section (2ms)
+  ✘  142 [Mobile Safari] › tests/e2e/dashboard.spec.ts:50:7 › Dashboard › should show quick actions (3ms)
+  ✘  143 [Mobile Safari] › tests/e2e/dashboard.spec.ts:68:7 › Dashboard › should navigate from quick actions (2ms)
+  ✘  144 [Mobile Safari] › tests/e2e/dashboard.spec.ts:91:7 › Dashboard › should show user stats (3ms)
+  ✘  145 [Mobile Safari] › tests/e2e/dashboard.spec.ts:114:7 › Dashboard › should handle content interactions (4ms)
+  ✘  146 [Mobile Safari] › tests/e2e/dashboard.spec.ts:134:7 › Dashboard › should be responsive on mobile (2ms)
+  ✘  147 [Mobile Safari] › tests/e2e/dashboard.spec.ts:155:7 › Dashboard › should handle loading states (3ms)
+  ✘  148 [Mobile Safari] › tests/e2e/dashboard.spec.ts:177:7 › Dashboard › should handle tab navigation (2ms)
+  ✘  149 [Mobile Safari] › tests/e2e/dashboard.spec.ts:201:7 › Dashboard › should show empty states appropriately (3ms)
+  ✘  150 [Mobile Safari] › tests/e2e/library.spec.ts:9:7 › Library › should display library page correctly (2ms)
+  ✘  151 [Mobile Safari] › tests/e2e/library.spec.ts:29:7 › Library › should handle empty library state (3ms)
+  ✘  152 [Mobile Safari] › tests/e2e/library.spec.ts:45:7 › Library › should navigate to add content page (3ms)
+  ✘  153 [Mobile Safari] › tests/e2e/library.spec.ts:60:7 › Library › should handle search functionality (3ms)
+  ✘  154 [Mobile Safari] › tests/e2e/library.spec.ts:81:7 › Library › should handle filters (3ms)
+  ✘  155 [Mobile Safari] › tests/e2e/library.spec.ts:99:7 › Library › should handle sorting (2ms)
+  ✘  156 [Mobile Safari] › tests/e2e/library.spec.ts:117:7 › Library › should be responsive on mobile (3ms)
+  ✘  157 [Mobile Safari] › tests/e2e/library.spec.ts:139:7 › Library › should handle content interactions (2ms)
+  ✘  158 [Mobile Safari] › tests/e2e/library.spec.ts:159:7 › Library › should handle pagination (2ms)
+  ✘  159 [Mobile Safari] › tests/e2e/library.spec.ts:181:7 › Library › should handle content actions (3ms)
+  ✘  160 [Mobile Safari] › tests/e2e/navigation.spec.ts:8:7 › Navigation › should navigate to main pages (2ms)
+  ✘  161 [Mobile Safari] › tests/e2e/navigation.spec.ts:32:7 › Navigation › should handle responsive navigation (4ms)
+  ✘  162 [Mobile Safari] › tests/e2e/navigation.spec.ts:59:7 › Navigation › should maintain navigation state (2ms)
+  ✘  163 [Mobile Safari] › tests/e2e/navigation.spec.ts:79:7 › Navigation › should handle sidebar collapse (3ms)
+  ✘  164 [Mobile Safari] › tests/e2e/navigation.spec.ts:100:7 › Navigation › should have working search navigation (3ms)
+  ✘  165 [Mobile Safari] › tests/e2e/navigation.spec.ts:121:7 › Navigation › should show user menu when authenticated (2ms)
+🧹 Cleaning up Octavia E2E test environment...
+✅ Authentication state cleaned up
+📁 Test results available at: /Users/marcelviana/projects/octavia/test-results
+✅ Global teardown complete
+
+
+  1) [chromium] › tests/e2e/basic.spec.ts:96:7 › Basic App Functionality › should handle page navigation 
+
+    [31mTest timeout of 30000ms exceeded.[39m
+
+    attachment #1: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/basic-Basic-App-Functionality-should-handle-page-navigation-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/basic-Basic-App-Functionality-should-handle-page-navigation-chromium/error-context.md
+
+  2) [firefox] › tests/e2e/basic.spec.ts:4:7 › Basic App Functionality › should load the home page ─
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  3) [firefox] › tests/e2e/basic.spec.ts:24:7 › Basic App Functionality › should have accessible navigation 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  4) [firefox] › tests/e2e/basic.spec.ts:79:7 › Basic App Functionality › should be responsive ─────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  5) [firefox] › tests/e2e/basic.spec.ts:96:7 › Basic App Functionality › should handle page navigation 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  6) [firefox] › tests/e2e/basic.spec.ts:142:7 › Basic App Functionality › should have proper meta tags 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  7) [firefox] › tests/e2e/basic.spec.ts:155:7 › Basic App Functionality › should have search functionality 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  8) [firefox] › tests/e2e/basic.spec.ts:180:7 › Basic App Functionality › should show user authentication state 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  9) [firefox] › tests/e2e/dashboard.spec.ts:9:7 › Dashboard › should display dashboard correctly ──
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  10) [firefox] › tests/e2e/dashboard.spec.ts:30:7 › Dashboard › should show recent content section 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  11) [firefox] › tests/e2e/dashboard.spec.ts:50:7 › Dashboard › should show quick actions ─────────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  12) [firefox] › tests/e2e/dashboard.spec.ts:68:7 › Dashboard › should navigate from quick actions 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  13) [firefox] › tests/e2e/dashboard.spec.ts:91:7 › Dashboard › should show user stats ────────────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  14) [firefox] › tests/e2e/dashboard.spec.ts:114:7 › Dashboard › should handle content interactions 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  15) [firefox] › tests/e2e/dashboard.spec.ts:134:7 › Dashboard › should be responsive on mobile ───
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  16) [firefox] › tests/e2e/dashboard.spec.ts:155:7 › Dashboard › should handle loading states ─────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  17) [firefox] › tests/e2e/dashboard.spec.ts:177:7 › Dashboard › should handle tab navigation ─────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  18) [firefox] › tests/e2e/dashboard.spec.ts:201:7 › Dashboard › should show empty states appropriately 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  19) [firefox] › tests/e2e/library.spec.ts:9:7 › Library › should display library page correctly ──
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  20) [firefox] › tests/e2e/library.spec.ts:29:7 › Library › should handle empty library state ─────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  21) [firefox] › tests/e2e/library.spec.ts:45:7 › Library › should navigate to add content page ───
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  22) [firefox] › tests/e2e/library.spec.ts:60:7 › Library › should handle search functionality ────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  23) [firefox] › tests/e2e/library.spec.ts:81:7 › Library › should handle filters ─────────────────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  24) [firefox] › tests/e2e/library.spec.ts:99:7 › Library › should handle sorting ─────────────────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  25) [firefox] › tests/e2e/library.spec.ts:117:7 › Library › should be responsive on mobile ───────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  26) [firefox] › tests/e2e/library.spec.ts:139:7 › Library › should handle content interactions ───
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  27) [firefox] › tests/e2e/library.spec.ts:159:7 › Library › should handle pagination ─────────────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  28) [firefox] › tests/e2e/library.spec.ts:181:7 › Library › should handle content actions ────────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  29) [firefox] › tests/e2e/navigation.spec.ts:8:7 › Navigation › should navigate to main pages ────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  30) [firefox] › tests/e2e/navigation.spec.ts:32:7 › Navigation › should handle responsive navigation 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  31) [firefox] › tests/e2e/navigation.spec.ts:59:7 › Navigation › should maintain navigation state 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  32) [firefox] › tests/e2e/navigation.spec.ts:79:7 › Navigation › should handle sidebar collapse ──
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  33) [firefox] › tests/e2e/navigation.spec.ts:100:7 › Navigation › should have working search navigation 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  34) [firefox] › tests/e2e/navigation.spec.ts:121:7 › Navigation › should show user menu when authenticated 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/firefox-1490/firefox/Nightly.app/Contents/MacOS/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  35) [webkit] › tests/e2e/basic.spec.ts:4:7 › Basic App Functionality › should load the home page ─
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  36) [webkit] › tests/e2e/basic.spec.ts:24:7 › Basic App Functionality › should have accessible navigation 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  37) [webkit] › tests/e2e/basic.spec.ts:79:7 › Basic App Functionality › should be responsive ─────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  38) [webkit] › tests/e2e/basic.spec.ts:96:7 › Basic App Functionality › should handle page navigation 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  39) [webkit] › tests/e2e/basic.spec.ts:142:7 › Basic App Functionality › should have proper meta tags 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  40) [webkit] › tests/e2e/basic.spec.ts:155:7 › Basic App Functionality › should have search functionality 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  41) [webkit] › tests/e2e/basic.spec.ts:180:7 › Basic App Functionality › should show user authentication state 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  42) [webkit] › tests/e2e/dashboard.spec.ts:9:7 › Dashboard › should display dashboard correctly ──
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  43) [webkit] › tests/e2e/dashboard.spec.ts:30:7 › Dashboard › should show recent content section ─
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  44) [webkit] › tests/e2e/dashboard.spec.ts:50:7 › Dashboard › should show quick actions ──────────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  45) [webkit] › tests/e2e/dashboard.spec.ts:68:7 › Dashboard › should navigate from quick actions ─
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  46) [webkit] › tests/e2e/dashboard.spec.ts:91:7 › Dashboard › should show user stats ─────────────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  47) [webkit] › tests/e2e/dashboard.spec.ts:114:7 › Dashboard › should handle content interactions 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  48) [webkit] › tests/e2e/dashboard.spec.ts:134:7 › Dashboard › should be responsive on mobile ────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  49) [webkit] › tests/e2e/dashboard.spec.ts:155:7 › Dashboard › should handle loading states ──────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  50) [webkit] › tests/e2e/dashboard.spec.ts:177:7 › Dashboard › should handle tab navigation ──────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  51) [webkit] › tests/e2e/dashboard.spec.ts:201:7 › Dashboard › should show empty states appropriately 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  52) [webkit] › tests/e2e/library.spec.ts:9:7 › Library › should display library page correctly ───
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  53) [webkit] › tests/e2e/library.spec.ts:29:7 › Library › should handle empty library state ──────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  54) [webkit] › tests/e2e/library.spec.ts:45:7 › Library › should navigate to add content page ────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  55) [webkit] › tests/e2e/library.spec.ts:60:7 › Library › should handle search functionality ─────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  56) [webkit] › tests/e2e/library.spec.ts:81:7 › Library › should handle filters ──────────────────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  57) [webkit] › tests/e2e/library.spec.ts:99:7 › Library › should handle sorting ──────────────────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  58) [webkit] › tests/e2e/library.spec.ts:117:7 › Library › should be responsive on mobile ────────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  59) [webkit] › tests/e2e/library.spec.ts:139:7 › Library › should handle content interactions ────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  60) [webkit] › tests/e2e/library.spec.ts:159:7 › Library › should handle pagination ──────────────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  61) [webkit] › tests/e2e/library.spec.ts:181:7 › Library › should handle content actions ─────────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  62) [webkit] › tests/e2e/navigation.spec.ts:8:7 › Navigation › should navigate to main pages ─────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  63) [webkit] › tests/e2e/navigation.spec.ts:32:7 › Navigation › should handle responsive navigation 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  64) [webkit] › tests/e2e/navigation.spec.ts:59:7 › Navigation › should maintain navigation state ─
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  65) [webkit] › tests/e2e/navigation.spec.ts:79:7 › Navigation › should handle sidebar collapse ───
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  66) [webkit] › tests/e2e/navigation.spec.ts:100:7 › Navigation › should have working search navigation 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  67) [webkit] › tests/e2e/navigation.spec.ts:121:7 › Navigation › should show user menu when authenticated 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  68) [Mobile Safari] › tests/e2e/basic.spec.ts:4:7 › Basic App Functionality › should load the home page 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  69) [Mobile Safari] › tests/e2e/basic.spec.ts:24:7 › Basic App Functionality › should have accessible navigation 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  70) [Mobile Safari] › tests/e2e/basic.spec.ts:79:7 › Basic App Functionality › should be responsive 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  71) [Mobile Safari] › tests/e2e/basic.spec.ts:96:7 › Basic App Functionality › should handle page navigation 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  72) [Mobile Safari] › tests/e2e/basic.spec.ts:142:7 › Basic App Functionality › should have proper meta tags 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  73) [Mobile Safari] › tests/e2e/basic.spec.ts:155:7 › Basic App Functionality › should have search functionality 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  74) [Mobile Safari] › tests/e2e/basic.spec.ts:180:7 › Basic App Functionality › should show user authentication state 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  75) [Mobile Safari] › tests/e2e/dashboard.spec.ts:9:7 › Dashboard › should display dashboard correctly 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  76) [Mobile Safari] › tests/e2e/dashboard.spec.ts:30:7 › Dashboard › should show recent content section 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  77) [Mobile Safari] › tests/e2e/dashboard.spec.ts:50:7 › Dashboard › should show quick actions ───
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  78) [Mobile Safari] › tests/e2e/dashboard.spec.ts:68:7 › Dashboard › should navigate from quick actions 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  79) [Mobile Safari] › tests/e2e/dashboard.spec.ts:91:7 › Dashboard › should show user stats ──────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  80) [Mobile Safari] › tests/e2e/dashboard.spec.ts:114:7 › Dashboard › should handle content interactions 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  81) [Mobile Safari] › tests/e2e/dashboard.spec.ts:134:7 › Dashboard › should be responsive on mobile 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  82) [Mobile Safari] › tests/e2e/dashboard.spec.ts:155:7 › Dashboard › should handle loading states 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  83) [Mobile Safari] › tests/e2e/dashboard.spec.ts:177:7 › Dashboard › should handle tab navigation 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  84) [Mobile Safari] › tests/e2e/dashboard.spec.ts:201:7 › Dashboard › should show empty states appropriately 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  85) [Mobile Safari] › tests/e2e/library.spec.ts:9:7 › Library › should display library page correctly 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  86) [Mobile Safari] › tests/e2e/library.spec.ts:29:7 › Library › should handle empty library state 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  87) [Mobile Safari] › tests/e2e/library.spec.ts:45:7 › Library › should navigate to add content page 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  88) [Mobile Safari] › tests/e2e/library.spec.ts:60:7 › Library › should handle search functionality 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  89) [Mobile Safari] › tests/e2e/library.spec.ts:81:7 › Library › should handle filters ───────────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  90) [Mobile Safari] › tests/e2e/library.spec.ts:99:7 › Library › should handle sorting ───────────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  91) [Mobile Safari] › tests/e2e/library.spec.ts:117:7 › Library › should be responsive on mobile ─
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  92) [Mobile Safari] › tests/e2e/library.spec.ts:139:7 › Library › should handle content interactions 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  93) [Mobile Safari] › tests/e2e/library.spec.ts:159:7 › Library › should handle pagination ───────
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  94) [Mobile Safari] › tests/e2e/library.spec.ts:181:7 › Library › should handle content actions ──
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  95) [Mobile Safari] › tests/e2e/navigation.spec.ts:8:7 › Navigation › should navigate to main pages 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  96) [Mobile Safari] › tests/e2e/navigation.spec.ts:32:7 › Navigation › should handle responsive navigation 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  97) [Mobile Safari] › tests/e2e/navigation.spec.ts:59:7 › Navigation › should maintain navigation state 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  98) [Mobile Safari] › tests/e2e/navigation.spec.ts:79:7 › Navigation › should handle sidebar collapse 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  99) [Mobile Safari] › tests/e2e/navigation.spec.ts:100:7 › Navigation › should have working search navigation 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  100) [Mobile Safari] › tests/e2e/navigation.spec.ts:121:7 › Navigation › should show user menu when authenticated 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/marcelviana/Library/Caches/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     pnpm exec playwright install                                        ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+
+  100 failed
+    [chromium] › tests/e2e/basic.spec.ts:96:7 › Basic App Functionality › should handle page navigation 
+    [firefox] › tests/e2e/basic.spec.ts:4:7 › Basic App Functionality › should load the home page ──
+    [firefox] › tests/e2e/basic.spec.ts:24:7 › Basic App Functionality › should have accessible navigation 
+    [firefox] › tests/e2e/basic.spec.ts:79:7 › Basic App Functionality › should be responsive ──────
+    [firefox] › tests/e2e/basic.spec.ts:96:7 › Basic App Functionality › should handle page navigation 
+    [firefox] › tests/e2e/basic.spec.ts:142:7 › Basic App Functionality › should have proper meta tags 
+    [firefox] › tests/e2e/basic.spec.ts:155:7 › Basic App Functionality › should have search functionality 
+    [firefox] › tests/e2e/basic.spec.ts:180:7 › Basic App Functionality › should show user authentication state 
+    [firefox] › tests/e2e/dashboard.spec.ts:9:7 › Dashboard › should display dashboard correctly ───
+    [firefox] › tests/e2e/dashboard.spec.ts:30:7 › Dashboard › should show recent content section ──
+    [firefox] › tests/e2e/dashboard.spec.ts:50:7 › Dashboard › should show quick actions ───────────
+    [firefox] › tests/e2e/dashboard.spec.ts:68:7 › Dashboard › should navigate from quick actions ──
+    [firefox] › tests/e2e/dashboard.spec.ts:91:7 › Dashboard › should show user stats ──────────────
+    [firefox] › tests/e2e/dashboard.spec.ts:114:7 › Dashboard › should handle content interactions ─
+    [firefox] › tests/e2e/dashboard.spec.ts:134:7 › Dashboard › should be responsive on mobile ─────
+    [firefox] › tests/e2e/dashboard.spec.ts:155:7 › Dashboard › should handle loading states ───────
+    [firefox] › tests/e2e/dashboard.spec.ts:177:7 › Dashboard › should handle tab navigation ───────
+    [firefox] › tests/e2e/dashboard.spec.ts:201:7 › Dashboard › should show empty states appropriately 
+    [firefox] › tests/e2e/library.spec.ts:9:7 › Library › should display library page correctly ────
+    [firefox] › tests/e2e/library.spec.ts:29:7 › Library › should handle empty library state ───────
+    [firefox] › tests/e2e/library.spec.ts:45:7 › Library › should navigate to add content page ─────
+    [firefox] › tests/e2e/library.spec.ts:60:7 › Library › should handle search functionality ──────
+    [firefox] › tests/e2e/library.spec.ts:81:7 › Library › should handle filters ───────────────────
+    [firefox] › tests/e2e/library.spec.ts:99:7 › Library › should handle sorting ───────────────────
+    [firefox] › tests/e2e/library.spec.ts:117:7 › Library › should be responsive on mobile ─────────
+    [firefox] › tests/e2e/library.spec.ts:139:7 › Library › should handle content interactions ─────
+    [firefox] › tests/e2e/library.spec.ts:159:7 › Library › should handle pagination ───────────────
+    [firefox] › tests/e2e/library.spec.ts:181:7 › Library › should handle content actions ──────────
+    [firefox] › tests/e2e/navigation.spec.ts:8:7 › Navigation › should navigate to main pages ──────
+    [firefox] › tests/e2e/navigation.spec.ts:32:7 › Navigation › should handle responsive navigation 
+    [firefox] › tests/e2e/navigation.spec.ts:59:7 › Navigation › should maintain navigation state ──
+    [firefox] › tests/e2e/navigation.spec.ts:79:7 › Navigation › should handle sidebar collapse ────
+    [firefox] › tests/e2e/navigation.spec.ts:100:7 › Navigation › should have working search navigation 
+    [firefox] › tests/e2e/navigation.spec.ts:121:7 › Navigation › should show user menu when authenticated 
+    [webkit] › tests/e2e/basic.spec.ts:4:7 › Basic App Functionality › should load the home page ───
+    [webkit] › tests/e2e/basic.spec.ts:24:7 › Basic App Functionality › should have accessible navigation 
+    [webkit] › tests/e2e/basic.spec.ts:79:7 › Basic App Functionality › should be responsive ───────
+    [webkit] › tests/e2e/basic.spec.ts:96:7 › Basic App Functionality › should handle page navigation 
+    [webkit] › tests/e2e/basic.spec.ts:142:7 › Basic App Functionality › should have proper meta tags 
+    [webkit] › tests/e2e/basic.spec.ts:155:7 › Basic App Functionality › should have search functionality 
+    [webkit] › tests/e2e/basic.spec.ts:180:7 › Basic App Functionality › should show user authentication state 
+    [webkit] › tests/e2e/dashboard.spec.ts:9:7 › Dashboard › should display dashboard correctly ────
+    [webkit] › tests/e2e/dashboard.spec.ts:30:7 › Dashboard › should show recent content section ───
+    [webkit] › tests/e2e/dashboard.spec.ts:50:7 › Dashboard › should show quick actions ────────────
+    [webkit] › tests/e2e/dashboard.spec.ts:68:7 › Dashboard › should navigate from quick actions ───
+    [webkit] › tests/e2e/dashboard.spec.ts:91:7 › Dashboard › should show user stats ───────────────
+    [webkit] › tests/e2e/dashboard.spec.ts:114:7 › Dashboard › should handle content interactions ──
+    [webkit] › tests/e2e/dashboard.spec.ts:134:7 › Dashboard › should be responsive on mobile ──────
+    [webkit] › tests/e2e/dashboard.spec.ts:155:7 › Dashboard › should handle loading states ────────
+    [webkit] › tests/e2e/dashboard.spec.ts:177:7 › Dashboard › should handle tab navigation ────────
+    [webkit] › tests/e2e/dashboard.spec.ts:201:7 › Dashboard › should show empty states appropriately 
+    [webkit] › tests/e2e/library.spec.ts:9:7 › Library › should display library page correctly ─────
+    [webkit] › tests/e2e/library.spec.ts:29:7 › Library › should handle empty library state ────────
+    [webkit] › tests/e2e/library.spec.ts:45:7 › Library › should navigate to add content page ──────
+    [webkit] › tests/e2e/library.spec.ts:60:7 › Library › should handle search functionality ───────
+    [webkit] › tests/e2e/library.spec.ts:81:7 › Library › should handle filters ────────────────────
+    [webkit] › tests/e2e/library.spec.ts:99:7 › Library › should handle sorting ────────────────────
+    [webkit] › tests/e2e/library.spec.ts:117:7 › Library › should be responsive on mobile ──────────
+    [webkit] › tests/e2e/library.spec.ts:139:7 › Library › should handle content interactions ──────
+    [webkit] › tests/e2e/library.spec.ts:159:7 › Library › should handle pagination ────────────────
+    [webkit] › tests/e2e/library.spec.ts:181:7 › Library › should handle content actions ───────────
+    [webkit] › tests/e2e/navigation.spec.ts:8:7 › Navigation › should navigate to main pages ───────
+    [webkit] › tests/e2e/navigation.spec.ts:32:7 › Navigation › should handle responsive navigation 
+    [webkit] › tests/e2e/navigation.spec.ts:59:7 › Navigation › should maintain navigation state ───
+    [webkit] › tests/e2e/navigation.spec.ts:79:7 › Navigation › should handle sidebar collapse ─────
+    [webkit] › tests/e2e/navigation.spec.ts:100:7 › Navigation › should have working search navigation 
+    [webkit] › tests/e2e/navigation.spec.ts:121:7 › Navigation › should show user menu when authenticated 
+    [Mobile Safari] › tests/e2e/basic.spec.ts:4:7 › Basic App Functionality › should load the home page 
+    [Mobile Safari] › tests/e2e/basic.spec.ts:24:7 › Basic App Functionality › should have accessible navigation 
+    [Mobile Safari] › tests/e2e/basic.spec.ts:79:7 › Basic App Functionality › should be responsive 
+    [Mobile Safari] › tests/e2e/basic.spec.ts:96:7 › Basic App Functionality › should handle page navigation 
+    [Mobile Safari] › tests/e2e/basic.spec.ts:142:7 › Basic App Functionality › should have proper meta tags 
+    [Mobile Safari] › tests/e2e/basic.spec.ts:155:7 › Basic App Functionality › should have search functionality 
+    [Mobile Safari] › tests/e2e/basic.spec.ts:180:7 › Basic App Functionality › should show user authentication state 
+    [Mobile Safari] › tests/e2e/dashboard.spec.ts:9:7 › Dashboard › should display dashboard correctly 
+    [Mobile Safari] › tests/e2e/dashboard.spec.ts:30:7 › Dashboard › should show recent content section 
+    [Mobile Safari] › tests/e2e/dashboard.spec.ts:50:7 › Dashboard › should show quick actions ─────
+    [Mobile Safari] › tests/e2e/dashboard.spec.ts:68:7 › Dashboard › should navigate from quick actions 
+    [Mobile Safari] › tests/e2e/dashboard.spec.ts:91:7 › Dashboard › should show user stats ────────
+    [Mobile Safari] › tests/e2e/dashboard.spec.ts:114:7 › Dashboard › should handle content interactions 
+    [Mobile Safari] › tests/e2e/dashboard.spec.ts:134:7 › Dashboard › should be responsive on mobile 
+    [Mobile Safari] › tests/e2e/dashboard.spec.ts:155:7 › Dashboard › should handle loading states ─
+    [Mobile Safari] › tests/e2e/dashboard.spec.ts:177:7 › Dashboard › should handle tab navigation ─
+    [Mobile Safari] › tests/e2e/dashboard.spec.ts:201:7 › Dashboard › should show empty states appropriately 
+    [Mobile Safari] › tests/e2e/library.spec.ts:9:7 › Library › should display library page correctly 
+    [Mobile Safari] › tests/e2e/library.spec.ts:29:7 › Library › should handle empty library state ─
+    [Mobile Safari] › tests/e2e/library.spec.ts:45:7 › Library › should navigate to add content page 
+    [Mobile Safari] › tests/e2e/library.spec.ts:60:7 › Library › should handle search functionality 
+    [Mobile Safari] › tests/e2e/library.spec.ts:81:7 › Library › should handle filters ─────────────
+    [Mobile Safari] › tests/e2e/library.spec.ts:99:7 › Library › should handle sorting ─────────────
+    [Mobile Safari] › tests/e2e/library.spec.ts:117:7 › Library › should be responsive on mobile ───
+    [Mobile Safari] › tests/e2e/library.spec.ts:139:7 › Library › should handle content interactions 
+    [Mobile Safari] › tests/e2e/library.spec.ts:159:7 › Library › should handle pagination ─────────
+    [Mobile Safari] › tests/e2e/library.spec.ts:181:7 › Library › should handle content actions ────
+    [Mobile Safari] › tests/e2e/navigation.spec.ts:8:7 › Navigation › should navigate to main pages 
+    [Mobile Safari] › tests/e2e/navigation.spec.ts:32:7 › Navigation › should handle responsive navigation 
+    [Mobile Safari] › tests/e2e/navigation.spec.ts:59:7 › Navigation › should maintain navigation state 
+    [Mobile Safari] › tests/e2e/navigation.spec.ts:79:7 › Navigation › should handle sidebar collapse 
+    [Mobile Safari] › tests/e2e/navigation.spec.ts:100:7 › Navigation › should have working search navigation 
+    [Mobile Safari] › tests/e2e/navigation.spec.ts:121:7 › Navigation › should show user menu when authenticated 
+  65 passed (2.2m)
+
+  Serving HTML report at http://localhost:9323. Press Ctrl+C to quit.
+ ELIFECYCLE  Command failed.

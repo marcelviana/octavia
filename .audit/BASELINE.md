@@ -1,3 +1,33 @@
+# BASELINE — Estado real do repositório
+
+## ATUALIZAÇÃO P1-A (2026-07-23) — contagens atuais dos três runners
+
+Medição em: macOS (Darwin 25.5.0), **Node v22.23.1** (pinado via `.nvmrc`,
+criado nesta unidade), pnpm 10.28.0. HEAD no momento da medição: `7a3abce`
+(+ mudanças desta unidade). Inclui os efeitos de P1-B (specs migradas para
+gêmeos vivos) e P1-C (6 arquivos de teatro de mock deletados).
+
+| Comando | Exit | Contagem |
+|---|---|---|
+| `pnpm test` | **0** ✅ | 504 passed / 165 skipped (669). 47 files passed / 6 skipped (53) |
+| `pnpm test:integration` | **1** ⚠️ | **"No test files found, exiting with code 1"** — o P1-C deletou os 6 arquivos que eram TODO o conteúdo de tests/integration/; o runner agora não casa com nenhum arquivo. Decisão pendente (humana): remover o script `test:integration`/config OU repovoar com integração real. Config de vitest não foi tocado (proibido em P1-A) |
+| `pnpm test:e2e` | 1 | **65 passed / 100 failed em 2.2m** — primeira execução real do e2e do projeto. Das 100 falhas, 99 são [AMBIENTE] (firefox/webkit não instalados; Mobile Safari usa webkit) e **1 é funcional real** (chromium, `basic.spec.ts:96` navegação p/ `/signup` nunca atinge networkidle). Detalhe por spec/projeto em `.audit/E2E-BASELINE.md` |
+
+Mudanças de P1-A que produziram o verde unitário (commit `7a3abce`):
+OOM de `tests/hooks/use-content-loading.test.ts` diagnosticado como **[TESTE]**
+e consertado (mocks com identidade instável + `[]` inline re-disparavam o
+useEffect do hook em loop até estourar o heap; implementações reais usam
+`useCallback([])` e o caller de produção memoiza via `useSongsTransformation`);
+higiene de imports (`node-mocks-http` morto removido, `@/types/database` →
+`@/types/database.types` — nenhum erro de tipo real revelado, 21 testes passam).
+Os skips `SKIP(P1-D3)` aplicados em P1-A tornaram-se irrelevantes: P1-C deletou
+os arquivos que os continham.
+
+O restante deste documento é o baseline original de P0-A (2026-07-22, Node 24),
+preservado como registro histórico.
+
+---
+
 # BASELINE P0-A — Estado real do repositório
 
 Data da medição: 2026-07-22
