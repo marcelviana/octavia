@@ -6,11 +6,17 @@
  *
  * Purpose: Determine if ContentDisplay correctly renders sections array
  * when given proper renderInfo data structure from useContentRenderer.
+ *
+ * P1-B: retargeted from the dead twin (performance-mode/content-display)
+ * to the live twin mounted at app/performance/page.tsx
+ * (performance-mode/optimized-content-display). Prop differences are
+ * setup-only: OptimizedContentDisplay takes `darkSheet` instead of
+ * `currentSong`. Assertions are unchanged — they are the spec.
  */
 
 import { render, screen } from '@testing-library/react'
 import { describe, it, expect } from 'vitest'
-import { ContentDisplay } from '@/components/performance-mode/content-display'
+import { OptimizedContentDisplay as ContentDisplay } from '@/components/performance-mode/optimized-content-display'
 import type { ContentRenderInfo, SongData } from '@/types/performance'
 
 describe('ContentDisplay - Chords Rendering', () => {
@@ -43,7 +49,7 @@ describe('ContentDisplay - Chords Rendering', () => {
       <ContentDisplay
         renderInfo={renderInfo}
         currentSongData={currentSongData}
-        currentSong={0}
+        darkSheet={false}
         zoom={100}
       />
     )
@@ -84,7 +90,7 @@ describe('ContentDisplay - Chords Rendering', () => {
       <ContentDisplay
         renderInfo={renderInfo}
         currentSongData={currentSongData}
-        currentSong={0}
+        darkSheet={false}
         zoom={100}
       />
     )
@@ -118,7 +124,7 @@ describe('ContentDisplay - Chords Rendering', () => {
       <ContentDisplay
         renderInfo={renderInfo}
         currentSongData={currentSongData}
-        currentSong={0}
+        darkSheet={false}
         zoom={100}
       />
     )
@@ -153,7 +159,7 @@ describe('ContentDisplay - Chords Rendering', () => {
       <ContentDisplay
         renderInfo={renderInfo}
         currentSongData={currentSongData}
-        currentSong={0}
+        darkSheet={false}
         zoom={100}
       />
     )
@@ -194,7 +200,7 @@ describe('ContentDisplay - Chords Rendering', () => {
       <ContentDisplay
         renderInfo={renderInfo}
         currentSongData={currentSongData}
-        currentSong={0}
+        darkSheet={false}
         zoom={100}
       />
     )
@@ -231,7 +237,7 @@ describe('ContentDisplay - Chords Rendering', () => {
       <ContentDisplay
         renderInfo={renderInfo}
         currentSongData={currentSongData}
-        currentSong={0}
+        darkSheet={false}
         zoom={150}
       />
     )
@@ -270,7 +276,7 @@ describe('ContentDisplay - Chords Rendering', () => {
       <ContentDisplay
         renderInfo={renderInfo}
         currentSongData={currentSongData}
-        currentSong={0}
+        darkSheet={false}
         zoom={100}
       />
     )

@@ -1,7 +1,9 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import { describe, it, expect, vi } from 'vitest'
 import { createMockChordsContent } from './bug-reproduction-helpers'
-import { PerformanceMode } from '@/components/performance-mode'
+// P1-B: retargeted from the dead twin (components/performance-mode) to the
+// live twin mounted at app/performance/page.tsx. Assertions unchanged.
+import { OptimizedPerformanceMode as PerformanceMode } from '@/components/optimized-performance-mode'
 
 /**
  * Bug #1: Chords Content Display Missing Chart
