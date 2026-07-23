@@ -1,0 +1,67 @@
+
+> octavia@0.1.0 build /Users/marcelviana/projects/octavia
+> pnpm exec next build && node scripts/build-sw.js
+
+   ▲ Next.js 15.2.8
+   - Environments: .env.local
+
+   Creating an optimized production build ...
+ ⚠ nodejs runtime support for middleware requires experimental.nodeMiddleware be enabled in your next.config
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/33) ...
+   Generating static pages (8/33) 
+   Generating static pages (16/33) 
+   Generating static pages (24/33) 
+ ✓ Generating static pages (33/33)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ƒ /                                      189 B         111 kB
+├ ƒ /_not-found                            984 B         103 kB
+├ ƒ /add-content                         1.89 kB         311 kB
+├ ƒ /api/auth/session                      196 B         103 kB
+├ ƒ /api/auth/user                         196 B         103 kB
+├ ƒ /api/auth/validate-token               196 B         103 kB
+├ ƒ /api/auth/verify                       196 B         103 kB
+├ ƒ /api/content                           196 B         103 kB
+├ ƒ /api/content/[id]                      196 B         103 kB
+├ ƒ /api/debug/config                      196 B         103 kB
+├ ƒ /api/firebase-config                   196 B         103 kB
+├ ƒ /api/health                            196 B         103 kB
+├ ƒ /api/profile                           196 B         103 kB
+├ ƒ /api/proxy                             196 B         103 kB
+├ ƒ /api/setlists                          196 B         103 kB
+├ ƒ /api/setlists/[id]                     196 B         103 kB
+├ ƒ /api/setlists/[id]/songs               196 B         103 kB
+├ ƒ /api/setlists/songs/[songId]           196 B         103 kB
+├ ƒ /api/storage/delete                    196 B         103 kB
+├ ƒ /api/storage/upload                    196 B         103 kB
+├ ƒ /api/test-setlists                     196 B         103 kB
+├ ƒ /content/[id]                         116 kB         441 kB
+├ ƒ /content/[id]/edit                   2.08 kB         263 kB
+├ ƒ /dashboard                           4.12 kB         314 kB
+├ ƒ /forgot-password                     4.08 kB         259 kB
+├ ƒ /library                             15.1 kB         325 kB
+├ ƒ /login                               4.86 kB         280 kB
+├ ƒ /offline                             4.21 kB         266 kB
+├ ƒ /performance                         1.63 kB         104 kB
+├ ƒ /privacy-policy                      1.69 kB         104 kB
+├ ƒ /profile                             3.03 kB         322 kB
+├ ƒ /setlists                             1.9 kB         311 kB
+├ ƒ /settings                            6.09 kB         326 kB
+├ ƒ /setup                               46.4 kB         164 kB
+├ ƒ /signup                              4.77 kB         306 kB
+├ ƒ /signup/confirm-email                2.49 kB         272 kB
+└ ƒ /verify-email                        2.88 kB         270 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/5205-de8cc85a3e2fa854.js        46 kB
+  ├ chunks/6af7d96a-45348c04c1b8b142.js  53.3 kB
+  └ other shared chunks (total)          3.21 kB
+
+
+ƒ  (Dynamic)  server-rendered on demand
+
+Copied /Users/marcelviana/projects/octavia/worker/index.js to /Users/marcelviana/projects/octavia/public/sw.js
