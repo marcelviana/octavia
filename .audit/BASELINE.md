@@ -1,5 +1,32 @@
 # BASELINE — Estado real do repositório
 
+## ATUALIZAÇÃO P1-E (2026-07-23) — FECHAMENTO DA FASE 1
+
+Medição em: Node v22.23.1, pnpm 10.28.0. Cinco commits (`14641af` lote A,
+`d545b99` lote B, `2b2c756` lote C, `26c0d95` lote D, `ed8e4dc` lote E),
+cada um com `pnpm test` e `pnpm build` em exit 0.
+
+**Deletados: 27 arquivos, ≈224 KB** (gêmeos mortos de performance-mode e
+add-content, órfãos de produção incl. storage-service com verificação 2×,
+zumbis de teste, helpers mortos, runner de integração vazio [D5]) + rename
+`useAddContentState.test.ts` → `useAddContentLogic.test.ts`.
+
+| Comando | Exit | Contagem |
+|---|---|---|
+| `pnpm test` | **0** ✅ | **381 passed / 115 skipped (496)** — delta vs. 504/165/669 é 100% cobertura fantasma/superfície morta, reconciliado it a it em `.audit/FASE1-CLOSEOUT.md` |
+| `pnpm build` | **0** ✅ | inalterado |
+| `pnpm test:integration` | — | **script removido** (D5 resolvida: runner estava vazio desde o P1-C; `test:all` agora roda unit + e2e) |
+
+Fase 1 fechada: 483 arquivos no tree do P0 → 430 (código real, excl.
+`.audit/`+`.planning/`: 448 → 356, −681 KB). Grafo: 335 → **255 módulos**
+(`graph-post-p1e.json`); knip: **1 unused file**, o falso positivo
+documentado `components/library/index.ts` (`knip-post-p1e.md`); zero
+Refactored*/optimized-* sem par vivo; zero órfãos de produção reais.
+Balanço do arnês, pendências deliberadas e critérios de aceite:
+**`.audit/FASE1-CLOSEOUT.md`**.
+
+---
+
 ## ATUALIZAÇÃO P1-D (2026-07-23) — pós-deleção da dupla condenação
 
 Medição em: Node v22.23.1, pnpm 10.28.0. Três commits (`b6292ff` lote 1,
