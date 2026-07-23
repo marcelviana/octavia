@@ -15,10 +15,9 @@ pnpm lint                   # Run ESLint
 pnpm test                   # Run unit tests only
 pnpm test:watch             # Run tests in watch mode
 pnpm test:coverage          # Run tests with coverage report
-pnpm test:integration       # Run integration tests
 pnpm test:e2e               # Run Playwright E2E tests
 pnpm test:e2e:ui            # Run E2E tests with UI mode
-pnpm test:all               # Run both unit and integration tests
+pnpm test:all               # Run unit + E2E tests (runner de integração removido no P1-E [D5])
 
 # E2E Test Utils
 pnpm test:e2e:headed        # Run E2E tests with browser UI
