@@ -1,0 +1,630 @@
+
+[1m[46m RUN [49m[22m [36mv4.0.16 [39m[90m/Users/marcelviana/projects/octavia[39m
+
+ [31m❯[39m tests/components/add-content.refactoring.test.tsx [2m([22m[2m25 tests[22m[2m | [22m[31m6 failed[39m[2m | [22m[33m4 skipped[39m[2m)[22m[32m 98[2mms[22m[39m
+       [2m[90m↓[39m[22m should render with initial state
+[31m       [31m×[31m should handle back navigation[39m[32m 56[2mms[22m[39m
+       [2m[90m↓[39m[22m should display content type selector on step 1
+       [32m✓[39m should handle content type selection[32m 6[2mms[22m[39m
+       [2m[90m↓[39m[22m should display mode selector on step 1 for non-sheet content
+       [32m✓[39m should not display mode selector for Sheet Music[32m 2[2mms[22m[39m
+       [32m✓[39m should handle create mode selection[32m 1[2mms[22m[39m
+       [32m✓[39m should handle import mode selection[32m 1[2mms[22m[39m
+       [2m[90m↓[39m[22m should display import mode selector when in import mode
+       [32m✓[39m should handle single import mode selection[32m 1[2mms[22m[39m
+       [32m✓[39m should handle batch import mode selection[32m 1[2mms[22m[39m
+[31m       [31m×[31m should display file upload for import mode[39m[32m 2[2mms[22m[39m
+[31m       [31m×[31m should display file upload for Sheet Music[39m[32m 1[2mms[22m[39m
+       [32m✓[39m should display content creator for create mode[32m 1[2mms[22m[39m
+[31m       [31m×[31m should display error messages when present[39m[32m 1[2mms[22m[39m
+       [32m✓[39m should clear errors when moving between steps[32m 1[2mms[22m[39m
+       [32m✓[39m should handle missing required data gracefully[32m 1[2mms[22m[39m
+       [32m✓[39m should handle Chords content workflow[32m 1[2mms[22m[39m
+[31m       [31m×[31m should handle Sheet Music workflow[39m[32m 1[2mms[22m[39m
+       [32m✓[39m should handle rapid state changes efficiently[32m 2[2mms[22m[39m
+       [32m✓[39m should clean up resources on unmount[32m 1[2mms[22m[39m
+       [32m✓[39m should support keyboard navigation[32m 1[2mms[22m[39m
+[31m       [31m×[31m should have proper focus management[39m[32m 10[2mms[22m[39m
+       [32m✓[39m should pass correct props to ContentTypeSelector[32m 2[2mms[22m[39m
+       [32m✓[39m should pass correct props to ModeSelector[32m 1[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 6 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m tests/components/add-content.refactoring.test.tsx[2m > [22mAddContent Refactoring Tests[2m > [22mComponent Structure and State Management[2m > [22mshould handle back navigation
+[31m[1mTestingLibraryElementError[22m: Unable to find an accessible element with the role "button" and name `/back/i`
+
+Here are the accessible roles:
+
+  button:
+
+  Name "Lyrics":
+  [36m<button[31m
+    [33mdata-testid[31m=[32m"lyrics-type"[31m
+  [36m/>[31m
+
+  Name "Chords":
+  [36m<button[31m
+    [33mdata-testid[31m=[32m"chords-type"[31m
+  [36m/>[31m
+
+  Name "Sheet Music":
+  [36m<button[31m
+    [33mdata-testid[31m=[32m"sheet-type"[31m
+  [36m/>[31m
+
+  Name "Create New":
+  [36m<button[31m
+    [33mdata-testid[31m=[32m"create-mode"[31m
+  [36m/>[31m
+
+  Name "Import File":
+  [36m<button[31m
+    [33mdata-testid[31m=[32m"import-mode"[31m
+  [36m/>[31m
+
+  Name "Create Content":
+  [36m<button />[31m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"min-h-screen bg-gradient-to-b from-amber-50 to-orange-50"[31m
+    [36m>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"p-4"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"max-w-4xl mx-auto space-y-4"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mdata-testid[31m=[32m"step-indicator"[31m
+          [36m>[31m
+            [0mStep [0m
+            [0m1[0m
+            [0m of 3[0m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"bg-white rounded-lg shadow-sm border border-amber-200 p-4"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mdata-testid[31m=[32m"content-type-selector"[31m
+            [36m>[31m
+              [36m<button[31m
+                [33mdata-testid[31m=[32m"lyrics-type"[31m
+              [36m>[31m
+                [0mLyrics[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [33mdata-testid[31m=[32m"chords-type"[31m
+              [36m>[31m
+                [0mChords[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [33mdata-testid[31m=[32m"sheet-type"[31m
+              [36m>[31m
+                [0mSheet Music[0m
+              [36m</button>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mdata-testid[31m=[32m"mode-selector"[31m
+            [36m>[31m
+              [36m<button[31m
+                [33mdata-testid[31m=[32m"create-mode"[31m
+              [36m>[31m
+                [0mCreate New[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [33mdata-testid[31m=[32m"import-mode"[31m
+              [36m>[31m
+                [0mImport File[0m
+              [36m</button>[31m
+            [36m</div>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mdata-testid[31m=[32m"content-creator"[31m
+          [36m>[31m
+            [36m<button>[31m
+              [0mCreate Content[0m
+            [36m</button>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+  [36m</div>[31m
+[36m</body>[31m[39m
+[90m [2m❯[22m Object.getElementError node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/config.js:[2m37:19[22m[39m
+[90m [2m❯[22m node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:[2m76:38[22m[39m
+[90m [2m❯[22m node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:[2m52:17[22m[39m
+[90m [2m❯[22m node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:[2m95:19[22m[39m
+[36m [2m❯[22m tests/components/add-content.refactoring.test.tsx:[2m175:33[22m[39m
+    [90m173| [39m      [34mrender[39m([33m<[39m[33mAddContent[39m [33m{[39m[33m...[39mdefaultProps[33m}[39m [33monBack[39m[33m=[39m[33m{[39monBack[33m}[39m [33m/[39m[33m>[39m)
+    [90m174| [39m
+    [90m175| [39m      [35mconst[39m backButton [33m=[39m screen[33m.[39m[34mgetByRole[39m([32m'button'[39m[33m,[39m { name[33m:[39m [36m/back/i[39m })
+    [90m   | [39m                                [31m^[39m
+    [90m176| [39m      fireEvent[33m.[39m[34mclick[39m(backButton)
+    [90m177| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m tests/components/add-content.refactoring.test.tsx[2m > [22mAddContent Refactoring Tests[2m > [22mFile Upload (dead twin: step 4)[2m > [22mshould display file upload for import mode
+[31m[1mTestingLibraryElementError[22m: Unable to find an element with the text: Import Music File. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"min-h-screen bg-gradient-to-b from-amber-50 to-orange-50"[31m
+    [36m>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"p-4"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"max-w-4xl mx-auto space-y-4"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mdata-testid[31m=[32m"step-indicator"[31m
+          [36m>[31m
+            [0mStep [0m
+            [0m1[0m
+            [0m of 3[0m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"bg-white rounded-lg shadow-sm border border-amber-200 p-4"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mdata-testid[31m=[32m"content-type-selector"[31m
+            [36m>[31m
+              [36m<button[31m
+                [33mdata-testid[31m=[32m"lyrics-type"[31m
+              [36m>[31m
+                [0mLyrics[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [33mdata-testid[31m=[32m"chords-type"[31m
+              [36m>[31m
+                [0mChords[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [33mdata-testid[31m=[32m"sheet-type"[31m
+              [36m>[31m
+                [0mSheet Music[0m
+              [36m</button>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mdata-testid[31m=[32m"mode-selector"[31m
+            [36m>[31m
+              [36m<button[31m
+                [33mdata-testid[31m=[32m"create-mode"[31m
+              [36m>[31m
+                [0mCreate New[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [33mdata-testid[31m=[32m"import-mode"[31m
+              [36m>[31m
+                [0mImport File[0m
+              [36m</button>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mdata-testid[31m=[32m"import-mode-selector"[31m
+            [36m>[31m
+              [36m<button[31m
+                [33mdata-testid[31m=[32m"single-import"[31m
+              [36m>[31m
+                [0mSingle Content[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [33mdata-testid[31m=[32m"batch-import"[31m
+              [36m>[31m
+                [0mBatch Import[0m
+              [36m</button>[31m
+            [36m</div>[31m
+          [36m</div>[31m
+          [36m<div>[31m
+            [36m<p[31m
+              [33mclass[31m=[32m"text-center text-gray-600"[31m
+            [36m>[31m
+              [0mFile upload functionality[0m
+            [36m</p>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+  [36m</div>[31m
+[36m</body>[31m[39m
+[90m [2m❯[22m Object.getElementError node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/config.js:[2m37:19[22m[39m
+[90m [2m❯[22m node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:[2m76:38[22m[39m
+[90m [2m❯[22m node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:[2m52:17[22m[39m
+[90m [2m❯[22m node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:[2m95:19[22m[39m
+[36m [2m❯[22m tests/components/add-content.refactoring.test.tsx:[2m337:21[22m[39m
+    [90m335| [39m      [34mrender[39m([33m<[39m[33mAddContent[39m [33m{[39m[33m...[39mdefaultProps[33m}[39m [33m/[39m[33m>[39m)
+    [90m336| [39m
+    [90m337| [39m      [34mexpect[39m(screen[33m.[39m[34mgetByText[39m([32m'Import Music File'[39m))[33m.[39m[34mtoBeInTheDocument[39m()
+    [90m   | [39m                    [31m^[39m
+    [90m338| [39m    })
+    [90m339| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m tests/components/add-content.refactoring.test.tsx[2m > [22mAddContent Refactoring Tests[2m > [22mFile Upload (dead twin: step 4)[2m > [22mshould display file upload for Sheet Music
+[31m[1mTestingLibraryElementError[22m: Unable to find an element with the text: Import Music File. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"min-h-screen bg-gradient-to-b from-amber-50 to-orange-50"[31m
+    [36m>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"p-4"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"max-w-4xl mx-auto space-y-4"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mdata-testid[31m=[32m"step-indicator"[31m
+          [36m>[31m
+            [0mStep [0m
+            [0m1[0m
+            [0m of 3[0m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"bg-white rounded-lg shadow-sm border border-amber-200 p-4"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mdata-testid[31m=[32m"content-type-selector"[31m
+            [36m>[31m
+              [36m<button[31m
+                [33mdata-testid[31m=[32m"lyrics-type"[31m
+              [36m>[31m
+                [0mLyrics[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [33mdata-testid[31m=[32m"chords-type"[31m
+              [36m>[31m
+                [0mChords[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [33mdata-testid[31m=[32m"sheet-type"[31m
+              [36m>[31m
+                [0mSheet Music[0m
+              [36m</button>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mdata-testid[31m=[32m"import-mode-selector"[31m
+            [36m>[31m
+              [36m<button[31m
+                [33mdata-testid[31m=[32m"single-import"[31m
+              [36m>[31m
+                [0mSingle Content[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [33mdata-testid[31m=[32m"batch-import"[31m
+              [36m>[31m
+                [0mBatch Import[0m
+              [36m</button>[31m
+            [36m</div>[31m
+          [36m</div>[31m
+          [36m<div>[31m
+            [36m<p[31m
+              [33mclass[31m=[32m"text-center text-gray-600"[31m
+            [36m>[31m
+              [0mFile upload functionality[0m
+            [36m</p>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+  [36m</div>[31m
+[36m</body>[31m[39m
+[90m [2m❯[22m Object.getElementError node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/config.js:[2m37:19[22m[39m
+[90m [2m❯[22m node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:[2m76:38[22m[39m
+[90m [2m❯[22m node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:[2m52:17[22m[39m
+[90m [2m❯[22m node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:[2m95:19[22m[39m
+[36m [2m❯[22m tests/components/add-content.refactoring.test.tsx:[2m351:21[22m[39m
+    [90m349| [39m      [34mrender[39m([33m<[39m[33mAddContent[39m [33m{[39m[33m...[39mdefaultProps[33m}[39m [33m/[39m[33m>[39m)
+    [90m350| [39m
+    [90m351| [39m      [34mexpect[39m(screen[33m.[39m[34mgetByText[39m([32m'Import Music File'[39m))[33m.[39m[34mtoBeInTheDocument[39m()
+    [90m   | [39m                    [31m^[39m
+    [90m352| [39m    })
+    [90m353| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m tests/components/add-content.refactoring.test.tsx[2m > [22mAddContent Refactoring Tests[2m > [22mError Handling[2m > [22mshould display error messages when present
+[31m[1mTestingLibraryElementError[22m: Unable to find an element with the text: File upload failed. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"min-h-screen bg-gradient-to-b from-amber-50 to-orange-50"[31m
+    [36m>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"p-4"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"max-w-4xl mx-auto space-y-4"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mdata-testid[31m=[32m"step-indicator"[31m
+          [36m>[31m
+            [0mStep [0m
+            [0m1[0m
+            [0m of 3[0m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"bg-white rounded-lg shadow-sm border border-amber-200 p-4"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mdata-testid[31m=[32m"content-type-selector"[31m
+            [36m>[31m
+              [36m<button[31m
+                [33mdata-testid[31m=[32m"lyrics-type"[31m
+              [36m>[31m
+                [0mLyrics[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [33mdata-testid[31m=[32m"chords-type"[31m
+              [36m>[31m
+                [0mChords[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [33mdata-testid[31m=[32m"sheet-type"[31m
+              [36m>[31m
+                [0mSheet Music[0m
+              [36m</button>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mdata-testid[31m=[32m"mode-selector"[31m
+            [36m>[31m
+              [36m<button[31m
+                [33mdata-testid[31m=[32m"create-mode"[31m
+              [36m>[31m
+                [0mCreate New[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [33mdata-testid[31m=[32m"import-mode"[31m
+              [36m>[31m
+                [0mImport File[0m
+              [36m</button>[31m
+            [36m</div>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mdata-testid[31m=[32m"content-creator"[31m
+          [36m>[31m
+            [36m<button>[31m
+              [0mCreate Content[0m
+            [36m</button>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+  [36m</div>[31m
+[36m</body>[31m[39m
+[90m [2m❯[22m Object.getElementError node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/config.js:[2m37:19[22m[39m
+[90m [2m❯[22m node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:[2m76:38[22m[39m
+[90m [2m❯[22m node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:[2m52:17[22m[39m
+[90m [2m❯[22m node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:[2m95:19[22m[39m
+[36m [2m❯[22m tests/components/add-content.refactoring.test.tsx:[2m384:21[22m[39m
+    [90m382| [39m      [34mrender[39m([33m<[39m[33mAddContent[39m [33m{[39m[33m...[39mdefaultProps[33m}[39m [33m/[39m[33m>[39m)
+    [90m383| [39m
+    [90m384| [39m      expect(screen.getByText('File upload failed')).toBeInTheDocument…
+    [90m   | [39m                    [31m^[39m
+    [90m385| [39m      [34mexpect[39m(screen[33m.[39m[34mgetByRole[39m([32m'alert'[39m))[33m.[39m[34mtoBeInTheDocument[39m()
+    [90m386| [39m    })
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m tests/components/add-content.refactoring.test.tsx[2m > [22mAddContent Refactoring Tests[2m > [22mContent Type Specific Workflows[2m > [22mshould handle Sheet Music workflow
+[31m[1mTestingLibraryElementError[22m: Unable to find an element with the text: Import Music File. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"min-h-screen bg-gradient-to-b from-amber-50 to-orange-50"[31m
+    [36m>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"p-4"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"max-w-4xl mx-auto space-y-4"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mdata-testid[31m=[32m"step-indicator"[31m
+          [36m>[31m
+            [0mStep [0m
+            [0m1[0m
+            [0m of 3[0m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"bg-white rounded-lg shadow-sm border border-amber-200 p-4"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mdata-testid[31m=[32m"content-type-selector"[31m
+            [36m>[31m
+              [36m<button[31m
+                [33mdata-testid[31m=[32m"lyrics-type"[31m
+              [36m>[31m
+                [0mLyrics[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [33mdata-testid[31m=[32m"chords-type"[31m
+              [36m>[31m
+                [0mChords[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [33mdata-testid[31m=[32m"sheet-type"[31m
+              [36m>[31m
+                [0mSheet Music[0m
+              [36m</button>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mdata-testid[31m=[32m"import-mode-selector"[31m
+            [36m>[31m
+              [36m<button[31m
+                [33mdata-testid[31m=[32m"single-import"[31m
+              [36m>[31m
+                [0mSingle Content[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [33mdata-testid[31m=[32m"batch-import"[31m
+              [36m>[31m
+                [0mBatch Import[0m
+              [36m</button>[31m
+            [36m</div>[31m
+          [36m</div>[31m
+          [36m<div>[31m
+            [36m<p[31m
+              [33mclass[31m=[32m"text-center text-gray-600"[31m
+            [36m>[31m
+              [0mFile upload functionality[0m
+            [36m</p>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+  [36m</div>[31m
+[36m</body>[31m[39m
+[90m [2m❯[22m Object.getElementError node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/config.js:[2m37:19[22m[39m
+[90m [2m❯[22m node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:[2m76:38[22m[39m
+[90m [2m❯[22m node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:[2m52:17[22m[39m
+[90m [2m❯[22m node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:[2m95:19[22m[39m
+[36m [2m❯[22m tests/components/add-content.refactoring.test.tsx:[2m452:21[22m[39m
+    [90m450| [39m      [34mrender[39m([33m<[39m[33mAddContent[39m [33m{[39m[33m...[39mdefaultProps[33m}[39m [33m/[39m[33m>[39m)
+    [90m451| [39m
+    [90m452| [39m      [34mexpect[39m(screen[33m.[39m[34mgetByText[39m([32m'Import Music File'[39m))[33m.[39m[34mtoBeInTheDocument[39m()
+    [90m   | [39m                    [31m^[39m
+    [90m453| [39m      expect(screen.queryByTestId('mode-selector')).not.toBeInTheDocum…
+    [90m454| [39m    })
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m tests/components/add-content.refactoring.test.tsx[2m > [22mAddContent Refactoring Tests[2m > [22mAccessibility[2m > [22mshould have proper focus management
+[31m[1mTestingLibraryElementError[22m: Unable to find an accessible element with the role "button" and name `/back/i`
+
+Here are the accessible roles:
+
+  button:
+
+  Name "Lyrics":
+  [36m<button[31m
+    [33mdata-testid[31m=[32m"lyrics-type"[31m
+  [36m/>[31m
+
+  Name "Chords":
+  [36m<button[31m
+    [33mdata-testid[31m=[32m"chords-type"[31m
+  [36m/>[31m
+
+  Name "Sheet Music":
+  [36m<button[31m
+    [33mdata-testid[31m=[32m"sheet-type"[31m
+  [36m/>[31m
+
+  Name "Create New":
+  [36m<button[31m
+    [33mdata-testid[31m=[32m"create-mode"[31m
+  [36m/>[31m
+
+  Name "Import File":
+  [36m<button[31m
+    [33mdata-testid[31m=[32m"import-mode"[31m
+  [36m/>[31m
+
+  Name "Create Content":
+  [36m<button />[31m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"min-h-screen bg-gradient-to-b from-amber-50 to-orange-50"[31m
+    [36m>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"p-4"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"max-w-4xl mx-auto space-y-4"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mdata-testid[31m=[32m"step-indicator"[31m
+          [36m>[31m
+            [0mStep [0m
+            [0m1[0m
+            [0m of 3[0m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"bg-white rounded-lg shadow-sm border border-amber-200 p-4"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mdata-testid[31m=[32m"content-type-selector"[31m
+            [36m>[31m
+              [36m<button[31m
+                [33mdata-testid[31m=[32m"lyrics-type"[31m
+              [36m>[31m
+                [0mLyrics[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [33mdata-testid[31m=[32m"chords-type"[31m
+              [36m>[31m
+                [0mChords[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [33mdata-testid[31m=[32m"sheet-type"[31m
+              [36m>[31m
+                [0mSheet Music[0m
+              [36m</button>[31m
+            [36m</div>[31m
+            [36m<div[31m
+              [33mdata-testid[31m=[32m"mode-selector"[31m
+            [36m>[31m
+              [36m<button[31m
+                [33mdata-testid[31m=[32m"create-mode"[31m
+              [36m>[31m
+                [0mCreate New[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [33mdata-testid[31m=[32m"import-mode"[31m
+              [36m>[31m
+                [0mImport File[0m
+              [36m</button>[31m
+            [36m</div>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mdata-testid[31m=[32m"content-creator"[31m
+          [36m>[31m
+            [36m<button>[31m
+              [0mCreate Content[0m
+            [36m</button>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+  [36m</div>[31m
+[36m</body>[31m[39m
+[90m [2m❯[22m Object.getElementError node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/config.js:[2m37:19[22m[39m
+[90m [2m❯[22m node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:[2m76:38[22m[39m
+[90m [2m❯[22m node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:[2m52:17[22m[39m
+[90m [2m❯[22m node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:[2m95:19[22m[39m
+[36m [2m❯[22m tests/components/add-content.refactoring.test.tsx:[2m510:33[22m[39m
+    [90m508| [39m      [34mrender[39m([33m<[39m[33mAddContent[39m [33m{[39m[33m...[39mdefaultProps[33m}[39m [33m/[39m[33m>[39m)
+    [90m509| [39m
+    [90m510| [39m      [35mconst[39m backButton [33m=[39m screen[33m.[39m[34mgetByRole[39m([32m'button'[39m[33m,[39m { name[33m:[39m [36m/back/i[39m })
+    [90m   | [39m                                [31m^[39m
+    [90m511| [39m      backButton[33m.[39m[34mfocus[39m()
+    [90m512| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m6 failed[39m[22m[2m | [22m[1m[32m15 passed[39m[22m[2m | [22m[33m4 skipped[39m[90m (25)[39m
+[2m   Start at [22m 12:33:53
+[2m   Duration [22m 5.29s[2m (transform 325ms, setup 1.22s, import 533ms, tests 98ms, environment 3.18s)[22m
+

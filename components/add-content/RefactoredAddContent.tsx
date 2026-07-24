@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { ContentCreator } from "@/components/content-creator";
+import { FileUploadZone } from "./FileUploadZone";
 import { StepIndicator } from "./StepIndicatorComponent";
 import { CompletionStep } from "./CompletionStep";
 import { DetailsStep } from "./DetailsStep";
@@ -142,10 +143,10 @@ export function RefactoredAddContent({
               }}
             />
           ) : (
-            <div>
-              {/* File upload component would go here */}
-              <p className="text-center text-gray-600">File upload functionality</p>
-            </div>
+            <FileUploadZone
+              contentType={contentType}
+              onFilesUploaded={handleFilesUploaded}
+            />
           )}
         </div>
       </div>

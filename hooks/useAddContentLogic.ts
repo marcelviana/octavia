@@ -14,6 +14,7 @@ interface UploadedFile {
   type: string;
   contentType: string;
   file: File;
+  url?: string;
 }
 
 interface DraftContent {
@@ -218,7 +219,7 @@ export function useAddContentLogic() {
           title: metadata.title || uploadedFile.name,
           artist: metadata.artist || "Unknown Artist",
           content_type: contentType,
-          file_url: uploadedFile.name, // This would be the uploaded file URL
+          file_url: uploadedFile.url ?? uploadedFile.name,
           user_id: user.uid
         });
         setCreatedContent(content);

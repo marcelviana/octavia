@@ -325,10 +325,8 @@ describe('AddContent Refactoring Tests', () => {
   })
 
   describe('File Upload (dead twin: step 4)', () => {
-    // BUG(P1-B): comportamento perdido na migração, ver .audit/LOST-BEHAVIOR.md
-    // — o vivo não tem UI de upload: em mode 'import' renderiza o placeholder
-    // "File upload functionality" (fluxo de import quebrado em produção).
-    it.skip('should display file upload for import mode', () => {
+    // CORRIGIDO(F1): UI de upload restaurada no ramo import.
+    it('should display file upload for import mode', () => {
       mockUseAddContentLogic.mockReturnValue({
         ...mockState,
         currentStep: 1,
@@ -340,10 +338,8 @@ describe('AddContent Refactoring Tests', () => {
       expect(screen.getByText('Import Music File')).toBeInTheDocument()
     })
 
-    // BUG(P1-B): comportamento perdido na migração, ver .audit/LOST-BEHAVIOR.md
-    // — Sheet Music força mode 'import', que no vivo é só o placeholder de upload;
-    // adicionar partitura está quebrado em produção.
-    it.skip('should display file upload for Sheet Music', () => {
+    // CORRIGIDO(F1): Sheet Music volta a ter UI de upload.
+    it('should display file upload for Sheet Music', () => {
       mockUseAddContentLogic.mockReturnValue({
         ...mockState,
         currentStep: 1,
@@ -444,9 +440,8 @@ describe('AddContent Refactoring Tests', () => {
       expect(screen.getByTestId('content-creator')).toBeInTheDocument()
     })
 
-    // BUG(P1-B): comportamento perdido na migração, ver .audit/LOST-BEHAVIOR.md
-    // — mesma perda da UI de upload ("Import Music File" → placeholder).
-    it.skip('should handle Sheet Music workflow', () => {
+    // CORRIGIDO(F1): mesma restauração da UI de upload.
+    it('should handle Sheet Music workflow', () => {
       // Sheet music skips mode selection
       mockUseAddContentLogic.mockReturnValue({
         ...mockState,
