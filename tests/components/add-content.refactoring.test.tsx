@@ -373,10 +373,8 @@ describe('AddContent Refactoring Tests', () => {
   })
 
   describe('Error Handling', () => {
-    // BUG(P1-B): comportamento perdido na migração, ver .audit/LOST-BEHAVIOR.md
-    // — o vivo recebe `error` do hook mas nunca o renderiza (sem texto, sem
-    // role="alert"); falhas de upload/save ficam invisíveis ao usuário.
-    it.skip('should display error messages when present', () => {
+    // CORRIGIDO(F1): `error` do hook agora renderiza com role="alert".
+    it('should display error messages when present', () => {
       mockUseAddContentLogic.mockReturnValue({
         ...mockState,
         error: 'File upload failed'

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { AlertCircle } from "lucide-react";
 import { ContentCreator } from "@/components/content-creator";
 import { FileUploadZone } from "./FileUploadZone";
 import { StepIndicator } from "./StepIndicatorComponent";
@@ -101,6 +102,16 @@ export function RefactoredAddContent({
       <div className="p-4">
         <div className="max-w-4xl mx-auto space-y-4">
           <StepIndicator currentStep={currentStep} />
+
+          {error && (
+            <div
+              role="alert"
+              className="flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700"
+            >
+              <AlertCircle className="w-4 h-4 shrink-0" aria-hidden="true" />
+              {error}
+            </div>
+          )}
 
           <div className="bg-white rounded-lg shadow-sm border border-amber-200 p-4">
             <ContentTypeSelector
