@@ -20,7 +20,7 @@ afrouxada**. Its que falharam contra o vivo ficaram `it.skip` com comentário
 | Veredito | Contagem (sobre os 76 its originais) |
 |---|---|
 | [PASSA] | **45** |
-| [FALHA-COMPORTAMENTO] | **10** (todos em add-content) |
+| [FALHA-COMPORTAMENTO] | **10** (todos em add-content) — **6 corrigidos no F1 (2026-07-24)**; os 4 de headings/copy aguardam Fase 5 |
 | [INAPLICÁVEL] | **21** (inclui os 13 `it.skip` TODO pré-existentes, que nunca foram validados nem contra o morto) |
 
 **Destaque obrigatório — chords-display-bug (fase .planning/02): os 3 its
@@ -34,6 +34,11 @@ existe no gêmeo em rota. O bug NÃO está vivo em produção.
 força `mode: "import"`, **importar arquivos e adicionar partituras está
 quebrado na rota /add-content em produção**. Também perdidos: botão Back,
 exibição de erro (`error` do hook nunca renderiza) e os headings do wizard.
+
+> **[CORRIGIDO F1, 2026-07-24]** — upload, exibição de erro e botão Back
+> foram restaurados (novo `FileUploadZone` → rota viva
+> `POST /api/storage/upload`; ver `.audit/F1-DESIGN.md`). Restam só os 4
+> its de headings/copy, aguardando Fase 5.
 
 ---
 
@@ -106,65 +111,72 @@ Retarget: `components/add-content-refactored.tsx` → `components/add-content.ts
 
 | it (original) | Veredito | Evidência (erro cru p/ falhas) |
 |---|---|---|
-| should render with initial state | **[FALHA-COMPORTAMENTO]** | `TestingLibraryElementError: Unable to find an element with the text: Add New Content.` — heading da página perdido |
+| should render with initial state | **[FALHA-COMPORTAMENTO]** _(aguardando Fase 5)_ | `TestingLibraryElementError: Unable to find an element with the text: Add New Content.` — heading da página perdido |
 | should initialize useFileHandling with correct parameters | **[INAPLICÁVEL]** | vivo não usa useFileHandling (wiring interno de useAddContentLogic) |
-| should handle back navigation | **[FALHA-COMPORTAMENTO]** | `TestingLibraryElementError: Unable to find an accessible element with the role "button" and name /back/i` — `onBack` é recebido e ignorado; sem botão Back no passo 1 |
-| should display content type selector on step 1 | **[FALHA-COMPORTAMENTO]** | `Unable to find an element with the text: What type of content do you want to add?` (o testid do selector renderiza; o heading não existe) |
+| should handle back navigation | **[CORRIGIDO F1]** (2026-07-24) | era: `Unable to find an accessible element with the role "button" and name /back/i` — botão Back restaurado no passo 1 |
+| should display content type selector on step 1 | **[FALHA-COMPORTAMENTO]** _(aguardando Fase 5)_ | `Unable to find an element with the text: What type of content do you want to add?` (o testid do selector renderiza; o heading não existe) |
 | should handle content type selection | **[PASSA]** (parcial) | `setContentType('Lyrics')` wired; asserção de avanço de passo → INAPLICÁVEL (wizard morto) |
 | should skip to step 3 for Sheet Music type | **[INAPLICÁVEL]** | avanço de passo é wiring do wizard de 5 passos; equivalente visível (Sheet oculta ModeSelector) coberto e [PASSA] |
 | TODO steps generation _(já skip no morto)_ | **[INAPLICÁVEL]** | StepIndicator vivo tem 3 passos fixos, não recebe steps/totalSteps |
-| should display mode selector on step 2 for non-sheet content | **[FALHA-COMPORTAMENTO]** | (setup: passo 1 no vivo) `Unable to find an element with the text: How would you like to add your content?` — o ModeSelector vivo tem copy diferente ("How would you like to add content?") e o heading do wizard morto não existe |
+| should display mode selector on step 2 for non-sheet content | **[FALHA-COMPORTAMENTO]** _(aguardando Fase 5)_ | (setup: passo 1 no vivo) `Unable to find an element with the text: How would you like to add your content?` — o ModeSelector vivo tem copy diferente ("How would you like to add content?") e o heading do wizard morto não existe |
 | should not display mode selector for Sheet Music | **[PASSA]** | `contentType === 'Sheet'` oculta o ModeSelector no vivo |
 | should handle create mode selection | **[PASSA]** (parcial) | `setMode('create')` wired; avanço p/ passo 5 → INAPLICÁVEL |
 | should handle import mode selection | **[PASSA]** (parcial) | `setMode('import')` wired; avanço p/ passo 3 → INAPLICÁVEL |
-| should display import mode selector when on step 3 with import mode | **[FALHA-COMPORTAMENTO]** | (setup: passo 1 no vivo) `Unable to find an element with the text: Import Options.` (testid renderiza; heading não existe) |
+| should display import mode selector when on step 3 with import mode | **[FALHA-COMPORTAMENTO]** _(aguardando Fase 5)_ | (setup: passo 1 no vivo) `Unable to find an element with the text: Import Options.` (testid renderiza; heading não existe) |
 | should handle single import mode selection | **[PASSA]** (parcial) | `setImportMode('single')` wired; avanço → INAPLICÁVEL |
 | should handle batch import mode selection | **[PASSA]** (parcial) | `setImportMode('batch')` wired; avanço → INAPLICÁVEL |
-| should display file upload for import mode on step 4 | **[FALHA-COMPORTAMENTO]** | `Unable to find an element with the text: Import Music File.` — **não há UI de upload no vivo**; renderiza o placeholder `"File upload functionality"` |
-| should display file upload for Sheet Music on step 3 | **[FALHA-COMPORTAMENTO]** | idem — Sheet Music força mode import ⇒ **adicionar partitura está quebrado** |
+| should display file upload for import mode on step 4 | **[CORRIGIDO F1]** (2026-07-24) | era: `Unable to find an element with the text: Import Music File.` — FileUploadZone substitui o placeholder |
+| should display file upload for Sheet Music on step 3 | **[CORRIGIDO F1]** (2026-07-24) | era: idem — adicionar partitura volta a funcionar |
 | TODO file handling _(já skip no morto)_ | **[INAPLICÁVEL]** | useFileHandling não existe no vivo |
 | TODO content creator display _(já skip no morto)_ | **[PASSA]** | des-skipado: no vivo o ContentCreator renderiza no ramo do passo 1 em mode create |
 | TODO metadata form _(já skip no morto)_ | **[INAPLICÁVEL]** | no vivo o form de metadados é interno ao DetailsStep (passo 2) |
 | TODO batch preview _(já skip no morto)_ | **[INAPLICÁVEL]** | idem (interno ao DetailsStep) |
 | TODO creation callback _(já skip no morto)_ | **[INAPLICÁVEL]** | fluxo vivo difere: criar → `setDraftContent`+`setCurrentStep(2)`; `onContentCreated` do pai só dispara no DetailsStep; spec nunca validada |
-| should display error messages when present | **[FALHA-COMPORTAMENTO]** | `Unable to find an element with the text: File upload failed.` — o vivo destrutura `error` do hook e **nunca o renderiza** (sem texto, sem `role="alert"`); falhas ficam invisíveis ao usuário |
+| should display error messages when present | **[CORRIGIDO F1]** (2026-07-24) | era: `Unable to find an element with the text: File upload failed.` — `error` do hook agora renderiza com `role="alert"` |
 | should clear errors when moving between steps | **[PASSA]** | ⚠️ passa por vacuidade: erro nunca renderiza, então "ausência de erro" é trivialmente verdadeira |
 | should handle missing required data gracefully | **[PASSA]** | não crasha sem file/createdContent |
 | TODO lyrics workflow _(já skip no morto)_ | **[INAPLICÁVEL]** | sequência do wizard de 5 passos; nunca validada |
 | should handle Chords content workflow | **[PASSA]** | ContentCreator renderiza em mode create |
-| should handle Sheet Music workflow | **[FALHA-COMPORTAMENTO]** | `Unable to find an element with the text: Import Music File.` — mesma perda da UI de upload (ModeSelector oculto ✓, upload ✗) |
+| should handle Sheet Music workflow | **[CORRIGIDO F1]** (2026-07-24) | era: `Unable to find an element with the text: Import Music File.` — mesma restauração da UI de upload |
 | TODO re-render _(já skip no morto)_ | **[INAPLICÁVEL]** | nunca validada |
 | should handle rapid state changes efficiently | **[PASSA]** | |
 | should clean up resources on unmount | **[PASSA]** | |
 | TODO ARIA _(já skip no morto)_ | **[INAPLICÁVEL]** | nunca validada; role main/h1/back eram chrome do morto — mas registra gap real de a11y do vivo (sem landmark, sem h1) |
 | should support keyboard navigation | **[PASSA]** | |
-| should have proper focus management | **[FALHA-COMPORTAMENTO]** | `Unable to find an accessible element with the role "button" and name /back/i` — mesma perda do botão Back |
+| should have proper focus management | **[CORRIGIDO F1]** (2026-07-24) | era: `Unable to find an accessible element with the role "button" and name /back/i` — mesma restauração do botão Back |
 | should pass correct props to ContentTypeSelector | **[PASSA]** | `selectedType`/`onTypeChange` idênticos |
 | should pass correct props to ModeSelector | **[PASSA]** | (setup: passo 1) `selectedMode`/`contentType`/`onModeChange` idênticos |
 | should pass correct props to StepIndicator | **[INAPLICÁVEL]** | StepIndicatorComponent vivo recebe só `{ currentStep }`; totalSteps/steps eram API do morto |
 
 Subtotal: **15 [PASSA] / 10 [FALHA-COMPORTAMENTO] / 11 [INAPLICÁVEL]**.
 
+> Pós-F1 (2026-07-24): **21 [PASSA] / 4 [FALHA-COMPORTAMENTO] (copy,
+> aguardando Fase 5) / 11 [INAPLICÁVEL]** — os 6 its funcionais foram
+> corrigidos e estão ativos e verdes.
+
 ---
 
 ## Consolidação dos comportamentos perdidos (todos em /add-content)
 
-1. **UI de upload de arquivo inexistente** (3 its): `mode: "import"` renderiza
-   `<p>File upload functionality</p>` — placeholder nunca implementado.
-   Impacto: importar arquivo e adicionar Sheet Music não funcionam na rota
-   /add-content. É a perda mais grave; candidata a fase de fix dedicada.
-2. **Exibição de erro inexistente** (1 it + 1 passe vácuo): `error` do
-   useAddContentLogic nunca é renderizado; sem `role="alert"`.
-3. **Botão Back inexistente** (2 its): prop `onBack` ignorada no passo 1;
-   `router.back()` da página nunca é acionável.
-4. **Headings do wizard perdidos** (4 its): "Add New Content", "What type of
-   content do you want to add?", "How would you like to add your content?"
-   (vivo tem copy divergente dentro do ModeSelector), "Import Options".
-   Menor gravidade (copy/UI), mas são spec divergente documentada.
+1. **[CORRIGIDO F1, 2026-07-24]** UI de upload de arquivo inexistente
+   (3 its): `mode: "import"` renderizava `<p>File upload functionality</p>`.
+   Restaurada via `FileUploadZone` → `POST /api/storage/upload`
+   (`.audit/F1-DESIGN.md`); importar arquivo e adicionar Sheet Music
+   voltam a funcionar.
+2. **[CORRIGIDO F1, 2026-07-24]** Exibição de erro inexistente (1 it +
+   1 passe vácuo): `error` do useAddContentLogic agora renderiza com
+   `role="alert"` no passo 1.
+3. **[CORRIGIDO F1, 2026-07-24]** Botão Back inexistente (2 its): prop
+   `onBack` agora acionável via botão Back no passo 1.
+4. **Headings do wizard perdidos** (4 its, _aguardando Fase 5_): "Add New
+   Content", "What type of content do you want to add?", "How would you
+   like to add your content?" (vivo tem copy divergente dentro do
+   ModeSelector), "Import Options". Menor gravidade (copy/UI), mas são
+   spec divergente documentada — decisão de UX na Fase 5.
 
-Fix é fase posterior — os its estão preservados como `it.skip` com
-comentário `BUG(P1-B)` apontando para este arquivo; para reativar, basta
-remover o `.skip` quando o comportamento for restaurado.
+Os 6 its funcionais foram des-skipados no F1 e estão verdes; os 4 de copy
+permanecem `it.skip` com comentário `BUG(P1-B)` apontando para este
+arquivo, aguardando Fase 5.
 
 ## Notas de método
 

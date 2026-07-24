@@ -1,0 +1,76 @@
+[WebServer]  [33m[1m⚠[22m[39m nodejs runtime support for middleware requires experimental.nodeMiddleware be enabled in your next.config
+🎵 Setting up Octavia E2E test environment...
+✅ User already authenticated
+✅ Authentication state saved
+
+Running 33 tests using 4 workers
+
+  ✓   1 [chromium] › tests/e2e/basic.spec.ts:24:7 › Basic App Functionality › should have accessible navigation (1.9s)
+  ✓   2 [chromium] › tests/e2e/basic.spec.ts:79:7 › Basic App Functionality › should be responsive (2.6s)
+  ✓   4 [chromium] › tests/e2e/basic.spec.ts:4:7 › Basic App Functionality › should load the home page (2.8s)
+[WebServer] Server-side user: No session cookie found
+  ✓   5 [chromium] › tests/e2e/basic.spec.ts:142:7 › Basic App Functionality › should have proper meta tags (5.9s)
+✅ Successfully navigated to /login
+[WebServer] Server-side user: No session cookie found
+  ✓   7 [chromium] › tests/e2e/basic.spec.ts:180:7 › Basic App Functionality › should show user authentication state (6.6s)
+  ✓   6 [chromium] › tests/e2e/basic.spec.ts:155:7 › Basic App Functionality › should have search functionality (6.9s)
+  ✓   8 [chromium] › tests/e2e/dashboard.spec.ts:9:7 › Dashboard › should display dashboard correctly (2.0s)
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+✅ Successfully navigated to /signup
+  ✓  11 [chromium] › tests/e2e/dashboard.spec.ts:68:7 › Dashboard › should navigate from quick actions (9.9s)
+  ✓  10 [chromium] › tests/e2e/dashboard.spec.ts:50:7 › Dashboard › should show quick actions (9.8s)
+  ✓   9 [chromium] › tests/e2e/dashboard.spec.ts:30:7 › Dashboard › should show recent content section (10.4s)
+  ✓   3 [chromium] › tests/e2e/basic.spec.ts:96:7 › Basic App Functionality › should handle page navigation (20.0s)
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+  ✓  12 [chromium] › tests/e2e/dashboard.spec.ts:91:7 › Dashboard › should show user stats (6.0s)
+  ✓  13 [chromium] › tests/e2e/dashboard.spec.ts:114:7 › Dashboard › should handle content interactions (6.0s)
+  ✓  14 [chromium] › tests/e2e/dashboard.spec.ts:134:7 › Dashboard › should be responsive on mobile (6.1s)
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+  ✓  17 [chromium] › tests/e2e/dashboard.spec.ts:201:7 › Dashboard › should show empty states appropriately (3.7s)
+  ✓  15 [chromium] › tests/e2e/dashboard.spec.ts:155:7 › Dashboard › should handle loading states (9.6s)
+  ✓  16 [chromium] › tests/e2e/dashboard.spec.ts:177:7 › Dashboard › should handle tab navigation (3.8s)
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+  ✓  18 [chromium] › tests/e2e/library.spec.ts:9:7 › Library › should display library page correctly (4.2s)
+[WebServer] Server-side user: No session cookie found
+  ✓  21 [chromium] › tests/e2e/library.spec.ts:60:7 › Library › should handle search functionality (4.5s)
+  ✓  20 [chromium] › tests/e2e/library.spec.ts:45:7 › Library › should navigate to add content page (4.5s)
+  ✓  19 [chromium] › tests/e2e/library.spec.ts:29:7 › Library › should handle empty library state (4.5s)
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+[WebServer] Server-side user: No session cookie found
+  ✓  22 [chromium] › tests/e2e/library.spec.ts:81:7 › Library › should handle filters (8.2s)
+[WebServer] Server-side user: No session cookie found
+  ✓  23 [chromium] › tests/e2e/library.spec.ts:99:7 › Library › should handle sorting (6.4s)
+  ✓  25 [chromium] › tests/e2e/library.spec.ts:139:7 › Library › should handle content interactions (8.2s)
+  ✓  24 [chromium] › tests/e2e/library.spec.ts:117:7 › Library › should be responsive on mobile (8.3s)
+[WebServer] Server-side user: No session cookie found
+  ✓  26 [chromium] › tests/e2e/library.spec.ts:159:7 › Library › should handle pagination (5.6s)
+  ✓  27 [chromium] › tests/e2e/library.spec.ts:181:7 › Library › should handle content actions (4.0s)
+  ✓  29 [chromium] › tests/e2e/navigation.spec.ts:32:7 › Navigation › should handle responsive navigation (2.3s)
+  ✓  28 [chromium] › tests/e2e/navigation.spec.ts:8:7 › Navigation › should navigate to main pages (2.7s)
+  ✓  31 [chromium] › tests/e2e/navigation.spec.ts:79:7 › Navigation › should handle sidebar collapse (2.5s)
+  ✓  32 [chromium] › tests/e2e/navigation.spec.ts:100:7 › Navigation › should have working search navigation (2.2s)
+  ✓  33 [chromium] › tests/e2e/navigation.spec.ts:121:7 › Navigation › should show user menu when authenticated (2.0s)
+  ✓  30 [chromium] › tests/e2e/navigation.spec.ts:59:7 › Navigation › should maintain navigation state (3.3s)
+🧹 Cleaning up Octavia E2E test environment...
+✅ Authentication state cleaned up
+📁 Test results available at: /Users/marcelviana/projects/octavia/test-results
+✅ Global teardown complete
+
+  33 passed (1.1m)
+
+To open last HTML report run:
+
+  pnpm exec playwright show-report
+

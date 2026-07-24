@@ -1,5 +1,26 @@
 # BASELINE — Estado real do repositório
 
+## ATUALIZAÇÃO F1 (2026-07-24) — upload restaurado em /add-content
+
+Medição em: Node v22.23.1, pnpm 10.28.0. Três commits (`f253931` upload,
+`b4e6f81` erro visível, `1839f68` botão Back), cada um verde no arquivo de
+teste afetado; suíte completa, lint e build verdes no estado final.
+Primeira mudança de comportamento do projeto (TDD contra os its
+`BUG(P1-B)`; design em `.audit/F1-DESIGN.md`).
+
+**Adicionados**: `components/add-content/FileUploadZone.tsx` +
+`upload-to-storage.ts` (client da rota viva `POST /api/storage/upload`,
+antes órfã). Mudança mínima em `useAddContentLogic`: `UploadedFile.url?` e
+`file_url` real no save.
+
+| Comando | Exit | Contagem |
+|---|---|---|
+| `pnpm test` | **0** ✅ | **387 passed / 109 skipped (496)** — +6 vs. P1-E: os 6 its funcionais de add-content des-skipados e verdes (baseline vermelho: `.audit/logs/f1-red.log`; verde: `f1-test-full.log`). Os 4 its de copy seguem skip (Fase 5) |
+| `pnpm build` | **0** ✅ | inalterado (`f1-build.log`) |
+| `pnpm exec playwright test --project=chromium` | **0** ✅ | **33/33 passed** (`f1-e2e-chromium.log`) — sem regressão vs. E2E-BASELINE (a falha flaky conhecida de basic.spec passou neste run) |
+
+---
+
 ## ATUALIZAÇÃO P1-E (2026-07-23) — FECHAMENTO DA FASE 1
 
 Medição em: Node v22.23.1, pnpm 10.28.0. Cinco commits (`14641af` lote A,
