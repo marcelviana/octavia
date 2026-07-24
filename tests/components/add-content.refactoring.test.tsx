@@ -167,9 +167,8 @@ describe('AddContent Refactoring Tests', () => {
       expect(mockUseAddContentLogic).toHaveBeenCalled()
     })
 
-    // BUG(P1-B): comportamento perdido na migração, ver .audit/LOST-BEHAVIOR.md
-    // — o vivo não renderiza botão "Back" no passo 1 (onBack é recebido e ignorado).
-    it.skip('should handle back navigation', () => {
+    // CORRIGIDO(F1): botão Back restaurado no passo 1.
+    it('should handle back navigation', () => {
       const onBack = vi.fn()
       render(<AddContent {...defaultProps} onBack={onBack} />)
 
@@ -504,9 +503,8 @@ describe('AddContent Refactoring Tests', () => {
       expect(contentTypeSelector).toBeInTheDocument()
     })
 
-    // BUG(P1-B): comportamento perdido na migração, ver .audit/LOST-BEHAVIOR.md
-    // — sem botão "Back" no vivo, não há alvo de foco (mesma perda do back).
-    it.skip('should have proper focus management', () => {
+    // CORRIGIDO(F1): botão Back restaurado — alvo de foco existe.
+    it('should have proper focus management', () => {
       render(<AddContent {...defaultProps} />)
 
       const backButton = screen.getByRole('button', { name: /back/i })

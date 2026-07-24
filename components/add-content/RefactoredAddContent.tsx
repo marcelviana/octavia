@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { AlertCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft, AlertCircle } from "lucide-react";
 import { ContentCreator } from "@/components/content-creator";
 import { FileUploadZone } from "./FileUploadZone";
 import { StepIndicator } from "./StepIndicatorComponent";
@@ -101,6 +102,17 @@ export function RefactoredAddContent({
     <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50">
       <div className="p-4">
         <div className="max-w-4xl mx-auto space-y-4">
+          <div className="flex items-center">
+            <Button
+              variant="ghost"
+              onClick={onBack}
+              className="hover:bg-amber-100 text-amber-700"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Button>
+          </div>
+
           <StepIndicator currentStep={currentStep} />
 
           {error && (
