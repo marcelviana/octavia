@@ -87,14 +87,28 @@ export const authSchemas = {
       .max(4000, 'Token too long')
   }),
 
-  // User profile update
+  // User profile creation (signup) — campos correspondem às colunas da tabela
+  // profiles (supabase/schema.sql). id/email vêm do token autenticado, nunca
+  // do body (chaves desconhecidas são descartadas pelo Zod).
+  profileCreate: z.object({
+    full_name: commonSchemas.createSafeText(0, 200).optional(),
+    first_name: commonSchemas.createSafeText(0, 100).optional(),
+    last_name: commonSchemas.createSafeText(0, 100).optional(),
+    primary_instrument: commonSchemas.createSafeText(0, 100).optional(),
+    avatar_url: z.string().url().optional(),
+    bio: commonSchemas.createSafeText(0, 2000).optional(),
+    website: z.string().url().optional()
+  }),
+
+  // User profile update — mesmo conjunto de campos editáveis
   profileUpdate: z.object({
-    displayName: commonSchemas.createSafeText(0, 1000).optional(),
-    preferences: z.object({
-      theme: z.enum(['light', 'dark', 'system']).optional(),
-      autoSync: z.boolean().optional(),
-      performanceMode: z.boolean().optional()
-    }).optional()
+    full_name: commonSchemas.createSafeText(0, 200).optional(),
+    first_name: commonSchemas.createSafeText(0, 100).optional(),
+    last_name: commonSchemas.createSafeText(0, 100).optional(),
+    primary_instrument: commonSchemas.createSafeText(0, 100).optional(),
+    avatar_url: z.string().url().optional(),
+    bio: commonSchemas.createSafeText(0, 2000).optional(),
+    website: z.string().url().optional()
   })
 } as const
 
@@ -308,9 +322,10 @@ export function withValidation<T extends z.ZodSchema>(
     validateParams?: boolean
     requireAuth?: boolean
     source?: 'body' | 'query' | 'params'
+    allowUnverifiedEmail?: boolean
   } = {}
 ) {
-  const { validateParams = false, requireAuth = true, source = 'body' } = options
+  const { validateParams = false, requireAuth = true, source = 'body', allowUnverifiedEmail = false } = options
 
   return function<TArgs extends any[]>(
     handler: (
@@ -326,7 +341,7 @@ export function withValidation<T extends z.ZodSchema>(
         let user: Awaited<ReturnType<typeof requireAuthServerSecure>> = null
 
         if (requireAuth) {
-          user = await requireAuthServerSecure(request)
+          user = await requireAuthServerSecure(request, { allowUnverifiedEmail })
           if (!user) {
             return new Response(
               JSON.stringify({
@@ -431,8 +446,11 @@ export function withValidation<T extends z.ZodSchema>(
 export const withAuth = (handler: any) =>
   withValidation(z.object({}), { requireAuth: true, source: 'body' })(handler)
 
-export const withBodyValidation = <T extends z.ZodSchema>(schema: T) =>
-  withValidation(schema, { requireAuth: true, source: 'body' })
+export const withBodyValidation = <T extends z.ZodSchema>(
+  schema: T,
+  options: { allowUnverifiedEmail?: boolean } = {}
+) =>
+  withValidation(schema, { requireAuth: true, source: 'body', ...options })
 
 export const withQueryValidation = <T extends z.ZodSchema>(schema: T) =>
   withValidation(schema, { requireAuth: true, source: 'query' })

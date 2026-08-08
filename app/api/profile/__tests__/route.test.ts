@@ -11,17 +11,17 @@ const mockEq = vi.fn()
 const mockSingle = vi.fn()
 
 // Set up the chain properly for all Supabase operations
-mockSelect.mockReturnValue({ 
-  eq: mockEq, 
+mockSelect.mockReturnValue({
+  eq: mockEq,
   single: mockSingle
 })
-mockEq.mockReturnValue({ 
-  select: mockSelect, 
+mockEq.mockReturnValue({
+  select: mockSelect,
   single: mockSingle
 })
-mockInsert.mockReturnValue({ 
-  select: mockSelect, 
-  single: mockSingle 
+mockInsert.mockReturnValue({
+  select: mockSelect,
+  single: mockSingle
 })
 mockUpdate.mockReturnValue({
   eq: mockEq,
@@ -43,26 +43,6 @@ vi.mock('@/lib/firebase-admin', () => ({
   verifyFirebaseToken: vi.fn()
 }))
 
-// Mock validation utilities
-vi.mock('@/lib/validation-utils', () => ({
-  validateRequestBody: vi.fn(),
-  createValidationErrorResponse: vi.fn(() => 
-    new Response(JSON.stringify({ error: 'Validation failed' }), { status: 400 })
-  ),
-  createUnauthorizedResponse: vi.fn(() => 
-    new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401 })
-  ),
-  createServerErrorResponse: vi.fn((message: string) => 
-    new Response(JSON.stringify({ error: message }), { status: 500 })
-  )
-}))
-
-// Mock validation schemas
-vi.mock('@/lib/validation-schemas', () => ({
-  createProfileSchema: {},
-  updateProfileSchema: {}
-}))
-
 // Mock rate limiting
 vi.mock('@/lib/rate-limit', () => ({
   withRateLimit: vi.fn((handler) => handler)
@@ -72,19 +52,18 @@ vi.mock('@/lib/rate-limit', () => ({
 vi.mock('@/lib/logger', () => ({
   default: {
     error: vi.fn(),
-    warn: vi.fn()
+    warn: vi.fn(),
+    log: vi.fn()
   }
 }))
 
 // Import the actual route handlers
 import { GET, POST, PATCH } from '../route'
 import { verifyFirebaseToken } from '@/lib/firebase-admin'
-import { validateRequestBody } from '@/lib/validation-utils'
 import logger from '@/lib/logger'
 
 // Get mocked functions for type safety
 const mockVerifyFirebaseToken = vi.mocked(verifyFirebaseToken)
-const mockValidateRequestBody = vi.mocked(validateRequestBody)
 const mockLogger = vi.mocked(logger)
 
 describe('/api/profile', () => {
@@ -102,6 +81,17 @@ describe('/api/profile', () => {
     iss: 'https://securetoken.google.com/test-project',
     sub: 'test-user-123',
     iat: Math.floor(Date.now() / 1000)
+  }
+
+  // Payload REAL enviado pelo signUp em contexts/firebase-auth-context.tsx:
+  // { ...userData, id, email } onde userData vem de components/auth/signup-panel.tsx
+  const realSignupPayload = {
+    first_name: 'Test',
+    last_name: 'User',
+    full_name: 'Test User',
+    primary_instrument: 'Guitar',
+    id: 'test-user-123',
+    email: 'test@example.com'
   }
 
   beforeEach(() => {
@@ -126,9 +116,9 @@ describe('/api/profile', () => {
 
     it('returns null when profile does not exist', async () => {
       mockVerifyFirebaseToken.mockResolvedValue(mockUser)
-      mockSingle.mockResolvedValue({ 
-        data: null, 
-        error: { code: 'PGRST116', message: 'No rows found' } 
+      mockSingle.mockResolvedValue({
+        data: null,
+        error: { code: 'PGRST116', message: 'No rows found' }
       })
 
       const request = new NextRequest('http://localhost:3000/api/profile', {
@@ -147,8 +137,9 @@ describe('/api/profile', () => {
       const mockProfile = {
         id: mockUser.uid,
         email: mockUser.email,
-        display_name: 'Test User',
-        bio: 'A test user profile',
+        first_name: 'Test',
+        last_name: 'User',
+        full_name: 'Test User',
         created_at: '2024-01-01T00:00:00Z',
         updated_at: '2024-01-01T00:00:00Z'
       }
@@ -168,9 +159,9 @@ describe('/api/profile', () => {
 
     it('handles database errors gracefully', async () => {
       mockVerifyFirebaseToken.mockResolvedValue(mockUser)
-      mockSingle.mockResolvedValue({ 
-        data: null, 
-        error: { code: 'PGRST500', message: 'Database error' } 
+      mockSingle.mockResolvedValue({
+        data: null,
+        error: { code: 'PGRST500', message: 'Database error' }
       })
 
       const request = new NextRequest('http://localhost:3000/api/profile', {
@@ -188,7 +179,7 @@ describe('/api/profile', () => {
       const mockProfile = {
         id: mockUser.uid,
         email: mockUser.email,
-        display_name: 'Cookie User'
+        full_name: 'Cookie User'
       }
 
       mockVerifyFirebaseToken.mockResolvedValue(mockUser)
@@ -212,8 +203,11 @@ describe('/api/profile', () => {
 
       const request = new NextRequest('http://localhost:3000/api/profile', {
         method: 'POST',
-        headers: { authorization: 'Bearer invalid-token' },
-        body: JSON.stringify({ display_name: 'Test User' })
+        headers: {
+          authorization: 'Bearer invalid-token',
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify(realSignupPayload)
       })
       const response = await POST(request)
       const data = await response.json()
@@ -223,83 +217,104 @@ describe('/api/profile', () => {
       expect(data.error).toMatch(/Unauthorized|Authentication required/)
     })
 
-    it.skip('TODO: Fix profile creation - creates profile successfully with valid data', async () => {
-      const profileInput = {
-        display_name: 'New User',
-        bio: 'A new user joining the platform',
-        website: 'https://example.com'
-      }
-
+    it('BUG(profile-create): creates profile with the real signup payload (first_name/last_name)', async () => {
       const mockProfile = {
         id: mockUser.uid,
         email: mockUser.email,
-        ...profileInput,
+        first_name: 'Test',
+        last_name: 'User',
+        full_name: 'Test User',
+        primary_instrument: 'Guitar',
         created_at: '2024-01-01T00:00:00Z',
         updated_at: '2024-01-01T00:00:00Z'
       }
 
-      mockVerifyFirebaseToken.mockResolvedValue(mockUser)
-      mockValidateRequestBody.mockResolvedValue({
-        success: true,
-        data: profileInput
-      })
       mockSingle.mockResolvedValue({ data: mockProfile, error: null })
 
       const request = new NextRequest('http://localhost:3000/api/profile', {
         method: 'POST',
-        headers: { authorization: 'Bearer valid-token' },
-        body: JSON.stringify(profileInput)
+        headers: {
+          authorization: 'Bearer valid-token',
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify(realSignupPayload)
       })
       const response = await POST(request)
       const data = await response.json()
 
-      expect(response.status).toBe(200)
+      expect(response.status).toBe(201)
       expect(data).toEqual(mockProfile)
       expect(mockFrom).toHaveBeenCalledWith('profiles')
+      // O insert deve preservar os campos do signup — o schema de validação
+      // não pode descartá-los silenciosamente
       expect(mockInsert).toHaveBeenCalledWith(expect.objectContaining({
         id: mockUser.uid,
         email: mockUser.email,
-        ...profileInput
+        first_name: 'Test',
+        last_name: 'User',
+        full_name: 'Test User',
+        primary_instrument: 'Guitar'
       }))
     })
 
-    it.skip('TODO: Fix validation error - returns validation error for invalid data', async () => {
-      mockVerifyFirebaseToken.mockResolvedValue(mockUser)
-      mockValidateRequestBody.mockResolvedValue({
-        success: false,
-        errors: ['Display name is required'],
-        details: {} as any
-      })
+    it('BUG(profile-create): ignores client-provided id/email and uses the authenticated user', async () => {
+      mockSingle.mockResolvedValue({ data: {}, error: null })
 
       const request = new NextRequest('http://localhost:3000/api/profile', {
         method: 'POST',
-        headers: { authorization: 'Bearer valid-token' },
-        body: JSON.stringify({ bio: 'No display name' })
+        headers: {
+          authorization: 'Bearer valid-token',
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          ...realSignupPayload,
+          id: 'spoofed-id',
+          email: 'spoofed@evil.com'
+        })
+      })
+      const response = await POST(request)
+
+      expect(response.status).toBe(201)
+      expect(mockInsert).toHaveBeenCalledWith(expect.objectContaining({
+        id: mockUser.uid,
+        email: mockUser.email
+      }))
+    })
+
+    it('BUG(profile-create): returns validation error for invalid data', async () => {
+      // Se o insert acontecer (comportamento bugado), não deixa o teste
+      // quebrar por outro motivo — a asserção é sobre o status 400
+      mockSingle.mockResolvedValue({ data: {}, error: null })
+
+      const request = new NextRequest('http://localhost:3000/api/profile', {
+        method: 'POST',
+        headers: {
+          authorization: 'Bearer valid-token',
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({ first_name: 'x'.repeat(200) })
       })
       const response = await POST(request)
       const data = await response.json()
 
       expect(response.status).toBe(400)
-      expect(data).toEqual({ error: 'Validation failed' })
+      expect(data.error).toBe('Validation failed')
+      expect(mockInsert).not.toHaveBeenCalled()
     })
 
-    it.skip('TODO: Fix DB error handling - handles database errors during creation', async () => {
-      const profileInput = { display_name: 'Test User' }
-
-      mockVerifyFirebaseToken.mockResolvedValue(mockUser)
-      mockValidateRequestBody.mockResolvedValue({
-        success: true,
-        data: profileInput
-      })
-      mockSingle.mockResolvedValue({ 
-        data: null, 
-        error: { message: 'Duplicate key violation' } 
+    it('handles database errors during creation', async () => {
+      mockSingle.mockResolvedValue({
+        data: null,
+        error: { message: 'Duplicate key violation' }
       })
 
       const request = new NextRequest('http://localhost:3000/api/profile', {
         method: 'POST',
-        headers: { authorization: 'Bearer valid-token' },
-        body: JSON.stringify(profileInput)
+        headers: {
+          authorization: 'Bearer valid-token',
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify(realSignupPayload)
       })
       const response = await POST(request)
       const data = await response.json()
@@ -309,20 +324,21 @@ describe('/api/profile', () => {
       expect(mockLogger.error).toHaveBeenCalled()
     })
 
-    it.skip('TODO: Fix invalid JSON - handles invalid JSON gracefully', async () => {
-      mockVerifyFirebaseToken.mockResolvedValue(mockUser)
-
+    it('handles invalid JSON gracefully', async () => {
       const request = new NextRequest('http://localhost:3000/api/profile', {
         method: 'POST',
-        headers: { authorization: 'Bearer valid-token' },
+        headers: {
+          authorization: 'Bearer valid-token',
+          'content-type': 'application/json'
+        },
         body: 'invalid json{'
       })
       const response = await POST(request)
       const data = await response.json()
 
-      expect(response.status).toBe(500)
-      expect(data).toEqual({ error: 'Failed to create profile' })
-      expect(mockLogger.error).toHaveBeenCalled()
+      expect(response.status).toBe(400)
+      expect(data.error).toBe('Validation failed')
+      expect(mockInsert).not.toHaveBeenCalled()
     })
   })
 
@@ -333,8 +349,11 @@ describe('/api/profile', () => {
 
       const request = new NextRequest('http://localhost:3000/api/profile', {
         method: 'PATCH',
-        headers: { authorization: 'Bearer invalid-token' },
-        body: JSON.stringify({ display_name: 'Updated Name' })
+        headers: {
+          authorization: 'Bearer invalid-token',
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({ first_name: 'Updated' })
       })
       const response = await PATCH(request)
       const data = await response.json()
@@ -344,10 +363,12 @@ describe('/api/profile', () => {
       expect(data.error).toMatch(/Unauthorized|Authentication required/)
     })
 
-    it.skip('TODO: Fix profile update - updates profile successfully with valid data', async () => {
+    it('BUG(profile-create): updates profile with real profile fields (first_name/last_name)', async () => {
+      // Payload real de updateProfile em contexts/firebase-auth-context.tsx (Partial<Profile>)
       const updateData = {
-        display_name: 'Updated User',
-        bio: 'Updated bio'
+        first_name: 'Updated',
+        last_name: 'Person',
+        full_name: 'Updated Person'
       }
 
       const mockUpdatedProfile = {
@@ -358,17 +379,14 @@ describe('/api/profile', () => {
         updated_at: '2024-01-02T00:00:00Z'
       }
 
-      mockVerifyFirebaseToken.mockResolvedValue(mockUser)
-      mockValidateRequestBody.mockResolvedValue({
-        success: true,
-        data: updateData,
-        errors: []
-      })
       mockSingle.mockResolvedValue({ data: mockUpdatedProfile, error: null })
 
       const request = new NextRequest('http://localhost:3000/api/profile', {
         method: 'PATCH',
-        headers: { authorization: 'Bearer valid-token' },
+        headers: {
+          authorization: 'Bearer valid-token',
+          'content-type': 'application/json'
+        },
         body: JSON.stringify(updateData)
       })
       const response = await PATCH(request)
@@ -384,43 +402,39 @@ describe('/api/profile', () => {
       expect(mockEq).toHaveBeenCalledWith('id', mockUser.uid)
     })
 
-    it.skip('TODO: Fix update validation - returns validation error for invalid update data', async () => {
-      mockVerifyFirebaseToken.mockResolvedValue(mockUser)
-      mockValidateRequestBody.mockResolvedValue({
-        success: false,
-        data: null,
-        errors: ['Bio too long']
-      })
+    it('BUG(profile-create): returns validation error for invalid update data', async () => {
+      mockSingle.mockResolvedValue({ data: {}, error: null })
 
       const request = new NextRequest('http://localhost:3000/api/profile', {
         method: 'PATCH',
-        headers: { authorization: 'Bearer valid-token' },
-        body: JSON.stringify({ bio: 'x'.repeat(1000) })
+        headers: {
+          authorization: 'Bearer valid-token',
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({ bio: 'x'.repeat(3000) })
       })
       const response = await PATCH(request)
       const data = await response.json()
 
       expect(response.status).toBe(400)
-      expect(data).toEqual({ error: 'Validation failed' })
+      expect(data.error).toBe('Validation failed')
+      expect(mockUpdate).not.toHaveBeenCalled()
     })
 
-    it.skip('TODO: Fix update DB error - handles database errors during update', async () => {
-      const updateData = { display_name: 'Updated Name' }
+    it('handles database errors during update', async () => {
+      const updateData = { first_name: 'Updated' }
 
-      mockVerifyFirebaseToken.mockResolvedValue(mockUser)
-      mockValidateRequestBody.mockResolvedValue({
-        success: true,
-        data: updateData,
-        errors: []
-      })
-      mockSingle.mockResolvedValue({ 
-        data: null, 
-        error: { message: 'Profile not found' } 
+      mockSingle.mockResolvedValue({
+        data: null,
+        error: { message: 'Profile not found' }
       })
 
       const request = new NextRequest('http://localhost:3000/api/profile', {
         method: 'PATCH',
-        headers: { authorization: 'Bearer valid-token' },
+        headers: {
+          authorization: 'Bearer valid-token',
+          'content-type': 'application/json'
+        },
         body: JSON.stringify(updateData)
       })
       const response = await PATCH(request)
@@ -431,28 +445,25 @@ describe('/api/profile', () => {
       expect(mockLogger.error).toHaveBeenCalled()
     })
 
-    it.skip('TODO: Fix partial updates - handles partial updates correctly', async () => {
+    it('BUG(profile-create): handles partial updates correctly', async () => {
       const partialUpdate = { bio: 'Only updating bio' }
 
       const mockUpdatedProfile = {
         id: mockUser.uid,
         email: mockUser.email,
-        display_name: 'Existing Name',
+        first_name: 'Existing',
         bio: 'Only updating bio',
         updated_at: '2024-01-02T00:00:00Z'
       }
 
-      mockVerifyFirebaseToken.mockResolvedValue(mockUser)
-      mockValidateRequestBody.mockResolvedValue({
-        success: true,
-        data: partialUpdate,
-        errors: []
-      })
       mockSingle.mockResolvedValue({ data: mockUpdatedProfile, error: null })
 
       const request = new NextRequest('http://localhost:3000/api/profile', {
         method: 'PATCH',
-        headers: { authorization: 'Bearer valid-token' },
+        headers: {
+          authorization: 'Bearer valid-token',
+          'content-type': 'application/json'
+        },
         body: JSON.stringify(partialUpdate)
       })
       const response = await PATCH(request)

@@ -243,7 +243,10 @@ export async function validateFirebaseTokenSecure(
 /**
  * SECURITY-HARDENED: Require authentication with enhanced security
  */
-export async function requireAuthServerSecure(request: Request): Promise<{
+export async function requireAuthServerSecure(
+  request: Request,
+  options: { allowUnverifiedEmail?: boolean } = {}
+): Promise<{
   uid: string
   email?: string
   emailVerified?: boolean
@@ -292,8 +295,10 @@ export async function requireAuthServerSecure(request: Request): Promise<{
       return null
     }
 
-    // SECURITY: Additional email verification check
-    if (!validation.user.emailVerified) {
+    // SECURITY: Additional email verification check.
+    // allowUnverifiedEmail existe para fluxos onde o usuário acabou de ser
+    // criado e ainda não pôde verificar o email (ex.: criação de perfil no signup)
+    if (!validation.user.emailVerified && !options.allowUnverifiedEmail) {
       logger.warn(`Unverified user attempted access: ${validation.user.uid}`)
       return null
     }

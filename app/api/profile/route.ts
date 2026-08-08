@@ -51,10 +51,12 @@ const getProfileHandler = async (request: NextRequest) => {
 export const GET = withRateLimit(getProfileHandler, 25)
 
 // POST /api/profile - Create user profile
-const createProfileHandlerRaw = withBodyValidation(authSchemas.profileUpdate)(
+// allowUnverifiedEmail: no signup o usuário Firebase acabou de ser criado e
+// ainda não verificou o email — sem isso o perfil nunca seria criado em prod
+const createProfileHandlerRaw = withBodyValidation(authSchemas.profileCreate, { allowUnverifiedEmail: true })(
   async (
     request: Request,
-    validatedData: z.infer<typeof authSchemas.profileUpdate>,
+    validatedData: z.infer<typeof authSchemas.profileCreate>,
     user?: NonNullable<Awaited<ReturnType<typeof requireAuthServerSecure>>>
   ) => {
     try {

@@ -337,6 +337,13 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
         })
 
         if (!response.ok) {
+          // Rollback: sem o perfil no Supabase o usuário Firebase ficaria órfão
+          // e o email nunca mais poderia se cadastrar
+          try {
+            await firebaseUser.delete()
+          } catch (deleteError) {
+            logger.error("Failed to delete orphaned Firebase user after profile creation failure:", deleteError)
+          }
           throw new Error('Failed to create profile in database')
         }
 
