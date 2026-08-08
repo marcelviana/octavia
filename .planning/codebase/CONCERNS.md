@@ -368,4 +368,38 @@
 
 ---
 
-*Concerns audit: 2026-02-23*
+## Adendo: Banco de dados & Housekeeping (2026-08-08)
+
+Itens levantados durante o fechamento do BUG(profile-create) e da verificação
+schema.sql vs. prod (`supabase gen types`). Registro apenas — nada implementado.
+
+### Reorder de setlist_songs: 2N UPDATEs sequenciais
+- **Issue:** O reorder faz um UPDATE por música em duas fases (posições temporárias `10000+i`, depois posições finais `1..n`) para contornar `UNIQUE(setlist_id, position)` — num setlist de 30 músicas são 60 round-trips por request
+- **Files:** `app/api/setlists/songs/[songId]/route.ts` (linhas ~232 e ~271); shift pós-remoção idem (linha ~109)
+- **Impact:** Latência proporcional ao tamanho do setlist. **Risco de integridade:** interrupção na fase 1 (crash, timeout) persiste posições `10000+` no banco — ordem corrompida visível ao usuário, sem rollback
+- **Fix approach:** Mover o reorder para uma função RPC/transação no Postgres (candidato a housekeeping; sem urgência enquanto setlists forem pequenos)
+
+### Tabela `annotations` em prod: morta no código
+- **Issue:** A tabela existe em prod (com FKs para profiles/content) mas nenhum código a acessa — zero `.from("annotations")`, zero rota de API. A feature de anotações da UI (`components/annotation-tools.tsx`) persiste em `content.content_data.annotations` (JSONB)
+- **Impact:** Tabela órfã; decisão **drop vs. migrar a feature para ela** é de produto — adiada para a **Fase E do UX assessment**
+- **Pendência imediata:** verificar no dashboard do Supabase se RLS está habilitado nela — não é coberta por `rls-policies.sql` nem `schema.sql`
+- **Fix approach:** Nenhum até a decisão da Fase E; se drop, confirmar antes que está vazia em prod
+
+### Colunas venue/performance_date/notes de setlists: possivelmente write-only
+- **Issue:** Existem só em prod (ausentes do schema.sql) e são escritas pela API (`app/api/setlists/route.ts:122-125`), mas não foi verificado se alguma UI as exibe
+- **Impact:** Se write-only, é dado coletado sem uso (ou UI perdida)
+- **Fix approach:** Verificar na **Fase C (área setlists)** se a UI expõe esses campos; decidir expor ou parar de escrever
+
+### Adotar migrations versionadas + regenerar schema.sql
+- **Issue:** O projeto não usa migrations versionadas; `supabase/schema.sql` é snapshot manual com drift confirmado em 2026-08-08 (tabela `annotations` e colunas de `setlists` ausentes; `setlist_songs.updated_at` declarado mas inexistente em prod)
+- **Referência:** detalhes do drift e do processo de validação em `.planning/codebase/STRUCTURE.md`, seção **supabase**
+- **Fix approach:** `supabase migration new` + `supabase db push` como fluxo padrão; regenerar schema.sql a partir de prod
+
+### Inventariar it.skip restantes da suíte
+- **Issue:** A suíte tem ~101 testes skipped (5 arquivos inteiros entre eles). Não há distinção entre "skip legítimo" (ex.: suíte movida/obsoleta) e "bug conhecido não corrigido"
+- **Impact:** Bugs reais podem estar escondidos atrás de skips genéricos — foi exatamente o caso dos 7 `it.skip "TODO: Fix..."` que mascaravam o BUG(profile-create)
+- **Fix approach:** Inventariar todos os `it.skip`/`describe.skip`, classificar cada um como "legítimo" (documentar por quê) ou "bug conhecido" (rotular no padrão `BUG(<slug>)` e abrir item), seguindo o precedente de BUG(profile-create)
+
+---
+
+*Concerns audit: 2026-02-23 · Adendo DB/housekeeping: 2026-08-08*
