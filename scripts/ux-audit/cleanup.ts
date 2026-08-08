@@ -69,13 +69,19 @@ async function main(): Promise<void> {
     console.log('[cleanup] MODO DRY-RUN: nada será deletado')
   }
 
-  // 1. Setlists com prefixo
+  // 1. Setlists do audit. Três formas de identificar:
+  //    - "UX-AUDIT ..." (prefixo SEM colchetes usado pelo seed — o
+  //      sanitizador strict do setlistSchemas.create zera nomes com [ ])
+  //    - "[UX-AUDIT] ..." (caso o sanitizador mude e o prefixo passe)
+  //    - nome vazio: lixo das execuções antigas do seed, cujos nomes o
+  //      sanitizador esvaziou (a conta é dedicada ao audit — toda setlist
+  //      dela é nossa)
   const setlists = (await apiFetch('/api/setlists').then(async (res) => {
     if (!res.ok) throw new Error(`GET /api/setlists: HTTP ${res.status}`)
     return (await res.json()) as SetlistRow[]
-  })).filter((s) => s.name.startsWith(PREFIX))
+  })).filter((s) => s.name.startsWith('UX-AUDIT') || s.name.startsWith(PREFIX) || s.name === '')
 
-  console.log(`[cleanup] ${setlists.length} setlists ${PREFIX} encontradas`)
+  console.log(`[cleanup] ${setlists.length} setlists do audit encontradas`)
 
   for (const setlist of setlists) {
     const label = `setlist "${setlist.name}" (${setlist.setlist_songs.length} músicas)`

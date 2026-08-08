@@ -9,7 +9,15 @@
  *
  * Execução: serial, ~300ms entre requests, backoff exponencial em 429
  * (via apiFetch). Idempotente: itens cujo título [UX-AUDIT] já existe são
- * pulados (duplicados intencionais são controlados por contagem).
+ * pulados (duplicados intencionais são controlados por contagem); músicas
+ * de setlist são idempotentes POR MÚSICA — só o delta até o alvo é
+ * inserido, com posições sequenciais a partir da última existente.
+ *
+ * A rota POST /api/setlists/[id]/songs tem pacing próprio (ver
+ * SONGS_DELAY_MS): limite de 50 req/60s por IP em lib/rate-limit.ts, num
+ * contador LRU COMPARTILHADO entre todas as rotas que usam withRateLimit
+ * (o token é só o IP, sem a rota) e com TTL renovado a cada request aceito
+ * (janela desliza — estourar o limite e insistir mantém o bloqueio).
  *
  * Uso: pnpm tsx scripts/ux-audit/seed.ts --yes
  */
@@ -18,6 +26,23 @@ import { apiFetch, sleep } from './auth'
 
 const PREFIX = '[UX-AUDIT]'
 const DELAY_MS = 300
+
+// Prefixo SEM colchetes para NOMES DE SETLIST: o setlistSchemas.create usa
+// createSafeText (nível strict do lib/input-sanitizer.ts), cujo padrão de
+// "command injection" /[;&|`$(){}[\]]/ casa com colchetes — e no strict
+// QUALQUER ameaça detectada zera a string INTEIRA. "[UX-AUDIT] X" vira ""
+// no banco (achado da Fase C: nomes com [, ], (, ), &, ', ", + são
+// silenciosamente esvaziados). Títulos de conteúdo não passam por isso.
+const SETLIST_PREFIX = 'UX-AUDIT'
+
+// POST /api/setlists/[id]/songs: withRateLimit(handler, 50) sobre o
+// defaultLimiter de lib/rate-limit.ts. NÃO é janela rolante: o contador
+// LRU tem TTL de 60s renovado a cada request ACEITO e é compartilhado por
+// IP entre todas as rotas do withRateLimit — na prática, burst de até 50
+// e depois 60s de silêncio para o contador expirar. O pacing correto é
+// adaptativo: ler X-RateLimit-Remaining/Reset das respostas e pausar até
+// o reset quando o orçamento estiver acabando.
+const SONGS_BUDGET_FLOOR = 3
 
 type ContentTypeName = 'Lyrics' | 'Chords' | 'Tab' | 'Sheet'
 
@@ -145,6 +170,23 @@ const CONTENT_PLAN: ContentItem[] = [
   { title: `${PREFIX} Palco`, artist: 'Gilberto Gil', content_type: 'Lyrics', content_data: { lyrics: LYRICS_DUMMY } },
 ]
 
+// A tabela setlist_songs em PROD tem unique constraint em
+// (setlist_id, content_id) — NÃO está no schema.sql (drift confirmado) — e
+// repetir uma música numa setlist retorna 500 genérico (achado Fase C/D:
+// bis/reprise é impossível pela API). A setlist Estresse (60 músicas)
+// exige portanto 60 conteúdos DISTINTOS; os "Bis" abaixo completam o que
+// falta além do CONTENT_PLAN + PDFs.
+const FILLER_TARGET = 60
+const FILLER_PLAN: ContentItem[] = Array.from(
+  { length: Math.max(0, FILLER_TARGET - (CONTENT_PLAN.length + 2)) },
+  (_, i) => ({
+    title: `${PREFIX} Bis nº ${String(i + 1).padStart(2, '0')}`,
+    artist: 'Conjunto do Bis',
+    content_type: 'Lyrics' as const,
+    content_data: { lyrics: LYRICS_DUMMY },
+  })
+)
+
 // PDFs pelo fluxo real de upload (storage + content)
 const PDF_PLAN = [
   { title: `${PREFIX} Partitura de 1 página`, filename: 'ux-audit-partitura-1p.pdf', pages: 1 },
@@ -258,13 +300,13 @@ interface SetlistRow {
   venue?: string | null
   performance_date?: string | null
   notes?: string | null
-  setlist_songs: Array<{ id: string; position: number }>
+  setlist_songs: Array<{ id: string; position: number; content_id: string }>
 }
 
 const SETLIST_PLAN = [
-  { name: `${PREFIX} Solo`, songCount: 1, extras: {} },
+  { name: `${SETLIST_PREFIX} Solo`, songCount: 1, extras: {} },
   {
-    name: `${PREFIX} Show padrão`,
+    name: `${SETLIST_PREFIX} Show padrão`,
     songCount: 8,
     // venue/performance_date/notes: a rota lê esses campos, mas o schema Zod
     // (setlistSchemas.create) os descarta antes do handler. Enviamos mesmo
@@ -276,7 +318,7 @@ const SETLIST_PLAN = [
       notes: 'Chegar 19h para passagem de som; levar cabo extra',
     },
   },
-  { name: `${PREFIX} Estresse`, songCount: 60, extras: {} },
+  { name: `${SETLIST_PREFIX} Estresse`, songCount: 60, extras: {} },
 ] as const
 
 async function fetchSetlists(): Promise<SetlistRow[]> {
@@ -297,6 +339,12 @@ async function createSetlist(plan: (typeof SETLIST_PLAN)[number]): Promise<Setli
   }
   const row = (await res.json()) as SetlistRow
   logItem('created', plan.name)
+  if (row.name !== plan.name) {
+    console.log(
+      `[seed]         achado: nome enviado "${plan.name}" persistido como ` +
+        `"${row.name}" (sanitizador strict do createSafeText — verificar na Fase C)`
+    )
+  }
   if ('venue' in plan.extras) {
     const stripped = [
       row.venue == null ? 'venue' : null,
@@ -313,18 +361,52 @@ async function createSetlist(plan: (typeof SETLIST_PLAN)[number]): Promise<Setli
   return row
 }
 
+interface SongInsertResult {
+  ok: boolean
+  status: number
+  remaining: number | null
+  resetAtMs: number | null
+  retryAfterSec: number | null
+  detail: string
+}
+
 async function addSongToSetlist(
   setlistId: string,
   contentId: string,
   position: number,
   notes?: string
-): Promise<boolean> {
+): Promise<SongInsertResult> {
   const res = await apiFetch(`/api/setlists/${setlistId}/songs`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ content_id: contentId, position, ...(notes ? { notes } : {}) }),
   })
-  return res.ok
+  const remainingHeader = res.headers.get('X-RateLimit-Remaining')
+  const resetHeader = res.headers.get('X-RateLimit-Reset')
+  const retryAfterHeader = res.headers.get('Retry-After')
+  let detail = ''
+  if (!res.ok) {
+    try {
+      detail = (await res.text()).slice(0, 200)
+    } catch {
+      // corpo ilegível
+    }
+  }
+  return {
+    ok: res.ok,
+    status: res.status,
+    remaining: remainingHeader !== null ? Number(remainingHeader) : null,
+    resetAtMs: resetHeader ? Date.parse(resetHeader) : null,
+    retryAfterSec: retryAfterHeader !== null ? Number(retryAfterHeader) : null,
+    detail,
+  }
+}
+
+/** Pausa até o reset da janela de rate limit (com margem de 2s). */
+async function waitForRateLimitReset(resetAtMs: number | null, label: string): Promise<void> {
+  const waitMs = resetAtMs ? Math.max(resetAtMs - Date.now(), 0) + 2_000 : 62_000
+  console.log(`[seed]         ${label} — pausando ${Math.ceil(waitMs / 1000)}s até a janela de rate limit resetar`)
+  await sleep(waitMs)
 }
 
 // ---------------------------------------------------------------------------
@@ -352,8 +434,8 @@ async function main(): Promise<void> {
 
   const contentIds: string[] = auditRows.map((row) => row.id)
 
-  // 1. Conteúdo inline (letras, cifras, tablaturas)
-  for (const item of CONTENT_PLAN) {
+  // 1. Conteúdo inline (letras, cifras, tablaturas + fillers da Estresse)
+  for (const item of [...CONTENT_PLAN, ...FILLER_PLAN]) {
     const remaining = existingByTitle.get(item.title) ?? 0
     if (remaining > 0) {
       existingByTitle.set(item.title, remaining - 1)
@@ -418,6 +500,10 @@ async function main(): Promise<void> {
   for (const plan of SETLIST_PLAN) {
     let setlist = existingSetlists.find((s) => s.name === plan.name) ?? null
     let currentSongs = setlist?.setlist_songs.length ?? 0
+    // Posições sequenciais a partir da última existente (não assume 1..n)
+    let lastPosition = setlist
+      ? setlist.setlist_songs.reduce((max, s) => Math.max(max, s.position), 0)
+      : 0
 
     if (setlist && currentSongs >= plan.songCount) {
       logItem('skipped', plan.name, `já existe com ${currentSongs} músicas`)
@@ -427,25 +513,70 @@ async function main(): Promise<void> {
     if (!setlist) {
       setlist = await createSetlist(plan)
       currentSongs = 0
+      lastPosition = 0
       await sleep(DELAY_MS)
       if (!setlist) continue
-    } else {
-      console.log(`[seed] ${plan.name}: completando de ${currentSongs} para ${plan.songCount} músicas`)
     }
 
+    const delta = plan.songCount - currentSongs
+    // Unique constraint (setlist_id, content_id) em prod: só entram
+    // conteúdos que ainda não estão na setlist
+    const usedContentIds = new Set(setlist.setlist_songs?.map((s) => s.content_id) ?? [])
+    const availableIds = contentIds.filter((id) => !usedContentIds.has(id))
+    if (availableIds.length < delta) {
+      logItem(
+        'failed',
+        `${plan.name} (músicas)`,
+        `só ${availableIds.length} conteúdos distintos disponíveis para ${delta} inserções`
+      )
+      continue
+    }
+    // Modelo do limiter: bursts de ~46 (50 menos margem/uso compartilhado)
+    // com pausa de ~62s entre bursts
+    const estimatedSec = Math.ceil((delta * DELAY_MS) / 1000) + Math.floor(delta / 46) * 62
+    console.log(
+      `[seed] ${plan.name}: inserindo ${delta} músicas (${currentSongs} → ${plan.songCount}), ` +
+        `pacing adaptativo via X-RateLimit-* (burst de ~50, pausa de ~60s) — tempo estimado ~${estimatedSec}s`
+    )
+
     let failures = 0
-    for (let i = currentSongs; i < plan.songCount; i++) {
-      const contentId = contentIds[i % contentIds.length]
+    for (let i = 0; i < delta; i++) {
+      const songIndex = currentSongs + i
+      const contentId = availableIds[i]
       if (!contentId) break
-      const notes = i % 5 === 0 ? `Observação da música ${i + 1}: modular meio tom acima no último refrão` : undefined
-      const ok = await addSongToSetlist(setlist.id, contentId, i + 1, notes)
-      if (!ok) failures++
+      const notes =
+        songIndex % 5 === 0
+          ? `Observação da música ${songIndex + 1}: modular meio tom acima no último refrão`
+          : undefined
+      let result = await addSongToSetlist(setlist.id, contentId, lastPosition + i + 1, notes)
+
+      if (result.status === 429) {
+        // Estourou apesar do pacing (orçamento compartilhado com outras
+        // rotas) — espera o reset e tenta a MESMA música mais uma vez
+        await waitForRateLimitReset(
+          result.retryAfterSec ? Date.now() + result.retryAfterSec * 1000 : result.resetAtMs,
+          `429 na música ${songIndex + 1}`
+        )
+        result = await addSongToSetlist(setlist.id, contentId, lastPosition + i + 1, notes)
+      }
+
+      if (!result.ok) {
+        failures++
+        console.log(
+          `[seed]         música ${songIndex + 1} falhou: HTTP ${result.status}` +
+            `${result.detail ? ` ${result.detail}` : ''}`
+        )
+      } else if (result.remaining !== null && result.remaining <= SONGS_BUDGET_FLOOR && i < delta - 1) {
+        // Pausa preventiva ANTES de estourar: o contador compartilhado só
+        // expira com ~60s sem requests aceitos
+        await waitForRateLimitReset(result.resetAtMs, `orçamento baixo (remaining=${result.remaining})`)
+      }
       await sleep(DELAY_MS)
     }
     if (failures > 0) {
-      logItem('failed', `${plan.name} (músicas)`, `${failures} de ${plan.songCount - currentSongs} inserções falharam`)
-    } else {
-      console.log(`[seed]         ${plan.name}: ${plan.songCount - currentSongs} músicas adicionadas`)
+      logItem('failed', `${plan.name} (músicas)`, `${failures} de ${delta} inserções falharam`)
+    } else if (delta > 0) {
+      console.log(`[seed]         ${plan.name}: ${delta} músicas adicionadas`)
     }
   }
 
