@@ -1,0 +1,146 @@
+{
+  "role": "WebArea",
+  "name": "Octavia - Digital Music Management",
+  "children": [
+    {
+      "role": "image",
+      "name": "Octavia"
+    },
+    {
+      "role": "textbox",
+      "name": "Search..."
+    },
+    {
+      "role": "button",
+      "name": "UT",
+      "haspopup": "menu"
+    },
+    {
+      "role": "button",
+      "name": "Home"
+    },
+    {
+      "role": "button",
+      "name": "Library"
+    },
+    {
+      "role": "button",
+      "name": "Setlists"
+    },
+    {
+      "role": "button",
+      "name": "Add"
+    },
+    {
+      "role": "heading",
+      "name": "Settings",
+      "level": 1
+    },
+    {
+      "role": "text",
+      "name": "Customize your Octavia experience"
+    },
+    {
+      "role": "tablist",
+      "name": "",
+      "orientation": "horizontal",
+      "children": [
+        {
+          "role": "tab",
+          "name": "Display",
+          "selected": true
+        },
+        {
+          "role": "tab",
+          "name": "Audio"
+        },
+        {
+          "role": "tab",
+          "name": "Cloud & Backup"
+        }
+      ]
+    },
+    {
+      "role": "tabpanel",
+      "name": "Display",
+      "children": [
+        {
+          "role": "text",
+          "name": "Display & Theme"
+        },
+        {
+          "role": "text",
+          "name": "Dark Mode"
+        },
+        {
+          "role": "text",
+          "name": "Switch to dark theme"
+        },
+        {
+          "role": "switch",
+          "name": "",
+          "checked": false
+        },
+        {
+          "role": "text",
+          "name": "Default Zoom Level"
+        },
+        {
+          "role": "slider",
+          "name": "",
+          "valuetext": "",
+          "valuemin": 50,
+          "valuemax": 200,
+          "orientation": "horizontal",
+          "value": 125
+        },
+        {
+          "role": "text",
+          "name": "50%"
+        },
+        {
+          "role": "text",
+          "name": "125"
+        },
+        {
+          "role": "text",
+          "name": "%"
+        },
+        {
+          "role": "text",
+          "name": "200%"
+        },
+        {
+          "role": "text",
+          "name": "Auto Scroll"
+        },
+        {
+          "role": "text",
+          "name": "Automatically scroll during performance"
+        },
+        {
+          "role": "switch",
+          "name": "",
+          "checked": false
+        },
+        {
+          "role": "text",
+          "name": "Performance Mode"
+        },
+        {
+          "role": "text",
+          "name": "Optimized display for live performance"
+        },
+        {
+          "role": "switch",
+          "name": "",
+          "checked": true
+        }
+      ]
+    },
+    {
+      "role": "region",
+      "name": "Notifications alt+T"
+    }
+  ]
+}

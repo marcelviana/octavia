@@ -37,6 +37,9 @@ coverage/
 test-results/
 playwright-report/
 
+# ux-audit auth state (contém tokens de sessão)
+tests/ux-audit/.auth/
+
 # backup files
 *.backup
 *.bak

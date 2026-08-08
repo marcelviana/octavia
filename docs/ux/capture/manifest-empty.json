@@ -1,0 +1,730 @@
+[
+  {
+    "route": "add-content",
+    "state": "initial",
+    "viewport": "desktop",
+    "url": "/add-content",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/add-content/initial-desktop.png",
+      "a11y": "docs/ux/capture/add-content/initial-desktop.a11y.json",
+      "axe": "docs/ux/capture/add-content/initial-desktop.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "add-content",
+    "state": "initial",
+    "viewport": "mobile",
+    "url": "/add-content",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/add-content/initial-mobile.png",
+      "a11y": "docs/ux/capture/add-content/initial-mobile.a11y.json",
+      "axe": "docs/ux/capture/add-content/initial-mobile.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "add-content",
+    "state": "initial",
+    "viewport": "tablet-landscape",
+    "url": "/add-content",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/add-content/initial-tablet-landscape.png",
+      "a11y": "docs/ux/capture/add-content/initial-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/add-content/initial-tablet-landscape.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "add-content",
+    "state": "initial",
+    "viewport": "tablet-portrait",
+    "url": "/add-content",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/add-content/initial-tablet-portrait.png",
+      "a11y": "docs/ux/capture/add-content/initial-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/add-content/initial-tablet-portrait.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "dashboard",
+    "state": "empty",
+    "viewport": "desktop",
+    "url": "/dashboard",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/dashboard/empty-desktop.png",
+      "a11y": "docs/ux/capture/dashboard/empty-desktop.a11y.json",
+      "axe": "docs/ux/capture/dashboard/empty-desktop.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "dashboard",
+    "state": "empty",
+    "viewport": "mobile",
+    "url": "/dashboard",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/dashboard/empty-mobile.png",
+      "a11y": "docs/ux/capture/dashboard/empty-mobile.a11y.json",
+      "axe": "docs/ux/capture/dashboard/empty-mobile.axe.json"
+    },
+    "axeViolations": 1
+  },
+  {
+    "route": "dashboard",
+    "state": "empty",
+    "viewport": "tablet-landscape",
+    "url": "/dashboard",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/dashboard/empty-tablet-landscape.png",
+      "a11y": "docs/ux/capture/dashboard/empty-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/dashboard/empty-tablet-landscape.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "dashboard",
+    "state": "empty",
+    "viewport": "tablet-portrait",
+    "url": "/dashboard",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/dashboard/empty-tablet-portrait.png",
+      "a11y": "docs/ux/capture/dashboard/empty-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/dashboard/empty-tablet-portrait.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "landing",
+    "state": "default",
+    "viewport": "desktop",
+    "url": "/",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/landing/default-desktop.png",
+      "a11y": "docs/ux/capture/landing/default-desktop.a11y.json",
+      "axe": "docs/ux/capture/landing/default-desktop.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "landing",
+    "state": "default",
+    "viewport": "mobile",
+    "url": "/",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/landing/default-mobile.png",
+      "a11y": "docs/ux/capture/landing/default-mobile.a11y.json",
+      "axe": "docs/ux/capture/landing/default-mobile.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "landing",
+    "state": "default",
+    "viewport": "tablet-landscape",
+    "url": "/",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/landing/default-tablet-landscape.png",
+      "a11y": "docs/ux/capture/landing/default-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/landing/default-tablet-landscape.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "landing",
+    "state": "default",
+    "viewport": "tablet-portrait",
+    "url": "/",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/landing/default-tablet-portrait.png",
+      "a11y": "docs/ux/capture/landing/default-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/landing/default-tablet-portrait.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "library",
+    "state": "empty",
+    "viewport": "desktop",
+    "url": "/library",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/library/empty-desktop.png",
+      "a11y": "docs/ux/capture/library/empty-desktop.a11y.json",
+      "axe": "docs/ux/capture/library/empty-desktop.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "library",
+    "state": "empty",
+    "viewport": "mobile",
+    "url": "/library",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/library/empty-mobile.png",
+      "a11y": "docs/ux/capture/library/empty-mobile.a11y.json",
+      "axe": "docs/ux/capture/library/empty-mobile.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "library",
+    "state": "empty",
+    "viewport": "tablet-landscape",
+    "url": "/library",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/library/empty-tablet-landscape.png",
+      "a11y": "docs/ux/capture/library/empty-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/library/empty-tablet-landscape.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "library",
+    "state": "empty",
+    "viewport": "tablet-portrait",
+    "url": "/library",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/library/empty-tablet-portrait.png",
+      "a11y": "docs/ux/capture/library/empty-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/library/empty-tablet-portrait.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "library",
+    "state": "search-noresults",
+    "viewport": "desktop",
+    "url": "/library?search=xyzabc",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/library/search-noresults-desktop.png",
+      "a11y": "docs/ux/capture/library/search-noresults-desktop.a11y.json",
+      "axe": "docs/ux/capture/library/search-noresults-desktop.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "library",
+    "state": "search-noresults",
+    "viewport": "mobile",
+    "url": "/library?search=xyzabc",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/library/search-noresults-mobile.png",
+      "a11y": "docs/ux/capture/library/search-noresults-mobile.a11y.json",
+      "axe": "docs/ux/capture/library/search-noresults-mobile.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "library",
+    "state": "search-noresults",
+    "viewport": "tablet-landscape",
+    "url": "/library?search=xyzabc",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/library/search-noresults-tablet-landscape.png",
+      "a11y": "docs/ux/capture/library/search-noresults-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/library/search-noresults-tablet-landscape.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "library",
+    "state": "search-noresults",
+    "viewport": "tablet-portrait",
+    "url": "/library?search=xyzabc",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/library/search-noresults-tablet-portrait.png",
+      "a11y": "docs/ux/capture/library/search-noresults-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/library/search-noresults-tablet-portrait.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "login",
+    "state": "default",
+    "viewport": "desktop",
+    "url": "/login",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/login/default-desktop.png",
+      "a11y": "docs/ux/capture/login/default-desktop.a11y.json",
+      "axe": "docs/ux/capture/login/default-desktop.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "login",
+    "state": "default",
+    "viewport": "mobile",
+    "url": "/login",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/login/default-mobile.png",
+      "a11y": "docs/ux/capture/login/default-mobile.a11y.json",
+      "axe": "docs/ux/capture/login/default-mobile.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "login",
+    "state": "default",
+    "viewport": "tablet-landscape",
+    "url": "/login",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/login/default-tablet-landscape.png",
+      "a11y": "docs/ux/capture/login/default-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/login/default-tablet-landscape.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "login",
+    "state": "default",
+    "viewport": "tablet-portrait",
+    "url": "/login",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/login/default-tablet-portrait.png",
+      "a11y": "docs/ux/capture/login/default-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/login/default-tablet-portrait.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "login",
+    "state": "validation-error",
+    "viewport": "desktop",
+    "url": "/login",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/login/validation-error-desktop.png",
+      "a11y": "docs/ux/capture/login/validation-error-desktop.a11y.json",
+      "axe": "docs/ux/capture/login/validation-error-desktop.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "login",
+    "state": "validation-error",
+    "viewport": "mobile",
+    "url": "/login",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/login/validation-error-mobile.png",
+      "a11y": "docs/ux/capture/login/validation-error-mobile.a11y.json",
+      "axe": "docs/ux/capture/login/validation-error-mobile.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "login",
+    "state": "validation-error",
+    "viewport": "tablet-landscape",
+    "url": "/login",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/login/validation-error-tablet-landscape.png",
+      "a11y": "docs/ux/capture/login/validation-error-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/login/validation-error-tablet-landscape.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "login",
+    "state": "validation-error",
+    "viewport": "tablet-portrait",
+    "url": "/login",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/login/validation-error-tablet-portrait.png",
+      "a11y": "docs/ux/capture/login/validation-error-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/login/validation-error-tablet-portrait.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "performance",
+    "state": "empty",
+    "viewport": "desktop",
+    "url": "/performance",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/performance/empty-desktop.png",
+      "a11y": "docs/ux/capture/performance/empty-desktop.a11y.json",
+      "axe": "docs/ux/capture/performance/empty-desktop.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "performance",
+    "state": "empty",
+    "viewport": "mobile",
+    "url": "/performance",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/performance/empty-mobile.png",
+      "a11y": "docs/ux/capture/performance/empty-mobile.a11y.json",
+      "axe": "docs/ux/capture/performance/empty-mobile.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "performance",
+    "state": "empty",
+    "viewport": "tablet-landscape",
+    "url": "/performance",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/performance/empty-tablet-landscape.png",
+      "a11y": "docs/ux/capture/performance/empty-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/performance/empty-tablet-landscape.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "performance",
+    "state": "empty",
+    "viewport": "tablet-portrait",
+    "url": "/performance",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/performance/empty-tablet-portrait.png",
+      "a11y": "docs/ux/capture/performance/empty-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/performance/empty-tablet-portrait.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "profile",
+    "state": "default",
+    "viewport": "desktop",
+    "url": "/profile",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/profile/default-desktop.png",
+      "a11y": "docs/ux/capture/profile/default-desktop.a11y.json",
+      "axe": "docs/ux/capture/profile/default-desktop.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "profile",
+    "state": "default",
+    "viewport": "mobile",
+    "url": "/profile",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/profile/default-mobile.png",
+      "a11y": "docs/ux/capture/profile/default-mobile.a11y.json",
+      "axe": "docs/ux/capture/profile/default-mobile.axe.json"
+    },
+    "axeViolations": 1
+  },
+  {
+    "route": "profile",
+    "state": "default",
+    "viewport": "tablet-landscape",
+    "url": "/profile",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/profile/default-tablet-landscape.png",
+      "a11y": "docs/ux/capture/profile/default-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/profile/default-tablet-landscape.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "profile",
+    "state": "default",
+    "viewport": "tablet-portrait",
+    "url": "/profile",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/profile/default-tablet-portrait.png",
+      "a11y": "docs/ux/capture/profile/default-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/profile/default-tablet-portrait.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "setlists",
+    "state": "empty",
+    "viewport": "desktop",
+    "url": "/setlists",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/setlists/empty-desktop.png",
+      "a11y": "docs/ux/capture/setlists/empty-desktop.a11y.json",
+      "axe": "docs/ux/capture/setlists/empty-desktop.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "setlists",
+    "state": "empty",
+    "viewport": "mobile",
+    "url": "/setlists",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/setlists/empty-mobile.png",
+      "a11y": "docs/ux/capture/setlists/empty-mobile.a11y.json",
+      "axe": "docs/ux/capture/setlists/empty-mobile.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "setlists",
+    "state": "empty",
+    "viewport": "tablet-landscape",
+    "url": "/setlists",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/setlists/empty-tablet-landscape.png",
+      "a11y": "docs/ux/capture/setlists/empty-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/setlists/empty-tablet-landscape.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "setlists",
+    "state": "empty",
+    "viewport": "tablet-portrait",
+    "url": "/setlists",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/setlists/empty-tablet-portrait.png",
+      "a11y": "docs/ux/capture/setlists/empty-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/setlists/empty-tablet-portrait.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "settings",
+    "state": "default",
+    "viewport": "desktop",
+    "url": "/settings",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/settings/default-desktop.png",
+      "a11y": "docs/ux/capture/settings/default-desktop.a11y.json",
+      "axe": "docs/ux/capture/settings/default-desktop.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "settings",
+    "state": "default",
+    "viewport": "mobile",
+    "url": "/settings",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/settings/default-mobile.png",
+      "a11y": "docs/ux/capture/settings/default-mobile.a11y.json",
+      "axe": "docs/ux/capture/settings/default-mobile.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "settings",
+    "state": "default",
+    "viewport": "tablet-landscape",
+    "url": "/settings",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/settings/default-tablet-landscape.png",
+      "a11y": "docs/ux/capture/settings/default-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/settings/default-tablet-landscape.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "settings",
+    "state": "default",
+    "viewport": "tablet-portrait",
+    "url": "/settings",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/settings/default-tablet-portrait.png",
+      "a11y": "docs/ux/capture/settings/default-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/settings/default-tablet-portrait.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "setup",
+    "state": "default",
+    "viewport": "desktop",
+    "url": "/setup",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/setup/default-desktop.png",
+      "a11y": "docs/ux/capture/setup/default-desktop.a11y.json",
+      "axe": "docs/ux/capture/setup/default-desktop.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "setup",
+    "state": "default",
+    "viewport": "mobile",
+    "url": "/setup",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/setup/default-mobile.png",
+      "a11y": "docs/ux/capture/setup/default-mobile.a11y.json",
+      "axe": "docs/ux/capture/setup/default-mobile.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "setup",
+    "state": "default",
+    "viewport": "tablet-landscape",
+    "url": "/setup",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/setup/default-tablet-landscape.png",
+      "a11y": "docs/ux/capture/setup/default-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/setup/default-tablet-landscape.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "setup",
+    "state": "default",
+    "viewport": "tablet-portrait",
+    "url": "/setup",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/setup/default-tablet-portrait.png",
+      "a11y": "docs/ux/capture/setup/default-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/setup/default-tablet-portrait.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "signup",
+    "state": "default",
+    "viewport": "desktop",
+    "url": "/signup",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/signup/default-desktop.png",
+      "a11y": "docs/ux/capture/signup/default-desktop.a11y.json",
+      "axe": "docs/ux/capture/signup/default-desktop.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "signup",
+    "state": "default",
+    "viewport": "mobile",
+    "url": "/signup",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/signup/default-mobile.png",
+      "a11y": "docs/ux/capture/signup/default-mobile.a11y.json",
+      "axe": "docs/ux/capture/signup/default-mobile.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "signup",
+    "state": "default",
+    "viewport": "tablet-landscape",
+    "url": "/signup",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/signup/default-tablet-landscape.png",
+      "a11y": "docs/ux/capture/signup/default-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/signup/default-tablet-landscape.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "signup",
+    "state": "default",
+    "viewport": "tablet-portrait",
+    "url": "/signup",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/signup/default-tablet-portrait.png",
+      "a11y": "docs/ux/capture/signup/default-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/signup/default-tablet-portrait.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "signup",
+    "state": "validation-error",
+    "viewport": "desktop",
+    "url": "/signup",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/signup/validation-error-desktop.png",
+      "a11y": "docs/ux/capture/signup/validation-error-desktop.a11y.json",
+      "axe": "docs/ux/capture/signup/validation-error-desktop.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "signup",
+    "state": "validation-error",
+    "viewport": "mobile",
+    "url": "/signup",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/signup/validation-error-mobile.png",
+      "a11y": "docs/ux/capture/signup/validation-error-mobile.a11y.json",
+      "axe": "docs/ux/capture/signup/validation-error-mobile.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "signup",
+    "state": "validation-error",
+    "viewport": "tablet-landscape",
+    "url": "/signup",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/signup/validation-error-tablet-landscape.png",
+      "a11y": "docs/ux/capture/signup/validation-error-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/signup/validation-error-tablet-landscape.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "signup",
+    "state": "validation-error",
+    "viewport": "tablet-portrait",
+    "url": "/signup",
+    "status": "captured",
+    "files": {
+      "screenshot": "docs/ux/capture/signup/validation-error-tablet-portrait.png",
+      "a11y": "docs/ux/capture/signup/validation-error-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/signup/validation-error-tablet-portrait.axe.json"
+    },
+    "axeViolations": 3
+  }
+]

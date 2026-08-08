@@ -1,0 +1,86 @@
+{
+  "role": "WebArea",
+  "name": "Octavia - Digital Music Management",
+  "children": [
+    {
+      "role": "button",
+      "name": ""
+    },
+    {
+      "role": "image",
+      "name": "Octavia"
+    },
+    {
+      "role": "image",
+      "name": "Octavia"
+    },
+    {
+      "role": "textbox",
+      "name": "Search..."
+    },
+    {
+      "role": "button",
+      "name": "UT",
+      "haspopup": "menu"
+    },
+    {
+      "role": "button",
+      "name": "Home"
+    },
+    {
+      "role": "button",
+      "name": "Library"
+    },
+    {
+      "role": "button",
+      "name": "Setlists"
+    },
+    {
+      "role": "button",
+      "name": "Add"
+    },
+    {
+      "role": "heading",
+      "name": "Dashboard",
+      "level": 1
+    },
+    {
+      "role": "link",
+      "name": "Add Content",
+      "children": [
+        {
+          "role": "button",
+          "name": "Add Content"
+        }
+      ]
+    },
+    {
+      "role": "tablist",
+      "name": "",
+      "orientation": "horizontal",
+      "children": [
+        {
+          "role": "tab",
+          "name": "Overview",
+          "selected": true
+        },
+        {
+          "role": "tab",
+          "name": "Recent"
+        },
+        {
+          "role": "tab",
+          "name": "Favorites"
+        }
+      ]
+    },
+    {
+      "role": "tabpanel",
+      "name": "Overview"
+    },
+    {
+      "role": "region",
+      "name": "Notifications alt+T"
+    }
+  ]
+}

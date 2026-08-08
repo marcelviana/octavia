@@ -1,0 +1,148 @@
+{
+  "role": "WebArea",
+  "name": "Octavia - Digital Music Management",
+  "children": [
+    {
+      "role": "button",
+      "name": ""
+    },
+    {
+      "role": "image",
+      "name": "Octavia"
+    },
+    {
+      "role": "image",
+      "name": "Octavia"
+    },
+    {
+      "role": "textbox",
+      "name": "Search..."
+    },
+    {
+      "role": "button",
+      "name": "UT",
+      "haspopup": "menu"
+    },
+    {
+      "role": "button",
+      "name": "Home"
+    },
+    {
+      "role": "button",
+      "name": "Library"
+    },
+    {
+      "role": "button",
+      "name": "Setlists"
+    },
+    {
+      "role": "button",
+      "name": "Add"
+    },
+    {
+      "role": "button",
+      "name": "Back"
+    },
+    {
+      "role": "text",
+      "name": "Upload"
+    },
+    {
+      "role": "text",
+      "name": "Add Details"
+    },
+    {
+      "role": "text",
+      "name": "Complete"
+    },
+    {
+      "role": "heading",
+      "name": "Content Type",
+      "level": 3
+    },
+    {
+      "role": "text",
+      "name": "Lyrics"
+    },
+    {
+      "role": "text",
+      "name": "Chords"
+    },
+    {
+      "role": "text",
+      "name": "Tab"
+    },
+    {
+      "role": "text",
+      "name": "Sheet"
+    },
+    {
+      "role": "heading",
+      "name": "How would you like to add content?",
+      "level": 3
+    },
+    {
+      "role": "heading",
+      "name": "Create New",
+      "level": 4
+    },
+    {
+      "role": "text",
+      "name": "Start from scratch and build your content manually with our editor."
+    },
+    {
+      "role": "heading",
+      "name": "Import from File",
+      "level": 4
+    },
+    {
+      "role": "text",
+      "name": "Upload and parse existing files (PDF, DOCX, TXT) to extract content automatically."
+    },
+    {
+      "role": "text",
+      "name": "Lyrics"
+    },
+    {
+      "role": "text",
+      "name": " Editor"
+    },
+    {
+      "role": "text",
+      "name": "Title"
+    },
+    {
+      "role": "textbox",
+      "name": "Title"
+    },
+    {
+      "role": "textbox",
+      "name": "Write your lyrics here...",
+      "multiline": true
+    },
+    {
+      "role": "text",
+      "name": "• "
+    },
+    {
+      "role": "text",
+      "name": "Use blank lines to separate verses and choruses."
+    },
+    {
+      "role": "text",
+      "name": "• "
+    },
+    {
+      "role": "text",
+      "name": "Add labels like [Verse], [Chorus], [Bridge] for better structure."
+    },
+    {
+      "role": "button",
+      "name": "Next"
+    },
+    {
+      "role": "region",
+      "name": "Notifications alt+T"
+    }
+  ]
+}

@@ -20,6 +20,7 @@
     "test:e2e:codegen": "playwright codegen",
     "test:e2e:install": "playwright install",
     "test:e2e:report": "playwright show-report",
+    "ux:harvest": "playwright test --config=playwright.ux-audit.config.ts",
     "test:ui": "vitest --ui",
     "test:unit": "pnpm run test",
     "test:all": "pnpm run test && pnpm run test:e2e"
@@ -84,6 +85,7 @@
     "zustand": "^5.0.8"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.12.1",
     "@playwright/test": "^1.54.1",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",

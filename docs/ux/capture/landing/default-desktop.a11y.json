@@ -1,0 +1,244 @@
+{
+  "role": "WebArea",
+  "name": "Octavia - Digital Music Management",
+  "children": [
+    {
+      "role": "image",
+      "name": "Octavia"
+    },
+    {
+      "role": "image",
+      "name": "Octavia"
+    },
+    {
+      "role": "link",
+      "name": "Sign In"
+    },
+    {
+      "role": "link",
+      "name": "Sign Up"
+    },
+    {
+      "role": "text",
+      "name": "🎵 Digital Music Revolution"
+    },
+    {
+      "role": "heading",
+      "name": "Your Music Library,Digitized",
+      "level": 1
+    },
+    {
+      "role": "text",
+      "name": "Organize, visualize, and share your sheet music, tabs, and lyrics. Perfect for rehearsals and performances with a modern, intuitive interface."
+    },
+    {
+      "role": "link",
+      "name": "Get Started Free"
+    },
+    {
+      "role": "link",
+      "name": "Sign In"
+    },
+    {
+      "role": "image",
+      "name": "Musician performing with digital sheet music on tablet"
+    },
+    {
+      "role": "heading",
+      "name": "Why Musicians Choose Octavia",
+      "level": 2
+    },
+    {
+      "role": "text",
+      "name": "Powerful features designed by musicians, for musicians"
+    },
+    {
+      "role": "heading",
+      "name": "Digital Sheet Music",
+      "level": 3
+    },
+    {
+      "role": "text",
+      "name": "Import and organize all your sheet music, tabs, and lyrics in one beautiful, searchable library."
+    },
+    {
+      "role": "heading",
+      "name": "Smart Annotations",
+      "level": 3
+    },
+    {
+      "role": "text",
+      "name": "Add notes, highlights, and markings directly onto your digital sheet music for better rehearsals."
+    },
+    {
+      "role": "heading",
+      "name": "Guitar Tabs & More",
+      "level": 3
+    },
+    {
+      "role": "text",
+      "name": "Support for multiple music formats including guitar tabs, chord charts, and traditional notation."
+    },
+    {
+      "role": "heading",
+      "name": "Multi-User Access",
+      "level": 3
+    },
+    {
+      "role": "text",
+      "name": "Secure, cloud-based access to your personal music library from any device, anywhere."
+    },
+    {
+      "role": "heading",
+      "name": "Loved by Musicians Everywhere",
+      "level": 2
+    },
+    {
+      "role": "text",
+      "name": "See what our community is saying about their experience with Octavia"
+    },
+    {
+      "role": "text",
+      "name": "S"
+    },
+    {
+      "role": "heading",
+      "name": "Sarah M.",
+      "level": 4
+    },
+    {
+      "role": "text",
+      "name": "Classical Guitarist"
+    },
+    {
+      "role": "text",
+      "name": "“Octavia has revolutionized how I organize my sheet music. The annotation feature is incredibly useful for marking fingerings and performance notes.”"
+    },
+    {
+      "role": "text",
+      "name": "M"
+    },
+    {
+      "role": "heading",
+      "name": "Mike R.",
+      "level": 4
+    },
+    {
+      "role": "text",
+      "name": "Band Leader"
+    },
+    {
+      "role": "text",
+      "name": "“Perfect for managing our band's repertoire. Being able to access everything from my tablet during rehearsals is a game-changer.”"
+    },
+    {
+      "role": "text",
+      "name": "A"
+    },
+    {
+      "role": "heading",
+      "name": "Alex K.",
+      "level": 4
+    },
+    {
+      "role": "text",
+      "name": "Music Teacher"
+    },
+    {
+      "role": "text",
+      "name": "“My students love how organized and accessible all our learning materials are now. The search function saves so much time.”"
+    },
+    {
+      "role": "heading",
+      "name": "Ready to Organize Your Music?",
+      "level": 2
+    },
+    {
+      "role": "text",
+      "name": "Join thousands of musicians who use Octavia to manage their sheet music, tabs, and lyrics with style and efficiency."
+    },
+    {
+      "role": "link",
+      "name": "Create Free Account"
+    },
+    {
+      "role": "link",
+      "name": "Sign In"
+    },
+    {
+      "role": "image",
+      "name": "Octavia"
+    },
+    {
+      "role": "image",
+      "name": "Octavia"
+    },
+    {
+      "role": "text",
+      "name": "Your digital music companion for rehearsals and performances."
+    },
+    {
+      "role": "heading",
+      "name": "Product",
+      "level": 3
+    },
+    {
+      "role": "link",
+      "name": "Features"
+    },
+    {
+      "role": "link",
+      "name": "Pricing"
+    },
+    {
+      "role": "link",
+      "name": "FAQ"
+    },
+    {
+      "role": "heading",
+      "name": "Company",
+      "level": 3
+    },
+    {
+      "role": "link",
+      "name": "About"
+    },
+    {
+      "role": "link",
+      "name": "Blog"
+    },
+    {
+      "role": "link",
+      "name": "Contact"
+    },
+    {
+      "role": "heading",
+      "name": "Legal",
+      "level": 3
+    },
+    {
+      "role": "link",
+      "name": "Privacy Policy"
+    },
+    {
+      "role": "link",
+      "name": "Terms"
+    },
+    {
+      "role": "text",
+      "name": "© "
+    },
+    {
+      "role": "text",
+      "name": "2026"
+    },
+    {
+      "role": "text",
+      "name": " Octavia. All rights reserved."
+    },
+    {
+      "role": "region",
+      "name": "Notifications alt+T"
+    }
+  ]
+}

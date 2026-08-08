@@ -1,0 +1,75 @@
+{
+  "role": "WebArea",
+  "name": "Octavia - Digital Music Management",
+  "children": [
+    {
+      "role": "image",
+      "name": "Octavia"
+    },
+    {
+      "role": "textbox",
+      "name": "Search..."
+    },
+    {
+      "role": "button",
+      "name": "UT",
+      "haspopup": "menu"
+    },
+    {
+      "role": "button",
+      "name": "Home"
+    },
+    {
+      "role": "button",
+      "name": "Library"
+    },
+    {
+      "role": "button",
+      "name": "Setlists"
+    },
+    {
+      "role": "button",
+      "name": "Add"
+    },
+    {
+      "role": "heading",
+      "name": "Your Music Library",
+      "level": 1
+    },
+    {
+      "role": "text",
+      "name": "Manage and organize all your musical content"
+    },
+    {
+      "role": "button",
+      "name": "",
+      "haspopup": "menu"
+    },
+    {
+      "role": "combobox",
+      "name": "",
+      "haspopup": "listbox"
+    },
+    {
+      "role": "button",
+      "name": ""
+    },
+    {
+      "role": "heading",
+      "name": "No content found",
+      "level": 3
+    },
+    {
+      "role": "text",
+      "name": "Add your first piece of music content to get started"
+    },
+    {
+      "role": "button",
+      "name": "Add Content"
+    },
+    {
+      "role": "region",
+      "name": "Notifications alt+T"
+    }
+  ]
+}

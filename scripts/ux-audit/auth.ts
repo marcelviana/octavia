@@ -42,6 +42,16 @@ export function auditEmail(): string {
 let idToken: string | null = null
 let sessionCookie: string | null = null
 
+export interface FirebaseCredentials {
+  apiKey: string
+  uid: string
+  email: string
+  idToken: string
+  refreshToken: string
+}
+
+let credentials: FirebaseCredentials | null = null
+
 async function signIn(): Promise<void> {
   const apiKey = requireEnv('NEXT_PUBLIC_FIREBASE_API_KEY')
   const email = requireEnv('USER_AUDIT')
@@ -68,17 +78,37 @@ async function signIn(): Promise<void> {
     throw new Error(`Firebase signIn falhou: HTTP ${res.status} (${code})`)
   }
 
-  const data = (await res.json()) as { idToken?: string }
-  if (!data.idToken) {
-    throw new Error('Firebase signIn não retornou idToken')
+  const data = (await res.json()) as {
+    idToken?: string
+    refreshToken?: string
+    localId?: string
+    email?: string
+  }
+  if (!data.idToken || !data.refreshToken || !data.localId) {
+    throw new Error('Firebase signIn não retornou idToken/refreshToken/localId')
   }
   idToken = data.idToken
+  credentials = {
+    apiKey,
+    uid: data.localId,
+    email: data.email ?? email,
+    idToken: data.idToken,
+    refreshToken: data.refreshToken,
+  }
 
-  const sessionRes = await fetch(`${BASE_URL}/api/auth/session`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ idToken }),
-  })
+  // POST /api/auth/session tem rate limit AUTH (5 req / 15 min por IP).
+  // Janela fixa: retentar não a estende — espera 60s entre tentativas.
+  let sessionRes: Response
+  for (let attempt = 0; ; attempt++) {
+    sessionRes = await fetch(`${BASE_URL}/api/auth/session`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ idToken }),
+    })
+    if (sessionRes.status !== 429 || attempt >= 15) break
+    console.log(`[ux-audit] 429 em POST /api/auth/session — aguardando 60s (tentativa ${attempt + 1}/15)`)
+    await sleep(60_000)
+  }
   if (!sessionRes.ok) {
     throw new Error(`POST /api/auth/session falhou: HTTP ${sessionRes.status}`)
   }
@@ -96,6 +126,28 @@ async function signIn(): Promise<void> {
   if (!sessionCookie) {
     throw new Error('Cookie de sessão (firebase-session) não veio no Set-Cookie de /api/auth/session')
   }
+}
+
+/**
+ * Retorna o valor do cookie de sessão (`firebase-session=...`), autenticando
+ * se necessário. Usado pelo auth.setup.ts do Playwright (ux-audit) para
+ * injetar a sessão no contexto do browser sem passar pela UI de login.
+ */
+export async function getSessionCookie(): Promise<string> {
+  if (!sessionCookie) await signIn()
+  return sessionCookie!
+}
+
+/**
+ * Credenciais Firebase da conta de audit (uid, idToken, refreshToken).
+ * Usadas pelo auth.setup.ts para semear o usuário no IndexedDB do browser
+ * (firebaseLocalStorageDb) — sem isso o SDK client-side não tem usuário,
+ * o firebase-auth-context dispara onAuthStateChanged(null) e APAGA o
+ * cookie de sessão via DELETE /api/auth/session.
+ */
+export async function getFirebaseCredentials(): Promise<FirebaseCredentials> {
+  if (!credentials) await signIn()
+  return credentials!
 }
 
 /**

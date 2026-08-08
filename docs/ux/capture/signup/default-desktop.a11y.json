@@ -1,0 +1,147 @@
+{
+  "role": "WebArea",
+  "name": "Octavia - Digital Music Management",
+  "children": [
+    {
+      "role": "image",
+      "name": "Octavia"
+    },
+    {
+      "role": "heading",
+      "name": "Join Octavia",
+      "level": 1
+    },
+    {
+      "role": "text",
+      "name": "Create your account to get started"
+    },
+    {
+      "role": "text",
+      "name": "Sign Up"
+    },
+    {
+      "role": "text",
+      "name": "Fill in your details to create your account"
+    },
+    {
+      "role": "text",
+      "name": "First Name"
+    },
+    {
+      "role": "textbox",
+      "name": "First Name",
+      "required": true
+    },
+    {
+      "role": "text",
+      "name": "Last Name"
+    },
+    {
+      "role": "textbox",
+      "name": "Last Name",
+      "required": true
+    },
+    {
+      "role": "text",
+      "name": "Email"
+    },
+    {
+      "role": "textbox",
+      "name": "Email",
+      "required": true
+    },
+    {
+      "role": "text",
+      "name": "Primary Instrument"
+    },
+    {
+      "role": "combobox",
+      "name": "",
+      "haspopup": "listbox",
+      "value": "Select your primary instrument"
+    },
+    {
+      "role": "text",
+      "name": "Password"
+    },
+    {
+      "role": "textbox",
+      "name": "Password",
+      "required": true
+    },
+    {
+      "role": "text",
+      "name": "Password must be at least 6 characters"
+    },
+    {
+      "role": "text",
+      "name": "Confirm Password"
+    },
+    {
+      "role": "textbox",
+      "name": "Confirm Password",
+      "required": true
+    },
+    {
+      "role": "button",
+      "name": "Create Account"
+    },
+    {
+      "role": "link",
+      "name": "Back to login"
+    },
+    {
+      "role": "text",
+      "name": "© 2025 Octavia Music. All rights reserved."
+    },
+    {
+      "role": "heading",
+      "name": "Start Your Musical Journey",
+      "level": 2
+    },
+    {
+      "role": "text",
+      "name": "Join thousands of musicians who trust Octavia to organize their musical content and enhance their practice sessions."
+    },
+    {
+      "role": "heading",
+      "name": "Upload Music",
+      "level": 3
+    },
+    {
+      "role": "text",
+      "name": "PDF, images & more"
+    },
+    {
+      "role": "heading",
+      "name": "Organize",
+      "level": 3
+    },
+    {
+      "role": "text",
+      "name": "Smart categorization"
+    },
+    {
+      "role": "heading",
+      "name": "Perform",
+      "level": 3
+    },
+    {
+      "role": "text",
+      "name": "Distraction-free mode"
+    },
+    {
+      "role": "heading",
+      "name": "Access",
+      "level": 3
+    },
+    {
+      "role": "text",
+      "name": "Any device, anywhere"
+    },
+    {
+      "role": "region",
+      "name": "Notifications alt+T"
+    }
+  ]
+}

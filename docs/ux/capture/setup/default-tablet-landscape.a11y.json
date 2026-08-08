@@ -1,0 +1,253 @@
+{
+  "role": "WebArea",
+  "name": "Octavia - Digital Music Management",
+  "children": [
+    {
+      "role": "text",
+      "name": "Octavia Setup"
+    },
+    {
+      "role": "text",
+      "name": "Set up your storage bucket for file uploads"
+    },
+    {
+      "role": "text",
+      "name": "What this does:"
+    },
+    {
+      "role": "text",
+      "name": " Creates a storage bucket called “content-files” in your Supabase project to store uploaded sheet music files."
+    },
+    {
+      "role": "text",
+      "name": "Requirements:"
+    },
+    {
+      "role": "text",
+      "name": " You need to be connected to your Supabase project with proper credentials."
+    },
+    {
+      "role": "text",
+      "name": "🔒 Secure Firebase Auth + Supabase Storage"
+    },
+    {
+      "role": "text",
+      "name": "This app uses "
+    },
+    {
+      "role": "text",
+      "name": "Firebase Auth"
+    },
+    {
+      "role": "text",
+      "name": " for user authentication and "
+    },
+    {
+      "role": "text",
+      "name": "Supabase Storage"
+    },
+    {
+      "role": "text",
+      "name": " for file storage. All uploads go through secure API endpoints that validate Firebase tokens server-side before uploading to Supabase."
+    },
+    {
+      "role": "text",
+      "name": "File uploads will not work until you complete this setup process. If you see 400 errors or permission errors when uploading, this is the cause."
+    },
+    {
+      "role": "button",
+      "name": "Create Storage Bucket"
+    },
+    {
+      "role": "heading",
+      "name": "Step 2: Storage Policies (Required)",
+      "level": 3
+    },
+    {
+      "role": "text",
+      "name": "After creating the bucket, you need to set up storage policies to allow uploads:"
+    },
+    {
+      "role": "text",
+      "name": "Go to your Supabase project dashboard"
+    },
+    {
+      "role": "text",
+      "name": "Navigate to "
+    },
+    {
+      "role": "text",
+      "name": "Storage"
+    },
+    {
+      "role": "text",
+      "name": " → "
+    },
+    {
+      "role": "text",
+      "name": "Policies"
+    },
+    {
+      "role": "text",
+      "name": "Click "
+    },
+    {
+      "role": "text",
+      "name": "“New Policy”"
+    },
+    {
+      "role": "text",
+      "name": " for the "
+    },
+    {
+      "role": "text",
+      "name": "Objects"
+    },
+    {
+      "role": "text",
+      "name": " table"
+    },
+    {
+      "role": "text",
+      "name": "Select "
+    },
+    {
+      "role": "text",
+      "name": "“Create a policy from template”"
+    },
+    {
+      "role": "text",
+      "name": "Choose "
+    },
+    {
+      "role": "text",
+      "name": "“Allow access to uploads for authenticated users”"
+    },
+    {
+      "role": "text",
+      "name": "Click "
+    },
+    {
+      "role": "text",
+      "name": "“Use this template”"
+    },
+    {
+      "role": "text",
+      "name": "Update the policy to target the "
+    },
+    {
+      "role": "text",
+      "name": "content-files"
+    },
+    {
+      "role": "text",
+      "name": " bucket"
+    },
+    {
+      "role": "text",
+      "name": "Click "
+    },
+    {
+      "role": "text",
+      "name": "“Save Policy”"
+    },
+    {
+      "role": "heading",
+      "name": "Quick SQL Setup (Recommended)",
+      "level": 4
+    },
+    {
+      "role": "text",
+      "name": "Copy and paste these SQL commands in your Supabase SQL Editor to set up storage policies:"
+    },
+    {
+      "role": "text",
+      "name": "-- Enable RLS on storage.objects if not already enabled\nALTER TABLE storage.objects ENABLE ROW LEVEL SECURITY;\n\n-- Since we're using Firebase Auth with secure API endpoints,\n-- we allow service role access (API routes authenticate users server-side)\nCREATE POLICY \"Allow service role access to content-files\" ON storage.objects\nFOR ALL USING (\n  bucket_id = 'content-files' AND auth.role() = 'service_role'\n);\n\n-- Allow public read access to files (so uploaded content can be viewed)\nCREATE POLICY \"Allow public read access to content-files\" ON storage.objects\nFOR SELECT USING (\n  bucket_id = 'content-files'\n);"
+    },
+    {
+      "role": "text",
+      "name": "💡 Tip:"
+    },
+    {
+      "role": "text",
+      "name": " If you get “policy already exists” errors, that's normal - it means the policies are already set up."
+    },
+    {
+      "role": "text",
+      "name": "🔑 Service Key:"
+    },
+    {
+      "role": "text",
+      "name": " Make sure your "
+    },
+    {
+      "role": "text",
+      "name": "SUPABASE_SERVICE_ROLE_KEY"
+    },
+    {
+      "role": "text",
+      "name": " environment variable is set for server-side storage operations."
+    },
+    {
+      "role": "heading",
+      "name": "Manual Bucket Setup (Alternative)",
+      "level": 3
+    },
+    {
+      "role": "text",
+      "name": "If the automatic bucket creation doesn't work:"
+    },
+    {
+      "role": "text",
+      "name": "Go to your Supabase project dashboard"
+    },
+    {
+      "role": "text",
+      "name": "Navigate to "
+    },
+    {
+      "role": "text",
+      "name": "Storage"
+    },
+    {
+      "role": "text",
+      "name": " in the sidebar"
+    },
+    {
+      "role": "text",
+      "name": "Click "
+    },
+    {
+      "role": "text",
+      "name": "“New Bucket”"
+    },
+    {
+      "role": "text",
+      "name": "Name it "
+    },
+    {
+      "role": "text",
+      "name": "content-files"
+    },
+    {
+      "role": "text",
+      "name": "Set it to "
+    },
+    {
+      "role": "text",
+      "name": "Public"
+    },
+    {
+      "role": "text",
+      "name": "Click "
+    },
+    {
+      "role": "text",
+      "name": "“Create Bucket”"
+    },
+    {
+      "role": "region",
+      "name": "Notifications alt+T"
+    }
+  ]
+}

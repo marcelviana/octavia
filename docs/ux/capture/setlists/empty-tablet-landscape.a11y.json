@@ -1,0 +1,69 @@
+{
+  "role": "WebArea",
+  "name": "Octavia - Digital Music Management",
+  "children": [
+    {
+      "role": "button",
+      "name": ""
+    },
+    {
+      "role": "image",
+      "name": "Octavia"
+    },
+    {
+      "role": "image",
+      "name": "Octavia"
+    },
+    {
+      "role": "textbox",
+      "name": "Search..."
+    },
+    {
+      "role": "button",
+      "name": "M",
+      "haspopup": "menu"
+    },
+    {
+      "role": "heading",
+      "name": "NAVIGATION",
+      "level": 3
+    },
+    {
+      "role": "button",
+      "name": "Dashboard"
+    },
+    {
+      "role": "button",
+      "name": "Library"
+    },
+    {
+      "role": "button",
+      "name": "Setlists"
+    },
+    {
+      "role": "button",
+      "name": "Add Song"
+    },
+    {
+      "role": "heading",
+      "name": "No setlists yet",
+      "level": 3
+    },
+    {
+      "role": "text",
+      "name": "Create your first setlist to organize songs for your performances."
+    },
+    {
+      "role": "button",
+      "name": "Create Your First Setlist"
+    },
+    {
+      "role": "text",
+      "name": "Select a setlist to view its details"
+    },
+    {
+      "role": "region",
+      "name": "Notifications alt+T"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "role": "WebArea",
+  "name": "Octavia - Digital Music Management",
+  "children": [
+    {
+      "role": "image",
+      "name": "Octavia Logo"
+    },
+    {
+      "role": "heading",
+      "name": "Welcome to Octavia",
+      "level": 1
+    },
+    {
+      "role": "text",
+      "name": "Your digital music companion"
+    },
+    {
+      "role": "text",
+      "name": "Sign In"
+    },
+    {
+      "role": "text",
+      "name": "Enter your credentials to access your music library"
+    },
+    {
+      "role": "text",
+      "name": "Email"
+    },
+    {
+      "role": "textbox",
+      "name": "Email",
+      "required": true
+    },
+    {
+      "role": "text",
+      "name": "Password"
+    },
+    {
+      "role": "link",
+      "name": "Forgot password?"
+    },
+    {
+      "role": "textbox",
+      "name": "Password",
+      "required": true
+    },
+    {
+      "role": "button",
+      "name": "Sign In"
+    },
+    {
+      "role": "text",
+      "name": "or"
+    },
+    {
+      "role": "button",
+      "name": "Continue with Google"
+    },
+    {
+      "role": "text",
+      "name": "Don't have an account?"
+    },
+    {
+      "role": "link",
+      "name": "Sign up"
+    },
+    {
+      "role": "text",
+      "name": "© 2025 Octavia Music. All rights reserved."
+    },
+    {
+      "role": "region",
+      "name": "Notifications alt+T"
+    }
+  ]
+}

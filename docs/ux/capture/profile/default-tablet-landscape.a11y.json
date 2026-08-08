@@ -1,0 +1,116 @@
+{
+  "role": "WebArea",
+  "name": "Octavia - Digital Music Management",
+  "children": [
+    {
+      "role": "button",
+      "name": ""
+    },
+    {
+      "role": "image",
+      "name": "Octavia"
+    },
+    {
+      "role": "image",
+      "name": "Octavia"
+    },
+    {
+      "role": "textbox",
+      "name": "Search..."
+    },
+    {
+      "role": "button",
+      "name": "M",
+      "haspopup": "menu"
+    },
+    {
+      "role": "heading",
+      "name": "NAVIGATION",
+      "level": 3
+    },
+    {
+      "role": "button",
+      "name": "Dashboard"
+    },
+    {
+      "role": "button",
+      "name": "Library"
+    },
+    {
+      "role": "button",
+      "name": "Setlists"
+    },
+    {
+      "role": "button",
+      "name": "Add Song"
+    },
+    {
+      "role": "text",
+      "name": "Profile Settings"
+    },
+    {
+      "role": "text",
+      "name": "Update your personal information and preferences"
+    },
+    {
+      "role": "text",
+      "name": "m"
+    },
+    {
+      "role": "heading",
+      "name": "User",
+      "level": 3
+    },
+    {
+      "role": "text",
+      "name": "marcelviana+uxtester@gmail.com"
+    },
+    {
+      "role": "text",
+      "name": "Email"
+    },
+    {
+      "role": "textbox",
+      "name": "Email",
+      "disabled": true,
+      "value": "marcelviana+uxtester@gmail.com"
+    },
+    {
+      "role": "text",
+      "name": "Display Name"
+    },
+    {
+      "role": "textbox",
+      "name": "Display Name"
+    },
+    {
+      "role": "text",
+      "name": "Bio"
+    },
+    {
+      "role": "textbox",
+      "name": "Bio",
+      "multiline": true
+    },
+    {
+      "role": "text",
+      "name": "Website"
+    },
+    {
+      "role": "textbox",
+      "name": "Website"
+    },
+    {
+      "role": "button",
+      "name": "Update Profile"
+    },
+    {
+      "role": "button",
+      "name": "Cancel"
+    },
+    {
+      "role": "region",
+      "name": "Notifications alt+T"
+    }
+  ]
+}
