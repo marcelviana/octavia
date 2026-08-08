@@ -54,7 +54,10 @@ export default defineConfig({
     },
     ...Object.entries(UX_AUDIT_VIEWPORTS).map(([name, viewport]) => ({
       name: `harvest-${name}`,
-      testMatch: /harvest\.spec\.ts/,
+      // Casa harvest.spec.ts (B1, estados vazios) e harvest-populated.spec.ts
+      // (B2) — rode UMA passada por vez filtrando pelo arquivo na CLI, senão
+      // o B1 sobrescreve capturas com a conta já populada.
+      testMatch: /harvest(-populated)?\.spec\.ts/,
       dependencies: ['setup'] as string[],
       use: {
         storageState: UX_AUDIT_STORAGE_STATE,

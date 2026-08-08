@@ -1,0 +1,127 @@
+{
+  "role": "WebArea",
+  "name": "Octavia - Digital Music Management",
+  "children": [
+    {
+      "role": "button",
+      "name": ""
+    },
+    {
+      "role": "image",
+      "name": "Octavia"
+    },
+    {
+      "role": "image",
+      "name": "Octavia"
+    },
+    {
+      "role": "textbox",
+      "name": "Search..."
+    },
+    {
+      "role": "button",
+      "name": "UT",
+      "haspopup": "menu"
+    },
+    {
+      "role": "button",
+      "name": "Home"
+    },
+    {
+      "role": "button",
+      "name": "Library"
+    },
+    {
+      "role": "button",
+      "name": "Setlists"
+    },
+    {
+      "role": "button",
+      "name": "Add"
+    },
+    {
+      "role": "button",
+      "name": ""
+    },
+    {
+      "role": "heading",
+      "name": "[UX-AUDIT] Construção",
+      "level": 1
+    },
+    {
+      "role": "text",
+      "name": "Chico Buarque"
+    },
+    {
+      "role": "text",
+      "name": " • "
+    },
+    {
+      "role": "text",
+      "name": "Lyrics"
+    },
+    {
+      "role": "button",
+      "name": ""
+    },
+    {
+      "role": "button",
+      "name": "Performance"
+    },
+    {
+      "role": "heading",
+      "name": "Lyrics",
+      "level": 3
+    },
+    {
+      "role": "text",
+      "name": "Quando a noite chega e a cidade acende\nEu procuro a estrada que me leva até você\nO vento traz lembranças de um tempo que passou\n\nE se a saudade aperta, eu canto essa canção\nPra espantar a sombra e acalmar o coração\nAmanhã é outro dia, o sol vai voltar\nE a gente segue em frente, sem parar de sonhar"
+    },
+    {
+      "role": "heading",
+      "name": "Song Details",
+      "level": 3
+    },
+    {
+      "role": "text",
+      "name": "Time Signature"
+    },
+    {
+      "role": "text",
+      "name": "4/4"
+    },
+    {
+      "role": "text",
+      "name": "Created "
+    },
+    {
+      "role": "text",
+      "name": "8/8/2026"
+    },
+    {
+      "role": "text",
+      "name": "Modified "
+    },
+    {
+      "role": "text",
+      "name": "8/8/2026"
+    },
+    {
+      "role": "heading",
+      "name": "Performance Notes",
+      "level": 3
+    },
+    {
+      "role": "text",
+      "name": "No performance notes available"
+    },
+    {
+      "role": "text",
+      "name": "Click Edit to add notes and performance tips"
+    },
+    {
+      "role": "region",
+      "name": "Notifications alt+T"
+    }
+  ]
+}

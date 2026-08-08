@@ -1,0 +1,95 @@
+{
+  "role": "WebArea",
+  "name": "Octavia - Digital Music Management",
+  "children": [
+    {
+      "role": "image",
+      "name": "Octavia"
+    },
+    {
+      "role": "textbox",
+      "name": "Search...",
+      "value": "viol"
+    },
+    {
+      "role": "button",
+      "name": "UT",
+      "haspopup": "menu"
+    },
+    {
+      "role": "button",
+      "name": "Home"
+    },
+    {
+      "role": "button",
+      "name": "Library"
+    },
+    {
+      "role": "button",
+      "name": "Setlists"
+    },
+    {
+      "role": "button",
+      "name": "Add"
+    },
+    {
+      "role": "heading",
+      "name": "Your Music Library",
+      "level": 1
+    },
+    {
+      "role": "text",
+      "name": "Manage and organize all your musical content"
+    },
+    {
+      "role": "button",
+      "name": "",
+      "haspopup": "menu"
+    },
+    {
+      "role": "combobox",
+      "name": "",
+      "haspopup": "listbox"
+    },
+    {
+      "role": "button",
+      "name": ""
+    },
+    {
+      "role": "button",
+      "name": "View [UX-AUDIT] Suíte concertante nº 3 em ré menor para violão de sete cordas, orquestra de câmara e coro feminino — movimento II: andante espressivo com variações sobre um tema nordestino by Orquestra do Recife",
+      "children": [
+        {
+          "role": "button",
+          "name": "Add to favorites",
+          "pressed": false
+        },
+        {
+          "role": "button",
+          "name": "More options",
+          "haspopup": "menu"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "View [UX-AUDIT] Canção interminável do sertão profundo onde o vento faz a curva e o violeiro conta causos da assombração da meia-noite em ritmo de moda de viola caipira da tradição centenária by Unknown Artist",
+      "children": [
+        {
+          "role": "button",
+          "name": "Add to favorites",
+          "pressed": false
+        },
+        {
+          "role": "button",
+          "name": "More options",
+          "haspopup": "menu"
+        }
+      ]
+    },
+    {
+      "role": "region",
+      "name": "Notifications alt+T"
+    }
+  ]
+}

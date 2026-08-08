@@ -1,0 +1,82 @@
+{
+  "role": "WebArea",
+  "name": "Octavia - Digital Music Management",
+  "children": [
+    {
+      "role": "generic",
+      "name": "",
+      "children": [
+        {
+          "role": "button",
+          "name": ""
+        },
+        {
+          "role": "heading",
+          "name": "[UX-AUDIT] Felicidade",
+          "level": 2
+        },
+        {
+          "role": "text",
+          "name": "Marcelo Jeneci"
+        },
+        {
+          "role": "button",
+          "name": ""
+        },
+        {
+          "role": "button",
+          "name": "Zoom out"
+        },
+        {
+          "role": "text",
+          "name": "200"
+        },
+        {
+          "role": "text",
+          "name": "%"
+        },
+        {
+          "role": "button",
+          "name": "Zoom in",
+          "focused": true
+        },
+        {
+          "role": "button",
+          "name": ""
+        },
+        {
+          "role": "button",
+          "name": "Decrease BPM"
+        },
+        {
+          "role": "text",
+          "name": "80"
+        },
+        {
+          "role": "text",
+          "name": " BPM"
+        },
+        {
+          "role": "button",
+          "name": "Increase BPM"
+        },
+        {
+          "role": "text",
+          "name": "[Intro] C  Am  F  G\n\nC                Am\nQuando a noite chega e a cidade acende\nF                 G\nEu procuro a estrada que me leva até você\nC                Am\nO vento traz lembranças de um tempo que passou\nF        G         C\nE a gente segue em frente\n\n[Refrão] F  G  Em  Am  F  G  C"
+        },
+        {
+          "role": "button",
+          "name": "Prev"
+        },
+        {
+          "role": "button",
+          "name": "Next"
+        }
+      ]
+    },
+    {
+      "role": "region",
+      "name": "Notifications alt+T"
+    }
+  ]
+}

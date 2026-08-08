@@ -1,0 +1,176 @@
+{
+  "role": "WebArea",
+  "name": "Octavia - Digital Music Management",
+  "children": [
+    {
+      "role": "image",
+      "name": "Octavia"
+    },
+    {
+      "role": "textbox",
+      "name": "Search..."
+    },
+    {
+      "role": "button",
+      "name": "UT",
+      "haspopup": "menu"
+    },
+    {
+      "role": "button",
+      "name": "Home"
+    },
+    {
+      "role": "button",
+      "name": "Library"
+    },
+    {
+      "role": "button",
+      "name": "Setlists"
+    },
+    {
+      "role": "button",
+      "name": "Add"
+    },
+    {
+      "role": "heading",
+      "name": "Dashboard",
+      "level": 1
+    },
+    {
+      "role": "link",
+      "name": "Add Content",
+      "children": [
+        {
+          "role": "button",
+          "name": "Add Content"
+        }
+      ]
+    },
+    {
+      "role": "tablist",
+      "name": "",
+      "orientation": "horizontal",
+      "children": [
+        {
+          "role": "tab",
+          "name": "Overview",
+          "selected": true
+        },
+        {
+          "role": "tab",
+          "name": "Recent"
+        },
+        {
+          "role": "tab",
+          "name": "Favorites"
+        }
+      ]
+    },
+    {
+      "role": "tabpanel",
+      "name": "Overview",
+      "children": [
+        {
+          "role": "text",
+          "name": "Total Content"
+        },
+        {
+          "role": "text",
+          "name": "60"
+        },
+        {
+          "role": "text",
+          "name": "pieces in your library"
+        },
+        {
+          "role": "text",
+          "name": "Setlists"
+        },
+        {
+          "role": "text",
+          "name": "3"
+        },
+        {
+          "role": "text",
+          "name": "ready for performance"
+        },
+        {
+          "role": "text",
+          "name": "Favorites"
+        },
+        {
+          "role": "text",
+          "name": "3"
+        },
+        {
+          "role": "text",
+          "name": "marked as favorites"
+        },
+        {
+          "role": "text",
+          "name": "Recent"
+        },
+        {
+          "role": "text",
+          "name": "10"
+        },
+        {
+          "role": "text",
+          "name": "viewed recently"
+        },
+        {
+          "role": "text",
+          "name": "Recent Content"
+        },
+        {
+          "role": "text",
+          "name": "Your recently viewed music"
+        },
+        {
+          "role": "button",
+          "name": "View [UX-AUDIT] Bis nº 22 content"
+        },
+        {
+          "role": "button",
+          "name": "View [UX-AUDIT] Bis nº 21 content"
+        },
+        {
+          "role": "button",
+          "name": "View [UX-AUDIT] Bis nº 20 content"
+        },
+        {
+          "role": "button",
+          "name": "View [UX-AUDIT] Bis nº 19 content"
+        },
+        {
+          "role": "button",
+          "name": "View [UX-AUDIT] Bis nº 18 content"
+        },
+        {
+          "role": "text",
+          "name": "Favorite Content"
+        },
+        {
+          "role": "text",
+          "name": "Your starred music pieces"
+        },
+        {
+          "role": "button",
+          "name": "View [UX-AUDIT] Anunciação content"
+        },
+        {
+          "role": "button",
+          "name": "View [UX-AUDIT] Garota de Ipanema content"
+        },
+        {
+          "role": "button",
+          "name": "View [UX-AUDIT] Construção content"
+        }
+      ]
+    },
+    {
+      "role": "region",
+      "name": "Notifications alt+T"
+    }
+  ]
+}

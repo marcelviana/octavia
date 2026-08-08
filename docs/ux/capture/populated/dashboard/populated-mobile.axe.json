@@ -1,0 +1,223 @@
+[
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "tags": [
+      "cat.color",
+      "wcag2aa",
+      "wcag143",
+      "TTv5",
+      "TT13.c",
+      "EN-301-549",
+      "EN-9.1.4.3",
+      "ACT",
+      "RGAAv4",
+      "RGAA-3.2.1"
+    ],
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "help": "Elements must meet minimum color contrast ratio thresholds",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=playwright",
+    "nodes": [
+      {
+        "any": [
+          {
+            "id": "color-contrast",
+            "data": {
+              "fgColor": "#d97706",
+              "bgColor": "#fffffe",
+              "contrastRatio": 3.18,
+              "fontSize": "9.0pt (12px)",
+              "fontWeight": "normal",
+              "messageKey": null,
+              "expectedContrastRatio": "4.5:1"
+            },
+            "relatedNodes": [
+              {
+                "html": "<div class=\"rounded-lg text-card-foreground bg-white/90 backdrop-blur-sm border border-amber-100 shadow-lg\">",
+                "target": [
+                  ".md\\:grid-cols-2 > .text-card-foreground.bg-white\\/90.border-amber-100:nth-child(1)"
+                ]
+              },
+              {
+                "html": "<div class=\"flex flex-col h-screen bg-[#fffcf7] overflow-hidden\">",
+                "target": [
+                  ".h-screen"
+                ]
+              }
+            ],
+            "impact": "serious",
+            "message": "Element has insufficient color contrast of 3.18 (foreground color: #d97706, background color: #fffffe, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "serious",
+        "html": "<p class=\"text-xs text-amber-600\">pieces in your library</p>",
+        "target": [
+          ".text-card-foreground.bg-white\\/90.border-amber-100:nth-child(1) > .pt-0.p-6 > .text-amber-600.text-xs"
+        ],
+        "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.18 (foreground color: #d97706, background color: #fffffe, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+      },
+      {
+        "any": [
+          {
+            "id": "color-contrast",
+            "data": {
+              "fgColor": "#d97706",
+              "bgColor": "#fffffe",
+              "contrastRatio": 3.18,
+              "fontSize": "9.0pt (12px)",
+              "fontWeight": "normal",
+              "messageKey": null,
+              "expectedContrastRatio": "4.5:1"
+            },
+            "relatedNodes": [
+              {
+                "html": "<div class=\"rounded-lg text-card-foreground bg-white/90 backdrop-blur-sm border border-amber-100 shadow-lg\">",
+                "target": [
+                  ".md\\:grid-cols-2 > .text-card-foreground.bg-white\\/90.border-amber-100:nth-child(2)"
+                ]
+              },
+              {
+                "html": "<div class=\"flex flex-col h-screen bg-[#fffcf7] overflow-hidden\">",
+                "target": [
+                  ".h-screen"
+                ]
+              }
+            ],
+            "impact": "serious",
+            "message": "Element has insufficient color contrast of 3.18 (foreground color: #d97706, background color: #fffffe, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "serious",
+        "html": "<p class=\"text-xs text-amber-600\">ready for performance</p>",
+        "target": [
+          ".text-card-foreground.bg-white\\/90.border-amber-100:nth-child(2) > .pt-0.p-6 > .text-amber-600.text-xs"
+        ],
+        "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.18 (foreground color: #d97706, background color: #fffffe, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+      },
+      {
+        "any": [
+          {
+            "id": "color-contrast",
+            "data": {
+              "fgColor": "#d97706",
+              "bgColor": "#fffffe",
+              "contrastRatio": 3.18,
+              "fontSize": "9.0pt (12px)",
+              "fontWeight": "normal",
+              "messageKey": null,
+              "expectedContrastRatio": "4.5:1"
+            },
+            "relatedNodes": [
+              {
+                "html": "<div class=\"rounded-lg text-card-foreground bg-white/90 backdrop-blur-sm border border-amber-100 shadow-lg\">",
+                "target": [
+                  ".text-card-foreground.bg-white\\/90.border-amber-100:nth-child(3)"
+                ]
+              },
+              {
+                "html": "<div class=\"flex flex-col h-screen bg-[#fffcf7] overflow-hidden\">",
+                "target": [
+                  ".h-screen"
+                ]
+              }
+            ],
+            "impact": "serious",
+            "message": "Element has insufficient color contrast of 3.18 (foreground color: #d97706, background color: #fffffe, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "serious",
+        "html": "<p class=\"text-xs text-amber-600\">marked as favorites</p>",
+        "target": [
+          ".text-card-foreground.bg-white\\/90.border-amber-100:nth-child(3) > .pt-0.p-6 > .text-amber-600.text-xs"
+        ],
+        "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.18 (foreground color: #d97706, background color: #fffffe, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+      },
+      {
+        "any": [
+          {
+            "id": "color-contrast",
+            "data": {
+              "fgColor": "#d97706",
+              "bgColor": "#fffffe",
+              "contrastRatio": 3.18,
+              "fontSize": "9.0pt (12px)",
+              "fontWeight": "normal",
+              "messageKey": null,
+              "expectedContrastRatio": "4.5:1"
+            },
+            "relatedNodes": [
+              {
+                "html": "<div class=\"rounded-lg text-card-foreground bg-white/90 backdrop-blur-sm border border-amber-100 shadow-lg\">",
+                "target": [
+                  ".text-card-foreground.bg-white\\/90.border-amber-100:nth-child(4)"
+                ]
+              },
+              {
+                "html": "<div class=\"flex flex-col h-screen bg-[#fffcf7] overflow-hidden\">",
+                "target": [
+                  ".h-screen"
+                ]
+              }
+            ],
+            "impact": "serious",
+            "message": "Element has insufficient color contrast of 3.18 (foreground color: #d97706, background color: #fffffe, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "serious",
+        "html": "<p class=\"text-xs text-amber-600\">viewed recently</p>",
+        "target": [
+          ".text-card-foreground.bg-white\\/90.border-amber-100:nth-child(4) > .pt-0.p-6 > .text-amber-600.text-xs"
+        ],
+        "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.18 (foreground color: #d97706, background color: #fffffe, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+      },
+      {
+        "any": [
+          {
+            "id": "color-contrast",
+            "data": {
+              "fgColor": "#d97706",
+              "bgColor": "#fffffe",
+              "contrastRatio": 3.18,
+              "fontSize": "10.5pt (14px)",
+              "fontWeight": "normal",
+              "messageKey": null,
+              "expectedContrastRatio": "4.5:1"
+            },
+            "relatedNodes": [
+              {
+                "html": "<div class=\"rounded-lg text-card-foreground bg-white/90 backdrop-blur-sm border border-amber-100 shadow-lg\">",
+                "target": [
+                  ".lg\\:grid-cols-2 > .text-card-foreground.bg-white\\/90.border-amber-100:nth-child(1)"
+                ]
+              },
+              {
+                "html": "<div class=\"flex flex-col h-screen bg-[#fffcf7] overflow-hidden\">",
+                "target": [
+                  ".h-screen"
+                ]
+              }
+            ],
+            "impact": "serious",
+            "message": "Element has insufficient color contrast of 3.18 (foreground color: #d97706, background color: #fffffe, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "serious",
+        "html": "<div class=\"text-sm text-amber-600\">Your recently viewed music</div>",
+        "target": [
+          ".text-card-foreground.bg-white\\/90.border-amber-100:nth-child(1) > .space-y-1\\.5.flex-col.p-6 > .text-amber-600.text-sm"
+        ],
+        "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.18 (foreground color: #d97706, background color: #fffffe, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+      }
+    ]
+  }
+]

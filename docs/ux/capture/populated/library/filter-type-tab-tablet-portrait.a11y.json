@@ -1,0 +1,200 @@
+{
+  "role": "WebArea",
+  "name": "Octavia - Digital Music Management",
+  "children": [
+    {
+      "role": "button",
+      "name": ""
+    },
+    {
+      "role": "image",
+      "name": "Octavia"
+    },
+    {
+      "role": "image",
+      "name": "Octavia"
+    },
+    {
+      "role": "textbox",
+      "name": "Search..."
+    },
+    {
+      "role": "button",
+      "name": "UT",
+      "haspopup": "menu"
+    },
+    {
+      "role": "button",
+      "name": "Home"
+    },
+    {
+      "role": "button",
+      "name": "Library"
+    },
+    {
+      "role": "button",
+      "name": "Setlists"
+    },
+    {
+      "role": "button",
+      "name": "Add"
+    },
+    {
+      "role": "heading",
+      "name": "Your Music Library",
+      "level": 1
+    },
+    {
+      "role": "text",
+      "name": "Manage and organize all your musical content"
+    },
+    {
+      "role": "button",
+      "name": "Filters",
+      "focused": true,
+      "haspopup": "menu"
+    },
+    {
+      "role": "combobox",
+      "name": "",
+      "haspopup": "listbox",
+      "value": "Sort"
+    },
+    {
+      "role": "button",
+      "name": "Add Content"
+    },
+    {
+      "role": "button",
+      "name": "View [UX-AUDIT] Trenzinho do Caipira by Villa-Lobos",
+      "children": [
+        {
+          "role": "button",
+          "name": "Add to favorites",
+          "pressed": false
+        },
+        {
+          "role": "button",
+          "name": "More options",
+          "haspopup": "menu"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "View [UX-AUDIT] Lamentos do Morro by Pixinguinha",
+      "children": [
+        {
+          "role": "button",
+          "name": "Add to favorites",
+          "pressed": false
+        },
+        {
+          "role": "button",
+          "name": "More options",
+          "haspopup": "menu"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "View [UX-AUDIT] Sons de Carrilhões by João Pernambuco",
+      "children": [
+        {
+          "role": "button",
+          "name": "Add to favorites",
+          "pressed": false
+        },
+        {
+          "role": "button",
+          "name": "More options",
+          "haspopup": "menu"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "View [UX-AUDIT] Manhã de Carnaval by Luiz Bonfá",
+      "children": [
+        {
+          "role": "button",
+          "name": "Add to favorites",
+          "pressed": false
+        },
+        {
+          "role": "button",
+          "name": "More options",
+          "haspopup": "menu"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "View [UX-AUDIT] Wave by Tom Jobim",
+      "children": [
+        {
+          "role": "button",
+          "name": "Add to favorites",
+          "pressed": false
+        },
+        {
+          "role": "button",
+          "name": "More options",
+          "haspopup": "menu"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "View [UX-AUDIT] Tema da Aula de Sexta by Unknown Artist",
+      "children": [
+        {
+          "role": "button",
+          "name": "Add to favorites",
+          "pressed": false
+        },
+        {
+          "role": "button",
+          "name": "More options",
+          "haspopup": "menu"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "View [UX-AUDIT] Estudo em Mi Menor by Unknown Artist",
+      "children": [
+        {
+          "role": "button",
+          "name": "Add to favorites",
+          "pressed": false
+        },
+        {
+          "role": "button",
+          "name": "More options",
+          "haspopup": "menu"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "View [UX-AUDIT] Ponta de Areia by Milton Nascimento",
+      "children": [
+        {
+          "role": "button",
+          "name": "Add to favorites",
+          "pressed": false
+        },
+        {
+          "role": "button",
+          "name": "More options",
+          "haspopup": "menu"
+        }
+      ]
+    },
+    {
+      "role": "region",
+      "name": "Notifications alt+T"
+    }
+  ]
+}

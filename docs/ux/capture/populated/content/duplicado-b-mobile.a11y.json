@@ -1,0 +1,127 @@
+{
+  "role": "WebArea",
+  "name": "Octavia - Digital Music Management",
+  "children": [
+    {
+      "role": "image",
+      "name": "Octavia"
+    },
+    {
+      "role": "textbox",
+      "name": "Search..."
+    },
+    {
+      "role": "button",
+      "name": "UT",
+      "haspopup": "menu"
+    },
+    {
+      "role": "button",
+      "name": "Home"
+    },
+    {
+      "role": "button",
+      "name": "Library"
+    },
+    {
+      "role": "button",
+      "name": "Setlists"
+    },
+    {
+      "role": "button",
+      "name": "Add"
+    },
+    {
+      "role": "button",
+      "name": ""
+    },
+    {
+      "role": "heading",
+      "name": "[UX-AUDIT] Águas de Março",
+      "level": 1
+    },
+    {
+      "role": "text",
+      "name": "Tom Jobim"
+    },
+    {
+      "role": "text",
+      "name": " • "
+    },
+    {
+      "role": "text",
+      "name": "Chords"
+    },
+    {
+      "role": "button",
+      "name": ""
+    },
+    {
+      "role": "button",
+      "name": ""
+    },
+    {
+      "role": "heading",
+      "name": "Chord Chart",
+      "level": 3
+    },
+    {
+      "role": "text",
+      "name": "[Intro] C Am F G C Am Quando a noite chega e a cidade acende F G Eu procuro a estrada que me leva até você C Am O vento traz lembranças de um tempo que passou F G C E a gente segue em frente [Refrão] F G Em Am F G C"
+    },
+    {
+      "role": "heading",
+      "name": "Song Details",
+      "level": 3
+    },
+    {
+      "role": "text",
+      "name": "Key"
+    },
+    {
+      "role": "text",
+      "name": "C"
+    },
+    {
+      "role": "text",
+      "name": "Time Signature"
+    },
+    {
+      "role": "text",
+      "name": "4/4"
+    },
+    {
+      "role": "text",
+      "name": "Created "
+    },
+    {
+      "role": "text",
+      "name": "8/8/2026"
+    },
+    {
+      "role": "text",
+      "name": "Modified "
+    },
+    {
+      "role": "text",
+      "name": "8/8/2026"
+    },
+    {
+      "role": "heading",
+      "name": "Performance Notes",
+      "level": 3
+    },
+    {
+      "role": "text",
+      "name": "No performance notes available"
+    },
+    {
+      "role": "text",
+      "name": "Click Edit to add notes and performance tips"
+    },
+    {
+      "role": "region",
+      "name": "Notifications alt+T"
+    }
+  ]
+}

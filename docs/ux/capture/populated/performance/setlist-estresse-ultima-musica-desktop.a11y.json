@@ -1,0 +1,130 @@
+{
+  "role": "WebArea",
+  "name": "Octavia - Digital Music Management",
+  "children": [
+    {
+      "role": "generic",
+      "name": "[UX-AUDIT] Bis nº 22 Conjunto do Bis Zoom out 100% Zoom in Decrease BPM 80 BPM Increase BPM Quando a noite chega e a cidade acende Eu procuro a estrada que me leva até você O vento traz lembranças de um tempo que passou   E se a saudade aperta, eu canto essa canção Pra espantar a sombra e acalmar o coração Amanhã é outro dia, o sol vai voltar E a gente segue em frente, sem parar de sonhar Prev",
+      "focused": true,
+      "children": [
+        {
+          "role": "button",
+          "name": ""
+        },
+        {
+          "role": "heading",
+          "name": "[UX-AUDIT] Bis nº 22",
+          "level": 2
+        },
+        {
+          "role": "text",
+          "name": "Conjunto do Bis"
+        },
+        {
+          "role": "button",
+          "name": ""
+        },
+        {
+          "role": "button",
+          "name": "Zoom out"
+        },
+        {
+          "role": "text",
+          "name": "100"
+        },
+        {
+          "role": "text",
+          "name": "%"
+        },
+        {
+          "role": "button",
+          "name": "Zoom in"
+        },
+        {
+          "role": "button",
+          "name": ""
+        },
+        {
+          "role": "button",
+          "name": "Decrease BPM"
+        },
+        {
+          "role": "text",
+          "name": "80"
+        },
+        {
+          "role": "text",
+          "name": " BPM"
+        },
+        {
+          "role": "button",
+          "name": "Increase BPM"
+        },
+        {
+          "role": "text",
+          "name": "Quando a noite chega e a cidade acende"
+        },
+        {
+          "role": "text",
+          "name": "Eu procuro a estrada que me leva até você"
+        },
+        {
+          "role": "text",
+          "name": "O vento traz lembranças de um tempo que passou"
+        },
+        {
+          "role": "text",
+          "name": " "
+        },
+        {
+          "role": "text",
+          "name": "E se a saudade aperta, eu canto essa canção"
+        },
+        {
+          "role": "text",
+          "name": "Pra espantar a sombra e acalmar o coração"
+        },
+        {
+          "role": "text",
+          "name": "Amanhã é outro dia, o sol vai voltar"
+        },
+        {
+          "role": "text",
+          "name": "E a gente segue em frente, sem parar de sonhar"
+        },
+        {
+          "role": "button",
+          "name": "Prev"
+        },
+        {
+          "role": "button",
+          "name": "Next",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "role": "region",
+      "name": "Notifications alt+T",
+      "children": [
+        {
+          "role": "list",
+          "name": "",
+          "children": [
+            {
+              "role": "listitem",
+              "name": "",
+              "level": 1,
+              "children": [
+                {
+                  "role": "text",
+                  "name": "Heads up! Your browser does not support preventing screen sleep. Please adjust your device settings to avoid screen timeout during your performance."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

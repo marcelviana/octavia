@@ -1,0 +1,2142 @@
+[
+  {
+    "route": "content",
+    "state": "cifra",
+    "viewport": "desktop",
+    "url": "/content/fd053ce9-8e4b-4d0b-a445-d3752ec53df2",
+    "status": "captured",
+    "content_id": "fd053ce9-8e4b-4d0b-a445-d3752ec53df2",
+    "notes": [
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/cifra-desktop.png",
+      "a11y": "docs/ux/capture/populated/content/cifra-desktop.a11y.json",
+      "axe": "docs/ux/capture/populated/content/cifra-desktop.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "content",
+    "state": "cifra",
+    "viewport": "mobile",
+    "url": "/content/fd053ce9-8e4b-4d0b-a445-d3752ec53df2",
+    "status": "captured",
+    "content_id": "fd053ce9-8e4b-4d0b-a445-d3752ec53df2",
+    "notes": [
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/cifra-mobile.png",
+      "a11y": "docs/ux/capture/populated/content/cifra-mobile.a11y.json",
+      "axe": "docs/ux/capture/populated/content/cifra-mobile.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "content",
+    "state": "cifra",
+    "viewport": "tablet-landscape",
+    "url": "/content/fd053ce9-8e4b-4d0b-a445-d3752ec53df2",
+    "status": "captured",
+    "content_id": "fd053ce9-8e4b-4d0b-a445-d3752ec53df2",
+    "notes": [
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/cifra-tablet-landscape.png",
+      "a11y": "docs/ux/capture/populated/content/cifra-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/populated/content/cifra-tablet-landscape.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "content",
+    "state": "cifra",
+    "viewport": "tablet-portrait",
+    "url": "/content/fd053ce9-8e4b-4d0b-a445-d3752ec53df2",
+    "status": "captured",
+    "content_id": "fd053ce9-8e4b-4d0b-a445-d3752ec53df2",
+    "notes": [
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/cifra-tablet-portrait.png",
+      "a11y": "docs/ux/capture/populated/content/cifra-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/populated/content/cifra-tablet-portrait.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "content",
+    "state": "duplicado-a",
+    "viewport": "desktop",
+    "url": "/content/c81bd22e-afdc-454f-99b6-4b8be35f5fea",
+    "status": "captured",
+    "content_id": "c81bd22e-afdc-454f-99b6-4b8be35f5fea",
+    "notes": [
+      "Duplicado exato 1/2 de \"Águas de Março\" — a tela diferencia qual é qual?",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/duplicado-a-desktop.png",
+      "a11y": "docs/ux/capture/populated/content/duplicado-a-desktop.a11y.json",
+      "axe": "docs/ux/capture/populated/content/duplicado-a-desktop.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "content",
+    "state": "duplicado-a",
+    "viewport": "mobile",
+    "url": "/content/c81bd22e-afdc-454f-99b6-4b8be35f5fea",
+    "status": "captured",
+    "content_id": "c81bd22e-afdc-454f-99b6-4b8be35f5fea",
+    "notes": [
+      "Duplicado exato 1/2 de \"Águas de Março\" — a tela diferencia qual é qual?",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/duplicado-a-mobile.png",
+      "a11y": "docs/ux/capture/populated/content/duplicado-a-mobile.a11y.json",
+      "axe": "docs/ux/capture/populated/content/duplicado-a-mobile.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "content",
+    "state": "duplicado-a",
+    "viewport": "tablet-landscape",
+    "url": "/content/c81bd22e-afdc-454f-99b6-4b8be35f5fea",
+    "status": "captured",
+    "content_id": "c81bd22e-afdc-454f-99b6-4b8be35f5fea",
+    "notes": [
+      "Duplicado exato 1/2 de \"Águas de Março\" — a tela diferencia qual é qual?",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/duplicado-a-tablet-landscape.png",
+      "a11y": "docs/ux/capture/populated/content/duplicado-a-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/populated/content/duplicado-a-tablet-landscape.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "content",
+    "state": "duplicado-a",
+    "viewport": "tablet-portrait",
+    "url": "/content/c81bd22e-afdc-454f-99b6-4b8be35f5fea",
+    "status": "captured",
+    "content_id": "c81bd22e-afdc-454f-99b6-4b8be35f5fea",
+    "notes": [
+      "Duplicado exato 1/2 de \"Águas de Março\" — a tela diferencia qual é qual?",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/duplicado-a-tablet-portrait.png",
+      "a11y": "docs/ux/capture/populated/content/duplicado-a-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/populated/content/duplicado-a-tablet-portrait.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "content",
+    "state": "duplicado-b",
+    "viewport": "desktop",
+    "url": "/content/64594f61-a9ab-47fd-8114-ba03a640018e",
+    "status": "captured",
+    "content_id": "64594f61-a9ab-47fd-8114-ba03a640018e",
+    "notes": [
+      "Duplicado exato 2/2 — comparar com duplicado-a: nada além do id na URL difere",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/duplicado-b-desktop.png",
+      "a11y": "docs/ux/capture/populated/content/duplicado-b-desktop.a11y.json",
+      "axe": "docs/ux/capture/populated/content/duplicado-b-desktop.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "content",
+    "state": "duplicado-b",
+    "viewport": "mobile",
+    "url": "/content/64594f61-a9ab-47fd-8114-ba03a640018e",
+    "status": "captured",
+    "content_id": "64594f61-a9ab-47fd-8114-ba03a640018e",
+    "notes": [
+      "Duplicado exato 2/2 — comparar com duplicado-a: nada além do id na URL difere",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/duplicado-b-mobile.png",
+      "a11y": "docs/ux/capture/populated/content/duplicado-b-mobile.a11y.json",
+      "axe": "docs/ux/capture/populated/content/duplicado-b-mobile.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "content",
+    "state": "duplicado-b",
+    "viewport": "tablet-landscape",
+    "url": "/content/64594f61-a9ab-47fd-8114-ba03a640018e",
+    "status": "captured",
+    "content_id": "64594f61-a9ab-47fd-8114-ba03a640018e",
+    "notes": [
+      "Duplicado exato 2/2 — comparar com duplicado-a: nada além do id na URL difere",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/duplicado-b-tablet-landscape.png",
+      "a11y": "docs/ux/capture/populated/content/duplicado-b-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/populated/content/duplicado-b-tablet-landscape.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "content",
+    "state": "duplicado-b",
+    "viewport": "tablet-portrait",
+    "url": "/content/64594f61-a9ab-47fd-8114-ba03a640018e",
+    "status": "captured",
+    "content_id": "64594f61-a9ab-47fd-8114-ba03a640018e",
+    "notes": [
+      "Duplicado exato 2/2 — comparar com duplicado-a: nada além do id na URL difere",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/duplicado-b-tablet-portrait.png",
+      "a11y": "docs/ux/capture/populated/content/duplicado-b-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/populated/content/duplicado-b-tablet-portrait.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "content",
+    "state": "letra",
+    "viewport": "desktop",
+    "url": "/content/9385a189-0ed9-4cbf-8957-c53d8f66f840",
+    "status": "captured",
+    "content_id": "9385a189-0ed9-4cbf-8957-c53d8f66f840",
+    "notes": [
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/letra-desktop.png",
+      "a11y": "docs/ux/capture/populated/content/letra-desktop.a11y.json",
+      "axe": "docs/ux/capture/populated/content/letra-desktop.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "content",
+    "state": "letra",
+    "viewport": "mobile",
+    "url": "/content/9385a189-0ed9-4cbf-8957-c53d8f66f840",
+    "status": "captured",
+    "content_id": "9385a189-0ed9-4cbf-8957-c53d8f66f840",
+    "notes": [
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/letra-mobile.png",
+      "a11y": "docs/ux/capture/populated/content/letra-mobile.a11y.json",
+      "axe": "docs/ux/capture/populated/content/letra-mobile.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "content",
+    "state": "letra",
+    "viewport": "tablet-landscape",
+    "url": "/content/9385a189-0ed9-4cbf-8957-c53d8f66f840",
+    "status": "captured",
+    "content_id": "9385a189-0ed9-4cbf-8957-c53d8f66f840",
+    "notes": [
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/letra-tablet-landscape.png",
+      "a11y": "docs/ux/capture/populated/content/letra-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/populated/content/letra-tablet-landscape.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "content",
+    "state": "letra",
+    "viewport": "tablet-portrait",
+    "url": "/content/9385a189-0ed9-4cbf-8957-c53d8f66f840",
+    "status": "captured",
+    "content_id": "9385a189-0ed9-4cbf-8957-c53d8f66f840",
+    "notes": [
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/letra-tablet-portrait.png",
+      "a11y": "docs/ux/capture/populated/content/letra-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/populated/content/letra-tablet-portrait.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "content",
+    "state": "pdf-12paginas-p1",
+    "viewport": "desktop",
+    "url": "/content/2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f",
+    "status": "captured",
+    "content_id": "2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f",
+    "notes": [
+      "react-pdf renderiza UMA página por vez; navegação só por chevrons sem aria-label",
+      "pdf_render ok: 2 canvas visível(is)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/pdf-12paginas-p1-desktop.png",
+      "a11y": "docs/ux/capture/populated/content/pdf-12paginas-p1-desktop.a11y.json",
+      "axe": "docs/ux/capture/populated/content/pdf-12paginas-p1-desktop.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "content",
+    "state": "pdf-12paginas-p1",
+    "viewport": "mobile",
+    "url": "/content/2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f",
+    "status": "captured",
+    "content_id": "2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f",
+    "notes": [
+      "react-pdf renderiza UMA página por vez; navegação só por chevrons sem aria-label",
+      "pdf_render ok: 2 canvas visível(is)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/pdf-12paginas-p1-mobile.png",
+      "a11y": "docs/ux/capture/populated/content/pdf-12paginas-p1-mobile.a11y.json",
+      "axe": "docs/ux/capture/populated/content/pdf-12paginas-p1-mobile.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "content",
+    "state": "pdf-12paginas-p1",
+    "viewport": "tablet-landscape",
+    "url": "/content/2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f",
+    "status": "captured",
+    "content_id": "2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f",
+    "notes": [
+      "react-pdf renderiza UMA página por vez; navegação só por chevrons sem aria-label",
+      "pdf_render ok: 2 canvas visível(is)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Failed to load resource: the server responded with a status of 429 ()"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/pdf-12paginas-p1-tablet-landscape.png",
+      "a11y": "docs/ux/capture/populated/content/pdf-12paginas-p1-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/populated/content/pdf-12paginas-p1-tablet-landscape.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "content",
+    "state": "pdf-12paginas-p1",
+    "viewport": "tablet-portrait",
+    "url": "/content/2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f",
+    "status": "captured",
+    "content_id": "2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f",
+    "notes": [
+      "react-pdf renderiza UMA página por vez; navegação só por chevrons sem aria-label",
+      "pdf_render ok: 2 canvas visível(is)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/pdf-12paginas-p1-tablet-portrait.png",
+      "a11y": "docs/ux/capture/populated/content/pdf-12paginas-p1-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/populated/content/pdf-12paginas-p1-tablet-portrait.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "content",
+    "state": "pdf-12paginas-p6",
+    "viewport": "desktop",
+    "url": "/content/2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f",
+    "status": "captured",
+    "content_id": "2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f",
+    "notes": [
+      "Página ~6 de 12 — alcançada com 5 cliques no chevron (não há campo de página)",
+      "indicador de página após 5 cliques: \"Page 6 / 12\"",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/pdf-12paginas-p6-desktop.png",
+      "a11y": "docs/ux/capture/populated/content/pdf-12paginas-p6-desktop.a11y.json",
+      "axe": "docs/ux/capture/populated/content/pdf-12paginas-p6-desktop.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "content",
+    "state": "pdf-12paginas-p6",
+    "viewport": "mobile",
+    "url": "/content/2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f",
+    "status": "captured",
+    "content_id": "2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f",
+    "notes": [
+      "Página ~6 de 12 — alcançada com 5 cliques no chevron (não há campo de página)",
+      "indicador de página após 5 cliques: \"Page 6 / 12\"",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/pdf-12paginas-p6-mobile.png",
+      "a11y": "docs/ux/capture/populated/content/pdf-12paginas-p6-mobile.a11y.json",
+      "axe": "docs/ux/capture/populated/content/pdf-12paginas-p6-mobile.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "content",
+    "state": "pdf-12paginas-p6",
+    "viewport": "tablet-landscape",
+    "url": "/content/2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f",
+    "status": "captured",
+    "content_id": "2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f",
+    "notes": [
+      "Página ~6 de 12 — alcançada com 5 cliques no chevron (não há campo de página)",
+      "indicador de página após 5 cliques: \"Page 6 / 12\"",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/pdf-12paginas-p6-tablet-landscape.png",
+      "a11y": "docs/ux/capture/populated/content/pdf-12paginas-p6-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/populated/content/pdf-12paginas-p6-tablet-landscape.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "content",
+    "state": "pdf-12paginas-p6",
+    "viewport": "tablet-portrait",
+    "url": "/content/2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f",
+    "status": "captured",
+    "content_id": "2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f",
+    "notes": [
+      "Página ~6 de 12 — alcançada com 5 cliques no chevron (não há campo de página)",
+      "indicador de página após 5 cliques: \"Page 6 / 12\"",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/pdf-12paginas-p6-tablet-portrait.png",
+      "a11y": "docs/ux/capture/populated/content/pdf-12paginas-p6-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/populated/content/pdf-12paginas-p6-tablet-portrait.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "content",
+    "state": "pdf-1pagina",
+    "viewport": "desktop",
+    "url": "/content/e50f0f23-d583-4d43-a136-8808f9946f0f",
+    "status": "captured",
+    "content_id": "e50f0f23-d583-4d43-a136-8808f9946f0f",
+    "notes": [
+      "pdf_render ok: 2 canvas visível(is)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/pdf-1pagina-desktop.png",
+      "a11y": "docs/ux/capture/populated/content/pdf-1pagina-desktop.a11y.json",
+      "axe": "docs/ux/capture/populated/content/pdf-1pagina-desktop.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "content",
+    "state": "pdf-1pagina",
+    "viewport": "mobile",
+    "url": "/content/e50f0f23-d583-4d43-a136-8808f9946f0f",
+    "status": "captured",
+    "content_id": "e50f0f23-d583-4d43-a136-8808f9946f0f",
+    "notes": [
+      "pdf_render ok: 2 canvas visível(is)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/pdf-1pagina-mobile.png",
+      "a11y": "docs/ux/capture/populated/content/pdf-1pagina-mobile.a11y.json",
+      "axe": "docs/ux/capture/populated/content/pdf-1pagina-mobile.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "content",
+    "state": "pdf-1pagina",
+    "viewport": "tablet-landscape",
+    "url": "/content/e50f0f23-d583-4d43-a136-8808f9946f0f",
+    "status": "captured",
+    "content_id": "e50f0f23-d583-4d43-a136-8808f9946f0f",
+    "notes": [
+      "pdf_render ok: 2 canvas visível(is)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Failed to load resource: the server responded with a status of 429 ()"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/pdf-1pagina-tablet-landscape.png",
+      "a11y": "docs/ux/capture/populated/content/pdf-1pagina-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/populated/content/pdf-1pagina-tablet-landscape.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "content",
+    "state": "pdf-1pagina",
+    "viewport": "tablet-portrait",
+    "url": "/content/e50f0f23-d583-4d43-a136-8808f9946f0f",
+    "status": "captured",
+    "content_id": "e50f0f23-d583-4d43-a136-8808f9946f0f",
+    "notes": [
+      "pdf_render ok: 2 canvas visível(is)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/pdf-1pagina-tablet-portrait.png",
+      "a11y": "docs/ux/capture/populated/content/pdf-1pagina-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/populated/content/pdf-1pagina-tablet-portrait.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "content",
+    "state": "tablatura",
+    "viewport": "desktop",
+    "url": "/content/f0d57e35-a701-4ea0-a92b-d72104e6f919",
+    "status": "captured",
+    "content_id": "f0d57e35-a701-4ea0-a92b-d72104e6f919",
+    "notes": [
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/tablatura-desktop.png",
+      "a11y": "docs/ux/capture/populated/content/tablatura-desktop.a11y.json",
+      "axe": "docs/ux/capture/populated/content/tablatura-desktop.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "content",
+    "state": "tablatura",
+    "viewport": "mobile",
+    "url": "/content/f0d57e35-a701-4ea0-a92b-d72104e6f919",
+    "status": "captured",
+    "content_id": "f0d57e35-a701-4ea0-a92b-d72104e6f919",
+    "notes": [
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/tablatura-mobile.png",
+      "a11y": "docs/ux/capture/populated/content/tablatura-mobile.a11y.json",
+      "axe": "docs/ux/capture/populated/content/tablatura-mobile.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "content",
+    "state": "tablatura",
+    "viewport": "tablet-landscape",
+    "url": "/content/f0d57e35-a701-4ea0-a92b-d72104e6f919",
+    "status": "captured",
+    "content_id": "f0d57e35-a701-4ea0-a92b-d72104e6f919",
+    "notes": [
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/tablatura-tablet-landscape.png",
+      "a11y": "docs/ux/capture/populated/content/tablatura-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/populated/content/tablatura-tablet-landscape.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "content",
+    "state": "tablatura",
+    "viewport": "tablet-portrait",
+    "url": "/content/f0d57e35-a701-4ea0-a92b-d72104e6f919",
+    "status": "captured",
+    "content_id": "f0d57e35-a701-4ea0-a92b-d72104e6f919",
+    "notes": [
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/tablatura-tablet-portrait.png",
+      "a11y": "docs/ux/capture/populated/content/tablatura-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/populated/content/tablatura-tablet-portrait.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "content",
+    "state": "titulo-186-chars",
+    "viewport": "desktop",
+    "url": "/content/ba9fa8f6-4259-46ed-a075-3e4b0cdac98a",
+    "status": "captured",
+    "content_id": "ba9fa8f6-4259-46ed-a075-3e4b0cdac98a",
+    "notes": [
+      "Título com 186 chars — sem breadcrumb; h1 direto no header",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/titulo-186-chars-desktop.png",
+      "a11y": "docs/ux/capture/populated/content/titulo-186-chars-desktop.a11y.json",
+      "axe": "docs/ux/capture/populated/content/titulo-186-chars-desktop.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "content",
+    "state": "titulo-186-chars",
+    "viewport": "mobile",
+    "url": "/content/ba9fa8f6-4259-46ed-a075-3e4b0cdac98a",
+    "status": "captured",
+    "content_id": "ba9fa8f6-4259-46ed-a075-3e4b0cdac98a",
+    "notes": [
+      "Título com 186 chars — sem breadcrumb; h1 direto no header",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/titulo-186-chars-mobile.png",
+      "a11y": "docs/ux/capture/populated/content/titulo-186-chars-mobile.a11y.json",
+      "axe": "docs/ux/capture/populated/content/titulo-186-chars-mobile.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "content",
+    "state": "titulo-186-chars",
+    "viewport": "tablet-landscape",
+    "url": "/content/ba9fa8f6-4259-46ed-a075-3e4b0cdac98a",
+    "status": "captured",
+    "content_id": "ba9fa8f6-4259-46ed-a075-3e4b0cdac98a",
+    "notes": [
+      "Título com 186 chars — sem breadcrumb; h1 direto no header",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/titulo-186-chars-tablet-landscape.png",
+      "a11y": "docs/ux/capture/populated/content/titulo-186-chars-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/populated/content/titulo-186-chars-tablet-landscape.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "content",
+    "state": "titulo-186-chars",
+    "viewport": "tablet-portrait",
+    "url": "/content/ba9fa8f6-4259-46ed-a075-3e4b0cdac98a",
+    "status": "captured",
+    "content_id": "ba9fa8f6-4259-46ed-a075-3e4b0cdac98a",
+    "notes": [
+      "Título com 186 chars — sem breadcrumb; h1 direto no header",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/content/titulo-186-chars-tablet-portrait.png",
+      "a11y": "docs/ux/capture/populated/content/titulo-186-chars-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/populated/content/titulo-186-chars-tablet-portrait.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "dashboard",
+    "state": "populated",
+    "viewport": "desktop",
+    "url": "/dashboard",
+    "status": "captured",
+    "notes": [
+      "Stats com 60 conteúdos/3 setlists; cards Recent (5) e Favorites preenchidos",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/dashboard/populated-desktop.png",
+      "a11y": "docs/ux/capture/populated/dashboard/populated-desktop.a11y.json",
+      "axe": "docs/ux/capture/populated/dashboard/populated-desktop.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "dashboard",
+    "state": "populated",
+    "viewport": "mobile",
+    "url": "/dashboard",
+    "status": "captured",
+    "notes": [
+      "Stats com 60 conteúdos/3 setlists; cards Recent (5) e Favorites preenchidos",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/dashboard/populated-mobile.png",
+      "a11y": "docs/ux/capture/populated/dashboard/populated-mobile.a11y.json",
+      "axe": "docs/ux/capture/populated/dashboard/populated-mobile.axe.json"
+    },
+    "axeViolations": 1
+  },
+  {
+    "route": "dashboard",
+    "state": "populated",
+    "viewport": "tablet-landscape",
+    "url": "/dashboard",
+    "status": "captured",
+    "notes": [
+      "Stats com 60 conteúdos/3 setlists; cards Recent (5) e Favorites preenchidos",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Failed to load resource: the server responded with a status of 429 ()"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/dashboard/populated-tablet-landscape.png",
+      "a11y": "docs/ux/capture/populated/dashboard/populated-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/populated/dashboard/populated-tablet-landscape.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "dashboard",
+    "state": "populated",
+    "viewport": "tablet-portrait",
+    "url": "/dashboard",
+    "status": "captured",
+    "notes": [
+      "Stats com 60 conteúdos/3 setlists; cards Recent (5) e Favorites preenchidos",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/dashboard/populated-tablet-portrait.png",
+      "a11y": "docs/ux/capture/populated/dashboard/populated-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/populated/dashboard/populated-tablet-portrait.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "library",
+    "state": "filter-type-tab",
+    "viewport": "desktop",
+    "url": "/library",
+    "status": "captured",
+    "notes": [
+      "Filtro por tipo ativo (Tab) — filtro NÃO é URL-addressável, só estado de cliente via dropdown Filters",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/library/filter-type-tab-desktop.png",
+      "a11y": "docs/ux/capture/populated/library/filter-type-tab-desktop.a11y.json",
+      "axe": "docs/ux/capture/populated/library/filter-type-tab-desktop.axe.json"
+    },
+    "axeViolations": 4
+  },
+  {
+    "route": "library",
+    "state": "filter-type-tab",
+    "viewport": "mobile",
+    "url": "/library",
+    "status": "captured",
+    "notes": [
+      "Filtro por tipo ativo (Tab) — filtro NÃO é URL-addressável, só estado de cliente via dropdown Filters",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/library/filter-type-tab-mobile.png",
+      "a11y": "docs/ux/capture/populated/library/filter-type-tab-mobile.a11y.json",
+      "axe": "docs/ux/capture/populated/library/filter-type-tab-mobile.axe.json"
+    },
+    "axeViolations": 4
+  },
+  {
+    "route": "library",
+    "state": "filter-type-tab",
+    "viewport": "tablet-landscape",
+    "url": "/library",
+    "status": "captured",
+    "notes": [
+      "Filtro por tipo ativo (Tab) — filtro NÃO é URL-addressável, só estado de cliente via dropdown Filters",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Failed to load resource: the server responded with a status of 429 ()"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/library/filter-type-tab-tablet-landscape.png",
+      "a11y": "docs/ux/capture/populated/library/filter-type-tab-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/populated/library/filter-type-tab-tablet-landscape.axe.json"
+    },
+    "axeViolations": 4
+  },
+  {
+    "route": "library",
+    "state": "filter-type-tab",
+    "viewport": "tablet-portrait",
+    "url": "/library",
+    "status": "captured",
+    "notes": [
+      "Filtro por tipo ativo (Tab) — filtro NÃO é URL-addressável, só estado de cliente via dropdown Filters",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/library/filter-type-tab-tablet-portrait.png",
+      "a11y": "docs/ux/capture/populated/library/filter-type-tab-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/populated/library/filter-type-tab-tablet-portrait.axe.json"
+    },
+    "axeViolations": 4
+  },
+  {
+    "route": "library",
+    "state": "list-bottom-page3",
+    "viewport": "desktop",
+    "url": "/library?page=3",
+    "status": "captured",
+    "notes": [
+      "Fundo da lista de 60: última página + ScrollArea interno rolado até o fim",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/library/list-bottom-page3-desktop.png",
+      "a11y": "docs/ux/capture/populated/library/list-bottom-page3-desktop.a11y.json",
+      "axe": "docs/ux/capture/populated/library/list-bottom-page3-desktop.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "library",
+    "state": "list-bottom-page3",
+    "viewport": "mobile",
+    "url": "/library?page=3",
+    "status": "captured",
+    "notes": [
+      "Fundo da lista de 60: última página + ScrollArea interno rolado até o fim",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/library/list-bottom-page3-mobile.png",
+      "a11y": "docs/ux/capture/populated/library/list-bottom-page3-mobile.a11y.json",
+      "axe": "docs/ux/capture/populated/library/list-bottom-page3-mobile.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "library",
+    "state": "list-bottom-page3",
+    "viewport": "tablet-landscape",
+    "url": "/library?page=3",
+    "status": "captured",
+    "notes": [
+      "Fundo da lista de 60: última página + ScrollArea interno rolado até o fim",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Failed to load resource: the server responded with a status of 429 ()"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/library/list-bottom-page3-tablet-landscape.png",
+      "a11y": "docs/ux/capture/populated/library/list-bottom-page3-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/populated/library/list-bottom-page3-tablet-landscape.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "library",
+    "state": "list-bottom-page3",
+    "viewport": "tablet-portrait",
+    "url": "/library?page=3",
+    "status": "captured",
+    "notes": [
+      "Fundo da lista de 60: última página + ScrollArea interno rolado até o fim",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/library/list-bottom-page3-tablet-portrait.png",
+      "a11y": "docs/ux/capture/populated/library/list-bottom-page3-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/populated/library/list-bottom-page3-tablet-portrait.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "library",
+    "state": "long-titles-listing",
+    "viewport": "desktop",
+    "url": "/library?search=viol",
+    "status": "captured",
+    "notes": [
+      "Como a listagem trata os títulos de 186/183 chars (\"viol\" casa violeiro/violão apenas nos dois títulos longos do seed)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/library/long-titles-listing-desktop.png",
+      "a11y": "docs/ux/capture/populated/library/long-titles-listing-desktop.a11y.json",
+      "axe": "docs/ux/capture/populated/library/long-titles-listing-desktop.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "library",
+    "state": "long-titles-listing",
+    "viewport": "mobile",
+    "url": "/library?search=viol",
+    "status": "captured",
+    "notes": [
+      "Como a listagem trata os títulos de 186/183 chars (\"viol\" casa violeiro/violão apenas nos dois títulos longos do seed)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/library/long-titles-listing-mobile.png",
+      "a11y": "docs/ux/capture/populated/library/long-titles-listing-mobile.a11y.json",
+      "axe": "docs/ux/capture/populated/library/long-titles-listing-mobile.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "library",
+    "state": "long-titles-listing",
+    "viewport": "tablet-landscape",
+    "url": "/library?search=viol",
+    "status": "captured",
+    "notes": [
+      "Como a listagem trata os títulos de 186/183 chars (\"viol\" casa violeiro/violão apenas nos dois títulos longos do seed)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Failed to load resource: the server responded with a status of 429 () | Failed to load resource: the server responded with a status of 401 () | useLibraryData.load: Error loading library data: Error: Unauthorized"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/library/long-titles-listing-tablet-landscape.png",
+      "a11y": "docs/ux/capture/populated/library/long-titles-listing-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/populated/library/long-titles-listing-tablet-landscape.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "library",
+    "state": "long-titles-listing",
+    "viewport": "tablet-portrait",
+    "url": "/library?search=viol",
+    "status": "captured",
+    "notes": [
+      "Como a listagem trata os títulos de 186/183 chars (\"viol\" casa violeiro/violão apenas nos dois títulos longos do seed)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/library/long-titles-listing-tablet-portrait.png",
+      "a11y": "docs/ux/capture/populated/library/long-titles-listing-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/populated/library/long-titles-listing-tablet-portrait.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "library",
+    "state": "populated-default",
+    "viewport": "desktop",
+    "url": "/library",
+    "status": "captured",
+    "notes": [
+      "Topo da lista de 60 (pageSize fixo 20 → 3 páginas; paginação clássica)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/library/populated-default-desktop.png",
+      "a11y": "docs/ux/capture/populated/library/populated-default-desktop.a11y.json",
+      "axe": "docs/ux/capture/populated/library/populated-default-desktop.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "library",
+    "state": "populated-default",
+    "viewport": "mobile",
+    "url": "/library",
+    "status": "captured",
+    "notes": [
+      "Topo da lista de 60 (pageSize fixo 20 → 3 páginas; paginação clássica)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/library/populated-default-mobile.png",
+      "a11y": "docs/ux/capture/populated/library/populated-default-mobile.a11y.json",
+      "axe": "docs/ux/capture/populated/library/populated-default-mobile.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "library",
+    "state": "populated-default",
+    "viewport": "tablet-landscape",
+    "url": "/library",
+    "status": "captured",
+    "notes": [
+      "Topo da lista de 60 (pageSize fixo 20 → 3 páginas; paginação clássica)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Failed to load resource: the server responded with a status of 429 () | Failed to load resource: the server responded with a status of 401 () | useLibraryData.load: Error loading library data: Error: Unauthorized"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/library/populated-default-tablet-landscape.png",
+      "a11y": "docs/ux/capture/populated/library/populated-default-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/populated/library/populated-default-tablet-landscape.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "library",
+    "state": "populated-default",
+    "viewport": "tablet-portrait",
+    "url": "/library",
+    "status": "captured",
+    "notes": [
+      "Topo da lista de 60 (pageSize fixo 20 → 3 páginas; paginação clássica)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/library/populated-default-tablet-portrait.png",
+      "a11y": "docs/ux/capture/populated/library/populated-default-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/populated/library/populated-default-tablet-portrait.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "library",
+    "state": "search-aguas-duplicados",
+    "viewport": "desktop",
+    "url": "/library?search=%C3%81guas%20de%20Mar%C3%A7o",
+    "status": "captured",
+    "notes": [
+      "Busca com resultado: deve trazer o par duplicado exato (mesmo título/artista/key)",
+      "ocorrências visíveis de \"Águas de Março\" na listagem: 2",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/library/search-aguas-duplicados-desktop.png",
+      "a11y": "docs/ux/capture/populated/library/search-aguas-duplicados-desktop.a11y.json",
+      "axe": "docs/ux/capture/populated/library/search-aguas-duplicados-desktop.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "library",
+    "state": "search-aguas-duplicados",
+    "viewport": "mobile",
+    "url": "/library?search=%C3%81guas%20de%20Mar%C3%A7o",
+    "status": "captured",
+    "notes": [
+      "Busca com resultado: deve trazer o par duplicado exato (mesmo título/artista/key)",
+      "ocorrências visíveis de \"Águas de Março\" na listagem: 2",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/library/search-aguas-duplicados-mobile.png",
+      "a11y": "docs/ux/capture/populated/library/search-aguas-duplicados-mobile.a11y.json",
+      "axe": "docs/ux/capture/populated/library/search-aguas-duplicados-mobile.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "library",
+    "state": "search-aguas-duplicados",
+    "viewport": "tablet-landscape",
+    "url": "/library?search=%C3%81guas%20de%20Mar%C3%A7o",
+    "status": "captured",
+    "notes": [
+      "Busca com resultado: deve trazer o par duplicado exato (mesmo título/artista/key)",
+      "ocorrências visíveis de \"Águas de Março\" na listagem: 0",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Failed to load resource: the server responded with a status of 429 () | Failed to load resource: the server responded with a status of 401 () | useLibraryData.load: Error loading library data: Error: Unauthorized"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/library/search-aguas-duplicados-tablet-landscape.png",
+      "a11y": "docs/ux/capture/populated/library/search-aguas-duplicados-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/populated/library/search-aguas-duplicados-tablet-landscape.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "library",
+    "state": "search-aguas-duplicados",
+    "viewport": "tablet-portrait",
+    "url": "/library?search=%C3%81guas%20de%20Mar%C3%A7o",
+    "status": "captured",
+    "notes": [
+      "Busca com resultado: deve trazer o par duplicado exato (mesmo título/artista/key)",
+      "ocorrências visíveis de \"Águas de Março\" na listagem: 2",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/library/search-aguas-duplicados-tablet-portrait.png",
+      "a11y": "docs/ux/capture/populated/library/search-aguas-duplicados-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/populated/library/search-aguas-duplicados-tablet-portrait.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "library",
+    "state": "search-artista",
+    "viewport": "desktop",
+    "url": "/library?search=Caetano%20Veloso",
+    "status": "captured",
+    "notes": [
+      "Busca por artista (o ilike da API cobre title/artist/album)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/library/search-artista-desktop.png",
+      "a11y": "docs/ux/capture/populated/library/search-artista-desktop.a11y.json",
+      "axe": "docs/ux/capture/populated/library/search-artista-desktop.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "library",
+    "state": "search-artista",
+    "viewport": "mobile",
+    "url": "/library?search=Caetano%20Veloso",
+    "status": "captured",
+    "notes": [
+      "Busca por artista (o ilike da API cobre title/artist/album)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/library/search-artista-mobile.png",
+      "a11y": "docs/ux/capture/populated/library/search-artista-mobile.a11y.json",
+      "axe": "docs/ux/capture/populated/library/search-artista-mobile.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "library",
+    "state": "search-artista",
+    "viewport": "tablet-landscape",
+    "url": "/library?search=Caetano%20Veloso",
+    "status": "captured",
+    "notes": [
+      "Busca por artista (o ilike da API cobre title/artist/album)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Failed to load resource: the server responded with a status of 429 () | Failed to load resource: the server responded with a status of 401 () | useLibraryData.load: Error loading library data: Error: Unauthorized"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/library/search-artista-tablet-landscape.png",
+      "a11y": "docs/ux/capture/populated/library/search-artista-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/populated/library/search-artista-tablet-landscape.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "library",
+    "state": "search-artista",
+    "viewport": "tablet-portrait",
+    "url": "/library?search=Caetano%20Veloso",
+    "status": "captured",
+    "notes": [
+      "Busca por artista (o ilike da API cobre title/artist/album)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/library/search-artista-tablet-portrait.png",
+      "a11y": "docs/ux/capture/populated/library/search-artista-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/populated/library/search-artista-tablet-portrait.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "performance",
+    "state": "controles-apos-10s-idle",
+    "viewport": "desktop",
+    "url": "/performance?setlistId=00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f&startingSongIndex=3",
+    "status": "captured",
+    "setlist_id": "00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f",
+    "notes": [
+      "Controles visíveis vs. ocultos: NÃO existe auto-hide implementado (showControls nunca vira false; handleMouseMove órfão) — captura após 10s sem interação como evidência",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Wake lock error NotAllowedError: Wake Lock permission request denied | Failed to load resource: the server responded with a status of 429 ()"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/performance/controles-apos-10s-idle-desktop.png",
+      "a11y": "docs/ux/capture/populated/performance/controles-apos-10s-idle-desktop.a11y.json",
+      "axe": "docs/ux/capture/populated/performance/controles-apos-10s-idle-desktop.axe.json"
+    },
+    "axeViolations": 5
+  },
+  {
+    "route": "performance",
+    "state": "controles-apos-10s-idle",
+    "viewport": "mobile",
+    "url": "/performance?setlistId=00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f&startingSongIndex=3",
+    "status": "captured",
+    "setlist_id": "00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f",
+    "notes": [
+      "Controles visíveis vs. ocultos: NÃO existe auto-hide implementado (showControls nunca vira false; handleMouseMove órfão) — captura após 10s sem interação como evidência",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Wake lock error NotAllowedError: Wake Lock permission request denied"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/performance/controles-apos-10s-idle-mobile.png",
+      "a11y": "docs/ux/capture/populated/performance/controles-apos-10s-idle-mobile.a11y.json",
+      "axe": "docs/ux/capture/populated/performance/controles-apos-10s-idle-mobile.axe.json"
+    },
+    "axeViolations": 5
+  },
+  {
+    "route": "performance",
+    "state": "controles-apos-10s-idle",
+    "viewport": "tablet-landscape",
+    "url": "/performance?setlistId=00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f&startingSongIndex=3",
+    "status": "captured",
+    "setlist_id": "00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f",
+    "notes": [
+      "Controles visíveis vs. ocultos: NÃO existe auto-hide implementado (showControls nunca vira false; handleMouseMove órfão) — captura após 10s sem interação como evidência",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Wake lock error NotAllowedError: Wake Lock permission request denied"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/performance/controles-apos-10s-idle-tablet-landscape.png",
+      "a11y": "docs/ux/capture/populated/performance/controles-apos-10s-idle-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/populated/performance/controles-apos-10s-idle-tablet-landscape.axe.json"
+    },
+    "axeViolations": 5
+  },
+  {
+    "route": "performance",
+    "state": "controles-apos-10s-idle",
+    "viewport": "tablet-portrait",
+    "url": "/performance?setlistId=00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f&startingSongIndex=3",
+    "status": "captured",
+    "setlist_id": "00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f",
+    "notes": [
+      "Controles visíveis vs. ocultos: NÃO existe auto-hide implementado (showControls nunca vira false; handleMouseMove órfão) — captura após 10s sem interação como evidência",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Wake lock error NotAllowedError: Wake Lock permission request denied"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/performance/controles-apos-10s-idle-tablet-portrait.png",
+      "a11y": "docs/ux/capture/populated/performance/controles-apos-10s-idle-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/populated/performance/controles-apos-10s-idle-tablet-portrait.axe.json"
+    },
+    "axeViolations": 5
+  },
+  {
+    "route": "performance",
+    "state": "dark-sheet",
+    "viewport": "desktop",
+    "url": "/performance?setlistId=00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f&startingSongIndex=3",
+    "status": "captured",
+    "setlist_id": "00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f",
+    "notes": [
+      "Dark sheet ativo (toggle client-side, sem escrita)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Wake lock error NotAllowedError: Wake Lock permission request denied | Failed to load resource: the server responded with a status of 429 ()"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/performance/dark-sheet-desktop.png",
+      "a11y": "docs/ux/capture/populated/performance/dark-sheet-desktop.a11y.json",
+      "axe": "docs/ux/capture/populated/performance/dark-sheet-desktop.axe.json"
+    },
+    "axeViolations": 5
+  },
+  {
+    "route": "performance",
+    "state": "dark-sheet",
+    "viewport": "mobile",
+    "url": "/performance?setlistId=00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f&startingSongIndex=3",
+    "status": "captured",
+    "setlist_id": "00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f",
+    "notes": [
+      "Dark sheet ativo (toggle client-side, sem escrita)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Wake lock error NotAllowedError: Wake Lock permission request denied"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/performance/dark-sheet-mobile.png",
+      "a11y": "docs/ux/capture/populated/performance/dark-sheet-mobile.a11y.json",
+      "axe": "docs/ux/capture/populated/performance/dark-sheet-mobile.axe.json"
+    },
+    "axeViolations": 5
+  },
+  {
+    "route": "performance",
+    "state": "dark-sheet",
+    "viewport": "tablet-landscape",
+    "url": "/performance?setlistId=00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f&startingSongIndex=3",
+    "status": "captured",
+    "setlist_id": "00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f",
+    "notes": [
+      "Dark sheet ativo (toggle client-side, sem escrita)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Wake lock error NotAllowedError: Wake Lock permission request denied"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/performance/dark-sheet-tablet-landscape.png",
+      "a11y": "docs/ux/capture/populated/performance/dark-sheet-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/populated/performance/dark-sheet-tablet-landscape.axe.json"
+    },
+    "axeViolations": 5
+  },
+  {
+    "route": "performance",
+    "state": "dark-sheet",
+    "viewport": "tablet-portrait",
+    "url": "/performance?setlistId=00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f&startingSongIndex=3",
+    "status": "captured",
+    "setlist_id": "00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f",
+    "notes": [
+      "Dark sheet ativo (toggle client-side, sem escrita)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Wake lock error NotAllowedError: Wake Lock permission request denied"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/performance/dark-sheet-tablet-portrait.png",
+      "a11y": "docs/ux/capture/populated/performance/dark-sheet-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/populated/performance/dark-sheet-tablet-portrait.axe.json"
+    },
+    "axeViolations": 5
+  },
+  {
+    "route": "performance",
+    "state": "pdf-12paginas-avulso",
+    "viewport": "desktop",
+    "url": "/performance?contentId=2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f",
+    "status": "captured",
+    "content_id": "2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f",
+    "notes": [
+      "PDF de 12 páginas via ?contentId= (caminho de conteúdo avulso)",
+      "pdf_render FALHOU: nenhum canvas após 60s — área de conteúdo em branco",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Wake lock error NotAllowedError: Wake Lock permission request denied | Refused to frame 'blob:https://octavia.rocks/5ae1c574-a27d-45ba-9434-1286294782df#toolbar=0&navpanes=0&scrollbar=0' because it violates the following Content Security Policy directive: \"frame-src 'non"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/performance/pdf-12paginas-avulso-desktop.png",
+      "a11y": "docs/ux/capture/populated/performance/pdf-12paginas-avulso-desktop.a11y.json",
+      "axe": "docs/ux/capture/populated/performance/pdf-12paginas-avulso-desktop.axe.json"
+    },
+    "axeViolations": 5
+  },
+  {
+    "route": "performance",
+    "state": "pdf-12paginas-avulso",
+    "viewport": "mobile",
+    "url": "/performance?contentId=2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f",
+    "status": "captured",
+    "content_id": "2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f",
+    "notes": [
+      "PDF de 12 páginas via ?contentId= (caminho de conteúdo avulso)",
+      "pdf_render FALHOU: nenhum canvas após 60s — área de conteúdo em branco",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Wake lock error NotAllowedError: Wake Lock permission request denied | Refused to frame 'blob:https://octavia.rocks/5fc50dd4-8b4f-4f03-b814-29affe23b72f#toolbar=0&navpanes=0&scrollbar=0' because it violates the following Content Security Policy directive: \"frame-src 'non"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/performance/pdf-12paginas-avulso-mobile.png",
+      "a11y": "docs/ux/capture/populated/performance/pdf-12paginas-avulso-mobile.a11y.json",
+      "axe": "docs/ux/capture/populated/performance/pdf-12paginas-avulso-mobile.axe.json"
+    },
+    "axeViolations": 4
+  },
+  {
+    "route": "performance",
+    "state": "pdf-12paginas-avulso",
+    "viewport": "tablet-landscape",
+    "url": "/performance?contentId=2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f",
+    "status": "captured",
+    "content_id": "2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f",
+    "notes": [
+      "PDF de 12 páginas via ?contentId= (caminho de conteúdo avulso)",
+      "pdf_render FALHOU: nenhum canvas após 60s — área de conteúdo em branco",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Wake lock error NotAllowedError: Wake Lock permission request denied | Refused to frame 'blob:https://octavia.rocks/9c4160bd-4193-468a-a042-4f05bd8cdcaf#toolbar=0&navpanes=0&scrollbar=0' because it violates the following Content Security Policy directive: \"frame-src 'non | Failed to load resource: the server responded with a status of 429 ()"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/performance/pdf-12paginas-avulso-tablet-landscape.png",
+      "a11y": "docs/ux/capture/populated/performance/pdf-12paginas-avulso-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/populated/performance/pdf-12paginas-avulso-tablet-landscape.axe.json"
+    },
+    "axeViolations": 5
+  },
+  {
+    "route": "performance",
+    "state": "pdf-12paginas-avulso",
+    "viewport": "tablet-portrait",
+    "url": "/performance?contentId=2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f",
+    "status": "captured",
+    "content_id": "2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f",
+    "notes": [
+      "PDF de 12 páginas via ?contentId= (caminho de conteúdo avulso)",
+      "pdf_render FALHOU: nenhum canvas após 60s — área de conteúdo em branco",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Wake lock error NotAllowedError: Wake Lock permission request denied | Refused to frame 'blob:https://octavia.rocks/a12b1550-9b26-4b61-88ad-a39672be9bae#toolbar=0&navpanes=0&scrollbar=0' because it violates the following Content Security Policy directive: \"frame-src 'non"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/performance/pdf-12paginas-avulso-tablet-portrait.png",
+      "a11y": "docs/ux/capture/populated/performance/pdf-12paginas-avulso-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/populated/performance/pdf-12paginas-avulso-tablet-portrait.axe.json"
+    },
+    "axeViolations": 5
+  },
+  {
+    "route": "performance",
+    "state": "setlist-estresse-ultima-musica",
+    "viewport": "desktop",
+    "url": "/performance?setlistId=4340bf95-9e08-41a4-8da1-f725fc1c2350&startingSongIndex=59",
+    "status": "captured",
+    "setlist_id": "4340bf95-9e08-41a4-8da1-f725fc1c2350",
+    "notes": [
+      "Última música (60/60) — estado de fim de setlist",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Wake lock error NotAllowedError: Wake Lock permission request denied | Failed to load resource: the server responded with a status of 429 ()"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/performance/setlist-estresse-ultima-musica-desktop.png",
+      "a11y": "docs/ux/capture/populated/performance/setlist-estresse-ultima-musica-desktop.a11y.json",
+      "axe": "docs/ux/capture/populated/performance/setlist-estresse-ultima-musica-desktop.axe.json"
+    },
+    "axeViolations": 5
+  },
+  {
+    "route": "performance",
+    "state": "setlist-estresse-ultima-musica",
+    "viewport": "mobile",
+    "url": "/performance?setlistId=4340bf95-9e08-41a4-8da1-f725fc1c2350&startingSongIndex=59",
+    "status": "captured",
+    "setlist_id": "4340bf95-9e08-41a4-8da1-f725fc1c2350",
+    "notes": [
+      "Última música (60/60) — estado de fim de setlist",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Wake lock error NotAllowedError: Wake Lock permission request denied"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/performance/setlist-estresse-ultima-musica-mobile.png",
+      "a11y": "docs/ux/capture/populated/performance/setlist-estresse-ultima-musica-mobile.a11y.json",
+      "axe": "docs/ux/capture/populated/performance/setlist-estresse-ultima-musica-mobile.axe.json"
+    },
+    "axeViolations": 4
+  },
+  {
+    "route": "performance",
+    "state": "setlist-estresse-ultima-musica",
+    "viewport": "tablet-landscape",
+    "url": "/performance?setlistId=4340bf95-9e08-41a4-8da1-f725fc1c2350&startingSongIndex=59",
+    "status": "captured",
+    "setlist_id": "4340bf95-9e08-41a4-8da1-f725fc1c2350",
+    "notes": [
+      "Última música (60/60) — estado de fim de setlist",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Wake lock error NotAllowedError: Wake Lock permission request denied"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/performance/setlist-estresse-ultima-musica-tablet-landscape.png",
+      "a11y": "docs/ux/capture/populated/performance/setlist-estresse-ultima-musica-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/populated/performance/setlist-estresse-ultima-musica-tablet-landscape.axe.json"
+    },
+    "axeViolations": 5
+  },
+  {
+    "route": "performance",
+    "state": "setlist-estresse-ultima-musica",
+    "viewport": "tablet-portrait",
+    "url": "/performance?setlistId=4340bf95-9e08-41a4-8da1-f725fc1c2350&startingSongIndex=59",
+    "status": "captured",
+    "setlist_id": "4340bf95-9e08-41a4-8da1-f725fc1c2350",
+    "notes": [
+      "Última música (60/60) — estado de fim de setlist",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Wake lock error NotAllowedError: Wake Lock permission request denied"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/performance/setlist-estresse-ultima-musica-tablet-portrait.png",
+      "a11y": "docs/ux/capture/populated/performance/setlist-estresse-ultima-musica-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/populated/performance/setlist-estresse-ultima-musica-tablet-portrait.axe.json"
+    },
+    "axeViolations": 5
+  },
+  {
+    "route": "performance",
+    "state": "setlist-show-cifra",
+    "viewport": "desktop",
+    "url": "/performance?setlistId=00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f&startingSongIndex=3",
+    "status": "captured",
+    "setlist_id": "00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f",
+    "notes": [
+      "Música com cifra (índice 3 da Show padrão)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Wake lock error NotAllowedError: Wake Lock permission request denied"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/performance/setlist-show-cifra-desktop.png",
+      "a11y": "docs/ux/capture/populated/performance/setlist-show-cifra-desktop.a11y.json",
+      "axe": "docs/ux/capture/populated/performance/setlist-show-cifra-desktop.axe.json"
+    },
+    "axeViolations": 5
+  },
+  {
+    "route": "performance",
+    "state": "setlist-show-cifra",
+    "viewport": "mobile",
+    "url": "/performance?setlistId=00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f&startingSongIndex=3",
+    "status": "captured",
+    "setlist_id": "00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f",
+    "notes": [
+      "Música com cifra (índice 3 da Show padrão)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Wake lock error NotAllowedError: Wake Lock permission request denied"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/performance/setlist-show-cifra-mobile.png",
+      "a11y": "docs/ux/capture/populated/performance/setlist-show-cifra-mobile.a11y.json",
+      "axe": "docs/ux/capture/populated/performance/setlist-show-cifra-mobile.axe.json"
+    },
+    "axeViolations": 4
+  },
+  {
+    "route": "performance",
+    "state": "setlist-show-cifra",
+    "viewport": "tablet-landscape",
+    "url": "/performance?setlistId=00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f&startingSongIndex=3",
+    "status": "captured",
+    "setlist_id": "00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f",
+    "notes": [
+      "Música com cifra (índice 3 da Show padrão)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Wake lock error NotAllowedError: Wake Lock permission request denied | Failed to load resource: the server responded with a status of 429 ()"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/performance/setlist-show-cifra-tablet-landscape.png",
+      "a11y": "docs/ux/capture/populated/performance/setlist-show-cifra-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/populated/performance/setlist-show-cifra-tablet-landscape.axe.json"
+    },
+    "axeViolations": 5
+  },
+  {
+    "route": "performance",
+    "state": "setlist-show-cifra",
+    "viewport": "tablet-portrait",
+    "url": "/performance?setlistId=00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f&startingSongIndex=3",
+    "status": "captured",
+    "setlist_id": "00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f",
+    "notes": [
+      "Música com cifra (índice 3 da Show padrão)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Wake lock error NotAllowedError: Wake Lock permission request denied"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/performance/setlist-show-cifra-tablet-portrait.png",
+      "a11y": "docs/ux/capture/populated/performance/setlist-show-cifra-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/populated/performance/setlist-show-cifra-tablet-portrait.axe.json"
+    },
+    "axeViolations": 5
+  },
+  {
+    "route": "performance",
+    "state": "setlist-show-primeira-musica",
+    "viewport": "desktop",
+    "url": "/performance?setlistId=00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f&startingSongIndex=0",
+    "status": "captured",
+    "setlist_id": "00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f",
+    "notes": [
+      "Entrada via setlist Show padrão, 1ª música (que é o PDF de 12 páginas — também cobre \"música com PDF\" via setlist)",
+      "pdf_render FALHOU: nenhum canvas após 60s — área de conteúdo em branco",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Wake lock error NotAllowedError: Wake Lock permission request denied | Refused to frame 'blob:https://octavia.rocks/1ce3c42a-be8d-4e0f-93b7-7e72dbaa127c#toolbar=0&navpanes=0&scrollbar=0' because it violates the following Content Security Policy directive: \"frame-src 'non | Failed to load resource: the server responded with a status of 429 ()"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/performance/setlist-show-primeira-musica-desktop.png",
+      "a11y": "docs/ux/capture/populated/performance/setlist-show-primeira-musica-desktop.a11y.json",
+      "axe": "docs/ux/capture/populated/performance/setlist-show-primeira-musica-desktop.axe.json"
+    },
+    "axeViolations": 5
+  },
+  {
+    "route": "performance",
+    "state": "setlist-show-primeira-musica",
+    "viewport": "mobile",
+    "url": "/performance?setlistId=00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f&startingSongIndex=0",
+    "status": "captured",
+    "setlist_id": "00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f",
+    "notes": [
+      "Entrada via setlist Show padrão, 1ª música (que é o PDF de 12 páginas — também cobre \"música com PDF\" via setlist)",
+      "pdf_render FALHOU: nenhum canvas após 60s — área de conteúdo em branco",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Wake lock error NotAllowedError: Wake Lock permission request denied | Refused to frame 'blob:https://octavia.rocks/9a45bf01-4697-49ad-8f52-0bf03eae6fdd#toolbar=0&navpanes=0&scrollbar=0' because it violates the following Content Security Policy directive: \"frame-src 'non | Failed to load resource: the server responded with a status of 429 ()"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/performance/setlist-show-primeira-musica-mobile.png",
+      "a11y": "docs/ux/capture/populated/performance/setlist-show-primeira-musica-mobile.a11y.json",
+      "axe": "docs/ux/capture/populated/performance/setlist-show-primeira-musica-mobile.axe.json"
+    },
+    "axeViolations": 4
+  },
+  {
+    "route": "performance",
+    "state": "setlist-show-primeira-musica",
+    "viewport": "tablet-landscape",
+    "url": "/performance?setlistId=00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f&startingSongIndex=0",
+    "status": "captured",
+    "setlist_id": "00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f",
+    "notes": [
+      "Entrada via setlist Show padrão, 1ª música (que é o PDF de 12 páginas — também cobre \"música com PDF\" via setlist)",
+      "pdf_render FALHOU: nenhum canvas após 60s — área de conteúdo em branco",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Wake lock error NotAllowedError: Wake Lock permission request denied | Refused to frame 'blob:https://octavia.rocks/9b5b5e3b-3d65-4d24-8335-8956af422963#toolbar=0&navpanes=0&scrollbar=0' because it violates the following Content Security Policy directive: \"frame-src 'non"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/performance/setlist-show-primeira-musica-tablet-landscape.png",
+      "a11y": "docs/ux/capture/populated/performance/setlist-show-primeira-musica-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/populated/performance/setlist-show-primeira-musica-tablet-landscape.axe.json"
+    },
+    "axeViolations": 5
+  },
+  {
+    "route": "performance",
+    "state": "setlist-show-primeira-musica",
+    "viewport": "tablet-portrait",
+    "url": "/performance?setlistId=00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f&startingSongIndex=0",
+    "status": "captured",
+    "setlist_id": "00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f",
+    "notes": [
+      "Entrada via setlist Show padrão, 1ª música (que é o PDF de 12 páginas — também cobre \"música com PDF\" via setlist)",
+      "pdf_render FALHOU: nenhum canvas após 60s — área de conteúdo em branco",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Wake lock error NotAllowedError: Wake Lock permission request denied | Refused to frame 'blob:https://octavia.rocks/5b747c6c-e677-4817-a60a-a899976f5253#toolbar=0&navpanes=0&scrollbar=0' because it violates the following Content Security Policy directive: \"frame-src 'non | Failed to load resource: the server responded with a status of 429 ()"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/performance/setlist-show-primeira-musica-tablet-portrait.png",
+      "a11y": "docs/ux/capture/populated/performance/setlist-show-primeira-musica-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/populated/performance/setlist-show-primeira-musica-tablet-portrait.axe.json"
+    },
+    "axeViolations": 5
+  },
+  {
+    "route": "performance",
+    "state": "zoom-maximo",
+    "viewport": "desktop",
+    "url": "/performance?setlistId=00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f&startingSongIndex=3",
+    "status": "captured",
+    "setlist_id": "00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f",
+    "notes": [
+      "Zoom máximo (10 cliques em \"Zoom in\": 100% → teto de 200%)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Wake lock error NotAllowedError: Wake Lock permission request denied | Failed to load resource: the server responded with a status of 429 ()"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/performance/zoom-maximo-desktop.png",
+      "a11y": "docs/ux/capture/populated/performance/zoom-maximo-desktop.a11y.json",
+      "axe": "docs/ux/capture/populated/performance/zoom-maximo-desktop.axe.json"
+    },
+    "axeViolations": 6
+  },
+  {
+    "route": "performance",
+    "state": "zoom-maximo",
+    "viewport": "mobile",
+    "url": "/performance?setlistId=00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f&startingSongIndex=3",
+    "status": "captured",
+    "setlist_id": "00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f",
+    "notes": [
+      "Zoom máximo (10 cliques em \"Zoom in\": 100% → teto de 200%)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Wake lock error NotAllowedError: Wake Lock permission request denied"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/performance/zoom-maximo-mobile.png",
+      "a11y": "docs/ux/capture/populated/performance/zoom-maximo-mobile.a11y.json",
+      "axe": "docs/ux/capture/populated/performance/zoom-maximo-mobile.axe.json"
+    },
+    "axeViolations": 6
+  },
+  {
+    "route": "performance",
+    "state": "zoom-maximo",
+    "viewport": "tablet-landscape",
+    "url": "/performance?setlistId=00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f&startingSongIndex=3",
+    "status": "captured",
+    "setlist_id": "00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f",
+    "notes": [
+      "Zoom máximo (10 cliques em \"Zoom in\": 100% → teto de 200%)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Wake lock error NotAllowedError: Wake Lock permission request denied"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/performance/zoom-maximo-tablet-landscape.png",
+      "a11y": "docs/ux/capture/populated/performance/zoom-maximo-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/populated/performance/zoom-maximo-tablet-landscape.axe.json"
+    },
+    "axeViolations": 6
+  },
+  {
+    "route": "performance",
+    "state": "zoom-maximo",
+    "viewport": "tablet-portrait",
+    "url": "/performance?setlistId=00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f&startingSongIndex=3",
+    "status": "captured",
+    "setlist_id": "00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f",
+    "notes": [
+      "Zoom máximo (10 cliques em \"Zoom in\": 100% → teto de 200%)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Wake lock error NotAllowedError: Wake Lock permission request denied"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/performance/zoom-maximo-tablet-portrait.png",
+      "a11y": "docs/ux/capture/populated/performance/zoom-maximo-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/populated/performance/zoom-maximo-tablet-portrait.axe.json"
+    },
+    "axeViolations": 5
+  },
+  {
+    "route": "setlists",
+    "state": "detail-estresse-bottom",
+    "viewport": "desktop",
+    "url": "/setlists",
+    "status": "captured",
+    "setlist_id": "4340bf95-9e08-41a4-8da1-f725fc1c2350",
+    "notes": [
+      "Fundo da lista de 60 músicas (última música visível)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Failed to load resource: the server responded with a status of 429 ()"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/setlists/detail-estresse-bottom-desktop.png",
+      "a11y": "docs/ux/capture/populated/setlists/detail-estresse-bottom-desktop.a11y.json",
+      "axe": "docs/ux/capture/populated/setlists/detail-estresse-bottom-desktop.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "setlists",
+    "state": "detail-estresse-bottom",
+    "viewport": "mobile",
+    "url": "/setlists",
+    "status": "captured",
+    "setlist_id": "4340bf95-9e08-41a4-8da1-f725fc1c2350",
+    "notes": [
+      "Fundo da lista de 60 músicas (última música visível)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Failed to load resource: the server responded with a status of 429 ()"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/setlists/detail-estresse-bottom-mobile.png",
+      "a11y": "docs/ux/capture/populated/setlists/detail-estresse-bottom-mobile.a11y.json",
+      "axe": "docs/ux/capture/populated/setlists/detail-estresse-bottom-mobile.axe.json"
+    },
+    "axeViolations": 1
+  },
+  {
+    "route": "setlists",
+    "state": "detail-estresse-bottom",
+    "viewport": "tablet-landscape",
+    "url": "/setlists",
+    "status": "captured",
+    "setlist_id": "4340bf95-9e08-41a4-8da1-f725fc1c2350",
+    "notes": [
+      "Fundo da lista de 60 músicas (última música visível)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/setlists/detail-estresse-bottom-tablet-landscape.png",
+      "a11y": "docs/ux/capture/populated/setlists/detail-estresse-bottom-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/populated/setlists/detail-estresse-bottom-tablet-landscape.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "setlists",
+    "state": "detail-estresse-bottom",
+    "viewport": "tablet-portrait",
+    "url": "/setlists",
+    "status": "captured",
+    "setlist_id": "4340bf95-9e08-41a4-8da1-f725fc1c2350",
+    "notes": [
+      "Fundo da lista de 60 músicas (última música visível)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Failed to load resource: the server responded with a status of 429 ()"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/setlists/detail-estresse-bottom-tablet-portrait.png",
+      "a11y": "docs/ux/capture/populated/setlists/detail-estresse-bottom-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/populated/setlists/detail-estresse-bottom-tablet-portrait.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "setlists",
+    "state": "detail-estresse-full",
+    "viewport": "desktop",
+    "url": "/setlists",
+    "status": "captured",
+    "setlist_id": "4340bf95-9e08-41a4-8da1-f725fc1c2350",
+    "notes": [
+      "Página inteira do detalhe com 60 músicas (full-page; mostra o comprimento total)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/setlists/detail-estresse-full-desktop.png",
+      "a11y": "docs/ux/capture/populated/setlists/detail-estresse-full-desktop.a11y.json",
+      "axe": "docs/ux/capture/populated/setlists/detail-estresse-full-desktop.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "setlists",
+    "state": "detail-estresse-full",
+    "viewport": "mobile",
+    "url": "/setlists",
+    "status": "captured",
+    "setlist_id": "4340bf95-9e08-41a4-8da1-f725fc1c2350",
+    "notes": [
+      "Página inteira do detalhe com 60 músicas (full-page; mostra o comprimento total)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/setlists/detail-estresse-full-mobile.png",
+      "a11y": "docs/ux/capture/populated/setlists/detail-estresse-full-mobile.a11y.json",
+      "axe": "docs/ux/capture/populated/setlists/detail-estresse-full-mobile.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "setlists",
+    "state": "detail-estresse-full",
+    "viewport": "tablet-landscape",
+    "url": "/setlists",
+    "status": "captured",
+    "setlist_id": "4340bf95-9e08-41a4-8da1-f725fc1c2350",
+    "notes": [
+      "Página inteira do detalhe com 60 músicas (full-page; mostra o comprimento total)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/setlists/detail-estresse-full-tablet-landscape.png",
+      "a11y": "docs/ux/capture/populated/setlists/detail-estresse-full-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/populated/setlists/detail-estresse-full-tablet-landscape.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "setlists",
+    "state": "detail-estresse-full",
+    "viewport": "tablet-portrait",
+    "url": "/setlists",
+    "status": "captured",
+    "setlist_id": "4340bf95-9e08-41a4-8da1-f725fc1c2350",
+    "notes": [
+      "Página inteira do detalhe com 60 músicas (full-page; mostra o comprimento total)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/setlists/detail-estresse-full-tablet-portrait.png",
+      "a11y": "docs/ux/capture/populated/setlists/detail-estresse-full-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/populated/setlists/detail-estresse-full-tablet-portrait.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "setlists",
+    "state": "detail-estresse-top",
+    "viewport": "desktop",
+    "url": "/setlists",
+    "status": "captured",
+    "setlist_id": "4340bf95-9e08-41a4-8da1-f725fc1c2350",
+    "notes": [
+      "Topo da lista de 60 músicas (lista cresce a página, sem virtualização)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Failed to load resource: the server responded with a status of 429 ()"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/setlists/detail-estresse-top-desktop.png",
+      "a11y": "docs/ux/capture/populated/setlists/detail-estresse-top-desktop.a11y.json",
+      "axe": "docs/ux/capture/populated/setlists/detail-estresse-top-desktop.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "setlists",
+    "state": "detail-estresse-top",
+    "viewport": "mobile",
+    "url": "/setlists",
+    "status": "captured",
+    "setlist_id": "4340bf95-9e08-41a4-8da1-f725fc1c2350",
+    "notes": [
+      "Topo da lista de 60 músicas (lista cresce a página, sem virtualização)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/setlists/detail-estresse-top-mobile.png",
+      "a11y": "docs/ux/capture/populated/setlists/detail-estresse-top-mobile.a11y.json",
+      "axe": "docs/ux/capture/populated/setlists/detail-estresse-top-mobile.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "setlists",
+    "state": "detail-estresse-top",
+    "viewport": "tablet-landscape",
+    "url": "/setlists",
+    "status": "captured",
+    "setlist_id": "4340bf95-9e08-41a4-8da1-f725fc1c2350",
+    "notes": [
+      "Topo da lista de 60 músicas (lista cresce a página, sem virtualização)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/setlists/detail-estresse-top-tablet-landscape.png",
+      "a11y": "docs/ux/capture/populated/setlists/detail-estresse-top-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/populated/setlists/detail-estresse-top-tablet-landscape.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "setlists",
+    "state": "detail-estresse-top",
+    "viewport": "tablet-portrait",
+    "url": "/setlists",
+    "status": "captured",
+    "setlist_id": "4340bf95-9e08-41a4-8da1-f725fc1c2350",
+    "notes": [
+      "Topo da lista de 60 músicas (lista cresce a página, sem virtualização)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Failed to load resource: the server responded with a status of 429 ()"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/setlists/detail-estresse-top-tablet-portrait.png",
+      "a11y": "docs/ux/capture/populated/setlists/detail-estresse-top-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/populated/setlists/detail-estresse-top-tablet-portrait.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "setlists",
+    "state": "detail-show-padrao",
+    "viewport": "desktop",
+    "url": "/setlists",
+    "status": "captured",
+    "setlist_id": "00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f",
+    "notes": [
+      "Verificação explícita venue/data/notes: seed enviou venue=\"Bar do Zé — Pelourinho\", date=2026-09-12, notes=\"Chegar 19h…\" — schema Zod da API descartou tudo (colunas inatingíveis)",
+      "CONFIRMADO: nenhum venue/performance_date/notes do seed visível na UI de detalhe",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/setlists/detail-show-padrao-desktop.png",
+      "a11y": "docs/ux/capture/populated/setlists/detail-show-padrao-desktop.a11y.json",
+      "axe": "docs/ux/capture/populated/setlists/detail-show-padrao-desktop.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "setlists",
+    "state": "detail-show-padrao",
+    "viewport": "mobile",
+    "url": "/setlists",
+    "status": "captured",
+    "setlist_id": "00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f",
+    "notes": [
+      "Verificação explícita venue/data/notes: seed enviou venue=\"Bar do Zé — Pelourinho\", date=2026-09-12, notes=\"Chegar 19h…\" — schema Zod da API descartou tudo (colunas inatingíveis)",
+      "CONFIRMADO: nenhum venue/performance_date/notes do seed visível na UI de detalhe",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/setlists/detail-show-padrao-mobile.png",
+      "a11y": "docs/ux/capture/populated/setlists/detail-show-padrao-mobile.a11y.json",
+      "axe": "docs/ux/capture/populated/setlists/detail-show-padrao-mobile.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "setlists",
+    "state": "detail-show-padrao",
+    "viewport": "tablet-landscape",
+    "url": "/setlists",
+    "status": "captured",
+    "setlist_id": "00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f",
+    "notes": [
+      "Verificação explícita venue/data/notes: seed enviou venue=\"Bar do Zé — Pelourinho\", date=2026-09-12, notes=\"Chegar 19h…\" — schema Zod da API descartou tudo (colunas inatingíveis)",
+      "CONFIRMADO: nenhum venue/performance_date/notes do seed visível na UI de detalhe",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/setlists/detail-show-padrao-tablet-landscape.png",
+      "a11y": "docs/ux/capture/populated/setlists/detail-show-padrao-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/populated/setlists/detail-show-padrao-tablet-landscape.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "setlists",
+    "state": "detail-show-padrao",
+    "viewport": "tablet-portrait",
+    "url": "/setlists",
+    "status": "captured",
+    "setlist_id": "00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f",
+    "notes": [
+      "Verificação explícita venue/data/notes: seed enviou venue=\"Bar do Zé — Pelourinho\", date=2026-09-12, notes=\"Chegar 19h…\" — schema Zod da API descartou tudo (colunas inatingíveis)",
+      "CONFIRMADO: nenhum venue/performance_date/notes do seed visível na UI de detalhe",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/setlists/detail-show-padrao-tablet-portrait.png",
+      "a11y": "docs/ux/capture/populated/setlists/detail-show-padrao-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/populated/setlists/detail-show-padrao-tablet-portrait.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "setlists",
+    "state": "detail-solo",
+    "viewport": "desktop",
+    "url": "/setlists",
+    "status": "captured",
+    "setlist_id": "8c4413d9-4c10-4691-b352-25a397cae2e3",
+    "notes": [
+      "Detalhe inline (não existe rota /setlists/[id]); setlist de 1 música",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/setlists/detail-solo-desktop.png",
+      "a11y": "docs/ux/capture/populated/setlists/detail-solo-desktop.a11y.json",
+      "axe": "docs/ux/capture/populated/setlists/detail-solo-desktop.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "setlists",
+    "state": "detail-solo",
+    "viewport": "mobile",
+    "url": "/setlists",
+    "status": "captured",
+    "setlist_id": "8c4413d9-4c10-4691-b352-25a397cae2e3",
+    "notes": [
+      "Detalhe inline (não existe rota /setlists/[id]); setlist de 1 música",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/setlists/detail-solo-mobile.png",
+      "a11y": "docs/ux/capture/populated/setlists/detail-solo-mobile.a11y.json",
+      "axe": "docs/ux/capture/populated/setlists/detail-solo-mobile.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "setlists",
+    "state": "detail-solo",
+    "viewport": "tablet-landscape",
+    "url": "/setlists",
+    "status": "captured",
+    "setlist_id": "8c4413d9-4c10-4691-b352-25a397cae2e3",
+    "notes": [
+      "Detalhe inline (não existe rota /setlists/[id]); setlist de 1 música",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/setlists/detail-solo-tablet-landscape.png",
+      "a11y": "docs/ux/capture/populated/setlists/detail-solo-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/populated/setlists/detail-solo-tablet-landscape.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "setlists",
+    "state": "detail-solo",
+    "viewport": "tablet-portrait",
+    "url": "/setlists",
+    "status": "captured",
+    "setlist_id": "8c4413d9-4c10-4691-b352-25a397cae2e3",
+    "notes": [
+      "Detalhe inline (não existe rota /setlists/[id]); setlist de 1 música",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/setlists/detail-solo-tablet-portrait.png",
+      "a11y": "docs/ux/capture/populated/setlists/detail-solo-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/populated/setlists/detail-solo-tablet-portrait.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "setlists",
+    "state": "edit-dialog-show-padrao",
+    "viewport": "desktop",
+    "url": "/setlists",
+    "status": "captured",
+    "setlist_id": "00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f",
+    "notes": [
+      "UI de edição ABERTA (leitura; nada salvo). Reorder não tem modo próprio: é drag-and-drop nativo sempre ativo e o callback é um TODO (console.log) — não arrastado. O diálogo expõe campos que a API descarta (evidência das colunas inatingíveis).",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Failed to load resource: the server responded with a status of 429 ()"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/setlists/edit-dialog-show-padrao-desktop.png",
+      "a11y": "docs/ux/capture/populated/setlists/edit-dialog-show-padrao-desktop.a11y.json",
+      "axe": "docs/ux/capture/populated/setlists/edit-dialog-show-padrao-desktop.axe.json"
+    },
+    "axeViolations": 1
+  },
+  {
+    "route": "setlists",
+    "state": "edit-dialog-show-padrao",
+    "viewport": "mobile",
+    "url": "/setlists",
+    "status": "captured",
+    "setlist_id": "00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f",
+    "notes": [
+      "UI de edição ABERTA (leitura; nada salvo). Reorder não tem modo próprio: é drag-and-drop nativo sempre ativo e o callback é um TODO (console.log) — não arrastado. O diálogo expõe campos que a API descarta (evidência das colunas inatingíveis).",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Failed to load resource: the server responded with a status of 429 ()"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/setlists/edit-dialog-show-padrao-mobile.png",
+      "a11y": "docs/ux/capture/populated/setlists/edit-dialog-show-padrao-mobile.a11y.json",
+      "axe": "docs/ux/capture/populated/setlists/edit-dialog-show-padrao-mobile.axe.json"
+    },
+    "axeViolations": 1
+  },
+  {
+    "route": "setlists",
+    "state": "edit-dialog-show-padrao",
+    "viewport": "tablet-landscape",
+    "url": "/setlists",
+    "status": "captured",
+    "setlist_id": "00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f",
+    "notes": [
+      "UI de edição ABERTA (leitura; nada salvo). Reorder não tem modo próprio: é drag-and-drop nativo sempre ativo e o callback é um TODO (console.log) — não arrastado. O diálogo expõe campos que a API descarta (evidência das colunas inatingíveis).",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/setlists/edit-dialog-show-padrao-tablet-landscape.png",
+      "a11y": "docs/ux/capture/populated/setlists/edit-dialog-show-padrao-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/populated/setlists/edit-dialog-show-padrao-tablet-landscape.axe.json"
+    },
+    "axeViolations": 1
+  },
+  {
+    "route": "setlists",
+    "state": "edit-dialog-show-padrao",
+    "viewport": "tablet-portrait",
+    "url": "/setlists",
+    "status": "captured",
+    "setlist_id": "00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f",
+    "notes": [
+      "UI de edição ABERTA (leitura; nada salvo). Reorder não tem modo próprio: é drag-and-drop nativo sempre ativo e o callback é um TODO (console.log) — não arrastado. O diálogo expõe campos que a API descarta (evidência das colunas inatingíveis).",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting') | Failed to load resource: the server responded with a status of 429 ()"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/setlists/edit-dialog-show-padrao-tablet-portrait.png",
+      "a11y": "docs/ux/capture/populated/setlists/edit-dialog-show-padrao-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/populated/setlists/edit-dialog-show-padrao-tablet-portrait.axe.json"
+    },
+    "axeViolations": 1
+  },
+  {
+    "route": "setlists",
+    "state": "populated-list",
+    "viewport": "desktop",
+    "url": "/setlists",
+    "status": "captured",
+    "notes": [
+      "Listagem com as 3 setlists (Solo/1, Show padrão/8, Estresse/60)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/setlists/populated-list-desktop.png",
+      "a11y": "docs/ux/capture/populated/setlists/populated-list-desktop.a11y.json",
+      "axe": "docs/ux/capture/populated/setlists/populated-list-desktop.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "setlists",
+    "state": "populated-list",
+    "viewport": "mobile",
+    "url": "/setlists",
+    "status": "captured",
+    "notes": [
+      "Listagem com as 3 setlists (Solo/1, Show padrão/8, Estresse/60)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/setlists/populated-list-mobile.png",
+      "a11y": "docs/ux/capture/populated/setlists/populated-list-mobile.a11y.json",
+      "axe": "docs/ux/capture/populated/setlists/populated-list-mobile.axe.json"
+    },
+    "axeViolations": 2
+  },
+  {
+    "route": "setlists",
+    "state": "populated-list",
+    "viewport": "tablet-landscape",
+    "url": "/setlists",
+    "status": "captured",
+    "notes": [
+      "Listagem com as 3 setlists (Solo/1, Show padrão/8, Estresse/60)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/setlists/populated-list-tablet-landscape.png",
+      "a11y": "docs/ux/capture/populated/setlists/populated-list-tablet-landscape.a11y.json",
+      "axe": "docs/ux/capture/populated/setlists/populated-list-tablet-landscape.axe.json"
+    },
+    "axeViolations": 3
+  },
+  {
+    "route": "setlists",
+    "state": "populated-list",
+    "viewport": "tablet-portrait",
+    "url": "/setlists",
+    "status": "captured",
+    "notes": [
+      "Listagem com as 3 setlists (Solo/1, Show padrão/8, Estresse/60)",
+      "console_errors: Service Worker registration failed: Cannot read properties of undefined (reading 'waiting') TypeError: Cannot read properties of undefined (reading 'waiting')"
+    ],
+    "files": {
+      "screenshot": "docs/ux/capture/populated/setlists/populated-list-tablet-portrait.png",
+      "a11y": "docs/ux/capture/populated/setlists/populated-list-tablet-portrait.a11y.json",
+      "axe": "docs/ux/capture/populated/setlists/populated-list-tablet-portrait.axe.json"
+    },
+    "axeViolations": 3
+  }
+]

@@ -1,0 +1,225 @@
+[
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "tags": [
+      "cat.color",
+      "wcag2aa",
+      "wcag143",
+      "TTv5",
+      "TT13.c",
+      "EN-301-549",
+      "EN-9.1.4.3",
+      "ACT",
+      "RGAAv4",
+      "RGAA-3.2.1"
+    ],
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "help": "Elements must meet minimum color contrast ratio thresholds",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=playwright",
+    "nodes": [
+      {
+        "any": [
+          {
+            "id": "color-contrast",
+            "data": {
+              "fgColor": "#ffffff",
+              "bgColor": "#2e7ce4",
+              "contrastRatio": 4.1,
+              "fontSize": "10.5pt (14px)",
+              "fontWeight": "normal",
+              "messageKey": null,
+              "expectedContrastRatio": "4.5:1"
+            },
+            "relatedNodes": [
+              {
+                "html": "<button class=\"inline-flex items-ce...\">",
+                "target": [
+                  ".px-4.h-10.bg-\\[\\#2E7CE4\\]"
+                ]
+              }
+            ],
+            "impact": "serious",
+            "message": "Element has insufficient color contrast of 4.1 (foreground color: #ffffff, background color: #2e7ce4, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "serious",
+        "html": "<button class=\"inline-flex items-ce...\">",
+        "target": [
+          ".px-4.h-10.bg-\\[\\#2E7CE4\\]"
+        ],
+        "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.1 (foreground color: #ffffff, background color: #2e7ce4, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+      },
+      {
+        "any": [
+          {
+            "id": "color-contrast",
+            "data": {
+              "fgColor": "#ffffff",
+              "bgColor": "#2e7ce4",
+              "contrastRatio": 4.1,
+              "fontSize": "10.5pt (14px)",
+              "fontWeight": "normal",
+              "messageKey": null,
+              "expectedContrastRatio": "4.5:1"
+            },
+            "relatedNodes": [
+              {
+                "html": "<button class=\"inline-flex items-ce...\">",
+                "target": [
+                  ".shadow-sm.cursor-pointer.hover\\:shadow-md:nth-child(1) > .pt-0.p-6 > .space-y-3 > .pt-1.gap-2.flex > .bg-\\[\\#2E7CE4\\].hover\\:bg-\\[\\#1E5BB8\\].text-white"
+                ]
+              }
+            ],
+            "impact": "serious",
+            "message": "Element has insufficient color contrast of 4.1 (foreground color: #ffffff, background color: #2e7ce4, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "serious",
+        "html": "<button class=\"inline-flex items-ce...\">",
+        "target": [
+          ".shadow-sm.cursor-pointer.hover\\:shadow-md:nth-child(1) > .pt-0.p-6 > .space-y-3 > .pt-1.gap-2.flex > .bg-\\[\\#2E7CE4\\].hover\\:bg-\\[\\#1E5BB8\\].text-white"
+        ],
+        "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.1 (foreground color: #ffffff, background color: #2e7ce4, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+      },
+      {
+        "any": [
+          {
+            "id": "color-contrast",
+            "data": {
+              "fgColor": "#ffffff",
+              "bgColor": "#2e7ce4",
+              "contrastRatio": 4.1,
+              "fontSize": "10.5pt (14px)",
+              "fontWeight": "normal",
+              "messageKey": null,
+              "expectedContrastRatio": "4.5:1"
+            },
+            "relatedNodes": [
+              {
+                "html": "<button class=\"inline-flex items-ce...\">",
+                "target": [
+                  ".shadow-sm.cursor-pointer.hover\\:shadow-md:nth-child(2) > .pt-0.p-6 > .space-y-3 > .pt-1.gap-2.flex > .bg-\\[\\#2E7CE4\\].hover\\:bg-\\[\\#1E5BB8\\].text-white"
+                ]
+              }
+            ],
+            "impact": "serious",
+            "message": "Element has insufficient color contrast of 4.1 (foreground color: #ffffff, background color: #2e7ce4, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "serious",
+        "html": "<button class=\"inline-flex items-ce...\">",
+        "target": [
+          ".shadow-sm.cursor-pointer.hover\\:shadow-md:nth-child(2) > .pt-0.p-6 > .space-y-3 > .pt-1.gap-2.flex > .bg-\\[\\#2E7CE4\\].hover\\:bg-\\[\\#1E5BB8\\].text-white"
+        ],
+        "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.1 (foreground color: #ffffff, background color: #2e7ce4, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+      },
+      {
+        "any": [
+          {
+            "id": "color-contrast",
+            "data": {
+              "fgColor": "#ffffff",
+              "bgColor": "#2e7ce4",
+              "contrastRatio": 4.1,
+              "fontSize": "10.5pt (14px)",
+              "fontWeight": "normal",
+              "messageKey": null,
+              "expectedContrastRatio": "4.5:1"
+            },
+            "relatedNodes": [
+              {
+                "html": "<button class=\"inline-flex items-ce...\">",
+                "target": [
+                  ".border-\\[\\#2E7CE4\\] > .pt-0.p-6 > .space-y-3 > .pt-1.gap-2.flex > .bg-\\[\\#2E7CE4\\].hover\\:bg-\\[\\#1E5BB8\\].text-white"
+                ]
+              }
+            ],
+            "impact": "serious",
+            "message": "Element has insufficient color contrast of 4.1 (foreground color: #ffffff, background color: #2e7ce4, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "serious",
+        "html": "<button class=\"inline-flex items-ce...\">",
+        "target": [
+          ".border-\\[\\#2E7CE4\\] > .pt-0.p-6 > .space-y-3 > .pt-1.gap-2.flex > .bg-\\[\\#2E7CE4\\].hover\\:bg-\\[\\#1E5BB8\\].text-white"
+        ],
+        "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.1 (foreground color: #ffffff, background color: #2e7ce4, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+      },
+      {
+        "any": [
+          {
+            "id": "color-contrast",
+            "data": {
+              "fgColor": "#ffffff",
+              "bgColor": "#2e7ce4",
+              "contrastRatio": 4.1,
+              "fontSize": "10.5pt (14px)",
+              "fontWeight": "normal",
+              "messageKey": null,
+              "expectedContrastRatio": "4.5:1"
+            },
+            "relatedNodes": [
+              {
+                "html": "<button class=\"inline-flex items-ce...\">",
+                "target": [
+                  ".ml-4.gap-2.flex > .bg-\\[\\#2E7CE4\\].hover\\:bg-\\[\\#1E5BB8\\].text-white"
+                ]
+              }
+            ],
+            "impact": "serious",
+            "message": "Element has insufficient color contrast of 4.1 (foreground color: #ffffff, background color: #2e7ce4, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "serious",
+        "html": "<button class=\"inline-flex items-ce...\">",
+        "target": [
+          ".ml-4.gap-2.flex > .bg-\\[\\#2E7CE4\\].hover\\:bg-\\[\\#1E5BB8\\].text-white"
+        ],
+        "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.1 (foreground color: #ffffff, background color: #2e7ce4, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+      }
+    ]
+  },
+  {
+    "id": "page-has-heading-one",
+    "impact": "moderate",
+    "tags": [
+      "cat.semantics",
+      "best-practice"
+    ],
+    "description": "Ensure that the page, or at least one of its frames contains a level-one heading",
+    "help": "Page should contain a level-one heading",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/page-has-heading-one?application=playwright",
+    "nodes": [
+      {
+        "any": [],
+        "all": [
+          {
+            "id": "page-has-heading-one",
+            "data": null,
+            "relatedNodes": [],
+            "impact": "moderate",
+            "message": "Page must have a level-one heading"
+          }
+        ],
+        "none": [],
+        "impact": "moderate",
+        "html": "<html lang=\"en\">",
+        "target": [
+          "html"
+        ],
+        "failureSummary": "Fix all of the following:\n  Page must have a level-one heading"
+      }
+    ]
+  }
+]

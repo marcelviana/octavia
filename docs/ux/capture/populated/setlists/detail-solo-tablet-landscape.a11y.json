@@ -1,0 +1,231 @@
+{
+  "role": "WebArea",
+  "name": "Octavia - Digital Music Management",
+  "children": [
+    {
+      "role": "button",
+      "name": ""
+    },
+    {
+      "role": "image",
+      "name": "Octavia"
+    },
+    {
+      "role": "image",
+      "name": "Octavia"
+    },
+    {
+      "role": "textbox",
+      "name": "Search..."
+    },
+    {
+      "role": "button",
+      "name": "UT",
+      "haspopup": "menu"
+    },
+    {
+      "role": "heading",
+      "name": "NAVIGATION",
+      "level": 3
+    },
+    {
+      "role": "button",
+      "name": "Dashboard"
+    },
+    {
+      "role": "button",
+      "name": "Library"
+    },
+    {
+      "role": "button",
+      "name": "Setlists"
+    },
+    {
+      "role": "button",
+      "name": "Add Song"
+    },
+    {
+      "role": "heading",
+      "name": "Your Setlists",
+      "level": 2
+    },
+    {
+      "role": "text",
+      "name": "3"
+    },
+    {
+      "role": "text",
+      "name": " setlist"
+    },
+    {
+      "role": "text",
+      "name": "s"
+    },
+    {
+      "role": "button",
+      "name": "Create Setlist"
+    },
+    {
+      "role": "text",
+      "name": "UX-AUDIT Estresse"
+    },
+    {
+      "role": "button",
+      "name": "Edit setlist"
+    },
+    {
+      "role": "button",
+      "name": "Delete setlist"
+    },
+    {
+      "role": "text",
+      "name": "60"
+    },
+    {
+      "role": "text",
+      "name": " song"
+    },
+    {
+      "role": "text",
+      "name": "s"
+    },
+    {
+      "role": "text",
+      "name": "4h 6m"
+    },
+    {
+      "role": "button",
+      "name": "Start Performance"
+    },
+    {
+      "role": "text",
+      "name": "UX-AUDIT Show padrão"
+    },
+    {
+      "role": "text",
+      "name": "Show completo com bloco acústico e bloco elétrico"
+    },
+    {
+      "role": "button",
+      "name": "Edit setlist"
+    },
+    {
+      "role": "button",
+      "name": "Delete setlist"
+    },
+    {
+      "role": "text",
+      "name": "8"
+    },
+    {
+      "role": "text",
+      "name": " song"
+    },
+    {
+      "role": "text",
+      "name": "s"
+    },
+    {
+      "role": "text",
+      "name": "32m"
+    },
+    {
+      "role": "button",
+      "name": "Start Performance"
+    },
+    {
+      "role": "text",
+      "name": "UX-AUDIT Solo"
+    },
+    {
+      "role": "button",
+      "name": "Edit setlist"
+    },
+    {
+      "role": "button",
+      "name": "Delete setlist"
+    },
+    {
+      "role": "text",
+      "name": "1"
+    },
+    {
+      "role": "text",
+      "name": " song"
+    },
+    {
+      "role": "text",
+      "name": "4m"
+    },
+    {
+      "role": "button",
+      "name": "Start Performance"
+    },
+    {
+      "role": "text",
+      "name": "UX-AUDIT Solo"
+    },
+    {
+      "role": "text",
+      "name": "1"
+    },
+    {
+      "role": "text",
+      "name": " song"
+    },
+    {
+      "role": "text",
+      "name": "4m"
+    },
+    {
+      "role": "button",
+      "name": "Edit"
+    },
+    {
+      "role": "button",
+      "name": "Start Performance"
+    },
+    {
+      "role": "heading",
+      "name": "Songs",
+      "level": 3
+    },
+    {
+      "role": "button",
+      "name": "Add Songs"
+    },
+    {
+      "role": "text",
+      "name": "1"
+    },
+    {
+      "role": "heading",
+      "name": "[UX-AUDIT] Partitura de 12 páginas",
+      "level": 4
+    },
+    {
+      "role": "text",
+      "name": "Compositor Anônimo"
+    },
+    {
+      "role": "text",
+      "name": "Observação da música 1: modular meio tom acima no último refrão"
+    },
+    {
+      "role": "text",
+      "name": "Sheet"
+    },
+    {
+      "role": "button",
+      "name": "Start performance from this song"
+    },
+    {
+      "role": "button",
+      "name": "Remove song"
+    },
+    {
+      "role": "region",
+      "name": "Notifications alt+T"
+    }
+  ]
+}

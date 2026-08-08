@@ -1,0 +1,189 @@
+{
+  "role": "WebArea",
+  "name": "Octavia - Digital Music Management",
+  "children": [
+    {
+      "role": "button",
+      "name": ""
+    },
+    {
+      "role": "image",
+      "name": "Octavia"
+    },
+    {
+      "role": "image",
+      "name": "Octavia"
+    },
+    {
+      "role": "textbox",
+      "name": "Search..."
+    },
+    {
+      "role": "button",
+      "name": "UT",
+      "haspopup": "menu"
+    },
+    {
+      "role": "heading",
+      "name": "NAVIGATION",
+      "level": 3
+    },
+    {
+      "role": "button",
+      "name": "Dashboard"
+    },
+    {
+      "role": "button",
+      "name": "Library"
+    },
+    {
+      "role": "button",
+      "name": "Setlists"
+    },
+    {
+      "role": "button",
+      "name": "Add Song"
+    },
+    {
+      "role": "button",
+      "name": ""
+    },
+    {
+      "role": "heading",
+      "name": "[UX-AUDIT] Partitura de 12 páginas",
+      "level": 1
+    },
+    {
+      "role": "text",
+      "name": "Compositor Anônimo"
+    },
+    {
+      "role": "text",
+      "name": " • "
+    },
+    {
+      "role": "text",
+      "name": "Sheet"
+    },
+    {
+      "role": "button",
+      "name": ""
+    },
+    {
+      "role": "button",
+      "name": "Performance"
+    },
+    {
+      "role": "heading",
+      "name": "Sheet Music",
+      "level": 3
+    },
+    {
+      "role": "button",
+      "name": ""
+    },
+    {
+      "role": "text",
+      "name": "Page "
+    },
+    {
+      "role": "text",
+      "name": "6"
+    },
+    {
+      "role": "text",
+      "name": " / "
+    },
+    {
+      "role": "text",
+      "name": "12"
+    },
+    {
+      "role": "button",
+      "name": "",
+      "focused": true
+    },
+    {
+      "role": "button",
+      "name": ""
+    },
+    {
+      "role": "text",
+      "name": "100"
+    },
+    {
+      "role": "text",
+      "name": "%"
+    },
+    {
+      "role": "button",
+      "name": ""
+    },
+    {
+      "role": "button",
+      "name": "Fit width"
+    },
+    {
+      "role": "button",
+      "name": "Fit page"
+    },
+    {
+      "role": "button",
+      "name": ""
+    },
+    {
+      "role": "text",
+      "name": "[UX-AUDIT] Partitura de 12 p?ginas"
+    },
+    {
+      "role": "text",
+      "name": "pagina 6 de 12"
+    },
+    {
+      "role": "heading",
+      "name": "Song Details",
+      "level": 3
+    },
+    {
+      "role": "text",
+      "name": "Time Signature"
+    },
+    {
+      "role": "text",
+      "name": "4/4"
+    },
+    {
+      "role": "text",
+      "name": "Created "
+    },
+    {
+      "role": "text",
+      "name": "8/8/2026"
+    },
+    {
+      "role": "text",
+      "name": "Modified "
+    },
+    {
+      "role": "text",
+      "name": "8/8/2026"
+    },
+    {
+      "role": "heading",
+      "name": "Performance Notes",
+      "level": 3
+    },
+    {
+      "role": "text",
+      "name": "No performance notes available"
+    },
+    {
+      "role": "text",
+      "name": "Click Edit to add notes and performance tips"
+    },
+    {
+      "role": "region",
+      "name": "Notifications alt+T"
+    }
+  ]
+}

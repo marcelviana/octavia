@@ -1,0 +1,83 @@
+{
+  "role": "WebArea",
+  "name": "Octavia - Digital Music Management",
+  "children": [
+    {
+      "role": "generic",
+      "name": "[UX-AUDIT] Partitura de 12 páginas Compositor Anônimo Zoom out 100% Zoom in Decrease BPM 80 BPM Increase BPM Sheet Music PDF Prev Next",
+      "focused": true,
+      "children": [
+        {
+          "role": "button",
+          "name": ""
+        },
+        {
+          "role": "heading",
+          "name": "[UX-AUDIT] Partitura de 12 páginas",
+          "level": 2
+        },
+        {
+          "role": "text",
+          "name": "Compositor Anônimo"
+        },
+        {
+          "role": "button",
+          "name": ""
+        },
+        {
+          "role": "button",
+          "name": "Zoom out"
+        },
+        {
+          "role": "text",
+          "name": "100"
+        },
+        {
+          "role": "text",
+          "name": "%"
+        },
+        {
+          "role": "button",
+          "name": "Zoom in"
+        },
+        {
+          "role": "button",
+          "name": ""
+        },
+        {
+          "role": "button",
+          "name": "Decrease BPM"
+        },
+        {
+          "role": "text",
+          "name": "80"
+        },
+        {
+          "role": "text",
+          "name": " BPM"
+        },
+        {
+          "role": "button",
+          "name": "Increase BPM"
+        },
+        {
+          "role": "Iframe",
+          "name": "Sheet Music PDF"
+        },
+        {
+          "role": "button",
+          "name": "Prev",
+          "disabled": true
+        },
+        {
+          "role": "button",
+          "name": "Next"
+        }
+      ]
+    },
+    {
+      "role": "region",
+      "name": "Notifications alt+T"
+    }
+  ]
+}

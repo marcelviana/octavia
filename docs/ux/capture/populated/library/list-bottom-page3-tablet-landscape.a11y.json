@@ -1,0 +1,416 @@
+{
+  "role": "WebArea",
+  "name": "Octavia - Digital Music Management",
+  "children": [
+    {
+      "role": "button",
+      "name": ""
+    },
+    {
+      "role": "image",
+      "name": "Octavia"
+    },
+    {
+      "role": "image",
+      "name": "Octavia"
+    },
+    {
+      "role": "textbox",
+      "name": "Search..."
+    },
+    {
+      "role": "button",
+      "name": "M",
+      "haspopup": "menu"
+    },
+    {
+      "role": "heading",
+      "name": "NAVIGATION",
+      "level": 3
+    },
+    {
+      "role": "button",
+      "name": "Dashboard"
+    },
+    {
+      "role": "button",
+      "name": "Library"
+    },
+    {
+      "role": "button",
+      "name": "Setlists"
+    },
+    {
+      "role": "button",
+      "name": "Add Song"
+    },
+    {
+      "role": "heading",
+      "name": "Your Music Library",
+      "level": 1
+    },
+    {
+      "role": "text",
+      "name": "Manage and organize all your musical content"
+    },
+    {
+      "role": "button",
+      "name": "Filters",
+      "haspopup": "menu"
+    },
+    {
+      "role": "combobox",
+      "name": "",
+      "haspopup": "listbox",
+      "value": "Sort"
+    },
+    {
+      "role": "button",
+      "name": "Add Content"
+    },
+    {
+      "role": "button",
+      "name": "View [UX-AUDIT] Tema da Aula de Sexta by Unknown Artist",
+      "children": [
+        {
+          "role": "button",
+          "name": "Add to favorites",
+          "pressed": false
+        },
+        {
+          "role": "button",
+          "name": "More options",
+          "haspopup": "menu"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "View [UX-AUDIT] Estudo em Mi Menor by Unknown Artist",
+      "children": [
+        {
+          "role": "button",
+          "name": "Add to favorites",
+          "pressed": false
+        },
+        {
+          "role": "button",
+          "name": "More options",
+          "haspopup": "menu"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "View [UX-AUDIT] Modinha sem Autor Conhecido by Unknown Artist",
+      "children": [
+        {
+          "role": "button",
+          "name": "Add to favorites",
+          "pressed": false
+        },
+        {
+          "role": "button",
+          "name": "More options",
+          "haspopup": "menu"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "View [UX-AUDIT] Baião de Dois by Unknown Artist",
+      "children": [
+        {
+          "role": "button",
+          "name": "Add to favorites",
+          "pressed": false
+        },
+        {
+          "role": "button",
+          "name": "More options",
+          "haspopup": "menu"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "View [UX-AUDIT] Ponta de Areia by Milton Nascimento",
+      "children": [
+        {
+          "role": "button",
+          "name": "Add to favorites",
+          "pressed": false
+        },
+        {
+          "role": "button",
+          "name": "More options",
+          "haspopup": "menu"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "View [UX-AUDIT] Andança by Beth Carvalho",
+      "children": [
+        {
+          "role": "button",
+          "name": "Add to favorites",
+          "pressed": false
+        },
+        {
+          "role": "button",
+          "name": "More options",
+          "haspopup": "menu"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "View [UX-AUDIT] Romaria by Renato Teixeira",
+      "children": [
+        {
+          "role": "button",
+          "name": "Add to favorites",
+          "pressed": false
+        },
+        {
+          "role": "button",
+          "name": "More options",
+          "haspopup": "menu"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "View [UX-AUDIT] João e Maria by Chico Buarque",
+      "children": [
+        {
+          "role": "button",
+          "name": "Add to favorites",
+          "pressed": false
+        },
+        {
+          "role": "button",
+          "name": "More options",
+          "haspopup": "menu"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "View [UX-AUDIT] Fé Cega, Faca Amolada by Milton Nascimento",
+      "children": [
+        {
+          "role": "button",
+          "name": "Add to favorites",
+          "pressed": false
+        },
+        {
+          "role": "button",
+          "name": "More options",
+          "haspopup": "menu"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "View [UX-AUDIT] Ê Boi by Unknown Artist",
+      "children": [
+        {
+          "role": "button",
+          "name": "Add to favorites",
+          "pressed": false
+        },
+        {
+          "role": "button",
+          "name": "More options",
+          "haspopup": "menu"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "View [UX-AUDIT] Canção da América by Milton Nascimento",
+      "children": [
+        {
+          "role": "button",
+          "name": "Add to favorites",
+          "pressed": false
+        },
+        {
+          "role": "button",
+          "name": "More options",
+          "haspopup": "menu"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "View [UX-AUDIT] Oração ao Tempo by Caetano Veloso",
+      "children": [
+        {
+          "role": "button",
+          "name": "Add to favorites",
+          "pressed": false
+        },
+        {
+          "role": "button",
+          "name": "More options",
+          "haspopup": "menu"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "View [UX-AUDIT] Coração Vagabundo by Caetano Veloso",
+      "children": [
+        {
+          "role": "button",
+          "name": "Add to favorites",
+          "pressed": false
+        },
+        {
+          "role": "button",
+          "name": "More options",
+          "haspopup": "menu"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "View [UX-AUDIT] Construção by Chico Buarque",
+      "children": [
+        {
+          "role": "button",
+          "name": "Remove from favorites",
+          "pressed": true
+        },
+        {
+          "role": "button",
+          "name": "More options",
+          "haspopup": "menu"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "View [UX-AUDIT] Evidências by Chitãozinho & Xororó",
+      "children": [
+        {
+          "role": "button",
+          "name": "Add to favorites",
+          "pressed": false
+        },
+        {
+          "role": "button",
+          "name": "More options",
+          "haspopup": "menu"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "View [UX-AUDIT] Evidências by Chitãozinho & Xororó",
+      "children": [
+        {
+          "role": "button",
+          "name": "Add to favorites",
+          "pressed": false
+        },
+        {
+          "role": "button",
+          "name": "More options",
+          "haspopup": "menu"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "View [UX-AUDIT] Águas de Março by Tom Jobim",
+      "children": [
+        {
+          "role": "button",
+          "name": "Add to favorites",
+          "pressed": false
+        },
+        {
+          "role": "button",
+          "name": "More options",
+          "haspopup": "menu"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "View [UX-AUDIT] Águas de Março by Tom Jobim",
+      "children": [
+        {
+          "role": "button",
+          "name": "Add to favorites",
+          "pressed": false
+        },
+        {
+          "role": "button",
+          "name": "More options",
+          "haspopup": "menu"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "View [UX-AUDIT] Suíte concertante nº 3 em ré menor para violão de sete cordas, orquestra de câmara e coro feminino — movimento II: andante espressivo com variações sobre um tema nordestino by Orquestra do Recife",
+      "children": [
+        {
+          "role": "button",
+          "name": "Add to favorites",
+          "pressed": false
+        },
+        {
+          "role": "button",
+          "name": "More options",
+          "haspopup": "menu"
+        }
+      ]
+    },
+    {
+      "role": "button",
+      "name": "View [UX-AUDIT] Canção interminável do sertão profundo onde o vento faz a curva e o violeiro conta causos da assombração da meia-noite em ritmo de moda de viola caipira da tradição centenária by Unknown Artist",
+      "children": [
+        {
+          "role": "button",
+          "name": "Add to favorites",
+          "pressed": false
+        },
+        {
+          "role": "button",
+          "name": "More options",
+          "haspopup": "menu"
+        }
+      ]
+    },
+    {
+      "role": "text",
+      "name": "Previous"
+    },
+    {
+      "role": "text",
+      "name": "1"
+    },
+    {
+      "role": "text",
+      "name": "2"
+    },
+    {
+      "role": "text",
+      "name": "3"
+    },
+    {
+      "role": "text",
+      "name": "Next"
+    },
+    {
+      "role": "region",
+      "name": "Notifications alt+T"
+    }
+  ]
+}

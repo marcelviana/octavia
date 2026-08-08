@@ -1,0 +1,127 @@
+{
+  "role": "WebArea",
+  "name": "Octavia - Digital Music Management",
+  "children": [
+    {
+      "role": "region",
+      "name": "Notifications alt+T"
+    },
+    {
+      "role": "dialog",
+      "name": "Edit Setlist",
+      "description": "Update your setlist information.",
+      "children": [
+        {
+          "role": "heading",
+          "name": "Edit Setlist",
+          "level": 2
+        },
+        {
+          "role": "text",
+          "name": "Update your setlist information."
+        },
+        {
+          "role": "text",
+          "name": "Setlist Name "
+        },
+        {
+          "role": "text",
+          "name": "*"
+        },
+        {
+          "role": "textbox",
+          "name": "Setlist Name *",
+          "focused": true,
+          "required": true,
+          "value": "UX-AUDIT Show padrão"
+        },
+        {
+          "role": "text",
+          "name": "Description"
+        },
+        {
+          "role": "textbox",
+          "name": "Description",
+          "multiline": true,
+          "value": "Show completo com bloco acústico e bloco elétrico"
+        },
+        {
+          "role": "text",
+          "name": "Performance Date"
+        },
+        {
+          "role": "Date",
+          "name": "Performance Date",
+          "children": [
+            {
+              "role": "spinbutton",
+              "name": "Day Day",
+              "valuetext": "",
+              "valuemin": 1,
+              "valuemax": 31,
+              "value": 0
+            },
+            {
+              "role": "text",
+              "name": "/"
+            },
+            {
+              "role": "spinbutton",
+              "name": "Month Month",
+              "valuetext": "",
+              "valuemin": 1,
+              "valuemax": 12,
+              "value": 0
+            },
+            {
+              "role": "text",
+              "name": "/"
+            },
+            {
+              "role": "spinbutton",
+              "name": "Year Year",
+              "valuetext": "",
+              "valuemin": 1,
+              "valuemax": 275760,
+              "value": 0
+            },
+            {
+              "role": "button",
+              "name": "Show date picker",
+              "haspopup": "menu"
+            }
+          ]
+        },
+        {
+          "role": "text",
+          "name": "Venue"
+        },
+        {
+          "role": "textbox",
+          "name": "Venue"
+        },
+        {
+          "role": "text",
+          "name": "Notes"
+        },
+        {
+          "role": "textbox",
+          "name": "Notes",
+          "multiline": true
+        },
+        {
+          "role": "button",
+          "name": "Cancel"
+        },
+        {
+          "role": "button",
+          "name": "Update Setlist"
+        },
+        {
+          "role": "button",
+          "name": "Close"
+        }
+      ]
+    }
+  ]
+}

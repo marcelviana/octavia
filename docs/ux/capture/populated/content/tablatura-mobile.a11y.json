@@ -1,0 +1,135 @@
+{
+  "role": "WebArea",
+  "name": "Octavia - Digital Music Management",
+  "children": [
+    {
+      "role": "image",
+      "name": "Octavia"
+    },
+    {
+      "role": "textbox",
+      "name": "Search..."
+    },
+    {
+      "role": "button",
+      "name": "UT",
+      "haspopup": "menu"
+    },
+    {
+      "role": "button",
+      "name": "Home"
+    },
+    {
+      "role": "button",
+      "name": "Library"
+    },
+    {
+      "role": "button",
+      "name": "Setlists"
+    },
+    {
+      "role": "button",
+      "name": "Add"
+    },
+    {
+      "role": "button",
+      "name": ""
+    },
+    {
+      "role": "heading",
+      "name": "[UX-AUDIT] Ponta de Areia",
+      "level": 1
+    },
+    {
+      "role": "text",
+      "name": "Milton Nascimento"
+    },
+    {
+      "role": "text",
+      "name": " • "
+    },
+    {
+      "role": "text",
+      "name": "Tab"
+    },
+    {
+      "role": "button",
+      "name": ""
+    },
+    {
+      "role": "button",
+      "name": ""
+    },
+    {
+      "role": "heading",
+      "name": "Tablature",
+      "level": 3
+    },
+    {
+      "role": "text",
+      "name": "e|-------0-----------0-------|-------0-----------0-------| B|-----1---1-------1---1-----|-----1---1-------1---1-----| G|---0-------0---0-------0---|---2-------2---2-------2---| D|---------------------------|---------------------------| A|-3-------------------------|---------------------------| E|---------------|-----------|-0-------------------------|"
+    },
+    {
+      "role": "text",
+      "name": "Capo:"
+    },
+    {
+      "role": "text",
+      "name": "None"
+    },
+    {
+      "role": "text",
+      "name": "Tuning:"
+    },
+    {
+      "role": "text",
+      "name": "Standard (EADGBE)"
+    },
+    {
+      "role": "heading",
+      "name": "Song Details",
+      "level": 3
+    },
+    {
+      "role": "text",
+      "name": "Time Signature"
+    },
+    {
+      "role": "text",
+      "name": "4/4"
+    },
+    {
+      "role": "text",
+      "name": "Created "
+    },
+    {
+      "role": "text",
+      "name": "8/8/2026"
+    },
+    {
+      "role": "text",
+      "name": "Modified "
+    },
+    {
+      "role": "text",
+      "name": "8/8/2026"
+    },
+    {
+      "role": "heading",
+      "name": "Performance Notes",
+      "level": 3
+    },
+    {
+      "role": "text",
+      "name": "No performance notes available"
+    },
+    {
+      "role": "text",
+      "name": "Click Edit to add notes and performance tips"
+    },
+    {
+      "role": "region",
+      "name": "Notifications alt+T"
+    }
+  ]
+}
