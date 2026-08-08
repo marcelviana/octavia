@@ -94,9 +94,10 @@ octavia/
 │   ├── build-sw.js             # Service worker bundling
 │   └── [other scripts]
 │
-├── supabase/                   # Supabase migrations and config
-│   ├── migrations/             # Database schema migrations
-│   └── config.toml             # Supabase project config
+├── supabase/                   # Supabase schema snapshots (NÃO há migrations versionadas)
+│   ├── schema.sql              # Snapshot manual do schema (sem garantia de sincronia com prod)
+│   ├── rls-policies.sql        # Políticas RLS (snapshot manual)
+│   └── .temp/                  # Cache local do CLI (não versionado como schema)
 │
 ├── middleware.ts               # Next.js middleware (route protection, headers)
 ├── next.config.mjs             # Next.js configuration
@@ -162,9 +163,10 @@ octavia/
 - Run: `pnpm test:e2e`
 
 **supabase:**
-- Purpose: Database schema and configuration
-- Contains: Migrations defining tables (content, setlists, setlist_songs, profiles)
-- Run migrations: `supabase migration up`
+- Purpose: Snapshots manuais do schema do banco (referência, não fonte da verdade)
+- Contains: `schema.sql` (tabelas profiles, content, setlists, setlist_songs) e `rls-policies.sql`. NÃO existem `migrations/` nem `config.toml`.
+- IMPORTANTE: o projeto NÃO usa migrations versionadas. `schema.sql` é um snapshot manual sem garantia de sincronia com prod — a fonte da verdade é o banco, validável via `supabase gen types typescript --project-id <ref>` (comparar com `types/database.types.ts`). Drift confirmado em 2026-08-08: prod tem a tabela `annotations` e colunas extras em `setlists` (`venue`, `performance_date`, `notes`) ausentes do schema.sql; `setlist_songs.updated_at` existe no schema.sql mas não em prod.
+- Housekeeping futuro (candidato): adotar migrations versionadas (`supabase migration new` + `supabase db push`) e regenerar schema.sql a partir de prod.
 
 ## Key File Locations
 
@@ -296,11 +298,11 @@ octavia/
 - Committed: No, in `.gitignore`
 - Special: Contains compiled pages, API routes, static optimizations
 
-**supabase/migrations:**
-- Purpose: Database schema version control
-- Generated: Created by `supabase migration new [name]`
+**types/database.types.ts:**
+- Purpose: Types TypeScript gerados do banco real (reflete o schema efetivo de prod)
+- Generated: `supabase gen types typescript --project-id <ref> --schema public`
 - Committed: Yes
-- Pattern: SQL files applying incremental schema changes
+- Special: única forma confiável de inspecionar o schema real — o projeto não usa migrations versionadas e `supabase/schema.sql` é snapshot manual sujeito a drift
 
 ---
 
