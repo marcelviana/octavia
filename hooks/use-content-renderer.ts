@@ -35,7 +35,7 @@ export function useContentRenderer({
 }: UseContentRendererProps): ContentRenderInfo {
   
   return useMemo(() => {
-    const normalizedContentType = normalizeContentType(currentSongData.content_type || '')
+    const normalizedContentType = normalizeContentType(currentSongData?.content_type || '')
     
     // Handle sheet music content
     if (normalizedContentType === ContentType.SHEET) {
@@ -47,7 +47,7 @@ export function useContentRenderer({
           hasContent: false,
           sheetUrl: null,
           lyricsContent: '',
-          contentType: currentSongData.content_type || null
+          contentType: currentSongData?.content_type || null
         }
       }
       
@@ -65,7 +65,7 @@ export function useContentRenderer({
           hasContent: true,
           sheetUrl: url,
           lyricsContent: '',
-          contentType: currentSongData.content_type || null
+          contentType: currentSongData?.content_type || null
         }
       }
       
@@ -77,7 +77,7 @@ export function useContentRenderer({
           hasContent: true,
           sheetUrl: url,
           lyricsContent: '',
-          contentType: currentSongData.content_type || null
+          contentType: currentSongData?.content_type || null
         }
       }
       
@@ -87,7 +87,7 @@ export function useContentRenderer({
         hasContent: false,
         sheetUrl: url,
         lyricsContent: '',
-        contentType: currentSongData.content_type || null,
+        contentType: currentSongData?.content_type || null,
         errorInfo: {
           url,
           mimeType: mimeType
@@ -107,7 +107,7 @@ export function useContentRenderer({
           hasContent: true,
           sheetUrl: null,
           lyricsContent: '',
-          contentType: currentSongData.content_type || null
+          contentType: currentSongData?.content_type || null
         }
       }
       
@@ -119,7 +119,7 @@ export function useContentRenderer({
           hasContent: true,
           sheetUrl: null,
           lyricsContent: '',
-          contentType: currentSongData.content_type || null
+          contentType: currentSongData?.content_type || null
         }
       }
     }
@@ -134,7 +134,7 @@ export function useContentRenderer({
         hasContent: true,
         sheetUrl: null,
         lyricsContent: lyrics,
-        contentType: currentSongData.content_type || null
+        contentType: currentSongData?.content_type || null
       }
     }
     
@@ -144,7 +144,7 @@ export function useContentRenderer({
       hasContent: false,
       sheetUrl: null,
       lyricsContent: '',
-      contentType: currentSongData.content_type || null
+      contentType: currentSongData?.content_type || null
     }
     
   }, [currentSong, currentSongData, sheetUrls, sheetMimeTypes, lyricsData, chordsData])

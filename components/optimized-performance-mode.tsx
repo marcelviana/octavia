@@ -8,6 +8,7 @@ import { OptimizedContentDisplay } from './performance-mode/optimized-content-di
 import { HeaderControls } from './performance-mode/header-controls'
 import { NavigationControls } from './performance-mode/navigation-controls'
 import { LoadingState } from './performance-mode/loading-state'
+import { EmptyState } from './performance-mode/empty-state'
 import { PerformanceWarning } from './performance-mode/performance-warning'
 import { MemoryStats } from './performance-mode/memory-stats'
 import { usePerformanceNavigation } from '@/hooks/use-performance-navigation'
@@ -88,6 +89,7 @@ export const OptimizedPerformanceMode = memo(function OptimizedPerformanceMode({
 
   const { showWarning, dismissWarning } = usePerformanceMonitoringUI(summary)
 
+  if (songs.length === 0) return <EmptyState onExitPerformance={onExitPerformance} />
   if (!currentSongData) return <LoadingState />
 
   return (

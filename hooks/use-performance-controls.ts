@@ -179,8 +179,8 @@ export function usePerformanceControls({
     // - Adjusts for time signature (3/4, 4/4, 6/8, etc.)
     // - Content-type multiplier for different display densities
     const beatsPerLine = calculateBeatsPerLine(
-      currentSongData.time_signature,
-      currentSongData.content_type
+      currentSongData?.time_signature,
+      currentSongData?.content_type
     )
     const beats = lines * beatsPerLine
     const beatDuration = 60 / bpm  // seconds per beat
@@ -216,11 +216,11 @@ export function usePerformanceControls({
 
   // Update BPM when song changes
   useEffect(() => {
-    setBpm(currentSongData.bpm || 80)
+    setBpm(currentSongData?.bpm || 80)
     if (contentRef.current) {
       contentRef.current.scrollTop = 0
     }
-  }, [currentSong, currentSongData.bpm])
+  }, [currentSong, currentSongData?.bpm])
 
   // Clear BPM feedback after delay
   useEffect(() => {

@@ -16,6 +16,7 @@ export default defineConfig({
     exclude: [
       'node_modules/**',
       'tests/e2e/**/*',
+      'tests/ux-audit/**/*',
       '**/*.e2e.{ts,tsx}',
       '**/e2e/**/*',
       '**/*integration*.test.{ts,tsx}',
