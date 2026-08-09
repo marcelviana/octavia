@@ -1,0 +1,56 @@
+{
+  "item": 6,
+  "question": "No viewer, quantos taps da página 1 à 6 de um PDF de 12 (só há prev/next)? Pinch-to-zoom funciona em touch ou só botões de 20%?",
+  "status": "respondida",
+  "procedure": [
+    {
+      "label": "next → página 2",
+      "taps": 1,
+      "atMs": 737,
+      "durMs": 737
+    },
+    {
+      "label": "next → página 3",
+      "taps": 1,
+      "atMs": 1408,
+      "durMs": 671
+    },
+    {
+      "label": "next → página 4",
+      "taps": 1,
+      "atMs": 2067,
+      "durMs": 659
+    },
+    {
+      "label": "next → página 5",
+      "taps": 1,
+      "atMs": 2737,
+      "durMs": 670
+    },
+    {
+      "label": "next → página 6",
+      "taps": 1,
+      "atMs": 3373,
+      "durMs": 636
+    }
+  ],
+  "observations": [
+    "BOUNCE em /content/2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "BOUNCE em /content/2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f (tentativa 2/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "BOUNCE em /content/2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f (tentativa 3/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "rota indisponível após retries de bounce — item inconclusivo nesta passada",
+    "BOUNCE em /content/2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "BOUNCE em /content/2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f (tentativa 2/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "Pinch-to-zoom físico: item do MANUAL-CHECKLIST (gesto real de iPad)."
+  ],
+  "measurements": {
+    "taps_total": 5,
+    "indicador_inicial": "Page 1 / 12",
+    "indicador_final": "Page 6 / 12",
+    "screenshot": "docs/ux/fase-d/evidence/item-06-viewer-pagina-6.png",
+    "controles_de_zoom_no_viewer": [],
+    "tempo_total_ms": 3439
+  },
+  "recordedAt": "2026-08-09T16:20:21.974Z",
+  "trace": "docs/ux/fase-d/traces/fase-d-b-pdf-Grupo-B-—-PDF-1a860-a-página-1-à-6-do-PDF-de-12-fase-d.zip"
+}

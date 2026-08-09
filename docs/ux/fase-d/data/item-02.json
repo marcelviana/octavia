@@ -1,0 +1,56 @@
+{
+  "item": 2,
+  "question": "Latência de troca de música no modo performance (critério <1s) e resposta do play/pause (<100ms percebido)?",
+  "status": "respondida",
+  "procedure": [
+    {
+      "label": "Next (1)",
+      "taps": 1,
+      "atMs": 51,
+      "durMs": 51
+    },
+    {
+      "label": "Next (2)",
+      "taps": 1,
+      "atMs": 172,
+      "durMs": 43
+    },
+    {
+      "label": "Next (3)",
+      "taps": 1,
+      "atMs": 221,
+      "durMs": 33
+    },
+    {
+      "label": "play/pause toggle (1)",
+      "taps": 1,
+      "atMs": 272,
+      "durMs": 38
+    },
+    {
+      "label": "play/pause toggle (2)",
+      "taps": 1,
+      "atMs": 305,
+      "durMs": 30
+    }
+  ],
+  "observations": [
+    "Deep link /performance BOUNCE (tentativa 1/3): aterrissou em https://octavia.rocks/login — padrão do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "Deep link /performance só funcionou na tentativa 2",
+    "Título inicial: \"[UX-AUDIT] Felicidade\" (índice 3 da Show padrão)"
+  ],
+  "measurements": {
+    "troca_1_ms": 126,
+    "troca_1_conteudo": "texto",
+    "troca_2_ms": 57,
+    "troca_2_conteudo": "texto",
+    "troca_3_ms": 46,
+    "troca_3_conteudo": "texto",
+    "playpause_1_feedback_ms": 41,
+    "playpause_2_feedback_ms": 57,
+    "taps_total": 5,
+    "tempo_total_ms": 332
+  },
+  "recordedAt": "2026-08-09T11:20:39.282Z",
+  "trace": "docs/ux/fase-d/traces/fase-d-a-j1-Grupo-A-—-flux-3bf6c-ca-e-resposta-do-play-pause-fase-d.zip"
+}

@@ -1,0 +1,28 @@
+{
+  "item": 37,
+  "question": "/performance por deep link direto: \"Go back\" do empty state sai do app (histórico vazio)?",
+  "status": "respondida",
+  "procedure": [
+    {
+      "label": "tap: Go back",
+      "taps": 1,
+      "atMs": 2551,
+      "durMs": 2551
+    }
+  ],
+  "observations": [
+    "BOUNCE TARDIO em /performance: página carregou e o client redirecionou para https://octavia.rocks/dashboard segundos depois (profile 429 → \"Redirecting to dashboard\")",
+    "BOUNCE em /performance (tentativa 1/3): aterrissou em https://octavia.rocks/dashboard — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "Go back levou para about:blank"
+  ],
+  "measurements": {
+    "url_apos_deep_link": "https://octavia.rocks/performance",
+    "tela_do_empty_state": "No song selectedChoose a song or setlist to start performance modeGo back(self.__next_f=self.__next_f||[]).push([0])self.__next_f.push([1,\"1:\\\"$Sreact.fragment\\\"\\n3:I[94046,[],\\\"\\\"]\\n4:I[79412,[],\\\"\\\"]\\n6:I[31398,[],\\\"MetadataBoundary\\\"]\\n8:I[31398,[",
+    "screenshot": "docs/ux/fase-d/evidence/item-37-empty-state.png",
+    "url_apos_go_back": "about:blank",
+    "taps_total": 1,
+    "tempo_total_ms": 2551
+  },
+  "recordedAt": "2026-08-09T14:56:13.496Z",
+  "trace": "docs/ux/fase-d/traces/fase-d-h-perf-Grupo-H-—-pe-cd115-arams-—-Go-back-sai-do-app--fase-d.zip"
+}

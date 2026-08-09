@@ -1,0 +1,43 @@
+{
+  "item": 29,
+  "question": "Os badges text-xs do dropdown de filtros são tocáveis com confiança? Seleção múltipla se comporta?",
+  "status": "respondida",
+  "procedure": [
+    {
+      "label": "tap: abrir dropdown Filters",
+      "taps": 1,
+      "atMs": 132,
+      "durMs": 132
+    },
+    {
+      "label": "tap: selecionar \"Tab\"",
+      "taps": 1,
+      "atMs": 1103,
+      "durMs": 45
+    },
+    {
+      "label": "tap: selecionar \"Chords\"",
+      "taps": 1,
+      "atMs": 1754,
+      "durMs": 31
+    }
+  ],
+  "observations": [
+    "BOUNCE em /library (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)"
+  ],
+  "measurements": {
+    "alvos_do_dropdown": [],
+    "screenshot_dropdown": "docs/ux/fase-d/evidence/item-29-filtros-dropdown.png",
+    "menu_continua_aberto_apos_1a_selecao": true,
+    "linhas_apos_dois_filtros": 20,
+    "indicacao_de_filtro_ativo": {
+      "temChipDeFiltroAtivo": false,
+      "amostra": "Your Music LibraryManage and organize all your musical contentFiltersSortAdd Content[data-radix-scroll-area-viewport]{scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;}[data-radix-scroll-area-viewport]::-webkit-scrollbar{"
+    },
+    "screenshot_filtrado": "docs/ux/fase-d/evidence/item-29-filtros-aplicados.png",
+    "taps_total": 3,
+    "tempo_total_ms": 3924
+  },
+  "recordedAt": "2026-08-09T13:53:49.214Z",
+  "trace": "docs/ux/fase-d/traces/fase-d-f-library-Grupo-F-—-47754--—-alvos-e-seleção-múltipla-fase-d.zip"
+}

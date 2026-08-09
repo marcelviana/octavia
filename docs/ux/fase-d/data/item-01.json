@@ -1,0 +1,57 @@
+{
+  "item": 1,
+  "question": "(continuação) O redirect landing → Sign In → /login → dashboard funciona offline?",
+  "status": "respondida",
+  "procedure": [
+    {
+      "label": "tap 1: \"Sign In\" na landing",
+      "taps": 1,
+      "atMs": 1174,
+      "durMs": 1174
+    },
+    {
+      "label": "tap: item \"Setlists\" na navegação",
+      "taps": 1,
+      "atMs": 2432,
+      "durMs": 398
+    },
+    {
+      "label": "tap: \"Start Performance\" no card da setlist do show",
+      "taps": 1,
+      "atMs": 5362,
+      "durMs": 2122
+    },
+    {
+      "label": "tap: Sign In offline",
+      "taps": 1,
+      "atMs": 4048,
+      "durMs": 4048
+    }
+  ],
+  "observations": [
+    "start_url / manteve o usuário logado na landing de marketing (AUTH-03 confirmado): https://octavia.rocks/",
+    "Total: 3 taps do primeiro tap até a primeira música; alvo ≤4 taps/10s. Conteúdo da 1ª música: texto (1ª música da Show padrão é o PDF de 12 páginas)."
+  ],
+  "measurements": {
+    "start_url_/_leva_para": "https://octavia.rocks/",
+    "tempo_carga_inicial_ms": 10301,
+    "custo_desvio_landing_login_redirect_ms": 1174,
+    "url_apos_desvio": "https://octavia.rocks/dashboard",
+    "shell_performance_visivel_ms_apos_tap": 2122,
+    "primeira_musica_conteudo": "texto",
+    "tempo_total_ate_conteudo_ms": 5390,
+    "taps_total": 1,
+    "tempo_total_ms": 4070,
+    "service_workers_registrados": [
+      {
+        "scope": "https://octavia.rocks/",
+        "active": true
+      }
+    ],
+    "landing_offline_render": "Sign InSign Up🎵 Digital Music RevolutionYour Music Library, DigitizedOrganize, visualize, and share your sheet music, tabs, and lyrics. Perfect for rehearsals and performances with a modern, intuitive interface.Get Started FreeSign InWhy Musicians Choose OctaviaPowerful features designed by musicia",
+    "url_apos_sign_in_offline": "https://octavia.rocks/dashboard",
+    "tela_apos_sign_in_offline": "MNavigationDashboardLibrarySetlistsAdd SongDashboard Add ContentOverviewRecentFavoritesTotal Content60pieces in your librarySetlists3ready for performanceFavorites3marked as favoritesRecent10viewed recentlyRecent ContentYour recently viewed music[UX-AUDIT] Bis nº 22Lyrics[UX-AUDIT] Bis nº 21Lyrics[U"
+  },
+  "recordedAt": "2026-08-09T10:59:54.340Z",
+  "trace": "docs/ux/fase-d/traces/fase-d-a-j1-Grupo-A-—-flux-e2234-→redirect-funciona-offline--fase-d.zip"
+}

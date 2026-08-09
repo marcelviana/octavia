@@ -1,0 +1,23 @@
+{
+  "item": 49,
+  "question": "Soltar 5 PDFs de uma vez no drop zone: confirmar que 4 são ignorados sem qualquer aviso (ADD-08).",
+  "status": "respondida",
+  "procedure": [],
+  "observations": [
+    "BOUNCE em /add-content (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "Recuperado via navegação de UI (sidebar \"Add Song\") após o bounce",
+    "Dos 5 arquivos, 1 upload(s) disparado(s) e nenhum aviso sobre os demais — ADD-08 confirmado se toasts vazios: []"
+  ],
+  "measurements": {
+    "estado_apos_drop_5": {
+      "toasts": [],
+      "estaNoPasso2": true,
+      "mencionaMultiplos": false
+    },
+    "uploads_disparados": 1,
+    "screenshot": "docs/ux/fase-d/evidence/item-49-drop-5.png",
+    "taps_total": 0
+  },
+  "recordedAt": "2026-08-09T17:20:56.024Z",
+  "trace": "docs/ux/fase-d/traces/fase-d-i-add-Grupo-I-—-Add-fe869-DFs-de-uma-vez-no-drop-zone-fase-d.zip"
+}

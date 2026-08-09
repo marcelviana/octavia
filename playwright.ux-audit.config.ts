@@ -52,6 +52,22 @@ export default defineConfig({
         viewport: UX_AUDIT_VIEWPORTS.desktop,
       },
     },
+    {
+      // Fase D — execução ao vivo dos fluxos contra PROD (medições).
+      // Diferenças deliberadas vs. harvest: service worker LIGADO (o SW é
+      // parte do app real e o offline/J6 depende dele), trace ligado em tudo
+      // (traces são a evidência das medições) e SEM dependência do setup —
+      // o setup queima 1 POST /api/auth/session (orçamento AUTH 5/15min) por
+      // execução; na Fase D ele é rodado manualmente uma única vez.
+      name: 'fase-d',
+      testMatch: /fase-d\/.*\.spec\.ts/,
+      use: {
+        storageState: UX_AUDIT_STORAGE_STATE,
+        viewport: UX_AUDIT_VIEWPORTS['tablet-landscape'],
+        serviceWorkers: 'allow',
+        trace: 'on',
+      },
+    },
     ...Object.entries(UX_AUDIT_VIEWPORTS).map(([name, viewport]) => ({
       name: `harvest-${name}`,
       // Casa harvest.spec.ts (B1, estados vazios) e harvest-populated.spec.ts

@@ -1,0 +1,96 @@
+{
+  "item": 42,
+  "question": "Orçamento de taps do J4 no mobile: do dashboard até \"Save Content\" com PDF de cifra — taps e tempo reais (estimativa estática: ~9 taps, meta ≤8).",
+  "status": "respondida",
+  "procedure": [
+    {
+      "label": "tap 1: \"Add\" na bottom nav",
+      "taps": 1,
+      "atMs": 550,
+      "durMs": 550
+    },
+    {
+      "label": "tap 2: tipo \"Chords\"",
+      "taps": 1,
+      "atMs": 2688,
+      "durMs": 48
+    },
+    {
+      "label": "tap 3: \"Import\" (modo arquivo)",
+      "taps": 1,
+      "atMs": 2740,
+      "durMs": 52
+    },
+    {
+      "label": "tap 4: \"Browse files\"",
+      "taps": 1,
+      "atMs": 3597,
+      "durMs": 48
+    },
+    {
+      "label": "tap 5: escolher o PDF (file picker)",
+      "taps": 1,
+      "atMs": 3614,
+      "durMs": 17
+    },
+    {
+      "label": "tap 6: título (1 tap/campo)",
+      "taps": 1,
+      "atMs": 5502,
+      "durMs": 299
+    },
+    {
+      "label": "tap 7: artista",
+      "taps": 1,
+      "atMs": 5510,
+      "durMs": 8
+    },
+    {
+      "label": "tap 8: abrir \"Advanced Options\" (tom enterrado — ADD-05)",
+      "taps": 1,
+      "atMs": 5578,
+      "durMs": 66
+    },
+    {
+      "label": "tap 9: campo do tom",
+      "taps": 1,
+      "atMs": 6723,
+      "durMs": 530
+    },
+    {
+      "label": "tap final: \"Save Content\"",
+      "taps": 1,
+      "atMs": 6774,
+      "durMs": 51
+    }
+  ],
+  "observations": [
+    "BOUNCE em /dashboard (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "Recuperado via navegação de UI (sidebar \"Dashboard\") após o bounce",
+    "Total de taps do dashboard ao save: 10 (meta ≤8, estimativa estática era ~9)",
+    "ACHADO NOVO (FASE-D-02): o item foi criado, mas com O NOME DO ARQUIVO como titulo e 'Unknown Artist' como artista. TUDO que foi digitado nos taps 6-9 (titulo, artista, tom) foi DESCARTADO. Confirmado por GET /api/content: title='ux-audit-fase-d-cifra.pdf', artist='Unknown Artist', key=null.",
+    "CAUSA-RAIZ: hooks/useAddContentLogic.ts, handleSaveContent — o branch 'else if (uploadedFile)' le `metadata` (estado do hook, nunca preenchido) em vez de `customMetadata` (o que o MetadataForm passa). O branch vizinho, 'else if (draftContent)', faz certo (`customMetadata || metadata`). Alem disso o branch de upload nao envia key/bpm/difficulty/album/genre/notes de forma alguma.",
+    "Consequencia: dos 10 taps medidos, os taps 6, 7, 8 e 9 (titulo, artista, abrir Advanced Options, tom) nao produzem efeito nenhum. O orcamento real de taps UTEIS do J4 e 6 — mas o resultado e um item sem metadados, impossivel de achar pelo titulo (ver itens 30 e 46)."
+  ],
+  "measurements": {
+    "estado_inicial_do_wizard": "docs/ux/fase-d/evidence/item-42-passo1.png",
+    "screenshot_passo2": "docs/ux/fase-d/evidence/item-42-passo2.png",
+    "tempo_total_ms_do_primeiro_tap": 6778,
+    "screenshot_conclusao": "docs/ux/fase-d/evidence/item-42-conclusao.png",
+    "upload_statuses": [
+      "HTTP 201"
+    ],
+    "taps_total": 10,
+    "tempo_total_ms": 26895,
+    "conteudo_realmente_criado": {
+      "titulo_digitado": "[UX-AUDIT] Fase D import solo",
+      "titulo_persistido": "ux-audit-fase-d-cifra.pdf",
+      "artista_digitado": "Conjunto Fase D",
+      "artista_persistido": "Unknown Artist",
+      "key_digitado": "F",
+      "key_persistido": null
+    }
+  },
+  "recordedAt": "2026-08-09T17:17:00.325Z",
+  "trace": "docs/ux/fase-d/traces/fase-d-i-add-Grupo-I-—-Add-b8a3f-o-J4-no-mobile-PDF-de-cifra-fase-d.zip"
+}

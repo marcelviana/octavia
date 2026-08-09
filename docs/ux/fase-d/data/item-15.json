@@ -1,0 +1,34 @@
+{
+  "item": 15,
+  "question": "O balão HTML5 aparece no idioma do SO (pt-BR), divergindo da UI em inglês (GLOB-01/AUTH-04)?",
+  "status": "respondida",
+  "procedure": [
+    {
+      "label": "probe: form.reportValidity() em /login deslogado (Chromium bundled, Chrome real; locale pt-BR e --lang=pt-BR)",
+      "taps": 1
+    }
+  ],
+  "observations": [
+    "Formulário de login usa APENAS validação nativa: inputs email/password com required, sem novalidate, sem mensagens customizadas (validationMessage default do browser).",
+    "O texto do balão é gerado pelo BROWSER no idioma da UI do browser — neste host (browser em inglês) veio 'Please fill out this field.'; num dispositivo com SO/browser em pt-BR virá 'Preencha este campo.', divergindo da UI 100% em inglês.",
+    "Confirmação visual no iPad real (SO pt-BR): incluída no MANUAL-CHECKLIST como verificação de 10 segundos.",
+    "Botões da tela: Sign In / Continue with Google — UI em inglês confirmada."
+  ],
+  "measurements": {
+    "inputs": [
+      {
+        "type": "email",
+        "id": "email",
+        "required": true
+      },
+      {
+        "type": "password",
+        "id": "password",
+        "required": true
+      }
+    ],
+    "validationMessage_neste_host": "Please fill out this field.",
+    "mecanismo": "balão nativo do browser; idioma segue o browser/SO, não a aplicação"
+  },
+  "recordedAt": "2026-08-09T12:00:00.000Z"
+}

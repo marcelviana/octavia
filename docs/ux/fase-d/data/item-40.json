@@ -1,0 +1,20 @@
+{
+  "item": 40,
+  "question": "Stat \"Recent: 10\" vs lista de 5: origem do número; se as abas ficarem, deveriam mostrar 10.",
+  "status": "respondida",
+  "procedure": [],
+  "observations": [
+    "Seletores do teste falharam, mas a evidência está nas capturas do dia (item-01b, item-25, item-40): stat card 'Recent: 10 viewed recently' ao lado da lista 'Recent Content' com exatamente 5 itens (Bis nº 22, 21, 20, 19, 18).",
+    "Confirma a divergência 10 vs 5: o stat conta 10 'recentes' mas a lista corta em 5, sem caminho para ver os outros 5 (as abas Recent/Favorites mostram os mesmos 5)."
+  ],
+  "measurements": {
+    "stat_recent": null,
+    "itens_na_lista_recent": 0,
+    "screenshot": "docs/ux/fase-d/evidence/item-40-dashboard-recent.png",
+    "taps_total": 0,
+    "stat_recent_fonte_screenshot": 10,
+    "itens_lista_recent_fonte_screenshot": 5
+  },
+  "recordedAt": "2026-08-09T15:00:28.611Z",
+  "trace": "docs/ux/fase-d/traces/fase-d-h-perf-Grupo-H-—-pe-3221c-d-e-Recent-10-vs-lista-de-5-fase-d.zip"
+}

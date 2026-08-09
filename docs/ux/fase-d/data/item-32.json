@@ -1,0 +1,159 @@
+{
+  "item": 32,
+  "question": "Partindo do viewer, criar uma anotação: quantos taps até o canvas do editor? Após salvar, confirmar que ela não aparece nem no viewer nem no modo performance (CONT-03/04).",
+  "status": "respondida",
+  "procedure": [],
+  "observations": [
+    "BOUNCE em /content/fd053ce9-8e4b-4d0b-a445-d3752ec53df2 (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "Sem botão Edit no viewer (CONT-04) — indo por URL direta /content/[id]/edit (caminho que o usuário não descobre pela UI)",
+    "Editor de Chords NÃO expõe canvas de anotação (AnnotationTools só renderiza para Sheet sem arquivo reconhecido) — a anotação do J2 é inalcançável pela UI para cifra. CONT-03 confirmado por inacessibilidade."
+  ],
+  "measurements": {
+    "botoes_do_viewer": [
+      "(icon-only sem nome)",
+      "(icon-only sem nome)",
+      "UT",
+      "Dashboard",
+      "Library",
+      "Setlists",
+      "Add Song",
+      "(icon-only sem nome)",
+      "(icon-only sem nome)",
+      "Performance"
+    ],
+    "viewer_tem_botao_edit": false,
+    "url_editor": "https://octavia.rocks/content/fd053ce9-8e4b-4d0b-a445-d3752ec53df2/edit",
+    "screenshot_editor": "docs/ux/fase-d/evidence/item-32-editor.png",
+    "canvas_de_anotacao_presente": 0,
+    "campos_do_editor": [
+      {
+        "tag": "input",
+        "label": "Search..."
+      },
+      {
+        "tag": "button",
+        "label": "UT"
+      },
+      {
+        "tag": "button",
+        "label": "Dashboard"
+      },
+      {
+        "tag": "button",
+        "label": "Library"
+      },
+      {
+        "tag": "button",
+        "label": "Setlists"
+      },
+      {
+        "tag": "button",
+        "label": "Add Song"
+      },
+      {
+        "tag": "button",
+        "label": "Save Changes"
+      },
+      {
+        "tag": "button",
+        "label": "F"
+      },
+      {
+        "tag": "input",
+        "label": "Fret"
+      },
+      {
+        "tag": "input",
+        "label": "120"
+      },
+      {
+        "tag": "button",
+        "label": "C"
+      },
+      {
+        "tag": "button",
+        "label": "G"
+      },
+      {
+        "tag": "button",
+        "label": "Am"
+      },
+      {
+        "tag": "button",
+        "label": "F"
+      },
+      {
+        "tag": "button",
+        "label": "D"
+      },
+      {
+        "tag": "button",
+        "label": "Em"
+      },
+      {
+        "tag": "button",
+        "label": "A"
+      },
+      {
+        "tag": "button",
+        "label": "E"
+      },
+      {
+        "tag": "button",
+        "label": "Dm"
+      },
+      {
+        "tag": "button",
+        "label": "B7"
+      },
+      {
+        "tag": "button",
+        "label": "Add Section"
+      },
+      {
+        "tag": "input",
+        "label": "Section name (e.g., Verse 1, Chorus)"
+      },
+      {
+        "tag": "input",
+        "label": "Am F C G"
+      },
+      {
+        "tag": "textarea",
+        "label": "Enter lyrics for this section..."
+      },
+      {
+        "tag": "button",
+        "label": "Basic Info"
+      },
+      {
+        "tag": "input",
+        "label": "Song title"
+      },
+      {
+        "tag": "input",
+        "label": "Artist or composer"
+      },
+      {
+        "tag": "input",
+        "label": "Album or collection"
+      },
+      {
+        "tag": "button",
+        "label": "Select genre"
+      },
+      {
+        "tag": "button",
+        "label": "Musical Info3 of 4 completed"
+      }
+    ],
+    "probe_put_annotation_status": 200,
+    "anotacao_visivel_no_viewer": false,
+    "screenshot_viewer_pos_anotacao": "docs/ux/fase-d/evidence/item-32-viewer-pos-anotacao.png",
+    "anotacao_visivel_no_performance": false,
+    "screenshot_perf_pos_anotacao": "docs/ux/fase-d/evidence/item-32-performance-pos-anotacao.png",
+    "taps_total": 0
+  },
+  "recordedAt": "2026-08-09T14:46:25.901Z",
+  "trace": "docs/ux/fase-d/traces/fase-d-g-viewer-Grupo-G-—--c4d41-anotação-salva-é-invisível--fase-d.zip"
+}

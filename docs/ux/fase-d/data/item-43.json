@@ -1,0 +1,45 @@
+{
+  "item": 43,
+  "question": "Forçar falha do POST /api/content no passo 2 (modo avião após o upload): o alert verde \"saved successfully\" aparece mesmo assim? O que resta na tela? Metadados persistem?",
+  "status": "respondida",
+  "procedure": [
+    {
+      "label": "tap: Save Content (offline)",
+      "taps": 1,
+      "atMs": 33,
+      "durMs": 33
+    }
+  ],
+  "observations": [
+    "BOUNCE em /add-content (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "Recuperado via navegação de UI (sidebar \"Add Song\") após o bounce",
+    "VEREDITO ADD-01: CONFIRMADO. Com o contexto offline, o tap em 'Save Content' produziu o alerta 'Content saved successfully!' (capturado em alertas=['Content saved successfully!']) SEM que nenhum POST /api/content tenha sido concluido.",
+    "O que resta na tela: o proprio formulario de metadados, intacto e ainda editavel, com os campos preenchidos ('[UX-AUDIT] Fase D offline teste' / 'Sem Rede') — ver screenshot item-43-save-offline.png. Ou seja, os metadados NAO se perdem (lado bom), mas a tela fica num estado ambiguo: mensagem de sucesso + formulario de edicao ainda aberto.",
+    "Impacto no J4: a mensagem verde e a unica sinalizacao que o usuario recebe. Ele sai da tela acreditando que importou; o conteudo nao existe. E o pior modo de falha possivel — falso positivo silencioso.",
+    "REVISAO apos consulta ao servidor: o save offline nao apenas mostrou sucesso — ele CRIOU DUAS linhas de content, com 41ms de diferenca (17:18:12.496 e .537). Double-submit.",
+    "As duas linhas vieram com title='ux-audit-fase-d-offline.pdf' e artist='Unknown Artist' — mesmo bug de descarte de metadados do item 42 (FASE-D-02).",
+    "Portanto o veredito de ADD-01 se refina: a mensagem 'Content saved successfully!' nao era um falso positivo puro — havia criacao, mas duplicada e com os metadados errados. O usuario ve uma mensagem de sucesso, fica com o formulario aberto (podendo salvar de novo) e acaba com duplicatas sem metadados."
+  ],
+  "measurements": {
+    "estado_apos_save_offline": {
+      "mostraSuccess": true,
+      "mostraErro": true,
+      "alertas": [
+        "Content saved successfully!"
+      ],
+      "tituloAindaPreenchido": "[UX-AUDIT] Fase D offline teste",
+      "amostra": "UTNavigationDashboardLibrarySetlistsAdd SongBackAdd Content DetailsBackAdd MetadataFill in the details for your contentContent saved successfully!Content DetailsTitle *Artist *AlbumGenreYearNotesAdvanced OptionsCancelSave Content(self.__next_f=self.__next_f||[]).push([0])self.__next_f.push([1,\"1:\\\"$"
+    },
+    "screenshot": "docs/ux/fase-d/evidence/item-43-save-offline.png",
+    "taps_total": 1,
+    "tempo_total_ms": 5114,
+    "veredito_ADD_01": "CONFIRMADO — 'Content saved successfully!' com o save falhando; metadados preservados na tela",
+    "linhas_criadas_no_servidor": 2,
+    "timestamps": [
+      "2026-08-09T17:18:12.496Z",
+      "2026-08-09T17:18:12.537Z"
+    ]
+  },
+  "recordedAt": "2026-08-09T17:17:47.685Z",
+  "trace": "docs/ux/fase-d/traces/fase-d-i-add-Grupo-I-—-Add-7889f-offline-pós-upload-—-ADD-01-fase-d.zip"
+}

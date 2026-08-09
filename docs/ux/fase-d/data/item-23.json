@@ -1,0 +1,133 @@
+{
+  "item": 23,
+  "question": "Abrir /library a 1194×834 com IndexedDB frio: a lista monta vazia ou esvazia depois (flash)? Reload cura?",
+  "status": "respondida",
+  "procedure": [],
+  "observations": [
+    "BOUNCE em /library (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "Lista montou com 20 linhas — LIB-01 não reproduzido nesta passada"
+  ],
+  "measurements": {
+    "serie_temporal_12s": [
+      {
+        "t": 45,
+        "rows": 20,
+        "emptyStateVisivel": false
+      },
+      {
+        "t": 573,
+        "rows": 20,
+        "emptyStateVisivel": false
+      },
+      {
+        "t": 1105,
+        "rows": 20,
+        "emptyStateVisivel": false
+      },
+      {
+        "t": 1644,
+        "rows": 20,
+        "emptyStateVisivel": false
+      },
+      {
+        "t": 2181,
+        "rows": 20,
+        "emptyStateVisivel": false
+      },
+      {
+        "t": 2720,
+        "rows": 20,
+        "emptyStateVisivel": false
+      },
+      {
+        "t": 3253,
+        "rows": 20,
+        "emptyStateVisivel": false
+      },
+      {
+        "t": 3784,
+        "rows": 20,
+        "emptyStateVisivel": false
+      },
+      {
+        "t": 4325,
+        "rows": 20,
+        "emptyStateVisivel": false
+      },
+      {
+        "t": 4855,
+        "rows": 20,
+        "emptyStateVisivel": false
+      },
+      {
+        "t": 5389,
+        "rows": 20,
+        "emptyStateVisivel": false
+      },
+      {
+        "t": 5922,
+        "rows": 20,
+        "emptyStateVisivel": false
+      },
+      {
+        "t": 6455,
+        "rows": 20,
+        "emptyStateVisivel": false
+      },
+      {
+        "t": 6989,
+        "rows": 20,
+        "emptyStateVisivel": false
+      },
+      {
+        "t": 7518,
+        "rows": 20,
+        "emptyStateVisivel": false
+      },
+      {
+        "t": 8045,
+        "rows": 20,
+        "emptyStateVisivel": false
+      },
+      {
+        "t": 8565,
+        "rows": 20,
+        "emptyStateVisivel": false
+      },
+      {
+        "t": 9085,
+        "rows": 20,
+        "emptyStateVisivel": false
+      },
+      {
+        "t": 9612,
+        "rows": 20,
+        "emptyStateVisivel": false
+      },
+      {
+        "t": 10144,
+        "rows": 20,
+        "emptyStateVisivel": false
+      },
+      {
+        "t": 10675,
+        "rows": 20,
+        "emptyStateVisivel": false
+      },
+      {
+        "t": 11194,
+        "rows": 20,
+        "emptyStateVisivel": false
+      },
+      {
+        "t": 11718,
+        "rows": 20,
+        "emptyStateVisivel": false
+      }
+    ],
+    "screenshot_estado_final": "docs/ux/fase-d/evidence/item-23-library-12s.png",
+    "taps_total": 0
+  },
+  "recordedAt": "2026-08-09T13:49:30.444Z",
+  "trace": "docs/ux/fase-d/traces/fase-d-f-library-Grupo-F-—-4e31b--com-IndexedDB-frio-LIB-01--fase-d.zip"
+}

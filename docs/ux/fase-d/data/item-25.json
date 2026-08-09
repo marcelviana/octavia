@@ -1,0 +1,26 @@
+{
+  "item": 25,
+  "question": "\"ipanma\" e \"aguas\" (sem acento) com dados reais: algum caso é salvo pelo Postgres, ou ambos zeram?",
+  "status": "respondida",
+  "procedure": [],
+  "observations": [],
+  "measurements": {
+    "busca_ipanma": {
+      "resultados": 8
+    },
+    "screenshot_ipanma": "docs/ux/fase-d/evidence/item-25-ipanma.png",
+    "busca_aguas": {
+      "resultados": 0,
+      "amostra": "Your Music LibraryManage and organize all your musical contentFiltersSortAdd ContentNo content foundTry adjusting your search or filtersAdd Content"
+    },
+    "busca_Águas": {
+      "resultados": 2
+    },
+    "busca_garota": {
+      "resultados": 1
+    },
+    "taps_total": 0
+  },
+  "recordedAt": "2026-08-09T16:23:17.787Z",
+  "trace": "docs/ux/fase-d/traces/fase-d-f-library-Grupo-F-—-0b6bf--ipanma-e-sem-acento-aguas--fase-d.zip"
+}

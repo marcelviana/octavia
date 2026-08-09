@@ -11,9 +11,13 @@
  *   pnpm tsx scripts/ux-audit/cleanup.ts --dry-run   # só lista, não deleta
  *   pnpm tsx scripts/ux-audit/cleanup.ts             # deleta de fato
  */
+import fs from 'node:fs'
 import { apiFetch, sleep } from './auth'
 
 const PREFIX = '[UX-AUDIT]'
+// Uploads da Fase D que nunca viraram content (sem file_url para rastrear):
+// os testes do grupo I registram cada órfão aqui no momento do upload
+const ORPHANS_FILE = 'docs/ux/fase-d/data/orphan-uploads.json'
 const DELAY_MS = 300
 const DRY_RUN = process.argv.includes('--dry-run')
 
@@ -94,9 +98,20 @@ async function main(): Promise<void> {
     await sleep(DELAY_MS)
   }
 
-  // 2. Content com prefixo (coletando file_urls antes de deletar)
-  const content = (await fetchAllContent()).filter((row) => row.title.startsWith(PREFIX))
-  console.log(`[cleanup] ${content.length} itens de conteúdo ${PREFIX} encontrados`)
+  // 2. Content do audit (coletando file_urls antes de deletar). Duas formas
+  //    de identificar:
+  //    - título com o prefixo "[UX-AUDIT]" (seed e conteúdo criado por API)
+  //    - título igual ao NOME DO ARQUIVO da fixture ("ux-audit-…"): o fluxo
+  //      de upload da UI descarta o título digitado e persiste o filename
+  //      (achado FASE-D-02 — hooks/useAddContentLogic.ts lê `metadata` em
+  //      vez de `customMetadata` no branch de uploadedFile). Sem esta
+  //      segunda regra, todo item importado pela UI nos testes ficaria para
+  //      trás no cleanup.
+  const FIXTURE_TITLE = /^ux-audit[-_]/i
+  const content = (await fetchAllContent()).filter(
+    (row) => row.title.startsWith(PREFIX) || FIXTURE_TITLE.test(row.title)
+  )
+  console.log(`[cleanup] ${content.length} itens de conteúdo do audit encontrados`)
 
   const filesToDelete: string[] = []
   for (const row of content) {
@@ -112,6 +127,18 @@ async function main(): Promise<void> {
     const res = await apiFetch(`/api/content?id=${row.id}`, { method: 'DELETE' })
     logItem(res.ok ? 'deleted' : 'failed', label, res.ok ? undefined : `HTTP ${res.status}`)
     await sleep(DELAY_MS)
+  }
+
+  // 2b. Órfãos de storage da Fase D (upload sem content associado)
+  if (fs.existsSync(ORPHANS_FILE)) {
+    const orphans = JSON.parse(fs.readFileSync(ORPHANS_FILE, 'utf-8')) as Array<{
+      filename: string
+      context: string
+    }>
+    console.log(`[cleanup] ${orphans.length} órfãos de storage da Fase D (${ORPHANS_FILE})`)
+    for (const orphan of orphans) {
+      if (!filesToDelete.includes(orphan.filename)) filesToDelete.push(orphan.filename)
+    }
   }
 
   // 3. Arquivos de storage associados

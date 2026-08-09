@@ -1,0 +1,83 @@
+{
+  "item": 26,
+  "question": "Existe caminho para a busca de dentro do modo performance (\"toca aquela!\")? Quantos taps?",
+  "status": "respondida",
+  "procedure": [
+    {
+      "label": "tap 1: sair do modo performance (X)",
+      "taps": 1,
+      "atMs": 667,
+      "durMs": 667
+    },
+    {
+      "label": "tap 2: foco na busca",
+      "taps": 1,
+      "atMs": 2847,
+      "durMs": 24
+    },
+    {
+      "label": "tap 3: digitar",
+      "taps": 1,
+      "atMs": 2859,
+      "durMs": 12
+    },
+    {
+      "label": "tap 4: Enter",
+      "taps": 1,
+      "atMs": 4078,
+      "durMs": 1219
+    }
+  ],
+  "observations": [
+    "Deep link /performance BOUNCE (tentativa 1/3): aterrissou em https://octavia.rocks/login — padrão do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "Deep link /performance só funcionou na tentativa 2"
+  ],
+  "measurements": {
+    "controles_disponiveis_no_performance": [
+      {
+        "tag": "button",
+        "label": "exit-button"
+      },
+      {
+        "tag": "button",
+        "label": "dark-mode-toggle"
+      },
+      {
+        "tag": "button",
+        "label": "Zoom out"
+      },
+      {
+        "tag": "button",
+        "label": "Zoom in"
+      },
+      {
+        "tag": "button",
+        "label": "play-pause-button"
+      },
+      {
+        "tag": "button",
+        "label": "Decrease BPM"
+      },
+      {
+        "tag": "button",
+        "label": "Increase BPM"
+      },
+      {
+        "tag": "button",
+        "label": "Prev"
+      },
+      {
+        "tag": "button",
+        "label": "Next"
+      }
+    ],
+    "busca_dentro_do_performance": false,
+    "url_apos_exit": "https://octavia.rocks/dashboard",
+    "taps_saida_ate_resultado": 4,
+    "tempo_ate_resultado_ms": 4078,
+    "taps_total": 4,
+    "tempo_total_ms": 4078
+  },
+  "recordedAt": "2026-08-09T13:29:38.275Z",
+  "trace": "docs/ux/fase-d/traces/fase-d-f-library-Grupo-F-—-2fec8-dentro-do-modo-performance--fase-d.zip"
+}

@@ -1,0 +1,34 @@
+{
+  "item": 34,
+  "question": "Botão Performance do header do viewer: latência até tela cheia (mede J5→J1).",
+  "status": "respondida",
+  "procedure": [
+    {
+      "label": "tap: botão Performance",
+      "taps": 1,
+      "atMs": 811,
+      "durMs": 811
+    }
+  ],
+  "observations": [
+    "BOUNCE em /content/fd053ce9-8e4b-4d0b-a445-d3752ec53df2 (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "BOUNCE em /content/fd053ce9-8e4b-4d0b-a445-d3752ec53df2 (tentativa 2/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "BOUNCE em /content/fd053ce9-8e4b-4d0b-a445-d3752ec53df2 (tentativa 3/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "rota indisponível após retries de bounce — item inconclusivo nesta passada",
+    "BOUNCE em /content/fd053ce9-8e4b-4d0b-a445-d3752ec53df2 (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "BOUNCE em /content/fd053ce9-8e4b-4d0b-a445-d3752ec53df2 (tentativa 2/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "BOUNCE em /content/fd053ce9-8e4b-4d0b-a445-d3752ec53df2 (tentativa 3/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "rota indisponível após retries de bounce — item inconclusivo nesta passada",
+    "BOUNCE em /dashboard (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "BOUNCE em /dashboard (tentativa 2/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)"
+  ],
+  "measurements": {
+    "taps_total": 1,
+    "shell_visivel_ms": 811,
+    "conteudo_visivel_ms": 820,
+    "overhead_conteudo_apos_shell_ms": 9,
+    "tempo_total_ms": 820
+  },
+  "recordedAt": "2026-08-09T16:58:09.302Z",
+  "trace": "docs/ux/fase-d/traces/fase-d-g-viewer-Grupo-G-—--23fd1-e-—-latência-até-tela-cheia-fase-d.zip"
+}

@@ -1,0 +1,41 @@
+{
+  "item": 3,
+  "question": "Girar o tablet na música 4: o layout com paddings fixos e barras absolutas sobrevive? O scroll se mantém?",
+  "status": "respondida",
+  "procedure": [],
+  "observations": [
+    "Deep link /performance BOUNCE (tentativa 1/3): aterrissou em https://octavia.rocks/login — padrão do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "Deep link /performance só funcionou na tentativa 2"
+  ],
+  "measurements": {
+    "landscape_antes": {
+      "viewport": "1194x834",
+      "contentRect": "1194x664 @y=110",
+      "scrollTop": 0,
+      "exitVisivel": true,
+      "bottomControlsVisivel": true,
+      "overflowHorizontal": false
+    },
+    "portrait_depois": {
+      "viewport": "834x1194",
+      "contentRect": "834x1024 @y=110",
+      "scrollTop": 0,
+      "exitVisivel": true,
+      "bottomControlsVisivel": true,
+      "overflowHorizontal": false
+    },
+    "scrollTop_antes_depois": "0 → 0",
+    "landscape_volta": {
+      "viewport": "1194x834",
+      "contentRect": "1194x664 @y=110",
+      "scrollTop": 0,
+      "exitVisivel": true,
+      "bottomControlsVisivel": true,
+      "overflowHorizontal": false
+    },
+    "error_boundary": false,
+    "taps_total": 0
+  },
+  "recordedAt": "2026-08-09T11:21:54.452Z",
+  "trace": "docs/ux/fase-d/traces/fase-d-a-j1-Grupo-A-—-flux-21a80-do-tablet-no-meio-da-música-fase-d.zip"
+}

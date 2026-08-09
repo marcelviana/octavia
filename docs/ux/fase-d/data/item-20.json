@@ -1,0 +1,25 @@
+{
+  "item": 20,
+  "question": "Scroll da setlist de 60 sem virtualização: jank perceptível? Tempo de load de /setlists com o seed completo?",
+  "status": "respondida",
+  "procedure": [],
+  "observations": [
+    "BOUNCE em /setlists (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)"
+  ],
+  "measurements": {
+    "load_setlists_ate_cards_ms": 70292,
+    "get_api_setlists_ms": -1,
+    "abrir_detalhe_estresse_ms": 97,
+    "linhas_renderizadas": 60,
+    "scroll_3s_frame_stats": {
+      "frames": 181,
+      "p95_ms": 16.700000000000728,
+      "max_ms": 16.800000000000182,
+      "frames_acima_2vsync": 0
+    },
+    "screenshot_fundo": "docs/ux/fase-d/evidence/item-20-estresse-fundo.png",
+    "taps_total": 0
+  },
+  "recordedAt": "2026-08-09T14:05:19.798Z",
+  "trace": "docs/ux/fase-d/traces/fase-d-e-setlists-Grupo-E--69c54-o-—-load-e-jank-na-Estresse-fase-d.zip"
+}

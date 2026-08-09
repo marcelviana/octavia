@@ -1,0 +1,14 @@
+{
+  "item": 17,
+  "question": "Reorder pós-religação: latência de um drag na setlist de 60 (120 UPDATEs)? Interromper no meio deixa posições 10000+?",
+  "status": "diferida",
+  "procedure": [],
+  "observations": [
+    "DIFERIDO por decisão da Fase D: o handler de drop da UI é um TODO (SET-03) — o reorder nunca chega à API. Religar o fio nesta fase alteraria o objeto medido. Medir latência/consistência dos 2N UPDATEs quando o fix de SET-03 existir."
+  ],
+  "measurements": {
+    "taps_total": 0
+  },
+  "recordedAt": "2026-08-09T14:07:54.497Z",
+  "trace": "docs/ux/fase-d/traces/fase-d-e-setlists-Grupo-E--7ed89--—-registrado-como-diferido-fase-d.zip"
+}

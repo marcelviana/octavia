@@ -63,3 +63,7 @@ tests/ux-audit/.auth/
 # Development and planning artifacts
 .claude/
 .planning/research/
+
+# Traces do UX audit (Fase D): 147MB — arquivados fora do repo
+# (~/octavia-ux-audit-fase-d-traces-*.zip); data/ e evidence/ são versionados
+docs/ux/fase-d/traces/

@@ -1,0 +1,37 @@
+{
+  "item": 45,
+  "question": "Erro de arquivo real: (a) >50MB e (b) .zip renomeado .pdf — mensagem exata em cada caso; algo digitado se perde?",
+  "status": "respondida",
+  "procedure": [],
+  "observations": [
+    "BOUNCE em /add-content (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "Recuperado via navegação de UI (sidebar \"Add Song\") após o bounce",
+    "Metadados: neste fluxo o formulário só aparece APÓS upload OK — não há digitação anterior a perder; a perda do item 43 (pós-upload) é o caso real.",
+    "CASO (a) >50MB: rejeitado com HTTP 413 e NENHUM toast/mensagem na tela (toasts=[]). O arquivo simplesmente não aparece e o wizard fica parado no passo 1 — falha muda, sem o quê nem o porquê. Contraria o critério do J4 ('mensagem específica e acionável').",
+    "CASO (b) .zip renomeado .pdf: ACEITO com HTTP 201 e o wizard AVANÇOU para 'Add Metadata' (screenshot item-45b-zip.png). O arquivo entrou no storage.",
+    "CAUSA-RAIZ do caso (b): app/api/storage/upload/route.ts:69-92 compara a EXTENSAO do nome com file.type — e file.type e o MIME declarado pelo CLIENTE. Renomear .zip->.pdf faz o browser declarar application/pdf e a checagem passa. Nao ha verificacao de magic bytes; o comentario 'Check file content consistency' descreve algo que o codigo nao faz.",
+    "Consequencia de UX (nao so de seguranca): o usuario sobe um arquivo invalido, preenche os metadados e so descobre no palco que o 'PDF' nao abre."
+  ],
+  "measurements": {
+    "caso_a_51mb": {
+      "toasts": [],
+      "uploads": [
+        "HTTP 413"
+      ]
+    },
+    "screenshot_51mb": "docs/ux/fase-d/evidence/item-45a-51mb.png",
+    "caso_b_zip_como_pdf": {
+      "toasts": [],
+      "uploads": [
+        "HTTP 413",
+        "HTTP 201"
+      ]
+    },
+    "screenshot_zip": "docs/ux/fase-d/evidence/item-45b-zip.png",
+    "taps_total": 0,
+    "veredito_a_51mb": "rejeitado (HTTP 413) SEM mensagem visivel",
+    "veredito_b_zip_como_pdf": "ACEITO (HTTP 201) — validacao de MIME e do cliente, sem magic bytes"
+  },
+  "recordedAt": "2026-08-09T17:18:39.674Z",
+  "trace": "docs/ux/fase-d/traces/fase-d-i-add-Grupo-I-—-Add-0d836-vo-50MB-e-zip-renomeado-pdf-fase-d.zip"
+}

@@ -1,0 +1,37 @@
+{
+  "item": 24,
+  "question": "Cronometrar busca do header até resultado renderizado (dashboard→resultado ≤4 taps/10s)? Submit com Enter funciona?",
+  "status": "respondida",
+  "procedure": [
+    {
+      "label": "tap 1: foco no campo de busca do header",
+      "taps": 1,
+      "atMs": 82,
+      "durMs": 82
+    },
+    {
+      "label": "tap 2: digitar \"Garota\" (1 tap/campo)",
+      "taps": 1,
+      "atMs": 101,
+      "durMs": 19
+    },
+    {
+      "label": "tap 3: Enter",
+      "taps": 1,
+      "atMs": 1493,
+      "durMs": 1392
+    }
+  ],
+  "observations": [
+    "Submit via Enter (equivalente ao Go do teclado mobile — mesmo evento de teclado)."
+  ],
+  "measurements": {
+    "tempo_ate_resultado_ms": 1493,
+    "url_resultado": "https://octavia.rocks/library?search=Garota",
+    "screenshot": "docs/ux/fase-d/evidence/item-24-busca-resultado.png",
+    "taps_total": 3,
+    "tempo_total_ms": 1565
+  },
+  "recordedAt": "2026-08-09T13:29:05.156Z",
+  "trace": "docs/ux/fase-d/traces/fase-d-f-library-Grupo-F-—-9d604-r-—-dashboard-até-resultado-fase-d.zip"
+}

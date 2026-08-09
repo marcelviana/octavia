@@ -1,0 +1,50 @@
+{
+  "item": 44,
+  "question": "Completar um batch import real (TXT com 3 músicas) e registrar qual tela aparece após \"Import All\": CompletionStep ou a tela inicial de upload?",
+  "status": "respondida",
+  "procedure": [
+    {
+      "label": "tap: modo batch",
+      "taps": 1,
+      "atMs": 26,
+      "durMs": 26
+    },
+    {
+      "label": "tap: \"Import All\"",
+      "taps": 1,
+      "atMs": 3173,
+      "durMs": 36
+    }
+  ],
+  "observations": [
+    "BOUNCE em /add-content (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "Recuperado via navegação de UI (sidebar \"Add Song\") após o bounce",
+    "Usuário despejado de volta na tela de upload após Import All — ADD-02 CONFIRMADO",
+    "VEREDITO ADD-02: CONFIRMADO ao vivo. Os 3 POST /api/content voltaram HTTP 201 (as 3 musicas FORAM criadas), mas a tela apos 'Import All' e a tela INICIAL de upload ('Drag and drop your file here').",
+    "Agravante visto na captura (item-44-apos-import-all.png): o StepIndicator mostra Upload/Add Details/Complete os TRES com check verde — ou seja, a UI afirma 'Complete' enquanto renderiza o passo 1. O usuario nao recebe nenhuma confirmacao de que as 3 musicas entraram, nem link para a biblioteca.",
+    "Efeito pratico no J4: o unico jeito de saber se o batch funcionou e ir manualmente a biblioteca conferir. Diante da duvida, o comportamento natural e repetir o import — gerando duplicatas (a biblioteca ja sofre de LIB-03)."
+  ],
+  "measurements": {
+    "screenshot_preview": "docs/ux/fase-d/evidence/item-44-batch-preview.png",
+    "preview": {
+      "musicasDetectadas": 0,
+      "temImportAll": true
+    },
+    "posts_api_content": [
+      "HTTP 201",
+      "HTTP 201",
+      "HTTP 201"
+    ],
+    "tela_apos_import_all": {
+      "mostraCompletion": false,
+      "mostraTelaDeUpload": true,
+      "amostra": "UTNavigationDashboardLibrarySetlistsAdd SongBackUploadAdd DetailsCompleteContent TypeLyricsChordsTabSheetHow would you like to add content?Create NewStart from scratch and build your content manually with our editor.Import from FileUpload and parse existing files (PDF, DOCX, TXT) to extract content "
+    },
+    "screenshot_apos_import_all": "docs/ux/fase-d/evidence/item-44-apos-import-all.png",
+    "taps_total": 2,
+    "tempo_total_ms": 11245,
+    "veredito_ADD_02": "CONFIRMADO — 3x HTTP 201 mas tela final = passo 1 de upload, com StepIndicator marcando Complete"
+  },
+  "recordedAt": "2026-08-09T17:18:12.438Z",
+  "trace": "docs/ux/fase-d/traces/fase-d-i-add-Grupo-I-—-Add-dbe43-m-3-músicas-—-decide-ADD-02-fase-d.zip"
+}

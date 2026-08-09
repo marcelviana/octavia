@@ -1,0 +1,93 @@
+{
+  "item": 47,
+  "question": "Upload de PDF de 20-40MB com throttling: a UI congela? O spinner comunica o suficiente? Dá para cancelar/navegar durante?",
+  "status": "respondida",
+  "procedure": [],
+  "observations": [
+    "BOUNCE em /add-content (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "Recuperado via navegação de UI (sidebar \"Add Song\") após o bounce",
+    "Navegação durante o upload: sem diálogo de confirmação nem opção de cancelar — upload segue ou morre silenciosamente"
+  ],
+  "measurements": {
+    "durante_upload": [
+      {
+        "t_ms": 6,
+        "mostraUploading": true,
+        "temProgressoNumerico": false,
+        "spinner": true,
+        "responsividade_eval_ms": 6
+      },
+      {
+        "t_ms": 4012,
+        "mostraUploading": true,
+        "temProgressoNumerico": false,
+        "spinner": true,
+        "responsividade_eval_ms": 3
+      },
+      {
+        "t_ms": 8019,
+        "mostraUploading": true,
+        "temProgressoNumerico": false,
+        "spinner": true,
+        "responsividade_eval_ms": 3
+      },
+      {
+        "t_ms": 12027,
+        "mostraUploading": true,
+        "temProgressoNumerico": false,
+        "spinner": true,
+        "responsividade_eval_ms": 3
+      },
+      {
+        "t_ms": 16033,
+        "mostraUploading": true,
+        "temProgressoNumerico": false,
+        "spinner": true,
+        "responsividade_eval_ms": 3
+      },
+      {
+        "t_ms": 20041,
+        "mostraUploading": true,
+        "temProgressoNumerico": false,
+        "spinner": true,
+        "responsividade_eval_ms": 3
+      },
+      {
+        "t_ms": 24048,
+        "mostraUploading": true,
+        "temProgressoNumerico": false,
+        "spinner": true,
+        "responsividade_eval_ms": 3
+      },
+      {
+        "t_ms": 28054,
+        "mostraUploading": true,
+        "temProgressoNumerico": false,
+        "spinner": true,
+        "responsividade_eval_ms": 3
+      },
+      {
+        "t_ms": 32059,
+        "mostraUploading": true,
+        "temProgressoNumerico": false,
+        "spinner": true,
+        "responsividade_eval_ms": 2
+      },
+      {
+        "t_ms": 36065,
+        "mostraUploading": true,
+        "temProgressoNumerico": false,
+        "spinner": true,
+        "responsividade_eval_ms": 2
+      }
+    ],
+    "screenshot_durante": "docs/ux/fase-d/evidence/item-47-durante-upload.png",
+    "navegou_durante_upload": {
+      "url": "https://octavia.rocks/library"
+    },
+    "upload_statuses": [],
+    "taps_total": 0
+  },
+  "recordedAt": "2026-08-09T17:19:33.188Z",
+  "trace": "docs/ux/fase-d/traces/fase-d-i-add-Grupo-I-—-Add-76763-lenta-—-UI-congela-cancela--fase-d.zip"
+}

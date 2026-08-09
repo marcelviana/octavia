@@ -1,0 +1,28 @@
+{
+  "item": 30,
+  "question": "Item recém-importado aparece na biblioteca ao voltar, sem reload manual (cache de 30s + refresh por foco)?",
+  "status": "respondida",
+  "procedure": [],
+  "observations": [
+    "BOUNCE em /library (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "Recuperado via navegação de UI (sidebar \"Library\") após o bounce",
+    "Não aparece na primeira página da listagem: a ordenação padrão não põe o item novo no topo (a listagem pagina de 20 em 20 sobre 60+ itens), então \"voltar à biblioteca\" não mostra o que acabou de ser importado.",
+    "CAUSA REAL da nao-localizacao: o item existe, mas foi salvo como 'ux-audit-fase-d-cifra.pdf' (FASE-D-02), nao com o titulo digitado. A ordenacao da biblioteca E por mais recente (os 3 BATCH aparecem no topo), entao o mecanismo de listagem funciona — o que falha e o titulo.",
+    "Ou seja: 'aparece na biblioteca ao voltar, sem reload manual?' → SIM, aparece imediatamente e no topo. Mas com um nome que o usuario nao reconhece."
+  ],
+  "measurements": {
+    "taps_total": 0,
+    "visivel_na_primeira_pagina_da_library": false,
+    "screenshot_library": "docs/ux/fase-d/evidence/item-30-library-apos-import.png",
+    "primeiros_titulos_da_listagem": [
+      "[UX-AUDIT] BATCH TRES",
+      "[UX-AUDIT] BATCH DOIS",
+      "[UX-AUDIT] BATCH UM",
+      "[UX-AUDIT] Bis nº 22",
+      "[UX-AUDIT] Bis nº 21"
+    ],
+    "visivel_apos_reload_manual": false
+  },
+  "recordedAt": "2026-08-09T18:35:04.317Z",
+  "trace": "docs/ux/fase-d/traces/fase-d-i-verify-item-30-it-2d680-tado-localizável-sem-reload-fase-d.zip"
+}

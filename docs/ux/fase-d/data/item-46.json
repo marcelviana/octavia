@@ -1,0 +1,39 @@
+{
+  "item": 46,
+  "question": "Item recém-importado aparece na busca/biblioteca sem reload manual (critério \"imediatamente localizável\")?",
+  "status": "respondida",
+  "procedure": [
+    {
+      "label": "tap: busca do header",
+      "taps": 1,
+      "atMs": 55,
+      "durMs": 55
+    },
+    {
+      "label": "tap: digitar \"Fase D import\"",
+      "taps": 1,
+      "atMs": 75,
+      "durMs": 20
+    },
+    {
+      "label": "tap: Enter",
+      "taps": 1,
+      "atMs": 409,
+      "durMs": 334
+    }
+  ],
+  "observations": [
+    "Item importado NÃO aparece na busca",
+    "O item NAO e localizavel pelo titulo digitado porque o titulo nao foi persistido (FASE-D-02). Buscar por 'cifra' ou pelo nome do arquivo o encontraria.",
+    "Criterio do J4 ('item recem-importado imediatamente localizavel'): FALHA — nao por causa da busca ou de cache, mas porque o dado que o usuario usaria para buscar foi descartado no save."
+  ],
+  "measurements": {
+    "taps_total": 3,
+    "localizavel_pela_busca": false,
+    "tempo_ate_resultado_ms": 3432,
+    "screenshot_busca": "docs/ux/fase-d/evidence/item-46-busca-item-novo.png",
+    "tempo_total_ms": 3488
+  },
+  "recordedAt": "2026-08-09T18:35:04.323Z",
+  "trace": "docs/ux/fase-d/traces/fase-d-i-verify-item-30-it-2d680-tado-localizável-sem-reload-fase-d.zip"
+}

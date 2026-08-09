@@ -1,0 +1,27 @@
+{
+  "item": 18,
+  "question": "Em iPad simulado: o drag inicia com toque? Os ícones hover-only aparecem com um tap? Quantos taps até remover uma música?",
+  "status": "inconclusiva",
+  "procedure": [],
+  "observations": [
+    "BOUNCE em /setlists (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "BOUNCE em /setlists (tentativa 2/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "BOUNCE em /setlists (tentativa 3/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "rota indisponível após retries de bounce — item inconclusivo nesta passada",
+    "BOUNCE em /setlists (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "BOUNCE em /setlists (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "BOUNCE em /setlists (tentativa 2/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "BOUNCE em /setlists (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "BOUNCE em /setlists (tentativa 2/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "BOUNCE em /setlists (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "Recuperado via navegação de UI (sidebar \"Setlists\") após o bounce",
+    "BOUNCE em /setlists (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "Recuperado via navegação de UI (sidebar \"Setlists\") após o bounce",
+    "Status corrigido para inconclusiva: o teste recuperou /setlists via sidebar mas nao encontrou a setlist do picker (item 16 nao pode ser criado), entao nenhuma medicao de drag/hover/remocao foi feita."
+  ],
+  "measurements": {
+    "taps_total": 0
+  },
+  "recordedAt": "2026-08-09T19:13:11.187Z",
+  "trace": "docs/ux/fase-d/traces/fase-d-e-setlists-Grupo-E--d87bc-only-taps-para-remover-drag-fase-d.zip"
+}

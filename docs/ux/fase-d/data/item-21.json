@@ -1,0 +1,26 @@
+{
+  "item": 21,
+  "question": "A unique (setlist_id, content_id) já está confirmada. (setlist_id, position) também existe no banco vivo? (Muda o risco do reorder / SET-07.)",
+  "status": "inconclusiva",
+  "procedure": [],
+  "observations": [
+    "GET /api/setlists respondeu HTTP 401 — probe adiado (lockout?)",
+    "BOUNCE em /dashboard (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "BOUNCE em /dashboard (tentativa 2/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "Setlist do picker não encontrada — rodar item 16 antes",
+    "BOUNCE em /dashboard (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "BOUNCE em /dashboard (tentativa 2/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "Setlist do picker não encontrada — rodar item 16 antes",
+    "BOUNCE em /dashboard (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "Recuperado via navegação de UI (sidebar \"Dashboard\") após o bounce",
+    "Setlist do picker não encontrada — rodar item 16 antes",
+    "BOUNCE em /dashboard (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "Recuperado via navegação de UI (sidebar \"Dashboard\") após o bounce",
+    "Setlist do picker não encontrada — rodar item 16 antes"
+  ],
+  "measurements": {
+    "taps_total": 0
+  },
+  "recordedAt": "2026-08-09T19:12:52.795Z",
+  "trace": "docs/ux/fase-d/traces/fase-d-e-setlists-Grupo-E--3f158-t-id-position-no-banco-vivo-fase-d.zip"
+}

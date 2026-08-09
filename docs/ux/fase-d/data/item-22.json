@@ -1,0 +1,32 @@
+{
+  "item": 22,
+  "question": "Bottom nav: a última linha fica permanentemente encoberta (DASH-04) ou o scroll a expõe? Tocar no item semi-visível funciona?",
+  "status": "respondida",
+  "procedure": [],
+  "observations": [
+    "BOUNCE em /dashboard (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)"
+  ],
+  "measurements": {
+    "geometria_dashboard": {
+      "navTop": 763,
+      "navHeight": 81,
+      "ultimoElemento": "Favorite ContentYour starred music pieces[UX-AUDIT] Anunciaç",
+      "ultimoBottom": 1529,
+      "encobertoPx": 766,
+      "scrollNoFim": true
+    },
+    "screenshot_dashboard": "docs/ux/fase-d/evidence/item-22-fundo-dashboard.png",
+    "geometria_setlists": {
+      "navTop": 763,
+      "navHeight": 81,
+      "ultimoElemento": "Start Performance",
+      "ultimoBottom": 700,
+      "encobertoPx": 0,
+      "scrollNoFim": true
+    },
+    "screenshot_setlists": "docs/ux/fase-d/evidence/item-22-fundo-setlists.png",
+    "taps_total": 0
+  },
+  "recordedAt": "2026-08-09T14:06:33.564Z",
+  "trace": "docs/ux/fase-d/traces/fase-d-e-setlists-Grupo-E--9d5e2-obre-a-última-linha-mobile--fase-d.zip"
+}

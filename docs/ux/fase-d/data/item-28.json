@@ -1,0 +1,29 @@
+{
+  "item": 28,
+  "question": "Em touch, o gesto rola a ScrollArea interna ou a página? A paginação (alvos 32px) é alcançável com a bottom nav?",
+  "status": "respondida",
+  "procedure": [],
+  "observations": [
+    "BOUNCE em /library (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "Swipe de 400px sobre a lista: página rolou 0px, ScrollArea interna rolou 400px"
+  ],
+  "measurements": {
+    "scroll_antes": {
+      "pageY": 0,
+      "saTop": 0
+    },
+    "scroll_depois_swipe": {
+      "pageY": 0,
+      "saTop": 400
+    },
+    "geometria_paginacao_vs_bottom_nav": {
+      "bottomNavTop": 763,
+      "viewportH": 844,
+      "paginacao": []
+    },
+    "screenshot": "docs/ux/fase-d/evidence/item-28-mobile-scroll-paginacao.png",
+    "taps_total": 0
+  },
+  "recordedAt": "2026-08-09T13:52:33.829Z",
+  "trace": "docs/ux/fase-d/traces/fase-d-f-library-Grupo-F-—-0d00e-ina-paginação-vs-bottom-nav-fase-d.zip"
+}

@@ -1,0 +1,26 @@
+{
+  "item": 33,
+  "question": "Tab: o overflow-x-auto é descobrível/operável em touch? Há affordance de conteúdo cortado?",
+  "status": "respondida",
+  "procedure": [],
+  "observations": [
+    "BOUNCE em /content/f0d57e35-a701-4ea0-a92b-d72104e6f919 (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "BOUNCE em /content/f0d57e35-a701-4ea0-a92b-d72104e6f919 (tentativa 2/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "BOUNCE em /content/f0d57e35-a701-4ea0-a92b-d72104e6f919 (tentativa 3/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "rota indisponível após retries de bounce — item inconclusivo nesta passada",
+    "BOUNCE em /content/f0d57e35-a701-4ea0-a92b-d72104e6f919 (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "BOUNCE em /content/f0d57e35-a701-4ea0-a92b-d72104e6f919 (tentativa 2/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "Operabilidade do gesto horizontal em touch físico: MANUAL-CHECKLIST.",
+    "VEREDITO: não existe NENHUM container overflow-x na tela da tab (elementos_overflow_x=[] em 1194 e 390). Em 390px a tablatura é quebrada por word-wrap — 'e|---0---|' vira linhas fragmentadas e as 6 cordas perdem o alinhamento (screenshot item-33-tab-390.png).",
+    "A pergunta 'o overflow-x é descobrível?' fica prejudicada: o problema real é pior — o conteúdo não é cortado, é DESTRUÍDO (CONT-02 ao vivo). Não há o que descobrir nem operar."
+  ],
+  "measurements": {
+    "taps_total": 0,
+    "elementos_overflow_x": [],
+    "screenshot_tab_viewer": "docs/ux/fase-d/evidence/item-33-tab-1194.png",
+    "overflow_390px": [],
+    "screenshot_tab_390": "docs/ux/fase-d/evidence/item-33-tab-390.png"
+  },
+  "recordedAt": "2026-08-09T15:57:03.036Z",
+  "trace": "docs/ux/fase-d/traces/fase-d-g-viewer-Grupo-G-—--89941-w-x-é-descobrível-operável--fase-d.zip"
+}
