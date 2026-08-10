@@ -6,7 +6,7 @@
 
 **Core Value**: Performance mode must work reliably during live performances. Musicians depend on instant, accurate display of their music content when performing—any lag, missing content, or broken features during a performance is unacceptable.
 
-**Current Focus**: Milestone v1.0 complete ✅ — Ready for next milestone
+**Current Focus**: UX assessment (Fases A–E) **encerrado** em 2026-08-10 — transição para apps nativos planejada em `docs/ux/PLANO-TRANSICAO.md` (documento vivo)
 
 ---
 
@@ -46,6 +46,7 @@
 | 2026-02-25 | Consolidate cleanup with ref nulling | Single useEffect reduces regression risk | ✅ v1.0 - Memory leaks prevented |
 | 2026-02-25 | Extract songs transformation to dedicated hook | 84-line complex logic warrants extraction | ✅ v1.0 - useSongsTransformation created |
 | 2026-02-25 | Consolidate side effects into single hook | Related effects belong together conceptually | ✅ v1.0 - usePerformanceEffects simplifies lifecycle |
+| 2026-08-10 | **UX assessment encerrado; sem reforma da UI web — migração para apps nativos (Android/iOS) mantendo o backend** | Fases A–E completas: 96 achados reclassificados em 4 destinos; fila mínima de sobrevivência do web aprovada (#0–#11); decisões de dados B5 tomadas (bis liberado, annotations mantida, venue/data/notas ligados, performance_date date-only) | `docs/ux/PLANO-TRANSICAO.md` é o documento vivo; ASSESSMENT.md congelado |
 
 ---
 
@@ -77,10 +78,10 @@
 
 ## Session Continuity
 
-**Last Session**: 2026-02-25
-**Stopped At**: Milestone v1.0 completion
+**Last Session**: 2026-08-10
+**Stopped At**: Fase E do UX assessment concluída — PLANO-TRANSICAO.md aprovado e commitado
 **Resume File**: None
-**Next Action**: `/gsd:new-milestone` to begin planning next development cycle
+**Next Action**: Executar a fila A (#0–#11) do `docs/ux/PLANO-TRANSICAO.md`; depois Bloco B (contratos de API) antes da primeira tela nativa; decisão de stack em aberto (spike de PDF)
 
 **v1.0 Summary**:
 - 4 phases completed (8 plans executed)

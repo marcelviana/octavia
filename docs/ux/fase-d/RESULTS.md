@@ -21,7 +21,7 @@
 | | Qtd | Itens |
 |---|-----|-------|
 | **Respondidas** | 45 | 1–6, 8–13, 15, 16, 18–34, 36–49 |
-| **Manual-pendentes** (hardware real) | 3 | 7, 14, 35 |
+| **N/A — decisão de plataforma (migração nativa)** | 3 | 7, 14, 35 (eram manual-pendentes; fechados na Fase E, ver `../PLANO-TRANSICAO.md`) |
 | **Diferidas** | 1 | 17 (reorder — handler morto, SET-03) |
 
 > 45 + 3 + 1 = **49**. As partes **físicas** dos itens 6, 18 e 33 (pinch,
@@ -325,7 +325,7 @@ AUTH-03 confirmado: logado, `/` mostra a landing de marketing.
 
 **7. Foto vertical de celular (JPG) como partitura: proporção e nitidez sobrevivem?**
 
-- **MANUAL-PENDENTE** — exige foto real de celular. Procedimento e critério em `MANUAL-CHECKLIST.md` § Item 7.
+- **N/A — decisão de plataforma (migração nativa)**, fechado na Fase E. A verificação exigia hardware real sobre o viewer web (`width={800}` fixo), que não receberá fix. A pergunta migra como critério de import/render de imagem do app nativo (`../PLANO-TRANSICAO.md`, Bloco C). Procedimento original preservado em `MANUAL-CHECKLIST.md` § Item 7.
 
 ### C. Offline (J6)
 
@@ -388,7 +388,7 @@ AUTH-03 confirmado: logado, `/` mostra a landing de marketing.
 
 **14. "Continue with Google" (popup) funciona no PWA instalado em tablet?**
 
-- **MANUAL-PENDENTE** — exige PWA instalado em hardware. Procedimento em `MANUAL-CHECKLIST.md` § Item 14.
+- **N/A — decisão de plataforma (migração nativa)**, fechado na Fase E. A dúvida era sobre popup de OAuth dentro de PWA instalado — superfície que morre com a migração: o login nativo usa o SDK do Firebase, sem popup de browser (`../PLANO-TRANSICAO.md`, Blocos B7/C). Procedimento original preservado em `MANUAL-CHECKLIST.md` § Item 14.
 
 **15. O balão HTML5 aparece no idioma do SO (pt-BR), divergindo da UI em inglês?**
 
@@ -539,7 +539,7 @@ AUTH-03 confirmado: logado, `/` mostra a landing de marketing.
 
 **35. Wake lock em iPad e Android real: tela acesa 10 min? Toast cobre controles?**
 
-- **MANUAL-PENDENTE** — exige hardware. Procedimento em `MANUAL-CHECKLIST.md` § Item 35.
+- **N/A — decisão de plataforma (migração nativa)**, fechado na Fase E com o **dado do usuário** registrado: o wake lock web **funciona em Android** e está **quebrado em Safari/iPadOS**. Não receberá fix na web — a Screen Wake Lock API é limitação de browser; no nativo o requisito é trivial (`keepScreenOn` / `isIdleTimerDisabled`) e entra como requisito de primeira classe do palco (`../PLANO-TRANSICAO.md`, Bloco C4), eliminando de quebra o toast do PERF-08. Procedimento original preservado em `MANUAL-CHECKLIST.md` § Item 35.
 - *Evidência colateral colhida*: na captura `evidence/item-36-dots-estresse60.png` o toast de wake lock aparece — *"Heads up! Your browser does not support preventing screen sleep…"* — ocupando o canto superior direito e **cobrindo o botão de dark sheet**. **PERF-08 confirmado** na parte da sobreposição.
 
 **36. Dots de 8 px: taxa de acerto real; e na setlist de 60?**

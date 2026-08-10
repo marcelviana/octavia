@@ -377,18 +377,18 @@ schema.sql vs. prod (`supabase gen types`). Registro apenas — nada implementad
 - **Issue:** O reorder faz um UPDATE por música em duas fases (posições temporárias `10000+i`, depois posições finais `1..n`) para contornar `UNIQUE(setlist_id, position)` — num setlist de 30 músicas são 60 round-trips por request
 - **Files:** `app/api/setlists/songs/[songId]/route.ts` (linhas ~232 e ~271); shift pós-remoção idem (linha ~109)
 - **Impact:** Latência proporcional ao tamanho do setlist. **Risco de integridade:** interrupção na fase 1 (crash, timeout) persiste posições `10000+` no banco — ordem corrompida visível ao usuário, sem rollback
-- **Fix approach:** Mover o reorder para uma função RPC/transação no Postgres (candidato a housekeeping; sem urgência enquanto setlists forem pequenos)
+- **Fix approach:** Mover o reorder para uma função RPC/transação no Postgres (candidato a housekeeping; sem urgência enquanto setlists forem pequenos). *(Fase E, 2026-08-10: contratado como tarefa B6 — endpoint de reorder atômico — em `docs/ux/PLANO-TRANSICAO.md`, porque o cliente nativo herda a API.)*
 
 ### Tabela `annotations` em prod: morta no código
 - **Issue:** A tabela existe em prod (com FKs para profiles/content) mas nenhum código a acessa — zero `.from("annotations")`, zero rota de API. A feature de anotações da UI (`components/annotation-tools.tsx`) persiste em `content.content_data.annotations` (JSONB)
-- **Impact:** Tabela órfã; decisão **drop vs. migrar a feature para ela** é de produto — adiada para a **Fase E do UX assessment**
+- **Impact:** Tabela órfã; decisão **drop vs. migrar a feature para ela** é de produto
 - **Pendência imediata:** verificar no dashboard do Supabase se RLS está habilitado nela — não é coberta por `rls-policies.sql` nem `schema.sql`
-- **Fix approach:** Nenhum até a decisão da Fase E; se drop, confirmar antes que está vazia em prod
+- **✅ Decidido (Fase E, 2026-08-10):** feature de anotações **mantida** — é requisito do app nativo (J2). A tabela **não** será dropada; o modelo de dados definitivo (tabela vs. JSONB em `content_data`) será decidido no design do nativo. Até lá: nada de escrita nova, nada de drop. Ver `docs/ux/PLANO-TRANSICAO.md` § B5. A pendência de RLS permanece.
 
 ### Colunas venue/performance_date/notes de setlists: possivelmente write-only
-- **Issue:** Existem só em prod (ausentes do schema.sql) e são escritas pela API (`app/api/setlists/route.ts:122-125`), mas não foi verificado se alguma UI as exibe
-- **Impact:** Se write-only, é dado coletado sem uso (ou UI perdida)
-- **Fix approach:** Verificar na **Fase C (área setlists)** se a UI expõe esses campos; decidir expor ou parar de escrever
+- **Issue:** Existem só em prod (ausentes do schema.sql) e são escritas pela API (`app/api/setlists/route.ts:122-125`); a Fase C/D provou o pior: a UI **envia** os três campos e o Zod os **descarta silenciosamente** (SET-01)
+- **Impact:** Perda silenciosa de dados do usuário ("setlist do show de hoje" sem data)
+- **✅ Decidido (Fase E, 2026-08-10):** **ligar de verdade**, via audit de schema (B2 do plano de transição): aceitar e persistir os três campos no contrato; `performance_date` com semântica **date-only** (sem hora/fuso — elimina o SET-17). Ver `docs/ux/PLANO-TRANSICAO.md` § B5.
 
 ### Adotar migrations versionadas + regenerar schema.sql
 - **Issue:** O projeto não usa migrations versionadas; `supabase/schema.sql` é snapshot manual com drift confirmado em 2026-08-08 (tabela `annotations` e colunas de `setlists` ausentes; `setlist_songs.updated_at` declarado mas inexistente em prod)

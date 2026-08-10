@@ -1,5 +1,15 @@
 # ASSESSMENT — Fases C + D (síntese consolidada dos findings)
 
+> **⛔ ASSESSMENT ENCERRADO (Fase E, 2026-08-10).** Por decisão de produto,
+> não haverá reforma nem reconstrução da UI web: a direção é apps nativos
+> (Android/iOS) mantendo o backend. Este documento congela como registro
+> das Fases C+D. Os 96 achados foram reclassificados em quatro destinos
+> (fila mínima de sobrevivência do web · contratos de API · corpus de
+> requisitos do nativo · morre com a web) no
+> **[`PLANO-TRANSICAO.md`](PLANO-TRANSICAO.md)** — que é o **documento
+> vivo da transição** a partir de agora. Não atualizar este arquivo;
+> mudanças de estado dos achados são rastreadas lá.
+
 > Insumos: os 7 arquivos em `docs/ux/findings/` (auth, dashboard, library,
 > content-viewer, setlists, performance, add-content), produzidos a partir das
 > capturas B1/B2 e da leitura do código, **mais as medições ao vivo contra prod da
