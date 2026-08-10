@@ -208,76 +208,40 @@ export async function settle(page: Page, ms = 800): Promise<void> {
 }
 
 /**
- * goto com detecção de BOUNCE: sob pressão de rate limit, os server
- * components (via getServerSideUser → /api/auth/verify, limiter antigo por
- * IP) redirecionam QUALQUER rota autenticada para /login → /dashboard.
- * Se a URL final não contém o pathname pedido, espera a janela do limiter
- * (65s) e tenta de novo. Cada bounce vira nota no recorder (é evidência).
+ * goto com detecção de BOUNCE. Pós fila A #0 (verify fora do limiter
+ * antigo, PLANO-TRANSICAO.md), o bounce deixou de ser condição de trabalho:
+ * a maquinaria defensiva da Fase D (espera de 75 s em about:blank +
+ * recuperação via sidebar) foi removida — a suíte volta a medir o tempo
+ * real do app. O bounce continua DETECTADO e anotado: hoje ele é sinal de
+ * regressão do #0, não ruído a contornar.
  */
 export async function gotoRoute(
   page: Page,
   url: string,
   rec: ItemRecorder,
-  attempts = 3
+  attempts = 2
 ): Promise<boolean> {
-  const wanted = url.split('?')[0]
+  const wanted = url.split('?')[0] ?? url
   for (let i = 1; i <= attempts; i++) {
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 90_000 })
     await page.waitForTimeout(2000)
     const pathNow = () => new URL(page.url()).pathname
     const matches = () => pathNow() === wanted || pathNow().startsWith(wanted)
     if (matches()) {
-      // O bounce também acontece CLIENT-SIDE segundos após o load ("Failed
-      // to fetch profile" → redirect p/ dashboard). Verifica estabilidade.
-      await page.waitForTimeout(6000)
+      // Estabilidade curta: bounce client-side tardio também é regressão
+      await page.waitForTimeout(3000)
       if (matches()) return true
       rec.note(
-        `BOUNCE TARDIO em ${wanted}: página carregou e o client redirecionou para ${page.url()} ` +
-          'segundos depois (profile 429 → "Redirecting to dashboard")'
+        `BOUNCE TARDIO em ${wanted}: página carregou e o client redirecionou ` +
+          `para ${page.url()} — REGRESSÃO do fila A #0, investigar`
+      )
+    } else {
+      rec.note(
+        `BOUNCE em ${wanted} (tentativa ${i}/${attempts}): aterrissou em ${page.url()} ` +
+          '— REGRESSÃO do fila A #0 (verify não deveria mais expulsar), investigar'
       )
     }
-    rec.note(
-      `BOUNCE em ${wanted} (tentativa ${i}/${attempts}): aterrissou em ${page.url()} ` +
-        '— redirect do 429 em /api/auth/verify (limiter compartilhado por IP)'
-    )
-    // Fallback: o bounce termina no dashboard LOGADO — de lá a navegação
-    // client-side pela sidebar não passa pelo redirect do server component
-    const NAV_LABEL: Record<string, string> = {
-      '/setlists': 'Setlists',
-      '/library': 'Library',
-      '/dashboard': 'Dashboard',
-      '/add-content': 'Add Song',
-    }
-    const navLabel = NAV_LABEL[wanted]
-    // O bounce pode parar em /login por alguns segundos até o client SDK
-    // redirecionar para o dashboard — espera essa segunda perna
-    if (navLabel && /\/login/.test(page.url())) {
-      await page.waitForURL(/\/dashboard/, { timeout: 20_000 }).catch(() => {})
-    }
-    if (navLabel && /\/dashboard/.test(page.url())) {
-      const clicked = await page
-        .getByText(navLabel, { exact: true })
-        .first()
-        .click({ timeout: 5000 })
-        .then(() => true)
-        .catch(() => false)
-      if (clicked) {
-        await page.waitForTimeout(3000)
-        if (matches()) {
-          await page.waitForTimeout(5000)
-          if (matches()) {
-            rec.note(`Recuperado via navegação de UI (sidebar "${navLabel}") após o bounce`)
-            return true
-          }
-        }
-      }
-    }
-    if (i < attempts) {
-      // Espera em about:blank: a página quicada (dashboard) continua gerando
-      // tráfego e renovando a janela do limiter — precisa de silêncio real
-      await page.goto('about:blank').catch(() => {})
-      await page.waitForTimeout(75_000)
-    }
+    if (i < attempts) await page.waitForTimeout(5000)
   }
   return false
 }

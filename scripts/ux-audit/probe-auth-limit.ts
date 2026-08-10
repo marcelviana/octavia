@@ -13,6 +13,8 @@
  * Uso: pnpm tsx scripts/ux-audit/probe-auth-limit.ts
  */
 import fs from 'node:fs'
+import os from 'node:os'
+import path from 'node:path'
 import { config } from 'dotenv'
 import { bypassHeaders } from './auth'
 
@@ -20,7 +22,13 @@ config({ path: '.env.uxaudit', quiet: true })
 config({ path: '.env.local', quiet: true })
 
 const BASE_URL = process.env.UX_AUDIT_BASE_URL || 'https://octavia.rocks'
-const DATA_DIR = 'docs/ux/fase-d/data'
+// Guard do registro histórico: os JSONs de docs/ux/fase-d/data são a
+// medição de PROD da Fase D. Com UX_AUDIT_BASE_URL setado (preview ou
+// qualquer alvo explícito), os resultados vão para um diretório efêmero —
+// rodada de validação nunca sobrescreve o registro.
+const DATA_DIR = process.env.UX_AUDIT_BASE_URL
+  ? fs.mkdtempSync(path.join(os.tmpdir(), 'ux-audit-probe-'))
+  : 'docs/ux/fase-d/data'
 const ATTEMPTS = 8
 
 interface Attempt {
