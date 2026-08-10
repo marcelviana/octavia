@@ -172,10 +172,29 @@ export async function validateFirebaseTokenSecure(
     // Validate via API with enhanced error handling
     let result: ServerAuthResult
 
-    if (typeof window === 'undefined' && requestUrl) {
+    if (typeof window === 'undefined') {
       // Server-side: Use internal API
       try {
-        const baseUrl = typeof requestUrl === 'string' ? new URL(requestUrl).origin : requestUrl.origin
+        // Destino ancorado em ENV, nunca no request de entrada: este fetch
+        // carrega o idToken do usuário, e Host/x-forwarded-host forjados não
+        // podem redirecioná-lo. NEXTAUTH_URL (localhost em todos os
+        // ambientes Vercel) resolve para o servidor da própria função — o
+        // hop nunca sai pelo edge (nem rate limit de borda, nem Deployment
+        // Protection). É a mesma cadeia do validateFirebaseTokenServer
+        // (lib/firebase-server-utils.ts). requestUrl fica como penúltimo
+        // recurso para ambientes fora do Vercel. O redesenho do B1
+        // (docs/ux/PLANO-TRANSICAO.md) substitui este self-fetch por chamada
+        // local de função, eliminando a classe inteira de pedágios.
+        let baseUrl = process.env.NEXTAUTH_URL || process.env.VERCEL_URL
+        if (!baseUrl && requestUrl) {
+          baseUrl = typeof requestUrl === 'string' ? new URL(requestUrl).origin : requestUrl.origin
+        }
+        if (!baseUrl) {
+          baseUrl = `http://localhost:${process.env.PORT || '3000'}`
+        }
+        if (!/^https?:\/\//.test(baseUrl)) {
+          baseUrl = `https://${baseUrl}`
+        }
         const verifyUrl = `${baseUrl}/api/auth/verify`
 
         const response = await fetch(verifyUrl, {

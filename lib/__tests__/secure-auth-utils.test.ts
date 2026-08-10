@@ -4,7 +4,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 // aqui queremos testar a implementação real.
 vi.unmock('@/lib/secure-auth-utils')
 
-import { requireAuthServerSecure } from '@/lib/secure-auth-utils'
+import { requireAuthServerSecure, validateFirebaseTokenSecure } from '@/lib/secure-auth-utils'
 
 const verifyResponse = (user: Record<string, unknown>) => ({
   ok: true,
@@ -66,5 +66,60 @@ describe('requireAuthServerSecure (real implementation)', () => {
     })
 
     expect(user).toMatchObject({ uid: 'user-unverified-signup', emailVerified: false })
+  })
+})
+
+describe('validateFirebaseTokenSecure — âncora de origem do self-fetch', () => {
+  beforeEach(() => {
+    vi.stubGlobal('window', undefined)
+  })
+
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
+
+  it('server-side SEM requestUrl usa a cadeia de env (antes: rejeição no branch client-side)', async () => {
+    vi.stubEnv('NEXTAUTH_URL', 'http://localhost:3000')
+    const fetchMock = vi.fn().mockResolvedValue(verifyResponse({
+      uid: 'user-sem-requesturl',
+      email: 'env@example.com',
+      emailVerified: true
+    }))
+    vi.stubGlobal('fetch', fetchMock)
+
+    const result = await validateFirebaseTokenSecure('token-sem-requesturl-1')
+
+    expect(result.isValid).toBe(true)
+    expect(fetchMock).toHaveBeenCalledWith(
+      'http://localhost:3000/api/auth/verify',
+      expect.anything()
+    )
+  })
+
+  it('a env vence o requestUrl: origin do request de entrada NÃO decide o destino do fetch', async () => {
+    // Propriedade de segurança: o self-fetch carrega o idToken — um Host
+    // forjado no request não pode redirecioná-lo para fora.
+    vi.stubEnv('NEXTAUTH_URL', 'http://localhost:3000')
+    const fetchMock = vi.fn().mockResolvedValue(verifyResponse({
+      uid: 'user-anti-forjamento',
+      email: 'anchor@example.com',
+      emailVerified: true
+    }))
+    vi.stubGlobal('fetch', fetchMock)
+
+    const result = await validateFirebaseTokenSecure(
+      'token-anti-forjamento-1',
+      'https://host-forjado.example/api/auth/session'
+    )
+
+    expect(result.isValid).toBe(true)
+    expect(fetchMock).toHaveBeenCalledWith(
+      'http://localhost:3000/api/auth/verify',
+      expect.anything()
+    )
+    expect(fetchMock).not.toHaveBeenCalledWith(
+      expect.stringContaining('host-forjado.example'),
+      expect.anything()
+    )
   })
 })
