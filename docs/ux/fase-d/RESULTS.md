@@ -670,7 +670,24 @@ limpo (hotspot). O que aprendemos ao fechá-los vale registro:
 
 ## Cleanup — o que o `--dry-run` enxerga
 
-`pnpm tsx scripts/ux-audit/cleanup.ts --dry-run` (executado ao fim desta passada):
+Dry-run ao fim da **segunda** passada (fila fechada), com a setlist do item
+16 e as músicas do item 13 já na conta:
+
+```
+4 setlists do audit encontradas
+  would-delete setlist "UX-AUDIT Fase D picker" (48 músicas)   ← criada na Fase D
+66 itens de conteúdo do audit encontrados
+2 órfãos de storage da Fase D (orphan-uploads.json)
+7 arquivos de storage associados
+```
+
+Todos os artefatos das duas passadas estão cobertos: a setlist do picker
+pelo prefixo `UX-AUDIT` (com as 48 músicas removidas em cascata pela rota
+de DELETE), os 3 conteúdos do batch pelo `[UX-AUDIT]`, os 3 itens com nome
+de arquivo pela regra `/^ux-audit[-_]/i`, e os 2 órfãos pelo
+`orphan-uploads.json`.
+
+Dry-run da **primeira** passada, para comparação:
 
 ```
 3 setlists do audit encontradas
