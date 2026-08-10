@@ -134,6 +134,17 @@ Por IP não é apenas ruim: é **incompatível com o cliente que vem aí**.
    (ou substituto), com configs explícitas por rota.
 5. Resposta 429 **estruturada** (ver B3) com `Retry-After` honesto.
 
+**Rastreio (fila A, 2026-08-10)**: o redesenho elimina o self-fetch HTTP
+(verify vira chamada de função local — `verifyFirebaseToken` já é local),
+removendo a classe inteira de pedágios cobrados três vezes durante o audit
+e a fila A: rate limiter no caminho (FASE-D-01), Deployment Protection
+bloqueando o hop interno no preview, e a âncora de origem do fetch
+(request-derived, corrigida na fila A por convergência com a cadeia de
+env). Nota adicional: o hop in-lambda via localhost não carrega
+`x-forwarded-for` — no limiter antigo, os self-fetches caíam todos no
+bucket `'anonymous'` compartilhado, evidência extra da incompatibilidade
+do desenho.
+
 ### B2 — Audit schema Zod × payload real, rota a rota
 
 Três casos **provados** do mesmo defeito — o schema foi escrito sem olhar o
