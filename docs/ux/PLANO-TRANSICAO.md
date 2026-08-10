@@ -37,13 +37,16 @@ apontamentos de arquivo/linha conferem com o estado atual do repositório.
 ### Fila final aprovada (#0–#11)
 
 **#0 — Paliativo do rate limit (RATE-01, aprovado da fronteira A/B)**:
-retirar o limiter antigo do caminho de `/api/auth/verify` — a chamada é
-interna, feita por `getServerSideUser` em todo server component, não é
-superfície de abuso do cliente. Elimina o sintoma mais grave do RATE-01
-(usuário logado expulso de qualquer rota; 63% de 429 medidos) sem
+retirar o limiter antigo do caminho de `/api/auth/verify`. A rota é
+**pública** (qualquer cliente pode dar POST nela); a justificativa do
+paliativo é outra: a verificação do token é **local** (assinatura JWT via
+firebase-admin, sem chamada de rede por request — custo de CPU baixo), o
+app tem um único usuário, e o estado é temporário até o redesenho do B1.
+O uso dominante é interno (`getServerSideUser` em todo server component),
+e é esse uso que o limiter antigo punia. Elimina o sintoma mais grave do
+RATE-01 (usuário logado expulso de qualquer rota; 63% de 429 medidos) sem
 comprometer o redesenho do B1, do qual é a primeira etapa. Esforço P ·
-risco baixo (a rota continua autenticando; só deixa de consumir orçamento
-de limiter).
+risco baixo e **explícito**: a rota fica sem rate limit algum até o B1.
 
 | # | ID | Fix proposto | Esf | Risco |
 |---|----|--------------|-----|-------|
@@ -123,9 +126,10 @@ Por IP não é apenas ruim: é **incompatível com o cliente que vem aí**.
    IP só como fallback para endpoints pré-auth — e com janelas largas.
 2. **Janela real**: fixa ou deslizante, sem renovação de TTL a cada request
    aceito; orçamento **por rota ou grupo de rotas**, nunca global.
-3. **Retirar o limiter do caminho de `/api/auth/verify`** — chamada interna
-   de server component, não superfície de abuso. *(Antecipado: aprovado
-   como item #0 da fila A.)*
+3. **Retirar o limiter do caminho de `/api/auth/verify`** — verificação
+   local de assinatura JWT, custo baixo por request; a rota é pública, mas
+   o uso que o limiter punia é o interno dos server components.
+   *(Antecipado: aprovado como item #0 da fila A.)*
 4. **Um sistema só**: matar `lib/rate-limit.ts`, ficar com `lib/rate-limiter.ts`
    (ou substituto), com configs explícitas por rota.
 5. Resposta 429 **estruturada** (ver B3) com `Retry-After` honesto.
@@ -214,6 +218,22 @@ existe no banco vivo (item 21), o que reduz o risco da transição.
   integral de cada música (N+1 + payload gordo). Em rede celular isso vira
   latência e dado móvel. Contratar shape de listagem enxuto + conteúdo sob
   demanda (que é também o shape que o cache offline do nativo vai querer).
+
+### B8 — Housekeeping de pipeline: passivo de tipos dos testes (rastreio obrigatório)
+
+Descoberto ao executar a fila A (2026-08-10): o `next build` type-checka os
+arquivos de teste e o main acumulou **166 erros de tipo em 24 arquivos —
+todos de teste, zero em código de app** — quebrando build e deploy (CI
+vermelho desde 24/07; Vercel sem deploy verde desde os specs da Fase D).
+Destravamento aprovado (PR de infra): `exclude` dos testes no tsconfig
+raiz + `tsconfig.test.json` + etapa **separada e informativa** de CI para
+o type-check dos testes.
+
+**Item de rastreio**: a etapa informativa só existe legitimamente com
+prazo de vida — **zerar os 166 erros** (baseline registrado em
+2026-08-10) **e promover a etapa de informativa a bloqueante**. Candidato
+a lote/workflow; entra junto do housekeeping do Bloco B, antes do
+desenvolvimento nativo ganhar ritmo.
 
 ---
 
@@ -574,6 +594,45 @@ rastreabilidade): ~~ADD-04~~ (absorvido em ADD-13), ~~SET-05~~ e
 ~~PERF-03~~ (corrigido em `a3114cc`), signup 401 e Bug F1 (históricos).
 
 ---
+
+## Execução da fila A — agrupamento em PRs (aprovado com ajustes, 2026-08-10)
+
+Nove itens de deploy: **PR-0** (#0, sozinha) → **housekeeping do retry**
+(commit próprio: reduzir o retry defensivo de 75 s do `recorder.ts` após a
+PR-0 validada em prod; nada de infra de suíte em diff de fix) → **PR-1**
+(#1, sozinha) → **PR-2** (#2) → **PR-3** (#3+#4) · **PR-4** (#5) ·
+**PR-6** (#8) · **PR-7** (#9) · **PR-8a** (#10) · **PR-8b** (#11) em
+qualquer ordem → **PR-5** (#6+#7) por último entre as de setlists.
+Cada PR roda o spec da Fase D correspondente como regressão
+(`tests/ux-audit/fase-d/`, alvo via `UX_AUDIT_BASE_URL`).
+
+Ajustes obrigatórios incorporados:
+
+1. **PR-0 com aceite quantitativo**: spec novo `rl-0-verify.spec.ts` —
+   40 POSTs diretos ao `/api/auth/verify` (2× o limite antigo de 20/60 s)
+   com assert de **zero 429**, mais 12 navegações autenticadas com assert
+   de **zero aterrissagens em `/login`** (o observável do FASE-D-01) e
+   zero 429 em `/api/*`. **Controle negativo principal** (exercita o
+   limiter antigo pós-fix): `/api/auth/user` continua envelopado
+   (2/60 s strict) — 4 GETs devem produzir ≥1 429 com
+   `X-RateLimit-Limit: 2` (assert no mesmo spec). Verificação adicional:
+   `probe-auth-limit.ts` (limite 5/15 min do `/api/auth/session`, módulo
+   novo, intacto). Validação sempre com **`--retries=0` explícito** — um
+   retry que passa na 2ª tentativa mascararia o 429 intermitente que o
+   spec existe para pegar. O corpo da PR declara explicitamente:
+   **verify fica sem rate limit algum até o B1** — paliativo aceitável em
+   app de usuário único, escrito, não implícito.
+2. **PR-1 com pre-check e gate em preview**: antes de escrever o valor da
+   CSP, verificar **de onde o iframe do modo performance carrega o PDF**
+   (se a origem for `*.supabase.co` e não blob do próprio app,
+   `frame-src 'self' blob:` não resolve); reportar o call site + valor
+   proposto antes de abrir a PR. Primeira validação do item 4 (Chromium
+   headed) contra **preview deployment do Vercel**; prod é confirmação,
+   não descoberta.
+3. **Retry de 75 s**: commit de housekeeping isolado (posição acima).
+4. **PR-5 com cláusula de escape**: SET-04 entra como botões ▲/▼ **se
+   couber em P**; se crescer para M durante a execução, sai da PR-5 e ela
+   segue só com o SET-03 — registrado na descrição da PR.
 
 ## Sequência (atualizada pós-aprovação)
 
