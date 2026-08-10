@@ -645,6 +645,16 @@ Ajustes obrigatórios incorporados:
 4. **PR-5 com cláusula de escape**: SET-04 entra como botões ▲/▼ **se
    couber em P**; se crescer para M durante a execução, sai da PR-5 e ela
    segue só com o SET-03 — registrado na descrição da PR.
+5. **Mutação de configuração local exige sinalização prévia** (regra de
+   sessão, 2026-08-10): qualquer comando que altere arquivos de
+   configuração ou credenciais locais fora do repositório (`.env*`,
+   configs de CLI, tokens, links de projeto) é **sinalizado antes de
+   rodar, com o efeito colateral esperado descrito** — mesmo quando o
+   objetivo do comando é só leitura. Origem: `vercel link` sobrescreveu
+   `.env.local` como efeito colateral de uma inspeção read-only.
+6. **Segredos de automação** (Vercel bypass etc.): valor lido **somente
+   inline no momento do comando** (`$(cat ~/.octavia-vercel-bypass)`),
+   nunca gravado em arquivo do repositório, nunca ecoado em log/output.
 
 ## Sequência (atualizada pós-aprovação)
 
