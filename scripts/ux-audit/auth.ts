@@ -23,6 +23,16 @@ export function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
+/**
+ * Header de bypass do Vercel Deployment Protection para previews.
+ * O valor vem SOMENTE de env no momento da execução (nunca de arquivo do
+ * repo) e não deve ser logado. Vazio quando o alvo é prod.
+ */
+export function bypassHeaders(): Record<string, string> {
+  const secret = process.env.VERCEL_AUTOMATION_BYPASS_SECRET
+  return secret ? { 'x-vercel-protection-bypass': secret } : {}
+}
+
 function requireEnv(name: string): string {
   const value = process.env[name]
   if (!value) {
@@ -102,7 +112,7 @@ async function signIn(): Promise<void> {
   for (let attempt = 0; ; attempt++) {
     sessionRes = await fetch(`${BASE_URL}/api/auth/session`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...bypassHeaders() },
       body: JSON.stringify({ idToken }),
     })
     if (sessionRes.status !== 429 || attempt >= 15) break
@@ -159,6 +169,7 @@ export async function apiFetch(path: string, init: RequestInit = {}): Promise<Re
 
   const doFetch = () => {
     const headers = new Headers(init.headers)
+    for (const [k, v] of Object.entries(bypassHeaders())) headers.set(k, v)
     headers.set('Authorization', `Bearer ${idToken}`)
     if (sessionCookie) headers.set('Cookie', sessionCookie)
     return fetch(`${BASE_URL}${path}`, { ...init, headers })

@@ -30,9 +30,13 @@ setup('autenticar conta de audit e salvar storageState', async ({ browser, baseU
   expect(name).toBe('firebase-session')
   expect(value.length).toBeGreaterThan(0)
 
+  // Contexts criados manualmente NÃO herdam o `use` do config — o header
+  // de bypass do Vercel (previews protegidos) precisa ser posto aqui também.
+  const bypass = process.env.VERCEL_AUTOMATION_BYPASS_SECRET
   const context: BrowserContext = await browser.newContext({
     baseURL,
     serviceWorkers: 'block',
+    ...(bypass ? { extraHTTPHeaders: { 'x-vercel-protection-bypass': bypass } } : {}),
   })
   // Evita que o app queime o rate limit AUTH (5/15min) ou apague o cookie
   await interceptSessionEndpoint(context)
