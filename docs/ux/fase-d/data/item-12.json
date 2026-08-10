@@ -1,0 +1,38 @@
+{
+  "item": 12,
+  "question": "Quantos POSTs a /api/auth/session um login completo dispara? Login + 3 trocas de aba já estoura o limite de 5?",
+  "status": "respondida",
+  "procedure": [
+    {
+      "label": "8 POSTs sequenciais a /api/auth/session (1 por \"troca de aba\"), 1,2 s entre eles",
+      "taps": 8
+    }
+  ],
+  "observations": [
+    "Método: medição direta no endpoint /api/auth/session. O app dispara exatamente 1 POST por evento — contexts/firebase-auth-context.tsx chama setSessionCookie() em três lugares: onAuthStateChanged (login), handler de visibilitychange (toda volta de aba) e setInterval de 50 min.",
+    "Header do servidor: X-RateLimit-Limit: 5 — confirma o orçamento de 5 requisições por janela de 15 min, por IP.",
+    "RESPOSTA (quantos POSTs um login dispara): 1 pelo onAuthStateChanged. Mas o custo real é maior — o mesmo login também carrega o dashboard, e cada volta de aba subsequente soma 1.",
+    "RESPOSTA (login + 3 trocas estoura o limite de 5?): login (1) + 3 trocas (3) = 4 POSTs — cabe numa janela VIRGEM, com 1 de folga. A 4ª volta de aba (5º POST) esgota o orçamento e a 5ª já recebe 429.",
+    "RESSALVA que a medição tornou visível: a janela raramente está virgem. Nesta execução o PRIMEIRO POST já voltou com remaining=1, ou seja, 3 dos 5 já haviam sido consumidos por atividade normal anterior no mesmo IP. Na prática o músico não dispõe dos 5 — dispõe do que sobrou."
+  ],
+  "measurements": {
+    "posts_por_login": 1,
+    "posts_por_troca_de_aba": 1,
+    "sequencia": [
+      "#1:200@0.4s",
+      "#2:200@1.8s",
+      "#3:429@3.1s",
+      "#4:429@4.5s",
+      "#5:429@5.8s",
+      "#6:429@7.2s",
+      "#7:429@8.5s",
+      "#8:429@9.9s"
+    ],
+    "aceitos_antes_do_429": 2,
+    "limite_declarado_no_header": "5",
+    "header_X-RateLimit-Limit": 5,
+    "remaining_no_primeiro_post": 1,
+    "leitura": "orçamento de 5/15min por IP; login=1 POST, cada volta de aba=1 POST"
+  },
+  "recordedAt": "2026-08-10T13:08:27.324Z"
+}

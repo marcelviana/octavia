@@ -66,6 +66,12 @@ export default defineConfig({
         viewport: UX_AUDIT_VIEWPORTS['tablet-landscape'],
         serviceWorkers: 'allow',
         trace: 'on',
+        // O default do Playwright para ações é 0 = espera INFINITA. Numa
+        // suíte de medição contra prod isso troca uma falha em 20s por um
+        // teste morrendo no timeout de 10-15min sem salvar nada (aconteceu
+        // nos itens 16 e 11/12). Um teto explícito transforma o travamento
+        // em erro rápido e legível.
+        actionTimeout: 20_000,
       },
     },
     ...Object.entries(UX_AUDIT_VIEWPORTS).map(([name, viewport]) => ({

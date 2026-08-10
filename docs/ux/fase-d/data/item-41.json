@@ -1,0 +1,38 @@
+{
+  "item": 41,
+  "question": "Recent Content → /content/[id]: tempo até render; o voltar preserva aba/scroll do dashboard?",
+  "status": "respondida",
+  "procedure": [
+    {
+      "label": "tap: aba Favorites",
+      "taps": 1,
+      "atMs": 45,
+      "durMs": 45
+    },
+    {
+      "label": "tap: item do dashboard",
+      "taps": 1,
+      "atMs": 2158,
+      "durMs": 876
+    }
+  ],
+  "observations": [
+    "BOUNCE em /dashboard (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "Recuperado via navegação de UI (sidebar \"Dashboard\") após o bounce",
+    "Aba NÃO preservada (voltou em \"Overview\")"
+  ],
+  "measurements": {
+    "card_alvo": "View [UX-AUDIT] Anunciação content",
+    "tempo_ate_render_content_ms": 911,
+    "scroll_antes": 0,
+    "estado_apos_voltar": {
+      "url": "https://octavia.rocks/dashboard",
+      "scrollY": 0,
+      "abaAtiva": "Overview"
+    },
+    "taps_total": 2,
+    "tempo_total_ms": 4228
+  },
+  "recordedAt": "2026-08-10T12:30:08.041Z",
+  "trace": "docs/ux/fase-d/traces/fase-d-h-perf-Grupo-H-—-pe-0effd-ntent-→-content-id-e-voltar-fase-d.zip"
+}

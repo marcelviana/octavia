@@ -20,15 +20,18 @@
 
 | | Qtd | Itens |
 |---|-----|-------|
-| **Respondidas** | 35 | 1–6, 15, 19, 20, 22–34, 36–40, 42–49 |
+| **Respondidas** | 45 | 1–6, 8–13, 15, 16, 18–34, 36–49 |
 | **Manual-pendentes** (hardware real) | 3 | 7, 14, 35 |
 | **Diferidas** | 1 | 17 (reorder — handler morto, SET-03) |
-| **Bloqueadas pelo ambiente** | 10 | 8, 9, 10, 11, 12, 13, 16, 18, 21, 41 |
 
-> 35 + 3 + 1 + 10 = **49**. Além disso, as partes **físicas** dos itens 6,
-> 18 e 33 (pinch, drag com o dedo, gesto horizontal) estão no
-> `MANUAL-CHECKLIST.md` — a parte automatizável de 6 e 33 já foi respondida
-> aqui; a de 18 caiu junto com o bloqueio.
+> 45 + 3 + 1 = **49**. As partes **físicas** dos itens 6, 18 e 33 (pinch,
+> drag com o dedo, gesto horizontal) seguem no `MANUAL-CHECKLIST.md`; a
+> parte automatizável dos três foi respondida aqui.
+>
+> **Duas passadas**: a primeira (IP saturado) fechou 35 itens e produziu o
+> FASE-D-01; a segunda, num IP limpo, fechou os 10 restantes — e revelou
+> que metade do bloqueio não era rate limit, e sim o **FASE-D-05** (criar
+> setlist quebrado), que só apareceu ao instrumentar a resposta do POST.
 
 > **Nota sobre os bloqueados**: o grupo C (offline, 8–10), o finale de rate
 > limit (11–13) e os itens que dependem de escrita em setlist (16, 18, 21)
@@ -45,11 +48,80 @@
 |----|----------|------|
 | **PERF-02** | ✅ **CONFIRMADO — e pior que o descrito** | Item 4. O PDF não renderiza no modo performance em Chrome real (headed, com viewer nativo de PDF disponível). Causa-raiz identificada: **a CSP do próprio app** (`lib/security-headers.ts`) manda `frame-src 'none'; object-src 'none'`, e o modo performance renderiza PDF via `<iframe>`. Não é "PDF branco por artefato de captura" — o browser exibe *"This content is blocked. Contact the site owner to fix the issue."* Vale em **qualquer** browser. |
 | **ADD-02** | ✅ **CONFIRMADO — e pior que o descrito** | Item 44. Batch import de TXT com 3 músicas: os 3 `POST /api/content` retornam **201** (as músicas são criadas), mas a tela após "Import All" é a **tela inicial de upload**, com o StepIndicator marcando *Upload ✓ / Add Details ✓ / Complete ✓*. A UI afirma "Complete" e renderiza o passo 1. |
-| **AUTH-01** | ⚠️ **CONFIRMADO por evidência lateral; medição dedicada pendente** | Não foi possível rodar os itens 11–12 (login limpo + trocas de aba) porque o rate limit já estava saturado pela própria execução. Mas a evidência passiva é contundente: **371 POSTs a `/api/auth/session` observados ao longo da fase, 234 deles (63%) com HTTP 429** (`data/session-posts.jsonl`). Ver FASE-D-01. |
+| **AUTH-01** | ✅ **CONFIRMADO com números próprios** | Itens 11–12. `X-RateLimit-Limit: 5` por 15 min **por IP**; 1 POST por login e **1 por volta de aba**; o 3º POST desta janela já veio 429, com **`Retry-After: 732 s` (12,2 min)** de bloqueio. Na primeira chamada o `remaining` já era **1** — a janela raramente está virgem. Evidência acumulada: **371 POSTs de sessão na fase, 234 (63%) com 429**. E o efeito não se limita ao login: ver FASE-D-01. |
 
 ---
 
 ## Achados novos da Fase D (não estavam na lista de 49)
+
+### [FASE-D-06] Offline, `/setlists` diz "No setlists yet" — e o dashboard, na mesma sessão, diz que há 3 — S1
+
+**Medição** (item 10): com 4 setlists na conta, offline após kill+reopen, a
+página `/setlists` renderiza o **estado vazio de primeiro uso**:
+
+> **No setlists yet** — Create your first setlist to organize songs for your
+> performances. · `[+ Create Your First Setlist]`
+
+Na **mesma sessão offline**, o `/dashboard` (item 8) exibe o stat
+**"Setlists 3 — ready for performance"**, e o modo performance por deep link
+abre a setlist inteira, inclusive uma **nunca visitada** (item 9). Ou seja,
+os dados **estão** cacheados e acessíveis — mas a tela de listagem não os lê
+e conclui que o usuário nunca criou nada.
+
+**Por que isto é S1 e não um detalhe de cache**: é o caminho natural do J1
+e do J6. O músico abre o app no palco sem rede, toca em "Setlists" para
+escolher o show — e o app afirma que ele não tem nenhuma. Não é uma
+mensagem de erro ("sem conexão, tentando de novo"): é uma afirmação
+positiva e falsa sobre o conteúdo dele, acompanhada de um convite para
+começar do zero. A recuperação exige saber que o deep link do modo
+performance funciona, o que nenhum usuário adivinha.
+
+**Relação com o SET-14**: o finding original supunha *cache desatualizado*
+(mostra a versão anterior à edição). A medição mostra algo diferente e pior:
+**não há leitura de cache nenhuma** nesta tela. O SET-14 deve ser
+reescrito, não confirmado.
+
+### [FASE-D-05] Criar setlist pela UI falha em silêncio se a descrição ficar vazia — S1
+
+O achado mais grave da fase: **o primeiro passo do J3 é impossível pelo
+caminho natural**, e foi ele que bloqueou metade da fila de testes.
+
+**Medição** (item 16, com a resposta do POST instrumentada):
+
+| Payload | Resposta |
+|---------|----------|
+| `description: null` — o que a UI envia com o campo vazio | **HTTP 400** `Validation failed: description — Expected string, received null` |
+| campo `description` omitido | **HTTP 201** |
+| `description: "texto"` — usuário preencheu | **HTTP 201** |
+
+**Causa-raiz** (duas linhas, em arquivos diferentes):
+- `components/setlist-manager.tsx:106` envia `description: data.description || null`
+- `lib/api-validation-middleware.ts:198` declara `description: safeHtml.optional()`
+  — e `.optional()` do Zod aceita `undefined`, **não `null`**
+
+**O que o usuário vê**: nada. O diálogo **fecha normalmente**, como se
+tivesse funcionado; `toasts_apos_criar` veio **vazio** — sem toast de erro,
+sem mensagem, sem realce no campo. A setlist simplesmente não existe. Só
+olhando a lista com atenção (ou voltando depois) o usuário descobre.
+
+**Custo real do "criar setlist vazia"** — critério do J3 que a Fase C dava
+como ≤3 taps: **7 taps**, sendo 3 desperdiçados na tentativa que falha, 1
+para reabrir o diálogo, e 1 obrigatório num campo que a UI rotula como
+opcional. E isso só depois de o usuário *descobrir* que a descrição é
+obrigatória — descoberta que a UI não oferece de forma alguma.
+
+**Impacto na fase**: os itens 18, 21 e 13 dependiam da setlist criada no
+item 16. As três primeiras execuções atribuíram o bloqueio ao rate limit
+(FASE-D-01), que de fato também estava acontecendo; só ao instrumentar a
+resposta do POST é que a causa real apareceu. Vale como lição de método: um
+diálogo que fecha sozinho é indistinguível de sucesso, para um teste
+automatizado tanto quanto para um músico.
+
+**Relação com achados existentes**: é o irmão gêmeo do SET-01 (o Zod
+descarta `venue`/`performance_date`/`notes`). Ali o schema **ignora** campos
+que a UI manda; aqui ele **rejeita a requisição inteira** por causa de um
+campo opcional. Mesma causa conceitual: *o schema de validação foi escrito
+sem olhar o payload que a própria UI produz*.
 
 ### [FASE-D-02] O upload de arquivo descarta todos os metadados digitados — S1
 
@@ -171,9 +243,11 @@ notas "BOUNCE" em praticamente todos os `data/item-NN.json`; traces.
 | J1 | Rotação no meio da música | layout sobrevive | landscape↔portrait OK, sem overflow, sem crash; **scroll volta a 0** | ⚠️ **parcial** |
 | **J2** | Anotação: intenção → texto salvo | ≤ 5 taps, ≤ 20 s | **inalcançável pela UI** para cifra/letra | ❌ **falha** |
 | J2 | Anotação visível na próxima abertura | visível | anotação gravada via API **não aparece** no viewer nem no palco | ❌ **falha** (CONT-03) |
-| **J3** | Criar setlist vazia | ≤ 3 taps | **3 taps** (medido na 1ª execução, antes do bloqueio) | ✅ **passa** |
+| **J3** | Criar setlist vazia | ≤ 3 taps | **7 taps** — a tentativa de 3 taps falha com 400 e sem aviso (FASE-D-05) | ❌ **falha** |
 | J3 | Adicionar cada música | ≤ 3 taps/música | **2,2 taps/música** (picker multi-select: 1 abrir + 10×(busca+seleção) + 1 confirmar), sem sair da tela | ✅ **passa** |
 | J3 | Listagem mostra título, artista e tom | os três | título ✅, artista ✅, **tom ausente** | ❌ **falha** (SET-08) |
+| J3 | Reordenar a setlist | funciona em touch | drag por toque **não move** (SET-04); controles da linha invisíveis em touch | ❌ **falha** |
+| J3 | Montar setlist grande (50+) | sem perda | pediu 56, entraram **38** (429 na 39ª), **sem aviso** | ❌ **falha** (SET-05) |
 | **J4** | Upload completo com metadados | ≤ 8 taps, ≤ 60 s | **10 taps, 27 s** | ⚠️ **falha nos taps**, passa no tempo |
 | J4 | Erro de arquivo inválido: mensagem específica | acionável | >50 MB → **HTTP 413 sem nenhuma mensagem**; `.zip` como `.pdf` → **aceito** | ❌ **falha** |
 | J4 | Item recém-importado localizável pela busca | imediato | ✅ localizável pela busca | ✅ **passa** |
@@ -183,7 +257,11 @@ notas "BOUNCE" em praticamente todos os `data/item-NN.json`; traces.
 | J5 | Busca sem resultado tem estado útil | ecoa a query | *"No content found / Try adjusting your search or filters"* — **não ecoa a query** | ⚠️ **parcial** (LIB-08) |
 | J5 | Tolerância a typo | — | `ipanma` → 0 hits reais; `aguas` (sem acento) → **0** vs `Águas` → 2 | ❌ **falha** (LIB-04) |
 | J5 | Busca de dentro do modo performance | existe? | **não existe**; custo real = 4 taps (sair + buscar), 4,1 s | ❌ **gap confirmado** |
-| **J6** | — | — | **pendente** (grupo C não rodou) | — |
+| **J6** | Abrir o app offline e chegar ao conteúdo | funciona | dashboard offline completo (stats 66/3/3 + listas); `/` offline OK | ✅ **passa** |
+| J6 | Setlist cacheada abre completa offline (deep link) | completa | shell + navegação + 3/3 músicas alcançáveis offline | ✅ **passa** |
+| J6 | Música cujo arquivo nunca foi cacheado | degrada com aviso | setlist **nunca aberta** renderizou a letra inteira offline | ✅ **passa** (melhor que o esperado) |
+| J6 | **Chegar à setlist pela navegação normal, offline** | lista disponível | `/setlists` mostra **"No setlists yet"** com 4 setlists na conta | ❌ **falha** (FASE-D-06) |
+| J6 | Partitura PDF offline | legível | `<iframe>` presente, **área em branco** — mesmo bloqueio de CSP do PERF-02, não é falha de offline | ❌ **falha** (herdada do PERF-02) |
 
 **Ressalva do J1**: a medição de 3 taps/5,4 s parte do app carregado.
 Somando a abertura fria do PWA (`start_url` `/` → landing → "Sign In" →
@@ -253,35 +331,60 @@ AUTH-03 confirmado: logado, `/` mostra a landing de marketing.
 
 **8. Kill + reopen em modo avião com sessão >1h: o app chega ao dashboard ou o middleware bloqueia em `/login` (AUTH-02)? O `setSessionCookie` falhando offline degrada algo visível?**
 
-- **BLOQUEADO** nesta passada (spec pronto em `c-offline.spec.ts`, com expiração forçada do token no IndexedDB e kill+reopen por nova page no mesmo contexto).
-- *Evidência parcial já coletada* (item 1, teste `item-01b`): com o service worker ativo no escopo raiz, **`/` abre offline e o tap em "Sign In" chega ao dashboard populado offline** — stats "60 / 3 / 3" e listas Recent/Favorites renderizadas. Ou seja, na sessão *fresca* o app não bloqueia em `/login`. Falta exatamente a variável do item: **sessão com mais de 1 h**.
+- *Procedimento*: aquecimento online do `/dashboard`; expiração forçada do `accessToken` no IndexedDB (−2 h) para simular sessão velha; `context.setOffline(true)`; `page.close()` ("kill") e nova page no mesmo contexto ("reopen"); `goto /dashboard` e depois `goto /`.
+- *Medição*: `goto /dashboard` offline = **ok**, URL final **`/dashboard`** (não houve expulsão para `/login`), com a tela **completa**: "Total Content 66 / Setlists 3 / Favorites 3 / Recent 10" e as listas Recent/Favorites renderizadas. `goto /` offline também **ok**. Erros de console: vários `net::ERR_INTERNET_DISCONNECTED` e um `Failed to fetch RSC payload … Falling back to browser navigation` — **nenhum deles visível na UI**.
+- *Veredito*: **passa**. Com sessão velha + offline, o app **não** bloqueia em `/login`: o service worker serve o shell e o conteúdo cacheado. O `setSessionCookie` falhando offline **não degrada nada visível** — os erros ficam no console. AUTH-02 não se manifesta neste cenário.
+- *Limitação anotada*: "kill+reopen" é nova page no mesmo contexto (um contexto novo no Playwright perderia o SW e os caches).
+- *Evidência*: `evidence/item-08-dashboard-offline.png`
 
 **9. A setlist cacheada abre completa offline, incluindo PDFs? O que aparece para música cujo arquivo nunca foi cacheado?**
 
-- **BLOQUEADO** nesta passada (spec pronto: aquece 3 músicas online, vai offline, percorre as 3 e depois tenta uma setlist nunca aberta).
-- *Nota que já se pode adiantar*: qualquer resposta sobre "PDFs offline" no modo performance é **moot enquanto o PERF-02 existir** — o PDF não renderiza nem **online**, por CSP. O que este item ainda mede de útil é o comportamento de **texto** (cifra/letra) offline e o estado da música nunca cacheada.
+- *Procedimento*: aquecer online as 3 primeiras músicas da Show padrão (a 1ª é o PDF de 12 páginas); ir offline; kill+reopen; reabrir a setlist e percorrer as 3; depois abrir a setlist **Estresse na música 6**, nunca visitada neste contexto.
+- *Medição*: reabertura offline **ok**, com o shell do modo performance visível. As 3 músicas: `[UX-AUDIT] Partitura de 12 páginas` → **iframe-pdf**, `[UX-AUDIT] Partitura de 1 página` → **iframe-pdf**, `[UX-AUDIT] Palco` → **texto**. Setlist **nunca cacheada**: abriu normalmente e **renderizou a letra completa** de `[UX-AUDIT] Odeio Você`, com os 60 dots de navegação.
+- *Veredito*: **passa, e melhor que o esperado**. A setlist cacheada abre completa offline; e o conteúdo **textual** funciona offline mesmo para músicas **nunca visitadas** — os dados vêm cacheados por atacado, não música a música. O único conteúdo que falha é o **PDF**, com o `<iframe>` presente e a área em branco: é **exatamente o PERF-02** (CSP), o mesmo comportamento que se vê **online**, não uma regressão de offline.
+- *Evidência*: `evidence/item-09-offline-musica-1.png` (PDF em branco), `evidence/item-09-nunca-cacheada.png` (letra completa de setlist nunca aberta)
 
 **10. Editar setlist → modo avião → reabrir: a versão cacheada é a anterior à edição (SET-14)?**
 
-- **BLOQUEADO** nesta passada (spec pronto; renomeia a setlist do audit, vai offline, reabre e depois desfaz a edição).
+- *Procedimento*: renomear a setlist do audit online, ir offline, kill+reopen, reabrir `/setlists` e comparar; depois reconectar e desfazer a edição.
+- *Medição*: o rename online ficou visível (`rename_online_visivel: true`). Offline, após kill+reopen, `/setlists` **não mostrou nem o nome novo nem o antigo**: mostrou o **estado vazio** — *"No setlists yet / Create your first setlist to organize songs for your performances"*, com o botão "Create Your First Setlist".
+- *Veredito*: **SET-14 não se confirma como descrito — o comportamento real é pior.** A questão "a versão cacheada é a anterior?" não se aplica: **não há versão cacheada alguma** nesta tela. Ver **FASE-D-06**.
+- *Evidência*: `evidence/item-10-setlists-offline.png`
 
 ### D. Auth e rate limits
 
 **11. [Decide AUTH-01] 5+ trocas de aba em <15 min disparam 429 no `/api/auth/session`? Depois do 429 + token >1h, reload de `/dashboard` expulsa para `/login`?**
 
-- **BLOQUEADO** para a medição controlada (spec pronto em `rl-auth.spec.ts`: login real pela UI, trocas de aba contadas, e injeção do cookie antigo para simular token vencido).
-- *Evidência passiva conclusiva quanto ao 429*: ao longo de toda a fase foram observados **371 POSTs a `/api/auth/session`, dos quais 234 (63%) responderam HTTP 429** (`data/session-posts.jsonl`). O limite de 5/15 min por IP **é atingido em uso normal**, sem esforço para provocá-lo.
-- *Quanto à segunda metade da pergunta* ("expulsa para `/login`?"): **sim, e por um caminho ainda pior que o previsto** — o FASE-D-01 mostra que a expulsão acontece em **qualquer rota autenticada**, não só após reload do dashboard, porque o 429 atinge `/api/auth/verify` no server component. Foi observada dezenas de vezes.
+- *Procedimento*: 8 POSTs sequenciais a `/api/auth/session` com um idToken válido, 1,2 s entre eles — cada POST equivale a uma volta de aba (ver método no item 12) —, registrando status e headers `X-RateLimit-*` de cada um. Script: `scripts/ux-audit/probe-auth-limit.ts`.
+- *Medição*:
+
+  | # | Status | X-RateLimit-Remaining | Retry-After |
+  |---|--------|----------------------|-------------|
+  | 1 | 200 | 1 | — |
+  | 2 | 200 | 0 | — |
+  | 3–8 | **429** | 0 | **732 s → 725 s** |
+
+- *Veredito*: **sim, disparam — e o bloqueio é muito mais longo que o suposto.** `X-RateLimit-Limit: 5` por janela de 15 min por IP. Uma vez estourado, o `Retry-After` é de **732 s (12,2 min)**: a renovação de sessão fica indisponível por mais de doze minutos. A janela não desliza a favor do usuário.
+- *Segunda metade da pergunta* — "reload de `/dashboard` expulsa para `/login`?": **sim, e não só o `/dashboard`**. É exatamente o mecanismo do **FASE-D-01**, observado dezenas de vezes ao longo da fase: com o orçamento estourado, o `/api/auth/verify` (chamado pelos server components) também responde 429, `getServerSideUser` devolve `null` e **qualquer rota autenticada** executa `redirect('/login')`.
+- *Evidência acumulada*: **371 POSTs a `/api/auth/session` ao longo da fase, 234 (63%) com HTTP 429** (`data/session-posts.jsonl`).
 
 **12. Quantos POSTs a `/api/auth/session` um login completo dispara? Login + 3 trocas de aba já estoura o limite de 5?**
 
-- **BLOQUEADO** para a contagem controlada (exige contexto deslogado e janela limpa de limiter).
-- *Do código, para orientar a medição*: `contexts/firebase-auth-context.tsx` chama `setSessionCookie` em **três** lugares — no `onAuthStateChanged` (login), no `visibilitychange` (toda volta de aba) e num `setInterval` de 50 min. Cada chamada é 1 POST. Isso torna a hipótese do item ("login + 3 trocas de aba ≥ 5") aritmeticamente plausível: 1 (login) + 3 (trocas) = 4, e qualquer quarta volta de aba estoura.
+- *Procedimento*: leitura do código para estabelecer a equivalência evento → POST, e medição direta no endpoint (mesmo probe do item 11).
+- *Método e por que não pela UI*: `contexts/firebase-auth-context.tsx` chama `setSessionCookie()` — 1 POST cada — em **três** lugares: `onAuthStateChanged` (login), handler de `visibilitychange` (**toda volta de aba**) e um `setInterval` de 50 min. Logo, 1 volta de aba = 1 POST, e medir a sequência no endpoint é mais preciso que dirigir `bringToFront()` num browser headless. (A tentativa de login pela UI dentro do runner foi abandonada: `goto('/login')` aterrissava no `/dashboard` já autenticado — comportamento do ambiente de teste, não do produto, já que um browser standalone permanece em `/login` por 20 s; registrado em `data/item-12.json`.)
+- *Medição*: **1 POST por login** e **1 por volta de aba**. Header do servidor: **`X-RateLimit-Limit: 5`**.
+- *Veredito*: **login (1) + 3 trocas (3) = 4 POSTs — cabem numa janela virgem, com 1 de folga.** A 4ª volta de aba (5º POST) esgota o orçamento e a 5ª recebe 429.
+- *Ressalva que a medição tornou visível, e que muda a leitura do achado*: **a janela quase nunca está virgem.** Nesta execução o **primeiro** POST já voltou com `remaining: 1` — 3 dos 5 haviam sido consumidos por atividade normal anterior do mesmo IP. Na prática o músico não dispõe de 5 eventos: dispõe do que sobrou, e não tem como saber quanto é.
 
 **13. [SET-05] Em qual adição o 429 dispara ao montar setlist de 50+? O que o usuário vê e em que estado fica a setlist?**
 
-- **BLOQUEADO** nesta passada (spec pronto em `rl-13.spec.ts`; depende da setlist do item 16, que não pôde ser criada). O teste já instrumenta a sequência de status por POST, os headers `X-RateLimit-*`, os toasts na tela e a divergência entre a contagem local da UI e a do servidor.
-- *Do código, para orientar a leitura*: `handleAddSongsToSetlist` (`components/setlist-manager.tsx:161`) faz um `for` **sequencial com `await`** e **aborta no primeiro erro**, mas só depois de já ter empurrado os itens anteriores para o estado local — daí a expectativa de divergência UI × servidor que o teste mede.
+- *Procedimento*: na setlist do audit (já com 10 músicas), abrir o picker, "Select all" (**"Add 56 Songs"**) e confirmar, instrumentando cada `POST /api/setlists/[id]/songs`, os headers `X-RateLimit-*`, os toasts e a contagem final na UI × servidor.
+- *Medição*: **39 POSTs em 30,2 s** — os **38 primeiros com HTTP 201** e o **39º com HTTP 429** (`X-RateLimit-Remaining: 0`, `Retry-After: 60`). O loop abortou aí: das 56 pedidas, **38 entraram** e **18 nunca foram tentadas**.
+- *O que o usuário vê*: **`toasts: []`** — nada. O diálogo fechou normalmente. A setlist ficou com **48 músicas** (10 + 38) na UI, **48 no servidor** e **48 após reload**.
+- *Veredito*: **SET-05 confirmado**, com dois refinamentos importantes:
+  1. O **429 dispara na 39ª adição** deste burst (o limite é 50/60 s **compartilhado por IP entre todas as rotas** — as ~12 requisições restantes do orçamento foram consumidas por page loads e GETs da própria navegação).
+  2. **Não há divergência UI × servidor** — a expectativa da Fase C não se confirmou: os 48 batem nos dois lados. O problema é outro e igualmente sério: o usuário pediu **56** e recebeu **48**, **sem uma única palavra de aviso**. A perda é silenciosa e só descobrível contando as músicas.
+- *Evidência*: `evidence/item-13-apos-burst.png`, `evidence/item-13-apos-reload.png`
 
 **14. "Continue with Google" (popup) funciona no PWA instalado em tablet?**
 
@@ -295,12 +398,13 @@ AUTH-03 confirmado: logado, `/` mostra a landing de marketing.
 
 ### E. Setlists (J3)
 
-**16. Adicionar 10 músicas pelo picker: quantos taps por música na prática?**
+**16. Adicionar 10 músicas pelo picker: quantos taps por música na prática (alvo ≤3, sem sair da tela)?**
 
-- *Procedimento*: criar a setlist "UX-AUDIT Fase D picker", abrir "Add Songs", buscar e selecionar 10 músicas, confirmar.
-- *Medição (1ª execução, antes do bloqueio de ambiente)*: **criar setlist vazia = 3 taps**; adicionar as 10 = **22 taps** (1 abrir + 10×(buscar + selecionar) + 1 confirmar) = **2,2 taps/música**, **sem sair da tela** da setlist.
-- *Veredito*: **passa** nos dois critérios do J3 (≤3 taps para criar, ≤3 taps/música sem ida-e-volta). O picker multi-select é o ponto **mais bem resolvido** do fluxo de setlists.
-- *Ressalva*: as re-execuções para consolidar a evidência foram bloqueadas pelo FASE-D-01 (3/3 bounces em `/setlists`). O número acima vem da passada que completou; item marcado para re-confirmação.
+- *Procedimento*: criar a setlist "UX-AUDIT Fase D picker" pelo diálogo da UI (com a resposta do `POST /api/setlists` instrumentada), depois "Add Songs" → buscar e selecionar 10 músicas → confirmar.
+- *Medição, parte 1 (criar a setlist)*: a primeira tentativa — nome preenchido, descrição vazia, 3 taps — **falhou com HTTP 400** e o diálogo fechou **sem nenhum toast**. Repetindo o caminho **com a descrição preenchida**: HTTP 201. Custo real: **7 taps**. Ver **FASE-D-05**.
+- *Medição, parte 2 (o picker)*: **22 taps para 10 músicas** (1 abrir + 10×(buscar + selecionar) + 1 confirmar) = **2,2 taps/música**, **sem sair da tela** da setlist, e o diálogo fechou com as 10 aparecendo na lista.
+- *Veredito*: **o picker passa com folga** (2,2 ≤ 3 taps/música, sem ida-e-volta) — é o ponto mais bem resolvido de toda a área de setlists. Mas o critério vizinho do J3, "criar setlist vazia em ≤3 taps", **falha**: são 7 taps, e só para quem já descobriu que o campo opcional é obrigatório.
+- *Evidência*: `evidence/item-16-criacao-falhou.png`, `evidence/item-16-setlist-vazia.png`, `evidence/item-16-setlist-10-musicas.png`
 
 **17. Reorder pós-religação: latência e posições 10000+?**
 
@@ -308,9 +412,15 @@ AUTH-03 confirmado: logado, `/` mostra a landing de marketing.
 
 **18. Em iPad simulado: o drag inicia com toque? Ícones hover-only aparecem com um tap? Quantos taps até remover?**
 
-- *Procedimento*: contexto com `hasTouch: true` a 1194×834, tap na linha, inspeção de `opacity` dos botões, sequência `touchStart/touchMove/touchEnd` sobre o grip via CDP.
-- *Medição*: **bloqueado pelo FASE-D-01** — o teste chegou a recuperar `/setlists` via sidebar numa das tentativas, mas depende da setlist do item 16, que não pôde ser criada.
-- *Veredito*: **inconclusivo por ambiente**. A parte física (drag com o dedo real) permanece no `MANUAL-CHECKLIST.md` § Item 18 independentemente.
+- *Procedimento*: contexto com `hasTouch: true` a 1194×834 na setlist do audit; inspeção de `opacity` e tamanho dos botões antes e depois de um tap na linha; drag por `touchStart/touchMove/touchEnd` sobre o grip via CDP; remoção de uma música.
+- *Medição*:
+  - **Ícones hover-only**: `opacity: 0` **antes do tap e igualmente 0 depois do tap**. Os dois botões da linha ("Start performance from this song" e "Remove song") medem **28×28 px**.
+  - **Drag por toque**: `moveu: false` — a primeira linha continuou sendo "[UX-AUDIT] Garota de Ipanema".
+  - **Remoção**: **1 tap** (com clique forçado sobre o alvo invisível) removeu a música — de 11 para 10 linhas, sem diálogo de confirmação.
+  - O tap na linha **não navegou** para fora do detalhe.
+- *Veredito*: **SET-12 e SET-04 confirmados juntos, e o efeito combinado é pior que a soma**. Em touch, os controles da linha **nunca se tornam visíveis** (não há hover num iPad, e o tap não os revela), então "1 tap para remover" é um número teórico: o usuário **não tem como saber que o botão existe**, nem onde. E o drag de reorder **não responde a toque** — a única forma de reordenar é inoperante no dispositivo de palco. Os alvos, quando existem, têm 28 px contra os 48 px recomendados.
+- *Nota*: a remoção sem confirmação num alvo invisível é um risco de perda acidental — tocar "por engano" na região onde o botão está remove a música do show sem perguntar nada.
+- *Evidência*: `evidence/item-18-touch-remocao.png`. Confirmação física do drag no iPad: `MANUAL-CHECKLIST.md` § Item 18.
 
 **19. Mobile: após tocar num card, quanto scroll até a primeira música do detalhe?**
 
@@ -328,9 +438,10 @@ AUTH-03 confirmado: logado, `/` mostra a landing de marketing.
 
 **21. A constraint `(setlist_id, position)` existe no banco vivo?**
 
-- *Procedimento*: probe autenticado — `POST /api/setlists/[id]/songs` com uma `position` já ocupada na setlist do audit.
-- *Medição*: **bloqueado** — depende da setlist do item 16, que não pôde ser recriada.
-- *Veredito*: **inconclusivo por ambiente**. Nota metodológica: as primeiras tentativas do probe retornaram **401** porque o cookie de sessão do `storageState` carrega um idToken de 1h já vencido; corrigido lendo o `accessToken` fresco do IndexedDB (`getBearer()` em `recorder.ts`) — o que é, por si, uma confirmação prática do **AUTH-02**.
+- *Procedimento*: probe autenticado — `POST /api/setlists/[id]/songs` com `position: 1`, já ocupada na setlist do audit.
+- *Medição*: **HTTP 201** — aceito. E o corpo da resposta revelou algo além da pergunta: a linha criada veio com **`position: 11`**, não com a posição 1 que foi enviada. **A API ignora a `position` do payload e calcula a sua própria** (final da lista).
+- *Veredito*: **a constraint `(setlist_id, position)` NÃO existe no banco vivo.** Isso **reduz o risco do SET-07** (colisão de posição no meio dos 2N UPDATEs do reorder): não há restrição de unicidade para violar. Em compensação, o segundo achado — a API sobrescrever a posição enviada — significa que **qualquer tentativa de inserir numa posição específica é silenciosamente ignorada**, o que precisa ser considerado quando o SET-03 (reorder) for religado.
+- *Nota metodológica*: as primeiras tentativas do probe retornaram **401** porque o cookie de sessão do `storageState` carrega um idToken de 1 h já vencido; corrigido lendo o `accessToken` fresco do IndexedDB (`getBearer()` em `recorder.ts`) — o que é, por si, uma confirmação prática do **AUTH-02**.
 
 **22. Bottom nav: a última linha fica encoberta ou o scroll a expõe?**
 
@@ -465,8 +576,9 @@ AUTH-03 confirmado: logado, `/` mostra a landing de marketing.
 
 **41. Recent Content → `/content/[id]`: tempo até render; o voltar preserva aba/scroll?**
 
-- **Bloqueado nesta passada** pelo FASE-D-01. Spec pronto em `h-perf.spec.ts`.
-- *Dado adjacente já disponível*: o item 34 mediu o caminho equivalente (resultado de busca → viewer → performance) com **811 ms** até a tela cheia, então a latência de render do viewer não é preocupante; o que falta medir é só a **preservação de aba/scroll no voltar**.
+- *Procedimento*: dashboard → aba "Favorites" → scroll para 300 px → tap no card `View [UX-AUDIT] Anunciação content` → medir render → `goBack()` e inspecionar aba ativa e scroll.
+- *Medição*: **911 ms** até o conteúdo renderizar. Ao voltar: URL `/dashboard`, **aba ativa "Overview"** (não "Favorites") e `scrollY: 0`.
+- *Veredito*: **latência passa** (< 1 s), **preservação de estado falha**. O voltar descarta a aba escolhida e a posição de scroll — o usuário que estava navegando os favoritos volta ao topo do "Overview" e precisa refazer a navegação a cada item que abre. Agrava o DASH-03 (abas redundantes): a única aba que o usuário escolhe explicitamente é justamente a que se perde.
 
 ### I. Add Content (J4)
 
@@ -530,28 +642,29 @@ AUTH-03 confirmado: logado, `/` mostra a landing de marketing.
 
 ---
 
-## O que falta rodar
+## Fila fechada — como a segunda passada correu
 
-Todos os specs estão escritos, validados e prontos; o que faltou foi
-**janela de ambiente**, pela razão que virou o achado FASE-D-01.
+Os 10 itens que a primeira passada deixou em aberto foram fechados num IP
+limpo (hotspot). O que aprendemos ao fechá-los vale registro:
 
-| Itens | Spec | Pré-condição |
-|-------|------|--------------|
-| 16, 18, 21 | `e-setlists.spec.ts` | janela sem 429 (a setlist do picker precisa ser criada) |
-| 41 | `h-perf.spec.ts` | janela sem 429 |
-| 8, 9, 10 (offline/J6) | `c-offline.spec.ts` | janela sem 429; ~25 min |
-| 13 (SET-05) | `rl-13.spec.ts` | setlist do item 16 existindo |
-| 11, 12 (AUTH-01) | `rl-auth.spec.ts` | 15+ min de cooldown após o item 13 |
-
-Ordem recomendada, respeitando o protocolo de segurança de rate limit:
-`e-setlists -g "item-16|item-18|item-21"` → `h-perf -g item-41` →
-`c-offline` → **`rl-13`** → cooldown de 15+ min ou troca de IP → **`rl-auth`**.
-
-**Recomendação prática**: rodar essa fila **de um IP diferente** (ou com o
-app apontado para um deploy de preview). O limiter é por IP e esta máquina
-está queimada há horas — foi o que impediu o fechamento. Como o FASE-D-01 já
-está caracterizado com causa-raiz e evidência quantitativa, os itens 11–13
-passam a ser **confirmação de números**, não descoberta.
+- **A causa do bloqueio era dupla.** O FASE-D-01 (rate limit) era real, mas
+  metade do travamento vinha do **FASE-D-05**: `POST /api/setlists`
+  respondendo 400 sem que a UI mostrasse nada. Como os itens 18, 21 e 13
+  dependiam da setlist criada no item 16, todos herdaram a falha. Só
+  instrumentar a resposta do POST revelou a causa real — três execuções
+  anteriores atribuíram tudo ao rate limit.
+- **Dois testes morreram em timeouts de 10–15 min sem salvar nada.** O
+  projeto `fase-d` não definia `actionTimeout`, e o default do Playwright é
+  **espera infinita**. Corrigido para 20 s: o travamento vira erro legível
+  em segundos. Os recorders também ganharam `try/finally` para salvar
+  mesmo quando o teste falha.
+- **Itens 11–12 mudaram de método.** O login pela UI dentro do runner
+  aterrissava no `/dashboard` já autenticado (um browser standalone
+  permanece em `/login` por 20 s — é artefato do ambiente de teste, não do
+  produto). Como cada volta de aba equivale a exatamente 1 POST
+  `/api/auth/session`, a medição foi feita direto no endpoint
+  (`scripts/ux-audit/probe-auth-limit.ts`), o que deu números mais
+  precisos do que dirigir `bringToFront()`.
 
 ---
 

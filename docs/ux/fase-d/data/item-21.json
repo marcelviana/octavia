@@ -1,7 +1,7 @@
 {
   "item": 21,
   "question": "A unique (setlist_id, content_id) já está confirmada. (setlist_id, position) também existe no banco vivo? (Muda o risco do reorder / SET-07.)",
-  "status": "inconclusiva",
+  "status": "respondida",
   "procedure": [],
   "observations": [
     "GET /api/setlists respondeu HTTP 401 — probe adiado (lockout?)",
@@ -16,11 +16,20 @@
     "Setlist do picker não encontrada — rodar item 16 antes",
     "BOUNCE em /dashboard (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
     "Recuperado via navegação de UI (sidebar \"Dashboard\") após o bounce",
-    "Setlist do picker não encontrada — rodar item 16 antes"
+    "Setlist do picker não encontrada — rodar item 16 antes",
+    "Setlist do picker não encontrada — rodar item 16 antes",
+    "BOUNCE em /dashboard (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "Posição duplicada ACEITA → constraint (setlist_id, position) NÃO existe no banco vivo"
   ],
   "measurements": {
-    "taps_total": 0
+    "taps_total": 0,
+    "probe_post_position_duplicada": {
+      "setlist": "UX-AUDIT Fase D picker",
+      "position_duplicada": 1,
+      "status": 201,
+      "body": "{\"id\":\"3a433f66-179b-4b9a-95d7-9cdf45094cc5\",\"setlist_id\":\"d8d5fb08-1ea0-4aec-92fd-06e983de6a9e\",\"content_id\":\"bec4195c-73a6-4365-a5d8-42fedea8bcdf\",\"position\":11,\"notes\":null,\"created_at\":\"2026-08-10T12:10:43.050325+00:00\"}"
+    }
   },
-  "recordedAt": "2026-08-09T19:12:52.795Z",
+  "recordedAt": "2026-08-10T12:08:54.846Z",
   "trace": "docs/ux/fase-d/traces/fase-d-e-setlists-Grupo-E--3f158-t-id-position-no-banco-vivo-fase-d.zip"
 }

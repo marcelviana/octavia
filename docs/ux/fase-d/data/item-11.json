@@ -1,0 +1,97 @@
+{
+  "item": 11,
+  "question": "AUTH-01: 5+ trocas de aba em <15min disparam 429 no /api/auth/session? Depois do 429 + token >1h, reload de /dashboard expulsa para /login?",
+  "status": "respondida",
+  "procedure": [
+    {
+      "label": "8 POSTs sequenciais a /api/auth/session (1 por \"troca de aba\"), 1,2 s entre eles",
+      "taps": 8
+    }
+  ],
+  "observations": [
+    "Método: 8 POSTs sequenciais a /api/auth/session (1,2 s entre eles), cada um equivalente a uma volta de aba do app.",
+    "RESPOSTA (5+ trocas em <15min disparam 429?): SIM, e com folga menor que a esperada. Sequência: 200 (remaining=1), 200 (remaining=0), depois 429 em TODAS as tentativas seguintes.",
+    "Retry-After = 732s (12,2 min) — não é um bloqueio de segundos: uma vez estourado, a renovação de sessão fica indisponível por mais de 12 minutos. A janela é de 15 min e não desliza a favor do usuário.",
+    "RESPOSTA (depois do 429 + token >1h, reload de /dashboard expulsa para /login?): SIM — e não só o /dashboard. É exatamente o mecanismo do FASE-D-01, observado dezenas de vezes ao longo da fase: com o POST de sessão em 429, o /api/auth/verify (chamado pelos server components) também 429a, getServerSideUser devolve null e QUALQUER rota autenticada faz redirect('/login').",
+    "AUTH-01 fica CONFIRMADO como S1 definitivo, com números próprios: limite 5/15min por IP, 429 a partir do 3º POST nesta janela, e 12,2 min de bloqueio."
+  ],
+  "measurements": {
+    "tentativas": [
+      {
+        "n": 1,
+        "status": 200,
+        "limit": "5",
+        "remaining": "1",
+        "retryAfter": null,
+        "atMs": 381
+      },
+      {
+        "n": 2,
+        "status": 200,
+        "limit": "5",
+        "remaining": "0",
+        "retryAfter": null,
+        "atMs": 1753
+      },
+      {
+        "n": 3,
+        "status": 429,
+        "limit": "5",
+        "remaining": "0",
+        "retryAfter": "732",
+        "atMs": 3109
+      },
+      {
+        "n": 4,
+        "status": 429,
+        "limit": "5",
+        "remaining": "0",
+        "retryAfter": "730",
+        "atMs": 4455
+      },
+      {
+        "n": 5,
+        "status": 429,
+        "limit": "5",
+        "remaining": "0",
+        "retryAfter": "729",
+        "atMs": 5807
+      },
+      {
+        "n": 6,
+        "status": 429,
+        "limit": "5",
+        "remaining": "0",
+        "retryAfter": "728",
+        "atMs": 7170
+      },
+      {
+        "n": 7,
+        "status": 429,
+        "limit": "5",
+        "remaining": "0",
+        "retryAfter": "726",
+        "atMs": 8522
+      },
+      {
+        "n": 8,
+        "status": 429,
+        "limit": "5",
+        "remaining": "0",
+        "retryAfter": "725",
+        "atMs": 9874
+      }
+    ],
+    "primeiro_429": {
+      "n": 3,
+      "status": 429,
+      "limit": "5",
+      "remaining": "0",
+      "retryAfter": "732",
+      "atMs": 3109
+    },
+    "aceitos_antes_do_429": 2,
+    "retry_after_s": "732"
+  },
+  "recordedAt": "2026-08-10T13:08:27.331Z"
+}

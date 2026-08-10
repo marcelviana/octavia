@@ -1,0 +1,39 @@
+{
+  "item": 8,
+  "question": "Kill + reopen em modo avião com sessão >1h: o app chega ao dashboard ou o middleware bloqueia em /login (AUTH-02)? O setSessionCookie falhando offline degrada algo visível?",
+  "status": "respondida",
+  "procedure": [],
+  "observations": [
+    "BOUNCE em /dashboard (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "Recuperado via navegação de UI (sidebar \"Dashboard\") após o bounce",
+    "accessToken do IndexedDB expirado à força (−2h) para simular sessão velha; cookie de sessão do storageState também tem >12h",
+    "Limitação: \"kill+reopen\" = nova page no mesmo contexto (contexto novo perderia SW/caches do Playwright)",
+    "accessToken do IndexedDB expirado à força (−2h) para simular sessão velha; cookie de sessão do storageState também tem >12h",
+    "Limitação: \"kill+reopen\" = nova page no mesmo contexto (contexto novo perderia SW/caches do Playwright)"
+  ],
+  "measurements": {
+    "goto_dashboard_offline": "ok",
+    "url_final": "https://octavia.rocks/dashboard",
+    "tela": "MNavigationDashboardLibrarySetlistsAdd SongDashboard Add ContentOverviewRecentFavoritesTotal Content66pieces in your librarySetlists3ready for performanceFavorites3marked as favoritesRecent10viewed recentlyRecent ContentYour recently viewed music[UX-AUDIT] BATCH TRESLyrics[UX-AUDIT] BATCH DOISLyrics",
+    "console_errors": [
+      "Failed to load resource: net::ERR_INTERNET_DISCONNECTED",
+      "Failed to fetch RSC payload for https://octavia.rocks/add-content. Falling back to browser navigation. TypeError: Failed to fetch\n    at y (https://oc",
+      "Failed to load resource: net::ERR_INTERNET_DISCONNECTED",
+      "Failed to load resource: net::ERR_INTERNET_DISCONNECTED",
+      "Failed to load resource: net::ERR_INTERNET_DISCONNECTED",
+      "Failed to fetch RSC payload for https://octavia.rocks/login. Falling back to browser navigation. TypeError: Failed to fetch\n    at y (https://octavia.",
+      "Failed to load resource: net::ERR_INTERNET_DISCONNECTED",
+      "Failed to fetch RSC payload for https://octavia.rocks/signup. Falling back to browser navigation. TypeError: Failed to fetch\n    at y (https://octavia",
+      "Failed to load resource: net::ERR_INTERNET_DISCONNECTED",
+      "Failed to load resource: net::ERR_INTERNET_DISCONNECTED"
+    ],
+    "screenshot": "docs/ux/fase-d/evidence/item-08-dashboard-offline.png",
+    "goto_starturl_offline": {
+      "nav": "ok",
+      "url": "https://octavia.rocks/"
+    },
+    "taps_total": 0
+  },
+  "recordedAt": "2026-08-09T21:06:28.293Z",
+  "trace": "docs/ux/fase-d/traces/fase-d-c-offline-Grupo-C-—-2afc8-eopen-offline-com-sessão-1h-fase-d.zip"
+}

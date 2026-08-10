@@ -1,4 +1,4 @@
-import { test, type Page } from '@playwright/test'
+import { test, chromium, type Page } from '@playwright/test'
 import fs from 'node:fs'
 import { config as loadEnv } from 'dotenv'
 import { ItemRecorder, settle } from './recorder'
@@ -50,8 +50,12 @@ test('item-12 + item-11: POSTs de sessão no login e trocas de aba; 429 + token 
     return
   }
 
-  // Contexto LIMPO (deslogado), headed p/ eventos reais de visibilidade
-  const context = await browser.newContext({
+  // Instância PRÓPRIA do browser: com o `browser` fixture compartilhado do
+  // projeto, `goto('/login')` aterrissava no /dashboard já logado (o teste
+  // registrou url_da_tela_de_login = /dashboard). Um launch dedicado
+  // garante o estado deslogado que o item exige.
+  const ownBrowser = await chromium.launch({ headless: true })
+  const context = await ownBrowser.newContext({
     baseURL: 'https://octavia.rocks',
     viewport: { width: 1194, height: 834 },
   })
@@ -70,6 +74,14 @@ test('item-12 + item-11: POSTs de sessão no login e trocas de aba; 429 + token 
     // ---- Item 12: login completo pela UI ----
     await page.goto('/login', { waitUntil: 'domcontentloaded', timeout: 90_000 })
     await settle(page, 1500)
+    // Diagnóstico: numa execução anterior o campo #email nunca apareceu e o
+    // teste morreu no timeout. Registrar onde a página realmente parou.
+    rec12.measure('url_da_tela_de_login', page.url())
+    rec12.measure(
+      'inputs_presentes',
+      await page.evaluate(() => Array.from(document.querySelectorAll('input')).map((i) => i.id || i.type))
+    )
+    rec12.measure('screenshot_login', await shot(page, 'item-12-tela-de-login'))
     await rec12.tap('taps: email + senha + Sign In (3)', async () => {
       await page.locator('#email').fill(email)
       await page.locator('#password').fill(password)
@@ -150,5 +162,6 @@ test('item-12 + item-11: POSTs de sessão no login e trocas de aba; 429 + token 
     rec11.save(testInfo)
     rec12.save(testInfo)
     await context.close()
+    await ownBrowser.close()
   }
 })

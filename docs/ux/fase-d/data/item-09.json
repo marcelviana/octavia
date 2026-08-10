@@ -1,0 +1,35 @@
+{
+  "item": 9,
+  "question": "A setlist cacheada abre completa offline, incluindo PDFs? O que aparece para música cujo arquivo nunca foi cacheado?",
+  "status": "respondida",
+  "procedure": [],
+  "observations": [
+    "Cache aquecido online: músicas 1-3 da Show padrão visitadas (1ª é o PDF de 12 páginas)"
+  ],
+  "measurements": {
+    "reopen_performance_offline": "ok",
+    "url_apos_reopen": "https://octavia.rocks/performance?setlistId=00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f&startingSongIndex=0",
+    "shell_performance_offline": true,
+    "musica_1_offline": {
+      "titulo": "[UX-AUDIT] Partitura de 12 páginas",
+      "conteudo": "iframe-pdf"
+    },
+    "musica_2_offline": {
+      "titulo": "[UX-AUDIT] Partitura de 1 página",
+      "conteudo": "iframe-pdf"
+    },
+    "musica_3_offline": {
+      "titulo": "[UX-AUDIT] Palco",
+      "conteudo": "texto"
+    },
+    "setlist_nunca_cacheada_offline": {
+      "nav": "ok",
+      "url": "https://octavia.rocks/performance?setlistId=4340bf95-9e08-41a4-8da1-f725fc1c2350&startingSongIndex=5",
+      "tela": "[UX-AUDIT] Odeio VocêAdoniran Barbosa100%80 BPMQuando a noite chega e a cidade acende Eu procuro a estrada que me leva até você O vento traz lembranças de um tempo que passou E se a saudade aperta, eu canto essa canção Pra espantar a sombra e acalmar o coração Amanhã é outro dia, o sol vai voltar E "
+    },
+    "screenshot_nunca_cacheada": "docs/ux/fase-d/evidence/item-09-nunca-cacheada.png",
+    "taps_total": 0
+  },
+  "recordedAt": "2026-08-09T21:06:49.786Z",
+  "trace": "docs/ux/fase-d/traces/fase-d-c-offline-Grupo-C-—-e1ece-ne-E-música-nunca-cacheada--fase-d.zip"
+}

@@ -48,10 +48,21 @@ test.describe('Grupo E — setlists (J3)', () => {
     )
     trackSessionPosts(page, 'item-16')
 
+    // Instrumentação do POST de criação: na 1ª execução o diálogo FECHOU
+    // normalmente e nada foi persistido — sem capturar a resposta não dá
+    // para saber se foi 429, 500 ou sucesso com nome sanitizado.
+    const createCalls: Array<{ status: number; body: string }> = []
+    page.on('response', async (res) => {
+      if (res.url().endsWith('/api/setlists') && res.request().method() === 'POST') {
+        const body = await res.text().catch(() => '')
+        createCalls.push({ status: res.status(), body: body.slice(0, 300) })
+      }
+    })
+
+    try {
     if (!(await gotoRoute(page, '/setlists', rec))) {
       rec.note('rota indisponível após retries de bounce — item inconclusivo nesta passada')
       rec.set('inconclusiva')
-      rec.save(testInfo)
       return
     }
     await settle(page, 2500)
@@ -78,7 +89,18 @@ test.describe('Grupo E — setlists (J3)', () => {
         await page.getByRole('dialog').waitFor({ state: 'hidden', timeout: 15_000 })
       })
       rec.measure('criar_setlist_vazia', { taps: 3, ms: rec.elapsed() })
-      await settle(page, 1500)
+      await settle(page, 2500)
+      rec.measure('POST_/api/setlists', createCalls)
+
+      // Toast de erro? (o diálogo fecha mesmo quando a criação falha)
+      rec.measure(
+        'toasts_apos_criar',
+        await page.evaluate(() =>
+          Array.from(
+            document.querySelectorAll('[data-sonner-toast], [role="alert"], [role="status"], li[data-type]')
+          ).map((t) => t.textContent?.trim().slice(0, 160))
+        )
+      )
 
       // Nome persistido corretamente? (SET-02: sanitizador)
       const visible = await page.getByText(PICKER_SETLIST, { exact: true }).count()
@@ -87,7 +109,49 @@ test.describe('Grupo E — setlists (J3)', () => {
         await page.getByText(PICKER_SETLIST, { exact: true }).first().click()
         await settle(page, 1500)
       } else {
-        rec.note('Nome não apareceu na lista — sanitizador pode ter alterado; procurando card vazio')
+        rec.note(
+          'ACHADO (FASE-D-05): o diálogo fechou como se tivesse dado certo, mas a setlist NÃO foi criada. ' +
+            `Resposta do POST: ${JSON.stringify(createCalls)}`
+        )
+        rec.measure('screenshot_falha_silenciosa', await shot(page, 'item-16-criacao-falhou'))
+
+        // Segunda tentativa PELO MESMO CAMINHO DE UI, agora preenchendo a
+        // descrição (campo rotulado como opcional). Isto não é um fix do
+        // produto: é o único caminho de UI que funciona, e medir os dois
+        // lados da fronteira é o que responde o item.
+        await rec.tap('tap 4: reabrir o diálogo de nova setlist', async () => {
+          await page.getByRole('button', { name: /new setlist|create/i }).first().click()
+          await page.getByRole('dialog').waitFor({ state: 'visible', timeout: 10_000 })
+        })
+        await rec.tap('tap 5: digitar o nome', async () => {
+          await page.locator('#name').fill(PICKER_SETLIST)
+        })
+        await rec.tap('tap 6: digitar a descrição (campo "opcional")', async () => {
+          await page.locator('#description').fill('Setlist de medição da Fase D')
+        })
+        await rec.tap('tap 7: confirmar criação', async () => {
+          await page
+            .getByRole('dialog')
+            .getByRole('button', { name: /create/i })
+            .click()
+          await page.getByRole('dialog').waitFor({ state: 'hidden', timeout: 15_000 })
+        })
+        await settle(page, 2500)
+        rec.measure('POST_apos_preencher_descricao', createCalls)
+        const visible2 = await page.getByText(PICKER_SETLIST, { exact: true }).count()
+        rec.measure('criada_com_descricao_preenchida', visible2 > 0)
+        rec.measure('taps_reais_para_criar_setlist', 7)
+        if (visible2 === 0) {
+          rec.note('Nem com descrição preenchida a setlist apareceu — bloqueio mais profundo')
+          rec.set('inconclusiva')
+          return
+        }
+        rec.note(
+          'Criar uma setlist pela UI exige preencher a descrição, que o formulário apresenta como opcional. ' +
+            'Deixá-la vazia falha em silêncio. Custo real: 7 taps (3 desperdiçados na tentativa que falha), não 3.'
+        )
+        await page.getByText(PICKER_SETLIST, { exact: true }).first().click()
+        await settle(page, 1500)
       }
     }
 
@@ -146,7 +210,9 @@ test.describe('Grupo E — setlists (J3)', () => {
       `Picker é multi-select num dialog: ${tapsAdding} taps para 10 músicas ` +
         `(1 abrir + 10×(busca+seleção) + 1 confirmar) = ${(tapsAdding / 10).toFixed(1)} taps/música, sem sair da tela.`
     )
-    rec.save(testInfo)
+    } finally {
+      rec.save(testInfo)
+    }
   })
 
   test('item-21: probe da constraint (setlist_id, position) no banco vivo', async ({ page }, testInfo) => {

@@ -1,8 +1,21 @@
 {
   "item": 18,
   "question": "Em iPad simulado: o drag inicia com toque? Os ícones hover-only aparecem com um tap? Quantos taps até remover uma música?",
-  "status": "inconclusiva",
-  "procedure": [],
+  "status": "respondida",
+  "procedure": [
+    {
+      "label": "tap na linha",
+      "taps": 1,
+      "atMs": 45,
+      "durMs": 45
+    },
+    {
+      "label": "tap: Remove song (Trash)",
+      "taps": 1,
+      "atMs": 2453,
+      "durMs": 16
+    }
+  ],
   "observations": [
     "BOUNCE em /setlists (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
     "BOUNCE em /setlists (tentativa 2/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
@@ -17,11 +30,53 @@
     "Recuperado via navegação de UI (sidebar \"Setlists\") após o bounce",
     "BOUNCE em /setlists (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
     "Recuperado via navegação de UI (sidebar \"Setlists\") após o bounce",
-    "Status corrigido para inconclusiva: o teste recuperou /setlists via sidebar mas nao encontrou a setlist do picker (item 16 nao pode ser criado), entao nenhuma medicao de drag/hover/remocao foi feita."
+    "Status corrigido para inconclusiva: o teste recuperou /setlists via sidebar mas nao encontrou a setlist do picker (item 16 nao pode ser criado), entao nenhuma medicao de drag/hover/remocao foi feita.",
+    "BOUNCE em /setlists (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "Recuperado via navegação de UI (sidebar \"Setlists\") após o bounce",
+    "Drag HTML5 nativo não escuta touch events (SET-04) — resultado esperado: nada move. Confirmação física no iPad: MANUAL-CHECKLIST.",
+    "Botão Remove está opacity-0 (hover-only) — tentando tap direto mesmo assim"
   ],
   "measurements": {
-    "taps_total": 0
+    "taps_total": 2,
+    "linha_draggable_encontrada": true,
+    "icones_antes_do_tap": [
+      {
+        "label": "Start performance from this song",
+        "opacity": "0",
+        "w": 28,
+        "h": 28
+      },
+      {
+        "label": "Remove song",
+        "opacity": "0",
+        "w": 28,
+        "h": 28
+      }
+    ],
+    "icones_apos_tap": [
+      {
+        "label": "Start performance from this song",
+        "opacity": "0",
+        "w": 28,
+        "h": 28
+      },
+      {
+        "label": "Remove song",
+        "opacity": "0",
+        "w": 28,
+        "h": 28
+      }
+    ],
+    "url_apos_tap_na_linha": "https://octavia.rocks/setlists",
+    "drag_touch": {
+      "moveu": false,
+      "primeira_linha_apos": "1[UX-AUDIT] Garota de IpanemaTom JobimChords"
+    },
+    "taps_para_remover": 1,
+    "linhas_restantes": 10,
+    "screenshot": "docs/ux/fase-d/evidence/item-18-touch-remocao.png",
+    "tempo_total_ms": 5573
   },
-  "recordedAt": "2026-08-09T19:13:11.187Z",
+  "recordedAt": "2026-08-10T12:10:43.393Z",
   "trace": "docs/ux/fase-d/traces/fase-d-e-setlists-Grupo-E--d87bc-only-taps-para-remover-drag-fase-d.zip"
 }

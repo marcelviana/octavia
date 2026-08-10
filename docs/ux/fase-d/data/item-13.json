@@ -1,0 +1,57 @@
+{
+  "item": 13,
+  "question": "SET-05: em qual adição o 429 dispara ao montar setlist de 50+? O que o usuário vê e em que estado fica a setlist (persistidas vs. estado local)?",
+  "status": "respondida",
+  "procedure": [
+    {
+      "label": "tap: Add Songs",
+      "taps": 1,
+      "atMs": 136,
+      "durMs": 136
+    },
+    {
+      "label": "tap: Select all",
+      "taps": 1,
+      "atMs": 312,
+      "durMs": 176
+    },
+    {
+      "label": "tap: Add N Songs (dispara o burst sequencial)",
+      "taps": 1,
+      "atMs": 1357,
+      "durMs": 90
+    }
+  ],
+  "observations": [
+    "BOUNCE em /setlists (tentativa 1/3): aterrissou em https://octavia.rocks/login — redirect do 429 em /api/auth/verify (limiter compartilhado por IP)",
+    "Recuperado via navegação de UI (sidebar \"Setlists\") após o bounce",
+    "UI local: 48 músicas visíveis; servidor: 48 — divergência = achado (o handler aborta o loop no primeiro erro sem reconciliar o estado local)"
+  ],
+  "measurements": {
+    "taps_total": 3,
+    "musicas_antes": 10,
+    "botao_add": "Add 56 Songs",
+    "duracao_burst_ms": 30165,
+    "posts_total": 39,
+    "primeiro_429": {
+      "i": 39,
+      "status": 429,
+      "remaining": "0",
+      "retryAfter": "60"
+    },
+    "sequencia_status": "201,201,201,201,201,201,201,201,201,201,201,201,201,201,201,201,201,201,201,201,201,201,201,201,201,201,201,201,201,201,201,201,201,201,201,201,201,201,429",
+    "ok_antes_do_429": 38,
+    "visao_do_usuario": {
+      "toasts": [],
+      "dialogAberto": false
+    },
+    "screenshot_apos_burst": "docs/ux/fase-d/evidence/item-13-apos-burst.png",
+    "musicas_na_ui_apos_burst": 48,
+    "musicas_no_servidor": 48,
+    "musicas_apos_reload": 48,
+    "screenshot_apos_reload": "docs/ux/fase-d/evidence/item-13-apos-reload.png",
+    "tempo_total_ms": 39926
+  },
+  "recordedAt": "2026-08-10T12:26:54.211Z",
+  "trace": "docs/ux/fase-d/traces/fase-d-rl-13-item-13-em-qu-72856-ra-ao-montar-setlist-de-50--fase-d.zip"
+}

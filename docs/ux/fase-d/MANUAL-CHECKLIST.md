@@ -125,8 +125,10 @@ de 60?
 
 **Pergunta original (parte)**: o drag inicia com toque?
 
-> A parte automatizável (ícones hover-only, taps para remover, drag por touch
-> emulado) está em `data/item-18.json`. Confirmar no hardware:
+> A parte automatizável está medida em `data/item-18.json`: com touch
+> emulado, os botões da linha ficam em `opacity: 0` **antes e depois** do
+> tap (28×28 px), e o drag por eventos de toque **não move** a linha.
+> Confirmar no hardware:
 
 **Procedimento**:
 1. Abrir a setlist "UX-AUDIT Fase D picker" no iPad, detalhe com músicas.

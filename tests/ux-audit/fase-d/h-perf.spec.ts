@@ -261,10 +261,11 @@ test.describe('Grupo H — performance diversos', () => {
     )
     trackSessionPosts(page, 'item-41')
 
+    test.setTimeout(6 * 60 * 1000)
+    try {
     if (!(await gotoRoute(page, '/dashboard', rec))) {
       rec.note('rota indisponível após retries de bounce — item inconclusivo nesta passada')
       rec.set('inconclusiva')
-      rec.save(testInfo)
       return
     }
     await settle(page, 2500)
@@ -274,12 +275,19 @@ test.describe('Grupo H — performance diversos', () => {
     const hasTabs = await favTab.isVisible().catch(() => false)
     if (hasTabs) {
       await rec.tap('tap: aba Favorites', async () => favTab.click())
-      await page.waitForTimeout(800)
+      await page.waitForTimeout(1200)
     }
     await page.evaluate(() => window.scrollTo(0, 300))
     const scrollBefore = await page.evaluate(() => window.scrollY)
 
-    const firstRecent = page.locator('button', { hasText: '[UX-AUDIT]' }).first()
+    // O card do dashboard expõe aria-label "View <título> content"
+    const firstRecent = page.getByRole('button', { name: /^View .*content$/i }).first()
+    if (!(await firstRecent.isVisible().catch(() => false))) {
+      rec.note('Nenhum card de conteúdo visível no dashboard nesta aba — item inconclusivo')
+      rec.set('inconclusiva')
+      return
+    }
+    rec.measure('card_alvo', (await firstRecent.getAttribute('aria-label')) ?? '(sem aria-label)')
     const t = Date.now()
     await rec.tap('tap: item do dashboard', async () => {
       await firstRecent.click()
@@ -310,6 +318,8 @@ test.describe('Grupo H — performance diversos', () => {
           : `Aba NÃO preservada (voltou em "${stateAfterBack.abaAtiva}")`
       )
     }
-    rec.save(testInfo)
+    } finally {
+      rec.save(testInfo)
+    }
   })
 })
