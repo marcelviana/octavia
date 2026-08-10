@@ -751,8 +751,10 @@ versionados; `traces/` (**147 MB**, 35 traces — o do PDF de 12 páginas tem
 50 MB sozinho) fica fora do git (`.gitignore`) e foi arquivado em:
 
 ```
-~/octavia-ux-audit-fase-d-traces-2026-08-09.zip   (147 MB, 36 arquivos)
+~/octavia-ux-audit-fase-d-traces-2026-08-10-completo.zip   (154 MB, 38 traces)
 ```
+
+(contém as duas passadas; substitui o zip parcial de 09/08)
 
 As referências `trace:` nos JSONs de `data/` apontam para
 `docs/ux/fase-d/traces/<nome>.zip` — para inspecionar um trace, extrair o
