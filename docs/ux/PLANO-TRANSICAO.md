@@ -235,6 +235,18 @@ prazo de vida — **zerar os 166 erros** (baseline registrado em
 a lote/workflow; entra junto do housekeeping do Bloco B, antes do
 desenvolvimento nativo ganhar ritmo.
 
+**Item irmão — suíte E2E do CI vermelha**: `tests/e2e/basic.spec.ts`
+falha nos 3 browsers (webkit não lança no runner, firefox timeout de
+navegação, chromium teste de estado de auth) — **pré-existente desde
+antes do audit**: o run do próprio `a3114cc` (o commit em prod) falhou
+igual. Diagnosticar e **reativar como gate bloqueante**. Disciplina de
+escopo: **nenhum diagnóstico do E2E começa durante a fila A**.
+
+**Gate provisório de merge** (regra escrita, válida para todas as PRs da
+fila A enquanto o E2E não voltar): **Vercel preview ✅ + Lint ✅ +
+type-check ✅ + unit tests ✅ + coverage ✅ + Build ✅**; E2E vermelho é
+herdado, **não bloqueante e não reaberto por PR**.
+
 ---
 
 ## Bloco C — Corpus de requisitos do app nativo

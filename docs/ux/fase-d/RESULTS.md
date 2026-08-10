@@ -555,6 +555,7 @@ AUTH-03 confirmado: logado, `/` mostra a landing de marketing.
 - *Medição*: o estado vazio aparece corretamente — *"No song selected / Choose a song or setlist to start performance mode"* + botão "Go back". Após o tap: **`about:blank`**.
 - *Veredito*: **PERF-07/beco sem saída confirmado no pior formato**. Com histórico vazio o `router.back()` leva para fora do app — numa aba de browser é a página em branco; num PWA instalado, é sair do app. O botão não deveria usar `back()` e sim navegar para o dashboard.
 - *Evidência*: `evidence/item-37-empty-state.png`
+- *Nota da Fase E (2026-08-10)*: dúvida sobre o baseline resolvida por arqueologia de deployments — **prod rodava exatamente `a3114cc`** (o commit do fix do empty state, último deploy de produção com sucesso no Vercel) durante toda a Fase D. Ou seja: o empty state renderizando corretamente **é o comportamento pós-fix do PERF-03**, e o `about:blank` do "Go back" é o **PERF-07**, aberto e independente (fila A #10 do `../PLANO-TRANSICAO.md`).
 
 **38. Confirmar que nenhum gesto de swipe avança música.**
 
