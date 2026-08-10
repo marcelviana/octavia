@@ -20,11 +20,6 @@ vi.mock('@/lib/logger', () => ({
   }
 }))
 
-// Mock rate limiting
-vi.mock('@/lib/rate-limit', () => ({
-  withRateLimit: (handler: any) => handler
-}))
-
 import {
   createMockRequest,
   createAuthenticatedRequest,

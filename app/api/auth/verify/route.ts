@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyFirebaseToken } from '@/lib/firebase-admin';
 import { verifyTokenSchema } from '@/lib/validation-schemas';
-import { 
+import {
   validateRequestBody,
   createValidationErrorResponse,
   createServerErrorResponse
 } from '@/lib/validation-utils';
-import { withRateLimit } from '@/lib/rate-limit';
 
 export const runtime = 'nodejs'; // Explicitly use Node.js runtime
 
@@ -83,4 +82,11 @@ const verifyTokenHandler = async (request: NextRequest): Promise<NextResponse<Ve
   }
 }
 
-export const POST = withRateLimit(verifyTokenHandler, 20, true) 
+// SEM rate limit até o redesenho do B1 (docs/ux/PLANO-TRANSICAO.md).
+// A rota é pública, mas é chamada por getServerSideUser em TODO server
+// component autenticado, e o limiter antigo (por IP, strict, compartilhado
+// com auth/user e storage/delete) derrubava o usuário logado de qualquer
+// rota — RATE-01, fila A #0. Paliativo aceitável em app de usuário único:
+// a verificação do token é local (assinatura JWT via firebase-admin), sem
+// chamada de rede por request.
+export const POST = verifyTokenHandler
