@@ -134,6 +134,13 @@ Por IP não é apenas ruim: é **incompatível com o cliente que vem aí**.
    (ou substituto), com configs explícitas por rota.
 5. Resposta 429 **estruturada** (ver B3) com `Retry-After` honesto.
 
+**Evidência acumulada do session (dossiê do B1)**: além dos **63% de 429
+em 371 POSTs** da Fase D (prod), a validação da fila A #0 em preview
+somou uma segunda fonte independente: **9 de 12 navegações triviais
+(75%) geraram 429 no `/api/auth/session`** — navegação normal de um
+único usuário esgota a janela de 5/15min quase imediatamente. Leitura:
+**o redesenho do session é candidato a primeiro item executado do B1.**
+
 **Rastreio (fila A, 2026-08-10)**: o redesenho elimina o self-fetch HTTP
 (verify vira chamada de função local — `verifyFirebaseToken` já é local),
 removendo a classe inteira de pedágios cobrados três vezes durante o audit
