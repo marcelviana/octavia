@@ -34,56 +34,59 @@ redesign: cada item é religar um fio, corrigir uma linha ou destravar um fluxo.
 Todos os candidatos abaixo foram **validados no código nesta fase** — os
 apontamentos de arquivo/linha conferem com o estado atual do repositório.
 
-### Fila final aprovada (#0–#11)
+### Fila final — RECORTADA para 7 itens (2026-08-10, segunda revisão)
 
-**#0 — Paliativo do rate limit (RATE-01, aprovado da fronteira A/B)**:
+> **Racional do recorte**: o custo real da fila ficou visível na execução
+> do #0 — o fix era 1 linha, mas o terreno (pipeline de build/deploy,
+> acesso a preview, self-fetch) consumiu o esforço. Com o nativo decidido,
+> o web precisa apenas **não atrapalhar shows e preparação de shows** até
+> a substituição. Recorte pelo uso real: a maior parte do conteúdo de
+> palco é **texto** (cifras/letras/tabs), não PDF; os fluxos de preparação
+> (setlists, upload) incomodam com frequência real. Itens #6, #7, #9, #10
+> e #11 da fila original foram **cortados** e migraram para o Bloco D.
+
+**#0 — Paliativo do rate limit (RATE-01) — ✅ CONCLUÍDO**:
 retirar o limiter antigo do caminho de `/api/auth/verify`. A rota é
 **pública** (qualquer cliente pode dar POST nela); a justificativa do
-paliativo é outra: a verificação do token é **local** (assinatura JWT via
-firebase-admin, sem chamada de rede por request — custo de CPU baixo), o
-app tem um único usuário, e o estado é temporário até o redesenho do B1.
-O uso dominante é interno (`getServerSideUser` em todo server component),
-e é esse uso que o limiter antigo punia. Elimina o sintoma mais grave do
-RATE-01 (usuário logado expulso de qualquer rota; 63% de 429 medidos) sem
-comprometer o redesenho do B1, do qual é a primeira etapa. Esforço P ·
-risco baixo e **explícito**: a rota fica sem rate limit algum até o B1.
+paliativo: verificação **local** de assinatura JWT (custo de CPU baixo),
+app de usuário único, estado temporário até o B1. Executado nas PRs #219
+(fix + regressão `rl-0-verify.spec.ts`) com as PRs de terreno #220
+(pipeline) e #221 (âncora do self-fetch); **validado quantitativamente em
+preview e em prod** (parte A: 40× 200 / 0× 429; parte B: 12/12 navegações
+sem expulsão; parte C: limiter antigo vivo fora do verify). Relatório
+final aprovado em 2026-08-10.
 
-| # | ID | Fix proposto | Esf | Risco |
-|---|----|--------------|-----|-------|
-| 1 | **PERF-02** | Em [`lib/security-headers.ts:79`](../../lib/security-headers.ts), trocar `frame-src: 'none'` por `frame-src: 'self' blob:` — o PDF do palco é um `<iframe>` com blob URL do próprio app (`worker-src` já libera `blob:`). | P | **Baixo.** Afrouxa a CSP apenas para conteúdo gerado pelo próprio app; `object-src 'none'` permanece. Validar em prod com o PDF de 12 páginas (procedimento do item 4 do RESULTS). |
-| 2 | **SET-23** | Em [`lib/api-validation-middleware.ts:199`](../../lib/api-validation-middleware.ts), `description: safeHtml.optional()` → `.nullish()` (aceita `null` e `undefined`). Opcional (defesa dupla): nos dois call sites de [`setlist-manager.tsx`](../../components/setlist-manager.tsx) (83, 106), `\|\| null` → `\|\| undefined`. | P | **Quase nulo.** Amplia o que o schema aceita; nenhum payload hoje válido passa a ser rejeitado. Destrava o primeiro passo do J3 (7 taps → 3). |
-| 3 | **ADD-13** | Em [`hooks/useAddContentLogic.ts:217-224`](../../hooks/useAddContentLogic.ts), o branch `else if (uploadedFile)` deve usar `metadataToUse` (`customMetadata \|\| metadata`) como o branch vizinho de draft já faz, e incluir `key`, `album`, `genre`, `bpm`, `difficulty`, `notes` no payload. | P | **Baixo.** Alinha ao branch que já funciona. Testar upload simples e batch (specs dos itens 42/44 existem). |
-| 4 | **ADD-14** | Guarda de in-flight no `handleSaveContent` (early-return se já salvando) + `disabled` no botão Save. Mesma PR do ADD-13 — mesmo arquivo, mesmo fluxo de teste. | P | **Nulo.** Elimina as duplicatas de 41 ms medidas no item 43. |
-| 5 | **SET-14** (FASE-D-06) | Fazer a listagem `/setlists` ler o cache offline — os dados **já estão** cacheados (o stat do dashboard e o deep link do performance leem; itens 8–9): é ligar a mesma fonte no data path da página de listagem. | **M** | **Médio-baixo.** Único M da fila (veto J1/J6: palco sem rede). Cuidar para não regredir o comportamento online; o cenário de verificação é o item 10 do RESULTS. |
-| 6 | **SET-03** | Implementar o handler de drop ([`setlist-manager.tsx:279`](../../components/setlist-manager.tsx), TODO) chamando a API de reorder existente (two-phase UPDATE pronta). | P | **Médio.** Religar expõe SET-07 (2N UPDATEs sem transação) a uso real pela primeira vez — medir a latência que o item 17 deixou diferido. Nota: o insert ignora `position` (item 21), mas isso não afeta o reorder, que usa UPDATE. |
-| 7 | **SET-04** (condicional) | Se couber em P: **não** reescrever o drag para touch (isso é M) — adicionar botões ▲/▼ por linha, sempre visíveis, ≥44 px. Resolve touch **e**, de quebra, o pior do SET-12 (controles invisíveis em touch). | P | **Baixo.** Se não couber no orçamento, registrar: reorder permanece mouse-only no web até o nativo — o iPad de palco continua sem reorder. |
+**Itens restantes, na ordem de execução** (nova ordem = prioridade real de
+uso; a antiga PR-1 vai para o fim):
 
-**Itens #8–#11 (adicionais aprovados)** — satisfazem o mesmo critério
-"S1/S2 + morde semanal + P":
+| Ordem | # | ID | Fix proposto | Esf | Risco / processo |
+|-------|---|----|--------------|-----|------------------|
+| 1º | 2 | **SET-23** | Em [`lib/api-validation-middleware.ts`](../../lib/api-validation-middleware.ts) (schema de setlist), `description: safeHtml.optional()` → `.nullish()`. Defesa dupla: nos dois call sites de [`setlist-manager.tsx`](../../components/setlist-manager.tsx) (83, 106), `\|\| null` → `\|\| undefined`. | P | **Quase nulo.** Destrava o primeiro passo do J3 (7 taps → 3). Regressão: item 16. **Rigor atual** (dados). |
+| 2º | 3 | **ADD-13** | Em [`hooks/useAddContentLogic.ts`](../../hooks/useAddContentLogic.ts), o branch `else if (uploadedFile)` usa `metadataToUse` (`customMetadata \|\| metadata`) como o branch de draft, e inclui `key`, `album`, `genre`, `bpm`, `difficulty`, `notes`. | P | **Baixo.** Regressão: itens 42/46 + 44 sanity. **Rigor atual** (upload/dados). |
+| 2º | 4 | **ADD-14** | Guarda de in-flight no `handleSaveContent` + `disabled` no Save. Mesma PR do ADD-13. | P | **Nulo.** Regressão: item 43. **Rigor atual**. |
+| 3º | 8 | **CONT-01 + CONT-02** | Cifra/tab-string em bloco monoespaçado `white-space: pre` + scroll-x (sem word-wrap). | P | **Baixo.** Conteúdo de texto é o caso majoritário do palco. Regressão: item 33 + assert de cifra. **Checkpoint único** (diff + teste juntos, sem intermediário). |
+| 4º | 5 | **SET-14** (FASE-D-06) | Listagem `/setlists` lê o cache offline (a mesma fonte que o dashboard e o deep link já leem; itens 8–9). | **M** | **Médio-baixo.** Único M (veto J1/J6: offline no local do show). Regressão: item 10 + 8–9 sanity. **Rigor atual**. |
+| 5º (último) | 1 | **PERF-02** | Em [`lib/security-headers.ts:79`](../../lib/security-headers.ts), `frame-src: 'none'` → `'self' blob:`. Pre-check do call site **feito**: o iframe só recebe `blob:` do próprio app (via `/api/proxy` → `createObjectURL`); não incluir `data:` (fallback legacy praticamente morto — declarado na PR). | P | **Baixo.** Mantido pelo custo marginal (one-liner com pre-check pronto). Perde a posição privilegiada: PDF é minoria do palco. Gate de preview permanece (item 4, Chromium headed). |
 
-| # | ID | Fix proposto | Por quê |
-|---|----|--------------|---------|
-| 8 | **CONT-01 + CONT-02** | Renderizar cifra/tab que chegam como string em bloco monoespaçado com `white-space: pre` e scroll horizontal (sem word-wrap). | Dois S1 de esforço P no palco: hoje cifra vira parágrafo corrido e a tab é **destruída** a 390 px (item 33). |
-| 9 | **AUTH-03** | Usuário com cookie de sessão acessando `/` → redirect `/dashboard` (middleware). | Corta 1 tap + ~1,2 s de todo J1 e o desvio pela landing de 10,3 s na abertura fria (item 1). |
-| 10 | **PERF-07** | "Go back" do empty state e fim de setlist → `router.push('/dashboard')` em vez de `router.back()`. | Item 37: com histórico vazio, o botão leva a `about:blank` — **sai do app** no palco. |
-| 11 | **DASH-04** | `pb-16` → `pb-24` no layout (nav real mede 81 px; déficit de 17 px confirmado no item 22). | Uma linha; visto diariamente. |
+**Cortados no recorte (2ª revisão) — migraram para o Bloco D**: SET-03 e
+SET-04 (reorder convive com workaround manual até o nativo; o desconhecido
+do item 17 — posições 10000+, latência dos 2N UPDATEs — deixa de ser risco
+da fila A e vira **pergunta de design do reorder nativo**, registrada no
+B6), AUTH-03, PERF-07 e DASH-04 (cosméticos).
 
-**Ordem e racional**: #0 devolve a estabilidade de navegação que todo o
-resto pressupõe. #1–#2 são fixes de uma linha nos dois maiores bloqueios
-de job (PDF no palco; criar setlist). #3–#4 saem numa única PR e eliminam
-a perda de dados do import semanal. #5 é o único M — palco offline, veto
-J1/J6. #6–#7 fecham o reorder, o fio desligado mais antigo. #8–#11 são a
-cauda P aprovada.
+**Mapeamento de PRs**: morrem PR-5, PR-7, PR-8a e PR-8b. Sobram, na ordem:
+**PR-2 (#2) → PR-3 (#3+#4) → PR-6 (#8) → PR-4 (#5) → PR-1 (#1)**.
 
-**Verificação sem custo novo**: a suíte da Fase D
-(`playwright.ux-audit.config.ts`, projeto `fase-d`,
-`tests/ux-audit/fase-d/`) já contém o teste de regressão de cada item
-desta fila — itens 4 (PDF), 16 (criar setlist), 42/43
-(metadados/double-submit), 10 (offline), o 17 diferido (reorder), 33
-(tab), 1 (landing), 37 (Go back), 22 (bottom nav) e os probes de rate
-limit (`rl-auth.spec.ts`, `probe-auth-limit.ts`). Rodar o spec
-correspondente após cada fix — agrupamento em PRs na proposta de execução
-apresentada à parte.
+**Processo por classe de item**: conteúdo/UI sem toque em auth ou dados
+(#8) roda com **checkpoint único** — diff + teste apresentados juntos.
+Auth, dados e upload (#2, #3, #4, #5) mantêm o rigor atual (pre-check
+reportado, aval por etapa).
+
+**Verificação sem custo novo**: a suíte da Fase D (projeto `fase-d`) tem o
+teste de regressão de cada item restante — 16 (criar setlist), 42/43/46
+(metadados/double-submit), 33 (tab), 10 + 8–9 (offline), 4 (PDF, headed).
+Validação preview-first com a infra montada no #0 (bypass header no
+tooling; self-fetch ancorado).
 
 ### O que NÃO entra no Bloco A (explícito)
 
@@ -223,6 +226,14 @@ nativo (J3) e o handler web será religado (A#6):
 transação única server-side. Documentar que o insert não aceita `position`
 (ou passar a aceitar — decidir). A constraint `(setlist_id, position)` NÃO
 existe no banco vivo (item 21), o que reduz o risco da transição.
+
+**Pergunta de design herdada do recorte da fila A (2026-08-10)**: SET-03/04
+foram cortados — o reorder web nunca será religado, e o **item 17 do
+RESULTS permanece sem medição**: latência real dos 2N UPDATEs na setlist
+de 60 e o risco de posições 10000+ persistidas em interrupção no meio da
+fase 1. O endpoint atômico do nativo deve ser desenhado assumindo que
+esses números **não são conhecidos** — a transação única elimina as duas
+incógnitas por construção.
 
 ### B7 — Contratos menores que o nativo herda
 
@@ -430,6 +441,11 @@ cosmético. Um por linha, com a justificativa.
 | SET-20 | Botão do shell sem nome (= DASH-06). |
 | SET-21 | Página sem h1 — semântica de página web. |
 | PERF-08 | Toast de wake lock cobrindo controles — o problema inteiro desaparece com wake lock nativo (C4). |
+| SET-03 *(recorte da fila A)* | Reorder web nunca será religado — workaround manual (remover/re-adicionar) convive até o nativo; o reorder nativo nasce do endpoint atômico do B6. |
+| SET-04 *(recorte da fila A)* | Drag touch morre com a UI web; o requisito de reorder operável em touch segue no C (J3) para o nativo. |
+| AUTH-03 *(recorte da fila A)* | Desvio pela landing é cosmético frente ao uso real; morre com o web app. |
+| PERF-07 *(recorte da fila A)* | "Go back" → about:blank é canto raro (deep link com histórico vazio); a navegação do palco nativo será outra. |
+| DASH-04 *(recorte da fila A)* | 17 px de encobrimento no dashboard — cosmético; layout morre com a web. |
 | PERF-11 | Botões do palco sem nome acessível — a11y da UI atual. |
 | PERF-12 | Auto-hide pela metade (170 px fixos) — o palco nativo será redesenhado; lição em C3-2. |
 | PERF-13 | Contraste #A69B8E no header do palco — paleta atual. |
@@ -512,16 +528,16 @@ com **PDF rendering como critério de maior peso** (foi o maior S1 da web).
 
 ## Tabela-resumo — os 96 achados com destino
 
-Legenda de destino: **A** fila de sobrevivência do web (aprovada, #0–#11)
-· **A\*** condicional a caber em P (item #7) · **B** contrato de
-API/backend · **C** corpus do nativo · **D** morre com a web. Sev/esforço
-conforme ASSESSMENT.
+Legenda de destino: **A** fila de sobrevivência do web (recortada em
+2026-08-10 para 7 itens: #0 ✅, #2, #3, #4, #8, #5, #1 — nesta ordem de
+execução) · **B** contrato de API/backend · **C** corpus do nativo · **D**
+morre com a web. Sev/esforço conforme ASSESSMENT.
 
 | ID | Título curto | Sev | Destino | Nota |
 |----|--------------|-----|---------|------|
-| RATE-01 | Dois sistemas de rate limit; antigo no caminho crítico | S1 | **B** | B1; paliativo aprovado como fila A **#0** |
+| RATE-01 | Dois sistemas de rate limit; antigo no caminho crítico | S1 | **B** | B1; paliativo **#0 ✅ concluído e validado** (2026-08-10) |
 | AUTH-02 | Cookie 7 dias carrega idToken de 1h | S2 | D | contrato Bearer do nativo em B7 |
-| AUTH-03 | Logado abre `/` e cai no marketing | S2 | **A** | fila #9 |
+| AUTH-03 | Logado abre `/` e cai no marketing | S2 | **D** | cortado da fila A (recorte 2026-08-10) |
 | AUTH-04 | Validação só pelo balão HTML5 | S3 | D | lição em C3-5 |
 | AUTH-05 | Select sem nome acessível | S3 | D | |
 | AUTH-06 | "Sign In" invisível na landing | S3 | D | |
@@ -547,7 +563,7 @@ conforme ASSESSMENT.
 | DASH-01 | Dashboard sem caminho para o show | S2 | **C** | IA do nativo (J1) |
 | DASH-02 | 1 de 4 stat cards navega | S2 | D | lição em C3-2 |
 | DASH-03 | Abas Recent/Favorites redundantes | S2 | D | |
-| DASH-04 | Bottom nav encobre conteúdo (81 px vs pb-16) | S2 | **A** | fila #11 |
+| DASH-04 | Bottom nav encobre conteúdo (81 px vs pb-16) | S2 | **D** | cortado da fila A (recorte 2026-08-10) |
 | DASH-05 | 4 stat cards consomem a dobra | S2 | D | |
 | DASH-06 | Botão do shell sem nome | S3 | D | |
 | DASH-07 | Contraste amber-600 | S3 | D | |
@@ -582,8 +598,8 @@ conforme ASSESSMENT.
 | CONT-12 | Scroll do PDF sem foco de teclado | S3 | D | |
 | SET-01 | Venue/data/notas descartados pelo Zod | S1 | **B** | B2; colunas serão ligadas (B5 ✅) |
 | SET-02 | Sanitizador zera nomes reais | S1 | **B** | sanitização é da API; nativo herda |
-| SET-03 | Reorder: handler da UI é TODO | S1 | **A** | fila #6 |
-| SET-04 | Drag inoperante em touch | S1 | **A\*** | fila #7: botões ▲/▼ se couber em P |
+| SET-03 | Reorder: handler da UI é TODO | S1 | **D** | cortado da fila A; item 17 vira pergunta de design do B6 |
+| SET-04 | Drag inoperante em touch | S1 | **D** | cortado da fila A; requisito touch segue no C (J3) |
 | SET-06 | Bis impossível (unique) com 500 mudo | S2 | **B** | constraint será removida (B5 ✅); requisito C4 |
 | SET-07 | Reorder 2N UPDATEs sem transação | S2 | **B** | endpoint atômico B6 |
 | SET-08 | Tom não aparece na área | S2 | **C** | critério do J3 |
@@ -606,7 +622,7 @@ conforme ASSESSMENT.
 | PERF-04 | Avançar exige botão de 36 px | S2 | **C** | anti-padrão C3-3; palco às cegas |
 | PERF-05 | Sem "música 4 de 12" | S2 | **C** | requisito C4/C2 |
 | PERF-06 | Pular música: só dots de 8 px | S2 | **C** | requisito de salto direto (J2) |
-| PERF-07 | Fim de setlist / Go back → about:blank | S2 | **A** | fila #10; `push('/dashboard')` |
+| PERF-07 | Fim de setlist / Go back → about:blank | S2 | **D** | cortado da fila A (recorte 2026-08-10) |
 | PERF-08 | Toast de wake lock cobre controles | S2 | D | some com wake lock nativo (C4) |
 | PERF-09 | Play mudo em PDF/imagem | S2 | **C** | anti-padrão C3-5 (estados por tipo) |
 | PERF-10 | Zoom re-quebra linhas | S2 | **C** | requisito de zoom nativo (pan, layout estável) |
@@ -616,9 +632,10 @@ conforme ASSESSMENT.
 | PERF-14 | Scroll sem foco + landmarks | S3 | D | |
 | GLOB-01 | UI em inglês para usuário brasileiro | S2 | **C** | nativo nasce pt-BR (C4) |
 
-**Conferência**: A 12 (fila #0–#11: núcleo 6 + condicional 1 + aceitos 5;
-o #0 executa o paliativo do RATE-01, cujo destino de redesenho segue B) ·
-B 10 · C 23 · D 51 = **96** — nenhum achado sem destino. Fechados/absorvidos anteriores (sem destino,
+**Conferência (pós-recorte de 2026-08-10)**: A 7 (PERF-02, SET-23,
+ADD-13, ADD-14, SET-14, CONT-01, CONT-02; o #0 executou o paliativo do
+RATE-01, cujo destino de redesenho segue B) · B 10 · C 23 · D 56 =
+**96** — nenhum achado sem destino. Fechados/absorvidos anteriores (sem destino,
 rastreabilidade): ~~ADD-04~~ (absorvido em ADD-13), ~~SET-05~~ e
 ~~AUTH-01~~ (consolidados em RATE-01), ~~PERF-01~~ (não reproduzido),
 ~~PERF-03~~ (corrigido em `a3114cc`), signup 401 e Bug F1 (históricos).
@@ -627,12 +644,13 @@ rastreabilidade): ~~ADD-04~~ (absorvido em ADD-13), ~~SET-05~~ e
 
 ## Execução da fila A — agrupamento em PRs (aprovado com ajustes, 2026-08-10)
 
-Nove itens de deploy: **PR-0** (#0, sozinha) → **housekeeping do retry**
-(commit próprio: reduzir o retry defensivo de 75 s do `recorder.ts` após a
-PR-0 validada em prod; nada de infra de suíte em diff de fix) → **PR-1**
-(#1, sozinha) → **PR-2** (#2) → **PR-3** (#3+#4) · **PR-4** (#5) ·
-**PR-6** (#8) · **PR-7** (#9) · **PR-8a** (#10) · **PR-8b** (#11) em
-qualquer ordem → **PR-5** (#6+#7) por último entre as de setlists.
+> **Atualizado no recorte de 2026-08-10 (2ª revisão)**: PR-5, PR-7, PR-8a
+> e PR-8b **mortas** (itens cortados → Bloco D). Executado até aqui:
+> **PR-0** (#0) + housekeeping (retry/tipo/guard) + PRs de terreno #220
+> (pipeline) e #221 (âncora do self-fetch). Restam, na ordem:
+> **PR-2 (#2) → PR-3 (#3+#4) → PR-6 (#8, checkpoint único) → PR-4 (#5) →
+> PR-1 (#1, por último, gate de preview mantido)**.
+
 Cada PR roda o spec da Fase D correspondente como regressão
 (`tests/ux-audit/fase-d/`, alvo via `UX_AUDIT_BASE_URL`).
 
