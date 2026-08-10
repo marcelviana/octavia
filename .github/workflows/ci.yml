@@ -20,6 +20,9 @@ jobs:
       run: pnpm test:e2e:install
     - name: Lint
       run: pnpm lint
+    - name: Type-check dos testes (informativo — zerar o passivo e promover a bloqueante, PLANO-TRANSICAO B8)
+      run: pnpm exec tsc -p tsconfig.test.json --noEmit
+      continue-on-error: true
     - name: Test
       run: pnpm test:unit
     - name: Test coverage

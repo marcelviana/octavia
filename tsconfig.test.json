@@ -1,0 +1,15 @@
+{
+  // Type-check dos ARQUIVOS DE TESTE (excluídos do tsconfig.json para não
+  // quebrar o `next build` — ver PLANO-TRANSICAO.md § B8). Roda como etapa
+  // separada de CI, informativa até o passivo de erros ser zerado; depois,
+  // promover a bloqueante. Uso: pnpm exec tsc -p tsconfig.test.json --noEmit
+  "extends": "./tsconfig.json",
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "types/**/*.d.ts"
+  ],
+  "exclude": ["node_modules"]
+}
