@@ -1,20 +1,26 @@
-# ASSESSMENT — Fase C (síntese dos findings por área)
+# ASSESSMENT — Fases C + D (síntese consolidada dos findings)
 
-> Insumos: exclusivamente os 7 arquivos em `docs/ux/findings/` (auth, dashboard,
-> library, content-viewer, setlists, performance, add-content), produzidos a partir
-> das capturas das passadas B1/B2 e da leitura do código. Régua de severidade:
-> `docs/ux/JOBS.md`.
+> Insumos: os 7 arquivos em `docs/ux/findings/` (auth, dashboard, library,
+> content-viewer, setlists, performance, add-content), produzidos a partir das
+> capturas B1/B2 e da leitura do código, **mais as medições ao vivo contra prod da
+> Fase D** (`docs/ux/fase-d/RESULTS.md`). Régua de severidade: `docs/ux/JOBS.md`.
 >
 > Este documento **não** recomenda reformar vs. reconstruir — essa é a decisão da
-> Fase E, com os dados da Fase D na mesa. Aqui estão apenas os dados consolidados.
+> Fase E. Aqui estão apenas os dados consolidados.
+>
+> **Atualizado após a Fase D** (2026-08-10): 45 das 49 perguntas da lista fechada
+> foram respondidas com medição ao vivo. Os itens tocados pela Fase D trazem a
+> marca *[D]* e um ponteiro para a pergunta correspondente no RESULTS.
 
 ## Números gerais
 
-- **94 achados abertos** + 3 históricos fechados (signup 401; crash bpm do estado
-  vazio, PERF-03, corrigido no commit a3114cc; Bug F1 do FileUploadZone) + 1 achado
-  global registrado na síntese.
-- Severidade: **14× S1** (3 provisórios, pendentes de confirmação na Fase D:
-  AUTH-01, PERF-02 e ADD-02), **43× S2**, **37× S3**.
+- **95 achados abertos** + 4 históricos fechados (signup 401; crash bpm do estado
+  vazio, PERF-03, corrigido no commit a3114cc; Bug F1 do FileUploadZone;
+  **PERF-01, não reproduzido na Fase D**) + 1 achado global registrado na síntese.
+- Severidade: **14× S1**, **43× S2**, **38× S3**.
+- Os 3 S1 provisórios da Fase C foram **todos confirmados** na Fase D (AUTH-01 →
+  hoje parte de RATE-01, PERF-02, ADD-02), e a fase produziu **5 achados novos**,
+  4 deles S1 (RATE-01, SET-23, SET-14 reescrito, ADD-13).
 - Violações axe deduplicadas por área (regra×elemento): auth 50 (45 delas de uma
   única causa: ausência de landmarks), dashboard 7, library 8, content-viewer 23,
   setlists 28 (3 causas-raiz), performance 17 (pior área, confirmado), add-content 3.
@@ -33,26 +39,57 @@
 
 ## Padrões transversais (consolidação entre áreas — sem novos IDs)
 
-1. **Feature com UI presente e fio desligado** — o padrão mais relevante para a
-   Fase E: reorder com handler TODO na UI e API pronta (SET-03), favorito que não
-   persiste (CONT-05), toolbar vestigial desativada (CONT-08), auto-hide de
-   controles pela metade (PERF-12), props de CTA nunca renderizadas no dashboard
-   (DASH-01), Edit/Delete nunca ligados no viewer (CONT-04), rota de detalhe de
-   setlist morta (SET-10), CompletionStep inalcançável no batch import com branch
-   de save morto e divergente (ADD-02).
-2. **Dupla paleta de ação primária e de estado selecionado** — azul/índigo × âmbar
+1. **Falha silenciosa como default: não existe camada de erro→usuário** *[D]* —
+   o padrão que a Fase D revelou e que passa a ser o mais relevante para a Fase E.
+   Em **sete** situações medidas ao vivo, uma operação falhou (ou fez menos do que
+   foi pedido) e o app **não disse absolutamente nada** — sem toast, sem realce de
+   campo, sem estado de erro. Em três delas o app ainda **afirmou sucesso**:
+
+   | # | Manifestação | O que o usuário vê | Ref. |
+   |---|--------------|--------------------|------|
+   | 1 | `POST /api/setlists` responde 400 (descrição vazia) | diálogo **fecha normalmente**; a setlist não existe | SET-23 · [item 16](fase-d/RESULTS.md) |
+   | 2 | 429 no meio da montagem de setlist 50+ | pediu 56 músicas, entraram **38**; nenhum aviso | RATE-01 · [item 13](fase-d/RESULTS.md) |
+   | 3 | Upload >50 MB rejeitado com HTTP 413 | **nada acontece**; o wizard fica parado | ADD-07 · [item 45](fase-d/RESULTS.md) |
+   | 4 | `.png` com tipo "Lyrics" selecionado | arquivo descartado **sem mensagem** | ADD-12 · [item 48](fase-d/RESULTS.md) |
+   | 5 | 5 PDFs soltos no drop zone | 4 ignorados **sem uma palavra**; o fluxo avança | ADD-08 · [item 49](fase-d/RESULTS.md) |
+   | 6 | Favoritar no viewer | estrela muda e **reverte** no reload | CONT-05 · [item 31](fase-d/RESULTS.md) |
+   | 7 | Save falhando no add-content | **"Content saved successfully!"** | ADD-01 · [item 43](fase-d/RESULTS.md) |
+
+   A causa não é local: **não há uma camada que traduza falha em mensagem**. Cada
+   chamada decide sozinha (e quase sempre decide não avisar). Isso torna o app
+   *inauditável pelo próprio usuário* — no palco, ele não tem como saber se o que
+   está na tela corresponde ao que existe. Para a Fase E, é o candidato mais forte
+   a correção estrutural única com efeito em 7 achados.
+
+2. **Feature com UI presente e fio desligado** — reorder com handler TODO na UI e
+   API pronta (SET-03), favorito que não persiste (CONT-05), toolbar vestigial
+   desativada (CONT-08), auto-hide de controles pela metade (PERF-12), props de CTA
+   nunca renderizadas no dashboard (DASH-01), Edit/Delete nunca ligados no viewer
+   (CONT-04), CompletionStep inalcançável no batch import com branch de save morto e
+   divergente (ADD-02). *[D]* SET-10 saiu da lista: a Fase D mostrou que o detalhe
+   **abre** no mobile — o problema é ele nascer 342 px abaixo da dobra, sem
+   auto-scroll ([item 19](fase-d/RESULTS.md)).
+3. **Dupla paleta de ação primária e de estado selecionado** — azul/índigo × âmbar
    no mesmo produto (LIB-13, SET-16, AUTH-09); três cores de "selecionado" na mesma
    tela (ADD-11); três rótulos para a mesma ação de importar (DASH-10, ADD-11).
-3. **Token de texto secundário sem contraste** — `#A69B8E` / `amber-600` reprovado
+4. **Token de texto secundário sem contraste** — `#A69B8E` / `amber-600` reprovado
    pelo axe em 3 áreas (LIB-11, DASH-07, PERF-13); corrigir o token resolve as três.
-4. **Icon-only sem nome acessível** — mesma causa em 7 áreas (AUTH-05, DASH-06,
+5. **Icon-only sem nome acessível** — mesma causa em 7 áreas (AUTH-05, DASH-06,
    LIB-10, CONT-11, PERF-11, SET-20, ADD-10), incluindo o botão do shell repetido
-   em todas.
-5. **Bottom nav encobrindo conteúdo** — causa-raiz medida no dashboard
-   (DASH-04: `pb-16` vs ~81px reais), com sintomas em setlists (SET-19) e library (LIB-07).
-6. **Sanitização/validação de segurança aplicada a dado de domínio** — SET-01
-   (Zod descarta campos), SET-02 (createSafeText zera nomes), SET-05/AUTH-01
-   (rate limit disparado por uso normal).
+   em todas. *[D]* Agravante medido: em touch os ícones da linha de setlist ficam
+   em `opacity: 0` **antes e depois do tap** — não têm nome nem existência visível
+   ([item 18](fase-d/RESULTS.md)).
+6. **Bottom nav encobrindo conteúdo** — causa-raiz medida no dashboard
+   (DASH-04: `pb-16` vs **81 px reais, confirmado na Fase D** — déficit de 17 px),
+   com sintomas em setlists (SET-19) e library (LIB-07). *[D]* [item 22](fase-d/RESULTS.md).
+7. **Segurança/validação aplicada sobre dado de domínio, quebrando o domínio** —
+   SET-01 (Zod descarta `venue`/`data`/`notas`), SET-02 (createSafeText zera nomes),
+   RATE-01 (rate limit disparado por uso normal). *[D]* A Fase D somou os dois
+   exemplares mais graves: **SET-23** (o Zod **rejeita a requisição inteira** da
+   própria UI por causa de um campo opcional) e **PERF-02** (a CSP do app proíbe o
+   `<iframe>` que o modo performance usa para exibir PDF). O padrão amadureceu: não
+   é só "a validação descarta dados" — é *a camada de segurança foi escrita sem
+   olhar o que o produto faz*.
 
 ## Tabela consolidada
 
@@ -61,7 +98,7 @@ cosm(ético) / estr(utural) / conc(eitual). Detalhes e evidências nos findings 
 
 | ID | Título curto | Sev | Esf | Classe | Jobs |
 |----|--------------|-----|-----|--------|------|
-| AUTH-01 | Rate limit 5/15min vs POST de sessão por page load/aba | S1* | P | estr | J1, J6, J3 |
+| **RATE-01** *[D]* | **Dois sistemas de rate limit; o antigo no caminho crítico de toda rota autenticada** (consolida AUTH-01 + SET-05 + FASE-D-01) | S1 | M | estr | J1, J3, J6 |
 | AUTH-02 | Cookie 7 dias carrega idToken de 1h | S2 | M | estr | J1, J6 |
 | AUTH-03 | Logado abre `/` e cai no marketing (start_url) | S2 | P | estr | J1, J6 |
 | AUTH-04 | Validação só pelo balão HTML5 nativo | S3 | M | estr | — |
@@ -72,10 +109,13 @@ cosm(ético) / estr(utural) / conc(eitual). Detalhes e evidências nos findings 
 | AUTH-09 | Inconsistência visual landing × auth | S3 | P | cosm | — |
 | AUTH-10 | Landing com conteúdo fictício e 7 links mortos | S3 | M | conc | — |
 | AUTH-11 | Loading compartilhado entre Sign In e Google | S3 | P | cosm | — |
-| ADD-01 | Falha ao salvar mostra "saved successfully" e engole o erro | S1 | M | estr | J4 |
-| ADD-02 | Batch import despeja o usuário de volta na tela de upload | S1* | M | estr | J4 |
+| ADD-01 *[D]* | Falha ao salvar mostra "saved successfully" e engole o erro — **confirmado**; e o save ainda criou 2 linhas duplicadas (ver ADD-14) | S1 | M | estr | J4 |
+| ADD-02 *[D]* | **Batch import: 3× HTTP 201 mas a tela final é o passo 1, com o StepIndicator marcando "Complete"** — confirmado | S1 | M | estr | J4 |
+| **ADD-13** *[D]* | **Upload descarta título/artista/tom digitados e salva o filename** | S1 | P | estr | J4, J5 |
+| **ADD-14** *[D]* | **Save do add-content faz double-submit (2 linhas em 41 ms)** | S2 | P | estr | J4 |
+| **ADD-15** *[D]* | **Storage sem endpoint de listagem: órfão de upload é irrecuperável** | S3 | M | estr | J4 |
 | ADD-03 | PWA sem share_target: cenário WhatsApp impossível | S2 | M | conc | J4 |
-| ADD-04 | Sem defaults: título/artista do zero mesmo com filename útil | S2 | P | estr | J4 |
+| ~~ADD-04~~ *[D]* | ~~Sem defaults: título/artista do zero mesmo com filename útil~~ — **absorvido pelo ADD-13**: o problema não é a falta de default, é o valor explícito do usuário ser descartado | — | — | — | — |
 | ADD-05 | Tom enterrado em "Advanced Options"; álbum/ano promovidos | S2 | P | conc | J4, J3 |
 | ADD-06 | Upload sem progresso real, cancelamento ou pré-validação de tamanho | S2 | M | estr | J4 |
 | ADD-07 | Erros do servidor genéricos ou em jargão técnico | S2 | P | estr | J4 |
@@ -85,7 +125,7 @@ cosm(ético) / estr(utural) / conc(eitual). Detalhes e evidências nos findings 
 | ADD-11 | Três cores de "selecionado" na mesma tela | S3 | P | cosm | — |
 | ADD-12 | Trocar tipo descarta silenciosamente o arquivo enviado | S3 | P | estr | J4 |
 | DASH-01 | Dashboard sem nenhum caminho para o show (J1) | S2 | M | conc | J1, J2 |
-| DASH-02 | Stat cards não navegam (texto morto) | S2 | P | estr | J1, J3, J5 |
+| DASH-02 *[D]* | **1 de 4 stat cards navega** (Setlists sim; Total/Favorites/Recent não), todos com aparência idêntica e `cursor: auto` — inconsistência é pior que inércia uniforme | S2 | P | estr | J1, J3, J5 |
 | DASH-03 | Abas Recent/Favorites redundantes (mesmos 5 itens) | S2 | M | estr | J5 |
 | DASH-04 | Bottom nav encobre conteúdo (pb-16 vs ~81px) | S2 | P | estr | J4, J5 |
 | DASH-05 | Mobile: 4 stat cards consomem a primeira dobra | S2 | M | estr | J4, J5, J1 |
@@ -95,7 +135,7 @@ cosm(ético) / estr(utural) / conc(eitual). Detalhes e evidências nos findings 
 | DASH-09 | Estrela emoji com classes CSS sem efeito | S3 | P | cosm | — |
 | DASH-10 | Três rótulos para a mesma ação de importar | S3 | P | cosm | J4 |
 | DASH-11 | Estado vazio sem CTA orientando o próximo passo | S3 | P | estr | J4 |
-| LIB-01 | Biblioteca renderiza vazia em tablet landscape com dados | S1 | M | estr | J5, J3, J1 |
+| LIB-01 *[D]* | **Biblioteca sem loading state por ~7 s** (não renderiza vazia: monta com os dados após ~7 s de área em branco) — *reclassificado na Fase D* | S2 | M | estr | J5, J3, J1 |
 | LIB-02 | Títulos longos escondem ações de todas as linhas | S2 | P | estr | J5, J4, J3 |
 | LIB-03 | Duplicados indistinguíveis na listagem | S2 | M | estr | J5, J3 |
 | LIB-04 | Busca ILIKE sem tolerância a typo/acento | S2 | M–G | conc | J5, J1 |
@@ -124,7 +164,8 @@ cosm(ético) / estr(utural) / conc(eitual). Detalhes e evidências nos findings 
 | SET-02 | Nomes com ()[]&'" zerados pelo sanitizador strict | S1 | M | conc | J3, J1 |
 | SET-03 | Reorder não persiste: handler da UI é TODO (API de two-phase UPDATE pronta) | S1 | P | estr | J3, J1 |
 | SET-04 | Drag HTML5 puro: inoperante em touch, sem alternativa | S1 | M | estr | J3 |
-| SET-05 | Rate limiter por IP com TTL renovado trava setlist 50+ | S1 | P | estr | J3 |
+| **SET-23** *[D]* | **Criar setlist falha em silêncio com a descrição vazia** (UI manda `null`, Zod aceita só `undefined`) | S1 | P | estr | J3, J1 |
+| ~~SET-05~~ *[D]* | ~~Rate limiter por IP com TTL renovado trava setlist 50+~~ — **consolidado em RATE-01** (medido: pediu 56, entraram 38) | — | — | — | — |
 | SET-06 | Bis impossível (unique) com 500 mudo | S2 | M | conc | J3, J1 |
 | SET-07 | Reorder 2N UPDATEs sem transação; posições 10000+ | S2 | M | estr | J3, J1 |
 | SET-08 | Tom (key) não aparece em lugar nenhum da área | S2 | P | estr | J3, J5 |
@@ -133,7 +174,7 @@ cosm(ético) / estr(utural) / conc(eitual). Detalhes e evidências nos findings 
 | SET-11 | Títulos truncados a ~4 chars úteis no detalhe | S2 | P | estr | J3, J1, J2 |
 | SET-12 | Ações hover-only com alvos de 28px em touch | S2 | P | estr | J3, J1, J2 |
 | SET-13 | Duração total fabricada ((bpm/60)*3) como fato | S2 | P | conc | J3 |
-| SET-14 | Cache offline gravado com estado desatualizado | S2 | P | estr | J6, J1 |
+| SET-14 *[D]* | **Offline, `/setlists` diz "No setlists yet"** com 4 setlists na conta — não é cache velho, é ausência de leitura de cache na listagem (o dashboard da mesma sessão diz "Setlists 3") — *reescrito na Fase D* | S1 | M | estr | J6, J1 |
 | SET-15 | Não existe "duplicar setlist" (gap previsto no J3) | S2 | M | estr | J3 |
 | SET-16 | Contraste dos CTAs azuis #2E7CE4 (26 pares axe) | S2 | P | cosm | J1, J3 |
 | SET-17 | Data com off-by-one de fuso (UTC parse) | S3 | P | estr | J1, J3 |
@@ -142,8 +183,8 @@ cosm(ético) / estr(utural) / conc(eitual). Detalhes e evidências nos findings 
 | SET-20 | Botão do shell sem nome acessível (= DASH-06) | S3 | P | cosm | — |
 | SET-21 | Página sem h1 | S3 | P | cosm | — |
 | SET-22 | N+1 com content_data integral + picker carrega tudo | S3 | M | estr | J3, J6 |
-| PERF-01 | Setlist de 60 estoura navegação: Prev/Next fora da tela | S1 | M | estr | J1, J2 |
-| PERF-02 | PDF 100% branco nas capturas, sem fallback/erro | S1* | M | estr | J1, J6 |
+| ~~PERF-01~~ *[D]* | ~~Setlist de 60 estoura navegação: Prev/Next fora da tela~~ — **NÃO REPRODUZIDO** a 1194×834: com 60 músicas os dots ocupam 716 px de 1194 e Prev/Next continuam na tela (81×36 px). Registro mantido; reavaliar em viewports menores | — | — | — | — |
+| PERF-02 *[D]* | **PDF não renderiza no palco: a CSP do app (`frame-src 'none'`) bloqueia o `<iframe>`** — confirmado em Chrome real headed; não era artefato de captura | S1 | M | estr | J1, J6 |
 | PERF-04 | Avançar música exige mirar botão de 36px | S2 | M | estr | J1 |
 | PERF-05 | Sem indicação de posição ("4 de 12") | S2 | P | estr | J1 |
 | PERF-06 | Pular para música: só dots anônimos de 8px | S2 | M | estr | J2, J1 |
@@ -157,37 +198,85 @@ cosm(ético) / estr(utural) / conc(eitual). Detalhes e evidências nos findings 
 | PERF-14 | Scroll principal sem foco + landmarks ausentes | S3 | P | estr | — |
 | GLOB-01 | UI em inglês para usuário único brasileiro | S2 | M–G | conc | todos |
 
-\* S1 provisório — confirmar na Fase D (AUTH-01: itens 11–12; PERF-02: item 4;
-ADD-02: item 44 da lista abaixo).
+*[D]* = tocado pela Fase D (medição ao vivo). Linhas ~~riscadas~~ saíram da
+contagem de abertos: absorvidas, consolidadas ou não reproduzidas.
+
+Os três S1 provisórios da Fase C foram **todos confirmados**: AUTH-01 (hoje
+RATE-01, [itens 11–12](fase-d/RESULTS.md)), PERF-02 ([item 4](fase-d/RESULTS.md))
+e ADD-02 ([item 44](fase-d/RESULTS.md)).
 
 Históricos fechados (rastreabilidade): signup 401 (auth.md) · PERF-03 crash bpm no
 estado vazio, corrigido em a3114cc e verificado no código · Bug F1 do FileUploadZone
-(add-content.md).
+(add-content.md) · **PERF-01, não reproduzido na Fase D**.
+
+### [RATE-01] O achado consolidado de rate limiting *[D]*
+
+Consolida **AUTH-01** (limite de sessão), **SET-05** (429 na montagem de setlist)
+e **FASE-D-01** (expulsão de qualquer rota autenticada) — os três IDs originais
+permanecem como referências dos findings de origem. A Fase D mostrou que são
+sintomas de **uma causa estrutural única**.
+
+**A causa**: o app tem **dois sistemas de rate limit** coexistindo.
+`lib/rate-limiter.ts` (novo: por janela, com configs por tipo de rota) e
+`lib/rate-limit.ts` (antigo: contador **por IP**, TTL de 60 s **renovado a cada
+request aceito**, **compartilhado entre todas as rotas** que o usam). O antigo
+está no **caminho crítico da autenticação**: `/api/auth/verify` — chamado por
+`getServerSideUser` em **todo server component autenticado** — usa ele.
+
+**Os números medidos**:
+
+| Métrica | Valor | Fonte |
+|---------|-------|-------|
+| Limite de `/api/auth/session` | **5 / 15 min por IP** (`X-RateLimit-Limit: 5`) | [item 11](fase-d/RESULTS.md) |
+| POSTs de sessão por evento | 1 no login, **1 por volta de aba**, 1 a cada 50 min | [item 12](fase-d/RESULTS.md) |
+| Bloqueio após estourar | **`Retry-After: 732 s` (12,2 min)** | [item 11](fase-d/RESULTS.md) |
+| Limite compartilhado das demais rotas | 50 / 60 s por IP, entre **todas** as rotas | `lib/rate-limit.ts` |
+| 429 na montagem de setlist | 38 aceitas, **429 na 39ª**; 18 nunca tentadas | [item 13](fase-d/RESULTS.md) |
+| Taxa observada na fase | **234 de 371 POSTs de sessão (63%) com 429** | `fase-d/data/session-posts.jsonl` |
+
+**O efeito no palco**: com o orçamento estourado, `/api/auth/verify` responde 429,
+`getServerSideUser` devolve `null` e **qualquer rota autenticada** executa
+`redirect('/login')` — o cookie ainda é válido, então o `/login` rebate para o
+`/dashboard`. O músico toca em "Setlists" e cai na home, sem mensagem. Foi
+observado dezenas de vezes e obrigou a instrumentar retry na própria suíte de
+medição.
+
+Severidade **S1** · Esforço **M** · Classe **estrutural** · Jobs **J1, J3, J6**
+(veto por J1/J6).
 
 ## Contagem por classe (insumo da decisão da Fase E)
 
-| Classe | Qtd | % dos 94 | Leitura |
+| Classe | Qtd | % dos 95 | Leitura |
 |--------|-----|----------|---------|
 | Cosmético | 20 | 21% | Tokens, contraste, rótulos, ícones — corrigível em lote |
-| Estrutural | 59 | 63% | Layout, fios desligados, dados descartados, componentes quebrados |
+| Estrutural | 60 | 63% | Layout, fios desligados, dados descartados, componentes quebrados, **falha sem mensagem** |
 | Conceitual | 15 (+GLOB-01) | 16% | Modelo errado: sanitização sobre domínio, setlist-como-conjunto, anotação write-only, zoom por font-size, dados fabricados, import sem share/lote, idioma |
 
-Por área — cosm/estr/conc: auth 3/7/1 · dashboard 4/6/1 · library 4/8/1 ·
-content-viewer 1/8/3 · setlists 4/15/3 · performance 2/9/2 · add-content 2/6/4.
+Por área — cosm/estr/conc: auth 3/6/1 · dashboard 4/6/1 · library 4/8/1 ·
+content-viewer 1/8/3 · setlists 4/15/3 · performance 2/8/2 · add-content 2/8/4 ·
+transversal (RATE-01) 0/1/0.
 
-### Classe × esforço (94 achados abertos)
+### Classe × esforço (95 achados abertos)
 
 | | P | M | G | Total |
 |---|---|---|---|-------|
 | Cosmético | 20 | — | — | **20** |
-| Estrutural | 36 | 23 | — | **59** |
+| Estrutural | 35 | 25 | — | **60** |
 | Conceitual | 3 | 10¹ | 2 | **15** |
-| **Total** | **59** | **33¹** | **2** | **94** |
+| **Total** | **58** | **35¹** | **2** | **95** |
 
 ¹ LIB-04 (busca fuzzy) é M–G conforme a profundidade da solução; contado em M.
-Leitura direta para a Fase E: 59 achados (63%) são esforço P, e todo o estoque
-cosmético é P; o núcleo duro são os 15 conceituais — 6 deles no caminho dos jobs
+
+Leitura direta para a Fase E: **58 achados (61%) são esforço P**, e todo o estoque
+cosmético é P; o núcleo duro segue nos 15 conceituais — 6 deles no caminho dos jobs
 de maior peso (SET-02, SET-06, CONT-03, PERF-09, PERF-10, LIB-04).
+
+*[D]* **O que a Fase D mudou nesta leitura**: os quatro S1 novos ou reescritos são
+**três de esforço P e um M** — SET-23 (P: aceitar `null` no schema), ADD-13 (P: ler
+`customMetadata` em vez de `metadata`), ADD-14 (P: guarda de double-submit) e
+SET-14 (M: ler o cache na listagem). Somados a RATE-01 (M), são cinco correções
+pequenas que destravam os dois jobs de maior peso. A Fase D **não** aumentou o
+tamanho do problema: aumentou a proporção dele que é barata de resolver.
 
 ## Top 10 por impacto ponderado
 
@@ -199,23 +288,82 @@ desempatados por proximidade do critério de sucesso do J1/J6.
 
 | # | ID | Achado | Score | Nota |
 |---|----|--------|-------|------|
-| 1 | SET-03 | Reorder: handler da UI é TODO (API funcional) | 1,60 | veto J1; só religar o elo UI→service (P) |
-| 2 | SET-01 | Venue/data/notas descartados silenciosamente | 1,60 | veto J1; perda de dados + "setlist do show de hoje" sem data |
-| 3 | AUTH-01 | Rate limit de sessão vs POST por page load | 1,60* | veto J1/J6; provisório — confirmar antes de tratar |
-| 4 | SET-02 | Sanitizador zera nomes de setlist reais | 0,80 | veto J1; perda silenciosa de dados |
-| 5 | PERF-01 | Setlist de 60 sem Prev/Next visíveis | 0,80 | veto J1; sem navegação na última música |
-| 6 | PERF-02 | PDF branco sem fallback/erro no palco | 0,80* | veto J1/J6; provisório, mas a ausência de fallback é fato de código |
-| 7 | SET-14 | Cache offline gravado desatualizado | 0,80 | J6 é binário: falha só aparece no palco |
+| 1 | **SET-23** *[D]* | Criar setlist falha em silêncio com descrição vazia | 1,60 | **veto J1/J3**; o **primeiro passo do J3 é impossível** pelo caminho natural. Fix P: aceitar `null` no schema |
+| 2 | SET-03 | Reorder: handler da UI é TODO (API funcional) | 1,60 | veto J1; só religar o elo UI→service (P). *[D]* O drag também não responde a toque (SET-04) — religar o handler sozinho não resolve no iPad |
+| 3 | SET-01 | Venue/data/notas descartados silenciosamente | 1,60 | veto J1; perda de dados + "setlist do show de hoje" sem data |
+| 4 | **RATE-01** *[D]* | Dois sistemas de rate limit; o antigo no caminho crítico de toda rota autenticada | 0,80 | veto J1/J6; **confirmado com números** (5/15min, `Retry-After` 732 s, 63% de 429) |
+| 5 | PERF-02 *[D]* | CSP do app bloqueia o `<iframe>` de PDF no palco | 0,80 | veto J1/J6; **confirmado em Chrome real** — não era artefato de captura |
+| 6 | **SET-14** *[D]* | Offline, `/setlists` diz "No setlists yet" com 4 setlists | 0,80 | veto J1/J6; **reescrito** — não é cache velho, é ausência de leitura de cache |
+| 7 | SET-02 | Sanitizador zera nomes de setlist reais | 0,80 | veto J1; perda silenciosa de dados |
 | 8 | CONT-07 | Fallback exibe acordes/tab fabricados | 0,80 | mina a confiança no que está na tela (pré-requisito do J1) |
 | 9 | PERF-05 | Sem "música 4 de 12" | 0,80 | critério explícito do J1, esforço P |
-| 10 | PERF-07 | Fim de setlist mudo | 0,80 | critério explícito do J1, esforço P |
-| — | | *Logo abaixo do corte (mesmo score 0,80):* DASH-02, AUTH-03, SET-11, SET-12, SET-16, PERF-08. *S1s fora do top por esforço/peso:* CONT-01 e CONT-02 (0,60 — cifra/tab ilegíveis, fix P), SET-05 (0,60), CONT-03 (0,40 — esforço G), LIB-01 (0,30 — mas é a biblioteca abrindo vazia no viewport de palco; prioridade de investigação na Fase D), SET-04 (0,30). | | |
+| 10 | PERF-07 | Fim de setlist mudo | 0,80 | critério explícito do J1, esforço P. *[D]* Medido: com histórico vazio, o "Go back" leva a `about:blank` — **sai do app** |
+| — | | *Logo abaixo do corte (0,80):* DASH-02, AUTH-03, SET-11, SET-12, SET-16, PERF-08. *S1s fora do top por esforço/peso:* CONT-01 e CONT-02 (0,60 — cifra/tab ilegíveis, fix P; *[D]* CONT-02 confirmado ao vivo: a tab é destruída por word-wrap a 390 px, não apenas cortada), **ADD-13** (0,40 — S1 mas J4 não veta), CONT-03 (0,40 — esforço G; *[D]* pior que o previsto: a anotação é **inalcançável pela UI**), SET-04 (0,30). *Saiu do top 10:* **PERF-01** (não reproduzido a 1194×834). *Reclassificado para fora:* **LIB-01** (S1→S2). | | |
+
+*[D]* **Como a Fase D mexeu neste ranking**: entraram SET-23 (posição 1) e SET-14
+reescrito (6); saiu PERF-01; AUTH-01 virou RATE-01; PERF-02 perdeu o asterisco de
+provisório. As posições 1–7 são todas **veto** por J1/J6 — nenhuma delas é
+questão de score. Três dos sete são esforço **P**.
 
 Nenhum achado de add-content pontua para o top 10: o peso 0,10 do J4 limita o teto
-da área — os dois S1 (ADD-01, ADD-02, ambos M) ficam em 0,20 e o maior score é o
-ADD-05 (0,30, via J3). Os S1 de add-content também não acionam veto (J4 não veta).
+da área — os três S1 (ADD-01, ADD-02, **ADD-13**) ficam entre 0,20 e 0,40, e o
+maior score não-S1 é o ADD-05 (0,30, via J3). Os S1 de add-content também não
+acionam veto (J4 não veta). *[D]* Vale registrar a tensão que a Fase D expôs:
+add-content é a área com **mais falhas confirmadas ao vivo** (7 dos 8 itens do
+grupo I) e a que a fórmula mais penaliza. Se a Fase E decidir por lotes de fix
+baratos, ADD-13 e ADD-14 são dois P que eliminam perda de dados real.
 
-## Verificar na Fase D — lista fechada
+## Medições vs. alvos do JOBS.md *[D]*
+
+Resumo da tabela completa em [`fase-d/RESULTS.md`](fase-d/RESULTS.md). Insumo
+direto para a Fase E: é aqui que se vê **quais jobs o produto já cumpre**.
+
+| Job | Critério | Alvo | Medido | Veredito |
+|-----|----------|------|--------|----------|
+| **J1** | Tela inicial → 1ª música em tela cheia | ≤4 taps / 10 s | **3 taps, 5,4 s** (app já aberto) | ✅ |
+| J1 | Abertura fria do PWA (landing → dashboard) | dentro dos 10 s | **10,3 s só de landing** | ❌ |
+| J1 | Avançar música | 1 tap, alvo ≥48 px | 1 tap, **81×36 px** | ⚠️ |
+| J1 | Play/pause | <100 ms | **41 / 57 ms** | ✅ |
+| J1 | Trocar de música | <1 s | **126 / 57 / 46 ms** | ✅ |
+| J1 | Dark sheet e zoom | ≤2 taps cada | **1 tap** cada | ✅ |
+| J1 | Zero estados em que a música quebra | zero | **PDF nunca renderiza** (PERF-02) | ❌ |
+| J1 | Rotação no meio da música | layout sobrevive | layout ok; **scroll volta a 0** | ⚠️ |
+| **J2** | Anotação: intenção → salva | ≤5 taps / 20 s | **inalcançável pela UI** | ❌ |
+| J2 | Anotação visível na reabertura | visível | **não aparece** em lugar nenhum | ❌ |
+| **J3** | Criar setlist vazia | ≤3 taps | **7 taps** (a de 3 falha em silêncio) | ❌ |
+| J3 | Adicionar cada música | ≤3 taps/música | **2,2 taps/música**, sem sair da tela | ✅ |
+| J3 | Listagem com título, artista e tom | os três | **tom ausente** | ❌ |
+| J3 | Reordenar | funciona em touch | **drag não responde a toque** | ❌ |
+| J3 | Montar setlist 50+ | sem perda | pediu 56, entraram **38**, sem aviso | ❌ |
+| **J4** | Upload completo com metadados | ≤8 taps / 60 s | **10 taps, 27 s** — e 4 taps **não têm efeito** | ❌ |
+| J4 | Erro de arquivo inválido | mensagem acionável | 413 **mudo**; `.zip` como `.pdf` **aceito** | ❌ |
+| J4 | Item localizável pela busca | imediato | ✅ (mas pelo filename, não pelo título) | ⚠️ |
+| J4 | Upload sem congelar a UI | progresso | UI responsiva; **sem % e sem cancelar** | ⚠️ |
+| **J5** | Dashboard → resultado | ≤4 taps / 10 s | **3 taps, 1,5 s** | ✅ |
+| J5 | Busca por título e artista | funciona | ✅ ambas | ✅ |
+| J5 | Sem-resultado com estado útil | ecoa a query | genérico, **não ecoa** | ⚠️ |
+| J5 | Tolerância a acento/typo | — | `aguas` → **0** vs `Águas` → 2 | ❌ |
+| J5 | Busca de dentro do palco | existe? | **não existe**; 4 taps para sair e buscar | ❌ |
+| **J6** | Abrir offline e chegar ao conteúdo | funciona | dashboard offline completo | ✅ |
+| J6 | Setlist cacheada offline (deep link) | completa | 3/3 músicas alcançáveis | ✅ |
+| J6 | Música nunca cacheada | degrada com aviso | **renderizou a letra inteira** | ✅ |
+| J6 | Chegar à setlist pela navegação, offline | lista disponível | **"No setlists yet"** com 4 setlists | ❌ |
+| J6 | Partitura PDF offline | legível | branco (mesmo CSP do PERF-02) | ❌ |
+
+**Leitura para a Fase E**: o **J5 passa quase inteiro** e o **J1 passa em tudo que
+é latência** — o motor está bom. O que falha é sempre a **borda**: o que acontece
+quando algo dá errado (J1 abertura fria, J3 criar, J4 erro), o que o app **não
+tem** (J2 anotação, J5 busca no palco) e o **estado offline da navegação normal**
+(J6). Nenhuma falha medida é de performance de renderização.
+
+## Verificar na Fase D — lista fechada ✅ EXECUTADA
+
+> **Status**: executada em 2026-08-09/10 contra prod. **45 das 49 respondidas**,
+> 3 manual-pendentes (7, 14, 35 — exigem hardware real, ver
+> [`fase-d/MANUAL-CHECKLIST.md`](fase-d/MANUAL-CHECKLIST.md)) e 1 diferida (17 —
+> reorder, handler morto). Respostas item a item, com procedimento, medição,
+> veredito e referência de trace: [`fase-d/RESULTS.md`](fase-d/RESULTS.md).
+> A lista original fica abaixo para rastreabilidade.
 
 Consolidada dos 7 findings; duplicatas entre áreas fundidas. A pergunta exata está
 em cada item; a origem entre colchetes.
@@ -293,5 +441,32 @@ Sete áreas analisadas (as 6 originais + add-content, incorporada nesta síntese
 As capturas de `profile`, `settings` e `setup` existem na passada B1 mas foram
 **deliberadamente deixadas fora da análise**: são superfícies secundárias que não
 participam de nenhum passo dos jobs J1–J6 (configuração e perfil são eventos raros
-para o usuário único). Se algum achado da Fase D apontar para elas (ex.: uma
-preferência que afete o modo performance), reavaliar a exclusão.
+para o usuário único). *[D]* **Nenhum achado da Fase D apontou para elas** — a
+exclusão se mantém.
+
+## Registro das mudanças da Fase D *[D]*
+
+Para rastreabilidade, o que esta atualização fez sobre o documento da Fase C:
+
+| Mudança | Antes | Depois | Ref. |
+|---------|-------|--------|------|
+| **Consolidação** | AUTH-01 + SET-05 + FASE-D-01 (3 IDs) | **RATE-01** (IDs originais mantidos como referência) | [itens 11–13](fase-d/RESULTS.md) |
+| **Promoção** | FASE-D-05 | **SET-23** (S1, novo) | [item 16](fase-d/RESULTS.md) |
+| **Promoção** | FASE-D-02 | **ADD-13** (S1, novo) | [itens 42/30/46](fase-d/RESULTS.md) |
+| **Promoção** | FASE-D-03 | **ADD-14** (S2, novo) | [item 43](fase-d/RESULTS.md) |
+| **Promoção** | FASE-D-04 | **ADD-15** (S3, novo) | seção de cleanup |
+| **Reescrita** | SET-14 "cache offline desatualizado" (S2) | SET-14 "offline sem leitura de cache na listagem" (**S1**) | [item 10](fase-d/RESULTS.md) |
+| **Reclassificação** | LIB-01 S1 "renderiza vazia" | **S2** "sem loading state por ~7 s" | [item 23](fase-d/RESULTS.md) |
+| **Não reproduzido** | PERF-01 S1 | fechado; fora do top 10 | [item 36](fase-d/RESULTS.md) |
+| **Absorvido** | ADD-04 | dentro do ADD-13 | [item 42](fase-d/RESULTS.md) |
+| **Descrição atualizada** | DASH-02 "não navegam" | "1 de 4 navega" | [item 39](fase-d/RESULTS.md) |
+| **Confirmações** | PERF-02, ADD-02 (provisórios) | S1 definitivos, com causa-raiz nova no PERF-02 | [itens 4 e 44](fase-d/RESULTS.md) |
+| **Novo padrão nº 1** | — | "falha silenciosa como default" (7 manifestações) | — |
+
+**Achados que a Fase D mediu e que confirmam a Fase C sem alteração**: SET-04
+(drag inoperante em touch), SET-12 (ações hover-only, 28 px), CONT-02 (tab
+destruída no mobile), CONT-03 (anotação invisível — e inalcançável), CONT-05
+(favorito não persiste), ADD-08 (drop de 5 → 1), DASH-04 (81 px de nav vs
+`pb-16`), LIB-04 (busca sem tolerância a acento), LIB-06 (filtro sem chip),
+LIB-07 (scroll aninhado), PERF-09 (play mudo no PDF), AUTH-03 (landing com
+usuário logado), GLOB-01 (balão HTML5 em pt-BR sobre UI em inglês).
