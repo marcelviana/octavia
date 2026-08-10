@@ -14,6 +14,7 @@
  */
 import fs from 'node:fs'
 import { config } from 'dotenv'
+import { bypassHeaders } from './auth'
 
 config({ path: '.env.uxaudit', quiet: true })
 config({ path: '.env.local', quiet: true })
@@ -56,7 +57,7 @@ async function main(): Promise<void> {
   for (let n = 1; n <= ATTEMPTS; n++) {
     const res = await fetch(`${BASE_URL}/api/auth/session`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...bypassHeaders() },
       body: JSON.stringify({ idToken }),
     })
     attempts.push({

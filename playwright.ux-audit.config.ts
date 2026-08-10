@@ -37,6 +37,16 @@ export default defineConfig({
     trace: 'off',
     video: 'off',
     screenshot: 'off',
+    // Preview do Vercel protegido por SSO: o header de bypass entra em toda
+    // requisição dos contexts do runner (página e page.request). O valor vem
+    // SOMENTE de env no momento da execução; nunca é gravado nem logado.
+    ...(process.env.VERCEL_AUTOMATION_BYPASS_SECRET
+      ? {
+          extraHTTPHeaders: {
+            'x-vercel-protection-bypass': process.env.VERCEL_AUTOMATION_BYPASS_SECRET,
+          },
+        }
+      : {}),
   },
   projects: [
     {
