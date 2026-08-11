@@ -164,7 +164,8 @@ payload que o próprio cliente envia:
 |------|-----------------|--------|
 | **profile** | `authSchemas.profileUpdate` validava campos inexistentes (`displayName`/`preferences`); o payload real do signup era descartado pelo strip do Zod — usuário Firebase órfão sem perfil | corrigido (commit `aa501cc`) — prova da classe |
 | **SET-01** | `venue`/`performance_date`/`notes` enviados pela UI, silenciosamente descartados pelo strip | aberto |
-| **SET-23 / FASE-D-05** | `description: null` da UI rejeitado por `.optional()` (aceita só `undefined`) — 400 sem feedback | fix na fila A; a classe permanece |
+| **SET-23 / FASE-D-05** | `description: null` da UI rejeitado por `.optional()` (aceita só `undefined`) — 400 sem feedback | ✅ corrigido na fila A #2 (PR #222); a classe permanece |
+| **`file_url` do add-content** *(direção inversa: payload que o schema **rejeita**, não que ele stripa)* | `createContentSchema` declara `file_url: z.string().url()`, mas o branch de upload envia `uploadedFile.url ?? uploadedFile.name` — se o upload falhar e sobrar o **nome do arquivo**, o POST leva 400 | aberto. A partir da fila A #3/#4 (PR-3) o desfecho é **erro visível** em vez de falso sucesso; o audit do B2 decide se o fallback some ou se o schema aceita o caso |
 
 **Tarefa**: inventário rota a rota — payload real (da UI atual **e** do
 futuro cliente nativo) × schema — decidindo por campo: aceitar, rejeitar
@@ -247,6 +248,25 @@ incógnitas por construção.
   integral de cada música (N+1 + payload gordo). Em rede celular isso vira
   latência e dado móvel. Contratar shape de listagem enxuto + conteúdo sob
   demanda (que é também o shape que o cache offline do nativo vai querer).
+
+### B9 — Idempotência do `POST /api/content` (chave de idempotência)
+
+**Achado durante o pre-check da PR-3 (2026-08-10)**: `createContent`
+([`lib/content-service.ts`](../../lib/content-service.ts)) enfileira a
+requisição (`enqueueRequest`) quando falha com `navigator.onLine === false`, e
+a fila é reprocessada depois. Se o POST **chegou ao servidor** mas a resposta
+se perdeu, o replay cria uma **segunda linha** — foi o cenário do **item 43**
+da Fase D (2 linhas com 41 ms de diferença, medidas offline).
+
+**Consequência declarada**: a guarda de in-flight da fila A #4 (ADD-14) cobre
+a duplicata **por clique, online** — e só. O replay offline continua
+duplicando, e nenhuma correção de UI o resolve.
+
+**Tarefa**: chave de idempotência no `POST /api/content` (header
+`Idempotency-Key` gerado no cliente por tentativa de save, com dedupe
+server-side por janela), aplicável também às demais escritas enfileiráveis.
+O cliente nativo herda o mesmo contrato — e a fila de escrita offline é
+**requisito do J6** no Bloco C, então isto é pré-requisito dela.
 
 ### B8 — Housekeeping de pipeline: passivo de tipos dos testes (rastreio obrigatório)
 
@@ -546,7 +566,7 @@ morre com a web. Sev/esforço conforme ASSESSMENT.
 | AUTH-09 | Inconsistência landing × auth | S3 | D | |
 | AUTH-10 | Landing fictícia, 7 links mortos | S3 | D | |
 | AUTH-11 | Loading compartilhado nos botões | S3 | D | |
-| ADD-01 | Falha de save mostra "saved successfully" | S1 | **C** | anti-padrão C3-1; motivação do B3 |
+| ADD-01 | Falha de save mostra "saved successfully" | S1 | **C** | anti-padrão C3-1; motivação do B3. *Causa-raiz resolvida por tabela na fila A #3/#4*: o save passou a ser aguardado e a mensagem vem depois dele — **timing correto; a visibilidade da mensagem de sucesso é decisão do design nativo** (com `onNext()` o wizard avança e ela pode não ser vista; para a fila A basta que não minta) |
 | ADD-02 | Batch import: 201×3 mas tela final é o passo 1 | S1 | **C** | anti-padrões C3-1/C3-2; import nativo em C4 |
 | ADD-03 | PWA sem share_target | S2 | **C** | requisito C4 (WhatsApp) |
 | ADD-05 | Tom enterrado em Advanced Options | S2 | **C** | design do form nativo (J4 ≤8 taps) |
