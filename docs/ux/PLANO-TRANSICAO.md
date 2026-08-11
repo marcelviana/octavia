@@ -249,6 +249,17 @@ incógnitas por construção.
   latência e dado móvel. Contratar shape de listagem enxuto + conteúdo sob
   demanda (que é também o shape que o cache offline do nativo vai querer).
 
+### B10 — Restrição de referrer da API key (endurecimento opcional, com calma)
+
+Se adotada, a allowlist é **desenhada de uma vez**: `octavia.rocks/*`,
+`www.octavia.rocks/*` (se aplicável) e `octavia-preview.vercel.app/*` —
+mais a **decisão sobre o caso sem-referer** do tooling (enviar `Referer`
+nas chamadas Node de `scripts/ux-audit/auth.ts`). **Nunca ativar
+parcialmente**: foi assim que o incidente de 2026-08-11 (registrado na
+seção de execução) bloqueou produção. A web API key do Firebase é pública
+por construção — a proteção real está nas Security Rules e no backend —,
+então isto é endurecimento, não correção de vulnerabilidade.
+
 ### B9 — Idempotência do `POST /api/content` (chave de idempotência)
 
 **Achado durante o pre-check da PR-3 (2026-08-10)**: `createContent`
@@ -711,6 +722,34 @@ Ajustes obrigatórios incorporados:
 6. **Segredos de automação** (Vercel bypass etc.): valor lido **somente
    inline no momento do comando** (`$(cat ~/.octavia-vercel-bypass)`),
    nunca gravado em arquivo do repositório, nunca ecoado em log/output.
+
+### Incidente API key (2026-08-11)
+
+A adição do referrer do preview **ativou restrição numa key até então
+irrestrita**, bloqueando `octavia.rocks` e o caso **sem-referer**.
+Detectado pelo mapa de referrers **antes do primeiro sintoma em prod**
+(sessões ativas seguravam a janela de ~1 h; o app só chama a API do
+Firebase Auth no login ou no refresh do token). Remediação: restrição
+removida, estado conhecido-bom restaurado, login real em prod confirmado
+de ponta a ponta pelo Marcel.
+
+**Lição**: mudança em credencial/config de console exige **verificação do
+estado atual ANTES** da mudança e **teste do caminho de prod DEPOIS** —
+mesmo quando a mudança parece só aditiva.
+
+### Housekeeping pendente (fila A)
+
+1. **Parametrizar o `baseURL`** de `i-add.spec.ts` e `i-verify.spec.ts`:
+   hoje os contexts fixam `https://octavia.rocks` (linhas 178/310/515),
+   o que impede validação preview-first desses itens e produziu um teste
+   "passando" contra o alvo errado.
+2. **Refinar a mensagem da sentinela de bounce** no `recorder.ts`:
+   distinguir regressão real do #0 do **falso alarme cookie×domínio**
+   (storageState de um host, navegação em outro), que foi o caso do
+   item 42 em 2026-08-11.
+3. **Referer nas chamadas Node do `scripts/ux-audit/auth.ts`** —
+   **somente se** o endurecimento de referrer do B10 for adotado; com a
+   key irrestrita (estado atual), é desnecessário.
 
 ## Sequência (atualizada pós-aprovação)
 
