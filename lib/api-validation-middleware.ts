@@ -196,7 +196,9 @@ export const setlistSchemas = {
   // Setlist creation
   create: z.object({
     name: commonSchemas.createSafeText(1, 100),
-    description: commonSchemas.safeHtml.optional(),
+    // .nullish(): a UI envia null com o campo vazio (SET-23/FASE-D-05 —
+    // .optional() aceita só undefined e rejeitava a requisição inteira)
+    description: commonSchemas.safeHtml.nullish(),
     songs: z.array(z.object({
       content_id: commonSchemas.objectId,
       position: z.number().int().min(0),
@@ -207,7 +209,9 @@ export const setlistSchemas = {
   // Setlist update
   update: z.object({
     name: commonSchemas.createSafeText(1, 100).optional(),
-    description: commonSchemas.safeHtml.optional(),
+    // .nullish(): null = "limpar o campo" (o handler faz set explícito);
+    // undefined = "não mexer". Mesmo caso do create (SET-23).
+    description: commonSchemas.safeHtml.nullish(),
     songs: z.array(z.object({
       content_id: commonSchemas.objectId,
       position: z.number().int().min(0),
