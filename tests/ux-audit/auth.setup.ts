@@ -30,13 +30,10 @@ setup('autenticar conta de audit e salvar storageState', async ({ browser, baseU
   expect(name).toBe('firebase-session')
   expect(value.length).toBeGreaterThan(0)
 
-  // Contexts criados manualmente NÃO herdam o `use` do config — o header
-  // de bypass do Vercel (previews protegidos) precisa ser posto aqui também.
   const bypass = process.env.VERCEL_AUTOMATION_BYPASS_SECRET
   const context: BrowserContext = await browser.newContext({
     baseURL,
     serviceWorkers: 'block',
-    ...(bypass ? { extraHTTPHeaders: { 'x-vercel-protection-bypass': bypass } } : {}),
   })
   // Evita que o app queime o rate limit AUTH (5/15min) ou apague o cookie
   await interceptSessionEndpoint(context)
@@ -47,7 +44,14 @@ setup('autenticar conta de audit e salvar storageState', async ({ browser, baseU
 
   // Precisa de uma página no origin para escrever no IndexedDB
   const page = await context.newPage()
-  await page.goto('/', { waitUntil: 'domcontentloaded', timeout: 90_000 })
+  // Preview protegido: a primeira navegação leva o bypass por QUERY e pede o
+  // cookie (`x-vercel-set-bypass-cookie`). O cookie `_vercel_jwt` resultante
+  // entra no storageState e autoriza todas as requisições seguintes — sem
+  // header custom, que quebraria as chamadas cross-origin do SDK do Firebase.
+  const primeiraUrl = bypass
+    ? `/?x-vercel-protection-bypass=${bypass}&x-vercel-set-bypass-cookie=true`
+    : '/'
+  await page.goto(primeiraUrl, { waitUntil: 'domcontentloaded', timeout: 90_000 })
 
   const now = Date.now()
   const authUser = {

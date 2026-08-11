@@ -37,16 +37,13 @@ export default defineConfig({
     trace: 'off',
     video: 'off',
     screenshot: 'off',
-    // Preview do Vercel protegido por SSO: o header de bypass entra em toda
-    // requisição dos contexts do runner (página e page.request). O valor vem
-    // SOMENTE de env no momento da execução; nunca é gravado nem logado.
-    ...(process.env.VERCEL_AUTOMATION_BYPASS_SECRET
-      ? {
-          extraHTTPHeaders: {
-            'x-vercel-protection-bypass': process.env.VERCEL_AUTOMATION_BYPASS_SECRET,
-          },
-        }
-      : {}),
+    // NÃO usar extraHTTPHeaders para o bypass do Vercel: ele é global e
+    // injeta o header também em requisições CROSS-ORIGIN (identitytoolkit,
+    // securetoken). Um header custom dispara preflight que o Google recusa
+    // ("no Access-Control-Allow-Origin") e derruba o SDK do Firebase no
+    // browser — o que trava qualquer fluxo que precise de token (upload).
+    // O bypass viaja no COOKIE `_vercel_jwt`, semeado pelo auth.setup.ts e
+    // carregado no storageState. Ver auth.setup.ts.
   },
   projects: [
     {
