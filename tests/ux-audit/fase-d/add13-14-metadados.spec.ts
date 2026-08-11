@@ -1,6 +1,7 @@
 import { test, expect, type Page } from '@playwright/test'
 import fs from 'node:fs'
 import path from 'node:path'
+import { PDFDocument, StandardFonts } from 'pdf-lib'
 import { getBearer, settle } from './recorder'
 
 /**
@@ -25,20 +26,17 @@ const ARTISTA = 'Conjunto PR-3'
 const KEY = 'F'
 const BPM = 120
 
-function pdfFixture(): string {
+async function pdfFixture(): Promise<string> {
   fs.mkdirSync(FIXTURES, { recursive: true })
   const file = path.join(FIXTURES, 'ux-audit-pr3-cifra.pdf')
   if (!fs.existsSync(file)) {
-    // PDF mínimo válido (1 página em branco)
-    const pdf = [
-      '%PDF-1.4',
-      '1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj',
-      '2 0 obj<</Type/Pages/Kids[3 0 R]/Count 1>>endobj',
-      '3 0 obj<</Type/Page/Parent 2 0 R/MediaBox[0 0 612 792]>>endobj',
-      'trailer<</Root 1 0 R>>',
-      '%%EOF',
-    ].join('\n')
-    fs.writeFileSync(file, pdf)
+    // PDF real (pdf-lib), como nos fixtures do i-add.spec.ts: um PDF
+    // artesanal não passa pelo fluxo de upload.
+    const doc = await PDFDocument.create()
+    const font = await doc.embedFont(StandardFonts.Helvetica)
+    const page = doc.addPage([595, 842])
+    page.drawText('UX-AUDIT PR-3 cifra', { x: 50, y: 800, size: 14, font })
+    fs.writeFileSync(file, await doc.save())
   }
   return file
 }
@@ -69,9 +67,13 @@ test('ADD-13 + ADD-14: metadados persistidos e double-click online cria 1 linha'
     await page.getByText('Chords', { exact: true }).first().click()
     await page.getByText(/import from file|^import$/i).first().click()
     await page.waitForTimeout(800)
-    await page.locator('input[type="file"]').setInputFiles(pdfFixture())
+    await page.locator('input[type="file"]').setInputFiles(await pdfFixture())
+    // O StepIndicator já mostra "Add Details" no passo 1 — esperar por esse
+    // texto casa imediatamente. Espera o campo de título de verdade.
     await page
-      .waitForFunction(() => /details|title/i.test(document.body.textContent ?? ''), { timeout: 60_000 })
+      .locator('input#title, input[name="title"], input[placeholder*="title" i]')
+      .first()
+      .waitFor({ state: 'visible', timeout: 90_000 })
     await settle(page, 1500)
 
     await page.locator('input#title, input[name="title"], input[placeholder*="title" i]').first().fill(TITULO)
