@@ -84,16 +84,15 @@ export function DetailsStep({
           <MetadataForm
             createdContent={draftContent}
             onComplete={async (metadata) => {
-              // Save the content with metadata
-              try {
-                const savedContent = await handleSaveContent(metadata);
-                if (savedContent && 'id' in savedContent) {
-                  onContentCreated(savedContent);
-                }
-                onNext();
-              } catch (error) {
-                console.error("Failed to save content:", error);
+              // O erro PROPAGA de propósito: quem chama (useMetadataForm)
+              // mostra a mensagem ao usuário. Antes, o catch aqui mandava a
+              // falha para o console e o wizard avançava assim mesmo — o
+              // usuário via "Complete" sobre um save que não aconteceu.
+              const savedContent = await handleSaveContent(metadata);
+              if (savedContent && 'id' in savedContent) {
+                onContentCreated(savedContent);
               }
+              onNext();
             }}
             onBack={onBack}
           />

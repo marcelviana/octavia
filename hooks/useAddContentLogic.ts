@@ -44,6 +44,7 @@ export function useAddContentLogic() {
   const [error, setError] = useState<string | null>(null);
   const { user } = useAuth();
   const isAutoDetectingContentType = useRef(false);
+  const saveInFlightRef = useRef(false);
 
   useEffect(() => {
     if (isAutoDetectingContentType.current) {
@@ -171,6 +172,13 @@ export function useAddContentLogic() {
   const handleSaveContent = async (customMetadata?: any) => {
     if (!user) return;
 
+    // ADD-14: guarda de in-flight. Defesa em profundidade — o formulário já
+    // aguarda o save (useMetadataForm), mas a ref protege o fluxo mesmo se um
+    // caller futuro voltar a chamar sem await. Não cobre o replay da fila
+    // offline (duplicata por reprocessamento): ver B9 do PLANO-TRANSICAO.
+    if (saveInFlightRef.current) return;
+    saveInFlightRef.current = true;
+
     setIsUploading(true);
     setError(null);
 
@@ -215,11 +223,27 @@ export function useAddContentLogic() {
         return content;
       } else if (uploadedFile) {
         // Handle single file upload
+        // ADD-13: este branch lia `metadata` — estado do hook que o formulário
+        // nunca preenche — em vez de `customMetadata`, e descartava título,
+        // artista e todos os campos avançados (o item 42 da Fase D salvou o
+        // filename e "Unknown Artist"). Alinhado ao branch de draft.
+        const metadataToUse = customMetadata || metadata;
         const content = await createContent({
-          title: metadata.title || uploadedFile.name,
-          artist: metadata.artist || "Unknown Artist",
+          title: metadataToUse.title || uploadedFile.name,
+          artist: metadataToUse.artist || "Unknown Artist",
           content_type: contentType,
           file_url: uploadedFile.url ?? uploadedFile.name,
+          album: metadataToUse.album || null,
+          genre: metadataToUse.genre || null,
+          notes: metadataToUse.notes || null,
+          key: metadataToUse.key || null,
+          // ternário antes do parseInt: string vazia vira null (o schema
+          // declara bpm .optional().nullable()), nunca NaN
+          bpm: metadataToUse.bpm ? parseInt(metadataToUse.bpm, 10) : null,
+          difficulty: metadataToUse.difficulty || null,
+          time_signature: metadataToUse.timeSignature || null,
+          is_favorite: metadataToUse.isFavorite || false,
+          tags: metadataToUse.tags || null,
           user_id: user.uid
         });
         setCreatedContent(content);
@@ -231,6 +255,7 @@ export function useAddContentLogic() {
       setError(err instanceof Error ? err.message : "Failed to save content");
       throw err;
     } finally {
+      saveInFlightRef.current = false;
       setIsUploading(false);
     }
   };
