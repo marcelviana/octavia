@@ -62,8 +62,8 @@ uso; a antiga PR-1 vai para o fim):
 | Ordem | # | ID | Fix proposto | Esf | Risco / processo |
 |-------|---|----|--------------|-----|------------------|
 | 1º | 2 | **SET-23** ✅ **CONCLUÍDO** | `.nullish()` nos schemas de **create e update** de setlist ([`lib/api-validation-middleware.ts`](../../lib/api-validation-middleware.ts)). A UI ficou **intocada**: em update, `undefined` = "não mexa" e `null` = "limpe o campo" — o `\|\| undefined` cogitado teria criado um save que mente. PR #222, mergeada em 2026-08-10. | P | **Validado em preview e prod**: create com `null` → 201; update-clear persiste vazio. Item 16 passou **inteiro** em prod pela 1ª vez: **criar setlist vazia 7 → 3 taps** (J3 ✅), `taps_total` 29 → 25. |
-| 2º | 3 | **ADD-13** | Em [`hooks/useAddContentLogic.ts`](../../hooks/useAddContentLogic.ts), o branch `else if (uploadedFile)` usa `metadataToUse` (`customMetadata \|\| metadata`) como o branch de draft, e inclui `key`, `album`, `genre`, `bpm`, `difficulty`, `notes`. | P | **Baixo.** Regressão: itens 42/46 + 44 sanity. **Rigor atual** (upload/dados). |
-| 2º | 4 | **ADD-14** | Guarda de in-flight no `handleSaveContent` + `disabled` no Save. Mesma PR do ADD-13. | P | **Nulo.** Regressão: item 43. **Rigor atual**. |
+| 2º | 3 | **ADD-13** ✅ **CONCLUÍDO** | Branch de upload passou a usar `metadataToUse` + os 9 campos avançados ([`hooks/useAddContentLogic.ts`](../../hooks/useAddContentLogic.ts)). Schema conferido campo a campo antes do commit — nada stripado. PR #223, mergeada em 2026-08-11. | P | **Confirmado em prod (item 42)**: título `ux-audit-fase-d-cifra.pdf` → **`[UX-AUDIT] Fase D import solo`**, artista `Unknown Artist` → **`Conjunto Fase D`**, tom `null` → **`F`**. Item 46 (busca pelo título) atendido, verificado por API. Read-back de `key`/`bpm` no spec novo. |
+| 2º | 4 | **ADD-14** ✅ **CONCLUÍDO** | Guarda de in-flight por ref + `await onComplete` (que tornou o `disabled` real). PR #223. | P | **Confirmado**: clique duplo online → **1 linha**; o 2º clique foi barrado pelo próprio `disabled`. Escopo declarado: **replay offline não é coberto** (B9). |
 | 3º | 8 | **CONT-01 + CONT-02** | Cifra/tab-string em bloco monoespaçado `white-space: pre` + scroll-x (sem word-wrap). | P | **Baixo.** Conteúdo de texto é o caso majoritário do palco. Regressão: item 33 + assert de cifra. **Checkpoint único** (diff + teste juntos, sem intermediário). |
 | 4º | 5 | **SET-14** (FASE-D-06) | Listagem `/setlists` lê o cache offline (a mesma fonte que o dashboard e o deep link já leem; itens 8–9). | **M** | **Médio-baixo.** Único M (veto J1/J6: offline no local do show). Regressão: item 10 + 8–9 sanity. **Rigor atual**. |
 | 5º (último) | 1 | **PERF-02** | Em [`lib/security-headers.ts:79`](../../lib/security-headers.ts), `frame-src: 'none'` → `'self' blob:`. Pre-check do call site **feito**: o iframe só recebe `blob:` do próprio app (via `/api/proxy` → `createObjectURL`); não incluir `data:` (fallback legacy praticamente morto — declarado na PR). | P | **Baixo.** Mantido pelo custo marginal (one-liner com pre-check pronto). Perde a posição privilegiada: PDF é minoria do palco. Gate de preview permanece (item 4, Chromium headed). |
@@ -141,8 +141,11 @@ Por IP não é apenas ruim: é **incompatível com o cliente que vem aí**.
 em 371 POSTs** da Fase D (prod), a validação da fila A #0 em preview
 somou uma segunda fonte independente: **9 de 12 navegações triviais
 (75%) geraram 429 no `/api/auth/session`** — navegação normal de um
-único usuário esgota a janela de 5/15min quase imediatamente. Leitura:
-**o redesenho do session é candidato a primeiro item executado do B1.**
+único usuário esgota a janela de 5/15min quase imediatamente. Terceira
+fonte (2026-08-11): na PR-3, uma **verificação de higiene trivial** ao
+fim da rodada de prod já encontrou a janela esgotada (429 com backoff de
+60 s no tooling). Leitura: **o redesenho do session é candidato a
+primeiro item executado do B1.**
 
 **Rastreio (fila A, 2026-08-10)**: o redesenho elimina o self-fetch HTTP
 (verify vira chamada de função local — `verifyFirebaseToken` já é local),
@@ -272,6 +275,13 @@ da Fase D (2 linhas com 41 ms de diferença, medidas offline).
 **Consequência declarada**: a guarda de in-flight da fila A #4 (ADD-14) cobre
 a duplicata **por clique, online** — e só. O replay offline continua
 duplicando, e nenhuma correção de UI o resolve.
+
+**⚠️ Reprodução documentada em prod, PÓS-fix de UI (2026-08-11)**: a rodada
+de confirmação do item 43 deixou **2 linhas no servidor com o título
+digitado** (portanto criadas depois do fix, não resquício da Fase D)
+enquanto o cliente exibia `"Failed to fetch"`. B9 **não é teórico** — o
+cliente vê erro e o servidor tem duas linhas. As linhas foram removidas na
+higiene da rodada.
 
 **Tarefa**: chave de idempotência no `POST /api/content` (header
 `Idempotency-Key` gerado no cliente por tentativa de save, com dedupe
@@ -577,7 +587,7 @@ morre com a web. Sev/esforço conforme ASSESSMENT.
 | AUTH-09 | Inconsistência landing × auth | S3 | D | |
 | AUTH-10 | Landing fictícia, 7 links mortos | S3 | D | |
 | AUTH-11 | Loading compartilhado nos botões | S3 | D | |
-| ADD-01 | Falha de save mostra "saved successfully" | S1 | **C** | anti-padrão C3-1; motivação do B3. *Causa-raiz resolvida por tabela na fila A #3/#4*: o save passou a ser aguardado e a mensagem vem depois dele — **timing correto; a visibilidade da mensagem de sucesso é decisão do design nativo** (com `onNext()` o wizard avança e ela pode não ser vista; para a fila A basta que não minta) |
+| ADD-01 | Falha de save mostra "saved successfully" | S1 | **C** | ✅ **resolvido por tabela na fila A #3/#4, confirmado em produção** (item 43: `mostraSuccess` **true → false**, alerta `"Content saved successfully!"` → `"Failed to fetch"`, `mostraErro: true`). Duas notas: (a) **visibilidade** da mensagem de sucesso é decisão do design nativo (com `onNext()` o wizard avança e ela pode não ser vista; para a fila A basta que não minta); (b) **"Failed to fetch" é visível mas não acionável** — a qualidade da mensagem é ADD-07/B3, não esta PR |
 | ADD-02 | Batch import: 201×3 mas tela final é o passo 1 | S1 | **C** | anti-padrões C3-1/C3-2; import nativo em C4 |
 | ADD-03 | PWA sem share_target | S2 | **C** | requisito C4 (WhatsApp) |
 | ADD-05 | Tom enterrado em Advanced Options | S2 | **C** | design do form nativo (J4 ≤8 taps) |
@@ -754,6 +764,13 @@ mesmo quando a mudança parece só aditiva.
    por cookie** — o mecanismo substituiu o header global que os dois
    usaram na validação da PR-0. É **verificação**, não reescrita; se
    algo quebrar, conserta aqui.
+5. **Item 42 falhando no passo `Library` (pós-save)** — investigar **com
+   hipótese, não como "ambiental"**: o passo é **posterior ao save**, e o
+   fluxo pós-save mudou na PR-3 (`onNext()` agora espera o `await`; antes
+   avançava com o save em voo). Verificar **primeiro** se o timing novo
+   alterou a navegação que o spec esperava — se sim, **o spec se adapta
+   ao fluxo correto**, sem regressão de app. Só rotular como ambiental
+   depois de descartar essa hipótese.
 
 ### Padrão de instrumentação: bypass nunca por header global
 
