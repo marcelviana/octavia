@@ -750,6 +750,25 @@ mesmo quando a mudança parece só aditiva.
 3. **Referer nas chamadas Node do `scripts/ux-audit/auth.ts`** —
    **somente se** o endurecimento de referrer do B10 for adotado; com a
    key irrestrita (estado atual), é desnecessário.
+4. **Confirmar `rl-0-verify.spec.ts` e `probe-auth-limit.ts` com o bypass
+   por cookie** — o mecanismo substituiu o header global que os dois
+   usaram na validação da PR-0. É **verificação**, não reescrita; se
+   algo quebrar, conserta aqui.
+
+### Padrão de instrumentação: bypass nunca por header global
+
+**Header custom global em `extraHTTPHeaders` vaza para requisições
+cross-origin** — o preflight é recusado por terceiros e o sintoma fica
+**indistinguível de bug do app**. Evidência (PR-3, 2026-08-11): o
+`x-vercel-protection-bypass` injetado no `use` do Playwright ia junto nas
+chamadas do SDK do Firebase (`identitytoolkit`, `securetoken`); o Google
+recusava o preflight (*"No 'Access-Control-Allow-Origin'"*), o SDK ficava
+sem token e o upload travava no passo 1 **sem toast** — três rodadas de
+diagnóstico foram gastas atribuindo isso ao app e à API key.
+
+**Regra**: o bypass da Vercel viaja por **cookie** (`_vercel_jwt`, semeado
+por query param no `auth.setup.ts` e carregado no storageState), **nunca**
+por header global.
 
 ## Sequência (atualizada pós-aprovação)
 
