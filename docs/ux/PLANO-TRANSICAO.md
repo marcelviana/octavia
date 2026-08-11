@@ -61,7 +61,7 @@ uso; a antiga PR-1 vai para o fim):
 
 | Ordem | # | ID | Fix proposto | Esf | Risco / processo |
 |-------|---|----|--------------|-----|------------------|
-| 1º | 2 | **SET-23** | Em [`lib/api-validation-middleware.ts`](../../lib/api-validation-middleware.ts) (schema de setlist), `description: safeHtml.optional()` → `.nullish()`. Defesa dupla: nos dois call sites de [`setlist-manager.tsx`](../../components/setlist-manager.tsx) (83, 106), `\|\| null` → `\|\| undefined`. | P | **Quase nulo.** Destrava o primeiro passo do J3 (7 taps → 3). Regressão: item 16. **Rigor atual** (dados). |
+| 1º | 2 | **SET-23** ✅ **CONCLUÍDO** | `.nullish()` nos schemas de **create e update** de setlist ([`lib/api-validation-middleware.ts`](../../lib/api-validation-middleware.ts)). A UI ficou **intocada**: em update, `undefined` = "não mexa" e `null` = "limpe o campo" — o `\|\| undefined` cogitado teria criado um save que mente. PR #222, mergeada em 2026-08-10. | P | **Validado em preview e prod**: create com `null` → 201; update-clear persiste vazio. Item 16 passou **inteiro** em prod pela 1ª vez: **criar setlist vazia 7 → 3 taps** (J3 ✅), `taps_total` 29 → 25. |
 | 2º | 3 | **ADD-13** | Em [`hooks/useAddContentLogic.ts`](../../hooks/useAddContentLogic.ts), o branch `else if (uploadedFile)` usa `metadataToUse` (`customMetadata \|\| metadata`) como o branch de draft, e inclui `key`, `album`, `genre`, `bpm`, `difficulty`, `notes`. | P | **Baixo.** Regressão: itens 42/46 + 44 sanity. **Rigor atual** (upload/dados). |
 | 2º | 4 | **ADD-14** | Guarda de in-flight no `handleSaveContent` + `disabled` no Save. Mesma PR do ADD-13. | P | **Nulo.** Regressão: item 43. **Rigor atual**. |
 | 3º | 8 | **CONT-01 + CONT-02** | Cifra/tab-string em bloco monoespaçado `white-space: pre` + scroll-x (sem word-wrap). | P | **Baixo.** Conteúdo de texto é o caso majoritário do palco. Regressão: item 33 + assert de cifra. **Checkpoint único** (diff + teste juntos, sem intermediário). |
@@ -617,7 +617,7 @@ morre com a web. Sev/esforço conforme ASSESSMENT.
 | SET-20 | Botão do shell sem nome | S3 | D | |
 | SET-21 | Sem h1 | S3 | D | |
 | SET-22 | N+1 com content_data integral | S3 | **B** | shape de listagem B7 |
-| SET-23 | Criar setlist falha em silêncio (null) | S1 | **A** | fila #2 |
+| SET-23 | Criar setlist falha em silêncio (null) | S1 | **A** | fila #2 — ✅ **concluído** (PR #222; J3 "criar ≤3 taps" agora ✅) |
 | PERF-02 | CSP bloqueia o iframe de PDF no palco | S1 | **A** | fila #1 |
 | PERF-04 | Avançar exige botão de 36 px | S2 | **C** | anti-padrão C3-3; palco às cegas |
 | PERF-05 | Sem "música 4 de 12" | S2 | **C** | requisito C4/C2 |
