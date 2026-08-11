@@ -20,7 +20,7 @@ interface MetadataFormData {
 }
 
 interface UseMetadataFormProps {
-  onComplete: (metadata: any) => void;
+  onComplete: (metadata: any) => void | Promise<void>;
   initialData?: Partial<MetadataFormData>;
 }
 
@@ -87,8 +87,14 @@ export function useMetadataForm({ onComplete, initialData }: UseMetadataFormProp
         tags: formData.tags.length > 0 ? formData.tags : null
       };
 
+      // ADD-14/ADD-01: o save é AGUARDADO e a mensagem de sucesso só aparece
+      // depois que ele conclui de verdade. Antes, setSuccess vinha antes de
+      // onComplete e o onComplete (async) não era aguardado: o "Content saved
+      // successfully!" aparecia mesmo com falha (ADD-01) e o
+      // `disabled={isSubmitting}` do botão liberava no mesmo tick, deixando o
+      // save em voo desprotegido (ADD-14).
+      await onComplete(metadata);
       setSuccess("Content saved successfully!");
-      onComplete(metadata);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to save content");
     } finally {
