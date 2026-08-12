@@ -57,16 +57,18 @@ export async function getUserSetlists(providedUser?: any) {
     })
 
     if (!response.ok) {
-      const errorData = await response.json()
+      const errorData = await response.json().catch(() => null)
       logger.error("Error fetching setlists:", errorData)
-      return []
+      // Lança em vez de devolver []: o caller precisa distinguir "sem
+      // setlists" de "falha de rede" para cair no cache offline (SET-14)
+      throw new Error("Failed to load setlists")
     }
 
     const setlists = await response.json()
     return setlists
   } catch (error) {
     logger.error("Error in getUserSetlists:", error)
-    return []
+    throw error instanceof Error ? error : new Error("Failed to load setlists")
   }
 }
 

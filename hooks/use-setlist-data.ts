@@ -4,7 +4,7 @@ import type React from "react"
 import { useState, useEffect, useRef, useCallback } from "react"
 import { getUserSetlists } from "@/lib/setlist-service"
 import { getUserContentPage } from "@/lib/content-service"
-import { saveSetlists, getCachedSetlists } from "@/lib/offline-setlist-cache"
+import { replaceSetlists, getCachedSetlists } from "@/lib/offline-setlist-cache"
 import { saveContent, getCachedContent } from "@/lib/offline-cache"
 import type { Database } from "@/types/supabase"
 
@@ -43,17 +43,42 @@ export function useSetlistData(user: any | null, ready: boolean): UseSetlistData
     }
     inProgressRef.current = true
     
+    // Visível fora do try: decide o tratamento de falha de rede abaixo
+    let hasCachedSets = false
+
     try {
       setLoading(true)
       setError(null)
 
-      if (typeof navigator !== "undefined" && !navigator.onLine) {
+      // 1. Cache-first: hidrata do IndexedDB antes de qualquer rede. Offline
+      // (ou com rede caída), a tela lista o último estado conhecido —
+      // staleness é aceitável e preferível ao estado vazio de primeiro uso.
+      try {
         const [cachedSets, cachedContent] = await Promise.all([
           getCachedSetlists(),
           getCachedContent(),
         ])
-        setSetlists(cachedSets as SetlistWithSongs[])
-        setAvailableContent(cachedContent)
+        if (cachedSets.length > 0) {
+          hasCachedSets = true
+          setSetlists(cachedSets as SetlistWithSongs[])
+          setLoading(false) // lista imediatamente; a rede revalida por trás
+        }
+        if (cachedContent.length > 0) {
+          setAvailableContent(cachedContent)
+        }
+      } catch (cacheErr) {
+        console.warn("useSetlistData: Failed to hydrate from cache:", cacheErr)
+      }
+
+      // 2. Sem rede declarada, fica no cache. Atalho, não porta: rede caída
+      // com navigator.onLine === true segue para o fetch e cai no rejected
+      // abaixo (o caso real de palco — wi-fi conectado sem internet)
+      if (typeof navigator !== "undefined" && !navigator.onLine) {
+        if (!hasCachedSets) {
+          // Offline sem cache: mesmo estado de erro do rejected sem cache —
+          // nunca o empty state de primeiro uso
+          setError("Couldn't load setlists. Check your connection and try again.")
+        }
         return
       }
 
@@ -65,7 +90,7 @@ export function useSetlistData(user: any | null, ready: boolean): UseSetlistData
         return
       }
 
-      // Load setlists and content using proper service functions
+      // 3. Revalidação pela rede
       const [setsResult, contentResult] = await Promise.allSettled([
         getUserSetlists(userForQuery),
         getUserContentPage({
@@ -78,62 +103,43 @@ export function useSetlistData(user: any | null, ready: boolean): UseSetlistData
         }, undefined, userForQuery)
       ])
 
-      let setsData: SetlistWithSongs[] = []
-      let contentData: Content[] = []
-
       if (setsResult.status === "fulfilled") {
-        setsData = setsResult.value as SetlistWithSongs[]
+        const setsData = setsResult.value as SetlistWithSongs[]
+        setSetlists(setsData)
+        // A resposta do servidor é a verdade: substitui o cache (sem merge,
+        // senão setlists deletadas em outro dispositivo ressuscitariam)
+        try {
+          await replaceSetlists(setsData as any[])
+        } catch (cacheErr) {
+          console.warn("useSetlistData: Failed to cache setlists:", cacheErr)
+        }
       } else {
         console.error("useSetlistData: Sets loading failed:", setsResult.reason)
-        // Try to load from cache
-        try {
-          setsData = await getCachedSetlists() as SetlistWithSongs[]
-        } catch (cacheErr) {
-          console.error("useSetlistData: Failed to load cached setlists:", cacheErr)
+        // Falha de rede nunca vira lista vazia: com cache na tela, mantém;
+        // sem cache, estado de erro — nunca o empty state de primeiro uso
+        if (!hasCachedSets) {
+          setError("Couldn't load setlists. Check your connection and try again.")
         }
       }
 
       if (contentResult.status === "fulfilled") {
-        contentData = contentResult.value.data || []
-      } else {
-        console.error("useSetlistData: Content loading failed:", contentResult.reason)
-        // Try to load from cache
+        const contentData = contentResult.value.data || []
+        setAvailableContent(contentData)
         try {
-          contentData = await getCachedContent()
+          if (contentData.length > 0) {
+            await saveContent(contentData)
+          }
         } catch (cacheErr) {
-          console.error("useSetlistData: Failed to load cached content:", cacheErr)
+          console.warn("useSetlistData: Failed to cache content:", cacheErr)
         }
+      } else {
+        // Estado já hidratado do cache no passo 1; só registra
+        console.error("useSetlistData: Content loading failed:", contentResult.reason)
       }
-
-      setSetlists(setsData)
-      setAvailableContent(contentData)
-
-      // Cache the data
-      try {
-        if (setsData.length > 0) {
-          await saveSetlists(setsData as any[])
-        }
-        if (contentData.length > 0) {
-          await saveContent(contentData)
-        }
-      } catch (cacheErr) {
-        console.warn("useSetlistData: Failed to cache data:", cacheErr)
-      }
-
     } catch (err: any) {
       console.error("useSetlistData: Error:", err)
-      setError(err?.message ?? "Failed to load data")
-      
-      // Try to load from cache as fallback
-      try {
-        const [cachedSets, cachedContent] = await Promise.all([
-          getCachedSetlists(),
-          getCachedContent(),
-        ])
-        setSetlists(cachedSets as SetlistWithSongs[])
-        setAvailableContent(cachedContent)
-      } catch (cacheErr) {
-        console.error("useSetlistData: Failed to load cached data:", cacheErr)
+      if (!hasCachedSets) {
+        setError(err?.message ?? "Failed to load data")
       }
     } finally {
       inProgressRef.current = false
