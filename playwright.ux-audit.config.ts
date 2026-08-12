@@ -81,6 +81,21 @@ export default defineConfig({
         actionTimeout: 20_000,
       },
     },
+    {
+      // Gate de regressão da PR-4 (SET-14): /setlists offline lê o cache.
+      // Mesmas escolhas do fase-d (SW ligado, sem dependência do setup —
+      // storageState semeado manualmente) e read-only: sem ItemRecorder,
+      // nada escrito em docs/. Ver cabeçalho do spec.
+      name: 'set14-gate',
+      testMatch: /set14-gate\.spec\.ts/,
+      use: {
+        storageState: UX_AUDIT_STORAGE_STATE,
+        viewport: UX_AUDIT_VIEWPORTS['tablet-landscape'],
+        serviceWorkers: 'allow',
+        trace: 'on',
+        actionTimeout: 20_000,
+      },
+    },
     ...Object.entries(UX_AUDIT_VIEWPORTS).map(([name, viewport]) => ({
       name: `harvest-${name}`,
       // Casa harvest.spec.ts (B1, estados vazios) e harvest-populated.spec.ts
