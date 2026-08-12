@@ -106,17 +106,23 @@ describe('Setlist Service', () => {
       })
     })
 
-    it('should handle API errors gracefully', async () => {
-      // Mock API error
+    it('should throw on API error so callers can fall back to the offline cache', async () => {
+      // Mock API error — SET-14: devolver [] aqui era indistinguível de
+      // "sem setlists" e impedia o fallback de cache do caller
       (fetch as any).mockResolvedValueOnce({
         ok: false,
         json: vi.fn().mockResolvedValue({ error: 'API Error' })
       })
 
       const { getUserSetlists } = await import('../setlist-service')
-      const result = await getUserSetlists()
+      await expect(getUserSetlists()).rejects.toThrow('Failed to load setlists')
+    })
 
-      expect(result).toEqual([])
+    it('should throw on network failure (fetch rejects)', async () => {
+      (fetch as any).mockRejectedValueOnce(new TypeError('Failed to fetch'))
+
+      const { getUserSetlists } = await import('../setlist-service')
+      await expect(getUserSetlists()).rejects.toThrow()
     })
   })
 
