@@ -809,6 +809,18 @@ diagnóstico foram gastas atribuindo isso ao app e à API key.
 por query param no `auth.setup.ts` e carregado no storageState), **nunca**
 por header global.
 
+### Nota operacional: rodadas longas re-semeiam sessão (~55 min)
+
+O cookie de sessão de 7 dias carrega o **idToken de 1h** (AUTH-02;
+`app/api/auth/session/route.ts`), e o middleware valida o idToken — logo
+o storageState do ux-audit **expira ~1 h após o setup**, com bounce para
+`/login` indistinguível à primeira vista de regressão de auth. Custo real:
+na confirmação de prod da PR-4 (2026-08-12), duas tentativas foram
+gastas na hipótese errada (limiter) antes do diagnóstico. **Regra**: em
+qualquer rodada contra prod/preview que passe de ~55 min desde o setup
+(ou que falhe com bounce em `/login`), re-rodar o setup **antes** de
+diagnosticar como regressão. Morre com o contrato Bearer do nativo (B7).
+
 ## Sequência (atualizada pós-aprovação)
 
 1. **Agora**: executar a fila A aprovada (#0–#11), no agrupamento de PRs
