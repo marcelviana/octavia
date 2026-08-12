@@ -24,7 +24,10 @@ export function TabDisplay({ content, getOrdinalSuffix }: TabDisplayProps) {
           )}
         </div>
       ) : typeof content.content_data?.tablature === "string" ? (
-        <div className="font-mono text-sm bg-gray-50 p-4 rounded-lg">
+        // CONT-02: sem `whitespace-pre` o texto perdia as quebras de linha e
+        // as linhas longas envolviam — as 6 cordas saíam do alinhamento e a
+        // tab virava ilegível a 390px. Mesmo padrão do branch de array acima.
+        <div className="font-mono text-sm bg-gray-50 p-4 rounded-lg whitespace-pre overflow-x-auto">
           {content.content_data.tablature}
         </div>
       ) : (

@@ -164,14 +164,19 @@ const MemoizedChordsDisplay = memo(function ChordsDisplay({
                 </div>
               )}
               {section.lyrics && (
-                <div className="font-mono leading-relaxed whitespace-pre-wrap">
+                // PALCO — mudança deliberada (CONT-01/02): era `pre-wrap`, que
+                // envolvia a linha longa e desalinhava acorde↔sílaba no meio da
+                // música. Passa a cortar com scroll horizontal.
+                <div className="font-mono leading-relaxed whitespace-pre overflow-x-auto">
                   {section.lyrics}
                 </div>
               )}
             </div>
           ))
         ) : (
-          <div className="font-mono leading-relaxed whitespace-pre-wrap">
+          // PALCO — cifra/tab que chega como string (o caso do seed e do uso
+          // real). Mesma mudança deliberada do branch de sections acima.
+          <div className="font-mono leading-relaxed whitespace-pre overflow-x-auto">
             {String(chordsData)}
           </div>
         )}

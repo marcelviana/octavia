@@ -29,7 +29,11 @@ export function ChordDisplay({ content }: ChordDisplayProps) {
                 </div>
               )}
               {section.lyrics && (
-                <pre className="whitespace-pre-wrap font-mono text-sm leading-relaxed">
+                // MUDANÇA DE COMPORTAMENTO DELIBERADA (CONT-01): era
+                // `pre-wrap` (envolvia a linha longa). Passa a cortar com
+                // scroll horizontal — desalinhar acorde↔sílaba é pior que
+                // rolar, no viewer e principalmente no palco.
+                <pre className="whitespace-pre overflow-x-auto font-mono text-sm leading-relaxed">
                   {section.lyrics}
                 </pre>
               )}
@@ -75,7 +79,9 @@ export function ChordDisplay({ content }: ChordDisplayProps) {
           )}
         </div>
       ) : typeof content.content_data?.chords === "string" ? (
-        <div className="font-mono text-sm bg-gray-50 p-4 rounded-lg">
+        // CONT-01: sem `whitespace-pre` a cifra virava parágrafo corrido —
+        // acordes e sílabas perdiam o alinhamento vertical.
+        <div className="font-mono text-sm bg-gray-50 p-4 rounded-lg whitespace-pre overflow-x-auto">
           {content.content_data.chords}
         </div>
       ) : (
