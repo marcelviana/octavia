@@ -65,7 +65,7 @@ uso; a antiga PR-1 vai para o fim):
 | 2º | 3 | **ADD-13** ✅ **CONCLUÍDO** | Branch de upload passou a usar `metadataToUse` + os 9 campos avançados ([`hooks/useAddContentLogic.ts`](../../hooks/useAddContentLogic.ts)). Schema conferido campo a campo antes do commit — nada stripado. PR #223, mergeada em 2026-08-11. | P | **Confirmado em prod (item 42)**: título `ux-audit-fase-d-cifra.pdf` → **`[UX-AUDIT] Fase D import solo`**, artista `Unknown Artist` → **`Conjunto Fase D`**, tom `null` → **`F`**. Item 46 (busca pelo título) atendido, verificado por API. Read-back de `key`/`bpm` no spec novo. |
 | 2º | 4 | **ADD-14** ✅ **CONCLUÍDO** | Guarda de in-flight por ref + `await onComplete` (que tornou o `disabled` real). PR #223. | P | **Confirmado**: clique duplo online → **1 linha**; o 2º clique foi barrado pelo próprio `disabled`. Escopo declarado: **replay offline não é coberto** (B9). |
 | 3º | 8 | **CONT-01 + CONT-02** ✅ **CONCLUÍDO** | `white-space: pre` + `overflow-x-auto` em **5 sites** (o plano supunha 1 renderer): `TabDisplay` tab-string, `ChordDisplay` cifra-string **e** `sections[].lyrics`, `LyricsDisplay` cifra-na-letra, e o **palco** (2 pontos). Mudança deliberada onde era `pre-wrap`. PR #224, mergeada em 2026-08-12. | P | **Validado em preview e prod** a 390 px, por computed style: cifra `pre`/`auto`/**420>276**, tab `pre`/`auto`/**521>276** com **6 cordas de largura idêntica**, palco/cifra `pre`/`auto`/**443>326**. **O item 33 deixa de ser gate** (media `[]` antes e depois: o seletor `pre, [class*="overflow-x"]` não casava com o `div.font-mono` quebrado) — o gate passa a ser `cont01-02-monoespacado.spec.ts`, que **falhou contra o código sem o fix** e passou com ele. Pendência declarada: `fixme` do palco/tab (tab não renderiza no palco → Bloco C). |
-| 4º | 5 | **SET-14** (FASE-D-06) | Listagem `/setlists` lê o cache offline (a mesma fonte que o dashboard e o deep link já leem; itens 8–9). | **M** | **Médio-baixo.** Único M (veto J1/J6: offline no local do show). Regressão: item 10 + 8–9 sanity. **Rigor atual**. |
+| 4º | 5 | **SET-14** (FASE-D-06) ✅ **CONCLUÍDO** | Cache-first no [`hooks/use-setlist-data.ts`](../../hooks/use-setlist-data.ts) (hidrata do IndexedDB e lista imediatamente; rede revalida e **substitui** estado e cache — `replaceSetlists`, sem merge, deleções de outro dispositivo não ressuscitam) + `getUserSetlists` deixa de engolir erro (lança; falha nunca vira `[]`). Sonda do pre-check separou H1×H2: a gravação **funcionava** (chave/uid corretos); o bug era o `[]` silencioso + `navigator.onLine` como porta única do cache — que é `true` no caso real de palco (**wi-fi conectado sem internet**), coberto agora; `onLine=false` virou atalho, com estado de erro declarado também para cache vazio. PR #225, mergeada em 2026-08-12. | **M** | **Validado em preview e prod** com gate novo `set14-gate.spec.ts` (read-only, prontidão por `expect.poll` no IndexedDB): offline lista "UX-AUDIT Show padrão", zero "No setlists yet". **Controle negativo**: o gate **falhou contra prod sem o fix** exatamente no assert do alvo. Sanity 8–9 sem regressão (medições idênticas à baseline). Staleness offline declarada aceitável por design (o SET-14 original vira comportamento pretendido). Fora do escopo → B: poda das demais stores; erro engolido nos outros serviços. |
 | 5º (último) | 1 | **PERF-02** | Em [`lib/security-headers.ts:79`](../../lib/security-headers.ts), `frame-src: 'none'` → `'self' blob:`. Pre-check do call site **feito**: o iframe só recebe `blob:` do próprio app (via `/api/proxy` → `createObjectURL`); não incluir `data:` (fallback legacy praticamente morto — declarado na PR). | P | **Baixo.** Mantido pelo custo marginal (one-liner com pre-check pronto). Perde a posição privilegiada: PDF é minoria do palco. Gate de preview permanece (item 4, Chromium headed). |
 
 **Cortados no recorte (2ª revisão) — migraram para o Bloco D**: SET-03 e
@@ -661,7 +661,7 @@ morre com a web. Sev/esforço conforme ASSESSMENT.
 | SET-11 | Títulos truncados a ~4 chars | S2 | D | |
 | SET-12 | Hover-only 28 px em touch | S2 | **C** | anti-padrão C3-3; atenuado por A#7 |
 | SET-13 | Duração fabricada como fato | S2 | **C** | anti-padrão C3-6 |
-| SET-14 | Offline: listagem sem leitura de cache | S1 | **A** | fila #5 (único M) |
+| SET-14 | Offline: listagem sem leitura de cache | S1 | **A** | fila #5 (único M) — ✅ **concluído** (PR #225; cache-first + erro não engolido; cobre `onLine=true` com rede caída, o caso real de palco) |
 | SET-15 | Não existe duplicar setlist | S2 | **C** | requisito C4 (J3) |
 | SET-16 | Contraste CTAs azuis | S2 | D | |
 | SET-17 | Data com off-by-one de fuso | S3 | **B** | `performance_date` date-only (B5 ✅) |
@@ -700,9 +700,10 @@ rastreabilidade): ~~ADD-04~~ (absorvido em ADD-13), ~~SET-05~~ e
 > **Atualizado no recorte de 2026-08-10 (2ª revisão)**: PR-5, PR-7, PR-8a
 > e PR-8b **mortas** (itens cortados → Bloco D). Executado até aqui:
 > **PR-0** (#0) + housekeeping (retry/tipo/guard) + PRs de terreno #220
-> (pipeline) e #221 (âncora do self-fetch). Restam, na ordem:
-> **PR-2 (#2) → PR-3 (#3+#4) → PR-6 (#8, checkpoint único) → PR-4 (#5) →
-> PR-1 (#1, por último, gate de preview mantido)**.
+> (pipeline) e #221 (âncora do self-fetch) + **PR-2 (#2, PR #222)** +
+> **PR-3 (#3+#4, PR #223)** + **PR-6 (#8, PR #224)** + **PR-4 (#5,
+> PR #225)**. Resta:
+> **PR-1 (#1, por último, gate de preview mantido)**.
 
 Cada PR roda o spec da Fase D correspondente como regressão
 (`tests/ux-audit/fase-d/`, alvo via `UX_AUDIT_BASE_URL`).
@@ -744,6 +745,15 @@ Ajustes obrigatórios incorporados:
 6. **Segredos de automação** (Vercel bypass etc.): valor lido **somente
    inline no momento do comando** (`$(cat ~/.octavia-vercel-bypass)`),
    nunca gravado em arquivo do repositório, nunca ecoado em log/output.
+7. **Controle negativo de gates novos** (regra de sessão, 2026-08-12;
+   mesma disciplina que desmascarou o item 33): todo gate de regressão
+   novo **prova que pega o bug que diz pegar** antes de valer como gate —
+   rodado contra o código **sem** o fix (prod pré-merge ou código
+   revertido), com **falha esperada no assert do alvo**, registrada no
+   relatório de validação. Primeiro uso deliberado: PR-4/#5, gate
+   `set14-gate.spec.ts` (falhou contra prod sem o fix exatamente no
+   assert "setlist canônica visível offline"; passou no preview e na
+   confirmação de prod com o fix).
 
 ### Incidente API key (2026-08-11)
 
