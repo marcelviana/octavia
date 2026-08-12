@@ -50,7 +50,9 @@ export function LyricsDisplay({ content }: LyricsDisplayProps) {
       {typeof content.content_data?.chords === "string" && content.content_data.chords && (
         <div className="p-4 bg-white/80 backdrop-blur-sm border border-blue-200 rounded-xl shadow">
           <h4 className="font-semibold mb-2">Chords</h4>
-          <div className="font-mono text-sm bg-gray-50 p-4 rounded-lg">
+          {/* CONT-01 (terceiro local da cifra-string): mesmo tratamento do
+              ChordDisplay. A prosa da letra acima segue com wrap normal. */}
+          <div className="font-mono text-sm bg-gray-50 p-4 rounded-lg whitespace-pre overflow-x-auto">
             {content.content_data.chords}
           </div>
         </div>
