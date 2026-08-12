@@ -393,6 +393,18 @@ cada ✅ e fechar cada ❌/⚠️**. Os números que definem o piso:
 
 ### C4 — Requisitos que a web nunca entregou e o nativo deve entregar
 
+- **Renderer do palco cobrindo TODOS os content types desde o design** —
+  na web, **`ContentType.TAB` nunca renderizou no modo performance**:
+  [`use-content-loading.ts`](../../hooks/use-content-loading.ts) carrega
+  apenas `content_data.chords` e `.sections`, **nunca `.tablature`**, e o
+  [`use-content-renderer.ts`](../../hooks/use-content-renderer.ts) para
+  `TAB` só consulta esses dois campos → fallback *"No lyrics available for
+  this song"*. **Fio desligado** (padrão nº 2), descoberto na validação da
+  PR-6 em 2026-08-12. Evidência: `test.fixme` em
+  `tests/ux-audit/fase-d/cont01-02-monoespacado.spec.ts`. **Decisão do
+  Marcel (2026-08-12): nenhum trabalho na web** — tablatura é material de
+  estudo, fora do palco, e o furo não intercepta o J1 do uso real. O
+  nativo, porém, não pode nascer com um tipo de conteúdo mudo no palco.
 - **Anotações renderizadas no palco** (J2; CONT-03): criável em ≤5 taps,
   visível no performance mode. Feature mantida (B5 decidido); o modelo de
   dados definitivo é do design nativo.

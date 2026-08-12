@@ -71,7 +71,12 @@
    está na tela corresponde ao que existe. Para a Fase E, é o candidato mais forte
    a correção estrutural única com efeito em 7 achados.
 
-2. **Feature com UI presente e fio desligado** — reorder com handler TODO na UI e
+2. **Feature com UI presente e fio desligado** — *(manifestação acrescentada em
+   2026-08-12, descoberta na validação da fila A #8: **tablatura nunca renderiza
+   no modo performance** — `use-content-loading`/`use-content-renderer` jamais
+   leem `content_data.tablature`, e o palco cai em "No lyrics available for this
+   song"; o viewer lê o mesmo campo corretamente. Destino: Bloco C, sem trabalho
+   na web — ver `PLANO-TRANSICAO.md`.)* — reorder com handler TODO na UI e
    API pronta (SET-03), favorito que não persiste (CONT-05), toolbar vestigial
    desativada (CONT-08), auto-hide de controles pela metade (PERF-12), props de CTA
    nunca renderizadas no dashboard (DASH-01), Edit/Delete nunca ligados no viewer
