@@ -262,9 +262,17 @@ test.describe('Grupo I — Add Content (J4)', () => {
       await rec.tap('tap final: "Save Content"', async () => {
         await page.getByRole('button', { name: /save content|save/i }).first().tap()
       })
+      // Fluxo pós-PR-3 (fila A #3/#4): o save é AGUARDADO e, ao concluir,
+      // o app navega sozinho para o viewer (onContentCreated →
+      // router.push('/content/<id>')). Esse redirect é o critério de
+      // sucesso determinístico — o waitForFunction antigo
+      // (/successfully|library/i) era trivialmente verdadeiro (a bottom
+      // nav sempre contém "Library") e deixava o passo seguinte correr
+      // contra o redirect (falha do item 42 em 2026-08-11, housekeeping
+      // #5 do PLANO-TRANSICAO).
       await page
-        .waitForFunction(() => /successfully|library/i.test(document.body.textContent ?? ''), { timeout: 30_000 })
-        .catch(() => rec.note('confirmação de sucesso não detectada em 30s'))
+        .waitForURL(/\/content\//, { timeout: 30_000 })
+        .catch(() => rec.note('redirect pós-save ao /content/<id> não ocorreu em 30s'))
       rec.measure('tempo_total_ms_do_primeiro_tap', rec.elapsed())
       rec.measure('screenshot_conclusao', await shot(page, 'item-42-conclusao'))
       rec.measure('upload_statuses', uploads.statuses)
