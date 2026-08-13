@@ -432,10 +432,16 @@ cada ✅ e fechar cada ❌/⚠️**. Os números que definem o piso:
   indicador "garantido offline" antes do show (ponto de observação do J6),
   e fila de escrita offline com feedback (critério do J6 nunca testado a
   fundo porque a web não tinha).
-- **PDF como requisito de primeira classe** (J1): render nativo, scroll
-  contínuo de 12 páginas, dark mode com inversão legível, zoom com pan,
-  arquivo local para offline. Foi o maior S1 da web (PERF-02) e é o item
-  que mais diferencia as stacks (ver seção de stack).
+- **PDF no palco — caso menor, com due diligence na 1ª semana** (J1):
+  premissa de repertório (decisão de 2026-08-13, ver seção de stack)
+  rebaixou PDF de "requisito de primeira classe" para caso menor — a
+  maioria absoluta do conteúdo é texto (cifras, letras, tabs); PDF
+  ocasional com render simples é aceitável. Qualquer render nativo já
+  elimina a classe PERF-02 (não há CSP/iframe fora do browser). **Item
+  da primeira semana do nativo**: due diligence de PDF dentro do RN —
+  renderizar um PDF com a lib padrão do ecossistema (`react-native-pdf`)
+  em device real, ~meia hora. Não decide nada; só estabelece o teto
+  cedo e evita surpresa.
 
 ---
 
@@ -526,14 +532,52 @@ O `MANUAL-CHECKLIST.md` permanece como registro dos procedimentos.
 
 ---
 
-## Stack nativa — considerações (análise, SEM decisão)
+## Stack nativa — ✅ DECISÃO (2026-08-13): React Native / Expo
 
-Critérios: dev **solo** com stack TS/React · backend REST existente (a API
-Next.js fica) · Firebase Auth (token Bearer, B7) · Supabase só via API
-(o cliente quase não fala com o Supabase direto) · requisitos do Bloco C —
-com **PDF rendering como critério de maior peso** (foi o maior S1 da web).
+**Decidido pelo Marcel em 2026-08-13**: o nativo será **React
+Native/Expo**, em **monorepo pnpm workspaces** com pacote compartilhado
+(schemas Zod, types TS, hooks de lógica pura) entre web e nativo durante
+a transição. **O spike de PDF está cancelado como gate decisório.**
 
-### As quatro opções
+### O que mudou: a premissa do PDF
+
+O spike de 1 dia (renderizar o PDF de 12 páginas do seed com dark sheet +
+zoom em iPad real) existia porque PDF era a **única capacidade onde React
+Native tinha risco real frente ao Flutter** — a análise abaixo o tratava
+como critério de maior peso. **Premissa nova, de repertório (decisão de
+produto do Marcel)**: PDF é caso menor no palco — a maioria absoluta do
+conteúdo é texto (cifras, letras, tabs). PDF ocasional com render simples
+é aceitável; **não é critério de escolha de stack**.
+
+### Racional da escolha
+
+Sem o PDF na equação, React Native/Expo vence sem desafiante:
+
+- **Reuso direto de schemas Zod, types TS e hooks de lógica pura** —
+  exatamente os contratos que o Bloco B vai auditar (B2/B3). Em Flutter
+  seriam reescritos em Dart, dobrando a superfície de erro.
+- **Monorepo pnpm workspaces** com pacote compartilhado entre web e
+  nativo durante a transição.
+- **Uma linguagem só para um dev solo** — o critério dominante já era de
+  capacidade, não técnico; RN é a única opção onde parte do repositório
+  atual migra em vez de morrer.
+
+### O destino do spike: due diligence, não gate
+
+O spike **não morre — encolhe e muda de natureza**: vira due diligence
+dentro do RN na **primeira semana do nativo** (item registrado no C4):
+renderizar um PDF com a lib padrão do ecossistema (`react-native-pdf`)
+em device real, ~meia hora. Não decide nada — só estabelece o teto cedo
+e evita surpresa.
+
+### Análise comparativa (registro pré-decisão; mantida como memória)
+
+Critérios da época: dev **solo** com stack TS/React · backend REST
+existente (a API Next.js fica) · Firebase Auth (token Bearer, B7) ·
+Supabase só via API · requisitos do Bloco C — com PDF rendering como
+critério de maior peso (premissa **revogada** acima).
+
+#### As quatro opções
 
 | Critério | React Native / Expo | Flutter | Kotlin Multiplatform | Nativo puro ×2 |
 |----------|--------------------|---------|--------------------|----------------|
@@ -547,7 +591,7 @@ com **PDF rendering como critério de maior peso** (foi o maior S1 da web).
 | Offline-first (DB local + fila de escrita) | expo-sqlite / WatermelonDB / op-sqlite — maduro | Drift/Isar — maduro | SQLDelight — maduro | Room / CoreData+GRDB |
 | Risco específico | Depender de libs nativas de terceiros para PDF/share (qualidade boa, mas manutenção da comunidade) | Reescrever em Dart tudo que hoje é TS; zero reuso | Volume de trabalho de 2 UIs para um dev solo | Volume máximo; fim do argumento "mínimo de mudança" |
 
-### Leituras (sem veredito)
+#### Leituras da época (pré-decisão)
 
 - **O critério dominante não é técnico, é de capacidade**: um dev solo
   mantendo backend + 2 apps. Isso pesa contra KMP e nativo puro (2 UIs)
@@ -559,23 +603,28 @@ com **PDF rendering como critério de maior peso** (foi o maior S1 da web).
 - **Flutter** ganha no polish do rendering (incluindo o ecossistema de PDF
   viewer talvez mais completo) ao custo de zerar o reuso de linguagem — a
   troca é "melhor ferramenta de UI" por "segunda stack para uma pessoa".
-- **O PDF decide mais que qualquer benchmark**: qualquer uma das quatro
-  opções elimina a classe PERF-02 (não há CSP nem iframe fora do browser).
-  A diferença está no custo de chegar a scroll de 12 páginas + dark sheet
-  invertido + zoom com pan. Prova prática recomendada **antes** da decisão:
-  um spike de 1 tela na(s) finalista(s) — renderizar o PDF de 12 páginas do
-  seed com inversão de cor e zoom, no iPad real. É o teste de 1 dia que
-  vale mais que esta tabela inteira.
+- ~~**O PDF decide mais que qualquer benchmark**~~ — **leitura revogada
+  em 2026-08-13** pela premissa de repertório (ver topo da seção). Fica
+  válido o fato técnico: qualquer uma das quatro opções elimina a classe
+  PERF-02 (não há CSP nem iframe fora do browser). O spike de 1 dia aqui
+  recomendado foi cancelado como gate e convertido em due diligence da
+  primeira semana do nativo (C4).
 - **Share target no iOS** é extensão de app em qualquer stack (até no
   nativo é um target separado); nenhuma opção torna isso "grátis" — apenas
   mais ou menos documentado.
 
-### Perguntas que fecham a decisão
+#### As perguntas que fechavam a decisão — respondidas (2026-08-13)
 
-1. O spike de PDF (12 páginas, dark sheet, zoom, iPad real) passa na stack candidata?
-2. O reuso de Zod/tipos TS no cliente vale o lock-in no ecossistema RN?
-3. Expo com dev build (necessário para PDF/share nativos) está confortável no fluxo de trabalho solo?
-4. Alguma ambição futura (widget de setlist, Apple Watch, CarPlay?) que empurre para nativo?
+1. ~~O spike de PDF passa na stack candidata?~~ → **pergunta dissolvida**:
+   PDF deixou de ser critério de escolha (premissa de repertório); o
+   spike virou due diligence pós-decisão dentro do RN (C4).
+2. O reuso de Zod/tipos TS vale o lock-in no ecossistema RN? → **Sim** —
+   é o coração do racional: os contratos que o Bloco B audita migram em
+   vez de serem reescritos em Dart.
+3. Expo com dev build confortável no fluxo solo? → **Sim** — aceito como
+   parte da escolha; sem desafiante restante.
+4. Ambição futura que empurre para nativo puro? → **Não** — nada no
+   horizonte que justifique 2 codebases para um dev solo.
 
 ---
 
@@ -881,5 +930,7 @@ automaticamente.
 3. **Junto do desenvolvimento nativo**: B4 (storage), B6 (reorder
    atômico), B7 (shapes de leitura); modelo de dados de anotações decidido
    no design nativo (B5).
-4. **Decisão de stack** (única decisão em aberto): responder as 4
-   perguntas da seção de stack — começando pelo spike de PDF.
+4. **Decisão de stack**: ✅ **fechada em 2026-08-13** — React
+   Native/Expo, monorepo pnpm workspaces. O spike de PDF foi cancelado
+   como gate decisório e convertido em due diligence da primeira semana
+   do nativo (C4). Nenhuma decisão de stack permanece em aberto.
