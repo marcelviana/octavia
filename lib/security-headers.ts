@@ -77,7 +77,11 @@ export const PRODUCTION_SECURITY_CONFIG: EnhancedSecurityConfig = {
         'wss://*.supabase.co' // WebSocket connections
       ],
       'frame-src': [
-        "'none'" // Prevent any iframe embedding
+        // PERF-02: o modo performance renderiza PDF num <iframe> cujo src é
+        // SEMPRE blob: do próprio origin (via /api/proxy → createObjectURL —
+        // único iframe do app). blob: só é criável por script same-origin;
+        // nada de 'self'/https:/data: — privilégio mínimo.
+        'blob:'
       ],
       'object-src': ["'none'"],
       'base-uri': ["'self'"],
