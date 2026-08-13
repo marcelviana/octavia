@@ -66,7 +66,7 @@ uso; a antiga PR-1 vai para o fim):
 | 2º | 4 | **ADD-14** ✅ **CONCLUÍDO** | Guarda de in-flight por ref + `await onComplete` (que tornou o `disabled` real). PR #223. | P | **Confirmado**: clique duplo online → **1 linha**; o 2º clique foi barrado pelo próprio `disabled`. Escopo declarado: **replay offline não é coberto** (B9). |
 | 3º | 8 | **CONT-01 + CONT-02** ✅ **CONCLUÍDO** | `white-space: pre` + `overflow-x-auto` em **5 sites** (o plano supunha 1 renderer): `TabDisplay` tab-string, `ChordDisplay` cifra-string **e** `sections[].lyrics`, `LyricsDisplay` cifra-na-letra, e o **palco** (2 pontos). Mudança deliberada onde era `pre-wrap`. PR #224, mergeada em 2026-08-12. | P | **Validado em preview e prod** a 390 px, por computed style: cifra `pre`/`auto`/**420>276**, tab `pre`/`auto`/**521>276** com **6 cordas de largura idêntica**, palco/cifra `pre`/`auto`/**443>326**. **O item 33 deixa de ser gate** (media `[]` antes e depois: o seletor `pre, [class*="overflow-x"]` não casava com o `div.font-mono` quebrado) — o gate passa a ser `cont01-02-monoespacado.spec.ts`, que **falhou contra o código sem o fix** e passou com ele. Pendência declarada: `fixme` do palco/tab (tab não renderiza no palco → Bloco C). |
 | 4º | 5 | **SET-14** (FASE-D-06) ✅ **CONCLUÍDO** | Cache-first no [`hooks/use-setlist-data.ts`](../../hooks/use-setlist-data.ts) (hidrata do IndexedDB e lista imediatamente; rede revalida e **substitui** estado e cache — `replaceSetlists`, sem merge, deleções de outro dispositivo não ressuscitam) + `getUserSetlists` deixa de engolir erro (lança; falha nunca vira `[]`). Sonda do pre-check separou H1×H2: a gravação **funcionava** (chave/uid corretos); o bug era o `[]` silencioso + `navigator.onLine` como porta única do cache — que é `true` no caso real de palco (**wi-fi conectado sem internet**), coberto agora; `onLine=false` virou atalho, com estado de erro declarado também para cache vazio. PR #225, mergeada em 2026-08-12. | **M** | **Validado em preview e prod** com gate novo `set14-gate.spec.ts` (read-only, prontidão por `expect.poll` no IndexedDB): offline lista "UX-AUDIT Show padrão", zero "No setlists yet". **Controle negativo**: o gate **falhou contra prod sem o fix** exatamente no assert do alvo. Sanity 8–9 sem regressão (medições idênticas à baseline). Staleness offline declarada aceitável por design (o SET-14 original vira comportamento pretendido). Fora do escopo → B: poda das demais stores; erro engolido nos outros serviços. |
-| 5º (último) | 1 | **PERF-02** | Em [`lib/security-headers.ts:79`](../../lib/security-headers.ts), `frame-src: 'none'` → `'self' blob:`. Pre-check do call site **feito**: o iframe só recebe `blob:` do próprio app (via `/api/proxy` → `createObjectURL`); não incluir `data:` (fallback legacy praticamente morto — declarado na PR). | P | **Baixo.** Mantido pelo custo marginal (one-liner com pre-check pronto). Perde a posição privilegiada: PDF é minoria do palco. Gate de preview permanece (item 4, Chromium headed). |
+| 5º (último) | 1 | **PERF-02** ✅ **CONCLUÍDO** | Em [`lib/security-headers.ts:79`](../../lib/security-headers.ts), `frame-src: 'none'` → **`blob:`** (mínimo — desvio declarado do `'self' blob:` registrado aqui: o pre-check provou que o único iframe do app só recebe `blob:` do próprio origin via `/api/proxy` → `createObjectURL`, e `'self'` não tinha uso que o justificasse). Sem `data:` (fallback legacy morto, restrito ao viewer — declarado na PR). Fonte única da CSP provada por grep. Teste unitário novo trava o invariante com asserts negativos. PR #226, mergeada em 2026-08-12. | P | **Validado em preview e prod, Chromium headed**: header vivo `frame-src blob:`, zero violações de CSP sobre o iframe blob, e o **PDF de 12 páginas renderizando no palco** (screenshot contra a baseline "This content is blocked" do item 4). Gate novo `perf02-gate.spec.ts` com **controle negativo** (regra nº 7): contra prod sem o fix, falhou com `CSP recebida: frame-src 'none'`. |
 
 **Cortados no recorte (2ª revisão) — migraram para o Bloco D**: SET-03 e
 SET-04 (reorder convive com workaround manual até o nativo; o desconhecido
@@ -671,7 +671,7 @@ morre com a web. Sev/esforço conforme ASSESSMENT.
 | SET-21 | Sem h1 | S3 | D | |
 | SET-22 | N+1 com content_data integral | S3 | **B** | shape de listagem B7 |
 | SET-23 | Criar setlist falha em silêncio (null) | S1 | **A** | fila #2 — ✅ **concluído** (PR #222; J3 "criar ≤3 taps" agora ✅) |
-| PERF-02 | CSP bloqueia o iframe de PDF no palco | S1 | **A** | fila #1 |
+| PERF-02 | CSP bloqueia o iframe de PDF no palco | S1 | **A** | fila #1 — ✅ **concluído** (PR #226; `frame-src blob:` mínimo, PDF renderizando no palco em prod) |
 | PERF-04 | Avançar exige botão de 36 px | S2 | **C** | anti-padrão C3-3; palco às cegas |
 | PERF-05 | Sem "música 4 de 12" | S2 | **C** | requisito C4/C2 |
 | PERF-06 | Pular música: só dots de 8 px | S2 | **C** | requisito de salto direto (J2) |
@@ -698,12 +698,13 @@ rastreabilidade): ~~ADD-04~~ (absorvido em ADD-13), ~~SET-05~~ e
 ## Execução da fila A — agrupamento em PRs (aprovado com ajustes, 2026-08-10)
 
 > **Atualizado no recorte de 2026-08-10 (2ª revisão)**: PR-5, PR-7, PR-8a
-> e PR-8b **mortas** (itens cortados → Bloco D). Executado até aqui:
+> e PR-8b **mortas** (itens cortados → Bloco D). Executado:
 > **PR-0** (#0) + housekeeping (retry/tipo/guard) + PRs de terreno #220
 > (pipeline) e #221 (âncora do self-fetch) + **PR-2 (#2, PR #222)** +
 > **PR-3 (#3+#4, PR #223)** + **PR-6 (#8, PR #224)** + **PR-4 (#5,
-> PR #225)**. Resta:
-> **PR-1 (#1, por último, gate de preview mantido)**.
+> PR #225)** + **PR-1 (#1, PR #226)**.
+> **✅ FILA A COMPLETA (2026-08-12)** — ver balanço de encerramento no
+> fim desta seção.
 
 Cada PR roda o spec da Fase D correspondente como regressão
 (`tests/ux-audit/fase-d/`, alvo via `UX_AUDIT_BASE_URL`).
@@ -809,6 +810,18 @@ diagnóstico foram gastas atribuindo isso ao app e à API key.
 por query param no `auth.setup.ts` e carregado no storageState), **nunca**
 por header global.
 
+**Interferências de ambiente de preview** (lista viva — o preview injeta
+comportamento que prod não tem; **asserts de gate devem mirar o invariante
+guardado, não o ambiente**):
+
+1. *extraHTTPHeaders global* — vaza para cross-origin e derruba o SDK do
+   Firebase (caso acima, PR-3).
+2. *Widget vercel.live* — o preview injeta o frame de feedback da Vercel
+   (headed/interativo; headless não o carrega, prod não o tem); nossa CSP
+   corretamente o bloqueia, e o assert de violações do `perf02-gate`
+   disparou nesse ruído até ser estreitado para o invariante real
+   (violações sobre `blob:`). Caso da validação da PR-1 (2026-08-12).
+
 ### Nota operacional: rodadas longas re-semeiam sessão (~55 min)
 
 O cookie de sessão de 7 dias carrega o **idToken de 1h** (AUTH-02;
@@ -820,6 +833,41 @@ gastas na hipótese errada (limiter) antes do diagnóstico. **Regra**: em
 qualquer rodada contra prod/preview que passe de ~55 min desde o setup
 (ou que falhe com bounce em `/login`), re-rodar o setup **antes** de
 diagnosticar como regressão. Morre com o contrato Bearer do nativo (B7).
+
+### Encerramento da fila A (2026-08-12)
+
+**A fila A está completa.** Balanço:
+
+- **7 itens executados** dos 12 originais: #0 (paliativo RATE-01, PR #219),
+  #2 (SET-23, PR #222), #3+#4 (ADD-13/14, PR #223), #8 (CONT-01/02,
+  PR #224), #5 (SET-14, PR #225), #1 (PERF-02, PR #226). Todos validados
+  preview-first e confirmados em prod, com relatórios quantitativos
+  aprovados item a item.
+- **5 cortados por decisão de escopo** (recorte de 2026-08-10, registrado
+  acima): SET-03, SET-04, AUTH-03, PERF-07, DASH-04 → Bloco D. O critério
+  do recorte se sustentou até o fim: o web precisa apenas não atrapalhar
+  shows e preparação até a substituição nativa.
+- **Ganhos colaterais** que ficam para o B e além: pipeline de build/deploy
+  destravado (PRs #220/#221); procedimento preview-first provado (alias
+  estável + bypass por cookie, nunca header global); **controle negativo
+  como regra nº 7** de gates novos (nascida do item 33, promovida na PR-4,
+  exercida na PR-1); gates de regressão permanentes (`rl-0-verify`,
+  `cont01-02-monoespacado`, `set14-gate`, `perf02-gate`); dossiês
+  **B1** (rate limit/session, três fontes de evidência) e **B9**
+  (idempotência do POST /api/content, duplicação **reproduzida ao vivo em
+  prod**) prontos para o desenho do B.
+- **Pendências que NÃO morrem com a fila** (registradas, sem execução
+  automática): housekeeping acumulado (seção acima) e o E2E do CI
+  (item irmão do B8 — vermelho herdado durante toda a fila, conjunto
+  idêntico verificado a cada merge).
+
+**Passagem de bastão**: o próximo trabalho é o **Bloco B**, com o **B1**
+(redesenho do rate limit/session — elimina o self-fetch por chamada de
+função local) como candidato a primeiro item, pela evidência acumulada
+(63% de 429 na Fase D; janela 5/15min esgotada em navegação trivial;
+AUTH-02 forçando re-seed de sessão a cada ~55 min de validação). A
+retomada é decisão do Marcel, em sessão nova — nada se inicia
+automaticamente.
 
 ## Sequência (atualizada pós-aprovação)
 
