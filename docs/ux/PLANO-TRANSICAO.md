@@ -819,30 +819,54 @@ de ponta a ponta pelo Marcel.
 estado atual ANTES** da mudança e **teste do caminho de prod DEPOIS** —
 mesmo quando a mudança parece só aditiva.
 
-### Housekeeping pendente (fila A)
+### Housekeeping da fila A — balanço final (2026-08-13)
 
-1. **Parametrizar o `baseURL`** de `i-add.spec.ts` e `i-verify.spec.ts`:
-   hoje os contexts fixam `https://octavia.rocks` (linhas 178/310/515),
-   o que impede validação preview-first desses itens e produziu um teste
-   "passando" contra o alvo errado.
-2. **Refinar a mensagem da sentinela de bounce** no `recorder.ts`:
-   distinguir regressão real do #0 do **falso alarme cookie×domínio**
-   (storageState de um host, navegação em outro), que foi o caso do
-   item 42 em 2026-08-11.
+Recorte decidido pelo critério **"os gates permanentes precisam disso
+para continuar confiáveis?"**: 3 itens executados, 2 encerrados sem
+execução (registro abaixo, para ninguém reabrir sem contexto), 1
+decisão registrada (secret do bypass — ver seção seguinte).
+
+1. **Parametrizar o `baseURL`** de `i-add.spec.ts` e `i-verify.spec.ts` —
+   ✅ **encerrado SEM execução** (2026-08-13): motivo morto — a fila A
+   encerrou e não há mais validação preview desses specs; os 6 gates
+   permanentes são parametrizados.
+2. **Refinar a mensagem da sentinela de bounce** no `recorder.ts`
+   (distinguir regressão do #0 do falso alarme cookie×domínio) —
+   ✅ **encerrado SEM execução** (2026-08-13): cenário morto — o falso
+   alarme só ocorria em validação cruzada preview/prod da fila A.
 3. **Referer nas chamadas Node do `scripts/ux-audit/auth.ts`** —
-   **somente se** o endurecimento de referrer do B10 for adotado; com a
-   key irrestrita (estado atual), é desnecessário.
+   inalterado: segue **somente se** o endurecimento de referrer do B10
+   for adotado; com a key irrestrita (estado atual), é desnecessário.
 4. **Confirmar `rl-0-verify.spec.ts` e `probe-auth-limit.ts` com o bypass
-   por cookie** — o mecanismo substituiu o header global que os dois
-   usaram na validação da PR-0. É **verificação**, não reescrita; se
-   algo quebrar, conserta aqui.
-5. **Item 42 falhando no passo `Library` (pós-save)** — investigar **com
-   hipótese, não como "ambiental"**: o passo é **posterior ao save**, e o
-   fluxo pós-save mudou na PR-3 (`onNext()` agora espera o `await`; antes
-   avançava com o save em voo). Verificar **primeiro** se o timing novo
-   alterou a navegação que o spec esperava — se sim, **o spec se adapta
-   ao fluxo correto**, sem regressão de app. Só rotular como ambiental
-   depois de descartar essa hipótese.
+   por cookie** — **tentado em 2026-08-13, bloqueado**: o secret do
+   bypass não estava no ambiente da sessão (por desenho ele vive só em
+   env no momento da execução, nunca em arquivo do repo) e a proteção
+   SSO está ativa no alias. **Permanece pendente**; retomada = exportar
+   `VERCEL_AUTOMATION_BYPASS_SECRET` inline e rodar, contra o alias:
+   setup → `rl-0-verify.spec.ts` com `--retries=0` → probe. Segue sendo
+   verificação, não reescrita.
+5. **Item 42 falhando no passo `Library` (pós-save)** — ✅ **executado**
+   (2026-08-13, commit `994c36c`): hipótese do plano **confirmada em
+   substância** — o passo corria contra o redirect pós-save do app
+   (`onContentCreated` → `router.push('/content/<id>')`); o
+   `waitForFunction(/successfully|library/i)` era trivialmente
+   verdadeiro (a bottom nav sempre contém "Library") e não esperava
+   nada. **Refinamento**: o redirect já existia pré-PR-3; o que a PR-3
+   mudou foi o save ser aguardado, tornando o redirect o evento
+   pós-save determinístico — a corrida passou a resolver do lado dele.
+   **Spec adaptado ao fluxo real** (critério de sucesso =
+   `waitForURL(/\/content\//)`, só então segue à Library), sem regressão
+   de app. Validação em runtime pendente do mesmo bloqueio do nº 4.
+6. **Guard do registro histórico da Fase D** (novo, ✅ **executado**
+   2026-08-13, commit `6b5347a`): invariante — qualquer rodada
+   pós-Fase D escreve em **path efêmero** (mkdtemp), independente do
+   alvo (preview OU prod); `docs/ux/fase-d/{data,evidence}` é imutável.
+   Mecanismo unificado em `scripts/ux-audit/fase-d-dirs.ts`
+   (ItemRecorder/trackSessionPosts, `EVIDENCE_DIR` dos 10 specs da
+   fase-d e o probe, que tinha guard local condicionado a
+   `UX_AUDIT_BASE_URL` — agora incondicional). Reabrir escrita
+   histórica exige opt-in deliberado `UX_AUDIT_FASE_D_HISTORICO=1`.
+   Assert do invariante no próprio guard + 3 testes unitários.
 
 ### Padrão de instrumentação: bypass nunca por header global
 
@@ -858,6 +882,12 @@ diagnóstico foram gastas atribuindo isso ao app e à API key.
 **Regra**: o bypass da Vercel viaja por **cookie** (`_vercel_jwt`, semeado
 por query param no `auth.setup.ts` e carregado no storageState), **nunca**
 por header global.
+
+**Decisão (2026-08-13): o secret do bypass permanece ativo.** O Bloco B
+fará PRs de rotas/contratos e a validação preview-first continua sendo o
+modelo. Revogação fica para o **fim do Bloco B** (ou para quando o
+preview-first deixar de ser necessário). O secret segue vivendo só em
+env no momento da execução, nunca em arquivo do repo.
 
 **Interferências de ambiente de preview** (lista viva — o preview injeta
 comportamento que prod não tem; **asserts de gate devem mirar o invariante
