@@ -1,6 +1,7 @@
 import { test, webkit, type Page } from '@playwright/test'
 import fs from 'node:fs'
 import { ItemRecorder, trackSessionPosts, settle, gotoPerformance, gotoRoute } from './recorder'
+import { resolveFaseDDir } from '../../../scripts/ux-audit/fase-d-dirs'
 import { UX_AUDIT_STORAGE_STATE } from '../../../playwright.ux-audit.config'
 
 /**
@@ -18,7 +19,7 @@ const discovery = JSON.parse(
 const SHOW_ID: string = discovery.setlists.show.id
 const PDF12_ID: string = discovery.content.pdf12.id
 
-const EVIDENCE_DIR = 'docs/ux/fase-d/evidence'
+const EVIDENCE_DIR = resolveFaseDDir('evidence')
 
 async function shot(page: Page, name: string): Promise<string> {
   fs.mkdirSync(EVIDENCE_DIR, { recursive: true })

@@ -2,6 +2,7 @@ import { test, chromium, type Page } from '@playwright/test'
 import fs from 'node:fs'
 import { config as loadEnv } from 'dotenv'
 import { ItemRecorder, settle } from './recorder'
+import { resolveFaseDDir } from '../../../scripts/ux-audit/fase-d-dirs'
 import { UX_AUDIT_STORAGE_STATE } from '../../../playwright.ux-audit.config'
 
 /**
@@ -14,7 +15,7 @@ import { UX_AUDIT_STORAGE_STATE } from '../../../playwright.ux-audit.config'
 
 loadEnv({ path: '.env.uxaudit', quiet: true })
 
-const EVIDENCE_DIR = 'docs/ux/fase-d/evidence'
+const EVIDENCE_DIR = resolveFaseDDir('evidence')
 async function shot(page: Page, name: string): Promise<string> {
   fs.mkdirSync(EVIDENCE_DIR, { recursive: true })
   const file = `${EVIDENCE_DIR}/${name}.png`

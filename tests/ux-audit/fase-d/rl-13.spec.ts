@@ -1,6 +1,7 @@
 import { test, type Page } from '@playwright/test'
 import fs from 'node:fs'
 import { ItemRecorder, trackSessionPosts, settle, gotoRoute, getBearer } from './recorder'
+import { resolveFaseDDir } from '../../../scripts/ux-audit/fase-d-dirs'
 
 /**
  * Fase D — FINALE de rate limit, parte 1: item 13 (SET-05).
@@ -14,7 +15,7 @@ import { ItemRecorder, trackSessionPosts, settle, gotoRoute, getBearer } from '.
  */
 
 const PICKER_SETLIST = 'UX-AUDIT Fase D picker'
-const EVIDENCE_DIR = 'docs/ux/fase-d/evidence'
+const EVIDENCE_DIR = resolveFaseDDir('evidence')
 
 async function shot(page: Page, name: string): Promise<string> {
   fs.mkdirSync(EVIDENCE_DIR, { recursive: true })

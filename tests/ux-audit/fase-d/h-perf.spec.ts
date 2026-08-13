@@ -1,6 +1,7 @@
 import { test, type Page } from '@playwright/test'
 import fs from 'node:fs'
 import { ItemRecorder, trackSessionPosts, settle, gotoPerformance, gotoRoute } from './recorder'
+import { resolveFaseDDir } from '../../../scripts/ux-audit/fase-d-dirs'
 
 /**
  * Fase D — Grupo H: modo performance diversos + dashboard (itens 36-41).
@@ -13,7 +14,7 @@ const discovery = JSON.parse(
 const SHOW_ID: string = discovery.setlists.show.id
 const ESTRESSE_ID: string = discovery.setlists.estresse.id
 
-const EVIDENCE_DIR = 'docs/ux/fase-d/evidence'
+const EVIDENCE_DIR = resolveFaseDDir('evidence')
 async function shot(page: Page, name: string): Promise<string> {
   fs.mkdirSync(EVIDENCE_DIR, { recursive: true })
   const file = `${EVIDENCE_DIR}/${name}.png`

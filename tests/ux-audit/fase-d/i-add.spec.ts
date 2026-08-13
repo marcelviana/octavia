@@ -3,6 +3,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { PDFDocument, StandardFonts } from 'pdf-lib'
 import { ItemRecorder, trackSessionPosts, settle, gotoRoute } from './recorder'
+import { resolveFaseDDir } from '../../../scripts/ux-audit/fase-d-dirs'
 
 /**
  * Fase D — Grupo I: Add Content / J4 (itens 42-49; cruza 30/46).
@@ -14,7 +15,7 @@ import { ItemRecorder, trackSessionPosts, settle, gotoRoute } from './recorder'
  */
 
 const FIXTURES = 'test-results/fase-d-fixtures'
-const EVIDENCE_DIR = 'docs/ux/fase-d/evidence'
+const EVIDENCE_DIR = resolveFaseDDir('evidence')
 const ORPHANS_FILE = 'docs/ux/fase-d/data/orphan-uploads.json'
 
 async function shot(page: Page, name: string): Promise<string> {

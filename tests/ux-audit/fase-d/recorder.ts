@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import type { Page, TestInfo } from '@playwright/test'
+import { resolveFaseDDir } from '../../../scripts/ux-audit/fase-d-dirs'
 
 /**
  * Recorder de medições da Fase D.
@@ -17,7 +18,8 @@ import type { Page, TestInfo } from '@playwright/test'
  * trace gravado pelo Playwright é a evidência para conferência.
  */
 
-const DATA_DIR = 'docs/ux/fase-d/data'
+// Pós-fila A: o registro histórico é imutável — resolveFaseDDir devolve
+// path efêmero por default (guard; ver scripts/ux-audit/fase-d-dirs.ts)
 const TRACES_DIR = 'docs/ux/fase-d/traces'
 
 export interface Step {
@@ -122,8 +124,9 @@ export class ItemRecorder {
     if (testInfo) {
       this.rec.trace = `docs/ux/fase-d/traces/${path.basename(testInfo.outputDir)}.zip`
     }
-    fs.mkdirSync(DATA_DIR, { recursive: true })
-    const file = path.join(DATA_DIR, `item-${String(this.rec.item).padStart(2, '0')}.json`)
+    const dataDir = resolveFaseDDir('data')
+    fs.mkdirSync(dataDir, { recursive: true })
+    const file = path.join(dataDir, `item-${String(this.rec.item).padStart(2, '0')}.json`)
     // Um item pode ser coberto por mais de um teste — mescla observações
     let out = this.rec
     if (fs.existsSync(file)) {
@@ -148,8 +151,9 @@ export class ItemRecorder {
  * acumulada para os itens 11-12 / AUTH-01), em JSONL append-only.
  */
 export function trackSessionPosts(page: Page, context: string): void {
-  fs.mkdirSync(DATA_DIR, { recursive: true })
-  const file = path.join(DATA_DIR, 'session-posts.jsonl')
+  const dataDir = resolveFaseDDir('data')
+  fs.mkdirSync(dataDir, { recursive: true })
+  const file = path.join(dataDir, 'session-posts.jsonl')
   page.on('response', (res) => {
     if (!res.url().includes('/api/auth/session')) return
     const method = res.request().method()
