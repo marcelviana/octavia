@@ -96,6 +96,21 @@ export default defineConfig({
         actionTimeout: 20_000,
       },
     },
+    {
+      // Gate de regressão da PR-1 (PERF-02): CSP permite o iframe de PDF do
+      // palco. Mesmas escolhas do set14-gate (read-only, sem dependência do
+      // setup). A rodada de validação usa --headed (viewer de PDF); os
+      // asserts em si funcionam headless. Ver cabeçalho do spec.
+      name: 'perf02-gate',
+      testMatch: /perf02-gate\.spec\.ts/,
+      use: {
+        storageState: UX_AUDIT_STORAGE_STATE,
+        viewport: UX_AUDIT_VIEWPORTS['tablet-landscape'],
+        serviceWorkers: 'allow',
+        trace: 'on',
+        actionTimeout: 20_000,
+      },
+    },
     ...Object.entries(UX_AUDIT_VIEWPORTS).map(([name, viewport]) => ({
       name: `harvest-${name}`,
       // Casa harvest.spec.ts (B1, estados vazios) e harvest-populated.spec.ts
