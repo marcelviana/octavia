@@ -83,14 +83,20 @@ test.describe('PERF-02 gate — CSP permite o iframe de PDF do palco', () => {
     // violação dispararia com frame-src 'none')
     await page.waitForTimeout(5000)
 
-    // Assert 2 — zero violações de frame-src
+    // Assert 2 — zero violações de frame-src sobre o iframe do app (blob:).
+    // Filtro por blockedURI blob: o preview da Vercel injeta um widget
+    // (vercel.live) cujo frame nossa CSP corretamente bloqueia — ruído de
+    // ambiente, não regressão (visto na validação da PR-1, rodada headed).
+    // Com frame-src 'none', o blob bloqueado aparece aqui como "blob".
     const violations = (await page.evaluate(
       () => (window as any).__cspViolations
     )) as Array<{ directive: string; blockedURI: string }>
-    const frameViolations = violations.filter((v) => v.directive.includes('frame-src'))
+    const frameViolations = violations.filter(
+      (v) => v.directive.includes('frame-src') && v.blockedURI.startsWith('blob')
+    )
     expect(
       frameViolations,
-      `violações de frame-src: ${JSON.stringify(frameViolations)}`
+      `violações de frame-src sobre blob: ${JSON.stringify(frameViolations)} (todas: ${JSON.stringify(violations)})`
     ).toHaveLength(0)
 
     // Evidência visual da rodada headed (test-results/, nunca docs/)
