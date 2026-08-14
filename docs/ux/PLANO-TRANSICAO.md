@@ -158,6 +158,64 @@ env). Nota adicional: o hop in-lambda via localhost não carrega
 bucket `'anonymous'` compartilhado, evidência extra da incompatibilidade
 do desenho.
 
+**Execução (pre-check aprovado 2026-08-14)** — o B1 vira **quatro PRs**,
+cada uma com ciclo completo (checkpoint → preview → aval → merge → prod):
+
+- **B1.0 — redução de superfície: ✅ CONCLUÍDA (PR #227, squash em main,
+  2026-08-14).** Três remoções de segurança, não housekeeping:
+  (1) `/api/auth/user` — gestão completa de usuários Firebase atrás de
+  "verifyAdminToken" **sem claim de admin** (escalação de privilégio
+  latente com signup aberto); rota órfã, zero callers. (2)
+  `/api/test-setlists` — debug público sem auth com self-fetch
+  request-derived (`req.nextUrl.origin`) encaminhando cookie — mesma
+  classe de vetor eliminada do session na PR #221. (3)
+  `/api/firebase-config` — oráculo público de env: `SET`/`MISSING` das
+  três credenciais Admin + prefixo da apiKey, sem auth; o client obtém a
+  config só de `NEXT_PUBLIC_*` em build. Junto: remoção do
+  `ddos-rate-limiting.test.ts` (100% auto-mockado, cobertura real zero).
+  Gate (regra nº 7): controle negativo contra main **401/401/429/429/
+  200/200** (não-404; test-setlists via GET sem cookie — forward morreu
+  em 401 interno, nada semeado) → preview e prod **404×6** com sanidade
+  `/api/health` 200. E2E herdado não ampliado (main 66 failed → PR os
+  mesmos menos 1 flaky); cobertura global idêntica ao dígito.
+  **Perda declarada**: parte C do `rl-0-verify.spec.ts` (controle
+  negativo do limiter antigo usava `auth/user`) — removida-com-substituto-
+  no-B1.3 (nota no cabeçalho do spec). **Pendência registrada para a
+  B1.1**: órfãos resultantes em `lib/firebase-admin` (`createUser`/
+  `updateUser`/`deleteUser`/`getUserByUid`) e `lib/validation-schemas`
+  (`createUserSchema`/`updateUserSchema`).
+- **B1.1 — self-fetch → chamada direta nas lambdas**, nas duas cadeias
+  (`firebase-server-utils` e `secure-auth-utils`), middleware intocado.
+  Inclui G1 (espião de fetch com controle negativo contra o código atual)
+  e a resolução do bundling (import dinâmico com guard de runtime vs
+  módulo server-only — decisão no desenho).
+- **B1.2 — middleware otimista + remoção da rota `/api/auth/verify`.**
+  Decisão do pre-check: middleware roda **Edge** no Next 15.2.8 (o
+  `runtime='nodejs'` é ignorado com warning) e valida via self-fetch por
+  mecanismo não-observável de fora — vira checagem de presença/formato do
+  cookie; a verificação real fica nos server components e rotas (o mapa
+  do pre-check provou cobertura em 100% das páginas protegidas). Condição:
+  gate que enumera rotas/páginas protegidas e prova a verificação própria
+  de cada uma. Com zero consumidores, a rota verify sai — a pendência da
+  PR #219 fecha por eliminação de superfície. O gate A do rl-0 morre aqui,
+  declarado.
+- **B1.3 — limiter único**: chave por **uid pós-auth** com fallback por
+  IP exclusivamente no caminho de auth falhada; janelas dimensionadas com
+  os dados do probe (caso dimensionante: `visibilitychange` do tablet de
+  palco no session); o limiter inline do `/api/proxy` (terceiro sistema,
+  achado do pre-check) migra para cá; aposentadoria do `lib/rate-limit.ts`
+  (buckets **globais compartilhados por IP** entre rotas strict/default —
+  pior que o registrado) e limpeza das ~300 linhas aspiracionais do
+  `lib/rate-limiter.ts`. Gates: G2 (probe por rota + estouro deliberado
+  com assinatura do sistema novo) e G3 (rl-0 parte B endurecido com
+  session **dentro** do assert — controle negativo: main atual falha com
+  os 9/12 conhecidos).
+- **B1.5 (item próprio, fora do B1)** — unificação das duas cadeias de
+  verificação (`firebase-server-utils` cache 1h × `secure-auth-utils`
+  cache 5min/blacklist/sessões). Racional de adiar: fundir caches e
+  blacklist é diff grande em superfície sensível que **não bloqueia o
+  nativo**; o B1 troca só o transporte das duas, sem fusão.
+
 ### B2 — Audit schema Zod × payload real, rota a rota
 
 Três casos **provados** do mesmo defeito — o schema foi escrito sem olhar o
@@ -637,7 +695,7 @@ morre com a web. Sev/esforço conforme ASSESSMENT.
 
 | ID | Título curto | Sev | Destino | Nota |
 |----|--------------|-----|---------|------|
-| RATE-01 | Dois sistemas de rate limit; antigo no caminho crítico | S1 | **B** | B1; paliativo **#0 ✅ concluído e validado** (2026-08-10) |
+| RATE-01 | Dois sistemas de rate limit; antigo no caminho crítico | S1 | **B** | B1 em execução: **B1.0 ✅** (PR #227, 2026-08-14); paliativo **#0 ✅ concluído e validado** (2026-08-10) |
 | AUTH-02 | Cookie 7 dias carrega idToken de 1h | S2 | D | contrato Bearer do nativo em B7 |
 | AUTH-03 | Logado abre `/` e cai no marketing | S2 | **D** | cortado da fila A (recorte 2026-08-10) |
 | AUTH-04 | Validação só pelo balão HTML5 | S3 | D | lição em C3-5 |
