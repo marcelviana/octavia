@@ -3,9 +3,10 @@ import { defineConfig } from '@playwright/test'
 /**
  * Config do projeto ux-audit — captura de evidências de UX contra PROD.
  *
- * Separado do playwright.config.ts da suíte e2e de propósito: roda serial
+ * Config próprio e autocontido (a antiga suíte e2e e seu
+ * playwright.config.ts foram removidos na B1.0.1): roda serial
  * (workers: 1) contra https://octavia.rocks, sem webServer local, sem
- * global-setup da e2e. A autenticação vem de tests/ux-audit/auth.setup.ts
+ * global-setup. A autenticação vem de tests/ux-audit/auth.setup.ts
  * (Firebase REST → cookie de sessão → storageState), nunca da UI de login.
  *
  * serviceWorkers: 'block' — queremos o app real servido pela rede, não o

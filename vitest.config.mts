@@ -15,7 +15,6 @@ export default defineConfig({
     // Exclude integration tests and E2E tests from unit test runs
     exclude: [
       'node_modules/**',
-      'tests/e2e/**/*',
       'tests/ux-audit/**/*',
       '**/*.e2e.{ts,tsx}',
       '**/e2e/**/*',
@@ -52,7 +51,6 @@ export default defineConfig({
         '.next/**',
         'dist/**',
         // Exclude E2E tests from coverage
-        'tests/e2e/**/*',
         '**/*.e2e.{ts,tsx}',
         '**/e2e/**/*',
         // Exclude Next.js specific files that cause V8 coverage issues
