@@ -11,7 +11,6 @@ import { NextRequest, NextResponse } from 'next/server'
 // Import auth-related modules
 import { POST as AuthSessionPost } from '@/app/api/auth/session/route'
 import { POST as AuthVerifyPost } from '@/app/api/auth/verify/route'
-import { GET as AuthUserGet } from '@/app/api/auth/user/route'
 
 describe('Authentication and Authorization Penetration Tests', () => {
   let mockTokenCache: Map<string, any>
