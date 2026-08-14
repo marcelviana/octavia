@@ -838,13 +838,21 @@ decisão registrada (secret do bypass — ver seção seguinte).
    inalterado: segue **somente se** o endurecimento de referrer do B10
    for adotado; com a key irrestrita (estado atual), é desnecessário.
 4. **Confirmar `rl-0-verify.spec.ts` e `probe-auth-limit.ts` com o bypass
-   por cookie** — **tentado em 2026-08-13, bloqueado**: o secret do
-   bypass não estava no ambiente da sessão (por desenho ele vive só em
-   env no momento da execução, nunca em arquivo do repo) e a proteção
-   SSO está ativa no alias. **Permanece pendente**; retomada = exportar
-   `VERCEL_AUTOMATION_BYPASS_SECRET` inline e rodar, contra o alias:
-   setup → `rl-0-verify.spec.ts` com `--retries=0` → probe. Segue sendo
-   verificação, não reescrita.
+   por cookie** — ✅ **executado** (2026-08-13, contra o alias, secret
+   inline): **os dois autenticam e atravessam a proteção; nada precisou
+   de conserto.** Setup semeou o `_vercel_jwt` (10,6 s); `rl-0-verify`
+   com `--retries=0` passou inteiro em 52 s — A: 40 POSTs ao verify →
+   **40× 200, 0× 429**; B: 12 navegações → **zero /login, zero 429**
+   fora do session (9× 429 de session, pré-B1 conhecido); C (controle
+   negativo): `/api/auth/user` → `401, 401, 429, 429` com
+   `X-RateLimit-Limit: 2`. Probe (bypass por header em fetch Node, sem
+   browser — o anti-padrão do header global não se aplica): 8 POSTs →
+   **8× 429 do limiter do app** (`limit=5`, `retryAfter ~810s`) — janela
+   5/15min esgotada pelos POSTs de sessão do rl-0 imediatamente
+   anterior; a presença dos headers `X-RateLimit-*` (e não um 302 do
+   SSO) é a prova da travessia. Rodada foi também o primeiro exercício
+   real do guard do nº 6: escrita em tmpdir, histórico intocado
+   (confirmado por `git status`).
 5. **Item 42 falhando no passo `Library` (pós-save)** — ✅ **executado**
    (2026-08-13, commit `994c36c`): hipótese do plano **confirmada em
    substância** — o passo corria contra o redirect pós-save do app
