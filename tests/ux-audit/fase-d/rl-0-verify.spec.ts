@@ -11,7 +11,8 @@ import { getBearer, settle } from './recorder'
  * executava redirect('/login') → rebote ao /dashboard (FASE-D-01, "BOUNCE";
  * 63% de 429 em 371 POSTs de sessão na fase).
  *
- * Três verificações, na mesma moeda da medição original:
+ * Duas verificações, na mesma moeda da medição original (a antiga parte C
+ * foi removida na B1.0 — ver nota abaixo):
  *
  *  A. Probe direto: 40 POSTs sequenciais a /api/auth/verify (2× o limite
  *     antigo de 20/60s) com token válido → **zero 429** (assert).
@@ -33,15 +34,17 @@ import { getBearer, settle } from './recorder'
  *     rota tem escopo maior que o fix (que só tira o verify do pool) —
  *     identificar a rota de origem no relatório (o assert lista método +
  *     path) ANTES de concluir regressão do fix; 429 de rota do limiter
- *     antigo (ex.: auth/user por chamada client-side) é achado novo, não
- *     necessariamente regressão da PR-0.
- *  C. CONTROLE NEGATIVO do limiter antigo: /api/auth/user permanece
- *     envelopado por withRateLimit(handler, 2, true) — 4 GETs rápidos
- *     devem produzir **pelo menos um 429 com X-RateLimit-Limit: 2**
- *     (assert). Prova que o fix removeu o limiter DO VERIFY, não o
- *     limiter antigo em si. (Verificação adicional, à parte:
- *     scripts/ux-audit/probe-auth-limit.ts — limite 5/15min do
- *     /api/auth/session, módulo novo, intacto.)
+ *     antigo (ex.: storage/delete) é achado novo, não necessariamente
+ *     regressão da PR-0.
+ *
+ * PARTE C REMOVIDA NA B1.0: o controle negativo do limiter antigo usava
+ * /api/auth/user (withRateLimit(handler, 2, true)), rota removida na PR
+ * B1.0 (redução de superfície — era gestão de usuários Firebase sem claim
+ * de admin). O limiter antigo segue vivo em outras rotas mas sem controle
+ * negativo aqui; o substituto vem no B1.3 junto com o limiter único
+ * (controle negativo do sistema novo, docs/ux/PLANO-TRANSICAO.md).
+ * (Verificação adicional, à parte: scripts/ux-audit/probe-auth-limit.ts —
+ * limite 5/15min do /api/auth/session, módulo novo, intacto.)
  *
  * NOTA: este spec só passa com o fix da PR-0 deployado no alvo
  * (UX_AUDIT_BASE_URL — preview do Vercel ou prod). Contra o código antigo
@@ -124,26 +127,5 @@ test('PR-0: verify sem limiter — zero 429 no probe direto e zero expulsões na
     'zero 429 de /api/* (exceto session) — se falhar, identificar a rota listada antes de concluir regressão do fix'
   ).toBe(0)
 
-  // ---- C. Controle negativo: o limiter antigo continua vivo fora do verify ----
-  // /api/auth/user: withRateLimit(handler, 2, true) — strict, 2/60s por IP.
-  // Com o limiter funcionando, os GETs 3-4 DEVEM ser 429 (consumo prévio do
-  // pool strict por outras rotas só antecipa o bloqueio, nunca o evita).
-  const controle: Array<{ status: number; limitHeader: string | null }> = []
-  for (let i = 0; i < 4; i++) {
-    const res = await page.request.get('/api/auth/user')
-    controle.push({ status: res.status(), limitHeader: res.headers()['x-ratelimit-limit'] ?? null })
-  }
-  const controle429 = controle.filter((c) => c.status === 429)
-  console.log(
-    `[PR-0] controle /api/auth/user: ${controle.map((c) => c.status).join(', ')} ` +
-      `(X-RateLimit-Limit do primeiro 429: ${controle429[0]?.limitHeader ?? '—'})`
-  )
-  expect(
-    controle429.length,
-    'limiter antigo segue ativo em /api/auth/user (≥1 dos 4 GETs com 429)'
-  ).toBeGreaterThanOrEqual(1)
-  expect(
-    controle429[0]?.limitHeader,
-    '429 veio do limiter antigo (X-RateLimit-Limit: 2 da rota auth/user)'
-  ).toBe('2')
+  // (Parte C removida na B1.0 — ver cabeçalho; substituto no B1.3.)
 })
