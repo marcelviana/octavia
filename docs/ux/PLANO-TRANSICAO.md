@@ -363,17 +363,28 @@ prazo de vida — **zerar os 166 erros** (baseline registrado em
 a lote/workflow; entra junto do housekeeping do Bloco B, antes do
 desenvolvimento nativo ganhar ritmo.
 
-**Item irmão — suíte E2E do CI vermelha**: `tests/e2e/basic.spec.ts`
-falha nos 3 browsers (webkit não lança no runner, firefox timeout de
-navegação, chromium teste de estado de auth) — **pré-existente desde
-antes do audit**: o run do próprio `a3114cc` (o commit em prod) falhou
-igual. Diagnosticar e **reativar como gate bloqueante**. Disciplina de
-escopo: **nenhum diagnóstico do E2E começa durante a fila A**.
+**Item irmão — suíte E2E do CI vermelha: REMOVIDO na B1.0.1
+(2026-08-14)**. Era: `tests/e2e/basic.spec.ts` falhando nos 3 browsers
+(webkit não lança no runner, firefox timeout de navegação, chromium teste
+de estado de auth) — pré-existente desde antes do audit; a premissa
+original era "diagnosticar e reativar como gate bloqueante". Racional da
+remoção: (1) vermelha desde julho/2025 — mais de um ano sem proteger
+nada, com cada PR pagando pedágio de comparação de conjuntos de falha
+para provar que não ampliou o que já não funcionava; (2) a premissa da
+reativação morreu com a decisão do nativo — a UI que ela testava está
+condenada, e webkit/firefox no runner são irrelevantes para React
+Native; (3) **distinção registrada**: isso NÃO toca os gates do ux-audit
+(rl-0, set23, add13-14, cont01-02, set14, perf02 e os futuros G1-G3 do
+B1) — Chromium, sob demanda, todos provados pela regra nº 7. Eles são a
+cobertura de fluxo dos contratos que o nativo herda e PERMANECEM; depois,
+a cobertura passa à suíte do nativo. Morreu a suíte morta; ficam os
+gates vivos.
 
-**Gate provisório de merge** (regra escrita, válida para todas as PRs da
-fila A enquanto o E2E não voltar): **Vercel preview ✅ + Lint ✅ +
-type-check ✅ + unit tests ✅ + coverage ✅ + Build ✅**; E2E vermelho é
-herdado, **não bloqueante e não reaberto por PR**.
+**Gate definitivo de merge** (regra escrita, válida para todas as PRs;
+promovido de provisório a definitivo na B1.0.1 com a remoção da suíte
+E2E do CI): **Vercel preview ✅ + Lint ✅ + type-check ✅ + unit tests ✅ +
+coverage ✅ + Build ✅** — CI integralmente verde, sem cláusula de
+falha herdada.
 
 ---
 

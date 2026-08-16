@@ -15,14 +15,9 @@ pnpm lint                   # Run ESLint
 pnpm test                   # Run unit tests only
 pnpm test:watch             # Run tests in watch mode
 pnpm test:coverage          # Run tests with coverage report
-pnpm test:e2e               # Run Playwright E2E tests
-pnpm test:e2e:ui            # Run E2E tests with UI mode
-pnpm test:all               # Run unit + E2E tests (runner de integração removido no P1-E [D5])
-
-# E2E Test Utils
-pnpm test:e2e:headed        # Run E2E tests with browser UI
-pnpm test:e2e:debug         # Debug E2E tests
-pnpm test:e2e:codegen       # Generate new E2E test code
+pnpm ux:harvest             # Gates do ux-audit (Playwright, sob demanda, contra preview/prod)
+# (suíte E2E do CI removida na B1.0.1 — cobertura de fluxo é dos gates do
+#  ux-audit até o nativo; runner de integração removido no P1-E [D5])
 ```
 
 ## Project Architecture
@@ -34,7 +29,7 @@ pnpm test:e2e:codegen       # Generate new E2E test code
 - **Storage**: Firebase Storage for file uploads
 - **UI**: Tailwind CSS + Radix UI components (shadcn/ui)
 - **State Management**: React hooks + Context API
-- **Testing**: Vitest (unit/integration) + Playwright (E2E)
+- **Testing**: Vitest (unit) + Playwright (gates do ux-audit, sob demanda)
 - **Offline Support**: Service Worker + IndexedDB caching
 
 ### Directory Structure
@@ -206,7 +201,7 @@ components/
 **Test Types & Requirements**:
 - **Unit Tests**: `**/*.test.{ts,tsx}` - All utilities, hooks, and isolated components
 - **Integration Tests**: `**/*.integration.test.{ts,tsx}` - Cross-component workflows  
-- **E2E Tests**: `/tests/e2e/*.spec.ts` - Complete user journeys
+- **Gates de fluxo**: `/tests/ux-audit/**/*.spec.ts` - Playwright sob demanda contra preview/prod (a suíte E2E do CI foi removida na B1.0.1)
 - **API Tests**: All routes must have integration tests
 
 **Coverage Breakdown Targets**:
