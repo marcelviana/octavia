@@ -184,6 +184,18 @@ cada uma com ciclo completo (checkpoint → preview → aval → merge → prod)
   B1.1**: órfãos resultantes em `lib/firebase-admin` (`createUser`/
   `updateUser`/`deleteUser`/`getUserByUid`) e `lib/validation-schemas`
   (`createUserSchema`/`updateUserSchema`).
+- **B1.0.1 — remoção da suíte E2E do CI: ✅ CONCLUÍDA (PR #228, squash
+  `e6dec0c`, 2026-08-14).** Decisão de escopo tomada antes do desenho da
+  B1.1: `tests/e2e/` + 3 passos do CI + configs/scripts/docs órfãos
+  removidos; **gate de merge promovido de provisório a definitivo**
+  (seção do item irmão do B8, racional em 3 pontos lá). **Marco: primeiro
+  CI integralmente verde em mais de um ano, 2m21s (~4× mais rápido)** —
+  gate da PR provado com contraste completo (run do main com o passo e o
+  vermelho × run da PR sem o passo e verde). Higiene verificada: o
+  `tests/e2e/.auth/user.json` commitado era **storageState vazio em todo
+  o histórico** (blob único de 36 bytes, `{"cookies":[],"origins":[]}`)
+  — nenhuma sessão de nenhuma conta jamais versionada, sem reescrita
+  necessária. `@playwright/test` e os gates do ux-audit intocados.
 - **B1.1 — self-fetch → chamada direta nas lambdas**, nas duas cadeias
   (`firebase-server-utils` e `secure-auth-utils`), middleware intocado.
   Inclui G1 (espião de fetch com controle negativo contra o código atual)
