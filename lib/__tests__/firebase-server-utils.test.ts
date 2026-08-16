@@ -3,6 +3,15 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 // Unmock the global firebase-server-utils mock for this test file
 vi.unmock('@/lib/firebase-server-utils')
 
+// B1.1: o transporte padrão é chamada direta de função — o verificador
+// local (lib/firebase-admin) é mockado; o fetch global vira espião. O
+// ramo fetch (Edge) segue testado no describe próprio com
+// NEXT_RUNTIME='edge' forçado, até morrer na B1.2.
+vi.mock('@/lib/firebase-admin', () => ({
+  verifyFirebaseToken: vi.fn()
+}))
+
+import { verifyFirebaseToken } from '@/lib/firebase-admin'
 import {
   validateFirebaseTokenServer,
   requireAuthServer,
@@ -12,6 +21,8 @@ import {
   clearTokenBlacklist
 } from '../firebase-server-utils'
 import type { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies'
+
+const mockVerify = vi.mocked(verifyFirebaseToken)
 
 // Mock fetch globally
 const mockFetch = vi.fn()
@@ -26,26 +37,35 @@ vi.mock('../logger', () => ({
   }
 }))
 
+const decodedUser = {
+  uid: 'test-user',
+  email: 'test@example.com',
+  email_verified: true
+}
+
 describe('Firebase Server Utils', () => {
   beforeEach(() => {
     vi.clearAllMocks()
     vi.resetModules()
-    
+
     // Clear caches to ensure clean state
     clearTokenCache()
     clearTokenBlacklist()
-    
+
     // Mock fetch globally using vi.stubGlobal for proper interception
     vi.stubGlobal('fetch', mockFetch)
-    
-    // Set up environment variables to ensure API calls are made
+
+    // Set up environment variables
     vi.stubEnv('NODE_ENV', 'development')
     vi.stubEnv('VITEST', undefined)
     vi.stubEnv('NEXTAUTH_URL', undefined)
     vi.stubEnv('VERCEL_URL', undefined)
     vi.stubEnv('PORT', '3000')
-    
-    // Ensure window is undefined to trigger localhost fallback
+    // Garante o ramo direto (lambda Node); o describe do ramo fetch
+    // força 'edge' explicitamente
+    vi.stubEnv('NEXT_RUNTIME', undefined)
+
+    // Ensure window is undefined (server-side)
     Object.defineProperty(global, 'window', {
       value: undefined,
       writable: true
@@ -54,12 +74,13 @@ describe('Firebase Server Utils', () => {
 
   afterEach(() => {
     vi.restoreAllMocks()
+    vi.unstubAllEnvs()
   })
 
-  describe('validateFirebaseTokenServer', () => {
+  describe('validateFirebaseTokenServer (transporte direto — B1.1)', () => {
     it('returns invalid for missing token', async () => {
       const result = await validateFirebaseTokenServer('')
-      
+
       expect(result).toEqual({
         isValid: false,
         error: 'Missing ID token'
@@ -68,19 +89,89 @@ describe('Firebase Server Utils', () => {
 
     it('returns invalid for null token', async () => {
       const result = await validateFirebaseTokenServer(null as any)
-      
+
       expect(result).toEqual({
         isValid: false,
         error: 'Missing ID token'
       })
     })
 
-    // Cache tests are complex to mock properly and are tested implicitly
-    // through the other functionality tests
+    it('valida token por chamada direta, sem nenhum fetch', async () => {
+      mockVerify.mockResolvedValueOnce(decodedUser as any)
+
+      const result = await validateFirebaseTokenServer('valid-token')
+
+      expect(mockVerify).toHaveBeenCalledWith('valid-token')
+      expect(mockFetch).not.toHaveBeenCalled()
+      expect(result).toEqual({
+        isValid: true,
+        user: {
+          uid: 'test-user',
+          email: 'test@example.com',
+          emailVerified: true
+        }
+      })
+    })
+
+    it('token inválido/expirado → isValid false (mesma classe observável do transporte HTTP)', async () => {
+      mockVerify.mockRejectedValueOnce(
+        new Error('Firebase ID token verification failed: Firebase ID token has expired')
+      )
+
+      const result = await validateFirebaseTokenServer('expired-token')
+
+      expect(result).toEqual({
+        isValid: false,
+        error: 'Token validation failed'
+      })
+    })
+
+    it('erro de infra sem cache → isValid false', async () => {
+      mockVerify.mockRejectedValueOnce(
+        new Error('Failed to fetch public keys from Google')
+      )
+
+      const result = await validateFirebaseTokenServer('infra-error-token')
+
+      expect(result).toEqual({
+        isValid: false,
+        error: 'Token validation failed'
+      })
+    })
+
+    it('erro de infra devolve resultado em cache mesmo vencido (fallback stale preservado)', async () => {
+      vi.useFakeTimers()
+      try {
+        vi.setSystemTime(new Date('2026-01-01T00:00:00Z'))
+        mockVerify.mockResolvedValueOnce(decodedUser as any)
+        const first = await validateFirebaseTokenServer('stale-token')
+        expect(first.isValid).toBe(true)
+
+        // cache de 1h vencido
+        vi.setSystemTime(new Date('2026-01-01T02:00:00Z'))
+        mockVerify.mockRejectedValueOnce(
+          new Error('Failed to fetch public keys from Google')
+        )
+        const second = await validateFirebaseTokenServer('stale-token')
+
+        expect(second.isValid).toBe(true)
+        expect(second.user?.uid).toBe('test-user')
+      } finally {
+        vi.useRealTimers()
+      }
+    })
+  })
+
+  describe('validateFirebaseTokenServer — ramo fetch (Edge; morre na B1.2)', () => {
+    // Só o middleware Edge percorre este ramo em produção pós-B1.1.
+    // NEXT_RUNTIME='edge' força o guard a preservá-lo aqui.
+    beforeEach(() => {
+      vi.stubEnv('NEXT_RUNTIME', 'edge')
+    })
 
     it('validates token successfully via API', async () => {
       const token = 'valid-token'
-      
+
       mockFetch.mockResolvedValueOnce({
         ok: true,
         json: async () => ({
@@ -92,9 +183,9 @@ describe('Firebase Server Utils', () => {
           }
         })
       })
-      
+
       const result = await validateFirebaseTokenServer(token)
-      
+
       expect(mockFetch).toHaveBeenCalledWith(
         'http://localhost:3000/api/auth/verify',
         {
@@ -103,7 +194,8 @@ describe('Firebase Server Utils', () => {
           body: JSON.stringify({ token })
         }
       )
-      
+      expect(mockVerify).not.toHaveBeenCalled()
+
       expect(result).toEqual({
         isValid: true,
         user: {
@@ -115,8 +207,6 @@ describe('Firebase Server Utils', () => {
     })
 
     it('handles API validation failure', async () => {
-      const token = 'invalid-token'
-      
       mockFetch.mockResolvedValueOnce({
         ok: true,
         json: async () => ({
@@ -124,9 +214,9 @@ describe('Firebase Server Utils', () => {
           error: 'Invalid token'
         })
       })
-      
-      const result = await validateFirebaseTokenServer(token)
-      
+
+      const result = await validateFirebaseTokenServer('invalid-token')
+
       expect(result).toEqual({
         isValid: false,
         error: 'Invalid token'
@@ -134,17 +224,15 @@ describe('Firebase Server Utils', () => {
     })
 
     it('handles HTTP error responses', async () => {
-      const token = 'error-token'
-      
       mockFetch.mockResolvedValueOnce({
         ok: false,
         status: 500,
         statusText: 'Internal Server Error',
         json: async () => ({ error: 'Server error' })
       })
-      
-      const result = await validateFirebaseTokenServer(token)
-      
+
+      const result = await validateFirebaseTokenServer('error-token')
+
       expect(result).toEqual({
         isValid: false,
         error: 'Server error'
@@ -152,12 +240,10 @@ describe('Firebase Server Utils', () => {
     })
 
     it('handles network errors gracefully', async () => {
-      const token = 'network-error-token'
-      
       mockFetch.mockRejectedValueOnce(new Error('Network error'))
-      
-      const result = await validateFirebaseTokenServer(token)
-      
+
+      const result = await validateFirebaseTokenServer('network-error-token')
+
       expect(result).toEqual({
         isValid: false,
         error: 'Token validation failed'
@@ -165,9 +251,8 @@ describe('Firebase Server Utils', () => {
     })
 
     it('uses NEXTAUTH_URL when available', async () => {
-      const token = 'nextauth-token'
       vi.stubEnv('NEXTAUTH_URL', 'https://myapp.com')
-      
+
       mockFetch.mockResolvedValueOnce({
         ok: true,
         json: async () => ({
@@ -175,9 +260,9 @@ describe('Firebase Server Utils', () => {
           user: { uid: 'test-user' }
         })
       })
-      
-      await validateFirebaseTokenServer(token)
-      
+
+      await validateFirebaseTokenServer('nextauth-token')
+
       expect(mockFetch).toHaveBeenCalledWith(
         'https://myapp.com/api/auth/verify',
         expect.any(Object)
@@ -185,9 +270,8 @@ describe('Firebase Server Utils', () => {
     })
 
     it('uses VERCEL_URL when available', async () => {
-      const token = 'vercel-token'
       vi.stubEnv('VERCEL_URL', 'myapp.vercel.app')
-      
+
       mockFetch.mockResolvedValueOnce({
         ok: true,
         json: async () => ({
@@ -195,9 +279,9 @@ describe('Firebase Server Utils', () => {
           user: { uid: 'test-user' }
         })
       })
-      
-      await validateFirebaseTokenServer(token)
-      
+
+      await validateFirebaseTokenServer('vercel-token')
+
       expect(mockFetch).toHaveBeenCalledWith(
         'https://myapp.vercel.app/api/auth/verify',
         expect.any(Object)
@@ -205,9 +289,6 @@ describe('Firebase Server Utils', () => {
     })
 
     it('extracts base URL from request URL', async () => {
-      const token = 'request-url-token'
-      const requestUrl = 'https://custom-domain.com/some/path'
-      
       mockFetch.mockResolvedValueOnce({
         ok: true,
         json: async () => ({
@@ -215,9 +296,12 @@ describe('Firebase Server Utils', () => {
           user: { uid: 'test-user' }
         })
       })
-      
-      await validateFirebaseTokenServer(token, requestUrl)
-      
+
+      await validateFirebaseTokenServer(
+        'request-url-token',
+        'https://custom-domain.com/some/path'
+      )
+
       expect(mockFetch).toHaveBeenCalledWith(
         'https://custom-domain.com/api/auth/verify',
         expect.any(Object)
@@ -225,8 +309,6 @@ describe('Firebase Server Utils', () => {
     })
 
     it('falls back to localhost for development', async () => {
-      const token = 'localhost-token'
-      
       mockFetch.mockResolvedValueOnce({
         ok: true,
         json: async () => ({
@@ -234,9 +316,9 @@ describe('Firebase Server Utils', () => {
           user: { uid: 'test-user' }
         })
       })
-      
-      await validateFirebaseTokenServer(token)
-      
+
+      await validateFirebaseTokenServer('localhost-token')
+
       expect(mockFetch).toHaveBeenCalledWith(
         'http://localhost:3000/api/auth/verify',
         expect.any(Object)
@@ -244,9 +326,8 @@ describe('Firebase Server Utils', () => {
     })
 
     it('uses custom port from environment', async () => {
-      const token = 'custom-port-token'
       vi.stubEnv('PORT', '8080')
-      
+
       mockFetch.mockResolvedValueOnce({
         ok: true,
         json: async () => ({
@@ -254,22 +335,16 @@ describe('Firebase Server Utils', () => {
           user: { uid: 'test-user' }
         })
       })
-      
-      await validateFirebaseTokenServer(token)
-      
+
+      await validateFirebaseTokenServer('custom-port-token')
+
       expect(mockFetch).toHaveBeenCalledWith(
         'http://localhost:8080/api/auth/verify',
         expect.any(Object)
       )
     })
 
-    // Remove the problematic cache tests since they're complex to mock properly
-    // The cache functionality is tested implicitly through the other tests
-
     it('handles malformed request URL gracefully', async () => {
-      const token = 'malformed-url-token'
-      const malformedUrl = 'not-a-valid-url'
-      
       mockFetch.mockResolvedValueOnce({
         ok: true,
         json: async () => ({
@@ -277,9 +352,60 @@ describe('Firebase Server Utils', () => {
           user: { uid: 'test-user' }
         })
       })
-      
-      const result = await validateFirebaseTokenServer(token, malformedUrl)
-      
+
+      const result = await validateFirebaseTokenServer(
+        'malformed-url-token',
+        'not-a-valid-url'
+      )
+
+      expect(result).toEqual({
+        isValid: true,
+        user: { uid: 'test-user' }
+      })
+    })
+
+    it('handles JSON parsing errors', async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: async () => { throw new Error('JSON parse error') }
+      })
+
+      const result = await validateFirebaseTokenServer('json-error-token')
+
+      expect(result).toEqual({
+        isValid: false,
+        error: 'Token validation failed'
+      })
+    })
+
+    it('handles missing user data in response', async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          success: true,
+          user: null
+        })
+      })
+
+      const result = await validateFirebaseTokenServer('missing-user-token')
+
+      expect(result).toEqual({
+        isValid: false,
+        error: 'Token validation failed'
+      })
+    })
+
+    it('handles malformed user data', async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          success: true,
+          user: { uid: 'test-user' }
+        })
+      })
+
+      const result = await validateFirebaseTokenServer('malformed-user-token')
+
       expect(result).toEqual({
         isValid: true,
         user: { uid: 'test-user' }
@@ -289,27 +415,16 @@ describe('Firebase Server Utils', () => {
 
   describe('requireAuthServer', () => {
     it('returns user for valid Authorization header', async () => {
-      const token = 'valid-auth-token'
       const request = new Request('https://example.com', {
         headers: {
-          'authorization': `Bearer ${token}`
+          'authorization': 'Bearer valid-auth-token'
         }
       })
-      
-      mockFetch.mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          user: {
-            uid: 'test-user',
-            email: 'test@example.com',
-            emailVerified: true
-          }
-        })
-      })
-      
+
+      mockVerify.mockResolvedValueOnce(decodedUser as any)
+
       const result = await requireAuthServer(request)
-      
+
       expect(result).toEqual({
         uid: 'test-user',
         email: 'test@example.com',
@@ -318,27 +433,16 @@ describe('Firebase Server Utils', () => {
     })
 
     it('returns user for valid session cookie', async () => {
-      const token = 'valid-session-token'
       const request = new Request('https://example.com', {
         headers: {
-          'cookie': `firebase-session=${token}`
+          'cookie': 'firebase-session=valid-session-token'
         }
       })
-      
-      mockFetch.mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          user: {
-            uid: 'test-user',
-            email: 'test@example.com',
-            emailVerified: true
-          }
-        })
-      })
-      
+
+      mockVerify.mockResolvedValueOnce(decodedUser as any)
+
       const result = await requireAuthServer(request)
-      
+
       expect(result).toEqual({
         uid: 'test-user',
         email: 'test@example.com',
@@ -348,64 +452,42 @@ describe('Firebase Server Utils', () => {
 
     it('returns null for missing Authorization header and session cookie', async () => {
       const request = new Request('https://example.com')
-      
+
       const result = await requireAuthServer(request)
-      
+
       expect(result).toBeNull()
     })
 
     it('returns null for invalid token', async () => {
-      const token = 'invalid-token'
       const request = new Request('https://example.com', {
         headers: {
-          'authorization': `Bearer ${token}`
+          'authorization': 'Bearer invalid-token'
         }
       })
-      
-      mockFetch.mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: false,
-          error: 'Invalid token'
-        })
-      })
-      
+
+      mockVerify.mockRejectedValueOnce(
+        new Error('Firebase ID token verification failed: invalid signature')
+      )
+
       const result = await requireAuthServer(request)
-      
+
       expect(result).toBeNull()
     })
 
     it('prioritizes Authorization header over session cookie', async () => {
-      const authToken = 'auth-token'
-      const sessionToken = 'session-token'
       const request = new Request('https://example.com', {
         headers: {
-          'authorization': `Bearer ${authToken}`,
-          'cookie': `firebase-session=${sessionToken}`
+          'authorization': 'Bearer auth-token',
+          'cookie': 'firebase-session=session-token'
         }
       })
-      
-      mockFetch.mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          user: {
-            uid: 'test-user',
-            email: 'test@example.com',
-            emailVerified: true
-          }
-        })
-      })
-      
+
+      mockVerify.mockResolvedValueOnce(decodedUser as any)
+
       const result = await requireAuthServer(request)
-      
-      expect(mockFetch).toHaveBeenCalledWith(
-        expect.stringContaining('/api/auth/verify'),
-        expect.objectContaining({
-          body: JSON.stringify({ token: authToken })
-        })
-      )
-      
+
+      expect(mockVerify).toHaveBeenCalledWith('auth-token')
+
       expect(result).toEqual({
         uid: 'test-user',
         email: 'test@example.com',
@@ -419,21 +501,11 @@ describe('Firebase Server Utils', () => {
       const mockCookies = {
         get: vi.fn().mockReturnValue({ value: 'valid-session-cookie' })
       } as unknown as ReadonlyRequestCookies
-      
-      mockFetch.mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          user: {
-            uid: 'test-user',
-            email: 'test@example.com',
-            emailVerified: true
-          }
-        })
-      })
-      
+
+      mockVerify.mockResolvedValueOnce(decodedUser as any)
+
       const result = await getServerSideUser(mockCookies)
-      
+
       expect(result).toEqual({
         uid: 'test-user',
         email: 'test@example.com',
@@ -445,9 +517,9 @@ describe('Firebase Server Utils', () => {
       const mockCookies = {
         get: vi.fn().mockReturnValue(null)
       } as unknown as ReadonlyRequestCookies
-      
+
       const result = await getServerSideUser(mockCookies)
-      
+
       expect(result).toBeNull()
     })
 
@@ -455,38 +527,14 @@ describe('Firebase Server Utils', () => {
       const mockCookies = {
         get: vi.fn().mockReturnValue({ value: 'invalid-session-cookie' })
       } as unknown as ReadonlyRequestCookies
-      
-      mockFetch.mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: false,
-          error: 'Invalid token'
-        })
-      })
-      
-      const result = await getServerSideUser(mockCookies)
-      
-      expect(result).toBeNull()
-    })
 
-    it('passes request URL to validation function', async () => {
-      const mockCookies = {
-        get: vi.fn().mockReturnValue({ value: 'test-session-cookie' })
-      } as unknown as ReadonlyRequestCookies
-      
-      const requestUrl = 'https://custom-domain.com'
-      
-      mockFetch.mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ success: true, user: { uid: 'test-user' } })
-      })
-      
-      await getServerSideUser(mockCookies, requestUrl)
-      
-      expect(mockFetch).toHaveBeenCalledWith(
-        'https://custom-domain.com/api/auth/verify',
-        expect.any(Object)
+      mockVerify.mockRejectedValueOnce(
+        new Error('Firebase ID token verification failed: invalid signature')
       )
+
+      const result = await getServerSideUser(mockCookies)
+
+      expect(result).toBeNull()
     })
   })
 
@@ -495,21 +543,11 @@ describe('Firebase Server Utils', () => {
       const mockCookies = {
         get: vi.fn().mockReturnValue({ value: 'valid-session-cookie' })
       } as unknown as ReadonlyRequestCookies
-      
-      mockFetch.mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ 
-          success: true, 
-          user: { 
-            uid: 'test-user',
-            email: 'test@example.com',
-            emailVerified: true
-          } 
-        })
-      })
-      
+
+      mockVerify.mockResolvedValueOnce(decodedUser as any)
+
       const result = await getServerSideUserDirect(mockCookies)
-      
+
       expect(result).toEqual({
         uid: 'test-user',
         email: 'test@example.com',
@@ -521,66 +559,10 @@ describe('Firebase Server Utils', () => {
       const mockCookies = {
         get: vi.fn().mockReturnValue(null)
       } as unknown as ReadonlyRequestCookies
-      
+
       const result = await getServerSideUserDirect(mockCookies)
-      
+
       expect(result).toBeNull()
-    })
-  })
-
-  describe('Error Handling', () => {
-    it('handles JSON parsing errors', async () => {
-      const token = 'json-error-token'
-      
-      mockFetch.mockResolvedValueOnce({
-        ok: true,
-        json: async () => { throw new Error('JSON parse error') }
-      })
-      
-      const result = await validateFirebaseTokenServer(token)
-      
-      expect(result).toEqual({
-        isValid: false,
-        error: 'Token validation failed'
-      })
-    })
-
-    it('handles missing user data in response', async () => {
-      const token = 'missing-user-token'
-      
-      mockFetch.mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          user: null
-        })
-      })
-      
-      const result = await validateFirebaseTokenServer(token)
-      
-      expect(result).toEqual({
-        isValid: false,
-        error: 'Token validation failed'
-      })
-    })
-
-    it('handles malformed user data', async () => {
-      const token = 'malformed-user-token'
-      
-      mockFetch.mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          success: true,
-          user: { uid: 'test-user' }
-        })
-      })
-      
-      const result = await validateFirebaseTokenServer(token)
-      
-      expect(result).toEqual({
-        isValid: true,
-        user: { uid: 'test-user' }
-      })
     })
   })
 
@@ -591,4 +573,4 @@ describe('Firebase Server Utils', () => {
       expect(setInterval).toBeDefined()
     })
   })
-}) 
+})

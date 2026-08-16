@@ -75,7 +75,47 @@ export async function validateFirebaseTokenServer(
       return cached.result
     }
 
-    // Always use API-based verification to avoid any client-side bundling issues
+    // B1.1: nas lambdas Node a verificação é chamada de função direta —
+    // o hop HTTP abaixo fica exclusivo do middleware Edge até a B1.2.
+    // O guard é resolvido em BUILD por compilação: NEXT_RUNTIME vira
+    // 'edge' no bundle do middleware (branch eliminado por DCE — o
+    // firebase-admin nunca entra no bundle Edge) e 'nodejs' nas lambdas;
+    // no client, o alias do next.config resolve @/lib/firebase-admin
+    // para módulo vazio (o guard de window impede a execução).
+    if (typeof window === 'undefined' && process.env.NEXT_RUNTIME !== 'edge') {
+      try {
+        const { verifyFirebaseToken } = await import('@/lib/firebase-admin')
+        const decoded = await verifyFirebaseToken(idToken)
+        const res: ServerAuthResult = {
+          isValid: true,
+          user: {
+            uid: decoded.uid,
+            email: decoded.email,
+            emailVerified: decoded.email_verified
+          }
+        }
+        tokenCache.set(idToken, {
+          result: res,
+          exp: now + 60 * 60 * 1000 // mesmo TTL de 1h do transporte HTTP
+        })
+        return res
+      } catch (err: any) {
+        const msg = String(err?.message || '')
+        // Mesmas classes observáveis do transporte HTTP: token
+        // inválido/expirado → isValid:false; erro de infra (ex.: fetch
+        // de certificados do SDK) → fallback para cache vencido.
+        if (/expired|invalid|argument|decod/i.test(msg)) {
+          return { isValid: false, error: 'Token validation failed' }
+        }
+        logger.error('Token verification failed (direct):', msg)
+        if (cached) {
+          return cached.result
+        }
+        return { isValid: false, error: 'Token validation failed' }
+      }
+    }
+
+    // Ramo fetch: só o middleware Edge chega aqui (morre na B1.2)
     let baseUrl = process.env.NEXTAUTH_URL || process.env.VERCEL_URL
 
     if (!baseUrl && requestUrl) {
