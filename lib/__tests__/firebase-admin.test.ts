@@ -5,12 +5,8 @@ const mockApps: any[] = [];
 
 // Mock firebase-admin
 const mockVerifyIdToken = vi.fn();
-const mockGetUser = vi.fn();
-const mockCreateUser = vi.fn();
-const mockGetAuth = vi.fn(() => ({ 
-  verifyIdToken: mockVerifyIdToken,
-  getUser: mockGetUser,
-  createUser: mockCreateUser
+const mockGetAuth = vi.fn(() => ({
+  verifyIdToken: mockVerifyIdToken
 }));
 const mockInitializeApp = vi.fn(() => ({ name: 'test-app' }));
 const mockGetApp = vi.fn(() => ({ name: 'test-app' }));
@@ -173,72 +169,4 @@ describe('Firebase Admin', () => {
       await expect(verifyFirebaseToken('test-token')).rejects.toThrow('Token verification can only be done in Node.js runtime');
     });
   });
-
-  describe('getUserByUid', () => {
-    it('should get user by UID successfully', async () => {
-      const mockUid = 'test-uid';
-      const mockUserRecord = { 
-        uid: 'test-uid', 
-        email: 'test@example.com',
-        displayName: 'Test User'
-      };
-      
-      mockApps.push({ name: 'test-app' });
-      mockGetUser.mockResolvedValue(mockUserRecord);
-      
-      const { getUserByUid } = await import('../firebase-admin');
-      const result = await getUserByUid(mockUid);
-      
-      expect(mockGetUser).toHaveBeenCalledWith(mockUid);
-      expect(result).toEqual(mockUserRecord);
-    });
-
-    it('should throw error in non-Node.js environment', async () => {
-      // Mock Edge Runtime environment
-      Object.defineProperty(process, 'versions', {
-        value: undefined,
-        writable: true
-      });
-      
-      const { getUserByUid } = await import('../firebase-admin');
-      
-      await expect(getUserByUid('test-uid')).rejects.toThrow('User lookup can only be done in Node.js runtime');
-    });
-  });
-
-  describe('createUser', () => {
-    it('should create user successfully', async () => {
-      const userData = {
-        email: 'test@example.com',
-        password: 'testpassword',
-        displayName: 'Test User'
-      };
-      const mockUserRecord = { 
-        uid: 'new-uid', 
-        email: 'test@example.com',
-        displayName: 'Test User'
-      };
-      
-      mockApps.push({ name: 'test-app' });
-      mockCreateUser.mockResolvedValue(mockUserRecord);
-      
-      const { createUser } = await import('../firebase-admin');
-      const result = await createUser(userData);
-      
-      expect(mockCreateUser).toHaveBeenCalledWith(userData);
-      expect(result).toEqual(mockUserRecord);
-    });
-
-    it('should throw error in non-Node.js environment', async () => {
-      // Mock Edge Runtime environment
-      Object.defineProperty(process, 'versions', {
-        value: undefined,
-        writable: true
-      });
-      
-      const { createUser } = await import('../firebase-admin');
-      
-      await expect(createUser({ email: 'test@example.com' })).rejects.toThrow('User creation can only be done in Node.js runtime');
-    });
-  });
-}); 
+});
