@@ -57,6 +57,10 @@ const nextConfig = {
         './firebase-admin': false,
         './firebase-admin.js': false,
         './firebase-admin.ts': false,
+        // B1.1: o import dinâmico de @/lib/firebase-admin nas cadeias de
+        // auth (guardado por runtime) não pode ser resolvido no bundle
+        // client — o guard impede a execução; este alias impede o bundling.
+        '@/lib/firebase-admin': false,
         // Prevent test utilities from being bundled on client-side
         '@/lib/test-utils': false,
         '@/lib/test-utils/api-test-helpers': false,
