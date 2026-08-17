@@ -196,11 +196,29 @@ cada uma com ciclo completo (checkpoint → preview → aval → merge → prod)
   o histórico** (blob único de 36 bytes, `{"cookies":[],"origins":[]}`)
   — nenhuma sessão de nenhuma conta jamais versionada, sem reescrita
   necessária. `@playwright/test` e os gates do ux-audit intocados.
-- **B1.1 — self-fetch → chamada direta nas lambdas**, nas duas cadeias
-  (`firebase-server-utils` e `secure-auth-utils`), middleware intocado.
-  Inclui G1 (espião de fetch com controle negativo contra o código atual)
-  e a resolução do bundling (import dinâmico com guard de runtime vs
-  módulo server-only — decisão no desenho).
+- **B1.1 — self-fetch → chamada direta nas lambdas: ✅ CONCLUÍDA (PR
+  #229, squash `bbe8de4`, 2026-08-17).** Transporte, não comportamento,
+  nas duas cadeias: verificação por chamada direta de
+  `verifyFirebaseToken` com guard estático por compilação
+  (`NEXT_RUNTIME !== 'edge'` + guard de window; alias client no
+  next.config em commit de infra próprio); caches, strings de erro,
+  fallback stale (teste novo) e blacklist dormante preservados; ramo
+  fetch preservado atrás de env, sem consumidor em produção, morre na
+  B1.2. **Achado central: o middleware roda como função NODE** — o
+  `functions-config-manifest.json` é a verdade (`"/_middleware":
+  {"runtime":"nodejs"}`), o warning do Next 15.2.8 não impede; o
+  self-fetch dele resolvia localhost in-lambda (mistério do pre-check
+  resolvido). **Decisão A**: middleware passou ao transporte direto sem
+  mudança de código, com assert nomeado na validação (expulsão sem
+  sessão 307→/login; passagem com sessão 200; /login→/dashboard 307 —
+  verificado em preview e prod). **G1 permanente na suíte**
+  (`lib/__tests__/g1-no-self-fetch.test.ts`): espião de fetch nas duas
+  cadeias + ponta a ponta; controle negativo executado contra o main
+  (falha com `'via-http' ≠ 'g1-uid'`). rl-0 A+B verdes no preview
+  (40×200 no verify; 12 navegações, zero /login, zero 429 fora do
+  session; session 9/12 — padrão pré-B1.3 intacto). Órfãos da B1.0
+  removidos. **`NEXTAUTH_URL` ficou sem consumidor em produção — morte
+  formal na B1.2.**
 - **B1.2 — middleware otimista + remoção da rota `/api/auth/verify`.**
   **PREMISSAS CORRIGIDAS na B1.1 (2026-08-16), redefinem este item:**
   (1) o middleware NÃO roda Edge — o build real o registra como **função
