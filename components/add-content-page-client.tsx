@@ -13,7 +13,7 @@ const AddContent = dynamic(() => import("@/components/add-content").then(mod => 
 import { ResponsiveLayout } from "@/components/responsive-layout"
 import { useAuth } from "@/contexts/firebase-auth-context"
 
-export default function AddContentPage() {
+export default function AddContentPageClient() {
   const router = useRouter()
   const { user, isLoading } = useAuth()
   const [activeScreen, setActiveScreen] = useState("add-content")

@@ -19,7 +19,7 @@ const SetlistManager = dynamic(() => import("@/components/setlist-manager").then
   ssr: false // Client-side only for better performance
 })
 
-export default function SetlistsPage() {
+export default function SetlistsPageClient() {
   const router = useRouter()
   const { user, isLoading } = useAuth()
   const [activeScreen, setActiveScreen] = useState("setlists")

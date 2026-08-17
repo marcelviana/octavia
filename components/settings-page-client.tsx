@@ -6,7 +6,7 @@ import { Settings } from "@/components/settings"
 import { ResponsiveLayout } from "@/components/responsive-layout"
 import { useAuth } from "@/contexts/firebase-auth-context"
 
-export default function SettingsPage() {
+export default function SettingsPageClient() {
   const router = useRouter()
   const { user, isLoading } = useAuth()
   const [activeScreen, setActiveScreen] = useState("settings")

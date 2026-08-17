@@ -1,5 +1,4 @@
-import { redirect } from "next/navigation";
-import { getServerSideUser } from "@/lib/firebase-server-utils";
+import { requirePageUser } from "@/lib/require-page-user";
 import { cookies, headers } from "next/headers";
 import {
   getContentByIdServer,
@@ -17,11 +16,9 @@ export default async function PerformancePage({ searchParams }: { searchParams?:
   const protocol = headersList.get('x-forwarded-proto') || 'https';
   const requestUrl = host ? `${protocol}://${host}/performance` : undefined;
   
-  const user = await getServerSideUser(cookieStore, requestUrl);
-  
-  if (!user) {
-    redirect("/login");
-  }
+  // B1.2a: helper unificado — /performance ganha também o check de email
+  // verificado (antes só as rotas do middleware o tinham; declarado na PR)
+  await requirePageUser(cookieStore);
 
   const params = await searchParams;
   const contentId = params?.contentId as string | undefined;

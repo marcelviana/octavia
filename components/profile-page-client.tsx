@@ -7,7 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import ProfileForm from "@/components/ProfileForm"
 import { ResponsiveLayout } from "@/components/responsive-layout"
 
-export default function ProfilePage() {
+export default function ProfilePageClient() {
   const router = useRouter()
   const { user, isLoading, isInitialized } = useAuth()
   const [mounted, setMounted] = useState(false)

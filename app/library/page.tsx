@@ -1,4 +1,4 @@
-import { getServerSideUser } from "@/lib/firebase-server-utils";
+import { requirePageUser } from "@/lib/require-page-user";
 import { cookies, headers } from "next/headers";
 import { getUserContentPageServer } from "@/lib/content-service-server";
 import LibraryPageClient from "@/components/library-page-client";
@@ -17,20 +17,9 @@ export default async function LibraryPage({
   const protocol = headersList.get('x-forwarded-proto') || 'https';
   const requestUrl = host ? `${protocol}://${host}/library` : undefined;
   
-  const user = await getServerSideUser(cookieStore, requestUrl);
-  
-  // If no user despite middleware check, something is wrong with token validation
-  if (!user) {
-    console.error('Library: User not found despite middleware authentication check')
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-amber-600 mx-auto mb-4"></div>
-          <p>Loading your library...</p>
-        </div>
-      </div>
-    )
-  }
+  // B1.2a: enforcement na página — user nulo expulsa (mesma arqueologia
+  // do dashboard: o spinner era defesa da era dos 429, causa morta)
+  await requirePageUser(cookieStore);
 
   const resolvedSearchParams = await searchParams;
   const searchParam = resolvedSearchParams?.search;
