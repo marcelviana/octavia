@@ -169,30 +169,6 @@ export const verifyTokenSchema = z.object({
   token: z.string().min(1, 'Token is required'),
 });
 
-export const createUserSchema = z.object({
-  email: z.string().email('Invalid email address').max(255, 'Email must be less than 255 characters'),
-  password: z.string()
-    .min(6, 'Password must be at least 6 characters')
-    .max(128, 'Password must be less than 128 characters')
-    .optional(),
-  displayName: z.string()
-    .max(100, 'Display name must be less than 100 characters')
-    .transform(sanitizeString)
-    .optional(),
-  emailVerified: z.boolean().optional(),
-});
-
-export const updateUserSchema = z.object({
-  uid: z.string().min(1, 'User ID is required'),
-  email: z.string().email('Invalid email address').max(255, 'Email must be less than 255 characters').optional(),
-  displayName: z.string()
-    .max(100, 'Display name must be less than 100 characters')
-    .transform(sanitizeString)
-    .optional(),
-  emailVerified: z.boolean().optional(),
-  disabled: z.boolean().optional(),
-});
-
 export const sessionSchema = z.object({
   idToken: z.string().min(1, 'ID token is required'),
 });
@@ -300,8 +276,6 @@ export type ContentQueryInput = z.infer<typeof contentQuerySchema>;
 export type CreateProfileInput = z.infer<typeof createProfileSchema>;
 export type UpdateProfileInput = z.infer<typeof updateProfileSchema>;
 export type VerifyTokenInput = z.infer<typeof verifyTokenSchema>;
-export type CreateUserInput = z.infer<typeof createUserSchema>;
-export type UpdateUserInput = z.infer<typeof updateUserSchema>;
 export type SessionInput = z.infer<typeof sessionSchema>;
 export type FileUploadInput = z.infer<typeof fileUploadSchema>;
 export type FileDeleteInput = z.infer<typeof fileDeleteSchema>;

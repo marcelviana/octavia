@@ -4,7 +4,17 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 // aqui queremos testar a implementação real.
 vi.unmock('@/lib/secure-auth-utils')
 
+// B1.1: o transporte padrão é chamada direta — o verificador local é
+// mockado. O ramo fetch (Edge) é exercitado só no describe da âncora,
+// com NEXT_RUNTIME='edge' forçado.
+vi.mock('@/lib/firebase-admin', () => ({
+  verifyFirebaseToken: vi.fn()
+}))
+
+import { verifyFirebaseToken } from '@/lib/firebase-admin'
 import { requireAuthServerSecure, validateFirebaseTokenSecure } from '@/lib/secure-auth-utils'
+
+const mockVerify = vi.mocked(verifyFirebaseToken)
 
 const verifyResponse = (user: Record<string, unknown>) => ({
   ok: true,
@@ -28,11 +38,11 @@ describe('requireAuthServerSecure (real implementation)', () => {
   })
 
   it('returns the user when the email is verified', async () => {
-    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(verifyResponse({
+    mockVerify.mockResolvedValueOnce({
       uid: 'user-verified',
       email: 'verified@example.com',
-      emailVerified: true
-    })))
+      email_verified: true
+    } as any)
 
     const user = await requireAuthServerSecure(makeRequest('token-verified-1'))
 
@@ -40,11 +50,11 @@ describe('requireAuthServerSecure (real implementation)', () => {
   })
 
   it('rejects users with unverified email by default', async () => {
-    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(verifyResponse({
+    mockVerify.mockResolvedValueOnce({
       uid: 'user-unverified-default',
       email: 'unverified@example.com',
-      emailVerified: false
-    })))
+      email_verified: false
+    } as any)
 
     const user = await requireAuthServerSecure(makeRequest('token-unverified-default-1'))
 
@@ -55,11 +65,11 @@ describe('requireAuthServerSecure (real implementation)', () => {
     // Durante o signup por email/senha o usuário acabou de ser criado, então
     // emailVerified === false. O POST /api/profile precisa poder aceitar esse
     // usuário — sem isso o perfil Supabase nunca é criado em produção.
-    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(verifyResponse({
+    mockVerify.mockResolvedValueOnce({
       uid: 'user-unverified-signup',
       email: 'new-user@example.com',
-      emailVerified: false
-    })))
+      email_verified: false
+    } as any)
 
     const user = await requireAuthServerSecure(makeRequest('token-unverified-signup-1'), {
       allowUnverifiedEmail: true
@@ -69,13 +79,19 @@ describe('requireAuthServerSecure (real implementation)', () => {
   })
 })
 
-describe('validateFirebaseTokenSecure — âncora de origem do self-fetch', () => {
+describe('validateFirebaseTokenSecure — âncora de origem do self-fetch (ramo Edge; morre na B1.2)', () => {
+  // Pós-B1.1 este ramo não tem consumidor em produção (a cadeia B não
+  // roda em Edge — o middleware usa a cadeia A), mas a propriedade de
+  // segurança da âncora de env fica protegida enquanto o código existir.
+  // NEXT_RUNTIME='edge' força o guard a percorrê-lo.
   beforeEach(() => {
     vi.stubGlobal('window', undefined)
+    vi.stubEnv('NEXT_RUNTIME', 'edge')
   })
 
   afterEach(() => {
     vi.unstubAllGlobals()
+    vi.unstubAllEnvs()
   })
 
   it('server-side SEM requestUrl usa a cadeia de env (antes: rejeição no branch client-side)', async () => {

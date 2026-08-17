@@ -202,15 +202,24 @@ cada uma com ciclo completo (checkpoint → preview → aval → merge → prod)
   e a resolução do bundling (import dinâmico com guard de runtime vs
   módulo server-only — decisão no desenho).
 - **B1.2 — middleware otimista + remoção da rota `/api/auth/verify`.**
-  Decisão do pre-check: middleware roda **Edge** no Next 15.2.8 (o
-  `runtime='nodejs'` é ignorado com warning) e valida via self-fetch por
-  mecanismo não-observável de fora — vira checagem de presença/formato do
-  cookie; a verificação real fica nos server components e rotas (o mapa
-  do pre-check provou cobertura em 100% das páginas protegidas). Condição:
-  gate que enumera rotas/páginas protegidas e prova a verificação própria
-  de cada uma. Com zero consumidores, a rota verify sai — a pendência da
-  PR #219 fecha por eliminação de superfície. O gate A do rl-0 morre aqui,
-  declarado.
+  **PREMISSAS CORRIGIDAS na B1.1 (2026-08-16), redefinem este item:**
+  (1) o middleware NÃO roda Edge — o build real o registra como **função
+  Node** (`functions-config-manifest.json`: `"/_middleware":
+  {"runtime":"nodejs"}`; o warning do entries.js não impede) e o
+  self-fetch dele resolvia `localhost` in-lambda — mistério do pre-check
+  resolvido; com a B1.1 (decisão A) ele já verifica por chamada direta.
+  (2) **As páginas verificam mas NÃO expulsam**: dashboard com user nulo
+  renderiza spinner ("avoid loops"), não redirect — o middleware é a
+  ÚNICA camada de redirect em prod; e `next start` local nem executa
+  node middleware no 15.2.8. **O desenho do middleware otimista DEVE
+  incluir enforcement de redirect nas páginas (ou equivalente) como
+  parte do pacote — "otimista" sem isso é remoção de segurança.** A
+  decisão 1 do B1 (opção a) fica condicionada a esse desenho. Condição
+  original mantida: gate que enumera rotas/páginas protegidas e prova o
+  enforcement de cada uma. Com zero consumidores, a rota verify sai — a
+  pendência da PR #219 fecha por eliminação de superfície. O gate A do
+  rl-0 morre aqui, declarado. A âncora `NEXTAUTH_URL` (sem consumidor em
+  produção desde a B1.1/decisão A) é aposentada aqui.
 - **B1.3 — limiter único**: chave por **uid pós-auth** com fallback por
   IP exclusivamente no caminho de auth falhada; janelas dimensionadas com
   os dados do probe (caso dimensionante: `visibilitychange` do tablet de

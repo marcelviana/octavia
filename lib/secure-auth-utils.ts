@@ -172,8 +172,47 @@ export async function validateFirebaseTokenSecure(
     // Validate via API with enhanced error handling
     let result: ServerAuthResult
 
-    if (typeof window === 'undefined') {
-      // Server-side: Use internal API
+    if (typeof window === 'undefined' && process.env.NEXT_RUNTIME !== 'edge') {
+      // B1.1: chamada direta de função nas lambdas Node — mesmo guard
+      // estático da cadeia A (lib/firebase-server-utils.ts); ver o
+      // comentário lá sobre DCE por compilação e o alias do client.
+      try {
+        const { verifyFirebaseToken } = await import('@/lib/firebase-admin')
+        const decoded = await verifyFirebaseToken(idToken)
+
+        result = {
+          isValid: true,
+          user: {
+            uid: decoded.uid,
+            email: decoded.email,
+            emailVerified: decoded.email_verified
+          }
+        }
+
+        // SECURITY: Track user session
+        addTokenToUserSession(decoded.uid, idToken)
+
+        logger.log(`Token validated successfully for user: ${decoded.uid}`)
+      } catch (error: any) {
+        const msg = String(error?.message || '')
+        // Mesmas classes observáveis do transporte HTTP (o auto-blacklist
+        // por string de erro segue dormante, como hoje — nota do desenho
+        // da B1.1; acordá-lo é decisão do B1.5):
+        // token inválido/expirado → 'Token verification failed' (era o
+        // !response.ok); erro de infra → 'service unavailable' (era o
+        // catch do fetch).
+        if (/expired|invalid|argument|decod/i.test(msg)) {
+          logger.error(`Token verification failed: token inválido/expirado`)
+          return { isValid: false, error: 'Token verification failed' }
+        }
+        logger.error('Token verification API call failed:', error)
+        return { isValid: false, error: 'Token verification service unavailable' }
+      }
+    } else if (typeof window === 'undefined') {
+      // Ramo fetch (Edge): SEM consumidor em produção pós-B1.1 — a cadeia
+      // B não roda em Edge (o middleware usa a cadeia A). Mantido até a
+      // remoção conjunta na B1.2; a âncora de env abaixo continua testada
+      // (lib/__tests__/secure-auth-utils.test.ts) enquanto o código existir.
       try {
         // Destino ancorado em ENV, nunca no request de entrada: este fetch
         // carrega o idToken do usuário, e Host/x-forwarded-host forjados não
