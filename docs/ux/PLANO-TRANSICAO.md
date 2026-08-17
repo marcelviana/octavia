@@ -217,8 +217,11 @@ cada uma com ciclo completo (checkpoint → preview → aval → merge → prod)
   (falha com `'via-http' ≠ 'g1-uid'`). rl-0 A+B verdes no preview
   (40×200 no verify; 12 navegações, zero /login, zero 429 fora do
   session; session 9/12 — padrão pré-B1.3 intacto). Órfãos da B1.0
-  removidos. **`NEXTAUTH_URL` ficou sem consumidor em produção — morte
-  formal na B1.2.**
+  removidos. **Primeiro número concreto do custo do self-fetch por
+  navegação**: a mesma rodada de 12 navegações do rl-0 caiu de 2.7min
+  (preview pré-B1.1) para **50s** (prod pós-B1.1) — entra no dossiê como
+  evidência do ganho. **`NEXTAUTH_URL` ficou sem consumidor em produção
+  — morte formal na B1.2.**
 - **B1.2 — middleware otimista + remoção da rota `/api/auth/verify`.**
   **PREMISSAS CORRIGIDAS na B1.1 (2026-08-16), redefinem este item:**
   (1) o middleware NÃO roda Edge — o build real o registra como **função
