@@ -266,63 +266,9 @@ export function applyEnhancedSecurityHeaders(
   return response
 }
 
-// CORS configuration for API routes
-export interface CORSConfig {
-  origin: string[] | string | boolean
-  methods: string[]
-  allowedHeaders: string[]
-  credentials: boolean
-  maxAge: number
-}
-
-export const PRODUCTION_CORS_CONFIG: CORSConfig = {
-  origin: process.env.NODE_ENV === 'production'
-    ? [process.env.NEXTAUTH_URL || 'https://your-domain.com']
-    : ['http://localhost:3000', 'http://127.0.0.1:3000'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: [
-    'Content-Type',
-    'Authorization',
-    'X-Requested-With',
-    'Accept',
-    'Origin'
-  ],
-  credentials: true,
-  maxAge: 86400 // 24 hours
-}
-
-// Apply CORS headers
-export function applyCORSHeaders(
-  response: NextResponse,
-  request: NextRequest,
-  config: CORSConfig = PRODUCTION_CORS_CONFIG
-): NextResponse {
-  const origin = request.headers.get('origin')
-
-  // Check if origin is allowed
-  let allowOrigin = false
-  if (typeof config.origin === 'boolean') {
-    allowOrigin = config.origin
-  } else if (typeof config.origin === 'string') {
-    allowOrigin = origin === config.origin
-  } else if (Array.isArray(config.origin)) {
-    allowOrigin = origin ? config.origin.includes(origin) : false
-  }
-
-  if (allowOrigin && origin) {
-    response.headers.set('Access-Control-Allow-Origin', origin)
-  }
-
-  response.headers.set('Access-Control-Allow-Methods', config.methods.join(', '))
-  response.headers.set('Access-Control-Allow-Headers', config.allowedHeaders.join(', '))
-  response.headers.set('Access-Control-Max-Age', config.maxAge.toString())
-
-  if (config.credentials) {
-    response.headers.set('Access-Control-Allow-Credentials', 'true')
-  }
-
-  return response
-}
+// B1.2b: bloco CORS removido (CORSConfig/PRODUCTION_CORS_CONFIG/
+// applyCORSHeaders) — órfão sem nenhum consumidor; era o último leitor
+// fantasma de NEXTAUTH_URL (docs/ux/PLANO-TRANSICAO.md, B1.2b).
 
 // Security event logging
 export function logSecurityEvent(
@@ -343,26 +289,7 @@ export function logSecurityEvent(
   console.warn('[SECURITY EVENT]', logData)
 }
 
-// Middleware for enhanced security
-export function withEnhancedSecurity(handler: any) {
-  return async (request: NextRequest): Promise<Response> => {
-    const response = await handler(request)
-    const nextResponse = NextResponse.next(response)
-
-    // Apply security headers
-    applyEnhancedSecurityHeaders(nextResponse, request)
-
-    // Apply CORS if needed
-    if (request.nextUrl.pathname.startsWith('/api/')) {
-      applyCORSHeaders(nextResponse, request)
-    }
-
-    return nextResponse
-  }
-}
-
 // Export aliases for backward compatibility with tests and middleware
 export const applySecurityHeaders = applyEnhancedSecurityHeaders
 export const generateCSPNonce = generateNonce
-export const createSecurityHeadersMiddleware = withEnhancedSecurity
 export const getEnvironmentCSPConfig = getEnvironmentSecurityConfig  // Alias for middleware compatibility
