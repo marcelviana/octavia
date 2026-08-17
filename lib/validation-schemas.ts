@@ -165,10 +165,6 @@ export const updateProfileSchema = z.object({
 });
 
 // Authentication validation schemas
-export const verifyTokenSchema = z.object({
-  token: z.string().min(1, 'Token is required'),
-});
-
 export const sessionSchema = z.object({
   idToken: z.string().min(1, 'ID token is required'),
 });
@@ -275,7 +271,6 @@ export type UpdateContentInput = z.infer<typeof updateContentSchema>;
 export type ContentQueryInput = z.infer<typeof contentQuerySchema>;
 export type CreateProfileInput = z.infer<typeof createProfileSchema>;
 export type UpdateProfileInput = z.infer<typeof updateProfileSchema>;
-export type VerifyTokenInput = z.infer<typeof verifyTokenSchema>;
 export type SessionInput = z.infer<typeof sessionSchema>;
 export type FileUploadInput = z.infer<typeof fileUploadSchema>;
 export type FileDeleteInput = z.infer<typeof fileDeleteSchema>;

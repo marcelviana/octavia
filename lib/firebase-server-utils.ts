@@ -115,69 +115,12 @@ export async function validateFirebaseTokenServer(
       }
     }
 
-    // Ramo fetch: só o middleware Edge chega aqui (morre na B1.2)
-    let baseUrl = process.env.NEXTAUTH_URL || process.env.VERCEL_URL
-
-    if (!baseUrl && requestUrl) {
-      try {
-        baseUrl = new URL(requestUrl.toString()).origin
-      } catch {
-        baseUrl = undefined
-      }
-    }
-
-    // Fallback to localhost for development
-    if (!baseUrl && typeof window === 'undefined') {
-      // Try to detect the port from environment or use default
-      const port = process.env.PORT || '3000'
-      baseUrl = `http://localhost:${port}`
-    }
-
-    if (baseUrl) {
-      if (!/^https?:\/\//.test(baseUrl)) {
-        baseUrl = `https://${baseUrl}`
-      }
-
-      const apiUrl = new URL('/api/auth/verify', baseUrl).toString()
-
-      try {
-        const response = await fetch(apiUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ token: idToken })
-        })
-
-        if (response.ok) {
-          const result = await response.json()
-          if (result.success && result.user) {
-            const res: ServerAuthResult = {
-              isValid: true,
-              user: {
-                uid: result.user.uid,
-                email: result.user.email,
-                emailVerified: result.user.emailVerified
-              }
-            }
-            tokenCache.set(idToken, {
-              result: res,
-              exp: now + 60 * 60 * 1000 // cache 1h when using API
-            })
-            return res
-          }
-          return { isValid: false, error: result.error || 'Token validation failed' }
-        }
-
-        const errorData = await response.json().catch(() => ({}))
-        return { isValid: false, error: errorData.error || `HTTP ${response.status}: ${response.statusText}` }
-      } catch (err: any) {
-        logger.error('Token verification fetch failed:', err.message)
-        if (cached) {
-          return cached.result
-        }
-      }
-    }
-
-    return { isValid: false, error: 'Token validation failed' }
+    // B1.2b: o ramo fetch (self-fetch a /api/auth/verify) morreu junto
+    // com a rota — a verificação só existe no runtime Node (guard acima).
+    // Edge não verifica mais token (middleware otimista) e client nunca
+    // verificou; cair aqui é erro de uso, não caminho legítimo.
+    logger.error('Token validation requested outside Node runtime')
+    return { isValid: false, error: 'Token validation unavailable in this runtime' }
   } catch (error: any) {
     logger.error('Firebase token validation failed:', error.message)
     return { isValid: false, error: error.message || 'Token validation failed' }
