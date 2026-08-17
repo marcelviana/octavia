@@ -222,7 +222,29 @@ cada uma com ciclo completo (checkpoint → preview → aval → merge → prod)
   (preview pré-B1.1) para **50s** (prod pós-B1.1) — entra no dossiê como
   evidência do ganho. **`NEXTAUTH_URL` ficou sem consumidor em produção
   — morte formal na B1.2.**
-- **B1.2 — middleware otimista + remoção da rota `/api/auth/verify`.**
+- **B1.2a — enforcement nas páginas + gate G-rotas: ✅ CONCLUÍDA (PR
+  #230, squash `6e9977e`, 2026-08-17).** A rede que torna o otimista da
+  B1.2b seguro, mergeada primeiro por desenho (racional: estritamente
+  mais segura que o estado anterior; o otimista só entra com ela em
+  prod — segurança estrutural, não disciplinar). `requirePageUser`
+  (nulo → /login; não-verificado → /verify-email) nas 8 páginas; as 4
+  client (setlists/settings/profile/add-content) **não tinham
+  verificação server nenhuma** — viraram wrapper server + componente
+  client intacto; dashboard/library trocaram o spinner "avoid loops"
+  (arqueologia: defesa da era dos 429, causa morta na B1.1) por
+  expulsão. **G-rotas permanente** (tests/gates/, 17 asserts, lista
+  única `lib/protected-routes.ts` — paridade middleware↔gate por
+  construção); controle negativo contra o main: **14/16 asserts de
+  página falhavam** — as 6 expulsões previstas MAIS as 8 do check de
+  verify-email, que **nenhuma página fazia** (buraco além do mapeado,
+  achado pelo próprio controle e fechado na mesma PR). Validação:
+  matriz 8 rotas × 3 estados = 24/24 com anti-loop em todas (preview) e
+  matriz reduzida em prod. **Semântica de stream do /performance
+  documentada**: única rota com loading.tsx — expulsão chega como
+  `NEXT_REDIRECT` no stream (HTTP 200, body só com fallback de loading,
+  zero vazamento; browser aterrissa em /login — provado em três
+  camadas). Válido também pós-B1.2b, registrado.
+- **B1.2b — middleware otimista + remoção da rota `/api/auth/verify`.**
   **PREMISSAS CORRIGIDAS na B1.1 (2026-08-16), redefinem este item:**
   (1) o middleware NÃO roda Edge — o build real o registra como **função
   Node** (`functions-config-manifest.json`: `"/_middleware":
@@ -235,7 +257,10 @@ cada uma com ciclo completo (checkpoint → preview → aval → merge → prod)
   node middleware no 15.2.8. **O desenho do middleware otimista DEVE
   incluir enforcement de redirect nas páginas (ou equivalente) como
   parte do pacote — "otimista" sem isso é remoção de segurança.** A
-  decisão 1 do B1 (opção a) fica condicionada a esse desenho. Condição
+  decisão 1 do B1 (opção a) fica condicionada a esse desenho.
+  **[2026-08-17] Premissa (2) ATENDIDA pela B1.2a (acima): enforcement
+  nas 8 páginas em prod + G-rotas permanente — a condição está
+  satisfeita e a troca pode acontecer.** Condição
   original mantida: gate que enumera rotas/páginas protegidas e prova o
   enforcement de cada uma. Com zero consumidores, a rota verify sai — a
   pendência da PR #219 fecha por eliminação de superfície. O gate A do
