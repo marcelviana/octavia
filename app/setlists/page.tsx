@@ -1,68 +1,14 @@
-"use client"
+import { cookies } from "next/headers"
+import { requirePageUser } from "@/lib/require-page-user"
+import SetlistsPageClient from "@/components/setlists-page-client"
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import dynamic from "next/dynamic"
-import { ResponsiveLayout } from "@/components/responsive-layout"
-import { useAuth } from "@/contexts/firebase-auth-context"
-
-// Bundle splitting: Lazy load setlist management features
-const SetlistManager = dynamic(() => import("@/components/setlist-manager").then(mod => ({ default: mod.SetlistManager })), {
-  loading: () => (
-    <div className="flex items-center justify-center min-h-[400px]">
-      <div className="text-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-600 mx-auto mb-2"></div>
-        <p className="text-sm text-muted-foreground">Loading setlists...</p>
-      </div>
-    </div>
-  ),
-  ssr: false // Client-side only for better performance
-})
-
-export default function SetlistsPage() {
-  const router = useRouter()
-  const { user, isLoading } = useAuth()
-  const [activeScreen, setActiveScreen] = useState("setlists")
-
-  // Handle navigation from sidebar
-  const handleNavigate = (screen: string) => {
-    if (screen === "setlists") {
-      setActiveScreen(screen)
-    } else {
-      router.push(`/${screen}`)
-    }
-  }
-
-  // Handle setlist selection
-  const handleSelectSetlist = (setlist: any) => {
-    router.push(`/setlist/${setlist.id}`)
-  }
-
-  const handleStartPerformance = (setlist: any, startingSongIndex?: number) => {
-    const url = `/performance?setlistId=${setlist.id}${startingSongIndex !== undefined ? `&startingSongIndex=${startingSongIndex}` : ''}`
-    router.push(url)
-  }
-
-  // Don't render anything while loading
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-[#fffcf7]">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-t-[#2E7CE4] border-[#F2EDE5] rounded-full animate-spin mx-auto"></div>
-          <p className="mt-4 text-[#1A1F36]">Loading your setlists...</p>
-        </div>
-      </div>
-    )
-  }
-
-  // Don't render anything if not authenticated
-  if (!user) {
-    return null
-  }
-
-  return (
-    <ResponsiveLayout activeScreen={activeScreen} onNavigate={handleNavigate}>
-      <SetlistManager onEnterPerformance={handleStartPerformance} />
-    </ResponsiveLayout>
-  )
+// B1.2a: wrapper server de enforcement — a página client original (movida
+// intacta para components/setlists-page-client.tsx) renderizava shell para
+// qualquer um; a verificação era 100% do middleware. Agora a página expulsa
+// por conta própria (gate G-rotas). A original não exportava metadata/
+// dynamic/generateStaticParams nem consumia params/searchParams — nada a
+// preservar além do conteúdo.
+export default async function SetlistsPage() {
+  await requirePageUser(await cookies())
+  return <SetlistsPageClient />
 }

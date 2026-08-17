@@ -1,5 +1,4 @@
-import { redirect } from "next/navigation";
-import { getServerSideUser } from "@/lib/firebase-server-utils";
+import { requirePageUser } from "@/lib/require-page-user";
 import { cookies, headers } from "next/headers";
 import { getContentByIdServer } from "@/lib/content-service-server";
 import ContentPageClient from "@/components/content-page-client";
@@ -20,11 +19,8 @@ export default async function ContentPage({
   const resolvedParams = await params;
   const requestUrl = host ? `${protocol}://${host}/content/${resolvedParams.id}` : undefined;
   
-  const user = await getServerSideUser(cookieStore, requestUrl);
-  
-  if (!user) {
-    redirect("/login");
-  }
+  // B1.2a: helper unificado de enforcement
+  await requirePageUser(cookieStore);
 
   const content = await getContentByIdServer(resolvedParams.id, cookieStore, requestUrl);
 

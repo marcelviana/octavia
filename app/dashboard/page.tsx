@@ -1,4 +1,4 @@
-import { getServerSideUser } from "@/lib/firebase-server-utils";
+import { requirePageUser } from "@/lib/require-page-user";
 import { cookies, headers } from "next/headers";
 import {
   getUserContentServer,
@@ -17,29 +17,9 @@ export default async function DashboardPage() {
   const protocol = headersList.get('x-forwarded-proto') || 'https'
   const requestUrl = host ? `${protocol}://${host}/dashboard` : undefined
   
-  const user = await getServerSideUser(cookieStore, requestUrl)
-  
-  // If no user despite middleware check, something is wrong with token validation
-  if (!user) {
-    console.error('Dashboard: User not found despite middleware authentication check')
-    
-    // Log additional debugging information
-    const sessionCookie = cookieStore.get('firebase-session')
-    console.error('Dashboard: Session cookie present:', !!sessionCookie?.value)
-    if (sessionCookie?.value) {
-      console.error('Dashboard: Session cookie length:', sessionCookie.value.length)
-    }
-    
-    // Return a loading state instead of redirecting to avoid loops
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-amber-600 mx-auto mb-4"></div>
-          <p>Loading your dashboard...</p>
-        </div>
-      </div>
-    )
-  }
+  // B1.2a: enforcement na página — user nulo expulsa (o spinner "avoid
+  // loops" era defesa da era dos 429 no verify; causa morta na B1.1)
+  await requirePageUser(cookieStore)
 
   const [rawContentData, stats] = await Promise.all([
     getUserContentServer(cookieStore, requestUrl),

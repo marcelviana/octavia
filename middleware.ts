@@ -4,6 +4,7 @@ import { validateFirebaseTokenServer } from '@/lib/firebase-server-utils'
 import '@/lib/logger'
 import { generateNonce } from '@/lib/csp-nonce'
 import { applySecurityHeaders } from '@/lib/security-headers'
+import { PROTECTED_ROUTE_PREFIXES, AUTH_ROUTES } from '@/lib/protected-routes'
 
 export const runtime = 'nodejs'
 
@@ -29,11 +30,10 @@ export async function middleware(request: NextRequest) {
   // Apply comprehensive security headers (handles config and nonce internally)
   applySecurityHeaders(response, request, nonce)
 
-  const protectedRoutes = ["/dashboard", "/library", "/setlists", "/settings", "/profile", "/add-content", "/content"]
-  const isProtectedRoute = protectedRoutes.some((route) => request.nextUrl.pathname.startsWith(route))
+  // B1.2a: lista compartilhada com o gate G-rotas (valores inalterados)
+  const isProtectedRoute = PROTECTED_ROUTE_PREFIXES.some((route) => request.nextUrl.pathname.startsWith(route))
 
-  const authRoutes = ["/login", "/signup"]
-  const isAuthRoute = authRoutes.includes(request.nextUrl.pathname)
+  const isAuthRoute = (AUTH_ROUTES as readonly string[]).includes(request.nextUrl.pathname)
 
   // Check for Firebase session cookie
   const firebaseSessionCookie = request.cookies.get('firebase-session')?.value
