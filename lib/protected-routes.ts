@@ -20,7 +20,12 @@ export const PROTECTED_ROUTE_PREFIXES = [
   "/content",
 ] as const
 
-/** Rotas de auth: usuário autenticado é redirecionado ao /dashboard. */
+/**
+ * Rotas de auth: usuário VÁLIDO é redirecionado ao /dashboard — pelas
+ * PRÓPRIAS páginas (login/signup validam de verdade), nunca pelo
+ * middleware otimista (B1.2b): redirecionar por forma de cookie criaria
+ * o loop /login↔/dashboard com cookie inválido.
+ */
 export const AUTH_ROUTES = ["/login", "/signup"] as const
 
 /**
