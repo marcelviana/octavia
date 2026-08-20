@@ -1,13 +1,22 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
-import { validateFirebaseTokenServer } from '@/lib/firebase-server-utils'
 import '@/lib/logger'
 import { generateNonce } from '@/lib/csp-nonce'
 import { applySecurityHeaders } from '@/lib/security-headers'
-import { PROTECTED_ROUTE_PREFIXES, AUTH_ROUTES } from '@/lib/protected-routes'
+import { PROTECTED_ROUTE_PREFIXES } from '@/lib/protected-routes'
 
 export const runtime = 'nodejs'
 
+// B1.2b — middleware OTIMISTA (docs/ux/PLANO-TRANSICAO.md, seção B1):
+// checa só PRESENÇA + FORMA do cookie de sessão (JWT: 3 segmentos
+// base64url). A verificação criptográfica real — e os redirects que
+// dependem dela — vive nas páginas via requirePageUser (B1.2a, gate
+// G-rotas): user inválido → /login; email não verificado →
+// /verify-email; auth-routes (login/signup) redirecionam usuário VÁLIDO
+// ao dashboard nas próprias páginas. É isso que mata o loop
+// /login↔/dashboard que um otimista ingênuo criaria: o middleware nunca
+// redireciona COM base em cookie que não validou.
+const JWT_SHAPE = /^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/
 
 export async function middleware(request: NextRequest) {
 
@@ -17,76 +26,26 @@ export async function middleware(request: NextRequest) {
 
   // Generate a nonce for CSP
   const nonce = generateNonce()
-  
+
   const response = NextResponse.next({
     request: {
       headers: new Headers(request.headers),
     },
   })
-  
+
   // Pass the nonce to the page via a custom header
   response.headers.set('x-csp-nonce', nonce)
 
   // Apply comprehensive security headers (handles config and nonce internally)
   applySecurityHeaders(response, request, nonce)
 
-  // B1.2a: lista compartilhada com o gate G-rotas (valores inalterados)
   const isProtectedRoute = PROTECTED_ROUTE_PREFIXES.some((route) => request.nextUrl.pathname.startsWith(route))
 
-  const isAuthRoute = (AUTH_ROUTES as readonly string[]).includes(request.nextUrl.pathname)
+  const sessionCookie = request.cookies.get('firebase-session')?.value
+  const hasWellFormedSession = !!sessionCookie && JWT_SHAPE.test(sessionCookie)
 
-  // Check for Firebase session cookie
-  const firebaseSessionCookie = request.cookies.get('firebase-session')?.value
-
-  // Track authentication status and user info
-  let isAuthenticated = false
-  let userInfo: { uid: string; email?: string; emailVerified?: boolean } | null = null
-
-  // Check for Authorization header (for API requests)
-  const authHeader = request.headers.get('authorization')
-  let token: string | null = null
-
-  if (authHeader && authHeader.startsWith('Bearer ')) {
-    token = authHeader.substring(7)
-  } else if (firebaseSessionCookie) {
-    token = firebaseSessionCookie
-  }
-
-  // Validate token using server-side verification with caching
-  if (token) {
-    try {
-      const validation = await validateFirebaseTokenServer(token, request.url)
-      isAuthenticated = validation.isValid
-      userInfo = validation.user || null
-
-      if (isAuthenticated) {
-        console.log('Middleware: Token validation successful for', request.nextUrl.pathname, 'Email verified:', userInfo?.emailVerified)
-      } else {
-        console.log('Middleware: Token validation failed')
-      }
-    } catch (error) {
-      console.error('Token validation failed in middleware:', error)
-      isAuthenticated = false
-    }
-  } else {
-    console.log('Middleware: No token found for', request.nextUrl.pathname)
-  }
-
-  // If user is authenticated and trying to access auth routes, redirect to dashboard
-  if (isAuthenticated && isAuthRoute) {
-    return NextResponse.redirect(new URL("/dashboard", request.url))
-  }
-
-  // If user is not authenticated and trying to access protected routes, redirect to login
-  if (!isAuthenticated && isProtectedRoute) {
+  if (isProtectedRoute && !hasWellFormedSession) {
     return NextResponse.redirect(new URL("/login", request.url))
-  }
-
-  // If user is authenticated but email is not verified, redirect to verify-email page
-  // (except for the verify-email page itself and some public routes)
-  if (isAuthenticated && userInfo && !userInfo.emailVerified && isProtectedRoute) {
-    console.log('Middleware: User not verified, redirecting to verify-email')
-    return NextResponse.redirect(new URL("/verify-email", request.url))
   }
 
   return response

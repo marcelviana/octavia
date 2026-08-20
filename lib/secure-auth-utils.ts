@@ -209,72 +209,11 @@ export async function validateFirebaseTokenSecure(
         return { isValid: false, error: 'Token verification service unavailable' }
       }
     } else if (typeof window === 'undefined') {
-      // Ramo fetch (Edge): SEM consumidor em produção pós-B1.1 — a cadeia
-      // B não roda em Edge (o middleware usa a cadeia A). Mantido até a
-      // remoção conjunta na B1.2; a âncora de env abaixo continua testada
-      // (lib/__tests__/secure-auth-utils.test.ts) enquanto o código existir.
-      try {
-        // Destino ancorado em ENV, nunca no request de entrada: este fetch
-        // carrega o idToken do usuário, e Host/x-forwarded-host forjados não
-        // podem redirecioná-lo. NEXTAUTH_URL (localhost em todos os
-        // ambientes Vercel) resolve para o servidor da própria função — o
-        // hop nunca sai pelo edge (nem rate limit de borda, nem Deployment
-        // Protection). É a mesma cadeia do validateFirebaseTokenServer
-        // (lib/firebase-server-utils.ts). requestUrl fica como penúltimo
-        // recurso para ambientes fora do Vercel. O redesenho do B1
-        // (docs/ux/PLANO-TRANSICAO.md) substitui este self-fetch por chamada
-        // local de função, eliminando a classe inteira de pedágios.
-        let baseUrl = process.env.NEXTAUTH_URL || process.env.VERCEL_URL
-        if (!baseUrl && requestUrl) {
-          baseUrl = typeof requestUrl === 'string' ? new URL(requestUrl).origin : requestUrl.origin
-        }
-        if (!baseUrl) {
-          baseUrl = `http://localhost:${process.env.PORT || '3000'}`
-        }
-        if (!/^https?:\/\//.test(baseUrl)) {
-          baseUrl = `https://${baseUrl}`
-        }
-        const verifyUrl = `${baseUrl}/api/auth/verify`
-
-        const response = await fetch(verifyUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'User-Agent': 'OctaviaServer/1.0'
-          },
-          body: JSON.stringify({ token: idToken })
-        })
-
-        if (!response.ok) {
-          logger.error(`Token verification failed: ${response.status}`)
-          return { isValid: false, error: 'Token verification failed' }
-        }
-
-        const data = await response.json()
-
-        if (data.error) {
-          logger.warn(`Token validation error: ${data.error}`)
-          return { isValid: false, error: data.error }
-        }
-
-        result = {
-          isValid: true,
-          user: {
-            uid: data.user.uid,
-            email: data.user.email,
-            emailVerified: data.user.emailVerified
-          }
-        }
-
-        // SECURITY: Track user session
-        addTokenToUserSession(data.user.uid, idToken)
-
-        logger.log(`Token validated successfully for user: ${data.user.uid}`)
-
-      } catch (error) {
-        logger.error('Token verification API call failed:', error)
-        return { isValid: false, error: 'Token verification service unavailable' }
-      }
+      // B1.2b: o ramo fetch (self-fetch a /api/auth/verify, âncora de env
+      // da PR #221) morreu junto com a rota — sem consumidor em produção
+      // desde a B1.1. A verificação só existe no runtime Node (guard acima).
+      logger.error('Token validation requested outside Node runtime')
+      return { isValid: false, error: 'Token verification failed' }
     } else {
       // Client-side or fallback
       logger.warn('Client-side token validation attempted - security risk')

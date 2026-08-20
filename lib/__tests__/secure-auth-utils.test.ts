@@ -4,9 +4,8 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 // aqui queremos testar a implementação real.
 vi.unmock('@/lib/secure-auth-utils')
 
-// B1.1: o transporte padrão é chamada direta — o verificador local é
-// mockado. O ramo fetch (Edge) é exercitado só no describe da âncora,
-// com NEXT_RUNTIME='edge' forçado.
+// B1.1: o transporte é chamada direta — o verificador local é mockado.
+// B1.2b: o ramo fetch e o describe da âncora (#221) morreram com a rota.
 vi.mock('@/lib/firebase-admin', () => ({
   verifyFirebaseToken: vi.fn()
 }))
@@ -15,11 +14,6 @@ import { verifyFirebaseToken } from '@/lib/firebase-admin'
 import { requireAuthServerSecure, validateFirebaseTokenSecure } from '@/lib/secure-auth-utils'
 
 const mockVerify = vi.mocked(verifyFirebaseToken)
-
-const verifyResponse = (user: Record<string, unknown>) => ({
-  ok: true,
-  json: async () => ({ success: true, user })
-})
 
 describe('requireAuthServerSecure (real implementation)', () => {
   const makeRequest = (token: string) =>
@@ -79,63 +73,6 @@ describe('requireAuthServerSecure (real implementation)', () => {
   })
 })
 
-describe('validateFirebaseTokenSecure — âncora de origem do self-fetch (ramo Edge; morre na B1.2)', () => {
-  // Pós-B1.1 este ramo não tem consumidor em produção (a cadeia B não
-  // roda em Edge — o middleware usa a cadeia A), mas a propriedade de
-  // segurança da âncora de env fica protegida enquanto o código existir.
-  // NEXT_RUNTIME='edge' força o guard a percorrê-lo.
-  beforeEach(() => {
-    vi.stubGlobal('window', undefined)
-    vi.stubEnv('NEXT_RUNTIME', 'edge')
-  })
-
-  afterEach(() => {
-    vi.unstubAllGlobals()
-    vi.unstubAllEnvs()
-  })
-
-  it('server-side SEM requestUrl usa a cadeia de env (antes: rejeição no branch client-side)', async () => {
-    vi.stubEnv('NEXTAUTH_URL', 'http://localhost:3000')
-    const fetchMock = vi.fn().mockResolvedValue(verifyResponse({
-      uid: 'user-sem-requesturl',
-      email: 'env@example.com',
-      emailVerified: true
-    }))
-    vi.stubGlobal('fetch', fetchMock)
-
-    const result = await validateFirebaseTokenSecure('token-sem-requesturl-1')
-
-    expect(result.isValid).toBe(true)
-    expect(fetchMock).toHaveBeenCalledWith(
-      'http://localhost:3000/api/auth/verify',
-      expect.anything()
-    )
-  })
-
-  it('a env vence o requestUrl: origin do request de entrada NÃO decide o destino do fetch', async () => {
-    // Propriedade de segurança: o self-fetch carrega o idToken — um Host
-    // forjado no request não pode redirecioná-lo para fora.
-    vi.stubEnv('NEXTAUTH_URL', 'http://localhost:3000')
-    const fetchMock = vi.fn().mockResolvedValue(verifyResponse({
-      uid: 'user-anti-forjamento',
-      email: 'anchor@example.com',
-      emailVerified: true
-    }))
-    vi.stubGlobal('fetch', fetchMock)
-
-    const result = await validateFirebaseTokenSecure(
-      'token-anti-forjamento-1',
-      'https://host-forjado.example/api/auth/session'
-    )
-
-    expect(result.isValid).toBe(true)
-    expect(fetchMock).toHaveBeenCalledWith(
-      'http://localhost:3000/api/auth/verify',
-      expect.anything()
-    )
-    expect(fetchMock).not.toHaveBeenCalledWith(
-      expect.stringContaining('host-forjado.example'),
-      expect.anything()
-    )
-  })
-})
+// B1.2b: o describe da âncora de origem (2 testes, propriedade da PR #221)
+// morreu junto com o ramo fetch — o self-fetch não existe mais em nenhuma
+// cadeia, então a âncora perdeu o objeto (docs/ux/PLANO-TRANSICAO.md, B1.2b).

@@ -11,11 +11,9 @@ import { getBearer, settle } from './recorder'
  * executava redirect('/login') → rebote ao /dashboard (FASE-D-01, "BOUNCE";
  * 63% de 429 em 371 POSTs de sessão na fase).
  *
- * Duas verificações, na mesma moeda da medição original (a antiga parte C
- * foi removida na B1.0 — ver nota abaixo):
+ * Uma verificação, na mesma moeda da medição original (parte C removida
+ * na B1.0; parte A removida na B1.2b — ver notas abaixo):
  *
- *  A. Probe direto: 40 POSTs sequenciais a /api/auth/verify (2× o limite
- *     antigo de 20/60s) com token válido → **zero 429** (assert).
  *  B. Navegação: 12 navegações sequenciais por rotas autenticadas →
  *     **zero aterrissagens em /login** e **zero 429 em /api/*** (asserts).
  *     (Os POSTs internos do verify não são visíveis ao browser — o
@@ -37,6 +35,14 @@ import { getBearer, settle } from './recorder'
  *     antigo (ex.: storage/delete) é achado novo, não necessariamente
  *     regressão da PR-0.
  *
+ * PARTE A REMOVIDA NA B1.2b: o probe direto media a rota /api/auth/verify
+ * sem limiter — a rota foi REMOVIDA (middleware otimista + verificação por
+ * chamada direta desde a B1.1: zero consumidores). O objeto do assert
+ * deixou de existir; a classe de regressão (rate limit voltando ao caminho
+ * de verificação) é coberta por G1 (g1-no-self-fetch: sem hop HTTP não há
+ * rota a limitar), pela parte B abaixo (429 visível em navegação) e pelo
+ * G-rotas (enforcement nas páginas). Ver docs/ux/PLANO-TRANSICAO.md, B1.2b.
+ *
  * PARTE C REMOVIDA NA B1.0: o controle negativo do limiter antigo usava
  * /api/auth/user (withRateLimit(handler, 2, true)), rota removida na PR
  * B1.0 (redução de superfície — era gestão de usuários Firebase sem claim
@@ -45,10 +51,6 @@ import { getBearer, settle } from './recorder'
  * (controle negativo do sistema novo, docs/ux/PLANO-TRANSICAO.md).
  * (Verificação adicional, à parte: scripts/ux-audit/probe-auth-limit.ts —
  * limite 5/15min do /api/auth/session, módulo novo, intacto.)
- *
- * NOTA: este spec só passa com o fix da PR-0 deployado no alvo
- * (UX_AUDIT_BASE_URL — preview do Vercel ou prod). Contra o código antigo
- * ele FALHA no probe A — é esse o ponto.
  *
  * RODAR COM --retries=0 (o config já define retries: 0; o flag explícito
  * blinda contra override). Este spec usa page.goto cru de propósito — NÃO
@@ -60,36 +62,20 @@ import { getBearer, settle } from './recorder'
 
 const ROTAS_AUTENTICADAS = ['/dashboard', '/setlists', '/library'] as const
 const NAVEGACOES = 12
-const PROBES_VERIFY = 40
 
-test('PR-0: verify sem limiter — zero 429 no probe direto e zero expulsões na navegação', async ({
+test('PR-0: zero expulsões e zero 429 na navegação autenticada', async ({
   page,
 }) => {
   test.setTimeout(10 * 60 * 1000)
 
-  // ---- Preparação: token fresco do IndexedDB (o cookie do storageState
+  // ---- Preparação: sessão viva confirmada (o cookie do storageState
   // carrega idToken de 1h possivelmente vencido — AUTH-02) ----
   await page.goto('/dashboard', { waitUntil: 'domcontentloaded' })
   await settle(page, 1500)
   const token = await getBearer(page)
   expect(token, 'accessToken fresco disponível no IndexedDB').toBeTruthy()
 
-  // ---- A. Probe direto: 40 POSTs, zero 429 ----
-  const statuses: number[] = []
-  for (let i = 0; i < PROBES_VERIFY; i++) {
-    const res = await page.request.post('/api/auth/verify', {
-      data: { token },
-    })
-    statuses.push(res.status())
-  }
-  const probe429 = statuses.filter((s) => s === 429).length
-  const probe200 = statuses.filter((s) => s === 200).length
-  console.log(
-    `[PR-0] probe verify: ${PROBES_VERIFY} POSTs → ${probe200}× 200, ${probe429}× 429, ` +
-      `outros: ${statuses.filter((s) => s !== 200 && s !== 429).join(',') || 'nenhum'}`
-  )
-  expect(probe429, `zero 429 em ${PROBES_VERIFY} POSTs ao /api/auth/verify`).toBe(0)
-  expect(probe200, 'todas as verificações de token bem-sucedidas').toBe(PROBES_VERIFY)
+  // (Parte A removida na B1.2b — ver cabeçalho; a rota verify não existe.)
 
   // ---- B. Navegação autenticada: zero /login, zero 429 visíveis ----
   // /api/auth/session fora do assert (exceção documentada no cabeçalho):
