@@ -244,7 +244,30 @@ cada uma com ciclo completo (checkpoint → preview → aval → merge → prod)
   `NEXT_REDIRECT` no stream (HTTP 200, body só com fallback de loading,
   zero vazamento; browser aterrissa em /login — provado em três
   camadas). Válido também pós-B1.2b, registrado.
-- **B1.2b — middleware otimista + remoção da rota `/api/auth/verify`.**
+- **B1.2b — middleware otimista + remoção da rota verify: ✅ CONCLUÍDA
+  (PR #231, squash `22c5e63`, 2026-08-20) — B1.2 COMPLETA (a+b).**
+  Middleware checa só presença+forma do cookie (JWT 3 segmentos); a
+  verificação vive nas páginas (B1.2a). Anti-loop por construção: o
+  redirect de auth-routes saiu do middleware (só as páginas, que validam,
+  redirecionam usuário válido). **Rota `/api/auth/verify` REMOVIDA** —
+  pendência da PR #219 fechada por eliminação, contraste medido (main
+  400 → preview/prod 404). Ramos fetch das duas cadeias mortos (16+8
+  testes declarados, incl. verify.test.ts — furo de inventário por
+  import relativo, registrado); bloco CORS órfão de security-headers
+  removido (+ alias createSecurityHeadersMiddleware, 3º órfão achado
+  pelo tsc). **`NEXTAUTH_URL` MORTA**: zero leitores de código →
+  removida dos 3 ambientes no dashboard (2026-08-20) e do .env.local;
+  validação sem a env: matriz reduzida 13/13 em preview de build novo E
+  prod. Prova de camada: bundle do middleware com zero símbolos de
+  verificação + forjado-atravessa-e-a-página-expulsa (destinos idênticos
+  à B1.2a em toda a matriz, 24/24 preview e 13/13 prod; /performance por
+  destino, semântica de stream). rl-0 parte A removida (objeto extinto;
+  classe coberta por G1 + parte B + G-rotas). **Relógio: navegação
+  2.7min (pré-B1.1) → 50s (B1.1) → 39.9s (B1.2b).** Dossiê do session
+  fecha em SEIS medições para a B1.3: 9, 9, 7, 10, 9, 11 de 12 + setup
+  falhando na própria validação da B1.2b. Registro histórico do item
+  (premissas corrigidas na B1.1, condição de enforcement) preservado
+  abaixo:
   **PREMISSAS CORRIGIDAS na B1.1 (2026-08-16), redefinem este item:**
   (1) o middleware NÃO roda Edge — o build real o registra como **função
   Node** (`functions-config-manifest.json`: `"/_middleware":
