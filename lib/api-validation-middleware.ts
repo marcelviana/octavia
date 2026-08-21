@@ -5,6 +5,13 @@ import { z } from 'zod'
 import { NextRequest, NextResponse } from 'next/server'
 import logger from './logger'
 import { requireAuthServerSecure } from './secure-auth-utils'
+import {
+  checkRateLimit,
+  rateLimited,
+  getAuthFailureLimit,
+  getClientIp,
+  type RateLimitConfig
+} from './user-rate-limit'
 import { sanitizeInput } from './input-sanitizer'
 
 // Common validation schemas
@@ -327,9 +334,11 @@ export function withValidation<T extends z.ZodSchema>(
     requireAuth?: boolean
     source?: 'body' | 'query' | 'params'
     allowUnverifiedEmail?: boolean
+    /** B1.3: limite por uid (roda APÓS a auth) — família + janela do sistema único */
+    rateLimit?: { familia: string; config: RateLimitConfig }
   } = {}
 ) {
-  const { validateParams = false, requireAuth = true, source = 'body', allowUnverifiedEmail = false } = options
+  const { validateParams = false, requireAuth = true, source = 'body', allowUnverifiedEmail = false, rateLimit } = options
 
   return function<TArgs extends any[]>(
     handler: (
@@ -347,6 +356,12 @@ export function withValidation<T extends z.ZodSchema>(
         if (requireAuth) {
           user = await requireAuthServerSecure(request, { allowUnverifiedEmail })
           if (!user) {
+            // B1.3: IP com janela de auth falhada estourada recebe 429
+            // estruturada (o funil já negou deny-fast por baixo)
+            const failLimit = getAuthFailureLimit(getClientIp(request))
+            if (failLimit) {
+              return rateLimited(failLimit)
+            }
             return new Response(
               JSON.stringify({
                 error: 'Authentication required',
@@ -360,6 +375,19 @@ export function withValidation<T extends z.ZodSchema>(
                 }
               }
             )
+          }
+
+          // B1.3: limite por uid, pós-auth
+          if (rateLimit) {
+            const rl = checkRateLimit({
+              scope: 'user',
+              id: user.uid,
+              familia: rateLimit.familia,
+              config: rateLimit.config
+            })
+            if (!rl.ok) {
+              return rateLimited(rl)
+            }
           }
         }
 
@@ -452,7 +480,10 @@ export const withAuth = (handler: any) =>
 
 export const withBodyValidation = <T extends z.ZodSchema>(
   schema: T,
-  options: { allowUnverifiedEmail?: boolean } = {}
+  options: {
+    allowUnverifiedEmail?: boolean
+    rateLimit?: { familia: string; config: RateLimitConfig }
+  } = {}
 ) =>
   withValidation(schema, { requireAuth: true, source: 'body', ...options })
 

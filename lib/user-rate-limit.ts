@@ -133,6 +133,16 @@ export function rateLimited(result: RateLimitResult): Response {
   )
 }
 
+/** Atalho das rotas: null = dentro do limite; Response = 429 pronta. */
+export function enforceUserLimit(
+  uid: string,
+  familia: string,
+  config: RateLimitConfig
+): Response | null {
+  const rl = checkRateLimit({ scope: 'user', id: uid, familia, config })
+  return rl.ok ? null : rateLimited(rl)
+}
+
 export function getClientIp(request: Request): string {
   const fwd = request.headers.get('x-forwarded-for')
   if (fwd) return fwd.split(',')[0]?.trim() || 'unknown'
@@ -152,8 +162,24 @@ export function recordAuthFailure(ip: string): void {
 }
 
 export function authFailureLimited(ip: string): boolean {
+  return getAuthFailureLimit(ip) !== null
+}
+
+/**
+ * Estado da janela de auth falhada do IP quando ESTOURADA (para construir
+ * a 429 onde a resposta é montada — withValidation e session POST); null
+ * quando dentro do limite.
+ */
+export function getAuthFailureLimit(ip: string): RateLimitResult | null {
   const key = `ip:${ip}:authfail`
   const entry = store.get(key)
-  if (!entry || Date.now() > entry.resetTime) return false
-  return entry.count > RATE_LIMITS.AUTH_FAIL.max
+  if (!entry || Date.now() > entry.resetTime) return null
+  if (entry.count <= RATE_LIMITS.AUTH_FAIL.max) return null
+  return {
+    ok: false,
+    scope: 'ip',
+    limit: RATE_LIMITS.AUTH_FAIL.max,
+    remaining: 0,
+    resetTime: entry.resetTime,
+  }
 }

@@ -2,6 +2,7 @@
 // Fixes critical vulnerabilities in token caching and validation
 
 import logger from './logger'
+import { authFailureLimited, recordAuthFailure, getClientIp } from './user-rate-limit'
 import type { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies'
 
 // Security Configuration
@@ -249,6 +250,13 @@ export async function requireAuthServerSecure(
   emailVerified?: boolean
 } | null> {
   try {
+    // B1.3: fallback por IP para auth falhada — mesmo padrão do funil A
+    // (lib/firebase-server-utils.ts): IP estourado nega sem verificar.
+    const clientIp = getClientIp(request)
+    if (authFailureLimited(clientIp)) {
+      return null
+    }
+
     // Extract token with security validation
     const authHeader = request.headers.get('authorization')
     const cookieHeader = request.headers.get('cookie')
@@ -283,6 +291,7 @@ export async function requireAuthServerSecure(
 
     if (!validation.isValid || !validation.user) {
       logger.warn('Token validation failed during auth requirement')
+      recordAuthFailure(clientIp)
 
       // SECURITY: Automatically blacklist suspicious tokens
       if (validation.error?.includes('revoked') || validation.error?.includes('expired')) {

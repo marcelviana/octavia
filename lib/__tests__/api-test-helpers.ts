@@ -624,10 +624,18 @@ export const setupApiTestMocks = () => {
     }
   }))
 
-  // Mock rate limiting
-  vi.doMock('@/lib/rate-limit', () => ({
-    withRateLimit: (handler: any) => handler
-  }))
+  // Mock rate limiting (B1.3: sistema único, neutralizado nos testes)
+  vi.doMock('@/lib/user-rate-limit', async () => {
+    const actual = await vi.importActual('@/lib/user-rate-limit')
+    return {
+      ...(actual as object),
+      enforceUserLimit: vi.fn(() => null),
+      checkRateLimit: vi.fn(() => ({ ok: true, scope: 'user', limit: 999, remaining: 999, resetTime: Date.now() + 60000 })),
+      authFailureLimited: vi.fn(() => false),
+      recordAuthFailure: vi.fn(),
+      getAuthFailureLimit: vi.fn(() => null)
+    }
+  })
 
   // Mock session cookie utilities
   vi.doMock('@/lib/firebase-session-cookies', () => ({

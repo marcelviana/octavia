@@ -2,6 +2,7 @@
 // This file is safe to use in Edge Runtime as it doesn't import Firebase Admin directly
 
 import logger from './logger'
+import { authFailureLimited, recordAuthFailure, getClientIp } from './user-rate-limit'
 import type { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies'
 
 // Simple runtime check so we only use firebase-admin on Node.js
@@ -138,6 +139,15 @@ export async function requireAuthServer(request: Request): Promise<{
   email?: string
   emailVerified?: boolean
 } | null> {
+  // B1.3: fallback por IP para auth FALHADA — "sem credencial não
+  // significa sem limite". IP estourado nega SEM verificar (deny-fast:
+  // corta o trabalho e o oráculo). Só credencial INVÁLIDA conta;
+  // ausência de token não executa verificação e não conta.
+  const clientIp = getClientIp(request)
+  if (authFailureLimited(clientIp)) {
+    return null
+  }
+
   let idToken: string | null = null
 
   const authHeader = request.headers.get('authorization')
@@ -163,6 +173,7 @@ export async function requireAuthServer(request: Request): Promise<{
   const validation = await validateFirebaseTokenServer(idToken, request.url)
 
   if (!validation.isValid || !validation.user) {
+    recordAuthFailure(clientIp)
     return null
   }
 

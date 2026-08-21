@@ -2,20 +2,7 @@ import { NextRequest } from 'next/server'
 import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import { isSupabaseConfigured } from '@/lib/supabase'
 import { requireAuthServer } from '@/lib/firebase-server-utils'
-
-const RATE_LIMIT_WINDOW_MS = 60_000
-const RATE_LIMIT_MAX = 20
-const rateLimitMap = new Map<string, { count: number; timestamp: number }>()
-
-// Periodically remove stale rate limit entries to avoid unbounded memory usage
-setInterval(() => {
-  const now = Date.now()
-  for (const [ip, entry] of rateLimitMap) {
-    if (now - entry.timestamp > RATE_LIMIT_WINDOW_MS) {
-      rateLimitMap.delete(ip)
-    }
-  }
-}, RATE_LIMIT_WINDOW_MS).unref()
+import { checkRateLimit, rateLimited, getClientIp, RATE_LIMITS } from '@/lib/user-rate-limit'
 
 export async function GET(req: NextRequest) {
   const baseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -45,23 +32,23 @@ export async function GET(req: NextRequest) {
     return new Response('URL not allowed. Configure ALLOWED_PROXY_HOSTS.', { status: 400 })
   }
 
+  // B1.3: o limiter inline por IP (terceiro sistema, achado do pre-check)
+  // migra para o sistema único — por uid quando autenticado; por IP só no
+  // modo dev sem Supabase (auth desligada).
+  let rlKey: { scope: 'user' | 'ip'; id: string }
   if (isSupabaseConfigured) {
     const user = await requireAuthServer(req)
     if (!user) {
       return new Response('Authentication required', { status: 401 })
     }
+    rlKey = { scope: 'user', id: user.uid }
+  } else {
+    rlKey = { scope: 'ip', id: getClientIp(req) }
   }
 
-  const ip = req.headers.get('x-forwarded-for') || 'unknown'
-  const now = Date.now()
-  const entry = rateLimitMap.get(ip)
-  if (entry && now - entry.timestamp < RATE_LIMIT_WINDOW_MS) {
-    if (entry.count >= RATE_LIMIT_MAX) {
-      return new Response('Too Many Requests', { status: 429 })
-    }
-    entry.count++
-  } else {
-    rateLimitMap.set(ip, { count: 1, timestamp: now })
+  const rl = checkRateLimit({ ...rlKey, familia: 'proxy', config: RATE_LIMITS.PROXY })
+  if (!rl.ok) {
+    return rateLimited(rl)
   }
 
   try {
