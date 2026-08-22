@@ -296,10 +296,31 @@ cada uma com ciclo completo (checkpoint → preview → aval → merge → prod)
   achado do pre-check) migra para cá; aposentadoria do `lib/rate-limit.ts`
   (buckets **globais compartilhados por IP** entre rotas strict/default —
   pior que o registrado) e limpeza das ~300 linhas aspiracionais do
-  `lib/rate-limiter.ts`. Gates: G2 (probe por rota + estouro deliberado
-  com assinatura do sistema novo) e G3 (rl-0 parte B endurecido com
-  session **dentro** do assert — controle negativo: main atual falha com
-  os 9/12 conhecidos).
+  `lib/rate-limiter.ts` (morre inteiro — núcleo novo em
+  `lib/user-rate-limit.ts`, decisão do desenho). Gates: G2 (uso real +
+  estouro deliberado com assinatura `X-RateLimit-Scope` e **guarda
+  anti-prod no spec**) e G3 (rl-0 parte B endurecido com session
+  **dentro** do assert — controle negativo: pré-B1.3 falha com o padrão
+  do dossiê).
+  **Janelas do sistema único (aprovadas no desenho, 2026-08-21) — chave
+  user salvo indicação:**
+  | Família | Janela | Racional |
+  |---|---|---|
+  | session POST | 120/15min | caso dimensionante: visibilitychange do tablet (dossiê de 6 medições: 7-11 POSTs/12 navegações); 8/min sustentado ≈ 8× o pior show real; ainda barra loop doente |
+  | session POST token inválido | ip 10/15min | brute force; falha legítima é rara |
+  | session DELETE | ip 30/15min | logout com token morto deve funcionar |
+  | auth falhada (funis) | ip 30/5min | deny-fast sem verificar; corta trabalho e oráculo |
+  | leitura (content/setlists GET) | 300/min | performance mode nunca engasga |
+  | mutação (POST/PUT/DELETE/PATCH) | 120/15min | montagem de setlist de 56 canções (o caso que o antigo matou: 18/56 perdidas) cabe 2× |
+  | profile | 60/15min | 1× por load + retry; o 25/min compartilhado era o próximo BOUNCE |
+  | storage (upload/delete) | 60/h | subir um repertório numa sessão |
+  | proxy | 120/min | biblioteca cheia busca dezenas de assets/load |
+  | health | ip 120/min | pública; "sem credencial ≠ sem limite" sem exceções |
+
+  **Nota de arquitetura (aceita por desenho)**: store em memória por
+  instância de lambda ⇒ janelas independentes por instância; teto efetivo
+  = limite × instâncias (só afrouxa). Redis registrado como evolução
+  multiusuário.
 - **B1.5 (item próprio, fora do B1)** — unificação das duas cadeias de
   verificação (`firebase-server-utils` cache 1h × `secure-auth-utils`
   cache 5min/blacklist/sessões). Racional de adiar: fundir caches e
