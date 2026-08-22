@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { requireAuthServer } from '@/lib/firebase-server-utils'
 import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
-import { withRateLimit } from '@/lib/rate-limit'
+import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
 
 // Type for song with joined setlist data
 type SongWithSetlist = {
@@ -35,6 +35,8 @@ const removeSongFromSetlistHandler = async (
         { status: 401 }
       )
     }
+    const limited = enforceUserLimit(user.uid, 'setlist-mutate', RATE_LIMITS.MUTATE)
+    if (limited) return limited
 
     // Await params for Next.js 15
     const { songId } = await params
@@ -141,7 +143,7 @@ const wrappedRemoveSongHandler = async (request: NextRequest) => {
   return removeSongFromSetlistHandler(request, { params })
 }
 
-export const DELETE = withRateLimit(wrappedRemoveSongHandler, 50)
+export const DELETE = wrappedRemoveSongHandler
 
 // PUT /api/setlists/songs/[songId] - Update song position
 const updateSongPositionHandler = async (
@@ -157,6 +159,8 @@ const updateSongPositionHandler = async (
         { status: 401 }
       )
     }
+    const limited = enforceUserLimit(user.uid, 'setlist-mutate', RATE_LIMITS.MUTATE)
+    if (limited) return limited
 
     const { songId } = await params
     const body = await request.json()
@@ -304,4 +308,4 @@ const wrappedUpdateSongPositionHandler = async (request: NextRequest) => {
   return updateSongPositionHandler(request, { params })
 }
 
-export const PUT = withRateLimit(wrappedUpdateSongPositionHandler, 50)
+export const PUT = wrappedUpdateSongPositionHandler

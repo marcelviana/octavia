@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { requireAuthServer } from "@/lib/firebase-server-utils"
 import { getSupabaseServiceClient } from "@/lib/supabase-service"
 import logger from "@/lib/logger"
-import { withRateLimit } from "@/lib/rate-limit"
+import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
 import { withBodyValidation, setlistSchemas } from "@/lib/api-validation-middleware"
 
 // GET /api/setlists - Get user's setlists
@@ -16,6 +16,8 @@ const getSetlistsHandler = async (request: NextRequest) => {
         { status: 401 }
       )
     }
+    const limited = enforceUserLimit(user.uid, 'setlist-read', RATE_LIMITS.READ)
+    if (limited) return limited
 
     const supabase = getSupabaseServiceClient()
     
@@ -109,10 +111,12 @@ const getSetlistsHandler = async (request: NextRequest) => {
   }
 }
 
-export const GET = withRateLimit(getSetlistsHandler, 100)
+export const GET = getSetlistsHandler
 
 // POST /api/setlists - Create new setlist
-const createSetlistHandler = withBodyValidation(setlistSchemas.create)(
+const createSetlistHandler = withBodyValidation(setlistSchemas.create, {
+  rateLimit: { familia: 'setlist-mutate', config: RATE_LIMITS.MUTATE }
+})(
   async (request: Request, validatedData: any, user: any) => {
     try {
       const supabase = getSupabaseServiceClient()
@@ -161,4 +165,4 @@ const createSetlistHandlerWrapped = async (request: NextRequest): Promise<NextRe
   return response as NextResponse
 }
 
-export const POST = withRateLimit(createSetlistHandlerWrapped, 100) 
+export const POST = createSetlistHandlerWrapped

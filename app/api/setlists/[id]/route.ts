@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { requireAuthServer } from '@/lib/firebase-server-utils'
 import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
-import { withRateLimit } from '@/lib/rate-limit'
+import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
 import { withBodyValidation, setlistSchemas } from '@/lib/api-validation-middleware'
 import type { SetlistSong, ContentData, FormattedSetlistSong } from '@/types/setlist'
 import { z } from 'zod'
@@ -21,6 +21,8 @@ const getSetlistByIdHandler = async (
         { status: 401 }
       )
     }
+    const limited = enforceUserLimit(user.uid, 'setlist-read', RATE_LIMITS.READ)
+    if (limited) return limited
 
     // Await params for Next.js 15
     const { id: setlistId } = await params
@@ -140,10 +142,12 @@ const wrappedGetSetlistHandler = async (request: NextRequest) => {
   return getSetlistByIdHandler(request, { params })
 }
 
-export const GET = withRateLimit(wrappedGetSetlistHandler, 100)
+export const GET = wrappedGetSetlistHandler
 
 // PUT /api/setlists/[id] - Update setlist
-const updateSetlistHandler = withBodyValidation(setlistSchemas.update)(
+const updateSetlistHandler = withBodyValidation(setlistSchemas.update, {
+  rateLimit: { familia: 'setlist-mutate', config: RATE_LIMITS.MUTATE }
+})(
   async (request: Request, validatedData: z.infer<typeof setlistSchemas.update>, user?: { uid: string }, params?: { id: string }) => {
     try {
       if (!user) {
@@ -290,7 +294,7 @@ const wrappedUpdateSetlistHandler = async (request: NextRequest) => {
   return NextResponse.json(data, { status: response.status, headers: response.headers })
 }
 
-export const PUT = withRateLimit(wrappedUpdateSetlistHandler, 100)
+export const PUT = wrappedUpdateSetlistHandler
 
 // DELETE /api/setlists/[id] - Delete setlist
 const deleteSetlistHandler = async (
@@ -306,6 +310,8 @@ const deleteSetlistHandler = async (
         { status: 401 }
       )
     }
+    const limited = enforceUserLimit(user.uid, 'setlist-mutate', RATE_LIMITS.MUTATE)
+    if (limited) return limited
 
     // Await params for Next.js 15
     const { id: setlistId } = await params
@@ -357,4 +363,4 @@ const wrappedDeleteSetlistHandler = async (request: NextRequest) => {
   return deleteSetlistHandler(request, { params })
 }
 
-export const DELETE = withRateLimit(wrappedDeleteSetlistHandler, 100) 
+export const DELETE = wrappedDeleteSetlistHandler

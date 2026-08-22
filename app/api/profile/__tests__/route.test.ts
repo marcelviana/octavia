@@ -44,9 +44,19 @@ vi.mock('@/lib/firebase-admin', () => ({
 }))
 
 // Mock rate limiting
-vi.mock('@/lib/rate-limit', () => ({
-  withRateLimit: vi.fn((handler) => handler)
-}))
+vi.mock('@/lib/user-rate-limit', async () => {
+  const actual = await vi.importActual('@/lib/user-rate-limit')
+  return {
+    ...(actual as object),
+    // B1.3: limites neutralizados nos testes de rota (o contrato do
+    // limiter tem suite propria em lib/__tests__/user-rate-limit.test.ts)
+    enforceUserLimit: vi.fn(() => null),
+    checkRateLimit: vi.fn(() => ({ ok: true, scope: 'user', limit: 999, remaining: 999, resetTime: Date.now() + 60000 })),
+    authFailureLimited: vi.fn(() => false),
+    recordAuthFailure: vi.fn(),
+    getAuthFailureLimit: vi.fn(() => null)
+  }
+})
 
 // Mock logger
 vi.mock('@/lib/logger', () => ({

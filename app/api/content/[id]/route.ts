@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { requireAuthServer } from '@/lib/firebase-server-utils'
 import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
-import { withRateLimit } from '@/lib/rate-limit'
+import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
 import type { Database } from '@/types/supabase'
 import { withBodyValidation, contentSchemas, commonSchemas } from '@/lib/api-validation-middleware'
 import { z } from 'zod'
@@ -21,6 +21,8 @@ const getContentByIdHandler = async (
         { status: 401 }
       )
     }
+    const limited = enforceUserLimit(user.uid, 'content-read', RATE_LIMITS.READ)
+    if (limited) return limited
 
     const { id } = await params
 
@@ -76,7 +78,9 @@ const wrappedGetHandler = async (request: NextRequest) => {
 }
 
 // PUT /api/content/[id] - Update specific content by ID
-const updateContentByIdHandler = withBodyValidation(contentSchemas.update)(
+const updateContentByIdHandler = withBodyValidation(contentSchemas.update, {
+  rateLimit: { familia: 'content-mutate', config: RATE_LIMITS.MUTATE }
+})(
   async (request: Request, validatedData: unknown, user: any, params: { id: string }) => {
     try {
       const { id } = params
@@ -154,6 +158,8 @@ const deleteContentByIdHandler = async (
         { status: 401 }
       )
     }
+    const limited = enforceUserLimit(user.uid, 'content-mutate', RATE_LIMITS.MUTATE)
+    if (limited) return limited
 
     const { id } = await params
     
@@ -224,6 +230,6 @@ const wrappedDeleteHandler = async (request: NextRequest) => {
   return deleteContentByIdHandler(request, { params })
 }
 
-export const GET = withRateLimit(wrappedGetHandler, 100)
-export const PUT = withRateLimit(wrappedPutHandler, 50)
-export const DELETE = withRateLimit(wrappedDeleteHandler, 50) 
+export const GET = wrappedGetHandler
+export const PUT = wrappedPutHandler
+export const DELETE = wrappedDeleteHandler

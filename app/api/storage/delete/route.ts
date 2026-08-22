@@ -9,7 +9,7 @@ import {
   createUnauthorizedResponse,
   createServerErrorResponse
 } from '@/lib/validation-utils'
-import { withRateLimit } from '@/lib/rate-limit'
+import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
 
 const BUCKET = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET || 'content-files'
 
@@ -27,6 +27,8 @@ const deleteFileHandler = async (request: NextRequest) => {
     if (!validation.isValid || !validation.user) {
       return createUnauthorizedResponse('Invalid or expired Firebase token')
     }
+    const limited = enforceUserLimit(validation.user.uid, 'storage', RATE_LIMITS.STORAGE)
+    if (limited) return limited
 
     // Parse and validate request body
     const body = await request.json()
@@ -73,4 +75,4 @@ const deleteFileHandler = async (request: NextRequest) => {
   }
 }
 
-export const POST = withRateLimit(deleteFileHandler, 10, true) 
+export const POST = deleteFileHandler
