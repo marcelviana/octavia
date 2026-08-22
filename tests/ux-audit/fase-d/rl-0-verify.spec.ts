@@ -18,22 +18,16 @@ import { getBearer, settle } from './recorder'
  *     **zero aterrissagens em /login** e **zero 429 em /api/*** (asserts).
  *     (Os POSTs internos do verify não são visíveis ao browser — o
  *     observável do mecanismo FASE-D-01 é exatamente o redirect.)
- *     EXCEÇÃO DOCUMENTADA: /api/auth/session fica FORA do assert (logado
- *     à parte). Cada page.goto dispara 1 POST de sessão (onAuthStateChanged
- *     do SDK) e o limite é 5/15min no limiter NOVO — módulo que esta PR
- *     não toca e cujo 429 pré-B1 é comportamento conhecido (63% medido na
- *     Fase D). Incluí-lo faria o spec falhar sempre, por causa externa.
- *     O log à parte NÃO é descarte — é DADO DE ENTRADA DO B1: 429s de
- *     session em navegação trivial vão registrados no relatório de
- *     validação como evidência que antecipa a prioridade do redesenho
- *     (mesmo tratamento do item 17 → B6). O assert de "zero /login"
- *     continua cobrindo o impacto visível de qualquer 429 do session.
- *     PROCEDIMENTO EM CASO DE FALHA NA PARTE B: um 429 de qualquer outra
- *     rota tem escopo maior que o fix (que só tira o verify do pool) —
- *     identificar a rota de origem no relatório (o assert lista método +
- *     path) ANTES de concluir regressão do fix; 429 de rota do limiter
- *     antigo (ex.: storage/delete) é achado novo, não necessariamente
- *     regressão da PR-0.
+ *     G3 (B1.3): /api/auth/session ENTROU no assert — a exceção
+ *     documentada morreu com o limiter único (session por uid,
+ *     120/15min; a antiga janela de 5/15min por chave instável era o
+ *     63%-de-429 da Fase D). A antiga exceção acumulou o dossiê de SEIS
+ *     medições (9, 9, 7, 10, 9, 11 de 12 navegações com 429) que
+ *     dimensionou a janela nova — e que é o CONTROLE NEGATIVO deste
+ *     assert: contra o código pré-B1.3, este spec FALHA com esse padrão.
+ *     PROCEDIMENTO EM CASO DE FALHA NA PARTE B: identificar a rota de
+ *     origem no relatório (o assert lista método + path) ANTES de
+ *     concluir regressão — um 429 novo aponta a janela da rota listada.
  *
  * PARTE A REMOVIDA NA B1.2b: o probe direto media a rota /api/auth/verify
  * sem limiter — a rota foi REMOVIDA (middleware otimista + verificação por
@@ -80,15 +74,11 @@ test('PR-0: zero expulsões e zero 429 na navegação autenticada', async ({
   // ---- B. Navegação autenticada: zero /login, zero 429 visíveis ----
   // /api/auth/session fora do assert (exceção documentada no cabeçalho):
   // limiter novo, 429 pré-B1 esperado a cada page load. Logado à parte.
+  // G3 (B1.3): session DENTRO do assert — sem exceções
   const api429: string[] = []
-  const session429: number[] = []
   page.on('response', (res) => {
     if (res.status() !== 429 || !res.url().includes('/api/')) return
     const path = new URL(res.url()).pathname
-    if (path === '/api/auth/session') {
-      session429.push(session429.length + 1)
-      return
-    }
     api429.push(`${res.request().method()} ${path}`)
   })
 
@@ -100,8 +90,7 @@ test('PR-0: zero expulsões e zero 429 na navegação autenticada', async ({
     aterrissagens.push(new URL(page.url()).pathname)
   }
   console.log(`[PR-0] navegação: ${aterrissagens.join(' → ')}`)
-  console.log(`[PR-0] 429 em /api/* (exceto session): ${api429.length ? api429.join('; ') : 'nenhum'}`)
-  console.log(`[PR-0] 429 em /api/auth/session (fora do assert, esperado pré-B1): ${session429.length}`)
+  console.log(`[PR-0] 429 em /api/* (session INCLUSO — G3): ${api429.length ? api429.join('; ') : 'nenhum'}`)
 
   const expulsoes = aterrissagens.filter((p) => p.startsWith('/login'))
   expect(
@@ -110,8 +99,9 @@ test('PR-0: zero expulsões e zero 429 na navegação autenticada', async ({
   ).toBe(0)
   expect(
     api429.length,
-    'zero 429 de /api/* (exceto session) — se falhar, identificar a rota listada antes de concluir regressão do fix'
+    'G3: zero 429 de /api/* com session INCLUSO — se falhar, identificar a rota listada antes de concluir regressão'
   ).toBe(0)
 
-  // (Parte C removida na B1.0 — ver cabeçalho; substituto no B1.3.)
+  // (Parte C removida na B1.0; o controle negativo do sistema é o G2 —
+  //  g2-limiter-unico.spec.ts, estouro deliberado com guarda anti-prod.)
 })
