@@ -289,7 +289,25 @@ cada uma com ciclo completo (checkpoint → preview → aval → merge → prod)
   pendência da PR #219 fecha por eliminação de superfície. O gate A do
   rl-0 morre aqui, declarado. A âncora `NEXTAUTH_URL` (sem consumidor em
   produção desde a B1.1/decisão A) é aposentada aqui.
-- **B1.3 — limiter único**: chave por **uid pós-auth** com fallback por
+- **B1.3 — limiter único: ✅ CONCLUÍDA (PR #232, squash `95ca739`,
+  2026-08-22) — B1 COMPLETO.** Sistema único em `lib/user-rate-limit.ts`
+  (núcleo novo, ~150 linhas + 7 testes de contrato; os dois módulos
+  antigos e o inline do proxy aposentados inteiros, ~700 linhas fora).
+  Chave `user:<uid>:<família>` pós-verificação; deny-fast por IP nos
+  funis de auth; 429 estruturada com `X-RateLimit-Scope` (semente do
+  B3). **G2**: uso real 120 GETs → zero 429; estouro deliberado → 429
+  com assinatura nos dois escopos e Retry-After honesto; guarda
+  anti-prod NO SPEC (provada por recusa antes do uso); controle negativo
+  contra preview pré-B1.3 falhou na linha exata da assinatura. **G3**:
+  rl-0 com session NO assert — controle negativo contra prod falhou com
+  6× 429 de session (**sétima medição fechando o dossiê**: 9, 9, 7, 10,
+  9, 11, 6+setup-falho); contra o B1.3, **a primeira navegação com zero
+  429 de session da história do projeto** (preview e prod). **Achado de
+  teste registrado**: o lockout do OWASP mandava `{email,password}` a um
+  endpoint de `{idToken}` e passava por acidente do limiter
+  pré-validação — corrigido, agora prova lockout de verdade. Tabela de
+  janelas final e nota de arquitetura: acima neste item.
+  *(Desenho original mantido abaixo para referência:)* chave por **uid pós-auth** com fallback por
   IP exclusivamente no caminho de auth falhada; janelas dimensionadas com
   os dados do probe (caso dimensionante: `visibilitychange` do tablet de
   palco no session); o limiter inline do `/api/proxy` (terceiro sistema,
@@ -321,6 +339,32 @@ cada uma com ciclo completo (checkpoint → preview → aval → merge → prod)
   instância de lambda ⇒ janelas independentes por instância; teto efetivo
   = limite × instâncias (só afrouxa). Redis registrado como evolução
   multiusuário.
+**BALANÇO DO B1 (2026-08-14 → 2026-08-23, PRs #227-#232) — o arco
+completo, para a posteridade:**
+- **De onde partiu**: 63% de 429 em 371 POSTs de session; rate limiter
+  por IP com buckets compartilhados no caminho crítico de TODO server
+  component; self-fetch HTTP de verificação em três consumidores; 4 de 8
+  páginas protegidas sem verificação server nenhuma; rota de gestão de
+  usuários Firebase sem claim de admin ao vivo; oráculo público de env;
+  CI vermelho havia mais de um ano.
+- **Onde chegou**: UM sistema de rate limiting com chave por uid
+  pós-auth e 429 estruturada; ZERO self-fetch (verificação é chamada
+  local em lambdas e páginas; middleware otimista barato); 8/8 páginas
+  verificando E expulsando com o invariante congelado em gate; superfície
+  reduzida (verify, auth/user, test-setlists, firebase-config
+  eliminadas); NEXTAUTH_URL morta com zero leitores; CI integralmente
+  verde como gate definitivo (2-3min); **seis famílias de gates
+  permanentes** (G1 espião de fetch · G2 assinatura do limiter com guarda
+  anti-prod · G3 navegação limpa com session no assert · G-rotas
+  enforcement · rl-0 parte B · gates da fila A), todos provados pela
+  regra nº 7 com controles negativos executados e registrados.
+- **O relógio**: navegação de validação 2.7min → 50s (B1.1, self-fetch
+  morto) → 39.9s (B1.2b, middleware sem verificação). O probe de session
+  que achava 429 na 6ª tentativa fecha em 8/8×200.
+- **Fica para depois**: B1.5 (fusão de cadeias, abaixo) · B2 (audit Zod
+  — próximo da sequência) · B3 (contrato de erro — a 429 estruturada do
+  B1.3 já é a semente) · B9 (idempotência do POST /api/content).
+
 - **B1.5 (item próprio, fora do B1)** — unificação das duas cadeias de
   verificação (`firebase-server-utils` cache 1h × `secure-auth-utils`
   cache 5min/blacklist/sessões). Racional de adiar: fundir caches e
@@ -817,7 +861,7 @@ morre com a web. Sev/esforço conforme ASSESSMENT.
 
 | ID | Título curto | Sev | Destino | Nota |
 |----|--------------|-----|---------|------|
-| RATE-01 | Dois sistemas de rate limit; antigo no caminho crítico | S1 | **B** | B1 em execução: **B1.0 ✅** (PR #227, 2026-08-14); paliativo **#0 ✅ concluído e validado** (2026-08-10) |
+| RATE-01 | Dois sistemas de rate limit; antigo no caminho crítico | S1 | **B** | **✅ FECHADO — B1 COMPLETO** (B1.0 #227 · B1.0.1 #228 · B1.1 #229 · B1.2a #230 · B1.2b #231 · B1.3 #232, 2026-08-14→22); sistema único por uid, seis gates permanentes |
 | AUTH-02 | Cookie 7 dias carrega idToken de 1h | S2 | D | contrato Bearer do nativo em B7 |
 | AUTH-03 | Logado abre `/` e cai no marketing | S2 | **D** | cortado da fila A (recorte 2026-08-10) |
 | AUTH-04 | Validação só pelo balão HTML5 | S3 | D | lição em C3-5 |
