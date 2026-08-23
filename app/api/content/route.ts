@@ -17,7 +17,7 @@ import {
   createNotFoundResponse
 } from '@/lib/validation-utils'
 import { z } from 'zod'
-import { withRateLimit, RATE_LIMIT_CONFIGS } from '@/lib/rate-limiter'
+import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
 
 // GET /api/content - Get user's content with pagination support
 const getContentHandler = async (request: NextRequest) => {
@@ -27,6 +27,9 @@ const getContentHandler = async (request: NextRequest) => {
     if (!user) {
       return createUnauthorizedResponse()
     }
+
+    const limited = enforceUserLimit(user.uid, 'content-read', RATE_LIMITS.READ)
+    if (limited) return limited
 
     const { searchParams } = new URL(request.url)
     
@@ -151,7 +154,7 @@ const getContentHandler = async (request: NextRequest) => {
   }
 }
 
-export const GET = withRateLimit(RATE_LIMIT_CONFIGS.CONTENT_READ)(getContentHandler)
+export const GET = getContentHandler
 
 // POST /api/content - Create new content
 const createContentHandler = async (request: NextRequest) => {
@@ -161,6 +164,9 @@ const createContentHandler = async (request: NextRequest) => {
     if (!user) {
       return createUnauthorizedResponse()
     }
+
+    const limited = enforceUserLimit(user.uid, 'content-mutate', RATE_LIMITS.MUTATE)
+    if (limited) return limited
 
     const body = await request.json()
     
@@ -198,7 +204,7 @@ const createContentHandler = async (request: NextRequest) => {
   }
 }
 
-export const POST = withRateLimit(RATE_LIMIT_CONFIGS.CONTENT_CREATE)(createContentHandler)
+export const POST = createContentHandler
 
 // PUT /api/content - Update existing content
 const updateContentHandler = async (request: NextRequest) => {
@@ -208,6 +214,9 @@ const updateContentHandler = async (request: NextRequest) => {
     if (!user) {
       return createUnauthorizedResponse()
     }
+
+    const limited = enforceUserLimit(user.uid, 'content-mutate', RATE_LIMITS.MUTATE)
+    if (limited) return limited
 
     const body = await request.json()
     
@@ -250,7 +259,7 @@ const updateContentHandler = async (request: NextRequest) => {
   }
 }
 
-export const PUT = withRateLimit(RATE_LIMIT_CONFIGS.CONTENT_CREATE)(updateContentHandler)
+export const PUT = updateContentHandler
 
 // DELETE /api/content - Delete content
 const deleteContentHandler = async (request: NextRequest) => {
@@ -260,6 +269,9 @@ const deleteContentHandler = async (request: NextRequest) => {
     if (!user) {
       return createUnauthorizedResponse()
     }
+
+    const limited = enforceUserLimit(user.uid, 'content-mutate', RATE_LIMITS.MUTATE)
+    if (limited) return limited
 
     const { searchParams } = new URL(request.url)
     const id = searchParams.get('id')
@@ -288,4 +300,4 @@ const deleteContentHandler = async (request: NextRequest) => {
   }
 }
 
-export const DELETE = withRateLimit(RATE_LIMIT_CONFIGS.API)(deleteContentHandler) 
+export const DELETE = deleteContentHandler 

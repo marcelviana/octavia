@@ -3,7 +3,7 @@ import { requireAuthServerSecure } from '@/lib/secure-auth-utils'
 import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
 import { withBodyValidation, authSchemas } from '@/lib/api-validation-middleware'
-import { withRateLimit } from '@/lib/rate-limit'
+import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
 import { z } from 'zod'
 
 export const runtime = 'nodejs' // Explicitly use Node.js runtime
@@ -21,6 +21,8 @@ const getProfileHandler = async (request: NextRequest) => {
         { status: 401 }
       )
     }
+    const limited = enforceUserLimit(user.uid, 'profile', RATE_LIMITS.PROFILE)
+    if (limited) return limited
 
     const supabase = getSupabaseServiceClient()
     
@@ -48,12 +50,15 @@ const getProfileHandler = async (request: NextRequest) => {
   }
 }
 
-export const GET = withRateLimit(getProfileHandler, 25)
+export const GET = getProfileHandler
 
 // POST /api/profile - Create user profile
 // allowUnverifiedEmail: no signup o usuário Firebase acabou de ser criado e
 // ainda não verificou o email — sem isso o perfil nunca seria criado em prod
-const createProfileHandlerRaw = withBodyValidation(authSchemas.profileCreate, { allowUnverifiedEmail: true })(
+const createProfileHandlerRaw = withBodyValidation(authSchemas.profileCreate, {
+  allowUnverifiedEmail: true,
+  rateLimit: { familia: 'profile', config: RATE_LIMITS.PROFILE }
+})(
   async (
     request: Request,
     validatedData: z.infer<typeof authSchemas.profileCreate>,
@@ -104,10 +109,12 @@ const createProfileHandler = async (request: NextRequest): Promise<NextResponse>
   return response as NextResponse
 }
 
-export const POST = withRateLimit(createProfileHandler, 25)
+export const POST = createProfileHandler
 
 // PATCH /api/profile - Update user profile
-const updateProfileHandlerRaw = withBodyValidation(authSchemas.profileUpdate)(
+const updateProfileHandlerRaw = withBodyValidation(authSchemas.profileUpdate, {
+  rateLimit: { familia: 'profile', config: RATE_LIMITS.PROFILE }
+})(
   async (
     request: Request,
     validatedData: z.infer<typeof authSchemas.profileUpdate>,
@@ -157,4 +164,4 @@ const updateProfileHandler = async (request: NextRequest): Promise<NextResponse>
   return response as NextResponse
 }
 
-export const PATCH = withRateLimit(updateProfileHandler, 25) 
+export const PATCH = updateProfileHandler 

@@ -3,7 +3,7 @@ import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import { requireAuthServerSecure } from '@/lib/secure-auth-utils'
 import logger from '@/lib/logger'
 import { storageSchemas } from '@/lib/api-validation-middleware'
-import { withRateLimit, RATE_LIMIT_CONFIGS } from '@/lib/rate-limiter'
+import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
 
 const BUCKET = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET || 'content-files'
 const MAX_FILE_SIZE = 50 * 1024 * 1024 // 50MB
@@ -18,6 +18,8 @@ const uploadFileHandler = async (request: NextRequest) => {
         { status: 401, headers: { 'Content-Type': 'application/json' } }
       )
     }
+    const limited = enforceUserLimit(user.uid, 'storage', RATE_LIMITS.STORAGE)
+    if (limited) return limited
 
     logger.log(`Upload request from authenticated user: ${user.email}`)
 
@@ -155,4 +157,4 @@ const uploadFileHandler = async (request: NextRequest) => {
   }
 }
 
-export const POST = withRateLimit(RATE_LIMIT_CONFIGS.UPLOAD)(uploadFileHandler) 
+export const POST = uploadFileHandler

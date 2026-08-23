@@ -1,14 +1,20 @@
 /**
- * Fase D — medição direta do rate limit de /api/auth/session (itens 11-12).
+ * Probe de sanidade do limite do /api/auth/session.
+ *
+ * HISTÓRICO: nasceu na Fase D como medição do limiter antigo (5/15min por
+ * chave instável) e foi o instrumento do dossiê de 6 medições que
+ * dimensionou a janela do B1.3. PÓS-B1.3 o limite é por UID, 120/15min
+ * (sistema único, lib/user-rate-limit.ts): a expectativa desta sanidade é
+ * TODOS os POSTs em 200 — qualquer 429 aqui é regressão de janela.
+ * (Headers X-RateLimit-* só aparecem na resposta 429 do sistema novo —
+ * `limit=null` nos 200 é o esperado, não erro.)
  *
  * Por que direto no endpoint e não pela UI: o app chama setSessionCookie()
  * (1 POST /api/auth/session) em exatamente três lugares —
  * contexts/firebase-auth-context.tsx no onAuthStateChanged (login), no
  * handler de `visibilitychange` (toda volta de aba) e num setInterval de
  * 50 min. Cada volta de aba é, portanto, 1 POST com o mesmo payload que
- * este script envia. Medir a sequência de status no endpoint responde
- * "em qual troca de aba o 429 aparece" com precisão maior do que dirigir
- * bringToFront() num browser headless.
+ * este script envia.
  *
  * Uso: pnpm tsx scripts/ux-audit/probe-auth-limit.ts
  */

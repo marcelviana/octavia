@@ -423,16 +423,25 @@ describe('OWASP Top 10 Security Penetration Tests', () => {
     })
 
     it('should implement account lockout after failed attempts', async () => {
+      // B1.3: o teste antigo mandava {email, password} a um endpoint de
+      // {idToken} e passava por acidente — o limiter antigo (5/15min por
+      // IP) rodava ANTES da validação de body e devolvia 429 a partir da
+      // 6ª tentativa, mascarando o 400 de contrato. No sistema único o
+      // lockout é por TOKEN INVÁLIDO (janela session-authfail, ip
+      // 10/15min): body com forma válida, token com assinatura inválida,
+      // IP dedicado para contador determinístico.
       const failedAttempts = []
 
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < 15; i++) {
         failedAttempts.push(
           AuthPost(new NextRequest('http://localhost:3000/api/auth/session', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+              'Content-Type': 'application/json',
+              'x-forwarded-for': '198.51.100.77'
+            },
             body: JSON.stringify({
-              email: 'test@example.com',
-              password: 'wrong-password'
+              idToken: `invalid-token-attempt-${i}`
             })
           }))
         )
@@ -440,10 +449,13 @@ describe('OWASP Top 10 Security Penetration Tests', () => {
 
       const responses = await Promise.all(failedAttempts)
 
-      // Later attempts should be locked out
+      // Primeiras tentativas: 401 (token inválido); após estourar a
+      // janela de 10, lockout com a 429 estruturada do sistema único
       const lockedResponses = responses.slice(-3)
       lockedResponses.forEach(response => {
-        expect([401, 429]).toContain(response.status)
+        expect(response.status).toBe(429)
+        expect(response.headers.get('X-RateLimit-Scope')).toBe('ip')
+        expect(response.headers.get('Retry-After')).toBeTruthy()
       })
     })
   })

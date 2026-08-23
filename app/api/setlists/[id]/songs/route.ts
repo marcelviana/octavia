@@ -2,12 +2,14 @@ import { NextRequest, NextResponse } from 'next/server'
 import { requireAuthServer } from '@/lib/firebase-server-utils'
 import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
-import { withRateLimit } from '@/lib/rate-limit'
+import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
 import { withBodyValidation, setlistSchemas } from '@/lib/api-validation-middleware'
 import type { Database } from '@/types/supabase'
 
 // POST /api/setlists/[id]/songs - Add song to setlist
-const addSongToSetlistHandler = withBodyValidation(setlistSchemas.addSong)(
+const addSongToSetlistHandler = withBodyValidation(setlistSchemas.addSong, {
+  rateLimit: { familia: 'setlist-mutate', config: RATE_LIMITS.MUTATE }
+})(
   async (request: Request, validatedData: any, user: any, params: { id: string }) => {
     try {
       const setlistId = params.id
@@ -102,4 +104,4 @@ const wrappedAddSongHandler = async (request: NextRequest): Promise<NextResponse
   return response as NextResponse
 }
 
-export const POST = withRateLimit(wrappedAddSongHandler, 50) 
+export const POST = wrappedAddSongHandler

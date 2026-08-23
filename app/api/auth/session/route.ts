@@ -3,7 +3,12 @@ import { validateFirebaseTokenSecure } from '@/lib/secure-auth-utils'
 import logger from '@/lib/logger'
 import { authSchemas } from '@/lib/api-validation-middleware'
 import { withPublicBodyValidation } from '@/lib/api-validation-middleware'
-import { withRateLimit, RATE_LIMIT_CONFIGS } from '@/lib/rate-limiter'
+import {
+  checkRateLimit,
+  rateLimited,
+  getClientIp,
+  RATE_LIMITS
+} from '@/lib/user-rate-limit'
 
 export const runtime = 'nodejs' // Explicitly use Node.js runtime
 
@@ -18,11 +23,36 @@ const postSessionHandler = withPublicBodyValidation(authSchemas.sessionCreate)(
 
       // Verify the token using secure authentication utilities
       const validation = await validateFirebaseTokenSecure(idToken, request.url)
-      if (!validation.isValid) {
+      if (!validation.isValid || !validation.user) {
+        // B1.3: token inválido conta na janela por IP (brute force);
+        // estourou → 429 estruturada, senão 401 como sempre
+        const fail = checkRateLimit({
+          scope: 'ip',
+          id: getClientIp(request),
+          familia: 'session-authfail',
+          config: RATE_LIMITS.SESSION_AUTH_FAIL
+        })
+        if (!fail.ok) {
+          return rateLimited(fail)
+        }
         return new Response(
           JSON.stringify({ error: 'Invalid or expired token' }),
           { status: 401, headers: { 'Content-Type': 'application/json' } }
         )
+      }
+
+      // B1.3: a janela do session é por UID, pós-verificação —
+      // 120/15min (caso dimensionante: visibilitychange do tablet de
+      // palco; dossiê de 6 medições no plano). O limiter antigo de
+      // 5/15min por chave instável era o 63%-de-429 da Fase D.
+      const rl = checkRateLimit({
+        scope: 'user',
+        id: validation.user.uid,
+        familia: 'session',
+        config: RATE_LIMITS.SESSION
+      })
+      if (!rl.ok) {
+        return rateLimited(rl)
       }
 
       // Create response with session cookie
@@ -52,11 +82,22 @@ const postSessionHandler = withPublicBodyValidation(authSchemas.sessionCreate)(
   }
 )
 
-export const POST = withRateLimit(RATE_LIMIT_CONFIGS.AUTH)(postSessionHandler)
+export const POST = postSessionHandler
 
 // DELETE /api/auth/session - Clear session cookie
 const deleteSessionHandler = async (request: NextRequest) => {
   try {
+    // B1.3: logout por IP (logout com token morto deve funcionar)
+    const rl = checkRateLimit({
+      scope: 'ip',
+      id: getClientIp(request),
+      familia: 'session-delete',
+      config: RATE_LIMITS.SESSION_DELETE
+    })
+    if (!rl.ok) {
+      return rateLimited(rl)
+    }
+
     const response = NextResponse.json({ success: true })
     
     response.cookies.set(SESSION_COOKIE_NAME, '', {
@@ -77,4 +118,4 @@ const deleteSessionHandler = async (request: NextRequest) => {
   }
 }
 
-export const DELETE = withRateLimit(RATE_LIMIT_CONFIGS.AUTH)(deleteSessionHandler) 
+export const DELETE = deleteSessionHandler
