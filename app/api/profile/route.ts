@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import type { Database } from '@/types/database.types'
 import { requireAuthServerSecure } from '@/lib/secure-auth-utils'
 import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
@@ -88,10 +89,19 @@ const createProfileHandlerRaw = withBodyValidation(authSchemas.profileCreate, {
 
       const supabase = getSupabaseServiceClient()
 
+      // Política D1: campos enumerados — nada de espalhar validatedData
+      // (o spread gravaria qualquer campo futuro do schema sem decisão
+      // escrita aqui). id/email vêm SEMPRE do token, nunca do body.
       const profileData = {
         id: user.uid,
-        ...validatedData,
         email: user.email,
+        full_name: validatedData.full_name ?? null,
+        first_name: validatedData.first_name ?? null,
+        last_name: validatedData.last_name ?? null,
+        primary_instrument: validatedData.primary_instrument ?? null,
+        avatar_url: validatedData.avatar_url ?? null,
+        bio: validatedData.bio ?? null,
+        website: validatedData.website ?? null,
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
       }
@@ -144,10 +154,18 @@ const updateProfileHandlerRaw = withBodyValidation(authSchemas.profileUpdate, {
 
       const supabase = getSupabaseServiceClient()
 
-      const updateData = {
-        ...validatedData,
+      // Política D1: campos enumerados. Semântica SET-23 por campo:
+      // undefined = "não mexer" (fica fora do UPDATE), null = "limpar".
+      const updateData: Database['public']['Tables']['profiles']['Update'] = {
         updated_at: new Date().toISOString(),
       }
+      if (validatedData.full_name !== undefined) updateData.full_name = validatedData.full_name
+      if (validatedData.first_name !== undefined) updateData.first_name = validatedData.first_name
+      if (validatedData.last_name !== undefined) updateData.last_name = validatedData.last_name
+      if (validatedData.primary_instrument !== undefined) updateData.primary_instrument = validatedData.primary_instrument
+      if (validatedData.avatar_url !== undefined) updateData.avatar_url = validatedData.avatar_url
+      if (validatedData.bio !== undefined) updateData.bio = validatedData.bio
+      if (validatedData.website !== undefined) updateData.website = validatedData.website
 
       const { data: profile, error } = await supabase
         .from('profiles')

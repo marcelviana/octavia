@@ -79,6 +79,49 @@ export const commonSchemas = {
   )
 } as const
 
+// ---------------------------------------------------------------------------
+// Política D1 (B2, docs/ux/B2-DESENHO.md §PR-1): strip explícito por lista +
+// .strict() no resto. Campo ignorado deliberadamente (id/email/user_id/
+// updated_at vindos do cliente — o servidor os deriva do token) é declarado
+// na lista ao lado do schema; chave desconhecida fora da lista → 400.
+// Nenhum .passthrough() em lugar nenhum.
+// ---------------------------------------------------------------------------
+export function withIgnoredKeys<T extends z.ZodTypeAny>(
+  schema: T,
+  ignoredKeys: readonly string[]
+) {
+  return z.preprocess((raw) => {
+    if (raw !== null && typeof raw === 'object' && !Array.isArray(raw)) {
+      const clean: Record<string, unknown> = { ...(raw as Record<string, unknown>) }
+      for (const key of ignoredKeys) delete clean[key]
+      return clean
+    }
+    return raw
+  }, schema)
+}
+
+// URL de formulário: "" (campo vazio) vira null em vez de 400 — b1 do B2
+// (z.string().url() rejeita string vazia; a UI envia "" quando o campo não
+// é preenchido — ProfileForm.tsx e photoURL de provedores sociais).
+const emptyableUrl = z.preprocess(
+  (v) => (v === '' ? null : v),
+  z.string().url().nullish()
+)
+
+// Campos editáveis de profiles (colunas reais do banco — supabase/schema.dump.sql).
+// .nullish() em tudo: null = "limpar o campo" (b2 do B2 — o login social envia
+// null quando o provedor não tem displayName/photoURL; .optional() rejeitava e
+// deixava usuário Firebase órfão sem perfil), undefined = "não mexer" (SET-23).
+const profileEditableFields = {
+  full_name: commonSchemas.createSafeText(0, 200).nullish(),
+  first_name: commonSchemas.createSafeText(0, 100).nullish(),
+  last_name: commonSchemas.createSafeText(0, 100).nullish(),
+  primary_instrument: commonSchemas.createSafeText(0, 100).nullish(),
+  avatar_url: emptyableUrl,
+  bio: commonSchemas.createSafeText(0, 2000).nullish(),
+  website: emptyableUrl,
+}
+
 // Authentication validation schemas
 export const authSchemas = {
   // Firebase ID token validation
@@ -94,29 +137,20 @@ export const authSchemas = {
       .max(4000, 'Token too long')
   }),
 
-  // User profile creation (signup) — campos correspondem às colunas da tabela
-  // profiles (supabase/schema.sql). id/email vêm do token autenticado, nunca
-  // do body (chaves desconhecidas são descartadas pelo Zod).
-  profileCreate: z.object({
-    full_name: commonSchemas.createSafeText(0, 200).optional(),
-    first_name: commonSchemas.createSafeText(0, 100).optional(),
-    last_name: commonSchemas.createSafeText(0, 100).optional(),
-    primary_instrument: commonSchemas.createSafeText(0, 100).optional(),
-    avatar_url: z.string().url().optional(),
-    bio: commonSchemas.createSafeText(0, 2000).optional(),
-    website: z.string().url().optional()
-  }),
+  // User profile creation (signup e primeiro login social) — política D1:
+  // id/email vêm do token autenticado; o cliente os envia hoje (login-panel e
+  // signup os incluem no body), então são IGNORADOS POR LISTA EXPLÍCITA.
+  // Qualquer outra chave desconhecida → 400 (strict).
+  profileCreate: withIgnoredKeys(
+    z.object(profileEditableFields).strict(),
+    ['id', 'email']
+  ),
 
-  // User profile update — mesmo conjunto de campos editáveis
-  profileUpdate: z.object({
-    full_name: commonSchemas.createSafeText(0, 200).optional(),
-    first_name: commonSchemas.createSafeText(0, 100).optional(),
-    last_name: commonSchemas.createSafeText(0, 100).optional(),
-    primary_instrument: commonSchemas.createSafeText(0, 100).optional(),
-    avatar_url: z.string().url().optional(),
-    bio: commonSchemas.createSafeText(0, 2000).optional(),
-    website: z.string().url().optional()
-  })
+  // User profile update — mesmo conjunto de campos editáveis, mesma lista.
+  profileUpdate: withIgnoredKeys(
+    z.object(profileEditableFields).strict(),
+    ['id', 'email']
+  )
 } as const
 
 // User profile validation schemas
