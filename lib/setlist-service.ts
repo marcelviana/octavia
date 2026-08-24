@@ -1,7 +1,7 @@
 import logger from "@/lib/logger"
 import { getContentById } from "@/lib/content-service"
 import { auth } from "@/lib/firebase"
-import type { Database } from "@/types/supabase"
+import type { Database } from "@/types/database.types"
 
 // Helper to get the current Firebase user with better error handling
 function getAuthenticatedUser() {

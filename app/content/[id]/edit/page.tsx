@@ -10,7 +10,7 @@ const ContentEditPageClient = dynamic(
 )
 import { useFirebaseAuth } from "@/contexts/firebase-auth-context"
 import { getContentById } from "@/lib/content-service"
-import type { Database } from "@/types/supabase"
+import type { Database } from "@/types/database.types"
 
 type Content = Database["public"]["Tables"]["content"]["Row"]
 

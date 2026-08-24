@@ -6,7 +6,7 @@ import { getUserSetlists } from "@/lib/setlist-service"
 import { getUserContentPage } from "@/lib/content-service"
 import { replaceSetlists, getCachedSetlists } from "@/lib/offline-setlist-cache"
 import { saveContent, getCachedContent } from "@/lib/offline-cache"
-import type { Database } from "@/types/supabase"
+import type { Database } from "@/types/database.types"
 
 export type Setlist = Database["public"]["Tables"]["setlists"]["Row"]
 export type Content = Database["public"]["Tables"]["content"]["Row"]

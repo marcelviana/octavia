@@ -2,7 +2,7 @@ import { memo } from "react"
 import { SetlistCard } from "./setlist-card"
 import { Button } from "@/components/ui/button"
 import { Plus } from "lucide-react"
-import type { Database } from "@/types/supabase"
+import type { Database } from "@/types/database.types"
 
 type Content = Database["public"]["Tables"]["content"]["Row"]
 type SetlistWithSongs = Database["public"]["Tables"]["setlists"]["Row"] & {

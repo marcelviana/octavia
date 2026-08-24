@@ -1,7 +1,24 @@
 import { z } from 'zod';
+import type { Json } from '@/types/database.types';
 
 // Common validation helpers
 export const sanitizeString = (str: string) => str.trim().replace(/[<>]/g, '');
+
+// content_data é jsonb: o valor deve ser JSON puro. Este schema valida
+// recursivamente e tipa a saída como Json — o que permitiu remover o
+// `as any` do insert (B2 PR-2, item E1). Para payload vindo de JSON.parse
+// é no-op de comportamento: todo valor já é JSON por construção; só
+// rejeitaria valores JS não-JSON (função, undefined), inalcançáveis via HTTP.
+const jsonValueSchema: z.ZodType<Json> = z.lazy(() =>
+  z.union([
+    z.string(),
+    z.number(),
+    z.boolean(),
+    z.null(),
+    z.array(jsonValueSchema),
+    z.record(jsonValueSchema),
+  ])
+);
 
 // Content validation schemas
 export const contentTypeSchema = z.enum(['Lyrics', 'Chords', 'Tab', 'Sheet', 'song', 'chord', 'lyric', 'audio', 'video', 'pdf']);
@@ -27,7 +44,7 @@ export const createContentSchema = z.object({
     .optional()
     .nullable(),
   content_type: contentTypeSchema,
-  content_data: z.record(z.unknown()).optional().nullable(),
+  content_data: z.record(jsonValueSchema).optional().nullable(),
   file_url: z.string().url().optional().nullable(),
   key: z.string().max(10, 'Key must be less than 10 characters').optional().nullable(),
   bpm: z.number().int().min(1).max(999).optional().nullable(),
@@ -68,7 +85,7 @@ export const updateContentSchema = z.object({
     .transform(sanitizeString)
     .optional()
     .nullable(),
-  content_data: z.record(z.unknown()).optional().nullable(),
+  content_data: z.record(jsonValueSchema).optional().nullable(),
   file_url: z.string().url().optional().nullable(),
   key: z.string().max(10, 'Key must be less than 10 characters').optional().nullable(),
   bpm: z.number().int().min(1).max(999).optional().nullable(),

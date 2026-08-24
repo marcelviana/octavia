@@ -3,7 +3,7 @@ import { useAuth } from "@/contexts/firebase-auth-context";
 import { createContent } from "@/lib/content-service";
 import { parseDocxFile, parsePdfFile, parseTextFile, type ParsedSong } from "@/lib/batch-import";
 import { ContentType } from "@/types/content";
-import type { Database } from "@/types/supabase";
+import type { Database } from "@/types/database.types";
 
 type Content = Database["public"]["Tables"]["content"]["Row"];
 

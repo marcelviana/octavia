@@ -134,7 +134,7 @@ const createSetlistHandler = withBodyValidation(setlistSchemas.create, {
 
       const { data: setlist, error } = await supabase
         .from('setlists')
-        .insert(setlistData as any)
+        .insert(setlistData)
         .select()
         .single()
 

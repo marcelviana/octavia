@@ -5,7 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import { MetadataForm } from "@/components/metadata-form";
 import { BatchPreview } from "@/components/batch-preview";
 import { ContentType } from "@/types/content";
-import type { Database } from "@/types/supabase";
+import type { Database } from "@/types/database.types";
 
 type Content = Database["public"]["Tables"]["content"]["Row"];
 

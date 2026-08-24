@@ -15,7 +15,7 @@ import {
 import { Search, Music, Clock, Loader2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { ContentType, normalizeContentType } from "@/types/content"
-import type { Database } from "@/types/supabase"
+import type { Database } from "@/types/database.types"
 
 type Content = Database["public"]["Tables"]["content"]["Row"]
 

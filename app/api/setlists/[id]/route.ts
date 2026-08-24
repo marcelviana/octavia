@@ -179,8 +179,8 @@ const updateSetlistHandler = withBodyValidation(setlistSchemas.update, {
       }
 
     // Update the setlist
-    const { data: setlist, error } = await (supabase
-      .from("setlists") as any)
+    const { data: setlist, error } = await supabase
+      .from("setlists")
       .update(updateData)
       .eq("id", setlistId)
       .eq("user_id", user.uid)

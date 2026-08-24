@@ -1,5 +1,5 @@
 import logger from "@/lib/logger";
-import type { Database } from "@/types/supabase";
+import type { Database } from "@/types/database.types";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { ContentQueryParams } from "./content-types";
 import { enqueueRequest } from "@/lib/offline-queue";

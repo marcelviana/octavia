@@ -3,7 +3,7 @@ import { requireAuthServer } from '@/lib/firebase-server-utils'
 import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
 import type { ContentQueryParams } from '@/lib/content-types'
-import type { Database } from '@/types/supabase'
+import type { Database } from '@/types/database.types'
 import { 
   contentQuerySchema, 
   createContentSchema, 
@@ -188,7 +188,7 @@ const createContentHandler = async (request: NextRequest) => {
 
     const { data: content, error } = await supabase
       .from('content')
-      .insert(contentData as any)
+      .insert(contentData)
       .select()
       .single()
 
@@ -232,12 +232,11 @@ const updateContentHandler = async (request: NextRequest) => {
     
     const contentData: Database['public']['Tables']['content']['Update'] = {
       ...updateData,
-      content_data: updateData.content_data as Database['public']['Tables']['content']['Update']['content_data'],
       updated_at: new Date().toISOString(),
     }
 
-    const { data: content, error } = await (supabase
-      .from('content') as any)
+    const { data: content, error } = await supabase
+      .from('content')
       .update(contentData)
       .eq('id', id)
       .eq('user_id', user.uid)
