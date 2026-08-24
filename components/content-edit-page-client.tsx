@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import type { Database } from "@/types/supabase";
+import type { Database } from "@/types/database.types";
 import dynamic from "next/dynamic";
 import { ResponsiveLayout } from "@/components/responsive-layout";
 import { updateContent, clearContentCache } from "@/lib/content-service";

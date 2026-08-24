@@ -72,6 +72,20 @@ const createProfileHandlerRaw = withBodyValidation(authSchemas.profileCreate, {
         )
       }
 
+      // D9/PR-2 (item E4): o tipo gerado expôs o que o `as any` escondia —
+      // user.email é string | undefined no token e profiles.email é NOT NULL.
+      // Antes, este caso estourava como violação de NOT NULL no Postgres e
+      // caía no catch com o MESMO 500 abaixo; o guard só torna o caminho
+      // explícito e logável. Inalcançável com os provedores atuais
+      // (email/senha e Google sempre trazem email).
+      if (!user.email) {
+        logger.error('Profile creation without email in token', { uid: user.uid })
+        return NextResponse.json(
+          { error: 'Failed to create profile' },
+          { status: 500 }
+        )
+      }
+
       const supabase = getSupabaseServiceClient()
 
       const profileData = {
@@ -84,7 +98,7 @@ const createProfileHandlerRaw = withBodyValidation(authSchemas.profileCreate, {
 
       const { data: profile, error } = await supabase
         .from('profiles')
-        .insert(profileData as any)
+        .insert(profileData)
         .select()
         .single()
 
@@ -137,7 +151,6 @@ const updateProfileHandlerRaw = withBodyValidation(authSchemas.profileUpdate, {
 
       const { data: profile, error } = await supabase
         .from('profiles')
-        // @ts-expect-error - Supabase type inference issue with profiles table
         .update(updateData)
         .eq('id', user.uid)
         .select()

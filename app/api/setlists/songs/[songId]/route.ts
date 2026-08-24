@@ -109,8 +109,8 @@ const removeSongFromSetlistHandler = async (
       for (const song of songsToShift) {
         const songRow = song as SongRow
         const updateData: { position: number } = { position: songRow.position - 1 }
-        const { error: updateError } = await (supabase
-          .from("setlist_songs") as any)
+        const { error: updateError } = await supabase
+          .from("setlist_songs")
           .update(updateData)
           .eq("id", songRow.id)
 
@@ -236,8 +236,8 @@ const updateSongPositionHandler = async (
       const tempPosition = tempOffset + i
       const updateData: { position: number } = { position: tempPosition }
       
-      const { error: tempError } = await (supabase
-        .from('setlist_songs') as any)
+      const { error: tempError } = await supabase
+        .from('setlist_songs')
         .update(updateData)
         .eq('id', songRow.id)
 
@@ -275,8 +275,8 @@ const updateSongPositionHandler = async (
       const newPos = i + 1
       const updateData: { position: number } = { position: newPos }
       
-      const { error: updError } = await (supabase
-        .from('setlist_songs') as any)
+      const { error: updError } = await supabase
+        .from('setlist_songs')
         .update(updateData)
         .eq('id', songRow.id)
 

@@ -12,7 +12,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { Loader2 } from "lucide-react"
-import type { Database } from "@/types/supabase"
+import type { Database } from "@/types/database.types"
 
 type SetlistWithSongs = Database["public"]["Tables"]["setlists"]["Row"] & {
   setlist_songs: Array<{

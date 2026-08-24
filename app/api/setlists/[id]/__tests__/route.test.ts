@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { NextRequest } from 'next/server'
 import { mockRequireAuthServerSecure } from '@/src/test-setup'
 import type { SupabaseClient } from '@supabase/supabase-js'
-import type { Database } from '@/types/supabase'
+import type { Database } from '@/types/database.types'
 
 // Mock logger
 vi.mock('@/lib/logger', () => ({

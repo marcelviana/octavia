@@ -1,4 +1,4 @@
-import type { Database } from "@/types/supabase"
+import type { Database } from "@/types/database.types"
 
 // Base types from Supabase
 export type Content = Database["public"]["Tables"]["content"]["Row"]

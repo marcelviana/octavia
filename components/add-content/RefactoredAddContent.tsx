@@ -13,7 +13,7 @@ import { ModeSelector } from "./ModeSelector";
 import { ContentTypeSelector } from "./ContentTypeSelector";
 import { useAddContentLogic } from "@/hooks/useAddContentLogic";
 import { ContentType, type ContentTypeId } from "@/types/content";
-import type { Database } from "@/types/supabase";
+import type { Database } from "@/types/database.types";
 
 type Content = Database["public"]["Tables"]["content"]["Row"];
 

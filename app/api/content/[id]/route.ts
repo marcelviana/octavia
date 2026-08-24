@@ -3,7 +3,7 @@ import { requireAuthServer } from '@/lib/firebase-server-utils'
 import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
 import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
-import type { Database } from '@/types/supabase'
+import type { Database } from '@/types/database.types'
 import { withBodyValidation, contentSchemas, commonSchemas } from '@/lib/api-validation-middleware'
 import { z } from 'zod'
 
@@ -113,9 +113,9 @@ const updateContentByIdHandler = withBodyValidation(contentSchemas.update, {
         updated_at: new Date().toISOString(),
       } as Database['public']['Tables']['content']['Update'];
 
-      const { data: content, error } = await (supabase
-        .from('content') as any)
-        .update(updateData as Database['public']['Tables']['content']['Update'])
+      const { data: content, error } = await supabase
+        .from('content')
+        .update(updateData)
         .eq('id', id)
         .eq('user_id', user.uid)
         .select()

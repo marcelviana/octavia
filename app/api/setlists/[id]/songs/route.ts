@@ -4,7 +4,7 @@ import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
 import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
 import { withBodyValidation, setlistSchemas } from '@/lib/api-validation-middleware'
-import type { Database } from '@/types/supabase'
+import type { Database } from '@/types/database.types'
 
 // POST /api/setlists/[id]/songs - Add song to setlist
 const addSongToSetlistHandler = withBodyValidation(setlistSchemas.addSong, {
@@ -71,7 +71,7 @@ const addSongToSetlistHandler = withBodyValidation(setlistSchemas.addSong, {
 
       const { data: song, error: songError } = await supabase
         .from("setlist_songs")
-        .insert(insertData as any)
+        .insert(insertData)
         .select()
         .single()
 
