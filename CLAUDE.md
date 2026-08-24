@@ -18,7 +18,19 @@ pnpm test:coverage          # Run tests with coverage report
 pnpm ux:harvest             # Gates do ux-audit (Playwright, sob demanda, contra preview/prod)
 # (suíte E2E do CI removida na B1.0.1 — cobertura de fluxo é dos gates do
 #  ux-audit até o nativo; runner de integração removido no P1-E [D5])
+
+# Database artifacts (GERADOS — nunca editar à mão)
+pnpm db:types               # Regenera types/database.types.ts a partir do banco vivo
+pnpm db:dump                # Regenera supabase/schema.dump.sql (exige projeto linkado — Marcel)
 ```
+
+**Schema e types do banco são artefatos GERADOS.** `types/database.types.ts` e
+`supabase/schema.dump.sql` são a verdade sobre o banco e se regeneram com os
+comandos acima; editar qualquer um à mão recria o drift que o B2 mediu e matou
+(os antigos `schema.sql`/`rls-policies.sql` mantidos à mão acumularam 10 drifts
+— D-1…D-10 no `docs/ux/B2-PRECHECK.md` e `docs/ux/B2-DESENHO.md` — e foram
+removidos). `pnpm db:dump` exige `supabase link` prévio, que pede a senha do
+Postgres: passo do Marcel, não da automação.
 
 ## Project Architecture
 
@@ -111,7 +123,7 @@ export async function POST(request: NextRequest) {
 The app manages musical content (sheet music, lyrics, tabs, chord charts):
 
 1. **Upload Flow**: Files uploaded to Firebase Storage → metadata stored in Supabase
-2. **Content Types**: Lyrics, chords, tabs, piano, drums (defined in `/types/content.ts`)
+2. **Content Types**: `Lyrics | Chords | Tab | Sheet` — o enum canônico vive em `/types/content.ts` (fonte única; qualquer schema deriva dele). Nota: versões antigas deste arquivo citavam "tabs, piano, drums" — valores que **nunca existiram no produto** e que originaram os quatro enums divergentes medidos no B2 (achado c2)
 3. **Performance Mode**: Full-screen interface for live performances
 4. **Setlist Management**: Organize songs for performances
 5. **Offline Support**: Content cached locally via service worker + IndexedDB

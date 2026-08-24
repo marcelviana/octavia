@@ -265,7 +265,7 @@ The service worker code lives in `worker/index.js`. A small build script copies 
 ## 🔧 Configuration
 
 Create a `.env` file in the project root with the variables listed in `.env.example`. These include Firebase credentials and the Supabase service role key required for server-side database access.
-If you plan to enforce row level security, run the SQL in `supabase/rls-policies.sql` on your database.
+Row level security is already enabled in the live schema — see `supabase/schema.dump.sql` (generated artifact, regenerate with `pnpm db:dump`).
 
 ## 📄 License
 
