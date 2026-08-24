@@ -15,7 +15,9 @@
     "test:ci": "vitest run --coverage --reporter=verbose",
     "ux:harvest": "playwright test --config=playwright.ux-audit.config.ts",
     "test:ui": "vitest --ui",
-    "test:unit": "pnpm run test"
+    "test:unit": "pnpm run test",
+    "db:types": "supabase gen types typescript --project-id mlxjmpbdchmwplcfislt > types/database.types.ts",
+    "db:dump": "supabase db dump -s public -f supabase/schema.dump.sql"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",

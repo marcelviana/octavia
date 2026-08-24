@@ -34,7 +34,7 @@ If the automated setup doesn't work, you can manually set up the database:
 1. Go to your [Supabase Dashboard](https://supabase.com/dashboard)
 2. Select your project
 3. Navigate to the **SQL Editor**
-4. Copy and paste the contents of `supabase/schema.sql`
+4. Copy and paste the contents of `supabase/schema.dump.sql` (generated artifact — regenerate with `pnpm db:dump`; never edit by hand)
 5. Execute the SQL
 
 ## Troubleshooting
@@ -65,7 +65,7 @@ If the automated setup doesn't work, you can manually set up the database:
 - **Cause**: Required tables don't exist
 - **Solution**:
   - Execute the schema manually in Supabase dashboard
-  - Check that all tables from `supabase/schema.sql` were created
+  - Check that all tables from `supabase/schema.dump.sql` were created
 
 ### Diagnostic Tools
 
