@@ -323,6 +323,7 @@ O coração do B2.
 | campos que voltam | `genre`, `file_url`, `time_signature`, `is_public`, e **`capo`/`tuning`** (colunas órfãs d2) passam a existir no contrato de content — o nativo nasce com eles |
 | mortes | os 8 schemas órfãos de `lib/validation-schemas.ts` (incl. o de `event_date`), `storageSchemas.delete`, `setlistSchemas.updatePosition`. `lib/validation-schemas.ts` fica só com `allowedMimeTypes`/`allowedExtensions`/`sanitizeString` ou some inteiro, conforme sobrar |
 | listas de MIME | as **três** listas incompatíveis (`storageSchemas.upload` regex, `allowedMimeTypes`, `FileUploadZone`) viram uma. Resolve b8 (`image/jpg`) |
+| **SAN-01 — sanitizer zera conteúdo em silêncio** (achado da validação da PR-1, 2026-08-24; pré-existente) | Causa medida: [`lib/input-sanitizer.ts:42`](../../lib/input-sanitizer.ts:42) — o padrão `COMMAND_INJECTION` `/[;&\|` + backtick + `$(){}[\]]/g` marca **qualquer** texto com `( ) { } [ ] ; & \|` como ameaça, e o nível `strict` **zera a string inteira** ("Input blocked") com a requisição retornando **200** — strip silencioso: `full_name: "Marcel (band)"` grava `""` sem erro. Agravante: regexes `/g` reutilizadas com `.test()` carregam `lastIndex` entre chamadas → o veredito varia com a ordem (`'(a)'` passou; `'a (b) c'` não — medido). **Princípio escrito da correção**: sanitizer **nunca** altera ou zera conteúdo silenciosamente — ou o valor passa, ou a rota responde **400 nomeando o campo**. **Controle negativo obrigatório** do contract test da PR-4: o caso medido `full_name: "Marcel (band)"` → `""` com 200 |
 
 **b6 (`file_url`)** — o contrato declara `file_url: z.string().url().nullish()`.
 A armadilha fica desativada **no contrato**; o fallback morto
@@ -644,7 +645,7 @@ o contrato documentado para o nativo.
 
 | Item | Destino |
 |---|---|
-| Shape uniforme de erro para não-validação | **B3** (herda o `{error, code, details}` desta etapa como semente) |
+| Shape uniforme de erro para não-validação | **B3** (herda o `{error, code, details}` desta etapa como semente). **Nota herdada da validação da PR-1**: no 400 de chave desconhecida (D1/strict), o issue `unrecognized_keys` do Zod tem `path: []` → `details[0].field` chega **vazio** ao cliente; as chaves ofensoras ficam só na `message`. O B3 deve mapear `unrecognized_keys` para um `field` útil (ex.: a primeira chave de `issue.keys`) |
 | `position` no add · reorder transacional · 2N UPDATEs (SET-07) | **B6** |
 | Storage: listagem, órfãos, magic bytes; `POST /api/storage/delete` (mantida sem uso) | **B5** |
 | Idempotência do POST de content · replay da fila offline | **B9** |
