@@ -311,6 +311,20 @@ uso lá — remover agora seria retrabalho. Declarado, não esquecido.
 
 O coração do B2.
 
+> **FATIAMENTO aprovado (2026-08-25)** — o escopo cresceu com o SAN-01 e foi
+> cortado em **3 PRs, uma por vez, ciclo completo cada**:
+>
+> | PR | Escopo | Controles negativos próprios (regra nº 7, já medidos) |
+> |---|---|---|
+> | **PR-4a (S1)** | SAN-01: semântica do sanitize — ou passa (persiste literal), ou 400 nomeando o campo. `()[]{};&\|` deixa de ser "ameaça" em texto plano. Cobre as DUAS variantes: strict (zera a string) e moderate (remove os caracteres em silêncio — medido: `'primeira (noite) no bar'` → `'primeira noite no bar'` na description). Retira `sanitizeInput` do caminho de escrita (o bug de `lastIndex` morre com o uso, não é consertado); `input-sanitizer.ts` vira órfão declarado → morre na PR-4c | `full_name: "Marcel (band)"` → `""` com 200 · description moderate removendo parênteses · **XSS `<script>` em bio hoje passa com `""` e 200** (vira 400 nomeando o campo) |
+> | **PR-4b (S2)** | `lib/api-schemas.ts` nasce: content + storage. Enum D4 canônico, limites do dump (c1), bpm 1–999, UMA lista de MIME (b8), D1 strict+ignorados, campos que voltam, one-liner b6, gate de drift §3.4 | title 256 chars → 500 genérico hoje (vira 400 nomeando) · `image/jpg` → 400 hoje · chave desconhecida engolida hoje |
+> | **PR-4c (S3)** | setlist + session migram; morte dos 8 schemas órfãos + `contentSchemas`/`userSchemas` (órfãos pós-PR-3, medido) + `storageSchemas.delete` + `updatePosition` + `input-sanitizer.ts`; `api-validation-middleware.ts` vira só middleware; comentário da exceção de `position`; gate estrutural D1 §3.3 sobre o módulo completo | chave desconhecida em setlist engolida hoje · gate §3.3 rodado contra schema sem `.strict()` |
+>
+> **Ordem obrigatória S1 → S2 → S3**: schemas novos adotando a família
+> `safeText` sobre o sanitizer quebrado fariam títulos de content com
+> parênteses **começarem** a ser zerados — o único estado intermediário que
+> pioraria comportamento visível. Cada merge deixa a main deployável.
+
 | Ação | Detalhe |
 |---|---|
 | criar `lib/api-schemas.ts` | fonte única. `lib/api-validation-middleware.ts` fica **só com o middleware** (auth, rate limit, `sanitizeInput`, `withValidation`) — D3 |
