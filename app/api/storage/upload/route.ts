@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import { requireAuthServerSecure } from '@/lib/secure-auth-utils'
 import logger from '@/lib/logger'
-import { storageSchemas } from '@/lib/api-validation-middleware'
+import { storageSchemas, mimeMatchesExtension } from '@/lib/api-schemas'
 import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
 
 const BUCKET = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET || 'content-files'
@@ -68,27 +68,9 @@ const uploadFileHandler = async (request: NextRequest) => {
       )
     }
 
-    // Check file content consistency (MIME type vs file extension)
-    const fileExtension = sanitizedFilename.toLowerCase().split('.').pop()
-    const mimeTypeValid = (() => {
-      switch (fileExtension) {
-        case 'pdf':
-          return file.type === 'application/pdf'
-        case 'txt':
-          return file.type === 'text/plain'
-        case 'docx':
-          return file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-        case 'png':
-          return file.type === 'image/png'
-        case 'jpg':
-        case 'jpeg':
-          return file.type === 'image/jpeg' || file.type === 'image/jpg'
-        default:
-          return false
-      }
-    })()
-
-    if (!mimeTypeValid) {
+    // Consistência extensão × MIME — MESMA tabela do schema (b8: as três
+    // listas divergentes viram uma, lib/api-schemas.ts ALLOWED_UPLOADS)
+    if (!mimeMatchesExtension(sanitizedFilename, file.type)) {
       return new Response(
         JSON.stringify({ error: 'File extension does not match MIME type' }),
         { status: 400, headers: { 'Content-Type': 'application/json' } }

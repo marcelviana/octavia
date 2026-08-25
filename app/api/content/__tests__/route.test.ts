@@ -280,15 +280,21 @@ describe('/api/content', () => {
       expect(data.id).toBe(newContentId)
       expect(data.user_id).toBe(TEST_USER.uid)
       
-      // Verify content was inserted with expected fields
-      expect(mockInsert).toHaveBeenCalledWith({
+      // B2 PR-4b (política D1): o handler ENUMERA todas as colunas — campos
+      // não enviados entram como null explícito, nunca por spread do body
+      expect(mockInsert).toHaveBeenCalledWith(expect.objectContaining({
         ...validContentData,
         user_id: TEST_USER.uid,
         created_at: expect.any(String),
         updated_at: expect.any(String),
         is_favorite: false,
-        is_public: false
-      })
+        is_public: false,
+        album: null,
+        genre: null,
+        capo: null,
+        tuning: null,
+        file_url: null,
+      }))
     })
 
     it('rejects unauthenticated requests', async () => {
@@ -320,35 +326,25 @@ describe('/api/content', () => {
       expect(data.error).toBe('Validation failed')
     })
 
-    it('sanitizes content before saving', async () => {
-      // Mock successful insert
-      const newContentId = 'b1c2d3e4-f5a6-7890-bcde-f12345678901' // Valid UUID
-      mockSingle.mockResolvedValue({ 
-        data: { id: newContentId }, 
-        error: null 
-      })
-
+    // SAN-01 (B2 PR-4a/4b): a política mudou — vetor real é REJEITADO com o
+    // campo nomeado; nunca sanitizado em silêncio e gravado com 201.
+    it('rejects XSS in title with 400 naming the field (never silently sanitize)', async () => {
       const { POST } = await import('../route')
-      
+
       const maliciousContent = {
         ...validContentData,
         title: '<script>alert("xss")</script>Malicious Title',
-        content: 'Normal content <script>alert("xss")</script>'
       }
-      
+
       const request = createValidAuthenticatedRequest(
         'http://localhost/api/content',
         { method: 'POST', body: maliciousContent }
       )
 
       const response = await POST(request)
-      
-      expectCreated(response)
-      
-      // Verify that scripts were sanitized in the insert call
-      const insertCall = mockInsert.mock.calls[0][0]
-      expect(insertCall.title).not.toContain('<script>')
-      // Note: content_data field doesn't exist in the malicious test data
+
+      expect(response.status).toBe(400)
+      expect(mockInsert).not.toHaveBeenCalled()
     })
 
     it('handles duplicate content gracefully', async () => {

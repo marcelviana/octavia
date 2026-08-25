@@ -4,11 +4,8 @@ import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
 import type { ContentQueryParams } from '@/lib/content-types'
 import type { Database } from '@/types/database.types'
-import { 
-  contentQuerySchema, 
-  createContentSchema, 
-  updateContentSchema 
-} from '@/lib/validation-schemas'
+import { contentSchemas } from '@/lib/api-schemas'
+import { ContentType } from '@/types/content'
 import { 
   validateRequestBody,
   createValidationErrorResponse,
@@ -41,7 +38,7 @@ const getContentHandler = async (request: NextRequest) => {
     
     let validatedParams;
     try {
-      validatedParams = contentQuerySchema.parse(rawParams);
+      validatedParams = contentSchemas.query.parse(rawParams);
     } catch (error: unknown) {
       if (error instanceof z.ZodError) {
         const errorMessages = error.errors.map((err: any) => {
@@ -91,7 +88,8 @@ const getContentHandler = async (request: NextRequest) => {
 
     // Apply filters
     if (filters.contentType?.length) {
-      const validTypes = ['Lyrics', 'Chords', 'Tab', 'Sheet']
+      // enum canônico único (D4) — mesma fonte do schema de escrita
+      const validTypes = Object.values(ContentType) as string[]
       const filteredTypes = filters.contentType.filter((type: string) => validTypes.includes(type))
       if (filteredTypes.length > 0) {
         query = query.in('content_type', filteredTypes)
@@ -169,19 +167,38 @@ const createContentHandler = async (request: NextRequest) => {
     if (limited) return limited
 
     const body = await request.json()
-    
+
     // Validate request body
-    const bodyValidation = await validateRequestBody(body, createContentSchema)
+    const bodyValidation = await validateRequestBody(body, contentSchemas.create)
     if (!bodyValidation.success) {
       return createValidationErrorResponse(bodyValidation.errors)
     }
 
     const validatedData = bodyValidation.data
     const supabase = getSupabaseServiceClient()
-    
+
+    // Política D1: campos enumerados — nada de espalhar validatedData.
+    // user_id/timestamps vêm SEMPRE do servidor (a lista de ignorados do
+    // schema garante que versões do body nunca chegam aqui).
     const contentData = {
-      ...validatedData,
       user_id: user.uid,
+      title: validatedData.title,
+      artist: validatedData.artist ?? null,
+      album: validatedData.album ?? null,
+      genre: validatedData.genre ?? null,
+      content_type: validatedData.content_type,
+      content_data: validatedData.content_data ?? null,
+      file_url: validatedData.file_url ?? null,
+      key: validatedData.key ?? null,
+      bpm: validatedData.bpm ?? null,
+      time_signature: validatedData.time_signature ?? null,
+      difficulty: validatedData.difficulty ?? null,
+      capo: validatedData.capo ?? null,
+      tuning: validatedData.tuning ?? null,
+      tags: validatedData.tags ?? null,
+      notes: validatedData.notes ?? null,
+      is_favorite: validatedData.is_favorite,
+      is_public: validatedData.is_public ?? false,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     }
@@ -219,21 +236,40 @@ const updateContentHandler = async (request: NextRequest) => {
     if (limited) return limited
 
     const body = await request.json()
-    
+
     // Validate request body
-    const bodyValidation = await validateRequestBody(body, updateContentSchema)
+    const bodyValidation = await validateRequestBody(body, contentSchemas.update)
     if (!bodyValidation.success) {
       return createValidationErrorResponse(bodyValidation.errors)
     }
 
-    const { id, ...updateData } = bodyValidation.data
-    
+    const v = bodyValidation.data
+    const id = v.id
+
     const supabase = getSupabaseServiceClient()
-    
+
+    // Política D1 + semântica SET-23 por campo: undefined = "não mexer"
+    // (fica fora do UPDATE), null = "limpar".
     const contentData: Database['public']['Tables']['content']['Update'] = {
-      ...updateData,
       updated_at: new Date().toISOString(),
     }
+    if (v.title !== undefined) contentData.title = v.title
+    if (v.artist !== undefined) contentData.artist = v.artist
+    if (v.album !== undefined) contentData.album = v.album
+    if (v.genre !== undefined) contentData.genre = v.genre
+    if (v.content_type !== undefined) contentData.content_type = v.content_type
+    if (v.content_data !== undefined) contentData.content_data = v.content_data
+    if (v.file_url !== undefined) contentData.file_url = v.file_url
+    if (v.key !== undefined) contentData.key = v.key
+    if (v.bpm !== undefined) contentData.bpm = v.bpm
+    if (v.time_signature !== undefined) contentData.time_signature = v.time_signature
+    if (v.difficulty !== undefined) contentData.difficulty = v.difficulty
+    if (v.capo !== undefined) contentData.capo = v.capo
+    if (v.tuning !== undefined) contentData.tuning = v.tuning
+    if (v.tags !== undefined) contentData.tags = v.tags
+    if (v.notes !== undefined) contentData.notes = v.notes
+    if (v.is_favorite !== undefined && v.is_favorite !== null) contentData.is_favorite = v.is_favorite
+    if (v.is_public !== undefined && v.is_public !== null) contentData.is_public = v.is_public
 
     const { data: content, error } = await supabase
       .from('content')
