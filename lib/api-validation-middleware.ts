@@ -12,7 +12,6 @@ import {
   getClientIp,
   type RateLimitConfig
 } from './user-rate-limit'
-import { sanitizeInput } from './input-sanitizer'
 
 // Common validation schemas
 export const commonSchemas = {
@@ -42,39 +41,36 @@ export const commonSchemas = {
   // File validation
   filename: z.string().min(1).max(255).regex(/^[^<>:"/\\|?*]+$/, 'Invalid filename'),
 
-  // Security: Prevent XSS in text fields with sanitization
-  safeText: z.string().max(1000).transform(val => {
-    const result = sanitizeInput(val, { level: 'strict' as any, allowHTML: false })
-    return result.sanitized
-  }).refine(
+  // SAN-01 (B2 PR-4a): validação SEM alteração silenciosa — o texto ou passa
+  // (e persiste LITERAL), ou o parse falha nomeando o campo (→ 400). Antes,
+  // sanitizeInput em nível strict ZERAVA a string inteira (e moderate REMOVIA
+  // caracteres) quando COMMAND_INJECTION casava ()[]{};&| — texto comum de
+  // música ("Show (acústico)") era gravado como "" com 200. Esses caracteres
+  // NÃO são ameaça aqui: o destino é varchar/jsonb via PostgREST
+  // parametrizado, e o React escapa na renderização. A ÚNICA normalização é
+  // .trim() (pré-existente no caminho antigo, declarada aqui). Vetores reais
+  // (script/javascript:/data:/vbscript:) continuam REJEITADOS pelo refine —
+  // que produz issue com o path do campo, não sanitização muda.
+  safeText: z.string().trim().max(1000).refine(
     (text) => !/<script|javascript:|data:|vbscript:/i.test(text),
     'Potentially unsafe content detected'
   ),
 
-  // Factory function for creating safe text schemas with min/max constraints and sanitization
+  // Factory com min/max — mesma semântica SAN-01 do safeText
   createSafeText: (minLength?: number, maxLength?: number) => {
-    let schema = z.string()
+    let schema = z.string().trim()
     if (minLength !== undefined) schema = schema.min(minLength)
     if (maxLength !== undefined) schema = schema.max(maxLength)
-    return schema.transform(val => {
-      const result = sanitizeInput(val, { level: 'strict' as any, allowHTML: false })
-      return result.sanitized
-    }).refine(
+    return schema.refine(
       (text) => !/<script|javascript:|data:|vbscript:/i.test(text),
       'Potentially unsafe content detected'
     )
   },
 
-  // Security: Safe HTML content (for lyrics, etc.) with sanitization
-  safeHtml: z.string().max(50000).transform(val => {
-    const result = sanitizeInput(val, { level: 'moderate' as any, allowHTML: true })
-    return result.sanitized
-  }).refine(
-    (html) => {
-      // Basic XSS prevention
-      const dangerous = /<script|javascript:|data:|vbscript:|on\w+\s*=/i
-      return !dangerous.test(html)
-    },
+  // Conteúdo longo (description/notes ricos) — mesma semântica SAN-01;
+  // regex amplia com on*= (handlers inline)
+  safeHtml: z.string().trim().max(50000).refine(
+    (html) => !/<script|javascript:|data:|vbscript:|on\w+\s*=/i.test(html),
     'Potentially unsafe HTML content detected'
   )
 } as const

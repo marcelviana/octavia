@@ -80,15 +80,18 @@ const LARGE_PAYLOAD = 'A'.repeat(2 * 1024 * 1024) // 2MB
 
 describe('API Validation Security Tests', () => {
   describe('XSS Prevention', () => {
-    it('should sanitize XSS payloads in content creation', async () => {
+    // SAN-01 (B2 PR-4a): a política mudou de "sanitizar em silêncio" para
+    // "ou passa LITERAL, ou 400 nomeando o campo". Vetor com assinatura real
+    // (script/javascript:/data:/vbscript:) → 400; o resto atravessa intacto —
+    // o destino é varchar/jsonb parametrizado e o React escapa na renderização.
+    // A versão antiga deste teste exigia o payload ALTERADO no handler (a
+    // política aposentada que zerava "Show (acústico)" com 200).
+    it('should reject or pass-through XSS payloads literally (never silently mutate)', async () => {
       for (const payload of XSS_PAYLOADS) {
         const handler = withBodyValidation(contentSchemas.create)(
           async (req, validatedData) => {
-            // Check that XSS payload was sanitized
-            expect(validatedData.title).not.toContain('<script>')
-            expect(validatedData.title).not.toContain('javascript:')
-            expect(validatedData.title).not.toContain('onerror=')
-            expect(validatedData.title).not.toContain('onload=')
+            // Se chegou ao handler, chegou LITERAL — mutação silenciosa é o bug
+            expect(validatedData.title).toBe(payload)
             return Response.json({ success: true })
           }
         )
@@ -187,13 +190,15 @@ describe('API Validation Security Tests', () => {
       }
     })
 
-    it('should validate and sanitize setlist names against SQL injection', async () => {
+    // SAN-01 (B2 PR-4a): "SQL injection em nome de setlist" não existe neste
+    // stack — toda escrita é parametrizada via PostgREST; palavras como DROP
+    // são texto legítimo (uma setlist "Drop the Bass" era mutilada pela
+    // política antiga). Contrato novo: 400 ou passagem LITERAL, nunca mutação.
+    it('should reject or pass-through SQL-looking setlist names literally (never silently mutate)', async () => {
       for (const payload of SQL_INJECTION_PAYLOADS) {
         const handler = withBodyValidation(setlistSchemas.create)(
           async (req, validatedData) => {
-            // Verify SQL injection patterns were sanitized
-            expect(validatedData.name).not.toMatch(/DROP|DELETE|INSERT|UPDATE|UNION|SELECT/i)
-            expect(validatedData.name).not.toMatch(/--|\/\*|\*\/|;/i)
+            expect(validatedData.name).toBe(payload)
             return Response.json({ success: true })
           }
         )
