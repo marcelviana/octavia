@@ -7,7 +7,8 @@
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { NextRequest } from 'next/server'
-import { withBodyValidation, contentSchemas, userSchemas, setlistSchemas } from '@/lib/api-validation-middleware'
+import { withBodyValidation } from '@/lib/api-validation-middleware'
+import { contentSchemas, setlistSchemas, authSchemas } from '@/lib/api-schemas'
 import { createValidationErrorResponse } from '@/lib/validation-utils'
 
 // Mock user for authentication tests (hoisted for vi.mock)
@@ -116,19 +117,15 @@ describe('API Validation Security Tests', () => {
       }
     })
 
+    // PR-4c: userSchemas.update era um schema ÓRFÃO (nunca ligado a rota) —
+    // o teste passa a exercitar o schema REAL do PATCH /api/profile.
+    // SAN-01: 400 ou passagem literal; nunca mutação silenciosa.
     it('should reject XSS payloads in user profile updates', async () => {
       for (const payload of XSS_PAYLOADS) {
-        const handler = withBodyValidation(userSchemas.update)(
+        const handler = withBodyValidation(authSchemas.profileUpdate)(
           async (req, validatedData) => {
-            // Verify sanitization happened
-            if (validatedData.full_name) {
-              expect(validatedData.full_name).not.toContain('<script>')
-              expect(validatedData.full_name).not.toContain('javascript:')
-            }
-            if (validatedData.bio) {
-              expect(validatedData.bio).not.toContain('<script>')
-              expect(validatedData.bio).not.toContain('javascript:')
-            }
+            expect(validatedData.full_name).toBe(payload)
+            expect(validatedData.bio).toBe(payload)
             return Response.json({ success: true })
           }
         )

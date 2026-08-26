@@ -3,7 +3,7 @@ import { requireAuthServer } from '@/lib/firebase-server-utils'
 import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
 import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
-import { commonSchemas } from '@/lib/api-validation-middleware'
+import { commonSchemas } from '@/lib/api-schemas'
 
 // GET /api/content/[id] - Get specific content by ID
 const getContentByIdHandler = async (

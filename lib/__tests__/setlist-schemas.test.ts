@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { setlistSchemas } from '@/lib/api-validation-middleware'
+import { setlistSchemas } from '@/lib/api-schemas'
 
 /**
  * SET-23 / FASE-D-05: a UI envia `description: null` com o campo vazio e o

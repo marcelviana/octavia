@@ -10,12 +10,6 @@ vi.mock('@/lib/firebase-server-utils', () => ({
   validateFirebaseTokenServer: vi.fn()
 }))
 
-vi.mock('@/lib/validation-schemas', () => ({
-  allowedMimeTypes: ['application/pdf'],
-  allowedExtensions: ['pdf'],
-  fileUploadSchema: {}
-}))
-
 vi.mock('@/lib/validation-utils', () => ({
   validateFileUpload: vi.fn(),
   sanitizeFilename: vi.fn(),

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { authSchemas, setlistSchemas } from '@/lib/api-validation-middleware'
+import { authSchemas, setlistSchemas } from '@/lib/api-schemas'
 
 /**
  * B2 PR-4a (SAN-01) — semântica do sanitize: o texto OU passa (e persiste

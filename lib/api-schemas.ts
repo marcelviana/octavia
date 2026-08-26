@@ -18,7 +18,98 @@
 import { z } from 'zod'
 import type { Json } from '@/types/database.types'
 import { ContentType } from '@/types/content'
-import { commonSchemas, withIgnoredKeys } from './api-validation-middleware'
+
+// Common validation schemas
+export const commonSchemas = {
+  // UUID pattern (Supabase default)
+  objectId: z.string().uuid('Invalid ID format'),
+
+  // Firebase UID pattern
+  firebaseUid: z.string().min(1).max(128),
+
+  // Email validation
+  email: z.string().email('Invalid email format'),
+
+  // Content types enum
+  contentType: z.enum(['Lyrics', 'Chords', 'Tabs', 'Piano', 'Drums'], {
+    errorMap: () => ({ message: 'Invalid content type' })
+  }),
+
+  // Pagination
+  pagination: z.object({
+    page: z.coerce.number().int().min(1).default(1),
+    limit: z.coerce.number().int().min(1).max(100).default(20)
+  }),
+
+  // Search query
+  search: z.string().min(1).max(200).optional(),
+
+  // File validation
+  filename: z.string().min(1).max(255).regex(/^[^<>:"/\\|?*]+$/, 'Invalid filename'),
+
+  // SAN-01 (B2 PR-4a): validação SEM alteração silenciosa — o texto ou passa
+  // (e persiste LITERAL), ou o parse falha nomeando o campo (→ 400). Antes,
+  // sanitizeInput em nível strict ZERAVA a string inteira (e moderate REMOVIA
+  // caracteres) quando COMMAND_INJECTION casava ()[]{};&| — texto comum de
+  // música ("Show (acústico)") era gravado como "" com 200. Esses caracteres
+  // NÃO são ameaça aqui: o destino é varchar/jsonb via PostgREST
+  // parametrizado, e o React escapa na renderização. A ÚNICA normalização é
+  // .trim() (pré-existente no caminho antigo, declarada aqui). Vetores reais
+  // (script/javascript:/data:/vbscript:) continuam REJEITADOS pelo refine —
+  // que produz issue com o path do campo, não sanitização muda.
+  safeText: z.string().trim().max(1000).refine(
+    (text) => !/<script|javascript:|data:|vbscript:/i.test(text),
+    'Potentially unsafe content detected'
+  ),
+
+  // Factory com min/max — mesma semântica SAN-01 do safeText
+  createSafeText: (minLength?: number, maxLength?: number) => {
+    let schema = z.string().trim()
+    if (minLength !== undefined) schema = schema.min(minLength)
+    if (maxLength !== undefined) schema = schema.max(maxLength)
+    return schema.refine(
+      (text) => !/<script|javascript:|data:|vbscript:/i.test(text),
+      'Potentially unsafe content detected'
+    )
+  },
+
+  // Conteúdo longo (description/notes ricos) — mesma semântica SAN-01;
+  // regex amplia com on*= (handlers inline)
+  safeHtml: z.string().trim().max(50000).refine(
+    (html) => !/<script|javascript:|data:|vbscript:|on\w+\s*=/i.test(html),
+    'Potentially unsafe HTML content detected'
+  )
+} as const
+
+// ---------------------------------------------------------------------------
+// Política D1 (B2, docs/ux/B2-DESENHO.md §PR-1): strip explícito por lista +
+// .strict() no resto. Campo ignorado deliberadamente (id/email/user_id/
+// updated_at vindos do cliente — o servidor os deriva do token) é declarado
+// na lista ao lado do schema; chave desconhecida fora da lista → 400.
+// Nenhum .passthrough() em lugar nenhum.
+// ---------------------------------------------------------------------------
+export function withIgnoredKeys<T extends z.ZodTypeAny>(
+  schema: T,
+  ignoredKeys: readonly string[]
+) {
+  return z.preprocess((raw) => {
+    if (raw !== null && typeof raw === 'object' && !Array.isArray(raw)) {
+      const clean: Record<string, unknown> = { ...(raw as Record<string, unknown>) }
+      for (const key of ignoredKeys) delete clean[key]
+      return clean
+    }
+    return raw
+  }, schema)
+}
+
+// URL de formulário: "" (campo vazio) vira null em vez de 400 — b1 do B2
+// (z.string().url() rejeita string vazia; a UI envia "" quando o campo não
+// é preenchido — ProfileForm.tsx e photoURL de provedores sociais).
+const emptyableUrl = z.preprocess(
+  (v) => (v === '' ? null : v),
+  z.string().url().nullish()
+)
+
 
 // content_data é jsonb: valores devem ser JSON puro; o TOPO é objeto-ou-null.
 // D5 (decisão de Marcel, 2026-08-24): o batch import da web envia STRING aqui
@@ -148,5 +239,101 @@ export const storageSchemas = {
   // morre na PR-4c)
   delete: z.object({
     filename: z.string().min(1).max(255).regex(/^[a-zA-Z0-9._/-]+$/, 'Invalid filename format'),
+  }).strict(),
+} as const
+
+// ---------------------------------------------------------------------------
+// Profile (migrado do api-validation-middleware na PR-4c; semântica da PR-1)
+// ---------------------------------------------------------------------------
+// Campos editáveis de profiles (colunas reais do banco — supabase/schema.dump.sql).
+// .nullish() em tudo: null = "limpar o campo" (b2 do B2 — o login social envia
+// null quando o provedor não tem displayName/photoURL; .optional() rejeitava e
+// deixava usuário Firebase órfão sem perfil), undefined = "não mexer" (SET-23).
+const profileEditableFields = {
+  full_name: commonSchemas.createSafeText(0, 200).nullish(),
+  first_name: commonSchemas.createSafeText(0, 100).nullish(),
+  last_name: commonSchemas.createSafeText(0, 100).nullish(),
+  primary_instrument: commonSchemas.createSafeText(0, 100).nullish(),
+  avatar_url: emptyableUrl,
+  bio: commonSchemas.createSafeText(0, 2000).nullish(),
+  website: emptyableUrl,
+}
+
+export const authSchemas = {
+  // Session creation (POST /api/auth/session) — payload real da UI é
+  // exatamente { idToken } (pre-check §2.11); strict é no-op de comportamento
+  sessionCreate: z.object({
+    idToken: z.string().min(1, 'ID token is required')
+      .max(4000, 'Token too long')
+  }).strict(),
+
+  // User profile creation (signup e primeiro login social) — política D1:
+  // id/email vêm do token autenticado; o cliente os envia hoje (login-panel e
+  // signup os incluem no body), então são IGNORADOS POR LISTA EXPLÍCITA.
+  profileCreate: withIgnoredKeys(
+    z.object(profileEditableFields).strict(),
+    ['id', 'email']
+  ),
+
+  // User profile update — mesmo conjunto de campos editáveis, mesma lista.
+  profileUpdate: withIgnoredKeys(
+    z.object(profileEditableFields).strict(),
+    ['id', 'email']
+  )
+} as const
+
+// ---------------------------------------------------------------------------
+// Setlists (migrado na PR-4c) — política D1 com UMA ressalva de estado
+// intermediário, decidida no aval da 4c:
+//
+// venue / performance_date / notes: a UI ENVIA os três (SET-01,
+// setlist-service.ts:145 e :193) e o contrato só os aceita NA PR-5 (que
+// religa os campos no handler + valida performance_date como date-only).
+// Até lá ficam na lista de ignorados — MESMO comportamento de hoje (strip),
+// mas por decisão escrita; sem isto o .strict() derrubaria o save de setlist
+// da web inteira no estado intermediário. A PR-5 os REMOVE desta lista e os
+// coloca no schema.
+// ---------------------------------------------------------------------------
+const SETLIST_PHANTOM_KEYS_UNTIL_PR5 = ['venue', 'performance_date', 'notes'] as const
+
+const setlistSongItem = z.object({
+  content_id: commonSchemas.objectId,
+  position: z.number().int().min(0),
+  notes: commonSchemas.safeText.nullish(),
+}).strict()
+
+export const setlistSchemas = {
+  create: withIgnoredKeys(
+    z.object({
+      // name 1..255: alinhado à coluna varchar(255) do dump (era 100)
+      name: commonSchemas.createSafeText(1, 255),
+      // .nullish(): SET-23 — null = limpar, undefined = não mexer
+      description: commonSchemas.safeHtml.nullish(),
+      // songs[] ainda é aceito-e-ignorado pelo handler (achado a3);
+      // a PR-5 o IMPLEMENTA de verdade no create. Mantido aqui sem
+      // mudança de semântica para a fatia 4c ficar só na validação.
+      songs: z.array(setlistSongItem).max(100).default([]),
+    }).strict(),
+    SETLIST_PHANTOM_KEYS_UNTIL_PR5
+  ),
+
+  update: withIgnoredKeys(
+    z.object({
+      name: commonSchemas.createSafeText(1, 255).optional(),
+      description: commonSchemas.safeHtml.nullish(),
+      // songs no update morre NA PR-5 (decisão D2: update é só metadados)
+      songs: z.array(setlistSongItem).max(100).optional(),
+    }).strict(),
+    SETLIST_PHANTOM_KEYS_UNTIL_PR5
+  ),
+
+  addSong: z.object({
+    content_id: commonSchemas.objectId,
+    // EXCEÇÃO DELIBERADA à política D1 (ajuste 4 do aval do desenho):
+    // position é aceita como SUGESTÃO e o servidor recalcula
+    // (songs/route.ts — Math.max(position, max+1); item 21 da Fase D).
+    // A semântica final é pergunta aberta do B6 — não "corrigir" aqui.
+    position: z.number().int().min(0).nullish(),
+    notes: commonSchemas.safeText.nullish(),
   }).strict(),
 } as const

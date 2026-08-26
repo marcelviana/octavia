@@ -27,12 +27,13 @@ import { apiFetch, sleep } from './auth'
 const PREFIX = '[UX-AUDIT]'
 const DELAY_MS = 300
 
-// Prefixo SEM colchetes para NOMES DE SETLIST: o setlistSchemas.create usa
-// createSafeText (nível strict do lib/input-sanitizer.ts), cujo padrão de
-// "command injection" /[;&|`$(){}[\]]/ casa com colchetes — e no strict
-// QUALQUER ameaça detectada zera a string INTEIRA. "[UX-AUDIT] X" vira ""
-// no banco (achado da Fase C: nomes com [, ], (, ), &, ', ", + são
-// silenciosamente esvaziados). Títulos de conteúdo não passam por isso.
+// HISTÓRICO: este prefixo sem colchetes nasceu porque o sanitizer antigo
+// (input-sanitizer.ts, nível strict) zerava silenciosamente qualquer nome
+// de setlist com []();&| — "[UX-AUDIT] X" virava "" no banco (achado da
+// Fase C). O SAN-01 (B2 PR-4a) matou essa classe: hoje colchetes passam
+// LITERAIS (gate: lib/__tests__/contract-sanitize.test.ts). O prefixo
+// permanece sem colchetes por CONTINUIDADE — as setlists já semeadas em
+// prod usam "UX-AUDIT" e os specs buscam por ele.
 const SETLIST_PREFIX = 'UX-AUDIT'
 
 // POST /api/setlists/[id]/songs: withRateLimit(handler, 50) sobre o
@@ -171,7 +172,7 @@ const CONTENT_PLAN: ContentItem[] = [
 ]
 
 // A tabela setlist_songs em PROD tem unique constraint em
-// (setlist_id, content_id) — NÃO está no schema.sql (drift confirmado) — e
+// (setlist_id, content_id) — setlist_songs_setlist_id_content_id_key no
 // repetir uma música numa setlist retorna 500 genérico (achado Fase C/D:
 // bis/reprise é impossível pela API). A setlist Estresse (60 músicas)
 // exige portanto 60 conteúdos DISTINTOS; os "Bis" abaixo completam o que
