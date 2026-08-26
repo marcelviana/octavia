@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import { validateFirebaseTokenServer } from '@/lib/firebase-server-utils'
 import '@/lib/logger'
-import { fileDeleteSchema } from '@/lib/validation-schemas'
+import { storageSchemas } from '@/lib/api-schemas'
 import { 
   validateRequestBody,
   createValidationErrorResponse,
@@ -32,7 +32,7 @@ const deleteFileHandler = async (request: NextRequest) => {
 
     // Parse and validate request body
     const body = await request.json()
-    const bodyValidation = await validateRequestBody(body, fileDeleteSchema)
+    const bodyValidation = await validateRequestBody(body, storageSchemas.delete)
     
     if (!bodyValidation.success) {
       return createValidationErrorResponse(bodyValidation.errors)

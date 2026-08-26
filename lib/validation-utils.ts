@@ -7,10 +7,13 @@ import { z } from 'zod';
  * @param schema - The Zod schema to validate against
  * @returns Object with success/error status and data or error details
  */
-export async function validateRequestBody<T>(
+// Genérico sobre o SCHEMA (não sobre o output): z.ZodSchema<T> exigia
+// input = output e fazia T colapsar para unknown com ZodEffects
+// (withIgnoredKeys usa z.preprocess). Type-only; runtime idêntico.
+export async function validateRequestBody<S extends z.ZodTypeAny>(
   body: unknown,
-  schema: z.ZodSchema<T>
-): Promise<{ success: true; data: T } | { success: false; errors: string[]; details: z.ZodError }> {
+  schema: S
+): Promise<{ success: true; data: z.infer<S> } | { success: false; errors: string[]; details: z.ZodError }> {
   try {
     const validatedData = schema.parse(body);
     return { success: true, data: validatedData };

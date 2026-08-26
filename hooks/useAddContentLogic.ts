@@ -232,7 +232,11 @@ export function useAddContentLogic() {
           title: metadataToUse.title || uploadedFile.name,
           artist: metadataToUse.artist || "Unknown Artist",
           content_type: contentType,
-          file_url: uploadedFile.url ?? uploadedFile.name,
+          // b6 (aval, ponto 4): o fallback `?? uploadedFile.name` era código
+          // morto (FileUploadZone só entrega o arquivo APÓS upload com URL) e
+          // uma armadilha de contrato — nome de arquivo não passa no
+          // z.string().url(). Removido; url é a única fonte.
+          file_url: uploadedFile.url,
           album: metadataToUse.album || null,
           genre: metadataToUse.genre || null,
           notes: metadataToUse.notes || null,

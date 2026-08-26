@@ -1,123 +1,7 @@
 import { z } from 'zod';
-import type { Json } from '@/types/database.types';
 
 // Common validation helpers
 export const sanitizeString = (str: string) => str.trim().replace(/[<>]/g, '');
-
-// content_data é jsonb: o valor deve ser JSON puro. Este schema valida
-// recursivamente e tipa a saída como Json — o que permitiu remover o
-// `as any` do insert (B2 PR-2, item E1). Para payload vindo de JSON.parse
-// é no-op de comportamento: todo valor já é JSON por construção; só
-// rejeitaria valores JS não-JSON (função, undefined), inalcançáveis via HTTP.
-const jsonValueSchema: z.ZodType<Json> = z.lazy(() =>
-  z.union([
-    z.string(),
-    z.number(),
-    z.boolean(),
-    z.null(),
-    z.array(jsonValueSchema),
-    z.record(jsonValueSchema),
-  ])
-);
-
-// Content validation schemas
-export const contentTypeSchema = z.enum(['Lyrics', 'Chords', 'Tab', 'Sheet', 'song', 'chord', 'lyric', 'audio', 'video', 'pdf']);
-
-export const createContentSchema = z.object({
-  title: z.string()
-    .min(1, 'Title is required')
-    .max(200, 'Title must be less than 200 characters')
-    .transform(sanitizeString),
-  artist: z.string()
-    .max(100, 'Artist name must be less than 100 characters')
-    .transform(sanitizeString)
-    .optional()
-    .nullable(),
-  album: z.string()
-    .max(100, 'Album name must be less than 100 characters')
-    .transform(sanitizeString)
-    .optional()
-    .nullable(),
-  genre: z.string()
-    .max(50, 'Genre must be less than 50 characters')
-    .transform(sanitizeString)
-    .optional()
-    .nullable(),
-  content_type: contentTypeSchema,
-  content_data: z.record(jsonValueSchema).optional().nullable(),
-  file_url: z.string().url().optional().nullable(),
-  key: z.string().max(10, 'Key must be less than 10 characters').optional().nullable(),
-  bpm: z.number().int().min(1).max(999).optional().nullable(),
-  time_signature: z.string().max(10, 'Time signature must be less than 10 characters').optional().nullable(),
-  difficulty: z.enum(['Beginner', 'Intermediate', 'Advanced', 'Expert']).optional().nullable(),
-  tags: z.array(z.string().max(50, 'Tag must be less than 50 characters').transform(sanitizeString))
-    .max(20, 'Maximum 20 tags allowed')
-    .optional()
-    .nullable(),
-  notes: z.string()
-    .max(2000, 'Notes must be less than 2000 characters')
-    .transform(sanitizeString)
-    .optional()
-    .nullable(),
-  is_favorite: z.boolean().default(false),
-  is_public: z.boolean().default(false),
-});
-
-export const updateContentSchema = z.object({
-  id: z.string().uuid('Invalid content ID'),
-  title: z.string()
-    .min(1, 'Title is required')
-    .max(200, 'Title must be less than 200 characters')
-    .transform(sanitizeString)
-    .optional(),
-  artist: z.string()
-    .max(100, 'Artist name must be less than 100 characters')
-    .transform(sanitizeString)
-    .optional()
-    .nullable(),
-  album: z.string()
-    .max(100, 'Album name must be less than 100 characters')
-    .transform(sanitizeString)
-    .optional()
-    .nullable(),
-  genre: z.string()
-    .max(50, 'Genre must be less than 50 characters')
-    .transform(sanitizeString)
-    .optional()
-    .nullable(),
-  content_data: z.record(jsonValueSchema).optional().nullable(),
-  file_url: z.string().url().optional().nullable(),
-  key: z.string().max(10, 'Key must be less than 10 characters').optional().nullable(),
-  bpm: z.number().int().min(1).max(999).optional().nullable(),
-  time_signature: z.string().max(10, 'Time signature must be less than 10 characters').optional().nullable(),
-  difficulty: z.enum(['Beginner', 'Intermediate', 'Advanced', 'Expert']).optional().nullable(),
-  tags: z.array(z.string().max(50, 'Tag must be less than 50 characters').transform(sanitizeString))
-    .max(20, 'Maximum 20 tags allowed')
-    .optional()
-    .nullable(),
-  notes: z.string()
-    .max(2000, 'Notes must be less than 2000 characters')
-    .transform(sanitizeString)
-    .optional()
-    .nullable(),
-  is_favorite: z.boolean().optional(),
-  is_public: z.boolean().optional(),
-});
-
-// Query parameter validation schemas
-export const contentQuerySchema = z.object({
-  page: z.string().regex(/^\d+$/, 'Page must be a number').transform(Number).default('1'),
-  pageSize: z.string().regex(/^\d+$/, 'Page size must be a number').transform(Number).default('20'),
-  search: z.string()
-    .max(100, 'Search query must be less than 100 characters')
-    .transform(sanitizeString)
-    .optional(),
-  sortBy: z.enum(['recent', 'title', 'artist', 'updated']).default('recent'),
-  contentType: z.string().max(100).optional(),
-  difficulty: z.string().max(100).optional(),
-  key: z.string().max(100).optional(),
-  favorite: z.enum(['true', 'false']).optional(),
-});
 
 // Profile validation schemas
 export const createProfileSchema = z.object({
@@ -186,43 +70,6 @@ export const sessionSchema = z.object({
   idToken: z.string().min(1, 'ID token is required'),
 });
 
-// File upload validation schemas
-export const allowedMimeTypes = [
-  'application/pdf',
-  'text/plain',
-  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-  'image/png',
-  'image/jpeg',
-  'image/jpg',
-] as const;
-
-export const allowedExtensions = [
-  'pdf', 'txt', 'docx', 'png', 'jpg', 'jpeg'
-] as const;
-
-export const fileUploadSchema = z.object({
-  filename: z.string()
-    .min(1, 'Filename is required')
-    .max(255, 'Filename must be less than 255 characters')
-    .regex(/^[a-zA-Z0-9._-]+\.[a-zA-Z0-9]+$/, 'Invalid filename format')
-    .refine((filename) => {
-      const ext = filename.toLowerCase().split('.').pop();
-      return ext && allowedExtensions.includes(ext as typeof allowedExtensions[number]);
-    }, 'File type not allowed'),
-  file: z.custom<File>((file) => file instanceof File, 'Invalid file')
-    .refine((file) => file.size <= 50 * 1024 * 1024, 'File size must be less than 50MB') // 50MB limit
-    .refine((file) => {
-      return allowedMimeTypes.includes(file.type as typeof allowedMimeTypes[number]);
-    }, 'File type not allowed'),
-});
-
-export const fileDeleteSchema = z.object({
-  filename: z.string()
-    .min(1, 'Filename is required')
-    .max(255, 'Filename must be less than 255 characters')
-    .regex(/^[a-zA-Z0-9._/-]+$/, 'Invalid filename format'),
-});
-
 // Setlist validation schemas
 export const createSetlistSchema = z.object({
   name: z.string()
@@ -283,14 +130,9 @@ export const proxyRequestSchema = z.object({
 });
 
 // Export all schema types for TypeScript inference
-export type CreateContentInput = z.infer<typeof createContentSchema>;
-export type UpdateContentInput = z.infer<typeof updateContentSchema>;
-export type ContentQueryInput = z.infer<typeof contentQuerySchema>;
 export type CreateProfileInput = z.infer<typeof createProfileSchema>;
 export type UpdateProfileInput = z.infer<typeof updateProfileSchema>;
 export type SessionInput = z.infer<typeof sessionSchema>;
-export type FileUploadInput = z.infer<typeof fileUploadSchema>;
-export type FileDeleteInput = z.infer<typeof fileDeleteSchema>;
 export type CreateSetlistInput = z.infer<typeof createSetlistSchema>;
 export type UpdateSetlistInput = z.infer<typeof updateSetlistSchema>;
 export type AddSongToSetlistInput = z.infer<typeof addSongToSetlistSchema>;
