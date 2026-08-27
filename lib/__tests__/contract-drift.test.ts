@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { contentSchemas } from '@/lib/api-schemas'
-import { authSchemas } from '@/lib/api-validation-middleware'
+import { authSchemas } from '@/lib/api-schemas'
 
 /**
  * B2 §3.4 — gate de drift Zod × banco (classe c1): nenhum schema aceita
@@ -39,5 +39,15 @@ describe('gate c1 — profiles: Zod ≤ varchar da coluna', () => {
   it.each(PROFILE_LIMITS)('%s: acima de varchar(%d) → parse falha', (campo, max) => {
     const r = authSchemas.profileUpdate.safeParse({ [campo]: 'x'.repeat(max + 1) })
     expect(r.success).toBe(false)
+  })
+})
+
+// PR-4c: setlists entra no gate (name varchar(255) — venue/notes entram
+// com o contrato na PR-5)
+import { setlistSchemas } from '@/lib/api-schemas'
+
+describe('gate c1 — setlists: Zod ≤ varchar da coluna', () => {
+  it('name: acima de varchar(255) → parse falha', () => {
+    expect(setlistSchemas.create.safeParse({ name: 'x'.repeat(256) }).success).toBe(false)
   })
 })

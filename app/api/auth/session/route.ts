@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { validateFirebaseTokenSecure } from '@/lib/secure-auth-utils'
 import logger from '@/lib/logger'
-import { authSchemas } from '@/lib/api-validation-middleware'
+import { authSchemas } from '@/lib/api-schemas'
 import { withPublicBodyValidation } from '@/lib/api-validation-middleware'
 import {
   checkRateLimit,

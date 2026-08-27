@@ -3,7 +3,8 @@ import { requireAuthServer } from '@/lib/firebase-server-utils'
 import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
 import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
-import { withBodyValidation, setlistSchemas } from '@/lib/api-validation-middleware'
+import { withBodyValidation } from '@/lib/api-validation-middleware'
+import { setlistSchemas } from '@/lib/api-schemas'
 import type { Database } from '@/types/database.types'
 
 // POST /api/setlists/[id]/songs - Add song to setlist

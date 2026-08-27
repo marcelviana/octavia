@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { authSchemas } from '@/lib/api-validation-middleware'
+import { authSchemas } from '@/lib/api-schemas'
 
 /**
  * B2 PR-1 (D8) — contrato de /api/profile: os dois S1 do pre-check
