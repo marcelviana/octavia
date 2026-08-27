@@ -51,3 +51,10 @@ describe('gate c1 — setlists: Zod ≤ varchar da coluna', () => {
     expect(setlistSchemas.create.safeParse({ name: 'x'.repeat(256) }).success).toBe(false)
   })
 })
+
+// PR-5: venue entra no contrato — varchar(255) no dump
+describe('gate c1 — setlists.venue (PR-5): Zod ≤ varchar da coluna', () => {
+  it('venue: acima de varchar(255) → parse falha', () => {
+    expect(setlistSchemas.create.safeParse({ name: 'x', venue: 'x'.repeat(256) }).success).toBe(false)
+  })
+})
