@@ -130,3 +130,33 @@ describe('authSchemas.sessionCreate — migração no-op (pre-check §2.11)', ()
     expect(authSchemas.sessionCreate.safeParse({ idToken: '' }).success).toBe(false)
   })
 })
+
+describe('setlistSchemas.updateSongPosition — B2 PR-6 (b7 morto)', () => {
+  const UUID = '11111111-2222-3333-4444-555555555555'
+
+  it('payload real da UI (setlist-service.ts:358) passa', () => {
+    expect(setlistSchemas.updateSongPosition.safeParse({ setlistId: UUID, newPosition: 3 }).success).toBe(true)
+  })
+
+  it('b7: newPosition 0 → 400 NOMEANDO o campo com a mensagem de mínimo (antes: 400 "required" — o !0 lia como ausente)', () => {
+    const r = setlistSchemas.updateSongPosition.safeParse({ setlistId: UUID, newPosition: 0 })
+    expect(r.success).toBe(false)
+    if (!r.success) {
+      const issue = r.error.issues.find((i) => i.path.join('.') === 'newPosition')
+      expect(issue?.message).toContain('1-based')
+    }
+  })
+
+  it('newPosition string → 400 de tipo (antes: atravessava a guarda e entrava na aritmética)', () => {
+    expect(setlistSchemas.updateSongPosition.safeParse({ setlistId: UUID, newPosition: '3' }).success).toBe(false)
+  })
+
+  it('newPosition 1 (primeiro slot) é válido — posições são 1-based', () => {
+    expect(setlistSchemas.updateSongPosition.safeParse({ setlistId: UUID, newPosition: 1 }).success).toBe(true)
+  })
+
+  it('setlistId inválido → 400; float → 400', () => {
+    expect(setlistSchemas.updateSongPosition.safeParse({ setlistId: 'nao-uuid', newPosition: 1 }).success).toBe(false)
+    expect(setlistSchemas.updateSongPosition.safeParse({ setlistId: UUID, newPosition: 1.5 }).success).toBe(false)
+  })
+})

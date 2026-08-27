@@ -332,6 +332,18 @@ export const setlistSchemas = {
     name: commonSchemas.createSafeText(1, 255).optional(),
   }).strict(),
 
+  // PUT /api/setlists/songs/[songId] — reorder (B2 PR-6). Era a ÚNICA rota
+  // com body e ZERO validação (pre-check §2.9): a guarda `!setlistId ||
+  // !newPosition` lia newPosition: 0 como AUSENTE (b7 — 400 "required"
+  // errado) e deixava string entrar na aritmética (targetIndex = "3" - 1).
+  // Posições são 1-BASED no banco (newPos = i + 1) — o min(1) é o contrato
+  // declarado, não uma escolha nova. FORA do escopo, no B6: 2N UPDATEs,
+  // tempOffset, transacionalidade — esta rota ganha SÓ validação de entrada.
+  updateSongPosition: z.object({
+    setlistId: commonSchemas.objectId,
+    newPosition: z.number().int().min(1, 'newPosition must be >= 1 (positions are 1-based)'),
+  }).strict(),
+
   addSong: z.object({
     content_id: commonSchemas.objectId,
     // EXCEÇÃO DELIBERADA à política D1 (ajuste 4 do aval do desenho):

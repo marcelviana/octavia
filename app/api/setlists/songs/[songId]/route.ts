@@ -3,6 +3,7 @@ import { requireAuthServer } from '@/lib/firebase-server-utils'
 import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
 import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
+import { setlistSchemas } from '@/lib/api-schemas'
 
 // Type for song with joined setlist data
 type SongWithSetlist = {
@@ -173,14 +174,27 @@ const updateSongPositionHandler = async (
 
     const { songId } = await params
     const body = await request.json()
-    const { setlistId, newPosition } = body
 
-    if (!setlistId || !newPosition) {
+    // B2 PR-6: Zod na única rota que não tinha nenhum (pre-check §2.9).
+    // A guarda antiga `!setlistId || !newPosition` lia newPosition: 0 como
+    // ausente (b7) e deixava string entrar na aritmética. Mesmo shape de
+    // erro do middleware (VALIDATION_ERROR + field).
+    const validation = setlistSchemas.updateSongPosition.safeParse(body)
+    if (!validation.success) {
       return NextResponse.json(
-        { error: 'setlistId and newPosition required' },
+        {
+          error: 'Validation failed',
+          code: 'VALIDATION_ERROR',
+          details: validation.error.issues.map((issue) => ({
+            field: issue.path.join('.'),
+            message: issue.message,
+            code: issue.code,
+          })),
+        },
         { status: 400 }
       )
     }
+    const { setlistId, newPosition } = validation.data
 
     const supabase = getSupabaseServiceClient()
 
