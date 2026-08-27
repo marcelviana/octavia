@@ -137,11 +137,6 @@ ALTER TABLE ONLY "public"."setlist_songs"
 
 
 ALTER TABLE ONLY "public"."setlist_songs"
-    ADD CONSTRAINT "setlist_songs_setlist_id_content_id_key" UNIQUE ("setlist_id", "content_id");
-
-
-
-ALTER TABLE ONLY "public"."setlist_songs"
     ADD CONSTRAINT "setlist_songs_setlist_id_position_key" UNIQUE ("setlist_id", "position");
 
 
@@ -260,6 +255,9 @@ CREATE POLICY "User owns setlists" ON "public"."setlists" USING (("user_id" = ("
 
 
 
+ALTER TABLE "public"."annotations" ENABLE ROW LEVEL SECURITY;
+
+
 ALTER TABLE "public"."content" ENABLE ROW LEVEL SECURITY;
 
 
@@ -279,8 +277,6 @@ GRANT USAGE ON SCHEMA "public" TO "service_role";
 
 
 
-GRANT ALL ON TABLE "public"."annotations" TO "anon";
-GRANT ALL ON TABLE "public"."annotations" TO "authenticated";
 GRANT ALL ON TABLE "public"."annotations" TO "service_role";
 
 

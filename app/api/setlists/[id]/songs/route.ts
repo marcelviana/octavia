@@ -58,9 +58,14 @@ const addSongToSetlistHandler = withBodyValidation(setlistSchemas.addSong, {
         throw maxPositionError
       }
 
-      // Calculate the actual position to insert at
+      // Calculate the actual position to insert at.
+      // PR-5: position ausente/null → vai direto para o fim (max+1). Antes,
+      // Math.max(undefined, …) = NaN → 500 do Postgres já na 1ª inserção
+      // (achado da verificação pós-MIG-1; o schema sempre permitiu omitir).
       const currentMaxPosition = (maxPositionResult as { position: number } | null)?.position || 0
-      const actualPosition = Math.max(position, currentMaxPosition + 1)
+      const actualPosition = position == null
+        ? currentMaxPosition + 1
+        : Math.max(position, currentMaxPosition + 1)
 
       // Add the new song at the calculated position
       const insertData = {
@@ -79,6 +84,17 @@ const addSongToSetlistHandler = withBodyValidation(setlistSchemas.addSong, {
       if (songError) {
         logger.error("Error adding song to setlist:", songError)
         throw songError
+      }
+
+      // PR-5/5c: mudar as músicas MUDA a setlist — sem este bump, um cliente
+      // que sincroniza por updated_at perde toda alteração de músicas
+      // (achado §0.3 do desenho: não existe trigger no banco)
+      const { error: touchError } = await supabase
+        .from('setlists')
+        .update({ updated_at: new Date().toISOString() })
+        .eq('id', setlistId)
+      if (touchError) {
+        logger.error('Error bumping setlist updated_at:', touchError)
       }
 
       return NextResponse.json(song, { status: 201 })

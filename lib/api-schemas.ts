@@ -283,49 +283,54 @@ export const authSchemas = {
 } as const
 
 // ---------------------------------------------------------------------------
-// Setlists (migrado na PR-4c) — política D1 com UMA ressalva de estado
-// intermediário, decidida no aval da 4c:
+// Setlists — PR-5: os três campos fantasma (SET-01) DEIXAM a lista de
+// ignorados e ENTRAM no contrato; o handler os persiste de verdade.
 //
-// venue / performance_date / notes: a UI ENVIA os três (SET-01,
-// setlist-service.ts:145 e :193) e o contrato só os aceita NA PR-5 (que
-// religa os campos no handler + valida performance_date como date-only).
-// Até lá ficam na lista de ignorados — MESMO comportamento de hoje (strip),
-// mas por decisão escrita; sem isto o .strict() derrubaria o save de setlist
-// da web inteira no estado intermediário. A PR-5 os REMOVE desta lista e os
-// coloca no schema.
+// performance_date é DATE-ONLY por decisão de produto (B5, 2026-08-10):
+// YYYY-MM-DD, sem hora, sem fuso — a coluna já é `date` no banco (dump).
+// Timestamp completo → 400 (elimina o off-by-one do SET-17 no contrato;
+// a exibição web mantém o bug até morrer — Bloco D).
 // ---------------------------------------------------------------------------
-const SETLIST_PHANTOM_KEYS_UNTIL_PR5 = ['venue', 'performance_date', 'notes'] as const
+const setlistMetadataFields = {
+  // name 1..255: alinhado à coluna varchar(255) do dump (era 100)
+  name: commonSchemas.createSafeText(1, 255),
+  // .nullish() em tudo: SET-23 — null = limpar, undefined = não mexer
+  description: commonSchemas.safeHtml.nullish(),
+  venue: commonSchemas.createSafeText(0, 255).nullish(),
+  performance_date: z.string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, 'performance_date must be date-only (YYYY-MM-DD)')
+    .nullish(),
+  notes: commonSchemas.safeHtml.nullish(),
+}
 
-const setlistSongItem = z.object({
+// Item de songs[] no CREATE (D2): SEM position — a ORDEM DO ARRAY é a
+// ordem, renumerada 1..N pelo servidor. Aceitar uma position que o servidor
+// recalcularia seria a mesma mentira que o B2 existe para matar.
+const setlistCreateSongItem = z.object({
   content_id: commonSchemas.objectId,
-  position: z.number().int().min(0),
   notes: commonSchemas.safeText.nullish(),
 }).strict()
 
 export const setlistSchemas = {
-  create: withIgnoredKeys(
-    z.object({
-      // name 1..255: alinhado à coluna varchar(255) do dump (era 100)
-      name: commonSchemas.createSafeText(1, 255),
-      // .nullish(): SET-23 — null = limpar, undefined = não mexer
-      description: commonSchemas.safeHtml.nullish(),
-      // songs[] ainda é aceito-e-ignorado pelo handler (achado a3);
-      // a PR-5 o IMPLEMENTA de verdade no create. Mantido aqui sem
-      // mudança de semântica para a fatia 4c ficar só na validação.
-      songs: z.array(setlistSongItem).max(100).default([]),
-    }).strict(),
-    SETLIST_PHANTOM_KEYS_UNTIL_PR5
-  ),
+  create: z.object({
+    ...setlistMetadataFields,
+    // songs[] agora é IMPLEMENTADO pelo handler (fim do a3 — o 201 diz a
+    // verdade). content_id repetido no array → 400: bis intencional se faz
+    // ADICIONANDO depois (a UNIQUE do bis caiu na MIG-1); repetir na
+    // criação é erro de cliente.
+    songs: z.array(setlistCreateSongItem).max(100).default([])
+      .refine(
+        (songs) => new Set(songs.map((s) => s.content_id)).size === songs.length,
+        'Duplicate content_id in songs'
+      ),
+  }).strict(),
 
-  update: withIgnoredKeys(
-    z.object({
-      name: commonSchemas.createSafeText(1, 255).optional(),
-      description: commonSchemas.safeHtml.nullish(),
-      // songs no update morre NA PR-5 (decisão D2: update é só metadados)
-      songs: z.array(setlistSongItem).max(100).optional(),
-    }).strict(),
-    SETLIST_PHANTOM_KEYS_UNTIL_PR5
-  ),
+  // update é SÓ metadados (decisão D2): songs aqui → 400 por chave
+  // desconhecida (não strip). Reordenar/adicionar/remover têm rotas próprias.
+  update: z.object({
+    ...setlistMetadataFields,
+    name: commonSchemas.createSafeText(1, 255).optional(),
+  }).strict(),
 
   addSong: z.object({
     content_id: commonSchemas.objectId,

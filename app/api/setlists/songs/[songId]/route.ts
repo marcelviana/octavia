@@ -121,6 +121,15 @@ const removeSongFromSetlistHandler = async (
       }
     }
 
+    // PR-5/5c: remover música muda a setlist (achado §0.3 — sem trigger no banco)
+    const { error: touchError } = await supabase
+      .from('setlists')
+      .update({ updated_at: new Date().toISOString() })
+      .eq('id', setlistId)
+    if (touchError) {
+      logger.error('Error bumping setlist updated_at:', touchError)
+    }
+
     return NextResponse.json({ success: true })
   } catch (error: any) {
     logger.error('Error removing song from setlist:', error)
@@ -284,6 +293,15 @@ const updateSongPositionHandler = async (
         logger.error('Error updating position:', updError)
         throw updError
       }
+    }
+
+    // PR-5/5c: reordenar muda a setlist (achado §0.3 — sem trigger no banco)
+    const { error: touchError } = await supabase
+      .from('setlists')
+      .update({ updated_at: new Date().toISOString() })
+      .eq('id', setlistId)
+    if (touchError) {
+      logger.error('Error bumping setlist updated_at:', touchError)
     }
 
     return NextResponse.json({ success: true })

@@ -168,6 +168,9 @@ const updateSetlistHandler = withBodyValidation(setlistSchemas.update, {
       const setlistId = params.id
       const supabase = getSupabaseServiceClient()
 
+      // PR-5/5a: os cinco campos de metadados, semântica SET-23 por campo —
+      // undefined = "não mexa" (fora do UPDATE), null = "limpe". Fim do lado
+      // update do SET-01 (o handler antigo só copiava name/description).
       const updateData: Record<string, unknown> = {
         updated_at: new Date().toISOString(),
       }
@@ -176,7 +179,16 @@ const updateSetlistHandler = withBodyValidation(setlistSchemas.update, {
         updateData.name = validatedData.name
       }
       if (validatedData.description !== undefined) {
-        updateData.description = validatedData.description || null
+        updateData.description = validatedData.description ?? null
+      }
+      if (validatedData.venue !== undefined) {
+        updateData.venue = validatedData.venue ?? null
+      }
+      if (validatedData.performance_date !== undefined) {
+        updateData.performance_date = validatedData.performance_date ?? null
+      }
+      if (validatedData.notes !== undefined) {
+        updateData.notes = validatedData.notes ?? null
       }
 
     // Update the setlist
