@@ -175,11 +175,16 @@ describe('/api/storage/delete', () => {
       expect(data.details[0]).toContain('path traversal detected')
     })
 
-    it('handles storage service errors gracefully', async () => {
-      // Mock storage service error
-      mockRemove.mockResolvedValue({ 
-        data: null, 
-        error: { message: 'Storage service unavailable' } 
+    it('G1/D6: erro do storage vira 500 genérico — a mensagem interna do Supabase NÃO vaza', async () => {
+      // B3 PR-1/D6 (achado de segurança nº 5 do B3-PRECHECK): a rota
+      // interpolava error.message do Supabase na resposta
+      // (`Delete failed: ${error.message}`). Este teste ASSERTAVA o
+      // vazamento (data.message contendo 'Delete failed') — invertido.
+      // Controle negativo (regra nº 7) executado contra o código antigo:
+      // falhou com a sentinela no corpo (registrado no relatório do PR-1).
+      mockRemove.mockResolvedValue({
+        data: null,
+        error: { message: 'SENTINELA-interna-do-supabase' }
       })
 
       const { POST } = await import('../delete/route')
@@ -187,19 +192,22 @@ describe('/api/storage/delete', () => {
       const request = createAuthenticatedRequest(
         'http://localhost/api/storage/delete',
         'valid-firebase-token',
-        { 
-          method: 'POST', 
-          body: { filename: '1234567890-test-file.pdf' } 
+        {
+          method: 'POST',
+          body: { filename: '1234567890-test-file.pdf' }
         }
       )
 
       const response = await POST(request)
-      
+
       expect(response.status).toBe(500)
-      
+
+      const raw = await response.clone().text()
+      expect(raw).not.toContain('SENTINELA-interna-do-supabase')
+
       const data = await getJsonResponse(response)
-      expect(data.error).toBe('Server error')
-      expect(data.message).toContain('Delete failed')
+      expect(data.error).toBe('File deletion failed')
+      expect(data.code).toBe('INTERNAL_ERROR')
     })
 
     it('validates filename format for various invalid cases', async () => {
