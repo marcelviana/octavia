@@ -24,20 +24,30 @@ import { getBearer, settle } from './recorder'
  * contrato unit (lib/__tests__/user-rate-limit.test.ts), não por
  * semeadura de dados no preview.
  *
- * GUARDA ANTI-PROD (exigência da B1.3, no spec e não na disciplina):
- * estouro deliberado NUNCA roda contra produção — ver beforeAll.
+ * GUARDA ANTI-PROD (exigência da B1.3; reescrita no B3/D0): estouro
+ * deliberado SÓ roda em deployment de BRANCH ≠ main — ver beforeAll.
  */
 
 const BASE_URL = process.env.UX_AUDIT_BASE_URL || ''
 
 test.describe('G2 — limiter único', () => {
   test.beforeAll(() => {
-    if (!BASE_URL || BASE_URL.includes('octavia.rocks')) {
+    // D0/B3 (2026-08-28): a guarda antiga (`includes('octavia.rocks')`)
+    // deixava passar octavia-git-main-… e o alias octavia-preview — que
+    // servem/serviram o MESMO deployment de produção. Foi exatamente o
+    // furo do pre-check do B3 (§0.1: família ip travada ~15min numa
+    // instância de prod por um probe que se acreditava "em preview").
+    // Agora a guarda é allowlist: só preview de BRANCH ≠ main.
+    const BRANCH_PREVIEW =
+      /^https:\/\/octavia-git-(?!main-)[a-z0-9-]+-marcelvianas-projects\.vercel\.app$/
+    if (!BASE_URL || !BRANCH_PREVIEW.test(BASE_URL)) {
       throw new Error(
-        'G2 recusa rodar: o alvo é produção (ou UX_AUDIT_BASE_URL não foi ' +
-          'definida). Este spec faz ESTOURO DELIBERADO de janelas de rate ' +
-          'limit — o palco nunca é alvo de teste de estresse. Aponte ' +
-          'UX_AUDIT_BASE_URL para um preview (octavia-*.vercel.app).'
+        'G2 recusa rodar: o alvo não é um preview de BRANCH ' +
+          '(https://octavia-git-<branch≠main>-marcelvianas-projects.vercel.app). ' +
+          'Este spec faz ESTOURO DELIBERADO de janelas de rate limit — ' +
+          'octavia.rocks, octavia-git-main-… e o alias aposentado ' +
+          'octavia-preview.vercel.app servem o deployment de produção e ' +
+          'nunca são alvo.'
       )
     }
   })
