@@ -370,6 +370,15 @@ validado por probes de preview no B2; o `contract-errors.test.ts` do PR-1
 será seu **primeiro** gate de shape. Sem interseção, sem contradição com
 o argumento do D1.
 
+> **Consequência vinculante para o PR-1 (exigência do aval do PR-0,
+> 2026-08-28)**: a prova de byte-identidade da delegação do middleware
+> **não pode se apoiar nos testes do B2** — eles não olham o envelope
+> (achado acima). Sequência obrigatória do PR-1: os asserts de shape
+> semente do `contract-errors.test.ts` são escritos e ficam **VERDES
+> contra o middleware ATUAL, antes da delegação** (commit 1); só então a
+> delegação acontece (commit 2), e os mesmos asserts verdes depois dela
+> são a prova. A ordem dos commits 1→2 do PR-1 fica condicionada a isso.
+
 **Conjunto B — limiter** (1 arquivo): `lib/__tests__/user-rate-limit.test.ts`
 — **7 `it()` num único arquivo** (a frase "os 7 contract tests do
 user-rate-limit" do §3.PR-4 lê-se assim). Muda **só no PR-4** (D4: o
