@@ -379,9 +379,9 @@ payload que o próprio cliente envia:
 | Caso | O que aconteceu | Estado |
 |------|-----------------|--------|
 | **profile** | `authSchemas.profileUpdate` validava campos inexistentes (`displayName`/`preferences`); o payload real do signup era descartado pelo strip do Zod — usuário Firebase órfão sem perfil | corrigido (commit `aa501cc`) — prova da classe |
-| **SET-01** | `venue`/`performance_date`/`notes` enviados pela UI, silenciosamente descartados pelo strip | aberto |
+| **SET-01** | `venue`/`performance_date`/`notes` enviados pela UI, silenciosamente descartados pelo strip | ✅ **fechado no B2** (PR #240 — schema + handler, create e update, date-only) |
 | **SET-23 / FASE-D-05** | `description: null` da UI rejeitado por `.optional()` (aceita só `undefined`) — 400 sem feedback | ✅ corrigido na fila A #2 (PR #222); a classe permanece |
-| **`file_url` do add-content** *(direção inversa: payload que o schema **rejeita**, não que ele stripa)* | `createContentSchema` declara `file_url: z.string().url()`, mas o branch de upload envia `uploadedFile.url ?? uploadedFile.name` — se o upload falhar e sobrar o **nome do arquivo**, o POST leva 400 | aberto. A partir da fila A #3/#4 (PR-3) o desfecho é **erro visível** em vez de falso sucesso; o audit do B2 decide se o fallback some ou se o schema aceita o caso |
+| **`file_url` do add-content** *(direção inversa: payload que o schema **rejeita**, não que ele stripa)* | `createContentSchema` declara `file_url: z.string().url()`, mas o branch de upload envia `uploadedFile.url ?? uploadedFile.name` — se o upload falhar e sobrar o **nome do arquivo**, o POST leva 400 | ✅ **fechado no B2** (PR #238 — fallback morto removido; contrato declara URL-ou-null) |
 
 **Tarefa**: inventário rota a rota — payload real (da UI atual **e** do
 futuro cliente nativo) × schema — decidindo por campo: aceitar, rejeitar
@@ -389,6 +389,98 @@ com erro claro, ou remover do produto. Política explícita sobre strip
 silencioso (hoje é o default do Zod e já causou dois S1). Entregável:
 tabela rota × campo × comportamento + testes de contrato. Este audit é
 **pré-requisito da espec da API que o nativo consome**.
+
+**BALANÇO DO B2 (2026-08-24 → 2026-08-27, PRs #233–#241 + MIG-1) —
+✅ COMPLETO. O arco inteiro, para a posteridade:**
+
+Ciclo completo com gate-keeping total: pre-check medido
+([`B2-PRECHECK.md`](B2-PRECHECK.md)) → desenho aprovado
+([`B2-DESENHO.md`](B2-DESENHO.md), com fatiamento da PR-4 decidido em
+revisão) → 9 PRs, uma por vez, cada uma com controle negativo executado
+(regra nº 7), validação em preview e confirmação em prod.
+
+**1. Sumário executivo — as PRs, na ordem de execução:**
+
+| PR | # | Uma linha |
+|----|---|-----------|
+| PR-0 | #233 | Infra: dump gerado (`schema.dump.sql`) substitui `schema.sql`/`rls-policies.sql` à mão (10 drifts D-1…D-10); scripts `db:types`/`db:dump`; enum falso do CLAUDE.md corrigido |
+| PR-2 | #234 | Types gerados como fonte única (D9): `types/supabase.ts` morre sem shim; 10 `as any` + 1 `@ts-expect-error` removidos — 4 erros de tsc desmascarados, todos corrigidos sem cast novo |
+| PR-1 | #235 | Os dois S1 de perfil (D8): `website:""` → 400 e login social com nulls → usuário órfão, mortos; política D1 estreia (`withIgnoredKeys` + `.strict()`, handlers enumeram) |
+| PR-3 | #236 | Remoções: PUT órfão de `/api/content/[id]` (a4/b4/b5/c1 de uma vez) e `validate-token` (pública, sem rate limit, zero refs) |
+| PR-4a | #237 | SAN-01: sanitizer valida, nunca altera — literal ou 400 nomeando o campo; XSS que virava `""` com 200 agora é 400 de verdade |
+| PR-4b | #238 | Módulo único content+storage: enum canônico (D4, zero migration — 194 linhas todas no enum), limites do dump, UMA lista de MIME (b8), b6 removido |
+| PR-4c | #239 | Setlist+session no módulo; middleware vira middleware-only (532→245); −1009 linhas de órfãos (`input-sanitizer`, `validation-schemas`, 8 schemas) |
+| MIG-1 | SQL Editor (Marcel) | Bis liberado (drop de `setlist_songs_setlist_id_content_id_key`; 201/201 provado, antes 500 SET-06) + RLS/REVOKE em `annotations` (anon → 401) |
+| PR-5 | #240 | SET-01 fechado dos dois lados; `performance_date` date-only (SET-17 fora do contrato); `songs[]` real no create (D2, opção B com delete compensatório TESTADO por mutação); `updated_at` do pai; fix do NaN |
+| PR-6 | #241 | Zod na última rota sem schema (reorder): b7 morto (`newPosition: 0` → 400 nomeado "1-based"; string → 400) |
+
+**Achados novos do ciclo (não estavam no pre-check) e onde cada um morreu:**
+
+| Achado | Descoberto em | Morreu em |
+|--------|--------------|-----------|
+| **SAN-01** — sanitizer zerava strings com `()[]{};&\|` retornando 200 (strict) ou removia os chars (moderate); XSS idem; `lastIndex` de `/g` tornava o veredito dependente da ordem | validação em preview da PR-1 | PR-4a (semântica) + PR-4c (arquivo) |
+| **Triggers inexistentes** — os 4 triggers + function de `updated_at` declarados no `schema.sql` nunca existiram no banco; add/remove/reorder não tocavam `setlists.updated_at` | leitura do dump (desenho §0.3) | PR-5/5c (bump nos 3 handlers) |
+| **RLS de `annotations`** — tabela world-writable pela anon key pública (sem RLS, `GRANT ALL TO anon`) | leitura do dump (desenho §0.4) | MIG-1 parte B |
+| **c1 re-medido** — o "título 300 → 500" era do PUT `[id]`; o create vivo rejeitava (máx 200). Correção declarada no enunciado | medição pré-PR-4b | PR-3 (rota) + gate de drift (classe) |
+| **NaN do addSong** — `position` ausente (válido pelo schema desde sempre) → `Math.max(undefined,…)` → 500 na 1ª inserção | verificação pós-MIG-1 | PR-5 (ausente → max+1) |
+| **unrecognized_keys com `path: []`** — `field` vazio no 400 de chave desconhecida | validação da PR-1 | herança nomeada do B3 (abaixo) |
+
+**2. Contrato pós-B2 (o que o cliente nativo consome)** — a tabela
+completa vive no [`B2-DESENHO.md`](B2-DESENHO.md) §4; o que mudou em voo:
+
+- **Toda chave desconhecida no body → 400** (gate D1 §3.3, comportamental,
+  sobre os 11 schemas de body do módulo). Schemas de query fora por
+  decisão declarada (cachebuster/utm não pode dar 400).
+- **Listas de ignorados por rota, com comentário no schema**: content
+  (`user_id`/`created_at`/`updated_at`) · profile (`id`/`email`) ·
+  setlists (lista VAZIA — os três fantasma entraram no contrato na PR-5).
+- **Exceção D1 declarada**: `addSong.position` é SUGESTÃO que o servidor
+  recalcula (comentário no schema; semântica final pendente do **B6**);
+  ausente/null → `max+1` (fix do NaN). Reorder é **1-based**
+  (`newPosition ≥ 1`).
+- **`performance_date` é date-only** (`YYYY-MM-DD`; timestamp → 400).
+  `content_data` é objeto-ou-null no topo (D5 — batch morre com a web,
+  comentário no schema impede "conserto" acidental).
+- **Shape de erro de validação**: `400 { error, code: 'VALIDATION_ERROR',
+  details: [{ field, message, code }] }` — usado por TODAS as rotas com
+  body, inclusive o reorder (fora do middleware). É **a semente do B3**.
+
+**3. Heranças nomeadas, com evidência:**
+
+- **B3** (contrato de erro): o shape `VALIDATION_ERROR + field` está
+  uniforme na validação; 401/403/404/500 ainda variam por rota;
+  `unrecognized_keys` tem `path: []` → mapear `field` a partir de
+  `issue.keys` (registrado no desenho, herança do B3).
+- **B6** (position/reorder): semântica da `position` do addSong (exceção
+  D1 comentada no schema) · 2N UPDATEs sem transação · `tempOffset=10000`
+  (a UNIQUE de posição FICA — verificada no dump pós-MIG-1).
+- **B5** (storage): listagem por prefixo, reconciliação de órfãos, magic
+  bytes (`.zip` renomeado `.pdf` com MIME certo ainda passa — declarado);
+  a rota `POST /api/storage/delete` teve o **primeiro uso real provado**
+  no cleanup da PR-4b (200×2).
+- **B9**: idempotência do `POST /api/content` (replay da fila offline).
+- **Bloco C**: forma interna de `content_data` · anotações **greenfield**
+  (tabela com 0 linhas, medido; agora com RLS) · off-by-one de RENDER do
+  `performance_date` (o contrato entrega date-only; a exibição web faz
+  `new Date()` — morre com a web).
+
+**4. Gates permanentes ao fim do bloco** (todos no `pnpm test`, que é
+gate de merge):
+
+- **Contract tests por módulo**: `contract-profile` (10) ·
+  `contract-sanitize` (13, com os 3 de caixa) · `contract-content` (22) ·
+  `contract-storage` (12) · `contract-setlist` (19) ·
+  `create-compensating` (3, provado por mutação) — todos com controles
+  negativos medidos documentados nos próprios arquivos.
+- **Gate D1** (`contract-d1-gate`): chave desconhecida → falha, nos 11
+  schemas de body; controle negativo permanente no arquivo.
+- **Gate de drift** (`contract-drift`): Zod ≤ varchar da coluna
+  (content, profiles, setlists), limites hardcoded do dump.
+- **Baseline da suíte**: **511 passed** / 87 skipped (era 412 no início
+  do bloco; +99, todos de contrato) — CI 2m40s–3m.
+
+**Fica para depois**: B3 (próximo natural — a semente está pronta) · B5 ·
+B6 · B9 · B1.5 · Bloco C.
 
 ### B3 — Contrato de erro: toda falha retorna erro estruturado
 
@@ -922,7 +1014,7 @@ morre com a web. Sev/esforço conforme ASSESSMENT.
 | CONT-10 | Título de 186 chars infla o header | S3 | D | |
 | CONT-11 | 21 icon-only sem nome | S3 | D | |
 | CONT-12 | Scroll do PDF sem foco de teclado | S3 | D | |
-| SET-01 | Venue/data/notas descartados pelo Zod | S1 | **B** | B2; colunas serão ligadas (B5 ✅) |
+| SET-01 | Venue/data/notas descartados pelo Zod | S1 | **B** | ✅ fechado no B2 (PR #240) |
 | SET-02 | Sanitizador zera nomes reais | S1 | **B** | sanitização é da API; nativo herda |
 | SET-03 | Reorder: handler da UI é TODO | S1 | **D** | cortado da fila A; item 17 vira pergunta de design do B6 |
 | SET-04 | Drag inoperante em touch | S1 | **D** | cortado da fila A; requisito touch segue no C (J3) |
