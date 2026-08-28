@@ -316,6 +316,20 @@ handler), `POST /api/setlists/[id]/songs` (wrapper + 500), `GET
 (`+code`). Replay verbatim: create setlist com songs (fluxo PR-5 do B2),
 profile PATCH, login→session.
 
+> **[EMENDA do aval do PR-1, 2026-08-28] Flip do D7 no middleware — é
+> AQUI, como mudança declarada.** No PR-1, a exigência de byte-identidade
+> (§4.1) impediu o middleware de adotar o mapper default do contrato: o
+> caminho de validação chama `validationError(err,
+> { expandUnrecognizedKeys: false })` (mapping antigo do
+> `unrecognized_keys`: um item, `field:""`). Neste PR-3b: (a) o flip para
+> o default do contrato (um detail POR CHAVE, D7) acontece nas rotas do
+> middleware, com replay verbatim e controle negativo (o literal
+> `field:""` do pre-check §2.2 é a falha esperada); (b) **o parâmetro
+> `expandUnrecognizedKeys` é REMOVIDO de `lib/api-errors.ts`** — o helper
+> não mantém modo não-contrato após o PR-3b (o teste do flag em
+> `contract-errors.test.ts` morre junto; os asserts de camada 2 do
+> unrecognized mudam para o shape D7 como mudança declarada DESTE PR).
+
 ### PR-4 — 429 (D4) + proxy (D5) + varredura final
 
 | Item | Detalhe |

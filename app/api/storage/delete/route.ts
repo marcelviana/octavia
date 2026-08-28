@@ -10,6 +10,7 @@ import {
   createServerErrorResponse
 } from '@/lib/validation-utils'
 import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
+import { internalError } from '@/lib/api-errors'
 
 const BUCKET = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET || 'content-files'
 
@@ -58,8 +59,12 @@ const deleteFileHandler = async (request: NextRequest) => {
       .remove([filename])
 
     if (error) {
+      // B3 PR-1/D6 (achado de segurança nº 5 do pre-check): a mensagem
+      // crua do Supabase ia para o cliente — era o ÚNICO ponto do repo
+      // interpolando error.message de dependência na resposta. Detalhe
+      // fica no log; o cliente recebe o envelope genérico.
       console.error('Supabase delete error:', error)
-      return createServerErrorResponse(`Delete failed: ${error.message}`)
+      return internalError('File deletion failed')
     }
 
     console.log(`File deleted successfully: ${filename}`)
