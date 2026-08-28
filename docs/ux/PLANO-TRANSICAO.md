@@ -489,8 +489,12 @@ ASSESSMENT — em três delas o app ainda afirmou sucesso. A causa não é
 local: não existe camada que traduza falha em mensagem.
 
 **Espec proposta**:
-- Toda resposta não-2xx carrega corpo estruturado: `{ error: { code,
-  message, details? } }`, com `code` estável (máquina) e `message` exibível.
+- Toda resposta não-2xx carrega corpo estruturado **flat**: `{ error,
+  code, details? }` — **[EMENDADO 2026-08-28, aval do pre-check do B3]**:
+  a espec original dizia `{ error: { code, message, details? } }`
+  (nested), escrita antes de o B2 cravar o shape flat como semente
+  testada; o flat estende a semente sem quebrar gate nem cliente.
+  Contrato completo: [`docs/api/CONTRATO-DE-ERRO.md`](../api/CONTRATO-DE-ERRO.md).
 - O cliente nativo nasce com a regra inversa da web atual: **toda não-2xx
   aparece para o usuário por default** (camada de rede central; silenciar é
   opt-out consciente, não o esquecimento padrão).
@@ -762,6 +766,16 @@ cada ✅ e fechar cada ❌/⚠️**. Os números que definem o piso:
 ---
 
 ## Bloco D — Morre com a web
+
+> **Item de abertura do Bloco D — prioridade máxima (registrado no B3,
+> 2026-08-28)**: o **loop mudo do `POST /api/auth/session`** — falha no
+> set do cookie é engolida ([`firebase-session-cookies.ts:22`](../../lib/firebase-session-cookies.ts)
+> → catch de [`firebase-auth-context.tsx:189`](../../contexts/firebase-auth-context.tsx),
+> no-op em prod), o fetch de perfil é pulado e o middleware devolve o
+> usuário a `/login` na navegação seguinte — "login OK → volta pro login"
+> sem nenhuma mensagem. Evidência completa: [`B3-PRECHECK.md`](B3-PRECHECK.md) §3.
+> Fora do escopo do B3 por decisão (D8); enquanto a web viver, qualquer
+> trabalho de UI neste bloco começa aqui.
 
 Achados que **não recebem fix nunca**: específicos de browser/PWA/CSP,
 polish visual de uma UI cuja direção visual será substituída, e S3
@@ -1212,6 +1226,20 @@ fará PRs de rotas/contratos e a validação preview-first continua sendo o
 modelo. Revogação fica para o **fim do Bloco B** (ou para quando o
 preview-first deixar de ser necessário). O secret segue vivendo só em
 env no momento da execução, nunca em arquivo do repo.
+
+**⚠️ Alias `octavia-preview.vercel.app` APOSENTADO (B3/D0, 2026-08-28).**
+O pre-check do B3 mediu o alias apontando para um deployment **podre**
+(pré-B2-PR-3): validate-token respondia 400 em vez de 404, PUT
+content/[id] 401 em vez de 405 ([`B3-PRECHECK.md`](B3-PRECHECK.md) §0).
+Toda validação usa a **URL de branch**
+(`octavia-git-<branch>-marcelvianas-projects.vercel.app`); para medir a
+main, `octavia-git-main-…` — que serve o **mesmo deployment de produção**,
+logo vale para leitura, **nunca** para provocação de rate limit. A guarda
+do G2 foi reescrita como allowlist de URL de branch ≠ main
+([`g2-limiter-unico.spec.ts`](../../tests/ux-audit/fase-d/g2-limiter-unico.spec.ts)).
+Regra irmã, do mesmo ciclo: **probe que escreve captura leitura-prévia
+antes do primeiro write** (furo do pre-check do B3 no PATCH de profile,
+declarado e fechado no desenho §0.2).
 
 **Interferências de ambiente de preview** (lista viva — o preview injeta
 comportamento que prod não tem; **asserts de gate devem mirar o invariante
