@@ -230,11 +230,11 @@ describe('shape semente contra o middleware (camada 2 — byte-identidade)', () 
 
   // MUDANÇA DECLARADA do PR-1 (desenho §0.3-2 / §3.PR-1): o 400 sintético
   // (JSON inválido, corpo >1MB) passa pelo mapper único. Este assert já
-  // nasce no shape NOVO; com o middleware ATUAL (details crus com
-  // path/expected/received — literal medido no §0.3) ele falha — por isso
-  // o it.fails, que é o controle negativo CODIFICADO (regra nº 7).
-  // O commit 2 remove o .fails; nenhum outro caractere deste it muda.
-  it.fails('400 sintético (JSON inválido): shape novo via mapper único', async () => {
+  // nasce no shape NOVO; no commit 1 ele rodou como it.fails contra o
+  // middleware ATUAL (details crus com path/expected/received — literal
+  // medido no §0.3): o controle negativo CODIFICADO e executado (regra
+  // nº 7). O commit 2 removeu o .fails; nenhum outro caractere mudou.
+  it('400 sintético (JSON inválido): shape novo via mapper único', async () => {
     const handler = withPublicBodyValidation(schemaB3)(async () => new Response('ok'))
     const res = await handler(jsonRequest('não é json {{{'))
     expect(res.status).toBe(400)

@@ -4,6 +4,7 @@
 import { z } from 'zod'
 import { NextRequest, NextResponse } from 'next/server'
 import logger from './logger'
+import { authRequired, internalError, validationError } from './api-errors'
 import { requireAuthServerSecure } from './secure-auth-utils'
 import {
   checkRateLimit,
@@ -105,19 +106,9 @@ export function withValidation<T extends z.ZodSchema>(
             if (failLimit) {
               return rateLimited(failLimit)
             }
-            return new Response(
-              JSON.stringify({
-                error: 'Authentication required',
-                code: 'AUTH_REQUIRED'
-              }),
-              {
-                status: 401,
-                headers: {
-                  'Content-Type': 'application/json',
-                  'WWW-Authenticate': 'Bearer'
-                }
-              }
-            )
+            // B3 PR-1: construção delegada ao ponto único (byte-idêntica
+            // ao inline anterior — provado pela camada 2 do contract-errors)
+            return authRequired()
           }
 
           // B1.3: limite por uid, pós-auth
@@ -166,21 +157,11 @@ export function withValidation<T extends z.ZodSchema>(
             errors: validationResult.error.issues
           })
 
-          return new Response(
-            JSON.stringify({
-              error: 'Validation failed',
-              code: 'VALIDATION_ERROR',
-              details: validationResult.error.issues.map(issue => ({
-                field: issue.path.join('.'),
-                message: issue.message,
-                code: issue.code
-              }))
-            }),
-            {
-              status: 400,
-              headers: { 'Content-Type': 'application/json' }
-            }
-          )
+          // B3 PR-1: delegado ao ponto único. expandUnrecognizedKeys:false
+          // preserva o mapping antigo do unrecognized (um item, field:"")
+          // — exigência de byte-identidade do §4.1; o flip para o default
+          // do contrato (D7 por chave) é mudança declarada de PR posterior.
+          return validationError(validationResult.error, { expandUnrecognizedKeys: false })
         }
 
         // Call handler with validated data
@@ -188,30 +169,16 @@ export function withValidation<T extends z.ZodSchema>(
 
       } catch (error) {
         if (error instanceof ValidationError) {
-          return new Response(
-            JSON.stringify({
-              error: 'Validation failed',
-              code: 'VALIDATION_ERROR',
-              details: error.issues
-            }),
-            {
-              status: error.statusCode,
-              headers: { 'Content-Type': 'application/json' }
-            }
-          )
+          // B3 PR-1 (achado §0.3-2 do desenho): a issue sintética passa
+          // pelo mapper único — field:"" ("o corpo como um todo", reserva
+          // do contrato), morrem os path/expected/received crus. O
+          // statusCode da ValidationError sempre foi 400 (único valor
+          // construído); o code VALIDATION_ERROR fixa 400 por contrato.
+          return validationError(error.issues)
         }
 
         logger.error('Validation middleware error:', error)
-        return new Response(
-          JSON.stringify({
-            error: 'Internal server error',
-            code: 'INTERNAL_ERROR'
-          }),
-          {
-            status: 500,
-            headers: { 'Content-Type': 'application/json' }
-          }
-        )
+        return internalError()
       }
     }
   }

@@ -4,6 +4,7 @@ import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
 import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
 import { setlistSchemas } from '@/lib/api-schemas'
+import { validationError } from '@/lib/api-errors'
 
 // Type for song with joined setlist data
 type SongWithSetlist = {
@@ -177,22 +178,15 @@ const updateSongPositionHandler = async (
 
     // B2 PR-6: Zod na única rota que não tinha nenhum (pre-check §2.9).
     // A guarda antiga `!setlistId || !newPosition` lia newPosition: 0 como
-    // ausente (b7) e deixava string entrar na aritmética. Mesmo shape de
-    // erro do middleware (VALIDATION_ERROR + field).
+    // ausente (b7) e deixava string entrar na aritmética.
+    // B3 PR-1: a cópia manual do shape semente vira import do ponto único
+    // (primeiro cliente do helper fora do middleware). Mapper no default
+    // do contrato — em chave desconhecida, um detail POR CHAVE (D7);
+    // mudança declarada: rota morta na web (reorder é TODO no cliente),
+    // zero observadores medidos.
     const validation = setlistSchemas.updateSongPosition.safeParse(body)
     if (!validation.success) {
-      return NextResponse.json(
-        {
-          error: 'Validation failed',
-          code: 'VALIDATION_ERROR',
-          details: validation.error.issues.map((issue) => ({
-            field: issue.path.join('.'),
-            message: issue.message,
-            code: issue.code,
-          })),
-        },
-        { status: 400 }
-      )
+      return validationError(validation.error)
     }
     const { setlistId, newPosition } = validation.data
 
