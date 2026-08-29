@@ -115,3 +115,28 @@ describe('user-rate-limit (núcleo do sistema único)', () => {
     expect(getClientIp(new Request('https://x.example'))).toBe('unknown')
   })
 })
+
+// B3 PR-4/D4 — o 429 ganha code no corpo. it.fails contra o código atual
+// (corpo {error, retryAfter} sem code — literal medido no B3-PRECHECK
+// §2.8); o commit do flip remove o .fails. O gate de headers é de
+// INVARIÂNCIA (plain it): os 5 headers NÃO mudam no D4.
+describe('B3 contrato — 429 (PR-4/D4)', () => {
+  it.fails('corpo do 429 carrega code:"RATE_LIMITED" (+error +retryAfter)', async () => {
+    const r = checkRateLimit({ scope: 'user', id: 'uid-d4', familia: 'd4', config: { windowMs: 60_000, max: 0 } })
+    const body = await rateLimited(r).clone().json()
+    expect(body.error).toBe('Rate limit exceeded')
+    expect(body.code).toBe('RATE_LIMITED')
+    expect(body.retryAfter).toBeGreaterThan(0)
+  })
+
+  it('INVARIÂNCIA: os 5 headers do 429 ficam como estão (D4 não os toca)', () => {
+    const r = checkRateLimit({ scope: 'ip', id: 'ip-d4', familia: 'd4h', config: { windowMs: 60_000, max: 0 } })
+    const res = rateLimited(r)
+    expect(res.status).toBe(429)
+    expect(res.headers.get('X-RateLimit-Scope')).toBe('ip')
+    expect(res.headers.get('X-RateLimit-Limit')).toBe('0')
+    expect(res.headers.get('X-RateLimit-Remaining')).toBe('0')
+    expect(Number(res.headers.get('X-RateLimit-Reset'))).toBeGreaterThan(Date.now() - 1000)
+    expect(Number(res.headers.get('Retry-After'))).toBeGreaterThan(0)
+  })
+})
