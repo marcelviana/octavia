@@ -70,35 +70,35 @@ describe('B3 contrato — /api/setlists/songs/[songId] (PR-3a, semântica)', () 
     mockRequireAuthServerSecure.mockResolvedValue(USER)
   })
 
-  it.fails('G-D2 PUT: song de OUTRO usuário → 404 NOT_FOUND (hoje: 403 vazando existência)', async () => {
+  it('G-D2 PUT: song de OUTRO usuário → 404 NOT_FOUND (hoje: 403 vazando existência)', async () => {
     mockSingle.mockResolvedValue({ data: songDeOutroUsuario, error: null })
     const response = await PUT(putRequest())
     expect(response.status).toBe(404)
     expect(await response.clone().text()).toBe('{"error":"Song not found","code":"NOT_FOUND"}')
   })
 
-  it.fails('G-D2 DELETE: song de OUTRO usuário → 404 NOT_FOUND (hoje: throw → 500)', async () => {
+  it('G-D2 DELETE: song de OUTRO usuário → 404 NOT_FOUND (hoje: throw → 500)', async () => {
     mockSingle.mockResolvedValue({ data: songDeOutroUsuario, error: null })
     const response = await DELETE(deleteRequest())
     expect(response.status).toBe(404)
     expect(await response.clone().text()).toBe('{"error":"Song not found","code":"NOT_FOUND"}')
   })
 
-  it.fails('G-PGRST116 PUT: songId inexistente → 404 (hoje: throw → 500; ramo 404 morto)', async () => {
+  it('G-PGRST116 PUT: songId inexistente → 404 (hoje: throw → 500; ramo 404 morto)', async () => {
     mockSingle.mockResolvedValue(pgrst116)
     const response = await PUT(putRequest())
     expect(response.status).toBe(404)
     expect(await response.clone().text()).toBe('{"error":"Song not found","code":"NOT_FOUND"}')
   })
 
-  it.fails('G-PGRST116 DELETE: songId inexistente → 404 (hoje: throw → 500)', async () => {
+  it('G-PGRST116 DELETE: songId inexistente → 404 (hoje: throw → 500)', async () => {
     mockSingle.mockResolvedValue(pgrst116)
     const response = await DELETE(deleteRequest())
     expect(response.status).toBe(404)
     expect(await response.clone().text()).toBe('{"error":"Song not found","code":"NOT_FOUND"}')
   })
 
-  it.fails('SEM ORÁCULO: corpo do 404 cross-user é BYTE-IDÊNTICO ao do 404 inexistente (a prova do D2)', async () => {
+  it('SEM ORÁCULO: corpo do 404 cross-user é BYTE-IDÊNTICO ao do 404 inexistente (a prova do D2)', async () => {
     mockSingle.mockResolvedValueOnce({ data: songDeOutroUsuario, error: null })
     const crossUser = await (await PUT(putRequest())).text()
     mockSingle.mockResolvedValueOnce(pgrst116)
@@ -106,7 +106,7 @@ describe('B3 contrato — /api/setlists/songs/[songId] (PR-3a, semântica)', () 
     expect(crossUser).toBe(inexistente)
   })
 
-  it.fails('401 PUT: envelope authRequired (hoje: {"error":"Unauthorized"} sem code)', async () => {
+  it('401 PUT: envelope authRequired (hoje: {"error":"Unauthorized"} sem code)', async () => {
     mockRequireAuthServerSecure.mockResolvedValue(null)
     const response = await PUT(putRequest())
     expect(response.status).toBe(401)
@@ -116,7 +116,7 @@ describe('B3 contrato — /api/setlists/songs/[songId] (PR-3a, semântica)', () 
     )
   })
 
-  it.fails('401 DELETE: envelope authRequired (hoje: {"error":"Unauthorized"} sem code)', async () => {
+  it('401 DELETE: envelope authRequired (hoje: {"error":"Unauthorized"} sem code)', async () => {
     mockRequireAuthServerSecure.mockResolvedValue(null)
     const response = await DELETE(deleteRequest())
     expect(response.status).toBe(401)

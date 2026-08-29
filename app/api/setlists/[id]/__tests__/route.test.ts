@@ -201,7 +201,11 @@ describe('/api/setlists/[id]', () => {
       })
       const response = await PUT(request)
 
-      expect(response.status).toBe(500)
+      // B3 PR-3a: era 500 (throw no PGRST116, ramo 404 morto) — o nome
+      // deste teste finalmente virou verdade
+      expect(response.status).toBe(404)
+      const data = await response.clone().json()
+      expect(data.code).toBe('NOT_FOUND')
     })
 
     it('updates setlist successfully with valid data', async () => {
@@ -299,7 +303,7 @@ describe('/api/setlists/[id]', () => {
       expect(response.status).toBe(401)
     })
 
-    it('returns 404 when setlist is not found', async () => {
+    it('returns 500 on database error during delete (renomeado no B3 PR-3a: delete de inexistente real é 200 idempotente, sem .single(); o cenário do factory simula ERRO de banco, não ausência)', async () => {
       mockRequireAuthServerSecure.mockResolvedValue(mockUser)
       
       // Setup scenario where setlist is not found
@@ -372,7 +376,7 @@ describe('B3 contrato — /api/setlists/[id] (PR-3a, semântica)', () => {
     mockRequireAuthServerSecure.mockResolvedValue(mockUser)
   })
 
-  it.fails('G-malformado GET: id não-uuid → 400 VALIDATION_ERROR field:"id" (real atual: 500/22P02)', async () => {
+  it('G-malformado GET: id não-uuid → 400 VALIDATION_ERROR field:"id" (real atual: 500/22P02)', async () => {
     const request = new NextRequest('http://localhost:3000/api/setlists/not-a-uuid')
     const response = await GET(request)
     expect(response.status).toBe(400)
@@ -383,7 +387,7 @@ describe('B3 contrato — /api/setlists/[id] (PR-3a, semântica)', () => {
     ])
   })
 
-  it.fails('G-malformado PUT: id não-uuid → 400 field:"id" (real atual: 500/22P02)', async () => {
+  it('G-malformado PUT: id não-uuid → 400 field:"id" (real atual: 500/22P02)', async () => {
     const request = new NextRequest('http://localhost:3000/api/setlists/not-a-uuid', {
       method: 'PUT',
       headers: { 'content-type': 'application/json' },
@@ -396,7 +400,7 @@ describe('B3 contrato — /api/setlists/[id] (PR-3a, semântica)', () => {
     expect(data.details[0].field).toBe('id')
   })
 
-  it.fails('G-malformado DELETE: id não-uuid → 400 field:"id" (real atual: 500/22P02)', async () => {
+  it('G-malformado DELETE: id não-uuid → 400 field:"id" (real atual: 500/22P02)', async () => {
     const request = new NextRequest('http://localhost:3000/api/setlists/not-a-uuid', {
       method: 'DELETE',
     })
@@ -410,7 +414,7 @@ describe('B3 contrato — /api/setlists/[id] (PR-3a, semântica)', () => {
   // MUDANÇA EXTRA da mesma classe PGRST116, declarada no checkpoint do
   // PR-3a: PUT em setlist inexistente hoje faz throw → 500 (o teste
   // legado ':204' codificava o defeito com nome de 404). Vira 404 real.
-  it.fails('PGRST116 PUT: uuid válido inexistente → 404 "Setlist not found" (hoje: 500)', async () => {
+  it('PGRST116 PUT: uuid válido inexistente → 404 "Setlist not found" (hoje: 500)', async () => {
     const errorScenarios = createErrorScenarios(factory)
     errorScenarios.setlistNotFound()
     const request = new NextRequest(`http://localhost:3000/api/setlists/${TEST_IDS.SETLIST_1}`, {
