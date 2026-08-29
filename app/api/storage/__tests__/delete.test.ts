@@ -130,7 +130,8 @@ describe('/api/storage/delete', () => {
       
       const data = await getJsonResponse(response)
       expect(data.error).toBe('Validation failed')
-      expect(data.details[0]).toContain('filename')
+      // B3 PR-2: details estruturado (era string[])
+      expect(data.details[0].field).toBe('filename')
     })
 
     it('prevents deletion with invalid filename format', async () => {
@@ -151,7 +152,8 @@ describe('/api/storage/delete', () => {
       
       const data = await getJsonResponse(response)
       expect(data.error).toBe('Validation failed')
-      expect(data.details).toContain('Invalid filename format')
+      // B3 PR-2: details estruturado (era string[])
+      expect(data.details[0]).toEqual({ field: 'filename', message: 'Invalid filename format', code: 'custom' })
     })
 
     it('prevents path traversal attacks', async () => {
@@ -172,7 +174,9 @@ describe('/api/storage/delete', () => {
       
       const data = await getJsonResponse(response)
       expect(data.error).toBe('Validation failed')
-      expect(data.details[0]).toContain('path traversal detected')
+      // B3 PR-2: details estruturado (era string[])
+      expect(data.details[0].field).toBe('filename')
+      expect(data.details[0].message).toContain('path traversal detected')
     })
 
     it('G1/D6: erro do storage vira 500 genérico — a mensagem interna do Supabase NÃO vaza', async () => {
@@ -255,14 +259,16 @@ describe('/api/storage/delete', () => {
       
       const data = await getJsonResponse(response)
       expect(data.error).toBe('Validation failed')
-      expect(data.details[0]).toContain('path traversal detected')
+      // B3 PR-2: details estruturado (era string[])
+      expect(data.details[0].field).toBe('filename')
+      expect(data.details[0].message).toContain('path traversal detected')
     })
   })
 }) 
 // B3 PR-2 — shapes do contrato em /api/storage/delete. it.fails contra o
 // código atual; a migração remove o .fails.
 describe('B3 contrato — /api/storage/delete (PR-2)', () => {
-  it.fails('401 sem header: envelope authRequired (hoje: família {error,message,timestamp} do utils)', async () => {
+  it('401 sem header: envelope authRequired (hoje: família {error,message,timestamp} do utils)', async () => {
     const { POST } = await import('../delete/route')
     const request = createMockRequest('http://localhost/api/storage/delete', {
       method: 'POST',
@@ -276,7 +282,7 @@ describe('B3 contrato — /api/storage/delete (PR-2)', () => {
     )
   })
 
-  it.fails('400 path traversal: details ESTRUTURADO com field:"filename" (hoje: details:string[])', async () => {
+  it('400 path traversal: details ESTRUTURADO com field:"filename" (hoje: details:string[])', async () => {
     const { POST } = await import('../delete/route')
     const request = createAuthenticatedRequest(
       'http://localhost/api/storage/delete',

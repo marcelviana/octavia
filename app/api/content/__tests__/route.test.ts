@@ -185,7 +185,9 @@ describe('/api/content', () => {
       expectUnauthorized(response)
       
       const data = await getJsonResponse(response)
-      expect(data.error).toBe('Unauthorized')
+      // B3 PR-2: 401 unificado no envelope (era 'Unauthorized' do utils)
+      expect(data.error).toBe('Authentication required')
+      expect(data.code).toBe('AUTH_REQUIRED')
     })
 
     it('handles database errors gracefully', async () => {
@@ -204,7 +206,9 @@ describe('/api/content', () => {
       expect(response.status).toBe(500)
       
       const data = await getJsonResponse(response)
-      expect(data.error).toBe('Server error')
+      // B3 PR-2: era {error:'Server error',message,timestamp} do utils
+      expect(data.error).toBe('Failed to fetch content')
+      expect(data.code).toBe('INTERNAL_ERROR')
     })
 
     it('supports pagination with limit and offset', async () => {
@@ -366,7 +370,9 @@ describe('/api/content', () => {
       expect(response.status).toBe(500) // Server error
       
       const data = await getJsonResponse(response)
-      expect(data.error).toBe('Server error')
+      // B3 PR-2: era {error:'Server error',message,timestamp} do utils
+      expect(data.error).toBe('Failed to create content')
+      expect(data.code).toBe('INTERNAL_ERROR')
     })
 
     it('validates content type is allowed', async () => {
@@ -404,7 +410,7 @@ describe('B3 contrato — /api/content (PR-2)', () => {
     vi.clearAllMocks()
   })
 
-  it.fails('401 GET sem credencial: envelope authRequired + WWW-Authenticate', async () => {
+  it('401 GET sem credencial: envelope authRequired + WWW-Authenticate', async () => {
     const { GET } = await import('../route')
     const response = await GET(createMockRequest('http://localhost/api/content'))
     expect(response.status).toBe(401)
@@ -414,7 +420,7 @@ describe('B3 contrato — /api/content (PR-2)', () => {
     )
   })
 
-  it.fails('500 GET com erro de banco: envelope INTERNAL_ERROR', async () => {
+  it('500 GET com erro de banco: envelope INTERNAL_ERROR', async () => {
     mockRange.mockResolvedValue({ data: null, error: { message: 'Database connection failed' } })
     const { GET } = await import('../route')
     const response = await GET(createValidAuthenticatedRequest('http://localhost/api/content'))
@@ -424,7 +430,7 @@ describe('B3 contrato — /api/content (PR-2)', () => {
     )
   })
 
-  it.fails('400 POST título faltando: semente com field real', async () => {
+  it('400 POST título faltando: semente com field real', async () => {
     const { POST } = await import('../route')
     const response = await POST(
       createValidAuthenticatedRequest('http://localhost/api/content', {
@@ -438,7 +444,7 @@ describe('B3 contrato — /api/content (PR-2)', () => {
     expect(data.details).toEqual([{ field: 'title', message: 'Required', code: 'invalid_type' }])
   })
 
-  it.fails('400 POST com chaves desconhecidas: D7 — um detail POR CHAVE', async () => {
+  it('400 POST com chaves desconhecidas: D7 — um detail POR CHAVE', async () => {
     const { POST } = await import('../route')
     const response = await POST(
       createValidAuthenticatedRequest('http://localhost/api/content', {
@@ -455,7 +461,7 @@ describe('B3 contrato — /api/content (PR-2)', () => {
     ])
   })
 
-  it.fails('G-guard (decisão B): corpo de 2MB no POST → 400 field:"" — hoje é PARSEADO', async () => {
+  it('G-guard (decisão B): corpo de 2MB no POST → 400 field:"" — hoje é PARSEADO', async () => {
     const big = 'x'.repeat(2 * 1024 * 1024)
     const { POST } = await import('../route')
     const response = await POST(
@@ -472,7 +478,7 @@ describe('B3 contrato — /api/content (PR-2)', () => {
     ])
   })
 
-  it.fails('404 PUT inexistente: literal NOVO "Content not found" (emenda 5)', async () => {
+  it('404 PUT inexistente: literal NOVO "Content not found" (emenda 5)', async () => {
     mockUpdate.mockReturnValue({ eq: mockEq })
     mockSingle.mockResolvedValue({
       data: null,
@@ -489,7 +495,7 @@ describe('B3 contrato — /api/content (PR-2)', () => {
     expect(await response.clone().text()).toBe('{"error":"Content not found","code":"NOT_FOUND"}')
   })
 
-  it.fails('400 DELETE id malformado: VALIDATION_ERROR com field:"id" (emenda 4)', async () => {
+  it('400 DELETE id malformado: VALIDATION_ERROR com field:"id" (emenda 4)', async () => {
     const { DELETE } = await import('../route')
     const response = await DELETE(
       createValidAuthenticatedRequest('http://localhost/api/content?id=not-a-uuid', {

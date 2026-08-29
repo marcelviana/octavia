@@ -104,7 +104,7 @@ describe('B3 contrato — /api/storage/upload (PR-2)', () => {
     return POST(request)
   }
 
-  it.fails('401 sem credencial: envelope authRequired (hoje: sem code, sem WWW-Authenticate)', async () => {
+  it('401 sem credencial: envelope authRequired (hoje: sem code, sem WWW-Authenticate)', async () => {
     const { requireAuthServerSecure } = await import('@/lib/secure-auth-utils')
     vi.mocked(requireAuthServerSecure).mockResolvedValueOnce(null)
     const response = await makeUpload()
@@ -115,7 +115,7 @@ describe('B3 contrato — /api/storage/upload (PR-2)', () => {
     )
   })
 
-  it.fails('400 sem arquivo: VALIDATION_ERROR com field:"file" (hoje: {"error":"No file provided"})', async () => {
+  it('400 sem arquivo: VALIDATION_ERROR com field:"file" (hoje: {"error":"No file provided"})', async () => {
     const response = await makeUpload(false)
     expect(response.status).toBe(400)
     const data = (await response.json()) as { code?: string; details?: unknown }
@@ -125,7 +125,7 @@ describe('B3 contrato — /api/storage/upload (PR-2)', () => {
     ])
   })
 
-  it.fails('G1-upload: error.message do Supabase NÃO vaza (hoje: "Upload failed: <msg>")', async () => {
+  it('G1-upload: error.message do Supabase NÃO vaza (hoje: "Upload failed: <msg>")', async () => {
     const mockUpload = vi.fn(async () => ({
       data: null,
       error: { message: 'SENTINELA-upload-supabase' },

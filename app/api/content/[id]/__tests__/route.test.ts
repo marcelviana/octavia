@@ -239,8 +239,10 @@ describe('/api/content/[id]', () => {
 
       const { DELETE } = await import('../route')
       
+      // B3 PR-2: 'nonexistent' é id MALFORMADO (hoje 400 field:"id");
+      // o caso 404 exige uuid válido inexistente
       const request = createValidAuthenticatedRequest(
-        'http://localhost/api/content/nonexistent',
+        'http://localhost/api/content/00000000-0000-4000-8000-000000000000',
         {
           method: 'DELETE'
         }
@@ -283,7 +285,7 @@ describe('B3 contrato — /api/content/[id] (PR-2)', () => {
     vi.clearAllMocks()
   })
 
-  it.fails('401 GET sem credencial: envelope authRequired (hoje: {"error":"Unauthorized"} sem code)', async () => {
+  it('401 GET sem credencial: envelope authRequired (hoje: {"error":"Unauthorized"} sem code)', async () => {
     const { GET } = await import('../route')
     const response = await GET(
       createMockRequest(`http://localhost/api/content/${TEST_CONTENT.id}`)
@@ -295,7 +297,7 @@ describe('B3 contrato — /api/content/[id] (PR-2)', () => {
     )
   })
 
-  it.fails('400 GET id malformado: VALIDATION_ERROR com field:"id" (emenda 4)', async () => {
+  it('400 GET id malformado: VALIDATION_ERROR com field:"id" (emenda 4)', async () => {
     const { GET } = await import('../route')
     const response = await GET(
       createValidAuthenticatedRequest('http://localhost/api/content/not-a-uuid')
@@ -308,7 +310,7 @@ describe('B3 contrato — /api/content/[id] (PR-2)', () => {
     ])
   })
 
-  it.fails('404 GET uuid inexistente: literal NOVO "Content not found" (emenda 5)', async () => {
+  it('404 GET uuid inexistente: literal NOVO "Content not found" (emenda 5)', async () => {
     mockSingle.mockResolvedValue({
       data: null,
       error: { code: 'PGRST116', message: 'No rows found' },

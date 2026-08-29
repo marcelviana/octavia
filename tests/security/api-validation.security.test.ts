@@ -9,7 +9,6 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { NextRequest } from 'next/server'
 import { withBodyValidation } from '@/lib/api-validation-middleware'
 import { contentSchemas, setlistSchemas, authSchemas } from '@/lib/api-schemas'
-import { createValidationErrorResponse } from '@/lib/validation-utils'
 
 // Mock user for authentication tests (hoisted for vi.mock)
 const mockUser = vi.hoisted(() => ({ uid: 'test-user-123', email: 'test@example.com' }))
