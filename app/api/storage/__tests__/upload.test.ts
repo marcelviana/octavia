@@ -76,3 +76,66 @@ describe('/api/storage/upload', () => {
     expect(response.status).toBe(401)
   })
 })
+// B3 PR-2 — shapes do contrato em /api/storage/upload. it.fails contra o
+// código atual (controle negativo codificado); a migração remove o .fails.
+// Inclui o ACHADO do PR-2: upload/route.ts:102 interpola error.message do
+// Supabase na resposta — segunda instância da classe D6 (o pre-check §2.9
+// declarava o delete como ponto único; corrigido no relatório do PR-2).
+vi.mock('@/lib/secure-auth-utils', () => ({
+  requireAuthServerSecure: vi.fn(async () => ({ uid: 'test-user-b3', email: 'b3@test.local' })),
+}))
+
+describe('B3 contrato — /api/storage/upload (PR-2)', () => {
+  const makeUpload = async (withFile = true, storageMock?: unknown) => {
+    const { getSupabaseServiceClient } = await import('@/lib/supabase-service')
+    if (storageMock) {
+      vi.mocked(getSupabaseServiceClient).mockReturnValue(storageMock as never)
+    }
+    const { POST } = await import('../upload/route')
+    const form = new FormData()
+    if (withFile) {
+      form.append('file', new File(['%PDF-1.4 b3'], 'b3.pdf', { type: 'application/pdf' }))
+      form.append('filename', 'b3.pdf')
+    }
+    const request = new NextRequest('http://localhost/api/storage/upload', {
+      method: 'POST',
+      body: form,
+    })
+    return POST(request)
+  }
+
+  it.fails('401 sem credencial: envelope authRequired (hoje: sem code, sem WWW-Authenticate)', async () => {
+    const { requireAuthServerSecure } = await import('@/lib/secure-auth-utils')
+    vi.mocked(requireAuthServerSecure).mockResolvedValueOnce(null)
+    const response = await makeUpload()
+    expect(response.status).toBe(401)
+    expect(response.headers.get('WWW-Authenticate')).toBe('Bearer')
+    expect(await response.clone().text()).toBe(
+      '{"error":"Authentication required","code":"AUTH_REQUIRED"}'
+    )
+  })
+
+  it.fails('400 sem arquivo: VALIDATION_ERROR com field:"file" (hoje: {"error":"No file provided"})', async () => {
+    const response = await makeUpload(false)
+    expect(response.status).toBe(400)
+    const data = (await response.json()) as { code?: string; details?: unknown }
+    expect(data.code).toBe('VALIDATION_ERROR')
+    expect(data.details).toEqual([
+      { field: 'file', message: 'No file provided', code: 'invalid_type' },
+    ])
+  })
+
+  it.fails('G1-upload: error.message do Supabase NÃO vaza (hoje: "Upload failed: <msg>")', async () => {
+    const mockUpload = vi.fn(async () => ({
+      data: null,
+      error: { message: 'SENTINELA-upload-supabase' },
+    }))
+    const response = await makeUpload(true, {
+      storage: { from: () => ({ upload: mockUpload, getPublicUrl: vi.fn() }) },
+    })
+    expect(response.status).toBe(500)
+    const raw = await response.clone().text()
+    expect(raw).not.toContain('SENTINELA-upload-supabase')
+    expect(raw).toBe('{"error":"File upload failed","code":"INTERNAL_ERROR"}')
+  })
+})

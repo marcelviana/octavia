@@ -391,3 +391,114 @@ describe('/api/content', () => {
     })
   })
 }) 
+// ————————————————————————————————————————————————————————————————
+// B3 PR-2 — shapes do contrato (docs/api/CONTRATO-DE-ERRO.md) em
+// /api/content. Nascem como it.fails contra o código ATUAL (controle
+// negativo codificado, técnica do PR-1); o commit de migração remove os
+// .fails sem tocar nenhum outro caractere. Falha esperada hoje: família
+// {error,message,timestamp} e details:string[] do validation-utils
+// (literais no B3-PRECHECK §2.1/2.2) e o 2MB parseado (§0.3 do desenho).
+// ————————————————————————————————————————————————————————————————
+describe('B3 contrato — /api/content (PR-2)', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
+
+  it.fails('401 GET sem credencial: envelope authRequired + WWW-Authenticate', async () => {
+    const { GET } = await import('../route')
+    const response = await GET(createMockRequest('http://localhost/api/content'))
+    expect(response.status).toBe(401)
+    expect(response.headers.get('WWW-Authenticate')).toBe('Bearer')
+    expect(await response.clone().text()).toBe(
+      '{"error":"Authentication required","code":"AUTH_REQUIRED"}'
+    )
+  })
+
+  it.fails('500 GET com erro de banco: envelope INTERNAL_ERROR', async () => {
+    mockRange.mockResolvedValue({ data: null, error: { message: 'Database connection failed' } })
+    const { GET } = await import('../route')
+    const response = await GET(createValidAuthenticatedRequest('http://localhost/api/content'))
+    expect(response.status).toBe(500)
+    expect(await response.clone().text()).toBe(
+      '{"error":"Failed to fetch content","code":"INTERNAL_ERROR"}'
+    )
+  })
+
+  it.fails('400 POST título faltando: semente com field real', async () => {
+    const { POST } = await import('../route')
+    const response = await POST(
+      createValidAuthenticatedRequest('http://localhost/api/content', {
+        method: 'POST',
+        body: { content_type: 'Lyrics' },
+      })
+    )
+    expect(response.status).toBe(400)
+    const data = await getJsonResponse(response)
+    expect(data.code).toBe('VALIDATION_ERROR')
+    expect(data.details).toEqual([{ field: 'title', message: 'Required', code: 'invalid_type' }])
+  })
+
+  it.fails('400 POST com chaves desconhecidas: D7 — um detail POR CHAVE', async () => {
+    const { POST } = await import('../route')
+    const response = await POST(
+      createValidAuthenticatedRequest('http://localhost/api/content', {
+        method: 'POST',
+        body: { title: 'b3', content_type: 'Lyrics', __b3_x__: 1, __b3_y__: 2 },
+      })
+    )
+    expect(response.status).toBe(400)
+    const data = await getJsonResponse(response)
+    expect(data.code).toBe('VALIDATION_ERROR')
+    expect(data.details).toEqual([
+      { field: '__b3_x__', message: "Unrecognized key: '__b3_x__'", code: 'unrecognized_keys' },
+      { field: '__b3_y__', message: "Unrecognized key: '__b3_y__'", code: 'unrecognized_keys' },
+    ])
+  })
+
+  it.fails('G-guard (decisão B): corpo de 2MB no POST → 400 field:"" — hoje é PARSEADO', async () => {
+    const big = 'x'.repeat(2 * 1024 * 1024)
+    const { POST } = await import('../route')
+    const response = await POST(
+      createValidAuthenticatedRequest('http://localhost/api/content', {
+        method: 'POST',
+        body: { title: 'b3-guard', content_type: 'Lyrics', notes: big },
+      })
+    )
+    expect(response.status).toBe(400)
+    const data = await getJsonResponse(response)
+    expect(data.code).toBe('VALIDATION_ERROR')
+    expect(data.details).toEqual([
+      { field: '', message: 'Invalid request body format', code: 'invalid_type' },
+    ])
+  })
+
+  it.fails('404 PUT inexistente: literal NOVO "Content not found" (emenda 5)', async () => {
+    mockUpdate.mockReturnValue({ eq: mockEq })
+    mockSingle.mockResolvedValue({
+      data: null,
+      error: { code: 'PGRST116', message: 'No rows found' },
+    })
+    const { PUT } = await import('../route')
+    const response = await PUT(
+      createValidAuthenticatedRequest('http://localhost/api/content', {
+        method: 'PUT',
+        body: { id: '00000000-0000-4000-8000-000000000000', title: 'x' },
+      })
+    )
+    expect(response.status).toBe(404)
+    expect(await response.clone().text()).toBe('{"error":"Content not found","code":"NOT_FOUND"}')
+  })
+
+  it.fails('400 DELETE id malformado: VALIDATION_ERROR com field:"id" (emenda 4)', async () => {
+    const { DELETE } = await import('../route')
+    const response = await DELETE(
+      createValidAuthenticatedRequest('http://localhost/api/content?id=not-a-uuid', {
+        method: 'DELETE',
+      })
+    )
+    expect(response.status).toBe(400)
+    const data = await getJsonResponse(response)
+    expect(data.code).toBe('VALIDATION_ERROR')
+    expect(data.details[0].field).toBe('id')
+  })
+})
