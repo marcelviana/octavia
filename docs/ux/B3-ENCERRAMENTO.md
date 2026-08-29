@@ -149,3 +149,23 @@ meia-linha na seção Envelope do contrato sobre codes que declaram campos
 adicionais (caso do `retryAfter`) · confirmação do D4 em prod é indireta
 (sem provocação de 429 em prod, por guarda; o código é o mesmo do branch
 e o corpo tem contract test — limitação declarada no registro).
+
+---
+
+## Rodapé — três lacunas cosméticas da tabela (registro do revisor, aval final do B3)
+
+1. **`/api/health` sem linha própria**: a única classe de erro alcançável
+   da rota é o **429 por IP** (120/min) — mesma `rateLimited()` da linha
+   do session DELETE (assinatura idêntica, coberta pelos contract tests
+   do limiter e pelo G2). O caminho feliz é 200 e não pertence à tabela.
+2. **Upload-400 re-medido** `[medido em prod, 2026-08-29, 400 sem
+   escrita]`: `POST /api/storage/upload` sem arquivo →
+   `{"error":"Validation failed","code":"VALIDATION_ERROR","details":[{"field":"file","message":"No file provided","code":"invalid_type"}]}`.
+3. **500s provados por gate, não por probe**: os catch-alls genéricos
+   (`INTERNAL_ERROR`) de cada rota não têm linha própria porque provocar
+   falha real de banco/storage em preview exige estado destrutivo — o
+   shape é provado pelos gates unitários com mock (G-content/storage,
+   G1/D6 com sentinela ×2, 500 do middleware na camada 2 do
+   contract-errors) e pelas duas linhas de 500 medidas ao vivo (proxy
+   upstream; a do pre-check §2.9). Cláusula: todo 500 sai de
+   `internalError()` — mensagem genérica por construção.
