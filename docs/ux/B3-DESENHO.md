@@ -307,6 +307,15 @@ Rotas vivas (delete-song é fluxo real; reorder é morto na web) → replay
 verbatim: add/remove song do fluxo do `setlist-manager`, e os casos de
 erro por probe.
 
+> **[REGISTRO da execução, aval do PR-3a, 2026-08-29]** (a) **Mudança
+> extra executada**, mesma classe PGRST116: `PUT /api/setlists/[id]` em
+> setlist inexistente era `throw` → 500 (o teste legado codificava o
+> defeito com nome de 404) → agora **404 real** `NOT_FOUND`. (b)
+> **Comportamento observável do contrato**: `DELETE` de recurso
+> inexistente (setlist E content, rotas sem `.single()` no delete) é
+> **200 idempotente** `{success:true}` — o cliente nativo O VERÁ; se um
+> dia virar 404, é **mudança de contrato**, não bugfix.
+
 ### PR-3b — envelope mecânico: setlists restantes + profile + session
 
 Rotas: `GET /api/setlists`, `POST /api/setlists` (os 400/500 custom do
