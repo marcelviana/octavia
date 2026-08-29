@@ -266,3 +266,51 @@ describe('/api/setlists', () => {
     })
   })
 })
+
+// B3 PR-3b — envelope mecânico em /api/setlists. it.fails contra o código
+// atual (controle negativo codificado); o commit do flip remove os .fails.
+// O gate do 400 custom do POST é de INVARIÂNCIA (plain it): o handler já
+// monta o shape semente à mão — a migração para validationError() deve
+// ser byte-idêntica (verde antes E depois).
+describe('B3 contrato — /api/setlists (PR-3b)', () => {
+  it.fails('401 GET: envelope authRequired (hoje: {"error":"Unauthorized"} sem code)', async () => {
+    mockRequireAuthServerSecure.mockResolvedValueOnce(null)
+    const request = new NextRequest('http://localhost:3000/api/setlists')
+    const response = await GET(request)
+    expect(response.status).toBe(401)
+    expect(response.headers.get('WWW-Authenticate')).toBe('Bearer')
+    expect(await response.clone().text()).toBe(
+      '{"error":"Authentication required","code":"AUTH_REQUIRED"}'
+    )
+  })
+
+  it.fails('500 GET: envelope INTERNAL_ERROR (hoje: sem code)', async () => {
+    mockRequireAuthServerSecure.mockResolvedValueOnce(mockUser)
+    const errorScenarios = createErrorScenarios(factory)
+    errorScenarios.databaseError()
+    const request = new NextRequest('http://localhost:3000/api/setlists')
+    const response = await GET(request)
+    expect(response.status).toBe(500)
+    expect(await response.clone().text()).toBe(
+      '{"error":"Internal server error","code":"INTERNAL_ERROR"}'
+    )
+  })
+
+  it('INVARIÂNCIA: 400 custom do POST (posse de songs) já é semente à mão — migração deve ser byte-idêntica', async () => {
+    mockRequireAuthServerSecure.mockResolvedValue(mockUser)
+    factory.setMockData('content', []) // nenhum content pertence ao user
+    const request = new NextRequest('http://localhost:3000/api/setlists', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        name: 'b3-3b',
+        songs: [{ content_id: '33333333-3333-4333-8333-333333333333' }],
+      }),
+    })
+    const response = await POST(request)
+    expect(response.status).toBe(400)
+    expect(await response.clone().text()).toBe(
+      '{"error":"Validation failed","code":"VALIDATION_ERROR","details":[{"field":"songs","message":"One or more content_id do not exist or do not belong to the user","code":"custom"}]}'
+    )
+  })
+})

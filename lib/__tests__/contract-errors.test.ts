@@ -234,6 +234,30 @@ describe('shape semente contra o middleware (camada 2 — byte-identidade)', () 
   // middleware ATUAL (details crus com path/expected/received — literal
   // medido no §0.3): o controle negativo CODIFICADO e executado (regra
   // nº 7). O commit 2 removeu o .fails; nenhum outro caractere mudou.
+  // B3 PR-3b — G-flip (it.fails no c1; o flip do commit 2 remove o .fails):
+  // o caminho de validação do middleware passa ao DEFAULT do contrato.
+  // Controle negativo: o literal field:"" atual (pre-check §2.2), que o
+  // assert legado acima ainda codifica até o flip.
+  it.fails('G-flip: UMA chave desconhecida via middleware → field:"<chave>" (D7 default)', async () => {
+    const handler = withPublicBodyValidation(schemaB3)(async () => new Response('ok'))
+    const res = await handler(jsonRequest(JSON.stringify({ name: 'x', __b3_unknown__: 1 })))
+    expect(res.status).toBe(400)
+    expect(await res.clone().text()).toBe(
+      '{"error":"Validation failed","code":"VALIDATION_ERROR","details":[{"field":"__b3_unknown__","message":"Unrecognized key: \'__b3_unknown__\'","code":"unrecognized_keys"}]}'
+    )
+  })
+
+  it.fails('G-flip: DUAS chaves desconhecidas via middleware → dois details nomeados (D7 pleno)', async () => {
+    const handler = withPublicBodyValidation(schemaB3)(async () => new Response('ok'))
+    const res = await handler(jsonRequest(JSON.stringify({ name: 'x', __b3_x__: 1, __b3_y__: 2 })))
+    expect(res.status).toBe(400)
+    const body = await res.clone().json()
+    expect(body.details).toEqual([
+      { field: '__b3_x__', message: "Unrecognized key: '__b3_x__'", code: 'unrecognized_keys' },
+      { field: '__b3_y__', message: "Unrecognized key: '__b3_y__'", code: 'unrecognized_keys' },
+    ])
+  })
+
   it('400 sintético (JSON inválido): shape novo via mapper único', async () => {
     const handler = withPublicBodyValidation(schemaB3)(async () => new Response('ok'))
     const res = await handler(jsonRequest('não é json {{{'))

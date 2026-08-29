@@ -343,3 +343,21 @@ describe('/api/auth/session', () => {
     })
   })
 }) 
+// B3 PR-3b — session no envelope: a mensagem 'Invalid or expired token'
+// FICA (exceção deliberada do desenho §2.4); ganha code AUTH_REQUIRED +
+// WWW-Authenticate. it.fails contra o código atual (sem code/header).
+describe('B3 contrato — /api/auth/session (PR-3b)', () => {
+  it.fails('401 token inválido: mensagem mantida + code + WWW-Authenticate', async () => {
+    const { POST } = await import('../session/route')
+    const request = createMockRequest('http://localhost/api/auth/session', {
+      method: 'POST',
+      body: { idToken: 'invalid-token' },
+    })
+    const response = await POST(request)
+    expect(response.status).toBe(401)
+    expect(response.headers.get('WWW-Authenticate')).toBe('Bearer')
+    expect(await response.clone().text()).toBe(
+      '{"error":"Invalid or expired token","code":"AUTH_REQUIRED"}'
+    )
+  })
+})

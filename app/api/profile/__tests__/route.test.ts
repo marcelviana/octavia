@@ -488,3 +488,21 @@ describe('/api/profile', () => {
     })
   })
 })
+
+// B3 PR-3b — envelope mecânico em /api/profile (o inline; o middleware já
+// fala o contrato desde o PR-1). it.fails contra o código atual.
+describe('B3 contrato — /api/profile (PR-3b)', () => {
+  it.fails('401 GET: envelope authRequired (hoje: {"error":"Unauthorized"} inline sem code)', async () => {
+    mockRequireAuthServerSecure.mockResolvedValueOnce(null)
+    const request = new NextRequest('http://localhost:3000/api/profile', {
+      headers: { authorization: 'Bearer invalid-token' },
+    })
+    const { GET } = await import('../route')
+    const response = await GET(request)
+    expect(response.status).toBe(401)
+    expect(response.headers.get('WWW-Authenticate')).toBe('Bearer')
+    expect(await response.clone().text()).toBe(
+      '{"error":"Authentication required","code":"AUTH_REQUIRED"}'
+    )
+  })
+})
