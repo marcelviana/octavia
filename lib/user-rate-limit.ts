@@ -24,6 +24,8 @@
  * pelos funis de auth.
  */
 
+import { apiError } from './api-errors'
+
 export interface RateLimitConfig {
   windowMs: number
   max: number
@@ -114,23 +116,24 @@ export function checkRateLimit(opts: {
   }
 }
 
-/** Resposta 429 estruturada com a assinatura do sistema único. */
+/**
+ * Resposta 429 estruturada com a assinatura do sistema único.
+ * B3 PR-4/D4: corpo pelo ponto único — ganha code:'RATE_LIMITED';
+ * retryAfter e os 5 headers ficam como estão. Direção de import
+ * user-rate-limit → api-errors (api-errors é Response puro, sem ciclo).
+ */
 export function rateLimited(result: RateLimitResult): Response {
   const retryAfter = Math.max(1, Math.ceil((result.resetTime - Date.now()) / 1000))
-  return new Response(
-    JSON.stringify({ error: 'Rate limit exceeded', retryAfter }),
-    {
-      status: 429,
-      headers: {
-        'Content-Type': 'application/json',
-        'X-RateLimit-Limit': String(result.limit),
-        'X-RateLimit-Remaining': String(result.remaining),
-        'X-RateLimit-Reset': String(result.resetTime),
-        'X-RateLimit-Scope': result.scope,
-        'Retry-After': String(retryAfter),
-      },
-    }
-  )
+  return apiError('RATE_LIMITED', 'Rate limit exceeded', {
+    extra: { retryAfter },
+    headers: {
+      'X-RateLimit-Limit': String(result.limit),
+      'X-RateLimit-Remaining': String(result.remaining),
+      'X-RateLimit-Reset': String(result.resetTime),
+      'X-RateLimit-Scope': result.scope,
+      'Retry-After': String(retryAfter),
+    },
+  })
 }
 
 /** Atalho das rotas: null = dentro do limite; Response = 429 pronta. */

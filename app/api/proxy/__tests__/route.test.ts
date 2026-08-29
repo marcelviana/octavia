@@ -32,6 +32,9 @@ function req(url?: string) {
 describe('B3 contrato — /api/proxy (PR-4)', () => {
   beforeEach(() => {
     vi.stubEnv('NEXT_PUBLIC_SUPABASE_URL', SUPA)
+    // o test-setup global fixa ALLOWED_PROXY_HOSTS='localhost,127.0.0.1';
+    // os probes deste arquivo miram o host do SUPA
+    vi.stubEnv('ALLOWED_PROXY_HOSTS', 'mlx-teste.supabase.co')
     vi.unstubAllGlobals()
     mockRequireAuthServerSecure.mockResolvedValue(USER)
   })
@@ -40,7 +43,7 @@ describe('B3 contrato — /api/proxy (PR-4)', () => {
     vi.unstubAllGlobals()
   })
 
-  it.fails('401 sem credencial: envelope authRequired (hoje: texto "Authentication required")', async () => {
+  it('401 sem credencial: envelope authRequired (hoje: texto "Authentication required")', async () => {
     mockRequireAuthServerSecure.mockResolvedValueOnce(null)
     const res = await GET(req(`${SUPA}/storage/x.pdf`))
     expect(res.status).toBe(401)
@@ -49,7 +52,7 @@ describe('B3 contrato — /api/proxy (PR-4)', () => {
     expect(await res.clone().text()).toBe('{"error":"Authentication required","code":"AUTH_REQUIRED"}')
   })
 
-  it.fails('400 url ausente: VALIDATION_ERROR com details field:"url" (hoje: texto "Missing url")', async () => {
+  it('400 url ausente: VALIDATION_ERROR com details field:"url" (hoje: texto "Missing url")', async () => {
     const res = await GET(req())
     expect(res.status).toBe(400)
     const body = await res.clone().json()
@@ -59,7 +62,7 @@ describe('B3 contrato — /api/proxy (PR-4)', () => {
     ])
   })
 
-  it.fails('400 host fora da allowlist: details field:"url" (hoje: texto "URL not allowed…")', async () => {
+  it('400 host fora da allowlist: details field:"url" (hoje: texto "URL not allowed…")', async () => {
     const res = await GET(req('https://evil.example.com/x.pdf'))
     expect(res.status).toBe(400)
     const body = await res.clone().json()
@@ -69,21 +72,21 @@ describe('B3 contrato — /api/proxy (PR-4)', () => {
     ])
   })
 
-  it.fails('decisão A: upstream 404 → NOSSO 404 NOT_FOUND (hoje: texto "Fetch failed" com status cru)', async () => {
+  it('decisão A: upstream 404 → NOSSO 404 NOT_FOUND (hoje: texto "Fetch failed" com status cru)', async () => {
     vi.stubGlobal('fetch', vi.fn(async () => new Response('not here', { status: 404 })))
     const res = await GET(req(`${SUPA}/storage/sumiu.pdf`))
     expect(res.status).toBe(404)
     expect(await res.clone().text()).toBe('{"error":"Resource not found","code":"NOT_FOUND"}')
   })
 
-  it.fails('decisão A: upstream 503 → NOSSO 500 (hoje: 503 cru atravessa)', async () => {
+  it('decisão A: upstream 503 → NOSSO 500 (hoje: 503 cru atravessa)', async () => {
     vi.stubGlobal('fetch', vi.fn(async () => new Response('down', { status: 503 })))
     const res = await GET(req(`${SUPA}/storage/x.pdf`))
     expect(res.status).toBe(500)
     expect(await res.clone().text()).toBe('{"error":"Internal server error","code":"INTERNAL_ERROR"}')
   })
 
-  it.fails('500 misconfiguração: envelope (hoje: texto "Server misconfiguration")', async () => {
+  it('500 misconfiguração: envelope (hoje: texto "Server misconfiguration")', async () => {
     vi.stubEnv('NEXT_PUBLIC_SUPABASE_URL', '')
     const res = await GET(req(`${SUPA}/x.pdf`))
     expect(res.status).toBe(500)

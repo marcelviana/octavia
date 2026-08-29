@@ -59,14 +59,14 @@ describe('B3 contrato — add-song (PR-4, semântica pelo rito do PR-3a)', () =>
     mockRequireAuthServerSecure.mockResolvedValue(USER)
   })
 
-  it.fails('setlist inexistente-ou-alheia → 404 "Setlist not found" (hoje: throw → 500)', async () => {
+  it('setlist inexistente-ou-alheia → 404 "Setlist not found" (hoje: throw → 500)', async () => {
     mockSingle.mockResolvedValueOnce(pgrst116) // query da setlist
     const res = await POST(addReq())
     expect(res.status).toBe(404)
     expect(await res.clone().text()).toBe('{"error":"Setlist not found","code":"NOT_FOUND"}')
   })
 
-  it.fails('content inexistente-ou-alheio → 404 "Content not found" (hoje: throw → 500)', async () => {
+  it('content inexistente-ou-alheio → 404 "Content not found" (hoje: throw → 500)', async () => {
     mockSingle
       .mockResolvedValueOnce({ data: { id: SETLIST_ID }, error: null }) // setlist ok
       .mockResolvedValueOnce(pgrst116) // content
@@ -75,7 +75,7 @@ describe('B3 contrato — add-song (PR-4, semântica pelo rito do PR-3a)', () =>
     expect(await res.clone().text()).toBe('{"error":"Content not found","code":"NOT_FOUND"}')
   })
 
-  it.fails('SEM ORÁCULO: alheio ≡ inexistente byte-idêntico (estrutural — mesma query filtrada)', async () => {
+  it('SEM ORÁCULO: alheio ≡ inexistente byte-idêntico (estrutural — mesma query filtrada)', async () => {
     mockSingle.mockResolvedValueOnce(pgrst116)
     const inexistente = await (await POST(addReq())).text()
     mockSingle.mockResolvedValueOnce(pgrst116) // "alheio": mesma PGRST116 por construção

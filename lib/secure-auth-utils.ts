@@ -318,52 +318,7 @@ export async function requireAuthServerSecure(
   }
 }
 
-/**
- * SECURITY: Enhanced authentication middleware for API routes
- */
-export function withSecureAuth<T extends any[]>(
-  handler: (request: Request, user: NonNullable<Awaited<ReturnType<typeof requireAuthServerSecure>>>, ...args: T) => Promise<Response>
-) {
-  return async (request: Request, ...args: T): Promise<Response> => {
-    try {
-      const user = await requireAuthServerSecure(request)
 
-      if (!user) {
-        return new Response(
-          JSON.stringify({
-            error: 'Authentication required',
-            code: 'AUTH_REQUIRED'
-          }),
-          {
-            status: 401,
-            headers: {
-              'Content-Type': 'application/json',
-              'WWW-Authenticate': 'Bearer'
-            }
-          }
-        )
-      }
-
-      // SECURITY: Rate limiting check (if user makes too many requests)
-      // This could be enhanced with Redis-based rate limiting
-
-      return await handler(request, user, ...args)
-
-    } catch (error) {
-      logger.error('Secure auth middleware error:', error)
-      return new Response(
-        JSON.stringify({
-          error: 'Authentication error',
-          code: 'AUTH_ERROR'
-        }),
-        {
-          status: 401,
-          headers: { 'Content-Type': 'application/json' }
-        }
-      )
-    }
-  }
-}
 
 /**
  * SECURITY: Get cache statistics for monitoring

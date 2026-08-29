@@ -82,6 +82,8 @@ describe('user-rate-limit (núcleo do sistema único)', () => {
     expect(res.headers.get('X-RateLimit-Limit')).toBe('0')
     const body = await res.json()
     expect(body.error).toBe('Rate limit exceeded')
+    // B3 PR-4/D4 (mudança declarada): o corpo ganhou code
+    expect(body.code).toBe('RATE_LIMITED')
     expect(body.retryAfter).toBeGreaterThan(0)
   })
 
@@ -121,7 +123,7 @@ describe('user-rate-limit (núcleo do sistema único)', () => {
 // §2.8); o commit do flip remove o .fails. O gate de headers é de
 // INVARIÂNCIA (plain it): os 5 headers NÃO mudam no D4.
 describe('B3 contrato — 429 (PR-4/D4)', () => {
-  it.fails('corpo do 429 carrega code:"RATE_LIMITED" (+error +retryAfter)', async () => {
+  it('corpo do 429 carrega code:"RATE_LIMITED" (+error +retryAfter)', async () => {
     const r = checkRateLimit({ scope: 'user', id: 'uid-d4', familia: 'd4', config: { windowMs: 60_000, max: 0 } })
     const body = await rateLimited(r).clone().json()
     expect(body.error).toBe('Rate limit exceeded')

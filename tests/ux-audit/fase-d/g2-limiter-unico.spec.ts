@@ -108,6 +108,8 @@ test.describe('G2 — limiter único', () => {
     expect(Number(user429!.headers()['retry-after']), 'Retry-After honesto').toBeGreaterThan(0)
     const body = await user429!.json()
     expect(body.retryAfter, '429 estruturada (semente do B3)').toBeGreaterThan(0)
+    // B3 PR-4/D4: a assinatura inclui o code do contrato
+    expect(body.code, '429 no envelope do contrato (D4)').toBe('RATE_LIMITED')
     console.log(
       `[G2b] profile: 429 com X-RateLimit-Scope=user, Retry-After=${user429!.headers()['retry-after']}s`
     )
