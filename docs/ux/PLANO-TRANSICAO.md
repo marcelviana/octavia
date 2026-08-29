@@ -1241,6 +1241,16 @@ Regra irmã, do mesmo ciclo: **probe que escreve captura leitura-prévia
 antes do primeiro write** (furo do pre-check do B3 no PATCH de profile,
 declarado e fechado no desenho §0.2).
 
+**Regra de varredura (2026-08-29, errata do §2.9 do B3-PRECHECK, PR
+#244)**: toda varredura declarada num relatório ("zero ocorrências",
+"único ponto", "N callers") vem com o **comando exato + saída literal
+colada no corpo do relatório** — sem saída colada, **não conta como
+medição** e não pode sustentar afirmação. Origem: o pre-check do B3
+citou um grep nunca executado (e inexecutável como escrito) para
+sustentar um "único ponto" que era falso — o segundo ponto da classe
+(interpolação de `error.message` em `storage/upload`) só apareceu no
+re-grep do PR-2.
+
 **Interferências de ambiente de preview** (lista viva — o preview injeta
 comportamento que prod não tem; **asserts de gate devem mirar o invariante
 guardado, não o ambiente**):
