@@ -359,3 +359,67 @@ describe('/api/setlists/[id]', () => {
     })
   })
 })
+
+// B3 PR-3a — gates de semântica em /api/setlists/[id]. it.fails contra o
+// código atual; a migração remove os .fails.
+// NOTA sobre os controles negativos de id malformado: no ambiente MOCKADO
+// o 22P02 do Postgres não existe (o factory é JS) — o comportamento real
+// atual (500, MEDIDO no B3-PRECHECK §2.4 contra preview) é o controle
+// negativo de verdade; aqui o it.fails prova apenas que o código atual
+// NÃO responde o 400 do contrato.
+describe('B3 contrato — /api/setlists/[id] (PR-3a, semântica)', () => {
+  beforeEach(() => {
+    mockRequireAuthServerSecure.mockResolvedValue(mockUser)
+  })
+
+  it.fails('G-malformado GET: id não-uuid → 400 VALIDATION_ERROR field:"id" (real atual: 500/22P02)', async () => {
+    const request = new NextRequest('http://localhost:3000/api/setlists/not-a-uuid')
+    const response = await GET(request)
+    expect(response.status).toBe(400)
+    const data = await response.clone().json()
+    expect(data.code).toBe('VALIDATION_ERROR')
+    expect(data.details).toEqual([
+      { field: 'id', message: 'Invalid ID format', code: 'invalid_string' },
+    ])
+  })
+
+  it.fails('G-malformado PUT: id não-uuid → 400 field:"id" (real atual: 500/22P02)', async () => {
+    const request = new NextRequest('http://localhost:3000/api/setlists/not-a-uuid', {
+      method: 'PUT',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ name: 'x' }),
+    })
+    const response = await PUT(request)
+    expect(response.status).toBe(400)
+    const data = await response.clone().json()
+    expect(data.code).toBe('VALIDATION_ERROR')
+    expect(data.details[0].field).toBe('id')
+  })
+
+  it.fails('G-malformado DELETE: id não-uuid → 400 field:"id" (real atual: 500/22P02)', async () => {
+    const request = new NextRequest('http://localhost:3000/api/setlists/not-a-uuid', {
+      method: 'DELETE',
+    })
+    const response = await DELETE(request)
+    expect(response.status).toBe(400)
+    const data = await response.clone().json()
+    expect(data.code).toBe('VALIDATION_ERROR')
+    expect(data.details[0].field).toBe('id')
+  })
+
+  // MUDANÇA EXTRA da mesma classe PGRST116, declarada no checkpoint do
+  // PR-3a: PUT em setlist inexistente hoje faz throw → 500 (o teste
+  // legado ':204' codificava o defeito com nome de 404). Vira 404 real.
+  it.fails('PGRST116 PUT: uuid válido inexistente → 404 "Setlist not found" (hoje: 500)', async () => {
+    const errorScenarios = createErrorScenarios(factory)
+    errorScenarios.setlistNotFound()
+    const request = new NextRequest(`http://localhost:3000/api/setlists/${TEST_IDS.SETLIST_1}`, {
+      method: 'PUT',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ name: 'x' }),
+    })
+    const response = await PUT(request)
+    expect(response.status).toBe(404)
+    expect(await response.clone().text()).toBe('{"error":"Setlist not found","code":"NOT_FOUND"}')
+  })
+})
