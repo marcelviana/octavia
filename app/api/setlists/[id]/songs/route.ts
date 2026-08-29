@@ -5,7 +5,7 @@ import logger from '@/lib/logger'
 import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
 import { withBodyValidation } from '@/lib/api-validation-middleware'
 import { setlistSchemas } from '@/lib/api-schemas'
-import { internalError, validationError } from '@/lib/api-errors'
+import { internalError, notFound, validationError } from '@/lib/api-errors'
 import type { Database } from '@/types/database.types'
 
 // POST /api/setlists/[id]/songs - Add song to setlist
@@ -28,6 +28,12 @@ const addSongToSetlistHandler = withBodyValidation(setlistSchemas.addSong, {
         .single()
 
       if (setlistError) {
+        // B3 PR-4 (rito do PR-3a): inexistente-ou-alheia → 404 idêntico
+        // por construção (query filtrada por user_id → mesmo PGRST116).
+        // Era throw → 500 — fechava a lacuna do pre-check §2.5.
+        if (setlistError.code === 'PGRST116') {
+          return notFound('Setlist not found')
+        }
         logger.error("Error verifying setlist ownership:", setlistError)
         throw setlistError
       }
@@ -41,8 +47,9 @@ const addSongToSetlistHandler = withBodyValidation(setlistSchemas.addSong, {
         .single()
 
       if (contentError || !content) {
-        logger.error("Error validating content:", contentError)
-        throw new Error(`Content with ID ${contentId} does not exist or does not belong to user`)
+        // B3 PR-4: mesma classe — 404 com mensagem própria (idêntica ao
+        // 404 de content/[id]); era throw → 500
+        return notFound('Content not found')
       }
 
       // Get the current maximum position in the setlist

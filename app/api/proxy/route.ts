@@ -3,12 +3,13 @@ import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import { isSupabaseConfigured } from '@/lib/supabase'
 import { requireAuthServer } from '@/lib/firebase-server-utils'
 import { checkRateLimit, rateLimited, getClientIp, RATE_LIMITS } from '@/lib/user-rate-limit'
+import { authRequired, internalError, notFound, validationError } from '@/lib/api-errors'
 
 export async function GET(req: NextRequest) {
   const baseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   if (!baseUrl) {
     console.error('NEXT_PUBLIC_SUPABASE_URL not set')
-    return new Response('Server misconfiguration', { status: 500 })
+    return internalError()
   }
   const defaultHost = new URL(baseUrl).host
   const allowedHosts = (process.env.ALLOWED_PROXY_HOSTS ?? defaultHost)
@@ -17,19 +18,28 @@ export async function GET(req: NextRequest) {
     .filter(Boolean)
 
   const urlParam = req.nextUrl.searchParams.get('url')
+  // B3 PR-4/D5: proxy fala o envelope; 400 SEMPRE com details (nota do
+  // aval do PR-0 — field:"url"; codes: invalid_type p/ ausente,
+  // invalid_string p/ malformada/não-permitida)
   if (!urlParam) {
-    return new Response('Missing url', { status: 400 })
+    return validationError([
+      { code: 'invalid_type', path: ['url'], message: 'Missing url' } as never,
+    ])
   }
 
   let target: URL
   try {
     target = new URL(urlParam)
   } catch {
-    return new Response('Invalid url', { status: 400 })
+    return validationError([
+      { code: 'invalid_string', path: ['url'], message: 'Invalid url' } as never,
+    ])
   }
 
   if (!allowedHosts.includes(target.host)) {
-    return new Response('URL not allowed. Configure ALLOWED_PROXY_HOSTS.', { status: 400 })
+    return validationError([
+      { code: 'invalid_string', path: ['url'], message: 'URL not allowed. Configure ALLOWED_PROXY_HOSTS.' } as never,
+    ])
   }
 
   // B1.3: o limiter inline por IP (terceiro sistema, achado do pre-check)
@@ -39,7 +49,7 @@ export async function GET(req: NextRequest) {
   if (isSupabaseConfigured) {
     const user = await requireAuthServer(req)
     if (!user) {
-      return new Response('Authentication required', { status: 401 })
+      return authRequired()
     }
     rlKey = { scope: 'user', id: user.uid }
   } else {
@@ -54,7 +64,9 @@ export async function GET(req: NextRequest) {
   try {
     const res = await fetch(target.href)
     if (!res.ok) {
-      return new Response('Fetch failed', { status: res.status })
+      // Decisão A (aval do desenho §8): nenhum status de dependência
+      // atravessa cru — 404 do upstream vira NOSSO 404; o resto, 500.
+      return res.status === 404 ? notFound() : internalError()
     }
     const headers = new Headers(res.headers)
     headers.delete('set-cookie')
@@ -62,6 +74,6 @@ export async function GET(req: NextRequest) {
     return new Response(res.body, { status: res.status, headers })
   } catch (err) {
     console.error('Proxy error', err)
-    return new Response('Error fetching resource', { status: 500 })
+    return internalError()
   }
 }
