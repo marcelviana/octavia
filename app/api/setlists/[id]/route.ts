@@ -4,7 +4,8 @@ import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
 import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
 import { withBodyValidation } from '@/lib/api-validation-middleware'
-import { setlistSchemas } from '@/lib/api-schemas'
+import { commonSchemas, setlistSchemas } from '@/lib/api-schemas'
+import { authRequired, internalError, notFound, validationError } from '@/lib/api-errors'
 import type { SetlistSong, ContentData, FormattedSetlistSong } from '@/types/setlist'
 import { z } from 'zod'
 
@@ -17,16 +18,20 @@ const getSetlistByIdHandler = async (
     const user = await requireAuthServer(request)
     
     if (!user) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      )
+      return authRequired()
     }
     const limited = enforceUserLimit(user.uid, 'setlist-read', RATE_LIMITS.READ)
     if (limited) return limited
 
     // Await params for Next.js 15
     const { id: setlistId } = await params
+
+    // B3 PR-3a (paridade com content/[id], emenda 4): id malformado ia
+    // cru ao Postgres → 22P02 → 500 (medido no pre-check §2.4)
+    const idValidation = commonSchemas.objectId.safeParse(setlistId)
+    if (!idValidation.success) {
+      return validationError(idValidation.error.issues.map((i) => ({ ...i, path: ['id'] })))
+    }
 
     const supabase = getSupabaseServiceClient()
     
@@ -41,20 +46,14 @@ const getSetlistByIdHandler = async (
     if (setlistError) {
       if (setlistError.code === 'PGRST116') {
         // No rows found - setlist doesn't exist
-        return NextResponse.json(
-          { error: 'Setlist not found' },
-          { status: 404 }
-        )
+        return notFound('Setlist not found')
       }
       logger.error("Error fetching setlist:", setlistError)
       throw setlistError
     }
 
     if (!setlist) {
-      return NextResponse.json(
-        { error: 'Setlist not found' },
-        { status: 404 }
-      )
+      return notFound('Setlist not found')
     }
 
     // TypeScript type narrowing - setlist is guaranteed to be non-null here
@@ -124,10 +123,7 @@ const getSetlistByIdHandler = async (
     return NextResponse.json({ ...setlistData, setlist_songs: formattedSongs })
   } catch (error: unknown) {
     logger.error('Error in setlist API:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    return internalError()
   }
 }
 
@@ -136,7 +132,9 @@ const wrappedGetSetlistHandler = async (request: NextRequest) => {
   const url = new URL(request.url)
   const id = url.pathname.split('/').pop()
   if (!id) {
-    return NextResponse.json({ error: 'Setlist ID is required' }, { status: 400 })
+    return validationError([
+      { code: 'invalid_type', path: ['id'], message: 'Setlist ID is required' } as never,
+    ])
   }
   
   const params = Promise.resolve({ id })
@@ -152,17 +150,19 @@ const updateSetlistHandler = withBodyValidation(setlistSchemas.update, {
   async (request: Request, validatedData: z.infer<typeof setlistSchemas.update>, user?: { uid: string }, params?: { id: string }) => {
     try {
       if (!user) {
-        return new Response(
-          JSON.stringify({ error: 'Unauthorized' }),
-          { status: 401, headers: { 'Content-Type': 'application/json' } }
-        )
+        return authRequired()
       }
 
       if (!params?.id) {
-        return new Response(
-          JSON.stringify({ error: 'Setlist ID is required' }),
-          { status: 400, headers: { 'Content-Type': 'application/json' } }
-        )
+        return validationError([
+          { code: 'invalid_type', path: ['id'], message: 'Setlist ID is required' } as never,
+        ])
+      }
+
+      // B3 PR-3a (paridade com content/[id], emenda 4)
+      const idValidation = commonSchemas.objectId.safeParse(params.id)
+      if (!idValidation.success) {
+        return validationError(idValidation.error.issues.map((i) => ({ ...i, path: ['id'] })))
       }
 
       const setlistId = params.id
@@ -201,15 +201,18 @@ const updateSetlistHandler = withBodyValidation(setlistSchemas.update, {
       .single()
 
     if (error) {
+      // B3 PR-3a (mudança extra declarada, mesma classe PGRST116):
+      // update em setlist inexistente/alheia era throw → 500; o ramo
+      // `if (!setlist)` abaixo era morto. Vira 404 real.
+      if ((error as { code?: string }).code === 'PGRST116') {
+        return notFound('Setlist not found')
+      }
       logger.error("Error updating setlist:", error)
       throw error
     }
 
     if (!setlist) {
-      return new Response(
-        JSON.stringify({ error: 'Setlist not found' }),
-        { status: 404, headers: { 'Content-Type': 'application/json' } }
-      )
+      return notFound('Setlist not found')
     }
 
     // TypeScript type narrowing - setlist is guaranteed to be non-null here
@@ -285,10 +288,7 @@ const updateSetlistHandler = withBodyValidation(setlistSchemas.update, {
       })
     } catch (error: unknown) {
       logger.error('Error updating setlist:', error)
-      return new Response(
-        JSON.stringify({ error: 'Internal server error' }),
-        { status: 500, headers: { 'Content-Type': 'application/json' } }
-      )
+      return internalError()
     }
   }
 )
@@ -298,7 +298,9 @@ const wrappedUpdateSetlistHandler = async (request: NextRequest) => {
   const url = new URL(request.url)
   const id = url.pathname.split('/').pop()
   if (!id) {
-    return NextResponse.json({ error: 'Setlist ID is required' }, { status: 400 })
+    return validationError([
+      { code: 'invalid_type', path: ['id'], message: 'Setlist ID is required' } as never,
+    ])
   }
 
   // Convert NextRequest to Request for the middleware, then convert Response back to NextResponse
@@ -318,16 +320,19 @@ const deleteSetlistHandler = async (
     const user = await requireAuthServer(request)
     
     if (!user) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      )
+      return authRequired()
     }
     const limited = enforceUserLimit(user.uid, 'setlist-mutate', RATE_LIMITS.MUTATE)
     if (limited) return limited
 
     // Await params for Next.js 15
     const { id: setlistId } = await params
+
+    // B3 PR-3a (paridade com content/[id], emenda 4)
+    const idValidation = commonSchemas.objectId.safeParse(setlistId)
+    if (!idValidation.success) {
+      return validationError(idValidation.error.issues.map((i) => ({ ...i, path: ['id'] })))
+    }
 
     const supabase = getSupabaseServiceClient()
 
@@ -357,10 +362,7 @@ const deleteSetlistHandler = async (
     return NextResponse.json({ success: true })
   } catch (error: unknown) {
     logger.error('Error deleting setlist:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    return internalError()
   }
 }
 
@@ -369,7 +371,9 @@ const wrappedDeleteSetlistHandler = async (request: NextRequest) => {
   const url = new URL(request.url)
   const id = url.pathname.split('/').pop()
   if (!id) {
-    return NextResponse.json({ error: 'Setlist ID is required' }, { status: 400 })
+    return validationError([
+      { code: 'invalid_type', path: ['id'], message: 'Setlist ID is required' } as never,
+    ])
   }
   
   const params = Promise.resolve({ id })

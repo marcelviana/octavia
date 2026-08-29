@@ -4,7 +4,7 @@ import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
 import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
 import { setlistSchemas } from '@/lib/api-schemas'
-import { validationError } from '@/lib/api-errors'
+import { authRequired, internalError, notFound, validationError } from '@/lib/api-errors'
 
 // Type for song with joined setlist data
 type SongWithSetlist = {
@@ -32,10 +32,7 @@ const removeSongFromSetlistHandler = async (
     const user = await requireAuthServer(request)
     
     if (!user) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      )
+      return authRequired()
     }
     const limited = enforceUserLimit(user.uid, 'setlist-mutate', RATE_LIMITS.MUTATE)
     if (limited) return limited
@@ -61,22 +58,22 @@ const removeSongFromSetlistHandler = async (
       .single()
 
     if (songError) {
+      // B3 PR-3a: PGRST116 tratado — songId inexistente era throw → 500
+      // (o ramo `if (!song)` abaixo era código morto, pre-check §2.5);
+      // .single() com sucesso garante linha, então o ramo morto saiu.
+      if (songError.code === 'PGRST116') {
+        return notFound('Song not found')
+      }
       logger.error("Error getting song details:", songError)
       throw songError
     }
 
-    if (!song) {
-      return NextResponse.json(
-        { error: 'Song not found' },
-        { status: 404 }
-      )
-    }
-
     const songData = song as SongWithSetlist
 
-    // Verify the setlist belongs to the user
+    // B3 PR-3a/D2: recurso de OUTRO usuário → 404 idêntico ao de
+    // inexistente (sem oráculo de existência; era throw → 500)
     if (songData.setlists.user_id !== user.uid) {
-      throw new Error("Unauthorized: Setlist does not belong to user")
+      return notFound('Song not found')
     }
 
     const setlistId = songData.setlist_id
@@ -135,10 +132,7 @@ const removeSongFromSetlistHandler = async (
     return NextResponse.json({ success: true })
   } catch (error: any) {
     logger.error('Error removing song from setlist:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    return internalError()
   }
 }
 
@@ -147,7 +141,9 @@ const wrappedRemoveSongHandler = async (request: NextRequest) => {
   const url = new URL(request.url)
   const songId = url.pathname.split('/').pop()
   if (!songId) {
-    return NextResponse.json({ error: 'Song ID is required' }, { status: 400 })
+    return validationError([
+      { code: 'invalid_type', path: ['songId'], message: 'Song ID is required' } as never,
+    ])
   }
   
   const params = Promise.resolve({ songId })
@@ -165,10 +161,7 @@ const updateSongPositionHandler = async (
     const user = await requireAuthServer(request)
 
     if (!user) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      )
+      return authRequired()
     }
     const limited = enforceUserLimit(user.uid, 'setlist-mutate', RATE_LIMITS.MUTATE)
     if (limited) return limited
@@ -199,24 +192,22 @@ const updateSongPositionHandler = async (
       .single()
 
     if (songError) {
+      // B3 PR-3a: PGRST116 → 404 (era throw → 500; ramo `if (!song)`
+      // era morto — removido)
+      if (songError.code === 'PGRST116') {
+        return notFound('Song not found')
+      }
       logger.error('Error fetching song:', songError)
       throw songError
     }
 
-    if (!song) {
-      return NextResponse.json(
-        { error: 'Song not found' },
-        { status: 404 }
-      )
-    }
-
     const songData = song as SongWithSetlist
 
+    // B3 PR-3a/D2: era 403 {"error":"Unauthorized"} — vazava existência
+    // (content/setlists respondem 404). Corpo BYTE-IDÊNTICO ao de
+    // inexistente, por contrato.
     if (songData.setlists.user_id !== user.uid || songData.setlist_id !== setlistId) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 403 }
-      )
+      return notFound('Song not found')
     }
 
     const { data: allSongs, error: fetchError } = await supabase
@@ -241,7 +232,7 @@ const updateSongPositionHandler = async (
     
     // First, move all songs to temporary positions
     if (!allSongs) {
-      return NextResponse.json({ error: 'Failed to fetch songs' }, { status: 500 })
+      return internalError('Failed to fetch songs')
     }
 
     const typedAllSongs = allSongs as SongRow[]
@@ -272,7 +263,7 @@ const updateSongPositionHandler = async (
     const reordered: SongRow[] = [...without]
     const moving = ordered.find((s: any) => s.id === songId) as SongRow | undefined
     if (!moving) {
-      return NextResponse.json({ error: 'Song not found' }, { status: 404 })
+      return notFound('Song not found')
     }
     
     let targetIndex = newPosition - 1
@@ -315,10 +306,7 @@ const updateSongPositionHandler = async (
     return NextResponse.json({ success: true })
   } catch (error: any) {
     logger.error('Error updating song position:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    return internalError()
   }
 }
 
@@ -327,7 +315,9 @@ const wrappedUpdateSongPositionHandler = async (request: NextRequest) => {
   const url = new URL(request.url)
   const songId = url.pathname.split('/').pop()
   if (!songId) {
-    return NextResponse.json({ error: 'Song ID is required' }, { status: 400 })
+    return validationError([
+      { code: 'invalid_type', path: ['songId'], message: 'Song ID is required' } as never,
+    ])
   }
   
   const params = Promise.resolve({ songId })
