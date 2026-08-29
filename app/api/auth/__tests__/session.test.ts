@@ -347,7 +347,7 @@ describe('/api/auth/session', () => {
 // FICA (exceção deliberada do desenho §2.4); ganha code AUTH_REQUIRED +
 // WWW-Authenticate. it.fails contra o código atual (sem code/header).
 describe('B3 contrato — /api/auth/session (PR-3b)', () => {
-  it.fails('401 token inválido: mensagem mantida + code + WWW-Authenticate', async () => {
+  it('401 token inválido: mensagem mantida + code + WWW-Authenticate', async () => {
     const { POST } = await import('../session/route')
     const request = createMockRequest('http://localhost/api/auth/session', {
       method: 'POST',

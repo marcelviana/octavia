@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { notFound } from '@/lib/api-errors';
 import { isSupabaseServiceConfigured } from '@/lib/supabase-service';
 
 export async function GET(request: NextRequest) {
   // Only allow in development
   if (process.env.NODE_ENV === 'production') {
-    return NextResponse.json({ error: 'Not available in production' }, { status: 404 });
+    return notFound('Not available in production');
   }
 
   const config = {

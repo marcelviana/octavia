@@ -181,7 +181,7 @@ describe('/api/profile', () => {
       const data = await response.json()
 
       expect(response.status).toBe(500)
-      expect(data).toEqual({ error: 'Internal server error' })
+      expect(data).toEqual({ error: 'Internal server error', code: 'INTERNAL_ERROR' })
       expect(mockLogger.error).toHaveBeenCalled()
     })
 
@@ -330,7 +330,7 @@ describe('/api/profile', () => {
       const data = await response.json()
 
       expect(response.status).toBe(500)
-      expect(data).toEqual({ error: 'Failed to create profile' })
+      expect(data).toEqual({ error: 'Failed to create profile', code: 'INTERNAL_ERROR' })
       expect(mockLogger.error).toHaveBeenCalled()
     })
 
@@ -451,7 +451,7 @@ describe('/api/profile', () => {
       const data = await response.json()
 
       expect(response.status).toBe(500)
-      expect(data).toEqual({ error: 'Failed to update profile' })
+      expect(data).toEqual({ error: 'Failed to update profile', code: 'INTERNAL_ERROR' })
       expect(mockLogger.error).toHaveBeenCalled()
     })
 
@@ -492,7 +492,7 @@ describe('/api/profile', () => {
 // B3 PR-3b — envelope mecânico em /api/profile (o inline; o middleware já
 // fala o contrato desde o PR-1). it.fails contra o código atual.
 describe('B3 contrato — /api/profile (PR-3b)', () => {
-  it.fails('401 GET: envelope authRequired (hoje: {"error":"Unauthorized"} inline sem code)', async () => {
+  it('401 GET: envelope authRequired (hoje: {"error":"Unauthorized"} inline sem code)', async () => {
     mockRequireAuthServerSecure.mockResolvedValueOnce(null)
     const request = new NextRequest('http://localhost:3000/api/profile', {
       headers: { authorization: 'Bearer invalid-token' },

@@ -5,6 +5,7 @@ import logger from "@/lib/logger"
 import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
 import { withBodyValidation } from '@/lib/api-validation-middleware'
 import { setlistSchemas } from '@/lib/api-schemas'
+import { authRequired, internalError, validationError } from '@/lib/api-errors'
 import { z } from 'zod'
 
 // GET /api/setlists - Get user's setlists
@@ -13,10 +14,7 @@ const getSetlistsHandler = async (request: NextRequest) => {
     const user = await requireAuthServer(request)
     
     if (!user) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      )
+      return authRequired()
     }
     const limited = enforceUserLimit(user.uid, 'setlist-read', RATE_LIMITS.READ)
     if (limited) return limited
@@ -106,10 +104,7 @@ const getSetlistsHandler = async (request: NextRequest) => {
     return NextResponse.json(setlistsWithSongs)
   } catch (error: any) {
     logger.error('Error in setlists API:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    return internalError()
   }
 }
 
@@ -140,14 +135,11 @@ const createSetlistHandler = withBodyValidation(setlistSchemas.create, {
         }
         ownedContent = contents ?? []
         if (ownedContent.length !== new Set(ids).size) {
-          return NextResponse.json(
-            {
-              error: 'Validation failed',
-              code: 'VALIDATION_ERROR',
-              details: [{ field: 'songs', message: 'One or more content_id do not exist or do not belong to the user', code: 'custom' }],
-            },
-            { status: 400 }
-          )
+          // B3 PR-3b: a cópia manual do semente vira o helper —
+          // byte-idêntico (gate de invariância no route.test)
+          return validationError([
+            { code: 'custom', path: ['songs'], message: 'One or more content_id do not exist or do not belong to the user' } as never,
+          ])
         }
       }
 
@@ -210,10 +202,7 @@ const createSetlistHandler = withBodyValidation(setlistSchemas.create, {
           if (rollbackError) {
             logger.error('Compensating delete FAILED — empty orphan setlist left behind:', rollbackError)
           }
-          return NextResponse.json(
-            { error: 'Failed to create setlist songs', code: 'INTERNAL_ERROR' },
-            { status: 500 }
-          )
+          return internalError('Failed to create setlist songs')
         }
 
         const contentMap = new Map(ownedContent.map((c) => [c.id, c]))
@@ -244,10 +233,7 @@ const createSetlistHandler = withBodyValidation(setlistSchemas.create, {
       return NextResponse.json(responseData, { status: 201 })
     } catch (error: any) {
       logger.error('Error creating setlist:', error)
-      return NextResponse.json(
-        { error: 'Internal server error' },
-        { status: 500 }
-      )
+      return internalError()
     }
   }
 )

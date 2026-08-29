@@ -3,6 +3,7 @@ import { validateFirebaseTokenSecure } from '@/lib/secure-auth-utils'
 import logger from '@/lib/logger'
 import { authSchemas } from '@/lib/api-schemas'
 import { withPublicBodyValidation } from '@/lib/api-validation-middleware'
+import { authRequired, internalError } from '@/lib/api-errors'
 import {
   checkRateLimit,
   rateLimited,
@@ -35,10 +36,9 @@ const postSessionHandler = withPublicBodyValidation(authSchemas.sessionCreate)(
         if (!fail.ok) {
           return rateLimited(fail)
         }
-        return new Response(
-          JSON.stringify({ error: 'Invalid or expired token' }),
-          { status: 401, headers: { 'Content-Type': 'application/json' } }
-        )
+        // B3 PR-3b: envelope; a MENSAGEM fica (exceção deliberada do
+        // desenho §2.4 — mais útil que a canônica, mesmo code)
+        return authRequired('Invalid or expired token')
       }
 
       // B1.3: a janela do session é por UID, pós-verificação —
@@ -74,10 +74,7 @@ const postSessionHandler = withPublicBodyValidation(authSchemas.sessionCreate)(
       return response
     } catch (error: any) {
       logger.error('Error setting session cookie:', error)
-      return new Response(
-        JSON.stringify({ error: 'Failed to set session cookie' }),
-        { status: 500, headers: { 'Content-Type': 'application/json' } }
-      )
+      return internalError('Failed to set session cookie')
     }
   }
 )
@@ -111,10 +108,7 @@ const deleteSessionHandler = async (request: NextRequest) => {
     return response
   } catch (error: any) {
     logger.error('Error clearing session cookie:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    return internalError()
   }
 }
 

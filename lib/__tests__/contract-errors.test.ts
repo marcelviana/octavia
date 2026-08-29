@@ -139,20 +139,6 @@ describe('api-errors — taxonomia e envelope (camada 1)', () => {
     ])
   })
 
-  it('expandUnrecognizedKeys:false preserva o mapping antigo (field:"") — uso exclusivo do middleware nesta fase', async () => {
-    const r = z.object({ name: z.string() }).strict().safeParse({ name: 'x', __b3_unknown__: 1 })
-    expect(r.success).toBe(false)
-    if (r.success) return
-    const body = await validationError(r.error, { expandUnrecognizedKeys: false }).json()
-    expect(body.details).toEqual([
-      {
-        field: '',
-        message: "Unrecognized key(s) in object: '__b3_unknown__'",
-        code: 'unrecognized_keys',
-      },
-    ])
-  })
-
   it('G-sintética: issue de corpo (path:[]) → field:"" SEM expected/received crus', () => {
     // Literal do achado §0.3 do desenho: o middleware atual vaza
     // path/expected/received no 400 de corpo >1MB / JSON inválido.
@@ -200,12 +186,12 @@ describe('shape semente contra o middleware (camada 2 — byte-identidade)', () 
     )
   })
 
-  it('400 unrecognized_keys de UMA chave: literal do pre-check §2.2 (field:"" — comportamento atual, não muda neste PR)', async () => {
+  it('400 unrecognized_keys de UMA chave: shape D7 (MUDANÇA DECLARADA do PR-3b — o literal field:"" do pre-check §2.2 era o comportamento até o flip)', async () => {
     const handler = withPublicBodyValidation(schemaB3)(async () => new Response('ok'))
     const res = await handler(jsonRequest(JSON.stringify({ name: 'x', __b3_unknown__: 1 })))
     expect(res.status).toBe(400)
     expect(await res.text()).toBe(
-      '{"error":"Validation failed","code":"VALIDATION_ERROR","details":[{"field":"","message":"Unrecognized key(s) in object: \'__b3_unknown__\'","code":"unrecognized_keys"}]}'
+      '{"error":"Validation failed","code":"VALIDATION_ERROR","details":[{"field":"__b3_unknown__","message":"Unrecognized key: \'__b3_unknown__\'","code":"unrecognized_keys"}]}'
     )
   })
 
@@ -238,7 +224,7 @@ describe('shape semente contra o middleware (camada 2 — byte-identidade)', () 
   // o caminho de validação do middleware passa ao DEFAULT do contrato.
   // Controle negativo: o literal field:"" atual (pre-check §2.2), que o
   // assert legado acima ainda codifica até o flip.
-  it.fails('G-flip: UMA chave desconhecida via middleware → field:"<chave>" (D7 default)', async () => {
+  it('G-flip: UMA chave desconhecida via middleware → field:"<chave>" (D7 default)', async () => {
     const handler = withPublicBodyValidation(schemaB3)(async () => new Response('ok'))
     const res = await handler(jsonRequest(JSON.stringify({ name: 'x', __b3_unknown__: 1 })))
     expect(res.status).toBe(400)
@@ -247,7 +233,7 @@ describe('shape semente contra o middleware (camada 2 — byte-identidade)', () 
     )
   })
 
-  it.fails('G-flip: DUAS chaves desconhecidas via middleware → dois details nomeados (D7 pleno)', async () => {
+  it('G-flip: DUAS chaves desconhecidas via middleware → dois details nomeados (D7 pleno)', async () => {
     const handler = withPublicBodyValidation(schemaB3)(async () => new Response('ok'))
     const res = await handler(jsonRequest(JSON.stringify({ name: 'x', __b3_x__: 1, __b3_y__: 2 })))
     expect(res.status).toBe(400)

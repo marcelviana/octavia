@@ -157,11 +157,10 @@ export function withValidation<T extends z.ZodSchema>(
             errors: validationResult.error.issues
           })
 
-          // B3 PR-1: delegado ao ponto único. expandUnrecognizedKeys:false
-          // preserva o mapping antigo do unrecognized (um item, field:"")
-          // — exigência de byte-identidade do §4.1; o flip para o default
-          // do contrato (D7 por chave) é mudança declarada de PR posterior.
-          return validationError(validationResult.error, { expandUnrecognizedKeys: false })
+          // B3 PR-3b: FLIP — o middleware fala o default do contrato
+          // (D7: um detail por chave em unrecognized_keys). O flag
+          // temporário do PR-1 morreu junto (emenda no desenho §3.PR-3b).
+          return validationError(validationResult.error)
         }
 
         // Call handler with validated data

@@ -273,7 +273,7 @@ describe('/api/setlists', () => {
 // monta o shape semente à mão — a migração para validationError() deve
 // ser byte-idêntica (verde antes E depois).
 describe('B3 contrato — /api/setlists (PR-3b)', () => {
-  it.fails('401 GET: envelope authRequired (hoje: {"error":"Unauthorized"} sem code)', async () => {
+  it('401 GET: envelope authRequired (hoje: {"error":"Unauthorized"} sem code)', async () => {
     mockRequireAuthServerSecure.mockResolvedValueOnce(null)
     const request = new NextRequest('http://localhost:3000/api/setlists')
     const response = await GET(request)
@@ -284,7 +284,7 @@ describe('B3 contrato — /api/setlists (PR-3b)', () => {
     )
   })
 
-  it.fails('500 GET: envelope INTERNAL_ERROR (hoje: sem code)', async () => {
+  it('500 GET: envelope INTERNAL_ERROR (hoje: sem code)', async () => {
     mockRequireAuthServerSecure.mockResolvedValueOnce(mockUser)
     const errorScenarios = createErrorScenarios(factory)
     errorScenarios.databaseError()
