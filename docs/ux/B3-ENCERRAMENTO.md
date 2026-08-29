@@ -125,6 +125,21 @@ colada, senão não é medição — nascida da errata §2.9) · P1-contraste
 (controle negativo AO VIVO branch × prod para flips) · leitura-antes de
 toda escrita · it.fails→it como controle negativo codificado.
 
+**Dois registros do aval de merge do PR-4**:
+
+1. **Ramo possivelmente inerte da decisão A**: o Supabase Storage
+   sinaliza objeto inexistente com **400** (medido na validação) — logo
+   "objeto sumido" no proxy responde o nosso **500**, e o ramo
+   `upstream 404 → NOSSO 404` pode nunca disparar com o upstream atual.
+   Distinguir "sumido" de "falha de upstream" um dia é **evolução de
+   contrato** (code novo ou mapeamento por corpo do upstream), não
+   bugfix.
+2. **Flake de tooling, fora do B3**: o teste
+   `tests/performance/performance-mode-responsiveness.test.tsx > rapid
+   navigation` falhou **3× no ciclo** (timing sob carga do runner; 2×
+   local, 1× no CI de um commit só-markdown — prova de flake). Candidato
+   a item de tooling (threshold/retry/isolamento), registrado.
+
 **Sai do bloco / fica registrado**: **D8** (loop mudo do session) é o
 item de abertura do Bloco D · consumo do contrato pela UI web (Bloco D —
 a web segue lendo só `.error`, que continua string em tudo) · a camada de
