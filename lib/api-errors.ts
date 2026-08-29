@@ -75,21 +75,14 @@ export function apiError(
  *     contrato) e SEM os campos crus do Zod (expected/received — o achado
  *     §0.3 do desenho morre aqui).
  *
- * `expandUnrecognizedKeys: false` preserva o mapping ANTIGO do
- * unrecognized (um item, field:"") — usado SOMENTE pelo caminho de
- * validação do middleware nesta fase do B3, para manter a prova de
- * byte-identidade do PR-1 (§4.1 do desenho, ordem vinculante). O flip
- * para o default do contrato é mudança declarada de PR posterior; quando
- * acontecer, o flag morre.
+ * [PR-3b] O flag temporário do PR-1 (modo não-contrato do unrecognized,
+ * usado só pelo middleware pela byte-identidade do §4.1) MORREU no flip
+ * — o helper só fala o contrato.
  */
-export function zodDetails(
-  issues: ZodIssue[],
-  opts?: { expandUnrecognizedKeys?: boolean }
-): ApiErrorDetail[] {
-  const expand = opts?.expandUnrecognizedKeys ?? true
+export function zodDetails(issues: ZodIssue[]): ApiErrorDetail[] {
   const details: ApiErrorDetail[] = []
   for (const issue of issues) {
-    if (expand && issue.code === 'unrecognized_keys') {
+    if (issue.code === 'unrecognized_keys') {
       for (const key of issue.keys) {
         details.push({
           field: key,
@@ -128,12 +121,9 @@ export function internalError(error = 'Internal server error'): Response {
 }
 
 /** 400 de validação — aceita o ZodError inteiro ou issues avulsas. */
-export function validationError(
-  input: ZodError | ZodIssue[],
-  opts?: { expandUnrecognizedKeys?: boolean }
-): Response {
+export function validationError(input: ZodError | ZodIssue[]): Response {
   const issues = Array.isArray(input) ? input : input.issues
   return apiError('VALIDATION_ERROR', 'Validation failed', {
-    details: zodDetails(issues, opts),
+    details: zodDetails(issues),
   })
 }

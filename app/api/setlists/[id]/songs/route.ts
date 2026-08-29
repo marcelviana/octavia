@@ -5,6 +5,7 @@ import logger from '@/lib/logger'
 import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
 import { withBodyValidation } from '@/lib/api-validation-middleware'
 import { setlistSchemas } from '@/lib/api-schemas'
+import { internalError, validationError } from '@/lib/api-errors'
 import type { Database } from '@/types/database.types'
 
 // POST /api/setlists/[id]/songs - Add song to setlist
@@ -100,25 +101,24 @@ const addSongToSetlistHandler = withBodyValidation(setlistSchemas.addSong, {
       return NextResponse.json(song, { status: 201 })
     } catch (error: any) {
       logger.error('Error adding song to setlist:', error)
-      return NextResponse.json(
-        { error: 'Internal server error' },
-        { status: 500 }
-      )
+      return internalError()
     }
   }
 )
 
 // Wrapper for POST handler
-const wrappedAddSongHandler = async (request: NextRequest): Promise<NextResponse> => {
+const wrappedAddSongHandler = async (request: NextRequest): Promise<Response> => {
   const url = new URL(request.url)
   const pathParts = url.pathname.split('/')
   const id = pathParts[pathParts.length - 2] // Get the setlist ID from the path
   if (!id) {
-    return NextResponse.json({ error: 'Setlist ID is required' }, { status: 400 })
+    return validationError([
+      { code: 'invalid_type', path: ['id'], message: 'Setlist ID is required' } as never,
+    ])
   }
 
   const response = await addSongToSetlistHandler(request, { id })
-  return response as NextResponse
+  return response
 }
 
 export const POST = wrappedAddSongHandler

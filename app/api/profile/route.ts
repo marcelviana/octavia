@@ -5,6 +5,7 @@ import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
 import { withBodyValidation } from '@/lib/api-validation-middleware'
 import { authSchemas } from '@/lib/api-schemas'
+import { authRequired, internalError } from '@/lib/api-errors'
 import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
 import { z } from 'zod'
 
@@ -18,10 +19,7 @@ const getProfileHandler = async (request: NextRequest) => {
     const user = await requireAuthServerSecure(request)
 
     if (!user) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      )
+      return authRequired()
     }
     const limited = enforceUserLimit(user.uid, 'profile', RATE_LIMITS.PROFILE)
     if (limited) return limited
@@ -45,10 +43,7 @@ const getProfileHandler = async (request: NextRequest) => {
     return NextResponse.json(profile)
   } catch (error: any) {
     logger.error('Error fetching profile:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    return internalError()
   }
 }
 
@@ -68,10 +63,7 @@ const createProfileHandlerRaw = withBodyValidation(authSchemas.profileCreate, {
   ) => {
     try {
       if (!user) {
-        return NextResponse.json(
-          { error: 'Unauthorized' },
-          { status: 401 }
-        )
+        return authRequired()
       }
 
       // D9/PR-2 (item E4): o tipo gerado expôs o que o `as any` escondia —
@@ -82,10 +74,7 @@ const createProfileHandlerRaw = withBodyValidation(authSchemas.profileCreate, {
       // (email/senha e Google sempre trazem email).
       if (!user.email) {
         logger.error('Profile creation without email in token', { uid: user.uid })
-        return NextResponse.json(
-          { error: 'Failed to create profile' },
-          { status: 500 }
-        )
+        return internalError('Failed to create profile')
       }
 
       const supabase = getSupabaseServiceClient()
@@ -120,10 +109,7 @@ const createProfileHandlerRaw = withBodyValidation(authSchemas.profileCreate, {
       return NextResponse.json(profile, { status: 201 })
     } catch (error: any) {
       logger.error('Error creating profile:', error)
-      return NextResponse.json(
-        { error: 'Failed to create profile' },
-        { status: 500 }
-      )
+      return internalError('Failed to create profile')
     }
   }
 )
@@ -147,10 +133,7 @@ const updateProfileHandlerRaw = withBodyValidation(authSchemas.profileUpdate, {
   ) => {
     try {
       if (!user) {
-        return NextResponse.json(
-          { error: 'Unauthorized' },
-          { status: 401 }
-        )
+        return authRequired()
       }
 
       const supabase = getSupabaseServiceClient()
@@ -182,10 +165,7 @@ const updateProfileHandlerRaw = withBodyValidation(authSchemas.profileUpdate, {
       return NextResponse.json(profile)
     } catch (error: any) {
       logger.error('Error updating profile:', error)
-      return NextResponse.json(
-        { error: 'Failed to update profile' },
-        { status: 500 }
-      )
+      return internalError('Failed to update profile')
     }
   }
 )
