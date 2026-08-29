@@ -239,8 +239,10 @@ describe('/api/content/[id]', () => {
 
       const { DELETE } = await import('../route')
       
+      // B3 PR-2: 'nonexistent' é id MALFORMADO (hoje 400 field:"id");
+      // o caso 404 exige uuid válido inexistente
       const request = createValidAuthenticatedRequest(
-        'http://localhost/api/content/nonexistent',
+        'http://localhost/api/content/00000000-0000-4000-8000-000000000000',
         {
           method: 'DELETE'
         }
@@ -276,3 +278,50 @@ describe('/api/content/[id]', () => {
     })
   })
 }) 
+// B3 PR-2 — shapes do contrato em /api/content/[id]. it.fails contra o
+// código atual (controle negativo codificado); a migração remove o .fails.
+describe('B3 contrato — /api/content/[id] (PR-2)', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
+
+  it('401 GET sem credencial: envelope authRequired (hoje: {"error":"Unauthorized"} sem code)', async () => {
+    const { GET } = await import('../route')
+    const response = await GET(
+      createMockRequest(`http://localhost/api/content/${TEST_CONTENT.id}`)
+    )
+    expect(response.status).toBe(401)
+    expect(response.headers.get('WWW-Authenticate')).toBe('Bearer')
+    expect(await response.clone().text()).toBe(
+      '{"error":"Authentication required","code":"AUTH_REQUIRED"}'
+    )
+  })
+
+  it('400 GET id malformado: VALIDATION_ERROR com field:"id" (emenda 4)', async () => {
+    const { GET } = await import('../route')
+    const response = await GET(
+      createValidAuthenticatedRequest('http://localhost/api/content/not-a-uuid')
+    )
+    expect(response.status).toBe(400)
+    const data = await getJsonResponse(response)
+    expect(data.code).toBe('VALIDATION_ERROR')
+    expect(data.details).toEqual([
+      { field: 'id', message: 'Invalid ID format', code: 'invalid_string' },
+    ])
+  })
+
+  it('404 GET uuid inexistente: literal NOVO "Content not found" (emenda 5)', async () => {
+    mockSingle.mockResolvedValue({
+      data: null,
+      error: { code: 'PGRST116', message: 'No rows found' },
+    })
+    const { GET } = await import('../route')
+    const response = await GET(
+      createValidAuthenticatedRequest(
+        'http://localhost/api/content/00000000-0000-4000-8000-000000000000'
+      )
+    )
+    expect(response.status).toBe(404)
+    expect(await response.clone().text()).toBe('{"error":"Content not found","code":"NOT_FOUND"}')
+  })
+})

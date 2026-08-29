@@ -232,6 +232,30 @@ mensagem crua do erro do Supabase Storage vai **para o cliente** no campo
 `grep 'error.message' app/api` → só este site e os de log). Os demais 500
 medidos entregam string genérica — nenhum vazou Supabase/Firebase.
 
+> **⚠️ ERRATA (2026-08-29, autópsia no PR #244)** — o parágrafo acima está
+> **errado em dois pontos**, e o erro é de método:
+>
+> 1. **A varredura declarada NÃO foi executada.** Não há registro do
+>    comando na sessão do pre-check; pior, o comando **como citado**
+>    (`grep 'error.message' app/api`, sem `-r`) retorna **vazio** — nunca
+>    poderia ter produzido o resultado alegado. A frase era leitura de
+>    código vestida de medição — violação da regra "meça, não presuma".
+> 2. **"Único ponto" era falso.** O sweep corrigido (recursivo, repo-wide,
+>    padrão alargado a `${qualquer_var.message}`) achou um **SEGUNDO
+>    ponto da mesma classe**: `storage/upload/route.ts:102`
+>    (`Upload failed: ${error.message}`) — **fechado no PR #244** com gate
+>    por sentinela (G1-upload), junto com a migração da rota. O primeiro
+>    (delete) foi fechado no PR #243 (D6).
+>
+> Os **demais zeros declarados no ciclo** foram re-executados com a
+> técnica corrigida na mesma autópsia e **confirmados**: `VALIDATION_ERROR`
+> em testes (via `git grep` no commit histórico da declaração),
+> `withSecureAuth` órfão, `validation-utils` sem imports (repo-wide),
+> leitores de `retryAfter`/`.details` no cliente. Saídas literais no
+> relatório de validação do PR #244. Regra nova de método derivada desta
+> errata: registrada no [`PLANO-TRANSICAO.md`](PLANO-TRANSICAO.md)
+> §"Padrão de instrumentação".
+
 ### 2.10 — Resumo: quem tem `code`?
 
 O campo `code` (a chave que o cliente nativo em pt-BR vai usar, GLOB-01) só

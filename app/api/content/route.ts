@@ -4,16 +4,13 @@ import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import logger from '@/lib/logger'
 import type { ContentQueryParams } from '@/lib/content-types'
 import type { Database } from '@/types/database.types'
-import { contentSchemas } from '@/lib/api-schemas'
+import { commonSchemas, contentSchemas } from '@/lib/api-schemas'
 import { ContentType } from '@/types/content'
-import { 
-  validateRequestBody,
-  createValidationErrorResponse,
-  createUnauthorizedResponse,
-  createServerErrorResponse,
-  createNotFoundResponse
-} from '@/lib/validation-utils'
-import { z } from 'zod'
+// B3 PR-2: erros pelo ponto único (docs/api/CONTRATO-DE-ERRO.md);
+// parse do corpo REUSA o guard do middleware (decisão B: mesmo código de
+// 1MB/JSON inválido, não cópia — paridade de contrato provada por gate)
+import { authRequired, internalError, notFound, validationError } from '@/lib/api-errors'
+import { parseRequestBody, ValidationError } from '@/lib/api-validation-middleware'
 import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
 
 // GET /api/content - Get user's content with pagination support
@@ -22,7 +19,7 @@ const getContentHandler = async (request: NextRequest) => {
     const user = await requireAuthServer(request)
     
     if (!user) {
-      return createUnauthorizedResponse()
+      return authRequired()
     }
 
     const limited = enforceUserLimit(user.uid, 'content-read', RATE_LIMITS.READ)
@@ -36,19 +33,11 @@ const getContentHandler = async (request: NextRequest) => {
       rawParams[key] = value;
     });
     
-    let validatedParams;
-    try {
-      validatedParams = contentSchemas.query.parse(rawParams);
-    } catch (error: unknown) {
-      if (error instanceof z.ZodError) {
-        const errorMessages = error.errors.map((err: any) => {
-          const path = err.path.length > 0 ? `${err.path.join('.')}: ` : '';
-          return `${path}${err.message}`;
-        });
-        return createValidationErrorResponse(errorMessages);
-      }
-      return createValidationErrorResponse(['Query parameter validation failed']);
+    const queryValidation = contentSchemas.query.safeParse(rawParams)
+    if (!queryValidation.success) {
+      return validationError(queryValidation.error)
     }
+    const validatedParams = queryValidation.data
 
     const { page, pageSize, search, sortBy, contentType: contentTypeParam, difficulty: difficultyParam, key: keyParam, favorite } = validatedParams
     
@@ -148,7 +137,7 @@ const getContentHandler = async (request: NextRequest) => {
     return NextResponse.json(result)
   } catch (error: any) {
     logger.error('Error in content API:', error)
-    return createServerErrorResponse('Failed to fetch content')
+    return internalError('Failed to fetch content')
   }
 }
 
@@ -160,18 +149,25 @@ const createContentHandler = async (request: NextRequest) => {
     const user = await requireAuthServer(request)
     
     if (!user) {
-      return createUnauthorizedResponse()
+      return authRequired()
     }
 
     const limited = enforceUserLimit(user.uid, 'content-mutate', RATE_LIMITS.MUTATE)
     if (limited) return limited
 
-    const body = await request.json()
+    // Decisão B do desenho: guard de 1MB/JSON inválido do middleware,
+    // reusado — ValidationError sintética vira 400 field:"" do contrato
+    let body: unknown
+    try {
+      body = await parseRequestBody(request)
+    } catch (e) {
+      if (e instanceof ValidationError) return validationError(e.issues)
+      throw e
+    }
 
-    // Validate request body
-    const bodyValidation = await validateRequestBody(body, contentSchemas.create)
+    const bodyValidation = contentSchemas.create.safeParse(body)
     if (!bodyValidation.success) {
-      return createValidationErrorResponse(bodyValidation.errors)
+      return validationError(bodyValidation.error)
     }
 
     const validatedData = bodyValidation.data
@@ -217,7 +213,7 @@ const createContentHandler = async (request: NextRequest) => {
     return NextResponse.json(content, { status: 201 })
   } catch (error: any) {
     logger.error('Error creating content:', error)
-    return createServerErrorResponse('Failed to create content')
+    return internalError('Failed to create content')
   }
 }
 
@@ -229,18 +225,23 @@ const updateContentHandler = async (request: NextRequest) => {
     const user = await requireAuthServer(request)
     
     if (!user) {
-      return createUnauthorizedResponse()
+      return authRequired()
     }
 
     const limited = enforceUserLimit(user.uid, 'content-mutate', RATE_LIMITS.MUTATE)
     if (limited) return limited
 
-    const body = await request.json()
+    let body: unknown
+    try {
+      body = await parseRequestBody(request)
+    } catch (e) {
+      if (e instanceof ValidationError) return validationError(e.issues)
+      throw e
+    }
 
-    // Validate request body
-    const bodyValidation = await validateRequestBody(body, contentSchemas.update)
+    const bodyValidation = contentSchemas.update.safeParse(body)
     if (!bodyValidation.success) {
-      return createValidationErrorResponse(bodyValidation.errors)
+      return validationError(bodyValidation.error)
     }
 
     const v = bodyValidation.data
@@ -281,7 +282,9 @@ const updateContentHandler = async (request: NextRequest) => {
 
     if (error) {
       if (error.code === 'PGRST116') {
-        return createNotFoundResponse('Content not found or access denied')
+        // Emenda 5 (mudança declarada): "or access denied" morreu — com o
+        // D2 não há oráculo a disfarçar
+        return notFound('Content not found')
       }
       logger.error('Database error updating content:', error)
       throw error
@@ -290,7 +293,7 @@ const updateContentHandler = async (request: NextRequest) => {
     return NextResponse.json(content)
   } catch (error: any) {
     logger.error('Error updating content:', error)
-    return createServerErrorResponse('Failed to update content')
+    return internalError('Failed to update content')
   }
 }
 
@@ -302,7 +305,7 @@ const deleteContentHandler = async (request: NextRequest) => {
     const user = await requireAuthServer(request)
     
     if (!user) {
-      return createUnauthorizedResponse()
+      return authRequired()
     }
 
     const limited = enforceUserLimit(user.uid, 'content-mutate', RATE_LIMITS.MUTATE)
@@ -310,10 +313,11 @@ const deleteContentHandler = async (request: NextRequest) => {
 
     const { searchParams } = new URL(request.url)
     const id = searchParams.get('id')
-    
-    // Validate the ID parameter
-    if (!id || !id.match(/^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/)) {
-      return createValidationErrorResponse(['Valid content ID is required'])
+
+    // Emenda 4: id malformado → VALIDATION_ERROR com field:"id"
+    const idValidation = commonSchemas.objectId.safeParse(id ?? '')
+    if (!idValidation.success) {
+      return validationError(idValidation.error.issues.map((i) => ({ ...i, path: ['id'] })))
     }
 
     const supabase = getSupabaseServiceClient()
@@ -321,7 +325,7 @@ const deleteContentHandler = async (request: NextRequest) => {
     const { error } = await supabase
       .from('content')
       .delete()
-      .eq('id', id)
+      .eq('id', idValidation.data)
       .eq('user_id', user.uid)
 
     if (error) {
@@ -331,7 +335,7 @@ const deleteContentHandler = async (request: NextRequest) => {
     return NextResponse.json({ success: true })
   } catch (error: any) {
     logger.error('Error deleting content:', error)
-    return createServerErrorResponse('Failed to delete content')
+    return internalError('Failed to delete content')
   }
 }
 

@@ -130,7 +130,8 @@ describe('/api/storage/delete', () => {
       
       const data = await getJsonResponse(response)
       expect(data.error).toBe('Validation failed')
-      expect(data.details[0]).toContain('filename')
+      // B3 PR-2: details estruturado (era string[])
+      expect(data.details[0].field).toBe('filename')
     })
 
     it('prevents deletion with invalid filename format', async () => {
@@ -151,7 +152,8 @@ describe('/api/storage/delete', () => {
       
       const data = await getJsonResponse(response)
       expect(data.error).toBe('Validation failed')
-      expect(data.details).toContain('Invalid filename format')
+      // B3 PR-2: details estruturado (era string[])
+      expect(data.details[0]).toEqual({ field: 'filename', message: 'Invalid filename format', code: 'custom' })
     })
 
     it('prevents path traversal attacks', async () => {
@@ -172,7 +174,9 @@ describe('/api/storage/delete', () => {
       
       const data = await getJsonResponse(response)
       expect(data.error).toBe('Validation failed')
-      expect(data.details[0]).toContain('path traversal detected')
+      // B3 PR-2: details estruturado (era string[])
+      expect(data.details[0].field).toBe('filename')
+      expect(data.details[0].message).toContain('path traversal detected')
     })
 
     it('G1/D6: erro do storage vira 500 genérico — a mensagem interna do Supabase NÃO vaza', async () => {
@@ -255,7 +259,41 @@ describe('/api/storage/delete', () => {
       
       const data = await getJsonResponse(response)
       expect(data.error).toBe('Validation failed')
-      expect(data.details[0]).toContain('path traversal detected')
+      // B3 PR-2: details estruturado (era string[])
+      expect(data.details[0].field).toBe('filename')
+      expect(data.details[0].message).toContain('path traversal detected')
     })
   })
 }) 
+// B3 PR-2 — shapes do contrato em /api/storage/delete. it.fails contra o
+// código atual; a migração remove o .fails.
+describe('B3 contrato — /api/storage/delete (PR-2)', () => {
+  it('401 sem header: envelope authRequired (hoje: família {error,message,timestamp} do utils)', async () => {
+    const { POST } = await import('../delete/route')
+    const request = createMockRequest('http://localhost/api/storage/delete', {
+      method: 'POST',
+      body: { filename: '1234567890-b3.pdf' },
+    })
+    const response = await POST(request)
+    expect(response.status).toBe(401)
+    expect(response.headers.get('WWW-Authenticate')).toBe('Bearer')
+    expect(await response.clone().text()).toBe(
+      '{"error":"Authentication required","code":"AUTH_REQUIRED"}'
+    )
+  })
+
+  it('400 path traversal: details ESTRUTURADO com field:"filename" (hoje: details:string[])', async () => {
+    const { POST } = await import('../delete/route')
+    const request = createAuthenticatedRequest(
+      'http://localhost/api/storage/delete',
+      'valid-firebase-token',
+      { method: 'POST', body: { filename: '../../../etc/passwd' } }
+    )
+    const response = await POST(request)
+    expect(response.status).toBe(400)
+    const data = await getJsonResponse(response)
+    expect(data.code).toBe('VALIDATION_ERROR')
+    expect(data.details[0].field).toBe('filename')
+    expect(data.details[0].message).toContain('path traversal')
+  })
+})
