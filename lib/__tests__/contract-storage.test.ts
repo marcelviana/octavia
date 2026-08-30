@@ -41,6 +41,35 @@ describe('storageSchemas.upload — b8 e a lista única', () => {
   })
 })
 
+/**
+ * B5 PR-1 — teto 4MB (B5-D4; B5-DESENHO.md §3). Regra nº 7, it.fails→it:
+ * este bloco nasce como `it.fails` contra o schema atual (max 50MB, que
+ * ACEITA 5MB — controle negativo codificado) e vira `it` no commit do
+ * flip. O histórico da branch prova a transição.
+ */
+describe('B5 PR-1 — teto de upload 4MB (B5-D4)', () => {
+  const parse = (size: number) =>
+    storageSchemas.upload.safeParse({ filename: 'cifra.pdf', contentType: 'application/pdf', size })
+
+  it.fails('5MB → recusado com too_big em field "size"', () => {
+    const res = parse(5 * 1024 * 1024)
+    expect(res.success).toBe(false)
+    if (!res.success) {
+      const issue = res.error.issues.find(i => i.path[0] === 'size')
+      expect(issue?.code).toBe('too_big')
+      expect(issue?.message).toBe('File exceeds the 4MB limit')
+    }
+  })
+
+  it.fails('fronteira: 4.194.305 (4MiB + 1) → recusado', () => {
+    expect(parse(4 * 1024 * 1024 + 1).success).toBe(false)
+  })
+
+  it('fronteira: 4.194.304 (4MiB exato) → aceito (inclusivo — §3.1 do desenho)', () => {
+    expect(parse(4 * 1024 * 1024).success).toBe(true)
+  })
+})
+
 describe('mimeMatchesExtension — a MESMA tabela vale para a checagem do route', () => {
   it('consistências e inconsistências', () => {
     expect(mimeMatchesExtension('cifra.pdf', 'application/pdf')).toBe(true)
