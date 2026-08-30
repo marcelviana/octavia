@@ -3,6 +3,7 @@ import { getSupabaseServiceClient } from '@/lib/supabase-service'
 import { requireAuthServerSecure } from '@/lib/secure-auth-utils'
 import logger from '@/lib/logger'
 import { storageSchemas, mimeMatchesExtension } from '@/lib/api-schemas'
+import { contentMatchesDeclaredMime } from '@/lib/file-signatures'
 import { authRequired, internalError, validationError } from '@/lib/api-errors'
 import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
 
@@ -69,6 +70,18 @@ const uploadFileHandler = async (request: NextRequest) => {
     // Convert File to ArrayBuffer then to Uint8Array for Supabase
     const arrayBuffer = await file.arrayBuffer()
     const uint8Array = new Uint8Array(arrayBuffer)
+
+    // B5 PR-2: magic bytes — os bytes precisam SER o que o MIME declara
+    // (tabela única em lib/file-signatures.ts; B5-DESENHO.md §4). Roda
+    // ANTES do upload ao Supabase, sobre os bytes já em memória. O MIME
+    // interpolado na mensagem é dado do REQUEST, não de dependência —
+    // sem violação da regra de sentinela (D6).
+    const sniff = contentMatchesDeclaredMime(uint8Array, file.type)
+    if (!sniff.ok) {
+      return validationError([
+        { code: 'custom', path: ['file'], message: `File content does not match declared type (${file.type})` } as never,
+      ])
+    }
 
     // Create unique filename with timestamp to prevent conflicts and directory traversal
     const timestamp = Date.now()

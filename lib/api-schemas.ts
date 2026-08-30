@@ -197,7 +197,10 @@ export const contentSchemas = {
 } as const
 
 // ---------------------------------------------------------------------------
-// Storage — UMA lista de tipos permitidos (resolve b8: as três listas
+// Storage — B5 PR-2: tipo novo nesta lista EXIGE assinatura nova em
+// lib/file-signatures.ts (comentário cruzado; o teste de paridade em
+// lib/__tests__/file-signatures.test.ts trava a divergência).
+// UMA lista de tipos permitidos (resolve b8: as três listas
 // divergentes — regex do storageSchemas.upload sem image/jpg mas com
 // gif/webp/html/msword; allowedMimeTypes; e o switch do route — viram esta
 // tabela). gif/webp/html/msword saem declaradamente: o switch de extensão do
