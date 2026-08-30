@@ -30,7 +30,7 @@ Quatro PRs + uma operação gateada + um encerramento docs-only. Espinha igual �
 | **PR-0** | Docs/rotulagem | Mata a ambiguidade B4/B5 no plano; corrige CLAUDE.md (Firebase→Supabase Storage); meia-linha cosmética do contrato (pendência do aval do B3 PR-0); stub do bloco da busca | — |
 | **PR-1** | Teto 4MB (B5-D4) | Schema 50MB→4MB (mata `MAX_FILE_SIZE` órfão); 400 `field:"size"` antes do Supabase; **ação de console do Marcel (bucket 1MB→4MB) sequenciada dentro do ciclo desta PR** | PR-0 (só ordem, não técnica) |
 | **PR-2** | Magic bytes | Módulo `lib/file-signatures.ts` + checagem na rota de upload; 400 `field:"file"` | PR-1 (mesma rota — evita conflito e mantém um flip por PR) |
-| **PR-3** | Listagem + reconciliação (modo relatório) | Rota `GET /api/storage/list`; script de reconciliação read-only; doc `docs/api/STORage.md` com a cláusula B5-D3; **nenhuma deleção** | PR-2 (o relatório usa o sniffer para apontar objetos mentirosos) |
+| **PR-3** | Listagem + reconciliação (modo relatório) | Rota `GET /api/storage/list`; script de reconciliação read-only; doc `docs/api/STORAGE.md` com a cláusula B5-D3; **nenhuma deleção** | PR-2 (o relatório usa o sniffer para apontar objetos mentirosos) |
 | **O-1** | Limpeza gateada (não é PR) | Execução do modo delete do script sobre a lista nominal aprovada pelo Marcel (B5-D2); consome `POST /api/storage/delete` como primeiro consumidor de sistema (B5-D6) | PR-3 mergeada + aval nominal |
 | **ENC** | `B5-ENCERRAMENTO.md` | Tabela re-medida + balanço + registro do B5-D5 (bypass → B9); commit docs-only direto na main com aval (mesma régua de `adab4f0`/`60b47ee`) | O-1 |
 
