@@ -92,11 +92,12 @@ describe('B3 contrato — /api/storage/upload (PR-2)', () => {
 
   /**
    * B5 PR-2 — magic bytes (B5-DESENHO.md §4). Regra nº 7, it.fails→it:
-   * nasce como `it.fails` contra a rota atual, que ACEITA texto declarado
-   * image/png — é o probe P1 do pre-check (§3.3, 201 medido em prod)
-   * codificado como controle negativo. Vira `it` no commit do flip.
+   * nasceu como `it.fails` contra a rota anterior, que ACEITAVA texto
+   * declarado image/png — o probe P1 do pre-check (§3.3, 201 medido em
+   * prod) codificado como controle negativo no commit 1/2 da branch.
+   * Virou `it` no commit do flip; o histórico prova a transição.
    */
-  it.fails('B5 PR-2: bytes de texto declarados image/png → 400 field:"file" (P1 do pre-check codificado)', async () => {
+  it('B5 PR-2: bytes de texto declarados image/png → 400 field:"file" (P1 do pre-check codificado)', async () => {
     const { getSupabaseServiceClient } = await import('@/lib/supabase-service')
     const mockUpload = vi.fn(async () => ({ data: { path: 'x' }, error: null }))
     vi.mocked(getSupabaseServiceClient).mockReturnValue({
