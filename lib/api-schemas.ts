@@ -232,7 +232,12 @@ export const storageSchemas = {
       (m) => ALLOWED_UPLOAD_MIMES.includes(m),
       'Unsupported file type'
     ),
-    size: z.number().int().min(1).max(50 * 1024 * 1024),
+    // B5-D4 (PR-1): teto único de produto — 4 MiB (4.194.304 bytes,
+    // inclusivo), MESMO valor do file_size_limit do bucket; a rota recusa
+    // antes de tocar o Supabase (B5-DESENHO.md §3.1). O 50MB anterior era
+    // teto que nenhuma requisição alcançava (bucket 1MB + 413 da
+    // plataforma ~4,5MB — B5-PRECHECK.md §4.4).
+    size: z.number().int().min(1).max(4 * 1024 * 1024, 'File exceeds the 4MB limit'),
   }).strict(),
 
   // rota real de delete usa filename (o schema órfão que esperava fileUrl

@@ -33,9 +33,9 @@ describe('storageSchemas.upload — b8 e a lista única', () => {
     expect(ok('doc.doc', 'application/msword').success).toBe(false)
   })
 
-  it('0 bytes → 400 · >50MB → 400 · extensão fora da lista → 400 · chave desconhecida → 400', () => {
+  it('0 bytes → 400 · >4MB (teto B5-D4) → 400 · extensão fora da lista → 400 · chave desconhecida → 400', () => {
     expect(ok('cifra.pdf', 'application/pdf', 0).success).toBe(false)
-    expect(ok('cifra.pdf', 'application/pdf', 50 * 1024 * 1024 + 1).success).toBe(false)
+    expect(ok('cifra.pdf', 'application/pdf', 4 * 1024 * 1024 + 1).success).toBe(false)
     expect(ok('arquivo.zip', 'application/pdf').success).toBe(false)
     expect(storageSchemas.upload.safeParse({ filename: 'a.pdf', contentType: 'application/pdf', size: 1, extra: 1 }).success).toBe(false)
   })
@@ -43,15 +43,15 @@ describe('storageSchemas.upload — b8 e a lista única', () => {
 
 /**
  * B5 PR-1 — teto 4MB (B5-D4; B5-DESENHO.md §3). Regra nº 7, it.fails→it:
- * este bloco nasce como `it.fails` contra o schema atual (max 50MB, que
- * ACEITA 5MB — controle negativo codificado) e vira `it` no commit do
- * flip. O histórico da branch prova a transição.
+ * este bloco nasceu como `it.fails` contra o schema anterior (max 50MB,
+ * que ACEITAVA 5MB — controle negativo codificado no commit 1/2 da
+ * branch) e virou `it` no commit do flip. O histórico prova a transição.
  */
 describe('B5 PR-1 — teto de upload 4MB (B5-D4)', () => {
   const parse = (size: number) =>
     storageSchemas.upload.safeParse({ filename: 'cifra.pdf', contentType: 'application/pdf', size })
 
-  it.fails('5MB → recusado com too_big em field "size"', () => {
+  it('5MB → recusado com too_big em field "size"', () => {
     const res = parse(5 * 1024 * 1024)
     expect(res.success).toBe(false)
     if (!res.success) {
@@ -61,7 +61,7 @@ describe('B5 PR-1 — teto de upload 4MB (B5-D4)', () => {
     }
   })
 
-  it.fails('fronteira: 4.194.305 (4MiB + 1) → recusado', () => {
+  it('fronteira: 4.194.305 (4MiB + 1) → recusado', () => {
     expect(parse(4 * 1024 * 1024 + 1).success).toBe(false)
   })
 
