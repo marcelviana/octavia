@@ -504,6 +504,13 @@ local: não existe camada que traduza falha em mensagem.
 
 ### B4 — Storage: listagem e reconciliação de órfãos (ADD-15 / FASE-D-04)
 
+> **⚠️ Nota de rotulagem (B5 PR-0, 2026-08-30)**: este é o bloco
+> executado sob o nome **B5** desde o balanço do B2 (pre-check em
+> [`B5-PRECHECK.md`](B5-PRECHECK.md), desenho em
+> [`B5-DESENHO.md`](B5-DESENHO.md)). O número de seção "B4" é histórico
+> e não será reusado. Escopo fixado pela decisão **B5-D1**: storage
+> apenas.
+
 A API expõe só `upload` e `delete` por nome exato — **não há listagem do
 bucket**. Todo fluxo de import que morre entre upload e criação do content
 (exatamente o que ADD-01/ADD-02 produzem) vaza um arquivo **irrecuperável**.
@@ -519,13 +526,31 @@ bytes server-side. O nativo herda esse endpoint tal como está.
 
 ### B5 — Decisões de dados (✅ decididas em 2026-08-10)
 
+> **⚠️ Nota de rotulagem (B5 PR-0, 2026-08-30)**: as decisões desta
+> seção estão encerradas desde 2026-08-10; o NOME "B5" passou a
+> designar o bloco de storage (seção acima). A única tarefa em aberto
+> aqui — **busca (LIB-04)** — sai para bloco próprio (ver **B11**),
+> por decisão **B5-D1**.
+
 | Decisão | Estado provado | **Decisão do Marcel** |
 |---------|----------------|-----------------------|
 | **Bis**: constraint única `(setlist_id, content_id)` | Existe no banco vivo (probe: 500 na duplicata — SET-06). Bis é **requisito do nativo** (Bloco C). | ✅ **Remover a constraint** — repetição permitida; unicidade da linha passa a ser lógica de posição. Tarefa: migration de drop + revisar o DELETE/reorder que assumam unicidade por `content_id`. |
 | **Tabela/campo de anotações** | ~~write-only desde sempre~~ → **corrigido pelo pre-check do B2 (2026-08-24): a tabela `annotations` é "nunca-escrita" — 0 linhas (medido) e zero leitores/escritores no repositório** (nenhum `.from('annotations')`, nenhuma rota). As anotações sempre viveram em `content.content_data.annotations`. O achado do item 32 ("gravada via API não renderiza") referia-se ao JSONB, não à tabela. | ✅ **Mantida** (não dropar) — anotação é requisito do nativo (J2). A **decisão final de modelo de dados** (tabela `annotations` vs. JSONB em `content_data`; âncora por trecho/página) fica para o design do nativo — e é **greenfield**: não há dado a migrar. Até lá: nada de escrita nova, nada de drop. RLS ligada + grants públicos revogados na MIG-1 do B2 (achado §0.4 do desenho). |
 | **Colunas `venue` / `performance_date` / `notes`** | UI envia, Zod descarta (SET-01); colunas existem sem uso real. | ✅ **Ligar de verdade, via B2**: o audit de schema (B2) inclui aceitar e persistir os três campos no contrato de setlists. A UI web não muda; o nativo já nasce lendo/escrevendo. |
 | **Semântica de `performance_date`** | Off-by-one de fuso no parse UTC (SET-17). | ✅ **Date-only**: data local sem componente de hora/fuso, no contrato e na exibição. Elimina o SET-17 por definição. |
-| **Busca com acento/typo** (LIB-04) | `aguas` → 0, `Águas` → 2 (item 25). A busca é `ILIKE` no Postgres; o nativo herda `GET /api/content?search=`. | (tarefa, não decisão) `unaccent` no mínimo; `pg_trgm` se quiser tolerância a typo. Corrigir no backend serve web e nativo de uma vez. |
+| **Busca com acento/typo** (LIB-04) | `aguas` → 0, `Águas` → 2 (item 25). A busca é `ILIKE` no Postgres; o nativo herda `GET /api/content?search=`. | → **movida para o B11** (bloco próprio; decisão **B5-D1**, 2026-08-29 — texto da tarefa vive lá) |
+
+### B11 — Busca (LIB-04) — bloco próprio, não desenhado
+
+> Criado no B5 PR-0 (decisões **B5-D1** e **B5-D8**, 2026-08-29/30): a
+> busca saiu do guarda-chuva "B5" e vira bloco próprio. Nada aqui foi
+> desenhado nem medido — o texto abaixo é a tarefa herdada da tabela de
+> decisões de dados (ex-B5, seção acima), movida verbatim.
+
+**Tarefa herdada** (LIB-04, S2): `aguas` → 0, `Águas` → 2 (item 25). A
+busca é `ILIKE` no Postgres; o nativo herda `GET /api/content?search=`.
+`unaccent` no mínimo; `pg_trgm` se quiser tolerância a typo. Corrigir no
+backend serve web e nativo de uma vez.
 
 ### B6 — Position e reorder: contrato para o nativo
 
@@ -1006,7 +1031,7 @@ morre com a web. Sev/esforço conforme ASSESSMENT.
 | LIB-01 | Sem loading state por ~7 s | S2 | **C** | baseline C2: nativo renderiza do cache local |
 | LIB-02 | Títulos longos escondem ações | S2 | D | |
 | LIB-03 | Duplicados indistinguíveis | S2 | D | fonte de duplicatas some com A#4 |
-| LIB-04 | Busca sem tolerância a acento/typo | S2 | **B** | B5: unaccent/pg_trgm — nativo herda a API |
+| LIB-04 | Busca sem tolerância a acento/typo | S2 | **B** | **B11** (bloco próprio; era rotulado B5 — decisão B5-D1) |
 | LIB-05 | Busca só no Enter | S2 | D | critérios do J5 cobrem o nativo |
 | LIB-06 | Filtro ativo invisível | S2 | D | |
 | LIB-07 | Scroll aninhado + paginação cortada | S2 | D | |
