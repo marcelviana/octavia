@@ -105,12 +105,21 @@ async function lerRefs(): Promise<DbRef[]> {
 }
 
 // (4) Primeiros 8KB por Range GET na URL pública + sniffer da PR-2.
+// Timeout explícito por objeto (achado da 1ª execução na validação da
+// PR-3: um hiccup de rede numa fetch SEM timeout pendurou o processo
+// inteiro — "fetch failed" após ~10min); falha transitória vira
+// "não avaliável" (null), nunca veredito.
 async function verificarMime(obj: BucketObj): Promise<{ mimeMismatch: boolean | null; detected: string | null }> {
   if (!obj.contentType) return { mimeMismatch: null, detected: null }
-  const res = await fetch(
-    `${SUPA}/storage/v1/object/public/${BUCKET}/${encodeURIComponent(obj.path)}`,
-    { headers: { Range: 'bytes=0-8191' } }
-  )
+  let res: Response
+  try {
+    res = await fetch(
+      `${SUPA}/storage/v1/object/public/${BUCKET}/${encodeURIComponent(obj.path)}`,
+      { headers: { Range: 'bytes=0-8191' }, signal: AbortSignal.timeout(15_000) }
+    )
+  } catch {
+    return { mimeMismatch: null, detected: null } // não avaliável — registrado como null
+  }
   if (!res.ok) return { mimeMismatch: null, detected: null } // não avaliável — registrado como null
   const bytes = new Uint8Array(await res.arrayBuffer())
   const veredito = contentMatchesDeclaredMime(bytes, obj.contentType)
@@ -188,11 +197,17 @@ async function modoReport(token: string): Promise<void> {
 }
 
 async function existeNoBucket(path: string): Promise<boolean> {
-  const res = await fetch(
-    `${SUPA}/storage/v1/object/public/${BUCKET}/${encodeURIComponent(path)}`,
-    { method: 'HEAD' }
-  )
-  return res.ok
+  // Falha transitória → false → podeDeletar PULA o arquivo (conservador:
+  // na dúvida, nada é deletado). Mesmo timeout da verificação de MIME.
+  try {
+    const res = await fetch(
+      `${SUPA}/storage/v1/object/public/${BUCKET}/${encodeURIComponent(path)}`,
+      { method: 'HEAD', signal: AbortSignal.timeout(15_000) }
+    )
+    return res.ok
+  } catch {
+    return false
+  }
 }
 
 async function modoDelete(token: string, listaArquivo: string): Promise<void> {
