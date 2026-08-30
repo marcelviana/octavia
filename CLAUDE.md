@@ -38,7 +38,7 @@ Postgres: passo do Marcel, não da automação.
 - **Framework**: Next.js 15 with App Router
 - **Authentication**: Firebase Auth with server-side verification
 - **Database**: Supabase with service role for server operations
-- **Storage**: Firebase Storage for file uploads
+- **Storage**: Supabase Storage (bucket `content-files`) for file uploads — Firebase é só Auth. (Nota B5 PR-0: versões antigas deste arquivo diziam "Firebase Storage" — nunca foi verdade no código atual; medido no `docs/ux/B5-PRECHECK.md` §2.1/§3)
 - **UI**: Tailwind CSS + Radix UI components (shadcn/ui)
 - **State Management**: React hooks + Context API
 - **Testing**: Vitest (unit) + Playwright (gates do ux-audit, sob demanda)
@@ -122,7 +122,7 @@ export async function POST(request: NextRequest) {
 
 The app manages musical content (sheet music, lyrics, tabs, chord charts):
 
-1. **Upload Flow**: Files uploaded to Firebase Storage → metadata stored in Supabase
+1. **Upload Flow**: Files uploaded to Supabase Storage (bucket `content-files`, via `POST /api/storage/upload`) → metadata stored in Supabase
 2. **Content Types**: `Lyrics | Chords | Tab | Sheet` — o enum canônico vive em `/types/content.ts` (fonte única; qualquer schema deriva dele). Nota: versões antigas deste arquivo citavam "tabs, piano, drums" — valores que **nunca existiram no produto** e que originaram os quatro enums divergentes medidos no B2 (achado c2)
 3. **Performance Mode**: Full-screen interface for live performances
 4. **Setlist Management**: Organize songs for performances

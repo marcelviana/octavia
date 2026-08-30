@@ -36,6 +36,11 @@ consciente.
   - `message`: humana, específica do item.
   - `code`: código de issue do Zod (ex.: `invalid_type`, `too_small`,
     `invalid_string`, `unrecognized_keys`).
+- Codes podem declarar **campos adicionais** no envelope (ex.:
+  `retryAfter`, inteiro em segundos, em `RATE_LIMITED`); o cliente
+  ignora campos que não conhece (cláusula 2 de compatibilidade,
+  abaixo). *(Meia-linha cosmética sancionada no aval do B3 PR-0;
+  adicionada no B5 PR-0 — nada normativo muda.)*
 
 ## Taxonomia (fechada, append-only)
 
