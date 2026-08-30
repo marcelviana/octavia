@@ -46,6 +46,25 @@ describe('B5 PR-2 — tabela de assinaturas: positivos', () => {
     expect(contentMatchesDeclaredMime(DOCX_MIN, DOCX_MIME)).toEqual({ ok: true })
   })
 
+  /**
+   * B5 PR-2b (decisão B5-D10). Regra nº 7, it.fails→it: a reconciliação
+   * da PR-3 achou 20 docx REAIS recusados pelo sniffer — o gerador do
+   * batch grava `[Content_Types].xml` como ÚLTIMA entrada do zip
+   * (medido: offsets 8003/9011 e 46451/47459; primeira entrada
+   * word/header1.xml). Fixture reproduz o formato: needle além dos 4096
+   * da regra atual. Nasce `it.fails`; vira `it` no flip (busca no
+   * arquivo inteiro).
+   */
+  it.fails('docx formato-batch ([Content_Types].xml no FIM, offset >4096) → ok (B5-D10)', () => {
+    const DOCX_BATCH = concat(
+      bytes(0x50, 0x4b, 0x03, 0x04),
+      ascii('\x14\x00\x06\x00word/header1.xml'),
+      new Uint8Array(4500).fill(0x61), // 4,5KB de conteúdo — empurra o needle p/ além de 4096
+      ascii('[Content_Types].xml resto-do-central-directory')
+    )
+    expect(contentMatchesDeclaredMime(DOCX_BATCH, DOCX_MIME)).toEqual({ ok: true })
+  })
+
   it('txt UTF-8 e txt Latin-1 (bytes >127, sem NUL) → ok (heurística B5-D9)', () => {
     expect(contentMatchesDeclaredMime(TXT_UTF8, 'text/plain')).toEqual({ ok: true })
     expect(contentMatchesDeclaredMime(TXT_LATIN1, 'text/plain')).toEqual({ ok: true })
