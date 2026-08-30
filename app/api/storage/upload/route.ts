@@ -7,7 +7,6 @@ import { authRequired, internalError, validationError } from '@/lib/api-errors'
 import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
 
 const BUCKET = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET || 'content-files'
-const MAX_FILE_SIZE = 50 * 1024 * 1024 // 50MB
 
 const uploadFileHandler = async (request: NextRequest) => {
   try {
