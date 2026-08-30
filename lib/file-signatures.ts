@@ -27,8 +27,8 @@ function startsWith(bytes: Uint8Array, sig: readonly number[]): boolean {
   return true
 }
 
-function asciiIncludes(bytes: Uint8Array, needle: string, limit: number): boolean {
-  const max = Math.min(bytes.length, limit) - needle.length
+function asciiIncludes(bytes: Uint8Array, needle: string): boolean {
+  const max = bytes.length - needle.length
   outer: for (let i = 0; i <= max; i++) {
     for (let j = 0; j < needle.length; j++) {
       if (bytes[i + j] !== needle.charCodeAt(j)) continue outer
@@ -56,13 +56,20 @@ export function detectSignature(bytes: Uint8Array): string | null {
 }
 
 // docx É zip: o PK sozinho não distingue do `.zip` renomeado (item 45b —
-// exatamente o furo que este módulo fecha). Todo escritor OOXML real põe
-// `[Content_Types].xml` como entrada inicial do arquivo. LIMITAÇÃO
-// DECLARADA (desenho §4.1): um zip ARTESANAL contendo essa entrada passa —
-// o modelo de ameaça é consistência de dados de um app single-user, não
-// adversário.
+// exatamente o furo que este módulo fecha). B5 PR-2b (decisão B5-D10):
+// a busca é no buffer INTEIRO — a premissa original do desenho §4.1
+// ("todo escritor OOXML real põe [Content_Types].xml como entrada
+// inicial", regra dos primeiros 4096 bytes) é FALSA para o gerador do
+// batch, que grava a entrada por ÚLTIMO (medido na reconciliação da
+// PR-3: 20 docx reais recusados; offsets 8003/9011 e 46451/47459).
+// Consequência para consumidores: a regra do docx exige o ARQUIVO
+// INTEIRO (a rota já tem os bytes em memória, ≤4MB; a reconciliação
+// baixa o objeto completo quando o MIME declarado é docx). LIMITAÇÃO
+// que PERMANECE declarada: um zip ARTESANAL contendo essa entrada
+// passa — o modelo de ameaça é consistência de dados de um app
+// single-user, não adversário.
 function isDocx(bytes: Uint8Array): boolean {
-  return startsWith(bytes, ZIP_SIG) && asciiIncludes(bytes, '[Content_Types].xml', 4096)
+  return startsWith(bytes, ZIP_SIG) && asciiIncludes(bytes, '[Content_Types].xml')
 }
 
 // text/plain não tem magic byte — heurística NEGATIVA (decisão B5-D9):

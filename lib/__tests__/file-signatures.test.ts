@@ -42,7 +42,7 @@ describe('B5 PR-2 — tabela de assinaturas: positivos', () => {
     expect(contentMatchesDeclaredMime(JPEG_MIN, 'image/jpg')).toEqual({ ok: true })
   })
 
-  it('docx real (PK + [Content_Types].xml nos primeiros 4096) → ok', () => {
+  it('docx real (PK + [Content_Types].xml no início) → ok', () => {
     expect(contentMatchesDeclaredMime(DOCX_MIN, DOCX_MIME)).toEqual({ ok: true })
   })
 
@@ -52,10 +52,10 @@ describe('B5 PR-2 — tabela de assinaturas: positivos', () => {
    * batch grava `[Content_Types].xml` como ÚLTIMA entrada do zip
    * (medido: offsets 8003/9011 e 46451/47459; primeira entrada
    * word/header1.xml). Fixture reproduz o formato: needle além dos 4096
-   * da regra atual. Nasce `it.fails`; vira `it` no flip (busca no
-   * arquivo inteiro).
+   * da regra anterior. Nasceu `it.fails` (commit 1/2 da branch); virou
+   * `it` no flip (busca no arquivo inteiro). Histórico prova a transição.
    */
-  it.fails('docx formato-batch ([Content_Types].xml no FIM, offset >4096) → ok (B5-D10)', () => {
+  it('docx formato-batch ([Content_Types].xml no FIM, offset >4096) → ok (B5-D10)', () => {
     const DOCX_BATCH = concat(
       bytes(0x50, 0x4b, 0x03, 0x04),
       ascii('\x14\x00\x06\x00word/header1.xml'),

@@ -109,13 +109,24 @@ async function lerRefs(): Promise<DbRef[]> {
 // PR-3: um hiccup de rede numa fetch SEM timeout pendurou o processo
 // inteiro — "fetch failed" após ~10min); falha transitória vira
 // "não avaliável" (null), nunca veredito.
+// B5 PR-2b (B5-D10): quando o MIME declarado é docx, o objeto é baixado
+// INTEIRO (sem Range) — a regra do docx busca [Content_Types].xml no
+// arquivo todo, que pode estar na última entrada do zip (formato do
+// gerador do batch, medido na PR-3). Objetos têm ≤4MB (teto B5-D4).
+const DOCX_MIME_RECONCILE =
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+
 async function verificarMime(obj: BucketObj): Promise<{ mimeMismatch: boolean | null; detected: string | null }> {
   if (!obj.contentType) return { mimeMismatch: null, detected: null }
+  const precisaInteiro = obj.contentType === DOCX_MIME_RECONCILE
   let res: Response
   try {
     res = await fetch(
       `${SUPA}/storage/v1/object/public/${BUCKET}/${encodeURIComponent(obj.path)}`,
-      { headers: { Range: 'bytes=0-8191' }, signal: AbortSignal.timeout(15_000) }
+      {
+        headers: precisaInteiro ? {} : { Range: 'bytes=0-8191' },
+        signal: AbortSignal.timeout(precisaInteiro ? 60_000 : 15_000),
+      }
     )
   } catch {
     return { mimeMismatch: null, detected: null } // não avaliável — registrado como null
