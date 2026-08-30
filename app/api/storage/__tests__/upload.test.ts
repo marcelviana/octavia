@@ -90,6 +90,38 @@ describe('B3 contrato — /api/storage/upload (PR-2)', () => {
     ])
   })
 
+  /**
+   * B5 PR-2 — magic bytes (B5-DESENHO.md §4). Regra nº 7, it.fails→it:
+   * nasce como `it.fails` contra a rota atual, que ACEITA texto declarado
+   * image/png — é o probe P1 do pre-check (§3.3, 201 medido em prod)
+   * codificado como controle negativo. Vira `it` no commit do flip.
+   */
+  it.fails('B5 PR-2: bytes de texto declarados image/png → 400 field:"file" (P1 do pre-check codificado)', async () => {
+    const { getSupabaseServiceClient } = await import('@/lib/supabase-service')
+    const mockUpload = vi.fn(async () => ({ data: { path: 'x' }, error: null }))
+    vi.mocked(getSupabaseServiceClient).mockReturnValue({
+      storage: {
+        from: () => ({
+          upload: mockUpload,
+          getPublicUrl: () => ({ data: { publicUrl: 'https://x/y.png' } }),
+        }),
+      },
+    } as never)
+    const { POST } = await import('../upload/route')
+    const form = new FormData()
+    form.append('file', new File(['this is not a png'], 'b5-magic.png', { type: 'image/png' }))
+    form.append('filename', 'b5-magic.png')
+    const request = new NextRequest('http://localhost/api/storage/upload', { method: 'POST', body: form })
+    const response = await POST(request)
+    expect(response.status).toBe(400)
+    const data = (await response.json()) as { code?: string; details?: unknown }
+    expect(data.code).toBe('VALIDATION_ERROR')
+    expect(data.details).toEqual([
+      { field: 'file', message: 'File content does not match declared type (image/png)', code: 'custom' },
+    ])
+    expect(mockUpload).not.toHaveBeenCalled()
+  })
+
   it('G1-upload: error.message do Supabase NÃO vaza (hoje: "Upload failed: <msg>")', async () => {
     const mockUpload = vi.fn(async () => ({
       data: null,
