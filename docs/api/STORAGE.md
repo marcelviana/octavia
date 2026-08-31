@@ -77,7 +77,9 @@
   (`content.file_url`, `content.thumbnail_url`, `profiles.avatar_url`)
   e emite: órfãos tipo A (objeto sem linha, com idade), órfãos tipo B
   (linha sem objeto), casados, e **mentirosos de MIME** (assinatura dos
-  primeiros 8KB × contentType armazenado).
+  primeiros 8KB × contentType armazenado; para docx o objeto é baixado
+  INTEIRO — a entrada `[Content_Types].xml` pode estar no fim do zip,
+  B5-D10).
 - **Idade mínima: 7 dias** — órfão mais novo aparece marcado
   "recente — fora da lista de remoção".
 - **`--delete --lista <arquivo>`**: remoção SÓ da lista nominal
