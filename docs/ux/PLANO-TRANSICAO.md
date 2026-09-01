@@ -554,6 +554,22 @@ backend serve web e nativo de uma vez.
 
 ### B6 — Position e reorder: contrato para o nativo
 
+> **✅ B6 ENCERRADO (2026-09-01** — [`B6-ENCERRAMENTO.md`](B6-ENCERRAMENTO.md);
+> pre-check + desenho em 5 revisões + PRs #253–#258 + migração
+> `20260901102108` aplicada em prod**)**: invariante contíguo 1..N virou
+> CONTRATO ([`docs/api/SETLISTS.md`](../api/SETLISTS.md)) com os 4
+> escritores em RPCs transacionais sob o lock da linha-pai; reorder em
+> LOTE (`PUT /api/setlists/[id]/songs/order`) no lugar do move-one
+> (removido); addSong append-only (gap morto); delete de content
+> renumera; D5′ (paridade upload→delete), D7 (WITH CHECK ×4) e o N+1
+> do GET (7→1, byte-idêntico) foram junto. O endpoint atômico previsto
+> abaixo existe — com payload de permutação exata, não de "array
+> ordenado" ingênuo; a incógnita do item 17 foi respondida por medição
+> (K=6 no move-one em prod: 4/6×500). **Fila após o B6**: **B9**
+> (idempotência + revogação do bypass — candidato natural) · B1.5 ·
+> B11 (aguarda PRD) · D8 abre o Bloco D. Texto abaixo mantido como
+> histórico.
+
 O insert de músicas **ignora a `position` do payload** e calcula a sua
 (item 21 — a linha enviada com `position: 1` voltou com `11`). E o reorder
 atual são 2N UPDATEs sem transação (SET-07). Como o reorder é requisito do
