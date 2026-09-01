@@ -23,7 +23,7 @@ const BODY_SCHEMAS: Array<[string, z.ZodTypeAny, Record<string, unknown>]> = [
   ['setlistSchemas.create', setlistSchemas.create, { name: 'x' }],
   ['setlistSchemas.update', setlistSchemas.update, {}],
   ['setlistSchemas.addSong', setlistSchemas.addSong, { content_id: UUID }],
-  ['setlistSchemas.updateSongPosition', setlistSchemas.updateSongPosition, { setlistId: UUID, newPosition: 1 }],
+  ['setlistSchemas.reorder', setlistSchemas.reorder, { order: [UUID] }],
   ['authSchemas.profileCreate', authSchemas.profileCreate, {}],
   ['authSchemas.profileUpdate', authSchemas.profileUpdate, {}],
   ['authSchemas.sessionCreate', authSchemas.sessionCreate, { idToken: 'a.b.c' }],

@@ -131,32 +131,34 @@ describe('authSchemas.sessionCreate — migração no-op (pre-check §2.11)', ()
   })
 })
 
-describe('setlistSchemas.updateSongPosition — B2 PR-6 (b7 morto)', () => {
+describe('setlistSchemas.reorder — B6 PR-3b (D1; o updateSongPosition morreu com o move-one)', () => {
   const UUID = '11111111-2222-3333-4444-555555555555'
+  const UUID2 = '22222222-3333-4444-5555-666666666666'
 
-  it('payload real da UI (setlist-service.ts:358) passa', () => {
-    expect(setlistSchemas.updateSongPosition.safeParse({ setlistId: UUID, newPosition: 3 }).success).toBe(true)
+  it('array de uuids válido passa; a ordem do array é o contrato', () => {
+    expect(setlistSchemas.reorder.safeParse({ order: [UUID, UUID2] }).success).toBe(true)
   })
 
-  it('b7: newPosition 0 → 400 NOMEANDO o campo com a mensagem de mínimo (antes: 400 "required" — o !0 lia como ausente)', () => {
-    const r = setlistSchemas.updateSongPosition.safeParse({ setlistId: UUID, newPosition: 0 })
+  it('duplicata no array → 400 nomeando order (refine)', () => {
+    const r = setlistSchemas.reorder.safeParse({ order: [UUID, UUID] })
     expect(r.success).toBe(false)
     if (!r.success) {
-      const issue = r.error.issues.find((i) => i.path.join('.') === 'newPosition')
-      expect(issue?.message).toContain('1-based')
+      const issue = r.error.issues.find((i) => i.path.join('.') === 'order')
+      expect(issue?.message).toBe('Duplicate song id in order')
     }
   })
 
-  it('newPosition string → 400 de tipo (antes: atravessava a guarda e entrava na aritmética)', () => {
-    expect(setlistSchemas.updateSongPosition.safeParse({ setlistId: UUID, newPosition: '3' }).success).toBe(false)
+  it('array vazio → 400 (min 1); >100 itens → 400 (max alinhado ao songs[] do create)', () => {
+    expect(setlistSchemas.reorder.safeParse({ order: [] }).success).toBe(false)
+    const many = Array.from({ length: 101 }, (_, i) =>
+      `${String(i).padStart(8, '0')}-1111-4111-8111-111111111111`)
+    expect(setlistSchemas.reorder.safeParse({ order: many }).success).toBe(false)
   })
 
-  it('newPosition 1 (primeiro slot) é válido — posições são 1-based', () => {
-    expect(setlistSchemas.updateSongPosition.safeParse({ setlistId: UUID, newPosition: 1 }).success).toBe(true)
-  })
-
-  it('setlistId inválido → 400; float → 400', () => {
-    expect(setlistSchemas.updateSongPosition.safeParse({ setlistId: 'nao-uuid', newPosition: 1 }).success).toBe(false)
-    expect(setlistSchemas.updateSongPosition.safeParse({ setlistId: UUID, newPosition: 1.5 }).success).toBe(false)
+  it('item não-uuid → 400; order ausente → 400; setlistId no body → 400 (strict — o recurso vem do path)', () => {
+    expect(setlistSchemas.reorder.safeParse({ order: ['nao-uuid'] }).success).toBe(false)
+    expect(setlistSchemas.reorder.safeParse({}).success).toBe(false)
+    expect(setlistSchemas.reorder.safeParse({ order: [UUID], setlistId: UUID }).success).toBe(false)
   })
 })
+

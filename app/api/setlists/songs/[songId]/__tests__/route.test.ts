@@ -1,14 +1,13 @@
 /**
- * B3 PR-3a — gates de SEMÂNTICA das rotas de songs (D2 + PGRST116→404).
- * Primeiro arquivo de teste destas rotas (o antigo, 9 it.skip, morreu no
- * B2/PR-5). Nascem como it.fails contra o código ATUAL (controle negativo
- * codificado, técnica do PR-1); o commit de migração remove os .fails.
+ * B3 PR-3a — gates de SEMÂNTICA da rota de songs (D2 + PGRST116→404).
  *
- * Controles negativos (literais MEDIDOS no B3-PRECHECK §2.5/§2.1):
- *  - PUT cross-user:    403 {"error":"Unauthorized"}
- *  - DELETE cross-user: 500 (throw new Error('Unauthorized…'))
- *  - songId inexistente (PGRST116): 500 nas duas rotas (ramos 404 mortos)
- *  - 401: {"error":"Unauthorized"} sem code, sem WWW-Authenticate
+ * B6 PR-3b (§1.5 do desenho): o move-one (PUT) foi REMOVIDO — os 4
+ * testes de PUT deste arquivo migraram para o contrato novo em
+ * app/api/setlists/[id]/songs/order/__tests__/route.test.ts (404
+ * alheia/inexistente, 401, byte-identidade; "songId inexistente" virou
+ * ID inexistente DENTRO de order → 400 mismatch). Ficam os 3 de DELETE
+ * (contrato externo intacto; o miolo virou rpc — cobertura da rpc em
+ * route-rpc.test.ts) e a byte-identidade, readaptada ao DELETE.
  */
 
 import { describe, it, expect, beforeEach, vi } from 'vitest'
@@ -28,7 +27,7 @@ vi.mock('@/lib/logger', () => ({
   default: { log: vi.fn(), error: vi.fn(), warn: vi.fn(), info: vi.fn() },
 }))
 
-import { PUT, DELETE } from '../route'
+import { DELETE } from '../route'
 
 const SONG_ID = '11111111-1111-4111-8111-111111111111'
 const SETLIST_ID = '22222222-2222-4222-8222-222222222222'
@@ -40,13 +39,6 @@ function wireChain() {
   mockEq.mockReturnValue({ single: mockSingle, eq: mockEq, order: vi.fn(), gt: vi.fn() })
 }
 
-function putRequest(body: unknown = { setlistId: SETLIST_ID, newPosition: 2 }) {
-  return new NextRequest(`http://localhost/api/setlists/songs/${SONG_ID}`, {
-    method: 'PUT',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify(body),
-  })
-}
 
 function deleteRequest() {
   return new NextRequest(`http://localhost/api/setlists/songs/${SONG_ID}`, {
@@ -70,23 +62,9 @@ describe('B3 contrato — /api/setlists/songs/[songId] (PR-3a, semântica)', () 
     mockRequireAuthServerSecure.mockResolvedValue(USER)
   })
 
-  it('G-D2 PUT: song de OUTRO usuário → 404 NOT_FOUND (hoje: 403 vazando existência)', async () => {
-    mockSingle.mockResolvedValue({ data: songDeOutroUsuario, error: null })
-    const response = await PUT(putRequest())
-    expect(response.status).toBe(404)
-    expect(await response.clone().text()).toBe('{"error":"Song not found","code":"NOT_FOUND"}')
-  })
-
   it('G-D2 DELETE: song de OUTRO usuário → 404 NOT_FOUND (hoje: throw → 500)', async () => {
     mockSingle.mockResolvedValue({ data: songDeOutroUsuario, error: null })
     const response = await DELETE(deleteRequest())
-    expect(response.status).toBe(404)
-    expect(await response.clone().text()).toBe('{"error":"Song not found","code":"NOT_FOUND"}')
-  })
-
-  it('G-PGRST116 PUT: songId inexistente → 404 (hoje: throw → 500; ramo 404 morto)', async () => {
-    mockSingle.mockResolvedValue(pgrst116)
-    const response = await PUT(putRequest())
     expect(response.status).toBe(404)
     expect(await response.clone().text()).toBe('{"error":"Song not found","code":"NOT_FOUND"}')
   })
@@ -98,22 +76,12 @@ describe('B3 contrato — /api/setlists/songs/[songId] (PR-3a, semântica)', () 
     expect(await response.clone().text()).toBe('{"error":"Song not found","code":"NOT_FOUND"}')
   })
 
-  it('SEM ORÁCULO: corpo do 404 cross-user é BYTE-IDÊNTICO ao do 404 inexistente (a prova do D2)', async () => {
+  it('SEM ORÁCULO: corpo do 404 cross-user é BYTE-IDÊNTICO ao do 404 inexistente (a prova do D2; readaptado ao DELETE na B6 PR-3b)', async () => {
     mockSingle.mockResolvedValueOnce({ data: songDeOutroUsuario, error: null })
-    const crossUser = await (await PUT(putRequest())).text()
+    const crossUser = await (await DELETE(deleteRequest())).text()
     mockSingle.mockResolvedValueOnce(pgrst116)
-    const inexistente = await (await PUT(putRequest())).text()
+    const inexistente = await (await DELETE(deleteRequest())).text()
     expect(crossUser).toBe(inexistente)
-  })
-
-  it('401 PUT: envelope authRequired (hoje: {"error":"Unauthorized"} sem code)', async () => {
-    mockRequireAuthServerSecure.mockResolvedValue(null)
-    const response = await PUT(putRequest())
-    expect(response.status).toBe(401)
-    expect(response.headers.get('WWW-Authenticate')).toBe('Bearer')
-    expect(await response.clone().text()).toBe(
-      '{"error":"Authentication required","code":"AUTH_REQUIRED"}'
-    )
   })
 
   it('401 DELETE: envelope authRequired (hoje: {"error":"Unauthorized"} sem code)', async () => {

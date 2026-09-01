@@ -340,24 +340,25 @@ export const setlistSchemas = {
     name: commonSchemas.createSafeText(1, 255).optional(),
   }).strict(),
 
-  // PUT /api/setlists/songs/[songId] — reorder (B2 PR-6). Era a ÚNICA rota
-  // com body e ZERO validação (pre-check §2.9): a guarda `!setlistId ||
-  // !newPosition` lia newPosition: 0 como AUSENTE (b7 — 400 "required"
-  // errado) e deixava string entrar na aritmética (targetIndex = "3" - 1).
-  // Posições são 1-BASED no banco (newPos = i + 1) — o min(1) é o contrato
-  // declarado, não uma escolha nova. FORA do escopo, no B6: 2N UPDATEs,
-  // tempOffset, transacionalidade — esta rota ganha SÓ validação de entrada.
-  updateSongPosition: z.object({
-    setlistId: commonSchemas.objectId,
-    newPosition: z.number().int().min(1, 'newPosition must be >= 1 (positions are 1-based)'),
+  // PUT /api/setlists/[id]/songs/order — reorder em LOTE (B6-D1): o array
+  // é a ordem completa, permutação EXATA dos setlist_songs da setlist
+  // (posse/existência a rota checa; permutação a RPC checa na transação —
+  // B6-D2). max(100) alinhado ao songs[] do create.
+  reorder: z.object({
+    order: z.array(commonSchemas.objectId).min(1).max(100)
+      .refine(
+        (ids) => new Set(ids).size === ids.length,
+        'Duplicate song id in order'
+      ),
   }).strict(),
 
   addSong: z.object({
     content_id: commonSchemas.objectId,
-    // EXCEÇÃO DELIBERADA à política D1 (ajuste 4 do aval do desenho):
-    // position é aceita como SUGESTÃO e o servidor recalcula
-    // (songs/route.ts — Math.max(position, max+1); item 21 da Fase D).
-    // A semântica final é pergunta aberta do B6 — não "corrigir" aqui.
+    // B6-D3: a exceção deliberada à política D1 (B2) está ENCERRADA —
+    // position é aceita por compatibilidade e SEMPRE recalculada para
+    // max+1 (append; gap impossível por construção). O invariante
+    // contíguo 1..N de setlist_songs é contrato (docs/api/SETLISTS.md);
+    // o 201 devolve a position real.
     position: z.number().int().min(0).nullish(),
     notes: commonSchemas.safeText.nullish(),
   }).strict(),
