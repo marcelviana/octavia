@@ -1,4 +1,4 @@
-# B6 — DESENHO (position · reorder · D11 do B5) — Revisão 4
+# B6 — DESENHO (position · reorder · D11 do B5) — Revisão 5
 
 *(Rev. 3 = rev. 2 aprovada no mérito + inventário de escritores §0.1/§0.2
 — que registrou a brecha (e) do delete de content como B6-Q9 — + guard de
@@ -6,7 +6,11 @@ double-delete no §2.4. Rev. 4 = **B6-Q9 DECIDIDA pelo Marcel em
 2026-09-01: opção (i), fechar no B6 → B6-D11** — quarta função
 `delete_content_resequence` no §2.6, tradução com a coluna da rota de
 content, gates próprios no §8, PR-3c proposta no §9 e o aprendizado do
-§11 registrado para o encerramento.)*
+§11 registrado para o encerramento. Rev. 5 = ajuste único do aval: o
+passo 0 do §2.6 trava a linha do CONTENT com `for update` ANTES da
+estabilização — o FOR KEY SHARE da checagem de FK do addSong conflita
+com ele, fechando a janela que o lock post-hoc da rev. 4 não cobria;
+loop vira cinto, lock post-hoc morre, P1 da D11 vira determinístico.)*
 
 Fase de desenho do Bloco B6, sobre as decisões **B6-D1 a D7 fechadas pelo
 Marcel em 2026-08-31**, com as emendas dos dois avais condicionados do
@@ -501,9 +505,10 @@ grant execute on function public.reorder_setlist_songs(uuid, uuid[]) to service_
   estado misto. As demais classes do inventário (§0.1) não disputam: o
   create (b) escreve numa setlist que só ele conhece, os deletes em
   massa (c) são vácuos e serializam pelo lock/cascade da própria
-  linha-pai. Resíduos declarados: deadlock entre dois
-  delete-de-content concorrentes (§2.6, ponto 5) e a janela pós-
-  estabilização (§2.6, lock post-hoc). Os guards de `row_count` + cinto `position < 1`
+  linha-pai. Resíduos declarados (rev. 5): addSong que perde a corrida
+  contra um delete do MESMO content falha na FK → 500 honesto (§2.6,
+  passo 0 — não é gap); e o deadlock puro entre dois delete-de-content
+  (§2.6, ponto 5) → 40P01 → 500. Os guards de `row_count` + cinto `position < 1`
   permanecem como defesa em profundidade (e como detectores de invariante
   interno quebrado), não mais como única defesa contra interleaving.
   Negativos **nunca** são visíveis fora da transação (atomicidade):
@@ -696,12 +701,21 @@ declare
   v_fase1    integer;
   v_fase2    integer;
 begin
-  -- 1. estabilização dos locks (ponto 1 do aval): trava, em ordem
-  -- determinística de id (anti-deadlock), toda setlist que referencia o
-  -- content; repete a MESMA seleção — se o conjunto cresceu (addSong
-  -- concorrente inseriu o content em setlist nova), trava as novas e
-  -- repete; encerra quando estável. Limite declarado: 10 iterações;
-  -- estouro → OB601 (contenção anômala / invariante interno → 500).
+  -- 0. (rev. 5 do aval) trava a linha do CONTENT antes de tudo: a
+  -- checagem de FK do addSong toma FOR KEY SHARE nesta linha, que
+  -- CONFLITA com FOR UPDATE — nenhuma referência NOVA a este content
+  -- pode commitar a partir daqui. 0 linhas = content sumiu entre o
+  -- gate da rota e a função → OB604 (404 canônico na rota).
+  perform 1 from content c where c.id = p_content_id for update;
+  if not found then
+    raise exception 'CONTENT_NOT_FOUND' using errcode = 'OB604';
+  end if;
+
+  -- 1. locks das setlists afetadas, em ordem determinística de id
+  -- (anti-deadlock). Com o lock do passo 0 o conjunto não pode crescer:
+  -- a estabilização converge na PRIMEIRA passada por construção — o
+  -- loop fica como CINTO, não como mecanismo (limite mantido; estouro
+  -- → OB601 → 500, invariante interno).
   loop
     v_iter := v_iter + 1;
     if v_iter > 10 then
@@ -727,19 +741,17 @@ begin
   select coalesce(array_agg(distinct d.setlist_id), '{}'::uuid[])
     into v_affected from del d;
 
-  -- janela residual declarada: setlist afetada FORA do conjunto estável
-  -- (addSong commitou entre a estabilização e o 2a) ganha lock post-hoc
-  -- antes da renumeração — aquisição fora de ordem, coberta pelo
-  -- resíduo de deadlock do ponto 5
-  foreach v_sid in array v_affected loop
-    if not (v_sid = any(v_locked)) then
-      perform 1 from setlists s where s.id = v_sid for update;
-    end if;
-  end loop;
+  -- (rev. 5) sem referência nova possível (lock do passo 0),
+  -- v_affected ⊆ v_locked SEMPRE — o lock post-hoc da rev. 4 morreu;
+  -- violação aqui = invariante interno quebrado
+  if exists (select 1 from unnest(v_affected) a(sid)
+              where not (a.sid = any(v_locked))) then
+    raise exception 'ORDER_MISMATCH' using errcode = 'OB601';
+  end if;
 
   -- 2b. delete do content, devolvendo a linha (shape do §0 byte a byte).
-  -- 0 linhas = content sumiu entre o gate da rota e a função → OB604
-  -- (404 canônico na rota); o raise reverte TAMBÉM o 2a (transação una).
+  -- O `if not found` virou CINTO inalcançável (linha travada e
+  -- existente desde o passo 0) — mantido por simetria com as irmãs.
   return query
     delete from content c
      where c.id = p_content_id
@@ -780,22 +792,34 @@ grant execute on function public.delete_content_resequence(uuid) to service_role
 
 Notas da quarta função:
 
+- **Por que o passo 0 (registro do motivo, rev. 5 do aval)**: o
+  interleaving que o lock post-hoc da rev. 4 **não** cobria — addSong de
+  X numa setlist nova Z passa pela checagem de FK DEPOIS do 2a e ANTES
+  do 2b, commita, e o cascade do 2b apaga a linha de Z **sem renumerar**
+  (Z fora de `v_affected`) — gap silencioso. Com o `for update` na linha
+  do content, a checagem de FK do addSong (FOR KEY SHARE) **bloqueia**
+  até o commit desta transação e então **falha na FK** — 500 honesto,
+  declarado: a rota do addSong já passou pelo gate de posse do content,
+  mas o content sumiu no intervalo; **resíduo aceito, não é gap** (nada
+  parcial é gravado).
 - **`FOUND` após `RETURN QUERY`**: o PL/pgSQL define `FOUND` como true se
-  o `RETURN QUERY` devolveu ≥1 linha (documentado no §43.5.5 do manual) —
-  o teste `if not found` do 2b é válido; o probe de errcode da PR-3a
-  (§8) confirma o `OB604` ao vivo antes de qualquer rota depender dele.
+  o `RETURN QUERY` devolveu ≥1 linha (§43.5.5 do manual) — o teste do 2b
+  é válido, ainda que agora seja cinto; o probe de errcode da PR-3a (§8)
+  confirma o `OB604` ao vivo pelo passo 0 (content inexistente).
 - **Rota** (`DELETE /api/content/[id]`, PR-3c): ganha gate de posse
   EXPLÍCITO antes da RPC (select `id` por `id`+`user_id` → 404
   `Content not found` no padrão PGRST116, como o GET) — hoje a posse
   está embutida no `.eq('user_id')` do delete direto; com a RPC ela
-  precisa vir antes, e o intervalo gate→RPC é coberto pelo `OB604`
-  (mesmo 404, sem oráculo). O 200 responde
+  precisa vir antes, e o intervalo gate→RPC é coberto pelo `OB604` do
+  passo 0 (mesmo 404, sem oráculo). O 200 responde
   `{ success: true, message: 'Content deleted successfully',
   deletedContent: data[0] }` — envelope e shape preservados byte a byte
   contra o literal do §0.
-- **Ponto 5 — resíduo declarado**: dois deletes concorrentes de contents
-  que compartilham setlists podem se travar em ordem cruzada (o lock
-  post-hoc acima também participa) → o Postgres aborta um com deadlock
+- **Ponto 5 — resíduo declarado (encolhido na rev. 5)**: com o lock
+  post-hoc morto, sobra o caso puro — dois deletes concorrentes de
+  contents com conjuntos de setlists cruzados adquiridos em ordens
+  diferentes (só possível se a iteração-cinto do loop disparar e
+  adquirir fora da ordem global) → o Postgres aborta um com deadlock
   (`40P01`) → **500 honesto** pela linha "outro" da tabela do §2.2.
   Evento: mesmo usuário disparando dois deletes simultâneos — aceito e
   registrado; nenhum estado parcial (rollback total do abortado).
@@ -1047,7 +1071,7 @@ role, que bypassa RLS).
 | D9 remove | it.fails→it no unit da rota DELETE (mock `rpc`) + replay do DELETE em preview com leitura de contiguidade pós-remoção | o loop sequencial velho é o controle de leitura (pre-check §2); a prova viva é a contiguidade 1..N-1 após remover do MEIO |
 | D11 rota de content | **it.fails→it** no unit da rota `DELETE /api/content/[id]` (mock `rpc`): assert de que o miolo chama `delete_content_resequence` e o 200 ecoa `deletedContent` de `data[0]` | falha no código atual (delete direto na tabela); flip no commit 2 |
 | D11 contiguidade (controle DETERMINÍSTICO) | **branch × prod**: setlist semeada com content SEMEADO no meio (posição 2 de 3); DELETE do content; leitura de positions colada. Prod: **gap garantido** (1,3 — o cascade não renumera, sem dependência de timing); branch: **1..2**. Balanço zero em setlists, setlist_songs E content | **único gate do bloco com reprodução GARANTIDA do controle negativo** — todos os demais controles vivos dependem de replay de envelope ou de corrida |
-| D11 P1 addSong×delete_content | **P1 na branch**: `Promise.all` de addSong(content X numa setlist NOVA) × DELETE do content X; estado final: nenhuma linha de X em `setlist_songs` e TODAS as setlists contíguas | se uma das pernas 500ar (deadlock/OB601 declarados no §2.6), colar o literal e re-executar o delete — o gate é sobre o ESTADO FINAL; qualquer linha órfã de X ou gap reprova |
+| D11 P1 addSong×delete_content | **P1 na branch**: `Promise.all` de addSong(content X numa setlist NOVA) × DELETE do content X; estado final: nenhuma linha de X em `setlist_songs` e TODAS as setlists contíguas | resultado **determinístico por serialização** (rev. 5): ou o addSong entra ANTES (X em Z; Z travada pela estabilização e renumerada no delete) ou bloqueia no FOR KEY SHARE da FK e **falha na FK → 500 declarado** — em AMBOS os casos o estado final não tem linha de X e todas as setlists ficam contíguas; qualquer linha órfã de X ou gap reprova |
 | D6 N+1 | **gate de invariância**: contador do §6.2 (7→1) + diff byte-a-byte do JSON | o contador no código velho acusa 7 — controle embutido |
 | D7 | pg_policies antes/depois (§7) + diff do dump regenerado | o "antes" já está medido e colado |
 | Estado dos dados | revalidação do invariante com `b6-item4-invariante.ts` no ciclo da PR-3b (pré-merge) | baseline desta revisão: **0 violações em 8 setlists/107 songs** (§0); se divergir, saneamento único com leitura antes/depois (precedente O-1) entra como passo declarado da 3b |
