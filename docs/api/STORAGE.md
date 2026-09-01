@@ -43,7 +43,7 @@
   a URL pública permanente; `path` segue a convenção
   `<timestamp>-<nome-sanitizado>`.
 - **Naming/sanitização (B6-D5′)**: o nome enviado é normalizado em
-  **NFD**, as marcas diacríticas (`̀-ͯ`) são removidas
+  **NFD**, as marcas diacríticas (U+0300 a U+036F) são removidas
   (`coração` → `coracao`) e todo caractere fora de `[a-zA-Z0-9._-]`
   vira `_` (regex com flag `u`: 1 `_` por code point — emoji vira UM
   `_`). O nome hostil é ACEITO na entrada; a normalização é declarada e
