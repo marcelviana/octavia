@@ -382,10 +382,15 @@ nomes de saída.
 -- NOTA (as quatro funções): os OUT-params/colunas de retorno id/position
 -- colidem com nomes de coluna de setlist_songs — manter TODA referência
 -- a coluna qualificada (ss./s./o./t.), nunca nua.
+-- O OUT-param chama-se "position" ENTRE ASPAS: position é keyword
+-- (col_name_keyword) e itens de RETURNS TABLE são parâmetros OUT (regra
+-- de type_function_name) — sem aspas é erro 42601. No corpo, os usos em
+-- SET position = e na lista de colunas do INSERT são contexto de COLUNA
+-- e não sofrem substituição de variável.
 create or replace function public.reorder_setlist_songs(
   p_setlist_id uuid,
   p_song_ids   uuid[]
-) returns table (id uuid, position integer)
+) returns table (id uuid, "position" integer)
 language plpgsql
 security invoker
 set search_path = public
@@ -541,9 +546,14 @@ Com a D9, mesma migração e mesma mecânica:
 ```sql
 -- NOTA: colunas de retorno id/position homônimas às da tabela — toda
 -- referência qualificada (ss./s./t.), nunca nua.
+-- O OUT-param chama-se "position" ENTRE ASPAS: position é keyword
+-- (col_name_keyword) e itens de RETURNS TABLE são parâmetros OUT (regra
+-- de type_function_name) — sem aspas é erro 42601. No corpo, os usos em
+-- SET position = e na lista de colunas do INSERT são contexto de COLUNA
+-- e não sofrem substituição de variável.
 create or replace function public.remove_setlist_song(
   p_song_id uuid
-) returns table (id uuid, position integer)
+) returns table (id uuid, "position" integer)
 language plpgsql
 security invoker
 set search_path = public
