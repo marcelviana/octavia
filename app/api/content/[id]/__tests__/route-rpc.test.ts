@@ -2,11 +2,12 @@
  * B6 PR-3c — DELETE /api/content/[id] → rpc('delete_content_resequence')
  * (B6-D11; docs/ux/B6-DESENHO.md §2.6, tradução §2.2).
  *
- * Regra nº 7 (it.fails→it, commit 1): (a)-(d) nascem `it.fails` — o
- * código ATUAL deleta direto na tabela
- * (.delete().eq(id).eq(user_id).select().single()) e deixa o FK cascade
- * apagar a música do MEIO das setlists SEM renumerar (a brecha (e) do
- * inventário §0.1, fechada pela D11). O commit da rota os vira `it`.
+ * Regra nº 7 (it.fails→it, commit 1): (a)-(d) nasceram `it.fails` — o
+ * código pré-3c deletava direto na tabela e deixava o FK cascade apagar
+ * a música do MEIO das setlists SEM renumerar (a brecha (e) do
+ * inventário §0.1, fechada pela D11); falharam no commit 1 por
+ * construção. Este é o estado pós-flip — o histórico da branch prova a
+ * transição.
  *
  * SENTINELA (D6 do B3): nasce `it`, DECLARADO — sem rpc no código atual
  * não há interpolação a acusar; afirma o contrato do código novo.
@@ -89,7 +90,7 @@ describe("B6 PR-3c — DELETE content via rpc('delete_content_resequence') (D11,
     mockRpc.mockResolvedValue({ data: [RPC_ROW], error: null })
   })
 
-  it.fails('(a) gate de posse EXPLÍCITO antes da rpc: PGRST116 → 404 byte-idêntico ao do GET, sem tocar rpc nem delete (hoje: posse embutida no delete direto)', async () => {
+  it('(a) gate de posse EXPLÍCITO antes da rpc: PGRST116 → 404 byte-idêntico ao do GET, sem tocar rpc nem delete (hoje: posse embutida no delete direto)', async () => {
     mockGateSingle.mockResolvedValue(pgrst116)
     const res = await DELETE(delReq())
     expect(res.status).toBe(404)
@@ -98,7 +99,7 @@ describe("B6 PR-3c — DELETE content via rpc('delete_content_resequence') (D11,
     expect(mockDelete).not.toHaveBeenCalled()
   })
 
-  it.fails('(b) miolo chama rpc delete_content_resequence {p_content_id} e NÃO deleta direto (hoje: .delete().eq().eq())', async () => {
+  it('(b) miolo chama rpc delete_content_resequence {p_content_id} e NÃO deleta direto (hoje: .delete().eq().eq())', async () => {
     await DELETE(delReq())
     expect(mockRpc).toHaveBeenCalledExactlyOnceWith('delete_content_resequence', {
       p_content_id: CONTENT_ID,
@@ -106,7 +107,7 @@ describe("B6 PR-3c — DELETE content via rpc('delete_content_resequence') (D11,
     expect(mockDelete).not.toHaveBeenCalled()
   })
 
-  it.fails('(c) 200 ecoa {success, message, deletedContent: data[0]} — 22 chaves na ordem do dump, byte-compatível com o §0 (hoje: ecoa o delete direto)', async () => {
+  it('(c) 200 ecoa {success, message, deletedContent: data[0]} — 22 chaves na ordem do dump, byte-compatível com o §0 (hoje: ecoa o delete direto)', async () => {
     const res = await DELETE(delReq())
     expect(res.status).toBe(200)
     expect(await res.clone().text()).toBe(JSON.stringify({
@@ -116,21 +117,21 @@ describe("B6 PR-3c — DELETE content via rpc('delete_content_resequence') (D11,
     }))
   })
 
-  it.fails('(d1) rpc error OB604 → 404 byte-idêntico ao do gate (content sumiu no intervalo; hoje: 200)', async () => {
+  it('(d1) rpc error OB604 → 404 byte-idêntico ao do gate (content sumiu no intervalo; hoje: 200)', async () => {
     mockRpc.mockResolvedValue({ data: null, error: { code: 'OB604', message: 'CONTENT_NOT_FOUND' } })
     const res = await DELETE(delReq())
     expect(res.status).toBe(404)
     expect(await res.clone().text()).toBe('{"error":"Content not found","code":"NOT_FOUND"}')
   })
 
-  it.fails('(d2) rpc error OB601 → 500 internalError (invariante interno; hoje: 200)', async () => {
+  it('(d2) rpc error OB601 → 500 internalError (invariante interno; hoje: 200)', async () => {
     mockRpc.mockResolvedValue({ data: null, error: { code: 'OB601', message: 'ORDER_MISMATCH' } })
     const res = await DELETE(delReq())
     expect(res.status).toBe(500)
     expect(await res.clone().text()).toBe('{"error":"Internal server error","code":"INTERNAL_ERROR"}')
   })
 
-  it.fails('(d3) rpc error com code desconhecido → 500 (hoje: 200)', async () => {
+  it('(d3) rpc error com code desconhecido → 500 (hoje: 200)', async () => {
     mockRpc.mockResolvedValue({ data: null, error: { code: 'XX000', message: 'whatever' } })
     const res = await DELETE(delReq())
     expect(res.status).toBe(500)

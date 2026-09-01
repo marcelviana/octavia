@@ -5,6 +5,7 @@ import logger from '@/lib/logger'
 import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
 import { commonSchemas } from '@/lib/api-schemas'
 import { authRequired, internalError, notFound, validationError } from '@/lib/api-errors'
+import { rpcErrorResponse } from '@/lib/rpc-errors'
 
 // GET /api/content/[id] - Get specific content by ID
 const getContentByIdHandler = async (
@@ -92,22 +93,42 @@ const deleteContentByIdHandler = async (
     }
 
     const supabase = getSupabaseServiceClient()
-    
-    const { data: content, error } = await supabase
+
+    // B6 PR-3c (D11, desenho §2.6): gate de posse EXPLÍCITO antes da
+    // RPC — a posse vinha embutida no .eq('user_id') do delete direto;
+    // o intervalo gate→rpc é coberto pelo OB604 (mesmo 404, sem
+    // oráculo). Inexistente-ou-alheio → 404 idêntico ao do GET.
+    const { data: owned, error: gateError } = await supabase
       .from('content')
-      .delete()
+      .select('id')
       .eq('id', id)
       .eq('user_id', user.uid)
-      .select()
       .single()
 
-    if (error) {
-      if (error.code === 'PGRST116') {
-        // Emenda 5 (mudança declarada): "or access denied" morreu
+    if (gateError) {
+      if (gateError.code === 'PGRST116') {
         return notFound('Content not found')
       }
-      throw error
+      throw gateError
     }
+    if (!owned) {
+      return notFound('Content not found')
+    }
+
+    // delete do content + delete explícito das linhas de setlist_songs
+    // + renumeração de CADA setlist afetada em UMA transação, sob os
+    // locks (content antes, setlists em ordem determinística) — o FK
+    // cascade deixa de ser o mecanismo; a brecha (e) do inventário
+    // (música apagada do MEIO sem renumerar) morre aqui.
+    const { data, error: rpcError } = await supabase.rpc('delete_content_resequence', {
+      p_content_id: id,
+    })
+
+    if (rpcError) {
+      return rpcErrorResponse('deleteContent', rpcError)
+    }
+
+    const content = Array.isArray(data) ? data[0] : data
 
     return NextResponse.json({ 
       success: true, 

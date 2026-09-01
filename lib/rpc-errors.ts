@@ -9,13 +9,14 @@
  * "alheio" à rota significa invariante interno quebrado, não erro do
  * cliente.
  *
- * Coluna da rota de content (OB604) entra na PR-3c, adicionando a
- * chave aqui — nunca inline na rota.
+ * As quatro colunas do §2.2 vivem aqui (reorder/removeSong/addSong/
+ * deleteContent — a de content entrou na PR-3c); code novo = editar
+ * AQUI, nunca inline na rota.
  */
 import logger from './logger'
 import { internalError, notFound, validationError } from './api-errors'
 
-export type RpcRoute = 'reorder' | 'removeSong' | 'addSong'
+export type RpcRoute = 'reorder' | 'removeSong' | 'addSong' | 'deleteContent'
 
 const MAP: Record<RpcRoute, Record<string, () => Response>> = {
   reorder: {
@@ -38,6 +39,11 @@ const MAP: Record<RpcRoute, Record<string, () => Response>> = {
   },
   addSong: {
     OB602: () => notFound('Setlist not found'),
+  },
+  deleteContent: {
+    // OB604 = content sumiu no intervalo gate→rpc: mesmo 404 do gate,
+    // sem oráculo (B6-D11, PR-3c)
+    OB604: () => notFound('Content not found'),
   },
 }
 

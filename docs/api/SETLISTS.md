@@ -21,8 +21,8 @@ content trava antes a linha de `content` (conflita com o FOR KEY SHARE
 da FK do addSong). Demais classes do inventário (B6-DESENHO.md §0.1):
 o create com `songs[]` inline é seguro por construção (setlist recém-
 criada, positions 1..N atribuídas pelo servidor); os deletes em massa
-por cascade são vácuos (a setlist morre junto). A rota de content migra
-para a RPC na PR-3c; até lá vale a janela declarada no §0.1.
+por cascade são vácuos (a setlist morre junto). Fechado na PR-3c: o
+delete de content renumera na mesma transação (B6-D11).
 
 Posições são **1-based**. Erros das RPCs saem por SQLSTATE custom
 (OB6xx) e são traduzidos POR `error.code` no ponto único
