@@ -354,10 +354,11 @@ export const setlistSchemas = {
 
   addSong: z.object({
     content_id: commonSchemas.objectId,
-    // EXCEÇÃO DELIBERADA à política D1 (ajuste 4 do aval do desenho):
-    // position é aceita como SUGESTÃO e o servidor recalcula
-    // (songs/route.ts — Math.max(position, max+1); item 21 da Fase D).
-    // A semântica final é pergunta aberta do B6 — não "corrigir" aqui.
+    // B6-D3: a exceção deliberada à política D1 (B2) está ENCERRADA —
+    // position é aceita por compatibilidade e SEMPRE recalculada para
+    // max+1 (append; gap impossível por construção). O invariante
+    // contíguo 1..N de setlist_songs é contrato (docs/api/SETLISTS.md);
+    // o 201 devolve a position real.
     position: z.number().int().min(0).nullish(),
     notes: commonSchemas.safeText.nullish(),
   }).strict(),
