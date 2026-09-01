@@ -97,7 +97,10 @@ export class SupabaseMockFactory {
     // Chainable query methods
     builder.select = vi.fn((columns = '*') => {
       currentContext.operation = 'select'
-      currentContext.columns = columns === '*' ? [] : columns.split(',').map((c: string) => c.trim())
+      // B6 PR-4: select('*') E select('*, embed(...)') = todas as colunas
+      // (semântica do PostgREST — '*' com embedding não filtra colunas;
+      // o split ingênuo picotava a string de embed em nomes-lixo)
+      currentContext.columns = columns.trim().startsWith('*') ? [] : columns.split(',').map((c: string) => c.trim())
       return builder
     })
 

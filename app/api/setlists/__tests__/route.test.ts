@@ -85,6 +85,13 @@ describe('/api/setlists', () => {
     it('returns setlists with songs for authenticated user', async () => {
       mockRequireAuthServerSecure.mockResolvedValueOnce(mockUser)
 
+      // B6 PR-4 (D6): o GET usa UMA query com embedding — a linha de
+      // setlists chega com setlist_songs (e content) EMBUTIDOS
+      factory.setMockData('setlists', [{
+        ...mockSetlists[0],
+        setlist_songs: mockSetlistSongs.map((song, i) => ({ ...song, content: mockContent[i] })),
+      }])
+
       const request = new NextRequest('http://localhost:3000/api/setlists')
       const response = await GET(request)
       const data = await response.json()
@@ -101,8 +108,12 @@ describe('/api/setlists', () => {
     it('handles missing content gracefully', async () => {
       mockRequireAuthServerSecure.mockResolvedValueOnce(mockUser)
       
-      // Setup scenario where content is missing
-      factory.setMockData('content', [])
+      // B6 PR-4: content ausente = embed content: null (fallbacks do
+      // mapeamento — mesmo gate de get-shape.test.ts)
+      factory.setMockData('setlists', [{
+        ...mockSetlists[0],
+        setlist_songs: mockSetlistSongs.map((song) => ({ ...song, content: null })),
+      }])
 
       const request = new NextRequest('http://localhost:3000/api/setlists')
       const response = await GET(request)
