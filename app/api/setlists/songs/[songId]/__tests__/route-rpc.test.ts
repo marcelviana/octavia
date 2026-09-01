@@ -3,8 +3,9 @@
  * docs/ux/B6-DESENHO.md §2.4, tradução §2.2).
  *
  * Regra nº 7 (it.fails→it, commit 1): (a)+(b) e (c) nascem `it.fails` —
- * o código ATUAL deleta direto e fecha o buraco com loop de UPDATEs
- * (route.ts:83-121), nunca chama rpc. O commit das rotas os vira `it`.
+ * o código pré-3b deletava direto e fechava o buraco com loop de
+ * UPDATEs, nunca chamava rpc; falharam no commit 1 por construção. Este
+ * é o estado pós-flip — o histórico da branch prova a transição.
  *
  * SENTINELA (D6 do B3): nasce `it`, DECLARADO — sem rpc no código atual
  * não há interpolação a acusar hoje; o teste afirma o contrato que o
@@ -77,7 +78,7 @@ describe("B6 PR-3b — DELETE via rpc('remove_setlist_song') (D9/D10, §2.4)", (
     })
   })
 
-  it.fails('(a)+(b) chama rpc remove_setlist_song {p_song_id}, NÃO deleta/shifta direto, e o 200 segue {"success":true} byte-idêntico (hoje: delete + loop)', async () => {
+  it('(a)+(b) chama rpc remove_setlist_song {p_song_id}, NÃO deleta/shifta direto, e o 200 segue {"success":true} byte-idêntico (hoje: delete + loop)', async () => {
     const res = await DELETE(delReq())
     expect(mockRpc).toHaveBeenCalledExactlyOnceWith('remove_setlist_song', { p_song_id: SONG_ID })
     expect(mockDelete).not.toHaveBeenCalled()
@@ -86,21 +87,21 @@ describe("B6 PR-3b — DELETE via rpc('remove_setlist_song') (D9/D10, §2.4)", (
     expect(await res.clone().text()).toBe('{"success":true}')
   })
 
-  it.fails('(c1) rpc error OB603 → 404 "Song not found" byte-idêntico (hoje: 200 pelo caminho velho)', async () => {
+  it('(c1) rpc error OB603 → 404 "Song not found" byte-idêntico (hoje: 200 pelo caminho velho)', async () => {
     mockRpc.mockResolvedValue({ data: null, error: { code: 'OB603', message: 'SONG_NOT_FOUND' } })
     const res = await DELETE(delReq())
     expect(res.status).toBe(404)
     expect(await res.clone().text()).toBe('{"error":"Song not found","code":"NOT_FOUND"}')
   })
 
-  it.fails('(c2) rpc error OB602 → 404 "Song not found" byte-idêntico (setlist sumiu no intervalo; hoje: 200)', async () => {
+  it('(c2) rpc error OB602 → 404 "Song not found" byte-idêntico (setlist sumiu no intervalo; hoje: 200)', async () => {
     mockRpc.mockResolvedValue({ data: null, error: { code: 'OB602', message: 'SETLIST_NOT_FOUND' } })
     const res = await DELETE(delReq())
     expect(res.status).toBe(404)
     expect(await res.clone().text()).toBe('{"error":"Song not found","code":"NOT_FOUND"}')
   })
 
-  it.fails('(c3) rpc error OB601 → 500 internalError (hoje: 200)', async () => {
+  it('(c3) rpc error OB601 → 500 internalError (hoje: 200)', async () => {
     mockRpc.mockResolvedValue({ data: null, error: { code: 'OB601', message: 'ORDER_MISMATCH' } })
     const res = await DELETE(delReq())
     expect(res.status).toBe(500)

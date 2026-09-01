@@ -5,6 +5,7 @@ import logger from '@/lib/logger'
 import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
 import { setlistSchemas } from '@/lib/api-schemas'
 import { authRequired, internalError, notFound, validationError } from '@/lib/api-errors'
+import { rpcErrorResponse } from '@/lib/rpc-errors'
 
 // Type for song with joined setlist data
 type SongWithSetlist = {
@@ -76,57 +77,17 @@ const removeSongFromSetlistHandler = async (
       return notFound('Song not found')
     }
 
-    const setlistId = songData.setlist_id
-    const songPosition = songData.position
+    // B6 PR-3b (D9/D10, desenho §2.4): delete + renumeração 1..N-1 +
+    // bump de updated_at viram UMA transação na RPC, sob o lock da
+    // linha-pai — o loop sequencial de shift (não-atômico) morreu.
+    // Tradução por error.code (§2.2): OB603/OB602 → 404 sem oráculo;
+    // OB601/desconhecido → 500.
+    const { error: rpcError } = await supabase.rpc('remove_setlist_song', {
+      p_song_id: songId,
+    })
 
-    // Remove the song
-    const { error: removeError } = await supabase
-      .from("setlist_songs")
-      .delete()
-      .eq("id", songId)
-
-    if (removeError) {
-      logger.error("Error removing song from setlist:", removeError)
-      throw removeError
-    }
-
-    // Get all songs with position > the removed song's position
-    const { data: songsToShift, error: fetchError } = await supabase
-      .from("setlist_songs")
-      .select("id, position")
-      .eq("setlist_id", setlistId)
-      .gt("position", songPosition)
-      .order("position", { ascending: true })
-
-    if (fetchError) {
-      logger.error("Error fetching songs to shift:", fetchError)
-      throw fetchError
-    }
-
-    // Shift positions of remaining songs using individual updates
-    if (songsToShift && songsToShift.length > 0) {
-      for (const song of songsToShift) {
-        const songRow = song as SongRow
-        const updateData: { position: number } = { position: songRow.position - 1 }
-        const { error: updateError } = await supabase
-          .from("setlist_songs")
-          .update(updateData)
-          .eq("id", songRow.id)
-
-        if (updateError) {
-          logger.error("Error shifting song position:", updateError)
-          throw updateError
-        }
-      }
-    }
-
-    // PR-5/5c: remover música muda a setlist (achado §0.3 — sem trigger no banco)
-    const { error: touchError } = await supabase
-      .from('setlists')
-      .update({ updated_at: new Date().toISOString() })
-      .eq('id', setlistId)
-    if (touchError) {
-      logger.error('Error bumping setlist updated_at:', touchError)
+    if (rpcError) {
+      return rpcErrorResponse('removeSong', rpcError)
     }
 
     return NextResponse.json({ success: true })

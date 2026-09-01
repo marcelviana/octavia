@@ -4,8 +4,9 @@
  *
  * Regra nº 7 (it.fails→it, commit 1): os gates (a)/(b)/(c) nascem
  * `it.fails` — o código ATUAL lê max, calcula Math.max e insere direto
- * (route.ts:55-95), nunca chama rpc; cada teste falha hoje por
- * construção. O commit das rotas os vira `it`.
+ * (route.ts:55-95), nunca chama rpc; cada teste falhou no commit 1 por
+ * construção. Este é o estado pós-flip (commit das rotas) — o histórico
+ * da branch prova a transição.
  *
  * SENTINELA (D6 do B3): nasce `it`, DECLARADO — o código atual não tem
  * rpc, logo não há interpolação de error.message de rpc a acusar hoje;
@@ -85,7 +86,7 @@ describe("B6 PR-3b — addSong via rpc('add_setlist_song') (D3/D10, §2.5)", () 
     mockRpc.mockResolvedValue({ data: [RPC_ROW], error: null })
   })
 
-  it.fails('(a) position 99: chama rpc add_setlist_song {p_setlist_id,p_content_id,p_notes} e NÃO insere direto (hoje: Math.max + insert)', async () => {
+  it('(a) position 99: chama rpc add_setlist_song {p_setlist_id,p_content_id,p_notes} e NÃO insere direto (hoje: Math.max + insert)', async () => {
     await POST(req())
     expect(mockRpc).toHaveBeenCalledExactlyOnceWith('add_setlist_song', {
       p_setlist_id: SETLIST_ID,
@@ -95,27 +96,27 @@ describe("B6 PR-3b — addSong via rpc('add_setlist_song') (D3/D10, §2.5)", () 
     expect(mockInsert).not.toHaveBeenCalled()
   })
 
-  it.fails('(b) 201 ecoa data[0] da rpc — 6 chaves na ordem id,setlist_id,content_id,position,notes,created_at (hoje: ecoa o insert direto)', async () => {
+  it('(b) 201 ecoa data[0] da rpc — 6 chaves na ordem id,setlist_id,content_id,position,notes,created_at (hoje: ecoa o insert direto)', async () => {
     const res = await POST(req())
     expect(res.status).toBe(201)
     expect(await res.clone().text()).toBe(JSON.stringify(RPC_ROW))
   })
 
-  it.fails('(c1) rpc error OB602 → 404 byte-idêntico ao 404 do gate (hoje: 201 pelo caminho velho)', async () => {
+  it('(c1) rpc error OB602 → 404 byte-idêntico ao 404 do gate (hoje: 201 pelo caminho velho)', async () => {
     mockRpc.mockResolvedValue({ data: null, error: { code: 'OB602', message: 'SETLIST_NOT_FOUND' } })
     const res = await POST(req())
     expect(res.status).toBe(404)
     expect(await res.clone().text()).toBe('{"error":"Setlist not found","code":"NOT_FOUND"}')
   })
 
-  it.fails('(c2) rpc error OB601 → 500 internalError (invariante interno; hoje: 201)', async () => {
+  it('(c2) rpc error OB601 → 500 internalError (invariante interno; hoje: 201)', async () => {
     mockRpc.mockResolvedValue({ data: null, error: { code: 'OB601', message: 'ORDER_MISMATCH' } })
     const res = await POST(req())
     expect(res.status).toBe(500)
     expect(await res.clone().text()).toBe('{"error":"Internal server error","code":"INTERNAL_ERROR"}')
   })
 
-  it.fails('(c3) rpc error com code desconhecido → 500 (hoje: 201)', async () => {
+  it('(c3) rpc error com code desconhecido → 500 (hoje: 201)', async () => {
     mockRpc.mockResolvedValue({ data: null, error: { code: 'XX000', message: 'whatever' } })
     const res = await POST(req())
     expect(res.status).toBe(500)

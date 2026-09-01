@@ -6,6 +6,7 @@ import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
 import { withBodyValidation } from '@/lib/api-validation-middleware'
 import { setlistSchemas } from '@/lib/api-schemas'
 import { internalError, notFound, validationError } from '@/lib/api-errors'
+import { rpcErrorResponse } from '@/lib/rpc-errors'
 import type { Database } from '@/types/database.types'
 
 // POST /api/setlists/[id]/songs - Add song to setlist
@@ -52,59 +53,30 @@ const addSongToSetlistHandler = withBodyValidation(setlistSchemas.addSong, {
         return notFound('Content not found')
       }
 
-      // Get the current maximum position in the setlist
-      const { data: maxPositionResult, error: maxPositionError } = await supabase
-        .from("setlist_songs")
-        .select("position")
-        .eq("setlist_id", setlistId)
-        .order("position", { ascending: false })
-        .limit(1)
-        .maybeSingle()
+      // B6 PR-3b (D3/D10, desenho §2.5): a escrita vira UMA chamada de
+      // RPC — max+1 é calculado DENTRO da transação, sob o lock da
+      // linha-pai (append-only, gap impossível; a corrida
+      // addSong×reorder/remove serializa no mesmo lock). O bump de
+      // updated_at acontece NA transação — o best-effort separado morreu.
+      // position do payload: aceita e SEMPRE recalculada (comentário do
+      // schema, §4.2). A leitura de max + Math.max + insert direto
+      // (código anterior) foi removida; `position` fica sem uso aqui por
+      // contrato.
+      void position
+      const { data, error: rpcError } = await supabase.rpc('add_setlist_song', {
+        p_setlist_id: setlistId,
+        p_content_id: contentId,
+        p_notes: notes || null,
+      })
 
-      if (maxPositionError) {
-        logger.error("Error getting max position:", maxPositionError)
-        throw maxPositionError
+      if (rpcError) {
+        return rpcErrorResponse('addSong', rpcError)
       }
 
-      // Calculate the actual position to insert at.
-      // PR-5: position ausente/null → vai direto para o fim (max+1). Antes,
-      // Math.max(undefined, …) = NaN → 500 do Postgres já na 1ª inserção
-      // (achado da verificação pós-MIG-1; o schema sempre permitiu omitir).
-      const currentMaxPosition = (maxPositionResult as { position: number } | null)?.position || 0
-      const actualPosition = position == null
-        ? currentMaxPosition + 1
-        : Math.max(position, currentMaxPosition + 1)
-
-      // Add the new song at the calculated position
-      const insertData = {
-        setlist_id: setlistId,
-        content_id: contentId,
-        position: actualPosition,
-        notes: notes || null,
-      }
-
-      const { data: song, error: songError } = await supabase
-        .from("setlist_songs")
-        .insert(insertData)
-        .select()
-        .single()
-
-      if (songError) {
-        logger.error("Error adding song to setlist:", songError)
-        throw songError
-      }
-
-      // PR-5/5c: mudar as músicas MUDA a setlist — sem este bump, um cliente
-      // que sincroniza por updated_at perde toda alteração de músicas
-      // (achado §0.3 do desenho: não existe trigger no banco)
-      const { error: touchError } = await supabase
-        .from('setlists')
-        .update({ updated_at: new Date().toISOString() })
-        .eq('id', setlistId)
-      if (touchError) {
-        logger.error('Error bumping setlist updated_at:', touchError)
-      }
-
+      // returns setof: data[0] é a linha inserida nas 6 colunas na ordem
+      // da tabela — o 201 ecoa a verdade da transação (paridade byte a
+      // byte com o shape medido no pre-check L1.1)
+      const song = Array.isArray(data) ? data[0] : data
       return NextResponse.json(song, { status: 201 })
     } catch (error: any) {
       logger.error('Error adding song to setlist:', error)

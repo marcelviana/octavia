@@ -352,6 +352,18 @@ export const setlistSchemas = {
     newPosition: z.number().int().min(1, 'newPosition must be >= 1 (positions are 1-based)'),
   }).strict(),
 
+  // PUT /api/setlists/[id]/songs/order — reorder em LOTE (B6-D1): o array
+  // é a ordem completa, permutação EXATA dos setlist_songs da setlist
+  // (posse/existência a rota checa; permutação a RPC checa na transação —
+  // B6-D2). max(100) alinhado ao songs[] do create.
+  reorder: z.object({
+    order: z.array(commonSchemas.objectId).min(1).max(100)
+      .refine(
+        (ids) => new Set(ids).size === ids.length,
+        'Duplicate song id in order'
+      ),
+  }).strict(),
+
   addSong: z.object({
     content_id: commonSchemas.objectId,
     // EXCEÇÃO DELIBERADA à política D1 (ajuste 4 do aval do desenho):
