@@ -10,7 +10,7 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "13.0.4"
+    PostgrestVersion: "14.5"
   }
   public: {
     Tables: {
@@ -275,7 +275,70 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      add_setlist_song: {
+        Args: { p_content_id: string; p_notes: string; p_setlist_id: string }
+        Returns: {
+          content_id: string
+          created_at: string | null
+          id: string
+          notes: string | null
+          position: number
+          setlist_id: string
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "setlist_songs"
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
+      delete_content_resequence: {
+        Args: { p_content_id: string }
+        Returns: {
+          album: string | null
+          artist: string | null
+          bpm: number | null
+          capo: number | null
+          content_data: Json | null
+          content_type: string
+          created_at: string | null
+          difficulty: string | null
+          file_url: string | null
+          genre: string | null
+          id: string
+          is_favorite: boolean | null
+          is_public: boolean | null
+          key: string | null
+          notes: string | null
+          tags: string[] | null
+          thumbnail_url: string | null
+          time_signature: string | null
+          title: string
+          tuning: string | null
+          updated_at: string | null
+          user_id: string
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "content"
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
+      remove_setlist_song: {
+        Args: { p_song_id: string }
+        Returns: {
+          id: string
+          position: number
+        }[]
+      }
+      reorder_setlist_songs: {
+        Args: { p_setlist_id: string; p_song_ids: string[] }
+        Returns: {
+          id: string
+          position: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
