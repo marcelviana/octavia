@@ -1,9 +1,12 @@
-# B6 — DESENHO (position · reorder · D11) — Revisão 3
+# B6 — DESENHO (position · reorder · D11 do B5) — Revisão 4
 
-*(Rev. 3 = rev. 2 aprovada no mérito + duas adições do aval de
-2026-09-01: inventário de escritores de `setlist_songs` no §0.1/§0.2 —
-que registrou a **brecha (e)** do delete de content como decisão
-pendente **B6-Q9** — e guard de double-delete no §2.4.)*
+*(Rev. 3 = rev. 2 aprovada no mérito + inventário de escritores §0.1/§0.2
+— que registrou a brecha (e) do delete de content como B6-Q9 — + guard de
+double-delete no §2.4. Rev. 4 = **B6-Q9 DECIDIDA pelo Marcel em
+2026-09-01: opção (i), fechar no B6 → B6-D11** — quarta função
+`delete_content_resequence` no §2.6, tradução com a coluna da rota de
+content, gates próprios no §8, PR-3c proposta no §9 e o aprendizado do
+§11 registrado para o encerramento.)*
 
 Fase de desenho do Bloco B6, sobre as decisões **B6-D1 a D7 fechadas pelo
 Marcel em 2026-08-31**, com as emendas dos dois avais condicionados do
@@ -29,6 +32,11 @@ mesmo dia:
   função**: o `Math.max` do route.ts deixa de existir — max+1 é calculado
   DENTRO da transação. `position` do payload continua aceita e ignorada
   (D3). O shape do 201 é preservado **byte a byte** (medido, §0).
+- **B6-D11** (ex-Q9, decidida 2026-09-01): o delete de content **fecha a
+  brecha (e) no B6** — quarta função `delete_content_resequence` na MESMA
+  migração; a rota `DELETE /api/content/[id]` passa a usá-la; o cascade
+  deixa de ser o mecanismo (delete explícito com RETURNING). Shape do 200
+  preservado byte a byte (medido, §0).
 - **§4.1 (rev. 1)**: leitura literal da D3 confirmada (append-only;
   inserção-com-deslocamento fica para o PRD do cliente nativo).
 - **§9**: fatiamento aceito (3a/3b; D7 no ciclo de console da 3a); com a
@@ -86,6 +94,21 @@ da main `bce342e`.
   (:89-96). `returns setof public.setlist_songs` na função devolve a
   linha nessa MESMA ordem de colunas (§2.5); o gate de byte-identidade
   está no §8.
+- **Shape do 200 do DELETE /api/content/[id] hoje** (base da paridade da
+  B6-D11, ponto 4 do aval) `[medido ao vivo, 2026-09-01]` — probe com
+  semeadura própria (1 content criado → deletado; balanço zero: content
+  do usuário de audit 66→66; script
+  `b6-rev4-shape-delete-content.ts`):
+  ```
+  POST /api/content → 201   (id 4640a1b9-6869-453f-8f04-e86a223fee71)
+  DELETE /api/content/4640a1b9-… → 200
+  {"success":true,"message":"Content deleted successfully","deletedContent":{"id":"4640a1b9-6869-453f-8f04-e86a223fee71","user_id":"Pw3bxXZw0iT3WwyL7kxGtGJIJH83","title":"B6-REV4 shape probe (efêmero)","artist":null,"album":null,"genre":null,"content_type":"Lyrics","key":null,"bpm":null,"time_signature":null,"difficulty":null,"capo":null,"tuning":null,"tags":null,"notes":null,"content_data":{"lyrics":"probe"},"file_url":null,"thumbnail_url":null,"is_favorite":false,"is_public":false,"created_at":"2026-09-01T12:30:35.293+00:00","updated_at":"2026-09-01T12:30:35.293+00:00"}}
+  content do usuário DEPOIS: 66
+  ```
+  Envelope `{success, message, deletedContent}` com `deletedContent` nas
+  22 colunas de `content` na ordem do dump (:42-64). `returns setof
+  public.content` na quarta função devolve a linha nessa MESMA ordem
+  (§2.6); gate de byte-identidade no §8.
 - Guard de corpo existente: `lib/api-validation-middleware.ts:29-39`
   (`parseRequestBody`, `if (text.length > 1024 * 1024)` → 400
   `field:""`/`Invalid request body format` via middleware).
@@ -176,7 +199,7 @@ fora do inventário de ESCRITA; verificado por leitura de cada trecho):
 | `app/api/setlists/[id]/route.ts:341` (DELETE da setlist: apaga as songs antes) | DELETE em massa | **(c)**: remoção do conjunto INTEIRO — o invariante fica vácuo (a setlist morre em seguida). Interleaving com addSong pós-D10: um insert que entre depois do `:341` morre no FK cascade do delete da setlist (`setlist_songs_setlist_id_fkey ON DELETE CASCADE`, dump:189-190), e o delete da linha de `setlists` serializa com o `for update` das funções. Nota `[análise]`: o delete explícito `:341` é redundante com o cascade — fica como está (fora do escopo) |
 | Cascade `profiles`→`setlists`→`setlist_songs` (dump:194-196 + :189-190) | DELETE em cadeia | **(c)** vácuo (setlists morrem junto); sem rota — só console, e a regra operacional é nunca deletar `profiles` |
 | `scripts/ux-audit/*` (cleanup/seed/discover) | via ROTAS da API | **(d)**: nenhuma escrita direta em `setlist_songs` no grep — cleanup deleta via rota DELETE da setlist (comentário `:5`), seed cria via rotas, discover só lê. Respeitam o contrato por construção |
-| `app/api/content/[id]/route.ts:96-102` (DELETE de content) → FK `setlist_songs_content_id_fkey ON DELETE CASCADE` (dump:184-185) | DELETE indireto por cascade | **(e) BRECHA** — ver abaixo |
+| `app/api/content/[id]/route.ts:96-102` (DELETE de content) → FK `setlist_songs_content_id_fkey ON DELETE CASCADE` (dump:184-185) | DELETE indireto por cascade | era **(e) BRECHA** (ver abaixo) → **(a) vira RPC** `delete_content_resequence` (B6-D11, rev. 4) |
 
 **PUT /api/setlists/[id] NÃO aceita `songs[]`** — verbatim do schema de
 update (`lib/api-schemas.ts:336-341`): não-escritor por construção.
@@ -208,27 +231,20 @@ O handler apaga só a linha de `content`; o FK
 silenciosamente a música do **MEIO** de toda setlist que a referencie,
 **sem renumeração** → gap real, fora de qualquer lock/guard do §2. O
 estado atual não tem vítimas (§0: 0 violações em 8 setlists/107 songs),
-mas o caminho existe desde sempre. **Registrada como decisão pendente
-B6-Q9 (do Marcel, não decidida aqui)** — opções preparadas:
-
-- **(i) fechar no B6**: 4ª função `delete_content_and_resequence(
-  p_content_id, p_user_id)` na MESMA migração — coleta as setlists
-  afetadas, toma os locks das linhas-pai **em ordem determinística de id**
-  (anti-deadlock), deleta o content (cascade dispara dentro da transação)
-  e renumera cada setlist afetada pelas duas fases; a rota de content
-  troca o delete direto pela RPC. Custo: migração e PR-3b crescem.
-- **(ii) adiar numerado**: registrar a janela no SETLISTS.md e no
-  encerramento; o invariante fica declarado como "garantido pelos
-  escritores de setlist, com a exceção conhecida do delete de content".
+mas o caminho existe desde sempre. **B6-Q9 DECIDIDA pelo Marcel
+(2026-09-01): opção (i), fechar no B6 → B6-D11** — quarta função
+`delete_content_resequence` na mesma migração (§2.6); a classe (e) sai
+do inventário como brecha e entra como **(a)**: o delete de content vira
+o quarto escritor de produção pós-criação sob o lock.
 
 ### §0.2 Consequência do inventário na terminologia
 
-Onde a rev. 2 dizia "os TRÊS escritores", leia-se: **os três escritores
-de produção pós-criação** (addSong, remove, reorder — classes (a), todos
-sob o lock da D10) + o create inline (b, seguro por construção) + os
-deletes em massa por cascade (c, vácuos) + o tooling via rotas (d) + a
-brecha (e) do delete de content, pendente na B6-Q9. §2, §2.2 e §10
-ajustados nesta revisão.
+Com a B6-D11, leia-se: **os QUATRO escritores de produção pós-criação
+sob o lock** (addSong, remove, reorder, delete-de-content — classes (a),
+todos serializando no `for update` da linha-pai) + o create inline (b,
+seguro por construção) + os deletes em massa por cascade (c, vácuos) + o
+tooling via rotas (d). Nenhuma classe (e) restante no inventário. §2,
+§2.2 e §10 ajustados.
 
 ---
 
@@ -344,12 +360,13 @@ Novos, sem equivalente no velho: duplicata → 400; permutação incompleta →
 
 ---
 
-## 2. Funções RPC (D2 + D9 + D10)
+## 2. Funções RPC (D2 + D9 + D10 + D11)
 
-A migração leva **TRÊS funções** — os três escritores de produção
-pós-criação de `setlist_songs` (reorder, remove, addSong — inventário
-completo com as demais classes no §0.1) passam a serializar no MESMO lock
-da linha-pai (`setlists`), que é o mecanismo do invariante 1..N (D10). Comentário
+A migração leva **QUATRO funções** — os quatro escritores de produção
+pós-criação de `setlist_songs` (reorder, remove, addSong,
+delete-de-content — inventário completo com as demais classes no §0.1)
+passam a serializar no MESMO lock da linha-pai (`setlists`), que é o
+mecanismo do invariante 1..N (D10/D11). Comentário
 obrigatório no SQL das três (rev. 1 do aval): as funções-tabela devolvem
 colunas homônimas às da tabela (`id`, `position`) — **toda referência a
 coluna sai qualificada** (`ss.`/`s.`/`o.`/`t.`) para não colidir com os
@@ -454,17 +471,19 @@ grant execute on function public.reorder_setlist_songs(uuid, uuid[]) to service_
 - **Exceção → envelope por SQLSTATE, não por mensagem** (rev. 7 do aval
   da rev. 0, mantida): `raise … using errcode` custom — `OB601`
   (mismatch/invariante interno), `OB602` (setlist sumiu), `OB603` (song
-  sumiu). O PostgREST propaga o SQLSTATE no campo `code` e o
-  `PostgrestError` do supabase-js o expõe em `error.code` — as rotas
-  traduzem **por `error.code`**, nunca por `error.message` (regra D6 do
-  B3). **Tradução POR ROTA** (rev. 3 do aval da rev. 1):
+  sumiu), `OB604` (content sumiu, na quarta §2.6). O PostgREST propaga o
+  SQLSTATE no campo `code` e o `PostgrestError` do supabase-js o expõe em
+  `error.code` — as rotas traduzem **por `error.code`**, nunca por
+  `error.message` (regra D6 do B3). **Tradução POR ROTA** (rev. 3 do aval
+  da rev. 1; coluna de content na rev. 4):
 
-  | SQLSTATE | rota reorder | rota DELETE (remove) | rota addSong |
-  |---|---|---|---|
-  | `OB601` | **400** `field:"order"` (erro do cliente: array ≠ conjunto) | **500** `internalError()` | **500** `internalError()` |
-  | `OB602` | **404** `Setlist not found` | **404** `Song not found` | **404** `Setlist not found` |
-  | `OB603` | **500** `internalError()` (inalcançável aqui) | **404** `Song not found` | **500** `internalError()` (inalcançável aqui) |
-  | outro | **500** `internalError()` | **500** `internalError()` | **500** `internalError()` |
+  | SQLSTATE | rota reorder | rota DELETE (remove) | rota addSong | rota DELETE content |
+  |---|---|---|---|---|
+  | `OB601` | **400** `field:"order"` (erro do cliente: array ≠ conjunto) | **500** `internalError()` | **500** `internalError()` | **500** `internalError()` |
+  | `OB602` | **404** `Setlist not found` | **404** `Song not found` | **404** `Setlist not found` | **500** (inalcançável aqui) |
+  | `OB603` | **500** (inalcançável aqui) | **404** `Song not found` | **500** (inalcançável aqui) | **500** (inalcançável aqui) |
+  | `OB604` | **500** (inalcançável aqui) | **500** (inalcançável aqui) | **500** (inalcançável aqui) | **404** `Content not found` |
+  | outro | **500** `internalError()` | **500** `internalError()` | **500** `internalError()` | **500** `internalError()` |
 
   Racional do `OB601` → 500 em remove/addSong: com o lock da D10, os
   guards de `row_count` dessas funções são inalcançáveis; se dispararem,
@@ -475,14 +494,16 @@ grant execute on function public.reorder_setlist_songs(uuid, uuid[]) to service_
   um array que a checagem provou ser permutação exata — contiguidade por
   construção. O expediente `tempOffset = 10000` (route.ts:231 atual)
   morre com a rota velha.
-- **Concorrência**: com a D10, os três escritores de produção
-  pós-criação tomam `for update` na linha da setlist — reorder×reorder,
-  reorder×remove, addSong×qualquer serializam por construção;
-  last-writer-wins de operação COMPLETA, sem estado misto. As demais
-  classes do inventário (§0.1) não disputam: o create (b) escreve numa
-  setlist que só ele conhece, os deletes em massa (c) são vácuos e
-  serializam pelo lock/cascade da própria linha-pai; a exceção real é a
-  brecha (e) do delete de content — pendente na B6-Q9. Os guards de `row_count` + cinto `position < 1`
+- **Concorrência**: com a D10/D11, os quatro escritores de produção
+  pós-criação tomam `for update` na(s) linha(s)-pai — reorder×reorder,
+  reorder×remove, addSong×qualquer, delete-de-content×qualquer
+  serializam por construção; last-writer-wins de operação COMPLETA, sem
+  estado misto. As demais classes do inventário (§0.1) não disputam: o
+  create (b) escreve numa setlist que só ele conhece, os deletes em
+  massa (c) são vácuos e serializam pelo lock/cascade da própria
+  linha-pai. Resíduos declarados: deadlock entre dois
+  delete-de-content concorrentes (§2.6, ponto 5) e a janela pós-
+  estabilização (§2.6, lock post-hoc). Os guards de `row_count` + cinto `position < 1`
   permanecem como defesa em profundidade (e como detectores de invariante
   interno quebrado), não mais como única defesa contra interleaving.
   Negativos **nunca** são visíveis fora da transação (atomicidade):
@@ -654,13 +675,138 @@ colunas da tabela — o 201 responde `data[0]` e preserva o shape medido no
 §0 **byte a byte** (gate no §8). `position` do payload: aceita e ignorada
 (D3; comentário do schema no §4.2).
 
+### 2.6 `delete_content_resequence` — quarta função (D11)
+
+```sql
+-- NOTA: regra das quatro — toda referência a coluna qualificada
+-- (ss./s./c./t./d.), nunca nua.
+create or replace function public.delete_content_resequence(
+  p_content_id uuid
+) returns setof public.content
+language plpgsql
+security invoker
+set search_path = public
+as $$
+declare
+  v_locked   uuid[] := '{}';
+  v_new      uuid[];
+  v_iter     integer := 0;
+  v_affected uuid[];
+  v_sid      uuid;
+  v_fase1    integer;
+  v_fase2    integer;
+begin
+  -- 1. estabilização dos locks (ponto 1 do aval): trava, em ordem
+  -- determinística de id (anti-deadlock), toda setlist que referencia o
+  -- content; repete a MESMA seleção — se o conjunto cresceu (addSong
+  -- concorrente inseriu o content em setlist nova), trava as novas e
+  -- repete; encerra quando estável. Limite declarado: 10 iterações;
+  -- estouro → OB601 (contenção anômala / invariante interno → 500).
+  loop
+    v_iter := v_iter + 1;
+    if v_iter > 10 then
+      raise exception 'ORDER_MISMATCH' using errcode = 'OB601';
+    end if;
+    select coalesce(array_agg(t.id), '{}'::uuid[]) into v_new
+      from (select s.id from setlists s
+             where s.id in (select ss.setlist_id from setlist_songs ss
+                             where ss.content_id = p_content_id)
+             order by s.id
+             for update) t;
+    exit when v_new = v_locked;
+    v_locked := v_new;
+  end loop;
+
+  -- 2a. delete EXPLÍCITO das linhas de setlist_songs, com RETURNING —
+  -- não confiar no cascade para saber quem foi afetado (ponto 2)
+  with del as (
+    delete from setlist_songs ss
+     where ss.content_id = p_content_id
+     returning ss.setlist_id
+  )
+  select coalesce(array_agg(distinct d.setlist_id), '{}'::uuid[])
+    into v_affected from del d;
+
+  -- janela residual declarada: setlist afetada FORA do conjunto estável
+  -- (addSong commitou entre a estabilização e o 2a) ganha lock post-hoc
+  -- antes da renumeração — aquisição fora de ordem, coberta pelo
+  -- resíduo de deadlock do ponto 5
+  foreach v_sid in array v_affected loop
+    if not (v_sid = any(v_locked)) then
+      perform 1 from setlists s where s.id = v_sid for update;
+    end if;
+  end loop;
+
+  -- 2b. delete do content, devolvendo a linha (shape do §0 byte a byte).
+  -- 0 linhas = content sumiu entre o gate da rota e a função → OB604
+  -- (404 canônico na rota); o raise reverte TAMBÉM o 2a (transação una).
+  return query
+    delete from content c
+     where c.id = p_content_id
+     returning *;
+  if not found then
+    raise exception 'CONTENT_NOT_FOUND' using errcode = 'OB604';
+  end if;
+
+  -- 3. renumeração de CADA setlist afetada: duas fases + guards + cinto
+  foreach v_sid in array v_affected loop
+    update setlist_songs ss set position = -ss.position
+     where ss.setlist_id = v_sid;
+    get diagnostics v_fase1 = row_count;
+
+    update setlist_songs ss
+       set position = t.rn
+      from (select ss2.id, row_number() over (order by ss2.position desc) as rn
+              from setlist_songs ss2
+             where ss2.setlist_id = v_sid) t
+     where ss.id = t.id;
+    get diagnostics v_fase2 = row_count;
+    if v_fase2 <> v_fase1 then
+      raise exception 'ORDER_MISMATCH' using errcode = 'OB601';
+    end if;
+    if exists (select 1 from setlist_songs ss
+                where ss.setlist_id = v_sid and ss.position < 1) then
+      raise exception 'ORDER_MISMATCH' using errcode = 'OB601';
+    end if;
+
+    update setlists s set updated_at = now() where s.id = v_sid;
+  end loop;
+end;
+$$;
+
+revoke all on function public.delete_content_resequence(uuid) from public;
+grant execute on function public.delete_content_resequence(uuid) to service_role;
+```
+
+Notas da quarta função:
+
+- **`FOUND` após `RETURN QUERY`**: o PL/pgSQL define `FOUND` como true se
+  o `RETURN QUERY` devolveu ≥1 linha (documentado no §43.5.5 do manual) —
+  o teste `if not found` do 2b é válido; o probe de errcode da PR-3a
+  (§8) confirma o `OB604` ao vivo antes de qualquer rota depender dele.
+- **Rota** (`DELETE /api/content/[id]`, PR-3c): ganha gate de posse
+  EXPLÍCITO antes da RPC (select `id` por `id`+`user_id` → 404
+  `Content not found` no padrão PGRST116, como o GET) — hoje a posse
+  está embutida no `.eq('user_id')` do delete direto; com a RPC ela
+  precisa vir antes, e o intervalo gate→RPC é coberto pelo `OB604`
+  (mesmo 404, sem oráculo). O 200 responde
+  `{ success: true, message: 'Content deleted successfully',
+  deletedContent: data[0] }` — envelope e shape preservados byte a byte
+  contra o literal do §0.
+- **Ponto 5 — resíduo declarado**: dois deletes concorrentes de contents
+  que compartilham setlists podem se travar em ordem cruzada (o lock
+  post-hoc acima também participa) → o Postgres aborta um com deadlock
+  (`40P01`) → **500 honesto** pela linha "outro" da tabela do §2.2.
+  Evento: mesmo usuário disparando dois deletes simultâneos — aceito e
+  registrado; nenhum estado parcial (rollback total do abortado).
+
 ---
 
 ## 3. B6-D8 (ex-Q8) — versionamento da migração: DECIDIDA, opção B
 
 **Decisão do aval (2026-08-31)**: arquivo
 `supabase/migrations/<timestamp>_b6_setlist_songs_rpc.sql` no repo (as
-**TRÊS** funções do §2 + revoke/grant), revisado como código na PR-3a;
+**QUATRO** funções do §2 + revoke/grant), revisado como código na PR-3a;
 **aplicação em prod = ação do Marcel** (console ou CLI dele; o CLI só é
 necessário para aplicar — criar o arquivo não exige `supabase init`);
 `pnpm db:dump` + `pnpm db:types` regenerados como prova pós-aplicação (as
@@ -899,6 +1045,9 @@ role, que bypassa RLS).
 | D10 addSong×addSong (rev. 5a) | **P1-contraste de 2 addSongs simultâneos, branch × prod**: mesma setlist semeada, `Promise.all` de 2 POSTs | esperado **201+201 (positions N+1, N+2)** na branch × **201+500** em prod (UNIQUE) — controle negativo medido de graça; se prod não reproduzir (timing), registra "não reproduzido", nunca argumento |
 | D10 addSong×remove (rev. 5b) | **P1 na branch**: `Promise.all` de DELETE (song do meio) + addSong na mesma setlist semeada; varredura de contiguidade 1..N do estado final | lado prod: mesma dupla contra o código atual, tentando reproduzir o gap do §2.3 — registra **gap reproduzido** (controle medido) OU **"não reproduzido em P1"** (janela é timing-dependent), nunca argumento |
 | D9 remove | it.fails→it no unit da rota DELETE (mock `rpc`) + replay do DELETE em preview com leitura de contiguidade pós-remoção | o loop sequencial velho é o controle de leitura (pre-check §2); a prova viva é a contiguidade 1..N-1 após remover do MEIO |
+| D11 rota de content | **it.fails→it** no unit da rota `DELETE /api/content/[id]` (mock `rpc`): assert de que o miolo chama `delete_content_resequence` e o 200 ecoa `deletedContent` de `data[0]` | falha no código atual (delete direto na tabela); flip no commit 2 |
+| D11 contiguidade (controle DETERMINÍSTICO) | **branch × prod**: setlist semeada com content SEMEADO no meio (posição 2 de 3); DELETE do content; leitura de positions colada. Prod: **gap garantido** (1,3 — o cascade não renumera, sem dependência de timing); branch: **1..2**. Balanço zero em setlists, setlist_songs E content | **único gate do bloco com reprodução GARANTIDA do controle negativo** — todos os demais controles vivos dependem de replay de envelope ou de corrida |
+| D11 P1 addSong×delete_content | **P1 na branch**: `Promise.all` de addSong(content X numa setlist NOVA) × DELETE do content X; estado final: nenhuma linha de X em `setlist_songs` e TODAS as setlists contíguas | se uma das pernas 500ar (deadlock/OB601 declarados no §2.6), colar o literal e re-executar o delete — o gate é sobre o ESTADO FINAL; qualquer linha órfã de X ou gap reprova |
 | D6 N+1 | **gate de invariância**: contador do §6.2 (7→1) + diff byte-a-byte do JSON | o contador no código velho acusa 7 — controle embutido |
 | D7 | pg_policies antes/depois (§7) + diff do dump regenerado | o "antes" já está medido e colado |
 | Estado dos dados | revalidação do invariante com `b6-item4-invariante.ts` no ciclo da PR-3b (pré-merge) | baseline desta revisão: **0 violações em 8 setlists/107 songs** (§0); se divergir, saneamento único com leitura antes/depois (precedente O-1) entra como passo declarado da 3b |
@@ -935,13 +1084,24 @@ subscrita). Argumento contra os dois princípios em tensão:
 | **PR-0** | docs-only: este desenho (rev. 2) versionado | — | aval da revisão |
 | **PR-1** | D5′: sanitização NFD+classe (flag `u`) no upload + teste de paridade + STORAGE.md | par upload→delete fecha para TODO o conjunto hostil (replay com saldo 7) | — |
 | ~~PR-2~~ | **ABSORVIDA na 3b** (D3 fundida na D10 — argumento acima) | — | — |
-| **PR-3a** | D2+D8+D9+D10: `supabase/migrations/<ts>_b6_setlist_songs_rpc.sql` (**as TRÊS funções** + revoke/grant) + **aplicação pelo Marcel** (mesmo ciclo de console roda o SQL da D7) + `db:dump`/`db:types` regenerados + CLAUDE.md (fluxo de migração) + probes de errcode (OB601/OB602/OB603, saldo zero) | funções existem no banco (probes `rpc` via service key) + diff do dump | aval da rev. 2 |
-| **PR-3b** | D1+D3+D4+D9/D10-rotas: rota nova de reorder (`withBodyValidation` + RPC) + DELETE → `rpc('remove_setlist_song')` + **addSong → `rpc('add_setlist_song')`** + remoção do move-one (rota PUT, schema, service, import morto) + migração dos 7 testes (§1.5) + `docs/api/SETLISTS.md` + revalidação do invariante + P1s do §8 (prod ANTES do merge) | contrato novo responde; move-one → 404 de rota inexistente; L2.1 → 400 `field:""`; L1.4 → max+1; addSong×addSong 201+201; 201 byte-idêntico | PR-3a aplicada |
+| **PR-3a** | D2+D8+D9+D10+D11: `supabase/migrations/<ts>_b6_setlist_songs_rpc.sql` (**as QUATRO funções** + revoke/grant) + **aplicação pelo Marcel** (mesmo ciclo de console roda o SQL da D7) + `db:dump`/`db:types` regenerados + CLAUDE.md (fluxo de migração) + probes de errcode (OB601/OB602/OB603/OB604, saldo zero) | funções existem no banco (probes `rpc` via service key) + diff do dump | aval da rev. 4 |
+| **PR-3b** | D1+D3+D4+D9/D10-rotas: rota nova de reorder (`withBodyValidation` + RPC) + DELETE de song → `rpc('remove_setlist_song')` + **addSong → `rpc('add_setlist_song')`** + remoção do move-one (rota PUT, schema, service, import morto) + migração dos 7 testes (§1.5) + `docs/api/SETLISTS.md` + revalidação do invariante + P1s de setlist do §8 (prod ANTES do merge) | contrato novo responde; move-one → 404 de rota inexistente; L2.1 → 400 `field:""`; L1.4 → max+1; addSong×addSong 201+201; 201 byte-idêntico | PR-3a aplicada |
+| **PR-3c** | D11-rota: `DELETE /api/content/[id]` → gate de posse explícito + `rpc('delete_content_resequence')` + gates da D11 do §8 (it.fails→it, controle determinístico branch×prod, P1 addSong×delete) | **"delete de content renumera"** — flip próprio, com o único controle negativo de reprodução garantida do bloco | PR-3a aplicada (independente da 3b) |
 | **PR-4** | D6: embedding no GET | contador 7→1 + byte-identidade | — (depois da 3b por higiene de rebase) |
-| **ENC** | B6-ENCERRAMENTO.md | — | tudo acima |
+| **ENC** | B6-ENCERRAMENTO.md (incluindo o aprendizado do §11) | — | tudo acima |
 
-Ordem: **1 → 3a → 3b → 4**. Banco primeiro (3a antes da 3b) — precedente
-da B5-D4. D7 roda no ciclo de console da 3a (uma sessão, um dump).
+**PR-3c separada, não fundida na 3b** — argumento: (a) família de rota
+distinta (`content-mutate` × `setlist-mutate`) e arquivo sem interseção
+com a 3b — zero toque duplo; (b) flip próprio e nomeável ("delete de
+content renumera"), com o único controle determinístico do bloco — fundir
+diluiria o checkpoint da 3b, que já concentra três rotas + remoção +
+migração de testes; (c) rollback independente: reverter a 3c não toca o
+contrato de setlist. Custo: um ciclo de PR a mais — aceito.
+
+Ordem: **1 → 3a → 3b → 3c → 4**. Banco primeiro (3a antes de 3b/3c) —
+precedente da B5-D4; 3b e 3c são independentes entre si (ambas dependem
+só da 3a) — a ordem 3b→3c proposta mantém o núcleo do bloco (setlists) na
+frente. D7 roda no ciclo de console da 3a (uma sessão, um dump).
 **Merge de cada PR: ação do Marcel, sempre** — checkpoint com diff
 verbatim na resposta antes de cada pedido de merge (régua do B5 mantida).
 
@@ -951,15 +1111,32 @@ verbatim na resposta antes de cada pedido de merge (régua do B5 mantida).
 
 | Doc | Ação |
 |---|---|
-| `docs/api/SETLISTS.md` | **novo** (PR-3b): contrato de addSong (append-only via RPC, position aceita-e-ignorada, 201 fiel byte a byte) + reorder em lote (URL, schema, invariante de permutação, mapa de erros §1.3, resposta 200) + DELETE renumerando por RPC (D9) + **invariante contíguo 1..N declarado como contrato da tabela, com o mecanismo nomeado: os três escritores de produção pós-criação de `setlist_songs` serializam no lock `for update` da linha-pai (D10), e as demais classes do inventário §0.1 são declaradas (create seguro por construção; cascades vácuos; B6-Q9 conforme decisão)** |
+| `docs/api/SETLISTS.md` | **novo** (PR-3b): contrato de addSong (append-only via RPC, position aceita-e-ignorada, 201 fiel byte a byte) + reorder em lote (URL, schema, invariante de permutação, mapa de erros §1.3, resposta 200) + DELETE renumerando por RPC (D9) + **invariante contíguo 1..N declarado como contrato da tabela, com o mecanismo nomeado: os QUATRO escritores de produção pós-criação de `setlist_songs` (addSong, remove, reorder, delete-de-content) serializam no lock `for update` da linha-pai (D10/D11), e as demais classes do inventário §0.1 são declaradas (create seguro por construção; cascades vácuos)**; a seção do delete de content documenta a renumeração das setlists afetadas (PR-3c) |
 | `docs/api/STORAGE.md` | PR-1: regra completa de naming da D5′ (NFD + marcas removidas + classe→`_`, flag `u`) + paridade upload→delete declarada como contrato |
 | `docs/api/CONTRATO-DE-ERRO.md` | **sem mudança** — nenhum code novo (§1.3); a lista continua 5 (os SQLSTATEs OB6xx são internos banco→rota, nunca aparecem no envelope) |
 | `CLAUDE.md` | PR-3a (D8): seção de banco ganha "migrações em `supabase/migrations/`; aplicação em prod = passo do Marcel; dump/types provam, não definem" |
 | `lib/api-schemas.ts` | PR-3b: comentário do addSong (§4.2, exceção encerrada via D10); schema `reorder` entra, `updateSongPosition` sai |
-| `types/database.types.ts` | PR-3a: `pnpm db:types` pós-aplicação (as três funções aparecem em `Functions`) |
+| `types/database.types.ts` | PR-3a: `pnpm db:types` pós-aplicação (as quatro funções aparecem em `Functions`) |
 
 ---
 
-*Fase seguinte: aval desta revisão pelo Marcel (leitura verbatim), merge
-da PR #253 (ação dele), então PR-1. Nenhuma linha dos §§1-7 vira código
-antes disso.*
+## 11. Registro para o encerramento (§ aprendizados)
+
+**Para todo bloco que declara invariante de tabela, o inventário de
+escritores dessa tabela é item obrigatório do PRE-CHECK, não do
+desenho.** A brecha (e) — delete de content apagando música do meio via
+FK cascade sem renumerar — só apareceu na TERCEIRA revisão do desenho
+porque o plano de medição do pre-check não pedia o inventário; três
+revisões desenharam lock e guards para "todos os escritores" sem a lista
+medida de quem escreve. O custo foi uma decisão extra (B6-Q9→D11), uma
+função a mais na migração e uma PR a mais (3c) descobertas tarde. Regra
+para os próximos blocos (B9, B1.5, B11, D): invariante declarado ⇒
+inventário `[medido]` de todos os caminhos de escrita (diretos, por
+cascade, por tooling) no pre-check, com classificação — antes de
+qualquer desenho de mecanismo.
+
+---
+
+*Fase seguinte: merge da PR #253 (ação do Marcel — o desenho está
+sancionado com esta revisão), então PR-1 (D5′) SÓ com prompt próprio
+dele. Nenhuma linha dos §§1-7 vira código antes disso.*
