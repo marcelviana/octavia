@@ -32,6 +32,16 @@ comandos acima; editar qualquer um à mão recria o drift que o B2 mediu e matou
 removidos). `pnpm db:dump` exige `supabase link` prévio, que pede a senha do
 Postgres: passo do Marcel, não da automação.
 
+**Migrações de banco (B6-D8)**: mudanças de schema/funções vivem como
+arquivos versionados em `supabase/migrations/<YYYYMMDDHHMMSS>_*.sql` —
+migração é CÓDIGO-FONTE, revisada em PR como qualquer código. A
+**aplicação em prod é sempre passo do Marcel** (console ou CLI dele; a
+automação nunca aplica). Após aplicar, `pnpm db:dump` + `pnpm db:types`
+regeneram os artefatos: **dump/types PROVAM a aplicação, nunca definem o
+banco** — a fonte é o arquivo de migração. Primeira migração da série:
+`20260901102108_b6_setlist_songs_rpc.sql` (as quatro RPCs do B6,
+`docs/ux/B6-DESENHO.md` §2/§3).
+
 ## Project Architecture
 
 ### Core Technology Stack
