@@ -379,7 +379,7 @@ nomes de saída.
 ### 2.1 `reorder_setlist_songs` — assinatura e corpo (rascunho SQL)
 
 ```sql
--- NOTA (as 3 funções): os OUT-params/colunas de retorno id/position
+-- NOTA (as quatro funções): os OUT-params/colunas de retorno id/position
 -- colidem com nomes de coluna de setlist_songs — manter TODA referência
 -- a coluna qualificada (ss./s./o./t.), nunca nua.
 create or replace function public.reorder_setlist_songs(
@@ -454,16 +454,22 @@ begin
 end;
 $$;
 
-revoke all on function public.reorder_setlist_songs(uuid, uuid[]) from public;
+revoke all on function public.reorder_setlist_songs(uuid, uuid[]) from public, anon, authenticated;
 grant execute on function public.reorder_setlist_songs(uuid, uuid[]) to service_role;
 ```
 
 ### 2.2 Decisões internas, com argumento
 
-- **SECURITY INVOKER** (as três): o único chamador é o service role
-  (grant explícito; revoke de `public` tira as funções da superfície do
-  PostgREST para `anon`/`authenticated`). DEFINER não compra nada — o
-  invoker já bypassa RLS — e alargaria o dano de um grant errado.
+- **SECURITY INVOKER** (as quatro): o único chamador é o service role
+  (grant explícito). O revoke nomeia `public, anon, authenticated` — o
+  Supabase concede EXECUTE em funções de `public` a anon/authenticated/
+  service_role por DEFAULT PRIVILEGES explícitos, e revogar só de PUBLIC
+  não remove grant explícito por role (veto do checkpoint A). Que as
+  funções saem da superfície do PostgREST para `anon`/`authenticated` é
+  afirmação MEDIDA, não assumida: probes 0a (routine_privileges) e 0b
+  (rpc com chave anon → erro de permissão, nunca OB6xx) no ciclo da
+  PR-3a. DEFINER não compra nada — o invoker já bypassa RLS — e
+  alargaria o dano de um grant errado.
 - **Posse checada FORA (na rota), consistência DENTRO (na função)**: as
   funções rodam como service role e não têm o uid do Firebase (não há JWT
   de usuário no caminho — padrão desde o B2); cada rota mantém seu gate
@@ -603,7 +609,7 @@ begin
 end;
 $$;
 
-revoke all on function public.remove_setlist_song(uuid) from public;
+revoke all on function public.remove_setlist_song(uuid) from public, anon, authenticated;
 grant execute on function public.remove_setlist_song(uuid) to service_role;
 ```
 
@@ -664,7 +670,7 @@ begin
 end;
 $$;
 
-revoke all on function public.add_setlist_song(uuid, uuid, text) from public;
+revoke all on function public.add_setlist_song(uuid, uuid, text) from public, anon, authenticated;
 grant execute on function public.add_setlist_song(uuid, uuid, text) to service_role;
 ```
 
@@ -721,7 +727,9 @@ begin
     if v_iter > 10 then
       raise exception 'ORDER_MISMATCH' using errcode = 'OB601';
     end if;
-    select coalesce(array_agg(t.id), '{}'::uuid[]) into v_new
+    -- order by DENTRO do agg: a igualdade v_new = v_locked não pode
+    -- depender da ordem que o planner preservar (veto do checkpoint A)
+    select coalesce(array_agg(t.id order by t.id), '{}'::uuid[]) into v_new
       from (select s.id from setlists s
              where s.id in (select ss.setlist_id from setlist_songs ss
                              where ss.content_id = p_content_id)
@@ -786,7 +794,7 @@ begin
 end;
 $$;
 
-revoke all on function public.delete_content_resequence(uuid) from public;
+revoke all on function public.delete_content_resequence(uuid) from public, anon, authenticated;
 grant execute on function public.delete_content_resequence(uuid) to service_role;
 ```
 

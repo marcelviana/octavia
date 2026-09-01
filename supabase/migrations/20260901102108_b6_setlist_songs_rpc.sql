@@ -20,7 +20,7 @@
 -- setlist sumiu · OB603 song sumiu · OB604 content sumiu.
 -- ---------------------------------------------------------------------------
 
--- NOTA (as 3 funções): os OUT-params/colunas de retorno id/position
+-- NOTA (as quatro funções): os OUT-params/colunas de retorno id/position
 -- colidem com nomes de coluna de setlist_songs — manter TODA referência
 -- a coluna qualificada (ss./s./o./t.), nunca nua.
 create or replace function public.reorder_setlist_songs(
@@ -95,7 +95,7 @@ begin
 end;
 $$;
 
-revoke all on function public.reorder_setlist_songs(uuid, uuid[]) from public;
+revoke all on function public.reorder_setlist_songs(uuid, uuid[]) from public, anon, authenticated;
 grant execute on function public.reorder_setlist_songs(uuid, uuid[]) to service_role;
 
 -- NOTA: colunas de retorno id/position homônimas às da tabela — toda
@@ -168,7 +168,7 @@ begin
 end;
 $$;
 
-revoke all on function public.remove_setlist_song(uuid) from public;
+revoke all on function public.remove_setlist_song(uuid) from public, anon, authenticated;
 grant execute on function public.remove_setlist_song(uuid) to service_role;
 
 -- NOTA: returns setof setlist_songs evita OUT-params homônimos, mas a
@@ -207,7 +207,7 @@ begin
 end;
 $$;
 
-revoke all on function public.add_setlist_song(uuid, uuid, text) from public;
+revoke all on function public.add_setlist_song(uuid, uuid, text) from public, anon, authenticated;
 grant execute on function public.add_setlist_song(uuid, uuid, text) to service_role;
 
 -- NOTA: regra das quatro — toda referência a coluna qualificada
@@ -248,7 +248,9 @@ begin
     if v_iter > 10 then
       raise exception 'ORDER_MISMATCH' using errcode = 'OB601';
     end if;
-    select coalesce(array_agg(t.id), '{}'::uuid[]) into v_new
+    -- order by DENTRO do agg: a igualdade v_new = v_locked não pode
+    -- depender da ordem que o planner preservar (veto do checkpoint A)
+    select coalesce(array_agg(t.id order by t.id), '{}'::uuid[]) into v_new
       from (select s.id from setlists s
              where s.id in (select ss.setlist_id from setlist_songs ss
                              where ss.content_id = p_content_id)
@@ -313,5 +315,5 @@ begin
 end;
 $$;
 
-revoke all on function public.delete_content_resequence(uuid) from public;
+revoke all on function public.delete_content_resequence(uuid) from public, anon, authenticated;
 grant execute on function public.delete_content_resequence(uuid) to service_role;
