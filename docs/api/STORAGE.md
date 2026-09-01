@@ -42,6 +42,19 @@
 - 201: `{ url, path, originalFilename, size, type, success }` — `url` é
   a URL pública permanente; `path` segue a convenção
   `<timestamp>-<nome-sanitizado>`.
+- **Naming/sanitização (B6-D5′)**: o nome enviado é normalizado em
+  **NFD**, as marcas diacríticas (`̀-ͯ`) são removidas
+  (`coração` → `coracao`) e todo caractere fora de `[a-zA-Z0-9._-]`
+  vira `_` (regex com flag `u`: 1 `_` por code point — emoji vira UM
+  `_`). O nome hostil é ACEITO na entrada; a normalização é declarada e
+  o `path` real volta no 201.
+- **Paridade upload→delete é CONTRATO**: todo `path` que o upload
+  produz casa a regex do delete (`^\d+-[a-zA-Z0-9._-]+\.[a-zA-Z0-9]+$`)
+  — gate de teste em
+  `app/api/storage/__tests__/upload-paridade.test.ts`. Exceção
+  histórica: `1750171474983-Easy - Guitar.pdf` (anterior à D5′) segue
+  indeletável pela rota — consequência aceita da B5-D11, precedente de
+  remoção via console (O-1).
 
 ### `POST /api/storage/delete`
 

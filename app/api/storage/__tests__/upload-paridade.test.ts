@@ -6,13 +6,15 @@
  * storageSchemas.delete.safeParse, (c) igualdade LITERAL com o path
  * esperado da tabela do §5.2 (após o prefixo `<ts>-`).
  *
- * Regra nº 7 (it.fails→it, dois commits na ordem): os casos que o código
- * ATUAL não satisfaz nascem `it.fails` — cada um prova que o teste pega o
- * bug de hoje (sanitização atual: replace(/[<>:"/\\|?*]/g, '_') — espaço,
- * tab, acento, parêntese, apóstrofo, &, #, +, colchete e emoji PASSAM
- * intactos; o L4.1 do pre-check mediu ao vivo o espaço preservado em prod,
- * 201 com "1788212663748-b6 precheck.txt"). O commit do flip (§5.1) os
- * vira `it`. `.hidden.pdf` é o único já-limpo → `it` desde o commit 1.
+ * Regra nº 7 (it.fails→it, dois commits na ordem): os 9 casos hostis
+ * nasceram `it.fails` no commit 1 — cada um provou que o teste pega o
+ * bug pré-D5' (sanitização antiga: replace(/[<>:"/\\|?*]/g, '_') —
+ * espaço, tab, acento, parêntese, apóstrofo, &, #, +, colchete e emoji
+ * passavam intactos; o L4.1 do pre-check mediu ao vivo o espaço
+ * preservado em prod, 201 com "1788212663748-b6 precheck.txt"). Este é
+ * o estado pós-flip (commit 2, diff do §5.1): todos `it`. O histórico
+ * da branch prova a transição. `.hidden.pdf` é o já-limpo — `it` desde
+ * o commit 1.
  */
 import { describe, it, expect, vi } from 'vitest'
 import { NextRequest } from 'next/server'
@@ -83,8 +85,8 @@ function assertParidade(uniqueFilename: string, esperadoAposTs: string) {
   expect(uniqueFilename.replace(/^\d+-/, '')).toBe(esperadoAposTs)
 }
 
-// [nome enviado, MIME, path esperado após `<ts>-`, por que falha HOJE]
-const CASOS_FAILS: Array<[string, keyof typeof CONTEUDO, string, string]> = [
+// [nome enviado, MIME, path esperado após `<ts>-`, por que falhava pré-D5']
+const CASOS_HOSTIS: Array<[string, keyof typeof CONTEUDO, string, string]> = [
   ['b6 precheck.txt', 'text/plain', 'b6_precheck.txt',
     'espaço não está na classe atual [<>:"/\\|?*] — preservado (L4.1 ao vivo)'],
   ['demo\tfinal.txt', 'text/plain', 'demo_final.txt',
@@ -106,8 +108,8 @@ const CASOS_FAILS: Array<[string, keyof typeof CONTEUDO, string, string]> = [
 ]
 
 describe('B6 PR-1 — paridade upload→delete (D5\', §5.2 do desenho)', () => {
-  for (const [nome, mime, esperado, motivo] of CASOS_FAILS) {
-    it.fails(`paridade: ${JSON.stringify(nome)} → "<ts>-${esperado}" (hoje falha: ${motivo})`, async () => {
+  for (const [nome, mime, esperado, motivo] of CASOS_HOSTIS) {
+    it(`paridade: ${JSON.stringify(nome)} → "<ts>-${esperado}" (pré-flip falhava: ${motivo})`, async () => {
       const { response, mockUpload } = await uploadCapturandoPath(nome, mime)
       expect(response.status).toBe(201)
       expect(mockUpload).toHaveBeenCalledOnce()
