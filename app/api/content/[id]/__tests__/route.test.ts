@@ -19,9 +19,11 @@ mockFrom.mockReturnValue({
   update: mockUpdate,
   delete: mockDelete,
 })
+// B6 PR-3c: o DELETE escreve via rpc('delete_content_resequence')
+const mockRpc = vi.fn()
 
 vi.mock('@/lib/supabase-service', () => ({
-  getSupabaseServiceClient: () => ({ from: mockFrom })
+  getSupabaseServiceClient: () => ({ from: mockFrom, rpc: mockRpc })
 }))
 
 // Mock Firebase server utils
@@ -188,12 +190,13 @@ describe('/api/content/[id]', () => {
   })
 
   describe('DELETE /api/content/[id]', () => {
-    it('deletes content when user owns it', async () => {
-      // Mock successful deletion
+    it('deletes content when user owns it (B6 PR-3c: gate + rpc, sem delete direto)', async () => {
+      // gate de posse (select) passa; a escrita é a RPC da D11
       mockSingle.mockResolvedValue({ 
         data: TEST_CONTENT, 
         error: null 
       })
+      mockRpc.mockResolvedValue({ data: [TEST_CONTENT], error: null })
 
       const { DELETE } = await import('../route')
       
@@ -212,8 +215,10 @@ describe('/api/content/[id]', () => {
       expect(data.success).toBe(true)
       expect(data.message).toContain('deleted successfully')
       
-      // Verify delete was called with proper filters
-      expect(mockDelete).toHaveBeenCalled()
+      // B6 PR-3c: posse checada pelo gate (select filtrado) e escrita
+      // pela RPC — o delete direto morreu
+      expect(mockRpc).toHaveBeenCalledWith('delete_content_resequence', { p_content_id: TEST_CONTENT.id })
+      expect(mockDelete).not.toHaveBeenCalled()
       expect(mockEq).toHaveBeenCalledWith('id', TEST_CONTENT.id)
       expect(mockEq).toHaveBeenCalledWith('user_id', TEST_USER.uid)
     })

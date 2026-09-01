@@ -52,6 +52,16 @@ describe('B6 PR-3b — rpcErrorResponse (tabela §2.2)', () => {
     expect((await corpo(rpcErrorResponse('addSong', { code: 'OB604', message: 'x' }))).status).toBe(500)
   })
 
+  it('coluna deleteContent (B6-D11, PR-3c): OB604 → 404 Content; OB601 → 500; outro → 500 (nasceu it.fails — a coluna não existia no mapa)', async () => {
+    const rota = 'deleteContent' as const
+    expect(await corpo(rpcErrorResponse(rota, { code: 'OB604', message: 'x' }))).toEqual({
+      status: 404,
+      text: '{"error":"Content not found","code":"NOT_FOUND"}',
+    })
+    expect((await corpo(rpcErrorResponse(rota, { code: 'OB601', message: 'x' }))).status).toBe(500)
+    expect((await corpo(rpcErrorResponse(rota, { code: 'XX000', message: 'x' }))).status).toBe(500)
+  })
+
   it('"outro": code desconhecido, ausente ou error null → 500 genérico', async () => {
     expect((await corpo(rpcErrorResponse('reorder', { code: 'XX000' }))).status).toBe(500)
     expect((await corpo(rpcErrorResponse('addSong', {}))).status).toBe(500)
