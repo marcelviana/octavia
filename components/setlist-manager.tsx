@@ -10,7 +10,6 @@ import {
   deleteSetlist,
   addSongToSetlist,
   removeSongFromSetlist,
-  updateSongPosition,
   updateSetlist,
 } from "@/lib/setlist-service"
 import {
