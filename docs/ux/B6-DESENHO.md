@@ -379,13 +379,18 @@ nomes de saída.
 ### 2.1 `reorder_setlist_songs` — assinatura e corpo (rascunho SQL)
 
 ```sql
--- NOTA (as 3 funções): os OUT-params/colunas de retorno id/position
+-- NOTA (as quatro funções): os OUT-params/colunas de retorno id/position
 -- colidem com nomes de coluna de setlist_songs — manter TODA referência
 -- a coluna qualificada (ss./s./o./t.), nunca nua.
+-- O OUT-param chama-se "position" ENTRE ASPAS: position é keyword
+-- (col_name_keyword) e itens de RETURNS TABLE são parâmetros OUT (regra
+-- de type_function_name) — sem aspas é erro 42601. No corpo, os usos em
+-- SET position = e na lista de colunas do INSERT são contexto de COLUNA
+-- e não sofrem substituição de variável.
 create or replace function public.reorder_setlist_songs(
   p_setlist_id uuid,
   p_song_ids   uuid[]
-) returns table (id uuid, position integer)
+) returns table (id uuid, "position" integer)
 language plpgsql
 security invoker
 set search_path = public
@@ -454,16 +459,22 @@ begin
 end;
 $$;
 
-revoke all on function public.reorder_setlist_songs(uuid, uuid[]) from public;
+revoke all on function public.reorder_setlist_songs(uuid, uuid[]) from public, anon, authenticated;
 grant execute on function public.reorder_setlist_songs(uuid, uuid[]) to service_role;
 ```
 
 ### 2.2 Decisões internas, com argumento
 
-- **SECURITY INVOKER** (as três): o único chamador é o service role
-  (grant explícito; revoke de `public` tira as funções da superfície do
-  PostgREST para `anon`/`authenticated`). DEFINER não compra nada — o
-  invoker já bypassa RLS — e alargaria o dano de um grant errado.
+- **SECURITY INVOKER** (as quatro): o único chamador é o service role
+  (grant explícito). O revoke nomeia `public, anon, authenticated` — o
+  Supabase concede EXECUTE em funções de `public` a anon/authenticated/
+  service_role por DEFAULT PRIVILEGES explícitos, e revogar só de PUBLIC
+  não remove grant explícito por role (veto do checkpoint A). Que as
+  funções saem da superfície do PostgREST para `anon`/`authenticated` é
+  afirmação MEDIDA, não assumida: probes 0a (routine_privileges) e 0b
+  (rpc com chave anon → erro de permissão, nunca OB6xx) no ciclo da
+  PR-3a. DEFINER não compra nada — o invoker já bypassa RLS — e
+  alargaria o dano de um grant errado.
 - **Posse checada FORA (na rota), consistência DENTRO (na função)**: as
   funções rodam como service role e não têm o uid do Firebase (não há JWT
   de usuário no caminho — padrão desde o B2); cada rota mantém seu gate
@@ -535,9 +546,14 @@ Com a D9, mesma migração e mesma mecânica:
 ```sql
 -- NOTA: colunas de retorno id/position homônimas às da tabela — toda
 -- referência qualificada (ss./s./t.), nunca nua.
+-- O OUT-param chama-se "position" ENTRE ASPAS: position é keyword
+-- (col_name_keyword) e itens de RETURNS TABLE são parâmetros OUT (regra
+-- de type_function_name) — sem aspas é erro 42601. No corpo, os usos em
+-- SET position = e na lista de colunas do INSERT são contexto de COLUNA
+-- e não sofrem substituição de variável.
 create or replace function public.remove_setlist_song(
   p_song_id uuid
-) returns table (id uuid, position integer)
+) returns table (id uuid, "position" integer)
 language plpgsql
 security invoker
 set search_path = public
@@ -603,7 +619,7 @@ begin
 end;
 $$;
 
-revoke all on function public.remove_setlist_song(uuid) from public;
+revoke all on function public.remove_setlist_song(uuid) from public, anon, authenticated;
 grant execute on function public.remove_setlist_song(uuid) to service_role;
 ```
 
@@ -664,7 +680,7 @@ begin
 end;
 $$;
 
-revoke all on function public.add_setlist_song(uuid, uuid, text) from public;
+revoke all on function public.add_setlist_song(uuid, uuid, text) from public, anon, authenticated;
 grant execute on function public.add_setlist_song(uuid, uuid, text) to service_role;
 ```
 
@@ -721,7 +737,9 @@ begin
     if v_iter > 10 then
       raise exception 'ORDER_MISMATCH' using errcode = 'OB601';
     end if;
-    select coalesce(array_agg(t.id), '{}'::uuid[]) into v_new
+    -- order by DENTRO do agg: a igualdade v_new = v_locked não pode
+    -- depender da ordem que o planner preservar (veto do checkpoint A)
+    select coalesce(array_agg(t.id order by t.id), '{}'::uuid[]) into v_new
       from (select s.id from setlists s
              where s.id in (select ss.setlist_id from setlist_songs ss
                              where ss.content_id = p_content_id)
@@ -786,7 +804,7 @@ begin
 end;
 $$;
 
-revoke all on function public.delete_content_resequence(uuid) from public;
+revoke all on function public.delete_content_resequence(uuid) from public, anon, authenticated;
 grant execute on function public.delete_content_resequence(uuid) to service_role;
 ```
 
@@ -841,11 +859,18 @@ pasta não existia; `db:types`/`db:dump` não interagem com migrações; na
 opção A a função só seria revisável como diff de artefato gerado — e a
 régua do CLAUDE.md é que dump/types provam, não definem.
 
-**Teste local da RPC: não existe caminho** — não há Supabase local
-(`config.toml` ausente) e a suíte moca o client. O que a suíte prova SEM
-banco: mapeamento `error.code`→envelope por rota, schema Zod, gates de
-posse, shapes de 200/201 (com `rpc` mockado). O que só preview/prod
-prova: o SQL — coberto pelos probes do §8.
+**Teste local da RPC: caminho ABERTO na PR-3a** (a afirmação anterior
+"não existe caminho" caiu — declarado): Postgres descartável via Docker
+(`postgres:15`, container efêmero) + prelúdio de 3 roles (`anon`,
+`authenticated`, `service_role`) e schema `auth` com stubs de
+`jwt()`/`role()`/`uid()` + `supabase/schema.dump.sql` aplicado (zero
+erros além do prelúdio) + a migração em `begin;`/`commit;` + probes em
+SQL direto. Executado em 2026-09-01 no ciclo da PR-3a: os 8 probes do
+passo 2 passaram localmente ANTES do console de prod. A suíte segue
+mocando o client (`error.code`→envelope, Zod, gates de posse, shapes) —
+o descartável cobre o SQL; preview/prod cobre a integração PostgREST
+(errcode atravessando `PostgrestError.code`, probes 0a/0b de
+privilégio).
 
 CLAUDE.md ganha na PR-3a a seção: migrações vivem em
 `supabase/migrations/`; aplicação em prod é passo do Marcel; dump/types
@@ -1158,6 +1183,14 @@ para os próximos blocos (B9, B1.5, B11, D): invariante declarado ⇒
 inventário `[medido]` de todos os caminhos de escrita (diretos, por
 cascade, por tooling) no pre-check, com classificação — antes de
 qualquer desenho de mecanismo.
+
+**Segundo aprendizado (checkpoint A da PR-3a, 2026-09-01): migração só
+vai ao console de prod DEPOIS de executar num Postgres descartável com o
+dump aplicado.** O primeiro contato do SQL da migração com um parser
+real foi o console de prod — que a rejeitou com `42601` (`position` sem
+aspas no RETURNS TABLE). Custo: uma rodada de checkpoint. O caminho
+descartável (§3) custa minutos e teria pego o erro antes de qualquer
+console; passa a ser passo obrigatório do rito de migração.
 
 ---
 
