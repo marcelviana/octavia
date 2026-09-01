@@ -51,8 +51,15 @@ const uploadFileHandler = async (request: NextRequest) => {
       return validationError(fileValidation.error)
     }
 
-    // Additional security checks - basic filename sanitization
-    const sanitizedFilename = filename.replace(/[<>:"/\\|?*]/g, '_').trim()
+    // B6-D5' (emenda da D5/B5-D11): a PARIDADE upload→delete é o
+    // contrato — todo path produzido aqui DEVE casar a regex do delete
+    // (delete/route.ts:46, [a-zA-Z0-9._-]). NFD + remoção de marcas
+    // diacríticas preserva o legível (coração→coracao); o resto vira '_'
+    // (flag u: 1 '_' por code point — emoji vira UM '_').
+    const sanitizedFilename = filename
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/gu, '')
+      .replace(/[^a-zA-Z0-9._-]/gu, '_')
     if (sanitizedFilename.length === 0) {
       return validationError([
         { code: 'custom', path: ['filename'], message: 'Invalid filename after sanitization' } as never,
