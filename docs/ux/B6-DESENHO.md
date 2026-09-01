@@ -859,11 +859,18 @@ pasta não existia; `db:types`/`db:dump` não interagem com migrações; na
 opção A a função só seria revisável como diff de artefato gerado — e a
 régua do CLAUDE.md é que dump/types provam, não definem.
 
-**Teste local da RPC: não existe caminho** — não há Supabase local
-(`config.toml` ausente) e a suíte moca o client. O que a suíte prova SEM
-banco: mapeamento `error.code`→envelope por rota, schema Zod, gates de
-posse, shapes de 200/201 (com `rpc` mockado). O que só preview/prod
-prova: o SQL — coberto pelos probes do §8.
+**Teste local da RPC: caminho ABERTO na PR-3a** (a afirmação anterior
+"não existe caminho" caiu — declarado): Postgres descartável via Docker
+(`postgres:15`, container efêmero) + prelúdio de 3 roles (`anon`,
+`authenticated`, `service_role`) e schema `auth` com stubs de
+`jwt()`/`role()`/`uid()` + `supabase/schema.dump.sql` aplicado (zero
+erros além do prelúdio) + a migração em `begin;`/`commit;` + probes em
+SQL direto. Executado em 2026-09-01 no ciclo da PR-3a: os 8 probes do
+passo 2 passaram localmente ANTES do console de prod. A suíte segue
+mocando o client (`error.code`→envelope, Zod, gates de posse, shapes) —
+o descartável cobre o SQL; preview/prod cobre a integração PostgREST
+(errcode atravessando `PostgrestError.code`, probes 0a/0b de
+privilégio).
 
 CLAUDE.md ganha na PR-3a a seção: migrações vivem em
 `supabase/migrations/`; aplicação em prod é passo do Marcel; dump/types
@@ -1176,6 +1183,14 @@ para os próximos blocos (B9, B1.5, B11, D): invariante declarado ⇒
 inventário `[medido]` de todos os caminhos de escrita (diretos, por
 cascade, por tooling) no pre-check, com classificação — antes de
 qualquer desenho de mecanismo.
+
+**Segundo aprendizado (checkpoint A da PR-3a, 2026-09-01): migração só
+vai ao console de prod DEPOIS de executar num Postgres descartável com o
+dump aplicado.** O primeiro contato do SQL da migração com um parser
+real foi o console de prod — que a rejeitou com `42601` (`position` sem
+aspas no RETURNS TABLE). Custo: uma rodada de checkpoint. O caminho
+descartável (§3) custa minutos e teria pego o erro antes de qualquer
+console; passa a ser passo obrigatório do rito de migração.
 
 ---
 
