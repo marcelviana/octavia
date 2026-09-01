@@ -47,6 +47,13 @@ export function rpcErrorResponse(
 ): Response {
   // message SÓ aqui (log) — nunca no envelope
   logger.error(`RPC error (${route}):`, { code: error?.code, message: error?.message })
-  const make = error?.code ? MAP[route][error.code] : undefined
+  // hasOwnProperty (endurecimento do checkpoint B): lookup direto
+  // herdaria o prototype — um code anômalo tipo "toString" devolveria
+  // FUNÇÃO herdada em vez de handler e quebraria o contrato de retorno
+  const handlers = MAP[route]
+  const make =
+    error?.code && Object.prototype.hasOwnProperty.call(handlers, error.code)
+      ? handlers[error.code]
+      : undefined
   return make ? make() : internalError()
 }

@@ -58,6 +58,15 @@ describe('B6 PR-3b — rpcErrorResponse (tabela §2.2)', () => {
     expect((await corpo(rpcErrorResponse('removeSong', null))).status).toBe(500)
   })
 
+  it('endurecimento (checkpoint B): code anômalo do prototype ("toString") → 500 internalError, nunca função herdada', async () => {
+    for (const route of ['reorder', 'removeSong', 'addSong'] as const) {
+      expect(await corpo(rpcErrorResponse(route, { code: 'toString', message: 'x' }))).toEqual({
+        status: 500,
+        text: '{"error":"Internal server error","code":"INTERNAL_ERROR"}',
+      })
+    }
+  })
+
   it('D6: error.message NUNCA aparece no corpo (todas as colunas, code mapeado e não-mapeado)', async () => {
     for (const route of ['reorder', 'removeSong', 'addSong'] as const) {
       for (const code of ['OB601', 'OB602', 'OB603', 'XX000']) {
