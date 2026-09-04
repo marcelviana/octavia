@@ -1,0 +1,59 @@
+$ find app/api -name 'route.ts' | sort
+app/api/auth/session/route.ts
+app/api/content/[id]/route.ts
+app/api/content/route.ts
+app/api/debug/config/route.ts
+app/api/health/route.ts
+app/api/profile/route.ts
+app/api/proxy/route.ts
+app/api/setlists/[id]/route.ts
+app/api/setlists/[id]/songs/order/route.ts
+app/api/setlists/[id]/songs/route.ts
+app/api/setlists/route.ts
+app/api/setlists/songs/[songId]/route.ts
+app/api/storage/delete/route.ts
+app/api/storage/list/route.ts
+app/api/storage/upload/route.ts
+
+$ for f in $(find app/api -name route.ts | sort); do echo "== $f"; grep -nE '^export (async )?function (GET|POST|PUT|PATCH|DELETE|OPTIONS|HEAD)|^export const (GET|POST|PUT|PATCH|DELETE|HEAD)' "$f"; done
+== app/api/auth/session/route.ts
+82:export const POST = postSessionHandler
+115:export const DELETE = deleteSessionHandler
+== app/api/content/[id]/route.ts
+158:export const GET = wrappedGetHandler
+159:export const DELETE = wrappedDeleteHandler
+== app/api/content/route.ts
+144:export const GET = getContentHandler
+220:export const POST = createContentHandler
+300:export const PUT = updateContentHandler
+342:export const DELETE = deleteContentHandler 
+== app/api/debug/config/route.ts
+5:export async function GET(request: NextRequest) {
+== app/api/health/route.ts
+32:export const GET = healthCheckHandler
+33:export const HEAD = headHealthCheckHandler
+== app/api/profile/route.ts
+50:export const GET = getProfileHandler
+123:export const POST = createProfileHandler
+179:export const PATCH = updateProfileHandler 
+== app/api/proxy/route.ts
+8:export async function GET(req: NextRequest) {
+== app/api/setlists/[id]/route.ts
+144:export const GET = wrappedGetSetlistHandler
+312:export const PUT = wrappedUpdateSetlistHandler
+383:export const DELETE = wrappedDeleteSetlistHandler
+== app/api/setlists/[id]/songs/order/route.ts
+77:export const PUT = wrappedReorderHandler
+== app/api/setlists/[id]/songs/route.ts
+103:export const POST = wrappedAddSongHandler
+== app/api/setlists/route.ts
+88:export const GET = getSetlistsHandler
+224:export const POST = createSetlistHandlerWrapped
+== app/api/setlists/songs/[songId]/route.ts
+108:export const DELETE = wrappedRemoveSongHandler
+== app/api/storage/delete/route.ts
+81:export const POST = deleteFileHandler
+== app/api/storage/list/route.ts
+72:export const GET = listHandler
+== app/api/storage/upload/route.ts
+145:export const POST = uploadFileHandler

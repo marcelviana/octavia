@@ -1,0 +1,244 @@
+$ cat -n lib/firebase-server-utils.ts
+     1	// Server-side Firebase utilities that work with the API-based architecture
+     2	// This file is safe to use in Edge Runtime as it doesn't import Firebase Admin directly
+     3	
+     4	import logger from './logger'
+     5	import { authFailureLimited, recordAuthFailure, getClientIp } from './user-rate-limit'
+     6	import type { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies'
+     7	
+     8	// Simple runtime check so we only use firebase-admin on Node.js
+     9	function isNodeJsRuntime(): boolean {
+    10	  try {
+    11	    return typeof process !== 'undefined' && !!process.versions?.node
+    12	  } catch {
+    13	    return false
+    14	  }
+    15	}
+    16	
+    17	// Token blacklist for security testing
+    18	const tokenBlacklist = new Set<string>()
+    19	
+    20	export function blacklistToken(token: string): void {
+    21	  tokenBlacklist.add(token)
+    22	}
+    23	
+    24	export function isTokenBlacklisted(token: string): boolean {
+    25	  return tokenBlacklist.has(token)
+    26	}
+    27	
+    28	export function clearTokenBlacklist(): void {
+    29	  tokenBlacklist.clear()
+    30	}
+    31	
+    32	export function clearTokenCache(): void {
+    33	  tokenCache.clear()
+    34	}
+    35	
+    36	// Cache verification results to avoid repeated validation and allow offline use
+    37	const tokenCache = new Map<string, { result: ServerAuthResult; exp: number }>()
+    38	
+    39	// Periodically remove expired tokens to avoid unbounded memory usage
+    40	const TOKEN_CACHE_CLEANUP_MS = 5 * 60 * 1000
+    41	if (typeof setInterval === 'function') {
+    42	  setInterval(() => {
+    43	    const now = Date.now()
+    44	    for (const [key, { exp }] of tokenCache) {
+    45	      if (exp <= now) tokenCache.delete(key)
+    46	    }
+    47	  }, TOKEN_CACHE_CLEANUP_MS).unref?.()
+    48	}
+    49	
+    50	export interface ServerAuthResult {
+    51	  isValid: boolean
+    52	  user?: {
+    53	    uid: string
+    54	    email?: string
+    55	    emailVerified?: boolean
+    56	  }
+    57	  error?: string
+    58	}
+    59	
+    60	/**
+    61	 * Validate Firebase token via API route (safe for Edge Runtime)
+    62	 * This replaces the direct Firebase Admin usage to avoid client-side bundling issues
+    63	 */
+    64	export async function validateFirebaseTokenServer(
+    65	  idToken: string,
+    66	  requestUrl?: string | URL
+    67	): Promise<ServerAuthResult> {
+    68	  try {
+    69	    if (!idToken) {
+    70	      return { isValid: false, error: 'Missing ID token' }
+    71	    }
+    72	
+    73	    const now = Date.now()
+    74	    const cached = tokenCache.get(idToken)
+    75	    if (cached && cached.exp > now) {
+    76	      return cached.result
+    77	    }
+    78	
+    79	    // B1.1: nas lambdas Node a verificação é chamada de função direta —
+    80	    // o hop HTTP abaixo fica exclusivo do middleware Edge até a B1.2.
+    81	    // O guard é resolvido em BUILD por compilação: NEXT_RUNTIME vira
+    82	    // 'edge' no bundle do middleware (branch eliminado por DCE — o
+    83	    // firebase-admin nunca entra no bundle Edge) e 'nodejs' nas lambdas;
+    84	    // no client, o alias do next.config resolve @/lib/firebase-admin
+    85	    // para módulo vazio (o guard de window impede a execução).
+    86	    if (typeof window === 'undefined' && process.env.NEXT_RUNTIME !== 'edge') {
+    87	      try {
+    88	        const { verifyFirebaseToken } = await import('@/lib/firebase-admin')
+    89	        const decoded = await verifyFirebaseToken(idToken)
+    90	        const res: ServerAuthResult = {
+    91	          isValid: true,
+    92	          user: {
+    93	            uid: decoded.uid,
+    94	            email: decoded.email,
+    95	            emailVerified: decoded.email_verified
+    96	          }
+    97	        }
+    98	        tokenCache.set(idToken, {
+    99	          result: res,
+   100	          exp: now + 60 * 60 * 1000 // mesmo TTL de 1h do transporte HTTP
+   101	        })
+   102	        return res
+   103	      } catch (err: any) {
+   104	        const msg = String(err?.message || '')
+   105	        // Mesmas classes observáveis do transporte HTTP: token
+   106	        // inválido/expirado → isValid:false; erro de infra (ex.: fetch
+   107	        // de certificados do SDK) → fallback para cache vencido.
+   108	        if (/expired|invalid|argument|decod/i.test(msg)) {
+   109	          return { isValid: false, error: 'Token validation failed' }
+   110	        }
+   111	        logger.error('Token verification failed (direct):', msg)
+   112	        if (cached) {
+   113	          return cached.result
+   114	        }
+   115	        return { isValid: false, error: 'Token validation failed' }
+   116	      }
+   117	    }
+   118	
+   119	    // B1.2b: o ramo fetch (self-fetch a /api/auth/verify) morreu junto
+   120	    // com a rota — a verificação só existe no runtime Node (guard acima).
+   121	    // Edge não verifica mais token (middleware otimista) e client nunca
+   122	    // verificou; cair aqui é erro de uso, não caminho legítimo.
+   123	    logger.error('Token validation requested outside Node runtime')
+   124	    return { isValid: false, error: 'Token validation unavailable in this runtime' }
+   125	  } catch (error: any) {
+   126	    logger.error('Firebase token validation failed:', error.message)
+   127	    return { isValid: false, error: error.message || 'Token validation failed' }
+   128	  }
+   129	}
+   130	
+   131	/**
+   132	 * Legacy function for backward compatibility
+   133	 * @deprecated Use validateFirebaseTokenServer instead
+   134	 */
+   135	export const validateFirebaseTokenServerLegacy = validateFirebaseTokenServer
+   136	
+   137	export async function requireAuthServer(request: Request): Promise<{
+   138	  uid: string
+   139	  email?: string
+   140	  emailVerified?: boolean
+   141	} | null> {
+   142	  // B1.3: fallback por IP para auth FALHADA — "sem credencial não
+   143	  // significa sem limite". IP estourado nega SEM verificar (deny-fast:
+   144	  // corta o trabalho e o oráculo). Só credencial INVÁLIDA conta;
+   145	  // ausência de token não executa verificação e não conta.
+   146	  const clientIp = getClientIp(request)
+   147	  if (authFailureLimited(clientIp)) {
+   148	    return null
+   149	  }
+   150	
+   151	  let idToken: string | null = null
+   152	
+   153	  const authHeader = request.headers.get('authorization')
+   154	  if (authHeader && authHeader.startsWith('Bearer ')) {
+   155	    idToken = authHeader.substring(7)
+   156	  } else {
+   157	    // Fall back to session cookie if no Authorization header
+   158	    const cookieHeader = request.headers.get('cookie')
+   159	    if (cookieHeader) {
+   160	      const cookie = cookieHeader
+   161	        .split(';')
+   162	        .find(c => c.trim().startsWith('firebase-session='))
+   163	      if (cookie) {
+   164	        idToken = cookie.trim().substring('firebase-session='.length)
+   165	      }
+   166	    }
+   167	  }
+   168	
+   169	  if (!idToken) {
+   170	    return null
+   171	  }
+   172	
+   173	  const validation = await validateFirebaseTokenServer(idToken, request.url)
+   174	
+   175	  if (!validation.isValid || !validation.user) {
+   176	    recordAuthFailure(clientIp)
+   177	    return null
+   178	  }
+   179	
+   180	  return validation.user
+   181	}
+   182	
+   183	export async function getServerSideUser(
+   184	  cookieStore: ReadonlyRequestCookies, 
+   185	  requestUrl?: string
+   186	): Promise<{
+   187	  uid: string
+   188	  email?: string
+   189	  emailVerified?: boolean
+   190	} | null> {
+   191	  try {
+   192	    const sessionCookie = cookieStore.get('firebase-session')
+   193	
+   194	    if (!sessionCookie?.value) {
+   195	      logger.warn('Server-side user: No session cookie found')
+   196	      return null
+   197	    }
+   198	
+   199	    // Use direct Firebase Admin validation for better reliability
+   200	    // Pass the request URL for proper base URL construction
+   201	    const validation = await validateFirebaseTokenServer(sessionCookie.value, requestUrl)
+   202	    
+   203	    if (!validation.isValid || !validation.user) {
+   204	      logger.warn('Server-side user validation failed:', validation.error)
+   205	      return null
+   206	    }
+   207	    
+   208	    return validation.user
+   209	  } catch (error) {
+   210	    logger.warn('Error getting server-side user:', error)
+   211	    return null
+   212	  }
+   213	}
+   214	
+   215	/**
+   216	 * Get server-side user using direct Firebase Admin validation
+   217	 * This is more reliable for middleware and SSR contexts
+   218	 */
+   219	export async function getServerSideUserDirect(cookieStore: ReadonlyRequestCookies): Promise<{
+   220	  uid: string
+   221	  email?: string
+   222	  emailVerified?: boolean
+   223	} | null> {
+   224	  try {
+   225	    const sessionCookie = cookieStore.get('firebase-session')
+   226	
+   227	    if (!sessionCookie?.value) {
+   228	      return null
+   229	    }
+   230	
+   231	    // Use direct Firebase Admin validation
+   232	    const validation = await validateFirebaseTokenServer(sessionCookie.value)
+   233	    
+   234	    if (!validation.isValid || !validation.user) {
+   235	      return null
+   236	    }
+   237	    
+   238	    return validation.user
+   239	  } catch (error) {
+   240	    logger.warn('Error getting server-side user (direct):', error)
+   241	    return null
+   242	  }
+   243	} 

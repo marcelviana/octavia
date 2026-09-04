@@ -1,0 +1,453 @@
+$ cat -n app/api/setlists/route.ts (linhas 1-88, handler GET)
+     1	import { NextRequest, NextResponse } from "next/server"
+     2	import { requireAuthServer } from "@/lib/firebase-server-utils"
+     3	import { getSupabaseServiceClient } from "@/lib/supabase-service"
+     4	import logger from "@/lib/logger"
+     5	import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
+     6	import { withBodyValidation } from '@/lib/api-validation-middleware'
+     7	import { setlistSchemas } from '@/lib/api-schemas'
+     8	import { authRequired, internalError, validationError } from '@/lib/api-errors'
+     9	import { z } from 'zod'
+    10	
+    11	// GET /api/setlists - Get user's setlists
+    12	const getSetlistsHandler = async (request: NextRequest) => {
+    13	  try {
+    14	    const user = await requireAuthServer(request)
+    15	    
+    16	    if (!user) {
+    17	      return authRequired()
+    18	    }
+    19	    const limited = enforceUserLimit(user.uid, 'setlist-read', RATE_LIMITS.READ)
+    20	    if (limited) return limited
+    21	
+    22	    const supabase = getSupabaseServiceClient()
+    23	
+    24	    // B6 PR-4 (D6, desenho §6.1): UMA query via embedding do PostgREST
+    25	    // (FKs setlist_songs->setlists e setlist_songs->content; sintaxe
+    26	    // referencedTable verificada no supabase-js 2.89.0 instalado) no
+    27	    // lugar do 1+2N medido no pre-check §3 (7 queries para N=3).
+    28	    // Delta DECLARADO (§6.1): a query antiga de content filtrava
+    29	    // user_id; o embedding segue a FK sem esse filtro — diferença
+    30	    // observável só se existisse setlist_song apontando para content
+    31	    // de OUTRO usuário, estado inalcançável pelos caminhos de escrita
+    32	    // (addSong e create validam posse) e inexistente nos dados.
+    33	    const { data: setlists, error: setlistsError } = await supabase
+    34	      .from('setlists')
+    35	      .select(`*, setlist_songs ( id, setlist_id, content_id, position, notes,
+    36	        content ( id, title, artist, content_type, key, bpm, file_url, content_data ) )`)
+    37	      .eq('user_id', user.uid)
+    38	      .order('created_at', { ascending: false })
+    39	      .order('position', { referencedTable: 'setlist_songs', ascending: true })
+    40	
+    41	    if (setlistsError) {
+    42	      logger.error("Error fetching setlists:", setlistsError)
+    43	      throw setlistsError
+    44	    }
+    45	
+    46	    // Mapeamento INALTERADO (gate de shape em __tests__/get-shape.test.ts):
+    47	    // só a FONTE mudou — o content EMBUTIDO no lugar do contentMap.
+    48	    const setlistsWithSongs = (setlists || []).map((setlist: any) => {
+    49	      const setlistSongs = setlist.setlist_songs
+    50	
+    51	      if (!setlistSongs || setlistSongs.length === 0) {
+    52	        return { ...setlist, setlist_songs: [] }
+    53	      }
+    54	
+    55	      // Format the songs with proper content data
+    56	      const formattedSongs = setlistSongs.map((song: any) => {
+    57	        const content = song.content
+    58	
+    59	        return {
+    60	          id: song.id,
+    61	          setlist_id: song.setlist_id,
+    62	          content_id: song.content_id,
+    63	          position: song.position,
+    64	          notes: song.notes,
+    65	          content: {
+    66	            id: content?.id || song.content_id,
+    67	            title: content?.title || "Unknown Title",
+    68	            artist: content?.artist || "Unknown Artist",
+    69	            content_type: content?.content_type || "Unknown Type",
+    70	            key: content?.key || null,
+    71	            bpm: content?.bpm || null,
+    72	            file_url: content?.file_url || null,
+    73	            content_data: content?.content_data || null,
+    74	          },
+    75	        }
+    76	      })
+    77	
+    78	      return { ...setlist, setlist_songs: formattedSongs }
+    79	    })
+    80	
+    81	    return NextResponse.json(setlistsWithSongs)
+    82	  } catch (error: any) {
+    83	    logger.error('Error in setlists API:', error)
+    84	    return internalError()
+    85	  }
+    86	}
+    87	
+    88	export const GET = getSetlistsHandler
+
+$ sed -n 1,144p app/api/setlists/[id]/route.ts
+     1	import { NextRequest, NextResponse } from 'next/server'
+     2	import { requireAuthServer } from '@/lib/firebase-server-utils'
+     3	import { getSupabaseServiceClient } from '@/lib/supabase-service'
+     4	import logger from '@/lib/logger'
+     5	import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
+     6	import { withBodyValidation } from '@/lib/api-validation-middleware'
+     7	import { commonSchemas, setlistSchemas } from '@/lib/api-schemas'
+     8	import { authRequired, internalError, notFound, validationError } from '@/lib/api-errors'
+     9	import type { SetlistSong, ContentData, FormattedSetlistSong } from '@/types/setlist'
+    10	import { z } from 'zod'
+    11	
+    12	// GET /api/setlists/[id] - Get specific setlist
+    13	const getSetlistByIdHandler = async (
+    14	  request: NextRequest,
+    15	  { params }: { params: Promise<{ id: string }> }
+    16	) => {
+    17	  try {
+    18	    const user = await requireAuthServer(request)
+    19	    
+    20	    if (!user) {
+    21	      return authRequired()
+    22	    }
+    23	    const limited = enforceUserLimit(user.uid, 'setlist-read', RATE_LIMITS.READ)
+    24	    if (limited) return limited
+    25	
+    26	    // Await params for Next.js 15
+    27	    const { id: setlistId } = await params
+    28	
+    29	    // B3 PR-3a (paridade com content/[id], emenda 4): id malformado ia
+    30	    // cru ao Postgres → 22P02 → 500 (medido no pre-check §2.4)
+    31	    const idValidation = commonSchemas.objectId.safeParse(setlistId)
+    32	    if (!idValidation.success) {
+    33	      return validationError(idValidation.error.issues.map((i) => ({ ...i, path: ['id'] })))
+    34	    }
+    35	
+    36	    const supabase = getSupabaseServiceClient()
+    37	    
+    38	    // Get the setlist
+    39	    const { data: setlist, error: setlistError } = await supabase
+    40	      .from("setlists")
+    41	      .select("*")
+    42	      .eq("id", setlistId)
+    43	      .eq("user_id", user.uid)
+    44	      .single()
+    45	
+    46	    if (setlistError) {
+    47	      if (setlistError.code === 'PGRST116') {
+    48	        // No rows found - setlist doesn't exist
+    49	        return notFound('Setlist not found')
+    50	      }
+    51	      logger.error("Error fetching setlist:", setlistError)
+    52	      throw setlistError
+    53	    }
+    54	
+    55	    if (!setlist) {
+    56	      return notFound('Setlist not found')
+    57	    }
+    58	
+    59	    // TypeScript type narrowing - setlist is guaranteed to be non-null here
+    60	    const setlistData = setlist as Record<string, unknown>
+    61	
+    62	    // Get the setlist_songs
+    63	    const { data: setlistSongs, error: songsError } = await supabase
+    64	      .from("setlist_songs")
+    65	      .select("id, setlist_id, content_id, position, notes")
+    66	      .eq("setlist_id", setlistId)
+    67	      .order("position", { ascending: true })
+    68	
+    69	    if (songsError) {
+    70	      logger.error(`Error fetching songs for setlist ${setlistId}:`, songsError)
+    71	      return NextResponse.json({ ...setlistData, setlist_songs: [] })
+    72	    }
+    73	
+    74	    if (!setlistSongs || setlistSongs.length === 0) {
+    75	      return NextResponse.json({ ...setlistData, setlist_songs: [] })
+    76	    }
+    77	
+    78	    // Get all unique content IDs
+    79	    const contentIds = [...new Set(setlistSongs.map((song: any) => song.content_id))]
+    80	
+    81	    // Fetch content separately
+    82	    const { data: contentData, error: contentError } = await supabase
+    83	      .from("content")
+    84	      .select("id, title, artist, content_type, key, bpm, file_url, content_data")
+    85	      .in("id", contentIds)
+    86	      .eq("user_id", user.uid)
+    87	
+    88	    if (contentError) {
+    89	      logger.error(`Error fetching content for setlist ${setlistId}:`, contentError)
+    90	    }
+    91	
+    92	    // Create a map of content by ID for efficient lookup
+    93	    const contentMap = new Map<string, any>()
+    94	    if (contentData) {
+    95	      contentData.forEach((content: ContentData) => {
+    96	        contentMap.set(content.id, content)
+    97	      })
+    98	    }
+    99	
+   100	    // Format the songs with proper content data
+   101	    const formattedSongs = setlistSongs.map((song: SetlistSong): FormattedSetlistSong => {
+   102	      const content = contentMap.get(song.content_id)
+   103	      
+   104	      return {
+   105	        id: song.id,
+   106	        setlist_id: song.setlist_id,
+   107	        content_id: song.content_id,
+   108	        position: song.position,
+   109	        notes: song.notes,
+   110	        content: {
+   111	          id: content?.id || song.content_id,
+   112	          title: content?.title || "Unknown Title",
+   113	          artist: content?.artist || "Unknown Artist",
+   114	          content_type: content?.content_type || "Unknown Type",
+   115	          key: content?.key || null,
+   116	          bpm: content?.bpm || null,
+   117	          file_url: content?.file_url || null,
+   118	          content_data: content?.content_data || null,
+   119	        },
+   120	      }
+   121	    })
+   122	
+   123	    return NextResponse.json({ ...setlistData, setlist_songs: formattedSongs })
+   124	  } catch (error: unknown) {
+   125	    logger.error('Error in setlist API:', error)
+   126	    return internalError()
+   127	  }
+   128	}
+   129	
+   130	// Wrapper for GET handler
+   131	const wrappedGetSetlistHandler = async (request: NextRequest) => {
+   132	  const url = new URL(request.url)
+   133	  const id = url.pathname.split('/').pop()
+   134	  if (!id) {
+   135	    return validationError([
+   136	      { code: 'invalid_type', path: ['id'], message: 'Setlist ID is required' } as never,
+   137	    ])
+   138	  }
+   139	  
+   140	  const params = Promise.resolve({ id })
+   141	  return getSetlistByIdHandler(request, { params })
+   142	}
+   143	
+   144	export const GET = wrappedGetSetlistHandler
+
+$ sed -n 1,144p app/api/content/route.ts
+     1	import { NextRequest, NextResponse } from 'next/server'
+     2	import { requireAuthServer } from '@/lib/firebase-server-utils'
+     3	import { getSupabaseServiceClient } from '@/lib/supabase-service'
+     4	import logger from '@/lib/logger'
+     5	import type { ContentQueryParams } from '@/lib/content-types'
+     6	import type { Database } from '@/types/database.types'
+     7	import { commonSchemas, contentSchemas } from '@/lib/api-schemas'
+     8	import { ContentType } from '@/types/content'
+     9	// B3 PR-2: erros pelo ponto único (docs/api/CONTRATO-DE-ERRO.md);
+    10	// parse do corpo REUSA o guard do middleware (decisão B: mesmo código de
+    11	// 1MB/JSON inválido, não cópia — paridade de contrato provada por gate)
+    12	import { authRequired, internalError, notFound, validationError } from '@/lib/api-errors'
+    13	import { parseRequestBody, ValidationError } from '@/lib/api-validation-middleware'
+    14	import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
+    15	
+    16	// GET /api/content - Get user's content with pagination support
+    17	const getContentHandler = async (request: NextRequest) => {
+    18	  try {
+    19	    const user = await requireAuthServer(request)
+    20	    
+    21	    if (!user) {
+    22	      return authRequired()
+    23	    }
+    24	
+    25	    const limited = enforceUserLimit(user.uid, 'content-read', RATE_LIMITS.READ)
+    26	    if (limited) return limited
+    27	
+    28	    const { searchParams } = new URL(request.url)
+    29	    
+    30	    // Validate query parameters
+    31	    const rawParams: Record<string, string> = {};
+    32	    searchParams.forEach((value, key) => {
+    33	      rawParams[key] = value;
+    34	    });
+    35	    
+    36	    const queryValidation = contentSchemas.query.safeParse(rawParams)
+    37	    if (!queryValidation.success) {
+    38	      return validationError(queryValidation.error)
+    39	    }
+    40	    const validatedParams = queryValidation.data
+    41	
+    42	    const { page, pageSize, search, sortBy, contentType: contentTypeParam, difficulty: difficultyParam, key: keyParam, favorite } = validatedParams
+    43	    
+    44	    // Parse filters safely
+    45	    const filters = {
+    46	      contentType: contentTypeParam ? contentTypeParam.split(',').filter(Boolean) : [],
+    47	      difficulty: difficultyParam ? difficultyParam.split(',').filter(Boolean) : [],
+    48	      key: keyParam ? keyParam.split(',').filter(Boolean) : [],
+    49	      favorite: favorite === 'true'
+    50	    }
+    51	
+    52	    const queryParams: ContentQueryParams = {
+    53	      page,
+    54	      pageSize,
+    55	      search: search || '',
+    56	      sortBy,
+    57	      filters,
+    58	      useCache: false // Always fetch fresh data for API calls
+    59	    }
+    60	
+    61	    const supabase = getSupabaseServiceClient()
+    62	    
+    63	    // Use the same logic as getUserContentPageServer but inline
+    64	    let query = supabase
+    65	      .from('content')
+    66	      .select('*', { count: 'exact' })
+    67	      .eq('user_id', user.uid)
+    68	
+    69	    // Apply search with sanitized input
+    70	    if (search && search.trim()) {
+    71	      // Escape any special characters for SQL ILIKE to prevent injection
+    72	      const sanitizedSearch = search.replace(/[%_]/g, '\\$&');
+    73	      query = query.or(
+    74	        `title.ilike.%${sanitizedSearch}%,artist.ilike.%${sanitizedSearch}%,album.ilike.%${sanitizedSearch}%`
+    75	      )
+    76	    }
+    77	
+    78	    // Apply filters
+    79	    if (filters.contentType?.length) {
+    80	      // enum canônico único (D4) — mesma fonte do schema de escrita
+    81	      const validTypes = Object.values(ContentType) as string[]
+    82	      const filteredTypes = filters.contentType.filter((type: string) => validTypes.includes(type))
+    83	      if (filteredTypes.length > 0) {
+    84	        query = query.in('content_type', filteredTypes)
+    85	      }
+    86	    }
+    87	
+    88	    if (filters.difficulty?.length) {
+    89	      const validDifficulties = ['Beginner', 'Intermediate', 'Advanced']
+    90	      const filteredDifficulties = filters.difficulty.filter((diff: string) => validDifficulties.includes(diff))
+    91	      if (filteredDifficulties.length > 0) {
+    92	        query = query.in('difficulty', filteredDifficulties)
+    93	      }
+    94	    }
+    95	
+    96	    if (filters.key?.length) {
+    97	      query = query.in('key', filters.key)
+    98	    }
+    99	
+   100	    if (filters.favorite) {
+   101	      query = query.eq('is_favorite', true)
+   102	    }
+   103	
+   104	    // Apply sorting
+   105	    const sortMap = {
+   106	      recent: ['created_at', false],
+   107	      title: ['title', true],
+   108	      artist: ['artist', true],
+   109	      updated: ['updated_at', false]
+   110	    } as const
+   111	
+   112	    const [sortColumn, ascending] = sortMap[sortBy] || sortMap.recent
+   113	    query = query.order(sortColumn, { ascending })
+   114	
+   115	    // Apply pagination
+   116	    const safePage = Math.max(1, page)
+   117	    const safePageSize = Math.min(Math.max(1, pageSize), 100)
+   118	    const from = (safePage - 1) * safePageSize
+   119	    const to = from + safePageSize - 1
+   120	
+   121	    const { data: content, error, count } = await query.range(from, to)
+   122	
+   123	    if (error) {
+   124	      logger.error('Error fetching content:', error)
+   125	      throw error
+   126	    }
+   127	
+   128	    const result = {
+   129	      data: content || [],
+   130	      total: count || 0,
+   131	      page: safePage,
+   132	      pageSize: safePageSize,
+   133	      hasMore: (count || 0) > safePage * safePageSize,
+   134	      totalPages: Math.ceil((count || 0) / safePageSize)
+   135	    }
+   136	
+   137	    return NextResponse.json(result)
+   138	  } catch (error: any) {
+   139	    logger.error('Error in content API:', error)
+   140	    return internalError('Failed to fetch content')
+   141	  }
+   142	}
+   143	
+   144	export const GET = getContentHandler
+
+$ sed -n 1,70p app/api/content/[id]/route.ts
+     1	import { NextRequest, NextResponse } from 'next/server'
+     2	import { requireAuthServer } from '@/lib/firebase-server-utils'
+     3	import { getSupabaseServiceClient } from '@/lib/supabase-service'
+     4	import logger from '@/lib/logger'
+     5	import { enforceUserLimit, RATE_LIMITS } from '@/lib/user-rate-limit'
+     6	import { commonSchemas } from '@/lib/api-schemas'
+     7	import { authRequired, internalError, notFound, validationError } from '@/lib/api-errors'
+     8	import { rpcErrorResponse } from '@/lib/rpc-errors'
+     9	
+    10	// GET /api/content/[id] - Get specific content by ID
+    11	const getContentByIdHandler = async (
+    12	  request: NextRequest,
+    13	  { params }: { params: Promise<{ id: string }> }
+    14	) => {
+    15	  try {
+    16	    const user = await requireAuthServer(request)
+    17	
+    18	    if (!user) {
+    19	      return authRequired()
+    20	    }
+    21	    const limited = enforceUserLimit(user.uid, 'content-read', RATE_LIMITS.READ)
+    22	    if (limited) return limited
+    23	
+    24	    const { id } = await params
+    25	
+    26	    // Validate the ID parameter
+    27	    // Emenda 4: id de path malformado → VALIDATION_ERROR com field:"id"
+    28	    const idValidation = commonSchemas.objectId.safeParse(id)
+    29	    if (!idValidation.success) {
+    30	      return validationError(idValidation.error.issues.map((i) => ({ ...i, path: ['id'] })))
+    31	    }
+    32	
+    33	    const supabase = getSupabaseServiceClient()
+    34	    
+    35	    const { data: content, error } = await supabase
+    36	      .from('content')
+    37	      .select('*')
+    38	      .eq('id', id)
+    39	      .eq('user_id', user.uid)
+    40	      .single()
+    41	
+    42	    if (error) {
+    43	      if (error.code === 'PGRST116') {
+    44	        // Emenda 5 (mudança declarada): "or access denied" morreu
+    45	        return notFound('Content not found')
+    46	      }
+    47	      throw error
+    48	    }
+    49	
+    50	    return NextResponse.json(content)
+    51	  } catch (error: any) {
+    52	    logger.error('Error fetching content by ID:', error)
+    53	    return internalError()
+    54	  }
+    55	}
+    56	
+    57	// Wrapper to handle the dynamic route parameters
+    58	const wrappedGetHandler = async (request: NextRequest) => {
+    59	  const url = new URL(request.url)
+    60	  const id = url.pathname.split('/').pop()
+    61	  if (!id) {
+    62	    return validationError([
+    63	      { code: 'invalid_type', path: ['id'], message: 'Content ID is required' } as never,
+    64	    ])
+    65	  }
+    66	  
+    67	  // Create params object to match the expected signature
+    68	  const params = Promise.resolve({ id })
+    69	  return getContentByIdHandler(request, { params })
+    70	}

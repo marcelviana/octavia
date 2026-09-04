@@ -1,0 +1,34 @@
+BASE_URL=https://octavia.rocks
+{"probe":"P1","url":"https://octavia.rocks/api/setlists","status":401,"content-type":"application/json","content-length":null,"cache-control":"public, max-age=0, must-revalidate","www-authenticate":"Bearer","x-ratelimit-limit":null,"x-ratelimit-remaining":null,"x-ratelimit-scope":null,"bytes":58,"sha256":"3c1c84e32bf667c45ff94c75d5b223d2a8b81a96d4c75f4c8afcdb7094014111","ms":2014}
+P1 body: {"error":"Authentication required","code":"AUTH_REQUIRED"}
+VEREDITO P1: OK — status=401 www-authenticate=Bearer
+signIn OK: uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 email=marcelviana+uxtester@gmail.com (token/cookie nunca impressos)
+{"probe":"P2","url":"https://octavia.rocks/api/setlists","status":200,"content-type":"application/json","content-length":null,"cache-control":"public, max-age=0, must-revalidate","www-authenticate":null,"x-ratelimit-limit":null,"x-ratelimit-remaining":null,"x-ratelimit-scope":null,"bytes":49983,"sha256":"08ebfe437cd81e52edd494bb037cc242f4c590ba9612da2bb87c1a1504e8cb01","ms":1520}
+VEREDITO P2: OK — status=200 bytes=49983
+P2 corpo: setlists=3 songs=69; ids=4340bf95-9e08-41a4-8da1-f725fc1c2350,00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f,8c4413d9-4c10-4691-b352-25a397cae2e3
+P2 invariante 1..N: violações=0
+{"probe":"P2b","url":"https://octavia.rocks/api/setlists","status":401,"content-type":"application/json","content-length":null,"cache-control":"public, max-age=0, must-revalidate","www-authenticate":"Bearer","x-ratelimit-limit":null,"x-ratelimit-remaining":null,"x-ratelimit-scope":null,"bytes":58,"sha256":"3c1c84e32bf667c45ff94c75d5b223d2a8b81a96d4c75f4c8afcdb7094014111","ms":150}
+P2b body: {"error":"Authentication required","code":"AUTH_REQUIRED"}
+VEREDITO P2b: OK — status=401
+{"probe":"P3","url":"https://octavia.rocks/api/setlists","status":200,"content-type":"application/json","content-length":null,"cache-control":"public, max-age=0, must-revalidate","www-authenticate":null,"x-ratelimit-limit":null,"x-ratelimit-remaining":null,"x-ratelimit-scope":null,"bytes":49983,"sha256":"08ebfe437cd81e52edd494bb037cc242f4c590ba9612da2bb87c1a1504e8cb01","ms":303}
+VEREDITO P3: OK — status=200 bytes=49983 sha=08ebfe43 (B6: 08ebfe43…, 49983 B)
+{"probe":"P3xP2-cookie","url":"https://octavia.rocks/api/setlists","status":200,"content-type":"application/json","content-length":null,"cache-control":"public, max-age=0, must-revalidate","www-authenticate":null,"x-ratelimit-limit":null,"x-ratelimit-remaining":null,"x-ratelimit-scope":null,"bytes":49983,"sha256":"08ebfe437cd81e52edd494bb037cc242f4c590ba9612da2bb87c1a1504e8cb01","ms":242}
+{"probe":"P3xP2-bearer","url":"https://octavia.rocks/api/setlists","status":200,"content-type":"application/json","content-length":null,"cache-control":"public, max-age=0, must-revalidate","www-authenticate":null,"x-ratelimit-limit":null,"x-ratelimit-remaining":null,"x-ratelimit-scope":null,"bytes":49983,"sha256":"08ebfe437cd81e52edd494bb037cc242f4c590ba9612da2bb87c1a1504e8cb01","ms":342}
+VEREDITO P3xP2: OK — sha bearer=08ebfe437cd8 sha cookie=08ebfe437cd8
+{"probe":"P3b","url":"https://octavia.rocks/api/profile","status":200,"content-type":"application/json","content-length":null,"cache-control":"public, max-age=0, must-revalidate","www-authenticate":null,"x-ratelimit-limit":null,"x-ratelimit-remaining":null,"x-ratelimit-scope":null,"bytes":307,"sha256":"25e196f9627d19f05b304580d73f28e0988bd8b08992c59b4577233a730a7df7","ms":221}
+P3b perfil: id=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 email=marcelviana+uxtester@gmail.com
+VEREDITO P3b: OK — status=200
+{"probe":"P4","url":"https://mlxjmpbdchmwplcfislt.supabase.co/storage/v1/object/public/content-files/1786218427769-ux-audit-partitura-1p.pdf","status":200,"content-type":"application/pdf","content-length":"20821","cache-control":"public, max-age=3600","www-authenticate":null,"x-ratelimit-limit":null,"x-ratelimit-remaining":null,"x-ratelimit-scope":null,"bytes":20821,"sha256":"3d42199bc98fb2f93695323e7e3082378907236eeae11d982b63f85d990cdb48","ms":1493}
+VEREDITO P4: OK — status=200 bytes=20821 ct=application/pdf (B5: 20821 B)
+{"probe":"P4b","url":"https://octavia.rocks/api/proxy?url=<omitida>","status":200,"content-type":"application/pdf","content-length":"20821","cache-control":"public, max-age=3600","www-authenticate":null,"x-ratelimit-limit":null,"x-ratelimit-remaining":null,"x-ratelimit-scope":null,"bytes":20821,"sha256":"3d42199bc98fb2f93695323e7e3082378907236eeae11d982b63f85d990cdb48","ms":664}
+VEREDITO P4b: OK — status=200 sha igual ao P4=true
+{"probe":"P5","url":"https://octavia.rocks/api/content?pageSize=100&page=1","status":200,"content-type":"application/json","content-length":null,"cache-control":"public, max-age=0, must-revalidate","www-authenticate":null,"x-ratelimit-limit":null,"x-ratelimit-remaining":null,"x-ratelimit-scope":null,"bytes":52941,"sha256":"8e27a377255c074a23e01d279d585eda84ca52921e1d001fb8a91327a4e7ef08","ms":229}
+VEREDITO P5: OK — status=200 bytes=52941
+P5 meta: {"total":66,"page":1,"pageSize":100,"hasMore":false,"totalPages":1,"n":66}
+{"probe":"P6","url":"https://octavia.rocks/api/setlists/4340bf95-9e08-41a4-8da1-f725fc1c2350","status":200,"content-type":"application/json","content-length":null,"cache-control":"public, max-age=0, must-revalidate","www-authenticate":null,"x-ratelimit-limit":null,"x-ratelimit-remaining":null,"x-ratelimit-scope":null,"bytes":43288,"sha256":"27a07deab996dc8642af90c28495650e7c37614324f2816250b3073ceb070b8e","ms":336}
+P6: setlist=4340bf95-9e08-41a4-8da1-f725fc1c2350 songs=60 setlist_songs idêntico ao item do P2=true
+VEREDITO P6: OK — status=200 identico=true
+{"probe":"P7","url":"https://octavia.rocks/api/content/2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f","status":200,"content-type":"application/json","content-length":null,"cache-control":"public, max-age=0, must-revalidate","www-authenticate":null,"x-ratelimit-limit":null,"x-ratelimit-remaining":null,"x-ratelimit-scope":null,"bytes":629,"sha256":"4d723c7aa90ae1580328f9aaeb485b55ada73ad71587bc585687a0d74519ab12","ms":181}
+P7: content_id=2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f title="[UX-AUDIT] Partitura de 12 páginas" no P5=true content_data byte-idêntico ao P5=true bytes(content_data)=4
+VEREDITO P7: OK — status=200 found=true identico=true
+RESULTS gravados em /tmp/c-probes-2026-09-04/results.json (12 registros)

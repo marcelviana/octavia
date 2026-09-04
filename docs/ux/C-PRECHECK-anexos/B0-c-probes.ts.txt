@@ -1,0 +1,170 @@
+/**
+ * Bloco C · Fase B — probes de LEITURA em prod (conta de audit, zero escrita).
+ * Ordem fixa: P1 → P2 → P2b → P3 → P3×P2 → P3b → P4 → P4b → P5 → P6 → P7.
+ * Env: carregado pelo MESMO mecanismo de scripts/ux-audit/auth.ts:12-16
+ * (dotenv config .env.uxaudit + .env.local, relativo ao cwd = raiz do repo).
+ * Nunca imprime token/cookie; só status, headers relevantes, tamanho e sha256.
+ */
+import { createHash } from 'node:crypto'
+import { writeFileSync, mkdirSync } from 'node:fs'
+import { join } from 'node:path'
+import {
+  BASE_URL,
+  getFirebaseCredentials,
+  getSessionCookie,
+} from '/Users/marcelviana/projects/octavia/scripts/ux-audit/auth.ts'
+
+const SCRATCH = process.env.SCRATCH || '/tmp/c-probes-2026-09-04'
+mkdirSync(SCRATCH, { recursive: true })
+const ANEXOS = '/Users/marcelviana/projects/octavia/docs/ux/C-PRECHECK-anexos'
+
+const sha = (b: Buffer | string) => createHash('sha256').update(b).digest('hex')
+
+interface Rec {
+  probe: string
+  url: string
+  status: number
+  'content-type': string | null
+  'content-length': string | null
+  'cache-control': string | null
+  'www-authenticate': string | null
+  'x-ratelimit-limit': string | null
+  'x-ratelimit-remaining': string | null
+  'x-ratelimit-scope': string | null
+  bytes: number
+  sha256: string
+  ms: number
+}
+const results: Rec[] = []
+
+async function probe(name: string, url: string, headers: Record<string, string>): Promise<{ rec: Rec; body: Buffer }> {
+  const t0 = Date.now()
+  const res = await fetch(url, { headers })
+  const body = Buffer.from(await res.arrayBuffer())
+  const h = (k: string) => res.headers.get(k)
+  const rec: Rec = {
+    probe: name, url: url.replace(/\?url=.*$/, '?url=<omitida>'), status: res.status,
+    'content-type': h('content-type'), 'content-length': h('content-length'),
+    'cache-control': h('cache-control'), 'www-authenticate': h('www-authenticate'),
+    'x-ratelimit-limit': h('x-ratelimit-limit'), 'x-ratelimit-remaining': h('x-ratelimit-remaining'),
+    'x-ratelimit-scope': h('x-ratelimit-scope'),
+    bytes: body.length, sha256: sha(body), ms: Date.now() - t0,
+  }
+  results.push(rec)
+  console.log(JSON.stringify(rec))
+  return { rec, body }
+}
+
+function veredito(name: string, ok: boolean, msg: string) {
+  console.log(`VEREDITO ${name}: ${ok ? 'OK' : 'FALHOU'} — ${msg}`)
+}
+
+async function main() {
+  console.log(`BASE_URL=${BASE_URL}`)
+  const supa = process.env.NEXT_PUBLIC_SUPABASE_URL
+  if (!supa) throw new Error('NEXT_PUBLIC_SUPABASE_URL ausente (env não carregada)')
+
+  // P1 — sem credencial (antes de qualquer signIn: não consome família nenhuma)
+  const p1 = await probe('P1', `${BASE_URL}/api/setlists`, {})
+  console.log(`P1 body: ${p1.body.toString('utf8').slice(0, 300)}`)
+  if (p1.rec.status === 429) { console.log('ABORT: P1 em 429 — IP em deny-fast; esperar 5 min e reexecutar P1'); process.exit(2) }
+  veredito('P1', p1.rec.status === 401 && p1.rec['www-authenticate'] === 'Bearer', `status=${p1.rec.status} www-authenticate=${p1.rec['www-authenticate']}`)
+
+  // signIn: idToken + cookie (1 POST /api/auth/session — família session)
+  const cred = await getFirebaseCredentials()
+  const cookie = await getSessionCookie()
+  const bearer = { Authorization: `Bearer ${cred.idToken}` }
+  console.log(`signIn OK: uid=${cred.uid} email=${cred.email} (token/cookie nunca impressos)`)
+
+  // P2 ★ — bearer sem cookie
+  const p2 = await probe('P2', `${BASE_URL}/api/setlists`, bearer)
+  veredito('P2', p2.rec.status === 200, `status=${p2.rec.status} bytes=${p2.rec.bytes}`)
+  const setlists = p2.rec.status === 200 ? JSON.parse(p2.body.toString('utf8')) : null
+  if (setlists) {
+    const nSongs = setlists.reduce((a: number, s: any) => a + (s.setlist_songs?.length ?? 0), 0)
+    console.log(`P2 corpo: setlists=${setlists.length} songs=${nSongs}; ids=${setlists.map((s: any) => s.id).join(',')}`)
+    const viol = setlists.filter((s: any) => !s.setlist_songs.every((x: any, i: number) => x.position === i + 1))
+    console.log(`P2 invariante 1..N: violações=${viol.length}`)
+    writeFileSync(join(ANEXOS, 'B-P2-setlists.json'), p2.body)
+  }
+
+  // P2b — bearer inválido (controle negativo; conta 1 em authfail/ip)
+  const p2b = await probe('P2b', `${BASE_URL}/api/setlists`, { Authorization: 'Bearer nao-e-um-token' })
+  console.log(`P2b body: ${p2b.body.toString('utf8').slice(0, 300)}`)
+  veredito('P2b', p2b.rec.status === 401, `status=${p2b.rec.status}`)
+
+  // P3 — cookie sem bearer
+  const p3 = await probe('P3', `${BASE_URL}/api/setlists`, { Cookie: cookie })
+  veredito('P3', p3.rec.status === 200, `status=${p3.rec.status} bytes=${p3.rec.bytes} sha=${p3.rec.sha256.slice(0, 8)} (B6: 08ebfe43…, 49983 B)`)
+
+  // P3×P2 — mesmo instante
+  const [x2, x3] = await Promise.all([
+    probe('P3xP2-bearer', `${BASE_URL}/api/setlists`, bearer),
+    probe('P3xP2-cookie', `${BASE_URL}/api/setlists`, { Cookie: cookie }),
+  ])
+  veredito('P3xP2', x2.rec.sha256 === x3.rec.sha256 && x2.rec.status === 200 && x3.rec.status === 200, `sha bearer=${x2.rec.sha256.slice(0, 12)} sha cookie=${x3.rec.sha256.slice(0, 12)}`)
+
+  // P3b — cadeia B com bearer
+  const p3b = await probe('P3b', `${BASE_URL}/api/profile`, bearer)
+  if (p3b.rec.status === 200) {
+    const prof = JSON.parse(p3b.body.toString('utf8'))
+    console.log(`P3b perfil: id=${prof?.id} email=${prof?.email}`)
+  } else console.log(`P3b body: ${p3b.body.toString('utf8').slice(0, 300)}`)
+  veredito('P3b', p3b.rec.status === 200, `status=${p3b.rec.status}`)
+
+  // P4 — objeto público, sem header
+  const objPath = '1786218427769-ux-audit-partitura-1p.pdf'
+  const objUrl = `${supa}/storage/v1/object/public/content-files/${objPath}`
+  const p4 = await probe('P4', objUrl, {})
+  veredito('P4', p4.rec.status === 200 && p4.rec.bytes === 20821, `status=${p4.rec.status} bytes=${p4.rec.bytes} ct=${p4.rec['content-type']} (B5: 20821 B)`)
+
+  // P4b — proxy com bearer
+  const p4b = await probe('P4b', `${BASE_URL}/api/proxy?url=${encodeURIComponent(objUrl)}`, bearer)
+  veredito('P4b', p4b.rec.status === 200 && p4b.rec.sha256 === p4.rec.sha256, `status=${p4b.rec.status} sha igual ao P4=${p4b.rec.sha256 === p4.rec.sha256}`)
+
+  // P5 — biblioteca
+  const p5 = await probe('P5', `${BASE_URL}/api/content?pageSize=100&page=1`, bearer)
+  veredito('P5', p5.rec.status === 200, `status=${p5.rec.status} bytes=${p5.rec.bytes}`)
+  let content: any = null
+  if (p5.rec.status === 200) {
+    content = JSON.parse(p5.body.toString('utf8'))
+    console.log(`P5 meta: ${JSON.stringify({ total: content.total, page: content.page, pageSize: content.pageSize, hasMore: content.hasMore, totalPages: content.totalPages, n: content.data.length })}`)
+    writeFileSync(join(ANEXOS, 'B-P5-content.json'), p5.body)
+  }
+
+  // P6 — detalhe da 1ª setlist do P2
+  let firstSetlist: any = null
+  if (setlists && setlists.length) {
+    firstSetlist = setlists[0]
+    const p6 = await probe('P6', `${BASE_URL}/api/setlists/${firstSetlist.id}`, bearer)
+    let same = false
+    if (p6.rec.status === 200) {
+      const d = JSON.parse(p6.body.toString('utf8'))
+      same = JSON.stringify(d.setlist_songs) === JSON.stringify(firstSetlist.setlist_songs)
+      console.log(`P6: setlist=${d.id} songs=${d.setlist_songs.length} setlist_songs idêntico ao item do P2=${same}`)
+      writeFileSync(join(ANEXOS, 'B-P6-setlist.json'), p6.body)
+    }
+    veredito('P6', p6.rec.status === 200 && same, `status=${p6.rec.status} identico=${same}`)
+
+    // P7 — content unitário da 1ª música da 1ª setlist
+    const firstSong = firstSetlist.setlist_songs?.[0]
+    if (firstSong && content) {
+      const p7 = await probe('P7', `${BASE_URL}/api/content/${firstSong.content_id}`, bearer)
+      let same7 = false, found = false
+      if (p7.rec.status === 200) {
+        const item = JSON.parse(p7.body.toString('utf8'))
+        const fromP5 = content.data.find((c: any) => c.id === firstSong.content_id)
+        found = !!fromP5
+        same7 = found && JSON.stringify(item.content_data) === JSON.stringify(fromP5.content_data)
+        console.log(`P7: content_id=${firstSong.content_id} title=${JSON.stringify(item.title)} no P5=${found} content_data byte-idêntico ao P5=${same7} bytes(content_data)=${Buffer.byteLength(JSON.stringify(item.content_data))}`)
+        writeFileSync(join(ANEXOS, 'B-P7-content-item.json'), p7.body)
+      }
+      veredito('P7', p7.rec.status === 200 && same7, `status=${p7.rec.status} found=${found} identico=${same7}`)
+    } else console.log('P7: pulado (sem 1ª música ou P5 falhou)')
+  } else console.log('P6/P7: pulados (P2 sem setlists)')
+
+  writeFileSync(join(SCRATCH, 'results.json'), JSON.stringify(results, null, 2))
+  console.log(`RESULTS gravados em ${SCRATCH}/results.json (${results.length} registros)`)
+}
+
+main().catch((e) => { console.error('ERRO:', e instanceof Error ? e.message : String(e)); process.exit(1) })

@@ -1,0 +1,107 @@
+$ ls -la middleware.ts src/middleware.ts app/middleware.ts
+ls: app/middleware.ts: No such file or directory
+ls: src/middleware.ts: No such file or directory
+-rw-r--r--@ 1 marcelviana  staff  2465 Aug 20 15:19 middleware.ts
+
+$ grep -rnE 'verifyIdToken|verifySessionCookie|createSessionCookie' --include=*.ts --include=*.tsx lib app middleware.ts hooks contexts components | grep -v __tests__ | grep -v .test.
+lib/firebase-admin.ts:101:    const decodedToken = await auth.verifyIdToken(idToken);
+
+$ grep -rnE "headers\.get\(['\"]authorization['\"]\)|Bearer" --include=*.ts --include=*.tsx lib app middleware.ts | grep -v __tests__ | grep -v .test.
+lib/secure-auth-utils.ts:261:    const authHeader = request.headers.get('authorization')
+lib/secure-auth-utils.ts:268:      const bearerMatch = authHeader.match(/^Bearer\s+(.+)$/i)
+lib/content-service.ts:265:        Authorization: `Bearer ${token}`,
+lib/content-service.ts:477:        Authorization: `Bearer ${token}`,
+lib/content-service.ts:510:        Authorization: `Bearer ${token}`,
+lib/content-service.ts:545:        Authorization: `Bearer ${token}`,
+lib/content-service.ts:587:          Authorization: `Bearer ${token}`,
+lib/api-errors.ts:109:    headers: { 'WWW-Authenticate': 'Bearer' },
+lib/firebase-server-utils.ts:153:  const authHeader = request.headers.get('authorization')
+lib/firebase-server-utils.ts:154:  if (authHeader && authHeader.startsWith('Bearer ')) {
+lib/setlist-service.ts:55:        'Authorization': `Bearer ${idToken}`,
+lib/setlist-service.ts:96:      headers: { Authorization: `Bearer ${idToken}` }
+lib/setlist-service.ts:143:        'Authorization': `Bearer ${idToken}`,
+lib/setlist-service.ts:191:        'Authorization': `Bearer ${idToken}`,
+lib/setlist-service.ts:229:      headers: { 'Authorization': `Bearer ${idToken}` }
+lib/setlist-service.ts:269:        'Authorization': `Bearer ${idToken}`,
+lib/setlist-service.ts:316:        'Authorization': `Bearer ${idToken}`,
+app/api/storage/delete/route.ts:14:    const authHeader = request.headers.get('authorization')
+app/api/storage/delete/route.ts:15:    if (!authHeader?.startsWith('Bearer ')) {
+
+$ grep -rnE "cookies\(\)|cookies\.get\(|firebase-session|__session|sessionCookie|SESSION_COOKIE" --include=*.ts --include=*.tsx lib app middleware.ts | grep -v __tests__ | grep -v .test.
+lib/secure-auth-utils.ts:278:      const sessionMatch = cookieHeader.match(/firebase-session=([^;]+)/)
+lib/firebase-session-cookies.ts:5:const SESSION_COOKIE_NAME = 'firebase-session'
+lib/firebase-session-cookies.ts:6:const SESSION_COOKIE_MAX_AGE = 60 * 60 * 24 * 7 // 7 days
+lib/firebase-session-cookies.ts:53:  const sessionCookie = cookies.find(cookie => 
+lib/firebase-session-cookies.ts:54:    cookie.trim().startsWith(`${SESSION_COOKIE_NAME}=`)
+lib/firebase-session-cookies.ts:57:  if (!sessionCookie) return null
+lib/firebase-session-cookies.ts:59:  return sessionCookie.split('=')[1] ?? null
+lib/firebase-server-utils.ts:162:        .find(c => c.trim().startsWith('firebase-session='))
+lib/firebase-server-utils.ts:164:        idToken = cookie.trim().substring('firebase-session='.length)
+lib/firebase-server-utils.ts:192:    const sessionCookie = cookieStore.get('firebase-session')
+lib/firebase-server-utils.ts:194:    if (!sessionCookie?.value) {
+lib/firebase-server-utils.ts:201:    const validation = await validateFirebaseTokenServer(sessionCookie.value, requestUrl)
+lib/firebase-server-utils.ts:225:    const sessionCookie = cookieStore.get('firebase-session')
+lib/firebase-server-utils.ts:227:    if (!sessionCookie?.value) {
+lib/firebase-server-utils.ts:232:    const validation = await validateFirebaseTokenServer(sessionCookie.value)
+app/add-content/page.tsx:10:  await requirePageUser(await cookies())
+app/settings/page.tsx:9:  await requirePageUser(await cookies())
+app/signup/page.tsx:9:  const user = await getServerSideUser(await cookies())
+app/library/page.tsx:12:  const cookieStore = await cookies();
+app/content/[id]/page.tsx:12:  const cookieStore = await cookies();
+app/dashboard/page.tsx:12:  const cookieStore = await cookies()
+app/profile/page.tsx:10:  await requirePageUser(await cookies())
+app/api/auth/session/route.ts:16:const SESSION_COOKIE_NAME = 'firebase-session'
+app/api/auth/session/route.ts:17:const SESSION_COOKIE_MAX_AGE = 60 * 60 * 24 * 7 // 7 days
+app/api/auth/session/route.ts:65:        `${SESSION_COOKIE_NAME}=${idToken}`,
+app/api/auth/session/route.ts:67:        `Max-Age=${SESSION_COOKIE_MAX_AGE}`,
+app/api/auth/session/route.ts:100:    response.cookies.set(SESSION_COOKIE_NAME, '', {
+app/setlists/page.tsx:12:  await requirePageUser(await cookies())
+app/performance/page.tsx:11:  const cookieStore = await cookies();
+app/login/page.tsx:7:  const user = await getServerSideUser(await cookies())
+middleware.ts:44:  const sessionCookie = request.cookies.get('firebase-session')?.value
+middleware.ts:45:  const hasWellFormedSession = !!sessionCookie && JWT_SHAPE.test(sessionCookie)
+
+$ grep -rnE "requireAuthServer|getServerSideUser|requirePageUser|verifyFirebaseToken|withAuth|withBodyValidation|withPublicBodyValidation|validateFirebaseTokenServer|validateFirebaseTokenSecure" --include=route.ts app/api
+app/api/proxy/route.ts:4:import { requireAuthServer } from '@/lib/firebase-server-utils'
+app/api/proxy/route.ts:50:    const user = await requireAuthServer(req)
+app/api/auth/session/route.ts:2:import { validateFirebaseTokenSecure } from '@/lib/secure-auth-utils'
+app/api/auth/session/route.ts:5:import { withPublicBodyValidation } from '@/lib/api-validation-middleware'
+app/api/auth/session/route.ts:20:const postSessionHandler = withPublicBodyValidation(authSchemas.sessionCreate)(
+app/api/auth/session/route.ts:26:      const validation = await validateFirebaseTokenSecure(idToken, request.url)
+app/api/content/route.ts:2:import { requireAuthServer } from '@/lib/firebase-server-utils'
+app/api/content/route.ts:19:    const user = await requireAuthServer(request)
+app/api/content/route.ts:149:    const user = await requireAuthServer(request)
+app/api/content/route.ts:225:    const user = await requireAuthServer(request)
+app/api/content/route.ts:305:    const user = await requireAuthServer(request)
+app/api/content/[id]/route.ts:2:import { requireAuthServer } from '@/lib/firebase-server-utils'
+app/api/content/[id]/route.ts:16:    const user = await requireAuthServer(request)
+app/api/content/[id]/route.ts:78:    const user = await requireAuthServer(request)
+app/api/storage/delete/route.ts:3:import { validateFirebaseTokenServer } from '@/lib/firebase-server-utils'
+app/api/storage/delete/route.ts:20:    const validation = await validateFirebaseTokenServer(firebaseToken, request.url)
+app/api/storage/list/route.ts:4:import { requireAuthServerSecure } from '@/lib/secure-auth-utils'
+app/api/storage/list/route.ts:22:    const user = await requireAuthServerSecure(request)
+app/api/storage/upload/route.ts:3:import { requireAuthServerSecure } from '@/lib/secure-auth-utils'
+app/api/storage/upload/route.ts:15:    const user = await requireAuthServerSecure(request)
+app/api/profile/route.ts:3:import { requireAuthServerSecure } from '@/lib/secure-auth-utils'
+app/api/profile/route.ts:6:import { withBodyValidation } from '@/lib/api-validation-middleware'
+app/api/profile/route.ts:19:    const user = await requireAuthServerSecure(request)
+app/api/profile/route.ts:55:const createProfileHandlerRaw = withBodyValidation(authSchemas.profileCreate, {
+app/api/profile/route.ts:62:    user?: NonNullable<Awaited<ReturnType<typeof requireAuthServerSecure>>>
+app/api/profile/route.ts:126:const updateProfileHandlerRaw = withBodyValidation(authSchemas.profileUpdate, {
+app/api/profile/route.ts:132:    user?: NonNullable<Awaited<ReturnType<typeof requireAuthServerSecure>>>
+app/api/setlists/route.ts:2:import { requireAuthServer } from "@/lib/firebase-server-utils"
+app/api/setlists/route.ts:6:import { withBodyValidation } from '@/lib/api-validation-middleware'
+app/api/setlists/route.ts:14:    const user = await requireAuthServer(request)
+app/api/setlists/route.ts:91:const createSetlistHandler = withBodyValidation(setlistSchemas.create, {
+app/api/setlists/songs/[songId]/route.ts:2:import { requireAuthServer } from '@/lib/firebase-server-utils'
+app/api/setlists/songs/[songId]/route.ts:27:    const user = await requireAuthServer(request)
+app/api/setlists/[id]/route.ts:2:import { requireAuthServer } from '@/lib/firebase-server-utils'
+app/api/setlists/[id]/route.ts:6:import { withBodyValidation } from '@/lib/api-validation-middleware'
+app/api/setlists/[id]/route.ts:18:    const user = await requireAuthServer(request)
+app/api/setlists/[id]/route.ts:147:const updateSetlistHandler = withBodyValidation(setlistSchemas.update, {
+app/api/setlists/[id]/route.ts:320:    const user = await requireAuthServer(request)
+app/api/setlists/[id]/songs/route.ts:2:import { requireAuthServer } from '@/lib/firebase-server-utils'
+app/api/setlists/[id]/songs/route.ts:6:import { withBodyValidation } from '@/lib/api-validation-middleware'
+app/api/setlists/[id]/songs/route.ts:13:const addSongToSetlistHandler = withBodyValidation(setlistSchemas.addSong, {
+app/api/setlists/[id]/songs/order/route.ts:5:import { withBodyValidation } from '@/lib/api-validation-middleware'
+app/api/setlists/[id]/songs/order/route.ts:17:const reorderSetlistHandler = withBodyValidation(setlistSchemas.reorder, {

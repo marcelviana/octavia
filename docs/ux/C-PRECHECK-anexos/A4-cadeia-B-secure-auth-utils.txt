@@ -1,0 +1,379 @@
+$ cat -n lib/secure-auth-utils.ts
+     1	// SECURITY-HARDENED Firebase Authentication Utilities
+     2	// Fixes critical vulnerabilities in token caching and validation
+     3	
+     4	import logger from './logger'
+     5	import { authFailureLimited, recordAuthFailure, getClientIp } from './user-rate-limit'
+     6	import type { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies'
+     7	
+     8	// Security Configuration
+     9	const SECURITY_CONFIG = {
+    10	  // Reduced cache time from 1 hour to 5 minutes for security
+    11	  TOKEN_CACHE_DURATION_MS: 5 * 60 * 1000, // 5 minutes
+    12	  // Cleanup interval
+    13	  CACHE_CLEANUP_INTERVAL_MS: 2 * 60 * 1000, // 2 minutes
+    14	  // Maximum cache size to prevent memory exhaustion
+    15	  MAX_CACHE_SIZE: 1000,
+    16	  // Token blacklist duration (longer than cache to prevent replay)
+    17	  BLACKLIST_DURATION_MS: 30 * 60 * 1000, // 30 minutes
+    18	} as const
+    19	
+    20	// Token blacklist for immediate revocation
+    21	const tokenBlacklist = new Map<string, number>() // token -> expiry timestamp
+    22	const tokenCache = new Map<string, { result: ServerAuthResult; exp: number; userId: string }>()
+    23	const userSessionMap = new Map<string, Set<string>>() // userId -> active tokens
+    24	
+    25	// Enhanced cleanup with blacklist management
+    26	if (typeof setInterval === 'function') {
+    27	  setInterval(() => {
+    28	    const now = Date.now()
+    29	
+    30	    // Clean expired cache entries
+    31	    for (const [token, { exp }] of tokenCache) {
+    32	      if (exp <= now) {
+    33	        const cachedEntry = tokenCache.get(token)
+    34	        if (cachedEntry) {
+    35	          removeTokenFromUserSession(cachedEntry.userId, token)
+    36	        }
+    37	        tokenCache.delete(token)
+    38	      }
+    39	    }
+    40	
+    41	    // Clean expired blacklist entries
+    42	    for (const [token, exp] of tokenBlacklist) {
+    43	      if (exp <= now) {
+    44	        tokenBlacklist.delete(token)
+    45	      }
+    46	    }
+    47	
+    48	    // Enforce maximum cache size (LRU eviction)
+    49	    if (tokenCache.size > SECURITY_CONFIG.MAX_CACHE_SIZE) {
+    50	      const entries = Array.from(tokenCache.entries())
+    51	      entries.sort((a, b) => a[1].exp - b[1].exp) // Sort by expiry time
+    52	
+    53	      const toRemove = entries.slice(0, entries.length - SECURITY_CONFIG.MAX_CACHE_SIZE)
+    54	      for (const [token] of toRemove) {
+    55	        const cachedEntry = tokenCache.get(token)
+    56	        if (cachedEntry) {
+    57	          removeTokenFromUserSession(cachedEntry.userId, token)
+    58	        }
+    59	        tokenCache.delete(token)
+    60	      }
+    61	    }
+    62	  }, SECURITY_CONFIG.CACHE_CLEANUP_INTERVAL_MS).unref?.()
+    63	}
+    64	
+    65	export interface ServerAuthResult {
+    66	  isValid: boolean
+    67	  user?: {
+    68	    uid: string
+    69	    email?: string
+    70	    emailVerified?: boolean
+    71	  }
+    72	  error?: string
+    73	}
+    74	
+    75	// Helper function to manage user session tokens
+    76	function addTokenToUserSession(userId: string, token: string): void {
+    77	  if (!userSessionMap.has(userId)) {
+    78	    userSessionMap.set(userId, new Set())
+    79	  }
+    80	  userSessionMap.get(userId)!.add(token)
+    81	}
+    82	
+    83	function removeTokenFromUserSession(userId: string, token: string): void {
+    84	  const userTokens = userSessionMap.get(userId)
+    85	  if (userTokens) {
+    86	    userTokens.delete(token)
+    87	    if (userTokens.size === 0) {
+    88	      userSessionMap.delete(userId)
+    89	    }
+    90	  }
+    91	}
+    92	
+    93	/**
+    94	 * SECURITY: Immediately blacklist a token (for logout, user suspension, etc.)
+    95	 */
+    96	export function blacklistToken(token: string): void {
+    97	  if (!token) return
+    98	
+    99	  const exp = Date.now() + SECURITY_CONFIG.BLACKLIST_DURATION_MS
+   100	  tokenBlacklist.set(token, exp)
+   101	
+   102	  // Remove from cache immediately
+   103	  const cachedEntry = tokenCache.get(token)
+   104	  if (cachedEntry) {
+   105	    removeTokenFromUserSession(cachedEntry.userId, token)
+   106	    tokenCache.delete(token)
+   107	  }
+   108	
+   109	  logger.log(`Token blacklisted: ${token.substring(0, 10)}...`)
+   110	}
+   111	
+   112	/**
+   113	 * SECURITY: Blacklist all tokens for a specific user (for account suspension)
+   114	 */
+   115	export function blacklistUserTokens(userId: string): void {
+   116	  const userTokens = userSessionMap.get(userId)
+   117	  if (userTokens) {
+   118	    for (const token of userTokens) {
+   119	      blacklistToken(token)
+   120	    }
+   121	  }
+   122	  logger.log(`All tokens blacklisted for user: ${userId}`)
+   123	}
+   124	
+   125	/**
+   126	 * SECURITY: Check if token is blacklisted
+   127	 */
+   128	function isTokenBlacklisted(token: string): boolean {
+   129	  const exp = tokenBlacklist.get(token)
+   130	  if (!exp) return false
+   131	
+   132	  if (Date.now() > exp) {
+   133	    tokenBlacklist.delete(token)
+   134	    return false
+   135	  }
+   136	
+   137	  return true
+   138	}
+   139	
+   140	/**
+   141	 * SECURITY-HARDENED: Validate Firebase token with enhanced security checks
+   142	 */
+   143	export async function validateFirebaseTokenSecure(
+   144	  idToken: string,
+   145	  requestUrl?: string | URL
+   146	): Promise<ServerAuthResult> {
+   147	  try {
+   148	    if (!idToken || typeof idToken !== 'string') {
+   149	      return { isValid: false, error: 'Missing or invalid ID token format' }
+   150	    }
+   151	
+   152	    // SECURITY: Check token blacklist first
+   153	    if (isTokenBlacklisted(idToken)) {
+   154	      logger.warn('Attempted use of blacklisted token')
+   155	      return { isValid: false, error: 'Token has been revoked' }
+   156	    }
+   157	
+   158	    // Check cache with security considerations
+   159	    const cached = tokenCache.get(idToken)
+   160	    const now = Date.now()
+   161	
+   162	    if (cached && cached.exp > now) {
+   163	      logger.log('Token validation from cache (secure)')
+   164	      return cached.result
+   165	    }
+   166	
+   167	    // Remove expired cached entry
+   168	    if (cached && cached.exp <= now) {
+   169	      removeTokenFromUserSession(cached.userId, idToken)
+   170	      tokenCache.delete(idToken)
+   171	    }
+   172	
+   173	    // Validate via API with enhanced error handling
+   174	    let result: ServerAuthResult
+   175	
+   176	    if (typeof window === 'undefined' && process.env.NEXT_RUNTIME !== 'edge') {
+   177	      // B1.1: chamada direta de função nas lambdas Node — mesmo guard
+   178	      // estático da cadeia A (lib/firebase-server-utils.ts); ver o
+   179	      // comentário lá sobre DCE por compilação e o alias do client.
+   180	      try {
+   181	        const { verifyFirebaseToken } = await import('@/lib/firebase-admin')
+   182	        const decoded = await verifyFirebaseToken(idToken)
+   183	
+   184	        result = {
+   185	          isValid: true,
+   186	          user: {
+   187	            uid: decoded.uid,
+   188	            email: decoded.email,
+   189	            emailVerified: decoded.email_verified
+   190	          }
+   191	        }
+   192	
+   193	        // SECURITY: Track user session
+   194	        addTokenToUserSession(decoded.uid, idToken)
+   195	
+   196	        logger.log(`Token validated successfully for user: ${decoded.uid}`)
+   197	      } catch (error: any) {
+   198	        const msg = String(error?.message || '')
+   199	        // Mesmas classes observáveis do transporte HTTP (o auto-blacklist
+   200	        // por string de erro segue dormante, como hoje — nota do desenho
+   201	        // da B1.1; acordá-lo é decisão do B1.5):
+   202	        // token inválido/expirado → 'Token verification failed' (era o
+   203	        // !response.ok); erro de infra → 'service unavailable' (era o
+   204	        // catch do fetch).
+   205	        if (/expired|invalid|argument|decod/i.test(msg)) {
+   206	          logger.error(`Token verification failed: token inválido/expirado`)
+   207	          return { isValid: false, error: 'Token verification failed' }
+   208	        }
+   209	        logger.error('Token verification API call failed:', error)
+   210	        return { isValid: false, error: 'Token verification service unavailable' }
+   211	      }
+   212	    } else if (typeof window === 'undefined') {
+   213	      // B1.2b: o ramo fetch (self-fetch a /api/auth/verify, âncora de env
+   214	      // da PR #221) morreu junto com a rota — sem consumidor em produção
+   215	      // desde a B1.1. A verificação só existe no runtime Node (guard acima).
+   216	      logger.error('Token validation requested outside Node runtime')
+   217	      return { isValid: false, error: 'Token verification failed' }
+   218	    } else {
+   219	      // Client-side or fallback
+   220	      logger.warn('Client-side token validation attempted - security risk')
+   221	      return { isValid: false, error: 'Client-side validation not allowed' }
+   222	    }
+   223	
+   224	    // Cache with security considerations
+   225	    if (result.isValid && result.user) {
+   226	      tokenCache.set(idToken, {
+   227	        result,
+   228	        exp: now + SECURITY_CONFIG.TOKEN_CACHE_DURATION_MS,
+   229	        userId: result.user.uid
+   230	      })
+   231	    }
+   232	
+   233	    return result
+   234	
+   235	  } catch (error) {
+   236	    logger.error('Token validation error:', error)
+   237	    return { isValid: false, error: 'Token validation failed' }
+   238	  }
+   239	}
+   240	
+   241	/**
+   242	 * SECURITY-HARDENED: Require authentication with enhanced security
+   243	 */
+   244	export async function requireAuthServerSecure(
+   245	  request: Request,
+   246	  options: { allowUnverifiedEmail?: boolean } = {}
+   247	): Promise<{
+   248	  uid: string
+   249	  email?: string
+   250	  emailVerified?: boolean
+   251	} | null> {
+   252	  try {
+   253	    // B1.3: fallback por IP para auth falhada — mesmo padrão do funil A
+   254	    // (lib/firebase-server-utils.ts): IP estourado nega sem verificar.
+   255	    const clientIp = getClientIp(request)
+   256	    if (authFailureLimited(clientIp)) {
+   257	      return null
+   258	    }
+   259	
+   260	    // Extract token with security validation
+   261	    const authHeader = request.headers.get('authorization')
+   262	    const cookieHeader = request.headers.get('cookie')
+   263	
+   264	    let token: string | null = null
+   265	
+   266	    // Extract from Authorization header
+   267	    if (authHeader) {
+   268	      const bearerMatch = authHeader.match(/^Bearer\s+(.+)$/i)
+   269	      if (bearerMatch && bearerMatch[1]) {
+   270	        token = bearerMatch[1]
+   271	      } else {
+   272	        logger.warn('Invalid Authorization header format')
+   273	        return null
+   274	      }
+   275	    }
+   276	    // Extract from session cookie
+   277	    else if (cookieHeader) {
+   278	      const sessionMatch = cookieHeader.match(/firebase-session=([^;]+)/)
+   279	      if (sessionMatch && sessionMatch[1]) {
+   280	        token = decodeURIComponent(sessionMatch[1])
+   281	      }
+   282	    }
+   283	
+   284	    if (!token) {
+   285	      logger.log('No authentication token found')
+   286	      return null
+   287	    }
+   288	
+   289	    // Validate token with security enhancements
+   290	    const validation = await validateFirebaseTokenSecure(token, request.url)
+   291	
+   292	    if (!validation.isValid || !validation.user) {
+   293	      logger.warn('Token validation failed during auth requirement')
+   294	      recordAuthFailure(clientIp)
+   295	
+   296	      // SECURITY: Automatically blacklist suspicious tokens
+   297	      if (validation.error?.includes('revoked') || validation.error?.includes('expired')) {
+   298	        blacklistToken(token)
+   299	      }
+   300	
+   301	      return null
+   302	    }
+   303	
+   304	    // SECURITY: Additional email verification check.
+   305	    // allowUnverifiedEmail existe para fluxos onde o usuário acabou de ser
+   306	    // criado e ainda não pôde verificar o email (ex.: criação de perfil no signup)
+   307	    if (!validation.user.emailVerified && !options.allowUnverifiedEmail) {
+   308	      logger.warn(`Unverified user attempted access: ${validation.user.uid}`)
+   309	      return null
+   310	    }
+   311	
+   312	    logger.log(`Authentication successful for user: ${validation.user.uid}`)
+   313	    return validation.user
+   314	
+   315	  } catch (error) {
+   316	    logger.error('Authentication requirement failed:', error)
+   317	    return null
+   318	  }
+   319	}
+   320	
+   321	
+   322	
+   323	/**
+   324	 * SECURITY: Get cache statistics for monitoring
+   325	 */
+   326	export function getAuthCacheStats() {
+   327	  return {
+   328	    cacheSize: tokenCache.size,
+   329	    blacklistSize: tokenBlacklist.size,
+   330	    activeUsers: userSessionMap.size,
+   331	    totalActiveSessions: Array.from(userSessionMap.values()).reduce((total, tokens) => total + tokens.size, 0)
+   332	  }
+   333	}
+   334	
+   335	/**
+   336	 * SECURITY: Clear all caches (for emergency situations)
+   337	 */
+   338	export function clearAllAuthCaches(): void {
+   339	  tokenCache.clear()
+   340	  tokenBlacklist.clear()
+   341	  userSessionMap.clear()
+   342	  logger.warn('All authentication caches cleared - emergency action')
+   343	}
+   344	
+   345	export function clearExpiredTokens(): void {
+   346	  const now = Date.now()
+   347	
+   348	  // Clear expired blacklisted tokens
+   349	  for (const [token, expiry] of tokenBlacklist.entries()) {
+   350	    if (now > expiry) {
+   351	      tokenBlacklist.delete(token)
+   352	    }
+   353	  }
+   354	
+   355	  // Clear expired cached tokens
+   356	  for (const [token, entry] of tokenCache.entries()) {
+   357	    if (now > entry.exp) {
+   358	      tokenCache.delete(token)
+   359	    }
+   360	  }
+   361	}
+   362	
+   363	export { isTokenBlacklisted }
+   364	
+   365	export function getUserSessions(userId: string): string[] {
+   366	  const sessions = userSessionMap.get(userId)
+   367	  return sessions ? Array.from(sessions) : []
+   368	}
+   369	
+   370	export function invalidateUserSessions(userId: string): void {
+   371	  const sessions = userSessionMap.get(userId) || []
+   372	  sessions.forEach(token => blacklistToken(token))
+   373	  userSessionMap.delete(userId)
+   374	}
+   375	
+   376	// Export legacy functions for backward compatibility
+   377	export const validateFirebaseTokenServer = validateFirebaseTokenSecure
+   378	export const requireAuthServer = requireAuthServerSecure

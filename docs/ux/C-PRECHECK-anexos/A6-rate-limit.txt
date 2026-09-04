@@ -1,0 +1,217 @@
+$ cat -n lib/user-rate-limit.ts
+     1	/**
+     2	 * Sistema ÚNICO de rate limiting (B1.3, docs/ux/PLANO-TRANSICAO.md).
+     3	 *
+     4	 * Chave por USUÁRIO AUTENTICADO (uid, pós-verificação — viável porque a
+     5	 * verificação é chamada local e barata desde a B1.1), com fallback por IP
+     6	 * exclusivamente para (a) o caminho de auth FALHADA ("sem credencial não
+     7	 * significa sem limite") e (b) rotas públicas (health). Substitui o
+     8	 * lib/rate-limit.ts (por IP, buckets compartilhados entre rotas — o
+     9	 * desenho que derrubava o usuário logado, RATE-01) e o lib/rate-limiter.ts
+    10	 * (chave ip:prefixo-de-token:path — prefixo muda a cada refresh de 1h).
+    11	 *
+    12	 * NOTA DE ARQUITETURA (aceita por desenho, não bug): o store é um Map em
+    13	 * memória POR INSTÂNCIA de lambda — janelas independentes por instância.
+    14	 * Para app de usuário único o teto efetivo é limite × instâncias, o que
+    15	 * só afrouxa, nunca aperta. Store distribuído (Redis) fica registrado
+    16	 * como evolução se o app um dia tiver multiusuário real.
+    17	 *
+    18	 * A resposta 429 é ESTRUTURADA (semente do B3): body { error, retryAfter }
+    19	 * + X-RateLimit-Limit/Remaining/Reset + Retry-After honesto +
+    20	 * X-RateLimit-Scope ('user'|'ip') — a assinatura que o gate G2 assert.
+    21	 *
+    22	 * Módulo deliberadamente sem imports de next/server (Response puro):
+    23	 * firebase-server-utils está no grafo do client e este módulo é importado
+    24	 * pelos funis de auth.
+    25	 */
+    26	
+    27	import { apiError } from './api-errors'
+    28	
+    29	export interface RateLimitConfig {
+    30	  windowMs: number
+    31	  max: number
+    32	}
+    33	
+    34	/**
+    35	 * Janelas do sistema único — racionais na tabela do plano (B1.3).
+    36	 * Caso dimensionante do SESSION: visibilitychange do tablet de palco
+    37	 * (dossiê de 6 medições: 7-11 POSTs em 12 navegações triviais); 120/15min
+    38	 * = 8/min sustentado, ~8× o pior show real, e ainda barra loop doente.
+    39	 */
+    40	export const RATE_LIMITS = {
+    41	  /** POST /api/auth/session com token válido (por uid) */
+    42	  SESSION: { windowMs: 15 * 60_000, max: 120 },
+    43	  /** POST /api/auth/session com token INVÁLIDO (por IP — brute force) */
+    44	  SESSION_AUTH_FAIL: { windowMs: 15 * 60_000, max: 10 },
+    45	  /** DELETE /api/auth/session (logout; por IP — logout com token morto deve funcionar) */
+    46	  SESSION_DELETE: { windowMs: 15 * 60_000, max: 30 },
+    47	  /** Auth falhada em qualquer rota autenticada (por IP, nos funis de auth) */
+    48	  AUTH_FAIL: { windowMs: 5 * 60_000, max: 30 },
+    49	  /** Leituras (content/setlists GET) — performance mode nunca pode engasgar */
+    50	  READ: { windowMs: 60_000, max: 300 },
+    51	  /** Mutações (content/setlists POST/PUT/DELETE/PATCH) — montagem de setlist de 56 canções cabe 2× */
+    52	  MUTATE: { windowMs: 15 * 60_000, max: 120 },
+    53	  /** Perfil (GET/POST/PATCH) — 1× por load + retry */
+    54	  PROFILE: { windowMs: 15 * 60_000, max: 60 },
+    55	  /** storage upload/delete — subir um repertório inteiro numa sessão */
+    56	  STORAGE: { windowMs: 60 * 60_000, max: 60 },
+    57	  /** /api/proxy — biblioteca cheia busca dezenas de assets por load */
+    58	  PROXY: { windowMs: 60_000, max: 120 },
+    59	  /** /api/health (pública; por IP) */
+    60	  HEALTH: { windowMs: 60_000, max: 120 },
+    61	} as const
+    62	
+    63	export interface RateLimitResult {
+    64	  ok: boolean
+    65	  scope: 'user' | 'ip'
+    66	  limit: number
+    67	  remaining: number
+    68	  resetTime: number
+    69	}
+    70	
+    71	interface Entry {
+    72	  count: number
+    73	  resetTime: number
+    74	}
+    75	
+    76	const store = new Map<string, Entry>()
+    77	
+    78	// Limpeza periódica de janelas vencidas (por instância)
+    79	if (typeof setInterval === 'function') {
+    80	  setInterval(() => {
+    81	    const now = Date.now()
+    82	    for (const [key, entry] of store) {
+    83	      if (now > entry.resetTime) store.delete(key)
+    84	    }
+    85	  }, 60_000).unref?.()
+    86	}
+    87	
+    88	/** Só para testes: zera o store da instância. */
+    89	export function clearRateLimitStore(): void {
+    90	  store.clear()
+    91	}
+    92	
+    93	export function checkRateLimit(opts: {
+    94	  scope: 'user' | 'ip'
+    95	  id: string
+    96	  familia: string
+    97	  config: RateLimitConfig
+    98	}): RateLimitResult {
+    99	  const { scope, id, familia, config } = opts
+   100	  const key = `${scope}:${id}:${familia}`
+   101	  const now = Date.now()
+   102	
+   103	  let entry = store.get(key)
+   104	  if (!entry || now > entry.resetTime) {
+   105	    entry = { count: 0, resetTime: now + config.windowMs }
+   106	    store.set(key, entry)
+   107	  }
+   108	  entry.count++
+   109	
+   110	  return {
+   111	    ok: entry.count <= config.max,
+   112	    scope,
+   113	    limit: config.max,
+   114	    remaining: Math.max(0, config.max - entry.count),
+   115	    resetTime: entry.resetTime,
+   116	  }
+   117	}
+   118	
+   119	/**
+   120	 * Resposta 429 estruturada com a assinatura do sistema único.
+   121	 * B3 PR-4/D4: corpo pelo ponto único — ganha code:'RATE_LIMITED';
+   122	 * retryAfter e os 5 headers ficam como estão. Direção de import
+   123	 * user-rate-limit → api-errors (api-errors é Response puro, sem ciclo).
+   124	 */
+   125	export function rateLimited(result: RateLimitResult): Response {
+   126	  const retryAfter = Math.max(1, Math.ceil((result.resetTime - Date.now()) / 1000))
+   127	  return apiError('RATE_LIMITED', 'Rate limit exceeded', {
+   128	    extra: { retryAfter },
+   129	    headers: {
+   130	      'X-RateLimit-Limit': String(result.limit),
+   131	      'X-RateLimit-Remaining': String(result.remaining),
+   132	      'X-RateLimit-Reset': String(result.resetTime),
+   133	      'X-RateLimit-Scope': result.scope,
+   134	      'Retry-After': String(retryAfter),
+   135	    },
+   136	  })
+   137	}
+   138	
+   139	/** Atalho das rotas: null = dentro do limite; Response = 429 pronta. */
+   140	export function enforceUserLimit(
+   141	  uid: string,
+   142	  familia: string,
+   143	  config: RateLimitConfig
+   144	): Response | null {
+   145	  const rl = checkRateLimit({ scope: 'user', id: uid, familia, config })
+   146	  return rl.ok ? null : rateLimited(rl)
+   147	}
+   148	
+   149	export function getClientIp(request: Request): string {
+   150	  const fwd = request.headers.get('x-forwarded-for')
+   151	  if (fwd) return fwd.split(',')[0]?.trim() || 'unknown'
+   152	  return request.headers.get('x-real-ip') || 'unknown'
+   153	}
+   154	
+   155	/**
+   156	 * Fallback de auth falhada, chamado NOS FUNIS de auth (requireAuthServer
+   157	 * e requireAuthServerSecure) quando a validação de credencial falha.
+   158	 * Devolve true quando o IP estourou a janela — o funil então nega SEM
+   159	 * verificar (corta o trabalho e o oráculo); o status na resposta é 429
+   160	 * onde a rota/wrapper consegue emiti-lo (withValidation e session POST)
+   161	 * e 401 nos handlers legados — o deny-fast vale em todos.
+   162	 */
+   163	export function recordAuthFailure(ip: string): void {
+   164	  checkRateLimit({ scope: 'ip', id: ip, familia: 'authfail', config: RATE_LIMITS.AUTH_FAIL })
+   165	}
+   166	
+   167	export function authFailureLimited(ip: string): boolean {
+   168	  return getAuthFailureLimit(ip) !== null
+   169	}
+   170	
+   171	/**
+   172	 * Estado da janela de auth falhada do IP quando ESTOURADA (para construir
+   173	 * a 429 onde a resposta é montada — withValidation e session POST); null
+   174	 * quando dentro do limite.
+   175	 */
+   176	export function getAuthFailureLimit(ip: string): RateLimitResult | null {
+   177	  const key = `ip:${ip}:authfail`
+   178	  const entry = store.get(key)
+   179	  if (!entry || Date.now() > entry.resetTime) return null
+   180	  if (entry.count <= RATE_LIMITS.AUTH_FAIL.max) return null
+   181	  return {
+   182	    ok: false,
+   183	    scope: 'ip',
+   184	    limit: RATE_LIMITS.AUTH_FAIL.max,
+   185	    remaining: 0,
+   186	    resetTime: entry.resetTime,
+   187	  }
+   188	}
+
+$ grep -rnE "enforceUserLimit\(|familia: '" app/api --include=route.ts | sort
+app/api/auth/session/route.ts:33:          familia: 'session-authfail',
+app/api/auth/session/route.ts:51:        familia: 'session',
+app/api/auth/session/route.ts:91:      familia: 'session-delete',
+app/api/content/[id]/route.ts:21:    const limited = enforceUserLimit(user.uid, 'content-read', RATE_LIMITS.READ)
+app/api/content/[id]/route.ts:83:    const limited = enforceUserLimit(user.uid, 'content-mutate', RATE_LIMITS.MUTATE)
+app/api/content/route.ts:155:    const limited = enforceUserLimit(user.uid, 'content-mutate', RATE_LIMITS.MUTATE)
+app/api/content/route.ts:231:    const limited = enforceUserLimit(user.uid, 'content-mutate', RATE_LIMITS.MUTATE)
+app/api/content/route.ts:25:    const limited = enforceUserLimit(user.uid, 'content-read', RATE_LIMITS.READ)
+app/api/content/route.ts:311:    const limited = enforceUserLimit(user.uid, 'content-mutate', RATE_LIMITS.MUTATE)
+app/api/health/route.ts:10:    familia: 'health',
+app/api/health/route.ts:23:    familia: 'health',
+app/api/profile/route.ts:127:  rateLimit: { familia: 'profile', config: RATE_LIMITS.PROFILE }
+app/api/profile/route.ts:24:    const limited = enforceUserLimit(user.uid, 'profile', RATE_LIMITS.PROFILE)
+app/api/profile/route.ts:57:  rateLimit: { familia: 'profile', config: RATE_LIMITS.PROFILE }
+app/api/proxy/route.ts:59:  const rl = checkRateLimit({ ...rlKey, familia: 'proxy', config: RATE_LIMITS.PROXY })
+app/api/setlists/[id]/route.ts:148:  rateLimit: { familia: 'setlist-mutate', config: RATE_LIMITS.MUTATE }
+app/api/setlists/[id]/route.ts:23:    const limited = enforceUserLimit(user.uid, 'setlist-read', RATE_LIMITS.READ)
+app/api/setlists/[id]/route.ts:325:    const limited = enforceUserLimit(user.uid, 'setlist-mutate', RATE_LIMITS.MUTATE)
+app/api/setlists/[id]/songs/order/route.ts:18:  rateLimit: { familia: 'setlist-mutate', config: RATE_LIMITS.MUTATE }
+app/api/setlists/[id]/songs/route.ts:14:  rateLimit: { familia: 'setlist-mutate', config: RATE_LIMITS.MUTATE }
+app/api/setlists/route.ts:19:    const limited = enforceUserLimit(user.uid, 'setlist-read', RATE_LIMITS.READ)
+app/api/setlists/route.ts:92:  rateLimit: { familia: 'setlist-mutate', config: RATE_LIMITS.MUTATE }
+app/api/setlists/songs/[songId]/route.ts:32:    const limited = enforceUserLimit(user.uid, 'setlist-mutate', RATE_LIMITS.MUTATE)
+app/api/storage/delete/route.ts:25:    const limited = enforceUserLimit(validation.user.uid, 'storage', RATE_LIMITS.STORAGE)
+app/api/storage/list/route.ts:27:    const limited = enforceUserLimit(user.uid, 'storage', RATE_LIMITS.STORAGE)
+app/api/storage/upload/route.ts:19:    const limited = enforceUserLimit(user.uid, 'storage', RATE_LIMITS.STORAGE)

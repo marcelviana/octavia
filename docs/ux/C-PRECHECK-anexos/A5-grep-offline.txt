@@ -1,0 +1,79 @@
+$ grep -rn 'serviceWorker' --include=*.ts --include=*.tsx --include=*.js app components hooks lib contexts public | grep -v __tests__ | grep -v .test.
+components/service-worker-wrapper.tsx:14:      'serviceWorker' in navigator &&
+components/service-worker-wrapper.tsx:48:            const registrations = await navigator.serviceWorker.getRegistrations();
+components/service-worker-wrapper.tsx:65:      navigator.serviceWorker.addEventListener('error', (event) => {
+hooks/use-service-worker.tsx:14:    if (typeof window === "undefined" || !("serviceWorker" in navigator)) {
+hooks/use-service-worker.tsx:107:        const registration = await navigator.serviceWorker.register("/sw.js", {
+hooks/use-service-worker.tsx:171:              if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
+hooks/use-service-worker.tsx:219:        navigator.serviceWorker.addEventListener("message", handleMessage)
+hooks/use-service-worker.tsx:222:        navigator.serviceWorker.addEventListener("error", handleServiceWorkerError)
+hooks/use-service-worker.tsx:256:          navigator.serviceWorker.removeEventListener("message", handleMessage)
+hooks/use-service-worker.tsx:257:          navigator.serviceWorker.removeEventListener("error", handleServiceWorkerError)
+lib/offline-queue.ts:40:if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+lib/offline-queue.ts:42:    navigator.serviceWorker.ready.then(() => processQueue())
+exit=0
+
+$ grep -rn 'localStorage' --include=*.ts --include=*.tsx --include=*.js app components hooks lib contexts public | grep -v __tests__ | grep -v .test.
+components/pwa-install-prompt.tsx:35:    const permanentlyDismissed = localStorage.getItem('octavia_install_dismissed')
+components/pwa-install-prompt.tsx:41:    const postponedTimestamp = localStorage.getItem('octavia_install_postponed')
+components/pwa-install-prompt.tsx:71:        const currentlyDismissed = localStorage.getItem('octavia_install_dismissed')
+components/pwa-install-prompt.tsx:72:        const currentlyPostponed = localStorage.getItem('octavia_install_postponed')
+components/pwa-install-prompt.tsx:127:    localStorage.setItem('octavia_install_dismissed', 'true')
+components/pwa-install-prompt.tsx:139:    localStorage.setItem('octavia_install_postponed', Date.now().toString())
+exit=0
+
+$ grep -rn 'indexedDB' --include=*.ts --include=*.tsx --include=*.js app components hooks lib contexts public | grep -v __tests__ | grep -v .test.
+exit=1
+
+$ grep -rn 'caches\.' --include=*.ts --include=*.tsx --include=*.js app components hooks lib contexts public | grep -v __tests__ | grep -v .test.
+components/service-worker-wrapper.tsx:20:          const cacheNames = await caches.keys();
+components/service-worker-wrapper.tsx:28:            await Promise.all(problematicCaches.map(name => caches.delete(name)));
+public/sw.js:43:    caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS))
+public/sw.js:53:      const cacheNames = await caches.keys();
+public/sw.js:56:      await Promise.all(oldCaches.map(name => caches.delete(name)));
+public/sw.js:72:      caches.match(request).then(res => res || fetch(request))
+public/sw.js:81:        const cache = await caches.open(STATIC_CACHE);
+public/sw.js:102:          const cache = await caches.open(PAGE_CACHE);
+public/sw.js:106:          const cache = await caches.open(PAGE_CACHE);
+public/sw.js:109:          const offline = await caches.match(OFFLINE_URL);
+exit=0
+
+$ grep -rn 'localforage' --include=*.ts --include=*.tsx --include=*.js app components hooks lib contexts public | grep -v __tests__ | grep -v .test.
+lib/offline-setlist-cache.ts:1:import localforage from 'localforage'
+lib/offline-setlist-cache.ts:21:    const data = await localforage.getItem<any[]>(getStoreKey(userId))
+lib/offline-setlist-cache.ts:32:    const existing = (await localforage.getItem<any[]>(getStoreKey(userId))) || []
+lib/offline-setlist-cache.ts:37:    await localforage.setItem(getStoreKey(userId), merged)
+lib/offline-setlist-cache.ts:52:    await localforage.setItem(getStoreKey(userId), items)
+lib/offline-setlist-cache.ts:62:  const existing = (await localforage.getItem<any[]>(storeKey)) || []
+lib/offline-setlist-cache.ts:64:    await localforage.setItem(storeKey, filtered)
+lib/offline-setlist-cache.ts:72:  await localforage.removeItem(getStoreKey(userId))
+lib/offline-cache.ts:1:import localforage from 'localforage'
+lib/offline-cache.ts:77:    const data = await localforage.getItem<IndexEntry[]>(getIndexKey(userId))
+lib/offline-cache.ts:88:    await localforage.setItem(getIndexKey(userId), index)
+lib/offline-cache.ts:105:    await localforage.removeItem(getFileKey(userId, victim.id))
+lib/offline-cache.ts:114:    const data = await localforage.getItem<any[]>(getStoreKey(userId))
+lib/offline-cache.ts:125:    const existing = (await localforage.getItem<any[]>(getStoreKey(userId))) || []
+lib/offline-cache.ts:130:    await localforage.setItem(getStoreKey(userId), merged)
+lib/offline-cache.ts:141:  const existing = (await localforage.getItem<any[]>(storeKey)) || []
+lib/offline-cache.ts:143:    await localforage.setItem(storeKey, filtered)
+lib/offline-cache.ts:144:    await localforage.removeItem(getFileKey(userId, id))
+lib/offline-cache.ts:145:    const index = (await localforage.getItem<IndexEntry[]>(indexKey)) || []
+lib/offline-cache.ts:168:        const existing = await localforage.getItem<any>(key)
+lib/offline-cache.ts:202:          await localforage.setItem(key, { mime, data: array })
+lib/offline-cache.ts:243:      const stored = await localforage.getItem<any>(getFileKey(userId, id))
+lib/offline-cache.ts:297:      const stored = await localforage.getItem<any>(getFileKey(userId, id))
+lib/offline-cache.ts:360:      const cached = await localforage.getItem(getFileKey(userId, item.id))
+lib/offline-cache.ts:419:  const index = (await localforage.getItem<IndexEntry[]>(indexKey)) || []
+lib/offline-cache.ts:421:    await localforage.removeItem(getFileKey(userId, entry.id))
+lib/offline-cache.ts:423:  await localforage.removeItem(indexKey)
+lib/offline-cache.ts:424:  await localforage.removeItem(storeKey)
+lib/offline-queue.ts:1:import localforage from 'localforage'
+lib/offline-queue.ts:13:  const queue = (await localforage.getItem<QueueItem[]>(QUEUE_KEY)) || []
+lib/offline-queue.ts:15:  await localforage.setItem(QUEUE_KEY, queue)
+lib/offline-queue.ts:19:  const queue = (await localforage.getItem<QueueItem[]>(QUEUE_KEY)) || []
+lib/offline-queue.ts:37:  await localforage.setItem(QUEUE_KEY, remaining)
+lib/advanced-content-cache.ts:8:import localforage from 'localforage'
+lib/advanced-content-cache.ts:46:  private cache = localforage.createInstance({
+lib/advanced-content-cache.ts:51:  private metadata = localforage.createInstance({
+exit=0
+
