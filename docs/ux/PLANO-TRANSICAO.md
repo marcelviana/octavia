@@ -370,6 +370,14 @@ completo, para a posteridade:**
   cache 5min/blacklist/sessões). Racional de adiar: fundir caches e
   blacklist é diff grande em superfície sensível que **não bloqueia o
   nativo**; o B1 troca só o transporte das duas, sem fusão.
+  **Bloco C (C-D1, 2026-09-04)**: confirmado como *desejável, não
+  bloqueador* — as 5 leituras da tela 1 estão todas na cadeia A; vai
+  para a **fila da tela 2**. Insumos medidos para o desenho
+  (C-PRECHECK §1.4): as cadeias divergem em email verificado, tolerância
+  do header e TTL (1h × 5min); o cache da cadeia A é por string de token
+  sem olhar o `exp` do JWT + fallback a cache vencido → vida efetiva do
+  idToken no servidor até ~2h; a fusão decide se o cache passa a
+  respeitar o `exp`.
 
 ### B2 — Audit schema Zod × payload real, rota a rota
 
@@ -552,6 +560,12 @@ busca é `ILIKE` no Postgres; o nativo herda `GET /api/content?search=`.
 `unaccent` no mínimo; `pg_trgm` se quiser tolerância a typo. Corrigir no
 backend serve web e nativo de uma vez.
 
+> **Bloco C (C-D3, 2026-09-04)**: o nativo busca **client-side** sobre o
+> cache local (66 itens / 19.481 B de corpos medidos; normalização NFD
+> no cliente) — o B11 **sai do caminho do nativo** e passa a servir só o
+> web. Tolerância a typo no nativo é backlog do índice local, não deste
+> item.
+
 ### B6 — Position e reorder: contrato para o nativo
 
 > **✅ B6 ENCERRADO (2026-09-01** — [`B6-ENCERRAMENTO.md`](B6-ENCERRAMENTO.md);
@@ -596,11 +610,35 @@ incógnitas por construção.
   Documentar como contrato oficial (o cookie de sessão é mecânica exclusiva
   da web; AUTH-02 morre com ela). O nativo usa o SDK do Firebase com refresh
   automático — o problema "cookie de 7 dias com idToken de 1 h" não se
-  transfere.
+  transfere. **Bloco C (2026-09-04)**: medido em prod — bearer sem cookie
+  → 200 byte-idêntico ao cookie (C-PRECHECK B.2 P2/P3×P2); o próprio web
+  já é bearer-first em 18 fetches (divergência 3 da Fase A). O contrato
+  escrito ainda não existe: **tarefa de doc**, base = PRD §3 (header
+  exato, prefixo `Bearer ` literal — cadeia A é case-sensitive —, refresh
+  com buffer < 5 min, 401 sem retry com o mesmo token, lista das rotas que
+  exigem email verificado). Classificado, não agendado.
 - **Payload de leitura de setlists** (SET-22): o GET embute `content_data`
   integral de cada música (N+1 + payload gordo). Em rede celular isso vira
   latência e dado móvel. Contratar shape de listagem enxuto + conteúdo sob
   demanda (que é também o shape que o cache offline do nativo vai querer).
+  **Bloco C (C-D4)**: rebaixado a **otimização** — o nativo descarta o
+  `content_data` embutido (21.423 B dos 49.983 B da listagem, C-PRECHECK
+  B.4) e lê o corpo só do cache de content; a listagem inteira custa
+  ~50 KB hoje. Reabrir quando pesar.
+
+#### Herança do Bloco C para o Bloco B (classificada, não agendada — PRD §11)
+
+| Item | Origem | Classe |
+|---|---|---|
+| `Cache-Control: private` ou `no-store` emitido pelas rotas de `/api/*` — hoje `public, max-age=0, must-revalidate` em 10/10 respostas medidas; o `no-store` de `lib/security-headers.ts:256` não chega porque o middleware exclui `/api` | C-PRECHECK B.5 achado 1 | higiene de contrato (ponto único: `lib/api-errors.ts` + `NextResponse.json` das rotas) |
+| Zod de `content_data` por `content_type` na escrita (`Lyrics→{lyrics}`, `Chords→{chords}`, `Tab→{tablature}`, `Sheet→null`+`file_url`; `annotations` fora) — hoje `z.record(jsonValueSchema).nullish()` | C-D7; C-PRECHECK §2.6, B.3 | contrato (mini-item; não pré-requisito da tela 1) |
+| **Desempate por `id` no `order` do `GET /api/content`** — o handler ordena só por `created_at desc` (`app/api/content/route.ts:105-113`); dois itens com o mesmo `created_at` têm ordem não garantida entre páginas | PRD nota N6 | contrato de paginação (mini-item; o nativo mitiga com dedupe por `id`, T1-R9b) |
+| Remoção de `GET /api/debug/config` (sem auth; 404 só por `NODE_ENV`) | C-PRECHECK Fase A div. 4 | superfície (classe da B1.0) |
+| `docs/api/STORAGE.md` diz "Bearer" no upload onde a rota aceita bearer OU cookie e exige email verificado | div. 5 | doc (junto do contrato de auth B7) |
+| `types/setlist.ts:40 event_date` (coluna inexistente, sem consumidor) | div. 6 | dead code |
+| `lib/api-schemas.ts:34 commonSchemas.contentType` (enum falso, sem consumidor) | div. 7 | dead code |
+| `scripts/ux-audit/auth.ts:109` comentário stale ("5 req / 15 min") | div. 8 | doc |
+| Policies de `storage.objects`/`storage.buckets` não versionadas (o `db:dump` é `-s public`) | div. 1 | versionamento (só se o storage mudar de contrato) |
 
 ### B10 — Restrição de referrer da API key (endurecimento opcional, com calma)
 
@@ -638,6 +676,10 @@ higiene da rodada.
 server-side por janela), aplicável também às demais escritas enfileiráveis.
 O cliente nativo herda o mesmo contrato — e a fila de escrita offline é
 **requisito do J6** no Bloco C, então isto é pré-requisito dela.
+**Bloco C (C-D4, 2026-09-04)**: a tela 1 é somente leitura e **não tem
+fila de escrita** — o B9 **não bloqueia a tela 1**; é pré-requisito da
+**tela 2** (a chave de idempotência nasce junto do primeiro POST do
+nativo). Fila da tela 2.
 
 ### B8 — Housekeeping de pipeline: passivo de tipos dos testes (rastreio obrigatório)
 
@@ -681,6 +723,21 @@ falha herdada.
 ---
 
 ## Bloco C — Corpus de requisitos do app nativo
+
+> **✅ Bloco C ENCERRADO (2026-09-04** — [`C-ENCERRAMENTO.md`](C-ENCERRAMENTO.md);
+> pre-check [`C-PRECHECK.md`](C-PRECHECK.md) commitado direto na main
+> (`bba5b2e`, C-D8) + PRD da tela 1 em PR #260 (merge `922469e`)**)**:
+> a tela 1 do nativo (modo performance + setlists, somente leitura) tem
+> PRD em [`docs/native/PRD-TELA-1.md`](../native/PRD-TELA-1.md) — 38
+> requisitos `T1-R1…R37`+`R9b` com aceite verificável, 22 critérios
+> `A1–A22`, decisões **C-D1…C-D8** (bearer exclusivo; bucket público;
+> busca local; corpo sempre do cache de content; cascata → tela 2; sync
+> ao abrir + prefetch 7 dias; contrato de `content_data` por tipo;
+> pre-check docs-only na main), hipóteses H8–H18 com dono. Medido em
+> prod: bearer sem cookie → 200 byte-idêntico ao cookie; **zero mudança
+> de backend necessária** para a tela 1. Backlog do PRD §11 transposto
+> para o Bloco B ("Herança do Bloco C", abaixo), B1.5, B9, B11 e
+> Sequência. Texto abaixo (C1–C4) mantido como corpus.
 
 Não é fila de fixes: é o que o assessment **produziu como espec**. O time
 (de um) que desenhar o nativo parte daqui.
@@ -1367,3 +1424,9 @@ automaticamente.
    Native/Expo, monorepo pnpm workspaces. O spike de PDF foi cancelado
    como gate decisório e convertido em due diligence da primeira semana
    do nativo (C4). Nenhuma decisão de stack permanece em aberto.
+5. **Após o Bloco C (2026-09-04)** — próximo bloco **a eleger**;
+   candidatos: **bloco de stack do nativo** (scaffold do monorepo,
+   escolha de runtime, prova das hipóteses H15/H16 do PRD na primeira
+   semana) × **mini-itens do Bloco B** ("Herança do Bloco C", seção B7).
+   Fora do repo, antes da primeira build: H11 (referrer da web API key —
+   Marcel/console).
