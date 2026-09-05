@@ -874,6 +874,14 @@ cada ✅ e fechar cada ❌/⚠️**. Os números que definem o piso:
 > sem nenhuma mensagem. Evidência completa: [`B3-PRECHECK.md`](B3-PRECHECK.md) §3.
 > Fora do escopo do B3 por decisão (D8); enquanto a web viver, qualquer
 > trabalho de UI neste bloco começa aqui.
+>
+> **Item registrado no encerramento do Bloco C (2026-09-05, medição do
+> Marcel no console)**: o **login Google no web não funciona**, e o
+> cliente OAuth "Web client (auto created by Google Service)" do Google
+> Cloud está sinalizado para **exclusão automática por inatividade**
+> (último uso 2026-02-26). Verificar antes de perder o cliente, se o
+> Google for desejado; a tela 1 do nativo usa só email/senha (PRD
+> T1-R6/H18) e não depende disso.
 
 Achados que **não recebem fix nunca**: específicos de browser/PWA/CSP,
 polish visual de uma UI cuja direção visual será substituída, e S3
@@ -1428,5 +1436,6 @@ automaticamente.
    candidatos: **bloco de stack do nativo** (scaffold do monorepo,
    escolha de runtime, prova das hipóteses H15/H16 do PRD na primeira
    semana) × **mini-itens do Bloco B** ("Herança do Bloco C", seção B7).
-   Fora do repo, antes da primeira build: H11 (referrer da web API key —
-   Marcel/console).
+   H11 (referrer da web API key) **fechada em 2026-09-05** (chave sem
+   restrição — Marcel/console); H14/H17/H18 idem (63 content / 2 setlists,
+   1 com `performance_date`, login por email/senha).
