@@ -75,7 +75,7 @@ Fatos que condicionam o cliente:
 **T1-R6 — Login e provedores** `[C-D1]`. O login é pelo SDK do Firebase, com os provedores que a conta já usa no web. **Cadastro (signup) fica no web** (§13). Provedor da tela 1: **email/senha** (H18, `[medido pelo Marcel, 2026-09-05]`). A conta principal tem `avatar_url` do Google `[medido: B5-PRECHECK §2.3, referência]` por uso passado, mas o login Google no web está quebrado e o cliente OAuth marcado para exclusão — **Google fica fora até o web consertar o seu**; client IDs nativos para Google saem do escopo.
 *Aceite*: login com a conta de audit (email/senha) → token válido → `GET /api/setlists` 200.
 
-**Pré-requisito de console (fora do repo)** `[C-D1; C-PRECHECK hipótese 11]`: se a web API key do Firebase tiver restrição por HTTP referrer, o `signInWithPassword`/refresh do app (sem `Referer`) falha. Checagem do Marcel no Google Cloud antes da primeira build. Efeito se falsa: nenhum login no nativo até ajustar a key (ou criar uma key própria para o app) — não bloqueia o PRD, bloqueia a primeira semana de implementação.
+**Pré-requisito de console — fechado** `[medido pelo Marcel, 2026-09-05]`: a web API key não tem restrição de aplicativo (H11); o `signInWithPassword`/refresh do app funciona com a chave atual. Restringi-la é o B10 do plano, a fazer depois que os apps Android/iOS existirem, listando os pacotes deles.
 
 ---
 
