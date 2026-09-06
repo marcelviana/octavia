@@ -14,7 +14,7 @@
 - **Usuário único** (JOBS.md "O que este arquivo NÃO cobre"; PLANO C1 — anti-jobs). Multiusuário não é requisito; onde ele mudaria uma decisão, o documento diz.
 - **A tela 1 não tem uso em palco hoje**: o web segue em produção e é o instrumento do show semanal até a substituição (PLANO, enquadramento). A tela 1 entra em palco só quando cumprir os critérios do §10.
 - **Backend intacto**: Next.js API + Supabase + Firebase Auth, "com o mínimo de mudança necessária" (PLANO, enquadramento). A tela 1 exige **zero** mudança de backend `[medido: C-PRECHECK B.6 — todas as leituras passam com bearer hoje]`; o que ela pede ao Bloco B está classificado no §11, não agendado.
-- **Base de referência**: 3 setlists / 69 songs / 66 content / 5 arquivos da conta de audit `[medido: C-PRECHECK B.2, B.3]`. A tabela `content` inteira tinha **194 linhas em 2026-08-24** `[referência: comentário do B2 em lib/api-schemas.ts:132-133 — nota N4]`; descontados os 66 da conta de audit, o repertório principal tem **~128 itens** — acima do `pageSize` máximo de 100, logo **⌈N/100⌉ = 2 páginas** de `GET /api/content` por sync com a conta principal (H14; a medição que fecha é o `total` da resposta com a conta principal).
+- **Base de referência**: 3 setlists / 69 songs / 66 content / 5 arquivos da conta de audit `[medido: C-PRECHECK B.2, B.3]`. A tabela `content` inteira tinha **194 linhas em 2026-08-24** `[referência: comentário do B2 em lib/api-schemas.ts:132-133 — nota N4]`. A conta principal tem **63 content / 2 setlists** `[medido pelo Marcel, 2026-09-05 — dashboard]` — menor que a conta de audit; **1 página** de `GET /api/content`. O cálculo anterior (194 − 66 = ~128) atribuía a uma conta o que está em quatro (5 profiles, B5) — errata declarada (H14).
 
 ---
 
@@ -72,10 +72,10 @@ Fatos que condicionam o cliente:
 
 **T1-R5 — Email verificado (registro de fato, sem aceite)** `[medido: §1.3]`. Nenhuma rota da tela 1 exige email verificado (todas na cadeia A). Registrado porque as rotas da cadeia B (`/api/profile` GET/PATCH, `/api/storage/*`, todas as mutações via `withBodyValidation`) exigem — a tela 2 herdará isso. A tela 1 **não chama** `/api/profile`; a existência ou não de perfil não a bloqueia. Sem critério de aceite: não existe conta sem email verificado e criar uma violaria o rito (usuário único); nenhum item de §10 depende deste requisito.
 
-**T1-R6 — Login e provedores** `[C-D1]`. O login é pelo SDK do Firebase, com os provedores que a conta já usa no web. **Cadastro (signup) fica no web** (§13). Quais provedores o app oferece é decisão do desenho de UI da tela 1, não deste PRD; o fato medido é que a conta principal tem `avatar_url` do Google `[medido: B5-PRECHECK §2.3, referência]` — logo Google e email/senha são candidatos.
+**T1-R6 — Login e provedores** `[C-D1]`. O login é pelo SDK do Firebase, com os provedores que a conta já usa no web. **Cadastro (signup) fica no web** (§13). Provedor da tela 1: **email/senha** (H18, `[medido pelo Marcel, 2026-09-05]`). A conta principal tem `avatar_url` do Google `[medido: B5-PRECHECK §2.3, referência]` por uso passado, mas o login Google no web está quebrado e o cliente OAuth marcado para exclusão — **Google fica fora até o web consertar o seu**; client IDs nativos para Google saem do escopo.
 *Aceite*: login com a conta de audit (email/senha) → token válido → `GET /api/setlists` 200.
 
-**Pré-requisito de console (fora do repo)** `[C-D1; C-PRECHECK hipótese 11]`: se a web API key do Firebase tiver restrição por HTTP referrer, o `signInWithPassword`/refresh do app (sem `Referer`) falha. Checagem do Marcel no Google Cloud antes da primeira build. Efeito se falsa: nenhum login no nativo até ajustar a key (ou criar uma key própria para o app) — não bloqueia o PRD, bloqueia a primeira semana de implementação.
+**Pré-requisito de console — fechado** `[medido pelo Marcel, 2026-09-05]`: a web API key não tem restrição de aplicativo (H11); o `signInWithPassword`/refresh do app funciona com a chave atual. Restringi-la é o B10 do plano, a fazer depois que os apps Android/iOS existirem, listando os pacotes deles.
 
 ---
 
@@ -157,13 +157,13 @@ Orçamento por abertura `[medido: §4.3; B.2]`:
 | Família | Janela | Custo por abertura | % |
 |---|---|---|---|
 | `setlist-read` | 300/min | 1 | 0,3% |
-| `content-read` | 300/min | ⌈N/100⌉ — **1** com a conta de audit (66), **2** com a principal (~128, H14) | 0,3–0,7% |
+| `content-read` | 300/min | ⌈N/100⌉ — **1** com a conta de audit (66) e **1** com a principal (63, H14) | 0,3% |
 | `proxy` | 120/min | **0** (C-D2) | 0 |
 | `session` | 120/15min | **0** (C-D1) | 0 |
 | bucket direto | sem família | ≤ nº de `file_url` não cacheadas (5 hoje) | — |
 
-Latência de referência `[medido: B.2]`: 150–340 ms por request quente; 1,5–2 s nos dois primeiros hits da campanha (`[hipótese 12: cold start]`). Payload: 49.983 B + 52.941 B ≈ 103 KB por abertura com a conta de audit (com a principal, ~2× a parte de content `[análise sobre H14]`).
-*Aceite*: (a) em modo avião, com cache populado, a lista de setlists aparece em < 1 s após o launch e a setlist de 60 músicas (`UX-AUDIT Estresse` `[B-P6]`) abre completa; (b) online, a captura de tráfego de uma abertura mostra exatamente **1 + ⌈N/100⌉** requests a `/api/*` (2 com a conta de audit, 3 com a principal) e nenhuma a `/api/proxy`; (c) primeira abertura sem cache mostra "sincronizando…", nunca "sem setlists", até o primeiro 200.
+Latência de referência `[medido: B.2]`: 150–340 ms por request quente; 1,5–2 s nos dois primeiros hits da campanha (`[hipótese 12: cold start]`). Payload: 49.983 B + 52.941 B ≈ 103 KB por abertura com a conta de audit.
+*Aceite*: (a) em modo avião, com cache populado, a lista de setlists aparece em < 1 s após o launch e a setlist de 60 músicas (`UX-AUDIT Estresse` `[B-P6]`) abre completa; (b) online, a captura de tráfego de uma abertura mostra exatamente **1 + ⌈N/100⌉** requests a `/api/*` (**2** com ambas as contas hoje) e nenhuma a `/api/proxy`; (c) primeira abertura sem cache mostra "sincronizando…", nunca "sem setlists", até o primeiro 200.
 
 **T1-R14 — Arquivos: download e retenção** `[C-D2; C-D6]`. Arquivo é baixado direto da `file_url` (sem header de auth), gravado por URL, servido do disco dali em diante. Retenção LRU com teto configurável (o web usa 50 MB e 100 MB nos dois caches `[medido: §2.5]`; propor 200 MB no tablet — `[hipótese: tamanho real dos PDFs do repertório do Marcel; o maior objeto medido no B5 tem 242.176 B]`). Arquivos das setlists dos próximos 7 dias nunca são vítimas do LRU.
 *Aceite*: a `file_url` do P4 `[B.2]` baixada uma vez; a segunda abertura da música não gera request (captura de tráfego); os bytes servidos têm o sha256 `3d42199b…` `[medido: B.2 P4]`.
@@ -255,14 +255,14 @@ Herança do plano: a tela 1 **iguala ou supera cada ✅ e fecha cada ❌/⚠️*
 | H8 | Mecanismo do item 9 (setlist nunca visitada offline no web) — `[C-PRECHECK hipótese 8]` | aceito (web) | nenhum na tela 1 (o modelo do §5 não depende do web) | não fechar |
 | H9 | Teto efetivo de rate limit = limite × instâncias — `[hipótese 9]` | aceito | só afrouxa | não fechar |
 | H10 | `authfail` sob CGNAT é risco real — `[hipótese 10]` | tela 1 (T1-R3) | um loop de 401 derruba o IP por 5 min | nenhuma; T1-R3 elimina o loop por construção |
-| H11 | Web API key sem restrição de referrer — `[hipótese 11]` | **Marcel / console** | login nativo falha até ajustar a key | checagem no Google Cloud antes da primeira build |
+| H11 | **Fechada** `[medido pelo Marcel, 2026-09-05 — Google Cloud]`: "Browser key (auto created by Firebase)", Restrições do aplicativo = **Nenhum** → o nativo autentica com a chave atual sem mudança | — | — |
 | H12 | Cold start explica 1,5–2 s dos dois primeiros hits — `[hipótese 12]` | aceito | abertura online mais lenta; o cache-first (T1-R13) esconde | 10 aberturas medidas na primeira semana |
 | H13 | Origem do `Cache-Control: public, max-age=0` (Next × Vercel) — `[hipótese 13]` | Bloco B (§11) | nenhum na tela 1 (T1-R12 ignora cache HTTP) | ler config do Next/Vercel quando o item do B abrir |
-| H14 | Repertório principal ≈ 194 − 66 = **~128 itens** `[referência B2, 2026-08-24 — nota N4]` → ⌈N/100⌉ = **2 páginas** hoje; assume-se que não cresceu além de 200 (3 páginas) | Marcel | mais páginas por sync (cada uma 1/300 de `content-read`); a busca local ainda cabe até ~5 MB de corpos (C-D3) | `total` de `GET /api/content` com a conta principal |
+| H14 | **Fechada** `[medido pelo Marcel, 2026-09-05 — dashboard]`: conta principal = **63 content / 2 setlists** → ⌈N/100⌉ = **1 página**. Errata: o "~128" (194 − 66) atribuía a uma conta o que está em quatro (5 profiles, B5). T1-R9/R9b/A21/A22 **ficam** como requisitos — a biblioteca pode crescer | — | reabre se a biblioteca passar de 100 (`total` de `GET /api/content`) |
 | H15 | SDK do Firebase no runtime nativo persiste sessão e opera offline (T1-R19) | primeira semana do nativo | app pede login offline → J6 falha | kill + reopen em modo avião |
 | H16 | Tamanho real dos PDFs do repertório (T1-R14, teto de 200 MB) | primeira semana | LRU expulsa arquivos de setlists futuras | somatório de `Content-Length` das `file_url` da conta principal |
-| H17 | `performance_date` é preenchida no uso real (T1-R15 depende dela) | Marcel | prefetch automático não dispara; resta o "baixar esta setlist" manual | contar `performance_date != null` nas setlists da conta principal |
-| H18 | Provedores de login da conta principal (T1-R6): email/senha e Google | Marcel | app sem o provedor certo não loga | console do Firebase Auth |
+| H17 | **Fechada** `[medido pelo Marcel, 2026-09-05 — dashboard]`: das 2 setlists da conta principal, **1 tem `performance_date`** → o prefetch de 7 dias (T1-R15) tem dado real; o "baixar esta setlist" manual cobre a outra | — | — |
+| H18 | **Fechada** `[medido pelo Marcel, 2026-09-05 — console]`: login por **email/senha**. Google foi usado no passado (daí o `avatar_url`), mas hoje o **login Google no web não funciona** e o cliente OAuth "Web client (auto created by Google Service)" está sinalizado para exclusão automática por inatividade (último uso 2026-02-26) — defeito do web, fora deste PRD (§11). Tela 1: **só email/senha** (T1-R6) | — | — |
 
 ---
 
@@ -275,7 +275,7 @@ A tela 1 está pronta para o palco quando **todos** abaixo passam no tablet do M
 | A1 | Login com a conta principal; 100% das requests com `Authorization: Bearer`; zero chamadas a `/api/auth/session`, `/api/proxy`, `/api/profile` | T1-R1, T1-R6 |
 | A2 | Token forjado inválido → no máximo 2 requests à rota e tela de login | T1-R3 |
 | A3 | 429 simulado com `Retry-After: 30` → sem request por 30 s, mensagem pt-BR | T1-R4, T1-R36 |
-| A4 | Abertura online: exatamente **1 + ⌈N/100⌉** requests a `/api/*` (3 com a conta principal, ~128 itens) e lista visível do cache em < 1 s | T1-R13 |
+| A4 | Abertura online: exatamente **1 + ⌈N/100⌉** requests a `/api/*` (**2** com ambas as contas hoje) e lista visível do cache em < 1 s | T1-R13 |
 | A5 | Modo avião com cache: kill + reopen, sem login, setlist de 60 músicas abre completa | T1-R13, T1-R19 |
 | A6 | Todo item da biblioteca renderiza por tipo (Lyrics/Chords/Tab/Sheet); item inválido mostra placeholder, nunca vazio | T1-R7, T1-R25 |
 | A7 | Título do content vence o embutido da setlist; servidor com 3 setlists após cache com 4 → lista 3 | T1-R8, T1-R9 |
@@ -318,6 +318,7 @@ Baselines do web a **não regredir** (PLANO C2): 1ª música em tela cheia ≤ 3
 | Revogação do bypass secret da Vercel | B5-D5 | operação | B-final (fim do Bloco B) |
 | Shape enxuto de listagem de setlists (SET-22, B7) | §2.1; B.4 (21.423 B descartados) | otimização | Bloco B, quando a listagem pesar (hoje 49.983 B) |
 | `GET /api/storage/list` para recontar o bucket (hipótese 5: bucket=7) | C-PRECHECK B.7 | medição | tela 2 / reconciliação |
+| Login Google no web não funciona; cliente OAuth "Web client (auto created by Google Service)" sinalizado para exclusão automática por inatividade (console, 2026-09-05) | H18 | defeito do web | **Bloco D** |
 
 ---
 

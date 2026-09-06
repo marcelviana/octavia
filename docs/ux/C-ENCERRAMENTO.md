@@ -69,14 +69,14 @@ Custo: `session` 1 · `setlist-read` 5 · `content-read` 2 · `proxy` 1 · `prof
 | H8 | Mecanismo do item 9 (setlist nunca visitada offline no web) | aceito (web) | não fechar |
 | H9 | Teto de rate limit = limite × instâncias | aceito | não fechar |
 | H10 | `authfail` sob CGNAT | tela 1 (T1-R3 elimina o loop por construção) | — |
-| H11 | Web API key sem restrição de HTTP referrer | **Marcel / console** — antes da primeira build | checagem no Google Cloud |
+| H11 | Web API key sem restrição de HTTP referrer | **fechada** `[medido pelo Marcel, 2026-09-05 — Google Cloud]`: "Browser key (auto created by Firebase)", Restrições do aplicativo = Nenhum | — |
 | H12 | Cold start explica 1,5–2 s dos primeiros hits | aceito | 10 aberturas na 1ª semana |
 | H13 | Origem do `Cache-Control: public, max-age=0` (Next × Vercel) | Bloco B | ler config quando o item abrir |
-| H14 | Repertório principal ~128 itens (194 − 66, B2 2026-08-24); não passou de 200 | Marcel | `total` de `GET /api/content` com a conta principal |
+| H14 | Repertório principal | **fechada** `[medido pelo Marcel, 2026-09-05 — dashboard]`: **63 content / 2 setlists** → 1 página. **Errata**: o "~128" (194 − 66) atribuía a uma conta o que está em quatro (5 profiles, B5) — lição (g) | reabre se passar de 100 |
 | H15 | SDK Firebase no runtime nativo persiste sessão e opera offline | 1ª semana do nativo | kill + reopen em modo avião |
 | H16 | Tamanho real dos PDFs (teto de 200 MB do LRU) | 1ª semana | soma de `Content-Length` das `file_url` |
-| H17 | `performance_date` preenchida no uso real (prefetch de 7 dias depende) | Marcel | contar não-nulos na conta principal |
-| H18 | Provedores de login da conta principal (email/senha, Google) | Marcel | console do Firebase Auth |
+| H17 | `performance_date` preenchida no uso real | **fechada** `[medido pelo Marcel, 2026-09-05 — dashboard]`: 1 das 2 setlists tem data → prefetch de 7 dias tem dado real | — |
+| H18 | Provedores de login da conta principal | **fechada** `[medido pelo Marcel, 2026-09-05 — console]`: **email/senha**; login Google no web quebrado e cliente OAuth marcado para exclusão por inatividade (último uso 2026-02-26) → tela 1 só email/senha; Google = defeito do web (Bloco D) | — |
 
 ## 6. Aprendizados (lições do bloco)
 
@@ -92,15 +92,17 @@ Custo: `session` 1 · `setlist-read` 5 · `content-read` 2 · `proxy` 1 · `prof
 
 **(f) Um relatório com a data do HEAD, não da sessão.** A primeira gravação do pre-check trazia "2026-09-01" (data de `9dea9a6`); corrigido como errata declarada na revisão. Miúdo, mas é a classe "número copiado de outro lugar" — a mesma da B6 §6-4.
 
+**(g) Um número derivado de duas medições virou premissa de conta única.** O PRD (revisão 1) fez 194 − 66 = ~128 e tratou o resultado como "o repertório da conta principal" — 2 páginas de `GET /api/content`, aceite A4 com 3 requests. A medição do Marcel (2026-09-05) deu **63 content / 2 setlists**: os 128 se espalham pelos outros quatro profiles, e o pre-check tinha o dado que desmentia a premissa (5 profiles, B5 §2.3) **na mesma frase** da nota N4. **Regra que fica**: subtração entre medições de escopos diferentes é `[hipótese]` até alguém medir o escopo-alvo diretamente.
+
 ## 7. Pendências que saem do Bloco C
 
 Classificadas, não agendadas — transpostas para o [`PLANO-TRANSICAO.md`](PLANO-TRANSICAO.md) nas seções certas (Bloco B: herança do C; B1.5; B9; B11; Sequência):
 
 - **Bloco B (mini-itens)**: `Cache-Control: private`/`no-store` nas rotas de `/api/*`; Zod de `content_data` por `content_type` na escrita (C-D7); remoção de `GET /api/debug/config`; correção do STORAGE.md (upload aceita bearer OU cookie e exige email verificado); dead code (`types/setlist.ts:40 event_date`, `commonSchemas.contentType`, comentário stale em `scripts/ux-audit/auth.ts:109`); contrato escrito de auth do cliente (B7 — o §3 do PRD é a base); **novo**: desempate por `id` no `order` do `GET /api/content` (PRD nota N6 — dois `created_at` iguais têm ordem não garantida entre páginas); shape enxuto de listagem de setlists (SET-22) como otimização.
 - **Fila da tela 2**: B1.5 (fusão das cadeias; cache respeitar `exp` do JWT), B9 (idempotência — pré-requisito do primeiro POST do nativo), B5-D6 (cascata content×storage + reconciliação).
-- **Web**: B11 (busca no servidor com `unaccent`/`pg_trgm`) — o nativo busca local.
+- **Web**: B11 (busca no servidor com `unaccent`/`pg_trgm`) — o nativo busca local; **login Google quebrado** + cliente OAuth do Google Cloud marcado para exclusão por inatividade (H18) → **Bloco D**.
 - **B-final**: revogação do bypass secret da Vercel (B5-D5).
-- **Marcel / console**: H11 (referrer da web API key), H14/H16/H17 (contagens da conta principal), H18 (provedores).
+- **Marcel / console — fechadas em 2026-09-05**: H11 (chave sem restrição), H14 (63 content / 2 setlists), H17 (1 setlist com `performance_date`), H18 (email/senha). Permanece H16 (tamanho dos PDFs — 1ª semana do nativo).
 - **Próximo bloco**: a eleger — candidatos: **bloco de stack do nativo** (scaffold do monorepo, escolha de runtime, prova de H15/H16 na primeira semana) × **mini-itens do Bloco B**.
 
 ## 8. Estado final
