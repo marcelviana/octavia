@@ -28,5 +28,3 @@ export async function getSetlists(): Promise<number> {
   if (!Array.isArray(body)) throw new Error('shape inesperado: esperado array na raiz')
   return body.length
 }
-
-const n: number = 'x'
