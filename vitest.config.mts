@@ -19,7 +19,8 @@ export default defineConfig({
       '**/*.e2e.{ts,tsx}',
       '**/e2e/**/*',
       '**/*integration*.test.{ts,tsx}',
-      '**/integration/**/*.test.{ts,tsx}'
+      '**/integration/**/*.test.{ts,tsx}',
+      'apps/**'
     ],
     env: {
       NODE_ENV: 'test',
