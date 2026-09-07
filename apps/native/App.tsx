@@ -35,6 +35,7 @@ export default function App() {
         })
         .catch((e: unknown) => {
           const msg = e instanceof Error ? e.message : String(e)
+          log(`sync-error ${msg}`)
           setPhase((p) => (p.kind === 'in' ? { ...p, error: msg } : p))
         })
     })
