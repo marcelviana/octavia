@@ -1,0 +1,12 @@
+$ adb logcat -d -s ReactNativeJS | grep "OCTAVIA:"   # N0-PR3, octavia_tab, 2026-09-07 — todas as linhas OCTAVIA: da sessao (3 abertura(s) + login manual + reabertura)
+# [abertura 1 apos run:android] 09-07 10:17:33.980 I ReactNativeJS: OCTAVIA: login-screen
+# [abertura 2 apos force-stop + am start -n (launcher do dev client; bundle nao carregou — sem linha)]
+# [abertura 3 via deep link] 09-07 10:19:59.822 I ReactNativeJS: OCTAVIA: login-screen
+# [login manual do Marcel]
+09-07 10:27:56.904  4774  4875 I ReactNativeJS: OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=login
+09-07 10:28:00.390  4774  4875 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1
+09-07 10:28:00.409  4774  4875 I ReactNativeJS: OCTAVIA: setlists=3 src=api
+# [§3.4 force-stop + reabertura pelo deep link, COM rede]
+09-07 10:29:03.767  5384  5444 I ReactNativeJS: OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+09-07 10:29:04.795  5384  5444 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1
+09-07 10:29:04.818  5384  5444 I ReactNativeJS: OCTAVIA: setlists=3 src=api

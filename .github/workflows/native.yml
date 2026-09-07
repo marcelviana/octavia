@@ -46,6 +46,8 @@ jobs:
           gradle-${{ runner.os }}-
     - name: Install dependencies
       run: pnpm install --frozen-lockfile
+    - name: Type-check apps/native
+      run: pnpm --filter native run type-check
     - name: Prebuild (android)
       run: cd apps/native && npx expo prebuild --platform android --no-install
     - name: Gradle assembleDebug
