@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "Octavia",
+    "slug": "octavia",
+    "version": "0.0.1",
+    "android": {
+      "package": "rocks.octavia.app"
+    }
+  }
+}
