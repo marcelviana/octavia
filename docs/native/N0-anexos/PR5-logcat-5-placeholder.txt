@@ -1,0 +1,8 @@
+$ adb logcat -d -s ReactNativeJS | grep "OCTAVIA:"   # §3.7 controle negativo — aviao LIGADO: "Apagar cache de arquivos" → "PDF 12 paginas" → placeholder; depois toque em "Baixar" sem rede; 2026-09-07
+# [apagar cache + abrir 12p]
+09-07 14:22:44.386  4944  4996 I ReactNativeJS: OCTAVIA: files-cleared
+09-07 14:22:46.596  4944  4996 I ReactNativeJS: OCTAVIA: pdf-placeholder name=1786218429715-ux-audit-partitura-12p.pdf
+09-07 14:22:46.596  4944  4996 I ReactNativeJS: OCTAVIA: download-error Call to function 'FileSystem.downloadFileAsync' has been rejected.
+# [toque em "Baixar", ainda em aviao]
+09-07 14:23:21.587  4944  4996 I ReactNativeJS: OCTAVIA: pdf-placeholder name=1786218429715-ux-audit-partitura-12p.pdf
+09-07 14:23:21.588  4944  4996 I ReactNativeJS: OCTAVIA: download-error Call to function 'FileSystem.downloadFileAsync' has been rejected.

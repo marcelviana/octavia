@@ -1,0 +1,21 @@
+$ for u in $(jq -r ".data[] | select(.file_url != null) | .file_url" docs/ux/C-PRECHECK-anexos/B-P5-content.json | sort -u); do curl -sI "$u" | grep -i "content-length\|content-type\|cache-control"; done   # H16 conta de audit, 4 URLs distintas, bucket publico, sem header; 2026-09-07
+## https://mlxjmpbdchmwplcfislt.supabase.co/storage/v1/object/public/content-files/1786218427769-ux-audit-partitura-1p.pdf
+HTTP/2 200 
+content-type: application/pdf
+content-length: 20821
+cache-control: no-cache
+## https://mlxjmpbdchmwplcfislt.supabase.co/storage/v1/object/public/content-files/1786218429715-ux-audit-partitura-12p.pdf
+HTTP/2 200 
+content-type: application/pdf
+content-length: 242176
+cache-control: no-cache
+## https://mlxjmpbdchmwplcfislt.supabase.co/storage/v1/object/public/content-files/1786295844475-ux-audit-fase-d-cifra.pdf
+HTTP/2 200 
+content-type: application/pdf
+content-length: 1117
+cache-control: no-cache
+## https://mlxjmpbdchmwplcfislt.supabase.co/storage/v1/object/public/content-files/1786295884124-ux-audit-fase-d-offline.pdf
+HTTP/2 200 
+content-type: application/pdf
+content-length: 888
+cache-control: no-cache

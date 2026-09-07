@@ -1,0 +1,15 @@
+$ adb logcat -d -s ReactNativeJS | grep "OCTAVIA:"   # §3.6 A13 — aviao LIGADO (ping unreachable, probe Metro ok), toque em "PDF 12 paginas" + 14 swipes ate a ultima pagina; 2026-09-07
+09-07 14:21:58.390  4944  4996 I ReactNativeJS: OCTAVIA: file src=disk name=1786218429715-ux-audit-partitura-12p.pdf bytes=242176
+09-07 14:21:58.642  4944  4996 I ReactNativeJS: OCTAVIA: pdf-render pages=12 src=disk
+09-07 14:21:58.670  4944  4996 I ReactNativeJS: OCTAVIA: pdf-page n=1/12
+09-07 14:22:06.125  4944  4996 I ReactNativeJS: OCTAVIA: pdf-page n=2/12
+09-07 14:22:06.653  4944  4996 I ReactNativeJS: OCTAVIA: pdf-page n=3/12
+09-07 14:22:07.374  4944  4996 I ReactNativeJS: OCTAVIA: pdf-page n=4/12
+09-07 14:22:08.290  4944  4996 I ReactNativeJS: OCTAVIA: pdf-page n=5/12
+09-07 14:22:08.709  4944  4996 I ReactNativeJS: OCTAVIA: pdf-page n=6/12
+09-07 14:22:09.557  4944  4996 I ReactNativeJS: OCTAVIA: pdf-page n=7/12
+09-07 14:22:10.254  4944  4996 I ReactNativeJS: OCTAVIA: pdf-page n=8/12
+09-07 14:22:10.856  4944  4996 I ReactNativeJS: OCTAVIA: pdf-page n=9/12
+09-07 14:22:11.772  4944  4996 I ReactNativeJS: OCTAVIA: pdf-page n=10/12
+09-07 14:22:12.170  4944  4996 I ReactNativeJS: OCTAVIA: pdf-page n=11/12
+09-07 14:22:13.024  4944  4996 I ReactNativeJS: OCTAVIA: pdf-page n=12/12
