@@ -1,0 +1,2 @@
+$ adb logcat -d -s ReactNativeJS | grep "OCTAVIA:"   # Abertura 4 — controle negativo: aviao LIGADO + pm clear rocks.octavia.app (Success), deep link url=http://localhost:8081; 2026-09-07 11:32:34. Nada digitado no formulario.
+09-07 11:31:55.395  6905  6955 I ReactNativeJS: OCTAVIA: login-screen

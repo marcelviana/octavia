@@ -460,17 +460,21 @@ Novos: `apps/native/*` (scaffold, N0-PR2), `packages/core/{package.json,tsconfig
 
 **H15 é duas medições**: **H15-a** "usuário restaurado sem rede" (o que T1-R19/A5 exigem) e **H15-b** "token disponível sem rede" (N0-H3; não exigido pela tela 1 — sync só com rede).
 
-**Protocolo de prova de H15** (emulador `octavia_tab`; no Tab S6 os mesmos comandos com o serial USB):
+**Protocolo de prova de H15** (emulador `octavia_tab`; no Tab S6 os mesmos comandos com o serial USB) — **reescrito no N0-PR4 (div. 25) com o que foi medido**: (i) com `expo-dev-client`, `am start -n …/.MainActivity` abre o launcher, não o bundle — o app só sobe pelo deep link; (ii) sem rede, o Metro só é alcançável por `adb reverse` (`localhost:8081` no device → host), nunca pelo IP da LAN (N0-H10 `[medido]`); (iii) o RN loga sob a tag `ReactNativeJS`.
 ```bash
 source scripts/native-env.sh      # ANDROID_HOME, PATH, JAVA_HOME 17, ADB_LOCAL_TRANSPORT_MAX_PORT=5555; ANDROID_SERIAL=<serial>
+DL='exp+octavia://expo-development-client/?url=http%3A%2F%2Flocalhost%3A8081'
+PROBE="sh -c \"(printf 'GET /status HTTP/1.0\r\n\r\n'; sleep 2) | nc 127.0.0.1 8081\""   # toybox nc: sem -z; stdin precisa ficar aberto
 ```
 1. `adb kill-server && adb start-server` → `adb devices` lista só o alvo (sem `emulator-5562 offline`).
-2. Online: abrir o app, login email/senha (conta de audit); esperar `adb logcat -d -s ReactNativeJS | grep 'OCTAVIA:'` mostrar `OCTAVIA: auth uid=<uid> src=login` e `OCTAVIA: setlists=3` (tag emitida pelo app; **uid e contagem, nunca token nem email**). Custo: 1 login + 1 `setlist-read`.
+2. Metro no ar (`cd apps/native && npx expo run:android --device <avd>`, que instala, faz `adb reverse tcp:8081 tcp:8081` e abre o app **online** — custa 1 `setlist-read`); `adb reverse --list` → `tcp:8081 tcp:8081`. Se a sessão ainda não existe: login email/senha pela UI (senha digitada pelo Marcel — `adb shell input text` engole caractere especial, div. 24) → `adb logcat -d -s ReactNativeJS | grep 'OCTAVIA:'` mostra `auth uid=<uid> src=login`, `api status=200 path=/api/setlists n=1`, `setlists=3 src=api` (**uid e contagem, nunca token nem email**).
 3. `adb shell am force-stop rocks.octavia.app` → `adb shell pidof rocks.octavia.app` vazio.
 4. `adb shell cmd connectivity airplane-mode enable` → `settings get global airplane_mode_on` = 1 → `ping -c 1 -W 3 8.8.8.8` = `Network is unreachable` (se não cortar: `svc wifi disable && svc data disable`, provado em B2).
-5. `adb logcat -c` → `adb shell am start -n rocks.octavia.app/.MainActivity` → `adb logcat -d -s ReactNativeJS | grep 'OCTAVIA:'` → **esperado (H15 verdadeira)**: `OCTAVIA: auth uid=<mesmo uid> src=restored offline=true` + `OCTAVIA: setlists=3 src=cache`; **sem** `OCTAVIA: login-screen`. `screencap`.
-6. Controle negativo (regra nº 7): avião ainda ligado, `adb shell pm clear rocks.octavia.app` → `Success` → `am start` → esperado `OCTAVIA: login-screen` (sem usuário). `screencap`.
-7. `cmd connectivity airplane-mode disable` → ping passa. Rede ligada ao final, provada.
+5. **Aparato (N0-H10)**: `adb shell "$PROBE"` com o avião ligado → última linha `packager-status:running` (o `adb reverse` vive fora da rede virtual). Se falhar, é aparato, não H15: parar e reportar.
+6. `adb logcat -c` → `adb shell am start -a android.intent.action.VIEW -d "$DL"` → `adb logcat -d -s ReactNativeJS | grep 'OCTAVIA:'` → **esperado (H15-a verdadeira)**: `OCTAVIA: auth uid=<mesmo uid> src=restored`; **sem** `OCTAVIA: login-screen`. H15-b fica no que vier depois: `sync-error fetch failed: … UnknownHostException` (token servido do cache, request morreu na rede) ou `sync-error` vindo do SDK (`auth/network-request-failed` — token expirado, sem renovação offline). `screencap`; `dumpsys activity activities | grep -i octavia | head -3`; `pidof`.
+7. Repetir 3–6 nos dois estados do token: **fresco** (< 1 h da última abertura online) e **expirado** (> 1 h; `exp − iat` = 3600, oráculo do PR3) — entre eles, uma abertura online para renovar (1 `setlist-read`).
+8. Controle negativo (regra nº 7): avião ainda ligado, `adb shell pm clear rocks.octavia.app` → `Success` → abrir pelo deep link → esperado `OCTAVIA: login-screen` e nenhuma linha `auth uid=`. **Nunca digitar credenciais com o avião ligado.** `screencap`.
+9. `cmd connectivity airplane-mode disable` → ping passa. Rede ligada ao final, provada. Estado final do device: sem sessão (o `pm clear` apagou) — a próxima PR/aceite exige um login.
 
 **"H15 falsa" para o PRD**: A5 e T1-R19 falham como escritos — o app pediria login em modo avião e o cache namespaced por `uid` (PRD §5) ficaria inacessível sem um usuário do SDK. Sem redesenho aqui: o N0 termina com a resposta binária e a decisão volta ao Marcel.
 
