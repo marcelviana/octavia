@@ -1,0 +1,57 @@
+# N0-PR2 (N0-PRECHECK C4-2): build verificável do nativo por PR — APK de debug local, sem EAS, sem segredo.
+# Só roda quando o nativo/core/lock/workspace mudam (filtro de paths); PRs só de web não o executam.
+name: native
+'on':
+  pull_request:
+    paths:
+    - apps/native/**
+    - packages/core/**
+    - .github/workflows/native.yml
+    - pnpm-lock.yaml
+    - pnpm-workspace.yaml
+  push:
+    branches:
+    - main
+    paths:
+    - apps/native/**
+    - packages/core/**
+    - .github/workflows/native.yml
+    - pnpm-lock.yaml
+    - pnpm-workspace.yaml
+env:
+  EXPO_NO_TELEMETRY: '1'
+  CI: '1'
+jobs:
+  android-debug-apk:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: pnpm/action-setup@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 22
+        cache: pnpm
+    - uses: actions/setup-java@v4
+      with:
+        distribution: temurin
+        java-version: 17
+    - uses: android-actions/setup-android@v3
+    - uses: actions/cache@v4
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: gradle-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml', 'apps/native/app.json') }}
+        restore-keys: |
+          gradle-${{ runner.os }}-
+    - name: Install dependencies
+      run: pnpm install --frozen-lockfile
+    - name: Prebuild (android)
+      run: cd apps/native && npx expo prebuild --platform android --no-install
+    - name: Gradle assembleDebug
+      run: cd apps/native/android && ./gradlew assembleDebug --no-daemon
+    - uses: actions/upload-artifact@v4
+      with:
+        name: app-debug.apk
+        path: apps/native/android/app/build/outputs/apk/debug/app-debug.apk
+        retention-days: 7

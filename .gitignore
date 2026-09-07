@@ -30,6 +30,9 @@ yarn-error.log*
 apps/native/android/
 apps/native/ios/
 .expo/
+# workspace (N0-PR2): node_modules dos pacotes — o /node_modules acima é ancorado na raiz
+apps/*/node_modules/
+packages/*/node_modules/
 
 # typescript
 *.tsbuildinfo
