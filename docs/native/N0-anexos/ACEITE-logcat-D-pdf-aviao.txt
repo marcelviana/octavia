@@ -1,0 +1,15 @@
+$ adb -s RX2N8000F3D logcat -d -s ReactNativeJS | grep "OCTAVIA:"   # Tab S6 — passo D (A13): aviao LIGADO, "PDF 12 paginas" do disco + 14 swipes ate a ultima pagina; 2026-09-07
+09-07 18:16:45.490 21626 21777 I ReactNativeJS: OCTAVIA: file src=disk name=1786218429715-ux-audit-partitura-12p.pdf bytes=242176
+09-07 18:16:45.644 21626 21777 I ReactNativeJS: OCTAVIA: pdf-render pages=12 src=disk
+09-07 18:16:45.676 21626 21777 I ReactNativeJS: OCTAVIA: pdf-page n=1/12
+09-07 18:16:55.875 21626 21777 I ReactNativeJS: OCTAVIA: pdf-page n=2/12
+09-07 18:16:56.387 21626 21777 I ReactNativeJS: OCTAVIA: pdf-page n=3/12
+09-07 18:16:57.083 21626 21777 I ReactNativeJS: OCTAVIA: pdf-page n=4/12
+09-07 18:16:57.715 21626 21777 I ReactNativeJS: OCTAVIA: pdf-page n=5/12
+09-07 18:16:58.329 21626 21777 I ReactNativeJS: OCTAVIA: pdf-page n=6/12
+09-07 18:16:59.109 21626 21777 I ReactNativeJS: OCTAVIA: pdf-page n=7/12
+09-07 18:16:59.541 21626 21777 I ReactNativeJS: OCTAVIA: pdf-page n=8/12
+09-07 18:17:00.373 21626 21777 I ReactNativeJS: OCTAVIA: pdf-page n=9/12
+09-07 18:17:00.770 21626 21777 I ReactNativeJS: OCTAVIA: pdf-page n=10/12
+09-07 18:17:01.586 21626 21777 I ReactNativeJS: OCTAVIA: pdf-page n=11/12
+09-07 18:17:02.016 21626 21777 I ReactNativeJS: OCTAVIA: pdf-page n=12/12
