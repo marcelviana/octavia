@@ -5,9 +5,6 @@
     "version": "0.0.1",
     "android": {
       "package": "rocks.octavia.app"
-    },
-    "plugins": [
-      "@octavia/plugin-inexistente"
-    ]
+    }
   }
 }
