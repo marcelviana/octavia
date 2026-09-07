@@ -26,6 +26,11 @@ yarn-error.log*
 # vercel
 .vercel
 
+# nativo (N0-PR1): pastas geradas pelo prebuild do Expo
+apps/native/android/
+apps/native/ios/
+.expo/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
