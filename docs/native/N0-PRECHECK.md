@@ -465,10 +465,10 @@ Novos: `apps/native/*` (scaffold, N0-PR2), `packages/core/{package.json,tsconfig
 source scripts/native-env.sh      # ANDROID_HOME, PATH, JAVA_HOME 17, ADB_LOCAL_TRANSPORT_MAX_PORT=5555; ANDROID_SERIAL=<serial>
 ```
 1. `adb kill-server && adb start-server` → `adb devices` lista só o alvo (sem `emulator-5562 offline`).
-2. Online: abrir o app, login email/senha (conta de audit); esperar `adb logcat -d -s OCTAVIA:*` mostrar `OCTAVIA: auth uid=<uid> src=login` e `OCTAVIA: setlists=3` (tag emitida pelo app; **uid e contagem, nunca token nem email**). Custo: 1 login + 1 `setlist-read`.
+2. Online: abrir o app, login email/senha (conta de audit); esperar `adb logcat -d -s ReactNativeJS | grep 'OCTAVIA:'` mostrar `OCTAVIA: auth uid=<uid> src=login` e `OCTAVIA: setlists=3` (tag emitida pelo app; **uid e contagem, nunca token nem email**). Custo: 1 login + 1 `setlist-read`.
 3. `adb shell am force-stop rocks.octavia.app` → `adb shell pidof rocks.octavia.app` vazio.
 4. `adb shell cmd connectivity airplane-mode enable` → `settings get global airplane_mode_on` = 1 → `ping -c 1 -W 3 8.8.8.8` = `Network is unreachable` (se não cortar: `svc wifi disable && svc data disable`, provado em B2).
-5. `adb logcat -c` → `adb shell am start -n rocks.octavia.app/.MainActivity` → `adb logcat -d -s OCTAVIA:*` → **esperado (H15 verdadeira)**: `OCTAVIA: auth uid=<mesmo uid> src=restored offline=true` + `OCTAVIA: setlists=3 src=cache`; **sem** `OCTAVIA: login-screen`. `screencap`.
+5. `adb logcat -c` → `adb shell am start -n rocks.octavia.app/.MainActivity` → `adb logcat -d -s ReactNativeJS | grep 'OCTAVIA:'` → **esperado (H15 verdadeira)**: `OCTAVIA: auth uid=<mesmo uid> src=restored offline=true` + `OCTAVIA: setlists=3 src=cache`; **sem** `OCTAVIA: login-screen`. `screencap`.
 6. Controle negativo (regra nº 7): avião ainda ligado, `adb shell pm clear rocks.octavia.app` → `Success` → `am start` → esperado `OCTAVIA: login-screen` (sem usuário). `screencap`.
 7. `cmd connectivity airplane-mode disable` → ping passa. Rede ligada ao final, provada.
 
