@@ -1,0 +1,4 @@
+$ adb logcat -d -s ReactNativeJS | grep "OCTAVIA:"   # §3.3 toque em "PDF 1 pagina (P4)" ONLINE — 1o download; 2026-09-07
+09-07 14:19:08.679  4431  4516 I ReactNativeJS: OCTAVIA: file src=download name=1786218427769-ux-audit-partitura-1p.pdf bytes=20821
+09-07 14:19:08.936  4431  4516 I ReactNativeJS: OCTAVIA: pdf-render pages=1 src=disk
+09-07 14:19:08.974  4431  4516 I ReactNativeJS: OCTAVIA: pdf-page n=1/1

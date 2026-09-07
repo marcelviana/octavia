@@ -8,7 +8,13 @@ import { StatusBar } from 'expo-status-bar'
 import { onAuthStateChanged, signInWithEmailAndPassword, signOut, type User } from 'firebase/auth'
 import { auth } from './src/firebase'
 import { getSetlists } from './src/api'
+import { clearFiles } from './src/files'
 import { log } from './src/log'
+import { PdfProbe } from './src/PdfProbe'
+
+// Objetos públicos da conta de audit (C-PRECHECK B.2 P4 e P7; bucket público, C-D2)
+const PDF_1P = 'https://mlxjmpbdchmwplcfislt.supabase.co/storage/v1/object/public/content-files/1786218427769-ux-audit-partitura-1p.pdf'
+const PDF_12P = 'https://mlxjmpbdchmwplcfislt.supabase.co/storage/v1/object/public/content-files/1786218429715-ux-audit-partitura-12p.pdf'
 
 type Phase = { kind: 'loading' } | { kind: 'login' } | { kind: 'in'; user: User; setlists: number | null; error: string | null }
 
@@ -17,6 +23,7 @@ export default function App() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loginError, setLoginError] = useState<string | null>(null)
+  const [pdf, setPdf] = useState<{ url: string; label: string } | null>(null)
   const loggedInThisRun = useRef(false)
 
   useEffect(() => {
@@ -68,10 +75,15 @@ export default function App() {
     )
   }
 
+  if (pdf) return <PdfProbe url={pdf.url} label={pdf.label} onClose={() => setPdf(null)} />
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Setlists: {phase.setlists ?? '…'}</Text>
       {phase.error ? <Text style={styles.error}>Erro ao sincronizar ({phase.error})</Text> : null}
+      <Button title="PDF 1 página (P4)" onPress={() => setPdf({ url: PDF_1P, label: 'PDF 1 página (P4)' })} />
+      <Button title="PDF 12 páginas" onPress={() => setPdf({ url: PDF_12P, label: 'PDF 12 páginas' })} />
+      <Button title="Apagar cache de arquivos" onPress={() => clearFiles()} />
       <Button title="Sair" onPress={() => signOut(auth)} />
       <StatusBar style="auto" />
     </View>
