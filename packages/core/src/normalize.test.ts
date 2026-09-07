@@ -4,7 +4,7 @@ import { normalizeForSearch } from './normalize'
 
 describe('normalizeForSearch (T1-R21)', () => {
   it('remove acentos: Águas → aguas', () => {
-    expect(normalizeForSearch('Águas')).toBe('Aguas')
+    expect(normalizeForSearch('Águas')).toBe('aguas')
   })
 
   it('minúsculas e acentos: GAROTA, garôta, garota → garota', () => {
