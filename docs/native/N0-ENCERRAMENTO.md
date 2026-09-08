@@ -93,7 +93,7 @@ Origem: **P** = premissa do prompt do revisor · **M** = premissa do Marcel via 
 | 27 | #269 | "#268 mergeada" — estava `OPEN` na 1ª medição | M |
 | 28 | #269 | `adb install -r -d --user 0` do Expo trava com o device bloqueado | T |
 
-Contagem: **P (prompt do revisor) = 8** (1, 2, 3, 4, 12, 16, 18, 20) · M = 2 · D = 4 · A = 8 · T = 6 · X = 1. Nenhuma foi acomodada; todas estão nos corpos das PRs.
+Contagem: **P (prompt do revisor) = 8** (1, 2, 3, 4, 12, 16, 18, 20) · M = 2 · D = 4 · A = 7 · T = 6 · X = 1 (soma 28). Nenhuma foi acomodada; todas estão nos corpos das PRs.
 
 ## 6. Aparato de validação — estado final (quatro camadas)
 
