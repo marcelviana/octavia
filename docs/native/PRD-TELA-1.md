@@ -8,7 +8,7 @@
 
 ## 0. Escopo e premissas
 
-**Escopo em uma frase**: um app nativo (Android e iOS) que, autenticado pela conta Firebase existente, lê as setlists e a biblioteca do usuário pelo backend atual, guarda tudo localmente e toca a setlist no palco — offline por padrão — **sem criar, editar ou apagar nada**.
+**Escopo em uma frase**: um app nativo (Android — 12L, API 32 no aceite do N0 — e iOS) que, autenticado pela conta Firebase existente, lê as setlists e a biblioteca do usuário pelo backend atual, guarda tudo localmente e toca a setlist no palco — offline por padrão — **sem criar, editar ou apagar nada**.
 
 **Premissas** (do plano, não reabertas aqui):
 - **Usuário único** (JOBS.md "O que este arquivo NÃO cobre"; PLANO C1 — anti-jobs). Multiusuário não é requisito; onde ele mudaria uma decisão, o documento diz.
@@ -165,7 +165,7 @@ Orçamento por abertura `[medido: §4.3; B.2]`:
 Latência de referência `[medido: B.2]`: 150–340 ms por request quente; 1,5–2 s nos dois primeiros hits da campanha (`[hipótese 12: cold start]`). Payload: 49.983 B + 52.941 B ≈ 103 KB por abertura com a conta de audit.
 *Aceite*: (a) em modo avião, com cache populado, a lista de setlists aparece em < 1 s após o launch e a setlist de 60 músicas (`UX-AUDIT Estresse` `[B-P6]`) abre completa; (b) online, a captura de tráfego de uma abertura mostra exatamente **1 + ⌈N/100⌉** requests a `/api/*` (**2** com ambas as contas hoje) e nenhuma a `/api/proxy`; (c) primeira abertura sem cache mostra "sincronizando…", nunca "sem setlists", até o primeiro 200.
 
-**T1-R14 — Arquivos: download e retenção** `[C-D2; C-D6]`. Arquivo é baixado direto da `file_url` (sem header de auth), gravado por URL, servido do disco dali em diante. Retenção LRU com teto configurável (o web usa 50 MB e 100 MB nos dois caches `[medido: §2.5]`; propor 200 MB no tablet — `[hipótese: tamanho real dos PDFs do repertório do Marcel; o maior objeto medido no B5 tem 242.176 B]`). Arquivos das setlists dos próximos 7 dias nunca são vítimas do LRU.
+**T1-R14 — Arquivos: download e retenção** `[C-D2; C-D6]`. Arquivo é baixado direto da `file_url` (sem header de auth), gravado por URL, servido do disco dali em diante. Retenção LRU com teto configurável (o web usa 50 MB e 100 MB nos dois caches `[medido: §2.5]`; propor 200 MB no tablet — `[hipótese: tamanho real dos PDFs do repertório do Marcel; o maior objeto medido no B5 tem 242.176 B]`). Arquivos das setlists dos próximos 7 dias nunca são vítimas do LRU. Nota (N0): arquivos garantidos vivem em armazenamento não-purgável (`Paths.document` do expo-file-system), não no `Paths.cache` usado na prova do N0 — `N0-H16.md` §4.
 *Aceite*: a `file_url` do P4 `[B.2]` baixada uma vez; a segunda abertura da música não gera request (captura de tráfego); os bytes servidos têm o sha256 `3d42199b…` `[medido: B.2 P4]`.
 
 **T1-R15 — Prefetch de 7 dias** `[C-D6; PLANO J6 "indicação antes do show"]`. Após cada sync, para toda setlist com `performance_date` (date-only `YYYY-MM-DD` — decisão da seção "B5 — Decisões de dados" do plano, 2026-08-10, implementada no B2 PR-5 (#240); schema em `lib/api-schemas.ts:297-310` — nota N5) entre hoje e hoje+7, baixar todos os `file_url` das suas songs ainda não cacheados, em background, com prioridade pela data mais próxima (mesma heurística do web, `lib/advanced-content-cache.ts:183-204` `[medido: §C-D4]`). Setlists sem `performance_date` (as 3 da conta de audit `[medido: B.2 — `performance_date: null` nas três]`) **não** entram no prefetch automático; entram sob demanda (T1-R16) ou por ação explícita "baixar esta setlist".
@@ -180,7 +180,7 @@ Latência de referência `[medido: B.2]`: 150–340 ms por request quente; 1,5�
 **T1-R18 — Estado de rede comunicado, nunca bloqueante** `[PLANO J6 critério 3; C3-1]`. Offline é um indicador discreto; falha de sync com cache presente mantém a tela e mostra "última sincronização há X"; falha de sync **sem** cache mostra erro acionável ("sem conexão — tente novamente"), nunca o empty state.
 *Aceite*: modo avião + cache → sem modal, indicador visível; modo avião + cache vazio → mensagem de erro com botão "tentar novamente".
 
-**T1-R19 — Sessão offline** `[PLANO J6 (ponto "login offline")]`. Com cache populado, o app abre e opera **sem** pedir token ao servidor; o token só é necessário quando há rede e sync. Se o SDK não conseguir renovar o token offline, o app **não** desloga: usa o cache. `[hipótese: o SDK do Firebase no runtime nativo escolhido persiste o usuário e devolve o último token sem rede — medição na primeira semana do nativo: kill + reopen em modo avião com conta logada]`.
+**T1-R19 — Sessão offline** `[PLANO J6 (ponto "login offline")]`. Com cache populado, o app abre e opera **sem** pedir token ao servidor; o token só é necessário quando há rede e sync. Se o SDK não conseguir renovar o token offline, o app **não** desloga: usa o cache. `[medido: N0-H15.md — usuário restaurado sem rede em avião (token fresco e expirado) no emulador API 31 e no Tab S6 API 32; token expirado sem rede → getIdToken rejeita com auth/network-request-failed e o usuário continua restaurado]`.
 *Aceite*: kill + reopen em modo avião (J6 passo 3) → a tela 1 abre com as setlists cacheadas sem tela de login.
 
 ---
@@ -259,8 +259,8 @@ Herança do plano: a tela 1 **iguala ou supera cada ✅ e fecha cada ❌/⚠️*
 | H12 | Cold start explica 1,5–2 s dos dois primeiros hits — `[hipótese 12]` | aceito | abertura online mais lenta; o cache-first (T1-R13) esconde | 10 aberturas medidas na primeira semana |
 | H13 | Origem do `Cache-Control: public, max-age=0` (Next × Vercel) — `[hipótese 13]` | Bloco B (§11) | nenhum na tela 1 (T1-R12 ignora cache HTTP) | ler config do Next/Vercel quando o item do B abrir |
 | H14 | **Fechada** `[medido pelo Marcel, 2026-09-05 — dashboard]`: conta principal = **63 content / 2 setlists** → ⌈N/100⌉ = **1 página**. Errata: o "~128" (194 − 66) atribuía a uma conta o que está em quatro (5 profiles, B5). T1-R9/R9b/A21/A22 **ficam** como requisitos — a biblioteca pode crescer | — | reabre se a biblioteca passar de 100 (`total` de `GET /api/content`) |
-| H15 | SDK do Firebase no runtime nativo persiste sessão e opera offline (T1-R19) | primeira semana do nativo | app pede login offline → J6 falha | kill + reopen em modo avião |
-| H16 | Tamanho real dos PDFs do repertório (T1-R14, teto de 200 MB) | primeira semana | LRU expulsa arquivos de setlists futuras | somatório de `Content-Length` das `file_url` da conta principal |
+| H15 | **Fechada — verdadeira** `[medido: N0-PR4, docs/native/N0-H15.md; aceite no Tab S6, N0-ACEITE-TAB-S6.md]`: o SDK restaura o usuário sem rede (token fresco e expirado) e não desloga quando a renovação falha offline; token expirado sem rede → `auth/network-request-failed` (H15-b condicional) | — | — | — |
+| H16 | **Fechada para a conta de audit** `[medido: N0-PR5, docs/native/N0-H16.md — 265.002 B em 4 objetos, maior 242.176 B]`; **conta principal: não medido** (passo do Marcel no dashboard, pendente no encerramento do N0) | Marcel | teto de 200 MB é folga sobre o medido | lista de tamanhos das `file_url` da conta principal |
 | H17 | **Fechada** `[medido pelo Marcel, 2026-09-05 — dashboard]`: das 2 setlists da conta principal, **1 tem `performance_date`** → o prefetch de 7 dias (T1-R15) tem dado real; o "baixar esta setlist" manual cobre a outra | — | — |
 | H18 | **Fechada** `[medido pelo Marcel, 2026-09-05 — console]`: login por **email/senha**. Google foi usado no passado (daí o `avatar_url`), mas hoje o **login Google no web não funciona** e o cliente OAuth "Web client (auto created by Google Service)" está sinalizado para exclusão automática por inatividade (último uso 2026-02-26) — defeito do web, fora deste PRD (§11). Tela 1: **só email/senha** (T1-R6) | — | — |
 
@@ -268,7 +268,7 @@ Herança do plano: a tela 1 **iguala ou supera cada ✅ e fecha cada ❌/⚠️*
 
 ## 10. Critérios de aceite da tela 1 (lista fechada)
 
-A tela 1 está pronta para o palco quando **todos** abaixo passam no tablet do Marcel, em landscape, com a conta principal:
+A tela 1 está pronta para o palco quando **todos** abaixo passam no tablet do Marcel (Galaxy Tab S6, Android 12L / API 32 — aceite N0), em landscape, com a conta principal:
 
 | # | Critério | Rastreio |
 |---|---|---|

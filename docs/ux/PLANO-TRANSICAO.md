@@ -1432,10 +1432,18 @@ automaticamente.
    Native/Expo, monorepo pnpm workspaces. O spike de PDF foi cancelado
    como gate decisório e convertido em due diligence da primeira semana
    do nativo (C4). Nenhuma decisão de stack permanece em aberto.
-5. **Após o Bloco C (2026-09-04)** — próximo bloco **a eleger**;
-   candidatos: **bloco de stack do nativo** (scaffold do monorepo,
-   escolha de runtime, prova das hipóteses H15/H16 do PRD na primeira
-   semana) × **mini-itens do Bloco B** ("Herança do Bloco C", seção B7).
-   H11 (referrer da web API key) **fechada em 2026-09-05** (chave sem
+5. **Após o Bloco C (2026-09-04)** — eleito o **bloco de stack do nativo
+   (N0)**. H11 (referrer da web API key) **fechada em 2026-09-05** (chave sem
    restrição — Marcel/console); H14/H17/H18 idem (63 content / 2 setlists,
    1 com `performance_date`, login por email/senha).
+6. **Bloco N0 ✅ (2026-09-06/07, PRs #263–#269)** — ver
+   [`docs/native/N0-ENCERRAMENTO.md`](../native/N0-ENCERRAMENTO.md):
+   monorepo (`apps/native` + `packages/core`, Next na raiz), Expo SDK 57 /
+   RN 0.86.3 em dev build, `native.yml` (APK por PR), **H15 verdadeira**
+   (emulador API 31 e Galaxy Tab S6 API 32), H16 da conta de audit fechada
+   (265 KB), PDF do cache em modo avião. A UI produzida é tela de prova,
+   descartável (N0-D11).
+7. **Próximo**: **mini-itens do Bloco B** ("Herança do Bloco C", seção B7,
+   mais a herança do N0 — encerramento §9), em sessão nova; **depois N1
+   (tela 1)**. O **design da tela 1 corre em paralelo** e entra
+   **congelado** como insumo do pre-check do N1.
