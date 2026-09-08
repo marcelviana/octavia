@@ -1,0 +1,273 @@
+$ pnpm exec tsc -p tsconfig.test.json --noEmit 2>&1; echo EXIT=$?
+
+## contagem: 151 erros
+
+## por arquivo (cut -d"(" -f1 | sort | uniq -c | sort -rn)
+  44 tests/components/content-viewer.refactoring.test.tsx
+  23 tests/ux-audit/fase-d/i-add.spec.ts
+  20 tests/security/auth-penetration-testing.test.ts
+  13 tests/security/api-validation.security.test.ts
+   7 tests/typescript-ide-improvements.test.ts
+   5 tests/ux-audit/harvest-populated.spec.ts
+   5 hooks/__tests__/use-toast.test.ts
+   4 tests/ux-audit/fase-d/h-perf.spec.ts
+   4 tests/security/security-headers-validation.test.ts
+   4 tests/components/add-content.refactoring.test.tsx
+   4 hooks/__tests__/use-content-renderer.test.ts
+   3 tests/ux-audit/fase-d/e-setlists.spec.ts
+   3 tests/typescript-strict-mode.test.ts
+   3 tests/security/token-blacklist-concurrency.test.ts
+   3 tests/hooks/use-performance-monitoring-ui.test.ts
+   2 tests/ux-audit/fase-d/g-viewer.spec.ts
+   2 __tests__/performance-mode/bug-reproduction-helpers.ts
+   1 lib/__tests__/api-test-helpers.ts
+   1 app/api/setlists/__tests__/route.test.ts
+
+## por código (grep -o "error TS[0-9]*" | sort | uniq -c | sort -rn)
+  31 error TS2741
+  30 error TS2345
+  18 error TS2532
+  17 error TS2322
+  12 error TS2554
+   7 error TS2339
+   6 error TS7005
+   6 error TS2561
+   6 error TS18047
+   4 error TS2540
+   3 error TS2367
+   2 error TS7034
+   2 error TS2769
+   2 error TS2698
+   2 error TS18048
+   1 error TS2551
+   1 error TS2304
+   1 error TS1378
+
+## saída integral
+__tests__/performance-mode/bug-reproduction-helpers.ts(61,11): error TS2698: Spread types may only be created from object types.
+__tests__/performance-mode/bug-reproduction-helpers.ts(62,11): error TS2698: Spread types may only be created from object types.
+app/api/setlists/__tests__/route.test.ts(49,50): error TS2345: Argument of type '{ from: Mock<(tableName: string) => any>; }' is not assignable to parameter of type 'SupabaseClient<Database, "public", "public", { Tables: { annotations: { Row: { annotation_data: Json; content_id: string; created_at: string | null; id: string; updated_at: string | null; user_id: string; }; Insert: { ...; }; Update: { ...; }; Relationships: [...]; }; content: { ...; }; profiles: { ...; }; setlist_s...'.
+  Type '{ from: Mock<(tableName: string) => any>; }' is missing the following properties from type 'SupabaseClient<Database, "public", "public", { Tables: { annotations: { Row: { annotation_data: Json; content_id: string; created_at: string | null; id: string; updated_at: string | null; user_id: string; }; Insert: { ...; }; Update: { ...; }; Relationships: [...]; }; content: { ...; }; profiles: { ...; }; setlist_s...': supabaseUrl, supabaseKey, auth, realtime, and 20 more.
+hooks/__tests__/use-content-renderer.test.ts(34,35): error TS2532: Object is possibly 'undefined'.
+hooks/__tests__/use-content-renderer.test.ts(154,35): error TS2532: Object is possibly 'undefined'.
+hooks/__tests__/use-content-renderer.test.ts(192,21): error TS2532: Object is possibly 'undefined'.
+hooks/__tests__/use-content-renderer.test.ts(193,19): error TS2532: Object is possibly 'undefined'.
+hooks/__tests__/use-toast.test.ts(17,12): error TS2532: Object is possibly 'undefined'.
+hooks/__tests__/use-toast.test.ts(26,12): error TS2532: Object is possibly 'undefined'.
+hooks/__tests__/use-toast.test.ts(35,12): error TS2532: Object is possibly 'undefined'.
+hooks/__tests__/use-toast.test.ts(36,12): error TS2532: Object is possibly 'undefined'.
+hooks/__tests__/use-toast.test.ts(43,12): error TS2532: Object is possibly 'undefined'.
+lib/__tests__/api-test-helpers.ts(172,7): error TS2322: Type 'string | null | undefined' is not assignable to type 'string | null'.
+  Type 'undefined' is not assignable to type 'string | null'.
+tests/components/add-content.refactoring.test.tsx(58,28): error TS1378: Top-level 'await' expressions are only allowed when the 'module' option is set to 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', 'nodenext', or 'preserve', and the 'target' option is set to 'es2017' or higher.
+tests/components/add-content.refactoring.test.tsx(110,45): error TS2345: Argument of type '"Lyrics"' is not assignable to parameter of type 'ContentType'.
+tests/components/add-content.refactoring.test.tsx(113,45): error TS2345: Argument of type '"Chords"' is not assignable to parameter of type 'ContentType'.
+tests/components/add-content.refactoring.test.tsx(116,45): error TS2345: Argument of type '"Sheet"' is not assignable to parameter of type 'ContentType'.
+tests/components/content-viewer.refactoring.test.tsx(102,7): error TS2561: Object literal may only specify known properties, but 'loadOfflineUrl' does not exist in type 'UseContentFileReturn'. Did you mean to write 'offlineUrl'?
+tests/components/content-viewer.refactoring.test.tsx(174,15): error TS2741: Property 'onEnterPerformance' is missing in type '{ content: { id: string; title: string; artist: string; content_type: string; file_url: string; content_data: { lyrics: string; chords: string[]; sections: string[]; }; key: string; bpm: number; user_id: string; created_at: string; updated_at: string; }; ... 5 more ...; currentSongIndex: number; }' but required in type 'ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(181,15): error TS2741: Property 'onEnterPerformance' is missing in type '{ content: { id: string; title: string; artist: string; content_type: string; file_url: string; content_data: { lyrics: string; chords: string[]; sections: string[]; }; key: string; bpm: number; user_id: string; created_at: string; updated_at: string; }; ... 5 more ...; currentSongIndex: number; }' but required in type 'ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(191,15): error TS2741: Property 'onEnterPerformance' is missing in type '{ onBack: Mock<Procedure>; content: { id: string; title: string; artist: string; content_type: string; file_url: string; content_data: { lyrics: string; chords: string[]; sections: string[]; }; ... 4 more ...; updated_at: string; }; ... 4 more ...; currentSongIndex: number; }' but required in type 'ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(199,15): error TS2741: Property 'onEnterPerformance' is missing in type '{ onEdit: Mock<Procedure>; content: { id: string; title: string; artist: string; content_type: string; file_url: string; content_data: { lyrics: string; chords: string[]; sections: string[]; }; ... 4 more ...; updated_at: string; }; ... 4 more ...; currentSongIndex: number; }' but required in type 'ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(207,47): error TS2322: Type '{ onDelete: Mock<Procedure>; content: { id: string; title: string; artist: string; content_type: string; file_url: string; content_data: { lyrics: string; chords: string[]; sections: string[]; }; ... 4 more ...; updated_at: string; }; ... 4 more ...; currentSongIndex: number; }' is not assignable to type 'IntrinsicAttributes & ContentViewerProps'.
+  Property 'onDelete' does not exist on type 'IntrinsicAttributes & ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(222,15): error TS2741: Property 'onEnterPerformance' is missing in type '{ content: { content_type: string; content_data: { lyrics: string; }; id: string; title: string; artist: string; file_url: string; key: string; bpm: number; user_id: string; created_at: string; updated_at: string; }; ... 5 more ...; currentSongIndex: number; }' but required in type 'ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(237,15): error TS2741: Property 'onEnterPerformance' is missing in type '{ content: { content_type: string; content_data: { chords: string[]; progression: string; }; id: string; title: string; artist: string; file_url: string; key: string; bpm: number; user_id: string; created_at: string; updated_at: string; }; ... 5 more ...; currentSongIndex: number; }' but required in type 'ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(253,15): error TS2741: Property 'onEnterPerformance' is missing in type '{ content: { content_type: string; content_data: { tablature: string; }; id: string; title: string; artist: string; file_url: string; key: string; bpm: number; user_id: string; created_at: string; updated_at: string; }; ... 5 more ...; currentSongIndex: number; }' but required in type 'ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(265,15): error TS2741: Property 'onEnterPerformance' is missing in type '{ content: { content_type: string; file_url: string; id: string; title: string; artist: string; content_data: { lyrics: string; chords: string[]; sections: string[]; }; key: string; bpm: number; user_id: string; created_at: string; updated_at: string; }; ... 5 more ...; currentSongIndex: number; }' but required in type 'ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(276,11): error TS2322: Type '{ setlist: { id: string; name: string; songs: { content_id: string; position: number; }[]; }; currentSongIndex: number; content: { id: string; title: string; artist: string; content_type: string; file_url: string; ... 5 more ...; updated_at: string; }; onBack: Mock<...>; onEdit: Mock<...>; onDelete: Mock<...>; onNav...' is not assignable to type 'IntrinsicAttributes & ContentViewerProps'.
+  Property 'setlist' does not exist on type 'IntrinsicAttributes & ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(290,11): error TS2322: Type '{ setlist: { id: string; name: string; songs: { content_id: string; position: number; }[]; }; currentSongIndex: number; onNavigate: Mock<Procedure>; content: { id: string; title: string; ... 8 more ...; updated_at: string; }; onBack: Mock<...>; onEdit: Mock<...>; onDelete: Mock<...>; }' is not assignable to type 'IntrinsicAttributes & ContentViewerProps'.
+  Property 'setlist' does not exist on type 'IntrinsicAttributes & ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(308,11): error TS2322: Type '{ setlist: { id: string; name: string; songs: { content_id: string; position: number; }[]; }; currentSongIndex: number; onNavigate: Mock<Procedure>; content: { id: string; title: string; ... 8 more ...; updated_at: string; }; onBack: Mock<...>; onEdit: Mock<...>; onDelete: Mock<...>; }' is not assignable to type 'IntrinsicAttributes & ContentViewerProps'.
+  Property 'setlist' does not exist on type 'IntrinsicAttributes & ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(324,11): error TS2322: Type '{ setlist: { id: string; name: string; songs: { content_id: string; position: number; }[]; }; currentSongIndex: number; content: { id: string; title: string; artist: string; content_type: string; file_url: string; ... 5 more ...; updated_at: string; }; onBack: Mock<...>; onEdit: Mock<...>; onDelete: Mock<...>; onNav...' is not assignable to type 'IntrinsicAttributes & ContentViewerProps'.
+  Property 'setlist' does not exist on type 'IntrinsicAttributes & ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(335,11): error TS2322: Type '{ setlist: { id: string; name: string; songs: { content_id: string; position: number; }[]; }; currentSongIndex: number; content: { id: string; title: string; artist: string; content_type: string; file_url: string; ... 5 more ...; updated_at: string; }; onBack: Mock<...>; onEdit: Mock<...>; onDelete: Mock<...>; onNav...' is not assignable to type 'IntrinsicAttributes & ContentViewerProps'.
+  Property 'setlist' does not exist on type 'IntrinsicAttributes & ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(347,15): error TS2741: Property 'onEnterPerformance' is missing in type '{ content: { id: string; title: string; artist: string; content_type: string; file_url: string; content_data: { lyrics: string; chords: string[]; sections: string[]; }; key: string; bpm: number; user_id: string; created_at: string; updated_at: string; }; ... 5 more ...; currentSongIndex: number; }' but required in type 'ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(358,9): error TS2561: Object literal may only specify known properties, but 'isLoading' does not exist in type 'UseContentFileReturn'. Did you mean to write 'isLoadingUrl'?
+tests/components/content-viewer.refactoring.test.tsx(363,15): error TS2741: Property 'onEnterPerformance' is missing in type '{ content: { id: string; title: string; artist: string; content_type: string; file_url: string; content_data: { lyrics: string; chords: string[]; sections: string[]; }; key: string; bpm: number; user_id: string; created_at: string; updated_at: string; }; ... 5 more ...; currentSongIndex: number; }' but required in type 'ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(371,9): error TS2561: Object literal may only specify known properties, but 'isLoading' does not exist in type 'UseContentFileReturn'. Did you mean to write 'isLoadingUrl'?
+tests/components/content-viewer.refactoring.test.tsx(376,15): error TS2741: Property 'onEnterPerformance' is missing in type '{ content: { id: string; title: string; artist: string; content_type: string; file_url: string; content_data: { lyrics: string; chords: string[]; sections: string[]; }; key: string; bpm: number; user_id: string; created_at: string; updated_at: string; }; ... 5 more ...; currentSongIndex: number; }' but required in type 'ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(384,9): error TS2561: Object literal may only specify known properties, but 'isLoading' does not exist in type 'UseContentFileReturn'. Did you mean to write 'isLoadingUrl'?
+tests/components/content-viewer.refactoring.test.tsx(389,15): error TS2741: Property 'onEnterPerformance' is missing in type '{ content: { id: string; title: string; artist: string; content_type: string; file_url: string; content_data: { lyrics: string; chords: string[]; sections: string[]; }; key: string; bpm: number; user_id: string; created_at: string; updated_at: string; }; ... 5 more ...; currentSongIndex: number; }' but required in type 'ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(398,15): error TS2741: Property 'onEnterPerformance' is missing in type '{ content: { id: string; title: string; artist: string; content_type: string; file_url: string; content_data: { lyrics: string; chords: string[]; sections: string[]; }; key: string; bpm: number; user_id: string; created_at: string; updated_at: string; }; ... 5 more ...; currentSongIndex: number; }' but required in type 'ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(404,53): error TS2551: Property 'webkitFullscreenElement' does not exist on type 'Document'. Did you mean 'fullscreenElement'?
+tests/components/content-viewer.refactoring.test.tsx(408,15): error TS2741: Property 'onEnterPerformance' is missing in type '{ content: { id: string; title: string; artist: string; content_type: string; file_url: string; content_data: { lyrics: string; chords: string[]; sections: string[]; }; key: string; bpm: number; user_id: string; created_at: string; updated_at: string; }; ... 5 more ...; currentSongIndex: number; }' but required in type 'ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(427,15): error TS2741: Property 'onEnterPerformance' is missing in type '{ content: { content_type: string; content_data: { lyrics: string; }; id: string; title: string; artist: string; file_url: string; key: string; bpm: number; user_id: string; created_at: string; updated_at: string; }; ... 5 more ...; currentSongIndex: number; }' but required in type 'ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(438,15): error TS2741: Property 'onEnterPerformance' is missing in type '{ content: { id: string; title: string; artist: string; content_type: string; file_url: string; content_data: { lyrics: string; chords: string[]; sections: string[]; }; key: string; bpm: number; user_id: string; created_at: string; updated_at: string; }; ... 5 more ...; currentSongIndex: number; }' but required in type 'ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(449,11): error TS2322: Type '{ setlist: { id: string; name: string; songs: { content_id: string; position: number; }[]; }; currentSongIndex: number; content: { id: string; title: string; artist: string; content_type: string; file_url: string; ... 5 more ...; updated_at: string; }; onBack: Mock<...>; onEdit: Mock<...>; onDelete: Mock<...>; onNav...' is not assignable to type 'IntrinsicAttributes & ContentViewerProps'.
+  Property 'setlist' does not exist on type 'IntrinsicAttributes & ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(461,15): error TS2741: Property 'onEnterPerformance' is missing in type '{ content: { id: string; title: string; artist: string; content_type: string; file_url: string; content_data: { lyrics: string; chords: string[]; sections: string[]; }; key: string; bpm: number; user_id: string; created_at: string; updated_at: string; }; ... 5 more ...; currentSongIndex: number; }' but required in type 'ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(470,15): error TS2741: Property 'onEnterPerformance' is missing in type '{ content: null; onBack: Mock<Procedure>; onEdit: Mock<Procedure>; onDelete: Mock<Procedure>; onNavigate: Mock<Procedure>; setlist: null; currentSongIndex: number; }' but required in type 'ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(481,15): error TS2741: Property 'onEnterPerformance' is missing in type '{ content: { content_data: null; id: string; title: string; artist: string; content_type: string; file_url: string; key: string; bpm: number; user_id: string; created_at: string; updated_at: string; }; ... 5 more ...; currentSongIndex: number; }' but required in type 'ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(490,9): error TS2561: Object literal may only specify known properties, but 'isLoading' does not exist in type 'UseContentFileReturn'. Did you mean to write 'isLoadingUrl'?
+tests/components/content-viewer.refactoring.test.tsx(495,15): error TS2741: Property 'onEnterPerformance' is missing in type '{ content: { id: string; title: string; artist: string; content_type: string; file_url: string; content_data: { lyrics: string; chords: string[]; sections: string[]; }; key: string; bpm: number; user_id: string; created_at: string; updated_at: string; }; ... 5 more ...; currentSongIndex: number; }' but required in type 'ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(504,15): error TS2741: Property 'onEnterPerformance' is missing in type '{ content: { id: string; title: string; artist: string; content_type: string; file_url: string; content_data: { lyrics: string; chords: string[]; sections: string[]; }; key: string; bpm: number; user_id: string; created_at: string; updated_at: string; }; ... 5 more ...; currentSongIndex: number; }' but required in type 'ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(517,15): error TS2741: Property 'onEnterPerformance' is missing in type '{ content: { id: string; title: string; artist: string; content_type: string; file_url: string; content_data: { lyrics: string; chords: string[]; sections: string[]; }; key: string; bpm: number; user_id: string; created_at: string; updated_at: string; }; ... 5 more ...; currentSongIndex: number; }' but required in type 'ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(536,15): error TS2741: Property 'onEnterPerformance' is missing in type '{ showMetadata: boolean; allowEdit: boolean; content: { id: string; title: string; artist: string; content_type: string; file_url: string; content_data: { lyrics: string; chords: string[]; sections: string[]; }; ... 4 more ...; updated_at: string; }; ... 5 more ...; currentSongIndex: number; }' but required in type 'ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(560,9): error TS2561: Object literal may only specify known properties, but 'isLoading' does not exist in type 'UseContentFileReturn'. Did you mean to write 'isLoadingUrl'?
+tests/components/content-viewer.refactoring.test.tsx(565,35): error TS2741: Property 'onEnterPerformance' is missing in type '{ content: { id: string; title: string; artist: string; content_type: string; file_url: string; content_data: { lyrics: string; chords: string[]; sections: string[]; }; key: string; bpm: number; user_id: string; created_at: string; updated_at: string; }; ... 5 more ...; currentSongIndex: number; }' but required in type 'ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(580,10): error TS2741: Property 'onEnterPerformance' is missing in type '{ content: { content_data: { lyrics: string; }; id: string; title: string; artist: string; content_type: string; file_url: string; key: string; bpm: number; user_id: string; created_at: string; updated_at: string; }; ... 5 more ...; currentSongIndex: number; }' but required in type 'ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(585,19): error TS2741: Property 'onEnterPerformance' is missing in type '{ content: { content_data: { lyrics: string; }; id: string; title: string; artist: string; content_type: string; file_url: string; key: string; bpm: number; user_id: string; created_at: string; updated_at: string; }; ... 5 more ...; currentSongIndex: number; }' but required in type 'ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(605,10): error TS2741: Property 'onEnterPerformance' is missing in type '{ content: { content_data: { chords: string[]; }; id: string; title: string; artist: string; content_type: string; file_url: string; key: string; bpm: number; user_id: string; created_at: string; updated_at: string; }; ... 5 more ...; currentSongIndex: number; }' but required in type 'ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(612,19): error TS2741: Property 'onEnterPerformance' is missing in type '{ content: { content_data: { chords: string[]; }; id: string; title: string; artist: string; content_type: string; file_url: string; key: string; bpm: number; user_id: string; created_at: string; updated_at: string; }; ... 5 more ...; currentSongIndex: number; }' but required in type 'ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(623,36): error TS2741: Property 'onEnterPerformance' is missing in type '{ content: { id: string; title: string; artist: string; content_type: string; file_url: string; content_data: { lyrics: string; chords: string[]; sections: string[]; }; key: string; bpm: number; user_id: string; created_at: string; updated_at: string; }; ... 5 more ...; currentSongIndex: number; }' but required in type 'ContentViewerProps'.
+tests/components/content-viewer.refactoring.test.tsx(632,13): error TS2322: Type '{ currentSongIndex: number; content: { id: string; title: string; artist: string; content_type: string; file_url: string; content_data: { lyrics: string; chords: string[]; sections: string[]; }; key: string; bpm: number; user_id: string; created_at: string; updated_at: string; }; ... 4 more ...; setlist: null; }' is not assignable to type 'IntrinsicAttributes & ContentViewerProps'.
+  Property 'currentSongIndex' does not exist on type 'IntrinsicAttributes & ContentViewerProps'.
+tests/hooks/use-performance-monitoring-ui.test.ts(11,3): error TS2304: Cannot find name 'afterEach'.
+tests/hooks/use-performance-monitoring-ui.test.ts(16,41): error TS2554: Expected 1 arguments, but got 0.
+tests/hooks/use-performance-monitoring-ui.test.ts(22,41): error TS2554: Expected 1 arguments, but got 0.
+tests/security/api-validation.security.test.ts(63,3): error TS2322: Type '{ __proto__: { isAdmin: true; }; }' is not assignable to type '{ __proto__: { isAdmin: boolean; }; constructor?: undefined; '__proto__.isAdmin'?: undefined; 'constructor.prototype.isAdmin'?: undefined; } | { constructor: { prototype: { isAdmin: boolean; }; }; __proto__?: undefined; '__proto__.isAdmin'?: undefined; 'constructor.prototype.isAdmin'?: undefined; } | { ...; } | { .....'.
+  Type '{ __proto__: { isAdmin: true; }; }' is not assignable to type '{ __proto__: { isAdmin: boolean; }; constructor?: undefined; '__proto__.isAdmin'?: undefined; 'constructor.prototype.isAdmin'?: undefined; }'.
+    Types of property ''constructor'' are incompatible.
+      Type 'Function' is not assignable to type 'undefined'.
+tests/security/api-validation.security.test.ts(65,3): error TS2322: Type '{ '__proto__.isAdmin': true; }' is not assignable to type '{ __proto__: { isAdmin: boolean; }; constructor?: undefined; '__proto__.isAdmin'?: undefined; 'constructor.prototype.isAdmin'?: undefined; } | { constructor: { prototype: { isAdmin: boolean; }; }; __proto__?: undefined; '__proto__.isAdmin'?: undefined; 'constructor.prototype.isAdmin'?: undefined; } | { ...; } | { .....'.
+  Type '{ '__proto__.isAdmin': true; }' is not assignable to type '{ '__proto__.isAdmin': boolean; __proto__?: undefined; constructor?: undefined; 'constructor.prototype.isAdmin'?: undefined; }'.
+    Types of property ''constructor'' are incompatible.
+      Type 'Function' is not assignable to type 'undefined'.
+tests/security/api-validation.security.test.ts(66,3): error TS2322: Type '{ 'constructor.prototype.isAdmin': true; }' is not assignable to type '{ __proto__: { isAdmin: boolean; }; constructor?: undefined; '__proto__.isAdmin'?: undefined; 'constructor.prototype.isAdmin'?: undefined; } | { constructor: { prototype: { isAdmin: boolean; }; }; __proto__?: undefined; '__proto__.isAdmin'?: undefined; 'constructor.prototype.isAdmin'?: undefined; } | { ...; } | { .....'.
+  Type '{ 'constructor.prototype.isAdmin': true; }' is not assignable to type '{ 'constructor.prototype.isAdmin': boolean; __proto__?: undefined; constructor?: undefined; '__proto__.isAdmin'?: undefined; }'.
+    Types of property ''constructor'' are incompatible.
+      Type 'Function' is not assignable to type 'undefined'.
+tests/security/api-validation.security.test.ts(112,49): error TS2554: Expected 1 arguments, but got 3.
+tests/security/api-validation.security.test.ts(144,49): error TS2554: Expected 1 arguments, but got 3.
+tests/security/api-validation.security.test.ts(176,49): error TS2554: Expected 1 arguments, but got 3.
+tests/security/api-validation.security.test.ts(214,49): error TS2554: Expected 1 arguments, but got 3.
+tests/security/api-validation.security.test.ts(244,49): error TS2554: Expected 1 arguments, but got 3.
+tests/security/api-validation.security.test.ts(277,49): error TS2554: Expected 1 arguments, but got 3.
+tests/security/api-validation.security.test.ts(301,49): error TS2554: Expected 1 arguments, but got 3.
+tests/security/api-validation.security.test.ts(336,47): error TS2554: Expected 1 arguments, but got 3.
+tests/security/api-validation.security.test.ts(394,42): error TS2554: Expected 1 arguments, but got 3.
+tests/security/api-validation.security.test.ts(436,49): error TS2554: Expected 1 arguments, but got 3.
+tests/security/auth-penetration-testing.test.ts(115,43): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(data: string): string', gave the following error.
+    Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+  Overload 2 of 2, '(data: string): string', gave the following error.
+    Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+tests/security/auth-penetration-testing.test.ts(367,55): error TS2345: Argument of type '(request: NextRequest) => Promise<{ uid: string; email: string; emailVerified: true; }>' is not assignable to parameter of type '(request: Request) => Promise<{ uid: string; email?: string | undefined; emailVerified?: boolean | undefined; } | null>'.
+  Types of parameters 'request' and 'request' are incompatible.
+    Type 'Request' is missing the following properties from type 'NextRequest': cookies, nextUrl, page, ua, [INTERNALS]
+tests/security/auth-penetration-testing.test.ts(394,45): error TS18047: 'user' is possibly 'null'.
+tests/security/auth-penetration-testing.test.ts(414,55): error TS2345: Argument of type '(request: NextRequest) => Promise<{ uid: string; email: string; emailVerified: true; }>' is not assignable to parameter of type '(request: Request) => Promise<{ uid: string; email?: string | undefined; emailVerified?: boolean | undefined; } | null>'.
+  Types of parameters 'request' and 'request' are incompatible.
+    Type 'Request' is missing the following properties from type 'NextRequest': cookies, nextUrl, page, ua, [INTERNALS]
+tests/security/auth-penetration-testing.test.ts(433,34): error TS18047: 'user' is possibly 'null'.
+tests/security/auth-penetration-testing.test.ts(435,18): error TS18047: 'user' is possibly 'null'.
+tests/security/auth-penetration-testing.test.ts(482,27): error TS18047: 'user' is possibly 'null'.
+tests/security/auth-penetration-testing.test.ts(489,18): error TS18047: 'user' is possibly 'null'.
+tests/security/auth-penetration-testing.test.ts(501,16): error TS18047: 'user' is possibly 'null'.
+tests/security/auth-penetration-testing.test.ts(643,55): error TS18048: 'creds' is possibly 'undefined'.
+tests/security/auth-penetration-testing.test.ts(643,68): error TS18048: 'creds' is possibly 'undefined'.
+tests/security/auth-penetration-testing.test.ts(757,51): error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'void'.
+tests/security/auth-penetration-testing.test.ts(768,13): error TS7034: Variable 'securityEvents' implicitly has type 'any[]' in some locations where its type cannot be determined.
+tests/security/auth-penetration-testing.test.ts(812,14): error TS7005: Variable 'securityEvents' implicitly has an 'any[]' type.
+tests/security/auth-penetration-testing.test.ts(815,30): error TS7005: Variable 'securityEvents' implicitly has an 'any[]' type.
+tests/security/auth-penetration-testing.test.ts(819,7): error TS7005: Variable 'securityEvents' implicitly has an 'any[]' type.
+tests/security/auth-penetration-testing.test.ts(828,13): error TS7034: Variable 'incidentResponses' implicitly has type 'any[]' in some locations where its type cannot be determined.
+tests/security/auth-penetration-testing.test.ts(876,14): error TS7005: Variable 'incidentResponses' implicitly has an 'any[]' type.
+tests/security/auth-penetration-testing.test.ts(879,33): error TS7005: Variable 'incidentResponses' implicitly has an 'any[]' type.
+tests/security/auth-penetration-testing.test.ts(886,7): error TS7005: Variable 'incidentResponses' implicitly has an 'any[]' type.
+tests/security/security-headers-validation.test.ts(175,19): error TS2540: Cannot assign to 'NODE_ENV' because it is a read-only property.
+tests/security/security-headers-validation.test.ts(185,19): error TS2540: Cannot assign to 'NODE_ENV' because it is a read-only property.
+tests/security/security-headers-validation.test.ts(312,19): error TS2540: Cannot assign to 'NODE_ENV' because it is a read-only property.
+tests/security/security-headers-validation.test.ts(326,19): error TS2540: Cannot assign to 'NODE_ENV' because it is a read-only property.
+tests/security/token-blacklist-concurrency.test.ts(141,68): error TS2367: This comparison appears to be unintentional because the types 'void' and 'boolean' have no overlap.
+tests/security/token-blacklist-concurrency.test.ts(304,54): error TS2367: This comparison appears to be unintentional because the types 'void' and 'boolean' have no overlap.
+tests/security/token-blacklist-concurrency.test.ts(476,38): error TS2367: This comparison appears to be unintentional because the types 'void' and 'boolean' have no overlap.
+tests/typescript-ide-improvements.test.ts(55,35): error TS2339: Property 'title' does not exist on type 'never'.
+tests/typescript-ide-improvements.test.ts(137,21): error TS2339: Property 'PIANO' does not exist on type 'typeof ContentType'.
+tests/typescript-ide-improvements.test.ts(138,21): error TS2339: Property 'DRUMS' does not exist on type 'typeof ContentType'.
+tests/typescript-ide-improvements.test.ts(216,36): error TS2345: Argument of type '{ album: string | null; artist: string | null; bpm: number | null; capo: number | null; content_data: Json; content_type: string; created_at: string | null; difficulty: string | null; ... 13 more ...; user_id: string; }' is not assignable to parameter of type '{ id: string; updated_at: string; }'.
+  Types of property 'updated_at' are incompatible.
+    Type 'string | null' is not assignable to type 'string'.
+      Type 'null' is not assignable to type 'string'.
+tests/typescript-ide-improvements.test.ts(221,22): error TS2339: Property 'title' does not exist on type '{ id: string; updated_at: string; }'.
+tests/typescript-ide-improvements.test.ts(222,22): error TS2339: Property 'artist' does not exist on type '{ id: string; updated_at: string; }'.
+tests/typescript-ide-improvements.test.ts(271,13): error TS2741: Property 'is_public' is missing in type '{ id: string; user_id: string; name: string; description: null; performance_date: null; venue: null; notes: null; created_at: string; updated_at: string; }' but required in type '{ created_at: string | null; description: string | null; id: string; is_public: boolean | null; name: string; notes: string | null; performance_date: string | null; updated_at: string | null; user_id: string; venue: string | null; }'.
+tests/typescript-strict-mode.test.ts(50,13): error TS2741: Property 'is_public' is missing in type '{ id: string; user_id: string; name: string; description: string; performance_date: null; venue: null; notes: null; created_at: string; updated_at: string; }' but required in type '{ created_at: string | null; description: string | null; id: string; is_public: boolean | null; name: string; notes: string | null; performance_date: string | null; updated_at: string | null; user_id: string; venue: string | null; }'.
+tests/typescript-strict-mode.test.ts(74,21): error TS2339: Property 'PIANO' does not exist on type 'typeof ContentType'.
+tests/typescript-strict-mode.test.ts(75,21): error TS2339: Property 'DRUMS' does not exist on type 'typeof ContentType'.
+tests/ux-audit/fase-d/e-setlists.spec.ts(230,88): error TS2322: Type '{ Authorization: string; } | { Authorization?: undefined; }' is not assignable to type '{ [key: string]: string; } | undefined'.
+  Type '{ Authorization?: undefined; }' is not assignable to type '{ [key: string]: string; }'.
+    Property 'Authorization' is incompatible with index signature.
+      Type 'undefined' is not assignable to type 'string'.
+tests/ux-audit/fase-d/e-setlists.spec.ts(249,106): error TS2322: Type '{ Authorization: string; } | { Authorization?: undefined; }' is not assignable to type '{ [key: string]: string; } | undefined'.
+  Type '{ Authorization?: undefined; }' is not assignable to type '{ [key: string]: string; }'.
+    Property 'Authorization' is incompatible with index signature.
+      Type 'undefined' is not assignable to type 'string'.
+tests/ux-audit/fase-d/e-setlists.spec.ts(261,7): error TS2322: Type '{ Authorization: string; } | { Authorization?: undefined; }' is not assignable to type '{ [key: string]: string; } | undefined'.
+  Type '{ Authorization?: undefined; }' is not assignable to type '{ [key: string]: string; }'.
+    Property 'Authorization' is incompatible with index signature.
+      Type 'undefined' is not assignable to type 'string'.
+tests/ux-audit/fase-d/g-viewer.spec.ts(143,97): error TS2322: Type '{ Authorization: string; } | { Authorization?: undefined; }' is not assignable to type '{ [key: string]: string; } | undefined'.
+  Type '{ Authorization?: undefined; }' is not assignable to type '{ [key: string]: string; }'.
+    Property 'Authorization' is incompatible with index signature.
+      Type 'undefined' is not assignable to type 'string'.
+tests/ux-audit/fase-d/g-viewer.spec.ts(160,11): error TS2322: Type '{ Authorization: string; } | { Authorization?: undefined; }' is not assignable to type '{ [key: string]: string; } | undefined'.
+  Type '{ Authorization?: undefined; }' is not assignable to type '{ [key: string]: string; }'.
+    Property 'Authorization' is incompatible with index signature.
+      Type 'undefined' is not assignable to type 'string'.
+tests/ux-audit/fase-d/h-perf.spec.ts(44,51): error TS2532: Object is possibly 'undefined'.
+tests/ux-audit/fase-d/h-perf.spec.ts(44,67): error TS2532: Object is possibly 'undefined'.
+tests/ux-audit/fase-d/h-perf.spec.ts(46,24): error TS2532: Object is possibly 'undefined'.
+tests/ux-audit/fase-d/h-perf.spec.ts(46,56): error TS2532: Object is possibly 'undefined'.
+tests/ux-audit/fase-d/i-add.spec.ts(32,39): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+tests/ux-audit/fase-d/i-add.spec.ts(108,22): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'PathLike'.
+  Type 'undefined' is not assignable to type 'PathLike'.
+tests/ux-audit/fase-d/i-add.spec.ts(109,22): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'PathOrFileDescriptor'.
+  Type 'undefined' is not assignable to type 'PathOrFileDescriptor'.
+tests/ux-audit/fase-d/i-add.spec.ts(111,22): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'PathLike'.
+  Type 'undefined' is not assignable to type 'PathLike'.
+tests/ux-audit/fase-d/i-add.spec.ts(112,22): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'PathOrFileDescriptor'.
+  Type 'undefined' is not assignable to type 'PathOrFileDescriptor'.
+tests/ux-audit/fase-d/i-add.spec.ts(114,22): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'PathLike'.
+  Type 'undefined' is not assignable to type 'PathLike'.
+tests/ux-audit/fase-d/i-add.spec.ts(117,22): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'PathOrFileDescriptor'.
+  Type 'undefined' is not assignable to type 'PathOrFileDescriptor'.
+tests/ux-audit/fase-d/i-add.spec.ts(119,22): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'PathLike'.
+  Type 'undefined' is not assignable to type 'PathLike'.
+tests/ux-audit/fase-d/i-add.spec.ts(121,22): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'PathOrFileDescriptor'.
+  Type 'undefined' is not assignable to type 'PathOrFileDescriptor'.
+tests/ux-audit/fase-d/i-add.spec.ts(123,22): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'PathLike'.
+  Type 'undefined' is not assignable to type 'PathLike'.
+tests/ux-audit/fase-d/i-add.spec.ts(126,22): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'PathOrFileDescriptor'.
+  Type 'undefined' is not assignable to type 'PathOrFileDescriptor'.
+tests/ux-audit/fase-d/i-add.spec.ts(128,22): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'PathLike'.
+  Type 'undefined' is not assignable to type 'PathLike'.
+tests/ux-audit/fase-d/i-add.spec.ts(131,7): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'PathOrFileDescriptor'.
+  Type 'undefined' is not assignable to type 'PathOrFileDescriptor'.
+tests/ux-audit/fase-d/i-add.spec.ts(138,22): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'PathLike'.
+  Type 'undefined' is not assignable to type 'PathLike'.
+tests/ux-audit/fase-d/i-add.spec.ts(140,7): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'PathOrFileDescriptor'.
+  Type 'undefined' is not assignable to type 'PathOrFileDescriptor'.
+tests/ux-audit/fase-d/i-add.spec.ts(222,64): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string | readonly string[] | { name: string; mimeType: string; buffer: Buffer<ArrayBufferLike>; } | readonly { name: string; mimeType: string; buffer: Buffer<ArrayBufferLike>; }[]'.
+  Type 'undefined' is not assignable to type 'string | readonly string[] | { name: string; mimeType: string; buffer: Buffer<ArrayBufferLike>; } | readonly { name: string; mimeType: string; buffer: Buffer<ArrayBufferLike>; }[]'.
+tests/ux-audit/fase-d/i-add.spec.ts(338,62): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string | readonly string[] | { name: string; mimeType: string; buffer: Buffer<ArrayBufferLike>; } | readonly { name: string; mimeType: string; buffer: Buffer<ArrayBufferLike>; }[]'.
+  Type 'undefined' is not assignable to type 'string | readonly string[] | { name: string; mimeType: string; buffer: Buffer<ArrayBufferLike>; } | readonly { name: string; mimeType: string; buffer: Buffer<ArrayBufferLike>; }[]'.
+tests/ux-audit/fase-d/i-add.spec.ts(413,60): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string | readonly string[] | { name: string; mimeType: string; buffer: Buffer<ArrayBufferLike>; } | readonly { name: string; mimeType: string; buffer: Buffer<ArrayBufferLike>; }[]'.
+  Type 'undefined' is not assignable to type 'string | readonly string[] | { name: string; mimeType: string; buffer: Buffer<ArrayBufferLike>; } | readonly { name: string; mimeType: string; buffer: Buffer<ArrayBufferLike>; }[]'.
+tests/ux-audit/fase-d/i-add.spec.ts(496,60): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string | readonly string[] | { name: string; mimeType: string; buffer: Buffer<ArrayBufferLike>; } | readonly { name: string; mimeType: string; buffer: Buffer<ArrayBufferLike>; }[]'.
+  Type 'undefined' is not assignable to type 'string | readonly string[] | { name: string; mimeType: string; buffer: Buffer<ArrayBufferLike>; } | readonly { name: string; mimeType: string; buffer: Buffer<ArrayBufferLike>; }[]'.
+tests/ux-audit/fase-d/i-add.spec.ts(505,60): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string | readonly string[] | { name: string; mimeType: string; buffer: Buffer<ArrayBufferLike>; } | readonly { name: string; mimeType: string; buffer: Buffer<ArrayBufferLike>; }[]'.
+  Type 'undefined' is not assignable to type 'string | readonly string[] | { name: string; mimeType: string; buffer: Buffer<ArrayBufferLike>; } | readonly { name: string; mimeType: string; buffer: Buffer<ArrayBufferLike>; }[]'.
+tests/ux-audit/fase-d/i-add.spec.ts(554,62): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string | readonly string[] | { name: string; mimeType: string; buffer: Buffer<ArrayBufferLike>; } | readonly { name: string; mimeType: string; buffer: Buffer<ArrayBufferLike>; }[]'.
+  Type 'undefined' is not assignable to type 'string | readonly string[] | { name: string; mimeType: string; buffer: Buffer<ArrayBufferLike>; } | readonly { name: string; mimeType: string; buffer: Buffer<ArrayBufferLike>; }[]'.
+tests/ux-audit/fase-d/i-add.spec.ts(622,22): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string | readonly string[] | { name: string; mimeType: string; buffer: Buffer<ArrayBufferLike>; } | readonly { name: string; mimeType: string; buffer: Buffer<ArrayBufferLike>; }[]'.
+  Type 'undefined' is not assignable to type 'string | readonly string[] | { name: string; mimeType: string; buffer: Buffer<ArrayBufferLike>; } | readonly { name: string; mimeType: string; buffer: Buffer<ArrayBufferLike>; }[]'.
+tests/ux-audit/fase-d/i-add.spec.ts(672,39): error TS2769: No overload matches this call.
+  Overload 1 of 3, '(path: PathOrFileDescriptor, options?: { encoding?: null | undefined; flag?: string | undefined; } | null | undefined): NonSharedBuffer', gave the following error.
+    Argument of type 'string | undefined' is not assignable to parameter of type 'PathOrFileDescriptor'.
+      Type 'undefined' is not assignable to type 'PathOrFileDescriptor'.
+  Overload 2 of 3, '(path: PathOrFileDescriptor, options?: BufferEncoding | (ObjectEncodingOptions & { flag?: string | undefined; }) | null | undefined): string | NonSharedBuffer', gave the following error.
+    Argument of type 'string | undefined' is not assignable to parameter of type 'PathOrFileDescriptor'.
+      Type 'undefined' is not assignable to type 'PathOrFileDescriptor'.
+tests/ux-audit/harvest-populated.spec.ts(285,26): error TS2532: Object is possibly 'undefined'.
+tests/ux-audit/harvest-populated.spec.ts(286,17): error TS2532: Object is possibly 'undefined'.
+tests/ux-audit/harvest-populated.spec.ts(292,26): error TS2532: Object is possibly 'undefined'.
+tests/ux-audit/harvest-populated.spec.ts(293,17): error TS2532: Object is possibly 'undefined'.
+tests/ux-audit/harvest-populated.spec.ts(525,26): error TS2532: Object is possibly 'undefined'.
+EXIT=2

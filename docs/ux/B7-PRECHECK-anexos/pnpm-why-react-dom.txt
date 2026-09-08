@@ -1,0 +1,55 @@
+$ pnpm why react-dom --filter native
+Legend: production dependency, optional only, dev only
+
+native@1.0.0 /Users/marcelviana/projects/octavia/apps/native (PRIVATE)
+
+dependencies:
+@config-plugins/react-native-blob-util 14.0.2
+└─┬ expo 57.0.20 peer
+  ├─┬ @expo/cli 57.0.22
+  │ └─┬ @expo/router-server 57.0.9
+  │   └── react-dom 18.3.1 peer
+  └── react-dom 18.3.1 peer
+@config-plugins/react-native-pdf 14.0.2
+└─┬ expo 57.0.20 peer
+  ├─┬ @expo/cli 57.0.22
+  │ └─┬ @expo/router-server 57.0.9
+  │   └── react-dom 18.3.1 peer
+  └── react-dom 18.3.1 peer
+expo 57.0.20
+├─┬ @expo/cli 57.0.22
+│ └─┬ @expo/router-server 57.0.9
+│   └── react-dom 18.3.1 peer
+└── react-dom 18.3.1 peer
+expo-dev-client 57.0.18
+├─┬ expo 57.0.20 peer
+│ ├─┬ @expo/cli 57.0.22
+│ │ └─┬ @expo/router-server 57.0.9
+│ │   └── react-dom 18.3.1 peer
+│ └── react-dom 18.3.1 peer
+└─┬ expo-dev-launcher 57.0.19
+  └─┬ expo 57.0.20 peer
+    ├─┬ @expo/cli 57.0.22
+    │ └─┬ @expo/router-server 57.0.9
+    │   └── react-dom 18.3.1 peer
+    └── react-dom 18.3.1 peer
+
+$ pnpm ls react-dom react --depth 0   (raiz)
+Legend: production dependency, optional only, dev only
+
+octavia@0.1.0 /Users/marcelviana/projects/octavia (PRIVATE)
+
+dependencies:
+react 18.3.1
+react-dom 18.3.1
+
+$ (cd apps/native && pnpm ls react-dom react --depth 0)
+Legend: production dependency, optional only, dev only
+
+native@1.0.0 /Users/marcelviana/projects/octavia/apps/native (PRIVATE)
+
+dependencies:
+react 19.2.3
+
+$ node -e "…expo/package.json peerDependencies/peerDependenciesMeta"
+{"peer":{"@expo/dom-webview":"*","@expo/metro-runtime":"*","react":"*","react-native":"*","react-dom":"*","react-native-web":"*","react-native-webview":"*"},"meta":{"@expo/dom-webview":{"optional":true},"@expo/metro-runtime":{"optional":true},"react-dom":{"optional":true},"react-native-web":{"optional":true},"react-native-webview":{"optional":true}}}

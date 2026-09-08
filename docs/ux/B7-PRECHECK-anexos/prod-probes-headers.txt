@@ -1,0 +1,47 @@
+$ NODE_PATH=<repo>/node_modules pnpm exec tsx <scratchpad>/b7-probe-headers.ts   (script NÃO versionado; bearer direto via signInWithPassword; 0 chamadas a /api/auth/session; set-cookie/authorization suprimidos)
+
+=== P1 setlist-read: GET /api/setlists (bearer)
+HTTP 200
+cache-control: public, max-age=0, must-revalidate
+content-encoding: br
+content-type: application/json
+date: Tue, 08 Sep 2026 11:58:40 GMT
+server: Vercel
+strict-transport-security: max-age=63072000
+transfer-encoding: chunked
+vary: RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch
+x-matched-path: /api/setlists
+x-vercel-cache: BYPASS
+x-vercel-id: gru1::iad1::r96t7-1788868718442-406be61a9caa
+(corpo: 49983 B, não impresso)
+
+=== P2 content-read: GET /api/content?pageSize=1 (bearer)
+HTTP 200
+cache-control: public, max-age=0, must-revalidate
+content-encoding: br
+content-type: application/json
+date: Tue, 08 Sep 2026 11:58:41 GMT
+server: Vercel
+strict-transport-security: max-age=63072000
+transfer-encoding: chunked
+vary: RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch
+x-matched-path: /api/content
+x-vercel-cache: BYPASS
+x-vercel-id: gru1::iad1::r96t7-1788868720357-410432385c7e
+(corpo: 610 B, não impresso)
+
+=== P3 debug/config (rota sem auth): GET /api/debug/config (sem credencial)
+HTTP 404
+age: 0
+cache-control: public, max-age=0, must-revalidate
+content-encoding: br
+content-type: application/json
+date: Tue, 08 Sep 2026 11:58:41 GMT
+server: Vercel
+strict-transport-security: max-age=63072000
+transfer-encoding: chunked
+vary: RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch
+x-matched-path: /api/debug/config
+x-vercel-cache: MISS
+x-vercel-id: gru1::iad1::r96t7-1788868721832-dcbc97f98855
+(corpo: 58 B, não impresso; primeiros 120 chars: {"error":"Not available in production","code":"NOT_FOUND"})
