@@ -1446,4 +1446,4 @@ automaticamente.
 7. **Próximo**: **mini-itens do Bloco B** ("Herança do Bloco C", seção B7,
    mais a herança do N0 — encerramento §9), em sessão nova; **depois N1
    (tela 1)**. O **design da tela 1 corre em paralelo** e entra
-   **congelado** como insumo do pre-check do N1.
+   **congelado** como insumo do pre-check do N1. ✅ congelado 2026-09-08 (N1-PR0)

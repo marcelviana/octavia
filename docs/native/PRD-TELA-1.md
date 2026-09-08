@@ -16,6 +16,8 @@
 - **Backend intacto**: Next.js API + Supabase + Firebase Auth, "com o mínimo de mudança necessária" (PLANO, enquadramento). A tela 1 exige **zero** mudança de backend `[medido: C-PRECHECK B.6 — todas as leituras passam com bearer hoje]`; o que ela pede ao Bloco B está classificado no §11, não agendado.
 - **Base de referência**: 3 setlists / 69 songs / 66 content / 5 arquivos da conta de audit `[medido: C-PRECHECK B.2, B.3]`. A tabela `content` inteira tinha **194 linhas em 2026-08-24** `[referência: comentário do B2 em lib/api-schemas.ts:132-133 — nota N4]`. A conta principal tem **63 content / 2 setlists** `[medido pelo Marcel, 2026-09-05 — dashboard]` — menor que a conta de audit; **1 página** de `GET /api/content`. O cálculo anterior (194 − 66 = ~128) atribuía a uma conta o que está em quatro (5 profiles, B5) — errata declarada (H14).
 
+Design da tela 1 congelado em 2026-09-08 — [`DESIGN-TELA-1/`](DESIGN-TELA-1/README.md) (N1-PR0; errata do A14 e §11 "Decididos no design").
+
 ---
 
 ## 1. Decisões vigentes
@@ -213,8 +215,8 @@ Herança do plano: a tela 1 **iguala ou supera cada ✅ e fecha cada ❌/⚠️*
 **T1-R26 — PDF e imagem do cache** `[C-D2; PLANO C2 "PDF no palco" (item 4, fechado na web pelo PERF-02); C4 "PDF: caso menor, due diligence na 1ª semana"]`. Arquivo é renderizado do disco (T1-R14); se não estiver no cache e não houver rede → placeholder "arquivo não baixado" com ação "baixar" (J6 ponto "placeholder claro ou quebra silenciosa"). PDF de 12 páginas (`[medido: B.2 P7 — file_url …partitura-12p.pdf; 242.176 B por B5-PRECHECK §2.2, referência]`) rola por página.
 *Aceite*: o PDF de 12 páginas da conta de audit abre do cache em modo avião e todas as 12 páginas são navegáveis; sem cache e offline → placeholder, não tela branca.
 
-**T1-R27 — Navegação às cegas** `[PLANO C3-3; PERF-04; JOBS J1 critérios "1 tap, ≥ 48 px, borda inteira"]`. Avançar/voltar: 1 tap ou 1 gesto; alvos ≥ 48 px de altura ocupando a borda lateral inteira da tela; nenhuma função exclusiva de hover; controles em posição fixa. Landscape em tablet é o layout primário (J1 contexto); rotação no meio da música preserva a posição (J1 ponto de observação).
-*Aceite*: no tablet em landscape, tocar em qualquer ponto dos 15% laterais da tela avança/volta; medição de alvo ≥ 48 px; girar o device na música 4 → continua na 4.
+**T1-R27 — Navegação às cegas** `[PLANO C3-3; PERF-04; JOBS J1 critérios "1 tap, ≥ 48 px, borda inteira"]`. Avançar/voltar: 1 tap ou 1 gesto; alvos ≥ 48 px de altura ocupando a borda lateral inteira da tela (entre as barras superior e inferior — D-1, design 2026-09-08); nenhuma função exclusiva de hover; controles em posição fixa. Landscape em tablet é o layout primário (J1 contexto); rotação no meio da música preserva a posição (J1 ponto de observação).
+*Aceite*: no tablet em landscape, tocar em qualquer ponto dos 15% laterais da área de conteúdo, entre as barras superior e inferior (D-1, design 2026-09-08) avança/volta; medição de alvo ≥ 48 px; girar o device na música 4 → continua na 4.
 
 **T1-R28 — Posição e salto** `[PLANO PERF-05, PERF-06; C2 "Posição na setlist ('4 de 12') e salto direto ≤ 3 taps"; JOBS J2 critério 1]`. "n de N" sempre visível; um índice da setlist acessível de dentro do palco em 1 tap, com salto para qualquer música em ≤ 3 taps no total; alvos ≥ 48 px (os dots de 8 px do web são o anti-padrão).
 *Aceite*: na setlist de 60 músicas `[B-P6]`, da música 1 até a 47 em ≤ 3 taps; o rótulo mostra "47 de 60".
@@ -285,7 +287,7 @@ A tela 1 está pronta para o palco quando **todos** abaixo passam no tablet do M
 | A11 | Busca local: `aguas` acha `Águas`; sem resultado mostra mensagem; funciona offline; do palco, abrir resultado e voltar mantém "n de N" | T1-R20–R23 |
 | A12 | Bis: mesmo content em duas posições = duas telas | T1-R24 |
 | A13 | PDF de 12 páginas do cache em modo avião, 12 páginas navegáveis | T1-R26 |
-| A14 | Avançar/voltar pela borda (≥ 48 px, 15% laterais); "n de N" visível; salto 1→47 em ≤ 3 taps; fim de setlist elegante; rotação preserva posição | T1-R27, R28, R29 |
+| A14 | Avançar/voltar pela borda (≥ 48 px, 15% laterais da área de conteúdo, entre as barras superior e inferior (D-1, design 2026-09-08)); "n de N" visível; salto 1→47 em ≤ 3 taps; fim de setlist elegante; rotação preserva posição | T1-R27, R28, R29 |
 | A15 | Auto-scroll < 100 ms em texto, desabilitado com motivo em PDF; zoom sem re-quebra; dark sheet em 1 tap | T1-R30, R31, R32 |
 | A16 | 15 min sem toque no palco → tela acesa | T1-R33 |
 | A17 | Troca de música p95 < 100 ms (texto) / < 1 s (PDF cacheado) na setlist de 60 | T1-R34 |
@@ -319,6 +321,22 @@ Baselines do web a **não regredir** (PLANO C2): 1ª música em tela cheia ≤ 3
 | Shape enxuto de listagem de setlists (SET-22, B7) | §2.1; B.4 (21.423 B descartados) | otimização | Bloco B, quando a listagem pesar (hoje 49.983 B) |
 | `GET /api/storage/list` para recontar o bucket (hipótese 5: bucket=7) | C-PRECHECK B.7 | medição | tela 2 / reconciliação |
 | Login Google no web não funciona; cliente OAuth "Web client (auto created by Google Service)" sinalizado para exclusão automática por inatividade (console, 2026-09-05) | H18 | defeito do web | **Bloco D** |
+
+### Decididos no design (2026-09-08)
+
+Propostas "fora do PRD" do design congelado da tela 1 ([`DESIGN-TELA-1/README.md`](DESIGN-TELA-1/README.md); texto transcrito do rodapé "Propostas fora do PRD" do PDF). **Nenhuma gera requisito `T1-R` novo**: 01 e 02 viraram decisão do Marcel (D-2, D-1), 04 foi aceita com o texto corrigido pelo revisor, e 03, 05, 06, 07, 08 e 09 ficam decididas no design — o executor do N1 as lê no HTML/PDF.
+
+| # | Proposta (texto do design) | Decisão (Marcel, 2026-09-08) |
+|---|---|---|
+| 01 | Tagline "MUSIC NEVER STOPS" omitida — não aparece em S0 (o logo é usado com recorte que a exclui). Regra T1-R36 vale para UI; como peça de marca em S0/splash seria aceitável — decida. | **Omitida do app** (D-2) |
+| 02 | Bordas laterais entre as barras, não altura total — o PRD pede 15% × altura total; as barras superior (64) e inferior (96) ficariam sob a zona e "Sair" colidiria com "avançar". Zona = 192×640. Se preferir altura total, "Sair" sai da borda. | **Errata do A14 / T1-R27** (D-1) |
+| 03 | Barra de progresso do auto-scroll (4 dp) — sem ela não há feedback de que o scroll está andando ou de onde está a música. Acento só quando ligado. | Decidido no design |
+| 04 | Texto de apoio no placeholder "arquivo não baixado" — nome e tamanho do arquivo e o aviso "começa quando a rede voltar" não estão no PRD; sem isso o botão "Baixar" sem rede parece quebrado. | **Aceita com o texto corrigido** (correção 3 do revisor: sem promessa de download automático + nome da música; T1-R16) |
+| 05 | Indicador "página n de N" no PDF e dica de pinça/pan — R31 pede pan no zoom mas não define como o usuário sabe em que página está. | Decidido no design |
+| 06 | Botão "Tentar novamente" no banner de falha (S1e) — o PRD só pede o banner; sem ação, o único jeito de re-sincronizar é reabrir o app. | Decidido no design |
+| 07 | Estado "Baixar esta setlist" desabilitado offline (S1c) — a ação existe pelo R15, mas sem rede não pode fazer nada; desabilitar evita toque sem efeito. | Decidido no design |
+| 08 | Retrato — mesma estrutura: barra superior vira 2 linhas (n de N + título), barra inferior mantém 7 controles em 800 dp de largura (104→96 dp cada). Bordas continuam 15%. | Decidido no design |
+| 09 | Degradê de 24 dp na borda direita do conteúdo (S3b/S3b') — quando uma linha extrapola a largura, o fade do transparente para o fundo sinaliza que há mais à direita; sem ele a linha parece simplesmente cortada. (Adicionada pelo revisor.) | Decidido no design |
 
 ---
 
