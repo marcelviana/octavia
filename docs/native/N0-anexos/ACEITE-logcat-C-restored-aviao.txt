@@ -1,0 +1,3 @@
+$ adb -s RX2N8000F3D logcat -d -s ReactNativeJS | grep "OCTAVIA:"   # Tab S6 — passo C: aviao LIGADO (cmd connectivity; ping unreachable), Metro por adb reverse (USB), deep link localhost, token fresco; 2026-09-07
+09-07 18:15:41.622 21626 21777 I ReactNativeJS: OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+09-07 18:15:41.693 21626 21777 I ReactNativeJS: OCTAVIA: sync-error fetch failed: java.net.UnknownHostException: Unable to resolve host "octavia.rocks": No address associated with hostname

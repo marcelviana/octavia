@@ -1,0 +1,4 @@
+$ adb -s RX2N8000F3D logcat -d -s ReactNativeJS | grep "OCTAVIA:"   # Tab S6 — passo A: "PDF 12 paginas" ONLINE, 1o download; 2026-09-07
+09-07 18:14:54.543 29163 29379 I ReactNativeJS: OCTAVIA: file src=download name=1786218429715-ux-audit-partitura-12p.pdf bytes=242176
+09-07 18:14:54.877 29163 29379 I ReactNativeJS: OCTAVIA: pdf-render pages=12 src=disk
+09-07 18:14:54.890 29163 29379 I ReactNativeJS: OCTAVIA: pdf-page n=1/12

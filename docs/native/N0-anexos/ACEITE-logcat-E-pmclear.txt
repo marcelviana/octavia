@@ -1,0 +1,2 @@
+$ adb -s RX2N8000F3D logcat -d -s ReactNativeJS | grep "OCTAVIA:"   # Tab S6 — passo E: controle negativo, aviao LIGADO + pm clear (Success), deep link localhost; nada digitado; 2026-09-07
+09-07 18:17:22.892 27887 28282 I ReactNativeJS: OCTAVIA: login-screen

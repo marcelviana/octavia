@@ -1,0 +1,5 @@
+$ adb -s RX2N8000F3D logcat -d -s ReactNativeJS | grep "OCTAVIA:"   # Tab S6 (SM-T865, API 32) — §2 login digitado pelo Marcel, ONLINE; 2026-09-07
+09-07 18:09:38.272 29163 29379 I ReactNativeJS: OCTAVIA: login-screen
+09-07 18:14:17.982 29163 29379 I ReactNativeJS: OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=login
+09-07 18:14:20.960 29163 29379 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1
+09-07 18:14:20.977 29163 29379 I ReactNativeJS: OCTAVIA: setlists=3 src=api
