@@ -24,7 +24,7 @@ import fs from 'node:fs'
  * (prod pré-merge), falha esperada nos asserts 1 e 2.
  *
  * PRÉ-REQUISITO (auth): mesmo do set14-gate — rodar o projeto setup
- * manualmente antes (1 POST do orçamento AUTH 5/15min); contra preview,
+ * manualmente antes (1 POST da família SESSION, 120/15min por uid); contra preview,
  * exportar UX_AUDIT_BASE_URL e o bypass antes de ambos. storageState
  * ausente/expirado → falha explícita no primeiro passo (nunca falso verde).
  * Sessão expira ~55 min após o setup (AUTH-02 — nota operacional do plano).

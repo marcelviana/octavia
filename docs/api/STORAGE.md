@@ -29,7 +29,10 @@
 
 ### `POST /api/storage/upload`
 
-- Auth obrigatória (Bearer verificado server-side).
+- Auth obrigatória — **cadeia B** (`requireAuthServerSecure`): bearer OU
+  cookie `firebase-session`, e **exige email verificado**
+  ([`AUTH.md`](AUTH.md) §3; corrigido na B7-PR1 — o texto anterior dizia
+  só "Bearer").
 - Multipart: `file` + `filename`.
 - **Teto: 4MB** (4.194.304 bytes, **inclusivo**) — alinhado em rota
   (schema) e bucket (`file_size_limit`); acima → `400` `field:"size"`.
@@ -58,7 +61,10 @@
 
 ### `POST /api/storage/delete`
 
-- Auth obrigatória. Body: `{ "filename": "<path da convenção>" }`.
+- Auth obrigatória — **bearer-only** (parse inline `Bearer ` +
+  `validateFirebaseTokenServer`), **sem** cookie e **sem** exigência de
+  email verificado — divergência registrada em [`AUTH.md`](AUTH.md) §6.1.
+  Body: `{ "filename": "<path da convenção>" }`.
 - **Interna/tooling por decisão (B5-D6)**: nenhum fluxo de UI a chama;
   o consumidor de sistema é a reconciliação
   (`scripts/storage/reconcile.ts`, modo `--delete` gateado).
@@ -66,7 +72,9 @@
 
 ### `GET /api/storage/list`
 
-- Auth obrigatória. Rate limit: família `storage` (60/h por uid).
+- Auth obrigatória — **cadeia B** (bearer OU cookie, **exige email
+  verificado**; [`AUTH.md`](AUTH.md) §3). Rate limit: família `storage`
+  (60/h por uid).
 - Query params: `prefix` (opcional, default `""`) · `limit` (opcional,
   default 100, máx 1000, inteiro ≥1) · `offset` (opcional, default 0,
   inteiro ≥0). Param inválido → `400` com `field` nomeando o param;

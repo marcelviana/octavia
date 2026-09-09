@@ -35,7 +35,7 @@ setup('autenticar conta de audit e salvar storageState', async ({ browser, baseU
     baseURL,
     serviceWorkers: 'block',
   })
-  // Evita que o app queime o rate limit AUTH (5/15min) ou apague o cookie
+  // Evita que o app consuma a família SESSION (120/15min por uid) ou apague o cookie
   await interceptSessionEndpoint(context)
 
   await context.addCookies([

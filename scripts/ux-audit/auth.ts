@@ -106,8 +106,10 @@ async function signIn(): Promise<void> {
     refreshToken: data.refreshToken,
   }
 
-  // POST /api/auth/session tem rate limit AUTH (5 req / 15 min por IP).
-  // Janela fixa: retentar não a estende — espera 60s entre tentativas.
+  // POST /api/auth/session: SESSION 120/15min por uid (token válido);
+  // SESSION_AUTH_FAIL 10/15min por IP (token inválido); SESSION_DELETE
+  // 30/15min por IP (lib/user-rate-limit.ts). Janela fixa: retentar não a
+  // estende — espera 60s entre tentativas.
   let sessionRes: Response
   for (let attempt = 0; ; attempt++) {
     sessionRes = await fetch(`${BASE_URL}/api/auth/session`, {

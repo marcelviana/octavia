@@ -42,6 +42,20 @@ banco** — a fonte é o arquivo de migração. Primeira migração da série:
 `20260901102108_b6_setlist_songs_rpc.sql` (as quatro RPCs do B6,
 `docs/ux/B6-DESENHO.md` §2/§3).
 
+## Sessões paralelas — uma árvore de trabalho por sessão (regra permanente)
+
+- **Uma árvore por sessão.** Quem abre um bloco novo enquanto outra sessão está
+  ativa trabalha em **`git worktree add ../octavia-<bloco> <branch>`**, nunca no
+  checkout principal. **A sessão dona do checkout principal é a do bloco mais
+  antigo em andamento.**
+- **Antes de qualquer `git checkout`**: `git status` e conferir que a árvore e a
+  branch são as suas; arquivo ou commit alheio nunca entra no seu stage
+  (`git add` só por caminho; conferir `git diff --cached --stat` antes do commit).
+- **Origem**: 2026-09-08, sessões B7 e N1 no mesmo checkout — o commit N1
+  `6c190a8` caiu em `b7/precheck` e o 1º commit do B7-PR0 (`247ea5c`) levou 5
+  arquivos alheios; corrigido por `reset --soft` + `push --force-with-lease`
+  (`fd63bce`). Registro: `docs/ux/B7-PRECHECK.md` (B7-PR1).
+
 ## Project Architecture
 
 ### Core Technology Stack
