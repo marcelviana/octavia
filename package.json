@@ -17,7 +17,8 @@
     "test:ui": "vitest --ui",
     "test:unit": "pnpm run test",
     "db:types": "supabase gen types typescript --project-id mlxjmpbdchmwplcfislt > types/database.types.ts",
-    "db:dump": "supabase db dump -s public -f supabase/schema.dump.sql"
+    "db:dump": "supabase db dump -s public -f supabase/schema.dump.sql",
+    "db:dump:storage": "supabase db dump -s storage -f supabase/storage.dump.sql"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",

@@ -1443,7 +1443,14 @@ automaticamente.
    (emulador API 31 e Galaxy Tab S6 API 32), H16 da conta de audit fechada
    (265 KB), PDF do cache em modo avião. A UI produzida é tela de prova,
    descartável (N0-D11).
-7. **Próximo**: **mini-itens do Bloco B** ("Herança do Bloco C", seção B7,
-   mais a herança do N0 — encerramento §9), em sessão nova; **depois N1
-   (tela 1)**. O **design da tela 1 corre em paralelo** e entra
-   **congelado** como insumo do pre-check do N1. ✅ congelado 2026-09-08 (N1-PR0)
+7. **Bloco B7 ✅ (2026-09-08/09, PRs #272–#279 + encerramento)** — ver
+   [`docs/ux/B7-ENCERRAMENTO.md`](B7-ENCERRAMENTO.md): higiene herdada do C
+   e do N0 fechada sem migração e sem escrita em prod (`AUTH.md`,
+   `CONTENT-DATA.md`, `Cache-Control: private, no-store`, desempate por
+   `id`, remoções, flake, `test.projects`, Node 22, policies do storage
+   versionadas — D8). O design da tela 1 entrou **congelado** (N1-PR0,
+   2026-09-08). **B8** = 151 erros de `tsc -p tsconfig.test.json` +
+   `coverage.thresholds` fictício; **Bloco D** = herança do B7 §9.
+8. **Próximo**: **N1 (tela 1)**, em sessão nova (worktree próprio se outra
+   sessão estiver aberta), com PRD + design congelado + errata do §4 vinda
+   do encerramento do B7.
