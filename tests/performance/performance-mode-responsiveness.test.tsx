@@ -307,7 +307,10 @@ describe('Performance Mode Responsiveness Tests', () => {
 
       expect(maxTime).toBeLessThan(100)
       expect(avgTime).toBeLessThan(50)
-      expect(secondHalfAvg).toBeLessThan(firstHalfAvg * 1.5) // No more than 50% degradation
+      // B7-PR6 (D6): razão entre médias de 10 amostras de ~2–4 ms em jsdom media ruído, não
+      // degradação — 4 vermelhos registrados com diferença < 2 ms (razão 1,55–2,02×).
+      // Tolerância absoluta: degradação real de UI é ≥ 10 ms.
+      expect(secondHalfAvg - firstHalfAvg).toBeLessThan(10)
 
       console.log(`Rapid Navigation: Total=${totalTime.toFixed(2)}ms, Max=${maxTime.toFixed(2)}ms, Avg=${avgTime.toFixed(2)}ms`)
     })
