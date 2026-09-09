@@ -5,6 +5,7 @@ import logger from '@/lib/logger'
 import type { ContentQueryParams } from '@/lib/content-types'
 import type { Database } from '@/types/database.types'
 import { commonSchemas, contentSchemas } from '@/lib/api-schemas'
+import { checkContentData } from '@/lib/content-data-contract'
 import { ContentType } from '@/types/content'
 // B3 PR-2: erros pelo ponto único (docs/api/CONTRATO-DE-ERRO.md);
 // parse do corpo REUSA o guard do middleware (decisão B: mesmo código de
@@ -249,6 +250,32 @@ const updateContentHandler = async (request: NextRequest) => {
     const id = v.id
 
     const supabase = getSupabaseServiceClient()
+
+    // B7-PR5 item 3 (opção a): content_data SEM content_type no payload (o
+    // editor do web) — o schema não vê o par; o tipo vem da linha. SELECT
+    // condicional com ownership no WHERE: ausente/alheia → 404 do D2 antes
+    // da validação; presente → checkContentData → 400 nomeando
+    // content_data.<chave>. Nos demais caminhos o PUT segue com UMA ida ao
+    // banco.
+    if (v.content_data !== undefined && v.content_type === undefined) {
+      const { data: row, error: rowError } = await supabase
+        .from('content')
+        .select('content_type')
+        .eq('id', id)
+        .eq('user_id', user.uid)
+        .single()
+      if (rowError || !row) {
+        if (!rowError || rowError.code === 'PGRST116') return notFound('Content not found')
+        logger.error('Database error reading content type:', rowError)
+        throw rowError
+      }
+      const check = checkContentData(row.content_type as ContentType, v.content_data)
+      if (!check.ok) {
+        return validationError([
+          { code: 'custom', path: check.field.split('.'), message: check.message } as never,
+        ])
+      }
+    }
 
     // Política D1 + semântica SET-23 por campo: undefined = "não mexer"
     // (fica fora do UPDATE), null = "limpar".

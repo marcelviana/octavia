@@ -29,13 +29,94 @@ describe('contentSchemas.create — D5: content_data é objeto-ou-null no topo',
     }
   })
 
-  it('objeto, null e objeto aninhado passam', () => {
+  it('objeto com a chave do tipo e null passam', () => {
     expect(contentSchemas.create.safeParse({ ...MIN_CREATE, content_data: { lyrics: 'x' } }).success).toBe(true)
     expect(contentSchemas.create.safeParse({ ...MIN_CREATE, content_data: null }).success).toBe(true)
-    expect(contentSchemas.create.safeParse({
+  })
+
+  // B7-PR5: era o 3º assert do it acima ("objeto aninhado passa") — Lyrics com
+  // {annotations, sections, meta} e SEM `lyrics`. Sob a D5 (tipado-passthrough)
+  // vira 400 nomeando content_data.lyrics. Controle negativo do gate antigo:
+  // commit 1 = it.fails contra o schema atual (aceita); commit 2 = it.
+  it('Lyrics com objeto aninhado SEM lyrics → 400 content_data.lyrics (era aceito)', () => {
+    const r = contentSchemas.create.safeParse({
       ...MIN_CREATE,
       content_data: { annotations: [], sections: [{ name: 'A' }], meta: { n: 1 } },
-    }).success).toBe(true)
+    })
+    expect(r.success).toBe(false)
+    if (!r.success) expect(r.error.issues.map((i) => i.path.join('.'))).toContain('content_data.lyrics')
+  })
+})
+
+/**
+ * B7-PR5 — contrato de content_data por content_type na ESCRITA (decisão
+ * B7-D5, forma (b) tipado-passthrough; D5b Sheet sem chave; D5c null aceito).
+ * docs/api/CONTENT-DATA.md. Commit 1: os "→ 400" são it.fails (o schema atual
+ * é z.record qualquer); commit 2: it.
+ */
+describe('contentSchemas — D5: content_data por tipo (tipado-passthrough)', () => {
+  const CASES = [
+    { type: 'Lyrics', key: 'lyrics' },
+    { type: 'Chords', key: 'chords' },
+    { type: 'Tab', key: 'tablature' },
+  ] as const
+
+  for (const { type, key } of CASES) {
+    describe(`${type} → content_data.${key}`, () => {
+      it(`objeto com ${key} string → passa`, () => {
+        expect(contentSchemas.create.safeParse({ title: 'x', content_type: type, content_data: { [key]: 'texto' } }).success).toBe(true)
+      })
+
+      it(`null → passa (D5c: "criado sem corpo ainda")`, () => {
+        expect(contentSchemas.create.safeParse({ title: 'x', content_type: type, content_data: null }).success).toBe(true)
+      })
+
+      it(`objeto SEM ${key} → 400 field content_data.${key}`, () => {
+        const r = contentSchemas.create.safeParse({ title: 'x', content_type: type, content_data: { outra: 'coisa' } })
+        expect(r.success).toBe(false)
+        if (!r.success) {
+          const issue = r.error.issues.find((i) => i.path.join('.') === `content_data.${key}`)
+          expect(issue?.message).toBe(`obrigatória para ${type}`)
+        }
+      })
+
+      it(`${key} com número → 400 "deve ser string"`, () => {
+        const r = contentSchemas.create.safeParse({ title: 'x', content_type: type, content_data: { [key]: 1 } })
+        expect(r.success).toBe(false)
+        if (!r.success) {
+          const issue = r.error.issues.find((i) => i.path.join('.') === `content_data.${key}`)
+          expect(issue?.message).toBe('deve ser string')
+        }
+      })
+    })
+  }
+
+  it('Sheet: {} e { file: "x" } passam (D5b: sem chave obrigatória; file_url não é cruzada)', () => {
+    expect(contentSchemas.create.safeParse({ title: 'x', content_type: 'Sheet', content_data: {} }).success).toBe(true)
+    expect(contentSchemas.create.safeParse({ title: 'x', content_type: 'Sheet', content_data: { file: 'x' } }).success).toBe(true)
+    expect(contentSchemas.create.safeParse({ title: 'x', content_type: 'Sheet', content_data: null }).success).toBe(true)
+  })
+
+  it('payload na forma real do editor do web (registro espalhado + annotations + content_data aninhado) com a chave presente → passa (passthrough)', () => {
+    const editorShaped = {
+      id: '11111111-2222-3333-4444-555555555555', title: 'Asa Branca', artist: 'Luiz Gonzaga',
+      content_type: 'Chords', key: 'F', capo: 2, bpm: 120, annotations: [],
+      content_data: { chords: 'F  C7  F' }, sections: [{ id: 1, name: 'Verse 1', chords: 'F', lyrics: '' }],
+      chords: 'F  C7  F',
+    }
+    const r = contentSchemas.create.safeParse({ title: 'Asa Branca', content_type: 'Chords', content_data: editorShaped })
+    expect(r.success).toBe(true)
+    if (r.success) expect(r.data.content_data).toEqual(editorShaped) // nunca altera
+  })
+
+  it('update com content_type Tab e content_data {} → 400 content_data.tablature', () => {
+    const r = contentSchemas.update.safeParse({ id: '11111111-2222-3333-4444-555555555555', content_type: 'Tab', content_data: {} })
+    expect(r.success).toBe(false)
+    if (!r.success) expect(r.error.issues.map((i) => i.path.join('.'))).toContain('content_data.tablature')
+  })
+
+  it('update com content_data SEM content_type passa no schema (o par é checado no handler — B7-PR5 item 3)', () => {
+    expect(contentSchemas.update.safeParse({ id: '11111111-2222-3333-4444-555555555555', content_data: {} }).success).toBe(true)
   })
 })
 

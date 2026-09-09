@@ -18,6 +18,7 @@
 import { z } from 'zod'
 import type { Json } from '@/types/database.types'
 import { ContentType } from '@/types/content'
+import { checkContentData } from '@/lib/content-data-contract'
 
 // Common validation schemas
 export const commonSchemas = {
@@ -159,12 +160,28 @@ const contentEditableFields = {
 // ignorados por decisão escrita (D1), nunca gravados do body.
 const CONTENT_IGNORED_KEYS = ['user_id', 'created_at', 'updated_at'] as const
 
+// B7-PR5 (D5, tipado-passthrough): quando o payload traz o PAR content_type ×
+// content_data, a chave do tipo é obrigatória e string (Sheet: nenhuma; null:
+// aceito). Só valida — nunca altera; 400 nomeia content_data.<chave>
+// (issue.path → field por path.join('.') em lib/api-errors.ts). Payload com
+// content_data e SEM content_type (o editor do web no PUT) é checado no
+// handler, com o tipo da linha (app/api/content/route.ts).
+const refineContentData = (
+  v: { content_type?: ContentType; content_data?: unknown },
+  ctx: z.RefinementCtx
+) => {
+  if (v.content_type && v.content_data !== undefined) {
+    const r = checkContentData(v.content_type, v.content_data)
+    if (!r.ok) ctx.addIssue({ code: 'custom', path: r.field.split('.'), message: r.message })
+  }
+}
+
 export const contentSchemas = {
   create: withIgnoredKeys(
     z.object({
       ...contentEditableFields,
       is_favorite: z.boolean().default(false),
-    }).strict(),
+    }).strict().superRefine(refineContentData),
     CONTENT_IGNORED_KEYS
   ),
 
@@ -177,7 +194,7 @@ export const contentSchemas = {
       title: commonSchemas.createSafeText(1, 255).optional(),
       content_type: contentTypeSchema.optional(),
       is_favorite: z.boolean().nullish(),
-    }).strict(),
+    }).strict().superRefine(refineContentData),
     CONTENT_IGNORED_KEYS
   ),
 
