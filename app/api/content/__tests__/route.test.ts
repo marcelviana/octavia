@@ -251,6 +251,34 @@ describe('/api/content', () => {
       // Verify database query was made with the filter
       expect(mockFrom).toHaveBeenCalledWith('content')
     })
+
+    // B7-PR4 (PRD nota N6 / T1-R9b): o order tem desempate determinístico
+    // por `id` depois da coluna de sortBy — dois itens com o mesmo
+    // created_at não trocam de lugar entre páginas. Commit 1 = it.fails
+    // contra o código atual (só um order); commit 2 = it.
+    it('B7-PR4: sortBy padrão (recent) ordena por created_at desc E desempata por id asc', async () => {
+      mockRange.mockResolvedValue({ data: [TEST_CONTENT], error: null, count: 1 })
+
+      const { GET } = await import('../route')
+      const response = await GET(createValidAuthenticatedRequest('http://localhost/api/content'))
+      expectSuccess(response)
+
+      expect(mockOrder).toHaveBeenNthCalledWith(1, 'created_at', { ascending: false })
+      expect(mockOrder).toHaveBeenNthCalledWith(2, 'id', { ascending: true })
+      expect(mockOrder).toHaveBeenCalledTimes(2)
+    })
+
+    it('B7-PR4: sortBy=title ordena por title asc E desempata por id asc', async () => {
+      mockRange.mockResolvedValue({ data: [TEST_CONTENT], error: null, count: 1 })
+
+      const { GET } = await import('../route')
+      const response = await GET(createValidAuthenticatedRequest('http://localhost/api/content?sortBy=title'))
+      expectSuccess(response)
+
+      expect(mockOrder).toHaveBeenNthCalledWith(1, 'title', { ascending: true })
+      expect(mockOrder).toHaveBeenNthCalledWith(2, 'id', { ascending: true })
+      expect(mockOrder).toHaveBeenCalledTimes(2)
+    })
   })
 
   describe('POST /api/content', () => {

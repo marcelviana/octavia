@@ -110,7 +110,8 @@ const getContentHandler = async (request: NextRequest) => {
     } as const
 
     const [sortColumn, ascending] = sortMap[sortBy] || sortMap.recent
-    query = query.order(sortColumn, { ascending })
+    // Desempate determinístico entre páginas (PRD N6; B7-PR4): id asc após a coluna do sort.
+    query = query.order(sortColumn, { ascending }).order('id', { ascending: true })
 
     // Apply pagination
     const safePage = Math.max(1, page)
