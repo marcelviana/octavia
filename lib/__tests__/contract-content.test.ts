@@ -38,7 +38,7 @@ describe('contentSchemas.create — D5: content_data é objeto-ou-null no topo',
   // {annotations, sections, meta} e SEM `lyrics`. Sob a D5 (tipado-passthrough)
   // vira 400 nomeando content_data.lyrics. Controle negativo do gate antigo:
   // commit 1 = it.fails contra o schema atual (aceita); commit 2 = it.
-  it.fails('Lyrics com objeto aninhado SEM lyrics → 400 content_data.lyrics (era aceito)', () => {
+  it('Lyrics com objeto aninhado SEM lyrics → 400 content_data.lyrics (era aceito)', () => {
     const r = contentSchemas.create.safeParse({
       ...MIN_CREATE,
       content_data: { annotations: [], sections: [{ name: 'A' }], meta: { n: 1 } },
@@ -71,7 +71,7 @@ describe('contentSchemas — D5: content_data por tipo (tipado-passthrough)', ()
         expect(contentSchemas.create.safeParse({ title: 'x', content_type: type, content_data: null }).success).toBe(true)
       })
 
-      it.fails(`objeto SEM ${key} → 400 field content_data.${key}`, () => {
+      it(`objeto SEM ${key} → 400 field content_data.${key}`, () => {
         const r = contentSchemas.create.safeParse({ title: 'x', content_type: type, content_data: { outra: 'coisa' } })
         expect(r.success).toBe(false)
         if (!r.success) {
@@ -80,7 +80,7 @@ describe('contentSchemas — D5: content_data por tipo (tipado-passthrough)', ()
         }
       })
 
-      it.fails(`${key} com número → 400 "deve ser string"`, () => {
+      it(`${key} com número → 400 "deve ser string"`, () => {
         const r = contentSchemas.create.safeParse({ title: 'x', content_type: type, content_data: { [key]: 1 } })
         expect(r.success).toBe(false)
         if (!r.success) {
@@ -109,7 +109,7 @@ describe('contentSchemas — D5: content_data por tipo (tipado-passthrough)', ()
     if (r.success) expect(r.data.content_data).toEqual(editorShaped) // nunca altera
   })
 
-  it.fails('update com content_type Tab e content_data {} → 400 content_data.tablature', () => {
+  it('update com content_type Tab e content_data {} → 400 content_data.tablature', () => {
     const r = contentSchemas.update.safeParse({ id: '11111111-2222-3333-4444-555555555555', content_type: 'Tab', content_data: {} })
     expect(r.success).toBe(false)
     if (!r.success) expect(r.error.issues.map((i) => i.path.join('.'))).toContain('content_data.tablature')

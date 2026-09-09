@@ -527,7 +527,7 @@ describe('B3 contrato — /api/content (PR-2)', () => {
   // handler lê content_type da linha (SELECT condicional, com ownership no
   // WHERE) e aplica checkContentData; presente-e-inválido → 400 nomeando
   // content_data.<chave>. Commit 1 = it.fails (hoje grava sem olhar); commit 2 = it.
-  it.fails('B7-PR5: PUT sem content_type com content_data inválido para a linha (Tab) → 400 content_data.tablature', async () => {
+  it('B7-PR5: PUT sem content_type com content_data inválido para a linha (Tab) → 400 content_data.tablature', async () => {
     mockUpdate.mockReturnValue({ eq: mockEq })
     // 1ª ida ao banco: SELECT content_type da linha do usuário
     mockSingle.mockResolvedValue({ data: { content_type: 'Tab' }, error: null })
