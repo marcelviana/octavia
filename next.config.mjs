@@ -3,6 +3,21 @@
 
 const nextConfig = {
   serverExternalPackages: ['firebase-admin'],
+  // B7-PR3 (docs/ux/B7-PRECHECK.md H-C1, decisão B7-D3): toda resposta de
+  // /api/* sai com `private, no-store`. Ponto único: nenhum handler emite
+  // Cache-Control e o no-store de lib/security-headers.ts nunca chega às
+  // rotas (o matcher do middleware exclui /api) — sem isto a Vercel injeta
+  // `public, max-age=0, must-revalidate`. /api/proxy fica de FORA por
+  // decisão: é stream de arquivo do palco e repassa o Cache-Control do
+  // upstream (app/api/proxy/route.ts). Gate: tests/config/next-headers.test.ts.
+  async headers() {
+    return [
+      {
+        source: '/api/:path((?!proxy).*)',
+        headers: [{ key: 'Cache-Control', value: 'private, no-store' }],
+      },
+    ]
+  },
   eslint: {
     // Run ESLint during builds to catch issues
     ignoreDuringBuilds: false,
