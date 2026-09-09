@@ -22,14 +22,14 @@ async function headerRules(): Promise<Array<{ source: string; headers: Array<{ k
 }
 
 describe('next.config.mjs headers() — B7-PR3', () => {
-  it.fails(`tem a regra ${SOURCE} com Cache-Control: private, no-store`, async () => {
+  it(`tem a regra ${SOURCE} com Cache-Control: private, no-store`, async () => {
     const rules = await headerRules()
     const rule = rules.find((r) => r.source === SOURCE)
     expect(rule).toBeDefined()
     expect(rule!.headers).toContainEqual({ key: 'Cache-Control', value: 'private, no-store' })
   })
 
-  it.fails('nenhuma regra de headers cobre /api/proxy (exclusão por decisão B7-D3)', async () => {
+  it('nenhuma regra de headers cobre /api/proxy (exclusão por decisão B7-D3)', async () => {
     const rules = await headerRules()
     expect(rules.length).toBeGreaterThan(0)
     // Só a regra do /api/* é esperada; nenhuma com source que case o proxy literalmente.

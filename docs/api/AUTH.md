@@ -32,6 +32,10 @@
   `firebase-session=<token>`. **O header tem precedência**: nas duas
   cadeias o cookie só é lido quando não há header
   (`firebase-server-utils.ts:154-158`, `secure-auth-utils.ts:266-277`).
+- **Cache HTTP**: toda resposta de `/api/*` **exceto `/api/proxy`** sai com
+  `Cache-Control: private, no-store` (`headers()` do `next.config.mjs`,
+  B7-PR3; gate `tests/config/next-headers.test.ts`); `/api/proxy` repassa o
+  `Cache-Control` do upstream (`app/api/proxy/route.ts:71-74`).
 - Toda verificação roda **só no runtime Node** das rotas
   (`process.env.NEXT_RUNTIME !== 'edge'`, `firebase-server-utils.ts:83`,
   `secure-auth-utils.ts:171`). O `middleware.ts` é **otimista**: checa só
