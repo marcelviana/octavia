@@ -491,7 +491,7 @@ $ sed -n 104,113p app/api/content/route.ts
 112	    const [sortColumn, ascending] = sortMap[sortBy] || sortMap.recent
 113	    query = query.order(sortColumn, { ascending })
 ```
-Sem desempate secundário (`id`) no `order`: dois itens com o mesmo `created_at` têm ordem não garantida entre páginas — mais um motivo para o dedupe por `id` do T1-R9b `[análise]`.
+Sem desempate secundário (`id`) no `order`: dois itens com o mesmo `created_at` têm ordem não garantida entre páginas — mais um motivo para o dedupe por `id` do T1-R9b `[análise]`. — Fechado no web pela B7-PR4 (`.order('id', { ascending: true })` como desempate após a coluna do sort, nos 4 `sortBy`); o dedupe por `id` do nativo (T1-R9b) permanece por defesa.
 
 ---
 

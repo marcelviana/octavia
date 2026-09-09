@@ -256,7 +256,7 @@ describe('/api/content', () => {
     // por `id` depois da coluna de sortBy — dois itens com o mesmo
     // created_at não trocam de lugar entre páginas. Commit 1 = it.fails
     // contra o código atual (só um order); commit 2 = it.
-    it.fails('B7-PR4: sortBy padrão (recent) ordena por created_at desc E desempata por id asc', async () => {
+    it('B7-PR4: sortBy padrão (recent) ordena por created_at desc E desempata por id asc', async () => {
       mockRange.mockResolvedValue({ data: [TEST_CONTENT], error: null, count: 1 })
 
       const { GET } = await import('../route')
@@ -268,7 +268,7 @@ describe('/api/content', () => {
       expect(mockOrder).toHaveBeenCalledTimes(2)
     })
 
-    it.fails('B7-PR4: sortBy=title ordena por title asc E desempata por id asc', async () => {
+    it('B7-PR4: sortBy=title ordena por title asc E desempata por id asc', async () => {
       mockRange.mockResolvedValue({ data: [TEST_CONTENT], error: null, count: 1 })
 
       const { GET } = await import('../route')
