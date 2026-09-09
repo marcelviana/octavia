@@ -24,6 +24,11 @@
 4. **Namespace do bucket é flat** (`<timestamp>-<nome>`); não há prefixo
    por usuário — registrado como pendência de modelagem multiusuário do
    PRD nativo.
+5. **Policies de `storage.*` versionadas** em `supabase/storage.dump.sql`
+   (B7-D8, 2026-09-09; regenerar com `pnpm db:dump:storage` — exige
+   `supabase link`, passo do Marcel) — 13 policies, todas em
+   `storage.objects` / bucket `content-files`; leitura e achados em
+   [`docs/ux/B7-ENCERRAMENTO.md`](../ux/B7-ENCERRAMENTO.md) §4.
 
 ## Rotas
 
