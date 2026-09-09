@@ -1,0 +1,2 @@
+$ pnpm exec tsc --noEmit; echo EXIT=$?
+EXIT=0

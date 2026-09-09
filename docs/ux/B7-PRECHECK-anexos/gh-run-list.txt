@@ -1,0 +1,87 @@
+$ gh run list --workflow ci.yml --limit 30 --json conclusion,headBranch,databaseId,createdAt,updatedAt,displayTitle
+34223021876 success main 2026-09-08T11:52:56Z → 2026-09-08T11:55:41Z  Merge pull request #270 from marcelviana/n0/encerramento
+34222049819 success n0/encerramento 2026-09-08T11:41:49Z → 2026-09-08T11:45:13Z  docs(N0): encerramento — N0 ✅, H15 verdadeira, herança para B e N1
+34172801959 success n0/encerramento 2026-09-08T00:16:46Z → 2026-09-08T00:19:52Z  docs(N0): encerramento — N0 ✅, H15 verdadeira, herança para B e N1
+34172561571 success main 2026-09-08T00:12:22Z → 2026-09-08T00:15:34Z  Merge pull request #269 from marcelviana/n0/aceite-tab-s6
+34165256354 success n0/aceite-tab-s6 2026-09-07T22:02:27Z → 2026-09-07T22:05:30Z  docs(N0): aceite no Tab S6 — N0-H9 verdadeira
+34160854049 success main 2026-09-07T20:49:25Z → 2026-09-07T20:52:55Z  Merge pull request #268 from marcelviana/n0/pr5-pdf-h16
+34147586146 success n0/pr5-pdf-h16 2026-09-07T17:26:00Z → 2026-09-07T17:29:17Z  feat(N0-PR5): PDF do cache em modo avião + H16
+34146190225 success main 2026-09-07T17:06:17Z → 2026-09-07T17:09:28Z  Merge pull request #267 from marcelviana/n0/pr4-h15
+34133725282 success n0/pr4-h15 2026-09-07T14:34:52Z → 2026-09-07T14:37:57Z  docs(N0-PR4): H15 — verdadeira
+34129780848 success main 2026-09-07T13:51:57Z → 2026-09-07T13:55:25Z  Merge pull request #266 from marcelviana/n0/pr3-auth-setlists
+34128158227 success n0/pr3-auth-setlists 2026-09-07T13:34:37Z → 2026-09-07T13:37:51Z  feat(N0-PR3): login email/senha + GET /api/setlists bearer + política T1-R3 no core
+34127828823 failure n0/pr3-auth-setlists 2026-09-07T13:31:04Z → 2026-09-07T13:33:21Z  feat(N0-PR3): login email/senha + GET /api/setlists bearer + política T1-R3 no core
+34126002427 success main 2026-09-07T13:11:36Z → 2026-09-07T13:15:06Z  Merge pull request #265 from marcelviana/n0/pr2-native-blank
+34117642809 success n0/pr2-native-blank 2026-09-07T11:38:16Z → 2026-09-07T11:41:21Z  feat(N0-PR2): apps/native blank no workspace + octavia_tab + native.yml
+34117343174 success n0/pr2-native-blank 2026-09-07T11:34:50Z → 2026-09-07T11:37:24Z  feat(N0-PR2): apps/native blank no workspace + octavia_tab + native.yml
+34116251600 success main 2026-09-07T11:22:05Z → 2026-09-07T11:25:17Z  Merge pull request #264 from marcelviana/n0/pr1-workspace-core
+34115588532 success n0/pr1-workspace-core 2026-09-07T11:14:19Z → 2026-09-07T11:17:43Z  feat(N0-PR1): workspace + packages/core sentinela
+34115301326 failure n0/pr1-workspace-core 2026-09-07T11:11:07Z → 2026-09-07T11:12:28Z  feat(N0-PR1): workspace + packages/core sentinela
+34114412246 success main 2026-09-07T11:00:57Z → 2026-09-07T11:04:02Z  Merge pull request #263 from marcelviana/n0/precheck
+34113591263 success n0/precheck 2026-09-07T10:51:14Z → 2026-09-07T10:54:28Z  docs(N0): pre-check
+34029400352 failure main 2026-09-06T11:08:56Z → 2026-09-06T11:10:16Z  Merge pull request #262 from marcelviana/c-pr1-errata
+34029361066 success c-pr1-errata 2026-09-06T11:08:07Z → 2026-09-06T11:11:20Z  docs(C): PR-1b — errata final do Bloco C (medições do Marcel, 2026-09-05)
+33989795599 success c-pr1-errata 2026-09-05T20:20:11Z → 2026-09-05T20:23:26Z  docs(C): PR-1b — errata final do Bloco C (medições do Marcel, 2026-09-05)
+33989078055 success main 2026-09-05T20:05:53Z → 2026-09-05T20:09:02Z  Merge pull request #261 from marcelviana/c-pr1-encerramento
+33925332136 success c-pr1-encerramento 2026-09-04T22:23:52Z → 2026-09-04T22:26:50Z  docs(C): PR-1 — encerramento do Bloco C
+33922556484 success c-pr1-encerramento 2026-09-04T21:45:41Z → 2026-09-04T21:48:52Z  docs(C): PR-1 — encerramento do Bloco C
+33922302512 success main 2026-09-04T21:42:16Z → 2026-09-04T21:45:15Z  Merge pull request #260 from marcelviana/c-pr0-prd-tela-1
+33920900708 success c-pr0-prd-tela-1 2026-09-04T21:23:52Z → 2026-09-04T21:26:10Z  docs(C): PR-0 — PRD da tela 1 (modo performance + setlists, leitura)
+33920107751 failure c-pr0-prd-tela-1 2026-09-04T21:13:53Z → 2026-09-04T21:15:10Z  docs(C): PR-0 — PRD da tela 1 (modo performance + setlists, leitura)
+33919615454 success main 2026-09-04T21:07:37Z → 2026-09-04T21:10:51Z  docs(C): pre-check do Bloco C — Fases A e B (inventário de auth, shap…
+
+## steps dos 3 últimos verdes na main: gh run view <id> --json jobs --jq ".jobs[].steps[] | …"
+--- 34223021876
+  Set up job: 2026-09-08T11:53:00Z → 2026-09-08T11:53:03Z
+  Run actions/checkout@v4: 2026-09-08T11:53:03Z → 2026-09-08T11:53:06Z
+  Run pnpm/action-setup@v4: 2026-09-08T11:53:06Z → 2026-09-08T11:53:07Z
+  Run actions/setup-node@v4: 2026-09-08T11:53:07Z → 2026-09-08T11:53:20Z
+  Install dependencies: 2026-09-08T11:53:20Z → 2026-09-08T11:53:26Z
+  Lint: 2026-09-08T11:53:26Z → 2026-09-08T11:53:31Z
+  Type-check dos testes (informativo — zerar o passivo e promover a bloqueante, PLANO-TRANSICAO B8): 2026-09-08T11:53:31Z → 2026-09-08T11:53:40Z
+  Type-check packages/core: 2026-09-08T11:53:40Z → 2026-09-08T11:53:41Z
+  Test: 2026-09-08T11:53:41Z → 2026-09-08T11:54:11Z
+  Test coverage: 2026-09-08T11:54:11Z → 2026-09-08T11:54:44Z
+  Upload coverage to Codecov: 2026-09-08T11:54:44Z → 2026-09-08T11:54:45Z
+  Upload coverage artifacts: 2026-09-08T11:54:45Z → 2026-09-08T11:54:47Z
+  Build: 2026-09-08T11:54:47Z → 2026-09-08T11:55:37Z
+  Post Run actions/setup-node@v4: 2026-09-08T11:55:37Z → 2026-09-08T11:55:37Z
+  Post Run pnpm/action-setup@v4: 2026-09-08T11:55:37Z → 2026-09-08T11:55:37Z
+  Post Run actions/checkout@v4: 2026-09-08T11:55:37Z → 2026-09-08T11:55:37Z
+  Complete job: 2026-09-08T11:55:37Z → 2026-09-08T11:55:37Z
+--- 34172561571
+  Set up job: 2026-09-08T00:12:25Z → 2026-09-08T00:12:26Z
+  Run actions/checkout@v4: 2026-09-08T00:12:26Z → 2026-09-08T00:12:27Z
+  Run pnpm/action-setup@v4: 2026-09-08T00:12:27Z → 2026-09-08T00:12:29Z
+  Run actions/setup-node@v4: 2026-09-08T00:12:29Z → 2026-09-08T00:12:39Z
+  Install dependencies: 2026-09-08T00:12:39Z → 2026-09-08T00:12:45Z
+  Lint: 2026-09-08T00:12:45Z → 2026-09-08T00:12:50Z
+  Type-check dos testes (informativo — zerar o passivo e promover a bloqueante, PLANO-TRANSICAO B8): 2026-09-08T00:12:50Z → 2026-09-08T00:13:02Z
+  Type-check packages/core: 2026-09-08T00:13:02Z → 2026-09-08T00:13:03Z
+  Test: 2026-09-08T00:13:03Z → 2026-09-08T00:13:42Z
+  Test coverage: 2026-09-08T00:13:42Z → 2026-09-08T00:14:24Z
+  Upload coverage to Codecov: 2026-09-08T00:14:24Z → 2026-09-08T00:14:25Z
+  Upload coverage artifacts: 2026-09-08T00:14:25Z → 2026-09-08T00:14:26Z
+  Build: 2026-09-08T00:14:26Z → 2026-09-08T00:15:31Z
+  Post Run actions/setup-node@v4: 2026-09-08T00:15:31Z → 2026-09-08T00:15:31Z
+  Post Run pnpm/action-setup@v4: 2026-09-08T00:15:31Z → 2026-09-08T00:15:32Z
+  Post Run actions/checkout@v4: 2026-09-08T00:15:32Z → 2026-09-08T00:15:32Z
+  Complete job: 2026-09-08T00:15:32Z → 2026-09-08T00:15:32Z
+--- 34160854049
+  Set up job: 2026-09-07T20:49:28Z → 2026-09-07T20:49:29Z
+  Run actions/checkout@v4: 2026-09-07T20:49:29Z → 2026-09-07T20:49:30Z
+  Run pnpm/action-setup@v4: 2026-09-07T20:49:30Z → 2026-09-07T20:49:32Z
+  Run actions/setup-node@v4: 2026-09-07T20:49:32Z → 2026-09-07T20:49:36Z
+  Install dependencies: 2026-09-07T20:49:36Z → 2026-09-07T20:49:50Z
+  Lint: 2026-09-07T20:49:50Z → 2026-09-07T20:49:56Z
+  Type-check dos testes (informativo — zerar o passivo e promover a bloqueante, PLANO-TRANSICAO B8): 2026-09-07T20:49:56Z → 2026-09-07T20:50:08Z
+  Type-check packages/core: 2026-09-07T20:50:08Z → 2026-09-07T20:50:09Z
+  Test: 2026-09-07T20:50:09Z → 2026-09-07T20:50:50Z
+  Test coverage: 2026-09-07T20:50:50Z → 2026-09-07T20:51:34Z
+  Upload coverage to Codecov: 2026-09-07T20:51:34Z → 2026-09-07T20:51:35Z
+  Upload coverage artifacts: 2026-09-07T20:51:35Z → 2026-09-07T20:51:36Z
+  Build: 2026-09-07T20:51:36Z → 2026-09-07T20:52:47Z
+  Post Run actions/setup-node@v4: 2026-09-07T20:52:47Z → 2026-09-07T20:52:53Z
+  Post Run pnpm/action-setup@v4: 2026-09-07T20:52:53Z → 2026-09-07T20:52:53Z
+  Post Run actions/checkout@v4: 2026-09-07T20:52:53Z → 2026-09-07T20:52:53Z
+  Complete job: 2026-09-07T20:52:53Z → 2026-09-07T20:52:53Z

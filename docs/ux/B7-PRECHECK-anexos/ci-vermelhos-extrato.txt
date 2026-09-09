@@ -1,0 +1,16 @@
+$ gh run view <id> --log-failed   — extrato (linhas com "×" de teste falho e "AssertionError"; ANSI removido; logs completos de 1.174–1.808 linhas cada ficaram no scratchpad)
+=== run 34127828823 (    1808 linhas; menções ao arquivo do flake: 27)
+build	Test coverage	2026-09-07T13:32:38.5735047Z  × tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Navigation Response Time Tests (<100ms requirement) > should handle rapid navigation without performance degradation 69ms
+build	Test coverage	2026-09-07T13:33:16.2640337Z AssertionError: expected 3.0160523999999898 to be less than 2.445557099999985
+=== run 34115301326 (    1174 linhas; menções ao arquivo do flake: 20)
+build	Test	2026-09-07T11:12:21.6389119Z      × remove acentos: Águas → aguas 9ms
+build	Test	2026-09-07T11:12:23.6632423Z AssertionError: expected 'aguas' to be 'Aguas' // Object.is equality
+build	Test	2026-09-07T11:12:23.6736860Z ##[error]AssertionError: expected 'aguas' to be 'Aguas' // Object.is equality
+=== run 34029400352 (    1784 linhas; menções ao arquivo do flake: 22)
+2026-09-06T11:09:38.2831892Z        × should handle rapid navigation without performance degradation 90ms
+2026-09-06T11:10:12.8922037Z AssertionError: expected 3.7640121999999794 to be less than 2.8484466
+2026-09-06T11:10:12.9110707Z ##[error]AssertionError: expected 3.7640121999999794 to be less than 2.8484466
+=== run 33920107751 (    1803 linhas; menções ao arquivo do flake: 22)
+2026-09-04T21:14:37.4327241Z        × should handle rapid navigation without performance degradation 76ms
+2026-09-04T21:15:05.6443167Z AssertionError: expected 3.636967999999888 to be less than 2.6964154500000292
+2026-09-04T21:15:05.6595217Z ##[error]AssertionError: expected 3.636967999999888 to be less than 2.6964154500000292

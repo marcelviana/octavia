@@ -1,0 +1,2 @@
+$ pnpm exec tsc -p packages/core/tsconfig.json --noEmit; echo EXIT=$?
+EXIT=0

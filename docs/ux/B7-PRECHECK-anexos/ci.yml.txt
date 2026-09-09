@@ -1,0 +1,47 @@
+$ cat .github/workflows/ci.yml   (HEAD 06bf93e)
+name: CI
+'on':
+  push:
+    branches:
+    - main
+  pull_request: null
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: pnpm/action-setup@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20
+        cache: pnpm
+    - name: Install dependencies
+      run: pnpm install --frozen-lockfile
+    - name: Lint
+      run: pnpm lint
+    - name: Type-check dos testes (informativo — zerar o passivo e promover a bloqueante, PLANO-TRANSICAO B8)
+      run: pnpm exec tsc -p tsconfig.test.json --noEmit
+      continue-on-error: true
+    - name: Type-check packages/core
+      run: pnpm exec tsc -p packages/core/tsconfig.json --noEmit
+    - name: Test
+      run: pnpm test:unit
+    - name: Test coverage
+      run: pnpm test:ci
+    - name: Upload coverage to Codecov
+      if: always()
+      uses: codecov/codecov-action@v4
+      with:
+        file: ./coverage/coverage-final.json
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+        verbose: true
+    - name: Upload coverage artifacts
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage
+        path: coverage
+    - name: Build
+      run: pnpm build
