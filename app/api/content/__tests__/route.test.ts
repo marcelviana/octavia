@@ -523,6 +523,45 @@ describe('B3 contrato — /api/content (PR-2)', () => {
     expect(await response.clone().text()).toBe('{"error":"Content not found","code":"NOT_FOUND"}')
   })
 
+  // B7-PR5 item 3 (opção a): PUT com content_data e SEM content_type — o
+  // handler lê content_type da linha (SELECT condicional, com ownership no
+  // WHERE) e aplica checkContentData; presente-e-inválido → 400 nomeando
+  // content_data.<chave>. Commit 1 = it.fails (hoje grava sem olhar); commit 2 = it.
+  it.fails('B7-PR5: PUT sem content_type com content_data inválido para a linha (Tab) → 400 content_data.tablature', async () => {
+    mockUpdate.mockReturnValue({ eq: mockEq })
+    // 1ª ida ao banco: SELECT content_type da linha do usuário
+    mockSingle.mockResolvedValue({ data: { content_type: 'Tab' }, error: null })
+    const { PUT } = await import('../route')
+    const response = await PUT(
+      createValidAuthenticatedRequest('http://localhost/api/content', {
+        method: 'PUT',
+        body: { id: '00000000-0000-4000-8000-000000000000', content_data: { tablature: 1 } },
+      })
+    )
+    expect(response.status).toBe(400)
+    const data = await getJsonResponse(response)
+    expect(data.code).toBe('VALIDATION_ERROR')
+    expect(data.details).toEqual([{ field: 'content_data.tablature', message: 'deve ser string', code: 'custom' }])
+    expect(mockSelect).toHaveBeenCalledWith('content_type')
+    expect(mockUpdate).not.toHaveBeenCalled()
+  })
+
+  it('B7-PR5: PUT com content_type no payload segue com UMA ida ao banco (sem SELECT prévio)', async () => {
+    mockUpdate.mockReturnValue({ eq: mockEq })
+    mockSingle.mockResolvedValue({ data: { ...TEST_CONTENT, content_type: 'Tab', content_data: { tablature: 'e|--0--|' } }, error: null })
+    const { PUT } = await import('../route')
+    const response = await PUT(
+      createValidAuthenticatedRequest('http://localhost/api/content', {
+        method: 'PUT',
+        body: { id: '00000000-0000-4000-8000-000000000000', content_type: 'Tab', content_data: { tablature: 'e|--0--|' } },
+      })
+    )
+    expect(response.status).toBe(200)
+    expect(mockFrom).toHaveBeenCalledTimes(1)
+    expect(mockSelect).not.toHaveBeenCalledWith('content_type')
+    expect(mockUpdate).toHaveBeenCalledTimes(1)
+  })
+
   it('400 DELETE id malformado: VALIDATION_ERROR com field:"id" (emenda 4)', async () => {
     const { DELETE } = await import('../route')
     const response = await DELETE(
