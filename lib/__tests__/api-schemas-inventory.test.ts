@@ -14,7 +14,7 @@ import { commonSchemas } from '@/lib/api-schemas'
  * nº 7); commit 2 = it.
  */
 describe('commonSchemas — inventário (B7-PR2)', () => {
-  it.fails('não expõe contentType (enum falso removido)', () => {
+  it('não expõe contentType (enum falso removido)', () => {
     expect('contentType' in commonSchemas).toBe(false)
   })
 })

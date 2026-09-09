@@ -343,7 +343,7 @@ describe('OWASP Top 10 Security Penetration Tests', () => {
     // GET /api/debug/config (sem auth; 404 só por NODE_ENV) foi removida; o
     // gate é o diretório não existir. Commit 1 = it.fails contra o código
     // presente (controle negativo, regra nº 7); commit 2 = it.
-    it.fails('B7-PR2 inventário: app/api/debug não existe (rota sem auth removida)', () => {
+    it('B7-PR2 inventário: app/api/debug não existe (rota sem auth removida)', () => {
       expect(existsSync(join(process.cwd(), 'app/api/debug'))).toBe(false)
     })
 
