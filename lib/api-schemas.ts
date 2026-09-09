@@ -30,10 +30,9 @@ export const commonSchemas = {
   // Email validation
   email: z.string().email('Invalid email format'),
 
-  // Content types enum
-  contentType: z.enum(['Lyrics', 'Chords', 'Tabs', 'Piano', 'Drums'], {
-    errorMap: () => ({ message: 'Invalid content type' })
-  }),
+  // (B7-PR2) O enum falso `contentType` ['Lyrics','Chords','Tabs','Piano',
+  // 'Drums'] que vivia aqui foi removido: sem consumidor desde o B2; o enum
+  // canônico é `contentTypeSchema` (abaixo), derivado de types/content.ts.
 
   // Pagination
   pagination: z.object({

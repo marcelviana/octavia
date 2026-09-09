@@ -32,15 +32,7 @@ export interface FormattedSetlistSong {
   content: ContentData
 }
 
-export interface Setlist {
-  id: string
-  name: string
-  description: string | null
-  user_id: string
-  event_date: string | null
-  venue: string | null
-  is_public: boolean
-  created_at: string
-  updated_at: string
-  setlist_songs?: FormattedSetlistSong[]
-}
+// (B7-PR2, decisão B7-D4) A interface `Setlist` que vivia aqui foi removida:
+// zero consumidores e drift contra o banco (`event_date` não existe; a coluna
+// é `performance_date`). O tipo da linha real é
+// Database['public']['Tables']['setlists']['Row'] em types/database.types.ts.

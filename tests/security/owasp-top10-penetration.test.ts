@@ -6,6 +6,8 @@
  */
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
+import { existsSync } from 'node:fs'
+import { join } from 'node:path'
 import { NextRequest, NextResponse } from 'next/server'
 
 // Import API routes for testing
@@ -336,14 +338,13 @@ describe('OWASP Top 10 Security Penetration Tests', () => {
   })
 
   describe('A05:2021 – Security Misconfiguration', () => {
-    it.skip('TODO: Fix OWASP A05 debug info test - should not expose debug information in production', async () => {
-      const debugRequest = new NextRequest('http://localhost:3000/api/debug/config', {
-        method: 'GET'
-      })
-
-      // Debug endpoints should not be accessible in production
-      const response = await fetch('http://localhost:3000/api/debug/config')
-      expect([404, 403]).toContain(response.status)
+    // B7-PR2 (docs/ux/B7-PRECHECK.md H-C4): teste de INVENTÁRIO, sem rede —
+    // substitui o it.skip que fazia fetch real em localhost:3000. A rota
+    // GET /api/debug/config (sem auth; 404 só por NODE_ENV) foi removida; o
+    // gate é o diretório não existir. Commit 1 = it.fails contra o código
+    // presente (controle negativo, regra nº 7); commit 2 = it.
+    it('B7-PR2 inventário: app/api/debug não existe (rota sem auth removida)', () => {
+      expect(existsSync(join(process.cwd(), 'app/api/debug'))).toBe(false)
     })
 
     it.skip('TODO: Fix OWASP A05 secure defaults test - should use secure default configurations', async () => {
