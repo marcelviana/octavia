@@ -3,8 +3,9 @@ import type { BrowserContext, Page } from '@playwright/test'
 /**
  * Intercepta POST/DELETE /api/auth/session com 200 fake, por dois motivos:
  *
- * 1. Rate limit: o endpoint usa RATE_LIMIT_CONFIGS.AUTH (5 req / 15 min por
- *    IP). Cada page load autenticado dispara um POST (setSessionCookie no
+ * 1. Rate limit: o endpoint usa as famílias SESSION (120/15min por uid,
+ *    token válido) e SESSION_DELETE (30/15min por IP) de
+ *    lib/user-rate-limit.ts. Cada page load autenticado dispara um POST (setSessionCookie no
  *    firebase-auth-context) e cada load deslogado dispara um DELETE
  *    (clearSessionCookie) — o harvest tem dezenas de células e estouraria o
  *    limite imediatamente.

@@ -15,7 +15,7 @@ import fs from 'node:fs'
  * em docs/. Usa as setlists canônicas do discovery.json.
  *
  * PRÉ-REQUISITO (auth): o projeto set14-gate NÃO depende do projeto setup —
- * o setup queima 1 POST /api/auth/session (orçamento AUTH 5/15min) por
+ * o setup queima 1 POST /api/auth/session (família SESSION, 120/15min por uid) por
  * execução, então ele é rodado manualmente, uma vez, antes:
  *
  *   pnpm exec playwright test --config=playwright.ux-audit.config.ts \

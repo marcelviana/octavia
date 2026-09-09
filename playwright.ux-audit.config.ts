@@ -65,8 +65,8 @@ export default defineConfig({
       // Diferenças deliberadas vs. harvest: service worker LIGADO (o SW é
       // parte do app real e o offline/J6 depende dele), trace ligado em tudo
       // (traces são a evidência das medições) e SEM dependência do setup —
-      // o setup queima 1 POST /api/auth/session (orçamento AUTH 5/15min) por
-      // execução; na Fase D ele é rodado manualmente uma única vez.
+      // o setup queima 1 POST /api/auth/session (família SESSION, 120/15min
+      // por uid) por execução; na Fase D ele é rodado manualmente uma única vez.
       name: 'fase-d',
       testMatch: /fase-d\/.*\.spec\.ts/,
       use: {
