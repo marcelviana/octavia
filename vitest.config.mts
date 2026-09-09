@@ -2,6 +2,10 @@ import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 
+// Padrão default de coleta do Vitest — explícito para o projeto `web` poder
+// excluir packages/** sem perder nada do que era coletado antes (B7-PR7).
+const DEFAULT_INCLUDE = ['**/*.{test,spec}.?(c|m)[jt]s?(x)']
+
 export default defineConfig({
   plugins: [react()],
   test: {
@@ -26,6 +30,40 @@ export default defineConfig({
       NODE_ENV: 'test',
       VITEST: 'true'
     },
+    // B7-PR7 (docs/ux/B7-PRECHECK.md H-N4): dois projetos. `web` herda tudo
+    // acima (jsdom, setup, alias @) e deixa de coletar packages/**; `core` é
+    // Node puro, SEM setupFiles e SEM alias — isolamento real do
+    // packages/core (gate: packages/core/src/isolation.test.ts). Coverage e
+    // thresholds continuam na raiz.
+    projects: [
+      {
+        extends: true,
+        test: {
+          name: 'web',
+          include: DEFAULT_INCLUDE,
+          exclude: [
+            'node_modules/**',
+            'tests/ux-audit/**/*',
+            '**/*.e2e.{ts,tsx}',
+            '**/e2e/**/*',
+            '**/*integration*.test.{ts,tsx}',
+            '**/integration/**/*.test.{ts,tsx}',
+            'apps/**',
+            'packages/**'
+          ],
+        },
+      },
+      {
+        test: {
+          name: 'core',
+          environment: 'node',
+          setupFiles: [],
+          globals: true,
+          include: ['packages/core/**/*.test.ts'],
+          exclude: ['node_modules/**'],
+        },
+      },
+    ],
     coverage: {
       enabled: false, // Disabled by default - use test:coverage script to enable
       provider: 'istanbul', // Using istanbul instead of v8 for better Next.js compatibility
