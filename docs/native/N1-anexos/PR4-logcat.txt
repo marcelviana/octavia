@@ -1,0 +1,106 @@
+N1-PR4 — logcat do emulador octavia_tab32 (API 32, 1138×711 dp), 2026-09-10.
+Saídas literais de `adb -s emulator-5554 logcat -d -s ReactNativeJS | grep 'OCTAVIA:'`
+(prefixo de data/pid removido com sed). Contrato das linhas: docs/native/LOGS-OCTAVIA.md.
+
+== A14 — bordas navegam; as barras NÃO (controle negativo) ==
+Taps: borda direita ×3 (x=2400), borda esquerda ×1 (x=150), barra superior (y=60),
+barra inferior (y=1540). Só os quatro primeiros produziram `nav`:
+OCTAVIA: nav n=2/60 setlist=4340bf95 t=79
+OCTAVIA: placeholder kind=file-missing
+OCTAVIA: nav n=3/60 setlist=4340bf95 t=84
+OCTAVIA: nav n=4/60 setlist=4340bf95 t=74
+OCTAVIA: nav n=3/60 setlist=4340bf95 t=55
+(nenhuma linha após os taps nas barras — a zona é 15% × altura ENTRE as barras, D-1)
+
+== A17 — 59 navegações consecutivas na setlist de 60 ==
+n=59  min=45  p50=59  p90=81  **p95=97**  max=536  media=71,3 ms   (aceite: p95 < 100 ms)
+Amostras completas em PR4-a17-tempos.txt. Três passaram de 100 ms; a maior (536 ms) é a
+primeira renderização de um item que cai em placeholder.
+OCTAVIA: nav n=2/60 setlist=4340bf95 t=63
+… (57 linhas) …
+OCTAVIA: nav n=60/60 setlist=4340bf95 t=66
+
+== T1-R29 — fim de setlist e volta pela borda ==
+OCTAVIA: end-of-setlist n=60
+OCTAVIA: nav n=60/60 setlist=fim t=0
+$ adb shell pidof rocks.octavia.app → 4594   (controle negativo: NÃO saiu do app)
+Tela: PR4-screencap-s5.png ("FIM DA SETLIST", "Voltar ao início", "Sair").
+
+== T1-R28 — índice a 1 tap e salto ==
+OCTAVIA: index open
+OCTAVIA: index jump n=3
+Custo do salto: 2 taps (Índice + item) a partir do palco — dentro dos ≤ 3 do aceite.
+
+== A15 — zoom e tema, 1 tap cada ==
+OCTAVIA: zoom dp=26
+OCTAVIA: theme=light
+Telas: PR4-screencap-s3-texto.png (escuro, 22 dp) e PR4-screencap-tema-claro.png
+(claro, 26 dp — o botão vira "Escuro"). O estado do zoom e do tema sobrevive à troca de
+música (T1-R32).
+
+== T1-R30 — auto-scroll no palco ==
+OCTAVIA: autoscroll on t=61      (aceite < 100 ms)
+OCTAVIA: autoscroll off t=0
+Em item de arquivo o controle fica desabilitado COM motivo, visível na barra:
+"auto-scroll só em texto" (PR4-screencap-s3f.png).
+
+DEFEITO MEDIDO E CORRIGIDO AQUI: na primeira tentativa o tap no auto-scroll não produzia
+linha nenhuma. Causa: o `useEffect` que reinicia a rolagem tinha `validade` e `content` nas
+dependências — objetos recriados a cada render —, então ele rodava também no render causado
+por `setRodando(true)` e cancelava o `requestAnimationFrame` antes do primeiro frame. As
+dependências passaram a ser só valores estáveis.
+
+== A18 / T1-R35 — nota da música ==
+A nota aparece na barra do palco ("Nota: Observação da música 1: mo…") e no índice, na
+segunda linha do item (PR4-screencap-s2.png). Song sem nota não abre área vazia.
+
+== A8 / T1-R7 — item inválido (fixture) ==
+Fixture no cache (avião ligado para o sync não sobrescrever): a song da posição 3 aponta
+para um content com `content_data: null` e `file_url: null`.
+Índice: "sem conteúdo · Gilberto Gil" em #C9923B, na posição certa (PR4-screencap-s2-bis.png).
+Palco:
+OCTAVIA: index jump n=3
+OCTAVIA: placeholder kind=no-body
+OCTAVIA: nav n=4/9 setlist=00c2c1f4 t=64     ← a borda continua funcionando no placeholder
+
+== A12 / T1-R24 — bis (fixture) ==
+DIVERGÊNCIA: **nenhuma setlist da conta de audit tem bis**. O pre-check A3 mediu "69 songs,
+60 content_id distintos", mas o compartilhamento é ENTRE setlists, não repetição dentro de
+uma. Medido agora no cache: Estresse 60/60, Show padrão 8/8, Solo 1/1 distintos.
+Fixture: a song da posição 2 duplicada como posição 9, com `setlist_songs.id` novo e nota
+própria. Resultado: duas telas distintas para o mesmo content —
+  PR4-bis-pos2-barra.png → "2 DE 9  …  [UX-AUDIT] Partitura de 1 página · Compositor Anônimo"
+  PR4-bis-pos9-barra.png → "9 DE 9  …  mesma música  …  Nota: bis (fixture da N1-PR4)"
+
+== A14 — rotação preserva a posição ==
+$ adb shell settings put system accelerometer_rotation 0; ... user_rotation 1
+PR4-rot-antes-barra.png  → "6 DE 9" (paisagem)
+PR4-rot-depois-barra.png → "6 DE 9" (retrato)
+$ adb shell pidof rocks.octavia.app → 5500   (sem crash)
+
+== A16 — keep-awake ==
+OCTAVIA: keepawake on     (ao focar o palco)
+OCTAVIA: keepawake off    (ao sair)
+
+INSTRUMENTO DESCARTADO: `dumpsys window | grep -c "fl=KEEP_SCREEN_ON"` devolve 1 o tempo
+todo enquanto o app vive — inclusive fora do palco e com o app em background — e só cai a 0
+com `am force-stop`. A flag é do **dev client do Expo**, não do `expo-keep-awake`; no build
+de desenvolvimento ela não distingue palco de não-palco. O instrumento válido é o par de
+linhas acima; os 15 min de tela acesa são medição do Tab S6, no aceite (PR7).
+
+DEFEITO CORRIGIDO NO CAMINHO: o `useKeepAwake` solta o lock no unmount, mas o native-stack
+**não desmonta** a tela do palco ao navegar para outra da pilha. Trocado por
+`useFocusEffect` + `activateKeepAwakeAsync`/`deactivateKeepAwake` com tag própria, que
+liga e desliga por FOCO.
+
+== Restauração e encerramento ==
+Avião desligado (`airplane_mode_on` 0, ping 16,648 ms); o sync real substituiu a fixture:
+OCTAVIA: sync ok setlists=3 content=66 pages=1 t=2934
+$ cache → UX-AUDIT Estresse: 60, UX-AUDIT Show padrão: 8, UX-AUDIT Solo: 1
+(a setlist voltou de 9 para 8 songs — T1-R9, substituição sem merge, mais uma vez)
+
+$ adb reverse --remove-all; adb emu kill; pgrep -c qemu → 0; lsof :8081 → 0
+$ diff (sdkmanager antes) (sdkmanager depois) → vazio
+
+Contabilidade de prod: 0 logins (sessão viva) · setlist-read 4 · content-read 4 = 8 requests
+(teto 8) · bucket 0 · escrita 0 · 401/429 0.

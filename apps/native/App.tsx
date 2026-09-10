@@ -125,6 +125,12 @@ export default function App(): React.JSX.Element {
         ) : (
           <Navigation
             signedIn={estado.fase === 'dentro'}
+            dados={{
+              lista: dados.setlists,
+              contentById: dados.contentById,
+              syncDone: sync.fase !== 'sincronizando',
+              online,
+            }}
             setlists={{
               setlists: dados.setlists,
               contentById: dados.contentById,

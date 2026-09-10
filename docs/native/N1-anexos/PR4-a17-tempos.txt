@@ -1,0 +1,5 @@
+$ sed -E "s/.* t=([0-9]+)$/\1/" navs.txt | sort -n   # 59 navegações consecutivas na setlist de 60 (A17)
+45 48 49 50 51 51 52 52 52 52 53 53 53 53 54 54 55 55 56 56 56 57 57 57 57 57 58 58 59 59 60 60 60 62 62 62 62 62 62 63 64 65 65 65 66 67 68 69 71 73 74 75 81 81 85 97 109 164 536 
+
+awk: n=59  min=45  p50=59  p90=81  p95=97  max=536  media=71.3   (aceite: p95 < 100 ms)
+acima de 100 ms: 3 amostras (a maior, 536 ms, é a primeira renderização de um item com placeholder)
