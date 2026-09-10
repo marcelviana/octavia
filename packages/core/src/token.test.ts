@@ -34,35 +34,35 @@ function jwt(payload: Record<string, unknown>): string {
 }
 
 describe('shouldRefresh (T1-R2 — buffer de 5 min)', () => {
-  it.fails('faltando 301 s para o exp → não renova', () => {
+  it('faltando 301 s para o exp → não renova', () => {
     expect(shouldRefresh(NOW_S + 301, NOW_MS)).toBe(false)
   })
 
-  it.fails('faltando exatamente 300 s → renova (limite inclusivo)', () => {
+  it('faltando exatamente 300 s → renova (limite inclusivo)', () => {
     expect(shouldRefresh(NOW_S + 300, NOW_MS)).toBe(true)
   })
 
-  it.fails('exp no instante de agora → renova', () => {
+  it('exp no instante de agora → renova', () => {
     expect(shouldRefresh(NOW_S, NOW_MS)).toBe(true)
   })
 
-  it.fails('token já expirado → renova', () => {
+  it('token já expirado → renova', () => {
     expect(shouldRefresh(NOW_S - 3600, NOW_MS)).toBe(true)
   })
 })
 
 describe('decodeExp (T1-R2 — payload sem verificar assinatura)', () => {
-  it.fails('JWT com exp → o número em segundos', () => {
+  it('JWT com exp → o número em segundos', () => {
     expect(decodeExp(jwt({ sub: 'Pw3b', exp: 1_760_003_600, iat: 1_760_000_000 }))).toBe(
       1_760_003_600,
     )
   })
 
-  it.fails('payload sem exp → null', () => {
+  it('payload sem exp → null', () => {
     expect(decodeExp(jwt({ sub: 'Pw3b' }))).toBeNull()
   })
 
-  it.fails('token malformado → null', () => {
+  it('token malformado → null', () => {
     expect(decodeExp('nao.e')).toBeNull()
     expect(decodeExp('a.!!!.c')).toBeNull()
     expect(decodeExp('')).toBeNull()

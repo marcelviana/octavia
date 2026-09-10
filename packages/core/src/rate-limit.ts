@@ -1,16 +1,54 @@
 /**
- * 429 e janela de espera (PRD T1-R4; aceite A3). O prazo vem no header
- * `Retry-After` e no `retryAfter` do envelope `RATE_LIMITED`
- * (`docs/api/CONTRATO-DE-ERRO.md`; nota N3 do PRD).
+ * 429 e janela de espera (PRD T1-R4; aceite A3). O servidor manda o prazo em
+ * DOIS lugares (`docs/api/CONTRATO-DE-ERRO.md`; medido na nota N3 do PRD):
+ * header `Retry-After` (segundos, inteiro — `lib/user-rate-limit.ts:134`) e
+ * `retryAfter` no corpo do envelope `RATE_LIMITED` (`lib/api-errors.ts:57`).
+ * O header é autoritativo; o corpo é o fallback.
  *
- * Commit 1 de 2 (regra nº 7): stub — a implementação entra no commit 2.
+ * O gate guarda estado explícito por família (`content-read`, `setlist-read`,
+ * …) e **não** usa timer: quem chama passa o relógio.
  */
 
+function parseSeconds(raw: string | undefined): number | null {
+  if (raw === undefined) return null
+  const trimmed = raw.trim()
+  if (!/^\d+$/.test(trimmed)) return null
+  const value = Number(trimmed)
+  return Number.isFinite(value) ? value : null
+}
+
+function headerValue(headers: Record<string, string>, name: string): string | undefined {
+  for (const key of Object.keys(headers)) {
+    if (key.toLowerCase() === name) return headers[key]
+  }
+  return undefined
+}
+
+/**
+ * Segundos a esperar antes da próxima request à mesma família, ou `null`
+ * quando a resposta não informa prazo (nesse caso a UI não promete "tentando
+ * em N s" — T1-R4).
+ */
 export function retryAfterFrom(
-  _headers: Record<string, string>,
-  _bodyText: string | null,
+  headers: Record<string, string>,
+  bodyText: string | null,
 ): number | null {
-  throw new Error('not implemented')
+  const fromHeader = parseSeconds(headerValue(headers, 'retry-after'))
+  if (fromHeader !== null) return fromHeader
+
+  if (bodyText === null) return null
+  let parsed: unknown
+  try {
+    parsed = JSON.parse(bodyText)
+  } catch {
+    return null
+  }
+  if (typeof parsed !== 'object' || parsed === null) return null
+  const envelope = parsed as { code?: unknown; retryAfter?: unknown }
+  if (envelope.code !== 'RATE_LIMITED') return null
+  const seconds = envelope.retryAfter
+  if (typeof seconds !== 'number' || !Number.isInteger(seconds) || seconds < 0) return null
+  return seconds
 }
 
 export interface RateLimitGate {
@@ -23,5 +61,18 @@ export interface RateLimitGate {
 }
 
 export function rateLimitGate(): RateLimitGate {
-  throw new Error('not implemented')
+  const blockedUntil = new Map<string, number>()
+  return {
+    block(family, untilMs) {
+      const current = blockedUntil.get(family)
+      if (current === undefined || untilMs > current) blockedUntil.set(family, untilMs)
+    },
+    canRequest(family, nowMs) {
+      const until = blockedUntil.get(family)
+      return until === undefined || nowMs >= until
+    },
+    nextAllowedAt(family) {
+      return blockedUntil.get(family) ?? null
+    },
+  }
 }

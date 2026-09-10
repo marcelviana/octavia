@@ -7,7 +7,7 @@ import { errorFrom } from './errors'
  * (`N0-H15.md` §1, `N0-H16.md` §4).
  */
 describe('errorFrom (T1-R37 / A19)', () => {
-  it.fails('401 AUTH_REQUIRED → auth', () => {
+  it('401 AUTH_REQUIRED → auth', () => {
     expect(
       errorFrom({
         status: 401,
@@ -16,7 +16,7 @@ describe('errorFrom (T1-R37 / A19)', () => {
     ).toEqual({ kind: 'auth', code: 'AUTH_REQUIRED', retryAfter: null, messageKey: 'erro.sessao_invalida' })
   })
 
-  it.fails('429 RATE_LIMITED → rate-limited com o prazo do header ou do corpo', () => {
+  it('429 RATE_LIMITED → rate-limited com o prazo do header ou do corpo', () => {
     const body = '{"error":"Rate limit exceeded","code":"RATE_LIMITED","retryAfter":868}'
     expect(errorFrom({ status: 429, bodyText: body })).toEqual({
       kind: 'rate-limited',
@@ -27,13 +27,13 @@ describe('errorFrom (T1-R37 / A19)', () => {
     expect(errorFrom({ status: 429, bodyText: body, headers: { 'Retry-After': '30' } }).retryAfter).toBe(30)
   })
 
-  it.fails('404 NOT_FOUND → not-found', () => {
+  it('404 NOT_FOUND → not-found', () => {
     expect(errorFrom({ status: 404, bodyText: '{"error":"Setlist not found","code":"NOT_FOUND"}' })).toEqual(
       { kind: 'not-found', code: 'NOT_FOUND', retryAfter: null, messageKey: 'erro.nao_encontrado' },
     )
   })
 
-  it.fails('400 VALIDATION_ERROR → validation', () => {
+  it('400 VALIDATION_ERROR → validation', () => {
     const body =
       '{"error":"Validation failed","code":"VALIDATION_ERROR","details":[{"field":"id","message":"Invalid ID format","code":"invalid_string"}]}'
     expect(errorFrom({ status: 400, bodyText: body })).toEqual({
@@ -44,7 +44,7 @@ describe('errorFrom (T1-R37 / A19)', () => {
     })
   })
 
-  it.fails('500 com envelope INTERNAL_ERROR e 500 sem JSON → server', () => {
+  it('500 com envelope INTERNAL_ERROR e 500 sem JSON → server', () => {
     expect(
       errorFrom({ status: 500, bodyText: '{"error":"Internal server error","code":"INTERNAL_ERROR"}' }).kind,
     ).toBe('server')
@@ -56,7 +56,7 @@ describe('errorFrom (T1-R37 / A19)', () => {
     })
   })
 
-  it.fails('413 text/plain (cláusula não-JSON) → unknown, sem retry', () => {
+  it('413 text/plain (cláusula não-JSON) → unknown, sem retry', () => {
     expect(
       errorFrom({
         status: 413,
@@ -65,11 +65,11 @@ describe('errorFrom (T1-R37 / A19)', () => {
     ).toEqual({ kind: 'unknown', code: null, retryAfter: null, messageKey: 'erro.desconhecido' })
   })
 
-  it.fails('404 HTML de rota inexistente → unknown', () => {
+  it('404 HTML de rota inexistente → unknown', () => {
     expect(errorFrom({ status: 404, bodyText: '<!DOCTYPE html><html>404</html>' }).kind).toBe('unknown')
   })
 
-  it.fails('as três formas de falha de transporte do N0 → network', () => {
+  it('as três formas de falha de transporte do N0 → network', () => {
     const formas = [
       'fetch failed: java.net.UnknownHostException: Unable to resolve host "octavia.rocks": No address associated with hostname',
       'Firebase: Error (auth/network-request-failed).',
@@ -85,7 +85,7 @@ describe('errorFrom (T1-R37 / A19)', () => {
     }
   })
 
-  it.fails('sem status, sem corpo e sem erro de rede → unknown', () => {
+  it('sem status, sem corpo e sem erro de rede → unknown', () => {
     expect(errorFrom({})).toEqual({
       kind: 'unknown',
       code: null,
