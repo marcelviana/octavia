@@ -51,6 +51,23 @@
 | rotação | `rotation=landscape\|portrait n=<i>/<N>` | T1-R27 (N1-D12: rotação preserva posição) | A14 |
 | wake lock | `keepawake on\|off` | entrar/sair do palco (T1-R33) | A16 |
 | pdf | `pdf-render pages=<n> src=disk` · `pdf-page n=<i>/<N>` · `pdf-error <msg>` | herdado do N0 (T1-R26) | A13 |
+| falha de download | `download-error <msg>` | `File.downloadFileAsync` rejeitou (T1-R26/R37) — **E5** | A13 |
+| cache de arquivos apagado | `files-cleared` | instrumento de prova; nenhuma UI chama — **E5** | A13 (controle negativo) |
+
+## Errata E5 (2026-09-10, N1-PR5)
+
+Duas linhas do **N0** que os aceites usam e que o catálogo do N1-PR1 não
+listava, acrescentadas acima: `download-error <msg>` (a rejeição do
+`File.downloadFileAsync` — sem rede é `Call to function
+'FileSystem.downloadFileAsync' has been rejected.`, com a causa Java em
+`→ Caused by:`, medido no N0-H16 §2) e `files-cleared`. Elas são **eventos
+distintos** de `pdf-error`, que é falha de RENDER de um arquivo já no disco.
+
+O prompt da N1-PR5 pedia `pdf-placeholder name=<seg>` para o S3e — nome do
+N0. **Não foi adotado**: o catálogo do N1 já tem esse evento como
+`placeholder kind=file-missing name=<seg>`, e duas linhas para o mesmo fato
+seriam contrato duplicado. O S3e emite a linha do catálogo. Divergência
+declarada, não acomodada.
 
 ## Caminho de dev (E4)
 

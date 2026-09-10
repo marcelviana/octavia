@@ -1,6 +1,11 @@
 /**
- * S3 — Palco, conteúdo de TEXTO (PRD T1-R24, R25, R27, R28, R29, R30, R31,
- * R32, R33, R34, R35; aceites A12, A14, A15, A16, A17, A18). PDF é a N1-PR5.
+ * S3 — Palco (PRD T1-R24, R25, R26, R27, R28, R29, R30, R31, R32, R33, R34,
+ * R35; aceites A12, A13, A14, A15, A16, A17, A18). Duas variantes:
+ *
+ *  - **texto** (Lyrics, Tab, Chords com corpo) — S3a/b/c;
+ *  - **arquivo** (Sheet, e Chords escaneada: `content_data` sem corpo e
+ *    `file_url` presente) — **S3d**, o PDF do disco, paginado; e **S3e**, o
+ *    placeholder "arquivo não baixado" quando ele não está aqui.
  *
  * Layout do design: barra superior de 64 dp com "n de N", nome da setlist,
  * título · artista · tipo, a nota da música e o chip de rede; conteúdo em
@@ -8,14 +13,21 @@
  * controles; e as **bordas invisíveis** de 15% da largura, ocupando só a
  * altura ENTRE as barras (D-1) — é por elas que se avança e volta às cegas.
  *
- * Decisões medidas no spike (commit 1): auto-scroll por `requestAnimationFrame`
+ * Decisões medidas no spike (N1-PR4): auto-scroll por `requestAnimationFrame`
  * (responde em ~38 ms) e linha longa dentro de um `ScrollView` horizontal
  * (sem ele a linha re-quebra).
+ *
+ * No PDF o `react-native-pdf` já traz pinça, pan e virar página; o que esta
+ * tela acrescenta é o "página n de N" do design, a dica de gesto, e a regra
+ * do T1-R30: **auto-scroll fica desabilitado com o motivo à vista**, nunca
+ * mudo. As bordas de 15% continuam navegando MÚSICA, não página — errata do
+ * design (D-1 / A14): quem vira página é o deslize sobre o documento.
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
 import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake'
+import Pdf from 'react-native-pdf'
 import {
   bodyOf,
   endOfSetlist,
@@ -26,7 +38,9 @@ import {
   type ContentDTO,
   type SetlistDTO,
 } from '@octavia/core'
+import { ensureFile, fileNameFromUrl, hasFile, knownBytes } from '../files'
 import { log } from '../log'
+import { prefetchDemanda } from '../prefetch'
 import {
   bar,
   colors,
@@ -52,6 +66,8 @@ export interface StageScreenProps {
   onFim: () => void
   onIndice: () => void
   onSair: () => void
+  /** O disco mudou (download ou despejo) — a raiz recalcula `filesPresent`. */
+  onArquivosMudaram: () => void
 }
 
 /** Tag do wake lock — só o palco a usa, então só ele a solta. */
@@ -90,18 +106,24 @@ const MOTIVO: Record<string, { titulo: string; apoio: string }> = {
     apoio:
       'Esta música ainda não foi sincronizada neste aparelho. Conecte-se à internet para baixá-la.',
   },
-  /**
-   * O corpo desta música é um ARQUIVO (Sheet, ou Chords escaneada). O
-   * download e o render de PDF são a N1-PR5 — até lá o item mostra o
-   * placeholder do design (S3e) em vez de uma tela vazia, que é o que o
-   * T1-R26 e a regra C3-1 proíbem.
-   */
-  arquivo: {
-    titulo: 'arquivo não baixado',
-    apoio:
-      'Esta música é um arquivo (partitura ou cifra escaneada). O download e a leitura de PDF chegam na próxima versão do app.',
-  },
 }
+
+/** "242.176 B" → "237 KB" — o "(1,2 MB)" do S3e. */
+function tamanhoLegivel(bytes: number): string {
+  if (bytes >= 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(1).replace('.', ',')} MB`
+  return `${Math.round(bytes / 1024)} KB`
+}
+
+/**
+ * O arquivo desta posição, nas quatro situações que a tela precisa
+ * distinguir. `bytes` sobrevive ao despejo (o índice lembra o tamanho), e é
+ * por isso que o S3e consegue dizer o tamanho de algo que não está aqui.
+ */
+type EstadoArquivo =
+  | { fase: 'buscando' }
+  | { fase: 'pronto'; uri: string }
+  | { fase: 'ausente'; bytes: number | null }
+  | { fase: 'erro'; mensagem: string; bytes: number | null }
 
 export function StageScreen({
   setlist,
@@ -112,6 +134,7 @@ export function StageScreen({
   onFim,
   onIndice,
   onSair,
+  onArquivosMudaram,
 }: StageScreenProps): React.JSX.Element {
   /**
    * T1-R33 — a tela não apaga ENQUANTO o palco está aberto.
@@ -137,6 +160,8 @@ export function StageScreen({
   const [zoom, setZoom] = useState<number>(zoomDefault)
   const [tema, setTema] = useState<ThemeName>('dark')
   const [rodando, setRodando] = useState(false)
+  const [arquivo, setArquivo] = useState<EstadoArquivo>({ fase: 'buscando' })
+  const [pagina, setPagina] = useState({ n: 0, total: 0 })
 
   const scroll = useRef<ScrollView | null>(null)
   const y = useRef(0)
@@ -179,9 +204,15 @@ export function StageScreen({
       ? 'content-missing'
       : validade !== null && !validade.ok
         ? validade.reason
-        : validade !== null && validade.body === 'file'
-          ? 'file-missing'
-          : null
+        : null
+
+  /**
+   * O corpo desta posição é um ARQUIVO? (Sheet, e Chords escaneada — o core
+   * decide, `isValidContent(...).body === 'file'`.) A URL vira dependência
+   * estável dos efeitos do PDF; `null` significa "variante texto".
+   */
+  const urlArquivo =
+    validade !== null && validade.ok && validade.body === 'file' ? content?.file_url ?? null : null
 
   useEffect(() => {
     pararScroll()
@@ -196,6 +227,52 @@ export function StageScreen({
     }
     if (chavePlaceholder !== null) log(`placeholder kind=${chavePlaceholder}`)
   }, [posicao, n, setlist.id, chavePlaceholder, pararScroll])
+
+  /**
+   * T1-R26 — o arquivo desta posição: **disco primeiro** (A9/A13), rede só
+   * se preciso, e sem arquivo nem rede o S3e — nunca tela branca. Sem retry
+   * automático: quem tenta de novo é o "Baixar" do usuário (T1-R37).
+   */
+  const buscarArquivo = useCallback(
+    async (url: string, pedidoPeloUsuario: boolean): Promise<void> => {
+      const nome = fileNameFromUrl(url)
+      if (!hasFile(url) && !online && !pedidoPeloUsuario) {
+        setArquivo({ fase: 'ausente', bytes: knownBytes(url) })
+        log(`placeholder kind=file-missing name=${nome}`)
+        return
+      }
+      setArquivo({ fase: 'buscando' })
+      try {
+        const r = await ensureFile(url)
+        setArquivo({ fase: 'pronto', uri: r.uri })
+        if (r.src === 'download') onArquivosMudaram()
+      } catch (e: unknown) {
+        const mensagem = e instanceof Error ? e.message : 'falha ao baixar'
+        log(`download-error ${mensagem}`)
+        setArquivo({ fase: 'erro', mensagem, bytes: knownBytes(url) })
+      }
+    },
+    [online, onArquivosMudaram],
+  )
+
+  useEffect(() => {
+    setPagina({ n: 0, total: 0 })
+    if (urlArquivo === null) {
+      setArquivo({ fase: 'buscando' })
+      return
+    }
+    void buscarArquivo(urlArquivo, false)
+  }, [urlArquivo, buscarArquivo])
+
+  /**
+   * T1-R16 — prefetch sob demanda a partir desta posição (atual, +1, +2, +3,
+   * −1, resto). Roda a cada navegação e só com rede; o `ensureFile` deduplica
+   * o download que o efeito de cima já pode ter começado.
+   */
+  useEffect(() => {
+    if (!online) return
+    void prefetchDemanda(setlist, contentById, posicao).then(onArquivosMudaram)
+  }, [setlist, contentById, posicao, online, onArquivosMudaram])
 
   const irPara = useCallback(
     (destino: number) => {
@@ -284,9 +361,7 @@ export function StageScreen({
       ? MOTIVO.ausente
       : validade !== null && !validade.ok
         ? MOTIVO[validade.reason]
-        : validade !== null && validade.ok && validade.body === 'file'
-          ? MOTIVO.arquivo
-          : undefined
+        : undefined
 
   return (
     <View style={[styles.tela, { backgroundColor: cor.bg }]}>
@@ -302,6 +377,12 @@ export function StageScreen({
             {content !== null ? ` · ${TIPO[content.content_type] ?? content.content_type}` : ''}
           </Text>
         </Text>
+        {/* S3d: "página n de N" — só no PDF, e só depois de ele carregar. */}
+        {pagina.total > 0 ? (
+          <Text style={[styles.paginaTexto, { color: cor.muted }]} testID="pagina">
+            {`página ${pagina.n} de ${pagina.total}`}
+          </Text>
+        ) : null}
         {/* T1-R35: a nota da POSIÇÃO, discreta; sem área vazia quando é nula. */}
         {song?.notes !== null && song?.notes !== undefined && song.notes.length > 0 ? (
           <View style={[styles.nota, { borderColor: cor.line }]}>
@@ -314,22 +395,41 @@ export function StageScreen({
       </View>
 
       <View style={styles.meio}>
-        <ScrollView ref={scroll} style={styles.conteudo} contentContainerStyle={styles.conteudoPad}>
-          {motivo !== undefined ? (
-            <View style={styles.placeholder} testID="placeholder">
-              <Text style={[styles.placeholderTitulo, { color: cor.text }]}>{motivo.titulo}</Text>
-              <Text style={[styles.placeholderApoio, { color: cor.muted }]}>{motivo.apoio}</Text>
-            </View>
-          ) : (
-            // O ScrollView horizontal é o que impede a re-quebra da linha
-            // longa em qualquer zoom (T1-R25/R31 — provado no spike).
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              <Text style={estiloTexto} testID="corpo">
-                {corpo ?? ''}
-              </Text>
-            </ScrollView>
-          )}
-        </ScrollView>
+        {urlArquivo !== null ? (
+          <Arquivo
+            estado={arquivo}
+            titulo={content?.title ?? ''}
+            tipo={(TIPO[content?.content_type ?? ''] ?? 'arquivo').toLowerCase()}
+            online={online}
+            cor={cor}
+            onPaginas={(total) => {
+              log(`pdf-render pages=${total} src=disk`)
+              setPagina({ n: 1, total })
+            }}
+            onPagina={(atual, total) => {
+              log(`pdf-page n=${atual}/${total}`)
+              setPagina({ n: atual, total })
+            }}
+            onBaixar={() => void buscarArquivo(urlArquivo, true)}
+          />
+        ) : (
+          <ScrollView ref={scroll} style={styles.conteudo} contentContainerStyle={styles.conteudoPad}>
+            {motivo !== undefined ? (
+              <View style={styles.placeholder} testID="placeholder">
+                <Text style={[styles.placeholderTitulo, { color: cor.text }]}>{motivo.titulo}</Text>
+                <Text style={[styles.placeholderApoio, { color: cor.muted }]}>{motivo.apoio}</Text>
+              </View>
+            ) : (
+              // O ScrollView horizontal é o que impede a re-quebra da linha
+              // longa em qualquer zoom (T1-R25/R31 — provado no spike).
+              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                <Text style={estiloTexto} testID="corpo">
+                  {corpo ?? ''}
+                </Text>
+              </ScrollView>
+            )}
+          </ScrollView>
+        )}
 
         <Pressable
           style={[styles.borda, { width: larguraBorda, height: alturaConteudo, left: 0 }]}
@@ -353,8 +453,23 @@ export function StageScreen({
           onPress={alternarScroll}
           testID="auto-scroll"
         />
-        <Controle rotulo="Zoom −" cor={cor} onPress={() => mudarZoom(-1)} testID="zoom-menos" />
-        <Controle rotulo="Zoom +" cor={cor} onPress={() => mudarZoom(1)} testID="zoom-mais" />
+        {/* T1-R31 é zoom de TEXTO. No PDF quem amplia é a pinça — o controle
+            fica desabilitado com o motivo à vista, como o auto-scroll. */}
+        <Controle
+          rotulo="Zoom −"
+          cor={cor}
+          inativo={urlArquivo !== null}
+          motivo={urlArquivo !== null ? 'pinça para zoom' : undefined}
+          onPress={() => (urlArquivo === null ? mudarZoom(-1) : undefined)}
+          testID="zoom-menos"
+        />
+        <Controle
+          rotulo="Zoom +"
+          cor={cor}
+          inativo={urlArquivo !== null}
+          onPress={() => (urlArquivo === null ? mudarZoom(1) : undefined)}
+          testID="zoom-mais"
+        />
         <Controle
           rotulo={tema === 'dark' ? 'Claro' : 'Escuro'}
           cor={cor}
@@ -365,6 +480,94 @@ export function StageScreen({
         <Controle rotulo="Busca" cor={cor} inativo onPress={() => undefined} testID="busca" />
         <Controle rotulo="Sair" cor={cor} onPress={onSair} testID="sair" />
       </View>
+    </View>
+  )
+}
+
+/**
+ * S3d / S3e — a variante ARQUIVO do palco.
+ *
+ * S3d: o PDF do disco, paginado (`enablePaging`), com pinça e pan do próprio
+ * `react-native-pdf`; o "página n de N" fica na barra superior e a dica de
+ * gesto embaixo, como no design. S3e: o placeholder do arquivo que não está
+ * aqui — com o nome da música, o tamanho quando o aparelho já o conhece, e
+ * "Baixar". O que esta função nunca faz é devolver nada: sem tela, o T1-R26
+ * e a regra C3-1 estariam violados.
+ */
+function Arquivo({
+  estado,
+  titulo,
+  tipo,
+  online,
+  cor,
+  onPaginas,
+  onPagina,
+  onBaixar,
+}: {
+  estado: EstadoArquivo
+  titulo: string
+  tipo: string
+  online: boolean
+  cor: (typeof colors)[ThemeName]
+  onPaginas: (total: number) => void
+  onPagina: (atual: number, total: number) => void
+  onBaixar: () => void
+}): React.JSX.Element {
+  if (estado.fase === 'pronto') {
+    return (
+      <View style={styles.pdfArea} testID="s3d">
+        <Pdf
+          source={{ uri: estado.uri, cache: false }}
+          style={[styles.pdf, { backgroundColor: cor.bg }]}
+          enablePaging
+          enableDoubleTapZoom
+          fitPolicy={0}
+          minScale={1}
+          maxScale={4}
+          spacing={0}
+          onLoadComplete={(total) => onPaginas(total)}
+          onPageChanged={(atual, total) => onPagina(atual, total)}
+          onError={(e: Error) => log(`pdf-error ${e.message}`)}
+        />
+        <Text style={[styles.dica, { color: cor.muted }]}>
+          pinça para zoom · arraste para mover · deslize para virar a página
+        </Text>
+      </View>
+    )
+  }
+
+  if (estado.fase === 'buscando') {
+    return (
+      <View style={styles.placeholder} testID="s3-baixando">
+        <Text style={[styles.placeholderApoio, { color: cor.muted }]}>baixando o arquivo…</Text>
+      </View>
+    )
+  }
+
+  const tamanho = estado.bytes === null ? '' : ` (${tamanhoLegivel(estado.bytes)})`
+  const fecho = online
+    ? 'Toque em Baixar para trazê-lo para este aparelho.'
+    : 'Sem conexão agora — toque em Baixar quando a rede voltar.'
+
+  return (
+    <View style={styles.placeholder} testID="s3e">
+      <Text style={[styles.placeholderTitulo, { color: cor.text }]}>arquivo não baixado</Text>
+      <Text style={[styles.placeholderApoio, { color: cor.muted }]}>
+        {`${titulo} · ${tipo}${tamanho} não está neste aparelho. ${fecho}`}
+      </Text>
+      {estado.fase === 'erro' ? (
+        <Text style={[styles.erro, { color: cor.error }]} testID="download-erro">
+          {estado.mensagem}
+        </Text>
+      ) : null}
+      <Pressable
+        style={[styles.botaoBaixar, { borderColor: cor.line }]}
+        onPress={onBaixar}
+        accessibilityRole="button"
+        testID="baixar"
+      >
+        <Text style={[styles.botaoBaixarTexto, { color: cor.text }]}>Baixar</Text>
+      </Pressable>
     </View>
   )
 }
@@ -438,7 +641,22 @@ const styles = StyleSheet.create({
   },
   notaTexto: { fontFamily: font.ui, fontSize: size.label },
   pontoOffline: { width: 8, height: 8, borderRadius: 4, backgroundColor: dark.offline },
+  paginaTexto: { fontFamily: font.mono, fontSize: size.label },
   meio: { flex: 1 },
+  pdfArea: { flex: 1 },
+  pdf: { flex: 1, width: '100%' },
+  dica: { textAlign: 'center', fontFamily: font.ui, fontSize: size.label, paddingVertical: space.sm },
+  erro: { fontFamily: font.ui, fontSize: size.label, textAlign: 'center', maxWidth: 560 },
+  botaoBaixar: {
+    marginTop: space.sm,
+    height: touch.stage,
+    paddingHorizontal: space.xxl,
+    borderWidth: bar.hairline,
+    borderRadius: radius.control,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  botaoBaixarTexto: { fontFamily: font.uiBold, fontSize: size.button },
   conteudo: { flex: 1 },
   conteudoPad: { padding: space.xxl, paddingBottom: space.xxxl },
   borda: { position: 'absolute', top: 0 },

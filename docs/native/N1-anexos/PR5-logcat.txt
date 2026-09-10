@@ -1,0 +1,200 @@
+N1-PR5 — logcat verbatim por prova (AVD octavia_tab32, API 32, 2560×1600 @ 360 dpi)
+Comando de leitura em todas: adb -s emulator-5554 logcat -d -s ReactNativeJS | grep 'OCTAVIA:'
+(o prefixo "09-10 ...  I ReactNativeJS:" foi cortado por sed; as linhas OCTAVIA: são verbatim)
+
+================================================================
+P1 — abertura online · prefetch de 7 dias real (T1-R15 / A10, parte real)
+================================================================
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=66
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=3227
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=349
+OCTAVIA: cache write kind=setlists n=3 invalidated=0
+OCTAVIA: cache write kind=content n=66 invalidated=0
+OCTAVIA: sync ok setlists=3 content=66 pages=1 t=3625
+OCTAVIA: prefetch plan n=0 reason=7d
+  → as 3 setlists da audit têm performance_date: null (pre-check A3): plano vazio.
+
+================================================================
+P2 — A9 / T1-R14 · 1ª abertura da música (download) + T1-R16 (demand)
+================================================================
+OCTAVIA: index jump n=1
+OCTAVIA: keepawake on
+OCTAVIA: prefetch plan n=1 reason=demand
+OCTAVIA: file src=download name=1786218429715-ux-audit-partitura-12p.pdf bytes=242176
+OCTAVIA: pdf-render pages=12 src=disk
+OCTAVIA: pdf-page n=1/12
+
+sha256 do arquivo LIDO DO DISCO DO APP (instrumento forte do A9):
+$ adb -s emulator-5554 exec-out run-as rocks.octavia.app \
+    cat cache/octavia-<uid>/files/1786218429715-ux-audit-partitura-12p.pdf | shasum -a 256
+ad2eae0942811adb4d60286516ce318110868f6aa889422ab0cb8b3dc690ea22  -
+  → idêntico ao medido no N0-H16 §2 (242.176 B).
+
+índice (files-index.json, em Paths.document):
+{"https://<host>.supabase.co/storage/v1/object/public/content-files/1786218429715-ux-audit-partitura-12p.pdf":
+ {"name":"1786218429715-ux-audit-partitura-12p.pdf","bytes":242176,"lastUsedMs":1789070495282}}
+
+================================================================
+P3 — A9 · 2ª abertura da MESMA música: disco, zero request
+================================================================
+OCTAVIA: index open
+OCTAVIA: keepawake off
+OCTAVIA: index jump n=1
+OCTAVIA: keepawake on
+OCTAVIA: file src=disk name=1786218429715-ux-audit-partitura-12p.pdf bytes=242176
+OCTAVIA: prefetch plan n=0 reason=demand
+OCTAVIA: pdf-render pages=12 src=disk
+OCTAVIA: pdf-page n=1/12
+$ adb ... logcat -d -s ReactNativeJS | grep -c 'src=download'
+0
+
+================================================================
+P4 — CONTROLE NEGATIVO do A9: apagar o arquivo → volta a baixar
+================================================================
+$ adb ... run-as rocks.octavia.app rm cache/octavia-<uid>/files/...-12p.pdf   (find → vazio)
+OCTAVIA: index open
+OCTAVIA: keepawake off
+OCTAVIA: index jump n=1
+OCTAVIA: keepawake on
+OCTAVIA: prefetch plan n=1 reason=demand
+OCTAVIA: file src=download name=1786218429715-ux-audit-partitura-12p.pdf bytes=242176
+OCTAVIA: pdf-render pages=12 src=disk
+OCTAVIA: pdf-page n=1/12
+
+================================================================
+P5 — T1-R15 manual · "baixar esta setlist" (SHOW PADRÃO) → ✓
+================================================================
+OCTAVIA: prefetch plan n=1 reason=manual
+OCTAVIA: file src=download name=1786218427769-ux-audit-partitura-1p.pdf bytes=20821
+
+================================================================
+P6 — A13 · avião ligado, abertura do app
+================================================================
+$ adb ... shell cmd connectivity airplane-mode enable ; settings get global airplane_mode_on → 1
+$ adb ... shell ping -c 2 -W 2 8.8.8.8 → connect: Network is unreachable
+$ probe do Metro (N0-H15) → packager-status:running
+OCTAVIA: net offline
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=66
+OCTAVIA: sync skip reason=offline
+
+================================================================
+P7 — A13 · PDF do disco em avião, 12 páginas navegáveis
+================================================================
+OCTAVIA: index open
+OCTAVIA: index jump n=1
+OCTAVIA: keepawake on
+OCTAVIA: file src=disk name=1786218429715-ux-audit-partitura-12p.pdf bytes=242176
+OCTAVIA: pdf-render pages=12 src=disk
+OCTAVIA: pdf-page n=1/12
+  → sem `prefetch plan reason=demand`: offline o prefetch sob demanda não corre (T1-R16).
+OCTAVIA: pdf-page n=2/12
+OCTAVIA: pdf-page n=3/12
+OCTAVIA: pdf-page n=4/12
+OCTAVIA: pdf-page n=5/12
+OCTAVIA: pdf-page n=6/12
+OCTAVIA: pdf-page n=7/12
+OCTAVIA: pdf-page n=8/12
+OCTAVIA: pdf-page n=9/12
+OCTAVIA: pdf-page n=10/12
+OCTAVIA: pdf-page n=11/12
+OCTAVIA: pdf-page n=12/12
+  (screencap: PR5-s3d-aviao-pagina12.png — "página 12 de 12", ícone de avião)
+
+================================================================
+P8 — CONTROLE NEGATIVO do A13: sem arquivo e sem rede → S3e
+================================================================
+$ adb ... run-as rocks.octavia.app rm -rf cache/octavia-<uid>/files files/octavia-<uid>/files
+$ find ... -name '*.pdf' → vazio
+OCTAVIA: index open
+OCTAVIA: keepawake off
+OCTAVIA: index jump n=1
+OCTAVIA: keepawake on
+OCTAVIA: placeholder kind=file-missing name=1786218429715-ux-audit-partitura-12p.pdf
+  (screencap: PR5-s3e-placeholder.png)
+
+toque em "Baixar" ainda em avião:
+OCTAVIA: download-error Call to function 'FileSystem.downloadFileAsync' has been rejected.
+$ adb ... shell pidof rocks.octavia.app
+4722
+  (screencap: PR5-s3e-baixar-erro.png — erro na tela com a causa Java, app vivo)
+
+================================================================
+P9 — A10 / T1-R15 · plano de 7 dias POR FIXTURE (N1-D10)
+================================================================
+Fixture: setlists.json do CACHE LOCAL do device, setlist "UX-AUDIT Solo" com
+performance_date = 2026-09-11 (amanhã; device date = Thu Sep 10 2026) e mais
+duas songs apontando para as duas Chords-arquivo da conta. Zero escrita em prod.
+Metro reiniciado com EXPO_PUBLIC_API_BASE_URL inline inválido para o sync FALHAR
+e o cache com a fixture sobreviver (T1-R9/A21) com a rede viva para o bucket.
+
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=66
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: sync fail stage=setlists page=1 code=network status=-
+OCTAVIA: prefetch plan n=3 reason=7d
+OCTAVIA: file src=download name=1786218429715-ux-audit-partitura-12p.pdf bytes=242176
+OCTAVIA: file src=download name=1786295844475-ux-audit-fase-d-cifra.pdf bytes=1117
+OCTAVIA: file src=download name=1786295884124-ux-audit-fase-d-offline.pdf bytes=888
+$ grep -ci "rejected|Uncaught" no logcat → 0
+
+destino dos três (Paths.document — NÃO purgável, N0-H16 §4):
+$ adb ... run-as rocks.octavia.app ls -l files/octavia-<uid>/files/
+-rw------- 242176 1786218429715-ux-audit-partitura-12p.pdf
+-rw-------   1117 1786295844475-ux-audit-fase-d-cifra.pdf
+-rw-------    888 1786295884124-ux-audit-fase-d-offline.pdf
+$ ls cache/octavia-<uid>/files/ → No such file or directory   (nada sob demanda)
+
+================================================================
+P10 — T1-R14 / LRU, com CAP INJETADO de 100 KB (100*1024 = 102.400 B)
+================================================================
+ETAPA 1 (positiva) — os 3 arquivos acima são GARANTIDOS (setlist datada):
+  disco = 242.176 + 1.117 + 888 = 244.181 B  >  cap 102.400 B
+  linhas `lru evict` na abertura: 0
+  → o garantido NÃO é vítima, mesmo com o teto estourado.
+
+ETAPA 2 (controle negativo) — mesma constante, mesmo disco, só tirei a data da
+fixture (performance_date → null), logo protectedUrls = ∅:
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=66
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: sync fail stage=setlists page=1 code=network status=-
+OCTAVIA: prefetch plan n=0 reason=7d
+OCTAVIA: lru evict n=1 bytes=242176
+$ ls files/octavia-<uid>/files/  →  só 1117 + 888 = 2.005 B ≤ cap
+  → sem proteção, o 12p é a PRIMEIRA vítima; com proteção, sobrevive.
+
+================================================================
+P11 — estado final: constante devolvida a 200 MB, API real
+================================================================
+$ grep -n "export const CAP_BYTES" apps/native/src/prefetch.ts
+33:export const CAP_BYTES = 200 * 1024 * 1024
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=66
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=2931
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=288
+OCTAVIA: cache write kind=setlists n=3 invalidated=0
+OCTAVIA: cache write kind=content n=66 invalidated=0
+OCTAVIA: sync ok setlists=3 content=66 pages=1 t=3329
+OCTAVIA: prefetch plan n=0 reason=7d
+  → zero `lru evict` com o cap real (2.005 B ≪ 200 MB). A fixture foi apagada
+    pela substituição do T1-R9: "UX-AUDIT Solo | None | songs 1".
+$ adb ... shell settings get global airplane_mode_on → 0 ; ping 8.8.8.8 → 0% packet loss
