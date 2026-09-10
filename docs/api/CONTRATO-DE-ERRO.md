@@ -76,6 +76,12 @@ Três respostas vêm de fora dos handlers e **não** carregam o envelope:
 Regra do cliente: **não-2xx cujo corpo não parseia como o envelope =
 erro genérico**, sem retry automático.
 
+Nota (N1-D15, 2026-09-10): **401/403 sem envelope não ocorrem hoje** — todo
+401 sai por `authRequired()` com o envelope (`AUTH.md` §2, inclusive quando o
+deny-fast por IP nega) e não há 403 no repo. Se passarem a ocorrer, o
+`errorFrom` do cliente nativo (`packages/core/src/errors.ts`) os classifica
+como `unknown` pela regra acima — errata a declarar nos dois lados.
+
 ## Exemplos normativos (medidos)
 
 ```
