@@ -6,6 +6,7 @@ const CACHE: ContentDTO = {
   id: 'c1',
   title: 'B',
   artist: 'Tom Jobim',
+  album: null,
   content_type: 'Lyrics',
   content_data: { lyrics: 'É pedra, é ponte' },
   file_url: null,
@@ -23,6 +24,7 @@ const SONG: SetlistSongDTO = {
     id: 'c1',
     title: 'A',
     artist: 'Tom Jobim',
+    // sem `album`: o embutido da listagem de setlists não traz o campo (A3)
     content_type: 'Lyrics',
     content_data: { lyrics: 'texto velho' },
     file_url: null,

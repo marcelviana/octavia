@@ -7,6 +7,7 @@ function content(id: string, updatedAt = '2026-08-09T17:18:32.193+00:00'): Conte
     id,
     title: `t-${id}`,
     artist: null,
+    album: null,
     content_type: 'Lyrics',
     content_data: { lyrics: 'x' },
     file_url: null,

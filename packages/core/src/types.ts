@@ -16,11 +16,20 @@
  */
 export type ContentType = 'Lyrics' | 'Chords' | 'Tab' | 'Sheet'
 
-/** Item de `GET /api/content` (`data[]`) — 22 colunas medidas, 7 usadas. */
+/** Item de `GET /api/content` (`data[]`) — 22 colunas medidas, 8 usadas. */
 export interface ContentDTO {
   id: string
   title: string
   artist: string | null
+  /**
+   * T1-R20 manda indexar `title`, `artist` e **`album`** — os mesmos campos
+   * do ILIKE do servidor. O campo entrou na N1-PR6, fechando a divergência 1
+   * declarada na N1-PR2b (`search.ts`). **Não** entra no `Pick` do
+   * `SetlistSongDTO` abaixo: o objeto `content` embutido na listagem de
+   * setlists não traz `album` (medido em `N1-PRECHECK.md` A3), e o corpo vem
+   * sempre do cache de `content` por `content_id` (T1-R8).
+   */
+  album: string | null
   content_type: ContentType
   content_data: Record<string, unknown> | null
   file_url: string | null

@@ -61,10 +61,18 @@ export interface StageScreenProps {
   setlist: SetlistDTO
   contentById: Map<string, ContentDTO>
   posicao: number
+  /**
+   * Música AVULSA da biblioteca, aberta pela busca (T1-R22): `content_id` que
+   * não pertence a esta posição da setlist. Quando presente, o palco mostra
+   * essa música e as bordas não navegam — sair devolve o palco à posição de
+   * onde a busca partiu.
+   */
+  avulsaContentId: string | null
   online: boolean
   onPosicao: (p: number) => void
   onFim: () => void
   onIndice: () => void
+  onBusca: () => void
   onSair: () => void
   /** O disco mudou (download ou despejo) — a raiz recalcula `filesPresent`. */
   onArquivosMudaram: () => void
@@ -129,10 +137,12 @@ export function StageScreen({
   setlist,
   contentById,
   posicao,
+  avulsaContentId,
   online,
   onPosicao,
   onFim,
   onIndice,
+  onBusca,
   onSair,
   onArquivosMudaram,
 }: StageScreenProps): React.JSX.Element {
@@ -175,9 +185,10 @@ export function StageScreen({
     [setlist],
   )
   const n = songs.length
-  const song = songs[posicao - 1]
+  const avulsa = avulsaContentId !== null
+  const song = avulsa ? undefined : songs[posicao - 1]
   const resolvida = song !== undefined ? resolveSong(song, contentById) : null
-  const content = resolvida?.content ?? null
+  const content = avulsa ? (contentById.get(avulsaContentId) ?? null) : (resolvida?.content ?? null)
   const validade =
     content !== null ? isValidContent(content.content_type, content.content_data, content.file_url) : null
   const corpo = content !== null ? bodyOf(content.content_type, content.content_data) : null
@@ -283,18 +294,19 @@ export function StageScreen({
   )
 
   const avancar = useCallback(() => {
+    if (avulsa) return
     if (endOfSetlist(posicao, n)) {
       log(`end-of-setlist n=${n}`)
       onFim()
       return
     }
     irPara(nextPosition(posicao, n))
-  }, [posicao, n, onFim, irPara])
+  }, [avulsa, posicao, n, onFim, irPara])
 
   const voltar = useCallback(() => {
-    if (posicao <= 1) return
+    if (avulsa || posicao <= 1) return
     irPara(prevPosition(posicao, n))
-  }, [posicao, n, irPara])
+  }, [avulsa, posicao, n, irPara])
 
   const passo = useCallback(() => {
     if (primeiroFrame.current) {
@@ -366,7 +378,9 @@ export function StageScreen({
   return (
     <View style={[styles.tela, { backgroundColor: cor.bg }]}>
       <View style={[styles.barraTopo, { borderBottomColor: cor.line }]}>
-        <Text style={[styles.posicao, { color: cor.text }]}>{`${posicao} DE ${n}`}</Text>
+        <Text style={[styles.posicao, { color: cor.text }]}>
+          {avulsa ? 'AVULSA' : `${posicao} DE ${n}`}
+        </Text>
         <Text style={[styles.nomeSetlist, { color: cor.muted }]} numberOfLines={1}>
           {setlist.name}
         </Text>
@@ -477,8 +491,13 @@ export function StageScreen({
           testID="tema"
         />
         <Controle rotulo="Índice" cor={cor} onPress={onIndice} testID="indice" />
-        <Controle rotulo="Busca" cor={cor} inativo onPress={() => undefined} testID="busca" />
-        <Controle rotulo="Sair" cor={cor} onPress={onSair} testID="sair" />
+        <Controle rotulo="Busca" cor={cor} onPress={onBusca} testID="busca" />
+        <Controle
+          rotulo={avulsa ? 'Voltar' : 'Sair'}
+          cor={cor}
+          onPress={onSair}
+          testID="sair"
+        />
       </View>
     </View>
   )
@@ -521,7 +540,17 @@ function Arquivo({
           style={[styles.pdf, { backgroundColor: cor.bg }]}
           enablePaging
           enableDoubleTapZoom
-          fitPolicy={0}
+          /**
+           * `fitPolicy={2}` = página inteira na tela: **um** gesto vira uma
+           * página, que é o que o T1-R27 pede ("avançar: 1 tap ou 1 gesto")
+           * para a navegação às cegas do palco. Com `0` (fit width) a
+           * partitura ficava maior, mas o deslize rolava dentro da página
+           * antes de virar — ~4 gestos por página, medido na N1-PR5.
+           * Reavaliado no aceite do Tab S6 (decisão do Marcel, 2026-09-10):
+           * se a partitura ficar ilegível no device real, errata declarada e
+           * volta a `0`.
+           */
+          fitPolicy={2}
           minScale={1}
           maxScale={4}
           spacing={0}

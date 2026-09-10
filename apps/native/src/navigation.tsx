@@ -14,6 +14,7 @@ import type { ContentDTO, SetlistDTO } from '@octavia/core'
 import { EndScreen } from './screens/EndScreen'
 import { IndexScreen } from './screens/IndexScreen'
 import { LoginScreen } from './screens/LoginScreen'
+import { SearchScreen } from './screens/SearchScreen'
 import { SetlistsScreen, type SetlistsScreenProps } from './screens/SetlistsScreen'
 import { StageScreen } from './screens/StageScreen'
 import { dark, font, size, space, tracking } from './theme'
@@ -22,8 +23,14 @@ export type RootStackParamList = {
   Login: undefined
   Setlists: undefined
   Index: { setlistId: string; posicaoAtual?: number }
-  Stage: { setlistId: string; position: number }
-  Search: { setlistId?: string }
+  /**
+   * `avulsa` (T1-R22): abrir pela busca uma música que NÃO está na setlist
+   * empilha uma segunda instância do palco. O `goBack` devolve a primeira,
+   * com a `position` intacta — a pilha É a restauração, sem estado global.
+   */
+  Stage: { setlistId: string; position: number; avulsa?: string }
+  /** `posicao` é a do palco na abertura; ausente quando a busca vem da S1/S2. */
+  Search: { setlistId?: string; posicao?: number }
   End: { setlistId: string }
 }
 
@@ -57,6 +64,8 @@ export interface NavigationProps {
   /** Dados que S2/S3/S5 consomem — os mesmos do cache já carregado. */
   dados: {
     lista: SetlistDTO[]
+    /** A biblioteca inteira, em ordem — o que a busca indexa (T1-R22). */
+    contents: ContentDTO[]
     contentById: Map<string, ContentDTO>
     syncDone: boolean
     online: boolean
@@ -80,6 +89,7 @@ export function Navigation({ signedIn, setlists, dados }: NavigationProps): Reac
                 <SetlistsScreen
                   {...setlists}
                   onAbrirSetlist={(setlistId) => navigation.navigate('Index', { setlistId })}
+                  onBuscar={() => navigation.navigate('Search', {})}
                 />
               )}
             </Stack.Screen>
@@ -100,6 +110,12 @@ export function Navigation({ signedIn, setlists, dados }: NavigationProps): Reac
                     onAbrirPosicao={(position) =>
                       navigation.navigate('Stage', { setlistId: setlist.id, position })
                     }
+                    onBuscar={() =>
+                      navigation.navigate('Search', {
+                        setlistId: setlist.id,
+                        posicao: route.params.posicaoAtual,
+                      })
+                    }
                   />
                 )
               }}
@@ -116,6 +132,7 @@ export function Navigation({ signedIn, setlists, dados }: NavigationProps): Reac
                     setlist={setlist}
                     contentById={dados.contentById}
                     posicao={route.params.position}
+                    avulsaContentId={route.params.avulsa ?? null}
                     online={dados.online}
                     onPosicao={(position) => navigation.setParams({ position })}
                     onFim={() => navigation.navigate('End', { setlistId: setlist.id })}
@@ -125,7 +142,19 @@ export function Navigation({ signedIn, setlists, dados }: NavigationProps): Reac
                         posicaoAtual: route.params.position,
                       })
                     }
-                    onSair={() => navigation.navigate('Setlists')}
+                    onBusca={() =>
+                      navigation.navigate('Search', {
+                        setlistId: setlist.id,
+                        posicao: route.params.position,
+                      })
+                    }
+                    // No avulso "Sair" é "Voltar": desempilha e o palco de
+                    // baixo reaparece na posição em que ficou (T1-R22).
+                    onSair={() =>
+                      route.params.avulsa !== undefined
+                        ? navigation.goBack()
+                        : navigation.navigate('Setlists')
+                    }
                     onArquivosMudaram={dados.onArquivosMudaram}
                   />
                 )
@@ -158,9 +187,39 @@ export function Navigation({ signedIn, setlists, dados }: NavigationProps): Reac
               }}
             </Stack.Screen>
 
-            {/* A busca é a N1-PR6. */}
             <Stack.Screen name="Search">
-              {() => <Placeholder titulo="BUSCA" nota="S4 — próxima PR" />}
+              {({ navigation, route }) => {
+                const setlist =
+                  route.params.setlistId === undefined
+                    ? null
+                    : (acharSetlist(route.params.setlistId) ?? null)
+                return (
+                  <SearchScreen
+                    contents={dados.contents}
+                    setlist={setlist}
+                    posicao={route.params.posicao ?? null}
+                    online={dados.online}
+                    onFechar={() => navigation.goBack()}
+                    onAbrir={(contentId, posicaoNaSetlist) => {
+                      // Na setlist: é um SALTO — o palco existente vai para a
+                      // posição. Fora dela: `replace` põe o palco avulso no
+                      // lugar da busca, e o `goBack` volta ao palco original.
+                      if (setlist !== null && posicaoNaSetlist !== null) {
+                        navigation.navigate('Stage', {
+                          setlistId: setlist.id,
+                          position: posicaoNaSetlist,
+                        })
+                        return
+                      }
+                      navigation.replace('Stage', {
+                        setlistId: setlist?.id ?? dados.lista[0]?.id ?? '',
+                        position: route.params.posicao ?? 1,
+                        avulsa: contentId,
+                      })
+                    }}
+                  />
+                )
+              }}
             </Stack.Screen>
           </Stack.Group>
         ) : (
