@@ -1,0 +1,153 @@
+N1-PR3b — logcat do emulador octavia_tab32 (API 32, 2560×1600 @ 360 dpi), 2026-09-10.
+
+Cada bloco é a saída literal de `adb -s emulator-5554 logcat -d -s ReactNativeJS | grep 'OCTAVIA:'`
+ao fim da etapa (o prefixo de data/pid foi removido com sed para caber). O buffer foi limpo
+entre as etapas. Contrato das linhas: docs/native/LOGS-OCTAVIA.md.
+
+== 1. Login + primeiro sync (A4) — senha digitada pelo Marcel ==
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=login
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=3913
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=327
+OCTAVIA: cache write kind=setlists n=3 invalidated=0
+OCTAVIA: cache write kind=content n=66 invalidated=0
+OCTAVIA: sync ok setlists=3 content=66 pages=1 t=4293
+
+$ ... | grep -c 'api status='   → 2      (A4: exatamente 1 + ⌈66/100⌉ = 2)
+Tela: PR3b-screencap-1-s1b.png (3 setlists da conta de audit; ◔ "0 de n" porque os
+downloads de arquivo são a N1-PR5).
+
+== 2. Segunda abertura ONLINE — fecha N0-H11 / T1-R12 ==
+force-stop + deep link, com o cache já populado:
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=66
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=1318
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=300
+OCTAVIA: cache write kind=setlists n=3 invalidated=0
+OCTAVIA: cache write kind=content n=66 invalidated=0
+OCTAVIA: sync ok setlists=3 content=66 pages=1 t=1897
+
+$ ... | grep -c 'api status='   → 2
+
+**N0-H11 fechada**: duas aberturas consecutivas online produzem DUAS requests reais a cada
+rota — o runtime do RN não serve nada de cache HTTP, e o `private, no-store` do servidor
+(B7-PR3) não muda o resultado. O `cache hit` que aparece ANTES do `sync start` é o cache
+local do app (T1-R13 passo 1, cache-first), não cache HTTP.
+
+== 3. S1e + A21 — falha de sync com cache presente ==
+Aparato: servidor local (PR3b-servidor-500.py.txt) respondendo 500 com o envelope do
+CONTRATO-DE-ERRO em 127.0.0.1:8099, alcançado por `adb reverse tcp:8099 tcp:8099`; o Metro
+foi reiniciado com EXPO_PUBLIC_API_BASE_URL=http://localhost:8099 **inline no shell** (o
+apps/native/.env não foi tocado). Zero requests a prod nesta etapa.
+
+sha256 ANTES:
+  content.json  82884f8ce0305e342015e82e20a043c4431dc732e0ce176760cb0903d348c5bc
+  setlists.json eda14cd1c1d749ab27608119a20236d0d6d4f0c8c8426ed3f0f504333797126d
+
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=66
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=500 path=/api/setlists n=1 ms=283
+OCTAVIA: sync fail stage=setlists page=1 code=INTERNAL_ERROR status=500
+
+sha256 DEPOIS:
+  content.json  82884f8ce0305e342015e82e20a043c4431dc732e0ce176760cb0903d348c5bc
+  setlists.json eda14cd1c1d749ab27608119a20236d0d6d4f0c8c8426ed3f0f504333797126d
+
+**A21 ✓** — cache byte a byte inalterado; a tela manteve a lista e mostrou o banner
+(PR3b-screencap-4-s1e.png: "falha ao sincronizar · mostrando dados de há 3 min" +
+"Tentar novamente").
+
+Tentativa anterior descartada: com `settings put global http_proxy 127.0.0.1:1` o proxy
+também bloqueou o Metro (o dev client não carregou o bundle) e o logcat ficou vazio — a
+prova não valia e foi refeita com o servidor local.
+
+== 4. S1c — avião com cache (também é o A5) ==
+$ adb shell cmd connectivity airplane-mode enable
+$ adb shell settings get global airplane_mode_on   → 1
+$ adb shell ping -c 1 -W 3 8.8.8.8                 → connect: Network is unreachable
+$ probe do Metro                                   → packager-status:running
+OCTAVIA: net offline
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=66
+OCTAVIA: sync skip reason=offline
+
+Tela: PR3b-screencap-2-s1c.png — "sem conexão · última sincronização há 5 min", lista
+inteira visível, sem modal. Kill + reopen em avião sem pedir login (T1-R19).
+
+== 5. S1d — avião e cache apagado ==
+$ adb shell "run-as rocks.octavia.app sh -c 'rm -rf files/octavia-<uid>'"
+OCTAVIA: net offline
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: sync skip reason=offline
+
+(sem `cache hit`: não havia cache). Tela: PR3b-screencap-3-s1d.png — "sem conexão",
+o parágrafo do design e o botão "Tentar novamente". Nunca o empty state.
+
+== 6. S1a e S1f — servidor local lento e vazio ==
+Aparato: PR3b-servidor-vazio.py.txt — `/api/setlists` dorme 9 s e devolve `[]`;
+`/api/content` devolve a página vazia no shape real. Zero requests a prod.
+
+Durante os 9 s (captura no ciclo 2 do laço de screencap):
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+→ PR3b-screencap-5-s1a.png: "sincronizando…" + "baixando suas setlists pela primeira vez"
+  (o `sync start` sem `sync ok` é a prova de que a tela é o estado (a), não o (f)).
+
+Depois:
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=9050
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=45
+OCTAVIA: cache write kind=setlists n=0 invalidated=0
+OCTAVIA: cache write kind=content n=0 invalidated=0
+OCTAVIA: sync ok setlists=0 content=0 pages=1 t=9186
+→ PR3b-screencap-6-s1f.png: "nenhuma setlist" + "Sua conta não tem setlists…"
+
+O servidor local registrou a URL real (A22 / T1-R9b no device):
+  REQ /api/setlists
+  REQ /api/content?pageSize=100&page=1&sortBy=recent
+
+== 7. Volta ao normal — sync real sobre o cache vazio (T1-R9, substituição sem merge) ==
+Metro reiniciado sem a variável inline (volta a apontar para octavia.rocks), avião desligado
+(`airplane_mode_on` 0, ping 18,356 ms):
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=0
+OCTAVIA: cache hit kind=content n=0
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=2206
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=299
+OCTAVIA: cache write kind=setlists n=3 invalidated=0
+OCTAVIA: cache write kind=content n=66 invalidated=0
+OCTAVIA: sync ok setlists=3 content=66 pages=1 t=2623
+
+O conjunto vazio foi SUBSTITUÍDO pelo real (nada foi mesclado) — T1-R9 na prática.
+
+== Encerramento ==
+$ adb shell settings get global airplane_mode_on   → 0
+$ adb shell ping -c 1 -W 3 8.8.8.8                 → rtt 18.356 ms  (rede provada de volta)
+$ adb reverse --remove-all
+$ diff (sdkmanager antes) (sdkmanager depois)      → vazio
+$ adb emu kill; pgrep -c qemu                      → 0
+$ lsof -iTCP:8081 / :8099 (LISTEN)                 → 0 / 0
+
+Estado final do emulador: app instalado, COM sessão da conta de audit, cache real gravado
+(content.json 52.866 B, setlists.json 15.247 B). Tab S6: intocado nesta PR.
+
+Contabilidade de prod: 1 login (senha do Marcel) · setlist-read 3 · content-read 3 = 6
+requests de leitura (teto 12) · bucket 0 · escrita 0 · 401/429 0.

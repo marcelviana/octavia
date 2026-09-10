@@ -65,7 +65,7 @@ export function LoginScreen(): React.JSX.Element {
       <ScrollView contentContainerStyle={styles.conteudo} keyboardShouldPersistTaps="handled">
         <View style={styles.marca}>
           <Image
-            source={require('../../assets/logo-octavia.png')}
+            source={require('../../assets/logo-octavia-dark.png')}
             style={styles.logo}
             resizeMode="contain"
             accessibilityLabel="Octavia"
