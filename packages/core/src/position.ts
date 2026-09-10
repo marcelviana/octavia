@@ -1,23 +1,30 @@
 /**
  * Navegação no palco (PRD T1-R24, T1-R27, T1-R29; aceites A12, A14).
- * Posições 1-based, como a API; nada circula.
- *
- * Commit 1 de 2 (regra nº 7): stub — a implementação entra no commit 2.
+ * Posições são **1-based**, como a API (`SETLISTS.md`, invariante 1..N
+ * contíguo). Nada circula: na última música o "avançar" abre a tela de fim de
+ * setlist (T1-R29), nunca volta à primeira nem sai do app.
  */
 import type { SetlistSongDTO } from './types'
 
-export function nextPosition(_pos: number, _n: number): number {
-  throw new Error('not implemented')
+/** Próxima posição; na última, devolve a própria (quem chama abre o fim). */
+export function nextPosition(pos: number, n: number): number {
+  return pos >= n ? n : pos + 1
 }
 
-export function prevPosition(_pos: number, _n: number): number {
-  throw new Error('not implemented')
+/** Posição anterior; na primeira, devolve 1 (não circula). */
+export function prevPosition(pos: number, _n: number): number {
+  return pos <= 1 ? 1 : pos - 1
 }
 
-export function endOfSetlist(_pos: number, _n: number): boolean {
-  throw new Error('not implemented')
+export function endOfSetlist(pos: number, n: number): boolean {
+  return pos >= n
 }
 
-export function songKey(_song: SetlistSongDTO): string {
-  throw new Error('not implemented')
+/**
+ * Identidade de uma música NA setlist: `setlist_songs.id`, nunca `content_id`
+ * (T1-R24). Um bis é o mesmo content em duas posições — duas telas distintas,
+ * cada uma com suas `notes`.
+ */
+export function songKey(song: SetlistSongDTO): string {
+  return song.id
 }

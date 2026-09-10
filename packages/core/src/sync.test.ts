@@ -26,7 +26,7 @@ function setlist(id: string): SetlistDTO {
 }
 
 describe('mergePages (T1-R9b / A22)', () => {
-  it.fails('id repetido entre páginas entra uma vez e conta como duplicata', () => {
+  it('id repetido entre páginas entra uma vez e conta como duplicata', () => {
     const { items, duplicates } = mergePages([
       [content('a'), content('b')],
       [content('b'), content('c')],
@@ -35,13 +35,13 @@ describe('mergePages (T1-R9b / A22)', () => {
     expect(duplicates).toBe(1)
   })
 
-  it.fails('preserva a ordem de chegada e aceita página vazia', () => {
+  it('preserva a ordem de chegada e aceita página vazia', () => {
     const { items, duplicates } = mergePages([[], [content('z'), content('a')], []])
     expect(items.map((i) => i.id)).toEqual(['z', 'a'])
     expect(duplicates).toBe(0)
   })
 
-  it.fails('duas páginas sem repetição (100 + 28) → 128 itens', () => {
+  it('duas páginas sem repetição (100 + 28) → 128 itens', () => {
     const p1 = Array.from({ length: 100 }, (_, i) => content(`p1-${i}`))
     const p2 = Array.from({ length: 28 }, (_, i) => content(`p2-${i}`))
     const { items, duplicates } = mergePages([p1, p2])
@@ -51,7 +51,7 @@ describe('mergePages (T1-R9b / A22)', () => {
 })
 
 describe('planSync (T1-R9 / A7, A21)', () => {
-  it.fails('página falhada → keep-previous com a MESMA referência do cache anterior', () => {
+  it('página falhada → keep-previous com a MESMA referência do cache anterior', () => {
     const previous = { content: [content('a')], setlists: [setlist('s1')] }
     const plan = planSync({
       pages: [
@@ -67,7 +67,7 @@ describe('planSync (T1-R9 / A7, A21)', () => {
     expect(plan.setlists).toBe(previous.setlists)
   })
 
-  it.fails('setlists ausentes → keep-previous, mesmo com todas as páginas ok', () => {
+  it('setlists ausentes → keep-previous, mesmo com todas as páginas ok', () => {
     const previous = { content: [content('a')], setlists: [setlist('s1')] }
     const plan = planSync({
       pages: [{ items: [content('a'), content('b')], failed: false }],
@@ -79,7 +79,7 @@ describe('planSync (T1-R9 / A7, A21)', () => {
     expect(plan.content).toBe(previous.content)
   })
 
-  it.fails('sem cache anterior e com falha → keep-previous com conjuntos vazios', () => {
+  it('sem cache anterior e com falha → keep-previous com conjuntos vazios', () => {
     const plan = planSync({
       pages: [{ items: [], failed: true }],
       setlists: null,
@@ -93,7 +93,7 @@ describe('planSync (T1-R9 / A7, A21)', () => {
     })
   })
 
-  it.fails('tudo ok → apply com o conjunto novo inteiro, já deduplicado', () => {
+  it('tudo ok → apply com o conjunto novo inteiro, já deduplicado', () => {
     const novas = [setlist('s1'), setlist('s2')]
     const plan = planSync({
       pages: [
@@ -111,13 +111,13 @@ describe('planSync (T1-R9 / A7, A21)', () => {
 })
 
 describe('diffByUpdatedAt (T1-R10 / A7)', () => {
-  it.fails('dois syncs idênticos → nenhuma invalidação', () => {
+  it('dois syncs idênticos → nenhuma invalidação', () => {
     const antes = [content('a'), content('b')]
     const depois = [content('a'), content('b')]
     expect(diffByUpdatedAt(antes, depois)).toEqual({ changed: [], added: [], removed: [] })
   })
 
-  it.fails('separa alterado, novo e removido', () => {
+  it('separa alterado, novo e removido', () => {
     const antes = [content('a'), content('b'), content('c')]
     const depois = [
       content('a'),

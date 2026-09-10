@@ -30,14 +30,14 @@ const SONG: SetlistSongDTO = {
 }
 
 describe('resolveSong (T1-R8 / A7)', () => {
-  it.fails('o cache vence o content embutido na resposta de setlists', () => {
+  it('o cache vence o content embutido na resposta de setlists', () => {
     const resolved = resolveSong(SONG, new Map([['c1', CACHE]]))
     expect(resolved.content?.title).toBe('B')
     expect(resolved.validity).toEqual({ ok: true, body: 'text' })
     expect(resolved.notes).toBe('cantar 1 tom abaixo')
   })
 
-  it.fails('content_id fora do cache → content e validity nulos (o embutido não substitui)', () => {
+  it('content_id fora do cache → content e validity nulos (o embutido não substitui)', () => {
     const resolved = resolveSong(SONG, new Map())
     expect(resolved.content).toBeNull()
     expect(resolved.validity).toBeNull()
@@ -46,20 +46,20 @@ describe('resolveSong (T1-R8 / A7)', () => {
 })
 
 describe('labelFor (T1-R11 + T1-R7 / A8)', () => {
-  it.fails('sem cache e sync em andamento → loading', () => {
+  it('sem cache e sync em andamento → loading', () => {
     expect(labelFor(SONG, new Map(), false)).toBe('loading')
   })
 
-  it.fails('sem cache e sync terminado → unavailable', () => {
+  it('sem cache e sync terminado → unavailable', () => {
     expect(labelFor(SONG, new Map(), true)).toBe('unavailable')
   })
 
-  it.fails('no cache e sem corpo renderizável → invalid', () => {
+  it('no cache e sem corpo renderizável → invalid', () => {
     const invalido: ContentDTO = { ...CACHE, content_data: null, file_url: null }
     expect(labelFor(SONG, new Map([['c1', invalido]]), true)).toBe('invalid')
   })
 
-  it.fails('no cache e renderizável → ready', () => {
+  it('no cache e renderizável → ready', () => {
     expect(labelFor(SONG, new Map([['c1', CACHE]]), true)).toBe('ready')
   })
 })

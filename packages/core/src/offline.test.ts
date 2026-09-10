@@ -48,7 +48,7 @@ function cache(items: ContentDTO[]): Map<string, ContentDTO> {
 }
 
 describe('offlineStatus (T1-R17 / A10)', () => {
-  it.fails('setlist só de texto está garantida com need 0', () => {
+  it('setlist só de texto está garantida com need 0', () => {
     const sl = setlist('sl1', [song('a', 1, 'c1'), song('b', 2, 'c2')])
     expect(offlineStatus(sl, cache([texto('c1'), texto('c2')]), new Set())).toEqual({
       kind: 'guaranteed',
@@ -57,7 +57,7 @@ describe('offlineStatus (T1-R17 / A10)', () => {
     })
   })
 
-  it.fails('2 de 5 arquivos → parcial "2 de 5"', () => {
+  it('2 de 5 arquivos → parcial "2 de 5"', () => {
     const songs = [1, 2, 3, 4, 5].map((n) => song(`s${n}`, n, `c${n}`))
     const contents = [1, 2, 3, 4, 5].map((n) => arquivo(`c${n}`, `${BUCKET}/${n}.pdf`))
     expect(
@@ -69,12 +69,12 @@ describe('offlineStatus (T1-R17 / A10)', () => {
     ).toEqual({ kind: 'partial', have: 2, need: 5 })
   })
 
-  it.fails('nenhum content no cache → nunca sincronizada', () => {
+  it('nenhum content no cache → nunca sincronizada', () => {
     const sl = setlist('sl1', [song('a', 1, 'c1'), song('b', 2, 'c2')])
     expect(offlineStatus(sl, cache([]), new Set())).toEqual({ kind: 'never', have: 0, need: 0 })
   })
 
-  it.fails('contents no cache e nenhum arquivo baixado → parcial "0 de 2" (aceite A10)', () => {
+  it('contents no cache e nenhum arquivo baixado → parcial "0 de 2" (aceite A10)', () => {
     const songs = [song('a', 1, 'c1'), song('b', 2, 'c2')]
     const contents = [arquivo('c1', `${BUCKET}/1.pdf`), arquivo('c2', `${BUCKET}/2.pdf`)]
     expect(offlineStatus(setlist('sl1', songs), cache(contents), new Set())).toEqual({
@@ -84,7 +84,7 @@ describe('offlineStatus (T1-R17 / A10)', () => {
     })
   })
 
-  it.fails('bis conta o arquivo uma vez; com ele baixado, garantida', () => {
+  it('bis conta o arquivo uma vez; com ele baixado, garantida', () => {
     const songs = [song('a', 1, 'c1'), song('b', 2, 'c1')]
     const contents = [arquivo('c1', `${BUCKET}/1.pdf`)]
     expect(
@@ -94,7 +94,7 @@ describe('offlineStatus (T1-R17 / A10)', () => {
 })
 
 describe('selectPrefetch (T1-R15 / A10)', () => {
-  it.fails('amanhã entra; hoje+8 e sem data não entram', () => {
+  it('amanhã entra; hoje+8 e sem data não entram', () => {
     const contents = cache([
       arquivo('c1', `${BUCKET}/1.pdf`),
       arquivo('c2', `${BUCKET}/2.pdf`),
@@ -110,7 +110,7 @@ describe('selectPrefetch (T1-R15 / A10)', () => {
     ])
   })
 
-  it.fails('duas datadas na janela saem pela data mais próxima primeiro', () => {
+  it('duas datadas na janela saem pela data mais próxima primeiro', () => {
     const contents = cache([arquivo('c1', `${BUCKET}/1.pdf`), arquivo('c2', `${BUCKET}/2.pdf`)])
     const setlists = [
       setlist('depois', [song('b', 1, 'c2')], '2026-09-15'),
@@ -122,7 +122,7 @@ describe('selectPrefetch (T1-R15 / A10)', () => {
     ])
   })
 
-  it.fails('arquivo já no aparelho não entra na fila', () => {
+  it('arquivo já no aparelho não entra na fila', () => {
     const contents = cache([arquivo('c1', `${BUCKET}/1.pdf`), arquivo('c2', `${BUCKET}/2.pdf`)])
     const sl = setlist('amanha', [song('a', 1, 'c1'), song('b', 2, 'c2')], '2026-09-11')
     expect(
@@ -132,7 +132,7 @@ describe('selectPrefetch (T1-R15 / A10)', () => {
 })
 
 describe('prefetchOrder (T1-R16)', () => {
-  it.fails('posição 5 de 12 → 5, 6, 7, 8, 4, depois o resto por position', () => {
+  it('posição 5 de 12 → 5, 6, 7, 8, 4, depois o resto por position', () => {
     const songs = Array.from({ length: 12 }, (_, i) => song(`ss${i + 1}`, i + 1, `c${i + 1}`))
     expect(prefetchOrder(5, songs)).toEqual([
       'ss5',
@@ -152,7 +152,7 @@ describe('prefetchOrder (T1-R16)', () => {
 })
 
 describe('lruEvict (T1-R14 / A9)', () => {
-  it.fails('o repertório medido no N0 (265.002 B) cabe no teto de 200 MB — nada a despejar', () => {
+  it('o repertório medido no N0 (265.002 B) cabe no teto de 200 MB — nada a despejar', () => {
     const files = [
       { url: `${BUCKET}/12p.pdf`, bytes: 242_176, lastUsedMs: 1 },
       { url: `${BUCKET}/1p.pdf`, bytes: 20_821, lastUsedMs: 2 },
@@ -165,7 +165,7 @@ describe('lruEvict (T1-R14 / A9)', () => {
     })
   })
 
-  it.fails('despeja o menos usado primeiro até caber', () => {
+  it('despeja o menos usado primeiro até caber', () => {
     const files = [
       { url: 'a', bytes: 100, lastUsedMs: 30 },
       { url: 'b', bytes: 100, lastUsedMs: 10 },
@@ -174,7 +174,7 @@ describe('lruEvict (T1-R14 / A9)', () => {
     expect(lruEvict(files, 150, new Set())).toEqual({ evict: ['b', 'c'], bytesAfter: 100 })
   })
 
-  it.fails('protegido dos 7 dias nunca sai, mesmo sendo o mais antigo', () => {
+  it('protegido dos 7 dias nunca sai, mesmo sendo o mais antigo', () => {
     const files = [
       { url: 'protegido', bytes: 100, lastUsedMs: 1 },
       { url: 'a', bytes: 100, lastUsedMs: 50 },
@@ -185,7 +185,7 @@ describe('lruEvict (T1-R14 / A9)', () => {
     })
   })
 
-  it.fails('se nem sem os protegidos couber, despeja o que pode e devolve o total real', () => {
+  it('se nem sem os protegidos couber, despeja o que pode e devolve o total real', () => {
     const files = [
       { url: 'p1', bytes: 100, lastUsedMs: 1 },
       { url: 'p2', bytes: 100, lastUsedMs: 2 },

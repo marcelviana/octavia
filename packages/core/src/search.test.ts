@@ -35,16 +35,16 @@ function indexar(): ReturnType<typeof buildIndex> {
 }
 
 describe('searchIndex (T1-R20, T1-R21 / A11)', () => {
-  it.fails('acento e caixa não importam: aguas acha "Águas de Março"', () => {
+  it('acento e caixa não importam: aguas acha "Águas de Março"', () => {
     expect(searchIndex(indexar(), 'aguas')).toEqual([{ id: 'c1', where: 'title' }])
     expect(searchIndex(indexar(), 'ÁGUAS')).toEqual([{ id: 'c1', where: 'title' }])
   })
 
-  it.fails('acha pelo corpo — o verso que se lembra', () => {
+  it('acha pelo corpo — o verso que se lembra', () => {
     expect(searchIndex(indexar(), 'coisa mais linda')).toEqual([{ id: 'c2', where: 'body' }])
   })
 
-  it.fails('acha pelo artista e devolve título antes de artista antes de corpo', () => {
+  it('acha pelo artista e devolve título antes de artista antes de corpo', () => {
     expect(searchIndex(indexar(), 'tom jobim')).toEqual([
       { id: 'c1', where: 'artist' },
       { id: 'c2', where: 'artist' },
@@ -58,18 +58,18 @@ describe('searchIndex (T1-R20, T1-R21 / A11)', () => {
     ])
   })
 
-  it.fails('limit corta o resultado', () => {
+  it('limit corta o resultado', () => {
     expect(searchIndex(indexar(), 'de', 2)).toHaveLength(2)
   })
 
-  it.fails('consulta vazia (ou só espaços) não busca', () => {
+  it('consulta vazia (ou só espaços) não busca', () => {
     expect(searchIndex(indexar(), '')).toEqual([])
     expect(searchIndex(indexar(), '   ')).toEqual([])
   })
 })
 
 describe('groupResults (T1-R22 / A11)', () => {
-  it.fails('o que está na setlist atual vem primeiro, o resto é biblioteca', () => {
+  it('o que está na setlist atual vem primeiro, o resto é biblioteca', () => {
     const hits = searchIndex(indexar(), 'tom jobim')
     expect(groupResults(hits, new Set(['c2']))).toEqual({
       inSetlist: [{ id: 'c2', where: 'artist' }],

@@ -7,7 +7,7 @@ function song(id: string, position: number, contentId: string): SetlistSongDTO {
 }
 
 describe('songKey (T1-R24 / A12 — bis)', () => {
-  it.fails('mesmo content em duas posições tem chaves distintas', () => {
+  it('mesmo content em duas posições tem chaves distintas', () => {
     const bis1 = song('ss2', 2, 'c-wave')
     const bis2 = song('ss7', 7, 'c-wave')
     expect(songKey(bis1)).not.toBe(songKey(bis2))
@@ -16,19 +16,19 @@ describe('songKey (T1-R24 / A12 — bis)', () => {
 })
 
 describe('nextPosition / prevPosition (T1-R27 — não circula)', () => {
-  it.fails('avança 1 → 2 e para na última', () => {
+  it('avança 1 → 2 e para na última', () => {
     expect(nextPosition(1, 12)).toBe(2)
     expect(nextPosition(12, 12)).toBe(12)
   })
 
-  it.fails('volta 5 → 4 e para na primeira', () => {
+  it('volta 5 → 4 e para na primeira', () => {
     expect(prevPosition(5, 12)).toBe(4)
     expect(prevPosition(1, 12)).toBe(1)
   })
 })
 
 describe('endOfSetlist (T1-R29 / A14)', () => {
-  it.fails('só a última posição é o fim', () => {
+  it('só a última posição é o fim', () => {
     expect(endOfSetlist(12, 12)).toBe(true)
     expect(endOfSetlist(11, 12)).toBe(false)
     expect(endOfSetlist(1, 1)).toBe(true)
