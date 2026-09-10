@@ -1,20 +1,21 @@
 /**
  * Navegação da tela 1 (N1-D1: `@react-navigation/native` + native-stack).
- * As seis rotas do design são declaradas aqui desde já — S0 Login, S1
- * Setlists, S2 Index, S3 Stage, S4 Search, S5 End — para que as PRs seguintes
- * só troquem o componente de cada uma. Sem header: as barras são do design
- * (T1-R27/R28), não do sistema.
+ * As seis rotas do design são declaradas aqui — S0 Login, S1 Setlists, S2
+ * Index, S3 Stage, S4 Search, S5 End — para que as PRs seguintes só troquem o
+ * componente de cada uma. Sem header: as barras são do design (T1-R27/R28).
  *
- * Nesta PR (N1-PR3a) só `Login` e um `Setlists` placeholder têm tela; as
- * outras quatro existem como rota registrada e componente vazio.
+ * Nesta PR (N1-PR3b) `Login` e `Setlists` são reais; S2, S3, S4 e S5 seguem
+ * como placeholder rotulado, para que um tap na setlist tenha efeito visível
+ * em vez de abrir tela preta.
  */
 import { DarkTheme, NavigationContainer, type Theme } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { StyleSheet, Text, View } from 'react-native'
 import { LoginScreen } from './screens/LoginScreen'
+import { SetlistsScreen, type SetlistsScreenProps } from './screens/SetlistsScreen'
 import { dark, font, size, space, tracking } from './theme'
 
-/** Parâmetros de rota da tela 1 — preenchidos nas PRs 3b a 6. */
+/** Parâmetros de rota da tela 1 — preenchidos nas PRs 4 a 6. */
 export type RootStackParamList = {
   Login: undefined
   Setlists: undefined
@@ -39,32 +40,48 @@ const navTheme: Theme = {
   },
 }
 
-/** Placeholder da S1 — a tela real é a N1-PR3b (sync + seis estados). */
-function SetlistsPlaceholder(): React.JSX.Element {
+function Placeholder({ titulo, nota }: { titulo: string; nota: string }): React.JSX.Element {
   return (
     <View style={styles.placeholder}>
-      <Text style={styles.placeholderTitle}>SETLISTS</Text>
-      <Text style={styles.placeholderText}>S1 — próxima PR</Text>
+      <Text style={styles.placeholderTitle}>{titulo}</Text>
+      <Text style={styles.placeholderText}>{nota}</Text>
     </View>
   )
 }
 
-/** Rotas ainda sem tela (S2, S3, S4, S5): registradas, vazias. */
-function Vazia(): React.JSX.Element {
-  return <View style={styles.placeholder} />
+export interface NavigationProps {
+  signedIn: boolean
+  setlists: SetlistsScreenProps
 }
 
-export function Navigation({ signedIn }: { signedIn: boolean }): React.JSX.Element {
+export function Navigation({ signedIn, setlists }: NavigationProps): React.JSX.Element {
   return (
     <NavigationContainer theme={navTheme}>
-      <Stack.Navigator screenOptions={{ headerShown: false, contentStyle: { backgroundColor: dark.bg } }}>
+      <Stack.Navigator
+        screenOptions={{ headerShown: false, contentStyle: { backgroundColor: dark.bg } }}
+      >
         {signedIn ? (
           <Stack.Group>
-            <Stack.Screen name="Setlists" component={SetlistsPlaceholder} />
-            <Stack.Screen name="Index" component={Vazia} />
-            <Stack.Screen name="Stage" component={Vazia} />
-            <Stack.Screen name="Search" component={Vazia} />
-            <Stack.Screen name="End" component={Vazia} />
+            <Stack.Screen name="Setlists">
+              {({ navigation }) => (
+                <SetlistsScreen
+                  {...setlists}
+                  onAbrirSetlist={(setlistId) => navigation.navigate('Index', { setlistId })}
+                />
+              )}
+            </Stack.Screen>
+            <Stack.Screen name="Index">
+              {() => <Placeholder titulo="ÍNDICE" nota="S2 — próxima PR" />}
+            </Stack.Screen>
+            <Stack.Screen name="Stage">
+              {() => <Placeholder titulo="PALCO" nota="S3 — próxima PR" />}
+            </Stack.Screen>
+            <Stack.Screen name="Search">
+              {() => <Placeholder titulo="BUSCA" nota="S4 — próxima PR" />}
+            </Stack.Screen>
+            <Stack.Screen name="End">
+              {() => <Placeholder titulo="FIM DA SETLIST" nota="S5 — próxima PR" />}
+            </Stack.Screen>
           </Stack.Group>
         ) : (
           <Stack.Screen name="Login" component={LoginScreen} />
