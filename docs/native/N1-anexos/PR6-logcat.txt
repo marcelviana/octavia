@@ -1,0 +1,191 @@
+N1-PR6 — logcat verbatim por prova (AVD octavia_tab32, API 32, 2560×1600 @ 360 dpi)
+Leitura: adb -s emulator-5554 logcat -d -s ReactNativeJS | grep 'OCTAVIA:'
+(o prefixo do logcat foi cortado por sed; as linhas OCTAVIA: são verbatim)
+NOTA sobre o `q=`: o `adb shell input text` digita caractere a caractere e o
+React agrupa renders, então saem linhas intermediárias. A linha da consulta
+COMPLETA é a última de cada bloco. O termo NUNCA entra no log (N1-D5 regra 2).
+
+================================================================
+P1 — abertura online
+================================================================
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=66
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=3204
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=1709
+OCTAVIA: cache write kind=setlists n=3 invalidated=0
+OCTAVIA: cache write kind=content n=66 invalidated=0
+OCTAVIA: sync ok setlists=3 content=66 pages=1 t=4980
+OCTAVIA: prefetch plan n=0 reason=7d
+
+================================================================
+P2 — palco na posição 4 de 8 (UX-AUDIT SHOW PADRÃO)
+================================================================
+OCTAVIA: index jump n=4
+OCTAVIA: keepawake on
+OCTAVIA: prefetch plan n=2 reason=demand
+OCTAVIA: file src=download name=1786218427769-ux-audit-partitura-1p.pdf bytes=20821
+OCTAVIA: file src=download name=1786218429715-ux-audit-partitura-12p.pdf bytes=242176
+  (screencap: PR6-palco-antes-4de8.png — "4 DE 8", [UX-AUDIT] Felicidade)
+
+================================================================
+P3 — A11 / T1-R20+R22 online: busca "caipira" do palco
+================================================================
+OCTAVIA: keepawake off
+OCTAVIA: search q=1 n=50 in-setlist=7
+OCTAVIA: search q=5 n=2 in-setlist=1
+OCTAVIA: search q=6 n=2 in-setlist=1
+OCTAVIA: search q=7 n=2 in-setlist=1
+  → 7 caracteres, 2 resultados, 1 na setlist atual.
+  (screencap: PR6-s4a-grupos.png — "NESTA SETLIST · UX-AUDIT SHOW PADRÃO" com
+   a posição 5 e o chip "Tab", ANTES de "BIBLIOTECA · 66 MÚSICAS")
+
+================================================================
+P4 — T1-R22: abrir o resultado da BIBLIOTECA (avulso) e voltar
+================================================================
+OCTAVIA: keepawake on
+OCTAVIA: prefetch plan n=0 reason=demand
+  (screencap: PR6-palco-avulsa.png — barra "AVULSA", botão "Voltar")
+
+toque em "Voltar":
+OCTAVIA: keepawake off
+OCTAVIA: keepawake on
+  (screencap: PR6-palco-depois-4de8.png — "4 DE 8", [UX-AUDIT] Felicidade:
+   BYTE A BYTE a mesma tela do PR6-palco-antes-4de8.png, exceto o relógio)
+
+================================================================
+P5 — T1-R22: fechar a busca com ◂ restaura a posição
+================================================================
+OCTAVIA: keepawake off
+OCTAVIA: search q=1 n=50 in-setlist=7
+OCTAVIA: search q=4 n=2 in-setlist=1
+OCTAVIA: search q=5 n=2 in-setlist=1
+OCTAVIA: search q=6 n=2 in-setlist=1
+OCTAVIA: search q=7 n=2 in-setlist=1
+OCTAVIA: search close restore n=4/8
+OCTAVIA: keepawake on
+
+================================================================
+P6 — T1-R21: acento e caixa não importam
+================================================================
+"aguas" (sem acento, minúsculas):
+OCTAVIA: search q=5 n=2 in-setlist=0
+
+"AGUAS" (sem acento, MAIÚSCULAS):
+OCTAVIA: search q=4 n=2 in-setlist=0
+OCTAVIA: search q=5 n=2 in-setlist=0
+  (screencap: PR6-acento-maiusculas.png — campo "AGUAS", 2 × "[UX-AUDIT] Águas
+   de Março", Tom Jobim; sem cabeçalho "NESTA SETLIST" porque in-setlist=0)
+
+DEFEITO DE APARATO declarado: os dois screencaps foram salvos como
+`PR6-acento-aguas.png` e `PR6-acento-AGUAS.png`. O filesystem do macOS é
+case-insensitive por padrão, então são O MESMO arquivo e o segundo
+sobrescreveu o primeiro — sobrou só o das MAIÚSCULAS, renomeado acima para um
+nome sem ambiguidade. O logcat das duas buscas está preservado e é idêntico
+(`n=2 in-setlist=0`), e o caso remanescente é o mais forte (caixa E acento);
+o screencap do minúsculo não foi refeito porque o emulador já havia sido
+encerrado com o protocolo completo. Regra para as próximas PRs: nomes de
+anexo nunca diferem só por caixa.
+
+================================================================
+P7 — CONTROLE NEGATIVO do T1-R21: termo inexistente → S4b
+================================================================
+OCTAVIA: search q=6 n=0 in-setlist=0
+  (screencap: PR6-s4b-nada-encontrado.png —
+   'nada encontrado para "xablau"' +
+   "busca em título, artista, álbum e letra de toda a biblioteca (66 músicas)")
+
+================================================================
+P8 — fitPolicy={2}: página inteira, UM gesto = UMA página (T1-R27)
+================================================================
+OCTAVIA: index jump n=1
+OCTAVIA: keepawake on
+OCTAVIA: file src=disk name=1786218429715-ux-audit-partitura-12p.pdf bytes=242176
+OCTAVIA: prefetch plan n=0 reason=demand
+OCTAVIA: pdf-render pages=12 src=disk
+OCTAVIA: pdf-page n=1/12
+  (screencap: PR6-fitpolicy2-pagina1.png — a página A4 INTEIRA na tela)
+
+$ adb ... shell input swipe 1280 1000 1280 400 200      ← UM swipe
+OCTAVIA: pdf-page n=2/12
+
+$ adb ... shell input swipe 1280 1000 1280 400 200      ← outro swipe
+OCTAVIA: pdf-page n=2/12
+OCTAVIA: pdf-page n=3/12
+  → 1 gesto = 1 página. Com fitPolicy={0} (N1-PR5) eram ~4 gestos por página.
+
+================================================================
+P9 — A11 / T1-R23: a mesma busca em MODO AVIÃO
+================================================================
+$ adb ... shell cmd connectivity airplane-mode enable
+$ adb ... shell settings get global airplane_mode_on   → 1
+$ adb ... shell ping -c 2 -W 2 8.8.8.8                 → connect: Network is unreachable
+OCTAVIA: keepawake off
+OCTAVIA: search q=1 n=50 in-setlist=7
+OCTAVIA: search q=3 n=2 in-setlist=1
+OCTAVIA: search q=4 n=2 in-setlist=1
+OCTAVIA: search q=5 n=2 in-setlist=1
+OCTAVIA: search q=6 n=2 in-setlist=1
+OCTAVIA: search q=7 n=2 in-setlist=1
+  → n=2 in-setlist=1: IDÊNTICO ao resultado online da P3.
+  (screencap: PR6-s4a-offline.png — chip "sem conexão · busca local", ícone de avião)
+
+================================================================
+P10 — CONTROLE NEGATIVO do T1-R23: sem cache do store, em avião
+================================================================
+$ adb ... run-as rocks.octavia.app rm -f files/octavia-<uid>/{content,setlists}.json
+$ ls files/octavia-<uid>/  →  só `files/` e `files-index.json` (os ARQUIVOS ficam)
+OCTAVIA: net offline
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: sync skip reason=offline
+OCTAVIA: prefetch plan n=0 reason=7d
+  → sem `cache hit`: não há cache. A tela é o S1d ("sem conexão", erro
+    acionável), nunca o empty state.
+
+busca do mesmo termo "caipira" a partir da S1d:
+OCTAVIA: search q=1 n=0 in-setlist=0
+OCTAVIA: search q=2 n=0 in-setlist=0
+OCTAVIA: search q=3 n=0 in-setlist=0
+OCTAVIA: search q=4 n=0 in-setlist=0
+OCTAVIA: search q=5 n=0 in-setlist=0
+OCTAVIA: search q=6 n=0 in-setlist=0
+OCTAVIA: search q=7 n=0 in-setlist=0
+$ adb ... shell pidof rocks.octavia.app
+5474
+  → o termo que dava n=2 agora dá n=0, S4b honesto "(0 músicas)", app vivo.
+  (screencap: PR6-controle-sem-cache.png)
+
+================================================================
+P11 — estado final: rede de volta, cache restaurado pelo sync
+================================================================
+$ adb ... shell cmd connectivity airplane-mode disable ; airplane_mode_on → 0
+$ ping 8.8.8.8 → 0% packet loss
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=2445
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=507
+OCTAVIA: cache write kind=setlists n=3 invalidated=0
+OCTAVIA: cache write kind=content n=66 invalidated=0
+OCTAVIA: sync ok setlists=3 content=66 pages=1 t=3061
+OCTAVIA: prefetch plan n=0 reason=7d
+
+================================================================
+NÃO REPRODUZIDO no device — álbum (prova 4 do §2)
+================================================================
+$ python3 — sobre o content.json puxado do device por run-as:
+  total content: 66
+  com album nao-nulo: 0
+  chaves do 1o item: [..., 'album', 'artist', ...]   ← a COLUNA existe
+→ nenhum item da conta de audit tem `album` preenchido; a busca por álbum é
+  inalcançável no device sem escrita em prod (orçamento: escrita 0). Coberta
+  por unidade: 3 testes novos em `packages/core/src/search.test.ts` e TRÊS
+  controles negativos (álbum fora do índice → 2 falham; álbum antes do artista
+  → 1 falha; sem o `?? ''` → 9 falham). Prova real fica para o aceite com a
+  conta principal (H17), junto com a A10.

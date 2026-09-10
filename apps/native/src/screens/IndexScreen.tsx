@@ -34,6 +34,8 @@ export interface IndexScreenProps {
   posicaoAtual: number | null
   onVoltar: () => void
   onAbrirPosicao: (posicao: number) => void
+  /** T1-R22 — busca na biblioteca, com esta setlist como contexto. */
+  onBuscar: () => void
 }
 
 /** Rótulo do chip por tipo, na grafia do design. */
@@ -108,6 +110,7 @@ export function IndexScreen({
   posicaoAtual,
   onVoltar,
   onAbrirPosicao,
+  onBuscar,
 }: IndexScreenProps): React.JSX.Element {
   const songs = [...setlist.setlist_songs].sort((a, b) => a.position - b.position)
   const n = songs.length
@@ -132,10 +135,9 @@ export function IndexScreen({
             {setlist.venue !== null && setlist.venue.length > 0 ? `  ·  ${setlist.venue}` : ''}
           </Text>
         </View>
-        {/* A busca na biblioteca é a N1-PR6. */}
-        <View style={[styles.botaoSecundario, styles.botaoInativo]}>
+        <Pressable style={styles.botaoSecundario} onPress={onBuscar} testID="buscar">
           <Text style={styles.botaoSecundarioTexto}>Buscar na biblioteca</Text>
-        </View>
+        </Pressable>
       </View>
 
       <FlatList

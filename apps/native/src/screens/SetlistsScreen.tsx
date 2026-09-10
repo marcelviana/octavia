@@ -38,6 +38,8 @@ export interface SetlistsScreenProps {
   onAbrirSetlist: (setlistId: string) => void
   /** T1-R15 manual — baixa todos os arquivos desta setlist agora. */
   onBaixarSetlist: (setlistId: string) => void
+  /** T1-R22 — busca na biblioteca inteira, sem setlist de contexto. */
+  onBuscar: () => void
 }
 
 /** "há 2 h", "há 15 min", "agora" — o texto do chip de status do design. */
@@ -175,6 +177,7 @@ export function SetlistsScreen({
   onTentarNovamente,
   onAbrirSetlist,
   onBaixarSetlist,
+  onBuscar,
 }: SetlistsScreenProps): React.JSX.Element {
   const status = useMemo(
     () => new Map(setlists.map((s) => [s.id, offlineStatus(s, contentById, filesPresent)])),
@@ -192,10 +195,9 @@ export function SetlistsScreen({
       <View style={styles.barra}>
         <Text style={styles.titulo}>SETLISTS</Text>
         <Text style={styles.status}>{textoDoStatus(sync)}</Text>
-        {/* A busca é a N1-PR6; o botão do design já ocupa o lugar, inativo. */}
-        <View style={[styles.botaoSecundario, styles.botaoInativo]}>
+        <Pressable style={styles.botaoSecundario} onPress={onBuscar} testID="buscar">
           <Text style={styles.botaoSecundarioTexto}>Buscar música</Text>
-        </View>
+        </Pressable>
       </View>
 
       {/* (e) falha com cache: banner, e a lista continua embaixo */}

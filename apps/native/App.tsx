@@ -213,6 +213,7 @@ export default function App(): React.JSX.Element {
             signedIn={estado.fase === 'dentro'}
             dados={{
               lista: dados.setlists,
+              contents: dados.content,
               contentById: dados.contentById,
               syncDone: sync.fase !== 'sincronizando',
               online,
@@ -227,7 +228,11 @@ export default function App(): React.JSX.Element {
               sync,
               online,
               onTentarNovamente: tentarNovamente,
+              // `onAbrirSetlist` e `onBuscar` são navegação: quem os liga é o
+              // `navigation.tsx`, que tem o `navigation` em mãos. Aqui ficam
+              // os no-ops que o tipo exige (padrão desde a N1-PR3b).
               onAbrirSetlist: () => undefined,
+              onBuscar: () => undefined,
               onBaixarSetlist: baixarEsta,
             }}
           />
