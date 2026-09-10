@@ -1,0 +1,1191 @@
+$ pnpm test 2>&1 | sed -E "s/\[[0-9;]*m//g"   # 2026-09-09 17:50, HEAD 1d31abc (== origin/main 138bf1a); baseline N1-PRECHECK A1
+
+> octavia@0.1.0 test /Users/marcelviana/projects/octavia
+> pnpm exec vitest run
+
+
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia
+
+ ✓  core  packages/core/src/isolation.test.ts (2 tests) 2ms
+ ✓  core  packages/core/src/normalize.test.ts (4 tests) 6ms
+ ✓  core  packages/core/src/auth-fetch.test.ts (5 tests) 10ms
+stdout | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Navigation Response Time Tests (<100ms requirement) > should navigate between songs in under 100ms
+Navigation Performance: Max=37.57ms, Avg=6.64ms
+
+stdout | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Navigation Response Time Tests (<100ms requirement) > should handle rapid navigation without performance degradation
+Rapid Navigation: Total=110.10ms, Max=9.57ms, Avg=3.64ms
+
+stdout | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Content Rendering Performance Tests > should render heavy content under performance threshold
+Heavy Content Rendering: Max=32.03ms, Avg=20.56ms
+
+stdout | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Content Rendering Performance Tests > should handle content switching with consistent performance
+Content Switching: Max=7.81ms, Avg=3.29ms
+
+stdout | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Performance Under Load Tests > should maintain responsiveness with large setlist
+Large Setlist Navigation: Max=10.48ms, Avg=5.71ms
+
+stderr | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Performance Under Load Tests > should handle concurrent UI updates efficiently
+Warning: You seem to have overlapping act() calls, this is not supported. Be sure to await previous act() calls before making a new one. 
+
+stderr | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Performance Under Load Tests > should handle concurrent UI updates efficiently
+Warning: You seem to have overlapping act() calls, this is not supported. Be sure to await previous act() calls before making a new one. 
+
+stderr | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Performance Under Load Tests > should handle concurrent UI updates efficiently
+Warning: An update to MockPerformanceMode inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at MockPerformanceMode (/Users/marcelviana/projects/octavia/tests/performance/performance-mode-responsiveness.test.tsx:42:3)
+
+stderr | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Performance Under Load Tests > should handle concurrent UI updates efficiently
+Warning: You seem to have overlapping act() calls, this is not supported. Be sure to await previous act() calls before making a new one. 
+
+stderr | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Performance Under Load Tests > should handle concurrent UI updates efficiently
+Warning: You seem to have overlapping act() calls, this is not supported. Be sure to await previous act() calls before making a new one. 
+
+stderr | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Performance Under Load Tests > should handle concurrent UI updates efficiently
+Warning: You seem to have overlapping act() calls, this is not supported. Be sure to await previous act() calls before making a new one. 
+
+stderr | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Performance Under Load Tests > should handle concurrent UI updates efficiently
+Warning: You seem to have overlapping act() calls, this is not supported. Be sure to await previous act() calls before making a new one. 
+
+stderr | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Performance Under Load Tests > should handle concurrent UI updates efficiently
+Warning: You seem to have overlapping act() calls, this is not supported. Be sure to await previous act() calls before making a new one. 
+
+stderr | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Performance Under Load Tests > should handle concurrent UI updates efficiently
+Warning: You seem to have overlapping act() calls, this is not supported. Be sure to await previous act() calls before making a new one. 
+
+stderr | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Performance Under Load Tests > should handle concurrent UI updates efficiently
+Warning: You seem to have overlapping act() calls, this is not supported. Be sure to await previous act() calls before making a new one. 
+
+stderr | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Performance Under Load Tests > should handle concurrent UI updates efficiently
+Warning: You seem to have overlapping act() calls, this is not supported. Be sure to await previous act() calls before making a new one. 
+
+stdout | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Performance Under Load Tests > should handle concurrent UI updates efficiently
+Concurrent Updates: Max=24.28ms, Avg=18.76ms
+
+stdout | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Real-World Performance Scenarios > should handle typical live performance session
+Live Performance Session:
+  Total Time: 359.47ms
+  Song Changes: 29
+  Max Navigation: 23.87ms
+  Avg Navigation: 12.28ms
+  Slow Operations: 0
+
+ ✓  web  tests/performance/performance-mode-responsiveness.test.tsx (7 tests) 862ms
+       ✓ should handle typical live performance session  361ms
+stderr | hooks/__tests__/use-setlist-data.test.tsx > useSetlistData > shows error state (never first-use empty state) when network and cache both fail
+useSetlistData: Failed to hydrate from cache: Error: Cache error
+    at /Users/marcelviana/projects/octavia/hooks/__tests__/use-setlist-data.test.tsx:324:45
+    at file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:145:11
+    at file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:915:26
+    at file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1243:20
+    at new Promise (<anonymous>)
+    at runWithTimeout (file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1209:10)
+    at file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1653:37
+    at Traces.$ (file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/vitest@4.0.16_@opentelemetry+api@1.9.0_@types+node@22.18.3_@vitest+ui@4.0.16_happy-dom@_f5fce2d6ec618dfdb20135702f5d0c55/node_modules/vitest/dist/chunks/traces.U4xDYhzZ.js:115:27)
+    at trace (file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/vitest@4.0.16_@opentelemetry+api@1.9.0_@types+node@22.18.3_@vitest+ui@4.0.16_happy-dom@_f5fce2d6ec618dfdb20135702f5d0c55/node_modules/vitest/dist/chunks/test.B8ej_ZHS.js:239:21)
+    at runTest (file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1653:12)
+
+stderr | hooks/__tests__/use-setlist-data.test.tsx > useSetlistData > shows error state (never first-use empty state) when network and cache both fail
+useSetlistData: Sets loading failed: Error: Network failure
+    at /Users/marcelviana/projects/octavia/hooks/__tests__/use-setlist-data.test.tsx:319:19
+    at file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:145:11
+    at file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:915:26
+    at file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1243:20
+    at new Promise (<anonymous>)
+    at runWithTimeout (file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1209:10)
+    at file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1653:37
+    at Traces.$ (file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/vitest@4.0.16_@opentelemetry+api@1.9.0_@types+node@22.18.3_@vitest+ui@4.0.16_happy-dom@_f5fce2d6ec618dfdb20135702f5d0c55/node_modules/vitest/dist/chunks/traces.U4xDYhzZ.js:115:27)
+    at trace (file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/vitest@4.0.16_@opentelemetry+api@1.9.0_@types+node@22.18.3_@vitest+ui@4.0.16_happy-dom@_f5fce2d6ec618dfdb20135702f5d0c55/node_modules/vitest/dist/chunks/test.B8ej_ZHS.js:239:21)
+    at runTest (file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1653:12)
+useSetlistData: Content loading failed: Error: Network failure
+    at /Users/marcelviana/projects/octavia/hooks/__tests__/use-setlist-data.test.tsx:319:19
+    at file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:145:11
+    at file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:915:26
+    at file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1243:20
+    at new Promise (<anonymous>)
+    at runWithTimeout (file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1209:10)
+    at file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1653:37
+    at Traces.$ (file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/vitest@4.0.16_@opentelemetry+api@1.9.0_@types+node@22.18.3_@vitest+ui@4.0.16_happy-dom@_f5fce2d6ec618dfdb20135702f5d0c55/node_modules/vitest/dist/chunks/traces.U4xDYhzZ.js:115:27)
+    at trace (file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/vitest@4.0.16_@opentelemetry+api@1.9.0_@types+node@22.18.3_@vitest+ui@4.0.16_happy-dom@_f5fce2d6ec618dfdb20135702f5d0c55/node_modules/vitest/dist/chunks/test.B8ej_ZHS.js:239:21)
+    at runTest (file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1653:12)
+
+ ✓  web  lib/__tests__/content-service.test.ts (6 tests) 1047ms
+       ✓ returns empty array when user not authenticated  1008ms
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A03:2021 – Injection Attacks > should prevent LDAP injection
+Validation failed: {
+  path: 'http://localhost:3000/api/auth/session',
+  method: 'POST',
+  errors: [
+    {
+      code: 'invalid_type',
+      expected: 'string',
+      received: 'undefined',
+      path: [Array],
+      message: 'Required'
+    },
+    {
+      code: 'unrecognized_keys',
+      keys: [Array],
+      path: [],
+      message: "Unrecognized key(s) in object: 'email', 'password'"
+    }
+  ]
+}
+
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A03:2021 – Injection Attacks > should prevent LDAP injection
+Validation failed: {
+  path: 'http://localhost:3000/api/auth/session',
+  method: 'POST',
+  errors: [
+    {
+      code: 'invalid_type',
+      expected: 'string',
+      received: 'undefined',
+      path: [Array],
+      message: 'Required'
+    },
+    {
+      code: 'unrecognized_keys',
+      keys: [Array],
+      path: [],
+      message: "Unrecognized key(s) in object: 'email', 'password'"
+    }
+  ]
+}
+
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A03:2021 – Injection Attacks > should prevent LDAP injection
+Validation failed: {
+  path: 'http://localhost:3000/api/auth/session',
+  method: 'POST',
+  errors: [
+    {
+      code: 'invalid_type',
+      expected: 'string',
+      received: 'undefined',
+      path: [Array],
+      message: 'Required'
+    },
+    {
+      code: 'unrecognized_keys',
+      keys: [Array],
+      path: [],
+      message: "Unrecognized key(s) in object: 'email', 'password'"
+    }
+  ]
+}
+
+ ✓  web  tests/performance/memory-leak-detection.test.tsx (8 tests | 1 skipped) 1069ms
+       ✓ should handle rapid component mounting/unmounting without leaks  875ms
+stderr | tests/components/add-content.refactoring.test.tsx
+Firebase not configured - missing environment variables
+
+stderr | hooks/__tests__/use-setlist-data.test.tsx > useSetlistData > keeps cached setlists visible when the network fails with onLine=true (SET-14)
+useSetlistData: Sets loading failed: TypeError: Failed to fetch
+    at /Users/marcelviana/projects/octavia/hooks/__tests__/use-setlist-data.test.tsx:370:43
+    at file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:145:11
+    at file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:915:26
+    at file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1243:20
+    at new Promise (<anonymous>)
+    at runWithTimeout (file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1209:10)
+    at file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1653:37
+    at Traces.$ (file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/vitest@4.0.16_@opentelemetry+api@1.9.0_@types+node@22.18.3_@vitest+ui@4.0.16_happy-dom@_f5fce2d6ec618dfdb20135702f5d0c55/node_modules/vitest/dist/chunks/traces.U4xDYhzZ.js:115:27)
+    at trace (file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/vitest@4.0.16_@opentelemetry+api@1.9.0_@types+node@22.18.3_@vitest+ui@4.0.16_happy-dom@_f5fce2d6ec618dfdb20135702f5d0c55/node_modules/vitest/dist/chunks/test.B8ej_ZHS.js:239:21)
+    at runTest (file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1653:12)
+useSetlistData: Content loading failed: TypeError: Failed to fetch
+    at /Users/marcelviana/projects/octavia/hooks/__tests__/use-setlist-data.test.tsx:371:46
+    at file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:145:11
+    at file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:915:26
+    at file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1243:20
+    at new Promise (<anonymous>)
+    at runWithTimeout (file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1209:10)
+    at file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1653:37
+    at Traces.$ (file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/vitest@4.0.16_@opentelemetry+api@1.9.0_@types+node@22.18.3_@vitest+ui@4.0.16_happy-dom@_f5fce2d6ec618dfdb20135702f5d0c55/node_modules/vitest/dist/chunks/traces.U4xDYhzZ.js:115:27)
+    at trace (file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/vitest@4.0.16_@opentelemetry+api@1.9.0_@types+node@22.18.3_@vitest+ui@4.0.16_happy-dom@_f5fce2d6ec618dfdb20135702f5d0c55/node_modules/vitest/dist/chunks/test.B8ej_ZHS.js:239:21)
+    at runTest (file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1653:12)
+
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A07:2021 – Identification and Authentication Failures > should prevent credential stuffing attacks
+Validation failed: {
+  path: 'http://localhost:3000/api/auth/session',
+  method: 'POST',
+  errors: [
+    {
+      code: 'invalid_type',
+      expected: 'string',
+      received: 'undefined',
+      path: [Array],
+      message: 'Required'
+    },
+    {
+      code: 'unrecognized_keys',
+      keys: [Array],
+      path: [],
+      message: "Unrecognized key(s) in object: 'email', 'password'"
+    }
+  ]
+}
+
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A07:2021 – Identification and Authentication Failures > should prevent credential stuffing attacks
+Validation failed: {
+  path: 'http://localhost:3000/api/auth/session',
+  method: 'POST',
+  errors: [
+    {
+      code: 'invalid_type',
+      expected: 'string',
+      received: 'undefined',
+      path: [Array],
+      message: 'Required'
+    },
+    {
+      code: 'unrecognized_keys',
+      keys: [Array],
+      path: [],
+      message: "Unrecognized key(s) in object: 'email', 'password'"
+    }
+  ]
+}
+
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A07:2021 – Identification and Authentication Failures > should prevent credential stuffing attacks
+Validation failed: {
+  path: 'http://localhost:3000/api/auth/session',
+  method: 'POST',
+  errors: [
+    {
+      code: 'invalid_type',
+      expected: 'string',
+      received: 'undefined',
+      path: [Array],
+      message: 'Required'
+    },
+    {
+      code: 'unrecognized_keys',
+      keys: [Array],
+      path: [],
+      message: "Unrecognized key(s) in object: 'email', 'password'"
+    }
+  ]
+}
+
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A07:2021 – Identification and Authentication Failures > should prevent session fixation
+Validation failed: {
+  path: 'http://localhost:3000/api/auth/session',
+  method: 'POST',
+  errors: [
+    {
+      code: 'invalid_type',
+      expected: 'string',
+      received: 'undefined',
+      path: [Array],
+      message: 'Required'
+    },
+    {
+      code: 'unrecognized_keys',
+      keys: [Array],
+      path: [],
+      message: "Unrecognized key(s) in object: 'email', 'password'"
+    }
+  ]
+}
+
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A07:2021 – Identification and Authentication Failures > should implement account lockout after failed attempts
+Client-side token validation attempted - security risk
+Client-side token validation attempted - security risk
+Client-side token validation attempted - security risk
+Client-side token validation attempted - security risk
+Client-side token validation attempted - security risk
+Client-side token validation attempted - security risk
+Client-side token validation attempted - security risk
+Client-side token validation attempted - security risk
+Client-side token validation attempted - security risk
+Client-side token validation attempted - security risk
+Client-side token validation attempted - security risk
+Client-side token validation attempted - security risk
+Client-side token validation attempted - security risk
+Client-side token validation attempted - security risk
+Client-side token validation attempted - security risk
+
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A08:2021 – Software and Data Integrity Failures > should verify API response integrity
+Error in content API: TypeError: query.order(...).order is not a function
+    at Module.getContentHandler (/Users/marcelviana/projects/octavia/app/api/content/route.ts:115:52)
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at /Users/marcelviana/projects/octavia/tests/security/owasp-top10-penetration.test.ts:491:24
+    at file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:915:20
+
+ ✓  web  tests/security/owasp-top10-penetration.test.ts (26 tests | 9 skipped) 632ms
+       ✓ should verify dependencies are up to date  556ms
+stderr | hooks/__tests__/use-setlist-data.test.tsx > useSetlistData > shows error state when network fails and cache is empty
+useSetlistData: Sets loading failed: TypeError: Failed to fetch
+    at /Users/marcelviana/projects/octavia/hooks/__tests__/use-setlist-data.test.tsx:407:43
+    at file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:145:11
+    at file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:915:26
+    at file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1243:20
+    at new Promise (<anonymous>)
+    at runWithTimeout (file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1209:10)
+    at file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1653:37
+    at Traces.$ (file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/vitest@4.0.16_@opentelemetry+api@1.9.0_@types+node@22.18.3_@vitest+ui@4.0.16_happy-dom@_f5fce2d6ec618dfdb20135702f5d0c55/node_modules/vitest/dist/chunks/traces.U4xDYhzZ.js:115:27)
+    at trace (file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/vitest@4.0.16_@opentelemetry+api@1.9.0_@types+node@22.18.3_@vitest+ui@4.0.16_happy-dom@_f5fce2d6ec618dfdb20135702f5d0c55/node_modules/vitest/dist/chunks/test.B8ej_ZHS.js:239:21)
+    at runTest (file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1653:12)
+useSetlistData: Content loading failed: TypeError: Failed to fetch
+    at /Users/marcelviana/projects/octavia/hooks/__tests__/use-setlist-data.test.tsx:408:46
+    at file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:145:11
+    at file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:915:26
+    at file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1243:20
+    at new Promise (<anonymous>)
+    at runWithTimeout (file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1209:10)
+    at file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1653:37
+    at Traces.$ (file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/vitest@4.0.16_@opentelemetry+api@1.9.0_@types+node@22.18.3_@vitest+ui@4.0.16_happy-dom@_f5fce2d6ec618dfdb20135702f5d0c55/node_modules/vitest/dist/chunks/traces.U4xDYhzZ.js:115:27)
+    at trace (file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/vitest@4.0.16_@opentelemetry+api@1.9.0_@types+node@22.18.3_@vitest+ui@4.0.16_happy-dom@_f5fce2d6ec618dfdb20135702f5d0c55/node_modules/vitest/dist/chunks/test.B8ej_ZHS.js:239:21)
+    at runTest (file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1653:12)
+
+ ✓  web  tests/components/add-content.refactoring.test.tsx (25 tests | 4 skipped) 537ms
+ ✓  web  hooks/__tests__/use-setlist-data.test.tsx (12 tests) 2408ms
+     ✓ hydrates from cache first, then replaces state and cache with the server response  307ms
+     ✓ keeps cached setlists visible when the network fails with onLine=true (SET-14)  309ms
+     ✓ shows error state (no fetch, never first-use empty state) when offline with empty cache  306ms
+     ✓ shows error state when network fails and cache is empty  306ms
+     ✓ caches successful data by replacement  360ms
+stdout | tests/gates/g-rotas-protegidas.test.ts > G-rotas — toda página protegida expulsa por conta própria > /content/[id]: user nulo → redirect('/login')
+Firebase client initialized successfully
+Firebase Auth initialized
+Firebase Firestore initialized
+
+stdout | tests/security/token-blacklist-concurrency.test.ts > Token Blacklisting Concurrency Tests > Database Consistency Under Load > should handle database failures gracefully
+Database failures encountered: 5
+Successful blacklists: 20/20
+
+ ✓  web  tests/security/token-blacklist-concurrency.test.ts (11 tests | 10 skipped) 527ms
+       ✓ should handle database failures gracefully  522ms
+stderr | tests/components/content-viewer.refactoring.test.tsx
+Firebase not configured - missing environment variables
+
+ ✓  web  app/api/auth/__tests__/session.test.ts (11 tests) 308ms
+ ✓  web  tests/gates/g-rotas-protegidas.test.ts (17 tests) 4258ms
+     ✓ /dashboard: user nulo → redirect('/login')  1684ms
+     ✓ /settings: user nulo → redirect('/login')  390ms
+     ✓ /content/[id]: user nulo → redirect('/login')  1705ms
+ ✓  web  tests/components/content-viewer.refactoring.test.tsx (33 tests | 24 skipped) 324ms
+ ✓  web  app/api/content/__tests__/route.test.ts (22 tests) 335ms
+ ✓  web  app/api/storage/__tests__/upload.test.ts (5 tests) 273ms
+stdout | app/api/storage/__tests__/delete.test.ts > /api/storage/delete > POST /api/storage/delete > deletes file when user owns it
+File deleted successfully: 1234567890-test-file.pdf
+
+stderr | app/api/storage/__tests__/delete.test.ts > /api/storage/delete > POST /api/storage/delete > G1/D6: erro do storage vira 500 genérico — a mensagem interna do Supabase NÃO vaza
+Supabase delete error: { message: 'SENTINELA-interna-do-supabase' }
+
+ ✓  web  app/api/storage/__tests__/delete.test.ts (10 tests) 302ms
+ ✓  web  app/api/content/[id]/__tests__/route.test.ts (12 tests | 5 skipped) 235ms
+ ✓  web  tests/hooks/use-performance-controls.memory.test.ts (4 tests) 121ms
+stderr | hooks/__tests__/use-library-data.test.tsx > useLibraryData > provides reload function
+Warning: An update to TestComponent inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at TestComponent (/Users/marcelviana/projects/octavia/node_modules/.pnpm/@testing-library+react@16.3.0_@testing-library+dom@10.4.1_@types+react-dom@19.1.9_@type_f08ce16ecb6cfeef4afb75809dcb933a/node_modules/@testing-library/react/dist/pure.js:329:5)
+Warning: An update to TestComponent inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at TestComponent (/Users/marcelviana/projects/octavia/node_modules/.pnpm/@testing-library+react@16.3.0_@testing-library+dom@10.4.1_@types+react-dom@19.1.9_@type_f08ce16ecb6cfeef4afb75809dcb933a/node_modules/@testing-library/react/dist/pure.js:329:5)
+
+stderr | hooks/__tests__/use-library-data.test.tsx > useLibraryData > provides reload function
+Warning: An update to TestComponent inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at TestComponent (/Users/marcelviana/projects/octavia/node_modules/.pnpm/@testing-library+react@16.3.0_@testing-library+dom@10.4.1_@types+react-dom@19.1.9_@type_f08ce16ecb6cfeef4afb75809dcb933a/node_modules/@testing-library/react/dist/pure.js:329:5)
+
+ ✓  web  hooks/__tests__/use-library-data.test.tsx (8 tests) 261ms
+stderr | tests/security/auth-penetration-testing.test.ts > Authentication and Authorization Penetration Tests > Authentication Bypass Attempts > should prevent session fixation attacks
+Client-side token validation attempted - security risk
+
+ ✓  web  tests/security/auth-penetration-testing.test.ts (16 tests | 3 skipped) 146ms
+ ✓  web  __tests__/performance-mode/auto-scroll-button-bug.test.tsx (3 tests) 322ms
+stdout | __tests__/performance-mode/empty-state.test.tsx > Performance mode without content > renders an empty state instead of crashing when no content is selected
+Real-time performance monitoring started
+Memory monitoring started for performance mode
+
+stdout | __tests__/performance-mode/empty-state.test.tsx > Performance mode without content > renders an empty state instead of crashing when no content is selected
+Performance monitoring stopped
+Force cleanup completed
+Memory monitoring stopped
+
+stdout | __tests__/performance-mode/empty-state.test.tsx > Performance mode without content > renders the empty state when content and setlist are explicitly null
+Real-time performance monitoring started
+Memory monitoring started for performance mode
+
+stdout | __tests__/performance-mode/empty-state.test.tsx > Performance mode without content > renders the empty state when content and setlist are explicitly null
+Performance monitoring stopped
+Force cleanup completed
+Memory monitoring stopped
+
+stdout | __tests__/performance-mode/chords-display-bug.test.tsx > Bug #1: Chords Display Missing Chart > should display full chord chart in performance mode
+Real-time performance monitoring started
+Memory monitoring started for performance mode
+
+stdout | __tests__/performance-mode/chords-display-bug.test.tsx > Bug #1: Chords Display Missing Chart > should display full chord chart in performance mode
+Performance monitoring stopped
+Force cleanup completed
+Memory monitoring stopped
+
+stdout | __tests__/performance-mode/chords-display-bug.test.tsx > Bug #1: Chords Display Missing Chart > should display section lyrics along with chords
+Real-time performance monitoring started
+Memory monitoring started for performance mode
+
+stdout | __tests__/performance-mode/chords-display-bug.test.tsx > Bug #1: Chords Display Missing Chart > should display section lyrics along with chords
+Performance monitoring stopped
+Force cleanup completed
+Memory monitoring stopped
+
+stdout | __tests__/performance-mode/chords-display-bug.test.tsx > Bug #1: Chords Display Missing Chart > should handle multiple chord chart sections
+Real-time performance monitoring started
+Memory monitoring started for performance mode
+
+stdout | __tests__/performance-mode/empty-state.test.tsx > Performance mode without content > offers a way back that calls onExitPerformance
+Real-time performance monitoring started
+Memory monitoring started for performance mode
+
+stdout | __tests__/performance-mode/chords-display-bug.test.tsx > Bug #1: Chords Display Missing Chart > should handle multiple chord chart sections
+Performance monitoring stopped
+Force cleanup completed
+Memory monitoring stopped
+
+ ✓  web  __tests__/performance-mode/chords-display-bug.test.tsx (3 tests) 191ms
+stdout | __tests__/performance-mode/empty-state.test.tsx > Performance mode without content > offers a way back that calls onExitPerformance
+Performance monitoring stopped
+Force cleanup completed
+Memory monitoring stopped
+
+ ✓  web  __tests__/performance-mode/empty-state.test.tsx (3 tests) 248ms
+ ✓  web  tests/hooks/useAddContentLogic.test.ts (20 tests) 147ms
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+Validation failed: {
+  path: 'http://localhost/api/users/profile',
+  method: 'PUT',
+  errors: [
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    },
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+Validation failed: {
+  path: 'http://localhost/api/users/profile',
+  method: 'PUT',
+  errors: [
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    },
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+Validation failed: {
+  path: 'http://localhost/api/users/profile',
+  method: 'PUT',
+  errors: [
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    },
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+Validation failed: {
+  path: 'http://localhost/api/users/profile',
+  method: 'PUT',
+  errors: [
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    },
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+Validation failed: {
+  path: 'http://localhost/api/users/profile',
+  method: 'PUT',
+  errors: [
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    },
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+Validation failed: {
+  path: 'http://localhost/api/users/profile',
+  method: 'PUT',
+  errors: [
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    },
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      validation: 'url',
+      code: 'invalid_string',
+      message: 'Invalid url',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      validation: 'url',
+      code: 'invalid_string',
+      message: 'Invalid url',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      validation: 'url',
+      code: 'invalid_string',
+      message: 'Invalid url',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      validation: 'url',
+      code: 'invalid_string',
+      message: 'Invalid url',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      validation: 'url',
+      code: 'invalid_string',
+      message: 'Invalid url',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      validation: 'url',
+      code: 'invalid_string',
+      message: 'Invalid url',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Prototype Pollution Prevention > should prevent prototype pollution in content data
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      code: 'custom',
+      path: [Array],
+      message: 'obrigatória para Lyrics'
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Prototype Pollution Prevention > should prevent prototype pollution in content data
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      code: 'custom',
+      path: [Array],
+      message: 'obrigatória para Lyrics'
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Prototype Pollution Prevention > should prevent prototype pollution in content data
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      code: 'custom',
+      path: [Array],
+      message: 'obrigatória para Lyrics'
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Prototype Pollution Prevention > should prevent prototype pollution in content data
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      code: 'custom',
+      path: [Array],
+      message: 'obrigatória para Lyrics'
+    }
+  ]
+}
+
+ ✓  web  app/api/storage/__tests__/list.test.ts (5 tests) 77ms
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Large Payload Protection > should reject oversized payloads
+Failed to parse request body: Error: Request body too large
+    at parseRequestBody (/Users/marcelviana/projects/octavia/lib/api-validation-middleware.ts:38:15)
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at /Users/marcelviana/projects/octavia/lib/api-validation-middleware.ts:145:25
+    at /Users/marcelviana/projects/octavia/tests/security/api-validation.security.test.ts:336:24
+    at file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:915:20
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Unicode and Encoding Attacks > should handle Unicode-encoded attacks
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Unicode and Encoding Attacks > should handle Unicode-encoded attacks
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Unicode and Encoding Attacks > should handle Unicode-encoded attacks
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Unicode and Encoding Attacks > should handle Unicode-encoded attacks
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    }
+  ]
+}
+
+ ✓  web  tests/security/api-validation.security.test.ts (12 tests) 133ms
+ ✓  web  hooks/__tests__/useAddContentLogic.test.ts (5 tests) 61ms
+ ✓  web  components/__tests__/content-display.test.tsx (7 tests) 230ms
+ ✓  web  tests/hooks/use-performance-monitoring-ui.test.ts (8 tests) 232ms
+ ✓  web  app/api/storage/__tests__/upload-paridade.test.ts (12 tests) 111ms
+ ✓  web  tests/components/monospace-rendering.test.tsx (5 tests) 103ms
+ ✓  web  hooks/__tests__/use-performance-navigation.test.ts (21 tests) 96ms
+ ✓  web  app/api/profile/__tests__/route.test.ts (17 tests) 74ms
+ ✓  web  lib/__tests__/setlist-schemas.test.ts (8 tests) 22ms
+ ✓  web  app/api/setlists/[id]/__tests__/route.test.ts (23 tests | 1 skipped) 89ms
+ ✓  web  lib/__tests__/auth-mock-example.test.ts (10 tests) 88ms
+ ✓  web  lib/__tests__/setlist-service.test.ts (5 tests) 95ms
+Error: Uncaught [Error: useSidebar must be used within a SidebarProvider]
+    at reportException (/Users/marcelviana/projects/octavia/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/marcelviana/projects/octavia/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/Users/marcelviana/projects/octavia/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/Users/marcelviana/projects/octavia/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/Users/marcelviana/projects/octavia/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/Users/marcelviana/projects/octavia/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/Users/marcelviana/projects/octavia/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: useSidebar must be used within a SidebarProvider
+    at Module.useSidebar (/Users/marcelviana/projects/octavia/contexts/sidebar-context.tsx:21:11)
+    at /Users/marcelviana/projects/octavia/contexts/__tests__/sidebar-context.test.tsx:13:37
+    at TestComponent (/Users/marcelviana/projects/octavia/node_modules/.pnpm/@testing-library+react@16.3.0_@testing-library+dom@10.4.1_@types+react-dom@19.1.9_@type_f08ce16ecb6cfeef4afb75809dcb933a/node_modules/@testing-library/react/dist/pure.js:331:27)
+    at renderWithHooks (/Users/marcelviana/projects/octavia/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/Users/marcelviana/projects/octavia/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/Users/marcelviana/projects/octavia/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/Users/marcelviana/projects/octavia/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (/Users/marcelviana/projects/octavia/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+Error: Uncaught [Error: useSidebar must be used within a SidebarProvider]
+    at reportException (/Users/marcelviana/projects/octavia/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/marcelviana/projects/octavia/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/Users/marcelviana/projects/octavia/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/Users/marcelviana/projects/octavia/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/Users/marcelviana/projects/octavia/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/Users/marcelviana/projects/octavia/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/Users/marcelviana/projects/octavia/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: useSidebar must be used within a SidebarProvider
+    at Module.useSidebar (/Users/marcelviana/projects/octavia/contexts/sidebar-context.tsx:21:11)
+    at /Users/marcelviana/projects/octavia/contexts/__tests__/sidebar-context.test.tsx:13:37
+    at TestComponent (/Users/marcelviana/projects/octavia/node_modules/.pnpm/@testing-library+react@16.3.0_@testing-library+dom@10.4.1_@types+react-dom@19.1.9_@type_f08ce16ecb6cfeef4afb75809dcb933a/node_modules/@testing-library/react/dist/pure.js:331:27)
+    at renderWithHooks (/Users/marcelviana/projects/octavia/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/Users/marcelviana/projects/octavia/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/Users/marcelviana/projects/octavia/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/Users/marcelviana/projects/octavia/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (/Users/marcelviana/projects/octavia/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+stderr | contexts/__tests__/sidebar-context.test.tsx > throws if useSidebar called outside provider
+The above error occurred in the <TestComponent> component:
+
+    at TestComponent (/Users/marcelviana/projects/octavia/node_modules/.pnpm/@testing-library+react@16.3.0_@testing-library+dom@10.4.1_@types+react-dom@19.1.9_@type_f08ce16ecb6cfeef4afb75809dcb933a/node_modules/@testing-library/react/dist/pure.js:329:5)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+
+ ✓  web  contexts/__tests__/sidebar-context.test.tsx (2 tests) 87ms
+ ✓  web  contexts/__tests__/firebase-auth-context.test.tsx (3 tests) 72ms
+ ✓  web  lib/__tests__/contract-content.test.ts (39 tests) 33ms
+stderr | tests/hooks/use-content-loading.test.ts > useContentLoading > should provide all required properties
+Warning: An update to TestComponent inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at TestComponent (/Users/marcelviana/projects/octavia/node_modules/.pnpm/@testing-library+react@16.3.0_@testing-library+dom@10.4.1_@types+react-dom@19.1.9_@type_f08ce16ecb6cfeef4afb75809dcb933a/node_modules/@testing-library/react/dist/pure.js:329:5)
+Warning: An update to TestComponent inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at TestComponent (/Users/marcelviana/projects/octavia/node_modules/.pnpm/@testing-library+react@16.3.0_@testing-library+dom@10.4.1_@types+react-dom@19.1.9_@type_f08ce16ecb6cfeef4afb75809dcb933a/node_modules/@testing-library/react/dist/pure.js:329:5)
+Warning: An update to TestComponent inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at TestComponent (/Users/marcelviana/projects/octavia/node_modules/.pnpm/@testing-library+react@16.3.0_@testing-library+dom@10.4.1_@types+react-dom@19.1.9_@type_f08ce16ecb6cfeef4afb75809dcb933a/node_modules/@testing-library/react/dist/pure.js:329:5)
+Warning: An update to TestComponent inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at TestComponent (/Users/marcelviana/projects/octavia/node_modules/.pnpm/@testing-library+react@16.3.0_@testing-library+dom@10.4.1_@types+react-dom@19.1.9_@type_f08ce16ecb6cfeef4afb75809dcb933a/node_modules/@testing-library/react/dist/pure.js:329:5)
+Warning: An update to TestComponent inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at TestComponent (/Users/marcelviana/projects/octavia/node_modules/.pnpm/@testing-library+react@16.3.0_@testing-library+dom@10.4.1_@types+react-dom@19.1.9_@type_f08ce16ecb6cfeef4afb75809dcb933a/node_modules/@testing-library/react/dist/pure.js:329:5)
+
+ ✓  web  tests/hooks/use-content-loading.test.ts (3 tests) 63ms
+stdout | hooks/__tests__/use-content-renderer.test.ts > useContentRenderer - Chords Content > should return chords renderType for Chords content with sections
+Hook result: {
+  renderType: 'chords',
+  hasContent: true,
+  chordsData: [
+    {
+      id: '1',
+      name: 'Verse 1',
+      chords: 'C F G Am',
+      lyrics: 'First verse lyrics here'
+    },
+    {
+      id: '2',
+      name: 'Chorus',
+      chords: 'F C G',
+      lyrics: 'Chorus lyrics here'
+    }
+  ],
+  contentType: 'Chords'
+}
+
+stdout | hooks/__tests__/use-content-renderer.test.ts > useContentRenderer - Chords Content > should handle Chords content with empty sections
+Empty sections result: { renderType: 'no-lyrics', hasContent: false }
+
+stdout | hooks/__tests__/use-content-renderer.test.ts > useContentRenderer - Chords Content > should handle Chords content with string chords format
+String chords result: { renderType: 'chords', chordsData: 'C F G Am | F C G' }
+
+stdout | hooks/__tests__/use-content-renderer.test.ts > useContentRenderer - Chords Content > should handle Tab content type (normalized to CHORDS)
+Tab content result: { renderType: 'chords', contentType: 'Tab' }
+
+stdout | hooks/__tests__/use-content-renderer.test.ts > useContentRenderer - Chords Content > should prioritize sections over string chords when both present
+Priority test result: {
+  renderType: 'chords',
+  chordsData: [
+    { id: '1', name: 'Verse', chords: 'C F G', lyrics: 'Verse lyrics' }
+  ]
+}
+
+ ✓  web  hooks/__tests__/use-content-renderer.test.ts (5 tests) 57ms
+stderr | lib/__tests__/contract-errors.test.ts > shape semente contra o middleware (camada 2 — byte-identidade) > 400 de validação: literal do pre-check §2.2 (campo faltando)
+Validation failed: {
+  path: 'http://test.local/api/b3-contract',
+  method: 'POST',
+  errors: [
+    {
+      code: 'invalid_type',
+      expected: 'string',
+      received: 'undefined',
+      path: [Array],
+      message: 'Required'
+    }
+  ]
+}
+
+stderr | lib/__tests__/contract-errors.test.ts > shape semente contra o middleware (camada 2 — byte-identidade) > 400 unrecognized_keys de UMA chave: shape D7 (MUDANÇA DECLARADA do PR-3b — o literal field:"" do pre-check §2.2 era o comportamento até o flip)
+Validation failed: {
+  path: 'http://test.local/api/b3-contract',
+  method: 'POST',
+  errors: [
+    {
+      code: 'unrecognized_keys',
+      keys: [Array],
+      path: [],
+      message: "Unrecognized key(s) in object: '__b3_unknown__'"
+    }
+  ]
+}
+
+stderr | lib/__tests__/contract-errors.test.ts > shape semente contra o middleware (camada 2 — byte-identidade) > 500 do catch do middleware: literal (código-confirmado no pre-check §2.9)
+Validation middleware error: Error: boom interno
+    at /Users/marcelviana/projects/octavia/lib/__tests__/contract-errors.test.ts:210:13
+    at /Users/marcelviana/projects/octavia/lib/api-validation-middleware.ts:167:22
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at /Users/marcelviana/projects/octavia/lib/__tests__/contract-errors.test.ts:212:17
+    at file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:915:20
+
+stderr | lib/__tests__/contract-errors.test.ts > shape semente contra o middleware (camada 2 — byte-identidade) > G-flip: UMA chave desconhecida via middleware → field:"<chave>" (D7 default)
+Validation failed: {
+  path: 'http://test.local/api/b3-contract',
+  method: 'POST',
+  errors: [
+    {
+      code: 'unrecognized_keys',
+      keys: [Array],
+      path: [],
+      message: "Unrecognized key(s) in object: '__b3_unknown__'"
+    }
+  ]
+}
+
+stderr | lib/__tests__/contract-errors.test.ts > shape semente contra o middleware (camada 2 — byte-identidade) > G-flip: DUAS chaves desconhecidas via middleware → dois details nomeados (D7 pleno)
+Validation failed: {
+  path: 'http://test.local/api/b3-contract',
+  method: 'POST',
+  errors: [
+    {
+      code: 'unrecognized_keys',
+      keys: [Array],
+      path: [],
+      message: "Unrecognized key(s) in object: '__b3_x__', '__b3_y__'"
+    }
+  ]
+}
+
+stderr | lib/__tests__/contract-errors.test.ts > shape semente contra o middleware (camada 2 — byte-identidade) > 400 sintético (JSON inválido): shape novo via mapper único
+Failed to parse request body: SyntaxError: Unexpected token 'ã', "não é json {{{" is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseRequestBody (/Users/marcelviana/projects/octavia/lib/api-validation-middleware.ts:42:27)
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at /Users/marcelviana/projects/octavia/lib/api-validation-middleware.ts:145:25
+    at /Users/marcelviana/projects/octavia/lib/__tests__/contract-errors.test.ts:249:17
+    at file:///Users/marcelviana/projects/octavia/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:915:20
+
+ ✓  web  lib/__tests__/contract-errors.test.ts (17 tests) 51ms
+stdout | lib/__tests__/firebase-admin.test.ts > Firebase Admin > initializeFirebaseAdmin > should initialize Firebase admin when called explicitly
+Firebase Admin initialized successfully
+
+stderr | lib/__tests__/firebase-admin.test.ts > Firebase Admin > verifyFirebaseToken > should handle token verification errors
+Firebase token verification failed: Invalid token
+
+stderr | lib/__tests__/firebase-admin.test.ts > Firebase Admin > verifyFirebaseToken > should throw error when Firebase Admin not initialized and missing env vars
+Firebase token verification failed: Missing Firebase Admin environment variables: FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, FIREBASE_PRIVATE_KEY
+
+ ✓  web  lib/__tests__/firebase-admin.test.ts (8 tests) 55ms
+ ✓  web  hooks/__tests__/useMetadataForm.test.ts (3 tests) 37ms
+ ✓  web  app/api/setlists/__tests__/route.test.ts (15 tests | 4 skipped) 80ms
+ ✓  web  tests/security/security-headers-validation.test.ts (31 tests | 20 skipped) 44ms
+ ✓  web  app/api/setlists/songs/[songId]/__tests__/route.test.ts (4 tests) 30ms
+stdout | scripts/ux-audit/fase-d-dirs.test.ts > resolveFaseDDir (guard do registro histórico) > default: path efêmero fora de docs/ux/fase-d, com escrita funcionando
+[ux-audit] guard do histórico ativo: escrevendo em /var/folders/y9/tw0zmy8x5rs4ybgyt8lys8vw0000gn/T/ux-audit-N3GrZX (docs/ux/fase-d permanece intacto; opt-in UX_AUDIT_FASE_D_HISTORICO=1)
+
+stdout | scripts/ux-audit/fase-d-dirs.test.ts > resolveFaseDDir (guard do registro histórico) > data e evidence compartilham a mesma raiz efêmera da rodada
+[ux-audit] guard do histórico ativo: escrevendo em /var/folders/y9/tw0zmy8x5rs4ybgyt8lys8vw0000gn/T/ux-audit-53dXIT (docs/ux/fase-d permanece intacto; opt-in UX_AUDIT_FASE_D_HISTORICO=1)
+
+ ✓  web  scripts/ux-audit/fase-d-dirs.test.ts (3 tests) 34ms
+stderr | app/api/proxy/__tests__/route.test.ts > B3 contrato — /api/proxy (PR-4) > 500 misconfiguração: envelope (hoje: texto "Server misconfiguration")
+NEXT_PUBLIC_SUPABASE_URL not set
+
+ ✓  web  app/api/proxy/__tests__/route.test.ts (6 tests) 29ms
+ ✓  web  app/api/setlists/[id]/songs/order/__tests__/route.test.ts (8 tests) 61ms
+ ✓  web  app/api/content/[id]/__tests__/route-rpc.test.ts (7 tests) 33ms
+ ✓  web  lib/__tests__/firebase-server-utils.test.ts (17 tests) 25ms
+ ✓  web  app/api/setlists/[id]/songs/__tests__/route-rpc.test.ts (6 tests) 29ms
+ ✓  web  tests/typescript-ide-improvements.test.ts (10 tests) 13ms
+ ✓  web  lib/__tests__/contract-storage.test.ts (10 tests) 16ms
+stdout | lib/__tests__/secure-auth-utils.test.ts > requireAuthServerSecure (real implementation) > returns the user when the email is verified
+Token validated successfully for user: user-verified
+
+stdout | lib/__tests__/secure-auth-utils.test.ts > requireAuthServerSecure (real implementation) > returns the user when the email is verified
+Authentication successful for user: user-verified
+
+stdout | lib/__tests__/secure-auth-utils.test.ts > requireAuthServerSecure (real implementation) > rejects users with unverified email by default
+Token validated successfully for user: user-unverified-default
+
+stderr | lib/__tests__/secure-auth-utils.test.ts > requireAuthServerSecure (real implementation) > rejects users with unverified email by default
+Unverified user attempted access: user-unverified-default
+
+stdout | lib/__tests__/secure-auth-utils.test.ts > requireAuthServerSecure (real implementation) > BUG(profile-create): allows a freshly signed-up (unverified) user when allowUnverifiedEmail is set
+Token validated successfully for user: user-unverified-signup
+
+stdout | lib/__tests__/secure-auth-utils.test.ts > requireAuthServerSecure (real implementation) > BUG(profile-create): allows a freshly signed-up (unverified) user when allowUnverifiedEmail is set
+Authentication successful for user: user-unverified-signup
+
+ ✓  web  lib/__tests__/secure-auth-utils.test.ts (3 tests) 22ms
+ ✓  web  lib/__tests__/contract-d1-gate.test.ts (12 tests) 26ms
+ ✓  web  lib/__tests__/user-rate-limit.test.ts (9 tests) 26ms
+ ✓  web  lib/__tests__/rpc-errors.test.ts (7 tests) 35ms
+ ✓  web  app/api/setlists/__tests__/create-compensating.test.ts (3 tests) 50ms
+ ✓  web  hooks/__tests__/use-debounce.test.tsx (1 test) 28ms
+ ✓  web  lib/__tests__/contract-profile.test.ts (10 tests) 21ms
+ ✓  web  lib/__tests__/contract-setlist.test.ts (18 tests) 23ms
+ ✓  web  app/api/setlists/[id]/songs/__tests__/route.test.ts (3 tests) 27ms
+ ✓  web  app/api/setlists/songs/[songId]/__tests__/route-rpc.test.ts (5 tests) 23ms
+ ✓  web  lib/__tests__/contract-drift.test.ts (13 tests) 15ms
+ ✓  web  lib/__tests__/contract-sanitize.test.ts (13 tests) 20ms
+stdout | lib/__tests__/g1-no-self-fetch.test.ts > G1 — zero self-fetch na verificação de token (lambdas Node) > cadeia B: validateFirebaseTokenSecure verifica por chamada direta, zero fetch
+Token validated successfully for user: g1-uid
+
+ ✓  web  lib/__tests__/g1-no-self-fetch.test.ts (3 tests) 8ms
+ ✓  web  scripts/storage/__tests__/reconcile-core.test.ts (16 tests) 13ms
+ ✓  web  lib/__tests__/utils.test.ts (2 tests) 11ms
+ ✓  web  tests/typescript-strict-mode.test.ts (11 tests) 12ms
+ ✓  web  lib/__tests__/file-signatures.test.ts (12 tests) 19ms
+ ✓  web  app/api/setlists/__tests__/get-shape.test.ts (1 test) 18ms
+ ✓  web  lib/__tests__/offline-setlist-cache.test.ts (5 tests) 10ms
+ ✓  web  hooks/__tests__/use-toast.test.ts (4 tests) 7ms
+ ✓  web  lib/__tests__/security-headers-csp.test.ts (4 tests) 8ms
+ ✓  web  tests/config/next-headers.test.ts (2 tests) 7ms
+ ✓  web  lib/__tests__/api-schemas-inventory.test.ts (1 test) 7ms
+ ↓  web  tests/hooks/useContentFile.test.ts (1 test | 1 skipped)
+ ↓  web  tests/security/auth-security.test.ts (1 test | 1 skipped)
+ ↓  web  tests/security/cors-security.test.ts (1 test | 1 skipped)
+ ↓  web  tests/security/security-headers.test.ts (1 test | 1 skipped)
+
+ Test Files  79 passed | 4 skipped (83)
+      Tests  685 passed | 85 skipped (770)
+   Start at  17:50:42
+   Duration  35.40s (transform 7.58s, setup 56.87s, import 18.81s, tests 17.27s, environment 118.07s)
+
+pnpm test  99.69s user 27.32s system 341% cpu 37.197 total

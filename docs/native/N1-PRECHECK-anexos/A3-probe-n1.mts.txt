@@ -1,0 +1,76 @@
+/**
+ * N1 pre-check A3 — 3 requests de LEITURA a prod com a conta de audit.
+ * Nunca imprime token/email/corpo de música: só status, headers, chaves e tamanhos.
+ */
+import { writeFileSync } from 'node:fs'
+const OUT = process.env.OUT!
+const email = process.env.USER_AUDIT!, password = process.env.PASSWORD_AUDIT!, apiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY!
+if (!email || !password || !apiKey) { console.error('env ausente'); process.exit(1) }
+const BASE = 'https://octavia.rocks'
+const r = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${apiKey}`, {
+  method: 'POST', headers: { 'content-type': 'application/json' },
+  body: JSON.stringify({ email, password, returnSecureToken: true }),
+})
+console.log('signInWithPassword status=', r.status)
+if (!r.ok) process.exit(2)
+const { idToken, localId } = await r.json() as { idToken: string; localId: string }
+console.log('uid=', localId)
+async function get(path: string, tag: string) {
+  const t0 = Date.now()
+  const res = await fetch(BASE + path, { headers: { Authorization: `Bearer ${idToken}` } })
+  const text = await res.text()
+  const ms = Date.now() - t0
+  const h: Record<string,string> = {}
+  for (const k of ['cache-control','content-type','content-length','retry-after','x-ratelimit-limit','x-ratelimit-remaining','www-authenticate','x-vercel-cache','age']) { const v = res.headers.get(k); if (v !== null) h[k] = v }
+  console.log(`\n[${tag}] GET ${path} → ${res.status} ${ms}ms bytes=${Buffer.byteLength(text)} headers=${JSON.stringify(h)}`)
+  if (res.status === 401 || res.status === 429) { console.log('PARAR: 401/429'); process.exit(3) }
+  writeFileSync(`${OUT}/${tag}.json`, text)
+  return JSON.parse(text)
+}
+const keys = (o: unknown) => (o && typeof o === 'object' && !Array.isArray(o)) ? Object.keys(o as object) : typeof o
+const typ = (o: unknown) => o === null ? 'null' : Array.isArray(o) ? `array[${o.length}]` : typeof o
+
+// 1) setlists
+const sl = await get('/api/setlists', 'setlists')
+console.log('raiz:', typ(sl), Array.isArray(sl) ? `n=${sl.length}` : keys(sl))
+if (Array.isArray(sl) && sl[0]) {
+  const s = sl[0]
+  console.log('chaves de um setlist:', Object.entries(s).map(([k,v]) => `${k}:${typ(v)}`).join(', '))
+  const song = s.setlist_songs?.[0]
+  if (song) {
+    console.log('chaves de um item de setlist_songs:', Object.entries(song).map(([k,v]) => `${k}:${typ(v)}`).join(', '))
+    console.log('chaves de song.content:', Object.entries(song.content ?? {}).map(([k,v]) => `${k}:${typ(v)}`).join(', '))
+  }
+  console.log('por setlist: name-len / performance_date / n songs / positions contíguas:')
+  for (const x of sl) {
+    const pos = (x.setlist_songs ?? []).map((y: any) => y.position)
+    const contig = pos.every((p: number, i: number) => p === i + 1)
+    console.log(`  id=${String(x.id).slice(0,8)}… name.len=${String(x.name).length} performance_date=${x.performance_date} songs=${pos.length} contig=${contig} updated_at=${x.updated_at}`)
+  }
+  const embedded = JSON.stringify(sl.flatMap((x: any) => x.setlist_songs.map((y: any) => y.content))).length
+  console.log('bytes do content embutido (JSON):', embedded)
+}
+
+// 2) content pageSize=100
+const c = await get('/api/content?pageSize=100&page=1&sortBy=recent', 'content-100')
+console.log('envelope:', Object.entries(c).filter(([k]) => k !== 'data').map(([k,v]) => `${k}=${JSON.stringify(v)}`).join(' '), 'data:', typ(c.data))
+if (c.data?.[0]) {
+  console.log('chaves de um content:', Object.entries(c.data[0]).map(([k,v]) => `${k}:${typ(v)}`).join(', '))
+  const byType: Record<string, {n:number; dataNull:number; fileUrl:number; keys: Record<string, number>; maxBody:number}> = {}
+  for (const it of c.data) {
+    const t = it.content_type; byType[t] ??= { n:0, dataNull:0, fileUrl:0, keys:{}, maxBody:0 }
+    const b = byType[t]; b.n++
+    if (it.content_data === null || it.content_data === undefined) b.dataNull++
+    if (it.file_url) b.fileUrl++
+    if (it.content_data && typeof it.content_data === 'object') for (const k of Object.keys(it.content_data)) { b.keys[k] = (b.keys[k] ?? 0) + 1; const v = it.content_data[k]; if (typeof v === 'string') b.maxBody = Math.max(b.maxBody, Buffer.byteLength(v)) }
+  }
+  console.log('por tipo:', JSON.stringify(byType))
+  const ids = new Set(c.data.map((x: any) => x.id)); console.log('ids únicos:', ids.size, 'updated_at presente em todos:', c.data.every((x: any) => typeof x.updated_at === 'string'))
+  const fileUrls = c.data.filter((x: any) => x.file_url).map((x: any) => String(x.file_url).replace(/^https:\/\/[^/]+/, '<host>'))
+  console.log('file_url (host mascarado):', fileUrls)
+  const ct = c.data.filter((x: any) => !['Lyrics','Chords','Tab','Sheet'].includes(x.content_type)).length; console.log('content_type fora do enum:', ct)
+}
+// 3) clamp
+const c2 = await get('/api/content?pageSize=1000&page=1', 'content-1000')
+console.log('envelope (pageSize=1000):', Object.entries(c2).filter(([k]) => k !== 'data').map(([k,v]) => `${k}=${JSON.stringify(v)}`).join(' '), 'data:', typ(c2.data))
+console.log('\nTOTAL requests /api: 3 (setlist-read 1, content-read 2); login 1')

@@ -1,0 +1,29 @@
+$ set -a; source .env.uxaudit; source .env.local; set +a; OUT=$S pnpm exec tsx $S/probe-n1.mts   # 2026-09-09 17:55, 3 requests de leitura a https://octavia.rocks com a conta de audit (N1-PRECHECK A3); token/email/corpos nunca impressos
+signInWithPassword status= 200
+uid= Pw3bxXZw0iT3WwyL7kxGtGJIJH83
+[setlists] GET /api/setlists → 200 2305ms bytes=49983 headers={"cache-control":"private, no-store","content-type":"application/json","x-vercel-cache":"BYPASS"}
+raiz: array[3] n=3
+chaves de um setlist: id:string, user_id:string, name:string, description:null, performance_date:null, venue:null, notes:null, is_public:boolean, created_at:string, updated_at:string, setlist_songs:array[60]
+chaves de um item de setlist_songs: id:string, setlist_id:string, content_id:string, position:number, notes:string, content:object
+chaves de song.content: id:string, title:string, artist:string, content_type:string, key:null, bpm:null, file_url:string, content_data:null
+por setlist: name-len / performance_date / n songs / positions contíguas:
+  id=4340bf95… name.len=17 performance_date=null songs=60 contig=true updated_at=2026-08-29T19:43:10.287+00:00
+  id=00c2c1f4… name.len=20 performance_date=null songs=8 contig=true updated_at=2026-08-08T20:01:24.728+00:00
+  id=8c4413d9… name.len=13 performance_date=null songs=1 contig=true updated_at=2026-08-08T20:01:23.522+00:00
+bytes do content embutido (JSON): 34634
+[content-100] GET /api/content?pageSize=100&page=1&sortBy=recent → 200 1701ms bytes=52941 headers={"cache-control":"private, no-store","content-type":"application/json","x-vercel-cache":"BYPASS"}
+envelope: total=66 page=1 pageSize=100 hasMore=false totalPages=1 data: array[66]
+chaves de um content: id:string, user_id:string, title:string, artist:string, album:null, genre:null, content_type:string, key:null, bpm:null, time_signature:string, difficulty:null, capo:null, tuning:null, tags:null, notes:null, content_data:object, file_url:null, thumbnail_url:null, is_favorite:boolean, is_public:boolean, created_at:string, updated_at:string
+por tipo: {"Lyrics":{"n":38,"dataNull":0,"fileUrl":0,"keys":{"lyrics":38},"maxBody":307},"Chords":{"n":18,"dataNull":3,"fileUrl":3,"keys":{"chords":15,"annotations":1},"maxBody":291},"Sheet":{"n":2,"dataNull":2,"fileUrl":2,"keys":{},"maxBody":0},"Tab":{"n":8,"dataNull":0,"fileUrl":0,"keys":{"tablature":8},"maxBody":353}}
+ids únicos: 66 updated_at presente em todos: true
+file_url (host mascarado): [
+  '<host>/storage/v1/object/public/content-files/1786295884124-ux-audit-fase-d-offline.pdf',
+  '<host>/storage/v1/object/public/content-files/1786295884124-ux-audit-fase-d-offline.pdf',
+  '<host>/storage/v1/object/public/content-files/1786295844475-ux-audit-fase-d-cifra.pdf',
+  '<host>/storage/v1/object/public/content-files/1786218429715-ux-audit-partitura-12p.pdf',
+  '<host>/storage/v1/object/public/content-files/1786218427769-ux-audit-partitura-1p.pdf'
+]
+content_type fora do enum: 0
+[content-1000] GET /api/content?pageSize=1000&page=1 → 200 333ms bytes=52941 headers={"cache-control":"private, no-store","content-type":"application/json","x-vercel-cache":"BYPASS"}
+envelope (pageSize=1000): total=66 page=1 pageSize=100 hasMore=false totalPages=1 data: array[66]
+TOTAL requests /api: 3 (setlist-read 1, content-read 2); login 1

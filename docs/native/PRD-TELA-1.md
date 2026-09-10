@@ -26,7 +26,7 @@ Design da tela 1 congelado em 2026-09-08 — [`DESIGN-TELA-1/`](DESIGN-TELA-1/RE
 |---|---|---|
 | **C-D1** | Bearer direto pelo SDK Firebase, exclusivo; o nativo nunca chama `/api/auth/session`; B1.5 desejável, fila da tela 2; pendência do Marcel: restrição de referrer da web API key | §1.3 (20/26 handlers `ambos`, zero `cookie-only`), §1.4, §1.5, §1.6; **B.2 P2/P2b/P3×P2/P3b** |
 | **C-D2** | Bucket público mantido; nativo baixa `file_url` direto, sem proxy; URL imutável = chave de cache | §3.2–3.3; **B.2 P4/P4b**; B.5 achado 2 |
-| **C-D3** | Busca client-side sobre o cache local, acentos normalizados no cliente; B11 (servidor) sai do caminho do nativo | §2.3 (ILIKE sem unaccent); **B.3** (19.481 B de corpos, 465 B máximo) |
+| **C-D3** | Busca client-side sobre o cache local, acentos normalizados no cliente; B11 (servidor) sai do caminho do nativo | §2.3 (ILIKE sem unaccent); **B.3** (19.481 B de corpos, 465 B máximo — método na nota N7, errata N1-PR1) |
 | **C-D4** | Setlists só para ordem/ids/metadados; corpo sempre do cache de content por `content_id`, versionado por `content.updated_at`; substituição sem merge; cache-first com revalidação atrás; B9 não bloqueia | §2.1, §2.5, **B.4** (69/69 idênticos; 21.423 B embutidos); dump: RPCs bumpam `setlists.updated_at` |
 | **C-D5** | Cascata content×storage fora da tela 1; reabre na tela 2 | §3.3; B.6 (órfãos tipo B = 0, referência B5) |
 | **C-D6** | Sync completo de metadados ao abrir (2 requests) + prefetch dos arquivos das setlists com `performance_date` nos próximos 7 dias + resto sob demanda; zero retry com token que recebeu 401; renovação pelo SDK com buffer < 5 min | §4.2–4.3; **B.2** (latências); B.5 achado 4 |
@@ -50,7 +50,7 @@ Envelope de erro comum a todas as rotas `[contrato: CONTRATO-DE-ERRO.md]`: `{ er
 | bucket `content-files` | GET direto da `file_url` | **nenhuma** (bucket público, contrato B5-D3) `[medido: §3, B.2 P4]` | nenhuma família da API | bytes do objeto; `Content-Type` e `Content-Length` presentes; `Cache-Control: public, max-age=3600` `[medido: B.2 P4]` | — | 400/404 do Supabase (objeto ausente) — tratar como "arquivo indisponível" |
 
 Fatos que condicionam o cliente:
-- `Cache-Control` das quatro rotas é `public, max-age=0, must-revalidate`, sem `ETag`/`Last-Modified` `[medido: B.5 achado 1; §2.3]` → **o cliente não usa cache HTTP** (§5).
+- `Cache-Control` das quatro rotas era `public, max-age=0, must-revalidate` `[medido: B.5 achado 1; §2.3]` e é **`private, no-store`** desde a B7-PR3 `[medido: N1-PRECHECK A3 — 3/3 requests em prod, 2026-09-09; errata N1-PR1]`, sem `ETag`/`Last-Modified` → **o cliente não usa cache HTTP** (§5).
 - `Content-Length` ausente nas respostas JSON `[medido: B.5 achado 3]` → progresso de download só nos arquivos.
 - Headers `X-RateLimit-*` só no 429 `[medido: B.5 achado 4]` → o cliente não observa saldo; opera pelo orçamento do §6.
 - O invariante `position` = 1..N contíguo é contrato da tabela `[contrato: SETLISTS.md "Invariante contíguo 1..N"; medido: B.2 P2 — 0 violações em 69 songs]`.
@@ -83,31 +83,31 @@ Fatos que condicionam o cliente:
 
 ## 4. Contrato de `content_data` (C-D7)
 
-**Estado hoje** `[medido: §2.6]`: o backend valida `content_data` só como "objeto JSON qualquer ou null" (`z.record(jsonValueSchema).nullish()`, `lib/api-schemas.ts:145`); nenhuma chave é declarada. O consumidor de referência do web (`hooks/use-songs-transformation.ts:26-49`) lê `lyrics`, `file`, `chords`, `sections` e ignora `tablature`.
+**Estado hoje** `[medido: §2.6]`: o backend valida `content_data` só como "objeto JSON qualquer ou null" (`z.record(jsonValueSchema).nullish()`, `lib/api-schemas.ts:145`); nenhuma chave é declarada. O consumidor de referência do web (`hooks/use-songs-transformation.ts:26-49`) lê `lyrics`, `file`, `chords`, `sections` e ignora `tablature`. **Errata N1-PR1 (2026-09-10)**: desde a B7-PR5 a **escrita** valida por tipo (`lib/content-data-contract.ts`, `checkContentData`; contrato em [`docs/api/CONTENT-DATA.md`](../api/CONTENT-DATA.md)): chave do tipo obrigatória quando `content_data` é objeto, `null` aceito para todo tipo (D5c), `Sheet` sem chave obrigatória (D5b), chaves extras passam. Este §4 continua sendo o contrato de **leitura**.
 
-**Inventário real** `[medido: B.3 — 66 itens]`:
+**Inventário real da conta de audit** `[medido: B.3 — 66 itens; reconfirmado em N1-PRECHECK A3, 2026-09-09]` — errata N1-PR1: a tabela abaixo é **só a conta de audit**; a tabela `content` inteira (194 linhas em 3 `user_id`) está no anexo D5 do B7 e, por perfil, em `N1-PRECHECK.md` §0:
 
 | `content_type` | n | Chave real de `content_data` (tipo) | `file_url` | Observação |
 |---|---|---|---|---|
 | `Lyrics` | 38 | `lyrics` (string, máx. 307 B) | nunca | — |
-| `Chords` | 18 | `chords` (**string**, cifra-texto; máx. 465 B) em 15; `content_data null` em 3 | 3 (os 3 com `content_data null`) | Chords com arquivo = cifra escaneada |
+| `Chords` | 18 | `chords` (**string**, cifra-texto; máx. 465 B `[C]` / 291 B `[N1 — nota N7, método]`) em 15; `content_data null` em 3 | 3 (os 3 com `content_data null`) | Chords com arquivo = cifra escaneada |
 | `Tab` | 8 | `tablature` (string) | nunca | **o palco web não lê esta chave** (C4: TAB nunca renderizou) |
-| `Sheet` | 2 | `null` | sempre | partitura em PDF |
-| (qualquer) | 1 | `annotations` (array) | — | não-contrato (C-D7) |
+| `Sheet` | 2 | `null` (audit; na tabela inteira, objeto com `file` em 3 de 7 e `annotations` em 1 `[D5]` — ignorados pela regra (a)) | sempre | partitura em PDF |
+| (qualquer) | 1 (audit; tabela inteira: Chords 4, Lyrics 14, Sheet 1 `[D5]`) | `annotations` (array) | — | não-contrato (C-D7) |
 
-Chaves que o web lê e **não existem** em nenhum item: `sections`, `file` `[medido: B.3]`.
+Chaves que o web lê e **não existem** em nenhum item da conta de audit: `sections`, `file` `[medido: B.3]`. **Errata N1-PR1**: na tabela inteira elas existem — `sections` em 4 Chords, `file` em 3 Sheet `[D5 query 1]`; a regra (a) as ignora, nada muda no cliente.
 
 **T1-R7 — Contrato por tipo** `[C-D7; PLANO C4 "renderer cobrindo TODOS os content types"]`:
 
 | `content_type` | O cliente lê | Renderiza como |
 |---|---|---|
 | `Lyrics` | `content_data.lyrics: string` | texto, `white-space: pre` (CONT-01) |
-| `Chords` | `content_data.chords: string` **ou**, se `content_data` for `null`, `file_url` | texto monoespaçado sem quebra de linha automática (CONT-01/02) **ou** arquivo (PDF/imagem) |
+| `Chords` | `content_data.chords: string` **ou**, se `content_data` for `null`, `file_url` (objeto **sem** `chords` = regra (c): 2 na tabela inteira, 0 na principal `[D5; N1-PRECHECK §0]`) | texto monoespaçado sem quebra de linha automática (CONT-01/02) **ou** arquivo (PDF/imagem) |
 | `Tab` | `content_data.tablature: string` | texto monoespaçado sem quebra, 6 cordas alinhadas (CONT-02) |
 | `Sheet` | `file_url` (`content_data` é `null`) | arquivo (PDF/imagem) |
 
-Regras: (a) **chaves desconhecidas são ignoradas** (inclusive `annotations`, `sections`, `file`); (b) **`content_data null` E `file_url null` é estado inválido**: o item aparece na lista com marca "sem conteúdo" e, no palco, um placeholder explícito — nunca renderiza vazio em silêncio (C3-1, C3-6; PERF-09); (c) chave esperada ausente com `content_data` não-nulo (ex.: `Lyrics` sem `lyrics`) = mesmo tratamento de (b); (d) `content_type` fora do enum canônico `{Lyrics, Chords, Tab, Sheet}` (`types/content.ts`) = placeholder "tipo desconhecido" (dado do B2, 2026-08-24: 194/194 linhas dentro do enum `[referência: lib/api-schemas.ts:132-133 — nota N4]`, mas o cliente não confia).
-*Aceite*: os 66 itens da conta de audit `[B-P5-content.json]` renderizam sem placeholder (61 texto + 5 arquivo); um item sintético `{content_type:"Lyrics", content_data:null, file_url:null}` injetado no cache local renderiza o placeholder de (b), não tela vazia; um item com `content_data.foo` extra renderiza normalmente.
+Regras: (a) **chaves desconhecidas são ignoradas** (inclusive `annotations`, `sections`, `file`); (b) **`content_data null` E `file_url null` é estado inválido**: o item aparece na lista com marca "sem conteúdo" e, no palco, um placeholder explícito — nunca renderiza vazio em silêncio (C3-1, C3-6; PERF-09); (c) chave esperada ausente com `content_data` não-nulo (ex.: `Lyrics` sem `lyrics`) = mesmo tratamento de (b); (d) `content_type` fora do enum canônico `{Lyrics, Chords, Tab, Sheet}` (`types/content.ts`) = placeholder "tipo desconhecido" (dado do B2, 2026-08-24: 194/194 linhas dentro do enum `[referência: lib/api-schemas.ts:132-133 — nota N4]`, mas o cliente não confia). **Errata N1-PR1 (contagem real por perfil, SQL do Marcel em 2026-09-10 — `N1-PRECHECK.md` §0)**: inválidos por (b)+(c) — conta de audit **0**; conta principal (63 content) **0**; os "~11" citados no B7-ENCERRAMENTO §9 estão no perfil `6b2da77b…` (65 content: Chords 2 sem corpo/arquivo + 2 objeto sem `chords`, Sheet 2, Tab 5). A poluição `content_data.content_data` (9 registros) e a limpeza seguem no Bloco D.
+*Aceite*: os 66 itens da conta de audit `[B-P5-content.json]` renderizam sem placeholder (61 texto + 5 arquivo); um item sintético `{content_type:"Lyrics", content_data:null, file_url:null}` injetado no cache local renderiza o placeholder de (b), não tela vazia; um item com `content_data.foo` extra renderiza normalmente. **N1-PR1**: no aceite final com a conta principal, os 63 itens renderizam sem placeholder (0 inválidos medidos); o placeholder com dado real só seria provável no perfil `6b2da77b…` (fora do escopo) — a fixture cobre (N1-D10).
 
 O Zod por tipo na **escrita** é mini-item do Bloco B (§11), não pré-requisito da tela 1 `[C-D7]`.
 
@@ -120,7 +120,7 @@ Quatro entidades, chaves e versões:
 | Entidade local | Fonte | Chave | Versão | Conteúdo guardado |
 |---|---|---|---|---|
 | `setlist` | `GET /api/setlists` (item) | `setlist.id` | `setlists.updated_at` | `name, description, performance_date, venue, notes, created_at, updated_at` + lista ordenada de `song` |
-| `song` (linha de setlist) | idem, `setlist_songs[]` | `setlist_songs.id` | herda a da setlist | `content_id, position, notes` — **e só**; o `content{…}` embutido é **descartado** (21.423 B por abertura hoje `[medido: B.4]`) |
+| `song` (linha de setlist) | idem, `setlist_songs[]` | `setlist_songs.id` | herda a da setlist | `content_id, position, notes` — **e só**; o `content{…}` embutido é **descartado** (21.423 B por abertura hoje `[medido: B.4]`; 34.634 B em 2026-09-09 — nota N7) |
 | `content` | `GET /api/content` (item) | `content.id` | `content.updated_at` | todas as colunas da `content.Row` (inclusive `content_data`, `file_url`) |
 | `file` | GET direto da `file_url` | a própria `file_url` (imutável `[C-D2; medido: B.5 achado 2]`) | nenhuma (imutável) | bytes + `Content-Type` + tamanho + data de download |
 
@@ -139,7 +139,7 @@ Quatro entidades, chaves e versões:
 **T1-R11 — `content_id` fora do cache de content** `[C-D4 — "estado inalcançável pelos escritores"]`. Pelo backend, toda `song` aponta para content do mesmo usuário — é contrato do addSong: "Gates na rota: setlist inexistente-ou-alheia → `404 Setlist not found`; content inexistente-ou-alheio → `404 Content not found` (sem oráculo, byte-idênticos por construção)" `[contrato: docs/api/SETLISTS.md:41-43]`; o create com `songs[]` valida posse dos `content_id` antes de inserir `[medido: app/api/setlists/route.ts:99-121, citado em C-PRECHECK anexo A7]`. (A nota de delta do §2.1 do pre-check diz outra coisa: que o embedding da listagem NÃO filtra `content.user_id` — inofensivo justamente porque a posse é garantida na escrita.) A listagem de content é completa quando `hasMore == false`. Logo o caso "song sem content local" só ocorre por **sync parcial** (content ainda não sincronizado, ou falha entre os dois requests). Comportamento: a song aparece na setlist com `title` = "(carregando…)" enquanto o sync de content não terminou e "(indisponível)" se o sync terminou e o id não existe; nunca é omitida (a posição 1..N não pode ter buraco visual — SETLISTS.md); no palco, placeholder da regra 4(b). Na próxima sincronização completa, resolve-se sozinho.
 *Aceite*: cache com setlist cujo `content_id` X não existe em `content` → a lista mostra a song na posição certa com o rótulo, o palco mostra o placeholder, e após um sync completo com X presente ela renderiza.
 
-**T1-R12 — Sem cache HTTP** `[medido: B.5 achado 1 — `public, max-age=0, must-revalidate`, sem ETag]`. O cliente desliga qualquer cache HTTP do runtime para `/api/*` e trata o payload inteiro como verdade a cada sync. (Se o Bloco B mudar para `private`/`no-store` — §11 — nada muda no cliente.)
+**T1-R12 — Sem cache HTTP** `[medido: B.5 achado 1 — `public, max-age=0, must-revalidate`, sem ETag; errata N1-PR1: `private, no-store` desde a B7-PR3, medido em prod em 2026-09-09]`. O cliente desliga qualquer cache HTTP do runtime para `/api/*` e trata o payload inteiro como verdade a cada sync. (O Bloco B mudou para `private, no-store` — B7-PR3; nada muda no cliente. N0-H11 — `cache: 'no-store'` no `fetch` do RN — fecha por medição na N1-PR3.)
 *Aceite*: duas chamadas consecutivas a `/api/setlists` geram duas requests reais no servidor (log do proxy de captura), não um hit de cache.
 
 **Namespace por usuário** `[C-D4; PLANO: web usa `<store>-<uid>` — medido §2.5]`: todo o cache local é chaveado pelo `uid`; trocar de conta no device não mistura dados.
@@ -259,7 +259,7 @@ Herança do plano: a tela 1 **iguala ou supera cada ✅ e fecha cada ❌/⚠️*
 | H10 | `authfail` sob CGNAT é risco real — `[hipótese 10]` | tela 1 (T1-R3) | um loop de 401 derruba o IP por 5 min | nenhuma; T1-R3 elimina o loop por construção |
 | H11 | **Fechada** `[medido pelo Marcel, 2026-09-05 — Google Cloud]`: "Browser key (auto created by Firebase)", Restrições do aplicativo = **Nenhum** → o nativo autentica com a chave atual sem mudança | — | — |
 | H12 | Cold start explica 1,5–2 s dos dois primeiros hits — `[hipótese 12]` | aceito | abertura online mais lenta; o cache-first (T1-R13) esconde | 10 aberturas medidas na primeira semana |
-| H13 | Origem do `Cache-Control: public, max-age=0` (Next × Vercel) — `[hipótese 13]` | Bloco B (§11) | nenhum na tela 1 (T1-R12 ignora cache HTTP) | ler config do Next/Vercel quando o item do B abrir |
+| H13 | **Fechada** `[medido: B7-PR3, 2026-09-09 — era o default da Vercel na ausência de `Cache-Control`; prod agora `private, no-store` (N1-PRECHECK A3)]` (errata N1-PR1) | — | nenhum na tela 1 (T1-R12 ignora cache HTTP) | — |
 | H14 | **Fechada** `[medido pelo Marcel, 2026-09-05 — dashboard]`: conta principal = **63 content / 2 setlists** → ⌈N/100⌉ = **1 página**. Errata: o "~128" (194 − 66) atribuía a uma conta o que está em quatro (5 profiles, B5). T1-R9/R9b/A21/A22 **ficam** como requisitos — a biblioteca pode crescer | — | reabre se a biblioteca passar de 100 (`total` de `GET /api/content`) |
 | H15 | **Fechada — verdadeira** `[medido: N0-PR4, docs/native/N0-H15.md; aceite no Tab S6, N0-ACEITE-TAB-S6.md]`: o SDK restaura o usuário sem rede (token fresco e expirado) e não desloga quando a renovação falha offline; token expirado sem rede → `auth/network-request-failed` (H15-b condicional) | — | — | — |
 | H16 | **Fechada para a conta de audit** `[medido: N0-PR5, docs/native/N0-H16.md — 265.002 B em 4 objetos, maior 242.176 B]`; **conta principal: não medido** (passo do Marcel no dashboard, pendente no encerramento do N0) | Marcel | teto de 200 MB é folga sobre o medido | lista de tamanhos das `file_url` da conta principal |
@@ -305,7 +305,7 @@ Baselines do web a **não regredir** (PLANO C2): 1ª música em tela cheia ≤ 3
 
 | Item | Origem | Classe | Destino |
 |---|---|---|---|
-| `Cache-Control: private` ou `no-store` emitido pelas rotas de `/api/*` (hoje `public, max-age=0, must-revalidate`) | C-PRECHECK B.5 achado 1 | higiene de contrato / segurança baixa | Bloco B (mini-item; ponto único em `lib/api-errors.ts` + `NextResponse.json` das rotas) |
+| `Cache-Control: private` ou `no-store` emitido pelas rotas de `/api/*` (era `public, max-age=0, must-revalidate`; **feito na B7-PR3** via `headers()` do `next.config.mjs` → `private, no-store`, `/api/proxy` fora — errata N1-PR1) | C-PRECHECK B.5 achado 1 | higiene de contrato / segurança baixa | ~~Bloco B~~ **fechado (B7-PR3)** |
 | Zod de `content_data` por `content_type` na escrita | C-D7; §2.6 | contrato | Bloco B (mini-item; não pré-requisito da tela 1) |
 | `GET /api/debug/config` sem auth (404 só por `NODE_ENV`) | Fase A divergência 4 | superfície | Bloco B (classe da B1.0 — remoção) |
 | `STORAGE.md` diz "Bearer" onde a rota aceita ambos e exige email verificado | divergência 5 | doc | Bloco B (correção de contrato, junto do contrato de auth B7) |
@@ -492,6 +492,17 @@ $ sed -n 104,113p app/api/content/route.ts
 113	    query = query.order(sortColumn, { ascending })
 ```
 Sem desempate secundário (`id`) no `order`: dois itens com o mesmo `created_at` têm ordem não garantida entre páginas — mais um motivo para o dedupe por `id` do T1-R9b `[análise]`. — Fechado no web pela B7-PR4 (`.order('id', { ascending: true })` como desempate após a coluna do sort, nos 4 `sortBy`); o dedupe por `id` do nativo (T1-R9b) permanece por defesa.
+
+**N7 — método de medição dos bytes (errata N1-PR1, 2026-09-10; N1-PRECHECK div. 7)**
+Três números deste PRD não batem com a remedição do pre-check do N1 sobre a mesma conta de audit (mesmos 66 content / 69 songs):
+
+| Número | PRD (C, 2026-09-04) | N1 (2026-09-09) | Método do N1 |
+|---|---|---|---|
+| maior corpo de Chords | 465 B | **291 B** | `Buffer.byteLength(content_data.chords)` (bytes UTF-8 da string; 320 B se `JSON.stringify`) |
+| soma dos corpos | 19.481 B | **18.043 B** | soma dos bytes UTF-8 de `lyrics`/`chords`/`tablature` |
+| `content{…}` embutido em `GET /api/setlists` | 21.423 B | **34.634 B** | `JSON.stringify` do array dos objetos `content` embutidos (69 objetos, com repetição dos bis) |
+
+Os dois primeiros são compatíveis com uma medição do C sobre o JSON escapado (ou sobre o objeto inteiro); o terceiro é **maior** no N1 e não se explica por método — declarado, não explicado (candidato: o C contou os 60 `content_id` distintos, o N1 os 69 embutidos). Nenhum muda decisão: o cache local descarta o embutido (T1-R8) e o índice de busca cabe em memória (C-D3).
 
 ---
 
