@@ -3,12 +3,26 @@
     "name": "Octavia",
     "slug": "octavia",
     "version": "0.0.1",
+    "orientation": "default",
     "android": {
       "package": "rocks.octavia.app"
     },
     "plugins": [
       "@config-plugins/react-native-blob-util",
-      "@config-plugins/react-native-pdf"
+      "@config-plugins/react-native-pdf",
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/Raleway_500Medium.ttf",
+            "./assets/fonts/Raleway_600SemiBold.ttf",
+            "./assets/fonts/Manrope_400Regular.ttf",
+            "./assets/fonts/Manrope_600SemiBold.ttf",
+            "./assets/fonts/IBMPlexMono_400Regular.ttf",
+            "./assets/fonts/IBMPlexMono_600SemiBold.ttf"
+          ]
+        }
+      ]
     ]
   }
 }

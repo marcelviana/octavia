@@ -1,0 +1,93 @@
+N1-PR3a — logcat do emulador octavia_tab32 (API 32, 2560×1600 @ 360 dpi), 2026-09-10.
+
+Cada bloco abaixo é a saída literal de um `adb -s emulator-5554 logcat -d -s ReactNativeJS | grep 'OCTAVIA:'`
+executado ao fim da etapa; o buffer foi limpo (`logcat -c`) entre as etapas 3, 4 e 5, por isso os
+blocos não são cumulativos. Nenhuma linha carrega token, email, senha ou corpo — contrato em
+docs/native/LOGS-OCTAVIA.md.
+
+== 1. Primeira abertura após o build (tela S0) ==
+$ adb -s emulator-5554 logcat -d -s ReactNativeJS | grep 'OCTAVIA:'
+09-10 11:43:03.940  6850  6936 I ReactNativeJS: OCTAVIA: login-screen
+
+$ adb -s emulator-5554 logcat -d -s ReactNativeJS | grep -c 'api status='
+0
+
+== 2. Login com a conta de audit (senha digitada pelo Marcel) ==
+$ adb -s emulator-5554 logcat -d -s ReactNativeJS | grep 'OCTAVIA:'
+09-10 11:43:03.940  6850  6936 I ReactNativeJS: OCTAVIA: login-screen
+09-10 12:08:12.969  6850  6936 I ReactNativeJS: OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+
+DEFEITO MEDIDO AQUI: o login digitado anunciou-se como `src=restored`. Causa: a marca
+"entrou nesta execução" vivia no próprio ouvinte do Firebase, que dispara DURANTE o
+signInWithEmailAndPassword. Corrigido em src/session.ts (a marca é posta antes da chamada);
+a prova da correção é o bloco 6.
+
+== 3. Rotação (D12): retrato e volta a paisagem, com o app aberto ==
+$ adb -s emulator-5554 shell settings put system accelerometer_rotation 0
+$ adb -s emulator-5554 shell settings put system user_rotation 1   # retrato
+$ adb -s emulator-5554 shell wm size
+Physical size: 2560x1600
+$ adb -s emulator-5554 shell settings put system user_rotation 0   # paisagem
+$ adb -s emulator-5554 shell pidof rocks.octavia.app
+6850
+$ adb -s emulator-5554 logcat -d -s ReactNativeJS AndroidRuntime | grep -iE 'FATAL|Exception'
+(vazio — nenhuma exceção)
+$ adb -s emulator-5554 shell settings put system accelerometer_rotation 1
+
+== 4. Persistência: force-stop + reabertura pelo deep link (protocolo N0-H15 §C2) ==
+$ adb -s emulator-5554 shell am force-stop rocks.octavia.app
+$ adb -s emulator-5554 shell pidof rocks.octavia.app
+(vazio)
+$ adb -s emulator-5554 reverse tcp:8081 tcp:8081 && adb -s emulator-5554 reverse --list
+host-18 tcp:8081 tcp:8081
+$ adb -s emulator-5554 shell "sh -c \"(printf 'GET /status HTTP/1.0\r\n\r\n'; sleep 2) | nc 127.0.0.1 8081\""
+packager-status:running
+$ adb -s emulator-5554 logcat -c
+$ adb -s emulator-5554 shell am start -a android.intent.action.VIEW -d 'exp+octavia://expo-development-client/?url=http%3A%2F%2Flocalhost%3A8081'
+Starting: Intent { act=android.intent.action.VIEW dat=exp+octavia://expo-development-client/?url=http://localhost:8081 }
+$ adb -s emulator-5554 logcat -d -s ReactNativeJS | grep 'OCTAVIA:'
+09-10 12:10:18.591  7723  7779 I ReactNativeJS: OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+
+$ ... | grep -c 'login-screen'   → 0
+$ ... | grep -c 'api status='    → 0
+
+== 5. Controle negativo do N0: pm clear com a sessão viva ==
+$ adb -s emulator-5554 shell pm clear rocks.octavia.app
+Success
+$ adb -s emulator-5554 logcat -c && am start ...deep link...
+$ adb -s emulator-5554 logcat -d -s ReactNativeJS | grep 'OCTAVIA:'
+09-10 12:11:06.651  7975  8030 I ReactNativeJS: OCTAVIA: login-screen
+
+$ ... | grep -c 'auth uid='   → 0
+
+== 6. Senha errada e depois senha certa (as duas digitadas pelo Marcel) ==
+$ adb -s emulator-5554 logcat -d -s ReactNativeJS | grep 'OCTAVIA:'
+09-10 12:11:06.651  7975  8030 I ReactNativeJS: OCTAVIA: login-screen
+09-10 12:17:04.402  7975  8030 I ReactNativeJS: OCTAVIA: login-error code=auth/invalid-credential
+09-10 12:17:59.405  7975  8030 I ReactNativeJS: OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=login
+
+$ ... | grep -c 'api status='   → 0
+
+`src=login` fecha o defeito do bloco 2.
+
+== 7. Reprodução do estado de erro para o screencap (senha falsa digitada pela automação) ==
+A senha propositalmente errada NÃO é segredo; a senha real nunca passa por `input text`
+(divergência 24 do N0).
+$ adb -s emulator-5554 logcat -d -s ReactNativeJS | grep 'OCTAVIA:'
+09-10 12:20:20.780  8561  8615 I ReactNativeJS: OCTAVIA: login-screen
+09-10 12:21:26.756  8561  8615 I ReactNativeJS: OCTAVIA: login-error code=auth/invalid-credential
+
+$ ... | grep -c 'auth uid='   → 0
+
+Screencap: PR3a-screencap-3-erro-ptbr.png (recortado: o campo de email não entra no anexo).
+
+== Encerramento ==
+$ adb -s emulator-5554 reverse --remove-all
+$ adb -s emulator-5554 emu kill
+OK: killing emulator, bye bye
+$ pgrep -c qemu                                   → 0
+$ lsof -nP -iTCP:8081 -sTCP:LISTEN | wc -l        → 0
+$ diff (sdkmanager antes) (sdkmanager depois)     → vazio
+
+Estado final do emulador: app instalado, SEM sessão (o último ato foi uma tentativa falha),
+cache de arquivos vazio. Tab S6: intocado nesta PR (conectado por USB, só leitura).
