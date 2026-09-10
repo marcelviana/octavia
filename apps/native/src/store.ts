@@ -40,7 +40,15 @@ function dirDe(uid: string): Directory {
   return new Directory(Paths.document, `octavia-${uid}`)
 }
 
-/** Escreve `.tmp` e renomeia por cima — nunca deixa o arquivo bom pela metade. */
+/**
+ * Escreve `.tmp` e renomeia por cima — nunca deixa o arquivo bom pela metade.
+ *
+ * `moveSync` e não `move`: no expo-file-system 57 o `move` é assíncrono
+ * (`Promise<void>`), então esta função retornava ANTES de o rename acontecer
+ * e a promise ficava sem dono — uma falha viraria
+ * `Uncaught (in promise)` em vez de erro tratado (a forma exata do defeito foi
+ * medida no `files.ts` da N1-PR5, com três gravações concorrentes).
+ */
 function gravarAtomico(dir: Directory, nome: string, texto: string): void {
   const tmp = new File(dir, `${nome}.tmp`)
   if (tmp.exists) tmp.delete()
@@ -48,7 +56,7 @@ function gravarAtomico(dir: Directory, nome: string, texto: string): void {
   tmp.write(texto)
   const alvo = new File(dir, nome)
   if (alvo.exists) alvo.delete()
-  tmp.move(alvo)
+  tmp.moveSync(alvo)
 }
 
 function lerJson<T>(dir: Directory, nome: string): T | null {

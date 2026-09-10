@@ -60,6 +60,8 @@ export interface NavigationProps {
     contentById: Map<string, ContentDTO>
     syncDone: boolean
     online: boolean
+    /** O disco de arquivos mudou (N1-PR5) — a raiz recalcula `filesPresent`. */
+    onArquivosMudaram: () => void
   }
 }
 
@@ -124,6 +126,7 @@ export function Navigation({ signedIn, setlists, dados }: NavigationProps): Reac
                       })
                     }
                     onSair={() => navigation.navigate('Setlists')}
+                    onArquivosMudaram={dados.onArquivosMudaram}
                   />
                 )
               }}

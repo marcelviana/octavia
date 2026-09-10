@@ -26,14 +26,18 @@ export type SyncState =
 export interface SetlistsScreenProps {
   setlists: SetlistDTO[]
   contentById: Map<string, ContentDTO>
-  /** URLs de arquivo já baixadas — vazio até a N1-PR5 (downloads). */
+  /** URLs de arquivo já no disco — de `listFiles()` (N1-PR5). */
   filesPresent: Set<string>
+  /** Setlists com "baixar esta setlist" em andamento agora. */
+  baixando: Set<string>
   /** `false` enquanto nenhum sync bem-sucedido aconteceu neste aparelho. */
   temCache: boolean
   sync: SyncState
   online: boolean
   onTentarNovamente: () => void
   onAbrirSetlist: (setlistId: string) => void
+  /** T1-R15 manual — baixa todos os arquivos desta setlist agora. */
+  onBaixarSetlist: (setlistId: string) => void
 }
 
 /** "há 2 h", "há 15 min", "agora" — o texto do chip de status do design. */
@@ -102,18 +106,23 @@ function CartaoSetlist({
   setlist,
   status,
   online,
+  baixando,
   onAbrir,
+  onBaixar,
 }: {
   setlist: SetlistDTO
   status: OfflineStatus
   online: boolean
+  baixando: boolean
   onAbrir: () => void
+  onBaixar: () => void
 }): React.JSX.Element {
   const cor = corDe(status.kind)
   // "Baixar esta setlist" só faz sentido sem data de show (o prefetch de 7
-  // dias cobre as datadas — T1-R15). A AÇÃO chega na N1-PR5: aqui o botão já
-  // nasce desabilitado, e offline ele fica desabilitado por definição (07).
+  // dias cobre as datadas — T1-R15). Offline ele fica desabilitado por
+  // definição (proposta 07); com tudo no disco, não há o que baixar.
   const mostrarBaixar = setlist.performance_date === null
+  const podeBaixar = online && !baixando && status.have < status.need
 
   return (
     <Pressable style={styles.cartao} onPress={onAbrir} accessibilityRole="button">
@@ -128,9 +137,17 @@ function CartaoSetlist({
 
       <View style={styles.cartaoDir}>
         {mostrarBaixar ? (
-          <View style={[styles.botaoSecundario, styles.botaoInativo]}>
-            <Text style={styles.botaoSecundarioTexto}>Baixar esta setlist</Text>
-          </View>
+          <Pressable
+            style={[styles.botaoSecundario, podeBaixar ? null : styles.botaoInativo]}
+            onPress={() => (podeBaixar ? onBaixar() : undefined)}
+            accessibilityRole="button"
+            accessibilityState={{ disabled: !podeBaixar }}
+            testID={`baixar-${setlist.id.slice(0, 8)}`}
+          >
+            <Text style={styles.botaoSecundarioTexto}>
+              {baixando ? 'Baixando…' : 'Baixar esta setlist'}
+            </Text>
+          </Pressable>
         ) : null}
 
         <View style={styles.indicador}>
@@ -151,11 +168,13 @@ export function SetlistsScreen({
   setlists,
   contentById,
   filesPresent,
+  baixando,
   temCache,
   sync,
   online,
   onTentarNovamente,
   onAbrirSetlist,
+  onBaixarSetlist,
 }: SetlistsScreenProps): React.JSX.Element {
   const status = useMemo(
     () => new Map(setlists.map((s) => [s.id, offlineStatus(s, contentById, filesPresent)])),
@@ -230,7 +249,9 @@ export function SetlistsScreen({
               setlist={item}
               status={status.get(item.id) ?? { kind: 'never', have: 0, need: 0 }}
               online={online}
+              baixando={baixando.has(item.id)}
               onAbrir={() => onAbrirSetlist(item.id)}
+              onBaixar={() => onBaixarSetlist(item.id)}
             />
           )}
         />
