@@ -34,8 +34,6 @@ export interface SetlistsScreenProps {
   online: boolean
   onTentarNovamente: () => void
   onAbrirSetlist: (setlistId: string) => void
-  /** TEMPORÁRIO — abre o spike do C3; sai no commit 2 da N1-PR4. */
-  onSpike?: () => void
 }
 
 /** "há 2 h", "há 15 min", "agora" — o texto do chip de status do design. */
@@ -158,7 +156,6 @@ export function SetlistsScreen({
   online,
   onTentarNovamente,
   onAbrirSetlist,
-  onSpike,
 }: SetlistsScreenProps): React.JSX.Element {
   const status = useMemo(
     () => new Map(setlists.map((s) => [s.id, offlineStatus(s, contentById, filesPresent)])),
@@ -180,11 +177,6 @@ export function SetlistsScreen({
         <View style={[styles.botaoSecundario, styles.botaoInativo]}>
           <Text style={styles.botaoSecundarioTexto}>Buscar música</Text>
         </View>
-        {onSpike !== undefined ? (
-          <Pressable style={styles.botaoSecundario} onPress={onSpike} testID="spike">
-            <Text style={styles.botaoSecundarioTexto}>spike</Text>
-          </Pressable>
-        ) : null}
       </View>
 
       {/* (e) falha com cache: banner, e a lista continua embaixo */}

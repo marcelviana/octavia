@@ -1,31 +1,30 @@
 /**
  * Navegação da tela 1 (N1-D1: `@react-navigation/native` + native-stack).
- * As seis rotas do design são declaradas aqui — S0 Login, S1 Setlists, S2
- * Index, S3 Stage, S4 Search, S5 End — para que as PRs seguintes só troquem o
- * componente de cada uma. Sem header: as barras são do design (T1-R27/R28).
+ * Seis rotas: S0 Login, S1 Setlists, S2 Index, S3 Stage, S4 Search, S5 End.
+ * Sem header — as barras são do design (T1-R27/R28).
  *
- * Nesta PR (N1-PR3b) `Login` e `Setlists` são reais; S2, S3, S4 e S5 seguem
- * como placeholder rotulado, para que um tap na setlist tenha efeito visível
- * em vez de abrir tela preta.
+ * A **posição no palco vive nos params da rota** (`Stage.position`): assim
+ * ela sobrevive à rotação do device sem estado extra (T1-R27: "girar na
+ * música 4 → continua na 4").
  */
 import { DarkTheme, NavigationContainer, type Theme } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { StyleSheet, Text, View } from 'react-native'
+import type { ContentDTO, SetlistDTO } from '@octavia/core'
+import { EndScreen } from './screens/EndScreen'
+import { IndexScreen } from './screens/IndexScreen'
 import { LoginScreen } from './screens/LoginScreen'
 import { SetlistsScreen, type SetlistsScreenProps } from './screens/SetlistsScreen'
-import { SpikeScreen } from './screens/SpikeScreen'
+import { StageScreen } from './screens/StageScreen'
 import { dark, font, size, space, tracking } from './theme'
 
-/** Parâmetros de rota da tela 1 — preenchidos nas PRs 4 a 6. */
 export type RootStackParamList = {
   Login: undefined
   Setlists: undefined
-  Index: { setlistId: string }
+  Index: { setlistId: string; posicaoAtual?: number }
   Stage: { setlistId: string; position: number }
   Search: { setlistId?: string }
   End: { setlistId: string }
-  /** TEMPORÁRIA — spike do C3, sai no commit 2 da N1-PR4. */
-  Spike: undefined
 }
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
@@ -55,9 +54,18 @@ function Placeholder({ titulo, nota }: { titulo: string; nota: string }): React.
 export interface NavigationProps {
   signedIn: boolean
   setlists: SetlistsScreenProps
+  /** Dados que S2/S3/S5 consomem — os mesmos do cache já carregado. */
+  dados: {
+    lista: SetlistDTO[]
+    contentById: Map<string, ContentDTO>
+    syncDone: boolean
+    online: boolean
+  }
 }
 
-export function Navigation({ signedIn, setlists }: NavigationProps): React.JSX.Element {
+export function Navigation({ signedIn, setlists, dados }: NavigationProps): React.JSX.Element {
+  const acharSetlist = (id: string): SetlistDTO | undefined => dados.lista.find((s) => s.id === id)
+
   return (
     <NavigationContainer theme={navTheme}>
       <Stack.Navigator
@@ -70,24 +78,86 @@ export function Navigation({ signedIn, setlists }: NavigationProps): React.JSX.E
                 <SetlistsScreen
                   {...setlists}
                   onAbrirSetlist={(setlistId) => navigation.navigate('Index', { setlistId })}
-                  onSpike={() => navigation.navigate('Spike')}
                 />
               )}
             </Stack.Screen>
+
             <Stack.Screen name="Index">
-              {() => <Placeholder titulo="ÍNDICE" nota="S2 — próxima PR" />}
+              {({ navigation, route }) => {
+                const setlist = acharSetlist(route.params.setlistId)
+                if (setlist === undefined) {
+                  return <Placeholder titulo="SETLIST" nota="não está no cache" />
+                }
+                return (
+                  <IndexScreen
+                    setlist={setlist}
+                    contentById={dados.contentById}
+                    syncDone={dados.syncDone}
+                    posicaoAtual={route.params.posicaoAtual ?? null}
+                    onVoltar={() => navigation.goBack()}
+                    onAbrirPosicao={(position) =>
+                      navigation.navigate('Stage', { setlistId: setlist.id, position })
+                    }
+                  />
+                )
+              }}
             </Stack.Screen>
+
             <Stack.Screen name="Stage">
-              {() => <Placeholder titulo="PALCO" nota="S3 — próxima PR" />}
+              {({ navigation, route }) => {
+                const setlist = acharSetlist(route.params.setlistId)
+                if (setlist === undefined) {
+                  return <Placeholder titulo="SETLIST" nota="não está no cache" />
+                }
+                return (
+                  <StageScreen
+                    setlist={setlist}
+                    contentById={dados.contentById}
+                    posicao={route.params.position}
+                    online={dados.online}
+                    onPosicao={(position) => navigation.setParams({ position })}
+                    onFim={() => navigation.navigate('End', { setlistId: setlist.id })}
+                    onIndice={() =>
+                      navigation.navigate('Index', {
+                        setlistId: setlist.id,
+                        posicaoAtual: route.params.position,
+                      })
+                    }
+                    onSair={() => navigation.navigate('Setlists')}
+                  />
+                )
+              }}
             </Stack.Screen>
+
+            <Stack.Screen name="End">
+              {({ navigation, route }) => {
+                const setlist = acharSetlist(route.params.setlistId)
+                const total = setlist?.setlist_songs.length ?? 0
+                return (
+                  <EndScreen
+                    nomeSetlist={setlist?.name ?? ''}
+                    total={total}
+                    onVoltarUltima={() =>
+                      navigation.navigate('Stage', {
+                        setlistId: route.params.setlistId,
+                        position: total,
+                      })
+                    }
+                    onVoltarInicio={() =>
+                      navigation.navigate('Stage', {
+                        setlistId: route.params.setlistId,
+                        position: 1,
+                      })
+                    }
+                    onSair={() => navigation.navigate('Setlists')}
+                  />
+                )
+              }}
+            </Stack.Screen>
+
+            {/* A busca é a N1-PR6. */}
             <Stack.Screen name="Search">
               {() => <Placeholder titulo="BUSCA" nota="S4 — próxima PR" />}
-            </Stack.Screen>
-            <Stack.Screen name="End">
-              {() => <Placeholder titulo="FIM DA SETLIST" nota="S5 — próxima PR" />}
-            </Stack.Screen>
-            <Stack.Screen name="Spike">
-              {({ navigation }) => <SpikeScreen onSair={() => navigation.goBack()} />}
             </Stack.Screen>
           </Stack.Group>
         ) : (
