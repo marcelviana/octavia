@@ -1,0 +1,205 @@
+$ emulator -avd octavia_tab -no-window -no-audio -no-boot-anim   # 2026-09-09, boot headless para ler o estado do app (N1-PRECHECK A1); encerrado com `adb emu kill`
+INFO         | Android emulator version 35.5.10.0 (build_id 13402964) (CL:N/A)
+INFO         | Graphics backend: gfxstream
+INFO         | Found systemPath /Users/marcelviana/Library/Android/sdk/system-images/android-31/google_apis/arm64-v8a/
+WARNING      | Please update the emulator to one that supports the feature(s): Vulkan
+INFO         | Increasing RAM size to 2048MB
+INFO         | Checking system compatibility:
+INFO         |   Checking: hasSufficientDiskSpace
+INFO         |      Ok: Disk space requirements to run avd: `octavia_tab` are met
+INFO         |   Checking: hasSufficientHwGpu
+INFO         |      Ok: Hardware GPU requirements to run avd: `octavia_tab` are passed
+INFO         |   Checking: hasSufficientSystem
+INFO         |      Ok: System requirements to run avd: `octavia_tab` are met
+INFO         | Storing crashdata in: /tmp/android-marcelviana/emu-crash-35.5.10.db, detection is enabled for process: 96723
+INFO         | Guest Driver: Auto (ext controls)
+library_mode swangle_indirect gpu mode swangle_indirect
+INFO         | Initializing hardware OpenGLES emulation support
+I0909 17:56:49.273237 0766180 opengles.cpp:285] android_startOpenglesRenderer: gpu info
+I0909 17:56:49.273779 0766180 opengles.cpp:286] 
+INFO         | HealthMonitor disabled.
+INFO         | initIcdPaths: ICD set to 'swiftshader', using Swiftshader ICD
+INFO         | Setting ICD filenames for the loader = /Users/marcelviana/Library/Android/sdk/emulator/qemu/darwin-aarch64/lib64/vulkan/vk_swiftshader_icd.json:/Users/marcelviana/Library/Android/sdk/emulator/lib64/vulkan/vk_swiftshader_icd.json
+INFO         | SharedLibrary::open for [/Users/marcelviana/Library/Android/sdk/emulator/qemu/darwin-aarch64/lib64/vulkan/libvulkan.dylib]
+
+INFO         | SharedLibrary::open for [/Users/marcelviana/Library/Android/sdk/emulator/qemu/darwin-aarch64/lib64/vulkan/libvulkan.dylib]: not found in map, open for the first time
+
+INFO         | SharedLibrary::open for [/Users/marcelviana/Library/Android/sdk/emulator/qemu/darwin-aarch64/lib64/vulkan/libvulkan.dylib] (posix): begin
+
+INFO         | SharedLibrary::open for [/Users/marcelviana/Library/Android/sdk/emulator/qemu/darwin-aarch64/lib64/vulkan/libvulkan.dylib] (posix,darwin): call dlopen
+
+INFO         | SharedLibrary::open for [/Users/marcelviana/Library/Android/sdk/emulator/qemu/darwin-aarch64/lib64/vulkan/libvulkan.dylib] (posix,darwin): failed, try again with [/Users/marcelviana/Library/Android/sdk/emulator/qemu/darwin-aarch64/lib64/vulkan/libvulkan.dylib]
+
+INFO         | SharedLibrary::open for [/Users/marcelviana/Library/Android/sdk/emulator/qemu/darwin-aarch64/lib64/vulkan/libvulkan.dylib] failed (posix). dlerror: []
+
+INFO         | SharedLibrary::open for [/Users/marcelviana/Library/Android/sdk/emulator/lib64/vulkan/libvulkan.dylib]
+
+INFO         | SharedLibrary::open for [/Users/marcelviana/Library/Android/sdk/emulator/lib64/vulkan/libvulkan.dylib]: not found in map, open for the first time
+
+INFO         | SharedLibrary::open for [/Users/marcelviana/Library/Android/sdk/emulator/lib64/vulkan/libvulkan.dylib] (posix): begin
+
+INFO         | SharedLibrary::open for [/Users/marcelviana/Library/Android/sdk/emulator/lib64/vulkan/libvulkan.dylib] (posix,darwin): call dlopen
+
+INFO         | Added library: /Users/marcelviana/Library/Android/sdk/emulator/lib64/vulkan/libvulkan.dylib
+INFO         | Selecting Vulkan device: SwiftShader Device (LLVM 10.0.0), Version: 1.2.0
+INFO         | SharedLibrary::open for [libGLESv2.dylib]: not found in map, open for the first time
+
+INFO         | SharedLibrary::open for [libGLESv2.dylib] (posix): begin
+
+INFO         | SharedLibrary::open for [libGLESv2.dylib] (posix,darwin): call dlopen
+
+INFO         | SharedLibrary::open for [libEGL.dylib]: not found in map, open for the first time
+
+INFO         | SharedLibrary::open for [libEGL.dylib] (posix): begin
+
+INFO         | SharedLibrary::open for [libEGL.dylib] (posix,darwin): call dlopen
+
+INFO         | Initializing VkEmulation features:
+INFO         |     glInteropSupported: false
+INFO         |     useDeferredCommands: true
+INFO         |     createResourceWithRequirements: true
+INFO         |     useVulkanComposition: false
+INFO         |     useVulkanNativeSwapchain: false
+INFO         |     enable guestRenderDoc: false
+INFO         |     ASTC LDR emulation mode: 2
+INFO         |     enable ETC2 emulation: true
+INFO         |     enable Ycbcr emulation: false
+INFO         |     guestVulkanOnly: false
+INFO         |     useDedicatedAllocations: false
+INFO         | Graphics Adapter Vendor Google (Google Inc. (Google))
+INFO         | Graphics Adapter Android Emulator OpenGL ES Translator (ANGLE (Google, Vulkan 1.2.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver-5.0.0))
+INFO         | Graphics API Version OpenGL ES 3.0 (OpenGL ES 3.1.0 (ANGLE 2.1.1 git hash: fbf66f49c7cc))
+INFO         | Graphics API Extensions GL_OES_EGL_sync GL_OES_EGL_image GL_OES_EGL_image_external GL_OES_depth24 GL_OES_depth32 GL_OES_element_index_uint GL_OES_texture_float GL_OES_texture_float_linear GL_OES_compressed_paletted_texture GL_OES_compressed_ETC1_RGB8_texture GL_OES_depth_texture GL_OES_texture_half_float GL_OES_texture_half_float_linear GL_OES_packed_depth_stencil GL_OES_vertex_half_float GL_OES_standard_derivatives GL_OES_texture_npot GL_OES_rgb8_rgba8 GL_OVR_multiview2 GL_EXT_color_buffer_float GL_EXT_color_buffer_half_float GL_EXT_texture_format_BGRA8888 GL_APPLE_texture_format_BGRA8888 GL_EXT_draw_buffers_indexed GL_EXT_clip_cull_distance 
+INFO         | Graphics Device Extensions N/A
+INFO         | Sending adb public key [QAAAAOdfrZMpvAKhxjGHG5nY5V3dvzBpjVYp4+YdXRda42Opn1nzRD1DE7Lxuunci2bNEri51EMOTmSJuFgs4ESIYA1vEg67G3GsDA0H8uztfKHW1uONWPqKujeflrnJkYF5eUdXoeOo28XLX9MUDyWZ2HbOcnl4ubYUkIhZoUnvykIPzWa3MRp0JFQUDAdwVyWJ79/u5PAeKUrjNiGT1fg6Cj7ZajCOJ6mPRRLcY0roVl6pZDoDrXH+C/e+tUnOnUZAB2FRkaZoPPh1SvNS89Vbg8eZArylje42Cwud2WUOYXExa21jI/QzZqVunVZ5+zQEJux6qgfe98ojHLlcUGOeElk52XKqPGEuPa+9zGwhW4NCUAqX55NB+EMC/GIPVVAZ5Vl3X7Gp3YibL25sAGiWiEJmnkWBsfZtMBHq1E3B9jw60Zfpm1go9XUPvJPPeW6VYQRqCNLP44vmk5gijMO7HFJ6bSe9U3z2gOoqCIexUEm62CysuDv7lJjZU/CnH8EEiUmcVAAGVs+xl/OYt/k2bpxID+SnQV8jAPnRTqWiwPyDebeoH1LGK5ps9938GBT9yhi+opk2zb0Ya9XUbxkMEVf4rFRJuTCIiSl75CSPt2U7BkzHFG8iPl/Y1JMCaot0AjxC53Qt20dFwq2VihBBsnA9TKcBPw6CAbwm1dd5AxdT88snTgEAAQA= marcelviana@unknown]
+INFO         | Userspace boot properties:
+INFO         |   androidboot.boot_devices=a003600.virtio_mmio
+INFO         |   androidboot.dalvik.vm.heapsize=512m
+INFO         |   androidboot.debug.hwui.renderer=skiagl
+INFO         |   androidboot.debug.sf.nobootanimation=1
+INFO         |   androidboot.hardware=ranchu
+INFO         |   androidboot.hardware.gltransport=pipe
+INFO         |   androidboot.hardware.vulkan=ranchu
+INFO         |   androidboot.logcat=*:V
+INFO         |   androidboot.opengles.version=196609
+INFO         |   androidboot.qemu=1
+INFO         |   androidboot.qemu.adb.pubkey=QAAAAOdfrZMpvAKhxjGHG5nY5V3dvzBpjVYp4+YdXRda42Opn1nzRD1DE7Lxuunci2bNEri51EMOTmSJuFgs4ESIYA1vEg67G3GsDA0H8uztfKHW1uONWPqKujeflrnJkYF5eUdXoeOo28XLX9MUDyWZ2HbOcnl4ubYUkIhZoUnvykIPzWa3MRp0JFQUDAdwVyWJ79/u5PAeKUrjNiGT1fg6Cj7ZajCOJ6mPRRLcY0roVl6pZDoDrXH+C/e+tUnOnUZAB2FRkaZoPPh1SvNS89Vbg8eZArylje42Cwud2WUOYXExa21jI/QzZqVunVZ5+zQEJux6qgfe98ojHLlcUGOeElk52XKqPGEuPa+9zGwhW4NCUAqX55NB+EMC/GIPVVAZ5Vl3X7Gp3YibL25sAGiWiEJmnkWBsfZtMBHq1E3B9jw60Zfpm1go9XUPvJPPeW6VYQRqCNLP44vmk5gijMO7HFJ6bSe9U3z2gOoqCIexUEm62CysuDv7lJjZU/CnH8EEiUmcVAAGVs+xl/OYt/k2bpxID+SnQV8jAPnRTqWiwPyDebeoH1LGK5ps9938GBT9yhi+opk2zb0Ya9XUbxkMEVf4rFRJuTCIiSl75CSPt2U7BkzHFG8iPl/Y1JMCaot0AjxC53Qt20dFwq2VihBBsnA9TKcBPw6CAbwm1dd5AxdT88snTgEAAQA= marcelviana@unknown
+INFO         |   androidboot.qemu.avd_name=octavia_tab
+INFO         |   androidboot.qemu.camera_hq_edge_processing=0
+INFO         |   androidboot.qemu.camera_protocol_ver=1
+INFO         |   androidboot.qemu.cpuvulkan.version=4202496
+INFO         |   androidboot.qemu.gltransport.drawFlushInterval=800
+INFO         |   androidboot.qemu.gltransport.name=pipe
+INFO         |   androidboot.qemu.hwcodec.avcdec=2
+INFO         |   androidboot.qemu.hwcodec.hevcdec=2
+INFO         |   androidboot.qemu.hwcodec.vpxdec=2
+INFO         |   androidboot.qemu.settings.system.screen_off_timeout=2147483647
+INFO         |   androidboot.qemu.virtiowifi=1
+INFO         |   androidboot.qemu.vsync=60
+INFO         |   androidboot.serialno=EMULATOR35X5X10X0
+INFO         |   androidboot.vbmeta.digest=a3cfd577d450a97484bb32c418a52a6aabea9aae0e5d67bb43370de6b8d0c954
+INFO         |   androidboot.vbmeta.hash_alg=sha256
+INFO         |   androidboot.vbmeta.size=6208
+INFO         |   androidboot.veritymode=enforcing
+INFO         | Monitoring duration of emulator setup.
+WARNING      | The emulator now requires a signed jwt token for gRPC access! Use the -grpc flag if you really want an open unprotected grpc port
+INFO         | Using security allow list from: /Users/marcelviana/Library/Android/sdk/emulator/lib/emulator_access.json
+WARNING      | *** Basic token auth should only be used by android-studio ***
+INFO         | The active JSON Web Key Sets can be found here: /Users/marcelviana/Library/Caches/TemporaryItems/avd/running/96723/jwks/acdab0d4-1823-4058-ba04-5c1678a2e2d9/active.jwk
+INFO         | Scanning /Users/marcelviana/Library/Caches/TemporaryItems/avd/running/96723/jwks/acdab0d4-1823-4058-ba04-5c1678a2e2d9 for jwk keys.
+INFO         | Started GRPC server at 127.0.0.1:8554, security: Local, auth: +token
+INFO         | Advertising in: /Users/marcelviana/Library/Caches/TemporaryItems/avd/running/pid_96723.ini
+INFO         | Setting display: 0 configuration to: 2560x1600, dpi: 320x320 
+INFO         | setDisplayActiveConfig 0
+INFO         | Loading snapshot 'default_boot'...
+INFO         | OpenGL Vendor=[Google (Google Inc. (Google))]
+INFO         | OpenGL Renderer=[Android Emulator OpenGL ES Translator (ANGLE (Google, Vulkan 1.2.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver-5.0.0))]
+INFO         | OpenGL Version=[OpenGL ES 3.0 (OpenGL ES 3.1.0 (ANGLE 2.1.1 git hash: fbf66f49c7cc))]
+WARNING      | change of renderer detected.
+WARNING      | Client not connected yet. Ignoring message!
+WARNING      | Client not connected yet. Ignoring message!
+WARNING      | Client not connected yet. Ignoring message!
+WARNING      | Unknown XR viewport mode requested: 0, ignored.
+
+WARNING      | Client not connected yet. Ignoring message!
+WARNING      | Client not connected yet. Ignoring message!
+WARNING      | Client not connected yet. Ignoring message!
+WARNING      | Client not connected yet. Ignoring message!
+WARNING      | Client not connected yet. Ignoring message!
+INFO         | Successfully loaded snapshot 'default_boot'
+INFO         | OpenGL Vendor=[Google (Google Inc. (Google))]
+INFO         | OpenGL Renderer=[Android Emulator OpenGL ES Translator (ANGLE (Google, Vulkan 1.2.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver-5.0.0))]
+INFO         | OpenGL Version=[OpenGL ES 3.0 (OpenGL ES 3.1.0 (ANGLE 2.1.1 git hash: fbf66f49c7cc))]
+INFO         | Activated packet streamer for bluetooth emulation
+saving arm snapshot.... !!!
+
+INFO         | Wait for emulator (pid 96723) 20 seconds to shutdown gracefully before kill;you can set environment variable ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL(in seconds) to change the default value (20 seconds)
+
+INFO         | Saving with gfxstream=1
+INFO         | OpenGL Vendor=[Google (Google Inc. (Google))]
+INFO         | OpenGL Renderer=[Android Emulator OpenGL ES Translator (ANGLE (Google, Vulkan 1.2.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver-5.0.0))]
+INFO         | OpenGL Version=[OpenGL ES 3.0 (OpenGL ES 3.1.0 (ANGLE 2.1.1 git hash: fbf66f49c7cc))]
+saving done.... !!!
+
+[96744:10878837:20260909,175759.762567:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation
+[96744:10878837:20260909,175759.762627:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/Frameworks/Foundation.framework/Versions/C/Foundation
+[96744:10878837:20260909,175759.762654:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /usr/lib/libobjc.A.dylib
+[96744:10878837:20260909,175759.762681:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /usr/lib/libc++.1.dylib
+[96744:10878837:20260909,175759.762705:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /usr/lib/liboah.dylib
+[96744:10878837:20260909,175759.762737:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /usr/lib/libc++abi.dylib
+[96744:10878837:20260909,175759.762756:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /usr/lib/libRosetta.dylib
+[96744:10878837:20260909,175759.762780:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/Frameworks/SystemConfiguration.framework/Versions/A/SystemConfiguration
+[96744:10878837:20260909,175759.762801:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/Frameworks/CFNetwork.framework/Versions/A/CFNetwork
+[96744:10878837:20260909,175759.762834:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/Frameworks/Network.framework/Versions/A/Network
+[96744:10878837:20260909,175759.762857:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/Frameworks/Security.framework/Versions/A/Security
+[96744:10878837:20260909,175759.762879:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/PrivateFrameworks/LoggingSupport.framework/Versions/A/LoggingSupport
+[96744:10878837:20260909,175759.762903:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /usr/lib/libquic.dylib
+[96744:10878837:20260909,175759.762924:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /usr/lib/libsqlite3.dylib
+[96744:10878837:20260909,175759.762948:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /usr/lib/system/libdispatch.dylib
+[96744:10878837:20260909,175759.762963:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /usr/lib/system/libdyld.dylib
+[96744:10878837:20260909,175759.762987:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /usr/lib/system/libsystem_asl.dylib
+[96744:10878837:20260909,175759.763003:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /usr/lib/system/libsystem_c.dylib
+[96744:10878837:20260909,175759.763026:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /usr/lib/system/libsystem_malloc.dylib
+[96744:10878837:20260909,175759.763043:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /usr/lib/system/libsystem_notify.dylib
+[96744:10878837:20260909,175759.763058:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /usr/lib/system/libsystem_secinit.dylib
+[96744:10878837:20260909,175759.763078:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /usr/lib/system/libsystem_kernel.dylib
+[96744:10878837:20260909,175759.763097:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /usr/lib/system/libsystem_platform.dylib
+[96744:10878837:20260909,175759.763111:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /usr/lib/system/libsystem_pthread.dylib
+[96744:10878837:20260909,175759.763128:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /usr/lib/system/libsystem_trace.dylib
+[96744:10878837:20260909,175759.763143:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /usr/lib/system/libxpc.dylib
+[96744:10878837:20260909,175759.763163:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/PrivateFrameworks/CrashReporterSupport.framework/Versions/A/CrashReporterSupport
+[96744:10878837:20260909,175759.763184:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/Frameworks/IOSurface.framework/Versions/A/IOSurface
+[96744:10878837:20260909,175759.763225:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/Frameworks/CoreGraphics.framework/Versions/A/CoreGraphics
+[96744:10878837:20260909,175759.763245:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/CarbonCore.framework/Versions/A/CarbonCore
+[96744:10878837:20260909,175759.763271:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/LaunchServices
+[96744:10878837:20260909,175759.763301:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/Frameworks/ImageIO.framework/Versions/A/ImageIO
+[96744:10878837:20260909,175759.763315:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/ATS.framework/Versions/A/ATS
+[96744:10878837:20260909,175759.763331:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/HIServices.framework/Versions/A/HIServices
+[96744:10878837:20260909,175759.763349:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/PrivateFrameworks/SkyLight.framework/Versions/A/SkyLight
+[96744:10878837:20260909,175759.763366:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/PrivateFrameworks/BaseBoard.framework/Versions/A/BaseBoard
+[96744:10878837:20260909,175759.763385:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/Frameworks/CoreDisplay.framework/Versions/A/CoreDisplay
+[96744:10878837:20260909,175759.763463:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/Frameworks/VideoToolbox.framework/Versions/A/VideoToolbox
+[96744:10878837:20260909,175759.763482:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/Frameworks/CoreMedia.framework/Versions/A/CoreMedia
+[96744:10878837:20260909,175759.763522:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/PrivateFrameworks/CoreSymbolication.framework/Versions/A/CoreSymbolication
+[96744:10878837:20260909,175759.765622:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/PrivateFrameworks/Symbolication.framework/Versions/A/Symbolication
+[96744:10878837:20260909,175759.765694:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/Frameworks/ExtensionFoundation.framework/Versions/A/ExtensionFoundation
+[96744:10878837:20260909,175759.765718:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/PrivateFrameworks/AppServerSupport.framework/Versions/A/AppServerSupport
+[96744:10878837:20260909,175759.765743:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/PrivateFrameworks/IconFoundation.framework/Versions/A/IconFoundation
+[96744:10878837:20260909,175759.765763:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/PrivateFrameworks/CoreUI.framework/Versions/A/CoreUI
+[96744:10878837:20260909,175759.765781:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/Frameworks/CoreImage.framework/Versions/A/CoreImage
+[96744:10878837:20260909,175759.765799:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/PrivateFrameworks/RenderBox.framework/Versions/A/RenderBox
+[96744:10878837:20260909,175759.765843:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/PrivateFrameworks/AudioToolboxCore.framework/Versions/A/AudioToolboxCore
+[96744:10878837:20260909,175759.765877:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/Frameworks/OSLog.framework/Versions/A/OSLog
+[96744:10878837:20260909,175759.765894:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /usr/lib/libspindump.dylib
+[96744:10878837:20260909,175759.765921:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/Frameworks/OpenDirectory.framework/Versions/A/Frameworks/CFOpenDirectory.framework/Versions/A/CFOpenDirectory
+[96744:10878837:20260909,175759.765947:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /usr/lib/libTelephonyUtilDynamic.dylib
+[96744:10878837:20260909,175759.765964:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/PrivateFrameworks/GPUWrangler.framework/Versions/A/GPUWrangler
+[96744:10878837:20260909,175759.765979:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/PrivateFrameworks/IOPresentment.framework/Versions/A/IOPresentment
+[96744:10878837:20260909,175759.766010:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /usr/lib/libsandbox.1.dylib
+[96744:10878837:20260909,175759.766033:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/PrivateFrameworks/AVFCore.framework/Versions/A/AVFCore
+[96744:10878837:20260909,175759.766089:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/PrivateFrameworks/AttributeGraph.framework/Versions/A/AttributeGraph
+[96744:10878837:20260909,175759.766127:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/Frameworks/AppKit.framework/Versions/C/AppKit
+[96744:10878837:20260909,175759.766152:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/HIToolbox.framework/Versions/A/HIToolbox
+[96744:10878837:20260909,175759.769763:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGLProgrammability.dylib
+[96744:10878837:20260909,175759.769852:WARNING mach_o_image_annotations_reader.cc:92] unexpected crash info version 7 in /usr/lib/dyld
+[96744:10878837:20260909,175759.929121:WARNING crash_report_exception_handler.cc:235] UniversalExceptionRaise: (os/kern) failure (5)

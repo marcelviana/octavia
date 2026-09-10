@@ -1454,3 +1454,15 @@ automaticamente.
 8. **Próximo**: **N1 (tela 1)**, em sessão nova (worktree próprio se outra
    sessão estiver aberta), com PRD + design congelado + errata do §4 vinda
    do encerramento do B7.
+9. **N1 em andamento (2026-09-09/10)** — pre-check
+   [`docs/native/N1-PRECHECK.md`](../native/N1-PRECHECK.md) (Fases A/B/C,
+   16 divergências, prod 3 requests / 0 escrita), decisões **N1-D1…D12**
+   fechadas pelo Marcel em 2026-09-10 (navegação `@react-navigation` +
+   native-stack, cache JSON em `Paths.document`, sem Maestro, AVD
+   `octavia_tab32`, `expo-network`, `orientation: default`), catálogo de
+   logs [`LOGS-OCTAVIA.md`](../native/LOGS-OCTAVIA.md), errata do PRD §4
+   (a conta principal tem **0** inválidos do T1-R7 — os ~11 do B7 §9 são de
+   outro perfil). PRs planejadas (C1): PR1 docs · PR2 core · PR3 esqueleto
+   (S0/S1) · PR4 S2 + S3 texto (spike C3) · PR5 S3 PDF + arquivos · PR6
+   S4/S5 · PR7 aceite no emulador · aceite no Tab S6 com a conta principal
+   · encerramento.

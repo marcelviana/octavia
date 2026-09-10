@@ -30,6 +30,43 @@ Posições são **1-based**. Erros das RPCs saem por SQLSTATE custom
 
 ## Rotas
 
+### `GET /api/setlists` — listagem (leitura; documentada na N1-PR1)
+
+Forma medida em prod em 2026-09-09 (conta de audit, `N1-PRECHECK.md` A3;
+código `app/api/setlists/route.ts:12-80`). Antes deste item o doc só
+cobria escrita — o consumidor da leitura é a tela 1 do nativo (PRD §2).
+
+- Auth: cadeia A (`requireAuthServer`; bearer ou cookie, sem exigir
+  email verificado — [`AUTH.md`](AUTH.md) §3); família `setlist-read`
+  (300/min por uid). `Cache-Control: private, no-store`.
+- **Sem paginação**: devolve todas as setlists do usuário.
+- 200: **array na raiz** (não envelope), uma setlist por item:
+  ```
+  { id, user_id, name, description, performance_date, venue, notes,
+    is_public, created_at, updated_at,
+    setlist_songs: [ { id, setlist_id, content_id, position, notes,
+      content: { id, title, artist, content_type, key, bpm, file_url, content_data } } ] }
+  ```
+  `performance_date` é date-only (`YYYY-MM-DD`) ou `null`; `updated_at`
+  ISO com offset (`2026-08-29T19:43:10.287+00:00`).
+- **Uma query** com embedding do PostgREST (`route.ts:31-38`, B6 PR-4
+  D6): `setlists` → `setlist_songs (…, content (…))`, filtrada por
+  `setlists.user_id`; o content embutido segue a FK **sem** filtro de
+  `user_id` (delta declarado no código — inalcançável pelos escritores,
+  que validam posse).
+- Ordem: setlists por `created_at desc`; `setlist_songs` por `position
+  asc` (`referencedTable`), contígua 1..N (invariante acima).
+- Fallbacks quando o content da FK não vem (`route.ts:60-70`):
+  `title: "Unknown Title"`, `artist: "Unknown Artist"`, `content_type:
+  "Unknown Type"`, `key/bpm/file_url/content_data: null`, `content.id =
+  song.content_id`. O cliente nativo **não** usa o embutido (PRD T1-R8):
+  lê o corpo do cache de content por `content_id`.
+- Medido (audit): 3 setlists (60 / 8 / 1 songs), 49.983 B, 69 songs com
+  60 `content_id` distintos (bis), `notes` não-nulo em 15; content
+  embutido = 34.634 B de JSON.
+- Erros: 401 `AUTH_REQUIRED`; 429 `RATE_LIMITED`; 500 `INTERNAL_ERROR`
+  ([`CONTRATO-DE-ERRO.md`](CONTRATO-DE-ERRO.md)).
+
 ### `POST /api/setlists/[id]/songs` — addSong
 
 - Auth obrigatória; família `setlist-mutate` (120/15min por uid).
