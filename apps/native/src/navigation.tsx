@@ -13,6 +13,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { StyleSheet, Text, View } from 'react-native'
 import { LoginScreen } from './screens/LoginScreen'
 import { SetlistsScreen, type SetlistsScreenProps } from './screens/SetlistsScreen'
+import { SpikeScreen } from './screens/SpikeScreen'
 import { dark, font, size, space, tracking } from './theme'
 
 /** Parâmetros de rota da tela 1 — preenchidos nas PRs 4 a 6. */
@@ -23,6 +24,8 @@ export type RootStackParamList = {
   Stage: { setlistId: string; position: number }
   Search: { setlistId?: string }
   End: { setlistId: string }
+  /** TEMPORÁRIA — spike do C3, sai no commit 2 da N1-PR4. */
+  Spike: undefined
 }
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
@@ -67,6 +70,7 @@ export function Navigation({ signedIn, setlists }: NavigationProps): React.JSX.E
                 <SetlistsScreen
                   {...setlists}
                   onAbrirSetlist={(setlistId) => navigation.navigate('Index', { setlistId })}
+                  onSpike={() => navigation.navigate('Spike')}
                 />
               )}
             </Stack.Screen>
@@ -81,6 +85,9 @@ export function Navigation({ signedIn, setlists }: NavigationProps): React.JSX.E
             </Stack.Screen>
             <Stack.Screen name="End">
               {() => <Placeholder titulo="FIM DA SETLIST" nota="S5 — próxima PR" />}
+            </Stack.Screen>
+            <Stack.Screen name="Spike">
+              {({ navigation }) => <SpikeScreen onSair={() => navigation.goBack()} />}
             </Stack.Screen>
           </Stack.Group>
         ) : (
