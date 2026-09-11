@@ -1,22 +1,24 @@
 # N0-PR2 (N0-PRECHECK C4-2): build verificável do nativo por PR — APK de debug local, sem EAS, sem segredo.
-# Só roda quando o nativo/core/lock/workspace mudam (filtro de paths); PRs só de web não o executam.
+# Só roda quando o nativo muda (filtro de paths); PRs de web ou de core não o executam.
+# Recorte da N1-PR8 (decisão do Marcel, 2026-09-10, N1-h3): `packages/core/**` e
+# `pnpm-lock.yaml` saíram do filtro. O gate custou 10m15s–14m15s nas sete medições do
+# N1 (mediana ~11m45s), acima dos ~9 min aceitáveis, e mudança só de core já é coberta
+# pelo `build` (que roda o `pnpm test` inteiro, incluindo o projeto `core`). O que o
+# APK de fato depende — `apps/native/**`, o próprio workflow e o `pnpm-workspace.yaml` —
+# continua disparando.
 name: native
 'on':
   pull_request:
     paths:
     - apps/native/**
-    - packages/core/**
     - .github/workflows/native.yml
-    - pnpm-lock.yaml
     - pnpm-workspace.yaml
   push:
     branches:
     - main
     paths:
     - apps/native/**
-    - packages/core/**
     - .github/workflows/native.yml
-    - pnpm-lock.yaml
     - pnpm-workspace.yaml
 env:
   EXPO_NO_TELEMETRY: '1'

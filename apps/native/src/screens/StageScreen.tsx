@@ -190,6 +190,26 @@ export function StageScreen({
   )
 
   const { width, height } = useWindowDimensions()
+
+  /**
+   * D-c / T1-R27 — `rotation=landscape|portrait n=<i>/<N>`: a linha que o
+   * catálogo (N1-D5) promete para o A14 e que o app nunca emitia — o aceite
+   * da N1-PR7 provou a rotação por screencap porque o log não existia.
+   *
+   * Sai só na MUDANÇA de orientação, não na montagem: o `useWindowDimensions`
+   * re-renderiza a cada giro, e sem o ref uma linha sairia a cada abertura do
+   * palco. A posição vem dos mesmos refs do `stage restore` (N1-D17), pela
+   * mesma razão — o efeito não pode depender de `posicao`.
+   */
+  const orientacaoRef = useRef<'landscape' | 'portrait' | null>(null)
+  const orientacao: 'landscape' | 'portrait' = width >= height ? 'landscape' : 'portrait'
+
+  useEffect(() => {
+    const anterior = orientacaoRef.current
+    orientacaoRef.current = orientacao
+    if (anterior === null || anterior === orientacao) return
+    log(`rotation=${orientacao} n=${posicaoRef.current}/${totalRef.current}`)
+  }, [orientacao])
   const [zoom, setZoom] = useState<number>(zoomDefault)
   const [tema, setTema] = useState<ThemeName>('dark')
   const [rodando, setRodando] = useState(false)
@@ -569,16 +589,22 @@ function Arquivo({
           enablePaging
           enableDoubleTapZoom
           /**
-           * `fitPolicy={2}` = página inteira na tela: **um** gesto vira uma
-           * página, que é o que o T1-R27 pede ("avançar: 1 tap ou 1 gesto")
-           * para a navegação às cegas do palco. Com `0` (fit width) a
-           * partitura ficava maior, mas o deslize rolava dentro da página
-           * antes de virar — ~4 gestos por página, medido na N1-PR5.
-           * Reavaliado no aceite do Tab S6 (decisão do Marcel, 2026-09-10):
-           * se a partitura ficar ilegível no device real, errata declarada e
-           * volta a `0`.
+           * `fitPolicy={0}` = **fit width**, a partitura ocupando a largura.
+           *
+           * A N1-PR6 tinha posto `{2}` (página inteira) porque ali **um**
+           * gesto virava **uma** página, contra ~4 com `{0}`. O aceite no Tab
+           * S6 mediu o outro lado da conta: com `{2}` a página A4 fica em
+           * ~548 px de 2560, ou seja **~244 dp de largura** — pequena demais
+           * para ler no palco (N1-PR7 §3.6). Decisão do Marcel, 2026-09-10:
+           * legibilidade ganha de contagem de gestos, volta a `{0}`.
+           *
+           * LIMITAÇÃO CONHECIDA, registrada: com fit width o deslize rola
+           * dentro da página antes de virar, então virar uma página custa
+           * vários gestos — o T1-R27 ("avançar: 1 tap ou 1 gesto") **não** se
+           * cumpre para a PÁGINA do PDF. Ele continua valendo para a MÚSICA:
+           * as bordas de 15% avançam e voltam em 1 tap, em PDF como em texto.
            */
-          fitPolicy={2}
+          fitPolicy={0}
           minScale={1}
           maxScale={4}
           spacing={0}

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { offlineStatus, selectPrefetch, prefetchOrder, lruEvict } from './offline'
+import { offlineStatus, selectPrefetch, prefetchOrder, lruEvict, promoteList } from './offline'
 import type { ContentDTO, SetlistDTO, SetlistSongDTO } from './types'
 
 const BUCKET = 'https://host/storage/v1/object/public/content-files'
@@ -150,6 +150,40 @@ describe('prefetchOrder (T1-R16)', () => {
       'ss11',
       'ss12',
     ])
+  })
+})
+
+describe('promoteList (T1-R14 / N0-H16 §4 — defeito do aceite N1-PR7 §3.1)', () => {
+  /** `{url, guaranteed}` é a forma que o `listFiles()` do app devolve. */
+  function disco(): { url: string; guaranteed: boolean }[] {
+    return [
+      { url: 'a', guaranteed: false }, // sob demanda, DENTRO da janela → promove
+      { url: 'b', guaranteed: true }, // já durável, na janela → nada a fazer
+      { url: 'c', guaranteed: false }, // sob demanda, FORA da janela → fica
+    ]
+  }
+
+  it('promove só o que é garantido, já está no disco e ainda não é durável', () => {
+    expect(promoteList(new Set(['a', 'b']), disco())).toEqual(['a'])
+  })
+
+  it('não promove nada quando a janela de 7 dias está vazia', () => {
+    // O caso real da conta de audit: 3 setlists com `performance_date: null`.
+    expect(promoteList(new Set<string>(), disco())).toEqual([])
+  })
+
+  it('não promove o que a janela cobre mas o disco não tem', () => {
+    // `selectPrefetch` cuida desses: eles são BAIXADOS já como garantidos.
+    expect(promoteList(new Set(['a', 'z']), disco())).toEqual(['a'])
+  })
+
+  it('é idempotente: depois de promovido, não promove de novo', () => {
+    const depois = [
+      { url: 'a', guaranteed: true },
+      { url: 'b', guaranteed: true },
+      { url: 'c', guaranteed: false },
+    ]
+    expect(promoteList(new Set(['a', 'b']), depois)).toEqual([])
   })
 })
 

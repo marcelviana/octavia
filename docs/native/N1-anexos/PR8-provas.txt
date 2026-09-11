@@ -1,0 +1,168 @@
+N1-PR8 — provas das seis correções do aceite (D-a…D-g)
+Emulador: AVD octavia_tab32 (API 32) · Tab S6: SM-T865 (API 32), conta PRINCIPAL
+Leitura: adb -s <alvo> logcat -d -s ReactNativeJS | grep 'OCTAVIA:'
+
+════════════════════════════════════════════════════════════════════════════
+D-a — GARANTIDO EM ARMAZENAMENTO NÃO-PURGÁVEL          → Tab S6, conta principal
+════════════════════════════════════════════════════════════════════════════
+O defeito (N1-PR7 §3.1): arquivo baixado SOB DEMANDA grava em `Paths.cache`
+(purgável); se depois ele entra na janela de 7 dias, nunca era promovido para
+`Paths.document`, porque o `selectPrefetch` só devolve o que FALTA baixar.
+
+Fixture: o content `b23a3803 'Easy'` — o ÚNICO da conta principal com
+`file_url` — vira song da setlist 'Good Times'. Metro com
+EXPO_PUBLIC_API_BASE_URL inválido, para o `sync fail` preservar a fixture
+(T1-R9/A21). Zero logins, 1 download.
+
+── PASSO 2: baixa sob demanda ──────────────────────────────────────────────
+OCTAVIA: index jump n=5
+OCTAVIA: prefetch plan n=1 reason=demand
+OCTAVIA: file src=download name=1751910900697-Easy_-_Guitar.pdf bytes=138916
+OCTAVIA: pdf-render pages=5 src=disk
+  → de passagem, fecha a **H16 da conta principal** (pendente desde o N0-H16
+    §1, "tamanho pendente do dashboard"): o único arquivo tem 138.916 B.
+
+── PASSO 3: os dois `ls` ANTES (é o estado do §3.1) ────────────────────────
+$ run-as rocks.octavia.app ls -l /data/data/rocks.octavia.app/cache/octavia-<uid>/files/
+total 136
+-rw------- 1 u0_a292 u0_a292_cache 138916 2026-09-11 09:59 1751910900697-Easy_-_Guitar.pdf
+$ run-as rocks.octavia.app ls -l /data/data/rocks.octavia.app/files/octavia-<uid>/files/
+ls: …/files/octavia-<uid>/files/: No such file or directory
+  → em CACHE (purgável); `Paths.document` nem existe.
+
+── PASSO 4: CONTROLE NEGATIVO — 'Good Times' SEM data ──────────────────────
+OCTAVIA: cache hit kind=setlists n=2
+OCTAVIA: sync fail stage=setlists page=1 code=network status=-
+OCTAVIA: prefetch plan n=0 reason=7d
+$ grep -c 'prefetch promote' → 0
+$ run-as … ls -l cache/octavia-<uid>/files/
+total 136
+-rw------- 1 u0_a292 u0_a292_cache 138916 2026-09-11 09:59 1751910900697-Easy_-_Guitar.pdf
+$ run-as … ls -l files/octavia-<uid>/files/
+ls: …: No such file or directory
+  → **a promoção NÃO é indiscriminada**: sem a janela de 7 dias, o arquivo
+    permanece exatamente onde estava.
+
+── PASSOS 5 e 6: datar 'Good Times' para amanhã e reabrir ──────────────────
+fixture: 'Good Times' date=2026-09-12 songs=5   (device date: 2026-09-11)
+OCTAVIA: cache hit kind=setlists n=2
+OCTAVIA: sync fail stage=setlists page=1 code=network status=-
+OCTAVIA: prefetch plan n=0 reason=7d        ← nada a BAIXAR, já está no disco
+OCTAVIA: prefetch promote n=1               ← a linha nova (E7)
+OCTAVIA: file src=disk name=1751910900697-Easy_-_Guitar.pdf bytes=138916
+$ grep -c 'src=download' na janela do passo 6 → **0**
+  → promover é MOVER: nenhum byte novo saiu do bucket.
+
+── OS DOIS `ls` DEPOIS ─────────────────────────────────────────────────────
+$ run-as … ls -l cache/octavia-<uid>/files/
+total 0
+$ run-as … ls -l files/octavia-<uid>/files/
+total 136
+-rw------- 1 u0_a292 u0_a292_cache 138916 2026-09-11 09:59 1751910900697-Easy_-_Guitar.pdf
+$ run-as … cat files/octavia-<uid>/files/…Easy_-_Guitar.pdf | shasum -a 256
+1e1d77c4ce2eed96e0046ba0694e1dff247cfa7fb0bdcc52216979bcfa15d942
+  → mesmo tamanho, mesmo mtime, mesmo conteúdo: o arquivo foi MOVIDO.
+
+── IDEMPOTÊNCIA: reabrir de novo ───────────────────────────────────────────
+OCTAVIA: prefetch plan n=0 reason=7d
+$ grep -c 'prefetch promote' → 0
+  → a 2ª passada não promove nada (o `promoteList` do core devolve vazio).
+
+════════════════════════════════════════════════════════════════════════════
+D-b — A MENSAGEM DERIVA DO CÓDIGO (T1-R36)                      → emulador
+════════════════════════════════════════════════════════════════════════════
+429 (mock):
+OCTAVIA: api status=429 path=/api/setlists n=1 ms=88
+OCTAVIA: ratelimit retry-after=30 family=setlist-read
+OCTAVIA: sync fail stage=setlists page=1 code=RATE_LIMITED status=429
+  tela → "servidor ocupado · tente em instantes · mostrando dados de há 2 min"
+         (PR8-db-429.png)
+
+500 (mock) — CONTROLE NEGATIVO, texto TEM de ser outro:
+OCTAVIA: api status=500 path=/api/content n=1 ms=40
+OCTAVIA: sync fail stage=content page=2 code=INTERNAL_ERROR status=500
+  tela → "falha no servidor · mostrando dados de há 4 min"
+         (PR8-db-500-dd-page2.png)
+
+Antes da PR8 os dois diziam "falha ao sincronizar": o `messageKey` do core era
+calculado e descartado pelo `App.tsx`.
+
+RESSALVA REGISTRADA (afeta a leitura do A21 da N1-PR7): o mock daquela PR
+devolvia `"code": "INTERNAL"`, que **não está no `CONTRATO-DE-ERRO.md`** e que
+o `KIND_BY_CODE` do core não conhece. O A21 passou — o cache ficou byte a byte
+intacto, que é o que ele mede — mas pelo caminho do erro **genérico**, não pelo
+de **servidor**. O mock desta PR usa `INTERNAL_ERROR`, o code real; é por isso
+que a tela agora diz "falha no servidor".
+
+════════════════════════════════════════════════════════════════════════════
+D-c — `rotation=landscape|portrait n=<i>/<N>`                   → emulador
+════════════════════════════════════════════════════════════════════════════
+CONTROLE NEGATIVO (montagem do palco, sem girar):
+$ grep -c 'rotation=' → 0
+POSITIVO ($ settings put system user_rotation 1 → 0):
+OCTAVIA: rotation=portrait  n=1/60
+OCTAVIA: rotation=landscape n=1/60
+  → duas linhas, MESMO `n=1/60`: a posição sobrevive ao giro (T1-R27/N1-D12).
+    A linha estava no catálogo desde o N1-D5 e nunca fora implementada — o A14
+    da N1-PR7 foi provado por screencap por falta dela.
+
+════════════════════════════════════════════════════════════════════════════
+D-d — `sync fail … page=<p>` com a página REAL                  → emulador
+════════════════════════════════════════════════════════════════════════════
+500 na página 2 (mock `500-pagina-2`):
+OCTAVIA: api status=200 path=/api/content n=1 ms=81     ← página 1 ok
+OCTAVIA: api status=500 path=/api/content n=1 ms=40     ← página 2
+OCTAVIA: sync fail stage=content page=2 code=INTERNAL_ERROR status=500
+
+500 na página 1 (mock `500-pagina-1`) — CONTROLE NEGATIVO:
+OCTAVIA: api status=500 path=/api/content n=1 ms=37
+OCTAVIA: sync fail stage=content page=1 code=INTERNAL_ERROR status=500
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+
+  → sem o controle na página 1, o acerto passaria por acaso: o valor antigo
+    era `page=1` hardcoded. O modo `500-pagina-1` do mock nasceu para isto.
+
+════════════════════════════════════════════════════════════════════════════
+D-f — PDF em FIT WIDTH                                          → emulador
+════════════════════════════════════════════════════════════════════════════
+OCTAVIA: file src=disk name=1786218429715-ux-audit-partitura-12p.pdf bytes=242176
+OCTAVIA: pdf-render pages=12 src=disk
+OCTAVIA: pdf-page n=1/12
+  PR8-df-fitwidth.png: a partitura ocupa a LARGURA inteira (pautas de ponta a
+  ponta) e a página é maior que a tela — 2 pautas visíveis de 10. Com
+  `fitPolicy={2}` a mesma A4 ficava em ~244 dp (N1-PR7 §3.6).
+  LIMITAÇÃO REGISTRADA: com fit width virar uma página custa vários deslizes;
+  o T1-R27 ("1 tap ou 1 gesto") **não** se cumpre para a PÁGINA do PDF. Segue
+  valendo para a MÚSICA: as bordas de 15% avançam em 1 tap, em PDF e em texto.
+
+════════════════════════════════════════════════════════════════════════════
+D-g — recorte do `native.yml`                                   → diff
+════════════════════════════════════════════════════════════════════════════
+`paths` perdeu `packages/core/**` e `pnpm-lock.yaml` nos DOIS gatilhos
+(pull_request e push). Mantidos: `apps/native/**`,
+`.github/workflows/native.yml`, `pnpm-workspace.yaml`.
+Base: N1-h3, sete medições do bloco entre 10m15s e 14m15s (mediana ~11m45s),
+acima dos ~9 min aceitáveis. Mudança só de core continua coberta pelo job
+`build`, que roda o `pnpm test` inteiro (incluindo o projeto `core`).
+Esta PR toca `apps/native/**`, então o gate DEVE disparar — conferido no
+`gh pr checks`.
+
+════════════════════════════════════════════════════════════════════════════
+ENCERRAMENTO DOS DOIS DEVICES
+════════════════════════════════════════════════════════════════════════════
+EMULADOR: $ settings get global airplane_mode_on → 0 ; ping → 0% packet loss
+  user_rotation 0 · accelerometer_rotation 1 · SDK antes = depois (diff vazio)
+  pgrep qemu → vazio ; lsof -i :8081 → vazio
+  Estado: **com sessão** da conta de audit (login do Marcel nesta PR), cache
+  de 3 setlists / 67 content no disco.
+
+TAB S6: cache real restaurado por sync (a fixture saiu pela substituição do
+  T1-R9): 'Good Times' date=None songs=4 · 'Season 3' date=2025-07-16 songs=7.
+  O arquivo promovido **permanece em `Paths.document`** — a promoção é do
+  disco, não do cache de dados:
+    files/octavia-<uid>/files/  → 138916 1751910900697-Easy_-_Guitar.pdf
+    cache/octavia-<uid>/files/  → total 0
+  Config devolvida: screen_off_timeout **30000** (era 30000 antes da prova; o
+  Marcel autorizou 600000 durante ela), accelerometer_rotation 1.
+  $ adb -s RX2N8000F3D reverse --remove-all ; reverse --list → vazio
+  Metro morto. App instalado, **sessão da conta principal viva**.

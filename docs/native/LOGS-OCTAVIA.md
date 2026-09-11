@@ -37,6 +37,7 @@
 | sync pulado | `sync skip reason=offline` | sem rede ao abrir | A5 |
 | cache | `cache hit kind=setlists\|content\|file n=<n>` · `cache miss kind=…` · `cache write kind=… n=<n> invalidated=<n>` | leitura/gravação do cache local (T1-R10: `invalidated=0` em sync sem mudança) | A4, A5, A7, A21 |
 | prefetch | `prefetch plan n=<n> reason=7d\|manual\|demand` | T1-R15/R16 | A10 |
+| promoção | `prefetch promote n=<n>` | arquivos já no disco que entraram na janela de 7 dias e foram movidos para o armazenamento não-purgável (T1-R14 + N0-H16 §4) — **E7** | A10 |
 | arquivo | `file src=disk\|download name=<seg> bytes=<n>` | T1-R14 (herdado do N0) | A9, A13 |
 | LRU | `lru evict n=<n> bytes=<n>` | T1-R14 | A10 |
 | navegação no palco | `nav n=<i>/<N> setlist=<id8> t=<ms>` | após avançar/voltar/salto (T1-R27/R28/R34) | A12, A14, A17 |
@@ -48,7 +49,7 @@
 | auto-scroll | `autoscroll on\|off t=<ms>` · `autoscroll disabled kind=pdf` | T1-R30 | A15 |
 | placeholder | `placeholder kind=invalid\|unknown-type\|file-missing\|content-missing name=<seg>` | T1-R7(b)(c)(d), R11, R26 | A6, A8, A13 |
 | rede | `net online\|offline` | mudança de estado (`expo-network`, N1-D11) | A5, A19 |
-| rotação | `rotation=landscape\|portrait n=<i>/<N>` | T1-R27 (N1-D12: rotação preserva posição) | A14 |
+| rotação | `rotation=landscape\|portrait n=<i>/<N>` | T1-R27 (N1-D12: rotação preserva posição). **Só na MUDANÇA de orientação**, nunca na montagem do palco — implementada na N1-PR8 (**E7**) | A14 |
 | wake lock | `keepawake on\|off` | entrar/sair do palco (T1-R33) | A16 |
 | palco restaurado | `stage restore n=<i>/<N>` | o palco reganha foco vindo de uma tela EMPILHADA (índice, busca, palco avulso) — não na montagem inicial, não no palco avulso — **N1-D17** | A11, A14 |
 | pdf | `pdf-render pages=<n> src=disk` · `pdf-page n=<i>/<N>` · `pdf-error <msg>` | herdado do N0 (T1-R26) | A13 |
@@ -100,6 +101,26 @@ em vez de empilhar sobre ele. Corrigido aqui.
 Nos casos em que a busca é fechada sem abrir nada, saem as DUAS linhas —
 `search close restore` (da busca, ao fechar) e `stage restore` (do palco, ao
 focar): eventos distintos da mesma volta.
+
+## Errata E7 (2026-09-10, N1-PR8) — o que o aceite mostrou que faltava
+
+O aceite da N1-PR7 encontrou **duas** linhas em desacordo entre catálogo e app,
+e a N1-PR8 acertou as duas no lado do app:
+
+1. **`rotation=landscape|portrait n=<i>/<N>` estava no catálogo desde o
+   N1-D5 e nunca tinha sido implementada** (`grep -rn rotation
+   apps/native/src/` → exit 1). O A14 foi provado por screencap porque o log
+   não existia. Agora sai, e **só na mudança de orientação**: a montagem do
+   palco não emite, senão toda abertura produziria uma linha falsa.
+2. **`sync fail … page=<p>` tinha `page=1` hardcoded** no `sync.ts`: no A21 a
+   falha aconteceu na página 2 e o log dizia 1. A página que falhou agora
+   viaja do `buscarContent` até a linha. (`/api/setlists` não pagina — array
+   na raiz, `SETLISTS.md` — então ali a página é sempre 1, por construção.)
+
+E uma linha **nova**, `prefetch promote n=<n>`, para o defeito do §3.1 do
+aceite: arquivo baixado sob demanda que depois entra na janela de 7 dias
+precisa ser movido do `Paths.cache` (purgável) para o `Paths.document`. Sem
+ela, a promoção seria invisível no protocolo de device.
 
 ## Caminho de dev (E4)
 
