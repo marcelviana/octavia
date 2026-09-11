@@ -75,3 +75,7 @@ tests/ux-audit/.auth/
 # Traces do UX audit (Fase D): 147MB — arquivados fora do repo
 # (~/octavia-ux-audit-fase-d-traces-*.zip); data/ e evidence/ são versionados
 docs/ux/fase-d/traces/
+
+# Artefatos gerados da auditoria (logs de comando e grafos do dependency-cruiser) — os .md de .audit/ ficam
+.audit/logs/
+.audit/*.json
