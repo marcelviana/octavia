@@ -20,14 +20,18 @@ export type SyncOutcome =
 
 /** Todas as páginas de content até `hasMore === false`. */
 async function buscarContent(): Promise<
-  { failed: false; paginas: ContentDTO[][]; total: number } | { failed: true; erro: ApiResult<never> }
+  | { failed: false; paginas: ContentDTO[][]; total: number }
+  | { failed: true; erro: ApiResult<never>; page: number }
 > {
   const paginas: ContentDTO[][] = []
   let page = 1
   let total = 0
   for (;;) {
     const r = await getContentPage(page)
-    if (!r.ok) return { failed: true, erro: r as ApiResult<never> }
+    // D-d: a página que falhou viaja junto — o `sync fail` tinha `page=1`
+    // hardcoded, e o aceite da N1-PR7 (§3.4) mediu a falha na página 2 sendo
+    // reportada como 1. O catálogo define `page=<p>`.
+    if (!r.ok) return { failed: true, erro: r as ApiResult<never>, page }
     paginas.push(r.data.data)
     total = r.data.total
     if (!r.data.hasMore) break
@@ -75,7 +79,9 @@ export async function sincronizar(
       : rSetlists
     const code = erro !== null && !erro.ok ? (erro.error.code ?? erro.error.kind) : 'net'
     const status = erro !== null && !erro.ok ? (erro.status ?? '-') : '-'
-    log(`sync fail stage=${stage} page=1 code=${code} status=${status}`)
+    // `setlists` não pagina (array na raiz, SETLISTS.md): a página é sempre 1.
+    const page = rContent !== null && rContent.failed ? rContent.page : 1
+    log(`sync fail stage=${stage} page=${page} code=${code} status=${status}`)
     return {
       kind: 'failed',
       stage,

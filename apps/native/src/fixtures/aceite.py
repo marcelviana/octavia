@@ -203,10 +203,20 @@ def servidor(porta: int, modo: str, setlists_path: str, content_path: str) -> No
                 return
 
             if u.path == "/api/content":
+                if modo == "500-pagina-1" and page == 1:
+                    # Controle negativo do D-d (N1-PR8): a MESMA falha na
+                    # página 1 tem de sair como `page=1`. Sem este modo, o
+                    # `page=<p>` passaria por acaso — o valor antigo era 1.
+                    self._json(500, {"error": "Internal error", "code": "INTERNAL_ERROR"})
+                    return
                 if modo == "500-pagina-2" and page == 2:
                     # A21 — "mock de 500 na página 2 → cache byte a byte
                     # inalterado + indicador de falha" (T1-R9).
-                    self._json(500, {"error": "Internal error", "code": "INTERNAL"})
+                    # `INTERNAL_ERROR` é o code REAL do `CONTRATO-DE-ERRO.md`; na
+                    # N1-PR7 o mock devolvia `INTERNAL`, que o `KIND_BY_CODE` do
+                    # core não conhece — o aceite passou (o cache ficou intacto),
+                    # mas pelo caminho do erro GENÉRICO, não pelo de servidor.
+                    self._json(500, {"error": "Internal error", "code": "INTERNAL_ERROR"})
                     return
                 dados = paginas[page - 1] if page <= len(paginas) else []
                 self._json(200, {"data": dados, "total": len(content), "page": page,

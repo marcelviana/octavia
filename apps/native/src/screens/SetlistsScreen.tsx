@@ -21,7 +21,8 @@ export type SyncState =
   | { fase: 'sincronizando' }
   | { fase: 'ok'; syncedAtMs: number }
   | { fase: 'offline'; syncedAtMs: number | null }
-  | { fase: 'falha'; syncedAtMs: number | null }
+  /** `messageKey` vem do `errorFrom` do core — T1-R36: o texto deriva do código. */
+  | { fase: 'falha'; syncedAtMs: number | null; messageKey: string }
 
 export interface SetlistsScreenProps {
   setlists: SetlistDTO[]
@@ -89,6 +90,30 @@ function sublinha(status: OfflineStatus, online: boolean): string {
   return online ? 'nenhum arquivo neste aparelho' : 'sem conexão para baixar'
 }
 
+/**
+ * T1-R36 — o texto pt-BR deriva do `code` da resposta, nunca do campo `error`
+ * (que é inglês e dado de UI). As chaves são exatamente as sete que o
+ * `errorFrom` do core emite: nada é inventado aqui, e uma chave nova do core
+ * cai no genérico em vez de sumir.
+ *
+ * Antes da N1-PR8 a tela mostrava só "falha ao sincronizar" para tudo: o
+ * `messageKey` era calculado e descartado (achado do aceite, N1-PR7 §3.2 —
+ * o A3 passava no comportamento e falhava no que o músico lê).
+ */
+const TEXTO_DE_ERRO: Record<string, string> = {
+  'erro.sem_conexao': 'sem conexão',
+  'erro.sessao_invalida': 'sua sessão expirou',
+  'erro.servidor_ocupado': 'servidor ocupado · tente em instantes',
+  'erro.nao_encontrado': 'não encontrado no servidor',
+  'erro.requisicao_invalida': 'o servidor recusou o pedido',
+  'erro.falha_do_servidor': 'falha no servidor',
+  'erro.desconhecido': 'falha ao sincronizar',
+}
+
+function textoDoErro(messageKey: string): string {
+  return TEXTO_DE_ERRO[messageKey] ?? TEXTO_DE_ERRO['erro.desconhecido'] ?? 'falha ao sincronizar'
+}
+
 function textoDoStatus(sync: SyncState): string {
   switch (sync.fase) {
     case 'sincronizando':
@@ -100,7 +125,7 @@ function textoDoStatus(sync: SyncState): string {
         ? 'sem conexão'
         : `sem conexão · última sincronização ${haQuantoTempo(sync.syncedAtMs)}`
     case 'falha':
-      return sync.syncedAtMs === null ? 'falha ao sincronizar' : 'mostrando dados salvos'
+      return sync.syncedAtMs === null ? textoDoErro(sync.messageKey) : 'mostrando dados salvos'
   }
 }
 
@@ -204,7 +229,7 @@ export function SetlistsScreen({
       {sync.fase === 'falha' && temCache ? (
         <View style={styles.banner}>
           <Text style={styles.bannerTexto}>
-            falha ao sincronizar · mostrando dados de {haQuantoTempo(sync.syncedAtMs)}
+            {`${textoDoErro(sync.messageKey)} · mostrando dados de ${haQuantoTempo(sync.syncedAtMs)}`}
           </Text>
           <Pressable onPress={onTentarNovamente} accessibilityRole="button" testID="tentar-banner">
             <Text style={styles.bannerAcao}>Tentar novamente</Text>
@@ -221,7 +246,7 @@ export function SetlistsScreen({
         // (d) erro acionável — nunca o empty state
         <View style={styles.centro} testID="s1d">
           <Text style={styles.centroTitulo}>
-            {offlineSemCache ? 'sem conexão' : 'falha ao sincronizar'}
+            {offlineSemCache ? 'sem conexão' : textoDoErro(sync.fase === 'falha' ? sync.messageKey : 'erro.desconhecido')}
           </Text>
           <Text style={styles.centroApoio}>
             Nenhuma setlist foi salva neste aparelho ainda. Conecte-se à internet uma vez para

@@ -16,6 +16,7 @@ import {
   isValidContent,
   lruEvict,
   prefetchOrder,
+  promoteList,
   selectPrefetch,
   type ContentDTO,
   type SetlistDTO,
@@ -83,10 +84,31 @@ export async function prefetch7Dias(
   setlists: SetlistDTO[],
   contentById: Map<string, ContentDTO>,
 ): Promise<void> {
-  const presentes = new Set(listFiles().map((f) => f.url))
+  const noDisco = listFiles()
+  const presentes = new Set(noDisco.map((f) => f.url))
   const plano = selectPrefetch(setlists, contentById, presentes, hoje())
   log(`prefetch plan n=${plano.length} reason=7d`)
   if (plano.length > 0) await baixar(plano.map((item) => item.url), true)
+
+  /**
+   * **Promoção** (defeito medido no aceite, N1-PR7 §3.1, Tab S6).
+   *
+   * O plano acima só cobre o que FALTA baixar. Um arquivo que veio sob
+   * demanda (T1-R16 grava no `Paths.cache`, purgável) e que depois entrou na
+   * janela de 7 dias ficava lá para sempre: o LRU do app o protegia, mas o
+   * Android não sabe dessa proteção e pode apagá-lo — inclusive na véspera do
+   * show, que é o caso que o prefetch de 7 dias existe para cobrir
+   * (N0-H16 §4).
+   *
+   * Quem decide o quê é o core (`promoteList`); o `ensureFile` já sabe mover
+   * do cache para o `Paths.document` (`moveSync`, N1-PR5). Roda DEPOIS do
+   * plano porque o que acabou de ser baixado já nasce durável, e é idempotente
+   * — na segunda passada `promoteList` devolve vazio.
+   */
+  const aPromover = promoteList(urlsGarantidas(setlists, contentById), listFiles())
+  if (aPromover.length === 0) return
+  log(`prefetch promote n=${aPromover.length}`)
+  for (const url of aPromover) await ensureFile(url, { guaranteed: true })
 }
 
 /**

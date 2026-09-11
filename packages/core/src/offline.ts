@@ -139,6 +139,29 @@ export function prefetchOrder(pos: number, songs: SetlistSongDTO[]): string[] {
   return out
 }
 
+/**
+ * T1-R14 / N0-H16 §4 — quais arquivos JÁ presentes precisam ser **promovidos**
+ * para o armazenamento não-purgável.
+ *
+ * Por que isto existe (defeito medido no aceite, N1-PR7 §3.1): o
+ * `selectPrefetch` só devolve o que **falta** baixar, e a promoção do
+ * `ensureFile` só corre para os itens do plano. Um arquivo baixado **sob
+ * demanda** (T1-R16, que grava no `Paths.cache` purgável) e que **depois**
+ * entra na janela de 7 dias ficava para sempre no cache: o LRU do app
+ * respeitava a proteção, mas o Android — que não sabe dela — podia apagá-lo
+ * na véspera do show.
+ *
+ * A regra é a interseção: garantido **e** já no disco **e** ainda não
+ * durável. Quem não está na janela não é promovido — a promoção não pode ser
+ * indiscriminada, senão o `Paths.cache` perderia o sentido.
+ */
+export function promoteList(
+  guaranteedUrls: Set<string>,
+  files: { url: string; guaranteed: boolean }[],
+): string[] {
+  return files.filter((file) => !file.guaranteed && guaranteedUrls.has(file.url)).map((f) => f.url)
+}
+
 export interface CachedFile {
   url: string
   bytes: number

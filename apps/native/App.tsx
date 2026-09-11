@@ -146,7 +146,8 @@ export default function App(): React.JSX.Element {
     setSync(
       r.kind === 'skipped-offline'
         ? { fase: 'offline', syncedAtMs: anterior.syncedAtMs }
-        : { fase: 'falha', syncedAtMs: anterior.syncedAtMs },
+        // T1-R36 / D-b: a chave do core viaja até a tela, que escolhe o texto.
+        : { fase: 'falha', syncedAtMs: anterior.syncedAtMs, messageKey: r.messageKey },
     )
     // Sync falho ou pulado: o cache anterior é o que vale, e é sobre ele que
     // o prefetch e o LRU trabalham.
