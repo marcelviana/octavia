@@ -1,0 +1,176 @@
+N1-PR7 — aceite no Tab S6 (SM-T865, Android 12 / API 32, 1600×2560 @ 360 dpi)
+Em paisagem: 2560×1600 px = 1138×711 dp — CONFERE com a errata E1 do design.
+Leitura: adb -s RX2N8000F3D logcat -d -s ReactNativeJS | grep 'OCTAVIA:'
+Todo comando levou `-s RX2N8000F3D`; o emulador foi encerrado ANTES.
+
+════════════════════════════════════════════════════════════════════════════
+APARATO
+════════════════════════════════════════════════════════════════════════════
+O APK que estava no tablet era de **2026-09-07** (N0-PR5): anterior ao
+native-stack, ao safe-area-context e às fontes do N1-D6 — o bundle do N1 não
+rodaria nele. `run-as ls files/` não tinha nenhum `octavia-<uid>`: o tablet
+estava SEM sessão e SEM cache desde o N0, então nada foi perdido.
+$ adb -s RX2N8000F3D install -r -d app-debug.apk   → Success (4,2 s)
+  (o `--device <serial>` do Expo não funciona — N0)
+$ adb -s RX2N8000F3D reverse tcp:8081 tcp:8081     → UsbFfs tcp:8081 tcp:8081
+$ probe do Metro a partir do tablet                → packager-status:running
+
+════════════════════════════════════════════════════════════════════════════
+1. LOGIN — a conta de audit entrou primeiro (declarado ao Marcel)
+════════════════════════════════════════════════════════════════════════════
+21:06:21  OCTAVIA: login-error code=auth/invalid-credential
+21:06:43  OCTAVIA: login-error code=auth/invalid-credential
+21:06:55  OCTAVIA: login-error code=auth/invalid-credential
+21:07:34  OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=login   ← AUDIT
+21:07:37  OCTAVIA: sync ok setlists=3 content=67 pages=1 t=2929
+Decisão do Marcel: seguir com a audit — e ela é a conta CERTA para o A17,
+porque a setlist de 60 (`UX-AUDIT Estresse`) só existe nela.
+
+════════════════════════════════════════════════════════════════════════════
+2. N1-h4 / A17 — a medição que só o device real fecha          → PASSA
+════════════════════════════════════════════════════════════════════════════
+59 navegações pela borda direita na setlist de 60, cadência de RAJADA (1,1 s):
+OCTAVIA: nav n=57/60 setlist=4340bf95 t=61
+OCTAVIA: nav n=58/60 setlist=4340bf95 t=59
+OCTAVIA: nav n=59/60 setlist=4340bf95 t=64
+OCTAVIA: nav n=60/60 setlist=4340bf95 t=58
+  TEXTO (58 amostras): min=56 p50=63 p90=66 **p95=68** máx=72 média=62,6
+                       acima de 100 ms: **0**
+  PDF cacheado: t=63 ms   (< 1 s, e 10× melhor que os 642 ms do emulador)
+
+CADÊNCIA DE SHOW — 10 navegações com 20 s de tela PARADA entre elas:
+OCTAVIA: nav n=59/60 t=58   ·  n=58 t=60  ·  n=57 t=56  ·  n=56 t=63
+OCTAVIA: nav n=55/60 t=63   ·  n=54 t=57  ·  n=53 t=59  ·  n=52 t=63
+OCTAVIA: nav n=51/60 t=54   ·  n=50 t=54
+  → 54–63 ms. **Nenhum salto.**
+
+ACHADO DO EMULADOR, RESOLVIDO: no AVD, toda medida de "tempo até o 1º frame"
+saltava para ~630 ms quando a tela ficava alguns segundos parada
+(`autoscroll on t=613/635/592/618`, `nav t=638/628/624`). **Isso não se
+reproduz no device real.** Era throttling de frames do emulador. O A17 passa
+com p95=68 ms, e passa TAMBÉM na cadência em que o palco é usado de verdade.
+
+════════════════════════════════════════════════════════════════════════════
+3. A15 — auto-scroll no device real                            → PASSA
+════════════════════════════════════════════════════════════════════════════
+2 ativações após 20 s de tela parada + 3 em rajada:
+OCTAVIA: autoscroll on t=27
+OCTAVIA: autoscroll on t=27
+OCTAVIA: autoscroll on t=31
+OCTAVIA: autoscroll on t=29
+OCTAVIA: autoscroll on t=29
+  → 27–31 ms em TODAS as cadências (< 100 ms do A15).
+
+════════════════════════════════════════════════════════════════════════════
+4. DÍVIDA DO LRU (aberta desde a N1-PR5)                       → FECHADA
+════════════════════════════════════════════════════════════════════════════
+Cap injetado de 250 KB (250*1024 = 256.000 B), devolvido a 200 MB no commit.
+disco antes: 12p 242.176 + 1p 20.821 = 262.997 B  (os DOIS sob demanda)
+fixture:     "UX-AUDIT Solo" datada 2026-09-11 → o 12p entra na janela de 7 d
+OCTAVIA: sync fail stage=setlists page=1 code=network status=-
+OCTAVIA: prefetch plan n=0 reason=7d
+OCTAVIA: lru evict n=1 bytes=20821        ← o 1p, NÃO protegido, foi a vítima
+$ run-as … ls cache/octavia-<uid>/files/
+-rw------- 242176 1786218429715-ux-audit-partitura-12p.pdf   ← protegido, ficou
+  → vítima não-protegida AO LADO de um garantido, mesmo disco, mesma rodada.
+
+DEFEITO ACHADO AQUI: o 12p protegido continua em **Paths.cache** (purgável
+pelo sistema). O prefetch de 7 dias não o promoveu para `Paths.document`
+porque o `selectPrefetch` pula os arquivos JÁ PRESENTES, e a promoção
+(o `moveSync` do `ensureFile`, N1-PR5) só roda para itens do plano. Ou seja:
+**um arquivo baixado sob demanda que depois entra na janela de 7 dias nunca
+vira não-purgável** — o Android pode apagá-lo na véspera do show. O LRU do app
+respeita a proteção; o sistema operacional não sabe dela. (N0-H16 §4.)
+
+════════════════════════════════════════════════════════════════════════════
+5. A5 e A13 no device real                                     → PASSAM
+════════════════════════════════════════════════════════════════════════════
+$ cmd connectivity airplane-mode enable → airplane_mode_on=1
+$ ping -c 2 -W 2 8.8.8.8 → connect: Network is unreachable
+$ am force-stop ; pidof → (vazio)
+OCTAVIA: net offline
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3 / content n=67
+OCTAVIA: sync skip reason=offline
+$ grep -c 'login-screen' → 0        ← A5: sem login
+UX-AUDIT ESTRESSE (60) abre completa: PR7-tab-a5-estresse60.png
+OCTAVIA: file src=disk name=1786218429715-ux-audit-partitura-12p.pdf bytes=242176
+OCTAVIA: pdf-render pages=12 src=disk
+OCTAVIA: pdf-page n=1/12 … n=12/12   ← A13: 11 swipes, um por página
+
+════════════════════════════════════════════════════════════════════════════
+6. A16 — 15 MINUTOS sem toque, palco aberto                    → PASSA
+════════════════════════════════════════════════════════════════════════════
+$ settings get system screen_off_timeout → 30000 ms  (30 s — 30× menor)
+21:21:17 início · amostragem a cada minuto:
+  +1…+15 min · mWakefulness=Awake     (15 pontos, todos Awake)
+21:36:19 fim:
+  mWakefulness=Awake
+  SCREEN_BRIGHT_WAKE_LOCK 'WindowManager' ACQ=-16m23s754ms ws=WorkSource{10292}
+$ run-as rocks.octavia.app id → uid=10292(u0_a292)   ← o lock é do APP
+Comparação objetiva dos screencaps início × fim:
+$ magick <a> -crop 2340x140+0+60 +repage ; magick compare -metric AE
+  barra do palco: **0** pixels diferentes   ← nunca saiu do palco
+  tela inteira:   316 px (7,7e-05)          ← o relógio do sistema
+  → sem o keep-awake a tela teria apagado 30 vezes nesses 15 minutos.
+
+════════════════════════════════════════════════════════════════════════════
+7. fitPolicy={2} no device                        → PENDÊNCIA DO MARCEL
+════════════════════════════════════════════════════════════════════════════
+PR7-tab-fitpolicy2.png: a página A4 inteira cabe na tela, ocupando ~548 px de
+2560 (~244 dp de largura). Decisão do Marcel (2026-09-11): "decido depois,
+com o instrumento na mão" — `{2}` fica, e a reavaliação é pendência do
+encerramento do N1.
+
+════════════════════════════════════════════════════════════════════════════
+8. CONTA PRINCIPAL — H14 e N1-h1 fechadas; H17 é PREMISSA FALSA
+════════════════════════════════════════════════════════════════════════════
+$ pm clear rocks.octavia.app → Success   (apaga a audit por completo)
+09:04:00  OCTAVIA: auth uid=xVDJRBh1WpPOatbfWahOLttYn1E3 src=login
+09:04:04  OCTAVIA: cache write kind=setlists n=2 invalidated=0
+09:04:04  OCTAVIA: cache write kind=content n=63 invalidated=0
+09:04:04  OCTAVIA: sync ok setlists=2 content=63 pages=1 t=3670
+09:04:04  OCTAVIA: prefetch plan n=0 reason=7d
+
+  **H14 confirmada**: 2 setlists / 63 content, exato.
+  **N1-h1 FECHADA — verdadeira**: `xVDJ…` é a conta principal. Era
+  `[hipótese forte]` no pre-check §0; agora é medição.
+
+  **H17 — PREMISSA FALSA.** O cache da principal, puxado por `run-as`:
+    'Good Times'  date=None        songs=4  arquivos=0
+    'Season 3'    date=2025-07-16  songs=7  arquivos=0   → −422 dias, FORA
+  A única setlist datada está a 422 dias no PASSADO, e NENHUMA das duas tem
+  um único `file_url`. O `prefetch plan n=0 reason=7d` é a consequência
+  correta, não um defeito.
+  H16 da principal: **1** arquivo em toda a conta (`Easy_-_Guitar.pdf`, do
+  content b23a3803 'Easy') — e ele **não está em nenhuma setlist**, então
+  nenhum caminho do app o alcança.
+  → **A10 real é IRREPRODUZÍVEL na principal sem escrita** (datar uma setlist
+    na janela e pôr um arquivo nela). NÃO REPRODUZIDO, com o motivo medido.
+    O A10 passou por fixture no emulador.
+  Tela: PR7-tab-principal-s1.png — as duas com "✓ garantida offline · nada a
+  baixar" (o caso `need === 0`), e "SEASON 3 · 2025-07-16".
+
+BUSCA POR ÁLBUM NA PRINCIPAL — ganho não previsto:
+  a principal tem 4 itens com álbum (Black Pumas, Unheard, Wasting Light, Album)
+  'unheard' (só existe no campo album de 'Too Sweert'):
+OCTAVIA: search q=7 n=1 in-setlist=0
+    → "Too Sweert · Hozier · Unheard"          (PR7-tab-album-principal.png)
+  'wasting' (álbum em 'Rope', corpo em 'Monkey Wrench'):
+OCTAVIA: search q=7 n=2 in-setlist=0
+    → 'Rope · Foo Fighters · Wasting Light' ANTES de 'Monkey Wrench'
+      = a ordem álbum > corpo do T1-R20, com dado real  (PR7-tab-album-ordem.png)
+  A dívida do álbum da N1-PR6 fecha nas DUAS contas.
+
+════════════════════════════════════════════════════════════════════════════
+ENCERRAMENTO DO TAB S6
+════════════════════════════════════════════════════════════════════════════
+Config do device devolvida (o Marcel autorizou subir o timeout durante a sessão):
+$ settings put system screen_off_timeout 30000   → 30000 ms (era 30000 antes)
+$ settings put system accelerometer_rotation 1   → 1 (auto-rotate devolvido)
+$ settings get global airplane_mode_on → 0 ; ping → 0% packet loss
+$ adb -s RX2N8000F3D reverse --remove-all ; reverse --list → vazio
+$ pgrep -fl "expo start" → vazio ; lsof -i :8081 → vazio
+ESTADO FINAL: o app **fica instalado**, com a **sessão da conta principal
+viva** e o cache dela no disco (`files/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3`).
+A conta de audit foi apagada do tablet pelo `pm clear`.

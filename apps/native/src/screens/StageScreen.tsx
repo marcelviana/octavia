@@ -155,10 +155,33 @@ export function StageScreen({
    * de sair do palco. Com `useFocusEffect` o lock vive exatamente enquanto o
    * palco está visível.
    */
+  /**
+   * N1-D17 — `stage restore n=<i>/<N>`: o palco voltou de uma tela empilhada
+   * (índice, busca, ou o palco avulso do T1-R22) na posição em que estava.
+   *
+   * Antes desta linha, a única prova da restauração era comparar dois
+   * screencaps pixel a pixel (N1-PR6): um aceite não deve depender disso.
+   *
+   * Só nos focos SEGUINTES ao primeiro — a montagem inicial não é uma volta.
+   * A posição sai de um ref, e não das dependências, para o efeito de foco
+   * não re-rodar a cada navegação dentro da própria setlist: com `[posicao]`
+   * na lista, avançar uma música emitiria `stage restore`, que é o oposto do
+   * que a linha significa. No palco AVULSO a linha não sai: ele não tem
+   * posição na setlist (o "n de N" da barra é "AVULSA").
+   */
+  const jaFocou = useRef(false)
+  const posicaoRef = useRef(posicao)
+  const totalRef = useRef(0)
+  const avulsaRef = useRef(false)
+
   useFocusEffect(
     useCallback(() => {
       void activateKeepAwakeAsync(TAG_PALCO)
       log('keepawake on')
+      if (jaFocou.current && !avulsaRef.current) {
+        log(`stage restore n=${posicaoRef.current}/${totalRef.current}`)
+      }
+      jaFocou.current = true
       return () => {
         deactivateKeepAwake(TAG_PALCO)
         log('keepawake off')
@@ -193,6 +216,11 @@ export function StageScreen({
     content !== null ? isValidContent(content.content_type, content.content_data, content.file_url) : null
   const corpo = content !== null ? bodyOf(content.content_type, content.content_data) : null
   const cor = colors[tema]
+
+  // Os refs que o efeito de foco (N1-D17) lê sem entrar nas dependências.
+  posicaoRef.current = posicao
+  totalRef.current = n
+  avulsaRef.current = avulsa
 
   const pararScroll = useCallback(() => {
     if (frame.current !== null) cancelAnimationFrame(frame.current)
