@@ -1,0 +1,318 @@
+N1-PR7 — aceite A1…A22 no AVD octavia_tab32 (API 32, 2560×1600 @ 360 dpi = 1138×711 dp)
+Leitura: adb -s emulator-5554 logcat -d -s ReactNativeJS | grep 'OCTAVIA:'
+Conta: audit (sessão viva; 0 logins). Estado de referência: 3 setlists / 67 content / 69 songs.
+Um aceite sem instrumento é "não reproduzido", nunca "passa".
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║ A1 — Bearer em 100% das requests; zero session/proxy/profile   → PASSA   ║
+╚══════════════════════════════════════════════════════════════════════════╝
+$ grep -n "get<.*>('/api\|get<.*>(\`/api" apps/native/src/api.ts
+128:  return get<SetlistDTO[]>('/api/setlists', 'setlist-read')
+146:  return get<ContentPageBody>(`/api/content?pageSize=100&page=${page}&sortBy=recent`, ...)
+  → a camada de rede única conhece DUAS rotas. Não há caminho para outra.
+$ adb ... logcat | grep -c 'auth/session\|/api/proxy\|/api/profile'
+0
+Prova direta do header, do servidor mock das fixtures (que imprime o que recebeu):
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+REQ /api/content?pageSize=100&page=2&sortBy=recent auth=sim sortBy=recent
+  → auth=sim em 3/3.
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║ A2 — token forjado → no máximo 2 requests e tela de login      → PASSA   ║
+╚══════════════════════════════════════════════════════════════════════════╝
+Caminho de dev E4: __DEV__ && EXPO_PUBLIC_DEV_FORGE_401=1 (nunca em release).
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached          ← 1º token forjado
+OCTAVIA: auth refresh=forced          ← renovação: 2º token forjado, DIFERENTE
+OCTAVIA: auth-failure
+OCTAVIA: login-screen
+OCTAVIA: api status=401 path=/api/setlists n=2 ms=1847     ← n=2, nunca uma 3ª
+OCTAVIA: sync fail stage=setlists page=1 code=AUTH_REQUIRED status=401
+$ grep -c 'api status=401'  →  1 linha (n=2 requests HTTP nela)
+DIVERGÊNCIA de ordem (não de conteúdo): o catálogo E4 previa `api status=401 …
+n=2` SEGUIDA de `auth-failure`; na prática o `auth-failure` sai antes, porque
+a linha `api` só é escrita quando o `authFetch` retorna. Mesmo conteúdo.
+EFEITO COLATERAL DECLARADO: este aceite DESLOGA a conta. O emulador termina
+esta PR sem sessão (o cache local fica).
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║ A3 — 429 com Retry-After: 30 → sem request por 30 s, pt-BR  → PASSA c/r  ║
+╚══════════════════════════════════════════════════════════════════════════╝
+Mock local (fixture, modo 429) — provocar 429 real exigiria 300 requests/min.
+OCTAVIA: api status=429 path=/api/setlists n=1 ms=251
+OCTAVIA: ratelimit retry-after=30 family=setlist-read
+OCTAVIA: sync fail stage=setlists page=1 code=RATE_LIMITED status=429
+$ grep -c "^REQ" mock.log     → 1        (logo após o 429)
+$ sleep 35 ; grep -c "^REQ"   → 1        ← nenhuma request em 35 s
+RESSALVA: a mensagem na tela é a genérica de falha ("falha ao sincronizar ·
+mostrando dados de há 2 min" + "Tentar novamente") — pt-BR, mas NÃO a
+específica de rate limit. O core calcula `messageKey: erro.muitas_tentativas`
+e o `App.tsx` o DESCARTA (só usa `fase: 'falha'`). T1-R36 pede que a mensagem
+derive do código. Achado do aceite; decisão do Marcel.
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║ A4 — 1+⌈N/100⌉ requests e lista do cache em < 1 s              → PASSA   ║
+╚══════════════════════════════════════════════════════════════════════════╝
+20:27:02.298  OCTAVIA: auth uid=… src=restored
+20:27:02.420  OCTAVIA: cache hit kind=setlists n=3      ← +122 ms
+20:27:02.421  OCTAVIA: cache hit kind=content n=66      ← +123 ms  (lista na tela)
+20:27:02.609  OCTAVIA: sync start
+20:27:05.460  OCTAVIA: api status=200 path=/api/setlists n=1 ms=2849
+20:27:05.757  OCTAVIA: api status=200 path=/api/content n=1 ms=276
+20:27:05.788  OCTAVIA: sync ok setlists=3 content=67 pages=1 t=3178
+$ grep -c 'api status='  →  2  = 1 + ⌈67/100⌉ ✓
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║ A5 — avião + kill + reopen, sem login, setlist de 60 completa  → PASSA   ║
+╚══════════════════════════════════════════════════════════════════════════╝
+$ cmd connectivity airplane-mode enable ; settings get global airplane_mode_on → 1
+$ ping -c 2 -W 2 8.8.8.8 → connect: Network is unreachable
+$ am force-stop ; pidof → (vazio)
+OCTAVIA: net offline
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=67
+OCTAVIA: sync skip reason=offline
+$ grep -c 'login-screen' → 0
+UX-AUDIT ESTRESSE (60 músicas) abre completa: PR7-a5-estresse-60-aviao.png
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║ A6 — todo tipo renderiza; inválido mostra placeholder          → PASSA   ║
+╚══════════════════════════════════════════════════════════════════════════╝
+Fixture (a audit tem 0 inválidos do T1-R7 — pre-check §0; os 9 estão no perfil
+legado 6b2da77b…). Três formas, uma por regra:
+OCTAVIA: placeholder kind=no-body        (b) Lyrics sem corpo e sem arquivo
+OCTAVIA: placeholder kind=no-key         (c) Chords objeto sem `chords`
+OCTAVIA: placeholder kind=unknown-type   (d) content_type "Piano", fora do enum
+Telas: "este item não tem conteúdo" / "tipo desconhecido", com o caminho de
+saída ("Toque na borda direita para seguir"). Nunca vazio.
+Os quatro tipos do enum renderizam por tipo: Letra, Cifra, Tab, Partitura
+(chips do índice em PR7-a8-indice-rotulos.png e PR7-a12-bis-indice.png).
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║ A7 — título do cache vence o embutido; 4 no cache → 3 do serv.  → PASSA  ║
+╚══════════════════════════════════════════════════════════════════════════╝
+OCTAVIA: cache hit kind=setlists n=4          ← cache com 4 (fixture)
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=95    ← servidor devolve 3
+OCTAVIA: cache write kind=setlists n=3 invalidated=0
+$ cat setlists.json | python3 → songs no cache: 69 · com content EMBUTIDO
+  gravado: 0 · com content=null: 69
+  setlists gravadas: ['UX-AUDIT Estresse','UX-AUDIT Show padrão','UX-AUDIT Solo']
+  → a 4ª sumiu (substituição sem merge, T1-R9) e o embutido é descartado na
+    gravação (T1-R8): o título vem SEMPRE do cache de content.
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║ A8 — song com content_id ausente: posição certa, com rótulo    → PASSA   ║
+╚══════════════════════════════════════════════════════════════════════════╝
+Fixture (pelo backend toda song aponta para content do mesmo usuário; o estado
+só ocorre por sync parcial).
+Índice: posição 5 = "(sem título)" · "indisponível" · chip "—"  — sem buraco.
+Palco: OCTAVIA: placeholder kind=content-missing
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║ A9 — baixado uma vez, servido do disco; sha256 == servidor     → PASSA   ║
+╚══════════════════════════════════════════════════════════════════════════╝
+OCTAVIA: prefetch plan n=2 reason=demand
+OCTAVIA: file src=download name=1786218427769-ux-audit-partitura-1p.pdf bytes=20821
+OCTAVIA: file src=download name=1786218429715-ux-audit-partitura-12p.pdf bytes=242176
+OCTAVIA: pdf-render pages=12 src=disk
+$ run-as … cat …-12p.pdf | shasum -a 256
+ad2eae0942811adb4d60286516ce318110868f6aa889422ab0cb8b3dc690ea22   = N0-H16 §2
+$ run-as … cat …-1p.pdf  | shasum -a 256
+3d42199bc98fb2f93695323e7e3082378907236eeae11d982b63f85d990cdb48   = C-PRECHECK P4
+2ª abertura da mesma música:
+OCTAVIA: file src=disk name=1786218429715-ux-audit-partitura-12p.pdf bytes=242176
+OCTAVIA: prefetch plan n=0 reason=demand
+$ grep -c 'src=download' → 0
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║ A10 — datada amanhã → baixa em background; indicador correto  → PASSA(F) ║
+╚══════════════════════════════════════════════════════════════════════════╝
+Fixture (N1-D10): as 3 setlists da audit têm performance_date: null.
+"UX-AUDIT Solo" datada 2026-09-11 (device date: 2026-09-10).
+OCTAVIA: sync fail stage=setlists page=1 code=network status=-
+OCTAVIA: prefetch plan n=1 reason=7d
+OCTAVIA: file src=download name=1786218429715-ux-audit-partitura-12p.pdf bytes=242176
+  → baixado SEM abrir a setlist.
+$ run-as … ls files/octavia-<uid>/files/     ← Paths.document, não purgável
+-rw------- 242176 1786218429715-ux-audit-partitura-12p.pdf
+Indicador recalculado: "UX-AUDIT SOLO · 2026-09-11 · 5 músicas · ◔ parcial ·
+1 de 1 arquivos baixados" — parcial (e não ✓) porque uma song da fixture não
+tem content no cache (o A8), que é a definição do T1-R17. PR7-a10-indicador.png
+A prova com data REAL é do Tab S6 com a conta principal (H17).
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║ A11 — busca local, offline, e voltar mantém "n de N"           → PASSA   ║
+╚══════════════════════════════════════════════════════════════════════════╝
+ÁLBUM COM DADO REAL (dívida da N1-PR6 fechada) — a régua criada pelo Marcel:
+OCTAVIA: search q=9 n=1 in-setlist=0     ← "compendio" (sem acento)
+  → acha "[UX-AUDIT] Linha de 120 colunas · Teste de Régua · Compêndio Sertanejo"
+`aguas` → OCTAVIA: search q=5 n=2 in-setlist=0   (2 × "Águas de Março")
+`xablau` → OCTAVIA: search q=6 n=0 in-setlist=0  → S4b "nada encontrado"
+Do palco (posição 4 de 8), abrir um resultado FORA da setlist e voltar:
+OCTAVIA: search q=7 n=2 in-setlist=1
+OCTAVIA: keepawake on            ← palco avulso (não emite stage restore)
+OCTAVIA: prefetch plan n=0 reason=demand
+OCTAVIA: keepawake off
+OCTAVIA: keepawake on
+OCTAVIA: stage restore n=4/8     ← N1-D17: a volta agora tem LINHA, não pixel
+Offline: provado na N1-PR6 (mesmo n=2 in-setlist=1 em avião) e refeito aqui.
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║ A12 — bis: mesmo content em duas posições = duas telas        → PASSA(F) ║
+╚══════════════════════════════════════════════════════════════════════════╝
+Fixture: nenhuma setlist da audit tem bis, e o editor do web não lista músicas
+já presentes na setlist (defeito de produto → herança do Bloco D).
+Índice: posição 1 "…Partitura de 12 páginas · Observação da música 1: mo…"
+        posição 9 "…Partitura de 12 páginas · BIS: repetir so o refrao, meio
+                   tom acima"     ← MESMO content, nota PRÓPRIA
+Palco da 9: "9 DE 9" + "Nota: BIS: repetir so o refrao, meio…"
+OCTAVIA: index jump n=9
+OCTAVIA: file src=disk name=1786218429715-ux-audit-partitura-12p.pdf bytes=242176
+  → a identidade é `setlist_songs.id`, não `content_id` (T1-R24).
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║ A13 — PDF de 12 páginas do cache em avião, 12 navegáveis       → PASSA   ║
+╚══════════════════════════════════════════════════════════════════════════╝
+OCTAVIA: file src=disk name=1786218429715-ux-audit-partitura-12p.pdf bytes=242176
+OCTAVIA: pdf-render pages=12 src=disk
+OCTAVIA: pdf-page n=1/12
+… 11 swipes, um por página (fitPolicy={2} da N1-PR6) …
+OCTAVIA: pdf-page n=12/12
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║ A14 — bordas, "n de N", salto 1→47, fim de setlist, rotação  → PASSA c/r ║
+╚══════════════════════════════════════════════════════════════════════════╝
+Geometria medida: tela 2560×1600 @ 360 dpi (escala 2,25) = 1138×711 dp.
+  borda = 15% da largura = 384 px = 171 dp   (mínimo do T1-R27: 48 dp)
+  altura entre as barras = 1240 px = 551 dp
+Salto 1 → 47 em 2 TAPS (Índice, depois a posição 47; o scroll não é tap):
+OCTAVIA: index jump n=47      → tela "47 DE 60"
+Fim de setlist (tap na borda direita estando em 60/60):
+OCTAVIA: end-of-setlist n=60  → "FIM DA SETLIST · 60 músicas · UX-AUDIT
+                                 Estresse" + "Voltar ao início" / "Sair"
+Rotação (accelerometer_rotation 0; user_rotation 0→1):
+  paisagem 2560×1600 → "47 DE 60"      (PR7-a14-rot-antes-paisagem.png)
+  retrato  1600×2560 → "47 DE 60"      (PR7-a14-rot-depois-retrato.png)
+  mesma música, mesmo conteúdo: a posição sobrevive.
+RESSALVA: o catálogo (N1-D5) promete `rotation=landscape|portrait n=<i>/<N>`
+para este aceite, e **o app nunca implementou a linha** —
+`grep -rn rotation apps/native/src/` → exit 1. A rotação está provada pelos
+screencaps; a linha de log é uma lacuna entre contrato e implementação.
+Não corrigida aqui: item 3 da lista fechada manda parar e reportar.
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║ A15 — auto-scroll < 100 ms; zoom sem re-quebra; tema 1 tap  → PASSA c/A  ║
+╚══════════════════════════════════════════════════════════════════════════╝
+ZOOM SEM RE-QUEBRA, com o item REAL (a régua do Marcel, 111 e 113 colunas):
+OCTAVIA: zoom dp=26 / 32 / 40 / 32 / 26 / 22 / 18
+  Em 40 dp a linha longa continua em UMA linha (corre para fora da tela, com
+  scroll horizontal), com as sequências de espaço preservadas e o alinhamento
+  acorde↔sílaba intacto. PR7-a15-regua-zoom22/40/18.png
+DARK SHEET EM 1 TAP:
+OCTAVIA: theme=light
+OCTAVIA: theme=dark
+AUTO-SCROLL DESABILITADO COM MOTIVO EM PDF: "auto-scroll só em texto" no
+controle (visível em toda tela de PDF).
+AUTO-SCROLL EM TEXTO — ACHADO:
+  em rajada (2 s entre ativações):  t=17, 16, 16, 18, 14 ms     → passa
+  1ª ativação após ~15 s de tela parada: t=613, 635, 592, 618 ms → NÃO passa
+  Não é do auto-scroll: o MESMO ~630 ms aparece no `nav t=` quando há 4 s
+  entre navegações (t=638, 628, 624), contra 47–66 ms em rajada. É o ciclo de
+  frames do EMULADOR com a tela ociosa — toda medida "tempo até o 1º frame"
+  sofre. O aceite real de A15 e A17 é no Tab S6.
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║ A16 — 15 min sem toque no palco → tela acesa      → NÃO REPRODUZIDO      ║
+╚══════════════════════════════════════════════════════════════════════════╝
+Protocolo B4 do pre-check manda este aceite no Tab S6 (cronômetro do Marcel).
+Não executado no emulador.
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║ A17 — troca p95 < 100 ms (texto) / < 1 s (PDF cacheado)        → PASSA   ║
+╚══════════════════════════════════════════════════════════════════════════╝
+59 navegações pela borda direita na setlist de 60 (1,1 s entre taps):
+OCTAVIA: nav n=56/60 setlist=4340bf95 t=58
+OCTAVIA: nav n=57/60 setlist=4340bf95 t=49
+OCTAVIA: nav n=58/60 setlist=4340bf95 t=50
+OCTAVIA: nav n=59/60 setlist=4340bf95 t=52
+OCTAVIA: nav n=60/60 setlist=4340bf95 t=65
+  TEXTO (58 amostras): min=47 p50=51 p90=58 **p95=64** máx=66 média=52,7
+                       acima de 100 ms: 0
+  PDF cacheado (1 amostra, posição 2): t=642 ms  (< 1 s)
+Ver o ACHADO do A15: em cadência de show (minutos entre trocas) o emulador
+mede ~630 ms. O número que vale é o do Tab S6 (N1-h4).
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║ A18 — `notes` visível; `annotations` não renderizadas          → PASSA   ║
+╚══════════════════════════════════════════════════════════════════════════╝
+NOTES: posição 6 da ESTRESSE → chip na barra "Nota: Observação da música 6: m…"
+ANNOTATIONS: "[UX-AUDIT] Garota de Ipanema" tem no cache
+  content_data.annotations = [{"x":40,"y":40,"id":"ux-audit-fase-d",
+  "text":"UX-AUDIT anotação Fase D — entrar mais suave aqui",...}]
+  A tela renderiza SÓ a cifra; o texto da anotação não aparece em lugar nenhum.
+  PR7-a18-notes.png / PR7-a18-annotations.png
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║ A19 — falha com cache: indicador + lista; sem cache: erro      → PASSA   ║
+╚══════════════════════════════════════════════════════════════════════════╝
+COM cache: OCTAVIA: sync fail stage=setlists page=1 code=network status=-
+  → banner "falha ao sincronizar · mostrando dados de há 17 min" +
+    "Tentar novamente", e a LISTA PERMANECE. PR7-a19-falha-com-cache.png
+SEM cache (store apagado por run-as) e sem rede:
+OCTAVIA: net offline
+OCTAVIA: auth uid=… src=restored
+OCTAVIA: sync skip reason=offline        ← sem `cache hit`: não há cache
+  → S1d: "sem conexão" + texto acionável + "Tentar novamente". Nunca o empty
+    state. PR7-a19-sem-cache.png
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║ A20 — nenhum literal de UI em inglês                           → PASSA   ║
+╚══════════════════════════════════════════════════════════════════════════╝
+Varredura de todos os literais que chegam ao usuário (<Text>, placeholder=,
+rotulo=, titulo:, apoio:, motivo=) nas 7 telas + navigation.tsx, contra um
+vocabulário de UI em inglês (Loading|Error|Retry|Search|No results|Cancel|
+Save|Delete|Back|Next|Done|Close|Settings|Offline|Download|Failed|…):
+  literais casando: 0
+Anglicismos presentes e sua origem — TODOS no design congelado:
+  Auto-scroll (design 1×) · Zoom (design 3×) · SETLISTS (design 1×) ·
+  Email (design 1×) · Tab (design 16×, e valor do enum canônico do produto)
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║ A21 — 500 na página 2 → cache byte a byte inalterado + indic. → PASSA c/r║
+╚══════════════════════════════════════════════════════════════════════════╝
+$ sha256 do content.json ANTES:  d27e6d8478185282d5707fb9459d8e124cdd6bdab9c20aa28df133041e86fc44
+OCTAVIA: api status=200 path=/api/content n=1 ms=39     ← página 1 ok
+OCTAVIA: api status=500 path=/api/content n=1 ms=70     ← página 2: 500
+OCTAVIA: sync fail stage=content page=1 code=INTERNAL status=500
+  (nenhum `cache write`)
+$ sha256 do content.json DEPOIS: d27e6d8478185282d5707fb9459d8e124cdd6bdab9c20aa28df133041e86fc44
+$ diff antes depois → vazio, exit 0    → BYTE A BYTE INALTERADO ✓
+RESSALVA: a linha diz `page=1`, mas a falha foi na página **2** — o `sync.ts`
+tem o `page=1` HARDCODED (`log(\`sync fail stage=${stage} page=1 …\`)`),
+enquanto o catálogo define `page=<p>`. Achado do aceite; não corrigido aqui.
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║ A22 — id repetido entre páginas → item uma vez; sortBy=recent  → PASSA   ║
+╚══════════════════════════════════════════════════════════════════════════╝
+Mock com 2 páginas (40 + 28) e o 1º item da página 1 repetido na página 2:
+OCTAVIA: api status=200 path=/api/content n=1 ms=82     ← página 1
+OCTAVIA: api status=200 path=/api/content n=1 ms=76     ← página 2
+OCTAVIA: sync dedupe n=1
+OCTAVIA: sync ok setlists=3 content=67 pages=2 t=342
+$ cat content.json → content no cache: 67 · ids distintos: 67 · repetidos: 0
+Captura de tráfego (o mock imprime o que recebeu):
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+REQ /api/content?pageSize=100&page=2&sortBy=recent auth=sim sortBy=recent
+  → `sortBy=recent` nas DUAS páginas (chave estável do T1-R9b).
+
+──────────────────────────────────────────────────────────────────────────
+ENCERRAMENTO DO EMULADOR
+$ settings get global airplane_mode_on → 0 ; ping 8.8.8.8 → 0% packet loss
+$ diff PR7-sdk-antes.txt PR7-sdk-depois.txt → vazio (exit 0)
+$ pgrep -fl qemu → vazio ; lsof -i :8081 → vazio ; adb devices → só RX2N8000F3D
+ESTADO FINAL: **sem sessão** — o A2 deslogou a conta de audit (é o
+comportamento que o próprio aceite exige). O cache local (3 setlists /
+67 content / arquivos) permanece no disco.

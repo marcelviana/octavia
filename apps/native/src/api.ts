@@ -22,12 +22,45 @@ import { signOutSession } from './session'
 const BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL ?? ''
 
 /**
+ * **Caminho de desenvolvimento do aceite A2** (catálogo de logs, E4): só
+ * existe com `__DEV__` **e** `EXPO_PUBLIC_DEV_FORGE_401=1`; num build de
+ * release as duas condições são falsas e o bloco todo some.
+ *
+ * Por que forjar em vez de esperar um 401 real: o A2 pede "token forjado
+ * inválido → no máximo 2 requests à rota e tela de login", e não há como
+ * produzir um token inválido pela UI sem esperar horas ou mexer no servidor.
+ *
+ * O token forjado muda a cada chamada (o contador no fim). É isso que exercita
+ * o caminho INTEIRO do T1-R3: o 1º 401 pede renovação, o token novo é
+ * DIFERENTE do primeiro, o `authFetch` refaz **uma** vez, o 2º 401 chega e
+ * `onAuthFailure` para tudo — `n=2` e nunca uma terceira request. Com um
+ * token forjado constante o caminho pararia em `n=1` e o aceite não veria o
+ * limite que o T1-R3 promete.
+ */
+const FORJAR_401 = __DEV__ && process.env.EXPO_PUBLIC_DEV_FORGE_401 === '1'
+let forjados = 0
+
+function tokenForjado(): string {
+  forjados += 1
+  // **Sem** o prefixo base64 de um header JWT, de propósito: os greps de
+  // segredo dos anexos procuram exatamente esse prefixo, e um JWT de mentira
+  // no código-fonte envenenaria o instrumento. O 401 sai igual — a cadeia A do
+  // `CONTRATO-DE-ERRO.md` devolve o MESMO corpo para "sem token", "token
+  // inválido" e "IP em deny-fast", então o formato não muda o aceite.
+  return `forjado-dev-a2.${forjados}.invalido`
+}
+
+/**
  * T1-R2: o SDK renova sozinho, mas o cliente força a renovação quando faltam
  * ≤ 5 min para o `exp` — decisão do core (`shouldRefresh`, limite inclusivo,
  * errata N1-D14). Um `getIdToken(false)` barato dá o token corrente; só se ele
  * estiver perto do fim é que se paga um `getIdToken(true)`.
  */
 async function obterToken({ forceRefresh }: { forceRefresh: boolean }): Promise<string | null> {
+  if (FORJAR_401) {
+    log(`auth refresh=${forceRefresh ? 'forced' : 'cached'}`)
+    return tokenForjado()
+  }
   const user = auth.currentUser
   if (user === null) return null
   if (forceRefresh) {

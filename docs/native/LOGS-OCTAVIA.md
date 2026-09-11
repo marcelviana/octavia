@@ -50,6 +50,7 @@
 | rede | `net online\|offline` | mudança de estado (`expo-network`, N1-D11) | A5, A19 |
 | rotação | `rotation=landscape\|portrait n=<i>/<N>` | T1-R27 (N1-D12: rotação preserva posição) | A14 |
 | wake lock | `keepawake on\|off` | entrar/sair do palco (T1-R33) | A16 |
+| palco restaurado | `stage restore n=<i>/<N>` | o palco reganha foco vindo de uma tela EMPILHADA (índice, busca, palco avulso) — não na montagem inicial, não no palco avulso — **N1-D17** | A11, A14 |
 | pdf | `pdf-render pages=<n> src=disk` · `pdf-page n=<i>/<N>` · `pdf-error <msg>` | herdado do N0 (T1-R26) | A13 |
 | falha de download | `download-error <msg>` | `File.downloadFileAsync` rejeitou (T1-R26/R37) — **E5** | A13 |
 | cache de arquivos apagado | `files-cleared` | instrumento de prova; nenhuma UI chama — **E5** | A13 (controle negativo) |
@@ -68,6 +69,37 @@ N0. **Não foi adotado**: o catálogo do N1 já tem esse evento como
 `placeholder kind=file-missing name=<seg>`, e duas linhas para o mesmo fato
 seriam contrato duplicado. O S3e emite a linha do catálogo. Divergência
 declarada, não acomodada.
+
+## Errata E6 / N1-D17 (2026-09-10, N1-PR7)
+
+`stage restore n=<i>/<N>` entra no catálogo. Origem: na N1-PR6 a única prova
+de que o palco voltava na posição certa depois de abrir uma música avulsa
+(T1-R22) era comparar dois screencaps pixel a pixel (`magick compare -metric
+AE` → 0 na barra do palco). **Um aceite não deve depender de comparação de
+imagem** — decisão do Marcel.
+
+Quando sai: no `useFocusEffect` do palco, a partir do **segundo** foco. A
+montagem inicial não é uma volta e não emite. O palco **avulso** também não
+emite: ele não tem posição na setlist (a barra mostra "AVULSA").
+
+**Quais caminhos emitem, medido no device (N1-PR7)** — o que separa os dois
+casos é qual tela fica na pilha, não a intenção:
+
+| Caminho | Emite? | Por quê |
+|---|---|---|
+| palco → **busca** → volta (fechar, ou abrir avulso e voltar) | **sim** | a busca EMPILHA sobre o palco; o palco não é destruído e reganha foco |
+| palco → **índice** → tocar numa posição | **não** | o índice já está na pilha ABAIXO do palco, então `navigate('Index')` **desempilha** o palco; voltar ao palco cria uma instância nova, cujo primeiro foco não é uma volta |
+| palco avulso (empilhado pela busca) | **não** | não tem posição na setlist |
+| montagem inicial de qualquer palco | **não** | não é uma volta |
+
+A primeira versão desta errata afirmava que o salto pelo índice também
+emitiria; **o device mostrou que não** (`index jump n=1` seguido de
+`keepawake off`/`on` sem `stage restore`), porque o índice desempilha o palco
+em vez de empilhar sobre ele. Corrigido aqui.
+
+Nos casos em que a busca é fechada sem abrir nada, saem as DUAS linhas —
+`search close restore` (da busca, ao fechar) e `stage restore` (do palco, ao
+focar): eventos distintos da mesma volta.
 
 ## Caminho de dev (E4)
 
