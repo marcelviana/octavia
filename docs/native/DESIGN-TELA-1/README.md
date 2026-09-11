@@ -36,6 +36,12 @@ não listado aqui — conflito novo é divergência declarada, não acomodada.
   R7–R10, R9b, R12, R14, R16, R19, R37) são não-visuais (auth, sync, cache,
   rede) e estão mapeados tela × aceite × medição em `N1-PRECHECK.md` A4.
   Esclarecimento, não defeito.
+- **E3 — `fitPolicy` do S3d** (2026-09-11, N1-PR8): o PDF do palco renderiza em
+  **fit width** (`fitPolicy={0}`), não em página inteira. Decisão do Marcel de
+  2026-09-10, depois do aceite no Tab S6: com a página inteira a A4 fica em
+  ~244 dp de largura `[medido: N1-PR7 §3.6]`. Consequência declarada: virar
+  página exige vários deslizes (o T1-R27 vale para a música, não para a página
+  do PDF) — ver `N1-ENCERRAMENTO.md` §6.
 
 sha256:
 - Octavia_Tela_1.html: 9761e4e535fdd7b1d312c3315d0e878daa866d6c06b97cdf9d3b3311e311f20c
