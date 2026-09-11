@@ -1454,15 +1454,32 @@ automaticamente.
 8. **Próximo**: **N1 (tela 1)**, em sessão nova (worktree próprio se outra
    sessão estiver aberta), com PRD + design congelado + errata do §4 vinda
    do encerramento do B7.
-9. **N1 em andamento (2026-09-09/10)** — pre-check
-   [`docs/native/N1-PRECHECK.md`](../native/N1-PRECHECK.md) (Fases A/B/C,
-   16 divergências, prod 3 requests / 0 escrita), decisões **N1-D1…D12**
-   fechadas pelo Marcel em 2026-09-10 (navegação `@react-navigation` +
-   native-stack, cache JSON em `Paths.document`, sem Maestro, AVD
-   `octavia_tab32`, `expo-network`, `orientation: default`), catálogo de
-   logs [`LOGS-OCTAVIA.md`](../native/LOGS-OCTAVIA.md), errata do PRD §4
-   (a conta principal tem **0** inválidos do T1-R7 — os ~11 do B7 §9 são de
-   outro perfil). PRs planejadas (C1): PR1 docs · PR2 core · PR3 esqueleto
-   (S0/S1) · PR4 S2 + S3 texto (spike C3) · PR5 S3 PDF + arquivos · PR6
-   S4/S5 · PR7 aceite no emulador · aceite no Tab S6 com a conta principal
-   · encerramento.
+9. **Bloco N1 ✅ (2026-09-10/11, PRs #281–#290)** — ver
+   [`docs/native/N1-ENCERRAMENTO.md`](../native/N1-ENCERRAMENTO.md): **a tela 1
+   existe, roda no Galaxy Tab S6 e passa no aceite** — 21 dos 22 critérios no
+   emulador, **A16 no device**, **0 falhas**, e **A10 com dado real "não
+   reproduzido"** (H17: a única setlist datada da conta principal está 422 dias
+   no passado e nenhuma das duas tem arquivo). App Expo SDK 57 / RN 0.86.3 com
+   as seis telas do design, cache-first em 2 requests, PDF e texto do disco em
+   modo avião, **p95 de 68 ms** na troca de música no device. Suíte 685 → **768**;
+   42 divergências declaradas (P 6 · D 14 · A 4 · T 14 · X 4); **escrita em prod
+   pela API: 0**. Erratas: T1-R22 (modo avulso), `fitPolicy` fit width (T1-R26/R27),
+   catálogo de logs E5/E6/E7. **Regra nova**: estado de bloco é artefato de
+   repositório — o encerramento é a fonte única e o rastro de sessão entra como
+   anexo do próprio bloco (`CLAUDE.md`).
+10. **Próximo — a eleger** (nenhum em execução):
+    - **N2 (tela 2 do nativo)** — escrita: criar, editar e reordenar. É o que
+      fecha o A10 real e a H17, e carrega B5-D6 (cascata content×storage),
+      B1.5, B9, B10 (restrição da API key, agora que o app existe) e o Maestro
+      (N1-D3, nunca instalado). **Candidato natural**: continua de onde o N1
+      parou, com o aparato de device já provado.
+    - **Bloco D (web)** — a herança que a tela 1 encontrou de fora: o editor não
+      lista músicas já na setlist (impede bis pela UI, backend aceita), poluição
+      de `content_data`, cookie 7 d × token 1 h, login Google, B11, policies.
+      **Candidato se o web ainda for o que o Marcel usa todo dia.**
+    - **B8 (housekeeping de pipeline)** — 151 erros de `tsc -p tsconfig.test.json`
+      e `coverage.thresholds` fictício. **Candidato se a dívida de tipos começar
+      a esconder defeito**; é o menor dos três.
+    Pendência de instrumento que qualquer um dos três resolve de passagem: a
+    **prova do D-g** (a primeira PR que toque só `packages/core/**` tem de
+    confirmar que o `android-debug-apk` **não** dispara — `N1-ENCERRAMENTO.md` §5).

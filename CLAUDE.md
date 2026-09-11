@@ -56,6 +56,18 @@ banco** — a fonte é o arquivo de migração. Primeira migração da série:
   arquivos alheios; corrigido por `reset --soft` + `push --force-with-lease`
   (`fd63bce`). Registro: `docs/ux/B7-PRECHECK.md` (B7-PR1).
 
+## Estado de bloco é artefato de repositório (regra permanente)
+
+- **A fonte de cada bloco é o seu `*-ENCERRAMENTO.md` commitado.** Arquivo de
+  memória de sessão (`~/.claude/projects/.../memory/*-execution-state.md`) é
+  **rastro**, nunca fonte: não se cita como se estivesse na branch, e onde ele
+  divergir do encerramento, o encerramento vence.
+- **O bruto entra como anexo do próprio bloco** (`docs/<área>/<BLOCO>-anexos/`),
+  no mesmo commit do encerramento, com cabeçalho dizendo que é rastro.
+- **Origem**: 2026-09-11, N1 — o `n1-execution-state.md` foi citado como
+  consolidando o estado do bloco e não estava no repositório; oito anteriores
+  (B3…B7, C, N0) vivem só na máquina. Registro: `docs/native/N1-ENCERRAMENTO.md` §11.
+
 ## Project Architecture
 
 ### Core Technology Stack
