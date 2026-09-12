@@ -152,7 +152,15 @@ function CartaoSetlist({
   const podeBaixar = online && !baixando && status.have < status.need
 
   return (
-    <Pressable style={styles.cartao} onPress={onAbrir} accessibilityRole="button">
+    <Pressable
+      style={styles.cartao}
+      onPress={onAbrir}
+      accessibilityRole="button"
+      // O alvo principal do S1 não tinha identidade: invisível para o G2 e
+      // para o G6 (V1-PRECHECK div. 10). O recorte de 8 é o mesmo do
+      // `baixar-<id8>` abaixo, para que os dois se correspondam no dump.
+      testID={`setlist-${setlist.id.slice(0, 8)}`}
+    >
       <View style={styles.cartaoEsq}>
         <Text style={styles.nome} numberOfLines={1}>
           {setlist.name}
