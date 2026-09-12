@@ -1,0 +1,140 @@
+$ (S3) G5 reconsolidado sobre os 18 dumps · (S4) pages=2 · (S5) INTERNAL_ERROR
+
+===== S3.1 — g5.mjs sobre TODOS os dumps =====
+alvos tocáveis medidos: 116 em 18 estados
+ABAIXO de 48 dp: 13
+  tentar-banner           130.7 ×  22.7 dp   (S1e-falha-com-cache)
+  voltar                     40 ×  57.8 dp   (S2-com-invalidos, S2-indice)
+  song-9                  540.9 ×  11.1 dp   (S2-com-invalidos)
+  song-10                 540.9 ×  11.1 dp   (S2-com-invalidos)
+  fechar-busca               40 ×  57.8 dp   (S4a-busca, S4a-resultados, S4b-nada-encontrado)
+  campo-busca             825.3 ×  46.2 dp   (S4a-busca, S4a-resultados, S4b-nada-encontrado)
+  campo-busca             760.4 ×  46.2 dp   (S4a-busca, S4a-resultados, S4b-nada-encontrado)
+  apagar                   48.9 ×  21.8 dp   (S4a-resultados, S4b-nada-encontrado)
+
+alvos SEM testID (inalcançáveis por resource-id):
+  S1b-normal-online :: (sem testID) UX-AUDIT ESTRESSE, sem data  ·
+  S1b-normal-online :: (sem testID) UX-AUDIT SHOW PADRÃO, sem data
+  S1b-normal-online :: (sem testID) UX-AUDIT SOLO, sem data  ·  1 
+  S1c-offline-com-cache :: (sem testID) UX-AUDIT ESTRESSE, sem data  ·
+  S1c-offline-com-cache :: (sem testID) UX-AUDIT SHOW PADRÃO, sem data
+  S1c-offline-com-cache :: (sem testID) UX-AUDIT SOLO, sem data  ·  1 
+  S1e-falha-com-cache :: (sem testID) UX-AUDIT ESTRESSE, sem data  ·
+  S1e-falha-com-cache :: (sem testID) UX-AUDIT SHOW PADRÃO, sem data
+  S1e-falha-com-cache :: (sem testID) UX-AUDIT SOLO, sem data  ·  1 
+
+--- RESSALVA DO INSTRUMENTO, achada aqui ---
+O `song-9` e o `song-10` a 540,9 × 11,1 dp NÃO são alvos pequenos: são itens de
+120 dp RECORTADOS pela viewport da lista. O dump dá os bounds VISÍVEIS, e no
+S2-com-invalidos a lista estava rolada com as posições 9 e 10 na fronteira
+inferior (y 1440..1465, e a janela acaba em 1465).
+  $ grep -o "resource-id=\"song-9\"[^>]*bounds=\"[^\"]*\"" S2-com-invalidos.xml
+bounds="[54,1440][1271,1465]"
+  e o mesmo song no S2-indice, não rolado:
+bounds="[54,576][1271,846]"
+    → 270 px = 120,0 dp. O alvo é 120 dp; o recorte é da captura.
+
+REGRA que o G5 do V1 precisa ter: descontar nós recortados pelo contêiner de
+rolagem — na prática, ignorar o nó cujo `y2` coincide com o `y2` do ScrollView
+pai (ou cujo `y1` coincide com o `y1` dele). Sem isso o gate dá falso positivo
+em toda lista rolada, e um gate que grita sem motivo é desligado na terceira vez.
+
+--- LISTA FINAL, descontados os dois recortes ---
+  tentar-banner  130,7 ×  22,7 dp   S1e
+  voltar          40,0 ×  57,8 dp   S2
+  fechar-busca    40,0 ×  57,8 dp   S4a, S4b
+  campo-busca    825,3 ×  46,2 dp   S4a, S4b   (760,4 × 46,2 com termo digitado)
+  apagar          48,9 ×  21,8 dp   S4a, S4b
+  → CINCO controles distintos. 116 alvos medidos em 18 estados.
+
+===== S3.2 — o S0 não tem dump =====
+A tela de login NÃO foi capturada (§4.4: a sessão está viva e não há botão de
+sair; deslogar exigiria `pm clear` e a senha do Marcel). Portanto:
+  os alvos do S0 — `email`, `senha`, `entrar` — são [hipótese] quanto ao tamanho.
+  Fecham no aceite da V1-PR7, que JÁ exige um login do Marcel por causa do A2
+  (ressalva do §7.4). Nenhuma tentativa de captura foi feita.
+
+===== S4 — pages=2 com content=0: artefato do APARATO =====
+$ cat mock-s1f.log   (o mock imprime toda request que recebe)
+fixture: servidor em :8788 modo=normal setlists=0 content=0 paginas=[0, 0]
+REQ /api/setlists auth=NAO sortBy=-
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+REQ /api/content?pageSize=100&page=2&sortBy=recent auth=sim sortBy=recent
+
+  As DUAS primeiras linhas com auth=NAO são MINHAS: os `curl` de probe que eu
+  rodei para conferir que o mock respondia. O app fez TRÊS requests, todas com
+  auth=sim — que é exatamente o que o logcat mostrou. Nenhuma request sem
+  Authorization partiu do app (o A1 continua de pé).
+
+$ o laço de páginas (apps/native/src/sync.ts:29-39)
+  const paginas: ContentDTO[][] = []
+  let page = 1
+  let total = 0
+  for (;;) {
+    const r = await getContentPage(page)
+    // D-d: a página que falhou viaja junto — o `sync fail` tinha `page=1`
+    // hardcoded, e o aceite da N1-PR7 (§3.4) mediu a falha na página 2 sendo
+    // reportada como 1. O catálogo define `page=<p>`.
+    if (!r.ok) return { failed: true, erro: r as ApiResult<never>, page }
+    paginas.push(r.data.data)
+    total = r.data.total
+    if (!r.data.hasMore) break
+    page += 1
+  }
+  return { failed: false, paginas, total }
+
+$ e o _paginas do aceite.py, simulado com três tamanhos de biblioteca:
+  content=  0  →  paginas=[0, 0]  len(paginas)=2
+      página 1: hasMore = (1 < 2) = True
+  content= 67  →  paginas=[40, 27]  len(paginas)=2
+      página 1: hasMore = (1 < 2) = True
+  content=140  →  paginas=[40, 100]  len(paginas)=2
+      página 1: hasMore = (1 < 2) = True
+
+VEREDITO: o `_paginas` do `aceite.py` devolve SEMPRE duas listas
+(`content[:40]` e `content[40:]`), qualquer que seja o tamanho — inclusive zero.
+Logo `hasMore` na página 1 é SEMPRE true, e o app pediu a página 2 porque o
+servidor disse que havia mais. **O laço do app está correto**: ele para em
+`if (!r.data.hasMore) break`. Contra um servidor real com N=0 (`hasMore:false`
+na página 1) seriam 1 + 1 = 2 requests e `pages=1`, como o A4 prevê.
+É artefato do APARATO; corrige-se no mock, não no app. O A4 não foi violado.
+
+===== S5 — INTERNAL_ERROR está no contrato? =====
+$ sed -n "41,58p" packages/core/src/errors.ts
+}
+
+const KIND_BY_CODE: Record<string, AppErrorKind> = {
+  AUTH_REQUIRED: 'auth',
+  RATE_LIMITED: 'rate-limited',
+  NOT_FOUND: 'not-found',
+  VALIDATION_ERROR: 'validation',
+  INTERNAL_ERROR: 'server',
+}
+
+const MESSAGE_KEY: Record<AppErrorKind, string> = {
+  network: 'erro.sem_conexao',
+  auth: 'erro.sessao_invalida',
+  'rate-limited': 'erro.servidor_ocupado',
+  'not-found': 'erro.nao_encontrado',
+  validation: 'erro.requisicao_invalida',
+  server: 'erro.falha_do_servidor',
+  unknown: 'erro.desconhecido',
+
+As SETE chaves que o `errorFrom` emite (o MESSAGE_KEY acima, um por kind):
+  1. erro.sem_conexao          (network)
+  2. erro.sessao_invalida      (auth           ← AUTH_REQUIRED)
+  3. erro.servidor_ocupado     (rate-limited   ← RATE_LIMITED)
+  4. erro.nao_encontrado       (not-found      ← NOT_FOUND)
+  5. erro.requisicao_invalida  (validation     ← VALIDATION_ERROR)
+  6. erro.falha_do_servidor    (server         ← INTERNAL_ERROR)
+  7. erro.desconhecido         (unknown)
+
+INTERNAL_ERROR **É** uma delas: KIND_BY_CODE mapeia INTERNAL_ERROR → server →
+erro.falha_do_servidor. NADA A FAZER, e a captura do S1e mostra a mensagem REAL:
+text="falha no servidor · mostrando dados de há 44 min"
+
+A div. 41 do N1 era sobre `INTERNAL` (sem sufixo), que de fato está fora do
+contrato — e foi por isso que a #290 a trocou por `INTERNAL_ERROR` no próprio
+`aceite.py`. O mock que usei é o commitado, já corrigido. A legenda da captura
+do S1e NÃO precisa de ressalva.

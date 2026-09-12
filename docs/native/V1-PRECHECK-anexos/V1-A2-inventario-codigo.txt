@@ -1,0 +1,282 @@
+$ (A2) inventário de código — worktree /Users/marcelviana/projects/octavia-v1, HEAD b5700a1 (= origin/main)
+
+===== A2(a) — literais usados como glifo ou pseudo-ícone (comentários removidos) =====
+$ node glifos.mjs   # varre literais de string/template fora de comentário
+src/files.ts:48: "files: sem uid — setFilesUser não foi chamado"  → glifos: "—"
+src/fixtures/palco.ts:21: "[Refrão — linha de 120 colunas]"  → glifos: "—"
+src/fixtures/palco.ts:29: "${String(i + 1).padStart(3, '0')}  la la la, a tarde cai devagar — verso ${i + 1}"  → glifos: "—"
+src/screens/EndScreen.tsx:44: "${total} ${total === 1 ? 'música' : 'músicas'}  ·  ${nomeSetlist}"  → glifos: "·"
+src/screens/IndexScreen.tsx:52: "carregando…"  → glifos: "…"
+src/screens/IndexScreen.tsx:57: "  ·  "  → glifos: "·"
+src/screens/IndexScreen.tsx:76: "—"  → glifos: "—"
+src/screens/IndexScreen.tsx:134: "  ·  ${setlist.performance_date}"  → glifos: "·"
+src/screens/IndexScreen.tsx:135: "  ·  ${setlist.venue}"  → glifos: "·"
+src/screens/LoginScreen.tsx:30: "sem conexão — verifique a internet e tente de novo"  → glifos: "—"
+src/screens/LoginScreen.tsx:31: "muitas tentativas seguidas — espere um pouco"  → glifos: "—"
+src/screens/LoginScreen.tsx:32: "não foi possível entrar — tente de novo"  → glifos: "—"
+src/screens/SearchScreen.tsx:61: "  ·  "  → glifos: "·"
+src/screens/SearchScreen.tsx:160: "Nesta setlist · ${setlist.name}"  → glifos: "·"
+src/screens/SearchScreen.tsx:170: "Biblioteca · ${n} ${n === 1 ? 'música' : 'músicas'}"  → glifos: "·"
+src/screens/SetlistsScreen.tsx:63: "  ·  "  → glifos: "·"
+src/screens/SetlistsScreen.tsx:67: "✓"  → glifos: "✓"
+src/screens/SetlistsScreen.tsx:68: "◔"  → glifos: "◔"
+src/screens/SetlistsScreen.tsx:69: "✗"  → glifos: "✗"
+src/screens/SetlistsScreen.tsx:106: "servidor ocupado · tente em instantes"  → glifos: "·"
+src/screens/SetlistsScreen.tsx:120: "sincronizando…"  → glifos: "…"
+src/screens/SetlistsScreen.tsx:126: "sem conexão · última sincronização ${haQuantoTempo(sync.syncedAtMs)}"  → glifos: "·"
+src/screens/SetlistsScreen.tsx:175: "Baixando…"  → glifos: "…"
+src/screens/SetlistsScreen.tsx:232: "${textoDoErro(sync.messageKey)} · mostrando dados de ${haQuantoTempo(sync.syncedAtMs)}"  → glifos: "·"
+src/screens/StageScreen.tsx:436: "—"  → glifos: "—"
+src/screens/StageScreen.tsx:438: " · ${content.artist}"  → glifos: "·"
+src/screens/StageScreen.tsx:439: " · ${TIPO[content.content_type] ?? content.content_type}"  → glifos: "·"
+src/screens/StageScreen.tsx:521: "Zoom −"  → glifos: "−"
+src/screens/StageScreen.tsx:633: "Sem conexão agora — toque em Baixar quando a rede voltar."  → glifos: "—"
+src/screens/StageScreen.tsx:639: "${titulo} · ${tipo}${tamanho} não está neste aparelho. ${fecho}"  → glifos: "·"
+
+===== A2(a2) — controles SÓ-TEXTO candidatos a ícone, por tela =====
+$ grep -n "rotulo=\"" src/screens/StageScreen.tsx
+510:          rotulo="Auto-scroll"
+521:          rotulo="Zoom −"
+529:          rotulo="Zoom +"
+536:          rotulo={tema === 'dark' ? 'Claro' : 'Escuro'}
+541:        <Controle rotulo="Índice" cor={cor} onPress={onIndice} testID="indice" />
+542:        <Controle rotulo="Busca" cor={cor} onPress={onBusca} testID="busca" />
+544:          rotulo={avulsa ? 'Voltar' : 'Sair'}
+$ grep -rn "botaoSecundarioTexto\|botaoPrimarioTexto" src/screens/*.tsx | head -20
+src/screens/IndexScreen.tsx:126:          <Text style={styles.botaoSecundarioTexto}>◂</Text>
+src/screens/IndexScreen.tsx:139:          <Text style={styles.botaoSecundarioTexto}>Buscar na biblioteca</Text>
+src/screens/IndexScreen.tsx:230:  botaoSecundarioTexto: { color: dark.text, fontFamily: font.ui, fontSize: size.bodySmall },
+src/screens/SearchScreen.tsx:183:          <Text style={styles.botaoSecundarioTexto}>◂</Text>
+src/screens/SearchScreen.tsx:330:  botaoSecundarioTexto: { color: dark.text, fontFamily: font.ui, fontSize: size.bodySmall },
+src/screens/EndScreen.tsx:48:              <Text style={styles.botaoPrimarioTexto}>Voltar ao início</Text>
+src/screens/EndScreen.tsx:51:              <Text style={styles.botaoSecundarioTexto}>Sair</Text>
+src/screens/EndScreen.tsx:115:  botaoPrimarioTexto: { color: dark.bg, fontFamily: font.uiBold, fontSize: size.button },
+src/screens/EndScreen.tsx:125:  botaoSecundarioTexto: { color: dark.text, fontFamily: font.ui, fontSize: size.button },
+src/screens/SetlistsScreen.tsx:174:            <Text style={styles.botaoSecundarioTexto}>
+src/screens/SetlistsScreen.tsx:224:          <Text style={styles.botaoSecundarioTexto}>Buscar música</Text>
+src/screens/SetlistsScreen.tsx:256:            <Text style={styles.botaoPrimarioTexto}>Tentar novamente</Text>
+src/screens/SetlistsScreen.tsx:353:  botaoSecundarioTexto: { color: dark.text, fontFamily: font.ui, fontSize: size.bodySmall },
+src/screens/SetlistsScreen.tsx:394:  botaoPrimarioTexto: { color: dark.bg, fontFamily: font.uiBold, fontSize: size.button },
+
+===== A2(b) — todo Pressable e o estilo que define a sua dimensão =====
+$ grep -rn "<Pressable" src/
+src/screens/IndexScreen.tsx:81:    <Pressable
+src/screens/IndexScreen.tsx:125:        <Pressable style={styles.botaoSecundario} onPress={onVoltar} testID="voltar">
+src/screens/IndexScreen.tsx:138:        <Pressable style={styles.botaoSecundario} onPress={onBuscar} testID="buscar">
+src/screens/SetlistsScreen.tsx:155:    <Pressable style={styles.cartao} onPress={onAbrir} accessibilityRole="button">
+src/screens/SetlistsScreen.tsx:167:          <Pressable
+src/screens/SetlistsScreen.tsx:223:        <Pressable style={styles.botaoSecundario} onPress={onBuscar} testID="buscar">
+src/screens/SetlistsScreen.tsx:234:          <Pressable onPress={onTentarNovamente} accessibilityRole="button" testID="tentar-banner">
+src/screens/SetlistsScreen.tsx:255:          <Pressable style={styles.botaoPrimario} onPress={onTentarNovamente} testID="tentar">
+src/screens/EndScreen.tsx:47:            <Pressable style={styles.botaoPrimario} onPress={onVoltarInicio} testID="voltar-inicio">
+src/screens/EndScreen.tsx:50:            <Pressable style={styles.botaoSecundario} onPress={onSair} testID="sair">
+src/screens/EndScreen.tsx:58:        <Pressable
+src/screens/SearchScreen.tsx:75:    <Pressable
+src/screens/SearchScreen.tsx:182:        <Pressable style={styles.botaoSecundario} onPress={fechar} testID="fechar-busca">
+src/screens/SearchScreen.tsx:199:            <Pressable onPress={() => setTermo('')} accessibilityRole="button" testID="apagar">
+src/screens/LoginScreen.tsx:108:          <Pressable
+src/screens/StageScreen.tsx:496:        <Pressable
+src/screens/StageScreen.tsx:501:        <Pressable
+src/screens/StageScreen.tsx:646:      <Pressable
+src/screens/StageScreen.tsx:676:    <Pressable
+
+$ estilos de dimensão citados
+src/screens/EndScreen.tsx:107:  botaoPrimario: {
+src/screens/EndScreen.tsx-108-    height: touch.stage,
+src/screens/EndScreen.tsx:116:  botaoSecundario: {
+src/screens/EndScreen.tsx-117-    height: touch.stage,
+src/screens/EndScreen.tsx:126:  borda: { position: 'absolute', top: 0 },
+src/screens/EndScreen.tsx-127-  barraBaixo: { height: bar.stage, borderTopWidth: bar.hairline, borderTopColor: dark.line },
+src/screens/IndexScreen.tsx:188:  item: {
+src/screens/IndexScreen.tsx-190-    minHeight: 120,
+src/screens/IndexScreen.tsx:205:  sublinha: { color: dark.muted, fontFamily: font.ui, fontSize: size.label },
+src/screens/IndexScreen.tsx-207-    height: 27,
+src/screens/IndexScreen.tsx:221:  botaoSecundario: {
+src/screens/IndexScreen.tsx-222-    height: touch.list + 2,
+src/screens/LoginScreen.tsx:165:  campo: {
+src/screens/LoginScreen.tsx-166-    height: touch.list + 4,
+src/screens/SearchScreen.tsx:261:  campo: {
+src/screens/SearchScreen.tsx-263-    height: touch.stage,
+src/screens/SearchScreen.tsx:273:  apagar: { color: dark.muted, fontFamily: font.ui, fontSize: size.bodySmall },
+src/screens/SearchScreen.tsx:290:  item: {
+src/screens/SearchScreen.tsx-291-    minHeight: touch.list + 2,
+src/screens/SearchScreen.tsx-296-    paddingVertical: space.md,
+src/screens/SearchScreen.tsx:305:  sublinha: { color: dark.muted, fontFamily: font.ui, fontSize: size.label },
+src/screens/SearchScreen.tsx-307-    height: 27,
+src/screens/SearchScreen.tsx:321:  botaoSecundario: {
+src/screens/SearchScreen.tsx-322-    height: touch.list + 2,
+src/screens/SetlistsScreen.tsx:310:  cartao: {
+src/screens/SetlistsScreen.tsx-311-    minHeight: 138,
+src/screens/SetlistsScreen.tsx-316-    paddingVertical: space.xl,
+src/screens/SetlistsScreen.tsx:344:  botaoSecundario: {
+src/screens/SetlistsScreen.tsx-345-    height: touch.list + 2,
+src/screens/SetlistsScreen.tsx:385:  botaoPrimario: {
+src/screens/SetlistsScreen.tsx-387-    height: touch.list,
+src/screens/StageScreen.tsx:745:  borda: { position: 'absolute', top: 0 },
+src/screens/StageScreen.tsx-755-    height: bar.stage,
+src/screens/StageScreen.tsx:762:  controle: {
+src/screens/StageScreen.tsx-763-    minWidth: 106,
+src/screens/StageScreen.tsx-764-    height: touch.stage + 2,
+
+===== A2(c) — cor fora do theme.ts e fontSize fora de size =====
+$ grep -rn "#[0-9A-Fa-f]{3,8}" src/ | grep -v theme.ts
+  (nenhum — zero hex literal fora do theme.ts)
+$ grep -rn "fontSize: *[0-9]" src/
+src/screens/SearchScreen.tsx:277:    fontSize: 13,
+src/screens/SearchScreen.tsx:301:  numero: { color: dark.accent, fontFamily: font.mono, fontSize: 20, minWidth: 32 },
+src/screens/SearchScreen.tsx:304:  titulo: { color: dark.text, fontFamily: font.uiBold, fontSize: 20 },
+src/screens/SearchScreen.tsx:318:    fontSize: 12,
+src/screens/SetlistsScreen.tsx:308:  status: { color: dark.muted, fontFamily: font.ui, fontSize: 13 },
+src/screens/SetlistsScreen.tsx:326:    fontSize: 24,
+src/screens/SetlistsScreen.tsx:340:  glifo: { fontFamily: font.monoBold, fontSize: 20 },
+src/screens/SetlistsScreen.tsx:343:  indicadorSub: { color: dark.muted, fontFamily: font.ui, fontSize: 13 },
+src/screens/EndScreen.tsx:93:    fontSize: 13,
+src/screens/EndScreen.tsx:102:    fontSize: 44,
+src/screens/IndexScreen.tsx:185:  barraSub: { color: dark.muted, fontFamily: font.ui, fontSize: 13 },
+src/screens/IndexScreen.tsx:202:  numero: { color: dark.muted, fontFamily: font.mono, fontSize: 20, minWidth: 32 },
+src/screens/IndexScreen.tsx:204:  titulo: { fontFamily: font.uiBold, fontSize: 20 },
+src/screens/IndexScreen.tsx:218:    fontSize: 12,
+src/screens/StageScreen.tsx:713:    fontSize: 13,
+src/screens/StageScreen.tsx:717:  titulo: { flex: 1, textAlign: 'center', fontFamily: font.ui, fontSize: 20 },
+src/screens/StageScreen.tsx:773:  controleTexto: { fontFamily: font.ui, fontSize: 12, letterSpacing: 12 * 0.04 },
+src/screens/StageScreen.tsx:774:  controleMotivo: { fontFamily: font.ui, fontSize: 10 },
+$ grep -rn "letterSpacing: *[0-9]" src/
+src/screens/IndexScreen.tsx:219:    letterSpacing: 12 * tracking.label,
+src/screens/EndScreen.tsx:94:    letterSpacing: 13 * tracking.label,
+src/screens/EndScreen.tsx:103:    letterSpacing: 44 * tracking.display,
+src/screens/SetlistsScreen.tsx:327:    letterSpacing: 24 * tracking.display,
+src/screens/SearchScreen.tsx:319:    letterSpacing: 12 * tracking.label,
+src/screens/StageScreen.tsx:714:    letterSpacing: 13 * tracking.label,
+src/screens/StageScreen.tsx:773:  controleTexto: { fontFamily: font.ui, fontSize: 12, letterSpacing: 12 * 0.04 },
+
+===== A2(d) — BASELINE G2: conjunto ordenado de testIDs por arquivo =====
+--- src/screens/EndScreen.tsx
+    testID="borda-voltar"
+    testID="sair"
+    testID="voltar-inicio"
+--- src/screens/IndexScreen.tsx
+    testID="buscar"
+    testID="voltar"
+    testID={`song-${song.position}`}
+--- src/screens/LoginScreen.tsx
+    testID="email"
+    testID="entrar"
+    testID="erro"
+    testID="senha"
+--- src/screens/SearchScreen.tsx
+    testID="apagar"
+    testID="campo-busca"
+    testID="chip-offline"
+    testID="fechar-busca"
+    testID="s4b"
+    testID={`resultado-${content.id.slice(0, 8)}`}
+--- src/screens/SetlistsScreen.tsx
+    testID="buscar"
+    testID="s1a"
+    testID="s1d"
+    testID="s1f"
+    testID="tentar"
+    testID="tentar-banner"
+    testID={`baixar-${setlist.id.slice(0, 8)}`}
+--- src/screens/StageScreen.tsx
+    testID="auto-scroll"
+    testID="baixar"
+    testID="borda-avancar"
+    testID="borda-voltar"
+    testID="busca"
+    testID="corpo"
+    testID="download-erro"
+    testID="indice"
+    testID="pagina"
+    testID="placeholder"
+    testID="s3-baixando"
+    testID="s3d"
+    testID="s3e"
+    testID="sair"
+    testID="tema"
+    testID="zoom-mais"
+    testID="zoom-menos"
+TOTAL (literais + dinâmicos): 37
+
+===== A2(e) — BASELINE G3: linhas log( por arquivo =====
+src/prefetch.ts:90:  log(`prefetch plan n=${plano.length} reason=7d`)
+src/prefetch.ts:110:  log(`prefetch promote n=${aPromover.length}`)
+src/prefetch.ts:136:  log(`prefetch plan n=${urls.length} reason=demand`)
+src/prefetch.ts:156:  log(`prefetch plan n=${urls.length} reason=manual`)
+src/prefetch.ts:170:  log(`lru evict n=${evict.length} bytes=${bytes}`)
+src/api.ts:61:    log(`auth refresh=${forceRefresh ? 'forced' : 'cached'}`)
+src/api.ts:67:    log('auth refresh=forced')
+src/api.ts:73:    log('auth refresh=forced')
+src/api.ts:76:  log('auth refresh=cached')
+src/api.ts:84:    log('auth-failure')
+src/api.ts:106:    log(`api status=${response.status} path=${path.split('?')[0]} n=${requests} ms=${ms}`)
+src/api.ts:115:        log(`ratelimit retry-after=${error.retryAfter} family=${familia}`)
+src/net.ts:31:        log(`net ${valor ? 'online' : 'offline'}`)
+src/files.ts:188:    log(`file src=disk name=${name} bytes=${bytes}`)
+src/files.ts:198:  log(`file src=download name=${name} bytes=${bytes}`)
+src/files.ts:279:  log('files-cleared')
+src/sync.ts:52:    log('sync skip reason=offline')
+src/sync.ts:57:  log('sync start')
+src/sync.ts:84:    log(`sync fail stage=${stage} page=${page} code=${code} status=${status}`)
+src/sync.ts:102:  if (duplicates > 0) log(`sync dedupe n=${duplicates}`)
+src/sync.ts:103:  log(
+src/store.ts:103:  log(`cache hit kind=setlists n=${s.setlists.length}`)
+src/store.ts:104:  log(`cache hit kind=content n=${c.length}`)
+src/store.ts:123:  log(`cache write kind=setlists n=${snapshot.setlists.length} invalidated=0`)
+src/store.ts:124:  log(`cache write kind=content n=${snapshot.content.length} invalidated=0`)
+src/screens/IndexScreen.tsx:119:    log('index open')
+src/screens/IndexScreen.tsx:156:              log(`index jump n=${item.position}`)
+src/screens/StageScreen.tsx:180:      log('keepawake on')
+src/screens/StageScreen.tsx:182:        log(`stage restore n=${posicaoRef.current}/${totalRef.current}`)
+src/screens/StageScreen.tsx:187:        log('keepawake off')
+src/screens/StageScreen.tsx:211:    log(`rotation=${orientacao} n=${posicaoRef.current}/${totalRef.current}`)
+src/screens/StageScreen.tsx:282:      log(
+src/screens/StageScreen.tsx:287:    if (chavePlaceholder !== null) log(`placeholder kind=${chavePlaceholder}`)
+src/screens/StageScreen.tsx:300:        log(`placeholder kind=file-missing name=${nome}`)
+src/screens/StageScreen.tsx:310:        log(`download-error ${mensagem}`)
+src/screens/StageScreen.tsx:347:      log(`end-of-setlist n=${n}`)
+src/screens/StageScreen.tsx:362:      log(`autoscroll on t=${Date.now() - pedidoEm.current}`)
+src/screens/StageScreen.tsx:373:      log('autoscroll disabled kind=pdf')
+src/screens/StageScreen.tsx:379:      log('autoscroll off t=0')
+src/screens/StageScreen.tsx:393:      log(`zoom dp=${novo}`)
+src/screens/StageScreen.tsx:401:      log(`theme=${novo}`)
+src/screens/StageScreen.tsx:468:              log(`pdf-render pages=${total} src=disk`)
+src/screens/StageScreen.tsx:472:              log(`pdf-page n=${atual}/${total}`)
+src/screens/StageScreen.tsx:613:          onError={(e: Error) => log(`pdf-error ${e.message}`)}
+src/screens/SearchScreen.tsx:138:    log(`search q=${termo.trim().length} n=${hits.length} in-setlist=${grupos.inSetlist.length}`)
+src/screens/SearchScreen.tsx:151:      log(`search close restore n=${posicao}/${setlist.setlist_songs.length}`)
+src/screens/LoginScreen.tsx:50:      log(`login-error code=${resultado.code}`)
+src/screens/EndScreen.tsx:61:            log(`nav n=${total}/${total} setlist=fim t=0`)
+TOTAL fora de log.ts: 48
+
+===== A2(f) — em que tema cada tela renderiza =====
+src/screens/EndScreen.tsx          colors[tema]=0   dark.=11 
+src/screens/IndexScreen.tsx        colors[tema]=0   dark.=16 
+src/screens/LoginScreen.tsx        colors[tema]=0   dark.=11 
+src/screens/SearchScreen.tsx       colors[tema]=0   dark.=18 
+src/screens/SetlistsScreen.tsx     colors[tema]=0   dark.=20 
+src/screens/StageScreen.tsx        colors[tema]=1   dark.=1  
+src/navigation.tsx                 colors[tema]=0   dark.=10 
+$ grep -n "cor\." src/screens/StageScreen.tsx | wc -l  (a única tela temática)
+   2 cor.accent
+   2 cor.bg
+   1 cor.error
+   5 cor.line
+   9 cor.muted
+   7 cor.text
+$ as barras do S3 seguem o tema?
+427:    <View style={[styles.tela, { backgroundColor: cor.bg }]}>
+428:      <View style={[styles.barraTopo, { borderBottomColor: cor.line }]}>
+508:      <View style={[styles.barraBaixo, { borderTopColor: cor.line }]}>
+$ estilo estático que NÃO segue o tema:
+726:  pontoOffline: { width: 8, height: 8, borderRadius: 4, backgroundColor: dark.offline },
+
+===== A2(g) — ordem em que o S1 lista as setlists =====
+$ grep -n "data={setlists}\|sort" src/screens/SetlistsScreen.tsx
+271:          data={setlists}
+$ grep -n "order" ../../app/api/setlists/route.ts
+38:      .order('created_at', { ascending: false })
+39:      .order('position', { referencedTable: 'setlist_songs', ascending: true })
+$ docs/api/SETLISTS.md:57
+- Ordem: setlists por `created_at desc`; `setlist_songs` por `position
+  asc` (`referencedTable`), contígua 1..N (invariante acima).

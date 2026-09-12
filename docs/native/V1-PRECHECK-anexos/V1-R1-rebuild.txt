@@ -1,0 +1,30 @@
+$ (R1) prova de que o ttf do config plugin do expo-font EXIGE prebuild
+
+$ grep -n "assetsFontsFir\|withDangerousMod\|copyFile" node_modules/expo-font/plugin/build/withFontsAndroid.js
+15:const assetsFontsFir = 'app/src/main/assets/fonts';
+44:    return (0, config_plugins_1.withDangerousMod)(config, [
+112:    return (0, config_plugins_1.withDangerousMod)(config, [
+123:                    await promises_1.default.copyFile(asset, output);
+
+O copyFontsToDir roda dentro de withDangerousMod(config, ["android", ...]) — mod de
+PREBUILD. Ele copia o ttf para app/src/main/assets/fonts do projeto Android.
+
+$ ls -l android/app/src/main/assets/fonts/   (o resultado do prebuild, no disco)
+total 1576
+-rw-r--r--@ 1 marcelviana  staff  133796 Sep 10 13:09 IBMPlexMono_400Regular.ttf
+-rw-r--r--@ 1 marcelviana  staff  138448 Sep 10 13:09 IBMPlexMono_600SemiBold.ttf
+-rw-r--r--@ 1 marcelviana  staff   96832 Sep 10 13:09 Manrope_400Regular.ttf
+-rw-r--r--@ 1 marcelviana  staff   96936 Sep 10 13:09 Manrope_600SemiBold.ttf
+-rw-r--r--@ 1 marcelviana  staff  163852 Sep 10 13:09 Raleway_500Medium.ttf
+-rw-r--r--@ 1 marcelviana  staff  163856 Sep 10 13:09 Raleway_600SemiBold.ttf
+
+Datas: os 6 ttf são de 2026-09-10 13:09. O dev client instalado no AVD tem
+lastUpdateTime=2026-09-10 13:12:15 — TRÊS MINUTOS depois. A ordem é
+prebuild → copia o ttf → gradle → APK → install. Não há caminho pelo Metro.
+
+$ e o APK do CI serve exatamente esses arquivos:
+  assets/fonts/Raleway_600SemiBold.ttf  163856 B   (APK, §6.1)
+  android/app/src/main/assets/fonts/Raleway_600SemiBold.ttf  163856 B   (projeto nativo)
+
+CONCLUSÃO: um ttf novo no plugin só chega ao device por APK novo.
+A correção do revisor está certa e foi aplicada — B1-embarcado e B3 EXIGEM rebuild.

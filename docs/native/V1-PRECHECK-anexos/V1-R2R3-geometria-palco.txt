@@ -1,0 +1,144 @@
+$ (R2/R3) geometria do palco — só a partir dos dumps da rodada 1
+
+===== R2.1 — bounds, e a sobreposição =====
+
+===== S3-texto.xml =====
+testID          |    x1    y1    x2    y2 px |     x1dp    x2dp  larg×alt dp
+borda-voltar    |     0   198   384  1438 |      0.0   170.7     170.7×551.1
+corpo           |    72   270  1452   886 |     32.0   645.3     613.3×273.8
+auto-scroll     |    54  1284   293  1432 |     24.0   130.2      106.2×65.8
+zoom-menos      |   320  1284   558  1432 |    142.2   248.0      105.8×65.8
+zoom-mais       |   585  1284   824  1432 |    260.0   366.2      106.2×65.8
+tema            |   851  1284  1089  1432 |    378.2   484.0      105.8×65.8
+indice          |  1116  1284  1355  1432 |    496.0   602.2      106.2×65.8
+busca           |  1382  1284  1620  1432 |    614.2   720.0      105.8×65.8
+sair            |  1647  1284  1886  1432 |    732.0   838.2      106.2×65.8
+borda-avancar   |  2176   198  2560  1438 |    967.1  1137.8     170.7×551.1
+
+  --- sobreposição VERTICAL borda × barra inferior ---
+  borda-voltar   y: 198..1438 px   (88.0..639.1 dp)
+  topo dos controles: 1284 px (570.7 dp)
+  SOBREPOSIÇÃO VERTICAL: 154 px = 68.4 dp  ← a borda INVADE a faixa da barra
+
+  --- sobreposição HORIZONTAL nessa faixa ---
+  borda-voltar × auto-scroll  → 239×148 px = 106.2×65.8 dp
+  borda-voltar × zoom-menos   → 64×148 px = 28.4×65.8 dp
+
+  barra inferior: x de 54 a 1886 px = 1832 px = 814.2 dp
+
+===== S3d-pdf.xml =====
+testID          |    x1    y1    x2    y2 px |     x1dp    x2dp  larg×alt dp
+pagina          |  1562   100  1831   148 |    694.2   813.8      119.6×21.3
+borda-voltar    |     0   198   384  1438 |      0.0   170.7     170.7×551.1
+s3d             |     0   198  2560  1249 |      0.0  1137.8    1137.8×467.1
+auto-scroll     |    54  1284   357  1432 |     24.0   158.7      134.7×65.8
+zoom-menos      |   384  1284   622  1432 |    170.7   276.4      105.8×65.8
+zoom-mais       |   649  1284   888  1432 |    288.4   394.7      106.2×65.8
+tema            |   915  1284  1153  1432 |    406.7   512.4      105.8×65.8
+indice          |  1180  1284  1419  1432 |    524.4   630.7      106.2×65.8
+busca           |  1446  1284  1684  1432 |    642.7   748.4      105.8×65.8
+sair            |  1711  1284  1950  1432 |    760.4   866.7      106.2×65.8
+borda-avancar   |  2176   198  2560  1438 |    967.1  1137.8     170.7×551.1
+
+  --- sobreposição VERTICAL borda × barra inferior ---
+  borda-voltar   y: 198..1438 px   (88.0..639.1 dp)
+  topo dos controles: 1284 px (570.7 dp)
+  SOBREPOSIÇÃO VERTICAL: 154 px = 68.4 dp  ← a borda INVADE a faixa da barra
+
+  --- sobreposição HORIZONTAL nessa faixa ---
+  borda-voltar × auto-scroll  → 303×148 px = 134.7×65.8 dp
+
+  barra inferior: x de 54 a 1950 px = 1896 px = 842.7 dp
+
+===== R2 — a conta que fecha =====
+  tela física ....................... 711.1 dp (1600 px)
+  JANELA REAL do app (raiz) ......... 627.1 dp  (y 54..1465 px)
+    barra de status ................. 24.0 dp (54 px)
+    barra de tarefas do 12L ......... 60.0 dp (135 px)
+    soma dos insets ................. 84.0 dp
+
+  barraTopo  y   54..198  px = 64.0 dp   (bar.top = 64) ok
+  meio       y  198..1249 px = 467.1 dp  <- área REAL entre as barras
+  barraBaixo y 1249..1465 px = 96.0 dp   (bar.stage = 96) ok
+
+  alturaConteudo = Math.max(height - (bar.top + bar.stage), touch.min)   [linha 409]
+    height do useWindowDimensions = 711.1 dp  <- a TELA, não a janela
+    711.1 - 160 ................. 551.1 dp  = o que a borda mede (551.1) ok
+    área real de meio ........... 467.1 dp
+    TRANSBORDO .................. 84.0 dp
+
+  O transbordo é EXATAMENTE a soma dos insets do sistema. A conta fecha.
+
+===== R2.2 — o código =====
+$ grep -n "alturaConteudo\|larguraBorda\|useWindowDimensions" src/screens/StageScreen.tsx
+27:import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native'
+192:  const { width, height } = useWindowDimensions()
+199:   * Sai só na MUDANÇA de orientação, não na montagem: o `useWindowDimensions`
+409:  const alturaConteudo = Math.max(height - (bar.top + bar.stage), touch.min)
+410:  const larguraBorda = Math.max(width * 0.15, touch.min)
+497:          style={[styles.borda, { width: larguraBorda, height: alturaConteudo, left: 0 }]}
+502:          style={[styles.borda, { width: larguraBorda, height: alturaConteudo, right: 0 }]}
+$ grep -n "  borda: {" src/screens/StageScreen.tsx
+745:  borda: { position: 'absolute', top: 0 },
+$ grep -n "  meio: {" src/screens/StageScreen.tsx
+728:  meio: { flex: 1 },
+$ grep -n "overflow" src/screens/StageScreen.tsx  → (nada: não há recorte)
+  (exit 1 — nenhum overflow declarado)
+$ grep -rn "SafeArea\|useSafeAreaInsets" src/   → (nada: os insets nunca são lidos)
+  (exit 1 — react-native-safe-area-context é dependência, mas o palco não a usa)
+
+===== R2.3 — por que o A15 passou: ordem de desenho, MEDIDA =====
+JSX: as duas bordas são filhas de <View style={styles.meio}>, e
+<View style={styles.barraBaixo}> é IRMÃO POSTERIOR de meio (linha 508).
+No Android o irmão posterior entra depois no ViewGroup → fica por cima e
+ganha o hit test. Não é recorte: não há overflow em lugar nenhum.
+
+PROVA (extra declarado; 1 tap, custo em prod 0):
+$ adb -s emulator-5554 shell input tap 174 1358   # x=174 px está DENTRO de borda-voltar (0..384)
+$ adb -s emulator-5554 logcat -d -s ReactNativeJS | grep OCTAVIA
+  OCTAVIA: autoscroll on t=35
+  → o toque foi para o auto-scroll, NÃO para a borda (que emitiria `nav n=…`).
+  A barra vence. A sobreposição é REAL na árvore e INÓCUA no toque — hoje.
+
+===== R2.4 — Tab S6, sem um único comando no tablet =====
+$ sips -g pixelWidth -g pixelHeight nas capturas de N1-anexos → todas 2560x1600
+$ magick <img> -crop 1x1600+20+0 +repage txt:   (varredura da coluna x=20)
+--- Tab S6 (PR8-da-easy-palco.png e PR7-tab-a16-fim.png, idênticas nas fronteiras):
+  y=196..198   #100F16 → #2A2836 → #FFFFFF   hairline do barraTopo  → barraTopo termina em 198 px
+  y=1276..1278 #100F16 → #2A2836 → #100F16   hairline do barraBaixo → barraBaixo começa em 1276 px
+  y=1492       #100F16 → #E8E7E8             o APP TERMINA em 1492 px; barra de tarefas daí até 1600
+--- AVD (V1-estado-S3-texto.png):
+  y=196..198   hairline do barraTopo
+  y=1249..1251 hairline do barraBaixo
+  y=1465       o APP TERMINA em 1465 px
+  (os três batem com o dump, medidos por pixel e por árvore, independentes)
+
+  AVD octavia_tab32:
+    janela útil ............ 627.1 dp   (y 54..1465 px)
+    barra de status ........ 24.0 dp
+    barra de tarefas ....... 60.0 dp
+    meio (entre as barras) . 467.1 dp
+    alturaConteudo calculada 551.1 dp  → TRANSBORDA 84.0 dp
+  Tab S6 SM-T865  :
+    janela útil ............ 639.1 dp   (y 54..1492 px)
+    barra de status ........ 24.0 dp
+    barra de tarefas ....... 48.0 dp
+    meio (entre as barras) . 479.1 dp
+    alturaConteudo calculada 551.1 dp  → TRANSBORDA 72.0 dp
+
+  Os DOIS têm barra de tarefas e os DOIS têm o transbordo. A diferença é o tamanho
+  da barra de tarefas: 60,0 dp no AVD, 48,0 dp no Tab S6.
+
+===== R3 — posição fixa dos controles (T1-R27) =====
+testID       | TEXTO  x1..x2 dp   | PARTITURA x1..x2 dp | deslocamento
+auto-scroll  |   24.0.. 130.2      |   24.0.. 158.7      | +0.0 dp
+zoom-menos   |  142.2.. 248.0      |  170.7.. 276.4      | +28.4 dp  ANDOU
+zoom-mais    |  260.0.. 366.2      |  288.4.. 394.7      | +28.4 dp  ANDOU
+tema         |  378.2.. 484.0      |  406.7.. 512.4      | +28.4 dp  ANDOU
+indice       |  496.0.. 602.2      |  524.4.. 630.7      | +28.4 dp  ANDOU
+busca        |  614.2.. 720.0      |  642.7.. 748.4      | +28.4 dp  ANDOU
+sair         |  732.0.. 838.2      |  760.4.. 866.7      | +28.4 dp  ANDOU
+
+  largura da barra, texto:     1832 px = 814.2 dp
+  largura da barra, partitura: 1896 px = 842.7 dp
+  (o "838 dp" do §3.3 da rodada 1 era o x FINAL do sair, não a largura — corrigido)

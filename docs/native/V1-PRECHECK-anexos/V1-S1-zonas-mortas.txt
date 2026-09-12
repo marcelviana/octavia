@@ -1,0 +1,54 @@
+$ (S1) as quatro zonas mortas da sobreposição borda × barraBaixo — seis taps + dois controles
+Palco em "3 DE 8" (texto), AVD octavia_tab32, avião ON. logcat -c antes de CADA tap.
+Oráculo: `nav n=<i>/<N>` — se sai, a borda ganhou o toque dentro da barra.
+
+===== bounds confirmados no dump desta rodada =====
+  borda-voltar   [0,198][384,1438]       ← chega a y=1438, sim
+  borda-avancar  [2176,198][2560,1438]   ← chega a y=1438, sim
+  auto-scroll    [54,1284][293,1432]
+  sair           [1647,1284][1886,1432]  ← o último CONTROLE acaba em x=1886
+  barraBaixo     [0,1249][2560,1465]     ← a VIEW cobre x 0..2560, a largura INTEIRA
+
+  → a premissa do prompt ("a barra acaba em x=1886") vale para os CONTROLES,
+    não para a View. A 4ª região está DENTRO da barraBaixo, não fora dela.
+
+===== CONTROLE POSITIVO — borda no meio da tela, fora da barra =====
+  tap (174,800)  → posição 2 DE 8
+     OCTAVIA: nav n=2/8 setlist=00c2c1f4 t=253
+     OCTAVIA: file src=disk name=1786218427769-ux-audit-partitura-1p.pdf bytes=20821
+     OCTAVIA: pdf-render pages=1 src=disk
+  → o instrumento ACUSA. (voltado para 3 DE 8 em seguida, por tap na borda direita.)
+
+===== AS QUATRO ZONAS MORTAS =====
+  região 1  x 0..384,    y 1249..1284   170,7 × 15,6 dp
+    tap (174,1265)  → posição 3 DE 8   logcat: <VAZIO>
+  região 2  x 0..54,     y 1284..1438    24,0 × 68,4 dp
+    tap (20,1360)   → posição 3 DE 8   logcat: <VAZIO>
+  região 3  x 293..320,  y 1284..1438    12,0 × 68,4 dp
+    tap (306,1360)  → posição 3 DE 8   logcat: <VAZIO>
+  região 4  x 2176..2560, y 1249..1438  170,7 × 84,0 dp   ← a maior, e a que o revisor destacou
+    tap (2300,1350) → posição 3 DE 8   logcat: <VAZIO>
+    tap (2500,1300) → posição 3 DE 8   logcat: <VAZIO>    (canto extremo)
+    tap (2200,1420) → posição 3 DE 8   logcat: <VAZIO>    (junto da base da borda)
+
+===== CONTROLE NEGATIVO — tap num controle =====
+  tap (174,1358)  → OCTAVIA: autoscroll on t=98
+  → o mesmo ponto da rodada 2, e o mesmo resultado.
+
+===== VEREDITO =====
+Seis taps nas quatro zonas: ZERO `nav`, e zero de qualquer outra linha.
+A borda NÃO ganha o toque em nenhum ponto da faixa da barra.
+
+O mecanismo, agora completo: a `barraBaixo` é [0,1249][2560,1465] — a faixa
+INTEIRA, de borda a borda. Sendo irmã POSTERIOR de `meio`, ela está por cima
+em toda a largura; e como uma <View> do RN é hit-testável por padrão
+(pointerEvents "auto"), ela vira o alvo do toque. A busca por respondedor então
+SOBE a partir dela (para styles.tela, para a raiz) e nunca chega à borda, que é
+irmã em outra subárvore. Onde não há controle, o toque morre ali.
+
+Consequência para a Q8: "inócuo no toque" agora está testado onde PODERIA falhar,
+não só onde não podia. E aparece um efeito colateral que não é da sobreposição:
+a faixa y 1249..1465 é INERTE onde não há controle — 24,0 dp na borda esquerda da
+barra, 12,0 dp entre os dois primeiros controles, e 170,7 × 84,0 dp à direita do
+último. Num palco em que o polegar mira os 15% laterais, os 24 dp da esquerda e os
+170,7 dp da direita são o lugar exato onde o dedo cai quando erra para baixo.

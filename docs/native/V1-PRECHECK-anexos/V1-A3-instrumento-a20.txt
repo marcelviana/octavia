@@ -1,0 +1,159 @@
+$ (A3) instrumento do A20
+
+===== A3.1 — a varredura do A20 do N1, reproduzida como comando =====
+$ sh a20.sh   (os alvos e o vocabulário são os descritos no PR7-emulador-A1-A22.txt)
+arquivos varridos: 7
+props/alvos: <Text>…</Text> · placeholder= · rotulo= · titulo: · apoio: · motivo=
+vocabulário: 38 termos
+--- literais que casam com o vocabulário inglês:
+literais casando: 0
+
+===== A3.2 — props que levam texto ao usuário e que a varredura NÃO cobre =====
+  accessibilityLabel     ocorrências hoje: 1
+  accessibilityHint      ocorrências hoje: 0
+  accessibilityValue     ocorrências hoje: 0
+  Alert.alert            ocorrências hoje: 0
+  aria-label             ocorrências hoje: 0
+$ grep -rn "accessibilityLabel" src/
+src/screens/LoginScreen.tsx:71:            accessibilityLabel="Octavia"
+  → UMA só, no logo. É exatamente onde o inglês entra quando o rótulo textual vira ícone.
+
+===== A3.3 — DESENHO da varredura estendida (implementação é da V1-PR2) =====
+/**
+ * A3.3 — DESENHO da varredura A20 estendida (G4). Roda em scratch, fora do
+ * repo; a implementação é da V1-PR2. Três diferenças para a do N1:
+ *
+ *  1. cobre `accessibilityLabel` e `accessibilityHint` (hoje 1 e 0 ocorrências;
+ *     com ícone, cada um dos ~20 controles ganha um label — é onde o inglês
+ *     entra sem ninguém ver, porque o texto some da tela);
+ *  2. cobre `Alert.alert(` (hoje 0) — o RN mostra o título e o corpo;
+ *  3. distingue NOME DE GLIFO de TEXTO DE UI: um literal só é texto de UI se
+ *     estiver numa posição-de-texto; `name="zoom-in"` / `<Icon name=…>` e
+ *     qualquer literal em POSIÇÃO DE NOME DE GLIFO é ISENTO por construção.
+ *
+ * Saída: exit 1 se houver qualquer acusação (é gate).
+ */
+import { readFileSync, readdirSync, statSync } from 'node:fs'
+import { join } from 'node:path'
+
+const RAIZ = process.argv[2] ?? 'src'
+const VOCAB = ['loading','error','retry','search','no results','cancel','save','delete',
+  'back','next','done','close','settings','offline','download','failed','submit','continue',
+  'confirm','yes','try again','sign in','log in','log out','sign out','play','pause','home',
+  'empty','not found','unknown','refresh','send','edit','add','remove','open','page','of',
+  'song','theme','light','zoom in','zoom out','previous']
+
+/**
+ * ISENÇÃO DE VOCABULÁRIO — anglicismos do PRODUTO, todos ancorados no design
+ * congelado (o A20 do N1 já os declarava: Auto-scroll, Zoom, SETLISTS, Email,
+ * Tab). Não são "literal de UI em inglês": são o nome que o produto usa em
+ * pt-BR. Lista FECHADA — acrescentar um item é errata declarada.
+ */
+const ANGLICISMOS_DO_PRODUTO = ['setlist','setlists','auto-scroll','zoom','email','tab','offline','pdf','online']
+
+// POSIÇÕES DE TEXTO: o que o usuário lê ou o leitor de tela fala.
+const POSICOES = [
+  { nome: 'accessibilityLabel', re: /accessibilityLabel\s*=\s*(?:"([^"]*)"|\{`([^`]*)`\}|\{'([^']*)'\})/g },
+  { nome: 'accessibilityHint',  re: /accessibilityHint\s*=\s*(?:"([^"]*)"|\{`([^`]*)`\}|\{'([^']*)'\})/g },
+  { nome: 'placeholder',        re: /placeholder\s*=\s*(?:"([^"]*)"|\{`([^`]*)`\}|\{'([^']*)'\})/g },
+  { nome: 'rotulo',             re: /rotulo\s*=\s*(?:"([^"]*)"|\{`([^`]*)`\}|\{'([^']*)'\})/g },
+  { nome: 'motivo',             re: /motivo\s*=\s*(?:"([^"]*)"|\{`([^`]*)`\}|\{'([^']*)'\})/g },
+  { nome: 'titulo:/apoio:',     re: /(?:titulo|apoio)\s*:\s*(?:'([^']*)'|`([^`]*)`|"([^"]*)")/g },
+  { nome: '<Text> literal',     re: /<Text[^>]*>\s*([A-Za-z][^<{]*?)\s*<\/Text>/g },
+  { nome: 'Alert.alert',        re: /Alert\.alert\(\s*(?:'([^']*)'|"([^"]*)"|`([^`]*)`)/g },
+]
+// POSIÇÃO DE NOME DE GLIFO — isenta: é identificador de ícone, não texto.
+const ISENTAS = [
+  /(?:^|[^A-Za-z])name\s*=\s*(?:"[^"]*"|\{`[^`]*`\}|\{'[^']*'\})/g,   // <Icon name="zoom-in" />
+  /\bglyph\s*[:=]/g, /\bicone\s*[:=]/g, /\bicon\s*[:=]/g,
+]
+
+const arquivos = []
+;(function walk(d) { for (const e of readdirSync(d)) { const p = join(d, e)
+  if (statSync(p).isDirectory()) walk(p); else if (/\.tsx?$/.test(p)) arquivos.push(p) } })(RAIZ)
+
+let acusacoes = 0, examinados = 0
+for (const f of arquivos.sort()) {
+  const bruto = readFileSync(f, 'utf8')
+  // tira comentários: comentário não é texto de UI
+  const src = bruto.replace(/\/\*[\s\S]*?\*\//g, m => m.replace(/[^\n]/g, ' '))
+                   .replace(/(^|[^:])\/\/[^\n]*/g, (m, p) => p + ' '.repeat(m.length - p.length))
+  // marca os trechos ISENTOS (posição de nome de glifo) para não acusá-los
+  const isento = new Array(src.length).fill(false)
+  for (const re of ISENTAS) for (const m of src.matchAll(re))
+    for (let i = m.index; i < m.index + m[0].length; i++) isento[i] = true
+
+  for (const { nome, re } of POSICOES) {
+    for (const m of src.matchAll(re)) {
+      if (isento[m.index]) continue
+      const s = (m[1] ?? m[2] ?? m[3] ?? '').trim()
+      if (!s) continue
+      examinados++
+      const baixo = s.toLowerCase()
+      // Casa SEMPRE contra o literal ORIGINAL (o termo mais longo primeiro, para
+      // que "zoom in" ganhe de "zoom"), e só então pergunta se o termo casado é
+      // um anglicismo do produto. Apagar o anglicismo ANTES de casar engolia o
+      // inglês de verdade: "Zoom in" virava " in" e passava — medido no
+      // controle negativo do V1-PRECHECK A3.3.
+      const hit = [...VOCAB].sort((a, b) => b.length - a.length)
+        .find(v => new RegExp(`(^|[^a-zà-ÿ])${v}([^a-zà-ÿ]|$)`, 'i').test(baixo))
+      const isentoPorProduto = hit !== undefined && ANGLICISMOS_DO_PRODUTO.includes(hit)
+      if (hit && isentoPorProduto) continue
+      if (hit) {
+        const ln = src.slice(0, m.index).split('\n').length
+        console.log(`  ACUSADO ${f}:${ln} [${nome}] ${JSON.stringify(s)} ← termo "${hit}"`)
+        acusacoes++
+      }
+    }
+  }
+}
+console.log(`  literais em posição de texto examinados: ${examinados}`)
+console.log(`  acusações: ${acusacoes}`)
+process.exit(acusacoes > 0 ? 1 : 0)
+
+----- rodada sobre o código REAL (tem de dar 0) -----
+$ node a20-estendido.mjs src
+  literais em posição de texto examinados: 40
+  acusações: 0
+exit=0
+
+----- CONTROLE NEGATIVO (arquivo de scratch, nunca entra no repo) -----
+$ cat cn-a20/src/Falso.tsx
+// Controle negativo do G4 — arquivo de SCRATCH, nunca entra no repo.
+import { Pressable, Text } from 'react-native'
+import Icon from './Icon'
+
+export function Falso(): React.JSX.Element {
+  return (
+    <>
+      {/* (1) DEVE SER ACUSADO: literal em inglês numa accessibilityLabel */}
+      <Pressable accessibilityLabel="Zoom in" testID="zoom-mais">
+        <Icon name="zoom-in" size={24} />
+      </Pressable>
+      {/* (2) DEVE SER ACUSADO: hint em inglês */}
+      <Pressable accessibilityHint="Go back to the previous song" testID="borda-voltar">
+        <Icon name="chevron-left" size={24} />
+      </Pressable>
+      {/* (3) NÃO pode ser acusado: nome de glifo é identificador, não texto */}
+      <Icon name="search" size={24} />
+      <Icon name="pause" size={24} />
+      {/* (4) NÃO pode ser acusado: pt-BR correto com anglicismo do produto */}
+      <Pressable accessibilityLabel="Ampliar o texto" testID="zoom-mais-2">
+        <Icon name="zoom-in" size={24} />
+      </Pressable>
+      <Text>Auto-scroll</Text>
+      <Text>SETLISTS</Text>
+    </>
+  )
+}
+$ node a20-estendido.mjs cn-a20/src
+  ACUSADO /tmp/claude-501/-Users-marcelviana-projects-octavia/1363c0ab-8b06-410f-a7ce-cd3bd40c3c52/scratchpad/cn-a20/src/Falso.tsx:9 [accessibilityLabel] "Zoom in" ← termo "zoom in"
+  ACUSADO /tmp/claude-501/-Users-marcelviana-projects-octavia/1363c0ab-8b06-410f-a7ce-cd3bd40c3c52/scratchpad/cn-a20/src/Falso.tsx:13 [accessibilityHint] "Go back to the previous song" ← termo "previous"
+  literais em posição de texto examinados: 5
+  acusações: 2
+exit=1
+
+DEFEITO DE INSTRUMENTO ENCONTRADO E CORRIGIDO AQUI: a 1a versão apagava o
+anglicismo do produto ANTES de casar o vocabulário, e "Zoom in" virava " in"
+e PASSAVA. A versão acima casa contra o literal original (termo mais longo
+primeiro) e só então pergunta se o termo casado é anglicismo do produto.

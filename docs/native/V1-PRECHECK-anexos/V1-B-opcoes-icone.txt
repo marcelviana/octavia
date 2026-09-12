@@ -1,0 +1,143 @@
+$ (Fase B) B2 · B3 · B4 · B5
+
+===== B2 — lucide-react-native =====
+$ npm view lucide-react-native peerDependencies version license
+peerDependencies = {
+  react: '^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0',
+  'react-native': '*',
+  'react-native-svg': '^12.0.0 || ^13.0.0 || ^14.0.0 || ^15.0.0'
+}
+version = '1.45.0'
+license = 'ISC'
+$ react-native-svg no bundledNativeModules.json do expo 57.0.20
+  react-native-svg: "15.15.4"
+$ react-native-svg JÁ está autolinkado no dev client atual?
+$ node -e "autolinking.json gerado pelo prebuild"
+  módulos autolinkados (community CLI): 6
+    @react-native-async-storage/async-storage
+    expo
+    react-native-blob-util
+    react-native-pdf
+    react-native-safe-area-context
+    react-native-screens
+  react-native-svg presente: NÃO
+$ npx expo-modules-autolinking search -p android  (lado Expo)
+    @expo/dom-webview
+    @expo/log-box
+    expo
+    expo-asset
+    expo-constants
+    expo-dev-client
+    expo-dev-launcher
+    expo-dev-menu
+    expo-dev-menu-interface
+    expo-file-system
+    expo-font
+    expo-json-utils
+    expo-keep-awake
+    expo-manifests
+    expo-modules-core
+    expo-network
+    expo-status-bar
+    expo-updates-interface
+$ controle negativo no APK de CI: unzip -l | grep -ci svg
+0
+  → 0 ocorrências. react-native-svg NÃO está no build. B2/B4 exigem REBUILD do dev client.
+
+===== B3 — fonte própria com subset de glifos Lucide (ISC) =====
+$ npm view lucide-static version license
+version = '1.45.0'
+license = 'ISC'
+$ ls -l node_modules/lucide-static/font/lucide.ttf
+  /tmp/claude-501/-Users-marcelviana-projects-octavia/1363c0ab-8b06-410f-a7ce-cd3bd40c3c52/scratchpad/v1-scratch/node_modules/lucide-static/font/lucide.ttf: 893964 B
+$ node -e "Object.keys(codepoints.json).length"
+  ícones no lucide: 2118
+
+--- a API createIconSet existe no SDK 57? assinatura verbatim ---
+$ tail -2 build/createIconSet.d.ts   (@expo/vector-icons 15.0.2, o par do SDK 57)
+tail: /tmp/claude-501/-Users-marcelviana-projects-octavia/1363c0ab-8b06-410f-a7ce-cd3bd40c3c52/scratchpad/v1-scratch/node_modules/@expo/vector-icons/build/createIconSet.d.ts: No such file or directory
+$ head -3 build/vendor/react-native-vector-icons/lib/create-icon-set.js  (o núcleo, sem expo-font)
+sed: /tmp/claude-501/-Users-marcelviana-projects-octavia/1363c0ab-8b06-410f-a7ce-cd3bd40c3c52/scratchpad/v1-scratch/node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/lib/create-icon-set.js: No such file or directory
+  → createIconSet(glyphMap, fontFamily, fontFile?, fontStyle?) — com fontFile
+    omitido é só <Text style={{fontFamily}}>; 30 linhas reimplementáveis, sem dependência.
+
+--- ferramenta escolhida: fontTools 4.65.0 (pyftsubset), em venv dentro do scratch ---
+$ ./.venv/bin/pyftsubset lucide.ttf --unicodes=U+E13C,U+E12E,U+E1B6,U+E1B7,U+E151 \
+      --output-file=OctaviaIcons.ttf --no-hinting --desubroutinize --drop-tables+=DSIG
+  OctaviaIcons.ttf (5 glifos): 2312 B
+$ PROVA — cmap do ttf gerado (fontTools):
+  cmap tem 5 codepoints:
+    U+E12E -> 'uniE12E'
+    U+E13C -> 'uniE13C'
+    U+E151 -> 'uniE151'
+    U+E1B6 -> 'uniE1B6'
+    U+E1B7 -> 'uniE1B7'
+    play      U+E13C  no cmap: True
+    pause     U+E12E  no cmap: True
+    zoom-in   U+E1B6  no cmap: True
+    zoom-out  U+E1B7  no cmap: True
+    search    U+E151  no cmap: True
+  glifos no glyf: 6 · unitsPerEm: 1000 · name ID 1: lucide
+$ extrapolação para 20 glifos plausíveis do V1:
+  OctaviaIcons20.ttf (20 glifos): 6788 B
+  licença: ISC (LICENSE do lucide-static, Copyright 2026 Lucide Icons and Contributors)
+  NADA DISSO ENTRA NO REPO — os dois ttf ficam no scratch.
+
+===== B5(i) — duração dos últimos 10 runs de native.yml =====
+$ gh run list --workflow native.yml -L 10 --json databaseId,createdAt,updatedAt,conclusion,event,headBranch
+<anonymous_script>:1
+failed to determine base repo: failed to run git: fatal: not a git repository (or any of the parent directories): .git
+  ^
+
+SyntaxError: Unexpected token 'i', "failed to de"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at Socket.<anonymous> ([eval]:1:77)
+    at Socket.emit (node:events:531:35)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:89:21)
+
+Node.js v22.23.1
+  NOTA: estes são RUNS (a série de `push` e a de `pull_request` misturadas — a
+  distinção que o N1-ENCERRAMENTO §5 fez). O JOB android-debug-apk do último
+  run verde da main mediu 534 s (8m54s).
+
+===== B5(ii) — o APK ANTES =====
+$ gh run view 34610061441 --json headSha  → 6a9315d88b223016a5e37cea34d7ff77d88a73c5 (#290)
+$ gh run download 34610061441 -n app-debug.apk
+  artefato (zip): 84.533.696 B · apk: 215354003 B
+  sha256: e90eb64a9089f728b67edb448c2e91de5c48b513a6743d4604b6f7e4741f4c46
+$ unzip -l app-debug.apk | grep -iE "\.ttf|\.otf"
+   133796  01-01-1981 01:01   assets/fonts/IBMPlexMono_400Regular.ttf
+   138448  01-01-1981 01:01   assets/fonts/IBMPlexMono_600SemiBold.ttf
+    96832  01-01-1981 01:01   assets/fonts/Manrope_400Regular.ttf
+    96936  01-01-1981 01:01   assets/fonts/Manrope_600SemiBold.ttf
+   163852  01-01-1981 01:01   assets/fonts/Raleway_500Medium.ttf
+   163856  01-01-1981 01:01   assets/fonts/Raleway_600SemiBold.ttf
+   344028  01-01-1981 01:01   res/font/inter_bold.ttf
+   342936  01-01-1981 01:01   res/font/inter_medium.ttf
+   342732  01-01-1981 01:01   res/font/inter_regular.ttf
+   343640  01-01-1981 01:01   res/font/inter_semibold.ttf
+   276452  01-01-1981 01:01   res/font/jetbrains_mono_light.ttf
+   273860  01-01-1981 01:01   res/font/jetbrains_mono_medium.ttf
+   273900  01-01-1981 01:01   res/font/jetbrains_mono_regular.ttf
+$ somas
+  assets/fonts (os 6 do N1-D6): 793720 B
+  res/font (7, do expo-dev-menu): 2197548 B
+$ ABIs
+    lib/arm64-v8a/
+    lib/armeabi-v7a/
+    lib/x86/
+    lib/x86_64/
+$ unzip -l app-debug.apk | tail -2
+---------                     -------
+247694868                     1357 files
+
+===== B5(iii) — o dev client instalado no emulador =====
+$ adb -s emulator-5554 shell dumpsys package rocks.octavia.app
+  versionName=0.0.1  versionCode=1  minSdk=24 targetSdk=36
+  firstInstallTime=2026-09-10 11:42:54   lastUpdateTime=2026-09-10 13:12:15
+  base.apk: 76.836.083 B  sha256 cb1b5fea0240e185ee8ff7e81d2eb790a13a21e12ffb5613c94e86e9e7963c8f
+  primaryCpuAbi=arm64-v8a   (o do CI traz as 4 ABIs → 215 MB)
+  → NÃO é o artefato do CI: é build local (expo run:android) de 2026-09-10 13:12,
+    portanto do intervalo #285/#286. A superfície NATIVA não muda desde a #284,
+    então ele serve para o JS de hoje — e é por isso que este pre-check rodou.

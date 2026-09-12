@@ -1,0 +1,53 @@
+$ (R6) os três riscos de ícone-em-fonte
+
+===== R6(a) — acessibilidade: o glifo é um codepoint de uso privado =====
+Como o dump expõe hoje: o `content-desc` do Pressable é a CONCATENAÇÃO dos
+<Text> filhos, separada por vírgula. Medido nos dumps da rodada 1:
+  S3d: content-desc="Auto-scroll, auto-scroll só em texto"
+  S3 texto: content-desc="Auto-scroll"
+
+  CONSEQUÊNCIA MEDIDA: se um <Text> com o glifo (ex.: U+E13C) entrar como irmão
+  do rótulo, ele entra no content-desc e o TalkBack lê o codepoint. O instrumento
+  do V1-A6 é o próprio `content-desc` do dump — não é preciso inventar nada.
+
+  V1-A6 REESCRITO, duas medições:
+   (i)  controle SÓ com ícone (sem rótulo textual) → o dump tem de mostrar
+        content-desc = a frase pt-BR do accessibilityLabel, e NADA mais;
+   (ii) glifo AO LADO de rótulo → o glifo tem de estar FORA da árvore de
+        acessibilidade: no RN, importantForAccessibility="no-hide-descendants"
+        no wrapper do glifo, ou accessible={true} + accessibilityLabel no
+        Pressable (que colapsa os filhos). Prova: o content-desc do controle
+        contém o rótulo e NÃO contém nenhum caractere em U+E000..U+F8FF.
+
+  CONTROLE NEGATIVO do V1-A6: pôr o glifo sem ocultar e conferir que o gate
+  acusa — o content-desc passa a casar /[\uE000-\uF8FF]/, que hoje não casa
+  em nenhum dos 18 dumps:
+  $ grep -lP "content-desc=\"[^\"]*[\x{E000}-\x{F8FF}]" cap/*.xml cap2/*.xml
+    (exit 1 — nenhum: a baseline está limpa, o gate nasce em verde)
+
+===== R6(b) — escala de fonte =====
+$ adb -s emulator-5554 shell settings get system font_scale
+  null            ← não definido = 1,0 (o padrão). O usuário pode levar a 2,0.
+$ grep -rn "allowFontScaling" src/
+  (exit 1) — NENHUMA ocorrência em 3.459 linhas.
+
+  CONSEQUÊNCIA: hoje TODO texto do app escala com a preferência do sistema,
+  inclusive os rótulos de 12 dp da barra do palco. Com ícone-em-fonte o glifo
+  também escalaria — e um ícone a 2× dentro de um alvo de 66 dp de altura
+  estoura o controle. O ícone precisa de allowFontScaling={false}; o RÓTULO
+  não (é texto e deve escalar).
+  [hipótese] o font_scale do Tab S6 é 1,0 — a fechar no aceite da V1-PR7, com
+  o mesmo comando, e um teste a 1,3 e 2,0 no AVD.
+
+===== R6(c) — alinhamento vertical (includeFontPadding) =====
+$ grep -rn "includeFontPadding\|textAlignVertical" src/
+  (exit 1) — nenhuma ocorrência: o padrão do Android (true) está valendo.
+
+  O includeFontPadding=true acrescenta o ascent/descent da fonte acima e abaixo
+  do glifo. Numa fonte de ÍCONES esse padding é arbitrário (o unitsPerEm do
+  subset é 1000, medido em §6.4) e desalinha o glifo em relação ao rótulo ao
+  lado. É risco do SPIKE da V1-PR3, não do desenho.
+  QUAL CAPTURA PROVA: a do spike tem de mostrar, lado a lado, o ícone com e sem
+  includeFontPadding={false} dentro do mesmo Controle de 66 dp — e a linha de
+  base do rótulo tem de coincidir. É o mesmo método do contraste por família
+  inexistente da #284: duas variantes na mesma tela, uma captura.
