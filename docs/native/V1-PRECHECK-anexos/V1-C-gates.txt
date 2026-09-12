@@ -1,0 +1,151 @@
+$ (Fase C) os gates — instrumento medido AGORA + controle negativo
+
+===== G1 — invariância de comportamento =====
+$ cat g1.sh
+#!/bin/sh
+# G1 — invariância de comportamento. Diff VAZIO nos arquivos EXISTENTES de
+# packages/core/src e nos 9 módulos não-visuais de apps/native/src.
+# Uso: g1.sh <base> <head>
+BASE=$1; HEAD=$2
+NUCLEO="apps/native/src/api.ts apps/native/src/store.ts apps/native/src/sync.ts \
+apps/native/src/net.ts apps/native/src/files.ts apps/native/src/prefetch.ts \
+apps/native/src/session.ts apps/native/src/firebase.ts apps/native/src/log.ts"
+# "arquivos EXISTENTES": os que já existem na BASE — arquivo novo no core é
+# permitido (a V1 pode precisar de um módulo novo); mudar um já existente não.
+EXISTENTES=$(git ls-tree -r --name-only "$BASE" -- packages/core/src)
+echo "base=$BASE head=$HEAD"
+echo "arquivos de packages/core/src existentes na base: $(echo "$EXISTENTES" | grep -c .)"
+D=$(git diff --stat "$BASE".."$HEAD" -- $EXISTENTES $NUCLEO)
+if [ -z "$D" ]; then echo "G1: DIFF VAZIO ✓"; exit 0
+else echo "G1: DIFF NÃO VAZIO ✗"; echo "$D" | sed 's/^/    /'; exit 1; fi
+--- BASELINE: origin/main..origin/main ---
+base=origin/main head=origin/main
+arquivos de packages/core/src existentes na base: 25
+G1: DIFF VAZIO ✓
+exit=0
+--- CONTROLE NEGATIVO: 138bf1a..6a9315d (o N1 inteiro) ---
+base=138bf1a head=6a9315d
+arquivos de packages/core/src existentes na base: 6
+G1: DIFF NÃO VAZIO ✗
+     apps/native/src/api.ts      | 149 +++++++++++++++++++++---
+     apps/native/src/files.ts    | 273 +++++++++++++++++++++++++++++++++++++++++---
+     apps/native/src/log.ts      |  13 ++-
+     apps/native/src/net.ts      |  43 +++++++
+     apps/native/src/prefetch.ts | 171 +++++++++++++++++++++++++++
+     apps/native/src/session.ts  |  86 ++++++++++++++
+     apps/native/src/store.ts    | 136 ++++++++++++++++++++++
+     apps/native/src/sync.ts     | 108 ++++++++++++++++++
+     packages/core/src/index.ts  |  10 ++
+     9 files changed, 954 insertions(+), 35 deletions(-)
+exit=1
+
+===== G2 / G3 — testIDs e linhas log( =====
+$ cat g2g3.sh
+#!/bin/sh
+# G2 — testIDs: o conjunto ANTES é subconjunto do DEPOIS (nenhum some).
+# G3 — linhas `log(` idênticas por arquivo (os logs são o instrumento dos aceites).
+# Uso: g2g3.sh <ref-antes> <ref-depois-ou-WORKTREE>
+A=$1; B=$2
+tmp=$(mktemp -d)
+coleta() { # $1=ref  $2=saida-testids  $3=saida-logs
+  if [ "$1" = "WORKTREE" ]; then
+    for f in $(find apps/native/src -name '*.ts' -o -name '*.tsx' | sort); do
+      grep -o 'testID="[^"]*"' "$f" 2>/dev/null | sed "s|^|$f\t|"
+      grep -oE 'testID=\{`[^`]*`\}' "$f" 2>/dev/null | sed "s|^|$f\t|"
+    done | sort -u > "$2"
+    for f in $(find apps/native/src packages/core/src -name '*.ts' -o -name '*.tsx' | sort); do
+      grep -n 'log(' "$f" 2>/dev/null | sed 's/^[0-9]*://' | sed 's/^ *//' | sed "s|^|$f\t|"
+    done | sort > "$3"
+  else
+    for f in $(git ls-tree -r --name-only "$1" -- apps/native/src | sort); do
+      git show "$1:$f" 2>/dev/null | grep -o 'testID="[^"]*"' | sed "s|^|$f\t|"
+      git show "$1:$f" 2>/dev/null | grep -oE 'testID=\{`[^`]*`\}' | sed "s|^|$f\t|"
+    done | sort -u > "$2"
+    for f in $(git ls-tree -r --name-only "$1" -- apps/native/src packages/core/src | sort); do
+      git show "$1:$f" 2>/dev/null | grep 'log(' | sed 's/^ *//' | sed "s|^|$f\t|"
+    done | sort > "$3"
+  fi
+}
+coleta "$A" $tmp/a.ids $tmp/a.log
+coleta "$B" $tmp/b.ids $tmp/b.log
+echo "G2 — testIDs  antes=$(wc -l < $tmp/a.ids | tr -d ' ')  depois=$(wc -l < $tmp/b.ids | tr -d ' ')"
+SUMIU=$(comm -23 $tmp/a.ids $tmp/b.ids)
+if [ -z "$SUMIU" ]; then echo "  G2: antes ⊆ depois ✓"; G2=0
+else echo "  G2: testID SUMIU ✗"; echo "$SUMIU" | sed 's/^/      /'; G2=1; fi
+echo "G3 — linhas log( antes=$(wc -l < $tmp/a.log | tr -d ' ')  depois=$(wc -l < $tmp/b.log | tr -d ' ')"
+DIF=$(diff $tmp/a.log $tmp/b.log)
+if [ -z "$DIF" ]; then echo "  G3: idênticas ✓"; G3=0
+else echo "  G3: DIVERGEM ✗"; echo "$DIF" | head -12 | sed 's/^/      /'; G3=1; fi
+rm -rf $tmp
+[ $G2 -eq 0 ] && [ $G3 -eq 0 ]
+--- BASELINE: origin/main × worktree (idênticos) ---
+G2 — testIDs  antes=40  depois=40
+  G2: antes ⊆ depois ✓
+G3 — linhas log( antes=50  depois=50
+  G3: idênticas ✓
+exit=0
+--- CONTROLE NEGATIVO 1 (G3): c2fa635 (#289) × 6a9315d (#290) — a PR8 mexeu no log ---
+G2 — testIDs  antes=40  depois=40
+  G2: antes ⊆ depois ✓
+G3 — linhas log( antes=48  depois=50
+  G3: DIVERGEM ✗
+      17a18
+      > apps/native/src/prefetch.ts	log(`prefetch promote n=${aPromover.length}`)
+      35a37
+      > apps/native/src/screens/StageScreen.tsx	log(`rotation=${orientacao} n=${posicaoRef.current}/${totalRef.current}`)
+      48c50
+      < apps/native/src/sync.ts	log(`sync fail stage=${stage} page=1 code=${code} status=${status}`)
+      ---
+      > apps/native/src/sync.ts	log(`sync fail stage=${stage} page=${page} code=${code} status=${status}`)
+exit=1
+--- CONTROLE NEGATIVO 2 (G2): 6a9315d × 23c00d2 — regressão ao estado da PR4 ---
+G2 — testIDs  antes=40  depois=25
+  G2: testID SUMIU ✗
+      apps/native/src/screens/IndexScreen.tsx	testID="buscar"
+      apps/native/src/screens/SearchScreen.tsx	testID="apagar"
+      apps/native/src/screens/SearchScreen.tsx	testID="campo-busca"
+      apps/native/src/screens/SearchScreen.tsx	testID="chip-offline"
+      apps/native/src/screens/SearchScreen.tsx	testID="fechar-busca"
+      apps/native/src/screens/SearchScreen.tsx	testID="s4b"
+      apps/native/src/screens/SearchScreen.tsx	testID={`resultado-${content.id.slice(0, 8)}`}
+      apps/native/src/screens/SetlistsScreen.tsx	testID="buscar"
+      apps/native/src/screens/SetlistsScreen.tsx	testID={`baixar-${setlist.id.slice(0, 8)}`}
+      apps/native/src/screens/StageScreen.tsx	testID="baixar"
+      apps/native/src/screens/StageScreen.tsx	testID="download-erro"
+      apps/native/src/screens/StageScreen.tsx	testID="pagina"
+      apps/native/src/screens/StageScreen.tsx	testID="s3-baixando"
+      apps/native/src/screens/StageScreen.tsx	testID="s3d"
+      apps/native/src/screens/StageScreen.tsx	testID="s3e"
+G3 — linhas log( antes=50  depois=32
+  G3: DIVERGEM ✗
+      6d5
+      < apps/native/src/api.ts	log(`auth refresh=${forceRefresh ? 'forced' : 'cached'}`)
+      8,10d6
+      < apps/native/src/files.ts	log('files-cleared')
+      < apps/native/src/files.ts	log(`file src=disk name=${name} bytes=${bytes}`)
+      < apps/native/src/files.ts	log(`file src=download name=${name} bytes=${bytes}`)
+      14,18d9
+      < apps/native/src/prefetch.ts	log(`lru evict n=${evict.length} bytes=${bytes}`)
+      < apps/native/src/prefetch.ts	log(`prefetch plan n=${plano.length} reason=7d`)
+      < apps/native/src/prefetch.ts	log(`prefetch plan n=${urls.length} reason=demand`)
+      < apps/native/src/prefetch.ts	log(`prefetch plan n=${urls.length} reason=manual`)
+      < apps/native/src/prefetch.ts	log(`prefetch promote n=${aPromover.length}`)
+exit=1
+
+===== G5 — alvos >= 48 dp pelo dump (BASELINE: já reprova hoje) =====
+$ node g5.mjs  sobre os 12 dumps do A1
+alvos tocáveis medidos: 83 em 12 estados
+ABAIXO de 48 dp: 9
+  voltar                     40 ×  57.8 dp   (S2-indice)
+  fechar-busca               40 ×  57.8 dp   (S4a-busca, S4a-resultados, S4b-nada-encontrado)
+  campo-busca             825.3 ×  46.2 dp   (S4a-busca, S4a-resultados, S4b-nada-encontrado)
+  campo-busca             760.4 ×  46.2 dp   (S4a-busca, S4a-resultados, S4b-nada-encontrado)
+  apagar                   48.9 ×  21.8 dp   (S4a-resultados, S4b-nada-encontrado)
+
+alvos SEM testID (inalcançáveis por resource-id):
+  S1b-normal-online :: (sem testID) UX-AUDIT ESTRESSE, sem data  ·
+  S1b-normal-online :: (sem testID) UX-AUDIT SHOW PADRÃO, sem data
+  S1b-normal-online :: (sem testID) UX-AUDIT SOLO, sem data  ·  1 
+  S1c-offline-com-cache :: (sem testID) UX-AUDIT ESTRESSE, sem data  ·
+  S1c-offline-com-cache :: (sem testID) UX-AUDIT SHOW PADRÃO, sem data
+  S1c-offline-com-cache :: (sem testID) UX-AUDIT SOLO, sem data  ·  1 

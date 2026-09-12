@@ -1,0 +1,314 @@
+$ (A1) para cada dump: node inv.mjs <estado>.xml  — dp = px / 2,25 (wm density 360)
+$ adb -s emulator-5554 shell uiautomator dump /sdcard/d.xml && adb -s emulator-5554 shell cat /sdcard/d.xml
+H-V1 FECHADA: o testID do RN aparece no dump como o atributo resource-id.
+AVD octavia_tab32 · wm size 2560x1600 · wm density 360 → 1138x711 dp
+Conta: audit (Pw3bxXZw…). Avião ON em todos os estados, salvo S1b.
+
+
+===== S1b-normal-online =====
+testID(resource-id)        | clicável | texto                                     | bounds px            |  dp (l×a)   | ≥48dp
+buscar                     |   sim    | Buscar música                             | 2184,  96  304× 130  | 135.1× 57.8 | SIM
+—                          |   sim    | UX-AUDIT ESTRESSE, sem data · 60 músicas, |   72, 342 2416× 311  | 1073.8×138.2| SIM
+baixar-4340bf95            |   sim    | Baixar esta setlist                       | 1509, 432  356× 131  | 158.2× 58.2 | SIM
+—                          |   sim    | UX-AUDIT SHOW PADRÃO, sem data · 8 música |   72, 680 2416× 310  | 1073.8×137.8| SIM
+baixar-00c2c1f4            |   sim    | Baixar esta setlist                       | 1509, 770  356× 130  | 158.2× 57.8 | SIM
+—                          |   sim    | UX-AUDIT SOLO, sem data · 1 música, ✓, ga |   72,1017 2416× 311  | 1073.8×138.2| SIM
+baixar-8c4413d9            |   sim    | Baixar esta setlist                       | 1509,1107  356× 131  | 158.2× 58.2 | SIM
+  --- textos visíveis (21):
+    "SETLISTS"  @ 72,117 790×39 dp
+    "sincronizado agora"  @ 1884,139 117×19 dp
+    "Buscar música"  @ 2222,136 101×22 dp
+    "UX-AUDIT ESTRESSE"  @ 146,421 590×33 dp
+    "sem data  ·  60 músicas"  @ 146,523 590×23 dp
+    "Baixar esta setlist"  @ 1547,472 124×22 dp
+    "✓"  @ 1955,463 12×30 dp
+    "garantida offline"  @ 2045,425 164×23 dp
+    "todos os arquivos neste aparelho"  @ 2045,485 164×37 dp
+    "UX-AUDIT SHOW PADRÃO"  @ 146,759 590×33 dp
+    "sem data  ·  8 músicas"  @ 146,861 590×23 dp
+    "Baixar esta setlist"  @ 1547,810 124×22 dp
+    "✓"  @ 1955,801 12×30 dp
+    "garantida offline"  @ 2045,763 164×23 dp
+    "todos os arquivos neste aparelho"  @ 2045,823 164×37 dp
+    "UX-AUDIT SOLO"  @ 146,1096 590×33 dp
+    "sem data  ·  1 música"  @ 146,1198 590×23 dp
+    "Baixar esta setlist"  @ 1547,1147 124×22 dp
+    "✓"  @ 1955,1138 12×30 dp
+    "garantida offline"  @ 2045,1100 164×23 dp
+    "todos os arquivos neste aparelho"  @ 2045,1160 164×37 dp
+
+===== S1c-offline-com-cache =====
+testID(resource-id)        | clicável | texto                                     | bounds px            |  dp (l×a)   | ≥48dp
+buscar                     |   sim    | Buscar música                             | 2184,  96  304× 130  | 135.1× 57.8 | SIM
+—                          |   sim    | UX-AUDIT ESTRESSE, sem data · 60 músicas, |   72, 342 2416× 311  | 1073.8×138.2| SIM
+baixar-4340bf95            |   sim    | Baixar esta setlist                       | 1509, 432  356× 131  | 158.2× 58.2 | SIM
+—                          |   sim    | UX-AUDIT SHOW PADRÃO, sem data · 8 música |   72, 680 2416× 310  | 1073.8×137.8| SIM
+baixar-00c2c1f4            |   sim    | Baixar esta setlist                       | 1509, 770  356× 130  | 158.2× 57.8 | SIM
+—                          |   sim    | UX-AUDIT SOLO, sem data · 1 música, ✓, ga |   72,1017 2416× 311  | 1073.8×138.2| SIM
+baixar-8c4413d9            |   sim    | Baixar esta setlist                       | 1509,1107  356× 131  | 158.2× 58.2 | SIM
+  --- textos visíveis (21):
+    "SETLISTS"  @ 72,117 651×39 dp
+    "sem conexão · última sincronização há 6 h"  @ 1572,139 256×19 dp
+    "Buscar música"  @ 2222,136 101×22 dp
+    "UX-AUDIT ESTRESSE"  @ 146,421 590×33 dp
+    "sem data  ·  60 músicas"  @ 146,523 590×23 dp
+    "Baixar esta setlist"  @ 1547,472 124×22 dp
+    "✓"  @ 1955,463 12×30 dp
+    "garantida offline"  @ 2045,425 164×23 dp
+    "todos os arquivos neste aparelho"  @ 2045,485 164×37 dp
+    "UX-AUDIT SHOW PADRÃO"  @ 146,759 590×33 dp
+    "sem data  ·  8 músicas"  @ 146,861 590×23 dp
+    "Baixar esta setlist"  @ 1547,810 124×22 dp
+    "✓"  @ 1955,801 12×30 dp
+    "garantida offline"  @ 2045,763 164×23 dp
+    "todos os arquivos neste aparelho"  @ 2045,823 164×37 dp
+    "UX-AUDIT SOLO"  @ 146,1096 590×33 dp
+    "sem data  ·  1 música"  @ 146,1198 590×23 dp
+    "Baixar esta setlist"  @ 1547,1147 124×22 dp
+    "✓"  @ 1955,1138 12×30 dp
+    "garantida offline"  @ 2045,1100 164×23 dp
+    "todos os arquivos neste aparelho"  @ 2045,1160 164×37 dp
+
+===== S2-indice =====
+testID(resource-id)        | clicável | texto                                     | bounds px            |  dp (l×a)   | ≥48dp
+voltar                     |   sim    | ◂                                         |   54,  78   90× 130  |    40× 57.8 | *** NÃO ***
+buscar                     |   sim    | Buscar na biblioteca                      | 2114,  78  392× 130  | 174.2× 57.8 | SIM
+song-1                     |   sim    | 1, [UX-AUDIT] Partitura de 12 páginas, Co |   54, 288 1217× 270  | 540.9×  120 | SIM
+song-2                     |   sim    | 2, [UX-AUDIT] Partitura de 1 página, Comp | 1289, 288 1217× 270  | 540.9×  120 | SIM
+song-3                     |   sim    | 3, [UX-AUDIT] Palco, Gilberto Gil, Letra  |   54, 576 1217× 270  | 540.9×  120 | SIM
+song-4                     |   sim    | 4, [UX-AUDIT] Felicidade, Marcelo Jeneci, | 1289, 576 1217× 270  | 540.9×  120 | SIM
+song-5                     |   sim    | 5, [UX-AUDIT] Trenzinho do Caipira, Villa |   54, 864 1217× 270  | 540.9×  120 | SIM
+song-6                     |   sim    | 6, [UX-AUDIT] Odeio Você, Adoniran Barbos | 1289, 864 1217× 270  | 540.9×  120 | SIM
+song-7                     |   sim    | 7, [UX-AUDIT] Lamentos do Morro, Pixingui |   54,1152 1217× 270  | 540.9×  120 | SIM
+song-8                     |   sim    | 8, [UX-AUDIT] Sons de Carrilhões, João Pe | 1289,1152 1217× 270  | 540.9×  120 | SIM
+  --- textos visíveis (36):
+    "◂"  @ 92,118 6×22 dp
+    "UX-AUDIT SHOW PADRÃO"  @ 180,82 844×31 dp
+    "8 músicas"  @ 180,160 844×19 dp
+    "Buscar na biblioteca"  @ 2152,118 140×22 dp
+    "1"  @ 117,389 32×30 dp
+    "[UX-AUDIT] Partitura de 12 páginas"  @ 225,363 350×30 dp
+    "Compositor Anônimo  ·  Observação da música 1: modular meio tom acima no último refrão"  @ 225,439 350×20 dp
+    "Partitura"  @ 1069,403 57×17 dp
+    "2"  @ 1352,389 32×30 dp
+    "[UX-AUDIT] Partitura de 1 página"  @ 1460,363 350×30 dp
+    "Compositor Anônimo"  @ 1460,439 350×20 dp
+    "Partitura"  @ 2304,403 57×17 dp
+    "3"  @ 117,677 32×30 dp
+    "[UX-AUDIT] Palco"  @ 225,651 373×30 dp
+    "Gilberto Gil"  @ 225,727 373×20 dp
+    "Letra"  @ 1121,691 34×17 dp
+    "4"  @ 1352,677 32×30 dp
+    "[UX-AUDIT] Felicidade"  @ 1460,651 376×30 dp
+    "Marcelo Jeneci"  @ 1460,727 376×20 dp
+    "Cifra"  @ 2361,691 32×17 dp
+    "5"  @ 117,965 32×30 dp
+    "[UX-AUDIT] Trenzinho do Caipira"  @ 225,939 384×30 dp
+    "Villa-Lobos"  @ 225,1015 384×20 dp
+    "Tab"  @ 1145,979 23×17 dp
+    "6"  @ 1352,965 32×30 dp
+    "[UX-AUDIT] Odeio Você"  @ 1460,939 373×30 dp
+    "Adoniran Barbosa  ·  Observação da música 6: modular meio tom acima no último refrão"  @ 1460,1015 373×20 dp
+    "Letra"  @ 2356,979 34×17 dp
+    "7"  @ 117,1253 32×30 dp
+    "[UX-AUDIT] Lamentos do Morro"  @ 225,1227 384×30 dp
+    "Pixinguinha"  @ 225,1303 384×20 dp
+    "Tab"  @ 1145,1267 23×17 dp
+    "8"  @ 1352,1253 32×30 dp
+    "[UX-AUDIT] Sons de Carrilhões"  @ 1460,1227 384×30 dp
+    "João Pernambuco"  @ 1460,1303 384×20 dp
+    "Tab"  @ 2380,1267 23×17 dp
+
+===== S3-texto =====
+testID(resource-id)        | clicável | texto                                     | bounds px            |  dp (l×a)   | ≥48dp
+borda-voltar               |   sim    |                                           |    0, 198  384×1240  | 170.7×551.1 | SIM
+corpo                      |   não    | Quando a noite chega e a cidade acende&#1 |   72, 270 1380× 616  | 613.3×273.8 | SIM
+auto-scroll                |   sim    | Auto-scroll                               |   54,1284  239× 148  | 106.2× 65.8 | SIM
+zoom-menos                 |   sim    | Zoom −                                    |  320,1284  238× 148  | 105.8× 65.8 | SIM
+zoom-mais                  |   sim    | Zoom +                                    |  585,1284  239× 148  | 106.2× 65.8 | SIM
+tema                       |   sim    | Claro                                     |  851,1284  238× 148  | 105.8× 65.8 | SIM
+indice                     |   sim    | Índice                                    | 1116,1284  239× 148  | 106.2× 65.8 | SIM
+busca                      |   sim    | Busca                                     | 1382,1284  238× 148  | 105.8× 65.8 | SIM
+sair                       |   sim    | Sair                                      | 1647,1284  239× 148  | 106.2× 65.8 | SIM
+borda-avancar              |   sim    |                                           | 2176, 198  384×1240  | 170.7×551.1 | SIM
+  --- textos visíveis (11):
+    "3 DE 8"  @ 54,90 84×31 dp
+    "UX-AUDIT SHOW PADRÃO"  @ 280,103 177×19 dp
+    "[UX-AUDIT] Palco · Gilberto Gil · Letra"  @ 714,92 773×28 dp
+    "Quando a noite chega e a cidade acende&#10;Eu procuro a estrada que me leva até você&#10;O vento traz lembranças de um tempo que passou&#10;&#10;E se a saudade aperta, eu canto essa canção&#10;Pra espantar a sombra e acalmar o coração&#10;Amanhã é outro dia, o sol vai voltar&#10;E a gente segue em frente, sem parar de sonhar"  @ 72,270 613×274 dp
+    "Auto-scroll"  @ 98,1338 67×17 dp
+    "Zoom −"  @ 390,1338 44×17 dp
+    "Zoom +"  @ 654,1338 44×17 dp
+    "Claro"  @ 934,1338 32×17 dp
+    "Índice"  @ 1194,1338 36×17 dp
+    "Busca"  @ 1460,1338 36×17 dp
+    "Sair"  @ 1740,1338 23×17 dp
+
+===== S3-claro =====
+testID(resource-id)        | clicável | texto                                     | bounds px            |  dp (l×a)   | ≥48dp
+borda-voltar               |   sim    |                                           |    0, 198  384×1240  | 170.7×551.1 | SIM
+corpo                      |   não    | Quando a noite chega e a cidade acende&#1 |   72, 270 1380× 616  | 613.3×273.8 | SIM
+auto-scroll                |   sim    | Auto-scroll                               |   54,1284  239× 148  | 106.2× 65.8 | SIM
+zoom-menos                 |   sim    | Zoom −                                    |  320,1284  238× 148  | 105.8× 65.8 | SIM
+zoom-mais                  |   sim    | Zoom +                                    |  585,1284  239× 148  | 106.2× 65.8 | SIM
+tema                       |   sim    | Escuro                                    |  851,1284  238× 148  | 105.8× 65.8 | SIM
+indice                     |   sim    | Índice                                    | 1116,1284  239× 148  | 106.2× 65.8 | SIM
+busca                      |   sim    | Busca                                     | 1382,1284  238× 148  | 105.8× 65.8 | SIM
+sair                       |   sim    | Sair                                      | 1647,1284  239× 148  | 106.2× 65.8 | SIM
+borda-avancar              |   sim    |                                           | 2176, 198  384×1240  | 170.7×551.1 | SIM
+  --- textos visíveis (11):
+    "3 DE 8"  @ 54,90 84×31 dp
+    "UX-AUDIT SHOW PADRÃO"  @ 280,103 177×19 dp
+    "[UX-AUDIT] Palco · Gilberto Gil · Letra"  @ 714,92 773×28 dp
+    "Quando a noite chega e a cidade acende&#10;Eu procuro a estrada que me leva até você&#10;O vento traz lembranças de um tempo que passou&#10;&#10;E se a saudade aperta, eu canto essa canção&#10;Pra espantar a sombra e acalmar o coração&#10;Amanhã é outro dia, o sol vai voltar&#10;E a gente segue em frente, sem parar de sonhar"  @ 72,270 613×274 dp
+    "Auto-scroll"  @ 98,1338 67×17 dp
+    "Zoom −"  @ 390,1338 44×17 dp
+    "Zoom +"  @ 654,1338 44×17 dp
+    "Escuro"  @ 923,1338 41×17 dp
+    "Índice"  @ 1194,1338 36×17 dp
+    "Busca"  @ 1460,1338 36×17 dp
+    "Sair"  @ 1740,1338 23×17 dp
+
+===== S3d-pdf =====
+testID(resource-id)        | clicável | texto                                     | bounds px            |  dp (l×a)   | ≥48dp
+pagina                     |   não    | página 1 de 12                            | 1562, 100  269×  48  | 119.6× 21.3 | n/a
+borda-voltar               |   sim    |                                           |    0, 198  384×1240  | 170.7×551.1 | SIM
+s3d                        |   não    |                                           |    0, 198 2560×1051  | 1137.8×467.1| SIM
+auto-scroll                |   sim    | Auto-scroll, auto-scroll só em texto      |   54,1284  303× 148  | 134.7× 65.8 | SIM
+zoom-menos                 |   sim    | Zoom −, pinça para zoom                   |  384,1284  238× 148  | 105.8× 65.8 | SIM
+zoom-mais                  |   sim    | Zoom +                                    |  649,1284  239× 148  | 106.2× 65.8 | SIM
+tema                       |   sim    | Claro                                     |  915,1284  238× 148  | 105.8× 65.8 | SIM
+indice                     |   sim    | Índice                                    | 1180,1284  239× 148  | 106.2× 65.8 | SIM
+busca                      |   sim    | Busca                                     | 1446,1284  238× 148  | 105.8× 65.8 | SIM
+sair                       |   sim    | Sair                                      | 1711,1284  239× 148  | 106.2× 65.8 | SIM
+borda-avancar              |   sim    |                                           | 2176, 198  384×1240  | 170.7×551.1 | SIM
+  --- textos visíveis (15):
+    "1 DE 8"  @ 54,90 83×31 dp
+    "UX-AUDIT SHOW PADRÃO"  @ 276,103 177×19 dp
+    "[UX-AUDIT] Partitura de 12 páginas · Compositor Anônimo · Partitura"  @ 710,92 363×28 dp
+    "página 1 de 12"  @ 1562,100 120×21 dp
+    "Nota: Observação da música 1: modular meio tom acima no último refrão"  @ 1897,102 234×20 dp
+    "pinça para zoom · arraste para mover · deslize para virar a página"  @ 0,1168 1138×36 dp
+    "Auto-scroll"  @ 130,1320 67×17 dp
+    "auto-scroll só em texto"  @ 83,1363 108×15 dp
+    "Zoom −"  @ 454,1320 44×17 dp
+    "pinça para zoom"  @ 416,1363 77×15 dp
+    "Zoom +"  @ 718,1338 44×17 dp
+    "Claro"  @ 998,1338 32×17 dp
+    "Índice"  @ 1258,1338 36×17 dp
+    "Busca"  @ 1524,1338 36×17 dp
+    "Sair"  @ 1804,1338 23×17 dp
+
+===== S3e-arquivo-nao-baixado =====
+testID(resource-id)        | clicável | texto                                     | bounds px            |  dp (l×a)   | ≥48dp
+borda-voltar               |   sim    |                                           |    0, 198  384×1240  | 170.7×551.1 | SIM
+s3e                        |   não    |                                           |    0, 198 2560× 536  | 1137.8×238.2| SIM
+baixar                     |   sim    | Baixar                                    | 1148, 590  264× 144  | 117.3×   64 | SIM
+auto-scroll                |   sim    | Auto-scroll, auto-scroll só em texto      |   54,1284  303× 148  | 134.7× 65.8 | SIM
+zoom-menos                 |   sim    | Zoom −, pinça para zoom                   |  384,1284  238× 148  | 105.8× 65.8 | SIM
+zoom-mais                  |   sim    | Zoom +                                    |  649,1284  239× 148  | 106.2× 65.8 | SIM
+tema                       |   sim    | Claro                                     |  915,1284  238× 148  | 105.8× 65.8 | SIM
+indice                     |   sim    | Índice                                    | 1180,1284  239× 148  | 106.2× 65.8 | SIM
+busca                      |   sim    | Busca                                     | 1446,1284  238× 148  | 105.8× 65.8 | SIM
+sair                       |   sim    | Voltar                                    | 1711,1284  239× 148  | 106.2× 65.8 | SIM
+borda-avancar              |   sim    |                                           | 2176, 198  384×1240  | 170.7×551.1 | SIM
+  --- textos visíveis (15):
+    "AVULSA"  @ 54,90 105×31 dp
+    "UX-AUDIT SHOW PADRÃO"  @ 327,103 177×19 dp
+    "ux-audit-fase-d-offline.pdf · Unknown Artist · Cifra"  @ 761,92 752×28 dp
+    "arquivo não baixado"  @ 980,306 267×42 dp
+    "ux-audit-fase-d-offline.pdf · cifra (1 KB) não está neste aparelho. Sem conexão agora — toque em Baixar quando a rede voltar."  @ 650,436 560×44 dp
+    "Baixar"  @ 1222,633 51×26 dp
+    "Auto-scroll"  @ 130,1320 67×17 dp
+    "auto-scroll só em texto"  @ 83,1363 108×15 dp
+    "Zoom −"  @ 454,1320 44×17 dp
+    "pinça para zoom"  @ 416,1363 77×15 dp
+    "Zoom +"  @ 718,1338 44×17 dp
+    "Claro"  @ 998,1338 32×17 dp
+    "Índice"  @ 1258,1338 36×17 dp
+    "Busca"  @ 1524,1338 36×17 dp
+    "Voltar"  @ 1790,1338 35×17 dp
+
+===== S3-avulsa =====
+testID(resource-id)        | clicável | texto                                     | bounds px            |  dp (l×a)   | ≥48dp
+borda-voltar               |   sim    |                                           |    0, 198  384×1240  | 170.7×551.1 | SIM
+corpo                      |   não    | [Intro] C Am F G&#10;&#10;C Am&#10;Quando |   72, 270 1380× 924  | 613.3×410.7 | SIM
+auto-scroll                |   sim    | Auto-scroll                               |   54,1284  239× 148  | 106.2× 65.8 | SIM
+zoom-menos                 |   sim    | Zoom −                                    |  320,1284  238× 148  | 105.8× 65.8 | SIM
+zoom-mais                  |   sim    | Zoom +                                    |  585,1284  239× 148  | 106.2× 65.8 | SIM
+tema                       |   sim    | Claro                                     |  851,1284  238× 148  | 105.8× 65.8 | SIM
+indice                     |   sim    | Índice                                    | 1116,1284  239× 148  | 106.2× 65.8 | SIM
+busca                      |   sim    | Busca                                     | 1382,1284  238× 148  | 105.8× 65.8 | SIM
+sair                       |   sim    | Voltar                                    | 1647,1284  239× 148  | 106.2× 65.8 | SIM
+borda-avancar              |   sim    |                                           | 2176, 198  384×1240  | 170.7×551.1 | SIM
+  --- textos visíveis (11):
+    "AVULSA"  @ 54,90 105×31 dp
+    "UX-AUDIT SHOW PADRÃO"  @ 327,103 177×19 dp
+    "[UX-AUDIT] Águas de Março · Tom Jobim · Cifra"  @ 761,92 752×28 dp
+    "[Intro] C  Am  F  G&#10;&#10;C                Am&#10;Quando a noite chega e a cidade acende&#10;F                 G&#10;Eu procuro a estrada que me leva até você&#10;C                Am&#10;O vento traz lembranças de um tempo que passou&#10;F        G         C&#10;E a gente segue em frente&#10;&#10;[Refrão] F  G  Em  Am  F  G  C"  @ 72,270 613×411 dp
+    "Auto-scroll"  @ 98,1338 67×17 dp
+    "Zoom −"  @ 390,1338 44×17 dp
+    "Zoom +"  @ 654,1338 44×17 dp
+    "Claro"  @ 934,1338 32×17 dp
+    "Índice"  @ 1194,1338 36×17 dp
+    "Busca"  @ 1460,1338 36×17 dp
+    "Voltar"  @ 1726,1338 35×17 dp
+
+===== S4a-busca =====
+testID(resource-id)        | clicável | texto                                     | bounds px            |  dp (l×a)   | ≥48dp
+fechar-busca               |   sim    | ◂                                         |   54,  88   90× 130  |    40× 57.8 | *** NÃO ***
+campo-busca                |   sim    | Buscar por título, artista, álbum ou letr |  218, 101 1857× 104  | 825.3× 46.2 | *** NÃO ***
+chip-offline               |   não    | sem conexão · busca local                 | 2149, 131  357×  43  | 158.7× 19.1 | n/a
+  --- textos visíveis (3):
+    "◂"  @ 92,128 6×22 dp
+    "Buscar por título, artista, álbum ou letra"  @ 218,101 825×46 dp
+    "sem conexão · busca local"  @ 2149,131 159×19 dp
+
+===== S4a-resultados =====
+testID(resource-id)        | clicável | texto                                     | bounds px            |  dp (l×a)   | ≥48dp
+fechar-busca               |   sim    | ◂                                         |   54,  88   90× 130  |    40× 57.8 | *** NÃO ***
+campo-busca                |   sim    | aguas                                     |  218, 101 1711× 104  | 760.4× 46.2 | *** NÃO ***
+apagar                     |   sim    | apagar                                    | 1965, 129  110×  49  |  48.9× 21.8 | *** NÃO ***
+chip-offline               |   não    | sem conexão · busca local                 | 2149, 131  357×  43  | 158.7× 19.1 | n/a
+resultado-c81bd22e         |   sim    | [UX-AUDIT] Águas de Março, Tom Jobim, Cif |   54, 411 2452× 180  | 1089.8×   80| SIM
+resultado-64594f61         |   sim    | [UX-AUDIT] Águas de Março, Tom Jobim, Cif |   54, 609 2452× 179  | 1089.8× 79.6| SIM
+  --- textos visíveis (11):
+    "◂"  @ 92,128 6×22 dp
+    "aguas"  @ 218,101 760×46 dp
+    "apagar"  @ 1965,129 49×22 dp
+    "sem conexão · busca local"  @ 2149,131 159×19 dp
+    "BIBLIOTECA · 67 MÚSICAS"  @ 54,308 1090×38 dp
+    "[UX-AUDIT] Águas de Março"  @ 200,440 943×30 dp
+    "Tom Jobim"  @ 200,516 943×20 dp
+    "Cifra"  @ 2376,480 32×17 dp
+    "[UX-AUDIT] Águas de Março"  @ 200,638 943×30 dp
+    "Tom Jobim"  @ 200,714 943×20 dp
+    "Cifra"  @ 2376,678 32×17 dp
+
+===== S4b-nada-encontrado =====
+testID(resource-id)        | clicável | texto                                     | bounds px            |  dp (l×a)   | ≥48dp
+fechar-busca               |   sim    | ◂                                         |   54,  88   90× 130  |    40× 57.8 | *** NÃO ***
+campo-busca                |   sim    | xablau                                    |  218, 101 1711× 104  | 760.4× 46.2 | *** NÃO ***
+apagar                     |   sim    | apagar                                    | 1965, 129  110×  49  |  48.9× 21.8 | *** NÃO ***
+chip-offline               |   não    | sem conexão · busca local                 | 2149, 131  357×  43  | 158.7× 19.1 | n/a
+s4b                        |   não    |                                           |    0, 254 2560×1211  | 1137.8×538.2| SIM
+  --- textos visíveis (6):
+    "◂"  @ 92,128 6×22 dp
+    "xablau"  @ 218,101 760×46 dp
+    "apagar"  @ 1965,129 49×22 dp
+    "sem conexão · busca local"  @ 2149,131 159×19 dp
+    "nada encontrado para “xablau”"  @ 819,768 410×42 dp
+    "busca em título, artista, álbum e letra de toda a biblioteca (67 músicas)"  @ 698,898 517×23 dp
+
+===== S5-fim-setlist =====
+testID(resource-id)        | clicável | texto                                     | bounds px            |  dp (l×a)   | ≥48dp
+borda-voltar               |   sim    |                                           |    0, 198  384×1240  | 170.7×551.1 | SIM
+voltar-inicio              |   sim    | Voltar ao início                          |  945, 808  416× 144  | 184.9×   64 | SIM
+sair                       |   sim    | Sair                                      | 1397, 808  218× 144  |  96.9×   64 | SIM
+  --- textos visíveis (6):
+    "8 DE 8"  @ 54,90 86×31 dp
+    "UX-AUDIT SHOW PADRÃO"  @ 283,103 177×19 dp
+    "FIM DA SETLIST"  @ 812,495 416×60 dp
+    "8 músicas  ·  UX-AUDIT Show padrão"  @ 985,667 262×23 dp
+    "Voltar ao início"  @ 1017,851 121×26 dp
+    "Sair"  @ 1471,852 31×24 dp

@@ -1,0 +1,161 @@
+$ (R4) os 5 estados que faltavam, capturados SEM pm clear, SEM senha, SEM prod
+
+===== R4.1 — o que o aceite.py já sabe fazer =====
+Lido inteiro (273 linhas). DOIS papéis de host, ambos já existentes:
+  1. `cache`    — reescreve files/octavia-<uid>/*.json a partir do cache real
+     modos: bis · data-amanha · invalidos-content · invalidos-songs · content-ausente
+  2. `servidor` — mock HTTP de /api/setlists e /api/content, em 127.0.0.1
+     modos: 429 · 500-pagina-1 · 500-pagina-2 · id-repetido · (normal)
+
+Trecho que decide a conta (linhas 164-235):
+  def servidor(porta: int, modo: str, setlists_path: str, content_path: str) -> None:
+      from http.server import BaseHTTPRequestHandler, HTTPServer
+      from urllib.parse import urlparse, parse_qs
+  
+      setlists = json.load(open(setlists_path))
+      if isinstance(setlists, dict):
+          setlists = setlists["setlists"]
+      content = json.load(open(content_path))
+      paginas = _paginas(content, modo)
+          def do_GET(self) -> None:  # noqa: N802
+              u = urlparse(self.path)
+              q = parse_qs(u.query)
+              page = int(q.get("page", ["1"])[0])
+              print(f"REQ {self.path} auth={'sim' if self.headers.get('Authorization') else 'NAO'}"
+                    f" sortBy={q.get('sortBy', ['-'])[0]}", flush=True)
+  
+              if modo == "429":
+                  # A3 — 429 com `Retry-After: 30`. Por que fixture: provocar um
+                  # 429 real exigiria 300 requests em 1 min contra prod.
+                  self._json(429, {"error": "Rate limit exceeded", "code": "RATE_LIMITED",
+                                   "retryAfter": 30},
+                             {"Retry-After": "30", "X-RateLimit-Scope": "user"})
+                  return
+  
+              if u.path == "/api/setlists":
+                  self._json(200, setlists)
+                  return
+  
+              if u.path == "/api/content":
+                  if modo == "500-pagina-1" and page == 1:
+                      # Controle negativo do D-d (N1-PR8): a MESMA falha na
+                      # página 1 tem de sair como `page=1`. Sem este modo, o
+                      # `page=<p>` passaria por acaso — o valor antigo era 1.
+                      self._json(500, {"error": "Internal error", "code": "INTERNAL_ERROR"})
+                      return
+                  if modo == "500-pagina-2" and page == 2:
+                      # A21 — "mock de 500 na página 2 → cache byte a byte
+                      # inalterado + indicador de falha" (T1-R9).
+                      # `INTERNAL_ERROR` é o code REAL do `CONTRATO-DE-ERRO.md`; na
+                      # N1-PR7 o mock devolvia `INTERNAL`, que o `KIND_BY_CODE` do
+                      # core não conhece — o aceite passou (o cache ficou intacto),
+                      # mas pelo caminho do erro GENÉRICO, não pelo de servidor.
+                      self._json(500, {"error": "Internal error", "code": "INTERNAL_ERROR"})
+                      return
+                  dados = paginas[page - 1] if page <= len(paginas) else []
+                  self._json(200, {"data": dados, "total": len(content), "page": page,
+                                   "pageSize": 100, "hasMore": page < len(paginas),
+                                   "totalPages": len(paginas)})
+                  return
+  
+              self._json(404, {"error": "Not found", "code": "NOT_FOUND"})
+
+ORÇAMENTO DO QUE FALTAVA — três dos cinco estados não custam NADA de código:
+  S1e  → modo `500-pagina-1` JÁ EXISTE (o 500 no /api/content com o /api/setlists em 200
+         é exatamente "falha de sync com cache")
+  S1f  → NENHUM modo novo: basta passar um setlists.json vazio ao modo normal
+  S1d  → NENHUM mock: store apagado + avião
+  S3 inválido → modos `invalidos-content` + `invalidos-songs`, JÁ EXISTEM
+  S1a  → ÚNICA falta: um modo `atraso`. Sete linhas. Escrito só em scratch.
+
+--- o modo novo, em scratch (a versão commitada é decisão da V1-PR1) ---
+  191a192,199
+  > 
+  >             if modo == "atraso":
+  >                 # V1-R4 / S1a — "sincronizando, sem cache": o estado só existe
+  >                 # ENTRE o `sync start` e o primeiro 200, janela que em prod dura
+  >                 # ~4 s e que a captura não alcança de forma confiável. O atraso
+  >                 # a torna determinística. NOVO nesta rodada, só em scratch.
+  >                 import time
+  >                 time.sleep(45)
+
+===== R4.2 — protocolo, com prova em cada passo =====
+$ adb -s emulator-5554 shell "run-as rocks.octavia.app sh -c \"sha256sum files/octavia-<uid>/*.json\"" — ANTES
+  d27e6d8478185282d5707fb9459d8e124cdd6bdab9c20aa28df133041e86fc44  content.json
+  925e4f35417375485ded8c1b99fc655dccbdd80c5aafc5337f3626ff3267b5d1  files-index.json
+  0a3a06380634b5dabbe1811e29a8f7a6151e1302bfe8a025d16013300a5f8a07  setlists.json
+  ad2eae0942811adb4d60286516ce318110868f6aa889422ab0cb8b3dc690ea22  files/1786218429715-ux-audit-partitura-12p.pdf
+
+$ backup DENTRO do próprio app (nada sai para o host a não ser as cópias de leitura):
+  run-as rocks.octavia.app sh -c "mkdir -p files/v1-backup && cp -r files/octavia-<uid>/. files/v1-backup/"
+  → BACKUP-OK
+
+$ sha256 DEPOIS da restauração:
+  d27e6d8478185282d5707fb9459d8e124cdd6bdab9c20aa28df133041e86fc44  content.json
+  925e4f35417375485ded8c1b99fc655dccbdd80c5aafc5337f3626ff3267b5d1  files-index.json
+  0a3a06380634b5dabbe1811e29a8f7a6151e1302bfe8a025d16013300a5f8a07  setlists.json
+  ad2eae0942811adb4d60286516ce318110868f6aa889422ab0cb8b3dc690ea22  files/1786218429715-ux-audit-partitura-12p.pdf
+  IDÊNTICOS aos quatro de antes. O backup foi apagado (ls | grep -c v1-backup → 0).
+
+$ prova de que a sessão sobreviveu a TODAS as manipulações (reabertura final, em avião):
+  OCTAVIA: net offline
+  OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+  OCTAVIA: cache hit kind=setlists n=3
+  OCTAVIA: cache hit kind=content n=67
+  OCTAVIA: sync skip reason=offline
+  → A HIPÓTESE DO REVISOR É VERDADEIRA: o cache JSON do store.ts e a persistência do
+    Firebase são coisas separadas. Apagar o store NÃO desloga. Zero senha digitada.
+
+===== R4.3 — os cinco estados, um a um =====
+
+--- S1e — falha de sync COM cache (mock 500-pagina-1, avião OFF, base inline)
+$ python3 aceite-v1.py servidor 8788 500-pagina-1 setlists.json content.json
+  fixture: servidor em :8788 modo=500-pagina-1 setlists=3 content=67 paginas=[40, 27]
+$ EXPO_PUBLIC_API_BASE_URL=http://localhost:8788 npx expo start --dev-client  (inline)
+$ adb -s emulator-5554 reverse tcp:8788 tcp:8788
+  OCTAVIA: net online
+  OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+  OCTAVIA: cache hit kind=setlists n=3
+  OCTAVIA: cache hit kind=content n=67
+  OCTAVIA: sync start
+  OCTAVIA: api status=200 path=/api/setlists n=1 ms=26
+  OCTAVIA: api status=500 path=/api/content n=1 ms=21
+  OCTAVIA: sync fail stage=content page=1 code=INTERNAL_ERROR status=500
+  → banner vermelho + a lista permanece. NENHUMA request a prod (base = localhost).
+
+--- S1f — vazia após sync bem-sucedido (mock normal com setlists vazias)
+$ python3 aceite-v1.py servidor 8788 normal vazio-setlists.json vazio-content.json
+  fixture: servidor em :8788 modo=normal setlists=0 content=0 paginas=[0, 0]
+  OCTAVIA: api status=200 path=/api/setlists n=1 ms=81
+  OCTAVIA: api status=200 path=/api/content n=1 ms=28
+  OCTAVIA: api status=200 path=/api/content n=1 ms=60
+  OCTAVIA: cache write kind=setlists n=0 invalidated=0
+  OCTAVIA: sync ok setlists=0 content=0 pages=2 t=194
+  → "nenhuma setlist" (empty state honesto), testID s1f.
+
+--- S1a — sincronizando, SEM cache (store apagado + mock com atraso de 45 s)
+$ run-as ... rm -f files/octavia-<uid>/setlists.json files/octavia-<uid>/content.json
+$ python3 aceite-v1.py servidor 8788 atraso setlists.json content.json
+  OCTAVIA: net online
+  OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+  OCTAVIA: sync start
+  OCTAVIA: auth refresh=cached
+  (sem `cache hit`: não há cache — é isso que separa o S1a do S1b)
+  → "baixando suas setlists pela primeira vez", testID s1a.
+
+--- S1d — offline SEM cache (store apagado + avião ON)
+  OCTAVIA: net offline
+  OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+  OCTAVIA: sync skip reason=offline
+  → "sem conexão" + texto acionável + botão "Tentar novamente" (testID tentar, 213,8 × 56 dp).
+
+--- S3 placeholder de item inválido (fixture invalidos-content + invalidos-songs)
+$ python3 aceite-v1.py cache content.json content-invalidos.json invalidos-content
+$ python3 aceite-v1.py cache setlists.json setlists-invalidos.json invalidos-songs "UX-AUDIT Show padrão"
+  → 70 content (67 + 3 inválidos) e 11 songs (8 + 3), posições 9/10/11
+$ adb push + run-as cp  (avião ON: nenhum sync sobrescreve a fixture)
+  OCTAVIA: cache hit kind=setlists n=3
+  OCTAVIA: cache hit kind=content n=70
+  OCTAVIA: index jump n=9
+  OCTAVIA: placeholder kind=no-body
+  → "9 DE 11", placeholder visível, testID placeholder. E o S2 mostra "sem conteúdo".

@@ -1,0 +1,149 @@
+$ node inv.mjs <estado>.xml — os 6 estados novos da rodada 2
+
+===== S1a-sincronizando-sem-cache =====
+testID(resource-id)        | clicável | texto                                     | bounds px            |  dp (l×a)   | ≥48dp
+buscar                     |   sim    | Buscar música                             | 2184,  96  304× 130  | 135.1× 57.8 | SIM
+s1a                        |   não    |                                           |    0, 270 2560×1195  | 1137.8×531.1| SIM
+  --- textos visíveis (4):
+    "SETLISTS"  @ 72,117 812×39 dp
+    "sincronizando…"  @ 1933,139 95×19 dp
+    "Buscar música"  @ 2222,136 101×22 dp
+    "baixando suas setlists pela primeira vez"  @ 953,842 291×23 dp
+
+===== S1d-offline-sem-cache =====
+testID(resource-id)        | clicável | texto                                     | bounds px            |  dp (l×a)   | ≥48dp
+buscar                     |   sim    | Buscar música                             | 2184,  96  304× 130  | 135.1× 57.8 | SIM
+s1d                        |   não    |                                           |    0, 270 2560×1195  | 1137.8×531.1| SIM
+tentar                     |   sim    | Tentar novamente                          | 1040, 947  481× 126  | 213.8×   56 | SIM
+  --- textos visíveis (6):
+    "SETLISTS"  @ 72,117 825×39 dp
+    "sem conexão"  @ 1964,139 81×19 dp
+    "Buscar música"  @ 2222,136 101×22 dp
+    "sem conexão"  @ 1083,662 175×42 dp
+    "Nenhuma setlist foi salva neste aparelho ainda. Conecte-se à internet uma vez para baixar tudo — depois funciona offline."  @ 650,792 560×44 dp
+    "Tentar novamente"  @ 1112,981 150×26 dp
+
+===== S1e-falha-com-cache =====
+testID(resource-id)        | clicável | texto                                     | bounds px            |  dp (l×a)   | ≥48dp
+buscar                     |   sim    | Buscar música                             | 2184,  96  304× 130  | 135.1× 57.8 | SIM
+tentar-banner              |   sim    | Tentar novamente                          | 2138, 382  294×  51  | 130.7× 22.7 | *** NÃO ***
+—                          |   sim    | UX-AUDIT ESTRESSE, sem data · 60 músicas, |   72, 545 2416× 311  | 1073.8×138.2| SIM
+baixar-4340bf95            |   sim    | Baixar esta setlist                       | 1509, 635  356× 131  | 158.2× 58.2 | SIM
+—                          |   sim    | UX-AUDIT SHOW PADRÃO, sem data · 8 música |   72, 883 2416× 310  | 1073.8×137.8| SIM
+baixar-00c2c1f4            |   sim    | Baixar esta setlist                       | 1509, 973  356× 130  | 158.2× 57.8 | SIM
+—                          |   sim    | UX-AUDIT SOLO, sem data · 1 música, ✓, ga |   72,1220 2416× 245  | 1073.8×108.9| SIM
+baixar-8c4413d9            |   sim    | Baixar esta setlist                       | 1509,1310  356× 131  | 158.2× 58.2 | SIM
+  --- textos visíveis (23):
+    "SETLISTS"  @ 72,117 757×39 dp
+    "mostrando dados salvos"  @ 1811,139 149×19 dp
+    "Buscar música"  @ 2222,136 101×22 dp
+    "falha no servidor · mostrando dados de há 44 min"  @ 128,381 348×23 dp
+    "Tentar novamente"  @ 2138,382 131×23 dp
+    "UX-AUDIT ESTRESSE"  @ 146,624 590×33 dp
+    "sem data  ·  60 músicas"  @ 146,726 590×23 dp
+    "Baixar esta setlist"  @ 1547,675 124×22 dp
+    "✓"  @ 1955,666 12×30 dp
+    "garantida offline"  @ 2045,628 164×23 dp
+    "todos os arquivos neste aparelho"  @ 2045,688 164×37 dp
+    "UX-AUDIT SHOW PADRÃO"  @ 146,962 590×33 dp
+    "sem data  ·  8 músicas"  @ 146,1064 590×23 dp
+    "Baixar esta setlist"  @ 1547,1013 124×22 dp
+    "✓"  @ 1955,1004 12×30 dp
+    "garantida offline"  @ 2045,966 164×23 dp
+    "todos os arquivos neste aparelho"  @ 2045,1026 164×37 dp
+    "UX-AUDIT SOLO"  @ 146,1299 590×33 dp
+    "sem data  ·  1 música"  @ 146,1401 590×23 dp
+    "Baixar esta setlist"  @ 1547,1350 124×22 dp
+    "✓"  @ 1955,1341 12×30 dp
+    "garantida offline"  @ 2045,1303 164×23 dp
+    "todos os arquivos neste aparelho"  @ 2045,1363 164×37 dp
+
+===== S1f-vazia-apos-sync =====
+testID(resource-id)        | clicável | texto                                     | bounds px            |  dp (l×a)   | ≥48dp
+buscar                     |   sim    | Buscar música                             | 2184,  96  304× 130  | 135.1× 57.8 | SIM
+s1f                        |   não    |                                           |    0, 270 2560×1195  | 1137.8×531.1| SIM
+  --- textos visíveis (5):
+    "SETLISTS"  @ 72,117 790×39 dp
+    "sincronizado agora"  @ 1884,139 117×19 dp
+    "Buscar música"  @ 2222,136 101×22 dp
+    "nenhuma setlist"  @ 1036,752 216×42 dp
+    "Sua conta não tem setlists. Crie na versão web — elas aparecem aqui na próxima sincronização."  @ 650,882 560×44 dp
+
+===== S2-com-invalidos =====
+testID(resource-id)        | clicável | texto                                     | bounds px            |  dp (l×a)   | ≥48dp
+voltar                     |   sim    | ◂                                         |   54,  78   90× 130  |    40× 57.8 | *** NÃO ***
+buscar                     |   sim    | Buscar na biblioteca                      | 2114,  78  392× 130  | 174.2× 57.8 | SIM
+song-1                     |   sim    | 1, [UX-AUDIT] Partitura de 12 páginas, Co |   54, 288 1217× 270  | 540.9×  120 | SIM
+song-2                     |   sim    | 2, [UX-AUDIT] Partitura de 1 página, Comp | 1289, 288 1217× 270  | 540.9×  120 | SIM
+song-3                     |   sim    | 3, [UX-AUDIT] Palco, Gilberto Gil, Letra  |   54, 576 1217× 270  | 540.9×  120 | SIM
+song-4                     |   sim    | 4, [UX-AUDIT] Felicidade, Marcelo Jeneci, | 1289, 576 1217× 270  | 540.9×  120 | SIM
+song-5                     |   sim    | 5, [UX-AUDIT] Trenzinho do Caipira, Villa |   54, 864 1217× 270  | 540.9×  120 | SIM
+song-6                     |   sim    | 6, [UX-AUDIT] Odeio Você, Adoniran Barbos | 1289, 864 1217× 270  | 540.9×  120 | SIM
+song-7                     |   sim    | 7, [UX-AUDIT] Lamentos do Morro, Pixingui |   54,1152 1217× 270  | 540.9×  120 | SIM
+song-8                     |   sim    | 8, [UX-AUDIT] Sons de Carrilhões, João Pe | 1289,1152 1217× 270  | 540.9×  120 | SIM
+song-9                     |   sim    | 9, [FIXTURE] Sem corpo (no-body), sem con |   54,1440 1217×  25  | 540.9× 11.1 | *** NÃO ***
+song-10                    |   sim    | 10, [FIXTURE] Objeto sem a chave (no-key) | 1289,1440 1217×  25  | 540.9× 11.1 | *** NÃO ***
+  --- textos visíveis (36):
+    "◂"  @ 92,118 6×22 dp
+    "UX-AUDIT SHOW PADRÃO"  @ 180,82 844×31 dp
+    "11 músicas"  @ 180,160 844×19 dp
+    "Buscar na biblioteca"  @ 2152,118 140×22 dp
+    "1"  @ 117,389 32×30 dp
+    "[UX-AUDIT] Partitura de 12 páginas"  @ 225,363 350×30 dp
+    "Compositor Anônimo  ·  Observação da música 1: modular meio tom acima no último refrão"  @ 225,439 350×20 dp
+    "Partitura"  @ 1069,403 57×17 dp
+    "2"  @ 1352,389 32×30 dp
+    "[UX-AUDIT] Partitura de 1 página"  @ 1460,363 350×30 dp
+    "Compositor Anônimo"  @ 1460,439 350×20 dp
+    "Partitura"  @ 2304,403 57×17 dp
+    "3"  @ 117,677 32×30 dp
+    "[UX-AUDIT] Palco"  @ 225,651 373×30 dp
+    "Gilberto Gil"  @ 225,727 373×20 dp
+    "Letra"  @ 1121,691 34×17 dp
+    "4"  @ 1352,677 32×30 dp
+    "[UX-AUDIT] Felicidade"  @ 1460,651 376×30 dp
+    "Marcelo Jeneci"  @ 1460,727 376×20 dp
+    "Cifra"  @ 2361,691 32×17 dp
+    "5"  @ 117,965 32×30 dp
+    "[UX-AUDIT] Trenzinho do Caipira"  @ 225,939 384×30 dp
+    "Villa-Lobos"  @ 225,1015 384×20 dp
+    "Tab"  @ 1145,979 23×17 dp
+    "6"  @ 1352,965 32×30 dp
+    "[UX-AUDIT] Odeio Você"  @ 1460,939 373×30 dp
+    "Adoniran Barbosa  ·  Observação da música 6: modular meio tom acima no último refrão"  @ 1460,1015 373×20 dp
+    "Letra"  @ 2356,979 34×17 dp
+    "7"  @ 117,1253 32×30 dp
+    "[UX-AUDIT] Lamentos do Morro"  @ 225,1227 384×30 dp
+    "Pixinguinha"  @ 225,1303 384×20 dp
+    "Tab"  @ 1145,1267 23×17 dp
+    "8"  @ 1352,1253 32×30 dp
+    "[UX-AUDIT] Sons de Carrilhões"  @ 1460,1227 384×30 dp
+    "João Pernambuco"  @ 1460,1303 384×20 dp
+    "Tab"  @ 2380,1267 23×17 dp
+
+===== S3-placeholder-invalido-nobody =====
+testID(resource-id)        | clicável | texto                                     | bounds px            |  dp (l×a)   | ≥48dp
+borda-voltar               |   sim    |                                           |    0, 198  384×1240  | 170.7×551.1 | SIM
+placeholder                |   não    |                                           |   72, 270 2416× 338  | 1073.8×150.2| SIM
+auto-scroll                |   sim    | Auto-scroll, auto-scroll só em texto      |   54,1284  303× 148  | 134.7× 65.8 | SIM
+zoom-menos                 |   sim    | Zoom −                                    |  384,1284  238× 148  | 105.8× 65.8 | SIM
+zoom-mais                  |   sim    | Zoom +                                    |  649,1284  239× 148  | 106.2× 65.8 | SIM
+tema                       |   sim    | Claro                                     |  915,1284  238× 148  | 105.8× 65.8 | SIM
+indice                     |   sim    | Índice                                    | 1180,1284  239× 148  | 106.2× 65.8 | SIM
+busca                      |   sim    | Busca                                     | 1446,1284  238× 148  | 105.8× 65.8 | SIM
+sair                       |   sim    | Sair                                      | 1711,1284  239× 148  | 106.2× 65.8 | SIM
+borda-avancar              |   sim    |                                           | 2176, 198  384×1240  | 170.7×551.1 | SIM
+  --- textos visíveis (13):
+    "9 DE 11"  @ 54,90 96×31 dp
+    "UX-AUDIT SHOW PADRÃO"  @ 306,103 177×19 dp
+    "[FIXTURE] Sem corpo (no-body) · Fixture A6 · Letra"  @ 740,92 761×28 dp
+    "este item não tem conteúdo"  @ 860,378 373×42 dp
+    "A música existe na setlist, mas não tem letra, cifra, tab ou arquivo. Edite na versão web. Toque na borda direita para seguir."  @ 650,508 560×44 dp
+    "Auto-scroll"  @ 130,1320 67×17 dp
+    "auto-scroll só em texto"  @ 83,1363 108×15 dp
+    "Zoom −"  @ 454,1338 44×17 dp
+    "Zoom +"  @ 718,1338 44×17 dp
+    "Claro"  @ 998,1338 32×17 dp
+    "Índice"  @ 1258,1338 36×17 dp
+    "Busca"  @ 1524,1338 36×17 dp
+    "Sair"  @ 1804,1338 23×17 dp

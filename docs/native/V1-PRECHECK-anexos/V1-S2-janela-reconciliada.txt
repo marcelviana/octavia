@@ -1,0 +1,84 @@
+$ (S2) reconciliação: quem desenha a partir de y=54
+
+===== S2.1 — bounds verbatim do dump desta rodada =====
+android.widget.FrameLayout                 [0,0][2560,1600]   = y 0,0..711,1 dp
+  android.widget.LinearLayout              [0,0][2560,1600]
+    android.widget.FrameLayout             [0,0][2560,1600]
+      rocks.octavia.app:id/action_bar_root [0,0][2560,1600]
+        android:id/content                 [0,0][2560,1600]   ← a TELA INTEIRA
+          android.widget.FrameLayout       [0,0][2560,1600]
+            android.widget.LinearLayout    [0,0][2560,1600]
+              ComposeView                  [0,0][2560,1600]   (FAB do dev client)
+            android.widget.FrameLayout     [0,0][2560,1600]
+              android.view.ViewGroup       [0,0][2560,1600]
+                …
+                  android.view.ViewGroup   [0,54][2560,1465]  ← 1137,8 × 627,1 dp (prof. 9)
+
+  $ nós com bounds [0,54][2560,1465]: 5 (profundidades 9 a 13, aninhados)
+
+===== S2.2 — quem aplica o inset: o App.tsx, e ele SEMPRE aplicou =====
+$ grep -n "SafeArea" App.tsx
+13:import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
+205:    <SafeAreaProvider>
+206:      <SafeAreaView style={styles.raiz} edges={['top', 'bottom', 'left', 'right']}>
+241:      </SafeAreaView>
+242:    </SafeAreaProvider>
+$ sed -n "205,207p;246,248p" App.tsx
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.raiz} edges={['top', 'bottom', 'left', 'right']}>
+        <StatusBar style="light" />
+const styles = StyleSheet.create({
+  raiz: { flex: 1, backgroundColor: dark.bg },
+  centro: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+
+  → NÃO HÁ CONTRADIÇÃO entre a rodada 1 e a rodada 2: as duas mediram nós
+    DIFERENTES. O `android:id/content` É [0,0][2560,1600] (o app desenha
+    edge-to-edge, rodada 1 certa); o [0,54][2560,1465] é o <SafeAreaView> do
+    App.tsx:206, com edges={[top,bottom,left,right]}, que consome os quatro
+    insets e entrega 627,1 dp para tudo que está abaixo (rodada 2 certa).
+    A rodada 2 apresentou como conflito o que era uma diferença de nó.
+
+  E o corolário que importa: o app JÁ usa react-native-safe-area-context, na
+  raiz, uma vez. O que falta não é "usar safe-area" — é o palco saber a altura
+  que de fato sobrou para ele.
+
+===== S2.3 — (a) useSafeAreaInsets × (b) onLayout =====
+CONCORDO com o revisor: (b).
+
+E a evidência torna (a) pior do que "depende de quem aplica": com o SafeAreaView
+da raiz JÁ consumindo os quatro insets, a altura disponível para o palco não tem
+mais inset nenhum dentro dela. Um `height - insets.top - insets.bottom` no palco
+acerta HOJE por coincidência aritmética —
+    711,1 - 24,0 - 60,0 = 627,1  e  627,1 - 160 = 467,1 ✓
+— mas acerta porque a raiz consome EXATAMENTE esses dois, e não porque a conta
+seja certa. Troque `edges` na raiz para ["top"] e a fórmula (a) passa a subtrair
+um inset que ninguém aplicou. É a mesma classe da lição (e) do N1: o requisito
+passa, a razão dele não.
+
+(b) `onLayout` no `meio` mede a altura que a View REALMENTE recebeu, seja quem
+for que tenha consumido o quê acima dela. Custo: um estado a mais e um render
+extra na montagem — irrelevante fora do caminho de navegação (o A17 mede a troca
+de música, que não remonta o palco).
+
+NÃO IMPLEMENTADO nesta rodada.
+
+===== S2.4 — quem mais herda o mesmo erro =====
+$ grep -rn "useWindowDimensions\|Dimensions.get" src/
+src/screens/EndScreen.tsx:8:import { Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native'
+src/screens/EndScreen.tsx:27:  const { width, height } = useWindowDimensions()
+src/screens/StageScreen.tsx:27:import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native'
+src/screens/StageScreen.tsx:192:  const { width, height } = useWindowDimensions()
+src/screens/StageScreen.tsx:199:   * Sai só na MUDANÇA de orientação, não na montagem: o `useWindowDimensions`
+
+$ sed -n "26,30p" src/screens/EndScreen.tsx
+}: EndScreenProps): React.JSX.Element {
+  const { width, height } = useWindowDimensions()
+  const larguraBorda = Math.max(width * 0.15, touch.min)
+  const alturaConteudo = Math.max(height - (bar.top + bar.stage), touch.min)
+
+
+  → o EndScreen (S5) tem as DUAS linhas idênticas às do palco: mesmo
+    `larguraBorda`, mesmo `alturaConteudo`. Herda o transbordo inteiro.
+    O S5 tem só a borda ESQUERDA (a direita não existe: é o fim da setlist),
+    e ela transborda sobre a mesma faixa.
+    Nenhum `Dimensions.get` em lugar nenhum — são os dois únicos casos.

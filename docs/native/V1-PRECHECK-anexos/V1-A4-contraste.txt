@@ -1,0 +1,35 @@
+$ (A4) node contraste2.mjs   — WCAG 2.1 relative luminance, tokens verbatim de apps/native/src/theme.ts
+
+===== TEMA ESCURO (o padrão de TODAS as telas) — fundo #100F16 =====
+  razão | mínimo | veredito | par                                     | onde
+  17,57 |  4,50  | ok       | text(#F9F5F1) / bg(#100F16)             | corpo do palco, títulos, rótulos de botão (16 usos dark. + 7 cor.)
+   7,93 |  4,50  | ok       | muted(#A9A5B5) / bg(#100F16)            | apoio, chips, "n de N", motivo do controle, sub-rótulos (18 + 9)
+   5,29 |  4,50  | ok       | accent(#777CE8) / bg(#100F16)           | número da posição no S4, destaque do S2 (3 usos)
+   5,29 |  3,00  | ok       | accent(#777CE8) / bg(#100F16)           | borda ATIVA do Controle do palco, borda esquerda do destaque S2 (2 usos)
+   5,94 |  4,50  | ok       | error(#E5686F) / bg(#100F16)            | mensagem de erro do S0 e banner do S1e (2 + 1)
+   5,94 |  3,00  | ok       | error(#E5686F) / bg(#100F16)            | borda do banner de erro (1 uso)
+   6,95 |  4,50  | ok       | offline(#C9923B) / bg(#100F16)          | chip offline e indicador ◔ (2 usos)
+   6,95 |  3,00  | ok       | offline(#C9923B) / bg(#100F16)          | ponto offline do palco, backgroundColor 8×8 dp (1 uso)
+   1,32 |  3,00  | *FALHA*  | line(#2A2836) / bg(#100F16)             | hairline das barras e borda de cartão/controle (17 usos)
+
+===== TEMA CLARO (só o S3, T1-R32) — fundo #F6F1EA =====
+  razão | mínimo | veredito | par                                     | onde
+  16,96 |  4,50  | ok       | text(#100F16) / bg(#F6F1EA)             | corpo do palco, títulos, rótulos de botão (16 usos dark. + 7 cor.)
+   5,94 |  4,50  | ok       | muted(#5E5A6A) / bg(#F6F1EA)            | apoio, chips, "n de N", motivo do controle, sub-rótulos (18 + 9)
+   3,20 |  4,50  | *FALHA*  | accent(#777CE8) / bg(#F6F1EA)           | número da posição no S4, destaque do S2 (3 usos)
+   3,20 |  3,00  | ok       | accent(#777CE8) / bg(#F6F1EA)           | borda ATIVA do Controle do palco, borda esquerda do destaque S2 (2 usos)
+   2,86 |  4,50  | *FALHA*  | error(#E5686F) / bg(#F6F1EA)            | mensagem de erro do S0 e banner do S1e (2 + 1)
+   2,86 |  3,00  | *FALHA*  | error(#E5686F) / bg(#F6F1EA)            | borda do banner de erro (1 uso)
+   2,44 |  4,50  | *FALHA*  | offline(#C9923B) / bg(#F6F1EA)          | chip offline e indicador ◔ (2 usos)
+   2,44 |  3,00  | *FALHA*  | offline(#C9923B) / bg(#F6F1EA)          | ponto offline do palco, backgroundColor 8×8 dp (1 uso)
+   1,38 |  3,00  | *FALHA*  | line(#D6CFC3) / bg(#F6F1EA)             | hairline das barras e borda de cartão/controle (17 usos)
+
+===== RESSALVA MEDIDA: o `offline` NÃO segue o tema =====
+  cor.offline tem 0 usos; o ponto do palco é `backgroundColor: dark.offline` ESTÁTICO.
+  no tema claro, portanto, o par real é #C9923B sobre #F6F1EA = 2,44:1  (mínimo 3:1 → FALHA)
+
+===== hipóteses do revisor =====
+  #F9F5F1 / #777CE8 = 3,32   (revisor: 3,32)  → CONFIRMADA
+  #777CE8 / #F6F1EA = 3,20   (revisor: 3,20)  → CONFIRMADA
+  #E5686F / #F6F1EA = 2,86   (revisor: 2,86)  → CONFIRMADA
+  #C9923B / #F6F1EA = 2,44   (revisor: 2,44)  → CONFIRMADA
