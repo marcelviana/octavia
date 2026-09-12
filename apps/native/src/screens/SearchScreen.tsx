@@ -196,7 +196,12 @@ export function SearchScreen({
             testID="campo-busca"
           />
           {termo.length > 0 ? (
-            <Pressable onPress={() => setTermo('')} accessibilityRole="button" testID="apagar">
+            <Pressable
+              style={styles.apagarAlvo}
+              onPress={() => setTermo('')}
+              accessibilityRole="button"
+              testID="apagar"
+            >
               <Text style={styles.apagar}>apagar</Text>
             </Pressable>
           ) : null}
@@ -269,7 +274,17 @@ const styles = StyleSheet.create({
     borderColor: dark.line,
     borderRadius: radius.control,
   },
-  input: { flex: 1, color: dark.text, fontFamily: font.ui, fontSize: size.input },
+  // O `campo` mede 64 dp, mas quem recebe o toque é o TextInput, e ele só
+  // tinha a altura do texto (46,2 dp no dump). O `minHeight` põe o ALVO
+  // acima de 48 sem mexer no campo em volta.
+  input: { flex: 1, minHeight: touch.min, color: dark.text, fontFamily: font.ui, fontSize: size.input },
+  // O rótulo textual media 48,9 × 21,8 dp: largura passava, altura não.
+  apagarAlvo: {
+    minWidth: touch.min,
+    minHeight: touch.min,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   apagar: { color: dark.muted, fontFamily: font.ui, fontSize: size.bodySmall },
   chipOffline: {
     color: dark.offline,
@@ -319,6 +334,8 @@ const styles = StyleSheet.create({
     letterSpacing: 12 * tracking.label,
   },
   botaoSecundario: {
+    // Ver a nota do `IndexScreen`: o alvo cresce de verdade, não por hitSlop.
+    minWidth: touch.min,
     height: touch.list + 2,
     paddingHorizontal: space.lg,
     borderWidth: bar.hairline,

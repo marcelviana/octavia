@@ -231,7 +231,12 @@ export function SetlistsScreen({
           <Text style={styles.bannerTexto}>
             {`${textoDoErro(sync.messageKey)} · mostrando dados de ${haQuantoTempo(sync.syncedAtMs)}`}
           </Text>
-          <Pressable onPress={onTentarNovamente} accessibilityRole="button" testID="tentar-banner">
+          <Pressable
+            style={styles.bannerAlvo}
+            onPress={onTentarNovamente}
+            accessibilityRole="button"
+            testID="tentar-banner"
+          >
             <Text style={styles.bannerAcao}>Tentar novamente</Text>
           </Pressable>
         </View>
@@ -366,6 +371,9 @@ const styles = StyleSheet.create({
     borderRadius: radius.control,
   },
   bannerTexto: { color: dark.error, fontFamily: font.uiBold, fontSize: size.bodySmall },
+  // 130,7 × 22,7 dp no dump: o "Tentar novamente" do banner era o alvo mais
+  // baixo do app — e o que o usuário procura justamente quando algo falhou.
+  bannerAlvo: { minWidth: touch.min, minHeight: touch.min, justifyContent: 'center' },
   bannerAcao: { color: dark.text, fontFamily: font.uiBold, fontSize: size.bodySmall },
   centro: {
     flex: 1,

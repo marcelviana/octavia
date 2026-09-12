@@ -219,6 +219,10 @@ const styles = StyleSheet.create({
     letterSpacing: 12 * tracking.label,
   },
   botaoSecundario: {
+    // `minWidth` e não `hitSlop`: o alvo tem de estar nos BOUNDS do dump, que
+    // é o instrumento do G5 e do A14 — `hitSlop` aumenta a área de toque sem
+    // aparecer em medição nenhuma (V1-PRECHECK §3.3, T1-R27/R28).
+    minWidth: touch.min,
     height: touch.list + 2,
     paddingHorizontal: space.lg,
     borderWidth: bar.hairline,
