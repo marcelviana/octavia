@@ -1,0 +1,54 @@
+$ (E) capturas ANTES × DEPOIS — comparação de pixel das quatro telas tocadas
+$ magick <png> -crop 2560x1411+0+54 +repage   (recorta relógio e barra de tarefas:
+$   o relógio é o único elemento que muda sozinho entre duas capturas)
+$ magick compare -metric AE <antes> <depois> null:
+
+  tela                        px diferentes          bbox da diferença (no recorte)
+  S3-texto                    0 (0)                  — (nenhuma)
+  S1e-falha-com-cache         508.953 (0,0001409)    293×27+2138+342
+  S2-indice                   8495.53 (0,00235193)   862×130+92+24
+  S4a-resultados              2334.02 (0,000646156)  2442×708+59+27
+
+===== E.1 — S3-texto: ZERO =====
+O conserto da geometria é VISUALMENTE INVISÍVEL. É isso que prova que as
+bordas não pintam pixel nenhum (anexo D.3) — a faixa de 84,0 dp que a borda
+deixou de cobrir sobre a barra não mudou um único pixel.
+
+===== E.2 — S1e: a diferença cabe dentro do botão =====
+bbox 293×27 em x 2138..2431, y (device) 396..423 — exatamente a região do
+`tentar-banner`. O BANNER NÃO EMPURROU O LAYOUT AO REDOR, que era a pergunta:
+o `banner` já tinha `minHeight: touch.list + 2` = 58 dp e `alignItems:'center'`,
+então um filho de 48 dp cabe sem crescer. Confirmado também pelo dump: os três
+cartões e os três `baixar-<id8>` estão nos mesmos bounds.
+
+===== E.3 — S2-indice: só a barra de cima =====
+bbox 862×130 em y (device) 78..208 — a linha da barra superior, onde `voltar`
+ganhou 8 dp e o texto ao lado escorregou 8 dp à direita. ABAIXO DE y=208 NADA
+MUDOU: a grade das oito músicas é pixel a pixel idêntica.
+
+===== E.4 — S4a-resultados: o alinhamento vertical do TextInput =====
+Era a preocupação nomeada: `minHeight` num TextInput do Android é onde o
+alinhamento vertical escorrega.
+
+Diferença por faixa (y relativo ao recorte):
+  barra        0..230     1501.03 px   ← `fechar-busca` +8 dp, campo 8 dp à direita e +1,8 dp de altura
+  resultados   330..740    832.99 px   ← ver abaixo
+  abaixo       740..1411        0 px   ← nada
+
+Linha de base do texto "aguas" dentro do campo (bbox do glifo num recorte fixo
+de 460×160+240+20, limiar 45%):
+  ANTES   103x34+0+72
+  DEPOIS  116x34+5+72
+  → a faixa vertical do glifo é a MESMA: +72, altura 34. O texto NÃO subiu nem
+    desceu. O deslocamento é só horizontal (+5 no recorte), consistente com o
+    campo começar 18 px (8 dp) mais à direita; a largura 103→116 é uma borda de
+    glifo a mais entrando na janela fixa do recorte.
+
+Os 833 px da faixa dos resultados NÃO são desta PR: no dump as duas linhas
+trocam qual delas fica com o pixel extra de arredondamento —
+  ANTES   resultado-c81bd22e [54,411][2506,591] (180 px) · resultado-64594f61 [54,609][2506,788] (179 px)
+  DEPOIS  resultado-c81bd22e [54,411][2506,590] (179 px) · resultado-64594f61 [54,609][2506,789] (180 px)
+— soma idêntica (359 px), `styles.item` intocado pelo diff, e a lista começa no
+mesmo y=411. É arredondamento sub-pixel de render, não layout novo.
+
+NENHUMA outra diferença visual apareceu além do alvo que cresceu em cada tela.

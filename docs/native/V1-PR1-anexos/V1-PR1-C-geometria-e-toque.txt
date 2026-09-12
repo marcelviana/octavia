@@ -1,0 +1,92 @@
+$ (C) a geometria das bordas: oráculo do dump, zonas mortas, e os gestos do PDF
+$ adb -s emulator-5554  ·  AVD octavia_tab32  ·  avião ON (0 requests a prod)
+
+===== C.1 — O CONTROLE NEGATIVO: y2 da borda == y2 do `meio` =====
+O `meio` não aparece como nó próprio no dump (o uiautomator elide View sem
+conteúdo). O oráculo equivalente é `meio.y2 == barraBaixo.y1`, e a barraBaixo
+APARECE como ViewGroup sem resource-id.
+
+  estado                          borda-voltar            barraBaixo.y1   veredito
+  S3-texto          ANTES   [0,198][384,1438]  551,1 dp        1249        1438 ≠ 1249 ✗
+  S3-texto          DEPOIS  [0,198][384,1249]  467,1 dp        1249        1249 = 1249 ✓
+  S3-claro          ANTES   [0,198][384,1438]  551,1 dp        1249                    ✗
+  S3-claro          DEPOIS  [0,198][384,1249]  467,1 dp        1249                    ✓
+  S3d-pdf           ANTES   [0,198][384,1438]  551,1 dp        1249                    ✗
+  S3d-pdf           DEPOIS  [0,198][384,1249]  467,1 dp        1249                    ✓
+  S3e               ANTES   [0,198][384,1438]  551,1 dp        1249                    ✗
+  S3e               DEPOIS  [0,198][384,1249]  467,1 dp        1249                    ✓
+  S3-avulsa         ANTES   [0,198][384,1438]  551,1 dp        1249                    ✗
+  S3-avulsa         DEPOIS  [0,198][384,1249]  467,1 dp        1249                    ✓
+  S3-placeholder    ANTES   [0,198][384,1438]  551,1 dp        1249                    ✗
+  S3-placeholder    DEPOIS  [0,198][384,1249]  467,1 dp        1249                    ✓
+  S5                ANTES   [0,198][384,1438]  551,1 dp        1249                    ✗
+  S5                DEPOIS  [0,198][384,1249]  467,1 dp        1249                    ✓
+
+No S3d o `s3d` (a superfície do react-native-pdf) mede exatamente
+[0,198][2560,1249] = 467,1 dp: DEPOIS, a borda e a superfície do PDF têm a
+mesma altura. ANTES a borda passava 189 px (84,0 dp) por baixo dela.
+
+===== C.2 — As seis zonas mortas, ANTES × DEPOIS =====
+$ para cada ponto: adb logcat -c ; adb shell input tap <x> <y> ; adb logcat -d | grep OCTAVIA
+
+  ponto           região                          ANTES            DEPOIS
+  (174,1265)   x 0..384,    y 1249..1284       <logcat vazio>   <logcat vazio>
+  (20,1360)    x 0..54,     y 1284..1438       <logcat vazio>   <logcat vazio>
+  (306,1360)   x 293..320,  y 1284..1438       <logcat vazio>   <logcat vazio>
+  (2300,1350)  x 2176..2560,y 1249..1438       <logcat vazio>   <logcat vazio>
+  (2500,1300)  idem, canto extremo             <logcat vazio>   <logcat vazio>
+  (2200,1420)  idem, junto da base             <logcat vazio>   <logcat vazio>
+
+NÃO MUDAM, e é o resultado certo — o §7.1 do V1-PRECHECK já o previa. Quem
+engole esses toques é a `barraBaixo` [0,1249][2560,1465], irmã posterior e
+full-width (div. 20), nunca a borda. O taps nunca foram o discriminador do
+conserto; o DUMP é (C.1). A premissa contrária do prompt é a divergência 29.
+
+  CONTROLE POSITIVO   (174,800)    ANTES: nav n=2/8 t=663   DEPOIS: nav n=2/8 t=662
+  CONTROLE NEGATIVO   (174,1358)   DEPOIS: autoscroll disabled kind=pdf  (o botão ganhou)
+  LINHA NOVA          (174,1240)   9 px ACIMA da barra, dentro da borda NOVA:
+                                   DEPOIS: nav n=1/8 setlist=00c2c1f4 t=17
+  A linha nova é o que fecha o conserto pelo lado positivo: a borda funciona
+  até a aresta nova, e não um pixel além.
+
+===== C.3 — S3d: os gestos do react-native-pdf continuam vivos =====
+A borda fica SOBRE a superfície do PDF nos 15% laterais. É a única variante em
+que a altura nova podia interagir com outra camada de toque.
+
+$ ARRASTE no centro (1280,1100) → (1280,300), seis vezes
+  OCTAVIA: pdf-page n=2/12
+  OCTAVIA: pdf-page n=3/12
+$ e a barra confirma:  pagina text = 'página 3 de 12'
+
+$ ARRASTE dentro da faixa da borda (192,1000) → (192,350)
+  <logcat vazio>   ← a borda navega por TAP, não por arraste; igual a ANTES
+
+$ TAP na borda direita sobre o PDF (2368,720)
+  OCTAVIA: nav n=2/8 setlist=00c2c1f4 t=67
+
+===== C.4 — PINÇA de dois dedos, injetada =====
+`adb shell input` não tem primitiva de multitoque. O AVD expõe UM device por
+contato (virtio_input_multi_touch_1..11), então dois dedos = dois
+/dev/input/eventN dirigidos por `sendevent`, que exige `adb root`.
+
+$ adb -s emulator-5554 root        →  restarting adbd as root
+$ adb -s emulator-5554 shell id    →  uid=0(root) … groups=…,1004(input),…
+$ sh /data/local/tmp/pinca.sh 1080 620 680 320  1480 820 1880 1120   (abrir)
+  PINCA-OK
+$ sh /data/local/tmp/pinca.sh 680 320 1080 620  1880 1120 1480 820   (fechar)
+  PINCA-OK
+
+Oráculo: comparação de pixel do screencap.
+  controle (dois screencaps SEM gesto):        0 (0) px diferentes
+  pinça-abrir   (1-antes  × 2-depois):    124462 (0,0303862) px diferentes
+  pinça-fechar  (2-depois × 3-fechar):    124624 (0,0304257) px diferentes
+
+As três capturas estão em `pinca/`: 1-antes-pinca.png (zoom base, título
+visível), 2-depois-pinca.png (partitura AMPLIADA, pautas mais largas, título
+rolou para fora), 3-depois-fechar.png (de volta ao zoom base).
+  → a pinça do PDF continua funcionando depois do conserto.
+
+$ adb -s emulator-5554 unroot      (estado do adbd devolvido; ver o §7 da entrega)
+
+O `pinca.sh` fica AQUI e não no repositório de código: é instrumento de host,
+como o aceite.py, mas específico do AVD (o Tab S6 tem outro mapa de eventos).

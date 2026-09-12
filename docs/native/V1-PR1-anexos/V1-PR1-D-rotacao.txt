@@ -1,0 +1,73 @@
+$ (D) rotação — o caminho de maior risco do conserto por onLayout
+$ adb -s emulator-5554 shell settings put system user_rotation 0|1
+$ (0 = paisagem, a orientação NATIVA do AVD; 1 = retrato)
+
+O `onLayout` refira a cada giro, então entre o giro e o layout novo as bordas
+existem com as dimensões antigas. O oráculo é o mesmo dos outros estados:
+y2 da borda == y1 da barraBaixo, EM CADA ORIENTAÇÃO.
+
+===== D.1 — S3 =====
+  orientação   janela (mAppBounds)      borda-voltar          barraBaixo.y1   veredito
+  ANTES
+    paisagem   Rect(0,0 - 2560,1465)  [0,198][384,1438]         1249         ✗ (+189 px = 84,0 dp)
+    retrato    Rect(0,0 - 1600,2425)  [0,198][240,2398]         2209         ✗ (+189 px = 84,0 dp)
+  DEPOIS
+    paisagem   Rect(0,0 - 2560,1465)  [0,198][384,1249]         1249         ✓
+    retrato    Rect(0,0 - 1600,2425)  [0,198][240,2209]         2209         ✓
+
+  O transbordo era o MESMO nas duas orientações (84,0 dp), porque é a soma dos
+  insets e ela não depende do giro. E o conserto fecha nas duas.
+  borda-avancar acompanha: ANTES [1360,198][1600,2398] → DEPOIS [1360,198][1600,2209].
+
+  logcat do giro (a linha do D-c/T1-R27, que o N1 acrescentou):
+    OCTAVIA: rotation=portrait n=9/11
+    OCTAVIA: rotation=landscape n=9/11
+
+===== D.2 — S5 =====
+  ANTES
+    paisagem   [0,198][384,1438]   barraBaixo.y1 = 1249   ✗
+    retrato    [0,198][240,2398]   barraBaixo.y1 = 2209   ✗
+  DEPOIS
+    paisagem   [0,198][384,1249]   barraBaixo.y1 = 1249   ✓
+    retrato    [0,198][240,2209]   barraBaixo.y1 = 2209   ✓
+
+  `voltar-inicio` e `sair` intocados nos dois lados, nas duas orientações:
+  paisagem [945,808][1361,952] e [1397,808][1615,952];
+  retrato  [465,1288][881,1432] e [917,1288][1135,1432].
+
+===== D.3 — O FRAME INTERMEDIÁRIO =====
+Pergunta: entre o giro e o `onLayout` novo, as bordas existem com as dimensões
+antigas. Há salto visível?
+
+NÃO, e a razão é estrutural, não estatística: `styles.borda` é
+`{ position: 'absolute', top: 0 }` mais width/height/left/right calculados —
+SEM `backgroundColor`, SEM `borderWidth`. **As bordas não têm um pixel.**
+
+A prova está na comparação de pixel do F2/anexo E: o S3-texto, onde a borda
+encolheu 84,0 dp sobre a faixa da barra, tem **0 (0) px diferentes** entre
+ANTES e DEPOIS. Se as bordas pintassem qualquer coisa, essa faixa teria mudado.
+
+Tentativa de flagrar o frame pelo dump, declarada como o que é — falha do
+instrumento, não ausência do fenômeno:
+$ adb shell settings put system user_rotation 0 &   (em paralelo)
+$ 4 dumps em rajada logo em seguida
+    dump 1: bounds="[0,198][384,1249]"
+    dump 2: bounds="[0,198][384,1249]"
+    dump 3: bounds="[0,198][384,1249]"
+    dump 4: bounds="[0,198][384,1249]"
+  O `uiautomator dump` leva ~1 s; a janela de staleness é de no máximo UM frame
+  (~16 ms a 60 Hz). O instrumento é 60× mais lento que o fenômeno e não o
+  alcança. O que se pode afirmar com medição: nenhum dump pegou geometria
+  velha, e nenhum pixel muda.
+  O custo real da janela, se existir, é um toque na posição antiga durante
+  ~16 ms depois do giro. [hipótese] — fecha no Tab S6, na V1-PR7.
+
+===== D.4 — ACHADO HERDADO, não causado por esta PR =====
+Em RETRATO a barra do palco NÃO CABE na largura: `busca` sai recortada
+(68,4 × 65,8 dp, x2 = 1600 = borda da janela) e **`sair` não aparece no dump**.
+  ANTES  S3-retrato: 9 resource-ids (sem `sair`)
+  DEPOIS S3-retrato: 9 resource-ids (sem `sair`)   ← IDÊNTICO; não é regressão
+A barra é 7 × 106 dp + gaps = 814,2 dp (842,7 na partitura) contra 711,1 dp de
+largura em retrato. É o mesmo objeto da div. 17 (os controles que andam 28,4 dp)
+e o recorte do V1 que mexe nessa barra é a V1-PR3. Registrado aqui para que a
+V1-PR3 não o descubra como novidade.

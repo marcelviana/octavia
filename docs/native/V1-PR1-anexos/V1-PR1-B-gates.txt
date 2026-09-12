@@ -1,0 +1,361 @@
+$ (B) os seis gates — saída ANTES × DEPOIS, e os scripts que os produzem
+
+===== G1 — invariância de comportamento =====
+$ cat g1.sh
+#!/bin/sh
+# G1 — invariância de comportamento (V1-PRECHECK §7.2).
+# Uso: g1.sh <base> <head|WORKTREE>
+BASE=$1; HEAD=$2
+NUCLEO="apps/native/src/api.ts apps/native/src/store.ts apps/native/src/sync.ts \
+apps/native/src/net.ts apps/native/src/files.ts apps/native/src/prefetch.ts \
+apps/native/src/session.ts apps/native/src/firebase.ts apps/native/src/log.ts"
+EXISTENTES=$(git ls-tree -r --name-only "$BASE" -- packages/core/src)
+echo "base=$BASE head=$HEAD"
+echo "arquivos de packages/core/src existentes na base: $(echo "$EXISTENTES" | grep -c .)"
+if [ "$HEAD" = "WORKTREE" ]; then
+  D=$(git diff --stat "$BASE" -- $EXISTENTES $NUCLEO)
+else
+  D=$(git diff --stat "$BASE".."$HEAD" -- $EXISTENTES $NUCLEO)
+fi
+if [ -z "$D" ]; then echo "G1: DIFF VAZIO ✓"; exit 0
+else echo "G1: DIFF NÃO VAZIO ✗"; echo "$D" | sed 's/^/    /'; exit 1; fi
+$ sh g1.sh origin/main WORKTREE
+base=origin/main head=WORKTREE
+arquivos de packages/core/src existentes na base: 25
+G1: DIFF VAZIO ✓
+exit=0
+$ sh g1.sh 138bf1a 6a9315d      # CONTROLE NEGATIVO: o N1 inteiro
+base=138bf1a head=6a9315d
+arquivos de packages/core/src existentes na base: 6
+G1: DIFF NÃO VAZIO ✗
+     apps/native/src/api.ts      | 149 +++++++++++++++++++++---
+     apps/native/src/files.ts    | 273 +++++++++++++++++++++++++++++++++++++++++---
+     apps/native/src/log.ts      |  13 ++-
+     apps/native/src/net.ts      |  43 +++++++
+     apps/native/src/prefetch.ts | 171 +++++++++++++++++++++++++++
+     apps/native/src/session.ts  |  86 ++++++++++++++
+     apps/native/src/store.ts    | 136 ++++++++++++++++++++++
+     apps/native/src/sync.ts     | 108 ++++++++++++++++++
+     packages/core/src/index.ts  |  10 ++
+     9 files changed, 954 insertions(+), 35 deletions(-)
+exit=1
+
+===== G2 / G3 — testIDs e linhas log( =====
+$ cat g2g3.sh
+#!/bin/sh
+# G2 — testIDs: antes ⊆ depois.   G3 — linhas `log(` idênticas por arquivo.
+# Uso: g2g3.sh <ref-antes> <ref-depois-ou-WORKTREE>
+A=$1; B=$2
+tmp=$(mktemp -d)
+coleta() {
+  if [ "$1" = "WORKTREE" ]; then
+    for f in $(find apps/native/src -name '*.ts' -o -name '*.tsx' | sort); do
+      grep -o 'testID="[^"]*"' "$f" 2>/dev/null | sed "s|^|$f\t|"
+      grep -oE 'testID=\{`[^`]*`\}' "$f" 2>/dev/null | sed "s|^|$f\t|"
+    done | sort -u > "$2"
+    for f in $(find apps/native/src packages/core/src -name '*.ts' -o -name '*.tsx' | sort); do
+      grep -n 'log(' "$f" 2>/dev/null | sed 's/^[0-9]*://' | sed 's/^ *//' | sed "s|^|$f\t|"
+    done | sort > "$3"
+  else
+    for f in $(git ls-tree -r --name-only "$1" -- apps/native/src | sort); do
+      git show "$1:$f" 2>/dev/null | grep -o 'testID="[^"]*"' | sed "s|^|$f\t|"
+      git show "$1:$f" 2>/dev/null | grep -oE 'testID=\{`[^`]*`\}' | sed "s|^|$f\t|"
+    done | sort -u > "$2"
+    for f in $(git ls-tree -r --name-only "$1" -- apps/native/src packages/core/src | sort); do
+      git show "$1:$f" 2>/dev/null | grep 'log(' | sed 's/^ *//' | sed "s|^|$f\t|"
+    done | sort > "$3"
+  fi
+}
+coleta "$A" $tmp/a.ids $tmp/a.log
+coleta "$B" $tmp/b.ids $tmp/b.log
+echo "G2 — testIDs  antes=$(wc -l < $tmp/a.ids | tr -d ' ')  depois=$(wc -l < $tmp/b.ids | tr -d ' ')"
+SUMIU=$(comm -23 $tmp/a.ids $tmp/b.ids)
+if [ -z "$SUMIU" ]; then echo "  G2: antes ⊆ depois ✓"; G2=0
+else echo "  G2: testID SUMIU ✗"; echo "$SUMIU" | sed 's/^/      /'; G2=1; fi
+NOVO=$(comm -13 $tmp/a.ids $tmp/b.ids)
+[ -n "$NOVO" ] && { echo "  testID NOVOS:"; echo "$NOVO" | sed 's/^/      /'; }
+echo "G3 — linhas log( antes=$(wc -l < $tmp/a.log | tr -d ' ')  depois=$(wc -l < $tmp/b.log | tr -d ' ')"
+DIF=$(diff $tmp/a.log $tmp/b.log)
+if [ -z "$DIF" ]; then echo "  G3: idênticas ✓"; G3=0
+else echo "  G3: DIVERGEM ✗"; echo "$DIF" | head -12 | sed 's/^/      /'; G3=1; fi
+rm -rf $tmp
+[ $G2 -eq 0 ] && [ $G3 -eq 0 ]
+$ sh g2g3.sh origin/main WORKTREE
+G2 — testIDs  antes=40  depois=41
+  G2: antes ⊆ depois ✓
+  testID NOVOS:
+      apps/native/src/screens/SetlistsScreen.tsx	testID={`setlist-${setlist.id.slice(0, 8)}`}
+G3 — linhas log( antes=50  depois=50
+  G3: idênticas ✓
+exit=0
+$ sh g2g3.sh c2fa635 6a9315d    # CONTROLE NEGATIVO do G3: a #290 mexeu no log
+G2 — testIDs  antes=40  depois=40
+  G2: antes ⊆ depois ✓
+G3 — linhas log( antes=48  depois=50
+  G3: DIVERGEM ✗
+      17a18
+      > apps/native/src/prefetch.ts	log(`prefetch promote n=${aPromover.length}`)
+      35a37
+      > apps/native/src/screens/StageScreen.tsx	log(`rotation=${orientacao} n=${posicaoRef.current}/${totalRef.current}`)
+      48c50
+      < apps/native/src/sync.ts	log(`sync fail stage=${stage} page=1 code=${code} status=${status}`)
+      ---
+      > apps/native/src/sync.ts	log(`sync fail stage=${stage} page=${page} code=${code} status=${status}`)
+exit=1
+
+RESSALVA DO INSTRUMENTO (divergência 30): o ramo de ref-git varre TODOS os
+arquivos sob apps/native/src atrás de `log(`, inclusive src/fixtures/aceite.py;
+o ramo WORKTREE varre só *.ts/*.tsx. Hoje é inerte (o aceite.py não contém a
+subcadeia "log(" — `log_message(` não casa), e o G3 dá 50 = 50 nos dois lados.
+
+===== G4 — varredura A20 =====
+A ESTENDIDA NÃO ENTRA NESTA PR: a implementação é da V1-PR3 (recorte §7.1).
+Aqui roda a varredura do N1, e o desenho estendido do V1-PRECHECK §5.3 como
+informação, com o controle negativo que prova que ele acusa o que deve.
+
+$ node a20.mjs src --n1        # dentro de apps/native
+  escopo: N1 (6 posições)
+  arquivos varridos: 18
+  vocabulário: 45 termos · isenções do produto: 9
+  literais em posição de texto examinados: 39
+  acusações: 0
+exit=0
+$ node a20.mjs src             # informativo: o DESENHO estendido
+  escopo: ESTENDIDO (desenho do V1-PRECHECK §5.3)
+  arquivos varridos: 18
+  vocabulário: 45 termos · isenções do produto: 9
+  literais em posição de texto examinados: 40
+  acusações: 0
+exit=0
+$ node a20.mjs <scratch>/cn-a20/src   # CONTROLE NEGATIVO do estendido
+  ACUSADO <scratch>/cn-a20/src/Falso.tsx:9 [accessibilityLabel] "Zoom in" ← termo "zoom in"
+  ACUSADO <scratch>/cn-a20/src/Falso.tsx:13 [accessibilityHint] "Go back to the previous song" ← termo "previous"
+  escopo: ESTENDIDO (desenho do V1-PRECHECK §5.3)
+  arquivos varridos: 1
+  vocabulário: 45 termos · isenções do produto: 9
+  literais em posição de texto examinados: 5
+  acusações: 2
+exit=1
+
+RESSALVAS declaradas: varri 18 arquivos (o N1 varreu 7) e usei o vocabulário
+de 45 termos do anexo V1-A3 (o N1 declarou 38, com a lista truncada por "…").
+Nos dois eixos esta varredura é MAIS ESTRITA que a do N1, não mais frouxa.
+
+===== G5 — alvos ≥ 48 dp, regra das DUAS bordas do ScrollView pai =====
+$ cat g5.mjs
+#!/usr/bin/env node
+/**
+ * G5 — alvos de toque >= 48 dp, medidos no `uiautomator dump`.
+ *
+ * Densidade 360 => 2,25 px/dp (AVD octavia_tab32 e Tab S6, N1-h2).
+ *
+ * REGRA DE RECORTE (V1-PRECHECK div. 21 / C2): um nó de lista recortado pela
+ * viewport aparece no dump com os bounds VISÍVEIS, não com o tamanho real.
+ * Descarta-se o nó cujo `y1` OU `y2` coincide com o `y1`/`y2` de um ancestral
+ * rolável — as DUAS bordas, cada uma valendo por si.
+ *
+ * Uso: node g5.mjs <dir-com-xml> [...]
+ */
+import { readFileSync, readdirSync } from 'node:fs'
+import { join, basename } from 'node:path'
+
+const DP = 2.25
+const MIN = 48
+
+function parseBounds(s) {
+  const m = /\[(-?\d+),(-?\d+)\]\[(-?\d+),(-?\d+)\]/.exec(s)
+  if (m === null) return null
+  return { x1: +m[1], y1: +m[2], x2: +m[3], y2: +m[4] }
+}
+
+/** Parser de tags: o dump do uiautomator é XML plano com tags auto-fechadas. */
+function nodes(xml) {
+  const out = []
+  const pilha = []
+  const re = /<node\b([^>]*?)(\/?)>|<\/node>/g
+  let m
+  while ((m = re.exec(xml)) !== null) {
+    if (m[0] === '</node>') { pilha.pop(); continue }
+    const attrs = {}
+    for (const a of m[1].matchAll(/(\w[\w-]*)="([^"]*)"/g)) attrs[a[1]] = a[2]
+    const no = {
+      id: attrs['resource-id'] ?? '',
+      cls: attrs['class'] ?? '',
+      clickable: attrs['clickable'] === 'true',
+      scrollable: attrs['scrollable'] === 'true',
+      desc: attrs['content-desc'] ?? '',
+      text: attrs['text'] ?? '',
+      b: parseBounds(attrs['bounds'] ?? ''),
+      pais: [...pilha],
+    }
+    out.push(no)
+    if (m[2] !== '/') pilha.push(no)
+  }
+  return out
+}
+
+/** Recortado por uma das DUAS bordas de um ancestral rolável. */
+function recortado(no) {
+  for (const p of no.pais) {
+    if (!p.scrollable || p.b === null || no.b === null) continue
+    if (no.b.y2 === p.b.y2 || no.b.y1 === p.b.y1) return p
+  }
+  return null
+}
+
+const dirs = process.argv.slice(2)
+const arquivos = []
+for (const d of dirs) for (const f of readdirSync(d)) if (f.endsWith('.xml')) arquivos.push(join(d, f))
+arquivos.sort()
+
+const pequenos = new Map()   // id|w|h -> Set(estado)
+const semId = []
+let total = 0
+const recortados = []
+
+for (const arq of arquivos) {
+  const estado = basename(arq, '.xml')
+  for (const no of nodes(readFileSync(arq, 'utf8'))) {
+    if (!no.clickable || no.b === null) continue
+    total++
+    const w = (no.b.x2 - no.b.x1) / DP
+    const h = (no.b.y2 - no.b.y1) / DP
+    if (no.id === '') {
+      const rot = (no.desc !== '' ? no.desc : no.text).slice(0, 48).replace(/\s+/g, ' ')
+      semId.push(`${estado} :: (sem testID) ${rot}`)
+    }
+    if (w >= MIN && h >= MIN) continue
+    const pai = recortado(no)
+    if (pai !== null) {
+      recortados.push(`${estado} :: ${no.id || '(sem testID)'} ${w.toFixed(1)} × ${h.toFixed(1)} dp — RECORTADO por ${pai.cls} [${pai.b.x1},${pai.b.y1}][${pai.b.x2},${pai.b.y2}]`)
+      continue
+    }
+    const k = `${no.id}|${w.toFixed(1)}|${h.toFixed(1)}`
+    if (!pequenos.has(k)) pequenos.set(k, new Set())
+    pequenos.get(k).add(estado)
+  }
+}
+
+console.log(`alvos tocáveis medidos: ${total} em ${arquivos.length} estados`)
+const ocorrencias = [...pequenos.values()].reduce((a, s) => a + s.size, 0)
+const ids = new Set([...pequenos.keys()].map((k) => k.split('|')[0]))
+console.log(`ABAIXO de ${MIN} dp: ${ocorrencias} ocorrências / ${ids.size} resource-ids`)
+for (const [k, estados] of [...pequenos].sort()) {
+  const [id, w, h] = k.split('|')
+  console.log(`  ${(id || '(sem testID)').padEnd(22)} ${w.padStart(7)} × ${h.padStart(6)} dp   (${[...estados].sort().join(', ')})`)
+}
+console.log(`\ndescartados por recorte (div. 21): ${recortados.length}`)
+for (const r of recortados.sort()) console.log(`  ${r}`)
+console.log(`\nalvos SEM testID (inalcançáveis por resource-id): ${new Set(semId).size}`)
+for (const s of [...new Set(semId)].sort()) console.log(`  ${s}`)
+process.exit(ocorrencias === 0 ? 0 : 1)
+
+$ node g5.mjs dumps-antes
+alvos tocáveis medidos: 144 em 20 estados
+ABAIXO de 48 dp: 15 ocorrências / 5 resource-ids
+  apagar                    48.9 ×   21.8 dp   (S4a-resultados, S4a-resultados-avulso, S4b-nada-encontrado)
+  campo-busca              760.4 ×   46.2 dp   (S4a-resultados, S4a-resultados-avulso, S4b-nada-encontrado)
+  campo-busca              825.3 ×   46.2 dp   (S4a-busca)
+  fechar-busca              40.0 ×   57.8 dp   (S4a-busca, S4a-resultados, S4a-resultados-avulso, S4b-nada-encontrado)
+  tentar-banner            130.7 ×   22.7 dp   (S1e-falha-com-cache)
+  voltar                    40.0 ×   57.8 dp   (S2-com-invalidos, S2-com-invalidos-rolado, S2-indice)
+
+descartados por recorte (div. 21): 4
+  S2-com-invalidos :: song-10 540.9 × 11.1 dp — RECORTADO por android.widget.ScrollView [0,234][2560,1465]
+  S2-com-invalidos :: song-9 540.9 × 11.1 dp — RECORTADO por android.widget.ScrollView [0,234][2560,1465]
+  S2-com-invalidos-rolado :: song-3 540.9 × 11.1 dp — RECORTADO por android.widget.ScrollView [0,234][2560,1465]
+  S2-com-invalidos-rolado :: song-4 540.9 × 11.1 dp — RECORTADO por android.widget.ScrollView [0,234][2560,1465]
+
+alvos SEM testID (inalcançáveis por resource-id): 6
+  S1c-offline-com-cache :: (sem testID) UX-AUDIT ESTRESSE, sem data · 60 músicas, ✓, g
+  S1c-offline-com-cache :: (sem testID) UX-AUDIT SHOW PADRÃO, sem data · 8 músicas, ✓,
+  S1c-offline-com-cache :: (sem testID) UX-AUDIT SOLO, sem data · 1 música, ✓, garanti
+  S1e-falha-com-cache :: (sem testID) UX-AUDIT ESTRESSE, sem data · 60 músicas, ✓, g
+  S1e-falha-com-cache :: (sem testID) UX-AUDIT SHOW PADRÃO, sem data · 8 músicas, ✓,
+  S1e-falha-com-cache :: (sem testID) UX-AUDIT SOLO, sem data · 1 música, ✓, garanti
+exit=1
+
+$ node g5.mjs dumps-depois
+alvos tocáveis medidos: 153 em 21 estados
+ABAIXO de 48 dp: 0 ocorrências / 0 resource-ids
+
+descartados por recorte (div. 21): 4
+  S2-com-invalidos :: song-10 540.9 × 11.1 dp — RECORTADO por android.widget.ScrollView [0,234][2560,1465]
+  S2-com-invalidos :: song-9 540.9 × 11.1 dp — RECORTADO por android.widget.ScrollView [0,234][2560,1465]
+  S2-com-invalidos-rolado :: song-3 540.9 × 11.1 dp — RECORTADO por android.widget.ScrollView [0,234][2560,1465]
+  S2-com-invalidos-rolado :: song-4 540.9 × 11.1 dp — RECORTADO por android.widget.ScrollView [0,234][2560,1465]
+
+alvos SEM testID (inalcançáveis por resource-id): 0
+exit=0
+
+===== G6 — todo estado com ID alcançável =====
+$ cat g6.sh
+#!/bin/sh
+# G6 — todo estado capturado é alcançável por resource-id, e todo alvo tocável
+# do estado TEM resource-id. Uso: g6.sh <dir-de-dumps>
+DIR=$1; FALHAS=0
+for x in "$DIR"/*.xml; do
+  N=$(basename "$x" .xml)
+  IDS=$(grep -o 'resource-id="[^"]*"' "$x" | sed 's/resource-id="//;s/"//' \
+        | grep -v '^$' | grep -v '^android:id/content$' | grep -v '^rocks.octavia.app:id/' | sort -u)
+  SEM=$(python3 -c "
+import re,sys
+xml=open('$x').read()
+n=0
+for m in re.finditer(r'<node\b([^>]*?)/?>',xml):
+    a=dict(re.findall(r'([\w-]+)=\"([^\"]*)\"',m.group(1)))
+    if a.get('clickable')=='true' and not a.get('resource-id'): n+=1
+print(n)")
+  ANC=$(echo "$IDS" | head -1)
+  if [ -z "$ANC" ] || [ "$SEM" != "0" ]; then FALHAS=$((FALHAS+1)); M="✗"; else M="✓"; fi
+  printf "  %-28s âncora=%-18s ids=%-3s alvos sem id=%s %s\n" "$N" "${ANC:-<NENHUMA>}" "$(echo "$IDS" | grep -c .)" "$SEM" "$M"
+done
+echo "  estados: $(ls "$DIR"/*.xml | wc -l | tr -d ' ')   falhas: $FALHAS"
+[ "$FALHAS" -eq 0 ]
+$ sh g6.sh dumps-antes
+  S1c-offline-com-cache        âncora=baixar-00c2c1f4    ids=4   alvos sem id=3 ✗
+  S1e-falha-com-cache          âncora=baixar-00c2c1f4    ids=5   alvos sem id=3 ✗
+  S2-com-invalidos-rolado      âncora=buscar             ids=11  alvos sem id=0 ✓
+  S2-com-invalidos             âncora=buscar             ids=12  alvos sem id=0 ✓
+  S2-indice                    âncora=buscar             ids=10  alvos sem id=0 ✓
+  S3-avulsa                    âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+  S3-claro                     âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+  S3-paisagem-volta            âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+  S3-placeholder-invalido-nobody âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+  S3-retrato                   âncora=auto-scroll        ids=9   alvos sem id=0 ✓
+  S3-texto                     âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+  S3d-pdf                      âncora=auto-scroll        ids=11  alvos sem id=0 ✓
+  S3e-arquivo-nao-baixado      âncora=auto-scroll        ids=11  alvos sem id=0 ✓
+  S4a-busca                    âncora=campo-busca        ids=3   alvos sem id=0 ✓
+  S4a-resultados-avulso        âncora=apagar             ids=6   alvos sem id=0 ✓
+  S4a-resultados               âncora=apagar             ids=6   alvos sem id=0 ✓
+  S4b-nada-encontrado          âncora=apagar             ids=5   alvos sem id=0 ✓
+  S5-fim-setlist               âncora=borda-voltar       ids=3   alvos sem id=0 ✓
+  S5-paisagem                  âncora=borda-voltar       ids=3   alvos sem id=0 ✓
+  S5-retrato                   âncora=borda-voltar       ids=3   alvos sem id=0 ✓
+  estados: 20   falhas: 2
+exit=1
+$ sh g6.sh dumps-depois
+  S1c-offline-com-cache        âncora=baixar-00c2c1f4    ids=7   alvos sem id=0 ✓
+  S1e-falha-com-cache          âncora=baixar-00c2c1f4    ids=8   alvos sem id=0 ✓
+  S2-com-invalidos-rolado      âncora=buscar             ids=11  alvos sem id=0 ✓
+  S2-com-invalidos             âncora=buscar             ids=12  alvos sem id=0 ✓
+  S2-indice                    âncora=buscar             ids=10  alvos sem id=0 ✓
+  S3-avulsa                    âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+  S3-claro                     âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+  S3-paisagem-pre-giro         âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+  S3-paisagem-volta            âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+  S3-placeholder-invalido-nobody âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+  S3-retrato                   âncora=auto-scroll        ids=9   alvos sem id=0 ✓
+  S3-texto                     âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+  S3d-pdf                      âncora=auto-scroll        ids=11  alvos sem id=0 ✓
+  S3e-arquivo-nao-baixado      âncora=auto-scroll        ids=11  alvos sem id=0 ✓
+  S4a-busca                    âncora=campo-busca        ids=3   alvos sem id=0 ✓
+  S4a-resultados-avulso        âncora=apagar             ids=6   alvos sem id=0 ✓
+  S4a-resultados               âncora=apagar             ids=6   alvos sem id=0 ✓
+  S4b-nada-encontrado          âncora=apagar             ids=5   alvos sem id=0 ✓
+  S5-fim-setlist               âncora=borda-voltar       ids=3   alvos sem id=0 ✓
+  S5-paisagem                  âncora=borda-voltar       ids=3   alvos sem id=0 ✓
+  S5-retrato                   âncora=borda-voltar       ids=3   alvos sem id=0 ✓
+  estados: 21   falhas: 0
+exit=0

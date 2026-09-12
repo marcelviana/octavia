@@ -1,0 +1,40 @@
+$ (G) lint, suíte e tipos — e o escopo REAL de cada um, com controle negativo
+
+===== G.1 — pnpm lint (da raiz) =====
+$ pnpm lint
+> octavia@0.1.0 lint /Users/marcelviana/projects/octavia-v1pr1
+> pnpm exec next lint
+
+✔ No ESLint warnings or errors
+exit=0
+
+CONTROLE NEGATIVO — e ele ACHOU um limite do instrumento (divergência 32):
+$ (erro deliberado no fim de apps/native/src/screens/EndScreen.tsx)
+$   const __cn_lint_unused = 1
+$   var __cn_lint_var: any = __cn_lint_unused
+$ pnpm lint
+  ✔ No ESLint warnings or errors
+  exit=0      ← PASSOU COM O ERRO PLANTADO
+
+`pnpm lint` é `next lint`, que varre as pastas padrão do Next na RAIZ do repo
+(app/, components/, lib/, …) e NÃO cobre `apps/native/**`; o `apps/native` não
+tem `eslint.config.js` próprio. Rodar o lint da raiz numa PR que mexe em seis
+arquivos do nativo dá verde sem ter olhado nenhum deles. Verde declarado como
+verde VAZIO, não como cobertura.
+
+===== G.2 — tsc --noEmit (apps/native) — o gate que de fato cobre estes seis arquivos =====
+$ cd apps/native && npx tsc --noEmit
+exit=0
+
+CONTROLE NEGATIVO:
+$ (erro deliberado no fim de EndScreen.tsx)  const __cn: number = "texto"
+$ npx tsc --noEmit
+  src/screens/EndScreen.tsx(140,7): error TS2322: Type 'string' is not assignable to type 'number'.
+  exit=2      ← ACUSA
+
+===== G.3 — pnpm test (suíte da raiz) =====
+$ pnpm test
+ Test Files  88 passed | 4 skipped (92)
+      Tests  768 passed | 85 skipped (853)
+  baseline do V1-PRECHECK §2:  88 passed | 4 skipped (92)  ·  768 passed | 85 skipped (853)
+  → IDÊNTICA.
