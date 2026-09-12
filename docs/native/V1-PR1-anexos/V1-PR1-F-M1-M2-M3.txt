@@ -1,0 +1,78 @@
+$ (F) as três medições do pre-check desta PR — M1, M2, M3
+
+============================================================================
+M1 — o item inválido do S2, medido INTEIRO. Div. 21 CONFIRMADA; sem 6º alvo.
+============================================================================
+Aparato: fixtures `invalidos-content` + `invalidos-songs` do aceite.py, store
+por run-as com backup/restauro, modo avião. Custo em prod: 0.
+  OCTAVIA: cache hit kind=content n=70   (67 + 3 inválidos)
+  setlist "UX-AUDIT Show padrão": 8 → 11 posições
+
+$ grep -o 'resource-id="song-9"[^>]*bounds="[^"]*"' S2-com-invalidos.xml
+  bounds="[54,1440][1271,1465]"     540,9 ×  11,1 dp   ← lista NÃO rolada
+$ adb shell input swipe 1280 1100 1280 600 500
+$ grep -o 'resource-id="song-9"[^>]*bounds="[^"]*"' S2-com-invalidos-rolado.xml
+  bounds="[54,853][1271,1123]"      540,9 × 120,0 dp   ← item INTEIRO na viewport
+
+  120,0 dp — o mesmo de qualquer outro item da grade, dentro da faixa
+  ~116–120 prevista. O 11,1 dp era RECORTE, não alvo pequeno.
+  → a regra de duas bordas do G5 é suficiente; o escopo da PR não cresce.
+
+Nó rolável pai, nos dois dumps:  android.widget.ScrollView [0,234][2560,1465]
+  song-9  recortado:  y2 = 1465 == y2 do pai   → recorte EMBAIXO
+  song-3  no dump rolado: y1 =  234 == y1 do pai → recorte EM CIMA
+  A metade "EM CIMA" da regra C2 estava escrita no V1-PRECHECK sem nunca ter
+  sido medida ("não foi medido só porque a lista estava rolada para baixo").
+  Agora está: o dump rolado a entrega, e o g5.mjs descarta os dois lados.
+
+============================================================================
+M2 — o logo empacotado. Os binários SÃO transparentes; a div. 22 já estava
+     fechada. Não há troca de arquivo e não há decisão do Marcel.
+============================================================================
+$ ls apps/native/assets/*.png | grep logo
+  logo-octavia-dark.png    logo-octavia-light.png
+  ← NÃO existe `logo-octavia.png` (divergência 27)
+
+  logo-octavia-dark.png   952 × 614  sha256 e9b9bd6b3a79230a10e0f6525d0b97ea02eb33c65b4c064e12fbc8a6fabe4a29
+  logo-octavia-light.png  952 × 614  sha256 80bcd3ba1811c63d94bc0b97e8ac9a0966ec43f1e1edbeb60a520813eba8511d
+
+$ magick <png> -alpha extract -depth 8 txt:-   (ImageMagick 7, /opt/homebrew/bin/magick)
+  pixels totais: 584528
+  alfa == 0   (totalmente transparente): 538815 (92,2%)
+  alfa == 255 (totalmente opaco):         38323 ( 6,6%)
+  parciais:                                7390 ( 1,3%)
+  → IDÊNTICO nos dois arquivos. 92,2% bate exato com a medição do Claude Design.
+
+$ magick <png> -alpha off -format %c histogram:info:-
+  dark : 538815 #000000 · 31245 #F9F5F1 · 14468 #777CE8   ← tinta CLARA (fundo escuro)
+  light: 538815 #000000 · 31245 #100F16 · 14468 #777CE8   ← tinta ESCURA (fundo claro)
+  Os dois diferem SÓ na cor da tinta; o fora-do-glifo é transparente nos dois.
+
+As duas afirmações nunca foram sobre o mesmo arquivo:
+$ magick docs/native/N1-anexos/PR3a-screencap-1-s0.png  -format %c histogram: | grep -c 100E16 → 1   (#284)
+$ magick docs/native/N1-anexos/PR7-a2-token-forjado.png -format %c histogram: | grep -c 100E16 → 0   (#289)
+$ git log --oneline --follow -- apps/native/assets/logo-octavia-dark.png
+  08b84d6 feat(N1-PR3b): store local, sync cache-first e tela de setlists nos seis estados
+$ git log --all --diff-filter=D -- 'apps/native/assets/logo-octavia*.png'
+  08b84d6   ← o MESMO commit que apagou `logo-octavia.png`
+
+VEREDITO: a div. 22 do N1 é do #284, quando o PNG vinha extraído do HTML do
+design com fundo #100E16 opaco. O 08b84d6 (#285) trocou o arquivo pelo par
+transparente. RESOLVIDA EM 08b84d6 (#285), VERIFICADA NA V1-PR1.
+Nada foi tocado nesta PR.
+
+============================================================================
+M3 — a janela e quem consome inset. Reconfirmado.
+============================================================================
+$ adb -s emulator-5554 shell wm size      → Physical size: 2560x1600
+$ adb -s emulator-5554 shell wm density   → Physical density: 360   (2,25 px/dp)
+
+no dump de hoje (profundidade na árvore × bounds):
+  d=4   FrameLayout  rid=android:id/content   [0,0][2560,1600]    ← edge-to-edge
+  d=9   ViewGroup    rid=                     [0,54][2560,1465]   ← SafeAreaView (App.tsx:206)
+  d=13  ViewGroup (barraTopo)                 [0,54][2560,198]     64,0 dp = bar.top
+  d=13  ScrollView (conteúdo do meio)         [0,198][2560,1249]  467,1 dp
+  d=13  ViewGroup (barraBaixo)                [0,1249][2560,1465]  96,0 dp = bar.stage
+
+  tela 711,1 dp · janela 627,1 dp · insets 84,0 dp
+  → é exatamente o transbordo que o item C conserta.

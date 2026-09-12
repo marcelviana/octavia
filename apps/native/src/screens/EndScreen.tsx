@@ -5,7 +5,8 @@
  * música; **nada** leva para fora do app sem o botão — o beco sem saída e a
  * saída acidental são justamente o que o requisito proíbe.
  */
-import { Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native'
+import { useCallback, useState } from 'react'
+import { Pressable, StyleSheet, Text, View, type LayoutChangeEvent } from 'react-native'
 import { log } from '../log'
 import { bar, dark, font, radius, size, space, touch, tracking } from '../theme'
 
@@ -24,9 +25,16 @@ export function EndScreen({
   onVoltarInicio,
   onSair,
 }: EndScreenProps): React.JSX.Element {
-  const { width, height } = useWindowDimensions()
-  const larguraBorda = Math.max(width * 0.15, touch.min)
-  const alturaConteudo = Math.max(height - (bar.top + bar.stage), touch.min)
+  // As duas linhas eram idênticas às do `StageScreen` e herdavam o mesmo
+  // transbordo de 84,0 dp (V1-PRECHECK §3.4, div. 16) — com uma borda só.
+  // Método e razão: a nota longa no `StageScreen`.
+  const [meio, setMeio] = useState<{ largura: number; altura: number } | null>(null)
+  const medirMeio = useCallback((e: LayoutChangeEvent) => {
+    const { width: w, height: h } = e.nativeEvent.layout
+    setMeio((m) => (m !== null && m.largura === w && m.altura === h ? m : { largura: w, altura: h }))
+  }, [])
+  const larguraBorda = meio === null ? 0 : Math.max(meio.largura * 0.15, touch.min)
+  const alturaConteudo = meio === null ? 0 : Math.max(meio.altura, touch.min)
 
   return (
     <View style={styles.tela}>
@@ -37,7 +45,7 @@ export function EndScreen({
         </Text>
       </View>
 
-      <View style={styles.meio}>
+      <View style={styles.meio} onLayout={medirMeio}>
         <View style={styles.centro}>
           <Text style={styles.titulo}>FIM DA SETLIST</Text>
           <Text style={styles.apoio}>
@@ -55,14 +63,16 @@ export function EndScreen({
 
         {/* Borda esquerda: volta à última música. A direita NÃO existe aqui —
             não há para onde avançar, e sair só pelo botão (T1-R29). */}
-        <Pressable
-          style={[styles.borda, { width: larguraBorda, height: alturaConteudo, left: 0 }]}
-          onPress={() => {
-            log(`nav n=${total}/${total} setlist=fim t=0`)
-            onVoltarUltima()
-          }}
-          testID="borda-voltar"
-        />
+        {meio !== null ? (
+          <Pressable
+            style={[styles.borda, { width: larguraBorda, height: alturaConteudo, left: 0 }]}
+            onPress={() => {
+              log(`nav n=${total}/${total} setlist=fim t=0`)
+              onVoltarUltima()
+            }}
+            testID="borda-voltar"
+          />
+        ) : null}
       </View>
 
       <View style={styles.barraBaixo} />

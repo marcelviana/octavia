@@ -1,0 +1,371 @@
+$ (A) alvos de toque — bounds ANTES × DEPOIS, todos os alvos de cada tela
+$ adb -s emulator-5554 shell uiautomator dump  ·  densidade 360 (2,25 px/dp)
+$ ANTES  = origin/main (45029dc), Metro do checkout principal
+$ DEPOIS = v1/pr1-alvos-geometria, Metro do worktree octavia-v1pr1
+$ mesmo estado de rede nos dois lados (avião ON; S1e contra o mock local)
+
+===== dumps-antes =====
+-- S1c-offline-com-cache
+  buscar                     [2184,96][2488,226]       135.1 ×   57.8 dp  click=1
+  baixar-4340bf95            [1509,432][1865,563]       158.2 ×   58.2 dp  click=1
+  baixar-00c2c1f4            [1509,770][1865,900]       158.2 ×   57.8 dp  click=1
+  baixar-8c4413d9            [1509,1107][1865,1238]       158.2 ×   58.2 dp  click=1
+-- S1e-falha-com-cache
+  buscar                     [2184,96][2488,226]       135.1 ×   57.8 dp  click=1
+  tentar-banner              [2138,382][2432,433]       130.7 ×   22.7 dp  click=1   ← <48
+  baixar-4340bf95            [1509,635][1865,766]       158.2 ×   58.2 dp  click=1
+  baixar-00c2c1f4            [1509,973][1865,1103]       158.2 ×   57.8 dp  click=1
+  baixar-8c4413d9            [1509,1310][1865,1441]       158.2 ×   58.2 dp  click=1
+-- S2-com-invalidos-rolado
+  voltar                     [54,78][144,208]        40.0 ×   57.8 dp  click=1   ← <48
+  buscar                     [2114,78][2506,208]       174.2 ×   57.8 dp  click=1
+  song-3                     [54,234][1271,259]       540.9 ×   11.1 dp  click=1   ← <48
+  song-4                     [1289,234][2506,259]       540.9 ×   11.1 dp  click=1   ← <48
+  song-5                     [54,277][1271,547]       540.9 ×  120.0 dp  click=1
+  song-6                     [1289,277][2506,547]       540.9 ×  120.0 dp  click=1
+  song-7                     [54,565][1271,835]       540.9 ×  120.0 dp  click=1
+  song-8                     [1289,565][2506,835]       540.9 ×  120.0 dp  click=1
+  song-9                     [54,853][1271,1123]       540.9 ×  120.0 dp  click=1
+  song-10                    [1289,853][2506,1123]       540.9 ×  120.0 dp  click=1
+  song-11                    [54,1141][2506,1411]      1089.8 ×  120.0 dp  click=1
+-- S2-com-invalidos
+  voltar                     [54,78][144,208]        40.0 ×   57.8 dp  click=1   ← <48
+  buscar                     [2114,78][2506,208]       174.2 ×   57.8 dp  click=1
+  song-1                     [54,288][1271,558]       540.9 ×  120.0 dp  click=1
+  song-2                     [1289,288][2506,558]       540.9 ×  120.0 dp  click=1
+  song-3                     [54,576][1271,846]       540.9 ×  120.0 dp  click=1
+  song-4                     [1289,576][2506,846]       540.9 ×  120.0 dp  click=1
+  song-5                     [54,864][1271,1134]       540.9 ×  120.0 dp  click=1
+  song-6                     [1289,864][2506,1134]       540.9 ×  120.0 dp  click=1
+  song-7                     [54,1152][1271,1422]       540.9 ×  120.0 dp  click=1
+  song-8                     [1289,1152][2506,1422]       540.9 ×  120.0 dp  click=1
+  song-9                     [54,1440][1271,1465]       540.9 ×   11.1 dp  click=1   ← <48
+  song-10                    [1289,1440][2506,1465]       540.9 ×   11.1 dp  click=1   ← <48
+-- S2-indice
+  voltar                     [54,78][144,208]        40.0 ×   57.8 dp  click=1   ← <48
+  buscar                     [2114,78][2506,208]       174.2 ×   57.8 dp  click=1
+  song-1                     [54,288][1271,558]       540.9 ×  120.0 dp  click=1
+  song-2                     [1289,288][2506,558]       540.9 ×  120.0 dp  click=1
+  song-3                     [54,576][1271,846]       540.9 ×  120.0 dp  click=1
+  song-4                     [1289,576][2506,846]       540.9 ×  120.0 dp  click=1
+  song-5                     [54,864][1271,1134]       540.9 ×  120.0 dp  click=1
+  song-6                     [1289,864][2506,1134]       540.9 ×  120.0 dp  click=1
+  song-7                     [54,1152][1271,1422]       540.9 ×  120.0 dp  click=1
+  song-8                     [1289,1152][2506,1422]       540.9 ×  120.0 dp  click=1
+-- S3-avulsa
+  borda-voltar               [0,198][384,1438]       170.7 ×  551.1 dp  click=1
+  corpo                      [72,270][1452,1194]       613.3 ×  410.7 dp  click=0
+  auto-scroll                [54,1284][293,1432]       106.2 ×   65.8 dp  click=1
+  zoom-menos                 [320,1284][558,1432]       105.8 ×   65.8 dp  click=1
+  zoom-mais                  [585,1284][824,1432]       106.2 ×   65.8 dp  click=1
+  tema                       [851,1284][1089,1432]       105.8 ×   65.8 dp  click=1
+  indice                     [1116,1284][1355,1432]       106.2 ×   65.8 dp  click=1
+  busca                      [1382,1284][1620,1432]       105.8 ×   65.8 dp  click=1
+  sair                       [1647,1284][1886,1432]       106.2 ×   65.8 dp  click=1
+  borda-avancar              [2176,198][2560,1438]       170.7 ×  551.1 dp  click=1
+-- S3-claro
+  borda-voltar               [0,198][384,1438]       170.7 ×  551.1 dp  click=1
+  corpo                      [72,270][1452,886]       613.3 ×  273.8 dp  click=0
+  auto-scroll                [54,1284][293,1432]       106.2 ×   65.8 dp  click=1
+  zoom-menos                 [320,1284][558,1432]       105.8 ×   65.8 dp  click=1
+  zoom-mais                  [585,1284][824,1432]       106.2 ×   65.8 dp  click=1
+  tema                       [851,1284][1089,1432]       105.8 ×   65.8 dp  click=1
+  indice                     [1116,1284][1355,1432]       106.2 ×   65.8 dp  click=1
+  busca                      [1382,1284][1620,1432]       105.8 ×   65.8 dp  click=1
+  sair                       [1647,1284][1886,1432]       106.2 ×   65.8 dp  click=1
+  borda-avancar              [2176,198][2560,1438]       170.7 ×  551.1 dp  click=1
+-- S3-paisagem-volta
+  borda-voltar               [0,198][384,1438]       170.7 ×  551.1 dp  click=1
+  placeholder                [72,270][2488,608]      1073.8 ×  150.2 dp  click=0
+  auto-scroll                [54,1284][357,1432]       134.7 ×   65.8 dp  click=1
+  zoom-menos                 [384,1284][622,1432]       105.8 ×   65.8 dp  click=1
+  zoom-mais                  [649,1284][888,1432]       106.2 ×   65.8 dp  click=1
+  tema                       [915,1284][1153,1432]       105.8 ×   65.8 dp  click=1
+  indice                     [1180,1284][1419,1432]       106.2 ×   65.8 dp  click=1
+  busca                      [1446,1284][1684,1432]       105.8 ×   65.8 dp  click=1
+  sair                       [1711,1284][1950,1432]       106.2 ×   65.8 dp  click=1
+  borda-avancar              [2176,198][2560,1438]       170.7 ×  551.1 dp  click=1
+-- S3-placeholder-invalido-nobody
+  borda-voltar               [0,198][384,1438]       170.7 ×  551.1 dp  click=1
+  placeholder                [72,270][2488,608]      1073.8 ×  150.2 dp  click=0
+  auto-scroll                [54,1284][357,1432]       134.7 ×   65.8 dp  click=1
+  zoom-menos                 [384,1284][622,1432]       105.8 ×   65.8 dp  click=1
+  zoom-mais                  [649,1284][888,1432]       106.2 ×   65.8 dp  click=1
+  tema                       [915,1284][1153,1432]       105.8 ×   65.8 dp  click=1
+  indice                     [1180,1284][1419,1432]       106.2 ×   65.8 dp  click=1
+  busca                      [1446,1284][1684,1432]       105.8 ×   65.8 dp  click=1
+  sair                       [1711,1284][1950,1432]       106.2 ×   65.8 dp  click=1
+  borda-avancar              [2176,198][2560,1438]       170.7 ×  551.1 dp  click=1
+-- S3-retrato
+  borda-voltar               [0,198][240,2398]       106.7 ×  977.8 dp  click=1
+  placeholder                [72,270][1528,608]       647.1 ×  150.2 dp  click=0
+  auto-scroll                [54,2244][357,2392]       134.7 ×   65.8 dp  click=1
+  zoom-menos                 [384,2244][622,2392]       105.8 ×   65.8 dp  click=1
+  zoom-mais                  [649,2244][888,2392]       106.2 ×   65.8 dp  click=1
+  tema                       [915,2244][1153,2392]       105.8 ×   65.8 dp  click=1
+  indice                     [1180,2244][1419,2392]       106.2 ×   65.8 dp  click=1
+  borda-avancar              [1360,198][1600,2398]       106.7 ×  977.8 dp  click=1
+  busca                      [1446,2244][1600,2392]        68.4 ×   65.8 dp  click=1
+-- S3-texto
+  borda-voltar               [0,198][384,1438]       170.7 ×  551.1 dp  click=1
+  corpo                      [72,270][1452,886]       613.3 ×  273.8 dp  click=0
+  auto-scroll                [54,1284][293,1432]       106.2 ×   65.8 dp  click=1
+  zoom-menos                 [320,1284][558,1432]       105.8 ×   65.8 dp  click=1
+  zoom-mais                  [585,1284][824,1432]       106.2 ×   65.8 dp  click=1
+  tema                       [851,1284][1089,1432]       105.8 ×   65.8 dp  click=1
+  indice                     [1116,1284][1355,1432]       106.2 ×   65.8 dp  click=1
+  busca                      [1382,1284][1620,1432]       105.8 ×   65.8 dp  click=1
+  sair                       [1647,1284][1886,1432]       106.2 ×   65.8 dp  click=1
+  borda-avancar              [2176,198][2560,1438]       170.7 ×  551.1 dp  click=1
+-- S3d-pdf
+  pagina                     [1562,100][1831,148]       119.6 ×   21.3 dp  click=0
+  borda-voltar               [0,198][384,1438]       170.7 ×  551.1 dp  click=1
+  s3d                        [0,198][2560,1249]      1137.8 ×  467.1 dp  click=0
+  auto-scroll                [54,1284][357,1432]       134.7 ×   65.8 dp  click=1
+  zoom-menos                 [384,1284][622,1432]       105.8 ×   65.8 dp  click=1
+  zoom-mais                  [649,1284][888,1432]       106.2 ×   65.8 dp  click=1
+  tema                       [915,1284][1153,1432]       105.8 ×   65.8 dp  click=1
+  indice                     [1180,1284][1419,1432]       106.2 ×   65.8 dp  click=1
+  busca                      [1446,1284][1684,1432]       105.8 ×   65.8 dp  click=1
+  sair                       [1711,1284][1950,1432]       106.2 ×   65.8 dp  click=1
+  borda-avancar              [2176,198][2560,1438]       170.7 ×  551.1 dp  click=1
+-- S3e-arquivo-nao-baixado
+  borda-voltar               [0,198][384,1438]       170.7 ×  551.1 dp  click=1
+  s3e                        [0,198][2560,734]      1137.8 ×  238.2 dp  click=0
+  baixar                     [1148,590][1412,734]       117.3 ×   64.0 dp  click=1
+  auto-scroll                [54,1284][357,1432]       134.7 ×   65.8 dp  click=1
+  zoom-menos                 [384,1284][622,1432]       105.8 ×   65.8 dp  click=1
+  zoom-mais                  [649,1284][888,1432]       106.2 ×   65.8 dp  click=1
+  tema                       [915,1284][1153,1432]       105.8 ×   65.8 dp  click=1
+  indice                     [1180,1284][1419,1432]       106.2 ×   65.8 dp  click=1
+  busca                      [1446,1284][1684,1432]       105.8 ×   65.8 dp  click=1
+  sair                       [1711,1284][1950,1432]       106.2 ×   65.8 dp  click=1
+  borda-avancar              [2176,198][2560,1438]       170.7 ×  551.1 dp  click=1
+-- S4a-busca
+  fechar-busca               [54,88][144,218]        40.0 ×   57.8 dp  click=1   ← <48
+  campo-busca                [218,101][2075,205]       825.3 ×   46.2 dp  click=1   ← <48
+  chip-offline               [2149,131][2506,174]       158.7 ×   19.1 dp  click=0
+-- S4a-resultados-avulso
+  fechar-busca               [54,88][144,218]        40.0 ×   57.8 dp  click=1   ← <48
+  campo-busca                [218,101][1929,205]       760.4 ×   46.2 dp  click=1   ← <48
+  apagar                     [1965,129][2075,178]        48.9 ×   21.8 dp  click=1   ← <48
+  chip-offline               [2149,131][2506,174]       158.7 ×   19.1 dp  click=0
+  resultado-13303251         [54,411][2506,590]      1089.8 ×   79.6 dp  click=1
+  resultado-97256d70         [54,609][2506,789]      1089.8 ×   80.0 dp  click=1
+-- S4a-resultados
+  fechar-busca               [54,88][144,218]        40.0 ×   57.8 dp  click=1   ← <48
+  campo-busca                [218,101][1929,205]       760.4 ×   46.2 dp  click=1   ← <48
+  apagar                     [1965,129][2075,178]        48.9 ×   21.8 dp  click=1   ← <48
+  chip-offline               [2149,131][2506,174]       158.7 ×   19.1 dp  click=0
+  resultado-c81bd22e         [54,411][2506,591]      1089.8 ×   80.0 dp  click=1
+  resultado-64594f61         [54,609][2506,788]      1089.8 ×   79.6 dp  click=1
+-- S4b-nada-encontrado
+  fechar-busca               [54,88][144,218]        40.0 ×   57.8 dp  click=1   ← <48
+  campo-busca                [218,101][1929,205]       760.4 ×   46.2 dp  click=1   ← <48
+  apagar                     [1965,129][2075,178]        48.9 ×   21.8 dp  click=1   ← <48
+  chip-offline               [2149,131][2506,174]       158.7 ×   19.1 dp  click=0
+  s4b                        [0,254][2560,1465]      1137.8 ×  538.2 dp  click=0
+-- S5-fim-setlist
+  borda-voltar               [0,198][384,1438]       170.7 ×  551.1 dp  click=1
+  voltar-inicio              [945,808][1361,952]       184.9 ×   64.0 dp  click=1
+  sair                       [1397,808][1615,952]        96.9 ×   64.0 dp  click=1
+-- S5-paisagem
+  borda-voltar               [0,198][384,1438]       170.7 ×  551.1 dp  click=1
+  voltar-inicio              [945,808][1361,952]       184.9 ×   64.0 dp  click=1
+  sair                       [1397,808][1615,952]        96.9 ×   64.0 dp  click=1
+-- S5-retrato
+  borda-voltar               [0,198][240,2398]       106.7 ×  977.8 dp  click=1
+  voltar-inicio              [465,1288][881,1432]       184.9 ×   64.0 dp  click=1
+  sair                       [917,1288][1135,1432]        96.9 ×   64.0 dp  click=1
+
+===== dumps-depois =====
+-- S1c-offline-com-cache
+  buscar                     [2184,96][2488,226]       135.1 ×   57.8 dp  click=1
+  setlist-4340bf95           [72,342][2488,653]      1073.8 ×  138.2 dp  click=1
+  baixar-4340bf95            [1509,432][1865,563]       158.2 ×   58.2 dp  click=1
+  setlist-00c2c1f4           [72,680][2488,990]      1073.8 ×  137.8 dp  click=1
+  baixar-00c2c1f4            [1509,770][1865,900]       158.2 ×   57.8 dp  click=1
+  setlist-8c4413d9           [72,1017][2488,1328]      1073.8 ×  138.2 dp  click=1
+  baixar-8c4413d9            [1509,1107][1865,1238]       158.2 ×   58.2 dp  click=1
+-- S1e-falha-com-cache
+  buscar                     [2184,96][2488,226]       135.1 ×   57.8 dp  click=1
+  tentar-banner              [2138,353][2432,461]       130.7 ×   48.0 dp  click=1
+  setlist-4340bf95           [72,545][2488,856]      1073.8 ×  138.2 dp  click=1
+  baixar-4340bf95            [1509,635][1865,766]       158.2 ×   58.2 dp  click=1
+  setlist-00c2c1f4           [72,883][2488,1193]      1073.8 ×  137.8 dp  click=1
+  baixar-00c2c1f4            [1509,973][1865,1103]       158.2 ×   57.8 dp  click=1
+  setlist-8c4413d9           [72,1220][2488,1465]      1073.8 ×  108.9 dp  click=1
+  baixar-8c4413d9            [1509,1310][1865,1441]       158.2 ×   58.2 dp  click=1
+-- S2-com-invalidos-rolado
+  voltar                     [54,78][162,208]        48.0 ×   57.8 dp  click=1
+  buscar                     [2114,78][2506,208]       174.2 ×   57.8 dp  click=1
+  song-3                     [54,234][1271,259]       540.9 ×   11.1 dp  click=1   ← <48
+  song-4                     [1289,234][2506,259]       540.9 ×   11.1 dp  click=1   ← <48
+  song-5                     [54,277][1271,547]       540.9 ×  120.0 dp  click=1
+  song-6                     [1289,277][2506,547]       540.9 ×  120.0 dp  click=1
+  song-7                     [54,565][1271,835]       540.9 ×  120.0 dp  click=1
+  song-8                     [1289,565][2506,835]       540.9 ×  120.0 dp  click=1
+  song-9                     [54,853][1271,1123]       540.9 ×  120.0 dp  click=1
+  song-10                    [1289,853][2506,1123]       540.9 ×  120.0 dp  click=1
+  song-11                    [54,1141][2506,1411]      1089.8 ×  120.0 dp  click=1
+-- S2-com-invalidos
+  voltar                     [54,78][162,208]        48.0 ×   57.8 dp  click=1
+  buscar                     [2114,78][2506,208]       174.2 ×   57.8 dp  click=1
+  song-1                     [54,288][1271,558]       540.9 ×  120.0 dp  click=1
+  song-2                     [1289,288][2506,558]       540.9 ×  120.0 dp  click=1
+  song-3                     [54,576][1271,846]       540.9 ×  120.0 dp  click=1
+  song-4                     [1289,576][2506,846]       540.9 ×  120.0 dp  click=1
+  song-5                     [54,864][1271,1134]       540.9 ×  120.0 dp  click=1
+  song-6                     [1289,864][2506,1134]       540.9 ×  120.0 dp  click=1
+  song-7                     [54,1152][1271,1422]       540.9 ×  120.0 dp  click=1
+  song-8                     [1289,1152][2506,1422]       540.9 ×  120.0 dp  click=1
+  song-9                     [54,1440][1271,1465]       540.9 ×   11.1 dp  click=1   ← <48
+  song-10                    [1289,1440][2506,1465]       540.9 ×   11.1 dp  click=1   ← <48
+-- S2-indice
+  voltar                     [54,78][162,208]        48.0 ×   57.8 dp  click=1
+  buscar                     [2114,78][2506,208]       174.2 ×   57.8 dp  click=1
+  song-1                     [54,288][1271,558]       540.9 ×  120.0 dp  click=1
+  song-2                     [1289,288][2506,558]       540.9 ×  120.0 dp  click=1
+  song-3                     [54,576][1271,846]       540.9 ×  120.0 dp  click=1
+  song-4                     [1289,576][2506,846]       540.9 ×  120.0 dp  click=1
+  song-5                     [54,864][1271,1134]       540.9 ×  120.0 dp  click=1
+  song-6                     [1289,864][2506,1134]       540.9 ×  120.0 dp  click=1
+  song-7                     [54,1152][1271,1422]       540.9 ×  120.0 dp  click=1
+  song-8                     [1289,1152][2506,1422]       540.9 ×  120.0 dp  click=1
+-- S3-avulsa
+  corpo                      [72,270][1452,1194]       613.3 ×  410.7 dp  click=0
+  borda-voltar               [0,198][384,1249]       170.7 ×  467.1 dp  click=1
+  borda-avancar              [2176,198][2560,1249]       170.7 ×  467.1 dp  click=1
+  auto-scroll                [54,1284][293,1432]       106.2 ×   65.8 dp  click=1
+  zoom-menos                 [320,1284][558,1432]       105.8 ×   65.8 dp  click=1
+  zoom-mais                  [585,1284][824,1432]       106.2 ×   65.8 dp  click=1
+  tema                       [851,1284][1089,1432]       105.8 ×   65.8 dp  click=1
+  indice                     [1116,1284][1355,1432]       106.2 ×   65.8 dp  click=1
+  busca                      [1382,1284][1620,1432]       105.8 ×   65.8 dp  click=1
+  sair                       [1647,1284][1886,1432]       106.2 ×   65.8 dp  click=1
+-- S3-claro
+  corpo                      [72,270][1452,886]       613.3 ×  273.8 dp  click=0
+  borda-voltar               [0,198][384,1249]       170.7 ×  467.1 dp  click=1
+  borda-avancar              [2176,198][2560,1249]       170.7 ×  467.1 dp  click=1
+  auto-scroll                [54,1284][293,1432]       106.2 ×   65.8 dp  click=1
+  zoom-menos                 [320,1284][558,1432]       105.8 ×   65.8 dp  click=1
+  zoom-mais                  [585,1284][824,1432]       106.2 ×   65.8 dp  click=1
+  tema                       [851,1284][1089,1432]       105.8 ×   65.8 dp  click=1
+  indice                     [1116,1284][1355,1432]       106.2 ×   65.8 dp  click=1
+  busca                      [1382,1284][1620,1432]       105.8 ×   65.8 dp  click=1
+  sair                       [1647,1284][1886,1432]       106.2 ×   65.8 dp  click=1
+-- S3-paisagem-pre-giro
+  placeholder                [72,270][2488,608]      1073.8 ×  150.2 dp  click=0
+  borda-voltar               [0,198][384,1249]       170.7 ×  467.1 dp  click=1
+  borda-avancar              [2176,198][2560,1249]       170.7 ×  467.1 dp  click=1
+  auto-scroll                [54,1284][357,1432]       134.7 ×   65.8 dp  click=1
+  zoom-menos                 [384,1284][622,1432]       105.8 ×   65.8 dp  click=1
+  zoom-mais                  [649,1284][888,1432]       106.2 ×   65.8 dp  click=1
+  tema                       [915,1284][1153,1432]       105.8 ×   65.8 dp  click=1
+  indice                     [1180,1284][1419,1432]       106.2 ×   65.8 dp  click=1
+  busca                      [1446,1284][1684,1432]       105.8 ×   65.8 dp  click=1
+  sair                       [1711,1284][1950,1432]       106.2 ×   65.8 dp  click=1
+-- S3-paisagem-volta
+  placeholder                [72,270][2488,608]      1073.8 ×  150.2 dp  click=0
+  borda-voltar               [0,198][384,1249]       170.7 ×  467.1 dp  click=1
+  borda-avancar              [2176,198][2560,1249]       170.7 ×  467.1 dp  click=1
+  auto-scroll                [54,1284][357,1432]       134.7 ×   65.8 dp  click=1
+  zoom-menos                 [384,1284][622,1432]       105.8 ×   65.8 dp  click=1
+  zoom-mais                  [649,1284][888,1432]       106.2 ×   65.8 dp  click=1
+  tema                       [915,1284][1153,1432]       105.8 ×   65.8 dp  click=1
+  indice                     [1180,1284][1419,1432]       106.2 ×   65.8 dp  click=1
+  busca                      [1446,1284][1684,1432]       105.8 ×   65.8 dp  click=1
+  sair                       [1711,1284][1950,1432]       106.2 ×   65.8 dp  click=1
+-- S3-placeholder-invalido-nobody
+  placeholder                [72,270][2488,608]      1073.8 ×  150.2 dp  click=0
+  borda-voltar               [0,198][384,1249]       170.7 ×  467.1 dp  click=1
+  borda-avancar              [2176,198][2560,1249]       170.7 ×  467.1 dp  click=1
+  auto-scroll                [54,1284][357,1432]       134.7 ×   65.8 dp  click=1
+  zoom-menos                 [384,1284][622,1432]       105.8 ×   65.8 dp  click=1
+  zoom-mais                  [649,1284][888,1432]       106.2 ×   65.8 dp  click=1
+  tema                       [915,1284][1153,1432]       105.8 ×   65.8 dp  click=1
+  indice                     [1180,1284][1419,1432]       106.2 ×   65.8 dp  click=1
+  busca                      [1446,1284][1684,1432]       105.8 ×   65.8 dp  click=1
+  sair                       [1711,1284][1950,1432]       106.2 ×   65.8 dp  click=1
+-- S3-retrato
+  placeholder                [72,270][1528,608]       647.1 ×  150.2 dp  click=0
+  borda-voltar               [0,198][240,2209]       106.7 ×  893.8 dp  click=1
+  borda-avancar              [1360,198][1600,2209]       106.7 ×  893.8 dp  click=1
+  auto-scroll                [54,2244][357,2392]       134.7 ×   65.8 dp  click=1
+  zoom-menos                 [384,2244][622,2392]       105.8 ×   65.8 dp  click=1
+  zoom-mais                  [649,2244][888,2392]       106.2 ×   65.8 dp  click=1
+  tema                       [915,2244][1153,2392]       105.8 ×   65.8 dp  click=1
+  indice                     [1180,2244][1419,2392]       106.2 ×   65.8 dp  click=1
+  busca                      [1446,2244][1600,2392]        68.4 ×   65.8 dp  click=1
+-- S3-texto
+  corpo                      [72,270][1452,886]       613.3 ×  273.8 dp  click=0
+  borda-voltar               [0,198][384,1249]       170.7 ×  467.1 dp  click=1
+  borda-avancar              [2176,198][2560,1249]       170.7 ×  467.1 dp  click=1
+  auto-scroll                [54,1284][293,1432]       106.2 ×   65.8 dp  click=1
+  zoom-menos                 [320,1284][558,1432]       105.8 ×   65.8 dp  click=1
+  zoom-mais                  [585,1284][824,1432]       106.2 ×   65.8 dp  click=1
+  tema                       [851,1284][1089,1432]       105.8 ×   65.8 dp  click=1
+  indice                     [1116,1284][1355,1432]       106.2 ×   65.8 dp  click=1
+  busca                      [1382,1284][1620,1432]       105.8 ×   65.8 dp  click=1
+  sair                       [1647,1284][1886,1432]       106.2 ×   65.8 dp  click=1
+-- S3d-pdf
+  pagina                     [1562,100][1831,148]       119.6 ×   21.3 dp  click=0
+  s3d                        [0,198][2560,1249]      1137.8 ×  467.1 dp  click=0
+  borda-voltar               [0,198][384,1249]       170.7 ×  467.1 dp  click=1
+  borda-avancar              [2176,198][2560,1249]       170.7 ×  467.1 dp  click=1
+  auto-scroll                [54,1284][357,1432]       134.7 ×   65.8 dp  click=1
+  zoom-menos                 [384,1284][622,1432]       105.8 ×   65.8 dp  click=1
+  zoom-mais                  [649,1284][888,1432]       106.2 ×   65.8 dp  click=1
+  tema                       [915,1284][1153,1432]       105.8 ×   65.8 dp  click=1
+  indice                     [1180,1284][1419,1432]       106.2 ×   65.8 dp  click=1
+  busca                      [1446,1284][1684,1432]       105.8 ×   65.8 dp  click=1
+  sair                       [1711,1284][1950,1432]       106.2 ×   65.8 dp  click=1
+-- S3e-arquivo-nao-baixado
+  borda-voltar               [0,198][384,1249]       170.7 ×  467.1 dp  click=1
+  s3e                        [0,198][2560,734]      1137.8 ×  238.2 dp  click=0
+  baixar                     [1148,590][1412,734]       117.3 ×   64.0 dp  click=1
+  borda-avancar              [2176,198][2560,1249]       170.7 ×  467.1 dp  click=1
+  auto-scroll                [54,1284][357,1432]       134.7 ×   65.8 dp  click=1
+  zoom-menos                 [384,1284][622,1432]       105.8 ×   65.8 dp  click=1
+  zoom-mais                  [649,1284][888,1432]       106.2 ×   65.8 dp  click=1
+  tema                       [915,1284][1153,1432]       105.8 ×   65.8 dp  click=1
+  indice                     [1180,1284][1419,1432]       106.2 ×   65.8 dp  click=1
+  busca                      [1446,1284][1684,1432]       105.8 ×   65.8 dp  click=1
+  sair                       [1711,1284][1950,1432]       106.2 ×   65.8 dp  click=1
+-- S4a-busca
+  fechar-busca               [54,88][162,218]        48.0 ×   57.8 dp  click=1
+  campo-busca                [236,99][2075,207]       817.3 ×   48.0 dp  click=1
+  chip-offline               [2149,131][2506,174]       158.7 ×   19.1 dp  click=0
+-- S4a-resultados-avulso
+  fechar-busca               [54,88][162,218]        48.0 ×   57.8 dp  click=1
+  campo-busca                [236,99][1929,207]       752.4 ×   48.0 dp  click=1
+  apagar                     [1965,99][2075,207]        48.9 ×   48.0 dp  click=1
+  chip-offline               [2149,131][2506,174]       158.7 ×   19.1 dp  click=0
+  resultado-13303251         [54,411][2506,590]      1089.8 ×   79.6 dp  click=1
+  resultado-97256d70         [54,609][2506,789]      1089.8 ×   80.0 dp  click=1
+-- S4a-resultados
+  fechar-busca               [54,88][162,218]        48.0 ×   57.8 dp  click=1
+  campo-busca                [236,99][1929,207]       752.4 ×   48.0 dp  click=1
+  apagar                     [1965,99][2075,207]        48.9 ×   48.0 dp  click=1
+  chip-offline               [2149,131][2506,174]       158.7 ×   19.1 dp  click=0
+  resultado-c81bd22e         [54,411][2506,590]      1089.8 ×   79.6 dp  click=1
+  resultado-64594f61         [54,609][2506,789]      1089.8 ×   80.0 dp  click=1
+-- S4b-nada-encontrado
+  fechar-busca               [54,88][162,218]        48.0 ×   57.8 dp  click=1
+  campo-busca                [236,99][1929,207]       752.4 ×   48.0 dp  click=1
+  apagar                     [1965,99][2075,207]        48.9 ×   48.0 dp  click=1
+  chip-offline               [2149,131][2506,174]       158.7 ×   19.1 dp  click=0
+  s4b                        [0,254][2560,1465]      1137.8 ×  538.2 dp  click=0
+-- S5-fim-setlist
+  borda-voltar               [0,198][384,1249]       170.7 ×  467.1 dp  click=1
+  voltar-inicio              [945,808][1361,952]       184.9 ×   64.0 dp  click=1
+  sair                       [1397,808][1615,952]        96.9 ×   64.0 dp  click=1
+-- S5-paisagem
+  borda-voltar               [0,198][384,1249]       170.7 ×  467.1 dp  click=1
+  voltar-inicio              [945,808][1361,952]       184.9 ×   64.0 dp  click=1
+  sair                       [1397,808][1615,952]        96.9 ×   64.0 dp  click=1
+-- S5-retrato
+  borda-voltar               [0,198][240,2209]       106.7 ×  893.8 dp  click=1
+  voltar-inicio              [465,1288][881,1432]       184.9 ×   64.0 dp  click=1
+  sair                       [917,1288][1135,1432]        96.9 ×   64.0 dp  click=1
+

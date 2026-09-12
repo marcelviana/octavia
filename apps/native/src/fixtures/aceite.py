@@ -18,6 +18,23 @@ Node) só para servir a um protocolo de device.
 Uso:
   python3 aceite.py cache <entrada.json> <saida.json> <modo> [args]
   python3 aceite.py servidor <porta> <modo> <setlists.json> <content.json>
+
+Receitas dos estados do design que NÃO se alcançam com o dado real
+(V1-PRECHECK §4.3 — nenhuma exige `pm clear` nem senha; o cache JSON e a
+persistência do Firebase Auth são armazenamentos distintos). Em todas, o
+Metro sobe com `EXPO_PUBLIC_API_BASE_URL=http://localhost:8788` **inline** e
+`adb reverse tcp:8788 tcp:8788`:
+
+  S1a  "sincronizando pela primeira vez"  store apagado  + servidor `atraso`
+  S1d  "offline sem cache"                store apagado  + modo avião
+  S1e  "falha com cache"                  cache real     + servidor `500-pagina-1`
+  S1f  "vazia após sync"                  cache real     + servidor normal com
+                                          um `{"setlists": []}` como entrada
+  S3   placeholder inválido               cache `invalidos-content`
+                                          + `invalidos-songs`, em modo avião
+
+"Store apagado" é `run-as rocks.octavia.app rm files/octavia-<uid>/*.json`,
+com backup e restauro por `cp -r` — a sessão sobrevive.
 """
 from __future__ import annotations
 
@@ -25,6 +42,10 @@ import copy
 import datetime
 import json
 import sys
+import time
+
+#: Segundos que o modo `atraso` segura cada resposta (S1a).
+ATRASO_S = 45
 
 # --------------------------------------------------------------- fixtures
 
@@ -149,16 +170,27 @@ def _paginas(content: list, modo: str) -> list[list]:
     A conta de audit tem 67 itens depois da régua de 120 colunas, então uma
     página só. Para os aceites A21/A22 a fixture força DUAS páginas baixando o
     corte para 40 — é o mínimo que exercita `hasMore` e o `mergePages`.
+
+    **Correção da divergência 23 (V1-PRECHECK §7.4)**: a versão anterior
+    devolvia SEMPRE duas listas, então com `content` vazio a página 1 saía com
+    `hasMore: true` e o app — obedecendo ao servidor, corretamente — pedia uma
+    página a mais. Foi isso que produziu o `sync ok … pages=2 content=0` do
+    S1f. A segunda página só existe quando há o que pôr nela.
+
+    Não confundir com a errata do A4 no PRD (§7.4 do mesmo pre-check): a
+    fórmula `1 + ⌈N/100⌉` erra com `N=0` mesmo contra um servidor perfeito,
+    porque descobrir que `N=0` custa a request que devolve `N`. São duas
+    coisas distintas e as duas são verdade; esta função conserta só a daqui.
     """
     corte = 40
     p1, p2 = content[:corte], content[corte:]
-    if modo == "id-repetido":
+    if modo == "id-repetido" and p1:
         # A22 — "duas páginas com um `id` repetido → item uma vez no cache".
         # Por que fixture: o servidor real só duplicaria um item se houvesse
         # uma criação entre as duas páginas, corrida que não se provoca em
         # prod sem escrever (orçamento: escrita 0).
         p2 = [copy.deepcopy(p1[0])] + p2
-    return [p1, p2]
+    return [p1, p2] if p2 else [p1]
 
 
 def servidor(porta: int, modo: str, setlists_path: str, content_path: str) -> None:
@@ -189,6 +221,14 @@ def servidor(porta: int, modo: str, setlists_path: str, content_path: str) -> No
             page = int(q.get("page", ["1"])[0])
             print(f"REQ {self.path} auth={'sim' if self.headers.get('Authorization') else 'NAO'}"
                   f" sortBy={q.get('sortBy', ['-'])[0]}", flush=True)
+
+            if modo == "atraso":
+                # S1a — "sincronizando pela primeira vez, sem cache". O estado
+                # vive só ENTRE o `sync start` e o primeiro 200, e contra prod
+                # isso dura ~4 s (medido: `sync ok … t=4010`): curto demais
+                # para `uiautomator dump` + `screencap`. Segurar a resposta é o
+                # único jeito de o estado ficar parado para ser medido.
+                time.sleep(ATRASO_S)
 
             if modo == "429":
                 # A3 — 429 com `Retry-After: 30`. Por que fixture: provocar um
