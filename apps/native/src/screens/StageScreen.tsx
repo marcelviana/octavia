@@ -24,7 +24,15 @@
  * design (D-1 / A14): quem vira página é o deslize sobre o documento.
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native'
+import {
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  useWindowDimensions,
+  type LayoutChangeEvent,
+} from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
 import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake'
 import Pdf from 'react-native-pdf'
@@ -405,9 +413,27 @@ export function StageScreen({
 
   useEffect(() => pararScroll, [pararScroll])
 
-  // Bordas: 15% da largura, altura ENTRE as barras (D-1 / A14).
-  const alturaConteudo = Math.max(height - (bar.top + bar.stage), touch.min)
-  const larguraBorda = Math.max(width * 0.15, touch.min)
+  // Bordas: 15% da largura, altura ENTRE as barras (D-1 / A14) — e agora as
+  // duas medidas vêm do `onLayout` do `meio`, não de `useWindowDimensions()`.
+  //
+  // Por quê (V1-PRECHECK §3.4, div. 16/24): `useWindowDimensions()` devolve a
+  // TELA (711,1 dp no AVD), e o código a tratava como JANELA (627,1 dp). A
+  // borda saía com 551,1 dp onde o `meio` tem 467,1 — **84,0 dp de transbordo**,
+  // exatamente a soma dos insets, cobrindo 100% do `auto-scroll`. O A14 afirma
+  // "entre as barras superior e inferior" desde o N1, e isso era falso.
+  //
+  // E por que `onLayout` e não `useSafeAreaInsets()`: o `SafeAreaView` da raiz
+  // (`App.tsx:206`) já consome os quatro insets, então `height - insets.top -
+  // insets.bottom` acerta HOJE por coincidência aritmética e quebra no dia em
+  // que alguém tocar em `edges`. O `onLayout` mede a altura que a View de fato
+  // recebeu, seja quem for que tenha consumido o quê acima dela.
+  const [meio, setMeio] = useState<{ largura: number; altura: number } | null>(null)
+  const medirMeio = useCallback((e: LayoutChangeEvent) => {
+    const { width: w, height: h } = e.nativeEvent.layout
+    setMeio((m) => (m !== null && m.largura === w && m.altura === h ? m : { largura: w, altura: h }))
+  }, [])
+  const alturaConteudo = meio === null ? 0 : Math.max(meio.altura, touch.min)
+  const larguraBorda = meio === null ? 0 : Math.max(meio.largura * 0.15, touch.min)
 
   const estiloTexto = {
     fontFamily: content?.content_type === 'Chords' || content?.content_type === 'Tab' ? font.mono : font.mono,
@@ -456,7 +482,7 @@ export function StageScreen({
         {!online ? <View style={styles.pontoOffline} /> : null}
       </View>
 
-      <View style={styles.meio}>
+      <View style={styles.meio} onLayout={medirMeio}>
         {urlArquivo !== null ? (
           <Arquivo
             estado={arquivo}
@@ -493,16 +519,24 @@ export function StageScreen({
           </ScrollView>
         )}
 
-        <Pressable
-          style={[styles.borda, { width: larguraBorda, height: alturaConteudo, left: 0 }]}
-          onPress={voltar}
-          testID="borda-voltar"
-        />
-        <Pressable
-          style={[styles.borda, { width: larguraBorda, height: alturaConteudo, right: 0 }]}
-          onPress={avancar}
-          testID="borda-avancar"
-        />
+        {/* No PRIMEIRO frame o `onLayout` ainda não disparou e as bordas não
+            existem — melhor do que existirem com o tamanho errado num canto.
+            Não afeta o A17: ele mede a TROCA de música, e trocar de música não
+            remonta o palco, então o `meio` não é medido de novo. */}
+        {meio !== null ? (
+          <>
+            <Pressable
+              style={[styles.borda, { width: larguraBorda, height: alturaConteudo, left: 0 }]}
+              onPress={voltar}
+              testID="borda-voltar"
+            />
+            <Pressable
+              style={[styles.borda, { width: larguraBorda, height: alturaConteudo, right: 0 }]}
+              onPress={avancar}
+              testID="borda-avancar"
+            />
+          </>
+        ) : null}
       </View>
 
       <View style={[styles.barraBaixo, { borderTopColor: cor.line }]}>
