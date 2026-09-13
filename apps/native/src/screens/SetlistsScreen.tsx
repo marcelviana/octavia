@@ -14,7 +14,7 @@
  * setlists" antes do primeiro sync bem-sucedido.
  *
  * O que a V1-PR4 mudou é pintura, não comportamento: os três glifos textuais
- * `✓ ◔ ✗` viram os ícones `garantida`, `parcial` (arco proporcional a n/m) e
+ * `✓ ◔ ✗` viram os ícones `garantida` (neutro), `parcial` (arco proporcional a n/m) e
  * `nunca-sincronizada` de 28; o separador " · " dos metadados vira os ícones
  * `data` · `local` · `n-de-musicas` de 20; status, banner e botões passam a
  * ícone + rótulo. Nenhum texto muda, nenhum controle deixa de aceitar toque
@@ -73,19 +73,21 @@ const ROTULO: Record<OfflineStatus['kind'], string> = {
 }
 
 /**
- * O indicador de garantia (§6.4): `garantida` em `accentInk` (a moldura S1b
- * mantém a cor que o glifo ✓ já tinha); `parcial` e `nunca sincronizada` em
- * `offlineInk` — âmbar é "não está pronta" (§6.1); `baixando` no acento,
- * porque é ação em curso, e leva o rótulo "Baixando…" que a §6.4 lhe dá.
+ * O indicador de garantia (§6.4 · §6.1): `garantida` em tinta NEUTRA — ícone
+ * em `text`, rótulo em `muted` (E12: a moldura S1b pintava em accentInk e
+ * estava errada; o acento fica com um significado só, ativo · atual · foco,
+ * §3.1); `parcial` e `nunca sincronizada` em `offlineInk` — âmbar é "não
+ * está pronta", neutro é "pode ir"; `baixando` no acento, porque é ação em
+ * curso, e leva o rótulo "Baixando…" que a §6.4 lhe dá.
  */
 function indicadorDe(
   kind: OfflineStatus['kind'],
   baixando: boolean,
-): { icone: NomeIcone; cor: string; rotulo: string } {
-  if (baixando) return { icone: 'baixando', cor: dark.accentInk, rotulo: 'Baixando…' }
-  if (kind === 'guaranteed') return { icone: 'garantida', cor: dark.accentInk, rotulo: ROTULO.guaranteed }
-  if (kind === 'partial') return { icone: 'parcial', cor: dark.offlineInk, rotulo: ROTULO.partial }
-  return { icone: 'nunca-sincronizada', cor: dark.offlineInk, rotulo: ROTULO.never }
+): { icone: NomeIcone; cor: string; corRotulo: string; rotulo: string } {
+  if (baixando) return { icone: 'baixando', cor: dark.accentInk, corRotulo: dark.accentInk, rotulo: 'Baixando…' }
+  if (kind === 'guaranteed') return { icone: 'garantida', cor: dark.text, corRotulo: dark.muted, rotulo: ROTULO.guaranteed }
+  if (kind === 'partial') return { icone: 'parcial', cor: dark.offlineInk, corRotulo: dark.offlineInk, rotulo: ROTULO.partial }
+  return { icone: 'nunca-sincronizada', cor: dark.offlineInk, corRotulo: dark.offlineInk, rotulo: ROTULO.never }
 }
 
 /** Sublinha do indicador — muda com a rede no estado ✗ (proposta 07). */
@@ -237,7 +239,7 @@ function CartaoSetlist({
             fracao={status.kind === 'partial' && status.need > 0 ? status.have / status.need : undefined}
           />
           <View style={styles.indicadorTexto}>
-            <Text style={[styles.indicadorRotulo, { color: indicador.cor }]}>{indicador.rotulo}</Text>
+            <Text style={[styles.indicadorRotulo, { color: indicador.corRotulo }]}>{indicador.rotulo}</Text>
             <Text style={styles.indicadorSub}>{sublinha(status, online)}</Text>
           </View>
         </View>
