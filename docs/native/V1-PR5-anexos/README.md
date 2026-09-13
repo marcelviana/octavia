@@ -208,41 +208,98 @@ direito** (`emu kill`, que levou ~20 s salvando o snapshot — div. 57).
 
 ## CI — `native.yml`
 
-**A referência é 9m16s** — run `34777518972`, a V1-PR4, head `cb31a40`. Os
-13m18s do run `34771766466` (V1-PR3) **não são referência**: aquele run
-compilou o `react-native-svg` do zero. Esta PR não acrescenta módulo nativo
-nenhum — só toca `apps/native/src/screens/IndexScreen.tsx`,
-`apps/native/scripts/` e `docs/` —, então **se subir para perto de 13, é cache
-frio do Gradle, não módulo novo**, e não há o que investigar.
+**Instrução recebida**: a referência é 9m16s (run `34777518972`, a V1-PR4); os
+13m18s da V1-PR3 não são referência, porque aquele run compilou o
+`react-native-svg` do zero; se esta PR subir para perto de 13, é cache frio,
+não módulo novo.
 
-| run | job `android-debug-apk` | Gradle `assembleDebug` | `Post cache` | tarefas |
-|---|---|---|---|---|
-| 34771766466 (V1-PR3, compilou o SVG do zero — **não é referência**) | 13m18s | 11m34s | **21s — SALVOU** | — |
-| 34777518972 (**referência**, V1-PR4, head `cb31a40`) | **9m16s** | 7m47s | 0s — hit | 621 : 621 executed |
-| 34780911672 (**esta PR**, head `4cb3b22`) | **11m55s** | **10m15s** | 1s — hit | **621 : 621 executed** |
+Esta PR deu **11m55s**. Acima da referência, longe dos 13. Fui medir se era
+cache frio — e a medição achou mais do que a pergunta pedia.
 
-**11m55s, contra 9m16s da referência — e não é cache frio.** O +2m39s do job está
-quase todo no Gradle (+2m28s), e o Gradle fez **exatamente o mesmo trabalho**:
+### As cinco medições
 
-- **mesma chave de cache**, byte a byte — `gradle-Linux-0df0eb47967ce576…` nos
-  dois runs, e os dois deram **hit** (o `Post Run actions/cache` levou 0–1 s,
-  porque não havia o que salvar). O que "cache frio" parece está no run da
-  V1-PR3: lá o `Post cache` levou **21 s**, salvando;
-- **621 actionable tasks : 621 executed** nos dois, e 801 linhas `> Task :` nos
-  dois;
+| run | head | o que mudou nele | job | Gradle | tarefas | `Post cache` |
+|---|---|---|---|---|---|---|
+| `34771766466` V1-PR3 | — | código **+ o `react-native-svg` novo** | 13m18s | 11m34s | — | **21s — SALVOU (frio)** |
+| `34777518972` V1-PR4 | `cb31a40` | o código do S1 | **9m16s** | **7m48s** | 621 : 621 | 0s — hit |
+| `34778219856` V1-PR4 | `b95a6bc` | **só `docs/`** | 12m21s | **11m03s** | — | hit |
+| `34780911672` V1-PR5 | `4cb3b22` | o código do S2 | **11m55s** | 10m15s | 621 : 621 | 1s — hit |
+| `34781671264` V1-PR5 | `74b339b` | **só `docs/`** | 11m53s | 10m39s | 621 : 621 | 0s — hit |
+
+*(A tabela vai até o head `74b339b`. O push que a registra dispara o run
+seguinte — ver "o gate re-roda", abaixo —, e documentar esse seria loop.)*
+
+### Não é cache frio, e a prova está dentro da própria V1-PR4
+
+**A #297 rodou o `native` duas vezes.** O segundo run tinha o `apps/native`
+byte a byte igual ao primeiro — entre eles entrou só o commit de anexos, que
+não toca uma linha de código — e levou **12m21s / Gradle 11m03s** contra
+**9m16s / 7m48s**. Treze minutos de diferença no relógio, mesmo código, mesmo
+dia, mesma chave de cache, mesmo runner nominal.
+
+Ou seja: a variação que esta PR estava tentando explicar contra a V1-PR4 **já
+existia dentro da V1-PR4**, e é **maior lá** (+3m15s no Gradle) do que aqui
+(+2m27s). Dentro da V1-PR5 ela quase não existe: 10m15s e 10m39s.
+
+O resto do aparato confirma que o trabalho é o mesmo nos quatro runs quentes:
+
+- **mesma chave de cache**, byte a byte — `gradle-Linux-0df0eb47967ce576…` —, e
+  todos com **hit**: o `Post Run actions/cache` levou 0–1 s, porque não havia o
+  que salvar. A assinatura de cache frio está só no run da V1-PR3, onde esse
+  mesmo passo levou **21 s** salvando;
+- **621 actionable tasks : 621 executed** em todos os medidos, e 801 linhas
+  `> Task :`;
 - **27** tarefas de `externalNativeBuild`/CMake e **38** tarefas
-  `:react-native-svg` nos dois. O SVG recompila em todo run — o cache do
-  `actions/cache` guarda o `~/.gradle` baixado, não a saída compilada do
-  módulo —, e recompilou igual nos dois.
+  `:react-native-svg`. **O SVG recompila em todo run** — o `actions/cache`
+  guarda o `~/.gradle` baixado, não a saída compilada do módulo — e recompilou
+  igual em todos.
 
-Conclusão, com o número na mão: **variação de runner** num passo que é
-CPU-bound (NDK/C++), não módulo novo e não cache frio. Esta PR não toca
-`pnpm-lock.yaml`, não acrescenta dependência e mexe em um `.tsx`, em
+Conclusão: **variação de runner** num passo CPU-bound de NDK/C++. Esta PR não
+toca `pnpm-lock.yaml`, não acrescenta dependência, e mexe em um `.tsx`, em
 `apps/native/scripts/` e em `docs/`. Nada a investigar.
 
-Nota de precisão sobre a referência: os **13m18s** citados para a V1-PR3 são o
-**job inteiro**; o `assembleDebug` de lá foi **11m34s**. O Gradle desta PR
-(10m15s) está abaixo dos dois números da PR3 e acima dos 7m47s da PR4.
+### O que isso diz sobre a referência — pergunta ao Marcel
+
+O `native.yml` carrega no cabeçalho a população que fecha o caso, da N1-h3:
+
+> "O gate custou **10m15s–14m15s** nas sete medições do N1 (**mediana ~11m45s**),
+> acima dos ~9 min aceitáveis."
+
+Somando os quatro jobs quentes desta série às sete do N1: os **11m55s** desta PR
+estão **na mediana do N1**; os **9m16s** da referência estão **abaixo de toda a
+faixa do N1**, e são o único dos onze a bater os "~9 min aceitáveis". A
+referência não descreve o regime do gate — descreve o run mais rápido já
+observado.
+
+Registro, sem mexer nela (a referência é do Marcel): se ficar em 9m16s, toda PR
+da série vai "estourar", inclusive as que não fizerem nada de errado. A mediana
+do N1 (~11m45s) descreve melhor o que o gate custa.
+
+Nota de precisão que a medição trouxe, e que o encerramento vai querer: os
+**13m18s** da V1-PR3 são o **job inteiro**; o `assembleDebug` de lá foi
+**11m34s**. E o `V1-PR4-anexos/README.md` registra `34777518972` / 9m16s como "a
+duração do `native.yml` da #297" — é verdade do run que ele nomeia pelo head,
+mas a #297 rodou o gate **duas** vezes e o último foi 12m21s.
+
+### O gate re-roda a cada push, mesmo só de `docs/` — material do B8
+
+O filtro de `paths` do `native.yml` é `apps/native/**`,
+`.github/workflows/native.yml` e `pnpm-workspace.yaml`. Ainda assim, o commit de
+anexos desta PR — **só `docs/`** — disparou o run `34781671264`, e o mesmo
+aconteceu na #297 (`34778219856`).
+
+Não é defeito do workflow: num `pull_request`, o GitHub avalia `paths` contra o
+**diff acumulado do PR**, não contra o push. Numa PR que já tocou
+`apps/native/**`, **todo push subsequente re-roda o gate**, ainda que mexa só em
+documentação.
+
+Custo medido: **~12 min de runner por commit de docs** numa PR de nativo — e o
+rito desta série garante pelo menos um, porque o commit que registra a duração
+do CI vem, por definição, depois do run que ele documenta. **Nada foi mudado
+aqui**: parece herança do **B8 (housekeeping de pipeline)**, e a decisão é do
+Marcel.
+
+`build` (CI): 2m53s e 2m57s, os dois `success`. Vercel verde.
 
 ## sha256 dos anexos de texto
 
