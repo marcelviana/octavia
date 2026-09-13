@@ -1,0 +1,4 @@
+3dfda0275e796830636b44424aa6c16611c08ce5c1bffc6cefe1f93807d92164  catalogo-34-dois-temas.png
+a6d85f808b334747a89f5322d40bf2700c9d2f1e3b173cabe8d3f6f6250dfdf5  catalogo-estados-cn-claro.png
+915f7c3ac104318c6de261415e2e3ae75dbd34f8ca0c9e44da22524187bc5cf5  catalogo-estados-cn-escuro.png
+1865b2acba6b1da6c53332f92242d9b72520bb4de93da969cf105d83c4bae310  s3d-motivo-so-screencap-crop.png

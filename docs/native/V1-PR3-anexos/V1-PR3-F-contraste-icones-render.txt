@@ -1,0 +1,33 @@
+$ (F) contraste dos dez tokens · a checagem do mapa de ícones · a prova de render (R14)
+
+===== F1 — contraste (WCAG 2.1, luminância relativa em sRGB, cores opacas) — node contraste.mjs =====
+text        escuro #F9F5F1 17,57 (17,5681) | claro #100F16 16,96 (16,9598) | ícone ok/ok  texto ok/ok
+muted       escuro #A9A5B5  7,93 (7,9281) | claro #5E5A6A  5,94 (5,9395) | ícone ok/ok  texto ok/ok
+accent      escuro #777CE8  5,29 (5,2931) | claro #777CE8  3,20 (3,2041) | ícone ok/ok  texto ok/REPROVA
+error       escuro #E5686F  5,94 (5,9361) | claro #E5686F  2,86 (2,8571) | ícone ok/REPROVA  texto ok/REPROVA
+offline     escuro #C9923B  6,95 (6,9497) | claro #C9923B  2,44 (2,4404) | ícone ok/REPROVA  texto ok/REPROVA
+line        escuro #2A2836  1,32 (1,3206) | claro #D6CFC3  1,38 (1,3770) | ícone REPROVA/REPROVA  texto REPROVA/REPROVA
+accentInk   escuro #777CE8  5,29 (5,2931) | claro #4A4FC0  5,89 (5,8942) | ícone ok/ok  texto ok/ok
+errorInk    escuro #E5686F  5,94 (5,9361) | claro #A32A31  6,37 (6,3722) | ícone ok/ok  texto ok/ok
+offlineInk  escuro #C9923B  6,95 (6,9497) | claro #7A5410  6,02 (6,0226) | ícone ok/ok  texto ok/ok
+lineInfo    escuro #6E6A80  3,66 (3,6629) | claro #8E8779  3,17 (3,1720) | ícone ok/ok  texto REPROVA/REPROVA
+  → accentInk claro = 5,89 (5,8942), não 5,90: errata E5 do DESIGN-V1 §9 (commit 2).
+
+===== F2 — dados.ts × §6.4 × anexo D do pre-check — node checa-dados.mjs =====
+nomes no mapa: 34  ·  linhas da §6.4: 34 (34, com voltar duas vezes)  ·  + log-in
+paths d distintos no anexo D: 50  ·  no mapa (normal): 51
+d do anexo ausentes do mapa: 0 []
+d 'normal' do mapa que não estão no anexo D: 1 ["M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 8l4 4-4 4M15 12H4"]  (esperado: só o log-in, que vem do telas.html)
+hex cravado no mapa: 0 (esperado 0)  ·  tinta por token: 6 ocorrências, nos ícones parcial, baixando
+linhas: dados.ts 149
+  (roda em scratch; versionar como gate:icones é pergunta ao Marcel)
+
+===== F3 — a prova de tela do R14 / div. 40 (commit 3) =====
+  render/catalogo-34-dois-temas.png: instrumento de scratch (Catalogo.tsx sobre o App.tsx,
+  revertido com git checkout, nunca commitado) renderizando os 34 nomes em 28 · 24 · 20 nos
+  dois temas, a linha "est" (auto-scroll ativo e inerte, zoom inertes, tab@20 e tab@28,
+  parcial e baixando por token) e a linha "CN" — o MESMO markup sem a prop `color`: índice,
+  tab, partitura e busca saem em PRETO, traço e preenchimento. render/catalogo-estados-cn-*.png
+  são os recortes das duas linhas em cada tema.
+  render/s3d-motivo-so-screencap-crop.png: o motivo "auto-scroll só em texto" na linha acima
+  da barra do S3d, 1 s depois do toque.

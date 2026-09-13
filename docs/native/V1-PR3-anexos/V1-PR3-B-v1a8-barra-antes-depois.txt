@@ -1,0 +1,178 @@
+$ (B) V1-A8 emendado — os sete controles, ANTES × DEPOIS, nas seis variantes do S3 e nos dois temas
+$ adb -s emulator-5554 shell uiautomator dump · densidade 360 (2,25 px/dp) · node ids.mjs <xml>
+
+As duas metades do aceite: (i) sete controles, mesma ordem, ≥ 64 dp, LARGURA IDÊNTICA entre
+as variantes; (ii) content-desc NÃO VAZIO nos sete (hoje é a concatenação dos <Text>).
+
+===== B1 — ANTES (main 6697285) =====
+-- S3-texto
+  auto-scroll                [54,1284][293,1432]      click=1 desc="Auto-scroll"
+  zoom-menos                 [320,1284][558,1432]     click=1 desc="Zoom −"
+  zoom-mais                  [585,1284][824,1432]     click=1 desc="Zoom +"
+  tema                       [851,1284][1089,1432]    click=1 desc="Claro"
+  indice                     [1116,1284][1355,1432]   click=1 desc="Índice"
+  busca                      [1382,1284][1620,1432]   click=1 desc="Busca"
+  sair                       [1647,1284][1886,1432]   click=1 desc="Sair"
+-- S3-texto-claro
+  auto-scroll                [54,1284][293,1432]      click=1 desc="Auto-scroll"
+  zoom-menos                 [320,1284][558,1432]     click=1 desc="Zoom −"
+  zoom-mais                  [585,1284][824,1432]     click=1 desc="Zoom +"
+  tema                       [851,1284][1089,1432]    click=1 desc="Escuro"
+  indice                     [1116,1284][1355,1432]   click=1 desc="Índice"
+  busca                      [1382,1284][1620,1432]   click=1 desc="Busca"
+  sair                       [1647,1284][1886,1432]   click=1 desc="Sair"
+-- S3d-pdf
+  auto-scroll                [54,1284][357,1432]      click=1 desc="Auto-scroll, auto-scroll só em texto"
+  zoom-menos                 [384,1284][622,1432]     click=1 desc="Zoom −, pinça para zoom"
+  zoom-mais                  [649,1284][888,1432]     click=1 desc="Zoom +"
+  tema                       [915,1284][1153,1432]    click=1 desc="Claro"
+  indice                     [1180,1284][1419,1432]   click=1 desc="Índice"
+  busca                      [1446,1284][1684,1432]   click=1 desc="Busca"
+  sair                       [1711,1284][1950,1432]   click=1 desc="Sair"
+-- S3d-pdf-claro
+  auto-scroll                [54,1284][357,1432]      click=1 desc="Auto-scroll, auto-scroll só em texto"
+  zoom-menos                 [384,1284][622,1432]     click=1 desc="Zoom −, pinça para zoom"
+  zoom-mais                  [649,1284][888,1432]     click=1 desc="Zoom +"
+  tema                       [915,1284][1153,1432]    click=1 desc="Escuro"
+  indice                     [1180,1284][1419,1432]   click=1 desc="Índice"
+  busca                      [1446,1284][1684,1432]   click=1 desc="Busca"
+  sair                       [1711,1284][1950,1432]   click=1 desc="Sair"
+-- S3-avulsa
+  auto-scroll                [54,1284][293,1432]      click=1 desc="Auto-scroll"
+  zoom-menos                 [320,1284][558,1432]     click=1 desc="Zoom −"
+  zoom-mais                  [585,1284][824,1432]     click=1 desc="Zoom +"
+  tema                       [851,1284][1089,1432]    click=1 desc="Claro"
+  indice                     [1116,1284][1355,1432]   click=1 desc="Índice"
+  busca                      [1382,1284][1620,1432]   click=1 desc="Busca"
+  sair                       [1647,1284][1886,1432]   click=1 desc="Voltar"
+-- S3-avulsa-claro
+  auto-scroll                [54,1284][293,1432]      click=1 desc="Auto-scroll"
+  zoom-menos                 [320,1284][558,1432]     click=1 desc="Zoom −"
+  zoom-mais                  [585,1284][824,1432]     click=1 desc="Zoom +"
+  tema                       [851,1284][1089,1432]    click=1 desc="Escuro"
+  indice                     [1116,1284][1355,1432]   click=1 desc="Índice"
+  busca                      [1382,1284][1620,1432]   click=1 desc="Busca"
+  sair                       [1647,1284][1886,1432]   click=1 desc="Voltar"
+-- S3e-arquivo-nao-baixado
+  auto-scroll                [54,1284][357,1432]      click=1 desc="Auto-scroll, auto-scroll só em texto"
+  zoom-menos                 [384,1284][622,1432]     click=1 desc="Zoom −, pinça para zoom"
+  zoom-mais                  [649,1284][888,1432]     click=1 desc="Zoom +"
+  tema                       [915,1284][1153,1432]    click=1 desc="Claro"
+  indice                     [1180,1284][1419,1432]   click=1 desc="Índice"
+  busca                      [1446,1284][1684,1432]   click=1 desc="Busca"
+  sair                       [1711,1284][1950,1432]   click=1 desc="Voltar"
+
+===== B2 — DEPOIS (commit 4) =====
+-- S3-texto
+  auto-scroll                [54,1284][203,1432]      click=1 desc="Rolagem automática, desligada"
+  zoom-menos                 [239,1284][387,1432]     click=1 desc="Diminuir o texto"
+  zoom-mais                  [423,1284][572,1432]     click=1 desc="Aumentar o texto"
+  tema                       [608,1284][756,1432]     click=1 desc="Mudar para o tema claro"
+  indice                     [792,1284][941,1432]     click=1 desc="Abrir o índice da setlist"
+  busca                      [977,1284][1125,1432]    click=1 desc="Buscar na biblioteca"
+  sair                       [1161,1284][1310,1432]   click=1 desc="Sair do palco"
+-- S3-texto-claro
+  auto-scroll                [54,1284][203,1432]      click=1 desc="Rolagem automática, desligada"
+  zoom-menos                 [239,1284][387,1432]     click=1 desc="Diminuir o texto"
+  zoom-mais                  [423,1284][572,1432]     click=1 desc="Aumentar o texto"
+  tema                       [608,1284][756,1432]     click=1 desc="Mudar para o tema escuro"
+  indice                     [792,1284][941,1432]     click=1 desc="Abrir o índice da setlist"
+  busca                      [977,1284][1125,1432]    click=1 desc="Buscar na biblioteca"
+  sair                       [1161,1284][1310,1432]   click=1 desc="Sair do palco"
+-- S3-texto-autoscroll-ligado
+  auto-scroll                [54,1284][203,1432]      click=1 desc="Rolagem automática, ligada"
+  zoom-menos                 [239,1284][387,1432]     click=1 desc="Diminuir o texto"
+  zoom-mais                  [423,1284][572,1432]     click=1 desc="Aumentar o texto"
+  tema                       [608,1284][756,1432]     click=1 desc="Mudar para o tema claro"
+  indice                     [792,1284][941,1432]     click=1 desc="Abrir o índice da setlist"
+  busca                      [977,1284][1125,1432]    click=1 desc="Buscar na biblioteca"
+  sair                       [1161,1284][1310,1432]   click=1 desc="Sair do palco"
+-- S3d-pdf
+  auto-scroll                [54,1284][203,1432]      click=1 desc="Rolagem automática, indisponível: só em texto"
+  zoom-menos                 [239,1284][387,1432]     click=1 desc="Diminuir o texto, indisponível: pinça para zoom"
+  zoom-mais                  [423,1284][572,1432]     click=1 desc="Aumentar o texto, indisponível: pinça para zoom"
+  tema                       [608,1284][756,1432]     click=1 desc="Mudar para o tema claro"
+  indice                     [792,1284][941,1432]     click=1 desc="Abrir o índice da setlist"
+  busca                      [977,1284][1125,1432]    click=1 desc="Buscar na biblioteca"
+  sair                       [1161,1284][1310,1432]   click=1 desc="Sair do palco"
+-- S3d-pdf-claro
+  auto-scroll                [54,1284][203,1432]      click=1 desc="Rolagem automática, indisponível: só em texto"
+  zoom-menos                 [239,1284][387,1432]     click=1 desc="Diminuir o texto, indisponível: pinça para zoom"
+  zoom-mais                  [423,1284][572,1432]     click=1 desc="Aumentar o texto, indisponível: pinça para zoom"
+  tema                       [608,1284][756,1432]     click=1 desc="Mudar para o tema escuro"
+  indice                     [792,1284][941,1432]     click=1 desc="Abrir o índice da setlist"
+  busca                      [977,1284][1125,1432]    click=1 desc="Buscar na biblioteca"
+  sair                       [1161,1284][1310,1432]   click=1 desc="Sair do palco"
+-- S3-avulsa
+  auto-scroll                [54,1284][203,1432]      click=1 desc="Rolagem automática, desligada"
+  zoom-menos                 [239,1284][387,1432]     click=1 desc="Diminuir o texto"
+  zoom-mais                  [423,1284][572,1432]     click=1 desc="Aumentar o texto"
+  tema                       [608,1284][756,1432]     click=1 desc="Mudar para o tema claro"
+  indice                     [792,1284][941,1432]     click=1 desc="Abrir o índice da setlist"
+  busca                      [977,1284][1125,1432]    click=1 desc="Buscar na biblioteca"
+  sair                       [1161,1284][1310,1432]   click=1 desc="Voltar para a busca"
+-- S3-avulsa-claro
+  auto-scroll                [54,1284][203,1432]      click=1 desc="Rolagem automática, desligada"
+  zoom-menos                 [239,1284][387,1432]     click=1 desc="Diminuir o texto"
+  zoom-mais                  [423,1284][572,1432]     click=1 desc="Aumentar o texto"
+  tema                       [608,1284][756,1432]     click=1 desc="Mudar para o tema escuro"
+  indice                     [792,1284][941,1432]     click=1 desc="Abrir o índice da setlist"
+  busca                      [977,1284][1125,1432]    click=1 desc="Buscar na biblioteca"
+  sair                       [1161,1284][1310,1432]   click=1 desc="Voltar para a busca"
+-- S3e-arquivo-nao-baixado
+  auto-scroll                [54,1284][203,1432]      click=1 desc="Rolagem automática, indisponível: só em texto"
+  zoom-menos                 [239,1284][387,1432]     click=1 desc="Diminuir o texto, indisponível: pinça para zoom"
+  zoom-mais                  [423,1284][572,1432]     click=1 desc="Aumentar o texto, indisponível: pinça para zoom"
+  tema                       [608,1284][756,1432]     click=1 desc="Mudar para o tema claro"
+  indice                     [792,1284][941,1432]     click=1 desc="Abrir o índice da setlist"
+  busca                      [977,1284][1125,1432]    click=1 desc="Buscar na biblioteca"
+  sair                       [1161,1284][1310,1432]   click=1 desc="Voltar para a busca"
+-- S3e-arquivo-nao-baixado-claro
+  auto-scroll                [54,1284][203,1432]      click=1 desc="Rolagem automática, indisponível: só em texto"
+  zoom-menos                 [239,1284][387,1432]     click=1 desc="Diminuir o texto, indisponível: pinça para zoom"
+  zoom-mais                  [423,1284][572,1432]     click=1 desc="Aumentar o texto, indisponível: pinça para zoom"
+  tema                       [608,1284][756,1432]     click=1 desc="Mudar para o tema escuro"
+  indice                     [792,1284][941,1432]     click=1 desc="Abrir o índice da setlist"
+  busca                      [977,1284][1125,1432]    click=1 desc="Buscar na biblioteca"
+  sair                       [1161,1284][1310,1432]   click=1 desc="Voltar para a busca"
+-- S3-placeholder-invalido-nobody
+  auto-scroll                [54,1284][203,1432]      click=1 desc="Rolagem automática, indisponível: só em texto"
+  zoom-menos                 [239,1284][387,1432]     click=1 desc="Diminuir o texto"
+  zoom-mais                  [423,1284][572,1432]     click=1 desc="Aumentar o texto"
+  tema                       [608,1284][756,1432]     click=1 desc="Mudar para o tema claro"
+  indice                     [792,1284][941,1432]     click=1 desc="Abrir o índice da setlist"
+  busca                      [977,1284][1125,1432]    click=1 desc="Buscar na biblioteca"
+  sair                       [1161,1284][1310,1432]   click=1 desc="Sair do palco"
+-- S3-placeholder-invalido-nobody-claro
+  auto-scroll                [54,1284][203,1432]      click=1 desc="Rolagem automática, indisponível: só em texto"
+  zoom-menos                 [239,1284][387,1432]     click=1 desc="Diminuir o texto"
+  zoom-mais                  [423,1284][572,1432]     click=1 desc="Aumentar o texto"
+  tema                       [608,1284][756,1432]     click=1 desc="Mudar para o tema escuro"
+  indice                     [792,1284][941,1432]     click=1 desc="Abrir o índice da setlist"
+  busca                      [977,1284][1125,1432]    click=1 desc="Buscar na biblioteca"
+  sair                       [1161,1284][1310,1432]   click=1 desc="Sair do palco"
+-- S3-retrato
+  auto-scroll                [54,2244][203,2392]      click=1 desc="Rolagem automática, desligada"
+  zoom-menos                 [239,2244][387,2392]     click=1 desc="Diminuir o texto"
+  zoom-mais                  [423,2244][572,2392]     click=1 desc="Aumentar o texto"
+  tema                       [608,2244][756,2392]     click=1 desc="Mudar para o tema claro"
+  indice                     [792,2244][941,2392]     click=1 desc="Abrir o índice da setlist"
+  busca                      [977,2244][1125,2392]    click=1 desc="Buscar na biblioteca"
+  sair                       [1161,2244][1310,2392]   click=1 desc="Sair do palco"
+-- S3-paisagem-volta
+  auto-scroll                [54,1284][203,1432]      click=1 desc="Rolagem automática, desligada"
+  zoom-menos                 [239,1284][387,1432]     click=1 desc="Diminuir o texto"
+  zoom-mais                  [423,1284][572,1432]     click=1 desc="Aumentar o texto"
+  tema                       [608,1284][756,1432]     click=1 desc="Mudar para o tema claro"
+  indice                     [792,1284][941,1432]     click=1 desc="Abrir o índice da setlist"
+  busca                      [977,1284][1125,1432]    click=1 desc="Buscar na biblioteca"
+  sair                       [1161,1284][1310,1432]   click=1 desc="Sair do palco"
+
+===== B3 — a conta =====
+  DEPOIS, em TODAS as variantes e temas (e no retrato):
+    x1 = 54 · 239 · 423 · 608 · 792 · 977 · 1161 px   (24 dp de padding + caixas de 66 + gap 16)
+    caixa = 149 × 148 px = 66,2 × 65,8 dp  (≥ 64 ✓)   fileira = 1310 − 54 = 1256 px = 558,2 dp (design: 558)
+    content-desc: os sete não vazios, em pt-BR, verbatim do DESIGN-V1 §6.4
+  ANTES:
+    auto-scroll 106,2 dp (texto) × 134,7 dp (PDF/S3e/nobody); os x1 de seis dos sete andam 28,4 dp
+    entre variantes (div. 17 / R10) — a metade (i) REPROVAVA; content-desc = texto dos filhos.

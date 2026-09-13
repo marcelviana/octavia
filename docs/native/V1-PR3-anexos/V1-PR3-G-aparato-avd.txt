@@ -1,0 +1,186 @@
+$ (G) o aparato — AVD antes × depois, rede, Metro, e o que o instrumento ensinou
+
+boot: 12:01:00  cmd: emulator -avd octavia_tab32 -port 5554   (SEM -no-snapshot-save — div. 42)
+
+=== AVD estado ANTES (2026-09-13 12:02:05) ===
+--- dumpsys package:
+    primaryCpuAbi=arm64-v8a
+    versionCode=1 minSdk=24 targetSdk=36
+    versionName=0.0.1
+    firstInstallTime=2026-09-10 11:42:54
+    lastUpdateTime=2026-09-10 13:12:15
+--- pm path + sha256 do base.apk:
+/data/app/~~45SpLO4E-G5L0kQbLXfDSg==/rocks.octavia.app-aRdxOEvc3n-4ZR4noqpESA==/base.apk
+cb1b5fea0240e185ee8ff7e81d2eb790a13a21e12ffb5613c94e86e9e7963c8f  /data/app/~~45SpLO4E-G5L0kQbLXfDSg==/rocks.octavia.app-aRdxOEvc3n-4ZR4noqpESA==/base.apk
+-rw-r--r-- 1 system system 76836083 2026-09-10 13:12 /data/app/~~45SpLO4E-G5L0kQbLXfDSg==/rocks.octavia.app-aRdxOEvc3n-4ZR4noqpESA==/base.apk
+--- store (run-as):
+cache/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83:
+total 8
+drwx--S--- 2 u0_a149 u0_a149_cache 4096 2026-09-10 20:42 files
+
+cache/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files:
+total 28
+-rw------- 1 u0_a149 u0_a149_cache 20821 2026-09-10 20:30 1786218427769-ux-audit-partitura-1p.pdf
+
+files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83:
+total 96
+-rw-rw-rw- 1 u0_a149 u0_a149 53738 2026-09-11 17:07 content.json
+drwx------ 2 u0_a149 u0_a149  4096 2026-09-10 20:42 files
+-rw------- 1 u0_a149 u0_a149   861 2026-09-11 17:56 files-index.json
+-rw-rw-rw- 1 u0_a149 u0_a149 15247 2026-09-11 17:07 setlists.json
+
+files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files:
+total 244
+-rw------- 1 u0_a149 u0_a149 242176 2026-09-11 17:07 1786218429715-ux-audit-partitura-12p.pdf
+--- sha256 store:
+sha256sum: content.json: No such file or directory
+sha256sum: setlists.json: No such file or directory
+sha256sum: files-index.json: No such file or directory
+sha256sum: files/*: No such file or directory
+--- files-index.json (conteúdo):
+{"https://mlxjmpbdchmwplcfislt.supabase.co/storage/v1/object/public/content-files/1786218429715-ux-audit-partitura-12p.pdf":{"name":"1786218429715-ux-audit-partitura-12p.pdf","bytes":242176,"lastUsedMs":1789153948252},"https://mlxjmpbdchmwplcfislt.supabase.co/storage/v1/object/public/content-files/1786295844475-ux-audit-fase-d-cifra.pdf":{"name":"1786295844475-ux-audit-fase-d-cifra.pdf","bytes":1117,"lastUsedMs":1789071627197},"https://mlxjmpbdchmwplcfislt.supabase.co/storage/v1/object/public/content-files/1786295884124-ux-audit-fase-d-offline.pdf":{"name":"1786295884124-ux-audit-fase-d-offline.pdf","bytes":888,"lastUsedMs":1789071628930},"https://mlxjmpbdchmwplcfislt.supabase.co/storage/v1/object/public/content-files/1786218427769-ux-audit-partitura-1p.pdf":{"name":"1786218427769-ux-audit-partitura-1p.pdf","bytes":20821,"lastUsedMs":1789160193016}}
+--- adb reverse --list:
+
+--- wm:
+Physical size: 2560x1600
+Physical density: 360
+
+=== corte de rede ANTES de abrir o app ===
+settings airplane_mode_on = 1   (NÃO é a prova)
+$ ping -c 2 -W 2 8.8.8.8
+ping: sendmsg: Network is unreachable
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+
+--- 8.8.8.8 ping statistics ---
+2 packets transmitted, 0 received, 100% packet loss, time 1012ms
+
+exit=1
+--- sha256 store (caminhos completos):
+d27e6d8478185282d5707fb9459d8e124cdd6bdab9c20aa28df133041e86fc44  files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/content.json
+0a3a06380634b5dabbe1811e29a8f7a6151e1302bfe8a025d16013300a5f8a07  files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/setlists.json
+950985955f9e1fb49a7e823fc2daae8d929bd89adfe01b3a42bb95c384ed6cdc  files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files-index.json
+ad2eae0942811adb4d60286516ce318110868f6aa889422ab0cb8b3dc690ea22  files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files/1786218429715-ux-audit-partitura-12p.pdf
+3d42199bc98fb2f93695323e7e3082378907236eeae11d982b63f85d990cdb48  cache/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files/1786218427769-ux-audit-partitura-1p.pdf
+
+===== G2 — Metro =====
+metro ANTES: checkout principal (6697285), 12:02:36, EXPO_PUBLIC_API_BASE_URL=http://localhost:8788 inline
+metro DEPOIS: worktree octavia-v1pr3 (8444b18), 12:17:22, EXPO_PUBLIC_API_BASE_URL=http://localhost:8788 inline, .env presente (copiado; apagado no fim)
+  (o worktree recebeu o apps/native/.env do checkout principal às 12:09 para o prebuild e o
+   Metro do "depois"; apagado às 12:46 com o Metro morto; varredura .env* no worktree → só os
+   dois .env.example versionados)
+
+===== G3 — install -r no AVD =====
+=== AVD: install -r do dev client novo (12:17:01) ===
+Performing Streamed Install
+Success
+--- dumpsys DEPOIS:
+    versionCode=1 minSdk=24 targetSdk=36
+    firstInstallTime=2026-09-10 11:42:54
+    lastUpdateTime=2026-09-13 12:17:01
+/data/app/~~ROoa56HLsemRjjPRYVvnLQ==/rocks.octavia.app-5x1L63SwH-RKHKw9khuiRw==/base.apk
+c0c1ab51b3076968142da6c10c48095224f7c7543a55e8362d9eb248d9e7ba14  /data/app/~~ROoa56HLsemRjjPRYVvnLQ==/rocks.octavia.app-5x1L63SwH-RKHKw9khuiRw==/base.apk
+231377892 B
+--- store DEPOIS do install -r:
+d27e6d8478185282d5707fb9459d8e124cdd6bdab9c20aa28df133041e86fc44  files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/content.json
+0a3a06380634b5dabbe1811e29a8f7a6151e1302bfe8a025d16013300a5f8a07  files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/setlists.json
+1c24fdb9d184e85c66f7468f2103a1e6f6990d645936d68bd5ed7910e809fd11  files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files-index.json
+ad2eae0942811adb4d60286516ce318110868f6aa889422ab0cb8b3dc690ea22  files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files/1786218429715-ux-audit-partitura-12p.pdf
+RKStorage
+RKStorage-journal
+
+=== AVD estado DEPOIS, dentro do boot (2026-09-13 12:40:53) ===
+    versionCode=1 minSdk=24 targetSdk=36
+    firstInstallTime=2026-09-10 11:42:54
+    lastUpdateTime=2026-09-13 12:17:01
+c0c1ab51b3076968142da6c10c48095224f7c7543a55e8362d9eb248d9e7ba14  /data/app/~~ROoa56HLsemRjjPRYVvnLQ==/rocks.octavia.app-5x1L63SwH-RKHKw9khuiRw==/base.apk
+d27e6d8478185282d5707fb9459d8e124cdd6bdab9c20aa28df133041e86fc44  files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/content.json
+0a3a06380634b5dabbe1811e29a8f7a6151e1302bfe8a025d16013300a5f8a07  files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/setlists.json
+0a640ed93a71a6e8e389f903dec4b293f9852efb56af9c7cca7745971597b206  files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files-index.json
+ad2eae0942811adb4d60286516ce318110868f6aa889422ab0cb8b3dc690ea22  files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files/1786218429715-ux-audit-partitura-12p.pdf
+3d42199bc98fb2f93695323e7e3082378907236eeae11d982b63f85d990cdb48  cache/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files/1786218427769-ux-audit-partitura-1p.pdf
+--- files-index.json:
+{"https://mlxjmpbdchmwplcfislt.supabase.co/storage/v1/object/public/content-files/1786218429715-ux-audit-partitura-12p.pdf":{"name":"1786218429715-ux-audit-partitura-12p.pdf","bytes":242176,"lastUsedMs":1789313690533},"https://mlxjmpbdchmwplcfislt.supabase.co/storage/v1/object/public/content-files/1786295844475-ux-audit-fase-d-cifra.pdf":{"name":"1786295844475-ux-audit-fase-d-cifra.pdf","bytes":1117,"lastUsedMs":1789071627197},"https://mlxjmpbdchmwplcfislt.supabase.co/storage/v1/object/public/content-files/1786295884124-ux-audit-fase-d-offline.pdf":{"name":"1786295884124-ux-audit-fase-d-offline.pdf","bytes":888,"lastUsedMs":1789071628930},"https://mlxjmpbdchmwplcfislt.supabase.co/storage/v1/object/public/content-files/1786218427769-ux-audit-partitura-1p.pdf":{"name":"1786218427769-ux-audit-partitura-1p.pdf","bytes":20821,"lastUsedMs":1789313694615}}
+DevLauncherApp-BridgelessReactNativeDevBundle.js octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83 profileInstalled 
+--- rede (ainda cortada?):
+connect: Network is unreachable
+0
+
+=== encerramento do aparato (2026-09-13 12:46:33) ===
+metro: nenhum · 8081: livre
+.env do worktree apagado: 1 (1 = não existe mais)
+varredura .env* no worktree: .env.example apps/native/.env.example 
+reverse --list AVD: [ ]
+--- rede do AVD de volta:
+airplane_mode_on = 0
+2 packets transmitted, 2 received, 0% packet loss, time 1002ms
+--- emu kill (snapshot SALVO — sem -no-snapshot-save):
+OK: killing emulator, bye bye
+OK
+19582 /Users/marcelviana/Library/Android/sdk/emulator/qemu/darwin-aarch64/qemu-system-aarch64 -avd octavia_tab32 -port 5554
+--- reboot para provar a permanência:
+adb: device 'emulator-5554' not found
+boot_completed=
+--- estado DURÁVEL (depois de um ciclo desligar/ligar):
+adb: device 'emulator-5554' not found
+adb: device 'emulator-5554' not found
+
+adb: device 'emulator-5554' not found
+adb: device 'emulator-5554' not found
+adb: device 'emulator-5554' not found
+--- files-index.json:
+adb: device 'emulator-5554' not found
+
+adb: device 'emulator-5554' not found
+airplane_mode_on = 
+--- emu kill final:
+error: could not connect to TCP port 5554: Connection refused
+qemu: nenhum
+8081: livre
+List of devices attached
+RX2N8000F3D	device
+
+--- sdk:
+       0
+--- a 1ª tentativa de reboot falhou (o qemu anterior ainda salvava o snapshot):
+ERROR        | Running multiple emulators with the same AVD 
+ERROR        | is an experimental feature.
+=== reboot 2 (12:49:39) ===
+qemu: nenhum antes do boot
+boot_completed=1 (12:49:56)
+--- estado DURÁVEL (depois de um ciclo desligar/ligar):
+    versionCode=1 minSdk=24 targetSdk=36
+    firstInstallTime=2026-09-10 11:42:54
+    lastUpdateTime=2026-09-13 12:17:01
+/data/app/~~ROoa56HLsemRjjPRYVvnLQ==/rocks.octavia.app-5x1L63SwH-RKHKw9khuiRw==/base.apk
+c0c1ab51b3076968142da6c10c48095224f7c7543a55e8362d9eb248d9e7ba14  /data/app/~~ROoa56HLsemRjjPRYVvnLQ==/rocks.octavia.app-5x1L63SwH-RKHKw9khuiRw==/base.apk
+231377892 B
+d27e6d8478185282d5707fb9459d8e124cdd6bdab9c20aa28df133041e86fc44  files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/content.json
+0a3a06380634b5dabbe1811e29a8f7a6151e1302bfe8a025d16013300a5f8a07  files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/setlists.json
+0a640ed93a71a6e8e389f903dec4b293f9852efb56af9c7cca7745971597b206  files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files-index.json
+ad2eae0942811adb4d60286516ce318110868f6aa889422ab0cb8b3dc690ea22  files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files/1786218429715-ux-audit-partitura-12p.pdf
+--- files-index.json:
+{"https://mlxjmpbdchmwplcfislt.supabase.co/storage/v1/object/public/content-files/1786218429715-ux-audit-partitura-12p.pdf":{"name":"1786218429715-ux-audit-partitura-12p.pdf","bytes":242176,"lastUsedMs":1789313690533},"https://mlxjmpbdchmwplcfislt.supabase.co/storage/v1/object/public/content-files/1786295844475-ux-audit-fase-d-cifra.pdf":{"name":"1786295844475-ux-audit-fase-d-cifra.pdf","bytes":1117,"lastUsedMs":1789071627197},"https://mlxjmpbdchmwplcfislt.supabase.co/storage/v1/object/public/content-files/1786295884124-ux-audit-fase-d-offline.pdf":{"name":"1786295884124-ux-audit-fase-d-offline.pdf","bytes":888,"lastUsedMs":1789071628930},"https://mlxjmpbdchmwplcfislt.supabase.co/storage/v1/object/public/content-files/1786218427769-ux-audit-partitura-1p.pdf":{"name":"1786218427769-ux-audit-partitura-1p.pdf","bytes":20821,"lastUsedMs":1789313694615}}
+airplane_mode_on = 0
+2 packets transmitted, 2 received, 0% packet loss, time 1004ms
+--- emu kill final (12:50:04):
+OK: killing emulator, bye bye
+OK
+qemu: nenhum
+8081: livre
+List of devices attached
+RX2N8000F3D	device
+
+--- Tab S6, rede (12:50:10):
+Wifi is not connected
+connect: Network is unreachable
+
+===== G6 — o que o instrumento ensinou (divergências T) =====
+  a) Metro (expo 57 / RN 0.86) servia um DELTA de "1 module" a cada relançamento depois de
+     uma edição, e o app abria com o bundle ANTERIOR (o catálogo de scratch continuou na tela
+     depois de removido; a barra nova só apareceu depois de `expo start --clear`). Regra:
+     depois de mexer em dependência ou em arquivo, reiniciar o Metro com --clear antes de medir.
+  b) `screencap` DEPOIS de `uiautomator dump` devolveu o frame ANTERIOR ao toque (PNG byte a
+     byte igual ao da captura anterior) enquanto o dump já trazia o texto novo. Regra: screencap
+     primeiro, dump depois — foi assim que as capturas de motivo foram refeitas.
+  c) `emu kill` sem -no-snapshot-save leva ~15 s salvando o snapshot; subir o emulador antes
+     disso falha ("Running multiple emulators with the same AVD"). Esperar o qemu sumir.
