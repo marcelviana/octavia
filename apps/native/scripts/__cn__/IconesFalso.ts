@@ -1,15 +1,21 @@
 /**
  * CONTROLE NEGATIVO do `gate:icones` (`gate:icones:cn`) — fora de `src/`,
  * nunca importado pelo app. Sem ele o gate é promessa, não gate. É o
- * `dados.ts` com cinco defeitos plantados, um por regra do script:
+ * `dados.ts` com seis defeitos plantados, um por regra do script:
  *
  *   (1) `apagar` FALTA           → 1 nome, e o círculo e o `d` dele somem do mapa
  *   (2) `lixeira` SOBRA          → 1 nome fora da §6.4, e o `d` dele não está no anexo D
  *   (3) `fechar` com o `d` mudado → o do anexo some do mapa, o do mapa não está no anexo
  *   (4) hex CRAVADO em `lixeira`  → `cor: '#6E6A80'`
  *   (5) `tinta: 'accent'`         → token que o `TintaIcone` não tem
+ *   (6) `tab.em20` = o desenho de SEIS cordas (V1-PR5) → o erro que a §6.3
+ *       existe para impedir: esquecer a exceção e servir em 20 dp o desenho
+ *       dos outros tamanhos. Acusa OITO vezes — a comparação é elemento a
+ *       elemento: três do `telas.html` somem (o `d` de quatro cordas e os
+ *       dois trastes), quatro entram (o `d` de seis e os três trastes) e a
+ *       contagem dá 6 onde a §6.3 declara 4.
  *
- * Esperado: 9 acusações, exit 1. Auto-contido (sem os tipos do `dados.ts`),
+ * Esperado: 17 acusações, exit 1. Auto-contido (sem os tipos do `dados.ts`),
  * para passar no `tsc --noEmit` do app sem importar nada.
  */
 export const desenhosFalsos = {
@@ -52,7 +58,7 @@ export const desenhosFalsos = {
   },
   'tab': {
     normal: [{ d: 'M3 3h18M3 6.6h1.225M11.175 6.6h9.825M3 10.2h9.225M19.175 10.2h1.825M3 13.8h4.225M14.175 13.8h6.825M3 17.4h18M3 21h18' }, { x: 5.5, y: 4.9, w: 4.4, h: 3.4, rx: 1.7, fill: true }, { x: 13.5, y: 8.5, w: 4.4, h: 3.4, rx: 1.7, fill: true }, { x: 8.5, y: 12.1, w: 4.4, h: 3.4, rx: 1.7, fill: true }],
-    em20: [{ d: 'M3 4.2h18M3 9.4h2.1M11.9 9.4h9.1M3 14.6h5.1M14.9 14.6h6.1M3 19.8h18' }, { x: 5.9, y: 7.7, w: 4.2, h: 3.4, rx: 1.7, fill: true }, { x: 8.9, y: 12.9, w: 4.2, h: 3.4, rx: 1.7, fill: true }],
+    em20: [{ d: 'M3 3h18M3 6.6h1.225M11.175 6.6h9.825M3 10.2h9.225M19.175 10.2h1.825M3 13.8h4.225M14.175 13.8h6.825M3 17.4h18M3 21h18' }, { x: 5.5, y: 4.9, w: 4.4, h: 3.4, rx: 1.7, fill: true }, { x: 13.5, y: 8.5, w: 4.4, h: 3.4, rx: 1.7, fill: true }, { x: 8.5, y: 12.1, w: 4.4, h: 3.4, rx: 1.7, fill: true }],
   },
   'partitura': {
     normal: [{ d: 'M3 5h18M3 8.5h18M3 12h18M3 15.5h18M3 19h18' }, { cx: 8.8, cy: 15.5, r: 2.4, fill: true }, { d: 'M11.2 15.5V6.5' }],
