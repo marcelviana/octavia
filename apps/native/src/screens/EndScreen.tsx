@@ -1,12 +1,36 @@
 /**
- * S5 — Fim da setlist (PRD T1-R29; aceite A14).
+ * S5 — Fim da setlist (PRD T1-R29; aceite A14), com o acabamento do DESIGN-V1
+ * na V1-PR6 (as molduras `S5` e `S5-n-grande` do `telas.html`, com as erratas
+ * da §9 prevalecendo).
+ *
  * Avançar na última música chega aqui: "fim da setlist", com "voltar ao
  * início" e "sair". A borda esquerda continua funcionando e devolve à última
  * música; **nada** leva para fora do app sem o botão — o beco sem saída e a
  * saída acidental são justamente o que o requisito proíbe.
+ *
+ * O que a V1-PR6 mudou é pintura, não comportamento:
+ *
+ *  - o título passa a `size.display` (52). O degrau nasceu na V1-PR3, pela
+ *    §4.4, e esta é a primeira e única tela que o usa: "o único momento em que
+ *    a tela pode ocupar espaço". O tracking vai a `displayWide` (0,22), que é
+ *    o degrau mais próximo dos 0,2 em da moldura;
+ *  - a **fileira de marcas** de música percorrida, uma por posição, com a
+ *    regra de N grande da §7.1 (ver `marcas()` abaixo);
+ *  - a contagem ganha o `n.º de músicas` de 20 em `lineInfo`, e os dois botões
+ *    ganham `voltar ao início` e `sair` de 24.
+ *
+ * O que NÃO mudou, e por quê: **a barra superior**. As molduras `S5` e `S3`
+ * desenham as duas com 88 dp de altura e o "n de N" em IBM Plex Mono 600 de
+ * 20; o app tem 64 e Raleway de 22 nas duas, iguais entre si. A §1 congela a
+ * barra superior do S3 ("no S3 mexe só na barra inferior"), então mudar só a
+ * do S5 abriria 24 dp e uma família de diferença entre duas telas que o músico
+ * atravessa deslizando — que é exatamente o salto que a nota da própria
+ * moldura `S5` diz querer evitar quando explica por que manteve a barra
+ * inferior vazia. As duas mudam juntas, na PR que tocar o S3, ou não mudam.
  */
 import { useCallback, useState } from 'react'
 import { Pressable, StyleSheet, Text, View, type LayoutChangeEvent } from 'react-native'
+import { Icone } from '../icones/Icone'
 import { log } from '../log'
 import { bar, dark, font, radius, size, space, touch, tracking } from '../theme'
 
@@ -16,6 +40,48 @@ export interface EndScreenProps {
   onVoltarUltima: () => void
   onVoltarInicio: () => void
   onSair: () => void
+}
+
+/**
+ * §7.1, a regra de N grande, medida e não afirmada. A fileira tem 900 dp
+ * úteis, a marca vai de 34 dp até um piso de 6, e a folga é fixa em 5:
+ *
+ *   8 → 34 dp · 60 → 10 dp · 128 é o último N em que a marca ainda é marca.
+ *
+ * Os três números da §7.1 saem daqui: com folga fixa a marca chega ao piso em
+ * N = 82 (6,04 dp), e daí em diante quem encolhe é a FOLGA, até 1 dp — é esse
+ * segundo trecho que faz de **128** o último N (folga 1,04) e de 129 o
+ * primeiro fora (0,98). Acima disso a fileira vira uma barra sólida de
+ * 900 × 3 e a contagem abaixo carrega o número sozinha (`null` aqui).
+ */
+const FILEIRA = 900
+const MARCA = { maxima: 34, piso: 6, altura: 3, raio: 2 }
+const FOLGA = 5
+
+function marcas(n: number): { largura: number; folga: number } | null {
+  if (n <= 0) return null
+  if (n === 1) return { largura: MARCA.maxima, folga: FOLGA }
+  const cabe = (FILEIRA - FOLGA * (n - 1)) / n
+  if (cabe >= MARCA.piso) return { largura: Math.min(MARCA.maxima, Math.floor(cabe)), folga: FOLGA }
+  const folga = (FILEIRA - MARCA.piso * n) / (n - 1)
+  return folga >= 1 ? { largura: MARCA.piso, folga: Math.floor(folga * 10) / 10 } : null
+}
+
+/**
+ * As marcas não levam nome acessível: a contagem logo abaixo já diz "n
+ * músicas", e repeti-la seria ler duas vezes a mesma coisa. Nenhuma `View`
+ * daqui é nó de texto, então nada entra no `content-desc`.
+ */
+function Percorridas({ total }: { total: number }): React.JSX.Element {
+  const m = marcas(total)
+  if (m === null) return <View style={[styles.fileira, styles.barraSolida]} />
+  return (
+    <View style={[styles.fileira, { gap: m.folga }]}>
+      {Array.from({ length: total }, (_, i) => (
+        <View key={i} style={[styles.marca, { width: m.largura }]} />
+      ))}
+    </View>
+  )
 }
 
 export function EndScreen({
@@ -47,15 +113,23 @@ export function EndScreen({
 
       <View style={styles.meio} onLayout={medirMeio}>
         <View style={styles.centro}>
-          <Text style={styles.titulo}>FIM DA SETLIST</Text>
-          <Text style={styles.apoio}>
-            {`${total} ${total === 1 ? 'música' : 'músicas'}  ·  ${nomeSetlist}`}
-          </Text>
+          <View style={styles.bloco}>
+            <Percorridas total={total} />
+            <Text style={styles.titulo}>FIM DA SETLIST</Text>
+            <View style={styles.contagem}>
+              <Icone nome="n-de-musicas" tamanho={20} cor={dark.lineInfo} />
+              <Text style={styles.apoio}>
+                {`${total} ${total === 1 ? 'música' : 'músicas'}  ·  ${nomeSetlist}`}
+              </Text>
+            </View>
+          </View>
           <View style={styles.acoes}>
             <Pressable style={styles.botaoPrimario} onPress={onVoltarInicio} testID="voltar-inicio">
+              <Icone nome="voltar-ao-inicio" tamanho={24} cor={dark.bg} />
               <Text style={styles.botaoPrimarioTexto}>Voltar ao início</Text>
             </Pressable>
             <Pressable style={styles.botaoSecundario} onPress={onSair} testID="sair">
+              <Icone nome="sair" tamanho={24} cor={dark.text} />
               <Text style={styles.botaoSecundarioTexto}>Sair</Text>
             </Pressable>
           </View>
@@ -80,6 +154,14 @@ export function EndScreen({
   )
 }
 
+/**
+ * Medidas das molduras `S5` e `S5-n-grande`. Onde a moldura usa um número
+ * fora das escalas do `theme.ts`, entra o degrau mais próximo — a regra da
+ * **errata E10**; a tabela desta tela está no anexo da PR. Ficam como literal,
+ * declarados, os que não têm degrau nem escala: a fileira de 900 e os
+ * 34 · 6 · 5 · 3 · 2 da §7.1, e o corpo 13 do nome da setlist (§4.4
+ * "chip / status").
+ */
 const styles = StyleSheet.create({
   tela: { flex: 1, backgroundColor: dark.bg },
   barraTopo: {
@@ -105,34 +187,51 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   meio: { flex: 1 },
+  // O gap do `centro` mais o `marginTop` das ações somam os 40 dp que a
+  // moldura põe entre o bloco e os botões (empate 32/48 na escala: fica o que
+  // o app já tinha, 16 + 24).
   centro: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: space.lg },
+  bloco: { alignItems: 'center', gap: space.xl },
+  fileira: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', maxWidth: FILEIRA },
+  marca: { height: MARCA.altura, borderRadius: MARCA.raio, backgroundColor: dark.accentInk },
+  barraSolida: {
+    width: FILEIRA,
+    height: MARCA.altura,
+    borderRadius: MARCA.raio,
+    backgroundColor: dark.accentInk,
+  },
   titulo: {
     color: dark.text,
     fontFamily: font.display,
-    fontSize: 44,
-    letterSpacing: 44 * tracking.display,
+    fontSize: size.display,
+    letterSpacing: size.display * tracking.displayWide,
+    lineHeight: size.display,
+    textAlign: 'center',
   },
+  contagem: { flexDirection: 'row', alignItems: 'center', gap: space.md },
   apoio: { color: dark.muted, fontFamily: font.ui, fontSize: size.body },
   acoes: { flexDirection: 'row', gap: space.lg, marginTop: space.xl },
   botaoPrimario: {
     height: touch.stage,
     paddingHorizontal: space.xxl,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.md,
     borderRadius: radius.control,
     backgroundColor: dark.text,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
-  botaoPrimarioTexto: { color: dark.bg, fontFamily: font.uiBold, fontSize: size.button },
+  botaoPrimarioTexto: { color: dark.bg, fontFamily: font.uiBold, fontSize: size.input },
   botaoSecundario: {
     height: touch.stage,
-    paddingHorizontal: space.xxl,
+    paddingHorizontal: space.xl,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.md,
     borderWidth: bar.hairline,
     borderColor: dark.line,
     borderRadius: radius.control,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
-  botaoSecundarioTexto: { color: dark.text, fontFamily: font.ui, fontSize: size.button },
+  botaoSecundarioTexto: { color: dark.text, fontFamily: font.ui, fontSize: size.input },
   borda: { position: 'absolute', top: 0 },
   barraBaixo: { height: bar.stage, borderTopWidth: bar.hairline, borderTopColor: dark.line },
 })
