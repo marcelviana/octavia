@@ -1,0 +1,149 @@
+$ (F) gates, baselines e a barra do palco
+
+===== F1 — G1: baseline e escopo =====
+$ git ls-tree -r --name-only HEAD -- packages/core/src | wc -l      → 25
+NUCLEO do g1.sh (9 módulos não-visuais de apps/native/src):
+  api.ts  store.ts  sync.ts  net.ts  files.ts  prefetch.ts  session.ts  firebase.ts  log.ts
+$ ls apps/native/src/*.ts
+  api.ts files.ts firebase.ts log.ts net.ts prefetch.ts session.ts store.ts sync.ts theme.ts
+  → `theme.ts` está no diretório mas NÃO está no NUCLEO. O G1 continua valendo
+    como está: os quatro tokens e os dois degraus da V1-PR3 entram sem tocá-lo.
+
+===== F2 — G3: nenhum `log(` depende de rótulo =====
+$ 50 linhas `log(` no total (48 fora do log.ts, como o V1-PRECHECK §5.1).
+Por arquivo: api 7 · files 3 · log 2 · net 1 · prefetch 5 · store 4 · sync 5 ·
+             EndScreen 1 · IndexScreen 2 · LoginScreen 1 · SearchScreen 2 · StageScreen 17
+
+As 23 linhas das telas, verbatim — NENHUMA interpola um rótulo de controle:
+  EndScreen:70      log(`nav n=${total}/${total} setlist=fim t=0`)
+  StageScreen:188   log('keepawake on')
+  StageScreen:190   log(`stage restore n=${posicaoRef.current}/${totalRef.current}`)
+  StageScreen:195   log('keepawake off')
+  StageScreen:219   log(`rotation=${orientacao} n=…`)
+  StageScreen:290   log(
+  StageScreen:295   log(`placeholder kind=${chavePlaceholder}`)
+  StageScreen:308   log(`placeholder kind=file-missing name=${nome}`)
+  StageScreen:318   log(`download-error ${mensagem}`)
+  StageScreen:355   log(`end-of-setlist n=${n}`)
+  StageScreen:370   log(`autoscroll on t=…`)
+  StageScreen:381   log('autoscroll disabled kind=pdf')
+  StageScreen:387   log('autoscroll off t=0')
+  StageScreen:401   log(`zoom dp=${novo}`)
+  StageScreen:409   log(`theme=${novo}`)          ← 'dark'/'light', não 'Claro'/'Escuro'
+  StageScreen:494   log(`pdf-render pages=${total} src=disk`)
+  StageScreen:498   log(`pdf-page n=${atual}/${total}`)
+  StageScreen:647   log(`pdf-error ${e.message}`)
+  IndexScreen:119   log('index open')
+  IndexScreen:156   log(`index jump n=${item.position}`)
+  SearchScreen:138  log(`search q=… n=… in-setlist=…`)
+  SearchScreen:151  log(`search close restore n=…`)
+  LoginScreen:50    log(`login-error code=${resultado.code}`)
+
+===== F3 — divergência 30 do g2g3.sh: medida e com controle negativo =====
+Assimetria: o ramo de ref-git varre `git ls-tree … -- apps/native/src` inteiro; o
+ramo WORKTREE varre só `-name '*.ts' -o -name '*.tsx'`.
+$ git ls-tree -r --name-only HEAD -- apps/native/src | grep -vE '\.tsx?$'
+  apps/native/src/fixtures/aceite.py          ← o único
+$ git show HEAD:apps/native/src/fixtures/aceite.py | grep -c 'log('   → 0   (inerte hoje)
+
+CONTROLE NEGATIVO (repo descartável em /tmp, dois commits, .ts idêntico dos dois
+lados, e o .py ganhando a subcadeia "log(" — `catalog(1)`):
+  HOJE (assimétrico)                       CORRIGIDO (mesmo recorte dos dois lados)
+  G3 — antes=2  depois=1                   G3 — antes=1  depois=1
+    G3: DIVERGEM ✗                           G3: idênticas ✓
+    1d0                                      exit=0
+    < …/fixtures/aceite.py  catalog(1)
+  exit=1                                   ← FALSO POSITIVO: nada mudou em .ts/.tsx
+
+CORREÇÃO: no ramo de ref-git, filtrar a lista por `grep -E '\.tsx?$'` antes do
+laço. Uma linha. Vale para o G2 pelo mesmo motivo (o `testID=` só existe em tsx,
+mas a assimetria é a mesma e a simetria é o que se quer provar).
+
+===== F4 — G4 estendido: o desenho corre, e os rótulos do design PASSAM =====
+Recuperei o `a20-estendido.mjs` do `V1-PRECHECK-anexos/V1-A3-instrumento-a20.txt`
+(§A3.3, 77 linhas) e rodei contra um arquivo de scratch com os 29 nomes
+acessíveis em pt-BR que o DESIGN-V1 §6.4 propõe, cada um em posição de
+`accessibilityLabel`:
+$ node a20-estendido.mjs rotulos-design/src
+  literais em posição de texto examinados: 29
+  acusações: 0
+  exit=0
+Nenhum dos 29 rótulos do design é acusado. Os que passam perto passam pela
+isenção de anglicismo do produto ("garantida offline", "…: pinça para zoom").
+
+O QUE FALTA PARA VERSIONAR (o instrumento hoje só existe nos anexos):
+  1. um lugar: `apps/native/scripts/a20.mjs` (hoje `scripts/native/` só tem
+     `token-oracle.ts`; o `a20.mjs` que a V1-PR1 rodou ficou no scratch dela);
+  2. o arquivo de CONTROLE NEGATIVO junto — sem ele o gate é uma promessa.
+     Sugestão: `apps/native/scripts/__cn__/A20Falso.tsx`, fora de `src/`, com os
+     quatro casos do V1-PRECHECK §5.3 (dois acusados, dois isentos);
+  3. um script de package.json (`"gate:a20": "node scripts/a20.mjs src"`) e o
+     par negativo (`"gate:a20:cn"`), para que o gate seja um comando e não um
+     parágrafo;
+  4. a CORREÇÃO DA DIVERGÊNCIA 30, que é do `g2g3.sh` e não do a20 — mas é a
+     mesma PR que versiona os gates, então entra junto (F3).
+
+===== F5 — a barra do palco HOJE (baseline do V1-A8), dos dumps da V1-PR1 =====
+`dumps-depois/` da V1-PR1 (= o estado da main de hoje), densidade 2,25 px/dp:
+
+  S3-texto     auto-scroll x=[  54, 293] 106,2 × 65,8   desc="Auto-scroll"
+               zoom-menos  x=[ 320, 558] 105,8 × 65,8   desc="Zoom −"
+               zoom-mais   x=[ 585, 824] 106,2 × 65,8   desc="Zoom +"
+               tema        x=[ 851,1089] 105,8 × 65,8   desc="Claro"
+               indice      x=[1116,1355] 106,2 × 65,8   desc="Índice"
+               busca       x=[1382,1620] 105,8 × 65,8   desc="Busca"
+               sair        x=[1647,1886] 106,2 × 65,8   desc="Sair"
+  S3d-pdf      auto-scroll x=[  54, 357] 134,7 × 65,8   desc="Auto-scroll, auto-scroll só em texto"
+               zoom-menos  x=[ 384, 622] …              desc="Zoom −, pinça para zoom"
+               … os outros cinco deslocados +64 px = +28,4 dp
+  S3-avulsa    idêntico ao S3-texto, com desc="Voltar" no `sair`
+  S3-claro     idêntico ao S3-texto, com desc="Escuro" no `tema`
+  S3-nobody    idêntico ao S3d-pdf (auto-scroll com motivo), desc="Zoom −" sem motivo
+  S3e          idêntico ao S3d-pdf, com desc="Voltar" no `sair`
+
+  `text` está VAZIO nos sete em todos os dumps: o `content-desc` é a
+  concatenação dos `<Text>` filhos, e é ISSO que o V1-A8 mede hoje. Não há um
+  único `accessibilityLabel` em `StageScreen.tsx` — no app inteiro há UM, em
+  `LoginScreen.tsx:71` ("Octavia").
+  → CONTROLE NEGATIVO do V1-A8, metade (ii): tirar o `<Text>` do `Controle` sem
+    pôr `accessibilityLabel` deixa `content-desc=""` nos sete. Não é hipótese:
+    é o mecanismo medido, e é o defeito que a PR tem de não cometer.
+
+  → CONTROLE NEGATIVO do V1-A8, metade (i) — largura idêntica entre variantes:
+    ela REPROVA HOJE. `auto-scroll` mede 134,7 dp no S3d e 106,2 no S3-texto, e
+    os `x1` de 6 dos 7 andam 28,4 dp. É a divergência 17 / R10, ainda de pé.
+
+===== F6 — a barra do palco NO DESENHO, medida no `telas.html` =====
+(6 molduras de S3, servidas por `python3 -m http.server`, medidas por
+ getBoundingClientRect no DOM)
+  contêiner da barra:  1138 × 97 dp   (96 + 1 de hairline), padding lateral 24
+  fileira:             7 caixas de 66 × 66, gap 16, x = 81 · 163 · 245 · 327 · 409 · 491 · 573
+  largura da fileira:  558 dp
+  as SEIS molduras dão exatamente os mesmos sete x — a largura idêntica entre
+  variantes já está no desenho.
+  66 = 64 do desenho + 1 dp de borda de cada lado; casa com a altura de hoje
+  (`touch.stage + 2` = 66; o dump mede 65,8).
+
+  DIVERGÊNCIA: o README §5.4 diz que a fileira "passa de 814,2 dp para 592 dp".
+  Medido: 558. 592 é a conta com caixa de 64 e gap 24 (7×64 + 6×24); o desenho
+  usa caixa de 66 e gap 16 (7×66 + 6×16 = 558).
+
+  CONSEQUÊNCIA PARA O R13 (área inerte à direita do último controle):
+    hoje    1138 − 24 − 838,2 = 275,8 dp
+    desenho 1138 − 24 − (24+558) = 532 dp
+  A barra só-ícone quase DOBRA a faixa inerte. Não é defeito do desenho — é o
+  preço de encolher os controles — mas o R13 muda de tamanho e o aceite tem de
+  saber disso.
+
+  Achado de passagem: a barra do desenho tem um segundo filho com
+  `display:none` — a fileira de microrrótulos de 10 px ("scroll / zoom − / …",
+  IBM Plex Mono, `color:#A9A5B5`). É a "variante com rótulo" do §4.4, que o §8
+  deixa como proposta. Está no HTML, oculta. Não entra na V1-PR3.
+
+===== F7 — G5: o que o só-ícone arrisca =====
+Baseline `dumps-depois` da V1-PR1: 144→153 alvos, **0 abaixo de 48 dp**.
+Os sete do palco hoje: 105,8–106,2 × 65,8 dp. Depois: 64 × 64 (66 × 66 com borda).
+  64 ≥ 48 ✓   64 ≥ 64 ✓ (V1-A8)
+Risco real: ZERO no G5, desde que a caixa de toque seja a de 64 e não a do
+desenho de 28. O jeito de errar é pôr o `<Svg>` de 28 como o Pressable — aí o
+alvo cai para 28 dp e o G5 acusa. É exatamente o que o gate existe para pegar.

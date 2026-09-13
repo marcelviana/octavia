@@ -1,0 +1,108 @@
+$ (C) H3 — o Tab S6 (só leitura) e a prova do `adb install -r` no emulador
+
+===== C1 — OS ÚNICOS COMANDOS QUE O TAB S6 RECEBEU NESTA SESSÃO =====
+São seis, todos de leitura, todos com `-s RX2N8000F3D`, todos autorizados
+nominalmente pelo prompt do H3. Nenhum install, uninstall, pm clear, push ou rm.
+
+  1  adb -s RX2N8000F3D shell dumpsys package rocks.octavia.app | grep -E 'versionName|versionCode|firstInstallTime|lastUpdateTime|primaryCpuAbi'
+  2  adb -s RX2N8000F3D shell wm size
+  3  adb -s RX2N8000F3D shell wm density
+  4  adb -s RX2N8000F3D shell run-as rocks.octavia.app ls -l files/      (e o mesmo em cache/, e `ls -lR` dos dois subdiretórios do store)
+  5  adb -s RX2N8000F3D shell pm path rocks.octavia.app
+  6  adb -s RX2N8000F3D shell sha256sum '<caminho do base.apk>'   (+ um `ls -l` do mesmo caminho)
+
+===== C2 — saída literal =====
+$ adb -s RX2N8000F3D shell dumpsys package rocks.octavia.app | grep -E '…'
+    primaryCpuAbi=arm64-v8a
+    versionCode=1 minSdk=24 targetSdk=36
+    versionName=0.0.1
+    firstInstallTime=2026-09-07 18:08:54
+    lastUpdateTime=2026-09-10 21:03:24
+
+$ adb -s RX2N8000F3D shell wm size      → Physical size: 1600x2560
+$ adb -s RX2N8000F3D shell wm density   → Physical density: 360
+  1600×2560 @ 360 dpi = 711,1 × 1137,8 dp. CONFIRMA a hipótese do prompt
+  (2560×1600 / 360), com a ressalva de que o `wm size` sai em retrato: o painel
+  reporta 1600x2560, não 2560x1600.
+
+$ adb -s RX2N8000F3D shell run-as rocks.octavia.app ls -l files/
+  -rw------- 5840133 2026-09-11 10:03 DevLauncherApp-BridgelessReactNativeDevBundle.js
+  drwx------    3488 2026-09-11 10:03 octavia-xVDJRBh1WpPOatbfWahOLttYn1E3
+  -rw-------      24 2026-09-12 17:07 profileInstalled
+  -rw-rw----      71 2026-09-11 10:02 rList
+$ … ls -l cache/
+  drwx--S--- WebView · http-cache · image_cache · octavia-xVDJRBh1WpPOatbfWahOLttYn1E3
+$ … ls -lR files/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3
+  -rw------- 111567 2026-09-11 10:03 content.json
+  -rw-------    200 2026-09-11 10:00 files-index.json
+  -rw-------   2752 2026-09-11 10:03 setlists.json
+  drwx------            files/
+     -rw------- 138916 2026-09-11 09:59 1751910900697-Easy_-_Guitar.pdf
+$ … ls -lR cache/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3
+  files/   (vazio)
+
+  → o uid é `xVDJRBh1WpPOatbfWahOLttYn1E3`: é a CONTA PRINCIPAL do Marcel, não a
+    de audit (`Pw3bxXZw0iT3WwyL7kxGtGJIJH83`, que é a do AVD). É essa sessão e
+    esse cache que a reinstalação da V1-PR3 põe em risco.
+
+$ adb -s RX2N8000F3D shell pm path rocks.octavia.app
+  package:/data/app/~~tCy8Yo8MjLq208ebVzOrmQ==/rocks.octavia.app-_kICWa82xG3hK4GAqq2XAQ==/base.apk
+$ adb -s RX2N8000F3D shell sha256sum '<esse caminho>'
+  cb1b5fea0240e185ee8ff7e81d2eb790a13a21e12ffb5613c94e86e9e7963c8f
+$ adb -s RX2N8000F3D shell ls -l '<esse caminho>'
+  -rw-r--r-- 1 system system 76836083 2026-09-10 21:03 …/base.apk
+
+===== C3 — o dev client do Tab S6 é O MESMO BINÁRIO do AVD =====
+  Tab S6   cb1b5fea0240e185ee8ff7e81d2eb790a13a21e12ffb5613c94e86e9e7963c8f   76.836.083 B
+  AVD      cb1b5fea0240e185ee8ff7e81d2eb790a13a21e12ffb5613c94e86e9e7963c8f   76.836.083 B
+(o do AVD foi lido nesta sessão, e bate com o V1-PRECHECK §6.1 iii)
+
+Não é "mesma versão": é o mesmo arquivo, byte a byte. Um rebuild serve aos dois,
+e o que se provar no AVD sobre a instalação vale para o tablet — ressalvado que
+o conteúdo do diretório de dados é outro (conta principal × conta de audit).
+
+===== C4 — `adb install -r` preserva o diretório de dados: MEDIDO NO AVD =====
+Aparato: AVD `octavia_tab32`, dev client ATUAL puxado do próprio aparelho
+(`adb pull` do base.apk, sha256 cb1b5fea… confirmado no host) e reinstalado
+sobre ele mesmo com `-r` — nenhum binário novo entrou no emulador.
+
+  ANTES                                                          DEPOIS de `install -r`
+  firstInstallTime=2026-09-10 11:42:54                           2026-09-10 11:42:54   ← IDÊNTICO
+  lastUpdateTime =2026-09-10 13:12:15                            2026-09-13 09:23:09   ← mudou (a reinstalação)
+  versionCode=1 / versionName=0.0.1                              idem
+
+$ adb -s emulator-5554 install -r /tmp/v1pr3-scratch/devclient-avd.apk
+  Performing Streamed Install
+  Success
+
+  sha256 do store, ANTES e DEPOIS do install -r:
+  d27e6d84…  content.json          →  d27e6d84…   IDÊNTICO
+  0a3a0638…  setlists.json         →  0a3a0638…   IDÊNTICO
+  95098595…  files-index.json      →  95098595…   IDÊNTICO
+  ad2eae09…  …-partitura-12p.pdf   →  ad2eae09…   IDÊNTICO
+  databases/RKStorage (o AsyncStorage, onde vive a sessão do Firebase): presente
+
+E a prova de comportamento — primeiro logcat depois da reinstalação:
+  OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored     ← R15 / R4
+  OCTAVIA: cache hit kind=setlists n=3
+  OCTAVIA: cache hit kind=content n=67
+
+`firstInstallTime` preservado é o marcador forte: uma instalação limpa o
+reescreve. O `install -r` do Android reinstala por cima mantendo o `userId` do
+app e, com ele, `/data/data/<pkg>` inteiro; o que apaga o diretório é
+`uninstall` (sem `-k`) ou `pm clear`. Nenhum dos dois foi usado.
+
+NOTA SOBRE O ESTADO FINAL DO AVD: a medição acima vale — os sha256 foram
+lidos antes e depois do `install -r`, DENTRO do mesmo boot, e são idênticos. O
+que NÃO sobreviveu foi o `install -r` em si: o AVD subiu com `-no-snapshot-save`
+e o `emu kill` descartou a reinstalação junto com tudo o mais. Conferido depois
+de um ciclo desligar/ligar: `lastUpdateTime` de volta a 2026-09-10 13:12:15 e o
+`pm path` de volta a `~~45SpLO4E-G5L0kQbLXfDSg==`. Ver o anexo G §G3 e a div. 42.
+
+LIMITE DESTA PROVA, declarado: reinstalei o MESMO apk (mesmo versionCode, mesma
+assinatura, mesmos bytes) — que é o que o prompt pediu. A V1-PR3 vai instalar um
+apk DIFERENTE, com o mesmo versionCode e a mesma assinatura de debug (o
+`debug.keystore` do Expo, que o prebuild não regenera — conferido: byte-idêntico
+depois do prebuild). O caminho do `install -r` é o mesmo; o que muda é o
+conteúdo. O que este pre-check NÃO provou é a instalação do apk novo — e essa
+prova é o primeiro item do aceite da V1-PR3 no Tab S6.

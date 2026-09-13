@@ -1,0 +1,103 @@
+$ (A) H1 — prebuild reprodutível e autolinking de 6 para 7
+
+APARATO — o scratch é um CLONE APFS do repositório, FORA dele:
+$ cd /Users/marcelviana/projects && time cp -Rc octavia /tmp/v1pr3-scratch/spike
+  41,046 s  ·  du -sh → 4,3G  ·  df /tmp inalterado (clonefile, sem cópia de bytes)
+$ rm -rf /tmp/v1pr3-scratch/spike/.git      # nenhum comando git pode alcançar o repo real
+
+===== A1 — o autolinking do community CLI, com o MESMO comando dos dois lados =====
+O `settings.gradle` usa `ex.autolinkLibrariesFromCommand(expoAutolinking.rnConfigCommand)`;
+o comando por trás é `expo-modules-autolinking react-native-config --platform android`.
+
+$ cd <checkout principal>/apps/native
+$ npx --no-install expo-modules-autolinking react-native-config --json --platform android
+  módulos (ANTES): 6
+     @react-native-async-storage/async-storage
+     expo
+     react-native-blob-util
+     react-native-pdf
+     react-native-safe-area-context
+     react-native-screens
+$ cd /Users/marcelviana/projects/octavia && git status --short
+  (vazio — o comando é de leitura; o checkout principal ficou intocado)
+
+$ cd /tmp/v1pr3-scratch/spike/apps/native      # com react-native-svg 15.15.4 instalado
+$ npx --no-install expo-modules-autolinking react-native-config --json --platform android
+  módulos (DEPOIS): 7
+     @react-native-async-storage/async-storage
+     expo
+     react-native-blob-util
+     react-native-pdf
+     react-native-safe-area-context
+     react-native-screens
+     react-native-svg          ← O SÉTIMO
+
+E o arquivo gerado que estava em disco no scratch antes de qualquer coisa:
+$ python3 -c "json.load(open('android/build/generated/autolinking/autolinking.json'))"
+  módulos: 6   ·   sha256 4602d6f525c37e65e975d5eb561c6164ac61492177db6b2e195caa66a151034b
+
+VERSÃO: `expo@57.0.20` → `bundledNativeModules.json["react-native-svg"] = "15.15.4"`.
+Instalada no scratch: 15.15.4 (exata, sem `^`).
+
+===== A2 — expo-modules-autolinking search -p android: NÃO MUDA =====
+$ npx --no-install expo-modules-autolinking search -p android --json
+  antes: 18   depois: 18
+  novos: (nenhum)      sumiram: (nenhum)
+`react-native-svg` NÃO é módulo Expo: entra pelo autolinking do community CLI.
+Os 18 seguem sendo @expo/dom-webview, @expo/log-box, expo, expo-asset, expo-constants,
+expo-dev-client, expo-dev-launcher, expo-dev-menu, expo-dev-menu-interface,
+expo-file-system, expo-font, expo-json-utils, expo-keep-awake, expo-manifests,
+expo-modules-core, expo-network, expo-status-bar, expo-updates-interface.
+
+===== A3 — o prebuild NÃO reescreve nada em android/ =====
+Método: snapshot de nomes + sha256 de TODOS os arquivos de `android/` exceto
+`build/`, `.gradle/` e `.cxx/` (42 arquivos), prebuild, snapshot de novo.
+
+$ npx --no-install expo prebuild -p android
+  - Clearing android → ✔ Cleared android code
+  - Creating native directory (./android) → ✔ Created native directory
+  - Updating package.json → ✔ no changes
+  ✔ Finished prebuild
+  real 2,215 s          ← DOIS SEGUNDOS
+
+  arquivos antes=42  depois=42
+  só no ANTES:  (nenhum)
+  só no DEPOIS: (nenhum)
+  em ambos, conteúdo diferente: (nenhum)
+
+  (Ressalva de instrumento: a primeira rodada acusou "MUDOU: android/gradlew".
+   Era falso positivo do meu grep — `grep -F "  android/gradlew"` casa também a
+   linha do `android/gradlew.bat`. sha256 conferido a mão:
+     gradlew  fb68debc1b1acf8ec55dc0d5e5495e1dedd0bd6b61f304bee61613eeb2bd9b92  antes == depois)
+
+CONSEQUÊNCIA: acrescentar `react-native-svg` **não muda uma linha do projeto
+Android gerado**. O módulo é resolvido pelo Gradle em tempo de configuração, a
+partir do `node_modules`. O que muda é o `pnpm-lock.yaml`, o `package.json` e o
+que o Gradle produz — nada versionado além dos dois primeiros
+(`apps/native/android/` é ignorado: `.gitignore:30`).
+
+As 6 fontes do N1-D6 voltaram para `android/app/src/main/assets/fonts/`
+(793.720 B, os mesmos seis nomes) — o `withFontsAndroid` rodou no prebuild,
+como o V1-PRECHECK §6.6 [r2] mediu.
+
+===== A4 — tempos =====
+  prebuild                                   2,2 s
+  gradlew assembleDebug (DEPOIS, limpo)    275 s   "BUILD SUCCESSFUL in 4m 35s"
+                                                   621 actionable tasks: 621 executed
+  gradlew assembleDebug (ANTES, limpo)     ~142 s  "BUILD SUCCESSFUL in 2m 22s"
+                                                   591 tasks: 67 executed, 524 up-to-date
+  (o ANTES reaproveitou o cache do DEPOIS; não é medida de build limpo do ANTES.
+   O número comparável de build limpo é o do CI: job android-debug-apk = 534 s.)
+
+DESVIO DECLARADO: os dois builds locais rodaram com **JDK 21.0.1** (o padrão da
+máquina), não com o corretto-17 do `scripts/native-env.sh` nem com o temurin-17
+do CI. O APK do ANTES saiu a **4 bytes** do artefato do CI (215.354.007 contra
+215.354.003), o que mostra que a diferença de JDK não move a medição — mas o
+desvio fica declarado.
+
+===== A5 — o tropeço que vale como aviso para a V1-PR3 =====
+Tirar `react-native-svg` do `package.json` e rodar `assembleDebug` SEM limpar
+`app/.cxx` falha:
+  ninja: error: unknown target 'react_codegen_rnsvg', did you mean 'react_codegen_rnpdf'?
+O CMake guarda a lista de alvos do codegen. Quem remover o spike tem de apagar
+`android/app/.cxx` (ou rodar prebuild --clean) antes do build seguinte.

@@ -1,0 +1,176 @@
+$ (D) H4 — os 34 registros do catálogo, a varredura de atributos e os arcos
+
+MÉTODO: `python3 -m http.server` num scratch fora do repo, `icones.html` aberto
+no navegador (a folha exige JS), e o DOM lido por `document.querySelectorAll('svg')`
+— 105 svg na página, dos quais 34 são o catálogo do tema escuro (índices 15…49
+do DOM, menos o demo de 72 px no índice 32). O markup abaixo foi reextraído do
+arquivo por unescape do bundle (`/`→`/`, `\"`→`"`) e casado com o do DOM
+por assinatura de `d`, para que o anexo não dependa do navegador.
+
+===== D1 — a varredura de atributos, nos 34 =====
+  elementos:            55 <path>   18 <circle>   4 <rect>
+  na RAIZ, em TODOS:    viewBox="0 0 24 24" · fill="none" · stroke-linecap="round"
+                        stroke-linejoin="round" · width · height · stroke-width
+  na RAIZ, em 32 de 34: stroke="currentColor"   (faltam: parcial e baixando)
+  variam:               width 20 / 24 / 28   ·   stroke-width 1,5 / 1,75 / 2,0
+                        (exatamente o pareamento do §5.5 — o traço é função do tamanho)
+  fill="currentColor":  12 elementos, em 8 ícones
+                        índice(3) · tab(3) · partitura(1) · sem-conexão(1) ·
+                        falha(1) · buscar-música(1) · n-de-músicas(1) · tipo-desconhecido(1)
+  stroke-dasharray:     4 ícones — nunca-sincronizada, baixando, sem-conteúdo,
+                        arquivo-não-baixado
+  fill-opacity:         1 ícone — parcial (0.35)
+  rx:                   4 elementos — os 3 trastes da tab e o corpo do calendar
+  stroke-width por ELEMENTO: 0 no catálogo; 2 na seção "os quatro estados"
+                        (zoom − e zoom + inertes, `stroke-width="1.25"` no path do sinal)
+
+  SEM currentColor, com cor CRAVADA (os dois de 2 cores):
+    parcial   escuro #6E6A80 (lineInfo) + #C9923B (offlineInk) + fill-opacity .35
+              claro  #8E8779 (lineInfo) + #7A5410 (offlineInk)
+    baixando  escuro #6E6A80 (lineInfo) + #777CE8 (accentInk)
+              claro  #8E8779 (lineInfo) + #4A4FC0 (accentInk)
+  São hexadecimais de TOKEN, um par por tema. Não podem ir crus para o
+  componente: têm de virar nome de token resolvido pelo tema.
+
+===== D2 — arcos: 19, nenhum inválido =====
+Tokenizei os `d` acompanhando o ponto corrente e conferi `2·min(rx,ry) ≥ corda`:
+
+  escuro (moon)         r 9      corda 15,585  2r 18,000   OK
+  escuro (moon)         r 8,2    corda 15,585  2r 16,400   OK
+  sair (log-out) ×2     r 2      corda  2,828  2r  4,000   OK
+  parcial ×2            r 9      corda 16,625  2r 18,000   OK
+  sem-conexão           r 11     corda 15,000  2r 22,000   OK
+  sem-conexão           r 6,6    corda  8,800  2r 13,200   OK
+  última-sincronização  r 8,5    corda  6,500  2r 17,000   OK
+  tentar-novamente      r 8      corda  6,125  2r 16,000   OK
+  baixar-setlist ×2     r 1,5    corda  2,121  2r  3,000   OK
+  baixando-ação ×2      r 1,5    corda  2,121  2r  3,000   OK
+  local (map-pin)       r 7      corda 14,000  2r 14,000   OK  ← a igualdade exata do §6.1
+  tipo-desconhecido     r 1,9    corda  2,900  2r  3,800   OK
+  arquivo-não-baixado   r 4      corda  7,976  2r  8,000   OK  ← o mais apertado do §6.1
+  arquivo-não-baixado   r 5,6    corda 10,735  2r 11,200   OK
+  arquivo-não-baixado   r 3,4    corda  6,299  2r  6,800   OK
+  ------------------------------------------------------------------
+  INVÁLIDOS: 0
+
+Os dois casos que o §6.1 nomeia batem ao milésimo. A CONTAGEM não: o README diz
+"15 arcos", eu conto 19. A diferença são exatamente os 4 arcos de canto de raio
+1,5 das bandejas de `baixar-setlist` e `baixando-ação` (19 − 4 = 15) — arcos de
+canto arredondado, que a varredura do design provavelmente não contou como
+arco. Nenhum deles é apertado. Divergência de contagem, não de desenho.
+
+===== D3 — a conta dos ícones =====
+  linhas na tabela §6.4 ............ 34
+  catálogo escuro renderizado ...... 34
+  catálogo claro renderizado ....... 33
+  desenhos DISTINTOS ............... 33
+  declarado ........................ "32 ícones"
+`voltar` e `voltar (avulsa)` têm markup IDÊNTICO ("M10 6l-6 6 6 6M4 12h15"): são
+uma linha a mais na tabela, não um desenho a mais. Sobram 33.
+
+===== D4 — o markup, os 34 =====
+# Os 34 registros do catálogo (tema escuro) do `icones.html`, extraídos por
+# unescape do bundle. `sc-camel-view-box` é como o bundler serializa `viewBox`.
+
+### auto-scroll  ·  próprio  ·  24 dp
+<svg width="24" height="24" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5h14M5 9h14M5 13h9"></path><path d="M17 12v7M14 16l3 3 3-3"></path></svg>
+
+### zoom-menos  ·  próprio  ·  24 dp
+<svg width="24" height="24" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3.15 9.3V3.15h6.15M14.7 3.15h6.15V9.3M20.85 14.7v6.15H14.7M9.3 20.85H3.15V14.7"></path><path d="M8 12h8"></path></svg>
+
+### zoom-mais  ·  próprio  ·  24 dp
+<svg width="24" height="24" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3.15 9.3V3.15h6.15M14.7 3.15h6.15V9.3M20.85 14.7v6.15H14.7M9.3 20.85H3.15V14.7"></path><path d="M12 8v8M8 12h8"></path></svg>
+
+### claro  ·  lucide · sun  ·  24 dp
+<svg width="24" height="24" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 3.15v2.3M12 20.85v-2.3M3.15 12h2.3M20.85 12h-2.3M5.74 5.74l1.63 1.63M18.26 18.26l-1.63-1.63M18.26 5.74l-1.63 1.63M5.74 18.26l1.63-1.63"></path></svg>
+
+### escuro  ·  lucide · moon  ·  24 dp
+<svg width="24" height="24" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.83 3.16A9 9 0 1 0 20.85 14.18A8.2 8.2 0 0 1 9.83 3.16Z"></path></svg>
+
+### indice  ·  próprio  ·  24 dp
+<svg width="24" height="24" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="7" r="1.3" fill="currentColor" stroke="none"></circle><circle cx="5.5" cy="12" r="1.3" fill="currentColor" stroke="none"></circle><circle cx="5.5" cy="17" r="1.3" fill="currentColor" stroke="none"></circle><path d="M10 7h9M10 12h9M10 17h6"></path></svg>
+
+### busca  ·  lucide · search  ·  24 dp
+<svg width="24" height="24" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="M15.5 15.5L21 21"></path></svg>
+
+### sair  ·  lucide · log-out  ·  24 dp
+<svg width="24" height="24" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h3M14 8l4 4-4 4M9 12h9"></path></svg>
+
+### voltar-avulsa  ·  lucide · arrow-left  ·  24 dp
+<svg width="24" height="24" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10 6l-6 6 6 6M4 12h15"></path></svg>
+
+### letra  ·  próprio  ·  24 dp
+<svg width="24" height="24" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.25h13M4 9.75h16M4 14.25h10M4 18.75h14"></path></svg>
+
+### cifra  ·  próprio  ·  24 dp
+<svg width="24" height="24" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h3M11 5h3M18 5h2"></path><path d="M4 9.5h16"></path><path d="M4 14.5h3M12 14.5h4"></path><path d="M4 19h13"></path></svg>
+
+### tab  ·  próprio  ·  24 dp
+<svg width="24" height="24" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18M3 6.6h1.225M11.175 6.6h9.825M3 10.2h9.225M19.175 10.2h1.825M3 13.8h4.225M14.175 13.8h6.825M3 17.4h18M3 21h18"></path><rect x="5.5" y="4.9" width="4.4" height="3.4" rx="1.7" fill="currentColor" stroke="none"></rect><rect x="13.5" y="8.5" width="4.4" height="3.4" rx="1.7" fill="currentColor" stroke="none"></rect><rect x="8.5" y="12.1" width="4.4" height="3.4" rx="1.7" fill="currentColor" stroke="none"></rect></svg>
+
+### partitura  ·  próprio  ·  24 dp
+<svg width="24" height="24" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18M3 8.5h18M3 12h18M3 15.5h18M3 19h18"></path><circle cx="8.8" cy="15.5" r="2.4" fill="currentColor" stroke="none"></circle><path d="M11.2 15.5V6.5"></path></svg>
+
+### garantida  ·  próprio  ·  28 dp
+<svg width="28" height="28" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M8 12.2l2.8 2.8L16.2 9.4"></path></svg>
+
+### parcial  ·  próprio · 2 cores  ·  28 dp
+<svg width="28" height="28" sc-camel-view-box="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" fill="none" stroke="#6E6A80"></circle><path d="M12 3a9 9 0 0 1 6.36 15.36" fill="none" stroke="#C9923B"></path><path d="M12 3a9 9 0 0 1 6.36 15.36L12 12z" fill="#C9923B" fill-opacity="0.35" stroke="none"></path></svg>
+
+### nunca-sincronizada  ·  próprio  ·  28 dp
+<svg width="28" height="28" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" stroke-dasharray="2.6 3"></circle><path d="M8.5 8.5l7 7M15.5 8.5l-7 7"></path></svg>
+
+### baixando  ·  próprio · 2 cores  ·  28 dp
+<svg width="28" height="28" sc-camel-view-box="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" fill="none" stroke="#6E6A80" stroke-dasharray="2.6 3"></circle><path d="M12 7.5v6M9.2 10.9l2.8 2.8 2.8-2.8" fill="none" stroke="#777CE8"></path><path d="M8 16.5h8" fill="none" stroke="#777CE8"></path></svg>
+
+### sem-conexao  ·  lucide · wifi-off  ·  24 dp
+<svg width="24" height="24" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 9.2a11 11 0 0 1 15 0M7.6 12.8a6.6 6.6 0 0 1 8.8 0"></path><circle cx="12" cy="17" r="1.4" fill="currentColor" stroke="none"></circle><path d="M4 4l16 16"></path></svg>
+
+### ultima-sincronizacao  ·  lucide · history  ·  24 dp
+<svg width="24" height="24" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 12a8.5 8.5 0 1 1-2.5-6M20.5 3.5V6H18"></path><path d="M12 8.5V12l2.6 1.6"></path></svg>
+
+### falha  ·  lucide · alert-triangle  ·  24 dp
+<svg width="24" height="24" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4.2l8.4 14.8H3.6z"></path><path d="M12 10v4"></path><circle cx="12" cy="16.9" r="1.1" fill="currentColor" stroke="none"></circle></svg>
+
+### tentar-novamente  ·  lucide · rotate-cw  ·  24 dp
+<svg width="24" height="24" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v4h-4"></path></svg>
+
+### voltar  ·  lucide · arrow-left  ·  24 dp
+<svg width="24" height="24" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10 6l-6 6 6 6M4 12h15"></path></svg>
+
+### fechar  ·  lucide · x  ·  24 dp
+<svg width="24" height="24" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+
+### apagar  ·  lucide · x-circle  ·  24 dp
+<svg width="24" height="24" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"></circle><path d="M9.2 9.2l5.6 5.6M14.8 9.2l-5.6 5.6"></path></svg>
+
+### buscar-musica  ·  próprio · search+nota  ·  24 dp
+<svg width="24" height="24" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="M15.5 15.5L21 21"></path><circle cx="9" cy="12.4" r="1.7" fill="currentColor" stroke="none"></circle><path d="M10.7 12.4V7.8"></path></svg>
+
+### baixar-setlist  ·  lucide · download  ·  24 dp
+<svg width="24" height="24" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5v10M8.4 10.1L12 13.7l3.6-3.6"></path><path d="M4.5 17v2a1.5 1.5 0 0 0 1.5 1.5h12a1.5 1.5 0 0 0 1.5-1.5v-2"></path></svg>
+
+### baixando-acao  ·  próprio · haste partida  ·  24 dp
+<svg width="24" height="24" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5v2.6M12 8.2v2.6M12 12.9v.8M8.4 10.1L12 13.7l3.6-3.6"></path><path d="M4.5 17v2a1.5 1.5 0 0 0 1.5 1.5h12a1.5 1.5 0 0 0 1.5-1.5v-2"></path></svg>
+
+### voltar-ao-inicio  ·  lucide · skip-back  ·  24 dp
+<svg width="24" height="24" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18.5 5.5v13L8.5 12z"></path><path d="M5.5 5.5v13"></path></svg>
+
+### data  ·  lucide · calendar  ·  20 dp
+<svg width="20" height="20" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"></rect><path d="M8 3v4M16 3v4M3.5 10h17"></path></svg>
+
+### local  ·  lucide · map-pin  ·  20 dp
+<svg width="20" height="20" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c4.6-4.4 7-8 7-11a7 7 0 1 0-14 0c0 3 2.4 6.6 7 11z"></path><circle cx="12" cy="10" r="2.4"></circle></svg>
+
+### n-de-musicas  ·  próprio  ·  20 dp
+<svg width="20" height="20" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.5h10M4 12h10M4 17.5h6"></path><circle cx="17" cy="17.5" r="2.3" fill="currentColor" stroke="none"></circle><path d="M19.3 17.5V8.5"></path></svg>
+
+### sem-conteudo  ·  próprio  ·  28 dp
+<svg width="28" height="28" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"></path><path d="M9 12h6M9 16h4" stroke-dasharray="2 2.4"></path></svg>
+
+### tipo-desconhecido  ·  próprio  ·  28 dp
+<svg width="28" height="28" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"></path><path d="M10.2 11a1.9 1.9 0 1 1 2 2.1v1.2"></path><circle cx="12.2" cy="17.3" r="0.9" fill="currentColor" stroke="none"></circle></svg>
+
+### arquivo-nao-baixado  ·  próprio  ·  28 dp
+<svg width="28" height="28" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 16.5a4 4 0 0 1 .5-7.96 5.6 5.6 0 0 1 10.6 1.7A3.4 3.4 0 0 1 17.4 16.5"></path><path d="M12 12.4v1.8M12 16v1" stroke-dasharray="0"></path><path d="M9.6 17.2L12 19.6l2.4-2.4"></path></svg>
+
