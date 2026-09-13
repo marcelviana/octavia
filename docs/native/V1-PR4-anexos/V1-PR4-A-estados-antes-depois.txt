@@ -1,0 +1,154 @@
+$ (A) os estados do S1 — bounds de TODOS os alvos, textos do dump e logcat, ANTES × DEPOIS
+$ adb -s emulator-5554 shell uiautomator dump  ·  densidade 360 (2,25 px/dp)  ·  área do app y 270…1465 px
+$ ANTES  = origin/main (2db81ce) — Metro do worktree em 82bfc3e, cujo apps/native/src, App.tsx e index.ts são
+$          byte a byte os de origin/main (`git diff --stat origin/main 82bfc3e -- apps/native/src apps/native/App.tsx
+$          apps/native/index.ts apps/native/app.json packages/core/src` → vazio); ver div. 58
+$ DEPOIS = v1/pr4-s1 em 5f7d5c4 (commit 2), Metro do mesmo worktree, `expo start --dev-client --clear`
+$ Mesmo aparato dos dois lados: S1a/S1b/S1e/S1f contra o mock local (aceite.py, :8788, base inline);
+$ S1c/S1d em avião provado por ping. Nomes = IDs do DESIGN-V1 §7. Extras: S1e-429 (A3), S1d-falha,
+$ S1c-indicadores (fixture ◔/✗), S1e-a21 (só DEPOIS: A21, 500 na página 2).
+
+===== A1 — bounds de todos os alvos tocáveis (node instrumentos/bounds.mjs dumps-antes dumps-depois) =====
+===== antes =====
+-- S1a
+  buscar                 [2184,96][2488,226]          135.1 ×   57.8 dp
+-- S1b
+  buscar                 [2184,96][2488,226]          135.1 ×   57.8 dp
+  setlist-4340bf95       [72,342][2488,653]          1073.8 ×  138.2 dp
+  baixar-4340bf95        [1509,432][1865,563]         158.2 ×   58.2 dp
+  setlist-00c2c1f4       [72,680][2488,990]          1073.8 ×  137.8 dp
+  baixar-00c2c1f4        [1509,770][1865,900]         158.2 ×   57.8 dp
+  setlist-8c4413d9       [72,1017][2488,1328]        1073.8 ×  138.2 dp
+  baixar-8c4413d9        [1509,1107][1865,1238]       158.2 ×   58.2 dp
+-- S1c-indicadores
+  buscar                 [2184,96][2488,226]          135.1 ×   57.8 dp
+  setlist-4340bf95       [72,342][2488,653]          1073.8 ×  138.2 dp
+  baixar-4340bf95        [1509,432][1865,563]         158.2 ×   58.2 dp
+  setlist-00c2c1f4       [72,680][2488,990]          1073.8 ×  137.8 dp
+  baixar-00c2c1f4        [1509,770][1865,900]         158.2 ×   57.8 dp
+  setlist-8c4413d9       [72,1017][2488,1328]        1073.8 ×  138.2 dp
+  baixar-8c4413d9        [1509,1107][1865,1238]       158.2 ×   58.2 dp
+-- S1c
+  buscar                 [2184,96][2488,226]          135.1 ×   57.8 dp
+  setlist-4340bf95       [72,342][2488,653]          1073.8 ×  138.2 dp
+  baixar-4340bf95        [1509,432][1865,563]         158.2 ×   58.2 dp
+  setlist-00c2c1f4       [72,680][2488,990]          1073.8 ×  137.8 dp
+  baixar-00c2c1f4        [1509,770][1865,900]         158.2 ×   57.8 dp
+  setlist-8c4413d9       [72,1017][2488,1328]        1073.8 ×  138.2 dp
+  baixar-8c4413d9        [1509,1107][1865,1238]       158.2 ×   58.2 dp
+-- S1d-falha
+  buscar                 [2184,96][2488,226]          135.1 ×   57.8 dp
+  tentar                 [1040,947][1521,1073]        213.8 ×   56.0 dp
+-- S1d
+  buscar                 [2184,96][2488,226]          135.1 ×   57.8 dp
+  tentar                 [1040,947][1521,1073]        213.8 ×   56.0 dp
+-- S1e-429
+  buscar                 [2184,96][2488,226]          135.1 ×   57.8 dp
+  tentar-banner          [2138,353][2432,461]         130.7 ×   48.0 dp
+  setlist-4340bf95       [72,545][2488,856]          1073.8 ×  138.2 dp
+  baixar-4340bf95        [1509,635][1865,766]         158.2 ×   58.2 dp
+  setlist-00c2c1f4       [72,883][2488,1193]         1073.8 ×  137.8 dp
+  baixar-00c2c1f4        [1509,973][1865,1103]        158.2 ×   57.8 dp
+  setlist-8c4413d9       [72,1220][2488,1465]        1073.8 ×  108.9 dp
+  baixar-8c4413d9        [1509,1310][1865,1441]       158.2 ×   58.2 dp
+-- S1e
+  buscar                 [2184,96][2488,226]          135.1 ×   57.8 dp
+  tentar-banner          [2138,353][2432,461]         130.7 ×   48.0 dp
+  setlist-4340bf95       [72,545][2488,856]          1073.8 ×  138.2 dp
+  baixar-4340bf95        [1509,635][1865,766]         158.2 ×   58.2 dp
+  setlist-00c2c1f4       [72,883][2488,1193]         1073.8 ×  137.8 dp
+  baixar-00c2c1f4        [1509,973][1865,1103]        158.2 ×   57.8 dp
+  setlist-8c4413d9       [72,1220][2488,1465]        1073.8 ×  108.9 dp
+  baixar-8c4413d9        [1509,1310][1865,1441]       158.2 ×   58.2 dp
+-- S1f
+  buscar                 [2184,96][2488,226]          135.1 ×   57.8 dp
+===== depois =====
+-- S1a
+  buscar                 [2103,123][2488,253]         171.1 ×   57.8 dp
+-- S1b
+  buscar                 [2103,123][2488,253]         171.1 ×   57.8 dp
+  setlist-4340bf95       [72,396][2488,693]          1073.8 ×  132.0 dp
+  baixar-4340bf95        [1406,480][1842,611]         193.8 ×   58.2 dp
+  setlist-00c2c1f4       [72,720][2488,1017]         1073.8 ×  132.0 dp
+  baixar-00c2c1f4        [1406,804][1842,935]         193.8 ×   58.2 dp
+  setlist-8c4413d9       [72,1044][2488,1341]        1073.8 ×  132.0 dp
+  baixar-8c4413d9        [1406,1128][1842,1259]       193.8 ×   58.2 dp
+-- S1c-indicadores
+  buscar                 [2103,123][2488,253]         171.1 ×   57.8 dp
+  setlist-4340bf95       [72,396][2488,693]          1073.8 ×  132.0 dp
+  baixar-4340bf95        [1406,479][1842,610]         193.8 ×   58.2 dp
+  setlist-00c2c1f4       [72,720][2488,1017]         1073.8 ×  132.0 dp
+  baixar-00c2c1f4        [1406,804][1842,935]         193.8 ×   58.2 dp
+  setlist-8c4413d9       [72,1044][2488,1341]        1073.8 ×  132.0 dp
+  baixar-8c4413d9        [1406,1127][1842,1258]       193.8 ×   58.2 dp
+-- S1c
+  buscar                 [2103,123][2488,253]         171.1 ×   57.8 dp
+  setlist-4340bf95       [72,396][2488,693]          1073.8 ×  132.0 dp
+  baixar-4340bf95        [1406,480][1842,611]         193.8 ×   58.2 dp
+  setlist-00c2c1f4       [72,720][2488,1017]         1073.8 ×  132.0 dp
+  baixar-00c2c1f4        [1406,804][1842,935]         193.8 ×   58.2 dp
+  setlist-8c4413d9       [72,1044][2488,1341]        1073.8 ×  132.0 dp
+  baixar-8c4413d9        [1406,1128][1842,1259]       193.8 ×   58.2 dp
+-- S1d-falha
+  buscar                 [2103,123][2488,253]         171.1 ×   57.8 dp
+
+  Leitura: o cartão sai de 138,2/137,8 dp para 132,0 (§5.4) e, no S1e, de 108,9 (recortado pela
+  viewport, div. 21) para 112,0 inteiro — os três cartões cabem sob o banner. `buscar` 135,1 → 171,1 dp
+  de largura (ganhou o ícone de 24); `baixar-*` 158,2 → 193,8. `tentar-banner` 130,7 × 48,0 → 197,0 × 48,0
+  (contorno próprio + ícone). `tentar` (S1d) 213,8 × 56,0 → 222,2 × 56,0. Nenhum alvo abaixo de 48 dp
+  em nenhum dos 19 dumps (G5, anexo B).
+
+===== A2 — textos do dump, os seis estados, ANTES × DEPOIS =====
+  O que muda no dump é só o que o design manda: o glifo ✓/◔/✗ some (era nó de texto; o SVG não é),
+  o "  ·  " dos metadados vira dois nós ("sem data", "60 músicas") separados pelos ícones, e o título
+  dos blocos S1d/S1f sai em caixa alta por `textTransform` (div. 63). Chip de status, banner e botões
+  têm a MESMA string (os nós aninhados de cor não quebram o texto).
+  S1a antes: "SETLISTS" "sincronizando…" "Buscar música" "baixando suas setlists pela primeira vez" 
+  S1a depois: "SETLISTS" "sincronizando…" "Buscar música" "baixando suas setlists pela primeira vez" 
+  S1b antes: "SETLISTS" "sincronizado agora" "Buscar música" "UX-AUDIT ESTRESSE" "sem data  ·  60 músicas" "Baixar esta setlist" "✓" "garantida offline" "todos os arquivos neste aparelho" "UX-AUDIT SHOW PADRÃO" "sem data  ·  8 músicas"
+  S1b depois: "SETLISTS" "sincronizado agora" "Buscar música" "UX-AUDIT ESTRESSE" "sem data" "60 músicas" "Baixar esta setlist" "garantida offline" "todos os arquivos neste aparelho" "UX-AUDIT SHOW PADRÃO" "sem data" "8 músicas" "Baixar est
+  S1c antes: "SETLISTS" "sem conexão · última sincronização há 1 d" "Buscar música" "UX-AUDIT ESTRESSE" "sem data  ·  60 músicas" "Baixar esta setlist" "✓" "garantida offline" "todos os arquivos neste aparelho" "UX-AUDIT SHOW PADRÃ
+  S1c depois: "SETLISTS" "sem conexão · última sincronização há 1 d" "Buscar música" "UX-AUDIT ESTRESSE" "sem data" "60 músicas" "Baixar esta setlist" "garantida offline" "todos os arquivos neste aparelho" "UX-AUDIT SHOW PADRÃO" "sem d
+  S1d antes: "SETLISTS" "sem conexão" "Buscar música" "sem conexão" "Nenhuma setlist foi salva neste aparelho ainda. Conecte-se à internet uma vez para baixar tudo — depois funciona offline." "Tentar novamente" 
+  S1d depois: "SETLISTS" "sem conexão" "Buscar música" "SEM CONEXÃO" "Nenhuma setlist foi salva neste aparelho ainda. Conecte-se à internet uma vez para baixar tudo — depois funciona offline." "Tentar novamente" 
+  S1e antes: "SETLISTS" "mostrando dados salvos" "Buscar música" "falha no servidor · mostrando dados de agora" "Tentar novamente" "UX-AUDIT ESTRESSE" "sem data  ·  60 músicas" "Baixar esta setlist" "✓" "garantida offline" "todos os arqu
+  S1e depois: "SETLISTS" "mostrando dados salvos" "Buscar música" "falha no servidor · mostrando dados de agora" "Tentar novamente" "UX-AUDIT ESTRESSE" "sem data" "60 músicas" "Baixar esta setlist" "garantida offline" "todos os arquivos nest
+  S1f antes: "SETLISTS" "sincronizado agora" "Buscar música" "nenhuma setlist" "Sua conta não tem setlists. Crie na versão web — elas aparecem aqui na próxima sincronização." 
+  S1f depois: "SETLISTS" "sincronizado agora" "Buscar música" "NENHUMA SETLIST" "Sua conta não tem setlists. Crie na versão web — elas aparecem aqui na próxima sincronização." 
+
+===== A3 — content-desc dos cartões (o glifo e o separador saem; o testID fica) =====
+  ANTES  setlist-4340bf95  "UX-AUDIT ESTRESSE, sem data  ·  60 músicas, ✓, garantida offline, todos os arquivos neste aparelho"
+  DEPOIS setlist-4340bf95  "UX-AUDIT ESTRESSE, sem data, 60 músicas, garantida offline, todos os arquivos neste aparelho"
+  DEPOIS (S1c-indicadores) "UX-AUDIT ESTRESSE, sem data, 61 músicas, parcial, 2 de 3 arquivos baixados"
+                           "UX-AUDIT SOLO, sem data, 1 música, nunca sincronizada, sem conexão para baixar"
+
+===== A4 — logcat (OCTAVIA:) por estado, verbatim, DEPOIS (o ANTES é idêntico linha a linha nos mesmos estados) =====
+--- S1b (mock normal)
+  net online · auth uid=Pw3bx… src=restored · cache hit kind=setlists n=3 · cache hit kind=content n=67 · sync start
+  api status=200 path=/api/setlists n=1 ms=28 · api status=200 path=/api/content n=1 (×2) · cache write kind=setlists n=3
+  invalidated=0 · cache write kind=content n=67 invalidated=0 · sync ok setlists=3 content=67 pages=2 t=242 · prefetch plan n=0 reason=7d
+  mock: REQ /api/setlists auth=sim · REQ /api/content?pageSize=100&page=1&sortBy=recent · …page=2…   (3 requests, todas ao mock)
+  A4 (tempo até o cache): 15:18:42.957 auth uid → 15:18:43.102 cache hit kind=setlists = 145 ms (ANTES: 15:09:59.205 → .376 = 171 ms)
+--- S1e (mock 500-pagina-1)
+  sync start · api status=200 path=/api/setlists · api status=500 path=/api/content n=1 · sync fail stage=content page=1 code=INTERNAL_ERROR status=500
+--- S1e-429 (mock 429, A3)
+  sync start · api status=429 path=/api/setlists n=1 · ratelimit retry-after=30 family=setlist-read · sync fail stage=setlists page=1 code=RATE_LIMITED status=429
+  banner: "servidor ocupado · tente em instantes · mostrando dados de agora"
+--- S1f (mock normal com {"setlists": []})
+  sync start · cache write kind=setlists n=0 invalidated=0 · cache write kind=content n=67 · sync ok setlists=0 content=67 pages=2 t=101
+--- S1a (store apagado + mock atraso 45 s)
+  net online · auth uid=… src=restored · sync start · auth refresh=cached      ← SEM cache hit: é o que o separa do S1b
+--- S1d-falha (store apagado + mock 500-pagina-1, rede viva)
+  sync start · sync fail stage=content page=1 code=INTERNAL_ERROR status=500     (título do bloco: "falha no servidor")
+--- S1d (store apagado + avião; ping → "connect: Network is unreachable" ANTES de abrir)
+  net offline · auth uid=… src=restored · sync skip reason=offline · prefetch plan n=0 reason=7d
+--- S1c (store restaurado + avião; ping idem)
+  net offline · auth uid=… src=restored · cache hit kind=setlists n=3 · cache hit kind=content n=67 · sync skip reason=offline
+--- S1c-indicadores (setlists.json = instrumentos/fixture-S1c-indicadores.json, sha256 a9668065…; avião)
+  cache hit kind=setlists n=3 · cache hit kind=content n=67 · sync skip reason=offline
+  Estresse: +1 song apontando para o content da fase-d-cifra.pdf (não está no disco) → parcial 2 de 3 (arco de 2/3)
+  Solo: content_id trocado por um inexistente → nunca sincronizada · Show padrão: intacta → garantida
+--- S1e-a21 (só DEPOIS: mock 500-pagina-2, A21)
+  sync start · api status=200 /api/setlists · api status=200 /api/content (page 1) · api status=500 /api/content · sync fail stage=content page=2 code=INTERNAL_ERROR status=500
+  store ANTES = DEPOIS: content.json d27e6d84… · setlists.json 0a3a0638… · files-index.json 0a640ed9… (byte a byte)
+  banner: "falha no servidor · mostrando dados de há 1 d" — o indicador de falha, com a lista embaixo
