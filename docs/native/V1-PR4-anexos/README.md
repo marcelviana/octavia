@@ -16,7 +16,7 @@
 > **ANTES** = `origin/main` (`2db81ce`), Metro do worktree em `82bfc3e` — o
 > commit 1 só toca scripts, e `apps/native/src` é byte a byte o de
 > `origin/main` (div. 58 explica por que não foi o Metro do checkout principal).
-> **DEPOIS** = `v1/pr4-s1` em `5f7d5c4` (commit 2), Metro do mesmo worktree; `S1c-e3` em cima do commit 4.
+> **DEPOIS** = `v1/pr4-s1` em `5f7d5c4` (commit 2), Metro do mesmo worktree; `S1c-e3` em cima do commit 4, `S1c-e12` em cima do commit 6.
 
 | Arquivo | O que traz |
 |---|---|
@@ -27,12 +27,12 @@
 
 ## Dumps e capturas
 
-`dumps-antes/` (9 estados) e `dumps-depois/` (11) — um `.xml` (`uiautomator
+`dumps-antes/` (9 estados) e `dumps-depois/` (12) — um `.xml` (`uiautomator
 dump`) e um `.png` (`screencap`, tirado ANTES do dump — div. 51) por estado,
 nomeados pelo ID do DESIGN-V1 §7: `S1a` · `S1b` · `S1c` · `S1d` · `S1e` ·
 `S1f`, mais `S1e-429` (A3), `S1d-falha` (falha sem cache, sem moldura),
 `S1c-indicadores` (◔ e ✗ por fixture, A10) e, só no depois, `S1e-a21` (500 na
-página 2, A21) e `S1c-e3` (o `Baixar` inativo pela E3, commit 4). `SHA256SUMS.txt` em cada diretório.
+página 2, A21) `S1c-e3` (o `Baixar` inativo pela E3, commit 4) e `S1c-e12` (`garantida` neutra, commit 6). `SHA256SUMS.txt` em cada diretório.
 
 `instrumentos/` — os scripts de host desta sessão: `g1.sh` · `g5.mjs` ·
 `g6.sh` (verbatim da V1-PR1), `ids.mjs` (V1-PR3), `bounds.mjs` (a tabela do
@@ -69,7 +69,7 @@ recebe a **E3 aqui** (tinta `lineInfo` na moldura, no ícone e no rótulo, sem o
 `dumps-depois/S1c-e3.png`) · Q3 a marca do S1f com o rótulo "Octavia", errata **E11** · Q4 código
 como está e a regra dos dezessete números vira errata **E10** agora, para a PR5 e a PR6 · Q5 caixa
 alta mantida (div. 63) · Q6 `errorInk` na falha sem cache (div. 65) · Q7 o commit de anexos fica.
-Div. 58: a limitação passa a ser declarada nos termos de ambiente, não de código. **Div. 60: pendente.**
+Div. 58: a limitação passa a ser declarada nos termos de ambiente, não de código. Div. 60: **§6.1 vence**, `garantida` neutra (ícone `text`, rótulo `muted`), errata **E12** — commit 6.
 
 ## Divergências — 58 em diante
 
@@ -79,7 +79,7 @@ Div. 58: a limitação passa a ser declarada nos termos de ambiente, não de có
 |---|---|---|
 | **58** | **T** | O `node_modules` do checkout principal é de 10/09, anterior à #296: o Metro de lá **não resolve `react-native-svg`** ("Unable to resolve … from Icone.tsx", bundling failed, dev client em erro). Nada foi instalado no checkout principal (não é o desta sessão); o ANTES rodou do worktree em `82bfc3e`. **Limitação, nos termos certos**: o diff vazio de `apps/native/src`, `App.tsx`, `index.ts` e `app.json` contra `origin/main` prova que o **código** do antes é o de `origin/main` — **não** prova que o **ambiente** foi o mesmo: antes e depois renderizaram com o mesmo dev client `c0c1ab51…` e um bundle que já têm o `react-native-svg` da #296, coisa que o `origin/main` de fato tinha, mas que o checkout principal não conseguiria servir. Risco baixo (mesmo worktree, mesmo APK, minutos de diferença), declarado. **Depois do merge, `pnpm install` no checkout principal é passo do Marcel — a PR5 bate no mesmo problema** |
 | **59** | **D** | As seis molduras do S1 desenham **só** o indicador `garantida` nos três cartões (a lista `setlists` do `telas.html` é a mesma nos três frames): `parcial`, `nunca sincronizada` e `baixando` (cartão e botão) **não têm moldura nenhuma**. Implementados pela §6.4 (nome, tamanho, cores) e §6.1 (âmbar = não está pronta) — anexo D3. **O tamanho dela**: três dos quatro indicadores nunca foram desenhados por ninguém, e o estado mais comum da conta real do Marcel — *parcial*, com o arco proporcional — é um deles. Vira item do **aceite visual da V1-PR7**, abaixo |
-| **60** | **D** | A §6.1 diz "garantida em **tinta neutra**"; a moldura S1b pinta o ícone e o rótulo em `#777CE8` e a legenda diz "*garantida* de 28 em accentInk — mesma cor de antes". O código segue a **moldura**. O argumento da §6.1 é forte: âmbar = "não está pronta", neutro = "pode ir", e com o acento em `garantida` o acento passa a significar duas coisas (a §3.1 o dá a ativo, atual ou foco). **Decisão do Marcel pendente** (2026-09-13): qualquer que seja, vira errata — a §6.1 ou a moldura está errada, e o congelado não pode dizer as duas |
+| **60** | **D** | A §6.1 diz "garantida em **tinta neutra**"; a moldura S1b pinta o ícone e o rótulo em `#777CE8` e a legenda diz "*garantida* de 28 em accentInk — mesma cor de antes". O commit 2 seguiu a moldura. **Decisão do Marcel (2026-09-13): a §6.1 vence** — ícone em `text`, rótulo em `muted`; o acento fica com um significado só (ativo, atual, foco, §3.1) e a semântica fecha: neutro é "pode ir", âmbar é "não está pronta". Errata **E12** na moldura S1b e na legenda; código no commit 6, capturado em `dumps-depois/S1c-e12` |
 | **61** | **D** | As molduras usam **17 números fora das escalas** do `theme.ts` que a §5.2 diz que o desenho respeita (gaps 10 · 14 · 22 · 26 · 28, paddings 14 · 18 · 22, raios 8 · 10, tracking .09, 14,5 px, banner 66). Entrou o degrau mais próximo, pelo critério da E6; tabela completa no anexo D2 — pergunta ao Marcel |
 | **62** | **P** | O prompt manda provar o `ping` falhando "antes de abrir o app, **toda vez**"; quatro dos seis estados (S1a, S1b, S1e, S1f) **só existem com o sync rodando** — `estaOnline()` pula o sync em avião. Eles rodaram com a rede viva e a base inline no mock (o protocolo do V1-PRECHECK §4.3 e da V1-PR1); o ping foi provado antes de S1c, S1d e S1c-indicadores nas duas rodadas. Prod: 0 pelos dois lados (logcat × `REQ` do mock) |
 | **63** | **A** | `textTransform: 'uppercase'` no título dos blocos S1d/S1f (como a moldura, Raleway 22 com tracking): o dump devolve **"SEM CONEXÃO" / "NENHUMA SETLIST"** — o mesmo mecanismo do nome do cartão desde o N1; a string em código não muda |
@@ -97,7 +97,7 @@ Div. 58: a limitação passa a ser declarada nos termos de ambiente, não de có
 |---|---|---|
 | `V1-PR4-A-estados-antes-depois.txt` | 154 | `f3430dc28b37d5f1dc1238748beca0800d862f596cdee12634b39e6582db5a1a` |
 | `V1-PR4-B-gates.txt` | 132 | `e4e4c155148b2de2440cfe03d4c9a83f5df93af31733d7acbf019dcb5e922304` |
-| `V1-PR4-C-aparato-e-prod.txt` | 159 | `2f1eccb87e55340d1a7c02f6d41ae72d9c98f61e3d61087965bde7dc76f23190` |
-| `V1-PR4-D-moldura-para-token.txt` | 65 | `020e61218c8c683807f172deb0876f7882a800e846a71bff3a1a9662d17ad72a` |
+| `V1-PR4-C-aparato-e-prod.txt` | 188 | `2b9ffde8a3a08380d7b104519b8a05c37f763e2272cb2aa24aaa17e87ca6ca7f` |
+| `V1-PR4-D-moldura-para-token.txt` | 65 | `2a9cd03ade888990621587e8c1e030e4b7ed93925d817ca85d8bb726fa1040f3` |
 | `dumps-antes/SHA256SUMS.txt` | 18 | `8900ba2d0c37a4bd0ff17e131d10963513bc60c8e43e0f36043e690db9f067c6` |
-| `dumps-depois/SHA256SUMS.txt` | 22 | `cd65039de868f76b20e8ced0c7389a6b903505fbb5e528359ee508585fba3300` |
+| `dumps-depois/SHA256SUMS.txt` | 24 | `82c8f399cede6e858d078926981b8dec877fbcbc8bc0d951a3267cddcf096095` |

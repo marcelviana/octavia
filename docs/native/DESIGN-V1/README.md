@@ -494,6 +494,12 @@ Passa a valer: a marca do S1f (§8.4, a proposta aplicada) leva o mesmo `accessi
 Onde: §8.4, último parágrafo.
 Causa: a frase foi escrita antes de a marca ter a segunda casa. Div. 67 da V1-PR4.
 
+**E12 — a moldura S1b pinta `garantida` em accentInk; a §6.1 manda tinta neutra, e a §6.1 vence.**
+Estava escrito: na moldura `S1b` do `telas.html` (e nas `S1c` e `S1e`, que repetem o cartão), o ícone *garantida* de 28 e o rótulo "garantida offline" em `#777CE8`, e a legenda da S1b: "vira o ícone *garantida* de 28 em accentInk — mesma cor de antes".
+Passa a valer: **a §6.1** — "garantida em tinta neutra". No app, o ícone vai em **`text`** e o rótulo em **`muted`**; `parcial` e `nunca sincronizada` seguem em `offlineInk`, `baixando` no acento. Decisão do Marcel, 2026-09-13 (V1-PR4): o acento fica com um significado só — ativo, atual, foco (§3.1) — e a semântica da §6.1 fecha: neutro é "pode ir", âmbar é "não está pronta". Quem varre o S1 procurando o que falta baixar tem o âmbar chamando e o resto em silêncio.
+Onde: as molduras `S1b`, `S1c`, `S1e` e a legenda da `S1b` no `telas.html` (o arquivo congelado não é reeditado; esta errata prevalece sobre ele). A §6.1 fica como está.
+Causa: a moldura herdou a cor do glifo `✓` do app anterior ("mesma cor de antes") sem passar a regra que a própria folha tinha acabado de escrever. Div. 60 da V1-PR4.
+
 ---
 
 ## 10 · Proveniência

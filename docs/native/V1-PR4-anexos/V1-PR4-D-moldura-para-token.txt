@@ -57,7 +57,7 @@ $ critério da errata E6 — a escala declarada vence o número desenhado); onde
   nunca sincronizada    ícone `nunca-sincronizada` 28 em offlineInk, rótulo em offlineInk (era muted)
   baixando (cartão)     ícone `baixando` 28 em accentInk + rótulo "Baixando…"; botão com `baixando-acao` 24 — não medido (div. 66)
   falha sem cache       chip `falha` 20 em errorInk + texto em errorInk; bloco com `falha` 28 em errorInk (hipótese de desenho)
-  garantida             a moldura S1b e a legenda dela pintam em accentInk; a §6.1 diz "tinta neutra" — seguida a moldura (div. 60)
+  garantida             a moldura S1b pintava em accentInk; a §6.1 ("tinta neutra") VENCE — ícone em text, rótulo em muted (E12, div. 60, commit 6)
 
 ===== D4 — o recorte da marca (§8.4), medido no arquivo =====
   logo-octavia-dark.png 952 × 614 → a moldura usa background-size 238 × 154 (¼) e background-position −88 −6 numa

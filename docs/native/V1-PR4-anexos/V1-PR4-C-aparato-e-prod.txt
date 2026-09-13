@@ -157,3 +157,32 @@ qemu: 0 (15:56:04)
 
   A primeira tentativa desta captura saiu com o screencap ANTES do cache carregar (frame transitório 'sincronizando…')
   enquanto o dump já trazia a lista — descartada; refeita esperando o `sync skip` no logcat antes de capturar (div. 70).
+
+===== C8 — commit 6 (E12, garantida neutra): a captura S1c-e12 e o terceiro ciclo =====
+=== S1c com a E12 (garantida neutra) 16:20:32
+1
+connect: Network is unreachable
+OCTAVIA: net offline
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=67
+OCTAVIA: sync skip reason=offline
+OCTAVIA: prefetch plan n=0 reason=7d
+/sdcard/s.png: 1 file pulled, 0 skipped. 85.4 MB/s (232071 bytes in 0.003s)
+/sdcard/d.xml: 1 file pulled, 0 skipped. 18.4 MB/s (38796 bytes in 0.002s)
+dump S1c-e12:    38796 B xml,   232071 B png
+  setlist-4340bf95           [72,396][2488,693]       click=1 desc="UX-AUDIT ESTRESSE, sem data, 60 músicas, garantida offline, "
+  baixar-4340bf95            [1406,480][1842,611]     click=1 desc="Baixar esta setlist"
+  setlist-00c2c1f4           [72,720][2488,1017]      click=1 desc="UX-AUDIT SHOW PADRÃO, sem data, 8 músicas, garantida offline"
+  setlist-8c4413d9           [72,1044][2488,1341]     click=1 desc="UX-AUDIT SOLO, sem data, 1 música, garantida offline, todos "
+=== encerramento
+.env apagado: sim · metro: 0 · 8081 LISTEN: 0
+reverse: []
+rtt min/avg/max/mdev = 14.426/14.951/15.477/0.539 ms
+d27e6d8478185282d5707fb9459d8e124cdd6bdab9c20aa28df133041e86fc44  content.json
+0a3a06380634b5dabbe1811e29a8f7a6151e1302bfe8a025d16013300a5f8a07  setlists.json
+0a640ed93a71a6e8e389f903dec4b293f9852efb56af9c7cca7745971597b206  files-index.json
+ad2eae0942811adb4d60286516ce318110868f6aa889422ab0cb8b3dc690ea22  files/1786218429715-ux-audit-partitura-12p.pdf
+OK: killing emulator, bye bye
+OK
+qemu: 0 (16:21:17)
