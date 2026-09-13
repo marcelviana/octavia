@@ -100,6 +100,12 @@ Mais: o **extra do commit 1 está justificado** (div. 71, o oitavo caso do
 §9.1), e a **div. 75 vai para o `LOGS-OCTAVIA.md`** junto com as outras regras
 operacionais do bloco.
 
+E, depois da entrega, uma sexta decisão que a medição do CI provocou: **a
+referência do `native.yml` passa a ser FAIXA, não ponto** — 9m16s era o melhor
+de onze, não o regime (div. 80, o nono caso do §9.1). A faixa, a tabela das
+onze medições e a marca para o `V1-ENCERRAMENTO.md` substituir a referência
+pontual estão na seção **CI**, no fim deste documento.
+
 ## Divergências — 71 em diante
 
 *(Origens: **P** prompt/pre-check · **D** design/documento · **A** app/código · **T** teste/instrumento.)*
@@ -115,12 +121,15 @@ operacionais do bloco.
 | **77** | **A** | Com `numColumns={2}` e contagem **ímpar**, o último item ocupa a linha inteira (`flex: 1` sem par): `song-11` mede 1089,8 dp contra 536,9 dos outros. Comportamento do `FlatList`, **idêntico no antes e no depois** (medido nos dois), não introduzido por esta PR e fora do escopo dela. A moldura `S2-invalidos` mostra só até o item 10 e não tem o que dizer sobre isso |
 | **78** | **T** | O `content-desc` do item muda de forma: o chip com contorno era um nó de texto e some; entram o rótulo do tipo no fim e, nos inválidos, a frase do motivo — `"9, [FIXTURE] Sem corpo (no-body), nada para mostrar — edite na versão web  ·  Fixture A6, vazia"` contra `"9, [FIXTURE] Sem corpo (no-body), sem conteúdo  ·  Fixture A6, —"`. Esperado; registrado porque o A20/G6 da V1-PR7 vai ler o novo. O mesmo que a div. 69 registrou no S1 |
 | **79** | **D/A** | A sublinha do inválido **mantém** artista e nota depois do motivo (`"nada para mostrar — edite na versão web  ·  Fixture A6"`), onde a moldura mostra só a frase. Razão: §1 ("não muda dado") — a sublinha é o único lugar do S2 onde o artista e a `notes` da posição aparecem, e um inválido pode ter nota. Decisão de código, declarada |
+| **80** | **P/T** | **O nono caso do padrão do §9.1, e desta vez o instrumento é a leitura de quem mediu** — "9m16s é o número em regime" era uma duração medida **uma vez**, lida como propriedade estável do gate. Ver abaixo, fora da tabela: é material de `LOGS-OCTAVIA.md` |
+| **80b** | **D** | O cabeçalho do `native.yml` diz que o gate custou "**10m15s–14m15s** nas sete medições do N1 (mediana **~11m45s**)"; o `N1-ENCERRAMENTO.md` §N1-h3 tabula as sete uma a uma e conclui "vão de 10m15s a **14m11s**, mediana **11m39s**". Pela regra permanente ("a fonte de cada bloco é o seu `*-ENCERRAMENTO.md` commitado"), **o encerramento vence**. **Nada foi mudado no workflow** — é material do B8, junto com o achado do `paths` |
 
 ### Div. 71, por extenso — o oitavo caso de "instrumento com escopo menor do que parece"
 
 > **Material de `LOGS-OCTAVIA.md`.** O padrão vive hoje na §9.1 do
 > `V1-PR3-PRECHECK.md`, com a instrução de migrar no encerramento do bloco; a
-> linha do oitavo caso já está lá, e este é o texto que o LOGS vai querer.
+> linha do oitavo caso já está lá, e este é o texto que o LOGS vai querer. Esta
+> PR acrescentou **dois** casos: este e a **div. 80**, mais abaixo.
 
 | o instrumento mede | eu li como se medisse |
 |---|---|
@@ -179,6 +188,49 @@ que os gates leem o que a PR introduz, e a confirmação achou o buraco — fech
 é a resposta honesta à instrução. A regra 4 é aditiva: não toca nenhuma das três
 existentes, e o `dados.ts` real dá 0 acusações antes e depois.
 
+### Div. 80, por extenso — o nono caso, e o instrumento é a leitura
+
+> **Material de `LOGS-OCTAVIA.md`**, junto com a div. 71. Decisão do Marcel,
+> 2026-09-13. A linha já está na tabela do §9.1 do `V1-PR3-PRECHECK.md`.
+
+| o instrumento mede | eu li como se medisse |
+|---|---|
+| a duração de **um** run de CI | **o custo do gate** — uma propriedade estável do `native.yml` |
+
+A V1-PR4 mediu o `native.yml` em **9m16s** e o registrou como "quatro minutos
+abaixo da referência… nada a investigar". Daí saiu a instrução que esta PR
+recebeu: *"a referência é 9m16s; os 13m18s da PR3 não são referência, aquele
+run compilou o `react-native-svg` do zero; se subir para perto de 13, é cache
+frio, não módulo novo."*
+
+Cada pedaço disso é verdadeiro isoladamente. A **conclusão** é que não se
+sustenta: com onze runs na mão,
+
+- os quatro quentes fizeram trabalho **idêntico** — 621 : 621 actionable
+  tasks, mesma chave de cache com hit, 27 tarefas de NDK e 38 do
+  `react-native-svg` — e o Gradle foi de **7m48s a 11m03s**;
+- a variação **maior está DENTRO da V1-PR4**: 9m16s e 12m21s, mesmo código,
+  treze minutos de diferença, só um commit de `docs/` entre os dois;
+- **9m16s é o melhor de onze**, e o único que bate os "~9 min aceitáveis" da
+  N1-h3.
+
+O que separa este caso dos oito anteriores é **onde o instrumento está**. Nos
+oito, o instrumento era uma ferramenta — um script, um dump, um setting, uma
+captura — e o erro estava em achar que ela media mais do que mede. Aqui não há
+ferramenta defeituosa: o `gh run view` devolveu 9m16s e 9m16s era verdade. **O
+instrumento é a leitura** — uma amostra de tamanho 1 tratada como propriedade
+estável de um sistema que se sabia variável (a própria N1-h3, citada no
+cabeçalho do workflow, dava sete medições e uma faixa de 4 minutos).
+
+É o caso mais perigoso justamente por isso: não há gate que o pegue, e a
+correção não é instrumentar nada — é **contar n antes de dizer "em regime"**.
+
+A regra que sai daqui, e que vale além do CI: **uma medição não vira referência
+sem `n`.** Onde houver população, a referência é **faixa com mediana**; onde só
+houver uma medida, ela se declara como "medido uma vez", não como regime. E o
+critério de alarme é **sair da faixa**, não passar de um ponto — porque gate que
+grita sem motivo é desligado na terceira vez.
+
 ### Div. 75, por extenso — quem escuta a 8081
 
 > **Material de `LOGS-OCTAVIA.md`**, junto com as outras regras operacionais do
@@ -206,98 +258,124 @@ que é o que a V1-PR3 mediu em minutos. **A correção não foi supor que estava
 tudo bem: foi religar, medir os quatro sha256, e só então matar o emulador
 direito** (`emu kill`, que levou ~20 s salvando o snapshot — div. 57).
 
-## CI — `native.yml`
+## CI — `native.yml`: a referência passa a ser FAIXA, não ponto
 
-**Instrução recebida**: a referência é 9m16s (run `34777518972`, a V1-PR4); os
-13m18s da V1-PR3 não são referência, porque aquele run compilou o
-`react-native-svg` do zero; se esta PR subir para perto de 13, é cache frio,
-não módulo novo.
+> **PARA O `V1-ENCERRAMENTO.md`: substituir a referência pontual pela faixa.**
+> Decisão do Marcel, 2026-09-13. O bloco vinha usando "9m16s" como o número em
+> regime do gate; com onze medições na mão isso não se sustenta, e um alvo
+> pontual faz toda PR da série "estourar" sem ter feito nada errado. **Gate que
+> grita sem motivo é desligado na terceira vez** — é o mesmo argumento que esta
+> série já usou para o G5.
 
-Esta PR deu **11m55s**. Acima da referência, longe dos 13. Fui medir se era
-cache frio — e a medição achou mais do que a pergunta pedia.
+### A faixa, n = 11
 
-### As cinco medições
+Job `android-debug-apk`, PRs que tocam `apps/native/**`, todas com o filtro do
+D-g. As sete do N1 são do `N1-ENCERRAMENTO.md` §N1-h3; as quatro desta série
+são as **quentes** (cache com hit) — a da V1-PR3 fica fora por ser a **fria**,
+a que compilou o `react-native-svg` do zero e salvou o cache.
 
-| run | head | o que mudou nele | job | Gradle | tarefas | `Post cache` |
-|---|---|---|---|---|---|---|
-| `34771766466` V1-PR3 | — | código **+ o `react-native-svg` novo** | 13m18s | 11m34s | — | **21s — SALVOU (frio)** |
-| `34777518972` V1-PR4 | `cb31a40` | o código do S1 | **9m16s** | **7m48s** | 621 : 621 | 0s — hit |
-| `34778219856` V1-PR4 | `b95a6bc` | **só `docs/`** | 12m21s | **11m03s** | — | hit |
-| `34780911672` V1-PR5 | `4cb3b22` | o código do S2 | **11m55s** | 10m15s | 621 : 621 | 1s — hit |
-| `34781671264` V1-PR5 | `74b339b` | **só `docs/`** | 11m53s | 10m39s | 621 : 621 | 0s — hit |
+| # | duração | run / PR | o que mudou nele |
+|---|---|---|---|
+| 1 | **9m16s** | `34777518972` · #297 `cb31a40` | o código do S1 |
+| 2 | 10m15s | #288 (N1) | — |
+| 3 | 11m22s | #286 (N1) | — |
+| 4 | 11m35s | #290 (N1) | — |
+| 5 | 11m39s | #289 (N1) | — |
+| 6 | **11m45s** ← mediana | #287 (N1) | — |
+| 7 | 11m53s | `34781671264` · #298 `74b339b` | **só `docs/`** |
+| 8 | 11m55s | `34780911672` · #298 `4cb3b22` | o código do S2 |
+| 9 | 11m57s | #285 (N1) | — |
+| 10 | 12m21s | `34778219856` · #297 `b95a6bc` | **só `docs/`** |
+| 11 | **14m11s** | #284 (N1) | a entrada do native-stack e dos peers nativos |
 
-*(A tabela vai até o head `74b339b`. O push que a registra dispara o run
-seguinte — ver "o gate re-roda", abaixo —, e documentar esse seria loop.)*
+**Faixa: 9m16s – 14m11s · mediana 11m45s · média 11m39s · n = 11.**
 
-### Não é cache frio, e a prova está dentro da própria V1-PR4
+**O que merece investigação é SAIR da faixa, não ficar acima de um número.** Um
+run em 16 min vale olhar; um em 12 não.
+
+#### Duas correções nos extremos que o Marcel propôs (9m16s → 7m48s, 14m15s)
+
+A faixa proposta na aprovação foi "7m48s a 14m15s". Os dois extremos são da
+mesma classe de erro que esta PR vinha corrigindo, e por isso ficam anotados:
+
+- **7m48s é o passo `Gradle assembleDebug`, não o job.** É o Gradle do run mais
+  rápido (`34777518972`), cujo **job** foi 9m16s. Misturar os dois níveis é o
+  mesmo que ler os 13m18s da V1-PR3 como Gradle quando são o job (o
+  `assembleDebug` de lá foi 11m34s). O mínimo **de job** entre as onze é
+  **9m16s**;
+- **14m15s é o número do comentário do `native.yml`; a fonte do bloco diz
+  14m11s.** O `N1-ENCERRAMENTO.md` §N1-h3 tabula as sete uma a uma — 14m11s ·
+  11m57s · 11m22s · 11m45s · 10m15s · 11m39s · 11m35s, "vão de 10m15s a 14m11s,
+  **mediana 11m39s**" — enquanto o cabeçalho do `native.yml` diz "10m15s–14m15s
+  … mediana ~11m45s". Pela regra permanente do repositório, **o encerramento
+  vence** (div. 80b).
+
+A **mediana de 11m45s está exata** para n = 11: é a 6ª de 11, e coincide com o
+valor que o comentário do `native.yml` atribuía — por outro caminho — ao N1
+sozinho.
+
+Faixa do **passo Gradle**, onde há dado (só esta série, n = 4 quentes):
+**7m48s – 11m03s**; a fria da V1-PR3 foi 11m34s. O N1 não registrou este nível.
+
+### Por que não é cache frio — a prova está dentro da própria V1-PR4
 
 **A #297 rodou o `native` duas vezes.** O segundo run tinha o `apps/native`
 byte a byte igual ao primeiro — entre eles entrou só o commit de anexos, que
 não toca uma linha de código — e levou **12m21s / Gradle 11m03s** contra
-**9m16s / 7m48s**. Treze minutos de diferença no relógio, mesmo código, mesmo
-dia, mesma chave de cache, mesmo runner nominal.
+**9m16s / Gradle 7m48s**. Mesmo código, mesmo dia, mesma chave de cache, treze
+minutos de diferença no relógio.
 
-Ou seja: a variação que esta PR estava tentando explicar contra a V1-PR4 **já
-existia dentro da V1-PR4**, e é **maior lá** (+3m15s no Gradle) do que aqui
+A variação que esta PR tentava explicar contra a V1-PR4 **já existia dentro da
+V1-PR4**, e é **maior lá** (+3m15s no Gradle) do que entre as duas PRs
 (+2m27s). Dentro da V1-PR5 ela quase não existe: 10m15s e 10m39s.
 
-O resto do aparato confirma que o trabalho é o mesmo nos quatro runs quentes:
+Os quatro runs quentes fizeram trabalho idêntico:
+
+| run | head | job | Gradle | tarefas | `Post cache` |
+|---|---|---|---|---|---|
+| `34771766466` V1-PR3 | — | 13m18s | 11m34s | — | **21s — SALVOU (frio)** |
+| `34777518972` V1-PR4 | `cb31a40` | 9m16s | 7m48s | 621 : 621 | 0s — hit |
+| `34778219856` V1-PR4 | `b95a6bc` | 12m21s | 11m03s | — | hit |
+| `34780911672` V1-PR5 | `4cb3b22` | 11m55s | 10m15s | 621 : 621 | 1s — hit |
+| `34781671264` V1-PR5 | `74b339b` | 11m53s | 10m39s | 621 : 621 | 0s — hit |
 
 - **mesma chave de cache**, byte a byte — `gradle-Linux-0df0eb47967ce576…` —, e
-  todos com **hit**: o `Post Run actions/cache` levou 0–1 s, porque não havia o
-  que salvar. A assinatura de cache frio está só no run da V1-PR3, onde esse
-  mesmo passo levou **21 s** salvando;
-- **621 actionable tasks : 621 executed** em todos os medidos, e 801 linhas
+  todas com **hit**: o `Post Run actions/cache` levou 0–1 s, porque não havia o
+  que salvar. A assinatura de frio está só na V1-PR3, onde levou **21 s**;
+- **621 actionable tasks : 621 executed** em todos os medidos, 801 linhas
   `> Task :`;
 - **27** tarefas de `externalNativeBuild`/CMake e **38** tarefas
   `:react-native-svg`. **O SVG recompila em todo run** — o `actions/cache`
   guarda o `~/.gradle` baixado, não a saída compilada do módulo — e recompilou
   igual em todos.
 
-Conclusão: **variação de runner** num passo CPU-bound de NDK/C++. Esta PR não
-toca `pnpm-lock.yaml`, não acrescenta dependência, e mexe em um `.tsx`, em
-`apps/native/scripts/` e em `docs/`. Nada a investigar.
+É **variação de runner** num passo CPU-bound de NDK/C++. Esta PR não toca
+`pnpm-lock.yaml`, não acrescenta dependência, e mexe em um `.tsx`, em
+`apps/native/scripts/` e em `docs/`.
 
-### O que isso diz sobre a referência — pergunta ao Marcel
-
-O `native.yml` carrega no cabeçalho a população que fecha o caso, da N1-h3:
-
-> "O gate custou **10m15s–14m15s** nas sete medições do N1 (**mediana ~11m45s**),
-> acima dos ~9 min aceitáveis."
-
-Somando os quatro jobs quentes desta série às sete do N1: os **11m55s** desta PR
-estão **na mediana do N1**; os **9m16s** da referência estão **abaixo de toda a
-faixa do N1**, e são o único dos onze a bater os "~9 min aceitáveis". A
-referência não descreve o regime do gate — descreve o run mais rápido já
-observado.
-
-Registro, sem mexer nela (a referência é do Marcel): se ficar em 9m16s, toda PR
-da série vai "estourar", inclusive as que não fizerem nada de errado. A mediana
-do N1 (~11m45s) descreve melhor o que o gate custa.
-
-Nota de precisão que a medição trouxe, e que o encerramento vai querer: os
-**13m18s** da V1-PR3 são o **job inteiro**; o `assembleDebug` de lá foi
-**11m34s**. E o `V1-PR4-anexos/README.md` registra `34777518972` / 9m16s como "a
-duração do `native.yml` da #297" — é verdade do run que ele nomeia pelo head,
-mas a #297 rodou o gate **duas** vezes e o último foi 12m21s.
+*(A tabela vai até o head `74b339b`. O push que a registra dispara o run
+seguinte, e documentar esse seria loop — ver abaixo.)*
 
 ### O gate re-roda a cada push, mesmo só de `docs/` — material do B8
 
 O filtro de `paths` do `native.yml` é `apps/native/**`,
-`.github/workflows/native.yml` e `pnpm-workspace.yaml`. Ainda assim, o commit de
-anexos desta PR — **só `docs/`** — disparou o run `34781671264`, e o mesmo
+`.github/workflows/native.yml` e `pnpm-workspace.yaml`. Ainda assim, o commit
+de anexos desta PR — **só `docs/`** — disparou o run `34781671264`, e o mesmo
 aconteceu na #297 (`34778219856`).
 
 Não é defeito do workflow: num `pull_request`, o GitHub avalia `paths` contra o
 **diff acumulado do PR**, não contra o push. Numa PR que já tocou
-`apps/native/**`, **todo push subsequente re-roda o gate**, ainda que mexa só em
-documentação.
+`apps/native/**`, **todo push subsequente re-roda o gate**, ainda que mexa só
+em documentação.
 
-Custo medido: **~12 min de runner por commit de docs** numa PR de nativo — e o
-rito desta série garante pelo menos um, porque o commit que registra a duração
-do CI vem, por definição, depois do run que ele documenta. **Nada foi mudado
-aqui**: parece herança do **B8 (housekeeping de pipeline)**, e a decisão é do
-Marcel.
+E o rito desta série garante pelo menos um desses, por construção: o commit que
+registra a duração do CI vem, necessariamente, **depois** do run que ele
+documenta. **O rito paga 12 minutos para registrar 12 minutos.** *(Frase do
+Marcel, 2026-09-13.)*
+
+Custo medido: **~12 min de runner por commit de `docs/`** numa PR de nativo.
+**Nada foi mudado aqui** — é herança do **B8 (housekeeping de pipeline)**, e a
+decisão é do Marcel.
 
 `build` (CI): 2m53s e 2m57s, os dois `success`. Vercel verde.
 

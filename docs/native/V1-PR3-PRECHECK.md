@@ -637,8 +637,8 @@ nenhum download de bucket, nenhum 401/429.
 ### 9.1 O padrão, nomeado — instrumento com escopo menor do que parece
 
 O Marcel juntou quatro casos do bloco; esta sessão acrescenta **dois**, a V1-PR3
-um **sétimo** e a V1-PR5 um **oitavo** (as duas últimas linhas) — os oito são o
-mesmo erro:
+um **sétimo** e a V1-PR5 **dois** (as três últimas linhas) — os nove são o mesmo
+erro:
 
 | caso | o instrumento mede | eu li como se medisse |
 |---|---|---|
@@ -650,16 +650,17 @@ mesmo erro:
 | **origem "lucide"** (E4 do design) | de onde veio a ideia do desenho | de onde veio o `path` |
 | **div. 53** (V1-PR3, acrescentado por decisão do Marcel em 2026-09-13) | o desenho A3.3 do a20: `accessibilityLabel` nas três formas de literal | os sete labels do palco, que são **ternários** — exatamente a forma que a PR introduziu. No commit 4 o gate leu 36 literais e 0 acusações **sem ler nenhum dos sete** |
 | **div. 71** (V1-PR5, acrescentado por decisão do Marcel em 2026-09-13) | o `normal` dos 34 desenhos, contra o anexo D | o mapa de ícones inteiro — mas `ativo`, `inerte` e **`em20`** ficam de fora, e o `em20` é o único desenho que a §6.3 declara **exceção** e o único que o S2 estreia. **O detalhe que separa este dos sete: o próprio script já dizia isso por escrito**, na nota da regra 2 — "os estados `ativo`/`inerte`/`em20` … não são cobrados contra o anexo D". O instrumento documentava a própria cegueira e ninguém tinha lido a nota |
+| **div. 80** (V1-PR5, acrescentado por decisão do Marcel em 2026-09-13) | **a duração de UM run de CI**, medida uma vez | **o custo do gate** — uma propriedade estável do `native.yml`. Os 9m16s da V1-PR4 viraram "o número em regime", e os 13m18s da V1-PR3 foram explicados pela primeira compilação do `react-native-svg`. Com **onze** runs na mão: quatro quentes de trabalho idêntico (621 : 621, mesma chave de cache) com Gradle entre 7m48s e 11m03s, e a variação **maior DENTRO da V1-PR4** (+3m15s, mesmo código, treze minutos de diferença) do que entre PRs. **9m16s não é regime: é o melhor de onze.** Neste caso o instrumento não é um script — é a própria leitura de quem mediu, e é o que torna o padrão perigoso fora de ferramenta |
 
 > **ESTA SUBSEÇÃO MIGRA.** Decisão do Marcel, 2026-09-13: o padrão é material do
 > **`LOGS-OCTAVIA.md`**, não de um pre-check de PR — é o achado mais reaproveitável
 > do V1 e não pode ficar enterrado aqui. **Fica onde está até o encerramento do
-> bloco**, e o `V1-ENCERRAMENTO.md` a move, com os **oito** casos e as duas regras
+> bloco**, e o `V1-ENCERRAMENTO.md` a move, com os **nove** casos e as duas regras
 > que saíram deles (§9 e §10.1). Quem escrever o encerramento procura por esta
 > caixa. *(O contador dizia "seis" desde a V1-PR3, que já tinha acrescentado o
-> sétimo sem atualizá-lo; corrigido na V1-PR5, que acrescentou o oitavo. A prosa
-> do oitavo caso, na forma que o LOGS vai querer, está na div. 71 do
-> `V1-PR5-anexos/README.md`.)*
+> sétimo sem atualizá-lo; corrigido na V1-PR5, que acrescentou o **oitavo e o
+> nono**. A prosa dos dois, na forma que o LOGS vai querer, está nas divs. 71 e
+> 80 do `V1-PR5-anexos/README.md`.)*
 
 ---
 
