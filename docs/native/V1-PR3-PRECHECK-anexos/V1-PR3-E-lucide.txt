@@ -1,0 +1,62 @@
+$ (E) H5 — `lucide-react-native` vale a pena? Não. Medido por dois caminhos.
+
+===== E1 — a conta dos 32 (que são 34 linhas e 33 desenhos) =====
+Contagem da tabela do DESIGN-V1 §6.4, conferida contra o catálogo renderizado
+do `icones.html`:
+  linhas na tabela §6.4 ................ 34
+  registros no catálogo escuro ......... 34   (svg #15…#49 do DOM, menos o demo de 72 px)
+  registros no catálogo claro .......... 33
+  desenhos DISTINTOS ................... 33   (`voltar` e `voltar (avulsa)` são o
+                                               MESMO markup: "M10 6l-6 6 6 6M4 12h15")
+  declarados no cabeçalho da folha ..... "32 ícones"
+
+  origem: 18 "próprio"  ·  16 "lucide" (15 desenhos distintos, arrow-left conta duas vezes)
+
+===== E2 — A MEDIÇÃO QUE DECIDE: nenhum dos 15 "lucide" é o lucide =====
+Comparei o markup dos 15 declarados "lucide · <nome>" no §6.4 contra
+`lucide-static@1.45.0` (`npm pack`, o mesmo pacote e a mesma versão que o
+`lucide-react-native@1.45.0` publica), normalizando `d`/`circle`/`rect`:
+
+  sun DIFERE · moon DIFERE · search DIFERE · log-out DIFERE · arrow-left DIFERE
+  wifi-off DIFERE · history DIFERE · triangle-alert DIFERE · rotate-cw DIFERE
+  x DIFERE · circle-x DIFERE · download DIFERE · skip-back DIFERE
+  calendar DIFERE · map-pin DIFERE
+  → idênticos ao lucide oficial 1.45.0: 0 de 15
+
+Três exemplos do porquê (lucide → design):
+  search       circle r=8 em (11,11)               →  r=6,5 em (10,5 · 10,5)
+  sun          raios "M12 2v2 / m4.93 4.93 1.41…"  →  "M12 3.15v2.3 / M5.74 5.74l1.63…"
+  map-pin      gota com curvas `c` + circle r=3    →  arco `a7 7 0 1 0-14 0` + circle r=2,4
+O design redesenhou tudo para a caixa óptica de 20 em 24 (§6.1). Instalar o
+lucide renderiza OUTRO desenho — não o congelado na V1-PR2.
+
+(De passagem: o §6.4 chama de `alert-triangle` e `x-circle` o que o lucide 1.45.0
+publica como `triangle-alert` e `circle-x`. Os nomes antigos ainda resolvem
+como alias, mas os do documento não são os canônicos da versão.)
+
+===== E3 — o bundle, medido (`expo export --platform android`, .hbc) =====
+  (a) baseline, App.tsx intocado, sem svg e sem lucide ....  2.509.619 B
+  (b) + react-native-svg, UM componente local (o `sun` do
+      design, escrito à mão com <Svg>/<Circle>/<Path>) .....  2.691.739 B   (+182.120)
+  (c) + lucide-react-native, `import Sun from
+      'lucide-react-native/icons/sun'` (subcaminho) ........  2.703.871 B   (+194.252)
+  (d) + lucide-react-native, `import { Sun } from
+      'lucide-react-native'` (barril) .....................   4.643.146 B  (+2.133.527)
+
+  custo do react-native-svg, que é inevitável nas duas rotas:  +182.120 B
+  custo do lucide POR CIMA disso:
+     pelo subcaminho ....  +12.132 B   (e renderiza o desenho ERRADO)
+     pelo barril ........  +1.951.407 B  (85 % do bundle, por UM ícone)
+
+O pacote: `lucide-react-native@1.45.0`, ISC, unpacked 27,6 MB, 9.504 arquivos,
+1.835 arquivos de ícone, barril de 245.841 B / 1.845 linhas, `sideEffects:false`
+e `exports["./icons/*"]`. O Metro **não faz tree-shaking** por padrão: o (d)
+acima é a medida disso. O subcaminho evita o problema, mas é o caminho em que o
+ganho de "catálogo pronto" já não existe.
+
+===== E4 — recomendação =====
+NÃO adicionar `lucide-react-native`. O argumento não é tamanho — é que a
+dependência não entrega o desenho que a V1-PR2 congelou: 0 de 15. Os 33 desenhos
+já estão escritos, revisados e medidos no `icones.html`; gerar componentes locais
+a partir deles custa 0 dependência, +182 KB de bundle (o `react-native-svg`, que
+a D-V1-1 já comprou) e entrega exatamente o que foi aprovado.

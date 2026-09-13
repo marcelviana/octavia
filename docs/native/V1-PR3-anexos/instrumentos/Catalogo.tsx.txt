@@ -1,0 +1,72 @@
+/**
+ * INSTRUMENTO DE SCRATCH — NÃO ENTRA NO REPOSITÓRIO. Renderiza os 34 desenhos
+ * nos dois temas e nos três tamanhos, mais o controle negativo do R14 (o mesmo
+ * componente SEM `color`). Aplicado sobre App.tsx só para a captura, e
+ * revertido com `git checkout`.
+ */
+import { ScrollView, Text, View } from 'react-native'
+import Svg, { Circle, Path, Rect } from 'react-native-svg'
+import { Icone, type TamanhoIcone } from './src/icones/Icone'
+import { desenhos, type NomeIcone, type Primitiva } from './src/icones/dados'
+import { colors, type ThemeName } from './src/theme'
+
+const NOMES = Object.keys(desenhos) as NomeIcone[]
+
+/** Controle negativo: mesmo markup, sem `color` — o R14/div. 40 ao vivo. */
+function SemColor({ nome, tamanho }: { nome: NomeIcone; tamanho: TamanhoIcone }): React.JSX.Element {
+  const d: readonly Primitiva[] = desenhos[nome].normal
+  return (
+    <Svg width={tamanho} height={tamanho} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      {d.map((p, i) => {
+        const pintura = p.fill === true ? { fill: 'currentColor', stroke: 'none' as const } : {}
+        if (p.d !== undefined) return <Path key={i} d={p.d} {...pintura} />
+        if (p.r !== undefined) return <Circle key={i} cx={p.cx} cy={p.cy} r={p.r} {...pintura} />
+        return <Rect key={i} x={p.x} y={p.y} width={p.w} height={p.h} rx={p.rx} {...pintura} />
+      })}
+    </Svg>
+  )
+}
+
+function Faixa({ tema }: { tema: ThemeName }): React.JSX.Element {
+  const cor = colors[tema]
+  return (
+    <View style={{ backgroundColor: cor.bg, padding: 16, gap: 10 }} testID={`catalogo-${tema}`}>
+      {([28, 24, 20] as TamanhoIcone[]).map((t) => (
+        <View key={t} style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 12, alignItems: 'center' }}>
+          <Text style={{ color: cor.muted, width: 28, fontSize: 11 }}>{t}</Text>
+          {NOMES.map((n) => (
+            <Icone key={n} nome={n} tamanho={t} cor={cor.text} tema={tema} />
+          ))}
+        </View>
+      ))}
+      <View style={{ flexDirection: 'row', gap: 12, alignItems: 'center' }}>
+        <Text style={{ color: cor.muted, width: 28, fontSize: 11 }}>est</Text>
+        <Icone nome="auto-scroll" tamanho={28} cor={cor.accent} estado="ativo" />
+        <Icone nome="auto-scroll" tamanho={28} cor={cor.lineInfo} estado="inerte" />
+        <Icone nome="zoom-menos" tamanho={28} cor={cor.lineInfo} estado="inerte" />
+        <Icone nome="zoom-mais" tamanho={28} cor={cor.lineInfo} estado="inerte" />
+        <Icone nome="tab" tamanho={20} cor={cor.text} />
+        <Icone nome="tab" tamanho={28} cor={cor.text} />
+        <Icone nome="parcial" tamanho={28} cor={cor.text} tema={tema} />
+        <Icone nome="baixando" tamanho={28} cor={cor.text} tema={tema} />
+      </View>
+      <View style={{ flexDirection: 'row', gap: 12, alignItems: 'center' }}>
+        <Text style={{ color: cor.muted, width: 28, fontSize: 11 }}>CN</Text>
+        <SemColor nome="indice" tamanho={28} />
+        <SemColor nome="tab" tamanho={28} />
+        <SemColor nome="partitura" tamanho={28} />
+        <SemColor nome="busca" tamanho={28} />
+        <Text style={{ color: cor.muted, fontSize: 11 }}>← sem `color`: o R14/div. 40 (traço e preenchimento em preto)</Text>
+      </View>
+    </View>
+  )
+}
+
+export function Catalogo(): React.JSX.Element {
+  return (
+    <ScrollView>
+      <Faixa tema="dark" />
+      <Faixa tema="light" />
+    </ScrollView>
+  )
+}

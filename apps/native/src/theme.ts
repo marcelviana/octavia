@@ -18,6 +18,14 @@ export const dark = {
   line: '#2A2836',
   error: '#E5686F',
   offline: '#C9923B',
+  // Os quatro do DESIGN-V1 §3.2 (V1-PR3). No escuro, três deles SÃO o token
+  // que já existia — nenhum pixel muda; o nome nasceu porque o claro precisava
+  // de outra tinta. `lineInfo` serve a 3:1 e só a três coisas (§3.3): ícone,
+  // contorno que carrega informação, elemento desabilitado. Nunca texto ativo.
+  accentInk: '#777CE8',
+  errorInk: '#E5686F',
+  offlineInk: '#C9923B',
+  lineInfo: '#6E6A80',
 } as const
 
 /**
@@ -32,6 +40,12 @@ export const light = {
   line: '#D6CFC3',
   error: '#E5686F',
   offline: '#C9923B',
+  // Sobre #F6F1EA: 5,89 · 6,37 · 6,02 · 3,17 (V1-PR3, script de contraste do
+  // V1-A4; o 5,89 do `accentInk` é a errata E5 do DESIGN-V1 — o README dizia 5,90).
+  accentInk: '#4A4FC0',
+  errorInk: '#A32A31',
+  offlineInk: '#7A5410',
+  lineInfo: '#8E8779',
 } as const
 
 /** As duas paletas têm as mesmas chaves; os valores é que mudam. */
@@ -66,7 +80,12 @@ export const font = {
   monoBold: 'IBMPlexMono_600SemiBold',
 } as const
 
-/** Tamanhos de UI do design: rótulos 12–14, corpo 15–16, títulos 20–28 dp. */
+/**
+ * Tamanhos de UI do design: rótulos 12–14, corpo 15–16, títulos 20–28 dp —
+ * mais os dois degraus que o DESIGN-V1 §4.4 fixou: `titleSmall` 26 (título
+ * de tela do S1) e `display` 52 (o "FIM DA SETLIST" do S5). Quem os aplica
+ * são as PRs de tela (V1-PR4/6); aqui só existem.
+ */
 export const size = {
   label: 14,
   labelSmall: 12,
@@ -75,7 +94,9 @@ export const size = {
   input: 18,
   button: 17,
   title: 22,
+  titleSmall: 26,
   titleLarge: 28,
+  display: 52,
 } as const
 
 /** Passos de zoom do conteúdo (T1-R31): 18 · 22 (padrão) · 26 · 32 · 40 dp. */

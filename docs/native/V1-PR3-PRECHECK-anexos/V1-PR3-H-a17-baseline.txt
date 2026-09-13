@@ -1,0 +1,136 @@
+$ (H) o baseline do A17 no AVD — rodada 2, prod = 0
+
+APARATO: AVD `octavia_tab32` (emulator-5554), main `6697285`, dev client
+cb1b5fea… (o mesmo do Tab S6), Metro do CHECKOUT PRINCIPAL (`.expo/` é ignorado,
+`.gitignore:32`; `git status` limpo antes e depois). Conta de audit.
+
+===== H0 — a rede cortada ANTES de o app abrir, e provada =====
+$ adb -s emulator-5554 shell svc wifi disable
+$ adb -s emulator-5554 shell svc data disable
+$ adb -s emulator-5554 shell cmd connectivity airplane-mode enable
+$ adb -s emulator-5554 shell settings put global airplane_mode_on 1
+$ adb -s emulator-5554 shell settings get global airplane_mode_on
+  1                                          ← NÃO é a prova
+$ adb -s emulator-5554 shell ping -c 2 -W 2 8.8.8.8
+  connect: Network is unreachable            ← A PROVA
+
+E do lado do app, no primeiro logcat:
+  OCTAVIA: net offline
+  OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+  OCTAVIA: cache hit kind=setlists n=3
+  OCTAVIA: cache hit kind=content n=67
+  OCTAVIA: sync skip reason=offline
+  OCTAVIA: prefetch plan n=0 reason=7d
+$ adb -s emulator-5554 logcat -d -s ReactNativeJS | grep -c "api status="
+  0                                          ← zero requests nesta rodada
+
+===== H1 — o caminho até o palco =====
+$ adb -s emulator-5554 shell input tap 400 490     # cartão setlist-4340bf95
+  OCTAVIA: index open
+  (S1 → S2; `setlist-4340bf95` = UX-AUDIT ESTRESSE, "60 músicas, ✓, garantida offline")
+$ adb -s emulator-5554 shell input tap 660 420     # song-1, bounds [54,288][1271,558]
+  OCTAVIA: keepawake on
+  OCTAVIA: file src=disk name=1786218429715-ux-audit-partitura-12p.pdf bytes=242176
+  OCTAVIA: pdf-render pages=12 src=disk
+  OCTAVIA: pdf-page n=1/12
+
+Bordas do S3, conferidas no dump antes de tocar (geometria da V1-PR1):
+  borda-voltar    [0,198][384,1249]
+  borda-avancar   [2176,198][2560,1249]      ← centro (2368, 723), o ponto do laço
+
+===== H2 — o laço, o mesmo instrumento do N1 (N1-anexos/PR4-a17-tempos.txt) =====
+$ adb -s emulator-5554 logcat -c
+$ for i in $(seq 1 59); do adb -s emulator-5554 shell input tap 2368 723; sleep 0.6; done
+$ adb -s emulator-5554 logcat -d -s ReactNativeJS | grep -c "nav n="
+  59
+
+===== H3 — os tempos =====
+$ sed -E "s/.* t=([0-9]+)$/\1/" navs.txt | sort -n
+22 22 23 23 23 23 23 23 24 24 24 24 24 24 24 25 25 25 26 26 26 26 26 26 26 26 27 27
+27 27 28 28 28 28 28 28 28 28 29 29 29 29 30 31 31 31 32 32 32 33 33 35 37 43 49 50
+56 197 624
+
+awk: n=59  min=22  p50=27  p90=37  p95=50  max=624  media=41,6   (aceite: p95 < 100 ms)
+acima de 100 ms: 2 amostras
+  nav n=2/60  t=624   ← a PRIMEIRA renderização do PDF de 1 página. É a metade
+                        "PDF cacheado < 1 s" do A17: PASSA, com 376 ms de folga.
+                        (o N1 mediu 642 ms no emulador para o mesmo caso)
+  nav n=44/60 t=197   ← item de texto. Vizinhos: n=43 t=23, n=45 t=37. Sem causa
+                        visível no logcat. Fica registrado, não explicado.
+
+  >>> BASELINE [AVD], main 6697285, 2026-09-13:  p95 = 50 ms
+
+===== H4 — contra o N1, e por que a comparação não vale =====
+                       p50   p90   p95   max    onde
+  N1-PR7, AVD           59    81    97    536    commit c2fa635
+  N1-PR7, Tab S6         —     —    68     72    device
+  ESTA sessão, AVD      27    37    50    624    commit 6697285
+
+O AVD de hoje dá metade do p95 do N1 no mesmo aparelho virtual. Parte é a
+V1-PR1 (geometria por onLayout), parte é a máquina em outro estado — e NÃO SEI
+SEPARAR AS DUAS: não tenho o binário do N1 para rodar lado a lado.
+Some-se a div. 37 do N1 ("latência de frame não se mede no emulador") e a regra
+fica: este número serve para comparar ANTES × DEPOIS na MESMA máquina e na MESMA
+sessão. Comparar o p95 da V1-PR3, dias depois, contra os 50 ms daqui compara
+duas máquinas, não duas versões do código.
+
+===== H5 — as 59 linhas, verbatim =====
+  nav n=2/60 setlist=4340bf95 t=624
+  nav n=3/60 setlist=4340bf95 t=56
+  nav n=4/60 setlist=4340bf95 t=29
+  nav n=5/60 setlist=4340bf95 t=24
+  nav n=6/60 setlist=4340bf95 t=29
+  nav n=7/60 setlist=4340bf95 t=24
+  nav n=8/60 setlist=4340bf95 t=31
+  nav n=9/60 setlist=4340bf95 t=23
+  nav n=10/60 setlist=4340bf95 t=23
+  nav n=11/60 setlist=4340bf95 t=25
+  nav n=12/60 setlist=4340bf95 t=23
+  nav n=13/60 setlist=4340bf95 t=25
+  nav n=14/60 setlist=4340bf95 t=26
+  nav n=15/60 setlist=4340bf95 t=22
+  nav n=16/60 setlist=4340bf95 t=28
+  nav n=17/60 setlist=4340bf95 t=26
+  nav n=18/60 setlist=4340bf95 t=28
+  nav n=19/60 setlist=4340bf95 t=25
+  nav n=20/60 setlist=4340bf95 t=27
+  nav n=21/60 setlist=4340bf95 t=30
+  nav n=22/60 setlist=4340bf95 t=26
+  nav n=23/60 setlist=4340bf95 t=24
+  nav n=24/60 setlist=4340bf95 t=49
+  nav n=25/60 setlist=4340bf95 t=43
+  nav n=26/60 setlist=4340bf95 t=35
+  nav n=27/60 setlist=4340bf95 t=28
+  nav n=28/60 setlist=4340bf95 t=26
+  nav n=29/60 setlist=4340bf95 t=31
+  nav n=30/60 setlist=4340bf95 t=29
+  nav n=31/60 setlist=4340bf95 t=32
+  nav n=32/60 setlist=4340bf95 t=28
+  nav n=33/60 setlist=4340bf95 t=26
+  nav n=34/60 setlist=4340bf95 t=28
+  nav n=35/60 setlist=4340bf95 t=23
+  nav n=36/60 setlist=4340bf95 t=32
+  nav n=37/60 setlist=4340bf95 t=32
+  nav n=38/60 setlist=4340bf95 t=28
+  nav n=39/60 setlist=4340bf95 t=24
+  nav n=40/60 setlist=4340bf95 t=28
+  nav n=41/60 setlist=4340bf95 t=33
+  nav n=42/60 setlist=4340bf95 t=24
+  nav n=43/60 setlist=4340bf95 t=23
+  nav n=44/60 setlist=4340bf95 t=197
+  nav n=45/60 setlist=4340bf95 t=37
+  nav n=46/60 setlist=4340bf95 t=33
+  nav n=47/60 setlist=4340bf95 t=27
+  nav n=48/60 setlist=4340bf95 t=26
+  nav n=49/60 setlist=4340bf95 t=28
+  nav n=50/60 setlist=4340bf95 t=23
+  nav n=51/60 setlist=4340bf95 t=24
+  nav n=52/60 setlist=4340bf95 t=22
+  nav n=53/60 setlist=4340bf95 t=29
+  nav n=54/60 setlist=4340bf95 t=26
+  nav n=55/60 setlist=4340bf95 t=27
+  nav n=56/60 setlist=4340bf95 t=50
+  nav n=57/60 setlist=4340bf95 t=27
+  nav n=58/60 setlist=4340bf95 t=26
+  nav n=59/60 setlist=4340bf95 t=24
+  nav n=60/60 setlist=4340bf95 t=31

@@ -1,0 +1,149 @@
+$ (A) A17 — o p95 da troca de música, ANTES × DEPOIS na MESMA sessão
+
+REGRA (V1-PR3-PRECHECK §15.2): o "depois" se mede na mesma sessão que refaz o "antes",
+no mesmo AVD, com o mesmo instrumento (N1-anexos/PR4-a17-tempos.txt): setlist de 60
+(UX-AUDIT ESTRESSE, 4340bf95) aberta na música 1, 59 toques no centro da borda-avancar
+(2368, 723), sleep 0,6 s, lendo `nav n=X/60 … t=<ms>` do logcat. Rede cortada e provada
+por ping ANTES de abrir o app nas duas rodadas (anexo G). Conta de audit.
+
+ANTES  = main 6697285, dev client cb1b5fea… (o de hoje), Metro do checkout principal
+DEPOIS = v1/pr3-svg-icones em 531f17b (commit 4), dev client c0c1ab51…, Metro do worktree
+
+===== A1 — ANTES =====
+22 22 22 22 23 23 23 23 23 23 24 24 24 24 24 24 24 24 24 24 24 25 25 25 25 25 25 25 25 25 26 26 26 26 26 26 26 26 26 26 26 27 27 27 27 28 28 28 28 28 29 30 30 31 31 34 40 79 592 
+n=59 min=22 p50=25 p90=30 p95=34 max=592 media=36.4   (aceite: p95 < 100 ms)
+acima de 60 ms:
+  n=2  → a primeira renderização do PDF de 1 página (o pre-check mediu 624; o N1, 642)
+  n=44 → item de texto: 79 ms, vizinhos 29 e 26. É o MESMO n=44 do pre-check (197 ms).
+
+===== A2 — DEPOIS =====
+16 17 17 17 17 17 17 17 18 18 18 18 18 18 18 18 18 18 18 18 18 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19 20 20 20 20 20 20 20 21 21 21 21 21 21 21 21 21 22 22 23 24 27 31 40 
+n=59 min=16 p50=19 p90=22 p95=24 max=40 media=19.9
+acima de 60 ms: (nenhum)
+  n=2  → n=2/60 setlist=4340bf95 t=21   n=44 → n=44/60 setlist=4340bf95 t=22
+
+  ANTES p95=34 · DEPOIS p95=24. O n=44 NÃO reapareceu no depois (22 ms). O n=2 caiu de
+  592 para 21 ms — registrado sem explicação: o instrumento mede o commit do React na
+  troca de posição, não a pintura do PDF, e a causa dos 592 não está no logcat.
+
+===== A3 — as 59 linhas, ANTES =====
+  OCTAVIA: nav n=2/60 setlist=4340bf95 t=592
+  OCTAVIA: nav n=3/60 setlist=4340bf95 t=40
+  OCTAVIA: nav n=4/60 setlist=4340bf95 t=24
+  OCTAVIA: nav n=5/60 setlist=4340bf95 t=26
+  OCTAVIA: nav n=6/60 setlist=4340bf95 t=22
+  OCTAVIA: nav n=7/60 setlist=4340bf95 t=28
+  OCTAVIA: nav n=8/60 setlist=4340bf95 t=25
+  OCTAVIA: nav n=9/60 setlist=4340bf95 t=31
+  OCTAVIA: nav n=10/60 setlist=4340bf95 t=25
+  OCTAVIA: nav n=11/60 setlist=4340bf95 t=28
+  OCTAVIA: nav n=12/60 setlist=4340bf95 t=27
+  OCTAVIA: nav n=13/60 setlist=4340bf95 t=24
+  OCTAVIA: nav n=14/60 setlist=4340bf95 t=26
+  OCTAVIA: nav n=15/60 setlist=4340bf95 t=27
+  OCTAVIA: nav n=16/60 setlist=4340bf95 t=30
+  OCTAVIA: nav n=17/60 setlist=4340bf95 t=28
+  OCTAVIA: nav n=18/60 setlist=4340bf95 t=22
+  OCTAVIA: nav n=19/60 setlist=4340bf95 t=30
+  OCTAVIA: nav n=20/60 setlist=4340bf95 t=31
+  OCTAVIA: nav n=21/60 setlist=4340bf95 t=27
+  OCTAVIA: nav n=22/60 setlist=4340bf95 t=25
+  OCTAVIA: nav n=23/60 setlist=4340bf95 t=26
+  OCTAVIA: nav n=24/60 setlist=4340bf95 t=24
+  OCTAVIA: nav n=25/60 setlist=4340bf95 t=28
+  OCTAVIA: nav n=26/60 setlist=4340bf95 t=28
+  OCTAVIA: nav n=27/60 setlist=4340bf95 t=22
+  OCTAVIA: nav n=28/60 setlist=4340bf95 t=23
+  OCTAVIA: nav n=29/60 setlist=4340bf95 t=24
+  OCTAVIA: nav n=30/60 setlist=4340bf95 t=25
+  OCTAVIA: nav n=31/60 setlist=4340bf95 t=34
+  OCTAVIA: nav n=32/60 setlist=4340bf95 t=24
+  OCTAVIA: nav n=33/60 setlist=4340bf95 t=24
+  OCTAVIA: nav n=34/60 setlist=4340bf95 t=24
+  OCTAVIA: nav n=35/60 setlist=4340bf95 t=26
+  OCTAVIA: nav n=36/60 setlist=4340bf95 t=23
+  OCTAVIA: nav n=37/60 setlist=4340bf95 t=23
+  OCTAVIA: nav n=38/60 setlist=4340bf95 t=24
+  OCTAVIA: nav n=39/60 setlist=4340bf95 t=23
+  OCTAVIA: nav n=40/60 setlist=4340bf95 t=23
+  OCTAVIA: nav n=41/60 setlist=4340bf95 t=26
+  OCTAVIA: nav n=42/60 setlist=4340bf95 t=25
+  OCTAVIA: nav n=43/60 setlist=4340bf95 t=29
+  OCTAVIA: nav n=44/60 setlist=4340bf95 t=79
+  OCTAVIA: nav n=45/60 setlist=4340bf95 t=26
+  OCTAVIA: nav n=46/60 setlist=4340bf95 t=23
+  OCTAVIA: nav n=47/60 setlist=4340bf95 t=26
+  OCTAVIA: nav n=48/60 setlist=4340bf95 t=25
+  OCTAVIA: nav n=49/60 setlist=4340bf95 t=26
+  OCTAVIA: nav n=50/60 setlist=4340bf95 t=24
+  OCTAVIA: nav n=51/60 setlist=4340bf95 t=26
+  OCTAVIA: nav n=52/60 setlist=4340bf95 t=27
+  OCTAVIA: nav n=53/60 setlist=4340bf95 t=25
+  OCTAVIA: nav n=54/60 setlist=4340bf95 t=22
+  OCTAVIA: nav n=55/60 setlist=4340bf95 t=26
+  OCTAVIA: nav n=56/60 setlist=4340bf95 t=26
+  OCTAVIA: nav n=57/60 setlist=4340bf95 t=25
+  OCTAVIA: nav n=58/60 setlist=4340bf95 t=25
+  OCTAVIA: nav n=59/60 setlist=4340bf95 t=24
+  OCTAVIA: nav n=60/60 setlist=4340bf95 t=24
+
+===== A4 — as 59 linhas, DEPOIS =====
+  OCTAVIA: nav n=2/60 setlist=4340bf95 t=21
+  OCTAVIA: nav n=3/60 setlist=4340bf95 t=31
+  OCTAVIA: nav n=4/60 setlist=4340bf95 t=20
+  OCTAVIA: nav n=5/60 setlist=4340bf95 t=20
+  OCTAVIA: nav n=6/60 setlist=4340bf95 t=22
+  OCTAVIA: nav n=7/60 setlist=4340bf95 t=21
+  OCTAVIA: nav n=8/60 setlist=4340bf95 t=19
+  OCTAVIA: nav n=9/60 setlist=4340bf95 t=18
+  OCTAVIA: nav n=10/60 setlist=4340bf95 t=17
+  OCTAVIA: nav n=11/60 setlist=4340bf95 t=20
+  OCTAVIA: nav n=12/60 setlist=4340bf95 t=20
+  OCTAVIA: nav n=13/60 setlist=4340bf95 t=18
+  OCTAVIA: nav n=14/60 setlist=4340bf95 t=17
+  OCTAVIA: nav n=15/60 setlist=4340bf95 t=18
+  OCTAVIA: nav n=16/60 setlist=4340bf95 t=21
+  OCTAVIA: nav n=17/60 setlist=4340bf95 t=23
+  OCTAVIA: nav n=18/60 setlist=4340bf95 t=24
+  OCTAVIA: nav n=19/60 setlist=4340bf95 t=19
+  OCTAVIA: nav n=20/60 setlist=4340bf95 t=18
+  OCTAVIA: nav n=21/60 setlist=4340bf95 t=21
+  OCTAVIA: nav n=22/60 setlist=4340bf95 t=18
+  OCTAVIA: nav n=23/60 setlist=4340bf95 t=18
+  OCTAVIA: nav n=24/60 setlist=4340bf95 t=17
+  OCTAVIA: nav n=25/60 setlist=4340bf95 t=19
+  OCTAVIA: nav n=26/60 setlist=4340bf95 t=18
+  OCTAVIA: nav n=27/60 setlist=4340bf95 t=17
+  OCTAVIA: nav n=28/60 setlist=4340bf95 t=19
+  OCTAVIA: nav n=29/60 setlist=4340bf95 t=19
+  OCTAVIA: nav n=30/60 setlist=4340bf95 t=20
+  OCTAVIA: nav n=31/60 setlist=4340bf95 t=27
+  OCTAVIA: nav n=32/60 setlist=4340bf95 t=21
+  OCTAVIA: nav n=33/60 setlist=4340bf95 t=40
+  OCTAVIA: nav n=34/60 setlist=4340bf95 t=17
+  OCTAVIA: nav n=35/60 setlist=4340bf95 t=19
+  OCTAVIA: nav n=36/60 setlist=4340bf95 t=20
+  OCTAVIA: nav n=37/60 setlist=4340bf95 t=18
+  OCTAVIA: nav n=38/60 setlist=4340bf95 t=19
+  OCTAVIA: nav n=39/60 setlist=4340bf95 t=19
+  OCTAVIA: nav n=40/60 setlist=4340bf95 t=18
+  OCTAVIA: nav n=41/60 setlist=4340bf95 t=21
+  OCTAVIA: nav n=42/60 setlist=4340bf95 t=18
+  OCTAVIA: nav n=43/60 setlist=4340bf95 t=17
+  OCTAVIA: nav n=44/60 setlist=4340bf95 t=22
+  OCTAVIA: nav n=45/60 setlist=4340bf95 t=19
+  OCTAVIA: nav n=46/60 setlist=4340bf95 t=21
+  OCTAVIA: nav n=47/60 setlist=4340bf95 t=18
+  OCTAVIA: nav n=48/60 setlist=4340bf95 t=19
+  OCTAVIA: nav n=49/60 setlist=4340bf95 t=20
+  OCTAVIA: nav n=50/60 setlist=4340bf95 t=21
+  OCTAVIA: nav n=51/60 setlist=4340bf95 t=19
+  OCTAVIA: nav n=52/60 setlist=4340bf95 t=16
+  OCTAVIA: nav n=53/60 setlist=4340bf95 t=19
+  OCTAVIA: nav n=54/60 setlist=4340bf95 t=19
+  OCTAVIA: nav n=55/60 setlist=4340bf95 t=19
+  OCTAVIA: nav n=56/60 setlist=4340bf95 t=18
+  OCTAVIA: nav n=57/60 setlist=4340bf95 t=19
+  OCTAVIA: nav n=58/60 setlist=4340bf95 t=21
+  OCTAVIA: nav n=59/60 setlist=4340bf95 t=17
+  OCTAVIA: nav n=60/60 setlist=4340bf95 t=18

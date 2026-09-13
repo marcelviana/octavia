@@ -10,7 +10,8 @@
  * Layout do design: barra superior de 64 dp com "n de N", nome da setlist,
  * título · artista · tipo, a nota da música e o chip de rede; conteúdo em
  * IBM Plex Mono com entrelinha 1,55; barra inferior de 96 dp com sete
- * controles; e as **bordas invisíveis** de 15% da largura, ocupando só a
+ * controles **só ícone** (V1-PR3, DESIGN-V1 §6 — o nome de cada um está no
+ * `accessibilityLabel`); e as **bordas invisíveis** de 15% da largura, ocupando só a
  * altura ENTRE as barras (D-1) — é por elas que se avança e volta às cegas.
  *
  * Decisões medidas no spike (N1-PR4): auto-scroll por `requestAnimationFrame`
@@ -19,9 +20,12 @@
  *
  * No PDF o `react-native-pdf` já traz pinça, pan e virar página; o que esta
  * tela acrescenta é o "página n de N" do design, a dica de gesto, e a regra
- * do T1-R30: **auto-scroll fica desabilitado com o motivo à vista**, nunca
- * mudo. As bordas de 15% continuam navegando MÚSICA, não página — errata do
- * design (D-1 / A14): quem vira página é o deslize sobre o documento.
+ * do T1-R30: **auto-scroll fica desabilitado com o motivo AO TOQUE**, nunca
+ * mudo — a forma permanente é a do ícone (tinta `lineInfo`, desenho
+ * amputado) e o motivo aparece na linha acima da barra quando se toca no
+ * controle (errata do A15, V1-PR3-PRECHECK §14.1). As bordas de 15%
+ * continuam navegando MÚSICA, não página — errata do design (D-1 / A14):
+ * quem vira página é o deslize sobre o documento.
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
@@ -47,6 +51,8 @@ import {
   type SetlistDTO,
 } from '@octavia/core'
 import { ensureFile, fileNameFromUrl, hasFile, knownBytes } from '../files'
+import { Icone, type EstadoIcone } from '../icones/Icone'
+import type { NomeIcone } from '../icones/dados'
 import { log } from '../log'
 import { prefetchDemanda } from '../prefetch'
 import {
@@ -88,6 +94,12 @@ export interface StageScreenProps {
 
 /** Tag do wake lock — só o palco a usa, então só ele a solta. */
 const TAG_PALCO = 'octavia-palco'
+
+/** Quanto tempo o motivo de um controle inerte fica na linha acima da barra. */
+const MOTIVO_MS = 2500
+
+/** A dica de gesto do PDF (S3d) — a linha acima da barra, como no design. */
+const DICA_PDF = 'pinça para zoom · arraste para mover · deslize para virar a página'
 
 const TIPO: Record<string, string> = {
   Lyrics: 'Letra',
@@ -224,6 +236,27 @@ export function StageScreen({
   const [arquivo, setArquivo] = useState<EstadoArquivo>({ fase: 'buscando' })
   const [pagina, setPagina] = useState({ n: 0, total: 0 })
 
+  /**
+   * V1-PR3 / errata do A15 — o motivo do controle inerte aparece AO TOQUE, na
+   * linha acima da barra (onde o design já põe a dica de gesto do PDF), por
+   * `MOTIVO_MS`, e some. A forma permanente é a do ícone (tinta `lineInfo` e
+   * o desenho amputado, §6.2 + E3); a palavra não mora mais dentro do
+   * controle. Trocar de música apaga o motivo antes do tempo.
+   */
+  const [motivoVisivel, setMotivoVisivel] = useState<string | null>(null)
+  const motivoTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const revelarMotivo = useCallback((m: string) => {
+    if (motivoTimer.current !== null) clearTimeout(motivoTimer.current)
+    setMotivoVisivel(m)
+    motivoTimer.current = setTimeout(() => setMotivoVisivel(null), MOTIVO_MS)
+  }, [])
+  useEffect(
+    () => () => {
+      if (motivoTimer.current !== null) clearTimeout(motivoTimer.current)
+    },
+    [],
+  )
+
   const scroll = useRef<ScrollView | null>(null)
   const y = useRef(0)
   const frame = useRef<number | null>(null)
@@ -284,6 +317,7 @@ export function StageScreen({
   useEffect(() => {
     pararScroll()
     setRodando(false)
+    setMotivoVisivel(null)
     y.current = 0
     scroll.current?.scrollTo({ y: 0, animated: false })
     if (navegouEm.current > 0) {
@@ -449,6 +483,10 @@ export function StageScreen({
         ? MOTIVO[validade.reason]
         : undefined
 
+  // A linha acima da barra: o motivo revelado por um toque, senão a dica de
+  // gesto do PDF (só no S3d, e só com o arquivo pronto), senão nada.
+  const linha = motivoVisivel ?? (arquivo.fase === 'pronto' && urlArquivo !== null ? DICA_PDF : null)
+
   return (
     <View style={[styles.tela, { backgroundColor: cor.bg }]}>
       <View style={[styles.barraTopo, { borderBottomColor: cor.line }]}>
@@ -519,6 +557,12 @@ export function StageScreen({
           </ScrollView>
         )}
 
+        {linha !== null ? (
+          <Text style={[styles.dica, { color: cor.muted }]} testID="linha-motivo">
+            {linha}
+          </Text>
+        ) : null}
+
         {/* No PRIMEIRO frame o `onLayout` ainda não disparou e as bordas não
             existem — melhor do que existirem com o tamanho errado num canto.
             Não afeta o A17: ele mede a TROCA de música, e trocar de música não
@@ -539,45 +583,83 @@ export function StageScreen({
         ) : null}
       </View>
 
+      {/* Os sete controles, só ícone, alinhados à esquerda (decisão do Marcel,
+          Q4: o polegar apoia na borda e a posição aprendida se preserva). Os
+          nomes acessíveis são verbatim do DESIGN-V1 §6.4. */}
       <View style={[styles.barraBaixo, { borderTopColor: cor.line }]}>
         <Controle
-          rotulo="Auto-scroll"
+          icone="auto-scroll"
+          accessibilityLabel={
+            corpo === null
+              ? 'Rolagem automática, indisponível: só em texto'
+              : rodando
+                ? 'Rolagem automática, ligada'
+                : 'Rolagem automática, desligada'
+          }
           ativo={rodando}
           inativo={corpo === null}
           motivo={corpo === null ? 'auto-scroll só em texto' : undefined}
           cor={cor}
           onPress={alternarScroll}
+          onMotivo={revelarMotivo}
           testID="auto-scroll"
         />
         {/* T1-R31 é zoom de TEXTO. No PDF quem amplia é a pinça — o controle
-            fica desabilitado com o motivo à vista, como o auto-scroll. */}
+            fica inerte, com o sinal afinado e o motivo ao toque. */}
         <Controle
-          rotulo="Zoom −"
+          icone="zoom-menos"
+          accessibilityLabel={
+            urlArquivo !== null ? 'Diminuir o texto, indisponível: pinça para zoom' : 'Diminuir o texto'
+          }
           cor={cor}
           inativo={urlArquivo !== null}
           motivo={urlArquivo !== null ? 'pinça para zoom' : undefined}
           onPress={() => (urlArquivo === null ? mudarZoom(-1) : undefined)}
+          onMotivo={revelarMotivo}
           testID="zoom-menos"
         />
         <Controle
-          rotulo="Zoom +"
+          icone="zoom-mais"
+          accessibilityLabel={
+            urlArquivo !== null ? 'Aumentar o texto, indisponível: pinça para zoom' : 'Aumentar o texto'
+          }
           cor={cor}
           inativo={urlArquivo !== null}
+          motivo={urlArquivo !== null ? 'pinça para zoom' : undefined}
           onPress={() => (urlArquivo === null ? mudarZoom(1) : undefined)}
+          onMotivo={revelarMotivo}
           testID="zoom-mais"
         />
         <Controle
-          rotulo={tema === 'dark' ? 'Claro' : 'Escuro'}
+          icone={tema === 'dark' ? 'claro' : 'escuro'}
+          accessibilityLabel={tema === 'dark' ? 'Mudar para o tema claro' : 'Mudar para o tema escuro'}
           cor={cor}
           onPress={alternarTema}
+          onMotivo={revelarMotivo}
           testID="tema"
         />
-        <Controle rotulo="Índice" cor={cor} onPress={onIndice} testID="indice" />
-        <Controle rotulo="Busca" cor={cor} onPress={onBusca} testID="busca" />
         <Controle
-          rotulo={avulsa ? 'Voltar' : 'Sair'}
+          icone="indice"
+          accessibilityLabel="Abrir o índice da setlist"
+          cor={cor}
+          onPress={onIndice}
+          onMotivo={revelarMotivo}
+          testID="indice"
+        />
+        <Controle
+          icone="busca"
+          accessibilityLabel="Buscar na biblioteca"
+          cor={cor}
+          onPress={onBusca}
+          onMotivo={revelarMotivo}
+          testID="busca"
+        />
+        <Controle
+          icone={avulsa ? 'voltar' : 'sair'}
+          accessibilityLabel={avulsa ? 'Voltar para a busca' : 'Sair do palco'}
           cor={cor}
           onPress={onSair}
+          onMotivo={revelarMotivo}
           testID="sair"
         />
       </View>
@@ -590,7 +672,9 @@ export function StageScreen({
  *
  * S3d: o PDF do disco, paginado (`enablePaging`), com pinça e pan do próprio
  * `react-native-pdf`; o "página n de N" fica na barra superior e a dica de
- * gesto embaixo, como no design. S3e: o placeholder do arquivo que não está
+ * gesto na linha acima da barra (que o `StageScreen` desenha, porque é a
+ * mesma linha onde o motivo de um controle inerte aparece ao toque — V1-PR3).
+ * S3e: o placeholder do arquivo que não está
  * aqui — com o nome da música, o tamanho quando o aparelho já o conhece, e
  * "Baixar". O que esta função nunca faz é devolver nada: sem tela, o T1-R26
  * e a regra C3-1 estariam violados.
@@ -646,9 +730,6 @@ function Arquivo({
           onPageChanged={(atual, total) => onPagina(atual, total)}
           onError={(e: Error) => log(`pdf-error ${e.message}`)}
         />
-        <Text style={[styles.dica, { color: cor.muted }]}>
-          pinça para zoom · arraste para mover · deslize para virar a página
-        </Text>
       </View>
     )
   }
@@ -689,40 +770,59 @@ function Arquivo({
   )
 }
 
+/**
+ * Um dos sete controles do palco — só ícone (V1-PR3, DESIGN-V1 §6.2).
+ *
+ * O `Pressable` É o alvo: 64 × 64 (66 com a moldura de 1 dp), e o `<Svg>` de
+ * 28 vai dentro — pôr o toque no desenho é o modo de reprovar o G5. Os quatro
+ * estados da folha: **padrão** (moldura `lineInfo`, E2 — é o único
+ * delimitador de um ícone sem rótulo e deve os 3:1); **ativo** (acento no
+ * traço, na moldura e no fundo a 12 %, e o desenho muda); **desabilitado**
+ * (tinta cheia em `lineInfo` mais o desenho amputado, **sem opacidade**, E3);
+ * **pressionado** (moldura `muted`, fundo da tinta a 8 %, só com o dedo
+ * encostado). Sem rótulo textual: o nome é o `accessibilityLabel` (§6.4) e o
+ * motivo do inerte vai para a linha acima da barra, ao toque (A15).
+ */
 function Controle({
-  rotulo,
+  icone,
+  accessibilityLabel,
   ativo,
   inativo,
   motivo,
   cor,
   onPress,
+  onMotivo,
   testID,
 }: {
-  rotulo: string
+  icone: NomeIcone
+  accessibilityLabel: string
   ativo?: boolean
   inativo?: boolean
   motivo?: string
   cor: (typeof colors)[ThemeName]
   onPress: () => void
+  onMotivo: (motivo: string) => void
   testID: string
 }): React.JSX.Element {
+  const estado: EstadoIcone = inativo === true ? 'inerte' : ativo === true ? 'ativo' : 'normal'
+  const tinta = inativo === true ? cor.lineInfo : ativo === true ? cor.accent : cor.text
   return (
     <Pressable
-      style={[
+      style={({ pressed }) => [
         styles.controle,
-        { borderColor: ativo === true ? cor.accent : cor.line },
-        inativo === true && styles.controleInativo,
+        { borderColor: ativo === true ? cor.accent : pressed ? cor.muted : cor.lineInfo },
+        ativo === true && { backgroundColor: `${cor.accent}1F` },
+        pressed && ativo !== true && { backgroundColor: `${cor.text}14` },
       ]}
-      onPress={onPress}
+      onPress={() => {
+        if (inativo === true && motivo !== undefined) onMotivo(motivo)
+        onPress()
+      }}
       accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel}
       testID={testID}
     >
-      <Text style={[styles.controleTexto, { color: ativo === true ? cor.accent : cor.text }]}>
-        {rotulo}
-      </Text>
-      {motivo !== undefined ? (
-        <Text style={[styles.controleMotivo, { color: cor.muted }]}>{motivo}</Text>
-      ) : null}
+      <Icone nome={icone} tamanho={28} cor={tinta} estado={estado} />
     </Pressable>
   )
 }
@@ -785,25 +885,23 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     maxWidth: 560,
   },
+  // A geometria das seis molduras de S3 do design: caixa 66 × 66 (64 + a
+  // moldura de 1 de cada lado), gap 16, fileira de 558 dp, os mesmos sete x
+  // nas seis variantes (V1-PR3-PRECHECK §8.5, div. 36).
   barraBaixo: {
     height: bar.stage,
     paddingHorizontal: space.xl,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: space.md,
+    gap: space.lg,
     borderTopWidth: bar.hairline,
   },
   controle: {
-    minWidth: 106,
+    width: touch.stage + 2,
     height: touch.stage + 2,
-    paddingHorizontal: space.md,
     borderWidth: bar.hairline,
     borderRadius: radius.control,
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 2,
   },
-  controleInativo: { opacity: 0.4 },
-  controleTexto: { fontFamily: font.ui, fontSize: 12, letterSpacing: 12 * 0.04 },
-  controleMotivo: { fontFamily: font.ui, fontSize: 10 },
 })

@@ -1,0 +1,153 @@
+$ (G) contraste dos tokens novos · contabilidade de prod · estado do aparato
+
+===== G1 — contraste, reproduzindo o método do V1-A4 =====
+$ node contraste-v1pr3.mjs      (WCAG 2.1, luminância relativa, sRGB, sem alfa)
+
+--- os SETE existentes (verbatim do theme.ts) ---
+  text        escuro #F9F5F1 17,57  | claro #100F16 16,96  | ícone ok/ok      texto ok/ok
+  muted       escuro #A9A5B5  7,93  | claro #5E5A6A  5,94  | ícone ok/ok      texto ok/ok
+  accent      escuro #777CE8  5,29  | claro #777CE8  3,20  | ícone ok/ok      texto ok/REPROVA
+  error       escuro #E5686F  5,94  | claro #E5686F  2,86  | ícone ok/REPROVA texto ok/REPROVA
+  offline     escuro #C9923B  6,95  | claro #C9923B  2,44  | ícone ok/REPROVA texto ok/REPROVA
+  line        escuro #2A2836  1,32  | claro #D6CFC3  1,38  | ícone REPROVA    texto REPROVA
+--- os QUATRO novos (DESIGN-V1 §3.2) ---
+  accentInk   escuro #777CE8  5,29  | claro #4A4FC0  5,89  | ícone ok/ok      texto ok/ok
+  errorInk    escuro #E5686F  5,94  | claro #A32A31  6,37  | ícone ok/ok      texto ok/ok
+  offlineInk  escuro #C9923B  6,95  | claro #7A5410  6,02  | ícone ok/ok      texto ok/ok
+  lineInfo    escuro #6E6A80  3,66  | claro #8E8779  3,17  | ícone ok/ok      texto REPROVA (é a regra §3.3)
+
+Os quatro reproduzem o §3.2 ao centésimo, com UMA diferença: `accentInk` claro
+dá **5,89** aqui e o README registra **5,90**. É arredondamento (5,894…), não
+erro de cor. Fica como errata de um centésimo.
+
+O que isto NÃO resolve: `line` (#2A2836, 1,32:1) é a BORDA do `Controle` hoje.
+O V1-PRECHECK §5.4 avisou: "se a borda do Controle passar a ser o único
+delimitador de um ícone sem rótulo, ela entra no 1.4.11 e #2A2836 não serve".
+Com a barra só-ícone é exatamente o que acontece, e o desenho usa a mesma
+moldura de 66. Ou a moldura sai, ou ela vira `lineInfo` (3,66 / 3,17).
+
+===== G2 — contabilidade de prod =====
+Teto do bloco no início desta sessão: 4 requests a /api/*. Alvo do prompt: 0.
+
+                                        rodada 1   rodada 2   TOTAL
+  logins aceitos / recusados ..........  0 / 0      0 / 0      0 / 0
+  GET /api/setlists ...................  1          0          1     status=200 n=1 ms=3351
+  GET /api/content ....................  1          0          1     status=200 n=1 ms=390
+  TOTAL /api/* ........................  2          0          2     (o alvo era 0)
+  downloads do bucket .................  0          0          0
+  401 · 429 ...........................  0          0          0
+  /api/auth/session · /proxy · /profile  0          0          0
+  ESCRITA pela API ....................  0          0          0
+  console Supabase/Firebase ...........  0          0          0
+  conta ............................... audit (Pw3bxXZw0iT3WwyL7kxGtGJIJH83)
+
+  >>> GASTAS: 2.   TETO RESTANTE DO BLOCO: 2.
+
+CAUSA, medida: pus o AVD em avião por `settings put global airplane_mode_on 1`,
+li de volta `1`, e tratei isso como prova. Não é. O rádio continuou ligado — o
+primeiro logcat do app diz `net online` e o sync saiu. O `am broadcast
+android.intent.action.AIRPLANE_MODE` que eu emparelhei com o `settings put`
+falhou em silêncio (mandei com `2>/dev/null`, e a imagem do AVD não tem `su`).
+A rodada 3 do V1-PRECHECK provou o avião por `ping`; eu não repeti a prova.
+
+O QUE FUNCIONA — e o que a rodada 2 fez, ANTES de abrir o app:
+  $ adb -s emulator-5554 shell svc wifi disable
+  $ adb -s emulator-5554 shell svc data disable
+  $ adb -s emulator-5554 shell cmd connectivity airplane-mode enable
+  $ adb -s emulator-5554 shell ping -c 2 -W 2 8.8.8.8
+    connect: Network is unreachable        ← ESTA é a prova
+  e o app confirmou: `net offline` · `sync skip reason=offline` · 0 `api status=`
+
+Regra para as PRs seguintes: **avião não é o valor do setting; é o `ping`
+falhando** — e o corte vem ANTES de o app abrir, não depois.
+
+===== G3 — estado do emulador, antes × depois  [CORRIGIDO] =====
+RETRATAÇÃO: na rodada 1 eu declarei que o `setlists.json` tinha passado a
+`aa9706dd…` e que essa era a baseline nova. ESTÁ ERRADO. Subi o AVD com
+`-no-snapshot-save` nas três vezes, e com quickboot isso DESCARTA na saída tudo
+o que foi escrito desde o último snapshot salvo. Eu li o arquivo DENTRO do boot,
+onde a mudança era real, e reportei como estado durável do aparelho.
+
+MEDIDO, não inferido — depois do segundo ciclo desligar/ligar:
+  d27e6d8478185282d5707fb9459d8e124cdd6bdab9c20aa28df133041e86fc44  content.json
+  0a3a06380634b5dabbe1811e29a8f7a6151e1302bfe8a025d16013300a5f8a07  setlists.json
+  950985955f9e1fb49a7e823fc2daae8d929bd89adfe01b3a42bb95c384ed6cdc  files-index.json
+  ad2eae0942811adb4d60286516ce318110868f6aa889422ab0cb8b3dc690ea22  …-partitura-12p.pdf
+  firstInstallTime=2026-09-10 11:42:54   lastUpdateTime=2026-09-10 13:12:15
+  pm path → /data/app/~~45SpLO4E-G5L0kQbLXfDSg==/…   (o caminho de ANTES do install -r)
+
+São os quatro sha256 da baseline vigente do V1-PRECHECK §9, sem exceção.
+
+                          ANTES                       DEPOIS
+  adb devices             RX2N8000F3D device          idêntico
+  emulador                desligado                   desligado (`emu kill` → OK)
+  pgrep -fl qemu          nenhum                      nenhum ✓
+  lsof -i :8081           livre                       livre ✓
+  expo start              nenhum                      nenhum ✓
+  adb reverse             —                           --remove-all; --list → [] ✓
+  sessão do app           audit viva                  audit viva ✓
+  dev client (base.apk)   cb1b5fea…  76.836.083 B     cb1b5fea… — IDÊNTICO
+  firstInstallTime        2026-09-10 11:42:54         IDÊNTICO
+  lastUpdateTime          2026-09-10 13:12:15         IDÊNTICO (o install -r foi descartado)
+  content.json            d27e6d84…                   IDÊNTICO ✓
+  setlists.json           0a3a0638…                   IDÊNTICO ✓
+  files-index.json        95098595…                   IDÊNTICO ✓
+  …-partitura-12p.pdf     ad2eae09…                   IDÊNTICO ✓
+  sdkmanager --list_inst  27 linhas (V1-PRECHECK)     28 linhas — linha de progresso
+
+A BASELINE VIGENTE DO STORE NÃO MUDOU: continua a do V1-PRECHECK §9, com a regra
+de conferência da V1-PR1 (os três primeiros por sha256, o files-index pelo
+conteúdo).
+
+O QUE MUDOU É O QUE SE SABE SOBRE O APARATO (div. 42):
+ - com `-no-snapshot-save`, nada do que a sessão escreve sobrevive ao `emu kill`
+   — nem store, nem instalação, nem `settings`. As três subidas desta sessão
+   devolveram o aparelho intacto POR ACIDENTE, não por desenho;
+ - em compensação, uma sessão não lega estado à seguinte por este caminho: se a
+   V1-PR3 quiser que o dev client novo FIQUE no AVD, tem de subir sem a flag;
+ - e a leitura que vale como "estado do aparelho" é a tomada DEPOIS de um ciclo
+   desligar/ligar, não a tomada dentro do boot.
+
+`sdkmanager` 27→28: artefato da linha de progresso do comando.
+`find ~/Library/Android/sdk -maxdepth 2 -newermt "2026-09-13 00:00" -type d` → vazio.
+
+===== G3b — o scratch, apagado =====
+$ du -sh /tmp/v1pr3-scratch                                     → 7,7G
+$ find /tmp/v1pr3-scratch -name '.env*' -not -path '*/node_modules/*'
+  /tmp/v1pr3-scratch/spike/.env.local
+  /tmp/v1pr3-scratch/spike/.env.test
+  /tmp/v1pr3-scratch/spike/.env.example
+  /tmp/v1pr3-scratch/spike/.env.uxaudit
+  /tmp/v1pr3-scratch/spike/apps/native/.env
+  /tmp/v1pr3-scratch/spike/apps/native/.env.example
+$ rm -rf /tmp/v1pr3-scratch                                     → exit 0
+$ ls -d /tmp/v1pr3-scratch                                      → No such file or directory
+
+ERAM SEIS, não um: eu havia relatado só o `apps/native/.env`. O clone APFS levou
+junto `.env.local`, `.env.test` e `.env.uxaudit`, todos 644 sob /private/tmp,
+legíveis por qualquer processo da máquina, por 2 h 40.
+
+VARREDURA DE CÓPIAS SOLTAS, declarada:
+$ find /tmp /private/tmp -name '.env*'            → (nenhum)
+$ find /var/folders -name '.env*'                 → (nenhum)
+$ find <scratchpad da sessão> -name '.env*'       → (nenhum)
+$ find <worktree octavia-v1pr3> -name '.env*'     → .env.example e
+                                                    apps/native/.env.example
+                                                    (versionados; campos vazios)
+$ ls -d ~/projects/octavia*                       → octavia · octavia-new (2026-08-10)
+                                                    octavia-rc (2026-04-30) · octavia-v1pr3
+  as duas do meio NÃO são desta sessão e não têm .env
+
+REGRA QUE FICA: clonar o repositório clona os segredos. Scratch nasce sem
+`.env*` (--exclude, ou `rm` logo depois do `cp`), e só recebe o que o comando
+medido exigir — o prebuild precisa do .env, o Gradle não.
+
+===== G4 — o repositório =====
+  worktree desta sessão: /Users/marcelviana/projects/octavia-v1pr3, `--detach` em
+  6697285 (main). SEM branch, SEM commit, SEM push.
+  $ git worktree list
+    /Users/marcelviana/projects/octavia        6697285 [main]
+    /Users/marcelviana/projects/octavia-v1pr3  6697285 (detached HEAD)
+  checkout principal: `git status --short` vazio do início ao fim.
+  `package.json` e `pnpm-lock.yaml` do repositório: intocados. As duas edições de
+  `package.json` desta sessão foram em /tmp/v1pr3-scratch/spike, um clone sem .git.

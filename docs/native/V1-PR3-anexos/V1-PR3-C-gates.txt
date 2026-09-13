@@ -1,0 +1,130 @@
+$ (C) os seis gates, commit a commit, mais suíte · tsc · lint — e os controles negativos
+
+Scripts: g1.sh, g5.mjs, g6.sh são os da V1-PR1-anexos/V1-PR1-B-gates.txt, extraídos verbatim
+para o scratch; g2g3.sh é o corrigido (div. 30), versionado em apps/native/scripts/ no commit 5;
+a20 = scripts/a20.mjs (commit 5) — antes dele, o desenho A3.3 do V1-PRECHECK, do scratch.
+
+===== C1 — G1 / G2 / G3 por commit (base origin/main = 6697285) =====
+--- 4e2585d  docs(V1-PR3): pre-check, e as erratas E2/E3/E4 do DESIGN-V1
+  G1: DIFF VAZIO ✓
+  G2 — testIDs  antes=41  depois=41
+    G2: antes ⊆ depois ✓
+  G3 — linhas log( antes=50  depois=50
+    G3: idênticas ✓
+--- 8444b18  build(V1-PR3): react-native-svg 15.15.4
+  G1: DIFF VAZIO ✓
+  G2 — testIDs  antes=41  depois=41
+    G2: antes ⊆ depois ✓
+  G3 — linhas log( antes=50  depois=50
+    G3: idênticas ✓
+--- 0448757  feat(V1-PR3): os quatro tokens de cor e os dois degraus de tamanho
+  G1: DIFF VAZIO ✓
+  G2 — testIDs  antes=41  depois=41
+    G2: antes ⊆ depois ✓
+  G3 — linhas log( antes=50  depois=50
+    G3: idênticas ✓
+--- dbd2545  feat(V1-PR3): o componente de ícone e os 34 desenhos
+  G1: DIFF VAZIO ✓
+  G2 — testIDs  antes=41  depois=41
+    G2: antes ⊆ depois ✓
+  G3 — linhas log( antes=50  depois=50
+    G3: idênticas ✓
+--- 531f17b  feat(V1-PR3): a barra do palco, só ícone
+  G1: DIFF VAZIO ✓
+  G2 — testIDs  antes=41  depois=42
+    G2: antes ⊆ depois ✓
+    testID NOVOS:
+        apps/native/src/screens/StageScreen.tsx	testID="linha-motivo"
+  G3 — linhas log( antes=50  depois=50
+    G3: idênticas ✓
+--- cf9e229  test(V1-PR3): a varredura A20 estendida e o g2g3 corrigido entram no repositório
+  G1: DIFF VAZIO ✓
+  G2 — testIDs  antes=41  depois=42
+    G2: antes ⊆ depois ✓
+    testID NOVOS:
+        apps/native/src/screens/StageScreen.tsx	testID="linha-motivo"
+  G3 — linhas log( antes=50  depois=50
+    G3: idênticas ✓
+
+===== C2 — G4: a20 =====
+--- commit 0 (desenho A3.3, scratch): literais 40 · acusações 0 · exit 0
+--- commit 4 (desenho A3.3, scratch): literais 36 · acusações 0 — os sete labels em expressão NÃO eram lidos
+--- commit 5, `pnpm --filter native gate:a20`:
+    escopo: ESTENDIDO (V1-A3 §A3.3 + labels em expressão, V1-PR3)
+    arquivos varridos: 20
+    vocabulário: 45 termos · isenções do produto: 9
+    literais em posição de texto examinados: 48
+    acusações: 0
+  exit=0
+--- commit 5, `pnpm --filter native gate:a20:cn` (controle negativo, esperado exit 1):
+    ACUSADO scripts/__cn__/A20Falso.tsx:24 [accessibilityLabel] "Zoom in" ← termo "zoom in"
+    ACUSADO scripts/__cn__/A20Falso.tsx:27 [accessibilityHint] "Go back to the previous song" ← termo "previous"
+    ACUSADO scripts/__cn__/A20Falso.tsx:35 [accessibilityLabel{…}] "Auto-scroll, loading" ← termo "loading"
+    escopo: ESTENDIDO (V1-A3 §A3.3 + labels em expressão, V1-PR3)
+    arquivos varridos: 1
+    vocabulário: 45 termos · isenções do produto: 9
+    literais em posição de texto examinados: 7
+    acusações: 3
+  exit=1
+
+===== C3 — G5 (alvos ≥ 48 dp) =====
+--- dumps-antes (12 estados):
+  alvos tocáveis medidos: 102 em 12 estados
+  ABAIXO de 48 dp: 0 ocorrências / 0 resource-ids
+  
+  descartados por recorte (div. 21): 0
+  
+  alvos SEM testID (inalcançáveis por resource-id): 0
+--- dumps-depois (17 estados):
+  alvos tocáveis medidos: 156 em 17 estados
+  ABAIXO de 48 dp: 0 ocorrências / 0 resource-ids
+  
+  descartados por recorte (div. 21): 0
+  
+  alvos SEM testID (inalcançáveis por resource-id): 0
+
+===== C4 — G6 (todo estado com ID alcançável) =====
+    S3-avulsa-claro              âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+    S3-avulsa                    âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+    S3-placeholder-invalido-nobody-claro âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+    S3-placeholder-invalido-nobody âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+    S3-texto-claro               âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+    S3-texto                     âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+    S3d-pdf-claro                âncora=auto-scroll        ids=11  alvos sem id=0 ✓
+    S3d-pdf                      âncora=auto-scroll        ids=11  alvos sem id=0 ✓
+    S3e-arquivo-nao-baixado-claro âncora=auto-scroll        ids=11  alvos sem id=0 ✓
+    S3e-arquivo-nao-baixado      âncora=auto-scroll        ids=11  alvos sem id=0 ✓
+    S4a-aguas                    âncora=apagar             ids=6   alvos sem id=0 ✓
+    S4a-offline                  âncora=apagar             ids=6   alvos sem id=0 ✓
+    estados: 12   falhas: 0
+    S3-avulsa-claro              âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+    S3-avulsa                    âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+    S3-nobody-motivo-autoscroll  âncora=auto-scroll        ids=11  alvos sem id=0 ✓
+    S3-paisagem-volta            âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+    S3-placeholder-invalido-nobody-claro âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+    S3-placeholder-invalido-nobody âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+    S3-retrato                   âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+    S3-texto-autoscroll-ligado   âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+    S3-texto-claro               âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+    S3-texto                     âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+    S3d-pdf-claro                âncora=auto-scroll        ids=12  alvos sem id=0 ✓
+    S3d-pdf-motivo-autoscroll    âncora=auto-scroll        ids=12  alvos sem id=0 ✓
+    S3d-pdf-motivo-zoom          âncora=auto-scroll        ids=12  alvos sem id=0 ✓
+    S3d-pdf                      âncora=auto-scroll        ids=12  alvos sem id=0 ✓
+    S3e-arquivo-nao-baixado-claro âncora=auto-scroll        ids=11  alvos sem id=0 ✓
+    S3e-arquivo-nao-baixado      âncora=auto-scroll        ids=11  alvos sem id=0 ✓
+    S3e-motivo-autoscroll        âncora=auto-scroll        ids=12  alvos sem id=0 ✓
+    estados: 17   falhas: 0
+
+===== C5 — divergência 30: controle negativo do g2g3.sh (repositório descartável) =====
+  .ts IDÊNTICO dos dois lados; src/fixtures/aceite.py com `catalog(1)` só no ramo de ref-git
+  HOJE (PR1, assimétrico):  G3 — antes=2 depois=1 · DIVERGEM ✗   ← falso positivo
+  CORRIGIDO (commit 5):     G3 — antes=1 depois=1 · idênticas ✓
+  positivo continua positivo (log( novo no .ts): G3 — antes=1 depois=2 · DIVERGEM ✗
+
+===== C6 — suíte · tsc · lint =====
+--- pnpm test (raiz), commit 0:  Test Files  88 passed | 4 skipped (92)  ·  Tests  768 passed | 85 skipped (853)
+--- pnpm test (raiz), commit 5:  Test Files  88 passed | 4 skipped (92)  ·  Tests  768 passed | 85 skipped (853)
+    baseline 768/85: IDÊNTICA. (vitest.config.mts exclui apps/** — a suíte não vê o nativo.)
+--- npx tsc --noEmit (apps/native), em todo commit: exit 0 (inclui scripts/__cn__/A20Falso.tsx e scripts/a20.mjs, allowJs)
+--- pnpm lint (raiz): ✔ No ESLint warnings or errors — verde VAZIO para apps/native (V1-PR1 div. 32)

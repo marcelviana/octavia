@@ -1,0 +1,218 @@
+$ (E) o Tab S6 — protocolo do §2, os quatro passos
+
+Comandos ao Tab S6 (todos com -s RX2N8000F3D): as leituras dos passos 1 e 4; input keyevent
+WAKEUP / 82 e um swipe (tentativas de dispensar o keyguard, sem senha); svc wifi/data disable
+e cmd connectivity airplane-mode enable (corte de rede, declarado); install -r; reverse; am
+force-stop + am start (deep link); logcat; e a devolução: airplane-mode disable, svc wifi/data
+enable, reverse --remove-all, force-stop. NENHUM pm clear, uninstall, push, rm, ou senha.
+
+=== TAB S6 — passo 1: leituras (2026-09-13 12:41:23) ===
+--- dumpsys package:
+    primaryCpuAbi=arm64-v8a
+    versionCode=1 minSdk=24 targetSdk=36
+    versionName=0.0.1
+    firstInstallTime=2026-09-07 18:08:54
+    lastUpdateTime=2026-09-10 21:03:24
+--- pm path + sha256 + tamanho do base.apk:
+/data/app/~~tCy8Yo8MjLq208ebVzOrmQ==/rocks.octavia.app-_kICWa82xG3hK4GAqq2XAQ==/base.apk
+cb1b5fea0240e185ee8ff7e81d2eb790a13a21e12ffb5613c94e86e9e7963c8f  /data/app/~~tCy8Yo8MjLq208ebVzOrmQ==/rocks.octavia.app-_kICWa82xG3hK4GAqq2XAQ==/base.apk
+76836083 B
+--- ls -lR files/ e cache/:
+cache:
+total 12
+drwx--S--- 2 u0_a292 u0_a292_cache 3488 2026-09-11 09:00 WebView
+drwx--S--- 2 u0_a292 u0_a292_cache 3488 2026-09-11 10:03 http-cache
+drwx--S--- 3 u0_a292 u0_a292_cache 3488 2026-09-11 09:01 image_cache
+drwx--S--- 3 u0_a292 u0_a292_cache 3488 2026-09-11 09:59 octavia-xVDJRBh1WpPOatbfWahOLttYn1E3
+
+cache/WebView:
+total 0
+
+cache/http-cache:
+total 4
+-rw------- 1 u0_a292 u0_a292_cache 36 2026-09-11 09:03 journal
+
+cache/image_cache:
+total 3
+drwx--S--- 3 u0_a292 u0_a292_cache 3488 2026-09-11 09:01 v2.ols100.1
+
+cache/image_cache/v2.ols100.1:
+total 3
+drwx--S--- 2 u0_a292 u0_a292_cache 3488 2026-09-11 09:01 17
+
+cache/image_cache/v2.ols100.1/17:
+total 40
+-rw------- 1 u0_a292 u0_a292_cache 39824 2026-09-11 09:01 0a12e5ai9UNGRTTCq9-v3lOihBQ.cnt
+
+cache/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3:
+total 3
+drwx--S--- 2 u0_a292 u0_a292_cache 3488 2026-09-11 10:00 files
+
+cache/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3/files:
+total 0
+
+files:
+total 5719
+-rw------- 1 u0_a292 u0_a292 5840133 2026-09-11 10:03 DevLauncherApp-BridgelessReactNativeDevBundle.js
+drwx------ 3 u0_a292 u0_a292    3488 2026-09-11 10:03 octavia-xVDJRBh1WpPOatbfWahOLttYn1E3
+-rw------- 1 u0_a292 u0_a292      24 2026-09-12 17:07 profileInstalled
+-rw-rw---- 1 u0_a292 u0_a292      71 2026-09-11 10:02 rList
+
+files/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3:
+total 123
+-rw------- 1 u0_a292 u0_a292 111567 2026-09-11 10:03 content.json
+drwx------ 2 u0_a292 u0_a292   3488 2026-09-11 10:00 files
+-rw------- 1 u0_a292 u0_a292    200 2026-09-11 10:00 files-index.json
+-rw------- 1 u0_a292 u0_a292   2752 2026-09-11 10:03 setlists.json
+
+files/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3/files:
+total 136
+-rw------- 1 u0_a292 u0_a292_cache 138916 2026-09-11 09:59 1751910900697-Easy_-_Guitar.pdf
+--- sha256 do store:
+39f784a4cfc396c2f5c40c3fa950f92ec5405af153469e16a5d8a667709a6796  files/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3/content.json
+539a0d764ab949dee13be42931e925ca1dce96d55db0942143f101def06674b6  files/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3/setlists.json
+8b658dd7d238704684984d4d01e68094a8dbd6711689676d112746a70073efba  files/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3/files-index.json
+1e1d77c4ce2eed96e0046ba0694e1dff247cfa7fb0bdcc52216979bcfa15d942  files/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3/files/1751910900697-Easy_-_Guitar.pdf
+--- files-index.json (conteúdo):
+{"https://mlxjmpbdchmwplcfislt.supabase.co/storage/v1/object/public/content-files/1751910900697-Easy_-_Guitar.pdf":{"name":"1751910900697-Easy_-_Guitar.pdf","bytes":138916,"lastUsedMs":1789131645191}}
+--- tela/bloqueio:
+  mWakefulness=Dozing
+  mHoldingDisplaySuspendBlocker=false
+mDreamingLockscreen=false
+Physical size: 1600x2560
+Physical density: 360
+--- rede:
+0
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 28.763/28.763/28.763/0.000 ms
+
+=== TAB S6 — tela e rede (12:41:42) ===
+  mWakefulness=Awake
+isKeyguardShowing=true
+mShowingDream=false
+--- corte de rede ANTES de abrir o app (declarado; restaurado no fim):
+settings airplane_mode_on = 1   (NÃO é a prova)
+$ ping -c 2 -W 2 8.8.8.8
+connect: Network is unreachable
+
+=== TAB S6 — keyguard ===
+ User "Marcel Viana" (id=0, flags=0xc13) (current): trusted=0, trustManaged=1, deviceLocked=1, strongAuthRequired=0x0
+isKeyguardShowing=true
+
+=== TAB S6 — passo 2: install -r (12:42:03) ===
+$ adb -s RX2N8000F3D install -r /private/tmp/claude-501/-Users-marcelviana-projects-octavia/8697c385-6a74-4a2f-80c6-61d2e548b1b6/scratchpad/app-debug-v1pr3.apk
+Performing Streamed Install
+Success
+--- dumpsys DEPOIS do install -r:
+    versionCode=1 minSdk=24 targetSdk=36
+    firstInstallTime=2026-09-07 18:08:54
+    lastUpdateTime=2026-09-13 12:42:13
+/data/app/~~PTrcKpQSAc8vKqckA9n4RQ==/rocks.octavia.app-s84t6GJpbmFx2nG8uHMTyw==/base.apk
+c0c1ab51b3076968142da6c10c48095224f7c7543a55e8362d9eb248d9e7ba14  /data/app/~~PTrcKpQSAc8vKqckA9n4RQ==/rocks.octavia.app-s84t6GJpbmFx2nG8uHMTyw==/base.apk
+231377892 B
+--- store logo depois do install -r:
+39f784a4cfc396c2f5c40c3fa950f92ec5405af153469e16a5d8a667709a6796  files/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3/content.json
+539a0d764ab949dee13be42931e925ca1dce96d55db0942143f101def06674b6  files/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3/setlists.json
+8b658dd7d238704684984d4d01e68094a8dbd6711689676d112746a70073efba  files/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3/files-index.json
+1e1d77c4ce2eed96e0046ba0694e1dff247cfa7fb0bdcc52216979bcfa15d942  files/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3/files/1751910900697-Easy_-_Guitar.pdf
+RKStorage
+RKStorage-journal
+
+=== TAB S6 — passo 3: abrir o app (12:42:30) ===
+keyguard depois de um swipe: isKeyguardShowing=true
+8081
+8788
+UsbFfs tcp:8081 tcp:8081
+UsbFfs tcp:8788 tcp:8788
+
+Status: ok
+--- logcat OCTAVIA:
+OCTAVIA: net offline
+OCTAVIA: auth uid=xVDJRBh1WpPOatbfWahOLttYn1E3 src=restored
+OCTAVIA: cache hit kind=setlists n=2
+OCTAVIA: cache hit kind=content n=63
+OCTAVIA: sync skip reason=offline
+OCTAVIA: prefetch plan n=0 reason=7d
+--- api status= : 0
+
+=== TAB S6 — passo 4: releitura (12:43:17) ===
+    firstInstallTime=2026-09-07 18:08:54
+    lastUpdateTime=2026-09-13 12:42:13
+c0c1ab51b3076968
+--- sha256 do store DEPOIS de abrir o app:
+39f784a4cfc396c2f5c40c3fa950f92ec5405af153469e16a5d8a667709a6796  files/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3/content.json
+539a0d764ab949dee13be42931e925ca1dce96d55db0942143f101def06674b6  files/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3/setlists.json
+8b658dd7d238704684984d4d01e68094a8dbd6711689676d112746a70073efba  files/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3/files-index.json
+1e1d77c4ce2eed96e0046ba0694e1dff247cfa7fb0bdcc52216979bcfa15d942  files/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3/files/1751910900697-Easy_-_Guitar.pdf
+cache/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3:
+drwx--S--- 2 u0_a292 u0_a292_cache 3488 2026-09-11 10:00 files
+
+cache/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3/files:
+
+files/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3:
+-rw------- 1 u0_a292 u0_a292 111567 2026-09-11 10:03 content.json
+drwx------ 2 u0_a292 u0_a292   3488 2026-09-11 10:00 files
+-rw------- 1 u0_a292 u0_a292    200 2026-09-11 10:00 files-index.json
+-rw------- 1 u0_a292 u0_a292   2752 2026-09-11 10:03 setlists.json
+
+files/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3/files:
+-rw------- 1 u0_a292 u0_a292_cache 138916 2026-09-11 09:59 1751910900697-Easy_-_Guitar.pdf
+--- files-index.json:
+{"https://mlxjmpbdchmwplcfislt.supabase.co/storage/v1/object/public/content-files/1751910900697-Easy_-_Guitar.pdf":{"name":"1751910900697-Easy_-_Guitar.pdf","bytes":138916,"lastUsedMs":1789131645191}}
+--- api status= no logcat: 0
+
+=== TAB S6 — devolver o aparelho (12:43:18) ===
+reverse --list: [ ]
+airplane_mode_on = 0
+$ ping -c 2 -W 3 8.8.8.8
+connect: Network is unreachable
+Wi-Fi is enabled
+keyguard: isKeyguardShowing=true
+=== TAB S6 — rede, 2ª leitura (12:44:07) ===
+airplane_mode_on = 0
+Wi-Fi is enabled
+mWifiInfo SSID: <unknown ssid>
+$ ping -c 2 -W 3 8.8.8.8
+connect: Network is unreachable
+=== TAB S6 — wifi, novo ciclo (12:44:22) ===
+Wifi is enabled
+Wifi scanning is only available when wifi is enabled
+==== Primary ClientModeManager instance ====
+Wifi is not connected
+Wifi is enabled
+Wifi scanning is only available when wifi is enabled
+==== Primary ClientModeManager instance ====
+Wifi is not connected
+mWifiInfo SSID: <unknown ssid>
+$ ping -c 2 -W 3 8.8.8.8
+connect: Network is unreachable
+=== TAB S6 — diagnóstico de rede (12:45:02) ===
+redes wifi salvas: 2
+mobile_data (global): 1
+mServiceState={mVoiceRegState=1(OUT_OF_SERVICE), mData
+mDataConnectionState=0
+Active default network: none
+Wifi is enabled
+Wifi is not connected
+$ ping -c 2 -W 3 8.8.8.8
+connect: Network is unreachable
+=== TAB S6 — rede, 3ª leitura (12:46:02) ===
+Wifi is enabled
+Wifi is not connected
+Active default network: none
+$ ping -c 2 -W 3 8.8.8.8
+connect: Network is unreachable
+airplane_mode_on = 0 · wifi_on = 1
+
+===== E5 — resumo =====
+  dev client: cb1b5fea… 76.836.083 B → c0c1ab51… 231.377.892 B (o mesmo APK do AVD)
+  firstInstallTime 2026-09-07 18:08:54 PRESERVADO · lastUpdateTime → 2026-09-13 12:42:13
+  store (4 sha256) IDÊNTICOS antes e depois, inclusive files-index.json (nenhum arquivo aberto)
+  primeiro logcat com o apk NOVO: auth uid=xVDJRBh1… src=restored · cache hit setlists n=2
+  · content n=63 · net offline · sync skip reason=offline · api status= 0   → R15 fechado
+  keyguard: isKeyguardShowing=true, deviceLocked=1 — a tela está bloqueada com a credencial
+  do Marcel; a automação não a digita. O app rodou ATRÁS do keyguard (o JS carregou e logou);
+  A15/A17 no Tab S6 exigem a tela e ficam para o Marcel (pergunta na entrega).
+  rede: cortada às 12:41:42 (ping: Network is unreachable) e RELIGADA às 12:43:18
+  (airplane 0, wifi_on 1, 2 redes salvas) — mas o Wi-Fi NÃO reconectou até 12:50 (Wifi is
+  not connected · Active default network: none · sem serviço celular). Estado declarado.

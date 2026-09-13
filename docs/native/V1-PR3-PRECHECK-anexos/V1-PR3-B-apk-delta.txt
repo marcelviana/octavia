@@ -1,0 +1,69 @@
+$ (B) H2 — o Δ do APK, medido com um ANTES e um DEPOIS locais
+
+POR QUE UM ANTES LOCAL: o "antes" do V1-PRECHECK §6.1(ii) é o artefato do CI
+(run 34610061441, 215.354.003 B, sha256 e90eb64a…), construído no ubuntu com
+temurin-17. Para isolar o custo do `react-native-svg` do custo de trocar de
+máquina, construí os DOIS lados na mesma máquina, com o mesmo comando do CI
+(`./gradlew assembleDebug`, 4 ABIs, variante debug), no mesmo scratch.
+
+A aproximação saiu boa a ponto de dispensar ressalva:
+  CI (run 34610061441)   215.354.003 B
+  ANTES local            215.354.007 B    Δ para o CI: +4 B
+  DEPOIS local           231.377.892 B
+
+===== B1 — totais =====
+$ shasum -a 256 apk-antes.apk
+  3525282aa0fb45f34a7cea0a28e0028ed6a3aa39bbb6b4c01870f77544daa63b   215.354.007 B   1357 entradas
+$ shasum -a 256 apk-depois.apk
+  c0a3d7905ea1a527f71c1d41f18fd1ec6403ce9009956b7c1e6ffc183f4d5630   231.377.892 B   1361 entradas
+
+  Δ do react-native-svg:  +16.023.885 B   (+7,44 %)   ·   +4 entradas
+
+===== B2 — o controle negativo do V1-A10 vira positivo =====
+$ unzip -l apk-antes.apk  | grep -ci svg   →  0     (como o V1-PRECHECK §6.1 mediu)
+$ unzip -l apk-depois.apk | grep -ci svg   →  4
+$ unzip -l apk-depois.apk | grep -i svg
+   2321576  lib/arm64-v8a/libreact_codegen_rnsvg.so
+   1466016  lib/armeabi-v7a/libreact_codegen_rnsvg.so
+   2481492  lib/x86/libreact_codegen_rnsvg.so
+   2447776  lib/x86_64/libreact_codegen_rnsvg.so
+
+Entradas NOVAS no APK: exatamente essas 4. Entradas que sumiram: nenhuma.
+
+===== B3 — .so por ABI, antes × depois =====
+  ABI            antes                    depois                   Δ
+  arm64-v8a      21 libs   51.960.984 B   22 libs   56.245.088 B   +4.284.104 B
+  armeabi-v7a    21 libs   32.381.868 B   22 libs   35.175.260 B   +2.793.392 B
+  x86            21 libs   53.009.448 B   22 libs   57.399.276 B   +4.389.828 B
+  x86_64         21 libs   52.609.928 B   22 libs   56.998.600 B   +4.388.672 B
+  TOTAL lib/               189.962.228 B            205.818.224 B  +15.855.996 B
+
+O Δ por ABI **não é só a lib nova**: `libappmodules.so` cresce nas quatro,
+porque é onde o registro de TurboModules/Fabric do app é ligado.
+
+  lib/arm64-v8a/libappmodules.so     3.021.920 → 4.984.448   (+1.962.528)
+  lib/armeabi-v7a/libappmodules.so   1.959.636 → 3.287.012   (+1.327.376)
+  lib/x86/libappmodules.so           2.921.480 → 4.829.816   (+1.908.336)
+  lib/x86_64/libappmodules.so        2.956.344 → 4.897.240   (+1.940.896)
+
+Por ABI, o custo total do svg fica entre **2,8 MB (armeabi-v7a)** e
+**4,4 MB (x86)** — dentro da faixa que o V1-PRECHECK §6.6 estimou por hipótese
+("+1,5 a 3 MB por ABI"), um pouco acima no teto.
+
+===== B4 — por grupo de entrada =====
+  lib/        189.962.228 → 205.818.224    Δ +15.855.996
+  classes*.dex 51.009.476 →  51.377.392    Δ    +367.916    (o java/kotlin do rnsvg)
+  assets/       1.675.345 →   1.675.345    Δ          +0
+  res/          3.162.171 →   3.162.171    Δ          +0
+  outros        1.890.028 →   1.890.028    Δ          +0
+
+===== B5 — as fontes não se mexeram =====
+$ unzip -l apk-depois.apk | grep -cE '\.ttf'                 → 13   (6 + 7, como antes)
+$ unzip -l apk-depois.apk | grep 'assets/fonts.*ttf' | soma  → 793.720 B   (o N1-D6, exato)
+
+===== B6 — o que este APK NÃO mede =====
+É `assembleDebug`, que é o que o CI produz e o que se instala no aparelho para
+desenvolver. **Não** é release: sem minify, sem `shrinkResources`, sem R8, com
+as 7 fontes e o menu do `expo-dev-menu` dentro. O Δ de um APK de release do
+`react-native-svg` seria menor — e o Octavia não tem pipeline de release hoje,
+então o número que importa para o Tab S6 é este.

@@ -412,6 +412,55 @@ Passa a valer: `font` tem **seis** chaves, e Raleway está tokenizado como `font
 Onde: §4.1, reescrita com a transcrição verbatim.
 Causa: eu inferi o conteúdo do `theme.ts` a partir dos tokens que os inventários **citavam**, e os inventários só citam o que as telas usam — nenhuma tela da auditoria aplica `font.display`. Ausência de uso não é ausência de token. Descoberta ao transcrever o arquivo.
 
+**E2 — a moldura do controle do palco não podia ficar em `line`.**
+Estava escrito: a §5.4 dá ao controle do palco 64 × 64 e a §6 desenha a moldura de 66, sem nomear a tinta; o app usa `cor.line` (`StageScreen.tsx`, `borderColor`), e o documento não pediu outra coisa.
+Passa a valer: a moldura do controle do palco vai em **`lineInfo`**. Ela é o único delimitador de um controle **sem rótulo**, logo carrega informação e deve os 3:1 do 1.4.11 — que é exatamente o papel que a §3.3 já dá a este token ("contorno que carrega informação (trilha do arco, **moldura de controle**)").
+Onde: §5.4 e §6.1, na descrição do controle do palco.
+Causa: `line` mede **1,32:1** no escuro e **1,38:1** no claro (V1-A4, reproduzido no V1-PR3-PRECHECK §8.1 do anexo G). Enquanto o controle tinha rótulo textual a moldura era decorativa e a reprovação era aceita; com a barra só-ícone ela deixa de ser decorativa no mesmo movimento. O V1-PRECHECK §5.4 previu isto por escrito — "se a borda do `Controle` passar a ser o único delimitador de um ícone sem rótulo, ela entra no 1.4.11 e `#2A2836` não serve" — e a folha congelou sem aplicar. `lineInfo` mede **3,66** / **3,17**.
+
+**E3 — a §6.2 proíbe opacidade e não disse que o app a usa.**
+Estava escrito: "Nenhum estado depende só de cor: … desabilitado muda tinta e amputa o desenho", e, no caso dos dois zooms inertes, "**sem opacidade**: o sinal carrega informação e deve os 3:1". A regra está certa e o documento a enuncia como se já valesse.
+Passa a valer: a regra é uma **mudança**, não uma descrição. O app de hoje desenha o inerte com `styles.controleInativo = { opacity: 0.4 }` (`StageScreen.tsx`), aplicada ao controle inteiro — moldura, rótulo e futuro ícone. Aplicar a §6.2 significa **remover essa opacidade** e trocá-la por tinta `lineInfo` mais o desenho amputado, e isso é trabalho da V1-PR3, não consequência automática do desenho.
+Onde: §6.2, e a §1 ("não muda comportamento em lugar nenhum"), que segue verdadeira — opacidade é pintura, não comportamento.
+Causa: escrevi a regra olhando as molduras, sem conferir como o app pinta o inerte hoje. O mesmo erro da E1 em outra direção: lá inferi o `theme.ts` pelo que os inventários citavam; aqui enunciei um estado sem ler o estilo que o produz.
+
+**E4 — a coluna "origem · lucide · <nome>" descreve a inspiração, não o arquivo.**
+Estava escrito: a tabela da §6.4 atribui 16 das 34 linhas a "lucide · sun", "lucide · search", "lucide · arrow-left" e assim por diante, o que se lê como procedência do desenho.
+Passa a valer: **nenhum** dos 15 desenhos distintos assim atribuídos é o desenho do Lucide. Comparados a `lucide-static@1.45.0` (o mesmo pacote que o `lucide-react-native@1.45.0` publica), normalizando `d`/`circle`/`rect`: **0 de 15 batem**. `search` tem `r=8` em (11,11) no Lucide e `r=6,5` em (10,5 · 10,5) aqui; `sun` tem raios em `M12 2v2` contra `M12 3.15v2.3`; `map-pin` é uma gota de curvas `c` contra um arco `a7 7 0 1 0-14 0`. Todos foram redesenhados para a caixa óptica de 20 em 24 da §6.1 — que é o que a §6.1 manda. A coluna, portanto, diz **de onde veio a ideia**, não de onde veio o path.
+Onde: §6.4, cabeçalho das colunas.
+Causa: escrevi "origem" pensando em vocabulário visual e o leitor lê procedência de arquivo. A diferença só aparece quando alguém tenta instalar a biblioteca para economizar trabalho — e aí ela renderiza outro desenho. Medido no V1-PR3-PRECHECK §5 e no anexo E.
+Consequência registrada: dois dos nomes citados (`alert-triangle`, `x-circle`) também não são os canônicos do Lucide 1.45.0, que os publica como `triangle-alert` e `circle-x`; os antigos seguem resolvendo como alias.
+
+**E5 — o `accentInk` claro mede 5,89:1, não 5,90.**
+Estava escrito: a tabela da §3.2 dá razão de contraste **5,90** para `#4A4FC0` sobre `#F6F1EA`.
+Passa a valer: **5,89** (5,8942…). O valor de cor não muda; muda o número que o descreve.
+Onde: §3.2, linha do `accentInk`, coluna "razão claro".
+Causa: arredondamento de um centésimo. Medido no V1-PR3-PRECHECK (div. 39, anexo G) e reproduzido na V1-PR3 pelo mesmo script do V1-A4 (luminância relativa em sRGB, cores opacas): os outros nove pares reproduzem a folha ao centésimo. Passa nos dois usos (ícone ≥ 3:1, texto ≥ 4,5:1) com a mesma folga de antes.
+
+**E6 — o controle do palco tem raio 14 no desenho e o token é 12.**
+Estava escrito: a §5.2 diz que o desenho respeita `radius` **6 · 12 · 20**, verbatim do `theme.ts`; as 42 caixas de 64 do `telas.html` e a folha "Os quatro estados" desenham o controle do palco com **`border-radius: 14`**.
+Passa a valer: o app usa **`radius.control` = 12** (V1-PR3, commit 4). Se 14 for a intenção, é um degrau novo da escala de raio — decisão de design, não da V1-PR3 (decisão do Marcel, 2026-09-13).
+Onde: §5.2 (a frase "que o desenho respeita" vale para `space`; para `radius`, o desenho diverge no controle do palco).
+Causa: o raio de 14 foi desenhado sem conferir a escala declarada. Medido no V1-PR3 (div. 47): 42 caixas em 14, 0 em 12.
+
+**E7 — o quarto estado do controle chama-se "pressionado", não "inerte com motivo".**
+Estava escrito: a §6.2 nomeia os quatro estados `normal · ativo · desabilitado · inerte com motivo`; a folha "Os quatro estados" do `icones.html` nomeia **padrão · ativo · desabilitado · pressionado** (moldura `muted`, fundo da tinta a 8 %, só com o dedo encostado).
+Passa a valer: os quatro nomes da **folha**. "Inerte com motivo" não é um estado à parte: é o desabilitado com o motivo revelado ao toque (errata do A15, V1-PR3-PRECHECK §14.1). O pressionado entra no app na V1-PR3 (commit 4) — feedback de toque num controle sem rótulo vale mais do que num controle com.
+Onde: §6.2, primeira frase.
+Causa: nomenclatura — o README foi escrito antes de a folha fixar o quarto estado. Div. 46 da V1-PR3.
+
+**E8 — o `log-in` do S0 não é o `log-out` "em rotação de 180°".**
+Estava escrito: na §6.4, "log-in (S0) — é o `log-out` em rotação de 180°: mesma geometria, mesma caixa, mesma espessura".
+Passa a valer: o desenho do S0 no `telas.html` — `M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 8l4 4-4 4M15 12H4` — é a **porta espelhada** (x → 24 − x) com a **seta mantendo o sentido**, entrando na porta, e a haste de 15 a 4. A rotação de 180° do `log-out` daria a seta saindo da porta pela esquerda, um desenho que não existe em lugar nenhum do congelamento. O `dados.ts` transcreve o frame, não a frase.
+Onde: §6.4, o parágrafo "Fora do catálogo".
+Causa: a frase descreveu a operação de cabeça; o frame foi desenhado à mão. Div. 45 da V1-PR3.
+
+**E9 — o catálogo renderiza os nove do palco a 24 dp, não aos 28 da tabela.**
+Estava escrito: a §6.4 dá **28 · 2,0** aos nove ícones do palco e **20 · 1,5** a `letra`, `cifra`, `tab`, `partitura`, `sem conexão` e `última sincronização`; o catálogo escuro do `icones.html` renderiza esses quinze a **24 · 1,75**. Por tamanho, o catálogo tem 7 · 24 · 3 (28 · 24 · 20), não os 16 · 9 · 9 que a tabela soma.
+Passa a valer: **a tabela**. O tamanho é propriedade do componente (`<Icone tamanho>`), o traço deriva dele (§5.5), e o `d` é o mesmo nos três tamanhos — o catálogo é uma folha de desenhos, não de tamanhos. Nada muda no app.
+Onde: cabeçalho do catálogo escuro do `icones.html` (que a §6 apresenta como "os 32 nos dois temas").
+Causa: o catálogo foi montado num tamanho de exibição só. Div. 44 da V1-PR3.
+
 ---
 
 ## 10 · Proveniência

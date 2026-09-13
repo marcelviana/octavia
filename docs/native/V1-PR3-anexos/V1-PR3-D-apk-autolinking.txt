@@ -1,0 +1,67 @@
+$ (D) o APK e o autolinking — commit 1
+
+=== APK depois (commit 1, local, JDK 17 corretto, gradle --no-daemon) ===
+c0c1ab51b3076968142da6c10c48095224f7c7543a55e8362d9eb248d9e7ba14  app/build/outputs/apk/debug/app-debug.apk
+231377892 B
+entradas: 1361
+grep -ci svg: 4
+  2321576  01-01-1981 01:01   lib/arm64-v8a/libreact_codegen_rnsvg.so
+  1466016  01-01-1981 01:01   lib/armeabi-v7a/libreact_codegen_rnsvg.so
+  2481492  01-01-1981 01:01   lib/x86/libreact_codegen_rnsvg.so
+  2447776  01-01-1981 01:01   lib/x86_64/libreact_codegen_rnsvg.so
+
+--- .so por ABI (n, bytes):
+arm64-v8a    22 libs  56245440 B
+armeabi-v7a  22 libs  35175612 B
+x86          22 libs  57399628 B
+x86_64       22 libs  56998952 B
+--- libreact_codegen_rnsvg.so e libappmodules.so:
+4984576 lib/arm64-v8a/libappmodules.so
+2321576 lib/arm64-v8a/libreact_codegen_rnsvg.so
+3287156 lib/armeabi-v7a/libappmodules.so
+1466016 lib/armeabi-v7a/libreact_codegen_rnsvg.so
+4829944 lib/x86/libappmodules.so
+2481492 lib/x86/libreact_codegen_rnsvg.so
+4897368 lib/x86_64/libappmodules.so
+2447776 lib/x86_64/libreact_codegen_rnsvg.so
+--- por grupo:
+assets/  1675345
+dex      51375844
+lib/     205819632
+outros   1890028
+res/     3162171
+ttf: 13  assets/fonts bytes: 793720
+
+--- Δ contra o ANTES local do pre-check (215.354.007 B, 1357 entradas):
+Δ = +16.023.885 B  (+7.44 %)
+
+===== D2 — build =====
+=== build commit 1 — 2026-09-13 12:09:11 ===
+JAVA_HOME=/Library/Java/JavaVirtualMachines/amazon-corretto-17.jdk/Contents/Home
+cp .env do checkout principal → worktree (só para o prebuild; apagado no fim, declarado)
+-rw-r--r--@ 419 .env
+--- prebuild:
+- Running prebuild
+✔ Finished prebuild
+real 2.32
+cp .env do checkout principal → worktree (só para o prebuild; apagado no fim, declarado)
+real 2.32
+BUILD SUCCESSFUL in 6m 36s
+real 397.58
+-rw-r--r--@ 1 marcelviana  staff  231377892 Sep 13 12:15 app/build/outputs/apk/debug/app-debug.apk
+=== fim 2026-09-13 12:15:52 ===
+  (o prebuild precisou do apps/native/.env: copiado do checkout principal para o worktree
+   às 12:09, usado também pelo Metro do worktree, apagado às 12:46 — anexo G)
+
+===== D3 — autolinking =====
+  expo-modules-autolinking react-native-config --json --platform android:  6 → 7  (+ react-native-svg)
+  expo-modules-autolinking search -p android --json:                      18 → 18
+  react-native-svg instalado: 15.15.4 (= bundledNativeModules.json do expo@57.0.20)
+  pnpm-lock.yaml: +97 linhas
+
+===== D4 — contra o pre-check (anexo B) =====
+  tamanho total 231.377.892 B: IGUAL ao DEPOIS do pre-check, ao byte; sha256 DIFERE
+  (c0c1ab51… aqui, JDK 17 corretto; c0a3d790… lá, JDK 21). Por grupo, lib/ 205.819.632
+  contra 205.818.224 (+1.408 B) e dex 51.375.844 contra 51.377.392 (−1.548 B): mesmo total,
+  distribuição ligeiramente diferente entre JDKs. As quatro libreact_codegen_rnsvg.so são
+  idênticas em tamanho (2.321.576 · 1.466.016 · 2.481.492 · 2.447.776).
