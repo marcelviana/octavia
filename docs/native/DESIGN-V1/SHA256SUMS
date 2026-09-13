@@ -1,8 +1,8 @@
 # DESIGN-V1 — impressão digital do congelamento (V1-PR2, 2026-09-13; README refeito com E10–E12 na V1-PR4
-# e com o acréscimo da V1-PR5 à E10 mais a E13 na V1-PR5). Os TRÊS congelados — telas.html, icones.html,
+# e com o acréscimo da V1-PR5 à E10 mais a E13 (a, b, c) na V1-PR5). Os TRÊS congelados — telas.html, icones.html,
 # telas.pdf — não mudam: a errata prevalece sobre a moldura, o arquivo congelado não é reeditado.
 # Confere com: shasum -a 256 -c SHA256SUMS
-43045c04f50430a87d3e6f3d99caecfd0f6eb246893488637e30c00ae4646f59  README.md
+49edf0863a7d2fe6bdccf20141f68a2e7e9cb017e52f3b4875cf20c0271730ab  README.md
 5048169566b172334e39f8bbfb0bb8a9e35975759578c6e4edea89041e37121d  telas.html
 42d28c60b4756b7aa782ab1340fa297c18de720ffe354cdc67e454e8c09793c0  icones.html
 8edc26c2ea2b5c4f1efa253012f7e61f55b51574ffeee1f0ccc379cc2807689d  telas.pdf
