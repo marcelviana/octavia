@@ -488,6 +488,21 @@ Onde: §5.2, a frase "que o desenho respeita" — vale para o app, não para as 
 
 Causa: as molduras foram compostas a olho, em pixel, sem conferir cada número contra as escalas transcritas — o mesmo erro da E6, agora medido inteiro. Div. 61 da V1-PR4.
 
+**Acréscimo da V1-PR5 (S2), pela instrução que a própria E10 carrega — números novos entram aqui, não numa errata nova.** Onze linhas, do `S2` e do `S2-invalidos`; tabela completa no anexo D da V1-PR5 (`docs/native/V1-PR5-anexos/V1-PR5-D-moldura-para-token.txt`):
+
+| elemento | moldura | código |
+| --- | --- | --- |
+| gap da barra superior (S2) | 22 | `space.xl` (24) |
+| gap do item (número ↔ texto ↔ tipo) | 18 | `space.lg` (16) |
+| padding horizontal do item | 22 | `space.xl` (24) |
+| padding vertical da lista | 20 | `space.xl` (24) — empate 16/24, fica o que o app já tinha |
+| gap nome ↔ subtítulo do cabeçalho | 5 | `space.xs` (4) |
+| corpo do nome da setlist no cabeçalho | 21 | `size.title` (22) — empate 20/22, fica o que o app já tinha |
+| corpo do título de item (só na `S2-invalidos`) | 19 | literal 20 — a moldura `S2` desenha 20 para o MESMO item; vale a §4.4 ("título de item 20 · bate") |
+| tracking do nome da setlist | .12em | `tracking.display` (.14) |
+
+Os três já cobertos pela tabela do S1 e reaplicados aqui sem decisão nova: gap ícone ↔ rótulo 10 → `space.md`, padding horizontal do botão 18 → `space.lg`, raio 10 → `radius.control` (o precedente da E6). Literais declarados novos, sem degrau: a altura de item **116** (§5.4), o corpo **13** da sublinha e do rótulo de tipo (§4.4 "chip / status"), e os `minWidth` **32** e **56** do número e da coluna de rótulo — o 56 é o que alinha os quatro rótulos no mesmo x, que é o pedido explícito da nota da moldura.
+
 **E11 — o `accessibilityLabel="Octavia"` não é mais "o único do app".**
 Estava escrito: na §8.4, "O `accessibilityLabel="Octavia"` (`LoginScreen.tsx:71`) viaja igual nos dois caminhos e continua sendo o único do app".
 Passa a valer: a marca do S1f (§8.4, a proposta aplicada) leva o mesmo `accessibilityLabel="Octavia"` — são **dois**, S0 e S1f, o mesmo rótulo para o mesmo desenho. Decisão do Marcel, 2026-09-13 (V1-PR4): com o rótulo, não decorativa. A frase da §8.4 descrevia o estado de antes da V1-PR4; a V1-PR7 vai ler os dois no dump.
@@ -499,6 +514,18 @@ Estava escrito: na moldura `S1b` do `telas.html` (e nas `S1c` e `S1e`, que repet
 Passa a valer: **a §6.1** — "garantida em tinta neutra". No app, o ícone vai em **`text`** e o rótulo em **`muted`**; `parcial` e `nunca sincronizada` seguem em `offlineInk`, `baixando` no acento. Decisão do Marcel, 2026-09-13 (V1-PR4): o acento fica com um significado só — ativo, atual, foco (§3.1) — e a semântica da §6.1 fecha: neutro é "pode ir", âmbar é "não está pronta". Quem varre o S1 procurando o que falta baixar tem o âmbar chamando e o resto em silêncio.
 Onde: as molduras `S1b`, `S1c`, `S1e` e a legenda da `S1b` no `telas.html` (o arquivo congelado não é reeditado; esta errata prevalece sobre ele). A §6.1 fica como está.
 Causa: a moldura herdou a cor do glifo `✓` do app anterior ("mesma cor de antes") sem passar a regra que a própria folha tinha acabado de escrever. Div. 60 da V1-PR4.
+
+**E13 — no S2, três coisas em que a moldura discorda da regra declarada, e em que a regra vence.** *(Decisão do Marcel, 2026-09-13, V1-PR5: as três.)*
+
+**E13.a — o ícone do botão Buscar.** Estava desenhado: as molduras `S2` e `S2-invalidos` põem no botão da barra o ícone **`busca`** (a lupa pura, o mesmo do palco). Passa a valer: **`buscar música`** (lupa + nota), que é o que a §6.4 lhe dá em letra — "entrar na busca a partir da lista · S1 (todos), **S2**". É o mesmo botão que a V1-PR4 pôs no S1, e o critério da E12 (a regra vence a moldura) já estava fixado. O texto "Buscar na biblioteca" **não muda**: a §1 não mexe em texto.
+
+**E13.b — o tamanho dos placeholders de inválido.** Estava desenhado: os dois ícones do item inválido em **20 dp**, e a legenda da `S2-invalidos` repete "recebem ícone de 20". Passa a valer: **28**, que é o que a §6.4 dá aos dois — e ela nomeia esta casa explicitamente, "`sem conteúdo` … placeholder · S3 sem corpo, **linha do S2 com inválidos**". Critério da E9 ("o tamanho é propriedade do componente … **a tabela** vence"). Efeito colateral medido e aceito: o rótulo do item inválido começa 8 dp à direita do rótulo do válido, porque o ícone é 8 dp mais largo; os quatro rótulos de tipo **válido** seguem alinhados no mesmo x, que é o que a nota da moldura pede. **Vai ao aceite visual da V1-PR7 no Tab S6**: 8 dp de desequilíbrio na mesma coluna é coisa de olho, não de medida.
+
+**E13.c — qual ícone leva qual inválido.** Estava desenhado: a moldura dá `sem-conteudo` ao item 9 (`no-body`) e **`tipo-desconhecido` ao item 10**, que é o `[FIXTURE] Objeto sem a chave (no-key)`. Passa a valer: **o `reason` do contrato de leitura do core** (`packages/core/src/content-contract.ts`, PRD §4), que classifica `no-key` pela regra **(c)**, falta de corpo — só a regra **(d)**, `content_type` fora do enum, produz `unknown-type`. No app o item 10 leva `sem-conteudo` e o 11 (`Piano`) leva `tipo-desconhecido`.
+Esta é de outra natureza que as duas primeiras, e a causa importa: **o desenho foi feito a partir de uma captura, e a captura mostra dois inválidos lado a lado sem dizer por quê.** A fixture do A6 põe os três em ordem — `no-body`, `no-key`, `unknown-type` — e o desenho leu a **ordem** como se fosse o motivo. Nem a moldura nem a §6.4 tinham como saber: só o contrato sabe. É o mesmo padrão de "instrumento com escopo menor do que parece" (V1-PR3-PRECHECK §9.1), aqui aplicado a uma captura de tela: ela mede *o que aparece*, e foi lida como se medisse *por quê*.
+
+Onde: as molduras `S2` e `S2-invalidos` e a legenda da `S2-invalidos` no `telas.html` (o arquivo congelado não é reeditado; esta errata prevalece sobre ele). A §6.4 fica como está.
+Causa das duas primeiras: a moldura composta antes de a tabela fechar — o mesmo da E12. Divs. 72, 73 e 76 da V1-PR5.
 
 ---
 

@@ -22,10 +22,20 @@
  *     do catálogo, e por isso não são cobrados contra o anexo D.
  *  3. TINTA — nenhum hex cravado (`#rrggbb`) no mapa, e todo `tinta:` é um
  *     dos três tokens do `TintaIcone` — cor é do tema, nunca do desenho.
+ *  4. EM20 — a exceção da §6.3 (a tab tem QUATRO cordas em 20 dp e seis nos
+ *     outros tamanhos), MEDIDA e não afirmada: o `em20` do `tab` é verbatim o
+ *     `<svg width="20">` da tab no `telas.html` (o único markup congelado que
+ *     tem esse desenho: o catálogo do anexo D só traz a de seis), e a
+ *     contagem de cordas é 4 contra 6. Acréscimo da V1-PR5, pela regra que a
+ *     PR3 deixou e a PR4 repetiu — **o gate vem antes do que ele mede**: o
+ *     chip de tipo do S2 é o primeiro lugar do app que renderiza `tab` em 20
+ *     dp, logo o primeiro que exercita o ramo `em20` do `Icone.tsx`, e até
+ *     aqui nada cobrava esse ramo (a nota da regra 2 o diz: os estados
+ *     `ativo`/`inerte`/`em20` não são cobrados contra o anexo D).
  *
  * Uso:  node scripts/icones.mjs src/icones/dados.ts          → exit 0
  *       node scripts/icones.mjs scripts/__cn__/IconesFalso.ts → o controle
- *                                  negativo: exit 1, 9 acusações
+ *                                  negativo: exit 1, 17 acusações
  * Como comando: `pnpm --filter native gate:icones` e `gate:icones:cn`.
  */
 import { readFileSync } from 'node:fs'
@@ -35,12 +45,16 @@ import { fileURLToPath } from 'node:url'
 const RAIZ = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..')
 const README = join(RAIZ, 'docs/native/DESIGN-V1/README.md')
 const ANEXO_D = join(RAIZ, 'docs/native/V1-PR3-PRECHECK-anexos/V1-PR3-D-icones-34.txt')
+const TELAS = join(RAIZ, 'docs/native/DESIGN-V1/telas.html')
 const MAPA = process.argv[2] ?? 'src/icones/dados.ts'
 
 /** §6.4, "Fora do catálogo": o `log-in` do S0, transcrito do `telas.html` (E8). */
 const LOG_IN = 'log-in'
 const LOG_IN_D = 'M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 8l4 4-4 4M15 12H4'
 const TINTAS = ['lineInfo', 'offlineInk', 'accentInk']
+
+/** §6.3 — cordas da tab por tamanho: quatro em 20 dp, seis nos outros. */
+const CORDAS = { em20: 4, normal: 6 }
 
 /** "última sincronização" → `ultima-sincronizacao`; "zoom −" → `zoom-menos`; "n.º de músicas" → `n-de-musicas`. */
 function chave(nomeDaTabela) {
@@ -59,6 +73,29 @@ function nomesDa64() {
   const fim = md.indexOf('Fora do catálogo', ini)
   const linhas = md.slice(ini, fim).split('\n').filter((l) => l.startsWith('| ') && !l.startsWith('| ícone') && !l.startsWith('| ---'))
   return linhas.map((l) => chave(l.split('|')[1].trim()))
+}
+
+/**
+ * O `telas.html` é um arquivo único: as 22 molduras vivem dentro de um
+ * `<script type="__bundler/template">` como STRING JSON escapada. Decodificar
+ * é o único jeito de ler o markup congelado sem abrir o arquivo no navegador.
+ */
+function telas() {
+  const bruto = readFileSync(TELAS, 'utf8')
+  const m = /<script type="__bundler\/template">\s*([\s\S]*?)\s*<\/script>/.exec(bruto)
+  if (m === null) throw new Error(`sem __bundler/template em ${TELAS}`)
+  return JSON.parse(m[1])
+}
+
+/**
+ * As cordas de um desenho de tab: as linhas HORIZONTAIS do `d`, contadas por
+ * y DISTINTO — a corda partida pelo traste são dois comandos `h` no mesmo y,
+ * e é uma corda só (§6.3, "traço interrompido": o vão se mede na forma).
+ */
+function cordas(d) {
+  const ys = new Set()
+  for (const m of d.matchAll(/M\s*(-?[\d.]+)[\s,]+(-?[\d.]+)/g)) ys.add(+m[2])
+  return ys.size
 }
 
 /** Assinaturas dos elementos de um trecho de markup SVG (anexo D). */
@@ -104,11 +141,14 @@ const blocos = [...src.matchAll(/^  '([^']+)': \{\n([\s\S]*?)\n  \},$/gm)]
 const nomes = blocos.map((m) => m[1])
 const doMapa = new Set()
 const normalDoMapa = new Map()
+/** `${nome}:${estado}` → a lista literal, para a regra 4 (que compara markup, não só assinatura). */
+const listas = new Map()
 for (const [, nome, corpo] of blocos) {
   for (const linha of corpo.split('\n')) {
     const m = /^\s+(normal|ativo|inerte|em20): (\[.*\]),?$/.exec(linha)
     if (m === null) continue
     const ass = assinaturasMapa(m[2])
+    listas.set(`${nome}:${m[1]}`, m[2])
     for (const a of ass) doMapa.add(a)
     if (m[1] === 'normal') normalDoMapa.set(nome, ass)
   }
@@ -139,9 +179,42 @@ for (const m of src.matchAll(/tinta: '([^']*)'/g)) {
   acusar(`${MAPA}:${ln} [tinta] token desconhecido: '${m[1]}' (esperado: ${TINTAS.join(' | ')})`)
 }
 
+// ---- 4. em20: a exceção da §6.3, contra o telas.html e contada
+const tabEm20 = listas.get('tab:em20')
+const tabNormal = listas.get('tab:normal')
+let svgTab20 = null
+let n20 = 0
+let n6 = 0
+if (tabEm20 === undefined) {
+  acusar(`${MAPA} [em20] "tab" não tem 'em20' — a §6.3 exige a de QUATRO cordas em 20 dp`)
+} else {
+  // O markup congelado: o único <svg width="20"> do telas.html com DOIS rects
+  // de rx 1.7 é a tab (os trastes) — os outros 20 dp são letra, cifra,
+  // partitura, data, local, n-de-musicas, sem-conexao e ultima-sincronizacao.
+  const candidatos = [...telas().matchAll(/<svg width="20"[\s\S]*?<\/svg>/g)]
+    .map((m) => m[0])
+    .filter((svg) => (svg.match(/rx="1\.7"/g) ?? []).length === 2)
+  const distintos = new Set(candidatos)
+  if (distintos.size !== 1) {
+    acusar(`${MAPA} [em20] o telas.html tem ${distintos.size} desenhos distintos de tab@20 (esperado 1)`)
+  } else {
+    svgTab20 = [...distintos][0]
+    const doFrame = assinaturasSvg(svgTab20)
+    const doMapaEm20 = assinaturasMapa(tabEm20)
+    for (const a of doFrame) if (!doMapaEm20.has(a)) acusar(`${MAPA} [em20] do telas.html ausente do 'em20' da tab: ${a}`)
+    for (const a of doMapaEm20) if (!doFrame.has(a)) acusar(`${MAPA} [em20] no 'em20' da tab e não no telas.html: ${a}`)
+  }
+  // A contagem de cordas — o que a §6.3 declara, medido nos dois desenhos.
+  n20 = [...tabEm20.matchAll(/d: '([^']+)'/g)].reduce((a, m) => a + cordas(m[1]), 0)
+  n6 = [...(tabNormal ?? '').matchAll(/d: '([^']+)'/g)].reduce((a, m) => a + cordas(m[1]), 0)
+  if (n20 !== CORDAS.em20) acusar(`${MAPA} [em20] a tab de 20 dp tem ${n20} cordas, e a §6.3 declara ${CORDAS.em20}`)
+  if (n6 !== CORDAS.normal) acusar(`${MAPA} [em20] a tab de 24/28 dp tem ${n6} cordas, e a §6.3 declara ${CORDAS.normal}`)
+}
+
 console.log(`  §6.4: ${tabela.length} linhas → ${new Set(tabela).size} nomes distintos, + ${LOG_IN} = ${esperados.size} esperados`)
 console.log(`  anexo D: ${registros.length} registros · ${doAnexo.size} elementos distintos`)
 console.log(`  mapa: ${nomes.length} nomes · ${doMapa.size} elementos distintos · ${normalDoMapa.size} com 'normal'`)
 console.log(`  hex cravado: ${(src.match(/#[0-9A-Fa-f]{6}\b/g) ?? []).length} · tinta por token: ${(src.match(/tinta: '/g) ?? []).length}`)
+console.log(`  §6.3 tab: em20 ${n20} cordas · normal ${n6} cordas · markup de 20 dp no telas.html: ${svgTab20 === null ? 'NÃO ACHADO' : 'idêntico'}`)
 console.log(`  acusações: ${acusacoes.length}`)
 process.exit(acusacoes.length > 0 ? 1 : 0)

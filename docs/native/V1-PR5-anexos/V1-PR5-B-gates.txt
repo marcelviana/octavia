@@ -1,0 +1,199 @@
+$ (B) os gates, commit a commit — G1…G6, gate:icones, gate:a20, controles negativos, suíte · tsc · lint
+Scripts: g1.sh, g5.mjs, g6.sh são os da V1-PR1, extraídos verbatim para o scratch (cópias em instrumentos/);
+g2g3.sh e a20.mjs são os versionados na V1-PR3; icones.mjs é o da V1-PR4 com a regra 4 do commit 1 desta PR.
+Base de todos: origin/main = 9a7fa6e. Cada gate rodado com `git checkout <commit>` no worktree.
+
+===== B1 — G1 / G2 / G3 por commit =====
+--- 411ef39  test(V1-PR5): o gate:icones passa a cobrir o em20 da tab, antes de o S2 renderizá-la
+  G1: DIFF VAZIO ✓
+  G2 — testIDs  antes=42  depois=42
+    G2: antes ⊆ depois ✓
+  G3 — linhas log( antes=50  depois=50
+    G3: idênticas ✓
+--- 64b7890  feat(V1-PR5): o S2 nas duas molduras do DESIGN-V1 — índice e inválidos
+  G1: DIFF VAZIO ✓
+  G2 — testIDs  antes=42  depois=42
+    G2: antes ⊆ depois ✓
+  G3 — linhas log( antes=50  depois=50
+    G3: idênticas ✓
+
+===== B2 — G4: a20, por commit (o `src` do app e o controle negativo) =====
+--- 411ef39
+      escopo: ESTENDIDO (V1-A3 §A3.3 + labels em expressão, V1-PR3)
+      arquivos varridos: 20
+      vocabulário: 45 termos · isenções do produto: 9
+      literais em posição de texto examinados: 49
+      acusações: 0
+  exit=0
+      ACUSADO scripts/__cn__/A20Falso.tsx:24 [accessibilityLabel] "Zoom in" ← termo "zoom in"
+      ACUSADO scripts/__cn__/A20Falso.tsx:27 [accessibilityHint] "Go back to the previous song" ← termo "previous"
+      ACUSADO scripts/__cn__/A20Falso.tsx:35 [accessibilityLabel{…}] "Auto-scroll, loading" ← termo "loading"
+      escopo: ESTENDIDO (V1-A3 §A3.3 + labels em expressão, V1-PR3)
+      arquivos varridos: 2
+      vocabulário: 45 termos · isenções do produto: 9
+      literais em posição de texto examinados: 7
+      acusações: 3
+  exit(controle negativo)=1
+--- 64b7890
+      escopo: ESTENDIDO (V1-A3 §A3.3 + labels em expressão, V1-PR3)
+      arquivos varridos: 20
+      vocabulário: 45 termos · isenções do produto: 9
+      literais em posição de texto examinados: 51
+      acusações: 0
+  exit=0
+      ACUSADO scripts/__cn__/A20Falso.tsx:24 [accessibilityLabel] "Zoom in" ← termo "zoom in"
+      ACUSADO scripts/__cn__/A20Falso.tsx:27 [accessibilityHint] "Go back to the previous song" ← termo "previous"
+      ACUSADO scripts/__cn__/A20Falso.tsx:35 [accessibilityLabel{…}] "Auto-scroll, loading" ← termo "loading"
+      escopo: ESTENDIDO (V1-A3 §A3.3 + labels em expressão, V1-PR3)
+      arquivos varridos: 2
+      vocabulário: 45 termos · isenções do produto: 9
+      literais em posição de texto examinados: 7
+      acusações: 3
+  exit(controle negativo)=1
+
+===== B3 — gate:icones, por commit (regra 4 nova: EM20) =====
+--- 411ef39
+      §6.4: 34 linhas → 33 nomes distintos, + log-in = 34 esperados
+      anexo D: 34 registros · 68 elementos distintos
+      mapa: 34 nomes · 75 elementos distintos · 34 com 'normal'
+      hex cravado: 0 · tinta por token: 6
+      §6.3 tab: em20 4 cordas · normal 6 cordas · markup de 20 dp no telas.html: idêntico
+      acusações: 0
+  exit=0
+      ACUSADO scripts/__cn__/IconesFalso.ts [nome] falta no mapa: "apagar" (§6.4)
+      ACUSADO scripts/__cn__/IconesFalso.ts [nome] sobra no mapa: "lixeira" (não está na §6.4)
+      ACUSADO scripts/__cn__/IconesFalso.ts [desenho] do anexo D ausente do mapa: d M6 6l12 12M18 6L6 18
+      ACUSADO scripts/__cn__/IconesFalso.ts [desenho] do anexo D ausente do mapa: d M9.2 9.2l5.6 5.6M14.8 9.2l-5.6 5.6
+      ACUSADO scripts/__cn__/IconesFalso.ts [desenho] do anexo D ausente do mapa: circle 12 12 8
+      ACUSADO scripts/__cn__/IconesFalso.ts [desenho] 'normal' de "fechar" não está no anexo D: d M6 6l12 12M18 6L6 18z
+      ACUSADO scripts/__cn__/IconesFalso.ts [desenho] 'normal' de "lixeira" não está no anexo D: d M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13
+      ACUSADO scripts/__cn__/IconesFalso.ts:94 [tinta] hex cravado: #6E6A80
+      ACUSADO scripts/__cn__/IconesFalso.ts:76 [tinta] token desconhecido: 'accent' (esperado: lineInfo | offlineInk | accentInk)
+      ACUSADO scripts/__cn__/IconesFalso.ts [em20] do telas.html ausente do 'em20' da tab: d M3 4.2h18M3 9.4h2.1M11.9 9.4h9.1M3 14.6h5.1M14.9 14.6h6.1M3 19.8h18
+      ACUSADO scripts/__cn__/IconesFalso.ts [em20] do telas.html ausente do 'em20' da tab: rect 5.9 7.7 4.2 3.4 1.7
+      ACUSADO scripts/__cn__/IconesFalso.ts [em20] do telas.html ausente do 'em20' da tab: rect 8.9 12.9 4.2 3.4 1.7
+      ACUSADO scripts/__cn__/IconesFalso.ts [em20] no 'em20' da tab e não no telas.html: d M3 3h18M3 6.6h1.225M11.175 6.6h9.825M3 10.2h9.225M19.175 10.2h1.825M3 13.8h4.225M14.175 13.8h6.825M3 17.4h18M3 21h18
+      ACUSADO scripts/__cn__/IconesFalso.ts [em20] no 'em20' da tab e não no telas.html: rect 5.5 4.9 4.4 3.4 1.7
+      ACUSADO scripts/__cn__/IconesFalso.ts [em20] no 'em20' da tab e não no telas.html: rect 13.5 8.5 4.4 3.4 1.7
+      ACUSADO scripts/__cn__/IconesFalso.ts [em20] no 'em20' da tab e não no telas.html: rect 8.5 12.1 4.4 3.4 1.7
+      ACUSADO scripts/__cn__/IconesFalso.ts [em20] a tab de 20 dp tem 6 cordas, e a §6.3 declara 4
+      §6.4: 34 linhas → 33 nomes distintos, + log-in = 34 esperados
+      anexo D: 34 registros · 68 elementos distintos
+      mapa: 34 nomes · 71 elementos distintos · 34 com 'normal'
+      hex cravado: 1 · tinta por token: 6
+      §6.3 tab: em20 6 cordas · normal 6 cordas · markup de 20 dp no telas.html: idêntico
+      acusações: 17
+  exit(controle negativo)=1
+--- 64b7890
+      §6.4: 34 linhas → 33 nomes distintos, + log-in = 34 esperados
+      anexo D: 34 registros · 68 elementos distintos
+      mapa: 34 nomes · 75 elementos distintos · 34 com 'normal'
+      hex cravado: 0 · tinta por token: 6
+      §6.3 tab: em20 4 cordas · normal 6 cordas · markup de 20 dp no telas.html: idêntico
+      acusações: 0
+  exit=0
+      ACUSADO scripts/__cn__/IconesFalso.ts [nome] falta no mapa: "apagar" (§6.4)
+      ACUSADO scripts/__cn__/IconesFalso.ts [nome] sobra no mapa: "lixeira" (não está na §6.4)
+      ACUSADO scripts/__cn__/IconesFalso.ts [desenho] do anexo D ausente do mapa: d M6 6l12 12M18 6L6 18
+      ACUSADO scripts/__cn__/IconesFalso.ts [desenho] do anexo D ausente do mapa: d M9.2 9.2l5.6 5.6M14.8 9.2l-5.6 5.6
+      ACUSADO scripts/__cn__/IconesFalso.ts [desenho] do anexo D ausente do mapa: circle 12 12 8
+      ACUSADO scripts/__cn__/IconesFalso.ts [desenho] 'normal' de "fechar" não está no anexo D: d M6 6l12 12M18 6L6 18z
+      ACUSADO scripts/__cn__/IconesFalso.ts [desenho] 'normal' de "lixeira" não está no anexo D: d M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13
+      ACUSADO scripts/__cn__/IconesFalso.ts:94 [tinta] hex cravado: #6E6A80
+      ACUSADO scripts/__cn__/IconesFalso.ts:76 [tinta] token desconhecido: 'accent' (esperado: lineInfo | offlineInk | accentInk)
+      ACUSADO scripts/__cn__/IconesFalso.ts [em20] do telas.html ausente do 'em20' da tab: d M3 4.2h18M3 9.4h2.1M11.9 9.4h9.1M3 14.6h5.1M14.9 14.6h6.1M3 19.8h18
+      ACUSADO scripts/__cn__/IconesFalso.ts [em20] do telas.html ausente do 'em20' da tab: rect 5.9 7.7 4.2 3.4 1.7
+      ACUSADO scripts/__cn__/IconesFalso.ts [em20] do telas.html ausente do 'em20' da tab: rect 8.9 12.9 4.2 3.4 1.7
+      ACUSADO scripts/__cn__/IconesFalso.ts [em20] no 'em20' da tab e não no telas.html: d M3 3h18M3 6.6h1.225M11.175 6.6h9.825M3 10.2h9.225M19.175 10.2h1.825M3 13.8h4.225M14.175 13.8h6.825M3 17.4h18M3 21h18
+      ACUSADO scripts/__cn__/IconesFalso.ts [em20] no 'em20' da tab e não no telas.html: rect 5.5 4.9 4.4 3.4 1.7
+      ACUSADO scripts/__cn__/IconesFalso.ts [em20] no 'em20' da tab e não no telas.html: rect 13.5 8.5 4.4 3.4 1.7
+      ACUSADO scripts/__cn__/IconesFalso.ts [em20] no 'em20' da tab e não no telas.html: rect 8.5 12.1 4.4 3.4 1.7
+      ACUSADO scripts/__cn__/IconesFalso.ts [em20] a tab de 20 dp tem 6 cordas, e a §6.3 declara 4
+      §6.4: 34 linhas → 33 nomes distintos, + log-in = 34 esperados
+      anexo D: 34 registros · 68 elementos distintos
+      mapa: 34 nomes · 71 elementos distintos · 34 com 'normal'
+      hex cravado: 1 · tinta por token: 6
+      §6.3 tab: em20 6 cordas · normal 6 cordas · markup de 20 dp no telas.html: idêntico
+      acusações: 17
+  exit(controle negativo)=1
+
+===== B4 — o mesmo gate:icones na BASE (origin/main), para separar o que a regra 4 acrescentou =====
+  na base a regra 4 não existe; o que ela acrescenta é a linha '§6.3 tab: …' e as acusações [em20].
+  base 9a7fa6e: 0 acusações · controle negativo: 9 acusações (V1-PR4-B-gates.txt §B3)
+  commit 1:     0 acusações · controle negativo: 17 acusações (+8 do sexto defeito plantado)
+
+===== B5 — G5 (alvos ≥ 48 dp) e G6 (alcançável por resource-id), sobre os dumps =====
+--- G5 ANTES (dumps-antes/, 5 estados)
+    alvos tocáveis medidos: 57 em 5 estados
+    ABAIXO de 48 dp: 0 ocorrências / 0 resource-ids
+    
+    descartados por recorte (div. 21): 8
+      S2-atual :: song-10 540.9 × 11.1 dp — RECORTADO por android.widget.ScrollView [0,234][2560,1465]
+      S2-atual :: song-9 540.9 × 11.1 dp — RECORTADO por android.widget.ScrollView [0,234][2560,1465]
+      S2-invalidos :: song-10 540.9 × 11.1 dp — RECORTADO por android.widget.ScrollView [0,234][2560,1465]
+      S2-invalidos :: song-9 540.9 × 11.1 dp — RECORTADO por android.widget.ScrollView [0,234][2560,1465]
+      S2-invalidos-rolado :: song-3 540.9 × 11.1 dp — RECORTADO por android.widget.ScrollView [0,234][2560,1465]
+      S2-invalidos-rolado :: song-4 540.9 × 11.1 dp — RECORTADO por android.widget.ScrollView [0,234][2560,1465]
+      S2-rolado :: song-37 540.9 × 42.7 dp — RECORTADO por android.widget.ScrollView [0,234][2560,1465]
+      S2-rolado :: song-38 540.9 × 42.7 dp — RECORTADO por android.widget.ScrollView [0,234][2560,1465]
+    
+    alvos SEM testID (inalcançáveis por resource-id): 0
+  exit=0
+--- G5 DEPOIS (dumps-depois/, 9 estados)
+    alvos tocáveis medidos: 101 em 9 estados
+    ABAIXO de 48 dp: 0 ocorrências / 0 resource-ids
+    
+    descartados por recorte (div. 21): 12
+      A12-bis :: song-9 1089.8 × 19.1 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1465]
+      A12-bis-rolado :: song-1 536.9 × 19.1 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1465]
+      A12-bis-rolado :: song-2 536.9 × 19.1 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1465]
+      A8-content-ausente :: song-9 1089.8 × 19.1 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1465]
+      A8-content-ausente-rolado :: song-1 536.9 × 19.1 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1465]
+      A8-content-ausente-rolado :: song-2 536.9 × 19.1 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1465]
+      S2-atual :: song-10 536.9 × 19.1 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1465]
+      S2-atual :: song-9 536.9 × 19.1 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1465]
+      S2-invalidos :: song-10 536.9 × 19.1 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1465]
+      S2-invalidos :: song-9 536.9 × 19.1 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1465]
+      S2-invalidos-rolado :: song-3 536.9 × 19.1 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1465]
+      S2-invalidos-rolado :: song-4 536.9 × 19.1 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1465]
+    
+    alvos SEM testID (inalcançáveis por resource-id): 0
+  exit=0
+--- G6 ANTES
+      S2-atual                     âncora=buscar             ids=12  alvos sem id=0 ✓
+      S2-invalidos-rolado          âncora=buscar             ids=11  alvos sem id=0 ✓
+      S2-invalidos                 âncora=buscar             ids=12  alvos sem id=0 ✓
+      S2-rolado                    âncora=buscar             ids=12  alvos sem id=0 ✓
+      S2                           âncora=buscar             ids=10  alvos sem id=0 ✓
+      estados: 5   falhas: 0
+  exit=0
+--- G6 DEPOIS
+      A12-bis-rolado               âncora=buscar             ids=11  alvos sem id=0 ✓
+      A12-bis                      âncora=buscar             ids=11  alvos sem id=0 ✓
+      A8-content-ausente-rolado    âncora=buscar             ids=11  alvos sem id=0 ✓
+      A8-content-ausente           âncora=buscar             ids=11  alvos sem id=0 ✓
+      S2-atual                     âncora=buscar             ids=12  alvos sem id=0 ✓
+      S2-invalidos-rolado          âncora=buscar             ids=11  alvos sem id=0 ✓
+      S2-invalidos                 âncora=buscar             ids=12  alvos sem id=0 ✓
+      S2-rolado                    âncora=buscar             ids=12  alvos sem id=0 ✓
+      S2                           âncora=buscar             ids=10  alvos sem id=0 ✓
+      estados: 9   falhas: 0
+  exit=0
+
+===== B6 — suíte · tsc · lint, por commit =====
+--- 411ef39
+    stdout | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Navigation Response Time Tests (<100ms requirement) > should navigate between songs in under 100ms
+    stdout | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Navigation Response Time Tests (<100ms requirement) > should handle rapid navigation without performance degradation
+     Test Files  88 passed | 4 skipped (92)
+          Tests  768 passed | 85 skipped (853)
+    exit=0   (baseline da PR: 768 passed | 85 skipped, 88 files | 4 skipped)
+    tsc --noEmit: exit=0 0 linhas de saída
+    lint: exit=0 · 1 × 'No ESLint warnings or errors'
+--- 64b7890
+    stdout | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Navigation Response Time Tests (<100ms requirement) > should navigate between songs in under 100ms
+    stdout | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Navigation Response Time Tests (<100ms requirement) > should handle rapid navigation without performance degradation
+     Test Files  88 passed | 4 skipped (92)
+          Tests  768 passed | 85 skipped (853)
+    exit=0   (baseline da PR: 768 passed | 85 skipped, 88 files | 4 skipped)
+    tsc --noEmit: exit=0 0 linhas de saída
+    lint: exit=0 · 1 × 'No ESLint warnings or errors'
