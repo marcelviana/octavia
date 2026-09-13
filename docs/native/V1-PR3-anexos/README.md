@@ -42,6 +42,27 @@ reinventar: `drive.sh` (condução do AVD), `ids.mjs` (ids + bounds de um dump),
 `icones.html` ao `dados.ts` e a checagem de volta), e o `Catalogo.tsx.txt`, o
 instrumento de scratch que rendeu o catálogo (nunca esteve num commit).
 
+## Decisões do Marcel sobre a entrega (2026-09-13) e duas regras que ficam
+
+Q1 o commit de anexos fica · Q2 raio 12, errata **E6** · Q3 A15/A17 no Tab S6 são da
+V1-PR7, com o tablet desbloqueado pelo Marcel · Q4 o Wi-Fi ele confere ao desbloquear
+· Q5 `gate:icones` na PR4 · Q6 o pressionado fica, errata **E7** · Q7 zoom no placeholder
+decide-se na PR4/5. Mais **E8** (div. 45) e **E9** (div. 44), todas em `DESIGN-V1/README.md` §9.
+
+> **1. NA PR4, O GATE VEM ANTES DO QUE ELE MEDE.** Entre o commit 4 e o 5 desta PR o
+> G4 leu 36 literais e 0 acusações **sem ler nenhum dos sete `accessibilityLabel`** que
+> o commit 4 acabara de introduzir — o desenho A3.3 não olhava label em expressão
+> (div. 53, o sétimo caso do padrão do V1-PR3-PRECHECK §9.1). Resolvido na ordem certa,
+> mas houve uma janela em que o gate estava cego para o que a PR trouxe. Na PR4, o
+> instrumento que mede a mudança entra (ou se estende) **antes** do commit que a faz.
+
+> **2. NO TABLET, "AVIÃO" É SÓ O OVERRIDE DA API — NUNCA O RÁDIO.** O corte de rede
+> do Tab S6 nesta sessão (`svc wifi disable` · `svc data disable` · `airplane-mode
+> enable`) foi revertido, mas o Wi-Fi **não reconectou** até o fim (anexo E, div. 55).
+> Para a V1-PR7: `EXPO_PUBLIC_API_BASE_URL=http://localhost:8788` inline no Metro (o
+> app faz `sync fail` e preserva o cache, A21) e nenhum comando de rádio no tablet.
+> No AVD a regra do pre-check §9 continua: rádio cortado e provado por `ping`.
+
 ## Divergências — 44 em diante
 
 *(Origens: **P** prompt/pre-check · **D** design/documento · **A** app/código · **T** teste/instrumento.)*

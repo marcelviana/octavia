@@ -636,8 +636,8 @@ nenhum download de bucket, nenhum 401/429.
 
 ### 9.1 O padrão, nomeado — instrumento com escopo menor do que parece
 
-O Marcel juntou quatro casos do bloco; esta sessão acrescenta **dois**, e os seis
-são o mesmo erro:
+O Marcel juntou quatro casos do bloco; esta sessão acrescenta **dois**, e a V1-PR3
+um **sétimo** (a última linha) — os sete são o mesmo erro:
 
 | caso | o instrumento mede | eu li como se medisse |
 |---|---|---|
@@ -647,6 +647,7 @@ são o mesmo erro:
 | **avião** (§9) | o valor do setting | o rádio desligado |
 | **store do AVD** (§10) | o filesystem vivo dentro do boot | o estado durável do AVD |
 | **origem "lucide"** (E4 do design) | de onde veio a ideia do desenho | de onde veio o `path` |
+| **div. 53** (V1-PR3, acrescentado por decisão do Marcel em 2026-09-13) | o desenho A3.3 do a20: `accessibilityLabel` nas três formas de literal | os sete labels do palco, que são **ternários** — exatamente a forma que a PR introduziu. No commit 4 o gate leu 36 literais e 0 acusações **sem ler nenhum dos sete** |
 
 > **ESTA SUBSEÇÃO MIGRA.** Decisão do Marcel, 2026-09-13: o padrão é material do
 > **`LOGS-OCTAVIA.md`**, não de um pre-check de PR — é o achado mais reaproveitável
