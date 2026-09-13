@@ -1,0 +1,6 @@
+# DESIGN-V1 — impressão digital do congelamento (V1-PR2, 2026-09-13).
+# Confere com: shasum -a 256 -c SHA256SUMS
+89bea6e67c884e3a1e590d02043f486e7db3fddd9f25af38ca1090b53b2899fc  README.md
+5048169566b172334e39f8bbfb0bb8a9e35975759578c6e4edea89041e37121d  telas.html
+42d28c60b4756b7aa782ab1340fa297c18de720ffe354cdc67e454e8c09793c0  icones.html
+8edc26c2ea2b5c4f1efa253012f7e61f55b51574ffeee1f0ccc379cc2807689d  telas.pdf
