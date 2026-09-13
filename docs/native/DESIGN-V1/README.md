@@ -461,6 +461,39 @@ Passa a valer: **a tabela**. O tamanho é propriedade do componente (`<Icone tam
 Onde: cabeçalho do catálogo escuro do `icones.html` (que a §6 apresenta como "os 32 nos dois temas").
 Causa: o catálogo foi montado num tamanho de exibição só. Div. 44 da V1-PR3.
 
+**E10 — as molduras usam dezessete números fora das escalas que a §5.2 diz que o desenho respeita.**
+Estava escrito: na §5.2, "Espaço e raio, também verbatim, que o desenho respeita: `space` 4 · 8 · 12 · 16 · 24 · 32 · 48; `radius` chip 6 · control 12 · pill 20".
+Passa a valer: **a escala declarada vence o número desenhado** — a regra que a E6 já aplicou ao raio 14 do palco vale para todo número das molduras. Onde a moldura usa um número que não é degrau, o código usa o degrau mais próximo; onde não há escala (barra do S1 120, cartão 132/112, banner 66, indicador 230, corpo 13), o literal fica e é declarado no arquivo. Decisão do Marcel, 2026-09-13 (V1-PR4): o código fica como está e a regra entra aqui para a PR5 e a PR6 não decidirem de novo.
+Onde: §5.2, a frase "que o desenho respeita" — vale para o app, não para as molduras. A tabela completa é o anexo D2 da V1-PR4 (`docs/native/V1-PR4-anexos/V1-PR4-D-moldura-para-token.txt`); os dezessete, com o que o código usa entre parênteses:
+
+| elemento | moldura | código |
+| --- | --- | --- |
+| gap chip de status ↔ botão Buscar (S1) | 26 | `space.xl` (24) |
+| gap nome ↔ metadados do cartão (S1b/S1c) | 14 | `space.md` (12) — no S1e a moldura já é 12 |
+| gap entre metadados do cartão | 22 | `space.xl` (24) |
+| gap botão Baixar ↔ indicador | 28 | `space.xl` (24) |
+| gap ícone ↔ texto do indicador | 14 | `space.md` (12) |
+| gap rótulo ↔ sublinha do indicador | 2 | `space.xs` (4) |
+| gap ícone ↔ rótulo nos botões | 10 | `space.md` (12) |
+| padding horizontal dos botões Buscar / Baixar | 18 | `space.lg` (16) |
+| padding horizontal do banner | 22 | `space.xl` (24) |
+| padding horizontal do botão do banner | 14 | `space.lg` (16) |
+| gap do bloco S1a | 22 | `space.xl` (24) |
+| gap dos blocos S1d / S1f | 18 | `space.lg` (16) |
+| raio dos botões | 10 | `radius.control` (12) — o precedente da E6 |
+| raio do botão do banner | 8 | `radius.control` (12) |
+| tracking do nome do cartão | .09em | `tracking.label` (.08) |
+| corpo do texto do banner | 14,5 | `size.bodySmall` (15) |
+| altura do banner | 66 | literal 66 (sem escala) |
+
+Causa: as molduras foram compostas a olho, em pixel, sem conferir cada número contra as escalas transcritas — o mesmo erro da E6, agora medido inteiro. Div. 61 da V1-PR4.
+
+**E11 — o `accessibilityLabel="Octavia"` não é mais "o único do app".**
+Estava escrito: na §8.4, "O `accessibilityLabel="Octavia"` (`LoginScreen.tsx:71`) viaja igual nos dois caminhos e continua sendo o único do app".
+Passa a valer: a marca do S1f (§8.4, a proposta aplicada) leva o mesmo `accessibilityLabel="Octavia"` — são **dois**, S0 e S1f, o mesmo rótulo para o mesmo desenho. Decisão do Marcel, 2026-09-13 (V1-PR4): com o rótulo, não decorativa. A frase da §8.4 descrevia o estado de antes da V1-PR4; a V1-PR7 vai ler os dois no dump.
+Onde: §8.4, último parágrafo.
+Causa: a frase foi escrita antes de a marca ter a segunda casa. Div. 67 da V1-PR4.
+
 ---
 
 ## 10 · Proveniência
