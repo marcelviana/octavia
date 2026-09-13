@@ -187,6 +187,10 @@ function CartaoSetlist({
   // definição (proposta 07); com tudo no disco, não há o que baixar.
   const mostrarBaixar = setlist.performance_date === null
   const podeBaixar = online && !baixando && status.have < status.need
+  // E3 (decisão do Marcel na V1-PR4): desabilitado é tinta `lineInfo` na
+  // moldura, no ícone e no rótulo — sem opacidade. O inativo carrega
+  // informação e deve os 3:1 (§3.3, item 3); opacidade não os garante.
+  const tintaBaixar = podeBaixar ? dark.muted : dark.lineInfo
   const n = setlist.setlist_songs.length
 
   return (
@@ -220,8 +224,8 @@ function CartaoSetlist({
             accessibilityState={{ disabled: !podeBaixar }}
             testID={`baixar-${setlist.id.slice(0, 8)}`}
           >
-            <Icone nome={baixando ? 'baixando-acao' : 'baixar-setlist'} tamanho={24} cor={dark.muted} />
-            <Text style={styles.baixarTexto}>{baixando ? 'Baixando…' : 'Baixar esta setlist'}</Text>
+            <Icone nome={baixando ? 'baixando-acao' : 'baixar-setlist'} tamanho={24} cor={tintaBaixar} />
+            <Text style={[styles.baixarTexto, { color: tintaBaixar }]}>{baixando ? 'Baixando…' : 'Baixar esta setlist'}</Text>
           </Pressable>
         ) : null}
 
@@ -448,8 +452,8 @@ const styles = StyleSheet.create({
     borderRadius: radius.control,
   },
   botaoSecundarioTexto: { color: dark.text, fontFamily: font.ui, fontSize: size.bodySmall },
-  baixarTexto: { color: dark.muted, fontFamily: font.ui, fontSize: size.bodySmall },
-  botaoInativo: { opacity: 0.4 },
+  baixarTexto: { fontFamily: font.ui, fontSize: size.bodySmall },
+  botaoInativo: { borderColor: dark.lineInfo },
   banner: {
     marginTop: space.xl,
     marginHorizontal: space.xxl,
