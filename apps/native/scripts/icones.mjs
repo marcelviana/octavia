@@ -22,6 +22,21 @@
  *     do catálogo, e por isso não são cobrados contra o anexo D.
  *  3. TINTA — nenhum hex cravado (`#rrggbb`) no mapa, e todo `tinta:` é um
  *     dos três tokens do `TintaIcone` — cor é do tema, nunca do desenho.
+ *  5. FORA DO CATÁLOGO — os desenhos que existem no `telas.html` e em nenhuma
+ *     tabela do README (§6.4, "Fora do catálogo"). Eram **um** — o `log-in`
+ *     do S0, cujo `d` esta regra 2 exemplava por constante — e a V1-PR6 os
+ *     leva a **quatro**: as molduras `S0` e `S4b` trazem `email`, `senha` e
+ *     `nada-encontrado`, que nenhuma linha da §6.4 nomeia. Cada um é cobrado
+ *     contra o `telas.html`, **por forma**: o conjunto de elementos do seu
+ *     `normal` tem de ser EXATAMENTE o de um `<svg>` do arquivo congelado, e
+ *     de um só. Achar por forma, e não por posição, é o que a regra 4 já fazia
+ *     com a tab de 20 dp — e é mais forte do que a constante de antes, porque
+ *     a constante era uma transcrição e o `telas.html` é o original.
+ *     Acréscimo da V1-PR6, pela mesma regra que a PR3 deixou e a PR4 e a PR5
+ *     repetiram — **o gate vem antes do que ele mede**: o S0 é a primeira tela
+ *     a pôr desenho fora do catálogo em campo, e até aqui só o `log-in` tinha
+ *     quem o cobrasse.
+ *
  *  4. EM20 — a exceção da §6.3 (a tab tem QUATRO cordas em 20 dp e seis nos
  *     outros tamanhos), MEDIDA e não afirmada: o `em20` do `tab` é verbatim o
  *     `<svg width="20">` da tab no `telas.html` (o único markup congelado que
@@ -35,7 +50,7 @@
  *
  * Uso:  node scripts/icones.mjs src/icones/dados.ts          → exit 0
  *       node scripts/icones.mjs scripts/__cn__/IconesFalso.ts → o controle
- *                                  negativo: exit 1, 17 acusações
+ *                                  negativo: exit 1, 18 acusações
  * Como comando: `pnpm --filter native gate:icones` e `gate:icones:cn`.
  */
 import { readFileSync } from 'node:fs'
@@ -48,9 +63,13 @@ const ANEXO_D = join(RAIZ, 'docs/native/V1-PR3-PRECHECK-anexos/V1-PR3-D-icones-3
 const TELAS = join(RAIZ, 'docs/native/DESIGN-V1/telas.html')
 const MAPA = process.argv[2] ?? 'src/icones/dados.ts'
 
-/** §6.4, "Fora do catálogo": o `log-in` do S0, transcrito do `telas.html` (E8). */
-const LOG_IN = 'log-in'
-const LOG_IN_D = 'M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 8l4 4-4 4M15 12H4'
+/**
+ * §6.4, "Fora do catálogo": os desenhos que o `telas.html` tem e o catálogo
+ * não. Era um (`log-in` do S0, E8) e a V1-PR6 o levou a quatro, com as
+ * molduras `S0` (`email`, `senha`) e `S4b` (`nada-encontrado`). Lista
+ * FECHADA: acrescentar um nome aqui é decisão declarada, como a de lá.
+ */
+const FORA_DO_CATALOGO = ['log-in', 'email', 'senha', 'nada-encontrado']
 const TINTAS = ['lineInfo', 'offlineInk', 'accentInk']
 
 /** §6.3 — cordas da tab por tamanho: quatro em 20 dp, seis nos outros. */
@@ -128,7 +147,7 @@ const acusar = (s) => { acusacoes.push(s); console.log(`  ACUSADO ${s}`) }
 
 // ---- as duas fontes
 const tabela = nomesDa64()
-const esperados = new Set([...tabela, LOG_IN])
+const esperados = new Set([...tabela, ...FORA_DO_CATALOGO])
 const anexo = readFileSync(ANEXO_D, 'utf8')
 const registros = [...anexo.matchAll(/^### (\S+)  ·  .+?  ·  \d+ dp\n(<svg[\s\S]*?<\/svg>)/gm)]
 const doAnexo = new Set(registros.flatMap(([, , svg]) => [...assinaturasSvg(svg)]))
@@ -162,11 +181,13 @@ for (const n of repetidos) acusar(`${MAPA} [nome] repetido no mapa: "${n}"`)
 
 // ---- 2. desenhos
 for (const a of doAnexo) if (!doMapa.has(a)) acusar(`${MAPA} [desenho] do anexo D ausente do mapa: ${a}`)
-for (const [nome, ass] of normalDoMapa)
+for (const [nome, ass] of normalDoMapa) {
+  // Fora do catálogo não tem o que estar no anexo D — quem o cobra é a regra 5.
+  if (FORA_DO_CATALOGO.includes(nome)) continue
   for (const a of ass) {
-    if (nome === LOG_IN && a === `d ${LOG_IN_D}`) continue
     if (!doAnexo.has(a)) acusar(`${MAPA} [desenho] 'normal' de "${nome}" não está no anexo D: ${a}`)
   }
+}
 
 // ---- 3. tinta
 for (const m of src.matchAll(/#[0-9A-Fa-f]{6}\b/g)) {
@@ -211,10 +232,29 @@ if (tabEm20 === undefined) {
   if (n6 !== CORDAS.normal) acusar(`${MAPA} [em20] a tab de 24/28 dp tem ${n6} cordas, e a §6.3 declara ${CORDAS.normal}`)
 }
 
-console.log(`  §6.4: ${tabela.length} linhas → ${new Set(tabela).size} nomes distintos, + ${LOG_IN} = ${esperados.size} esperados`)
+// ---- 5. fora do catálogo: cada um verbatim de UM <svg> do telas.html, por forma
+const porAssinatura = new Map()
+for (const svg of [...telas().matchAll(/<svg [\s\S]*?<\/svg>/g)].map((m) => m[0])) {
+  const k = [...assinaturasSvg(svg)].sort().join(' | ')
+  porAssinatura.set(k, (porAssinatura.get(k) ?? 0) + 1)
+}
+let foraOk = 0
+for (const nome of FORA_DO_CATALOGO) {
+  const lista = listas.get(`${nome}:normal`)
+  if (lista === undefined) {
+    acusar(`${MAPA} [fora-do-catálogo] "${nome}" não tem 'normal' no mapa`)
+    continue
+  }
+  const k = [...assinaturasMapa(lista)].sort().join(' | ')
+  if (porAssinatura.has(k)) foraOk++
+  else acusar(`${MAPA} [fora-do-catálogo] o 'normal' de "${nome}" não é, elemento a elemento, nenhum <svg> do telas.html`)
+}
+
+console.log(`  §6.4: ${tabela.length} linhas → ${new Set(tabela).size} nomes distintos, + ${FORA_DO_CATALOGO.length} fora do catálogo = ${esperados.size} esperados`)
 console.log(`  anexo D: ${registros.length} registros · ${doAnexo.size} elementos distintos`)
 console.log(`  mapa: ${nomes.length} nomes · ${doMapa.size} elementos distintos · ${normalDoMapa.size} com 'normal'`)
 console.log(`  hex cravado: ${(src.match(/#[0-9A-Fa-f]{6}\b/g) ?? []).length} · tinta por token: ${(src.match(/tinta: '/g) ?? []).length}`)
 console.log(`  §6.3 tab: em20 ${n20} cordas · normal ${n6} cordas · markup de 20 dp no telas.html: ${svgTab20 === null ? 'NÃO ACHADO' : 'idêntico'}`)
+console.log(`  fora do catálogo: ${foraOk}/${FORA_DO_CATALOGO.length} idênticos a um <svg> do telas.html (${porAssinatura.size} assinaturas distintas no arquivo)`)
 console.log(`  acusações: ${acusacoes.length}`)
 process.exit(acusacoes.length > 0 ? 1 : 0)

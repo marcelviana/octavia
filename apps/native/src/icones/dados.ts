@@ -5,6 +5,11 @@
  * em 20 dp (§6.3), que só existem no `telas.html`. Extraídos por script, não
  * digitados: todo `d` é o do arquivo (V1-PR3-PRECHECK, anexo D).
  *
+ * A V1-PR6 acrescenta **três** que também só existem no `telas.html` e que
+ * nenhuma tabela do README nomeia — `email`, `senha` (moldura `S0`) e
+ * `nada-encontrado` (moldura `S4b`). São 37 nomes, dos quais 4 estão "fora do
+ * catálogo" (§6.4): estes três mais o `log-in`.
+ *
  * O envelope comum (viewBox 24 · fill none · pontas redondas · traço por
  * tamanho) é do `Icone.tsx`; aqui só o que varia. Os dois de duas cores
  * (`parcial`, `baixando`) apontam para o NOME do token, nunca para um hex.
@@ -143,6 +148,22 @@ export const desenhos = {
   },
   'log-in': {
     normal: [{ d: 'M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 8l4 4-4 4M15 12H4' }],
+  },
+  // Os TRÊS da V1-PR6, transcritos das molduras `S0` e `S4b` do `telas.html`
+  // — “fora do catálogo” como o `log-in`: nenhum deles está na tabela da
+  // §6.4 nem no anexo D. O `email` e o `senha` marcam o papel do campo do
+  // login sem rótulo flutuante; o `nada-encontrado` é a lupa com o X dentro,
+  // composta com as peças de `busca` e de `fechar` — é o que a legenda da
+  // `S4b` diz por escrito, “nada de glifo novo”. A regra 5 do `gate:icones`
+  // cobra os quatro contra o próprio `telas.html`, por FORMA.
+  'email': {
+    normal: [{ x: 3, y: 5.5, w: 18, h: 13, rx: 2.5 }, { d: 'M3.6 6.8L12 13l8.4-6.2' }],
+  },
+  'senha': {
+    normal: [{ x: 4.5, y: 10.5, w: 15, h: 9.5, rx: 2.5 }, { d: 'M8 10.5V7.8a4 4 0 0 1 8 0v2.7' }],
+  },
+  'nada-encontrado': {
+    normal: [{ cx: 10.5, cy: 10.5, r: 6.5 }, { d: 'M15.5 15.5L21 21' }, { d: 'M8 8l5 5M13 8l-5 5' }],
   },
 } as const satisfies Record<string, Desenho>
 

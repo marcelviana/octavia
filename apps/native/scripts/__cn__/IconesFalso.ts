@@ -1,7 +1,7 @@
 /**
  * CONTROLE NEGATIVO do `gate:icones` (`gate:icones:cn`) — fora de `src/`,
  * nunca importado pelo app. Sem ele o gate é promessa, não gate. É o
- * `dados.ts` com seis defeitos plantados, um por regra do script:
+ * `dados.ts` com sete defeitos plantados, um por regra do script:
  *
  *   (1) `apagar` FALTA           → 1 nome, e o círculo e o `d` dele somem do mapa
  *   (2) `lixeira` SOBRA          → 1 nome fora da §6.4, e o `d` dele não está no anexo D
@@ -14,8 +14,14 @@
  *       elemento: três do `telas.html` somem (o `d` de quatro cordas e os
  *       dois trastes), quatro entram (o `d` de seis e os três trastes) e a
  *       contagem dá 6 onde a §6.3 declara 4.
+ *   (7) `nada-encontrado` com o X de dentro da lupa torto — um braço 1 dp
+ *       mais longo que o outro (V1-PR6) → o modo de errar um desenho
+ *       "composto com as mesmas peças". Acusa UMA vez, pela regra 5: o
+ *       conjunto de elementos não é o de nenhum `<svg>` do `telas.html`.
+ *       O `email` e o `senha` entram CORRETOS — sem eles a regra 1 acusaria
+ *       "falta no mapa" e o defeito (7) ficaria escondido no meio.
  *
- * Esperado: 17 acusações, exit 1. Auto-contido (sem os tipos do `dados.ts`),
+ * Esperado: 18 acusações, exit 1. Auto-contido (sem os tipos do `dados.ts`),
  * para passar no `tsc --noEmit` do app sem importar nada.
  */
 export const desenhosFalsos = {
@@ -125,5 +131,19 @@ export const desenhosFalsos = {
   },
   'log-in': {
     normal: [{ d: 'M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 8l4 4-4 4M15 12H4' }],
+  },
+  'email': {
+    normal: [{ x: 3, y: 5.5, w: 18, h: 13, rx: 2.5 }, { d: 'M3.6 6.8L12 13l8.4-6.2' }],
+  },
+  'senha': {
+    normal: [{ x: 4.5, y: 10.5, w: 15, h: 9.5, rx: 2.5 }, { d: 'M8 10.5V7.8a4 4 0 0 1 8 0v2.7' }],
+  },
+  // (7) o X de dentro da lupa com um braço 1 dp mais longo que o outro
+  // (`l-5 6` no lugar de `l-5 5`) — o erro que um desenho "composto com as
+  // mesmas peças" convida. Acusa UMA vez, pela regra 5. Não pode ser o X do
+  // `fechar` inteiro: esse `d` está no anexo D e o defeito (7) esconderia o
+  // (3), que acusa justamente a falta dele no mapa (medido).
+  'nada-encontrado': {
+    normal: [{ cx: 10.5, cy: 10.5, r: 6.5 }, { d: 'M15.5 15.5L21 21' }, { d: 'M8 8l5 5M13 8l-5 6' }],
   },
 } as const
