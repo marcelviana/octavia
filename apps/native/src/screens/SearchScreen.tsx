@@ -1,5 +1,7 @@
 /**
- * S4 — Busca na biblioteca (PRD T1-R20, R21, R22, R23; aceite A11).
+ * S4 — Busca na biblioteca (PRD T1-R20, R21, R22, R23; aceite A11), com o
+ * acabamento do DESIGN-V1 na V1-PR6 (as molduras `S4a-vazio`,
+ * `S4a-resultados` e `S4b` do `telas.html`, com as erratas da §9 prevalecendo).
  *
  * Toda local, sobre o cache: em modo avião ela funciona igual (T1-R23), e é
  * por isso que o chip do design diz "busca local" quando não há rede — não é
@@ -14,6 +16,32 @@
  * palco não pode engasgar (T1-R34) e a conta cresce.
  *
  * **Nunca** entra em log o termo digitado, só o comprimento (N1-D5, regra 2).
+ *
+ * O que a V1-PR6 mudou é pintura, não comportamento:
+ *
+ *  - o `fechar` é um **X**, não uma seta: a busca é uma camada sobre a tela
+ *    anterior, não um passo atrás. O glifo `◂` num alvo de 48 × 58 vira o
+ *    ícone de 24 num alvo de 48 × 48;
+ *  - o `apagar` era a palavra num alvo de 48,9 × 48; vira o `x-circle` de 24,
+ *    dentro do campo, à direita;
+ *  - o campo ganha a lupa de 24 e, quando tem conteúdo, contorno e lupa em
+ *    `accentInk` — foco é uma das três casas que a §3.1 dá ao acento (E12);
+ *  - cada resultado ganha o **chip de tipo** como ícone + rótulo de 20 dp,
+ *    o mesmo do S2 — e é a segunda casa do app a renderizar a tab de quatro
+ *    cordas da §6.3, pelo ramo `em20` do `Icone.tsx`;
+ *  - a **régua de seção** ganha o fio e a contagem à direita. Ela fica em
+ *    `muted`, não em `lineInfo`: é texto ativo abaixo de 24 dp, e a §3.3
+ *    proíbe `lineInfo` aí;
+ *  - o corpo vazio (`S4a-vazio`), que era uma lista sem nada, ganha o
+ *    `buscar música` de 28 e a mesma frase de escopo que o `S4b` já mostrava;
+ *  - o `S4b` ganha a lupa com o X dentro, em `muted` e não em `errorInk`: não
+ *    achar não é erro.
+ *
+ * Nenhum controle deixa de aceitar toque e nenhuma linha de log muda — a
+ * chamada não aparece escrita aqui de propósito: o G3 compara as linhas que
+ * casam com a cadeia `log` seguida de parêntese SEM tirar comentários (ao
+ * contrário do `gate:a20`, que os tira), então uma frase que a cite acusa
+ * divergência. Instrumento conservador: erra para o lado de falar demais.
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
@@ -25,6 +53,8 @@ import {
   type SearchHit,
   type SetlistDTO,
 } from '@octavia/core'
+import { Icone } from '../icones/Icone'
+import type { NomeIcone } from '../icones/dados'
 import { log } from '../log'
 import { bar, dark, font, radius, size, space, touch, tracking } from '../theme'
 
@@ -45,12 +75,12 @@ export interface SearchScreenProps {
   onAbrir: (contentId: string, posicaoNaSetlist: number | null) => void
 }
 
-/** Rótulo do chip por tipo, na grafia do design (o mesmo do S2). */
-const CHIP: Record<string, string> = {
-  Lyrics: 'Letra',
-  Chords: 'Cifra',
-  Tab: 'Tab',
-  Sheet: 'Partitura',
+/** Ícone e rótulo do chip por tipo, na grafia do design (o mesmo do S2). */
+const TIPO: Record<string, { icone: NomeIcone; rotulo: string }> = {
+  Lyrics: { icone: 'letra', rotulo: 'Letra' },
+  Chords: { icone: 'cifra', rotulo: 'Cifra' },
+  Tab: { icone: 'tab', rotulo: 'Tab' },
+  Sheet: { icone: 'partitura', rotulo: 'Partitura' },
 }
 
 /** O que a linha do resultado mostra sob o título. */
@@ -71,6 +101,22 @@ function Resultado({
   posicao: number | null
   onAbrir: () => void
 }): React.JSX.Element {
+  /**
+   * O critério que a div. 74 da V1-PR5 deixou para esta PR, decidido para as
+   * duas telas de uma vez: **o ícone de tipo existe quando o app sabe o tipo.**
+   * Três casos, os três distinguíveis pelo dado:
+   *   1. sabe e é um dos quatro do enum → o desenho do tipo;
+   *   2. sabe e NÃO é um dos quatro → `tipo-desconhecido`, e o rótulo segue
+   *      sendo o `content_type` cru, que é o que o app tem e o que ele já
+   *      mostrava (§1 — não muda dado); o S2 pode dizer "?" no lugar porque a
+   *      sublinha dele carrega o motivo por extenso, e a do S4 é artista e
+   *      álbum;
+   *   3. NÃO sabe — o `content` não está no cache → nenhum ícone e "—". Este
+   *      caso **não existe no S4 por construção**: o índice é feito de
+   *      `contents`, então todo hit tem o seu DTO. O "—" do S2 segue sendo o
+   *      único do app.
+   */
+  const tipo = TIPO[content.content_type]
   return (
     <Pressable
       style={styles.item}
@@ -78,6 +124,8 @@ function Resultado({
       accessibilityRole="button"
       testID={`resultado-${content.id.slice(0, 8)}`}
     >
+      {/* §3.3 e E12 — o número aqui é posição, não "atual": vai em `muted`,
+          como o do S2. O S4 não tem posição atual, e o acento fica sem dono. */}
       {posicao !== null ? <Text style={styles.numero}>{posicao}</Text> : <View style={styles.semNumero} />}
       <View style={styles.itemTexto}>
         <Text style={styles.titulo} numberOfLines={1}>
@@ -87,16 +135,28 @@ function Resultado({
           {sublinha(content)}
         </Text>
       </View>
-      <View style={styles.chip}>
-        <Text style={styles.chipTexto}>{CHIP[content.content_type] ?? content.content_type}</Text>
+      <View style={styles.tipo}>
+        <Icone nome={tipo?.icone ?? 'tipo-desconhecido'} tamanho={20} cor={dark.muted} />
+        <Text style={styles.tipoTexto}>{tipo?.rotulo ?? content.content_type}</Text>
       </View>
     </Pressable>
   )
 }
 
+/** A régua de seção: rótulo à esquerda, fio no meio, contagem à direita. */
+function Regua({ texto, n }: { texto: string; n: number }): React.JSX.Element {
+  return (
+    <View style={styles.regua}>
+      <Text style={styles.reguaTexto}>{texto}</Text>
+      <View style={styles.reguaFio} />
+      <Text style={styles.reguaTexto}>{`${n} ${n === 1 ? 'resultado' : 'resultados'}`}</Text>
+    </View>
+  )
+}
+
 /** Uma linha da lista: cabeçalho de grupo ou resultado. */
 type Linha =
-  | { kind: 'cabecalho'; id: string; texto: string }
+  | { kind: 'cabecalho'; id: string; texto: string; n: number }
   | { kind: 'hit'; id: string; hit: SearchHit; posicao: number | null }
 
 export function SearchScreen({
@@ -157,7 +217,12 @@ export function SearchScreen({
     if (!consultou) return []
     const out: Linha[] = []
     if (setlist !== null && grupos.inSetlist.length > 0) {
-      out.push({ kind: 'cabecalho', id: 'h-setlist', texto: `Nesta setlist · ${setlist.name}` })
+      out.push({
+        kind: 'cabecalho',
+        id: 'h-setlist',
+        texto: `Nesta setlist · ${setlist.name}`,
+        n: grupos.inSetlist.length,
+      })
       for (const hit of grupos.inSetlist) {
         out.push({ kind: 'hit', id: `s-${hit.id}`, hit, posicao: posicaoDe.get(hit.id) ?? null })
       }
@@ -168,6 +233,7 @@ export function SearchScreen({
         kind: 'cabecalho',
         id: 'h-lib',
         texto: `Biblioteca · ${n} ${n === 1 ? 'música' : 'músicas'}`,
+        n: grupos.library.length,
       })
       for (const hit of grupos.library) {
         out.push({ kind: 'hit', id: `l-${hit.id}`, hit, posicao: null })
@@ -176,14 +242,26 @@ export function SearchScreen({
     return out
   }, [consultou, setlist, grupos, posicaoDe, contents.length])
 
+  /** A frase de escopo — a mesma nos dois vazios, `S4a-vazio` e `S4b`. */
+  const escopo = `busca em título, artista, álbum e letra de toda a biblioteca (${contents.length} ${
+    contents.length === 1 ? 'música' : 'músicas'
+  })`
+
   return (
     <View style={styles.tela}>
       <View style={styles.barra}>
-        <Pressable style={styles.botaoSecundario} onPress={fechar} testID="fechar-busca">
-          <Text style={styles.botaoSecundarioTexto}>◂</Text>
+        <Pressable
+          style={styles.botaoIcone}
+          onPress={fechar}
+          accessibilityRole="button"
+          accessibilityLabel="Fechar a busca"
+          testID="fechar-busca"
+        >
+          <Icone nome="fechar" tamanho={24} cor={dark.text} />
         </Pressable>
 
-        <View style={styles.campo}>
+        <View style={[styles.campo, consultou && styles.campoAtivo]}>
+          <Icone nome="busca" tamanho={24} cor={consultou ? dark.accentInk : dark.lineInfo} />
           <TextInput
             style={styles.input}
             value={termo}
@@ -200,30 +278,37 @@ export function SearchScreen({
               style={styles.apagarAlvo}
               onPress={() => setTermo('')}
               accessibilityRole="button"
+              accessibilityLabel="Apagar o que foi digitado"
               testID="apagar"
             >
-              <Text style={styles.apagar}>apagar</Text>
+              <Icone nome="apagar" tamanho={24} cor={dark.muted} />
             </Pressable>
           ) : null}
         </View>
 
         {/* T1-R23: sem rede a busca é a mesma — o chip explica, não alarma. */}
         {!online ? (
-          <Text style={styles.chipOffline} testID="chip-offline">
-            sem conexão · busca local
-          </Text>
+          <View style={styles.chipOffline} testID="chip-offline">
+            <Icone nome="sem-conexao" tamanho={20} cor={dark.offlineInk} />
+            <Text style={styles.chipOfflineTexto}>sem conexão</Text>
+            <Text style={styles.chipOfflineApoio}>· busca local</Text>
+          </View>
         ) : null}
       </View>
 
-      {consultou && linhas.length === 0 ? (
+      {!consultou ? (
+        // S4a-vazio — o corpo era uma lista sem nada; ganha o ícone do botão
+        // que trouxe o usuário até aqui e a frase de escopo que o S4b já tinha.
+        <View style={styles.centro} testID="s4a-vazio">
+          <Icone nome="buscar-musica" tamanho={28} cor={dark.muted} />
+          <Text style={styles.centroApoio}>{escopo}</Text>
+        </View>
+      ) : linhas.length === 0 ? (
         // S4b — "nada encontrado", nunca tela vazia (J5 critério 3)
         <View style={styles.centro} testID="s4b">
+          <Icone nome="nada-encontrado" tamanho={28} cor={dark.muted} />
           <Text style={styles.centroTitulo}>{`nada encontrado para “${termo.trim()}”`}</Text>
-          <Text style={styles.centroApoio}>
-            {`busca em título, artista, álbum e letra de toda a biblioteca (${contents.length} ${
-              contents.length === 1 ? 'música' : 'músicas'
-            })`}
-          </Text>
+          <Text style={styles.centroApoio}>{escopo}</Text>
         </View>
       ) : (
         <FlatList
@@ -233,7 +318,7 @@ export function SearchScreen({
           keyboardShouldPersistTaps="handled"
           renderItem={({ item }) => {
             if (item.kind === 'cabecalho') {
-              return <Text style={styles.cabecalho}>{item.texto}</Text>
+              return <Regua texto={item.texto} n={item.n} />
             }
             const content = porId.get(item.hit.id)
             if (content === undefined) return null
@@ -251,100 +336,100 @@ export function SearchScreen({
   )
 }
 
+/**
+ * Medidas das três molduras do S4. Onde a moldura usa um número fora das
+ * escalas do `theme.ts`, entra o degrau mais próximo — a regra da **errata
+ * E10**; a tabela desta tela está no anexo da PR. Ficam como literal,
+ * declarados, os que não têm degrau nem escala: a altura da régua (38), a do
+ * resultado (80), o corpo 13 da sublinha e do rótulo de tipo (§4.4 "chip /
+ * status"), o título de resultado de 20 (§4.4, "bate" com o app) e os
+ * `minWidth` 32 do número e 56 da coluna de rótulo — o 56 é o que alinha os
+ * quatro rótulos de tipo no mesmo x, igual ao do S2.
+ */
 const styles = StyleSheet.create({
   tela: { flex: 1, backgroundColor: dark.bg },
+  // §5.3 — a barra superior de S2/S4 é 88: `bar.top` + 24, como a do índice
   barra: {
-    minHeight: bar.top + space.lg,
+    height: bar.top + space.xl,
     paddingHorizontal: space.xl,
-    paddingVertical: space.md,
     flexDirection: 'row',
     alignItems: 'center',
     gap: space.lg,
     borderBottomWidth: bar.hairline,
     borderBottomColor: dark.line,
   },
+  // `width`/`height` e não `hitSlop`: o alvo tem de estar nos BOUNDS do dump,
+  // que é o instrumento do G5 (a mesma nota do `IndexScreen`).
+  botaoIcone: {
+    width: touch.min,
+    height: touch.min,
+    borderWidth: bar.hairline,
+    borderColor: dark.line,
+    borderRadius: radius.control,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   campo: {
     flex: 1,
-    height: touch.stage,
-    paddingHorizontal: space.lg,
+    height: touch.list + 2,
+    paddingLeft: space.lg,
+    paddingRight: space.md,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: space.lg,
+    gap: space.md,
     borderWidth: bar.hairline,
     borderColor: dark.line,
     borderRadius: radius.control,
   },
-  // O `campo` mede 64 dp, mas quem recebe o toque é o TextInput, e ele só
+  // E12 — acento em ativo, atual ou FOCO. O campo com conteúdo é o foco, e é
+  // o único acento desta tela.
+  campoAtivo: { borderColor: dark.accentInk },
+  // O `campo` mede 58 dp, mas quem recebe o toque é o TextInput, e ele só
   // tinha a altura do texto (46,2 dp no dump). O `minHeight` põe o ALVO
   // acima de 48 sem mexer no campo em volta.
-  input: { flex: 1, minHeight: touch.min, color: dark.text, fontFamily: font.ui, fontSize: size.input },
-  // O rótulo textual media 48,9 × 21,8 dp: largura passava, altura não.
+  input: { flex: 1, minHeight: touch.min, color: dark.text, fontFamily: font.ui, fontSize: size.body },
+  // O rótulo textual media 48,9 × 21,8 dp antes da V1-PR1; agora é o ícone
+  // dentro de um alvo próprio, na posição convencional (dentro, à direita).
   apagarAlvo: {
     minWidth: touch.min,
     minHeight: touch.min,
+    borderRadius: radius.chip,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  apagar: { color: dark.muted, fontFamily: font.ui, fontSize: size.bodySmall },
-  chipOffline: {
-    color: dark.offline,
-    fontFamily: font.ui,
-    fontSize: 13,
-    maxWidth: 220,
-  },
-  lista: { padding: space.xl, gap: space.sm },
-  cabecalho: {
+  chipOffline: { flexDirection: 'row', alignItems: 'center', gap: space.sm, maxWidth: 260 },
+  chipOfflineTexto: { color: dark.offlineInk, fontFamily: font.ui, fontSize: 13 },
+  chipOfflineApoio: { color: dark.muted, fontFamily: font.ui, fontSize: 13 },
+  lista: { paddingTop: space.sm, paddingHorizontal: space.xl, paddingBottom: space.xl, gap: space.md },
+  regua: { minHeight: 38, flexDirection: 'row', alignItems: 'center', gap: space.md },
+  // §3.3 — régua de seção é TEXTO ATIVO abaixo de 24 dp: `muted`, nunca
+  // `lineInfo`. O fio entre os dois é que é decorativo, e vai em `line`.
+  reguaTexto: {
     color: dark.muted,
-    fontFamily: font.uiBold,
+    fontFamily: font.mono,
     fontSize: size.labelSmall,
-    letterSpacing: size.labelSmall * tracking.displayWide,
+    letterSpacing: size.labelSmall * tracking.display,
     textTransform: 'uppercase',
-    paddingTop: space.lg,
-    paddingBottom: space.xs,
   },
+  reguaFio: { flex: 1, height: bar.hairline, backgroundColor: dark.line },
   item: {
-    minHeight: touch.list + 2,
+    minHeight: 80,
     flexDirection: 'row',
     alignItems: 'center',
     gap: space.lg,
-    paddingHorizontal: space.lg,
+    paddingHorizontal: space.xl,
     paddingVertical: space.md,
     borderWidth: bar.hairline,
     borderColor: dark.line,
     borderRadius: radius.control,
   },
-  numero: { color: dark.accent, fontFamily: font.mono, fontSize: 20, minWidth: 32 },
+  numero: { color: dark.muted, fontFamily: font.mono, fontSize: 20, minWidth: 32, textAlign: 'right' },
   semNumero: { width: 32 },
   itemTexto: { flex: 1, gap: space.xs },
   titulo: { color: dark.text, fontFamily: font.uiBold, fontSize: 20 },
-  sublinha: { color: dark.muted, fontFamily: font.ui, fontSize: size.label },
-  chip: {
-    height: 27,
-    paddingHorizontal: space.sm,
-    borderWidth: bar.hairline,
-    borderColor: dark.line,
-    borderRadius: radius.chip,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  chipTexto: {
-    color: dark.muted,
-    fontFamily: font.ui,
-    fontSize: 12,
-    letterSpacing: 12 * tracking.label,
-  },
-  botaoSecundario: {
-    // Ver a nota do `IndexScreen`: o alvo cresce de verdade, não por hitSlop.
-    minWidth: touch.min,
-    height: touch.list + 2,
-    paddingHorizontal: space.lg,
-    borderWidth: bar.hairline,
-    borderColor: dark.line,
-    borderRadius: radius.control,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  botaoSecundarioTexto: { color: dark.text, fontFamily: font.ui, fontSize: size.bodySmall },
+  sublinha: { color: dark.muted, fontFamily: font.ui, fontSize: 13 },
+  tipo: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
+  tipoTexto: { color: dark.muted, fontFamily: font.ui, fontSize: 13, minWidth: 56 },
   centro: {
     flex: 1,
     alignItems: 'center',
@@ -352,11 +437,17 @@ const styles = StyleSheet.create({
     gap: space.lg,
     paddingHorizontal: space.xxxl,
   },
-  centroTitulo: { color: dark.text, fontFamily: font.uiBold, fontSize: size.titleLarge },
+  centroTitulo: {
+    color: dark.text,
+    fontFamily: font.display,
+    fontSize: size.title,
+    letterSpacing: size.title * tracking.label,
+  },
   centroApoio: {
     color: dark.muted,
     fontFamily: font.ui,
-    fontSize: size.body,
+    fontSize: size.bodySmall,
+    lineHeight: size.bodySmall * 1.5,
     textAlign: 'center',
     maxWidth: 560,
   },
