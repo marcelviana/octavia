@@ -1,0 +1,132 @@
+$ (B) os gates, commit a commit — G1…G6, gate:icones, suíte · tsc · lint, e os controles negativos
+Scripts: g1.sh, g5.mjs, g6.sh são os da V1-PR1-anexos/V1-PR1-B-gates.txt, extraídos verbatim para o scratch
+(cópias em instrumentos/); g2g3.sh e a20.mjs são os versionados na V1-PR3; icones.mjs é o do commit 1 desta PR.
+Base de todos: origin/main = 2db81ce.
+
+===== B1 — G1 / G2 / G3 por commit (base origin/main = 2db81ce) =====
+--- 82bfc3e  test(V1-PR4): o gate:icones entra antes do que ele mede
+  G1: DIFF VAZIO ✓
+  G2 — testIDs  antes=42  depois=42
+    G2: antes ⊆ depois ✓
+  G3 — linhas log( antes=50  depois=50
+    G3: idênticas ✓
+--- 5f7d5c4  feat(V1-PR4): o S1 nos seis estados do DESIGN-V1
+  G1: DIFF VAZIO ✓
+  G2 — testIDs  antes=42  depois=42
+    G2: antes ⊆ depois ✓
+  G3 — linhas log( antes=50  depois=50
+    G3: idênticas ✓
+
+===== B2 — G4: a20, por commit =====
+--- 82bfc3e
+    escopo: ESTENDIDO (V1-A3 §A3.3 + labels em expressão, V1-PR3)
+    arquivos varridos: 20
+    vocabulário: 45 termos · isenções do produto: 9
+    literais em posição de texto examinados: 48
+    acusações: 0
+  exit=0
+    ACUSADO scripts/__cn__/A20Falso.tsx:24 [accessibilityLabel] "Zoom in" ← termo "zoom in"
+    ACUSADO scripts/__cn__/A20Falso.tsx:27 [accessibilityHint] "Go back to the previous song" ← termo "previous"
+    ACUSADO scripts/__cn__/A20Falso.tsx:35 [accessibilityLabel{…}] "Auto-scroll, loading" ← termo "loading"
+    escopo: ESTENDIDO (V1-A3 §A3.3 + labels em expressão, V1-PR3)
+    arquivos varridos: 2
+    vocabulário: 45 termos · isenções do produto: 9
+    literais em posição de texto examinados: 7
+    acusações: 3
+  exit=0
+--- 5f7d5c4
+    escopo: ESTENDIDO (V1-A3 §A3.3 + labels em expressão, V1-PR3)
+    arquivos varridos: 20
+    vocabulário: 45 termos · isenções do produto: 9
+    literais em posição de texto examinados: 49
+    acusações: 0
+  exit=0
+    ACUSADO scripts/__cn__/A20Falso.tsx:24 [accessibilityLabel] "Zoom in" ← termo "zoom in"
+    ACUSADO scripts/__cn__/A20Falso.tsx:27 [accessibilityHint] "Go back to the previous song" ← termo "previous"
+    ACUSADO scripts/__cn__/A20Falso.tsx:35 [accessibilityLabel{…}] "Auto-scroll, loading" ← termo "loading"
+    escopo: ESTENDIDO (V1-A3 §A3.3 + labels em expressão, V1-PR3)
+    arquivos varridos: 2
+    vocabulário: 45 termos · isenções do produto: 9
+    literais em posição de texto examinados: 7
+    acusações: 3
+  exit=0
+
+===== B3 — gate:icones, por commit =====
+--- 82bfc3e
+    §6.4: 34 linhas → 33 nomes distintos, + log-in = 34 esperados
+    anexo D: 34 registros · 68 elementos distintos
+    mapa: 34 nomes · 75 elementos distintos · 34 com 'normal'
+    hex cravado: 0 · tinta por token: 6
+    acusações: 0
+  exit=0
+    ACUSADO scripts/__cn__/IconesFalso.ts [nome] falta no mapa: "apagar" (§6.4)
+    ACUSADO scripts/__cn__/IconesFalso.ts [nome] sobra no mapa: "lixeira" (não está na §6.4)
+    ACUSADO scripts/__cn__/IconesFalso.ts [desenho] do anexo D ausente do mapa: d M6 6l12 12M18 6L6 18
+    ACUSADO scripts/__cn__/IconesFalso.ts [desenho] do anexo D ausente do mapa: d M9.2 9.2l5.6 5.6M14.8 9.2l-5.6 5.6
+    ACUSADO scripts/__cn__/IconesFalso.ts [desenho] do anexo D ausente do mapa: circle 12 12 8
+    ACUSADO scripts/__cn__/IconesFalso.ts [desenho] 'normal' de "fechar" não está no anexo D: d M6 6l12 12M18 6L6 18z
+    ACUSADO scripts/__cn__/IconesFalso.ts [desenho] 'normal' de "lixeira" não está no anexo D: d M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13
+    ACUSADO scripts/__cn__/IconesFalso.ts:88 [tinta] hex cravado: #6E6A80
+    ACUSADO scripts/__cn__/IconesFalso.ts:70 [tinta] token desconhecido: 'accent' (esperado: lineInfo | offlineInk | accentInk)
+    §6.4: 34 linhas → 33 nomes distintos, + log-in = 34 esperados
+    anexo D: 34 registros · 68 elementos distintos
+    mapa: 34 nomes · 74 elementos distintos · 34 com 'normal'
+    hex cravado: 1 · tinta por token: 6
+    acusações: 9
+  exit=0
+--- 5f7d5c4
+    §6.4: 34 linhas → 33 nomes distintos, + log-in = 34 esperados
+    anexo D: 34 registros · 68 elementos distintos
+    mapa: 34 nomes · 75 elementos distintos · 34 com 'normal'
+    hex cravado: 0 · tinta por token: 6
+    acusações: 0
+  exit=0
+    ACUSADO scripts/__cn__/IconesFalso.ts [nome] falta no mapa: "apagar" (§6.4)
+    ACUSADO scripts/__cn__/IconesFalso.ts [nome] sobra no mapa: "lixeira" (não está na §6.4)
+    ACUSADO scripts/__cn__/IconesFalso.ts [desenho] do anexo D ausente do mapa: d M6 6l12 12M18 6L6 18
+    ACUSADO scripts/__cn__/IconesFalso.ts [desenho] do anexo D ausente do mapa: d M9.2 9.2l5.6 5.6M14.8 9.2l-5.6 5.6
+    ACUSADO scripts/__cn__/IconesFalso.ts [desenho] do anexo D ausente do mapa: circle 12 12 8
+    ACUSADO scripts/__cn__/IconesFalso.ts [desenho] 'normal' de "fechar" não está no anexo D: d M6 6l12 12M18 6L6 18z
+    ACUSADO scripts/__cn__/IconesFalso.ts [desenho] 'normal' de "lixeira" não está no anexo D: d M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13
+    ACUSADO scripts/__cn__/IconesFalso.ts:88 [tinta] hex cravado: #6E6A80
+    ACUSADO scripts/__cn__/IconesFalso.ts:70 [tinta] token desconhecido: 'accent' (esperado: lineInfo | offlineInk | accentInk)
+    §6.4: 34 linhas → 33 nomes distintos, + log-in = 34 esperados
+    anexo D: 34 registros · 68 elementos distintos
+    mapa: 34 nomes · 74 elementos distintos · 34 com 'normal'
+    hex cravado: 1 · tinta por token: 6
+    acusações: 9
+  exit=0
+## v1/pr4-s1...origin/main [ahead 2]
+
+===== B4 — G5 (alvos ≥ 48 dp, regra das duas bordas) — node g5.mjs <dir> =====
+--- dumps-antes (9 estados):
+  alvos tocáveis medidos: 43 em 9 estados
+  ABAIXO de 48 dp: 0 ocorrências / 0 resource-ids
+  descartados por recorte (div. 21): 0
+  alvos SEM testID (inalcançáveis por resource-id): 0
+  exit=0
+--- dumps-depois (9 estados, antes de o S1e-a21 entrar; com ele, 10 estados e o mesmo resultado):
+  alvos tocáveis medidos: 43 em 9 estados
+  ABAIXO de 48 dp: 0 ocorrências / 0 resource-ids
+  descartados por recorte (div. 21): 0
+  alvos SEM testID (inalcançáveis por resource-id): 0
+  exit=0
+
+===== B5 — G6 (todo estado com ID alcançável) — sh g6.sh <dir> =====
+--- dumps-antes:
+  S1a  âncora=buscar  ids=2 · S1b  âncora=baixar-00c2c1f4  ids=7 · S1c-indicadores ids=7 · S1c ids=7 · S1d-falha âncora=buscar ids=3
+  S1d ids=3 · S1e-429 âncora=baixar-00c2c1f4 ids=8 · S1e ids=8 · S1f âncora=buscar ids=2 — alvos sem id=0 em todos
+  estados: 9   falhas: 0   exit=0
+--- dumps-depois: idêntico, estado a estado (as mesmas âncoras e contagens), estados: 9   falhas: 0   exit=0
+
+===== B6 — suíte · tsc · lint, por commit =====
+--- 82bfc3e (commit 1): pnpm test (raiz) → Test Files 88 passed | 4 skipped (92) · Tests 768 passed | 85 skipped (853)
+                        npx tsc --noEmit (apps/native) → exit 0 (inclui scripts/icones.mjs e scripts/__cn__/IconesFalso.ts)
+                        pnpm lint (raiz) → ✔ No ESLint warnings or errors (verde VAZIO para apps/native, V1-PR1 div. 32)
+--- 5f7d5c4 (commit 2): pnpm test → 88 passed | 4 skipped · 768 passed | 85 skipped — baseline 768/85 IDÊNTICA
+                        npx tsc --noEmit → exit 0 · pnpm lint → limpo
+  (o worktree nasceu sem node_modules; `pnpm install --frozen-lockfile --offline` — 11,8 s do store, lockfile intacto)
+
+===== B7 — o gate:a20 leu o que a PR introduziu =====
+  commit 1: literais examinados 48 (os da PR3) · commit 2: 49 — o 49.º é o accessibilityLabel="Octavia" da marca no S1f.
+  O controle negativo a20:cn passou a varrer 2 arquivos (IconesFalso.ts vive em scripts/__cn__), com as MESMAS 3 acusações (div. 64).

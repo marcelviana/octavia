@@ -1,0 +1,65 @@
+$ (D) as medidas das seis molduras → o que o código usa (div. 61)
+$ Fonte: as seis molduras S1a…S1f do telas.html (linha 400 do arquivo, HTML escapado em string JSON; decodificado por
+$ script e lido no markup — `sc-camel-view-box` é como o bundler serializa `viewBox`). Critério: onde a moldura usa
+$ um número que é degrau das escalas do theme.ts, entra o token; onde não é, entra o degrau MAIS PRÓXIMO (o mesmo
+$ critério da errata E6 — a escala declarada vence o número desenhado); onde não há escala, fica literal, declarado.
+
+===== D1 — o que bate com a escala (token direto) =====
+  elemento                          moldura   token                              obs
+  título de tela "Setlists"          26        size.titleSmall (26)               substitui o literal 24 (§4.3/§4.4)
+  título de tela, tracking          .2em      tracking.displayWide (.22)         token de tracking do display
+  nome do cartão                     22        size.title (22)                    substitui o literal 24
+  rótulo do indicador                14        size.label (14)                    era size.bodySmall 15 em uiBold
+  metadado do cartão                 14        size.label (14)                    era size.body 16
+  rótulo de botão (Buscar, Baixar)   15        size.bodySmall (15)                já era
+  apoio dos blocos (S1a/d/f)         15        size.bodySmall (15)                era size.body 16; line-height 1,5 mantido
+  rótulo do botão primário           16        size.body (16), Manrope 600        era size.button 17
+  chip icon↔texto, metadado icon↔txt 8         space.sm (8)                       —
+  padding horizontal (barra, cartão) 32        space.xxl (32)                     —
+  gap entre cartões / banner→lista   12        space.md (12)                      —
+  banner ícone↔texto                 12        space.md (12)                      —
+  gap dos blocos S1d/S1f            18        space.lg (16)                      degrau mais próximo
+  botão primário padding             24        space.xl (24)                      era space.xxl 32
+  botão primário margin-top          8         space.sm (8)                       já era
+  botão Buscar / Baixar altura       58        touch.list + 2 (58)                já era
+  botão primário altura              56        touch.list (56)                    já era
+  Tentar novamente (banner) altura   48        touch.min (48)                     minHeight; já era desde a V1-PR1
+  cartão                             132       literal 132 (§5.4)                 minHeight; era 138
+  cartão sob o banner (S1e)          112       literal 112 (§5.4)                 minHeight, prop `compacto`
+  barra superior do S1               120       literal 120 (§5.3 "minha")         era bar.top + space.xxl = 96
+  largura do indicador               230       literal 230                        era 220
+  chip de status / sublinha          13        literal 13 (§4.3, sem degrau)      já era
+  fundo do banner                    7 %       `${errorInk}12` (0x12 = 7,06 %)    —
+  ícones                             20/24/28  <Icone tamanho>                    traço derivado (§5.5)
+
+===== D2 — o que NÃO bate e recebeu o degrau mais próximo =====
+  elemento                          moldura   usado                              diferença
+  gap chip↔botão Buscar              26        space.xl (24)                      −2
+  gap nome↔metadados (S1b/c)         14        space.md (12)                      −2 (no S1e a moldura já é 12)
+  gap entre metadados                22        space.xl (24)                      +2
+  gap botão Baixar↔indicador         28        space.xl (24)                      −4
+  gap ícone↔texto do indicador       14        space.md (12)                      −2
+  gap rótulo↔sublinha do indicador   2         space.xs (4)                       +2
+  gap ícone↔rótulo nos botões        10        space.md (12)                      +2
+  padding dos botões (Buscar/Baixar) 18        space.lg (16)                      −2
+  padding do banner                  22        space.xl (24)                      +2
+  padding do botão do banner         14        space.lg (16)                      +2
+  gap do bloco S1a                   22        space.xl (24)                      +2
+  raio dos botões                    10        radius.control (12)                +2 — precedente E6 (o palco desenhava 14)
+  raio do botão do banner            8         radius.control (12)                +4
+  tracking do nome do cartão         .09em     tracking.label (.08)               −.01 (era .14, tracking.display)
+  texto do banner                    14,5      size.bodySmall (15)                +0,5; peso 400 (era uiBold)
+  altura do banner                   66        literal 66 (minHeight)             sem escala; era touch.list + 2 = 58
+  sublinha, line-height              1,35      13 × 1,35                          literal, como na moldura
+
+===== D3 — o que a moldura não desenha e a §6.4 / §6.1 mandam (div. 59, 65) =====
+  parcial               ícone `parcial` 28, arco proporcional a n/m (prop `fracao`), rótulo em offlineInk
+  nunca sincronizada    ícone `nunca-sincronizada` 28 em offlineInk, rótulo em offlineInk (era muted)
+  baixando (cartão)     ícone `baixando` 28 em accentInk + rótulo "Baixando…"; botão com `baixando-acao` 24 — não medido (div. 66)
+  falha sem cache       chip `falha` 20 em errorInk + texto em errorInk; bloco com `falha` 28 em errorInk (hipótese de desenho)
+  garantida             a moldura S1b pintava em accentInk; a §6.1 ("tinta neutra") VENCE — ícone em text, rótulo em muted (E12, div. 60, commit 6)
+
+===== D4 — o recorte da marca (§8.4), medido no arquivo =====
+  logo-octavia-dark.png 952 × 614 → a moldura usa background-size 238 × 154 (¼) e background-position −88 −6 numa
+  janela de 60 × 90: `magick logo.png -resize 238x154! … -crop 60x90+88+6` dá o laço do oito com o ponto, sem o
+  wordmark (conferido a olho na sessão). No app: View 60 × 90 overflow hidden + Image 238 × 154 em (−88, −6).

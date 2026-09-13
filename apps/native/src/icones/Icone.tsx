@@ -30,20 +30,46 @@ export interface IconeProps {
   estado?: EstadoIcone
   /** Só os dois de duas cores (`parcial`, `baixando`) leem tokens daqui. */
   tema?: ThemeName
+  /**
+   * Só `parcial`: a fração n/m que o arco cobre (§6.4 — "arco proporcional a
+   * n/m", não um glifo por faixa). Sem ela o desenho é o do catálogo (3/8).
+   */
+  fracao?: number
 }
 
 /** §5.5 — o traço é função do tamanho. */
 const TRACO: Record<TamanhoIcone, number> = { 20: 1.5, 24: 1.75, 28: 2 }
 
-function elementos(nome: NomeIcone, tamanho: TamanhoIcone, estado: EstadoIcone): readonly Primitiva[] {
+/**
+ * O arco do `parcial` para uma fração: parte do topo (12, 3) e varre no
+ * sentido horário sobre r 9 — o mesmo arco do catálogo quando f = 3/8
+ * (`a9 9 0 0 1 6.36 15.36`). Trilha em `lineInfo`, arco e setor a 35 % em
+ * `offlineInk` (§6.1), como no `dados.ts`. f = 1 não chega aqui (é
+ * `garantida`); o teto de 0,9999 evita o arco degenerado do SVG.
+ */
+function arcoParcial(fracao: number): readonly Primitiva[] {
+  const f = Math.min(Math.max(Number.isFinite(fracao) ? fracao : 0, 0), 0.9999)
+  const t = 2 * Math.PI * f
+  const dx = (9 * Math.sin(t)).toFixed(2)
+  const dy = (9 - 9 * Math.cos(t)).toFixed(2)
+  const arco = `M12 3a9 9 0 ${f > 0.5 ? 1 : 0} 1 ${dx} ${dy}`
+  return [
+    { cx: 12, cy: 12, r: 9, tinta: 'lineInfo' },
+    { d: arco, tinta: 'offlineInk' },
+    { d: `${arco}L12 12z`, fill: true, tinta: 'offlineInk', alfa: 0.35 },
+  ]
+}
+
+function elementos(nome: NomeIcone, tamanho: TamanhoIcone, estado: EstadoIcone, fracao?: number): readonly Primitiva[] {
   const d: Desenho = desenhos[nome]
+  if (nome === 'parcial' && fracao !== undefined) return arcoParcial(fracao)
   if (estado === 'ativo' && d.ativo !== undefined) return d.ativo
   if (estado === 'inerte' && d.inerte !== undefined) return d.inerte
   if (tamanho === 20 && d.em20 !== undefined) return d.em20
   return d.normal
 }
 
-export function Icone({ nome, tamanho, cor, estado = 'normal', tema = 'dark' }: IconeProps): React.JSX.Element {
+export function Icone({ nome, tamanho, cor, estado = 'normal', tema = 'dark', fracao }: IconeProps): React.JSX.Element {
   const paleta = colors[tema]
   return (
     <Svg
@@ -57,7 +83,7 @@ export function Icone({ nome, tamanho, cor, estado = 'normal', tema = 'dark' }: 
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      {elementos(nome, tamanho, estado).map((p, i) => {
+      {elementos(nome, tamanho, estado, fracao).map((p, i) => {
         const tinta = p.tinta !== undefined ? paleta[p.tinta] : 'currentColor'
         const pintura =
           p.fill === true

@@ -1,20 +1,32 @@
 /**
  * S1 — Setlists, nos seis estados do design congelado (PRD T1-R13, T1-R17,
- * T1-R18; aceites A4, A19):
+ * T1-R18; aceites A4, A19), redesenhada pelo DESIGN-V1 na V1-PR4 (as seis
+ * molduras `S1a`…`S1f` do `telas.html`, com as erratas da §9 prevalecendo):
  *
  *  a. sincronizando, sem cache → "baixando suas setlists pela primeira vez"
- *  b. normal → lista + indicador ✓ ◔ ✗
+ *  b. normal → lista + indicador garantida · parcial · nunca sincronizada
  *  c. offline com cache → chip "sem conexão · última sincronização há X"
  *  d. offline sem cache → erro acionável com "Tentar novamente"
- *  e. falha de sync com cache → banner vermelho, a lista permanece
+ *  e. falha de sync com cache → banner de erro, a lista permanece
  *  f. vazia após sync bem-sucedido → "nenhuma setlist" (empty state honesto)
  *
  * Regra do SET-14 que o estado (a) protege: **nunca** mostrar "você não tem
  * setlists" antes do primeiro sync bem-sucedido.
+ *
+ * O que a V1-PR4 mudou é pintura, não comportamento: os três glifos textuais
+ * `✓ ◔ ✗` viram os ícones `garantida` (neutro), `parcial` (arco proporcional a n/m) e
+ * `nunca-sincronizada` de 28; o separador " · " dos metadados vira os ícones
+ * `data` · `local` · `n-de-musicas` de 20; status, banner e botões passam a
+ * ícone + rótulo. Nenhum texto muda, nenhum controle deixa de aceitar toque
+ * (as propostas da §8 — desabilitados, ordenação por data — ficam fora).
+ * Todo ícone aqui acompanha um rótulo, então nenhum leva `accessibilityLabel`
+ * próprio; o SVG não é nó de texto e não entra no `content-desc`.
  */
 import { useMemo } from 'react'
-import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native'
+import { FlatList, Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import { offlineStatus, type ContentDTO, type OfflineStatus, type SetlistDTO } from '@octavia/core'
+import { Icone } from '../icones/Icone'
+import type { NomeIcone } from '../icones/dados'
 import { bar, dark, font, radius, size, space, touch, tracking } from '../theme'
 
 export type SyncState =
@@ -54,31 +66,28 @@ function haQuantoTempo(ms: number | null): string {
   return `há ${Math.floor(h / 24)} d`
 }
 
-/** Linha de metadados: data · local · N músicas (o " · " é do design). */
-function metadados(setlist: SetlistDTO): string {
-  const partes: string[] = [setlist.performance_date ?? 'sem data']
-  if (setlist.venue !== null && setlist.venue.length > 0) partes.push(setlist.venue)
-  const n = setlist.setlist_songs.length
-  partes.push(`${n} ${n === 1 ? 'música' : 'músicas'}`)
-  return partes.join('  ·  ')
-}
-
-const GLIFO: Record<OfflineStatus['kind'], string> = {
-  guaranteed: '✓',
-  partial: '◔',
-  never: '✗',
-}
-
 const ROTULO: Record<OfflineStatus['kind'], string> = {
   guaranteed: 'garantida offline',
   partial: 'parcial',
   never: 'nunca sincronizada',
 }
 
-function corDe(kind: OfflineStatus['kind']): string {
-  if (kind === 'guaranteed') return dark.accent
-  if (kind === 'partial') return dark.offline
-  return dark.muted
+/**
+ * O indicador de garantia (§6.4 · §6.1): `garantida` em tinta NEUTRA — ícone
+ * em `text`, rótulo em `muted` (E12: a moldura S1b pintava em accentInk e
+ * estava errada; o acento fica com um significado só, ativo · atual · foco,
+ * §3.1); `parcial` e `nunca sincronizada` em `offlineInk` — âmbar é "não
+ * está pronta", neutro é "pode ir"; `baixando` no acento, porque é ação em
+ * curso, e leva o rótulo "Baixando…" que a §6.4 lhe dá.
+ */
+function indicadorDe(
+  kind: OfflineStatus['kind'],
+  baixando: boolean,
+): { icone: NomeIcone; cor: string; corRotulo: string; rotulo: string } {
+  if (baixando) return { icone: 'baixando', cor: dark.accentInk, corRotulo: dark.accentInk, rotulo: 'Baixando…' }
+  if (kind === 'guaranteed') return { icone: 'garantida', cor: dark.text, corRotulo: dark.muted, rotulo: ROTULO.guaranteed }
+  if (kind === 'partial') return { icone: 'parcial', cor: dark.offlineInk, corRotulo: dark.offlineInk, rotulo: ROTULO.partial }
+  return { icone: 'nunca-sincronizada', cor: dark.offlineInk, corRotulo: dark.offlineInk, rotulo: ROTULO.never }
 }
 
 /** Sublinha do indicador — muda com a rede no estado ✗ (proposta 07). */
@@ -114,19 +123,46 @@ function textoDoErro(messageKey: string): string {
   return TEXTO_DE_ERRO[messageKey] ?? TEXTO_DE_ERRO['erro.desconhecido'] ?? 'falha ao sincronizar'
 }
 
-function textoDoStatus(sync: SyncState): string {
+/**
+ * O chip de status do cabeçalho: ícone de 20 + texto de 13, uma tinta por
+ * estado (as molduras): `tentar-novamente` no acento enquanto sincroniza,
+ * `ultima-sincronizacao` em `muted` quando há dado, `sem-conexao` em
+ * `offlineInk` sem rede — e aí a hora da última sincronização vai em `muted`,
+ * como `complemento`, no MESMO nó de texto (a string não muda). A falha sem
+ * cache não tem moldura: leva `falha` em `errorInk`, por paralelo com o S1d.
+ */
+function chipDoStatus(sync: SyncState): { icone: NomeIcone; cor: string; texto: string; complemento?: string } {
   switch (sync.fase) {
     case 'sincronizando':
-      return 'sincronizando…'
+      return { icone: 'tentar-novamente', cor: dark.accentInk, texto: 'sincronizando…' }
     case 'ok':
-      return `sincronizado ${haQuantoTempo(sync.syncedAtMs)}`
+      return { icone: 'ultima-sincronizacao', cor: dark.muted, texto: `sincronizado ${haQuantoTempo(sync.syncedAtMs)}` }
     case 'offline':
       return sync.syncedAtMs === null
-        ? 'sem conexão'
-        : `sem conexão · última sincronização ${haQuantoTempo(sync.syncedAtMs)}`
+        ? { icone: 'sem-conexao', cor: dark.offlineInk, texto: 'sem conexão' }
+        : {
+            icone: 'sem-conexao',
+            cor: dark.offlineInk,
+            texto: 'sem conexão',
+            complemento: ` · última sincronização ${haQuantoTempo(sync.syncedAtMs)}`,
+          }
     case 'falha':
-      return sync.syncedAtMs === null ? textoDoErro(sync.messageKey) : 'mostrando dados salvos'
+      return sync.syncedAtMs === null
+        ? { icone: 'falha', cor: dark.errorInk, texto: textoDoErro(sync.messageKey) }
+        : { icone: 'ultima-sincronizacao', cor: dark.muted, texto: 'mostrando dados salvos' }
   }
+}
+
+/** Um metadado do cartão: ícone de 20 em `lineInfo` + texto de 14 em `muted`. */
+function Metadado({ icone, texto }: { icone: NomeIcone; texto: string }): React.JSX.Element {
+  return (
+    <View style={styles.metadado}>
+      <Icone nome={icone} tamanho={20} cor={dark.lineInfo} />
+      <Text style={styles.metadadoTexto} numberOfLines={1}>
+        {texto}
+      </Text>
+    </View>
+  )
 }
 
 function CartaoSetlist({
@@ -134,6 +170,7 @@ function CartaoSetlist({
   status,
   online,
   baixando,
+  compacto,
   onAbrir,
   onBaixar,
 }: {
@@ -141,19 +178,26 @@ function CartaoSetlist({
   status: OfflineStatus
   online: boolean
   baixando: boolean
+  /** §5.4 — o cartão do S1e, com o banner em cima, é 112; os outros, 132. */
+  compacto: boolean
   onAbrir: () => void
   onBaixar: () => void
 }): React.JSX.Element {
-  const cor = corDe(status.kind)
+  const indicador = indicadorDe(status.kind, baixando)
   // "Baixar esta setlist" só faz sentido sem data de show (o prefetch de 7
   // dias cobre as datadas — T1-R15). Offline ele fica desabilitado por
   // definição (proposta 07); com tudo no disco, não há o que baixar.
   const mostrarBaixar = setlist.performance_date === null
   const podeBaixar = online && !baixando && status.have < status.need
+  // E3 (decisão do Marcel na V1-PR4): desabilitado é tinta `lineInfo` na
+  // moldura, no ícone e no rótulo — sem opacidade. O inativo carrega
+  // informação e deve os 3:1 (§3.3, item 3); opacidade não os garante.
+  const tintaBaixar = podeBaixar ? dark.muted : dark.lineInfo
+  const n = setlist.setlist_songs.length
 
   return (
     <Pressable
-      style={styles.cartao}
+      style={[styles.cartao, compacto ? styles.cartaoCompacto : null]}
       onPress={onAbrir}
       accessibilityRole="button"
       // O alvo principal do S1 não tinha identidade: invisível para o G2 e
@@ -165,9 +209,12 @@ function CartaoSetlist({
         <Text style={styles.nome} numberOfLines={1}>
           {setlist.name}
         </Text>
-        <Text style={styles.meta} numberOfLines={1}>
-          {metadados(setlist)}
-        </Text>
+        {/* data · local · N músicas — o separador do design agora é o ícone; "sem data" continua escrito */}
+        <View style={styles.meta}>
+          <Metadado icone="data" texto={setlist.performance_date ?? 'sem data'} />
+          {setlist.venue !== null && setlist.venue.length > 0 ? <Metadado icone="local" texto={setlist.venue} /> : null}
+          <Metadado icone="n-de-musicas" texto={`${n} ${n === 1 ? 'música' : 'músicas'}`} />
+        </View>
       </View>
 
       <View style={styles.cartaoDir}>
@@ -179,18 +226,20 @@ function CartaoSetlist({
             accessibilityState={{ disabled: !podeBaixar }}
             testID={`baixar-${setlist.id.slice(0, 8)}`}
           >
-            <Text style={styles.botaoSecundarioTexto}>
-              {baixando ? 'Baixando…' : 'Baixar esta setlist'}
-            </Text>
+            <Icone nome={baixando ? 'baixando-acao' : 'baixar-setlist'} tamanho={24} cor={tintaBaixar} />
+            <Text style={[styles.baixarTexto, { color: tintaBaixar }]}>{baixando ? 'Baixando…' : 'Baixar esta setlist'}</Text>
           </Pressable>
         ) : null}
 
         <View style={styles.indicador}>
-          <View style={[styles.badge, { borderColor: cor }]}>
-            <Text style={[styles.glifo, { color: cor }]}>{GLIFO[status.kind]}</Text>
-          </View>
+          <Icone
+            nome={indicador.icone}
+            tamanho={28}
+            cor={indicador.cor}
+            fracao={status.kind === 'partial' && status.need > 0 ? status.have / status.need : undefined}
+          />
           <View style={styles.indicadorTexto}>
-            <Text style={[styles.indicadorRotulo, { color: cor }]}>{ROTULO[status.kind]}</Text>
+            <Text style={[styles.indicadorRotulo, { color: indicador.corRotulo }]}>{indicador.rotulo}</Text>
             <Text style={styles.indicadorSub}>{sublinha(status, online)}</Text>
           </View>
         </View>
@@ -222,29 +271,44 @@ export function SetlistsScreen({
   const offlineSemCache = semCache && sync.fase === 'offline'
   const falhaSemCache = semCache && sync.fase === 'falha'
   const vaziaAposSync = temCache && setlists.length === 0
+  const comBanner = sync.fase === 'falha' && temCache
+  const chip = chipDoStatus(sync)
 
   return (
     <View style={styles.tela}>
       <View style={styles.barra}>
         <Text style={styles.titulo}>SETLISTS</Text>
-        <Text style={styles.status}>{textoDoStatus(sync)}</Text>
+        <View style={styles.chip}>
+          <Icone nome={chip.icone} tamanho={20} cor={chip.cor} />
+          <Text style={[styles.status, { color: chip.cor }]}>
+            {chip.texto}
+            {chip.complemento !== undefined ? <Text style={styles.statusComplemento}>{chip.complemento}</Text> : null}
+          </Text>
+        </View>
         <Pressable style={styles.botaoSecundario} onPress={onBuscar} testID="buscar">
+          <Icone nome="buscar-musica" tamanho={24} cor={dark.text} />
           <Text style={styles.botaoSecundarioTexto}>Buscar música</Text>
         </Pressable>
       </View>
 
-      {/* (e) falha com cache: banner, e a lista continua embaixo */}
-      {sync.fase === 'falha' && temCache ? (
+      {/* (e) falha com cache: banner, e a lista continua embaixo. A causa em
+          errorInk; a idade do dado em muted, porque não é erro, é fato. */}
+      {comBanner && sync.fase === 'falha' ? (
         <View style={styles.banner}>
-          <Text style={styles.bannerTexto}>
-            {`${textoDoErro(sync.messageKey)} · mostrando dados de ${haQuantoTempo(sync.syncedAtMs)}`}
-          </Text>
+          <View style={styles.bannerEsq}>
+            <Icone nome="falha" tamanho={24} cor={dark.errorInk} />
+            <Text style={styles.bannerTexto} numberOfLines={2}>
+              {textoDoErro(sync.messageKey)}
+              <Text style={styles.bannerIdade}>{` · mostrando dados de ${haQuantoTempo(sync.syncedAtMs)}`}</Text>
+            </Text>
+          </View>
           <Pressable
             style={styles.bannerAlvo}
             onPress={onTentarNovamente}
             accessibilityRole="button"
             testID="tentar-banner"
           >
+            <Icone nome="tentar-novamente" tamanho={24} cor={dark.text} />
             <Text style={styles.bannerAcao}>Tentar novamente</Text>
           </Pressable>
         </View>
@@ -252,12 +316,20 @@ export function SetlistsScreen({
 
       {primeiraSincronizacao ? (
         // (a) nunca "você não tem setlists" antes do primeiro 200 (SET-14)
-        <View style={styles.centro} testID="s1a">
+        <View style={[styles.centro, styles.centroSincronizando]} testID="s1a">
+          <Icone nome="baixando" tamanho={28} cor={dark.accentInk} />
           <Text style={styles.centroApoio}>baixando suas setlists pela primeira vez</Text>
         </View>
       ) : offlineSemCache || falhaSemCache ? (
-        // (d) erro acionável — nunca o empty state
+        // (d) erro acionável — nunca o empty state. O ícone repete o do chip
+        // de propósito (a moldura): o chip diz o estado da rede, o bloco diz
+        // a consequência para os dados.
         <View style={styles.centro} testID="s1d">
+          <Icone
+            nome={offlineSemCache ? 'sem-conexao' : 'falha'}
+            tamanho={28}
+            cor={offlineSemCache ? dark.offlineInk : dark.errorInk}
+          />
           <Text style={styles.centroTitulo}>
             {offlineSemCache ? 'sem conexão' : textoDoErro(sync.fase === 'falha' ? sync.messageKey : 'erro.desconhecido')}
           </Text>
@@ -266,12 +338,23 @@ export function SetlistsScreen({
             baixar tudo — depois funciona offline.
           </Text>
           <Pressable style={styles.botaoPrimario} onPress={onTentarNovamente} testID="tentar">
+            <Icone nome="tentar-novamente" tamanho={24} cor={dark.bg} />
             <Text style={styles.botaoPrimarioTexto}>Tentar novamente</Text>
           </Pressable>
         </View>
       ) : vaziaAposSync ? (
-        // (f) empty state honesto: só depois de um sync bem-sucedido
+        // (f) empty state honesto: só depois de um sync bem-sucedido. Vazio
+        // por sucesso, não por falha: sem tinta de alerta, sem botão, e a
+        // segunda casa da marca (§8.4, a única proposta aplicada): só o laço
+        // do oito do PNG oficial, recortado a 60 dp, sem wordmark.
         <View style={styles.centro} testID="s1f">
+          <View style={styles.marca} accessibilityRole="image" accessibilityLabel="Octavia">
+            <Image
+              source={require('../../assets/logo-octavia-dark.png')}
+              style={styles.marcaImagem}
+              resizeMode="stretch"
+            />
+          </View>
           <Text style={styles.centroTitulo}>nenhuma setlist</Text>
           <Text style={styles.centroApoio}>
             Sua conta não tem setlists. Crie na versão web — elas aparecem aqui na próxima
@@ -283,13 +366,14 @@ export function SetlistsScreen({
         <FlatList
           data={setlists}
           keyExtractor={(s) => s.id}
-          contentContainerStyle={styles.lista}
+          contentContainerStyle={[styles.lista, comBanner ? styles.listaComBanner : null]}
           renderItem={({ item }) => (
             <CartaoSetlist
               setlist={item}
               status={status.get(item.id) ?? { kind: 'never', have: 0, need: 0 }}
               online={online}
               baixando={baixando.has(item.id)}
+              compacto={comBanner}
               onAbrir={() => onAbrirSetlist(item.id)}
               onBaixar={() => onBaixarSetlist(item.id)}
             />
@@ -300,14 +384,22 @@ export function SetlistsScreen({
   )
 }
 
+/**
+ * Medidas das molduras. Onde a moldura usa um número fora das escalas do
+ * `theme.ts`, entra o degrau mais próximo (o mesmo critério da E6: a escala
+ * declarada vence o número desenhado) — a lista está no anexo da PR. Ficam
+ * como literal, declarados, os que não têm degrau nem escala: a barra do S1
+ * (120, §5.3 "minha"), o cartão (132 / 112, §5.4), o banner (66), o
+ * indicador (230) e o corpo de 13 do chip e da sublinha (§4.3).
+ */
 const styles = StyleSheet.create({
   tela: { flex: 1, backgroundColor: dark.bg },
   barra: {
-    height: bar.top + space.xxl,
+    height: 120,
     paddingHorizontal: space.xxl,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: space.lg,
+    gap: space.xl,
     borderBottomWidth: bar.hairline,
     borderBottomColor: dark.line,
   },
@@ -315,74 +407,86 @@ const styles = StyleSheet.create({
     flex: 1,
     color: dark.text,
     fontFamily: font.display,
-    fontSize: size.titleLarge,
-    letterSpacing: size.titleLarge * tracking.displayWide,
+    fontSize: size.titleSmall,
+    letterSpacing: size.titleSmall * tracking.displayWide,
   },
-  status: { color: dark.muted, fontFamily: font.ui, fontSize: 13 },
+  chip: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
+  status: { fontFamily: font.ui, fontSize: 13 },
+  statusComplemento: { color: dark.muted },
   lista: { padding: space.xxl, gap: space.md },
+  listaComBanner: { paddingTop: space.md },
   cartao: {
-    minHeight: 138,
+    minHeight: 132,
     flexDirection: 'row',
     alignItems: 'center',
     gap: space.lg,
     paddingHorizontal: space.xxl,
-    paddingVertical: space.xl,
+    paddingVertical: space.lg,
     borderWidth: bar.hairline,
     borderColor: dark.line,
     borderRadius: radius.control,
   },
+  cartaoCompacto: { minHeight: 112 },
   cartaoEsq: { flex: 1, gap: space.md },
-  cartaoDir: { flexDirection: 'row', alignItems: 'center', gap: space.xl },
   nome: {
     color: dark.text,
     fontFamily: font.display,
-    fontSize: 24,
-    letterSpacing: 24 * tracking.display,
+    fontSize: size.title,
+    letterSpacing: size.title * tracking.label,
     textTransform: 'uppercase',
   },
-  meta: { color: dark.muted, fontFamily: font.ui, fontSize: size.body },
-  indicador: { flexDirection: 'row', alignItems: 'center', gap: space.md, width: 220 },
-  badge: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    borderWidth: 2,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  glifo: { fontFamily: font.monoBold, fontSize: 20 },
+  meta: { flexDirection: 'row', alignItems: 'center', gap: space.xl },
+  metadado: { flexDirection: 'row', alignItems: 'center', gap: space.sm, flexShrink: 1 },
+  metadadoTexto: { color: dark.muted, fontFamily: font.ui, fontSize: size.label, flexShrink: 1 },
+  cartaoDir: { flexDirection: 'row', alignItems: 'center', gap: space.xl },
+  indicador: { flexDirection: 'row', alignItems: 'center', gap: space.md, width: 230 },
   indicadorTexto: { flex: 1, gap: space.xs },
-  indicadorRotulo: { fontFamily: font.uiBold, fontSize: size.bodySmall },
-  indicadorSub: { color: dark.muted, fontFamily: font.ui, fontSize: 13 },
+  indicadorRotulo: { fontFamily: font.ui, fontSize: size.label },
+  indicadorSub: { color: dark.muted, fontFamily: font.ui, fontSize: 13, lineHeight: 13 * 1.35 },
   botaoSecundario: {
     height: touch.list + 2,
     paddingHorizontal: space.lg,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.md,
     borderWidth: bar.hairline,
     borderColor: dark.line,
     borderRadius: radius.control,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   botaoSecundarioTexto: { color: dark.text, fontFamily: font.ui, fontSize: size.bodySmall },
-  botaoInativo: { opacity: 0.4 },
+  baixarTexto: { fontFamily: font.ui, fontSize: size.bodySmall },
+  botaoInativo: { borderColor: dark.lineInfo },
   banner: {
-    margin: space.xxl,
-    marginBottom: 0,
-    minHeight: touch.list + 2,
+    marginTop: space.xl,
+    marginHorizontal: space.xxl,
+    minHeight: 66,
     paddingHorizontal: space.xl,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     gap: space.lg,
     borderWidth: bar.hairline,
-    borderColor: dark.error,
+    borderColor: dark.errorInk,
+    borderRadius: radius.control,
+    backgroundColor: `${dark.errorInk}12`,
+  },
+  bannerEsq: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: space.md },
+  bannerTexto: { color: dark.errorInk, fontFamily: font.ui, fontSize: size.bodySmall, flexShrink: 1 },
+  bannerIdade: { color: dark.muted },
+  // 130,7 × 22,7 dp no dump da V1-PRECHECK: o "Tentar novamente" do banner era
+  // o alvo mais baixo do app (corrigido na V1-PR1 para 48). Agora com contorno
+  // próprio e o `tentar-novamente` de 24, como na moldura S1e.
+  bannerAlvo: {
+    minHeight: touch.min,
+    paddingHorizontal: space.lg,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.md,
+    borderWidth: bar.hairline,
+    borderColor: dark.line,
     borderRadius: radius.control,
   },
-  bannerTexto: { color: dark.error, fontFamily: font.uiBold, fontSize: size.bodySmall },
-  // 130,7 × 22,7 dp no dump: o "Tentar novamente" do banner era o alvo mais
-  // baixo do app — e o que o usuário procura justamente quando algo falhou.
-  bannerAlvo: { minWidth: touch.min, minHeight: touch.min, justifyContent: 'center' },
-  bannerAcao: { color: dark.text, fontFamily: font.uiBold, fontSize: size.bodySmall },
+  bannerAcao: { color: dark.text, fontFamily: font.ui, fontSize: size.bodySmall },
   centro: {
     flex: 1,
     alignItems: 'center',
@@ -390,22 +494,36 @@ const styles = StyleSheet.create({
     gap: space.lg,
     paddingHorizontal: space.xxxl,
   },
-  centroTitulo: { color: dark.text, fontFamily: font.uiBold, fontSize: size.titleLarge },
+  centroSincronizando: { gap: space.xl },
+  centroTitulo: {
+    color: dark.text,
+    fontFamily: font.display,
+    fontSize: size.title,
+    letterSpacing: size.title * tracking.display,
+    textTransform: 'uppercase',
+  },
   centroApoio: {
     color: dark.muted,
     fontFamily: font.ui,
-    fontSize: size.body,
+    fontSize: size.bodySmall,
+    lineHeight: size.bodySmall * 1.5,
     textAlign: 'center',
     maxWidth: 560,
   },
   botaoPrimario: {
     marginTop: space.sm,
     height: touch.list,
-    paddingHorizontal: space.xxl,
+    paddingHorizontal: space.xl,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.md,
     borderRadius: radius.control,
     backgroundColor: dark.text,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
-  botaoPrimarioTexto: { color: dark.bg, fontFamily: font.uiBold, fontSize: size.button },
+  botaoPrimarioTexto: { color: dark.bg, fontFamily: font.uiBold, fontSize: size.body },
+  // §8.4: o laço a 60 dp — a moldura recorta o PNG de 952 × 614 a um quarto
+  // (238 × 154) e mostra a janela [88…148] × [6…96]. Medido no arquivo: é o
+  // oito com o ponto, sem o wordmark.
+  marca: { width: 60, height: 90, overflow: 'hidden' },
+  marcaImagem: { position: 'absolute', left: -88, top: -6, width: 238, height: 154 },
 })

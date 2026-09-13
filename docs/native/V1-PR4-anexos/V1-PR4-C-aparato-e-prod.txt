@@ -1,0 +1,188 @@
+$ (C) o aparato — AVD antes × depois, rede, Metro, mock, e a contabilidade de prod
+
+===== C1 — contabilidade de prod: 0 requests a /api/* =====
+  Toda request do app saiu com EXPO_PUBLIC_API_BASE_URL=http://localhost:8788 inline no Metro (nunca em .env), e o
+  único servidor em :8788 era o aceite.py (adb reverse tcp:8788). Prova por dois lados: os `api status=` do logcat
+  em cada estado (anexo A4) e as linhas `REQ` do mock, que batem 1:1 — S1b 3/3, S1e 2/2, S1e-429 1/1, S1f 3/3,
+  S1a 0 (segurado 45 s), S1d-falha 2/2, S1e-a21 3/3; S1c/S1d/S1c-indicadores em avião: `sync skip reason=offline`.
+  logins: 0 (sessão restaurada, `src=restored` em todas as aberturas) · bucket: 0 downloads (prefetch plan n=0 em
+  todas; o "Baixar" nunca foi tocado) · /api/auth/session · /api/proxy · /api/profile: 0 · escrita: 0 · console: 0.
+  Teto restante do bloco: 2 → continua 2.
+
+===== C2 — rede: o corte, provado por ping, ANTES de abrir o app, nas duas rodadas =====
+  ANTES 15:12:42 e DEPOIS 15:21:08: svc wifi disable · svc data disable · cmd connectivity airplane-mode enable
+    settings get global airplane_mode_on → 1        (NÃO é a prova)
+    ping -c 2 -W 2 8.8.8.8 → connect: Network is unreachable        ← a prova, repetida antes de S1d, S1c e S1c-indicadores
+  Os quatro estados que EXIGEM o sync rodar (S1a, S1b, S1e, S1f) rodaram com a rede viva e a base no mock
+  (protocolo do V1-PRECHECK §4.3 e da V1-PR1) — div. 62. Rede devolvida no fim: airplane 0, ping 2/2.
+
+===== C3 — AVD estado ANTES =====
+=== AVD estado ANTES (2026-09-13 15:05:52) — boot 15:05:14, cmd: emulator -avd octavia_tab32 -port 5554 (SEM -no-snapshot-save)
+--- dumpsys package:
+    primaryCpuAbi=arm64-v8a
+    versionCode=1 minSdk=24 targetSdk=36
+    versionName=0.0.1
+    firstInstallTime=2026-09-10 11:42:54
+    lastUpdateTime=2026-09-13 12:17:01
+--- pm path + sha256 + tamanho do base.apk:
+/data/app/~~ROoa56HLsemRjjPRYVvnLQ==/rocks.octavia.app-5x1L63SwH-RKHKw9khuiRw==/base.apk
+c0c1ab51b3076968142da6c10c48095224f7c7543a55e8362d9eb248d9e7ba14  /data/app/~~ROoa56HLsemRjjPRYVvnLQ==/rocks.octavia.app-5x1L63SwH-RKHKw9khuiRw==/base.apk
+-rw-r--r-- 1 system system 231377892 2026-09-13 12:17 /data/app/~~ROoa56HLsemRjjPRYVvnLQ==/rocks.octavia.app-5x1L63SwH-RKHKw9khuiRw==/base.apk
+--- store (run-as):
+d27e6d8478185282d5707fb9459d8e124cdd6bdab9c20aa28df133041e86fc44  content.json
+0a3a06380634b5dabbe1811e29a8f7a6151e1302bfe8a025d16013300a5f8a07  setlists.json
+0a640ed93a71a6e8e389f903dec4b293f9852efb56af9c7cca7745971597b206  files-index.json
+ad2eae0942811adb4d60286516ce318110868f6aa889422ab0cb8b3dc690ea22  files/1786218429715-ux-audit-partitura-12p.pdf
+--- files-index.json:
+{"https://mlxjmpbdchmwplcfislt.supabase.co/storage/v1/object/public/content-files/1786218429715-ux-audit-partitura-12p.pdf":{"name":"1786218429715-ux-audit-partitura-12p.pdf","bytes":242176,"lastUsedMs":1789313690533},"https://mlxjmpbdchmwplcfislt.supabase.co/storage/v1/object/public/content-files/1786295844475-ux-audit-fase-d-cifra.pdf":{"name":"1786295844475-ux-audit-fase-d-cifra.pdf","bytes":1117,"lastUsedMs":1789071627197},"https://mlxjmpbdchmwplcfislt.supabase.co/storage/v1/object/public/content-files/1786295884124-ux-audit-fase-d-offline.pdf":{"name":"1786295884124-ux-audit-fase-d-offline.pdf","bytes":888,"lastUsedMs":1789071628930},"https://mlxjmpbdchmwplcfislt.supabase.co/storage/v1/object/public/content-files/1786218427769-ux-audit-partitura-1p.pdf":{"name":"1786218427769-ux-audit-partitura-1p.pdf","bytes":20821,"lastUsedMs":1789313694615}}
+--- reverse:
+
+--- wm:
+Physical size: 2560x1600
+Physical density: 360
+--- rede:
+0
+--- 8.8.8.8 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 14.739/22.430/30.122/7.692 ms
+
+===== C4 — Metro e .env =====
+  Metro do checkout principal (2db81ce), 15:06:51: "Unable to resolve react-native-svg from apps/native/src/icones/Icone.tsx"
+    → Android Bundling failed · o dev client abriu o DevLauncherErrorActivity ("Octavia keeps stopping"). O node_modules
+    do checkout principal é de 10/09, anterior à #296 (div. 58). Nada foi instalado lá: não é o meu checkout.
+  Metro do ANTES: worktree em 82bfc3e, 15:09:12, EXPO_PUBLIC_API_BASE_URL=http://localhost:8788 inline, --clear
+    (apps/native/src idêntico a origin/main — diff vazio, anexo A cabeçalho). LIMITAÇÃO: isso prova o CÓDIGO,
+    não o AMBIENTE — antes e depois rodaram com o mesmo dev client c0c1ab51… e bundle com o react-native-svg
+    (div. 58, redigida por decisão do Marcel). apps/native/.env copiado do checkout
+    principal para o worktree às 15:09:12 (o app precisa da config do Firebase para restaurar a sessão).
+  Metro do DEPOIS: mesmo worktree com o commit 2 no working tree, 15:18:06, mesma base inline, --clear (div. 50 da PR3).
+  Fim: Metro e mock mortos (0 processos; 8081 e 8788 livres), .env apagado às 15:23:54; varredura .env* no worktree →
+  ./.env.example ./apps/native/.env.example (só os versionados).
+
+===== C5 — store: backup e restauro por run-as, sha256 dos dois lados =====
+  backup:   run-as … 'mkdir -p files/v1-backup && cp -r files/octavia-<uid>/. files/v1-backup/' → BACKUP-OK, os 4 sha256 iguais
+  apagado 2× por rodada (S1a, S1d-falha/S1d), restaurado 2× por rodada (antes do S1c e no fim), fixture 1× por rodada;
+  cada restauro conferido: d27e6d84… · 0a3a0638… · 0a640ed9… · ad2eae09… (os quatro da baseline do fim da V1-PR3).
+  files-index.json pelo CONTEÚDO: idêntico ao da V1-PR3 (lastUsedMs 1789313690533 / …627197 / …628930 / …694615).
+  backup in-app removido no fim (ls files/ | grep -c v1-backup → 0).
+
+===== C6 — encerramento e estado DURÁVEL (depois de um ciclo desligar/ligar) =====
+=== encerramento do aparato (15:23:54)
+metro/mock: 0 processos · 8081: 0 LISTEN · 8788: 0 LISTEN
+.env do worktree apagado: sim · varredura .env* no worktree: ./.env.example ./apps/native/.env.example 
+--- backup in-app removido:
+0
+DevLauncherApp-BridgelessReactNativeDevBundle.js
+octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83
+profileInstalled
+reverse --list: []
+--- rede do AVD de volta:
+0
+2 packets transmitted, 2 received, 0% packet loss, time 1006ms
+rtt min/avg/max/mdev = 15.590/16.283/16.976/0.693 ms
+--- store (dentro do boot):
+d27e6d8478185282d5707fb9459d8e124cdd6bdab9c20aa28df133041e86fc44  content.json
+0a3a06380634b5dabbe1811e29a8f7a6151e1302bfe8a025d16013300a5f8a07  setlists.json
+0a640ed93a71a6e8e389f903dec4b293f9852efb56af9c7cca7745971597b206  files-index.json
+ad2eae0942811adb4d60286516ce318110868f6aa889422ab0cb8b3dc690ea22  files/1786218429715-ux-audit-partitura-12p.pdf
+--- emu kill (snapshot SALVO — sem -no-snapshot-save) 15:23:57:
+OK: killing emulator, bye bye
+OK
+qemu sumiu em ~12 s (15:24:08): 0 processos
+=== reboot para provar a permanência (15:24:26)
+boot_completed=1 (15:24:35)
+--- estado DURÁVEL (depois de um ciclo desligar/ligar):
+    versionCode=1 minSdk=24 targetSdk=36
+    firstInstallTime=2026-09-10 11:42:54
+    lastUpdateTime=2026-09-13 12:17:01
+/data/app/~~ROoa56HLsemRjjPRYVvnLQ==/rocks.octavia.app-5x1L63SwH-RKHKw9khuiRw==/base.apk
+c0c1ab51b3076968142da6c10c48095224f7c7543a55e8362d9eb248d9e7ba14  /data/app/~~ROoa56HLsemRjjPRYVvnLQ==/rocks.octavia.app-5x1L63SwH-RKHKw9khuiRw==/base.apk
+231377892 B
+d27e6d8478185282d5707fb9459d8e124cdd6bdab9c20aa28df133041e86fc44  content.json
+0a3a06380634b5dabbe1811e29a8f7a6151e1302bfe8a025d16013300a5f8a07  setlists.json
+0a640ed93a71a6e8e389f903dec4b293f9852efb56af9c7cca7745971597b206  files-index.json
+ad2eae0942811adb4d60286516ce318110868f6aa889422ab0cb8b3dc690ea22  files/1786218429715-ux-audit-partitura-12p.pdf
+--- files-index.json:
+{"https://mlxjmpbdchmwplcfislt.supabase.co/storage/v1/object/public/content-files/1786218429715-ux-audit-partitura-12p.pdf":{"name":"1786218429715-ux-audit-partitura-12p.pdf","bytes":242176,"lastUsedMs":1789313690533},"https://mlxjmpbdchmwplcfislt.supabase.co/storage/v1/object/public/content-files/1786295844475-ux-audit-fase-d-cifra.pdf":{"name":"1786295844475-ux-audit-fase-d-cifra.pdf","bytes":1117,"lastUsedMs":1789071627197},"https://mlxjmpbdchmwplcfislt.supabase.co/storage/v1/object/public/content-files/1786295884124-ux-audit-fase-d-offline.pdf":{"name":"1786295884124-ux-audit-fase-d-offline.pdf","bytes":888,"lastUsedMs":1789071628930},"https://mlxjmpbdchmwplcfislt.supabase.co/storage/v1/object/public/content-files/1786218427769-ux-audit-partitura-1p.pdf":{"name":"1786218427769-ux-audit-partitura-1p.pdf","bytes":20821,"lastUsedMs":1789313694615}}
+--- files/ do app (sem v1-backup?):
+DevLauncherApp-BridgelessReactNativeDevBundle.js
+octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83
+profileInstalled
+--- rede:
+0
+2 packets transmitted, 2 received, 0% packet loss, time 1003ms
+rtt min/avg/max/mdev = 11.830/13.866/15.902/2.036 ms
+--- reverse: []
+--- emu kill final (15:24:38):
+OK: killing emulator, bye bye
+OK
+qemu: 0 · 8081: 0 · 15:24:49
+List of devices attached
+RX2N8000F3D	device
+
+
+  Leitura: emu kill sem -no-snapshot-save (div. 42) — ~12 s até o qemu sumir (div. 57); reboot 15:24:26 → boot em 9 s;
+  dev client c0c1ab51… 231.377.892 B, lastUpdateTime 2026-09-13 12:17:01 (o da V1-PR3, ainda instalado); os quatro
+  sha256 do store e o files-index.json byte a byte iguais ao ANTES; rede 2/2; reverse []; emu kill final 15:24:38,
+  qemu 0, 8081 livre. Tab S6 RX2N8000F3D: conectado, NÃO recebeu um comando (-s emulator-5554 em 100 % das chamadas).
+
+===== C7 — commit 4 (E3 no Baixar inativo): a captura S1c-e3 e o segundo ciclo =====
+=== S1c com a E3 (commit 4), refeito 15:55:23
+1
+connect: Network is unreachable
+OCTAVIA: net offline
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=67
+OCTAVIA: sync skip reason=offline
+OCTAVIA: prefetch plan n=0 reason=7d
+/sdcard/s.png: 1 file pulled, 0 skipped. 76.4 MB/s (231253 bytes in 0.003s)
+/sdcard/d.xml: 1 file pulled, 0 skipped. 12.0 MB/s (38796 bytes in 0.003s)
+dump S1c-e3:    38796 B xml,   231253 B png
+  buscar                     [2103,123][2488,253]     click=1 desc="Buscar música"
+  baixar-4340bf95            [1406,480][1842,611]     click=1 desc="Baixar esta setlist"
+  baixar-00c2c1f4            [1406,804][1842,935]     click=1 desc="Baixar esta setlist"
+  baixar-8c4413d9            [1406,1128][1842,1259]   click=1 desc="Baixar esta setlist"
+=== encerramento
+.env apagado: sim · metro: 0 · 8081 LISTEN: 0
+reverse: []
+rtt min/avg/max/mdev = 13.324/16.637/19.951/3.316 ms
+d27e6d8478185282d5707fb9459d8e124cdd6bdab9c20aa28df133041e86fc44  content.json
+0a3a06380634b5dabbe1811e29a8f7a6151e1302bfe8a025d16013300a5f8a07  setlists.json
+0a640ed93a71a6e8e389f903dec4b293f9852efb56af9c7cca7745971597b206  files-index.json
+ad2eae0942811adb4d60286516ce318110868f6aa889422ab0cb8b3dc690ea22  files/1786218429715-ux-audit-partitura-12p.pdf
+OK: killing emulator, bye bye
+OK
+qemu: 0 (15:56:04)
+
+  A primeira tentativa desta captura saiu com o screencap ANTES do cache carregar (frame transitório 'sincronizando…')
+  enquanto o dump já trazia a lista — descartada; refeita esperando o `sync skip` no logcat antes de capturar (div. 70).
+
+===== C8 — commit 6 (E12, garantida neutra): a captura S1c-e12 e o terceiro ciclo =====
+=== S1c com a E12 (garantida neutra) 16:20:32
+1
+connect: Network is unreachable
+OCTAVIA: net offline
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=67
+OCTAVIA: sync skip reason=offline
+OCTAVIA: prefetch plan n=0 reason=7d
+/sdcard/s.png: 1 file pulled, 0 skipped. 85.4 MB/s (232071 bytes in 0.003s)
+/sdcard/d.xml: 1 file pulled, 0 skipped. 18.4 MB/s (38796 bytes in 0.002s)
+dump S1c-e12:    38796 B xml,   232071 B png
+  setlist-4340bf95           [72,396][2488,693]       click=1 desc="UX-AUDIT ESTRESSE, sem data, 60 músicas, garantida offline, "
+  baixar-4340bf95            [1406,480][1842,611]     click=1 desc="Baixar esta setlist"
+  setlist-00c2c1f4           [72,720][2488,1017]      click=1 desc="UX-AUDIT SHOW PADRÃO, sem data, 8 músicas, garantida offline"
+  setlist-8c4413d9           [72,1044][2488,1341]     click=1 desc="UX-AUDIT SOLO, sem data, 1 música, garantida offline, todos "
+=== encerramento
+.env apagado: sim · metro: 0 · 8081 LISTEN: 0
+reverse: []
+rtt min/avg/max/mdev = 14.426/14.951/15.477/0.539 ms
+d27e6d8478185282d5707fb9459d8e124cdd6bdab9c20aa28df133041e86fc44  content.json
+0a3a06380634b5dabbe1811e29a8f7a6151e1302bfe8a025d16013300a5f8a07  setlists.json
+0a640ed93a71a6e8e389f903dec4b293f9852efb56af9c7cca7745971597b206  files-index.json
+ad2eae0942811adb4d60286516ce318110868f6aa889422ab0cb8b3dc690ea22  files/1786218429715-ux-audit-partitura-12p.pdf
+OK: killing emulator, bye bye
+OK
+qemu: 0 (16:21:17)
