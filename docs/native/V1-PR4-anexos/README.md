@@ -71,6 +71,16 @@ como está e a regra dos dezessete números vira errata **E10** agora, para a PR
 alta mantida (div. 63) · Q6 `errorInk` na falha sem cache (div. 65) · Q7 o commit de anexos fica.
 Div. 58: a limitação passa a ser declarada nos termos de ambiente, não de código. Div. 60: **§6.1 vence**, `garantida` neutra (ícone `text`, rótulo `muted`), errata **E12** — commit 6.
 
+## CI — `native.yml` da #297
+
+| run | job `android-debug-apk` | Gradle `assembleDebug` |
+|---|---|---|
+| 34771766466 (referência, V1-PR3, já com o `react-native-svg`) | **13m18s** (17:30:01 → 17:43:19Z) | — |
+| 34777518972 (esta PR, head `cb31a40`) | **9m16s** (19:23:01 → 19:32:17Z) | 7m48s |
+
+Quatro minutos abaixo da referência, na direção esperada: a PR não acrescenta módulo nativo e o
+cache do Gradle já tinha o SVG da #296. `build` 2m27s, Vercel verde. Nada a investigar.
+
 ## Divergências — 58 em diante
 
 *(Origens: **P** prompt/pre-check · **D** design/documento · **A** app/código · **T** teste/instrumento.)*
