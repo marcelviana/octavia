@@ -431,6 +431,12 @@ Onde: §6.4, cabeçalho das colunas.
 Causa: escrevi "origem" pensando em vocabulário visual e o leitor lê procedência de arquivo. A diferença só aparece quando alguém tenta instalar a biblioteca para economizar trabalho — e aí ela renderiza outro desenho. Medido no V1-PR3-PRECHECK §5 e no anexo E.
 Consequência registrada: dois dos nomes citados (`alert-triangle`, `x-circle`) também não são os canônicos do Lucide 1.45.0, que os publica como `triangle-alert` e `circle-x`; os antigos seguem resolvendo como alias.
 
+**E5 — o `accentInk` claro mede 5,89:1, não 5,90.**
+Estava escrito: a tabela da §3.2 dá razão de contraste **5,90** para `#4A4FC0` sobre `#F6F1EA`.
+Passa a valer: **5,89** (5,8942…). O valor de cor não muda; muda o número que o descreve.
+Onde: §3.2, linha do `accentInk`, coluna "razão claro".
+Causa: arredondamento de um centésimo. Medido no V1-PR3-PRECHECK (div. 39, anexo G) e reproduzido na V1-PR3 pelo mesmo script do V1-A4 (luminância relativa em sRGB, cores opacas): os outros nove pares reproduzem a folha ao centésimo. Passa nos dois usos (ícone ≥ 3:1, texto ≥ 4,5:1) com a mesma folga de antes.
+
 ---
 
 ## 10 · Proveniência
