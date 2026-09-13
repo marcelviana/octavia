@@ -215,11 +215,34 @@ nenhum — só toca `apps/native/src/screens/IndexScreen.tsx`,
 `apps/native/scripts/` e `docs/` —, então **se subir para perto de 13, é cache
 frio do Gradle, não módulo novo**, e não há o que investigar.
 
-| run | job `android-debug-apk` | Gradle `assembleDebug` |
-|---|---|---|
-| 34771766466 (V1-PR3, compilou o SVG do zero — **não é referência**) | 13m18s | — |
-| 34777518972 (**referência**, V1-PR4, head `cb31a40`) | **9m16s** | 7m48s |
-| *(esta PR)* | *(preenchido quando o run terminar)* | |
+| run | job `android-debug-apk` | Gradle `assembleDebug` | `Post cache` | tarefas |
+|---|---|---|---|---|
+| 34771766466 (V1-PR3, compilou o SVG do zero — **não é referência**) | 13m18s | 11m34s | **21s — SALVOU** | — |
+| 34777518972 (**referência**, V1-PR4, head `cb31a40`) | **9m16s** | 7m47s | 0s — hit | 621 : 621 executed |
+| 34780911672 (**esta PR**, head `4cb3b22`) | **11m55s** | **10m15s** | 1s — hit | **621 : 621 executed** |
+
+**11m55s, contra 9m16s da referência — e não é cache frio.** O +2m39s do job está
+quase todo no Gradle (+2m28s), e o Gradle fez **exatamente o mesmo trabalho**:
+
+- **mesma chave de cache**, byte a byte — `gradle-Linux-0df0eb47967ce576…` nos
+  dois runs, e os dois deram **hit** (o `Post Run actions/cache` levou 0–1 s,
+  porque não havia o que salvar). O que "cache frio" parece está no run da
+  V1-PR3: lá o `Post cache` levou **21 s**, salvando;
+- **621 actionable tasks : 621 executed** nos dois, e 801 linhas `> Task :` nos
+  dois;
+- **27** tarefas de `externalNativeBuild`/CMake e **38** tarefas
+  `:react-native-svg` nos dois. O SVG recompila em todo run — o cache do
+  `actions/cache` guarda o `~/.gradle` baixado, não a saída compilada do
+  módulo —, e recompilou igual nos dois.
+
+Conclusão, com o número na mão: **variação de runner** num passo que é
+CPU-bound (NDK/C++), não módulo novo e não cache frio. Esta PR não toca
+`pnpm-lock.yaml`, não acrescenta dependência e mexe em um `.tsx`, em
+`apps/native/scripts/` e em `docs/`. Nada a investigar.
+
+Nota de precisão sobre a referência: os **13m18s** citados para a V1-PR3 são o
+**job inteiro**; o `assembleDebug` de lá foi **11m34s**. O Gradle desta PR
+(10m15s) está abaixo dos dois números da PR3 e acima dos 7m47s da PR4.
 
 ## sha256 dos anexos de texto
 
