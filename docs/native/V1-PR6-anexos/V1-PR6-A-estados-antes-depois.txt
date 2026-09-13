@@ -1,0 +1,448 @@
+(A) estados antes × depois — bounds de todos os alvos, textos do dump e content-desc
+=====================================================================================
+V1-PR6 · 2026-09-13 · AVD octavia_tab32 (API 32, 2560×1600 @ 360 dpi = 1138×711 dp)
+Densidade 2,25 px/dp. Conta de audit. Tudo em modo avião, o corte provado por `ping`
+antes de CADA abertura do app (anexo C). Tab S6 RX2N8000F3D: zero comandos.
+
+ANTES  = origin/main (1ba1557), Metro do worktree SEM commit nenhum — `apps/native`
+         byte a byte igual ao de origin/main (`git status` limpo na coleta).
+DEPOIS = v1/pr6-acabamento em dc4632a (commit 4), Metro do mesmo worktree.
+
+O S0 NÃO tem estado aqui, nos dois lados: alcançá-lo exige `pm clear` e voltar dele
+exige a senha do Marcel, que a automação não digita. Referência de antes:
+`docs/native/N1-anexos/PR7-a2-token-forjado.png` (#289), elegível pelo
+V1-PRECHECK.md §4.3. O aceite visual do S0 é da V1-PR7.
+
+Estados coletados (5 com moldura + os de aceite):
+
+  S4a-vazio          campo vazio, teclado FECHADO — o comparável com a moldura
+  S4a-vazio-teclado  o mesmo na entrada real (autoFocus abre o teclado)
+  S4a-resultados     termo "aguas", 2 resultados, grupo Biblioteca
+  S4b                termo "xablau", nada encontrado
+  S5                 fim de "UX-AUDIT Show padrão" (8 músicas) — moldura `S5`
+  S5-n-grande        fim de "UX-AUDIT Estresse" (60) — moldura `S5-n-grande`
+  A11-busca-do-palco busca aberta do palco na música 4 de 8 (grupo "Nesta setlist")
+  A11-restaurado     a mesma, depois de fechar: o palco de volta em 4 de 8
+  A11-estresse       (só DEPOIS) a mesma busca na setlist de 60: 43 resultados
+  A14-voltar-inicio  (só DEPOIS) "Voltar ao início" do S5 de 60 → palco em 1 de 60
+
+===== A1 — ANTES =====
+
+--- A11-busca-do-palco
+  ALVOS:
+    fechar-busca [54,88][162,218]            48.0 ×   57.8 dp  desc="◂"
+    campo-busca [236,99][1929,207]         752.4 ×   48.0 dp  desc=""
+    apagar     [1965,99][2075,207]         48.9 ×   48.0 dp  desc="apagar"
+    resultado-2e98efc7 [54,411][2506,591]        1089.8 ×   80.0 dp  desc="1, [UX-AUDIT] Partitura de 12 páginas, Compositor Anônimo, Partitura"
+    resultado-e50f0f23 [54,609][2506,788]        1089.8 ×   79.6 dp  desc="2, [UX-AUDIT] Partitura de 1 página, Compositor Anônimo, Partitura"
+    resultado-66f7174d [54,806][2506,986]        1089.8 ×   80.0 dp  desc="3, [UX-AUDIT] Palco, Gilberto Gil, Letra"
+    resultado-9ba55f7b [54,1004][2506,1183]      1089.8 ×   79.6 dp  desc="4, [UX-AUDIT] Felicidade, Marcelo Jeneci, Cifra"
+    resultado-c40a3784 [54,1201][2506,1381]      1089.8 ×   80.0 dp  desc="5, [UX-AUDIT] Trenzinho do Caipira, Villa-Lobos, Tab"
+    resultado-d5b415ab [54,1399][2506,1465]      1089.8 ×   29.3 dp  desc="6, [UX-AUDIT] Odeio Você, Adoniran Barbosa, Letra"
+  TEXTOS (25):
+    "◂"
+    "a"
+    "apagar"
+    "sem conexão · busca local"
+    "NESTA SETLIST · UX-AUDIT SHOW PADRÃO"
+    "1"
+    "[UX-AUDIT] Partitura de 12 páginas"
+    "Compositor Anônimo"
+    "Partitura"
+    "2"
+    "[UX-AUDIT] Partitura de 1 página"
+    "3"
+    "[UX-AUDIT] Palco"
+    "Gilberto Gil"
+    "Letra"
+    "4"
+    "[UX-AUDIT] Felicidade"
+    "Marcelo Jeneci"
+    "Cifra"
+    "5"
+    "[UX-AUDIT] Trenzinho do Caipira"
+    "Villa-Lobos"
+    "Tab"
+    "6"
+    "[UX-AUDIT] Odeio Você"
+
+--- A11-restaurado
+  ALVOS:
+    borda-voltar [0,198][384,1249]          170.7 ×  467.1 dp  desc=""
+    borda-avancar [2176,198][2560,1249]      170.7 ×  467.1 dp  desc=""
+    auto-scroll [54,1284][203,1432]         66.2 ×   65.8 dp  desc="Rolagem automática, desligada"
+    zoom-menos [239,1284][387,1432]        65.8 ×   65.8 dp  desc="Diminuir o texto"
+    zoom-mais  [423,1284][572,1432]        66.2 ×   65.8 dp  desc="Aumentar o texto"
+    tema       [608,1284][756,1432]        65.8 ×   65.8 dp  desc="Mudar para o tema claro"
+    indice     [792,1284][941,1432]        66.2 ×   65.8 dp  desc="Abrir o índice da setlist"
+    busca      [977,1284][1125,1432]       65.8 ×   65.8 dp  desc="Buscar na biblioteca"
+    sair       [1161,1284][1310,1432]      66.2 ×   65.8 dp  desc="Sair do palco"
+  TEXTOS (4):
+    "4 DE 8"
+    "UX-AUDIT SHOW PADRÃO"
+    "[UX-AUDIT] Felicidade · Marcelo Jeneci · Cifra"
+    "[Intro] C  Am  F  G  C                Am Quando a noite chega e a cidade acende F                 G Eu procuro a estrada que me leva até você C                Am O vento traz lembranças de um tempo que passou F        G         C E a gente segue em frente  [Refrão] F  G  Em  Am  F  G  C"
+
+--- S4a-resultados
+  ALVOS:
+    fechar-busca [54,88][162,218]            48.0 ×   57.8 dp  desc="◂"
+    campo-busca [236,99][1929,207]         752.4 ×   48.0 dp  desc=""
+    apagar     [1965,99][2075,207]         48.9 ×   48.0 dp  desc="apagar"
+    resultado-c81bd22e [54,411][2506,591]        1089.8 ×   80.0 dp  desc="[UX-AUDIT] Águas de Março, Tom Jobim, Cifra"
+    resultado-64594f61 [54,609][2506,788]        1089.8 ×   79.6 dp  desc="[UX-AUDIT] Águas de Março, Tom Jobim, Cifra"
+  TEXTOS (8):
+    "◂"
+    "aguas"
+    "apagar"
+    "sem conexão · busca local"
+    "BIBLIOTECA · 67 MÚSICAS"
+    "[UX-AUDIT] Águas de Março"
+    "Tom Jobim"
+    "Cifra"
+
+--- S4a-vazio-teclado
+  ALVOS:
+    fechar-busca [54,88][162,218]            48.0 ×   57.8 dp  desc="◂"
+    campo-busca [236,99][2075,207]         817.3 ×   48.0 dp  desc=""
+  TEXTOS (3):
+    "◂"
+    "Buscar por título, artista, álbum ou letra"
+    "sem conexão · busca local"
+
+--- S4a-vazio
+  ALVOS:
+    fechar-busca [54,88][162,218]            48.0 ×   57.8 dp  desc="◂"
+    campo-busca [236,99][2075,207]         817.3 ×   48.0 dp  desc=""
+  TEXTOS (3):
+    "◂"
+    "Buscar por título, artista, álbum ou letra"
+    "sem conexão · busca local"
+
+--- S4b
+  ALVOS:
+    fechar-busca [54,88][162,218]            48.0 ×   57.8 dp  desc="◂"
+    campo-busca [236,99][1929,207]         752.4 ×   48.0 dp  desc=""
+    apagar     [1965,99][2075,207]         48.9 ×   48.0 dp  desc="apagar"
+  TEXTOS (6):
+    "◂"
+    "xablau"
+    "apagar"
+    "sem conexão · busca local"
+    "nada encontrado para “xablau”"
+    "busca em título, artista, álbum e letra de toda a biblioteca (67 músicas)"
+
+--- S5-n-grande
+  ALVOS:
+    borda-voltar [0,198][384,1249]          170.7 ×  467.1 dp  desc=""
+    voltar-inicio [945,808][1361,952]        184.9 ×   64.0 dp  desc="Voltar ao início"
+    sair       [1397,808][1615,952]        96.9 ×   64.0 dp  desc="Sair"
+  TEXTOS (6):
+    "60 DE 60"
+    "UX-AUDIT ESTRESSE"
+    "FIM DA SETLIST"
+    "60 músicas  ·  UX-AUDIT Estresse"
+    "Voltar ao início"
+    "Sair"
+
+--- S5
+  ALVOS:
+    borda-voltar [0,198][384,1249]          170.7 ×  467.1 dp  desc=""
+    voltar-inicio [945,808][1361,952]        184.9 ×   64.0 dp  desc="Voltar ao início"
+    sair       [1397,808][1615,952]        96.9 ×   64.0 dp  desc="Sair"
+  TEXTOS (6):
+    "8 DE 8"
+    "UX-AUDIT SHOW PADRÃO"
+    "FIM DA SETLIST"
+    "8 músicas  ·  UX-AUDIT Show padrão"
+    "Voltar ao início"
+    "Sair"
+
+===== A2 — DEPOIS =====
+
+--- A11-busca-do-palco
+  ALVOS:
+    fechar-busca [54,98][162,206]            48.0 ×   48.0 dp  desc="Fechar a busca"
+    campo-busca [317,98][1873,206]         691.6 ×   48.0 dp  desc=""
+    apagar     [1900,98][2008,206]         48.0 ×   48.0 dp  desc="Apagar o que foi digitado"
+    resultado-2e98efc7 [54,383][2506,563]        1089.8 ×   80.0 dp  desc="1, [UX-AUDIT] Partitura de 12 páginas, Compositor Anônimo, Partitura"
+    resultado-e50f0f23 [54,590][2506,770]        1089.8 ×   80.0 dp  desc="2, [UX-AUDIT] Partitura de 1 página, Compositor Anônimo, Partitura"
+    resultado-66f7174d [54,797][2506,977]        1089.8 ×   80.0 dp  desc="3, [UX-AUDIT] Palco, Gilberto Gil, Letra"
+    resultado-9ba55f7b [54,1004][2506,1184]      1089.8 ×   80.0 dp  desc="4, [UX-AUDIT] Felicidade, Marcelo Jeneci, Cifra"
+    resultado-c40a3784 [54,1211][2506,1391]      1089.8 ×   80.0 dp  desc="5, [UX-AUDIT] Trenzinho do Caipira, Villa-Lobos, Tab"
+    resultado-d5b415ab [54,1418][2506,1465]      1089.8 ×   20.9 dp  desc="6, [UX-AUDIT] Odeio Você, Adoniran Barbosa, Letra"
+  TEXTOS (24):
+    "a"
+    "sem conexão"
+    "· busca local"
+    "NESTA SETLIST · UX-AUDIT SHOW PADRÃO"
+    "8 RESULTADOS"
+    "1"
+    "[UX-AUDIT] Partitura de 12 páginas"
+    "Compositor Anônimo"
+    "Partitura"
+    "2"
+    "[UX-AUDIT] Partitura de 1 página"
+    "3"
+    "[UX-AUDIT] Palco"
+    "Gilberto Gil"
+    "Letra"
+    "4"
+    "[UX-AUDIT] Felicidade"
+    "Marcelo Jeneci"
+    "Cifra"
+    "5"
+    "[UX-AUDIT] Trenzinho do Caipira"
+    "Villa-Lobos"
+    "Tab"
+    "[UX-AUDIT] Odeio Você"
+
+--- A11-estresse
+  ALVOS:
+    fechar-busca [54,98][162,206]            48.0 ×   48.0 dp  desc="Fechar a busca"
+    campo-busca [317,98][1873,206]         691.6 ×   48.0 dp  desc=""
+    apagar     [1900,98][2008,206]         48.0 ×   48.0 dp  desc="Apagar o que foi digitado"
+    resultado-5a68b7a2 [54,383][2506,563]        1089.8 ×   80.0 dp  desc="60, [UX-AUDIT] Bis nº 22, Conjunto do Bis, Letra"
+    resultado-581f9454 [54,590][2506,770]        1089.8 ×   80.0 dp  desc="59, [UX-AUDIT] Bis nº 21, Conjunto do Bis, Letra"
+    resultado-3dd56ba1 [54,797][2506,977]        1089.8 ×   80.0 dp  desc="58, [UX-AUDIT] Bis nº 20, Conjunto do Bis, Letra"
+    resultado-c4ae8a08 [54,1004][2506,1184]      1089.8 ×   80.0 dp  desc="57, [UX-AUDIT] Bis nº 19, Conjunto do Bis, Letra"
+    resultado-ca72c653 [54,1211][2506,1391]      1089.8 ×   80.0 dp  desc="56, [UX-AUDIT] Bis nº 18, Conjunto do Bis, Letra"
+    resultado-2b67140c [54,1418][2506,1465]      1089.8 ×   20.9 dp  desc="55, [UX-AUDIT] Bis nº 17, Conjunto do Bis, Letra"
+  TEXTOS (18):
+    "a"
+    "sem conexão"
+    "· busca local"
+    "NESTA SETLIST · UX-AUDIT ESTRESSE"
+    "43 RESULTADOS"
+    "60"
+    "[UX-AUDIT] Bis nº 22"
+    "Conjunto do Bis"
+    "Letra"
+    "59"
+    "[UX-AUDIT] Bis nº 21"
+    "58"
+    "[UX-AUDIT] Bis nº 20"
+    "57"
+    "[UX-AUDIT] Bis nº 19"
+    "56"
+    "[UX-AUDIT] Bis nº 18"
+    "[UX-AUDIT] Bis nº 17"
+
+--- A11-restaurado
+  ALVOS:
+    borda-voltar [0,198][384,1249]          170.7 ×  467.1 dp  desc=""
+    borda-avancar [2176,198][2560,1249]      170.7 ×  467.1 dp  desc=""
+    auto-scroll [54,1284][203,1432]         66.2 ×   65.8 dp  desc="Rolagem automática, desligada"
+    zoom-menos [239,1284][387,1432]        65.8 ×   65.8 dp  desc="Diminuir o texto"
+    zoom-mais  [423,1284][572,1432]        66.2 ×   65.8 dp  desc="Aumentar o texto"
+    tema       [608,1284][756,1432]        65.8 ×   65.8 dp  desc="Mudar para o tema claro"
+    indice     [792,1284][941,1432]        66.2 ×   65.8 dp  desc="Abrir o índice da setlist"
+    busca      [977,1284][1125,1432]       65.8 ×   65.8 dp  desc="Buscar na biblioteca"
+    sair       [1161,1284][1310,1432]      66.2 ×   65.8 dp  desc="Sair do palco"
+  TEXTOS (4):
+    "4 DE 8"
+    "UX-AUDIT SHOW PADRÃO"
+    "[UX-AUDIT] Felicidade · Marcelo Jeneci · Cifra"
+    "[Intro] C  Am  F  G  C                Am Quando a noite chega e a cidade acende F                 G Eu procuro a estrada que me leva até você C                Am O vento traz lembranças de um tempo que passou F        G         C E a gente segue em frente  [Refrão] F  G  Em  Am  F  G  C"
+
+--- A14-voltar-inicio
+  ALVOS:
+    borda-voltar [0,198][384,1249]          170.7 ×  467.1 dp  desc=""
+    borda-avancar [2176,198][2560,1249]      170.7 ×  467.1 dp  desc=""
+    auto-scroll [54,1284][203,1432]         66.2 ×   65.8 dp  desc="Rolagem automática, indisponível: só em texto"
+    zoom-menos [239,1284][387,1432]        65.8 ×   65.8 dp  desc="Diminuir o texto, indisponível: pinça para zoom"
+    zoom-mais  [423,1284][572,1432]        66.2 ×   65.8 dp  desc="Aumentar o texto, indisponível: pinça para zoom"
+    tema       [608,1284][756,1432]        65.8 ×   65.8 dp  desc="Mudar para o tema claro"
+    indice     [792,1284][941,1432]        66.2 ×   65.8 dp  desc="Abrir o índice da setlist"
+    busca      [977,1284][1125,1432]       65.8 ×   65.8 dp  desc="Buscar na biblioteca"
+    sair       [1161,1284][1310,1432]      66.2 ×   65.8 dp  desc="Sair do palco"
+  TEXTOS (6):
+    "1 DE 60"
+    "UX-AUDIT ESTRESSE"
+    "[UX-AUDIT] Partitura de 12 páginas · Compositor Anônimo · Partitura"
+    "página 1 de 12"
+    "Nota: Observação da música 1: modular meio tom acima no último refrão"
+    "pinça para zoom · arraste para mover · deslize para virar a página"
+
+--- S4a-resultados
+  ALVOS:
+    fechar-busca [54,98][162,206]            48.0 ×   48.0 dp  desc="Fechar a busca"
+    campo-busca [317,98][1873,206]         691.6 ×   48.0 dp  desc=""
+    apagar     [1900,98][2008,206]         48.0 ×   48.0 dp  desc="Apagar o que foi digitado"
+    resultado-c81bd22e [54,383][2506,563]        1089.8 ×   80.0 dp  desc="[UX-AUDIT] Águas de Março, Tom Jobim, Cifra"
+    resultado-64594f61 [54,590][2506,770]        1089.8 ×   80.0 dp  desc="[UX-AUDIT] Águas de Março, Tom Jobim, Cifra"
+  TEXTOS (8):
+    "aguas"
+    "sem conexão"
+    "· busca local"
+    "BIBLIOTECA · 67 MÚSICAS"
+    "2 RESULTADOS"
+    "[UX-AUDIT] Águas de Março"
+    "Tom Jobim"
+    "Cifra"
+
+--- S4a-vazio-teclado
+  ALVOS:
+    fechar-busca [54,98][162,206]            48.0 ×   48.0 dp  desc="Fechar a busca"
+    campo-busca [317,98][2008,206]         751.6 ×   48.0 dp  desc=""
+  TEXTOS (4):
+    "Buscar por título, artista, álbum ou letra"
+    "sem conexão"
+    "· busca local"
+    "busca em título, artista, álbum e letra de toda a biblioteca (67 músicas)"
+
+--- S4a-vazio
+  ALVOS:
+    fechar-busca [54,98][162,206]            48.0 ×   48.0 dp  desc="Fechar a busca"
+    campo-busca [317,98][2008,206]         751.6 ×   48.0 dp  desc=""
+  TEXTOS (4):
+    "Buscar por título, artista, álbum ou letra"
+    "sem conexão"
+    "· busca local"
+    "busca em título, artista, álbum e letra de toda a biblioteca (67 músicas)"
+
+--- S4b
+  ALVOS:
+    fechar-busca [54,98][162,206]            48.0 ×   48.0 dp  desc="Fechar a busca"
+    campo-busca [317,98][1873,206]         691.6 ×   48.0 dp  desc=""
+    apagar     [1900,98][2008,206]         48.0 ×   48.0 dp  desc="Apagar o que foi digitado"
+  TEXTOS (5):
+    "xablau"
+    "sem conexão"
+    "· busca local"
+    "nada encontrado para “xablau”"
+    "busca em título, artista, álbum e letra de toda a biblioteca (67 músicas)"
+
+--- S5-n-grande
+  ALVOS:
+    borda-voltar [0,198][384,1249]          170.7 ×  467.1 dp  desc=""
+    voltar-inicio [873,838][1384,982]        227.1 ×   64.0 dp  desc="Voltar ao início"
+    sair       [1420,838][1687,982]       118.7 ×   64.0 dp  desc="Sair"
+  TEXTOS (6):
+    "60 DE 60"
+    "UX-AUDIT ESTRESSE"
+    "FIM DA SETLIST"
+    "60 músicas  ·  UX-AUDIT Estresse"
+    "Voltar ao início"
+    "Sair"
+
+--- S5
+  ALVOS:
+    borda-voltar [0,198][384,1249]          170.7 ×  467.1 dp  desc=""
+    voltar-inicio [873,838][1384,982]        227.1 ×   64.0 dp  desc="Voltar ao início"
+    sair       [1420,838][1687,982]       118.7 ×   64.0 dp  desc="Sair"
+  TEXTOS (6):
+    "8 DE 8"
+    "UX-AUDIT SHOW PADRÃO"
+    "FIM DA SETLIST"
+    "8 músicas  ·  UX-AUDIT Show padrão"
+    "Voltar ao início"
+    "Sair"
+
+
+===== A3 — os alvos, lado a lado =====
+
+Só os alvos que existem nos DOIS lados. Bounds em px, tamanho em dp (2,25 px/dp).
+
+  estado             alvo            ANTES                     dp             DEPOIS                    dp
+  ------------------ --------------- ------------------------- -------------- ------------------------- --------------
+  S4a-vazio          fechar-busca    [54,88][162,218]          48,0 × 57,8    [54,98][162,206]          48,0 × 48,0
+  S4a-vazio          campo-busca     [236,99][2075,207]       817,3 × 48,0    [317,98][2008,206]       751,6 × 48,0
+  S4a-resultados     fechar-busca    [54,88][162,218]          48,0 × 57,8    [54,98][162,206]          48,0 × 48,0
+  S4a-resultados     campo-busca     [236,99][1929,207]       752,4 × 48,0    [317,98][1873,206]       691,6 × 48,0
+  S4a-resultados     apagar          [1965,99][2075,207]       48,9 × 48,0    [1900,98][2008,206]       48,0 × 48,0
+  S4a-resultados     resultado-c81b  [54,411][2506,591]      1089,8 × 80,0    [54,383][2506,563]      1089,8 × 80,0
+  S4a-resultados     resultado-6459  [54,609][2506,788]      1089,8 × 79,6    [54,590][2506,770]      1089,8 × 80,0
+  S4b                fechar-busca    [54,88][162,218]          48,0 × 57,8    [54,98][162,206]          48,0 × 48,0
+  S4b                campo-busca     [236,99][1929,207]       752,4 × 48,0    [317,98][1873,206]       691,6 × 48,0
+  S4b                apagar          [1965,99][2075,207]       48,9 × 48,0    [1900,98][2008,206]       48,0 × 48,0
+  S5                 borda-voltar    [0,198][384,1249]        170,7 × 467,1   [0,198][384,1249]        170,7 × 467,1
+  S5                 voltar-inicio   [945,808][1361,952]      184,9 × 64,0    [873,838][1384,982]      227,1 × 64,0
+  S5                 sair            [1397,808][1615,952]      96,9 × 64,0    [1420,838][1687,982]     118,7 × 64,0
+  S5-n-grande        borda-voltar    [0,198][384,1249]        170,7 × 467,1   [0,198][384,1249]        170,7 × 467,1
+  S5-n-grande        voltar-inicio   [945,808][1361,952]      184,9 × 64,0    [873,838][1384,982]      227,1 × 64,0
+  S5-n-grande        sair            [1397,808][1615,952]      96,9 × 64,0    [1420,838][1687,982]     118,7 × 64,0
+  A11-busca-do-palco fechar-busca    [54,88][162,218]          48,0 × 57,8    [54,98][162,206]          48,0 × 48,0
+  A11-busca-do-palco campo-busca     [236,99][1929,207]       752,4 × 48,0    [317,98][1873,206]       691,6 × 48,0
+  A11-busca-do-palco apagar          [1965,99][2075,207]       48,9 × 48,0    [1900,98][2008,206]       48,0 × 48,0
+  A11-busca-do-palco resultado-2e98  [54,411][2506,591]      1089,8 × 80,0    [54,383][2506,563]      1089,8 × 80,0
+  A11-busca-do-palco resultado-9ba5  [54,1004][2506,1183]    1089,8 × 79,6    [54,1004][2506,1184]    1089,8 × 80,0
+
+  O que muda, e por quê:
+
+  - `fechar-busca` 48,0 × 57,8 → 48,0 × 48,0. Era `botaoSecundario` (altura
+    `touch.list + 2`) com o glifo `◂`; vira o `botaoIcone` quadrado de 48 da
+    moldura, com o ícone `fechar`. Continua ACIMA do mínimo: 48 é o piso, não a
+    folga. O `content-desc` passa de `"◂"` (o glifo, que o leitor de tela lia
+    como pontuação) para `"Fechar a busca"`, que é o nome que a §6.4 lhe dá;
+  - `apagar` 48,9 × 48,0 → 48,0 × 48,0, e o `content-desc` de `"apagar"` (a
+    palavra, que era o próprio rótulo visível) para `"Apagar o que foi
+    digitado"`. Os 0,9 dp a mais eram a largura do texto, não uma folga
+    desenhada;
+  - `campo-busca` encolhe 65,7 dp (S4a-vazio) / 60,8 dp (com termo): a lupa de
+    24 e a folga de 12 entram DENTRO do campo, à esquerda, e o alvo do
+    `TextInput` começa depois delas. O campo em volta vai de 64 para 58 dp
+    (`touch.list + 2`, o número da moldura), e o `minHeight: touch.min` do
+    input — que é o que a V1-PR1 pôs lá — segue segurando o alvo em 48,0;
+  - `voltar-inicio` +42,2 dp e `sair` +21,8 dp de largura: os ícones de 24 mais
+    a folga de 12 entram nos dois botões, e o rótulo sobe de 17 para 18;
+  - `borda-voltar` **não muda em nenhum dígito**, nos dois estados do S5:
+    [0,198][384,1249], 170,7 × 467,1 dp. É a verificação que o prompt pede.
+    O `y2` de 1249 px é o fundo do `meio` por construção — a borda tem
+    `top: 0` e `height = max(altura do meio, 48)`, e 467,1 dp está muito acima
+    de 48. Confere pela aritmética da tela: 1600 px totais − 216 (a
+    `barraBaixo` de 96 dp) − 135 (a barra de tarefas de 60 dp) = 1249. O
+    `meio` em si não aparece no dump (o uiautomator colapsa `ViewGroup` sem
+    informação), e é por isso que a prova é a aritmética mais a identidade
+    antes × depois;
+  - os `resultado-*` que mediam 79,6 dp passam a 80,0: a altura de 80 da
+    moldura é `minHeight` e o conteúdo cabe nela com folga nos dois lados; os
+    0,4 dp eram arredondamento do `paddingVertical` contra o texto.
+
+===== A4 — a fileira de marcas do S5, prevista × medida =====
+
+A previsão é a `instrumentos/marcas.mjs`, que é a MESMA função do
+`EndScreen.tsx`; a medida é a `instrumentos/fileira.mjs` sobre o dump.
+
+  $ node instrumentos/marcas.mjs 8 60 82 83 128 129
+  8 34 dp · folga 5 · fileira 307.0 dp
+  60 10 dp · folga 5 · fileira 895.0 dp
+  82 6 dp · folga 5 · fileira 897.0 dp
+  83 6 dp · folga 4.9 · fileira 899.8 dp
+  128 6 dp · folga 1 · fileira 895.0 dp
+  129 barra sólida 900 × 3
+
+  $ node instrumentos/fileira.mjs dumps-depois/S5.xml dumps-depois/S5-n-grande.xml
+  S5.xml: 8 marcas · largura 33.8 / 34.2 dp · altura 3.1 dp · folga 4.4 / 4.9 / 5.3 dp · fileira 306.7 dp (teto 900)
+  S5-n-grande.xml: 60 marcas · largura 9.8 / 10.2 dp · altura 3.1 dp · folga 4.9 / 5.3 dp · fileira 895.1 dp (teto 900)
+
+  Previsto 307,0 · medido 306,7. Previsto 895,0 · medido 895,1. As duas
+  larguras e as duas folgas aparecem em dois valores porque 34 dp e 5 dp não
+  são múltiplos inteiros de 2,25 px/dp: o Android arredonda cada caixa para o
+  pixel e a diferença aparece como 33,8 / 34,2. É arredondamento de
+  rasterização, não variação de layout — a soma da fileira fecha em 0,3 dp
+  sobre 307 e em 0,1 dp sobre 895.
+
+  Os três números que a §7.1 publica caem todos: 8 → 34, 60 → 10, e 128 como
+  o último N em que a marca ainda é marca. Ver o anexo D2 para de onde sai o
+  128, que não sai da folga fixa.
+
+===== A5 — os textos do dump, o que entrou e o que saiu =====
+
+  S4a-vazio       +"busca em título, artista, álbum e letra de toda a biblioteca (67 músicas)"
+                  −"◂"
+  S4a-resultados  +"2 RESULTADOS"   −"◂"   −"apagar"
+                  "sem conexão · busca local" vira DOIS nós: "sem conexão" (em
+                  offlineInk) e "· busca local" (em muted), que é como a moldura
+                  os pinta. O chip continua com o `testID="chip-offline"`, agora
+                  na `View` que embrulha os dois mais o ícone
+  S4b             −"◂"  −"apagar"; o resto idêntico, inclusive o título
+                  "nada encontrado para “xablau”" SEM uppercase (div. 84)
+  S5              nenhum texto entra nem sai: "8 DE 8", "UX-AUDIT SHOW PADRÃO",
+                  "FIM DA SETLIST", "8 músicas  ·  UX-AUDIT Show padrão",
+                  "Voltar ao início", "Sair" — os seis, idênticos
+  S5-n-grande     idem, com 60
+  A11-*           +"8 RESULTADOS" (e "43 RESULTADOS" na de 60)  −"◂"  −"apagar"
+
+  Nenhum texto EXISTENTE muda de grafia. O que entra é a contagem da régua,
+  que é UI nova da moldura, e o que sai são os dois glifos textuais que viraram
+  ícone. Os `content-desc` que mudam estão no A3.

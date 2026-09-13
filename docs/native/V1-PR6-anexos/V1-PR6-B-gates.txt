@@ -1,0 +1,323 @@
+(B) gates — G1 a G6, os dois controles negativos, suíte, tsc e lint, commit a commit
+=====================================================================================
+V1-PR6 · 2026-09-13. Base de comparação: origin/main (1ba1557).
+
+Os quatro commits:
+
+  09baca9  os gates antes do que medem — fora do catálogo e chave de objeto
+  5b85c81  o S0 pela moldura — a marca real, os ícones dos campos, e a E3
+  c01fc6f  o S4 pelas três molduras — o X, o x-circle, o chip e a régua
+  dc4632a  o S5 pelas duas molduras — o display de 52, as marcas e a regra de N grande
+
+G1 a G4 e os dois controles negativos foram rodados nos QUATRO, num worktree
+destacado e transitório (criado e removido nesta sessão) — não é a saída de
+quatro execuções soltas no tempo, é a mesma máquina lendo cada commit.
+
+G5 e G6 são de DEVICE e rodam sobre os dumps, não sobre o commit: a coleta do
+DEPOIS é do commit 4 (dc4632a), que é onde as três telas já estão.
+
+RESUMO
+------
+  commit    G1     G2            G3        a20  a20:cn  icones  icones:cn  tsc  lint  suíte
+  09baca9   vazio  42 ⊆ 42       50 = 50   0    4       0       18         0    0     768/85
+  5b85c81   vazio  42 ⊆ 42       50 = 50   0    4       0       18         0    0     768/85
+  c01fc6f   vazio  42 ⊆ 43 (+1)  50 = 50   0    4       0       18         0    0     768/85
+  dc4632a   vazio  42 ⊆ 43 (+1)  50 = 50   0    4       0       18         0    0     768/85
+
+  O testID novo é um só, `s4a-vazio` (commit 3): o S4 com o campo vazio deixa
+  de ser uma lista sem nada e passa a ter corpo, então passa a ter âncora. O G2
+  é "antes ⊆ depois" e nenhum sumiu.
+
+  Literais em posição de texto examinados pelo `gate:a20`, por commit:
+  51 (origin/main) → 67 → 67 → 72 → 72. O salto do commit 1 é a posição de
+  CHAVE DE OBJETO, que a varredura não lia; o do commit 3 é a régua do S4.
+
+  Controles negativos: `icones:cn` 17 → **18** no commit 1 (o 7º defeito), e
+  `a20:cn` 3 → **4** (o 6º caso). Os dois seguem com exit 1 em todos os
+  commits — regra sem controle negativo é promessa.
+
+############################################################
+### commit 09baca9 — feat(V1-PR6): os gates antes do que medem — fora do catálogo e chave 
+############################################################
+--- G1 (invariância: packages/core/src + o núcleo do app)
+base=origin/main head=09baca9
+arquivos de packages/core/src existentes na base: 25
+G1: DIFF VAZIO ✓
+--- G2 / G3 (testIDs e linhas de log)
+G2 — testIDs  antes=42  depois=42
+  G2: antes ⊆ depois ✓
+G3 — linhas log( antes=50  depois=50
+  G3: idênticas ✓
+--- G4 gate:a20 (src)
+  escopo: ESTENDIDO (V1-A3 §A3.3 + labels em expressão, V1-PR3 + chave de objeto, V1-PR6)
+  arquivos varridos: 20
+  vocabulário: 45 termos · isenções do produto: 9
+  literais em posição de texto examinados: 67
+  acusações: 0
+    exit=0
+--- G4 gate:a20:cn (controle negativo)
+  ACUSADO scripts/__cn__/A20Falso.tsx:32 [accessibilityLabel] "Zoom in" ← termo "zoom in"
+  ACUSADO scripts/__cn__/A20Falso.tsx:35 [accessibilityHint] "Go back to the previous song" ← termo "previous"
+  ACUSADO scripts/__cn__/A20Falso.tsx:43 [accessibilityLabel{…}] "Auto-scroll, loading" ← termo "loading"
+  ACUSADO scripts/__cn__/A20Falso.tsx:25 [chave: literal] "Loading" ← termo "loading"
+  escopo: ESTENDIDO (V1-A3 §A3.3 + labels em expressão, V1-PR3 + chave de objeto, V1-PR6)
+  arquivos varridos: 2
+  vocabulário: 45 termos · isenções do produto: 9
+  literais em posição de texto examinados: 8
+  acusações: 4
+    exit=1
+--- gate:icones (dados.ts)
+  §6.4: 34 linhas → 33 nomes distintos, + 4 fora do catálogo = 37 esperados
+  anexo D: 34 registros · 68 elementos distintos
+  mapa: 37 nomes · 80 elementos distintos · 37 com 'normal'
+  hex cravado: 0 · tinta por token: 6
+  §6.3 tab: em20 4 cordas · normal 6 cordas · markup de 20 dp no telas.html: idêntico
+  fora do catálogo: 4/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  acusações: 0
+    exit=0
+--- gate:icones:cn (controle negativo)
+  ACUSADO scripts/__cn__/IconesFalso.ts [fora-do-catálogo] o 'normal' de "nada-encontrado" não é, elemento a elemento, nenhum <svg> do telas.html
+  §6.4: 34 linhas → 33 nomes distintos, + 4 fora do catálogo = 37 esperados
+  anexo D: 34 registros · 68 elementos distintos
+  mapa: 37 nomes · 76 elementos distintos · 37 com 'normal'
+  hex cravado: 1 · tinta por token: 6
+  §6.3 tab: em20 6 cordas · normal 6 cordas · markup de 20 dp no telas.html: idêntico
+  fora do catálogo: 3/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  acusações: 18
+    exit=1 esperado
+
+############################################################
+### commit 5b85c81 — feat(V1-PR6): o S0 pela moldura — a marca real, os ícones dos campos,
+############################################################
+--- G1 (invariância: packages/core/src + o núcleo do app)
+base=origin/main head=5b85c81
+arquivos de packages/core/src existentes na base: 25
+G1: DIFF VAZIO ✓
+--- G2 / G3 (testIDs e linhas de log)
+G2 — testIDs  antes=42  depois=42
+  G2: antes ⊆ depois ✓
+G3 — linhas log( antes=50  depois=50
+  G3: idênticas ✓
+--- G4 gate:a20 (src)
+  escopo: ESTENDIDO (V1-A3 §A3.3 + labels em expressão, V1-PR3 + chave de objeto, V1-PR6)
+  arquivos varridos: 20
+  vocabulário: 45 termos · isenções do produto: 9
+  literais em posição de texto examinados: 67
+  acusações: 0
+    exit=0
+--- G4 gate:a20:cn (controle negativo)
+  ACUSADO scripts/__cn__/A20Falso.tsx:32 [accessibilityLabel] "Zoom in" ← termo "zoom in"
+  ACUSADO scripts/__cn__/A20Falso.tsx:35 [accessibilityHint] "Go back to the previous song" ← termo "previous"
+  ACUSADO scripts/__cn__/A20Falso.tsx:43 [accessibilityLabel{…}] "Auto-scroll, loading" ← termo "loading"
+  ACUSADO scripts/__cn__/A20Falso.tsx:25 [chave: literal] "Loading" ← termo "loading"
+  escopo: ESTENDIDO (V1-A3 §A3.3 + labels em expressão, V1-PR3 + chave de objeto, V1-PR6)
+  arquivos varridos: 2
+  vocabulário: 45 termos · isenções do produto: 9
+  literais em posição de texto examinados: 8
+  acusações: 4
+    exit=1
+--- gate:icones (dados.ts)
+  §6.4: 34 linhas → 33 nomes distintos, + 4 fora do catálogo = 37 esperados
+  anexo D: 34 registros · 68 elementos distintos
+  mapa: 37 nomes · 80 elementos distintos · 37 com 'normal'
+  hex cravado: 0 · tinta por token: 6
+  §6.3 tab: em20 4 cordas · normal 6 cordas · markup de 20 dp no telas.html: idêntico
+  fora do catálogo: 4/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  acusações: 0
+    exit=0
+--- gate:icones:cn (controle negativo)
+  ACUSADO scripts/__cn__/IconesFalso.ts [fora-do-catálogo] o 'normal' de "nada-encontrado" não é, elemento a elemento, nenhum <svg> do telas.html
+  §6.4: 34 linhas → 33 nomes distintos, + 4 fora do catálogo = 37 esperados
+  anexo D: 34 registros · 68 elementos distintos
+  mapa: 37 nomes · 76 elementos distintos · 37 com 'normal'
+  hex cravado: 1 · tinta por token: 6
+  §6.3 tab: em20 6 cordas · normal 6 cordas · markup de 20 dp no telas.html: idêntico
+  fora do catálogo: 3/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  acusações: 18
+    exit=1 esperado
+
+############################################################
+### commit c01fc6f — feat(V1-PR6): o S4 pelas três molduras — o X, o x-circle, o chip e a 
+############################################################
+--- G1 (invariância: packages/core/src + o núcleo do app)
+base=origin/main head=c01fc6f
+arquivos de packages/core/src existentes na base: 25
+G1: DIFF VAZIO ✓
+--- G2 / G3 (testIDs e linhas de log)
+G2 — testIDs  antes=42  depois=43
+  G2: antes ⊆ depois ✓
+  testID NOVOS:
+      apps/native/src/screens/SearchScreen.tsx	testID="s4a-vazio"
+G3 — linhas log( antes=50  depois=50
+  G3: idênticas ✓
+--- G4 gate:a20 (src)
+  escopo: ESTENDIDO (V1-A3 §A3.3 + labels em expressão, V1-PR3 + chave de objeto, V1-PR6)
+  arquivos varridos: 20
+  vocabulário: 45 termos · isenções do produto: 9
+  literais em posição de texto examinados: 72
+  acusações: 0
+    exit=0
+--- G4 gate:a20:cn (controle negativo)
+  ACUSADO scripts/__cn__/A20Falso.tsx:32 [accessibilityLabel] "Zoom in" ← termo "zoom in"
+  ACUSADO scripts/__cn__/A20Falso.tsx:35 [accessibilityHint] "Go back to the previous song" ← termo "previous"
+  ACUSADO scripts/__cn__/A20Falso.tsx:43 [accessibilityLabel{…}] "Auto-scroll, loading" ← termo "loading"
+  ACUSADO scripts/__cn__/A20Falso.tsx:25 [chave: literal] "Loading" ← termo "loading"
+  escopo: ESTENDIDO (V1-A3 §A3.3 + labels em expressão, V1-PR3 + chave de objeto, V1-PR6)
+  arquivos varridos: 2
+  vocabulário: 45 termos · isenções do produto: 9
+  literais em posição de texto examinados: 8
+  acusações: 4
+    exit=1
+--- gate:icones (dados.ts)
+  §6.4: 34 linhas → 33 nomes distintos, + 4 fora do catálogo = 37 esperados
+  anexo D: 34 registros · 68 elementos distintos
+  mapa: 37 nomes · 80 elementos distintos · 37 com 'normal'
+  hex cravado: 0 · tinta por token: 6
+  §6.3 tab: em20 4 cordas · normal 6 cordas · markup de 20 dp no telas.html: idêntico
+  fora do catálogo: 4/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  acusações: 0
+    exit=0
+--- gate:icones:cn (controle negativo)
+  ACUSADO scripts/__cn__/IconesFalso.ts [fora-do-catálogo] o 'normal' de "nada-encontrado" não é, elemento a elemento, nenhum <svg> do telas.html
+  §6.4: 34 linhas → 33 nomes distintos, + 4 fora do catálogo = 37 esperados
+  anexo D: 34 registros · 68 elementos distintos
+  mapa: 37 nomes · 76 elementos distintos · 37 com 'normal'
+  hex cravado: 1 · tinta por token: 6
+  §6.3 tab: em20 6 cordas · normal 6 cordas · markup de 20 dp no telas.html: idêntico
+  fora do catálogo: 3/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  acusações: 18
+    exit=1 esperado
+
+############################################################
+### commit dc4632a — feat(V1-PR6): o S5 pelas duas molduras — o display de 52, as marcas e 
+############################################################
+--- G1 (invariância: packages/core/src + o núcleo do app)
+base=origin/main head=dc4632a
+arquivos de packages/core/src existentes na base: 25
+G1: DIFF VAZIO ✓
+--- G2 / G3 (testIDs e linhas de log)
+G2 — testIDs  antes=42  depois=43
+  G2: antes ⊆ depois ✓
+  testID NOVOS:
+      apps/native/src/screens/SearchScreen.tsx	testID="s4a-vazio"
+G3 — linhas log( antes=50  depois=50
+  G3: idênticas ✓
+--- G4 gate:a20 (src)
+  escopo: ESTENDIDO (V1-A3 §A3.3 + labels em expressão, V1-PR3 + chave de objeto, V1-PR6)
+  arquivos varridos: 20
+  vocabulário: 45 termos · isenções do produto: 9
+  literais em posição de texto examinados: 72
+  acusações: 0
+    exit=0
+--- G4 gate:a20:cn (controle negativo)
+  ACUSADO scripts/__cn__/A20Falso.tsx:32 [accessibilityLabel] "Zoom in" ← termo "zoom in"
+  ACUSADO scripts/__cn__/A20Falso.tsx:35 [accessibilityHint] "Go back to the previous song" ← termo "previous"
+  ACUSADO scripts/__cn__/A20Falso.tsx:43 [accessibilityLabel{…}] "Auto-scroll, loading" ← termo "loading"
+  ACUSADO scripts/__cn__/A20Falso.tsx:25 [chave: literal] "Loading" ← termo "loading"
+  escopo: ESTENDIDO (V1-A3 §A3.3 + labels em expressão, V1-PR3 + chave de objeto, V1-PR6)
+  arquivos varridos: 2
+  vocabulário: 45 termos · isenções do produto: 9
+  literais em posição de texto examinados: 8
+  acusações: 4
+    exit=1
+--- gate:icones (dados.ts)
+  §6.4: 34 linhas → 33 nomes distintos, + 4 fora do catálogo = 37 esperados
+  anexo D: 34 registros · 68 elementos distintos
+  mapa: 37 nomes · 80 elementos distintos · 37 com 'normal'
+  hex cravado: 0 · tinta por token: 6
+  §6.3 tab: em20 4 cordas · normal 6 cordas · markup de 20 dp no telas.html: idêntico
+  fora do catálogo: 4/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  acusações: 0
+    exit=0
+--- gate:icones:cn (controle negativo)
+  ACUSADO scripts/__cn__/IconesFalso.ts [fora-do-catálogo] o 'normal' de "nada-encontrado" não é, elemento a elemento, nenhum <svg> do telas.html
+  §6.4: 34 linhas → 33 nomes distintos, + 4 fora do catálogo = 37 esperados
+  anexo D: 34 registros · 68 elementos distintos
+  mapa: 37 nomes · 76 elementos distintos · 37 com 'normal'
+  hex cravado: 1 · tinta por token: 6
+  §6.3 tab: em20 6 cordas · normal 6 cordas · markup de 20 dp no telas.html: idêntico
+  fora do catálogo: 3/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  acusações: 18
+    exit=1 esperado
+
+
+############################################################
+### tsc · lint · suíte, nos quatro commits
+############################################################
+09baca9   tsc native 0 · tsc raiz 0 · lint 0 · Test Files 88 passed | 4 skipped (92) · Tests 768 passed | 85 skipped (853)
+5b85c81   tsc native 0 · tsc raiz 0 · lint 0 · Test Files 88 passed | 4 skipped (92) · Tests 768 passed | 85 skipped (853)
+c01fc6f   tsc native 0 · tsc raiz 0 · lint 0 · Test Files 88 passed | 4 skipped (92) · Tests 768 passed | 85 skipped (853)
+dc4632a   tsc native 0 · tsc raiz 0 · lint 0 · Test Files 88 passed | 4 skipped (92) · Tests 768 passed | 85 skipped (853)
+
+A baseline do prompt é 768/85, e é o que os quatro dão. Esta PR não acrescenta
+teste: a suíte do repositório exclui `apps/**` (`vitest.config.mts`, div. 52 da
+V1-PR3), e é por isso que os gates de nativo são scripts com exit code e
+controle negativo, e não `it()`.
+
+############################################################
+### G5 — alvos de toque ≥ 48 dp, medidos no uiautomator dump
+############################################################
+$ node instrumentos/g5.mjs dumps-antes
+alvos tocáveis medidos: 36 em 8 estados
+ABAIXO de 48 dp: 0 ocorrências / 0 resource-ids
+
+descartados por recorte (div. 21): 1
+  A11-busca-do-palco :: resultado-d5b415ab 1089.8 × 29.3 dp — RECORTADO por android.widget.ScrollView [0,254][2560,1465]
+
+alvos SEM testID (inalcançáveis por resource-id): 0
+    exit=0
+
+$ node instrumentos/g5.mjs dumps-depois
+alvos tocáveis medidos: 54 em 10 estados
+ABAIXO de 48 dp: 0 ocorrências / 0 resource-ids
+
+descartados por recorte (div. 21): 2
+  A11-busca-do-palco :: resultado-d5b415ab 1089.8 × 20.9 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1465]
+  A11-estresse :: resultado-2b67140c 1089.8 × 20.9 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1465]
+
+alvos SEM testID (inalcançáveis por resource-id): 0
+    exit=0
+
+$ node instrumentos/g5.mjs dumps-antes dumps-depois
+alvos tocáveis medidos: 90 em 18 estados
+ABAIXO de 48 dp: 0 ocorrências / 0 resource-ids
+descartados por recorte (div. 21): 3
+    exit=0
+
+  Os dois descartes são o MESMO caso da div. 21: o último resultado da lista,
+  cortado pela viewport, aparece no dump com os bounds visíveis. O `y2` dele
+  coincide com o `y2` do `ScrollView` ancestral, que é a regra de recorte.
+  Existia no ANTES (29,3 dp) e existe no DEPOIS (20,9 dp) — o item inteiro mede
+  80,0 dp nos dois, medido nos que não estão cortados.
+
+############################################################
+### G6 — todo estado alcançável por resource-id, todo alvo com id
+############################################################
+$ sh instrumentos/g6.sh dumps-antes
+  A11-busca-do-palco           âncora=apagar             ids=10  alvos sem id=0 ✓
+  A11-restaurado               âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+  S4a-resultados               âncora=apagar             ids=6   alvos sem id=0 ✓
+  S4a-vazio-teclado            âncora=campo-busca        ids=3   alvos sem id=0 ✓
+  S4a-vazio                    âncora=campo-busca        ids=3   alvos sem id=0 ✓
+  S4b                          âncora=apagar             ids=5   alvos sem id=0 ✓
+  S5-n-grande                  âncora=borda-voltar       ids=3   alvos sem id=0 ✓
+  S5                           âncora=borda-voltar       ids=3   alvos sem id=0 ✓
+  estados: 8   falhas: 0
+    exit=0
+
+$ sh instrumentos/g6.sh dumps-depois
+  A11-busca-do-palco           âncora=apagar             ids=10  alvos sem id=0 ✓
+  A11-estresse                 âncora=apagar             ids=10  alvos sem id=0 ✓
+  A11-restaurado               âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+  A14-voltar-inicio            âncora=auto-scroll        ids=12  alvos sem id=0 ✓
+  S4a-resultados               âncora=apagar             ids=6   alvos sem id=0 ✓
+  S4a-vazio-teclado            âncora=campo-busca        ids=4   alvos sem id=0 ✓
+  S4a-vazio                    âncora=campo-busca        ids=4   alvos sem id=0 ✓
+  S4b                          âncora=apagar             ids=5   alvos sem id=0 ✓
+  S5-n-grande                  âncora=borda-voltar       ids=3   alvos sem id=0 ✓
+  S5                           âncora=borda-voltar       ids=3   alvos sem id=0 ✓
+  estados: 10   falhas: 0
+    exit=0
+
+  Os dois estados do S4 com o campo vazio ganham um id (3 → 4): é o
+  `s4a-vazio` do corpo novo.

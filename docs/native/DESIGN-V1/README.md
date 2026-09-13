@@ -503,6 +503,26 @@ Causa: as molduras foram compostas a olho, em pixel, sem conferir cada número c
 
 Os três já cobertos pela tabela do S1 e reaplicados aqui sem decisão nova: gap ícone ↔ rótulo 10 → `space.md`, padding horizontal do botão 18 → `space.lg`, raio 10 → `radius.control` (o precedente da E6). Literais declarados novos, sem degrau: a altura de item **116** (§5.4), o corpo **13** da sublinha e do rótulo de tipo (§4.4 "chip / status"), e os `minWidth` **32** e **56** do número e da coluna de rótulo — o 56 é o que alinha os quatro rótulos no mesmo x, que é o pedido explícito da nota da moldura.
 
+**Acréscimo da V1-PR6 (S0, S4, S5), pela mesma instrução.** As seis molduras desta PR fecham a série: `S0`, `S4a-vazio`, `S4a-resultados`, `S4b`, `S5` e `S5-n-grande`. A tabela completa, número a número, é o anexo D da V1-PR6 (`docs/native/V1-PR6-anexos/V1-PR6-D-moldura-para-token.txt`, seções D1 a D3), e as linhas novas são estas:
+
+| elemento | moldura | código |
+| --- | --- | --- |
+| gap da coluna do formulário (S0) | 30 | `space.xxl` (32) |
+| tracking do rótulo "ENTRAR" (S0) | .3em | `tracking.displayWide` (.22) |
+| padding-left do rótulo "ENTRAR" (S0) | .3em | `space.xs` (4) |
+| corpo do texto do erro (S0) | 13,5 | `size.label` (14) |
+| raio do `apagar` (S4) | 8 | `radius.chip` (6) |
+| padding esquerdo do campo de busca (S4) | 18 | `space.lg` (16) |
+| padding direito do campo com termo (S4) | 10 | `space.md` (12) |
+| gap da lista e da régua (S4) | 10 | `space.md` (12) |
+| tracking do título do S4b | .1em | `tracking.label` (.08) |
+| gap interno do bloco central (S5) | 26 | `space.xl` (24) |
+| tracking do título do S5 | .2em | `tracking.displayWide` (.22) |
+
+Empates, em que fica **o que o app já tinha** (o critério que a V1-PR5 fixou): gap título ↔ sublinha do resultado 6 → `space.xs` (4); gap da barra do S5 20 → `space.lg` (16); gap bloco ↔ botões do S5 40 → `space.lg` + `space.xl`; padding do botão primário do S5 28 → `space.xxl` (32).
+
+Literais declarados novos, sem degrau nem escala: a folga marca ↔ formulário **140**, a marca **340 × 219** e a coluna do formulário **420** (S0); a altura da régua **38**, a do resultado **80** e a largura do apoio **560** (S4); e os seis números da §7.1 — fileira **900**, marca **34** e **6**, altura **3**, raio **2**, folga **5** (S5). Reaplicados sem decisão nova: raio 10 → `radius.control`, gap 18 → `space.lg`, gap ícone ↔ rótulo 10 → `space.md`, padding horizontal do item 22 → `space.xl`, corpo 13 de chip e sublinha.
+
 **E11 — o `accessibilityLabel="Octavia"` não é mais "o único do app".**
 Estava escrito: na §8.4, "O `accessibilityLabel="Octavia"` (`LoginScreen.tsx:71`) viaja igual nos dois caminhos e continua sendo o único do app".
 Passa a valer: a marca do S1f (§8.4, a proposta aplicada) leva o mesmo `accessibilityLabel="Octavia"` — são **dois**, S0 e S1f, o mesmo rótulo para o mesmo desenho. Decisão do Marcel, 2026-09-13 (V1-PR4): com o rótulo, não decorativa. A frase da §8.4 descrevia o estado de antes da V1-PR4; a V1-PR7 vai ler os dois no dump.
@@ -526,6 +546,20 @@ Esta é de outra natureza que as duas primeiras, e a causa importa: **o desenho 
 
 Onde: as molduras `S2` e `S2-invalidos` e a legenda da `S2-invalidos` no `telas.html` (o arquivo congelado não é reeditado; esta errata prevalece sobre ele). A §6.4 fica como está.
 Causa das duas primeiras: a moldura composta antes de a tabela fechar — o mesmo da E12. Divs. 72, 73 e 76 da V1-PR5.
+
+**E14 — no S0, no S4 e no S5, seis lugares em que a moldura (ou o silêncio do documento) discorda de uma regra declarada, e em que a regra vence.** *(V1-PR6; decisão do Marcel pendente na entrega.)*
+
+**E14.a — "Fora do catálogo" tem cinco habitantes, não dois.** Estava escrito: a §6.4 fecha com "Fora do catálogo, dois desenhos", o `log-in` e o laço do oito. Passa a valer: são **cinco**. As molduras `S0` e `S4b` trazem mais três que nenhuma linha da §6.4 nomeia — `email` e `senha` (os ícones dos dois campos do login) e `nada-encontrado` (a lupa com o X dentro, que a legenda da `S4b` descreve como "composto com as mesmas peças de *busca* e *fechar* — nada de glifo novo"). Os três estão no `dados.ts` desde a V1-PR6, e o `gate:icones` ganhou uma regra (a 5) que cobra a categoria inteira contra o `telas.html` **por forma**: o conjunto de elementos do `normal` de cada um tem de ser exatamente o de um `<svg>` do arquivo congelado, e de um só. Medido: 4/4 (o `log-in` incluído), entre 36 assinaturas distintas nos 131 `<svg>` do arquivo. Onde: §6.4, o parágrafo "Fora do catálogo". Causa: a folha de ícones foi fechada na Fase 1 e as telas do S0 e do S4b foram compostas na Fase 2, com desenhos que a Fase 1 não tinha. Div. 81 da V1-PR6.
+
+**E14.b — a altura do campo do S0 é 60, não os 52 da moldura.** Estava desenhado: os dois campos do `S0` com `height: 52`. Passa a valer: **`touch.list + 4` = 60**, que é o que o app já tinha — e que a **§5.2 nomeia por escrito**, na frase "Confirmam os derivados citados em V1-A2(b): `touch.list + 2` = 58 (botão secundário), **`touch.list + 4` = 60 (campo do login)**". 52 é empate exato entre `touch.min` e `touch.list`, então a regra da E10 não desempata; quem desempata é a §5.2, que fala deste elemento e de mais nenhum. Onde: a moldura `S0`. Div. 84.
+
+**E14.c — o `falha` do S0 é de 20 dp, não dos 24 da §6.4.** Estava escrito: a tabela da §6.4 dá ao `falha` "24 · 1,75" e nomeia a casa dele, "banner de falha · S1e"; a moldura `S0` o desenha em **20 · 1,5** ao lado do texto de erro. Passa a valer: **20**. O critério da E13.b — a tabela vence a moldura no tamanho — valia lá porque a §6.4 **nomeava a casa em disputa** ("linha do S2 com inválidos"); aqui a casa é nova, a §6.4 não fala dela, e a §5.5 põe em 20 dp o "ícone dentro de texto", que é o papel do `falha` no S0. Onde: §6.4, linha do `falha`. Div. 85.
+
+**E14.d — o título do S4b não recebe o `text-transform: uppercase` da moldura.** Estava desenhado: `nada encontrado para "xablau"` com `text-transform: uppercase`, como os títulos centrais do S1f e do S5. Passa a valer: **sem uppercase**. Nos outros dois o uppercase cai sobre string fixa; aqui a string carrega **o termo que o usuário acabou de digitar**, entre aspas curvas — e o `textTransform` do React Native no Android transforma o texto de verdade (aparece maiúsculo até no atributo `text` do dump). O usuário leria de volta em maiúsculas o que digitou em minúsculas, e a §1 diz que o V1 não muda texto. Onde: a moldura `S4b`. Div. 88.
+
+**E14.e — a barra superior do S5 fica como está, em 64 e Raleway.** Estava desenhado: as molduras `S5` e `S5-n-grande` põem a barra superior em **88 dp** e o "n de N" em **IBM Plex Mono 600, 20, .06em** — exatamente como as seis molduras do `S3`. O app tem as duas barras em **64 dp** e `font.display` / `size.title` / `tracking.display`, também iguais **entre si**. Passa a valer: **a §1**, que congela a barra superior do S3 ("no **S3** mexe **só** na barra inferior"). Mudar só a do S5 abriria 24 dp de altura e uma troca de família entre duas telas que o músico atravessa deslizando — que é o mesmo salto que a nota da própria moldura `S5` diz querer evitar quando explica por que manteve a barra inferior vazia ("para que a altura do conteúdo não salte em relação ao S3"). As duas mudam juntas, na PR que tocar o S3, ou não mudam. Onde: as molduras `S5`, `S5-n-grande` e as seis do `S3`. Div. 91.
+
+**E14.f — a regra de N grande da §7.1 tem dois trechos, e o texto só descreve o primeiro.** Estava escrito: "A marca encolhe de 34 dp para o que couber, com **folga fixa de 5** e **piso de 6 dp** por marca: 8 músicas → 34 dp cada; 60 → 10 dp; **128 é o último N em que a marca ainda é uma marca**." Passa a valer: os dois primeiros números saem da folga fixa, e o terceiro **não**. Com folga fixa em 5, a marca bate no piso de 6 em **N = 82** (6,04 dp) e em 83 já não cabe — a regra pararia em 82. O 128 exige um **segundo trecho**: abaixo do piso a marca fica em 6 e quem encolhe é a **folga**, de 4,90 em N=83 até **1,04** em N=128; em 129 daria 0,98, e é aí que a fileira vira a barra sólida de 900 × 3. A curva é contínua nos dois trechos. A conta inteira está no anexo D5 da V1-PR6; a função está no `EndScreen.tsx` e, idêntica, no `V1-PR6-anexos/instrumentos/marcas.mjs`, para reproduzir os três números sem abrir o app. Medido no device: fileira de 306,7 dp para n=8 (307,0 previstos) e 895,1 para n=60 (895,0 previstos). Onde: §7.1. Causa: a regra foi escrita a partir dos três casos desenhados, não da fórmula — e o caso de 128 nunca foi desenhado. Div. 93.
 
 ---
 

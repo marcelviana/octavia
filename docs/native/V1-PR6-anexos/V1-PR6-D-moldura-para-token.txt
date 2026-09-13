@@ -1,0 +1,191 @@
+(D) moldura → token: cada número das seis molduras e o que o código usa
+=====================================================================================
+V1-PR6 · 2026-09-13. Molduras `S0`, `S4a-vazio`, `S4a-resultados`, `S4b`, `S5`
+e `S5-n-grande` do `docs/native/DESIGN-V1/telas.html`.
+
+A regra é a **errata E10** do DESIGN-V1, que a E6 estreou no raio do palco, a
+V1-PR4 mediu inteira e a V1-PR5 já reaplicou: onde a moldura usa um número que
+não é degrau, o código usa o **degrau mais próximo**; onde não há escala, o
+literal fica e é declarado no arquivo. A E10 carrega a instrução de que números
+novos entram na tabela dela, e não numa errata nova — é o que esta PR faz.
+
+Empate (o número da moldura equidista de dois degraus): fica **o que o app já
+tinha**, que é o critério que a V1-PR5 fixou em duas linhas do S2.
+
+===== D1 — S0 =====
+
+  elemento                             moldura   código
+  ------------------------------------ --------- ----------------------------------------
+  folga marca ↔ formulário               140     literal 140 (sem escala: `space` para em 48)
+  a marca                             340 × 219  literal (o PNG de 952 × 614 à largura da moldura)
+  largura da coluna do formulário         420     literal 420 (sem escala)
+  gap da coluna (rótulo · campos · botão)  30     `space.xxl` (32)
+  corpo do rótulo "ENTRAR"                 15     `size.bodySmall` (15) — bate
+  tracking do rótulo "ENTRAR"            .3em     `tracking.displayWide` (.22)
+  padding-left do rótulo (compensação)   .3em     `space.xs` (4) — .3em de 15 = 4,5
+  gap entre os dois campos                 14     `space.md` (12) — o precedente do cartão do S1
+  ALTURA DO CAMPO                          52     **`touch.list + 4` (60)** — ver D4
+  raio do campo                            10     `radius.control` (12) — o precedente da E6
+  padding horizontal do campo              16     `space.lg` (16) — bate
+  gap ícone ↔ texto no campo               12     `space.md` (12) — bate
+  corpo do texto do campo                  15     `size.bodySmall` (15) — bate
+  ícone dos dois campos                20 · 1,5   `<Icone tamanho={20}>` — bate (traço derivado, §5.5)
+  gap ícone ↔ texto do erro                10     `space.md` (12) — o precedente dos botões do S1
+  ÍCONE DO ERRO (`falha`)              20 · 1,5   **20** — ver D4
+  corpo do texto do erro                 13,5     `size.label` (14)
+  entrelinha do texto do erro            1,45     14 × 1,45 — bate
+  altura do botão                          56     `touch.list` (56) — bate
+  raio do botão                            10     `radius.control` (12)
+  gap ícone ↔ rótulo do botão              10     `space.md` (12)
+  corpo do rótulo do botão                 17     `size.button` (17) — bate
+  ícone do botão (`log-in`)           24 · 1,75   `<Icone tamanho={24}>` — bate
+
+===== D2 — S4 (as três molduras) =====
+
+  elemento                             moldura   código
+  ------------------------------------ --------- ----------------------------------------
+  altura da barra superior                 88     `bar.top + space.xl` (88) — bate (§5.3)
+  padding horizontal da barra              24     `space.xl` (24) — bate
+  gap da barra                             18     `space.lg` (16) — o precedente do item do S2
+  botão `fechar`                       48 × 48    `touch.min` × `touch.min` — bate
+  raio do botão `fechar`                   10     `radius.control` (12)
+  altura do campo                          58     `touch.list + 2` (58) — bate (§5.2, derivado)
+  raio do campo                            10     `radius.control` (12)
+  padding esquerdo do campo                18     `space.lg` (16)
+  padding direito do campo (com termo)     10     `space.md` (12)
+  gap dentro do campo                      12     `space.md` (12) — bate
+  corpo do texto do campo                  16     `size.body` (16) — bate
+  lupa do campo                       24 · 1,75   `<Icone tamanho={24}>` — bate
+  alvo do `apagar`                     48 × 48    `touch.min` — bate
+  raio do `apagar`                          8     `radius.chip` (6)
+  gap do chip de rede                       8     `space.sm` (8) — bate
+  corpo do chip de rede                    13     literal 13 (§4.4 "chip / status")
+  ícone do chip de rede                20 · 1,5   bate
+  padding da lista (topo · lados · base) 8/24/24  `space.sm` / `space.xl` / `space.xl` — bate
+  gap da lista                             10     `space.md` (12)
+  altura da régua de seção                 38     literal 38 (altura não é a escala de `space`)
+  gap da régua                             10     `space.md` (12)
+  corpo da régua                           12     `size.labelSmall` (12) — bate
+  tracking da régua                     .14em     `tracking.display` (.14) — bate
+  fio da régua                              1     `bar.hairline` (1) — bate
+  altura do resultado                      80     literal 80 (sem degrau; é `minHeight`)
+  raio do resultado                        10     `radius.control` (12)
+  gap do resultado                         18     `space.lg` (16)
+  padding horizontal do resultado          22     `space.xl` (24) — o precedente do item do S2
+  gap título ↔ sublinha                     6     `space.xs` (4) — empate 4/8, fica o que o app tinha
+  corpo do título do resultado             20     literal 20 (§4.4 "título de item · bate")
+  corpo da sublinha                        13     literal 13 (§4.4 "chip / status")
+  gap do chip de tipo                       8     `space.sm` (8) — bate
+  minWidth do rótulo de tipo               56     literal 56 — o que alinha os rótulos no mesmo x
+  corpo do rótulo de tipo                  13     literal 13
+  ícone de tipo                        20 · 1,5   bate
+  S4a-vazio · gap do bloco                 16     `space.lg` (16) — bate
+  S4a-vazio · ícone `buscar música`    28 · 2,0   bate
+  S4a-vazio · corpo da frase               15     `size.bodySmall` (15) — bate
+  S4b · gap do bloco                       18     `space.lg` (16)
+  S4b · ícone `nada encontrado`        28 · 2,0   bate
+  S4b · corpo do título                    22     `size.title` (22) — bate
+  S4b · tracking do título                .1em    `tracking.label` (.08)
+  S4b · UPPERCASE no título               sim     **não aplicado** — ver D4
+  S4b · corpo do apoio                     15     `size.bodySmall` (15) — bate
+  S4b · largura do apoio                  560     literal 560 (o que o app já tinha)
+  S4b · entrelinha do apoio               1,5     `size.bodySmall × 1,5` — bate
+
+===== D3 — S5 (as duas molduras) =====
+
+  elemento                             moldura   código
+  ------------------------------------ --------- ----------------------------------------
+  ALTURA DA BARRA SUPERIOR                 88     **`bar.top` (64)** — não aplicado, ver D4
+  "n DE N": família · corpo · tracking  mono 600 · 20 · .06em
+                                               **`font.display` · `size.title` · `tracking.display`**
+                                               — não aplicado, ver D4
+  gap da barra superior                    20     `space.lg` (16) — empate 16/24, o que o app tinha
+  nome da setlist · corpo · tracking   13 · .1em  literal 13 · `tracking.label` (.08) — já batia
+  gap do bloco ↔ botões                    40     `space.lg` + `space.xl` (16 + 24) — empate 32/48
+  gap interno do bloco                     26     `space.xl` (24)
+  fileira de marcas — largura útil        900     literal 900 (§7.1)
+  marca — largura máxima · piso         34 · 6    literais (§7.1)
+  marca — altura · raio                  3 · 2    literais (§7.1; 2 não é degrau de `radius`)
+  folga entre marcas                        5     literal 5 (§7.1)
+  corpo do título                          52     `size.display` (52) — bate, e é a estreia do degrau
+  tracking do título                     .2em     `tracking.displayWide` (.22)
+  entrelinha do título                   1,0      `size.display` (52) — bate
+  gap da contagem                          12     `space.md` (12) — bate
+  ícone da contagem                    20 · 1,5   bate
+  corpo da contagem                        16     `size.body` (16) — bate
+  gap entre os dois botões                 16     `space.lg` (16) — bate
+  altura dos botões                        64     `touch.stage` (64) — bate
+  raio dos botões                          12     `radius.control` (12) — bate
+  gap ícone ↔ rótulo                       12     `space.md` (12) — bate
+  padding horizontal do primário           28     `space.xxl` (32) — empate 24/32, o que o app tinha
+  padding horizontal do secundário         24     `space.xl` (24) — bate
+  corpo dos dois rótulos                   18     `size.input` (18) — bate (degrau exato)
+  ícones dos botões                   24 · 1,75   bate
+  altura da barra inferior                 96     `bar.stage` (96) — bate
+
+===== D4 — as cinco em que a REGRA vence a moldura =====
+
+O critério é o da E9 / E12 / E13: quando a moldura e uma regra declarada
+discordam, vence a regra, e a discordância vira errata. As cinco, com a regra
+que venceu:
+
+  1. **altura do campo do S0: 60, não 52.** 52 é empate exato entre `touch.min`
+     (48) e `touch.list` (56), e nesse caso o critério da V1-PR5 é "fica o que
+     o app já tinha" — mas o app tinha 60, que não é nenhum dos dois. O que
+     desempata é a §5.2, que nomeia ESTE elemento por escrito: "Confirmam os
+     derivados citados em V1-A2(b): … `touch.list + 4` = 60 (campo do login)".
+     Baixar para 52 também pioraria o único eixo que o bloco vem protegendo.
+
+  2. **`falha` do S0 a 20, não a 24.** A §6.4 dá 24 ao `falha` e nomeia UMA
+     casa: "banner de falha · S1e". O S0 é casa nova, a moldura desenha 20, e a
+     §5.5 põe em 20 o "ícone dentro de texto", que é o que ele é aqui. O
+     critério da E13.b (a tabela vence) se aplicava porque lá a §6.4 **nomeava
+     a casa** ("linha do S2 com inválidos"); aqui ela não nomeia, e a única
+     evidência da casa é a moldura.
+
+  3. **o título do S4b não recebe o `text-transform: uppercase`.** Nos outros
+     lugares o uppercase cai sobre string fixa — "NENHUMA SETLIST" (S1f),
+     "FIM DA SETLIST" (S5). Aqui a string carrega o termo que o usuário acabou
+     de digitar, entre aspas curvas, e o `textTransform` do RN no Android
+     transforma o TEXTO (aparece maiúsculo até no `text` do dump): o usuário
+     leria de volta em maiúsculas o que digitou em minúsculas. A §1 diz que o
+     V1 não muda texto.
+
+  4. e 5. **a barra superior do S5: 64 e Raleway, não 88 e mono.** As molduras
+     `S5` e `S3` desenham as duas barras superiores iguais entre si — 88 dp e
+     "n de N" em IBM Plex Mono 600 de 20, tracking .06em. O app também as tem
+     iguais entre si, em 64 e Raleway `size.title` com `tracking.display`. A §1
+     congela a barra superior do S3 ("no S3 mexe **só** na barra inferior"), e
+     o S5 não pode mudar sozinho: abriria 24 dp de altura e uma troca de
+     família entre duas telas que o músico atravessa deslizando — que é
+     exatamente o salto que a nota da própria moldura `S5` diz querer evitar
+     quando explica por que manteve a barra inferior vazia. As duas mudam
+     juntas, na PR que tocar o S3, ou não mudam.
+
+===== D5 — de onde saem os 128 da §7.1 =====
+
+A §7.1 publica três números — "8 músicas → 34 dp cada; 60 → 10 dp; 128 é o
+último N em que a marca ainda é uma marca" — e uma regra: "a marca encolhe de
+34 dp para o que couber, com folga fixa de 5 e piso de 6 dp por marca".
+
+Com folga FIXA em 5, os dois primeiros caem e o terceiro não:
+
+  largura(n) = (900 − 5(n−1)) / n, limitada a [6, 34]
+    n = 8  → 108,1 → 34 ✓
+    n = 60 → 10,08 → 10 ✓
+    n = 82 → 6,04  → 6, e 82 × 6 + 81 × 5 = 897 ≤ 900
+    n = 83 → 5,90  → ABAIXO do piso.
+
+Ou seja: com folga fixa a regra pararia em **82**, não em 128. O que faz 128
+aparecer é um segundo trecho, que a §7.1 não escreve mas os números dela
+exigem: **abaixo do piso, a marca fica em 6 e quem encolhe é a folga**.
+
+  folga(n) = (900 − 6n) / (n − 1), com mínimo de 1 dp
+    n = 83  → 4,90   (continua de onde a folga fixa parou — a curva é contínua)
+    n = 128 → 1,039  ✓  ← o último
+    n = 129 → 0,984  ✗  → barra sólida de 900 × 3
+
+O 128 da §7.1 é, portanto, o N em que a folga chega a 1 dp. A função está no
+`EndScreen.tsx` e, idêntica, no `instrumentos/marcas.mjs`, para que qualquer um
+possa refazer a conta sem abrir o app. O anexo A4 compara previsão e medida no
+device: 307,0 previstos contra 306,7 medidos (n=8), 895,0 contra 895,1 (n=60).
