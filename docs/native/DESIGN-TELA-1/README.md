@@ -46,3 +46,5 @@ não listado aqui — conflito novo é divergência declarada, não acomodada.
 sha256:
 - Octavia_Tela_1.html: 9761e4e535fdd7b1d312c3315d0e878daa866d6c06b97cdf9d3b3311e311f20c
 - Octavia_Tela_1.pdf:  b24ef2d8e6862870fe3cb14ebdc1f71f41af1b5a5a795436103ef80181a50e8c
+
+> **Substituído.** O design do N1 desta pasta foi substituído pelo `../DESIGN-V1/` no bloco V1 (V1-PR2, #295, 2026-09-13); este documento fica como está, congelado.
