@@ -1,0 +1,87 @@
+$ (D) cada número das molduras S2 e S2-invalidos, e o token (ou literal declarado) que o código usa
+Critério: a **errata E10** — a escala declarada vence o número desenhado; onde não há degrau, o literal
+fica e é declarado no arquivo. A E10 foi escrita na V1-PR4 exatamente para que a PR5 e a PR6 não
+decidissem de novo, e é o que esta tabela aplica. As linhas marcadas [NOVO] não estão na tabela da E10
+(que é do S1) e **entram nela** — a instrução do prompt: "se esta PR achar números novos, acrescente à
+E10, não crie errata nova".
+
+===== D1 — números fora das escalas (o que a E10 governa) =====
+
+| elemento                                   | moldura | código                    | |
+|--------------------------------------------|---------|---------------------------|-|
+| gap da barra superior (S2)                 | 22      | `space.xl` (24)           | [NOVO] |
+| gap do item (número ↔ texto ↔ tipo)        | 18      | `space.lg` (16)           | [NOVO] |
+| padding horizontal do item                 | 22      | `space.xl` (24)           | [NOVO] |
+| padding vertical da lista                  | 20      | `space.xl` (24)           | [NOVO] — empate 16/24, ficou o que o app já tinha |
+| gap nome ↔ subtítulo do cabeçalho          | 5       | `space.xs` (4)            | [NOVO] |
+| gap ícone ↔ rótulo nos botões              | 10      | `space.md` (12)           | já na E10 (S1) |
+| padding horizontal do botão Buscar         | 18      | `space.lg` (16)           | já na E10 (S1) |
+| raio do `voltar`, do botão e do item       | 10      | `radius.control` (12)     | já na E10 — o precedente da E6 |
+| corpo do nome da setlist no cabeçalho      | 21      | `size.title` (22)         | [NOVO] — empate 20/22, ficou o que o app já tinha |
+| corpo do título de item (S2-invalidos)     | 19      | literal 20                | [NOVO] — a moldura S2 desenha 20 e a S2-invalidos 19 para o MESMO item; vale 20 (§4.4 "bate") |
+| tracking do nome da setlist                | .12em   | `tracking.display` (.14)  | [NOVO] |
+
+===== D2 — números que batem com a escala =====
+
+| elemento                        | moldura | token                              |
+|---------------------------------|---------|------------------------------------|
+| barra superior                  | 88      | `bar.top` + `space.xl` (64+24) — §5.3 |
+| padding horizontal da barra     | 24      | `space.xl`                         |
+| alvo do `voltar`                | 48 × 48 | `touch.min` × `touch.min`          |
+| altura do botão Buscar          | 58      | `touch.list` + 2                   |
+| padding horizontal da lista     | 24      | `space.xl`                         |
+| gap entre linhas da grade       | 8       | `space.sm`                         |
+| gap entre colunas da grade      | 16      | `space.lg`                         |
+| gap ícone ↔ texto nos metadados | 8       | `space.sm`                         |
+| gap ícone ↔ rótulo do tipo      | 8       | `space.sm`                         |
+| gap título ↔ sublinha do item   | 8       | `space.sm`                         |
+| hairline                        | 1       | `bar.hairline`                     |
+| ícones de tipo                  | 20      | `<Icone tamanho={20}>` — §5.5      |
+| ícones de metadado              | 20      | `<Icone tamanho={20}>` — §5.5      |
+| `voltar` e `buscar-musica`      | 24      | `<Icone tamanho={24}>` — §5.5      |
+| corpo do botão Buscar           | 15      | `size.bodySmall`                   |
+
+===== D3 — literais declarados (sem degrau nem escala) =====
+
+| elemento                          | valor | por quê                                            |
+|-----------------------------------|-------|----------------------------------------------------|
+| altura do item                    | 116   | §5.4, "meu" — não há escala de altura de item       |
+| corpo do subtítulo do cabeçalho   | 13    | §4.4 "chip / status 13" — o app já tinha            |
+| corpo da sublinha do item         | 13    | idem — era `size.label` (14), passa a 13 pela moldura |
+| corpo do rótulo de tipo           | 13    | idem                                                 |
+| corpo do título de item           | 20    | §4.4 "título de item 20 · bate"                     |
+| corpo do número de posição        | 20    | idem, em mono                                        |
+| largura da coluna do número       | 32    | `minWidth` — a moldura dá `width: 32`, mas `minWidth` aguenta 3 dígitos (a §7.1 vai até 128) |
+| largura da coluna do rótulo       | 56    | `minWidth` — é o que alinha os quatro rótulos no mesmo x (a nota da moldura) |
+| barra de acento do item atual     | 4     | correção 4 do revisor ao design (herdada, não é da moldura) |
+
+===== D4 — cores, e de onde cada uma vem =====
+
+| elemento                            | moldura   | código                | regra |
+|-------------------------------------|-----------|-----------------------|-------|
+| ícone do `voltar` e do Buscar       | `#F9F5F1` | `dark.text`           | —     |
+| ícone `n-de-musicas`/`data`/`local`  | `#6E6A80` | `dark.lineInfo`       | §3.3 item 1 (ícone) e o `Metadado` da V1-PR4 |
+| texto dos metadados                 | `#A9A5B5` | `dark.muted`          | §3.3 (texto ativo < 24 dp nunca em `lineInfo`) |
+| ícone e rótulo de tipo (válido)     | `#A9A5B5` | `dark.muted`          | —     |
+| título do item válido               | `#F9F5F1` | `dark.text`           | —     |
+| número de posição                   | `#A9A5B5` | `dark.muted`          | §3.3 — **inclusive no inválido** |
+| borda do item e da barra            | `#2A2836` | `dark.line`           | decorativa (§3.1)     |
+| item atual: barra, número, título   | —         | `dark.accent`         | §3.1 — o único uso do acento nesta tela |
+| item atual: fundo                   | —         | `dark.line`           | herdado; neutro       |
+| item inválido: ícone, sublinha, rótulo | `#C9923B` | `dark.offlineInk`  | §6.1 — âmbar é "não está pronta" |
+| item inválido: título               | `#A9A5B5` | `dark.muted`          | a moldura              |
+| item inválido: fundo                | rgba(201,146,59,.05) | `${dark.offlineInk}0D` | 0,05 × 255 = 12,75 ≈ 0x0D |
+
+Nenhum `errorInk` nesta tela, e é deliberado: a nota da moldura S2-invalidos diz por quê — "o app está
+íntegro, o dado está incompleto".
+
+===== D5 — onde a MOLDURA e a TABELA §6.4 discordam, e o que ficou =====
+
+| # | assunto | moldura | §6.4 / prompt | ficou | div. |
+|---|---------|---------|---------------|-------|------|
+| 1 | ícone do botão Buscar | `busca` (lupa pura) | `buscar música` ("entrar na busca a partir da lista · S1 (todos), **S2**") | `buscar-musica` | 72 |
+| 2 | tamanho dos ícones de inválido | 20 (e a legenda da moldura repete "ícone de 20") | 28 (`sem conteúdo` e `tipo desconhecido`: "28 · 2,0"), e o prompt: "em 28 dp" | 28 | 76 |
+| 3 | qual ícone leva o item 10 (`no-key`) | `tipo-desconhecido` | o contrato do core chama `no-key` de falta de CORPO | `sem-conteudo` | 73 |
+
+O critério dos três é o mesmo que a E12 e a div. 60 fixaram na V1-PR4: **a regra declarada vence a
+moldura**. O #3 acrescenta a essa regra o dado do código, que nem a moldura nem a tabela tinham.

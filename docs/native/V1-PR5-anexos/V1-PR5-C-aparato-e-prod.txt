@@ -1,0 +1,116 @@
+$ (C) aparato e contabilidade de prod — o corte de rede provado, AVD, Metro, .env, store
+
+===== C1 — PROD: 0 requests a /api/* =====
+  Teto restante do bloco: 2. Gasto nesta sessão: **0**. Sobram 2.
+
+  A garantia é DUPLA, e as duas são medidas, não declaradas:
+
+  (1) A REDE DO DEVICE ESTAVA MORTA em toda abertura do app. O prompt manda provar por `ping`, não pelo
+      valor do setting, e foi assim nas SEIS aberturas (a saída verbatim está em C2). O app, em avião,
+      registra `sync skip reason=offline` (sync.ts:52) e **não chega a `sync start`** — logo nenhuma
+      request. Toda request HTTP do app passa por `api.ts:106`, que loga `api status=… path=… n=… ms=…`:
+      **zero linhas `api status=` em todo o logcat da sessão**, e zero `sync start` / `sync ok` /
+      `sync fail` / `ratelimit`.
+
+  (2) O METRO SUBIU COM `EXPO_PUBLIC_API_BASE_URL=http://127.0.0.1:9` **inline**, nas duas rodadas —
+      a porta de descarte (RFC 863), no loopback DO DEVICE, sem `adb reverse` para ela. Mesmo que o
+      `estaOnline()` tivesse errado, a request não teria como sair para prod. O `.env` copiado traz um
+      `EXPO_PUBLIC_API_BASE_URL` de prod, e o Expo **não o exportou**: o log do Metro lista só as seis
+      chaves do Firebase ("env: export EXPO_PUBLIC_FIREBASE_*"), porque a variável já estava no ambiente.
+
+  Nenhuma fixture desta PR precisou de servidor mock: o S2 lê do cache, e em avião o cache é tudo.
+  Nenhuma escrita: `run-as cp` sobre o store local, com backup e restauro (C5).
+
+===== C2 — o corte de rede, provado seis vezes =====
+  O comando é `adb -s emulator-5554 shell "ping -c 2 -W 2 8.8.8.8"`; a prova é ele FALHAR.
+
+  ligado o avião (17:xx, antes da rodada ANTES):
+    settings get global airplane_mode_on → 1        (isto NÃO é a prova)
+    ping -c 2 -W 2 8.8.8.8            → connect: Network is unreachable
+    ping -c 1 -W 2 mlxjmpbdchmwplcfislt.supabase.co → ping: unknown host mlxjmpbdchmwplcfislt.supabase.co
+
+  antes de cada uma das SEIS aberturas do app (`pingprova` do instrumentos/env.sh):
+    1. ANTES · primeira abertura          setting=1 · connect: Network is unreachable → OCTAVIA: sync skip reason=offline
+    2. ANTES · com a fixture de inválidos setting=1 · connect: Network is unreachable → OCTAVIA: sync skip reason=offline
+    3. DEPOIS · primeira abertura         setting=1 · connect: Network is unreachable → OCTAVIA: sync skip reason=offline
+    4. DEPOIS · com a fixture de inválidos setting=1 · connect: Network is unreachable → OCTAVIA: sync skip reason=offline
+    5. DEPOIS · A8 (content-ausente)      setting=1 · connect: Network is unreachable → OCTAVIA: sync skip reason=offline
+    6. DEPOIS · A12 (bis)                 setting=1 · connect: Network is unreachable → OCTAVIA: sync skip reason=offline
+
+  Ao contrário da V1-PR4 (div. 62), aqui NENHUM estado exigiu a rede viva: o S2 não tem estado de sync.
+  Os seis são em avião, sem exceção — o ping foi provado antes de todos.
+
+  rede devolvida no fim (17:08):
+    settings get global airplane_mode_on → 0
+    2 packets transmitted, 2 received, 0% packet loss · rtt min/avg/max/mdev = 16.294/16.954/17.615/0.673 ms
+
+===== C3 — AVD =====
+  boot 16:46:22 · cmd: emulator -avd octavia_tab32 -port 5554   (SEM -no-snapshot-save — div. 42)
+  1138 × 711 dp (2560×1600 @ 360 dpi), idêntico ao Tab S6.
+  O Tab S6 (RX2N8000F3D) ficou plugado o tempo todo e **não recebeu um comando**: todo `adb` desta
+  sessão passou por `E()`, que é `adb -s emulator-5554`.
+
+  encerramento — DUAS mortes, e a primeira foi um erro meu (div. 75):
+    17:08:12  `lsof -ti:8081 | xargs kill -9` para liberar a 8081 — e quem escutava a 8081 no host
+              NÃO era o Metro (já morto), era o **próprio qemu**, que é quem abre a porta do
+              `adb reverse`. O emulador morreu de SIGKILL, sem salvar snapshot.
+    17:08:44  reboot para MEDIR o estado durável em vez de supô-lo (C6): boot em ~20 s.
+    17:09:16  `adb -s emulator-5554 emu kill` → "OK: killing emulator, bye bye" · qemu sumiu em ~20 s,
+              snapshot salvo, como manda o protocolo.
+  Efeito do SIGKILL: o `userdata` voltou ao snapshot anterior, que é a baseline do fim da V1-PR4 —
+  medido em C6, os quatro sha256 iguais. Nada se perdeu; o que se perdeu foi o churn de `lastUsedMs`.
+
+===== C4 — Metro e .env =====
+  Worktree próprio: /Users/marcelviana/projects/octavia-v1-pr5, branch v1/pr5-s2 a partir de origin/main (9a7fa6e).
+  `pnpm install --frozen-lockfile` no worktree, 12,4 s, exit 0, `git status` limpo depois — é o passo que a
+  div. 58 da V1-PR4 previu ("a PR5 bate no mesmo problema"): o node_modules do checkout PRINCIPAL continua
+  de 10/09 e não resolve o `react-native-svg`. **Nada foi instalado no checkout principal.**
+
+  Metro do ANTES:  16:53:11, worktree no commit 1, `EXPO_PUBLIC_API_BASE_URL=http://127.0.0.1:9` inline, --clear.
+                   Pronto em ~20 s. O `apps/native/src` do commit 1 é byte a byte o de origin/main (diff vazio).
+  Metro do DEPOIS: 17:00:28, mesmo worktree com o commit 2, mesma base inline, --clear (div. 50 da PR3).
+  LIMITAÇÃO, nos termos da div. 58: o diff vazio prova que o CÓDIGO do antes é o de origin/main; não prova
+  que o AMBIENTE foi o mesmo — antes e depois renderizaram com o mesmo dev client e o mesmo node_modules.
+  Risco baixo (mesmo worktree, mesmo APK, sete minutos de diferença), declarado.
+
+  .env: `apps/native/.env` copiado do checkout principal para o worktree às 16:53:03 — o app precisa da
+  config do Firebase para restaurar a sessão. **Apagado às 17:08:12.** Varredura no fim:
+    ./.env.example
+    ./apps/native/.env.example
+  (só os dois versionados). Nenhum segredo em arquivo novo; o único valor que esta sessão escreveu foi o
+  `EXPO_PUBLIC_API_BASE_URL` inline, na linha de comando.
+
+  Fim do aparato: metro/expo 0 processos · 8081 0 LISTEN · `adb reverse --list` vazio.
+
+===== C5 — store: backup e restauro por run-as, sha256 dos dois lados =====
+  baseline do INÍCIO (= baseline do fim da V1-PR4, os quatro conferidos um a um):
+    d27e6d8478185282d5707fb9459d8e124cdd6bdab9c20aa28df133041e86fc44  content.json
+    0a3a06380634b5dabbe1811e29a8f7a6151e1302bfe8a025d16013300a5f8a07  setlists.json
+    0a640ed93a71a6e8e389f903dec4b293f9852efb56af9c7cca7745971597b206  files-index.json
+    ad2eae0942811adb4d60286516ce318110868f6aa889422ab0cb8b3dc690ea22  files/1786218429715-ux-audit-partitura-12p.pdf
+
+  backup: run-as … "rm -rf files/v1-backup && mkdir -p files/v1-backup && cp -r files/octavia-<uid>/. files/v1-backup/"
+          → BACKUP-OK, os quatro sha256 conferidos no backup.
+  fixtures instaladas por `adb push /data/local/tmp` + `run-as cp` (o `run-as sh -c "cat > path"` dá Permission denied):
+    invalidos-content + invalidos-songs  content 81568ad6a72b19e3141e6c281060d468dce03bdd2265e32065d46387e3f8926c
+                                         setlists 06a5f7c415c386e4dd1923dd569b1f7528967028b7ceec02f8b5b4e6a64c834c
+                                         (2× — uma por rodada; o app leu `cache hit kind=content n=70`)
+    content-ausente (A8)                 setlists com a song órfã na posição 9, content ORIGINAL (n=67)
+    bis (A12)                            setlists com o content da posição 1 repetido na 9, com notes próprias
+  restauros: 2 (um por rodada), cada um conferido — content.json e setlists.json voltam aos sha256 da baseline.
+  `files-index.json` comparado pelo CONTEÚDO, como a V1-PR4 fixou: o conjunto de URLs é idêntico (4 → 4),
+  `name` e `bytes` idênticos nos quatro; só o `lastUsedMs` do PDF de 12 páginas mexeu
+  (1789313690533 → 1789329709221), porque o aceite A14 abriu essa música no palco. Os outros três, intactos.
+  backup in-app removido no fim: `ls files/` → DevLauncherApp-… · octavia-<uid> · profileInstalled (sem v1-backup).
+
+===== C6 — estado DURÁVEL, medido depois de um ciclo desligar/ligar =====
+  (reboot das 17:08:44, antes do `emu kill` definitivo)
+    airplane_mode_on → 0
+    d27e6d8478185282d5707fb9459d8e124cdd6bdab9c20aa28df133041e86fc44  content.json
+    0a3a06380634b5dabbe1811e29a8f7a6151e1302bfe8a025d16013300a5f8a07  setlists.json
+    0a640ed93a71a6e8e389f903dec4b293f9852efb56af9c7cca7745971597b206  files-index.json
+    ad2eae0942811adb4d60286516ce318110868f6aa889422ab0cb8b3dc690ea22  files/1786218429715-ux-audit-partitura-12p.pdf
+    ls files/ → DevLauncherApp-BridgelessReactNativeDevBundle.js · octavia-<uid> · profileInstalled
+    adb reverse --list → vazio
+  Os QUATRO sha256 são os da baseline do fim da V1-PR4, `files-index.json` incluído — o SIGKILL da div. 75
+  desfez até o churn de `lastUsedMs`. O AVD que a V1-PR6 herda é o mesmo que a V1-PR5 recebeu.
