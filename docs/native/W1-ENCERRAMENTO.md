@@ -171,6 +171,40 @@ teste que só cresce), com a lista de exceções **escrita no próprio script**:
 
 ---
 
+## 5.1 Um ganho lateral que não estava no plano: a suíte passou a cobrir o nativo
+
+O commit 1 precisou de um projeto `native` no `vitest.config.mts` para que os testes do
+G7 rodassem. O efeito colateral é grande, e não estava no recorte:
+
+```
+apps/native/src   |   75.62 |     62.5 |   89.58 |   81.93
+apps/native/test  |   80.43 |    56.79 |   81.35 |   86.18
+```
+
+**Pela primeira vez o CI roda teste de unidade sobre `apps/native`** — a linha acima é do
+`build` da PR, não da máquina. Até aqui o `vitest.config.mts` trazia `exclude: ['apps/**']`
+desde o N0-PR1 (a decisão está no `N0-PRECHECK.md` §A3/E4 e reaparece escrita no
+`N1-PRECHECK.md:257`: *"o Vitest exclui `apps/**`"*), e **é essa exclusão que empurrou os
+gates do nativo para fora do Vitest**: o `gate:a20` e o `gate:icones` são scripts `.mjs`
+chamados por `pnpm --filter native`, com controle negativo próprio, porque teste ali não
+rodava.
+
+*Nota de precisão: o aval atribuiu esse fato à "div. 52 do V1"; `grep` nas tabelas de
+divergência do V1 e do V1-PR3 não acha o número 52 com esse conteúdo. O fato é real e
+está medido nos dois pre-checks citados acima — o que não se confirma é a numeração.
+Registrado assim para que ninguém procure uma divergência que não existe.*
+
+**A exclusão deixou de valer para quem escrever teste em `apps/native/test/`.** Vai como
+item da W2 (§10): reavaliar se o `gate:a20` e o `gate:icones` podem virar **testes** em
+vez de scripts. O que se ganharia: um só runner, um só relatório, e o controle negativo
+como `it.fails` em vez de um segundo comando. O que se perderia, e que é o motivo de isto
+ser item de investigação e não decisão: os dois scripts hoje **varrem arquivo** (`src/`
+inteiro) em vez de importar módulo, e é essa varredura que os faz enxergar literal em
+qualquer forma — a mesma propriedade que a div. 53 e a div. 82 do V1 provaram ser
+indispensável. Um teste que importa o mapa de ícones não vê o `.tsx` que não importou.
+
+---
+
 ## 6. Divergências — 123 a 127
 
 Origens: **P** prompt/pre-check · **D** design/documento · **A** app/código · **T** instrumento.
@@ -186,6 +220,32 @@ Origens: **P** prompt/pre-check · **D** design/documento · **A** app/código �
 **Contagem por origem, das cinco**: **A** 3 (124, 125, 126) · **T** 2 (123, 127).
 **A leitura**: nenhuma é regressão desta PR, e **duas são sobre instrumento** — as duas
 que mais custaram. O padrão do `LOGS-OCTAVIA.md` ganhou dois casos e uma variante nova.
+
+---
+
+## 6.1 O incidente de CI, e a faixa provando o próprio valor
+
+Com a PR já aberta, o job `native` (o gate de APK) passou a reprovar em **~27 s**, no
+passo `android-actions/setup-android@v3`, antes de instalar dependência e antes de
+compilar: `Failed to find package 'tools'`. **Não é a PR** — o mesmo passo passou na
+`main` 11 h antes, esta branch não toca `.github/` (diff vazio), e o rerun reproduz
+idêntico (n=2).
+
+**O que merece registro não é a falha, é o que a apontou.** 27 s está muito fora da faixa
+do gate — **9m16s a 14m11s, mediana ~11m49s, n=12**. Com uma referência **pontual**, um
+job que "falhou rápido" teria passado por ruído de CI; com **faixa**, a regra *"sair dela
+é o que merece investigação"* levou ao passo certo em segundos.
+
+> **É a primeira vez que a regra da div. 80 paga por si num caso que NÃO é de duração.**
+> Ela nasceu para impedir que "9m16s" virasse "o custo do gate" (uma medição virando
+> referência sem `n`), e acabou servindo de **detector de falha de infraestrutura** — um
+> uso que ninguém desenhou. Uma faixa não diz só quanto custa: diz **o que é estranho**.
+
+O conserto foi para **PR própria** (`ci: setup-android v4 com `packages` explícito`),
+fora do W1, porque a #301 não pode carregar infraestrutura e porque mergeá-la com o gate
+vermelho poria na `main` um estado em que ninguém sabe se o APK compila — logo depois de
+uma PR que mexe em `files.ts` e `prefetch.ts`. A ordem é: infra primeiro, rebase, e o
+merge da #301 com o gate verde.
 
 ---
 
@@ -289,6 +349,11 @@ decidiu não fazer*. A diferença importa para quem ler depois.
   3. a div. 125 (a mensagem em inglês no S3e), que é escolha de texto de UI;
   4. **a medição do build de release** (opção (b) da decisão 1): se o progresso em voo
      existir fora do dev client, o teto de inatividade volta a ser implementável — e aí o
-     `T₁` já terá população, vinda do `total=`/`ms=` que esta PR passou a registrar.
+     `T₁` já terá população, vinda do `total=`/`ms=` que esta PR passou a registrar;
+  5. **reavaliar o `gate:a20` e o `gate:icones` como TESTES** (§5.1): a exclusão de
+     `apps/**` do Vitest, que os empurrou para fora do runner, deixou de valer. A
+     pergunta a responder antes de mexer: um teste que **importa** módulo enxerga o que a
+     varredura de **arquivo** enxerga? A div. 53 e a div. 82 do V1 dizem que não —
+     então a resposta pode muito bem ser "ficam como estão", e isso também é resultado.
 - **N2** — a div. 121 (`updated_at` do T1-R17) e o estouro de teto que o `lruEvict`
   devolve e o `prefetch.ts` ignora.

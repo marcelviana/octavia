@@ -325,6 +325,14 @@ device, isso significa: cada troca de código exige matar e subir o Metro.
 mediana; onde não houver, "medido uma vez", escrito assim. O bloco V1 aplicou isto ao custo
 do CI (faixa de 12 runs) e ao A17 do Tab S6 (três leituras, cada uma com o seu `n`).
 
+**E a faixa serve para mais do que dizer o custo — ela diz o que é ESTRANHO.** (W1,
+2026-09-14.) Com a PR do W1 aberta, o gate de APK reprovou em **27 s**, contra a faixa de
+**9m16s–14m11s (n=12)**: a falha era do `setup-android`, não do código, e foi o "fora da
+faixa" que apontou para o passo certo em segundos. Com uma referência **pontual**, um job
+que falha rápido passa por ruído de CI. **Primeira vez que a regra pagou por si num caso
+que não era de duração** — e o corolário é prático: quando um número sai da faixa, a
+primeira pergunta não é "o que eu quebrei", é **"o que mudou debaixo de mim"**.
+
 ---
 
 ## Errata W1 (2026-09-14) — duas linhas, e por que uma estende e a outra nasce
