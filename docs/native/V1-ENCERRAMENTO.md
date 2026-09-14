@@ -384,6 +384,41 @@ frase "todos os arquivos neste aparelho". Dar forma a uma promessa é assumi-la.
 | **div. 104** | o download **trava em silêncio** — sete minutos sem `download-error`, sem timeout, sem retentativa | **é a CAUSA; as outras duas são o sintoma.** Medir: há timeout configurado? há caminho de erro que o `prefetch` não alcança? Se não der para medir, declarar aberta e apontar o arquivo |
 | **div. 109** | a barra do palco não marca a fronteira entre comportamento e navegação | **Proposta A, decidida pelo Marcel**: navegação alinhada à direita com a mesma margem de 24,0 dp (`indice` x1 de 792 → 1987 px, vão de 547,1 dp). Não quebra V1-A8, V1-A14 nem as bordas do A14 — conferido em `V1-PR7-anexos/V1-PR7-C-aceite-visual.txt` |
 
+> ### ⚠ Errata W1 (2026-09-14) — as duas prescrições desta tabela estavam erradas, e o pre-check do W1 mediu por quê.
+>
+> 1. **"o tamanho em disco contra o esperado no índice" não funciona.** O `bytes` do
+>    `files-index.json` é escrito **a partir do disco**, no `touch()` (`files.ts:236`,
+>    `const bytes = localizar(url)?.file.size ?? …`), que corre logo depois do download
+>    (`:197`) e **sobrescreve** o valor bom de uma passagem anterior. O índice não é
+>    oráculo: comparar disco contra índice é comparar um número com ele mesmo.
+>    **`W1-PRECHECK.md` div. 111.** E não há terceira fonte — a tabela `content` não tem
+>    coluna de tamanho e o `ContentDTO` não tem campo (**div. 112**).
+> 2. **"`size > 0` é o PISO" também está errado — não é nem o piso.** No Android o
+>    `expo-file-system` abre `FileOutputStream(destination)` **antes do primeiro byte do
+>    corpo** e escreve em cima do alvo; a doc da própria biblioteca o diz no comentário da
+>    função que o app chama. Logo **um download EM VOO já conta como baixado**, e a
+>    checagem de tamanho não alcança a corrida. **div. 113.** Medido no aparelho pelo W1:
+>    o arquivo cresce com o NOME FINAL, de 30.273 a 211.911 B, por 19 segundos
+>    (`W1-anexos/W1-C-aceites-aparelho.txt` §2).
+>
+> **O conserto é de outra natureza**: baixar para um nome temporário e renomear para o
+> lugar só quando o download terminar — o `.tmp` + rename que o `store.ts:42` e o
+> `files.ts:107` já usam, e que o arquivo baixado foi o único a não receber. Com ele,
+> *existir é estar completo*, e a pergunta do tamanho desaparece.
+>
+> **E a div. 104 não era um travamento**: 14.400 bit/s = 1,8 KB/s, **~37 h** para
+> 242.176 B. *"Não estava travado, estava chegando devagar demais"* (Marcel,
+> 2026-09-14). O silêncio veio do `Promise.allSettled` cujo resultado o `baixar()`
+> descarta (**div. 114**), não do OkHttp.
+>
+> **E o item 1 da herança (`cache miss`) fica respondido aqui**: as duas coisas **não se
+> tocam** — um `miss` dispara quando algo não é achado, e o arquivo de 0 byte **foi
+> achado**. A linha que falaria já existia e falou (`file src=disk … bytes=0`). O que
+> faltou não foi log, foi checagem. **div. 120**, e a Q4 do pre-check do W1.
+>
+> *Esta nota não reescreve o registro do bloco V1: anota por cima dele. A PR do conserto
+> é a W1 (`docs/native/W1-ENCERRAMENTO.md`).*
+
 **Duas coisas que entram no mesmo trabalho, e não em outro:**
 
 - **a pergunta que liga as três primeiras**: se o `cache miss` do item 1 abaixo existisse,
