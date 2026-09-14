@@ -37,9 +37,38 @@ if [ -z "$SUMIU" ]; then echo "  G2: antes ⊆ depois ✓"; G2=0
 else echo "  G2: testID SUMIU ✗"; echo "$SUMIU" | sed 's/^/      /'; G2=1; fi
 NOVO=$(comm -13 $tmp/a.ids $tmp/b.ids)
 [ -n "$NOVO" ] && { echo "  testID NOVOS:"; echo "$NOVO" | sed 's/^/      /'; }
+# G3 — W1: de "idênticas" para "antes ⊆ depois, com ERRATA DECLARADA".
+#
+# Por que ele muda de forma: até aqui nenhuma PR precisava acrescentar linha de
+# log, e "idênticas" era a afirmação certa. Esta PR existe **justamente** para
+# acrescentar linhas que faltavam (div. 114: o `download-error` existia em UM
+# lugar no app inteiro) e para mudar uma que dizia menos do que precisa dizer.
+# Então o gate passa a exigir duas coisas, e a segunda é a que importa:
+#
+#   1. toda linha que SUMIU tem de estar na lista de erratas abaixo, com o
+#      motivo — uma linha que some sem estar aqui é contrato quebrado em
+#      silêncio, e é exatamente o que um "⊆" cru deixaria passar;
+#   2. as linhas NOVAS saem impressas, para entrar no commit e no catálogo.
+#
+# ERRATAS DECLARADAS (`W1-PRECHECK.md` §9.3; `LOGS-OCTAVIA.md`, errata W1):
+#   • `file src=download … bytes=<n>` → ganha `total=<n|->` e `ms=<n>`. Sem a
+#     taxa no log, "não abortou" não se separa em "a rede estava sã" e "o teto
+#     não funciona", e o aceite W1-A2 vira impressão.
+ERRATAS='file src=download name=${name} bytes=${bytes}`'
 echo "G3 — linhas log( antes=$(wc -l < $tmp/a.log | tr -d ' ')  depois=$(wc -l < $tmp/b.log | tr -d ' ')"
-DIF=$(diff $tmp/a.log $tmp/b.log)
-if [ -z "$DIF" ]; then echo "  G3: idênticas ✓"; G3=0
-else echo "  G3: DIVERGEM ✗"; echo "$DIF" | head -12 | sed 's/^/      /'; G3=1; fi
+SUMIRAM=$(comm -23 $tmp/a.log $tmp/b.log)
+NOVAS=$(comm -13 $tmp/a.log $tmp/b.log)
+G3=0
+if [ -n "$SUMIRAM" ]; then
+  echo "  linhas que SUMIRAM (cada uma tem de ser errata declarada):"
+  echo "$SUMIRAM" | sed 's/^/      /'
+  echo "$SUMIRAM" | while IFS= read -r L; do
+    echo "$L" | grep -qF "$ERRATAS" || { echo "  G3: linha sumiu SEM ERRATA ✗"; exit 1; }
+  done || G3=1
+  [ $G3 -eq 0 ] && echo "  G3: as que sumiram estão na lista de erratas ✓"
+else
+  echo "  G3: nenhuma linha sumiu ✓"
+fi
+if [ -n "$NOVAS" ]; then echo "  linhas NOVAS (declarar no commit e no catálogo):"; echo "$NOVAS" | sed 's/^/      /'; fi
 rm -rf $tmp
 [ $G2 -eq 0 ] && [ $G3 -eq 0 ]

@@ -1,12 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import {
-  fileVerdict,
-  offlineStatus,
-  selectPrefetch,
-  prefetchOrder,
-  lruEvict,
-  promoteList,
-} from './offline'
+import { offlineStatus, selectPrefetch, prefetchOrder, lruEvict, promoteList } from './offline'
 import type { ContentDTO, SetlistDTO, SetlistSongDTO } from './types'
 
 const BUCKET = 'https://host/storage/v1/object/public/content-files'
@@ -240,6 +233,11 @@ describe('lruEvict (T1-R14 / A9)', () => {
     })
   })
 })
+
+// W1: o import fica numa linha PRÓPRIA para que o diff deste arquivo seja só
+// ADIÇÃO — é o que o G1b exige, e é ele que afirma que nenhuma decisão do core
+// mudou nesta PR.
+import { fileVerdict } from './offline'
 
 describe('fileVerdict — W1: existir é estar completo', () => {
   const pdf = (bytes: number, head = '%PDF-1.7', tail = 'startxref\n900\n%%EOF\n') => ({
