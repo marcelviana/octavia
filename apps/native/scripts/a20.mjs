@@ -18,9 +18,17 @@
  * sete do palco) tem TODOS os seus literais examinados, um a um — senão os
  * sete rótulos do S3 passariam sem serem lidos.
  *
+ * Acréscimo da V1-PR6 (declarado): a posição de CHAVE DE OBJETO passa de
+ * `titulo:`/`apoio:` para `titulo|apoio|texto|rotulo|motivo`. A varredura já
+ * lia `rotulo=` e `motivo=` como PROPS de JSX e não como chaves de objeto, e
+ * desde a V1-PR5 o app põe texto de UI exatamente aí — `rotulo: 'Letra'`,
+ * `motivo: 'nada para mostrar…'` (`IndexScreen`), e agora `texto:` na régua de
+ * seção do S4. Tudo isso passava sem ser lido. É a mesma regra 1 que a PR5
+ * aplicou ao `gate:icones`: o gate vem antes do que ele mede.
+ *
  * Uso:  node scripts/a20.mjs src            → exit 0 se nenhuma acusação
  *       node scripts/a20.mjs scripts/__cn__ → o controle negativo: exit 1,
- *                                             3 acusações (A20Falso.tsx)
+ *                                             4 acusações (A20Falso.tsx)
  * Como comando: `pnpm --filter native gate:a20` e `gate:a20:cn`.
  */
 import { readFileSync, readdirSync, statSync } from 'node:fs'
@@ -51,7 +59,9 @@ const POSICOES = [
   { nome: 'placeholder',        re: /placeholder\s*=\s*(?:"([^"]*)"|\{`([^`]*)`\}|\{'([^']*)'\})/g },
   { nome: 'rotulo',             re: /rotulo\s*=\s*(?:"([^"]*)"|\{`([^`]*)`\}|\{'([^']*)'\})/g },
   { nome: 'motivo',             re: /motivo\s*=\s*(?:"([^"]*)"|\{`([^`]*)`\}|\{'([^']*)'\})/g },
-  { nome: 'titulo:/apoio:',     re: /(?:titulo|apoio)\s*:\s*(?:'([^']*)'|`([^`]*)`|"([^"]*)")/g },
+  // V1-PR6: texto de UI como VALOR de chave de objeto. `rotulo`/`motivo`
+  // aparecem acima como prop de JSX (`rotulo=`); aqui são a outra metade.
+  { nome: 'chave: literal',     re: /(?:titulo|apoio|texto|rotulo|motivo)\s*:\s*(?:'([^']*)'|`([^`]*)`|"([^"]*)")/g },
   { nome: '<Text> literal',     re: /<Text[^>]*>\s*([A-Za-z][^<{]*?)\s*<\/Text>/g },
   { nome: 'Alert.alert',        re: /Alert\.alert\(\s*(?:'([^']*)'|"([^"]*)"|`([^`]*)`)/g },
 ]
@@ -106,7 +116,7 @@ for (const f of arquivos.sort()) {
     }
   }
 }
-console.log(`  escopo: ESTENDIDO (V1-A3 §A3.3 + labels em expressão, V1-PR3)`)
+console.log(`  escopo: ESTENDIDO (V1-A3 §A3.3 + labels em expressão, V1-PR3 + chave de objeto, V1-PR6)`)
 console.log(`  arquivos varridos: ${arquivos.length}`)
 console.log(`  vocabulário: ${VOCAB.length} termos · isenções do produto: ${ANGLICISMOS_DO_PRODUTO.length}`)
 console.log(`  literais em posição de texto examinados: ${examinados}`)

@@ -1,0 +1,160 @@
+(C) aparato e contabilidade de prod — o corte provado, AVD, Metro, .env, store
+=====================================================================================
+V1-PR6 · 2026-09-13.
+
+===== C1 — contabilidade de prod: ZERO =====
+
+  Teto restante do bloco antes desta PR: 2 requests a `/api/*`.
+  Gastos nesta PR: **0**. Teto restante para a V1-PR7: **2**.
+
+  Como se sabe, e não é o valor do setting:
+
+  1. o app foi aberto DUAS vezes (uma no ANTES, uma no DEPOIS) e nas duas o
+     logcat traz `sync skip reason=offline` — a sincronização nem tentou;
+  2. `adb logcat -d -s ReactNativeJS | grep -c "OCTAVIA: sync ok\|OCTAVIA: api "`
+     → **0** ao fim da sessão;
+  3. `content.json` e `setlists.json` têm o MESMO sha256 no início e no fim
+     (C4): nada chegou da rede para escrever.
+
+===== C2 — o avião provado por `ping`, quatro vezes =====
+
+  A regra do bloco: avião não é o valor do setting, é o `ping` falhando. O
+  setting é lido junto, mas quem prova é a segunda linha.
+
+  PROVA 0 — o estado em que o AVD foi encontrado (rede VIVA, e é por isso que
+  a prova existe):
+    $ adb -s emulator-5554 shell settings get global airplane_mode_on
+    0
+    $ adb -s emulator-5554 shell "ping -c 2 -W 2 8.8.8.8"
+    2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+    rtt min/avg/max/mdev = 46.266/129.704/213.142/83.438 ms
+
+  **Esta prova 0 é o cenário que já custou duas requests ao bloco**, e desta vez
+  pegou antes de o app abrir. O `V1-PR3-PRECHECK.md` §9 registra o gasto e a
+  causa, com estas palavras: "Pus o AVD em avião com `settings put global
+  airplane_mode_on 1`, li de volta `1`, e **tratei isso como prova**. Não é. O
+  rádio continuou ligado — o primeiro logcat do app diz `net online`, e o sync
+  saiu." Foram 2 requests (`GET /api/setlists` e `GET /api/content`) num alvo de
+  0, e é de lá que vem o teto de 2 que esta PR herdou e não tocou.
+
+  A diferença desta sessão não é ter ligado o avião: é ter medido o estado
+  ANTERIOR ao corte e achado a rede viva. O setting dizia 0 e o `ping` dizia 0 —
+  os dois concordavam, e é justamente quando eles concordam que o hábito de
+  pular a prova se forma. Quando discordam, é a PR3.
+
+  Corte: `settings put global airplane_mode_on 1` + broadcast AIRPLANE_MODE.
+
+  PROVA 1 — logo depois do corte, ANTES de qualquer abertura:
+    setting=1
+    connect: Network is unreachable
+
+  PROVA 2 — depois do `adb reverse`, ANTES da abertura do ANTES:
+    setting=1
+    connect: Network is unreachable
+
+  PROVA 3 — ANTES da abertura do DEPOIS (bundle dos quatro commits):
+    setting=1
+    connect: Network is unreachable
+
+  PROVA 4 — ao fim de toda a medição:
+    setting=1
+    connect: Network is unreachable
+
+  O `adb reverse tcp:8081 tcp:8081` atravessa o avião porque não é rede: é o
+  canal do adb. É por isso que o Metro serve o bundle com a rede cortada.
+
+===== C3 — AVD: antes × depois =====
+
+  AVD `octavia_tab32` (API 32, pixel_tablet), `-port 5554` obrigatório (div. 20),
+  subido SEM `-no-snapshot-save` (div. 42).
+
+    $ adb -s emulator-5554 shell wm size     → Physical size: 2560x1600
+    $ adb -s emulator-5554 shell wm density  → Physical density: 360
+    2560×1600 @ 360 dpi = 1138 × 711 dp, idêntico ao Tab S6.
+
+  Dois ciclos completos nesta sessão:
+    boot 1 → medição ANTES e DEPOIS → `emu kill` (22,6 s salvando o snapshot)
+    boot 2 → medição do store DURÁVEL → `emu kill`
+
+  Encerramento, pela div. 75, nos dois tempos e nesta ordem:
+    1. `adb -s emulator-5554 reverse --remove-all` — e a lista fica vazia;
+    2. `lsof -ti:8081 | xargs ps -o pid,command -p` ANTES de matar nada:
+         37948 node .../expo/bin/cli start --port 8081      ← o Metro
+         38051 adb -L tcp:5037 fork-server server           ← o SERVIDOR ADB
+       Este segundo PID é a lição inteira: um `lsof -ti:8081 | xargs kill -9`
+       teria levado o adb junto. Depois do `--remove-all` o qemu não aparece
+       mais, que é o outro lado da mesma regra.
+    3. `pkill -f "expo/bin/cli start"` — pelo comando, não pelo PID da porta;
+    4. 8081 livre, conferido;
+    5. `emu kill`, que salva o snapshot.
+
+  Estado em que o AVD FICA, e a diferença declarada: **modo avião LIGADO**
+  (`airplane_mode_on = 1`), onde foi encontrado com 0. Deixei ligado de
+  propósito: reduz o risco de um sync acidental contra o teto de 2 requests que
+  a V1-PR7 herda. **Isso não dispensa a prova**: a sessão seguinte tem de rodar
+  o `ping` do mesmo jeito, porque o setting nunca foi a evidência.
+
+===== C4 — store: os quatro sha256, início × fim × durável =====
+
+  Nenhuma escrita da automação: o store não foi tocado, só lido por `run-as`.
+
+  INÍCIO (= baseline do fim da V1-PR5):
+    d27e6d8478185282d5707fb9459d8e124cdd6bdab9c20aa28df133041e86fc44  content.json
+    0a3a06380634b5dabbe1811e29a8f7a6151e1302bfe8a025d16013300a5f8a07  setlists.json
+    0a640ed93a71a6e8e389f903dec4b293f9852efb56af9c7cca7745971597b206  files-index.json
+    ad2eae0942811adb4d60286516ce318110868f6aa889422ab0cb8b3dc690ea22  files/1786218429715-ux-audit-partitura-12p.pdf
+
+  FIM da medição, e DURÁVEL (depois do `emu kill` + boot 2, os dois iguais):
+    d27e6d8478185282d5707fb9459d8e124cdd6bdab9c20aa28df133041e86fc44  content.json      ← igual
+    0a3a06380634b5dabbe1811e29a8f7a6151e1302bfe8a025d16013300a5f8a07  setlists.json     ← igual
+    c0ab6b6bbad8868fa67070275440162a71a7505a15feadef4df5fd7280dead57  files-index.json  ← MUDOU
+    ad2eae0942811adb4d60286516ce318110868f6aa889422ab0cb8b3dc690ea22  files/…12p.pdf    ← igual
+
+  O `files-index.json` é o único que muda, e a causa está medida: o aceite A14
+  abriu a música 1 da "UX-AUDIT Estresse", que é o PDF de 12 páginas
+  (`file src=disk … bytes=242176`, `pdf-render pages=12 src=disk`), e o índice
+  guarda `lastUsedMs`. É churn de LRU, o mesmo que a V1-PR5 registrou. Os dois
+  arquivos que carregam DADO — content e setlists — não mudaram um byte, que é
+  a prova de que nenhum sync aconteceu.
+
+  O DURÁVEL bate com o FIM: o `emu kill` salvou o snapshot direito. Esta é a
+  baseline que a V1-PR7 herda.
+
+===== C5 — Metro e `.env` =====
+
+  Metro: `npx expo start --port 8081`, do worktree `../octavia-v1pr6`, o MESMO
+  nos dois lados. No ANTES, `git status` limpo em `origin/main`; no DEPOIS, o
+  commit 4 (dc4632a). O deep link é o do protocolo do N1 §8.
+
+  `.env`: o worktree nasce sem nenhum (`.gitignore:23` cobre `.env*`). O
+  `apps/native/.env` do checkout principal foi COPIADO para o worktree porque
+  o Metro exige as seis chaves `EXPO_PUBLIC_FIREBASE_*` mais a
+  `EXPO_PUBLIC_API_BASE_URL` (`apps/native/src/firebase.ts`, `api.ts`), USADO
+  durante a sessão e APAGADO ao fim — `ls` confirma que não existe mais, e
+  `git status` fica limpo. 419 B, sha256 `f2bfa179cd8e4b1f…` (o arquivo do
+  checkout principal, byte a byte). Nenhum valor dele aparece em lugar nenhum
+  desta PR.
+
+  Nenhuma mutação de configuração local: nenhum `.env*` do checkout principal
+  foi tocado, nenhum `supabase link`, nenhum `eas` e nenhuma instalação no
+  device — o dev client é o da V1-PR3, como nas PR4 e PR5.
+
+===== C6 — o Tab S6 =====
+
+  `RX2N8000F3D` esteve conectado por USB a sessão inteira e **não recebeu um
+  comando**. Todas as 100% das chamadas de adb levaram `-s emulator-5554`. O
+  aceite visual no Tab S6 é da V1-PR7.
+
+===== C7 — o que NÃO foi medido, e por quê =====
+
+  - **o S0 no device**, nos dois lados. Alcançá-lo exige `pm clear` (que apaga
+    o store que é a baseline) e voltar dele exige a senha do Marcel, que a
+    automação não digita. O prompt manda explicitamente não tentar. Referência
+    de antes: `docs/native/N1-anexos/PR7-a2-token-forjado.png` (#289);
+  - o **A2 com login de verdade** — da V1-PR7, que vai precisar do Marcel;
+  - o **`nav` de volta do "Voltar ao início"**: o A14 confirmou o destino
+    ("1 DE 60" no dump, `A14-voltar-inicio`), mas eu não capturei o mesmo
+    caminho no ANTES, então não há par. O caminho é o mesmo código (a prop
+    `onVoltarInicio` não mudou, e o G1 prova que o núcleo não mudou);
+  - o **tema claro**: o S0, o S4 e o S5 são só escuros no app (`dark.*`
+    direto), como eram antes desta PR. Nenhuma das três telas lê `colors[tema]`.

@@ -8,8 +8,10 @@
  *   (3) NÃO pode ser acusado   nome de glifo é identificador, não texto
  *   (4) NÃO pode ser acusado   pt-BR com anglicismo do produto
  *   (5) DEVE SER ACUSADO   inglês escondido num ternário de label
+ *   (6) DEVE SER ACUSADO   inglês num `rotulo:` de OBJETO (V1-PR6) — a metade
+ *                          que a varredura lia só como prop de JSX
  *
- * Esperado: 3 acusações, exit 1. Auto-contido (o `Icon` abaixo é um stub),
+ * Esperado: 4 acusações, exit 1. Auto-contido (o `Icon` abaixo é um stub),
  * para passar no `tsc --noEmit` do app sem importar nada que não exista.
  */
 import { Pressable, Text } from 'react-native'
@@ -17,6 +19,12 @@ import { Pressable, Text } from 'react-native'
 function Icon(_p: { name: string; size: number }): null {
   return null
 }
+
+/** (6) V1-PR6: texto de UI como valor de chave de objeto, não como prop. */
+const TIPO_FALSO: Record<string, { icone: string; rotulo: string }> = {
+  Lyrics: { icone: 'letra', rotulo: 'Loading' },
+}
+export const usado = TIPO_FALSO
 
 export function Falso({ ligado }: { ligado: boolean }): React.JSX.Element {
   return (
