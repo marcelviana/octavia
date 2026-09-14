@@ -14,6 +14,7 @@
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import {
+  __existe,
   __iniciados,
   __picoDeConcorrencia,
   __plantar,
@@ -181,5 +182,17 @@ describe('div. 115 — a promoção não pode derrubar o sync', () => {
     await expect(voo).resolves.toBeUndefined()
 
     expect(octavia('download-error')).toHaveLength(1)
+  })
+})
+
+describe('div. 102 — "Baixar esta setlist" grava no DURÁVEL', () => {
+  it('o arquivo cai em `files/`, não em `cache/`', async () => {
+    const { urls, nomes, contentById, setlists } = repertorio(1, marca())
+    __responder(urls[0] as string, { corpo: pdfBom(1000) })
+
+    await baixarSetlist(setlists[0] as (typeof setlists)[0], contentById)
+
+    expect(__existe(`${filesDirs().guaranteed}/${nomes[0] as string}`)).toBe(true)
+    expect(__existe(`${filesDirs().demand}/${nomes[0] as string}`)).toBe(false)
   })
 })

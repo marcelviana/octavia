@@ -204,6 +204,21 @@ export async function prefetchDemanda(
 /**
  * T1-R15 manual — "baixar esta setlist" (o design mostra o botão só em
  * setlist sem data de show: as datadas já são cobertas pelo plano de 7 dias).
+ *
+ * **Grava no DURÁVEL** (W1, div. 102). Era a única das quatro formas de
+ * baixar que gravava no purgável, e portanto a que dava a garantia **mais
+ * fraca** — justamente a única em que o usuário pede o arquivo de forma
+ * explícita. O prefetch automático de 7 dias, que ninguém pediu, dava a mais
+ * forte: **a hierarquia estava invertida**. E o botão só aparece em setlist
+ * SEM data de show — exatamente a que a janela de 7 dias nunca cobre: se ele
+ * não durar, nada dura para ela.
+ *
+ * **Com trava, e a trava é o que fica de fora**: o arquivo sai do alcance do
+ * Android (o dano real da 102) e **não** entra no `protectedUrls` do LRU. A
+ * política de purga não muda — o arquivo fixado continua candidato normal,
+ * despejável por desuso —, e a pergunta grande ("como se solta o que foi
+ * fixado", com UI de soltar) fica aberta e honesta, para quando houver
+ * repertório que a justifique. Decisão do Marcel, 2026-09-14 (Q1).
  */
 export async function baixarSetlist(
   setlist: SetlistDTO,
@@ -219,7 +234,7 @@ export async function baixarSetlist(
     urls.push(url)
   }
   log(`prefetch plan n=${urls.length} reason=manual`)
-  if (urls.length > 0) await baixar(urls, false, aoArquivo)
+  if (urls.length > 0) await baixar(urls, true, aoArquivo)
 }
 
 /**
