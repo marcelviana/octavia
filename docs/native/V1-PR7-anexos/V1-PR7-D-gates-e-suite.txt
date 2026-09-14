@@ -1,0 +1,196 @@
+$ (D) V1-PR7 — os gates do bloco inteiro, 6a9315d → origin/main (72bdb38)
+
+REGRA: a V1-PR7 não toca uma linha de apps/native/**. Os gates rodam sobre o BLOCO,
+da base (6a9315d, merge da #290, último commit antes do V1) até origin/main.
+
+===== G1 — invariância de comportamento =====
+base=6a9315d head=origin/main
+arquivos de packages/core/src existentes na base: 25
+G1: DIFF VAZIO ✓
+
+===== G2 / G3 =====
+G2 — testIDs  antes=40  depois=43
+  G2: antes ⊆ depois ✓
+  testID NOVOS:
+      apps/native/src/screens/SearchScreen.tsx	testID="s4a-vazio"
+      apps/native/src/screens/SetlistsScreen.tsx	testID={`setlist-${setlist.id.slice(0, 8)}`}
+      apps/native/src/screens/StageScreen.tsx	testID="linha-motivo"
+G3 — linhas log( antes=50  depois=50
+  G3: idênticas ✓
+
+===== gate:a20 (G4 estendido) =====
+  escopo: ESTENDIDO (V1-A3 §A3.3 + labels em expressão, V1-PR3 + chave de objeto, V1-PR6)
+  arquivos varridos: 20
+  vocabulário: 45 termos · isenções do produto: 9
+  literais em posição de texto examinados: 72
+  acusações: 0
+exit=0
+
+===== gate:a20 — CONTROLE NEGATIVO =====
+  ACUSADO scripts/__cn__/A20Falso.tsx:32 [accessibilityLabel] "Zoom in" ← termo "zoom in"
+  ACUSADO scripts/__cn__/A20Falso.tsx:35 [accessibilityHint] "Go back to the previous song" ← termo "previous"
+  ACUSADO scripts/__cn__/A20Falso.tsx:43 [accessibilityLabel{…}] "Auto-scroll, loading" ← termo "loading"
+  ACUSADO scripts/__cn__/A20Falso.tsx:25 [chave: literal] "Loading" ← termo "loading"
+  escopo: ESTENDIDO (V1-A3 §A3.3 + labels em expressão, V1-PR3 + chave de objeto, V1-PR6)
+  arquivos varridos: 2
+  vocabulário: 45 termos · isenções do produto: 9
+  literais em posição de texto examinados: 8
+  acusações: 4
+exit=1
+
+===== gate:icones =====
+  §6.4: 34 linhas → 33 nomes distintos, + 4 fora do catálogo = 37 esperados
+  anexo D: 34 registros · 68 elementos distintos
+  mapa: 37 nomes · 80 elementos distintos · 37 com 'normal'
+  hex cravado: 0 · tinta por token: 6
+  §6.3 tab: em20 4 cordas · normal 6 cordas · markup de 20 dp no telas.html: idêntico
+  fora do catálogo: 4/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  acusações: 0
+exit=0
+
+===== gate:icones — CONTROLE NEGATIVO =====
+  ACUSADO scripts/__cn__/IconesFalso.ts [nome] falta no mapa: "apagar" (§6.4)
+  ACUSADO scripts/__cn__/IconesFalso.ts [nome] sobra no mapa: "lixeira" (não está na §6.4)
+  ACUSADO scripts/__cn__/IconesFalso.ts [desenho] do anexo D ausente do mapa: d M6 6l12 12M18 6L6 18
+  ACUSADO scripts/__cn__/IconesFalso.ts [desenho] do anexo D ausente do mapa: d M9.2 9.2l5.6 5.6M14.8 9.2l-5.6 5.6
+  ACUSADO scripts/__cn__/IconesFalso.ts [desenho] do anexo D ausente do mapa: circle 12 12 8
+  ACUSADO scripts/__cn__/IconesFalso.ts [desenho] 'normal' de "fechar" não está no anexo D: d M6 6l12 12M18 6L6 18z
+  ACUSADO scripts/__cn__/IconesFalso.ts [desenho] 'normal' de "lixeira" não está no anexo D: d M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13
+  ACUSADO scripts/__cn__/IconesFalso.ts:100 [tinta] hex cravado: #6E6A80
+  ACUSADO scripts/__cn__/IconesFalso.ts:82 [tinta] token desconhecido: 'accent' (esperado: lineInfo | offlineInk | accentInk)
+  ACUSADO scripts/__cn__/IconesFalso.ts [em20] do telas.html ausente do 'em20' da tab: d M3 4.2h18M3 9.4h2.1M11.9 9.4h9.1M3 14.6h5.1M14.9 14.6h6.1M3 19.8h18
+  ACUSADO scripts/__cn__/IconesFalso.ts [em20] do telas.html ausente do 'em20' da tab: rect 5.9 7.7 4.2 3.4 1.7
+  ACUSADO scripts/__cn__/IconesFalso.ts [em20] do telas.html ausente do 'em20' da tab: rect 8.9 12.9 4.2 3.4 1.7
+  ACUSADO scripts/__cn__/IconesFalso.ts [em20] no 'em20' da tab e não no telas.html: d M3 3h18M3 6.6h1.225M11.175 6.6h9.825M3 10.2h9.225M19.175 10.2h1.825M3 13.8h4.225M14.175 13.8h6.825M3 17.4h18M3 21h18
+  ACUSADO scripts/__cn__/IconesFalso.ts [em20] no 'em20' da tab e não no telas.html: rect 5.5 4.9 4.4 3.4 1.7
+  ACUSADO scripts/__cn__/IconesFalso.ts [em20] no 'em20' da tab e não no telas.html: rect 13.5 8.5 4.4 3.4 1.7
+  ACUSADO scripts/__cn__/IconesFalso.ts [em20] no 'em20' da tab e não no telas.html: rect 8.5 12.1 4.4 3.4 1.7
+  ACUSADO scripts/__cn__/IconesFalso.ts [em20] a tab de 20 dp tem 6 cordas, e a §6.3 declara 4
+  ACUSADO scripts/__cn__/IconesFalso.ts [fora-do-catálogo] o 'normal' de "nada-encontrado" não é, elemento a elemento, nenhum <svg> do telas.html
+  §6.4: 34 linhas → 33 nomes distintos, + 4 fora do catálogo = 37 esperados
+  anexo D: 34 registros · 68 elementos distintos
+  mapa: 37 nomes · 76 elementos distintos · 37 com 'normal'
+  hex cravado: 1 · tinta por token: 6
+  §6.3 tab: em20 6 cordas · normal 6 cordas · markup de 20 dp no telas.html: idêntico
+  fora do catálogo: 3/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  acusações: 18
+exit=1
+
+===== G5 — alvos ≥ 48 dp, sobre os 42 dumps do AVD desta PR =====
+alvos tocáveis medidos: 345 em 42 estados
+ABAIXO de 48 dp: 0 ocorrências / 0 resource-ids
+
+descartados por recorte (div. 21): 17
+  A12-indice-bis :: song-9 1089.8 × 19.1 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1465]
+  A14-indice-47 :: song-47 536.9 × 4.0 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1465]
+  A14-indice-47 :: song-48 536.9 × 4.0 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1465]
+  A14-indice-47 :: song-57 536.9 × 31.1 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1465]
+  A14-indice-47 :: song-58 536.9 × 31.1 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1465]
+  A14-indice-47b :: song-43 536.9 × 12.0 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1465]
+  A14-indice-47b :: song-44 536.9 × 12.0 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1465]
+  A14-indice-47b :: song-53 536.9 × 23.1 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1465]
+  A14-indice-47b :: song-54 536.9 × 23.1 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1465]
+  A14-indice-rolado :: song-51 536.9 × 19.1 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1465]
+  A14-indice-rolado :: song-52 536.9 × 19.1 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1465]
+  A5-S2-estresse-60 :: song-10 536.9 × 19.1 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1465]
+  A5-S2-estresse-60 :: song-9 536.9 × 19.1 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1465]
+  A5-S2-estresse-fim :: song-51 536.9 × 19.1 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1465]
+  A5-S2-estresse-fim :: song-52 536.9 × 19.1 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1465]
+  A6-A8-indice :: song-3 536.9 × 19.1 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1465]
+  A6-A8-indice :: song-4 536.9 × 19.1 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1465]
+
+alvos SEM testID (inalcançáveis por resource-id): 0
+exit=0
+
+===== G5 — sobre os 17 dumps do Tab S6 =====
+alvos tocáveis medidos: 114 em 17 estados
+ABAIXO de 48 dp: 0 ocorrências / 0 resource-ids
+
+descartados por recorte (div. 21): 2
+  S2-60-tipos :: song-10 536.9 × 31.1 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1492]
+  S2-60-tipos :: song-9 536.9 × 31.1 dp — RECORTADO por android.widget.ScrollView [0,252][2560,1492]
+
+alvos SEM testID (inalcançáveis por resource-id): 0
+exit=0
+
+===== G6 — AVD =====
+  A10-S1-data-amanha           âncora=baixar-4340bf95    ids=6   alvos sem id=0 ✓
+  A10-S1-parcial               âncora=baixar-4340bf95    ids=6   alvos sem id=0 ✓
+  A11-avulso-limpo             âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+  A11-busca-do-palco           âncora=campo-busca        ids=4   alvos sem id=0 ✓
+  A11-fecha-restaura           âncora=auto-scroll        ids=12  alvos sem id=0 ✓
+  A11-nada-encontrado          âncora=apagar             ids=5   alvos sem id=0 ✓
+  A11-resultados               âncora=apagar             ids=6   alvos sem id=0 ✓
+  A11-volta-do-avulso          âncora=auto-scroll        ids=12  alvos sem id=0 ✓
+  A12-indice-bis               âncora=buscar             ids=11  alvos sem id=0 ✓
+  A12-palco-1de9               âncora=auto-scroll        ids=12  alvos sem id=0 ✓
+  A12-palco-9de9               âncora=auto-scroll        ids=12  alvos sem id=0 ✓
+  A14-fim-setlist              âncora=borda-voltar       ids=3   alvos sem id=0 ✓
+  A14-indice-47                âncora=buscar             ids=14  alvos sem id=0 ✓
+  A14-indice-47b               âncora=buscar             ids=14  alvos sem id=0 ✓
+  A14-indice-rolado            âncora=buscar             ids=12  alvos sem id=0 ✓
+  A14-paisagem-volta-real      âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+  A14-palco-1de60              âncora=auto-scroll        ids=12  alvos sem id=0 ✓
+  A14-palco-2de60              âncora=auto-scroll        ids=12  alvos sem id=0 ✓
+  A14-palco-47de60             âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+  A14-retrato-real             âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+  A15-motivo-rapido            âncora=auto-scroll        ids=12  alvos sem id=0 ✓
+  A15-pdf-inerte               âncora=auto-scroll        ids=12  alvos sem id=0 ✓
+  A15-tema-claro               âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+  A19-S1d-sem-cache-erro       âncora=buscar             ids=3   alvos sem id=0 ✓
+  A21-S1e-falha                âncora=baixar-00c2c1f4    ids=8   alvos sem id=0 ✓
+  A3-429                       âncora=baixar-00c2c1f4    ids=8   alvos sem id=0 ✓
+  A4-S1f-vazia-apos-sync       âncora=buscar             ids=2   alvos sem id=0 ✓
+  A5-S1-apos-reabrir           âncora=baixar-00c2c1f4    ids=7   alvos sem id=0 ✓
+  A5-S2-estresse-60            âncora=buscar             ids=12  alvos sem id=0 ✓
+  A5-S2-estresse-fim           âncora=buscar             ids=12  alvos sem id=0 ✓
+  A6-A8-indice                 âncora=buscar             ids=12  alvos sem id=0 ✓
+  A6-palco-nobody              âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+  A6-palco-nokey               âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+  A6-palco-tipo                âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+  A8-palco-ausente             âncora=auto-scroll        ids=10  alvos sem id=0 ✓
+  AV1-1-parcial                âncora=baixar-00c2c1f4    ids=8   alvos sem id=0 ✓
+  AV1-2-baixando               âncora=baixar-00c2c1f4    ids=8   alvos sem id=0 ✓
+  AV1-2b-baixando-travado      âncora=baixar-00c2c1f4    ids=8   alvos sem id=0 ✓
+  AV1-3-garantida-mentira      âncora=auto-scroll        ids=11  alvos sem id=0 ✓
+  AV1-3-garantida-pos-download âncora=baixar-00c2c1f4    ids=8   alvos sem id=0 ✓
+  AV1-3-garantida              âncora=baixar-00c2c1f4    ids=7   alvos sem id=0 ✓
+  AV1-S1-tres-indicadores      âncora=baixar-4340bf95    ids=6   alvos sem id=0 ✓
+  estados: 42   falhas: 0
+
+===== G6 — Tab S6 =====
+  A16-palco-fim                âncora=android:id/navigationBarBackground ids=11  alvos sem id=0 ✓
+  A16-palco-inicio             âncora=android:id/navigationBarBackground ids=11  alvos sem id=0 ✓
+  AV-S1-brilho-baixo           âncora=android:id/navigationBarBackground ids=5   alvos sem id=0 ✓
+  AV5-S5-sessenta-marcas       âncora=android:id/navigationBarBackground ids=4   alvos sem id=0 ✓
+  AV5-S5-sete-marcas           âncora=android:id/navigationBarBackground ids=4   alvos sem id=0 ✓
+  AVicones-A-texto             âncora=android:id/navigationBarBackground ids=11  alvos sem id=0 ✓
+  AVicones-B2-pdf-inertes      âncora=android:id/navigationBarBackground ids=13  alvos sem id=0 ✓
+  S0-login                     âncora=android:id/navigationBarBackground ids=4   alvos sem id=0 ✓
+  S0-pronto-para-login         âncora=android:id/navigationBarBackground ids=5   alvos sem id=0 ✓
+  S1-principal-sincronizada    âncora=android:id/navigationBarBackground ids=5   alvos sem id=0 ✓
+  S1-principal                 âncora=android:id/navigationBarBackground ids=6   alvos sem id=0 ✓
+  S2-60-tipos                  âncora=android:id/navigationBarBackground ids=13  alvos sem id=0 ✓
+  S2-season3                   âncora=android:id/navigationBarBackground ids=10  alvos sem id=0 ✓
+  S3-palco-1de7                âncora=android:id/navigationBarBackground ids=11  alvos sem id=0 ✓
+  S3-tema-claro                âncora=android:id/navigationBarBackground ids=11  alvos sem id=0 ✓
+  S4-tipos                     âncora=android:id/navigationBarBackground ids=9   alvos sem id=0 ✓
+  ZZ-estado-final              âncora=android:id/navigationBarBackground ids=6   alvos sem id=0 ✓
+  estados: 17   falhas: 0
+
+===== suíte da raiz (V1-A12: baseline 768 / 85 (853)) =====
+[2m Test Files [22m [1m[32m88 passed[39m[22m[2m | [22m[33m4 skipped[39m[90m (92)[39m
+[2m      Tests [22m [1m[32m768 passed[39m[22m[2m | [22m[33m85 skipped[39m[90m (853)[39m
+[2m   Start at [22m 12:01:30
+[2m   Duration [22m 20.06s[2m (transform 4.55s, setup 32.58s, import 10.64s, tests 10.93s, environment 65.91s)[22m
+
+
+===== tsc do apps/native =====
+> native@1.0.0 type-check <repo>/apps/native
+> tsc --noEmit
+
+
+===== lint =====
+> pnpm exec next lint
+
+✔ No ESLint warnings or errors

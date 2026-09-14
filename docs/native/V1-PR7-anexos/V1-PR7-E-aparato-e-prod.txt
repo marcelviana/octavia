@@ -1,0 +1,162 @@
+$ (E) V1-PR7 — aparato, contabilidade de prod e de bucket, e o que NÃO foi medido
+
+==========================================================================
+1. CONTABILIDADE DE PROD — ESTA PR, E O ESTOURO
+==========================================================================
+TETO DECLARADO NO PROMPT DESTA PR: 2 requests a `/api/*` (o restante do bloco).
+GASTO: 4.  **ESTOURO DE 2, com a causa nomeada abaixo.**
+
+| item                                   | quando            | requests |
+|----------------------------------------|-------------------|----------|
+| login do Marcel + o sync que ele disparou | ~11:22          | 2        |
+| a abertura que eu rodei logo depois    | ~11:24            | 2        |
+| TOTAL                                  |                   | **4**    |
+
+CAUSA, declarada e não escondida: o Metro rodava com `EXPO_PUBLIC_DEV_FORGE_401=1` para o
+A2. Ao trocá-lo pelo Metro limpo eu avisei o Marcel e, sem checar se ele já tinha logado,
+rodei um `am force-stop` + abertura para "preparar o estado limpo". Toda abertura ONLINE
+sincroniza. O login dele já tinha gasto 2; a minha abertura gastou outros 2.
+O que teria evitado: perguntar "você já logou?" ANTES do `force-stop`, ou manter a base da
+API desviada para a porta morta até ter a resposta — que é exatamente o que passei a fazer
+depois, para a fixture de 60 (0 requests, provado abaixo).
+
+TUDO O MAIS DESTA PR CUSTOU ZERO, e a prova de cada bloco:
+  - regressão inteira do AVD em AVIÃO, corte provado por `ping` antes de cada abertura;
+  - A3/A4/A19/A21 contra o MOCK local (`aceite.py servidor 8788`), com
+    `EXPO_PUBLIC_API_BASE_URL=http://localhost:8788` inline — as requests aparecem no log
+    do mock, não em prod;
+  - A2 contra o servidor 401 de host (`s401.py`, porta 8401);
+  - o aceite do Tab S6 (A15, A17, A16, os AV) com a API desviada para `localhost:8401`
+    SEM `adb reverse` — connection refused, `sync fail … code=network status=-`;
+  - a fixture de 60, depois do estouro, com a API desviada de novo:
+      OCTAVIA: sync fail stage=setlists page=1 code=network status=-
+      requests a prod: 0
+
+CONTABILIDADE DO BLOCO INTEIRO — ver §5.
+
+==========================================================================
+2. CONTABILIDADE DE BUCKET — a primeira do bloco que não é zero
+==========================================================================
+| item                                    | arquivos | bytes    |
+|-----------------------------------------|----------|----------|
+| AV-1, download 1 (link cheio) — COMPLETO | 1        | 242.176  |
+| AV-1, download 2 (link estrangulado) — TRAVOU em 0 B | 0 | 0    |
+| TOTAL                                   | **1**    | **242.176** |
+
+Conta de AUDIT, no emulador. O arquivo é o `1786218429715-ux-audit-partitura-12p.pdf`.
+O RESTAURO NÃO GASTOU BUCKET: veio da cópia local guardada antes (`files/GUARDA-av1`),
+e o sha256 bate: ad2eae0942811adb4d60286516ce318110868f6aa889422ab0cb8b3dc690ea22.
+
+Autorizado pelo Marcel em 2026-09-14, depois de eu medir que na conta PRINCIPAL não existe
+`parcial` (as duas setlists têm need=0) e que, portanto, não havia caminho não destrutivo
+no tablet. Decisão dele, verbatim: "o que se destrói é um PDF de 242 KB na conta de AUDIT,
+no emulador, que o próprio app rebaixa e baixa de volta".
+
+O arquivo que o app BAIXOU é byte a byte o que estava em disco:
+  ad2eae09…  (a cópia guardada)   ==   ad2eae09…  (o baixado)     ← o A9 de raspão
+
+==========================================================================
+3. O APARATO, e os dois desvios declarados
+==========================================================================
+DESVIO d1 — O METRO SUBIU DO CHECKOUT PRINCIPAL, NÃO DO WORKTREE.
+  A V1-PR7 não toca uma linha de `apps/native/**`, e a identidade foi provada antes:
+  $ find apps/native/{src,App.tsx,app.json,package.json,index.ts,scripts} -type f \
+      | sort | xargs shasum -a 256 | shasum -a 256
+    58924f2ea8ae7c0eea890c557fab2c5bb74a6d0a5ce8a7478cf38f015b6ac35b  -   (principal, limpo em 72bdb38)
+    58924f2ea8ae7c0eea890c557fab2c5bb74a6d0a5ce8a7478cf38f015b6ac35b  -   (worktree ../octavia-v1pr7)
+  O worktree existe e é onde a PR é escrita; só não tem `node_modules`. Instalar ~7 GB para
+  rodar um Metro byte a byte idêntico ao que já está na máquina não paga.
+
+DESVIO d2 — O SERVIDOR 401 É SCRIPT DE HOST NOVO (`instrumentos/s401.py`), não um modo novo
+  no `aceite.py`. O `aceite.py` mora em `apps/native/src/fixtures/` e mexer nele numa PR de
+  aceite dispararia o gate `native` e misturaria código com veredito.
+
+DESVIO d3 — A FIXTURE DE 60 DO TABLET é script de host (`instrumentos/fix60.py`), pelo mesmo
+  motivo. Ela recompõe só o `setlists.json`, a partir dos contents que já estão no cache.
+
+PORTA 8081 — a div. 75 obedecida em TODAS as cinco trocas de Metro: `lsof` para ver QUEM
+escuta, `adb reverse --remove-all` ANTES do `kill`, e conferência de que a porta ficou livre.
+  ex.: node 29989 <user> 32u IPv6 ... TCP *:8081 (LISTEN)  →  8081 livre
+
+EMULADOR: `octavia_tab32`, subido SEM `-no-snapshot-save` (div. 42).
+  $ emulator -avd octavia_tab32 -no-boot-anim
+  boot_completed=1 após ~5 s (restauro de snapshot)
+
+ESTRANGULAMENTO DE REDE DO AVD (só para o AV-1), e o restauro:
+  $ adb -s emulator-5554 emu network speed gsm    → 14.400 bits/s
+  $ ... emu network speed edge                    → 473.600 bits/s
+  $ ... emu network speed full ; emu network delay none
+
+==========================================================================
+4. ESTADO DOS DOIS APARELHOS — antes × depois
+==========================================================================
+AVD `octavia_tab32`, conta de audit:
+  item               INÍCIO DO DIA                        FIM
+  content.json       d27e6d84…                            d27e6d84…    ← idêntico
+  setlists.json      0a3a0638…                            0a3a0638…    ← idêntico
+  files-index.json   87255365…                            cce7936f…    ← MUDOU (lastUsedMs, div. 22)
+  files/…-12p.pdf    ad2eae09… (durável)                  ad2eae09… (durável)   ← idêntico
+  cache/…-1p.pdf     3d42199b… (purgável)                 3d42199b… (purgável)  ← idêntico
+  rede               avião, ping falhando                 avião, ping falhando
+  O 1p foi PROMOVIDO para o durável pelo app durante o A10 (`prefetch promote n=1`) e
+  DEVOLVIDO ao purgável no restauro, para que a baseline do bloco fique como estava.
+
+Tab S6 RX2N8000F3D, conta principal:
+  item               ENCONTRADO                           FIM
+  content.json       39f784a4…                            39f784a4…    ← idêntico
+  setlists.json      539a0d76…                            5f128c74…    ← o PÓS-SYNC de prod
+  files-index.json   8b658dd7…                            1a10b82c…    ← MUDOU (lastUsedMs)
+  files/…Easy.pdf    1e1d77c4…                            1e1d77c4…    ← idêntico
+  sessão             viva                                 viva
+  keyguard           travado                              aberto (o Marcel abriu)
+  rádio              ligado, ping 27,997 ms               ligado, ping ~29 ms
+  A fixture de 60 foi escrita DUAS vezes e restaurada DUAS vezes, com sha provado nos
+  quatro momentos (c1c32609… / a8dc3518… nas idas; 539a0d76… e 5f128c74… nas voltas).
+
+==========================================================================
+5. CONTABILIDADE DE PROD DO BLOCO V1 INTEIRO
+==========================================================================
+TETO DO BLOCO (V1-PRECHECK §8): 6 requests a `/api/*`.
+
+| sessão                | requests | onde está escrito                        |
+|-----------------------|----------|------------------------------------------|
+| V1-PRECHECK (3 rodadas) | 2      | V1-PRECHECK.md §8                        |
+| V1-PR0 (docs)         | 0        | —                                        |
+| V1-PR1                | 0        | V1-PR1-anexos/README.md                  |
+| V1-PR2 (design)       | 0        | —                                        |
+| V1-PR3-PRECHECK       | 2        | V1-PR3-PRECHECK.md §9 (o alvo era 0)     |
+| V1-PR3                | 0        | V1-PR3-anexos/README.md                  |
+| V1-PR4                | 0        | V1-PR4-anexos/README.md                  |
+| V1-PR5                | 0        | V1-PR5-anexos/README.md                  |
+| V1-PR6                | 0        | V1-PR6-anexos/README.md                  |
+| **V1-PR7**            | **4**    | este anexo, §1                           |
+| **TOTAL**             | **8**    | **contra um teto de 6 — ESTOURO DE 2**   |
+
+logins aceitos no bloco: 1 (o do Marcel, nesta PR) · recusados: 0
+401 forjados (caminho de dev, servidor local): 2 · 429 reais: 0 (o do A3 é mock)
+downloads de bucket: 1 arquivo, 242.176 B (todos nesta PR)
+escrita pela API: 0 em todo o bloco
+acesso ao console Supabase/Firebase: 0 em todo o bloco
+/api/auth/session · /api/proxy · /api/profile: 0 em todo o bloco
+
+RESSALVA HERDADA do V1-PRECHECK §8, que continua valendo: com o app aberto e rede, o SDK do
+Firebase pode renovar token contra `securetoken.googleapis.com`. Não é `/api/*`, não conta
+no teto, e fica declarado.
+
+==========================================================================
+6. O QUE NÃO FOI MEDIDO — declarado, não omitido
+==========================================================================
+1. A PRIMEIRA ABERTURA DE UM APP RECÉM-INSTALADO. O caminho FORGE_401 alcança o S0 pelo
+   RE-login, não pela instalação limpa. Nem o `pm clear` chegaria lá inteiro. Decisão do
+   Marcel: não paga o cache.
+2. A metade "arquivos baixados em BACKGROUND sem abrir" do A10. É `prefetch.ts`, sob o G1
+   com diff vazio, e o N1 a mediu no device.
+3. O MECANISMO por trás da div. 102/103 (por que o download trava sem `download-error`).
+   Sete minutos sem timeout, sem erro e sem retentativa, medidos; a CAUSA, não. Aponta para
+   `apps/native/src/prefetch.ts` (`baixar`) e `apps/native/src/files.ts` (`ensureFile`).
+4. O `parcial` e o `baixando` NA CONTA PRINCIPAL. Não existem hoje: as duas setlists do
+   Marcel têm `need = 0` — o único content com `file_url` (`Easy`, Sheet, 138.916 B) não
+   está em nenhuma das duas. É informação sobre o uso real dele, não só sobre o teste.
+5. O AV-2 no S2 e o AV-3, no aparelho. Julgados por captura do AVD, por decisão do Marcel:
+   o critério dos dois é GEOMÉTRICO (contagem de cordas, vão de 5,44 px; 8 dp de
+   desequilíbrio de coluna) e o AVD tem a mesma densidade de 2,25 e o mesmo canvas.

@@ -1,0 +1,302 @@
+$ (A) V1-PR7 — a regressão no AVD, aceite por aceite
+
+APARATO: AVD `octavia_tab32` (API 32, 2560×1600 @ 360 dpi = 1137,8 × 711,1 dp), subido sem
+`-no-snapshot-save`, conta de audit (Pw3bxXZw0iT3WwyL7kxGtGJIJH83), dev client da V1-PR3.
+Metro do CHECKOUT PRINCIPAL, não do worktree — desvio d1, declarado no README, com a prova
+de que `apps/native` é byte a byte igual ao da branch.
+
+PROVA 0 — o AVD foi ENCONTRADO em avião, e o corte provado por ping ANTES de o app abrir:
+  $ adb -s emulator-5554 shell settings get global airplane_mode_on   → 1   (NÃO é a prova)
+  $ adb -s emulator-5554 shell ping -c 2 -W 2 8.8.8.8
+    connect: Network is unreachable                                        ← A PROVA
+
+==========================================================================
+A5 — modo avião com cache: kill + reopen, sem login, setlist de 60 abre completa
+==========================================================================
+$ abrir            # am force-stop + am start no dev client, 20 s
+OCTAVIA: net offline
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=67
+OCTAVIA: sync skip reason=offline
+OCTAVIA: prefetch plan n=0 reason=7d
+$ lc | grep -c "api status="   → 0
+
+S1 (A5-S1-apos-reabrir): os três cartões, com testID (V1-A2)
+  setlist-4340bf95  [72,396][2488,693]   "UX-AUDIT ESTRESSE, sem data, 60 músicas, garantida offline, "
+  setlist-00c2c1f4  [72,720][2488,1017]  "UX-AUDIT SHOW PADRÃO, sem data, 8 músicas, garantida offline"
+  setlist-8c4413d9  [72,1044][2488,1341] "UX-AUDIT SOLO, sem data, 1 música, garantida offline, todos "
+
+S2 da de 60 (A5-S2-estresse-60): cabeçalho "60 músicas", duas colunas, song-1..song-10 visíveis
+S2 rolado até o fim (A5-S2-estresse-fim):
+  song-59  [54,1150][1262,1411]   "59, [UX-AUDIT] Bis nº 21, Conjunto do Bis, Letra"
+  song-60  [1298,1150][2506,1411] "60, [UX-AUDIT] Bis nº 22, Conjunto do Bis, Letra"
+VEREDITO: ✓ — 60 posições alcançáveis offline, zero request.
+
+==========================================================================
+A14 — borda, "n de N", salto 1→47 em ≤ 3 taps, fim de setlist, rotação
+==========================================================================
+-- borda (A14-palco-1de60, A14-palco-2de60)
+   borda-voltar   [0,198][384,1249]   170,7 × 467,1 dp
+   borda-avancar  [2176,198][2560,1249]
+   A barra de controles começa em y=1284: a borda NÃO a cobre (div. 16 da V1-PRECHECK,
+   consertada na V1-PR1).
+$ tap 2368 723 ×2 ; tap 192 723 ×1
+OCTAVIA: nav n=2/60 setlist=4340bf95 t=740
+OCTAVIA: nav n=3/60 setlist=4340bf95 t=50
+   dump: "2 DE 60"
+
+-- salto (A14-indice-47b, A14-palco-47de60): DOIS toques do palco
+   toque 1 = indice (866,1358) → OCTAVIA: index open
+   (rolagem — não é toque)
+   toque 2 = song-47 (658,706)  → OCTAVIA: index jump n=47 · keepawake on
+   dump: "47 DE 60"
+VEREDITO do salto: ✓ 2 ≤ 3.
+
+-- fim de setlist (A14-fim-setlist), na setlist de 9 da fixture do A12
+OCTAVIA: end-of-setlist n=9
+OCTAVIA: keepawake off
+   "FIM DA SETLIST" · "9 músicas  ·  UX-AUDIT Show padrão"
+   voltar-inicio [873,838][1384,982]  227,1 × 64,0 dp
+   sair          [1420,838][1687,982] 118,7 × 64,0 dp
+   borda-voltar continua em [0,198][384,1249]
+
+-- rotação (A14-retrato-real, A14-paisagem-volta-real)
+$ settings put system accelerometer_rotation 0 ; settings put system user_rotation 1
+   raiz do dump: [0,0][1600,2560]  (RETRATO)  ·  "47 DE 60"
+OCTAVIA: rotation=portrait n=2/60
+OCTAVIA: rotation=portrait n=47/60      ← DUAS linhas: div. 95
+$ settings put system user_rotation 0
+   raiz do dump: [0,0][2560,1600]  (PAISAGEM) ·  "47 DE 60"
+OCTAVIA: rotation=landscape n=2/60
+OCTAVIA: rotation=landscape n=47/60
+VEREDITO do A14: ✓ em tudo o que o aceite pede. A div. 95 é achado NOVO, não falha do A14.
+
+-- div. 95, caracterizada do zero (setlist de 8):
+   1 palco montado, 2 giros → 2 linhas    (rotation=portrait n=1/8 · rotation=landscape n=1/8)
+   depois de 1 salto pelo índice, 2 giros → 4 linhas (n=1/8 E n=3/8, nos dois sentidos)
+   depois de 2 saltos,          2 giros → 6 linhas (n=1/8, n=3/8, n=5/8)
+   um `keyevent 4` derruba uma instância → volta a 4
+   CONCLUSÃO: cada salto pelo índice EMPILHA um palco novo e os anteriores continuam
+   montados. A errata E6 do LOGS-OCTAVIA explica a ausência do `stage restore` dizendo
+   que "o índice desempilha o palco": o efeito é verdadeiro, o MECANISMO é falso.
+
+==========================================================================
+A11 — busca local: acento, nada encontrado, offline, volta do palco
+==========================================================================
+$ palco 1/8 → toque em `busca` (1051,1358)
+OCTAVIA: keepawake off
+   S4 (A11-busca-do-palco): fechar-busca 48,0 × 48,0 · campo-busca · chip-offline · s4a-vazio
+$ input text "aguas"
+OCTAVIA: search q=1 n=50 in-setlist=8
+OCTAVIA: search q=5 n=2 in-setlist=0
+   (A11-resultados) resultado-c81bd22e / resultado-64594f61, ambos:
+     "[UX-AUDIT] Águas de Março, Tom Jobim, Cifra"       ← "aguas" acha "Águas"
+   textos: "sem conexão" · "· busca local" · "BIBLIOTECA · 67 MÚSICAS" · "2 RESULTADOS"
+   alvos: fechar-busca 48,0 × 48,0 · apagar 48,0 × 48,0   (eram 40,0 e 21,8 — div. 9/18)
+
+$ input text "xablau"  (sobre o termo anterior)
+OCTAVIA: search q=11 n=0 in-setlist=0
+   (A11-nada-encontrado) "nada encontrado para “aguasxablau”"   ← minúsculas: E14.d de pé
+                         "busca em título, artista, álbum e letra de toda a biblioteca (67 músicas)"
+
+$ palco → busca → fechar-busca (108,152), logcat INTEIRO:
+OCTAVIA: keepawake off
+OCTAVIA: search close restore n=1/8
+OCTAVIA: keepawake on
+OCTAVIA: stage restore n=1/8
+OCTAVIA: pdf-render pages=12 src=disk
+OCTAVIA: pdf-page n=1/12
+   dump: "1 DE 8"
+
+$ palco → busca → "aguas" → abrir resultado → avulsa → `sair` (1235,1358)
+   (A11-avulso-limpo) "AVULSA" · "[UX-AUDIT] Águas de Março · Tom Jobim · Cifra"
+   a barra da avulsa: os SETE, com `sair` = "Voltar para a busca"
+   (A11-volta-do-avulso)
+OCTAVIA: keepawake off / keepawake on / stage restore n=1/8 / pdf-render pages=12 src=disk
+VEREDITO: ✓ nas quatro metades (acento, mensagem, offline, "n de N" preservado).
+
+==========================================================================
+A12 — bis: mesmo content em duas posições = duas telas
+==========================================================================
+FIXTURE: aceite.py cache … bis "UX-AUDIT Show padrão"   (a conta de audit tem 0 bis)
+  push:  sha256 no aparelho = sha256 local = c0d5fb273104c05eb5d3340e78f3f34d291a8d0c30bad9863d66e9af4213ceed
+
+(A12-indice-bis) "9 músicas":
+  song-1  "1, [UX-AUDIT] Partitura de 12 páginas, … Observação da música 1: …, Partitura"
+  song-9  "9, [UX-AUDIT] Partitura de 12 páginas, … BIS: repetir so o refrao, meio tom acima, Partitura"
+                                   ↑ mesmo content, nota PRÓPRIA
+
+(A12-palco-1de9) "1 DE 9" · "Nota: Observação da música 1: modular meio tom acima no último refrão"
+(A12-palco-9de9) "9 DE 9" · "Nota: BIS: repetir so o refrao, meio tom acima"
+OCTAVIA: nav n=2/9 t=614 · n=3/9 t=42 · n=4/9 t=19 · n=5/9 t=20 · n=6/9 t=22
+         n=7/9 t=21 · n=8/9 t=21 · n=9/9 t=29
+VEREDITO: ✓ — a identidade é `setlist_songs.id`, não `content_id`.
+
+==========================================================================
+A6 / A8 — tipo, placeholder de inválido, content ausente do cache
+==========================================================================
+FIXTURES: invalidos-content (content.json, 67 → 70) + invalidos-songs + content-ausente
+  content.json  81568ad6a72b19e3141e6c281060d468dce03bdd2265e32065d46387e3f8926c
+  setlists.json 87bbfe02780d5b32e046e8b8579a3ca59ee733ce3f164f44bd4f1ccae26e8519
+  (os dois conferidos sha256 local == aparelho)
+
+(A6-A8-indice) "12 músicas" — os quatro, na coluna dos válidos:
+  song-9  "9, [FIXTURE] Sem corpo (no-body), nada para mostrar — edite na versão web  ·  Fixture A6, vazia"
+  song-10 "10, [FIXTURE] Objeto sem a chave (no-key), nada para mostrar — edite na versão web  ·  Fixture A6, vazia"
+  song-11 "11, [FIXTURE] Tipo desconhecido, tipo não reconhecido — edite na versão web  ·  Fixture A6, ?"
+  song-12 "12, (sem título), indisponível, —"                    ← A8: posição certa, rótulo, sem buraco
+  chips de tipo dos VÁLIDOS: Partitura · Letra · Cifra · Tab (os quatro do enum)
+
+no palco, um a um:
+  (A6-palco-nobody)  "9 DE 12"  · "este item não tem conteúdo"
+      "A música existe na setlist, mas não tem letra, cifra, tab ou arquivo. Edite na versão web.
+       Toque na borda direita para seguir."          OCTAVIA: placeholder kind=no-body
+  (A6-palco-nokey)   "10 DE 12" · "este item não tem conteúdo"
+      "O conteúdo salvo não traz o texto desta música. …"   OCTAVIA: placeholder kind=no-key
+  (A6-palco-tipo)    "11 DE 12" · "tipo desconhecido"
+      "Este item tem um tipo que o app ainda não sabe mostrar. …"  OCTAVIA: placeholder kind=unknown-type
+  (A8-palco-ausente) "12 DE 12" · "conteúdo não baixado"
+      "Esta música ainda não foi sincronizada neste aparelho. Conecte-se à internet para baixá-la."
+                                                     OCTAVIA: placeholder kind=content-missing
+VEREDITO: ✓ nos dois. NUNCA vazio.
+ACHADO: os `kind` emitidos não são os do catálogo — div. 96, errata do LOGS-OCTAVIA.
+
+==========================================================================
+A10 — prefetch por data + indicador ✓ ◔ ✗ correto e RECALCULADO
+==========================================================================
+FIXTURE: data-amanha "UX-AUDIT Show padrão" 2026-09-15 (hoje+1)
+(A10-S1-data-amanha), avião:
+OCTAVIA: prefetch plan n=0 reason=7d
+OCTAVIA: prefetch promote n=1                     ← a linha da E7, medida viva
+OCTAVIA: file src=disk name=1786218427769-ux-audit-partitura-1p.pdf bytes=20821
+  disco ANTES : cache/…/files/…-1p.pdf (purgável)   files/…/files/…-12p.pdf (durável)
+  disco DEPOIS: cache/…/files/ VAZIO                files/…/files/ com os DOIS
+  cartões: "garantida offline, todos os arquivos neste aparelho" (×3)
+  o cartão datado PERDE o botão "Baixar esta setlist" — deliberado (SetlistsScreen.tsx:187)
+
+RECÁLCULO, movendo o 12p de cena:
+(A10-S1-parcial):
+OCTAVIA: prefetch plan n=1 reason=7d
+  "UX-AUDIT ESTRESSE … parcial, 1 de 2 arquivos baixados"
+  "UX-AUDIT SHOW PADRÃO, 2026-09-15 … parcial, 1 de 2 arquivos baixados"
+  "UX-AUDIT SOLO … parcial, 0 de 1 arquivos baixados"
+(AV1-S1-tres-indicadores), com o content da SOLO trocado por um id ausente:
+  "UX-AUDIT SOLO … nunca sincronizada, sem conexão para baixar"
+VEREDITO: ✓ o indicador recalcula e os três estados são alcançáveis.
+DISPENSA DECLARADA: a metade "arquivos baixados em background sem abrir" não foi
+reverificada — é `prefetch.ts`, sob o G1 com diff vazio, e o N1 a mediu no device.
+
+==========================================================================
+A3 — 429 com Retry-After: 30 → sem request por 30 s, mensagem pt-BR
+==========================================================================
+MOCK: aceite.py servidor 8788 429   (Metro com EXPO_PUBLIC_API_BASE_URL=http://localhost:8788 inline)
+OCTAVIA: api status=429 path=/api/setlists n=1 ms=99
+OCTAVIA: ratelimit retry-after=30 family=setlist-read
+OCTAVIA: sync fail stage=setlists page=1 code=RATE_LIMITED status=429
+(A3-429):
+  "mostrando dados salvos"
+  "servidor ocupado · tente em instantes · mostrando dados de há 2 d"
+  "Tentar novamente"      tentar-banner [1989,398][2432,506]  196,9 × 48,0 dp
+  a lista PERMANECE: os três cartões, todos "garantida offline"
+silêncio, sete leituras do log do mock:
+  t=+5s  1 | t=+10s 1 | t=+15s 1 | t=+20s 1 | t=+25s 1 | t=+30s 1 | t=+35s 1
+VEREDITO: ✓ — 35 s, UMA request. O `tentar-banner` era 130,7 × 22,7 dp (div. 18): consertado.
+
+==========================================================================
+A4 — abertura online: 1 + max(1, ⌈N/100⌉) requests, lista do cache em < 1 s
+==========================================================================
+-- N = 67 (a biblioteca da audit), mock com corte de 40 → duas páginas
+REQ /api/setlists                                   auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent  auth=sim sortBy=recent
+REQ /api/content?pageSize=100&page=2&sortBy=recent  auth=sim sortBy=recent
+OCTAVIA: sync ok setlists=3 content=67 pages=2 t=839
+  3 requests = 1 + 2 páginas. O `sortBy=recent` nas duas de content é a 2ª metade do A22.
+
+-- N = 0 — A ERRATA DO PRD §10, MEDIDA
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=435
+OCTAVIA: api status=200 path=/api/content  n=1 ms=65
+OCTAVIA: sync ok setlists=0 content=0 pages=1 t=584
+  total REQ no mock = 2
+  a fórmula do PRD (1 + ⌈0/100⌉) prevê 1; o app faz 2, E ESTÁ CERTO.
+  `pages=1`, não 2: o conserto do `_paginas` (div. 23) está de pé.
+(A4-S1f-vazia-apos-sync): "sincronizado agora" · "NENHUMA SETLIST" ·
+  "Sua conta não tem setlists. Crie na versão web — elas aparecem aqui na próxima sincronização."
+  (a regra do SET-14: só diz "não tem" DEPOIS de sincronizar)
+VEREDITO: ✓, com a errata confirmada por medição.
+
+==========================================================================
+A21 — 500 na página 2 → cache byte a byte inalterado + indicador de falha
+==========================================================================
+MOCK: aceite.py servidor 8788 500-pagina-2
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=83
+OCTAVIA: api status=200 path=/api/content  n=1 ms=101
+OCTAVIA: api status=500 path=/api/content  n=1 ms=82
+OCTAVIA: sync fail stage=content page=2 code=INTERNAL_ERROR status=500     ← page=2, o D-d de pé
+
+store ANTES                                                          store DEPOIS
+d27e6d84…  content.json                                              d27e6d84…  content.json
+0a3a0638…  setlists.json                                             0a3a0638…  setlists.json
+e5f6835d…  files-index.json                                          e5f6835d…  files-index.json
+3d42199b…  files/…-1p.pdf                                            3d42199b…  files/…-1p.pdf
+ad2eae09…  files/…-12p.pdf                                           ad2eae09…  files/…-12p.pdf
+  OS CINCO IDÊNTICOS — e o `cache write kind=setlists` NÃO saiu: o sync é atômico.
+(A21-S1e-falha): "falha no servidor · mostrando dados de há 2 d" · "Tentar novamente"
+VEREDITO: ✓ nas duas metades.
+
+==========================================================================
+A19 — falha de revalidação com cache; sem cache, erro acionável
+==========================================================================
+-- COM cache: é o A3 e o A21 acima. Banner + lista permanece. ✓
+-- SEM cache: `rm files/octavia-<uid>/{setlists,content}.json` (a sessão sobrevive — §4.3
+   do V1-PRECHECK) + mock 500-pagina-1
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=202
+OCTAVIA: api status=500 path=/api/content  n=1 ms=139
+OCTAVIA: sync fail stage=content page=1 code=INTERNAL_ERROR status=500  ← page=1: controle negativo do D-d
+(A19-S1d-sem-cache-erro):
+  "FALHA NO SERVIDOR"
+  "Nenhuma setlist foi salva neste aparelho ainda. Conecte-se à internet uma vez para
+   baixar tudo — depois funciona offline."
+  tentar [1030,1012][1530,1138]   222,2 × 56,0 dp
+VEREDITO: ✓ nas duas metades.
+
+==========================================================================
+A15 (metade do AVD) — inertes com motivo, ativos rápidos, tema em 1 toque
+==========================================================================
+-- PDF (A15-pdf-inerte):
+  auto-scroll "Rolagem automática, indisponível: só em texto"
+  zoom-menos  "Diminuir o texto, indisponível: pinça para zoom"
+  zoom-mais   "Aumentar o texto, indisponível: pinça para zoom"
+$ tap no auto-scroll inerte
+OCTAVIA: autoscroll disabled kind=pdf
+  (A15-motivo-rapido, dump tirado sem `sleep`) a linha de motivo troca a dica de gesto por
+  "auto-scroll só em texto", e some em MOTIVO_MS = 2500  ← a errata do A15 da V1-PR3
+-- texto:
+OCTAVIA: autoscroll on t=17 · autoscroll off t=0            (aceite: < 100 ms)
+OCTAVIA: zoom dp=18 · zoom dp=22 · zoom dp=26
+OCTAVIA: theme=light          (UM toque; o rótulo vira "Mudar para o tema escuro")
+OCTAVIA: theme=dark
+VEREDITO (AVD): ✓. O tempo que o aceite pede é o do device — anexo B.
+
+==========================================================================
+A20 — nenhum literal de UI em inglês
+==========================================================================
+$ pnpm --filter native gate:a20        → 72 literais examinados, 0 acusações, exit 0
+$ pnpm --filter native gate:a20:cn     → 4 acusações, exit 1
+VEREDITO: ✓ (anexo D, verbatim).
+
+==========================================================================
+DISPENSADOS PELO G1 — seis, com o argumento de cada um
+==========================================================================
+O G1 fechou com DIFF VAZIO sobre o bloco inteiro (6a9315d → 72bdb38) nos nove módulos
+não-visuais do app e nos 25 arquivos de `packages/core/src`. Os seis abaixo vivem inteiros
+ali dentro:
+  A1  auth/rede   — `session.ts`, `firebase.ts`, `api.ts`
+  A7  sync/cache  — `sync.ts`, `store.ts`
+  A9  arquivo     — `files.ts`   (medido de raspão nesta PR: o download devolveu ad2eae09…,
+                    idêntico ao arquivo que estava em disco)
+  A13 pdf         — `files.ts` + react-native-pdf (visto vivo: pdf-render pages=12 src=disk)
+  A18 notes       — o `Nota:` do palco, visto vivo no A12
+  A22 sortBy      — visto vivo no A4: sortBy=recent nas duas páginas
+RESSALVA REGISTRADA: o A2 NÃO está nesta lista. O G1 dispensa a lógica dele; a TELA é o S0,
+que a V1-PR6 redesenhou. O A2 rodou no Tab S6 — anexo B.

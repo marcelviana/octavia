@@ -1,0 +1,185 @@
+$ (C) V1-PR7 — o aceite visual: os seis AV e o teste dos sete ícones
+
+REGRA DO AV: o gate prova o markup, o dump prova a geometria, e NENHUM DOS DOIS prova que
+se lê. O que está aqui é veredito humano, com o estado preparado e a pergunta feita.
+Data: 2026-09-14. Quem julga: Marcel.
+
+ONDE CADA UM FOI JULGADO, e por quê — decisão do Marcel, 2026-09-14:
+  no APARELHO, no escuro e com brilho baixo, o que se julga é COR e DENSIDADE PERCEBIDA:
+    AV-4 (S0), AV-5 (marcas do S5), AV-6 (acento das marcas), o S1 sincronizado,
+    e o teste dos sete ícones do palco.
+  no MONITOR, por captura, o que se julga é GEOMETRIA — e o AVD tem a mesma densidade de
+  2,25 px/dp e o mesmo canvas de 2560×1600 do Tab S6:
+    AV-1 (os quatro indicadores), AV-2 (a tab de 4 cordas), AV-3 (os 8 dp de coluna).
+  "Não vale um ciclo de escrita e restauro no store da conta principal do Marcel para mover
+   8 dp que já estão capturados." — Marcel, sobre o AV-3.
+
+==========================================================================
+O TESTE DOS SETE ÍCONES — a um metro, de relance, no escuro
+==========================================================================
+É o teste que o design propôs na Fase 1, com o qual o Marcel decidiu TIRAR os rótulos, e
+que nunca tinha sido feito no aparelho real. Duas molduras, as duas preparadas ANTES de
+chamá-lo (a regra que ele deu: "trocar de estado com ele esperando no escuro é o que faz o
+teste virar demonstração em vez de teste").
+
+MOLDURA A — palco de texto, os sete ATIVOS (AVicones-A-texto):
+  "1 DE 4 · GOOD TIMES · Colors · Black Pumas · Letra"
+  auto-scroll · zoom− · zoom+ · tema · indice · busca · sair
+VEREDITO: **"a leitura e visibilidade dos ícones está ótima"**.
+
+MOLDURA B — PDF avulso, os três primeiros INERTES (AVicones-B2-pdf-inertes):
+  "AVULSA · GOOD TIMES · Easy · Faith No More · Partitura · página 1 de 5"
+  auto-scroll, zoom− e zoom+ em `lineInfo` com o desenho amputado (E3: tinta, não opacidade)
+VEREDITO: **"leem como inertes — passa"**. A E3 funciona no painel real.
+
+ACHADO DO TESTE — não de legibilidade, de FUNÇÃO. Marcel, verbatim:
+  "Existem ícones que dizem respeito ao comportamento da tela em que a pessoa está (os 4
+   primeiros) e outros que são de navegação (os 3 últimos). Estes últimos não deveriam
+   aparecer juntos. talvez alinhá-los à direita seja uma solução."
+
+A BARRA, MEDIDA (AVicones-A-texto.xml, janela de 2560 px = 1137,8 dp):
+  auto-scroll  x=[  54, 203]  66,2 dp   margem antes = 24,0 dp
+  zoom-menos   x=[ 239, 387]  65,8 dp   folga = 16,0 dp
+  zoom-mais    x=[ 423, 572]  66,2 dp   folga = 16,0 dp
+  tema         x=[ 608, 756]  65,8 dp   folga = 16,0 dp
+  ──────────────────────────────────── aqui muda de família, e a folga NÃO muda
+  indice       x=[ 792, 941]  66,2 dp   folga = 16,0 dp
+  busca        x=[ 977,1125]  65,8 dp   folga = 16,0 dp
+  sair         x=[1161,1310]  66,2 dp   folga = 16,0 dp
+  fim do último controle: 582,2 dp   ·   VAZIO à direita: 555,6 dp = 49% da barra
+
+DUAS COISAS QUE A MEDIÇÃO ACRESCENTA AO ACHADO:
+  1. O DESENHO JÁ TINHA DEVOLVIDO ESSA METADE E NÃO LHE DEU SIGNIFICADO. O README §5.4
+     registra que a fileira encolheu de 814,2 para 592 dp "devolve 222 dp" e para aí.
+     Medido hoje: 582,2 dp de fileira, 555,6 dp de sobra sem função.
+  2. A FRONTEIRA POR FUNÇÃO É TAMBÉM A FRONTEIRA POR ESTADO. Os três controles que podem
+     ficar inertes (auto-scroll, zoom−, zoom+) são TODOS do grupo da esquerda; nenhum do
+     grupo da direita jamais fica inerte. As sete folgas são 16,0 dp iguais.
+
+PROPOSTA A — decidida pelo Marcel, 2026-09-14:
+                          hoje            proposta A
+  comportamento (4)   x 54…756 px       x 54…756 px          (não muda)
+  navegação (3)       x 792…1310 px     x 1987…2506 px       (+531,1 dp cada)
+  vão entre grupos    16,0 dp           547,1 dp
+  margem direita      555,6 dp vazios   24,0 dp — a mesma da esquerda
+  grupo de navegação: 3 × 66,2 + 2 × 16,0 = 230,7 dp
+
+O QUE NÃO QUEBRA, conferido:
+  V1-A8  (sete controles, mesma ORDEM, ≥ 64 dp, x1 iguais ENTRE AS VARIANTES) — intacto:
+         o gate compara variantes entre si, não desenhos entre si.
+  V1-A14 (largura fixa por controle entre texto e PDF) — intacto.
+  A14 do PRD (bordas): `borda-avancar` acaba em y=1276 e a barra começa em y=1311; o `sair`
+         a 2506 px não encosta nela. Foi a div. 16, que a V1-PR1 consertou.
+ONDE ENTRA: na PR de conserto, junto com as div. 102/103/104 — decisão do Marcel.
+NÃO ENTRA NESTA PR: a V1-PR7 não toca `apps/native/**`, e os dumps deste anexo deixariam
+de descrever o código mergeado.
+
+==========================================================================
+AV-1 — os indicadores do S1 que nenhuma moldura desenhou
+==========================================================================
+O prompt manda usar a conta principal no tablet, "onde o `parcial` é o caso real".
+A PREMISSA CAIU, e a medição é esta:
+  contents da conta principal com `file_url`: 1
+    b23a3803 · Sheet · 'Easy' · 1751910900697-Easy_-_Guitar.pdf (138.916 B, EM DISCO)
+  Good Times: 4 songs, need(arquivos) = 0
+  Season 3:   7 songs, need(arquivos) = 0
+  S1 do tablet: as duas "garantida offline, nada a baixar"
+Nenhuma setlist do Marcel está `parcial`, e não há um segundo arquivo para baixar. O `Easy`
+está no `files-index.json` porque foi aberto AVULSO pela busca, não por setlist.
+Decisão do Marcel: produzir os quatro estados no AVD, com a conta de audit.
+
+OS QUATRO, produzidos e capturados:
+  (AV1-S1-tres-indicadores) `parcial` (1 de 2, 1 de 2) e `nunca sincronizada`
+     "UX-AUDIT SOLO … nunca sincronizada, sem conexão para baixar"   ← a sublinha muda com a rede
+  (AV1-1-parcial)     as três em "parcial, 1 de 2 / 1 de 2 / 0 de 1"
+  (AV1-2-baixando)    "UX-AUDIT ESTRESSE … Baixando…, 1 de 2 arquivos baixados"
+                      com DUAS `parcial` ao lado — os três estados numa tela
+  (AV1-3-garantida)   as três em "garantida offline, todos os arquivos neste aparelho"
+COMO O `baixando` FOI ALCANÇADO: `adb emu network speed gsm` (14.400 bits/s) para o estado
+parar de pé tempo suficiente. No link cheio ele dura menos que um `screencap`.
+VEREDITO: **"Passa — os quatro se distinguem"**.
+
+PARA O ENCERRAMENTO, e não só para o teste: o `parcial` da conta principal do Marcel NÃO
+EXISTE hoje porque tudo está garantido. É informação sobre o uso real dele.
+
+==========================================================================
+AV-2 — a tab de quatro cordas, em 20 dp, no S2 e no S4
+==========================================================================
+S4, com dado real do tablet (S4-tipos): "Tabita, Tab" no grupo BIBLIOTECA · 63 MÚSICAS.
+S2, com a fixture de 60 (S2-60-tipos): os QUATRO tipos numa tela —
+  song-3  "Don't You Forget About Me, Simple Minds, Cifra"
+  song-7  "Tabita, Nota da posição 7, Tab"
+  song-8  "Chordinho, Cifra"
+  song-9  "Easy, Faith No More, Partitura"
+  o resto, Letra
+A §6.3 declara a tab de 20 dp como a ÚNICA exceção da família: 4 cordas em vez de 6.
+VEREDITO: **"Passa — lê como tab"**.
+
+==========================================================================
+AV-3 — os placeholders de 28 dp no S2, contra os tipos de 20
+==========================================================================
+Julgado por captura do AVD (A6-A8-indice), por decisão do Marcel — o critério é geométrico.
+Os quatro placeholders nas posições 9, 10, 11 e 12, na MESMA coluna que os válidos 3, 5 e 7:
+  9  "[FIXTURE] Sem corpo (no-body)"          chip "vazia"   ícone `sem-conteudo` 28 dp
+  10 "[FIXTURE] Objeto sem a chave (no-key)"  chip "vazia"   ícone `sem-conteudo` 28 dp
+  11 "[FIXTURE] Tipo desconhecido"            chip "?"       ícone `tipo-desconhecido` 28 dp
+  12 "(sem título)"                           "—"           nenhum ícone (E15.b)
+A E13.b mediu e aceitou o efeito: o rótulo do item inválido começa 8 dp à direita do rótulo
+do válido, porque o ícone é 8 dp mais largo; os rótulos de tipo VÁLIDO seguem no mesmo x.
+VEREDITO: **"Passa — o desequilíbrio não incomoda"**. A E13.b se confirma.
+
+==========================================================================
+AV-4 — o S0 inteiro, primeira vez no device
+==========================================================================
+Alcançado sem `pm clear` (anexo B). O que estava em jogo: a marca a 340 dp, os ícones de
+20 dp dos dois campos, o triângulo do `falha`, o `log-in`, e o botão inativo em `lineInfo`
+(E3, primeira aplicação fora do palco).
+  marca:  ImageView content-desc="Octavia" [268,527][1033,1019] → 340,0 dp  (E11 exata)
+  entrar: enabled=FALSE na árvore de acessibilidade — a E3 virou tinta E estado
+VEREDITO: **"Passa como está"**.
+LIMITE DECLARADO: este é o S0 do RE-login. A primeira abertura de um app recém-instalado
+continua sem ter sido vista no device, e nem o `pm clear` chegaria lá inteiro.
+
+==========================================================================
+AV-5 — a fileira de 60 marcas: contagem ou linha tracejada?
+==========================================================================
+As duas no aparelho, na ordem, com o juízo só depois das duas (a regra do próprio teste):
+  (AV5-S5-sete-marcas)     7 marcas · 33,8/34,2 dp · folga 4,4/4,9/5,3 · fileira 268,4 dp
+                           previsto por marcas.mjs: 34 dp, folga 5, fileira 268,0
+  (AV5-S5-sessenta-marcas) 60 marcas · 9,8/10,2 dp · folga 4,9/5,3 · fileira 895,1 dp (teto 900)
+                           previsto: 10 dp, folga 5, fileira 895,0
+  a geometria fecha em 0,1 dp nos dois casos.
+A §7.1 admite: "a marca já não conta músicas legíveis, e a leitura vira proporção".
+VEREDITO: **"Como proporção — e está certo"**. O piso de 6 dp e a folga de 5 ficam como estão.
+
+==========================================================================
+AV-6 — o acento nas marcas do S5 (div. 92 / errata E15.a)
+==========================================================================
+A E12 fixou "acento só em ativo, atual ou foco"; as marcas não são nenhum dos três ao pé da
+letra, e a moldura ARGUMENTA o acento ("é o mesmo vocabulário do arco de garantia —
+proporção, não medalha"), ao contrário da S1b que originou a E12 e que dizia só "mesma cor
+de antes". A pergunta era se a tela ficou com dois donos de acento.
+VEREDITO: **"Um dono — o acento é das marcas"**. A E15.a se confirma no painel real, e com
+ela a distinção que ela estabeleceu: **moldura que argumenta não é moldura que herda.**
+
+==========================================================================
+EXTRA — o S1 sincronizado, sob brilho baixo (a tela de todo dia)
+==========================================================================
+(AV-S1-brilho-baixo) "SETLISTS · sincronizado há 27 min", os dois cartões reais em
+"garantida offline · nada a baixar", arco de garantia em tinta NEUTRA.
+A E12 foi decisão do Marcel CONTRA a moldura: `garantida` em `text`, não em acento; só
+`parcial` e `nunca` em âmbar (`offlineInk`). A pergunta era se ele acertou.
+VEREDITO: **"Acertou — neutro é 'pode ir'"**.
+
+==========================================================================
+PLACAR DOS SEIS AV
+==========================================================================
+  AV-1  ✓ passa          (monitor, AVD — o `parcial` da conta principal não existe)
+  AV-2  ✓ passa          (monitor, tablet no S4 + AVD/fixture no S2)
+  AV-3  ✓ passa          (monitor, AVD — critério geométrico)
+  AV-4  ✓ passa          (aparelho, no escuro — primeira vez)
+  AV-5  ✓ passa          (aparelho, no escuro — as duas fileiras na sequência)
+  AV-6  ✓ passa          (aparelho, no escuro)
+  + os sete ícones       ✓ legibilidade nas duas molduras
+                         ✗ AGRUPAMENTO — achado novo, proposta A decidida, PR de conserto
+  + o S1 de todo dia     ✓ a E12 confirmada no painel real

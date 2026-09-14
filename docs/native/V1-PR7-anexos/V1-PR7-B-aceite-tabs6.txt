@@ -1,0 +1,241 @@
+$ (B) V1-PR7 — o aceite no Tab S6, e o protocolo das duas paradas
+
+APARELHO: RX2N8000F3D · SM-T865 (Galaxy Tab S6) · Android 12 · 360 dpi ·
+2560×1600 px = 1137,8 × 711,1 dp, janela do app 2560×1492 (não há barra de tarefas
+como no AVD: a janela é 40 px mais alta que a do emulador).
+CONTA: principal, xVDJRBh1WpPOatbfWahOLttYn1E3. Dev client da V1-PR3 (c0c1ab51…).
+
+REGRA DO TABLET, obedecida do início ao fim: "avião" aqui é SÓ o override da API
+(`EXPO_PUBLIC_API_BASE_URL` inline no Metro), NUNCA o rádio — foi o corte de rádio que
+deixou o Wi-Fi sem reconectar na V1-PR3. O `ping` de 8.8.8.8 respondeu em TODAS as
+medições (27–31 ms), e é a prova de que o rádio ficou de pé.
+
+==========================================================================
+ESTADO ENCONTRADO — e uma premissa do prompt que caiu
+==========================================================================
+$ adb -s RX2N8000F3D shell dumpsys power | grep mWakefulness    → mWakefulness=Dozing
+$ ... dumpsys window | grep mDreamingLockscreen                 → mDreamingLockscreen=true
+$ ... shell settings get global airplane_mode_on                → 0
+$ ... shell ping -c 2 -W 2 8.8.8.8
+  2 packets transmitted, 2 received, 0% packet loss, rtt avg 27,997 ms     ← ONLINE
+
+  O prompt diz "Wi-Fi ligado mas desconectado (div. 55)". O tablet está ONLINE.
+  O que estava travado era o keyguard, e só o Marcel o abre. DIV. 101.
+
+STORE DA CONTA PRINCIPAL, registrado antes de qualquer comando de escrita:
+  39f784a4cfc396c2f5c40c3fa950f92ec5405af153469e16a5d8a667709a6796  content.json    (111.567 B)
+  539a0d764ab949dee13be42931e925ca1dce96d55db0942143f101def06674b6  setlists.json   (2.752 B)
+  8b658dd7d238704684984d4d01e68094a8dbd6711689676d112746a70073efba  files-index.json
+  1e1d77c4ce2eed96e0046ba0694e1dff247cfa7fb0bdcc52216979bcfa15d942  files/1751910900697-Easy_-_Guitar.pdf
+  sessão do Firebase: databases/RKStorage (20.480 B)
+  setlists: 'Good Times' 4 · 'Season 3' 7 (2025-07-16) · 63 contents · 1 com file_url
+
+==========================================================================
+PARADA 1 — e a premissa do `pm clear`, que CAIU
+==========================================================================
+O prompt manda `pm clear` porque "o A2 e o S0 exigem deslogar, e deslogar apaga a sessão".
+Deslogar apaga a sessão; `pm clear` apaga tudo o mais junto, e NÃO É PRECISO:
+
+  export function signOutSession(): Promise<void> {
+    return signOut(auth)          // apps/native/src/session.ts — não toca o store
+  }
+
+CAMINHO USADO, aprovado pelo Marcel em 2026-09-14:
+  Metro com EXPO_PUBLIC_DEV_FORGE_401=1 (a E4) + EXPO_PUBLIC_API_BASE_URL=http://localhost:8401,
+  e um servidor de host que devolve 401 a toda request (instrumentos/s401.py).
+  `adb -s RX2N8000F3D reverse tcp:8401 tcp:8401`.
+
+DECISÃO DO MARCEL, verbatim, e as duas coisas que ele mandou declarar:
+  "O custo de login é o mesmo nas duas e a 2 destrói o que não precisa ser destruído — é a
+   mesma lição do files-index.json: não apagar estado que o aparelho legitimamente tem, só
+   para alcançar um estado de teste."
+  1. o 401 forçado exercita o S0 e o RE-login, NÃO a primeira abertura de um app
+     recém-instalado. Esse estado continua sem ter sido visto no device, e o `pm clear` só
+     chegaria perto dele — não é o suficiente para pagar o cache;
+  2. o caminho (FORGE_401 + servidor 401 local) fica REGISTRADO COMO O MÉTODO PADRÃO de
+     alcançar o S0 daqui em diante, para que nenhum bloco futuro use `pm clear` por não
+     saber que existe alternativa.
+
+==========================================================================
+A2 — token forjado inválido → no máximo 2 requests à rota e tela de login
+==========================================================================
+OCTAVIA: net online
+OCTAVIA: auth uid=xVDJRBh1WpPOatbfWahOLttYn1E3 src=restored
+OCTAVIA: cache hit kind=setlists n=2
+OCTAVIA: cache hit kind=content n=63
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached          ← 1ª request
+OCTAVIA: auth refresh=forced          ← o 401 pediu renovação (createAuthFetch)
+OCTAVIA: auth-failure
+OCTAVIA: login-screen
+OCTAVIA: api status=401 path=/api/setlists n=2 ms=70
+OCTAVIA: sync fail stage=setlists page=1 code=UNAUTHORIZED status=401
+
+o servidor 401 local viu, e SÓ:
+  REQ /api/setlists auth=sim token=forjado-dev-a2.1.invalido
+  REQ /api/setlists auth=sim token=forjado-dev-a2.2.invalido
+
+STORE DEPOIS — os quatro sha256 IDÊNTICOS aos de antes:
+  39f784a4…  content.json   539a0d76…  setlists.json
+  381c4033…  files-index.json (mudou só o lastUsedMs — div. 22)
+  1e1d77c4…  files/1751910900697-Easy_-_Guitar.pdf
+VEREDITO: ✓ — n=2, nunca uma terceira, tela de login, ZERO request a prod, ZERO destruição.
+
+==========================================================================
+O S0 lido pelo dump (S0-login.xml) — primeira vez no aparelho
+==========================================================================
+resource-id  classe     enabled  click  text                      content-desc   bounds
+-            TextView   true     false  "ENTRAR"                  ""             [1348,466][2293,513]
+-            ImageView  true     false  ""                        "Octavia"      [268,527][1033,1019]
+email        EditText   true     true   "voce@exemplo.com.br"     "Email"        [1458,587][2256,718]
+senha        EditText   true     true   ""                        "Senha"        [1458,749][2256,880]
+entrar       Button     FALSE    true   ""                        "Entrar"       [1348,954][2293,1080]
+-            TextView   true     false  "Entrar"                  ""             [1803,988][1918,1046]
+
+  marca:   765 px / 2,25 = 340,0 dp        → a E11 fecha exata
+  campos:  354,7 × 58,2 dp                 → ver abaixo
+  entrar:  420,0 × 56,0 dp, enabled=FALSE  → a E3 virou tinta E estado de acessibilidade
+  "Email" e "Senha" só como nome acessível → div. 86 confirmada
+
+OS 58,2 dp NÃO CONTRADIZEM A E14.b. O estilo é `height: touch.list + 4` = 60 no CONTÊINER,
+com `borderWidth: 1`; o dump mede o `TextInput` de dentro, que é 60 − 2×1 = 58.
+É o padrão da §9.1 outra vez: o instrumento mede o nó acessível, não o elemento desenhado.
+Decisão do Marcel: "registre como instância, não como defeito".
+
+==========================================================================
+A15 — os três controles do palco, no device
+==========================================================================
+(S3-palco-1de7, AVicones-A-texto) os SETE, com content-desc não vazio:
+  auto-scroll [54,1311][203,1459]   66,2 × 65,8 dp  "Rolagem automática, desligada"
+  zoom-menos  [239,1311][387,1459]  65,8 × 65,8 dp  "Diminuir o texto"
+  zoom-mais   [423,1311][572,1459]  66,2 × 65,8 dp  "Aumentar o texto"
+  tema        [608,1311][756,1459]  65,8 × 65,8 dp  "Mudar para o tema claro"
+  indice      [792,1311][941,1459]  66,2 × 65,8 dp  "Abrir o índice da setlist"
+  busca       [977,1311][1125,1459] 65,8 × 65,8 dp  "Buscar na biblioteca"
+  sair        [1161,1311][1310,1459] 66,2 × 65,8 dp "Sair do palco"
+  → V1-A8 no aparelho real: sete, na ordem, ≥ 64 dp, content-desc nos sete.
+
+auto-scroll, cinco ciclos on/off:
+OCTAVIA: autoscroll on t=36 · off t=0
+OCTAVIA: autoscroll on t=36 · off t=0
+OCTAVIA: autoscroll on t=39 · off t=0
+OCTAVIA: autoscroll on t=41 · off t=0
+OCTAVIA: autoscroll on t=37 · off t=0
+  n=5 · min 36 · max 41 · aceite: < 100 ms  → ✓
+
+zoom (três toques em "−" no piso, depois quatro em "+"):
+OCTAVIA: zoom dp=18 · dp=18 · dp=18 · dp=22 · dp=26 · dp=32 · dp=40
+  a escada inteira do T1-R31, sem re-quebra (os cinco degraus são discretos).
+  OBSERVAÇÃO: os três `dp=18` saem com o zoom já no piso — a linha sai ao TOQUE, não à
+  mudança. O catálogo não promete "só na mudança" para o `zoom` (promete para o `rotation`),
+  então não é errata; fica registrado.
+
+tema: OCTAVIA: theme=light   (UM toque)   → o rótulo vira "Mudar para o tema escuro"
+      OCTAVIA: theme=dark
+(S3-tema-claro) o dump do tema claro, para o registro.
+
+PDF, os três inertes (AVicones-B2-pdf-inertes, o avulso do `Easy`, 5 páginas):
+  auto-scroll "Rolagem automática, indisponível: só em texto"
+  zoom-menos  "Diminuir o texto, indisponível: pinça para zoom"
+  zoom-mais   "Aumentar o texto, indisponível: pinça para zoom"
+  sair        "Voltar para a busca"       (variante avulsa)
+OCTAVIA: file src=disk name=1751910900697-Easy_-_Guitar.pdf bytes=138916
+OCTAVIA: pdf-render pages=5 src=disk · pdf-page n=1/5
+VEREDITO: ✓ nas três metades do A15 (auto-scroll < 100 ms, inerte com motivo, tema em 1 tap).
+
+==========================================================================
+A17 — p95 da troca de música, no device
+==========================================================================
+NÃO HÁ "ANTES" NO TAB S6, e isso se declara em vez de se inventar: o dev client foi trocado
+na V1-PR3 e ninguém mediu o anterior. Regra da div. 80: uma medição não vira referência sem n.
+
+-- (1) DADO REAL, a setlist que o Marcel tem: Season 3, 7 músicas, 6 trocas
+   85 84 82 81 82 85
+   n=6 · min=81 · p50=82 · p90=85 · p95=85 · max=85 · média=83,2
+   com n=6 o p95 É praticamente o máximo, e isso se declara.
+
+-- (2) O MESMO, estendido: 3 idas + 3 voltas = 36 trocas
+   68 68 62 64 68 67 71 74 66 64 68 71 64 67 71 62 69 67 72 73 62 64 66 68 69 71 72 68 74 69 72 70 64 71 66 69
+   n=36 · min=62 · p50=68 · p90=72 · p95=74 · max=74 · média=68,1
+   as 6 primeiras (83,2 de média) são consistentemente mais lentas que as 36 seguintes
+   (68,1): há aquecimento, e ele cabe dentro do aceite nos dois casos.
+
+-- (3) O ACEITE COMO ESTÁ ESCRITO: setlist de 60, 59 trocas
+   FIXTURE de host (instrumentos/fix60.py): recompõe SÓ o `setlists.json`, a partir dos 63
+   contents QUE JÁ ESTÃO no cache. Não escreve em prod, não toca `content.json`.
+     antes:   539a0d764ab949dee13be42931e925ca1dce96d55db0942143f101def06674b6
+     fixture: c1c326096c234c6dbf447a350e1c4e8a7e8d59619d1427784bfc6bc689fee17d (local == aparelho)
+     depois:  539a0d764ab949dee13be42931e925ca1dce96d55db0942143f101def06674b6  ← byte a byte
+   68 87 74 77 76 70 73 71 75 77 71 78 67 72 80 86 78 68 72 71 75 78 78 73 78 77 74 62 69 73
+   72 69 75 79 73 75 75 75 72 72 78 77 75 78 74 75 73 68 79 63 74 74 61 73 64 65 69 81 61
+   n=59 · min=61 · p50=74 · p90=79 · p95=81 · max=87 · média=73,3
+   acima de 100 ms: NENHUM
+   a posição 9 é o Sheet `Easy` (OCTAVIA: file src=disk … bytes=138916) e não produziu pico:
+   a anomalia `n=44` que o AVD tinha nos dois lados da V1-PR3 NÃO reapareceu aqui.
+
+OS DOIS LADO A LADO, cada um com o seu n:
+   Season 3 real (7)   n=6    p50=82  p95=85   ← o uso de verdade, n pequeno, declarado
+   Season 3 real (7)   n=36   p50=68  p95=74   ← o mesmo, com população
+   Season 3 fixture(60) n=59  p50=74  p95=81   ← o aceite como escrito
+   Não divergem: as três faixas se sobrepõem. A de 60 não é mais lenta por ser maior.
+VEREDITO: ✓ p95 < 100 ms nas três leituras.
+
+==========================================================================
+A16 — 15 min sem toque no palco → tela acesa
+==========================================================================
+O A16 estava no §7.4 do V1-PRECHECK como aceite de device e ficou fora da lista mínima do
+prompt. Rodado por decisão do Marcel, 2026-09-14, com o furo que ele nomeou:
+  "o G1 cobre os NOVE módulos não visuais, e o StageScreen.tsx não está entre eles — a
+   V1-PR3 o reescreveu inteiro, e é lá que o keep-awake vive."
+
+OS DOIS LADOS, como ele pediu — o app PEDE, e o Android ATENDE:
+  uid do app: 10292
+  PEDE:    a janela do rocks.octavia.app tem fl=81810180 → 0x81810180 & 0x80 = FLAG_KEEP_SCREEN_ON
+  ATENDE:  Wake Locks: SCREEN_BRIGHT_WAKE_LOCK 'WindowManager' ws=WorkSource{10292}
+  log:     OCTAVIA: keepawake off → index open → index jump n=1 → keepawake on
+  timeout do sistema: settings get system screen_off_timeout → 30000 (30 s)
+
+RELÓGIO (instrumentos/a16.sh — leitura por dumpsys, não toca o aparelho), T0 = 10:38:21:
+  10:39:11  t=+0min   mWakefulness=Awake  mScreenOnFully=true  mDreamingLockscreen=false
+  10:40:11  t=+1min   Awake  true  false     10:48:14  t=+9min   Awake  true  false
+  10:41:11  t=+2min   Awake  true  false     10:49:15  t=+10min  Awake  true  false
+  10:42:12  t=+3min   Awake  true  false     10:50:15  t=+11min  Awake  true  false
+  10:43:12  t=+4min   Awake  true  false     10:51:16  t=+12min  Awake  true  false
+  10:44:13  t=+5min   Awake  true  false     10:52:16  t=+13min  Awake  true  false
+  10:45:13  t=+6min   Awake  true  false     10:53:16  t=+14min  Awake  true  false
+  10:46:13  t=+7min   Awake  true  false     10:54:17  t=+15min  Awake  true  false
+  10:47:14  t=+8min   Awake  true  false     10:55:17  t=+16min  Awake  true  false
+ESTADO FINAL, sem tocar (A16-palco-fim):
+  SCREEN_BRIGHT_WAKE_LOCK ... ACQ=-22m48s848ms (ws=WorkSource{10292})
+  dump: "1 DE 7" · "SEASON 3" · "Hoochie Coochie Man · Muddy Waters · Letra"
+VEREDITO: ✓ — 22m48s de tela acesa contra um timeout de 30 s (45× o timeout).
+
+==========================================================================
+A4 e A1 contra PROD, com a conta principal
+==========================================================================
+Uma única abertura online, com a base real da API:
+OCTAVIA: auth uid=xVDJRBh1WpPOatbfWahOLttYn1E3 src=restored
+OCTAVIA: cache hit kind=setlists n=2 · cache hit kind=content n=63
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=3182
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content  n=1 ms=461
+OCTAVIA: cache write kind=setlists n=2 invalidated=0
+OCTAVIA: cache write kind=content n=63 invalidated=0
+OCTAVIA: sync ok setlists=2 content=63 pages=1 t=3928
+  chamadas a /api/auth/session, /api/proxy, /api/profile: 0                 ← A1
+  1 + max(1, ⌈63/100⌉) = 2 · o app fez 2                                    ← A4
+  content.json DEPOIS: 39f784a4… — BYTE A BYTE o de antes (o servidor devolveu os mesmos 63)
+  setlists.json DEPOIS: 5f128c74… (mudou: `syncedAtMs` novo)
+VEREDITO: ✓. ESTA abertura, mais o login do Marcel que a precedeu, é o estouro do teto — §E.
+
+==========================================================================
+ESTADO FINAL DO TAB S6
+==========================================================================
+  39f784a4cfc396c2f5c40c3fa950f92ec5405af153469e16a5d8a667709a6796  content.json     (= o do início)
+  5f128c74fa760a7b7e2588184120f568560fead4c618f0d54a8b4178c422034e  setlists.json    (= o pós-sync)
+  1a10b82c3f17eb487031a88c1b9203ca3a5915a6e360b61d182d26b6b1efbc2d  files-index.json (lastUsedMs)
+  1e1d77c4ce2eed96e0046ba0694e1dff247cfa7fb0bdcc52216979bcfa15d942  files/…Easy_-_Guitar.pdf (= o do início)
+  sessão viva, tela S1 com as duas setlists reais, rádio ligado, keyguard aberto.
+  (ZZ-estado-final.xml / .png)
