@@ -652,6 +652,14 @@ erro:
 | **div. 71** (V1-PR5, acrescentado por decisão do Marcel em 2026-09-13) | o `normal` dos 34 desenhos, contra o anexo D | o mapa de ícones inteiro — mas `ativo`, `inerte` e **`em20`** ficam de fora, e o `em20` é o único desenho que a §6.3 declara **exceção** e o único que o S2 estreia. **O detalhe que separa este dos sete: o próprio script já dizia isso por escrito**, na nota da regra 2 — "os estados `ativo`/`inerte`/`em20` … não são cobrados contra o anexo D". O instrumento documentava a própria cegueira e ninguém tinha lido a nota |
 | **div. 80** (V1-PR5, acrescentado por decisão do Marcel em 2026-09-13) | **a duração de UM run de CI**, medida uma vez | **o custo do gate** — uma propriedade estável do `native.yml`. Os 9m16s da V1-PR4 viraram "o número em regime", e os 13m18s da V1-PR3 foram explicados pela primeira compilação do `react-native-svg`. Com **onze** runs na mão: quatro quentes de trabalho idêntico (621 : 621, mesma chave de cache) com Gradle entre 7m48s e 11m03s, e a variação **maior DENTRO da V1-PR4** (+3m15s, mesmo código, treze minutos de diferença) do que entre PRs. **9m16s não é regime: é o melhor de onze.** Neste caso o instrumento não é um script — é a própria leitura de quem mediu, e é o que torna o padrão perigoso fora de ferramenta |
 
+> **ESTA SUBSEÇÃO MIGROU — V1-PR7, 2026-09-14.** O padrão vive agora em
+> [`LOGS-OCTAVIA.md`](LOGS-OCTAVIA.md), na seção *"O padrão — instrumento com escopo
+> menor do que parece"*, com **treze** casos (os nove daqui, o décimo da div. 82 da
+> V1-PR5/PR6 e mais três que o aceite da V1-PR7 achou) e as duas regras que saíram deles
+> (§9 e §10.1 deste documento). **O que está abaixo fica como registro histórico da
+> descoberta**; a versão viva, que cresce, é a do `LOGS-OCTAVIA.md`. A nota original da
+> decisão segue preservada:
+>
 > **ESTA SUBSEÇÃO MIGRA.** Decisão do Marcel, 2026-09-13: o padrão é material do
 > **`LOGS-OCTAVIA.md`**, não de um pre-check de PR — é o achado mais reaproveitável
 > do V1 e não pode ficar enterrado aqui. **Fica onde está até o encerramento do
