@@ -1,0 +1,457 @@
+$ (B) W1 — commit 1: A REPROVAÇÃO, antes do conserto
+
+RASTRO, não fonte. A fonte da PR é o diff e as mensagens de commit.
+Data: 2026-09-14. Árvore: /Users/marcelviana/projects/octavia-w1, branch `w1/garantia-offline`.
+O código medido é o de `f79a4b7` (main): NENHUMA linha de `files.ts` ou `prefetch.ts` foi
+tocada quando esta saída foi produzida. Os testes são do commit 1; o app é o de ontem.
+
+"O gate vem antes do que ele mede" — regra que a V1-PR3 deixou e a V1-PR4 repetiu.
+Se estes testes passassem aqui, o errado seria o teste.
+
+==========================================================================
+1. O QUE REPROVA, E POR QUÊ — a leitura das 24 asserções
+==========================================================================
+  17 REPROVAM · 7 passam, e as 7 são CONTROLE (o que já estava certo e não pode quebrar):
+    ✓ `.part` sobrando não conta            — o `listFiles` itera o índice, que nunca conhece um `.part`
+    ✓ o arquivo íntegro continua contando   — o caminho feliz de hoje
+    ✓ lento mas sem parar não aborta        — hoje NÃO ABORTA NUNCA: passa pelo motivo errado, e é por isso
+                                              que ele é controle e não prova (o `W1-A2`/`W1-A3` é quem prova)
+    ✓ sem `Content-Length` o download vale  — idem
+    ✓ o tamanho lembrado sobrevive          — o `knownBytes` de hoje
+    ✓ nunca mais de três ao mesmo tempo     — o lote de hoje garante ≤ 3 (desperdiçando vagas)
+    ✓ a ordem de início é a do core         — o lote de hoje também a respeita
+
+  DUAS reprovações são POR TEMPO ESGOTADO, e isso é o achado literal:
+    × "a conexão que morre no meio"         — 5004 ms: a promessa NUNCA ASSENTA
+    × "sem nenhum byte novo por 30 s"       — 5002 ms: idem
+  É a div. 104 reproduzida em teste de unidade: *não estava travado, estava chegando devagar
+  demais* — e sem teto nenhum, o app espera para sempre. O teste espera junto, e o runner o mata.
+
+==========================================================================
+2. `pnpm exec vitest run --project native` — SAÍDA LITERAL
+==========================================================================
+
+
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-w1
+
+ ❯  native  apps/native/test/files-saneamento.test.ts (5 tests | 5 failed) 7ms
+     × apaga o 0 byte e o truncado, e deixa o íntegro em paz 4ms
+     × a ENTRADA do índice fica — é o "(1,2 MB)" que o S3e mostra (Q3) 1ms
+     × varre o `.part` que um processo morto deixou para trás 1ms
+     × num disco já são, não apaga nada e não custa nada 0ms
+     × um arquivo que não é PDF não é julgado pela forma do PDF 0ms
+stdout | apps/native/test/files-integridade.test.ts > G7 — o que está no disco só conta se estiver completo > o arquivo íntegro continua contando — o gate não pode recusar o que é bom
+OCTAVIA: file src=download name=178621843-partitura-12p.pdf bytes=4000
+
+stdout | apps/native/test/files-integridade.test.ts > G7 — o que está no disco só conta se estiver completo > o arquivo íntegro continua contando — o gate não pode recusar o que é bom
+OCTAVIA: file src=disk name=178621843-partitura-12p.pdf bytes=4000
+
+(node:25474) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 15)
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯  native  apps/native/test/prefetch-fila.test.ts (8 tests | 6 failed) 27ms
+     × o quarto arquivo COMEÇA enquanto o primeiro ainda baixa 10ms
+     ✓ nunca mais de três downloads ao mesmo tempo (T1-R13 passo 3) 5ms
+     ✓ a ordem de INÍCIO continua sendo a do core — o que muda é a de término 2ms
+     × o callback por arquivo corre antes de o plano terminar 3ms
+     × três falhas, três linhas, e as outras continuam 2ms
+     × a linha de falha não carrega a URL inteira (regra 2 do catálogo) 1ms
+     × "Baixar esta setlist" também reporta a falha 1ms
+     × uma promoção que falha vira linha, não rejeição sem dono 3ms
+stdout | apps/native/test/files-integridade.test.ts > W1-A2 / W1-A3 — o teto é de inatividade, e a checagem é do corpo > CONTROLE NEGATIVO do teto: lento mas SEM parar não pode abortar
+OCTAVIA: file src=download name=178621847-partitura-12p.pdf bytes=4000
+
+stdout | apps/native/test/files-integridade.test.ts > W1-A2 / W1-A3 — o teto é de inatividade, e a checagem é do corpo > um corpo mais curto que o `Content-Length` é recusado
+OCTAVIA: file src=download name=178621848-partitura-12p.pdf bytes=2000
+
+stdout | apps/native/test/files-integridade.test.ts > W1-A2 / W1-A3 — o teto é de inatividade, e a checagem é do corpo > sem `Content-Length` (`total=-1`) o download vale pela forma do arquivo
+OCTAVIA: file src=download name=178621849-partitura-12p.pdf bytes=4000
+
+(node:25473) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 3)
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | apps/native/test/files-integridade.test.ts > W1-A2 / W1-A3 — o teto é de inatividade, e a checagem é do corpo > um PDF sem `%%EOF` é recusado mesmo com o tamanho "certo"
+OCTAVIA: file src=download name=1786218410-partitura-12p.pdf bytes=2000
+
+stdout | apps/native/test/files-integridade.test.ts > o índice continua sendo memória, não oráculo (div. 111) > o tamanho lembrado sobrevive ao arquivo recusado — é o "(1,2 MB)" do S3e
+OCTAVIA: file src=download name=1786218411-partitura-12p.pdf bytes=4000
+
+(node:25473) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 5)
+ ❯  native  apps/native/test/files-integridade.test.ts (11 tests | 6 failed) 10038ms
+     × (a) um arquivo de 0 byte NÃO conta como presente 7ms
+     ✓ (c) um `.part` sobrando de um download morto não conta como presente 1ms
+     ✓ o arquivo íntegro continua contando — o gate não pode recusar o que é bom 2ms
+     × a conexão que morre no meio: nada com o nome final, e a promessa rejeita 5004ms
+     × durante o download, o nome final ainda não existe — a promessa não mente enquanto baixa 3ms
+     × sem nenhum byte novo por 30 s, o download é abortado e a falha aparece 5002ms
+     ✓ CONTROLE NEGATIVO do teto: lento mas SEM parar não pode abortar 4ms
+     × um corpo mais curto que o `Content-Length` é recusado 7ms
+     ✓ sem `Content-Length` (`total=-1`) o download vale pela forma do arquivo 2ms
+     × um PDF sem `%%EOF` é recusado mesmo com o tamanho "certo" 4ms
+     ✓ o tamanho lembrado sobrevive ao arquivo recusado — é o "(1,2 MB)" do S3e 1ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 17 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   native  apps/native/test/files-integridade.test.ts > G7 — o que está no disco só conta se estiver completo > (a) um arquivo de 0 byte NÃO conta como presente
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ apps/native/test/files-integridade.test.ts:63:28
+     61|     touch(URL_A)
+     62| 
+     63|     expect(hasFile(URL_A)).toBe(false)
+       |                            ^
+     64|     expect(listFiles()).toEqual([])
+     65|     expect(presentUrls().has(URL_A)).toBe(false)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/17]⎯
+
+ FAIL   native  apps/native/test/files-integridade.test.ts > W1-A1 — um download interrompido não deixa arquivo no lugar do bom > a conexão que morre no meio: nada com o nome final, e a promessa rejeita
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ apps/native/test/files-integridade.test.ts:98:3
+     96| 
+     97| describe('W1-A1 — um download interrompido não deixa arquivo no lugar …
+     98|   it('a conexão que morre no meio: nada com o nome final, e a promessa…
+       |   ^
+     99|     // 2 pedaços entregues e o soquete de pé para sempre: é a conexão …
+    100|     __responder(URL_A, { corpo: pdfBom(4000), pedacos: 4, atrasoMs: 10…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/17]⎯
+
+ FAIL   native  apps/native/test/files-integridade.test.ts > W1-A1 — um download interrompido não deixa arquivo no lugar do bom > durante o download, o nome final ainda não existe — a promessa não mente enquanto baixa
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ apps/native/test/files-integridade.test.ts:118:28
+    116|     await vi.advanceTimersByTimeAsync(1500)
+    117|     // div. 113: com o download direto no alvo, aqui o arquivo JÁ exis…
+    118|     expect(hasFile(URL_A)).toBe(false)
+       |                            ^
+    119| 
+    120|     await vi.advanceTimersByTimeAsync(10_000)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/17]⎯
+
+ FAIL   native  apps/native/test/files-integridade.test.ts > W1-A2 / W1-A3 — o teto é de inatividade, e a checagem é do corpo > sem nenhum byte novo por 30 s, o download é abortado e a falha aparece
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ apps/native/test/files-integridade.test.ts:127:3
+    125| 
+    126| describe('W1-A2 / W1-A3 — o teto é de inatividade, e a checagem é do c…
+    127|   it('sem nenhum byte novo por 30 s, o download é abortado e a falha a…
+       |   ^
+    128|     __responder(URL_A, { corpo: pdfBom(4000), pedacos: 2, atrasoMs: 10…
+    129| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/17]⎯
+
+ FAIL   native  apps/native/test/files-integridade.test.ts > W1-A2 / W1-A3 — o teto é de inatividade, e a checagem é do corpo > um corpo mais curto que o `Content-Length` é recusado
+AssertionError: promise resolved "{ …(3) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "bytes": 2000,
++   "src": "download",
++   "uri": "file://doc/octavia-u8/files/178621848-partitura-12p.pdf",
+  }
+
+ ❯ apps/native/test/files-integridade.test.ts:156:31
+    154| 
+    155|     const voo = ensureFile(URL_A, { guaranteed: true })
+    156|     const rejeita = expect(voo).rejects.toThrow(/2000|incompleto/)
+       |                               ^
+    157|     await vi.advanceTimersByTimeAsync(1000)
+    158|     await rejeita
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/17]⎯
+
+ FAIL   native  apps/native/test/files-integridade.test.ts > W1-A2 / W1-A3 — o teto é de inatividade, e a checagem é do corpo > um PDF sem `%%EOF` é recusado mesmo com o tamanho "certo"
+AssertionError: promise resolved "{ …(3) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "bytes": 2000,
++   "src": "download",
++   "uri": "file://doc/octavia-u10/files/1786218410-partitura-12p.pdf",
+  }
+
+ ❯ apps/native/test/files-integridade.test.ts:179:31
+    177| 
+    178|     const voo = ensureFile(URL_A, { guaranteed: true })
+    179|     const rejeita = expect(voo).rejects.toThrow()
+       |                               ^
+    180|     await vi.advanceTimersByTimeAsync(1000)
+    181|     await rejeita
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/17]⎯
+
+ FAIL   native  apps/native/test/files-saneamento.test.ts > W1-A6 — a varredura da abertura repara o que já está no disco > apaga o 0 byte e o truncado, e deixa o íntegro em paz
+TypeError: (0 , __vite_ssr_import_3__.sanearArquivos) is not a function
+ ❯ apps/native/test/files-saneamento.test.ts:60:22
+     58|     touch(URL_CURTO)
+     59| 
+     60|     const veredito = sanearArquivos()
+       |                      ^
+     61| 
+     62|     expect(veredito.removidos).toBe(2)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/17]⎯
+
+ FAIL   native  apps/native/test/files-saneamento.test.ts > W1-A6 — a varredura da abertura repara o que já está no disco > a ENTRADA do índice fica — é o "(1,2 MB)" que o S3e mostra (Q3)
+TypeError: (0 , __vite_ssr_import_3__.sanearArquivos) is not a function
+ ❯ apps/native/test/files-saneamento.test.ts:79:5
+     77|     expect(lembrado).not.toBeNull()
+     78| 
+     79|     sanearArquivos()
+       |     ^
+     80| 
+     81|     expect(__existe(`${dir.demand}/${NOME_CURTO}`)).toBe(false)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/17]⎯
+
+ FAIL   native  apps/native/test/files-saneamento.test.ts > W1-A6 — a varredura da abertura repara o que já está no disco > varre o `.part` que um processo morto deixou para trás
+TypeError: (0 , __vite_ssr_import_3__.sanearArquivos) is not a function
+ ❯ apps/native/test/files-saneamento.test.ts:90:22
+     88|     __plantar(`${dir.demand}/${NOME_CURTO}.part`, '')
+     89| 
+     90|     const veredito = sanearArquivos()
+       |                      ^
+     91| 
+     92|     expect(veredito.parciais).toBe(2)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/17]⎯
+
+ FAIL   native  apps/native/test/files-saneamento.test.ts > W1-A6 — a varredura da abertura repara o que já está no disco > num disco já são, não apaga nada e não custa nada
+TypeError: (0 , __vite_ssr_import_3__.sanearArquivos) is not a function
+ ❯ apps/native/test/files-saneamento.test.ts:101:12
+     99|     touch(URL_BOM)
+    100| 
+    101|     expect(sanearArquivos()).toEqual({ removidos: 0, parciais: 0 })
+       |            ^
+    102|     expect(hasFile(URL_BOM)).toBe(true)
+    103|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/17]⎯
+
+ FAIL   native  apps/native/test/files-saneamento.test.ts > W1-A6 — a varredura da abertura repara o que já está no disco > um arquivo que não é PDF não é julgado pela forma do PDF
+TypeError: (0 , __vite_ssr_import_3__.sanearArquivos) is not a function
+ ❯ apps/native/test/files-saneamento.test.ts:114:12
+    112|     touch(urlPng)
+    113| 
+    114|     expect(sanearArquivos().removidos).toBe(0)
+       |            ^
+    115|     expect(hasFile(urlPng)).toBe(true)
+    116|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/17]⎯
+
+ FAIL   native  apps/native/test/prefetch-fila.test.ts > div. 122 — um download lento não pode parar a fila > o quarto arquivo COMEÇA enquanto o primeiro ainda baixa
+AssertionError: expected [ '1786218400001-arquivo-1.pdf', …(2) ] to have a length of 5 but got 3
+
+- Expected
++ Received
+
+- 5
++ 3
+
+ ❯ apps/native/test/prefetch-fila.test.ts:69:27
+     67| 
+     68|     // Com a BARREIRA DE LOTE de hoje, aqui só três teriam começado.
+     69|     expect(__iniciados()).toHaveLength(5)
+       |                           ^
+     70|     expect(hasFile(urls[4] as string)).toBe(true)
+     71|     expect(hasFile(urls[0] as string)).toBe(false)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/17]⎯
+
+ FAIL   native  apps/native/test/prefetch-fila.test.ts > W1-A7 — o indicador anda DURANTE o download, não só no fim > o callback por arquivo corre antes de o plano terminar
+AssertionError: expected 0 to be greater than or equal to 4
+ ❯ apps/native/test/prefetch-fila.test.ts:117:27
+    115|     // Com a barreira de lote, aqui `passos` estaria VAZIO: o único po…
+    116|     // atualização era o fim de `prefetch7Dias`.
+    117|     expect(passos.length).toBeGreaterThanOrEqual(4)
+       |                           ^
+    118|     expect(passos).toEqual([...passos].sort((a, b) => a - b))
+    119| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/17]⎯
+
+ FAIL   native  apps/native/test/prefetch-fila.test.ts > div. 114 — nenhuma falha de download é engolida (T1-R37) > três falhas, três linhas, e as outras continuam
+AssertionError: expected [] to have a length of 3 but got +0
+
+- Expected
++ Received
+
+- 3
++ 0
+
+ ❯ apps/native/test/prefetch-fila.test.ts:136:39
+    134|     await voo
+    135| 
+    136|     expect(octavia('download-error')).toHaveLength(3)
+       |                                       ^
+    137|     expect(hasFile(urls[3] as string)).toBe(true)
+    138|     expect(hasFile(urls[4] as string)).toBe(true)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/17]⎯
+
+ FAIL   native  apps/native/test/prefetch-fila.test.ts > div. 114 — nenhuma falha de download é engolida (T1-R37) > a linha de falha não carrega a URL inteira (regra 2 do catálogo)
+AssertionError: expected [] to have a length of 1 but got +0
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ apps/native/test/prefetch-fila.test.ts:150:20
+    148| 
+    149|     const falhas = octavia('download-error')
+    150|     expect(falhas).toHaveLength(1)
+       |                    ^
+    151|     expect(falhas[0]).not.toContain('http')
+    152|     expect(falhas[0]).toContain(nomes[0] as string)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/17]⎯
+
+ FAIL   native  apps/native/test/prefetch-fila.test.ts > div. 114 — nenhuma falha de download é engolida (T1-R37) > "Baixar esta setlist" também reporta a falha
+AssertionError: expected [] to have a length of 2 but got +0
+
+- Expected
++ Received
+
+- 2
++ 0
+
+ ❯ apps/native/test/prefetch-fila.test.ts:163:39
+    161|     await voo
+    162| 
+    163|     expect(octavia('download-error')).toHaveLength(2)
+       |                                       ^
+    164|   })
+    165| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/17]⎯
+
+ FAIL   native  apps/native/test/prefetch-fila.test.ts > div. 115 — a promoção não pode derrubar o sync > uma promoção que falha vira linha, não rejeição sem dono
+AssertionError: promise rejected "Error: fake: move recusado para 178621840…" instead of resolving
+ ❯ apps/native/test/prefetch-fila.test.ts:181:21
+    179|     const voo = prefetch7Dias(setlists, contentById)
+    180|     await vi.advanceTimersByTimeAsync(10_000)
+    181|     await expect(voo).resolves.toBeUndefined()
+       |                     ^
+    182| 
+    183|     expect(octavia('download-error')).toHaveLength(1)
+
+Caused by: Error: fake: move recusado para 1786218400008-arquivo-1.pdf
+ ❯ File.moveSync apps/native/test/fake-expo-file-system.ts:180:46
+ ❯ ensureFileUma apps/native/src/files.ts:183:18
+ ❯ ensureFile apps/native/src/files.ts:164:15
+ ❯ prefetch7Dias apps/native/src/prefetch.ts:111:38
+ ❯ apps/native/test/prefetch-fila.test.ts:179:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/17]⎯
+
+⎯⎯⎯⎯⎯⎯ Unhandled Errors ⎯⎯⎯⎯⎯⎯
+
+Vitest caught 3 unhandled errors during the test run.
+This might cause false positive tests. Resolve unhandled errors to make sure your tests are not affected.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: fake: move recusado para 1786218400008-arquivo-1.pdf
+ ❯ File.moveSync apps/native/test/fake-expo-file-system.ts:180:46
+ ❯ ensureFileUma apps/native/src/files.ts:183:18
+ ❯ ensureFile apps/native/src/files.ts:164:15
+ ❯ prefetch7Dias apps/native/src/prefetch.ts:111:38
+ ❯ apps/native/test/prefetch-fila.test.ts:179:17
+ ❯ node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:145:11
+ ❯ node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:915:26
+ ❯ node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1243:20
+ ❯ runWithTimeout node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1209:10
+
+This error originated in "apps/native/test/prefetch-fila.test.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+The latest test that might've caused the error is "uma promoção que falha vira linha, não rejeição sem dono". It might mean one of the following:
+- The error was thrown, while Vitest was running this test.
+- If the error occurred after the test had been completed, this was the last documented test before it was thrown.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+AssertionError: promise resolved "{ …(3) }" instead of rejecting
+ ❯ _Assertion.__VITEST_REJECTS__ node_modules/.pnpm/@vitest+expect@4.0.16/node_modules/@vitest/expect/dist/index.js:1675:17
+ ❯ _Assertion.propertyGetter node_modules/.pnpm/chai@6.2.2/node_modules/chai/index.js:1570:27
+ ❯ Object.proxyGetter [as get] node_modules/.pnpm/chai@6.2.2/node_modules/chai/index.js:1659:22
+ ❯ apps/native/test/files-integridade.test.ts:156:31
+ ❯ node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:145:11
+ ❯ node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:915:26
+ ❯ node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1243:20
+ ❯ runWithTimeout node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1209:10
+
+This error originated in "apps/native/test/files-integridade.test.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+The latest test that might've caused the error is "um corpo mais curto que o `Content-Length` é recusado". It might mean one of the following:
+- The error was thrown, while Vitest was running this test.
+- If the error occurred after the test had been completed, this was the last documented test before it was thrown.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+AssertionError: promise resolved "{ …(3) }" instead of rejecting
+ ❯ _Assertion.__VITEST_REJECTS__ node_modules/.pnpm/@vitest+expect@4.0.16/node_modules/@vitest/expect/dist/index.js:1675:17
+ ❯ _Assertion.propertyGetter node_modules/.pnpm/chai@6.2.2/node_modules/chai/index.js:1570:27
+ ❯ Object.proxyGetter [as get] node_modules/.pnpm/chai@6.2.2/node_modules/chai/index.js:1659:22
+ ❯ apps/native/test/files-integridade.test.ts:179:31
+ ❯ node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:145:11
+ ❯ node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:915:26
+ ❯ node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1243:20
+ ❯ runWithTimeout node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1209:10
+
+This error originated in "apps/native/test/files-integridade.test.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+The latest test that might've caused the error is "um PDF sem `%%EOF` é recusado mesmo com o tamanho "certo"". It might mean one of the following:
+- The error was thrown, while Vitest was running this test.
+- If the error occurred after the test had been completed, this was the last documented test before it was thrown.
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+
+ Test Files  3 failed (3)
+      Tests  17 failed | 7 passed (24)
+     Errors  3 errors
+   Start at  18:37:39
+   Duration  10.32s (transform 283ms, setup 0ms, import 404ms, tests 10.07s, environment 0ms)
+
+
+==========================================================================
+3. `pnpm --filter native type-check` — TAMBÉM REPROVA, e é de propósito
+==========================================================================
+  $ pnpm --filter native type-check   (na árvore do commit 1, com o files.ts/prefetch.ts de f79a4b7)
+  
+  > native@1.0.0 type-check /Users/marcelviana/projects/octavia-w1/apps/native
+  > tsc --noEmit
+  
+  test/files-saneamento.test.ts(23,3): error TS2305: Module '"../src/files"' has no exported member 'sanearArquivos'.
+  test/prefetch-fila.test.ts(110,54): error TS2554: Expected 2 arguments, but got 3.
+  /Users/marcelviana/projects/octavia-w1/apps/native:
+   ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  native@1.0.0 type-check: `tsc --noEmit`
+  Exit status 2          ← o `tsc` do nativo REPROVA no commit 1, e volta a passar no commit 6
+
+==========================================================================
+4. A TERCEIRA REPROVAÇÃO, DECLARADA COMO MAIS FRACA
+==========================================================================
+O `files-saneamento.test.ts` reprova por `import` que não resolve
+(`has no exported member 'sanearArquivos'`), não por asserção sobre
+comportamento. Está num arquivo separado de propósito: assim ele não derruba
+a coleta do `files-integridade.test.ts`, que reprova MEDINDO.
+(É a div. 19 do N1 pelo lado certo: "controle negativo que quebra a coleta não
+é controle negativo".)

@@ -63,6 +63,31 @@ export default defineConfig({
           exclude: ['node_modules/**'],
         },
       },
+      // W1 (commit 1): o terceiro projeto — `apps/native`. Até aqui NENHUM
+      // teste de unidade cobria o nativo (`exclude: ['apps/**']` acima), e é
+      // por isso que a garantia offline pôde ser falsa sem nada acusar. O
+      // `expo-file-system` não existe fora do device: entra o duplo de
+      // `apps/native/test/fake-expo-file-system.ts`, que reproduz os três
+      // comportamentos medidos da biblioteca real (div. 113 e 116).
+      //
+      // Os testes vivem em `apps/native/test/`, FORA de `src/`, porque o
+      // `g2g3.sh` varre `apps/native/src` atrás de `testID=` e de linhas
+      // `log(` — um teste dentro de `src/` falsearia o G2 e o G3.
+      {
+        test: {
+          name: 'native',
+          environment: 'node',
+          setupFiles: [],
+          globals: false,
+          include: ['apps/native/test/**/*.test.ts'],
+          exclude: ['node_modules/**'],
+        },
+        resolve: {
+          alias: {
+            'expo-file-system': path.resolve(__dirname, 'apps/native/test/fake-expo-file-system.ts'),
+          },
+        },
+      },
     ],
     coverage: {
       enabled: false, // Disabled by default - use test:coverage script to enable
