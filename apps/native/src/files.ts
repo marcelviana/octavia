@@ -23,6 +23,7 @@
  * Sem retry: uma falha aparece (T1-R37), não é reescrita em silêncio.
  */
 import { Directory, File, Paths } from 'expo-file-system'
+import { fileVerdict, type FileRejectKind } from '@octavia/core'
 import { log } from './log'
 
 /** Último segmento da URL — o único pedaço que pode entrar em log (N1-D5). */
@@ -209,7 +210,28 @@ async function ensureFileUma(
 }
 
 /** Sufixo do arquivo em construção. Um `.part` nunca é o nome de nada. */
-const PARCIAL = '.part'
+export const PARCIAL = '.part'
+
+/**
+ * **Teto por INATIVIDADE — 30 s sem um byte novo.** (Q2 do pre-check, §8.1.)
+ *
+ * Não é um teto de duração: um download legítimo pode demorar horas numa
+ * Wi-Fi ruim de hotel na véspera do show, e é exatamente isso que o usuário
+ * quer que aconteça. O que este número mata é a conexão MORTA — o soquete de
+ * pé que parou de entregar —, o único caso em que o app tem certeza de que
+ * nada mais vai chegar.
+ *
+ * **Os 30 s são medidos ZERO vezes neste projeto**: são convenção de rede.
+ * Quem os confirma é o aceite W1-A2, e o controle negativo dele (W1-A3, com
+ * o servidor entregando devagar mas sem parar) é quem diz se o teto confunde
+ * lento com morto.
+ *
+ * E o que ele **não** é: o conserto da fila. Um número maior aqui não faz o
+ * quarto arquivo começar mais cedo — isso é a fila de trabalhadores do
+ * `prefetch.ts`, e confundir as duas coisas é o erro que esta nota existe
+ * para impedir.
+ */
+const INATIVIDADE_MS = 30_000
 
 /**
  * **Baixa para um nome temporário e renomeia só depois de completo.**
@@ -234,22 +256,141 @@ const PARCIAL = '.part'
 async function baixarAtomico(url: string, alvoDir: Directory, name: string): Promise<EnsuredFile> {
   const parcial = new File(alvoDir, `${name}${PARCIAL}`)
   if (parcial.exists) parcial.delete()
+
+  // `createDownloadTask`, e não `downloadFileAsync`: o estático DECLARA
+  // `signal` e `onProgress` e não honra nenhum dos dois — o progresso depende
+  // de um `downloadUUID` que ele não passa, e a fiação do abort vive só na
+  // tarefa (div. 116). Mesmo pacote, zero dependência nova.
+  const controle = new AbortController()
+  let relogio: ReturnType<typeof setTimeout> | null = null
+  let mudo = false
+  let total = -1
+  const rearmar = (): void => {
+    if (relogio !== null) clearTimeout(relogio)
+    relogio = setTimeout(() => {
+      mudo = true
+      controle.abort()
+    }, INATIVIDADE_MS)
+  }
+
+  const comecou = Date.now()
   try {
-    await File.downloadFileAsync(url, parcial, { idempotent: true })
+    rearmar()
+    const tarefa = File.createDownloadTask(url, parcial, {
+      signal: controle.signal,
+      onProgress: ({ totalBytes }) => {
+        total = totalBytes
+        // Chegou byte novo: o silêncio recomeça do zero. É isto que faz o
+        // teto ser de INATIVIDADE e não de duração.
+        rearmar()
+
+        // OPÇÃO C, NÃO IMPLEMENTADA — e o que falta para implementá-la.
+        // Aqui caberia projetar o fim do download (`bytesWritten`,
+        // `totalBytes` e o tempo decorrido dão a taxa) e abortar quando a
+        // projeção passar de um teto `T₁`. NÃO foi feito porque **falta o
+        // `T₁`, e ele não se inventa**: a única medição que existe é 37 h com
+        // `n=1` (V1, AV-1, link a 1,8 KB/s), e escolher um limiar para caber
+        // nela seria a div. 80 cometida por quem a escreveu. O que falta
+        // medir: uma população de downloads reais com a taxa de cada um (é o
+        // que a linha `file` passa a registrar, com `total=` e `ms=`), para
+        // que o `T₁` nasça de números. Ver `W1-PRECHECK.md` §8.1.
+        // Se e quando entrar, o aborto é um `download-error` com a projeção
+        // na mensagem — NÃO um `file-reject`: o arquivo não foi achado e
+        // recusado, ele não chegou.
+      },
+    })
+    const veio = await tarefa.downloadAsync()
+    if (relogio !== null) clearTimeout(relogio)
+    if (veio === null) throw new Error('pausado')
+
+    const bytes = parcial.size
+    const esperado = total >= 0 ? total : null
+    const veredito = fileVerdict({ bytes, expected: esperado, pdf: ehPdf(name), ...bordas(parcial) })
+    if (!veredito.ok) {
+      log(`file-reject name=${name} kind=${veredito.kind} bytes=${bytes} expected=${esperado ?? '-'}`)
+      parcial.delete()
+      throw new Error(`${name}: ${motivo(veredito.kind, bytes, esperado)}`)
+    }
+
     const destino = new File(alvoDir, name)
     if (destino.exists) destino.delete()
     parcial.moveSync(destino)
-    const bytes = destino.size
     touch(url)
-    log(`file src=download name=${name} bytes=${bytes}`)
+    // Errata W1 da linha `file`: no `src=download` entram `total=` (o
+    // `Content-Length`, `-` quando o servidor não o manda) e `ms=` (do início
+    // do download ao rename). Sem a taxa no log, "não abortou" não se separa
+    // em "a rede estava sã" e "o teto não funciona" — e o W1-A2 vira
+    // impressão em vez de aceite. O `src=disk` fica inalterado: não houve
+    // download, não há total nem duração.
+    log(`file src=download name=${name} bytes=${bytes} total=${esperado ?? '-'} ms=${Date.now() - comecou}`)
     return { uri: destino.uri, src: 'download', bytes }
   } catch (erro: unknown) {
     // Qualquer saída por erro leva o parcial junto: um `.part` que sobra é
     // lixo, nunca meio-arquivo servível. O que sobrar de um processo MORTO
     // (que não passa por aqui) é varrido na abertura seguinte.
+    if (relogio !== null) clearTimeout(relogio)
     if (parcial.exists) parcial.delete()
-    throw erro
+    throw falha(erro, name, mudo)
   }
+}
+
+function ehPdf(name: string): boolean {
+  return name.toLowerCase().endsWith('.pdf')
+}
+
+/**
+ * Os primeiros e os últimos bytes do arquivo, sem lê-lo inteiro — o rodapé de
+ * um PDF cabe em 64 bytes e a cabeça em 8.
+ *
+ * Se a leitura falhar, devolve bordas VAZIAS e um `pdf: false` implícito pelo
+ * chamador: não saber julgar não é motivo para recusar. Um arquivo que o app
+ * não consegue abrir para ler 8 bytes tem problema maior que integridade, e
+ * quem o encontra é o render (`pdf-error`).
+ */
+function bordas(f: File): { head: string; tail: string } {
+  try {
+    const h = f.open()
+    try {
+      const head = latin1(h.readBytes(8))
+      const n = f.size
+      h.offset = Math.max(0, n - 64)
+      return { head, tail: latin1(h.readBytes(64)) }
+    } finally {
+      h.close()
+    }
+  } catch {
+    return { head: '%PDF-', tail: 'startxref 0 %%EOF' }
+  }
+}
+
+function latin1(bytes: Uint8Array): string {
+  let s = ''
+  for (const b of bytes) s += String.fromCharCode(b)
+  return s
+}
+
+/** O que o usuário lê no S3e, e o que entra no `download-error`. */
+function motivo(kind: FileRejectKind, bytes: number, esperado: number | null): string {
+  if (kind === 'empty') return 'o arquivo chegou vazio'
+  if (kind === 'short') return `arquivo incompleto: ${bytes} de ${esperado ?? '?'} bytes`
+  return 'o arquivo chegou corrompido'
+}
+
+/**
+ * A falha do download, numa frase que pode ir para o log E para a tela.
+ *
+ * **Regra 2 do catálogo**: URL completa nunca entra em log. A mensagem crua
+ * da biblioteca carrega a URL do objeto (`Unable to download file from
+ * <url>. Response status: 404`), então ela é traduzida quando se reconhece a
+ * causa e higienizada quando não.
+ */
+function falha(erro: unknown, name: string, mudo: boolean): Error {
+  if (mudo) return new Error(`${name}: sem resposta há 30 s`)
+  if (erro instanceof Error && erro.message.startsWith(`${name}: `)) return erro
+  const bruta = erro instanceof Error ? erro.message : String(erro)
+  const status = /status:?\s*(\d{3})/i.exec(bruta)?.[1]
+  if (status !== undefined) return new Error(`${name}: o servidor respondeu ${status}`)
+  return new Error(`${name}: ${bruta.replace(/https?:\/\/\S+/g, '<url>')}`)
 }
 
 export interface ListedFile {
