@@ -71,6 +71,24 @@ export default function App(): React.JSX.Element {
     setFilesPresent(presentUrls())
   }, [])
 
+  /**
+   * O mesmo refresh SEM o LRU — o que corre a cada arquivo que assenta (W1).
+   *
+   * Com a barreira de lote, o indicador só se atualizava no FIM de todo o
+   * plano: o cartão saltava de "0 de 5" para "5 de 5", e com um arquivo lento
+   * no primeiro lote **nunca saía de 0**. Com a fila de trabalhadores, cada
+   * arquivo que chega pode atualizar na hora, e é isso que o "parcial
+   * honesto" desta PR significa na tela (aceite W1-A7).
+   *
+   * Por que sem o LRU: o `aplicarLru` é varredura de arrumação, não precisa
+   * correr por arquivo — corre uma vez ao fim da fila, e o motivo que o pôs
+   * no caminho (o teto ficava furado entre um sync e o seguinte) continua
+   * satisfeito.
+   */
+  const atualizarPresentes = useCallback(() => {
+    setFilesPresent(presentUrls())
+  }, [])
+
   useEffect(() => {
     dadosRef.current = dados
   }, [dados])
@@ -87,10 +105,10 @@ export default function App(): React.JSX.Element {
    */
   const prefetchEArrumar = useCallback(
     async (setlists: SetlistDTO[], contentById: Map<string, ContentDTO>): Promise<void> => {
-      await prefetch7Dias(setlists, contentById)
+      await prefetch7Dias(setlists, contentById, atualizarPresentes)
       recarregarArquivos()
     },
-    [recarregarArquivos],
+    [recarregarArquivos, atualizarPresentes],
   )
 
   useEffect(() => {
@@ -189,16 +207,24 @@ export default function App(): React.JSX.Element {
       const setlist = dados.setlists.find((s) => s.id === setlistId)
       if (setlist === undefined) return
       setBaixando((atual) => new Set(atual).add(setlistId))
-      void baixarSetlist(setlist, dados.contentById).finally(() => {
-        setBaixando((atual) => {
-          const proximo = new Set(atual)
-          proximo.delete(setlistId)
-          return proximo
+      void baixarSetlist(setlist, dados.contentById, atualizarPresentes)
+        // O `.finally` sozinho limpava o "Baixando…" e **não tratava a
+        // rejeição**: o botão aceitava o toque e falhava em silêncio (o
+        // sintoma que o `DESIGN-V1` §8.2 nomeou). As falhas de download já
+        // saem uma a uma pela fila; este `catch` é o que sobra depois delas.
+        .catch((erro: unknown) => {
+          log(`download-error ${erro instanceof Error ? erro.message : 'falha ao baixar'}`)
         })
-        recarregarArquivos()
-      })
+        .finally(() => {
+          setBaixando((atual) => {
+            const proximo = new Set(atual)
+            proximo.delete(setlistId)
+            return proximo
+          })
+          recarregarArquivos()
+        })
     },
-    [dados, recarregarArquivos],
+    [dados, recarregarArquivos, atualizarPresentes],
   )
 
   return (
