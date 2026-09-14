@@ -29,6 +29,19 @@ V1-PR6 · 2026-09-13.
     2 packets transmitted, 2 received, 0% packet loss, time 1001ms
     rtt min/avg/max/mdev = 46.266/129.704/213.142/83.438 ms
 
+  **Esta prova 0 é o cenário que já custou duas requests ao bloco**, e desta vez
+  pegou antes de o app abrir. O `V1-PR3-PRECHECK.md` §9 registra o gasto e a
+  causa, com estas palavras: "Pus o AVD em avião com `settings put global
+  airplane_mode_on 1`, li de volta `1`, e **tratei isso como prova**. Não é. O
+  rádio continuou ligado — o primeiro logcat do app diz `net online`, e o sync
+  saiu." Foram 2 requests (`GET /api/setlists` e `GET /api/content`) num alvo de
+  0, e é de lá que vem o teto de 2 que esta PR herdou e não tocou.
+
+  A diferença desta sessão não é ter ligado o avião: é ter medido o estado
+  ANTERIOR ao corte e achado a rede viva. O setting dizia 0 e o `ping` dizia 0 —
+  os dois concordavam, e é justamente quando eles concordam que o hábito de
+  pular a prova se forma. Quando discordam, é a PR3.
+
   Corte: `settings put global airplane_mode_on 1` + broadcast AIRPLANE_MODE.
 
   PROVA 1 — logo depois do corte, ANTES de qualquer abertura:

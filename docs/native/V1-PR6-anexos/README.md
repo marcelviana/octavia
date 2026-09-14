@@ -98,7 +98,7 @@ prova a geometria, e **nenhum dos dois prova que se lê**.
 |---|---|---|
 | **81** | **D** | **Três desenhos fora do catálogo, não um.** As molduras `S0` e `S4b` trazem `email`, `senha` e `nada-encontrado` — nenhum deles em linha alguma da §6.4, que declara "Fora do catálogo, **dois** desenhos" (o `log-in` e o laço). Pôr os três no mapa faria o `gate:icones` acusar "sobra no mapa" três vezes, pela regra 1. **Extra declarado**: a regra 5 do gate, que cobra a categoria inteira contra o `telas.html` por forma. Errata proposta: **E14.a** |
 | **82** | **T** | **O DÉCIMO caso do padrão do §9.1** — o `gate:a20` lia `rotulo=` e `motivo=` como PROP de JSX e não como CHAVE DE OBJETO, e desde a V1-PR5 o app põe texto de UI exatamente aí. Por extenso abaixo, fora da tabela: é material de `LOGS-OCTAVIA.md` |
-| **83** | **T** | **O G3 conta comentário.** O `g2g3.sh` compara as linhas que casam com `log(` **sem tirar comentários** (o `a20.mjs` tira). Uma frase de documentação que citasse a chamada — "nenhuma linha de `log(` muda" — fez o G3 acusar divergência com zero mudança de código. **Nada foi mudado no gate**: ele erra para o lado de falar demais, que é o lado certo para um gate de invariância. O comentário foi reescrito sem a cadeia, e a razão ficou no próprio comentário |
+| **83** | **T** | **O G3 conta comentário, e não mexer nele foi decisão, não omissão.** Por extenso abaixo, fora da tabela: é material de `LOGS-OCTAVIA.md` (decisão do Marcel) |
 | **84** | **D** | **A altura do campo do S0**: a moldura desenha 52, que é empate exato entre `touch.min` (48) e `touch.list` (56) — e a §5.2 **nomeia este elemento por escrito**, "`touch.list + 4` = 60 (campo do login)". Ficou **60**, que é o que o app já tinha. Errata proposta: **E14.b** |
 | **85** | **D** | **O `falha` do S0 a 20 e não aos 24 da §6.4.** A tabela dá 24 e nomeia uma casa só, o banner do S1e; o S0 é casa nova e a §5.5 põe em 20 o "ícone dentro de texto". O critério da E13.b (a tabela vence) valia lá porque a §6.4 **nomeava a casa**. Errata proposta: **E14.c** |
 | **86** | **D** | **Os rótulos "Email" e "Senha" saem da tela** — é o que a legenda da moldura pede ("marcam o papel do campo sem rótulo flutuante"). Não somem: viram `accessibilityLabel` do próprio `TextInput`, e o leitor de tela lê o mesmo. Decisão de código, declarada |
@@ -107,9 +107,9 @@ prova a geometria, e **nenhum dos dois prova que se lê**.
 | **89** | **D/A** | **O número do resultado do S4 vai de `accent` para `muted`.** O S4 não tem posição ATUAL, e a E12 deixou o acento com um significado só. É o mesmo movimento que a V1-PR5 fez no S2 (§3.3). A moldura não desenha o grupo "Nesta setlist", então não há frame que discorde |
 | **90** | **D/A** | **O `S4a-vazio` ganha corpo.** Era uma `FlatList` com zero linhas — tela em branco. A moldura põe ali o `buscar música` de 28 e a frase de escopo, que é **a mesma string** que o `S4b` já mostrava (extraída para uso nos dois). Texto novo em tela: nenhum |
 | **91** | **D** | **A barra superior do S5 fica em 64 e Raleway, contra os 88 e o mono da moldura.** As molduras `S5` e `S3` desenham as duas iguais entre si; o app também as tem iguais entre si, com outros números. A §1 congela a barra superior do S3, então mudar só a do S5 abriria 24 dp e uma família de diferença entre duas telas que o músico atravessa deslizando. Errata proposta: **E14.e** |
-| **92** | **D** | **As marcas do S5 em `accentInk`, contra a letra da E12** ("acento só em ativo, atual ou foco"). Ficou acento, por três razões: a §3.1 dá o acento ao "número de posição", e as marcas SÃO as posições percorridas em forma gráfica; o S5 não tem nenhum outro acento, então "um dono só" continua valendo; e a moldura **argumenta** a escolha ("é o mesmo vocabulário do arco de garantia — proporção, não medalha"), ao contrário da `S1b` da E12, cuja legenda dizia "mesma cor de antes" — herdou sem pensar, que foi a causa registrada da E12. **Item AV-6 do aceite visual** |
+| **92** | **D** | **As marcas do S5 em `accentInk`, contra a letra da E12** ("acento só em ativo, atual ou foco"). Ficou acento, por três razões: a §3.1 dá o acento ao "número de posição", e as marcas SÃO as posições percorridas em forma gráfica; o S5 não tem nenhum outro acento, então "um dono só" continua valendo; e a moldura **argumenta** a escolha ("é o mesmo vocabulário do arco de garantia — proporção, não medalha"), ao contrário da `S1b` da E12, cuja legenda dizia "mesma cor de antes" — herdou sem pensar, que foi a causa registrada da E12. **Item AV-6 do aceite visual**. Errata **E15.a**, com a distinção que sai daí: *moldura que argumenta não é moldura que herda* |
 | **93** | **D** | **Os 128 da §7.1 não saem da "folga fixa de 5".** Com folga fixa a marca bate no piso de 6 em N=82 e a regra pararia aí. O 128 exige um segundo trecho que a §7.1 não escreve: abaixo do piso a marca fica em 6 e quem encolhe é a **folga**, até 1 dp — 128 dá 1,04 e 129 dá 0,98. A conta inteira está no anexo D5 e a função, no `EndScreen.tsx` e no `instrumentos/marcas.mjs`. Errata proposta: **E14.f** |
-| **94** | **D/A** | **A div. 74 da V1-PR5, fechada.** O critério, decidido para as duas telas de uma vez: *o ícone de tipo existe quando o app sabe o tipo*. (1) sabe e é um dos quatro → o desenho do tipo; (2) sabe e não é → `tipo-desconhecido`, com o `content_type` cru de rótulo; (3) **não** sabe, porque o `content` não está no cache → nenhum ícone e "—". O caso (3) **não existe no S4 por construção** (o índice é feito de `contents`), então o "—" do S2 segue sendo o único do app. O que o S4 não faz é dizer "vazia": o chip dele responde *que tipo é*, não *está íntegro* — para isso existe o índice da setlist, que é onde o músico confere antes do show |
+| **94** | **D/A** | **A div. 74 da V1-PR5, fechada.** O critério, decidido para as duas telas de uma vez: *o ícone de tipo existe quando o app sabe o tipo*. (1) sabe e é um dos quatro → o desenho do tipo; (2) sabe e não é → `tipo-desconhecido`, com o `content_type` cru de rótulo; (3) **não** sabe, porque o `content` não está no cache → nenhum ícone e "—". O caso (3) **não existe no S4 por construção** (o índice é feito de `contents`), então o "—" do S2 segue sendo o único do app. O que o S4 não faz é dizer "vazia": o chip dele responde *que tipo é*, não *está íntegro* — para isso existe o índice da setlist, que é onde o músico confere antes do show. Errata **E15.b** |
 
 ### Div. 82, por extenso — o décimo caso de "instrumento com escopo menor do que parece"
 
@@ -151,13 +151,97 @@ deixado de olhar.
 Controle negativo: o 6º caso do `A20Falso.tsx` é `rotulo: 'Loading'` dentro de
 um objeto, que a varredura antiga não via. **3 → 4** acusações, exit 1.
 
+### Div. 83, por extenso — o lado para o qual um gate deve errar
+
+> **Material de `LOGS-OCTAVIA.md`**, junto com a div. 82. Decisão do Marcel,
+> 2026-09-13.
+
+O G3 falhou num commit que não mudou uma linha de código executável. A causa é
+trivial: o `g2g3.sh` coleta as linhas que casam com a cadeia `log(` por `grep`
+direto no arquivo, **sem tirar comentários**, e eu tinha escrito num comentário
+de documentação a frase "nenhuma linha de `log(` muda". A frase virou uma linha
+nova na coleta do DEPOIS, e o `diff` acusou.
+
+O `a20.mjs`, que é do mesmo conjunto, **tira** comentários antes de varrer — a
+assimetria entre os dois é real e está medida. A pergunta, então, é por que não
+alinhar o G3 ao A20.
+
+**Porque os dois medem coisas de natureza oposta, e o erro que cada um pode
+cometer não custa a mesma coisa.**
+
+| gate | o que ele afirma | falso positivo | falso negativo |
+|---|---|---|---|
+| `gate:a20` | "não há literal de UI em inglês" | acusa um comentário e alguém **relaxa a regra** | inglês entra em produção |
+| **G3** | "**nenhuma** linha de log mudou" | acusa uma frase e alguém **lê o diff** | um `log(` muda e o aceite do bloco inteiro mede outra coisa |
+
+O A20 é um gate de **conteúdo**: ele precisa de precisão, porque a acusação
+aponta um defeito específico que alguém vai corrigir, e acusação falsa em gate
+de conteúdo gasta a paciência que mantém o gate ligado. Por isso ele tira
+comentários.
+
+O G3 é um gate de **invariância**: ele não aponta defeito, ele afirma que nada
+mudou. Um gate de invariância que erra para o lado de **falar demais** manda o
+autor olhar o diff — que é uma ação barata e sempre correta. Um que erra para o
+lado de calar deixa passar exatamente a coisa que ele existia para impedir: uma
+linha de log alterada faz o aceite do bloco inteiro medir outra coisa sem que
+ninguém perceba, porque os aceites desta série são lidos **pelo logcat**.
+
+É o mesmo raciocínio que a série já usou em outra direção no **G5** — "gate que
+grita sem motivo é desligado na terceira vez" (div. 80) — e a diferença entre os
+dois casos é o que vale registrar: lá o grito era **sistemático** (uma
+referência pontual num sistema variável faz toda PR estourar sem ter feito nada
+errado), e aqui é **eventual e autoexplicativo** (quem escreveu a frase é quem
+recebe a acusação, no mesmo minuto, com o diff na mão). Grito sistemático
+desliga o gate; grito eventual custa trinta segundos.
+
+Decisão: **nada mudado no `g2g3.sh`**. O comentário foi reescrito sem a cadeia,
+e a razão ficou escrita no próprio comentário, para que o próximo que tropeçar
+não gaste a descoberta de novo.
+
+## Decisões do Marcel sobre a entrega (2026-09-13)
+
+As sete perguntas, respondidas:
+
+1. **Manter 64 e Raleway** na barra superior do S5. "S3 e S5 se atravessam
+   deslizando; abrir 24 dp e trocar de família entre elas é o salto que a nota
+   da moldura quer evitar. As duas juntas é PR pós-V1." Errata **E14.e**.
+2. **Sem uppercase** no título do S4b. "A string carrega o termo digitado, e o
+   `textTransform` do Android transforma o texto de verdade — aparecer maiúsculo
+   no dump é o sintoma." Errata **E14.d**.
+3. **20 dp** no `falha` do S0. "É o que a moldura desenha e o que a §5.5 dá a
+   'ícone dentro de texto'; a §6.4 nomeia o S1e, não o S0." Errata **E14.c**.
+4. **Manter o acento** nas marcas do S5. "A terceira razão é a que decide: a
+   moldura ARGUMENTA a escolha, ao contrário da S1b da E12, cuja legenda dizia
+   só 'mesma cor de antes'." Confirma no tablet pelo **AV-6**.
+5. **Critério confirmado, e SEM o `sem-conteudo` no S4.** "O chip do S4 responde
+   QUE TIPO É; quem responde SE ESTÁ ÍNTEGRO é o índice, que é onde se confere
+   antes do show. Acrescentar lá duplicaria o sinal no lugar errado." Fecha a
+   div. 74 da V1-PR5 com um critério, não com um caso — e o terceiro caso não
+   existir no S4 **por construção** é o que o torna verificável.
+6. **Aceitos os dois gates estendidos** (div. 81 e 82). "Aditivos, nenhuma regra
+   existente muda de resultado, e os controles negativos cresceram junto
+   (17→18, 3→4)."
+7. **A div. 82 (décimo caso) e a div. 83 vão para o `LOGS-OCTAVIA.md`**, como a
+   V1-PR5 fez com as 71, 75 e 80.
+
+Mais duas coisas que o Marcel mandou registrar além da tabela, e que estão
+escritas por extenso:
+
+- **a distinção que faltava no G5** — o G3 erra para o lado de falar demais, e
+  num gate de INVARIÂNCIA esse é o lado certo. A razão, e não só a decisão,
+  está na seção "Div. 83, por extenso" acima;
+- **a prova 0 do avião** — o AVD foi encontrado com `airplane_mode_on = 0` e a
+  rede viva, que é exatamente o cenário que custou duas requests no
+  `V1-PR3-PRECHECK.md` §9. Desta vez a prova pegou **antes** de o app abrir. A
+  linha está no anexo C2, com a citação da causa registrada lá.
+
 ## sha256 dos anexos de texto
 
 | Arquivo | linhas | sha256 |
 |---|---|---|
 | `V1-PR6-A-estados-antes-depois.txt` | 448 | `32bd4c4192482eb1861853135ebc165edec0daed08b64e3bbe5f37261f22f313` |
 | `V1-PR6-B-gates.txt` | 323 | `711212507b973e634e284a96e30d7fad6215c579bd966aa5e5970a726d6b980e` |
-| `V1-PR6-C-aparato-e-prod.txt` | 147 | `99c99dba06b10a60a57fb3fd04cdecf038c463b409b879c3cc05e0393a7f75cd` |
+| `V1-PR6-C-aparato-e-prod.txt` | 160 | `f9cd60c2f590ec3f74680894466805fa6a5f65767142cd6e3ce1c77e3d4d22fe` |
 | `V1-PR6-D-moldura-para-token.txt` | 191 | `1f61d8d3bc8659f5bb4a28dfef5b17df4844632ae2746b38903983d8712b7d0f` |
 | `dumps-antes/SHA256SUMS.txt` | 16 | `47fb3aa8391a524651f839b666d9e7b482405e70e1c3087d8b39815479bfa33a` |
 | `dumps-depois/SHA256SUMS.txt` | 20 | `1d12452aff96bcfcd865d907c99f95e72a8217c66ec82c5303ab87d98b247cdd` |
