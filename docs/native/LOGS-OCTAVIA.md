@@ -38,7 +38,8 @@
 | cache | `cache hit kind=setlists\|content\|file n=<n>` · `cache write kind=… n=<n> invalidated=<n>` — **E8(2): `cache miss` nunca foi implementado** | leitura/gravação do cache local (T1-R10: `invalidated=0` em sync sem mudança) | A4, A5, A7, A21 |
 | prefetch | `prefetch plan n=<n> reason=7d\|manual\|demand` | T1-R15/R16 | A10 |
 | promoção | `prefetch promote n=<n>` | arquivos já no disco que entraram na janela de 7 dias e foram movidos para o armazenamento não-purgável (T1-R14 + N0-H16 §4) — **E7** | A10 |
-| arquivo | `file src=disk\|download name=<seg> bytes=<n>` | T1-R14 (herdado do N0) | A9, A13 |
+| arquivo | `file src=disk name=<seg> bytes=<n>` · `file src=download name=<seg> bytes=<n> total=<n\|-> ms=<n>` — **errata W1** | T1-R14 (herdado do N0). O `total` (`Content-Length`, `-` se ausente) e o `ms` (início do download → rename) **só no `src=download`**: não houve download, não há total nem duração | A9, A13, **W1-A2/A3/A7** |
+| arquivo recusado | `file-reject name=<seg> kind=empty\|short\|malformed bytes=<n> expected=<n\|->` — **W1** | a checagem de integridade recusa um arquivo, no download ou no saneamento da abertura | W1-A1, W1-A3, W1-A6 |
 | LRU | `lru evict n=<n> bytes=<n>` | T1-R14 | A10 |
 | navegação no palco | `nav n=<i>/<N> setlist=<id8> t=<ms>` | após avançar/voltar/salto (T1-R27/R28/R34) | A12, A14, A17 |
 | fim da setlist | `end-of-setlist n=<N>` | T1-R29 | A14 |
@@ -53,7 +54,7 @@
 | wake lock | `keepawake on\|off` | entrar/sair do palco (T1-R33) | A16 |
 | palco restaurado | `stage restore n=<i>/<N>` | o palco reganha foco vindo de uma tela EMPILHADA (índice, busca, palco avulso) — não na montagem inicial, não no palco avulso — **N1-D17** | A11, A14 |
 | pdf | `pdf-render pages=<n> src=disk` · `pdf-page n=<i>/<N>` · `pdf-error <msg>` | herdado do N0 (T1-R26) | A13 |
-| falha de download | `download-error <msg>` | `File.downloadFileAsync` rejeitou (T1-R26/R37) — **E5** | A13 |
+| falha de download | `download-error <msg>` | o download rejeitou (T1-R26/R37) — **E5**. **Errata W1**: deixou de sair em UM lugar só (o `catch` do palco) e passa a sair também nos três caminhos de prefetch, um por rejeição (div. 114); e a `<msg>` é traduzida e higienizada num ponto só, porque ela vai para o log **e** para a tela do S3e — URI completa nunca entra em log (regra 2) | A13, **W1-A4** |
 | cache de arquivos apagado | `files-cleared` | instrumento de prova; nenhuma UI chama — **E5** | A13 (controle negativo) |
 
 ## Errata E5 (2026-09-10, N1-PR5)
@@ -210,8 +211,9 @@ pergunta de produto continua aberta.
 > ponteiro para cá.
 
 O Marcel juntou quatro casos do bloco N1; o V1 acrescentou seis; o aceite da V1-PR7,
-mais três. **São treze, e é sempre o mesmo erro**: ler o que o instrumento mede como se
-fosse o que se queria saber.
+mais três; o W1, mais dois. **São quinze, e é quase sempre o mesmo erro**: ler o que o
+instrumento mede como se fosse o que se queria saber. O 15º é a exceção, e é o mais
+perigoso: um instrumento que mede **mais** do que a coisa medida.
 
 | # | caso | o instrumento mede | eu li como se medisse |
 |---|---|---|---|
@@ -229,6 +231,22 @@ fosse o que se queria saber.
 | 12 | **div. 99** (V1-PR7) | o `store()` do aparato: `sha256sum files/octavia-<uid>/files/*` | o cache de arquivos do app. Metade dele vive no **purgável** (`cache/octavia-<uid>/files/`), e a baseline do bloco nunca viu o PDF de 1 página que estava lá |
 | 13 | **os 58,2 dp** (V1-PR7) | o `uiautomator dump`: o nó **acessível** | o elemento **desenhado**. O campo do S0 mede 58,2 dp no dump e 60 no estilo — `height: touch.list + 4` no contêiner, menos 1 dp de borda de cada lado. *Instância, não defeito (decisão do Marcel).* |
 
+| 14 | **div. 113** (W1) | `File.downloadFileAsync` no Android: o corpo **streama direto para o arquivo alvo**, criado antes do primeiro byte — **e a doc da função diz isso, verbatim, no comentário que se lê para chamá-la** | "o arquivo existe ⇒ o download terminou". Daí a prescrição de *"`size > 0` é o piso"*, que não alcança um download **em voo** |
+| 15 | **div. 126** (W1) | o **duplo de teste** do `expo-file-system`: ele emitia `onProgress` a cada pedaço | a biblioteca real. Ela entrega o progresso **uma vez, no fim, em rajada** — e o gate verde passou um teto de inatividade que o aparelho reprovou no primeiro aceite |
+
+> **A variante do 14, e por que ela merece nome próprio.** O caso 8 (div. 71) era o script
+> documentando a própria cegueira numa nota que ninguém leu. Este é um grau além: **a
+> documentação não descrevia um limite do instrumento — descrevia o comportamento, com
+> precisão, na primeira tela de quem vai usá-lo**, e ainda contrastava Android com iOS
+> ("*on iOS … the file is moved into place only after success*"), que é literalmente o
+> conserto. Não houve nada a inferir: houve o que ler. **O padrão não é só desconfiar do
+> que o instrumento mede; é ler o que ele já diz de si.**
+>
+> **E o 15 é o padrão PELO AVESSO, que nenhum dos catorze anteriores era**: um instrumento
+> **mais capaz** que a coisa medida. Os catorze mediam menos do que se supunha e faziam
+> perder um defeito; este media MAIS, e fez passar um mecanismo que não existe. A direção
+> do erro é a pior possível — é a direção de dizer que está pronto.
+
 **O que separa os casos entre si, e que vale mais que a lista**:
 
 - o **7** e o **10** foram achados pela **regra 1** ("o gate vem antes do que ele mede"),
@@ -240,7 +258,7 @@ fosse o que se queria saber.
 - o **11** e o **12** são de **escopo declarado**: os dois instrumentos dizem com precisão
   o que cobrem, e os dois foram lidos como se cobrissem a categoria inteira.
 
-### As duas regras que saíram do padrão
+### As regras que saíram do padrão
 
 **1. Avião não é o valor do setting, é o `ping` falhando** — e o corte vem **antes** de o
 app abrir, não depois. (Origem: `V1-PR3-PRECHECK.md` §9, onde a leitura de
@@ -267,8 +285,65 @@ legíveis por qualquer processo da máquina, por 2 h 40.) Um scratch que precise
 o `.env` do `apps/native` só entra se o comando medido precisar dele — o prebuild precisa,
 o Gradle não.
 
+**3. Achado que vira BLOQUEANTE precisa do bruto COMMITADO, não só da prosa.**
+(Origem: div. 110, W1.) A div. 103 foi medida "de ponta a ponta" no aceite do V1 e o
+único registro que sobrou foi a **linha em prosa** da §9 do `V1-ENCERRAMENTO.md`:
+`grep -rn "File is empty\|e3b0c442" docs/` devolve só ela. O pre-check do W1 teve de
+**rederivar do código** — do Kotlin do `expo-file-system`, inclusive — um mecanismo que o
+logcat já tinha dito, e ao rederivar descobriu que a prescrição escrita na prosa estava
+errada **nas duas metades** (a errata da §11, W1). A regra permanente do `CLAUDE.md` já
+manda o bruto entrar como anexo; o que esta acrescenta é **a prioridade**: quando o
+achado é o que bloqueia o próximo trabalho, o anexo não é higiene, é o insumo desse
+trabalho. **Prosa não se relê com `grep`.**
+
 ### A regra de método que o padrão implica
 
 **Uma medição não vira referência sem `n`** (div. 80). Onde houver população, faixa com
 mediana; onde não houver, "medido uma vez", escrito assim. O bloco V1 aplicou isto ao custo
 do CI (faixa de 12 runs) e ao A17 do Tab S6 (três leituras, cada uma com o seu `n`).
+
+---
+
+## Errata W1 (2026-09-14) — duas linhas, e por que uma estende e a outra nasce
+
+**(1) A linha `file` ganha `total=` e `ms=` no `src=download`.** É errata declarada,
+não acomodação: muda uma linha existente do catálogo.
+
+| | antes | depois |
+|---|---|---|
+| do disco | `file src=disk name=<seg> bytes=<n>` | **inalterada** — não houve download, não há total nem duração |
+| baixado | `file src=download name=<seg> bytes=<n>` | `file src=download name=<seg> bytes=<n> total=<n\|-> ms=<n>` |
+
+`total` é o `Content-Length` (`-` quando o servidor não o manda); `ms` é do início do
+download ao rename. **A taxa é `bytes/ms`** — valor derivado, que o catálogo não guarda
+por regra (chaves fixas, valores crus).
+
+**Por que ela não podia faltar**: sem a taxa no log, a leitura *"não abortou"* não se
+separa em **"não abortou porque a rede estava sã"** e **"não abortou porque o teto não
+funciona"** — e o aceite W1-A2 viraria impressão. Foi exatamente essa separação que
+permitiu ler a corrida do W1-A3 e descobrir a div. 126.
+
+**E o nome que NÃO foi adotado**: `file-progress`. Uma linha chamada "progress" que sai
+**uma vez, no fim** seria um nome que mente sobre o próprio evento — a classe de defeito
+que as erratas E7 e E8 passaram dois blocos consertando. O número entra na linha que já
+sai uma vez por download.
+
+**(2) A linha `file-reject` nasce** — é evento novo de verdade:
+
+`file-reject name=<seg> kind=empty|short|malformed bytes=<n> expected=<n|->`
+
+O `expected=<n|->` admite que às vezes não se sabe o esperado, e isso é de propósito:
+*"honesto é melhor que completo"* (Marcel, 2026-09-14). Em repouso nunca se sabe — a
+única fonte de tamanho esperado é o `Content-Length`, que só existe durante o download
+(div. 112), e o `bytes` do índice não é oráculo (div. 111).
+
+**As três perguntas ficam em três linhas distintas, e é de propósito**:
+
+| linha | responde |
+|---|---|
+| `file` | *o que eu tenho, e quanto custou* |
+| `file-reject` | *achei e recusei* |
+| `download-error` | *não consegui baixar* |
+
+E o `cache miss` **não** passa a existir (Q4): ele dispararia quando algo não é achado, e
+o arquivo de 0 byte **foi achado**. O que faltou nunca foi log, foi checagem — div. 120.
