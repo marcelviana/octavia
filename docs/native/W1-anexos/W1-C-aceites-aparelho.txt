@@ -1,0 +1,576 @@
+$ (C) W1 — os aceites no aparelho: comando e saída literal
+
+RASTRO, não fonte. A fonte da PR é o diff e as mensagens de commit; o veredito
+do bloco é o `W1-ENCERRAMENTO.md`.
+
+Data: 2026-09-14. Aparelho: AVD `octavia_tab32` (emulator-5554), conta de audit.
+**O Tab S6 (RX2N8000F3D) apareceu em `adb devices` e NÃO recebeu um comando.**
+Todo comando leva `-s emulator-5554`.
+
+AVIÃO o tempo todo, salvo o W1-A5 (declarado em §7): `ping -c 2 -W 2 8.8.8.8`
+→ `connect: Network is unreachable` no início e no fim.
+
+COMO O APARELHO BAIXA EM AVIÃO: `adb reverse tcp:8790 tcp:8790` — o loopback do
+device vira o servidor de host `instrumentos/arquivos.py`. Prod: 0 requests.
+Bucket: 0 downloads. O PDF é sintético (242.176 B, a ordem de grandeza do 12p).
+
+O PAR QUE VALE MAIS QUE CADA MEDIDA: cada aceite foi rodado DUAS VEZES no mesmo
+aparelho, com o mesmo estado de disco — uma com o bundle de `f79a4b7` e outra
+com o do W1. Trocar o código é trocar o bundle do Metro, e **o Metro em CI=1
+não relê o disco**: cada troca exigiu matar e subir o Metro de novo (o primeiro
+controle negativo desta sessão foi INVÁLIDO por isso, e está registrado em §2).
+
+==========================================================================
+1. W1-A6 — o saneamento, e A MENTIRA MEDIDA
+==========================================================================
+Plantio por `run-as` (custo zero, repetível — decisão Q7):
+  - `files/…/files/1786218429715-…-12p.pdf` truncado a 121.088 de 242.176 B
+  - `cache/…/files/1786218427769-…-1p.pdf` zerado (0 B)
+  - `cache/…/files/1786295844475-….pdf.part` de 999 B (o `.part` órfão)
+
+--- f79a4b7 (CONTROLE NEGATIVO) -----------------------------------------
+  --- logcat ---
+  OCTAVIA: net offline
+  OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+  OCTAVIA: cache hit kind=setlists n=3
+  OCTAVIA: cache hit kind=content n=67
+  OCTAVIA: sync skip reason=offline
+  OCTAVIA: prefetch plan n=0 reason=7d
+
+  --- disco depois ---
+  15247 files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/setlists.json
+  121088 files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files/1786218429715-ux-audit-partitura-12p.pdf
+  861 files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files-index.json
+  53738 files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/content.json
+  0 cache/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files/1786218427769-ux-audit-partitura-1p.pdf
+
+  --- cartão ---
+     garantida offline
+     todos os arquivos neste aparelho
+     garantida offline
+     todos os arquivos neste aparelho
+     garantida offline
+     todos os arquivos neste aparelho
+
+  LEITURA: nenhuma linha de recusa, os dois venenos ficam no disco, e os TRÊS
+  cartões dizem "garantida offline · todos os arquivos neste aparelho".
+  É a div. 103 reproduzida no aparelho, hoje — a prova bruta que o V1 não
+  deixou (div. 110). Captura: `dumps/A6-2-cn-f79a4b7.png`.
+
+--- W1 (a medida) -------------------------------------------------------
+  --- logcat ---
+  OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+  OCTAVIA: net offline
+  OCTAVIA: file-reject name=1786218429715-ux-audit-partitura-12p.pdf kind=malformed bytes=121088 expected=-
+  OCTAVIA: file-reject name=1786218427769-ux-audit-partitura-1p.pdf kind=empty bytes=0 expected=-
+  OCTAVIA: cache hit kind=setlists n=3
+  OCTAVIA: cache hit kind=content n=67
+  OCTAVIA: sync skip reason=offline
+  OCTAVIA: prefetch plan n=0 reason=7d
+
+  --- disco depois ---
+  15247 files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/setlists.json
+  861 files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files-index.json
+  53738 files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/content.json
+
+  --- índice: a ENTRADA fica (Q3) ---
+     1786218429715-ux-audit-partitura-12p.pdf bytes=242176
+     1786295844475-ux-audit-fase-d-cifra.pdf bytes=1117
+     1786295884124-ux-audit-fase-d-offline.pdf bytes=888
+     1786218427769-ux-audit-partitura-1p.pdf bytes=20821
+
+  --- cartão ---
+  /sdcard/s.png: 1 file pulled, 0 skipped. 67.2 MB/s (210867 bytes in 0.003s)
+     parcial
+     0 de 2 arquivos baixados
+     parcial
+     0 de 2 arquivos baixados
+     parcial
+     0 de 1 arquivos baixados
+
+  LEITURA: duas linhas `file-reject` com o `kind` certo (`malformed` para o
+  truncado, `empty` para o de 0 byte), os dois somem do disco, o `.part` órfão
+  é varrido, e os três cartões caem para "parcial · 0 de N arquivos baixados".
+  **As quatro entradas do índice FICAM, com o `bytes` lembrado** (242176 e
+  20821) — é a decisão Q3, e é o "(1,2 MB)" do S3e.
+  Captura: `dumps/A6-3-w1.png`.
+
+==========================================================================
+2. W1-A7 e a div. 122 — a fila, segundo a segundo
+==========================================================================
+Cenário `fila`: 5 arquivos, o 1º entregue em 8 pedaços a cada 3 s (24 s), os
+outros 4 instantâneos. Amostra do diretório ALVO a cada 1 s, do lançamento.
+
+--- f79a4b7 (barreira de lote) ------------------------------------------
+    t=01s
+    t=02s
+    t=03s  w1-fila-1.pdf:30273
+    t=04s  w1-fila-1.pdf:30273
+    t=05s  w1-fila-1.pdf:30273
+    t=06s  w1-fila-1.pdf:60546
+    t=07s  w1-fila-1.pdf:60546
+    t=08s  w1-fila-1.pdf:90819
+    t=09s  w1-fila-1.pdf:90819
+    t=10s  w1-fila-1.pdf:90819
+    t=11s  w1-fila-1.pdf:121092
+    t=12s  w1-fila-1.pdf:121092
+    t=14s  w1-fila-1.pdf:121092
+    t=15s  w1-fila-1.pdf:151365
+    t=16s  w1-fila-1.pdf:151365
+    t=17s  w1-fila-1.pdf:151365
+    t=18s  w1-fila-1.pdf:181638
+    t=19s  w1-fila-1.pdf:181638
+    t=20s  w1-fila-1.pdf:181638
+    t=21s  w1-fila-1.pdf:211911
+    t=22s  w1-fila-1.pdf:211911
+    t=23s  w1-fila-1.pdf:242176 w1-fila-2.pdf:242176 w1-fila-3.pdf:242176 w1-fila-5.pdf:242176
+  LEITURA — duas coisas, e as duas são a PR:
+  (a) de t=03 s a t=22 s existe UM arquivo, **com o nome final**, crescendo:
+      30273 → 60546 → 90819 → … → 211911 B. É a div. 113 no aparelho: no
+      Android o corpo é gravado direto no alvo, que existe desde o primeiro
+      byte. Nesse intervalo `hasFile()` diz `true` sobre um arquivo pela
+      metade — e `size > 0` também. **`size > 0` nunca foi nem o piso.**
+  (b) nada mais chega até t=23 s. A barreira de lote não deixa o 4º começar.
+
+--- W1 (fila de três trabalhadores) -------------------------------------
+    t=01s
+    t=02s
+    t=03s
+    t=04s  w1-fila-2.pdf:242176 w1-fila-3.pdf:242176 w1-fila-4.pdf:242176 w1-fila-5.pdf:242176
+    t=05s  w1-fila-2.pdf:242176 w1-fila-3.pdf:242176 w1-fila-4.pdf:242176 w1-fila-5.pdf:242176
+    t=06s  w1-fila-2.pdf:242176 w1-fila-3.pdf:242176 w1-fila-4.pdf:242176 w1-fila-5.pdf:242176
+    t=07s  w1-fila-2.pdf:242176 w1-fila-3.pdf:242176 w1-fila-4.pdf:242176 w1-fila-5.pdf:242176
+    t=09s  w1-fila-2.pdf:242176 w1-fila-3.pdf:242176 w1-fila-4.pdf:242176 w1-fila-5.pdf:242176
+    t=10s  w1-fila-2.pdf:242176 w1-fila-3.pdf:242176 w1-fila-4.pdf:242176 w1-fila-5.pdf:242176
+    t=11s  w1-fila-2.pdf:242176 w1-fila-3.pdf:242176 w1-fila-4.pdf:242176 w1-fila-5.pdf:242176
+    t=12s  w1-fila-2.pdf:242176 w1-fila-3.pdf:242176 w1-fila-4.pdf:242176 w1-fila-5.pdf:242176
+    t=13s  w1-fila-2.pdf:242176 w1-fila-3.pdf:242176 w1-fila-4.pdf:242176 w1-fila-5.pdf:242176
+    t=14s  w1-fila-2.pdf:242176 w1-fila-3.pdf:242176 w1-fila-4.pdf:242176 w1-fila-5.pdf:242176
+    t=15s  w1-fila-2.pdf:242176 w1-fila-3.pdf:242176 w1-fila-4.pdf:242176 w1-fila-5.pdf:242176
+    t=16s  w1-fila-2.pdf:242176 w1-fila-3.pdf:242176 w1-fila-4.pdf:242176 w1-fila-5.pdf:242176
+    t=17s  w1-fila-2.pdf:242176 w1-fila-3.pdf:242176 w1-fila-4.pdf:242176 w1-fila-5.pdf:242176
+    t=18s  w1-fila-2.pdf:242176 w1-fila-3.pdf:242176 w1-fila-4.pdf:242176 w1-fila-5.pdf:242176
+    t=19s  w1-fila-2.pdf:242176 w1-fila-3.pdf:242176 w1-fila-4.pdf:242176 w1-fila-5.pdf:242176
+    t=20s  w1-fila-2.pdf:242176 w1-fila-3.pdf:242176 w1-fila-4.pdf:242176 w1-fila-5.pdf:242176
+    t=21s  w1-fila-2.pdf:242176 w1-fila-3.pdf:242176 w1-fila-4.pdf:242176 w1-fila-5.pdf:242176
+    t=23s  w1-fila-2.pdf:242176 w1-fila-3.pdf:242176 w1-fila-4.pdf:242176 w1-fila-5.pdf:242176
+    t=24s  w1-fila-2.pdf:242176 w1-fila-3.pdf:242176 w1-fila-4.pdf:242176 w1-fila-5.pdf:242176
+  LEITURA: em t=04 s os QUATRO rápidos já estão completos (242.176 B cada), e
+  o lento **não aparece com o nome final em momento nenhum** — só ao fim. O
+  cartão anda: medido "parcial · 4 de 5 arquivos baixados" aos ~14 s e
+  "garantida offline" ao fim (é o W1-A7).
+
+--- o logcat da corrida final (código do W1) ----------------------------
+  --- logcat ---
+  OCTAVIA: net offline
+  OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+  OCTAVIA: cache hit kind=setlists n=1
+  OCTAVIA: cache hit kind=content n=5
+  OCTAVIA: sync skip reason=offline
+  OCTAVIA: prefetch plan n=5 reason=7d
+  OCTAVIA: file src=download name=w1-fila-2.pdf bytes=242176 total=242176 ms=88
+  OCTAVIA: file src=download name=w1-fila-3.pdf bytes=242176 total=242176 ms=136
+  OCTAVIA: file src=download name=w1-fila-4.pdf bytes=242176 total=242176 ms=60
+  OCTAVIA: file src=download name=w1-fila-5.pdf bytes=242176 total=242176 ms=40
+  OCTAVIA: file src=download name=w1-fila-1.pdf bytes=242176 total=242176 ms=21092
+  --- disco ---
+  242176 files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files/w1-fila-1.pdf
+  242176 files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files/w1-fila-2.pdf
+  242176 files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files/w1-fila-3.pdf
+  242176 files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files/w1-fila-4.pdf
+  242176 files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files/w1-fila-5.pdf
+  /sdcard/s.png: 1 file pulled, 0 skipped. 44.1 MB/s (114649 bytes in 0.002s)
+  --- cartão ---
+  LEITURA: o lento custou `ms=21092`; os quatro rápidos, 40 a 136 ms — e
+  terminaram ANTES dele. A ordem de INÍCIO continua a do core; o que muda é a
+  de término, que o PRD nunca prometeu. Captura: `dumps/fila-final.png`.
+
+  E UM ACHADO DE BRINDE (div. 124): com o `downloadFileAsync` estático, os
+  arquivos 2 e 3 do primeiro lote só apareceram QUANDO o lento acabou (t=23 s),
+  apesar de levarem ~100 ms cada. Com o `createDownloadTask` eles terminam em
+  paralelo. [hipótese: o estático corre na fila serial do módulo Expo; não
+  abri o Kotlin do `FileSystemDownloadTask` para confirmar.] Se procede, a
+  barreira de lote era ainda pior do que o desenho dizia: não é só que o 4º
+  não começava — o 2º e o 3º não TERMINAVAM.
+
+==========================================================================
+3. W1-A2 — a conexão morta, e o teto que NÃO existe (div. 126)
+==========================================================================
+Cenário `morto`: 200 + `Content-Length` + 8.192 B + silêncio (o soquete fica
+de pé). É a conexão morta, o único caso em que o app teria certeza.
+
+--- f79a4b7 (CONTROLE NEGATIVO) -----------------------------------------
+    t=00s  []
+    t=05s  [w1-morto-1.pdf:8192 ]
+    t=09s  [w1-morto-1.pdf:8192 ]
+    t=13s  [w1-morto-1.pdf:8192 ]
+    t=17s  [w1-morto-1.pdf:8192 ]
+    t=21s  [w1-morto-1.pdf:8192 ]
+    t=25s  [w1-morto-1.pdf:8192 ]
+    t=29s  [w1-morto-1.pdf:8192 ]
+    t=33s  [w1-morto-1.pdf:8192 ]
+    t=37s  [w1-morto-1.pdf:8192 ]
+    t=41s  [w1-morto-1.pdf:8192 ]
+    t=45s  [w1-morto-1.pdf:8192 ]
+    t=49s  [w1-morto-1.pdf:8192 ]
+  --- logcat aos ~55s (com o app de hoje NÃO há teto: nenhum download-error) ---
+  OCTAVIA: net offline
+  OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+  OCTAVIA: cache hit kind=setlists n=1
+  OCTAVIA: cache hit kind=content n=1
+  OCTAVIA: sync skip reason=offline
+  OCTAVIA: prefetch plan n=1 reason=7d
+  --- cartão ---
+  /sdcard/s.png: 1 file pulled, 0 skipped. 36.6 MB/s (107363 bytes in 0.003s)
+     parcial
+     0 de 1 arquivos baixados
+  LEITURA: o fragmento de 8.192 B fica **com o nome final** desde t=05 s, e
+  aos 49 s ainda está lá. Nenhum `download-error`, nenhum teto: é a div. 104,
+  medida.
+
+--- E A MENTIRA, EM UMA LINHA: reabrir o app (ainda f79a4b7) -------------
+  --- logcat ---
+  OCTAVIA: net offline
+  OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+  OCTAVIA: cache hit kind=setlists n=1
+  OCTAVIA: cache hit kind=content n=1
+  OCTAVIA: sync skip reason=offline
+  OCTAVIA: prefetch plan n=1 reason=7d
+  OCTAVIA: file src=disk name=w1-morto-1.pdf bytes=8192
+  --- cartão ---
+  /sdcard/s.png: 1 file pulled, 0 skipped. 52.6 MB/s (114603 bytes in 0.002s)
+     garantida offline
+     todos os arquivos neste aparelho
+  LEITURA: `file src=disk name=w1-morto-1.pdf bytes=8192` — o app ACHA o
+  fragmento, o `touch()` o inscreve no índice, o `recarregarArquivos()` roda,
+  e o cartão vira **"garantida offline · todos os arquivos neste aparelho"**
+  para uma setlist cujo único arquivo tem 8 KB de 242 KB.
+  **Esta é a frase da PR, e agora ela tem bruto.** Captura: `dumps/A2-3-mentira.png`.
+
+--- W1, MESMO DISCO -----------------------------------------------------
+  --- logcat ---
+  OCTAVIA: net offline
+  OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+  OCTAVIA: file-reject name=w1-morto-1.pdf kind=malformed bytes=8192 expected=-
+  OCTAVIA: cache hit kind=setlists n=1
+  OCTAVIA: cache hit kind=content n=1
+  OCTAVIA: sync skip reason=offline
+  OCTAVIA: prefetch plan n=1 reason=7d
+  OCTAVIA: download-error w1-morto-1.pdf: sem resposta há 30 s
+  --- disco ---
+  cache/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files:
+
+  files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files:
+  --- cartão ---
+  /sdcard/s.png: 1 file pulled, 0 skipped. 30.5 MB/s (107485 bytes in 0.003s)
+     parcial
+     0 de 1 arquivos baixados
+  LEITURA, na ordem em que acontece: (1) o saneamento recusa o fragmento
+  (`file-reject … kind=malformed bytes=8192`) e o apaga; (2) o plano tenta de
+  novo; (3) o teto de 30 s corta o download morto; (4) nada com o nome final;
+  (5) cartão "parcial · 0 de 1". **Esta corrida é do commit 3, com o teto
+  ainda de pé — e o teto foi REMOVIDO depois, pelo motivo do §4.**
+
+--- W1 FINAL (sem o teto) -----------------------------------------------
+  --- logcat ---
+  OCTAVIA: net offline
+  OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+  OCTAVIA: cache hit kind=setlists n=1
+  OCTAVIA: cache hit kind=content n=1
+  OCTAVIA: sync skip reason=offline
+  OCTAVIA: prefetch plan n=1 reason=7d
+  --- disco ---
+  /sdcard/s.png: 1 file pulled, 0 skipped. 51.0 MB/s (107999 bytes in 0.002s)
+  --- cartão ---
+     parcial
+     0 de 1 arquivos baixados
+  LEITURA: nenhum `download-error` (não há mais teto), **nada com o nome
+  final**, e o cartão honesto em "parcial · 0 de 1". O que fica em aberto: o
+  download morto segura UMA das três vagas até o processo morrer — pergunta 1
+  ao Marcel. Captura: `dumps/morto-final.png`.
+
+==========================================================================
+4. W1-A3 — O ACEITE QUE DERRUBOU O TETO
+==========================================================================
+O pre-check escreveu, na tabela de riscos §10, palavra por palavra:
+
+  "O teto de inatividade dispara em rede sã e quebra o A9/A10 | o `T = 30 s` é
+   medido zero vezes. Prova barata e sem bucket: o W1-A3, com o servidor de
+   host entregando devagar MAS SEM PARAR — se sair `download-error`, o teto
+   confunde lento com morto."
+
+Cenário `lento`: 5 pedaços a cada 20 s (100 s de download, nenhum silêncio
+maior que 20 s — abaixo do teto de 30 s). Com o commit 3 no lugar:
+
+  OCTAVIA: prefetch plan n=1 reason=7d
+  OCTAVIA: download-error w1-lento-1.pdf: sem resposta há 30 s      ← REPROVOU
+
+A SONDAGEM que explicou por quê (duas linhas de log temporárias, NÃO
+commitadas, uma no `onProgress` e outra num `addListener('progress')`), com o
+servidor a 6 pedaços de 4 s = download de 20 s:
+
+  OCTAVIA: dbg-listener name=w1-lento-1.pdf w=8192   ms=20075
+  OCTAVIA: dbg-progress  name=w1-lento-1.pdf w=8192  t=242176 ms=20081
+  OCTAVIA: dbg-listener name=w1-lento-1.pdf w=242176 ms=20082
+  OCTAVIA: dbg-progress  name=w1-lento-1.pdf w=242176 t=242176 ms=20083
+  OCTAVIA: dbg-listener name=w1-lento-1.pdf w=242176 ms=20084
+  OCTAVIA: dbg-progress  name=w1-lento-1.pdf w=242176 t=242176 ms=20084
+  OCTAVIA: dbg-progress  name=w1-lento-1.pdf w=242176 t=242176 ms=20088
+  OCTAVIA: file src=download name=w1-lento-1.pdf bytes=242176 total=242176 ms=20106
+
+  TODOS os eventos em ms=20075..20088 — **em rajada, no fim**, pelos dois
+  caminhos. Nenhum evento em voo.
+
+E O DISCO TAMBÉM NÃO FALA (alvo e `cache/http-cache` a cada 2 s, mesmo download):
+  t=01s alvo=[] http-cache=16   …   t=22s alvo=[] http-cache=16
+  t=24s alvo=[w1-lento-1.pdf:242176] http-cache=16
+
+  O destino **não existe** durante o download inteiro e aparece completo de uma
+  vez. (Efeito colateral bom: por este caminho a biblioteca já se comporta como
+  no iOS. O `.part` do app continua valendo — ele não depende de uma garantia
+  interna da biblioteca, e é ele que torna o `localizar()` honesto.)
+
+  CONCLUSÃO: não há, no app, nenhum sinal de "chegou byte" em voo. Um relógio
+  de 30 s rearmado por `onProgress` NUNCA é rearmado — é um teto ABSOLUTO de
+  duração com o nome de inatividade, isto é, a opção A, descartada porque pune
+  o caso legítimo. **O teto saiu da PR** (commit c157fce). → div. 126.
+
+--- o mesmo cenário, com o código FINAL (sem teto) ----------------------
+  --- logcat ---
+  OCTAVIA: net offline
+  OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+  OCTAVIA: cache hit kind=setlists n=1
+  OCTAVIA: cache hit kind=content n=1
+  OCTAVIA: sync skip reason=offline
+  OCTAVIA: prefetch plan n=1 reason=7d
+  OCTAVIA: file src=download name=w1-lento-1.pdf bytes=242176 total=242176 ms=20088
+  --- disco ---
+  242176 files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files/w1-lento-1.pdf
+  /sdcard/s.png: 1 file pulled, 0 skipped. 38.4 MB/s (115455 bytes in 0.003s)
+  --- cartão ---
+     garantida offline
+     todos os arquivos neste aparelho
+  LEITURA: o download lento TERMINA (`ms=20088`), entra no disco e o cartão
+  vira "garantida offline" — desta vez com verdade. O caso legítimo não é
+  punido.
+
+--- corpo mais curto que o `Content-Length` -----------------------------
+  --- logcat ---
+  OCTAVIA: net offline
+  OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+  OCTAVIA: cache hit kind=setlists n=1
+  OCTAVIA: cache hit kind=content n=1
+  OCTAVIA: sync skip reason=offline
+  OCTAVIA: prefetch plan n=1 reason=7d
+  OCTAVIA: download-error w1-curto-1.pdf: Call to function 'FileSystemDownloadTask.start' has been rejected.
+  --- disco ---
+  /sdcard/s.png: 1 file pulled, 0 skipped. 42.4 MB/s (108199 bytes in 0.002s)
+  --- cartão ---
+  --- logcat ---
+  LEITURA: o servidor declarou 242.176 e entregou 121.088. O arquivo **não
+  entra** e o cartão fica honesto. A recusa veio do NATIVO
+  (`FileSystemDownloadTask.start ... rejected`), antes da checagem do app —
+  então não há `file-reject` aqui: quem recusou foi o OkHttp, comparando o
+  corpo com o `Content-Length`. A checagem `short` do `fileVerdict` fica como
+  segunda rede (e está coberta em unidade).
+  E fica uma divergência: essa mensagem crua, em INGLÊS, é a que o S3e mostra
+  ao músico (div. 125).
+
+==========================================================================
+5. W1-A4 — nenhuma falha engolida (T1-R37)
+==========================================================================
+Cenário `falhas`: 5 arquivos, os três primeiros 404, os dois últimos bons.
+  === W1-A4 — três 404 e duas boas: uma linha por falha, e as outras continuam ===
+  <scratch>/fixture-falhas/setlists.json: 1 file pushed, 0 skipped. 0.7 MB/s (730 bytes in 0.001s)
+  <scratch>/fixture-falhas/content.json: 1 file pushed, 0 skipped. 0.9 MB/s (1108 bytes in 0.001s)
+  --- logcat ---
+  OCTAVIA: net offline
+  OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+  OCTAVIA: cache hit kind=setlists n=1
+  OCTAVIA: cache hit kind=content n=5
+  OCTAVIA: sync skip reason=offline
+  OCTAVIA: prefetch plan n=5 reason=7d
+  OCTAVIA: download-error w1-falhas-1.pdf: Call to function 'FileSystemDownloadTask.start' has been rejected.
+  OCTAVIA: download-error w1-falhas-2.pdf: Call to function 'FileSystemDownloadTask.start' has been rejected.
+  OCTAVIA: download-error w1-falhas-3.pdf: Call to function 'FileSystemDownloadTask.start' has been rejected.
+  OCTAVIA: file src=download name=w1-falhas-4.pdf bytes=242176 total=242176 ms=88
+  OCTAVIA: file src=download name=w1-falhas-5.pdf bytes=242176 total=242176 ms=120
+  --- disco ---
+  242176 files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files/w1-falhas-4.pdf
+  242176 files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files/w1-falhas-5.pdf
+  /sdcard/s.png: 1 file pulled, 0 skipped. 53.1 MB/s (110118 bytes in 0.002s)
+  --- cartão ---
+     parcial
+     2 de 5 arquivos baixados
+  LEITURA: **três falhas, três linhas** — uma por rejeição —, os dois bons
+  baixam, e o cartão diz "parcial · 2 de 5". Antes: ZERO linhas, porque o
+  `baixar()` descartava o array do `allSettled` (div. 114).
+  E nenhuma linha carrega a URL: só o `<seg>` (regra 2 do catálogo).
+  Captura: `dumps/falhas-final.png`.
+
+==========================================================================
+6. W1-A1 — um download interrompido não deixa arquivo no lugar do bom
+==========================================================================
+Não tem corrida própria: é o que os §2, §3 e §4 mostram três vezes.
+  · §2 (curva do W1): o lento de 24 s NUNCA aparece com o nome final;
+  · §3 (morto, W1 final): ao fim, `files/` e `cache/` VAZIOS;
+  · §4 (curto): o corpo pela metade não entra.
+E o contra-exemplo, no mesmo aparelho: §2 (curva de f79a4b7) mostra o arquivo
+crescendo COM O NOME FINAL de 30.273 a 211.911 B, e §3 mostra o fragmento de
+8.192 B parado ali para sempre.
+
+==========================================================================
+7. W1-A5 — "Baixar esta setlist" grava no durável (div. 102)
+==========================================================================
+DESVIO DECLARADO: este é o único aceite que exigiu o rádio de pé — o botão é
+`podeBaixar = online && …` (`SetlistsScreen.tsx:192`), e em avião ele fica
+inerte por definição. O AVD saiu do avião por ~11 min.
+**Prod `/api/*` continuou em 0, e não por confiança: por construção** — o
+Metro subiu com `EXPO_PUBLIC_API_BASE_URL=http://localhost:8788` (o mock
+`aceite.py servidor`) e os `file_url` da fixture apontam para `localhost:8790`.
+A prova está nos dois lados: as duas linhas `api status=200` do app e as duas
+linhas `REQ` do mock, que se correspondem uma a uma.
+
+  $ adb -s emulator-5554 shell cmd connectivity airplane-mode disable
+  $ adb -s emulator-5554 shell "ping -c 2 -W 2 8.8.8.8"
+    2 packets transmitted, 2 received, 0% packet loss   ← o rádio de pé
+  --- a abertura online (o mock atendeu as duas requests) ---
+  [TRANSCRITO do terminal: esta corrida não foi salva em arquivo; o `<uid>` está
+   abreviado aqui e sai inteiro no logcat, como o catálogo permite]
+  OCTAVIA: net online
+  OCTAVIA: auth uid=… src=restored
+  OCTAVIA: sync start
+  OCTAVIA: api status=200 path=/api/setlists n=1 ms=19
+  OCTAVIA: api status=200 path=/api/content n=1 ms=15
+  OCTAVIA: sync ok setlists=1 content=1 pages=1 t=52
+  OCTAVIA: prefetch plan n=0 reason=7d        ← setlist SEM data: nada automático
+  mock:  REQ /api/setlists auth=sim sortBy=-
+  mock:  REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+  dump:  baixar-w1sl | bounds [1406,479][1842,610] | enabled=true
+
+  --- o toque, com o app do W1 ---
+  --- logcat ---
+  OCTAVIA: prefetch plan n=1 reason=manual
+  OCTAVIA: file src=download name=w1-manual-1.pdf bytes=242176 total=242176 ms=73
+  --- ONDE o arquivo caiu (durável = files/, purgável = cache/) ---
+  DURAVEL:
+  242176 files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files/w1-manual-1.pdf
+  PURGAVEL:
+  --- cartão ---
+  /sdcard/s.png: 1 file pulled, 0 skipped. 20.7 MB/s (115874 bytes in 0.005s)
+     garantida offline
+     todos os arquivos neste aparelho
+  --- o servidor de arquivos viu ---
+    → GET /ok/w1-manual-1.pdf
+
+  --- o MESMO toque, com o app de f79a4b7 (CONTROLE NEGATIVO) ---
+    botão em [1406,479][1842,610] enabled= true
+  --- logcat ---
+  OCTAVIA: prefetch plan n=1 reason=manual
+  OCTAVIA: file src=download name=w1-manual-1.pdf bytes=242176
+  --- ONDE caiu ---
+  DURAVEL:
+  PURGAVEL:
+  242176 cache/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files/w1-manual-1.pdf
+
+  LEITURA: com o W1 o arquivo cai em `files/…` (DURÁVEL, fora do alcance do
+  Android); com `f79a4b7`, no `cache/…` (purgável). É a div. 102, medida nos
+  dois sentidos, com o mesmo toque nas mesmas coordenadas.
+  E a trava vale: o arquivo **não** entrou no `protectedUrls` do LRU — a
+  política de purga não mudou (Q1).
+  Capturas: `dumps/A5-2-depois.png`, dumps `A5-1-antes.xml`/`A5-2-depois.xml`.
+
+==========================================================================
+8. OS ACEITES DO PRD QUE TOCAM A GARANTIA OFFLINE
+==========================================================================
+  A9  "arquivo baixado uma vez, servido do disco depois"
+      → coberto pela última abertura (§9): os dois arquivos REAIS do aparelho
+        passam pelo saneamento sem uma recusa, e o `prefetch plan n=0` diz que
+        nada foi rebaixado. Em unidade: "o arquivo íntegro continua contando"
+        + "a segunda vez vem do disco" (`src=disk`).
+  A10 "arquivos baixados em background; indicador ✓/◔/✗ correto e recalculado"
+      → §2 (a fila, cinco arquivos, cartão andando de 4/5 para 5/5) e §5 (2 de
+        5 com três falhas). A metade que o V1 dispensou — "baixados em
+        background" — é exatamente o `prefetch.ts` que esta PR reescreveu, e
+        foi rodada.
+  A18 `notes` visível, `annotations` não → NÃO TOCADO, não rodado (o G1a cobre
+        o `sync.ts`/`store.ts` com diff vazio).
+  A19 "falha de revalidação com cache → indicador, lista permanece"
+      → o irmão que faltava: a falha de DOWNLOAD agora aparece (§5). A falha
+        de SYNC não foi tocada (G1a).
+  A21 "mock de 500 na página 2 → cache byte a byte inalterado" → dispensado
+        pelo G1a, e a dispensa é legítima: `sync.ts` e `store.ts` têm diff
+        VAZIO contra `f79a4b7`.
+  A13 "PDF de 12 páginas do cache em avião" → NÃO rodado. Declarado: o palco
+        não foi aberto nesta sessão (o `StageScreen.tsx` é da W2, e abrir o
+        palco dispararia o `prefetchDemanda`, que não é o eixo desta PR).
+
+==========================================================================
+9. ESTADO DO APARELHO — ANTES × DEPOIS
+==========================================================================
+  --- ANTES (início da sessão) ---
+  == data host ==
+  Mon Sep 14 18:27:11 -03 2026
+  == avd ==
+  octavia_tab32
+  OK
+  == ping (A PROVA) ==
+  connect: Network is unreachable
+  == setting (nao e a prova) ==
+  1
+  == pid/uptime ==
+  11854
+   18:27:08 up  8:57,  0 users,  load average: 0.04, 0.11, 0.09
+  == store ==
+  d27e6d8478185282d5707fb9459d8e124cdd6bdab9c20aa28df133041e86fc44  content.json
+  0a3a06380634b5dabbe1811e29a8f7a6151e1302bfe8a025d16013300a5f8a07  setlists.json
+  cce7936f9c86e833368777060c483e2fec70fcef8a5531ce5d8feacfad53efef  files-index.json
+  ad2eae0942811adb4d60286516ce318110868f6aa889422ab0cb8b3dc690ea22  files/1786218429715-ux-audit-partitura-12p.pdf
+  == purgavel ==
+  3d42199bc98fb2f93695323e7e3082378907236eeae11d982b63f85d990cdb48  cache/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files/1786218427769-ux-audit-partitura-1p.pdf
+
+  --- DEPOIS (fim da sessão) ---
+  === ESTADO FINAL DO AVD ===
+  Mon Sep 14 19:39:46 -03 2026
+  octavia_tab32
+  OK
+  --- ping (A PROVA do avião) ---
+  connect: Network is unreachable
+  --- setting (não é a prova) ---
+  1
+  --- app ---
+  2455
+    PID     ELAPSED ARGS
+   2455       01:33 rocks.octavia.app
+   19:39:43 up 10:10,  0 users,  load average: 0.47, 0.72, 0.49
+  --- store (os cinco sha) ---
+  d27e6d8478185282d5707fb9459d8e124cdd6bdab9c20aa28df133041e86fc44  content.json
+  0a3a06380634b5dabbe1811e29a8f7a6151e1302bfe8a025d16013300a5f8a07  setlists.json
+  cce7936f9c86e833368777060c483e2fec70fcef8a5531ce5d8feacfad53efef  files-index.json
+  ad2eae0942811adb4d60286516ce318110868f6aa889422ab0cb8b3dc690ea22  files/1786218429715-ux-audit-partitura-12p.pdf
+  3d42199bc98fb2f93695323e7e3082378907236eeae11d982b63f85d990cdb48  cache/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files/1786218427769-ux-audit-partitura-1p.pdf
+  --- Tab S6: listado e NUNCA endereçado ---
+  1
+
+  --- o restauro, com sha256 dos DOIS lados ---
+  === RESTAURO do store a partir do backup (run-as cp -r) ===
+  RESTAURADO
+  --- sha256 do restaurado ---
+  d27e6d8478185282d5707fb9459d8e124cdd6bdab9c20aa28df133041e86fc44  content.json
+  0a3a06380634b5dabbe1811e29a8f7a6151e1302bfe8a025d16013300a5f8a07  setlists.json
+  cce7936f9c86e833368777060c483e2fec70fcef8a5531ce5d8feacfad53efef  files-index.json
+  ad2eae0942811adb4d60286516ce318110868f6aa889422ab0cb8b3dc690ea22  files/1786218429715-ux-audit-partitura-12p.pdf
+  3d42199bc98fb2f93695323e7e3082378907236eeae11d982b63f85d990cdb48  cache/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files/1786218427769-ux-audit-partitura-1p.pdf
+  --- sha256 do backup (o outro lado) ---
+  d27e6d8478185282d5707fb9459d8e124cdd6bdab9c20aa28df133041e86fc44  content.json
+  0a3a06380634b5dabbe1811e29a8f7a6151e1302bfe8a025d16013300a5f8a07  setlists.json
+  cce7936f9c86e833368777060c483e2fec70fcef8a5531ce5d8feacfad53efef  files-index.json
+  ad2eae0942811adb4d60286516ce318110868f6aa889422ab0cb8b3dc690ea22  files/1786218429715-ux-audit-partitura-12p.pdf
+  3d42199bc98fb2f93695323e7e3082378907236eeae11d982b63f85d990cdb48  cache/W1BACKUP/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files/1786218427769-ux-audit-partitura-1p.pdf
+  LEITURA: os CINCO sha256 do fim batem byte a byte com os do início — que são
+  os mesmos do "FIM" do V1-PR7 e do pre-check do W1. O backup do aparelho
+  (`files/W1BACKUP`, `cache/W1BACKUP`) foi removido.
+  O QUE MUDOU: o pid do app (era 11854, ficou 2455) — o app foi fechado e
+  aberto 14 vezes por este protocolo; e o bundle carregado é o do W1, servido
+  pelo Metro desta árvore, que foi morto ao fim (o app segue com ele em
+  memória). O AVD não foi subido nem morto: `uptime` 6:43 → 10:10.

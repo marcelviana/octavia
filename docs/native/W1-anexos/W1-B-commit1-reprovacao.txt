@@ -1,7 +1,7 @@
 $ (B) W1 — commit 1: A REPROVAÇÃO, antes do conserto
 
 RASTRO, não fonte. A fonte da PR é o diff e as mensagens de commit.
-Data: 2026-09-14. Árvore: /Users/marcelviana/projects/octavia-w1, branch `w1/garantia-offline`.
+Data: 2026-09-14. Árvore: <árvore-w1>, branch `w1/garantia-offline`.
 O código medido é o de `f79a4b7` (main): NENHUMA linha de `files.ts` ou `prefetch.ts` foi
 tocada quando esta saída foi produzida. Os testes são do commit 1; o app é o de ontem.
 
@@ -32,7 +32,7 @@ Se estes testes passassem aqui, o errado seria o teste.
 ==========================================================================
 
 
- RUN  v4.0.16 /Users/marcelviana/projects/octavia-w1
+ RUN  v4.0.16 <árvore-w1>
 
  ❯  native  apps/native/test/files-saneamento.test.ts (5 tests | 5 failed) 7ms
      × apaga o 0 byte e o truncado, e deixa o íntegro em paz 4ms
@@ -437,12 +437,12 @@ The latest test that might've caused the error is "um PDF sem `%%EOF` é recusad
 ==========================================================================
   $ pnpm --filter native type-check   (na árvore do commit 1, com o files.ts/prefetch.ts de f79a4b7)
   
-  > native@1.0.0 type-check /Users/marcelviana/projects/octavia-w1/apps/native
+  > native@1.0.0 type-check <árvore-w1>/apps/native
   > tsc --noEmit
   
   test/files-saneamento.test.ts(23,3): error TS2305: Module '"../src/files"' has no exported member 'sanearArquivos'.
   test/prefetch-fila.test.ts(110,54): error TS2554: Expected 2 arguments, but got 3.
-  /Users/marcelviana/projects/octavia-w1/apps/native:
+  <árvore-w1>/apps/native:
    ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  native@1.0.0 type-check: `tsc --noEmit`
   Exit status 2          ← o `tsc` do nativo REPROVA no commit 1, e volta a passar no commit 6
 

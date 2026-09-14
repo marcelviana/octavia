@@ -1,0 +1,266 @@
+$ (A) W1-PRECHECK — o bruto: todo comando desta sessão, e a saída literal
+
+RASTRO, não fonte. A fonte do pre-check é o `W1-PRECHECK.md` ao lado.
+Data: 2026-09-14. Árvore: /Users/marcelviana/projects/octavia-w1 (detached em f79a4b7).
+NENHUM comando foi enviado ao Tab S6 (RX2N8000F3D). Todo comando de aparelho leva `-s emulator-5554`.
+
+==========================================================================
+0. A ÁRVORE DE TRABALHO
+==========================================================================
+$ git worktree add --detach ../octavia-w1 main
+  Preparing worktree (detached HEAD f79a4b7)
+  HEAD is now at f79a4b7 Merge pull request #300 from marcelviana/v1/pr7-aceite
+$ git worktree list
+  /Users/marcelviana/projects/octavia     f79a4b7 [main]
+  /Users/marcelviana/projects/octavia-w1  f79a4b7 (detached HEAD)
+
+==========================================================================
+1. O EMULADOR — identidade, avião provado, e o que já estava de pé
+==========================================================================
+$ adb -s emulator-5554 emu avd name                        → octavia_tab32 / OK
+$ adb -s emulator-5554 shell getprop sys.boot_completed     → 1
+$ adb -s emulator-5554 shell getprop ro.product.model       → sdk_gphone64_arm64
+$ adb -s emulator-5554 shell settings get global airplane_mode_on   → 1   (NÃO é a prova)
+$ adb -s emulator-5554 shell ping -c 2 -W 2 8.8.8.8
+  connect: Network is unreachable                                   ← A PROVA (regra 1 do padrão)
+
+$ adb -s emulator-5554 shell pidof rocks.octavia.native     → (vazio)
+  ERRO MEU: o pacote é `rocks.octavia.app`, não `.native`. A primeira sondagem
+  concluiu "app fechado" e estava errada. Corrigido abaixo.
+$ adb -s emulator-5554 shell pm list packages | grep -i octavia  → package:rocks.octavia.app
+$ adb -s emulator-5554 shell pidof rocks.octavia.app        → 11854
+$ adb -s emulator-5554 shell ps -o PID,ETIME,ARGS -p 11854
+    PID     ELAPSED ARGS
+  11854    04:34:10 rocks.octavia.app
+$ adb -s emulator-5554 shell uptime   →  16:12:52 up  6:43
+$ date (host)                         →  Mon Sep 14 16:12:55 -03 2026
+  LEITURA: o processo tem 4 h 34 min e esta sessão começou às ~16:04. O app foi
+  deixado de pé pela V1-PR7; esta sessão NÃO o abriu e não o fechou.
+  Em avião com ping falhando, ele não pode fazer request nenhuma.
+
+==========================================================================
+2. H4 — INVENTÁRIO COMPLETO DO ARMAZENAMENTO DO APP, COM TAMANHO
+==========================================================================
+$ adb -s emulator-5554 shell "run-as rocks.octavia.app find files -type f -exec stat -c '%s %n' {} \;"
+  24        files/profileInstalled
+  6231322   files/DevLauncherApp-BridgelessReactNativeDevBundle.js
+  15247     files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/setlists.json
+  242176    files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files/1786218429715-ux-audit-partitura-12p.pdf
+  861       files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files-index.json
+  53738     files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/content.json
+
+$ adb -s emulator-5554 shell "run-as rocks.octavia.app find cache -type f -exec stat -c '%s %n' {} \;"
+  466729    cache/image_cache/v2.ols100.1/22/gIs8cjvWH84xa0BY1g3ajsA4zbs.cnt
+  39824     cache/image_cache/v2.ols100.1/1/WQfkRzGXSIhU4nOhIsuDDhKYJAw.cnt
+  187       cache/image_cache/v2.ols100.1/1/393nUl7CbWpUPUGTsH9a1RoLirQ.cnt
+  39824     cache/image_cache/v2.ols100.1/17/0a12e5ai9UNGRTTCq9-v3lOihBQ.cnt
+  36        cache/http-cache/journal
+  20821     cache/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files/1786218427769-ux-audit-partitura-1p.pdf
+
+  ARQUIVOS DE MÚSICA: 2.  DE 0 BYTE: 0.  (o `image_cache` e o `http-cache` são de
+  bibliotecas, fora do namespace `octavia-<uid>` — não são do cache de arquivos do app.)
+
+INTEGRIDADE DOS DOIS, por três sinais independentes:
+$ adb -s emulator-5554 shell "run-as rocks.octavia.app sha256sum '<A>' '<B>'"
+  ad2eae0942811adb4d60286516ce318110868f6aa889422ab0cb8b3dc690ea22  …-12p.pdf
+  3d42199bc98fb2f93695323e7e3082378907236eeae11d982b63f85d990cdb48  …-1p.pdf
+  ← os dois BATEM byte a byte com o registro do V1-PR7 (anexo E §4)
+$ ... head -c 8   →  %PDF-1.7   nos dois
+$ ... tail -c 32 | od -c
+  12p: m \n e n d o b j \n \n s t a r t x r e f \n 2 4 1 8 8 3 \n % % E O F
+  1p : a m \n e n d o b j \n \n s t a r t x r e f \n 2 0 6 0 9 \n % % E O F
+  ← `%%EOF` presente e `startxref` DENTRO do tamanho (241883 < 242176; 20609 < 20821)
+
+==========================================================================
+3. H1 — O `files-index.json`, VERBATIM
+==========================================================================
+$ adb -s emulator-5554 shell "run-as rocks.octavia.app cat files/<uid>/files-index.json" | python3 -m json.tool
+{
+  "…/1786218429715-ux-audit-partitura-12p.pdf": { "bytes": 242176, "lastUsedMs": 1789395229435 },
+  "…/1786295844475-ux-audit-fase-d-cifra.pdf":  { "bytes":   1117, "lastUsedMs": 1789071627197 },
+  "…/1786295884124-ux-audit-fase-d-offline.pdf":{ "bytes":    888, "lastUsedMs": 1789071628930 },
+  "…/1786218427769-ux-audit-partitura-1p.pdf":  { "bytes":  20821, "lastUsedMs": 1789389245541 }
+}
+  4 entradas, 2 arquivos em disco  → a div. 98 do V1 confirmada, com os números.
+  `bytes` do índice == tamanho em disco nos dois presentes (242176 e 20821).
+  Os dois ausentes guardam `bytes` de quando estiveram aqui — é o "(1,2 MB)" do S3e.
+
+==========================================================================
+4. H2 — ONDE CADA COISA VIVE (lido do código, conferido no disco acima)
+==========================================================================
+apps/native/src/files.ts:52-58
+  dirGarantido() = Directory(Paths.document, `octavia-${uid}`, 'files')   ← DURÁVEL
+  dirDemanda()   = Directory(Paths.cache,    `octavia-${uid}`, 'files')   ← PURGÁVEL
+apps/native/src/store.ts:40
+  dirDe(uid)     = Directory(Paths.document, `octavia-${uid}`)            ← DURÁVEL
+                   (setlists.json, content.json, files-index.json)
+
+QUEM ESCREVE ONDE — os quatro caminhos de download, `apps/native/src/prefetch.ts`:
+  :91   prefetch7Dias   → baixar(plano, TRUE)   janela de 7 dias      → DURÁVEL
+  :111  prefetch7Dias   → ensureFile(url, {guaranteed:true}) promoção → DURÁVEL
+  :137  prefetchDemanda → baixar(urls, FALSE)   T1-R16 no palco       → purgável
+  :157  baixarSetlist   → baixar(urls, FALSE)   "Baixar esta setlist" → purgável  ← div. 102
+  `apps/native/src/screens/StageScreen.tsx:347` → ensureFile(url) sem opções
+        → o default de `ensureFile` é `{guaranteed:false}` (files.ts:160)  → purgável
+
+O `false` da linha 156/157 é o parâmetro `guaranteed: boolean` de `baixar()` (prefetch.ts:71),
+que vira `ensureFile(url, { guaranteed })` (prefetch.ts:74), que escolhe a pasta em
+`files.ts:174`: `const alvoDir = opcoes.guaranteed ? dirGarantido() : dirDemanda()`.
+
+O QUE O LRU PROTEGE — `prefetch.ts:165-171` + `packages/core/src/offline.ts:179-197`:
+  protegidos = urlsGarantidas(...) = selectPrefetch(... , disco vazio, hoje) = a janela de 7 dias.
+  `lruEvict` nunca despeja quem está em `protectedUrls`.
+  CONSEQUÊNCIA MEDIDA POR LEITURA: um arquivo no PURGÁVEL que esteja na janela de 7 dias é
+  protegido do LRU do app e NÃO do Android. Foi exatamente esse buraco que a `promoteList`
+  (N1-PR7 §3.1, errata E7) veio tapar — e ela só corre em `prefetch7Dias`, depois do sync.
+  Um arquivo purgável FORA da janela (o caso do "Baixar esta setlist") não é protegido por
+  ninguém: nem pelo LRU (não está em `protectedUrls`) nem pelo Android (está em `Paths.cache`).
+
+==========================================================================
+5. H3 — O DOWNLOAD, LIDO ATÉ O KOTLIN
+==========================================================================
+5.1 NÃO HÁ TIMEOUT NEM ABORT NO APP
+$ grep -rni "timeout|AbortController|AbortSignal" apps/native/src packages/core/src
+  apps/native/src/screens/StageScreen.tsx:247,249,251,255   ← os quatro são o `MOTIVO_MS` do A15
+  NENHUMA outra ocorrência. Zero timeout no caminho de download.
+
+5.2 `download-error` SÓ EXISTE EM UM LUGAR
+$ grep -rn "download-error" --include='*.ts' --include='*.tsx' apps packages
+  apps/native/src/screens/StageScreen.tsx:352:        log(`download-error ${mensagem}`)
+  UM lugar, e é o `catch` do `buscarArquivo` do palco. `prefetch.ts` não emite nenhum.
+
+5.3 O `baixar()` ENGOLE — prefetch.ts:71-76, verbatim
+  async function baixar(urls: string[], guaranteed: boolean): Promise<void> {
+    for (let i = 0; i < urls.length; i += CONCORRENCIA) {
+      const lote = urls.slice(i, i + CONCORRENCIA)
+      await Promise.allSettled(lote.map((url) => ensureFile(url, { guaranteed })))
+    }                     ↑ o array de resultados é DESCARTADO: nenhum `status==='rejected'`
+  }                         é lido, logado ou propagado.
+
+5.4 O LAÇO DE PROMOÇÃO NÃO É PROTEGIDO — prefetch.ts:108-111
+  const aPromover = promoteList(urlsGarantidas(setlists, contentById), listFiles())
+  if (aPromover.length === 0) return
+  log(`prefetch promote n=${aPromover.length}`)
+  for (const url of aPromover) await ensureFile(url, { guaranteed: true })   ← sem try/catch
+  → rejeita `prefetch7Dias` → rejeita `prefetchEArrumar` (App.tsx:87-92)
+  → rejeita `rodarSync` → `void rodarSync(...)` (App.tsx:178 e :183) = rejeição sem dono,
+     e `recarregarArquivos()` (LRU + `setFilesPresent`) NÃO corre.
+
+5.5 O `emVoo` DEDUPLICA POR URL E IGNORA `opcoes` — files.ts:151-167
+  const emVoo = new Map<string, Promise<EnsuredFile>>()
+  export function ensureFile(url, opcoes = { guaranteed: false }) {
+    const jaVoando = emVoo.get(url)
+    if (jaVoando !== undefined) return jaVoando       ← devolve o voo ALHEIO, com as opções dele
+    ...
+  }
+  → o palco (StageScreen.tsx:347) que pede um arquivo já em voo pelo prefetch recebe
+    a promise DO PREFETCH. Se ela não assenta, o palco fica em `fase:'buscando'` para
+    sempre, e o `catch` do `download-error` (o único que existe) nunca é alcançado.
+
+5.6 O KOTLIN — `expo-file-system@57.0.6`, android/…/FileSystemDownload.kt
+  :44   private val sharedHttpClient = OkHttpClient()      ← sem builder = defaults do OkHttp
+  :77   if (!activeResponse.isSuccessful) throw UnableToDownloadException(...)
+  :91   if (options?.idempotent != true && destination.exists()) throw DestinationAlreadyExists
+  :96   body.byteStream().use { input ->
+  :97     FileOutputStream(destination).use { output ->     ← O ARQUIVO É CRIADO/TRUNCADO AQUI,
+  :99       streamWithProgress(...)  // só quando downloadUUID != null    ANTES DO 1º BYTE DO CORPO
+  :101      input.copyTo(output)     // o caminho do `downloadFileAsync`
+  :175  while (input.read(buffer) != -1) { output.write(...) }   ← cresce em disco, em cima do alvo
+
+  E A PRÓPRIA DOC DA BIBLIOTECA DIZ, em `src/File.ts:45-48`, no comentário do
+  `downloadFileAsync` que o app chama:
+    "On Android, the response body streams directly into the target file. If the download
+     fails after it starts, a partially written file may remain at the destination. On iOS,
+     the download first completes in a temporary location and the file is moved into place
+     only after success, so no file is left behind when the request fails."
+
+5.7 `signal` E `onProgress` NÃO VALEM PARA ESTE PONTO DE ENTRADA
+  `NetworkTasks.types.d.ts:14-40` declara `DownloadOptions = { headers, idempotent, onProgress, signal }`.
+  Mas: o Kotlin só emite progresso quando `downloadUUID != null` (FileSystemDownload.kt:98), e o
+  `downloadUUID` é um 4º argumento (FileSystemModule.kt:58) que o estático `File.downloadFileAsync`
+  nunca passa; e a fiação de `signal`/`onProgress` em JS vive só em
+  `NetworkTasks.ts:430-431` (`DownloadTask._runDownloadOperation`).
+  → para ter timeout e progresso é preciso `File.createDownloadTask(url, dest, {signal, onProgress})`
+    + `.downloadAsync()` — `File.ts:275`, mesmo pacote, ZERO dependência nova.
+  → `DownloadProgress.totalBytes` é o `Content-Length`, ou `-1` quando o servidor não o manda
+    (NetworkTasks.types.d.ts:10-12).
+
+5.8 NÃO HÁ TAMANHO ESPERADO EM LUGAR NENHUM DO CONTRATO
+$ grep 'content: {' types/database.types.ts   → 22 colunas, NENHUMA de tamanho
+  (album, artist, bpm, capo, content_data, content_type, created_at, difficulty, file_url,
+   genre, id, is_favorite, is_public, key, notes, tags, thumbnail_url, time_signature,
+   title, tuning, updated_at, user_id)
+  `packages/core/src/types.ts:20-35` — `ContentDTO` tem 8 campos, nenhum de tamanho.
+
+5.9 DE ONDE VEM O `bytes` DO ÍNDICE — files.ts:233-239
+  export function touch(url: string): void {
+    const idx = carregarIndice()
+    const bytes = localizar(url)?.file.size ?? idx[url]?.bytes ?? 0     ← DO DISCO
+    idx[url] = { name: fileNameFromUrl(url), bytes, lastUsedMs: Date.now() }
+    gravarIndice()
+  }
+  e `touch(url)` é chamado em files.ts:187 (disco) e :197 (logo depois do download).
+  → o índice grava O QUE FOI ESCRITO, não o que era esperado.
+
+==========================================================================
+6. H5 — A BARRA DO PALCO, RELIDA DOS DUMPS DO V1-PR7 (zero comando de aparelho)
+==========================================================================
+$ node barra.mjs dumps-tabs6/AVicones-A-texto.xml dumps-tabs6/AVicones-B2-pdf-inertes.xml \
+                 dumps-tabs6/S3-palco-1de7.xml         (script em scratch, fora do repo)
+
+--- AVicones-A-texto.xml   janela=2560 px = 1137.8 dp
+  auto-scroll  x=[  54, 203]   66.2 dp  margem= 24.0 dp  enabled=true
+  zoom-menos   x=[ 239, 387]   65.8 dp  folga = 16.0 dp  enabled=true
+  zoom-mais    x=[ 423, 572]   66.2 dp  folga = 16.0 dp  enabled=true
+  tema         x=[ 608, 756]   65.8 dp  folga = 16.0 dp  enabled=true
+  indice       x=[ 792, 941]   66.2 dp  folga = 16.0 dp  enabled=true
+  busca        x=[ 977,1125]   65.8 dp  folga = 16.0 dp  enabled=true
+  sair         x=[1161,1310]   66.2 dp  folga = 16.0 dp  enabled=true
+  fim do último controle: 582.2 dp   ·   VAZIO à direita: 555.6 dp = 49% da barra
+  ← reproduz EXATAMENTE o `V1-PR7-C-aceite-visual.txt`. Os três dumps dão o mesmo.
+
+E O QUE A RELEITURA ACRESCENTA — `enabled` e `content-desc` dos sete, nos dois estados:
+  A-texto (todos ativos):
+    auto-scroll  enabled=true clickable=true desc='Rolagem automática, desligada'
+  B2-pdf-inertes (os três primeiros INERTES):
+    auto-scroll  enabled=TRUE  clickable=true desc='Rolagem automática, indisponível: só em texto'
+    zoom-menos   enabled=TRUE  clickable=true desc='Diminuir o texto, indisponível: pinça para zoom'
+    zoom-mais    enabled=TRUE  clickable=true desc='Aumentar o texto, indisponível: pinça para zoom'
+  → os três inertes são `enabled=true clickable=true` na árvore. Ver div. 118.
+  CONFERIDO NO CÓDIGO: `StageScreen.tsx:807-827`, o componente `Controle` não põe `disabled`
+  nem `accessibilityState`; o estado inerte é só tinta (`cor.lineInfo`) + `estado='inerte'`
+  no `<Icone>`. O `entrar` do S0 (AV-4) é outro componente, e esse sim mede `enabled=FALSE`.
+
+==========================================================================
+7. GATES E SUÍTE — a linha de base desta PR
+==========================================================================
+$ sh apps/native/scripts/g2g3.sh f79a4b7 WORKTREE        (na árvore ../octavia-w1)
+  G2 — testIDs  antes=43  depois=43
+    G2: antes ⊆ depois ✓
+  G3 — linhas log( antes=50  depois=50
+    G3: idênticas ✓
+
+$ pnpm test                                              (no checkout principal, limpo em f79a4b7)
+   Test Files  88 passed | 4 skipped (92)
+        Tests  768 passed | 85 skipped (853)
+     Duration  19.29s
+  EXIT=0
+  ← é a baseline do V1-A12, reconferida nesta sessão.
+
+$ cat docs/native/V1-PR7-anexos/instrumentos/g1.sh     (o escopo do G1, verbatim)
+  NUCLEO="apps/native/src/api.ts apps/native/src/store.ts apps/native/src/sync.ts \
+  apps/native/src/net.ts apps/native/src/files.ts apps/native/src/prefetch.ts \
+  apps/native/src/session.ts apps/native/src/firebase.ts apps/native/src/log.ts"
+  EXISTENTES=$(git ls-tree -r --name-only "$BASE" -- packages/core/src)
+  → os NOVE + os 25 de `packages/core/src`. O `files.ts` e o `prefetch.ts` estão entre os nove.
+
+==========================================================================
+8. ESTADO FINAL DO AVD — só leituras foram feitas
+==========================================================================
+$ adb -s emulator-5554 shell "run-as rocks.octavia.app sha256sum files/<uid>/{content,setlists,files-index}.json"
+  d27e6d8478185282d5707fb9459d8e124cdd6bdab9c20aa28df133041e86fc44  content.json
+  0a3a06380634b5dabbe1811e29a8f7a6151e1302bfe8a025d16013300a5f8a07  setlists.json
+  cce7936f9c86e833368777060c483e2fec70fcef8a5531ce5d8feacfad53efef  files-index.json
+  ← os TRÊS batem byte a byte com o "FIM" registrado no `V1-PR7-anexos/…-E-…txt` §4.
+$ adb -s emulator-5554 shell ping -c 2 -W 2 8.8.8.8   → connect: Network is unreachable
+$ adb devices | grep -c RX2N8000F3D                   → 1  (listado, e nunca endereçado)
