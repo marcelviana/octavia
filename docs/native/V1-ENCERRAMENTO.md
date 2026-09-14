@@ -273,8 +273,15 @@ nada**. A medição fria da V1-PR3 (11m34s) fica fora da comparação.
 `actions/cache` guarda o `~/.gradle` baixado, não a saída compilada do módulo.
 
 **Esta PR não mede o CI**: ela não toca `apps/native/**`, `.github/workflows/native.yml`
-nem `pnpm-workspace.yaml`, então o gate `native` **não deve disparar**. Se disparar, é o
-achado do B8 (§11, item 3) se manifestando — o `paths` avaliado contra o diff acumulado do PR.
+nem `pnpm-workspace.yaml`, então o gate `native` **não deve disparar**. Se disparasse, seria
+o achado do B8 (§11, item 3) se manifestando — o `paths` avaliado contra o diff acumulado do
+PR.
+
+**Previsão conferida, na #300**: o `native` **não disparou**. Os únicos checks foram
+`CI · build` (**success, 2m25s**, run `34881780359`) e o Vercel. Isto delimita o B8 com
+precisão: o gate re-roda por commit de `docs/` **só quando o PR já tocou `apps/native/**`
+em algum commit** — numa PR de documento de ponta a ponta, o `paths` filtra como deveria.
+A faixa do `native` fica onde estava, **n = 12**, sem medição nova.
 
 ---
 
