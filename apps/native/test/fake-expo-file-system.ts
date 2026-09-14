@@ -13,9 +13,13 @@
  * 1. **O alvo é criado e truncado ANTES do primeiro byte do corpo, e cresce
  *    em disco** (div. 113: `FileOutputStream(destination)` em
  *    `FileSystemDownload.kt:97`). Um download em voo já "existe".
- * 2. **`File.downloadFileAsync` ignora `signal` e `onProgress`** (div. 116:
- *    o progresso depende de um `downloadUUID` que o estático não passa).
- *    Só `File.createDownloadTask(...).downloadAsync()` os honra.
+ * 2. **`File.downloadFileAsync` ignora `signal` e `onProgress`** (div. 116).
+ * 2b. **E o `createDownloadTask` entrega o progresso SÓ NO FIM, em rajada** —
+ *    medido no AVD, pelo `onProgress` e pelo `addListener`, os dois (div. 126).
+ *    O duplo emitia progresso a cada pedaço, e com isso **passava um teto de
+ *    inatividade que o aparelho reprovou**: um instrumento mais capaz que a
+ *    coisa medida é tão ruim quanto um menos capaz, e foi assim que o gate
+ *    verde conviveu com o defeito até o aceite W1-A3.
  * 3. **Um download que falha depois de começar deixa o parcial no destino**
  *    — é a doc da própria biblioteca (`File.ts:45-48`).
  *
@@ -350,10 +354,12 @@ async function baixar(url: string, destino: File | Directory, opcoes: TarefaOpco
       await esperar(r.atrasoMs ?? 0, opcoes.signal)
       const ate = Math.min(corpo.length, i + passo)
       arquivos.set(chave(alvo.uri), corpo.slice(0, ate))
-      opcoes.onProgress?.({ bytesWritten: ate, totalBytes: total })
       if (ate >= corpo.length) break
     }
     if (r.morre === true) await paraSempre(opcoes.signal)
+    // div. 126: o progresso chega UMA VEZ, no fim. Não é simplificação do
+    // duplo — é o que o aparelho faz, e o que derrubou o teto de inatividade.
+    opcoes.onProgress?.({ bytesWritten: corpo.length, totalBytes: total })
     return new File(alvo.uri)
   } finally {
     emVoo--

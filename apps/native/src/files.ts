@@ -213,25 +213,40 @@ async function ensureFileUma(
 export const PARCIAL = '.part'
 
 /**
- * **Teto por INATIVIDADE — 30 s sem um byte novo.** (Q2 do pre-check, §8.1.)
+ * **O TETO DE INATIVIDADE NÃO ESTÁ AQUI — e o motivo é uma medição, não um
+ * esquecimento.** (Q2 do pre-check, §8.1; derrubada pelo aceite W1-A3.)
  *
- * Não é um teto de duração: um download legítimo pode demorar horas numa
- * Wi-Fi ruim de hotel na véspera do show, e é exatamente isso que o usuário
- * quer que aconteça. O que este número mata é a conexão MORTA — o soquete de
- * pé que parou de entregar —, o único caso em que o app tem certeza de que
- * nada mais vai chegar.
+ * O desenho era: abortar quando NENHUM byte novo chegasse em `T = 30 s`,
+ * rearmando o relógio a cada `onProgress`. Contra a conexão morta, e só
+ * contra ela — um download legítimo pode demorar horas numa Wi-Fi ruim de
+ * hotel na véspera do show, e é isso que o usuário quer.
  *
- * **Os 30 s são medidos ZERO vezes neste projeto**: são convenção de rede.
- * Quem os confirma é o aceite W1-A2, e o controle negativo dele (W1-A3, com
- * o servidor entregando devagar mas sem parar) é quem diz se o teto confunde
- * lento com morto.
+ * **O aparelho disse que o sinal de rearme não existe.** Medido duas vezes no
+ * AVD `octavia_tab32`, com o dev client, servidor de host entregando 6 pedaços
+ * a cada 4 s (download de 20 s):
  *
- * E o que ele **não** é: o conserto da fila. Um número maior aqui não faz o
- * quarto arquivo começar mais cedo — isso é a fila de trabalhadores do
- * `prefetch.ts`, e confundir as duas coisas é o erro que esta nota existe
- * para impedir.
+ *     OCTAVIA: dbg-listener name=… w=8192   ms=20075
+ *     OCTAVIA: dbg-progress  name=… w=8192  ms=20081
+ *     OCTAVIA: dbg-listener name=… w=242176 ms=20082
+ *     OCTAVIA: dbg-progress  name=… w=242176 ms=20083
+ *
+ * Todos os eventos chegam **em rajada, no fim** — pelo `onProgress` e pelo
+ * `addListener`, os dois. E o disco não ajuda: o destino não existe durante o
+ * download inteiro e aparece completo de uma vez (medido: alvo vazio de
+ * t=01 s a t=22 s, 242.176 B em t=24 s). **Não há, no app, nenhum sinal de
+ * "chegou byte" em voo.**
+ *
+ * Logo um relógio de 30 s rearmado por `onProgress` **nunca é rearmado**: é um
+ * teto ABSOLUTO de duração disfarçado — exatamente a opção A, que foi
+ * descartada por punir o caso legítimo ("barato e errado é pior que caro e
+ * certo quando o erro cai em cima do uso real", Marcel, 2026-09-14). Ficar
+ * com ele seria shippar a opção A com o nome da B.
+ *
+ * O que fica de pé sem o teto: o `.part` (o cartão diz "parcial" o tempo
+ * todo, sem mentir), a fila de trabalhadores (um download morto não para os
+ * outros) e o saneamento. O que fica em aberto: uma conexão morta segura UMA
+ * das três vagas até o processo morrer. Ver `W1-ENCERRAMENTO.md`, pergunta 1.
  */
-const INATIVIDADE_MS = 30_000
 
 /**
  * **Baixa para um nome temporário e renomeia só depois de completo.**
@@ -258,31 +273,20 @@ async function baixarAtomico(url: string, alvoDir: Directory, name: string): Pro
   if (parcial.exists) parcial.delete()
 
   // `createDownloadTask`, e não `downloadFileAsync`: o estático DECLARA
-  // `signal` e `onProgress` e não honra nenhum dos dois — o progresso depende
-  // de um `downloadUUID` que ele não passa, e a fiação do abort vive só na
-  // tarefa (div. 116). Mesmo pacote, zero dependência nova.
-  const controle = new AbortController()
-  let relogio: ReturnType<typeof setTimeout> | null = null
-  let mudo = false
+  // `signal` e `onProgress` e não honra nenhum dos dois (div. 116), e o
+  // `totalBytes` do progresso é a ÚNICA fonte de `Content-Length` que o app
+  // tem. Mesmo pacote, zero dependência nova.
+  //
+  // O evento chega uma vez, em rajada, no fim do download (medição acima) —
+  // o que basta para o `total=` da linha `file` e para a checagem de corpo
+  // curto, e não basta para teto nenhum.
   let total = -1
-  const rearmar = (): void => {
-    if (relogio !== null) clearTimeout(relogio)
-    relogio = setTimeout(() => {
-      mudo = true
-      controle.abort()
-    }, INATIVIDADE_MS)
-  }
 
   const comecou = Date.now()
   try {
-    rearmar()
     const tarefa = File.createDownloadTask(url, parcial, {
-      signal: controle.signal,
       onProgress: ({ totalBytes }) => {
         total = totalBytes
-        // Chegou byte novo: o silêncio recomeça do zero. É isto que faz o
-        // teto ser de INATIVIDADE e não de duração.
-        rearmar()
 
         // OPÇÃO C, NÃO IMPLEMENTADA — e o que falta para implementá-la.
         // Aqui caberia projetar o fim do download (`bytesWritten`,
@@ -300,7 +304,6 @@ async function baixarAtomico(url: string, alvoDir: Directory, name: string): Pro
       },
     })
     const veio = await tarefa.downloadAsync()
-    if (relogio !== null) clearTimeout(relogio)
     if (veio === null) throw new Error('pausado')
 
     const bytes = parcial.size
@@ -328,9 +331,8 @@ async function baixarAtomico(url: string, alvoDir: Directory, name: string): Pro
     // Qualquer saída por erro leva o parcial junto: um `.part` que sobra é
     // lixo, nunca meio-arquivo servível. O que sobrar de um processo MORTO
     // (que não passa por aqui) é varrido na abertura seguinte.
-    if (relogio !== null) clearTimeout(relogio)
     if (parcial.exists) parcial.delete()
-    throw falha(erro, name, mudo)
+    throw falha(erro, name)
   }
 }
 
@@ -384,8 +386,7 @@ function motivo(kind: FileRejectKind, bytes: number, esperado: number | null): s
  * <url>. Response status: 404`), então ela é traduzida quando se reconhece a
  * causa e higienizada quando não.
  */
-function falha(erro: unknown, name: string, mudo: boolean): Error {
-  if (mudo) return new Error(`${name}: sem resposta há 30 s`)
+function falha(erro: unknown, name: string): Error {
   if (erro instanceof Error && erro.message.startsWith(`${name}: `)) return erro
   const bruta = erro instanceof Error ? erro.message : String(erro)
   const status = /status:?\s*(\d{3})/i.exec(bruta)?.[1]

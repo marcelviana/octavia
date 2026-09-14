@@ -95,20 +95,6 @@ describe('G7 — o que está no disco só conta se estiver completo', () => {
 })
 
 describe('W1-A1 — um download interrompido não deixa arquivo no lugar do bom', () => {
-  it('a conexão que morre no meio: nada com o nome final, e a promessa rejeita', async () => {
-    // 2 pedaços entregues e o soquete de pé para sempre: é a conexão MORTA.
-    __responder(URL_A, { corpo: pdfBom(4000), pedacos: 4, atrasoMs: 1000, morre: true })
-
-    const voo = ensureFile(URL_A, { guaranteed: true })
-    const rejeita = expect(voo).rejects.toThrow()
-    await vi.advanceTimersByTimeAsync(60_000)
-    await rejeita
-
-    expect(__existe(`${filesDirs().guaranteed}/${NOME_A}`)).toBe(false)
-    expect(hasFile(URL_A)).toBe(false)
-    expect(__inventario().filter((p) => p.endsWith(NOME_A))).toEqual([])
-  })
-
   it('durante o download, o nome final ainda não existe — a promessa não mente enquanto baixa', async () => {
     __responder(URL_A, { corpo: pdfBom(4000), pedacos: 4, atrasoMs: 1000 })
 
@@ -121,23 +107,51 @@ describe('W1-A1 — um download interrompido não deixa arquivo no lugar do bom'
     await voo
     expect(hasFile(URL_A)).toBe(true)
   })
-})
 
-describe('W1-A2 / W1-A3 — o teto é de inatividade, e a checagem é do corpo', () => {
-  it('sem nenhum byte novo por 30 s, o download é abortado e a falha aparece', async () => {
+  it('a conexão que MORRE no meio não deixa nada com o nome final', async () => {
+    __responder(URL_A, { corpo: pdfBom(4000), pedacos: 4, atrasoMs: 1000, morre: true })
+
+    const voo = ensureFile(URL_A, { guaranteed: true })
+    voo.catch(() => undefined)
+    await vi.advanceTimersByTimeAsync(600_000)
+
+    expect(hasFile(URL_A)).toBe(false)
+    expect(__existe(`${filesDirs().guaranteed}/${NOME_A}`)).toBe(false)
+    expect(__inventario().filter((p) => p.endsWith(NOME_A))).toEqual([])
+  })
+
+  it('div. 126 — NÃO há teto: sem sinal de progresso em voo, o download morto espera para sempre', async () => {
+    // Este teste descreve um DEFEITO CONHECIDO, e é assim de propósito.
+    // O teto de inatividade da Q2 dependia de `onProgress` rearmar um relógio;
+    // o aparelho mediu que o progresso chega uma vez só, no fim, em rajada —
+    // e que o destino não existe em disco durante o download. Sem sinal de
+    // "chegou byte", um relógio de 30 s vira teto ABSOLUTO de duração, que é a
+    // opção A, descartada por punir o caso legítimo.
+    //
+    // O que sobra de pé: nada com o nome final, cartão honesto, e os outros
+    // downloads andando (a fila). O que fica: UMA das três vagas presa até o
+    // processo morrer. Quando houver sinal de progresso em voo, este teste é o
+    // primeiro a virar.
     __responder(URL_A, { corpo: pdfBom(4000), pedacos: 2, atrasoMs: 100, morre: true })
 
     const voo = ensureFile(URL_A, { guaranteed: true })
-    const rejeita = expect(voo).rejects.toThrow(/30\s?s/)
-    await vi.advanceTimersByTimeAsync(31_000)
-    await rejeita
+    let assentou = false
+    voo.then(
+      () => (assentou = true),
+      () => (assentou = true),
+    )
+    await vi.advanceTimersByTimeAsync(10 * 60_000)
 
+    expect(assentou).toBe(false)
     expect(hasFile(URL_A)).toBe(false)
   })
+})
 
-  it('CONTROLE NEGATIVO do teto: lento mas SEM parar não pode abortar', async () => {
-    // 10 pedaços a cada 10 s = 100 s de download, muito além do teto de 30 s,
-    // e nenhum silêncio maior que 10 s. É o caso de 1,8 KB/s medido no V1.
+describe('W1-A2 / W1-A3 — o teto é de inatividade, e a checagem é do corpo', () => {
+  it('lento mas SEM parar termina — o download demorado não é punido', async () => {
+    // 10 pedaços a cada 10 s = 100 s de download. É o caso de 1,8 KB/s medido
+    // no V1, e o app tem de deixá-lo terminar: no aparelho (W1-A3, servidor de
+    // host a 6 pedaços de 4 s) o arquivo entrou com `ms=20106`.
     __responder(URL_A, { corpo: pdfBom(4000), pedacos: 10, atrasoMs: 10_000 })
 
     const voo = ensureFile(URL_A, { guaranteed: true })
