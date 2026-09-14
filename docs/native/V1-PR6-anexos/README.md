@@ -235,6 +235,50 @@ escritas por extenso:
   `V1-PR3-PRECHECK.md` §9. Desta vez a prova pegou **antes** de o app abrir. A
   linha está no anexo C2, com a citação da causa registrada lá.
 
+## CI — a medição desta PR contra a faixa
+
+A referência do bloco é **faixa, não ponto**, desde a div. 80 da V1-PR5:
+**9m16s a 14m11s, mediana 11m45s, n = 11**. O critério de alarme é **sair da
+faixa**, não passar de um número.
+
+| | run | resultado | duração |
+|---|---|---|---|
+| `native` · `android-debug-apk` | `34791936599` | **success** | **12m32s** |
+| `CI` · `build` | `34791936582` | **success** | 3m00s |
+
+**12m32s (752 s) está DENTRO da faixa**, a 47 s acima da mediana e a 1m39s do
+teto. Nada a investigar. Com esta medição a população vai a **n = 12** e a
+faixa não se move — 9m16s e 14m11s continuam sendo os extremos, e a mediana
+passa de 11m45s para 11m49s (a média de 11m45s e 11m53s, que são as duas do
+meio agora que o n é par). **Para o `V1-ENCERRAMENTO.md`**: a faixa continua
+**9m16s – 14m11s**, mediana **11m49s**, **n = 12**.
+
+O trabalho foi o mesmo dos outros quentes, medido e não suposto:
+
+- **cache com HIT**, na mesma chave byte a byte das cinco medições anteriores
+  da série — `gradle-Linux-0df0eb47967ce57615f243bb839597dbf447ee7bed47b1c1bbd15eb5ded92e0a`
+  — e o `node-cache` também com hit;
+- **621 actionable tasks : 621 executed**, o mesmo número dos quatro runs que a
+  V1-PR5 tabulou;
+- **38 tarefas `:react-native-svg`** e 15 de `externalNativeBuild`/CMake. O SVG
+  recompila em todo run, como sempre: o `actions/cache` guarda o `~/.gradle`
+  baixado, não a saída compilada do módulo.
+
+Uma nota sobre o passo Gradle, para não repetir o erro que a div. 80 corrigiu:
+o `assembleDebug` levou **11m11s**, e a faixa de Gradle que a V1-PR5 registrou
+era **7m48s – 11m03s** com **n = 4**. Os 11m11s ficam **8 segundos** acima
+desse teto — e isso não é sinal de nada: uma faixa de n=4 não tem o que dizer
+sobre o quinto ponto, que é precisamente a regra que a div. 80 deixou (*uma
+medição não vira referência sem `n`*, e quatro mal são uma população). Com
+n = 5 a faixa de Gradle passa a **7m48s – 11m11s**; a fria da V1-PR3 segue em
+11m34s, fora da comparação.
+
+**O custo do registro, de novo.** Este commit toca só `docs/`, e numa PR que já
+tocou `apps/native/**` o GitHub avalia o `paths` contra o diff acumulado do PR:
+o gate re-roda inteiro. É o achado que a V1-PR5 deixou para o **B8**, com a
+frase do Marcel — *o rito paga 12 minutos para registrar 12 minutos*. Nada foi
+mudado aqui.
+
 ## sha256 dos anexos de texto
 
 | Arquivo | linhas | sha256 |
