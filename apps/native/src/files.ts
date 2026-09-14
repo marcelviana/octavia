@@ -122,12 +122,27 @@ function arquivoEm(dir: Directory, url: string): File {
   return new File(dir, fileNameFromUrl(url))
 }
 
-/** Onde o arquivo está agora — `null` se não está em lugar nenhum. */
+/**
+ * Onde o arquivo está agora — `null` se não está em lugar nenhum.
+ *
+ * **Um arquivo de 0 byte não está em lugar nenhum** (W1, div. 103). Esta é a
+ * única checagem que `localizar` faz, e ela só é honesta PORQUE o download
+ * passou a escrever num `.part` (abaixo): enquanto o corpo era gravado direto
+ * no alvo, `size > 0` valia para todo download em voo desde o primeiro
+ * milissegundo — não era nem o piso (div. 113). Com o `.part`, nada
+ * incompleto tem o nome definitivo, e aí um 0 byte no nome final só pode ser
+ * lixo: de um download anterior a esta PR, ou de um `moveSync` interrompido.
+ *
+ * O que ela NÃO alcança: um arquivo truncado em 100 KB de 242 KB, que tem
+ * tamanho e não tem forma. Esse é caro de julgar (abre o arquivo) e por isso
+ * não corre aqui — `localizar` é chamada em laço. Quem o alcança é o
+ * `sanearArquivos()`, uma vez por abertura.
+ */
 function localizar(url: string): { file: File; guaranteed: boolean } | null {
   const g = arquivoEm(dirGarantido(), url)
-  if (g.exists) return { file: g, guaranteed: true }
+  if (g.exists && g.size > 0) return { file: g, guaranteed: true }
   const d = arquivoEm(dirDemanda(), url)
-  if (d.exists) return { file: d, guaranteed: false }
+  if (d.exists && d.size > 0) return { file: d, guaranteed: false }
   return null
 }
 
@@ -190,13 +205,51 @@ async function ensureFileUma(
   }
 
   if (!alvoDir.exists) alvoDir.create({ intermediates: true })
-  // `idempotent` porque o destino pode existir meio escrito de um download
-  // interrompido — no Android o corpo é gravado direto no alvo (doc do SDK).
-  const out = await File.downloadFileAsync(url, new File(alvoDir, name), { idempotent: true })
-  const bytes = out.size ?? 0
-  touch(url)
-  log(`file src=download name=${name} bytes=${bytes}`)
-  return { uri: out.uri, src: 'download', bytes }
+  return baixarAtomico(url, alvoDir, name)
+}
+
+/** Sufixo do arquivo em construção. Um `.part` nunca é o nome de nada. */
+const PARCIAL = '.part'
+
+/**
+ * **Baixa para um nome temporário e renomeia só depois de completo.**
+ *
+ * É o mesmo `.tmp` + rename que o `store.ts:42` usa para o cache JSON ("assim
+ * uma interrupção no meio da escrita nunca deixa um JSON truncado no lugar do
+ * cache bom") e que o `gravarIndice()` acima usa para o índice. **A única
+ * coisa que nunca tinha recebido esse tratamento era o arquivo baixado** — e
+ * era ela que sustentava a frase "garantida offline" (div. 103).
+ *
+ * No Android o corpo é gravado DIRETO no destino, que é criado e truncado
+ * antes do primeiro byte (`FileSystemDownload.kt:97`; a doc da biblioteca diz
+ * isso verbatim em `File.ts:45-48`, e contrasta com o iOS, que já move para o
+ * lugar só depois do sucesso — div. 113). Com o `.part`, o Android passa a se
+ * comportar como o iOS, e aí **existir é estar completo**: o `localizar()` de
+ * hoje volta a estar certo sem mudar de ideia sobre nada.
+ *
+ * O `.part` nasce **no diretório alvo**, nunca num terceiro: durável e
+ * purgável são volumes diferentes, e só dentro do mesmo volume o rename é uma
+ * operação de metadado (`W1-PRECHECK.md` §10).
+ */
+async function baixarAtomico(url: string, alvoDir: Directory, name: string): Promise<EnsuredFile> {
+  const parcial = new File(alvoDir, `${name}${PARCIAL}`)
+  if (parcial.exists) parcial.delete()
+  try {
+    await File.downloadFileAsync(url, parcial, { idempotent: true })
+    const destino = new File(alvoDir, name)
+    if (destino.exists) destino.delete()
+    parcial.moveSync(destino)
+    const bytes = destino.size
+    touch(url)
+    log(`file src=download name=${name} bytes=${bytes}`)
+    return { uri: destino.uri, src: 'download', bytes }
+  } catch (erro: unknown) {
+    // Qualquer saída por erro leva o parcial junto: um `.part` que sobra é
+    // lixo, nunca meio-arquivo servível. O que sobrar de um processo MORTO
+    // (que não passa por aqui) é varrido na abertura seguinte.
+    if (parcial.exists) parcial.delete()
+    throw erro
+  }
 }
 
 export interface ListedFile {
