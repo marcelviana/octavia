@@ -232,7 +232,7 @@ perigoso: um instrumento que mede **mais** do que a coisa medida.
 | 13 | **os 58,2 dp** (V1-PR7) | o `uiautomator dump`: o nó **acessível** | o elemento **desenhado**. O campo do S0 mede 58,2 dp no dump e 60 no estilo — `height: touch.list + 4` no contêiner, menos 1 dp de borda de cada lado. *Instância, não defeito (decisão do Marcel).* |
 
 | 14 | **div. 113** (W1) | `File.downloadFileAsync` no Android: o corpo **streama direto para o arquivo alvo**, criado antes do primeiro byte — **e a doc da função diz isso, verbatim, no comentário que se lê para chamá-la** | "o arquivo existe ⇒ o download terminou". Daí a prescrição de *"`size > 0` é o piso"*, que não alcança um download **em voo** |
-| 15 | **div. 126** (W1) | o **duplo de teste** do `expo-file-system`: ele emitia `onProgress` a cada pedaço | a biblioteca real. Ela entrega o progresso **uma vez, no fim, em rajada** — e o gate verde passou um teto de inatividade que o aparelho reprovou no primeiro aceite |
+| 15 | **div. 126** (W1) | o **duplo de teste** do `expo-file-system`, que emitia `onProgress` a cada pedaço | a biblioteca real — que entrega o progresso **uma vez, no fim, em rajada**. **O teste passou porque o dublê emitia progresso; o aparelho não emite.** O gate verde carimbou um teto de inatividade que não pode disparar |
 
 > **A variante do 14, e por que ela merece nome próprio.** O caso 8 (div. 71) era o script
 > documentando a própria cegueira numa nota que ninguém leu. Este é um grau além: **a
@@ -242,10 +242,20 @@ perigoso: um instrumento que mede **mais** do que a coisa medida.
 > conserto. Não houve nada a inferir: houve o que ler. **O padrão não é só desconfiar do
 > que o instrumento mede; é ler o que ele já diz de si.**
 >
-> **E o 15 é o padrão PELO AVESSO, que nenhum dos catorze anteriores era**: um instrumento
-> **mais capaz** que a coisa medida. Os catorze mediam menos do que se supunha e faziam
-> perder um defeito; este media MAIS, e fez passar um mecanismo que não existe. A direção
-> do erro é a pior possível — é a direção de dizer que está pronto.
+> **E o 15 é o padrão PELO AVESSO — a variante mais desconfortável de todas, e a primeira
+> vez no projeto em que o instrumento foi MAIS GENEROSO QUE A REALIDADE.** Os catorze
+> anteriores mediam menos do que se supunha, e o preço era perder um defeito que estava
+> lá. Este mediu **mais**: o duplo emitia progresso a cada pedaço, a biblioteca entrega
+> tudo numa rajada no fim, e o teste carimbou um mecanismo **que não existe**.
+>
+> A direção do erro é o que o torna pior: um instrumento cego faz duvidar do que passou;
+> um instrumento generoso faz **acreditar**. É a mesma direção da mentira que esta PR foi
+> consertar — dizer que está pronto quando não está —, e ela apareceu no lugar de onde se
+> espera o contrário: no gate. Quem escreve um duplo escreve, sem querer, a biblioteca
+> que gostaria de ter. **O duplo se corrige contra a medição no aparelho, nunca contra a
+> documentação.** (No W1 ele foi corrigido: `fake-expo-file-system.ts` passou a emitir o
+> progresso uma vez, no fim, e os dois testes do teto viraram testes do defeito
+> conhecido.)
 
 **O que separa os casos entre si, e que vale mais que a lista**:
 
@@ -295,6 +305,19 @@ errada **nas duas metades** (a errata da §11, W1). A regra permanente do `CLAUD
 manda o bruto entrar como anexo; o que esta acrescenta é **a prioridade**: quando o
 achado é o que bloqueia o próximo trabalho, o anexo não é higiene, é o insumo desse
 trabalho. **Prosa não se relê com `grep`.**
+
+**4. Controle negativo que NÃO reprova pode ser instrumento quebrado, não código
+correto.** (Origem: div. 127, W1.) O primeiro controle negativo do W1-A6 trocou o
+`files.ts`/`prefetch.ts`/`App.tsx` pelos de `f79a4b7`, reabriu o app — e o logcat saiu com
+linhas `file-reject`, que o código de `f79a4b7` não tem. **Com `CI=1` o Metro não relê o
+disco: serviu o bundle que já tinha em cache, e o "controle negativo" mediu o código
+NOVO.** Foi declarado inválido e refeito com o Metro reconstruído; o que fica é a regra:
+
+> **Um CN que passa é tão suspeito quanto um gate que nunca acusa.**
+
+Antes de comemorar um controle negativo que não reprovou, prove que ele **podia**
+reprovar — que o instrumento estava vendo o que você acha que ele estava vendo. No
+device, isso significa: cada troca de código exige matar e subir o Metro.
 
 ### A regra de método que o padrão implica
 

@@ -245,7 +245,24 @@ export const PARCIAL = '.part'
  * O que fica de pé sem o teto: o `.part` (o cartão diz "parcial" o tempo
  * todo, sem mentir), a fila de trabalhadores (um download morto não para os
  * outros) e o saneamento. O que fica em aberto: uma conexão morta segura UMA
- * das três vagas até o processo morrer. Ver `W1-ENCERRAMENTO.md`, pergunta 1.
+ * das três vagas até o processo morrer.
+ *
+ * **E a razão que fecha a questão, do aval de 2026-09-14: o teto perdeu o
+ * objeto.** Ele existia para impedir que um download condenado comesse o
+ * orçamento dos outros — e é isso que a fila do `prefetch.ts` impede, melhor,
+ * porque impede SEMPRE e não só depois de 30 s. O dano real da div. 122 já
+ * está consertado; o que sobra do download morto é uma vaga de três.
+ *
+ * Se você chegou aqui com um relatório de "prefetch lento" e a mão num
+ * `setTimeout`, leia isto primeiro:
+ *
+ *     UM TETO QUE NÃO PODE DISPARAR É PIOR QUE TETO NENHUM, PORQUE PROMETE.
+ *                                               — Marcel, 2026-09-14
+ *
+ * O que reabre a questão não é um número maior: é **sinal de progresso em
+ * voo**. A medida que falta está na W2 (um build de release, para saber se a
+ * div. 126 é do dev client ou da biblioteca). Ver `W1-ENCERRAMENTO.md` §9,
+ * decisão 1.
  */
 
 /**

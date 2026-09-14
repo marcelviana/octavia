@@ -4,10 +4,30 @@
 > perde: a regra permanente do `CLAUDE.md` diz que o encerramento commitado é a fonte.
 > O bruto está em [`W1-anexos/`](W1-anexos/), no mesmo commit.
 >
-> **Data**: 2026-09-14. **Uma PR**, dez commits, branch `w1/garantia-offline` a partir de
+> **Data**: 2026-09-14. **Uma PR**, doze commits, branch `w1/garantia-offline` a partir de
 > `origin/main` (`f79a4b7`), em worktree próprio (`../octavia-w1`) — o checkout principal
-> não recebeu commit nem `checkout`. **Aguardando o aval do Marcel: nada foi pushado,
-> nada foi mergeado.**
+> não recebeu commit nem `checkout`. **Avalizada pelo Marcel em 2026-09-14; o merge é
+> dele.**
+
+---
+
+## A PR INTEIRA, EM DUAS LINHAS
+
+O **mesmo disco** — um arquivo de 8.192 B de 242.176, deixado por uma conexão que entregou
+o cabeçalho, um naco, e calou — lido pelos **dois códigos**, no mesmo aparelho, na mesma
+tarde:
+
+```
+f79a4b7   OCTAVIA: file src=disk name=w1-morto-1.pdf bytes=8192
+          cartão:  "garantida offline · todos os arquivos neste aparelho"
+
+W1        OCTAVIA: file-reject name=w1-morto-1.pdf kind=malformed bytes=8192 expected=-
+          cartão:  "parcial · 0 de 1 arquivos baixados"
+```
+
+Não é resumo: é a medição, verbatim, e é o bloco inteiro. Tudo o que vem abaixo existe
+para explicar como se chega de uma linha à outra, e o que foi preciso derrubar no caminho.
+O bruto está em [`W1-anexos/W1-C-aceites-aparelho.txt`](W1-anexos/W1-C-aceites-aparelho.txt) §3.
 
 ---
 
@@ -24,24 +44,14 @@ O defeito não era um download que para: era **o app não ter como dizer isso**.
 tinha teto, não tinha progresso e não tinha voz — e, pior, *chamava de pronto* o arquivo
 que estava chegando.
 
-**A medição que prova as duas metades**, no AVD, hoje, com o app de `f79a4b7`, depois de
-uma conexão que entregou 8.192 B de 242.176 e calou:
-
-```
-OCTAVIA: file src=disk name=w1-morto-1.pdf bytes=8192
-cartão:  "garantida offline · todos os arquivos neste aparelho"
-```
-
-E o mesmo disco, com o app do W1:
-
-```
-OCTAVIA: file-reject name=w1-morto-1.pdf kind=malformed bytes=8192 expected=-
-cartão:  "parcial · 0 de 1 arquivos baixados"
-```
+**As duas metades estão medidas no par que abre este documento**: o app *acha* o
+fragmento, o `touch()` o inscreve no índice, o indicador recalcula — e a setlist vira
+"garantida offline" com 8 KB de 242 KB no disco. Não foi preciso reproduzir o
+travamento para provar a mentira: bastou o que ele deixa para trás.
 
 ---
 
-## 2. Os dez commits
+## 2. Os doze commits
 
 | # | commit | o que é |
 |---|---|---|
@@ -57,6 +67,7 @@ cartão:  "parcial · 0 de 1 arquivos baixados"
 | 8 | `d94bbc3` `docs(W1)` | a errata da §11 do `V1-ENCERRAMENTO.md` |
 | 9 | `04c4f64` `docs(W1)` | o `LOGS-OCTAVIA.md`: uma regra, dois casos do padrão, duas linhas |
 | 10 | (este) `docs(W1)` | o encerramento, o pre-check e os anexos |
+| 11 | `docs(W1)` | as cinco decisões do aval, as duas redações fixadas e a regra da div. 127 |
 
 **Dois commits fora da tabela §3 do pre-check, declarados**: o `chore` dos gates (a §5 os
 exigia e não lhes deu número) e o `fix` que **desfaz parte do commit 3** — a errata da PR,
@@ -105,7 +116,7 @@ opção A, descartada por punir o caso legítimo. → **div. 126**, e a **pergun
 | # | o que prova | resultado | controle negativo |
 |---|---|---|---|
 | **W1-A1** | um download interrompido não deixa arquivo no lugar do bom | ✅ três vezes (o lento nunca aparece; o morto não deixa nada; o curto não entra) | o mesmo aparelho com `f79a4b7`: o arquivo cresce **com o nome final** |
-| **W1-A2** | a conexão morta | ⚠️ **parcial, e declarado**: nada com o nome final e cartão honesto — **mas sem `download-error`**, porque o teto saiu | `f79a4b7`: fragmento de 8.192 B parado no nome final aos 49 s, e "garantida offline" na reabertura |
+| **W1-A2** | a conexão morta | **duas das três metades passam** (§4.1) | `f79a4b7`: fragmento de 8.192 B parado no nome final aos 49 s, e "garantida offline" na reabertura |
 | **W1-A3** | corpo mais curto que o `Content-Length` | ✅ recusado (pelo nativo, antes da checagem do app) | **e o controle negativo REPROVOU o teto** — é a errata da PR |
 | **W1-A4** | nenhuma falha engolida | ✅ três falhas, três linhas, as outras duas baixam | antes: três falhas, **zero** linhas |
 | **W1-A5** | "Baixar esta setlist" grava durável | ✅ `files/…`, `cache/` vazio | `f79a4b7`, mesmo toque, mesmas coordenadas: cai em `cache/…` |
@@ -117,6 +128,22 @@ background" — é o `prefetch.ts` que esta PR reescreveu); **A19** ganhou o irm
 faltava (a falha de *download*); **A18** e **A21** não tocados e dispensados pelo **G1a**,
 com diff vazio em `sync.ts` e `store.ts`; **A13 NÃO rodado** — o palco não foi aberto
 nesta sessão, e isso vai declarado, não escondido.
+
+### 4.1 O W1-A2, com a redação que a diferença exige
+
+Ele tinha três metades: **(i)** nada com o nome final, **(ii)** o cartão honesto e
+**(iii)** a falha visível. **As duas primeiras passam, medidas** — ao fim do cenário
+`morto`, `files/` e `cache/` estão vazios e o cartão diz "parcial · 0 de 1".
+
+A terceira **não falhou: ela mede uma coisa que esta PR decidiu não fazer.** O
+`download-error` da conexão morta era o teto de inatividade, e o teto **saiu** — porque o
+aceite W1-A3 mediu que o sinal que o rearmaria não existe (§3, errata; div. 126;
+pergunta 1, respondida em §9). Não é aceite com ressalva, e não é dívida escondida: é um
+critério que ficou sem objeto no mesmo dia em que o objeto se provou impossível.
+
+Escrito assim porque a diferença importa para quem ler depois: "passou com ressalva"
+convida a esquecer; "duas das três metades passam, e a terceira mede o que decidimos não
+fazer" obriga a reabrir a decisão se alguém discordar dela.
 
 Detalhe verbatim de tudo: [`W1-anexos/W1-C-aceites-aparelho.txt`](W1-anexos/W1-C-aceites-aparelho.txt).
 
@@ -190,14 +217,17 @@ aberturas) e o bundle carregado (o do W1).
    não implementada**, no lugar exato onde entraria, porque falta o `T₁` e ele não se
    inventa, se mede. **Esta PR começou a medir**: a linha `file src=download` agora sai
    com `total=` e `ms=`, e as primeiras taxas já estão no anexo C.
-2. **O teto de inatividade** — ver a pergunta 1. Enquanto não houver sinal de progresso em
-   voo, uma conexão morta segura **uma das três vagas** até o processo morrer.
+2. **O teto de inatividade** — ver a decisão 1 (§9): ele **perdeu o objeto**, porque o
+   dano que ele combatia era o da div. 122 e a fila já o conserta. Enquanto não houver
+   sinal de progresso em voo, uma conexão morta segura **uma das três vagas** até o
+   processo morrer. O que reabre a questão é a medição do build de release, na W2 — não
+   um número maior.
 3. **As duas hipóteses declaradas e não medidas** continuam as duas: que um processo de
    app não sobreviva 37 h num tablet, e que 30 s de silêncio seja morte de conexão. A
    segunda **perdeu o único uso que tinha** (o teto saiu), e volta a importar se a
    pergunta 1 for respondida com "implementar".
-4. **`[hipótese] o build de release se comporta como o dev client** quanto ao progresso
-   (div. 126). Tudo foi medido no dev client.
+4. **`[hipótese]` o build de release se comporta como o dev client** quanto ao progresso
+   (div. 126). Tudo foi medido no dev client — e medir isso é o item 4 da W2.
 5. **A13** não rodado (o palco não foi aberto).
 6. **div. 119** (o `emVoo` que devolve o voo alheio com as opções dele) segue aberta —
    fora da lista fechada, e ela toca o palco, que é território da W2.
@@ -205,43 +235,60 @@ aberturas) e o bundle carregado (o do W1).
 
 ---
 
-## 9. Perguntas ao Marcel
+## 9. As cinco decisões do aval (Marcel, 2026-09-14)
 
-**1. O teto de download, agora que o sinal não existe.** *(A pergunta desta PR.)*
-Três caminhos:
+**1. O teto: (a) — SEM TETO, e a razão que fecha a questão.**
 
-- **(a) ficar sem teto**, como está na branch, e abrir a medição do build de release como
-  item da W2 — **RECOMENDO**. O que se perde é só o aborto: o `.part`, a fila e o
-  saneamento já entregam a honestidade, e um download morto custa uma das três vagas, não
-  o prefetch inteiro. Segue a sua própria regra: *barato e errado é pior que caro e certo*;
-- **(b) medir um build de release antes de decidir** — custa um `assembleRelease` (~15 min
-  de CI ou de máquina) e responde se a div. 126 é do dev client ou da biblioteca;
-- **(c) teto ABSOLUTO de duração**, com um número escolhido hoje — **não recomendo**: é a
-  opção A com outro nome, e inventa o número que a div. 80 existe para não inventar.
+> *"Com a fila, uma conexão morta custa UMA VAGA DE TRÊS, não o prefetch inteiro — que
+> era o dano real da div. 122, e já está consertado. **O teto perdeu o objeto.**"*
 
-**2. A mensagem em inglês na tela do músico (div. 125).** O S3e mostra
-`Call to function 'FileSystemDownloadTask.start' has been rejected.`. Consertar exige
-escolher texto de UI, que é design. **Recomendo levar para a W2**, que já abre o palco —
-e não fazer agora, porque seria extra fora da lista fechada.
+Isso reposiciona a errata inteira: o teto não foi removido por ser impossível, foi
+removido por ter ficado **sem função**. O que ele existia para impedir — um download
+condenado comendo o orçamento dos outros — a fila já impede, e impede melhor, porque
+impede sempre e não só depois de 30 s. O que sobra do download morto é uma vaga de três,
+até o processo morrer; e o cartão, esse, nunca mente enquanto isso.
 
-**3. Os gates e o `App.tsx` (div. 123).** Pôr `apps/native/App.tsx` na lista do G1a e no
-varredor do `g2g3.sh` custa duas linhas. **Recomendo fazer na W2**, junto com o resto do
-trabalho de gate — e não nesta PR, para não mexer no gate depois de ele ter medido.
+E o corolário que precisa ficar escrito, porque é o que impede alguém de "consertar" isto
+no futuro com um número maior: **um teto que não pode disparar é pior que teto nenhum,
+porque promete.** (Marcel, 2026-09-14.)
 
-**4. A13 antes do merge?** **Recomendo não**: abrir o palco dispara o `prefetchDemanda`,
-que é o eixo da W2, e o A13 lê um arquivo do disco que esta PR não muda (o G1a cobre o
-caminho de render com diff vazio).
+A opção **(b)** — medir um build de release para saber se o progresso em voo existe fora
+do dev client — **tem valor e cabe na W2**, quando o `T₁` já tiver população vinda do
+`total=`/`ms=`. **Não bloqueia esta PR.** A **(c)** (teto absoluto com número escolhido
+hoje) fica descartada pelo motivo certo: é a opção A com outro nome.
 
-**5. O `W1-A2` como está.** Ele passa em duas das três metades (nada no nome final,
-cartão honesto) e falha na terceira (nenhuma linha de falha para a conexão morta). **Você
-aceita o aceite parcial**, com a div. 126 registrada, ou prefere que a PR só feche com a
-pergunta 1 resolvida?
+**2. A mensagem em inglês no S3e (div. 125): W2.** *"Escolher texto de UI é design."*
+
+**3. Os gates e o `App.tsx` (div. 123): W2, e PRIORITÁRIO lá.** O motivo de esperar é o
+mesmo que eu dei — não mexer no gate depois de ele ter medido —, mas a prioridade é do
+Marcel e vai com a palavra dele: **"o `App.tsx` invisível para todo gate é buraco
+estrutural, não detalhe, e esta PR o editou duas vezes sem que nada notasse."**
+
+**4. O A13 não roda.** Abrir o palco dispara o `prefetchDemanda`, que é o eixo da W2.
+
+**5. O A2 parcial, aceito — com a redação da §4.1**, que é dele: não "passou com
+ressalva", e sim *duas das três metades passam, e a terceira mede uma coisa que a PR
+decidiu não fazer*. A diferença importa para quem ler depois.
+
+**E uma regra nova, que saiu da div. 127 e foi para o `LOGS-OCTAVIA.md`:**
+
+> **Controle negativo que NÃO reprova pode ser instrumento quebrado, não código correto.**
+> Um CN que passa é tão suspeito quanto um gate que nunca acusa.
 
 ---
 
 ## 10. O que vem depois
 
-- **W2** — a div. 109 (a barra do palco) + a div. 118 (o `accessibilityState` dos
-  inertes), e agora também a 125 e a 123. Continua sendo PR de forma, com veredito visual.
+- **W2** — e ela começa com o que NÃO é forma:
+  1. **PRIORITÁRIO — a div. 123**, o `App.tsx` fora de todo gate. Buraco estrutural, não
+     detalhe. Entra no G1a e no varredor do `g2g3.sh`, e é a primeira coisa a fazer,
+     antes de qualquer tela — pela mesma regra que esta PR obedeceu duas vezes: **o gate
+     vem antes do que ele mede**;
+  2. a div. 109 (a barra do palco) + a div. 118 (o `accessibilityState` dos inertes) — a
+     PR de forma que já estava desenhada, com veredito visual;
+  3. a div. 125 (a mensagem em inglês no S3e), que é escolha de texto de UI;
+  4. **a medição do build de release** (opção (b) da decisão 1): se o progresso em voo
+     existir fora do dev client, o teto de inatividade volta a ser implementável — e aí o
+     `T₁` já terá população, vinda do `total=`/`ms=` que esta PR passou a registrar.
 - **N2** — a div. 121 (`updated_at` do T1-R17) e o estouro de teto que o `lruEvict`
   devolve e o `prefetch.ts` ignora.
