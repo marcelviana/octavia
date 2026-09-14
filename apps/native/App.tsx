@@ -12,7 +12,7 @@ import { ActivityIndicator, StyleSheet, View } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import type { ContentDTO, SetlistDTO } from '@octavia/core'
-import { presentUrls, setFilesUser } from './src/files'
+import { presentUrls, sanearArquivos, setFilesUser } from './src/files'
 import { log } from './src/log'
 import { Navigation } from './src/navigation'
 import { useOnline } from './src/net'
@@ -178,6 +178,12 @@ export default function App(): React.JSX.Element {
     // O namespace dos arquivos é o mesmo do cache (PRD §5) e precisa estar
     // definido ANTES de qualquer leitura de disco.
     setFilesUser(uid)
+    // A varredura da abertura (W1): o conserto do caminho de escrita impede
+    // que nasçam arquivos envenenados; só isto tira os que já nasceram — o
+    // `ensureFile` vê que o `localizar()` achou e nunca retenta. Roda ANTES
+    // do primeiro `presentUrls()` para que o cartão nunca chegue a dizer
+    // "garantida" sobre um arquivo que vai sumir um instante depois.
+    sanearArquivos()
     const cache = load(uid)
     const iniciais: Dados = {
       setlists: cache.setlists,

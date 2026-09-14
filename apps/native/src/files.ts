@@ -473,6 +473,66 @@ export function clearFiles(): void {
   log('files-cleared')
 }
 
+export interface Saneamento {
+  /** Arquivos com nome definitivo que foram recusados e apagados. */
+  removidos: number
+  /** `.part` de downloads mortos que foram varridos. */
+  parciais: number
+}
+
+/**
+ * **A varredura da abertura** (W1, commit 6; aceite W1-A6).
+ *
+ * Por que ela existe, se o estrago medido hoje nos dois aparelhos é ZERO: um
+ * arquivo envenenado **nunca se recupera sozinho**. O `ensureFileUma` vê que
+ * `localizar()` achou, devolve `src=disk` e não tenta baixar de novo — então
+ * um 0 byte de amanhã fica lá para sempre, inclusive DEPOIS do conserto do
+ * caminho de escrita. O conserto do caminho de escrita impede que nasçam
+ * novos; só uma varredura tira os que já nasceram.
+ *
+ * **Apaga do DISCO e mantém a ENTRADA do índice** (Q3, decisão do Marcel):
+ * esconder sem apagar deixaria o LRU contando bytes de lixo, e preservar a
+ * entrada mantém o "(1,2 MB)" do S3e — que é a informação de que o usuário
+ * precisa para decidir baixar.
+ *
+ * Não custa rede, não custa bucket e não emite linha nova: cada recusa já é
+ * um `file-reject`, e o catálogo não ganha um terceiro evento por isto.
+ */
+export function sanearArquivos(): Saneamento {
+  if (uidAtual === null) return { removidos: 0, parciais: 0 }
+  let removidos = 0
+  let parciais = 0
+  for (const dir of [dirGarantido(), dirDemanda()]) {
+    if (!dir.exists) continue
+    for (const item of dir.list()) {
+      if (!(item instanceof File)) continue
+      if (item.name.endsWith(PARCIAL)) {
+        // Um `.part` que sobreviveu a uma abertura é de um processo morto: o
+        // `baixarAtomico` apaga o dele em toda saída por erro.
+        item.delete()
+        parciais++
+        continue
+      }
+      const bytes = item.size
+      // `expected: null` — em repouso não há `Content-Length`: a única fonte
+      // de tamanho esperado existe durante o download (div. 112), e o índice
+      // não é oráculo (div. 111). O que sobra é a forma, e ela basta para o
+      // vazio e para o truncado.
+      const veredito = fileVerdict({
+        bytes,
+        expected: null,
+        pdf: ehPdf(item.name),
+        ...bordas(item),
+      })
+      if (veredito.ok) continue
+      log(`file-reject name=${item.name} kind=${veredito.kind} bytes=${bytes} expected=-`)
+      item.delete()
+      removidos++
+    }
+  }
+  return { removidos, parciais }
+}
+
 /** Caminhos das duas pastas — usados pelos protocolos de device (`run-as`). */
 export function filesDirs(): { guaranteed: string; demand: string } {
   return { guaranteed: dirGarantido().uri, demand: dirDemanda().uri }
