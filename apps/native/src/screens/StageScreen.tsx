@@ -638,6 +638,23 @@ export function StageScreen({
           onMotivo={revelarMotivo}
           testID="tema"
         />
+        {/* PROPOSTA A (div. 109) — decidida pelo Marcel em 2026-09-14.
+            A fileira contígua dos sete deixava 555,6 dp — 49 % da barra —
+            vazios à direita, medidos no dump do V1-PR7 e reproduzidos pelos
+            tokens. Os quatro de COMPORTAMENTO ficam onde estão (o polegar
+            apoia na borda e a posição aprendida se preserva, a decisão da Q4);
+            os três de NAVEGAÇÃO vão para a borda direita, com a mesma margem
+            de 24 dp da esquerda. O vão passa de 16 para ~547,8 dp, e é aí que
+            a fronteira por função vira fronteira que se VÊ.
+            É um espaçador `flex: 1`, não número cravado: vale em qualquer
+            largura, no Tab S6 e em retrato. Com o `gap` de 16 já existente o
+            espaçador mede ~515,8 dp e o vão fica 16 + 515,8 + 16 = 547,8 dp,
+            contra os 547,1 da Proposta A — a diferença é o arredondamento de
+            2560 px / 2,25.
+            O DESIGN-V1 §5.3 dá à barra só a ALTURA (96 dp) e nada sobre
+            distribuição horizontal; as seis molduras do S3 passam a mostrar
+            uma barra que o app não desenha mais, e isso é a errata E16. */}
+        <View style={styles.espacador} />
         <Controle
           icone="indice"
           accessibilityLabel="Abrir o índice da setlist"
@@ -920,6 +937,8 @@ const styles = StyleSheet.create({
     gap: space.lg,
     borderTopWidth: bar.hairline,
   },
+  /** O vão da Proposta A — ver o comentário no JSX da barra (div. 109). */
+  espacador: { flex: 1 },
   controle: {
     width: touch.stage + 2,
     height: touch.stage + 2,
