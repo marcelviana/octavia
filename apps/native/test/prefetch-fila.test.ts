@@ -18,12 +18,13 @@ import {
   __iniciados,
   __picoDeConcorrencia,
   __plantar,
+  __quebrarDelete,
   __quebrarMove,
   __reset,
   __responder,
 } from './fake-expo-file-system'
 import { pdfBom, repertorio } from './ajuda'
-import { filesDirs, hasFile, setFilesUser, touch } from '../src/files'
+import { PARCIAL, filesDirs, hasFile, setFilesUser, touch } from '../src/files'
 import { baixarSetlist, prefetch7Dias } from '../src/prefetch'
 
 let n = 0
@@ -194,5 +195,77 @@ describe('div. 102 — "Baixar esta setlist" grava no DURÁVEL', () => {
 
     expect(__existe(`${filesDirs().guaranteed}/${nomes[0] as string}`)).toBe(true)
     expect(__existe(`${filesDirs().demand}/${nomes[0] as string}`)).toBe(false)
+  })
+})
+
+/**
+ * **A REDE DE SEGURANÇA TAMBÉM HIGIENIZA** — W3, div. 137, a metade que a W2
+ * deixou de pé.
+ *
+ * O `mensagemDe()` do `prefetch.ts` é o que pega o que **nunca passou pelo
+ * `falha()`**, e ele tinha higienização PRÓPRIA e ANTIGA: casava só URI com
+ * esquema, e não o host NU entre aspas que o aparelho devolve em modo avião
+ * (`Unable to resolve host "<ref>.supabase.co"`). O identificador do projeto
+ * Supabase ia inteiro para o log — e log deste projeto se cola em anexo
+ * commitado.
+ *
+ * Como se alcança essa rede, já que a W2 encolheu o conjunto: o
+ * `parcial.delete()` da ABERTURA do `baixarAtomico` está fora de qualquer
+ * `try`. Um `.part` velho no disco + um `delete()` que recusa = rejeição crua
+ * subindo até o `catch` do `baixar()`. É o `__quebrarDelete` do duplo.
+ *
+ * O CN está dentro do próprio teste: a mensagem crua tem o host e a URI, e o
+ * que se afirma é que NENHUM dos dois sobrevive — afirmar só que `<host>`
+ * aparece deixaria passar uma higienização que acrescenta o rótulo sem apagar
+ * o segredo.
+ */
+describe('div. 137 — o que não passa pelo `falha()` também é higienizado', () => {
+  async function linhaDeErro(bruta: string): Promise<string> {
+    const { urls, nomes, contentById, setlists } = repertorio(1, marca())
+    const url = urls[0] as string
+    const nome = nomes[0] as string
+    // Um `.part` velho no durável: a abertura do `baixarAtomico` vai tentar
+    // apagá-lo, FORA de qualquer `try`.
+    __plantar(`${filesDirs().guaranteed}/${nome}${PARCIAL}`, pdfBom(10))
+    __quebrarDelete(`${nome}${PARCIAL}`, bruta)
+    __responder(url, { corpo: pdfBom(1000) })
+
+    const voo = prefetch7Dias(setlists, contentById)
+    await vi.advanceTimersByTimeAsync(10_000)
+    await expect(voo).resolves.toBeUndefined()
+
+    const falhas = octavia('download-error')
+    expect(falhas).toHaveLength(1)
+    return falhas[0] as string
+  }
+
+  it('o HOST NU entre aspas não chega ao log — era o buraco da higienização antiga', async () => {
+    const linha = await linhaDeErro(
+      'Unable to resolve host "mlxjmpbdchmwplcfislt.supabase.co": No address associated with hostname',
+    )
+    expect(linha).not.toContain('mlxjmpbdchmwplcfislt')
+    expect(linha).not.toContain('supabase.co')
+    expect(linha).toContain('"<host>"')
+  })
+
+  it('a URI `file://` continua coberta — unificar não podia custar cobertura', async () => {
+    const linha = await linhaDeErro(
+      'delete recusado: file:///data/user/0/com.octavia/files/octavia/x.pdf.part',
+    )
+    expect(linha).not.toContain('/data/user/0/')
+    expect(linha).toContain('<uri>')
+  })
+
+  it('a URL completa continua coberta', async () => {
+    const linha = await linhaDeErro('falhou em https://mlxjmpbdchmwplcfislt.supabase.co/o/x.pdf?t=1')
+    expect(linha).not.toContain('mlxjmpbdchmwplcfislt')
+    expect(linha).toContain('<url>')
+  })
+
+  it('CONTROLE NEGATIVO: o que NÃO é segredo sobrevive inteiro', async () => {
+    const linha = await linhaDeErro('delete recusado para w3-curto-1.pdf.part')
+    expect(linha).toContain('w3-curto-1.pdf.part')
+    expect(linha).not.toContain('<host>')
+    expect(linha).not.toContain('<uri>')
   })
 })
