@@ -28,31 +28,53 @@
 # `App.tsx` e rodar os dois escopos. Com o de antes, "nenhuma linha sumiu ✓";
 # com este, a linha aparece em SUMIRAM e o gate reprova.
 # ---------------------------------------------------------------------------
+#
+# ---------------------------------------------------------------------------
+# W3 — O COLETOR DEIXA DE LER COMENTÁRIO (div. 136, e a div. 140 que ela esconde)
+#
+# O `coleta()` grepava o texto CRU do arquivo. Uma MENÇÃO a uma prop de teste ou
+# a uma chamada de log dentro de comentário entrava na população como se fosse
+# código — a W2 achou isso ao documentar o `files.ts`, chamou de falso positivo
+# e contornou escrevendo a documentação de outro jeito.
+#
+# **A W3 mediu que o falso positivo não é inerte** (div. 140): uma vez na
+# população do ANTES, editar o comentário faz a menção SUMIR, e aí o G2 reprova
+# por "testID SUMIU" e o G3 por "linha sumiu SEM ERRATA". É REPROVAÇÃO FALSA — e
+# a partir desta PR este gate IMPEDE (div. 129), então o custo do defeito deixa
+# de ser um anexo confuso e passa a ser um CI vermelho sem causa.
+#
+# Entra o `sem-comentario.awk`, com a MESMA regra que o `a20.mjs` já aplica.
+# Medido antes de entrar: a população não muda — 43 testIDs e 57 linhas de log,
+# os mesmos conjuntos. É conserto de defeito, não mudança de escopo, e por isso
+# NÃO precisa de errata no G3.
+# ---------------------------------------------------------------------------
 A=$1; B=$2
+AQUI=$(dirname "$0")
+SEM_COMENTARIO="$AQUI/sem-comentario.awk"
 tmp=$(mktemp -d)
 # As duas EXCLUSÕES DECLARADAS do escopo (W2): os testes e os instrumentos.
 # `node_modules` sai por construção, não por decisão.
 fora_do_escopo() {
   grep -vE '^\./' | grep -vE '^apps/native/(test|scripts)/' | grep -vE '(^|/)node_modules/'
 }
+# O texto do arquivo SEM COMENTÁRIO — a única fonte que o coletor lê (W3).
+sem_comentario() {
+  if [ "$1" = "WORKTREE" ]; then awk -f "$SEM_COMENTARIO" "$2"
+  else git show "$1:$2" 2>/dev/null | awk -f "$SEM_COMENTARIO"; fi
+}
 coleta() {
   if [ "$1" = "WORKTREE" ]; then
-    for f in $(find apps/native packages/core/src \( -name '*.ts' -o -name '*.tsx' \) | fora_do_escopo | sort); do
-      grep -o 'testID="[^"]*"' "$f" 2>/dev/null | sed "s|^|$f\t|"
-      grep -oE 'testID=\{`[^`]*`\}' "$f" 2>/dev/null | sed "s|^|$f\t|"
-    done | sort -u > "$2"
-    for f in $(find apps/native packages/core/src \( -name '*.ts' -o -name '*.tsx' \) | fora_do_escopo | sort); do
-      grep -n 'log(' "$f" 2>/dev/null | sed 's/^[0-9]*://' | sed 's/^ *//' | sed "s|^|$f\t|"
-    done | sort > "$3"
+    ARQS=$(find apps/native packages/core/src \( -name '*.ts' -o -name '*.tsx' \) | fora_do_escopo | sort)
   else
-    for f in $(git ls-tree -r --name-only "$1" -- apps/native packages/core/src | grep -E '\.tsx?$' | fora_do_escopo | sort); do
-      git show "$1:$f" 2>/dev/null | grep -o 'testID="[^"]*"' | sed "s|^|$f\t|"
-      git show "$1:$f" 2>/dev/null | grep -oE 'testID=\{`[^`]*`\}' | sed "s|^|$f\t|"
-    done | sort -u > "$2"
-    for f in $(git ls-tree -r --name-only "$1" -- apps/native packages/core/src | grep -E '\.tsx?$' | fora_do_escopo | sort); do
-      git show "$1:$f" 2>/dev/null | grep 'log(' | sed 's/^ *//' | sed "s|^|$f\t|"
-    done | sort > "$3"
+    ARQS=$(git ls-tree -r --name-only "$1" -- apps/native packages/core/src | grep -E '\.tsx?$' | fora_do_escopo | sort)
   fi
+  for f in $ARQS; do
+    sem_comentario "$1" "$f" | grep -o 'testID="[^"]*"' | sed "s|^|$f\t|"
+    sem_comentario "$1" "$f" | grep -oE 'testID=\{`[^`]*`\}' | sed "s|^|$f\t|"
+  done | sort -u > "$2"
+  for f in $ARQS; do
+    sem_comentario "$1" "$f" | grep 'log(' | sed 's/^ *//' | sed "s|^|$f\t|"
+  done | sort > "$3"
 }
 coleta "$A" $tmp/a.ids $tmp/a.log
 coleta "$B" $tmp/b.ids $tmp/b.log
