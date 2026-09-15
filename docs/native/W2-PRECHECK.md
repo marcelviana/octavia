@@ -311,9 +311,14 @@ G1a da W2 :  os NOVE módulos do nativo (os 7 do W1 + files.ts + prefetch.ts)
 >
 > O `App.tsx` **não** é exceção — ele entra na invariância, que é o ponto da PR —,
 > e o `prefetch.ts` e o `core/offline.ts` voltam à cobertura. Resultado: **33
-> arquivos** no escopo do G1a, contra os 19 do W1. É a mesma forma da lição que
-> este pre-check mediu no G1a do W1: **a lista de exceções é o escopo declarado, e
-> escopo se conta depois de escrever o código, não antes.**
+> arquivos** no escopo do G1a, contra os 19 do W1.
+>
+> **A leitura errada é do Marcel, por atribuição dele** (aval da entrega da W2,
+> 2026-09-15): *"a lista de exceções que eu escrevi dizia 'StageScreen.tsx, e só
+> ela'."* E a lição que fica com nome: **ESCOPO SE CONTA DEPOIS DE ESCREVER O
+> CÓDIGO, NÃO ANTES** — a lista de exceções é o escopo declarado da PR, e escopo
+> declarado por antecipação é palpite. É a mesma forma que este pre-check já havia
+> medido no G1a do W1, agora cometida por ele próprio.
 
 **O que continua sem cobertura, e é a div. 108 e não a 123**: o `StageScreen.tsx` nunca
 esteve em lista nenhuma do G1. Quem afirma que ele não mudou de comportamento é o aceite no

@@ -24,6 +24,16 @@ Captura: `S3e-ANTES-a-mensagem-crua.png` (recorte 2× da região do
        pegou porque ela casa `https?://\S+` e ali o host vem NU, entre aspas,
        sem esquema. **Div. 137**, e vale para o log também.
 
+  A (3) é **achado de segurança, não de forma**, e foi consertada nesta PR como
+  EXTRA declarado ao escopo fechado, por ordem do Marcel no aval da entrega
+  (2026-09-15): *"o host é o identificador do projeto Supabase, e relatório de log
+  se cola em anexo — este repositório já tem três anexos de log commitados."*
+  O `higienizar()` ganhou uma segunda alternativa para host entre aspas, e o
+  limite dela vai DECLARADO (host de dois rótulos passa; exigir um ponto só
+  comeria todo nome de arquivo entre aspas e destruiria a diagnosticabilidade que
+  a separação das duas metades comprou). Três testes, um deles o controle
+  negativo do próprio limite. Ver o commit 6.
+
   O W1 mediu só as duas primeiras linhas. Por quê: o `lc()` do protocolo de
   device é `logcat -d -s ReactNativeJS | grep -o 'OCTAVIA: .*'`, e o `grep -o`
   PARA NA QUEBRA DE LINHA. A mensagem tem duas linhas no logcat, e a segunda —

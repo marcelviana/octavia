@@ -18,7 +18,7 @@
  * que é o que o W1 abriu (div. 129: os cinco gates de script não rodam lá).
  */
 import { describe, expect, it } from 'vitest'
-import { FALHA_GENERICA, falha, fraseDaFalha } from '../src/files'
+import { FALHA_GENERICA, falha, fraseDaFalha, higienizar } from '../src/files'
 
 const NOME = '1751910900697-Easy_-_Guitar.pdf'
 
@@ -92,6 +92,44 @@ describe('a frase que o músico lê (div. 125)', () => {
     expect(estaNoConjunto("Call to function 'x' has been rejected.")).toBe(false)
     expect(estaNoConjunto(`${NOME}: não consegui baixar`)).toBe(false)
     expect(estaNoConjunto('o servidor respondeu quatrocentos e quatro')).toBe(false)
+  })
+
+  it('o HOST NU entre aspas some do detalhe — div. 137', () => {
+    // A cadeia é verbatim do AVD em modo avião (W2-anexos/W2-D §1). O regex de
+    // antes casava `https?://\S+` e este host vem SEM ESQUEMA, entre aspas:
+    // ia inteiro para o log, e log deste projeto se cola em anexo commitado.
+    const e = falha(
+      new Error(
+        "Call to function 'FileSystemDownloadTask.start' has been rejected.\n" +
+          '→ Caused by: Unable to download a file: Unable to resolve host ' +
+          '"mlxjmpbdchmwplcfislt.supabase.co": No address associated with hostname',
+      ),
+      NOME,
+    )
+    expect(e.message).not.toContain('mlxjmpbdchmwplcfislt')
+    expect(e.message).not.toContain('supabase.co')
+    expect(e.message).toContain('"<host>"')
+    // e o que faz o relatório servir continua lá
+    expect(e.message).toContain(NOME)
+    expect(e.message).toContain('has been rejected')
+    // a tela segue sem nada disso
+    expect(fraseDaFalha(e)).toBe(FALHA_GENERICA)
+  })
+
+  it('a higienização não come o NOME DO ARQUIVO entre aspas', () => {
+    // O contraponto do teste acima: exigir só UM ponto pegaria todo nome de
+    // arquivo e apagaria do log a diagnosticabilidade que o commit 4 comprou.
+    expect(higienizar('falhou "w1-curto-1.pdf" no meio')).toBe('falhou "w1-curto-1.pdf" no meio')
+    expect(higienizar(`falhou "${NOME}"`)).toBe(`falhou "${NOME}"`)
+  })
+
+  it('CONTROLE NEGATIVO da higienização — o LIMITE é declarado, não esquecido', () => {
+    // as duas alternativas fazem o que prometem...
+    expect(higienizar('de https://xyz.supabase.co/a.pdf?t=1 agora')).toBe('de <url> agora')
+    expect(higienizar('host "a.b.c" aqui')).toBe('host "<host>" aqui')
+    expect(higienizar('as duas: https://x.y/z e "a.b.c"')).toBe('as duas: <url> e "<host>"')
+    // ...e ESTE é o limite, escrito no `files.ts`: host de DOIS rótulos passa.
+    expect(higienizar('host "exemplo.com" aqui')).toBe('host "exemplo.com" aqui')
   })
 
   it('um erro que nunca passou pelo `falha()` também cai no genérico', () => {

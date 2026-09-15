@@ -452,12 +452,49 @@ export function fraseDaFalha(erro: unknown): string {
 }
 
 /**
+ * A higienização da regra 2, e ela tem DUAS alternativas — não uma.
+ *
+ * **Div. 137 (W2), e é achado de SEGURANÇA, não de forma.** Até aqui isto era
+ * `bruta.replace(/https?:\/\/\S+/g, '<url>')`, e o que o aparelho devolveu em
+ * modo avião foi:
+ *
+ *     Unable to resolve host "mlxjmpbdchmwplcfislt.supabase.co":
+ *     No address associated with hostname
+ *
+ * O host vem **nu, entre aspas, sem esquema** — então o regex não casava, e o
+ * identificador do projeto Supabase ia inteiro para o log. E log deste projeto
+ * **se cola em anexo commitado**: há três anexos de log no repositório.
+ *
+ * A segunda alternativa casa um token entre aspas que tem cara de HOST: rótulos
+ * de `[A-Za-z0-9-]` e **pelo menos dois pontos**.
+ *
+ * **O limite é declarado, não esquecido**: um host de dois rótulos
+ * (`exemplo.com`) NÃO é higienizado. Exigir só um ponto pegaria
+ * `"w1-curto-1.pdf"` e qualquer nome de arquivo entre aspas — e apagar o nome
+ * do arquivo do log destrói exatamente a diagnosticabilidade que a separação
+ * das duas metades comprou. O bucket deste app é Supabase, cujo host tem sempre
+ * três rótulos (`<ref>.supabase.co`), então a linha cai onde interessa. Se um
+ * dia o bucket mudar de forma, esta é a linha a mexer.
+ *
+ * O que ela NÃO cobre, e vai dito: o `mensagemDe()` do `prefetch.ts`, que é a
+ * rede de segurança para o que nunca passou pelo `falha()`. Depois do commit 4
+ * desta PR esse conjunto encolheu (a promoção do `ensureFileUma` entrou num
+ * `try`), mas não é vazio.
+ */
+const SEGREDO_DE_REDE = /https?:\/\/\S+|"[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+){2,}"/g
+
+export function higienizar(bruta: string): string {
+  return bruta.replace(SEGREDO_DE_REDE, (m) => (m.startsWith('"') ? '"<host>"' : '<url>'))
+}
+
+/**
  * A falha do download: o DETALHE para o log, e a frase para a tela.
  *
  * **Regra 2 do catálogo**: URL completa nunca entra em log. A mensagem crua
  * da biblioteca carrega a URL do objeto (`Unable to download file from
- * <url>. Response status: 404`), então ela é traduzida quando se reconhece a
- * causa e higienizada quando não.
+ * <url>. Response status: 404`) e, quando a rede nem resolve, o **host nu**
+ * (div. 137) — então ela é traduzida quando se reconhece a causa e higienizada
+ * quando não, pelas duas alternativas do `higienizar()`.
  *
  * Os três ramos, e o que cada um manda para cada metade:
  *   1. já vem de dentro daqui (prefixo `${name}: `) — devolve como está, com a
@@ -475,7 +512,7 @@ export function falha(erro: unknown, name: string): Error {
   if (status !== undefined) {
     return comFrase(`${name}: o servidor respondeu ${status}`, `o servidor respondeu ${status}`)
   }
-  return new Error(`${name}: ${bruta.replace(/https?:\/\/\S+/g, '<url>')}`)
+  return new Error(`${name}: ${higienizar(bruta)}`)
 }
 
 export interface ListedFile {

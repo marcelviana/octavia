@@ -150,6 +150,17 @@ $ sh docs/native/V1-PR7-anexos/instrumentos/g6.sh <os mesmos 15>
     na lista fechada da PR, e o controle negativo dele — os dumps de hoje — só
     passou a existir como par completo agora. Fica para a W3, junto com a
     conversão.
-  • **`StageScreen.tsx`** continua fora de qualquer G1 (div. 108, não 123). Quem
-    afirma que ele não mudou de comportamento é o aceite no aparelho, e é por
-    isso que o aceite visual desta PR não era opcional.
+  • **`StageScreen.tsx`** continua fora de qualquer G1, e **isso é a div. 108, NÃO
+    a div. 123** — as duas não devem se confundir, e o Marcel pediu a distinção
+    por escrito no aval da entrega (2026-09-15):
+
+        div. 123  um arquivo de produção INVISÍVEL para todo gate, por o gate
+                  varrer `src/` e ele morar um nível acima. **Esta PR fecha.**
+        div. 108  um arquivo DENTRO do escopo do G1 que é EXCEÇÃO declarada,
+                  porque a PR o muda de propósito. **Esta PR não fecha, e não
+                  pode**: quem afirma que o `StageScreen.tsx` não mudou de
+                  comportamento é o aceite no aparelho, não um diff.
+
+    A primeira é buraco de instrumento; a segunda é limite de método. Consertar a
+    123 não encolhe a 108 em um arquivo sequer — e é por isso que o aceite visual
+    desta PR não era opcional.

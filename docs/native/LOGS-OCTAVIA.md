@@ -216,6 +216,34 @@ erro**: ler o que o instrumento mede como se fosse o que se queria saber. O 15º
 exceção, e é o mais
 perigoso: um instrumento que mede **mais** do que a coisa medida.
 
+> ### E há uma coisa acima dos casos: **o que acontece quando TRÊS se empilham**
+>
+> *(Nomeado pelo Marcel no aval da W2, 2026-09-15.)* Os casos abaixo são um
+> instrumento de cada vez. A W2 produziu a primeira vez no projeto em que **três
+> instrumentos INDEPENDENTES falharam sobre a MESMA cadeia, cada um por um motivo
+> diferente** — e a cadeia era justamente a que os três existiam para pegar: a
+> mensagem crua em inglês que chegava à tela do músico (div. 125).
+>
+> | instrumento | por que não a viu | div. |
+> |---|---|---|
+> | `gate:a20` | **natureza** — acusa LITERAL em posição de texto, e ela é valor de tempo de execução. Nenhum escopo a alcança | 130 |
+> | `lc()` do protocolo de device | **truncamento** — `grep -o 'OCTAVIA: .*'` para na quebra de linha, e a mensagem tem duas | 138 |
+> | `uiautomator dump` | **renderização** — devolve `text=""` no `<Text>` multilinha, então a varredura de inglês sobre os dumps do ANTES acusa as MESMAS quatro cadeias do DEPOIS | 139 |
+>
+> **Quem a viu foi a captura de tela e o logcat lido inteiro.** Nenhum dos dois é
+> gate; os dois são olhar.
+>
+> O que o empilhamento ensina, e que nenhum caso isolado ensinava: **três
+> instrumentos concordando não são três medições — podem ser três silêncios.** A
+> concordância entre instrumentos é evidência fraca quando eles falham por razões
+> diferentes, porque é exatamente isso que faz os três calarem juntos sem que
+> nenhum acuse. O que rompeu o empilhamento não foi um quarto instrumento melhor:
+> foi **mudar de gênero** — olhar a tela e ler o log inteiro.
+>
+> E o que passa a IMPEDIR a cadeia não é nenhum dos três, nem um quarto do mesmo
+> tipo: é o teste de unidade sobre `falha()` (`files-mensagem.test.ts`), que
+> afirma um conjunto FECHADO e não depende de ler tela nem de ler log.
+
 | # | caso | o instrumento mede | eu li como se medisse |
 |---|---|---|---|
 | 1 | **A14** (N1) | tap no centro | a extensão do alvo |
@@ -274,6 +302,17 @@ perigoso: um instrumento que mede **mais** do que a coisa medida.
   o que cobrem, e os dois foram lidos como se cobrissem a categoria inteira.
 
 ### As regras que saíram do padrão
+
+**0. O DUMP NÃO É FONTE DE TEXTO DE TELA.** *(Marcel, aval da W2, 2026-09-15 —
+mais forte do que a proposta que lhe foi feita, que era "varredura de texto
+precisa de captura".)* O `uiautomator dump` devolve **`text=""` onde há texto**:
+o `<Text>` de várias linhas do `download-erro` volta com os `bounds` certos e a
+cadeia vazia. A consequência não é "falta um dado": é que **um aceite que varre
+inglês por dump passa por cima da frase que ele existe para pegar** — medido, a
+varredura sobre os dumps do ANTES acusou as mesmas quatro cadeias do DEPOIS e não
+viu a mensagem de quatro linhas que era o objeto inteiro da div. 125. Quem quiser
+afirmar o que está na tela usa **captura**; o dump serve para geometria, `enabled`,
+`resource-id` e `content-desc`, e para isso é excelente. Prova: div. 139.
 
 **1. Avião não é o valor do setting, é o `ping` falhando** — e o corte vem **antes** de o
 app abrir, não depois. (Origem: `V1-PR3-PRECHECK.md` §9, onde a leitura de
