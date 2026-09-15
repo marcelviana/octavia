@@ -319,6 +319,25 @@ Antes de comemorar um controle negativo que não reprovou, prove que ele **podia
 reprovar — que o instrumento estava vendo o que você acha que ele estava vendo. No
 device, isso significa: cada troca de código exige matar e subir o Metro.
 
+**E a regra pegou o próprio autor, no dia seguinte, com outro instrumento.** No rebase da
+PR do W1, o `git` do sistema parou (o `xcode-select` apontava para um Xcode cuja licença
+não fora aceita). O `g2g3.sh` chama `git` do `PATH`: as coletas do "antes" voltaram
+**vazias**, e o gate imprimiu
+
+```
+G2 — testIDs  antes=0  depois=43
+  G2: antes ⊆ depois ✓
+```
+
+**Um gate verde afirmando que nenhum `testID` sumiu — sem ter lido um único `testID` do
+lado "antes".** O `antes=0` é o que denuncia, e é por isso que ele é impresso: **um gate
+que não mostra o tamanho do que mediu não deixa ninguém desconfiar dele**. Refeito com o
+`git` das Command Line Tools no `PATH`, o número voltou a `antes=43`.
+
+Duas ocorrências em dois dias, com instrumentos diferentes (Metro, `git`), bastam para
+tratar isto como classe e não como anedota: **todo gate deve imprimir o TAMANHO do que
+leu, não só o veredito.** O G2, o G3 e o G1a já imprimem; é para isso que serve.
+
 ### A regra de método que o padrão implica
 
 **Uma medição não vira referência sem `n`** (div. 80). Onde houver população, faixa com

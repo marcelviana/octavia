@@ -333,7 +333,7 @@ E O DISCO TAMBÉM NÃO FALA (alvo e `cache/http-cache` a cada 2 s, mesmo downloa
   CONCLUSÃO: não há, no app, nenhum sinal de "chegou byte" em voo. Um relógio
   de 30 s rearmado por `onProgress` NUNCA é rearmado — é um teto ABSOLUTO de
   duração com o nome de inatividade, isto é, a opção A, descartada porque pune
-  o caso legítimo. **O teto saiu da PR** (commit c157fce). → div. 126.
+  o caso legítimo. **O teto saiu da PR** (commit 3284c51). → div. 126.
 
 --- o mesmo cenário, com o código FINAL (sem teto) ----------------------
   --- logcat ---

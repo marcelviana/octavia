@@ -55,17 +55,17 @@ travamento para provar a mentira: bastou o que ele deixa para trás.
 
 | # | commit | o que é |
 |---|---|---|
-| 1 | `45add59` `test(W1)` | o G7 e os testes, **reprovando** contra o código de ontem: 17 de 24 |
-| 2 | `488cd4c` `fix(W1)` | `.part` + rename — *existir é estar completo* |
-| 3 | `86d8b78` `fix(W1)` | `createDownloadTask`, `Content-Length`, `fileVerdict` no core, teto de 30 s |
-| 4 | `bb9fb1c` `fix(W1)` | a fila de três trabalhadores; nenhuma falha engolida; o indicador que anda |
-| 5 | `d0d09f5` `fix(W1)` | "Baixar esta setlist" grava no durável |
-| 6 | `e224dab` `fix(W1)` | o saneamento da abertura |
-| — | `3089c4d` `chore(W1)` | **os gates que mudam de forma**: G1a, G1b e o G3 com errata |
-| — | `c157fce` `fix(W1)` | **o teto de inatividade SAI** — o aparelho disse que o sinal não existe |
-| 7 | `c0dcef8` `docs(W1)` | as três erratas do `PRD-TELA-1.md` |
-| 8 | `d94bbc3` `docs(W1)` | a errata da §11 do `V1-ENCERRAMENTO.md` |
-| 9 | `04c4f64` `docs(W1)` | o `LOGS-OCTAVIA.md`: uma regra, dois casos do padrão, duas linhas |
+| 1 | `95987ae` `test(W1)` | o G7 e os testes, **reprovando** contra o código de ontem: 17 de 24 |
+| 2 | `5396a19` `fix(W1)` | `.part` + rename — *existir é estar completo* |
+| 3 | `8f04677` `fix(W1)` | `createDownloadTask`, `Content-Length`, `fileVerdict` no core, teto de 30 s |
+| 4 | `62cbbf3` `fix(W1)` | a fila de três trabalhadores; nenhuma falha engolida; o indicador que anda |
+| 5 | `67e1c3b` `fix(W1)` | "Baixar esta setlist" grava no durável |
+| 6 | `2110ad7` `fix(W1)` | o saneamento da abertura |
+| — | `c25db8c` `chore(W1)` | **os gates que mudam de forma**: G1a, G1b e o G3 com errata |
+| — | `3284c51` `fix(W1)` | **o teto de inatividade SAI** — o aparelho disse que o sinal não existe |
+| 7 | `f9a2925` `docs(W1)` | as três erratas do `PRD-TELA-1.md` |
+| 8 | `ecb0f4f` `docs(W1)` | a errata da §11 do `V1-ENCERRAMENTO.md` |
+| 9 | `e682693` `docs(W1)` | o `LOGS-OCTAVIA.md`: uma regra, dois casos do padrão, duas linhas |
 | 10 | (este) `docs(W1)` | o encerramento, o pre-check e os anexos |
 | 11 | `docs(W1)` | as cinco decisões do aval, as duas redações fixadas e a regra da div. 127 |
 
@@ -100,7 +100,7 @@ violação direta do **T1-R37**. Medido: três 404 → três linhas; antes, zero
 Porque **um arquivo envenenado nunca se recupera sozinho**: o `ensureFile` vê que o
 `localizar()` achou e nunca retenta.
 
-**A errata: o teto de inatividade saiu** (`c157fce`). Ele estava no commit 3 e o aceite
+**A errata: o teto de inatividade saiu** (`3284c51`). Ele estava no commit 3 e o aceite
 **W1-A3** o derrubou — exatamente como o pre-check previu, palavra por palavra, na tabela
 de riscos: *"se sair `download-error`, o teto confunde lento com morto"*. Saiu. A
 sondagem explicou: **o progresso chega uma vez, no fim, em rajada** (pelos dois caminhos,
@@ -241,11 +241,38 @@ job que "falhou rápido" teria passado por ruído de CI; com **faixa**, a regra 
 > referência sem `n`), e acabou servindo de **detector de falha de infraestrutura** — um
 > uso que ninguém desenhou. Uma faixa não diz só quanto custa: diz **o que é estranho**.
 
-O conserto foi para **PR própria** (`ci: setup-android v4 com `packages` explícito`),
-fora do W1, porque a #301 não pode carregar infraestrutura e porque mergeá-la com o gate
-vermelho poria na `main` um estado em que ninguém sabe se o APK compila — logo depois de
-uma PR que mexe em `files.ts` e `prefetch.ts`. A ordem é: infra primeiro, rebase, e o
-merge da #301 com o gate verde.
+O conserto foi para **PR própria — a #302**, fora do W1, porque a #301 não pode carregar
+infraestrutura e porque mergeá-la com o gate vermelho poria na `main` um estado em que
+ninguém sabe se o APK compila, logo depois de uma PR que mexe em `files.ts` e
+`prefetch.ts`. A ordem foi: **infra primeiro (mergeada em 2026-09-15), rebase desta
+branch, e o merge da #301 com o gate verde.**
+
+**A causa**, para quem reencontrar o `27 s` no histórico: `tools` é pacote **aposentado**
+do SDK e continua no default do action (`packages: 'tools platform-tools'`); o
+`cmdline-tools` 16.0 da imagem do runner deixou de tolerá-lo. **O bump para `v4` sozinho
+não resolveria** — o default dele é o mesmo, lido no `action.yml` da tag. Quem tira a
+causa é o `packages: platform-tools` explícito; o `v4` entra junto por pinar o
+`cmdline-tools` em vez de depender do que a imagem tiver no dia.
+
+### A medição nova, e o que ela faz com a faixa
+
+A #302 é o próprio instrumento (o filtro `paths` inclui o `native.yml`, então o gate roda
+nela): **`android-debug-apk` success em 12m43s**, com o passo que reprovava em **6 s**.
+
+**12m43s (763 s) está DENTRO da faixa**, a 54 s da mediana anterior e a 1m28s do teto:
+
+- **os extremos não se movem** — 9m16s e 14m11s continuam piso e teto;
+- **a mediana passa de 11m49s para 11m53s**. Com `n = 12` (par) ela era a média dos dois
+  do meio (11m45s e 11m53s); com `n = 13` (ímpar) ela é o 7º valor, e como a medição nova
+  é maior que ele, a mediana **sobe para o próprio 11m53s** — que já estava na conta.
+
+**Faixa a citar daqui em diante: 9m16s – 14m11s, mediana 11m53s, n = 13.**
+
+E a ressalva que a população passa a carregar: **a 13ª medição é de outra configuração**
+(`v4`, `cmdline-tools` pinado, um pacote a menos). Misturá-las é defensável — o passo que
+mudou leva ~6 s num job de ~12 min dominado pelo Gradle —, mas o corte fica registrado:
+de agora em diante a série é **v3 (n = 12) + v4 (n = 1)**, e pode ser partida sem
+arqueologia se o `v4` se mostrar sistematicamente diferente.
 
 ---
 
