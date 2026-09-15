@@ -8,23 +8,48 @@
 # *.ts/*.tsx — assimetria que dá falso positivo no G3 com o .ts idêntico dos
 # dois lados quando um não-ts contém a subcadeia `log(`. Agora os dois ramos
 # têm o mesmo recorte: `grep -E '\.tsx?$'` na lista do ref-git.
+#
+# ---------------------------------------------------------------------------
+# W2 — O ESCOPO (div. 123 e 128)
+#
+# Os dois ramos do `coleta()` varriam `apps/native/src`, e o `App.tsx` mora um
+# nível acima. O gate que existe para garantir que nenhuma linha do contrato
+# suma em silêncio NÃO LIA o arquivo onde vivem TRÊS delas — `login-screen`
+# (que prova o A5), `auth uid=… src=…` (A1 e A5) e `download-error` (A13 e
+# W1-A4). Medido: o G3 comparava 54 linhas `log(` e a população certa é 57.
+#
+# O escopo passa a ser `apps/native` INTEIRO, menos duas exclusões declaradas:
+#   • `apps/native/test/`     — os testes; já é exclusão declarada, escrita no
+#     `vitest.config.mts` ("um teste dentro de src/ falsearia o G2 e o G3");
+#   • `apps/native/scripts/`  — os próprios instrumentos, inclusive o `__cn__`.
+# `node_modules` sai por construção.
+#
+# O controle negativo que prova a diferença: apagar `log('login-screen')` do
+# `App.tsx` e rodar os dois escopos. Com o de antes, "nenhuma linha sumiu ✓";
+# com este, a linha aparece em SUMIRAM e o gate reprova.
+# ---------------------------------------------------------------------------
 A=$1; B=$2
 tmp=$(mktemp -d)
+# As duas EXCLUSÕES DECLARADAS do escopo (W2): os testes e os instrumentos.
+# `node_modules` sai por construção, não por decisão.
+fora_do_escopo() {
+  grep -vE '^\./' | grep -vE '^apps/native/(test|scripts)/' | grep -vE '(^|/)node_modules/'
+}
 coleta() {
   if [ "$1" = "WORKTREE" ]; then
-    for f in $(find apps/native/src -name '*.ts' -o -name '*.tsx' | sort); do
+    for f in $(find apps/native packages/core/src \( -name '*.ts' -o -name '*.tsx' \) | fora_do_escopo | sort); do
       grep -o 'testID="[^"]*"' "$f" 2>/dev/null | sed "s|^|$f\t|"
       grep -oE 'testID=\{`[^`]*`\}' "$f" 2>/dev/null | sed "s|^|$f\t|"
     done | sort -u > "$2"
-    for f in $(find apps/native/src packages/core/src -name '*.ts' -o -name '*.tsx' | sort); do
+    for f in $(find apps/native packages/core/src \( -name '*.ts' -o -name '*.tsx' \) | fora_do_escopo | sort); do
       grep -n 'log(' "$f" 2>/dev/null | sed 's/^[0-9]*://' | sed 's/^ *//' | sed "s|^|$f\t|"
     done | sort > "$3"
   else
-    for f in $(git ls-tree -r --name-only "$1" -- apps/native/src | grep -E '\.tsx?$' | sort); do
+    for f in $(git ls-tree -r --name-only "$1" -- apps/native packages/core/src | grep -E '\.tsx?$' | fora_do_escopo | sort); do
       git show "$1:$f" 2>/dev/null | grep -o 'testID="[^"]*"' | sed "s|^|$f\t|"
       git show "$1:$f" 2>/dev/null | grep -oE 'testID=\{`[^`]*`\}' | sed "s|^|$f\t|"
     done | sort -u > "$2"
-    for f in $(git ls-tree -r --name-only "$1" -- apps/native/src packages/core/src | grep -E '\.tsx?$' | sort); do
+    for f in $(git ls-tree -r --name-only "$1" -- apps/native packages/core/src | grep -E '\.tsx?$' | fora_do_escopo | sort); do
       git show "$1:$f" 2>/dev/null | grep 'log(' | sed 's/^ *//' | sed "s|^|$f\t|"
     done | sort > "$3"
   fi
