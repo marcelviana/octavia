@@ -1,0 +1,234 @@
+================================================================================
+W2-C — A BARRA E A ÁRVORE, MEDIDAS NO APARELHO: ANTES × DEPOIS
+================================================================================
+Rastro de medição, não fonte. 2026-09-15, AVD `octavia_tab32` (emulator-5554),
+2560×1600 @ 360 dpi = 1137,8 × 711,1 dp — idêntico ao Tab S6.
+**O Tab S6 não recebeu um comando**: todo `adb` levou `-s emulator-5554`.
+**Modo avião conferido pelo PING, não pelo setting**, antes e durante:
+
+  $ adb -s emulator-5554 shell settings get global airplane_mode_on
+    setting=1
+  $ adb -s emulator-5554 shell "ping -c 2 -W 2 8.8.8.8"
+    connect: Network is unreachable
+
+Instrumento: `instrumentos/barra.mjs` (detalhe) e `instrumentos/compacto.mjs`
+(uma linha por estado). Densidade 2,25 px/dp, janela 2560 px.
+Os dumps brutos estão em `dumps-avd/`, com prefixo ANTES- e DEPOIS-.
+
+--------------------------------------------------------------------------------
+§1. AS SEIS VARIANTES DO S3, NOS DOIS TEMAS — OS SETE x1 EM dp
+--------------------------------------------------------------------------------
+As seis variantes são as do DESIGN-V1 §7: `S3-letra`, `S3-claro`, `S3-avulsa`,
+`S3d`, `S3-nobody`, `S3e`. O `S3-nobody` exigiu a fixture `invalidos-content` +
+`invalidos-songs` do `apps/native/src/fixtures/aceite.py` (a conta de audit tem
+ZERO inválidos do T1-R7 — N1-ENCERRAMENTO §8.3), instalada com backup e
+restaurada por sha256 no fim (ver §5).
+
+ANTES (o código de f58259e, servido pelo mesmo Metro):
+estado                      auto-s zoom-m zoom-m   tema indice  busca   sair   mEsq  mDir   vão   enabled=false
+01-S3letra-escuro            24.0  106.2  188.0  270.2  352.0  434.2  516.0   24.0 555.6   16.0   (nenhum)
+02-S3claro-claro             24.0  106.2  188.0  270.2  352.0  434.2  516.0   24.0 555.6   16.0   (nenhum)
+03-S3d-escuro                24.0  106.2  188.0  270.2  352.0  434.2  516.0   24.0 555.6   16.0   (nenhum)
+04-S3d-claro                 24.0  106.2  188.0  270.2  352.0  434.2  516.0   24.0 555.6   16.0   (nenhum)
+05-S3avulsa-escuro           24.0  106.2  188.0  270.2  352.0  434.2  516.0   24.0 555.6   16.0   (nenhum)
+06-S3avulsa-claro            24.0  106.2  188.0  270.2  352.0  434.2  516.0   24.0 555.6   16.0   (nenhum)
+07-S3e-escuro                24.0  106.2  188.0  270.2  352.0  434.2  516.0   24.0 555.6   16.0   (nenhum)
+08-S3e-erro-escuro           24.0  106.2  188.0  270.2  352.0  434.2  516.0   24.0 555.6   16.0   (nenhum)
+09-S3e-claro                 24.0  106.2  188.0  270.2  352.0  434.2  516.0   24.0 555.6   16.0   (nenhum)
+10-S3nobody-escuro           24.0  106.2  188.0  270.2  352.0  434.2  516.0   24.0 555.6   16.0   (nenhum)
+11-S3nobody-claro            24.0  106.2  188.0  270.2  352.0  434.2  516.0   24.0 555.6   16.0   (nenhum)
+
+DEPOIS (a árvore desta PR):
+estado                      auto-s zoom-m zoom-m   tema indice  busca   sair   mEsq  mDir   vão   enabled=false
+01-S3letra-escuro            24.0  106.2  188.0  270.2  884.0  965.8 1048.0   24.0  24.0  548.0   (nenhum)
+02-S3claro-claro             24.0  106.2  188.0  270.2  884.0  965.8 1048.0   24.0  24.0  548.0   (nenhum)
+03-S3d-escuro                24.0  106.2  188.0  270.2  884.0  965.8 1048.0   24.0  24.0  548.0   auto-scroll,zoom-menos,zoom-mais
+04-S3d-claro                 24.0  106.2  188.0  270.2  884.0  965.8 1048.0   24.0  24.0  548.0   auto-scroll,zoom-menos,zoom-mais
+05-S3avulsa-escuro           24.0  106.2  188.0  270.2  884.0  965.8 1048.0   24.0  24.0  548.0   (nenhum)
+06-S3avulsa-claro            24.0  106.2  188.0  270.2  884.0  965.8 1048.0   24.0  24.0  548.0   (nenhum)
+07-S3e-escuro                24.0  106.2  188.0  270.2  884.0  965.8 1048.0   24.0  24.0  548.0   auto-scroll,zoom-menos,zoom-mais
+08-S3e-erro-escuro           24.0  106.2  188.0  270.2  884.0  965.8 1048.0   24.0  24.0  548.0   auto-scroll,zoom-menos,zoom-mais
+09-S3e-claro                 24.0  106.2  188.0  270.2  884.0  965.8 1048.0   24.0  24.0  548.0   auto-scroll,zoom-menos,zoom-mais
+10-S3nobody-escuro           24.0  106.2  188.0  270.2  884.0  965.8 1048.0   24.0  24.0  548.0   auto-scroll
+11-S3nobody-claro            24.0  106.2  188.0  270.2  884.0  965.8 1048.0   24.0  24.0  548.0   auto-scroll
+
+  LEITURA — as duas metades, num quadro só:
+
+  A BARRA (div. 109, Proposta A).  Os quatro de COMPORTAMENTO não se mexeram em
+  nenhuma das doze combinações: 24,0 · 106,2 · 188,0 · 270,2 dp, antes e depois.
+  Os três de NAVEGAÇÃO foram de 352,0 · 434,2 · 516,0 para 884,0 · 965,8 ·
+  1048,0 dp. A margem direita foi de 555,6 dp (49 % da barra, sem função) para
+  **24,0 dp — exatamente a da esquerda**. O vão foi de 16,0 para **548,0 dp**.
+
+  E a conta da Proposta A se confirma no aparelho: ela previa `indice` a
+  883,8 dp e vão de 547,8 (derivados dos tokens); o dump dá **884,0** e
+  **548,0**. A diferença é o arredondamento de 2560/2,25 = 1137,78 dp, e é
+  menor do que 1 px. **Nenhum número foi cravado no código** — é um
+  `<View style={{ flex: 1 }} />`.
+
+  A ÁRVORE (div. 118).  ANTES: `enabled=false` em NENHUM estado — inclusive no
+  `S3d`, onde os três primeiros controles estão inertes e o dump os mostra
+  `enabled=true clickable=true`, com "indisponível" só dentro do `content-desc`.
+  DEPOIS: `enabled=false` em exatamente os três que podem ficar inertes, e em
+  nenhum outro. E a fronteira, com a precisão que a errata da W2 fixa:
+
+    S3d / S3e   -> auto-scroll, zoom-menos, zoom-mais   (os três)
+    S3-nobody   -> auto-scroll                          (só ele: corpo===null,
+                                                         mas urlArquivo===null
+                                                         também, então o zoom
+                                                         de TEXTO vale)
+    letra/claro/avulsa -> nenhum
+
+  Ou seja: **os três que podem ficar inertes estão todos no grupo da esquerda,
+  que tem QUATRO** — o `tema` sai `enabled=true` em todos os doze estados. A
+  fronteira de ESTADO é subconjunto PRÓPRIO da de FUNÇÃO. É a correção da frase
+  que circulava desde o aceite do V1 (§4 deste anexo).
+
+--------------------------------------------------------------------------------
+§2. O DETALHE DO S3d — O ESTADO EM QUE AS DUAS METADES APARECEM JUNTAS
+--------------------------------------------------------------------------------
+ANTES:
+=== 03-S3d-escuro ===
+  auto-scroll  x=[  54, 203]  x1=  24.0 dp  larg=66.2×65.8 dp  enabled=true  clickable=true   margem esq=24.0 dp  desc="Rolagem automática, indisponível: só em texto"
+  zoom-menos   x=[ 239, 387]  x1= 106.2 dp  larg=65.8×65.8 dp  enabled=true  clickable=true   folga=16.0 dp  desc="Diminuir o texto, indisponível: pinça para zoom"
+  zoom-mais    x=[ 423, 572]  x1= 188.0 dp  larg=66.2×65.8 dp  enabled=true  clickable=true   folga=16.0 dp  desc="Aumentar o texto, indisponível: pinça para zoom"
+  tema         x=[ 608, 756]  x1= 270.2 dp  larg=65.8×65.8 dp  enabled=true  clickable=true   folga=16.0 dp  desc="Mudar para o tema claro"
+  indice       x=[ 792, 941]  x1= 352.0 dp  larg=66.2×65.8 dp  enabled=true  clickable=true   folga=16.0 dp  desc="Abrir o índice da setlist"
+  busca        x=[ 977,1125]  x1= 434.2 dp  larg=65.8×65.8 dp  enabled=true  clickable=true   folga=16.0 dp  desc="Buscar na biblioteca"
+  sair         x=[1161,1310]  x1= 516.0 dp  larg=66.2×65.8 dp  enabled=true  clickable=true   folga=16.0 dp  desc="Sair do palco"
+  --- margem DIREITA: 555.6 dp   (esquerda: 24.0 dp)
+  --- VÃO entre tema e indice: 16.0 dp
+  --- enabled=false em: (nenhum)
+
+DEPOIS:
+=== 03-S3d-escuro ===
+  auto-scroll  x=[  54, 203]  x1=  24.0 dp  larg=66.2×65.8 dp  enabled=false clickable=true   margem esq=24.0 dp  desc="Rolagem automática, indisponível: só em texto"
+  zoom-menos   x=[ 239, 387]  x1= 106.2 dp  larg=65.8×65.8 dp  enabled=false clickable=true   folga=16.0 dp  desc="Diminuir o texto, indisponível: pinça para zoom"
+  zoom-mais    x=[ 423, 572]  x1= 188.0 dp  larg=66.2×65.8 dp  enabled=false clickable=true   folga=16.0 dp  desc="Aumentar o texto, indisponível: pinça para zoom"
+  tema         x=[ 608, 756]  x1= 270.2 dp  larg=65.8×65.8 dp  enabled=true  clickable=true   folga=16.0 dp  desc="Mudar para o tema claro"
+  indice       x=[1989,2137]  x1= 884.0 dp  larg=65.8×65.8 dp  enabled=true  clickable=true   folga=548.0 dp  desc="Abrir o índice da setlist"
+  busca        x=[2173,2322]  x1= 965.8 dp  larg=66.2×65.8 dp  enabled=true  clickable=true   folga=16.0 dp  desc="Buscar na biblioteca"
+  sair         x=[2358,2506]  x1=1048.0 dp  larg=65.8×65.8 dp  enabled=true  clickable=true   folga=16.0 dp  desc="Sair do palco"
+  --- margem DIREITA: 24.0 dp   (esquerda: 24.0 dp)
+  --- VÃO entre tema e indice: 548.0 dp
+  --- enabled=false em: auto-scroll, zoom-menos, zoom-mais
+
+  `clickable=true` nos SETE, antes e depois. É o que separa o conserto certo do
+  errado: `disabled={inativo}` teria zerado o `clickable` e matado o `onPress`
+  que revela o motivo — o A15. Ver §3.
+
+--------------------------------------------------------------------------------
+§3. O CONTROLE NEGATIVO DO CONSERTO — O MOTIVO AINDA APARECE (A15)
+--------------------------------------------------------------------------------
+Se o conserto tivesse sido `disabled`, o `onPress` não rodaria e a linha acima
+da barra continuaria mostrando a dica de gesto do PDF. Medido, no S3d, DEPOIS,
+com o dump disparado no MESMO comando do toque (o `MOTIVO_MS` é 2500 e um
+`screencap` + `pull` + `dump` estoura isso):
+
+  $ adb -s emulator-5554 shell "input tap 128 1358; uiautomator dump /sdcard/m1.xml"
+    linha-motivo  text= 'auto-scroll só em texto'  bounds= [0,1168][2560,1249]
+    OCTAVIA: autoscroll disabled kind=pdf        <- o onPress RODOU
+
+  $ ... input tap 310 1358   (zoom-menos)  -> linha-motivo: 'pinça para zoom'
+  $ ... input tap 494 1358   (zoom-mais)   -> linha-motivo: 'pinça para zoom'
+
+  Os três inertes: `enabled=false` na árvore E motivo ao toque. As duas metades
+  do A15 de pé ao mesmo tempo, que é exatamente o que o pre-check exigia.
+
+  NOTA DE INSTRUMENTO: a primeira tentativa usou `dump` com `sleep 1` antes e
+  NÃO capturou o motivo — a linha já tinha voltado para a dica de gesto. Não é
+  defeito do app: é o `MOTIVO_MS` fazendo o que promete, e o instrumento sendo
+  mais lento que o fenômeno. Registrado para quem repetir.
+
+--------------------------------------------------------------------------------
+§4. A FRASE DA FRONTEIRA, CORRIGIDA EM TRÊS DOCUMENTOS
+--------------------------------------------------------------------------------
+A redação que passa a valer, por decisão do Marcel no aval da W2:
+**"os três que podem ficar inertes estão todos no grupo da esquerda, que tem
+quatro"** — e NÃO "a fronteira por função é a fronteira por estado".
+
+Corrigido por ANOTAÇÃO, não por reescrita (documento e anexo são rastro):
+  docs/native/V1-PR7-anexos/V1-PR7-C-aceite-visual.txt   (bloco ">> ERRATA W2")
+  docs/native/W1-PRECHECK.md §H5 razão 3                 (comentário HTML)
+  docs/native/W1-ENCERRAMENTO.md §10 item 2              (comentário HTML)
+
+A medição que a sustenta está na §1: o `tema` sai `enabled=true` nos doze
+estados, e é do grupo da esquerda.
+
+--------------------------------------------------------------------------------
+§5. O STORE, ANTES × DEPOIS — E O QUE MUDOU NELE
+--------------------------------------------------------------------------------
+Os CINCO sha256 da baseline do fim do W1, lidos no início desta sessão:
+
+  d27e6d84…  content.json         \
+  0a3a0638…  setlists.json         |  os quatro que não podem mudar
+  ad2eae09…  files/…-12p.pdf       |
+  3d42199b…  cache/…-1p.pdf       /
+  cce7936f…  files-index.json        <- este muda por projeto
+
+  NO FIM DA SESSÃO:
+    d27e6d8478185282d5707fb9459d8e124cdd6bdab9c20aa28df133041e86fc44  content.json     IGUAL
+    0a3a06380634b5dabbe1811e29a8f7a6151e1302bfe8a025d16013300a5f8a07  setlists.json    IGUAL
+    ad2eae0942811adb4d60286516ce318110868f6aa889422ab0cb8b3dc690ea22  files/…-12p.pdf  IGUAL
+    3d42199bc98fb2f93695323e7e3082378907236eeae11d982b63f85d990cdb48  cache/…-1p.pdf   IGUAL
+    3f5768b7bf68bc616c57c76acfa045473d0bfd2ee5512bb59cf0aeab8aed4f8e  files-index.json MUDOU
+
+  O `files-index.json` mudou, e o DELTA está medido — não suposto:
+
+    1786218429715-…-partitura-12p.pdf   bytes=242176  lastUsedMs …229435 -> …718730
+    1786295844475-…-fase-d-cifra.pdf    bytes=  1117  lastUsedMs …627197 -> igual
+    1786295884124-…-fase-d-offline.pdf  bytes=   888  lastUsedMs …628930 -> igual
+    1786218427769-…-partitura-1p.pdf    bytes= 20821  lastUsedMs …245541 -> …289162
+
+  Quatro URLs antes, quatro depois. Nenhum `bytes` mudou, nenhuma URL entrou ou
+  saiu. O que mudou foram DOIS `lastUsedMs`, nos dois arquivos que esta sessão
+  abriu — o `touch()` fazendo o que existe para fazer. **O índice é memória, não
+  oráculo (div. 111), e é por isso que o quinto sha não é um "não mudou".**
+
+  A FIXTURE do S3-nobody, e como ela não deixou rastro:
+    1. `cp content.json setlists.json files-index.json W2BACKUP/` no aparelho,
+       com `sha256sum` dos dois lados;
+    2. `aceite.py cache … invalidos-content` e `… invalidos-songs "UX-AUDIT Solo"`;
+    3. `adb push` + `run-as cp` (o `run-as sh -c "cat > path"` dá Permission denied);
+    4. capturado o S3-nobody ANTES **e** DEPOIS com a fixture no lugar — trocando
+       só o código servido pelo Metro, para pagar a fixture uma vez;
+    5. `cp W2BACKUP/* .` + `rm -rf W2BACKUP` + `rm /data/local/tmp/*-fix.json`;
+    6. `content.json` e `setlists.json` de volta aos sha da baseline (acima).
+
+--------------------------------------------------------------------------------
+§6. O QUE ESTA SESSÃO NÃO MEDIU, E VAI DECLARADO
+--------------------------------------------------------------------------------
+  • O **Tab S6**: zero comandos, por regra do prompt. Aparece em `adb devices`
+    (RX2N8000F3D) e nunca foi endereçado.
+  • A metade de TEMPO do A15 (`< 100 ms`): cinco amostras no AVD deram
+    797 · 163 · 33 · 18 · 61 ms. As duas primeiras são aquecimento (primeiro
+    frame depois da abertura); as três seguintes estão sob 100 ms. **Mas a
+    div. 37 diz que latência de frame não se mede no emulador**, e a referência
+    do bloco continua sendo o Tab S6 do V1-PR7: 36 · 36 · 39 · 41 · 37 ms
+    (n=5). Esta PR não toca o caminho do auto-scroll; o que ela toca é o
+    `accessibilityState` do MESMO controle, e a metade que ela precisava provar
+    (o motivo ao toque) está na §3.
+  • `accelerometer_rotation` foi posto em 0 para a medição de retrato **sem
+    que o valor anterior tivesse sido lido**. Foi restaurado para 1 (o padrão
+    do Android) e `user_rotation` para 0. Declarado, não suposto: se o AVD
+    estava com auto-rotate desligado antes, esta sessão o ligou.
+
+--------------------------------------------------------------------------------
+§7. RETRATO — A PROVA DE QUE NÃO HÁ NÚMERO CRAVADO
+--------------------------------------------------------------------------------
+A Proposta A foi decidida com números de PAISAGEM (884,0 · 965,8 · 1048,0 dp
+numa janela de 1137,8). Se a implementação fosse aqueles números, o retrato
+quebraria. Medido, com `settings put system user_rotation 1`, no S3-letra:
+
+  janela: 1600 px = 711,1 dp   (contra 2560 px = 1137,8 dp em paisagem)
+    auto-scroll  x1=   24,0 dp     indice   x1= 457,3 dp
+    zoom-menos   x1=  106,2 dp     busca    x1= 539,1 dp
+    zoom-mais    x1=  188,0 dp     sair     x1= 621,3 dp
+    tema         x1=  270,2 dp
+    margem esq = 24,0 dp   margem dir = 24,0 dp   vão = 121,3 dp
+
+  As duas margens continuam 24,0 dp e os dois grupos continuam sendo dois; o
+  que encolhe é o VÃO, de 548,0 para 121,3 dp — que é 711,1 − 24 − 24 − 558
+  − 16 − 16, a conta do `flex: 1` e de mais nada. **Nenhum dos sete x1 do grupo
+  da esquerda se mexeu entre as duas orientações**, que é o que a decisão da Q4
+  pede (a posição aprendida se preserva).

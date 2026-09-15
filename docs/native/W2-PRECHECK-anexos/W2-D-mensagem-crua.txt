@@ -1,0 +1,214 @@
+================================================================================
+W2-D — A MENSAGEM CRUA EM INGLÊS NA TELA DO MÚSICO (div. 125) — H5
+================================================================================
+Rastro de medição. 2026-09-15, worktree `../octavia-w2`, sem commit.
+
+A linha medida pelo W1, verbatim:
+  OCTAVIA: download-error w1-curto-1.pdf: Call to function
+           'FileSystemDownloadTask.start' has been rejected.
+e o mesmo texto no `testID="download-erro"` do S3e.
+
+--------------------------------------------------------------------------------
+§1. ONDE ELA NASCE
+--------------------------------------------------------------------------------
+$ sed -n '347,354p' apps/native/src/files.ts        # o catch do baixarAtomico
+    } catch (erro: unknown) {
+      // Qualquer saída por erro leva o parcial junto: um `.part` que sobra é
+      // lixo, nunca meio-arquivo servível. O que sobrar de um processo MORTO
+      // (que não passa por aqui) é varrido na abertura seguinte.
+      if (parcial.exists) parcial.delete()
+      throw falha(erro, name)
+    }
+  }
+
+$ sed -n '399,412p' apps/native/src/files.ts        # a função `falha`
+   * A falha do download, numa frase que pode ir para o log E para a tela.
+   *
+   * **Regra 2 do catálogo**: URL completa nunca entra em log. A mensagem crua
+   * da biblioteca carrega a URL do objeto (`Unable to download file from
+   * <url>. Response status: 404`), então ela é traduzida quando se reconhece a
+   * causa e higienizada quando não.
+   */
+  function falha(erro: unknown, name: string): Error {
+    if (erro instanceof Error && erro.message.startsWith(`${name}: `)) return erro
+    const bruta = erro instanceof Error ? erro.message : String(erro)
+    const status = /status:?\s*(\d{3})/i.exec(bruta)?.[1]
+    if (status !== undefined) return new Error(`${name}: o servidor respondeu ${status}`)
+    return new Error(`${name}: ${bruta.replace(/https?:\/\/\S+/g, '<url>')}`)
+  }
+  
+
+  TRÊS RAMOS, e o terceiro é o vazamento:
+    1. já vem prefixado `${name}: ` -> devolve como está. São as mensagens do
+       `motivo()`, todas em pt-BR ("o arquivo chegou vazio", "arquivo
+       incompleto: N de M bytes", "o arquivo chegou corrompido");
+    2. casa `/status:?\s*(\d{3})/i` -> traduz para
+       `${name}: o servidor respondeu ${status}`;
+    3. **qualquer outra coisa** -> `${name}: ${bruta}` com só as URLs
+       higienizadas. A mensagem da biblioteca passa INTEIRA, em inglês.
+
+  O ramo 3 é deliberado e está documentado ("higienizada quando não [se
+  reconhece a causa]") — o que ele resolve é a **regra 2 do catálogo** (URL
+  nunca entra em log). Ele nunca prometeu resolver idioma.
+
+--------------------------------------------------------------------------------
+§2. POR ONDE ELA PASSA ATÉ A TELA
+--------------------------------------------------------------------------------
+$ sed -n '337,356p' apps/native/src/screens/StageScreen.tsx
+    const buscarArquivo = useCallback(
+      async (url: string, pedidoPeloUsuario: boolean): Promise<void> => {
+        const nome = fileNameFromUrl(url)
+        if (!hasFile(url) && !online && !pedidoPeloUsuario) {
+          setArquivo({ fase: 'ausente', bytes: knownBytes(url) })
+          log(`placeholder kind=file-missing name=${nome}`)
+          return
+        }
+        setArquivo({ fase: 'buscando' })
+        try {
+          const r = await ensureFile(url)
+          setArquivo({ fase: 'pronto', uri: r.uri })
+          if (r.src === 'download') onArquivosMudaram()
+        } catch (e: unknown) {
+          const mensagem = e instanceof Error ? e.message : 'falha ao baixar'
+          log(`download-error ${mensagem}`)
+          setArquivo({ fase: 'erro', mensagem, bytes: knownBytes(url) })
+        }
+      },
+      [online, onArquivosMudaram],
+
+$ sed -n '755,760p' apps/native/src/screens/StageScreen.tsx      # o S3e
+        </Text>
+        {estado.fase === 'erro' ? (
+          <Text style={[styles.erro, { color: cor.error }]} testID="download-erro">
+            {estado.mensagem}
+          </Text>
+        ) : null}
+
+  O caminho inteiro, sem desvio:
+    biblioteca -> catch de `baixarAtomico` -> `falha()` ramo 3
+      -> rejeição de `ensureFile`
+      -> catch de `buscarArquivo` (StageScreen:350) -> `e.message`
+      -> `setArquivo({fase:'erro', mensagem})`
+      -> <Text testID="download-erro">{mensagem}</Text>  ← A TELA DO MÚSICO
+    e, em paralelo, `log('download-error ' + mensagem)` -> o logcat.
+
+--------------------------------------------------------------------------------
+§3. É UMA OU É UMA FAMÍLIA?  — É UMA FAMÍLIA, E COM DUAS CLASSES
+--------------------------------------------------------------------------------
+$ grep -rn "download-error\|mensagemDe(" apps/native/src apps/native/App.tsx
+  apps/native/src/prefetch.ts:87: * download é lido, e cada rejeição vira uma linha `download-error`. Antes o
+  apps/native/src/prefetch.ts:107:        log(`download-error ${mensagemDe(erro)}`)
+  apps/native/src/prefetch.ts:123:function mensagemDe(erro: unknown): string {
+  apps/native/src/prefetch.ts:171:      log(`download-error ${mensagemDe(erro)}`)
+  apps/native/src/files.ts:318:        // Se e quando entrar, o aborto é um `download-error` com a projeção
+  apps/native/src/files.ts:391:/** O que o usuário lê no S3e, e o que entra no `download-error`. */
+  apps/native/src/screens/StageScreen.tsx:352:        log(`download-error ${mensagem}`)
+  apps/native/App.tsx:222:          log(`download-error ${erro instanceof Error ? erro.message : 'falha ao baixar'}`)
+
+  CLASSE 1 — o que passa pelo `falha()` e cai no ramo 3.
+    Tudo o que a biblioteca lançar dentro do `try` de `baixarAtomico` e que não
+    tenha `status: NNN` na mensagem: `createDownloadTask`, `downloadAsync`
+    (o caso medido), `parcial.size`, `destino.delete()`, `parcial.moveSync()`.
+    Fica com o prefixo `${name}: ` e a URL higienizada — e o texto em inglês.
+
+  CLASSE 2 — o que NEM PASSA pelo `falha()`.
+$ sed -n '186,210p' apps/native/src/files.ts     # o ramo de PROMOÇÃO do ensureFileUma
+    if (atual !== null) {
+      // Promoção a garantido: move do cache purgável para o não-purgável.
+      if (opcoes.guaranteed && !atual.guaranteed) {
+        if (!alvoDir.exists) alvoDir.create({ intermediates: true })
+        const destino = new File(alvoDir, name)
+        if (destino.exists) destino.delete()
+        atual.file.moveSync(destino)
+      }
+      const achado = localizar(url)
+      const bytes = achado?.file.size ?? 0
+      touch(url)
+      log(`file src=disk name=${name} bytes=${bytes}`)
+      return { uri: achado?.file.uri ?? '', src: 'disk', bytes }
+    }
+  
+    if (!alvoDir.exists) alvoDir.create({ intermediates: true })
+    return baixarAtomico(url, alvoDir, name)
+  }
+    Este bloco (`alvoDir.create()`, `destino.delete()`, `atual.file.moveSync()`)
+    está FORA de qualquer `try`: uma rejeição aqui sobe crua, **sem nem o
+    prefixo do nome**, até o `e.message` do palco e até o `erro.message` do
+    `App.tsx:222`. O `mensagemDe()` do `prefetch.ts` higieniza URI, e só.
+
+  => São DUAS classes, não uma mensagem. Consertar só a frase medida pelo W1
+     deixaria a segunda de pé. Div. 131.
+
+--------------------------------------------------------------------------------
+§4. O `gate:a20` ALCANÇA A INTERCEPTAÇÃO?
+--------------------------------------------------------------------------------
+Não, e o motivo não é escopo — é natureza.
+
+  O `a20.mjs` acusa LITERAL em posição de texto (`<Text>…</Text>`,
+  `accessibilityLabel=`, `placeholder=`, `chave: '…'`, `Alert.alert(`). A
+  mensagem da div. 125 **não é literal em lugar nenhum**: é um valor de tempo
+  de execução que vem da biblioteca. Pôr o `App.tsx` no escopo do a20 (o
+  conserto da div. 123) **não a alcança**. Varrer `apps/native` inteiro também
+  não. Nenhum escopo alcança.
+
+  => O `gate:a20` tem escopo menor do que o ACEITE que ele representa. O A20 do
+     PRD diz "nenhum literal de UI em inglês"; o que chega à tela do músico é
+     texto de UI em inglês que não é literal. É o mesmo erro do padrão do
+     `LOGS-OCTAVIA.md`, num lugar novo — ler o que o instrumento mede como se
+     fosse o que se queria saber. **Div. 130.**
+
+  O QUE ALCANÇA, e agora é possível porque o W1 abriu o projeto `native` do
+  vitest:
+    • um teste de unidade sobre `falha()` — hoje ela não é exportada, o que é
+      uma linha de `export`: dado um Error com mensagem arbitrária, o que sai
+      tem de estar num conjunto FECHADO de frases em pt-BR;
+    • e um gate de verdade: a lista de frases que podem chegar ao
+      `testID="download-erro"` é finita e declarada — o mesmo formato da lista
+      de erratas do G3, que é o escopo escrito no próprio script.
+
+--------------------------------------------------------------------------------
+§5. O QUE É DECISÃO DE TEXTO DE UI, E PORTANTO DO MARCEL
+--------------------------------------------------------------------------------
+  1. A frase genérica do ramo 3. Candidata: "não foi possível baixar agora"
+     (o catálogo já traduz `download-error` por *"não consegui baixar"*,
+     `LOGS-OCTAVIA.md:396`) — mas a escolha é dele.
+  2. **O nome do arquivo na tela.** Hoje o S3e mostra
+     `1751910900697-Easy_-_Guitar.pdf: <mensagem>` — o prefixo `${name}: ` do
+     `falha()` vai junto. O nome do objeto no bucket não é vocabulário de
+     músico. Separar "o que vai para o log" de "o que vai para a tela" é
+     decisão de produto, não de código.
+  3. Se o texto cru deve sobreviver em ALGUM lugar. Recomendação: sim, no log
+     (é o que faz um relatório ser diagnosticável), e não na tela.
+
+--------------------------------------------------------------------------------
+§6. DECIDIDO (Marcel, 2026-09-15) — E O ARGUMENTO QUE ELE ACRESCENTOU
+--------------------------------------------------------------------------------
+Das três decisões de texto levantadas na §5:
+
+  1. frase genérica em **pt-BR** na tela                      -> SIM
+  2. o **nome do arquivo** na tela                            -> **NÃO**, só no log
+  3. o texto cru sobrevive no log                             -> SIM
+
+  O argumento do Marcel, que é o que fecha a questão e vai para a errata:
+
+    "O nome do objeto do bucket é detalhe de infraestrutura que o músico não
+     pediu e não pode usar — ele não identifica a MÚSICA, identifica o OBJETO.
+     O que serve na tela é o título, que a tela já tem."
+
+  E a tela já o tem, medido — duas linhas ACIMA da linha de erro:
+
+$ sed -n '751,760p' apps/native/src/screens/StageScreen.tsx
+      <View style={styles.placeholder} testID="s3e">
+        <Text style={[styles.placeholderTitulo, { color: cor.text }]}>arquivo não baixado</Text>
+        <Text style={[styles.placeholderApoio, { color: cor.muted }]}>
+          {`${titulo} · ${tipo}${tamanho} não está neste aparelho. ${fecho}`}
+        </Text>
+        {estado.fase === 'erro' ? (
+          <Text style={[styles.erro, { color: cor.error }]} testID="download-erro">
+            {estado.mensagem}
+          </Text>
+        ) : null}
+
+  => O dado certo (`${titulo} · ${tipo}${tamanho}`) já está em tela, duas linhas
+     acima do errado. O conserto não precisa inventar contexto: precisa parar
+     de repetir o objeto onde a música já foi nomeada.

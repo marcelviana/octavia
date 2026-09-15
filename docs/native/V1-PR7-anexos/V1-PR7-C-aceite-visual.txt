@@ -56,6 +56,19 @@ DUAS COISAS QUE A MEDIÇÃO ACRESCENTA AO ACHADO:
      ficar inertes (auto-scroll, zoom−, zoom+) são TODOS do grupo da esquerda; nenhum do
      grupo da direita jamais fica inerte. As sete folgas são 16,0 dp iguais.
 
+     >> ERRATA W2 (2026-09-15, por decisão do Marcel no aval da W2). A primeira frase
+     >> deste item 2 está ERRADA, e é anotada por cima porque anexo é rastro e não se
+     >> reescreve. A SEGUNDA frase está certa e fica: os três que podem ficar inertes
+     >> são todos do grupo da esquerda. O que não vale é a EQUIVALÊNCIA: o grupo da
+     >> esquerda tem QUATRO (auto-scroll, zoom−, zoom+ e `tema`) e só TRÊS deles podem
+     >> ficar inertes — o `tema` é comportamento da tela e nunca fica. A fronteira de
+     >> ESTADO é SUBCONJUNTO PRÓPRIO da fronteira de FUNÇÃO, não igual a ela.
+     >> A redação que passa a valer, verbatim: **os três que podem ficar inertes estão
+     >> todos no grupo da esquerda, que tem quatro.**
+     >> Medido no código (`W2-PRECHECK-anexos/W2-C` §2: só três `inativo=` no arquivo)
+     >> e no aparelho (`W2-anexos/W2-C` — no S3d saem exatamente três `enabled=false`
+     >> e o `tema` sai `true`).
+
 PROPOSTA A — decidida pelo Marcel, 2026-09-14:
                           hoje            proposta A
   comportamento (4)   x 54…756 px       x 54…756 px          (não muda)

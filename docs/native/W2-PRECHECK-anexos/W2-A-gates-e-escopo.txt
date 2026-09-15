@@ -1,0 +1,278 @@
+================================================================================
+W2-A — O QUE CADA GATE ALCANÇA, E O QUE NENHUM ALCANÇA (H1)
+================================================================================
+Rastro de medição, não fonte. Gerado em 2026-09-15, no worktree
+`../octavia-w2` (detached em f58259e), SEM commit e SEM tocar aparelho.
+Cada bloco abre com o comando que o gerou.
+
+--------------------------------------------------------------------------------
+§1. TODO ARQUIVO DE `apps/native/` FORA DE `src/`
+--------------------------------------------------------------------------------
+$ find apps/native -not -path "*/node_modules/*" -type f | sort
+  apps/native/.env.example
+  apps/native/App.tsx
+  apps/native/app.json
+  apps/native/assets/android-icon-background.png
+  apps/native/assets/android-icon-foreground.png
+  apps/native/assets/android-icon-monochrome.png
+  apps/native/assets/favicon.png
+  apps/native/assets/fonts/IBMPlexMono_400Regular.ttf
+  apps/native/assets/fonts/IBMPlexMono_600SemiBold.ttf
+  apps/native/assets/fonts/Manrope_400Regular.ttf
+  apps/native/assets/fonts/Manrope_600SemiBold.ttf
+  apps/native/assets/fonts/Raleway_500Medium.ttf
+  apps/native/assets/fonts/Raleway_600SemiBold.ttf
+  apps/native/assets/icon.png
+  apps/native/assets/logo-octavia-dark.png
+  apps/native/assets/logo-octavia-light.png
+  apps/native/assets/splash-icon.png
+  apps/native/index.ts
+  apps/native/package.json
+  apps/native/scripts/__cn__/A20Falso.tsx
+  apps/native/scripts/__cn__/IconesFalso.ts
+  apps/native/scripts/a20.mjs
+  apps/native/scripts/g1.sh
+  apps/native/scripts/g2g3.sh
+  apps/native/scripts/g7.sh
+  apps/native/scripts/icones.mjs
+  apps/native/src/api.ts
+  apps/native/src/files.ts
+  apps/native/src/firebase.ts
+  apps/native/src/fixtures/aceite.py
+  apps/native/src/fixtures/palco.ts
+  apps/native/src/icones/Icone.tsx
+  apps/native/src/icones/dados.ts
+  apps/native/src/log.ts
+  apps/native/src/navigation.tsx
+  apps/native/src/net.ts
+  apps/native/src/prefetch.ts
+  apps/native/src/screens/EndScreen.tsx
+  apps/native/src/screens/IndexScreen.tsx
+  apps/native/src/screens/LoginScreen.tsx
+  apps/native/src/screens/SearchScreen.tsx
+  apps/native/src/screens/SetlistsScreen.tsx
+  apps/native/src/screens/StageScreen.tsx
+  apps/native/src/session.ts
+  apps/native/src/store.ts
+  apps/native/src/sync.ts
+  apps/native/src/theme.ts
+  apps/native/test/ajuda.ts
+  apps/native/test/fake-expo-file-system.ts
+  apps/native/test/files-integridade.test.ts
+  apps/native/test/files-saneamento.test.ts
+  apps/native/test/prefetch-fila.test.ts
+  apps/native/tsconfig.json
+
+  LEITURA, por arquivo de CÓDIGO fora de `src/`:
+
+  | arquivo                    | linhas | g1 (G1a) | g2g3 (G2/G3) | a20 | icones | g7/vitest | tsc |
+  |----------------------------|--------|----------|--------------|-----|--------|-----------|-----|
+  | App.tsx                    |  281   |   NÃO    |     NÃO      | NÃO |  n/a   |    NÃO    | SIM |
+  | index.ts                   |    8   |   NÃO    |     NÃO      | NÃO |  n/a   |    NÃO    | SIM |
+  | test/*.ts (4)              |  ---   |   NÃO    | NÃO (de propósito) | NÃO | n/a | É o runner | SIM |
+  | scripts/*.mjs|sh, __cn__   |  ---   |   NÃO    |     NÃO      | só como alvo do CN | n/a | NÃO | NÃO |
+  | app.json, package.json     |  ---   |   NÃO    |     NÃO      | NÃO |  n/a   |    NÃO    | NÃO |
+  | assets/** (binários)       |  ---   |   —      |      —       |  —  |   —    |     —     |  —  |
+
+  `test/` fora do G2/G3 é DECISÃO DECLARADA e está escrita no `vitest.config.mts`
+  ("os testes vivem em apps/native/test/, FORA de src/, porque o g2g3.sh varre
+  apps/native/src atrás de testID= e de linhas log( — um teste dentro de src/
+  falsearia o G2 e o G3"). Não é buraco.
+
+  => O `App.tsx` é o ÚNICO arquivo de código de PRODUÇÃO fora de todo gate.
+     A div. 123 achou um arquivo, e ele é o único. O `index.ts` (8 linhas,
+     `registerRootComponent`) está tecnicamente na mesma situação e não tem
+     nada que um gate meça: sem testID, sem log(, sem literal de UI.
+
+--------------------------------------------------------------------------------
+§2. `packages/core/` E A RAIZ DO REPO
+--------------------------------------------------------------------------------
+$ find packages -not -path "*/node_modules/*" -type f | sort
+  packages/core/package.json
+  packages/core/src/auth-fetch.test.ts
+  packages/core/src/auth-fetch.ts
+  packages/core/src/content-contract.test.ts
+  packages/core/src/content-contract.ts
+  packages/core/src/errors.test.ts
+  packages/core/src/errors.ts
+  packages/core/src/index.ts
+  packages/core/src/isolation.test.ts
+  packages/core/src/normalize.test.ts
+  packages/core/src/normalize.ts
+  packages/core/src/offline.test.ts
+  packages/core/src/offline.ts
+  packages/core/src/position.test.ts
+  packages/core/src/position.ts
+  packages/core/src/rate-limit.test.ts
+  packages/core/src/rate-limit.ts
+  packages/core/src/search.test.ts
+  packages/core/src/search.ts
+  packages/core/src/song.test.ts
+  packages/core/src/song.ts
+  packages/core/src/sync.test.ts
+  packages/core/src/sync.ts
+  packages/core/src/token.test.ts
+  packages/core/src/token.ts
+  packages/core/src/types.ts
+  packages/core/tsconfig.json
+
+  => Em `packages/core/` NÃO existe o buraco do App.tsx: todo código vive em
+     `src/`, e fora dele há só `package.json` e `tsconfig.json`. O G1a varre
+     `git ls-tree -r packages/core/src` e o G3 varre `packages/core/src`.
+
+$ git ls-files | grep -v /        # arquivos de código no topo do repo
+  .dependency-cruiser.cjs
+  middleware.ts
+  next.config.mjs
+  playwright.ux-audit.config.ts
+  postcss.config.mjs
+  tailwind.config.ts
+
+  => Os arquivos de código da RAIZ são do app web (Next). Nenhum gate do
+     nativo os cobre — e nem deve: quem os cobre é o `ci.yml` (`pnpm lint`,
+     `tsc -p tsconfig.test.json`, `pnpm test:unit`, `pnpm test:ci`). Os dois
+     tsconfig da raiz excluem `apps/**` e `packages/**` explicitamente.
+
+--------------------------------------------------------------------------------
+§3. QUEM VARRE POR CAMINHO FIXO E QUEM VARRE POR PADRÃO
+--------------------------------------------------------------------------------
+$ grep -n 'NUCLEO=\|CORE=\|find apps/native\|ls-tree\|walk(RAIZ)\|include:' \
+      apps/native/scripts/*.sh apps/native/scripts/*.mjs vitest.config.mts
+
+  | instrumento         | forma do escopo                              | segue arquivo novo? |
+  |---------------------|----------------------------------------------|---------------------|
+  | g1.sh · G1a NUCLEO  | LISTA LITERAL de 7 caminhos, no script        | **NÃO**             |
+  | g1.sh · G1a CORE    | `git ls-tree -r … -- packages/core/src`       | SIM (no ref)        |
+  | g1.sh · G1b         | `git ls-tree … | grep '\.test\.ts$'`          | SIM (no ref)        |
+  | g2g3.sh (WORKTREE)  | `find apps/native/src … -name '*.ts(x)'`      | SIM, dentro de src  |
+  | g2g3.sh (ref-git)   | `git ls-tree -r … -- apps/native/src`         | SIM, dentro de src  |
+  | a20.mjs             | `walk(RAIZ)` com RAIZ=`src` do argv           | SIM, dentro de src  |
+  | icones.mjs          | UM arquivo, `src/icones/dados.ts` (argv)      | n/a                 |
+  | g7.sh               | vitest `include: apps/native/test/**/*.test.ts`| SIM                |
+
+  => **O que silenciosamente não acompanha um arquivo novo é o NUCLEO do G1a.**
+     É uma lista literal de sete caminhos escrita no próprio script; um módulo
+     novo em `apps/native/src` nasce fora da invariância e nada avisa. A metade
+     do core do MESMO gate não tem esse defeito: é derivada por `git ls-tree`.
+     Os outros dois (g2g3, a20) não erram por arquivo novo — erram por
+     DIRETÓRIO: tudo que não estiver sob `src/` é invisível, e é exatamente aí
+     que o `App.tsx` mora.
+
+--------------------------------------------------------------------------------
+§4. QUANTO O G3 DEIXA DE VER, EM NÚMERO
+--------------------------------------------------------------------------------
+$ for f in $(find apps/native/src packages/core/src -name '*.ts' -o -name '*.tsx'); do
+      grep -c 'log(' $f; done   # o escopo do G3, hoje
+  apps/native/src/api.ts  7
+  apps/native/src/files.ts  5
+  apps/native/src/log.ts  2
+  apps/native/src/net.ts  1
+  apps/native/src/prefetch.ts  7
+  apps/native/src/screens/EndScreen.tsx  1
+  apps/native/src/screens/IndexScreen.tsx  2
+  apps/native/src/screens/LoginScreen.tsx  1
+  apps/native/src/screens/SearchScreen.tsx  2
+  apps/native/src/screens/StageScreen.tsx  17
+  apps/native/src/store.ts  4
+  apps/native/src/sync.ts  5
+  ----------------------------------------------
+  TOTAL que o G3 compara hoje: 54
+
+$ grep -n "log(" apps/native/App.tsx     # fora do escopo
+  117:        log('login-screen')
+  127:      log(`auth uid=${user.uid} src=${signedInThisRun() ? 'login' : 'restored'}`)
+  222:          log(`download-error ${erro instanceof Error ? erro.message : 'falha ao baixar'}`)
+
+  => 54 linhas `log(` dentro do escopo do G3; **3 fora**, todas em `App.tsx`,
+     e **as três estão no catálogo** do `LOGS-OCTAVIA.md`:
+
+       linha 117  log('login-screen')            catálogo §24, prova o A5 (CN)
+       linha 127  log(`auth uid=… src=…`)        catálogo §24, prova A1 e A5
+       linha 222  log(`download-error …`)        catálogo §24, prova A13 e W1-A4
+
+     O gate que existe para garantir que nenhuma linha do contrato suma em
+     silêncio **não lê o arquivo onde vivem três linhas do contrato** — duas
+     delas as que provam a autenticação. População certa: 57.
+
+--------------------------------------------------------------------------------
+§5. CONTROLE NEGATIVO 1 — O `gate:a20` PODE REPROVAR, E É O ESCOPO QUE O CEGA
+--------------------------------------------------------------------------------
+Prova a div. 127: um CN que não reprova pode ser instrumento quebrado. Aqui o
+instrumento está inteiro — o que falha é a raiz que ele recebe.
+
+$ cp apps/native/App.tsx  <scratch>/cn-app/App.tsx
+$ # injeta, na cópia de scratch, um literal de UI em inglês numa posição que o
+$ # A20 lê:  <View accessibilityLabel="Loading, please wait" testID="app-raiz-cn" />
+$ cd apps/native && node scripts/a20.mjs src            # o escopo de HOJE
+    escopo: ESTENDIDO (V1-A3 §A3.3 + labels em expressão, V1-PR3 + chave de objeto, V1-PR6)
+    arquivos varridos: 20
+    vocabulário: 45 termos · isenções do produto: 9
+    literais em posição de texto examinados: 72
+    acusações: 0
+  exit=0
+
+$ cd apps/native && node scripts/a20.mjs <scratch>/cn-app   # a MESMA máquina, com o App.tsx dentro
+    ACUSADO <scratch>/cn-app/App.tsx:240 [accessibilityLabel] "Loading, please wait" ← termo "loading"
+    escopo: ESTENDIDO (V1-A3 §A3.3 + labels em expressão, V1-PR3 + chave de objeto, V1-PR6)
+    arquivos varridos: 1
+    vocabulário: 45 termos · isenções do produto: 9
+    literais em posição de texto examinados: 1
+    acusações: 1
+  exit=1
+
+  => O motor acusa; o escopo é que não o leva ao arquivo. O conserto é de
+     ESCOPO, não de vocabulário, e o CN acima **reprova hoje** — é o que a
+     regra da div. 127 exige antes de aceitar qualquer conserto de gate.
+
+--------------------------------------------------------------------------------
+§6. CONTROLE NEGATIVO 2 — O G3 COM O ESCOPO DE HOJE × COM O ESCOPO DA W2
+--------------------------------------------------------------------------------
+Árvore B = cópia da árvore de trabalho com UMA linha do catálogo apagada do
+`App.tsx` (`log('login-screen')`, a que prova o A5). O coletor é o do
+`g2g3.sh`, com os dois recortes.
+
+$ coleta-g3.sh . hoje   |  coleta-g3.sh <arvoreB> hoje    # escopo = apps/native/src
+  linhas antes=54  depois=54
+  SUMIRAM: []
+  VEREDITO: o G3 NÃO ACUSA — uma linha do catálogo sumiu e o gate diz 'nenhuma linha sumiu'
+
+$ coleta-g3.sh . w2     |  coleta-g3.sh <arvoreB> w2      # escopo = apps/native (menos test/ e scripts/)
+  linhas antes=57  depois=56
+  SUMIRAM: [App.tsx	log('login-screen');]
+  VEREDITO: o G3 ACUSA — e, sem errata declarada, reprova ✗
+
+  => O conserto proposto para o G3 é de UMA linha em cada ramo do `coleta()`:
+     trocar `apps/native/src` por `apps/native`, excluindo `test/` e `scripts/`
+     (que já são exceção declarada, pela nota do `vitest.config.mts`). O mesmo
+     vale para o G2 (testID) — hoje o `App.tsx` não tem nenhum, e é justamente
+     isso que o gate não saberia dizer se mudasse.
+
+--------------------------------------------------------------------------------
+§7. O CONSERTO, ARQUIVO A ARQUIVO
+--------------------------------------------------------------------------------
+  g2g3.sh   os dois ramos de `coleta()`: `apps/native/src` -> `apps/native`,
+            com `grep -vE '/apps/native/(test|scripts)/'`. Dois lugares por
+            ramo (testID e log), quatro linhas no total.
+  a20.mjs   o argv do `package.json`: `gate:a20` passa de `src` para `.`, com
+            uma lista de exclusão (`test`, `scripts`, `node_modules`, `android`,
+            `ios`) no `walk()` — senão ele varre o `__cn__` e reprova sempre.
+  g1.sh     o NUCLEO ganha `apps/native/App.tsx`. E a lista inteira muda de
+            conteúdo para a W2 (ver §8).
+  icones.mjs  nada: o escopo dele é um arquivo nomeado.
+  g7.sh     nada.
+
+--------------------------------------------------------------------------------
+§8. O QUE A W2 OBRIGA A REESCREVER NO G1 (e que não é a div. 123)
+--------------------------------------------------------------------------------
+A lista de exceções do G1a É O ESCOPO DECLARADO da PR (regra do W1, escrita no
+próprio script). A W2 tem outro escopo, logo outra lista:
+
+  G1a da W1 :  7 módulos do nativo + core exceto offline.ts
+               exceções: files.ts · prefetch.ts · core/offline.ts
+  G1a da W2 :  os NOVE módulos do nativo (os 7 + files.ts + prefetch.ts)
+               + **App.tsx** (div. 123) + `packages/core/src` INTEIRO
+               exceção: **StageScreen.tsx**, e só ela
+
+E o que o G1 continua sem cobrir, que é a div. 108 e não a 123: o
+`StageScreen.tsx` nunca esteve em lista nenhuma do G1 — quem afirma que ele
+não mudou de comportamento é o aceite no aparelho, não um diff.
