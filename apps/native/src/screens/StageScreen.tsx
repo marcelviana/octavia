@@ -782,6 +782,29 @@ function Arquivo({
  * **pressionado** (moldura `muted`, fundo da tinta a 8 %, só com o dedo
  * encostado). Sem rótulo textual: o nome é o `accessibilityLabel` (§6.4) e o
  * motivo do inerte vai para a linha acima da barra, ao toque (A15).
+ *
+ * ---------------------------------------------------------------------------
+ * W2 — O INERTE TAMBÉM PRECISA SAIR NA ÁRVORE (div. 118)
+ *
+ * Até aqui o `inativo` virava `estado` e `tinta`, e mais nada: DESENHO puro.
+ * Medido nos dumps do V1-PR7, nos dois aparelhos: a sub-árvore da barra é
+ * IDÊNTICA no estado ativo e no inerte — mesmos sete `bounds`, todos com
+ * `enabled=true clickable=true`. A única diferença entre "posso usar" e "não
+ * posso" era o `content-desc`. Para quem navega pela árvore os dois estados
+ * eram o MESMO estado: o leitor anuncia um botão utilizável e "indisponível"
+ * chega como parte do nome, não como propriedade.
+ *
+ * E tem de ser esta linha, não a outra:
+ *
+ *     ✅  accessibilityState={{ disabled: inativo === true }}
+ *     ❌  disabled={inativo === true}
+ *
+ * O `disabled` do `Pressable` IMPEDIRIA o `onPress` — e é o `onPress` do
+ * inerte que revela o motivo na linha acima da barra. Consertaria a árvore e
+ * quebraria o A15 exatamente na metade que a errata do PRD acabou de fixar.
+ * O aceite da W2 mede as duas coisas no mesmo toque: `enabled=false` no dump
+ * E o motivo ainda aparecendo.
+ * ---------------------------------------------------------------------------
  */
 function Controle({
   icone,
@@ -820,6 +843,7 @@ function Controle({
       }}
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel}
+      accessibilityState={{ disabled: inativo === true }}
       testID={testID}
     >
       <Icone nome={icone} tamanho={28} cor={tinta} estado={estado} />
