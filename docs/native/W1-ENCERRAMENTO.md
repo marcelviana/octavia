@@ -373,6 +373,12 @@ decidiu não fazer*. A diferença importa para quem ler depois.
      vem antes do que ele mede**;
   2. a div. 109 (a barra do palco) + a div. 118 (o `accessibilityState` dos inertes) — a
      PR de forma que já estava desenhada, com veredito visual;
+     <!-- ERRATA W2 (2026-09-15): onde este bloco (e o §H5 do W1-PRECHECK, que ele
+          resume) diz que "a fronteira por função é a fronteira por estado", está
+          ERRADO — decisão do Marcel no aval da W2. O grupo da esquerda tem QUATRO
+          controles e só TRÊS podem ficar inertes; o `tema` nunca fica. A redação que
+          passa a valer: **os três que podem ficar inertes estão todos no grupo da
+          esquerda, que tem quatro.** -->
   3. a div. 125 (a mensagem em inglês no S3e), que é escolha de texto de UI;
   4. **a medição do build de release** (opção (b) da decisão 1): se o progresso em voo
      existir fora do dev client, o teto de inatividade volta a ser implementável — e aí o

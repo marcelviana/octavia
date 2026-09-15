@@ -292,7 +292,12 @@ código (`StageScreen.tsx:807-827`): o componente `Controle` não põe `disabled
 3. **Ela ganhou escopo.** Com a div. 118, "alinhar os três à direita" passa a ter um
    companheiro natural: **dar aos inertes o `accessibilityState`** que a E3 já afirma que
    eles têm. A fronteira por função é a fronteira por estado — a própria medição do V1 diz
-   isso — e agora as duas metades têm conserto. Isso é uma PR de forma, com veredito visual,
+   isso — e agora as duas metades têm conserto.
+   <!-- ERRATA W2 (2026-09-15): "a fronteira por função é a fronteira por estado" está
+        ERRADO, por decisão do Marcel no aval da W2. O grupo da esquerda tem QUATRO e só
+        TRÊS podem ficar inertes (o `tema` nunca fica): a fronteira de estado é
+        SUBCONJUNTO da de função. Redação que vale: **os três que podem ficar inertes
+        estão todos no grupo da esquerda, que tem quatro.** --> Isso é uma PR de forma, com veredito visual,
    não um apêndice.
 
 A Proposta A já está decidida pelo Marcel e conferida contra V1-A8, V1-A14 e as bordas do

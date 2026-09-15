@@ -1,0 +1,110 @@
+================================================================================
+W2-B — OS ACEITES DA PR, COM INSTRUMENTO E CONTROLE NEGATIVO
+================================================================================
+Rastro de medição. 2026-09-15, AVD `octavia_tab32` (emulator-5554), avião
+conferido pelo `ping`. **Tab S6: zero comandos.**
+
+--------------------------------------------------------------------------------
+A13 — PDF DE 12 PÁGINAS DO CACHE EM MODO AVIÃO, 12 NAVEGÁVEIS
+--------------------------------------------------------------------------------
+Obrigatório nesta PR: o W1 o deixou sem rodar (decisão 4 do aval dele) e a W2
+**é** a PR do palco. Isto fecha a dívida 5 do W1.
+
+INSTRUMENTO: o log do próprio app (`pdf-render` e `pdf-page`) mais o `text` do
+dump. O arquivo é o do store, `sha256 ad2eae09…`, 242.176 B, que NÃO foi baixado
+nesta sessão (o sha é o mesmo do fim do W1).
+
+  $ pingprova
+    setting=1
+    connect: Network is unreachable        <- avião é o ping falhando
+
+  OCTAVIA: file src=disk name=1786218429715-ux-audit-partitura-12p.pdf bytes=242176
+  OCTAVIA: pdf-render pages=12 src=disk
+  OCTAVIA: pdf-page n=1/12
+  OCTAVIA: pdf-page n=2/12
+  ... (3, 4, 5, 6, 7, 8, 9, 10, 11)
+  OCTAVIA: pdf-page n=12/12
+
+  E a tela, no fim (`DEPOIS-14-A13-pagina-12.xml`):
+    'página 12 de 12'
+    '[UX-AUDIT] Partitura de 12 páginas · Compositor Anônimo · Partitura'
+
+  >> A13 ✓ — 12 de 12, `src=disk`, sem rede.
+
+  NOTA DE CONDUÇÃO, para quem repetir: a borda direita avança a MÚSICA, não a
+  página. Virar página é DESLIZE, e **vertical** — a primeira tentativa com
+  `input swipe` horizontal não virou nada e o toque na borda percorreu a
+  setlist inteira (`nav n=3/8` … `end-of-setlist n=8`). O `enablePaging` do
+  `react-native-pdf` é no eixo Y. Instrumento errado, não app errado.
+
+  DE BRINDE, e não pedido: as seis trocas de música que o erro produziu deram
+  `t=33, 28, 29, 27, 32, 23` ms — bem sob os 100 ms do A17. No emulador, e a
+  div. 37 vale: não é medição de tempo que conte.
+
+--------------------------------------------------------------------------------
+A15 — AUTO-SCROLL: INERTE EM PDF COM O MOTIVO AO TOQUE
+--------------------------------------------------------------------------------
+A metade que esta PR podia quebrar, e o CN dela: ver `W2-C` §3. Resumo:
+
+  toque no `auto-scroll` inerte -> linha-motivo: 'auto-scroll só em texto'
+  toque no `zoom-menos` inerte  -> linha-motivo: 'pinça para zoom'
+  toque no `zoom-mais`  inerte  -> linha-motivo: 'pinça para zoom'
+  e o log: OCTAVIA: autoscroll disabled kind=pdf   <- o onPress RODOU
+
+  >> A15 (metade do inerte) ✓ — `enabled=false` na árvore E o motivo ao toque,
+  >> ao mesmo tempo. É a prova de que a linha escolhida foi
+  >> `accessibilityState` e não `disabled`.
+
+  A metade de TEMPO (`< 100 ms` em texto) **não se conclui aqui**, e vai
+  declarado: cinco amostras no AVD deram 797 · 163 · 33 · 18 · 61 ms (as duas
+  primeiras são aquecimento). A **div. 37** diz que latência de frame não se
+  mede no emulador, e o Tab S6 está fora desta PR por ordem do prompt. A
+  referência do bloco continua sendo o V1-PR7 no Tab S6: 36 · 36 · 39 · 41 · 37
+  ms (n=5). Esta PR não toca o caminho do auto-scroll.
+
+--------------------------------------------------------------------------------
+A20 — NENHUM LITERAL DE UI EM INGLÊS
+--------------------------------------------------------------------------------
+Duas metades, e as duas passam — mas por instrumentos diferentes, que é o que a
+div. 130 obriga a dizer:
+
+  o GATE (literal no código)  : `node scripts/a20.mjs .` -> 22 arquivos,
+                                72 literais, **0 acusações**, exit 0
+  o ACEITE (o que a tela deu) : 128 cadeias distintas dos dumps do DEPOIS,
+                                4 acusações, **as quatro são `Unknown Artist`**,
+                                que é DADO da conta de audit, não literal do app
+
+  >> A20 ✓, com a ressalva escrita: o gate não representa o aceite inteiro, e a
+  >> div. 139 mostra que nem o dump representa. Detalhe em `W2-D` §3.
+
+--------------------------------------------------------------------------------
+A14 / A8 — CONFERÊNCIA, NÃO CONSERTO
+--------------------------------------------------------------------------------
+  sete controles ≥ 64 dp      : 65,8–66,2 dp, os sete, antes E depois
+  mesma ordem                 : auto-scroll · zoom− · zoom+ · tema · indice ·
+                                busca · sair, nas doze combinações
+  x1 iguais entre variantes   : sim — os sete x1 são idênticos nas seis
+                                variantes e nos dois temas, antes e depois
+  G5 (alvo ≥ 48 dp)           : 138 alvos / 15 estados, **0 abaixo**
+  G6 (todo alvo tem id)       : 15 estados, **0 falhas**
+  rotação                     : retrato medido (`W2-C` §7) — as duas margens
+                                continuam 24,0 dp e os quatro da esquerda não
+                                se mexem
+
+  >> A14 e A8 intactos. Mover caixa não mudou caixa.
+
+--------------------------------------------------------------------------------
+OS ACEITES NOVOS DA W2
+--------------------------------------------------------------------------------
+  W2-A1  os sete x1 em dois grupos, margem direita = esquerda = 24,0 dp
+         ✓  884,0 · 965,8 · 1048,0 dp; margem dir 24,0 = margem esq 24,0
+            (`W2-C` §1, doze combinações)
+  W2-A2  três inertes `enabled=false`, quatro `enabled=true`, no MESMO dump
+         ✓  `DEPOIS-03-S3d-escuro.xml` (`W2-C` §2)
+  W2-A3  o motivo ainda aparece ao toque depois de (2)
+         ✓  os três, `W2-C` §3 — e é o CN do conserto de uma linha
+  W2-A4  nenhuma frase em inglês chega ao `download-erro`, com erro provocado
+         ✓  'não consegui baixar' (`W2-D` §2)
+  W2-A5  os dois CN de gate do commit 1 reprovam sobre `f58259e`
+         ✓  e são TRÊS, não dois: o do G3, o do a20 e o do MECANISMO
+            (`W2-A` §1–§3)

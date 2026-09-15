@@ -39,7 +39,7 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "type-check": "tsc --noEmit",
-    "gate:a20": "node scripts/a20.mjs src",
+    "gate:a20": "node scripts/a20.mjs .",
     "gate:a20:cn": "node scripts/a20.mjs scripts/__cn__",
     "gate:icones": "node scripts/icones.mjs src/icones/dados.ts",
     "gate:icones:cn": "node scripts/icones.mjs scripts/__cn__/IconesFalso.ts"

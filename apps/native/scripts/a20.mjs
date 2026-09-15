@@ -26,7 +26,22 @@
  * seção do S4. Tudo isso passava sem ser lido. É a mesma regra 1 que a PR5
  * aplicou ao `gate:icones`: o gate vem antes do que ele mede.
  *
- * Uso:  node scripts/a20.mjs src            → exit 0 se nenhuma acusação
+ * Acréscimo da W2 (declarado) — O ESCOPO, div. 123: a raiz passa de `src` para
+ * `.`, porque o `App.tsx` mora um nível acima de `src/` e era invisível para
+ * esta varredura como era para todas as outras. O motor NÃO muda: o controle
+ * negativo do pre-check injetou `accessibilityLabel="Loading, please wait"`
+ * numa cópia do `App.tsx` e esta mesma máquina acusou assim que a recebeu como
+ * raiz — o que falhava era a raiz, não o vocabulário. Com a raiz `.` vêm as
+ * EXCLUSÕES declaradas abaixo, senão a varredura entra no próprio `__cn__` e
+ * reprova sempre.
+ *
+ * E a ressalva que anda junto (div. 130): este gate acusa LITERAL em posição de
+ * texto, e o aceite A20 é maior do que ele. O que chega à tela do músico pela
+ * div. 125 é texto de UI em inglês que NÃO é literal — é valor de tempo de
+ * execução, vindo da biblioteca. **Nenhum escopo o alcança**, nem este. Quem o
+ * alcança é o teste `files-mensagem.test.ts`, do commit 4.
+ *
+ * Uso:  node scripts/a20.mjs .              → exit 0 se nenhuma acusação
  *       node scripts/a20.mjs scripts/__cn__ → o controle negativo: exit 1,
  *                                             4 acusações (A20Falso.tsx)
  * Como comando: `pnpm --filter native gate:a20` e `gate:a20:cn`.
@@ -34,7 +49,15 @@
 import { readFileSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 
-const RAIZ = process.argv[2] ?? 'src'
+const RAIZ = process.argv[2] ?? '.'
+/**
+ * EXCLUSÕES DECLARADAS do escopo (W2). `test/` e `scripts/` não são texto que
+ * o músico lê: são os testes e os próprios instrumentos — a mesma exclusão que
+ * o `vitest.config.mts` e o `g2g3.sh` já declaram. O resto sai por construção.
+ * Só vale para DIRETÓRIO DESCIDO: passar `scripts/__cn__` como raiz continua
+ * funcionando, que é como o `gate:a20:cn` roda.
+ */
+const NAO_DESCER = new Set(['test', 'scripts', 'node_modules', 'android', 'ios', '.expo', '.git', 'assets'])
 const VOCAB = ['loading','error','retry','search','no results','cancel','save','delete',
   'back','next','done','close','settings','offline','download','failed','submit','continue',
   'confirm','yes','try again','sign in','log in','log out','sign out','play','pause','home',
@@ -73,7 +96,8 @@ const ISENTAS = [
 
 const arquivos = []
 ;(function walk(d) { for (const e of readdirSync(d)) { const p = join(d, e)
-  if (statSync(p).isDirectory()) walk(p); else if (/\.tsx?$/.test(p)) arquivos.push(p) } })(RAIZ)
+  if (statSync(p).isDirectory()) { if (!NAO_DESCER.has(e)) walk(p) }
+  else if (/\.tsx?$/.test(p)) arquivos.push(p) } })(RAIZ)
 
 let acusacoes = 0, examinados = 0
 for (const f of arquivos.sort()) {
@@ -117,6 +141,7 @@ for (const f of arquivos.sort()) {
   }
 }
 console.log(`  escopo: ESTENDIDO (V1-A3 §A3.3 + labels em expressão, V1-PR3 + chave de objeto, V1-PR6)`)
+console.log(`  raiz: ${RAIZ} · não descidos: ${[...NAO_DESCER].join(', ')} (W2, div. 123)`)
 console.log(`  arquivos varridos: ${arquivos.length}`)
 console.log(`  vocabulário: ${VOCAB.length} termos · isenções do produto: ${ANGLICISMOS_DO_PRODUTO.length}`)
 console.log(`  literais em posição de texto examinados: ${examinados}`)

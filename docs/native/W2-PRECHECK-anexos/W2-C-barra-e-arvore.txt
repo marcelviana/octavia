@@ -1,0 +1,276 @@
+================================================================================
+W2-C — A BARRA DO PALCO (div. 109) E A ÁRVORE DE ACESSIBILIDADE (div. 118)
+================================================================================
+Rastro de medição. 2026-09-15, worktree `../octavia-w2`, sem commit e
+**SEM TOCAR APARELHO**: a geometria de hoje é relida do CÓDIGO e conferida
+contra os dumps que a V1-PR7 já mediu.
+
+--------------------------------------------------------------------------------
+§1. A GEOMETRIA DE HOJE, PELO CÓDIGO
+--------------------------------------------------------------------------------
+$ grep -n "barraBaixo\|controle:" -A6 apps/native/src/screens/StageScreen.tsx
+$ grep -n "space =\|bar =\|touch =" apps/native/src/theme.ts
+    // A geometria das seis molduras de S3 do design: caixa 66 × 66 (64 + a
+    // moldura de 1 de cada lado), gap 16, fileira de 558 dp, os mesmos sete x
+    // nas seis variantes (V1-PR3-PRECHECK §8.5, div. 36).
+    barraBaixo: {
+      height: bar.stage,
+      paddingHorizontal: space.xl,
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: space.lg,
+      borderTopWidth: bar.hairline,
+    },
+    controle: {
+      width: touch.stage + 2,
+      height: touch.stage + 2,
+      borderWidth: bar.hairline,
+      borderRadius: radius.control,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  58:export const space = { xs: 4, sm: 8, md: 12, lg: 16, xl: 24, xxl: 32, xxxl: 48 } as const
+  64:export const touch = { min: 48, list: 56, stage: 64 } as const
+  67:export const bar = { top: 64, stage: 96, hairline: 1 } as const
+
+  A conta que esses tokens produzem:
+    caixa do controle = touch.stage + 2 = 66 dp  (64 + 1 de moldura de cada lado)
+    folga             = space.lg       = 16 dp   (o `gap` da barra)
+    margem            = space.xl       = 24 dp   (paddingHorizontal)
+      auto-scroll  x1=  24.0 dp   x2=  90.0 dp
+      zoom-menos   x1= 106.0 dp   x2= 172.0 dp
+      zoom-mais    x1= 188.0 dp   x2= 254.0 dp
+      tema         x1= 270.0 dp   x2= 336.0 dp
+      indice       x1= 352.0 dp   x2= 418.0 dp
+      busca        x1= 434.0 dp   x2= 500.0 dp
+      sair         x1= 516.0 dp   x2= 582.0 dp
+      fileira = 7x66 + 6x16 = 558 dp   fim do 7º = 582 dp
+      VAZIO à direita, na janela de 1137.8 dp = 555.8 dp = 49% da barra
+
+$ sed -n '25,50p' docs/native/V1-PR7-anexos/V1-PR7-C-aceite-visual.txt   # o que o APARELHO mediu
+  A BARRA, MEDIDA (AVicones-A-texto.xml, janela de 2560 px = 1137,8 dp):
+    auto-scroll  x=[  54, 203]  66,2 dp   margem antes = 24,0 dp
+    zoom-menos   x=[ 239, 387]  65,8 dp   folga = 16,0 dp
+    zoom-mais    x=[ 423, 572]  66,2 dp   folga = 16,0 dp
+    tema         x=[ 608, 756]  65,8 dp   folga = 16,0 dp
+    ──────────────────────────────────── aqui muda de família, e a folga NÃO muda
+    indice       x=[ 792, 941]  66,2 dp   folga = 16,0 dp
+    busca        x=[ 977,1125]  65,8 dp   folga = 16,0 dp
+    sair         x=[1161,1310]  66,2 dp   folga = 16,0 dp
+    fim do último controle: 582,2 dp   ·   VAZIO à direita: 555,6 dp = 49% da barra
+
+  => Duas fontes independentes, o mesmo número: fileira 558 dp, fim do último
+     a 582 dp, 555,6–555,8 dp vazios = 49% da barra, sete folgas de 16,0 dp
+     iguais. O código REPRODUZ o dump. Nada a remedir no aparelho.
+
+--------------------------------------------------------------------------------
+§2. QUAIS TRÊS PODEM FICAR INERTES — CONFERIDO NO CÓDIGO
+--------------------------------------------------------------------------------
+$ grep -n "inativo=" apps/native/src/screens/StageScreen.tsx
+  600:          inativo={corpo === null}
+  615:          inativo={urlArquivo !== null}
+  627:          inativo={urlArquivo !== null}
+
+  ORDEM dos sete, verbatim do JSX (`testID`):
+    1 auto-scroll   2 zoom-menos   3 zoom-mais   4 tema
+    5 indice        6 busca        7 sair
+
+  Os que recebem `inativo`:
+    auto-scroll  <- `corpo === null`        (conteúdo que não é texto)
+    zoom-menos   <- `urlArquivo !== null`   (no PDF quem amplia é a pinça)
+    zoom-mais    <- `urlArquivo !== null`
+
+  => **CONFIRMADO**: os três que podem ficar inertes são `auto-scroll`,
+     `zoom-menos` e `zoom-mais` — os três PRIMEIROS, todos do grupo da
+     esquerda. Nenhum dos quatro restantes tem `inativo` em lugar nenhum do
+     arquivo. A fronteira por função é a fronteira por estado, agora lida no
+     código e não só no dump.
+
+     Uma precisão que o achado do V1 não tinha: o grupo da esquerda tem
+     QUATRO (o `tema` é comportamento da tela), e só TRÊS deles podem ficar
+     inertes. O `tema` nunca fica. A fronteira de estado é subconjunto da
+     fronteira de função, não igual a ela.
+
+--------------------------------------------------------------------------------
+§3. O QUE O DESENHO DESENHA PARA A BARRA — E SE ISSO RESOLVE A 109
+--------------------------------------------------------------------------------
+$ grep -n "^### 5.3 Barras" -A10 docs/native/DESIGN-V1/README.md
+$ grep -n "^## 8 · Propostas" -A4 docs/native/DESIGN-V1/README.md
+  ### 5.3 Barras
+  
+  | barra | dp | token |
+  | --- | --- | --- |
+  | do palco (topo) | 64 | `bar.top` |
+  | superior (S2, S4) | 88 | **minha** — `bar.top` + 24 |
+  | superior (S1) | 120 | **minha** |
+  | inferior do palco | 96 | `bar.stage` |
+  | hairline | 1 | `bar.hairline` |
+  
+  `bar.top` = 64 e `bar.stage` = 96 são verbatim; as duas barras superiores de lista são minhas, e nenhuma delas existe como token hoje.
+
+  A §5.3 dá à barra inferior do palco 96 dp de ALTURA e mais nada: o
+  documento não tem uma linha sobre a distribuição horizontal dos sete. As seis
+  molduras do S3 no `telas.html` são IMAGENS (PNG embutido em base64), e o que
+  elas mostram é a fileira contígua que o app já desenha — "os mesmos sete x
+  nas seis variantes" (V1-PR3-PRECHECK §8.5, div. 36).
+
+  A §8 ("Propostas — fora do escopo, decisão do dono do app") tem quatro
+  propostas: 8.1 chevrons, 8.2 os cinco desabilitados, 8.3 ordenação por data,
+  8.4 a marca. **Nenhuma é sobre a barra.**
+
+  => O DESENHO NÃO RESOLVE A 109 — ele desenha o problema. Mas isto **não
+     torna a W2 um desenho novo**, e é a distinção que importa: a Proposta A
+     JÁ ESTÁ DECIDIDA pelo Marcel (2026-09-14), com número, e conferida contra
+     V1-A8, V1-A14 e as bordas do A14:
+  DUAS COISAS QUE A MEDIÇÃO ACRESCENTA AO ACHADO:
+    1. O DESENHO JÁ TINHA DEVOLVIDO ESSA METADE E NÃO LHE DEU SIGNIFICADO. O README §5.4
+       registra que a fileira encolheu de 814,2 para 592 dp "devolve 222 dp" e para aí.
+       Medido hoje: 582,2 dp de fileira, 555,6 dp de sobra sem função.
+    2. A FRONTEIRA POR FUNÇÃO É TAMBÉM A FRONTEIRA POR ESTADO. Os três controles que podem
+       ficar inertes (auto-scroll, zoom−, zoom+) são TODOS do grupo da esquerda; nenhum do
+       grupo da direita jamais fica inerte. As sete folgas são 16,0 dp iguais.
+  
+  PROPOSTA A — decidida pelo Marcel, 2026-09-14:
+                            hoje            proposta A
+    comportamento (4)   x 54…756 px       x 54…756 px          (não muda)
+    navegação (3)       x 792…1310 px     x 1987…2506 px       (+531,1 dp cada)
+    vão entre grupos    16,0 dp           547,1 dp
+    margem direita      555,6 dp vazios   24,0 dp — a mesma da esquerda
+    grupo de navegação: 3 × 66,2 + 2 × 16,0 = 230,7 dp
+  
+
+  A CONTA DA PROPOSTA A, reproduzida aqui a partir dos tokens (não do dump):
+      grupo de navegação (3) = 3x66 + 2x16 = 230 dp
+      x1 do indice, alinhado à direita = 1137.8 - 24 - 230 = 883.8 dp  (1989 px)
+      vão entre os grupos = 547.8 dp
+      margem direita = 24 dp, a mesma da esquerda
+      IMPLEMENTAÇÃO: um <View style={{ flex: 1 }} /> entre `tema` e `indice`.
+      Com o gap de 16 já existente, o espaçador mede 515.8 dp e o vão
+      fica 16 + 515.8 + 16 = 547.8 dp — a Proposta A pede 547,1.
+
+  => O vão calculado bate com o da Proposta A dentro do arredondamento da
+     largura da janela (2560 px / 2,25 = 1137,78 dp). **A implementação é uma
+     View com `flex: 1`** — não é número cravado, e por isso vale em qualquer
+     largura, inclusive no Tab S6 e em retrato.
+
+  O QUE ISSO CUSTA AO CONGELADO: as seis molduras do S3 no `telas.html` passam
+  a mostrar uma barra que o app não desenha mais. Nenhum gate quebra — o
+  `gate:icones` cobra DESENHO DE ÍCONE contra o `telas.html`, não layout —, mas
+  o documento fica mentindo, e a §9 do DESIGN-V1 tem quinze erratas
+  (E1…E15) justamente para esse caso. **A W2 deve a décima sexta, E16.**
+
+--------------------------------------------------------------------------------
+§4. A div. 118 — O MECANISMO, LIDO NO CÓDIGO
+--------------------------------------------------------------------------------
+$ grep -rn "accessibilityState\|disabled=" apps/native/src
+  apps/native/src/screens/SetlistsScreen.tsx:226:            accessibilityState={{ disabled: !podeBaixar }}
+  apps/native/src/screens/LoginScreen.tsx:163:            disabled={!podeEnviar}
+
+  => No app inteiro há DOIS jeitos de marcar desabilitado, e o palco não usa
+     nenhum dos dois:
+       LoginScreen.tsx:163   `disabled={!podeEnviar}`          (no Pressable)
+       SetlistsScreen.tsx:226 `accessibilityState={{disabled: !podeBaixar}}`
+
+  O `Controle` do palco (StageScreen.tsx:786-828):
+  }): React.JSX.Element {
+    const estado: EstadoIcone = inativo === true ? 'inerte' : ativo === true ? 'ativo' : 'normal'
+    const tinta = inativo === true ? cor.lineInfo : ativo === true ? cor.accent : cor.text
+    return (
+      <Pressable
+        style={({ pressed }) => [
+          styles.controle,
+          { borderColor: ativo === true ? cor.accent : pressed ? cor.muted : cor.lineInfo },
+          ativo === true && { backgroundColor: `${cor.accent}1F` },
+          pressed && ativo !== true && { backgroundColor: `${cor.text}14` },
+        ]}
+        onPress={() => {
+          if (inativo === true && motivo !== undefined) onMotivo(motivo)
+          onPress()
+        }}
+        accessibilityRole="button"
+        accessibilityLabel={accessibilityLabel}
+        testID={testID}
+      >
+        <Icone nome={icone} tamanho={28} cor={tinta} estado={estado} />
+      </Pressable>
+    )
+
+  => O `inativo` vira APENAS `estado: EstadoIcone` e `tinta` — desenho. O
+     `Pressable` não recebe `disabled`, não recebe `accessibilityState`. Daí o
+     `enabled=true clickable=true` que o dump `AVicones-B2-pdf-inertes.xml`
+     registrou. **A errata E3 afirma `enabled=false`; o palco tem `true`.**
+
+  POR QUE O S0 SAI `enabled=false` E O PALCO NÃO: o S0 usa `disabled` de
+  verdade, e o React Native mapeia `disabled` do Pressable para o
+  `AccessibilityNodeInfo.setEnabled(false)` do Android. O palco não o usa.
+
+  O CONSERTO É DE UMA LINHA — E TEM DE SER A LINHA CERTA:
+
+    ✅  accessibilityState={{ disabled: inativo === true }}
+    ❌  disabled={inativo === true}
+
+  O `disabled` do Pressable **impediria o onPress**, e o onPress do inerte é o
+  que revela o motivo na linha acima da barra:
+
+      onPress={() => { if (inativo === true && motivo !== undefined) onMotivo(motivo); onPress() }}
+
+  Ou seja: usar `disabled` consertaria a árvore e QUEBRARIA o A15 na metade
+  que a errata do PRD acabou de fixar ("o motivo é revelado AO TOQUE, por
+  MOTIVO_MS = 2500"). É o caso clássico de conserto de uma linha que só é de
+  uma linha se for a linha certa — e o CN do aceite tem de mostrar o motivo
+  ainda aparecendo DEPOIS do conserto, senão o conserto passou por cima do A15.
+
+--------------------------------------------------------------------------------
+§5. O CONTROLE NEGATIVO DO GATE NOVO JÁ ESTÁ COMMITADO — E DIZ MAIS DO QUE A 118
+--------------------------------------------------------------------------------
+Os dumps do V1-PR7 estão versionados. Lê-los NÃO é tocar aparelho.
+
+$ python3 — extrai enabled/clickable/bounds dos sete controles de cada dump
+  == Tab S6 · TEXTO, os sete ATIVOS ==
+     auto-scroll  enabled=true  clickable=true  bounds=[54,1311][203,1459]      desc=Rolagem automática, desligada
+     zoom-menos   enabled=true  clickable=true  bounds=[239,1311][387,1459]     desc=Diminuir o texto
+     zoom-mais    enabled=true  clickable=true  bounds=[423,1311][572,1459]     desc=Aumentar o texto
+     tema         enabled=true  clickable=true  bounds=[608,1311][756,1459]     desc=Mudar para o tema claro
+     indice       enabled=true  clickable=true  bounds=[792,1311][941,1459]     desc=Abrir o índice da setlist
+     busca        enabled=true  clickable=true  bounds=[977,1311][1125,1459]    desc=Buscar na biblioteca
+     sair         enabled=true  clickable=true  bounds=[1161,1311][1310,1459]   desc=Sair do palco
+  
+  == Tab S6 · PDF, os tres primeiros INERTES ==
+     auto-scroll  enabled=true  clickable=true  bounds=[54,1311][203,1459]      desc=Rolagem automática, indisponível: só em text
+     zoom-menos   enabled=true  clickable=true  bounds=[239,1311][387,1459]     desc=Diminuir o texto, indisponível: pinça para z
+     zoom-mais    enabled=true  clickable=true  bounds=[423,1311][572,1459]     desc=Aumentar o texto, indisponível: pinça para z
+     tema         enabled=true  clickable=true  bounds=[608,1311][756,1459]     desc=Mudar para o tema claro
+     indice       enabled=true  clickable=true  bounds=[792,1311][941,1459]     desc=Abrir o índice da setlist
+     busca        enabled=true  clickable=true  bounds=[977,1311][1125,1459]    desc=Buscar na biblioteca
+     sair         enabled=true  clickable=true  bounds=[1161,1311][1310,1459]   desc=Voltar para a busca
+  
+  == AVD octavia_tab32 · PDF, INERTES (A15) ==
+     auto-scroll  enabled=true  clickable=true  bounds=[54,1284][203,1432]      desc=Rolagem automática, indisponível: só em text
+     zoom-menos   enabled=true  clickable=true  bounds=[239,1284][387,1432]     desc=Diminuir o texto, indisponível: pinça para z
+     zoom-mais    enabled=true  clickable=true  bounds=[423,1284][572,1432]     desc=Aumentar o texto, indisponível: pinça para z
+     tema         enabled=true  clickable=true  bounds=[608,1284][756,1432]     desc=Mudar para o tema claro
+     indice       enabled=true  clickable=true  bounds=[792,1284][941,1432]     desc=Abrir o índice da setlist
+     busca        enabled=true  clickable=true  bounds=[977,1284][1125,1432]    desc=Buscar na biblioteca
+     sair         enabled=true  clickable=true  bounds=[1161,1284][1310,1432]   desc=Sair do palco
+  
+  TRÊS COISAS QUE ESTA EXTRAÇÃO ACRESCENTA:
+
+  1. **A sub-árvore da barra é IDÊNTICA nos dois estados.** Mesmos sete bounds,
+     mesmos `enabled=true clickable=true`, no dump dos ATIVOS e no dos INERTES,
+     nos DOIS aparelhos. A única diferença entre "posso usar" e "não posso" é o
+     `content-desc` ("…, indisponível: só em texto"). Para quem navega pela
+     árvore, **os dois estados são o mesmo estado**: o leitor de tela anuncia
+     um botão utilizável, e a frase "indisponível" vem como parte do nome, não
+     como propriedade. A div. 118 dizia "a E3 está errada"; isto diz **quanto**.
+
+  2. Os sete `x1` em px — 54 · 239 · 423 · 608 · 792 · 977 · 1161 — divididos
+     por 2,25 dão 24 · 106,2 · 188 · 270,2 · 352 · 434,2 · 516 dp: **exatamente
+     os sete que os tokens produzem** (§1). Terceira fonte independente, e a
+     única que é do aparelho.
+
+  3. **O controle negativo do G8 já existe, versionado, desde antes da PR**:
+       dumps-avd/A15-pdf-inerte.xml            (AVD — o aparelho da W2)
+       dumps-tabs6/AVicones-B2-pdf-inertes.xml (Tab S6)
+       dumps-tabs6/AVicones-A-texto.xml        (o estado ativo, para o par)
+     Os três reprovam as duas metades do gate novo: nem a barra em dois grupos,
+     nem o `enabled=false`. É o raro caso em que o CN não precisa ser fabricado.

@@ -1,0 +1,166 @@
+================================================================================
+W2-A — OS GATES DA PR, E OS TRÊS CONTROLES NEGATIVOS DO COMMIT 1
+================================================================================
+Rastro de medição, não fonte. 2026-09-15, worktree `../octavia-w2`, branch
+`w2/gate-barra-mensagem` a partir de `origin/main` (`f58259e`).
+Cada bloco abre com o comando que o gerou.
+
+--------------------------------------------------------------------------------
+§1. CN-1 — O G3, ANTES DO CONSERTO: A LINHA SOME E O GATE DIZ QUE ESTÁ TUDO BEM
+--------------------------------------------------------------------------------
+É a medição que a ORDEM DO MARCEL manda abrir o `W2-ENCERRAMENTO.md`, e ela
+REPROVA sobre `f58259e` — que é o que a regra da div. 127 exige antes de aceitar
+qualquer conserto de gate.
+
+$ sed -n '117p' apps/native/App.tsx        # a linha que PROVA o A5
+          log('login-screen')
+$ sed -i '' 117d apps/native/App.tsx       # apagada
+$ sh apps/native/scripts/g2g3.sh origin/main WORKTREE
+  G2 — testIDs  antes=43  depois=43
+    G2: antes ⊆ depois ✓
+  G3 — linhas log( antes=54  depois=54
+    G3: nenhuma linha sumiu ✓
+  exit=0
+
+  >> UMA LINHA DO CATÁLOGO SUMIU E O GATE QUE EXISTE PARA IMPEDIR ISSO
+  >> RESPONDEU "nenhuma linha sumiu ✓".
+
+DEPOIS do conserto, a MESMA árvore com a MESMA linha apagada:
+
+$ sh apps/native/scripts/g2g3.sh origin/main WORKTREE
+  G3 — linhas log( antes=57  depois=56
+    linhas que SUMIRAM (cada uma tem de ser errata declarada):
+        apps/native/App.tsx	log('login-screen')
+    G3: linha sumiu SEM ERRATA ✗
+  exit=1
+
+E na árvore limpa, depois do conserto: **57 = 57**, que é a população certa
+(54 do escopo antigo + as três do `App.tsx`, todas catalogadas: `login-screen`,
+`auth uid=… src=…` e `download-error`). Div. 128.
+
+--------------------------------------------------------------------------------
+§2. CN-2 — O `gate:a20`: O MOTOR ESTAVA INTEIRO, A RAIZ É QUE ERA CEGA
+--------------------------------------------------------------------------------
+Um literal de UI em inglês injetado no `App.tsx`:
+  <View accessibilityLabel="Loading, please wait" testID="app-raiz-cn" />
+
+ANTES (raiz `src`, numa CÓPIA de scratch, para não tocar a árvore):
+$ node scripts/a20.mjs src
+    arquivos varridos: 20
+    literais em posição de texto examinados: 72
+    acusações: 0
+  exit=0
+$ node scripts/a20.mjs <scratch>/cn-app        # a MESMA máquina, outra raiz
+    ACUSADO <scratch>/cn-app/App.tsx:240 [accessibilityLabel] "Loading, please wait" ← termo "loading"
+  exit=1
+
+DEPOIS (raiz `.`), com o literal na árvore de verdade:
+$ node scripts/a20.mjs .
+    ACUSADO App.tsx:240 [accessibilityLabel] "Loading, please wait" ← termo "loading"
+    raiz: . · não descidos: test, scripts, node_modules, android, ios, .expo, .git, assets (W2, div. 123)
+    arquivos varridos: 22
+    literais em posição de texto examinados: 73
+    acusações: 1
+  exit=1
+
+Árvore limpa, depois do conserto: 22 arquivos (20 + `App.tsx` + `index.ts`),
+72 literais, 0 acusações, exit 0. O `gate:a20:cn` continua reprovando com as
+mesmas 4 acusações do `A20Falso.tsx` — a raiz `scripts/__cn__` não é filtrada,
+porque a exclusão só vale para diretório DESCIDO.
+
+--------------------------------------------------------------------------------
+§3. CN-3 — O MECANISMO (div. 134): ARQUIVO NOVO ENTRA SOZINHO
+--------------------------------------------------------------------------------
+Um módulo novo em `apps/native/src`, fora das exceções, com NINGUÉM editando o
+script. Antes, com o `NUCLEO` de sete caminhos literais:
+
+$ cat > apps/native/src/cn-modulo-novo.ts    # 4 linhas, um export
+$ sh apps/native/scripts/g1.sh origin/main WORKTREE
+  G1a — diff vazio em 7 módulos do nativo + 12 arquivos de packages/core/src
+    G1a: DIFF VAZIO ✓
+  exit=0
+
+Depois, com o escopo derivado da união BASE∪HEAD:
+
+$ sh apps/native/scripts/g1.sh origin/main WORKTREE
+  G1a — diff vazio em 34 arquivos DERIVADOS de apps/native + packages/core/src
+    G1a: ARQUIVO NOVO no escopo, sem exceção declarada ✗
+        apps/native/src/cn-modulo-novo.ts
+  exit=1
+
+  >> Metade do gate acompanhava arquivo novo (o ramo do core, por `git ls-tree`)
+  >> e metade não (o `NUCLEO`, lista literal). A div. 123 é o que essa metade
+  >> produziu UMA vez; sem o mecanismo, ela produz de novo. É a causa, e por
+  >> isso as duas entram no mesmo commit.
+
+--------------------------------------------------------------------------------
+§4. OS GATES, POR COMMIT
+--------------------------------------------------------------------------------
+                             c1 gate   c2 a11y   c3 barra   c4 mensagem
+  G1a (diff vazio)              ✓ 33      ✓ 33      ✓ 33       ✓ 33
+  G1b (só adição no core)       ✓         ✓         ✓          ✓
+  G2  (testID antes ⊆ depois)   ✓ 43      ✓ 43      ✓ 43       ✓ 43
+  G3  (log( idênticas)          ✓ 57      ✓ 57      ✓ 57       ✓ 57
+  G4  = gate:a20                ✓ 0/22    ✓ 0       ✓ 0        ✓ 0
+       gate:a20:cn              ✗ 4 (como deve, nos quatro)
+  gate:icones                   ✓ 0       —         —          ✓ 0
+       gate:icones:cn           ✗ 18 (como deve)
+  G7  (integridade, vitest)     ✓ 25      ✓ 25      ✓ 25       ✓ 32
+  suíte (`pnpm test:unit`)      ✓ 801     —         —          ✓ 808
+  tsc nativo · core             ✓ · ✓     ✓ · ✓     ✓ · ✓      ✓ · ✓
+  lint                          ✓         ✓         ✓          ✓
+
+  G5 e G6 são de DUMP e correm no aceite, não por commit — §5.
+  O `tsc -p tsconfig.test.json` (informativo no CI) tem **151 erros**, todos em
+  `tests/ux-audit/`, e é o passivo de antes desta PR: nenhum arquivo dela entra
+  naquele projeto.
+
+--------------------------------------------------------------------------------
+§5. G5 E G6 SOBRE OS DUMPS DO DEPOIS
+--------------------------------------------------------------------------------
+$ node docs/native/V1-PR7-anexos/instrumentos/g5.mjs <15 dumps do DEPOIS>
+  alvos tocáveis medidos: 138 em 15 estados
+  ABAIXO de 48 dp: 0 ocorrências / 0 resource-ids
+  descartados por recorte (div. 21): 0
+  alvos SEM testID (inalcançáveis por resource-id): 0
+
+$ sh docs/native/V1-PR7-anexos/instrumentos/g6.sh <os mesmos 15>
+  estados: 15   falhas: 0
+
+  Os sete controles medem 65,8–66,2 dp depois da mudança, iguais aos de antes:
+  mover caixa não mudou caixa. V1-A8 e V1-A14 intactos.
+
+--------------------------------------------------------------------------------
+§6. O QUE ESTA PR NÃO CONSERTOU NOS GATES, E VAI DECLARADO
+--------------------------------------------------------------------------------
+  • **div. 129** — nenhum dos cinco gates de script RODA NO CI. `gate:a20`,
+    `gate:icones`, G1, G2/G3 e G7 são comando de mão. O que roda é a suíte, e é
+    por isso que o teste do commit 4 vale mais do que um gate novo aqui. A
+    conversão é da W3 (opção B do pre-check): mudar ESCOPO e INVÓLUCRO na mesma
+    PR é perder quem causou o quê.
+  • **div. 130** — o `gate:a20` acusa LITERAL; o aceite A20 é maior. Nenhum
+    escopo alcança a mensagem de tempo de execução. Não é conserto pendente: é
+    propriedade do instrumento, e quem cobre o buraco é o teste.
+  • **div. 136**, achada por esta PR — o coletor do G2 grepa a prop de teste sem
+    tirar comentário, e contou uma menção dentro de um bloco de documentação do
+    `files.ts` como `testID` novo. Falso positivo; não muda veredito (o G2 é
+    antes ⊆ depois). Contornado escrevendo a documentação de outro jeito, e o
+    conserto do coletor fica para a W3, pela mesma razão acima.
+  • **o G8** (o gate de dump que o pre-check propôs, §3) **não entra**: não está
+    na lista fechada da PR, e o controle negativo dele — os dumps de hoje — só
+    passou a existir como par completo agora. Fica para a W3, junto com a
+    conversão.
+  • **`StageScreen.tsx`** continua fora de qualquer G1, e **isso é a div. 108, NÃO
+    a div. 123** — as duas não devem se confundir, e o Marcel pediu a distinção
+    por escrito no aval da entrega (2026-09-15):
+
+        div. 123  um arquivo de produção INVISÍVEL para todo gate, por o gate
+                  varrer `src/` e ele morar um nível acima. **Esta PR fecha.**
+        div. 108  um arquivo DENTRO do escopo do G1 que é EXCEÇÃO declarada,
+                  porque a PR o muda de propósito. **Esta PR não fecha, e não
+                  pode**: quem afirma que o `StageScreen.tsx` não mudou de
+                  comportamento é o aceite no aparelho, não um diff.
+
+    A primeira é buraco de instrumento; a segunda é limite de método. Consertar a
+    123 não encolhe a 108 em um arquivo sequer — e é por isso que o aceite visual
+    desta PR não era opcional.

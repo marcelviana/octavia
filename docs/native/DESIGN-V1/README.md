@@ -575,6 +575,25 @@ O caso 3 **não existe no S4 por construção** — o índice de busca é feito 
 
 E o que o S4 **não** faz, por decisão: não diz "vazia" para um item sem corpo. O chip do S4 responde *que tipo é*; quem responde *se está íntegro* é o índice da setlist, que é onde o músico confere antes do show. Acrescentar o `sem-conteudo` ao S4 duplicaria o sinal no lugar errado. Onde: §6.4. Div. 94 da V1-PR6.
 
+**E16 — a barra inferior do palco passa a ter dois grupos, e as seis molduras do S3 deixam de descrever o app.** *(Decisão do Marcel, 2026-09-14, executada na W2; errata SEM redesenhar moldura, decisão 3 do aval da W2, 2026-09-15.)*
+
+O que o congelado diz sobre a barra inferior do palco é **só a altura**: a §5.3 lhe dá 96 dp (`bar.stage`) e nenhuma linha sobre distribuição horizontal. As seis molduras do S3 (`S3-letra`, `S3-claro`, `S3-avulsa`, `S3d`, `S3-nobody`, `S3e`) mostram a fileira contígua que o app desenhava, e a §8 (Propostas) não tem nenhum item sobre a barra. **O documento não resolvia a questão — ele a desenhava.**
+
+O que passa a valer no app (div. 109, Proposta A):
+
+| | antes | depois |
+| --- | --- | --- |
+| comportamento (`auto-scroll`, `zoom −`, `zoom +`, `tema`) | x1 24,0 · 106,2 · 188,0 · 270,2 dp | **iguais, não se mexem** |
+| navegação (`indice`, `busca`, `sair`) | x1 352,0 · 434,2 · 516,0 dp | **884,0 · 965,8 · 1048,0 dp** |
+| vão entre os grupos | 16,0 dp | **548,0 dp** |
+| margem direita | 555,6 dp vazios (49 % da barra) | **24,0 dp — a mesma da esquerda** |
+
+Medido no AVD `octavia_tab32` (2560 × 1600 @ 360 = 1137,8 dp), **nas seis variantes do S3 e nos dois temas**, antes e depois: `W2-anexos/W2-C-barra-e-arvore.txt`. A implementação é um `<View style={{ flex: 1 }} />` — não há número cravado, e por isso vale em qualquer largura.
+
+**Por que errata e não moldura nova**, e o precedente que o Marcel nomeia: *"o DESIGN-TELA-1 ficou intocado quando o V1 o substituiu. Documento congelado se anota por cima, não se reescreve."* O `telas.html` é fonte congelada de **desenho de ícone** — é o que o `gate:icones` cobra dele —, e nenhum gate quebra com a mudança; regravar seis PNGs para mover três caixas custa mais do que a errata resolve. As seis molduras do S3 continuam válidas para tudo menos a posição horizontal dos três de navegação, e **esta errata é o que diz isso**.
+
+**E a E3 deixa de ser falsa.** A E3 afirma que o inativo é "tinta e, na árvore, `enabled=false`"; até a W2 isso era verdade para o botão `entrar` do S0 e **falso** para os três controles do palco, que saíam `enabled=true clickable=true` (div. 118, e a errata do A15 no `PRD-TELA-1.md`). Com o `accessibilityState={{ disabled: … }}` da W2, o palco passa a cumprir a E3 — medido no S3d: os três inertes `enabled=false`, os quatro restantes `true`, `clickable=true` em todos (o `onPress` do inerte é o que revela o motivo, A15). **A E3 não precisa de errata; ela passou a descrever o app.** Onde: §5.3 e §7 (as seis molduras do S3). Div. 109 e 118 da W2.
+
 ---
 
 ## 10 · Proveniência

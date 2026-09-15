@@ -1,0 +1,173 @@
+================================================================================
+W2-B — OS GATES COMO TESTES: O QUE MUDOU, O QUE SE GANHA, O QUE SE PERDE (H2)
+================================================================================
+Rastro de medição. 2026-09-15, worktree `../octavia-w2`, sem commit.
+
+--------------------------------------------------------------------------------
+§1. O PROJETO `native` DO VITEST — O QUE ELE INCLUI E O QUE ELE EXCLUI
+--------------------------------------------------------------------------------
+$ ls apps/native/vitest.config.mts
+  ls: apps/native/vitest.config.mts: No such file or directory
+  => **Não existe.** O projeto `native` vive no `vitest.config.mts` DA RAIZ.
+     (A §2 do prompt do pre-check o listava para leitura; é premissa que não
+     se confirma — div. 133.)
+
+$ sed -n '/name: .native./,/^      },$/p' vitest.config.mts
+  test: {
+            name: 'native',
+            environment: 'node',
+            setupFiles: [],
+            globals: false,
+            include: ['apps/native/test/**/*.test.ts'],
+            exclude: ['node_modules/**'],
+          },
+          resolve: {
+            alias: {
+              'expo-file-system': path.resolve(__dirname, 'apps/native/test/fake-expo-file-system.ts'),
+            },
+          },
+        },
+
+  MEDIDO, e é o centro da pergunta:
+   • include  = `apps/native/test/**/*.test.ts`  — SÓ `test/`, não `src/`
+   • exclude  = `node_modules/**`
+   • environment `node`, `setupFiles: []`, `globals: false`
+   • alias `expo-file-system` -> o duplo de `apps/native/test/`
+   • o `exclude: ['apps/**']` do bloco `test` da raiz continua lá, e continua
+     valendo para os projetos `web` e `core`. O projeto `native` tem include
+     próprio e não o herda — é por isso que a exclusão "deixou de valer".
+
+$ grep -n "test:unit\|\"test\"" package.json ; grep -n "run: pnpm" .github/workflows/ci.yml
+  12:    "test": "pnpm exec vitest run",
+  15:    "test:ci": "vitest run --coverage --reporter=verbose",
+  18:    "test:unit": "pnpm run test",
+  1:name: CI
+  17:    - name: Install dependencies
+  18:      run: pnpm install --frozen-lockfile
+  19:    - name: Lint
+  20:      run: pnpm lint
+  21:    - name: Type-check dos testes (informativo — zerar o passivo e promover a bloqueante, PLANO-TRANSICAO B8)
+  22:      run: pnpm exec tsc -p tsconfig.test.json --noEmit
+  24:    - name: Type-check packages/core
+  25:      run: pnpm exec tsc -p packages/core/tsconfig.json --noEmit
+  26:    - name: Test
+  27:      run: pnpm test:unit
+  28:    - name: Test coverage
+  29:      run: pnpm test:ci
+  30:    - name: Upload coverage to Codecov
+  36:        name: codecov-umbrella
+  39:    - name: Upload coverage artifacts
+  43:        name: coverage
+  45:    - name: Build
+  46:      run: pnpm build
+
+  => `pnpm test:unit` -> `pnpm test` -> `vitest run` -> roda os TRÊS projetos,
+     `native` incluído. **O que o W1 abriu é isto: um teste em
+     `apps/native/test/` roda no CI, em toda PR, sem ninguém pedir.**
+
+--------------------------------------------------------------------------------
+§2. O QUE RODA NO CI HOJE, E O QUE NÃO RODA
+--------------------------------------------------------------------------------
+$ grep -n "run:" .github/workflows/native.yml
+
+  | instrumento              | roda no CI? | onde                                  |
+  |--------------------------|-------------|---------------------------------------|
+  | suíte (3 projetos)       | **SIM**     | ci.yml · `pnpm test:unit` / `test:ci`  |
+  | lint, tsc (web+core)     | SIM         | ci.yml                                 |
+  | type-check do nativo     | SIM         | native.yml (filtro de paths)           |
+  | APK de debug             | SIM         | native.yml                             |
+  | **gate:a20**             | **NÃO**     | só à mão, `pnpm --filter native`       |
+  | **gate:icones**          | **NÃO**     | só à mão                               |
+  | **G1 / G2 / G3 / G7**    | **NÃO**     | só à mão, `sh apps/native/scripts/*.sh`|
+
+  => A garantia dos cinco gates é hoje "alguém lembrou de rodar e colou a saída
+     no anexo". É verdade desde que existem, e não é regressão de ninguém —
+     mas é o argumento mais forte a favor da conversão, e não é o que o item 5
+     da §10 do W1-ENCERRAMENTO listava (lá o ganho era "um só runner"). **O
+     ganho real é CI.** Div. 129.
+
+--------------------------------------------------------------------------------
+§3. A SONDA — UM TESTE DO VITEST CONSEGUE FAZER O QUE OS DOIS SCRIPTS FAZEM?
+--------------------------------------------------------------------------------
+Pergunta do prompt: eles leem arquivos FORA de `apps/native` (o README do
+DESIGN-V1, o telas.html, o anexo D). Um teste consegue? Com que caminho?
+
+$ cat <scratch>/probe/gates-como-teste.test.ts     (resumo)
+    const AQUI = dirname(fileURLToPath(import.meta.url))
+    const RAIZ = <a raiz do repo>
+    it: readFileSync(join(RAIZ,'docs/native/DESIGN-V1/README.md'))
+    it: readFileSync(telas.html) + readFileSync(anexo D)
+    it: execFileSync(process.execPath, ['scripts/a20.mjs','src'], {cwd: apps/native})
+    it: CONTROLE NEGATIVO — execFileSync(... 'scripts/__cn__') tem de dar exit 1
+    it: execFileSync(process.execPath, ['scripts/icones.mjs','src/icones/dados.ts'])
+
+$ ./node_modules/.bin/vitest run --config <scratch>/probe/vitest.probe.mts
+   RUN  v4.0.16 /Users/marcelviana/projects/octavia-w2
+  stdout | ../../../..<scratch>/probe/gates-como-teste.test.ts
+    [sonda] import.meta.url resolveu para <scratch>/probe
+  stdout | ../../../..<scratch>/probe/gates-como-teste.test.ts > sonda H2 > lê o README do DESIGN-V1 por caminho relativo
+    [sonda] RAIZ = /Users/marcelviana/projects/octavia-w2 | README bytes = 57861
+  stdout | ../../../..<scratch>/probe/gates-como-teste.test.ts > sonda H2 > lê o telas.html e o anexo D
+    [sonda] telas.html bytes = 622224 | anexo D bytes = 15874
+  stdout | ../../../..<scratch>/probe/gates-como-teste.test.ts > sonda H2 > roda o gate:a20 como subprocesso e vê exit 0
+    literais em posição de texto examinados: 72 |   acusações: 0
+   ✓  sonda-native  ../../../..<scratch>/probe/gates-como-teste.test.ts (5 tests) 133ms
+   Test Files  1 passed (1)
+        Tests  5 passed (5)
+     Start at  10:42:46
+     Duration  254ms (transform 21ms, setup 0ms, import 30ms, tests 133ms, environment 0ms)
+
+  MEDIDO — 5 de 5 passam, 147 ms:
+   • `import.meta.url` funciona dentro do teste (a sonda imprimiu o próprio
+     diretório): a mesma âncora que o `icones.mjs` já usa hoje
+     (`resolve(dirname(fileURLToPath(import.meta.url)),'..','..','..')`);
+   • o caminho relativo de `apps/native/test/` até a raiz é `'..','..','..'` —
+     MEDIDO:
+    resolve(apps/native/test, .., .., ..) = /Users/marcelviana/projects/octavia-w2
+   • os três arquivos de fora foram lidos: README 57.861 B, telas.html
+     622.224 B, anexo D 15.874 B;
+   • o subprocesso roda e o exit code chega: o CN exigiu exit 1 e o obteve.
+
+  RESSALVA DA SONDA, para quem a repetir: ela vive no scratchpad, não em
+  `apps/native/test/`, então o `RAIZ` dela está fixado à mão. As duas primeiras
+  tentativas falharam por isso (ENOENT no README e `spawnSync … ENOENT`, este
+  último porque o `cwd` derivado estava errado, não porque o spawn seja
+  proibido). Registrado para que o erro não seja lido como limite do vitest.
+
+--------------------------------------------------------------------------------
+§4. O QUE SE PERDE, E O QUE NÃO SE PERDE
+--------------------------------------------------------------------------------
+$ grep -n "^export\|process.exit\|process.argv" apps/native/scripts/a20.mjs apps/native/scripts/icones.mjs
+  apps/native/scripts/icones.mjs:64:const MAPA = process.argv[2] ?? 'src/icones/dados.ts'
+  apps/native/scripts/icones.mjs:260:process.exit(acusacoes.length > 0 ? 1 : 0)
+  apps/native/scripts/a20.mjs:37:const RAIZ = process.argv[2] ?? 'src'
+  apps/native/scripts/a20.mjs:124:process.exit(acusacoes > 0 ? 1 : 0)
+
+  => **Nenhum dos dois exporta nada.** Os dois são script de topo-de-arquivo
+     com `process.exit`. Há duas formas de convertê-los, e elas têm preços
+     diferentes:
+
+  (A) REESCREVER como módulo importável (`export function a20(raiz)`), com um
+      CLI fino por cima.
+      perde: nada de escopo — a varredura continua de ARQUIVO;
+      custa: mexer nos dois scripts inteiros, na PR em que eles medem outra
+             coisa (a div. 123). É a reescrita de gate que o W1 recusou por
+             princípio, e por duas vezes.
+
+  (B) EMBRULHAR: o teste roda o script como subprocesso e afirma o exit code.
+      perde: **nada** — nem o exit code próprio, nem a saída legível (basta
+             capturar stdout e imprimi-la quando reprovar), nem o CN como
+             comando separado (`gate:a20:cn` continua existindo);
+      ganha: roda no `pnpm test`, logo no CI, em toda PR; o CN vira um `it` que
+             falha se o gate deixar de acusar — que é a regra da div. 127
+             virando código;
+      custa: **147 ms** para os cinco `it` da sonda, medidos acima;
+      não ganha: cobertura. Um subprocesso não instrumenta o processo do
+             vitest, então os dois scripts continuam fora do relatório de
+             cobertura. O item 5 da §10 do W1 dizia "aparecer na cobertura" —
+             com (B), **não aparece**. Com (A), aparece.
+
+  E o medo do item 5 — "um teste que IMPORTA módulo não vê o `.tsx` que não
+  importou" (div. 53 e div. 82) — **não se aplica a nenhuma das duas**: em (A)
+  e em (B) o instrumento continua sendo a varredura de arquivo. O que a div. 53
+  proíbe é trocar a varredura por importação, e ninguém propôs isso.

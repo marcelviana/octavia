@@ -1,0 +1,157 @@
+================================================================================
+W2-E — A FAIXA DE CI COM A #301, O T1, E A CONTABILIDADE DESTE PRE-CHECK
+================================================================================
+Rastro de medição. 2026-09-15, worktree `../octavia-w2`, sem commit.
+
+--------------------------------------------------------------------------------
+§1. A CORRIDA DA #301 ENTRA NA POPULAÇÃO
+--------------------------------------------------------------------------------
+O encerramento do W1 segurou a corrida da própria #301 de propósito, pelo
+regresso. Este pre-check é o lugar dela.
+
+$ gh run list --workflow=native.yml --limit 8 --json databaseId,conclusion,event,headSha,createdAt
+$ gh run view <id> --json jobs --jq '.jobs[] | "\(.name) \(.conclusion) \(.startedAt) -> \(.completedAt)"'
+  run=34966774801  android-debug-apk  success  2026-09-15T12:04:36Z -> 2026-09-15T12:13:55Z
+  run=34910579325  android-debug-apk  success  2026-09-14T23:49:43Z -> 2026-09-15T00:02:26Z
+  run=34791936599  android-debug-apk  success  2026-09-14T00:12:15Z -> 2026-09-14T00:24:47Z
+
+  run 34966774801 = a #301 (`5b80df0`, depois do rebase sobre a #302):
+      12:04:36Z -> 12:13:55Z = **9m19s** — confirma o número do prompt.
+  run 34910579325 = a #302 (`717104e`): 23:49:43Z -> 00:02:26Z = **12m43s**,
+      que é exatamente a 13ª medição já registrada. A conferência serve de
+      controle: a regra de leitura da população é o JOB `android-debug-apk`
+      de um run de `pull_request`.
+  run 34791936599 = a #299 (`b348da9`): 00:12:15Z -> 00:24:47Z = **12m32s**,
+      que é a 12ª já registrada. Confirma a mesma regra, por um segundo caso.
+
+--------------------------------------------------------------------------------
+§2. A FAIXA RECALCULADA
+--------------------------------------------------------------------------------
+$ python3 — sobre a série de 13 do W1-ENCERRAMENTO §6.1, mais 9m19s
+  CONTROLE — reconstrução da série de 13:
+    piso 9m16s  teto 14m11s  mediana 11m53s  média 11m48s  n=13
+    (o W1 cita 9m16s–14m11s, mediana 11m53s, n=13 — bate, logo a série está certa)
+  
+  COM A #301 (9m19s):
+    piso 9m16s  teto 14m11s  mediana 11m49s  média 11m37s  n=14
+    os dois do meio: 11m45s e 11m53s
+  
+    série ordenada:
+      9m16s · 9m19s · 10m15s · 11m22s · 11m35s · 11m39s · 11m45s · 11m53s · 11m55s · 11m57s · 12m21s · 12m32s · 12m43s · 14m11s
+
+  A FAIXA SE MOVE? **Nos extremos, não; na mediana, sim, e para trás.**
+   • piso 9m16s e teto 14m11s: intactos pela 14ª vez;
+   • a mediana volta de 11m53s para **11m49s** — com n par ela é a média dos
+     dois do meio (11m45s e 11m53s), que é exatamente onde ela estava em n=12.
+     Ela oscila entre 11m45s / 11m49s / 11m53s conforme a paridade de `n`;
+     os extremos não se mexem há catorze medições. **Citar a faixa, não a
+     mediana**, é a leitura que a regra da div. 80 pede.
+   • a média cai de 11m48s para 11m37s.
+
+  **Faixa a citar daqui em diante: 9m16s – 14m11s, mediana 11m49s, n = 14.**
+
+  O CORTE v3/v4 — e o que a #301 faz com ele. A 13ª (12m43s) era a única de
+  `v4`; agora são **duas**: 12m43s e **9m19s**. Série: **v3 (n=12) + v4 (n=2)**.
+  E a leitura muda de sinal: as duas de `v4` caem uma quase no PISO e outra
+  acima da mediana — ou seja, **o par v4 cobre quase toda a amplitude do v3**,
+  o que é evidência CONTRA "o v4 é sistematicamente diferente". Não é prova
+  (n=2), mas quem quiser partir a série agora tem de argumentar contra isto.
+
+  FORA DA POPULAÇÃO, e declarado para não virar arqueologia:
+   • run 34966363353 — `push` do merge da #302 na main: 12:00:17 -> 12:10:44 =
+     10m27s. É run de `push`, não de `pull_request`; a população da série é de
+     runs de PR (conferido pelos três casos do §1). **Não entra.**
+   • run 34975012521 — `push` do merge da #301 (`f58259e`): **em andamento** no
+     momento deste pre-check (iniciado 13:26:36Z, passo `Gradle assembleDebug`
+     correndo). Também é `push`. **Não entra.**
+
+--------------------------------------------------------------------------------
+§3. O T1 DA OPÇÃO C — QUANTAS AMOSTRAS EXISTEM DE VERDADE
+--------------------------------------------------------------------------------
+O W1 diz: "Esta PR começou a medir: a linha `file src=download` agora sai com
+`total=` e `ms=`, e as primeiras taxas já estão no anexo C."
+
+$ grep -rh "file src=download" docs/native/W1-anexos/ | grep "ms="
+  a linha `file src=download` agora sai com `total=` e `ms=`, e as corridas
+  apps/native/src/files.ts	log(`file src=download name=${name} bytes=${bytes} total=${esperado ?? '-'} ms=${Date.now() - comecou}`)
+  OCTAVIA: file src=download name=w1-fila-2.pdf bytes=242176 total=242176 ms=88
+  OCTAVIA: file src=download name=w1-fila-3.pdf bytes=242176 total=242176 ms=136
+  OCTAVIA: file src=download name=w1-fila-4.pdf bytes=242176 total=242176 ms=60
+  OCTAVIA: file src=download name=w1-fila-5.pdf bytes=242176 total=242176 ms=40
+  OCTAVIA: file src=download name=w1-fila-1.pdf bytes=242176 total=242176 ms=21092
+  OCTAVIA: file src=download name=w1-lento-1.pdf bytes=242176 total=242176 ms=20106
+  OCTAVIA: file src=download name=w1-lento-1.pdf bytes=242176 total=242176 ms=20088
+  OCTAVIA: file src=download name=w1-falhas-4.pdf bytes=242176 total=242176 ms=88
+  OCTAVIA: file src=download name=w1-falhas-5.pdf bytes=242176 total=242176 ms=120
+  OCTAVIA: file src=download name=w1-manual-1.pdf bytes=242176 total=242176 ms=73
+
+  contagem: 12 linhas com total= e ms=
+
+  E A LEITURA, que é o contrário do que a contagem sugere:
+
+  As doze linhas são de **fixtures servidas por um mock em `localhost:8788`**
+  (`w1-fila-*`, `w1-lento-*`, `w1-falhas-*`, `w1-manual-*`), várias delas com a
+  taxa ARTIFICIALMENTE estrangulada pelo próprio servidor de teste — 242.176 B
+  em 40 ms é ~6 MB/s de loopback; 242.176 B em 20.106 ms é um atraso que o
+  mock impôs de propósito.
+
+  **Para escolher um `T1`, a população continua sendo n = 0.** Nenhuma das doze
+  é um download real, por uma rede real, de um objeto real do bucket. A única
+  medição de rede que existe segue sendo a de 37 h com `n = 1` (V1, AV-1). A
+  opção C continua sem o número de que precisa, e a W2 não o adquire por ficar
+  parada — ele vem do uso, ou de uma sessão que baixe de prod contra o teto de
+  requests. **Div. 132.**
+
+--------------------------------------------------------------------------------
+§4. CONTABILIDADE DESTE PRE-CHECK
+--------------------------------------------------------------------------------
+  requests a `/api/*` em prod      **0**  (teto 4, alvo 0) — alvo cumprido
+  downloads de bucket              **0**  (teto 0)
+  logins · escrita pela API        0 · 0
+  comandos ao Tab S6               **0** — ver §5
+  comandos a QUALQUER aparelho     **0** — `adb` não foi invocado uma vez
+  commits · branches · pushes      0 · 0 · 0
+  mutação do repositório           nenhuma: `git status` limpo nas duas árvores
+  chamadas de rede feitas          só `gh` (api.github.com), para ler o CI
+
+$ cd /Users/marcelviana/projects/octavia   && git status --short --branch
+  ## main...origin/main
+$ cd /Users/marcelviana/projects/octavia-w2 && git status --short --branch
+  ## HEAD (no branch)
+  ?? docs/native/W2-PRECHECK-anexos/
+  (o `docs/native/W2-PRECHECK*` aparece como não rastreado, de propósito: o
+   retorno deste pre-check é rascunho no worktree, sem commit)
+
+$ ls -a /Users/marcelviana/projects/octavia-w2 | grep -i '^\.env'
+  .env.example
+  => Só o `.env.example`, que é RASTREADO e não tem segredo. **O scratch
+     nasceu sem `.env*`**, como a regra manda.
+
+--------------------------------------------------------------------------------
+§5. ESTADO DO EMULADOR E DO TAB S6, ANTES × DEPOIS
+--------------------------------------------------------------------------------
+$ which adb emulator
+  adb not found
+  emulator not found
+    adb not found / emulator not found
+  => Nenhum dos dois está no PATH desta sessão. **`adb` não foi invocado
+     nenhuma vez**, e é por construção — não por disciplina — que o Tab S6 não
+     recebeu comando: não havia com o quê.
+
+$ pgrep -fl "qemu-system|netsimd"     (filtrado)
+  31893 /Users/marcelviana/Library/Android/sdk/emulator/qemu/darwin-aarch64/qemu-system-aarch64 -avd octavia_tab32 -no-boot-anim
+  31929 /Users/marcelviana/Library/Android/sdk/emulator/netsimd --host-dns=192.168.15.1,192.168.68.1
+
+  ANTES: o AVD `octavia_tab32` **já estava de pé** ao início desta sessão (pid
+  31893, `-avd octavia_tab32 -no-boot-anim`) — sobra da sessão do W1, que o
+  encerrou por aval mas não desligou a máquina.
+  DEPOIS: **idêntico**. Nada foi enviado a ele, nada foi morto, nenhum
+  `emu kill`, nenhum `adb reverse` desfeito (não havia nenhum desta sessão).
+
+$ lsof -nP -iTCP:8081 -sTCP:LISTEN      # quem escuta a 8081 (div. 75)
+  (vazio — ninguém escuta a 8081; nenhum Metro de pé, nada a matar)
+
+  STORE: a baseline do fim do W1 está **intacta por construção** — ler o store
+  exige `adb shell`, e nenhum comando foi enviado. Os cinco sha256 não foram
+  reconferidos nesta sessão, e isso vai declarado, não suposto: quem os
+  reconferir é o aceite da W2.

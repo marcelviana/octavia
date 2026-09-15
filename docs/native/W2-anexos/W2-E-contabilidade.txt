@@ -1,0 +1,86 @@
+================================================================================
+W2-E — PROD, BUCKET, APARELHOS, REPOSITÓRIO E A FAIXA DE CI
+================================================================================
+Rastro de medição. 2026-09-15.
+
+--------------------------------------------------------------------------------
+§1. CONTABILIDADE
+--------------------------------------------------------------------------------
+  requests a `/api/*` em prod      **0**   (teto 4, alvo 0) — ALVO CUMPRIDO
+  downloads de bucket              **0**   (teto 0)
+  logins · escrita pela API        0 · 0
+  comandos ao Tab S6               **0**
+  commits · branches · pushes      5 · 1 · **0**
+  mutação do repositório           nenhum `pnpm add`; `package.json` do nativo
+                                   muda em UMA linha (o argv do `gate:a20`);
+                                   lockfile intacto
+
+  O ZERO DE PROD NÃO É CONFIANÇA, e tem três camadas independentes:
+   1. o AVD ficou em **modo avião a sessão inteira**, conferido pelo `ping` e
+      não pelo setting (`connect: Network is unreachable`), antes e durante;
+   2. o Metro subiu com `EXPO_PUBLIC_API_BASE_URL=http://localhost:8788`
+      **inline** — e não havia nada escutando naquela porta, então mesmo sem
+      avião a request morreria em recusa de conexão;
+   3. o app registrou `sync skip reason=offline` em **todas** as aberturas.
+
+  O ZERO DE BUCKET: as duas tentativas de download (uma antes, uma depois — o
+  aceite W2-A4 precisa do erro) morreram na **resolução de nome**, e a prova é
+  a própria mensagem: `Unable to resolve host "…supabase.co": No address
+  associated with hostname`. Zero bytes. Os sha256 dos dois PDFs do store são
+  os mesmos do fim do W1.
+
+  SEGREDO: nenhum `.env*` foi criado no worktree — `ls -a apps/native | grep
+  '^\.env'` dá só `.env.example`, que é rastreado e não tem valor. As chaves do
+  Firebase entraram **inline**, no ambiente de UM comando, lidas do checkout
+  principal e nunca escritas em arquivo nem impressas.
+
+--------------------------------------------------------------------------------
+§2. O EMULADOR E O TAB S6, ANTES × DEPOIS
+--------------------------------------------------------------------------------
+  ANTES  : o AVD `octavia_tab32` **já estava de pé**, pid 31893
+           (`-avd octavia_tab32 -no-boot-anim`) — sobra do W1, como o pre-check
+           da W2 já havia registrado. **Ninguém escutava a 8081** (div. 75,
+           conferido antes de qualquer coisa).
+  DURANTE: `adb reverse tcp:8081`, Metro desta árvore, o app aberto ~6 vezes,
+           rotação para retrato e de volta.
+  DEPOIS : pid **31893**, o mesmo — não foi subido nem morto por esta sessão.
+           `reverse --remove-all` feito **antes** do kill (div. 75), lista
+           vazia, 8081 livre, Metro morto por padrão de linha de comando (só o
+           desta árvore).
+
+  ROTAÇÃO: `user_rotation` de volta a 0 e `accelerometer_rotation` a 1. Vai
+  declarado que o valor ANTERIOR de `accelerometer_rotation` **não foi lido**
+  antes de ser mudado: se o AVD estava com auto-rotate desligado, esta sessão o
+  ligou.
+
+  TAB S6: aparece em `adb devices` (RX2N8000F3D, via USB) e **nunca foi
+  endereçado** — todo comando levou `-s emulator-5554`, e as funções do
+  `env.sh` desta sessão só definem `E()`/`RA()` para o emulador.
+
+  STORE: 4 dos 5 sha256 batem byte a byte com a baseline do fim do W1; o quinto
+  é o `files-index.json`, que mudou **dois `lastUsedMs`** e mais nada — detalhe
+  e delta em `W2-C` §5, com a fixture do S3-nobody instalada e restaurada.
+
+--------------------------------------------------------------------------------
+§3. A FAIXA DE CI
+--------------------------------------------------------------------------------
+  **9m16s – 14m11s · mediana 11m49s · n = 14**, com o corte
+  `v3 (n=12) + v4 (n=2)`, exatamente como o pre-check da W2 a deixou. Esta PR
+  **não acrescenta medição**: ela não foi empurrada, então o `native.yml` dela
+  ainda não correu. A corrida desta PR será a 15ª, e entra no encerramento.
+
+  A regra que continua valendo (div. 80): **citar a FAIXA, não a mediana.** Os
+  extremos não se mexem há catorze medições; a mediana oscila entre 11m45s,
+  11m49s e 11m53s com a paridade de `n`.
+
+  Sair da faixa é o que merece investigação — e esta PR tem um motivo plausível
+  para ficar dentro: ela acrescenta **um arquivo de teste** ao projeto `native`
+  do Vitest (7 casos, ~5 ms) e não toca nada do `native.yml`.
+
+--------------------------------------------------------------------------------
+§4. AMBIENTE LOCAL — O QUE ESTA SESSÃO MUDOU NA MÁQUINA
+--------------------------------------------------------------------------------
+  `pnpm install --frozen-lockfile` no worktree `../octavia-w2`, que tinha um
+  `node_modules/` VAZIO (16,4 s, pnpm 10.28.0). É instalação de dependências de
+  desenvolvimento a partir do lockfile commitado: não muda repositório, não
+  muda config, não cria `.env`. Declarado porque é mutação da máquina.

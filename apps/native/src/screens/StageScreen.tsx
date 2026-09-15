@@ -50,7 +50,7 @@ import {
   type ContentDTO,
   type SetlistDTO,
 } from '@octavia/core'
-import { ensureFile, fileNameFromUrl, hasFile, knownBytes } from '../files'
+import { ensureFile, fileNameFromUrl, fraseDaFalha, hasFile, knownBytes } from '../files'
 import { Icone, type EstadoIcone } from '../icones/Icone'
 import type { NomeIcone } from '../icones/dados'
 import { log } from '../log'
@@ -348,9 +348,16 @@ export function StageScreen({
         setArquivo({ fase: 'pronto', uri: r.uri })
         if (r.src === 'download') onArquivosMudaram()
       } catch (e: unknown) {
+        // DUAS metades, e de propósito (W2, div. 125). O `mensagem` é o
+        // DETALHE — com o nome do objeto e a URL já higienizada pelo `falha()`
+        // —, e é ele que continua indo para o log, porque é o que faz um
+        // relatório ser diagnosticável. O que o MÚSICO lê é a `fraseDaFalha()`,
+        // de um conjunto FECHADO de frases em pt-BR. Antes as duas eram a mesma
+        // coisa, e o palco mostrava `1751910900697-Easy_-_Guitar.pdf: Call to
+        // function 'FileSystemDownloadTask.start' has been rejected.`
         const mensagem = e instanceof Error ? e.message : 'falha ao baixar'
         log(`download-error ${mensagem}`)
-        setArquivo({ fase: 'erro', mensagem, bytes: knownBytes(url) })
+        setArquivo({ fase: 'erro', mensagem: fraseDaFalha(e), bytes: knownBytes(url) })
       }
     },
     [online, onArquivosMudaram],
@@ -638,6 +645,23 @@ export function StageScreen({
           onMotivo={revelarMotivo}
           testID="tema"
         />
+        {/* PROPOSTA A (div. 109) — decidida pelo Marcel em 2026-09-14.
+            A fileira contígua dos sete deixava 555,6 dp — 49 % da barra —
+            vazios à direita, medidos no dump do V1-PR7 e reproduzidos pelos
+            tokens. Os quatro de COMPORTAMENTO ficam onde estão (o polegar
+            apoia na borda e a posição aprendida se preserva, a decisão da Q4);
+            os três de NAVEGAÇÃO vão para a borda direita, com a mesma margem
+            de 24 dp da esquerda. O vão passa de 16 para ~547,8 dp, e é aí que
+            a fronteira por função vira fronteira que se VÊ.
+            É um espaçador `flex: 1`, não número cravado: vale em qualquer
+            largura, no Tab S6 e em retrato. Com o `gap` de 16 já existente o
+            espaçador mede ~515,8 dp e o vão fica 16 + 515,8 + 16 = 547,8 dp,
+            contra os 547,1 da Proposta A — a diferença é o arredondamento de
+            2560 px / 2,25.
+            O DESIGN-V1 §5.3 dá à barra só a ALTURA (96 dp) e nada sobre
+            distribuição horizontal; as seis molduras do S3 passam a mostrar
+            uma barra que o app não desenha mais, e isso é a errata E16. */}
+        <View style={styles.espacador} />
         <Controle
           icone="indice"
           accessibilityLabel="Abrir o índice da setlist"
@@ -782,6 +806,29 @@ function Arquivo({
  * **pressionado** (moldura `muted`, fundo da tinta a 8 %, só com o dedo
  * encostado). Sem rótulo textual: o nome é o `accessibilityLabel` (§6.4) e o
  * motivo do inerte vai para a linha acima da barra, ao toque (A15).
+ *
+ * ---------------------------------------------------------------------------
+ * W2 — O INERTE TAMBÉM PRECISA SAIR NA ÁRVORE (div. 118)
+ *
+ * Até aqui o `inativo` virava `estado` e `tinta`, e mais nada: DESENHO puro.
+ * Medido nos dumps do V1-PR7, nos dois aparelhos: a sub-árvore da barra é
+ * IDÊNTICA no estado ativo e no inerte — mesmos sete `bounds`, todos com
+ * `enabled=true clickable=true`. A única diferença entre "posso usar" e "não
+ * posso" era o `content-desc`. Para quem navega pela árvore os dois estados
+ * eram o MESMO estado: o leitor anuncia um botão utilizável e "indisponível"
+ * chega como parte do nome, não como propriedade.
+ *
+ * E tem de ser esta linha, não a outra:
+ *
+ *     ✅  accessibilityState={{ disabled: inativo === true }}
+ *     ❌  disabled={inativo === true}
+ *
+ * O `disabled` do `Pressable` IMPEDIRIA o `onPress` — e é o `onPress` do
+ * inerte que revela o motivo na linha acima da barra. Consertaria a árvore e
+ * quebraria o A15 exatamente na metade que a errata do PRD acabou de fixar.
+ * O aceite da W2 mede as duas coisas no mesmo toque: `enabled=false` no dump
+ * E o motivo ainda aparecendo.
+ * ---------------------------------------------------------------------------
  */
 function Controle({
   icone,
@@ -820,6 +867,7 @@ function Controle({
       }}
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel}
+      accessibilityState={{ disabled: inativo === true }}
       testID={testID}
     >
       <Icone nome={icone} tamanho={28} cor={tinta} estado={estado} />
@@ -896,6 +944,8 @@ const styles = StyleSheet.create({
     gap: space.lg,
     borderTopWidth: bar.hairline,
   },
+  /** O vão da Proposta A — ver o comentário no JSX da barra (div. 109). */
+  espacador: { flex: 1 },
   controle: {
     width: touch.stage + 2,
     height: touch.stage + 2,

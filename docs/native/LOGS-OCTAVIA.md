@@ -54,7 +54,7 @@
 | wake lock | `keepawake on\|off` | entrar/sair do palco (T1-R33) | A16 |
 | palco restaurado | `stage restore n=<i>/<N>` | o palco reganha foco vindo de uma tela EMPILHADA (índice, busca, palco avulso) — não na montagem inicial, não no palco avulso — **N1-D17** | A11, A14 |
 | pdf | `pdf-render pages=<n> src=disk` · `pdf-page n=<i>/<N>` · `pdf-error <msg>` | herdado do N0 (T1-R26) | A13 |
-| falha de download | `download-error <msg>` | o download rejeitou (T1-R26/R37) — **E5**. **Errata W1**: deixou de sair em UM lugar só (o `catch` do palco) e passa a sair também nos três caminhos de prefetch, um por rejeição (div. 114); e a `<msg>` é traduzida e higienizada num ponto só, porque ela vai para o log **e** para a tela do S3e — URI completa nunca entra em log (regra 2) | A13, **W1-A4** |
+| falha de download | `download-error <msg>` | o download rejeitou (T1-R26/R37) — **E5**. **Errata W1**: deixou de sair em UM lugar só (o `catch` do palco) e passa a sair também nos três caminhos de prefetch, um por rejeição (div. 114); e a `<msg>` é traduzida e higienizada num ponto só, porque ela vai para o log **e** para a tela do S3e — URI completa nunca entra em log (regra 2). **Errata W2**: a `<msg>` **deixa de ir para os dois lugares**. O log continua recebendo o DETALHE (o nome do objeto e a causa crua, com a URL higienizada), e a tela passa a receber uma frase de um conjunto FECHADO em pt-BR — ver a errata W2 no fim deste arquivo | A13, **W1-A4** |
 | cache de arquivos apagado | `files-cleared` | instrumento de prova; nenhuma UI chama — **E5** | A13 (controle negativo) |
 
 ## Errata E5 (2026-09-10, N1-PR5)
@@ -211,9 +211,38 @@ pergunta de produto continua aberta.
 > ponteiro para cá.
 
 O Marcel juntou quatro casos do bloco N1; o V1 acrescentou seis; o aceite da V1-PR7,
-mais três; o W1, mais dois. **São quinze, e é quase sempre o mesmo erro**: ler o que o
-instrumento mede como se fosse o que se queria saber. O 15º é a exceção, e é o mais
+mais três; o W1, mais dois; a W2, mais três. **São dezoito, e é quase sempre o mesmo
+erro**: ler o que o instrumento mede como se fosse o que se queria saber. O 15º é a
+exceção, e é o mais
 perigoso: um instrumento que mede **mais** do que a coisa medida.
+
+> ### E há uma coisa acima dos casos: **o que acontece quando TRÊS se empilham**
+>
+> *(Nomeado pelo Marcel no aval da W2, 2026-09-15.)* Os casos abaixo são um
+> instrumento de cada vez. A W2 produziu a primeira vez no projeto em que **três
+> instrumentos INDEPENDENTES falharam sobre a MESMA cadeia, cada um por um motivo
+> diferente** — e a cadeia era justamente a que os três existiam para pegar: a
+> mensagem crua em inglês que chegava à tela do músico (div. 125).
+>
+> | instrumento | por que não a viu | div. |
+> |---|---|---|
+> | `gate:a20` | **natureza** — acusa LITERAL em posição de texto, e ela é valor de tempo de execução. Nenhum escopo a alcança | 130 |
+> | `lc()` do protocolo de device | **truncamento** — `grep -o 'OCTAVIA: .*'` para na quebra de linha, e a mensagem tem duas | 138 |
+> | `uiautomator dump` | **renderização** — devolve `text=""` no `<Text>` multilinha, então a varredura de inglês sobre os dumps do ANTES acusa as MESMAS quatro cadeias do DEPOIS | 139 |
+>
+> **Quem a viu foi a captura de tela e o logcat lido inteiro.** Nenhum dos dois é
+> gate; os dois são olhar.
+>
+> O que o empilhamento ensina, e que nenhum caso isolado ensinava: **três
+> instrumentos concordando não são três medições — podem ser três silêncios.** A
+> concordância entre instrumentos é evidência fraca quando eles falham por razões
+> diferentes, porque é exatamente isso que faz os três calarem juntos sem que
+> nenhum acuse. O que rompeu o empilhamento não foi um quarto instrumento melhor:
+> foi **mudar de gênero** — olhar a tela e ler o log inteiro.
+>
+> E o que passa a IMPEDIR a cadeia não é nenhum dos três, nem um quarto do mesmo
+> tipo: é o teste de unidade sobre `falha()` (`files-mensagem.test.ts`), que
+> afirma um conjunto FECHADO e não depende de ler tela nem de ler log.
 
 | # | caso | o instrumento mede | eu li como se medisse |
 |---|---|---|---|
@@ -233,6 +262,10 @@ perigoso: um instrumento que mede **mais** do que a coisa medida.
 
 | 14 | **div. 113** (W1) | `File.downloadFileAsync` no Android: o corpo **streama direto para o arquivo alvo**, criado antes do primeiro byte — **e a doc da função diz isso, verbatim, no comentário que se lê para chamá-la** | "o arquivo existe ⇒ o download terminou". Daí a prescrição de *"`size > 0` é o piso"*, que não alcança um download **em voo** |
 | 15 | **div. 126** (W1) | o **duplo de teste** do `expo-file-system`, que emitia `onProgress` a cada pedaço | a biblioteca real — que entrega o progresso **uma vez, no fim, em rajada**. **O teste passou porque o dublê emitia progresso; o aparelho não emite.** O gate verde carimbou um teto de inatividade que não pode disparar |
+
+| 16 | **div. 128** (W2) | o **G3**: as linhas `log(` de `apps/native/src` e `packages/core/src` — **54** | "o catálogo de observabilidade está protegido; nenhuma linha some em silêncio". O `App.tsx` mora **um nível acima de `src/`**, e dentro dele vivem **três** linhas do catálogo: `login-screen` (que prova o A5), `auth uid=… src=…` (A1 e A5) e `download-error` (A13, W1-A4). População certa: **57**. O controle negativo: apagar `log('login-screen')` e o gate responder *"nenhuma linha sumiu ✓"* |
+| 17 | **div. 130** (W2) | o **`gate:a20`**: LITERAL em posição de texto | "o aceite A20 está cumprido — nenhum texto de UI em inglês". O que chegava à tela do músico no S3e era texto de UI em inglês que **não é literal**: é valor de tempo de execução, vindo da biblioteca. **Nenhum escopo alcança**, nem `apps/native` inteiro. É o par estrutural do 11 e do 12 (escopo declarado), mas com uma diferença que o torna pior: ali o escopo era *menor*; aqui é de **outra natureza** |
+| 18 | **div. 139** (W2) | o **`uiautomator dump`**: o nó acessível, com o `text` que o Android expõe | "o que está na tela". O `<Text>` de várias linhas do `download-erro` volta do dump com **`text=""`** e só os `bounds` — então a varredura de inglês sobre os dumps do ANTES acusa as **mesmas 4** cadeias do DEPOIS e **não vê** a frase de 4 linhas que é o objeto inteiro da div. 125. Quem a viu foi a **captura de tela** e o **logcat**. É o 13 uma volta adiante: lá o dump media o nó e não o desenho; aqui ele **não mede nem o nó** |
 
 > **A variante do 14, e por que ela merece nome próprio.** O caso 8 (div. 71) era o script
 > documentando a própria cegueira numa nota que ninguém leu. Este é um grau além: **a
@@ -269,6 +302,17 @@ perigoso: um instrumento que mede **mais** do que a coisa medida.
   o que cobrem, e os dois foram lidos como se cobrissem a categoria inteira.
 
 ### As regras que saíram do padrão
+
+**0. O DUMP NÃO É FONTE DE TEXTO DE TELA.** *(Marcel, aval da W2, 2026-09-15 —
+mais forte do que a proposta que lhe foi feita, que era "varredura de texto
+precisa de captura".)* O `uiautomator dump` devolve **`text=""` onde há texto**:
+o `<Text>` de várias linhas do `download-erro` volta com os `bounds` certos e a
+cadeia vazia. A consequência não é "falta um dado": é que **um aceite que varre
+inglês por dump passa por cima da frase que ele existe para pegar** — medido, a
+varredura sobre os dumps do ANTES acusou as mesmas quatro cadeias do DEPOIS e não
+viu a mensagem de quatro linhas que era o objeto inteiro da div. 125. Quem quiser
+afirmar o que está na tela usa **captura**; o dump serve para geometria, `enabled`,
+`resource-id` e `content-desc`, e para isso é excelente. Prova: div. 139.
 
 **1. Avião não é o valor do setting, é o `ping` falhando** — e o corte vem **antes** de o
 app abrir, não depois. (Origem: `V1-PR3-PRECHECK.md` §9, onde a leitura de
@@ -397,3 +441,66 @@ O `expected=<n|->` admite que às vezes não se sabe o esperado, e isso é de pr
 
 E o `cache miss` **não** passa a existir (Q4): ele dispararia quando algo não é achado, e
 o arquivo de 0 byte **foi achado**. O que faltou nunca foi log, foi checagem — div. 120.
+
+---
+
+## Errata W2 (2026-09-15) — a linha do log e a frase da tela deixam de ser a mesma coisa
+
+A errata W1 fechou dizendo que a `<msg>` do `download-error` "é traduzida e higienizada num
+ponto só, **porque ela vai para o log e para a tela do S3e**". O ponto único estava certo; o
+**destino único** é que estava errado, e o preço foi medido no aparelho. O que o músico lia,
+verbatim, no S3e em modo avião (AVD `octavia_tab32`, 2026-09-15):
+
+```
+1786295844475-ux-audit-fase-d-cifra.pdf: Call to function
+'FileSystemDownloadTask.start' has been rejected.
+→ Caused by: Unable to download a file: Unable to resolve host
+"mlxjmpbdchmwplcfislt.supabase.co": No address associated with hostname
+```
+
+Três coisas erradas numa frase só, e a terceira ninguém tinha visto:
+
+1. **inglês cru de biblioteca** na tela de um app em pt-BR (div. 125);
+2. **o nome do objeto do bucket**, que não identifica a MÚSICA e sim o OBJETO — detalhe de
+   infraestrutura que o músico não pediu e não pode usar. *(Decisão do Marcel no aval da W2:
+   "o que serve na tela é o título, que a tela já tem" — e tem, duas linhas acima:
+   `${titulo} · ${tipo}${tamanho}`.)*
+3. **o host do projeto Supabase**, que a higienização não pegou porque ela casa
+   `https?://\S+` e ali o host vem **nu, entre aspas**, sem esquema. Div. 137.
+
+**O que passa a valer.** O `Error` carrega duas metades: `message` é o DETALHE — nome e causa
+crua, URL higienizada — e continua indo INTEIRO para o `download-error`, porque é o que faz um
+relatório ser diagnosticável; `fraseDaFalha()` é o que o músico lê, de um conjunto **FECHADO**
+de frases em pt-BR (`não consegui baixar` · `o arquivo chegou vazio` · `o arquivo chegou
+corrompido` · `arquivo incompleto: N de M bytes` · `o servidor respondeu NNN`). O que fecha o
+conjunto é a **omissão**: quem não tem frase declarada cai na genérica. Medido depois, na
+mesma tela e no mesmo avião: **`não consegui baixar`**, e o log com a mesma linha de antes.
+
+**Nenhuma linha `log(` mudou** — G3 57 = 57, sem errata de gate. Era essa a forma de separar
+as duas metades sem tocar no contrato de observabilidade.
+
+### A família tinha duas classes, e a segunda não passava por aqui
+
+Div. 131. O ramo de **promoção** do `ensureFileUma` (`alvoDir.create()`, `destino.delete()`,
+`atual.file.moveSync()`) estava **fora de qualquer `try`**: uma rejeição ali subia crua — sem
+o prefixo do nome, **sem a higienização da regra 2** — até o palco e até o `App.tsx`. Passa a
+entrar num `try` e a sair pelo mesmo `falha()`. Consertar só a frase medida pelo W1 teria
+deixado esta de pé.
+
+### O trio 80 · 111 · 132 — "o número EXISTIR foi lido como o número SERVIR"
+
+*(Nomeado pelo Marcel no aval da W2, 2026-09-15, e as três são leituras dele, por atribuição
+dele.)* É uma forma do padrão que não é sobre escopo de instrumento, e por isso vale à parte:
+
+| div. | o número que existia | como foi lido |
+|---|---|---|
+| **80** | a duração de **um** run do `native.yml`: 9m16s | "9m16s é o regime" — uma medição lida como propriedade estável do gate. Com catorze runs: é o **piso** de uma faixa de 9m16s a 14m11s |
+| **111** | o `bytes` do `files-index.json` | um oráculo do tamanho esperado — sem ver que ele é escrito **a partir do disco** pelo `touch()`, então concorda consigo mesmo por construção |
+| **132** | as 12 linhas `total=`/`ms=` do W1 | "as primeiras taxas já estão no anexo C" — e as doze são de **fixtures servidas por um mock em `localhost:8788`**, várias com a taxa encenada pelo próprio servidor de teste. Para escolher um `T₁`, `n` continua **0** de rede real |
+
+**A div. 126 NÃO pertence a este trio**, e a correção é do Marcel: lá o número **não existia**
+(o `onProgress` entrega tudo em rajada no fim), e o defeito foi o duplo de teste ser mais
+capaz que a biblioteca. É outra forma — o 15º caso do padrão, pelo avesso.
+
+A consequência que a W2 registra e não conserta: **a opção C continuará sem população até
+alguém baixar de uma rede de verdade**, e isso não acontece por uma PR existir.
