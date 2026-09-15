@@ -37,7 +37,18 @@ jobs:
       with:
         distribution: temurin
         java-version: 17
-    - uses: android-actions/setup-android@v3
+    # Bump para v4 + `packages` explícito (2026-09-14). O `v3` com o default
+    # `tools platform-tools` passou a reprovar em ~27 s no `sdkmanager`
+    # (`Failed to find package 'tools'`) — o `tools` é pacote APOSENTADO do SDK,
+    # e o cmdline-tools 16.0 da imagem do runner deixou de tolerá-lo.
+    # O `v4` sozinho NÃO basta: o default dele continua sendo
+    # `tools platform-tools` (lido no `action.yml` da tag v4). Quem tira a causa
+    # é o `packages` explícito — o build não precisa do `tools`: o Gradle baixa
+    # a `platform`/`build-tools` de que precisa, e o `platform-tools` é o que a
+    # imagem usa para `adb`.
+    - uses: android-actions/setup-android@v4
+      with:
+        packages: platform-tools
     - uses: actions/cache@v4
       with:
         path: |
