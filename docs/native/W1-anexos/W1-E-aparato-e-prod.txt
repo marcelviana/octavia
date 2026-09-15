@@ -1,0 +1,114 @@
+$ (E) W1 — contabilidade, desvios e o que NÃO foi medido
+
+RASTRO, não fonte. Data: 2026-09-14. Árvore `<árvore-w1>` (worktree próprio),
+branch `w1/garantia-offline` a partir de `origin/main` (`f79a4b7`).
+
+==========================================================================
+1. CONTABILIDADE DE PROD
+==========================================================================
+  requests a `/api/*` em prod .................... 0     (teto 4, alvo 0)
+  downloads do bucket ............................ 0     (teto 0 — decisão Q7)
+  logins ......................................... 0
+  escrita pela API ............................... 0
+  console Supabase / Firebase .................... 0
+  comandos ao Tab S6 ............................. 0     (listado, nunca endereçado)
+
+COMO O ZERO SE SUSTENTA, e não por confiança:
+  · o AVD ficou em AVIÃO em todos os aceites menos um, com `ping` falhando —
+    e a prova é o `ping`, não o `settings get` (regra 1 do padrão);
+  · no único aceite com rádio de pé (W1-A5, ~11 min), o Metro subiu com
+    `EXPO_PUBLIC_API_BASE_URL=http://localhost:8788` **inline**, apontando para
+    o mock `aceite.py servidor`. As duas requests do app aparecem no log do
+    mock, uma a uma. Prod não recebeu nenhuma;
+  · nenhum `file_url` de bucket foi pedido: as fixtures apontam para
+    `http://localhost:8790`, servido pelo `instrumentos/arquivos.py` através de
+    `adb reverse`, com um PDF SINTÉTICO de 242.176 B gerado no host.
+
+==========================================================================
+2. OS DESVIOS, DECLARADOS
+==========================================================================
+D-1  **O AVD saiu do avião por ~11 min** (W1-A5). Motivo: o botão "Baixar esta
+     setlist" é `podeBaixar = online && …`; em avião ele é inerte por
+     definição e o aceite não existiria. Contabilidade acima. Avião reposto e
+     reconferido por `ping` ao fim.
+
+D-2  **Duas linhas de log temporárias** (`dbg-progress`, `dbg-listener`) foram
+     postas no `files.ts` para medir a cadência do progresso, e REMOVIDAS antes
+     do commit. Elas são a única razão pela qual a div. 126 tem número: sem
+     elas, o teto teria saído da PR por suspeita em vez de por medição.
+     Não há resquício em código: as quatro ocorrências que o
+     `grep -rn "dbg-" apps/native/src` ainda acha são a SAÍDA MEDIDA, citada no
+     comentário do `files.ts` que explica por que o teto saiu.
+
+D-3  **O primeiro controle negativo do W1-A6 foi INVÁLIDO**, e está registrado
+     em vez de escondido: troquei o `files.ts`/`prefetch.ts`/`App.tsx` pelos de
+     `f79a4b7` e reabri o app — e o Metro, em `CI=1`, serviu o bundle que já
+     tinha em cache. O logcat saiu com as linhas `file-reject`, que o código de
+     `f79a4b7` não tem: foi assim que o erro apareceu. Toda troca de código
+     desta sessão passou a exigir matar e subir o Metro de novo.
+     **A lição, que vale além desta PR: com `CI=1` o Metro não relê o disco, e
+     um "controle negativo" que não reconstrói o bundle mede o código novo.**
+
+D-4  **Um erro de leitura meu, corrigido**: a primeira amostragem da curva do
+     W1-A7 (o par antes × depois da fila) foi feita às cegas, contando
+     arquivos, e eu li "1 arquivo" como "o lote não começou". Refeita com nome
+     e tamanho, ela mostrou o contrário e mais: o arquivo de 30.273 B crescendo
+     com o NOME FINAL — que é a medição mais importante do anexo C.
+
+==========================================================================
+3. O QUE NÃO FOI MEDIDO — declarado, não escondido
+==========================================================================
+  · **A13** (PDF de 12 páginas no palco, em avião): não rodado. O palco não foi
+    aberto nesta sessão — o `StageScreen.tsx` é o território da W2, e abrir o
+    palco dispararia o `prefetchDemanda`, que não é o eixo desta PR.
+  · **O Tab S6**: zero comandos. O aparelho do Marcel não entrou nesta PR.
+  · **Build de release**: tudo foi medido no DEV CLIENT, com o Metro. A
+    div. 126 (o progresso que só chega no fim) é uma medição do dev client;
+    `[hipótese, não medida]` de que um build de release se comporte igual. Se
+    se comportar diferente, o teto de inatividade volta a ser implementável —
+    é a pergunta 1 ao Marcel.
+  · **O mecanismo da div. 124** (o estático serializando downloads): medido no
+    comportamento, não lido no Kotlin do `FileSystemDownloadTask`.
+  · **`T₁` da opção C**: continua sem população. Esta PR começou a coletá-la —
+    a linha `file src=download` agora sai com `total=` e `ms=`, e as corridas
+    deste anexo já dão as primeiras taxas (242.176 B em 21.092 ms no cenário
+    lento; em 30 a 141 ms no rápido).
+
+==========================================================================
+4. O APARATO — o que subiu, e o que ficou de pé
+==========================================================================
+  Metro ......... subido 7 vezes na porta 8081 (uma por troca de bundle),
+                  sempre com as chaves do Firebase INLINE, a partir do
+                  `apps/native/.env` do checkout principal. **Nenhum `.env` foi
+                  copiado para a árvore do W1** — a regra é "segredos só
+                  inline", e a árvore nasceu sem eles.
+  arquivos.py ... porta 8790, servidor de arquivos de host (instrumento novo).
+  aceite.py ..... porta 8788, mock da API (instrumento do N1/V1, não tocado).
+  adb reverse ... 8081, 8788, 8790 — desfeitos ANTES de cada kill (div. 75).
+  DESMONTAGEM ... as três portas livres ao fim, conferido por `lsof`.
+
+  `pnpm install --frozen-lockfile` rodou UMA vez na árvore do W1 (ela nasceu
+  sem `node_modules`). Nenhum `pnpm add`, nenhum toque no `package.json` ou no
+  lockfile: `git diff --stat f79a4b7 -- package.json pnpm-lock.yaml` é vazio.
+
+==========================================================================
+5. O EMULADOR — ANTES × DEPOIS (o detalhe está no anexo C §9)
+==========================================================================
+                    antes                          depois
+  AVD               octavia_tab32, up 6:43         igual, up 10:10 (não subido
+                                                   nem morto por mim)
+  app               pid 11854, de pé há 4:34       pid 2455 — fechado e aberto
+                                                   14 vezes pelo protocolo
+  bundle            o do V1-PR7                    o do W1, servido pelo Metro
+                                                   desta árvore (morto ao fim)
+  rede              avião, `ping` inalcançável     igual, reconferido
+  content.json      d27e6d84…                      d27e6d84…
+  setlists.json     0a3a0638…                      0a3a0638…
+  files-index.json  cce7936f…                      cce7936f…
+  files/…-12p.pdf   ad2eae09…                      ad2eae09…
+  cache/…-1p.pdf    3d42199b…                      3d42199b…
+
+  Os CINCO sha256 batem byte a byte com o "FIM" do `V1-PR7-anexos` e com o
+  pre-check do W1. O backup no aparelho (`files/W1BACKUP`, `cache/W1BACKUP`)
+  foi criado por `run-as cp -r`, conferido por sha256 dos dois lados, usado
+  para restaurar, e removido.

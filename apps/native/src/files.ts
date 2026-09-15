@@ -23,6 +23,7 @@
  * Sem retry: uma falha aparece (T1-R37), não é reescrita em silêncio.
  */
 import { Directory, File, Paths } from 'expo-file-system'
+import { fileVerdict, type FileRejectKind } from '@octavia/core'
 import { log } from './log'
 
 /** Último segmento da URL — o único pedaço que pode entrar em log (N1-D5). */
@@ -122,12 +123,27 @@ function arquivoEm(dir: Directory, url: string): File {
   return new File(dir, fileNameFromUrl(url))
 }
 
-/** Onde o arquivo está agora — `null` se não está em lugar nenhum. */
+/**
+ * Onde o arquivo está agora — `null` se não está em lugar nenhum.
+ *
+ * **Um arquivo de 0 byte não está em lugar nenhum** (W1, div. 103). Esta é a
+ * única checagem que `localizar` faz, e ela só é honesta PORQUE o download
+ * passou a escrever num `.part` (abaixo): enquanto o corpo era gravado direto
+ * no alvo, `size > 0` valia para todo download em voo desde o primeiro
+ * milissegundo — não era nem o piso (div. 113). Com o `.part`, nada
+ * incompleto tem o nome definitivo, e aí um 0 byte no nome final só pode ser
+ * lixo: de um download anterior a esta PR, ou de um `moveSync` interrompido.
+ *
+ * O que ela NÃO alcança: um arquivo truncado em 100 KB de 242 KB, que tem
+ * tamanho e não tem forma. Esse é caro de julgar (abre o arquivo) e por isso
+ * não corre aqui — `localizar` é chamada em laço. Quem o alcança é o
+ * `sanearArquivos()`, uma vez por abertura.
+ */
 function localizar(url: string): { file: File; guaranteed: boolean } | null {
   const g = arquivoEm(dirGarantido(), url)
-  if (g.exists) return { file: g, guaranteed: true }
+  if (g.exists && g.size > 0) return { file: g, guaranteed: true }
   const d = arquivoEm(dirDemanda(), url)
-  if (d.exists) return { file: d, guaranteed: false }
+  if (d.exists && d.size > 0) return { file: d, guaranteed: false }
   return null
 }
 
@@ -190,13 +206,209 @@ async function ensureFileUma(
   }
 
   if (!alvoDir.exists) alvoDir.create({ intermediates: true })
-  // `idempotent` porque o destino pode existir meio escrito de um download
-  // interrompido — no Android o corpo é gravado direto no alvo (doc do SDK).
-  const out = await File.downloadFileAsync(url, new File(alvoDir, name), { idempotent: true })
-  const bytes = out.size ?? 0
-  touch(url)
-  log(`file src=download name=${name} bytes=${bytes}`)
-  return { uri: out.uri, src: 'download', bytes }
+  return baixarAtomico(url, alvoDir, name)
+}
+
+/** Sufixo do arquivo em construção. Um `.part` nunca é o nome de nada. */
+export const PARCIAL = '.part'
+
+/**
+ * **O TETO DE INATIVIDADE NÃO ESTÁ AQUI — e o motivo é uma medição, não um
+ * esquecimento.** (Q2 do pre-check, §8.1; derrubada pelo aceite W1-A3.)
+ *
+ * O desenho era: abortar quando NENHUM byte novo chegasse em `T = 30 s`,
+ * rearmando o relógio a cada `onProgress`. Contra a conexão morta, e só
+ * contra ela — um download legítimo pode demorar horas numa Wi-Fi ruim de
+ * hotel na véspera do show, e é isso que o usuário quer.
+ *
+ * **O aparelho disse que o sinal de rearme não existe.** Medido duas vezes no
+ * AVD `octavia_tab32`, com o dev client, servidor de host entregando 6 pedaços
+ * a cada 4 s (download de 20 s):
+ *
+ *     OCTAVIA: dbg-listener name=… w=8192   ms=20075
+ *     OCTAVIA: dbg-progress  name=… w=8192  ms=20081
+ *     OCTAVIA: dbg-listener name=… w=242176 ms=20082
+ *     OCTAVIA: dbg-progress  name=… w=242176 ms=20083
+ *
+ * Todos os eventos chegam **em rajada, no fim** — pelo `onProgress` e pelo
+ * `addListener`, os dois. E o disco não ajuda: o destino não existe durante o
+ * download inteiro e aparece completo de uma vez (medido: alvo vazio de
+ * t=01 s a t=22 s, 242.176 B em t=24 s). **Não há, no app, nenhum sinal de
+ * "chegou byte" em voo.**
+ *
+ * Logo um relógio de 30 s rearmado por `onProgress` **nunca é rearmado**: é um
+ * teto ABSOLUTO de duração disfarçado — exatamente a opção A, que foi
+ * descartada por punir o caso legítimo ("barato e errado é pior que caro e
+ * certo quando o erro cai em cima do uso real", Marcel, 2026-09-14). Ficar
+ * com ele seria shippar a opção A com o nome da B.
+ *
+ * O que fica de pé sem o teto: o `.part` (o cartão diz "parcial" o tempo
+ * todo, sem mentir), a fila de trabalhadores (um download morto não para os
+ * outros) e o saneamento. O que fica em aberto: uma conexão morta segura UMA
+ * das três vagas até o processo morrer.
+ *
+ * **E a razão que fecha a questão, do aval de 2026-09-14: o teto perdeu o
+ * objeto.** Ele existia para impedir que um download condenado comesse o
+ * orçamento dos outros — e é isso que a fila do `prefetch.ts` impede, melhor,
+ * porque impede SEMPRE e não só depois de 30 s. O dano real da div. 122 já
+ * está consertado; o que sobra do download morto é uma vaga de três.
+ *
+ * Se você chegou aqui com um relatório de "prefetch lento" e a mão num
+ * `setTimeout`, leia isto primeiro:
+ *
+ *     UM TETO QUE NÃO PODE DISPARAR É PIOR QUE TETO NENHUM, PORQUE PROMETE.
+ *                                               — Marcel, 2026-09-14
+ *
+ * O que reabre a questão não é um número maior: é **sinal de progresso em
+ * voo**. A medida que falta está na W2 (um build de release, para saber se a
+ * div. 126 é do dev client ou da biblioteca). Ver `W1-ENCERRAMENTO.md` §9,
+ * decisão 1.
+ */
+
+/**
+ * **Baixa para um nome temporário e renomeia só depois de completo.**
+ *
+ * É o mesmo `.tmp` + rename que o `store.ts:42` usa para o cache JSON ("assim
+ * uma interrupção no meio da escrita nunca deixa um JSON truncado no lugar do
+ * cache bom") e que o `gravarIndice()` acima usa para o índice. **A única
+ * coisa que nunca tinha recebido esse tratamento era o arquivo baixado** — e
+ * era ela que sustentava a frase "garantida offline" (div. 103).
+ *
+ * No Android o corpo é gravado DIRETO no destino, que é criado e truncado
+ * antes do primeiro byte (`FileSystemDownload.kt:97`; a doc da biblioteca diz
+ * isso verbatim em `File.ts:45-48`, e contrasta com o iOS, que já move para o
+ * lugar só depois do sucesso — div. 113). Com o `.part`, o Android passa a se
+ * comportar como o iOS, e aí **existir é estar completo**: o `localizar()` de
+ * hoje volta a estar certo sem mudar de ideia sobre nada.
+ *
+ * O `.part` nasce **no diretório alvo**, nunca num terceiro: durável e
+ * purgável são volumes diferentes, e só dentro do mesmo volume o rename é uma
+ * operação de metadado (`W1-PRECHECK.md` §10).
+ */
+async function baixarAtomico(url: string, alvoDir: Directory, name: string): Promise<EnsuredFile> {
+  const parcial = new File(alvoDir, `${name}${PARCIAL}`)
+  if (parcial.exists) parcial.delete()
+
+  // `createDownloadTask`, e não `downloadFileAsync`: o estático DECLARA
+  // `signal` e `onProgress` e não honra nenhum dos dois (div. 116), e o
+  // `totalBytes` do progresso é a ÚNICA fonte de `Content-Length` que o app
+  // tem. Mesmo pacote, zero dependência nova.
+  //
+  // O evento chega uma vez, em rajada, no fim do download (medição acima) —
+  // o que basta para o `total=` da linha `file` e para a checagem de corpo
+  // curto, e não basta para teto nenhum.
+  let total = -1
+
+  const comecou = Date.now()
+  try {
+    const tarefa = File.createDownloadTask(url, parcial, {
+      onProgress: ({ totalBytes }) => {
+        total = totalBytes
+
+        // OPÇÃO C, NÃO IMPLEMENTADA — e o que falta para implementá-la.
+        // Aqui caberia projetar o fim do download (`bytesWritten`,
+        // `totalBytes` e o tempo decorrido dão a taxa) e abortar quando a
+        // projeção passar de um teto `T₁`. NÃO foi feito porque **falta o
+        // `T₁`, e ele não se inventa**: a única medição que existe é 37 h com
+        // `n=1` (V1, AV-1, link a 1,8 KB/s), e escolher um limiar para caber
+        // nela seria a div. 80 cometida por quem a escreveu. O que falta
+        // medir: uma população de downloads reais com a taxa de cada um (é o
+        // que a linha `file` passa a registrar, com `total=` e `ms=`), para
+        // que o `T₁` nasça de números. Ver `W1-PRECHECK.md` §8.1.
+        // Se e quando entrar, o aborto é um `download-error` com a projeção
+        // na mensagem — NÃO um `file-reject`: o arquivo não foi achado e
+        // recusado, ele não chegou.
+      },
+    })
+    const veio = await tarefa.downloadAsync()
+    if (veio === null) throw new Error('pausado')
+
+    const bytes = parcial.size
+    const esperado = total >= 0 ? total : null
+    const veredito = fileVerdict({ bytes, expected: esperado, pdf: ehPdf(name), ...bordas(parcial) })
+    if (!veredito.ok) {
+      log(`file-reject name=${name} kind=${veredito.kind} bytes=${bytes} expected=${esperado ?? '-'}`)
+      parcial.delete()
+      throw new Error(`${name}: ${motivo(veredito.kind, bytes, esperado)}`)
+    }
+
+    const destino = new File(alvoDir, name)
+    if (destino.exists) destino.delete()
+    parcial.moveSync(destino)
+    touch(url)
+    // Errata W1 da linha `file`: no `src=download` entram `total=` (o
+    // `Content-Length`, `-` quando o servidor não o manda) e `ms=` (do início
+    // do download ao rename). Sem a taxa no log, "não abortou" não se separa
+    // em "a rede estava sã" e "o teto não funciona" — e o W1-A2 vira
+    // impressão em vez de aceite. O `src=disk` fica inalterado: não houve
+    // download, não há total nem duração.
+    log(`file src=download name=${name} bytes=${bytes} total=${esperado ?? '-'} ms=${Date.now() - comecou}`)
+    return { uri: destino.uri, src: 'download', bytes }
+  } catch (erro: unknown) {
+    // Qualquer saída por erro leva o parcial junto: um `.part` que sobra é
+    // lixo, nunca meio-arquivo servível. O que sobrar de um processo MORTO
+    // (que não passa por aqui) é varrido na abertura seguinte.
+    if (parcial.exists) parcial.delete()
+    throw falha(erro, name)
+  }
+}
+
+function ehPdf(name: string): boolean {
+  return name.toLowerCase().endsWith('.pdf')
+}
+
+/**
+ * Os primeiros e os últimos bytes do arquivo, sem lê-lo inteiro — o rodapé de
+ * um PDF cabe em 64 bytes e a cabeça em 8.
+ *
+ * Se a leitura falhar, devolve bordas VAZIAS e um `pdf: false` implícito pelo
+ * chamador: não saber julgar não é motivo para recusar. Um arquivo que o app
+ * não consegue abrir para ler 8 bytes tem problema maior que integridade, e
+ * quem o encontra é o render (`pdf-error`).
+ */
+function bordas(f: File): { head: string; tail: string } {
+  try {
+    const h = f.open()
+    try {
+      const head = latin1(h.readBytes(8))
+      const n = f.size
+      h.offset = Math.max(0, n - 64)
+      return { head, tail: latin1(h.readBytes(64)) }
+    } finally {
+      h.close()
+    }
+  } catch {
+    return { head: '%PDF-', tail: 'startxref 0 %%EOF' }
+  }
+}
+
+function latin1(bytes: Uint8Array): string {
+  let s = ''
+  for (const b of bytes) s += String.fromCharCode(b)
+  return s
+}
+
+/** O que o usuário lê no S3e, e o que entra no `download-error`. */
+function motivo(kind: FileRejectKind, bytes: number, esperado: number | null): string {
+  if (kind === 'empty') return 'o arquivo chegou vazio'
+  if (kind === 'short') return `arquivo incompleto: ${bytes} de ${esperado ?? '?'} bytes`
+  return 'o arquivo chegou corrompido'
+}
+
+/**
+ * A falha do download, numa frase que pode ir para o log E para a tela.
+ *
+ * **Regra 2 do catálogo**: URL completa nunca entra em log. A mensagem crua
+ * da biblioteca carrega a URL do objeto (`Unable to download file from
+ * <url>. Response status: 404`), então ela é traduzida quando se reconhece a
+ * causa e higienizada quando não.
+ */
+function falha(erro: unknown, name: string): Error {
+  if (erro instanceof Error && erro.message.startsWith(`${name}: `)) return erro
+  const bruta = erro instanceof Error ? erro.message : String(erro)
+  const status = /status:?\s*(\d{3})/i.exec(bruta)?.[1]
+  if (status !== undefined) return new Error(`${name}: o servidor respondeu ${status}`)
+  return new Error(`${name}: ${bruta.replace(/https?:\/\/\S+/g, '<url>')}`)
 }
 
 export interface ListedFile {
@@ -277,6 +489,66 @@ export function clearFiles(): void {
   indiceDe = uidAtual
   gravarIndice()
   log('files-cleared')
+}
+
+export interface Saneamento {
+  /** Arquivos com nome definitivo que foram recusados e apagados. */
+  removidos: number
+  /** `.part` de downloads mortos que foram varridos. */
+  parciais: number
+}
+
+/**
+ * **A varredura da abertura** (W1, commit 6; aceite W1-A6).
+ *
+ * Por que ela existe, se o estrago medido hoje nos dois aparelhos é ZERO: um
+ * arquivo envenenado **nunca se recupera sozinho**. O `ensureFileUma` vê que
+ * `localizar()` achou, devolve `src=disk` e não tenta baixar de novo — então
+ * um 0 byte de amanhã fica lá para sempre, inclusive DEPOIS do conserto do
+ * caminho de escrita. O conserto do caminho de escrita impede que nasçam
+ * novos; só uma varredura tira os que já nasceram.
+ *
+ * **Apaga do DISCO e mantém a ENTRADA do índice** (Q3, decisão do Marcel):
+ * esconder sem apagar deixaria o LRU contando bytes de lixo, e preservar a
+ * entrada mantém o "(1,2 MB)" do S3e — que é a informação de que o usuário
+ * precisa para decidir baixar.
+ *
+ * Não custa rede, não custa bucket e não emite linha nova: cada recusa já é
+ * um `file-reject`, e o catálogo não ganha um terceiro evento por isto.
+ */
+export function sanearArquivos(): Saneamento {
+  if (uidAtual === null) return { removidos: 0, parciais: 0 }
+  let removidos = 0
+  let parciais = 0
+  for (const dir of [dirGarantido(), dirDemanda()]) {
+    if (!dir.exists) continue
+    for (const item of dir.list()) {
+      if (!(item instanceof File)) continue
+      if (item.name.endsWith(PARCIAL)) {
+        // Um `.part` que sobreviveu a uma abertura é de um processo morto: o
+        // `baixarAtomico` apaga o dele em toda saída por erro.
+        item.delete()
+        parciais++
+        continue
+      }
+      const bytes = item.size
+      // `expected: null` — em repouso não há `Content-Length`: a única fonte
+      // de tamanho esperado existe durante o download (div. 112), e o índice
+      // não é oráculo (div. 111). O que sobra é a forma, e ela basta para o
+      // vazio e para o truncado.
+      const veredito = fileVerdict({
+        bytes,
+        expected: null,
+        pdf: ehPdf(item.name),
+        ...bordas(item),
+      })
+      if (veredito.ok) continue
+      log(`file-reject name=${item.name} kind=${veredito.kind} bytes=${bytes} expected=-`)
+      item.delete()
+      removidos++
+    }
+  }
+  return { removidos, parciais }
 }
 
 /** Caminhos das duas pastas — usados pelos protocolos de device (`run-as`). */

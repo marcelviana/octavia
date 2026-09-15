@@ -233,3 +233,55 @@ describe('lruEvict (T1-R14 / A9)', () => {
     })
   })
 })
+
+// W1: o import fica numa linha PRÓPRIA para que o diff deste arquivo seja só
+// ADIÇÃO — é o que o G1b exige, e é ele que afirma que nenhuma decisão do core
+// mudou nesta PR.
+import { fileVerdict } from './offline'
+
+describe('fileVerdict — W1: existir é estar completo', () => {
+  const pdf = (bytes: number, head = '%PDF-1.7', tail = 'startxref\n900\n%%EOF\n') => ({
+    bytes,
+    expected: null,
+    head,
+    tail,
+    pdf: true,
+  })
+
+  it('0 byte é `empty`, e é o caso que o cartão jurava estar garantido', () => {
+    expect(fileVerdict(pdf(0))).toEqual({ ok: false, kind: 'empty' })
+  })
+
+  it('menos bytes que o `Content-Length` é `short`', () => {
+    expect(fileVerdict({ ...pdf(1000), expected: 2000 })).toEqual({ ok: false, kind: 'short' })
+  })
+
+  it('mais bytes que o `Content-Length` também não passa', () => {
+    expect(fileVerdict({ ...pdf(3000), expected: 2000 }).ok).toBe(false)
+  })
+
+  it('sem `Content-Length` (`expected: null`) o tamanho não é julgado', () => {
+    expect(fileVerdict(pdf(1000))).toEqual({ ok: true })
+  })
+
+  it('PDF sem `%%EOF` é `malformed` mesmo com o tamanho certo', () => {
+    expect(fileVerdict({ ...pdf(1000, '%PDF-1.7', 'meio de arquivo'), expected: 1000 })).toEqual({
+      ok: false,
+      kind: 'malformed',
+    })
+  })
+
+  it('PDF cuja cabeça não é `%PDF-` é `malformed`', () => {
+    expect(fileVerdict(pdf(1000, '<html>')).ok).toBe(false)
+  })
+
+  it('`startxref` apontando para FORA do arquivo é `malformed`', () => {
+    expect(fileVerdict(pdf(500, '%PDF-1.7', 'startxref\n900\n%%EOF\n')).ok).toBe(false)
+  })
+
+  it('o que não é PDF não é julgado pela forma do PDF', () => {
+    expect(fileVerdict({ bytes: 10, expected: null, head: '\x89PNG', tail: 'x', pdf: false })).toEqual({
+      ok: true,
+    })
+  })
+})

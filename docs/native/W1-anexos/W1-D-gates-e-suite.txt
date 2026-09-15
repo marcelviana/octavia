@@ -1,0 +1,104 @@
+$ (D) W1 — os gates, a suíte, o tsc e o lint
+
+RASTRO, não fonte. Data: 2026-09-14. Árvore `<árvore-w1>`, branch `w1/garantia-offline`.
+Base de comparação de todos os gates: `f79a4b7` (main).
+
+O QUE MUDOU DE FORMA NESTA PR, e por quê (§5 do pre-check):
+  · o G1 virou G1a + G1b — o `files.ts` e o `prefetch.ts` são DOIS dos nove
+    módulos que ele protegia, e são o objeto desta PR. A lista de exceções está
+    escrita no `apps/native/scripts/g1.sh`: é o escopo declarado.
+  · o G3 deixou de exigir linhas idênticas e passou a exigir que toda linha que
+    SOME esteja numa lista de erratas escrita no script. "antes ⊆ depois" cru
+    deixaria uma linha sumir em silêncio.
+  · o G7 nasceu (`apps/native/scripts/g7.sh`), com o controle negativo embutido.
+
+=== bateria final, sobre o HEAD da branch ===
+--- G1a + G1b ---
+base=f79a4b7 head=WORKTREE
+G1a — diff vazio em 7 módulos do nativo + 12 arquivos de packages/core/src
+      EXCEÇÕES DECLARADAS (o escopo desta PR): files.ts · prefetch.ts · core/offline.ts
+      e os *.test.ts do core, que ficam sob o G1b
+  G1a: DIFF VAZIO ✓
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+  G1b: só adição ✓
+EXIT=0
+--- G2 + G3 ---
+G2 — testIDs  antes=43  depois=43
+  G2: antes ⊆ depois ✓
+G3 — linhas log( antes=50  depois=54
+  linhas que SUMIRAM (cada uma tem de ser errata declarada):
+      apps/native/src/files.ts	log(`file src=download name=${name} bytes=${bytes}`)
+  G3: as que sumiram estão na lista de erratas ✓
+  linhas NOVAS (declarar no commit e no catálogo):
+      apps/native/src/files.ts	log(`file src=download name=${name} bytes=${bytes} total=${esperado ?? '-'} ms=${Date.now() - comecou}`)
+      apps/native/src/files.ts	log(`file-reject name=${item.name} kind=${veredito.kind} bytes=${bytes} expected=-`)
+      apps/native/src/files.ts	log(`file-reject name=${name} kind=${veredito.kind} bytes=${bytes} expected=${esperado ?? '-'}`)
+      apps/native/src/prefetch.ts	log(`download-error ${mensagemDe(erro)}`)
+      apps/native/src/prefetch.ts	log(`download-error ${mensagemDe(erro)}`)
+EXIT=0
+--- G4 gate:a20 ---
+  arquivos varridos: 20
+  vocabulário: 45 termos · isenções do produto: 9
+  literais em posição de texto examinados: 72
+  acusações: 0
+--- G4 CN ---
+  acusações: 4
+Exit status 1
+--- gate:icones ---
+  §6.3 tab: em20 4 cordas · normal 6 cordas · markup de 20 dp no telas.html: idêntico
+  fora do catálogo: 4/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  acusações: 0
+--- gate:icones CN ---
+  acusações: 18
+Exit status 1
+--- G7 ---
+ Test Files  3 passed (3)
+      Tests  25 passed (25)
+G7: PASSOU ✓
+--- G7 CN ---
+    ⎯⎯⎯⎯⎯⎯ Failed Tests 18 ⎯⎯⎯⎯⎯⎯⎯
+          Tests  18 failed | 7 passed (25)
+G7: o código de f79a4b7 REPROVA, como tem de reprovar ✓
+--- suíte ---
+ Test Files  91 passed | 4 skipped (95)
+      Tests  801 passed | 85 skipped (886)
+   Start at  19:43:54
+   Duration  17.69s (transform 3.97s, setup 27.15s, import 9.95s, tests 10.71s, environment 57.82s)
+
+--- tsc nativo ---
+> tsc --noEmit
+
+EXIT=0
+--- tsc core ---
+EXIT=0
+--- lint ---
+
+✔ No ESLint warnings or errors
+
+==========================================================================
+LEITURA
+==========================================================================
+G1a  DIFF VAZIO nos 7 módulos + 12 arquivos de `packages/core/src`.
+     CN rodado à mão: uma linha a mais no `net.ts` → "DIFF NÃO VAZIO ✗", exit 1.
+G1b  zero linhas removidas ou alteradas nos `*.test.ts` do core — só adição.
+     ELE JÁ COBROU O PREÇO: o `fileVerdict` tinha entrado editando a linha de
+     `import` do `offline.test.ts`; virou um `import` próprio para que o diff
+     fosse só adição. O gate venceu a conveniência.
+G2   43 → 43 testIDs, nenhum sumiu. A PR não põe nem tira tela.
+G3   uma linha sumiu, e é a errata declarada (`file src=download … bytes=<n>`);
+     cinco novas, todas no commit e no catálogo.
+     CN rodado à mão: apagando a linha `lru evict`, o gate acusa
+     "linha sumiu SEM ERRATA ✗", exit 1.
+G4   0 acusações · CN 4 acusações, exit 1.
+G5   NÃO EXERCIDO — a PR não põe controle novo, e o gate mede alvo tocável.
+G6   NÃO EXERCIDO — a PR não põe estado novo de tela. Os dumps de aceite estão
+     em `dumps/` e nenhum deles tem nó clicável sem `resource-id` novo.
+gate:icones  0 acusações · CN 18, exit 1. A PR não desenha ícone.
+G7   25/25 na árvore; **18 de 25 REPROVAM com o `files.ts`/`prefetch.ts` de
+     `f79a4b7`**, e os 7 que passam são controle.
+suíte  801 passam, 85 puladas, 95 arquivos — contra 768/85/92 da baseline do
+     pre-check: +3 arquivos e +33 testes, todos novos (o projeto `native` e o
+     `fileVerdict` do core). Nenhum teste existente foi tocado.
+tsc  nativo e core: exit 0. (No commit 1 o tsc do nativo REPROVAVA, de
+     propósito — ver o anexo B.)
+lint  ✔ No ESLint warnings or errors.

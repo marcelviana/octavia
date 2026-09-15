@@ -67,12 +67,62 @@ export function urlsGarantidas(
   )
 }
 
-/** Baixa em ordem, `CONCORRENCIA` de cada vez; uma falha não derruba as outras. */
-async function baixar(urls: string[], guaranteed: boolean): Promise<void> {
-  for (let i = 0; i < urls.length; i += CONCORRENCIA) {
-    const lote = urls.slice(i, i + CONCORRENCIA)
-    await Promise.allSettled(lote.map((url) => ensureFile(url, { guaranteed })))
+/**
+ * **Uma fila com `CONCORRENCIA` trabalhadores** — não mais um lote por vez.
+ *
+ * O que havia aqui era uma BARREIRA: `await Promise.allSettled(lote)` antes
+ * do lote seguinte. Um arquivo a 1,8 KB/s não atrasava só a si mesmo —
+ * **parava a fila inteira**, e os arquivos do 4º em diante nunca começavam,
+ * inclusive os que baixariam em dois segundos (div. 122).
+ *
+ * **O mesmo 3, com outro significado.** `CONCORRENCIA` era o tamanho do lote;
+ * passa a ser o teto de downloads simultâneos. O invariante que importa —
+ * quantas conexões o app abre ao mesmo tempo — é o mesmo nas duas formas, e é
+ * o que o **T1-R13 passo 3** sempre pediu: "concorrência ≤ 3". O nome da
+ * constante e o requisito sempre disseram concorrência; foi a implementação
+ * que fez lote. O lote garante ≤ 3 e **desperdiça vagas**; a fila garante ≤ 3
+ * e as usa.
+ *
+ * **Nenhuma falha é engolida** (div. 114, T1-R37): o resultado de cada
+ * download é lido, e cada rejeição vira uma linha `download-error`. Antes o
+ * array do `allSettled` era descartado e **toda** falha de download nos três
+ * caminhos de prefetch era invisível.
+ *
+ * O `aoArquivo` corre a cada arquivo que assenta — é o que faz o cartão andar
+ * "1 de 5 → 2 de 5" DURANTE o download em vez de saltar no fim (W1-A7).
+ */
+async function baixar(
+  urls: string[],
+  guaranteed: boolean,
+  aoArquivo?: () => void,
+): Promise<void> {
+  const fila = [...urls]
+  const trabalhador = async (): Promise<void> => {
+    for (;;) {
+      const url = fila.shift()
+      if (url === undefined) return
+      try {
+        await ensureFile(url, { guaranteed })
+      } catch (erro: unknown) {
+        log(`download-error ${mensagemDe(erro)}`)
+        continue
+      }
+      aoArquivo?.()
+    }
   }
+  const quantos = Math.min(CONCORRENCIA, fila.length)
+  await Promise.all(Array.from({ length: quantos }, () => trabalhador()))
+}
+
+/**
+ * A falha numa frase que pode entrar em log. O `files.ts` já traduz e higieniza
+ * o que vem do download; isto é a rede de segurança para o que vem de outro
+ * caminho (um `moveSync` recusado, por exemplo), porque **regra 2 do catálogo:
+ * URI completa nunca entra em log**.
+ */
+function mensagemDe(erro: unknown): string {
+  const bruta = erro instanceof Error ? erro.message : 'falha ao baixar'
+  return bruta.replace(/\b(?:https?|file):\/\/\S+/g, '<uri>')
 }
 
 /**
@@ -83,12 +133,13 @@ async function baixar(urls: string[], guaranteed: boolean): Promise<void> {
 export async function prefetch7Dias(
   setlists: SetlistDTO[],
   contentById: Map<string, ContentDTO>,
+  aoArquivo?: () => void,
 ): Promise<void> {
   const noDisco = listFiles()
   const presentes = new Set(noDisco.map((f) => f.url))
   const plano = selectPrefetch(setlists, contentById, presentes, hoje())
   log(`prefetch plan n=${plano.length} reason=7d`)
-  if (plano.length > 0) await baixar(plano.map((item) => item.url), true)
+  if (plano.length > 0) await baixar(plano.map((item) => item.url), true, aoArquivo)
 
   /**
    * **Promoção** (defeito medido no aceite, N1-PR7 §3.1, Tab S6).
@@ -108,7 +159,20 @@ export async function prefetch7Dias(
   const aPromover = promoteList(urlsGarantidas(setlists, contentById), listFiles())
   if (aPromover.length === 0) return
   log(`prefetch promote n=${aPromover.length}`)
-  for (const url of aPromover) await ensureFile(url, { guaranteed: true })
+  for (const url of aPromover) {
+    // Com guarda (div. 115): sem ela, uma rejeição aqui subia por
+    // `prefetchEArrumar` → `rodarSync` → `void rodarSync(...)` e virava
+    // rejeição sem dono — E o `recarregarArquivos()` não corria, então o LRU
+    // não era aparado e o `filesPresent` não era atualizado. Uma promoção que
+    // falha é uma linha, não um sync derrubado.
+    try {
+      await ensureFile(url, { guaranteed: true })
+    } catch (erro: unknown) {
+      log(`download-error ${mensagemDe(erro)}`)
+      continue
+    }
+    aoArquivo?.()
+  }
 }
 
 /**
@@ -140,10 +204,26 @@ export async function prefetchDemanda(
 /**
  * T1-R15 manual — "baixar esta setlist" (o design mostra o botão só em
  * setlist sem data de show: as datadas já são cobertas pelo plano de 7 dias).
+ *
+ * **Grava no DURÁVEL** (W1, div. 102). Era a única das quatro formas de
+ * baixar que gravava no purgável, e portanto a que dava a garantia **mais
+ * fraca** — justamente a única em que o usuário pede o arquivo de forma
+ * explícita. O prefetch automático de 7 dias, que ninguém pediu, dava a mais
+ * forte: **a hierarquia estava invertida**. E o botão só aparece em setlist
+ * SEM data de show — exatamente a que a janela de 7 dias nunca cobre: se ele
+ * não durar, nada dura para ela.
+ *
+ * **Com trava, e a trava é o que fica de fora**: o arquivo sai do alcance do
+ * Android (o dano real da 102) e **não** entra no `protectedUrls` do LRU. A
+ * política de purga não muda — o arquivo fixado continua candidato normal,
+ * despejável por desuso —, e a pergunta grande ("como se solta o que foi
+ * fixado", com UI de soltar) fica aberta e honesta, para quando houver
+ * repertório que a justifique. Decisão do Marcel, 2026-09-14 (Q1).
  */
 export async function baixarSetlist(
   setlist: SetlistDTO,
   contentById: Map<string, ContentDTO>,
+  aoArquivo?: () => void,
 ): Promise<void> {
   const urls: string[] = []
   const vistas = new Set<string>()
@@ -154,7 +234,7 @@ export async function baixarSetlist(
     urls.push(url)
   }
   log(`prefetch plan n=${urls.length} reason=manual`)
-  if (urls.length > 0) await baixar(urls, false)
+  if (urls.length > 0) await baixar(urls, true, aoArquivo)
 }
 
 /**
