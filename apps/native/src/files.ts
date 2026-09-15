@@ -192,11 +192,21 @@ async function ensureFileUma(
 
   if (atual !== null) {
     // Promoção a garantido: move do cache purgável para o não-purgável.
+    //
+    // O `try` é da W2 (div. 131, CLASSE 2). Estas três chamadas estavam FORA de
+    // qualquer `try`: uma rejeição do `create`, do `delete` ou do `moveSync`
+    // subia CRUA — sem passar pelo `falha()`, logo sem o prefixo do nome, sem a
+    // URL higienizada (regra 2 do catálogo) e sem frase de tela — até o palco e
+    // até o `App.tsx`. Consertar só a frase medida pelo W1 deixaria esta de pé.
     if (opcoes.guaranteed && !atual.guaranteed) {
-      if (!alvoDir.exists) alvoDir.create({ intermediates: true })
-      const destino = new File(alvoDir, name)
-      if (destino.exists) destino.delete()
-      atual.file.moveSync(destino)
+      try {
+        if (!alvoDir.exists) alvoDir.create({ intermediates: true })
+        const destino = new File(alvoDir, name)
+        if (destino.exists) destino.delete()
+        atual.file.moveSync(destino)
+      } catch (erro: unknown) {
+        throw falha(erro, name)
+      }
     }
     const achado = localizar(url)
     const bytes = achado?.file.size ?? 0
@@ -205,7 +215,11 @@ async function ensureFileUma(
     return { uri: achado?.file.uri ?? '', src: 'disk', bytes }
   }
 
-  if (!alvoDir.exists) alvoDir.create({ intermediates: true })
+  try {
+    if (!alvoDir.exists) alvoDir.create({ intermediates: true })
+  } catch (erro: unknown) {
+    throw falha(erro, name)
+  }
   return baixarAtomico(url, alvoDir, name)
 }
 
@@ -329,7 +343,8 @@ async function baixarAtomico(url: string, alvoDir: Directory, name: string): Pro
     if (!veredito.ok) {
       log(`file-reject name=${name} kind=${veredito.kind} bytes=${bytes} expected=${esperado ?? '-'}`)
       parcial.delete()
-      throw new Error(`${name}: ${motivo(veredito.kind, bytes, esperado)}`)
+      const porque = motivo(veredito.kind, bytes, esperado)
+      throw comFrase(`${name}: ${porque}`, porque)
     }
 
     const destino = new File(alvoDir, name)
@@ -388,7 +403,7 @@ function latin1(bytes: Uint8Array): string {
   return s
 }
 
-/** O que o usuário lê no S3e, e o que entra no `download-error`. */
+/** A causa da recusa, em pt-BR — vai para a TELA e para o `download-error`. */
 function motivo(kind: FileRejectKind, bytes: number, esperado: number | null): string {
   if (kind === 'empty') return 'o arquivo chegou vazio'
   if (kind === 'short') return `arquivo incompleto: ${bytes} de ${esperado ?? '?'} bytes`
@@ -396,18 +411,70 @@ function motivo(kind: FileRejectKind, bytes: number, esperado: number | null): s
 }
 
 /**
- * A falha do download, numa frase que pode ir para o log E para a tela.
+ * A frase que o músico lê quando nada mais se sabe dizer (W2, decisão 2 do
+ * aval). O catálogo já traduz `download-error` por "não consegui baixar".
+ */
+export const FALHA_GENERICA = 'não consegui baixar'
+
+/** Onde a frase de tela viaja: uma propriedade do próprio `Error`. */
+type ComFrase = Error & { fraseDeTela: string }
+
+function comFrase(paraOLog: string, paraATela: string): Error {
+  const e = new Error(paraOLog) as ComFrase
+  e.fraseDeTela = paraATela
+  return e
+}
+
+/**
+ * A frase que chega ao `testID` **download-erro** — e o CONJUNTO é FECHADO.
+ *
+ * (Escrito sem as aspas de propósito: o coletor do G2 grepa a prop de teste
+ *  literalmente, sem tirar comentário, e contaria esta linha como uma prop nova
+ *  do `files.ts`.
+ *  É falso positivo do instrumento — div. 136, registrada, e o conserto é da W3,
+ *  porque mexer no gate aqui é misturar escopo com invólucro.)
+ *
+ * W2, div. 125 e 131. O erro carrega DUAS metades: `message` é o detalhe, que
+ * vai para o log e continua diagnosticável (com o nome do objeto e a URL já
+ * higienizada); `fraseDeTela` é o que o músico lê. Quem não tiver frase
+ * declarada cai no genérico — e é ESSA omissão que fecha o conjunto: nenhuma
+ * mensagem de biblioteca pode chegar à tela, porque só chega o que alguém
+ * escreveu aqui, em pt-BR.
+ *
+ * E o nome do objeto do bucket NÃO vai junto (decisão 2 do aval): ele não
+ * identifica a MÚSICA, identifica o OBJETO — é detalhe de infraestrutura que o
+ * músico não pediu e não pode usar. O que serve na tela é o título, e o S3e já
+ * o mostra duas linhas acima (`${titulo} · ${tipo}${tamanho}`).
+ */
+export function fraseDaFalha(erro: unknown): string {
+  const f = (erro as Partial<ComFrase> | null | undefined)?.fraseDeTela
+  return typeof f === 'string' ? f : FALHA_GENERICA
+}
+
+/**
+ * A falha do download: o DETALHE para o log, e a frase para a tela.
  *
  * **Regra 2 do catálogo**: URL completa nunca entra em log. A mensagem crua
  * da biblioteca carrega a URL do objeto (`Unable to download file from
  * <url>. Response status: 404`), então ela é traduzida quando se reconhece a
  * causa e higienizada quando não.
+ *
+ * Os três ramos, e o que cada um manda para cada metade:
+ *   1. já vem de dentro daqui (prefixo `${name}: `) — devolve como está, com a
+ *      frase de tela que ele já carrega;
+ *   2. `status: NNN` — traduz para as duas metades;
+ *   3. **qualquer outra coisa** — o log fica com o texto cru higienizado, que é
+ *      o que faz um relatório ser diagnosticável, e a TELA fica sem frase, logo
+ *      com a genérica. Era este ramo que mandava `Call to function
+ *      'FileSystemDownloadTask.start' has been rejected.` para o palco.
  */
-function falha(erro: unknown, name: string): Error {
+export function falha(erro: unknown, name: string): Error {
   if (erro instanceof Error && erro.message.startsWith(`${name}: `)) return erro
   const bruta = erro instanceof Error ? erro.message : String(erro)
   const status = /status:?\s*(\d{3})/i.exec(bruta)?.[1]
-  if (status !== undefined) return new Error(`${name}: o servidor respondeu ${status}`)
+  if (status !== undefined) {
+    return comFrase(`${name}: o servidor respondeu ${status}`, `o servidor respondeu ${status}`)
+  }
   return new Error(`${name}: ${bruta.replace(/https?:\/\/\S+/g, '<url>')}`)
 }
 

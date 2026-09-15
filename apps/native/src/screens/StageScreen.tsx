@@ -50,7 +50,7 @@ import {
   type ContentDTO,
   type SetlistDTO,
 } from '@octavia/core'
-import { ensureFile, fileNameFromUrl, hasFile, knownBytes } from '../files'
+import { ensureFile, fileNameFromUrl, fraseDaFalha, hasFile, knownBytes } from '../files'
 import { Icone, type EstadoIcone } from '../icones/Icone'
 import type { NomeIcone } from '../icones/dados'
 import { log } from '../log'
@@ -348,9 +348,16 @@ export function StageScreen({
         setArquivo({ fase: 'pronto', uri: r.uri })
         if (r.src === 'download') onArquivosMudaram()
       } catch (e: unknown) {
+        // DUAS metades, e de propósito (W2, div. 125). O `mensagem` é o
+        // DETALHE — com o nome do objeto e a URL já higienizada pelo `falha()`
+        // —, e é ele que continua indo para o log, porque é o que faz um
+        // relatório ser diagnosticável. O que o MÚSICO lê é a `fraseDaFalha()`,
+        // de um conjunto FECHADO de frases em pt-BR. Antes as duas eram a mesma
+        // coisa, e o palco mostrava `1751910900697-Easy_-_Guitar.pdf: Call to
+        // function 'FileSystemDownloadTask.start' has been rejected.`
         const mensagem = e instanceof Error ? e.message : 'falha ao baixar'
         log(`download-error ${mensagem}`)
-        setArquivo({ fase: 'erro', mensagem, bytes: knownBytes(url) })
+        setArquivo({ fase: 'erro', mensagem: fraseDaFalha(e), bytes: knownBytes(url) })
       }
     },
     [online, onArquivosMudaram],
