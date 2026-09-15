@@ -267,6 +267,25 @@ perigoso: um instrumento que mede **mais** do que a coisa medida.
 | 17 | **div. 130** (W2) | o **`gate:a20`**: LITERAL em posição de texto | "o aceite A20 está cumprido — nenhum texto de UI em inglês". O que chegava à tela do músico no S3e era texto de UI em inglês que **não é literal**: é valor de tempo de execução, vindo da biblioteca. **Nenhum escopo alcança**, nem `apps/native` inteiro. É o par estrutural do 11 e do 12 (escopo declarado), mas com uma diferença que o torna pior: ali o escopo era *menor*; aqui é de **outra natureza** |
 | 18 | **div. 139** (W2) | o **`uiautomator dump`**: o nó acessível, com o `text` que o Android expõe | "o que está na tela". O `<Text>` de várias linhas do `download-erro` volta do dump com **`text=""`** e só os `bounds` — então a varredura de inglês sobre os dumps do ANTES acusa as **mesmas 4** cadeias do DEPOIS e **não vê** a frase de 4 linhas que é o objeto inteiro da div. 125. Quem a viu foi a **captura de tela** e o **logcat**. É o 13 uma volta adiante: lá o dump media o nó e não o desenho; aqui ele **não mede nem o nó** |
 
+| 19 | **div. 140** (W3) | o **coletor do G2/G3**: `testID="…"` e `log(` no texto **CRU** do arquivo — comentário incluído | "as populações do antes e do depois são o código". A W2 viu a metade inofensiva disto (div. 136: uma menção em comentário contada como `testID` NOVO) e a chamou de falso positivo. A W3 mediu a outra: assim que a menção entra na população do **ANTES**, editar o comentário a faz SUMIR, e o G2 reprova por *"testID SUMIU"* e o G3 por *"linha sumiu SEM ERRATA"* — **sem que uma linha de código tenha mudado**. É o **segundo caso do padrão pelo avesso**, e o primeiro num gate de verdade: o instrumento mede **MAIS** do que o critério, não menos |
+
+> **O 19 é o 15 outra vez, e a segunda vez muda o que a primeira parecia ser.** Quando o
+> 15 apareceu, o texto acima o chamou de *"a primeira vez no projeto em que o instrumento
+> foi MAIS GENEROSO QUE A REALIDADE"* e tratou a generosidade como acidente de duplo de
+> teste. Com o 19 vira outra coisa: **um instrumento que lê texto bruto mede sempre um
+> SUPERCONJUNTO do que afirma medir**, e a única pergunta é se o excesso já encostou em
+> alguma coisa. No 15 o excesso fez acreditar; aqui ele faz **duvidar** — reprovação sem
+> causa, que é o jeito mais rápido de um gate perder autoridade. As duas direções do erro
+> têm o mesmo remédio, e ele é o de sempre: **plantar o defeito e ver o instrumento
+> reagir**, nas DUAS direções — o que aparece quando não devia, e o que some quando
+> ninguém mexeu.
+>
+> E há uma lição de recorte, que é do Marcel decidir se vira regra: a W2 achou a div. 136,
+> julgou-a inofensiva **na direção em que a viu**, e contornou. Estava certa sobre aquela
+> direção e o contorno custou uma linha. O que faltou não foi diligência — foi a pergunta
+> *"e se isto estivesse na BASE?"*. **Todo achado de coletor tem duas direções, e a barata
+> é a que se vê primeiro.**
+
 > **A variante do 14, e por que ela merece nome próprio.** O caso 8 (div. 71) era o script
 > documentando a própria cegueira numa nota que ninguém leu. Este é um grau além: **a
 > documentação não descrevia um limite do instrumento — descrevia o comportamento, com
@@ -504,3 +523,44 @@ capaz que a biblioteca. É outra forma — o 15º caso do padrão, pelo avesso.
 
 A consequência que a W2 registra e não conserta: **a opção C continuará sem população até
 alguém baixar de uma rede de verdade**, e isso não acontece por uma PR existir.
+
+---
+
+## Errata W3 — a regra 2 passa a ter UMA implementação
+
+**Div. 137, a segunda metade.** A W2 consertou a higienização do `files.ts` depois de o
+aparelho devolver, em modo avião, `Unable to resolve host "<ref>.supabase.co"` — host nu,
+sem esquema, entre aspas, que nenhum regex de URI casa. O que ela não pôde tocar foi o
+`mensagemDe()` do `prefetch.ts`, a **rede de segurança para o que nunca passa pelo
+`falha()`**: ele tinha higienização própria, e era a antiga. A regra 2 do catálogo — *URI
+completa nunca entra em log* — tinha duas implementações, e a segunda não conhecia o
+host nu. **Passa a ter uma**: o `prefetch.ts` chama o `higienizar()` do `files.ts`.
+
+A razão de a W2 não ter feito isto vale registro, porque é método e não desleixo: o
+`prefetch.ts` está DENTRO da cobertura do G1a, e tocá-lo exigiria declará-lo exceção —
+alargando, no commit 4, o escopo que o commit 1 daquela PR acabara de fechar. Aqui ele é
+**exceção declarada e justificada no `g1.sh`**, que é o que a lista de exceções existe
+para ser.
+
+**Nenhuma linha `log(` mudou** (G3 57 = 57), e **nenhum rótulo mudou de vocabulário**:
+`<url>` para `http(s)`, `<uri>` para `file:`, `"<host>"` para o host nu. Cada um já era o
+que o seu lado usava; o que a W3 fez foi dar a cada lado o que só o outro tinha — a
+alternativa `file://`, que só existia no `prefetch.ts`, entrou no `higienizar()`.
+
+O conjunto coberto por essa rede **encolheu com a W2 e não zerou**: o `parcial.delete()`
+da abertura do `baixarAtomico`, o `touch()` e os dois `localizar()` do `ensureFileUma`
+seguem fora de qualquer `try`. É por ali que o teste o alcança (`__quebrarDelete`, novo no
+duplo). Ver `W3-anexos/W3-C-a-rede-de-seguranca.txt`.
+
+## Errata W3 — os gates deixam de só medir
+
+**Div. 129.** `gate:a20`, `gate:icones` e o G7 passam a rodar dentro do `pnpm test:unit`
+do `ci.yml`; G1a/G1b e G2/G3 passam a rodar num job `gates-nativos` próprio. O que fica de
+fora, declarado, são os **controles negativos** do G1, do G2/G3 e do G7 — os dois
+primeiros precisam de um par de refs fabricado, o terceiro troca arquivo da árvore de
+trabalho. Continuam sendo comando de mão. A tabela completa está em
+`W3-anexos/W3-B-os-cinco-gates-e-o-ci.txt`.
+
+O que o invólucro **não** dá, e o item 5 da §10 do `W1-ENCERRAMENTO` prometia: **cobertura**.
+Um subprocesso não instrumenta o processo do Vitest, então `a20.mjs` e `icones.mjs`
+continuam fora do relatório. Dívida declarada.

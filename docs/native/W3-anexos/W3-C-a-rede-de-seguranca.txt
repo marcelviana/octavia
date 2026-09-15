@@ -1,0 +1,111 @@
+================================================================================
+W3-C — A REDE DE SEGURANÇA TAMBÉM HIGIENIZA (div. 137, a segunda metade)
+================================================================================
+Rastro de medição. 2026-09-15, worktree `../octavia-w3`, branch `w3/gates-no-ci`.
+
+--------------------------------------------------------------------------------
+§1. O QUE ESTAVA DE PÉ
+--------------------------------------------------------------------------------
+$ grep -n "mensagemDe" -A 3 apps/native/src/prefetch.ts    (antes desta PR)
+  function mensagemDe(erro: unknown): string {
+    const bruta = erro instanceof Error ? erro.message : 'falha ao baixar'
+    return bruta.replace(/\b(?:https?|file):\/\/\S+/g, '<uri>')
+  }
+
+Duas implementações da regra 2 do catálogo (*URI completa nunca entra em log*),
+e a de cá era a ANTIGA: sem a alternativa do **host NU** que a W2 acrescentou ao
+`higienizar()` depois de o aparelho devolver, em modo avião:
+
+    Unable to resolve host "mlxjmpbdchmwplcfislt.supabase.co":
+    No address associated with hostname
+
+O host vem sem esquema, entre aspas — nenhum regex de URI o casa. O
+identificador do projeto Supabase ia INTEIRO para o log, e **log deste projeto
+se cola em anexo commitado**.
+
+--------------------------------------------------------------------------------
+§2. O CONJUNTO QUE ESCAPA DO `falha()` — ENCOLHEU, NÃO ZEROU
+--------------------------------------------------------------------------------
+A W2 pôs a promoção do `ensureFileUma` num `try` (div. 131, classe 2). Sobrou,
+lido no código:
+
+  `ensureFileUma`  linhas 189-191 — `fileNameFromUrl`, `dirGarantido()`/
+                   `dirDemanda()`, o primeiro `localizar(url)`
+                   linhas 211-214 — o segundo `localizar()`, o `.size`, o
+                   `touch(url)` e o `log()`
+  `baixarAtomico`  a ABERTURA: `const parcial = new File(...)` e
+                   `if (parcial.exists) parcial.delete()` estão **antes** do
+                   `try`
+
+Qualquer rejeição desses pontos sobe crua até o `catch` do `baixar()` do
+`prefetch.ts` e sai pelo `mensagemDe()`.
+
+--------------------------------------------------------------------------------
+§3. COMO SE MEDE UMA REDE — O `__quebrarDelete`
+--------------------------------------------------------------------------------
+O teste alcança o `parcial.delete()`: um `.part` velho plantado no durável, e um
+`delete()` que recusa com a mensagem crua que se quiser. É um gancho novo no
+duplo (`apps/native/test/fake-expo-file-system.ts`), e só existe para isto — o
+`__quebrarMove` que já havia não serve mais, porque a W2 pôs o `moveSync` sob o
+`falha()`.
+
+Quatro `it`, em `prefetch-fila.test.ts`:
+
+  ✓ o HOST NU entre aspas não chega ao log — era o buraco da higienização antiga
+  ✓ a URI `file://` continua coberta — unificar não podia custar cobertura
+  ✓ a URL completa continua coberta
+  ✓ CONTROLE NEGATIVO: o que NÃO é segredo sobrevive inteiro
+
+O último é o que impede o conserto de virar exagero: `w3-curto-1.pdf.part`
+sobrevive. Apagar o nome do arquivo do log destruiria a diagnosticabilidade que
+a separação das duas metades (W2) comprou — é o mesmo limite que o `files.ts`
+já declara para o host de dois rótulos.
+
+--------------------------------------------------------------------------------
+§4. O CONTROLE NEGATIVO — COM A HIGIENIZAÇÃO DE ONTEM REPOSTA
+--------------------------------------------------------------------------------
+$ <o `mensagemDe()` antigo de volta no lugar>
+$ pnpm exec vitest run --project native
+  × o HOST NU entre aspas não chega ao log — era o buraco da higienização antiga
+  × a URL completa continua coberta
+
+  FAIL prefetch-fila.test.ts > div. 137 … > o HOST NU entre aspas não chega ao log
+  AssertionError: expected 'OCTAVIA: download-error Unable to res…'
+    not to contain 'mlxjmpbdchmwplcfislt'
+      246|     expect(linha).not.toContain('mlxjmpbdchmwplcfislt')
+  FAIL prefetch-fila.test.ts > div. 137 … > a URL completa continua coberta
+  AssertionError: expected 'OCTAVIA: download-error falhou em <ur…' to contain '<url>'
+
+  Test Files  1 failed | 4 passed (5)
+       Tests  2 failed | 45 passed (47)
+
+**A PRECISÃO, porque os dois vermelhos não provam a mesma coisa:**
+ • o primeiro é o BURACO de verdade — o host nu VAZAVA, e o `mlxjmpbdchmwplcfislt`
+   aparece cru na linha de log;
+ • o segundo é só o RÓTULO — a higienização antiga já cobria `http(s)`, mas a
+   chamava `<uri>`. Nenhum segredo vazava por aí.
+Registrado assim para que ninguém leia "dois testes vermelhos" como "dois
+buracos". Era um.
+
+--------------------------------------------------------------------------------
+§5. E O G7 CONTRA A BASE DESTA PR
+--------------------------------------------------------------------------------
+$ sh apps/native/scripts/g7.sh cbff070
+  FAIL files-mensagem.test.ts > a alternativa `file://` — e o rótulo de cada esquema
+  FAIL prefetch-fila.test.ts > div. 137 … > o HOST NU entre aspas não chega ao log
+  FAIL prefetch-fila.test.ts > div. 137 … > a URL completa continua coberta
+  Test Files  2 failed | 3 passed (5)
+       Tests  3 failed | 45 passed (48)
+  G7: o código de cbff070 REPROVA, como tem de reprovar ✓
+  exit=0
+
+--------------------------------------------------------------------------------
+§6. O QUE MUDA NO LOG, E O QUE NÃO MUDA
+--------------------------------------------------------------------------------
+G3: 57 = 57. **Nenhuma linha `log(` mudou** — logo SEM errata de gate, e sem
+linha nova no catálogo. O `log(\`download-error ${mensagemDe(erro)}\`)` é o
+mesmo caractere por caractere; o que mudou é o que a função devolve.
+
+Os rótulos também não mudam de vocabulário: `<url>` para `http(s)`, `<uri>` para
+`file:`, `"<host>"` para o host nu — cada um já era o que o seu lado usava. O que
+esta PR fez foi dar a cada lado o que só o outro tinha.

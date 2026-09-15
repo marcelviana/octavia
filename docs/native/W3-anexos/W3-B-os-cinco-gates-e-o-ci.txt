@@ -1,0 +1,130 @@
+================================================================================
+W3-B — OS CINCO GATES, ONDE CADA UM PASSA A RODAR, E A PROVA DO VERMELHO
+================================================================================
+Rastro de medição. 2026-09-15, worktree `../octavia-w3`, branch `w3/gates-no-ci`.
+
+--------------------------------------------------------------------------------
+§1. O ESTADO DE ANTES — A DIV. 129, MEDIDA DE NOVO NESTA ÁRVORE
+--------------------------------------------------------------------------------
+$ node -e "<js-yaml sobre os dois workflows>"
+  ci.yml     · triggers ["push","pull_request"]
+    job build -> checkout | pnpm | node | Install | Lint | Type-check dos testes
+      (informativo) | Type-check packages/core | Test | Test coverage | Codecov
+      | artifacts | Build
+  native.yml · triggers ["pull_request","push"]
+    job android-debug-apk -> ... | Type-check apps/native | Prebuild | Gradle
+      assembleDebug | upload-artifact
+
+  Nenhum dos dois chama `gate:a20`, `gate:icones`, `g1.sh`, `g2g3.sh` ou
+  `g7.sh`. Confirmado nesta árvore, como o pre-check da W2 já tinha medido.
+
+--------------------------------------------------------------------------------
+§2. A TABELA DOS CINCO, DEPOIS DESTA PR
+--------------------------------------------------------------------------------
+| gate | roda no CI? | ONDE | se reprovar |
+|---|---|---|---|
+| `gate:a20` (+ `:cn`) | **SIM** | `apps/native/test/gates.test.ts`, projeto `native` do Vitest → `pnpm test:unit` → passo `Test` do job `build` | `build` vermelho; merge bloqueado por check |
+| `gate:icones` (+ `:cn`) | **SIM** | idem | idem |
+| **G7** (árvore de trabalho) | **SIM, e já rodava** | por IDENTIDADE: `g7.sh WORKTREE` **é** `vitest run --project native`, subconjunto do mesmo `pnpm test:unit` | `build` vermelho |
+| **G1a / G1b** | **SIM** | job `gates-nativos` novo no `ci.yml` (`sh` + `git` + `awk`, sem `pnpm install`) | job `gates-nativos` vermelho |
+| **G2 / G3** | **SIM** | idem | idem |
+
+O QUE FICA DE FORA, gate a gate, e por quê:
+
+ • **o CN do G7** (`g7.sh <ref>`) — ele TROCA `files.ts` e `prefetch.ts` pelos do
+   ref, roda a suíte e restaura. Um job de CI que muta a própria árvore de
+   trabalho para provar um ponto é instrumento de mão: o que ele afirma é
+   histórico ("o código de ontem reprova as asserções de hoje"), e isso não
+   muda a cada PR. Continua sendo comando de mão, e esta PR o rodou (§4).
+
+ • **os CN do G1/G2/G3** — exigem um PAR de refs fabricado (um commit temporário
+   com o defeito). Não há como fazê-lo num job sem escrever no repositório.
+   Continuam sendo comando de mão, e esta PR os rodou (anexo A §4).
+
+ • **o G8** (o gate de dump proposto no pre-check da W2 §3) — não entra: não
+   está na lista fechada desta PR.
+
+POR QUE G1 E G2/G3 NÃO VIRARAM `it`, e a recomendação é POR GATE, não em bloco:
+os dois são **diferenciais** — a verdade deles é um PAR de refs git, não uma
+árvore. Um `it` não sabe qual é a BASE da PR (ele roda numa árvore, sem saber de
+onde ela veio), e o `actions/checkout` default não traz histórico. O `gate:a20`
+e o `gate:icones` são **absolutos** — leem a árvore e acusam —, e por isso cabem
+num `it` sem inventar nada. **A forma do gate decidiu o invólucro, não a
+conveniência.**
+
+O job usa `fetch-depth: 0` e `ref: head.sha`. O `ref` importa: o default do
+`actions/checkout` numa PR é o MERGE COMMIT, e aí o que voltou da `main` depois
+do ponto de ramificação apareceria como diff desta PR — G1a vermelho por
+culpa alheia. Com a HEAD do ramo e `BASE = git merge-base`, o par é
+exatamente o que o executor roda à mão.
+
+--------------------------------------------------------------------------------
+§3. A PROVA LOCAL — UM COMMIT QUE REPROVA UM GATE FICA VERMELHO
+--------------------------------------------------------------------------------
+O defeito plantado é TypeScript VÁLIDO, para que só o gate possa pegá-lo:
+
+$ git diff --unified=0 apps/native/src/screens/IndexScreen.tsx
+  -  accessibilityLabel={posicaoAtual === null ? 'Voltar para as setlists' : 'Voltar para o palco'}
+  +  accessibilityLabel={posicaoAtual === null ? 'Back to setlists' : 'Voltar para o palco'}
+
+Os passos do CI, um a um:
+
+  tsc do nativo (native.yml, BLOQUEANTE) → exit=0
+  lint da raiz (ci.yml, BLOQUEANTE)      → exit=0
+  tsc do core (ci.yml, BLOQUEANTE)       → exit=0
+  passo Test (pnpm test:unit)            → exit=1   ⟵
+  job gates-nativos (G1a)                → exit=1   ⟵
+
+$ pnpm test:unit
+  FAIL native apps/native/test/gates.test.ts > gate:a20 — nenhum literal de UI
+    em inglês (G4) > a árvore de trabalho PASSA — exit 0, zero acusações
+  AssertionError:
+  exit=1
+    ACUSADO src/screens/IndexScreen.tsx:200 [accessibilityLabel{…}] "Back to setlists" ← termo "back"
+    acusações: 1
+  : expected 1 to be +0 // Object.is equality
+  Test Files  1 failed | 92 passed | 4 skipped (97)
+       Tests  1 failed | 818 passed | 85 skipped (904)
+
+$ sh <simulação do job gates-nativos>
+  G1a: DIFF NÃO VAZIO ✗
+       apps/native/src/screens/IndexScreen.tsx | 2 +-
+       1 file changed, 1 insertion(+), 1 deletion(-)
+
+**São dois vermelhos por causas diferentes, e a distinção importa**: o `Test`
+ficou vermelho porque o TEXTO é inglês (`gate:a20`); o `gates-nativos` ficou
+vermelho porque o ARQUIVO mudou sem exceção declarada (G1a). Um é sobre o que o
+músico lê, o outro é sobre escopo. Três passos bloqueantes verdes e o inglês na
+tela: é a div. 129 inteira em cinco linhas, e é o que deixa de acontecer.
+
+--------------------------------------------------------------------------------
+§4. O QUE AINDA NÃO FOI MEDIDO — O CONTROLE NEGATIVO **NO CI**
+--------------------------------------------------------------------------------
+Está em falta, e vai dito com as palavras do prompt: *um gate que nunca foi
+visto vermelho no CI é promessa, não barreira*.
+
+POR QUE NÃO FOI RODADO: o `ci.yml` dispara em `pull_request` (qualquer) e em
+`push` para a `main`. **Um push de branch, sozinho, não dispara nada** —
+MEDIDO na §1: `'on': {push: {branches: [main]}, pull_request: null}`. Para ver
+o vermelho no CI é preciso que a PR EXISTA, e abrir a PR é push, que a §1 do
+prompt reserva ao aval do Marcel.
+
+A RECEITA, pronta, para rodar assim que houver aval (pergunta 1 do relatório):
+
+    # 1. a PR desta branch existe
+    git checkout -b w3/cn-ci
+    # 2. o mesmo defeito do §3, TypeScript válido
+    sed -i '' "s/'Voltar para as setlists'/'Back to setlists'/" \
+      apps/native/src/screens/IndexScreen.tsx
+    git commit -am "CN do W3 §2 — este commit TEM de reprovar o CI. REVERTIDO a seguir."
+    git push -u origin w3/cn-ci
+    gh pr create --draft --title "CN da W3 — este CI tem de ficar VERMELHO" \
+      --body "Controle negativo da div. 129. Fecha sem merge."
+    # 3. ler os dois jobs: `build` (gate:a20) e `gates-nativos` (G1a)
+    gh run list --workflow=ci.yml --branch w3/cn-ci
+    # 4. fechar a PR e apagar a branch — o defeito nunca encosta na `w3/gates-no-ci`
+    gh pr close w3/cn-ci --delete-branch
+
+Numa branch DESCARTÁVEL, e não na desta PR: o vermelho fica no histórico de uma
+PR fechada, e a `w3/gates-no-ci` continua com todos os commits verdes. É a
+alternativa que o prompt pediu para quem achasse que o CN "suja a PR".
