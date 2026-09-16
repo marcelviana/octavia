@@ -21,7 +21,7 @@ import {
   type ContentDTO,
   type SetlistDTO,
 } from '@octavia/core'
-import { ensureFile, hasFile, listFiles, remove } from './files'
+import { ensureFile, hasFile, higienizar, listFiles, remove } from './files'
 import { log } from './log'
 
 /**
@@ -115,14 +115,34 @@ async function baixar(
 }
 
 /**
- * A falha numa frase que pode entrar em log. O `files.ts` já traduz e higieniza
- * o que vem do download; isto é a rede de segurança para o que vem de outro
- * caminho (um `moveSync` recusado, por exemplo), porque **regra 2 do catálogo:
- * URI completa nunca entra em log**.
+ * A falha numa frase que pode entrar em log — a REDE DE SEGURANÇA para o que
+ * nunca passou pelo `falha()`, porque **regra 2 do catálogo: URI completa
+ * nunca entra em log**.
+ *
+ * **W3, div. 137 — a metade que a W2 deixou.** Até aqui esta função tinha
+ * higienização PRÓPRIA: `replace(/\b(?:https?|file):\/\/\S+/g, '<uri>')`. Duas
+ * implementações da mesma regra, e a de cá era a ANTIGA — não tinha a
+ * alternativa do host nu que a W2 acrescentou ao `higienizar()` depois de o
+ * aparelho devolver, em modo avião, `Unable to resolve host
+ * "<ref>.supabase.co"` (host sem esquema, entre aspas, que o regex de URI não
+ * casa). O identificador do projeto Supabase ia inteiro para o log — e log
+ * deste projeto se cola em anexo commitado.
+ *
+ * A W2 não pôde tocar aqui: o `prefetch.ts` está DENTRO da cobertura do G1a, e
+ * mexer nele exigiria declará-lo exceção, alargando o escopo que o commit 1
+ * dela acabara de fechar. Nesta PR ele é **exceção declarada no `g1.sh`**, com
+ * a razão escrita — a lista de exceções é o escopo declarado.
+ *
+ * O conjunto que esta rede cobre encolheu com a W2 (a promoção do
+ * `ensureFileUma` entrou num `try`) e **não é vazio**: o `parcial.delete()` da
+ * abertura do `baixarAtomico`, o `touch()` e os dois `localizar()` do
+ * `ensureFileUma` seguem fora de qualquer `try`.
+ *
+ * O `file://` que só existia aqui foi junto para o `higienizar()`, com o mesmo
+ * rótulo `<uri>`: unificar não podia custar cobertura a nenhum dos dois lados.
  */
 function mensagemDe(erro: unknown): string {
-  const bruta = erro instanceof Error ? erro.message : 'falha ao baixar'
-  return bruta.replace(/\b(?:https?|file):\/\/\S+/g, '<uri>')
+  return higienizar(erro instanceof Error ? erro.message : 'falha ao baixar')
 }
 
 /**

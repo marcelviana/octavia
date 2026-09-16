@@ -1,0 +1,94 @@
+================================================================================
+W3-D — A FAIXA DO `native.yml` COM A 15ª CORRIDA, E A CONTABILIDADE DA W3
+================================================================================
+Rastro de medição. 2026-09-15, worktree `../octavia-w3`, branch `w3/gates-no-ci`.
+
+--------------------------------------------------------------------------------
+§1. A 15ª — A CORRIDA DA #303
+--------------------------------------------------------------------------------
+A regra de leitura da população, herdada do `W2-E` §1 e §2: o job
+`android-debug-apk` de um run de **`pull_request`**. Runs de `push` (o merge na
+`main`) ficam fora.
+
+$ gh run view 35015930984 --json jobs \
+    --jq '.jobs[] | "\(.name) \(.conclusion) \(.startedAt) -> \(.completedAt)"'
+  android-debug-apk success 2026-09-15T19:49:36Z -> 2026-09-15T20:02:13Z
+  => **12m37s**  (run de `pull_request`, branch `w2/gate-barra-mensagem`)
+
+FORA DA POPULAÇÃO, declarado para não virar arqueologia:
+$ gh run view 35026669769 --json jobs --jq '...'
+  android-debug-apk success 2026-09-15T21:37:32Z -> 2026-09-15T21:48:31Z
+  => 10m59s — é o `push` do merge da #303 na `main`. **Não entra.**
+
+--------------------------------------------------------------------------------
+§2. A FAIXA RECALCULADA
+--------------------------------------------------------------------------------
+CONTROLE — a série de 14 do prompt, reconstruída:
+  n=14  piso 9m16s  teto 14m11s  mediana 11m49s  média 11m37s
+  (o prompt cita 9m16s–14m11s, mediana 11m49s, n=14 — bate; a série está certa)
+
+COM A 15ª (12m37s):
+  n=15  piso 9m16s  teto 14m11s  mediana **11m53s**  média 11m41s
+
+  série ordenada:
+    9m16s · 9m19s · 10m15s · 11m22s · 11m35s · 11m39s · 11m45s · **11m53s** ·
+    11m55s · 11m57s · 12m21s · 12m32s · 12m37s · 12m43s · 14m11s
+
+A FAIXA SE MOVE? **Nos extremos, não; na mediana, sim, e para a frente.**
+ • piso 9m16s e teto 14m11s: **intactos pela 15ª vez**;
+ • a mediana volta de 11m49s para 11m53s. É a oscilação que a W2 previu por
+   escrito — *"ela oscila entre 11m45s / 11m49s / 11m53s conforme a paridade de
+   `n`"* — e a previsão se cumpre: com `n` ímpar ela é o 8º valor, 11m53s. **Uma
+   previsão de instrumento conferida é o que separa faixa de palpite**, e é a
+   regra da div. 80 em uso: citar a FAIXA, não a mediana.
+ • a média sobe de 11m37s para 11m41s.
+
+**Faixa a citar daqui em diante: 9m16s – 14m11s, mediana 11m53s, n = 15.**
+
+O CORTE v3/v4: a 15ª é de `v4` (posterior à #302). Série **v3 (n=12) + v4
+(n=3)**. As três de `v4` são 9m19s, 12m37s e 12m43s — quase o piso, acima da
+mediana, e acima da mediana de novo. Segue sendo evidência CONTRA "o `v4` é
+sistematicamente diferente", agora com uma amostra a mais.
+
+--------------------------------------------------------------------------------
+§3. O QUE ESTA PR FAZ COM O CUSTO DE CI — e é previsão, não medição
+--------------------------------------------------------------------------------
+[hipótese, a conferir na primeira corrida desta PR]
+ • o job `gates-nativos` é novo e RODA EM PARALELO com o `build`: é `sh`, `git`
+   e `awk` sobre um checkout com histórico, sem `pnpm install` e sem build.
+   Previsão: **bem abaixo de 1 min**, e ZERO no relógio de parede, porque o
+   `build` e o `native.yml` são muito mais longos;
+ • o `fetch-depth: 0` é o que ele tem de mais caro (clone completo);
+ • dentro do `build`, o `gates.test.ts` custou **213 ms** para 8 `it` nesta
+   máquina — a sonda do pre-check da W2 mediu 147 ms para 5. Ruído.
+ • o `native.yml` DISPARA nesta PR (ela toca `apps/native/**`), então haverá uma
+   16ª medição para a faixa.
+
+--------------------------------------------------------------------------------
+§4. CONTABILIDADE
+--------------------------------------------------------------------------------
+| | |
+|---|---|
+| requests a `/api/*` em prod | **0** (teto 2, alvo 0) — **alvo cumprido** |
+| downloads de bucket | **0** (teto 0) — **cumprido** |
+| logins · escrita pela API | 0 · 0 |
+| comandos ao **Tab S6** | **0** |
+| comandos a qualquer aparelho | **0** — `adb` não foi invocado uma vez |
+| **emulador** | **não usado.** Não foi iniciado, não foi consultado, não foi morto. Nada nesta PR precisa de tela: os quatro itens são invólucro de gate, coletor de gate e uma função de string com teste de unidade |
+| rede | só `gh` (api.github.com), para ler durações de CI |
+| commits · branches · pushes | 4 · 1 (`w3/gates-no-ci`) · **0** |
+| mutação fora da árvore da W3 | nenhuma. O checkout principal e o `../octavia-w2` não foram tocados |
+| `.env*` | o worktree nasceu sem nenhum; só o `.env.example`, que é versionado |
+
+**O `pnpm install --frozen-lockfile`** correu uma vez no worktree novo (11,4 s),
+porque `git worktree add` não traz `node_modules`. Não mexeu em
+`pnpm-lock.yaml` nem em `package.json` — conferido por `git status` limpo logo
+depois.
+
+**Por que esta PR não precisou do aparelho**, declarado como o prompt pediu:
+nenhum dos quatro itens muda pixel. O item 4 muda o TEXTO DE UM LOG, e log se
+mede por teste de unidade — o `download-error` é asserido em
+`prefetch-fila.test.ts` com o duplo do `expo-file-system`. A frase de TELA
+(`fraseDaFalha`) não mudou uma letra nesta PR: ela é do conjunto fechado que a
+W2 fixou, e o G7 contra `cbff070` confirma que só as três asserções novas
+mudaram de veredito.

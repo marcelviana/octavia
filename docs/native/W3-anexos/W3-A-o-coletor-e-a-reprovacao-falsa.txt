@@ -1,0 +1,195 @@
+================================================================================
+W3-A — O COLETOR DO G2: DE FALSO POSITIVO A REPROVAÇÃO FALSA (div. 136, 140)
+     e o do G3, que fica como está de propósito (div. 83, 142)
+================================================================================
+Rastro de medição. 2026-09-15, worktree `../octavia-w3`, branch `w3/gates-no-ci`.
+
+--------------------------------------------------------------------------------
+§1. O QUE A W2 ACHOU, E ATÉ ONDE ELA FOI
+--------------------------------------------------------------------------------
+`W2-A-gates-e-controles-negativos.txt` §6, verbatim:
+
+    • **div. 136**, achada por esta PR — o coletor do G2 grepa a prop de teste
+      sem tirar comentário, e contou uma menção dentro de um bloco de
+      documentação do `files.ts` como `testID` novo. Falso positivo; não muda
+      veredito (o G2 é antes ⊆ depois). Contornado escrevendo a documentação de
+      outro jeito, e o conserto do coletor fica para a W3.
+
+"Não muda veredito" está certo PARA A DIREÇÃO QUE A W2 VIU — uma menção NOVA só
+aparece em "testID NOVOS". A W3 olhou a outra direção.
+
+--------------------------------------------------------------------------------
+§2. A DIV. 140 — A MENÇÃO EM COMENTÁRIO É REPROVAÇÃO FALSA
+--------------------------------------------------------------------------------
+(a) O defeito, com o coletor de ANTES. Uma menção plantada em comentário no
+    `files.ts`, nada mais:
+
+$ sh apps/native/scripts/g2g3.sh origin/main WORKTREE
+  G2 — testIDs  antes=43  depois=44
+    G2: antes ⊆ depois ✓
+    testID NOVOS:
+        apps/native/src/files.ts	testID="cn-falso-136"
+  G3 — linhas log( antes=57  depois=58
+    G3: nenhuma linha sumiu ✓
+    linhas NOVAS (declarar no commit e no catálogo):
+        apps/native/src/files.ts	* seguinte menciona log(`cn-falso-136`), as duas DENTRO de comentário.
+  exit=0
+
+  Já aqui a medição corrige a W2 num ponto: **o G3 tem a MESMA doença**, e a W2
+  só nomeou a do G2. O `coleta()` é uma função só, e serve os dois.
+
+(b) A mesma menção COMMITADA (vira BASE), e depois o comentário apagado. Nenhuma
+    linha de CÓDIGO mudou entre os dois lados:
+
+$ git commit -m "TEMP CN div.136/140"   → a3b1a5b
+$ <o comentário volta ao que era>
+$ sh apps/native/scripts/g2g3.sh a3b1a5b WORKTREE
+  G2 — testIDs  antes=44  depois=43
+    G2: testID SUMIU ✗
+        apps/native/src/files.ts	testID="cn-falso-136"
+  G3 — linhas log( antes=58  depois=57
+    linhas que SUMIRAM (cada uma tem de ser errata declarada):
+        apps/native/src/files.ts	* seguinte menciona log(`cn-falso-136`), as duas DENTRO de comentário.
+    G3: linha sumiu SEM ERRATA ✗
+  exit=1
+
+  **DIV. 140.** Não é ruído: é REPROVAÇÃO FALSA, nos dois lados do gate, por uma
+  edição de COMENTÁRIO. Enquanto o gate era comando de mão o custo era um anexo
+  confuso; com o gate IMPEDINDO no CI (div. 129, commit 2) o custo passa a ser
+  um CI vermelho sem causa — e a reação natural a um CI vermelho sem causa é
+  desconfiar do gate. É por isso que este conserto é o commit 1, pela regra que
+  a V1-PR3 deixou: **o gate vem antes do que ele mede**.
+
+--------------------------------------------------------------------------------
+§3. O CONSERTO NÃO MUDA A POPULAÇÃO — e é o que dispensa errata no G3
+--------------------------------------------------------------------------------
+Antes de o filtro entrar, a mesma coleta com e sem ele, sobre a árvore limpa:
+
+$ sh <cmp.sh — a coleta do `g2g3.sh` nos dois modos>
+  testIDs  cru=43  sem-comentario=43
+    IDENTICOS
+  log(     cru=57  sem-comentario=57
+    IDENTICOS
+
+`diff` vazio nos dois: mesmos CONJUNTOS, não só mesmas contagens. Logo o
+conserto é remoção de defeito, e **nenhuma linha `log(` some** — sem errata no
+G3. E vale para os DOIS ramos do coletor (ref-git e árvore de trabalho):
+
+$ sh apps/native/scripts/g2g3.sh origin/main origin/main   (só ref-git)
+  G2 — testIDs  antes=43  depois=43 · G3 — linhas log( antes=57  depois=57 · exit=0
+
+--------------------------------------------------------------------------------
+§4. OS QUATRO CONTROLES NEGATIVOS DO CONSERTO
+--------------------------------------------------------------------------------
+(a) menção NOVA em comentário → o coletor consertado IGNORA
+    G2 43→43 · G3 57→57 · exit=0     (antes: 43→44 e 57→58)
+
+(b) menção na BASE, comentário apagado → não reprova mais
+    G2 43→43 · G3 57→57 · exit=0     (antes: exit=1, os dois vermelhos)
+
+(c) o gate AINDA SABE REPROVAR — `testID="pagina"` apagado do CÓDIGO do
+    `StageScreen.tsx`:
+      G2 — testIDs  antes=43  depois=42
+        G2: testID SUMIU ✗
+            apps/native/src/screens/StageScreen.tsx	testID="pagina"
+      exit=1
+
+(d) idem para o G3 — a linha `log(` apagada do CÓDIGO do `prefetch.ts`:
+      G3 — linhas log( antes=57  depois=56
+        linhas que SUMIRAM (cada uma tem de ser errata declarada):
+            apps/native/src/prefetch.ts	log(`download-error ${mensagemDe(erro)}`)
+        G3: linha sumiu SEM ERRATA ✗
+      exit=1
+
+(c) e (d) são a **div. 127** cumprida: *um controle negativo que não reprova
+pode ser instrumento quebrado*. Este reprova, e pelos dois lados.
+
+E o CN do filtro isolado virou teste permanente — quatro `it` em
+`apps/native/test/gates.test.ts`, que rodam no CI em toda PR. Sem eles, o
+`sem-comentario.awk` poderia apodrecer e nada avisaria até o dia do vermelho
+sem causa.
+
+--------------------------------------------------------------------------------
+§5. O LIMITE DO FILTRO, DECLARADO
+--------------------------------------------------------------------------------
+Abertura de comentário dentro de literal de string ou de regex seria tratada
+como comentário. Na árvore de hoje isso não acontece — é o que o §3 mede. Se um
+dia divergir, o sintoma é uma linha sumindo sem ninguém a ter tocado, e a linha
+a mexer é o `sem-comentario.awk`.
+
+A regra do filtro **não é nova**: é a MESMA que o `a20.mjs` aplica desde a
+V1-PR3 ("tira comentários: comentário não é texto de UI"), guarda de esquema de
+URI incluída.
+
+> **ERRATA desta PR, antes do merge (2026-09-16).** Aqui estava escrito: *"O
+> projeto passa a ter uma regra de comentário num lugar só, e não duas parecidas
+> em dois."* **Está errado, e é a frase que a div. 83 existe para impedir.** As
+> duas políticas são DELIBERADAS: gate de conteúdo (`a20`, e agora o G2) tira
+> comentário; gate de invariância (G3) não tira, e erra para o lado de falar
+> demais. Ver §6. A frase fica aqui, riscada por esta nota, porque quem ler o
+> commit 1 vai encontrá-la no `.awk` daquele commit.
+
+--------------------------------------------------------------------------------
+§6. A DECISÃO (b) — O FILTRO FICA SÓ NO G2 (div. 83, 142)
+--------------------------------------------------------------------------------
+Decisão do Marcel antes do merge, 2026-09-16. O commit 1 estendeu o filtro ao
+G3 como extra declarado. Isso desfez, sem citá-la, a div. 83 (V1-PR6):
+
+  `V1-ENCERRAMENTO.md` §11, B8.3 — "O G3 conta comentário (div. 83). Não é para
+  consertar — a decisão do Marcel foi deixá-lo errar para o lado de falar
+  demais, e a razão está escrita no próprio comentário do `g2g3.sh`. Entra aqui
+  para que ninguém 'conserte' sem ler a razão."
+
+DIV. 142 — a razão NÃO estava no `g2g3.sh`. Nas quatro versões do arquivo:
+
+$ for c in cf9e229 c25db8c 7630c4e 78e8e6e; do
+    git show "${c}:apps/native/scripts/g2g3.sh" \
+      | LC_ALL=C grep -c -i -e 'coment' -e 'div\. 83' -e 'falar demais'; done
+  cf9e229  0
+  c25db8c  0
+  7630c4e  0
+  78e8e6e  12      ← as doze são da própria W3
+
+  NOTA DE INSTRUMENTO (regra 4 cumprida no meio do caminho): a primeira versão
+  deste laço escrevia `$c:apps/…`, e o zsh leu `:a` como MODIFICADOR DE
+  CAMINHO — o `git show` nunca recebeu um ref e todas as contagens deram 0,
+  INCLUSIVE a do `78e8e6e`, que obrigatoriamente tem menções. Esse 0 foi o
+  controle negativo que denunciou o instrumento. Os números acima são com
+  `${c}`.
+
+  A razão mora só em `V1-PR6-anexos/README.md`, "Div. 83, por extenso". A W3 a
+  copiou para o cabeçalho do `g2g3.sh` (commit `2ffa3cf`).
+
+AS MEDIÇÕES DE (b):
+
+(1) árvore limpa: G2 43=43 · G3 57=57 · exit 0
+
+(2) o G3 NOVO é o G3 de ANTES da W3, byte a byte. Cópias instrumentadas dos dois
+    scripts (o de `cbff070` e o novo), guardando as populações do antes e do
+    depois; um `log(` plantado em comentário para a comparação não ser trivial:
+      novo:  antes=57 depois=58
+      velho: antes=57 depois=58
+      $ cmp novo.a velho.a && cmp novo.b velho.b
+      CONJUNTOS IDÊNTICOS, byte a byte (antes e depois)
+      apps/native/src/files.ts	* CN div. 83: menciona log(`cn-83`) dentro de comentário.
+
+(3) a separação desenhada — menção a `testID` e a `log(` num comentário da
+    BASE (commit temporário `78ff532`, desfeito com `reset` sem `--hard`),
+    comentário apagado na árvore:
+      G2 — testIDs  antes=43  depois=43
+        G2: antes ⊆ depois ✓
+      G3 — linhas log( antes=58  depois=57
+        linhas que SUMIRAM (cada uma tem de ser errata declarada):
+            apps/native/src/files.ts	* CN div. 83/140: menciona testID="cn-140" e log(`cn-83`) em comentário.
+        G3: linha sumiu SEM ERRATA ✗
+      exit=1
+
+    O G2 deixou de reprovar por comentário (div. 140). O G3 reprova — e esse é
+    o lado que a div. 83 escolheu. Sem código mudado, a acusação é
+    autoexplicativa: a linha que "sumiu" começa com `*`.
+
+(4) o G3 ainda reprova por CÓDIGO — a linha `download-error` do `prefetch.ts`
+    apagada:
+      G3 — linhas log( antes=58  depois=56
+          apps/native/src/prefetch.ts	log(`download-error ${mensagemDe(erro)}`)
+        G3: linha sumiu SEM ERRATA ✗

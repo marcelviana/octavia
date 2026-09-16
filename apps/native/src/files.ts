@@ -476,15 +476,30 @@ export function fraseDaFalha(erro: unknown): string {
  * três rótulos (`<ref>.supabase.co`), então a linha cai onde interessa. Se um
  * dia o bucket mudar de forma, esta é a linha a mexer.
  *
- * O que ela NÃO cobre, e vai dito: o `mensagemDe()` do `prefetch.ts`, que é a
- * rede de segurança para o que nunca passou pelo `falha()`. Depois do commit 4
- * desta PR esse conjunto encolheu (a promoção do `ensureFileUma` entrou num
- * `try`), mas não é vazio.
+ * **W3 — A METADE QUE FALTAVA (div. 137, segunda parte).** Até aqui isto NÃO
+ * cobria o `mensagemDe()` do `prefetch.ts`, a rede de segurança para o que
+ * nunca passou pelo `falha()`: ele tinha higienização PRÓPRIA, e antiga —
+ * `bruta.replace(/\b(?:https?|file):\/\/\S+/g, '<uri>')`, sem a alternativa do
+ * host nu. O conjunto que ele cobre encolheu com a W2 (a promoção do
+ * `ensureFileUma` entrou num `try`) mas nunca foi vazio: o `parcial.delete()`
+ * da abertura do `baixarAtomico`, o `touch()` e os dois `localizar()` do
+ * `ensureFileUma` seguem fora de qualquer `try`, e uma rejeição de qualquer um
+ * deles sai pelo `mensagemDe()`.
+ *
+ * Agora o `prefetch.ts` chama ESTA função, e a regra 2 do catálogo passa a ter
+ * **uma implementação só**. Para que isso não custe cobertura, a alternativa
+ * `file://` — que só o `mensagemDe()` tinha — entra aqui, e com o MESMO
+ * rótulo que ela já usava: `<uri>` para `file:`, `<url>` para `http(s)`.
+ * Nenhum texto de log muda de vocabulário em lugar nenhum; o que muda é que
+ * cada um dos dois passa a ter o que só o outro tinha.
  */
-const SEGREDO_DE_REDE = /https?:\/\/\S+|"[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+){2,}"/g
+const SEGREDO_DE_REDE = /https?:\/\/\S+|\bfile:\/\/\S+|"[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+){2,}"/g
 
 export function higienizar(bruta: string): string {
-  return bruta.replace(SEGREDO_DE_REDE, (m) => (m.startsWith('"') ? '"<host>"' : '<url>'))
+  return bruta.replace(SEGREDO_DE_REDE, (m) => {
+    if (m.startsWith('"')) return '"<host>"'
+    return m.startsWith('file:') ? '<uri>' : '<url>'
+  })
 }
 
 /**

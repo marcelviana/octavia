@@ -1,3 +1,27 @@
+# W3 (div. 129): os gates deixam de só medir.
+#
+# Até a W2, `gate:a20`, `gate:icones`, G1, G2/G3 e G7 rodavam quando o executor
+# os rodava, à mão, e o relatório da PR dizia que rodaram. A disciplina do
+# projeto é real e está medida em todas as PRs — e é exatamente por isso que a
+# distinção importa: **o gate mede, o gate não IMPEDE**. Nada barrava a entrada
+# na `main` de um commit que os reprovasse; o que barrava era alguém ter rodado
+# e lido.
+#
+# Onde cada um passa a rodar (a tabela inteira, com o que fica de FORA e por quê,
+# está em `docs/native/W3-anexos/W3-B-os-cinco-gates-e-o-ci.txt`):
+#   • `gate:a20` + CN, `gate:icones` + CN  → `apps/native/test/gates.test.ts`,
+#     dentro do projeto `native` do Vitest, logo dentro do `pnpm test:unit` do
+#     job `build` abaixo. Reprovar = `build` vermelho.
+#   • G7 (árvore de trabalho)              → já rodava: ele É
+#     `vitest run --project native`, um subconjunto do mesmo `pnpm test:unit`.
+#   • G1a/G1b e G2/G3                      → o job `gates-nativos` daqui. São
+#     gates DIFERENCIAIS: a verdade deles é um PAR de refs git, não uma árvore.
+#     Não cabem num `it` (um teste não sabe qual é a BASE da PR) e precisam do
+#     histórico inteiro — por isso job próprio, com `fetch-depth: 0`.
+#   • os CN de G1/G2/G3/G7                 → FORA, e declarado: os do G1/G2/G3
+#     exigem um par de refs fabricado, e o do G7 TROCA arquivo da árvore de
+#     trabalho para rodar o código de ontem contra as asserções de hoje. Um job
+#     que muta a própria árvore para provar um ponto é instrumento de mão.
 name: CI
 'on':
   push:
@@ -5,6 +29,34 @@ name: CI
     - main
   pull_request: null
 jobs:
+  # Os dois gates DIFERENCIAIS. Custam segundos: é `sh`, `git` e `awk`, sem
+  # `pnpm install`, sem build. Não têm filtro de caminho de propósito — o
+  # escopo do G2/G3 inclui `packages/core/src`, que o `native.yml` não cobre, e
+  # numa PR que não toca o nativo os dois passam num diff vazio.
+  gates-nativos:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        # O histórico inteiro: sem ele não há `merge-base`, e sem `merge-base`
+        # não há par. E a HEAD é a do RAMO, não o merge commit que o
+        # `actions/checkout` monta por default — senão o que voltou da `main`
+        # depois do ponto de ramificação apareceria como diff desta PR.
+        fetch-depth: 0
+        ref: ${{ github.event.pull_request.head.sha || github.sha }}
+    - name: A BASE do par — o ponto de ramificação
+      run: |
+        set -e
+        ALVO="${{ github.event.pull_request.base.sha }}"
+        if [ -z "$ALVO" ]; then ALVO=$(git rev-parse HEAD~1); fi
+        BASE=$(git merge-base "$ALVO" HEAD)
+        echo "BASE=$BASE" >> "$GITHUB_ENV"
+        echo "base=$BASE  head=$(git rev-parse HEAD)"
+    - name: G1a/G1b — invariância de comportamento e de decisão
+      run: sh apps/native/scripts/g1.sh "$BASE" WORKTREE
+    - name: G2/G3 — testIDs antes ⊆ depois, linhas de log com errata declarada
+      run: sh apps/native/scripts/g2g3.sh "$BASE" WORKTREE
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -23,7 +75,10 @@ jobs:
       continue-on-error: true
     - name: Type-check packages/core
       run: pnpm exec tsc -p packages/core/tsconfig.json --noEmit
-    - name: Test
+    # Aqui dentro correm o `gate:a20`, o `gate:icones` e os CN dos dois
+    # (`apps/native/test/gates.test.ts`), e o G7 sobre a árvore de trabalho.
+    # Este passo NÃO tem `continue-on-error`: um gate que reprova reprova o job.
+    - name: Test — a suíte, e com ela os gates embrulhados (W3, div. 129)
       run: pnpm test:unit
     - name: Test coverage
       run: pnpm test:ci

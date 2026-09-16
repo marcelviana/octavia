@@ -46,19 +46,41 @@
 # Uso (da RAIZ do repositório):  sh apps/native/scripts/g1.sh <base> <head|WORKTREE>
 BASE=$1; HEAD=$2
 
-# --- As EXCEÇÕES desta PR (o escopo declarado da W2) -------------------------
-#   StageScreen.tsx  commits 2, 3 e 4 — o `accessibilityState` dos inertes
-#                    (div. 118), a barra em dois grupos (div. 109) e a frase
-#                    que o músico lê no S3e (div. 125)
-#   files.ts         commit 4 — a frase de tela separada do detalhe de log, e o
-#                    ramo de promoção do `ensureFileUma` entrando num `try`
-#                    (div. 131, classe 2)
+# ---------------------------------------------------------------------------
+# W3 — A LISTA É PODADA A CADA PR, E O GATE PASSA A DIZER QUANDO NÃO FOI
 #
-# O `App.tsx` **não** é exceção, e é o ponto da PR: ele entra na invariância
-# (div. 123) e o gate afirma que ele não mudou. O `prefetch.ts` e o
-# `packages/core/src/offline.ts`, que eram exceção no W1, voltam à cobertura.
-EXCECOES='apps/native/src/screens/StageScreen.tsx
-apps/native/src/files.ts'
+# Div. 141, achada ao pôr este gate para IMPEDIR no CI (div. 129). A lista de
+# exceções é ESTADO DE UMA PR guardado num arquivo que SOBREVIVE à PR. Enquanto
+# o gate era comando de mão, quem o rodava lia a lista e sabia de quem era.
+# Rodando sozinho no CI, uma exceção esquecida não faz barulho nenhum: ela só
+# torna o gate MAIS PERMISSIVO, em silêncio, para a PR seguinte — que é o
+# avesso do que uma exceção declarada deve fazer.
+#
+# Nunca é REPROVAÇÃO falsa (lista velha só deixa passar), e por isso o remédio
+# é proporcional: o gate IMPRIME as exceções que declarou e NÃO USOU, alto, em
+# toda corrida — e NÃO reprova por isso. Reprovar quebraria a regra do projeto
+# de que **o gate vem antes do que ele mede**: o commit 1 de uma PR declara a
+# exceção que só o commit 3 vai usar, e um gate que reprovasse ali obrigaria a
+# inverter a ordem. Se o Marcel quiser que passe a reprovar, é uma linha —
+# trocar o aviso por `A=1`. (Pergunta 3 do relatório da W3.)
+#
+# --- As EXCEÇÕES desta PR (o escopo declarado da W3) -------------------------
+#   files.ts      commit 3 — a alternativa `file://` entra no `higienizar()`,
+#                 para que unificar a regra 2 num ponto só não custe cobertura
+#                 ao lado que já a tinha (div. 137, segunda parte)
+#   prefetch.ts   commit 3 — o `mensagemDe()` larga a higienização PRÓPRIA e
+#                 antiga (sem a alternativa do host nu) e passa a chamar o
+#                 `higienizar()`. **É a exceção que o prompt exigiu declarada e
+#                 justificada**: a W2 não pôde tocar aqui porque declará-lo
+#                 exceção alargaria o escopo que o commit 1 dela fechava
+#
+# O `StageScreen.tsx`, que era exceção da W2, SAI: esta PR não toca em tela
+# nenhuma, e deixá-lo seria exatamente a div. 141. Ele volta a estar sob a
+# invariância — e continua sendo a div. 108 (um arquivo que, quando MUDA, só o
+# aceite no aparelho sabe dizer se o comportamento mudou), que é limite de
+# método e não buraco de instrumento.
+EXCECOES='apps/native/src/files.ts
+apps/native/src/prefetch.ts'
 
 listar() {
   if [ "$1" = "WORKTREE" ]; then
@@ -100,6 +122,21 @@ if [ -n "$NOVOS" ]; then
   A=1
 fi
 [ $A -eq 0 ] && echo "  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)"
+
+# --- W3, div. 141: exceção declarada que NÃO foi usada ----------------------
+# Ela não reprova (ver o cabeçalho), mas não passa calada: exceção velha é
+# gate mais permissivo em silêncio, e silêncio é o que o CI não perdoa.
+NAOUSADAS=''
+for E in $EXCECOES; do
+  if [ "$HEAD" = "WORKTREE" ]; then D=$(git diff --stat "$BASE" -- "$E")
+  else D=$(git diff --stat "$BASE".."$HEAD" -- "$E"); fi
+  [ -z "$D" ] && NAOUSADAS="$NAOUSADAS$E
+"
+done
+if [ -n "$NAOUSADAS" ]; then
+  echo "  G1a: EXCEÇÃO DECLARADA E NÃO USADA — poda isto ANTES do merge (div. 141):"
+  printf '%s' "$NAOUSADAS" | sed 's/^/        /'
+fi
 
 # --- G1b: invariância de DECISÃO nos módulos tocados -------------------------
 # O core é puro e testado. A garantia de que `selectPrefetch`, `prefetchOrder`,

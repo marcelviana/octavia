@@ -132,6 +132,21 @@ describe('a frase que o músico lê (div. 125)', () => {
     expect(higienizar('host "exemplo.com" aqui')).toBe('host "exemplo.com" aqui')
   })
 
+  /**
+   * W3, div. 137. A TERCEIRA alternativa, vinda do `mensagemDe()` do
+   * `prefetch.ts` quando as duas implementações da regra 2 viraram uma.
+   * Unificar não podia custar cobertura a nenhum dos dois lados, e o rótulo é
+   * o que o lado de lá já usava: `<uri>` para `file:`, `<url>` para `http(s)`.
+   */
+  it('a alternativa `file://` — e o rótulo de cada esquema', () => {
+    expect(higienizar('recusado file:///data/user/0/com.octavia/x.pdf.part!')).toBe(
+      'recusado <uri>',
+    )
+    expect(higienizar('http://a/b e file://c/d')).toBe('<url> e <uri>')
+    // CN: `file` colado noutra palavra NÃO é esquema — a guarda `\b`.
+    expect(higienizar('perfile://x')).toBe('perfile://x')
+  })
+
   it('um erro que nunca passou pelo `falha()` também cai no genérico', () => {
     // A CLASSE 2 da div. 131 pelo avesso: mesmo que algum caminho ainda escape
     // do `falha()`, a tela não recebe a mensagem crua — recebe a genérica.

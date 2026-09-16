@@ -1,6 +1,18 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict": true
+    "strict": true,
+    // W3: o `gates.test.ts` roda os gates como SUBPROCESSO (opção B da div.
+    // 129), logo importa `node:child_process`. Sem isto, o `tsc --noEmit`
+    // daqui — que é passo BLOQUEANTE do `native.yml` — reprova com cinco
+    // `TS2591`: o `moduleResolution: bundler` + `customConditions:
+    // ["react-native"]` do `expo/tsconfig.base` não resolve os módulos `node:`.
+    //
+    // MEDIDO, e por isso não entrou dependência nenhuma: `@types/node` já
+    // existe como devDependency da RAIZ, e o `typeRoots` default do TypeScript
+    // sobe até lá a partir de `apps/native`. `typeRoots` explícito NÃO resolve
+    // (tentado, mesmos cinco erros); o que resolve é declarar o pacote aqui.
+    // Se um dia o `@types/node` sair da raiz, é este o lugar que grita.
+    "types": ["node"]
   }
 }

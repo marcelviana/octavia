@@ -266,6 +266,30 @@ perigoso: um instrumento que mede **mais** do que a coisa medida.
 | 16 | **div. 128** (W2) | o **G3**: as linhas `log(` de `apps/native/src` e `packages/core/src` — **54** | "o catálogo de observabilidade está protegido; nenhuma linha some em silêncio". O `App.tsx` mora **um nível acima de `src/`**, e dentro dele vivem **três** linhas do catálogo: `login-screen` (que prova o A5), `auth uid=… src=…` (A1 e A5) e `download-error` (A13, W1-A4). População certa: **57**. O controle negativo: apagar `log('login-screen')` e o gate responder *"nenhuma linha sumiu ✓"* |
 | 17 | **div. 130** (W2) | o **`gate:a20`**: LITERAL em posição de texto | "o aceite A20 está cumprido — nenhum texto de UI em inglês". O que chegava à tela do músico no S3e era texto de UI em inglês que **não é literal**: é valor de tempo de execução, vindo da biblioteca. **Nenhum escopo alcança**, nem `apps/native` inteiro. É o par estrutural do 11 e do 12 (escopo declarado), mas com uma diferença que o torna pior: ali o escopo era *menor*; aqui é de **outra natureza** |
 | 18 | **div. 139** (W2) | o **`uiautomator dump`**: o nó acessível, com o `text` que o Android expõe | "o que está na tela". O `<Text>` de várias linhas do `download-erro` volta do dump com **`text=""`** e só os `bounds` — então a varredura de inglês sobre os dumps do ANTES acusa as **mesmas 4** cadeias do DEPOIS e **não vê** a frase de 4 linhas que é o objeto inteiro da div. 125. Quem a viu foi a **captura de tela** e o **logcat**. É o 13 uma volta adiante: lá o dump media o nó e não o desenho; aqui ele **não mede nem o nó** |
+| 19 | **div. 140** (W3) | o **coletor do G2**: `testID="…"` no texto **CRU** do arquivo — comentário incluído | "as populações do antes e do depois são o código". A W2 viu a metade barata disto (div. 136: uma menção em comentário contada como `testID` NOVO) e a chamou de falso positivo. A W3 mediu a outra: com a menção na **BASE**, editar o comentário a faz SUMIR e o G2 reprova por *"testID SUMIU"* **sem que uma linha de código tenha mudado**. O G2 passou a ler sem comentário. **O G3 tem o mesmo mecanismo e NÃO foi mudado, de propósito** — div. 83, ver a regra 5. É o **segundo caso do padrão pelo avesso**: o instrumento mede **MAIS** do que o critério, não menos |
+| 20 | **div. 142** (W3) | o **`V1-ENCERRAMENTO.md` §11**, item B8.3: *"a razão está escrita no próprio comentário do `g2g3.sh`"* | "quem mexer no gate vai encontrar a razão da div. 83 onde mexe". Medido nas quatro versões do `g2g3.sh` (`cf9e229`, `c25db8c`, `7630c4e`, `78e8e6e`): **ela nunca esteve lá.** Morava só em `V1-PR6-anexos/README.md`. A W3 leu o script inteiro, não achou razão nenhuma, e desfez a decisão — que é exatamente o que o aviso existia para impedir. **Variante nova do padrão**: não é instrumento que mede menos do que se supõe; é **REGISTRO QUE APONTA PARA ONDE A RAZÃO NÃO ESTÁ**. Consertado na W3: a razão passou a morar no cabeçalho do `g2g3.sh` |
+
+> **O 19 é o 15 outra vez, e a segunda vez muda o que a primeira parecia ser.** Quando o
+> 15 apareceu, o texto acima o chamou de *"a primeira vez no projeto em que o instrumento
+> foi MAIS GENEROSO QUE A REALIDADE"* e tratou a generosidade como acidente de duplo de
+> teste. Com o 19 vira outra coisa: **um instrumento que lê texto bruto mede sempre um
+> SUPERCONJUNTO do que afirma medir**, e a única pergunta é se o excesso já encostou em
+> alguma coisa. No 15 o excesso fez acreditar; aqui ele faz **duvidar** — reprovação sem
+> causa, que é o jeito mais rápido de um gate perder autoridade.
+>
+> **E o 19 não se conserta do mesmo jeito em todo gate.** O G2 e o G3 têm o mesmo coletor
+> e o mesmo superconjunto, e só o G2 mudou. No G3 o excesso é **o lado do erro que a div.
+> 83 escolheu**: num gate de invariância, falar demais custa uma errata; calar deixa uma
+> linha de log sumir. Saber para que lado um instrumento erra não obriga a corrigi-lo —
+> obriga a **decidir**, e a escrever a decisão.
+
+> **O 20 é o par do 19, e é o mais barato de evitar de toda a tabela.** A decisão da 83
+> existia, estava bem argumentada, e havia até um aviso apontando para ela. O aviso
+> apontava para o lugar errado. Quem chegou ao `g2g3.sh` seguiu o mapa, não achou a
+> razão, e concluiu que não havia razão. **Registro que aponta para onde a razão não está
+> é pior do que registro nenhum**: sem ele, a pergunta "por que o G3 não tira comentário?"
+> ficaria aberta; com ele, a busca termina num arquivo que parece confirmar que ninguém
+> pensou nisso.
 
 > **A variante do 14, e por que ela merece nome próprio.** O caso 8 (div. 71) era o script
 > documentando a própria cegueira numa nota que ninguém leu. Este é um grau além: **a
@@ -382,11 +406,57 @@ Duas ocorrências em dois dias, com instrumentos diferentes (Metro, `git`), bast
 tratar isto como classe e não como anedota: **todo gate deve imprimir o TAMANHO do que
 leu, não só o veredito.** O G2, o G3 e o G1a já imprimem; é para isso que serve.
 
+**5. Todo achado de coletor tem DUAS direções, e a barata é a que se vê primeiro — e
+escolher uma direção pode ser a decisão certa, mas então ela precisa estar onde quem
+mexe no gate vai ler.** (Origem: div. 83, V1-PR6; div. 136, W2; div. 140 e 142, W3.
+*Redação do Marcel, aval da W3, 2026-09-16.*)
+
+Quem percebe que um coletor conta a mais tem duas perguntas a fazer, não uma:
+
+> **o que APARECE quando não devia** — barato: ruído no relatório;
+> **o que SOME quando ninguém mexeu** — caro: REPROVAÇÃO FALSA.
+
+**Três ocorrências, e a primeira ESCOLHEU UM LADO DE PROPÓSITO:**
+
+| div. | bloco | o que se viu | o que se fez |
+|---|---|---|---|
+| **83** | V1-PR6 | o G3 contou uma frase de comentário como linha `log(` nova | **decidiu-se não consertar**: gate de invariância erra para o lado de falar demais |
+| **136** | W2 | o G2 contou uma menção em comentário como `testID` NOVO | contornado; "falso positivo, veredito intacto" — a direção barata |
+| **140** | W3 | com a menção na BASE, apagar o comentário reprova o G2 **sem código mudar** | o G2 passou a ler sem comentário — a direção cara |
+
+A assimetria de custo é estrutural: a direção barata é a que o instrumento te MOSTRA (a
+menção aparece na saída), e a cara só aparece **uma PR depois**, quando a população
+envenenada já é a BASE de outra pessoa. O remédio é a regra 4 nas duas direções:
+**plantar o defeito e ver o instrumento reagir**.
+
+**A segunda metade da regra é a que a div. 142 ensinou, e é a que mais custou.** A div. 83
+fez tudo certo — perguntou, escolheu, argumentou — e mesmo assim a W3 a desfez, porque a
+razão não estava onde quem mexe no gate lê. **Uma decisão de deixar um instrumento errar
+é uma decisão sobre o instrumento, e mora NO instrumento**: no cabeçalho do script, com o
+lado escolhido e o porquê. Um anexo de PR antiga não é onde alguém vai procurar antes de
+"consertar".
+
 ### A regra de método que o padrão implica
 
 **Uma medição não vira referência sem `n`** (div. 80). Onde houver população, faixa com
 mediana; onde não houver, "medido uma vez", escrito assim. O bloco V1 aplicou isto ao custo
 do CI (faixa de 12 runs) e ao A17 do Tab S6 (três leituras, cada uma com o seu `n`).
+
+**Passo, job e run são três números — e o relógio de quem acompanha é um quarto, que não
+é nenhum dos três.** (W3, 2026-09-16.) Citar um pelo outro é erro **recorrente** neste
+projeto, e cada ocorrência foi de um par diferente:
+
+| onde | o que se leu | o que era | diferença |
+|---|---|---|---|
+| V1-PR5, sobre a V1-PR3 | 13m18s como **Gradle** (passo) | o **job**; o `assembleDebug` foi 11m34s | 1m44s |
+| V1-PR5, na faixa proposta | 7m48s como **job** | o **passo** Gradle do run mais rápido; o job foi 9m16s | 1m28s |
+| W3, a 17ª corrida | 13m10s como duração | **o relógio do polling**; o job foi 12m53s e o run 12m57s | 17s |
+
+**A população da faixa é de JOB** (`android-debug-apk`, `startedAt → completedAt`). O
+run inclui fila e setup do runner; o passo exclui checkout, install e prebuild; o
+relógio de quem acompanha inclui o intervalo do próprio polling. Todo número de CI
+citado neste projeto vem **com o nível ao lado**, e dos **carimbos**, nunca do
+acompanhamento.
 
 **E a faixa serve para mais do que dizer o custo — ela diz o que é ESTRANHO.** (W1,
 2026-09-14.) Com a PR do W1 aberta, o gate de APK reprovou em **27 s**, contra a faixa de
@@ -504,3 +574,44 @@ capaz que a biblioteca. É outra forma — o 15º caso do padrão, pelo avesso.
 
 A consequência que a W2 registra e não conserta: **a opção C continuará sem população até
 alguém baixar de uma rede de verdade**, e isso não acontece por uma PR existir.
+
+---
+
+## Errata W3 — a regra 2 passa a ter UMA implementação
+
+**Div. 137, a segunda metade.** A W2 consertou a higienização do `files.ts` depois de o
+aparelho devolver, em modo avião, `Unable to resolve host "<ref>.supabase.co"` — host nu,
+sem esquema, entre aspas, que nenhum regex de URI casa. O que ela não pôde tocar foi o
+`mensagemDe()` do `prefetch.ts`, a **rede de segurança para o que nunca passa pelo
+`falha()`**: ele tinha higienização própria, e era a antiga. A regra 2 do catálogo — *URI
+completa nunca entra em log* — tinha duas implementações, e a segunda não conhecia o
+host nu. **Passa a ter uma**: o `prefetch.ts` chama o `higienizar()` do `files.ts`.
+
+A razão de a W2 não ter feito isto vale registro, porque é método e não desleixo: o
+`prefetch.ts` está DENTRO da cobertura do G1a, e tocá-lo exigiria declará-lo exceção —
+alargando, no commit 4, o escopo que o commit 1 daquela PR acabara de fechar. Aqui ele é
+**exceção declarada e justificada no `g1.sh`**, que é o que a lista de exceções existe
+para ser.
+
+**Nenhuma linha `log(` mudou** (G3 57 = 57), e **nenhum rótulo mudou de vocabulário**:
+`<url>` para `http(s)`, `<uri>` para `file:`, `"<host>"` para o host nu. Cada um já era o
+que o seu lado usava; o que a W3 fez foi dar a cada lado o que só o outro tinha — a
+alternativa `file://`, que só existia no `prefetch.ts`, entrou no `higienizar()`.
+
+O conjunto coberto por essa rede **encolheu com a W2 e não zerou**: o `parcial.delete()`
+da abertura do `baixarAtomico`, o `touch()` e os dois `localizar()` do `ensureFileUma`
+seguem fora de qualquer `try`. É por ali que o teste o alcança (`__quebrarDelete`, novo no
+duplo). Ver `W3-anexos/W3-C-a-rede-de-seguranca.txt`.
+
+## Errata W3 — os gates deixam de só medir
+
+**Div. 129.** `gate:a20`, `gate:icones` e o G7 passam a rodar dentro do `pnpm test:unit`
+do `ci.yml`; G1a/G1b e G2/G3 passam a rodar num job `gates-nativos` próprio. O que fica de
+fora, declarado, são os **controles negativos** do G1, do G2/G3 e do G7 — os dois
+primeiros precisam de um par de refs fabricado, o terceiro troca arquivo da árvore de
+trabalho. Continuam sendo comando de mão. A tabela completa está em
+`W3-anexos/W3-B-os-cinco-gates-e-o-ci.txt`.
+
+O que o invólucro **não** dá, e o item 5 da §10 do `W1-ENCERRAMENTO` prometia: **cobertura**.
+Um subprocesso não instrumenta o processo do Vitest, então `a20.mjs` e `icones.mjs`
+continuam fora do relatório. Dívida declarada.

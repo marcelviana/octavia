@@ -177,6 +177,8 @@ export class File {
   }
 
   delete(): void {
+    const m = deletesQuebrados.get(this.name)
+    if (m !== undefined) throw new Error(m)
     arquivos.delete(this.uri)
   }
 
@@ -239,6 +241,7 @@ export interface Resposta {
 
 const respostas = new Map<string, Resposta>()
 const movesQuebrados = new Set<string>()
+const deletesQuebrados = new Map<string, string>()
 let emVoo = 0
 let picoEmVoo = 0
 let iniciados: string[] = []
@@ -256,11 +259,26 @@ export function __quebrarMove(nome: string): void {
   movesQuebrados.add(nome)
 }
 
+/**
+ * O `delete()` de um arquivo recusa, com a mensagem CRUA que se quiser.
+ *
+ * W3, div. 137. Serve para alcançar o caminho que **não passa pelo `falha()`**:
+ * o `parcial.delete()` da abertura do `baixarAtomico` está fora de qualquer
+ * `try`, então a rejeição sobe inteira até o `catch` do `baixar()` do
+ * `prefetch.ts` e sai pelo `mensagemDe()`. É exatamente a rede de segurança
+ * que a W2 deixou com a higienização antiga — e a única forma de medi-la é
+ * fazer a biblioteca falhar por ali.
+ */
+export function __quebrarDelete(nome: string, mensagem: string): void {
+  deletesQuebrados.set(nome, mensagem)
+}
+
 export function __reset(): void {
   arquivos.clear()
   diretorios.clear()
   respostas.clear()
   movesQuebrados.clear()
+  deletesQuebrados.clear()
   emVoo = 0
   picoEmVoo = 0
   iniciados = []
