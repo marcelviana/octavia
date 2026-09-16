@@ -280,11 +280,10 @@ perigoso: um instrumento que mede **mais** do que a coisa medida.
 > reagir**, nas DUAS direções — o que aparece quando não devia, e o que some quando
 > ninguém mexeu.
 >
-> E há uma lição de recorte, que é do Marcel decidir se vira regra: a W2 achou a div. 136,
-> julgou-a inofensiva **na direção em que a viu**, e contornou. Estava certa sobre aquela
-> direção e o contorno custou uma linha. O que faltou não foi diligência — foi a pergunta
-> *"e se isto estivesse na BASE?"*. **Todo achado de coletor tem duas direções, e a barata
-> é a que se vê primeiro.**
+> E há uma lição de recorte, **promovida a regra pelo Marcel no aval da W3 (2026-09-15)**:
+> a W2 achou a div. 136, julgou-a inofensiva **na direção em que a viu**, e contornou.
+> Estava certa sobre aquela direção e o contorno custou uma linha. O que faltou não foi
+> diligência — foi a pergunta *"e se isto estivesse na BASE?"*. É a **regra 5**, abaixo.
 
 > **A variante do 14, e por que ela merece nome próprio.** O caso 8 (div. 71) era o script
 > documentando a própria cegueira numa nota que ninguém leu. Este é um grau além: **a
@@ -400,6 +399,31 @@ que não mostra o tamanho do que mediu não deixa ninguém desconfiar dele**. Re
 Duas ocorrências em dois dias, com instrumentos diferentes (Metro, `git`), bastam para
 tratar isto como classe e não como anedota: **todo gate deve imprimir o TAMANHO do que
 leu, não só o veredito.** O G2, o G3 e o G1a já imprimem; é para isso que serve.
+
+**5. Todo achado de coletor tem DUAS direções, e a barata é a que se vê primeiro.**
+(Origem: div. 136, W2, e div. 140, W3. *Promovida pelo Marcel no aval da W3, 2026-09-15.*)
+Quem percebe que um coletor conta a mais tem duas perguntas a fazer, não uma:
+
+> **o que APARECE quando não devia** — barato: ruído no relatório, veredito intacto;
+> **o que SOME quando ninguém mexeu** — caro: REPROVAÇÃO FALSA.
+
+A W2 fez a primeira e parou: uma menção a `testID="…"` dentro de comentário do `files.ts`
+apareceu como "testID NOVO", o G2 é `antes ⊆ depois`, logo o veredito não mudou —
+tudo certo, e o contorno custou uma linha de documentação reescrita. A W3 fez a
+segunda, e a resposta foi outra: **com a mesma menção na BASE, apagar o comentário deixa
+o G2 e o G3 vermelhos sem que uma linha de código mude.** Medido:
+
+```
+G2 — testIDs  antes=44  depois=43     G2: testID SUMIU ✗
+G3 — linhas log( antes=58  depois=57  G3: linha sumiu SEM ERRATA ✗   exit=1
+```
+
+O que torna isto regra e não anedota é a assimetria de CUSTO entre as duas direções, e ela
+é estrutural: a direção barata é a que o instrumento te MOSTRA (a menção aparece na saída,
+em "NOVOS"), e a direção cara é a que só aparece **uma PR depois**, quando a população
+envenenada já é a BASE de outra pessoa. Um gate que reprova sem causa é o jeito mais
+rápido de perder autoridade — e o remédio é o mesmo de sempre, a regra 4 aplicada nas duas
+direções: **plantar o defeito e ver o instrumento reagir**.
 
 ### A regra de método que o padrão implica
 

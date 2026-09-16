@@ -98,33 +98,72 @@ músico lê, o outro é sobre escopo. Três passos bloqueantes verdes e o inglê
 tela: é a div. 129 inteira em cinco linhas, e é o que deixa de acontecer.
 
 --------------------------------------------------------------------------------
-§4. O QUE AINDA NÃO FOI MEDIDO — O CONTROLE NEGATIVO **NO CI**
+§4. O CONTROLE NEGATIVO **NO CI** — RODADO (aval do Marcel, 2026-09-15)
 --------------------------------------------------------------------------------
-Está em falta, e vai dito com as palavras do prompt: *um gate que nunca foi
-visto vermelho no CI é promessa, não barreira*.
+Branch DESCARTÁVEL `w3/cn-ci`, PR #304 (draft), fechada sem merge com
+`--delete-branch`. Um commit só, com o mesmo defeito do §3.
 
-POR QUE NÃO FOI RODADO: o `ci.yml` dispara em `pull_request` (qualquer) e em
-`push` para a `main`. **Um push de branch, sozinho, não dispara nada** —
-MEDIDO na §1: `'on': {push: {branches: [main]}, pull_request: null}`. Para ver
-o vermelho no CI é preciso que a PR EXISTA, e abrir a PR é push, que a §1 do
-prompt reserva ao aval do Marcel.
+POR QUE PRECISOU DE PR, e não bastou um push: o `ci.yml` dispara em
+`pull_request` (qualquer) e em `push` para a `main` — MEDIDO na §1. **Push de
+branch, sozinho, não dispara nada.**
 
-A RECEITA, pronta, para rodar assim que houver aval (pergunta 1 do relatório):
+$ gh run view 35044913970 --json jobs
+  gates-nativos  failure  2026-09-16T01:39:02Z -> 2026-09-16T01:39:15Z   (13 s)
+  build          failure  2026-09-16T01:39:02Z -> 2026-09-16T01:40:30Z   (1m28s)
 
-    # 1. a PR desta branch existe
-    git checkout -b w3/cn-ci
-    # 2. o mesmo defeito do §3, TypeScript válido
-    sed -i '' "s/'Voltar para as setlists'/'Back to setlists'/" \
-      apps/native/src/screens/IndexScreen.tsx
-    git commit -am "CN do W3 §2 — este commit TEM de reprovar o CI. REVERTIDO a seguir."
-    git push -u origin w3/cn-ci
-    gh pr create --draft --title "CN da W3 — este CI tem de ficar VERMELHO" \
-      --body "Controle negativo da div. 129. Fecha sem merge."
-    # 3. ler os dois jobs: `build` (gate:a20) e `gates-nativos` (G1a)
-    gh run list --workflow=ci.yml --branch w3/cn-ci
-    # 4. fechar a PR e apagar a branch — o defeito nunca encosta na `w3/gates-no-ci`
-    gh pr close w3/cn-ci --delete-branch
+--- job `gates-nativos`, verbatim do log ---
+  base=cbff07009213afd3ba7d0e98d0fed515145dc104  head=192b954cd3b3e394ec569cce3594108ee0e9bb3a
+  G1a — diff vazio em 33 arquivos DERIVADOS de apps/native + packages/core/src
+        EXCEÇÕES DECLARADAS (o escopo desta PR):
+          apps/native/src/files.ts
+          apps/native/src/prefetch.ts
+    G1a: DIFF NÃO VAZIO ✗
+         apps/native/src/screens/IndexScreen.tsx | 2 +-
+         1 file changed, 1 insertion(+), 1 deletion(-)
+  G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+    G1b: só adição ✓
+  ##[error]Process completed with exit code 1.
 
-Numa branch DESCARTÁVEL, e não na desta PR: o vermelho fica no histórico de uma
-PR fechada, e a `w3/gates-no-ci` continua com todos os commits verdes. É a
-alternativa que o prompt pediu para quem achasse que o CN "suja a PR".
+  O `head` é o commit DO RAMO, não um merge commit: o `ref: head.sha` fez o que
+  foi desenhado para fazer, e o `merge-base` devolveu `cbff070`. **O G2/G3 não
+  chegou a rodar** — o passo do G1a falhou antes e o job para no primeiro
+  vermelho. Comportamento certo; registrado para quem estranhar a ausência.
+
+--- job `build`, passo `Test`, verbatim ---
+  FAIL native apps/native/test/gates.test.ts > gate:a20 — nenhum literal de UI
+    em inglês (G4) > a árvore de trabalho PASSA — exit 0, zero acusações
+  AssertionError:
+  exit=1
+    ACUSADO src/screens/IndexScreen.tsx:200 [accessibilityLabel{…}] "Back to setlists" ← termo "back"
+    escopo: ESTENDIDO (V1-A3 §A3.3 + labels em expressão, V1-PR3 + chave de objeto, V1-PR6)
+    raiz: . · não descidos: test, scripts, node_modules, android, ios, .expo, .git, assets
+    arquivos varridos: 22
+    vocabulário: 45 termos · isenções do produto: 9
+    literais em posição de texto examinados: 72
+    acusações: 1
+  : expected 1 to be +0 // Object.is equality
+  Test Files  1 failed | 92 passed | 4 skipped (97)
+   ELIFECYCLE  Command failed with exit code 1.
+  ##[error]Process completed with exit code 1.
+
+--- e o que ficou VERDE, que é metade da prova ---
+  CI · build · Lint                      → "✔ No ESLint warnings or errors"
+  CI · build · Type-check packages/core  → verde
+  native · Type-check apps/native        → verde (passo 9, completed/success)
+
+  Um lint, dois `tsc` e o type-check do nativo VERDES, com texto em inglês na
+  tela do músico. **Antes desta PR, era esse o conjunto inteiro do que o CI
+  sabia dizer.**
+
+  Os dois vermelhos são de CAUSAS DIFERENTES, e a distinção importa: o `build`
+  porque o TEXTO é inglês (`gate:a20`); o `gates-nativos` porque o ARQUIVO mudou
+  sem exceção declarada (G1a). Um é sobre o que o músico lê, o outro é sobre
+  escopo.
+
+CUSTO, e a previsão do anexo D vira medição: o job `gates-nativos` levou
+**13 segundos**. A previsão escrita era [hipótese] "bem abaixo de 1 min"; passa
+a ser medição com `n = 1` — e **uma medição não vira referência sem `n`**
+(div. 80), então é "medido uma vez", escrito assim.
+
+A corrida do `native.yml` desta PR CN **não entra na população da faixa**: a
+branch era artificial e foi apagada.
