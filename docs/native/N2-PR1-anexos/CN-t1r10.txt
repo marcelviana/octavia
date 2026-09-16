@@ -1,0 +1,129 @@
+# CN do T1-R10 contra o código de ANTES do conserto (os quatro arquivos do commit 2 na versão 984051d).
+# Rastro, não fonte: a fonte é o teste apps/native/test/sync-t1r10.test.ts.
+# Regerado no commit 4, com a espera pelo mock (div. 196); a primeira captura, do commit 1, deu o mesmo 5 de 6.
+$ pnpm exec vitest run --project native apps/native/test/sync-t1r10.test.ts
+
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-n2-pr1
+
+ ❯ |native| apps/native/test/sync-t1r10.test.ts (6 tests | 5 failed) 1263ms
+     ✓ o segundo loga invalidated=0 nos dois conjuntos 101ms
+     × e não recria derivado nenhum: os conjuntos devolvidos são os MESMOS do anterior 142ms
+     × content: invalidated=1, e o índice de busca não tem mais a versão velha 322ms
+     × setlist renomeada no web: kind=setlists invalidated=1, e volta a 0 no sync seguinte 267ms
+     × item novo e item removido também invalidam (entram e saem dos derivados) 239ms
+     × primeiro sync, sem cache anterior: todo item é novo 134ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |native| apps/native/test/sync-t1r10.test.ts > T1-R10 — dois syncs sem mudança no servidor > e não recria derivado nenhum: os conjuntos devolvidos são os MESMOS do anterior
+AssertionError: expected [ { id: 'c-1', …(7) }, …(2) ] to be [ { id: 'c-1', …(7) }, …(2) ] // Object.is equality
+
+If it should pass with deep equality, replace "toBe" with "toStrictEqual"
+
+Expected: [ { id: 'c-1', …(7) }, …(2) ]
+Received: serializes to the same string
+
+
+Compared values have no visual difference.
+
+ ❯ apps/native/test/sync-t1r10.test.ts:205:24
+    203|     const r1 = await syncOk(null)
+    204|     const r2 = await syncOk(r1)
+    205|     expect(r2.content).toBe(r1.content)
+       |                        ^
+    206|     expect(r2.setlists).toBe(r1.setlists)
+    207|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  |native| apps/native/test/sync-t1r10.test.ts > T1-R10 — CN: o servidor devolve updated_at diferente para um item > content: invalidated=1, e o índice de busca não tem mais a versão velha
+AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+  [
+-   "OCTAVIA: cache write kind=content n=3 invalidated=1",
++   "OCTAVIA: cache write kind=content n=3 invalidated=0",
+  ]
+
+ ❯ apps/native/test/sync-t1r10.test.ts:220:35
+    218|     const r3 = await syncOk(r1)
+    219| 
+    220|     expect(cacheWrite('content')).toEqual(['OCTAVIA: cache write kind=…
+       |                                   ^
+    221|     expect(cacheWrite('setlists')).toEqual(['OCTAVIA: cache write kind…
+    222|     // O derivado do item foi recriado: conjunto novo, e o índice cons…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  |native| apps/native/test/sync-t1r10.test.ts > T1-R10 — CN: o servidor devolve updated_at diferente para um item > setlist renomeada no web: kind=setlists invalidated=1, e volta a 0 no sync seguinte
+AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+  [
+-   "OCTAVIA: cache write kind=setlists n=1 invalidated=1",
++   "OCTAVIA: cache write kind=setlists n=1 invalidated=0",
+  ]
+
+ ❯ apps/native/test/sync-t1r10.test.ts:238:36
+    236|     await servir([setlist('Show renomeado', T1)], BIBLIOTECA)
+    237|     const r2 = await syncOk(r1)
+    238|     expect(cacheWrite('setlists')).toEqual(['OCTAVIA: cache write kind…
+       |                                    ^
+    239|     expect(cacheWrite('content')).toEqual(['OCTAVIA: cache write kind=…
+    240|     expect(r2.setlists).not.toBe(r1.setlists)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  |native| apps/native/test/sync-t1r10.test.ts > T1-R10 — CN: o servidor devolve updated_at diferente para um item > item novo e item removido também invalidam (entram e saem dos derivados)
+AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+  [
+-   "OCTAVIA: cache write kind=content n=3 invalidated=2",
++   "OCTAVIA: cache write kind=content n=3 invalidated=0",
+  ]
+
+ ❯ apps/native/test/sync-t1r10.test.ts:255:35
+    253|     await syncOk(r1)
+    254|     // c-3 saiu e c-4 entrou: dois itens cujo derivado muda.
+    255|     expect(cacheWrite('content')).toEqual(['OCTAVIA: cache write kind=…
+       |                                   ^
+    256|   })
+    257| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  |native| apps/native/test/sync-t1r10.test.ts > T1-R10 — CN: o servidor devolve updated_at diferente para um item > primeiro sync, sem cache anterior: todo item é novo
+AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+  [
+-   "OCTAVIA: cache write kind=setlists n=1 invalidated=1",
++   "OCTAVIA: cache write kind=setlists n=1 invalidated=0",
+  ]
+
+ ❯ apps/native/test/sync-t1r10.test.ts:261:36
+    259|     await servir([setlist('Show')], BIBLIOTECA)
+    260|     await syncOk(null)
+    261|     expect(cacheWrite('setlists')).toEqual(['OCTAVIA: cache write kind…
+       |                                    ^
+    262|     expect(cacheWrite('content')).toEqual(['OCTAVIA: cache write kind=…
+    263|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed | 1 passed (6)
+   Start at  19:15:37
+   Duration  1.50s (transform 131ms, setup 0ms, import 138ms, tests 1.26s, environment 0ms)
+
+exit=1

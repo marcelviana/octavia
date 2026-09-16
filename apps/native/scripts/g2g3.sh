@@ -126,7 +126,13 @@ NOVO=$(comm -13 $tmp/a.ids $tmp/b.ids)
 #   • `file src=download … bytes=<n>` → ganha `total=<n|->` e `ms=<n>`. Sem a
 #     taxa no log, "não abortou" não se separa em "a rede estava sã" e "o teto
 #     não funciona", e o aceite W1-A2 vira impressão.
-ERRATAS='file src=download name=${name} bytes=${bytes}`'
+#   • N2-PR1 (N2-D8, div. 157): `cache write kind=setlists|content … invalidated=0`
+#     → `invalidated=${invalidated.<kind>}`. MESMO formato do catálogo
+#     (`… invalidated=<n>`); só o valor deixa de ser literal. O `0` fixo fazia o
+#     aceite A7/T1-R10 ler uma constante que nenhum sync podia reprovar.
+ERRATAS='file src=download name=${name} bytes=${bytes}`
+cache write kind=setlists n=${snapshot.setlists.length} invalidated=0`
+cache write kind=content n=${snapshot.content.length} invalidated=0`'
 echo "G3 — linhas log( antes=$(wc -l < $tmp/a.log | tr -d ' ')  depois=$(wc -l < $tmp/b.log | tr -d ' ')"
 SUMIRAM=$(comm -23 $tmp/a.log $tmp/b.log)
 NOVAS=$(comm -13 $tmp/a.log $tmp/b.log)

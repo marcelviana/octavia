@@ -111,7 +111,17 @@ export function load(uid: string): LoadedCache {
   }
 }
 
-export function save(uid: string, snapshot: CacheSnapshot): void {
+/**
+ * Quantos itens de cada conjunto tiveram o derivado invalidado nesta gravação
+ * (T1-R10) — quem calcula é o sync, pelo `reconcileByUpdatedAt` do core; aqui
+ * só se loga. Até a N2-PR1 as duas linhas saíam com `0` literal (div. 157).
+ */
+export interface Invalidated {
+  setlists: number
+  content: number
+}
+
+export function save(uid: string, snapshot: CacheSnapshot, invalidated: Invalidated): void {
   const dir = dirDe(uid)
   if (!dir.exists) dir.create({ intermediates: true })
   const arquivoSetlists: ArquivoSetlists = {
@@ -120,8 +130,8 @@ export function save(uid: string, snapshot: CacheSnapshot): void {
   }
   gravarAtomico(dir, 'setlists.json', JSON.stringify(arquivoSetlists))
   gravarAtomico(dir, 'content.json', JSON.stringify(snapshot.content))
-  log(`cache write kind=setlists n=${snapshot.setlists.length} invalidated=0`)
-  log(`cache write kind=content n=${snapshot.content.length} invalidated=0`)
+  log(`cache write kind=setlists n=${snapshot.setlists.length} invalidated=${invalidated.setlists}`)
+  log(`cache write kind=content n=${snapshot.content.length} invalidated=${invalidated.content}`)
 }
 
 /** Apaga o cache deste usuário (instrumento de prova; nenhuma UI chama). */

@@ -7,7 +7,13 @@
  * audit, 63 na principal). Cache-first é da tela: ela já renderizou o cache
  * antes desta função ser chamada (T1-R13 passo 1).
  */
-import { mergePages, planSync, type ContentDTO, type SetlistDTO } from '@octavia/core'
+import {
+  mergePages,
+  planSync,
+  reconcileByUpdatedAt,
+  type ContentDTO,
+  type SetlistDTO,
+} from '@octavia/core'
 import { getContentPage, getSetlists, type ApiResult } from './api'
 import { log } from './log'
 import { estaOnline } from './net'
@@ -89,13 +95,19 @@ export async function sincronizar(
     }
   }
 
+  // T1-R10 (N2-D8): compara com o que o app já tem. Sem cache anterior, tudo
+  // é novo. Quando nada mudou, o conjunto devolvido é o MESMO do anterior —
+  // os derivados memoizados por referência não se recriam.
+  const setlists = reconcileByUpdatedAt(anterior?.setlists ?? [], plano.setlists)
+  const content = reconcileByUpdatedAt(anterior?.content ?? [], plano.content)
+
   const syncedAtMs = Date.now()
   const snapshot: CacheSnapshot = {
-    setlists: plano.setlists,
-    content: plano.content,
+    setlists: setlists.items,
+    content: content.items,
     syncedAtMs,
   }
-  save(uid, snapshot)
+  save(uid, snapshot, { setlists: setlists.invalidated, content: content.invalidated })
 
   const paginas = rContent !== null && !rContent.failed ? rContent.paginas.length : 0
   const { duplicates } = mergePages(rContent !== null && !rContent.failed ? rContent.paginas : [])
@@ -104,5 +116,5 @@ export async function sincronizar(
     `sync ok setlists=${plano.setlists.length} content=${plano.content.length} pages=${paginas} t=${Date.now() - t0}`,
   )
 
-  return { kind: 'ok', setlists: plano.setlists, content: plano.content, syncedAtMs }
+  return { kind: 'ok', setlists: setlists.items, content: content.items, syncedAtMs }
 }
