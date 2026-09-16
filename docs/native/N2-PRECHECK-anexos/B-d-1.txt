@@ -1,0 +1,12 @@
+HTTP/2 500 
+cache-control: private, no-store
+content-type: application/json
+date: Wed, 16 Sep 2026 17:58:02 GMT
+server: Vercel
+strict-transport-security: max-age=63072000
+vary: RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch
+x-matched-path: /api/setlists/songs/[songId]
+x-vercel-cache: MISS
+x-vercel-id: gru1::iad1::gdqrm-1789581481939-053e54995e5e
+
+{"error":"Internal server error","code":"INTERNAL_ERROR"}

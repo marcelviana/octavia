@@ -1,0 +1,609 @@
+# A1 — writers de setlist (rastro bruto, N2 pre-check Fase A, HEAD 9e14042)
+
+$ git ls-tree -r --name-only HEAD app/api/setlists
+app/api/setlists/[id]/__tests__/route.test.ts
+app/api/setlists/[id]/route.ts
+app/api/setlists/[id]/songs/__tests__/route-rpc.test.ts
+app/api/setlists/[id]/songs/__tests__/route.test.ts
+app/api/setlists/[id]/songs/order/__tests__/route.test.ts
+app/api/setlists/[id]/songs/order/route.ts
+app/api/setlists/[id]/songs/route.ts
+app/api/setlists/__tests__/create-compensating.test.ts
+app/api/setlists/__tests__/get-shape.test.ts
+app/api/setlists/__tests__/route.test.ts
+app/api/setlists/route.ts
+app/api/setlists/songs/[songId]/__tests__/route-rpc.test.ts
+app/api/setlists/songs/[songId]/__tests__/route.test.ts
+app/api/setlists/songs/[songId]/route.ts
+[exit 0]
+
+$ grep -rn "export const \(GET\|POST\|PUT\|DELETE\|PATCH\)" app/api/setlists --include=route.ts
+app/api/setlists/songs/[songId]/route.ts:108:export const DELETE = wrappedRemoveSongHandler
+app/api/setlists/route.ts:88:export const GET = getSetlistsHandler
+app/api/setlists/route.ts:224:export const POST = createSetlistHandlerWrapped
+app/api/setlists/[id]/songs/order/route.ts:77:export const PUT = wrappedReorderHandler
+app/api/setlists/[id]/songs/route.ts:103:export const POST = wrappedAddSongHandler
+app/api/setlists/[id]/route.ts:144:export const GET = wrappedGetSetlistHandler
+app/api/setlists/[id]/route.ts:312:export const PUT = wrappedUpdateSetlistHandler
+app/api/setlists/[id]/route.ts:383:export const DELETE = wrappedDeleteSetlistHandler
+[exit 0]
+
+$ grep -rn "requireAuthServer\|requireAuthServer(\|withBodyValidation(\|familia:\|enforceUserLimit(" app/api/setlists --include=route.ts | grep -v import
+app/api/setlists/songs/[songId]/route.ts:27:    const user = await requireAuthServer(request)
+app/api/setlists/songs/[songId]/route.ts:32:    const limited = enforceUserLimit(user.uid, 'setlist-mutate', RATE_LIMITS.MUTATE)
+app/api/setlists/route.ts:14:    const user = await requireAuthServer(request)
+app/api/setlists/route.ts:19:    const limited = enforceUserLimit(user.uid, 'setlist-read', RATE_LIMITS.READ)
+app/api/setlists/route.ts:91:const createSetlistHandler = withBodyValidation(setlistSchemas.create, {
+app/api/setlists/route.ts:92:  rateLimit: { familia: 'setlist-mutate', config: RATE_LIMITS.MUTATE }
+app/api/setlists/[id]/songs/order/route.ts:17:const reorderSetlistHandler = withBodyValidation(setlistSchemas.reorder, {
+app/api/setlists/[id]/songs/order/route.ts:18:  rateLimit: { familia: 'setlist-mutate', config: RATE_LIMITS.MUTATE }
+app/api/setlists/[id]/songs/route.ts:13:const addSongToSetlistHandler = withBodyValidation(setlistSchemas.addSong, {
+app/api/setlists/[id]/songs/route.ts:14:  rateLimit: { familia: 'setlist-mutate', config: RATE_LIMITS.MUTATE }
+app/api/setlists/[id]/route.ts:18:    const user = await requireAuthServer(request)
+app/api/setlists/[id]/route.ts:23:    const limited = enforceUserLimit(user.uid, 'setlist-read', RATE_LIMITS.READ)
+app/api/setlists/[id]/route.ts:147:const updateSetlistHandler = withBodyValidation(setlistSchemas.update, {
+app/api/setlists/[id]/route.ts:148:  rateLimit: { familia: 'setlist-mutate', config: RATE_LIMITS.MUTATE }
+app/api/setlists/[id]/route.ts:320:    const user = await requireAuthServer(request)
+app/api/setlists/[id]/route.ts:325:    const limited = enforceUserLimit(user.uid, 'setlist-mutate', RATE_LIMITS.MUTATE)
+[exit 0]
+
+$ grep -rn "updated_at\|\.rpc(\|\.delete()\|\.insert(\|\.update(" app/api/setlists --include=route.ts
+app/api/setlists/songs/[songId]/route.ts:75:    // bump de updated_at viram UMA transação na RPC, sob o lock da
+app/api/setlists/songs/[songId]/route.ts:79:    const { error: rpcError } = await supabase.rpc('remove_setlist_song', {
+app/api/setlists/route.ts:134:        updated_at: new Date().toISOString(),
+app/api/setlists/route.ts:139:        .insert(setlistData)
+app/api/setlists/route.ts:170:          .insert(rows)
+app/api/setlists/route.ts:176:            .delete()
+app/api/setlists/[id]/songs/order/route.ts:45:      const { data, error } = await supabase.rpc('reorder_setlist_songs', {
+app/api/setlists/[id]/songs/route.ts:60:      // updated_at acontece NA transação — o best-effort separado morreu.
+app/api/setlists/[id]/songs/route.ts:66:      const { data, error: rpcError } = await supabase.rpc('add_setlist_song', {
+app/api/setlists/[id]/route.ts:175:        updated_at: new Date().toISOString(),
+app/api/setlists/[id]/route.ts:197:      .update(updateData)
+app/api/setlists/[id]/route.ts:342:      .delete()
+app/api/setlists/[id]/route.ts:353:      .delete()
+[exit 0]
+
+$ grep -rn "objectId.safeParse\|commonSchemas" app/api/setlists --include=route.ts | grep -v import
+app/api/setlists/[id]/route.ts:31:    const idValidation = commonSchemas.objectId.safeParse(setlistId)
+app/api/setlists/[id]/route.ts:163:      const idValidation = commonSchemas.objectId.safeParse(params.id)
+app/api/setlists/[id]/route.ts:332:    const idValidation = commonSchemas.objectId.safeParse(setlistId)
+[exit 0]
+
+$ sed -n 336,361p 'app/api/setlists/[id]/route.ts'
+
+    const supabase = getSupabaseServiceClient()
+
+    // Delete all songs in the setlist first
+    const { error: songsError } = await supabase
+      .from("setlist_songs")
+      .delete()
+      .eq("setlist_id", setlistId)
+
+    if (songsError) {
+      logger.error("Error deleting setlist songs:", songsError)
+      throw songsError
+    }
+
+    // Then delete the setlist
+    const { error } = await supabase
+      .from("setlists")
+      .delete()
+      .eq("id", setlistId)
+      .eq("user_id", user.uid)
+
+    if (error) {
+      logger.error("Error deleting setlist:", error)
+      throw error
+    }
+
+[exit 0]
+
+$ sed -n 351,363p 'app/api/setlists/[id]/__tests__/route.test.ts'
+    it('only deletes setlists owned by the authenticated user', async () => {
+      mockRequireAuthServerSecure.mockResolvedValue({ uid: 'different-user' })
+      
+      // Setup empty setlists for different user (simulates not found due to user_id filter)
+      factory.setMockData('setlists', [])
+
+      const request = new NextRequest(`http://localhost:3000/api/setlists/${setlistId}`, {
+        method: 'DELETE'
+      })
+      const response = await DELETE(request)
+
+      expect(response.status).toBe(200) // API handles this gracefully
+    })
+[exit 0]
+
+$ sed -n 36,68p supabase/schema.dump.sql
+);
+
+
+ALTER TABLE "public"."setlist_songs" OWNER TO "postgres";
+
+
+CREATE OR REPLACE FUNCTION "public"."add_setlist_song"("p_setlist_id" "uuid", "p_content_id" "uuid", "p_notes" "text") RETURNS SETOF "public"."setlist_songs"
+    LANGUAGE "plpgsql"
+    SET "search_path" TO 'public'
+    AS $$
+begin
+  -- lock único do invariante (D10): o addSong era o ÚNICO escritor sem
+  -- ele — a janela do §2.3 fecha aqui, por serialização
+  perform 1 from setlists s where s.id = p_setlist_id for update;
+  if not found then
+    raise exception 'SETLIST_NOT_FOUND' using errcode = 'OB602';
+  end if;
+
+  -- B6-D3 (fundida): max+1 calculado DENTRO da transação, sob o lock —
+  -- append-only, gap impossível por construção
+  return query
+    insert into setlist_songs (setlist_id, content_id, position, notes)
+    values (
+      p_setlist_id,
+      p_content_id,
+      coalesce((select max(ss.position) from setlist_songs ss
+                 where ss.setlist_id = p_setlist_id), 0) + 1,
+      p_notes
+    )
+    returning *;
+
+  update setlists s set updated_at = now() where s.id = p_setlist_id;
+end;
+[exit 0]
+
+$ grep -n "for update\|update setlists s set updated_at\|errcode" supabase/schema.dump.sql
+49:  perform 1 from setlists s where s.id = p_setlist_id for update;
+51:    raise exception 'SETLIST_NOT_FOUND' using errcode = 'OB602';
+67:  update setlists s set updated_at = now() where s.id = p_setlist_id;
+122:  perform 1 from content c where c.id = p_content_id for update;
+124:    raise exception 'CONTENT_NOT_FOUND' using errcode = 'OB604';
+135:      raise exception 'ORDER_MISMATCH' using errcode = 'OB601';
+144:             for update) t;
+164:    raise exception 'ORDER_MISMATCH' using errcode = 'OB601';
+175:    raise exception 'CONTENT_NOT_FOUND' using errcode = 'OB604';
+192:      raise exception 'ORDER_MISMATCH' using errcode = 'OB601';
+196:      raise exception 'ORDER_MISMATCH' using errcode = 'OB601';
+199:    update setlists s set updated_at = now() where s.id = v_sid;
+221:    raise exception 'SONG_NOT_FOUND' using errcode = 'OB603';
+225:  perform 1 from setlists s where s.id = v_setlist_id for update;
+229:    raise exception 'SETLIST_NOT_FOUND' using errcode = 'OB602';
+239:    raise exception 'SONG_NOT_FOUND' using errcode = 'OB603';
+258:    raise exception 'ORDER_MISMATCH' using errcode = 'OB601';
+262:    raise exception 'ORDER_MISMATCH' using errcode = 'OB601';
+265:  update setlists s set updated_at = now() where s.id = v_setlist_id;
+287:  perform 1 from setlists s where s.id = p_setlist_id for update;
+289:    raise exception 'SETLIST_NOT_FOUND' using errcode = 'OB602';
+303:    raise exception 'ORDER_MISMATCH' using errcode = 'OB601';
+316:    raise exception 'ORDER_MISMATCH' using errcode = 'OB601';
+326:    raise exception 'ORDER_MISMATCH' using errcode = 'OB601';
+332:    raise exception 'ORDER_MISMATCH' using errcode = 'OB601';
+337:  update setlists s set updated_at = now() where s.id = p_setlist_id;
+[exit 0]
+
+$ grep -n "setlist_songs_setlist_id_fkey\|setlist_songs_content_id_fkey" supabase/schema.dump.sql
+463:    ADD CONSTRAINT "setlist_songs_content_id_fkey" FOREIGN KEY ("content_id") REFERENCES "public"."content"("id") ON DELETE CASCADE;
+468:    ADD CONSTRAINT "setlist_songs_setlist_id_fkey" FOREIGN KEY ("setlist_id") REFERENCES "public"."setlists"("id") ON DELETE CASCADE;
+[exit 0]
+
+$ grep -in "trigger" supabase/schema.dump.sql
+[exit 1]
+
+$ sed -n 309,381p lib/api-schemas.ts
+// ---------------------------------------------------------------------------
+// Setlists — PR-5: os três campos fantasma (SET-01) DEIXAM a lista de
+// ignorados e ENTRAM no contrato; o handler os persiste de verdade.
+//
+// performance_date é DATE-ONLY por decisão de produto (B5, 2026-08-10):
+// YYYY-MM-DD, sem hora, sem fuso — a coluna já é `date` no banco (dump).
+// Timestamp completo → 400 (elimina o off-by-one do SET-17 no contrato;
+// a exibição web mantém o bug até morrer — Bloco D).
+// ---------------------------------------------------------------------------
+const setlistMetadataFields = {
+  // name 1..255: alinhado à coluna varchar(255) do dump (era 100)
+  name: commonSchemas.createSafeText(1, 255),
+  // .nullish() em tudo: SET-23 — null = limpar, undefined = não mexer
+  description: commonSchemas.safeHtml.nullish(),
+  venue: commonSchemas.createSafeText(0, 255).nullish(),
+  performance_date: z.string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, 'performance_date must be date-only (YYYY-MM-DD)')
+    .nullish(),
+  notes: commonSchemas.safeHtml.nullish(),
+}
+
+// Item de songs[] no CREATE (D2): SEM position — a ORDEM DO ARRAY é a
+// ordem, renumerada 1..N pelo servidor. Aceitar uma position que o servidor
+// recalcularia seria a mesma mentira que o B2 existe para matar.
+const setlistCreateSongItem = z.object({
+  content_id: commonSchemas.objectId,
+  notes: commonSchemas.safeText.nullish(),
+}).strict()
+
+export const setlistSchemas = {
+  create: z.object({
+    ...setlistMetadataFields,
+    // songs[] agora é IMPLEMENTADO pelo handler (fim do a3 — o 201 diz a
+    // verdade). content_id repetido no array → 400: bis intencional se faz
+    // ADICIONANDO depois (a UNIQUE do bis caiu na MIG-1); repetir na
+    // criação é erro de cliente.
+    songs: z.array(setlistCreateSongItem).max(100).default([])
+      .refine(
+        (songs) => new Set(songs.map((s) => s.content_id)).size === songs.length,
+        'Duplicate content_id in songs'
+      ),
+  }).strict(),
+
+  // update é SÓ metadados (decisão D2): songs aqui → 400 por chave
+  // desconhecida (não strip). Reordenar/adicionar/remover têm rotas próprias.
+  update: z.object({
+    ...setlistMetadataFields,
+    name: commonSchemas.createSafeText(1, 255).optional(),
+  }).strict(),
+
+  // PUT /api/setlists/[id]/songs/order — reorder em LOTE (B6-D1): o array
+  // é a ordem completa, permutação EXATA dos setlist_songs da setlist
+  // (posse/existência a rota checa; permutação a RPC checa na transação —
+  // B6-D2). max(100) alinhado ao songs[] do create.
+  reorder: z.object({
+    order: z.array(commonSchemas.objectId).min(1).max(100)
+      .refine(
+        (ids) => new Set(ids).size === ids.length,
+        'Duplicate song id in order'
+      ),
+  }).strict(),
+
+  addSong: z.object({
+    content_id: commonSchemas.objectId,
+    // B6-D3: a exceção deliberada à política D1 (B2) está ENCERRADA —
+    // position é aceita por compatibilidade e SEMPRE recalculada para
+    // max+1 (append; gap impossível por construção). O invariante
+    // contíguo 1..N de setlist_songs é contrato (docs/api/SETLISTS.md);
+    // o 201 devolve a position real.
+    position: z.number().int().min(0).nullish(),
+    notes: commonSchemas.safeText.nullish(),
+  }).strict(),
+} as const
+[exit 0]
+
+$ sed -n 26p lib/api-schemas.ts
+  objectId: z.string().uuid('Invalid ID format'),
+[exit 0]
+
+$ sed -n 95,126p lib/api-validation-middleware.ts
+    return async (request: Request, ...args: TArgs): Promise<Response> => {
+      try {
+        // Authentication check
+        let user: Awaited<ReturnType<typeof requireAuthServerSecure>> = null
+
+        if (requireAuth) {
+          user = await requireAuthServerSecure(request, { allowUnverifiedEmail })
+          if (!user) {
+            // B1.3: IP com janela de auth falhada estourada recebe 429
+            // estruturada (o funil já negou deny-fast por baixo)
+            const failLimit = getAuthFailureLimit(getClientIp(request))
+            if (failLimit) {
+              return rateLimited(failLimit)
+            }
+            // B3 PR-1: construção delegada ao ponto único (byte-idêntica
+            // ao inline anterior — provado pela camada 2 do contract-errors)
+            return authRequired()
+          }
+
+          // B1.3: limite por uid, pós-auth
+          if (rateLimit) {
+            const rl = checkRateLimit({
+              scope: 'user',
+              id: user.uid,
+              familia: rateLimit.familia,
+              config: rateLimit.config
+            })
+            if (!rl.ok) {
+              return rateLimited(rl)
+            }
+          }
+        }
+[exit 0]
+
+$ sed -n 28,70p lib/api-validation-middleware.ts
+// Security-focused request body parser
+export async function parseRequestBody(request: Request): Promise<unknown> {
+  try {
+    const contentType = request.headers.get('content-type') || ''
+
+    if (contentType.includes('application/json')) {
+      const text = await request.text()
+
+      // Security: Limit JSON size
+      if (text.length > 1024 * 1024) { // 1MB limit
+        throw new Error('Request body too large')
+      }
+
+      // Security: Prevent prototype pollution
+      const parsed = JSON.parse(text)
+      if (typeof parsed === 'object' && parsed !== null) {
+        // Remove dangerous keys
+        delete parsed.__proto__
+        delete parsed.constructor
+        delete parsed.prototype
+      }
+
+      return parsed
+    } else if (contentType.includes('multipart/form-data')) {
+      // Handle FormData for file uploads
+      return await request.formData()
+    } else {
+      // Handle other content types
+      return await request.text()
+    }
+  } catch (error) {
+    logger.error('Failed to parse request body:', error)
+    throw new ValidationError(
+      [{ 
+        code: 'invalid_type', 
+        message: 'Invalid request body format', 
+        path: [],
+        expected: 'object',
+        received: 'unknown'
+      }],
+      400
+    )
+  }
+[exit 0]
+
+$ sed -n 150,167p lib/api-validation-middleware.ts
+        // Validate data
+        const validationResult = schema.safeParse(rawData)
+
+        if (!validationResult.success) {
+          logger.warn('Validation failed:', {
+            path: request.url,
+            method: request.method,
+            errors: validationResult.error.issues
+          })
+
+          // B3 PR-3b: FLIP — o middleware fala o default do contrato
+          // (D7: um detail por chave em unrecognized_keys). O flag
+          // temporário do PR-1 morreu junto (emenda no desenho §3.PR-3b).
+          return validationError(validationResult.error)
+        }
+
+        // Call handler with validated data
+        return await handler(request, validationResult.data, user || undefined, ...args)
+[exit 0]
+
+$ sed -n 260,310p lib/secure-auth-utils.ts
+    // Extract token with security validation
+    const authHeader = request.headers.get('authorization')
+    const cookieHeader = request.headers.get('cookie')
+
+    let token: string | null = null
+
+    // Extract from Authorization header
+    if (authHeader) {
+      const bearerMatch = authHeader.match(/^Bearer\s+(.+)$/i)
+      if (bearerMatch && bearerMatch[1]) {
+        token = bearerMatch[1]
+      } else {
+        logger.warn('Invalid Authorization header format')
+        return null
+      }
+    }
+    // Extract from session cookie
+    else if (cookieHeader) {
+      const sessionMatch = cookieHeader.match(/firebase-session=([^;]+)/)
+      if (sessionMatch && sessionMatch[1]) {
+        token = decodeURIComponent(sessionMatch[1])
+      }
+    }
+
+    if (!token) {
+      logger.log('No authentication token found')
+      return null
+    }
+
+    // Validate token with security enhancements
+    const validation = await validateFirebaseTokenSecure(token, request.url)
+
+    if (!validation.isValid || !validation.user) {
+      logger.warn('Token validation failed during auth requirement')
+      recordAuthFailure(clientIp)
+
+      // SECURITY: Automatically blacklist suspicious tokens
+      if (validation.error?.includes('revoked') || validation.error?.includes('expired')) {
+        blacklistToken(token)
+      }
+
+      return null
+    }
+
+    // SECURITY: Additional email verification check.
+    // allowUnverifiedEmail existe para fluxos onde o usuário acabou de ser
+    // criado e ainda não pôde verificar o email (ex.: criação de perfil no signup)
+    if (!validation.user.emailVerified && !options.allowUnverifiedEmail) {
+      logger.warn(`Unverified user attempted access: ${validation.user.uid}`)
+      return null
+    }
+[exit 0]
+
+$ sed -n 151,180p lib/firebase-server-utils.ts
+  let idToken: string | null = null
+
+  const authHeader = request.headers.get('authorization')
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    idToken = authHeader.substring(7)
+  } else {
+    // Fall back to session cookie if no Authorization header
+    const cookieHeader = request.headers.get('cookie')
+    if (cookieHeader) {
+      const cookie = cookieHeader
+        .split(';')
+        .find(c => c.trim().startsWith('firebase-session='))
+      if (cookie) {
+        idToken = cookie.trim().substring('firebase-session='.length)
+      }
+    }
+  }
+
+  if (!idToken) {
+    return null
+  }
+
+  const validation = await validateFirebaseTokenServer(idToken, request.url)
+
+  if (!validation.isValid || !validation.user) {
+    recordAuthFailure(clientIp)
+    return null
+  }
+
+  return validation.user
+[exit 0]
+
+$ sed -n 19,65p lib/rpc-errors.ts
+export type RpcRoute = 'reorder' | 'removeSong' | 'addSong' | 'deleteContent'
+
+const MAP: Record<RpcRoute, Record<string, () => Response>> = {
+  reorder: {
+    // erro do cliente: array ≠ conjunto exato (falta/sobra/alheio/corrida)
+    OB601: () =>
+      validationError([
+        {
+          code: 'custom',
+          path: ['order'],
+          message: 'order must contain exactly the songs of the setlist',
+        } as never,
+      ]),
+    OB602: () => notFound('Setlist not found'),
+  },
+  removeSong: {
+    // OB602 = setlist sumiu no intervalo gate→rpc (cascade levou a song):
+    // mesmo 404 de song, sem oráculo
+    OB602: () => notFound('Song not found'),
+    OB603: () => notFound('Song not found'),
+  },
+  addSong: {
+    OB602: () => notFound('Setlist not found'),
+  },
+  deleteContent: {
+    // OB604 = content sumiu no intervalo gate→rpc: mesmo 404 do gate,
+    // sem oráculo (B6-D11, PR-3c)
+    OB604: () => notFound('Content not found'),
+  },
+}
+
+export function rpcErrorResponse(
+  route: RpcRoute,
+  error: { code?: string | null; message?: string | null } | null
+): Response {
+  // message SÓ aqui (log) — nunca no envelope
+  logger.error(`RPC error (${route}):`, { code: error?.code, message: error?.message })
+  // hasOwnProperty (endurecimento do checkpoint B): lookup direto
+  // herdaria o prototype — um code anômalo tipo "toString" devolveria
+  // FUNÇÃO herdada em vez de handler e quebraria o contrato de retorno
+  const handlers = MAP[route]
+  const make =
+    error?.code && Object.prototype.hasOwnProperty.call(handlers, error.code)
+      ? handlers[error.code]
+      : undefined
+  return make ? make() : internalError()
+}
+[exit 0]
+
+$ sed -n 108,129p lib/api-errors.ts
+  return apiError('AUTH_REQUIRED', error, {
+    headers: { 'WWW-Authenticate': 'Bearer' },
+  })
+}
+
+/** 404 — inexistente OU de outro usuário (D2: sem oráculo de existência). */
+export function notFound(error = 'Resource not found'): Response {
+  return apiError('NOT_FOUND', error)
+}
+
+/** 500 — mensagem SEMPRE genérica; nada de mensagem interna de dependência. */
+export function internalError(error = 'Internal server error'): Response {
+  return apiError('INTERNAL_ERROR', error)
+}
+
+/** 400 de validação — aceita o ZodError inteiro ou issues avulsas. */
+export function validationError(input: ZodError | ZodIssue[]): Response {
+  const issues = Array.isArray(input) ? input : input.issues
+  return apiError('VALIDATION_ERROR', 'Validation failed', {
+    details: zodDetails(issues),
+  })
+}
+[exit 0]
+
+$ grep -n "MUTATE\|READ:" lib/user-rate-limit.ts
+50:  READ: { windowMs: 60_000, max: 300 },
+52:  MUTATE: { windowMs: 15 * 60_000, max: 120 },
+[exit 0]
+
+$ sed -n 195,205p docs/ux/B6-DESENHO.md
+fora do inventário de ESCRITA; verificado por leitura de cada trecho):
+
+| Caminho | Operação | Classe |
+|---|---|---|
+| `app/api/setlists/route.ts:192` (POST create, `songs[]` inline) | INSERT multi-row | **(b) seguro por construção**: a setlist acabou de ser criada NA MESMA request — o id é desconhecido de terceiros até a resposta; positions 1..N atribuídas pelo servidor pela ordem do array (`rows.map((s, i) => … position: i + 1)`, :185-190); falha tem delete compensatório declarado (PR-5 do B2) |
+| `app/api/setlists/[id]/songs/route.ts:87` (addSong) | INSERT | **(a) vira RPC** `add_setlist_song` (D10) |
+| `app/api/setlists/songs/[songId]/route.ts:84` + `:112` (remove + shift) | DELETE + UPDATEs | **(a) vira RPC** `remove_setlist_song` (D9) |
+| `app/api/setlists/songs/[songId]/route.ts:248` + `:287` (move-one) | UPDATEs 2N | **(a) rota REMOVIDA** (D1) |
+| `app/api/setlists/[id]/route.ts:341` (DELETE da setlist: apaga as songs antes) | DELETE em massa | **(c)**: remoção do conjunto INTEIRO — o invariante fica vácuo (a setlist morre em seguida). Interleaving com addSong pós-D10: um insert que entre depois do `:341` morre no FK cascade do delete da setlist (`setlist_songs_setlist_id_fkey ON DELETE CASCADE`, dump:189-190), e o delete da linha de `setlists` serializa com o `for update` das funções. Nota `[análise]`: o delete explícito `:341` é redundante com o cascade — fica como está (fora do escopo) |
+| Cascade `profiles`→`setlists`→`setlist_songs` (dump:194-196 + :189-190) | DELETE em cadeia | **(c)** vácuo (setlists morrem junto); sem rota — só console, e a regra operacional é nunca deletar `profiles` |
+| `scripts/ux-audit/*` (cleanup/seed/discover) | via ROTAS da API | **(d)**: nenhuma escrita direta em `setlist_songs` no grep — cleanup deleta via rota DELETE da setlist (comentário `:5`), seed cria via rotas, discover só lê. Respeitam o contrato por construção |
+[exit 0]
+
+$ grep -n "for update\|update setlists s set updated_at\|CREATE OR REPLACE FUNCTION" supabase/schema.dump.sql
+42:CREATE OR REPLACE FUNCTION "public"."add_setlist_song"("p_setlist_id" "uuid", "p_content_id" "uuid", "p_notes" "text") RETURNS SETOF "public"."setlist_songs"
+49:  perform 1 from setlists s where s.id = p_setlist_id for update;
+67:  update setlists s set updated_at = now() where s.id = p_setlist_id;
+104:CREATE OR REPLACE FUNCTION "public"."delete_content_resequence"("p_content_id" "uuid") RETURNS SETOF "public"."content"
+122:  perform 1 from content c where c.id = p_content_id for update;
+144:             for update) t;
+199:    update setlists s set updated_at = now() where s.id = v_sid;
+208:CREATE OR REPLACE FUNCTION "public"."remove_setlist_song"("p_song_id" "uuid") RETURNS TABLE("id" "uuid", "position" integer)
+225:  perform 1 from setlists s where s.id = v_setlist_id for update;
+265:  update setlists s set updated_at = now() where s.id = v_setlist_id;
+277:CREATE OR REPLACE FUNCTION "public"."reorder_setlist_songs"("p_setlist_id" "uuid", "p_song_ids" "uuid"[]) RETURNS TABLE("id" "uuid", "position" integer)
+287:  perform 1 from setlists s where s.id = p_setlist_id for update;
+337:  update setlists s set updated_at = now() where s.id = p_setlist_id;
+[exit 0]
+
+$ grep -n 'objectId\|commonSchemas' 'app/api/setlists/[id]/songs/route.ts' 'app/api/setlists/[id]/songs/order/route.ts' 'app/api/setlists/songs/[songId]/route.ts'
+[exit 1]
+
+$ sed -n 88,101p 'app/api/setlists/[id]/songs/route.ts'
+// Wrapper for POST handler
+const wrappedAddSongHandler = async (request: NextRequest): Promise<Response> => {
+  const url = new URL(request.url)
+  const pathParts = url.pathname.split('/')
+  const id = pathParts[pathParts.length - 2] // Get the setlist ID from the path
+  if (!id) {
+    return validationError([
+      { code: 'invalid_type', path: ['id'], message: 'Setlist ID is required' } as never,
+    ])
+  }
+
+  const response = await addSongToSetlistHandler(request, { id })
+  return response
+}
+[exit 0]
+
+$ sed -n 36,53p 'app/api/setlists/songs/[songId]/route.ts'
+    const { songId } = await params
+
+    const supabase = getSupabaseServiceClient()
+
+    // Get the song details including setlist_id
+    const { data: song, error: songError } = await supabase
+      .from("setlist_songs")
+      .select(`
+        id,
+        position,
+        setlist_id,
+        setlists!inner (
+          id,
+          user_id
+        )
+      `)
+      .eq("id", songId)
+      .single()
+[exit 0]
+

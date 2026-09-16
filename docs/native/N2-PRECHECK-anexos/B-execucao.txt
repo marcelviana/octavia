@@ -1,0 +1,47 @@
+# B-execucao — transcrição da Fase B (rastro bruto; token redigido como $TOKEN). Comando: set -a; source .env.uxaudit; source .env.local; set +a; bash $SP/fase-b.sh
+
+signInWithPassword status=200
+uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 claim.email_verified=true claim.sign_in_provider=password
+$ 2026-09-16T17:57:56Z [B-c] curl -sS -i -o B-c-1.raw -H Authorization: Bearer $TOKEN https://octavia.rocks/api/setlists 
+[curl exit 0]
+status=200
+arquivo bruto (headers+corpo): 50363 B  sha256 87b8807a383580d779f4b15ce7c7fa3198cd14fceb684eaa16cf8a3529448830
+corpo: 49983 B  sha256 08ebfe437cd81e52edd494bb037cc242f4c590ba9612da2bb87c1a1504e8cb01
+
+$ 2026-09-16T17:58:00Z [B-a] curl -sS -i -o B-a-1.txt -X POST -H Authorization: Bearer $TOKEN -H Content-Type: application/json --data {} https://octavia.rocks/api/setlists 
+[curl exit 0]
+status=400
+arquivo bruto (headers+corpo): 505 B  sha256 4ee1b3aa7e69ee55af3ab9f4a6fe6f787a1ac45b33c547ff94c4d5774aeb55b1
+corpo: 127 B  sha256 24ef235a800ff4e3337ef06bcd97b041d3d07a36ec50c6dc55da91eb0907af8c
+
+$ 2026-09-16T17:58:00Z [B-b1] curl -sS -i -o B-b-1.txt -X POST -H Content-Type: application/json --data {} https://octavia.rocks/api/setlists 
+[curl exit 0]
+status=401
+arquivo bruto (headers+corpo): 462 B  sha256 cd174d1fd5e4fedd891f14c567762ebf60a7c019386381f03a9c15973087e890
+corpo: 58 B  sha256 3c1c84e32bf667c45ff94c75d5b223d2a8b81a96d4c75f4c8afcdb7094014111
+
+$ 2026-09-16T17:58:01Z [B-b2] curl -sS -i -o B-b-2.txt https://octavia.rocks/api/setlists 
+[curl exit 0]
+status=401
+arquivo bruto (headers+corpo): 470 B  sha256 e3eb4d35c45b6c0c2136fb9f78f6a39358a25be0ce35e4f4bd8d147d175d7d49
+corpo: 58 B  sha256 3c1c84e32bf667c45ff94c75d5b223d2a8b81a96d4c75f4c8afcdb7094014111
+
+$ 2026-09-16T17:58:01Z [B-d] curl -sS -i -o B-d-1.txt -X DELETE -H Authorization: Bearer $TOKEN https://octavia.rocks/api/setlists/songs/nao-e-uuid 
+[curl exit 0]
+status=500
+arquivo bruto (headers+corpo): 450 B  sha256 9e352058e639a2d8e02bb87172ac9a1a3533de289d34b9a5fb546ff7c1f9e3c4
+corpo: 57 B  sha256 f349dba9a20dca5489cdac36db322b4677a5e0db8871bdd84150b942d04b3fb9
+
+FIM 2026-09-16T17:58:02Z
+
+$ cmp B-b1.body B-b2.body
+[exit 0]
+$ printf '%s' '{"error":"Authentication required","code":"AUTH_REQUIRED"}' | sha256sum   # corpo do C-PRECHECK B.2 P1 (sha 3c1c84e3…4111, 58 B)
+3c1c84e32bf667c45ff94c75d5b223d2a8b81a96d4c75f4c8afcdb7094014111  -
+      58
+$ cmp B-b1.body c-precheck-p1.body; cmp B-b2.body c-precheck-p1.body
+[exit 0]
+[exit 0]
+$ cmp (N2-D9) B-a.body B-b1.body — B-a devolveu 400, o cmp da N2-D9 NÃO se aplica (registrado; executado só como fato)
+B-a.body B-b1.body differ: char 11, line 1
+[exit 1]

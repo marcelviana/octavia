@@ -1,0 +1,124 @@
+# B-aval-150 — cliente Supabase e RLS de setlist_songs (rastro bruto; aval 1.2-a; HEAD 37e7f48)
+
+$ grep -n 'getSupabaseServiceClient' 'app/api/setlists/[id]/route.ts'
+3:import { getSupabaseServiceClient } from '@/lib/supabase-service'
+36:    const supabase = getSupabaseServiceClient()
+169:      const supabase = getSupabaseServiceClient()
+337:    const supabase = getSupabaseServiceClient()
+[exit 0]
+
+$ sed -n 337,355p 'app/api/setlists/[id]/route.ts'
+    const supabase = getSupabaseServiceClient()
+
+    // Delete all songs in the setlist first
+    const { error: songsError } = await supabase
+      .from("setlist_songs")
+      .delete()
+      .eq("setlist_id", setlistId)
+
+    if (songsError) {
+      logger.error("Error deleting setlist songs:", songsError)
+      throw songsError
+    }
+
+    // Then delete the setlist
+    const { error } = await supabase
+      .from("setlists")
+      .delete()
+      .eq("id", setlistId)
+      .eq("user_id", user.uid)
+[exit 0]
+
+$ sed -n 1,38p lib/supabase-service.ts
+import { createClient } from "@supabase/supabase-js"
+import type { Database } from "@/types/database.types"
+import type { SupabaseClient } from "@supabase/supabase-js"
+import logger from "@/lib/logger"
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
+
+export const isSupabaseServiceConfigured = Boolean(
+  supabaseUrl &&
+  supabaseServiceKey &&
+  supabaseUrl.startsWith("https://") &&
+  supabaseServiceKey.length > 20,
+)
+
+let supabaseServiceClient: SupabaseClient<Database> | null = null
+
+export function getSupabaseServiceClient(): SupabaseClient<Database> {
+  if (!supabaseServiceClient) {
+    if (!isSupabaseServiceConfigured) {
+      logger.warn("Supabase service role not configured - operations will fail")
+      throw new Error("Supabase service role key not configured")
+    }
+    
+    supabaseServiceClient = createClient<Database>(
+      supabaseUrl,
+      supabaseServiceKey,
+      {
+        auth: {
+          autoRefreshToken: false,
+          persistSession: false
+        }
+      }
+    )
+  }
+  
+  return supabaseServiceClient!
+}
+[exit 0]
+
+$ grep -n -i 'setlist_songs' supabase/*.sql | grep -i 'POLICY\|ROW LEVEL SECURITY'
+supabase/schema.dump.sql:485:CREATE POLICY "Service role access to setlist songs" ON "public"."setlist_songs" USING (("auth"."role"() = 'service_role'::"text")) WITH CHECK (("auth"."role"() = 'service_role'::"text"));
+supabase/schema.dump.sql:505:CREATE POLICY "User can insert setlist songs" ON "public"."setlist_songs" FOR INSERT WITH CHECK ((EXISTS ( SELECT 1
+supabase/schema.dump.sql:526:CREATE POLICY "User owns setlist songs" ON "public"."setlist_songs" USING ((EXISTS ( SELECT 1
+supabase/schema.dump.sql:547:ALTER TABLE "public"."setlist_songs" ENABLE ROW LEVEL SECURITY;
+[exit 0]
+
+$ sed -n 485,487p supabase/schema.dump.sql
+CREATE POLICY "Service role access to setlist songs" ON "public"."setlist_songs" USING (("auth"."role"() = 'service_role'::"text")) WITH CHECK (("auth"."role"() = 'service_role'::"text"));
+
+
+[exit 0]
+
+$ sed -n 505,533p supabase/schema.dump.sql
+CREATE POLICY "User can insert setlist songs" ON "public"."setlist_songs" FOR INSERT WITH CHECK ((EXISTS ( SELECT 1
+   FROM "public"."setlists"
+  WHERE (("setlists"."id" = "setlist_songs"."setlist_id") AND ("setlists"."user_id" = ("auth"."jwt"() ->> 'uid'::"text"))))));
+
+
+
+CREATE POLICY "User can read content referenced in setlists" ON "public"."content" FOR SELECT USING ((("user_id" = ("auth"."jwt"() ->> 'uid'::"text")) OR (EXISTS ( SELECT 1
+   FROM ("public"."setlist_songs"
+     JOIN "public"."setlists" ON (("setlists"."id" = "setlist_songs"."setlist_id")))
+  WHERE (("setlist_songs"."content_id" = "content"."id") AND ("setlists"."user_id" = ("auth"."jwt"() ->> 'uid'::"text")))))));
+
+
+
+CREATE POLICY "User owns content" ON "public"."content" USING (("user_id" = ("auth"."jwt"() ->> 'uid'::"text")));
+
+
+
+CREATE POLICY "User owns profile" ON "public"."profiles" USING (("id" = ("auth"."jwt"() ->> 'uid'::"text")));
+
+
+
+CREATE POLICY "User owns setlist songs" ON "public"."setlist_songs" USING ((EXISTS ( SELECT 1
+   FROM "public"."setlists"
+  WHERE (("setlists"."id" = "setlist_songs"."setlist_id") AND ("setlists"."user_id" = ("auth"."jwt"() ->> 'uid'::"text")))))) WITH CHECK ((EXISTS ( SELECT 1
+   FROM "public"."setlists"
+  WHERE (("setlists"."id" = "setlist_songs"."setlist_id") AND ("setlists"."user_id" = ("auth"."jwt"() ->> 'uid'::"text"))))));
+
+
+
+[exit 0]
+
+$ sed -n 547p supabase/schema.dump.sql
+ALTER TABLE "public"."setlist_songs" ENABLE ROW LEVEL SECURITY;
+[exit 0]
+
+$ grep -n -i 'bypassrls\|FORCE ROW LEVEL' supabase/*.sql
+[exit 1]
+

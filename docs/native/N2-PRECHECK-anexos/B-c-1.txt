@@ -1,0 +1,18 @@
+# B-c-1 — GET /api/setlists (bearer, sem cookie). HEADERS literais; o CORPO fica fora do repositório
+# (contém content_data/file_url — precedente do N1-PRECHECK A3); abaixo, o resumo gerado dele.
+HTTP/2 200 
+cache-control: private, no-store
+content-type: application/json
+date: Wed, 16 Sep 2026 17:58:00 GMT
+server: Vercel
+strict-transport-security: max-age=63072000
+vary: RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch
+x-matched-path: /api/setlists
+x-vercel-cache: BYPASS
+x-vercel-id: gru1::iad1::tlwpq-1789581477271-bf6a181ad627
+--- resumo do corpo ---
+raiz: list n= 3
+id=4340bf95-9e08-41a4-8da1-f725fc1c2350 performance_date=None venue=None songs=60 contig=True updated_at=2026-08-29T19:43:10.287+00:00 created_at=2026-08-08T20:01:30.217+00:00 name.len=17
+id=00c2c1f4-4d20-4bfd-a152-7ae8e1a27c4f performance_date=None venue=None songs=8 contig=True updated_at=2026-08-08T20:01:24.728+00:00 created_at=2026-08-08T20:01:24.728+00:00 name.len=20
+id=8c4413d9-4c10-4691-b352-25a397cae2e3 performance_date=None venue=None songs=1 contig=True updated_at=2026-08-08T20:01:23.522+00:00 created_at=2026-08-08T20:01:23.522+00:00 name.len=13
+setlist_songs.id do primeiro item de cada setlist: ['39dc91b1-0bf6-4d1d-afee-a8f36a2ff02e', '879f60d4-af70-4104-91c9-8afaba2397a3', 'ff37eb87-f1b5-4231-a8bd-ef9029fd0003']

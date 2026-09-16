@@ -1,0 +1,59 @@
+# A0 — preparação (rastro bruto, N2 pre-check Fase A, 2026-09-16)
+
+$ git rev-parse origin/main
+9e14042b95d09c56b77afa7a8a2439d798c96127
+[exit 0]
+
+$ git rev-parse HEAD
+9e14042b95d09c56b77afa7a8a2439d798c96127
+[exit 0]
+
+$ git branch --show-current
+n2/precheck
+[exit 0]
+
+$ git worktree list
+/Users/marcelviana/projects/octavia     cbff070 [main]
+/Users/marcelviana/projects/octavia-n2  9e14042 [n2/precheck]
+[exit 0]
+
+$ grep -rhoE 'div\. ?1[4-9][0-9]' docs | sort | uniq -c
+   6 div. 140
+   8 div. 141
+   5 div. 142
+   1 div. 143
+[exit 0]
+
+$ sed -n 142p docs/native/W3-ENCERRAMENTO.md
+## 3. As divergências — 140 a 143
+[exit 0]
+
+$ sed -n 230p docs/native/W3-ENCERRAMENTO.md
+### Div. 143 (T) — a saída que o executor jogou fora
+[exit 0]
+
+$ sed -n 13p docs/native/W3-anexos/README.md
+**Divergências desta PR: 140 a 143.** Continuando de 139 (W2).
+[exit 0]
+
+$ grep -rni 'heran' docs/native/W3-ENCERRAMENTO.md docs/native/W3-anexos/README.md
+[exit 1]
+
+$ grep -n '^[0-9]*\. \*\*' docs/native/W3-ENCERRAMENTO.md
+288:1. **A div. 83 foi decidida sobre um G3 que exigia linhas IDÊNTICAS** (V1-PR6).
+290:2. **O W1 trocou "idênticas" por "⊆ com errata declarada".** Desde então, linha
+293:3. **O único caminho de reprovação por comentário que sobra é o SUMIU** da div.
+295:4. **Com a W3, esse SUMIU bloqueia merge.** E o único remédio que o script
+298:5. **A premissa da 83** — *"quem escreveu a frase é quem recebe a acusação, no
+393:1. **Cobertura.** O invólucro roda o gate como subprocesso, que não instrumenta
+399:2. **Proteção de branch** (§6) — ação do Marcel.
+400:3. **A opção C / `T₁`** — `n = 0` de rede real. Não anda por uma PR existir.
+401:4. **A div. 108** — o `StageScreen.tsx` voltou à cobertura do G1a, mas quem
+404:5. **O G8** (gate de dump, pre-check da W2 §3) — não estava na lista fechada.
+405:6. **O `parcial.delete()` fora do `try`** — o item 4 usa esse caminho para
+408:7. **B8.1 — o APK re-roda em push só de docs, agora com preço.** É a mesma
+427:8. **A proposta de revisão da div. 83** (§3a) — pendente, para PR própria, se
+429:9. **A div. 143** — o teste que falhou uma vez em sete não tem nome. Se
+431:10. **O `W2-ENCERRAMENTO.md`** — **escrito nesta PR**, fora de ordem e declarado
+[exit 0]
+
