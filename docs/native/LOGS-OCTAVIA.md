@@ -442,6 +442,22 @@ lado escolhido e o porquê. Um anexo de PR antiga não é onde alguém vai procu
 mediana; onde não houver, "medido uma vez", escrito assim. O bloco V1 aplicou isto ao custo
 do CI (faixa de 12 runs) e ao A17 do Tab S6 (três leituras, cada uma com o seu `n`).
 
+**Passo, job e run são três números — e o relógio de quem acompanha é um quarto, que não
+é nenhum dos três.** (W3, 2026-09-16.) Citar um pelo outro é erro **recorrente** neste
+projeto, e cada ocorrência foi de um par diferente:
+
+| onde | o que se leu | o que era | diferença |
+|---|---|---|---|
+| V1-PR5, sobre a V1-PR3 | 13m18s como **Gradle** (passo) | o **job**; o `assembleDebug` foi 11m34s | 1m44s |
+| V1-PR5, na faixa proposta | 7m48s como **job** | o **passo** Gradle do run mais rápido; o job foi 9m16s | 1m28s |
+| W3, a 17ª corrida | 13m10s como duração | **o relógio do polling**; o job foi 12m53s e o run 12m57s | 17s |
+
+**A população da faixa é de JOB** (`android-debug-apk`, `startedAt → completedAt`). O
+run inclui fila e setup do runner; o passo exclui checkout, install e prebuild; o
+relógio de quem acompanha inclui o intervalo do próprio polling. Todo número de CI
+citado neste projeto vem **com o nível ao lado**, e dos **carimbos**, nunca do
+acompanhamento.
+
 **E a faixa serve para mais do que dizer o custo — ela diz o que é ESTRANHO.** (W1,
 2026-09-14.) Com a PR do W1 aberta, o gate de APK reprovou em **27 s**, contra a faixa de
 **9m16s–14m11s (n=12)**: a falha era do `setup-android`, não do código, e foi o "fora da

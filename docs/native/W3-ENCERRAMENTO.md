@@ -1,6 +1,6 @@
 # W3 — ENCERRAMENTO
 
-**A fonte do bloco.** Uma PR (`w3/gates-no-ci`, #305), oito commits, sem tela,
+**A fonte do bloco.** Uma PR (`w3/gates-no-ci`, #305), nove commits, sem tela,
 sem aparelho, sem emulador. O que ela fez: **os gates deixaram de só medir**.
 
 Os dois últimos commits vieram **depois** de a PR estar aberta e verde, antes do
@@ -227,7 +227,7 @@ deram 0, **inclusive a do `78e8e6e`**, que tem menções obrigatoriamente. Esse 
 foi o controle negativo que denunciou o instrumento — a regra 4 funcionando no
 meio de uma medição sobre a regra 5. (Anexo A §6.)
 
-### Div. 143 (T) — uma suíte vermelha cuja saída foi jogada fora
+### Div. 143 (T) — a saída que o executor jogou fora
 
 Na varredura de gates do commit `2ffa3cf`, **uma corrida de `pnpm test` saiu com
 exit 1**, e a saída dela tinha ido para `/dev/null`. **Não se sabe qual teste
@@ -238,12 +238,17 @@ sozinhas, duas sob carga concorrente de `tsc` e `lint`:
 1 vermelha em 7 · teste desconhecido · não reproduzida em 6 tentativas
 ```
 
-A suspeita são os testes de tempo (`tests/performance/…`, *"<100ms
-requirement"*), mas **suspeita não é medição**, e isto não vai registrado como
-"flaky". O erro de instrumento é do executor: **gate cuja saída se joga fora não
-deixa ninguém desconfiar dele** — a regra 4 na forma do W1 (*todo gate deve
-imprimir o tamanho do que leu*), com um corolário: **e quem o roda deve guardar o
-que ele imprimiu.** Daqui em diante, toda corrida da suíte guarda a saída.
+**Não vai registrada como "teste instável".** Essa seria a conclusão confortável,
+e não tem base: a suspeita recai sobre os testes de tempo (`tests/performance/…`,
+*"<100ms requirement"*), mas suspeita não é medição. O erro é de instrumento, e
+é do executor.
+
+**É a regra 0 pelo avesso.** A regra 0 é sobre o instrumento que **não viu** — o
+dump que devolve `text=""` onde há texto. Aqui o instrumento **viu**: a suíte
+imprimiu o nome do teste que falhou. Quem jogou fora o que ele viu foi quem o
+rodou. O corolário, que completa a regra do W1 (*todo gate deve imprimir o
+tamanho do que leu*): **e quem o roda guarda o que ele imprimiu.** Desde a
+varredura seguinte, toda saída de gate e de suíte desta PR foi guardada.
 
 ---
 
@@ -439,6 +444,7 @@ decide por dentro se pula o build — não o filtro de paths.)
 | worktree | `../octavia-w3`, nascido **sem** `.env*` |
 | branches criadas | 2 — `w3/gates-no-ci` e `w3/cn-ci` (esta, apagada) |
 | PRs abertas | 2 — a **#305** (a da W3) e a **#304**, fechada sem merge |
+| APKs gastos com push só de docs | **3** — a 17ª, a 18ª e a 19ª (esta última pela tabela das retidas, §8) |
 | commits temporários locais | 3, para controles negativos — `a3b1a5b`, um segundo cujo sha não foi registrado (o CN do conserto do commit 1), e `78ff532` (o da decisão b) —, todos desfeitos, nenhum enviado |
 
 **CI do `native.yml`**, com a 15ª corrida (a da #303, `pull_request`, **12m37s**):
@@ -456,39 +462,56 @@ A corrida do `native.yml` na PR **#304** **não entra na população**: a branch
 artificial e foi apagada (e o job foi cancelado pelo `--delete-branch`, com o
 `Type-check apps/native` já concluído em verde, que era o que interessava).
 
-### A 16ª existe, está medida, e fica RETIDA
+### As três corridas RETIDAS — escritas aqui, para não se perderem
 
 Pelo precedente do W1 — *"o encerramento do W1 segurou a corrida da própria #301
-de propósito, pelo regresso"* —, o bloco não incorpora a sua própria corrida.
-Mas o número fica **escrito aqui**, para que o próximo não precise cavar:
+de propósito, pelo regresso"* —, o bloco não incorpora as corridas da própria
+PR. **O próximo bloco as incorpora.** Até lá, elas moram aqui, com o número do
+run, e não em memória de sessão: três pontos de uma população de 18 fora do
+repositório seria a div. 110 — achado que existe e não se relê.
+
+| ordem | run | commit | o que disparou | `android-debug-apk` (job) | duração |
+|---|---|---|---|---|---|
+| **16ª** | `35045454235` | `440aa1a` | a abertura da #305 | 01:47:25Z → 01:57:09Z | **9m44s** |
+| **17ª** | `35046199666` | `f70d988` | push **só de docs** | 01:59:06Z → 02:11:59Z | **12m53s** |
+| **18ª** | `35094310127` | `712f054` | push **só de docs** | 12:10:32Z → 12:23:24Z | **12m52s** |
+
+Todas `pull_request`, todas `success`, todas `v4`. Durações pelos carimbos do
+**job**, que é o nível da população (ver a linha sobre níveis no
+`LOGS-OCTAVIA.md`).
+
+**Se as três entrarem**: `n=18 · piso 9m16s · teto 14m11s · mediana 11m54s ·
+média 11m43s` — com `n` par, a mediana é a média do 9º e do 10º valores (11m53s e
+11m55s). Extremos intactos pela 18ª vez. O corte vai a **v3 (n=12) + v4 (n=6)**.
+
+Parciais, para quem conferir: com a 16ª só, `n=16 · mediana 11m49s`; com a 16ª e
+a 17ª, `n=17 · mediana 11m53s` (o 9º valor). *(Correção feita na sessão: a
+primeira conta da 17ª deu "13m10s" e "mediana 11m49s". O 13m10s não é nem o job
+nem o run — o run foi 12m57s —; saiu do relógio de quem acompanhava a corrida. O
+11m49s aplicou a fórmula de `n` par a um `n` ímpar, o mesmo erro de paridade que
+a sessão da W2 corrigiu no dela.)*
+
+**A 17ª e a 18ª são também o preço do B8.1** (dívida 7): 12m53s e 12m52s de APK
+para dois pushes que não tocaram `apps/native/**`.
+
+### O custo de escrever esta tabela — declarado
+
+**Escrevê-la custa mais um APK.** O push que a traz toca só
+`docs/native/W3-ENCERRAMENTO.md` e o `LOGS-OCTAVIA.md`, e ainda assim dispara o
+`native.yml` inteiro (~12–13 min), pelo B8.1. A decisão, do Marcel: *perder três
+pontos de uma população de 18 custa mais que doze minutos de CI.* O B8.1 se
+pagando — não gastar APK à toa — tinha levado a deixá-las fora; **três medições
+é o limite** dessa economia.
+
+**E a corrida desse push é a 19ª**, que por construção não pode estar nesta
+tabela. Ela não fica só em memória: o próximo bloco a encontra — e confere as três
+acima — com
 
 ```
-run 35045454235 · PR #305 (a desta W3) · pull_request
-  android-debug-apk  success  2026-09-16T01:47:25Z -> 2026-09-16T01:57:09Z
-  => 9m44s
+gh run list --workflow=native.yml --branch w3/gates-no-ci --event pull_request \
+  --json databaseId,headSha,conclusion
+gh run view <id> --json jobs --jq '.jobs[] | "\(.startedAt) -> \(.completedAt)"'
 ```
-
-**Se entrar**: `n=16 · piso 9m16s · teto 14m11s · mediana 11m49s · média 11m34s`.
-Extremos intactos pela 16ª vez; a mediana volta a 11m49s — **terceira
-confirmação seguida** da previsão de paridade que a W2 escreveu. E é a **quarta
-corrida de `v4`** (`v3 n=12 + v4 n=4`), a mais rápida das quatro e a 3ª mais
-rápida de todas: segue sendo evidência contra *"o v4 é sistematicamente
-diferente"*.
-
-### A 17ª também existe, e também fica retida
-
-```
-run 35046199666 · PR #305 · pull_request · o push SÓ DE DOCS (f70d988)
-  android-debug-apk  success  2026-09-16T01:59:06Z -> 2026-09-16T02:11:59Z
-  => 12m53s   (dentro da faixa; é o preço do B8.1, dívida 7)
-```
-
-**Se as duas retidas entrarem**: `n=17 · piso 9m16s · teto 14m11s · mediana
-11m53s · média 11m39s`. Com `n` ímpar a mediana é o 9º valor. *(Correção: a
-primeira conta desta 17ª, feita na sessão, deu "13m10s" e "mediana 11m49s". O
-13m10s saiu do relógio de quem acompanhava a corrida, não dos carimbos do job;
-o 11m49s aplicou a fórmula de `n` par a um `n` ímpar — o mesmo erro de paridade
-que a sessão da W2 corrigiu no dela. Os números acima são dos carimbos.)*
 
 ### O custo do job novo
 
