@@ -266,8 +266,8 @@ perigoso: um instrumento que mede **mais** do que a coisa medida.
 | 16 | **div. 128** (W2) | o **G3**: as linhas `log(` de `apps/native/src` e `packages/core/src` — **54** | "o catálogo de observabilidade está protegido; nenhuma linha some em silêncio". O `App.tsx` mora **um nível acima de `src/`**, e dentro dele vivem **três** linhas do catálogo: `login-screen` (que prova o A5), `auth uid=… src=…` (A1 e A5) e `download-error` (A13, W1-A4). População certa: **57**. O controle negativo: apagar `log('login-screen')` e o gate responder *"nenhuma linha sumiu ✓"* |
 | 17 | **div. 130** (W2) | o **`gate:a20`**: LITERAL em posição de texto | "o aceite A20 está cumprido — nenhum texto de UI em inglês". O que chegava à tela do músico no S3e era texto de UI em inglês que **não é literal**: é valor de tempo de execução, vindo da biblioteca. **Nenhum escopo alcança**, nem `apps/native` inteiro. É o par estrutural do 11 e do 12 (escopo declarado), mas com uma diferença que o torna pior: ali o escopo era *menor*; aqui é de **outra natureza** |
 | 18 | **div. 139** (W2) | o **`uiautomator dump`**: o nó acessível, com o `text` que o Android expõe | "o que está na tela". O `<Text>` de várias linhas do `download-erro` volta do dump com **`text=""`** e só os `bounds` — então a varredura de inglês sobre os dumps do ANTES acusa as **mesmas 4** cadeias do DEPOIS e **não vê** a frase de 4 linhas que é o objeto inteiro da div. 125. Quem a viu foi a **captura de tela** e o **logcat**. É o 13 uma volta adiante: lá o dump media o nó e não o desenho; aqui ele **não mede nem o nó** |
-
-| 19 | **div. 140** (W3) | o **coletor do G2/G3**: `testID="…"` e `log(` no texto **CRU** do arquivo — comentário incluído | "as populações do antes e do depois são o código". A W2 viu a metade inofensiva disto (div. 136: uma menção em comentário contada como `testID` NOVO) e a chamou de falso positivo. A W3 mediu a outra: assim que a menção entra na população do **ANTES**, editar o comentário a faz SUMIR, e o G2 reprova por *"testID SUMIU"* e o G3 por *"linha sumiu SEM ERRATA"* — **sem que uma linha de código tenha mudado**. É o **segundo caso do padrão pelo avesso**, e o primeiro num gate de verdade: o instrumento mede **MAIS** do que o critério, não menos |
+| 19 | **div. 140** (W3) | o **coletor do G2**: `testID="…"` no texto **CRU** do arquivo — comentário incluído | "as populações do antes e do depois são o código". A W2 viu a metade barata disto (div. 136: uma menção em comentário contada como `testID` NOVO) e a chamou de falso positivo. A W3 mediu a outra: com a menção na **BASE**, editar o comentário a faz SUMIR e o G2 reprova por *"testID SUMIU"* **sem que uma linha de código tenha mudado**. O G2 passou a ler sem comentário. **O G3 tem o mesmo mecanismo e NÃO foi mudado, de propósito** — div. 83, ver a regra 5. É o **segundo caso do padrão pelo avesso**: o instrumento mede **MAIS** do que o critério, não menos |
+| 20 | **div. 142** (W3) | o **`V1-ENCERRAMENTO.md` §11**, item B8.3: *"a razão está escrita no próprio comentário do `g2g3.sh`"* | "quem mexer no gate vai encontrar a razão da div. 83 onde mexe". Medido nas quatro versões do `g2g3.sh` (`cf9e229`, `c25db8c`, `7630c4e`, `78e8e6e`): **ela nunca esteve lá.** Morava só em `V1-PR6-anexos/README.md`. A W3 leu o script inteiro, não achou razão nenhuma, e desfez a decisão — que é exatamente o que o aviso existia para impedir. **Variante nova do padrão**: não é instrumento que mede menos do que se supõe; é **REGISTRO QUE APONTA PARA ONDE A RAZÃO NÃO ESTÁ**. Consertado na W3: a razão passou a morar no cabeçalho do `g2g3.sh` |
 
 > **O 19 é o 15 outra vez, e a segunda vez muda o que a primeira parecia ser.** Quando o
 > 15 apareceu, o texto acima o chamou de *"a primeira vez no projeto em que o instrumento
@@ -275,15 +275,21 @@ perigoso: um instrumento que mede **mais** do que a coisa medida.
 > teste. Com o 19 vira outra coisa: **um instrumento que lê texto bruto mede sempre um
 > SUPERCONJUNTO do que afirma medir**, e a única pergunta é se o excesso já encostou em
 > alguma coisa. No 15 o excesso fez acreditar; aqui ele faz **duvidar** — reprovação sem
-> causa, que é o jeito mais rápido de um gate perder autoridade. As duas direções do erro
-> têm o mesmo remédio, e ele é o de sempre: **plantar o defeito e ver o instrumento
-> reagir**, nas DUAS direções — o que aparece quando não devia, e o que some quando
-> ninguém mexeu.
+> causa, que é o jeito mais rápido de um gate perder autoridade.
 >
-> E há uma lição de recorte, **promovida a regra pelo Marcel no aval da W3 (2026-09-15)**:
-> a W2 achou a div. 136, julgou-a inofensiva **na direção em que a viu**, e contornou.
-> Estava certa sobre aquela direção e o contorno custou uma linha. O que faltou não foi
-> diligência — foi a pergunta *"e se isto estivesse na BASE?"*. É a **regra 5**, abaixo.
+> **E o 19 não se conserta do mesmo jeito em todo gate.** O G2 e o G3 têm o mesmo coletor
+> e o mesmo superconjunto, e só o G2 mudou. No G3 o excesso é **o lado do erro que a div.
+> 83 escolheu**: num gate de invariância, falar demais custa uma errata; calar deixa uma
+> linha de log sumir. Saber para que lado um instrumento erra não obriga a corrigi-lo —
+> obriga a **decidir**, e a escrever a decisão.
+
+> **O 20 é o par do 19, e é o mais barato de evitar de toda a tabela.** A decisão da 83
+> existia, estava bem argumentada, e havia até um aviso apontando para ela. O aviso
+> apontava para o lugar errado. Quem chegou ao `g2g3.sh` seguiu o mapa, não achou a
+> razão, e concluiu que não havia razão. **Registro que aponta para onde a razão não está
+> é pior do que registro nenhum**: sem ele, a pergunta "por que o G3 não tira comentário?"
+> ficaria aberta; com ele, a busca termina num arquivo que parece confirmar que ninguém
+> pensou nisso.
 
 > **A variante do 14, e por que ela merece nome próprio.** O caso 8 (div. 71) era o script
 > documentando a própria cegueira numa nota que ninguém leu. Este é um grau além: **a
@@ -400,30 +406,35 @@ Duas ocorrências em dois dias, com instrumentos diferentes (Metro, `git`), bast
 tratar isto como classe e não como anedota: **todo gate deve imprimir o TAMANHO do que
 leu, não só o veredito.** O G2, o G3 e o G1a já imprimem; é para isso que serve.
 
-**5. Todo achado de coletor tem DUAS direções, e a barata é a que se vê primeiro.**
-(Origem: div. 136, W2, e div. 140, W3. *Promovida pelo Marcel no aval da W3, 2026-09-15.*)
+**5. Todo achado de coletor tem DUAS direções, e a barata é a que se vê primeiro — e
+escolher uma direção pode ser a decisão certa, mas então ela precisa estar onde quem
+mexe no gate vai ler.** (Origem: div. 83, V1-PR6; div. 136, W2; div. 140 e 142, W3.
+*Redação do Marcel, aval da W3, 2026-09-16.*)
+
 Quem percebe que um coletor conta a mais tem duas perguntas a fazer, não uma:
 
-> **o que APARECE quando não devia** — barato: ruído no relatório, veredito intacto;
+> **o que APARECE quando não devia** — barato: ruído no relatório;
 > **o que SOME quando ninguém mexeu** — caro: REPROVAÇÃO FALSA.
 
-A W2 fez a primeira e parou: uma menção a `testID="…"` dentro de comentário do `files.ts`
-apareceu como "testID NOVO", o G2 é `antes ⊆ depois`, logo o veredito não mudou —
-tudo certo, e o contorno custou uma linha de documentação reescrita. A W3 fez a
-segunda, e a resposta foi outra: **com a mesma menção na BASE, apagar o comentário deixa
-o G2 e o G3 vermelhos sem que uma linha de código mude.** Medido:
+**Três ocorrências, e a primeira ESCOLHEU UM LADO DE PROPÓSITO:**
 
-```
-G2 — testIDs  antes=44  depois=43     G2: testID SUMIU ✗
-G3 — linhas log( antes=58  depois=57  G3: linha sumiu SEM ERRATA ✗   exit=1
-```
+| div. | bloco | o que se viu | o que se fez |
+|---|---|---|---|
+| **83** | V1-PR6 | o G3 contou uma frase de comentário como linha `log(` nova | **decidiu-se não consertar**: gate de invariância erra para o lado de falar demais |
+| **136** | W2 | o G2 contou uma menção em comentário como `testID` NOVO | contornado; "falso positivo, veredito intacto" — a direção barata |
+| **140** | W3 | com a menção na BASE, apagar o comentário reprova o G2 **sem código mudar** | o G2 passou a ler sem comentário — a direção cara |
 
-O que torna isto regra e não anedota é a assimetria de CUSTO entre as duas direções, e ela
-é estrutural: a direção barata é a que o instrumento te MOSTRA (a menção aparece na saída,
-em "NOVOS"), e a direção cara é a que só aparece **uma PR depois**, quando a população
-envenenada já é a BASE de outra pessoa. Um gate que reprova sem causa é o jeito mais
-rápido de perder autoridade — e o remédio é o mesmo de sempre, a regra 4 aplicada nas duas
-direções: **plantar o defeito e ver o instrumento reagir**.
+A assimetria de custo é estrutural: a direção barata é a que o instrumento te MOSTRA (a
+menção aparece na saída), e a cara só aparece **uma PR depois**, quando a população
+envenenada já é a BASE de outra pessoa. O remédio é a regra 4 nas duas direções:
+**plantar o defeito e ver o instrumento reagir**.
+
+**A segunda metade da regra é a que a div. 142 ensinou, e é a que mais custou.** A div. 83
+fez tudo certo — perguntou, escolheu, argumentou — e mesmo assim a W3 a desfez, porque a
+razão não estava onde quem mexe no gate lê. **Uma decisão de deixar um instrumento errar
+é uma decisão sobre o instrumento, e mora NO instrumento**: no cabeçalho do script, com o
+lado escolhido e o porquê. Um anexo de PR antiga não é onde alguém vai procurar antes de
+"consertar".
 
 ### A regra de método que o padrão implica
 

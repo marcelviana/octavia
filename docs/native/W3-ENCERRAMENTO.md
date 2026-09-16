@@ -1,7 +1,13 @@
 # W3 — ENCERRAMENTO
 
-**A fonte do bloco.** Uma PR (`w3/gates-no-ci`), cinco commits, sem tela, sem
-aparelho, sem emulador. O que ela fez: **os gates deixaram de só medir**.
+**A fonte do bloco.** Uma PR (`w3/gates-no-ci`, #305), oito commits, sem tela,
+sem aparelho, sem emulador. O que ela fez: **os gates deixaram de só medir**.
+
+Os dois últimos commits vieram **depois** de a PR estar aberta e verde, antes do
+merge. Na revisão apareceu que o commit 1 tinha desfeito uma decisão do Marcel
+(div. 83) sem citá-la, e que o registro que devia impedir isso apontava para o
+lugar errado (div. 142). §3a conta o que foi revertido e o que ficou pendente.
+No mesmo commit entra o `W2-ENCERRAMENTO.md`, que a W2 não teve.
 
 > **O GATE MEDE, O GATE NÃO IMPEDE.**
 > A disciplina do projeto é real e está medida em todas as PRs — e é exatamente
@@ -112,13 +118,28 @@ dos dois existia dez commits atrás.
 para no primeiro passo vermelho. É comportamento certo e fica registrado para
 quem ler o log e estranhar a ausência.
 
-**Custo**: **13 segundos** para os dois gates diferenciais. A previsão escrita
-no anexo D (*"bem abaixo de 1 min"*) era [hipótese]; passa a ser medição, com
-`n = 1`.
+### O custo — e a resposta para quem, daqui a um ano, propuser tirar o job
+
+> **O `gates-nativos` roda em 8 SEGUNDOS, e reprova.**
+
+```
+w3/cn-ci  192b954  (reprovando)  01:39:02Z -> 01:39:15Z   13 s
+#305      440aa1a  (passando)    01:47:25Z -> 01:47:34Z    9 s
+#305      f70d988  (passando)    01:59:06Z -> 01:59:14Z    8 s
+```
+
+**Faixa: 8–13 s, `n = 3`.** No mesmo relógio de parede, o `build` leva ~3 min e o
+APK leva 9m44s–12m53s. O job termina antes de o `pnpm install` do `build`
+acabar: **o gate diferencial roda praticamente de graça**. Quem propuser tirá-lo
+do CI por custo está propondo economizar oito segundos, e o preço é a div. 129
+de volta — o G1a e o G2/G3 voltando a ser comando de mão.
+
+A previsão do anexo D (*"bem abaixo de 1 min"*) era `[hipótese]`. Agora é medição,
+com o `n` escrito ao lado, porque **uma medição não vira referência sem `n`**.
 
 ---
 
-## 3. As divergências — 140 e 141
+## 3. As divergências — 140 a 143
 
 ### Div. 140 (T) — a div. 136 é pior do que a W2 viu
 
@@ -126,7 +147,8 @@ Não é falso positivo inerte: é **REPROVAÇÃO FALSA**. Uma menção a `testID
 ou a uma chamada de log **dentro de comentário** entrava na população do
 coletor. A W2 viu a direção barata (aparece como "testID NOVO", veredito
 intacto) e contornou. A W3 mediu a cara — com a menção na BASE, **apagar o
-comentário deixa o G2 e o G3 vermelhos sem que uma linha de código mude**:
+comentário deixa o G2 e o G3 vermelhos sem que uma linha de código mude**
+(medido com o coletor de antes da W3):
 
 ```
 G2 — testIDs  antes=44  depois=43     G2: testID SUMIU ✗
@@ -140,10 +162,15 @@ faz **duvidar**. Quando o 15 apareceu, o catálogo o chamou de "primeira vez" e
 tratou a generosidade como acidente de duplo de teste. Com o 19, não é acidente:
 é propriedade de quem lê texto bruto.
 
-Daí a **regra 5** do catálogo, promovida pelo Marcel: *todo achado de coletor
-tem duas direções, e a barata é a que se vê primeiro*. A assimetria de custo é
-estrutural — a direção barata é a que o instrumento te MOSTRA; a cara só aparece
-uma PR depois, quando a população envenenada já é a BASE de outra pessoa.
+**O conserto ficou só no G2.** O G3 tem o mesmo mecanismo e continua lendo o
+texto cru, **de propósito** — div. 83, §3a. No G3 o superconjunto é o lado do erro
+que foi escolhido.
+
+Daí a **regra 5** do catálogo, na redação do Marcel: *todo achado de coletor tem
+duas direções, a barata é a que se vê primeiro — e escolher uma direção pode ser
+a decisão certa, mas então ela precisa estar onde quem mexe no gate vai ler.*
+São **três** ocorrências (83, 136, 140), não duas, e a primeira escolheu um lado
+de propósito.
 
 ### Div. 141 (T) — a lista de exceções do G1a apodrece
 
@@ -164,6 +191,114 @@ G1a: EXCEÇÃO DECLARADA E NÃO USADA — poda isto ANTES do merge (div. 141):
       apps/native/src/files.ts
       apps/native/src/prefetch.ts
 ```
+
+### Div. 142 (D) — o registro que aponta para onde a razão não está
+
+**O achado do dia, e vale mais que o conserto.** O `V1-ENCERRAMENTO.md` §11,
+item B8.3, diz: *"O G3 conta comentário (div. 83). **Não é para consertar** — […]
+a razão está escrita no próprio comentário do `g2g3.sh`. Entra aqui para que
+ninguém 'conserte' sem ler a razão."*
+
+Medido nas quatro versões do `g2g3.sh`:
+
+```
+cf9e229  0 · c25db8c  0 · 7630c4e  0 · 78e8e6e  12   (as doze são da própria W3)
+```
+
+**A razão nunca esteve lá.** Morava só em `V1-PR6-anexos/README.md`, "Div. 83,
+por extenso". A W3 leu o `g2g3.sh` inteiro, não achou razão nenhuma, e desfez a
+decisão. É exatamente o que o aviso existia para impedir.
+
+É o padrão numa **variante nova** — o 20º caso do `LOGS-OCTAVIA.md`: **não é
+instrumento que mede menos do que se supõe; é REGISTRO QUE APONTA PARA ONDE A
+RAZÃO NÃO ESTÁ.** E é pior do que registro nenhum: sem ele, a pergunta *"por que
+o G3 não tira comentário?"* ficaria aberta; com ele, a busca termina num arquivo
+que parece confirmar que ninguém pensou nisso.
+
+**Consertado aqui** (commit `2ffa3cf`): a razão da 83 passou a morar no
+cabeçalho do `g2g3.sh`, onde o encerramento do V1 já dizia que ela estava. O
+`V1-ENCERRAMENTO.md` **não foi editado** — documento congelado se anota por
+cima, não se reescreve (precedente do DESIGN-TELA-1, W2), e a frase dele passou
+a ser verdadeira a partir deste commit.
+
+**Nota de instrumento, da própria medição.** A primeira versão do laço escrevia
+`$c:apps/…`, e o zsh leu `:a` como modificador de caminho: todas as contagens
+deram 0, **inclusive a do `78e8e6e`**, que tem menções obrigatoriamente. Esse 0
+foi o controle negativo que denunciou o instrumento — a regra 4 funcionando no
+meio de uma medição sobre a regra 5. (Anexo A §6.)
+
+### Div. 143 (T) — uma suíte vermelha cuja saída foi jogada fora
+
+Na varredura de gates do commit `2ffa3cf`, **uma corrida de `pnpm test` saiu com
+exit 1**, e a saída dela tinha ido para `/dev/null`. **Não se sabe qual teste
+falhou.** As seis corridas seguintes deram 824 passados, exit 0 — quatro
+sozinhas, duas sob carga concorrente de `tsc` e `lint`:
+
+```
+1 vermelha em 7 · teste desconhecido · não reproduzida em 6 tentativas
+```
+
+A suspeita são os testes de tempo (`tests/performance/…`, *"<100ms
+requirement"*), mas **suspeita não é medição**, e isto não vai registrado como
+"flaky". O erro de instrumento é do executor: **gate cuja saída se joga fora não
+deixa ninguém desconfiar dele** — a regra 4 na forma do W1 (*todo gate deve
+imprimir o tamanho do que leu*), com um corolário: **e quem o roda deve guardar o
+que ele imprimiu.** Daqui em diante, toda corrida da suíte guarda a saída.
+
+---
+
+## 3a. A decisão (b) — o G3 volta ao texto cru
+
+**Decidido pelo Marcel antes do merge, 2026-09-16.** O prompt pedia "o coletor
+do **G2**". O commit 1 estendeu o filtro ao G3 como extra declarado, e chegou a
+escrever no `.awk` que *"o projeto passa a ter UMA regra de comentário"* — a
+unificação que a div. 83 recusa por escrito. O commit `2ffa3cf` reverte isso:
+**filtro só no G2; G3 no texto cru**, e medido como byte a byte igual ao G3 de
+antes da W3.
+
+**A razão, na redação do Marcel, e ela não é "o prompt disse G2":**
+
+> A div. 83 escolheu **um lado do erro de propósito**. Num gate de invariância,
+> falar demais custa uma errata a mais; falar de menos deixa uma linha sumir em
+> silêncio. Reverter isso porque o caminho de reprovação encolheu é **trocar
+> proteção deliberada por conveniência de fluxo**. E o risco que a extensão
+> resolvia é **latente**: zero menções em comentário hoje.
+
+A separação medida (anexo A §6), com a menção na BASE e o comentário apagado:
+
+```
+G2 — testIDs  antes=43  depois=43     G2: antes ⊆ depois ✓
+G3 — linhas log( antes=58  depois=57
+    apps/native/src/files.ts  * CN div. 83/140: menciona … log(`cn-83`) …
+  G3: linha sumiu SEM ERRATA ✗
+```
+
+A acusação do G3 é autoexplicativa: a linha que "sumiu" começa com `*`.
+
+### A proposta de revisão da div. 83 — PENDENTE, e não pode se perder
+
+O argumento da opção (a) tem **fato novo de verdade**, e fica registrado aqui por
+inteiro:
+
+1. **A div. 83 foi decidida sobre um G3 que exigia linhas IDÊNTICAS** (V1-PR6).
+   O incidente que a motivou foi uma linha **NOVA** vinda de comentário.
+2. **O W1 trocou "idênticas" por "⊆ com errata declarada".** Desde então, linha
+   nova **não reprova mais**, só é impressa. O caminho de reprovação que motivou
+   a 83 deixou de existir.
+3. **O único caminho de reprovação por comentário que sobra é o SUMIU** da div.
+   140: menção na BASE, comentário editado depois.
+4. **Com a W3, esse SUMIU bloqueia merge.** E o único remédio que o script
+   oferece é declarar na lista de ERRATAS uma "linha de log" que nunca foi log —
+   uma errata falsa no registro que existe para ser verdadeiro.
+5. **A premissa da 83** — *"quem escreveu a frase é quem recebe a acusação, no
+   mesmo minuto, com o diff na mão"* — **não vale para o SUMIU**: quem edita o
+   comentário pode não ser quem o escreveu, e a acusação chega pelo CI.
+
+**Por que não se decide agora** (Marcel): não numa PR de invólucro, e não por
+quem acabou de descobrir a decisão original. **Se o argumento voltar com caso
+real, revisa-se a 83 por escrito, em PR própria, com o texto dela ao lado.**
+
+---
 
 ---
 
@@ -222,9 +357,29 @@ nesta PR (anexos A §4 e C §5).
 
 **E falta uma coisa que não é código**: sem **proteção de branch**, "o job fica
 vermelho" é informação, não barreira — a div. 129 sobrevive por outra porta.
-Configurar os checks obrigatórios (`build` e `gates-nativos`) é **ação do
-Marcel**, quando esta PR entrar. Enquanto não for feito, o bloco está entregue e
-a barreira não está armada.
+Enquanto não for feito, o bloco está entregue e a barreira não está armada.
+
+### A receita da proteção de branch — ação do Marcel, depois do merge
+
+```
+Settings → Branches → rule para `main`
+  ☑ Require status checks to pass before merging
+      ☑ build
+      ☑ gates-nativos
+  ☑ Require branches to be up to date before merging
+```
+
+**Por que o "up to date"**: sem ele, **um gate verde sobre base velha passa**. O
+`gates-nativos` compara a HEAD do ramo com o ponto de ramificação; se a `main`
+andou depois, o verde foi dado a uma combinação que não é a que vai entrar.
+
+**O cuidado: NÃO marcar `android-debug-apk`.** Ele vem do `native.yml`, que é
+**filtrado por paths**. Numa PR só de docs o workflow não roda, e um check
+obrigatório que nunca roda fica em **"Expected — waiting for status to be
+reported" para sempre** — a PR trava sem que nada tenha falhado. O `build` e o
+`gates-nativos` estão no `ci.yml`, que não tem filtro, e por isso rodam em toda
+PR. (Se um dia o APK precisar ser obrigatório, a saída é um job que sempre roda e
+decide por dentro se pula o build — não o filtro de paths.)
 
 ---
 
@@ -245,8 +400,31 @@ a barreira não está armada.
 6. **O `parcial.delete()` fora do `try`** — o item 4 usa esse caminho para
    *testar* a rede e não o conserta. Pô-lo sob `falha()` daria frase de tela e
    prefixo de nome. Não estava na lista fechada.
-7. **O encerramento da W2** segue não escrito (registrado na memória de sessão,
-   não no repositório).
+7. **B8.1 — o APK re-roda em push só de docs, agora com preço.** É a mesma
+   mecânica que a V1-PR5 mediu e o `V1-ENCERRAMENTO.md` §11 registra (herdada do
+   N1, ainda aberta: *"o rito paga 12 minutos para registrar 12 minutos"*). Num
+   evento `pull_request`, o GitHub avalia o `paths` do `native.yml` contra o
+   **diff acumulado da PR**, não contra o commit novo. Nesta PR:
+
+   ```
+   f70d988  docs(W3) — só docs/native/W3-ENCERRAMENTO.md
+     android-debug-apk  01:59:06Z -> 02:11:59Z   12m53s de APK
+   ```
+
+   **O custo cresce com o número de pushes de revisão, e no rito deste projeto
+   eles são muitos.** Item de bloco futuro. As saídas conhecidas — separar o job
+   de APK do gate; ou condicionar por `paths` no `push` em vez do
+   `pull_request`; ou um job que sempre roda e decide por dentro se compila —
+   são **hipóteses a medir, não palpite a aplicar**. Cada uma muda o que o CI de
+   PR garante, e a escolha depende de medir o que se perde. (O mesmo mecanismo
+   já tinha sido **delimitado** na #300: numa PR que NUNCA tocou `apps/native/**`,
+   o filtro funciona.)
+8. **A proposta de revisão da div. 83** (§3a) — pendente, para PR própria, se
+   voltar com caso real.
+9. **A div. 143** — o teste que falhou uma vez em sete não tem nome. Se
+   reaparecer, a saída já estará guardada.
+10. **O `W2-ENCERRAMENTO.md`** — **escrito nesta PR**, fora de ordem e declarado
+    como tal na abertura dele.
 
 ---
 
@@ -260,7 +438,8 @@ a barreira não está armada.
 | **emulador** | **não usado**: não iniciado, não consultado, não morto |
 | worktree | `../octavia-w3`, nascido **sem** `.env*` |
 | branches criadas | 2 — `w3/gates-no-ci` e `w3/cn-ci` (esta, apagada) |
-| PRs abertas | 2 — a da W3 e a **#304**, fechada sem merge |
+| PRs abertas | 2 — a **#305** (a da W3) e a **#304**, fechada sem merge |
+| commits temporários locais | 3, para controles negativos — `a3b1a5b`, um segundo cujo sha não foi registrado (o CN do conserto do commit 1), e `78ff532` (o da decisão b) —, todos desfeitos, nenhum enviado |
 
 **CI do `native.yml`**, com a 15ª corrida (a da #303, `pull_request`, **12m37s**):
 
@@ -296,17 +475,24 @@ corrida de `v4`** (`v3 n=12 + v4 n=4`), a mais rápida das quatro e a 3ª mais
 rápida de todas: segue sendo evidência contra *"o v4 é sistematicamente
 diferente"*.
 
-### E o custo do job novo, que agora tem `n = 2`
+### A 17ª também existe, e também fica retida
 
 ```
-w3/cn-ci  (reprovando)  01:39:02Z -> 01:39:15Z   13 s
-#305      (passando)    01:47:25Z -> 01:47:34Z    9 s
+run 35046199666 · PR #305 · pull_request · o push SÓ DE DOCS (f70d988)
+  android-debug-apk  success  2026-09-16T01:59:06Z -> 2026-09-16T02:11:59Z
+  => 12m53s   (dentro da faixa; é o preço do B8.1, dívida 7)
 ```
 
-Duas medições, as duas abaixo de 15 s, contra um `build` de 3m06s e um APK de
-9m44s no mesmo relógio de parede. O job `gates-nativos` **não custa tempo de
-PR**: ele termina antes de o `pnpm install` do `build` acabar. `n = 2`, dito
-assim, porque **uma medição não vira referência sem `n`**.
+**Se as duas retidas entrarem**: `n=17 · piso 9m16s · teto 14m11s · mediana
+11m53s · média 11m39s`. Com `n` ímpar a mediana é o 9º valor. *(Correção: a
+primeira conta desta 17ª, feita na sessão, deu "13m10s" e "mediana 11m49s". O
+13m10s saiu do relógio de quem acompanhava a corrida, não dos carimbos do job;
+o 11m49s aplicou a fórmula de `n` par a um `n` ímpar — o mesmo erro de paridade
+que a sessão da W2 corrigiu no dela. Os números acima são dos carimbos.)*
+
+### O custo do job novo
+
+Está no §2, com `n = 3`: **8–13 s**.
 
 **E a corrida verde da #305 fecha o par do §2 no próprio CI**: o mesmo job que
 ficou vermelho com o defeito plantado ficou verde sem ele, e desta vez o **G2/G3

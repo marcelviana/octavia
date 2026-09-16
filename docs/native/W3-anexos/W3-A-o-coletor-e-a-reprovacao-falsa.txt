@@ -1,5 +1,6 @@
 ================================================================================
-W3-A — O COLETOR DO G2/G3: DE FALSO POSITIVO A REPROVAÇÃO FALSA (div. 136, 140)
+W3-A — O COLETOR DO G2: DE FALSO POSITIVO A REPROVAÇÃO FALSA (div. 136, 140)
+     e o do G3, que fica como está de propósito (div. 83, 142)
 ================================================================================
 Rastro de medição. 2026-09-15, worktree `../octavia-w3`, branch `w3/gates-no-ci`.
 
@@ -118,5 +119,77 @@ a mexer é o `sem-comentario.awk`.
 
 A regra do filtro **não é nova**: é a MESMA que o `a20.mjs` aplica desde a
 V1-PR3 ("tira comentários: comentário não é texto de UI"), guarda de esquema de
-URI incluída. O projeto passa a ter uma regra de comentário num lugar só, e não
-duas parecidas em dois.
+URI incluída.
+
+> **ERRATA desta PR, antes do merge (2026-09-16).** Aqui estava escrito: *"O
+> projeto passa a ter uma regra de comentário num lugar só, e não duas parecidas
+> em dois."* **Está errado, e é a frase que a div. 83 existe para impedir.** As
+> duas políticas são DELIBERADAS: gate de conteúdo (`a20`, e agora o G2) tira
+> comentário; gate de invariância (G3) não tira, e erra para o lado de falar
+> demais. Ver §6. A frase fica aqui, riscada por esta nota, porque quem ler o
+> commit 1 vai encontrá-la no `.awk` daquele commit.
+
+--------------------------------------------------------------------------------
+§6. A DECISÃO (b) — O FILTRO FICA SÓ NO G2 (div. 83, 142)
+--------------------------------------------------------------------------------
+Decisão do Marcel antes do merge, 2026-09-16. O commit 1 estendeu o filtro ao
+G3 como extra declarado. Isso desfez, sem citá-la, a div. 83 (V1-PR6):
+
+  `V1-ENCERRAMENTO.md` §11, B8.3 — "O G3 conta comentário (div. 83). Não é para
+  consertar — a decisão do Marcel foi deixá-lo errar para o lado de falar
+  demais, e a razão está escrita no próprio comentário do `g2g3.sh`. Entra aqui
+  para que ninguém 'conserte' sem ler a razão."
+
+DIV. 142 — a razão NÃO estava no `g2g3.sh`. Nas quatro versões do arquivo:
+
+$ for c in cf9e229 c25db8c 7630c4e 78e8e6e; do
+    git show "${c}:apps/native/scripts/g2g3.sh" \
+      | LC_ALL=C grep -c -i -e 'coment' -e 'div\. 83' -e 'falar demais'; done
+  cf9e229  0
+  c25db8c  0
+  7630c4e  0
+  78e8e6e  12      ← as doze são da própria W3
+
+  NOTA DE INSTRUMENTO (regra 4 cumprida no meio do caminho): a primeira versão
+  deste laço escrevia `$c:apps/…`, e o zsh leu `:a` como MODIFICADOR DE
+  CAMINHO — o `git show` nunca recebeu um ref e todas as contagens deram 0,
+  INCLUSIVE a do `78e8e6e`, que obrigatoriamente tem menções. Esse 0 foi o
+  controle negativo que denunciou o instrumento. Os números acima são com
+  `${c}`.
+
+  A razão mora só em `V1-PR6-anexos/README.md`, "Div. 83, por extenso". A W3 a
+  copiou para o cabeçalho do `g2g3.sh` (commit `2ffa3cf`).
+
+AS MEDIÇÕES DE (b):
+
+(1) árvore limpa: G2 43=43 · G3 57=57 · exit 0
+
+(2) o G3 NOVO é o G3 de ANTES da W3, byte a byte. Cópias instrumentadas dos dois
+    scripts (o de `cbff070` e o novo), guardando as populações do antes e do
+    depois; um `log(` plantado em comentário para a comparação não ser trivial:
+      novo:  antes=57 depois=58
+      velho: antes=57 depois=58
+      $ cmp novo.a velho.a && cmp novo.b velho.b
+      CONJUNTOS IDÊNTICOS, byte a byte (antes e depois)
+      apps/native/src/files.ts	* CN div. 83: menciona log(`cn-83`) dentro de comentário.
+
+(3) a separação desenhada — menção a `testID` e a `log(` num comentário da
+    BASE (commit temporário `78ff532`, desfeito com `reset` sem `--hard`),
+    comentário apagado na árvore:
+      G2 — testIDs  antes=43  depois=43
+        G2: antes ⊆ depois ✓
+      G3 — linhas log( antes=58  depois=57
+        linhas que SUMIRAM (cada uma tem de ser errata declarada):
+            apps/native/src/files.ts	* CN div. 83/140: menciona testID="cn-140" e log(`cn-83`) em comentário.
+        G3: linha sumiu SEM ERRATA ✗
+      exit=1
+
+    O G2 deixou de reprovar por comentário (div. 140). O G3 reprova — e esse é
+    o lado que a div. 83 escolheu. Sem código mudado, a acusação é
+    autoexplicativa: a linha que "sumiu" começa com `*`.
+
+(4) o G3 ainda reprova por CÓDIGO — a linha `download-error` do `prefetch.ts`
+    apagada:
+      G3 — linhas log( antes=58  depois=56
+          apps/native/src/prefetch.ts	log(`download-error ${mensagemDe(erro)}`)
+        G3: linha sumiu SEM ERRATA ✗
