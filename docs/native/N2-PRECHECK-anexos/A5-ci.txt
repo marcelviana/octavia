@@ -1,0 +1,205 @@
+# A5 — CI e proteção de branch (rastro bruto, HEAD 9e14042; as duas chamadas gh api são LEITURA do GitHub, não da API do Octavia)
+
+$ ls .github/workflows/
+ci.yml
+native.yml
+[exit 0]
+
+$ cat -n .github/workflows/ci.yml
+     1	# W3 (div. 129): os gates deixam de só medir.
+     2	#
+     3	# Até a W2, `gate:a20`, `gate:icones`, G1, G2/G3 e G7 rodavam quando o executor
+     4	# os rodava, à mão, e o relatório da PR dizia que rodaram. A disciplina do
+     5	# projeto é real e está medida em todas as PRs — e é exatamente por isso que a
+     6	# distinção importa: **o gate mede, o gate não IMPEDE**. Nada barrava a entrada
+     7	# na `main` de um commit que os reprovasse; o que barrava era alguém ter rodado
+     8	# e lido.
+     9	#
+    10	# Onde cada um passa a rodar (a tabela inteira, com o que fica de FORA e por quê,
+    11	# está em `docs/native/W3-anexos/W3-B-os-cinco-gates-e-o-ci.txt`):
+    12	#   • `gate:a20` + CN, `gate:icones` + CN  → `apps/native/test/gates.test.ts`,
+    13	#     dentro do projeto `native` do Vitest, logo dentro do `pnpm test:unit` do
+    14	#     job `build` abaixo. Reprovar = `build` vermelho.
+    15	#   • G7 (árvore de trabalho)              → já rodava: ele É
+    16	#     `vitest run --project native`, um subconjunto do mesmo `pnpm test:unit`.
+    17	#   • G1a/G1b e G2/G3                      → o job `gates-nativos` daqui. São
+    18	#     gates DIFERENCIAIS: a verdade deles é um PAR de refs git, não uma árvore.
+    19	#     Não cabem num `it` (um teste não sabe qual é a BASE da PR) e precisam do
+    20	#     histórico inteiro — por isso job próprio, com `fetch-depth: 0`.
+    21	#   • os CN de G1/G2/G3/G7                 → FORA, e declarado: os do G1/G2/G3
+    22	#     exigem um par de refs fabricado, e o do G7 TROCA arquivo da árvore de
+    23	#     trabalho para rodar o código de ontem contra as asserções de hoje. Um job
+    24	#     que muta a própria árvore para provar um ponto é instrumento de mão.
+    25	name: CI
+    26	'on':
+    27	  push:
+    28	    branches:
+    29	    - main
+    30	  pull_request: null
+    31	jobs:
+    32	  # Os dois gates DIFERENCIAIS. Custam segundos: é `sh`, `git` e `awk`, sem
+    33	  # `pnpm install`, sem build. Não têm filtro de caminho de propósito — o
+    34	  # escopo do G2/G3 inclui `packages/core/src`, que o `native.yml` não cobre, e
+    35	  # numa PR que não toca o nativo os dois passam num diff vazio.
+    36	  gates-nativos:
+    37	    runs-on: ubuntu-latest
+    38	    steps:
+    39	    - uses: actions/checkout@v4
+    40	      with:
+    41	        # O histórico inteiro: sem ele não há `merge-base`, e sem `merge-base`
+    42	        # não há par. E a HEAD é a do RAMO, não o merge commit que o
+    43	        # `actions/checkout` monta por default — senão o que voltou da `main`
+    44	        # depois do ponto de ramificação apareceria como diff desta PR.
+    45	        fetch-depth: 0
+    46	        ref: ${{ github.event.pull_request.head.sha || github.sha }}
+    47	    - name: A BASE do par — o ponto de ramificação
+    48	      run: |
+    49	        set -e
+    50	        ALVO="${{ github.event.pull_request.base.sha }}"
+    51	        if [ -z "$ALVO" ]; then ALVO=$(git rev-parse HEAD~1); fi
+    52	        BASE=$(git merge-base "$ALVO" HEAD)
+    53	        echo "BASE=$BASE" >> "$GITHUB_ENV"
+    54	        echo "base=$BASE  head=$(git rev-parse HEAD)"
+    55	    - name: G1a/G1b — invariância de comportamento e de decisão
+    56	      run: sh apps/native/scripts/g1.sh "$BASE" WORKTREE
+    57	    - name: G2/G3 — testIDs antes ⊆ depois, linhas de log com errata declarada
+    58	      run: sh apps/native/scripts/g2g3.sh "$BASE" WORKTREE
+    59	
+    60	  build:
+    61	    runs-on: ubuntu-latest
+    62	    steps:
+    63	    - uses: actions/checkout@v4
+    64	    - uses: pnpm/action-setup@v4
+    65	    - uses: actions/setup-node@v4
+    66	      with:
+    67	        node-version: 22
+    68	        cache: pnpm
+    69	    - name: Install dependencies
+    70	      run: pnpm install --frozen-lockfile
+    71	    - name: Lint
+    72	      run: pnpm lint
+    73	    - name: Type-check dos testes (informativo — zerar o passivo e promover a bloqueante, PLANO-TRANSICAO B8)
+    74	      run: pnpm exec tsc -p tsconfig.test.json --noEmit
+    75	      continue-on-error: true
+    76	    - name: Type-check packages/core
+    77	      run: pnpm exec tsc -p packages/core/tsconfig.json --noEmit
+    78	    # Aqui dentro correm o `gate:a20`, o `gate:icones` e os CN dos dois
+    79	    # (`apps/native/test/gates.test.ts`), e o G7 sobre a árvore de trabalho.
+    80	    # Este passo NÃO tem `continue-on-error`: um gate que reprova reprova o job.
+    81	    - name: Test — a suíte, e com ela os gates embrulhados (W3, div. 129)
+    82	      run: pnpm test:unit
+    83	    - name: Test coverage
+    84	      run: pnpm test:ci
+    85	    - name: Upload coverage to Codecov
+    86	      if: always()
+    87	      uses: codecov/codecov-action@v4
+    88	      with:
+    89	        file: ./coverage/coverage-final.json
+    90	        flags: unittests
+    91	        name: codecov-umbrella
+    92	        fail_ci_if_error: false
+    93	        verbose: true
+    94	    - name: Upload coverage artifacts
+    95	      if: always()
+    96	      uses: actions/upload-artifact@v4
+    97	      with:
+    98	        name: coverage
+    99	        path: coverage
+   100	    - name: Build
+   101	      run: pnpm build
+[exit 0]
+
+$ cat -n .github/workflows/native.yml
+     1	# N0-PR2 (N0-PRECHECK C4-2): build verificável do nativo por PR — APK de debug local, sem EAS, sem segredo.
+     2	# Só roda quando o nativo muda (filtro de paths); PRs de web ou de core não o executam.
+     3	# Recorte da N1-PR8 (decisão do Marcel, 2026-09-10, N1-h3): `packages/core/**` e
+     4	# `pnpm-lock.yaml` saíram do filtro. O gate custou 10m15s–14m15s nas sete medições do
+     5	# N1 (mediana ~11m45s), acima dos ~9 min aceitáveis, e mudança só de core já é coberta
+     6	# pelo `build` (que roda o `pnpm test` inteiro, incluindo o projeto `core`). O que o
+     7	# APK de fato depende — `apps/native/**`, o próprio workflow e o `pnpm-workspace.yaml` —
+     8	# continua disparando.
+     9	name: native
+    10	'on':
+    11	  pull_request:
+    12	    paths:
+    13	    - apps/native/**
+    14	    - .github/workflows/native.yml
+    15	    - pnpm-workspace.yaml
+    16	  push:
+    17	    branches:
+    18	    - main
+    19	    paths:
+    20	    - apps/native/**
+    21	    - .github/workflows/native.yml
+    22	    - pnpm-workspace.yaml
+    23	env:
+    24	  EXPO_NO_TELEMETRY: '1'
+    25	  CI: '1'
+    26	jobs:
+    27	  android-debug-apk:
+    28	    runs-on: ubuntu-latest
+    29	    steps:
+    30	    - uses: actions/checkout@v4
+    31	    - uses: pnpm/action-setup@v4
+    32	    - uses: actions/setup-node@v4
+    33	      with:
+    34	        node-version: 22
+    35	        cache: pnpm
+    36	    - uses: actions/setup-java@v4
+    37	      with:
+    38	        distribution: temurin
+    39	        java-version: 17
+    40	    # Bump para v4 + `packages` explícito (2026-09-14). O `v3` com o default
+    41	    # `tools platform-tools` passou a reprovar em ~27 s no `sdkmanager`
+    42	    # (`Failed to find package 'tools'`) — o `tools` é pacote APOSENTADO do SDK,
+    43	    # e o cmdline-tools 16.0 da imagem do runner deixou de tolerá-lo.
+    44	    # O `v4` sozinho NÃO basta: o default dele continua sendo
+    45	    # `tools platform-tools` (lido no `action.yml` da tag v4). Quem tira a causa
+    46	    # é o `packages` explícito — o build não precisa do `tools`: o Gradle baixa
+    47	    # a `platform`/`build-tools` de que precisa, e o `platform-tools` é o que a
+    48	    # imagem usa para `adb`.
+    49	    - uses: android-actions/setup-android@v4
+    50	      with:
+    51	        packages: platform-tools
+    52	    - uses: actions/cache@v4
+    53	      with:
+    54	        path: |
+    55	          ~/.gradle/caches
+    56	          ~/.gradle/wrapper
+    57	        key: gradle-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml', 'apps/native/app.json') }}
+    58	        restore-keys: |
+    59	          gradle-${{ runner.os }}-
+    60	    - name: Install dependencies
+    61	      run: pnpm install --frozen-lockfile
+    62	    - name: Type-check apps/native
+    63	      run: pnpm --filter native run type-check
+    64	    - name: Prebuild (android)
+    65	      run: cd apps/native && npx expo prebuild --platform android --no-install
+    66	    - name: Gradle assembleDebug
+    67	      run: cd apps/native/android && ./gradlew assembleDebug --no-daemon
+    68	    - uses: actions/upload-artifact@v4
+    69	      with:
+    70	        name: app-debug.apk
+    71	        path: apps/native/android/app/build/outputs/apk/debug/app-debug.apk
+    72	        retention-days: 7
+[exit 0]
+
+$ grep -rn 'paths' .github/workflows/
+.github/workflows/native.yml:2:# Só roda quando o nativo muda (filtro de paths); PRs de web ou de core não o executam.
+.github/workflows/native.yml:12:    paths:
+.github/workflows/native.yml:19:    paths:
+[exit 0]
+
+$ gh api repos/marcelviana/octavia/rulesets
+[{"id":23545697,"name":"maion","target":"branch","source_type":"Repository","source":"marcelviana/octavia","enforcement":"active","node_id":"RRS_lACqUmVwb3NpdG9yec47ParbzgFnR2E","_links":{"self":{"href":"https://api.github.com/repos/marcelviana/octavia/rulesets/23545697"},"html":{"href":"https://github.com/marcelviana/octavia/rules/23545697"}},"created_at":"2026-09-16T10:14:00.668-03:00","updated_at":"2026-09-16T10:14:00.782-03:00"}][exit 0]
+
+$ gh api repos/marcelviana/octavia/rules/branches/main
+[{"type":"deletion","ruleset_source_type":"Repository","ruleset_source":"marcelviana/octavia","ruleset_id":23545697},{"type":"non_fast_forward","ruleset_source_type":"Repository","ruleset_source":"marcelviana/octavia","ruleset_id":23545697},{"type":"required_status_checks","parameters":{"strict_required_status_checks_policy":true,"do_not_enforce_on_create":false,"required_status_checks":[{"context":"gates-nativos","integration_id":15368},{"context":"build","integration_id":15368}]},"ruleset_source_type":"Repository","ruleset_source":"marcelviana/octavia","ruleset_id":23545697},{"type":"pull_request","parameters":{"required_approving_review_count":0,"dismiss_stale_reviews_on_push":false,"required_reviewers":[],"require_code_owner_review":false,"require_last_push_approval":false,"required_review_thread_resolution":false,"require_extra_approval_for_unattributed_changes":true,"allowed_merge_methods":["merge"]},"ruleset_source_type":"Repository","ruleset_source":"marcelviana/octavia","ruleset_id":23545697}][exit 0]
+
+$ gh api repos/marcelviana/octavia/branches/main/protection
+{"message":"Branch not protected","documentation_url":"https://docs.github.com/rest/branches/branch-protection#get-branch-protection","status":"404"}gh: Branch not protected (HTTP 404)
+[exit 1]
+
+$ gh api repos/marcelviana/octavia/rulesets/23545697
+{"id":23545697,"name":"maion","target":"branch","source_type":"Repository","source":"marcelviana/octavia","enforcement":"active","conditions":{"ref_name":{"exclude":[],"include":["~DEFAULT_BRANCH"]}},"rules":[{"type":"deletion"},{"type":"non_fast_forward"},{"type":"required_status_checks","parameters":{"strict_required_status_checks_policy":true,"do_not_enforce_on_create":false,"required_status_checks":[{"context":"gates-nativos","integration_id":15368},{"context":"build","integration_id":15368}]}},{"type":"pull_request","parameters":{"required_approving_review_count":0,"dismiss_stale_reviews_on_push":false,"required_reviewers":[],"require_code_owner_review":false,"require_last_push_approval":false,"required_review_thread_resolution":false,"require_extra_approval_for_unattributed_changes":true,"allowed_merge_methods":["merge"]}}],"node_id":"RRS_lACqUmVwb3NpdG9yec47ParbzgFnR2E","created_at":"2026-09-16T10:14:00.668-03:00","updated_at":"2026-09-16T10:14:00.782-03:00","bypass_actors":[],"current_user_can_bypass":"never","_links":{"self":{"href":"https://api.github.com/repos/marcelviana/octavia/rulesets/23545697"},"html":{"href":"https://github.com/marcelviana/octavia/rules/23545697"}}}[exit 0]
+

@@ -1,0 +1,502 @@
+# A7 — core e cache (rastro bruto, HEAD 9e14042)
+
+$ ls packages/core/src apps/native/src
+apps/native/src:
+api.ts
+files.ts
+firebase.ts
+fixtures
+icones
+log.ts
+navigation.tsx
+net.ts
+prefetch.ts
+screens
+session.ts
+store.ts
+sync.ts
+theme.ts
+
+packages/core/src:
+auth-fetch.test.ts
+auth-fetch.ts
+content-contract.test.ts
+content-contract.ts
+errors.test.ts
+errors.ts
+index.ts
+isolation.test.ts
+normalize.test.ts
+normalize.ts
+offline.test.ts
+offline.ts
+position.test.ts
+position.ts
+rate-limit.test.ts
+rate-limit.ts
+search.test.ts
+search.ts
+song.test.ts
+song.ts
+sync.test.ts
+sync.ts
+token.test.ts
+token.ts
+types.ts
+[exit 0]
+
+$ cat -n packages/core/src/auth-fetch.ts
+     1	/**
+     2	 * Camada de rede única do nativo (PRD T1-R1, T1-R3, T1-R12; N0-PR3).
+     3	 * Lógica pura: zero dependência de react/react-native/firebase — o SDK entra por `getToken`;
+     4	 * zero dependência de `lib.dom` — a `Response` real entra pelo genérico `R` (só `status` é lido).
+     5	 *
+     6	 * - T1-R1: exatamente um header `Authorization: Bearer <token>` (prefixo literal, um espaço).
+     7	 * - T1-R12: `cache: 'no-store'` em toda request a /api/*.
+     8	 * - T1-R3: um 401 NUNCA é retentado com o mesmo token. Em 401: pede o token com
+     9	 *   `forceRefresh: true` UMA vez; se o token novo for DIFERENTE, refaz UMA vez; se for o mesmo
+    10	 *   (renovação não aconteceu) ou o segundo 401 vier, chama `onAuthFailure` e para —
+    11	 *   nunca uma terceira request (cada 401 conta na janela `authfail` por IP, 30/5 min).
+    12	 */
+    13	export interface AuthRequestInit {
+    14	  method?: string
+    15	  headers?: Record<string, string>
+    16	  body?: string
+    17	  cache?: 'no-store'
+    18	}
+    19	
+    20	export interface AuthResponseLike {
+    21	  status: number
+    22	}
+    23	
+    24	export type GetToken = (opts: { forceRefresh: boolean }) => Promise<string | null | undefined>
+    25	
+    26	export interface AuthFetchDeps<R extends AuthResponseLike> {
+    27	  fetch: (path: string, init: AuthRequestInit) => Promise<R>
+    28	  getToken: GetToken
+    29	  onAuthFailure: () => void | Promise<void>
+    30	}
+    31	
+    32	export interface AuthFetchResult<R> {
+    33	  response: R
+    34	  /** Número de requests HTTP feitas para esta chamada (1 ou 2). */
+    35	  requests: 1 | 2
+    36	}
+    37	
+    38	export type AuthFetch<R> = (path: string, init?: Omit<AuthRequestInit, 'cache'>) => Promise<AuthFetchResult<R>>
+    39	
+    40	export function createAuthFetch<R extends AuthResponseLike>({ fetch, getToken, onAuthFailure }: AuthFetchDeps<R>): AuthFetch<R> {
+    41	  const doFetch = (path: string, init: Omit<AuthRequestInit, 'cache'> | undefined, token: string) =>
+    42	    fetch(path, {
+    43	      ...init,
+    44	      headers: { ...(init?.headers ?? {}), Authorization: `Bearer ${token}` },
+    45	      cache: 'no-store',
+    46	    })
+    47	
+    48	  return async (path, init) => {
+    49	    const first = await getToken({ forceRefresh: false })
+    50	    if (!first) {
+    51	      await onAuthFailure()
+    52	      throw new Error('auth-fetch: sem token')
+    53	    }
+    54	    const response = await doFetch(path, init, first)
+    55	    if (response.status !== 401) return { response, requests: 1 }
+    56	
+    57	    const refreshed = await getToken({ forceRefresh: true })
+    58	    if (!refreshed || refreshed === first) {
+    59	      await onAuthFailure()
+    60	      return { response, requests: 1 }
+    61	    }
+    62	    const second = await doFetch(path, init, refreshed)
+    63	    if (second.status === 401) await onAuthFailure()
+    64	    return { response: second, requests: 2 }
+    65	  }
+    66	}
+[exit 0]
+
+$ grep -rn 'authFetch\|createAuthFetch' packages/core/src apps/native/src --include='*.ts' --include='*.tsx' | grep -v '\.test\.'
+packages/core/src/auth-fetch.ts:40:export function createAuthFetch<R extends AuthResponseLike>({ fetch, getToken, onAuthFailure }: AuthFetchDeps<R>): AuthFetch<R> {
+packages/core/src/token.ts:6: * (`createAuthFetch`), nunca aqui.
+apps/native/src/api.ts:3: * A lógica é do core (`createAuthFetch`, `shouldRefresh`, `decodeExp`,
+apps/native/src/api.ts:10:  createAuthFetch,
+apps/native/src/api.ts:35: * DIFERENTE do primeiro, o `authFetch` refaz **uma** vez, o 2º 401 chega e
+apps/native/src/api.ts:80:const authFetch = createAuthFetch<Response>({
+apps/native/src/api.ts:104:    const { response, requests } = await authFetch(`${BASE_URL}${path}`)
+[exit 0]
+
+$ sed -n 1,8p apps/native/src/api.ts
+/**
+ * Camada de rede única do app (PRD T1-R1, T1-R2, T1-R3, T1-R12, T1-R37).
+ * A lógica é do core (`createAuthFetch`, `shouldRefresh`, `decodeExp`,
+ * `errorFrom`); aqui entram o `fetch` do RN e o SDK do Firebase.
+ *
+ * Rotas consumidas: **só** `GET /api/setlists` e `GET /api/content`
+ * (PRD §2). Nunca `/api/auth/session`, `/api/proxy` ou `/api/profile`.
+ */
+[exit 0]
+
+$ sed -n 80,129p apps/native/src/api.ts
+const authFetch = createAuthFetch<Response>({
+  fetch: (path, init) => fetch(path, init as RequestInit),
+  getToken: obterToken,
+  onAuthFailure: async () => {
+    log('auth-failure')
+    await signOutSession()
+  },
+})
+
+export interface ApiOk<T> {
+  ok: true
+  data: T
+}
+export interface ApiErro {
+  ok: false
+  error: AppError
+  status: number | null
+}
+export type ApiResult<T> = ApiOk<T> | ApiErro
+
+/** Uma chamada GET instrumentada: mede o tempo e normaliza a falha (T1-R37). */
+async function get<T>(path: string, familia: string): Promise<ApiResult<T>> {
+  const t0 = Date.now()
+  try {
+    const { response, requests } = await authFetch(`${BASE_URL}${path}`)
+    const ms = Date.now() - t0
+    log(`api status=${response.status} path=${path.split('?')[0]} n=${requests} ms=${ms}`)
+    const corpo = await response.text()
+    if (!response.ok) {
+      const headers: Record<string, string> = {}
+      response.headers.forEach((v, k) => {
+        headers[k] = v
+      })
+      const error = errorFrom({ status: response.status, bodyText: corpo, headers })
+      if (error.kind === 'rate-limited' && error.retryAfter !== null) {
+        log(`ratelimit retry-after=${error.retryAfter} family=${familia}`)
+      }
+      return { ok: false, error, status: response.status }
+    }
+    return { ok: true, data: JSON.parse(corpo) as T }
+  } catch (e: unknown) {
+    const msg = e instanceof Error ? e.message : String(e)
+    return { ok: false, error: errorFrom({ networkError: msg }), status: null }
+  }
+}
+
+/** `GET /api/setlists` — array na raiz, sem paginação (`docs/api/SETLISTS.md`). */
+export function getSetlists(): Promise<ApiResult<SetlistDTO[]>> {
+  return get<SetlistDTO[]>('/api/setlists', 'setlist-read')
+}
+[exit 0]
+
+$ grep -rn 'method\|POST\|PUT\|DELETE' apps/native/src packages/core/src --include='*.ts' --include='*.tsx' | grep -v '\.test\.'
+apps/native/src/screens/StageScreen.tsx:648:        {/* PROPOSTA A (div. 109) — decidida pelo Marcel em 2026-09-14.
+packages/core/src/auth-fetch.ts:14:  method?: string
+[exit 0]
+
+$ grep -rn 'retry\|tentar\|setTimeout' packages/core/src/rate-limit.ts packages/core/src/errors.ts | head -20
+packages/core/src/rate-limit.ts:5: * `retryAfter` no corpo do envelope `RATE_LIMITED` (`lib/api-errors.ts:57`).
+packages/core/src/rate-limit.ts:32:export function retryAfterFrom(
+packages/core/src/rate-limit.ts:36:  const fromHeader = parseSeconds(headerValue(headers, 'retry-after'))
+packages/core/src/rate-limit.ts:47:  const envelope = parsed as { code?: unknown; retryAfter?: unknown }
+packages/core/src/rate-limit.ts:49:  const seconds = envelope.retryAfter
+packages/core/src/errors.ts:11: * genérico e **sem retry**).
+packages/core/src/errors.ts:13:import { retryAfterFrom } from './rate-limit'
+packages/core/src/errors.ts:29:  retryAfter: number | null
+packages/core/src/errors.ts:61:function build(kind: AppErrorKind, code: string | null, retryAfter: number | null): AppError {
+packages/core/src/errors.ts:62:  return { kind, code, retryAfter, messageKey: MESSAGE_KEY[kind] }
+packages/core/src/errors.ts:96:    if (kind === 'rate-limited') return build(kind, code, retryAfterFrom(headers, bodyText))
+packages/core/src/errors.ts:100:  // Sem envelope: cláusula não-JSON do contrato — genérico e sem retry, salvo
+[exit 0]
+
+$ sed -n 53,80p packages/core/src/sync.ts
+/**
+ * T1-R9: o conjunto de `content` só é substituído quando **todas** as páginas
+ * chegaram; qualquer falha mantém o cache anterior **inteiro** (nunca um
+ * conjunto parcial, nunca merge). Sem cache anterior, o "manter" devolve
+ * conjuntos vazios — a UI mostra erro acionável (T1-R18), não empty state.
+ * Em `keep-previous` os arrays devolvidos são as MESMAS referências do
+ * anterior: nada é copiado, nada é reordenado (A21 "byte a byte inalterado").
+ */
+export function planSync(input: SyncInput): SyncPlan {
+  const { pages, setlists, previous } = input
+  const failed = pages.some((page) => page.failed)
+
+  if (failed || setlists === null) {
+    return {
+      action: 'keep-previous',
+      content: previous?.content ?? [],
+      setlists: previous?.setlists ?? [],
+      reason: failed ? 'content-page-failed' : 'setlists-missing',
+    }
+  }
+
+  return {
+    action: 'apply',
+    content: mergePages(pages.map((page) => page.items)).items,
+    setlists,
+    reason: 'ok',
+  }
+}
+[exit 0]
+
+$ sed -n 47,108p apps/native/src/sync.ts
+export async function sincronizar(
+  uid: string,
+  anterior: { content: ContentDTO[]; setlists: SetlistDTO[] } | null,
+): Promise<SyncOutcome> {
+  if (!(await estaOnline())) {
+    log('sync skip reason=offline')
+    return { kind: 'skipped-offline' }
+  }
+
+  const t0 = Date.now()
+  log('sync start')
+
+  const rSetlists = await getSetlists()
+  const rContent = rSetlists.ok ? await buscarContent() : null
+
+  const plano = planSync({
+    pages:
+      rContent === null
+        ? [{ items: [], failed: true }]
+        : rContent.failed
+          ? [{ items: [], failed: true }]
+          : rContent.paginas.map((items) => ({ items, failed: false })),
+    setlists: rSetlists.ok ? rSetlists.data : null,
+    previous: anterior,
+  })
+
+  if (plano.action === 'keep-previous') {
+    const stage = rSetlists.ok ? 'content' : 'setlists'
+    const erro = rSetlists.ok
+      ? rContent !== null && rContent.failed
+        ? rContent.erro
+        : null
+      : rSetlists
+    const code = erro !== null && !erro.ok ? (erro.error.code ?? erro.error.kind) : 'net'
+    const status = erro !== null && !erro.ok ? (erro.status ?? '-') : '-'
+    // `setlists` não pagina (array na raiz, SETLISTS.md): a página é sempre 1.
+    const page = rContent !== null && rContent.failed ? rContent.page : 1
+    log(`sync fail stage=${stage} page=${page} code=${code} status=${status}`)
+    return {
+      kind: 'failed',
+      stage,
+      messageKey: erro !== null && !erro.ok ? erro.error.messageKey : 'erro.desconhecido',
+    }
+  }
+
+  const syncedAtMs = Date.now()
+  const snapshot: CacheSnapshot = {
+    setlists: plano.setlists,
+    content: plano.content,
+    syncedAtMs,
+  }
+  save(uid, snapshot)
+
+  const paginas = rContent !== null && !rContent.failed ? rContent.paginas.length : 0
+  const { duplicates } = mergePages(rContent !== null && !rContent.failed ? rContent.paginas : [])
+  if (duplicates > 0) log(`sync dedupe n=${duplicates}`)
+  log(
+    `sync ok setlists=${plano.setlists.length} content=${plano.content.length} pages=${paginas} t=${Date.now() - t0}`,
+  )
+
+  return { kind: 'ok', setlists: plano.setlists, content: plano.content, syncedAtMs }
+}
+[exit 0]
+
+$ sed -n 73,125p apps/native/src/store.ts
+interface ArquivoSetlists {
+  setlists: SetlistDTO[]
+  syncedAtMs: number | null
+}
+
+/**
+ * T1-R8 / PRD §5: a entidade local `song` guarda `content_id`, `position` e
+ * `notes` — **e só**. O objeto `content` embutido na resposta de setlists é
+ * descartado antes de gravar: ele é uma segunda cópia com relógio próprio
+ * (editar um content não bumpa `setlists.updated_at`) e custa ~35 KB por
+ * sync na conta de audit `[medido: N1-PRECHECK A3]`.
+ */
+function semEmbutido(setlists: SetlistDTO[]): SetlistDTO[] {
+  return setlists.map((s) => ({
+    ...s,
+    setlist_songs: s.setlist_songs.map((song) => ({ ...song, content: null })),
+  }))
+}
+
+export function load(uid: string): LoadedCache {
+  const dir = dirDe(uid)
+  if (!dir.exists) {
+    return { ...VAZIO, present: false, contentById: new Map() }
+  }
+  const s = lerJson<ArquivoSetlists>(dir, 'setlists.json')
+  const c = lerJson<ContentDTO[]>(dir, 'content.json')
+  if (s === null || c === null) {
+    return { ...VAZIO, present: false, contentById: new Map() }
+  }
+  const contentById = new Map(c.map((item) => [item.id, item]))
+  log(`cache hit kind=setlists n=${s.setlists.length}`)
+  log(`cache hit kind=content n=${c.length}`)
+  return {
+    setlists: s.setlists,
+    content: c,
+    syncedAtMs: s.syncedAtMs,
+    present: true,
+    contentById,
+  }
+}
+
+export function save(uid: string, snapshot: CacheSnapshot): void {
+  const dir = dirDe(uid)
+  if (!dir.exists) dir.create({ intermediates: true })
+  const arquivoSetlists: ArquivoSetlists = {
+    setlists: semEmbutido(snapshot.setlists),
+    syncedAtMs: snapshot.syncedAtMs,
+  }
+  gravarAtomico(dir, 'setlists.json', JSON.stringify(arquivoSetlists))
+  gravarAtomico(dir, 'content.json', JSON.stringify(snapshot.content))
+  log(`cache write kind=setlists n=${snapshot.setlists.length} invalidated=0`)
+  log(`cache write kind=content n=${snapshot.content.length} invalidated=0`)
+}
+[exit 0]
+
+$ sed -n 39,67p packages/core/src/types.ts
+/**
+ * Linha de `setlist_songs` no 200 de `GET /api/setlists`.
+ * `content` é o objeto EMBUTIDO da listagem: existe na resposta e o cache
+ * o **descarta** (T1-R8 — o corpo vem sempre do cache de `content` por
+ * `content_id`); está aqui só para tipar o payload que chega.
+ */
+export interface SetlistSongDTO {
+  id: string
+  setlist_id: string
+  content_id: string
+  position: number
+  notes: string | null
+  content: Pick<
+    ContentDTO,
+    'id' | 'title' | 'artist' | 'content_type' | 'content_data' | 'file_url'
+  > | null
+}
+
+/** Item da raiz (array) de `GET /api/setlists`. */
+export interface SetlistDTO {
+  id: string
+  name: string
+  /** date-only `YYYY-MM-DD` ou `null` (B5 2026-08-10; T1-R15). */
+  performance_date: string | null
+  venue: string | null
+  updated_at: string
+  /** Ordenadas por `position` ascendente, contíguas 1..N (SETLISTS.md). */
+  setlist_songs: SetlistSongDTO[]
+}
+[exit 0]
+
+$ grep -rn 'sincronizar(\|save(' apps/native/src apps/native/App.tsx --include='*.ts' --include='*.tsx' | grep -v '\.test\.'
+apps/native/src/store.ts:114:export function save(uid: string, snapshot: CacheSnapshot): void {
+apps/native/src/sync.ts:47:export async function sincronizar(
+apps/native/src/sync.ts:98:  save(uid, snapshot)
+apps/native/App.tsx:135:    const r = await sincronizar(
+[exit 0]
+
+$ sed -n 77,79p apps/native/src/session.ts
+export function signOutSession(): Promise<void> {
+  return signOut(auth)
+}
+[exit 0]
+
+$ grep -rn 'emailVerified\|email_verified' apps/native packages/core --include='*.ts' --include='*.tsx' --exclude-dir=node_modules
+[exit 1]
+
+$ sed -n 304,310p lib/secure-auth-utils.ts
+    // SECURITY: Additional email verification check.
+    // allowUnverifiedEmail existe para fluxos onde o usuário acabou de ser
+    // criado e ainda não pôde verificar o email (ex.: criação de perfil no signup)
+    if (!validation.user.emailVerified && !options.allowUnverifiedEmail) {
+      logger.warn(`Unverified user attempted access: ${validation.user.uid}`)
+      return null
+    }
+[exit 0]
+
+$ sed -n 176,188p lib/user-rate-limit.ts
+export function getAuthFailureLimit(ip: string): RateLimitResult | null {
+  const key = `ip:${ip}:authfail`
+  const entry = store.get(key)
+  if (!entry || Date.now() > entry.resetTime) return null
+  if (entry.count <= RATE_LIMITS.AUTH_FAIL.max) return null
+  return {
+    ok: false,
+    scope: 'ip',
+    limit: RATE_LIMITS.AUTH_FAIL.max,
+    remaining: 0,
+    resetTime: entry.resetTime,
+  }
+}
+[exit 0]
+
+$ sed -n 15,31p packages/core/src/errors.ts
+export type AppErrorKind =
+  | 'network'
+  | 'auth'
+  | 'rate-limited'
+  | 'not-found'
+  | 'validation'
+  | 'server'
+  | 'unknown'
+
+export interface AppError {
+  kind: AppErrorKind
+  /** `code` do envelope quando houve envelope; `null` caso contrário. */
+  code: string | null
+  /** Segundos até a próxima tentativa (só `rate-limited`). */
+  retryAfter: number | null
+  /** Chave da mensagem pt-BR (o texto é da UI — PR3). */
+  messageKey: string
+[exit 0]
+
+$ awk 'NR>=132 && NR<=173 {printf "%d: %s
+", NR, $0}' apps/native/App.tsx
+132:   /** Passo 2 do T1-R13 — roda depois de a tela já mostrar o cache. */
+133:   const rodarSync = useCallback(async (uid: string, anterior: Dados): Promise<void> => {
+134:     setSync({ fase: 'sincronizando' })
+135:     const r = await sincronizar(
+136:       uid,
+137:       anterior.temCache ? { content: anterior.content, setlists: anterior.setlists } : null,
+138:     )
+139:     if (r.kind === 'ok') {
+140:       const contentById = new Map(r.content.map((c) => [c.id, c]))
+141:       setDados({
+142:         setlists: r.setlists,
+143:         content: r.content,
+144:         contentById,
+145:         temCache: true,
+146:         syncedAtMs: r.syncedAtMs,
+147:       })
+148:       setSync({ fase: 'ok', syncedAtMs: r.syncedAtMs })
+149:       // O `dadosRef` é atualizado à mão aqui porque o efeito que o segue o
+150:       // `setDados` só corre no próximo render — e o LRU precisa das setlists
+151:       // NOVAS para saber o que está garantido.
+152:       dadosRef.current = {
+153:         setlists: r.setlists,
+154:         content: r.content,
+155:         contentById,
+156:         temCache: true,
+157:         syncedAtMs: r.syncedAtMs,
+158:       }
+159:       await prefetchEArrumar(r.setlists, contentById)
+160:       return
+161:     }
+162:     // Falha ou offline: o cache anterior fica exatamente como está (A21) e o
+163:     // estado da tela conta o que houve, sem esconder e sem bloquear (T1-R18).
+164:     setSync(
+165:       r.kind === 'skipped-offline'
+166:         ? { fase: 'offline', syncedAtMs: anterior.syncedAtMs }
+167:         // T1-R36 / D-b: a chave do core viaja até a tela, que escolhe o texto.
+168:         : { fase: 'falha', syncedAtMs: anterior.syncedAtMs, messageKey: r.messageKey },
+169:     )
+170:     // Sync falho ou pulado: o cache anterior é o que vale, e é sobre ele que
+171:     // o prefetch e o LRU trabalham.
+172:     await prefetchEArrumar(anterior.setlists, anterior.contentById)
+173:   }, [prefetchEArrumar])
+[exit 0]
+

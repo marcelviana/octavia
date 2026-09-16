@@ -1,0 +1,153 @@
+# A3 — a coluna de data (rastro bruto, HEAD 9e14042)
+
+$ ls supabase
+migrations
+schema.dump.sql
+storage.dump.sql
+[exit 0]
+
+$ sed -n 380,391p supabase/schema.dump.sql
+CREATE TABLE IF NOT EXISTS "public"."setlists" (
+    "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
+    "user_id" "text" NOT NULL,
+    "name" character varying(255) NOT NULL,
+    "description" "text",
+    "performance_date" "date",
+    "venue" character varying(255),
+    "notes" "text",
+    "is_public" boolean DEFAULT false,
+    "created_at" timestamp with time zone DEFAULT "now"(),
+    "updated_at" timestamp with time zone DEFAULT "now"()
+);
+[exit 0]
+
+$ grep -rn 'event_date\|performance_date' --include='*.ts' --include='*.tsx' --include='*.sql' --exclude-dir=node_modules --exclude-dir=.next --exclude-dir=.git .
+./types/performance.ts:24:  performance_date: string
+./types/setlist.ts:36:// zero consumidores e drift contra o banco (`event_date` não existe; a coluna
+./types/setlist.ts:37:// é `performance_date`). O tipo da linha real é
+./types/database.types.ts:234:          performance_date: string | null
+./types/database.types.ts:246:          performance_date?: string | null
+./types/database.types.ts:258:          performance_date?: string | null
+./app/api/setlists/__tests__/route.test.ts:206:        performance_date: '2024-02-01',
+./app/api/setlists/__tests__/get-shape.test.ts:24:  performance_date: null,
+./app/api/setlists/route.ts:124:      // SET-01 — antes o schema stripava venue/performance_date/notes e
+./app/api/setlists/route.ts:129:        performance_date: validatedData.performance_date ?? null,
+./app/api/setlists/[id]/route.ts:187:      if (validatedData.performance_date !== undefined) {
+./app/api/setlists/[id]/route.ts:188:        updateData.performance_date = validatedData.performance_date ?? null
+./tests/typescript-ide-improvements.test.ts:276:        performance_date: null,
+./tests/typescript-strict-mode.test.ts:55:        performance_date: null,
+./tests/ux-audit/harvest-populated.spec.ts:326:        ['performance_date (2026 / 9/12)', /09\/12|12\/09|Sep.*2026|set.*2026/i.test(body)],
+./tests/ux-audit/harvest-populated.spec.ts:331:        ? 'CONFIRMADO: nenhum venue/performance_date/notes do seed visível na UI de detalhe'
+./tests/performance/live-music-performance.bench.tsx:49:    performance_date: new Date(Date.now() + i * 1000 * 60 * 60 * 24).toISOString(),
+./supabase/schema.dump.sql:385:    "performance_date" "date",
+./components/setlist/setlist-details.tsx:132:                {setlist.performance_date && (
+./components/setlist/setlist-details.tsx:135:                    {new Date(setlist.performance_date).toLocaleDateString()}
+./components/setlist/setlist-card.tsx:66:  const isUpcoming = setlist.performance_date && new Date(setlist.performance_date) > new Date()
+./components/setlist/setlist-card.tsx:67:  const isRecent = setlist.performance_date && 
+./components/setlist/setlist-card.tsx:68:    new Date(setlist.performance_date) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+./components/setlist/setlist-card.tsx:169:          {setlist.performance_date && (
+./components/setlist/setlist-card.tsx:172:              <span>{new Date(setlist.performance_date).toLocaleDateString()}</span>
+./components/setlist/setlist-dialog.tsx:29:  performance_date: string
+./components/setlist/setlist-dialog.tsx:45:  performance_date: "",
+./components/setlist/setlist-dialog.tsx:69:          performance_date: editingSetlist.performance_date || "",
+./components/setlist/setlist-dialog.tsx:151:                <Label htmlFor="performance_date" className="text-[#1A1F36] font-medium">
+./components/setlist/setlist-dialog.tsx:155:                  id="performance_date"
+./components/setlist/setlist-dialog.tsx:157:                  value={formData.performance_date}
+./components/setlist/setlist-dialog.tsx:158:                  onChange={(e) => updateFormData("performance_date", e.target.value)}
+./components/setlist-manager.tsx:83:          performance_date: data.performance_date || null,
+./components/setlist-manager.tsx:106:          performance_date: data.performance_date || null,
+./scripts/ux-audit/seed.ts:302:  performance_date?: string | null
+./scripts/ux-audit/seed.ts:312:    // venue/performance_date/notes: a rota lê esses campos, mas o schema Zod
+./scripts/ux-audit/seed.ts:318:      performance_date: '2026-09-12T21:00:00.000Z',
+./scripts/ux-audit/seed.ts:352:      row.performance_date == null ? 'performance_date' : null,
+./scripts/ux-audit/discover.ts:32:  performance_date?: string | null
+./scripts/ux-audit/discover.ts:145:        performance_date: show.performance_date ?? null,
+./packages/core/src/sync.test.ts:22:    performance_date: null,
+./packages/core/src/types.ts:62:  performance_date: string | null
+./packages/core/src/offline.ts:84: * T1-R15 — arquivos das setlists com `performance_date` entre hoje e hoje+7
+./packages/core/src/offline.ts:99:      const date = setlist.performance_date
+./packages/core/src/offline.ts:102:    .sort((a, b) => (a.performance_date ?? '').localeCompare(b.performance_date ?? ''))
+./packages/core/src/offline.test.ts:41:    performance_date: performanceDate,
+./packages/core/src/offline.test.ts:171:    // O caso real da conta de audit: 3 setlists com `performance_date: null`.
+./lib/test-utils/supabase-mock-factory.ts:272:      performance_date: '2024-01-14',
+./lib/api-schemas.ts:313:// performance_date é DATE-ONLY por decisão de produto (B5, 2026-08-10):
+./lib/api-schemas.ts:324:  performance_date: z.string()
+./lib/api-schemas.ts:325:    .regex(/^\d{4}-\d{2}-\d{2}$/, 'performance_date must be date-only (YYYY-MM-DD)')
+./lib/__tests__/contract-setlist.test.ts:8: * PR-4c provavam que venue/performance_date/notes eram STRIPADOS por lista
+./lib/__tests__/contract-setlist.test.ts:27:      performance_date: '2026-09-12',
+./lib/__tests__/contract-setlist.test.ts:34:      expect(r.data.performance_date).toBe('2026-09-12')
+./lib/__tests__/contract-setlist.test.ts:42:      performance_date: '2026-09-12', venue: 'Bar do Zé', notes: 'levar capo',
+./lib/__tests__/contract-setlist.test.ts:47:      expect(r.data.performance_date).toBe('2026-09-12')
+./lib/__tests__/contract-setlist.test.ts:52:  it('performance_date é DATE-ONLY (decisão B5): timestamp → 400; null limpa; formato inválido → 400', () => {
+./lib/__tests__/contract-setlist.test.ts:53:    expect(setlistSchemas.create.safeParse({ name: 'x', performance_date: '2026-09-12' }).success).toBe(true)
+./lib/__tests__/contract-setlist.test.ts:54:    expect(setlistSchemas.create.safeParse({ name: 'x', performance_date: '2026-09-12T20:00:00Z' }).success).toBe(false)
+./lib/__tests__/contract-setlist.test.ts:55:    expect(setlistSchemas.create.safeParse({ name: 'x', performance_date: '12/09/2026' }).success).toBe(false)
+./lib/__tests__/contract-setlist.test.ts:56:    const limpa = setlistSchemas.update.safeParse({ performance_date: null })
+./lib/__tests__/contract-setlist.test.ts:58:    if (limpa.success) expect(limpa.data).toHaveProperty('performance_date', null)
+./lib/setlist-service.ts:113:  performance_date?: string | null; 
+./lib/setlist-service.ts:148:        performance_date: setlist.performance_date || null,
+./lib/setlist-service.ts:167:export async function updateSetlist(id: string, updates: { name?: string; description?: string | null; performance_date?: string | null; venue?: string | null; notes?: string | null }) {
+./apps/native/test/ajuda.ts:53:    performance_date: performanceDate,
+./apps/native/src/prefetch.ts:150: * `performance_date: null` (medido no pre-check A3), então aqui o plano real
+./apps/native/src/screens/SetlistsScreen.tsx:190:  const mostrarBaixar = setlist.performance_date === null
+./apps/native/src/screens/SetlistsScreen.tsx:214:          <Metadado icone="data" texto={setlist.performance_date ?? 'sem data'} />
+./apps/native/src/screens/IndexScreen.tsx:212:            {setlist.performance_date !== null ? (
+./apps/native/src/screens/IndexScreen.tsx:213:              <Metadado icone="data" texto={setlist.performance_date} />
+[exit 0]
+
+$ sed -n 34,38p types/setlist.ts
+
+// (B7-PR2, decisão B7-D4) A interface `Setlist` que vivia aqui foi removida:
+// zero consumidores e drift contra o banco (`event_date` não existe; a coluna
+// é `performance_date`). O tipo da linha real é
+// Database['public']['Tables']['setlists']['Row'] em types/database.types.ts.[exit 0]
+
+$ wc -l types/setlist.ts
+      37 types/setlist.ts
+[exit 0]
+
+$ grep -rn 'event_date' --include='*.ts' --include='*.tsx' --exclude-dir=node_modules --exclude-dir=.next --exclude-dir=.git .
+./types/setlist.ts:36:// zero consumidores e drift contra o banco (`event_date` não existe; a coluna
+[exit 0]
+
+$ grep -n "event_date" docs/native/PRD-TELA-1.md
+314:| `types/setlist.ts:40 event_date` (coluna inexistente, sem consumidor) | divergência 6 | dead code | Bloco B (housekeeping) |
+[exit 0]
+
+$ sed -n 313,327p lib/api-schemas.ts
+// performance_date é DATE-ONLY por decisão de produto (B5, 2026-08-10):
+// YYYY-MM-DD, sem hora, sem fuso — a coluna já é `date` no banco (dump).
+// Timestamp completo → 400 (elimina o off-by-one do SET-17 no contrato;
+// a exibição web mantém o bug até morrer — Bloco D).
+// ---------------------------------------------------------------------------
+const setlistMetadataFields = {
+  // name 1..255: alinhado à coluna varchar(255) do dump (era 100)
+  name: commonSchemas.createSafeText(1, 255),
+  // .nullish() em tudo: SET-23 — null = limpar, undefined = não mexer
+  description: commonSchemas.safeHtml.nullish(),
+  venue: commonSchemas.createSafeText(0, 255).nullish(),
+  performance_date: z.string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, 'performance_date must be date-only (YYYY-MM-DD)')
+    .nullish(),
+  notes: commonSchemas.safeHtml.nullish(),
+[exit 0]
+
+$ sed -n 126,135p app/api/setlists/route.ts
+      const setlistData = {
+        name: validatedData.name,
+        description: validatedData.description ?? null,
+        performance_date: validatedData.performance_date ?? null,
+        venue: validatedData.venue ?? null,
+        notes: validatedData.notes ?? null,
+        user_id: user.uid,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      }
+[exit 0]
+
+$ sed -n 187,189p 'app/api/setlists/[id]/route.ts'
+      if (validatedData.performance_date !== undefined) {
+        updateData.performance_date = validatedData.performance_date ?? null
+      }
+[exit 0]
+

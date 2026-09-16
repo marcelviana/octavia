@@ -1,0 +1,180 @@
+# A8 — S1 e S2 como estão (rastro bruto, HEAD 9e14042)
+
+$ ls apps/native/src/screens
+EndScreen.tsx
+IndexScreen.tsx
+LoginScreen.tsx
+SearchScreen.tsx
+SetlistsScreen.tsx
+StageScreen.tsx
+[exit 0]
+
+$ wc -l apps/native/src/screens/SetlistsScreen.tsx apps/native/src/screens/IndexScreen.tsx apps/native/src/navigation.tsx
+     529 apps/native/src/screens/SetlistsScreen.tsx
+     339 apps/native/src/screens/IndexScreen.tsx
+     248 apps/native/src/navigation.tsx
+    1116 total
+[exit 0]
+
+$ grep -rn 'testID' apps/native/src/screens/SetlistsScreen.tsx apps/native/src/screens/IndexScreen.tsx
+apps/native/src/screens/SetlistsScreen.tsx:206:      testID={`setlist-${setlist.id.slice(0, 8)}`}
+apps/native/src/screens/SetlistsScreen.tsx:227:            testID={`baixar-${setlist.id.slice(0, 8)}`}
+apps/native/src/screens/SetlistsScreen.tsx:288:        <Pressable style={styles.botaoSecundario} onPress={onBuscar} testID="buscar">
+apps/native/src/screens/SetlistsScreen.tsx:309:            testID="tentar-banner"
+apps/native/src/screens/SetlistsScreen.tsx:319:        <View style={[styles.centro, styles.centroSincronizando]} testID="s1a">
+apps/native/src/screens/SetlistsScreen.tsx:327:        <View style={styles.centro} testID="s1d">
+apps/native/src/screens/SetlistsScreen.tsx:340:          <Pressable style={styles.botaoPrimario} onPress={onTentarNovamente} testID="tentar">
+apps/native/src/screens/SetlistsScreen.tsx:350:        <View style={styles.centro} testID="s1f">
+apps/native/src/screens/IndexScreen.tsx:134:      testID={`song-${song.position}`}
+apps/native/src/screens/IndexScreen.tsx:201:          testID="voltar"
+apps/native/src/screens/IndexScreen.tsx:220:        <Pressable style={styles.botaoSecundario} onPress={onBuscar} testID="buscar">
+[exit 0]
+
+$ awk 'NR>=264 && NR<=275 || NR>=317 && NR<=327 || NR>=345 && NR<=366 {printf "%d: %s
+", NR, $0}' apps/native/src/screens/SetlistsScreen.tsx
+264:   const status = useMemo(
+265:     () => new Map(setlists.map((s) => [s.id, offlineStatus(s, contentById, filesPresent)])),
+266:     [setlists, contentById, filesPresent],
+267:   )
+268: 
+269:   const semCache = !temCache
+270:   const primeiraSincronizacao = semCache && sync.fase === 'sincronizando'
+271:   const offlineSemCache = semCache && sync.fase === 'offline'
+272:   const falhaSemCache = semCache && sync.fase === 'falha'
+273:   const vaziaAposSync = temCache && setlists.length === 0
+274:   const comBanner = sync.fase === 'falha' && temCache
+275:   const chip = chipDoStatus(sync)
+317:       {primeiraSincronizacao ? (
+318:         // (a) nunca "você não tem setlists" antes do primeiro 200 (SET-14)
+319:         <View style={[styles.centro, styles.centroSincronizando]} testID="s1a">
+320:           <Icone nome="baixando" tamanho={28} cor={dark.accentInk} />
+321:           <Text style={styles.centroApoio}>baixando suas setlists pela primeira vez</Text>
+322:         </View>
+323:       ) : offlineSemCache || falhaSemCache ? (
+324:         // (d) erro acionável — nunca o empty state. O ícone repete o do chip
+325:         // de propósito (a moldura): o chip diz o estado da rede, o bloco diz
+326:         // a consequência para os dados.
+327:         <View style={styles.centro} testID="s1d">
+345:       ) : vaziaAposSync ? (
+346:         // (f) empty state honesto: só depois de um sync bem-sucedido. Vazio
+347:         // por sucesso, não por falha: sem tinta de alerta, sem botão, e a
+348:         // segunda casa da marca (§8.4, a única proposta aplicada): só o laço
+349:         // do oito do PNG oficial, recortado a 60 dp, sem wordmark.
+350:         <View style={styles.centro} testID="s1f">
+351:           <View style={styles.marca} accessibilityRole="image" accessibilityLabel="Octavia">
+352:             <Image
+353:               source={require('../../assets/logo-octavia-dark.png')}
+354:               style={styles.marcaImagem}
+355:               resizeMode="stretch"
+356:             />
+357:           </View>
+358:           <Text style={styles.centroTitulo}>nenhuma setlist</Text>
+359:           <Text style={styles.centroApoio}>
+360:             Sua conta não tem setlists. Crie na versão web — elas aparecem aqui na próxima
+361:             sincronização.
+362:           </Text>
+363:         </View>
+364:       ) : (
+365:         // (b) normal e (c) offline com cache — a mesma lista; o que muda é o chip
+366:         <FlatList
+[exit 0]
+
+$ sed -n 334,343p docs/native/DESIGN-V1/README.md
+| --- | --- |
+| `S0` | login: marca à esquerda, formulário à direita, campo de senha com erro |
+| `S1a` | sincronizando sem cache — tela vazia com o ícone *baixando* |
+| `S1b` | normal, online — três cartões, sync recente |
+| `S1c` | offline com cache — chip *sem conexão* e a hora da última sincronização |
+| `S1d` | offline sem cache — bloco vazio com *tentar novamente* |
+| `S1e` | falha com cache — banner de erro acima da lista |
+| `S1f` | vazia após sync — vazio por sucesso, com a marca |
+| `S1-proposta-data` | **proposta**: S1 agrupado por data do show (dado ilustrativo) |
+| `S2` | índice — 8 músicas em duas colunas, chip de tipo por item |
+[exit 0]
+
+$ sed -n 390,398p docs/native/DESIGN-V1/README.md
+### 8.3 Ordenação por data (S1)
+
+Hoje a API ordena por `created_at desc` (`route.ts:38`, e `docs/api/SETLISTS.md:57`) e a tela não reordena — `data={setlists}`, sem `sort`. Para quem toca, a pergunta é *qual é o próximo show*.
+
+A proposta agrupa por `performance_date` ascendente sob o rótulo *a seguir*, com dia e mês numa coluna fixa de 88 e o local no lugar do calendário redundante. Muda ordenação e layout do cartão; não muda dado nem sync.
+
+**Com o dado de hoje ela quase desaparece** (`PROP-data-hoje`): as três setlists da conta de auditoria não têm data e a única datada da conta principal está 422 dias no passado — *a seguir* fica vazio. A proposta só compensa se as setlists passarem a ter `performance_date` preenchido. Sem isso, o cartão atual ordenado por criação é honesto.
+
+### 8.4 A marca
+[exit 0]
+
+$ awk 'NR>=11 && NR<=37 || NR>=80 && NR<=97 {printf "%d: %s
+", NR, $0}' apps/native/src/navigation.tsx
+11: import { createNativeStackNavigator } from '@react-navigation/native-stack'
+12: import { StyleSheet, Text, View } from 'react-native'
+13: import type { ContentDTO, SetlistDTO } from '@octavia/core'
+14: import { EndScreen } from './screens/EndScreen'
+15: import { IndexScreen } from './screens/IndexScreen'
+16: import { LoginScreen } from './screens/LoginScreen'
+17: import { SearchScreen } from './screens/SearchScreen'
+18: import { SetlistsScreen, type SetlistsScreenProps } from './screens/SetlistsScreen'
+19: import { StageScreen } from './screens/StageScreen'
+20: import { dark, font, size, space, tracking } from './theme'
+21: 
+22: export type RootStackParamList = {
+23:   Login: undefined
+24:   Setlists: undefined
+25:   Index: { setlistId: string; posicaoAtual?: number }
+26:   /**
+27:    * `avulsa` (T1-R22): abrir pela busca uma música que NÃO está na setlist
+28:    * empilha uma segunda instância do palco. O `goBack` devolve a primeira,
+29:    * com a `position` intacta — a pilha É a restauração, sem estado global.
+30:    */
+31:   Stage: { setlistId: string; position: number; avulsa?: string }
+32:   /** `posicao` é a do palco na abertura; ausente quando a busca vem da S1/S2. */
+33:   Search: { setlistId?: string; posicao?: number }
+34:   End: { setlistId: string }
+35: }
+36: 
+37: const Stack = createNativeStackNavigator<RootStackParamList>()
+80:   return (
+81:     <NavigationContainer theme={navTheme}>
+82:       <Stack.Navigator
+83:         screenOptions={{ headerShown: false, contentStyle: { backgroundColor: dark.bg } }}
+84:       >
+85:         {signedIn ? (
+86:           <Stack.Group>
+87:             <Stack.Screen name="Setlists">
+88:               {({ navigation }) => (
+89:                 <SetlistsScreen
+90:                   {...setlists}
+91:                   onAbrirSetlist={(setlistId) => navigation.navigate('Index', { setlistId })}
+92:                   onBuscar={() => navigation.navigate('Search', {})}
+93:                 />
+94:               )}
+95:             </Stack.Screen>
+96: 
+97:             <Stack.Screen name="Index">
+[exit 0]
+
+$ grep -n 'Stack.Screen name=' apps/native/src/navigation.tsx
+87:            <Stack.Screen name="Setlists">
+97:            <Stack.Screen name="Index">
+124:            <Stack.Screen name="Stage">
+164:            <Stack.Screen name="End">
+190:            <Stack.Screen name="Search">
+226:          <Stack.Screen name="Login" component={LoginScreen} />
+[exit 0]
+
+$ grep -n 'export function\|Props\|interface' apps/native/src/screens/SetlistsScreen.tsx apps/native/src/screens/IndexScreen.tsx
+apps/native/src/screens/SetlistsScreen.tsx:39:export interface SetlistsScreenProps {
+apps/native/src/screens/SetlistsScreen.tsx:251:export function SetlistsScreen({
+apps/native/src/screens/SetlistsScreen.tsx:263:}: SetlistsScreenProps): React.JSX.Element {
+apps/native/src/screens/IndexScreen.tsx:45:export interface IndexScreenProps {
+apps/native/src/screens/IndexScreen.tsx:173:export function IndexScreen({
+apps/native/src/screens/IndexScreen.tsx:181:}: IndexScreenProps): React.JSX.Element {
+[exit 0]
+
+$ sh apps/native/scripts/g2g3.sh 9e14042 WORKTREE
+G2 — testIDs  antes=43  depois=43
+  G2: antes ⊆ depois ✓
+G3 — linhas log( antes=57  depois=57
+  G3: nenhuma linha sumiu ✓
+[exit 0]
+

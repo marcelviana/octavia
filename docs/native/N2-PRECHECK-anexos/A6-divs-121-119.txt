@@ -1,0 +1,127 @@
+# A6 — divs. 121 e 119 verbatim (rastro bruto, HEAD 9e14042)
+
+$ grep -rn 'div\. 121\|^| \*\*121\*\*' docs/native/
+docs/native/W2-PRECHECK.md:269:| **N2** | div. 121 (`updated_at`), o estouro do `lruEvict`, div. 119 (`emVoo`) | como já decidido |
+docs/native/W2-PRECHECK.md:283:release; o `cor.offline`/tema claro; a div. 121; qualquer item da §8 do DESIGN-V1.
+docs/native/W2-PRECHECK.md:403:2. **A div. 121** (`updated_at` do T1-R17) — fora, para o N2, como decidido na Q5 do W1.
+docs/native/W1-ENCERRAMENTO.md:321:7. **div. 121** (`updated_at` do T1-R17) segue fora, para o N2, como decidido na Q5.
+docs/native/W1-ENCERRAMENTO.md:391:- **N2** — a div. 121 (`updated_at` do T1-R17) e o estouro de teto que o `lruEvict`
+docs/native/W1-PRECHECK.md:314:| — | div. 121 (`updated_at` do T1-R17) | **não entra** — **[decidido]**, Q5 da §8: *"esta PR é o eixo do arquivo; o `updated_at` é o eixo do corpo"* |
+docs/native/W1-PRECHECK.md:485:| **Q5** | **A div. 121 fica FORA.** *"Duas definições de garantia numa PR só é o que faz escopo escorregar. Esta PR é o eixo do arquivo; o `updated_at` é o eixo do corpo."* Para o N2 | §11, div. 121 |
+docs/native/W1-PRECHECK.md:868:| **121** | **D** | **O T1-R17 (i) exige `updated_at` igual ao do último sync e o `offlineStatus` nunca olha `updated_at`** (`core/offline.ts:52-65`). Gap PRD × código no outro eixo da garantia. **Fora desta PR** — [decidido], §8, Q5; proposta para o N2 |
+docs/native/W2-ENCERRAMENTO.md:216:**Fora, como decidido**: a opção C / `T₁` (`n = 0`), a div. 121, o `cor.offline`, o
+[exit 0]
+
+$ grep -rn 'div\. 119\|^| \*\*119\*\*' docs/native/
+docs/native/W2-PRECHECK.md:269:| **N2** | div. 121 (`updated_at`), o estouro do `lruEvict`, div. 119 (`emVoo`) | como já decidido |
+docs/native/W2-PRECHECK.md:416:7. **A div. 119** (`emVoo` devolvendo o voo alheio com as opções dele) — segue aberta;
+docs/native/W1-ENCERRAMENTO.md:319:6. **div. 119** (o `emVoo` que devolve o voo alheio com as opções dele) segue aberta —
+docs/native/N2-PRECHECK-anexos/A6-divs-121-119.txt:4:docs/native/W2-PRECHECK.md:269:| **N2** | div. 121 (`updated_at`), o estouro do `lruEvict`, div. 119 (`emVoo`) | como já decidido |
+docs/native/W1-PRECHECK.md:185:   `download-error` (`StageScreen.tsx:352`) nunca é alcançado. **div. 119**
+docs/native/W1-PRECHECK.md:865:| **119** | **A** | **O `emVoo` deduplica por URL e ignora as opções** (`files.ts:151-167`): quem pede um arquivo já em voo recebe a promise alheia, com o `guaranteed` do outro. Efeitos: (a) o palco herda a promise do prefetch e, se ela não assenta, fica em `buscando` sem alcançar o `catch` do `download-error`; (b) um pedido `guaranteed:true` que pega carona num voo `false` grava no purgável — o `promoteList` conserta na passada seguinte, não nessa |
+docs/native/W2-ENCERRAMENTO.md:217:tema claro nas listas, a §8 inteira do DESIGN-V1 (decisão 4), a div. 119, a metade de
+[exit 0]
+
+$ sed -n 865p docs/native/W1-PRECHECK.md
+| **119** | **A** | **O `emVoo` deduplica por URL e ignora as opções** (`files.ts:151-167`): quem pede um arquivo já em voo recebe a promise alheia, com o `guaranteed` do outro. Efeitos: (a) o palco herda a promise do prefetch e, se ela não assenta, fica em `buscando` sem alcançar o `catch` do `download-error`; (b) um pedido `guaranteed:true` que pega carona num voo `false` grava no purgável — o `promoteList` conserta na passada seguinte, não nessa |
+[exit 0]
+
+$ sed -n 868p docs/native/W1-PRECHECK.md
+| **121** | **D** | **O T1-R17 (i) exige `updated_at` igual ao do último sync e o `offlineStatus` nunca olha `updated_at`** (`core/offline.ts:52-65`). Gap PRD × código no outro eixo da garantia. **Fora desta PR** — [decidido], §8, Q5; proposta para o N2 |
+[exit 0]
+
+$ sed -n 485p docs/native/W1-PRECHECK.md
+| **Q5** | **A div. 121 fica FORA.** *"Duas definições de garantia numa PR só é o que faz escopo escorregar. Esta PR é o eixo do arquivo; o `updated_at` é o eixo do corpo."* Para o N2 | §11, div. 121 |
+[exit 0]
+
+$ grep -n '^\*\*T1-R9 \|^\*\*T1-R10 \|^\*\*T1-R15 \|^\*\*T1-R17 ' docs/native/PRD-TELA-1.md
+130:**T1-R9 — Substituição sem merge, atômica por conjunto** `[C-D4; PLANO SET-14 (fila A #5): "deleções em outro dispositivo não ressuscitam"]`. Uma resposta 200 de `GET /api/setlists` **substitui** o conjunto inteiro de `setlist`+`song` do usuário. O conjunto de `content` só é substituído quando **todas** as páginas de `GET /api/content` chegaram (página 1, 2, … até `hasMore == false`); se qualquer página falhar (não-2xx, rede), **o cache anterior de content permanece inteiro** e o indicador de falha de sincronização (T1-R18) aparece — nunca um conjunto parcial. Nada é mesclado; o que não veio numa substituição completa, some. Arquivos (`file`) **não** são apagados na substituição (são imutáveis por URL; limpeza é por LRU, T1-R14).
+136:**T1-R10 — Versionamento por `updated_at`** `[C-D4]`. Cada gravação compara `updated_at` do item novo com o local: igual → não re-renderiza nem re-baixa; diferente → substitui e invalida derivados (índice de busca, layout renderizado). `updated_at` de `content` é bumpado **no handler** do `PUT /api/content` `[medido: app/api/content/route.ts:255 — nota N1]`; a coluna tem apenas `DEFAULT now()` (vale no INSERT) e o dump **não tem trigger nenhum** `[medido: dump:97; `grep -i TRIGGER` → exit=1 — nota N1]`. Consequência declarada: **edição fora da API (console/SQL) não bumpa `updated_at`, e o cliente não detecta** — só um PUT pela API invalida o item no nativo. É risco aceito (o console não é caminho de edição do produto).
+173:**T1-R15 — Prefetch de 7 dias** `[C-D6; PLANO J6 "indicação antes do show"]`. Após cada sync, para toda setlist com `performance_date` (date-only `YYYY-MM-DD` — decisão da seção "B5 — Decisões de dados" do plano, 2026-08-10, implementada no B2 PR-5 (#240); schema em `lib/api-schemas.ts:297-310` — nota N5) entre hoje e hoje+7, baixar todos os `file_url` das suas songs ainda não cacheados, em background, com prioridade pela data mais próxima (mesma heurística do web, `lib/advanced-content-cache.ts:183-204` `[medido: §C-D4]`). Setlists sem `performance_date` (as 3 da conta de audit `[medido: B.2 — `performance_date: null` nas três]`) **não** entram no prefetch automático; entram sob demanda (T1-R16) ou por ação explícita "baixar esta setlist".
+179:**T1-R17 — Indicador "garantido offline"** `[C-D6; PLANO J6 (ponto de observação "baixada ✓"); C4 "indicador garantido offline antes do show"]`. Definição **verificável**: uma setlist está garantida offline sse (i) todas as suas `song.content_id` existem no cache de `content` com `updated_at` igual ao do último sync e (ii) todas as `file_url` não-nulas dessas contents **existem e estão completas** no cache de `file` — um arquivo em download, truncado ou de 0 byte **não conta como presente**. *Errata W1, 2026-09-14: a redação anterior dizia só "existem", e o `localizar()` (`files.ts:126`) a implementava com fidelidade — o contrato autorizava o defeito das div. 102/103/104. Ver `W1-PRECHECK.md` §4 e div. 117.* O indicador tem três estados: ✓ garantida · ◔ parcial (mostra "n de m arquivos") · ✗ nunca sincronizada. O estado é recalculado a cada gravação no cache, não a cada render.
+[exit 0]
+
+$ sed -n 130p docs/native/PRD-TELA-1.md
+**T1-R9 — Substituição sem merge, atômica por conjunto** `[C-D4; PLANO SET-14 (fila A #5): "deleções em outro dispositivo não ressuscitam"]`. Uma resposta 200 de `GET /api/setlists` **substitui** o conjunto inteiro de `setlist`+`song` do usuário. O conjunto de `content` só é substituído quando **todas** as páginas de `GET /api/content` chegaram (página 1, 2, … até `hasMore == false`); se qualquer página falhar (não-2xx, rede), **o cache anterior de content permanece inteiro** e o indicador de falha de sincronização (T1-R18) aparece — nunca um conjunto parcial. Nada é mesclado; o que não veio numa substituição completa, some. Arquivos (`file`) **não** são apagados na substituição (são imutáveis por URL; limpeza é por LRU, T1-R14).
+[exit 0]
+
+$ sed -n 136p docs/native/PRD-TELA-1.md
+**T1-R10 — Versionamento por `updated_at`** `[C-D4]`. Cada gravação compara `updated_at` do item novo com o local: igual → não re-renderiza nem re-baixa; diferente → substitui e invalida derivados (índice de busca, layout renderizado). `updated_at` de `content` é bumpado **no handler** do `PUT /api/content` `[medido: app/api/content/route.ts:255 — nota N1]`; a coluna tem apenas `DEFAULT now()` (vale no INSERT) e o dump **não tem trigger nenhum** `[medido: dump:97; `grep -i TRIGGER` → exit=1 — nota N1]`. Consequência declarada: **edição fora da API (console/SQL) não bumpa `updated_at`, e o cliente não detecta** — só um PUT pela API invalida o item no nativo. É risco aceito (o console não é caminho de edição do produto).
+[exit 0]
+
+$ sed -n 179p docs/native/PRD-TELA-1.md
+**T1-R17 — Indicador "garantido offline"** `[C-D6; PLANO J6 (ponto de observação "baixada ✓"); C4 "indicador garantido offline antes do show"]`. Definição **verificável**: uma setlist está garantida offline sse (i) todas as suas `song.content_id` existem no cache de `content` com `updated_at` igual ao do último sync e (ii) todas as `file_url` não-nulas dessas contents **existem e estão completas** no cache de `file` — um arquivo em download, truncado ou de 0 byte **não conta como presente**. *Errata W1, 2026-09-14: a redação anterior dizia só "existem", e o `localizar()` (`files.ts:126`) a implementava com fidelidade — o contrato autorizava o defeito das div. 102/103/104. Ver `W1-PRECHECK.md` §4 e div. 117.* O indicador tem três estados: ✓ garantida · ◔ parcial (mostra "n de m arquivos") · ✗ nunca sincronizada. O estado é recalculado a cada gravação no cache, não a cada render.
+[exit 0]
+
+$ sed -n 43,65p packages/core/src/offline.ts
+/**
+ * T1-R17 — ✓ garantida · ◔ parcial ("n de m arquivos") · ✗ nunca sincronizada.
+ *
+ * Leitura declarada (PRD T1-R17 + aceite A10, que diz "antes do download →
+ * ◔ 0 de 2"): **`never` é "nunca sincronizada"** — nenhuma das songs tem
+ * content no cache. Zero arquivos baixados COM os contents presentes é
+ * `partial` com `have: 0`, não `never`. Um bis conta o arquivo uma vez (URLs
+ * distintas). Setlist sem songs está garantida por vacuidade.
+ */
+export function offlineStatus(
+  setlist: SetlistDTO,
+  contentById: Map<string, ContentDTO>,
+  filesPresent: Set<string>,
+): OfflineStatus {
+  const songs = setlist.setlist_songs
+  const { urls, missingContent } = fileUrlsOf(songs, contentById)
+  const have = urls.filter((url) => filesPresent.has(url)).length
+  const need = urls.length
+
+  if (songs.length > 0 && missingContent === songs.length) return { kind: 'never', have: 0, need: 0 }
+  if (missingContent === 0 && have === need) return { kind: 'guaranteed', have, need }
+  return { kind: 'partial', have, need }
+}
+[exit 0]
+
+$ grep -rn 'updated_at' packages/core/src apps/native/src --include='*.ts' --include='*.tsx' | grep -v '\.test\.'
+packages/core/src/song.ts:5: * ignorado, porque editar um content não bumpa `setlists.updated_at` (duas
+packages/core/src/types.ts:36:  updated_at: string
+packages/core/src/types.ts:64:  updated_at: string
+packages/core/src/sync.ts:3: * versionamento por `updated_at` (PRD T1-R9, T1-R9b, T1-R10; aceites A7, A21,
+packages/core/src/sync.ts:84: * `updated_at` difere — dois syncs sem mudança no servidor produzem as três
+packages/core/src/sync.ts:91:  const before = new Map(prev.map((item) => [item.id, item.updated_at]))
+packages/core/src/sync.ts:100:    else if (previousUpdatedAt !== item.updated_at) changed.push(item.id)
+apps/native/src/store.ts:82: * (editar um content não bumpa `setlists.updated_at`) e custa ~35 KB por
+[exit 0]
+
+$ grep -rn 'diffByUpdatedAt' packages/core/src apps/native/src
+packages/core/src/sync.test.ts:2:import { mergePages, planSync, diffByUpdatedAt } from './sync'
+packages/core/src/sync.test.ts:114:describe('diffByUpdatedAt (T1-R10 / A7)', () => {
+packages/core/src/sync.test.ts:118:    expect(diffByUpdatedAt(antes, depois)).toEqual({ changed: [], added: [], removed: [] })
+packages/core/src/sync.test.ts:128:    expect(diffByUpdatedAt(antes, depois)).toEqual({
+packages/core/src/sync.ts:87:export function diffByUpdatedAt(
+[exit 0]
+
+$ grep -n 'update setlists s set updated_at' supabase/schema.dump.sql
+67:  update setlists s set updated_at = now() where s.id = p_setlist_id;
+199:    update setlists s set updated_at = now() where s.id = v_sid;
+265:  update setlists s set updated_at = now() where s.id = v_setlist_id;
+337:  update setlists s set updated_at = now() where s.id = p_setlist_id;
+[exit 0]
+
+$ grep -n 'updated_at' app/api/setlists/route.ts 'app/api/setlists/[id]/route.ts'
+app/api/setlists/route.ts:134:        updated_at: new Date().toISOString(),
+app/api/setlists/[id]/route.ts:175:        updated_at: new Date().toISOString(),
+[exit 0]
+
+$ sed -n 123,124p apps/native/src/store.ts
+  log(`cache write kind=setlists n=${snapshot.setlists.length} invalidated=0`)
+  log(`cache write kind=content n=${snapshot.content.length} invalidated=0`)
+[exit 0]
+
+$ grep -rn 'invalidated=0' docs --include='*.md'
+docs/native/LOGS-OCTAVIA.md:38:| cache | `cache hit kind=setlists\|content\|file n=<n>` · `cache write kind=… n=<n> invalidated=<n>` — **E8(2): `cache miss` nunca foi implementado** | leitura/gravação do cache local (T1-R10: `invalidated=0` em sync sem mudança) | A4, A5, A7, A21 |
+docs/native/N1-PRECHECK.md:193:| R10 `updated_at` | — | (A7) | core: `diffByUpdatedAt` → `cache write … invalidated=0` | core |
+docs/native/V1-ENCERRAMENTO.md:122:| **A7** | sync e cache: `sync.ts`, `store.ts` | `cache write kind=setlists n=2 invalidated=0` no device |
+[exit 0]
+
+$ grep -rn 'diffByUpdatedAt' apps packages --include='*.ts' --include='*.tsx' --exclude-dir=node_modules | grep -v '\.test\.'
+packages/core/src/sync.ts:87:export function diffByUpdatedAt(
+[exit 0]
+

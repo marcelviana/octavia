@@ -1,0 +1,68 @@
+# A9 — A10 do PRD e H17 do N1 (rastro bruto, HEAD 9e14042)
+
+$ grep -n '^| A10 ' docs/native/PRD-TELA-1.md
+286:| A10 | Setlist com `performance_date` amanhã → arquivos baixados em background sem abrir; indicador ✓/◔/✗ correto e recalculado | T1-R15, T1-R17 |
+[exit 0]
+
+$ sed -n 266p docs/native/PRD-TELA-1.md
+| H17 | **Fechada** `[medido pelo Marcel, 2026-09-05 — dashboard]`: das 2 setlists da conta principal, **1 tem `performance_date`** → o prefetch de 7 dias (T1-R15) tem dado real; o "baixar esta setlist" manual cobre a outra | — | — |
+[exit 0]
+
+$ sed -n 133,180p docs/native/N1-ENCERRAMENTO.md
+## 5. Hipóteses — estado final
+
+| # | Hipótese | Estado | Prova |
+|---|---|---|---|
+| **N1-h1** | `xVDJ…` é a conta principal | **verdadeira** | #289 — login no Tab S6: `auth uid=xVDJ… src=login` → 2 setlists / 63 content |
+| **N1-h2** | o emulador aceita `hw.lcd.density=360` | **verdadeira** | #284 — 2560×1600 @ 360 = **1138×711 dp**, igual ao Tab S6 |
+| **N1-h3** | custo do `native.yml` | **medida; o efeito do D-g fica em aberto** | abaixo |
+| **N1-h4** | auto-scroll por rAF sem jank a 60 fps no Tab S6 | **verdadeira** | #286 (spike, 0,00% janky moderna) + #289 (device: 27–31 ms, p95 de navegação 68 ms) |
+| **N1-h5** | `ScrollView` horizontal + `Text` mono mantém a linha de 120 colunas em 40 dp | **verdadeira** | #286 spike; #289 com o item **real** (a régua do Marcel) |
+| **N1-h6** | tamanhos dos APK/módulos | **não medida como hipótese** — o inventário do SDK foi conferido antes/depois em toda build (idêntico em 7 PRs), mas o tamanho do APK não foi tabulado no N1 |
+| **N0-H11** | `cache: 'no-store'` do RN é no-op; T1-R12 por 2 requests reais | **fechada, verdadeira** | #285 — a 2ª abertura online faz **mais 2 requests reais** |
+| **H14** | conta principal = 63 content / 2 setlists | **confirmada, exata** | #289 no device |
+| **H16 (audit)** | tamanho dos arquivos | fechada no N0 (265.002 B em 4 objetos) | — |
+| **H16 (principal)** | idem, conta principal | **fechada — 138.916 B**, pendente desde o N0 | #290, D-a: o **único** arquivo da conta |
+| **H17** | ver abaixo | **a conclusão é falsa** | #289 |
+
+### N1-h3 — o que o `native.yml` custa, e o que o D-g ainda não provou
+
+Duração do job `android-debug-apk` no check final de cada PR `[medido: gh pr checks]`:
+
+| PR | #281 | #282 | #283 | #284 | #285 | #286 | #287 | #288 | #289 | #290 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| | **ausente** | 7m08s | 5m57s | 14m11s | 11m57s | 11m22s | 11m45s | 10m15s | 11m39s | 11m35s |
+
+- **#281 é docs-only e o gate não disparou** — com o filtro **antigo**, que ainda continha `packages/core/**`.
+- **#282 e #283 são de core** (a #282 não toca um único arquivo fora de `packages/core/`) e o gate **disparou**: 7m08s e 5m57s. Sob o filtro do D-g, nenhuma das duas dispararia.
+- As **sete** PRs que tocam `apps/native/**` (#284–#290) vão de 10m15s a 14m11s, **mediana 11m39s**. O salto da #284 é a entrada do native-stack e dos peers nativos: antes deles o mesmo job custava ~6–7 min.
+- **Duas populações, não uma**: os runs de `push` na main (após cada merge) medem o *run*, não o *job*, e vão de 6m44s a 13m27s. O rastro de sessão misturou as duas séries numa lista só; **esta tabela é a correção**, e é uma das razões de o estado de bloco virar artefato de repositório (§11).
+
+**O efeito do D-g não foi provado e não podia ser.** Este encerramento é docs-only, e uma PR docs-only **já não** disparava o gate antes do recorte (#281 é a prova). A prova discriminante é uma PR que toque **só `packages/core/**` ou só o lock**: o "antes" está medido (#282, 7m08s); o "depois" cabe à primeira PR core-only depois da #290 — do N2 ou do Bloco D. **Registrado como herança verificável, não como hipótese fechada** (§11).
+
+### H17 — a medição é verdadeira, a conclusão é falsa
+
+O que o PRD e o [`C-ENCERRAMENTO.md`](../ux/C-ENCERRAMENTO.md) registram: *"das 2 setlists da conta principal, 1 tem `performance_date` → o prefetch de 7 dias (T1-R15) tem dado real"* `[medido pelo Marcel, 2026-09-05 — dashboard]`.
+
+O que o device mediu (#289, cache da principal lido por `run-as`):
+
+```
+'Good Times'  date=None        songs=4  arquivos=0
+'Season 3'    date=2025-07-16  songs=7  arquivos=0    → −422 dias, FORA da janela
+```
+
+**A primeira metade é verdadeira** — 1 das 2 setlists tem data. **A conclusão anexa é falsa**: a data está **422 dias no passado** e **nenhuma das duas setlists tem um único `file_url`**. O único arquivo da conta (`Easy_-_Guitar.pdf`, content `b23a3803`) **não está em setlist alguma**, então nenhum caminho do app o alcança pela navegação normal. `prefetch plan n=0 reason=7d` é a consequência **correta**, não um defeito.
+
+**Consequência**: **A10 com dado real na conta principal fica NÃO REPRODUZIDO**, com o motivo medido. O A10 passa por fixture (#287) e a lógica passa por unidade no core. **Caminho para fechá-la**: datar uma setlist da principal dentro da janela de 7 dias e pôr um arquivo nela — **escrita do Marcel, quando houver show de verdade**. Decisão registrada (2026-09-11): *"não vou datar setlist para satisfazer aceite"*.
+
+---
+
+[exit 0]
+
+$ sed -n 365,368p docs/native/N1-ENCERRAMENTO.md
+- **B1.5**, **B9** (idempotência do `POST /api/content`), **B10** (restrição de referrer da API key — reavaliar **agora que o app existe**: o nativo usa a mesma chave).
+- **Maestro** (N1-D3): não instalado; a doc não lista API 32. Continua hipótese inteira, com a restrição de que **a senha nunca entra por automação**.
+- **A10 real e H17**: datar uma setlist da principal na janela e pôr um arquivo nela.
+- **`fitPolicy`**: se virar página a gesto único voltar a importar, a saída não é `{2}` — é paginação por **tap na borda** também em PDF, ou fit width com botão de página.
+[exit 0]
+
