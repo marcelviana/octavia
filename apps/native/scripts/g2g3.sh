@@ -30,23 +30,43 @@
 # ---------------------------------------------------------------------------
 #
 # ---------------------------------------------------------------------------
-# W3 — O COLETOR DEIXA DE LER COMENTÁRIO (div. 136, e a div. 140 que ela esconde)
+# W3 — O G2 DEIXA DE LER COMENTÁRIO. O G3, NÃO — E ISSO É DE PROPÓSITO.
 #
-# O `coleta()` grepava o texto CRU do arquivo. Uma MENÇÃO a uma prop de teste ou
-# a uma chamada de log dentro de comentário entrava na população como se fosse
-# código — a W2 achou isso ao documentar o `files.ts`, chamou de falso positivo
-# e contornou escrevendo a documentação de outro jeito.
+# **G2 (div. 136 e 140).** O coletor grepava `testID="…"` no texto CRU, e uma
+# MENÇÃO em comentário entrava na população como se fosse prop. A W3 mediu que o
+# falso positivo não é inerte (div. 140): com a menção na BASE, editar o
+# comentário a faz SUMIR e o G2 reprova por "testID SUMIU" sem que uma linha de
+# código mude. O G2 passa a ler o texto SEM COMENTÁRIO (`sem-comentario.awk`).
 #
-# **A W3 mediu que o falso positivo não é inerte** (div. 140): uma vez na
-# população do ANTES, editar o comentário faz a menção SUMIR, e aí o G2 reprova
-# por "testID SUMIU" e o G3 por "linha sumiu SEM ERRATA". É REPROVAÇÃO FALSA — e
-# a partir desta PR este gate IMPEDE (div. 129), então o custo do defeito deixa
-# de ser um anexo confuso e passa a ser um CI vermelho sem causa.
+# **G3 — div. 83, a razão por extenso.** (Decisão do Marcel, V1-PR6, 2026-09-13;
+# o `V1-ENCERRAMENTO.md` §11 dizia que esta razão estava escrita AQUI, e ela
+# nunca esteve, em nenhuma das quatro versões deste arquivo — div. 142. Agora
+# está. O original mora em `V1-PR6-anexos/README.md`, "Div. 83, por extenso".)
 #
-# Entra o `sem-comentario.awk`, com a MESMA regra que o `a20.mjs` já aplica.
-# Medido antes de entrar: a população não muda — 43 testIDs e 57 linhas de log,
-# os mesmos conjuntos. É conserto de defeito, não mudança de escopo, e por isso
-# NÃO precisa de errata no G3.
+#   O G3 conta `log(` escrito em comentário, e ISSO ESTÁ CERTO. Os dois gates
+#   do conjunto medem coisas de natureza oposta, e o erro de cada um não custa
+#   a mesma coisa:
+#
+#     gate:a20  gate de CONTEÚDO — "não há literal de UI em inglês". Acusação
+#               falsa gasta a paciência que mantém o gate ligado. Precisa de
+#               PRECISÃO, e por isso tira comentário.
+#     G3        gate de INVARIÂNCIA — "nenhuma linha de log mudou". Ele não
+#               aponta defeito, afirma que nada mudou. Errar para o lado de
+#               FALAR DEMAIS custa uma errata a mais; errar para o lado de
+#               CALAR deixa uma linha de log sumir em silêncio — e os aceites
+#               desta série são lidos PELO LOGCAT.
+#
+#   UM LADO DO ERRO FOI ESCOLHIDO DE PROPÓSITO. Não alinhe o G3 ao a20 sem ler
+#   isto.
+#
+# A W3 chegou a estender o filtro ao G3, sem conhecer a div. 83, e voltou atrás
+# antes do merge (decisão do Marcel, 2026-09-16). O argumento contrário — o W1
+# trocou "idênticas" por "⊆ com errata", e com isso o caminho de reprovação que
+# motivou a 83 (linha NOVA vinda de comentário) deixou de reprovar; o que sobra
+# é o SUMIU da div. 140, que agora bloqueia merge — está registrado no
+# `W3-ENCERRAMENTO.md` como PROPOSTA DE REVISÃO PENDENTE. Se voltar com caso
+# real, revisa-se a 83 por escrito, em PR própria, com o texto dela ao lado. O
+# risco é latente: ZERO menções a `log(` em comentário na árvore de hoje.
 # ---------------------------------------------------------------------------
 A=$1; B=$2
 AQUI=$(dirname "$0")
@@ -57,7 +77,11 @@ tmp=$(mktemp -d)
 fora_do_escopo() {
   grep -vE '^\./' | grep -vE '^apps/native/(test|scripts)/' | grep -vE '(^|/)node_modules/'
 }
-# O texto do arquivo SEM COMENTÁRIO — a única fonte que o coletor lê (W3).
+# O texto do arquivo, CRU (G3) ou SEM COMENTÁRIO (G2) — ver o cabeçalho.
+cru() {
+  if [ "$1" = "WORKTREE" ]; then cat "$2"
+  else git show "$1:$2" 2>/dev/null; fi
+}
 sem_comentario() {
   if [ "$1" = "WORKTREE" ]; then awk -f "$SEM_COMENTARIO" "$2"
   else git show "$1:$2" 2>/dev/null | awk -f "$SEM_COMENTARIO"; fi
@@ -72,8 +96,9 @@ coleta() {
     sem_comentario "$1" "$f" | grep -o 'testID="[^"]*"' | sed "s|^|$f\t|"
     sem_comentario "$1" "$f" | grep -oE 'testID=\{`[^`]*`\}' | sed "s|^|$f\t|"
   done | sort -u > "$2"
+  # G3: texto CRU, comentário incluído — div. 83.
   for f in $ARQS; do
-    sem_comentario "$1" "$f" | grep 'log(' | sed 's/^ *//' | sed "s|^|$f\t|"
+    cru "$1" "$f" | grep 'log(' | sed 's/^ *//' | sed "s|^|$f\t|"
   done | sort > "$3"
 }
 coleta "$A" $tmp/a.ids $tmp/a.log

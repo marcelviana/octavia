@@ -122,16 +122,17 @@ describe('gate:icones — o mapa contra as duas fontes congeladas', () => {
 })
 
 /**
- * O coletor do G2/G3 — div. 136 e 140, consertadas no commit 1.
+ * O coletor do G2 — div. 136 e 140.
  *
- * O gate inteiro compara dois refs git e não cabe num `it` (ver a tabela da
- * §3 do relatório: G1 e G2/G3 vão para o CI como JOB, não como teste). O que
- * cabe, e é o que pode apodrecer em silêncio, é o FILTRO: se o
- * `sem-comentario.awk` parar de apagar comentário, o G2 e o G3 voltam a poder
- * reprovar por uma edição de comentário, e nada avisaria até o CI ficar
- * vermelho sem causa.
+ * O gate inteiro compara dois refs git e não cabe num `it` (G1 e G2/G3 vão para
+ * o CI como JOB, não como teste). O que cabe, e é o que pode apodrecer em
+ * silêncio, é o FILTRO: se o `sem-comentario.awk` parar de apagar comentário, o
+ * G2 volta a poder reprovar por uma edição de comentário.
+ *
+ * **Só o G2.** O G3 lê o texto CRU de propósito — div. 83: gate de invariância
+ * erra para o lado de falar demais. A razão está no cabeçalho do `g2g3.sh`.
  */
-describe('sem-comentario.awk — o filtro do coletor do G2/G3', () => {
+describe('sem-comentario.awk — o filtro do coletor do G2', () => {
   function filtrar(fonte: string): string {
     const dir = mkdtempSync(join(tmpdir(), 'w3-sc-'))
     const arq = join(dir, 'x.tsx')
