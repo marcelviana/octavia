@@ -1,0 +1,249 @@
+# C-posse — filtro de dono por rota e a RPC de remover música (rastro bruto; complemento pré-merge; HEAD 016e763)
+
+$ sed -n 35,85p 'app/api/setlists/songs/[songId]/route.ts'
+    // Await params for Next.js 15
+    const { songId } = await params
+
+    const supabase = getSupabaseServiceClient()
+
+    // Get the song details including setlist_id
+    const { data: song, error: songError } = await supabase
+      .from("setlist_songs")
+      .select(`
+        id,
+        position,
+        setlist_id,
+        setlists!inner (
+          id,
+          user_id
+        )
+      `)
+      .eq("id", songId)
+      .single()
+
+    if (songError) {
+      // B3 PR-3a: PGRST116 tratado — songId inexistente era throw → 500
+      // (o ramo `if (!song)` abaixo era código morto, pre-check §2.5);
+      // .single() com sucesso garante linha, então o ramo morto saiu.
+      if (songError.code === 'PGRST116') {
+        return notFound('Song not found')
+      }
+      logger.error("Error getting song details:", songError)
+      throw songError
+    }
+
+    const songData = song as SongWithSetlist
+
+    // B3 PR-3a/D2: recurso de OUTRO usuário → 404 idêntico ao de
+    // inexistente (sem oráculo de existência; era throw → 500)
+    if (songData.setlists.user_id !== user.uid) {
+      return notFound('Song not found')
+    }
+
+    // B6 PR-3b (D9/D10, desenho §2.4): delete + renumeração 1..N-1 +
+    // bump de updated_at viram UMA transação na RPC, sob o lock da
+    // linha-pai — o loop sequencial de shift (não-atômico) morreu.
+    // Tradução por error.code (§2.2): OB603/OB602 → 404 sem oráculo;
+    // OB601/desconhecido → 500.
+    const { error: rpcError } = await supabase.rpc('remove_setlist_song', {
+      p_song_id: songId,
+    })
+
+    if (rpcError) {
+      return rpcErrorResponse('removeSong', rpcError)
+    }
+[exit 0]
+
+$ grep -n -A40 'FUNCTION "public"."remove_setlist_song"' supabase/schema.dump.sql
+208:CREATE OR REPLACE FUNCTION "public"."remove_setlist_song"("p_song_id" "uuid") RETURNS TABLE("id" "uuid", "position" integer)
+209-    LANGUAGE "plpgsql"
+210-    SET "search_path" TO 'public'
+211-    AS $$
+212-declare
+213-  v_setlist_id uuid;
+214-  v_del  integer;
+215-  v_rem  integer;
+216-  v_rows integer;
+217-begin
+218-  select ss.setlist_id into v_setlist_id
+219-    from setlist_songs ss where ss.id = p_song_id;
+220-  if not found then
+221-    raise exception 'SONG_NOT_FOUND' using errcode = 'OB603';
+222-  end if;
+223-
+224-  -- lock único do invariante (D10)
+225-  perform 1 from setlists s where s.id = v_setlist_id for update;
+226-  if not found then
+227-    -- rev. 2 do aval: setlist deletada entre a leitura acima e o lock
+228-    -- (cascade levou a song junto) — mesmo 404 de song sumida na rota
+229-    raise exception 'SETLIST_NOT_FOUND' using errcode = 'OB602';
+230-  end if;
+231-
+232-  delete from setlist_songs ss where ss.id = p_song_id;
+233-  get diagnostics v_del = row_count;
+234-  if v_del = 0 then
+235-    -- double-delete (rev. 3 do aval): um remove concorrente da MESMA
+236-    -- música commitou enquanto esta transação esperava o lock — 404
+237-    -- canônico na rota. Idempotência de replay é pauta do B9, não
+238-    -- deste bloco.
+239-    raise exception 'SONG_NOT_FOUND' using errcode = 'OB603';
+240-  end if;
+241-
+242-  -- renumeração pelas MESMAS duas fases, com os MESMOS guards
+243-  update setlist_songs ss set position = -ss.position
+244-   where ss.setlist_id = v_setlist_id;
+245-  get diagnostics v_rem = row_count;
+246-
+247-  -- ordem original preservada: positions eram únicas; negadas, o desc
+248-  -- reproduz o asc original — row_number renumera 1..N contíguo mesmo
+--
+274:ALTER FUNCTION "public"."remove_setlist_song"("p_song_id" "uuid") OWNER TO "postgres";
+275-
+276-
+277-CREATE OR REPLACE FUNCTION "public"."reorder_setlist_songs"("p_setlist_id" "uuid", "p_song_ids" "uuid"[]) RETURNS TABLE("id" "uuid", "position" integer)
+278-    LANGUAGE "plpgsql"
+279-    SET "search_path" TO 'public'
+280-    AS $$
+281-declare
+282-  v_n    integer := coalesce(array_length(p_song_ids, 1), 0);
+283-  v_rows integer;
+284-begin
+285-  -- lock único do invariante (D10): TODO escritor de setlist_songs
+286-  -- serializa aqui
+287-  perform 1 from setlists s where s.id = p_setlist_id for update;
+288-  if not found then
+289-    raise exception 'SETLIST_NOT_FOUND' using errcode = 'OB602';
+290-  end if;
+291-
+292-  -- permutação exata: mesma contagem, todos os IDs da setlist, sem
+293-  -- duplicata (defesa em profundidade — o Zod já barrou duplicata antes)
+294-  if (select count(*) from setlist_songs ss
+295-       where ss.setlist_id = p_setlist_id) <> v_n
+296-     or (select count(distinct u) from unnest(p_song_ids) u) <> v_n
+297-     or exists (
+298-       select 1 from unnest(p_song_ids) u(sid)
+299-       left join setlist_songs ss
+300-         on ss.id = u.sid and ss.setlist_id = p_setlist_id
+301-       where ss.id is null)
+302-  then
+303-    raise exception 'ORDER_MISMATCH' using errcode = 'OB601';
+304-  end if;
+305-
+306-  -- fase 1: tira todo mundo da faixa 1..N. A UNIQUE (setlist_id,
+307-  -- position) não é DEFERRABLE (dump:140) e NÃO há CHECK de sinal na
+308-  -- coluna (§0 — medido): negativos são legais e nunca colidem entre si
+309-  -- porque as positions de partida são únicas.
+310-  update setlist_songs ss set position = -ss.position
+311-   where ss.setlist_id = p_setlist_id;
+312-  get diagnostics v_rows = row_count;
+313-  if v_rows <> v_n then
+314-    -- com a D10 este ramo vira inalcançável (nenhum escritor entra sem
+--
+582:REVOKE ALL ON FUNCTION "public"."remove_setlist_song"("p_song_id" "uuid") FROM PUBLIC;
+583:GRANT ALL ON FUNCTION "public"."remove_setlist_song"("p_song_id" "uuid") TO "service_role";
+584-
+585-
+586-
+587-REVOKE ALL ON FUNCTION "public"."reorder_setlist_songs"("p_setlist_id" "uuid", "p_song_ids" "uuid"[]) FROM PUBLIC;
+588-GRANT ALL ON FUNCTION "public"."reorder_setlist_songs"("p_setlist_id" "uuid", "p_song_ids" "uuid"[]) TO "service_role";
+589-
+590-
+591-
+592-GRANT ALL ON TABLE "public"."annotations" TO "service_role";
+593-
+594-
+595-
+596-GRANT ALL ON TABLE "public"."profiles" TO "anon";
+597-GRANT ALL ON TABLE "public"."profiles" TO "authenticated";
+598-GRANT ALL ON TABLE "public"."profiles" TO "service_role";
+599-
+600-
+601-
+602-GRANT ALL ON TABLE "public"."setlists" TO "anon";
+603-GRANT ALL ON TABLE "public"."setlists" TO "authenticated";
+604-GRANT ALL ON TABLE "public"."setlists" TO "service_role";
+605-
+606-
+607-
+608-ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON SEQUENCES  TO "postgres";
+609-ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON SEQUENCES  TO "anon";
+610-ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON SEQUENCES  TO "authenticated";
+611-ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON SEQUENCES  TO "service_role";
+612-
+613-
+614-
+615-
+616-
+617-
+618-ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON FUNCTIONS  TO "postgres";
+619-ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON FUNCTIONS  TO "anon";
+620-ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON FUNCTIONS  TO "authenticated";
+621-ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON FUNCTIONS  TO "service_role";
+622-
+623-
+[exit 0]
+
+$ grep -n 'CREATE OR REPLACE FUNCTION' supabase/schema.dump.sql
+42:CREATE OR REPLACE FUNCTION "public"."add_setlist_song"("p_setlist_id" "uuid", "p_content_id" "uuid", "p_notes" "text") RETURNS SETOF "public"."setlist_songs"
+104:CREATE OR REPLACE FUNCTION "public"."delete_content_resequence"("p_content_id" "uuid") RETURNS SETOF "public"."content"
+208:CREATE OR REPLACE FUNCTION "public"."remove_setlist_song"("p_song_id" "uuid") RETURNS TABLE("id" "uuid", "position" integer)
+277:CREATE OR REPLACE FUNCTION "public"."reorder_setlist_songs"("p_setlist_id" "uuid", "p_song_ids" "uuid"[]) RETURNS TABLE("id" "uuid", "position" integer)
+[exit 0]
+
+$ grep -n "user_id\|getSupabaseServiceClient()" app/api/setlists/route.ts 'app/api/setlists/[id]/route.ts' 'app/api/setlists/[id]/songs/route.ts' 'app/api/setlists/[id]/songs/order/route.ts' 'app/api/setlists/songs/[songId]/route.ts'
+app/api/setlists/route.ts:22:    const supabase = getSupabaseServiceClient()
+app/api/setlists/route.ts:29:    // user_id; o embedding segue a FK sem esse filtro — diferença
+app/api/setlists/route.ts:37:      .eq('user_id', user.uid)
+app/api/setlists/route.ts:96:      const supabase = getSupabaseServiceClient()
+app/api/setlists/route.ts:108:          .eq('user_id', user.uid)
+app/api/setlists/route.ts:132:        user_id: user.uid,
+app/api/setlists/route.ts:178:            .eq('user_id', user.uid)
+app/api/setlists/[id]/route.ts:36:    const supabase = getSupabaseServiceClient()
+app/api/setlists/[id]/route.ts:43:      .eq("user_id", user.uid)
+app/api/setlists/[id]/route.ts:86:      .eq("user_id", user.uid)
+app/api/setlists/[id]/route.ts:169:      const supabase = getSupabaseServiceClient()
+app/api/setlists/[id]/route.ts:199:      .eq("user_id", user.uid)
+app/api/setlists/[id]/route.ts:249:        .eq("user_id", user.uid)
+app/api/setlists/[id]/route.ts:337:    const supabase = getSupabaseServiceClient()
+app/api/setlists/[id]/route.ts:355:      .eq("user_id", user.uid)
+app/api/setlists/[id]/songs/route.ts:21:      const supabase = getSupabaseServiceClient()
+app/api/setlists/[id]/songs/route.ts:28:        .eq("user_id", user.uid)
+app/api/setlists/[id]/songs/route.ts:33:        // por construção (query filtrada por user_id → mesmo PGRST116).
+app/api/setlists/[id]/songs/route.ts:47:        .eq("user_id", user.uid)
+app/api/setlists/[id]/songs/order/route.ts:23:      const supabase = getSupabaseServiceClient()
+app/api/setlists/[id]/songs/order/route.ts:26:      // construção (query filtrada por user_id — padrão B3 PR-4)
+app/api/setlists/[id]/songs/order/route.ts:31:        .eq('user_id', user.uid)
+app/api/setlists/songs/[songId]/route.ts:16:    user_id: string
+app/api/setlists/songs/[songId]/route.ts:38:    const supabase = getSupabaseServiceClient()
+app/api/setlists/songs/[songId]/route.ts:49:          user_id
+app/api/setlists/songs/[songId]/route.ts:70:    if (songData.setlists.user_id !== user.uid) {
+[exit 0]
+
+$ sed -n 7p lib/supabase-service.ts
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
+[exit 0]
+
+$ sed -n 485p supabase/schema.dump.sql
+CREATE POLICY "Service role access to setlist songs" ON "public"."setlist_songs" USING (("auth"."role"() = 'service_role'::"text")) WITH CHECK (("auth"."role"() = 'service_role'::"text"));
+[exit 0]
+
+$ grep -rn 'set setlist_id\|setlist_id:' supabase/schema.dump.sql app/api --include='*.ts' --include='*.sql' | grep -v __tests__
+app/api/setlists/songs/[songId]/route.ts:13:  setlist_id: string
+app/api/setlists/route.ts:61:          setlist_id: song.setlist_id,
+app/api/setlists/route.ts:163:          setlist_id: (setlist as { id: string }).id,
+app/api/setlists/route.ts:186:        formattedSongs = inserted.map((song: { id: string; setlist_id: string; content_id: string; position: number; notes: string | null }) => {
+app/api/setlists/route.ts:190:            setlist_id: song.setlist_id,
+app/api/setlists/[id]/songs/order/route.ts:46:        p_setlist_id: setlistId,
+app/api/setlists/[id]/songs/route.ts:67:        p_setlist_id: setlistId,
+app/api/setlists/[id]/route.ts:106:        setlist_id: song.setlist_id,
+app/api/setlists/[id]/route.ts:269:          setlist_id: song.setlist_id,
+[exit 0]
+
+$ sed -n 365p docs/native/N1-PRECHECK.md
+`grep -rn eyJ docs/native/N1-PRECHECK-anexos` → exit 1; `grep -rln uxtester …` → exit 1. Os corpos JSON de prod (`setlists.json` 49.983 B, `content-100.json` 52.941 B) **não** são anexos (contêm corpo de música).
+[exit 0]
+
+$ sed -n 3p docs/native/N1-PRECHECK-anexos/A3-probe-n1.mts.txt
+ * Nunca imprime token/email/corpo de música: só status, headers, chaves e tamanhos.
+[exit 0]
+
