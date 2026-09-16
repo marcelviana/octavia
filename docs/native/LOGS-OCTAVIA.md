@@ -268,6 +268,7 @@ perigoso: um instrumento que mede **mais** do que a coisa medida.
 | 18 | **div. 139** (W2) | o **`uiautomator dump`**: o nó acessível, com o `text` que o Android expõe | "o que está na tela". O `<Text>` de várias linhas do `download-erro` volta do dump com **`text=""`** e só os `bounds` — então a varredura de inglês sobre os dumps do ANTES acusa as **mesmas 4** cadeias do DEPOIS e **não vê** a frase de 4 linhas que é o objeto inteiro da div. 125. Quem a viu foi a **captura de tela** e o **logcat**. É o 13 uma volta adiante: lá o dump media o nó e não o desenho; aqui ele **não mede nem o nó** |
 | 19 | **div. 140** (W3) | o **coletor do G2**: `testID="…"` no texto **CRU** do arquivo — comentário incluído | "as populações do antes e do depois são o código". A W2 viu a metade barata disto (div. 136: uma menção em comentário contada como `testID` NOVO) e a chamou de falso positivo. A W3 mediu a outra: com a menção na **BASE**, editar o comentário a faz SUMIR e o G2 reprova por *"testID SUMIU"* **sem que uma linha de código tenha mudado**. O G2 passou a ler sem comentário. **O G3 tem o mesmo mecanismo e NÃO foi mudado, de propósito** — div. 83, ver a regra 5. É o **segundo caso do padrão pelo avesso**: o instrumento mede **MAIS** do que o critério, não menos |
 | 20 | **div. 142** (W3) | o **`V1-ENCERRAMENTO.md` §11**, item B8.3: *"a razão está escrita no próprio comentário do `g2g3.sh`"* | "quem mexer no gate vai encontrar a razão da div. 83 onde mexe". Medido nas quatro versões do `g2g3.sh` (`cf9e229`, `c25db8c`, `7630c4e`, `78e8e6e`): **ela nunca esteve lá.** Morava só em `V1-PR6-anexos/README.md`. A W3 leu o script inteiro, não achou razão nenhuma, e desfez a decisão — que é exatamente o que o aviso existia para impedir. **Variante nova do padrão**: não é instrumento que mede menos do que se supõe; é **REGISTRO QUE APONTA PARA ONDE A RAZÃO NÃO ESTÁ**. Consertado na W3: a razão passou a morar no cabeçalho do `g2g3.sh` |
+| 21 | **div. 157** (N2 pre-check) | a linha `cache write kind=… invalidated=<n>` que este catálogo liga ao **A7** (tabela acima: *"T1-R10: `invalidated=0` em sync sem mudança"*) — no V1 o A7 foi dispensado pelo G1 com `cache write kind=setlists n=2 invalidated=0` no device como o que se viu de raspão (`V1-ENCERRAMENTO.md:122`) | "o versionamento por `updated_at` do T1-R10 funciona — dois syncs sem mudança não invalidam nada". O `0` é **LITERAL** em `store.ts:123-124`, e o `diffByUpdatedAt` (`core/sync.ts:87`), a função que calcularia o número, **não tem chamador fora dos testes**. O aceite passou lendo uma **constante**: não havia valor que o fizesse reprovar. Correção: **N2-D8** (primeira PR de código do N2 — ligar o `diffByUpdatedAt` no sync, contador real no log, CN com `invalidated=1` sob mock de `updated_at` diferente, errata do A7 no `PRD-TELA-1.md`) |
 
 > **O 19 é o 15 outra vez, e a segunda vez muda o que a primeira parecia ser.** Quando o
 > 15 apareceu, o texto acima o chamou de *"a primeira vez no projeto em que o instrumento
@@ -290,6 +291,15 @@ perigoso: um instrumento que mede **mais** do que a coisa medida.
 > é pior do que registro nenhum**: sem ele, a pergunta "por que o G3 não tira comentário?"
 > ficaria aberta; com ele, a busca termina num arquivo que parece confirmar que ninguém
 > pensou nisso.
+
+> **O 21 é o caso-limite da tabela: o instrumento não mede um escopo menor — não mede NADA.**
+> Em todos os outros o log carregava um valor que vinha de algum lugar e a pergunta era
+> *de onde*. Aqui o valor não vem de lugar nenhum: é texto fixo com cara de medição
+> (`invalidated=<n>` no catálogo, `0` no código). Um aceite que lê uma constante passa
+> sempre — e a dispensa do V1 apoiou-se nela. O teste que o denuncia é o controle
+> negativo que nunca foi escrito: **mock com `updated_at` diferente → a linha tem de dizer
+> `invalidated=1`**. Achado no pre-check do N2 (`N2-PRECHECK.md` §6.1, div. 157), não por
+> aceite — nenhum aceite podia achá-lo.
 
 > **A variante do 14, e por que ela merece nome próprio.** O caso 8 (div. 71) era o script
 > documentando a própria cegueira numa nota que ninguém leu. Este é um grau além: **a

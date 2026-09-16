@@ -1,0 +1,12 @@
+HTTP/2 400 
+cache-control: private, no-store
+content-type: application/json
+date: Wed, 16 Sep 2026 17:58:00 GMT
+server: Vercel
+strict-transport-security: max-age=63072000
+vary: RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch
+x-matched-path: /api/setlists
+x-vercel-cache: MISS
+x-vercel-id: gru1::iad1::66wr5-1789581480510-f13a45d83923
+
+{"error":"Validation failed","code":"VALIDATION_ERROR","details":[{"field":"name","message":"Required","code":"invalid_type"}]}

@@ -1,0 +1,13 @@
+HTTP/2 401 
+cache-control: private, no-store
+content-type: application/json
+date: Wed, 16 Sep 2026 17:58:01 GMT
+server: Vercel
+strict-transport-security: max-age=63072000
+vary: RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch
+www-authenticate: Bearer
+x-matched-path: /api/setlists
+x-vercel-cache: MISS
+x-vercel-id: gru1::iad1::n4nq2-1789581481129-92349079e7bd
+
+{"error":"Authentication required","code":"AUTH_REQUIRED"}

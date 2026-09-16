@@ -1,14 +1,17 @@
-# N2 — pre-check, Fase A (estática, read-only)
+# N2 — pre-check: Fase A (estática) e Fase B (prod, leitura e 400/401/500)
 
 > **Bloco**: N2 — tela 2 do app nativo, **escrita de setlist** (criar com nome e
 > data, renomear, apagar, adicionar e remover músicas, reordenar), no
 > `apps/native`, contra o backend atual **sem alteração**.
 > **Data**: 2026-09-16. **Árvore**: `../octavia-n2`, branch `n2/precheck`, a
 > partir de `origin/main` = `9e14042`.
-> **Escopo desta fase**: inventário estático. Nenhuma escrita em prod, nenhuma
-> chamada à API do Octavia, nenhum código de app, nenhum emulador. As duas
-> leituras de rede feitas foram ao **GitHub** (`gh api …/rulesets` e
-> `…/rules/branches/main`, para o A5), não à API do app.
+> **Fase A** (commit `37e7f48`): inventário estático. Nenhuma escrita em
+> prod, nenhuma chamada à API do Octavia, nenhum código de app, nenhum
+> emulador. As leituras de rede foram ao **GitHub** (`gh api …/rulesets…`,
+> para o A5), não à API do app.
+> **Fase B + aval** (segundo commit, mesma PR #306): cinco requests a
+> `https://octavia.rocks` com a conta de audit (§11), **zero escrita**; as
+> decisões do aval em §0.1 (N2-D6…D11).
 > **Regra de leitura**: `[medido: Ax]` = comando e saída literal no anexo
 > `N2-PRECHECK-anexos/Ax-*.txt` (cada bloco começa com `$ <comando>` e termina
 > com `[exit n]`). `[hipótese]` = não medido, com dono em §12.
@@ -27,6 +30,17 @@
 | **N2-D3** | Da dívida do palco, só a div. 121 entra no N2. A div. 119, o estouro do `lruEvict` e a medição do build de release vão para um W4. |
 | **N2-D4** | Design novo: Claude Design com brief próprio, como extensão de S1/S2. A proposta §8.3 do `DESIGN-V1` (ordenar S1 pela data do show) é decidida nesse brief. |
 | **N2-D5** | O pre-check inclui o probe dos workflows de CI (A5), e a PR do pre-check é o teste real da proteção de branch. |
+
+**Aval da Fase A (Marcel, 2026-09-16):**
+
+| # | Decisão |
+|---|---|
+| **N2-D6** | Divs. 150 e 151: hotfix **agora**, em PR própria no web, antes de qualquer escrita do nativo. Sessão e worktree separadas; não é o executor do N2. |
+| **N2-D7** | Div. 145: a errata do `SETLISTS.md` (criar, editar, apagar a setlist) nasce na **PR-0 do N2** (o PRD da tela 2), copiada dos handlers medidos em §1. A div. 149 (`event_date` no `PRD-TELA-1.md:314`) vai junto. |
+| **N2-D8** | Div. 157 + T1-R10 entram no N2 como **primeira PR de código**, com o gate antes da tela: ligar o `diffByUpdatedAt` no sync, contador real no log, controle negativo com `invalidated=1` sob mock com `updated_at` diferente. A errata do A7 no `PRD-TELA-1.md` vai nessa PR. A div. 121 se resolve pelo mesmo mecanismo. |
+| **N2-D9** | O nativo **não desloga** em 401 de escrita: trata como falha da operação e mantém a sessão. Se o 401 de email não verificado for idêntico byte a byte ao de token inválido, a distinção no backend é item do Bloco D e o nativo mostra frase genérica. |
+| **N2-D10** | Fase B: **B-c, B-a, B-b e B-d aprovados**; B-e adiado para a Fase C; **B-f vetado**. A B-a ganha o `cmp` da N2-D9. |
+| **N2-D11** | O A10 continua dependendo de uso real. O aceite do N2 mede o mecanismo (criar setlist com data → o prefetch dispara) com uma setlist que o Marcel criaria de qualquer jeito, ou por fixture, com o A10 registrado como "não reproduzido". |
 
 ### 0.2 Premissas do prompt — veredito
 
@@ -457,9 +471,80 @@ mesmo aviso.
 
 ---
 
-## 11. Fase B — proposta (não executada)
+## 11. Fase B — executada (2026-09-16, 17:57:56Z–17:58:02Z)
 
-**Padrão** (o do N1-PRECHECK A3, `N1-PRECHECK-anexos/A3-probe-n1.mts.txt`):
+Aprovação: **N2-D10** (B-c, B-a, B-b, B-d; B-e adiado; B-f vetado). Uma
+execução de cada, nesta ordem, **sem nenhuma repetição**. Transcrição completa
+(comandos com o token redigido como `$TOKEN`, status, bytes, sha e os `cmp`) em
+`N2-PRECHECK-anexos/B-execucao.txt`; respostas brutas (`curl -sS -i`) em
+`B-a-1.txt`, `B-b-1.txt`, `B-b-2.txt` e `B-d-1.txt`; B-c em `B-c-1.txt`
+(veja o desvio declarado 1).
+
+**Token**: `set -a; source .env.uxaudit; source .env.local; set +a; bash $SP/fase-b.sh`.
+O script chama `node $SP/token.mjs`, que faz **só** o `signInWithPassword` do
+Firebase REST, a mesma chamada de `scripts/ux-audit/auth.ts:67-75`, **sem** o
+`POST /api/auth/session` que aquele módulo faz em seguida (`auth.ts:109-139`).
+Esse POST seria uma request a prod fora do orçamento e traria cookie, que os
+probes não podem ter → div. 159. Saída:
+`signInWithPassword status=200` ·
+`uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 claim.email_verified=true claim.sign_in_provider=password`
+(o claim é lido do payload do JWT, localmente e sem request).
+
+### 11.0 Resultado
+
+| Probe | Request | Status | Bytes (bruto · corpo) | sha256 do corpo | Garantia de zero escrita | Veredito |
+|---|---|---|---|---|---|---|
+| **B-c** | `GET /api/setlists`, bearer, sem cookie | **200** | 50.363 · **49.983** | `08ebfe43…e8cb01` | GET: um `select` e `NextResponse.json` (`route.ts:12-86`) | **conforme**. 3 setlists (`4340bf95…` 60 songs · `00c2c1f4…` 8 · `8c4413d9…` 1), as três com `performance_date: null` e `venue: null`, posições contíguas; `cache-control: private, no-store` |
+| **B-a** | `POST /api/setlists`, bearer, sem cookie, `{}` | **400** | 505 · 127 | `24ef235a…07af8c` | a validação do corpo devolve em `api-validation-middleware.ts:163`, **antes** do handler (`:167`); o INSERT fica em `route.ts:137-141` | **conforme**: `{"error":"Validation failed","code":"VALIDATION_ERROR","details":[{"field":"name","message":"Required","code":"invalid_type"}]}`. O bearer sozinho passa pela cadeia B, e **a conta de audit tem email verificado** (senão seria 401, `secure-auth-utils.ts:307-310`) |
+| **B-b1** | `POST /api/setlists`, **sem token**, `{}` | **401** | 462 · 58 | `3c1c84e3…014111` | sem credencial → `null` (`secure-auth-utils.ts:284-287`) → `authRequired()` (`middleware:111`), sem ler o corpo; handler não chamado | **conforme**; `www-authenticate: Bearer` |
+| **B-b2** | `GET /api/setlists`, **sem token** | **401** | 470 · 58 | `3c1c84e3…014111` | `firebase-server-utils.ts:169-171` → `authRequired()` (`route.ts:16-18`) | **conforme**; corpo idêntico ao da B-b1 (`cmp` → `[exit 0]`) e ao do **C-PRECHECK B.2 P1** (sha `3c1c84e3…4111`, 58 B; `cmp` com o corpo literal → `[exit 0]`) |
+| **B-d** | `DELETE /api/setlists/songs/nao-e-uuid`, bearer | **500** | 450 · 57 | `f349dba9…4b3fb9` | o primeiro acesso ao banco é o SELECT (`[songId]/route.ts:41-53`), que falha com o id malformado; a RPC de escrita (`:79`) não é alcançada | **conforme a div. 153** (hipótese confirmada nesta rota): `{"error":"Internal server error","code":"INTERNAL_ERROR"}`, contra o 400 `field:"id"` do contrato. `x-matched-path: /api/setlists/songs/[songId]` |
+
+shas completos (do arquivo bruto e do corpo) em `B-execucao.txt`.
+
+**Rate limit e `authfail` usados**: `setlist-read` 1 · `setlist-mutate` 2
+(B-a, B-d) · 2 requests anônimas, que **não** contam no `authfail`. A
+ausência de token sai em `secure-auth-utils.ts:284-287` e
+`firebase-server-utils.ts:169-171`, **antes** do `recordAuthFailure`
+(`:294` e `:176`); o `getAuthFailureLimit` do middleware só lê
+(`lib/user-rate-limit.ts:176-188`). Escrita em prod: **zero**.
+
+**Estado para a Fase C (B-c)**: o corpo tem **49.983 B**, o mesmo tamanho
+medido no N1-PRECHECK A3 (2026-09-09), com os **mesmos três `updated_at`**
+(`2026-08-29T19:43:10.287+00:00`, `2026-08-08T20:01:24.728+00:00`,
+`2026-08-08T20:01:23.522+00:00`). Nenhuma setlist da conta de audit foi escrita
+entre as duas medições. Primeiro `setlist_songs.id` de cada setlist:
+`39dc91b1…`, `879f60d4…`, `ff37eb87…` (completos em `B-c-1.txt`). **A Fase C
+compara com esta medição.**
+
+### 11.1 O `cmp` da N2-D9
+
+**A B-a devolveu 400, então o `cmp` da N2-D9 não se aplica à conta de audit**:
+ela tem email verificado, e não há 401 "com token válido e email não
+verificado" para comparar. (O `cmp B-a.body B-b1.body` foi registrado só
+como fato: `differ: char 11, line 1`, porque é um 400 contra um 401.)
+**Leitura do código, `[análise]`, não medição**: os dois 401 da cadeia B saem
+do mesmo `return authRequired()` (`api-validation-middleware.ts:111`), sem
+argumento. Por construção, o corpo deve ser idêntico byte a byte ao de token
+ausente ou inválido, e isso poria a N2-D9 no ramo "Bloco D + frase genérica".
+**A medição fica em aberto e depende de uma conta com email não verificado**
+(H-N2-11, dono: Marcel).
+
+### 11.2 Desvios declarados
+
+1. **O corpo da B-c não foi commitado.** O `B-c-1.txt` traz os **headers
+   literais** e um **resumo gerado do corpo** (ids, datas, venue, n de songs,
+   contiguidade, `updated_at`, `created_at`, tamanho do nome). O corpo tem
+   `content_data`/`file_url` da biblioteca de audit, e o precedente é o
+   N1-PRECHECK A3, que também não gravou corpo de música. Tamanho e sha do
+   corpo inteiro (49.983 B, `08ebfe43…`) permitem conferir uma cópia
+   futura. Isso vai contra a letra do aval ("corpo salvo em anexo").
+2. **O token não veio do `scripts/ux-audit/auth.ts` inteiro**: só do passo
+   `signInWithPassword` dele. O motivo está acima (div. 159).
+
+### 11.3 Desenho dos probes (escrito antes da execução — mantido como estava)
+
+**Padrão proposto** (o do N1-PRECHECK A3, `N1-PRECHECK-anexos/A3-probe-n1.mts.txt`):
 um script `tsx` no scratchpad, env carregado na linha de comando
 (`set -a; source .env.uxaudit; source .env.local; set +a`),
 `signInWithPassword` (Firebase REST) com a **conta de audit** → `idToken`.
@@ -543,6 +628,19 @@ corpo de música.
 | B-e | `PUT https://octavia.rocks/api/setlists/<uuid da B-c>` com `{"performance_date":"2026-02-31"}` | medir a div. 154: **500 ou 400?** | **risco declarado**: o UPDATE **é executado**. Se o Postgres aceitar a data (não deveria, `date` rejeita 31/02), grava a data e o `updated_at`. Restaurar exigiria outro PUT, e o `updated_at` **não volta**. **Recomendação: adiar para a Fase C** | 1 `setlist-mutate` |
 | B-f | `DELETE https://octavia.rocks/api/setlists/<uuid v4 gerado na hora>` com bearer | medir a div. 151: **200 `{success:true}` para inexistente** | **risco declarado**: executa dois `DELETE` de verdade (`[id]/route.ts:340-355`), cada um com filtro por um uuid recém-gerado → 0 linhas, salvo colisão de uuid v4. **Recomendação: vetar em prod**; a leitura do código basta | 1 `setlist-mutate` |
 
+**Garantia de zero escrita da B-d, escrita ANTES da execução (aval, Parte 2)**:
+`DELETE /api/setlists/songs/nao-e-uuid` → wrapper extrai `songId` do path
+(`[songId]/route.ts:96-97`) → autenticação (`:27-31`) → rate limit (`:32-33`)
+→ **o primeiro acesso ao banco é um SELECT** (`:41-53`,
+`.from("setlist_songs").select(…).eq("id", songId).single()`). Um id que não é
+uuid falha **nesse select** (o Postgres não converte `nao-e-uuid` para `uuid`,
+22P02); o erro não é `PGRST116` (`:59`), então `throw songError` (`:63`) →
+`catch` → `internalError()` (`:88-90`). A única escrita da rota é a RPC
+`remove_setlist_song` (`:79`), **depois** do select e da checagem de dono
+(`:70-72`); ela não é alcançada. A rota **não recebe id de setlist**, e é da
+**cadeia A** (sem exigência de email verificado, `firebase-server-utils.ts:137-181`)
+→ div. 160.
+
 **A div. 150 (apagar músicas de setlist alheia) NÃO deve ser provada em
 prod**: a prova exigiria uma setlist de outra conta. Se o Marcel quiser prova
 empírica, o lugar é um teste de rota com o mock factory (a própria correção
@@ -557,37 +655,41 @@ nasce com esse teste) ou o preview com duas contas de audit.
 
 | # | Hipótese | Dono | Como fecha |
 |---|---|---|---|
-| **H-N2-1** | a conta de **audit** tem `emailVerified: true` | executor (Fase B) | B-a: 400 = verificada; 401 = não verificada |
-| **H-N2-2** | a conta **principal** tem `emailVerified: true` | Marcel (console do Firebase) | se for `false`, toda escrita da cadeia B desloga o Marcel no tablet (div. 152) |
-| **H-N2-3** | `DELETE /api/setlists/songs/<não-uuid>` (e addSong/reorder com id de path malformado) → 500 | executor | B-d (opcional) ou teste de rota |
+| **H-N2-1** | a conta de **audit** tem `emailVerified: true` | — | **FECHADA, verdadeira** (Fase B): a B-a deu **400**, não 401, e o claim do token diz `email_verified=true` (`B-execucao.txt`). A Fase C pode usar a conta de audit |
+| **H-N2-2** | a conta **principal** tem `emailVerified: true` | Marcel (console do Firebase) | aberta. Pela N2-D9, um `false` já não desloga o nativo; a escrita da cadeia B falharia com a frase genérica |
+| **H-N2-3** | id de path malformado → 500 nas três rotas da div. 153 | executor | **removeSong: FECHADA, verdadeira** (B-d: 500 `INTERNAL_ERROR`). **addSong e reorder: abertas** (só leitura de código; nenhum probe aprovado). O nativo sempre manda ids reais |
 | **H-N2-4** | a política de nova tentativa das escritas do N2 é "nenhuma automática; a falha aparece e o usuário decide" (N2-D2), e o risco de setlist ou bis duplicado sob rede instável é aceito | Marcel (desenho) | decisão no desenho do N2; a alternativa exige idempotência no servidor, o que contraria "backend sem alteração" |
 | **H-N2-5** | depois de cada escrita, o nativo reconcilia com a opção (c) de §6.1: `GET /api/setlists` só de setlists | Marcel (desenho) | decisão no desenho; o custo está em §6.1 |
 | **H-N2-6** | `performance_date` impossível (`2026-02-31`) → 500 | executor | B-e na Fase C, ou teste de rota |
 | **H-N2-7** | reordenar com o palco aberto muda a música que o `Stage {position}` aponta | executor (desenho/aceite) | decisão do brief: o palco é endereçado por `setlist_songs.id` ou a edição bloqueia com o palco aberto |
-| **H-N2-8** | o A10 com dado real **continua não reproduzido** no N2 (decisão de 2026-09-11) | Marcel | decisão explícita se o N2 for usado para fechá-lo |
+| **H-N2-8** | o A10 com dado real **continua não reproduzido** no N2 (decisão de 2026-09-11) | Marcel | **decidido (N2-D11)**: o aceite do N2 mede o mecanismo (setlist com data → o prefetch dispara) com uma setlist de uso real ou por fixture, com o A10 "não reproduzido" |
 | **H-N2-9** | o limite `setlist-mutate` (120/15 min) basta para montar uma setlist no nativo, com um POST por música como no web | executor | conta no desenho: 60 músicas + create + reorder = 62; duas montagens seguidas estouram |
 | **H-N2-10** | o design (N2-D4) cabe sem mudar `SetlistDTO` além de campos que a API já devolve (`description`, `notes` existem na resposta e não estão no DTO) | Claude Design / executor | brief |
+| **H-N2-11** | o 401 da cadeia B para **email não verificado** é idêntico byte a byte ao 401 de token ausente/inválido (sha `3c1c84e3…`) — `[análise]`: os dois saem de `authRequired()` sem argumento (`api-validation-middleware.ts:111`) | **Marcel** (precisa de uma conta com email não verificado; a de audit é verificada) | medição pendente; decide o ramo da N2-D9 (se idênticos: Bloco D + frase genérica) |
 
 ---
 
-## 13. Divergências (144 em diante)
+## 13. Divergências (144 a 160)
 
 | # | Origem | Divergência | Estado |
 |---|---|---|---|
 | **144** | **P** | **A numeração começa em 144, não em 143.** O prompt diz "a 142 foi a última do W3", mas o W3 registra a **div. 143** (T, "a saída que o executor jogou fora", `W3-ENCERRAMENTO.md:230`; `W3-anexos/README.md:13`: "Divergências desta PR: 140 a 143") `[medido: A0]` | registrada; numeração ajustada |
 | **145** | **P** | **P2 é só parcialmente verdadeira**: o `SETLISTS.md` não contrata `POST /api/setlists`, `PUT /api/setlists/[id]` nem `DELETE /api/setlists/[id]` (§2.2 L1–L3), nem fala de conflito entre dois writers (L4) ou de idempotência (L6) | registrada; completar o contrato é tarefa de doc do N2, se o Marcel quiser |
 | **146** | **P** | **P6**: a div. 121 é do T1-R17 (indicador "garantido offline"), não do "prefetch por data" (T1-R15), e fala do `updated_at` de **content**, não do de setlist | registrada |
-| **147** | **P** | **"herança 6 do W3" não existe**: o `W3-ENCERRAMENTO.md` não tem seção de herança (`grep -ni heran` → `[exit 1]`); o item 6 da dívida (§7) é o `parcial.delete()`; a poda do g1 é a div. 141 (§3). E **não há `pnpm gate:g1`**; o equivalente é `sh apps/native/scripts/g1.sh` | registrada; o A10 foi feito com o script |
+| **147** | **P** | **"herança 6 do W3" não existe**: o `W3-ENCERRAMENTO.md` não tem seção de herança (`grep -ni heran` → `[exit 1]`); o item 6 da dívida (§7) é o `parcial.delete()`; a poda do g1 é a div. 141 (§3). E **não há `pnpm gate:g1`**; o equivalente é `sh apps/native/scripts/g1.sh`. **Origem (aval, 2026-09-16)**: as duas referências vieram do **handoff do Marcel (memória de sessão)**, não do `W3-ENCERRAMENTO.md`. É exatamente o caso que a regra "estado de bloco é artefato de repositório" (`CLAUDE.md`) existe para pegar: o rastro citado como se estivesse na branch | registrada; o A10 foi feito com o script |
 | **148** | **P** | O A4 pede busca em `domains/`, **que não existe** (`ls -d … domains …` → `No such file or directory`) | registrada |
 | **149** | **D** | `PRD-TELA-1.md:314` ainda aponta `types/setlist.ts:40 event_date` como dead code; a interface saiu na B7-PR2 (o arquivo tem 37 linhas e só um comentário em `:35-37`) | registrada; errata do PRD na primeira PR do N2 que tocar o PRD |
-| **150** | **A** | **`DELETE /api/setlists/[id]` apaga as músicas de QUALQUER setlist.** `[id]/route.ts:340-343` roda `delete from setlist_songs where setlist_id = <id>` **sem filtro de dono**, com o client de service role, **antes** do DELETE de `setlists` filtrado por `user_id` (`:351-355`). Qualquer usuário autenticado (cadeia A: nem exige email verificado) que conheça o uuid de uma setlist alheia a **esvazia** e recebe `200 {"success":true}`. O B6-DESENHO:203 inventariou a linha como "redundante com o cascade" e não viu a falta do filtro. O teste `[id]/__tests__/route.test.ts:351-363` só verifica o status. Atenuante: uuid v4 não se adivinha. **Não corrigido** (esta PR é só docs) e **não provado em prod** (§11) | **registrada — achado de segurança**; correção (gate de posse antes, ou remover o DELETE explícito e deixar o cascade trabalhar) é decisão do Marcel, fora da lista fechada |
-| **151** | **A** | `DELETE /api/setlists/[id]` para setlist inexistente ou alheia → **200 `{success:true}`**, não 404 (`:357-362`: um DELETE que afeta 0 linhas não é erro). As outras rotas por id devolvem 404. Para o nativo, "apaguei" e "já não existia" ficam iguais | registrada; o nativo pode tratar o DELETE como idempotente |
-| **152** | **A / X** | **Uma escrita da cadeia B com email não verificado desloga o usuário do nativo.** A cadeia B devolve 401 (`secure-auth-utils.ts:307-310`); o `authFetch` renova, repete e chama `onAuthFailure` (`core/auth-fetch.ts:55-64`) → `signOut` (`api.ts:83-86`, `session.ts:77-78`). As leituras (cadeia A) funcionam para a mesma conta. Além disso, apagar e remover (cadeia A) aceitam o que criar e adicionar (cadeia B) recusam | registrada; depende de H-N2-1/H-N2-2; a saída (política única no B1.5, ou o nativo checar `emailVerified` antes) é decisão do Marcel |
-| **153** | **A** | Três rotas de escrita **não validam o id do path**: addSong (`songs/route.ts`), reorder (`order/route.ts`), removeSong (`[songId]/route.ts:52`); `grep objectId\|commonSchemas` nos três → `[exit 1]`. Id malformado vai cru ao Postgres → 500 `[hipótese H-N2-3]`, contra "id de path malformado → 400 `field:"id"`" (`CONTRATO-DE-ERRO.md:32-33`). O web chega a esse caminho (div. 156) | registrada |
+| **150** | **A** | **`DELETE /api/setlists/[id]` apaga as músicas de QUALQUER setlist: EXPLORÁVEL.** `[id]/route.ts:340-343` roda `delete from setlist_songs where setlist_id = <id>` **sem filtro de dono**, **antes** do DELETE de `setlists` filtrado por `user_id` (`:351-355`). **O cliente é o de service role**: `const supabase = getSupabaseServiceClient()` (`[id]/route.ts:337`), criado com `process.env.SUPABASE_SERVICE_ROLE_KEY` (`lib/supabase-service.ts:7`, `:25-34`). A RLS de `setlist_songs` **está ligada** (`schema.dump.sql:547`), e a policy de dono (`"User owns setlist songs"`, `:526-531`, `auth.jwt() ->> 'uid'`) barraria o DELETE, **mas não se aplica a este cliente**: `"Service role access to setlist songs"` (`:485`, sem `FOR`, logo vale para todos os comandos, `USING (auth.role() = 'service_role')`) libera tudo para ele, e as policies permissivas se somam por OR. (O papel `service_role` do Supabase também ignora RLS por atributo da plataforma, `[hipótese]` fora do dump: `grep -i "bypassrls\|FORCE ROW LEVEL"` → `[exit 1]`. O veredito não depende disso.) **Veredito: explorável, não defesa em profundidade.** Qualquer usuário autenticado (cadeia A: nem exige email verificado) que conheça o uuid de uma setlist alheia a **esvazia** e recebe `200 {"success":true}`. O B6-DESENHO:203 inventariou a linha como "redundante com o cascade" e não viu a falta do filtro; o teste `[id]/__tests__/route.test.ts:351-363` só verifica o status. Atenuante: uuid v4 não se adivinha. `[medido: B-aval-150.txt]` | **registrada, achado de segurança**. Correção: **hotfix no web em PR própria, fora desta sessão (N2-D6)**. Não corrigido aqui; não provado em prod |
+| **151** | **A** | `DELETE /api/setlists/[id]` para setlist inexistente ou alheia → **200 `{success:true}`**, não 404 (`:357-362`: um DELETE que afeta 0 linhas não é erro). As outras rotas por id devolvem 404. Para o nativo, "apaguei" e "já não existia" ficam iguais | registrada; **hotfix junto com a 150 (N2-D6)** |
+| **152** | **A / X** | **Uma escrita da cadeia B com email não verificado desloga o usuário do nativo.** A cadeia B devolve 401 (`secure-auth-utils.ts:307-310`); o `authFetch` renova, repete e chama `onAuthFailure` (`core/auth-fetch.ts:55-64`) → `signOut` (`api.ts:83-86`, `session.ts:77-78`). As leituras (cadeia A) funcionam para a mesma conta. Além disso, apagar e remover (cadeia A) aceitam o que criar e adicionar (cadeia B) recusam | registrada. **N2-D9**: o nativo não desloga em 401 de escrita. A conta de audit tem email verificado (H-N2-1); a principal segue em H-N2-2; a identidade byte a byte fica em H-N2-11 |
+| **153** | **A** | Três rotas de escrita **não validam o id do path**: addSong (`songs/route.ts`), reorder (`order/route.ts`), removeSong (`[songId]/route.ts:52`); `grep objectId\|commonSchemas` nos três → `[exit 1]`. Id malformado vai cru ao Postgres → 500 (**medido em prod na removeSong, B-d**; addSong/reorder por leitura, H-N2-3), contra "id de path malformado → 400 `field:"id"`" (`CONTRATO-DE-ERRO.md:32-33`). O web chega a esse caminho (div. 156) | registrada |
 | **154** | **A** | A regex de `performance_date` (`api-schemas.ts:324-326`) aceita datas que não existem no calendário (`2026-02-31`), e o Postgres `date` as rejeita → 500 em vez de 400 `[hipótese H-N2-6]` | registrada; o seletor de data do nativo não gera esse valor |
 | **155** | **A** | O reorder tem teto de 100 (`api-schemas.ts:364`), o addSong não tem. Uma setlist com mais de 100 músicas **não pode ser reordenada** (400). O `songs[]` do create também para em 100 (`:345`) | registrada; insumo do desenho |
 | **156** | **A** | Dois defeitos do web que o nativo não copia: remove por `content.id` com filtro de todas as ocorrências (`setlist-manager.tsx:207,214`), que com bis deixa tela e banco divergentes; e id local falso `${setlist.id}-${songId}` depois do add (`:179`), que ao remover manda um id que não é uuid para a W6 (div. 153) | registrada; fora do escopo (web) |
-| **157** | **A / T** | **O T1-R10 não está ligado no app.** `diffByUpdatedAt` (`core/sync.ts:87`) não tem chamador fora dos testes; `store.ts:123-124` loga `invalidated=0` **literal**. O aceite A7 "`invalidated=0` no device" (`V1-ENCERRAMENTO.md:122`; `LOGS-OCTAVIA.md:38`) lê uma constante, **não pode reprovar**. Na prática, o app substitui sempre | registrada; entra junto com a 121 (N2-D3), porque as duas precisam do mesmo `updated_at` do último sync |
+| **157** | **A / T** | **O T1-R10 não está ligado no app.** `diffByUpdatedAt` (`core/sync.ts:87`) não tem chamador fora dos testes; `store.ts:123-124` loga `invalidated=0` **literal**. O aceite A7 "`invalidated=0` no device" (`V1-ENCERRAMENTO.md:122`; `LOGS-OCTAVIA.md:38`) lê uma constante, **não pode reprovar**. Na prática, o app substitui sempre | registrada; **caso 21** do padrão em `LOGS-OCTAVIA.md`; correção na **primeira PR de código do N2 (N2-D8)**, que também resolve a 121 |
+| **158** | **P** | **O aval numera as hipóteses de outro jeito que o documento.** Ele chama de "H-N2-2 confirmada para audit" o que aqui é a **H-N2-1** (email verificado da conta de audit), e de "H-N2-3, dono Marcel" a pergunta sobre uma conta não verificada, que aqui é a nova **H-N2-11** (a H-N2-3 do documento é a do id malformado) | registrada; vale a numeração do documento |
+| **159** | **P** | **"O mesmo mecanismo das Fases B do C e do N1 (`scripts/ux-audit/`)" são dois mecanismos.** O C usou o `auth.ts` inteiro, que depois do `signInWithPassword` faz `POST /api/auth/session` e recebe cookie (`scripts/ux-audit/auth.ts:109-139`; `C-PRECHECK.md:1163`: "o único POST foi o `/api/auth/session` do `signIn`"). O N1 usou um script próprio **só** com o `signInWithPassword` (`N1-PRECHECK-anexos/A3-probe-n1.mts.txt`). Usei o do N1: o do C somaria uma request a prod fora do orçamento e um cookie que os probes não podem ter | registrada; §11 |
+| **160** | **P** | **A B-d do aval pressupõe duas coisas que a rota não tem.** (1) "setlist real da B-c": `DELETE /api/setlists/songs/[songId]` **não recebe id de setlist** (`[songId]/route.ts:95-106`); (2) "se a B-a der 401, a B-d vai devolver 401 também": a removeSong é da **cadeia A** (`:27`, `requireAuthServer`), que **não** exige email verificado; ela daria 500 mesmo para uma conta não verificada | registrada; a B-d rodou com `songId=nao-e-uuid` |
 
 ---
 
@@ -609,3 +711,7 @@ exit), não fonte. Onde a prosa e o anexo divergirem, vale o anexo.
 | `A8-s1-s2.txt` | A8 (inclui o G2/G3 na árvore limpa) |
 | `A9-a10-h17.txt` | A9 |
 | `A10-g1-aviso.txt` | A10 |
+| `B-aval-150.txt` | aval 1.2-a: cliente Supabase do DELETE e RLS/policies de `setlist_songs` (div. 150) |
+| `B-execucao.txt` | Fase B: transcrição (token redigido), status, bytes e sha de cada probe, os `cmp` |
+| `B-c-1.txt` | B-c: headers literais + resumo do corpo (o corpo não foi commitado, §11.2) |
+| `B-a-1.txt`, `B-b-1.txt`, `B-b-2.txt`, `B-d-1.txt` | respostas brutas (`curl -sS -i`) |
