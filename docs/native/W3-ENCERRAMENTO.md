@@ -274,4 +274,49 @@ Extremos **intactos pela 15ª vez**. A mediana volta a 11m53s, e isso é
 11m53s conforme a paridade de `n`. **Citar a faixa, não a mediana** (div. 80).
 
 A corrida do `native.yml` na PR **#304** **não entra na população**: a branch era
-artificial e foi apagada. Registrado para não virar arqueologia.
+artificial e foi apagada (e o job foi cancelado pelo `--delete-branch`, com o
+`Type-check apps/native` já concluído em verde, que era o que interessava).
+
+### A 16ª existe, está medida, e fica RETIDA
+
+Pelo precedente do W1 — *"o encerramento do W1 segurou a corrida da própria #301
+de propósito, pelo regresso"* —, o bloco não incorpora a sua própria corrida.
+Mas o número fica **escrito aqui**, para que o próximo não precise cavar:
+
+```
+run 35045454235 · PR #305 (a desta W3) · pull_request
+  android-debug-apk  success  2026-09-16T01:47:25Z -> 2026-09-16T01:57:09Z
+  => 9m44s
+```
+
+**Se entrar**: `n=16 · piso 9m16s · teto 14m11s · mediana 11m49s · média 11m34s`.
+Extremos intactos pela 16ª vez; a mediana volta a 11m49s — **terceira
+confirmação seguida** da previsão de paridade que a W2 escreveu. E é a **quarta
+corrida de `v4`** (`v3 n=12 + v4 n=4`), a mais rápida das quatro e a 3ª mais
+rápida de todas: segue sendo evidência contra *"o v4 é sistematicamente
+diferente"*.
+
+### E o custo do job novo, que agora tem `n = 2`
+
+```
+w3/cn-ci  (reprovando)  01:39:02Z -> 01:39:15Z   13 s
+#305      (passando)    01:47:25Z -> 01:47:34Z    9 s
+```
+
+Duas medições, as duas abaixo de 15 s, contra um `build` de 3m06s e um APK de
+9m44s no mesmo relógio de parede. O job `gates-nativos` **não custa tempo de
+PR**: ele termina antes de o `pnpm install` do `build` acabar. `n = 2`, dito
+assim, porque **uma medição não vira referência sem `n`**.
+
+**E a corrida verde da #305 fecha o par do §2 no próprio CI**: o mesmo job que
+ficou vermelho com o defeito plantado ficou verde sem ele, e desta vez o **G2/G3
+chegou a rodar** (no CN o G1a falhou antes e o job parou):
+
+```
+G2 — testIDs  antes=43  depois=43    G2: antes ⊆ depois ✓
+G3 — linhas log( antes=57  depois=57
+```
+
+É a regra 4 aplicada ao CI e não só à bancada: **um CN que passa é tão suspeito
+quanto um gate que nunca acusa** — e aqui os dois lados foram vistos, no CI, com
+os dois vereditos.
