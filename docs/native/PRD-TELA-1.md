@@ -311,7 +311,7 @@ Baselines do web a **não regredir** (PLANO C2): 1ª música em tela cheia ≤ 3
 | Zod de `content_data` por `content_type` na escrita | C-D7; §2.6 | contrato | Bloco B (mini-item; não pré-requisito da tela 1) |
 | `GET /api/debug/config` sem auth (404 só por `NODE_ENV`) | Fase A divergência 4 | superfície | Bloco B (classe da B1.0 — remoção) |
 | `STORAGE.md` diz "Bearer" onde a rota aceita ambos e exige email verificado | divergência 5 | doc | Bloco B (correção de contrato, junto do contrato de auth B7) |
-| `types/setlist.ts:40 event_date` (coluna inexistente, sem consumidor) | divergência 6 | dead code | Bloco B (housekeeping) |
+| ~~`types/setlist.ts:40 event_date` (coluna inexistente, sem consumidor)~~ — **removido na B7-PR2** (B7-D4): o arquivo tem 37 linhas e `event_date` só sobrevive num comentário (`types/setlist.ts:36`) — errata N2-PR0, div. 149 | divergência 6 | dead code | ~~Bloco B (housekeeping)~~ **fechado (B7-PR2)** |
 | `lib/api-schemas.ts:34` enum falso `commonSchemas.contentType` (sem consumidor) | divergência 7 | dead code | Bloco B (housekeeping) |
 | `scripts/ux-audit/auth.ts:109` comentário stale (5/15min) | divergência 8 | doc | Bloco B (housekeeping) |
 | Contrato escrito de auth do cliente (header, prefixo literal, rotas com email verificado) | C-D1; PLANO B7 | doc | Bloco B (B7 — pode nascer copiando o §3 deste PRD) |
