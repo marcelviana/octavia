@@ -137,7 +137,13 @@ export default function App(): React.JSX.Element {
       anterior.temCache ? { content: anterior.content, setlists: anterior.setlists } : null,
     )
     if (r.kind === 'ok') {
-      const contentById = new Map(r.content.map((c) => [c.id, c]))
+      // T1-R10: conjunto de content inalterado volta com a MESMA referência
+      // (`reconcileByUpdatedAt`), e o índice por id é reaproveitado — senão
+      // todo derivado que o lê se recriaria num sync com `invalidated=0`.
+      const contentById =
+        r.content === anterior.content
+          ? anterior.contentById
+          : new Map(r.content.map((c) => [c.id, c]))
       setDados({
         setlists: r.setlists,
         content: r.content,

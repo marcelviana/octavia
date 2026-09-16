@@ -1,0 +1,18 @@
+# CN do T1-R10 DEPOIS do conserto (commit 2 da N2-PR1). Rastro; a fonte é o teste.
+$ pnpm exec vitest run --project native apps/native/test/sync-t1r10.test.ts --reporter=verbose
+
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-n2-pr1
+
+ ✓ |native| apps/native/test/sync-t1r10.test.ts > T1-R10 — dois syncs sem mudança no servidor > o segundo loga invalidated=0 nos dois conjuntos 143ms
+ ✓ |native| apps/native/test/sync-t1r10.test.ts > T1-R10 — dois syncs sem mudança no servidor > e não recria derivado nenhum: os conjuntos devolvidos são os MESMOS do anterior 145ms
+ ✓ |native| apps/native/test/sync-t1r10.test.ts > T1-R10 — CN: o servidor devolve updated_at diferente para um item > content: invalidated=1, e o índice de busca não tem mais a versão velha 238ms
+ ✓ |native| apps/native/test/sync-t1r10.test.ts > T1-R10 — CN: o servidor devolve updated_at diferente para um item > setlist renomeada no web: kind=setlists invalidated=1, e volta a 0 no sync seguinte 205ms
+ ✓ |native| apps/native/test/sync-t1r10.test.ts > T1-R10 — CN: o servidor devolve updated_at diferente para um item > item novo e item removido também invalidam (entram e saem dos derivados) 214ms
+ ✓ |native| apps/native/test/sync-t1r10.test.ts > T1-R10 — CN: o servidor devolve updated_at diferente para um item > primeiro sync, sem cache anterior: todo item é novo 107ms
+
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+   Start at  19:01:15
+   Duration  1.36s (transform 135ms, setup 0ms, import 141ms, tests 1.11s, environment 0ms)
+
+exit=0

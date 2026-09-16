@@ -1,0 +1,117 @@
+# Gates do commit 2 da N2-PR1 (árvore de trabalho antes do commit). Rastro.
+
+## suíte inteira: pnpm test:unit
+stdout | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Navigation Response Time Tests (<100ms requirement) > should navigate between songs in under 100ms
+stdout | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Navigation Response Time Tests (<100ms requirement) > should handle rapid navigation without performance degradation
+stdout | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Content Rendering Performance Tests > should render heavy content under performance threshold
+stdout | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Content Rendering Performance Tests > should handle content switching with consistent performance
+stdout | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Performance Under Load Tests > should maintain responsiveness with large setlist
+stderr | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Performance Under Load Tests > should handle concurrent UI updates efficiently
+stderr | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Performance Under Load Tests > should handle concurrent UI updates efficiently
+stderr | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Performance Under Load Tests > should handle concurrent UI updates efficiently
+stderr | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Performance Under Load Tests > should handle concurrent UI updates efficiently
+stderr | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Performance Under Load Tests > should handle concurrent UI updates efficiently
+stderr | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Performance Under Load Tests > should handle concurrent UI updates efficiently
+stderr | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Performance Under Load Tests > should handle concurrent UI updates efficiently
+stderr | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Performance Under Load Tests > should handle concurrent UI updates efficiently
+stderr | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Performance Under Load Tests > should handle concurrent UI updates efficiently
+stderr | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Performance Under Load Tests > should handle concurrent UI updates efficiently
+stderr | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Performance Under Load Tests > should handle concurrent UI updates efficiently
+stdout | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Performance Under Load Tests > should handle concurrent UI updates efficiently
+stderr | tests/security/auth-penetration-testing.test.ts > Authentication and Authorization Penetration Tests > Authentication Bypass Attempts > should prevent session fixation attacks
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A03:2021 – Injection Attacks > should prevent LDAP injection
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A03:2021 – Injection Attacks > should prevent LDAP injection
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A03:2021 – Injection Attacks > should prevent LDAP injection
+stdout | tests/performance/performance-mode-responsiveness.test.tsx > Performance Mode Responsiveness Tests > Real-World Performance Scenarios > should handle typical live performance session
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A07:2021 – Identification and Authentication Failures > should prevent credential stuffing attacks
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A07:2021 – Identification and Authentication Failures > should prevent credential stuffing attacks
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A07:2021 – Identification and Authentication Failures > should prevent credential stuffing attacks
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A07:2021 – Identification and Authentication Failures > should prevent session fixation
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A07:2021 – Identification and Authentication Failures > should implement account lockout after failed attempts
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A08:2021 – Software and Data Integrity Failures > should verify API response integrity
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+stdout | tests/security/token-blacklist-concurrency.test.ts > Token Blacklisting Concurrency Tests > Database Consistency Under Load > should handle database failures gracefully
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Prototype Pollution Prevention > should prevent prototype pollution in content data
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Prototype Pollution Prevention > should prevent prototype pollution in content data
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Prototype Pollution Prevention > should prevent prototype pollution in content data
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Prototype Pollution Prevention > should prevent prototype pollution in content data
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Large Payload Protection > should reject oversized payloads
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Unicode and Encoding Attacks > should handle Unicode-encoded attacks
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Unicode and Encoding Attacks > should handle Unicode-encoded attacks
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Unicode and Encoding Attacks > should handle Unicode-encoded attacks
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Unicode and Encoding Attacks > should handle Unicode-encoded attacks
+ Test Files  95 passed | 4 skipped (99)
+      Tests  838 passed | 85 skipped (923)
+
+## pnpm lint
+✔ No ESLint warnings or errors
+
+## tsc
+$ pnpm exec tsc -p packages/core/tsconfig.json --noEmit → exit 0
+$ (apps/native) pnpm type-check → exit 0
+
+## gate:a20 / gate:icones
+  vocabulário: 45 termos · isenções do produto: 9
+  literais em posição de texto examinados: 72
+  acusações: 0
+  §6.3 tab: em20 4 cordas · normal 6 cordas · markup de 20 dp no telas.html: idêntico
+  fora do catálogo: 4/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  acusações: 0
+
+## G1
+base=984051d8dd8c489d3bdf5ed7ce58166092dcb769 head=WORKTREE
+G1a — diff vazio em 31 arquivos DERIVADOS de apps/native + packages/core/src
+      escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+      menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+      EXCEÇÕES DECLARADAS (o escopo desta PR):
+        packages/core/src/sync.ts
+        apps/native/src/sync.ts
+        apps/native/src/store.ts
+        apps/native/App.tsx
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+  G1b: só adição ✓
+exit=0
+
+## G2/G3
+G2 — testIDs  antes=43  depois=43
+  G2: antes ⊆ depois ✓
+G3 — linhas log( antes=57  depois=57
+  linhas que SUMIRAM (cada uma tem de ser errata declarada):
+      apps/native/src/store.ts	log(`cache write kind=content n=${snapshot.content.length} invalidated=0`)
+      apps/native/src/store.ts	log(`cache write kind=setlists n=${snapshot.setlists.length} invalidated=0`)
+  G3: as que sumiram estão na lista de erratas ✓
+  linhas NOVAS (declarar no commit e no catálogo):
+      apps/native/src/store.ts	log(`cache write kind=content n=${snapshot.content.length} invalidated=${invalidated.content}`)
+      apps/native/src/store.ts	log(`cache write kind=setlists n=${snapshot.setlists.length} invalidated=${invalidated.setlists}`)
+exit=0
+
+## Controle do G3 com errata: apagar a linha nova de content do store.ts
+## (div. 189 — o G3 NÃO reprova; quem pega é o CN do vitest)
+G2 — testIDs  antes=43  depois=43
+  G2: antes ⊆ depois ✓
+G3 — linhas log( antes=57  depois=56
+  linhas que SUMIRAM (cada uma tem de ser errata declarada):
+      apps/native/src/store.ts	log(`cache write kind=content n=${snapshot.content.length} invalidated=0`)
+      apps/native/src/store.ts	log(`cache write kind=setlists n=${snapshot.setlists.length} invalidated=0`)
+  G3: as que sumiram estão na lista de erratas ✓
+  linhas NOVAS (declarar no commit e no catálogo):
+      apps/native/src/store.ts	log(`cache write kind=setlists n=${snapshot.setlists.length} invalidated=${invalidated.setlists}`)
+exit=0
