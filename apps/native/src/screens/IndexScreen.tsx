@@ -197,7 +197,7 @@ export function IndexScreen({
           style={styles.botaoIcone}
           onPress={onVoltar}
           accessibilityRole="button"
-          accessibilityLabel={posicaoAtual === null ? 'Voltar para as setlists' : 'Voltar para o palco'}
+          accessibilityLabel={posicaoAtual === null ? 'Back to setlists' : 'Voltar para o palco'}
           testID="voltar"
         >
           <Icone nome="voltar" tamanho={24} cor={dark.text} />
