@@ -336,27 +336,25 @@ const deleteSetlistHandler = async (
 
     const supabase = getSupabaseServiceClient()
 
-    // Delete all songs in the setlist first
-    const { error: songsError } = await supabase
-      .from("setlist_songs")
-      .delete()
-      .eq("setlist_id", setlistId)
-
-    if (songsError) {
-      logger.error("Error deleting setlist songs:", songsError)
-      throw songsError
-    }
-
-    // Then delete the setlist
-    const { error } = await supabase
+    // Hotfix divs. 150/151: o delete com filtro de dono é o gate. As
+    // linhas de setlist_songs saem pelo FK `setlist_songs_setlist_id_fkey
+    // ON DELETE CASCADE` — o delete explícito por setlist_id (sem filtro
+    // de dono) esvaziava setlist alheia e saiu.
+    const { data: deleted, error } = await supabase
       .from("setlists")
       .delete()
       .eq("id", setlistId)
       .eq("user_id", user.uid)
+      .select("id")
 
     if (error) {
       logger.error("Error deleting setlist:", error)
       throw error
+    }
+
+    // inexistente e alheia: a mesma resposta (sem oráculo)
+    if (!deleted || deleted.length === 0) {
+      return notFound('Setlist not found')
     }
 
     return NextResponse.json({ success: true })

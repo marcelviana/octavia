@@ -303,7 +303,7 @@ describe('/api/setlists/[id]', () => {
       expect(response.status).toBe(401)
     })
 
-    it('returns 500 on database error during delete (renomeado no B3 PR-3a: delete de inexistente real é 200 idempotente, sem .single(); o cenário do factory simula ERRO de banco, não ausência)', async () => {
+    it('returns 500 on database error during delete (o cenário do factory simula ERRO de banco, não ausência; inexistente é 404 desde o hotfix das divs. 150/151)', async () => {
       mockRequireAuthServerSecure.mockResolvedValue(mockUser)
       
       // Setup scenario where setlist is not found
@@ -359,7 +359,7 @@ describe('/api/setlists/[id]', () => {
       })
       const response = await DELETE(request)
 
-      expect(response.status).toBe(200) // API handles this gracefully
+      expect(response.status).toBe(404) // hotfix divs. 150/151: alheia = inexistente, sem oráculo
     })
   })
 })

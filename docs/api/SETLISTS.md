@@ -67,6 +67,25 @@ cobria escrita — o consumidor da leitura é a tela 1 do nativo (PRD §2).
 - Erros: 401 `AUTH_REQUIRED`; 429 `RATE_LIMITED`; 500 `INTERNAL_ERROR`
   ([`CONTRATO-DE-ERRO.md`](CONTRATO-DE-ERRO.md)).
 
+### `DELETE /api/setlists/[id]` — apagar setlist (hotfix das divs. 150/151; **parcial**)
+
+> **Parcial**: só o DELETE. O contrato das demais escritas da setlist
+> (`POST /api/setlists`, `PUT /api/setlists/[id]`) é errata da PR-0 do
+> N2 (N2-D7), não do hotfix.
+
+- Auth obrigatória (cadeia A); família `setlist-mutate`. Id não-uuid →
+  `400 VALIDATION_ERROR` com `field: "id"`.
+- **Gate de dono**: um único `DELETE` em `setlists` filtrado por `id` E
+  `user_id`, com `RETURNING id`. Zero linhas → `404 Setlist not found`
+  (`NOT_FOUND`) — setlist inexistente-ou-alheia são **a mesma resposta**
+  (sem oráculo, byte-idênticas por construção: o mesmo ramo de código).
+- As linhas de `setlist_songs` saem pelo FK
+  `setlist_songs_setlist_id_fkey ON DELETE CASCADE`; a rota **não** apaga
+  `setlist_songs` por conta própria (o delete explícito por `setlist_id`,
+  sem filtro de dono, era a div. 150 e saiu).
+- 200: `{ "success": true }`. Delete repetido da mesma setlist → `404`
+  (antes do hotfix: `200`, div. 151).
+
 ### `POST /api/setlists/[id]/songs` — addSong
 
 - Auth obrigatória; família `setlist-mutate` (120/15min por uid).
