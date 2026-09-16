@@ -132,6 +132,21 @@ async function servir(setlists: SetlistDTO[], contents: ContentDTO[]): Promise<v
       reject(new Error(`mock saiu com ${code}: ${saida}`))
     })
   })
+  // A linha `fixture: servidor` sai ANTES do bind (`aceite.py:272` imprime,
+  // `:275` constrói o `HTTPServer`): ela não prova que a porta aceita
+  // conexão. Na máquina do Marcel o bind ganhava a corrida; no runner do CI o
+  // primeiro sync chegou antes e voltou `erro.sem_conexao`. Pronto é responder.
+  const limite = Date.now() + 10_000
+  for (;;) {
+    try {
+      const r = await fetch(`http://127.0.0.1:${porta}/api/setlists`)
+      if (r.ok) return
+    } catch {
+      // ainda não aceita conexão
+    }
+    if (s.exitCode !== null || Date.now() > limite) throw new Error('mock não aceitou conexão')
+    await new Promise((resolve) => setTimeout(resolve, 50))
+  }
 }
 
 function cacheWrite(kind: 'setlists' | 'content'): string[] {

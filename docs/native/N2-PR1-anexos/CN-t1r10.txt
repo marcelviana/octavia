@@ -1,16 +1,17 @@
-# CN do T1-R10 contra o código de ANTES do conserto (commit 1 da N2-PR1, base 984051d).
+# CN do T1-R10 contra o código de ANTES do conserto (os quatro arquivos do commit 2 na versão 984051d).
 # Rastro, não fonte: a fonte é o teste apps/native/test/sync-t1r10.test.ts.
+# Regerado no commit 4, com a espera pelo mock (div. 196); a primeira captura, do commit 1, deu o mesmo 5 de 6.
 $ pnpm exec vitest run --project native apps/native/test/sync-t1r10.test.ts
 
  RUN  v4.0.16 /Users/marcelviana/projects/octavia-n2-pr1
 
- ❯ |native| apps/native/test/sync-t1r10.test.ts (6 tests | 5 failed) 1202ms
-     ✓ o segundo loga invalidated=0 nos dois conjuntos 100ms
-     × e não recria derivado nenhum: os conjuntos devolvidos são os MESMOS do anterior 155ms
-     × content: invalidated=1, e o índice de busca não tem mais a versão velha 254ms
-     × setlist renomeada no web: kind=setlists invalidated=1, e volta a 0 no sync seguinte 241ms
-     × item novo e item removido também invalidam (entram e saem dos derivados) 259ms
-     × primeiro sync, sem cache anterior: todo item é novo 130ms
+ ❯ |native| apps/native/test/sync-t1r10.test.ts (6 tests | 5 failed) 1263ms
+     ✓ o segundo loga invalidated=0 nos dois conjuntos 101ms
+     × e não recria derivado nenhum: os conjuntos devolvidos são os MESMOS do anterior 142ms
+     × content: invalidated=1, e o índice de busca não tem mais a versão velha 322ms
+     × setlist renomeada no web: kind=setlists invalidated=1, e volta a 0 no sync seguinte 267ms
+     × item novo e item removido também invalidam (entram e saem dos derivados) 239ms
+     × primeiro sync, sem cache anterior: todo item é novo 134ms
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
 
@@ -25,13 +26,13 @@ Received: serializes to the same string
 
 Compared values have no visual difference.
 
- ❯ apps/native/test/sync-t1r10.test.ts:190:24
-    188|     const r1 = await syncOk(null)
-    189|     const r2 = await syncOk(r1)
-    190|     expect(r2.content).toBe(r1.content)
+ ❯ apps/native/test/sync-t1r10.test.ts:205:24
+    203|     const r1 = await syncOk(null)
+    204|     const r2 = await syncOk(r1)
+    205|     expect(r2.content).toBe(r1.content)
        |                        ^
-    191|     expect(r2.setlists).toBe(r1.setlists)
-    192|   })
+    206|     expect(r2.setlists).toBe(r1.setlists)
+    207|   })
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
 
@@ -46,13 +47,13 @@ AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
 +   "OCTAVIA: cache write kind=content n=3 invalidated=0",
   ]
 
- ❯ apps/native/test/sync-t1r10.test.ts:205:35
-    203|     const r3 = await syncOk(r1)
-    204| 
-    205|     expect(cacheWrite('content')).toEqual(['OCTAVIA: cache write kind=…
+ ❯ apps/native/test/sync-t1r10.test.ts:220:35
+    218|     const r3 = await syncOk(r1)
+    219| 
+    220|     expect(cacheWrite('content')).toEqual(['OCTAVIA: cache write kind=…
        |                                   ^
-    206|     expect(cacheWrite('setlists')).toEqual(['OCTAVIA: cache write kind…
-    207|     // O derivado do item foi recriado: conjunto novo, e o índice cons…
+    221|     expect(cacheWrite('setlists')).toEqual(['OCTAVIA: cache write kind…
+    222|     // O derivado do item foi recriado: conjunto novo, e o índice cons…
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
 
@@ -67,13 +68,13 @@ AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
 +   "OCTAVIA: cache write kind=setlists n=1 invalidated=0",
   ]
 
- ❯ apps/native/test/sync-t1r10.test.ts:223:36
-    221|     await servir([setlist('Show renomeado', T1)], BIBLIOTECA)
-    222|     const r2 = await syncOk(r1)
-    223|     expect(cacheWrite('setlists')).toEqual(['OCTAVIA: cache write kind…
+ ❯ apps/native/test/sync-t1r10.test.ts:238:36
+    236|     await servir([setlist('Show renomeado', T1)], BIBLIOTECA)
+    237|     const r2 = await syncOk(r1)
+    238|     expect(cacheWrite('setlists')).toEqual(['OCTAVIA: cache write kind…
        |                                    ^
-    224|     expect(cacheWrite('content')).toEqual(['OCTAVIA: cache write kind=…
-    225|     expect(r2.setlists).not.toBe(r1.setlists)
+    239|     expect(cacheWrite('content')).toEqual(['OCTAVIA: cache write kind=…
+    240|     expect(r2.setlists).not.toBe(r1.setlists)
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
 
@@ -88,13 +89,13 @@ AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
 +   "OCTAVIA: cache write kind=content n=3 invalidated=0",
   ]
 
- ❯ apps/native/test/sync-t1r10.test.ts:240:35
-    238|     await syncOk(r1)
-    239|     // c-3 saiu e c-4 entrou: dois itens cujo derivado muda.
-    240|     expect(cacheWrite('content')).toEqual(['OCTAVIA: cache write kind=…
+ ❯ apps/native/test/sync-t1r10.test.ts:255:35
+    253|     await syncOk(r1)
+    254|     // c-3 saiu e c-4 entrou: dois itens cujo derivado muda.
+    255|     expect(cacheWrite('content')).toEqual(['OCTAVIA: cache write kind=…
        |                                   ^
-    241|   })
-    242| 
+    256|   })
+    257| 
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
 
@@ -109,20 +110,20 @@ AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
 +   "OCTAVIA: cache write kind=setlists n=1 invalidated=0",
   ]
 
- ❯ apps/native/test/sync-t1r10.test.ts:246:36
-    244|     await servir([setlist('Show')], BIBLIOTECA)
-    245|     await syncOk(null)
-    246|     expect(cacheWrite('setlists')).toEqual(['OCTAVIA: cache write kind…
+ ❯ apps/native/test/sync-t1r10.test.ts:261:36
+    259|     await servir([setlist('Show')], BIBLIOTECA)
+    260|     await syncOk(null)
+    261|     expect(cacheWrite('setlists')).toEqual(['OCTAVIA: cache write kind…
        |                                    ^
-    247|     expect(cacheWrite('content')).toEqual(['OCTAVIA: cache write kind=…
-    248|   })
+    262|     expect(cacheWrite('content')).toEqual(['OCTAVIA: cache write kind=…
+    263|   })
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
 
 
  Test Files  1 failed (1)
       Tests  5 failed | 1 passed (6)
-   Start at  18:58:07
-   Duration  1.45s (transform 138ms, setup 0ms, import 148ms, tests 1.20s, environment 0ms)
+   Start at  19:15:37
+   Duration  1.50s (transform 131ms, setup 0ms, import 138ms, tests 1.26s, environment 0ms)
 
 exit=1

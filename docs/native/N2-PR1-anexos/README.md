@@ -62,7 +62,7 @@ Protocolo quando for rodar (ver também a div. 192):
    e a S4 acha o título novo. Depois, voltar os nomes;
 3. abrir de novo → `invalidated=0`.
 
-## Divergências (a partir de 187)
+## Divergências (187–196)
 
 | # | origem | o quê | destino |
 |---|---|---|---|
@@ -74,6 +74,7 @@ Protocolo quando for rodar (ver também a div. 192):
 | **192** | P | item 4.2 do prompt: "a busca (S4) acha o nome novo" da setlist. A S4 só indexa **content** (`buildIndex(contents)`, `SearchScreen.tsx:172`; `core/search.ts:30`) — nome de setlist nunca é achado por ela | registrada; protocolo acima corrigido |
 | **193** | D | o A7 do `PRD-TELA-1.md` nunca rastreou o T1-R10 (rastreio "T1-R8, T1-R9"); o T1-R10 ficou pendurado nele só em `N1-PRECHECK.md:193` ("(A7)") e daí no `V1-ENCERRAMENTO.md:122` | corrigida (errata do A7 inclui o T1-R10) |
 | **194** | D | T1-R20 diz "índice reconstruído **por item** a cada invalidação"; o app reconstrói o índice **inteiro** quando qualquer item invalida (`buildIndex` sobre o conjunto). Esta PR só poupa o caso "nada mudou" | registrada; custo medido do índice é pequeno (19.481 B de corpo, T1-R20); mexer é tela (S4), fora desta PR |
+| **196** | T | **o CN passou na máquina e reprovou no CI** (4 de 6, `sync não fechou ok: … erro.sem_conexao`, só nos testes que re-sobem o mock). O `aceite.py` imprime `fixture: servidor` (`:272`) **antes** de construir o `HTTPServer` (`:275`), e o CN usava a linha como sinal de pronto. Na máquina o bind ganhava a corrida; no runner, não. Commit 4: o CN só segue quando o mock **responde** a `/api/setlists`. Reprovação contra o código de antes reconferida (5 de 6, todas `AssertionError`) | corrigida no teste; o `aceite.py` não mudou (a mesma corrida existe nos protocolos de device, mas lá há um humano esperando) |
 | **195** | T | a lista de erratas do G3 ainda carrega a do W1 (`file src=download …`), mergeada há três PRs — a mesma forma da div. 141, agora no G3 (lá não há aviso de "não usada") | registrada; não podada (fora da lista fechada) |
 
 ## Extra declarado antes de commitar
@@ -83,3 +84,5 @@ Protocolo quando for rodar (ver também a div. 192):
   ele o `contentById` era recriado em todo sync e o `invalidated=0` seria de novo
   uma frase que o app desmente.
 - `apps/native/scripts/g2g3.sh`: a errata do G3, como o prompt previa.
+- **Commit 4** (`test(N2-PR1): o CN espera o mock responder`), depois da PR aberta:
+  só o teste e os dois anexos do CN — é o conserto da div. 196, que o CI achou.
