@@ -79,12 +79,13 @@ cobria escrita — o consumidor da leitura é a tela 1 do nativo (PRD §2).
   `user_id`, com `RETURNING id`. Zero linhas → `404 Setlist not found`
   (`NOT_FOUND`) — setlist inexistente-ou-alheia são **a mesma resposta**
   (sem oráculo, byte-idênticas por construção: o mesmo ramo de código).
+  Supera a semântica idempotente-200 da B3 PR-3a (N2-D12).
 - As linhas de `setlist_songs` saem pelo FK
   `setlist_songs_setlist_id_fkey ON DELETE CASCADE`; a rota **não** apaga
   `setlist_songs` por conta própria (o delete explícito por `setlist_id`,
   sem filtro de dono, era a div. 150 e saiu).
 - 200: `{ "success": true }`. Delete repetido da mesma setlist → `404`
-  (antes do hotfix: `200`, div. 151).
+  (antes do hotfix: `200`, contrato da B3 PR-3a — N2-D12).
 
 ### `POST /api/setlists/[id]/songs` — addSong
 

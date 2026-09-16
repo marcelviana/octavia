@@ -1,6 +1,6 @@
-# HOTFIX-150.md — `DELETE /api/setlists/[id]` sem checagem de dono (divs. 150 e 151)
+# HOTFIX-150.md — `DELETE /api/setlists/[id]` sem checagem de dono (div. 150) e 404 do inexistente (div. 151 → N2-D12)
 
-> **Data**: 2026-09-16. **Origem**: pre-check do N2 (PR #306, `docs/native/N2-PRECHECK.md` §13), decisão do Marcel **N2-D6** (corrigir agora, PR própria, antes de qualquer escrita do nativo).
+> **Data**: 2026-09-16. **Origem**: pre-check do N2 (PR #306, `docs/native/N2-PRECHECK.md` §13), decisão do Marcel **N2-D6** (corrigir agora, PR própria, antes de qualquer escrita do nativo). O 404 do inexistente é a decisão **N2-D12** (Marcel, 2026-09-16), §1.1.
 > **Base**: `origin/main` = `9e14042b95d09c56b77afa7a8a2439d798c96127`; worktree `../octavia-hotfix150`, branch `fix/setlist-delete-owner`.
 > **Escopo**: só a rota. Não toca `apps/native/`, `packages/`, `docs/native/`. Zero migração, zero escrita em prod.
 > Convenção: `[medido]` = comando + saída literal; `[análise]` = inferência sobre o medido.
@@ -16,6 +16,31 @@
 **Efeito**: um usuário logado (qualquer conta) que conheça o uuid de uma setlist alheia **esvazia** essa setlist (todas as músicas somem) e recebe `200 {success:true}`; a linha de `setlists` da vítima sobrevive (o 2º delete filtra por dono). Integridade, não confidencialidade — nada é lido.
 
 **Limitante** `[análise]`: o atacante precisa do uuid (v4, não enumerável). O código web não expõe setlist de um usuário a outro (sem rota de compartilhamento; `is_public` de setlists não é usado por nenhum caller — `grep -rn is_public app lib components hooks` só acha `content`). Gravidade: **média** — bypass real de autorização, baixa probabilidade de descoberta do id.
+
+Esse veredito vale só para a **div. 150**. A **151 não é defeito** (§1.1).
+
+### 1.1 Div. 151 — decisão revista (N2-D12), não defeito
+
+O `200 {success:true}` para setlist inexistente **era contrato decidido** na B3 PR-3a (#245, merge `effe847`, 2026-08-29). Onde a decisão está `[medido]`:
+
+```
+$ git log -S"idempotente" --oneline -- app/api/setlists
+790b527 fix(api): DELETE /api/setlists/[id] checa dono e devolve 404 (divs. 150, 151)
+effe847 B3 PR-3a — semântica: D2 + PGRST116→404 + paridade 400 (setlists/songs) (#245)
+```
+
+`docs/ux/B3-DESENHO.md:312-317` (registro da execução, aval do PR-3a, 2026-08-29):
+
+> (b) **Comportamento observável do contrato**: `DELETE` de recurso inexistente (setlist E content, rotas sem `.single()` no delete) é **200 idempotente** `{success:true}` — o cliente nativo O VERÁ; se um dia virar 404, é **mudança de contrato**, não bugfix.
+
+No código, a PR-3a renomeou o teste legado para "…delete de inexistente real é 200 idempotente, sem .single()…" (`effe847`, `route.test.ts`). O `B3-ENCERRAMENTO.md` **não** registra a decisão (`grep -n -i idempotente docs/ux/B3-*` → só `B3-DESENHO.md:316`) — div. 176.
+
+**N2-D12** (Marcel, 2026-09-16): `DELETE /api/setlists/[id]` devolve **404** para inexistente e alheia, byte-idêntico (sem oráculo), **superando a B3 PR-3a**. Razões:
+- consistência com `SETLISTS.md:78-80` na main (`:98-100` nesta branch, depois do parágrafo novo) (setlist inexistente-ou-alheia → 404 nas rotas de song);
+- o nativo lê 404 como "ressincroniza" (T1-R9);
+- repetir o DELETE continua sem efeito no banco — só o status muda.
+
+Por ser mudança de contrato (a própria PR-3a disse), ela é decidida, não "corrigida".
 
 ## 2. Medições antes de mexer
 
@@ -42,7 +67,7 @@
 362	    return NextResponse.json({ success: true })
 ```
 
-Nenhuma leitura das linhas afetadas → inexistente e alheia caem no mesmo `200` (div. 151).
+Nenhuma leitura das linhas afetadas → inexistente e alheia caem no mesmo `200` (div. 151 — o 200 do inexistente era contrato da B3 PR-3a; o do alheio não).
 
 ### 2.2 Cliente Supabase `[medido]`
 
@@ -106,7 +131,7 @@ lib/__tests__/contract-setlist.test.ts:5: * B2 PR-5 — contrato de /api/setlist
 lib/__tests__/setlist-service.test.ts:101:      expect(fetch).toHaveBeenCalledWith('/api/setlists', {
 ```
 
-Único caller do DELETE: `lib/setlist-service.ts:227` (`deleteSetlist`), que faz `if (!response.ok) throw` e não lê o corpo; chamado só por `components/setlist-manager.tsx:140` (`confirmDeleteSetlist`). Nenhum caller **depende** do 200 para inexistente. Mudança observável: se a setlist já tiver sumido (outra aba/aparelho apagou antes), o usuário vê o toast "Failed to delete setlist" e a setlist continua na lista local até recarregar — **div. 172**, declarada e **não** adaptada (o escopo é a rota).
+Único caller do DELETE: `lib/setlist-service.ts:227` (`deleteSetlist`), que faz `if (!response.ok) throw` e não lê o corpo; chamado só por `components/setlist-manager.tsx:140` (`confirmDeleteSetlist`). Nenhum caller **depende** do 200 para inexistente. Mudança observável: se a setlist já tiver sumido (outra aba/aparelho apagou antes), o usuário vê o toast "Failed to delete setlist" e a setlist continua na lista local até recarregar — **div. 172**, declarada e **não** adaptada (o escopo é a rota); destino: **Bloco D**.
 
 ### 2.6 Contrato `[medido]`
 
@@ -117,7 +142,7 @@ lib/__tests__/setlist-service.test.ts:101:      expect(fetch).toHaveBeenCalledWi
 96:404  {"error":"Setlist not found","code":"NOT_FOUND"}
 ```
 
-`docs/api/SETLISTS.md` (as linhas `41-43` citadas no prompt são da listagem GET — o texto está em `78-80`; **div. 171**):
+`docs/api/SETLISTS.md` (as linhas `41-43` citadas no prompt são da listagem GET — o texto está em `78-80` na main — `:98-100` nesta branch; **div. 171**):
 
 ```
 78:- Gates na rota: setlist inexistente-ou-alheia → `404 Setlist not
@@ -233,6 +258,34 @@ AssertionError: expected 200 to be 404 // Object.is equality
  ELIFECYCLE  Test failed. See above for more details.
 ```
 
+### 3.1 Prova do `.select('id')` em banco real
+
+**2.1 — alvo** `[medido pelo Marcel]`, 2026-09-16: no painel da Vercel, `NEXT_PUBLIC_SUPABASE_URL` do ambiente **Preview** é o **mesmo host da produção**. Esta é a variável que o servidor lê (`lib/supabase-service.ts:6`). A sessão não conseguiu medir por conta própria (div. 175) e não repetiu a tentativa.
+
+**2.2 — um request, sem repetição** `[medido]`. Preview da #307 (`790b527`): `https://octavia-806juh765-marcelvianas-projects.vercel.app`. Token da conta de audit via Firebase REST (`signInWithPassword`), sem sessão da app. Bypass do Deployment Protection lido inline. Uuid novo de `uuidgen`: `978bd206-b55d-4016-a145-8dc4022ceda7`.
+
+```
+$ curl -sS -i -X DELETE -H "Authorization: Bearer <idToken audit>" -H "x-vercel-protection-bypass: <inline>" \
+    https://octavia-806juh765-marcelvianas-projects.vercel.app/api/setlists/978bd206-b55d-4016-a145-8dc4022ceda7
+HTTP/2 404 
+cache-control: private, no-store
+content-type: application/json
+date: Wed, 16 Sep 2026 18:36:21 GMT
+server: Vercel
+strict-transport-security: max-age=63072000; includeSubDomains; preload
+vary: RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch
+x-matched-path: /api/setlists/[id]
+x-robots-tag: noindex
+x-vercel-cache: MISS
+x-vercel-id: gru1::iad1::fw2wg-1789583779079-91846097a481
+
+{"error":"Setlist not found","code":"NOT_FOUND"}
+```
+
+- Corpo: **48 bytes**, sha256 `9b7d9169b47bce3aa6be7f11883f6c5a2c1b58dd71135bbe1a4a3348e01e86bd`. É o mesmo sha de `printf '%s' '{"error":"Setlist not found","code":"NOT_FOUND"}'`, o literal do `CONTRATO-DE-ERRO.md:96` que o CN-151 exige.
+- Zero linhas tocadas por construção: o único efeito do handler é o `.delete().eq("id", setlistId).eq("user_id", user.uid).select("id")` (`route.ts:344-348`; os `.eq` estão em `:346-347`). Para um uuid recém-gerado ele casa zero linhas, e o `RETURNING` vazio vira o 404 (`route.ts:355-357`).
+- **O que isto prova**: no Postgres real, o `.delete()…select("id")` sem linha casada volta **sem erro** (senão seria 500) e com zero linhas, e o ramo de 404 é alcançado. Array vazio e `null` não se distinguem por aqui, porque o guard `!deleted || deleted.length === 0` cobre os dois. O caso "alheia" usa o mesmo ramo e não foi provocado contra dado real: exigiria uma setlist de outra conta.
+
 ## 4. Depois do fix
 
 `[medido]`
@@ -274,8 +327,17 @@ Esse teste existente **fixava o bug** (`expect(response.status).toBe(200) // API
 
 ## 5. Divergências
 
-- **170** — extra fora da lista fechada, declarado antes do commit: `app/api/setlists/[id]/__tests__/route.test.ts` muda 2 linhas — a asserção do teste "only deletes setlists owned by the authenticated user" (200 → 404) e o nome do teste vizinho, que afirmava "delete de inexistente real é 200 idempotente" (decisão do B3 PR-3a, derrubada pela N2-D6).
-- **171** — o prompt cita `SETLISTS.md:41-43` para a regra "inexistente-ou-alheia → 404 sem oráculo"; o texto está em `:78-80` (e repetido em `:100` e `:113`).
-- **172** — efeito observável no único caller web (2.5): delete de setlist já apagada vira toast de erro em vez de sucesso silencioso. Não adaptado nesta PR.
+- **170** — extra fora da lista fechada, declarado antes do commit: `app/api/setlists/[id]/__tests__/route.test.ts` muda 2 linhas — a asserção do teste "only deletes setlists owned by the authenticated user" (200 → 404) e o nome do teste vizinho, que afirmava "delete de inexistente real é 200 idempotente" (decisão da B3 PR-3a, superada pela **N2-D12** — §1.1).
+- **171** — o prompt cita `SETLISTS.md:41-43` para a regra "inexistente-ou-alheia → 404 sem oráculo"; o texto está em `:78-80` na main (e repetido em `:100` e `:113`); nesta branch, deslocado +20 linhas pelo parágrafo do DELETE.
+- **172** — efeito observável no único caller web (2.5): delete de setlist já apagada vira toast de erro em vez de sucesso silencioso. Não adaptado nesta PR. **Destino: Bloco D.**
 - **173** — o prompt pede `pnpm test <arquivo>`; o filtro do Vitest não casa caminho com `[id]` (`No test files found`, com e sem escape). Rodado por nome (`pnpm test delete-owner`), que casa só o arquivo novo.
 - Numeração: a PR #306 (`n2/precheck`) usa até a div. 160 (`git grep -E "[Dd]iv\. ?1[5-9][0-9]" FETCH_HEAD -- docs` → maior = 160); 170+ sem colisão.
+- **174** — a decisão da B3 PR-3a cobria **setlist E content**. A N2-D12 supera só a de setlist: `DELETE /api/content/[id]` segue com o 200 idempotente para inexistente. É assimetria de contrato entre as duas rotas, registrada sem mexer em content. **Destino: pre-check do N3, junto do B9.**
+- **175** — o 2.1 do complemento (para qual Supabase o preview aponta) **não foi medido pela sessão** (depois, o Marcel mediu no painel, §3.1):
+  - a CLI `vercel` não está instalada (`which vercel` → `vercel not found`), e instalar ou fazer `vercel link` mexeria em config local;
+  - os chunks JS do `/login` do preview não contêm host `*.supabase.co` (o cliente não usa Supabase);
+  - a prova alternativa (`GET /api/setlists` da conta de audit no preview **e** na prod, comparando o sha dos ids) foi **negada** na leitura de prod pelo classificador de permissões da sessão.
+
+  Pelo prompt, o 2.2 ficou parado até o Marcel medir o 2.1 no painel da Vercel (2026-09-16). Depois disso, o 2.2 rodou uma vez (§3.1).
+- **176** — a decisão do 200 idempotente (B3 PR-3a) vive só no `B3-DESENHO.md:312-317` e no commit `effe847`; o `B3-ENCERRAMENTO.md` não a cita. **Vira regra 9 na PR-0 do N2.**
+
