@@ -68,6 +68,26 @@ banco** — a fonte é o arquivo de migração. Primeira migração da série:
   consolidando o estado do bloco e não estava no repositório; oito anteriores
   (B3…B7, C, N0) vivem só na máquina. Registro: `docs/native/N1-ENCERRAMENTO.md` §11.
 
+## Anexo não carrega texto de música (regra permanente)
+
+- **Anexo commitado não carrega texto de música** — corpo JSON, dump de UI ou
+  imagem. O repositório é **público**; o corpo é obra de terceiro na biblioteca
+  do usuário, e nenhuma prova de bloco precisa dele: o que a prova usa é a
+  posição, o tamanho e o comprimento, não o verso.
+- **Como omitir**: no dump, o `text` do nó vira
+  `[<BLOCO>: corpo da música omitido — <n> caracteres; bounds preservado]`,
+  com `bounds` e estrutura intactos (o `diff` mostra só a linha do texto). Na
+  imagem, recorta-se o que a prova precisa (a barra, o controle), nunca a tela
+  inteira do palco. No corpo JSON, o anexo não entra.
+- **O precedente é o `docs/native/N1-PRECHECK.md:365`**: os corpos JSON de prod
+  (`setlists.json`, `content-100.json`) ficaram **fora** dos anexos por
+  conterem corpo de música. A **div. 204 do N2** estende a mesma regra ao dump
+  de UI e à imagem.
+- **Origem**: 2026-09-16, N2 — o `C6.xml` das capturas do brief trazia a letra
+  inteira (914 caracteres), e cinco dumps do Tab S6 já na `main`
+  (`docs/native/V1-PR7-anexos/dumps-tabs6/`) traziam letras reais. Registro:
+  `docs/native/N2-BRIEF-anexos/README.md`, div. 204.
+
 ## Project Architecture
 
 ### Core Technology Stack

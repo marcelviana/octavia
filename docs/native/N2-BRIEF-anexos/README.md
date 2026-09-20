@@ -47,7 +47,7 @@ Boot e sync, verbatim (`adb logcat -d -s ReactNativeJS | grep OCTAVIA:`):
 | C4 | S2 aberta **do palco**, o índice do T1-R28 | palco na 1/7 → toque em `indice`, em (2063, 1385) | **feito** | `C4.png`, `C4.xml` |
 | C5 | S4 busca **com resultado**, aberta do palco | palco → toque em `busca`, em (2247, 1385) → `input text man` | **feito**, com teclado aberto | `C5.png`, `C5.xml` |
 | C5b | *(extra)* o mesmo estado de C5 com o teclado fechado | `keyevent 111` (ESC) | **feito**; só PNG (div. 203) | `C5b.png` |
-| C6 | S3 palco com a barra, referência do A15 | S2 (C3) → toque em `song-1`, em (658, 436) | **feito**; corpo omitido no XML (div. 204) | `C6.png`, `C6.xml` |
+| C6 | S3 palco com a barra, referência do A15 | S2 (C3) → toque em `song-1`, em (658, 436) | **feito**; a imagem é **só as duas barras** e o corpo saiu do XML (div. 204) | `C6-topo.png` (2560×144, o recorte de `[0,54][2560,198]`), `C6-base.png` (2560×216, o recorte de `[0,1276][2560,1492]`), `C6.xml` |
 
 Os toques usam coordenadas do aparelho, lidas dos dumps (`N1-ENCERRAMENTO.md` §8.2).
 
@@ -93,7 +93,8 @@ e9b34d3074d68df2e37c9fefc4dcd09061deb2c086cd53f8c314cb8d3597199a  C3.png
 17903357583b6ceacd9d7a5099203ea0c9cf5dbfb2a1e6f71de4aff5c7ddee9a  C4.png
 380a0d4bcab2bbd0b287242ac87ef07afe867d8d326f41aba6f08d3352ac301b  C5.png
 bf1b4ae7e5d1df25989fe2e29e24639668e5fde60a7ad66a3b00195a454991b7  C5b.png
-f056227fc1c59e84be6ec79fd2038a83a1ad6fa0fa75cf30a71208ea74dd03e3  C6.png
+ae15b2a80fd48f98edc84e13ac0672532edfa9c2b2db51245edbdd0a514701cf  C6-base.png
+b60a8a1d6e44081ef1512eb18a87a2fa54137dbfceebb8cf52c528c3ae1ac15b  C6-topo.png
 203d9111149047fe6c8542764ea9930745e5c87004995827040bd3491b3a4508  C1.xml
 456212fa24be58d6f7e962c67df3b57cf7f9e784ec759d9062a847306e2d59c2  C3.xml
 61dcc7ad6e78abac0486552908a187ba45ebccf2da0e45b4b869b58ae8ae492b  C4.xml
@@ -101,9 +102,9 @@ a12b18efa4ebf7db0e812e9327a384b4cfa23ee1687a8bc198aa7197d6a1fed9  C5.xml
 dea42fc7786be19ff587bf6d5a2e137f27fb8fbc85e94d26ebf425864fa88dc6  C6.xml
 ```
 
-(`C6.xml` já com o corpo omitido; ver div. 204.)
+(`C6.xml` já com o corpo omitido e `C6.png` já recortado nas duas barras; ver div. 204. Os cinco dumps tocados fora desta pasta, com o sha256 de cada um, estão na §5.)
 
-## 4. Divergências (200–207; 187–199 ficam para a PR-1)
+## 4. Divergências (200–211; 187–199 ficam para a PR-1)
 
 | div. | o que | o que foi feito |
 |---|---|---|
@@ -111,7 +112,41 @@ dea42fc7786be19ff587bf6d5a2e137f27fb8fbc85e94d26ebf425864fa88dc6  C6.xml
 | **201** | O brief manda "conferir o sha no log de boot", mas **essa linha não existe**: o catálogo `LOGS-OCTAVIA.md` não tem evento com sha, e `apps/native` não registra um. | Prova do bundle usada: Metro com `cwd` em `octavia-n2-brief/apps/native` (`lsof -d cwd`), worktree em `984051d` = `origin/main` e `git status` limpo. As linhas `OCTAVIA:` do boot aparecem ecoadas na saída desse Metro, e ele registrou `Android Bundled … apps/native/index.ts`. O `.env` foi carregado **inline** do checkout principal, sem arquivo novo na worktree. Uma linha de boot com sha fica como candidata ao catálogo (destino do Marcel). |
 | **202** | O Tab S6 tem bloqueio e tempo de tela de 30 s (`screen_off_timeout=30000`). A **1ª tentativa de C3** caiu na tela de bloqueio e o toque não chegou ao app. | Essa C3 foi **apagada** e refeita depois de o Marcel desbloquear. Durante as capturas rodou um keep-alive que manda `input keyevent 59` (SHIFT) a cada 10 s, **só** com `isKeyguardShowing=false`. Nenhum ajuste do aparelho mudou: sem `svc power stayon`, tempo de tela intacto. |
 | **203** | C5 com o teclado aberto esconde metade dos resultados. O `uiautomator dump` não captura a janela do teclado, então os XMLs com e sem teclado saíram **byte a byte iguais** (`cmp` sem diferença). | Extra declarado: `C5b.png`, sem teclado. Ficou só `C5.xml`, que vale para as duas imagens. |
-| **204** | O `C6.xml` trazia a **letra inteira** da música no `text` do `corpo` (914 caracteres), e o repositório é **público**. A letra é conteúdo de terceiro na biblioteca do Marcel; a regra 2 do `LOGS-OCTAVIA.md` já proíbe corpo de música em log. | O `text` desse nó foi trocado por `[N2-BRIEF: corpo da música omitido — 914 caracteres; bounds preservado]`. Nada mais no XML mudou, e ele continua válido. **Precedente na `main`**: `V1-PR7-anexos/dumps-tabs6/S3-palco-1de7.xml` tem a mesma letra inteira. Fica registrado, com destino do Marcel. `C6.png` mostra as primeiras estrofes, como as capturas de palco anteriores; também é decisão do Marcel. |
+| **204** | O `C6.xml` trazia a **letra inteira** da música no `text` do `corpo` (914 caracteres), e o repositório é **público**. A letra é conteúdo de terceiro na biblioteca do Marcel; a regra 2 do `LOGS-OCTAVIA.md` já proíbe corpo de música em log, e o `N1-PRECHECK.md:365` já tinha deixado os corpos JSON de prod fora dos anexos pelo mesmo motivo. | **Fechada, em três frentes.** (a) **Dump**: o `text` do nó `corpo` virou `[N2-BRIEF: corpo da música omitido — <n> caracteres; bounds preservado]`, com `bounds` e estrutura intactos. (b) **Imagem**: `C6.png` saiu e deu lugar a `C6-topo.png` e `C6-base.png`, só as duas barras — nenhuma linha de letra. (c) **Regra**: `CLAUDE.md`, seção "Anexo não carrega texto de música (regra permanente)". Alcance medido e arquivos tocados na §5. |
 | **205** | O FAB do dev client aparece sobre controles da barra superior em C1, C3, C4 e C5. | Não dá para esconder sem mudar a preferência do dev client. Ficou registrado na §2.1 e no `MEDIDAS.md` como "só no build de dev". |
-| **206** | Observação, sem julgamento: abrir o **índice** ou a **busca** a partir do palco gera `keepawake off`, e voltar gera `keepawake on` + `stage restore`. O catálogo descreve o evento como "entrar/sair do palco (T1-R33)". | Registrado porque o **picker** do N2 também vai empilhar sobre o palco: o brief e o PRD decidem se a tela pode apagar enquanto o picker está aberto. |
+| **206** | Observação, sem julgamento: abrir o **índice** ou a **busca** a partir do palco gera `keepawake off`, e voltar gera `keepawake on` + `stage restore`. O catálogo descreve o evento como "entrar/sair do palco (T1-R33)". | **Corrigida** (o registro anterior dizia que isto importava para o picker, e não importa): o picker só existe em **S2 com edição**, que só se abre **a partir de S1** ou da criação — S2 aberta do palco não oferece edição, logo o picker **nunca** empilha sobre o palco (`PRD-TELA-2.md` T2-R19, N2-D19). A observação fica registrada como fato do **palco**, fora do escopo do N2. |
 | **207** | O termo digitado em C5 (`man`) aparece na imagem e no `text` do `campo-busca`. O log só guarda o comprimento (`q=3`), como manda a regra 2. | É termo neutro, escolhido para ter resultado na setlist e na biblioteca. Nenhum dado pessoal. |
+
+## 5. Alcance da div. 204: o que foi tocado fora desta pasta
+
+Tudo nesta seção é **extra declarado** — higiene, não escopo do N2.
+
+**A varredura** (assinaturas literais das letras + chaves `lyrics`/`chords`/`tablature`, em todo `docs/`, fora PNG e PDF) achou **92 arquivos** com texto de música, em duas classes:
+
+- **5 com letra real de terceiro**, todos dumps do Tab S6 na conta principal, em `docs/native/V1-PR7-anexos/dumps-tabs6/` — **os tocados**;
+- **87 com o texto-fixture do próprio projeto** (`Quando a noite chega…`, `[Intro] C  Am  F  G`, a tablatura `e|-------0`, escritos para a audit) — **não tocados**, por decisão do Marcel (div. 208).
+
+**Os 5 arquivos tocados**, um nó `corpo` em cada, `bounds` e estrutura intactos:
+
+| arquivo (`docs/native/V1-PR7-anexos/dumps-tabs6/`) | corpo omitido | sha256 depois |
+|---|---|---|
+| `A16-palco-inicio.xml` | 914 caracteres | `e697202f5f4656322d430e4305b1cc6be5476095139c37b8116ca6a5233fb51b` |
+| `A16-palco-fim.xml` | 914 caracteres | `e697202f5f4656322d430e4305b1cc6be5476095139c37b8116ca6a5233fb51b` |
+| `S3-palco-1de7.xml` | 914 caracteres | `e697202f5f4656322d430e4305b1cc6be5476095139c37b8116ca6a5233fb51b` |
+| `AVicones-A-texto.xml` | 1831 caracteres | `7acadfd20974af4e2a9e079ccb85ccf15847426a30e9b5d6d8305e8f2d36fa25` |
+| `S3-tema-claro.xml` | 1390 caracteres | `688a08c89433bfb41fb880b9e67ab02f2105d3589e5cc5f6f198d38bcf6ef62a` |
+
+Os três primeiros saem com o **mesmo** sha porque já eram byte a byte
+idênticos antes desta entrega (`327fa19f…` no `HEAD`) — ver div. 211.
+
+Prova de que o `diff` é só o texto: para cada arquivo, a árvore com todos os
+atributos `text` mascarados é **idêntica** antes e depois, o número de
+atributos `text` não mudou (72, 72, 72, 72, 71) e **um** deles difere. Os
+cinco continuam válidos como XML.
+
+| div. | o que | o que foi feito |
+|---|---|---|
+| **208** | O alcance da div. 204 é maior do que um arquivo, e as duas classes são diferentes: letra de terceiro contra texto-fixture do projeto. Além disso, **6** dos 92 arquivos têm o sha256 registrado em docs (`C-PRECHECK-anexos/B-P2-setlists.json`, `B-P5-content.json`, `B-P6-setlist.json` em `C-PRECHECK.md`/`C-ENCERRAMENTO.md`; `V1-A1-inventario-alvos.txt` em `V1-PRECHECK.md`; `V1-PR6-A-estados-antes-depois.txt` no README do V1-PR6; `DESIGN-V1/telas.html` no `SHA256SUMS` do design congelado) — reescrever qualquer um deles quebraria o registro. | Decisão do Marcel (2026-09-20): **só as 5 letras reais**. Nenhum sha registrado mudou; o design congelado não foi tocado. A regra do `CLAUDE.md` vale **para frente**: o texto-fixture do projeto não é obra de terceiro, mas anexo novo também não precisa carregá-lo. |
+| **209** | A omissão vale para o **conteúdo atual**, não para a história. O `C6.png` inteiro está no commit `34d7064` desta branch, e os cinco dumps do V1-PR7 estão na `main` desde a PR #300. | Registrado. Tirar da história exigiria reescrever a branch (`--force-with-lease`, ainda possível aqui porque a PR não foi mergeada) e, na `main`, reescrever história já publicada — **decisão do Marcel**, não feita aqui. |
+| **210** | As **PNGs irmãs** dos cinco dumps (`A16-palco-inicio.png`, `A16-palco-fim.png`, `S3-palco-1de7.png`, `AVicones-A-texto.png`, `S3-tema-claro.png`) mostram a mesma letra na tela do palco. Recortá-las às barras, como se fez no C6, pode invalidar a prova que cada uma sustenta no V1-PR7. | Não tocadas: fora do alcance escolhido na div. 208 e do item 2 desta entrega. Ficam registradas, com destino do Marcel. |
+| **211** | Achado sobre prova alheia, não causado aqui: `A16-palco-inicio.xml`, `A16-palco-fim.xml` e `S3-palco-1de7.xml` do V1-PR7 já eram **byte a byte idênticos** entre si na `main` (sha `327fa19f…`), embora o A16 trate "início" e "fim" como dois estados. | Registrado; a omissão do corpo preservou a propriedade (os três seguem idênticos entre si). Rever a prova do A16 é **destino do Marcel**, fora do N2. |
