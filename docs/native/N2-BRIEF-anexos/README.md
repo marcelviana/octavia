@@ -144,9 +144,39 @@ atributos `text` mascarados é **idêntica** antes e depois, o número de
 atributos `text` não mudou (72, 72, 72, 72, 71) e **um** deles difere. Os
 cinco continuam válidos como XML.
 
+### 5.1 As cinco PNGs irmãs (div. 210)
+
+Cada imagem teve **só** a região do nó `corpo` pixelizada, com o `bounds`
+lido do dump ao lado dela — o mesmo `bounds` que o marcador
+`[… bounds preservado]` cita. Bloco de **40 px**: nenhum verso fica legível,
+e barras, controles, cabeçalho e barra de status seguem intactos, como a
+prova de cada aceite do V1-PR7 exige. O arquivo é reescrito no lugar, com as
+mesmas dimensões.
+
+O comando, verbatim (Pillow 12.3.0 num venv do scratchpad; `BLOCK = 40`):
+
+```python
+reg = im.crop((x1, y1, x2, y2))
+peq = reg.resize((reg.width // BLOCK, reg.height // BLOCK), Image.NEAREST)
+im.paste(peq.resize(reg.size, Image.NEAREST), (x1, y1))
+```
+
+| arquivo (`docs/native/V1-PR7-anexos/dumps-tabs6/`) | `bounds` pixelizado | região | antes | depois | sha256 depois |
+|---|---|---|---|---|---|
+| `A16-palco-inicio.png` | `[72,270][1302,1276]` | 1230×1006 | 2560×1600 | 2560×1600 | `f042b2c8260e4bb2cbfe02b793bd34510c0696b60f7224aa5a4d5dc419364e8f` |
+| `A16-palco-fim.png` | `[72,270][1302,1276]` | 1230×1006 | 2560×1600 | 2560×1600 | `aab68070bcd75bd2dd6fb33028d7825bf00a41a9df37479f237f474839b2f2b2` |
+| `S3-palco-1de7.png` | `[72,270][1302,1276]` | 1230×1006 | 2560×1600 | 2560×1600 | `1522e24bb96594c746e976419b3a205b31504e4d75fa8d772e5585910ffe474f` |
+| `AVicones-A-texto.png` | `[72,270][2322,1276]` | 2250×1006 | 2560×1600 | 2560×1600 | `f451a455a9b7038d69cbdf493341ce0144de8784a3c382931609f4f6ae7bcebc` |
+| `S3-tema-claro.png` | `[72,198][2488,1276]` | 2416×1078 | 2560×1600 | 2560×1600 | `11a6fc63cd9b11c344ea7ef628c8e9db1dc911a7a4479ebb3a1282b9d831b145` |
+
+As três primeiras imagens continuam **diferentes entre si** — o relógio do
+aparelho marca 10:37 em `A16-palco-inicio.png`, 11:00 em `A16-palco-fim.png`
+e 10:29 em `S3-palco-1de7.png` —, embora os três XML sejam idênticos entre
+si. Ver div. 211.
+
 | div. | o que | o que foi feito |
 |---|---|---|
 | **208** | O alcance da div. 204 é maior do que um arquivo, e as duas classes são diferentes: letra de terceiro contra texto-fixture do projeto. Além disso, **6** dos 92 arquivos têm o sha256 registrado em docs (`C-PRECHECK-anexos/B-P2-setlists.json`, `B-P5-content.json`, `B-P6-setlist.json` em `C-PRECHECK.md`/`C-ENCERRAMENTO.md`; `V1-A1-inventario-alvos.txt` em `V1-PRECHECK.md`; `V1-PR6-A-estados-antes-depois.txt` no README do V1-PR6; `DESIGN-V1/telas.html` no `SHA256SUMS` do design congelado) — reescrever qualquer um deles quebraria o registro. | Decisão do Marcel (2026-09-20): **só as 5 letras reais**. Nenhum sha registrado mudou; o design congelado não foi tocado. A regra do `CLAUDE.md` vale **para frente**: o texto-fixture do projeto não é obra de terceiro, mas anexo novo também não precisa carregá-lo. |
 | **209** | A omissão vale para o **conteúdo atual**, não para a história. O `C6.png` inteiro está no commit `34d7064` desta branch, e os cinco dumps do V1-PR7 estão na `main` desde a PR #300. | Registrado. Tirar da história exigiria reescrever a branch (`--force-with-lease`, ainda possível aqui porque a PR não foi mergeada) e, na `main`, reescrever história já publicada — **decisão do Marcel**, não feita aqui. |
-| **210** | As **PNGs irmãs** dos cinco dumps (`A16-palco-inicio.png`, `A16-palco-fim.png`, `S3-palco-1de7.png`, `AVicones-A-texto.png`, `S3-tema-claro.png`) mostram a mesma letra na tela do palco. Recortá-las às barras, como se fez no C6, pode invalidar a prova que cada uma sustenta no V1-PR7. | Não tocadas: fora do alcance escolhido na div. 208 e do item 2 desta entrega. Ficam registradas, com destino do Marcel. |
-| **211** | Achado sobre prova alheia, não causado aqui: `A16-palco-inicio.xml`, `A16-palco-fim.xml` e `S3-palco-1de7.xml` do V1-PR7 já eram **byte a byte idênticos** entre si na `main` (sha `327fa19f…`), embora o A16 trate "início" e "fim" como dois estados. | Registrado; a omissão do corpo preservou a propriedade (os três seguem idênticos entre si). Rever a prova do A16 é **destino do Marcel**, fora do N2. |
+| **210** | As **PNGs irmãs** dos cinco dumps (`A16-palco-inicio.png`, `A16-palco-fim.png`, `S3-palco-1de7.png`, `AVicones-A-texto.png`, `S3-tema-claro.png`) mostravam a mesma letra na tela do palco. | **Fechada**: a região do nó `corpo` de cada dump foi **pixelizada** na imagem correspondente; barras, controles, cabeçalho e o resto da tela ficaram intactos, e as dimensões não mudaram. Comando, `bounds` e sha novo de cada uma na §5.1. |
+| **211** | Achado sobre prova alheia, não causado aqui: `A16-palco-inicio.xml`, `A16-palco-fim.xml` e `S3-palco-1de7.xml` do V1-PR7 já eram **byte a byte idênticos** entre si na `main` (sha `327fa19f…`), embora o A16 trate "início" e "fim" como dois estados. | Registrado; a omissão do corpo preservou a propriedade (os três seguem idênticos entre si). **Destino: W4-a, caso 23 do padrão** — não investigado aqui. |

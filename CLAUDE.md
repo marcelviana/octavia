@@ -79,6 +79,15 @@ banco** — a fonte é o arquivo de migração. Primeira migração da série:
   com `bounds` e estrutura intactos (o `diff` mostra só a linha do texto). Na
   imagem, recorta-se o que a prova precisa (a barra, o controle), nunca a tela
   inteira do palco. No corpo JSON, o anexo não entra.
+- **O que a regra NÃO alcança**: texto-fixture escrito pelo próprio projeto
+  para audit e teste ("Quando a noite chega…", "[Intro] C Am F G", a
+  tablatura `e|---0`) é obra do projeto e fica. A varredura da div. 204 achou
+  87 arquivos assim; nenhum foi tocado.
+- **Arquivo com sha256 registrado em documento** (`C-PRECHECK.md`,
+  `C-ENCERRAMENTO.md`, `V1-PRECHECK.md`, `V1-PR6-anexos/README.md`,
+  `DESIGN-V1/SHA256SUMS`) **não se reescreve por esta regra**: a omissão vale
+  para o que ainda vai ser commitado. Se um deles carregar obra de terceiro, a
+  decisão é do Marcel, com o sha novo registrado ao lado do velho.
 - **O precedente é o `docs/native/N1-PRECHECK.md:365`**: os corpos JSON de prod
   (`setlists.json`, `content-100.json`) ficaram **fora** dos anexos por
   conterem corpo de música. A **div. 204 do N2** estende a mesma regra ao dump
