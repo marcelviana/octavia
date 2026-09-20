@@ -1,0 +1,177 @@
+================================================================================
+N2-PR1 — O ACEITE DO T1-R10 NO APARELHO (item 4)
+================================================================================
+Rastro de medição, não fonte. 2026-09-20. O que se mede aqui é UMA coisa: a
+linha `cache write kind=… invalidated=<n>` carrega um CONTADOR, e não o `0`
+literal que o A7 do V1 leu (div. 157, caso 21 do `LOGS-OCTAVIA.md`).
+
+--------------------------------------------------------------------------------
+APARATO
+--------------------------------------------------------------------------------
+APARELHO : RX2N8000F3D · SM-T865 (Galaxy Tab S6) · Android 12 · 2560×1492 na
+           janela do app. **Tab S6 conectado**, então o AVD não foi usado.
+CONTA    : principal, uid xVDJRBh1WpPOatbfWahOLttYn1E3, ONLINE o tempo todo —
+           `airplane_mode_on` = 0 e ping 8.8.8.8 respondendo no início (32,5 ms)
+           e no fim (avg 20,7 ms). **Nenhum comando de rádio no tablet** (regra
+           da V1-PR3, div. 55).
+CÓDIGO   : branch `n2/pr1-t1r10` em `e5c1ec1`, servida pelo Metro DESTA árvore
+           (`../octavia-n2-pr1`), `adb reverse tcp:8081 tcp:8081`. A mudança é
+           só JS: o dev client instalado é o de 2026-09-13 12:42 (V1-PR3), sem
+           reinstalação. Chaves do Firebase **inline** no ambiente de um único
+           comando, lidas do checkout principal; nenhum `.env` escrito aqui.
+ABRIR    : `am force-stop` + `logcat -c` + `am start -W -a VIEW -d
+           'exp+octavia://expo-development-client/?url=http%3A%2F%2Flocalhost%3A8081'`,
+           e depois `logcat -d -s ReactNativeJS | grep -o 'OCTAVIA: .*'`.
+
+STORE ANTES (sha256, `run-as`), medido antes de qualquer comando:
+    b868f6b8e2aaffce866858832c5872eb82eedb479f136ad7f8317c7d5631c012  setlists.json  (2.752 B)
+    39f784a4cfc396c2f5c40c3fa950f92ec5405af153469e16a5d8a667709a6796  content.json   (111.567 B)
+  Conteúdo: **2 setlists**, 63 contents, nada com `updated_at` posterior a
+  2026-08-06 — ou seja, as duas edições do Marcel no web ainda NÃO tinham
+  chegado ao aparelho.
+
+STORE DEPOIS:
+    c35bfbd98863bd5ea79873cc9afdfd116ca597940a49ed01c3d0b9cd41431b2a  setlists.json
+    a60ed34ea9f63508bb10da761e8d8aac197149e34df18484c6bb98caea9baf16  content.json
+    1a10b82c3f17eb487031a88c1b9203ca3a5915a6e360b61d182d26b6b1efbc2d  files-index.json
+  O único arquivo em `files/` continua o mesmo (`1751910900697-Easy_-_Guitar.pdf`);
+  `prefetch plan n=0 reason=7d` em todas as aberturas — nada foi baixado.
+
+O QUE O MARCEL MUDOU NO WEB (medido comparando o cache antes × depois):
+    SETLIST NOVA   b100382e  'DESCARTÁVEL N2'  0 músicas  updated_at 2026-09-20T21:04:39.411+00:00
+    CONTENT ALTERADO 69735e94  updated_at 2026-08-06T12:43:35.314 -> 2026-09-20T21:07:15.213
+                              título 'Colors' -> 'Colors 2'  (o nome NÃO foi
+                              revertido — ver div. 198, e ainda bem)
+
+--------------------------------------------------------------------------------
+ABERTURA 1 — as duas mudanças do servidor chegam (logcat verbatim)
+--------------------------------------------------------------------------------
+    OCTAVIA: net online
+    OCTAVIA: auth uid=xVDJRBh1WpPOatbfWahOLttYn1E3 src=restored
+    OCTAVIA: cache hit kind=setlists n=2
+    OCTAVIA: cache hit kind=content n=63
+    OCTAVIA: sync start
+    OCTAVIA: auth refresh=cached
+    OCTAVIA: api status=200 path=/api/setlists n=1 ms=804
+    OCTAVIA: auth refresh=cached
+    OCTAVIA: api status=200 path=/api/content n=1 ms=445
+    OCTAVIA: cache write kind=setlists n=3 invalidated=1
+    OCTAVIA: cache write kind=content n=63 invalidated=1
+    OCTAVIA: sync ok setlists=3 content=63 pages=1 t=2534
+    OCTAVIA: prefetch plan n=0 reason=7d
+
+  **É a linha que não existia.** Contra o código de antes desta PR, as duas
+  sairiam `invalidated=0` com o servidor tendo mudado duas coisas. Cada conjunto
+  conta o SEU: a setlist nova é 1 (de 2 para 3 itens, um `added`), o content
+  renomeado é 1 (`changed`), e os outros 62 contents não invalidam nada.
+
+--------------------------------------------------------------------------------
+ABERTURA 2 — nada mudou no servidor
+--------------------------------------------------------------------------------
+    OCTAVIA: cache hit kind=setlists n=3
+    OCTAVIA: cache hit kind=content n=63
+    OCTAVIA: api status=200 path=/api/setlists n=1 ms=580
+    OCTAVIA: api status=200 path=/api/content n=1 ms=352
+    OCTAVIA: cache write kind=setlists n=3 invalidated=0
+    OCTAVIA: cache write kind=content n=63 invalidated=0
+    OCTAVIA: sync ok setlists=3 content=63 pages=1 t=2276
+
+--------------------------------------------------------------------------------
+ABERTURA 3 — igual, e com o aparelho TRAVADO (o keyguard entrou sozinho)
+--------------------------------------------------------------------------------
+    OCTAVIA: cache write kind=setlists n=3 invalidated=0
+    OCTAVIA: cache write kind=content n=63 invalidated=0
+    OCTAVIA: sync ok setlists=3 content=63 pages=1 t=2980
+  (`deviceLocked=1` durante toda esta abertura: o app abre, sincroniza e grava
+  atrás da tela de bloqueio. Medido, não suposto.)
+
+--------------------------------------------------------------------------------
+ABERTURA 4 — a tela, com o Marcel tendo destravado: S1 e S4
+--------------------------------------------------------------------------------
+OCTAVIA: net online
+OCTAVIA: auth uid=xVDJRBh1WpPOatbfWahOLttYn1E3 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=63
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=556
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=367
+OCTAVIA: cache write kind=setlists n=3 invalidated=0
+OCTAVIA: cache write kind=content n=63 invalidated=0
+OCTAVIA: sync ok setlists=3 content=63 pages=1 t=1225
+OCTAVIA: prefetch plan n=0 reason=7d
+OCTAVIA: search q=1 n=50 in-setlist=0
+OCTAVIA: search q=5 n=2 in-setlist=0
+OCTAVIA: search q=6 n=2 in-setlist=0
+OCTAVIA: search q=6 n=2 in-setlist=0
+OCTAVIA: search q=8 n=1 in-setlist=0
+
+  S1 (`uiautomator dump`, nós com texto ou content-desc):
+    -                    ''                                             'Tools'                                        [2436,119][2495,178]
+    -                    'SETLISTS'                                     ''                                             [72,147][1669,228]
+    -                    'sincronizado agora'                           ''                                             [1786,166][2049,209]
+    buscar               ''                                             'Buscar música'                                [2103,123][2488,253]
+    -                    'Buscar música'                                ''                                             [2222,163][2450,212]
+    setlist-b100382e     ''                                             'DESCARTÁVEL N2, sem data, 0 músicas, garant   [72,396][2488,693]
+    -                    'DESCARTÁVEL N2'                               ''                                             [146,474][1370,543]
+    -                    'sem data'                                     ''                                             [209,570][345,615]
+    -                    '0 músicas'                                    ''                                             [462,570][611,615]
+    baixar-b100382e      ''                                             'Baixar esta setlist'                          [1406,479][1842,610]
+    -                    'Baixar esta setlist'                          ''                                             [1525,519][1804,568]
+    -                    'garantida offline'                            ''                                             [1987,497][2415,542]
+    -                    'nada a baixar'                                ''                                             [1987,551][2415,591]
+    setlist-772076b4     ''                                             'GOOD TIMES, sem data, 4 músicas, garantida    [72,720][2488,1017]
+    -                    'GOOD TIMES'                                   ''                                             [146,798][1370,867]
+    -                    'sem data'                                     ''                                             [209,894][345,939]
+    -                    '4 músicas'                                    ''                                             [462,894][610,939]
+    baixar-772076b4      ''                                             'Baixar esta setlist'                          [1406,803][1842,934]
+    -                    'Baixar esta setlist'                          ''                                             [1525,843][1804,892]
+    -                    'garantida offline'                            ''                                             [1987,821][2415,866]
+    -                    'nada a baixar'                                ''                                             [1987,875][2415,915]
+    setlist-e39d57cf     ''                                             'SEASON 3, 2025-07-16, 7 músicas, garantida    [72,1044][2488,1341]
+    -                    'SEASON 3'                                     ''                                             [146,1122][1861,1191]
+    -                    '2025-07-16'                                   ''                                             [209,1218][379,1263]
+    -                    '7 músicas'                                    ''                                             [496,1218][642,1263]
+    -                    'garantida offline'                            ''                                             [1986,1146][2414,1191]
+    -                    'nada a baixar'                                ''                                             [1986,1200][2414,1240]
+
+  A setlist nova está lá: `setlist-b100382e` · 'DESCARTÁVEL N2' · '0 músicas'.
+
+  S4, termo digitado `colors 2` (8 caracteres — o catálogo só deixa sair o
+  COMPRIMENTO, `search q=8 n=1`):
+    -                    ''                                             'Tools'                                        [2436,119][2495,178]
+    fechar-busca         ''                                             'Fechar a busca'                               [54,98][162,206]
+    campo-busca          'colors 2'                                     ''                                             [317,98][2342,206]
+    apagar               ''                                             'Apagar o que foi digitado'                    [2369,98][2477,206]
+    -                    'BIBLIOTECA · 63 MÚSICAS'                      ''                                             [54,292][514,333]
+    -                    '1 RESULTADO'                                  ''                                             [2286,292][2506,333]
+    resultado-69735e94   ''                                             'Colors 2, Black Pumas  ·  Black Pumas, Letr   [54,383][2506,563]
+    -                    'Colors 2'                                     ''                                             [218,414][2225,481]
+    -                    'Black Pumas  ·  Black Pumas'                  ''                                             [218,490][2225,533]
+    -                    'Letra'                                        ''                                             [2324,452][2450,495]
+
+  O índice de busca foi reconstruído com o título NOVO: 1 resultado,
+  `resultado-69735e94` · 'Colors 2'. O item cujo `updated_at` mudou é o mesmo
+  que a busca agora acha pelo nome novo — o derivado do T1-R10 invalidado de
+  ponta a ponta, do `updated_at` do servidor até o que o músico lê.
+
+--------------------------------------------------------------------------------
+DIVERGÊNCIAS (197 em diante)
+--------------------------------------------------------------------------------
+| 197 | P | O protocolo previa TRÊS eventos separados (setlist nova → sem
+        mudança → content renomeado). As duas edições do web foram feitas ANTES
+        da primeira abertura, então elas chegaram JUNTAS na abertura 1. Não há
+        prejuízo: o log tem uma linha por conjunto, e cada uma contou o seu
+        (`kind=setlists … 1` e `kind=content … 1`); o "volta a 0" foi medido
+        três vezes. O que NÃO se mediu no aparelho é um sync em que um conjunto
+        invalida e o outro não — isso está no CN (`sync-t1r10.test.ts`). |
+| 198 | P | O prompt diz que o Marcel "renomeou o título de um content **e
+        voltou o nome**". Ele não voltou: o título está 'Colors 2'. Foi o que
+        tornou a S4 mensurável — com o nome revertido, o `updated_at` mudaria e
+        a string ficaria idêntica, e nenhuma busca saberia distinguir índice
+        velho de índice novo. **O estado do web ficou assim**: o content
+        69735e94 está 'Colors 2' e a setlist 'DESCARTÁVEL N2' existe, vazia. |
+|  —  | T | O Tab S6 trava sozinho em 30 s e o keyguard é seguro; a parte
+        visual parou até o Marcel destravar. Já registrada na sessão do brief
+        (PR #310), não renumerada aqui. |

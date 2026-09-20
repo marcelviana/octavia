@@ -11,7 +11,7 @@
 | `g1-antes-depois.txt` | G1 na árvore limpa (aviso da div. 141 literal) e depois da poda |
 | `gates-commit2.txt` | suíte, lint, tsc, `gate:a20`, `gate:icones`, G1, G2/G3 do commit 2, e o controle do G3 com errata (div. 189) |
 | `div121-medicao.ts.txt` | o script da medição da div. 121 (rodado com `pnpm exec tsx`) |
-| `device-t1r10.txt` | **não existe ainda** — item 4 pendente (ver abaixo) |
+| `device-t1r10.txt` | **item 4, feito** (2026-09-20, Tab S6, conta principal): quatro aberturas, S1 com a setlist nova, S4 com o título novo |
 
 ## O contador (decisão a avalizar)
 
@@ -46,23 +46,24 @@ Saída de `pnpm exec tsx div121-medicao.ts`:
 - Sobra o limite já declarado no T1-R10: edição fora da API não bumpa
   `updated_at` e não é vista.
 
-## Item 4 (aparelho) — **pendente**
+## Item 4 (aparelho) — **feito** (2026-09-20, Tab S6 `RX2N8000F3D`, conta principal)
 
-Nada rodou no aparelho. O Tab S6 não está conectado; o AVD `octavia_tab32`
-(`emulator-5554`) e o Metro da 8081 estão em uso por outra sessão
-(`octavia-n2-brief`), e não mexi neles. O passo 2 depende do Marcel. A mudança
-é só JS: o dev client instalado serve, com o Metro desta árvore.
+`device-t1r10.txt` tem o verbatim. Resumo:
 
-Protocolo quando for rodar (ver também a div. 192):
-1. abrir o app duas vezes sem mudança → `cache write kind=setlists … invalidated=0`
-   e `kind=content … invalidated=0` nas duas aberturas;
-2. **o Marcel** renomeia uma setlist no web → abrir → `kind=setlists … invalidated=1`,
-   e o nome novo aparece na **S1** (a S4 não indexa setlist). Para ver o
-   derivado da busca: renomear o **título de um content** → `kind=content … invalidated=1`
-   e a S4 acha o título novo. Depois, voltar os nomes;
-3. abrir de novo → `invalidated=0`.
+| abertura | `kind=setlists` | `kind=content` | o que havia mudado no web |
+|---|---|---|---|
+| 1 | `n=3 invalidated=1` | `n=63 invalidated=1` | setlist nova `DESCARTÁVEL N2` **e** o content 69735e94 renomeado |
+| 2 | `n=3 invalidated=0` | `n=63 invalidated=0` | nada |
+| 3 | `n=3 invalidated=0` | `n=63 invalidated=0` | nada (aparelho **travado**: abre, sincroniza e grava atrás do keyguard) |
+| 4 | `n=3 invalidated=0` | `n=63 invalidated=0` | nada — a abertura da tela: S1 mostra `setlist-b100382e` 'DESCARTÁVEL N2'; S4 com `colors 2` → `search q=8 n=1`, `resultado-69735e94` 'Colors 2' |
 
-## Divergências (187–196)
+O contador é real no aparelho, não só no CN: com o servidor mudado, as duas
+linhas saíram `1` — contra o código de antes elas sairiam `0`, que é a div. 157
+inteira. Nada foi baixado (`prefetch plan n=0` nas quatro), o único arquivo do
+store continua o mesmo, e o tablet ficou online o tempo todo (nenhum comando de
+rádio, regra da V1-PR3).
+
+## Divergências (187–198)
 
 | # | origem | o quê | destino |
 |---|---|---|---|
@@ -74,6 +75,8 @@ Protocolo quando for rodar (ver também a div. 192):
 | **192** | P | item 4.2 do prompt: "a busca (S4) acha o nome novo" da setlist. A S4 só indexa **content** (`buildIndex(contents)`, `SearchScreen.tsx:172`; `core/search.ts:30`) — nome de setlist nunca é achado por ela | registrada; protocolo acima corrigido |
 | **193** | D | o A7 do `PRD-TELA-1.md` nunca rastreou o T1-R10 (rastreio "T1-R8, T1-R9"); o T1-R10 ficou pendurado nele só em `N1-PRECHECK.md:193` ("(A7)") e daí no `V1-ENCERRAMENTO.md:122` | corrigida (errata do A7 inclui o T1-R10) |
 | **194** | D | T1-R20 diz "índice reconstruído **por item** a cada invalidação"; o app reconstrói o índice **inteiro** quando qualquer item invalida (`buildIndex` sobre o conjunto). Esta PR só poupa o caso "nada mudou" | registrada; custo medido do índice é pequeno (19.481 B de corpo, T1-R20); mexer é tela (S4), fora desta PR |
+| **197** | P | as duas edições do web precederam a primeira abertura, então chegaram JUNTAS (uma linha por conjunto, cada uma com o seu `1`); o protocolo previa três eventos separados | registrada; sem prejuízo — o caso "um conjunto invalida, o outro não" está no CN |
+| **198** | P | o content **não** teve o nome revertido ('Colors' → 'Colors 2', e assim ficou) — foi o que tornou a S4 mensurável. Estado do web deixado assim, declarado | registrada; o Marcel decide se volta |
 | **196** | T | **o CN passou na máquina e reprovou no CI** (4 de 6, `sync não fechou ok: … erro.sem_conexao`, só nos testes que re-sobem o mock). O `aceite.py` imprime `fixture: servidor` (`:272`) **antes** de construir o `HTTPServer` (`:275`), e o CN usava a linha como sinal de pronto. Na máquina o bind ganhava a corrida; no runner, não. Commit 4: o CN só segue quando o mock **responde** a `/api/setlists`. Reprovação contra o código de antes reconferida (5 de 6, todas `AssertionError`) | corrigida no teste; o `aceite.py` não mudou (a mesma corrida existe nos protocolos de device, mas lá há um humano esperando) |
 | **195** | T | a lista de erratas do G3 ainda carrega a do W1 (`file src=download …`), mergeada há três PRs — a mesma forma da div. 141, agora no G3 (lá não há aviso de "não usada") | registrada; não podada (fora da lista fechada) |
 
