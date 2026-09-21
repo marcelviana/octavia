@@ -67,6 +67,34 @@
 # `W3-ENCERRAMENTO.md` como PROPOSTA DE REVISÃO PENDENTE. Se voltar com caso
 # real, revisa-se a 83 por escrito, em PR própria, com o texto dela ao lado. O
 # risco é latente: ZERO menções a `log(` em comentário na árvore de hoje.
+#
+# --- W4-a — A FORMA NOVA, E O QUE ELA FAZ COM A PROPOSTA PENDENTE -----------
+#
+# É aqui que a herança do `W3-ENCERRAMENTO.md` (§7, item 8) se cumpre: a razão
+# da forma nova fica ESCRITA AO LADO DO TEXTO DA 83, no lugar onde quem mexer
+# no gate vai ler. Foi essa distância — razão num anexo, decisão no script —
+# que produziu a div. 142, e a regra 5 do catálogo diz que ela não se repete.
+#
+# **Por que a errata virou PAR** (div. 189, medida na N2-PR1): a forma da W1
+# declarava só a linha que SAI. Apagar a velha sem pôr nada no lugar passava.
+# A palavra *errata* promete "esta linha VIROU aquela"; o gate checava metade.
+# Agora ele exige as duas pontas. **Isto não mexe na 83**: a 83 é sobre o que o
+# COLETOR lê (texto cru, comentário incluído), e o coletor continua igual.
+#
+# **Mas muda um fato do argumento pendente, e o fato é contra o silêncio.** A
+# proposta registrada na W3 dizia que, num SUMIU vindo de comentário (div. 140),
+# "o único remédio que o script oferece é declarar na lista de ERRATAS uma
+# 'linha de log' que nunca foi log — uma errata falsa no registro que existe
+# para ser verdadeiro". **Esse remédio ACABOU.** Com o par, a errata falsa já
+# não basta: seria preciso inventar TAMBÉM uma substituta e fazê-la aparecer
+# entre as linhas adicionadas. A saída de emergência era ruim e agora está
+# fechada — o que torna o argumento da proposta mais forte, não menos.
+#
+# **O W4-a NÃO decide a 83**, e isso é de propósito, pela razão que o Marcel já
+# deu: não por quem acabou de mexer no gate, e não sem caso real. Medido de
+# novo nesta PR: ZERO menções a `log(` em comentário na árvore. A proposta
+# segue PENDENTE, com um fato a mais; o que fecha aqui é a DÍVIDA DE ESCRITA —
+# a 83 e a razão da forma nova, juntas, neste arquivo.
 # ---------------------------------------------------------------------------
 # ---------------------------------------------------------------------------
 # W4-a — O GATE RECUSA CHAMADA SEM PAR (div. 187)

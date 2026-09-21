@@ -37,6 +37,36 @@ cada diretório. **Não há "antes × depois" nesta PR**: o código não muda, e
 | `S0-` `S1-` `S2-` `S3-` `S4-` `S5-` `A16-` `AV5-` `AVicones-` | o aceite e o veredito visual | Tab S6 |
 | `ZZ-estado-final` | o tablet como ficou | Tab S6 |
 
+### Errata (W4-a, 2026-09-21) — o que sustenta o A16, e o que os três dumps do palco NÃO sustentam
+
+`A16-palco-inicio.xml`, `A16-palco-fim.xml` e `S3-palco-1de7.xml` são **byte a
+byte idênticos** (`e697202f…` hoje; `327fa19f…` antes da omissão de corpo da
+div. 204) e **nasceram assim**, no mesmo commit em que entraram — `8f62e3c`,
+esta PR. Não são três medições que por acaso coincidiram `[medido: W4-a,
+`git rev-parse <commit>:<arquivo>` nos quatro commits do histórico]`.
+
+**E não poderiam ser diferentes.** Os três dumps têm 72 nós, todos com
+`package="rocks.octavia.app"`: **sem barra de status, sem relógio, sem um só
+atributo que varie com o tempo** `[medido: W4-a]`. Numa tela de palco que não
+muda, o `uiautomator dump` não tem o que registrar de diferente entre dois
+instantes — ele mede a ÁRVORE, não o MOMENTO.
+
+Então, explicitamente, **o que prova cada parte do A16** (o veredito está
+intacto — o registro é que prometia demais):
+
+| o que o A16 afirma | o que prova | onde |
+|---|---|---|
+| o app PEDE e o Android ATENDE | `fl=81810180 & 0x80` = `FLAG_KEEP_SCREEN_ON`; `SCREEN_BRIGHT_WAKE_LOCK 'WindowManager' ws=WorkSource{10292}` | `V1-PR7-B-aceite-tabs6.txt` |
+| a tela ficou acesa 15 min+ sem toque | `ACQ=-22m48s848ms` contra `screen_off_timeout=30000`, e as **17 leituras** do `a16.sh` (`Awake true false`, +0 a +16 min) | `V1-PR7-B-aceite-tabs6.txt` |
+| passou tempo entre "início" e "fim" | o **relógio na barra de status das PNGs**: 10:37 e 11:00 (e 10:29 na do S3) | as `.png` irmãs |
+| a tela é a mesma, música 1 de 7 | os **XML** — e **só isto** | os três `.xml` |
+
+Os três XML seguem válidos como prova da **invariante** (é a mesma tela), que é
+o que o A16 precisa deles. O que estava errado era o nome do arquivo sugerir
+dois ESTADOS onde o instrumento só sabe registrar um. Catalogado como **caso
+23** do padrão *instrumento com escopo menor do que parece*
+(`LOGS-OCTAVIA.md`), origem na **div. 211** (N2).
+
 ## Instrumentos
 
 `instrumentos/` — `g1.sh`, `g5.mjs`, `g6.sh` (verbatim da V1-PR1), `ids.mjs`, `bounds.mjs`,
