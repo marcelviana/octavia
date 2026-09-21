@@ -348,7 +348,12 @@ def _paginas(content: list, modo: str) -> list[list]:
 
 
 def servidor(porta: int, modo: str, setlists_path: str, content_path: str) -> None:
-    from http.server import BaseHTTPRequestHandler, HTTPServer
+    # `ThreadingHTTPServer` e não `HTTPServer` (N2-PR2, 2ª rodada): o
+    # `HTTPServer` atende UMA conexão por vez, então um `sleep` num handler
+    # congela todos os outros — e o que se quer medir é justamente DUAS
+    # releituras SOBREPOSTAS. Com o servidor serial, a sobreposição não
+    # existiria e o teste mediria a fila do mock em vez da trava do app.
+    from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
     from urllib.parse import urlparse, parse_qs
 
     setlists = json.load(open(setlists_path))
@@ -360,7 +365,7 @@ def servidor(porta: int, modo: str, setlists_path: str, content_path: str) -> No
     # lista VIVA — o `GET /api/setlists` serve o que o modelo tem agora, que é
     # o que faz a releitura do T2-R9 medir alguma coisa.
     modelo = Modelo(setlists)
-    estado = {"escritas": 0}
+    estado = {"escritas": 0, "gets_pos_escrita": 0}
 
     class H(BaseHTTPRequestHandler):
         def _json(self, code: int, body, extra: dict | None = None) -> None:
@@ -470,6 +475,32 @@ def servidor(porta: int, modo: str, setlists_path: str, content_path: str) -> No
                 return
 
             if u.path == "/api/setlists":
+                if modo == "escrita-releitura-fora-de-ordem" and estado["escritas"] > 0:
+                    # **Inverte a ordem de chegada de duas releituras.** O
+                    # PRIMEIRO `GET` depois de uma escrita chega 600 ms
+                    # atrasado; os seguintes respondem na hora. Assim a
+                    # releitura EMITIDA primeiro chega POR ÚLTIMO — que é o
+                    # único jeito de medir se o cache acaba com o ÚLTIMO 200
+                    # ou com o último a chegar.
+                    #
+                    # **A FOTO É TIRADA ANTES DO ATRASO**, e essa ordem é o
+                    # instrumento inteiro. A primeira forma disto dormia e
+                    # SÓ ENTÃO lia o modelo: a resposta lenta voltava com
+                    # dado FRESCO, a inversão não existia, e o teste passava
+                    # sem medir nada. Num servidor real a leitura acontece na
+                    # hora do request e o atraso é de TRANSPORTE — a resposta
+                    # que demora 600 ms carrega a foto de 600 ms atrás.
+                    #
+                    # Isto não encena um defeito: duas releituras sobrepostas
+                    # são o que o congelado pede (`N2-P-relendo`: "as outras
+                    # linhas seguem ativas"), e numa rede real a ordem de
+                    # chegada não é a de emissão.
+                    estado["gets_pos_escrita"] += 1
+                    if estado["gets_pos_escrita"] == 1:
+                        foto = copy.deepcopy(modelo.setlists)
+                        time.sleep(0.6)
+                        self._json(200, foto)
+                        return
                 if modo == "escrita-resync-500" and estado["escritas"] > 0:
                     # N2-D22: a escrita gravou e a RELEITURA é que falhou.
                     # Só depois da primeira escrita — o sync da abertura
@@ -610,7 +641,9 @@ def servidor(porta: int, modo: str, setlists_path: str, content_path: str) -> No
     print(f"fixture: servidor em :{porta} modo={modo} "
           f"setlists={len(modelo.setlists)} content={len(content)} paginas={[len(p) for p in paginas]}",
           flush=True)
-    HTTPServer(("127.0.0.1", porta), H).serve_forever()
+    servidor_http = ThreadingHTTPServer(("127.0.0.1", porta), H)
+    servidor_http.daemon_threads = True
+    servidor_http.serve_forever()
 
 
 # ------------------------------------------------------------------- cli

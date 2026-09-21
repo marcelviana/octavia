@@ -50,7 +50,7 @@ import {
   type Resultado,
   type SetlistDTO,
 } from '@octavia/core'
-import { getSetlists, mutate } from './api'
+import { getSetlists, mutate, type RespostaDeEscrita } from './api'
 import { log } from './log'
 import { estaOnline } from './net'
 import { saveSetlists } from './store'
@@ -79,7 +79,12 @@ export interface EstadoLocal {
 
 export interface Saida {
   resultado: Resultado
-  /** O conjunto novo quando a releitura voltou 200; `null` quando não. */
+  /**
+   * O conjunto novo que ESTA escrita trouxe, ou `null` — porque a releitura
+   * falhou (e aí `resultado.especie` é `ok-nao-relido`) ou porque uma
+   * releitura mais nova já entregou um conjunto melhor (div. 232; aí a
+   * espécie é `ok`, e o conjunto chega pelo `aoRelerSetlists`).
+   */
   setlists: SetlistDTO[] | null
   syncedAtMs: number | null
 }
@@ -104,6 +109,31 @@ let gate = rateLimitGate()
 let emVoo = false
 
 /**
+ * **A ordem entre releituras — div. 232, a segunda metade.**
+ *
+ * Com a trava cobrindo só o request (ver o `finally` do `escrever`), duas
+ * releituras podem estar em voo ao mesmo tempo, e **a ordem de chegada não é
+ * a de emissão**: a resposta que demora 600 ms carrega a foto de 600 ms
+ * atrás. Sem ordem, a releitura EMITIDA primeiro chega por último e
+ * sobrescreve o cache com o estado mais VELHO — medido, e é o que o terceiro
+ * CN reprova.
+ *
+ * `geracao` é a ordem de EMISSÃO; `ultimaAplicada`, a da última que gravou.
+ * Um 200 só se aplica se nenhuma releitura mais nova já tiver gravado. Não
+ * muda quantas requests voam nem o que cada uma diz: só impede que uma foto
+ * velha vença uma nova. É o mesmo raciocínio do `reconcileByUpdatedAt` — o
+ * que vale é o que o servidor disse por último.
+ *
+ * **Como um descarte aparece no log**, sem campo novo: a releitura descartada
+ * emite a sua linha `resync … status=200` (ela LEU, e isso é verdade) e
+ * **não** emite `cache write kind=setlists` (ela não gravou). Duas linhas
+ * `resync` e uma `cache write` é a assinatura de um descarte, e as duas
+ * linhas já estão no catálogo.
+ */
+let geracao = 0
+let ultimaAplicada = 0
+
+/**
  * Instrumento de teste: troca o gate por um NOVO e solta o "em voo". Nenhuma
  * UI chama.
  *
@@ -119,6 +149,8 @@ let emVoo = false
 export function limparGatesDeEscrita(): void {
   gate = rateLimitGate()
   emVoo = false
+  geracao = 0
+  ultimaAplicada = 0
 }
 
 function barrar(op: Op, motivo: MotivoBarrado): void {
@@ -181,8 +213,21 @@ export function prepararEdicao(
 export type MotivoDaReleitura = 'write' | '404' | 'order' | 'reopen'
 
 export interface Releitura {
+  /**
+   * O conjunto novo, ou `null` — e `null` tem DOIS significados, que o `leu`
+   * separa: a leitura falhou (N2-D22), ou ela voltou 200 e uma releitura
+   * mais nova já tinha gravado (div. 232).
+   */
   setlists: SetlistDTO[] | null
   syncedAtMs: number | null
+  /**
+   * `true` quando o `GET` voltou 200, **inclusive** quando o resultado foi
+   * descartado por uma releitura mais nova. Sem esta distinção, o descarte
+   * viraria "salvo; não foi possível recarregar" na tela — uma mentira
+   * exatamente ao contrário: tudo funcionou, e foi a versão MAIS NOVA que
+   * venceu.
+   */
+  leu: boolean
 }
 
 /**
@@ -219,6 +264,7 @@ async function reler(
   reason: MotivoDaReleitura,
   op: Op | null,
 ): Promise<Releitura> {
+  const minha = ++geracao
   const t0 = Date.now()
   const r = await getSetlists()
   const ms = Date.now() - t0
@@ -226,8 +272,16 @@ async function reler(
   if (!r.ok) {
     const status = r.status ?? 'net'
     log(`resync kind=setlists reason=${reason} op=${opDoLog} status=${status} setlists=- ms=${ms}`)
-    return { setlists: null, syncedAtMs: null }
+    return { setlists: null, syncedAtMs: null, leu: false }
   }
+  if (minha < ultimaAplicada) {
+    // Uma releitura MAIS NOVA já gravou: esta foto é velha e não vence
+    // (div. 232). A linha sai igual — ela leu, e o 200 é verdade —, e o que
+    // falta depois dela é o `cache write kind=setlists`.
+    log(`resync kind=setlists reason=${reason} op=${opDoLog} status=200 setlists=${r.data.length} ms=${ms}`)
+    return { setlists: null, syncedAtMs: null, leu: true }
+  }
+  ultimaAplicada = minha
   // T1-R10 (N2-D8): o contador real. Quando nada mudou, o conjunto devolvido
   // é o MESMO do anterior, e os derivados memoizados por referência não se
   // recriam — a escrita de outro aparelho que não mexeu nesta setlist não
@@ -241,7 +295,7 @@ async function reler(
     { setlists: invalidated, content: 0 },
   )
   aposReler?.(items)
-  return { setlists: items, syncedAtMs }
+  return { setlists: items, syncedAtMs, leu: true }
 }
 
 /**
@@ -262,6 +316,48 @@ export function relerAoAbrir(estado: EstadoLocal): Promise<SetlistDTO[] | null> 
  * dois casos e o campo `error` não pode ser lido (T1-R36). Quem sabe de quem
  * a tela está falando é a tela, depois de ver o conjunto relido.
  */
+/**
+ * **O trecho que a trava cobre**: a checagem de rede e o request. Nada mais.
+ * `null` = offline, e nenhum request saiu (T2-R12).
+ */
+async function enviarUm(
+  pedido: Pedido,
+  contexto?: 'setlist' | 'musica',
+): Promise<{ resposta: RespostaDeEscrita; preliminar: Resultado } | null> {
+  if (!(await estaOnline())) return null
+
+  const t0 = Date.now()
+  const resposta = await mutate(pedido.method, pedido.path, pedido.body)
+  const ms = Date.now() - t0
+
+  const preliminar = classificar(pedido.op, resposta, null, contexto)
+  // Logar — sempre, 2xx ou não (T2-R16).
+  //
+  // A linha vai inteira em UMA linha de fonte, e não quebrada em três como
+  // o `sync ok` do `sync.ts:115-117`. O G3 coleta as linhas de fonte que
+  // contêm a chamada; quebrada, ele coletaria só a abertura dela, e o
+  // formato inteiro ficaria invisível para o gate que existe justamente
+  // para dizer que nenhum formato mudou em silêncio.
+  //
+  // (E o comentário evita escrever a chamada: o coletor do G3 lê o texto
+  // CRU, comentário incluído — div. 83, decidido de propósito —, e a
+  // árvore de hoje tem ZERO menções dessas. Criar a primeira aqui faria a
+  // próxima PR que reescrevesse este parágrafo reprovar por "linha de log
+  // sumiu", que é o risco que o `W3-ENCERRAMENTO` deixou registrado.)
+  const status = resposta.status === null ? 'net' : String(resposta.status)
+  const code = resposta.status === null ? 'net' : (preliminar.code ?? '-')
+  log(`write op=${pedido.op} setlist=${pedido.setlist} items=${pedido.items} status=${status} code=${code} ms=${ms}`)
+
+  if (preliminar.especie === 'limite') {
+    // T2-R14: a família inteira fecha. Sem prazo, fecha pelo mínimo que o
+    // servidor garante (`Math.max(1, …)` em `user-rate-limit.ts:126`) — um
+    // gate que não fechasse por falta de número deixaria o app bater na
+    // porta até o servidor abrir, que é o que o 429 pede para não fazer.
+    gate.block(FAMILIA, Date.now() + (preliminar.retryAfter ?? 1) * 1000)
+  }
+  return { resposta, preliminar }
+}
+
 export async function escrever(
   pedido: Pedido,
   estado: EstadoLocal,
@@ -285,58 +381,47 @@ export async function escrever(
   if (!gate.canRequest(FAMILIA, Date.now())) return semReleitura('ratelimit')
 
   emVoo = true
+  let enviado: { resposta: RespostaDeEscrita; preliminar: Resultado } | null
   try {
-    // T2-R12: offline, nenhum request sai. Fica DENTRO da trava para que o
-    // `finally` a solte por um caminho só.
-    if (!(await estaOnline())) return semReleitura('offline')
-
     // 2. enviar — um request.
-    const t0 = Date.now()
-    const resposta = await mutate(pedido.method, pedido.path, pedido.body)
-    const ms = Date.now() - t0
-
-    const preliminar = classificar(pedido.op, resposta, null, opcoes?.contexto)
-    // 3. logar — sempre, 2xx ou não (T2-R16).
-    //
-    // A linha vai inteira em UMA linha de fonte, e não quebrada em três como
-    // o `sync ok` do `sync.ts:115-117`. O G3 coleta as linhas de fonte que
-    // contêm a chamada; quebrada, ele coletaria só a abertura dela, e o
-    // formato inteiro ficaria invisível para o gate que existe justamente
-    // para dizer que nenhum formato mudou em silêncio.
-    //
-    // (E o comentário evita escrever a chamada: o coletor do G3 lê o texto
-    // CRU, comentário incluído — div. 83, decidido de propósito —, e a
-    // árvore de hoje tem ZERO menções dessas. Criar a primeira aqui faria a
-    // próxima PR que reescrevesse este parágrafo reprovar por "linha de log
-    // sumiu", que é o risco que o `W3-ENCERRAMENTO` deixou registrado.)
-    const status = resposta.status === null ? 'net' : String(resposta.status)
-    const code = resposta.status === null ? 'net' : (preliminar.code ?? '-')
-    log(`write op=${pedido.op} setlist=${pedido.setlist} items=${pedido.items} status=${status} code=${code} ms=${ms}`)
-
-    if (preliminar.especie === 'limite') {
-      // T2-R14: a família inteira fecha. Sem prazo, fecha pelo mínimo que o
-      // servidor garante (`Math.max(1, …)` em `user-rate-limit.ts:126`) — um
-      // gate que não fechasse por falta de número deixaria o app bater na
-      // porta até o servidor abrir, que é o que o 429 pede para não fazer.
-      gate.block(FAMILIA, Date.now() + (preliminar.retryAfter ?? 1) * 1000)
-    }
-
-    // 4. reler — depois de todo 2xx (T2-R9) e de todo 404 (T2-R10).
-    const dosQueRelem = preliminar.especie === 'ok' || preliminar.especie === 'sumiu'
-    if (!dosQueRelem) return { resultado: preliminar, setlists: null, syncedAtMs: null }
-
-    const rel = await reler(estado, preliminar.especie === 'sumiu' ? '404' : 'write', pedido.op)
-
-    // 5. classificar de novo, agora com a releitura — é ela que separa `ok`
-    // de `ok-nao-relido` (N2-D22).
-    const resultado = classificar(
-      pedido.op,
-      resposta,
-      rel.setlists === null ? 'falhou' : 'ok',
-      opcoes?.contexto,
-    )
-    return { resultado, setlists: rel.setlists, syncedAtMs: rel.syncedAtMs }
+    enviado = await enviarUm(pedido, opcoes?.contexto)
   } finally {
+    // **A TRAVA SOLTA AQUI, ANTES DA RELEITURA — div. 232.**
+    //
+    // A primeira forma disto tinha o `await reler(…)` DENTRO deste `try`, e
+    // a trava durava a operação inteira. O T2-R11 diz "uma escrita por vez",
+    // e travar da primeira linha à última é a leitura óbvia dele — mas
+    // contradiz o congelado. `DESIGN-N2/telas.html`, legenda de
+    // `N2-P-relendo`, verbatim: *"As outras linhas **seguem ativas**: a
+    // releitura de uma adição não congela o picker."*
+    //
+    // O que a trava existe para impedir é **duas escritas no servidor ao
+    // mesmo tempo** (dois `POST` de bis, duas ordens concorrentes). A
+    // releitura é um `GET` de outra família, que não escreve nada e não
+    // consome a janela `setlist-mutate` — segurá-la aqui custaria ~50 KB de
+    // espera por música no T2-R6, que pede dez adições seguidas com o picker
+    // aberto.
     emVoo = false
   }
+  if (enviado === null) return semReleitura('offline')
+  const { resposta, preliminar } = enviado
+
+  // 3. reler — depois de todo 2xx (T2-R9) e de todo 404 (T2-R10). Fora da
+  // trava: daqui para baixo outra escrita já pode ter começado.
+  const dosQueRelem = preliminar.especie === 'ok' || preliminar.especie === 'sumiu'
+  if (!dosQueRelem) return { resultado: preliminar, setlists: null, syncedAtMs: null }
+
+  const rel = await reler(estado, preliminar.especie === 'sumiu' ? '404' : 'write', pedido.op)
+
+  // 4. classificar de novo, agora com a releitura — é ela que separa `ok`
+  // de `ok-nao-relido` (N2-D22).
+  const resultado = classificar(
+    pedido.op,
+    resposta,
+    // `leu`, e não `setlists !== null`: uma releitura descartada por outra
+    // mais nova LEU, e a escrita está relida — por uma foto melhor.
+    rel.leu ? 'ok' : 'falhou',
+    opcoes?.contexto,
+  )
+  return { resultado, setlists: rel.setlists, syncedAtMs: rel.syncedAtMs }
 }

@@ -428,6 +428,98 @@ describe('T2-R12 / T2-R14 — as escritas barradas, sem request nenhum', () => {
   })
 })
 
+/**
+ * O ESCOPO DA TRAVA — `DESIGN-N2/telas.html`, legenda de `N2-P-relendo`,
+ * verbatim: *"As outras linhas **seguem ativas**: a releitura de uma adição
+ * não congela o picker."*
+ *
+ * O T2-R11 diz "uma escrita por vez", e a leitura óbvia — travar da primeira
+ * linha à última — contradiz o congelado: a releitura da N2-D13 é um `GET` de
+ * ~50 KB, e segurar o picker por ela transformaria "adicionar 10 músicas" em
+ * dez esperas. **A trava é do REQUEST, não da operação inteira.**
+ *
+ * Os três CNs abaixo medem isso, e o terceiro mede o preço de encurtá-la:
+ * com duas releituras em voo, a que chega por último pode trazer uma foto
+ * mais VELHA do servidor.
+ */
+describe('T2-R11 — a trava cobre o request, não a releitura (N2-P-relendo)', () => {
+  /** Espera uma condição do log, sem relógio fixo: o mock é rápido demais. */
+  async function ate(condicao: () => boolean, oQue: string): Promise<void> {
+    const limite = Date.now() + 5_000
+    while (!condicao()) {
+      if (Date.now() > limite) throw new Error(`não aconteceu em 5 s: ${oQue}`)
+      await new Promise((r) => setTimeout(r, 5))
+    }
+  }
+
+  it('uma segunda adição é ACEITA enquanto a releitura da primeira está em voo', async () => {
+    await servir('escrita-releitura-fora-de-ordem')
+    const estado = await estadoInicial()
+
+    const primeira = mod.escrever(mod.pedidoAdicionar(SL, 'c-1'), estado)
+    // O `write op=add` sai quando o REQUEST da primeira voltou; a releitura
+    // dela ainda está em voo (o mock a segura por 600 ms).
+    await ate(() => so('write op=add').length === 1, 'o request da primeira voltar')
+    expect(so('resync')).toEqual([]) // a releitura da primeira NÃO voltou ainda
+
+    const segunda = await mod.escrever(mod.pedidoAdicionar(SL, 'c-2'), estado)
+    await primeira
+
+    // O que o congelado exige: a segunda linha do picker seguia ativa.
+    expect(segunda.resultado.especie).not.toBe('rede')
+    expect(so('write blocked')).toEqual([])
+    expect(so('write op=add')).toHaveLength(2)
+  })
+
+  it('duas releituras se SOBREPÕEM — e são duas, não uma enfileirada atrás da outra', async () => {
+    await servir('escrita-releitura-fora-de-ordem')
+    const estado = await estadoInicial()
+
+    const primeira = mod.escrever(mod.pedidoAdicionar(SL, 'c-1'), estado)
+    await ate(() => so('write op=add').length === 1, 'o request da primeira voltar')
+    const segunda = mod.escrever(mod.pedidoAdicionar(SL, 'c-2'), estado)
+    await Promise.all([primeira, segunda])
+
+    // Duas releituras, e a EMITIDA primeiro chega por último (o mock a
+    // segura): é a inversão que uma rede real produz sozinha.
+    const resyncs = so('resync')
+    expect(resyncs).toHaveLength(2)
+    const ms = resyncs.map((l) => Number(/ ms=(\d+)$/.exec(l)?.[1] ?? 0))
+    expect(Math.max(...ms)).toBeGreaterThan(500)
+    expect(Math.min(...ms)).toBeLessThan(500)
+  })
+
+  it('e o cache acaba igual ao ÚLTIMO 200, não ao último a chegar', async () => {
+    await servir('escrita-releitura-fora-de-ordem')
+    const estado = await estadoInicial()
+
+    const primeira = mod.escrever(mod.pedidoAdicionar(SL, 'c-1'), estado)
+    await ate(() => so('write op=add').length === 1, 'o request da primeira voltar')
+    const segunda = mod.escrever(mod.pedidoAdicionar(SL, 'c-2'), estado)
+    const [r1, r2] = await Promise.all([primeira, segunda])
+
+    // As duas adições entraram no servidor; o cache tem de mostrar as duas.
+    // Sem ordem entre releituras, a que foi emitida primeiro chega por último
+    // — com a foto de ANTES da segunda adição — e sobrescreve a que já
+    // trouxe as duas.
+    const noServidor = await doServidor()
+    expect(noServidor[0]?.setlist_songs).toHaveLength(4)
+    expect(doCache()?.setlists).toEqual(semEmbutido(noServidor))
+
+    // A assinatura do descarte, sem campo novo na linha: DUAS releituras
+    // voltaram 200 e só UMA gravou.
+    expect(so('resync')).toHaveLength(2)
+    expect(so('resync').every((l) => l.includes('status=200'))).toBe(true)
+    expect(so('cache write kind=setlists')).toHaveLength(1)
+
+    // E a escrita cuja releitura foi descartada continua `ok`: ela FOI
+    // relida, por uma foto melhor. Chamá-la de "não relida" seria mentir ao
+    // contrário — tudo funcionou.
+    expect(r1.resultado.especie).toBe('ok')
+    expect(r2.resultado.especie).toBe('ok')
+  })
+})
+
 describe('regras 2 e 4 do catálogo — o que NUNCA entra no log', () => {
   it('nenhuma linha nova carrega uuid inteiro, nome de setlist ou token', async () => {
     await servir('escrita')

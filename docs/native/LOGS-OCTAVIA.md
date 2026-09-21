@@ -653,7 +653,7 @@ continuam fora do relatório. Dívida declarada.
 
 O T2-R16 do `PRD-TELA-2.md` fixou o formato das três linhas novas **antes** de
 haver código que as emitisse, e a PR-2 as emite. Nenhuma linha existente mudou
-de texto: o G3 foi de **57 para 63** linhas `log(`, com a lista de erratas
+de texto: o G3 foi de **57 para 64** linhas `log(`, com a lista de erratas
 **vazia** — seis adições e nenhuma substituição. Isso não é sorte; é o efeito
 de uma decisão pequena no `store.ts`, registrada abaixo.
 
@@ -699,3 +699,19 @@ A linha `cache write kind=content` **não** sai na releitura da escrita, de
 propósito: a escrita não mexe em content (N2-D1), e uma linha dizendo
 `invalidated=0` sobre algo que não aconteceu seria ruído no instrumento que o
 A21 lê.
+
+### A assinatura de uma releitura descartada — duas linhas que já existem
+
+Com a trava de escrita cobrindo só o request (div. 232), **duas releituras
+podem estar em voo ao mesmo tempo**, e a que chega por último pode trazer uma
+foto mais velha. Quando isso acontece, ela **não** grava.
+
+Isso **não ganhou campo novo na linha `resync`**, e a razão é que não precisa:
+a releitura descartada emite a sua `resync … status=200` — ela leu, e o 200 é
+verdade — e **não** emite a `cache write kind=setlists` que a aplicação emite.
+**Duas linhas `resync … status=200` para uma `cache write kind=setlists`** é a
+assinatura do descarte, contada com duas linhas que o catálogo já tem.
+
+O que isso custa, declarado: um `grep` por `resync` sozinho não diz qual das
+duas venceu. Se um aceite no aparelho precisar disso, é um campo na linha
+`resync`, com errata — e aí o T2-R16 muda junto.

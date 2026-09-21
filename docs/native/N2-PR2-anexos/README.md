@@ -12,6 +12,7 @@ ele mede** (`V1-ENCERRAMENTO.md:204`).
 | `G1-depois.txt` | G1, G2 e G3 sobre os dois commits |
 | `gate-icones.txt` | o `gate:icones` a 39 registros, antes e depois; o CN de 18 → 19 acusações; o `gate:a20` |
 | `retry-after.txt` | a medição do item 1.3 — **o servidor manda `Retry-After`**; fecha a div. 225 |
+| `trava.txt` | o escopo da trava "uma escrita por vez" (div. 232 e 233), medido em **três estados**: trava longa, trava curta sem ordem, trava curta com ordem |
 
 **Nenhum anexo carrega texto de música** (regra do `CLAUDE.md`): esta PR não
 tem tela, não tem dump de UI e não tem captura. Os corpos que o mock serve nos
@@ -28,7 +29,7 @@ a prova disso: nenhum `testID` novo.
 
 | gate | antes | depois | como |
 | --- | --- | --- | --- |
-| G3 (linhas de log) | 57 | **63** | seis adições, lista de erratas **vazia** |
+| G3 (linhas de log) | 57 | **64** | sete adições, lista de erratas **vazia** |
 | `gate:icones` (registros) | 34 | **39** | + o anexo D do `DESIGN-N2` (E17, N2-D33) |
 | CN do `gate:icones` | 18 | **19** | o defeito (8): um pendente que já está no mapa e não casa |
 
@@ -51,6 +52,21 @@ os dois achados pelos CNs e não pela leitura:
    `await`.
 
 Os dois estão escritos no arquivo, ao lado do código, com a razão.
+
+E um terceiro, na segunda rodada, achado por leitura do congelado e não pelo
+teste: **a trava cobria a releitura** (div. 232). O T2-R11 diz "uma escrita por
+vez" e a leitura óbvia dele — travar da primeira linha à última — contradiz a
+legenda de `N2-P-relendo` (*"as outras linhas seguem ativas"*). Encurtá-la
+custou a ordem entre releituras sobrepostas (div. 233), que o terceiro CN
+mediu: o cache acabava com a foto de 600 ms atrás. As três medições estão em
+`trava.txt`.
+
+**Nota sobre o instrumento**, porque ele quase não mediu nada: a primeira forma
+do modo `escrita-releitura-fora-de-ordem` do mock **dormia e só então lia o
+modelo**, então a resposta lenta voltava com dado FRESCO — a inversão não
+existia e o terceiro CN passava sem medir. Num servidor real a leitura acontece
+na hora do request e o atraso é de transporte. A foto passou a ser tirada
+**antes** do atraso.
 
 ## O que fica para as PRs da tela
 
