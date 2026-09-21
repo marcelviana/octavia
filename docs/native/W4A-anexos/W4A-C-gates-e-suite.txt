@@ -1,0 +1,62 @@
+### gates e suíte — W4-a commit 2
+### 2026-09-21T21:01:04Z   branch=w4a/gates
+### BASE=7039a829bda504b5c9fa5bed7a7f9e9373a3ced6
+
+=== G1a/G1b ===
+base=7039a829bda504b5c9fa5bed7a7f9e9373a3ced6 head=WORKTREE
+G1a — diff vazio em 35 arquivos DERIVADOS de apps/native + packages/core/src
+      escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+      menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+      EXCEÇÕES DECLARADAS (o escopo desta PR):
+        (nenhuma — nenhum arquivo de comportamento está fora da invariância)
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+  G1b: só adição ✓
+exit=0
+
+=== G2/G3 ===
+G2 — testIDs  antes=43  depois=43
+  G2: antes ⊆ depois ✓
+G3 — linhas log( antes=57  depois=57
+      ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+        (nenhuma — nenhuma linha de log pode sumir nesta PR)
+  G3: nenhuma linha sumiu ✓
+exit=0
+
+=== gate:a20 (+CN) e gate:icones (+CN) ===
+  vocabulário: 45 termos · isenções do produto: 9
+  literais em posição de texto examinados: 72
+  acusações: 0
+  exit=0
+  literais em posição de texto examinados: 8
+  acusações: 4
+  fora do catálogo: 4/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  acusações: 0
+  fora do catálogo: 3/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  acusações: 18
+
+=== G7 / suíte native ===
+ ✓  native  apps/native/test/sync-t1r10.test.ts (6 tests) 1819ms
+     ✓ o segundo loga invalidated=0 nos dois conjuntos  700ms
+
+ Test Files  6 passed (6)
+      Tests  54 passed (54)
+   Start at  18:01:20
+   Duration  2.20s (transform 674ms, setup 0ms, import 871ms, tests 2.05s, environment 0ms)
+
+
+=== suíte completa (pnpm test) ===
+
+ ✓  web  __tests__/performance-mode/empty-state.test.tsx (3 tests) 129ms
+ ✓  web  lib/__tests__/utils.test.ts (2 tests) 11ms
+ ✓  web  hooks/__tests__/use-debounce.test.tsx (1 test) 10ms
+ ↓  web  tests/security/security-headers.test.ts (1 test | 1 skipped)
+ ↓  web  tests/security/auth-security.test.ts (1 test | 1 skipped)
+ ↓  web  tests/hooks/useContentFile.test.ts (1 test | 1 skipped)
+ ↓  web  tests/security/cors-security.test.ts (1 test | 1 skipped)
+
+ Test Files  95 passed | 4 skipped (99)
+      Tests  838 passed | 85 skipped (923)
+   Start at  18:01:23
+   Duration  31.48s (transform 5.35s, setup 25.62s, import 13.16s, tests 11.92s, environment 152.88s)
+

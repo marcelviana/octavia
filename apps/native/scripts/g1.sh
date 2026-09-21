@@ -43,8 +43,35 @@
 # declara.
 # ---------------------------------------------------------------------------
 #
+# ---------------------------------------------------------------------------
+# W4-a — O GATE RECUSA CHAMADA SEM PAR (div. 187)
+#
+# Medido na N2-PR1 e recolado no CN desta PR: `sh g1.sh` SEM ARGUMENTO dava
+# `fatal: Not a valid object name` duas vezes, o despejo de `usage:` do git, e
+# então **"G1a: DIFF VAZIO ✓"**, **"G1b: só adição ✓"** e exit 0 — sobre ZERO
+# arquivos. Um gate diferencial sem par de refs não tem o que comparar, e o que
+# ele imprimia não era um resultado fraco: era um resultado FALSO, verde, no
+# formato exato do verdadeiro.
+#
+# É o mesmo buraco da div. 127 pelo avesso — lá o controle negativo não
+# reprovava; aqui o gate APROVA sem medir. A recusa é a correção inteira: sem
+# os dois argumentos, ou com um ref que não resolve, o gate para com exit 2 e
+# imprime o uso. `WORKTREE` é a única palavra que não precisa resolver.
+# ---------------------------------------------------------------------------
 # Uso (da RAIZ do repositório):  sh apps/native/scripts/g1.sh <base> <head|WORKTREE>
 BASE=$1; HEAD=$2
+uso() {
+  echo "g1.sh: $1" >&2
+  echo "uso: sh apps/native/scripts/g1.sh <base> <head|WORKTREE>" >&2
+  echo "     da RAIZ do repositório. <base> é um ref git; <head> é um ref git" >&2
+  echo "     ou a palavra WORKTREE (a árvore de trabalho como está agora)." >&2
+  exit 2
+}
+[ -n "$BASE" ] || uso "falta <base> — um gate diferencial sem par nao mede nada"
+[ -n "$HEAD" ] || uso "falta <head> — use um ref git ou a palavra WORKTREE"
+git rev-parse --verify --quiet "$BASE^{commit}" >/dev/null || uso "<base> nao resolve: $BASE"
+[ "$HEAD" = "WORKTREE" ] || git rev-parse --verify --quiet "$HEAD^{commit}" >/dev/null \
+  || uso "<head> nao resolve: $HEAD (e nao e a palavra WORKTREE)"
 
 # ---------------------------------------------------------------------------
 # W3 — A LISTA É PODADA A CADA PR, E O GATE PASSA A DIZER QUANDO NÃO FOI
@@ -64,33 +91,18 @@ BASE=$1; HEAD=$2
 # inverter a ordem. Se o Marcel quiser que passe a reprovar, é uma linha —
 # trocar o aviso por `A=1`. (Pergunta 3 do relatório da W3.)
 #
-# --- As EXCEÇÕES desta PR (o escopo declarado da N2-PR1) ---------------------
-# Poda da div. 141: `files.ts` e `prefetch.ts`, exceções da W3, SAEM — a W3
-# mergeou e a N2-PR1 não toca em nenhum dos dois; deixá-los era o gate mais
-# permissivo em silêncio que o aviso abaixo existe para gritar.
+# --- As EXCEÇÕES desta PR (o escopo declarado do W4-a) -----------------------
+# Poda da div. 141: os QUATRO arquivos da N2-PR1 (`packages/core/src/sync.ts`,
+# `apps/native/src/sync.ts`, `apps/native/src/store.ts`, `apps/native/App.tsx`)
+# SAEM — a N2-PR1 mergeou em `adf32e6` e o W4-a não toca em nenhum deles. O
+# aviso abaixo gritava pelos quatro em toda corrida, que é exatamente o que ele
+# existe para fazer; deixá-los seria o gate mais permissivo em silêncio.
 #
-# Entram os quatro arquivos que o commit 2 (T1-R10 ligado, N2-D8) vai tocar,
-# e só eles. Declarados aqui, no commit 1, porque o gate vem antes do que mede:
-# até o commit 2 o aviso de "declarada e não usada" sai para os quatro, de
-# propósito.
-#   packages/core/src/sync.ts   o `diffByUpdatedAt` passa a valer para setlist
-#                               também (tipo genérico sobre `id`+`updated_at`)
-#                               e ganha o par que o sync usa: contador e
-#                               preservação do conjunto quando nada mudou
-#   apps/native/src/sync.ts     o caminho do sync (T1-R13 passo 2) chama o core
-#                               e devolve o contador
-#   apps/native/src/store.ts    a linha `cache write … invalidated=<n>` deixa de
-#                               ser literal — só o valor; nada da separação por
-#                               `save` da N2-D13, que é da PR-2
-#   apps/native/App.tsx         o `rodarSync` (`App.tsx:133`) reaproveita o
-#                               `contentById` quando o conjunto não mudou: é o
-#                               índice que os derivados memoizados leem, e sem
-#                               isto "invalidated=0" seria de novo uma frase
-#                               que o app desmente
-EXCECOES='packages/core/src/sync.ts
-apps/native/src/sync.ts
-apps/native/src/store.ts
-apps/native/App.tsx'
+# A LISTA FICA VAZIA, e isso é a afirmação mais forte que ela pode fazer: o
+# W4-a é PR de instrumento e não muda uma linha de comportamento do app. Tudo
+# que ele toca — `apps/native/scripts/` — já está fora do escopo por exclusão
+# declarada. Nenhum arquivo precisa de perdão.
+EXCECOES=''
 
 listar() {
   if [ "$1" = "WORKTREE" ]; then
@@ -118,7 +130,8 @@ echo "G1a — diff vazio em $(echo "$NUCLEO" | grep -c .) arquivos DERIVADOS de 
 echo "      escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,"
 echo "      menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo"
 echo "      EXCEÇÕES DECLARADAS (o escopo desta PR):"
-echo "$EXCECOES" | sed 's/^/        /'
+if [ -n "$EXCECOES" ]; then echo "$EXCECOES" | sed 's/^/        /'
+else echo "        (nenhuma — nenhum arquivo de comportamento está fora da invariância)"; fi
 if [ "$HEAD" = "WORKTREE" ]; then
   DA=$(git diff --stat "$BASE" -- $NUCLEO)
 else

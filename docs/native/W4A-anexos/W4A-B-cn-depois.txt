@@ -1,0 +1,85 @@
+
+==============================================================================
+CN-187 — os dois gates diferenciais SEM ARGUMENTO
+==============================================================================
+--- sh apps/native/scripts/g1.sh   (sem argumento) ---
+  g1.sh: falta <base> — um gate diferencial sem par nao mede nada
+  uso: sh apps/native/scripts/g1.sh <base> <head|WORKTREE>
+       da RAIZ do repositório. <base> é um ref git; <head> é um ref git
+       ou a palavra WORKTREE (a árvore de trabalho como está agora).
+  exit=2   recusou a chamada sem par ✓
+--- sh apps/native/scripts/g2g3.sh   (sem argumento) ---
+  g2g3.sh: falta <ref-antes> — um gate diferencial sem par nao mede nada
+  uso: sh apps/native/scripts/g2g3.sh <ref-antes> <ref-depois|WORKTREE>
+       da RAIZ do repositório. <ref-antes> é um ref git; <ref-depois> é
+       um ref git ou a palavra WORKTREE (a árvore como está agora).
+  exit=2   recusou a chamada sem par ✓
+
+==============================================================================
+CN-189 — errata declarada, linha APAGADA, substituta AUSENTE
+==============================================================================
+erratas declaradas (o par velha -> nova):
+    log(`cn-w4a linha=velha n=${n}`)
+    log(`cn-w4a linha=nova n=${n} extra=${e}`)
+--- g2g3  BASE=<tem a velha>  DEPOIS=<não tem nenhuma das duas> ---
+  G2 — testIDs  antes=43  depois=43
+    G2: antes ⊆ depois ✓
+  G3 — linhas log( antes=58  depois=57
+        ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+          log(`cn-w4a linha=velha n=${n}`)
+          log(`cn-w4a linha=nova n=${n} extra=${e}`)
+    linhas que SUMIRAM (cada uma precisa de um PAR de errata, e a substituta do par tem de entrar):
+        apps/native/src/store.ts	export function __cnW4a(n, e) { log(`cn-w4a linha=velha n=${n}`) }
+    G3: ERRATA SEM SUBSTITUTA ✗ (div. 189) — a linha saiu e a do par não entrou:
+        saiu:          apps/native/src/store.ts	export function __cnW4a(n, e) { log(`cn-w4a linha=velha n=${n}`) }
+        devia entrar:  log(`cn-w4a linha=nova n=${n} extra=${e}`)
+  exit=1
+  recusou ✓
+
+==============================================================================
+CP-189 — a MESMA errata, com a substituta PRESENTE (controle POSITIVO)
+==============================================================================
+--- g2g3  BASE=<tem a velha>  DEPOIS=<tem a nova> ---
+  G2 — testIDs  antes=43  depois=43
+    G2: antes ⊆ depois ✓
+  G3 — linhas log( antes=58  depois=58
+        ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+          log(`cn-w4a linha=velha n=${n}`)
+          log(`cn-w4a linha=nova n=${n} extra=${e}`)
+    linhas que SUMIRAM (cada uma precisa de um PAR de errata, e a substituta do par tem de entrar):
+        apps/native/src/store.ts	export function __cnW4a(n, e) { log(`cn-w4a linha=velha n=${n}`) }
+    G3: cada linha que sumiu tem par de errata, e a substituta entrou ✓
+    linhas NOVAS (declarar no commit e no catálogo):
+        apps/native/src/store.ts	export function __cnW4a(n, e) { log(`cn-w4a linha=nova n=${n} extra=${e}`) }
+  exit=0
+  passou ✓ (o gate não reprova a troca legítima)
+
+==============================================================================
+CN-195 — errata ÓRFÃ ao lado de uma usada
+==============================================================================
+erratas declaradas (o par de cima é usado; o de baixo não casa com nada):
+    log(`cn-w4a linha=velha n=${n}`)
+    log(`cn-w4a linha=nova n=${n} extra=${e}`)
+    log(`cn-w4a linha=que-nunca-existiu`)
+    log(`cn-w4a substituta-de-ninguem`)
+--- g2g3  BASE=<tem a velha>  DEPOIS=<tem a nova> ---
+  G2 — testIDs  antes=43  depois=43
+    G2: antes ⊆ depois ✓
+  G3 — linhas log( antes=58  depois=58
+        ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+          log(`cn-w4a linha=velha n=${n}`)
+          log(`cn-w4a linha=nova n=${n} extra=${e}`)
+          log(`cn-w4a linha=que-nunca-existiu`)
+          log(`cn-w4a substituta-de-ninguem`)
+    linhas que SUMIRAM (cada uma precisa de um PAR de errata, e a substituta do par tem de entrar):
+        apps/native/src/store.ts	export function __cnW4a(n, e) { log(`cn-w4a linha=velha n=${n}`) }
+    G3: cada linha que sumiu tem par de errata, e a substituta entrou ✓
+    linhas NOVAS (declarar no commit e no catálogo):
+        apps/native/src/store.ts	export function __cnW4a(n, e) { log(`cn-w4a linha=nova n=${n} extra=${e}`) }
+    G3: ERRATA DECLARADA E NÃO USADA — poda isto ANTES do merge (div. 195):
+          log(`cn-w4a linha=que-nunca-existiu`)
+                -> log(`cn-w4a substituta-de-ninguem`)
+  exit=0
+  avisou ✓
+  e NÃO reprovou por isso ✓ (div. 141: o gate vem antes do que ele mede)
+
