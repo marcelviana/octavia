@@ -408,7 +408,16 @@ x-vercel-id: gru1::iad1::v76pr-1790019478183-6e22132c2910
   repetição. Escrita em prod: **zero**.
 
 **Confirmação de que a música continua na setlist** (conta principal, no web):
-confirmação: Marcel, __________ — a música continua na setlist.
+confirmação: Marcel, 2026-09-21 — a música continua na setlist
+`DESCARTÁVEL N2` (`b100382e-e41d-4845-b332-c089109174f3`).
+
+**Div. 214 fechada, e com ela a §3.2.** Os três ramos do 404 estão medidos
+contra dado real e os três corpos são byte-idênticos (48 B, sha
+`9b7d9169…e01e86bd`): inexistente no preview (§3.1), alheia **vazia** e alheia
+**com músicas** em prod. No caso com músicas, o `.eq("user_id")` barrou o
+request **e** a linha de `setlist_songs` que o pré-fix teria apagado
+(`route.ts:340-343` pré-fix, §2.1) continua lá — é o efeito da div. 150 (§1)
+observado diretamente, não só no mock.
 
 ## 4. Depois do fix
 
@@ -485,13 +494,14 @@ Esse teste existente **fixava o bug** (`expect(response.status).toBe(200) // API
   três em `B7-PRECHECK-anexos/prod-probes-headers.txt`). Consequência prática: **não
   comparar sha do arquivo bruto entre preview e prod** — o do corpo é o que
   vale (48 B, `9b7d9169…`, igual nos dois). Nada adaptado aqui.
-- **214** — **MEDIDA** (§3.2, "ramo alheia **com músicas**", 2026-09-21).
+- **214** — **FECHADA** (§3.2, "ramo alheia **com músicas**", 2026-09-21:
+  medição + confirmação do Marcel).
   Nascera assim: a setlist descartável estava **vazia**, então o primeiro
   request de prod não pôde exercer o observável mais visível da div. 150
   (setlist alheia esvaziada) — o 404 e a sobrevivência da linha de `setlists`
   foram medidos, mas "zero toques em `setlist_songs`" só existia no mock
   (CN-150, §3/§4) e no código (§2.3). **Fechamento**: o Marcel pôs uma música na
   `DESCARTÁVEL N2` e o request foi repetido **uma vez** — mesmo 404, corpo
-  byte-idêntico (`cmp` → `[exit 0]`). Falta só a confirmação no web de que a
-  música continua lá (linha em aberto na §3.2, dono: Marcel).
+  byte-idêntico (`cmp` → `[exit 0]`) — e o Marcel confirmou no web que a música
+  continua na setlist. O observável da div. 150 deixou de depender só do mock.
 
