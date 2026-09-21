@@ -286,6 +286,76 @@ x-vercel-id: gru1::iad1::fw2wg-1789583779079-91846097a481
 - Zero linhas tocadas por construção: o único efeito do handler é o `.delete().eq("id", setlistId).eq("user_id", user.uid).select("id")` (`route.ts:344-348`; os `.eq` estão em `:346-347`). Para um uuid recém-gerado ele casa zero linhas, e o `RETURNING` vazio vira o 404 (`route.ts:355-357`).
 - **O que isto prova**: no Postgres real, o `.delete()…select("id")` sem linha casada volta **sem erro** (senão seria 500) e com zero linhas, e o ramo de 404 é alcançado. Array vazio e `null` não se distinguem por aqui, porque o guard `!deleted || deleted.length === 0` cobre os dois. O caso "alheia" usa o mesmo ramo e não foi provocado contra dado real: exigiria uma setlist de outra conta.
 
+### 3.2 Ramo "alheia" `[medido em prod]`
+
+**2026-09-21**, base `https://octavia.rocks` (prod; o fix da #307 está na `main`
+desde `e20c0a4`). O Marcel criou na **conta principal** uma setlist descartável
+(`b100382e-e41d-4845-b332-c089109174f3`); o request abaixo sai com o token da
+**conta de audit** — outra conta, que não é dona dela. **Um request, sem
+repetição e sem retries.**
+
+**Token** `[medido]`: `set -a; source .env.uxaudit; source .env.local; set +a`,
+e um script que faz **só** o `signInWithPassword` do Firebase REST (a mesma
+chamada de `scripts/ux-audit/auth.ts:67-75`), **sem** o `POST /api/auth/session`
+que aquele módulo faz em seguida — o mesmo mecanismo da Fase B do N2
+(`docs/native/N2-PRECHECK.md` §11, div. 159), pelo mesmo motivo: aquele POST
+seria uma request a prod fora do orçamento e traria cookie, que o probe não
+pode ter. Saída:
+
+```
+signInWithPassword status=200
+uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 claim.email_verified=true claim.sign_in_provider=password
+```
+
+**O request** `[medido]`, `2026-09-21T19:07:34Z`–`19:07:37Z`:
+
+```
+$ curl -sS -i -X DELETE -H "Authorization: Bearer $TOKEN" \
+    https://octavia.rocks/api/setlists/b100382e-e41d-4845-b332-c089109174f3
+[curl exit 0]
+HTTP/2 404 
+cache-control: private, no-store
+content-type: application/json
+date: Mon, 21 Sep 2026 19:07:36 GMT
+server: Vercel
+strict-transport-security: max-age=63072000
+vary: RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch
+x-matched-path: /api/setlists/[id]
+x-vercel-cache: MISS
+x-vercel-id: gru1::iad1::6bjnq-1790017654969-7a7b431a5da9
+
+{"error":"Setlist not found","code":"NOT_FOUND"}
+```
+
+- **Corpo**: **48 bytes**, sha256
+  `9b7d9169b47bce3aa6be7f11883f6c5a2c1b58dd71135bbe1a4a3348e01e86bd` —
+  **o mesmo sha do ramo "inexistente"** medido no preview (§3.1) e
+  o mesmo de `printf '%s' '{"error":"Setlist not found","code":"NOT_FOUND"}'`,
+  o literal do `CONTRATO-DE-ERRO.md:96`. Bruto (headers+corpo): 431 B, sha256
+  `653182c34831ddaca2e2df89b69cc96b2395ccd12abd58b232eb1392c2e81faa`
+  (os headers diferem entre preview e prod — div. 213; só o **corpo** se compara).
+- **Zero linhas** `[análise]`: o único efeito do handler é
+  `.delete().eq("id", setlistId).eq("user_id", user.uid).select("id")`
+  (`app/api/setlists/[id]/route.ts:343-348` **na `main`** — a §3.1 cita a
+  numeração da branch da #307, uma linha acima). A setlist é de outro usuário,
+  o `.eq("user_id")` de `:347` não casa, o `RETURNING` volta vazio e o guard
+  `!deleted || deleted.length === 0` (`:356-357`) devolve o 404. O delete
+  explícito de `setlist_songs` saiu no fix (§2.3), então não há nada mais a
+  tocar.
+- **O que isto prova**: contra dado real, o ramo "alheia" devolve **404
+  byte-idêntico** ao do inexistente — o sem-oráculo da **N2-D12** vale em prod,
+  e o bypass da div. 150 está fechado onde o usuário o exploraria.
+- **O que isto NÃO prova sozinho** `[análise]`: a resposta é byte-idêntica à do
+  inexistente **por construção** — é o que "sem oráculo" quer dizer. Logo o
+  request, isolado, não distingue "a setlist existe e é de outro" de "o uuid não
+  existe", e não pode certificar por si que a linha sobreviveu. Isso é a
+  confirmação do Marcel abaixo (div. 212).
+- **Custo em prod**: 1 login no Firebase + 1 request `setlist-mutate`. Escrita
+  em prod: **zero**.
+
+**Confirmação de que a setlist `b100382e…` continua existindo** (conta principal,
+no web): confirmação: Marcel, __________ .
+
 ## 4. Depois do fix
 
 `[medido]`
@@ -340,4 +410,25 @@ Esse teste existente **fixava o bug** (`expect(response.status).toBe(200) // API
 
   Pelo prompt, o 2.2 ficou parado até o Marcel medir o 2.1 no painel da Vercel (2026-09-16). Depois disso, o 2.2 rodou uma vez (§3.1).
 - **176** — a decisão do 200 idempotente (B3 PR-3a) vive só no `B3-DESENHO.md:312-317` e no commit `effe847`; o `B3-ENCERRAMENTO.md` não a cita. **Vira regra 9 na PR-0 do N2.**
+- Numeração (2026-09-21, §3.2): o maior número na `main` é **211**
+  (`git grep -hoE "div\. ?2[0-9][0-9]" origin/main -- docs` → 201, 202, 203,
+  204, 208, 210, 211); esta sessão começa em **212**.
+- **212** — **o request do ramo "alheia", sozinho, não prova que a linha
+  sobreviveu.** O 404 é byte-idêntico ao do inexistente por decisão (N2-D12,
+  §1.1), então a própria resposta não distingue "alheia" de "inexistente". A
+  prova do ramo é a soma de duas partes: a medição da §3.2 (a sessão) e a
+  confirmação de que `b100382e…` continua na conta principal (o Marcel, no
+  web) — por isso a linha de confirmação fica em aberto na §3.2, e o ramo só
+  está fechado quando ela for preenchida.
+- **213** — **os headers de prod e do preview diferem; só o corpo se compara.**
+  Em prod (§3.2): `strict-transport-security: max-age=63072000`, sem
+  `x-robots-tag`. No preview (§3.1): `max-age=63072000; includeSubDomains; preload`
+  e `x-robots-tag: noindex`. É da plataforma, não do código: o matcher do
+  middleware exclui `/api`, então o HSTS de `lib/security-headers.ts:213-218`
+  **não** alcança estas respostas (`next.config.mjs:5-12` registra o mesmo
+  para o `Cache-Control`). O valor de prod bate com as oito medições
+  de prod anteriores (cinco em `N2-PRECHECK-anexos/B-{a-1,b-1,b-2,c-1,d-1}.txt`,
+  três em `B7-PRECHECK-anexos/prod-probes-headers.txt`). Consequência prática: **não
+  comparar sha do arquivo bruto entre preview e prod** — o do corpo é o que
+  vale (48 B, `9b7d9169…`, igual nos dois). Nada adaptado aqui.
 
