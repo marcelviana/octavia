@@ -1,0 +1,58 @@
+# N2-PR2 — gate:icones a 39 (commit 1), antes de qualquer tela
+
+## `pnpm --filter native gate:icones` — a árvore de hoje
+```
+  AVISO src/icones/dados.ts [pendente] "nova-setlist" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  AVISO src/icones/dados.ts [pendente] "alca" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  AVISO src/icones/dados.ts [pendente] "renomear" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  AVISO src/icones/dados.ts [pendente] "apagar-setlist" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  AVISO src/icones/dados.ts [pendente] "adicionar" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  AVISO src/icones/dados.ts [pendente] "remover" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  §6.4: 34 linhas → 33 nomes distintos, + 4 fora do catálogo + 6 da tela 2 = 43 esperados
+  anexo D: 34 registros (V1) + 5 (DESIGN-N2, E17) = 39 registros · 68 elementos distintos no do V1
+  tela 2 (E17): 0/6 nomes já no mapa e cobrados · 6 declarados pendentes
+  mapa: 37 nomes · 80 elementos distintos · 37 com 'normal'
+  hex cravado: 0 · tinta por token: 6
+  §6.3 tab: em20 4 cordas · normal 6 cordas · markup de 20 dp no telas.html: idêntico
+  fora do catálogo: 4/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  PENDENTES DECLARADOS E AUSENTES — poda a lista quando desenhar (N2-D33): 6
+  acusações: 0 · avisos: 6
+[exit 0]
+```
+
+## `pnpm --filter native gate:icones:cn` — o controle negativo
+```
+  ACUSADO scripts/__cn__/IconesFalso.ts [nome] falta no mapa: "apagar" (§6.4)
+  AVISO scripts/__cn__/IconesFalso.ts [pendente] "nova-setlist" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  AVISO scripts/__cn__/IconesFalso.ts [pendente] "apagar-setlist" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  AVISO scripts/__cn__/IconesFalso.ts [pendente] "adicionar" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  AVISO scripts/__cn__/IconesFalso.ts [pendente] "remover" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  ACUSADO scripts/__cn__/IconesFalso.ts [nome] sobra no mapa: "lixeira" (não está na §6.4)
+  ACUSADO scripts/__cn__/IconesFalso.ts [desenho] do anexo D ausente do mapa: d M6 6l12 12M18 6L6 18
+  ACUSADO scripts/__cn__/IconesFalso.ts [desenho] do anexo D ausente do mapa: d M9.2 9.2l5.6 5.6M14.8 9.2l-5.6 5.6
+  ACUSADO scripts/__cn__/IconesFalso.ts [desenho] do anexo D ausente do mapa: circle 12 12 8
+  ACUSADO scripts/__cn__/IconesFalso.ts [desenho] 'normal' de "fechar" não está no anexo D: d M6 6l12 12M18 6L6 18z
+  ACUSADO scripts/__cn__/IconesFalso.ts [desenho] 'normal' de "lixeira" não está no anexo D: d M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13
+  ACUSADO scripts/__cn__/IconesFalso.ts:112 [tinta] hex cravado: #6E6A80
+  ACUSADO scripts/__cn__/IconesFalso.ts:94 [tinta] token desconhecido: 'accent' (esperado: lineInfo | offlineInk | accentInk)
+  ACUSADO scripts/__cn__/IconesFalso.ts [em20] do telas.html ausente do 'em20' da tab: d M3 4.2h18M3 9.4h2.1M11.9 9.4h9.1M3 14.6h5.1M14.9 14.6h6.1M3 19.8h18
+  ACUSADO scripts/__cn__/IconesFalso.ts [em20] do telas.html ausente do 'em20' da tab: rect 5.9 7.7 4.2 3.4 1.7
+  ACUSADO scripts/__cn__/IconesFalso.ts [em20] do telas.html ausente do 'em20' da tab: rect 8.9 12.9 4.2 3.4 1.7
+  ACUSADO scripts/__cn__/IconesFalso.ts [em20] no 'em20' da tab e não no telas.html: d M3 3h18M3 6.6h1.225M11.175 6.6h9.825M3 10.2h9.225M19.175 10.2h1.825M3 13.8h4.225M14.175 13.8h6.825M3 17.4h18M3 21h18
+  ACUSADO scripts/__cn__/IconesFalso.ts [em20] no 'em20' da tab e não no telas.html: rect 5.5 4.9 4.4 3.4 1.7
+  ACUSADO scripts/__cn__/IconesFalso.ts [em20] no 'em20' da tab e não no telas.html: rect 13.5 8.5 4.4 3.4 1.7
+  ACUSADO scripts/__cn__/IconesFalso.ts [em20] no 'em20' da tab e não no telas.html: rect 8.5 12.1 4.4 3.4 1.7
+  ACUSADO scripts/__cn__/IconesFalso.ts [em20] a tab de 20 dp tem 6 cordas, e a §6.3 declara 4
+  ACUSADO scripts/__cn__/IconesFalso.ts [fora-do-catálogo] o 'normal' de "nada-encontrado" não é, elemento a elemento, nenhum <svg> do telas.html
+  ACUSADO scripts/__cn__/IconesFalso.ts [anexo-D-N2] 'normal' de "renomear" não está no registro do anexo D do DESIGN-N2: d M4.5 19.5h4L20 8l-4-4L4.5 15.6z
+  §6.4: 34 linhas → 33 nomes distintos, + 4 fora do catálogo + 6 da tela 2 = 43 esperados
+  anexo D: 34 registros (V1) + 5 (DESIGN-N2, E17) = 39 registros · 68 elementos distintos no do V1
+  tela 2 (E17): 2/6 nomes já no mapa e cobrados · 6 declarados pendentes
+  mapa: 39 nomes · 85 elementos distintos · 39 com 'normal'
+  hex cravado: 1 · tinta por token: 6
+  §6.3 tab: em20 6 cordas · normal 6 cordas · markup de 20 dp no telas.html: idêntico
+  fora do catálogo: 3/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  PENDENTES DECLARADOS E AUSENTES — poda a lista quando desenhar (N2-D33): 4
+  acusações: 19 · avisos: 4
+[exit 1]
+```

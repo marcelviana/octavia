@@ -53,6 +53,46 @@
  *                                  negativo: exit 1, 18 acusações
  * Como comando: `pnpm --filter native gate:icones` e `gate:icones:cn`.
  */
+/**
+ * N2-D33 / errata E17 — OS CINCO DESENHOS DA TELA 2, E A LISTA DE PENDENTES
+ *
+ * O catálogo vai de 34 para **39 registros** (div. 222: é esta a leitura que
+ * torna o 39 verdadeiro — 34 do anexo D do V1 mais 5 do anexo D do
+ * `DESIGN-N2/telas.html`; o "32 + log-in + 5" do parêntese da folha não fecha
+ * e o 32 é o número do TÍTULO da §6.4 do V1, que já estava 2 abaixo das
+ * linhas da própria tabela).
+ *
+ * Esta extensão entra no **commit 1 da PR-2**, antes de qualquer tela —
+ * *o gate vem antes do que ele mede* (`V1-ENCERRAMENTO.md:204`). Mas os cinco
+ * desenhos ainda **não existem** no mapa: quem os põe lá é a PR que desenhar a
+ * tela. Um gate que reprovasse por isso obrigaria a inverter a ordem, que é
+ * justamente o que a regra proíbe. Daí a lista `PENDENTES`:
+ *
+ *   • nome pendente **ausente** do mapa  → **AVISO**, nunca acusação;
+ *   • nome pendente **presente** no mapa → cobrado como qualquer outro, e
+ *     elemento a elemento contra o registro dele no anexo D do N2. Aparecer
+ *     errado reprova.
+ *
+ * **A PR que desenhar os ícones poda esta lista** — é o mesmo mecanismo das
+ * exceções do `g1.sh` (div. 141) e das erratas do `g2g3.sh` (div. 195): a
+ * lista é estado de uma PR guardado num arquivo que sobrevive à PR, e por isso
+ * o gate GRITA os pendentes em toda corrida.
+ *
+ * **Seis nomes, cinco registros** (div. 226). `adicionar / remover` é UM
+ * registro do anexo D — "um par, não dois desenhos: mesmo círculo, mesma corda
+ * de 8" — mas são DUAS entradas no mapa, porque o app renderiza as duas na
+ * mesma tela (o picker adiciona, a linha de S2 remove) e o `Desenho` do
+ * `dados.ts` não tem estado que comporte "o outro do par". Não é novidade de
+ * forma: o V1 já tem 34 linhas de §6.4 para 33 nomes distintos (`voltar`
+ * aparece duas vezes), e aqui é o avesso — um registro para dois nomes. Por
+ * isso a conta do anexo (39) e a de nomes esperados (43) diferem, e as duas
+ * são impressas.
+ *
+ * O anexo D do N2 é lido do `telas.html` congelado, não transcrito: o registro
+ * tem TRÊS células (normal · ativo · inativo) e a do meio, no par, carrega o
+ * `remover` em vez de um estado — por isso a cobrança é contra a UNIÃO dos
+ * elementos das três células do registro, e não célula a célula.
+ */
 import { readFileSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -61,6 +101,7 @@ const RAIZ = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..')
 const README = join(RAIZ, 'docs/native/DESIGN-V1/README.md')
 const ANEXO_D = join(RAIZ, 'docs/native/V1-PR3-PRECHECK-anexos/V1-PR3-D-icones-34.txt')
 const TELAS = join(RAIZ, 'docs/native/DESIGN-V1/telas.html')
+const TELAS_N2 = join(RAIZ, 'docs/native/DESIGN-N2/telas.html')
 const MAPA = process.argv[2] ?? 'src/icones/dados.ts'
 
 /**
@@ -71,6 +112,24 @@ const MAPA = process.argv[2] ?? 'src/icones/dados.ts'
  */
 const FORA_DO_CATALOGO = ['log-in', 'email', 'senha', 'nada-encontrado']
 const TINTAS = ['lineInfo', 'offlineInk', 'accentInk']
+
+/**
+ * Anexo D do `DESIGN-N2` (N2-D33, E17): o nome do REGISTRO na folha → os
+ * nomes que ele vale no mapa. Lista FECHADA, como a `FORA_DO_CATALOGO`.
+ */
+const REGISTROS_N2 = {
+  'nova setlist': ['nova-setlist'],
+  'alça': ['alca'],
+  renomear: ['renomear'],
+  'apagar setlist': ['apagar-setlist'],
+  'adicionar / remover': ['adicionar', 'remover'],
+}
+
+/**
+ * Os nomes que o mapa AINDA não tem, e cuja ausência é AVISO e não acusação
+ * (ver o cabeçalho). **A PR que desenhar os ícones poda esta lista.**
+ */
+const PENDENTES = ['nova-setlist', 'alca', 'renomear', 'apagar-setlist', 'adicionar', 'remover']
 
 /** §6.3 — cordas da tab por tamanho: quatro em 20 dp, seis nos outros. */
 const CORDAS = { em20: 4, normal: 6 }
@@ -99,10 +158,10 @@ function nomesDa64() {
  * `<script type="__bundler/template">` como STRING JSON escapada. Decodificar
  * é o único jeito de ler o markup congelado sem abrir o arquivo no navegador.
  */
-function telas() {
-  const bruto = readFileSync(TELAS, 'utf8')
+function telas(arquivo = TELAS) {
+  const bruto = readFileSync(arquivo, 'utf8')
   const m = /<script type="__bundler\/template">\s*([\s\S]*?)\s*<\/script>/.exec(bruto)
-  if (m === null) throw new Error(`sem __bundler/template em ${TELAS}`)
+  if (m === null) throw new Error(`sem __bundler/template em ${arquivo}`)
   return JSON.parse(m[1])
 }
 
@@ -115,6 +174,32 @@ function cordas(d) {
   const ys = new Set()
   for (const m of d.matchAll(/M\s*(-?[\d.]+)[\s,]+(-?[\d.]+)/g)) ys.add(+m[2])
   return ys.size
+}
+
+/**
+ * Os registros do anexo D do `DESIGN-N2/telas.html`, lidos do congelado.
+ *
+ * A seção é `<section data-screen-label="anexo D icones">`; cada registro é
+ * uma linha da grade que começa com `<div style="font-size:15px;color:#F9F5F1">NOME</div>`
+ * e traz três `<svg>` (normal · ativo · inativo). A cobrança é contra a UNIÃO
+ * dos elementos dos três, e não célula a célula — no par `adicionar /
+ * remover` a célula do meio carrega o OUTRO desenho do par, não um estado.
+ */
+function anexoDN2() {
+  const t = telas(TELAS_N2)
+  const ini = t.indexOf('data-screen-label="anexo D icones"')
+  if (ini === -1) throw new Error(`sem a seção do anexo D em ${TELAS_N2}`)
+  const fim = t.indexOf('<!-- ============ PROPOSTAS', ini)
+  const secao = t.slice(ini, fim === -1 ? undefined : fim)
+  const out = new Map()
+  const linhas = [...secao.matchAll(/<div style="font-size:15px;color:#F9F5F1">([^<]+)<\/div>([\s\S]*?)(?=<div style="font-size:15px;color:#F9F5F1">|$)/g)]
+  for (const [, nome, corpo] of linhas) {
+    if (!(nome in REGISTROS_N2)) continue
+    const ass = new Set()
+    for (const m of corpo.matchAll(/<svg [\s\S]*?<\/svg>/g)) for (const a of assinaturasSvg(m[0])) ass.add(a)
+    out.set(nome, ass)
+  }
+  return out
 }
 
 /** Assinaturas dos elementos de um trecho de markup SVG (anexo D). */
@@ -144,13 +229,28 @@ function assinaturasMapa(lista) {
 
 const acusacoes = []
 const acusar = (s) => { acusacoes.push(s); console.log(`  ACUSADO ${s}`) }
+/** O pendente que ainda não existe: grita, não reprova (ver o cabeçalho). */
+const avisos = []
+const avisar = (s) => { avisos.push(s); console.log(`  AVISO ${s}`) }
 
-// ---- as duas fontes
+// ---- as duas fontes (três, desde a E17: o anexo D do N2)
 const tabela = nomesDa64()
-const esperados = new Set([...tabela, ...FORA_DO_CATALOGO])
+const nomesN2 = Object.values(REGISTROS_N2).flat()
+const esperados = new Set([...tabela, ...FORA_DO_CATALOGO, ...nomesN2])
 const anexo = readFileSync(ANEXO_D, 'utf8')
 const registros = [...anexo.matchAll(/^### (\S+)  ·  .+?  ·  \d+ dp\n(<svg[\s\S]*?<\/svg>)/gm)]
 const doAnexo = new Set(registros.flatMap(([, , svg]) => [...assinaturasSvg(svg)]))
+const registrosN2 = anexoDN2()
+/** `nome do mapa` → as assinaturas do registro dele no anexo D do N2. */
+const anexoPorNome = new Map()
+for (const [registro, nomes] of Object.entries(REGISTROS_N2)) {
+  const ass = registrosN2.get(registro)
+  if (ass === undefined) {
+    acusar(`${TELAS_N2} [anexo-D-N2] registro ausente na folha congelada: "${registro}"`)
+    continue
+  }
+  for (const n of nomes) anexoPorNome.set(n, ass)
+}
 
 // ---- o mapa (sem os comentários: um hex num comentário não é hex cravado)
 const src = readFileSync(MAPA, 'utf8')
@@ -174,7 +274,13 @@ for (const [, nome, corpo] of blocos) {
 }
 
 // ---- 1. nomes
-for (const n of esperados) if (!nomes.includes(n)) acusar(`${MAPA} [nome] falta no mapa: "${n}" (§6.4)`)
+for (const n of esperados) {
+  if (nomes.includes(n)) continue
+  // E17/N2-D33: o pendente ainda não desenhado GRITA e não reprova — o gate
+  // vem antes da tela que ele mede. Qualquer outro nome ausente reprova.
+  if (PENDENTES.includes(n)) avisar(`${MAPA} [pendente] "${n}" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES`)
+  else acusar(`${MAPA} [nome] falta no mapa: "${n}" (§6.4)`)
+}
 for (const n of nomes) if (!esperados.has(n)) acusar(`${MAPA} [nome] sobra no mapa: "${n}" (não está na §6.4)`)
 const repetidos = nomes.filter((n, i) => nomes.indexOf(n) !== i)
 for (const n of repetidos) acusar(`${MAPA} [nome] repetido no mapa: "${n}"`)
@@ -184,6 +290,8 @@ for (const a of doAnexo) if (!doMapa.has(a)) acusar(`${MAPA} [desenho] do anexo 
 for (const [nome, ass] of normalDoMapa) {
   // Fora do catálogo não tem o que estar no anexo D — quem o cobra é a regra 5.
   if (FORA_DO_CATALOGO.includes(nome)) continue
+  // Os da tela 2 têm anexo PRÓPRIO (E17) e são cobrados na regra 6.
+  if (anexoPorNome.has(nome)) continue
   for (const a of ass) {
     if (!doAnexo.has(a)) acusar(`${MAPA} [desenho] 'normal' de "${nome}" não está no anexo D: ${a}`)
   }
@@ -250,11 +358,35 @@ for (const nome of FORA_DO_CATALOGO) {
   else acusar(`${MAPA} [fora-do-catálogo] o 'normal' de "${nome}" não é, elemento a elemento, nenhum <svg> do telas.html`)
 }
 
-console.log(`  §6.4: ${tabela.length} linhas → ${new Set(tabela).size} nomes distintos, + ${FORA_DO_CATALOGO.length} fora do catálogo = ${esperados.size} esperados`)
-console.log(`  anexo D: ${registros.length} registros · ${doAnexo.size} elementos distintos`)
+// ---- 6. os cinco do DESIGN-N2 (E17, N2-D33): só quem JÁ está no mapa
+// O que não está é aviso da regra 1. O que está é cobrado elemento a elemento
+// contra a UNIÃO das três células do registro dele — no par, a célula do meio
+// carrega o outro desenho, não um estado (ver o cabeçalho).
+let n2Cobrados = 0
+for (const [nome, doRegistro] of anexoPorNome) {
+  const temNoMapa = [...listas.keys()].some((k) => k.startsWith(`${nome}:`))
+  if (!temNoMapa) continue
+  n2Cobrados++
+  for (const estado of ['normal', 'ativo', 'inerte', 'em20']) {
+    const lista = listas.get(`${nome}:${estado}`)
+    if (lista === undefined) continue
+    for (const a of assinaturasMapa(lista)) {
+      if (!doRegistro.has(a)) acusar(`${MAPA} [anexo-D-N2] '${estado}' de "${nome}" não está no registro do anexo D do DESIGN-N2: ${a}`)
+    }
+  }
+}
+
+const totalRegistros = registros.length + registrosN2.size
+console.log(`  §6.4: ${tabela.length} linhas → ${new Set(tabela).size} nomes distintos, + ${FORA_DO_CATALOGO.length} fora do catálogo + ${nomesN2.length} da tela 2 = ${esperados.size} esperados`)
+console.log(`  anexo D: ${registros.length} registros (V1) + ${registrosN2.size} (DESIGN-N2, E17) = ${totalRegistros} registros · ${doAnexo.size} elementos distintos no do V1`)
+if (totalRegistros !== 39) acusar(`[E17] o catálogo tem ${totalRegistros} registros e a N2-D33 declara 39`)
+console.log(`  tela 2 (E17): ${n2Cobrados}/${anexoPorNome.size} nomes já no mapa e cobrados · ${PENDENTES.length} declarados pendentes`)
 console.log(`  mapa: ${nomes.length} nomes · ${doMapa.size} elementos distintos · ${normalDoMapa.size} com 'normal'`)
 console.log(`  hex cravado: ${(src.match(/#[0-9A-Fa-f]{6}\b/g) ?? []).length} · tinta por token: ${(src.match(/tinta: '/g) ?? []).length}`)
 console.log(`  §6.3 tab: em20 ${n20} cordas · normal ${n6} cordas · markup de 20 dp no telas.html: ${svgTab20 === null ? 'NÃO ACHADO' : 'idêntico'}`)
 console.log(`  fora do catálogo: ${foraOk}/${FORA_DO_CATALOGO.length} idênticos a um <svg> do telas.html (${porAssinatura.size} assinaturas distintas no arquivo)`)
-console.log(`  acusações: ${acusacoes.length}`)
+if (avisos.length > 0) {
+  console.log(`  PENDENTES DECLARADOS E AUSENTES — poda a lista quando desenhar (N2-D33): ${avisos.length}`)
+}
+console.log(`  acusações: ${acusacoes.length} · avisos: ${avisos.length}`)
 process.exit(acusacoes.length > 0 ? 1 : 0)

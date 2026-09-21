@@ -1,0 +1,40 @@
+# N2-PR2 — os controles negativos ANTES do código (commit 1)
+
+Árvore: becdf7e + o commit 1 desta PR (os módulos do §2 ainda NÃO existem).
+Comando: `pnpm exec vitest run --project core --project native`
+
+```
+ ✓  core  packages/core/src/position.test.ts (4 tests) 2ms
+ ✓  core  packages/core/src/sync.test.ts (14 tests) 4ms
+ ✓  core  packages/core/src/offline.test.ts (25 tests) 13ms
+ ✓  core  packages/core/src/search.test.ts (9 tests) 4ms
+ ✓  core  packages/core/src/content-contract.test.ts (15 tests) 4ms
+ ✓  core  packages/core/src/auth-fetch.test.ts (5 tests) 4ms
+ ✓  core  packages/core/src/token.test.ts (7 tests) 3ms
+ ✓  core  packages/core/src/errors.test.ts (9 tests) 5ms
+ ✓  core  packages/core/src/song.test.ts (6 tests) 7ms
+ ✓  core  packages/core/src/normalize.test.ts (4 tests) 3ms
+ ✓  core  packages/core/src/rate-limit.test.ts (7 tests) 2ms
+ ✓  core  packages/core/src/isolation.test.ts (2 tests) 4ms
+ ❯  native  apps/native/test/escrita.test.ts (15 tests | 15 skipped) 10ms
+ ✓  native  apps/native/test/files-mensagem.test.ts (11 tests) 4ms
+ ✓  native  apps/native/test/files-saneamento.test.ts (5 tests) 7ms
+ ✓  native  apps/native/test/files-integridade.test.ts (11 tests) 15ms
+ ✓  native  apps/native/test/prefetch-fila.test.ts (13 tests) 21ms
+ ✓  native  apps/native/test/gates.test.ts (11 tests) 368ms
+ ✓  native  apps/native/test/sync-t1r10.test.ts (6 tests) 1244ms
+ FAIL   native  apps/native/test/escrita.test.ts [ apps/native/test/escrita.test.ts ]
+Error: Cannot find module '/apps/native/src/escrita' imported from '/Users/marcelviana/projects/octavia-n2-pr2/apps/native/test/escrita.test.ts'
+ ❯ apps/native/test/escrita.test.ts:200:9
+ FAIL   core  packages/core/src/escrita.test.ts [ packages/core/src/escrita.test.ts ]
+Error: Cannot find module './escrita' imported from '/Users/marcelviana/projects/octavia-n2-pr2/packages/core/src/escrita.test.ts'
+ ❯ packages/core/src/escrita.test.ts:10:1
+ FAIL   core  packages/core/src/frases.test.ts [ packages/core/src/frases.test.ts ]
+Error: Cannot find module './escrita' imported from '/Users/marcelviana/projects/octavia-n2-pr2/packages/core/src/frases.test.ts'
+ ❯ packages/core/src/frases.test.ts:11:1
+ FAIL   core  packages/core/src/validacao.test.ts [ packages/core/src/validacao.test.ts ]
+Error: Cannot find module './validacao' imported from '/Users/marcelviana/projects/octavia-n2-pr2/packages/core/src/validacao.test.ts'
+ ❯ packages/core/src/validacao.test.ts:7:1
+ Test Files  4 failed | 18 passed (22)
+      Tests  164 passed | 15 skipped (179)
+```

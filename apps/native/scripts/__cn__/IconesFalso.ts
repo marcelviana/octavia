@@ -21,8 +21,20 @@
  *       O `email` e o `senha` entram CORRETOS — sem eles a regra 1 acusaria
  *       "falta no mapa" e o defeito (7) ficaria escondido no meio.
  *
- * Esperado: 18 acusações, exit 1. Auto-contido (sem os tipos do `dados.ts`),
- * para passar no `tsc --noEmit` do app sem importar nada.
+ *   (8) `renomear` PRESENTE e com o `d` do corpo 0,1 dp fora (`15.6z` no
+ *       lugar de `15.5z`) — N2-PR2, a regra 6. É o modo de errar um pendente
+ *       que JÁ foi desenhado: a ausência dele é aviso, mas aparecer errado
+ *       tem de reprovar, senão a lista `PENDENTES` seria uma anistia. Acusa
+ *       UMA vez.
+ *   (9) `alca` PRESENTE e CORRETA — o CONTROLE POSITIVO da mesma regra 6, e
+ *       ele importa tanto quanto o negativo: sem ele, "a regra 6 acusa"
+ *       também seria verdade numa regra que acusasse todo nome da tela 2.
+ *       Acusa ZERO vezes, e some da lista de avisos (está no mapa).
+ *
+ * Esperado: **19** acusações (18 do V1 + a (8)), exit 1, e **quatro** avisos
+ * de pendente — `nova-setlist`, `apagar-setlist`, `adicionar` e `remover`, os
+ * que (8) e (9) não puseram no mapa. Auto-contido (sem os tipos do
+ * `dados.ts`), para passar no `tsc --noEmit` do app sem importar nada.
  */
 export const desenhosFalsos = {
   'auto-scroll': {
@@ -145,5 +157,17 @@ export const desenhosFalsos = {
   // (3), que acusa justamente a falta dele no mapa (medido).
   'nada-encontrado': {
     normal: [{ cx: 10.5, cy: 10.5, r: 6.5 }, { d: 'M15.5 15.5L21 21' }, { d: 'M8 8l5 5M13 8l-5 6' }],
+  },
+  // (8) o lápis do anexo D do DESIGN-N2 com o corpo 0,1 dp fora: `15.6z` no
+  // lugar de `15.5z`. O `d` da ferrule entra CORRETO, para a acusação ser uma
+  // só e apontar o elemento errado, não o registro inteiro.
+  'renomear': {
+    normal: [{ d: 'M4.5 19.5h4L20 8l-4-4L4.5 15.6z' }, { d: 'M15 5l4 4' }],
+    inerte: [{ d: 'M4.5 19.5h4L20 8' }, { d: 'M15 5l4 4' }],
+  },
+  // (9) a alça VERBATIM do anexo D do DESIGN-N2 — o controle positivo.
+  'alca': {
+    normal: [{ cx: 9, cy: 6.5, r: 1.5, fill: true }, { cx: 15, cy: 6.5, r: 1.5, fill: true }, { cx: 9, cy: 12, r: 1.5, fill: true }, { cx: 15, cy: 12, r: 1.5, fill: true }, { cx: 9, cy: 17.5, r: 1.5, fill: true }, { cx: 15, cy: 17.5, r: 1.5, fill: true }],
+    inerte: [{ cx: 9, cy: 6.5, r: 1.5, fill: true }, { cx: 15, cy: 6.5, r: 1.5, fill: true }, { cx: 9, cy: 12, r: 1.5, fill: true }, { cx: 9, cy: 17.5, r: 1.5, fill: true }],
   },
 } as const
