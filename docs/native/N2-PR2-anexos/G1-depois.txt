@@ -1,7 +1,11 @@
-# N2-PR2 — G1/G2/G3 DEPOIS do código (commit 2)
+# N2-PR2 — G1/G2/G3 DEPOIS do código (commits 1 e 2)
+
+`sh apps/native/scripts/g1.sh origin/main HEAD` — as sete exceções, agora USADAS
+(no commit 1 as sete apareciam como "declarada e não usada", que é o que a ordem
+'o gate vem antes do que ele mede' custa; ver `G1-antes.txt`).
 
 ```
-base=origin/main head=WORKTREE
+base=origin/main head=HEAD
 G1a — diff vazio em 32 arquivos DERIVADOS de apps/native + packages/core/src
       escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
       menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
@@ -14,11 +18,6 @@ G1a — diff vazio em 32 arquivos DERIVADOS de apps/native + packages/core/src
         apps/native/src/api.ts
         apps/native/src/store.ts
   G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
-  G1a: EXCEÇÃO DECLARADA E NÃO USADA — poda isto ANTES do merge (div. 141):
-        packages/core/src/escrita.ts
-        packages/core/src/validacao.ts
-        packages/core/src/frases.ts
-        apps/native/src/escrita.ts
 G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
   G1b: só adição ✓
 [exit 0]
