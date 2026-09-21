@@ -354,7 +354,16 @@ x-vercel-id: gru1::iad1::6bjnq-1790017654969-7a7b431a5da9
   em prod: **zero**.
 
 **Confirmação de que a setlist `b100382e…` continua existindo** (conta principal,
-no web): confirmação: Marcel, __________ .
+no web): confirmação: Marcel, 2026-09-21 — a setlist `DESCARTÁVEL N2`
+(`b100382e-e41d-4845-b332-c089109174f3`) **continua existindo, vazia**.
+
+Com isso o ramo "alheia" está fechado: a medição (404, 48 B, sha `9b7d9169…`)
+mais a confirmação de que a linha sobreviveu ao request. **Limite do que prod
+prova** `[análise]`: a setlist estava **vazia**, então o segundo observável do
+defeito original — as músicas de uma setlist alheia sumirem (§1, efeito da div.
+150) — não tinha como aparecer aqui; quem prova esse é o CN-150 no mock
+(`touchedSetlistSongs() === 0`, §3 e §4). Em prod ficou provado o que prod podia
+provar: 404 sem oráculo e a linha de `setlists` intacta (div. 214).
 
 ## 4. Depois do fix
 
@@ -413,13 +422,13 @@ Esse teste existente **fixava o bug** (`expect(response.status).toBe(200) // API
 - Numeração (2026-09-21, §3.2): o maior número na `main` é **211**
   (`git grep -hoE "div\. ?2[0-9][0-9]" origin/main -- docs` → 201, 202, 203,
   204, 208, 210, 211); esta sessão começa em **212**.
-- **212** — **o request do ramo "alheia", sozinho, não prova que a linha
-  sobreviveu.** O 404 é byte-idêntico ao do inexistente por decisão (N2-D12,
+- **212** — **FECHADA** (confirmação do Marcel, 2026-09-21, §3.2: a setlist
+  continua existindo, vazia). **O request do ramo "alheia", sozinho, não prova
+  que a linha sobreviveu.** O 404 é byte-idêntico ao do inexistente por decisão (N2-D12,
   §1.1), então a própria resposta não distingue "alheia" de "inexistente". A
   prova do ramo é a soma de duas partes: a medição da §3.2 (a sessão) e a
   confirmação de que `b100382e…` continua na conta principal (o Marcel, no
-  web) — por isso a linha de confirmação fica em aberto na §3.2, e o ramo só
-  está fechado quando ela for preenchida.
+  web) — as duas partes estão na §3.2, e o ramo está fechado.
 - **213** — **os headers de prod e do preview diferem; só o corpo se compara.**
   Em prod (§3.2): `strict-transport-security: max-age=63072000`, sem
   `x-robots-tag`. No preview (§3.1): `max-age=63072000; includeSubDomains; preload`
@@ -431,4 +440,11 @@ Esse teste existente **fixava o bug** (`expect(response.status).toBe(200) // API
   três em `B7-PRECHECK-anexos/prod-probes-headers.txt`). Consequência prática: **não
   comparar sha do arquivo bruto entre preview e prod** — o do corpo é o que
   vale (48 B, `9b7d9169…`, igual nos dois). Nada adaptado aqui.
+- **214** — **a setlist descartável estava vazia**, então o request de prod não
+  pôde exercer o observável mais visível da div. 150 (setlist alheia esvaziada).
+  O 404 e a sobrevivência da linha de `setlists` foram medidos; "zero toques em
+  `setlist_songs`" continua provado só no mock (CN-150, §3/§4) e pelo código (o
+  delete explícito saiu; o CASCADE do FK é o único caminho — §2.3). Registrado
+  sem repetir o request: exercer o outro observável exigiria uma setlist alheia
+  **com músicas**, e um request a mais em prod, que esta sessão não fez.
 
