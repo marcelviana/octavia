@@ -1,0 +1,6 @@
+# DESIGN-N2 — impressão digital do congelamento (N2, desenho da tela 2, 2026-09-21).
+# Os dois congelados NÃO mudam: a errata prevalece sobre a moldura, o arquivo congelado não é reeditado
+# (o precedente é a E16 do DESIGN-V1). Erratas desta folha vão para a §9 do README.md desta pasta.
+# Confere com: shasum -a 256 -c SHA256SUMS
+a5a3687efcca308a195913e2546885c9c46d6645c333f74d8da3da7b4755f710  telas.html
+95504340af774a0893f55e6bbaf000c759a36c4b080b9c5144d2ae87a3502473  telas.pdf
