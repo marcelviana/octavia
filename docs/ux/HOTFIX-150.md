@@ -363,7 +363,52 @@ prova** `[análise]`: a setlist estava **vazia**, então o segundo observável d
 defeito original — as músicas de uma setlist alheia sumirem (§1, efeito da div.
 150) — não tinha como aparecer aqui; quem prova esse é o CN-150 no mock
 (`touchedSetlistSongs() === 0`, §3 e §4). Em prod ficou provado o que prod podia
-provar: 404 sem oráculo e a linha de `setlists` intacta (div. 214).
+provar: 404 sem oráculo e a linha de `setlists` intacta — a div. 214, fechada
+logo abaixo.
+
+#### Ramo alheia **com músicas** `[medido em prod]`
+
+**2026-09-21**, fechando a div. 214. O Marcel adicionou **uma música** à
+`DESCARTÁVEL N2` no web; o request acima foi repetido **uma vez**, igual em
+tudo (mesma rota, mesmo uuid, token da conta de audit, prod). Agora a setlist
+alheia tem linha em `setlist_songs` — é o observável que o pré-fix destruiria
+(§1: "esvazia essa setlist (todas as músicas somem) e recebe `200
+{success:true}`").
+
+```
+$ curl -sS -i -X DELETE -H "Authorization: Bearer $TOKEN" \
+    https://octavia.rocks/api/setlists/b100382e-e41d-4845-b332-c089109174f3
+[curl exit 0]
+HTTP/2 404 
+cache-control: private, no-store
+content-type: application/json
+date: Mon, 21 Sep 2026 19:37:58 GMT
+server: Vercel
+strict-transport-security: max-age=63072000
+vary: RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch
+x-matched-path: /api/setlists/[id]
+x-vercel-cache: MISS
+x-vercel-id: gru1::iad1::v76pr-1790019478183-6e22132c2910
+
+{"error":"Setlist not found","code":"NOT_FOUND"}
+```
+
+- **Corpo**: **48 bytes**, sha256
+  `9b7d9169b47bce3aa6be7f11883f6c5a2c1b58dd71135bbe1a4a3348e01e86bd` — o mesmo
+  dos outros dois ramos. `cmp` dos dois corpos de prod (§3.2 vazia × esta) →
+  **`[exit 0]`**. Bruto: 431 B, sha256
+  `c8732b06ca3164554fe9eedd5fab2adc690494515fae6d512e863de9eef9f721`; o `diff`
+  contra o bruto anterior mostra **só** `date` e `x-vercel-id` (div. 213).
+- **O que isto acrescenta** `[análise]`: com músicas na setlist, o request
+  exercita o caminho que no pré-fix apagava `setlist_songs` **antes** do gate
+  de dono (§2.1, `route.ts:340-343` pré-fix). A resposta é a mesma do caso
+  vazio e nada sai do banco — o delete explícito não existe mais (§2.3) e o
+  único `delete` do handler casa zero linhas pelo `.eq("user_id")`.
+- **Custo em prod**: 1 login no Firebase + 1 request `setlist-mutate`, sem
+  repetição. Escrita em prod: **zero**.
+
+**Confirmação de que a música continua na setlist** (conta principal, no web):
+confirmação: Marcel, __________ — a música continua na setlist.
 
 ## 4. Depois do fix
 
@@ -440,11 +485,13 @@ Esse teste existente **fixava o bug** (`expect(response.status).toBe(200) // API
   três em `B7-PRECHECK-anexos/prod-probes-headers.txt`). Consequência prática: **não
   comparar sha do arquivo bruto entre preview e prod** — o do corpo é o que
   vale (48 B, `9b7d9169…`, igual nos dois). Nada adaptado aqui.
-- **214** — **a setlist descartável estava vazia**, então o request de prod não
-  pôde exercer o observável mais visível da div. 150 (setlist alheia esvaziada).
-  O 404 e a sobrevivência da linha de `setlists` foram medidos; "zero toques em
-  `setlist_songs`" continua provado só no mock (CN-150, §3/§4) e pelo código (o
-  delete explícito saiu; o CASCADE do FK é o único caminho — §2.3). Registrado
-  sem repetir o request: exercer o outro observável exigiria uma setlist alheia
-  **com músicas**, e um request a mais em prod, que esta sessão não fez.
+- **214** — **MEDIDA** (§3.2, "ramo alheia **com músicas**", 2026-09-21).
+  Nascera assim: a setlist descartável estava **vazia**, então o primeiro
+  request de prod não pôde exercer o observável mais visível da div. 150
+  (setlist alheia esvaziada) — o 404 e a sobrevivência da linha de `setlists`
+  foram medidos, mas "zero toques em `setlist_songs`" só existia no mock
+  (CN-150, §3/§4) e no código (§2.3). **Fechamento**: o Marcel pôs uma música na
+  `DESCARTÁVEL N2` e o request foi repetido **uma vez** — mesmo 404, corpo
+  byte-idêntico (`cmp` → `[exit 0]`). Falta só a confirmação no web de que a
+  música continua lá (linha em aberto na §3.2, dono: Marcel).
 
