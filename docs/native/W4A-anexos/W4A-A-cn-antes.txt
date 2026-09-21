@@ -1,0 +1,95 @@
+
+==============================================================================
+CN-187 — os dois gates diferenciais SEM ARGUMENTO
+==============================================================================
+--- sh apps/native/scripts/g1.sh   (sem argumento) ---
+  fatal: Not a valid object name 
+  fatal: Not a valid object name 
+  base= head=
+  G1a — diff vazio em 0 arquivos DERIVADOS de apps/native + packages/core/src
+        escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+        menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+        EXCEÇÕES DECLARADAS (o escopo desta PR):
+          packages/core/src/sync.ts
+          apps/native/src/sync.ts
+          apps/native/src/store.ts
+          apps/native/App.tsx
+  warning: Not a git repository. Use --no-index to compare two paths outside a working tree
+  usage: git diff --no-index [<options>] <path> <path>
+  Diff rename options
+  Diff algorithm options
+    G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+    G1a: EXCEÇÃO DECLARADA E NÃO USADA — poda isto ANTES do merge (div. 141):
+          packages/core/src/sync.ts
+          apps/native/src/sync.ts
+          apps/native/src/store.ts
+          apps/native/App.tsx
+  fatal: Not a valid object name 
+  warning: Not a git repository. Use --no-index to compare two paths outside a working tree
+  usage: git diff --no-index [<options>] <path> <path>
+  Diff rename options
+  Diff algorithm options
+  G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+    G1b: só adição ✓
+  exit=0   *** CN REPROVADO: o gate passou sem medir nada ***
+--- sh apps/native/scripts/g2g3.sh   (sem argumento) ---
+  fatal: Not a valid object name 
+  fatal: Not a valid object name 
+  G2 — testIDs  antes=0  depois=0
+    G2: antes ⊆ depois ✓
+  G3 — linhas log( antes=0  depois=0
+    G3: nenhuma linha sumiu ✓
+  exit=0   *** CN REPROVADO: o gate passou sem medir nada ***
+
+==============================================================================
+CN-189 — errata declarada, linha APAGADA, substituta AUSENTE
+==============================================================================
+erratas declaradas (o par velha -> nova):
+    log(`cn-w4a linha=velha n=${n}`)
+    log(`cn-w4a linha=nova n=${n} extra=${e}`)
+--- g2g3  BASE=<tem a velha>  DEPOIS=<não tem nenhuma das duas> ---
+  G2 — testIDs  antes=43  depois=43
+    G2: antes ⊆ depois ✓
+  G3 — linhas log( antes=58  depois=57
+    linhas que SUMIRAM (cada uma tem de ser errata declarada):
+        apps/native/src/store.ts	export function __cnW4a(n, e) { log(`cn-w4a linha=velha n=${n}`) }
+    G3: as que sumiram estão na lista de erratas ✓
+  exit=0
+  *** CN REPROVADO: a errata autorizou o sumiço sem exigir a substituta ***
+
+==============================================================================
+CP-189 — a MESMA errata, com a substituta PRESENTE (controle POSITIVO)
+==============================================================================
+--- g2g3  BASE=<tem a velha>  DEPOIS=<tem a nova> ---
+  G2 — testIDs  antes=43  depois=43
+    G2: antes ⊆ depois ✓
+  G3 — linhas log( antes=58  depois=58
+    linhas que SUMIRAM (cada uma tem de ser errata declarada):
+        apps/native/src/store.ts	export function __cnW4a(n, e) { log(`cn-w4a linha=velha n=${n}`) }
+    G3: as que sumiram estão na lista de erratas ✓
+    linhas NOVAS (declarar no commit e no catálogo):
+        apps/native/src/store.ts	export function __cnW4a(n, e) { log(`cn-w4a linha=nova n=${n} extra=${e}`) }
+  exit=0
+  passou ✓ (o gate não reprova a troca legítima)
+
+==============================================================================
+CN-195 — errata ÓRFÃ ao lado de uma usada
+==============================================================================
+erratas declaradas (o par de cima é usado; o de baixo não casa com nada):
+    log(`cn-w4a linha=velha n=${n}`)
+    log(`cn-w4a linha=nova n=${n} extra=${e}`)
+    log(`cn-w4a linha=que-nunca-existiu`)
+    log(`cn-w4a substituta-de-ninguem`)
+--- g2g3  BASE=<tem a velha>  DEPOIS=<tem a nova> ---
+  G2 — testIDs  antes=43  depois=43
+    G2: antes ⊆ depois ✓
+  G3 — linhas log( antes=58  depois=58
+    linhas que SUMIRAM (cada uma tem de ser errata declarada):
+        apps/native/src/store.ts	export function __cnW4a(n, e) { log(`cn-w4a linha=velha n=${n}`) }
+    G3: as que sumiram estão na lista de erratas ✓
+    linhas NOVAS (declarar no commit e no catálogo):
+        apps/native/src/store.ts	export function __cnW4a(n, e) { log(`cn-w4a linha=nova n=${n} extra=${e}`) }
+  exit=0
+  *** CN REPROVADO: a errata órfã passou em silêncio ***
+  e NÃO reprovou por isso ✓ (div. 141: o gate vem antes do que ele mede)
+

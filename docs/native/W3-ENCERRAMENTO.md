@@ -424,8 +424,23 @@ decide por dentro se pula o build — não o filtro de paths.)
    PR garante, e a escolha depende de medir o que se perde. (O mesmo mecanismo
    já tinha sido **delimitado** na #300: numa PR que NUNCA tocou `apps/native/**`,
    o filtro funciona.)
-8. **A proposta de revisão da div. 83** (§3a) — pendente, para PR própria, se
-   voltar com caso real.
+8. **A proposta de revisão da div. 83** (§3a) — **a dívida de ESCRITA fechou no
+   W4-a; a DECISÃO segue pendente.** O que esta herança pedia era *"revisa-se a
+   83 por escrito, em PR própria, com o texto dela ao lado"*. O W4-a é a PR
+   própria, e a razão da forma nova do G3 está escrita no cabeçalho do
+   `g2g3.sh`, encostada no texto da 83 — que era o remédio da div. 142 e da
+   regra 5 do catálogo. **O que o W4-a NÃO fez, de propósito:** decidir a 83.
+   Não há caso real (ZERO menções a `log(` em comentário na árvore, medido de
+   novo), e a decisão não é de quem acabou de mexer no gate.
+
+   **O W4-a acrescenta um fato, e ele é a favor da proposta.** O item 4 dela
+   dizia que o único remédio para um SUMIU vindo de comentário era *"declarar
+   na lista de ERRATAS uma 'linha de log' que nunca foi log — uma errata falsa
+   no registro que existe para ser verdadeiro"*. Com a errata em PAR (div.
+   189), **esse remédio acabou**: a errata falsa já não basta, seria preciso
+   inventar também uma substituta e fazê-la aparecer entre as adicionadas. A
+   saída de emergência era ruim e agora está fechada — quem sofrer o SUMIU da
+   div. 140 não terá nem ela. Registrado no `g2g3.sh`, ao lado da 83.
 9. **A div. 143** — o teste que falhou uma vez em sete não tem nome. Se
    reaparecer, a saída já estará guardada.
 10. **O `W2-ENCERRAMENTO.md`** — **escrito nesta PR**, fora de ordem e declarado
