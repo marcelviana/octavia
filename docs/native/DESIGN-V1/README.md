@@ -594,6 +594,25 @@ Medido no AVD `octavia_tab32` (2560 × 1600 @ 360 = 1137,8 dp), **nas seis varia
 
 **E a E3 deixa de ser falsa.** A E3 afirma que o inativo é "tinta e, na árvore, `enabled=false`"; até a W2 isso era verdade para o botão `entrar` do S0 e **falso** para os três controles do palco, que saíam `enabled=true clickable=true` (div. 118, e a errata do A15 no `PRD-TELA-1.md`). Com o `accessibilityState={{ disabled: … }}` da W2, o palco passa a cumprir a E3 — medido no S3d: os três inertes `enabled=false`, os quatro restantes `true`, `clickable=true` em todos (o `onPress` do inerte é o que revela o motivo, A15). **A E3 não precisa de errata; ela passou a descrever o app.** Onde: §5.3 e §7 (as seis molduras do S3). Div. 109 e 118 da W2.
 
+**E17 — a tela 2 existe, e é ela que anota este documento por cima.** *(Decisão do Marcel, 2026-09-21, no aval do desenho do N2; errata SEM redesenhar moldura, pelo precedente da E16.)*
+
+**O desenho da tela 2 vive em [`docs/native/DESIGN-N2/`](../DESIGN-N2/)** — 18 molduras no mesmo canvas de 1138 × 627 dp, congeladas com `telas.html`, `telas.pdf` e `SHA256SUMS` próprios. As doze decisões que o sustentam são as **N2-D23…D34**, na §2 do `DESIGN-N2/README.md`. Nada do V1 é reescrito: como na E16, **documento congelado se anota por cima**. O que muda, ponto a ponto:
+
+| onde | o que o V1 diz | o que passa a valer |
+| --- | --- | --- |
+| §5.3 · barra de S1 (120 dp) | a barra tem o título e `Buscar música` | ganha **`Nova setlist`** (ícone + rótulo, 190 × 57,8 dp) à esquerda de `Buscar música`, com vão de 24. A caixa do título cai de 709,8 para **495,8 dp**. A barra continua terminando em y 144 e o primeiro cartão continua começando em 176: **nada cobre cartão**. O cartão de S1 **não ganha nada** — renomear, datar e apagar moram em S2 |
+| §7 · `S1f` | o estado vazio traz a frase que manda criar "na versão web" | a frase sai e entra **`Criar a primeira setlist`**, o mesmo ato, aqui. É o **único lugar das duas folhas com borda em `accentInk`**, porque é o único controle da tela. A marca fica, como na §8.4 |
+| §7 · `S2` | uma S2 só | **duas entradas.** *S2 com edição* (vinda de S1 ou da criação) ganha uma **faixa de 64 dp abaixo da barra de 88**, com quatro controles de escrita, e um `remover` por linha; a lista cai de 551,1 para 487,1 dp (N2-D26). *S2 vinda do palco* **não muda** — é o frame de controle `N2-S2p`, a `S2` do V1 sem uma vírgula de diferença (T2-R19, N2-D19) |
+| §5.3 e §7 · S1 e S2 | não há linha de aviso | a **linha de aviso de 48 dp** passa a ser **componente de S1 e S2**: ícone de 20, motivo sempre escrito, um aviso por vez, e o que bloqueia mais vence. Quando existe, a lista perde 48 dp e nada mais muda de lugar |
+| §6.4 · catálogo | 34 linhas na tabela, 4 desenhos fora do catálogo (E14.a) | **39 linhas**: entram `nova setlist`, `alça`, `renomear`, `apagar setlist` e o par `adicionar / remover`. A fonte dos cinco é o **anexo D do `DESIGN-N2/telas.html`**, e é contra ele que o `gate:icones` mede (N2-D33). A categoria "fora do catálogo" **continua em 4**. O parêntese da folha do N2 que soma 38 está registrado na div. 222 |
+| §8.3 · ordenar S1 por data | proposta em aberto, "só compensa se as setlists passarem a ter `performance_date` preenchido" | **decidida: não** (N2-D24). `created_at desc` continua. O gatilho para reabrir é **medido, não uma data**: quando **metade ou mais** das setlists da conta tiverem data futura. As duas molduras (`S1-proposta-data`, `PROP-data-hoje`) voltam ao debate **sem redesenho** |
+| §8 · o critério dos desabilitados (`:374`) | "o motivo tem que ser legível **sem toque**" — critério da seção de propostas | **confirmado como regra da tela 2 inteira** (N2-D23), com uma consequência: o **A15 do palco** (revelar o motivo **ao toque**) vira a **exceção**, e é só do palco. Na tela 2, *desabilitado* e *inerte com motivo* colapsam num estado só, porque aqui todo inativo tem motivo escrito |
+| §6.1 e §6.2 · inativo | "desabilitado muda tinta e amputa o desenho" | ganha um **limite**: amputa-se **só o que continua reconhecível amputado**. **O visto não é amputável** — sem a haste longa sobram 4 dp de traço, que se leem como caractere perdido. Nesses casos o inativo é o desenho **inteiro** em `lineInfo` com traço 1,25, como o par `zoom −` / `zoom +` da §6.2 já fazia. Exceção **R2·2**, no anexo D do N2 |
+
+**O `SHA256SUMS` do V1 não muda com esta errata**, e os três congelados seguem conferindo. O `telas.html` do V1 fica **intacto**: ele é fonte congelada de desenho de ícone, é isso que o `gate:icones` cobra dele, e nenhum gate quebra com a tela 2. O hash do `README.md` registrado ali já estava velho antes desta errata — **div. 223**, com a decisão pendente do Marcel.
+
+Onde: §5.3, §6.1, §6.2, §6.4, §7, §8 e §8.3. Divs. 221–225 do `DESIGN-N2/README.md` §9.
+
 ---
 
 ## 10 · Proveniência
