@@ -1,0 +1,62 @@
+# N2-PR2 — o escopo da trava "uma escrita por vez" (div. 232 e 233)
+
+## A linha medida, antes
+
+Commit `70e77be`, `apps/native/src/escrita.ts` — o `finally` que solta a trava
+está em `:339-341`, e o `try` que ele fecha abre em `:288`, contendo o
+`await reler(…)` da `:328`. **A trava cobria a releitura.**
+
+```
+$ git show 70e77be:apps/native/src/escrita.ts | sed -n "287,341p" | grep -n "emVoo\|try\|finally\|await"
+1:  emVoo = true
+2:  try {
+4:    // `finally` a solte por um caminho só.
+5:    if (!(await estaOnline())) return semReleitura('offline')
+9:    const resposta = await mutate(pedido.method, pedido.path, pedido.body)
+42:    const rel = await reler(estado, preliminar.especie === 'sumiu' ? '404' : 'write', pedido.op)
+53:  } finally {
+54:    emVoo = false
+```
+
+## O que o congelado exige
+
+`docs/native/DESIGN-N2/telas.html`, legenda de `N2-P-relendo`, verbatim:
+
+> As outras linhas **seguem ativas**: a releitura de uma adição não congela o picker.
+
+## As três medições
+
+### A · trava LONGA (`70e77be`) — os três CNs REPROVAM
+```
+     × uma segunda adição é ACEITA enquanto a releitura da primeira está em voo 720ms
+     × duas releituras se SOBREPÕEM — e são duas, não uma enfileirada atrás da outra 740ms
+     × e o cache acaba igual ao ÚLTIMO 200, não ao último a chegar 752ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+AssertionError: expected 'rede' not to be 'rede' // Object.is equality
+AssertionError: expected [ Array(1) ] to have a length of 2 but got 1
+AssertionError: expected [ { …(6) }, { …(6) }, { …(7) } ] to have a length of 4 but got 3
+      Tests  3 failed | 72 skipped (75)
+```
+
+### B · trava CURTA, sem ordem entre releituras — o TERCEIRO reprova
+
+O preço de encurtar, medido: com duas releituras em voo, a emitida primeiro
+chega por último com a foto velha e sobrescreve o cache (3 músicas contra 4
+no servidor). É a div. 233.
+```
+     ✓ uma segunda adição é ACEITA enquanto a releitura da primeira está em voo  697ms
+     ✓ duas releituras se SOBREPÕEM — e são duas, não uma enfileirada atrás da outra  738ms
+     × e o cache acaba igual ao ÚLTIMO 200, não ao último a chegar 813ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+AssertionError: expected [ { …(6) } ] to deeply equal [ { …(6) } ]
+      Tests  1 failed | 2 passed | 72 skipped (75)
+```
+
+### C · trava CURTA + ordem — os três PASSAM
+```
+ ✓  native  apps/native/test/escrita.test.ts (18 tests | 15 skipped) 2313ms
+     ✓ uma segunda adição é ACEITA enquanto a releitura da primeira está em voo  697ms
+     ✓ duas releituras se SOBREPÕEM — e são duas, não uma enfileirada atrás da outra  742ms
+     ✓ e o cache acaba igual ao ÚLTIMO 200, não ao último a chegar  740ms
+      Tests  3 passed | 72 skipped (75)
+```

@@ -91,18 +91,42 @@ git rev-parse --verify --quiet "$BASE^{commit}" >/dev/null || uso "<base> nao re
 # inverter a ordem. Se o Marcel quiser que passe a reprovar, é uma linha —
 # trocar o aviso por `A=1`. (Pergunta 3 do relatório da W3.)
 #
-# --- As EXCEÇÕES desta PR (o escopo declarado do W4-a) -----------------------
-# Poda da div. 141: os QUATRO arquivos da N2-PR1 (`packages/core/src/sync.ts`,
-# `apps/native/src/sync.ts`, `apps/native/src/store.ts`, `apps/native/App.tsx`)
-# SAEM — a N2-PR1 mergeou em `adf32e6` e o W4-a não toca em nenhum deles. O
-# aviso abaixo gritava pelos quatro em toda corrida, que é exatamente o que ele
-# existe para fazer; deixá-los seria o gate mais permissivo em silêncio.
+# --- As EXCEÇÕES desta PR (o escopo declarado da N2-PR2) ---------------------
+# Poda da div. 141: a lista do W4-a estava VAZIA (aquela era PR de instrumento)
+# e não há nada herdado a podar. As SETE abaixo são desta PR, e são o escopo
+# inteiro do core da escrita — **nenhuma tela**.
 #
-# A LISTA FICA VAZIA, e isso é a afirmação mais forte que ela pode fazer: o
-# W4-a é PR de instrumento e não muda uma linha de comportamento do app. Tudo
-# que ele toca — `apps/native/scripts/` — já está fora do escopo por exclusão
-# declarada. Nenhum arquivo precisa de perdão.
-EXCECOES=''
+#   packages/core/src/escrita.ts    NOVO. Os seis pedidos (método, caminho,
+#       corpo) e a classificação fechada em sete espécies. Puro: nenhuma
+#       request mora aqui, e é por isso que ele cabe no core.
+#   packages/core/src/validacao.ts  NOVO. As TRÊS validações do cliente
+#       (N2-D21) e a data-calendário local do T2-R2. Nada do filtro de texto
+#       do servidor (div. 181), que não se replica.
+#   packages/core/src/frases.ts     NOVO. O conjunto FECHADO de frases —
+#       T2-R15 ∪ as fixas do desenho congelado. É o padrão do `fraseDaFalha()`
+#       da W2, e o teste afirma que toda saída pertence ao conjunto.
+#   packages/core/src/index.ts      os três `export *` acima. Sem eles os
+#       módulos existem e ninguém os alcança.
+#   apps/native/src/escrita.ts      NOVO. A orquestração: barrar, enviar,
+#       classificar, reler, gravar, logar. É a única superfície de
+#       comportamento novo do APP nesta PR, e não tem uma linha de tela.
+#   apps/native/src/api.ts          o transporte de escrita. Ele mora AQUI, e
+#       não no módulo novo, porque o cabeçalho deste arquivo declara ser "a
+#       camada de rede única do app" — partir o transporte em dois faria dessa
+#       frase uma mentira. É também onde vive a N2-D9: um SEGUNDO `authFetch`,
+#       cujo `onAuthFailure` **não** chama `signOutSession()`.
+#   apps/native/src/store.ts        o `saveSetlists()` da N2-D13 — gravar só o
+#       `setlists.json`, porque o `save()` de hoje grava os dois arquivos
+#       juntos e a releitura da escrita não lê content. A linha
+#       `cache write kind=setlists …` é a MESMA, byte a byte: ela mudou de
+#       função e não de texto, e por isso o G3 não precisa de errata.
+EXCECOES='packages/core/src/escrita.ts
+packages/core/src/validacao.ts
+packages/core/src/frases.ts
+packages/core/src/index.ts
+apps/native/src/escrita.ts
+apps/native/src/api.ts
+apps/native/src/store.ts'
 
 listar() {
   if [ "$1" = "WORKTREE" ]; then

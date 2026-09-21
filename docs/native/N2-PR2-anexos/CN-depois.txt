@@ -1,0 +1,31 @@
+# N2-PR2 — os CNs DEPOIS do código (commit 2)
+
+Comando: `pnpm exec vitest run --project core --project native`
+
+```
+ ✓  core  packages/core/src/normalize.test.ts (4 tests) 2ms
+ ✓  core  packages/core/src/sync.test.ts (14 tests) 4ms
+ ✓  core  packages/core/src/search.test.ts (9 tests) 4ms
+ ✓  core  packages/core/src/validacao.test.ts (17 tests) 6ms
+ ✓  core  packages/core/src/offline.test.ts (25 tests) 19ms
+ ✓  core  packages/core/src/escrita.test.ts (23 tests) 5ms
+ ✓  core  packages/core/src/frases.test.ts (24 tests) 33ms
+ ✓  core  packages/core/src/content-contract.test.ts (15 tests) 3ms
+ ✓  core  packages/core/src/auth-fetch.test.ts (5 tests) 5ms
+ ✓  core  packages/core/src/errors.test.ts (9 tests) 3ms
+ ✓  core  packages/core/src/position.test.ts (4 tests) 2ms
+ ✓  core  packages/core/src/token.test.ts (7 tests) 2ms
+ ✓  core  packages/core/src/song.test.ts (6 tests) 2ms
+ ✓  core  packages/core/src/rate-limit.test.ts (7 tests) 3ms
+ ✓  core  packages/core/src/isolation.test.ts (2 tests) 1ms
+ ✓  native  apps/native/test/files-mensagem.test.ts (11 tests) 7ms
+ ✓  native  apps/native/test/files-saneamento.test.ts (5 tests) 10ms
+ ✓  native  apps/native/test/files-integridade.test.ts (11 tests) 15ms
+ ✓  native  apps/native/test/prefetch-fila.test.ts (13 tests) 21ms
+ ✓  native  apps/native/test/gates.test.ts (11 tests) 383ms
+ ✓  native  apps/native/test/sync-t1r10.test.ts (6 tests) 1316ms
+     ✓ setlist renomeada no web: kind=setlists invalidated=1, e volta a 0 no sync seguinte  334ms
+ ✓  native  apps/native/test/escrita.test.ts (15 tests) 2467ms
+ Test Files  22 passed (22)
+      Tests  243 passed (243)
+```

@@ -107,17 +107,43 @@ describe('gate:a20 — nenhum literal de UI em inglês (G4)', () => {
   })
 })
 
-describe('gate:icones — o mapa contra as duas fontes congeladas', () => {
+describe('gate:icones — o mapa contra as fontes congeladas', () => {
   it('o mapa real PASSA — exit 0, zero acusações', () => {
     const s = rodar('scripts/icones.mjs', 'src/icones/dados.ts')
     expect(s.status, comSaida(s)).toBe(0)
     expect(acusacoes(s.texto), comSaida(s)).toBe(0)
   })
 
-  it('CONTROLE NEGATIVO: o `IconesFalso` REPROVA — exit 1, 18 acusações', () => {
+  it('CONTROLE NEGATIVO: o `IconesFalso` REPROVA — exit 1, 19 acusações', () => {
     const s = rodar('scripts/icones.mjs', 'scripts/__cn__/IconesFalso.ts')
     expect(s.status, comSaida(s)).toBe(1)
-    expect(acusacoes(s.texto), comSaida(s)).toBe(18)
+    // 18 do V1 + a (8) da N2-PR2: um pendente que JÁ está no mapa e não casa
+    // com o anexo D do DESIGN-N2. A lista `PENDENTES` adia a cobrança da
+    // AUSÊNCIA, nunca a do desenho errado.
+    expect(acusacoes(s.texto), comSaida(s)).toBe(19)
+    expect(s.texto).toContain('[anexo-D-N2]')
+  })
+
+  /**
+   * N2-D33 / E17 — o gate vem ANTES da tela que ele mede, e por isso o que
+   * ainda não foi desenhado tem de GRITAR sem reprovar. Estas três asserções
+   * são o que impede a lista `PENDENTES` de virar anistia silenciosa.
+   */
+  it('o catálogo é 39 registros, e os cinco do DESIGN-N2 entram nessa conta', () => {
+    const s = rodar('scripts/icones.mjs', 'src/icones/dados.ts')
+    expect(s.texto, comSaida(s)).toContain('34 registros (V1) + 5 (DESIGN-N2, E17) = 39 registros')
+  })
+
+  it('os seis nomes pendentes saem como AVISO, e o gate passa mesmo assim', () => {
+    const s = rodar('scripts/icones.mjs', 'src/icones/dados.ts')
+    expect(s.status, comSaida(s)).toBe(0)
+    expect((s.texto.match(/AVISO .*\[pendente\]/g) ?? []).length, comSaida(s)).toBe(6)
+    expect(s.texto, comSaida(s)).toContain('poda a lista quando desenhar')
+  })
+
+  it('CONTROLE POSITIVO da regra 6: a `alca` do CN está correta e acusa ZERO', () => {
+    const s = rodar('scripts/icones.mjs', 'scripts/__cn__/IconesFalso.ts')
+    expect(s.texto, comSaida(s)).not.toContain('de "alca"')
   })
 })
 

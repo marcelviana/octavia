@@ -1,0 +1,128 @@
+# N2-PR2 — o veredito do item 1.3: o servidor MANDA `Retry-After`?
+
+Resolve a **div. 225**. Leitura de código, sem request nenhum (orçamento de prod: 0).
+
+## Os dois caminhos que as seis rotas usam
+
+```
+$ grep -rn "Retry-After\|retryAfter" lib/ app/api/ | grep -v __tests__
+lib/user-rate-limit.ts:18: * A resposta 429 é ESTRUTURADA (semente do B3): body { error, retryAfter }
+lib/user-rate-limit.ts:19: * + X-RateLimit-Limit/Remaining/Reset + Retry-After honesto +
+lib/user-rate-limit.ts:122: * retryAfter e os 5 headers ficam como estão. Direção de import
+lib/user-rate-limit.ts:126:  const retryAfter = Math.max(1, Math.ceil((result.resetTime - Date.now()) / 1000))
+lib/user-rate-limit.ts:128:    extra: { retryAfter },
+lib/user-rate-limit.ts:134:      'Retry-After': String(retryAfter),
+lib/api-errors.ts:40: * Construtor único do envelope flat { error, code, details?, retryAfter? }.
+lib/api-errors.ts:43: * o único campo extra do envelope é o retryAfter do 429 — o envelope não
+lib/api-errors.ts:52:    extra?: { retryAfter?: number }
+lib/api-errors.ts:57:  if (opts?.extra?.retryAfter !== undefined) body.retryAfter = opts.extra.retryAfter
+```
+
+```
+$ sed -n 119,137p lib/user-rate-limit.ts
+/**
+ * Resposta 429 estruturada com a assinatura do sistema único.
+ * B3 PR-4/D4: corpo pelo ponto único — ganha code:'RATE_LIMITED';
+ * retryAfter e os 5 headers ficam como estão. Direção de import
+ * user-rate-limit → api-errors (api-errors é Response puro, sem ciclo).
+ */
+export function rateLimited(result: RateLimitResult): Response {
+  const retryAfter = Math.max(1, Math.ceil((result.resetTime - Date.now()) / 1000))
+  return apiError('RATE_LIMITED', 'Rate limit exceeded', {
+    extra: { retryAfter },
+    headers: {
+      'X-RateLimit-Limit': String(result.limit),
+      'X-RateLimit-Remaining': String(result.remaining),
+      'X-RateLimit-Reset': String(result.resetTime),
+      'X-RateLimit-Scope': result.scope,
+      'Retry-After': String(retryAfter),
+    },
+  })
+}
+```
+
+```
+$ sed -n 140,147p lib/user-rate-limit.ts   # a cadeia A (DELETE setlist, DELETE song)
+export function enforceUserLimit(
+  uid: string,
+  familia: string,
+  config: RateLimitConfig
+): Response | null {
+  const rl = checkRateLimit({ scope: 'user', id: uid, familia, config })
+  return rl.ok ? null : rateLimited(rl)
+}
+```
+
+```
+$ sed -n 113,125p lib/api-validation-middleware.ts   # a cadeia B (as outras quatro)
+
+          // B1.3: limite por uid, pós-auth
+          if (rateLimit) {
+            const rl = checkRateLimit({
+              scope: 'user',
+              id: user.uid,
+              familia: rateLimit.familia,
+              config: rateLimit.config
+            })
+            if (!rl.ok) {
+              return rateLimited(rl)
+            }
+          }
+```
+
+```
+$ sed -n 54,63p lib/api-errors.ts   # o retryAfter no CORPO
+): Response {
+  const body: Record<string, unknown> = { error, code }
+  if (opts?.details) body.details = opts.details
+  if (opts?.extra?.retryAfter !== undefined) body.retryAfter = opts.extra.retryAfter
+  return new Response(JSON.stringify(body), {
+    status: STATUS_BY_CODE[code],
+    headers: {
+      'Content-Type': 'application/json',
+      ...opts?.headers,
+    },
+```
+
+## Veredito
+
+**SIM, nos dois caminhos, e em dois lugares cada.** As seis rotas de escrita
+chegam ao 429 por dois funis — o middleware da cadeia B
+(`api-validation-middleware.ts:123`, para criar, editar, adicionar e
+reordenar) e o `enforceUserLimit` da cadeia A (`user-rate-limit.ts:146`, para
+apagar setlist e remover música) — e **os dois chamam o mesmo `rateLimited()`**
+(`user-rate-limit.ts:125-137`), que põe:
+
+- o header `Retry-After: <segundos>` (`:134`), e
+- o campo `retryAfter` no corpo do envelope `RATE_LIMITED`
+  (`api-errors.ts:57`).
+
+O valor é `Math.max(1, ceil((resetTime - agora) / 1000))` (`:126`): inteiro e
+nunca zero. O `retryAfterFrom` do core (`packages/core/src/rate-limit.ts:32-52`)
+já lê os dois, com o header como autoritativo e o corpo como fallback.
+
+## O que isso decide
+
+**Div. 225 fecha pela primeira alternativa.** A N2-D31 mandou a frase sem
+número "até se medir se o servidor manda `Retry-After`"; ele manda, então a
+linha do T2-R15 fica **como está**, com o `N`:
+
+    RATE_LIMITED → "muitas alterações seguidas — tente de novo em N s"
+
+**E a frase sem número não sai do conjunto.** Ela passa a ser o ramo do 429
+que chega SEM prazo nenhum, que o contrato prevê: a cláusula não-JSON do
+`CONTRATO-DE-ERRO.md` cobre respostas que não saem dos handlers (405 vazio,
+404 HTML, 413 da plataforma), e um 429 de borda cairia ali. Nesse caso o
+`retryAfterFrom` devolve `null` e vale a frase da moldura `N2-X-limite`:
+
+    "Muitas mudanças em pouco tempo. Os controles de escrita voltam em instantes."
+
+Duas frases, dois ramos medidos, nenhuma inventada. O modo `escrita-429-sem-prazo`
+do mock existe só para exercitar o segundo.
+
+**O limite desta medição, declarado**: isto é leitura de CÓDIGO. Se a
+plataforma (Vercel) removesse o header `Retry-After` de uma resposta 429 em
+prod, o corpo continuaria trazendo `retryAfter` e a frase com número
+continuaria valendo — é por isso que o core lê os dois. Um 429 real de prod
+não foi provocado: custaria 120 requests na janela `setlist-mutate` da conta
+de audit, e o orçamento de escrita desta PR é **zero**.

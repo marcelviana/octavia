@@ -29,13 +29,16 @@
 | sem sessão | `login-screen` | `onAuthStateChanged` sem user | A5 (controle negativo) |
 | renovação de token | `auth refresh=forced\|cached` | antes de cada request (T1-R2) | A1 |
 | sessão inválida | `auth-failure` | 2º 401 ou refresh sem token novo (T1-R3) | A2 |
-| request à API | `api status=<s> path=<path> n=<1\|2> ms=<ms>` | toda resposta de `/api/*` | A1, A2, A4, A22 |
-| 429 | `ratelimit retry-after=<s> family=<f>` | resposta 429 (T1-R4) | A3 |
+| request à API | `api status=<s> path=<path> n=<1\|2> ms=<ms>` | toda resposta de `/api/*`, **também nas escritas** (N2-PR2). Nas rotas de escrita o `path` traz cada uuid pelos seus **8 primeiros caracteres** (regra 3): `/api/setlists/<id8>`, `/api/setlists/<id8>/songs/order`, `/api/setlists/songs/<id8>`. Até a N2-PR1 esta linha só conheceu paths sem id, e `split('?')[0]` bastava | A1, A2, A4, A22, A-N2-8 |
+| 429 | `ratelimit retry-after=<s> family=<f>` | resposta 429 (T1-R4). `family` é `content-read`, `setlist-read` ou, desde a N2-PR2, `setlist-mutate` — **compartilhada pelas seis escritas**, então um 429 numa adição fecha o botão de criar também (T2-R14). A linha só sai quando o prazo VEIO: medido na N2-PR2, o servidor manda `Retry-After` nos dois funis e também no corpo (`N2-PR2-anexos/retry-after.txt`) | A3, A-N2-16 |
 | início do sync | `sync start` | T1-R13 passo 2 | A4 |
 | sync ok | `sync ok setlists=<n> content=<n> pages=<p> t=<ms>` | as duas listas aplicadas (E3: `t=` do `sync start` ao cache gravado) | A4, A7 |
 | sync falhou | `sync fail stage=setlists\|content page=<p> code=<code\|network\|net> status=<s\|->` — **E8(3)** | qualquer não-2xx/rede; cache anterior mantido (T1-R9) | A19, A21 |
 | sync pulado | `sync skip reason=offline` | sem rede ao abrir | A5 |
 | cache | `cache hit kind=setlists\|content\|file n=<n>` · `cache write kind=… n=<n> invalidated=<n>` — **E8(2): `cache miss` nunca foi implementado** | leitura/gravação do cache local. `invalidated` é o **contador real** do T1-R10 desde a N2-PR1 (antes, `0` literal — caso 21): itens do conjunto alterados (`updated_at` diferente) + novos + removidos em relação ao cache anterior; `0` em sync sem mudança, `n` no primeiro sync | A4, A5, A7, A21 |
+| **escrita** | `write op=create\|update\|delete\|add\|remove\|reorder setlist=<id8\|-> items=<n\|-> status=<s\|net> code=<CODE\|net\|-> ms=<ms>` — **N2-PR2** | fim de TODA escrita de setlist, 2xx ou não. `op` é a operação, não a rota. `setlist=-` só no `create`, antes do 201 (o id ainda não existe). `items` é o tamanho do `order` no reorder e `-` nas outras cinco. `status=net` e `code=net` quando a request não teve resposta — e isso inclui a resposta cujo CORPO não chegou (N2-D18: o servidor pode ter gravado). `code=-` num 2xx | A-N2-1, A-N2-8, A-N2-12, A-N2-13, A-N2-15 |
+| **ressincronização** | `resync kind=setlists reason=write\|404\|order\|reopen op=<op\|-> status=<s\|net> setlists=<n\|-> ms=<ms>` — **N2-PR2** | fim da releitura do T2-R9/R10 (`GET /api/setlists`, N2-D13). `kind` é sempre `setlists` e fica para o formato não mudar quando houver outro. Um não-2xx aqui **não** é falha da escrita: é o estado próprio da N2-D22, e `setlists=-` porque nada foi aplicado. `reason=reopen` é o `GET` refeito na próxima abertura da tela, com `op=-` | A-N2-10, A-N2-11, A-N2-25 |
+| **escrita barrada** | `write blocked op=<op> reason=offline\|ratelimit\|ceiling\|busy\|nada-mudou` — **N2-PR2** | toque num controle de escrita que **não gera request**. `offline` (T2-R12), `ratelimit` (a família `setlist-mutate` fechada por um 429 anterior, T2-R14), `ceiling` (acima de 100 músicas o reordenar não sai, N2-D17), `busy` (outra escrita em voo, T2-R11) e `nada-mudou` (o formulário abriu e nada mudou, T2-R3 (iii)) — ver a **errata N2-PR2** abaixo | A-N2-9, A-N2-14, A-N2-24 |
 | prefetch | `prefetch plan n=<n> reason=7d\|manual\|demand` | T1-R15/R16 | A10 |
 | promoção | `prefetch promote n=<n>` | arquivos já no disco que entraram na janela de 7 dias e foram movidos para o armazenamento não-purgável (T1-R14 + N0-H16 §4) — **E7** | A10 |
 | arquivo | `file src=disk name=<seg> bytes=<n>` · `file src=download name=<seg> bytes=<n> total=<n\|-> ms=<n>` — **errata W1** | T1-R14 (herdado do N0). O `total` (`Content-Length`, `-` se ausente) e o `ms` (início do download → rename) **só no `src=download`**: não houve download, não há total nem duração | A9, A13, **W1-A2/A3/A7** |
@@ -643,3 +646,72 @@ trabalho. Continuam sendo comando de mão. A tabela completa está em
 O que o invólucro **não** dá, e o item 5 da §10 do `W1-ENCERRAMENTO` prometia: **cobertura**.
 Um subprocesso não instrumenta o processo do Vitest, então `a20.mjs` e `icones.mjs`
 continuam fora do relatório. Dívida declarada.
+
+---
+
+## Errata N2-PR2 (2026-09-21) — as quatro linhas da escrita, e a quinta razão de barrar
+
+O T2-R16 do `PRD-TELA-2.md` fixou o formato das três linhas novas **antes** de
+haver código que as emitisse, e a PR-2 as emite. Nenhuma linha existente mudou
+de texto: o G3 foi de **57 para 64** linhas `log(`, com a lista de erratas
+**vazia** — seis adições e nenhuma substituição. Isso não é sorte; é o efeito
+de uma decisão pequena no `store.ts`, registrada abaixo.
+
+### O que entrou
+
+As três do T2-R16 (`write op=`, `resync kind=setlists`, `write blocked`) estão
+no catálogo acima, com a semântica de cada campo. A quarta não é uma linha
+nova: é a `api …`, que passa a sair **também** nas escritas e por isso passa a
+carregar id no `path` — daí o `<id8>`.
+
+### A quinta razão de `write blocked`, declarada
+
+O T2-R16 escreveu `reason=offline|ratelimit|ceiling|busy`. A PR-2 acrescenta
+**`nada-mudou`**: o toque num "Salvar" que não envia porque o formulário abriu
+e nada mudou (T2-R3 (iii), N2-D21).
+
+Por que ela precisa existir, e por que não briga com o **A-N2-24**: o aceite
+mede `grep 'write op='` **vazio** depois de editar e cancelar, e a linha nova
+começa com `write blocked op=` — a subcadeia `write op=` não aparece nela, e o
+grep continua dizendo o que sempre disse. Sem a linha, "o músico tocou em
+salvar e nada saiu" e "o músico não tocou em nada" seriam indistinguíveis no
+logcat, que é o único instrumento dos aceites desta série.
+
+As outras duas validações do cliente — nome vazio e data impossível — **não**
+geram linha: ali o botão nasce inativo com o motivo escrito ao lado (N2-D23), e
+um toque num botão que nunca esteve ativo não é um toque num controle de
+escrita.
+
+### A linha que se moveu sem mudar — e por que isso importa
+
+A N2-D13 pede um `save` só de `setlists.json` (`PRD-TELA-2.md` §4.2: o `save()`
+de hoje grava os dois arquivos juntos). O caminho fácil seria uma segunda
+função com a sua própria linha `cache write kind=setlists …` — e aí o contrato
+de observabilidade teria **duas implementações** da mesma linha, que é a div.
+137 outra vez, pelo lado do log.
+
+O que se fez: a gravação do `setlists.json` virou uma função privada com os
+**mesmos nomes de parâmetro**, de modo que o template literal é literalmente o
+mesmo texto. O `save()` e o `saveSetlists()` chamam essa função. Para o G3, a
+linha não mudou — e não mudou mesmo: ela mudou de lugar, não de contrato.
+
+A linha `cache write kind=content` **não** sai na releitura da escrita, de
+propósito: a escrita não mexe em content (N2-D1), e uma linha dizendo
+`invalidated=0` sobre algo que não aconteceu seria ruído no instrumento que o
+A21 lê.
+
+### A assinatura de uma releitura descartada — duas linhas que já existem
+
+Com a trava de escrita cobrindo só o request (div. 232), **duas releituras
+podem estar em voo ao mesmo tempo**, e a que chega por último pode trazer uma
+foto mais velha. Quando isso acontece, ela **não** grava.
+
+Isso **não ganhou campo novo na linha `resync`**, e a razão é que não precisa:
+a releitura descartada emite a sua `resync … status=200` — ela leu, e o 200 é
+verdade — e **não** emite a `cache write kind=setlists` que a aplicação emite.
+**Duas linhas `resync … status=200` para uma `cache write kind=setlists`** é a
+assinatura do descarte, contada com duas linhas que o catálogo já tem.
+
+O que isso custa, declarado: um `grep` por `resync` sozinho não diz qual das
+duas venceu. Se um aceite no aparelho precisar disso, é um campo na linha
+`resync`, com errata — e aí o T2-R16 muda junto.

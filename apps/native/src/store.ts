@@ -121,17 +121,51 @@ export interface Invalidated {
   content: number
 }
 
-export function save(uid: string, snapshot: CacheSnapshot, invalidated: Invalidated): void {
-  const dir = dirDe(uid)
-  if (!dir.exists) dir.create({ intermediates: true })
+/**
+ * A metade `setlists.json` da gravação — uma implementação só, usada pelos
+ * dois caminhos.
+ *
+ * A linha de log é **byte a byte a mesma** de antes (mesmos nomes de
+ * parâmetro, mesmo template): ela mudou de função e não de texto, e por isso
+ * o G3 não precisa de errata. Isso é de propósito — uma segunda cópia da
+ * linha seria a div. 137 outra vez, com um contrato de observabilidade tendo
+ * duas implementações que podem divergir em silêncio.
+ */
+function gravarSetlists(dir: Directory, snapshot: CacheSnapshot, invalidated: Invalidated): void {
   const arquivoSetlists: ArquivoSetlists = {
     setlists: semEmbutido(snapshot.setlists),
     syncedAtMs: snapshot.syncedAtMs,
   }
   gravarAtomico(dir, 'setlists.json', JSON.stringify(arquivoSetlists))
-  gravarAtomico(dir, 'content.json', JSON.stringify(snapshot.content))
   log(`cache write kind=setlists n=${snapshot.setlists.length} invalidated=${invalidated.setlists}`)
+}
+
+export function save(uid: string, snapshot: CacheSnapshot, invalidated: Invalidated): void {
+  const dir = dirDe(uid)
+  if (!dir.exists) dir.create({ intermediates: true })
+  gravarSetlists(dir, snapshot, invalidated)
+  gravarAtomico(dir, 'content.json', JSON.stringify(snapshot.content))
   log(`cache write kind=content n=${snapshot.content.length} invalidated=${invalidated.content}`)
+}
+
+/**
+ * N2-D13 — a releitura da escrita grava **só o `setlists.json`**.
+ *
+ * O `save()` acima grava os dois arquivos juntos, e era esse o custo de
+ * implementação que a opção (b) declarou (`PRD-TELA-2.md` §4.2, medido no
+ * pre-check §7.2). Regravar o `content.json` inalterado a cada escrita seria
+ * uma gravação atômica inteira — `.tmp`, `delete`, `moveSync` — de ~200 KB
+ * por música adicionada, e o T2-R6 adiciona dez seguidas.
+ *
+ * O `content` do snapshot **não é lido** aqui, e o `invalidated.content`
+ * tampouco: a escrita não mexe em content (N2-D1), então uma linha
+ * `cache write kind=content` nesta passagem diria zero sobre uma coisa que
+ * não aconteceu — e o A21 lê essas linhas.
+ */
+export function saveSetlists(uid: string, snapshot: CacheSnapshot, invalidated: Invalidated): void {
+  const dir = dirDe(uid)
+  if (!dir.exists) dir.create({ intermediates: true })
+  gravarSetlists(dir, snapshot, invalidated)
 }
 
 /** Apaga o cache deste usuário (instrumento de prova; nenhuma UI chama). */

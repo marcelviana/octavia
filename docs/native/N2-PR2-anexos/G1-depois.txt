@@ -1,0 +1,38 @@
+# N2-PR2 — G1/G2/G3 (2ª rodada: a trava)
+
+```
+base=origin/main head=WORKTREE
+G1a — diff vazio em 32 arquivos DERIVADOS de apps/native + packages/core/src
+      escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+      menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+      EXCEÇÕES DECLARADAS (o escopo desta PR):
+        packages/core/src/escrita.ts
+        packages/core/src/validacao.ts
+        packages/core/src/frases.ts
+        packages/core/src/index.ts
+        apps/native/src/escrita.ts
+        apps/native/src/api.ts
+        apps/native/src/store.ts
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+  G1b: só adição ✓
+[exit 0]
+```
+
+```
+G2 — testIDs  antes=43  depois=43
+  G2: antes ⊆ depois ✓
+G3 — linhas log( antes=57  depois=64
+      ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+        (nenhuma — nenhuma linha de log pode sumir nesta PR)
+  G3: nenhuma linha sumiu ✓
+  linhas NOVAS (declarar no commit e no catálogo):
+      apps/native/src/api.ts	if (prazo !== null) log(`ratelimit retry-after=${prazo} family=setlist-mutate`)
+      apps/native/src/api.ts	log(`api status=${response.status} path=${pathDoLog(path)} n=${requests} ms=${ms}`)
+      apps/native/src/escrita.ts	log(`resync kind=setlists reason=${reason} op=${opDoLog} status=${status} setlists=- ms=${ms}`)
+      apps/native/src/escrita.ts	log(`resync kind=setlists reason=${reason} op=${opDoLog} status=200 setlists=${items.length} ms=${ms}`)
+      apps/native/src/escrita.ts	log(`resync kind=setlists reason=${reason} op=${opDoLog} status=200 setlists=${r.data.length} ms=${ms}`)
+      apps/native/src/escrita.ts	log(`write blocked op=${op} reason=${motivo}`)
+      apps/native/src/escrita.ts	log(`write op=${pedido.op} setlist=${pedido.setlist} items=${pedido.items} status=${status} code=${code} ms=${ms}`)
+[exit 0]
+```
