@@ -64,23 +64,33 @@ BASE=$1; HEAD=$2
 # inverter a ordem. Se o Marcel quiser que passe a reprovar, é uma linha —
 # trocar o aviso por `A=1`. (Pergunta 3 do relatório da W3.)
 #
-# --- As EXCEÇÕES desta PR (o escopo declarado da W3) -------------------------
-#   files.ts      commit 3 — a alternativa `file://` entra no `higienizar()`,
-#                 para que unificar a regra 2 num ponto só não custe cobertura
-#                 ao lado que já a tinha (div. 137, segunda parte)
-#   prefetch.ts   commit 3 — o `mensagemDe()` larga a higienização PRÓPRIA e
-#                 antiga (sem a alternativa do host nu) e passa a chamar o
-#                 `higienizar()`. **É a exceção que o prompt exigiu declarada e
-#                 justificada**: a W2 não pôde tocar aqui porque declará-lo
-#                 exceção alargaria o escopo que o commit 1 dela fechava
+# --- As EXCEÇÕES desta PR (o escopo declarado da N2-PR1) ---------------------
+# Poda da div. 141: `files.ts` e `prefetch.ts`, exceções da W3, SAEM — a W3
+# mergeou e a N2-PR1 não toca em nenhum dos dois; deixá-los era o gate mais
+# permissivo em silêncio que o aviso abaixo existe para gritar.
 #
-# O `StageScreen.tsx`, que era exceção da W2, SAI: esta PR não toca em tela
-# nenhuma, e deixá-lo seria exatamente a div. 141. Ele volta a estar sob a
-# invariância — e continua sendo a div. 108 (um arquivo que, quando MUDA, só o
-# aceite no aparelho sabe dizer se o comportamento mudou), que é limite de
-# método e não buraco de instrumento.
-EXCECOES='apps/native/src/files.ts
-apps/native/src/prefetch.ts'
+# Entram os quatro arquivos que o commit 2 (T1-R10 ligado, N2-D8) vai tocar,
+# e só eles. Declarados aqui, no commit 1, porque o gate vem antes do que mede:
+# até o commit 2 o aviso de "declarada e não usada" sai para os quatro, de
+# propósito.
+#   packages/core/src/sync.ts   o `diffByUpdatedAt` passa a valer para setlist
+#                               também (tipo genérico sobre `id`+`updated_at`)
+#                               e ganha o par que o sync usa: contador e
+#                               preservação do conjunto quando nada mudou
+#   apps/native/src/sync.ts     o caminho do sync (T1-R13 passo 2) chama o core
+#                               e devolve o contador
+#   apps/native/src/store.ts    a linha `cache write … invalidated=<n>` deixa de
+#                               ser literal — só o valor; nada da separação por
+#                               `save` da N2-D13, que é da PR-2
+#   apps/native/App.tsx         o `rodarSync` (`App.tsx:133`) reaproveita o
+#                               `contentById` quando o conjunto não mudou: é o
+#                               índice que os derivados memoizados leem, e sem
+#                               isto "invalidated=0" seria de novo uma frase
+#                               que o app desmente
+EXCECOES='packages/core/src/sync.ts
+apps/native/src/sync.ts
+apps/native/src/store.ts
+apps/native/App.tsx'
 
 listar() {
   if [ "$1" = "WORKTREE" ]; then

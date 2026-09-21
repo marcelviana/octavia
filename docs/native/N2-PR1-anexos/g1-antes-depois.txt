@@ -1,0 +1,41 @@
+# G1 da N2-PR1 — antes e depois da poda da div. 141. Rastro; a fonte é apps/native/scripts/g1.sh.
+# Nota: o comando do prompt (sh apps/native/scripts/g1.sh, sem argumentos) roda com BASE e HEAD vazios
+# e não mede nada (div. 187); o par abaixo é o do CI: merge-base com origin/main, e WORKTREE.
+
+## 1. Árvore limpa, antes da poda (origin/main 984051d)
+$ sh apps/native/scripts/g1.sh 984051d8dd8c489d3bdf5ed7ce58166092dcb769 WORKTREE   # árvore limpa, antes da poda
+base=984051d8dd8c489d3bdf5ed7ce58166092dcb769 head=WORKTREE
+G1a — diff vazio em 33 arquivos DERIVADOS de apps/native + packages/core/src
+      escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+      menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+      EXCEÇÕES DECLARADAS (o escopo desta PR):
+        apps/native/src/files.ts
+        apps/native/src/prefetch.ts
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+  G1a: EXCEÇÃO DECLARADA E NÃO USADA — poda isto ANTES do merge (div. 141):
+        apps/native/src/files.ts
+        apps/native/src/prefetch.ts
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+  G1b: só adição ✓
+exit=0
+
+## 2. Depois da poda, commit 1 (exceções da N2-PR1 declaradas, ainda não usadas)
+$ sh apps/native/scripts/g1.sh 984051d8dd8c489d3bdf5ed7ce58166092dcb769 WORKTREE
+base=984051d8dd8c489d3bdf5ed7ce58166092dcb769 head=WORKTREE
+G1a — diff vazio em 31 arquivos DERIVADOS de apps/native + packages/core/src
+      escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+      menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+      EXCEÇÕES DECLARADAS (o escopo desta PR):
+        packages/core/src/sync.ts
+        apps/native/src/sync.ts
+        apps/native/src/store.ts
+        apps/native/App.tsx
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+  G1a: EXCEÇÃO DECLARADA E NÃO USADA — poda isto ANTES do merge (div. 141):
+        packages/core/src/sync.ts
+        apps/native/src/sync.ts
+        apps/native/src/store.ts
+        apps/native/App.tsx
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+  G1b: só adição ✓
+exit=0

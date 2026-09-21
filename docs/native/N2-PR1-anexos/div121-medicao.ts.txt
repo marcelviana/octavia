@@ -1,0 +1,23 @@
+import { offlineStatus, planSync, reconcileByUpdatedAt, type ContentDTO, type SetlistDTO } from '<raiz>/packages/core/src/index'
+const T0 = '2026-09-01T00:00:00.000+00:00', T1 = '2026-09-16T12:00:00.000+00:00'
+const sheet = (url: string, t: string): ContentDTO => ({ id: 'c-pdf', title: 'P', artist: null, album: null, content_type: 'Sheet', content_data: null, file_url: url, updated_at: t })
+const letra = (t: string, txt: string): ContentDTO => ({ id: 'c-txt', title: 'L', artist: null, album: null, content_type: 'Lyrics', content_data: { lyrics: txt }, file_url: null, updated_at: t })
+const sl: SetlistDTO = { id: 's', name: 'S', performance_date: null, venue: null, updated_at: T0, setlist_songs: [
+  { id: '1', setlist_id: 's', content_id: 'c-pdf', position: 1, notes: null, content: null },
+  { id: '2', setlist_id: 's', content_id: 'c-txt', position: 2, notes: null, content: null }] }
+const byId = (cs: ContentDTO[]) => new Map(cs.map((c) => [c.id, c]))
+const U0 = 'https://h/content-files/1700000000000-a.pdf', U1 = 'https://h/content-files/1757000000000-a.pdf'
+const presentes = new Set([U0])
+const v0 = [sheet(U0, T0), letra(T0, 'velha')]
+console.log('1. sync 0, arquivo U0 no disco:', JSON.stringify(offlineStatus(sl, byId(v0), presentes)))
+// (a) PUT troca o arquivo: upload gera nome novo (Date.now()-nome, upsert:false) → file_url novo + updated_at novo
+const va = [sheet(U1, T1), letra(T0, 'velha')]
+const ra = reconcileByUpdatedAt(v0, planSync({ pages: [{ items: va, failed: false }], setlists: [sl], previous: { content: v0, setlists: [sl] } }).content)
+console.log('2a. arquivo trocado no web: invalidated=%d status=%s', ra.invalidated, JSON.stringify(offlineStatus(sl, byId(ra.items), presentes)))
+// (b) PUT só no texto: updated_at novo, corpo novo no próprio cache
+const vb = [sheet(U0, T0), letra(T1, 'nova')]
+const rb = reconcileByUpdatedAt(v0, vb)
+console.log('2b. letra editada no web: invalidated=%d status=%s corpo=%s', rb.invalidated, JSON.stringify(offlineStatus(sl, byId(rb.items), presentes)), JSON.stringify(byId(rb.items).get('c-txt')?.content_data))
+// (c) sync falha com o servidor já mudado: planSync mantém o conjunto anterior INTEIRO (setlists e content do mesmo sync)
+const pc = planSync({ pages: [{ items: [], failed: true }], setlists: [sl], previous: { content: v0, setlists: [sl] } })
+console.log('2c. sync falho: action=%s content===anterior=%s status=%s', pc.action, pc.content === v0, JSON.stringify(offlineStatus(sl, byId(pc.content), presentes)))
