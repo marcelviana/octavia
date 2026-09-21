@@ -81,6 +81,14 @@ describe('as fixas do desenho congelado (DESIGN-N2/telas.html)', () => {
     }
   })
 
+  it('salvo-não-relido em S1 guarda só a metade FIXA da frase da folha (div. 227)', () => {
+    // A moldura nomeia a setlist ("Season 4 foi criada. …"); nome é dado, não
+    // texto, e S1 monta a primeira oração. Aqui fica a segunda, verbatim.
+    expect(FRASES['salvo-nao-relido-s1']).toBe(
+      'Não foi possível recarregar a lista, então ela pode não aparecer abaixo ainda.',
+    )
+  })
+
   it('salvo-não-relido: nunca "salvo" limpo, nunca "falhou" (N2-D22)', () => {
     expect(FRASES['salvo-nao-relido-s2']).toBe(
       'Salvo. Não foi possível recarregar a setlist, então o que está na tela pode estar velho.',
