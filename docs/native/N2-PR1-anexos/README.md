@@ -11,7 +11,7 @@
 | `g1-antes-depois.txt` | G1 na árvore limpa (aviso da div. 141 literal) e depois da poda |
 | `gates-commit2.txt` | suíte, lint, tsc, `gate:a20`, `gate:icones`, G1, G2/G3 do commit 2, e o controle do G3 com errata (div. 189) |
 | `div121-medicao.ts.txt` | o script da medição da div. 121 (rodado com `pnpm exec tsx`) |
-| `device-t1r10.txt` | **item 4, feito** (2026-09-20, Tab S6, conta principal): quatro aberturas, S1 com a setlist nova, S4 com o título novo |
+| `device-t1r10.txt` | **item 4, feito**: §1 (2026-09-20) quatro aberturas, S1 com a setlist nova, S4 com o título novo; §2 (2026-09-21) a reversão — um conjunto invalida e o outro não, e a versão velha SAI do índice |
 
 ## O contador (decisão a avalizar)
 
@@ -46,7 +46,7 @@ Saída de `pnpm exec tsx div121-medicao.ts`:
 - Sobra o limite já declarado no T1-R10: edição fora da API não bumpa
   `updated_at` e não é vista.
 
-## Item 4 (aparelho) — **feito** (2026-09-20, Tab S6 `RX2N8000F3D`, conta principal)
+## Item 4 (aparelho) — **feito** (2026-09-20 e 2026-09-21, Tab S6 `RX2N8000F3D`, conta principal)
 
 `device-t1r10.txt` tem o verbatim. Resumo:
 
@@ -56,6 +56,9 @@ Saída de `pnpm exec tsx div121-medicao.ts`:
 | 2 | `n=3 invalidated=0` | `n=63 invalidated=0` | nada |
 | 3 | `n=3 invalidated=0` | `n=63 invalidated=0` | nada (aparelho **travado**: abre, sincroniza e grava atrás do keyguard) |
 | 4 | `n=3 invalidated=0` | `n=63 invalidated=0` | nada — a abertura da tela: S1 mostra `setlist-b100382e` 'DESCARTÁVEL N2'; S4 com `colors 2` → `search q=8 n=1`, `resultado-69735e94` 'Colors 2' |
+| 5 (21/09) | `n=3 **invalidated=0**` | `n=63 **invalidated=1**` | só o content: 'Colors 2' → 'Colors' (a reversão). **O caso que faltava**: um conjunto invalida, o outro não |
+| — | — | — | S4: `colors 2` → `search q=8 n=0`, "nada encontrado para “colors 2”"; `colors` → `q=6 n=2`, `resultado-69735e94` 'Colors'. **A versão velha saiu do índice** |
+| 6 (21/09) | `n=3 invalidated=0` | `n=63 invalidated=0` | nada |
 
 O contador é real no aparelho, não só no CN: com o servidor mudado, as duas
 linhas saíram `1` — contra o código de antes elas sairiam `0`, que é a div. 157
@@ -63,7 +66,7 @@ inteira. Nada foi baixado (`prefetch plan n=0` nas quatro), o único arquivo do
 store continua o mesmo, e o tablet ficou online o tempo todo (nenhum comando de
 rádio, regra da V1-PR3).
 
-## Divergências (187–198)
+## Divergências (187–199)
 
 | # | origem | o quê | destino |
 |---|---|---|---|
@@ -75,8 +78,9 @@ rádio, regra da V1-PR3).
 | **192** | P | item 4.2 do prompt: "a busca (S4) acha o nome novo" da setlist. A S4 só indexa **content** (`buildIndex(contents)`, `SearchScreen.tsx:172`; `core/search.ts:30`) — nome de setlist nunca é achado por ela | registrada; protocolo acima corrigido |
 | **193** | D | o A7 do `PRD-TELA-1.md` nunca rastreou o T1-R10 (rastreio "T1-R8, T1-R9"); o T1-R10 ficou pendurado nele só em `N1-PRECHECK.md:193` ("(A7)") e daí no `V1-ENCERRAMENTO.md:122` | corrigida (errata do A7 inclui o T1-R10) |
 | **194** | D | T1-R20 diz "índice reconstruído **por item** a cada invalidação"; o app reconstrói o índice **inteiro** quando qualquer item invalida (`buildIndex` sobre o conjunto). Esta PR só poupa o caso "nada mudou" | registrada; custo medido do índice é pequeno (19.481 B de corpo, T1-R20); mexer é tela (S4), fora desta PR |
-| **197** | P | as duas edições do web precederam a primeira abertura, então chegaram JUNTAS (uma linha por conjunto, cada uma com o seu `1`); o protocolo previa três eventos separados | registrada; sem prejuízo — o caso "um conjunto invalida, o outro não" está no CN |
-| **198** | P | o content **não** teve o nome revertido ('Colors' → 'Colors 2', e assim ficou) — foi o que tornou a S4 mensurável. Estado do web deixado assim, declarado | registrada; o Marcel decide se volta |
+| **197** | P | as duas edições do web precederam a primeira abertura, então chegaram JUNTAS (uma linha por conjunto, cada uma com o seu `1`); o protocolo previa três eventos separados | **fechada em 21/09**: a abertura 5 mediu no aparelho o caso "um conjunto invalida, o outro não" (`setlists 0` · `content 1`) |
+| **198** | P | o content não teve o nome revertido em 20/09 (o Marcel esqueceu de salvar) | **resolvida em 21/09**: revertido, e a reversão mediu o lado forte — o índice perde a versão velha. Sobra a setlist vazia `DESCARTÁVEL N2` no web |
+| **199** | T | o botão flutuante **Tools** do dev client cobre o canto do `apagar` da S4: tocar no centro do `apagar` abre o menu do dev client. Não existe em release | registrada; conduzir por (2390,195) |
 | **196** | T | **o CN passou na máquina e reprovou no CI** (4 de 6, `sync não fechou ok: … erro.sem_conexao`, só nos testes que re-sobem o mock). O `aceite.py` imprime `fixture: servidor` (`:272`) **antes** de construir o `HTTPServer` (`:275`), e o CN usava a linha como sinal de pronto. Na máquina o bind ganhava a corrida; no runner, não. Commit 4: o CN só segue quando o mock **responde** a `/api/setlists`. Reprovação contra o código de antes reconferida (5 de 6, todas `AssertionError`) | corrigida no teste; o `aceite.py` não mudou (a mesma corrida existe nos protocolos de device, mas lá há um humano esperando) |
 | **195** | T | a lista de erratas do G3 ainda carrega a do W1 (`file src=download …`), mergeada há três PRs — a mesma forma da div. 141, agora no G3 (lá não há aviso de "não usada") | registrada; não podada (fora da lista fechada) |
 

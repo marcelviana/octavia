@@ -175,3 +175,95 @@ DIVERGÊNCIAS (197 em diante)
 |  —  | T | O Tab S6 trava sozinho em 30 s e o keyguard é seguro; a parte
         visual parou até o Marcel destravar. Já registrada na sessão do brief
         (PR #310), não renumerada aqui. |
+
+
+================================================================================
+§2 — A REVERSÃO, 2026-09-21: O CASO QUE FALTAVA
+================================================================================
+O Marcel reverteu 'Colors 2' → 'Colors' no web (a reversão de 2026-09-20 não
+tinha sido salva — div. 198). Mesmo aparato do §1: Tab S6, conta principal,
+online (ping avg 27,8 ms no fim), branch `n2/pr1-t1r10` em `e949cc9` pelo Metro
+desta árvore, dev client de 2026-09-13.
+
+CACHE ANTES desta rodada: 3 setlists, 63 contents, o 69735e94 com
+`'Colors 2'` / `updated_at 2026-09-20T21:07:15.213+00:00`.
+
+--------------------------------------------------------------------------------
+ABERTURA 5 — um conjunto invalida, o OUTRO NÃO (logcat verbatim)
+--------------------------------------------------------------------------------
+    OCTAVIA: cache hit kind=setlists n=3
+    OCTAVIA: cache hit kind=content n=63
+    OCTAVIA: sync start
+    OCTAVIA: api status=200 path=/api/setlists n=1 ms=452
+    OCTAVIA: api status=200 path=/api/content n=1 ms=363
+    OCTAVIA: cache write kind=setlists n=3 invalidated=0
+    OCTAVIA: cache write kind=content n=63 invalidated=1
+    OCTAVIA: sync ok setlists=3 content=63 pages=1 t=1108
+    OCTAVIA: prefetch plan n=0 reason=7d
+
+  **É o caso que a div. 197 dizia faltar no aparelho**: no §1 as duas edições
+  chegaram juntas e os dois contadores deram 1. Aqui só o content mudou, e a
+  linha de setlists diz `0` enquanto a de content diz `1`. Cada conjunto conta o
+  seu, medido, e o conjunto de setlists NÃO foi recriado.
+
+  Delta do cache, do JSON (antes × depois desta rodada):
+    ALTERADO 69735e94  'Colors 2' -> 'Colors'
+                       2026-09-20T21:07:15.213+00:00 -> 2026-09-21T09:56:00.512+00:00
+    novos: 0 · removidos: 0
+
+--------------------------------------------------------------------------------
+S4 — A VERSÃO VELHA SAIU DO ÍNDICE
+--------------------------------------------------------------------------------
+No §1 a busca provou que o título NOVO entra. Aqui prova o outro lado, que é o
+que o T1-R10 promete e o que o A7 nunca pôde medir: o que saiu, saiu.
+
+  termo `colors 2` → `search q=8 n=0`:
+    -                    ''                                                   'Tools'
+    fechar-busca         ''                                                   'Fechar a busca'
+    campo-busca          'colors 2'                                           ''
+    apagar               ''                                                   'Apagar o que foi digitado'
+    -                    'nada encontrado para “colors 2”'                    ''
+    -                    'busca em título, artista, álbum e letra de toda a   ''
+
+  termo `colors` → `search q=6 n=2`, e o 69735e94 volta a ler 'Colors':
+    -                    ''                                                   'Tools'
+    fechar-busca         ''                                                   'Fechar a busca'
+    campo-busca          'colors'                                             ''
+    apagar               ''                                                   'Apagar o que foi digitado'
+    -                    'BIBLIOTECA · 63 MÚSICAS'                            ''
+    -                    '2 RESULTADOS'                                       ''
+    resultado-69735e94   ''                                                   'Colors, Black Pumas  ·  Black Pumas, Letra'
+    -                    'Colors'                                             ''
+    -                    'Black Pumas  ·  Black Pumas'                        ''
+    -                    'Letra'                                              ''
+    resultado-639cafda   ''                                                   'Come Out And Play, Letra'
+    -                    'Come Out And Play'                                  ''
+    -                    'Letra'                                              ''
+
+--------------------------------------------------------------------------------
+ABERTURA 6 — nada mudou: volta a 0 nos dois
+--------------------------------------------------------------------------------
+    OCTAVIA: cache write kind=setlists n=3 invalidated=0
+    OCTAVIA: cache write kind=content n=63 invalidated=0
+    OCTAVIA: sync ok setlists=3 content=63 pages=1 t=1232
+
+STORE no fim:
+    355c68aa71d9922c9bbc5b23404ac9df8bca9155eb6c39781600c48cf1c64121  setlists.json
+    734ac0ba9965bfcabeb00ab7f9ca6203cfe5d6b8ae37142e5e6bdca91900e599  content.json
+  O `setlists.json` muda de sha mesmo com `invalidated=0` porque o `syncedAtMs`
+  é reescrito a cada gravação — o CONJUNTO é o mesmo (a referência é preservada;
+  quem grava é o `save`). O "byte a byte inalterado" do A21 é sobre o sync que
+  FALHA (`keep-previous`), não sobre este.
+
+--------------------------------------------------------------------------------
+DIVERGÊNCIAS desta rodada
+--------------------------------------------------------------------------------
+| 198 | RESOLVIDA em 2026-09-21: o nome foi revertido e a reversão virou a
+        medição mais forte do bloco — o índice PERDE a versão velha
+        ('colors 2' → "nada encontrado"). O web ficou com 'Colors', como era
+        antes; sobra a setlist vazia `DESCARTÁVEL N2`, que é do Marcel apagar. |
+| 199 | T | O botão flutuante **Tools** do dev client ([2436,119][2495,178])
+        fica POR CIMA do canto do `apagar` da S4 ([2369,98][2477,206]): tocar no
+        centro do `apagar` abre o menu do dev client, não limpa o campo. Num
+        build de release o botão não existe. Para conduzir a S4 por adb, tocar
+        em (2390,195) — dentro do `apagar` e fora do Tools. |
