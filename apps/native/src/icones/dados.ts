@@ -201,13 +201,25 @@ export const desenhos = {
     inerte: [{ d: 'M4.5 19.5h4L20 8', traco: 1.25 }, { d: 'M15 5l4 4', traco: 1.25 }],
   },
   'apagar-setlist': {
-    normal: [
-      { d: 'M4.5 7h15M9.5 7V4.8h5V7M6.8 7l1 12.2h8.4l1-12.2' },
-      { d: 'M10.2 10.8v5.4M13.8 10.8v5.4' },
-    ],
+    normal: [{ d: 'M4.5 7h15M9.5 7V4.8h5V7M6.8 7l1 12.2h8.4l1-12.2' }, { d: 'M10.2 10.8v5.4M13.8 10.8v5.4' }],
     // Amputação: a parede direita e as duas costelas saem. Balde aberto ainda
     // é lixeira (o limite da R2·2).
     inerte: [{ d: 'M4.5 7h15M9.5 7V4.8h5V7M6.8 7l1 12.2h8.4', traco: 1.25 }],
+  },
+  /**
+   * O QUARTO dos cinco (N2-PR5) — a alça do modo de reordenar. Anexo D,
+   * verbatim: *"seis círculos r 1,5 · cx 9 e 15 · cy 6,5 · 12 · 17,5"*, **sem
+   * traço** — só o marcador do logo, a mesma massa dos pontos do `indice`.
+   * Alvo de 48 × 72, desenho de 24 centrado nele (R1·7b): quem dá o alvo é a
+   * linha do modo, não o desenho.
+   *
+   * Amputação: *"quatro círculos · a coluna direita perde cy 12 e 17,5"*. O
+   * marcador é preenchido, então não há traço de 1,25 a afinar — a
+   * amputação é a camada que sobra, e a tinta `lineInfo` a outra.
+   */
+  'alca': {
+    normal: [{ cx: 9, cy: 6.5, r: 1.5, fill: true }, { cx: 15, cy: 6.5, r: 1.5, fill: true }, { cx: 9, cy: 12, r: 1.5, fill: true }, { cx: 15, cy: 12, r: 1.5, fill: true }, { cx: 9, cy: 17.5, r: 1.5, fill: true }, { cx: 15, cy: 17.5, r: 1.5, fill: true }],
+    inerte: [{ cx: 9, cy: 6.5, r: 1.5, fill: true }, { cx: 15, cy: 6.5, r: 1.5, fill: true }, { cx: 9, cy: 12, r: 1.5, fill: true }, { cx: 9, cy: 17.5, r: 1.5, fill: true }],
   },
   'remover': {
     normal: [{ cx: 12, cy: 12, r: 8.5 }, { d: 'M8 12h8' }],

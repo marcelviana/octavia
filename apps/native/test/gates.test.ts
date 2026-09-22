@@ -161,10 +161,17 @@ describe('gate:icones — o mapa contra as fontes congeladas', () => {
    * ser: é a forma que o gate tem de dizer "podaram o pendente e não
    * desenharam" — a mesma pressão que a lista `PENDENTES` existe para fazer.
    */
-  it('os dois nomes pendentes saem como AVISO, e o gate passa mesmo assim', () => {
+  /**
+   * **N2-PR5 poda a `alca`** (o modo de reordenar): resta UM pendente, o
+   * `adicionar`. Mesma pressão, um degrau adiante — entre o commit 1 e o
+   * commit 2 desta PR este `it` e o "mapa real PASSA" acima reprovam por
+   * `falta no mapa: "alca"`.
+   */
+  it('o único nome pendente sai como AVISO, e o gate passa mesmo assim', () => {
     const s = rodar('scripts/icones.mjs', 'src/icones/dados.ts')
     expect(s.status, comSaida(s)).toBe(0)
-    expect((s.texto.match(/AVISO .*\[pendente\]/g) ?? []).length, comSaida(s)).toBe(2)
+    expect((s.texto.match(/AVISO .*\[pendente\]/g) ?? []).length, comSaida(s)).toBe(1)
+    expect(s.texto, comSaida(s)).not.toContain('"alca" ainda não está no mapa')
     expect(s.texto, comSaida(s)).toContain('poda a lista quando desenhar')
     // O meio par: o `remover` JÁ é cobrado, o `adicionar` ainda avisa.
     expect(s.texto, comSaida(s)).toContain('"adicionar" ainda não está no mapa')

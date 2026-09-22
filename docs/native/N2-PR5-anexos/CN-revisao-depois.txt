@@ -1,0 +1,39 @@
+# N2-PR5 (revisão) — depois da N2-D36 revista e da N2-D37
+
+$ npx vitest run --project native-tela apps/native/test/reordenar.test.tsx
+ ✓ |native-tela| apps/native/test/reordenar.test.tsx (15 tests) 4349ms
+     ✓ aviso, "movida de 5", releitura atrás do modo, e `Tentar de novo` reenvia O ARRASTO  339ms
+     ✓ `sumiu`, com a lista da releitura entregue antes da saída  329ms
+      Tests  15 passed (15)
+
+$ npx vitest run --project core --project native --project native-tela
+ Test Files  28 passed (28)
+      Tests  309 passed (309)
+
+$ sh apps/native/scripts/g1.sh origin/main WORKTREE
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+  G1b: só adição ✓
+
+$ sh apps/native/scripts/g2g3.sh origin/main WORKTREE
+G2 — testIDs  antes=63  depois=69
+  G2: antes ⊆ depois ✓
+  testID NOVOS:
+      apps/native/src/screens/IndexScreen.tsx	testID="reordenar"
+      apps/native/src/screens/ModoDeReordenar.tsx	testID="reordenar-motivo"
+      apps/native/src/screens/ModoDeReordenar.tsx	testID="reordenar-sair"
+      apps/native/src/screens/ModoDeReordenar.tsx	testID="reordenar-salvar"
+      apps/native/src/screens/ModoDeReordenar.tsx	testID="reordenar-salvar-motivo"
+      apps/native/src/screens/ModoDeReordenar.tsx	testID={`alca-${numero}`}
+G3 — linhas log( antes=64  depois=64
+  G3: nenhuma linha sumiu ✓
+
+$ gate:a20
+  literais em posição de texto examinados: 142
+  acusações: 0
+
+$ gate:icones
+  acusações: 0 · avisos: 1
+
+$ tsc --noEmit
+(zero erros)

@@ -91,59 +91,38 @@ git rev-parse --verify --quiet "$BASE^{commit}" >/dev/null || uso "<base> nao re
 # inverter a ordem. Se o Marcel quiser que passe a reprovar, é uma linha —
 # trocar o aviso por `A=1`. (Pergunta 3 do relatório da W3.)
 #
-# --- As EXCEÇÕES desta PR (o escopo declarado da N2-PR4) ---------------------
-# Poda da div. 141: as OITO da N2-PR3 saíram — elas mergearam em `0fa1b75` e
+# --- As EXCEÇÕES desta PR (o escopo declarado da N2-PR5) ---------------------
+# Poda da div. 141: as ONZE da N2-PR4 saíram — elas mergearam em `8bd4281` e
 # uma exceção mergeada só torna o gate mais permissivo para a PR seguinte. As
-# ONZE abaixo são desta PR, e são o escopo inteiro de "S2 com edição".
+# SETE abaixo são desta PR, e são o escopo inteiro do modo de reordenar.
 #
-#   packages/core/src/auth-fetch.ts  o `signal` opcional do `AuthRequestInit`.
-#       É o único ponto por onde um prazo de rede pode chegar ao transporte
-#       sem que o core conheça `lib.dom` — o campo é opaco aqui (`unknown`) e
-#       quem o preenche é o `api.ts`. Medido no §1: hoje **não há prazo
-#       nenhum** em nenhuma das duas camadas (div. 262).
-#   packages/core/src/escrita.ts     o `PRAZO_DE_REDE_MS` (N2-D35). O número
-#       é uma DECISÃO, e decisão mora no core — é a mesma regra que põe a
-#       classificação aqui e o transporte lá.
-#   packages/core/src/frases.ts      as quatro chaves novas da N2-E7
-#       (`falhou-salvar`, `lista-relida`, `removendo`, `apagar-arquivos`) e o
-#       `perguntaDeApagar`, que monta a pergunta do diálogo com o nome e a
-#       contagem — que são DADO, não texto (div. 227).
-#   apps/native/src/api.ts           o prazo no transporte: `AbortController`
-#       no `mutate` e no `get`, e nada mais. O mecanismo mora aqui porque o
-#       cabeçalho deste arquivo declara ser "a camada de rede única do app".
-#   apps/native/src/escrita.ts       o prazo da escrita e o da releitura, e o
-#       `relerAoAbrir` com ele. Nenhuma regra nova: o número vem do core.
-#   apps/native/src/icones/dados.ts  TRÊS dos cinco desenhos do anexo D do
-#       DESIGN-N2 — `renomear`, `apagar-setlist` e `remover`. Os outros dois
-#       (`alca`, `adicionar`) seguem na lista `PENDENTES` do `gate:icones`
-#       até as PRs 5 e 6.
-#   apps/native/src/screens/IndexScreen.tsx   S2 com edição: a faixa de 64 dp,
-#       o `remover` por linha, a linha de aviso e os dois modais. É a
-#       superfície de comportamento nova desta PR.
-#   apps/native/src/screens/FolhaDeCriar.tsx  o MODO editar. O arquivo não
-#       muda de nome de propósito: o G2 indexa `testID` por ARQUIVO, e mover
-#       os oito `form-*` para um arquivo novo os faria "sumir" — o congelado
-#       diz "mesma folha, três diferenças", e é a mesma folha.
-#   apps/native/src/screens/DialogoDeApagar.tsx  NOVO. O diálogo de 620 × 300
-#       da regra 5 (N2-D14). Arquivo próprio porque os `testID` dele são
-#       NOVOS: nada se move, tudo se acrescenta.
-#   apps/native/src/navigation.tsx   a ligação. É aqui que se decide qual S2
-#       abre com edição (T2-R19: `posicaoAtual` ausente = veio de S1) e é aqui
-#       que mora o aviso de 404 que S2 deixa para S1.
-#   apps/native/src/screens/SetlistsScreen.tsx  a terceira linha de aviso de
-#       S1 — `Essa setlist não existe mais…`, sem botão (R1·4). S2 não pode
-#       desenhá-la: quando ela aparece, S2 já não existe.
-EXCECOES='packages/core/src/auth-fetch.ts
-packages/core/src/escrita.ts
+#   packages/core/src/ordem.ts       NOVO. A ordem de um arrasto como decisão
+#       pura: `mover`, `mesmaOrdem` (o "nada mudou" da N2-D36), o teto de 100
+#       do contrato (`SETLISTS.md` §order) e `alvoDoArrasto`. Regra mora no
+#       core — o cabeçalho do `apps/native/src/escrita.ts` diz isso com todas
+#       as letras. EXTRA declarado antes do commit 1.
+#   packages/core/src/index.ts       o `export * from './ordem'`. Uma linha.
+#   packages/core/src/frases.ts      as quatro chaves novas da errata da
+#       N2-PR5 e os quatro construtores com número ou nome dentro (título do
+#       modo, "de 5 para 2", "soltar aqui · posição 2", "movida de 5").
+#   apps/native/src/escrita.ts       a releitura da regra 3 depois de um
+#       reorder que falhou, com o `reason=order` que o T2-R16 declarou e
+#       nada emitia. Nenhuma regra nova: é o `reler` que já existe.
+#   apps/native/src/icones/dados.ts  o QUARTO dos cinco desenhos do anexo D
+#       do DESIGN-N2 — a `alca`. Resta o `adicionar` (PR-6).
+#   apps/native/src/screens/IndexScreen.tsx   `Reordenar` na faixa (o
+#       terceiro controle), a linha N2-X-100, e a troca grade ↔ modo.
+#   apps/native/src/screens/ModoDeReordenar.tsx  NOVO. O modo: barra
+#       própria, coluna única de 72 dp, alça de 48 × 72, arrasto por
+#       `PanResponder`, salvar/cancelar/falhou. Arquivo próprio porque os
+#       `testID` dele são NOVOS: nada se move, tudo se acrescenta.
+EXCECOES='packages/core/src/ordem.ts
+packages/core/src/index.ts
 packages/core/src/frases.ts
-apps/native/src/api.ts
 apps/native/src/escrita.ts
 apps/native/src/icones/dados.ts
-apps/native/src/navigation.tsx
-apps/native/src/screens/DialogoDeApagar.tsx
-apps/native/src/screens/FolhaDeCriar.tsx
 apps/native/src/screens/IndexScreen.tsx
-apps/native/src/screens/SetlistsScreen.tsx'
+apps/native/src/screens/ModoDeReordenar.tsx'
 
 listar() {
   if [ "$1" = "WORKTREE" ]; then

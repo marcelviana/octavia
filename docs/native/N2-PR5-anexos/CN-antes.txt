@@ -1,0 +1,72 @@
+# N2-PR5 — os CNs do commit 1 contra a árvore de hoje (origin/main 8bd4281 + só os testes)
+
+$ npx vitest run --project native-tela apps/native/test/reordenar.test.tsx
+     × a faixa ganha o terceiro controle, e os dois da PR-4 continuam 169ms
+     × o modo: barra própria, linhas de 72 com alça de 48 × 72, grade e `remover` ausentes 132ms
+     × durante o gesto: rótulo, buraco, nenhuma renumeração e NADA escrito 130ms
+     × salvar: um `PUT`, `write op=reorder … status=200`, releitura, modo fechado 130ms
+     × zero request, zero linha de escrita, grade de volta na ordem de antes 134ms
+     × o voltar do sistema é o `Cancelar`: sai do modo, e não da tela 129ms
+     × entrar e salvar: zero request e `write blocked op=reorder reason=nada-mudou` 132ms
+     × arrastar e devolver também é "nada mudou" 130ms
+     × aviso, "movida de 5", releitura atrás do modo, e `Tentar de novo` reenvia O ARRASTO 137ms
+     × `Sair sem salvar` descarta o arrasto: a grade volta com a ordem do servidor 131ms
+     × `sumiu`, com a lista da releitura entregue antes da saída 132ms
+     × 101 músicas: só `Reordenar` inativa, a linha de aviso diz por quê, zero request 196ms
+     × 100 músicas ainda reordena 197ms
+     × desenho amputado, a frase de sem rede, e o toque não abre o modo 155ms
+⎯⎯⎯⎯⎯⎯ Failed Tests 14 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  |native-tela| apps/native/test/reordenar.test.tsx > (a) N2-D27 / N2-S2e-reordenar — `Reordenar` entra no modo de coluna única > a faixa ganha o terceiro controle, e os dois da PR-4 continuam
+Error: sem nó com testID="reordenar"
+ FAIL  |native-tela| apps/native/test/reordenar.test.tsx > (a) N2-D27 / N2-S2e-reordenar — `Reordenar` entra no modo de coluna única > o modo: barra própria, linhas de 72 com alça de 48 × 72, grade e `remover` ausentes
+Error: sem nó com testID="reordenar"
+ FAIL  |native-tela| apps/native/test/reordenar.test.tsx > (b) T2-R8 — arrastar 5 → 2 e salvar: UM `PUT` com a ordem inteira > durante o gesto: rótulo, buraco, nenhuma renumeração e NADA escrito
+Error: sem nó com testID="reordenar"
+ FAIL  |native-tela| apps/native/test/reordenar.test.tsx > (b) T2-R8 — arrastar 5 → 2 e salvar: UM `PUT` com a ordem inteira > salvar: um `PUT`, `write op=reorder … status=200`, releitura, modo fechado
+Error: sem nó com testID="reordenar"
+ FAIL  |native-tela| apps/native/test/reordenar.test.tsx > (c) `Cancelar` devolve a ordem do servidor sem escrever nada > zero request, zero linha de escrita, grade de volta na ordem de antes
+Error: sem nó com testID="reordenar"
+ FAIL  |native-tela| apps/native/test/reordenar.test.tsx > (c) `Cancelar` devolve a ordem do servidor sem escrever nada > o voltar do sistema é o `Cancelar`: sai do modo, e não da tela
+Error: sem nó com testID="reordenar"
+ FAIL  |native-tela| apps/native/test/reordenar.test.tsx > (d) N2-D36 — `Salvar a ordem` com a ordem inalterada fecha o modo sem request > entrar e salvar: zero request e `write blocked op=reorder reason=nada-mudou`
+Error: sem nó com testID="reordenar"
+ FAIL  |native-tela| apps/native/test/reordenar.test.tsx > (d) N2-D36 — `Salvar a ordem` com a ordem inalterada fecha o modo sem request > arrastar e devolver também é "nada mudou"
+Error: sem nó com testID="reordenar"
+ FAIL  |native-tela| apps/native/test/reordenar.test.tsx > (e) R2·1 / N2-S2e-ordem-falhou — 500: o modo fica, o arrasto é preservado > aviso, "movida de 5", releitura atrás do modo, e `Tentar de novo` reenvia O ARRASTO
+Error: sem nó com testID="reordenar"
+ FAIL  |native-tela| apps/native/test/reordenar.test.tsx > (e) R2·1 / N2-S2e-ordem-falhou — 500: o modo fica, o arrasto é preservado > `Sair sem salvar` descarta o arrasto: a grade volta com a ordem do servidor
+Error: sem nó com testID="reordenar"
+ FAIL  |native-tela| apps/native/test/reordenar.test.tsx > (f) T2-R10 — 404 no reorder: o modo fecha, e S2 sai para S1 já relida > `sumiu`, com a lista da releitura entregue antes da saída
+Error: sem nó com testID="reordenar"
+ FAIL  |native-tela| apps/native/test/reordenar.test.tsx > (g) N2-X-100 / A-N2-9 — acima de 100 músicas, `Reordenar` inativo com a frase > 101 músicas: só `Reordenar` inativa, a linha de aviso diz por quê, zero request
+Error: sem nó com testID="reordenar"
+ FAIL  |native-tela| apps/native/test/reordenar.test.tsx > (g) N2-X-100 / A-N2-9 — acima de 100 músicas, `Reordenar` inativo com a frase > 100 músicas ainda reordena
+Error: sem nó com testID="reordenar"
+ FAIL  |native-tela| apps/native/test/reordenar.test.tsx > (h) T2-R12 / N2-X-sem-rede — sem rede, `Reordenar` inativa com o resto da faixa > desenho amputado, a frase de sem rede, e o toque não abre o modo
+Error: sem nó com testID="reordenar"
+ Test Files  1 failed (1)
+      Tests  14 failed (14)
+
+$ npx vitest run --project core packages/core/src/ordem.test.ts
+ FAIL  |core| packages/core/src/ordem.test.ts [ packages/core/src/ordem.test.ts ]
+Error: Cannot find module './ordem' imported from '/Users/marcelviana/projects/octavia-n2-pr5/packages/core/src/ordem.test.ts'
+ Test Files  1 failed (1)
+      Tests  no tests
+
+$ npx vitest run --project native apps/native/test/gates.test.ts
+     ✓ a árvore de trabalho PASSA — exit 0, zero acusações 80ms
+     ✓ CONTROLE NEGATIVO: o `__cn__` REPROVA — exit 1, 4 acusações 41ms
+     × o mapa real PASSA — exit 0, zero acusações 53ms
+     ✓ CONTROLE NEGATIVO: o `IconesFalso` REPROVA — exit 1, 22 acusações 46ms
+     ✓ o catálogo é 39 registros, e os cinco do DESIGN-N2 entram nessa conta 44ms
+     × o único nome pendente sai como AVISO, e o gate passa mesmo assim 43ms
+     ✓ CONTROLE POSITIVO da regra 6: a `alca` do CN está correta e acusa ZERO 43ms
+     ✓ menção em comentário de bloco NÃO sobrevive ao filtro 6ms
+     ✓ menção em comentário de linha NÃO sobrevive ao filtro 4ms
+     ✓ CONTROLE NEGATIVO: o que é CÓDIGO sobrevive inteiro 4ms
+     ✓ a guarda do esquema de URI: `https://…` não é comentário 4ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+  ACUSADO src/icones/dados.ts [nome] falta no mapa: "alca" (§6.4)
+  ACUSADO src/icones/dados.ts [nome] falta no mapa: "alca" (§6.4)
+ Test Files  1 failed (1)
+      Tests  2 failed | 9 passed (11)

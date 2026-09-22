@@ -1,0 +1,88 @@
+# N2-PR5 — §4.2, prod. Três escritas, duas contas, dois aparelhos.
+
+Logcat VERBATIM (`adb logcat -d | grep OCTAVIA:`), com o `uid` do `auth`
+mascarado onde aparece. Nenhuma linha de escrita traz uuid inteiro, nome de
+setlist ou título — o que a regra 3 do `LOGS-OCTAVIA.md` exige, e o que se
+confere no fim deste arquivo. Nenhum dump de prod foi commitado.
+
+## (a) Tab S6 (RX2N8000F3D), conta principal, `N2-PR5 aceite` (3 músicas) — escrita 1
+
+Ordem no servidor ANTES (cache do app lido por `run-as`, ids recortados a 8):
+  setlist 3ccef313 updated_at 2026-09-22T19:41:15.909719+00:00 order ['4c4d113d', 'e1e6e812', '8196bcf6']
+Gesto: `input swipe 110 747 110 387 900` pela alça da 3ª linha até a 1ª.
+Tela antes do salvar (comparação em memória, sem imprimir título): linhas 3 → esperado True
+
+09-22 17:17:10.536  9596 10225 I ReactNativeJS: OCTAVIA: auth refresh=cached
+09-22 17:17:12.167  9596 10225 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists/3ccef313/songs/order n=1 ms=1631
+09-22 17:17:12.177  9596 10225 I ReactNativeJS: OCTAVIA: write op=reorder setlist=3ccef313 items=3 status=200 code=- ms=1640
+09-22 17:17:12.180  9596 10225 I ReactNativeJS: OCTAVIA: auth refresh=cached
+09-22 17:17:12.696  9596 10225 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=516
+09-22 17:17:12.716  9596 10225 I ReactNativeJS: OCTAVIA: resync kind=setlists reason=write op=reorder status=200 setlists=3 ms=537
+09-22 17:17:12.730  9596 10225 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=3 invalidated=1
+09-22 17:17:12.736  9596 10225 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=7d
+
+Ordem no servidor DEPOIS (a releitura, gravada no cache):
+  setlist 3ccef313 updated_at 2026-09-22T20:17:10.444155+00:00 order ['8196bcf6', '4c4d113d', 'e1e6e812']
+
+O corpo do `PUT` é a permutação inteira, na ordem da tela (ids mascarados):
+  PUT /api/setlists/3ccef313…/songs/order
+  {"order":["8196bcf6…","4c4d113d…","e1e6e812…"]}
+(o corpo não vai para log nenhum — regra 2; ele é a ordem que o servidor
+passou a ter, e o CN (b) do `reordenar.test.tsx` lê o corpo real pelo espião
+do `fetch`.)
+
+Reabrir o app (force-stop + deep link) — `invalidated=0`:
+09-22 17:17:26.392 15918 16132 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=646
+09-22 17:17:26.818 15918 16132 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=391
+09-22 17:17:26.863 15918 16132 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=3 invalidated=0
+09-22 17:17:26.881 15918 16132 I ReactNativeJS: OCTAVIA: cache write kind=content n=63 invalidated=0
+09-22 17:17:26.882 15918 16132 I ReactNativeJS: OCTAVIA: sync ok setlists=3 content=63 pages=1 t=1141
+
+A setlist NÃO foi apagada.
+
+## (b) AVD `octavia_tab32` (emulator-5554), conta de audit, a setlist de 60 (`4340bf95`) — escritas 2 e 3
+
+A conta de audit estava logada (`auth uid=Pw3b… src=restored`, div. 200).
+O AVD estava em MODO AVIÃO (airplane=1, wifi=0, data=0 — lido antes); para o
+aceite: airplane off + `svc data enable`, `ping` 17,4 ms; restaurado no fim
+(airplane=1, data=0, `ping` → Network is unreachable).
+
+Ordem ANTES: n 60 · updated_at 2026-08-29T19:43:10.287+00:00 · primeira 39dc91b1 · última bd5eca36
+
+Escrita 2 — a última para a primeira (A-N2-8). Gesto: rolar pelo CORPO até o
+fim; `motionevent DOWN` na `alca-60` (555,1 dp), MOVE até 130 dp (dentro da
+faixa de 48 dp do topo da lista), 9 s parado — a rolagem automática levou a
+lista ao topo; dump COM O DEDO NO VIDRO: `de 60 para 1` e
+`soltar aqui · posição 1`; nenhuma linha `OCTAVIA:` durante o gesto.
+09-22 17:23:43.570  8542  8721 I ReactNativeJS: OCTAVIA: auth refresh=cached
+09-22 17:23:44.451  8542  8721 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists/4340bf95/songs/order n=1 ms=892
+09-22 17:23:44.465  8542  8721 I ReactNativeJS: OCTAVIA: write op=reorder setlist=4340bf95 items=60 status=200 code=- ms=906
+09-22 17:23:44.467  8542  8721 I ReactNativeJS: OCTAVIA: auth refresh=cached
+09-22 17:23:44.728  8542  8721 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=260
+09-22 17:23:44.744  8542  8721 I ReactNativeJS: OCTAVIA: resync kind=setlists reason=write op=reorder status=200 setlists=3 ms=277
+09-22 17:23:44.761  8542  8721 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=3 invalidated=1
+09-22 17:23:44.777  8542  8721 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=7d
+  → servidor == [antes[59]] + antes[:59]: True · updated_at 2026-09-22T20:23:44.370938+00:00
+
+Escrita 3 — devolver (a primeira para a última, pela faixa de 48 dp de BAIXO,
+9 s): dump com o dedo no vidro: `de 1 para 60` e `soltar aqui · posição 60`.
+09-22 17:24:37.886  8542  8721 I ReactNativeJS: OCTAVIA: auth refresh=cached
+09-22 17:24:38.608  8542  8721 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists/4340bf95/songs/order n=1 ms=739
+09-22 17:24:38.612  8542  8721 I ReactNativeJS: OCTAVIA: write op=reorder setlist=4340bf95 items=60 status=200 code=- ms=743
+09-22 17:24:38.614  8542  8721 I ReactNativeJS: OCTAVIA: auth refresh=cached
+09-22 17:24:38.860  8542  8721 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=248
+09-22 17:24:38.877  8542  8721 I ReactNativeJS: OCTAVIA: resync kind=setlists reason=write op=reorder status=200 setlists=3 ms=265
+09-22 17:24:38.890  8542  8721 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=3 invalidated=1
+09-22 17:24:38.900  8542  8721 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=7d
+  → servidor == a ordem de ANTES, elemento a elemento: True · updated_at 2026-09-22T20:24:38.536723+00:00
+
+## Contagem
+
+Escritas em prod nesta PR: **3** (uma no Tab S6, duas no AVD). `n=1` nas três
+(nenhum 401, nenhum retry). Os dois `PUT` de 60 itens: **ms=906** e **ms=743**.
+
+## Regra 4 do `LOGS-OCTAVIA.md`
+
+    grep -n eyJ device-prod.txt            → só o enunciado desta linha
+    grep -c 'uid=[A-Za-z0-9]\{20,\}'       → 0
+    grep -E 'write op=|resync kind=' …     → nenhum uuid inteiro, nome ou título

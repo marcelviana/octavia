@@ -125,6 +125,30 @@ export type ChaveDeFrase =
   | 'lista-relida'
   | 'removendo'
   | 'apagar-arquivos'
+  /**
+   * **ERRATA DA N2-PR5 — quatro chaves novas, zero redação nova.**
+   *
+   * As quatro são do modo de reordenar e as quatro estão verbatim nas
+   * molduras `N2-S2e-reordenar` e `N2-S2e-ordem-falhou` (§3), pela mesma
+   * razão da N2-E1 e da N2-E7.
+   *
+   * `reordenar-apoio` é a segunda linha da barra do modo — o gesto explicado
+   * em texto, porque a alça não tem rótulo. `ordem-arrastada` é a mesma linha
+   * depois de uma falha (R2·1): *"esta é a sua ordem, a do servidor é
+   * outra"*. `falhou-ordem` é o título do aviso do modo, que é para o
+   * reordenar o que `falhou-salvar` é para S2 — e são frases DIFERENTES
+   * porque a moldura as escreve diferentes. `ordem-relida` é a terceira
+   * oração do mesmo aviso, e como a `lista-relida` só aparece DEPOIS da
+   * releitura da regra 3.
+   *
+   * **Nenhuma frase nova para "nada mudou"** (N2-D36): `Salvar a ordem` com
+   * a ordem inalterada fecha o modo sem request, e a N2-D21 continua com as
+   * três validações de sempre.
+   */
+  | 'reordenar-apoio'
+  | 'ordem-arrastada'
+  | 'falhou-ordem'
+  | 'ordem-relida'
 
 export const FRASES: Readonly<Record<ChaveDeFrase, string>> = {
   // T2-R15 (`PRD-TELA-2.md`)
@@ -188,6 +212,12 @@ export const FRASES: Readonly<Record<ChaveDeFrase, string>> = {
   removendo: 'removendo…',
   'apagar-arquivos':
     'As músicas continuam na biblioteca, e os arquivos já baixados continuam neste aparelho. Só a setlist deixa de existir.',
+
+  // As quatro da N2-PR5, verbatim das molduras `N2-S2e-reordenar` e `N2-S2e-ordem-falhou`.
+  'reordenar-apoio': 'arraste pela alça · a ordem só é salva no fim',
+  'ordem-arrastada': 'a ordem abaixo é a que você arrastou · a do servidor é outra',
+  'falhou-ordem': 'Não foi possível salvar a ordem',
+  'ordem-relida': 'a setlist foi relida; a ordem dela não foi aplicada aqui',
 }
 
 /**
@@ -213,6 +243,37 @@ export const FRASES: Readonly<Record<ChaveDeFrase, string>> = {
  */
 export function perguntaDeApagar(nome: string, musicas: number): string {
   return `Apagar ${nome}, com ${musicas} ${musicas === 1 ? 'música' : 'músicas'}?`
+}
+
+/**
+ * **N2-PR5 — as quatro redações do modo de reordenar que carregam DADO.**
+ *
+ * A mesma razão do `perguntaDeApagar` (div. 227): número de posição e nome de
+ * setlist não moram numa constante, e um buraco `{n}` faria o conjunto deixar
+ * de ser verificável por comparação literal. A redação fica AQUI, dentro do
+ * alcance do `gate:a20` (a posição `EXTRAS: literal de template`), e não
+ * espalhada pela tela.
+ *
+ * As posições são as que o músico vê — a partir de 1.
+ */
+/** A barra do modo: *"Reordenar · Season 3"* (`N2-S2e-reordenar`). */
+export function tituloDoReordenar(nome: string): string {
+  return `Reordenar · ${nome}`
+}
+
+/** O rótulo da linha erguida enquanto arrasta: *"de 5 para 2"*. */
+export function deParaPosicao(de: number, para: number): string {
+  return `de ${de} para ${para}`
+}
+
+/** O buraco tracejado onde a linha vai cair: *"soltar aqui · posição 2"*. */
+export function soltarAquiPosicao(posicao: number): string {
+  return `soltar aqui · posição ${posicao}`
+}
+
+/** A linha arrastada, depois de uma falha (R2·1): *"movida de 5"*. */
+export function movidaDe(posicao: number): string {
+  return `movida de ${posicao}`
 }
 
 /** O conjunto, como conjunto — é contra ele que o teste afirma o fechamento. */

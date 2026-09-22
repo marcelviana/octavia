@@ -112,3 +112,49 @@ export async function assentar(ms = 0): Promise<void> {
     await new Promise((r) => setTimeout(r, ms))
   })
 }
+
+/** Os círculos dentro deste nó — a `alca` é seis marcadores, e inativa, quatro. */
+export function circulos(testID: string): number {
+  return exige(testID).querySelectorAll('circle').length
+}
+
+/** O `style` achatado deste nó, como o duplo o serializou (`data-style`). */
+export function estilo(e: HTMLElement): Record<string, unknown> {
+  return JSON.parse(e.getAttribute('data-style') ?? '{}') as Record<string, unknown>
+}
+
+/**
+ * N2-PR5 — um arrasto pela alça, como o RN o entregaria: `grant`, os `move`
+ * com o deslocamento ACUMULADO, e o `release`. O gesto de verdade (o
+ * reconhecedor de toque, a rolagem que o corpo da linha faz) é do aparelho,
+ * §4; isto só alimenta a máquina de estados da tela.
+ *
+ * `moveY` fica no meio da lista por padrão — longe dos 48 dp das bordas, onde
+ * a rolagem automática entraria.
+ */
+export async function pegar(testID: string): Promise<{
+  mover: (dy: number, moveY?: number) => Promise<void>
+  soltar: () => Promise<void>
+}> {
+  const { __arrasto } = await import('./fake-react-native')
+  const c = __arrasto(testID)
+  if (c === undefined) throw new Error(`sem arrasto registrado em testID="${testID}"`)
+  let ultimo = { dx: 0, dy: 0, moveY: 400, y0: 400 }
+  if (c.onStartShouldSetPanResponder?.() === false) throw new Error(`"${testID}" recusou o gesto`)
+  await act(async () => {
+    c.onPanResponderGrant?.({}, ultimo)
+  })
+  return {
+    mover: async (dy, moveY = 400) => {
+      ultimo = { dx: 0, dy, moveY, y0: 400 }
+      await act(async () => {
+        c.onPanResponderMove?.({}, ultimo)
+      })
+    },
+    soltar: async () => {
+      await act(async () => {
+        c.onPanResponderRelease?.({}, ultimo)
+      })
+    },
+  }
+}
