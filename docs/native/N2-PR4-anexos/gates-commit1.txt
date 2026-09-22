@@ -1,0 +1,47 @@
+# N2-PR4 — os gates do commit 1, antes do código de tela
+
+## gate:a20 estendido (posição nova: literal de template nos EXTRAS)
+
+$ pnpm --filter native gate:a20
+  escopo: ESTENDIDO (V1-A3 §A3.3 + labels em expressão, V1-PR3 + chave de objeto, V1-PR6)
+  raiz: . · não descidos: test, scripts, node_modules, android, ios, .expo, .git, assets (W2, div. 123)
+  arquivos varridos: 27 (inclui 1 de fora da raiz: ../../packages/core/src/frases.ts — N2-PR3, div. 229)
+  vocabulário: 45 termos · isenções do produto: 9
+  literais em posição de texto examinados: 115
+  acusações: 0
+
+## CN ad hoc da posição nova — uma frase em inglês montada por template
+(injetada no fim do frases.ts, medida, e removida em seguida)
+
+export function cnTemplate(nome: string): string {
+  return `Delete ${nome}, please confirm?`
+}
+
+  ACUSADO ../../packages/core/src/frases.ts:178 [EXTRAS: literal de template] "Delete ${nome}, please confirm?" ← termo "confirm"
+  literais em posição de texto examinados: 116
+  acusações: 1
+
+## gate:a20:cn (o controle negativo versionado, intacto)
+
+  ACUSADO scripts/__cn__/A20Falso.tsx:32 [accessibilityLabel] "Zoom in" ← termo "zoom in"
+  ACUSADO scripts/__cn__/A20Falso.tsx:35 [accessibilityHint] "Go back to the previous song" ← termo "previous"
+  ACUSADO scripts/__cn__/A20Falso.tsx:43 [accessibilityLabel{…}] "Auto-scroll, loading" ← termo "loading"
+  ACUSADO scripts/__cn__/A20Falso.tsx:25 [chave: literal] "Loading" ← termo "loading"
+  acusações: 4
+
+## gate:icones — os cinco pendentes ANTES da poda
+
+  AVISO src/icones/dados.ts [pendente] "alca" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  AVISO src/icones/dados.ts [pendente] "renomear" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  AVISO src/icones/dados.ts [pendente] "apagar-setlist" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  AVISO src/icones/dados.ts [pendente] "adicionar" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  AVISO src/icones/dados.ts [pendente] "remover" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  §6.4: 34 linhas → 33 nomes distintos, + 4 fora do catálogo + 6 da tela 2 = 43 esperados
+  anexo D: 34 registros (V1) + 5 (DESIGN-N2, E17) = 39 registros · 68 elementos distintos no do V1
+  tela 2 (E17): 1/6 nomes já no mapa e cobrados · 5 declarados pendentes
+  mapa: 38 nomes · 83 elementos distintos · 38 com 'normal'
+  hex cravado: 0 · tinta por token: 6
+  §6.3 tab: em20 4 cordas · normal 6 cordas · markup de 20 dp no telas.html: idêntico
+  fora do catálogo: 4/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  PENDENTES DECLARADOS E AUSENTES — poda a lista quando desenhar (N2-D33): 5
+  acusações: 0 · avisos: 5

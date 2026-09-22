@@ -133,6 +133,24 @@ const POSICOES = [
  */
 const POSICOES_EXTRAS = [
   { nome: 'EXTRAS: valor de chave', re: /(?:^|[\s{,])'?[A-Za-z][\w-]*'?\s*:\s*(?:'((?:[^'\\]|\\.)*)'|`([^`]*)`)/gm },
+  /**
+   * N2-PR4 — a segunda posição dos `EXTRAS`: **todo literal de template**.
+   *
+   * Pela mesma razão da div. 229, um degrau adiante. O conjunto fechado de
+   * frases ganha nesta PR a primeira redação que **não é valor de chave**: o
+   * `perguntaDeApagar(nome, musicas)`, que monta `Apagar <nome>, com <n>
+   * músicas?` — o nome e a contagem são DADO (div. 227, a mesma razão que
+   * deixou `salvo-nao-relido-s1` pela metade), então a frase não cabe numa
+   * constante e tem de ser montada. Sem esta posição a redação nasceria
+   * dentro do único arquivo que este gate lê de fora da raiz e **não seria
+   * examinada** — o instrumento quebrado da div. 238 outra vez, com outro
+   * disfarce.
+   *
+   * Vale só nos `EXTRAS`, onde todo literal é texto de UI por construção. Na
+   * raiz do app um template é quase sempre um caminho, uma chave de cache ou
+   * uma linha de log, e a posição acusaria o que não é texto.
+   */
+  { nome: 'EXTRAS: literal de template', re: /`([^`]*)`/g },
 ]
 
 // POSIÇÃO DE NOME DE GLIFO — isenta: é identificador de ícone, não texto.

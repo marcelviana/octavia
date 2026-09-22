@@ -91,43 +91,59 @@ git rev-parse --verify --quiet "$BASE^{commit}" >/dev/null || uso "<base> nao re
 # inverter a ordem. Se o Marcel quiser que passe a reprovar, é uma linha —
 # trocar o aviso por `A=1`. (Pergunta 3 do relatório da W3.)
 #
-# --- As EXCEÇÕES desta PR (o escopo declarado da N2-PR2) ---------------------
-# Poda da div. 141: a lista do W4-a estava VAZIA (aquela era PR de instrumento)
-# e não há nada herdado a podar. As SETE abaixo são desta PR, e são o escopo
-# inteiro do core da escrita — **nenhuma tela**.
+# --- As EXCEÇÕES desta PR (o escopo declarado da N2-PR4) ---------------------
+# Poda da div. 141: as OITO da N2-PR3 saíram — elas mergearam em `0fa1b75` e
+# uma exceção mergeada só torna o gate mais permissivo para a PR seguinte. As
+# ONZE abaixo são desta PR, e são o escopo inteiro de "S2 com edição".
 #
-#   packages/core/src/escrita.ts    NOVO. Os seis pedidos (método, caminho,
-#       corpo) e a classificação fechada em sete espécies. Puro: nenhuma
-#       request mora aqui, e é por isso que ele cabe no core.
-#   packages/core/src/validacao.ts  NOVO. As TRÊS validações do cliente
-#       (N2-D21) e a data-calendário local do T2-R2. Nada do filtro de texto
-#       do servidor (div. 181), que não se replica.
-#   packages/core/src/frases.ts     NOVO. O conjunto FECHADO de frases —
-#       T2-R15 ∪ as fixas do desenho congelado. É o padrão do `fraseDaFalha()`
-#       da W2, e o teste afirma que toda saída pertence ao conjunto.
-#   packages/core/src/index.ts      os três `export *` acima. Sem eles os
-#       módulos existem e ninguém os alcança.
-#   apps/native/src/escrita.ts      NOVO. A orquestração: barrar, enviar,
-#       classificar, reler, gravar, logar. É a única superfície de
-#       comportamento novo do APP nesta PR, e não tem uma linha de tela.
-#   apps/native/src/api.ts          o transporte de escrita. Ele mora AQUI, e
-#       não no módulo novo, porque o cabeçalho deste arquivo declara ser "a
-#       camada de rede única do app" — partir o transporte em dois faria dessa
-#       frase uma mentira. É também onde vive a N2-D9: um SEGUNDO `authFetch`,
-#       cujo `onAuthFailure` **não** chama `signOutSession()`.
-#   apps/native/src/store.ts        o `saveSetlists()` da N2-D13 — gravar só o
-#       `setlists.json`, porque o `save()` de hoje grava os dois arquivos
-#       juntos e a releitura da escrita não lê content. A linha
-#       `cache write kind=setlists …` é a MESMA, byte a byte: ela mudou de
-#       função e não de texto, e por isso o G3 não precisa de errata.
-EXCECOES='packages/core/src/frases.ts
-apps/native/App.tsx
+#   packages/core/src/auth-fetch.ts  o `signal` opcional do `AuthRequestInit`.
+#       É o único ponto por onde um prazo de rede pode chegar ao transporte
+#       sem que o core conheça `lib.dom` — o campo é opaco aqui (`unknown`) e
+#       quem o preenche é o `api.ts`. Medido no §1: hoje **não há prazo
+#       nenhum** em nenhuma das duas camadas (div. 262).
+#   packages/core/src/escrita.ts     o `PRAZO_DE_REDE_MS` (N2-D35). O número
+#       é uma DECISÃO, e decisão mora no core — é a mesma regra que põe a
+#       classificação aqui e o transporte lá.
+#   packages/core/src/frases.ts      as quatro chaves novas da N2-E7
+#       (`falhou-salvar`, `lista-relida`, `removendo`, `apagar-arquivos`) e o
+#       `perguntaDeApagar`, que monta a pergunta do diálogo com o nome e a
+#       contagem — que são DADO, não texto (div. 227).
+#   apps/native/src/api.ts           o prazo no transporte: `AbortController`
+#       no `mutate` e no `get`, e nada mais. O mecanismo mora aqui porque o
+#       cabeçalho deste arquivo declara ser "a camada de rede única do app".
+#   apps/native/src/escrita.ts       o prazo da escrita e o da releitura, e o
+#       `relerAoAbrir` com ele. Nenhuma regra nova: o número vem do core.
+#   apps/native/src/icones/dados.ts  TRÊS dos cinco desenhos do anexo D do
+#       DESIGN-N2 — `renomear`, `apagar-setlist` e `remover`. Os outros dois
+#       (`alca`, `adicionar`) seguem na lista `PENDENTES` do `gate:icones`
+#       até as PRs 5 e 6.
+#   apps/native/src/screens/IndexScreen.tsx   S2 com edição: a faixa de 64 dp,
+#       o `remover` por linha, a linha de aviso e os dois modais. É a
+#       superfície de comportamento nova desta PR.
+#   apps/native/src/screens/FolhaDeCriar.tsx  o MODO editar. O arquivo não
+#       muda de nome de propósito: o G2 indexa `testID` por ARQUIVO, e mover
+#       os oito `form-*` para um arquivo novo os faria "sumir" — o congelado
+#       diz "mesma folha, três diferenças", e é a mesma folha.
+#   apps/native/src/screens/DialogoDeApagar.tsx  NOVO. O diálogo de 620 × 300
+#       da regra 5 (N2-D14). Arquivo próprio porque os `testID` dele são
+#       NOVOS: nada se move, tudo se acrescenta.
+#   apps/native/src/navigation.tsx   a ligação. É aqui que se decide qual S2
+#       abre com edição (T2-R19: `posicaoAtual` ausente = veio de S1) e é aqui
+#       que mora o aviso de 404 que S2 deixa para S1.
+#   apps/native/src/screens/SetlistsScreen.tsx  a terceira linha de aviso de
+#       S1 — `Essa setlist não existe mais…`, sem botão (R1·4). S2 não pode
+#       desenhá-la: quando ela aparece, S2 já não existe.
+EXCECOES='packages/core/src/auth-fetch.ts
+packages/core/src/escrita.ts
+packages/core/src/frases.ts
 apps/native/src/api.ts
-apps/native/src/apos-escrita.ts
+apps/native/src/escrita.ts
 apps/native/src/icones/dados.ts
-apps/native/src/screens/SetlistsScreen.tsx
+apps/native/src/navigation.tsx
+apps/native/src/screens/DialogoDeApagar.tsx
 apps/native/src/screens/FolhaDeCriar.tsx
-apps/native/src/screens/LinhaDeAviso.tsx'
+apps/native/src/screens/IndexScreen.tsx
+apps/native/src/screens/SetlistsScreen.tsx'
 
 listar() {
   if [ "$1" = "WORKTREE" ]; then

@@ -1,0 +1,64 @@
+
+[1m[46m RUN [49m[22m [36mv4.0.16 [39m[90m/Users/marcelviana/projects/octavia-n2-pr4[39m
+
+[90mstdout[2m | apps/native/test/prazo-de-rede.test.ts
+[22m[39mOCTAVIA: resync kind=setlists reason=write op=update status=net setlists=- ms=4882
+
+ [31m❯[39m [30m[42m native [49m[39m apps/native/test/prazo-de-rede.test.ts [2m([22m[2m3 tests[22m[2m | [22m[31m3 failed[39m[2m)[22m[33m 45074[2mms[22m[39m
+[31m     [31m×[31m o número é do CORE, e é 20 s[39m[32m 4[2mms[22m[39m
+[31m     [31m×[31m servidor mudo: a escrita desiste em ≤ 20 s, com espécie `rede` e `status=net`[39m[33m 40002[2mms[22m[39m
+[31m     [31m×[31m a RELEITURA tem o mesmo prazo: 2xx com o `GET` mudo vira `ok-nao-relido`[39m[33m 5001[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 3 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m [30m[42m native [49m[39m apps/native/test/prazo-de-rede.test.ts[2m > [22mN2-D35 — o prazo de rede de uma escrita[2m > [22mo número é do CORE, e é 20 s
+[31m[1mAssertionError[22m: expected undefined to be 20000 // Object.is equality[39m
+
+[32m- Expected:[39m 
+20000
+
+[31m+ Received:[39m 
+undefined
+
+[36m [2m❯[22m apps/native/test/prazo-de-rede.test.ts:[2m176:30[22m[39m
+    [90m174| [39m    // Um prazo que cada chamador escolhesse seria cinco prazos difere…
+    [90m175| [39m    [90m// primeira PR que esquecesse de passar o dele.[39m
+    [90m176| [39m    [34mexpect[39m([33mPRAZO_DE_REDE_MS[39m)[33m.[39m[34mtoBe[39m([34m20_000[39m)
+    [90m   | [39m                             [31m^[39m
+    [90m177| [39m  })
+    [90m178| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[42m native [49m[39m apps/native/test/prazo-de-rede.test.ts[2m > [22mN2-D35 — o prazo de rede de uma escrita[2m > [22mservidor mudo: a escrita desiste em ≤ 20 s, com espécie `rede` e `status=net`
+[31m[1mError[22m: Test timed out in 40000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+[36m [2m❯[22m apps/native/test/prazo-de-rede.test.ts:[2m179:3[22m[39m
+    [90m177| [39m  })
+    [90m178| [39m
+    [90m179| [39m  [34mit[39m(
+    [90m   | [39m  [31m^[39m
+    [90m180| [39m    'servidor mudo: a escrita desiste em ≤ 20 s, com espécie `rede` e …
+    [90m181| [39m    [35masync[39m () [33m=>[39m {
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[42m native [49m[39m apps/native/test/prazo-de-rede.test.ts[2m > [22mN2-D35 — o prazo de rede de uma escrita[2m > [22ma RELEITURA tem o mesmo prazo: 2xx com o `GET` mudo vira `ok-nao-relido`
+[31m[1mError[22m: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+[36m [2m❯[22m apps/native/test/prazo-de-rede.test.ts:[2m210:3[22m[39m
+    [90m208| [39m  )
+    [90m209| [39m
+    [90m210| [39m  it('a RELEITURA tem o mesmo prazo: 2xx com o `GET` mudo vira `ok-nao…
+    [90m   | [39m  [31m^[39m
+    [90m211| [39m    [35mawait[39m [34mservir[39m([32m'resync-pendurado'[39m)
+    [90m212| [39m    // Prazo curto passado pela chamada — aqui se mede a LIGAÇÃO (a re…
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m3 failed[39m[22m[90m (3)[39m
+[2m   Start at [22m 14:15:56
+[2m   Duration [22m 45.33s[2m (transform 136ms, setup 0ms, import 153ms, tests 45.07s, environment 0ms)[22m
+
