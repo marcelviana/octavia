@@ -15,6 +15,19 @@ export interface AuthRequestInit {
   headers?: Record<string, string>
   body?: string
   cache?: 'no-store'
+  /**
+   * N2-D35 — o sinal que cancela o transporte quando o prazo de rede estoura.
+   *
+   * **`unknown` de propósito**: um `AbortSignal` é `lib.dom`, e a primeira
+   * linha deste arquivo promete zero dependência dela. O core não olha para
+   * dentro do campo — ele só o repassa, do mesmo jeito que já repassa
+   * `headers` e `body`. Quem o cria e quem o dispara é a camada de rede do
+   * app (`apps/native/src/api.ts`).
+   *
+   * As duas requests do T1-R3 (a original e a de depois da renovação)
+   * compartilham o mesmo sinal: o prazo é da OPERAÇÃO, não de cada tentativa.
+   */
+  signal?: unknown
 }
 
 export interface AuthResponseLike {

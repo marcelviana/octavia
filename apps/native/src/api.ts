@@ -147,11 +147,36 @@ export interface ApiErro {
 }
 export type ApiResult<T> = ApiOk<T> | ApiErro
 
+/**
+ * **O prazo de rede (N2-D35), e é só isto que ele é**: um `AbortController`
+ * que dispara depois de `prazoMs` e mata a request em voo. O número é do core
+ * (`PRAZO_DE_REDE_MS`); a decisão de usá-lo é de quem chama; o mecanismo é
+ * daqui, porque a primeira linha deste arquivo diz que ele é a camada de rede
+ * única do app.
+ *
+ * `prazoMs` ausente = **sem prazo**, que é o comportamento de sempre. As
+ * leituras do sync continuam assim de propósito: a fixture `atraso` do S1a
+ * segura a resposta por 45 s para que o estado "sincronizando pela primeira
+ * vez" fique parado o suficiente para ser medido, e um prazo ali apagaria um
+ * estado do design em vez de proteger alguém.
+ *
+ * O `abort` faz o `fetch` rejeitar, e a rejeição cai no mesmo `catch` de
+ * qualquer falha de transporte: vira `networkError`, e o core a classifica
+ * como espécie `rede`. Nenhum ramo novo.
+ */
+function prazoDe(prazoMs: number | undefined): { signal?: unknown; fim: () => void } {
+  if (prazoMs === undefined) return { fim: () => undefined }
+  const controle = new AbortController()
+  const t = setTimeout(() => controle.abort(), prazoMs)
+  return { signal: controle.signal, fim: () => clearTimeout(t) }
+}
+
 /** Uma chamada GET instrumentada: mede o tempo e normaliza a falha (T1-R37). */
-async function get<T>(path: string, familia: string): Promise<ApiResult<T>> {
+async function get<T>(path: string, familia: string, prazoMs?: number): Promise<ApiResult<T>> {
   const t0 = Date.now()
+  const prazo = prazoDe(prazoMs)
   try {
-    const { response, requests } = await authFetch(`${baseUrl()}${path}`)
+    const { response, requests } = await authFetch(`${baseUrl()}${path}`, { signal: prazo.signal })
     const ms = Date.now() - t0
     log(`api status=${response.status} path=${path.split('?')[0]} n=${requests} ms=${ms}`)
     const corpo = await response.text()
@@ -170,12 +195,19 @@ async function get<T>(path: string, familia: string): Promise<ApiResult<T>> {
   } catch (e: unknown) {
     const msg = e instanceof Error ? e.message : String(e)
     return { ok: false, error: errorFrom({ networkError: msg }), status: null }
+  } finally {
+    prazo.fim()
   }
 }
 
-/** `GET /api/setlists` — array na raiz, sem paginação (`docs/api/SETLISTS.md`). */
-export function getSetlists(): Promise<ApiResult<SetlistDTO[]>> {
-  return get<SetlistDTO[]>('/api/setlists', 'setlist-read')
+/**
+ * `GET /api/setlists` — array na raiz, sem paginação (`docs/api/SETLISTS.md`).
+ *
+ * `prazoMs` só chega pela **releitura** da escrita (T2-R9, N2-D35): quem lê
+ * pelo sync continua sem prazo (ver o `prazoDe` acima).
+ */
+export function getSetlists(opcoes?: { prazoMs?: number }): Promise<ApiResult<SetlistDTO[]>> {
+  return get<SetlistDTO[]>('/api/setlists', 'setlist-read', opcoes?.prazoMs)
 }
 
 export interface ContentPageBody {
@@ -245,11 +277,14 @@ export async function mutate(
   method: 'POST' | 'PUT' | 'DELETE',
   path: string,
   body: string | null,
+  prazoMs?: number,
 ): Promise<RespostaDeEscrita> {
   const t0 = Date.now()
+  const prazo = prazoDe(prazoMs)
   try {
     const { response, requests } = await authFetchEscrita(`${baseUrl()}${path}`, {
       method,
+      signal: prazo.signal,
       ...(body === null ? {} : { headers: { 'Content-Type': 'application/json' }, body }),
     })
     const ms = Date.now() - t0
@@ -271,5 +306,7 @@ export async function mutate(
       networkError: e instanceof Error ? e.message : String(e),
       headers: {},
     }
+  } finally {
+    prazo.fim()
   }
 }

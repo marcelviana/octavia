@@ -51,7 +51,7 @@ import { relerAoAbrir, type EstadoLocal } from '../escrita'
 import { Icone } from '../icones/Icone'
 import type { NomeIcone } from '../icones/dados'
 import { bar, dark, font, radius, size, space, touch, tracking } from '../theme'
-import { FolhaDeCriar } from './FolhaDeCriar'
+import { FolhaDeSetlist } from './FolhaDeCriar'
 import { LinhaDeAviso } from './LinhaDeAviso'
 
 export type SyncState =
@@ -89,6 +89,16 @@ export interface SetlistsScreenProps {
    * avisa a raiz para que a tela mostre o que já foi gravado (T2-R9).
    */
   aoRelerNaEscrita: (setlists: SetlistDTO[], syncedAtMs: number | null) => void
+  /**
+   * N2-PR4 / T2-R10 — S2 foi abandonada por um 404 e caiu aqui. A lista
+   * **já vem relida** (a releitura é do `escrita.ts`, antes de sair de lá);
+   * o que falta é dizer por que a tela mudou sozinha. Sem botão: *"não há o
+   * que tentar de novo, e a releitura já aconteceu"* (§3 do congelado).
+   *
+   * Quem guarda este estado é o `navigation.tsx`, e não S2 — quando o aviso
+   * aparece, S2 já não existe.
+   */
+  sumiu?: boolean
 }
 
 /** "há 2 h", "há 15 min", "agora" — o texto do chip de status do design. */
@@ -346,6 +356,7 @@ export function SetlistsScreen({
   onBuscar,
   estadoLocal,
   aoRelerNaEscrita,
+  sumiu = false,
 }: SetlistsScreenProps): React.JSX.Element {
   const [folhaAberta, setFolhaAberta] = useState(false)
   /** N2-D22 — o nome da setlist que foi criada e que a lista não releu. */
@@ -392,7 +403,17 @@ export function SetlistsScreen({
    */
   const podeCriar = online && estadoLocal !== null
 
-  /** §3.3 — um aviso por vez, e a de rede vence a de "salvo, não relido". */
+  /**
+   * §3.3 — **um aviso por vez; vale o que bloqueia mais**. A ordem, e o
+   * porquê de cada degrau:
+   *
+   *  1. **sem rede** — o congelado nomeia este par ("se 'salvo; não foi
+   *     possível recarregar' e 'sem conexão' coincidirem, vale a de rede");
+   *  2. **a setlist sumiu** (T2-R10) — a tela mudou sozinha debaixo do
+   *     músico, e essa é a única coisa nesta lista que ele ainda não sabe;
+   *  3. **salvo, não relido** — fala do que ELE acabou de fazer, e o dado na
+   *     tela pode estar velho, o que é menos urgente do que uma tela trocada.
+   */
   const aviso = !online
     ? {
         icone: 'sem-conexao' as NomeIcone,
@@ -400,6 +421,13 @@ export function SetlistsScreen({
         motivo: frase('sem-rede-s1'),
         acao: undefined,
       }
+    : sumiu
+      ? {
+          icone: 'falha' as NomeIcone,
+          cor: dark.muted,
+          motivo: frase('sumiu-declarado'),
+          acao: undefined,
+        }
     : salvoNaoRelido !== null
       ? {
           icone: 'ultima-sincronizacao' as NomeIcone,
@@ -543,10 +571,10 @@ export function SetlistsScreen({
       )}
 
       {folhaAberta && estadoLocal !== null ? (
-        <FolhaDeCriar
+        <FolhaDeSetlist
           estado={estadoLocal}
           aoFechar={() => setFolhaAberta(false)}
-          aoCriar={(novas, syncedAtMs) => {
+          aoConcluir={(novas, syncedAtMs) => {
             // Congelado (`N2-F-salvando`): "Confirmado o servidor, a folha
             // fecha e S1 relê a lista." A releitura já aconteceu no core — o
             // que chega aqui é o conjunto dela.

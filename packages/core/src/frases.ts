@@ -96,6 +96,35 @@ export type ChaveDeFrase =
   | 'relendo-a-lista'
   /** O apoio do estado vazio de S1 depois que o ato nasceu aqui (`N2-S1f-criar`). */
   | 'primeira-setlist'
+  /**
+   * **ERRATA DA N2-PR4 — quatro chaves novas, e a razão de cada uma.**
+   *
+   * As quatro são de S2 com edição e as quatro estão verbatim no congelado;
+   * nenhuma é redação nova, como na N2-E1.
+   *
+   * `falhou-salvar` é o título da moldura `N2-X-falhou` (§7) — *"Não foi
+   * possível salvar"*. Ele é para S2 o que o `falhou-criar` é para a folha de
+   * criar, e são frases DIFERENTES pela mesma razão que a N2-E1 separou as
+   * duas metades do "pode ter gravado": criar e salvar não são o mesmo ato, e
+   * ler uma no lugar da outra quebraria o congelado sem que nada acusasse.
+   *
+   * `lista-relida` é a terceira oração da mesma moldura — *"a frase à
+   * esquerda dele diz que o que está na tela já é o estado real"*. Ela só
+   * aparece DEPOIS da releitura da regra 3, e é o que torna o `Tentar de
+   * novo` ao lado uma oferta honesta.
+   *
+   * `removendo` é o estado da linha enquanto a remoção voa (§3: *"linha em
+   * removendo…"*). Irmã de `adicionando` e `relendo`, que já estão aqui.
+   *
+   * `apagar-arquivos` é a terceira das quatro coisas obrigatórias do diálogo
+   * da regra 5 (§6). As outras três são o nome, a contagem e os dois botões:
+   * o nome e a contagem são DADO (ver `perguntaDeApagar`) e os rótulos dos
+   * botões são rótulo de controle, como `Criar` e `Cancelar`.
+   */
+  | 'falhou-salvar'
+  | 'lista-relida'
+  | 'removendo'
+  | 'apagar-arquivos'
 
 export const FRASES: Readonly<Record<ChaveDeFrase, string>> = {
   // T2-R15 (`PRD-TELA-2.md`)
@@ -152,6 +181,38 @@ export const FRASES: Readonly<Record<ChaveDeFrase, string>> = {
   'falhou-criar': 'Não foi possível criar',
   'relendo-a-lista': 'relendo a lista…',
   'primeira-setlist': 'Nenhuma setlist por aqui ainda. A primeira pode nascer neste aparelho.',
+
+  // As quatro da N2-PR4, verbatim das molduras `N2-X-falhou`, `N2-S2e` e `N2-D-apagar`.
+  'falhou-salvar': 'Não foi possível salvar',
+  'lista-relida': 'a lista abaixo é a que o servidor acabou de devolver',
+  removendo: 'removendo…',
+  'apagar-arquivos':
+    'As músicas continuam na biblioteca, e os arquivos já baixados continuam neste aparelho. Só a setlist deixa de existir.',
+}
+
+/**
+ * A pergunta do diálogo de apagar (`N2-D-apagar`, §6): *"Apagar Season 3, com
+ * 7 músicas?"*.
+ *
+ * **Por que é função e não constante** — div. 227, a mesma razão do
+ * `salvo-nao-relido-s1`, com um agravante. Nome de setlist e contagem são
+ * **dado**, não texto: não podem morar numa constante, e um buraco `{nome}`
+ * faria o conjunto deixar de ser verificável por comparação literal. Lá a
+ * metade fixa coube numa constante porque o nome vinha na frente; aqui ele
+ * cai no MEIO da frase, e partir a redação em três pedaços espalharia pela
+ * tela justamente o que este módulo existe para guardar.
+ *
+ * A regra do T2-R15 continua de pé: **nenhuma frase de ERRO carrega nome**.
+ * Esta não é frase de erro — é a pergunta de um diálogo cujo objeto é a
+ * setlist, e o congelado a escreve com o nome de propósito ("os quatro itens
+ * da regra estão lá e nessa ordem: o nome, a contagem, a frase dos arquivos
+ * baixados, dois botões").
+ *
+ * O `gate:a20` lê este literal desde a N2-PR4 (a posição `EXTRAS: literal de
+ * template`): a redação está dentro do alcance do gate, e não ao lado dele.
+ */
+export function perguntaDeApagar(nome: string, musicas: number): string {
+  return `Apagar ${nome}, com ${musicas} ${musicas === 1 ? 'música' : 'músicas'}?`
 }
 
 /** O conjunto, como conjunto — é contra ele que o teste afirma o fechamento. */

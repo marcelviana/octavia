@@ -7,6 +7,7 @@
  * ela sobrevive à rotação do device sem estado extra (T1-R27: "girar na
  * música 4 → continua na 4").
  */
+import { useCallback, useState } from 'react'
 import { DarkTheme, NavigationContainer, type Theme } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { StyleSheet, Text, View } from 'react-native'
@@ -77,6 +78,36 @@ export interface NavigationProps {
 export function Navigation({ signedIn, setlists, dados }: NavigationProps): React.JSX.Element {
   const acharSetlist = (id: string): SetlistDTO | undefined => dados.lista.find((s) => s.id === id)
 
+  /**
+   * **T2-R10 — o aviso que S2 deixa para S1.** Quando uma escrita volta 404, a
+   * tela é abandonada: *"fecha o que estiver aberto, sai de S2 e cai em S1 já
+   * relida, com a linha de aviso de 48 dp […] sem botão"*. O estado mora AQUI
+   * e não em S2 pela razão mais simples possível: quando o aviso aparece, S2
+   * já não existe.
+   *
+   * Ele se apaga ao abrir qualquer setlist — a partir daí a tela já não é a
+   * que mudou debaixo do músico.
+   */
+  const [sumiu, setSumiu] = useState(false)
+
+  /**
+   * N2-PR4 — o que S2 precisa para escrever (T2-R19). O `estadoLocal` e o
+   * `aoRelerNaEscrita` são os MESMOS que S1 usa: a escrita parte do cache que
+   * a tela mostra, e quem grava é o `escrita.ts` nas duas telas.
+   */
+  const edicaoDeS2 = useCallback(
+    (sair: (aviso: 'sumiu' | null) => void) =>
+      setlists.estadoLocal === null
+        ? null
+        : {
+            estado: setlists.estadoLocal,
+            online: dados.online,
+            aoReler: setlists.aoRelerNaEscrita,
+            aoSairParaS1: sair,
+          },
+    [setlists.estadoLocal, setlists.aoRelerNaEscrita, dados.online],
+  )
+
   return (
     <NavigationContainer theme={navTheme}>
       <Stack.Navigator
@@ -88,7 +119,11 @@ export function Navigation({ signedIn, setlists, dados }: NavigationProps): Reac
               {({ navigation }) => (
                 <SetlistsScreen
                   {...setlists}
-                  onAbrirSetlist={(setlistId) => navigation.navigate('Index', { setlistId })}
+                  sumiu={sumiu}
+                  onAbrirSetlist={(setlistId) => {
+                    setSumiu(false)
+                    navigation.navigate('Index', { setlistId })
+                  }}
                   onBuscar={() => navigation.navigate('Search', {})}
                 />
               )}
@@ -106,6 +141,22 @@ export function Navigation({ signedIn, setlists, dados }: NavigationProps): Reac
                     contentById={dados.contentById}
                     syncDone={dados.syncDone}
                     posicaoAtual={route.params.posicaoAtual ?? null}
+                    /**
+                     * **T2-R19 — quem veio do palco não edita.** O
+                     * discriminante é o `posicaoAtual` dos params, o mesmo que
+                     * escolhe o nome acessível do `voltar` desde a V1-PR5:
+                     * ausente = veio de S1 (`navigate('Index', { setlistId })`
+                     * acima), presente = veio do palco (`onIndice`, que manda
+                     * a posição junto).
+                     */
+                    edicao={
+                      route.params.posicaoAtual === undefined
+                        ? edicaoDeS2((aviso) => {
+                            setSumiu(aviso === 'sumiu')
+                            navigation.navigate('Setlists')
+                          })
+                        : null
+                    }
                     onVoltar={() => navigation.goBack()}
                     onAbrirPosicao={(position) =>
                       navigation.navigate('Stage', { setlistId: setlist.id, position })

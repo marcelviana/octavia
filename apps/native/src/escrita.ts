@@ -39,6 +39,7 @@ import {
   pedidoAtualizar,
   pedidoCriar,
   rateLimitGate,
+  PRAZO_DE_REDE_MS,
   reconcileByUpdatedAt,
   validarAtualizacao,
   validarCriacao,
@@ -263,10 +264,14 @@ async function reler(
   estado: EstadoLocal,
   reason: MotivoDaReleitura,
   op: Op | null,
+  prazoMs: number = PRAZO_DE_REDE_MS,
 ): Promise<Releitura> {
   const minha = ++geracao
   const t0 = Date.now()
-  const r = await getSetlists()
+  // N2-D35 — a releitura tem o MESMO prazo da escrita: uma leitura pendurada
+  // deixa a tela em "relendo…" pelo mesmo tempo infinito que uma escrita
+  // pendurada deixaria a folha em "Salvando no servidor…".
+  const r = await getSetlists({ prazoMs })
   const ms = Date.now() - t0
   const opDoLog = op ?? '-'
   if (!r.ok) {
@@ -302,8 +307,8 @@ async function reler(
  * N2-D22 — o `GET` refeito na próxima abertura da tela, depois de uma
  * releitura que falhou. É a mesma leitura, com outro `reason` e sem `op`.
  */
-export function relerAoAbrir(estado: EstadoLocal): Promise<SetlistDTO[] | null> {
-  return reler(estado, 'reopen', null).then((r) => r.setlists)
+export function relerAoAbrir(estado: EstadoLocal, prazoMs?: number): Promise<SetlistDTO[] | null> {
+  return reler(estado, 'reopen', null, prazoMs).then((r) => r.setlists)
 }
 
 // ---------------------------------------------------------------- escrita
@@ -322,12 +327,13 @@ export function relerAoAbrir(estado: EstadoLocal): Promise<SetlistDTO[] | null> 
  */
 async function enviarUm(
   pedido: Pedido,
-  contexto?: 'setlist' | 'musica',
+  contexto: 'setlist' | 'musica' | undefined,
+  prazoMs: number,
 ): Promise<{ resposta: RespostaDeEscrita; preliminar: Resultado } | null> {
   if (!(await estaOnline())) return null
 
   const t0 = Date.now()
-  const resposta = await mutate(pedido.method, pedido.path, pedido.body)
+  const resposta = await mutate(pedido.method, pedido.path, pedido.body, prazoMs)
   const ms = Date.now() - t0
 
   const preliminar = classificar(pedido.op, resposta, null, contexto)
@@ -361,8 +367,15 @@ async function enviarUm(
 export async function escrever(
   pedido: Pedido,
   estado: EstadoLocal,
-  opcoes?: { contexto?: 'setlist' | 'musica' },
+  /**
+   * `prazoMs` existe para o CN poder medir a LIGAÇÃO sem esperar os 20 s do
+   * prazo de verdade (`prazo-de-rede.test.ts`). Nenhuma tela o passa: o
+   * número é do core, e uma tela que escolhesse o seu teria cinco prazos
+   * diferentes na primeira PR que esquecesse de passar o dele.
+   */
+  opcoes?: { contexto?: 'setlist' | 'musica'; prazoMs?: number },
 ): Promise<Saida> {
+  const prazoMs = opcoes?.prazoMs ?? PRAZO_DE_REDE_MS
   const semReleitura = (motivo: MotivoBarrado): Saida => {
     barrar(pedido.op, motivo)
     return { resultado: resultadoBarrado(pedido.op, motivo), setlists: null, syncedAtMs: null }
@@ -384,7 +397,7 @@ export async function escrever(
   let enviado: { resposta: RespostaDeEscrita; preliminar: Resultado } | null
   try {
     // 2. enviar — um request.
-    enviado = await enviarUm(pedido, opcoes?.contexto)
+    enviado = await enviarUm(pedido, opcoes?.contexto, prazoMs)
   } finally {
     // **A TRAVA SOLTA AQUI, ANTES DA RELEITURA — div. 232.**
     //
@@ -411,7 +424,7 @@ export async function escrever(
   const dosQueRelem = preliminar.especie === 'ok' || preliminar.especie === 'sumiu'
   if (!dosQueRelem) return { resultado: preliminar, setlists: null, syncedAtMs: null }
 
-  const rel = await reler(estado, preliminar.especie === 'sumiu' ? '404' : 'write', pedido.op)
+  const rel = await reler(estado, preliminar.especie === 'sumiu' ? '404' : 'write', pedido.op, prazoMs)
 
   // 4. classificar de novo, agora com a releitura — é ela que separa `ok`
   // de `ok-nao-relido` (N2-D22).

@@ -33,6 +33,42 @@ import type { CamposSetlist } from './validacao'
 
 export type Op = 'create' | 'update' | 'delete' | 'add' | 'remove' | 'reorder'
 
+/**
+ * **N2-D35 — o prazo de rede de uma escrita e da releitura dela.**
+ *
+ * `[medido: N2-PR4, §1.3]` Não havia prazo nenhum. O `createAuthFetch` deste
+ * pacote não conhecia `signal` e a camada de rede do app chamava
+ * `fetch(path, init)` cru; no Android o `fetch` do React Native é OkHttp com
+ * `connectTimeout`/`readTimeout`/`writeTimeout` **zerados**, e zero em OkHttp
+ * quer dizer *sem limite*. Um servidor que aceita a conexão e nunca responde
+ * — rede de casa de show que cai no meio do handshake, captive portal que
+ * engole a resposta — deixava a escrita em voo para sempre.
+ *
+ * E o custo disso não é abstrato: enquanto a escrita voa, a folha fica aberta
+ * com os campos inativos e **sem `Cancelar`** (regra 1 do congelado: "ele
+ * sairia da tela sem cancelar a escrita, e prometer isso seria mentira"). Sem
+ * prazo, "para sempre" é literal — só matando o app.
+ *
+ * **Por que 20 s.** É longo o bastante para uma escrita honesta numa rede
+ * ruim (as seis rotas medem dezenas de ms em prod, e o pior `ms=` de escrita
+ * dos aceites desta série está na casa das centenas) e curto o bastante para
+ * caber na paciência de quem está montando a setlist na coxia. Não é um
+ * número medido no aparelho — é um teto declarado; o que se mede é que ele
+ * existe e que é ESTE.
+ *
+ * O prazo vale para a escrita **e** para a releitura do T2-R9, porque uma
+ * releitura pendurada deixa a tela em "relendo…" pelo mesmo tempo infinito.
+ * Ele **não** vale para as leituras do sync (T1-R13): elas têm o seu próprio
+ * caminho, ninguém espera por elas numa folha modal, e a fixture `atraso` do
+ * S1a segura a resposta por 45 s de propósito — um prazo ali apagaria um
+ * estado do design em vez de proteger alguém.
+ *
+ * Um prazo estourado é a espécie `rede`: a operação não aconteceu e o
+ * servidor não disse nada. É o que o `classificar` já faz com qualquer falha
+ * de transporte, e por isso não há espécie nova.
+ */
+export const PRAZO_DE_REDE_MS = 20_000
+
 /** Um request pronto, sem a base da URL. */
 export interface Pedido {
   op: Op

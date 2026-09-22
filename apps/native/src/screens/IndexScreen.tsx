@@ -24,23 +24,76 @@
  *
  * O acento tem **um dono só** nesta tela (§3.1, E12): a posição atual. A
  * barra de 4 dp, o número e o título dela; mais nada.
+ *
+ * ## O que a N2-PR4 acrescenta — S2 COM EDIÇÃO (DESIGN-N2 §3, §6, §7)
+ *
+ * S2 passa a ter **dois estados de entrada** (T2-R19, N2-D19), e o que os
+ * separa é de onde se veio:
+ *
+ *  - **de S1** → edição. Uma **faixa de 64 dp** abaixo da barra de 88, um
+ *    `remover` em cada linha, a folha de renomear, o diálogo de apagar e a
+ *    linha de aviso de 48 dp;
+ *  - **do palco** → nada. *"Se a implementação puser um único controle de
+ *    escrita nesta moldura, ela está errada."* O palco é endereçado por
+ *    `position` e um reorder muda a música que uma posição aponta.
+ *
+ * O discriminante é o **`posicaoAtual`**, que já existia e já servia a isto:
+ * `null` quando o índice foi aberto de S1, preenchido quando veio do palco.
+ * Ele decide o nome acessível do `voltar` desde a V1-PR5; agora decide também
+ * se a tela escreve. Quem o passa é o `navigation.tsx`.
+ *
+ * **A faixa nasce com DOIS controles, e isso é estado intermediário
+ * declarado**: `Renomear e datar` e `Apagar setlist`. `Reordenar` é da PR-5 e
+ * `Adicionar música` é da PR-6 — a faixa do congelado tem quatro, e ela vai
+ * ganhá-los sem mudar de forma. Não é errata do congelado; é a ordem das PRs.
+ *
+ * **Nada aqui toca o cache.** Toda escrita passa pelo `escrever()` do
+ * `src/escrita.ts`, que relê e grava (T2-R9); esta tela recebe o conjunto
+ * novo por `edicao.aoReler` e quem o aplica é a raiz. É a mesma regra que a
+ * folha de criar já obedecia.
  */
-import { useEffect } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native'
 import {
+  frase,
   labelFor,
   resolveSong,
   songKey,
   type ContentDTO,
   type ContentValidity,
+  type Resultado,
   type SetlistDTO,
   type SetlistSongDTO,
   type SongLabel,
 } from '@octavia/core'
+import { escrever, pedidoRemover, relerAoAbrir, type EstadoLocal } from '../escrita'
 import { Icone, type TamanhoIcone } from '../icones/Icone'
 import type { NomeIcone } from '../icones/dados'
 import { log } from '../log'
 import { bar, dark, font, radius, size, space, touch, tracking } from '../theme'
+import { DialogoDeApagar } from './DialogoDeApagar'
+import { FolhaDeSetlist } from './FolhaDeCriar'
+import { LinhaDeAviso } from './LinhaDeAviso'
+
+/**
+ * O que S2 precisa para ESCREVER, e ela só o recebe quando veio de S1
+ * (T2-R19). `null` = a S2 do palco, que é a do V1 sem uma vírgula de
+ * diferença.
+ */
+export interface EdicaoDeS2 {
+  /** O cache de onde a escrita parte, e ao qual a releitura volta (T2-R9). */
+  estado: EstadoLocal
+  /** T2-R12 — sem rede não há escrita, e o motivo fica escrito uma vez. */
+  online: boolean
+  /** A releitura trouxe conjunto novo; quem grava o cache foi o `escrita.ts`. */
+  aoReler: (setlists: SetlistDTO[], syncedAtMs: number | null) => void
+  /**
+   * A tela acabou: ou a setlist foi apagada aqui (`null`), ou ela sumiu
+   * debaixo do músico (`'sumiu'`, T2-R10 — e aí S1 explica por quê). Nos dois
+   * casos a releitura **já aconteceu** antes desta chamada.
+   */
+  aoSairParaS1: (aviso: 'sumiu' | null) => void
+}
 
 export interface IndexScreenProps {
   setlist: SetlistDTO
@@ -53,6 +106,8 @@ export interface IndexScreenProps {
   onAbrirPosicao: (posicao: number) => void
   /** T1-R22 — busca na biblioteca, com esta setlist como contexto. */
   onBuscar: () => void
+  /** N2-PR4 — presente só na S2 vinda de S1 (T2-R19). */
+  edicao?: EdicaoDeS2 | null
 }
 
 /** Ícone e rótulo por tipo (§6.4): o rótulo **é** o nome acessível. */
@@ -97,17 +152,73 @@ function sublinha(
   return partes.join('  ·  ')
 }
 
+/**
+ * O `remover` da linha (§3): *"o círculo com menos, 24 em `accentInk`, alvo de
+ * 48, no fim da linha. Ele come 56 dp da caixa do título (336 → 280 dp) e
+ * nada mais."*
+ *
+ * **Cada bis tem o seu** — o `testID` é a POSIÇÃO (`remover-<n>`) e o id que
+ * vai no request é o `setlist_songs.id` daquela linha (T2-R7). É a diferença
+ * que a div. 156 manda não copiar do web, onde remover por `content_id`
+ * apagava as duas posições de um bis.
+ *
+ * Enquanto a remoção voa, o alvo dá lugar ao estado `removendo…` — sem botão,
+ * como a linha do picker em `adicionando…`: tocar de novo aqui não teria o que
+ * remover duas vezes.
+ */
+function Remover({
+  posicao,
+  inativo,
+  removendo,
+  onPress,
+}: {
+  posicao: number
+  inativo: boolean
+  removendo: boolean
+  onPress: () => void
+}): React.JSX.Element {
+  if (removendo) {
+    return (
+      <View style={styles.removendo} testID={`remover-${posicao}`}>
+        <Icone nome="baixando" tamanho={24} cor={dark.accentInk} />
+        <Text style={styles.removendoTexto}>{frase('removendo')}</Text>
+      </View>
+    )
+  }
+  return (
+    <Pressable
+      style={styles.remover}
+      onPress={() => (inativo ? undefined : onPress())}
+      accessibilityRole="button"
+      accessibilityState={{ disabled: inativo }}
+      // §6.4: ícone sem rótulo visível leva o nome acessível do anexo D.
+      accessibilityLabel="Remover da setlist"
+      testID={`remover-${posicao}`}
+    >
+      <Icone
+        nome="remover"
+        tamanho={24}
+        cor={inativo ? dark.lineInfo : dark.accentInk}
+        estado={inativo ? 'inerte' : 'normal'}
+      />
+    </Pressable>
+  )
+}
+
 function Item({
   song,
   contentById,
   syncDone,
   atual,
+  remover,
   onAbrir,
 }: {
   song: SetlistSongDTO
   contentById: Map<string, ContentDTO>
   syncDone: boolean
   atual: boolean
+  /** `null` na S2 do palco: lá a linha não tem alvo de escrita nenhum. */
+  remover: { inativo: boolean; removendo: boolean; onPress: () => void } | null
   onAbrir: () => void
 }): React.JSX.Element {
   const { content, validity } = resolveSong(song, contentById)
@@ -154,6 +265,14 @@ function Item({
           {invalido?.rotulo ?? tipo?.rotulo ?? (content !== null ? content.content_type : '—')}
         </Text>
       </View>
+      {remover !== null ? (
+        <Remover
+          posicao={song.position}
+          inativo={remover.inativo}
+          removendo={remover.removendo}
+          onPress={remover.onPress}
+        />
+      ) : null}
     </Pressable>
   )
 }
@@ -170,6 +289,42 @@ function Metadado({ icone, texto }: { icone: NomeIcone; texto: string }): React.
   )
 }
 
+/** Um controle da faixa de 64 dp: ícone acentuado + rótulo, alvo de 48. */
+function ControleDaFaixa({
+  icone,
+  rotulo,
+  tinta,
+  inativo,
+  onPress,
+  testID,
+}: {
+  icone: NomeIcone
+  rotulo: string
+  /** §3.1: escrita é `accentInk`; `apagar setlist` é a única exceção. */
+  tinta: string
+  inativo: boolean
+  onPress: () => void
+  testID: string
+}): React.JSX.Element {
+  return (
+    <Pressable
+      style={[styles.controle, inativo ? styles.controleInativo : null]}
+      onPress={() => (inativo ? undefined : onPress())}
+      accessibilityRole="button"
+      accessibilityState={{ disabled: inativo }}
+      testID={testID}
+    >
+      <Icone
+        nome={icone}
+        tamanho={24}
+        cor={inativo ? dark.lineInfo : tinta}
+        estado={inativo ? 'inerte' : 'normal'}
+      />
+      <Text style={[styles.controleTexto, inativo ? styles.controleTextoInativo : null]}>{rotulo}</Text>
+    </Pressable>
+  )
+}
+
 export function IndexScreen({
   setlist,
   contentById,
@@ -178,13 +333,169 @@ export function IndexScreen({
   onVoltar,
   onAbrirPosicao,
   onBuscar,
+  edicao = null,
 }: IndexScreenProps): React.JSX.Element {
   const songs = [...setlist.setlist_songs].sort((a, b) => a.position - b.position)
   const n = songs.length
 
+  const [folha, setFolha] = useState(false)
+  const [dialogo, setDialogo] = useState(false)
+  /** O `setlist_songs.id` da linha cuja remoção está em voo, ou `null`. */
+  const [removendo, setRemovendo] = useState<string | null>(null)
+  /** A falha da última escrita SEM folha (o `remover`) — a linha de aviso. */
+  const [falha, setFalha] = useState<Resultado | null>(null)
+  /** N2-D22 — 2xx com a releitura falhando. */
+  const [salvoNaoRelido, setSalvoNaoRelido] = useState(false)
+  const [relendo, setRelendo] = useState(false)
+  /** O que `Tentar de novo` repete, quando há o que repetir. */
+  const [repetir, setRepetir] = useState<(() => void) | null>(null)
+
   useEffect(() => {
     log('index open')
   }, [])
+
+  const online = edicao?.online ?? false
+  /**
+   * **Enquanto uma escrita voa, os outros controles de escrita param** — é a
+   * última frase do T2-R11 ("os outros controles de escrita da mesma tela
+   * ficam ocupados"), e aqui ela não é folclore: sem isso um segundo toque
+   * cairia na trava do módulo, voltaria barrado com `reason=busy` e a tela
+   * teria de mostrar a frase da espécie `rede` — *"sem conexão — nada foi
+   * salvo"* — que seria **mentira** com a rede de pé.
+   *
+   * O motivo continua legível sem toque (N2-D23), e é a própria linha em
+   * `removendo…`: escrever o mesmo motivo ao lado de cada um dos outros
+   * alvos seria o ruído que o congelado recusa em `N2-X-sem-rede` (*"cinco
+   * motivos iguais repetidos ao lado de cada alvo seria ruído"*).
+   */
+  const escrevendo = removendo !== null
+  const podeEscrever = edicao !== null && online && !escrevendo
+
+  /** A releitura de trás da tela (regra 3 e N2-D22): o mesmo `reason=reopen`. */
+  const recarregar = useCallback(async () => {
+    if (edicao === null || relendo) return
+    setRelendo(true)
+    try {
+      const novas = await relerAoAbrir(edicao.estado)
+      if (novas !== null) {
+        edicao.aoReler(novas, Date.now())
+        setSalvoNaoRelido(false)
+      }
+    } finally {
+      setRelendo(false)
+    }
+  }, [edicao, relendo])
+
+  /**
+   * T2-R7 / N2-D28 — remover é **escrita imediata, sem diálogo**, com o ciclo
+   * do §7: linha em `removendo…`, releitura depois da confirmação.
+   *
+   * O 404 tem dois significados e quem os separa é a releitura (o `contexto`
+   * do core): se a setlist voltou no conjunto novo, quem sumiu foi a MÚSICA e
+   * a tela fica (T2-R10); se não voltou, a tela acaba.
+   */
+  const remover = useCallback(
+    async (song: SetlistSongDTO) => {
+      if (edicao === null || !podeEscrever) return
+      setRemovendo(song.id)
+      setFalha(null)
+      setSalvoNaoRelido(false)
+      // Nada de `Tentar de novo` herdado da falha anterior: o botão da linha
+      // de aviso repete a ÚLTIMA escrita, e a última é esta.
+      setRepetir(null)
+      try {
+        const saida = await escrever(pedidoRemover(setlist.id, song.id), edicao.estado, {
+          contexto: 'musica',
+        })
+        const { especie } = saida.resultado
+        if (especie === 'ok') {
+          if (saida.setlists !== null) edicao.aoReler(saida.setlists, saida.syncedAtMs)
+          return
+        }
+        if (especie === 'ok-nao-relido') {
+          setSalvoNaoRelido(true)
+          return
+        }
+        if (especie === 'sumiu') {
+          const aindaExiste = (saida.setlists ?? []).some((s) => s.id === setlist.id)
+          if (!aindaExiste) {
+            edicao.aoSairParaS1('sumiu')
+            return
+          }
+          // A setlist está lá; a música é que não. A lista nova já chegou, e
+          // não há o que repetir: o que se queria tirar já não estava lá.
+          if (saida.setlists !== null) edicao.aoReler(saida.setlists, saida.syncedAtMs)
+          setFalha(saida.resultado)
+          return
+        }
+        setFalha(saida.resultado)
+        setRepetir(() => () => void remover(song))
+        void recarregar()
+      } finally {
+        setRemovendo(null)
+      }
+    },
+    [edicao, podeEscrever, setlist.id, recarregar],
+  )
+
+  /**
+   * §3.3 / §7 — **um aviso por vez; vale o que bloqueia mais**. A ordem é a
+   * do congelado lido de cima para baixo: sem rede bloqueia tudo; o limite de
+   * taxa bloqueia toda escrita; a falha é de uma escrita só; e o
+   * "salvo, não relido" não bloqueia nada — só diz que o que está na tela
+   * pode estar velho.
+   *
+   * O estado do teto de 100 (`N2-X-100`) **não entra nesta PR**: ele inativa
+   * `Reordenar`, que é da PR-5, e um aviso sobre um controle que não existe
+   * seria um aviso sobre nada.
+   */
+  const aviso = useMemo(() => {
+    if (edicao === null) return null
+    if (!online) {
+      return { icone: 'sem-conexao' as NomeIcone, cor: dark.offlineInk, motivo: frase('sem-rede-s2'), acao: undefined }
+    }
+    if (falha !== null && falha.especie === 'limite') {
+      // Âmbar: é "não está pronta", não erro (V1 §6.1). Sem ação — o que
+      // falta é tempo, e o prazo já está na frase.
+      return { icone: 'ultima-sincronizacao' as NomeIcone, cor: dark.offlineInk, motivo: falha.frase, acao: undefined }
+    }
+    if (falha !== null) {
+      // As três orações da moldura `N2-X-falhou`, nesta ordem: o que não deu
+      // certo, o que o servidor disse, e o que a tela mostra agora. A
+      // terceira só existe DEPOIS da releitura (regra 3) — antes dela seria
+      // uma promessa sobre uma lista que ainda não chegou.
+      const oracoes = [frase('falhou-salvar'), falha.frase]
+      if (!relendo) oracoes.push(frase('lista-relida'))
+      return {
+        icone: 'falha' as NomeIcone,
+        cor: dark.errorInk,
+        motivo: oracoes.join('  ·  '),
+        acao:
+          repetir === null
+            ? undefined
+            : {
+                rotulo: 'Tentar de novo',
+                onPress: repetir,
+                inativo: relendo || !podeEscrever,
+                motivoInativo: relendo ? frase('relendo') : undefined,
+              },
+      }
+    }
+    if (salvoNaoRelido) {
+      return {
+        icone: 'ultima-sincronizacao' as NomeIcone,
+        cor: dark.muted,
+        motivo: frase('salvo-nao-relido-s2'),
+        acao: {
+          rotulo: 'Tentar recarregar',
+          onPress: () => void recarregar(),
+          inativo: relendo,
+          motivoInativo: relendo ? frase('relendo') : undefined,
+        },
+      }
+    }
+    return null
+  }, [edicao, online, falha, salvoNaoRelido, relendo, repetir, podeEscrever, recarregar])
 
   return (
     <View style={styles.tela}>
@@ -223,6 +534,54 @@ export function IndexScreen({
         </Pressable>
       </View>
 
+      {/*
+        A FAIXA DE 64 dp (N2-D26) — *"é o que distingue as duas S2"*. Custo
+        declarado: 64 dp de lista (551,1 → 487,1).
+
+        O congelado agrupa os quatro atos **por consequência**: à esquerda o
+        que acrescenta (`Adicionar música`, PR-6), à direita o que altera a
+        setlist inteira. Os dois desta PR são os da direita, e é por isso que
+        a faixa já nasce com o grupo encostado nesse lado — quando os outros
+        dois chegarem, nenhum destes muda de lugar.
+      */}
+      {edicao !== null ? (
+        <View style={styles.faixa}>
+          {/* A esquerda é da PR-6 (`Adicionar música`). */}
+          <View style={styles.faixaEsq} />
+          <View style={styles.faixaDir}>
+            <ControleDaFaixa
+              icone="renomear"
+              rotulo="Renomear e datar"
+              tinta={dark.accentInk}
+              inativo={!podeEscrever}
+              onPress={() => setFolha(true)}
+              testID="setlist-editar"
+            />
+            {/* §3.1, a exceção declarada: o único ícone de escrita em
+                `errorInk` — e mesmo assim exige diálogo (§6). */}
+            <ControleDaFaixa
+              icone="apagar-setlist"
+              rotulo="Apagar setlist"
+              tinta={dark.errorInk}
+              inativo={!podeEscrever}
+              onPress={() => setDialogo(true)}
+              testID="setlist-apagar"
+            />
+          </View>
+        </View>
+      ) : null}
+
+      {/* §3.3 — a linha de 48 dp, com recuo de 24 em S2 (32 é o de S1). */}
+      {aviso !== null ? (
+        <LinhaDeAviso
+          icone={aviso.icone}
+          cor={aviso.cor}
+          motivo={aviso.motivo}
+          acao={aviso.acao}
+          recuo={space.xl}
+        />
+      ) : null}
+
       <FlatList
         data={songs}
         keyExtractor={songKey}
@@ -235,6 +594,15 @@ export function IndexScreen({
             contentById={contentById}
             syncDone={syncDone}
             atual={item.position === posicaoAtual}
+            remover={
+              edicao === null
+                ? null
+                : {
+                    inativo: !podeEscrever,
+                    removendo: removendo === item.id,
+                    onPress: () => void remover(item),
+                  }
+            }
             onAbrir={() => {
               log(`index jump n=${item.position}`)
               onAbrirPosicao(item.position)
@@ -242,6 +610,60 @@ export function IndexScreen({
           />
         )}
       />
+
+      {folha && edicao !== null ? (
+        <FolhaDeSetlist
+          estado={edicao.estado}
+          editando={{
+            setlistId: setlist.id,
+            // O que o SERVIDOR tem agora é o que a tela mostra — o conjunto
+            // desta tela vem da última releitura (T2-R9).
+            noServidor: { name: setlist.name, performance_date: setlist.performance_date },
+          }}
+          aoFechar={() => setFolha(false)}
+          aoConcluir={(novas, syncedAtMs) => {
+            setFolha(false)
+            setFalha(null)
+            setSalvoNaoRelido(false)
+            if (novas !== null) edicao.aoReler(novas, syncedAtMs)
+          }}
+          aoSalvoNaoRelido={() => {
+            // Em S2 o objeto da frase É o título da tela, então a frase não o
+            // nomeia (div. 227, o outro lado): `salvo-nao-relido-s2`.
+            setFolha(false)
+            setSalvoNaoRelido(true)
+          }}
+          aoSumir={() => {
+            setFolha(false)
+            edicao.aoSairParaS1('sumiu')
+          }}
+          aoRelerAtras={(novas, syncedAtMs) => edicao.aoReler(novas, syncedAtMs)}
+        />
+      ) : null}
+
+      {dialogo && edicao !== null ? (
+        <DialogoDeApagar
+          setlist={setlist}
+          estado={edicao.estado}
+          aoManter={() => setDialogo(false)}
+          aoApagar={() => {
+            setDialogo(false)
+            edicao.aoSairParaS1(null)
+          }}
+          aoSumir={() => {
+            setDialogo(false)
+            edicao.aoSairParaS1('sumiu')
+          }}
+          aoSalvoNaoRelido={() => {
+            // A setlist FOI apagada; o que não se conseguiu foi reler a
+            // lista. Quem mostra isso é S1, que é onde a lista está — e por
+            // isso a tela sai, como sai no sucesso.
+            setDialogo(false)
+            edicao.aoSairParaS1(null)
+          }}
+          aoRelerAtras={(novas, syncedAtMs) => edicao.aoReler(novas, syncedAtMs)}
+        />
+      ) : null}
     </View>
   )
 }
@@ -268,6 +690,39 @@ const styles = StyleSheet.create({
     borderBottomWidth: bar.hairline,
     borderBottomColor: dark.line,
   },
+  // §3 — faixa de 64 dp abaixo da barra de 88 (N2-D26). A lista desconta
+  // exatamente isto, e nada mais muda de lugar.
+  faixa: {
+    height: touch.stage,
+    paddingHorizontal: space.xl,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: space.lg,
+    borderBottomWidth: bar.hairline,
+    borderBottomColor: dark.line,
+  },
+  faixaEsq: { flexDirection: 'row', alignItems: 'center', gap: space.lg },
+  faixaDir: { flexDirection: 'row', alignItems: 'center', gap: space.lg },
+  controle: {
+    height: touch.min,
+    paddingHorizontal: space.lg,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.md,
+    borderWidth: bar.hairline,
+    borderColor: dark.line,
+    borderRadius: radius.control,
+  },
+  // E3: inativo é tinta na moldura, no ícone e no rótulo — sem opacidade.
+  controleInativo: { borderColor: dark.lineInfo },
+  controleTexto: { color: dark.text, fontFamily: font.ui, fontSize: size.bodySmall },
+  controleTextoInativo: { color: dark.lineInfo },
+  // O alvo de 48 do `remover`, no fim da linha — `width`/`height` e não
+  // `hitSlop`, pela mesma razão do `botaoIcone` abaixo: o G5 lê BOUNDS.
+  remover: { width: touch.min, height: touch.min, alignItems: 'center', justifyContent: 'center' },
+  removendo: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
+  removendoTexto: { color: dark.accentInk, fontFamily: font.ui, fontSize: 13 },
   barraTexto: { flex: 1, gap: space.xs },
   nomeSetlist: {
     color: dark.text,
