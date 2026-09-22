@@ -227,6 +227,8 @@ Erratas desta folha, no formato da §9 do V1 (**N2-E1, N2-E2, …**).
 
 **N2-E5 — o S1f congelado tem duas linhas de texto; a implementação tem uma.** *"Nenhuma setlist por aqui ainda."* e *"A primeira pode nascer neste aparelho."* saem num único nó de texto (a frase `primeira-setlist`), que quebra em duas linhas na largura de 560 dp do apoio. O que o congelado desenha como duas linhas é quebra de linha, não dois papéis: nenhuma das duas é título — o título em caixa alta do V1 (*"nenhuma setlist"*) **sai** com a moldura nova. `[div. 246]`
 
+**N2-E6 — o botão `Nova setlist` mede 152,0 dp de largura, não 190.** A **div. 249** abaixo anuncia *"os 190 × 57,8 dp"* do `criar-setlist` como sendo **"do dump do aparelho"** — mas quando ela foi escrita **não havia dump**: o §4 era justamente o que estava pendente. O primeiro dump do Tab S6 (N2-PR3 §4.1, `N2-PR3-anexos/dumps/01-N2-S1-criar.xml`) mede **152,0 × 57,8 dp**. **A altura confere** — os 57,8 são medidos, e são os do `buscar` na mesma barra (`MEDIDAS.md:26`). A largura não podia conferir: o botão é pintado pelo estilo do `buscar` e a largura é a do rótulo — `171,1 − 152,0 = 19,1` é exatamente `101,3 − 81,8`, a diferença entre *"Buscar música"* e *"Nova setlist"*, com o mesmo recuo (45,8 contra 46,2 dp). **O `190` foi emprestado da linha errada da mesma tabela**: o único `190` do `MEDIDAS.md` é o `190,2 × 20,0` do texto `garantida offline` **dentro do cartão** (`:34`). Por consequência a caixa do título encolhe de 709,8 para **534,2 dp**, e não para os 495,8 anunciados — e é **a conta do congelado que confirma a medida**, não que a contradiz: `709,8 − (152,0 + 24,0) = 533,8`, contra 534,2 medidos, com o vão de 24 dp intacto. **Nada a corrigir na implementação**; o número que as PRs 4–7 herdam é **152,0 × 57,8 dp**. `[div. 252]`
+
 ### Divergências abertas na N2-PR3, **234 a 249**
 
 | div. | o que | o que foi feito |
@@ -247,6 +249,27 @@ Erratas desta folha, no formato da §9 do V1 (**N2-E1, N2-E2, …**).
 | **247** | A variante da regra 4 dentro da folha diria "foi criada" sobre o que não foi criado. | **N2-E3**. |
 | **248** | A releitura da lista **atrás da folha** (regra 3) não tem razão própria no conjunto fechado do T2-R16 (`write\|404\|order\|reopen`). | Usa **`reason=reopen`**, que é a mesma leitura sem `op` que a N2-D22 já nomeia. Alargar o conjunto fechado por causa de uma ocasião nova seria fazê-lo crescer em silêncio, que é o que ele existe para impedir. Fica declarado: **duas ocasiões, uma razão**, e o que as separa no logcat é a linha `write op=` imediatamente antes. |
 | **249** | Não havia **nenhuma** infraestrutura de teste de tela no repositório: os projetos do Vitest coletam só `.ts` em ambiente `node`, e é por isso que o `PRD-TELA-2.md` repete "a parte da TELA é das PRs 3–7" requisito a requisito. | Entrou o quarto projeto, `native-tela` (`.tsx` em `jsdom`), com o `react-dom` 19.2.3 que **já era** devDependency de `apps/native` — **nenhuma dependência nova** — e duplos para `react-native`, `react-native-svg` e o `datetimepicker`. **Não mede geometria**: os 190 × 57,8 dp e os 48 dp são do dump do aparelho, como em toda esta série. As PRs 4–7 herdam o aparato. |
+
+### Divergências abertas no §4 da N2-PR3 (o aceite no aparelho), **250 a 259**
+
+O §4 rodou em sessão própria, sobre `25c00ee`. O anexo é
+[`N2-PR3-anexos/aparato.md`](../N2-PR3-anexos/aparato.md); o logcat de prod é
+[`device-prod.txt`](../N2-PR3-anexos/device-prod.txt).
+
+| div. | o que | o que foi feito |
+| --- | --- | --- |
+| **250** | O roteiro do §4.1 sobe o mock na **8081**, que é a porta do **Metro**; e o gate `which adb emulator` reprova nesta máquina por `PATH` de shell não-login, com as duas ferramentas instaladas. | Mock na **8788** (a do docstring do `aceite.py` e de todo aceite anterior). O gate virou `ls` no SDK. Erros do roteiro, não do aparato. |
+| **251** | `expo run:android --device` recusa o serial do `adb` (`RX2N8000F3D`) e o `ro.product.model` (`SM-T865`). | O nome é o do `getDevicesAsync` do Expo: **`SM_T865`**. Fica para as PRs 4–7. |
+| **252** | `criar-setlist` mede **152,0 × 57,8 dp**, não 190 × 57,8; a caixa do título fica em **534,2 dp**, não 495,8. | **N2-E6** acima. |
+| **253** | O APK **local** desta série tem **uma** abi (`arm64-v8a`, 82.030.412 B) contra as quatro da V1-PR3 (231.377.892 B). E no CI o `android-debug-apk` deu **13m11s** e **8m9s** em duas pushes cuja árvore difere **só num parágrafo de anexo**. | O tamanho: é o `expo run:android` mirando a abi do aparelho ligado, não o módulo novo — **não se compara com a faixa do CI**. O tempo: a diferença de 5m2s é **cache do runner**, e a leitura de que os 13m11s vinham do módulo novo (div. 234) **fica registrada como errada** — duas medições da mesma árvore não dizem o custo do módulo. A faixa de n=12 da V1-PR6 segue sendo a referência. `aparato.md` §2. |
+| **254** | No ramo `salvando` o botão `Criar` é renderizado **sem `testID`** (`FolhaDeCriar.tsx:207`); o ramo `editando` passa `form-salvar`. | O **G6 fica sem `resource-id` próprio** para `N2-F-salvando`. O estado é alcançável e o `enabled=false` confere. Correção de outra rodada. |
+| **255** | O seletor de data tem **33 alvos abaixo de 48 dp** — 30 células de dia a 46,2 × 32,0. | São do `DatePickerDialog` do Android, não do app: **custo declarado da N2-D16/§2**, a mesma escolha da div. 244. O G5 dos alvos do app passa com **zero** falhas. |
+| **256** | **Defeito.** `autoFocus` dentro do `Modal` dá foco e **não sobe o teclado**; o congelado manda subir (e o código cita a frase). Custa um toque a mais, contra os 3 taps do J3. | Registrado, não corrigido. `aparato.md` §5.1. |
+| **257** | **Defeito de aparato.** O modo `escrita-corta` **não produz falha no Android**: um 201 de corpo truncado passa por sucesso (`await response.text()` não estoura como no Node). | O estado `N2-F-falhou` foi alcançado com `escrita-500`. A espécie `rede` da N2-D18 e a frase `pode-ter-gravado-folha` da N2-E1 **seguem sem prova de aparelho**. `aparato.md` §5.2. |
+| **258** | O §4 do prompt pede uma **N2-E6** para o `form-falha` fora das 25 — que **já é a N2-E4** (div. 245), palavra por palavra. | **Não foi aberta uma segunda errata do mesmo fato.** A N2-E4 ganhou a prova de aparelho que lhe faltava (dump `07`, 654,2 × 87,6 dp). O rótulo **N2-E6** ficou com a medida do botão. |
+| **259** | `grep -rn eyJ` sobre os anexos acha **o enunciado da própria regra 4**, no `README.md:121`. | Registrado. Nenhum arquivo novo do §4 contém o literal. |
+
+**Próxima divergência livre: 260.**
 
 Divergências abertas nesta PR, **221 a 225** (o W4-a parou em 220):
 

@@ -1,0 +1,112 @@
+N2-PR3 §4.2 — prod, conta principal, Tab S6 online
+O PRIMEIRO `POST` DO NATIVO EM PRODUÇÃO
+===============================================================
+
+APARATO
+  aparelho     Tab S6 (SM-T865, RX2N8000F3D), Android 12, densidade 360
+  conta        uid xVDJRBh1WpPOatbfWahOLttYn1E3 — a conta PRINCIPAL
+               (a mesma que o `V1-PR3-PRECHECK.md:162` identifica; não é a de audit)
+  commit       25c00eedb2cee989f92f73d08bcfe0d4267da4dd  (n2/pr3-s1-criar)
+  dev client   app-debug.apk sha256 9447edc76f329ba3f66f3badd16268e52c779f1ae3363f6c6b94d1f2d4ab0548
+               instalado 2026-09-22 10:34:25 (ver `aparato.md`)
+  Metro        `npx expo start --dev-client --clear` SEM override — a base sai
+               do `apps/native/.env` (prod). O mock foi MORTO e o
+               `adb reverse tcp:8788` REMOVIDO antes do 4.2; conferido:
+               `curl -m 2 http://localhost:8788/api/setlists` → 000.
+  data/hora    2026-09-22, 10:58–11:00 (America/Sao_Paulo)
+
+O QUE FOI CRIADO
+  nome   `N2-PR3 aceite`
+  data   escolhida NO SELETOR DO SISTEMA: dia 25 do calendário aberto em
+         "Ter., 22 de set." → +3 dias → a folha passou a mostrar `25 / 09 / 2026`
+  →      o cartão em S1 mostra `2026-09-25` (dump 10)
+  NÃO APAGADA — é o objeto do aceite de apagar da PR-4.
+
+CONTAGEM DE REQUESTS DE ESCRITA EM PROD NESTA PR: 1 (um único toque em `Criar`)
+
+===============================================================
+1) A ABERTURA CONTRA PROD (para provar que é prod, e não o mock)
+===============================================================
+$ adb -s RX2N8000F3D logcat -d | grep OCTAVIA
+OCTAVIA: auth uid=xVDJRBh1WpPOatbfWahOLttYn1E3 src=restored
+OCTAVIA: cache hit kind=setlists n=2
+OCTAVIA: cache hit kind=content n=3
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=3342
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=504
+OCTAVIA: cache write kind=setlists n=2 invalidated=4
+OCTAVIA: cache write kind=content n=63 invalidated=66
+OCTAVIA: sync ok setlists=2 content=63 pages=1 t=3947
+OCTAVIA: prefetch plan n=0 reason=7d
+
+  `content=63` é a prova de que é prod: o mock do §4.1 servia 3.
+  `n=1` nas linhas `api status=` é a CONTAGEM DE REQUESTS (tentativas), não
+  de itens — `api.ts:156`, e a linha é emitida ANTES do `await response.text()`.
+
+===============================================================
+2) O POST — UM TOQUE EM `Criar`, LOGCAT VERBATIM
+===============================================================
+$ adb -s RX2N8000F3D logcat -c
+$ adb -s RX2N8000F3D shell input tap 1875 973      # `Criar`, um toque
+$ adb -s RX2N8000F3D logcat -d | grep OCTAVIA
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=201 path=/api/setlists n=1 ms=1105
+OCTAVIA: write op=create setlist=- items=- status=201 code=- ms=1113
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=315
+OCTAVIA: resync kind=setlists reason=write op=create status=200 setlists=3 ms=327
+OCTAVIA: cache write kind=setlists n=3 invalidated=1
+OCTAVIA: prefetch plan n=0 reason=7d
+
+CONTRA O ESPERADO DO ROTEIRO (`README.md` §4.2), linha a linha:
+  write op=create … status=201 … ms=<n>          →  OK  (ms=1113)
+  resync kind=setlists reason=write op=create
+         status=200 setlists=<n> ms=<n>          →  OK  (setlists=3, ms=327)
+  cache write kind=setlists n=<n> invalidated=1  →  OK  (n=3, invalidated=1)
+  prefetch plan n=0 reason=7d                    →  OK
+
+  `prefetch plan n=0` é o ESPERADO e não é falha: a setlist nasce vazia, então
+  o plano existe e não baixa nada — o mecanismo que a N2-D11 manda medir.
+
+  NÃO HOUVE 401. A H-N2-2 (email da conta não verificado) NÃO se manifestou,
+  nem na leitura da abertura nem na escrita. Nada a verificar do lado do Marcel.
+
+===============================================================
+3) A SETLIST NO TOPO DE S1 (`created_at desc`)
+===============================================================
+Dump `dumps/10-N2-S1-prod-criada.xml`, ordem dos cartões por `y`:
+  y=396    setlist-286a4785     ← N2-PR3 ACEITE · 2026-09-25 · 0 músicas
+  y=720    setlist-772076b4
+  y=1044   setlist-e39d57cf
+O cartão novo é o PRIMEIRO da lista.
+
+===============================================================
+4) REABERTURA → `invalidated=0`
+===============================================================
+$ adb -s RX2N8000F3D shell am force-stop rocks.octavia.app
+$ (relançar) ; adb -s RX2N8000F3D logcat -d | grep OCTAVIA
+OCTAVIA: net online
+OCTAVIA: auth uid=xVDJRBh1WpPOatbfWahOLttYn1E3 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=63
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=1761
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=293
+OCTAVIA: cache write kind=setlists n=3 invalidated=0
+OCTAVIA: cache write kind=content n=63 invalidated=0
+OCTAVIA: sync ok setlists=3 content=63 pages=1 t=2143
+OCTAVIA: prefetch plan n=0 reason=7d
+
+  `invalidated=0` nas DUAS linhas: nada mudou no servidor desde a escrita.
+  É o T1-R10 dizendo que a releitura do item 2 já trouxe tudo.
+
+===============================================================
+5) REGRA 4 DO `LOGS-OCTAVIA.md` — conferida sobre os anexos
+===============================================================
+(saída em `aparato.md` §7; o prefixo de JWT e o email saem com exit 1, e as linhas
+ `write op=` / `resync kind=` não trazem uuid inteiro, nome de setlist
+ nem título — o `setlist=-` do `op=create` é literalmente um hífen.)

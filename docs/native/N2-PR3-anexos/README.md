@@ -9,12 +9,28 @@ Branch `n2/pr3-s1-criar`, sobre `fedfd24` (merge da #314).
 | `CN-antes-gates.txt` | `gate:a20` e `gate:icones` logo depois do commit 1 — o `icones` REPROVA (1 acusação), que é o commit 2 ainda não ter desenhado |
 | `CN-depois.txt` | os mesmos, com o commit 2 — 260 passam, 0 falham |
 | `gates-depois.txt` | `tsc --noEmit`, os dois gates e os CNs deles, G1, G2 e G3 |
-| `dumps/` | **VAZIO — §4.1 pendente** (ver abaixo) |
-| `device-prod.txt` | **AUSENTE — §4.2 pendente** (ver abaixo) |
+| `dumps/` | **os 10 dumps do §4.1 e do §4.2**, com `SHA256SUMS.txt` — ver `aparato.md` §3 |
+| `device-prod.txt` | **§4.2 FEITO**: o primeiro `POST` do nativo em prod, `201`, logcat verbatim |
+| `aparato.md` | **o §4 inteiro**: dev client, G5/G6, as medidas contra o congelado (**N2-E6**), os dois defeitos achados, as divs. 250–259 |
 
 ---
 
-## Por que o §4 não foi executado nesta sessão
+## O §4 FOI EXECUTADO — em sessão própria, 2026-09-22
+
+**Feito**, na árvore `../octavia-n2-pr3-aceite` sobre o mesmo `25c00ee`, com o
+Tab S6 e o AVD `octavia_tab32`. O resultado está em
+[`aparato.md`](aparato.md) e [`device-prod.txt`](device-prod.txt); o §4.2
+passou (`write op=create … status=201`, **sem 401** — a H-N2-2 não se
+manifestou). Fica abaixo, **sem edição**, o registro de por que a sessão que
+escreveu a PR não pôde executá-lo, e o roteiro que a sessão do aceite seguiu.
+
+Três correções que o aceite teve de fazer no roteiro abaixo, todas medidas e
+registradas em `aparato.md` §9: o mock sobe na **8788** e não na 8081 (que é a
+porta do Metro) `[div. 250]`; o `--device` do Expo quer **`SM_T865`**
+`[div. 251]`; e o estado 7 **não é alcançável** com `escrita-corta` no Android
+`[div. 257]`.
+
+## Por que o §4 não foi executado na sessão que escreveu a PR
 
 **A sessão não tem `adb` nem `emulator`.** Medido, literal:
 
