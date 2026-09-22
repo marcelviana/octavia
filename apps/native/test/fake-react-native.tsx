@@ -38,7 +38,21 @@ interface PropsComuns {
   accessibilityHint?: string
   accessibilityState?: { disabled?: boolean; selected?: boolean }
   numberOfLines?: number
-  [k: string]: unknown
+  /**
+   * Sem assinatura de índice (`[k: string]: unknown`), que foi a primeira
+   * forma disto: ela faz a INTERSEÇÃO com `{ onPress?: () => void }` resolver
+   * para `unknown`, e o `tsc --noEmit` — passo bloqueante do `native.yml` —
+   * reprova com "This expression is not callable". Prop que os primitivos não
+   * conhecem simplesmente não chega ao DOM, que é o certo.
+   */
+  placeholderTextColor?: string
+  animationType?: string
+  transparent?: boolean
+  onRequestClose?: () => void
+  mode?: string
+  display?: string
+  resizeMode?: string
+  source?: unknown
 }
 
 /**
@@ -76,15 +90,22 @@ export const Image = primitivo('img', 'Image')
 export const ActivityIndicator = primitivo('div', 'ActivityIndicator')
 export const SafeAreaView = primitivo('div', 'SafeAreaView')
 
-/** `Pressable` é `<button>`: o toque vira `click`, e `disabled` é do RN. */
+/**
+ * `Pressable` — o toque vira `click`.
+ *
+ * `<div role="button">` e **não** `<button>`: no RN um `Pressable` dentro de
+ * outro é legítimo e o app tem um (o `Baixar esta setlist` dentro do cartão de
+ * S1), mas `<button>` dentro de `<button>` é HTML inválido e o React avisa a
+ * cada render. O que os CNs leem é o `data-testid` e o `data-disabled`, que
+ * não dependem da tag.
+ */
 export const Pressable = forwardRef<unknown, PropsComuns & { onPress?: () => void; disabled?: boolean }>(
   (p, ref) =>
     createElement(
-      'button',
+      'div',
       {
         ...atributos(p),
-        type: 'button',
-        disabled: p.disabled === true,
+        role: 'button',
         onClick: () => p.onPress?.(),
         ref,
       },

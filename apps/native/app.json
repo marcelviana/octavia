@@ -22,7 +22,8 @@
             "./assets/fonts/IBMPlexMono_600SemiBold.ttf"
           ]
         }
-      ]
+      ],
+      "@react-native-community/datetimepicker"
     ]
   }
 }

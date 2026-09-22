@@ -18,11 +18,13 @@
  * ou inativo, que desenho saiu, e o que acontece ao toque — que é exatamente o
  * que o G6 pergunta ao `uiautomator`.
  */
+import './dev-flag'
 import { mkdtempSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { ContentDTO, SetlistDTO } from '@octavia/core'
+import type { SetlistsScreenProps } from '../src/screens/SetlistsScreen'
 import { Directory, File, Paths, __reset } from './fake-expo-file-system'
 import { __proximaData } from './fake-datetimepicker'
 import { Mock, portaLivre } from './mock'
@@ -99,7 +101,7 @@ function daquiA(dias: number): Date {
 }
 
 /** As props de S1 — os valores fixos, e o que cada CN sobrescreve. */
-async function props(extra: Record<string, unknown> = {}): Promise<Record<string, unknown>> {
+async function props(extra: Partial<SetlistsScreenProps> = {}): Promise<SetlistsScreenProps> {
   const doServidor = await mock.doServidor()
   return {
     setlists: semEmbutido(doServidor),
@@ -146,7 +148,13 @@ beforeEach(() => {
   })
 })
 
-afterEach(() => {
+afterEach(async () => {
+  // **Deixa as pendentes assentarem ANTES de limpar** — medido: a releitura
+  // que a folha do teste anterior disparou continua em voo depois do
+  // `desmontar()`, e a linha `resync … reason=reopen` dela caía no `linhas`
+  // do teste SEGUINTE, que então lia a releitura errada como se fosse a sua.
+  // O teste (f) passava sozinho e reprovava na suíte: poluição, não defeito.
+  await assentar(20)
   desmontar()
   vi.restoreAllMocks()
 })
@@ -308,15 +316,27 @@ describe('(e) R1·1 / N2-D18 — "grava e corta": a folha fica, com o banner', (
   })
 
   it('enquanto a releitura está em voo, `Tentar de novo` é inativo com o motivo escrito', async () => {
-    await mock.servir('escrita-corta', [setlist(SL, 'Show', 2)], BIBLIOTECA)
+    // O modo `escrita-corta-lento` existe por causa DESTE estado: a escrita
+    // falha na hora e a releitura demora 600 ms, que é a única janela em que
+    // o congelado desenha `Tentar de novo` inativo com `relendo a lista…`.
+    // Com o `escrita-corta` normal a releitura voltava dentro do mesmo `act`
+    // e o estado nunca era observável — teste que depende de corrida não é
+    // teste.
+    await mock.servir('escrita-corta-lento', [setlist(SL, 'Show', 2)], BIBLIOTECA)
     await montar(<S1.SetlistsScreen {...(await props())} />)
     await tocar('criar-setlist')
     await digitar('form-nome', 'Season 4')
-    // Sem deixar assentar: o POST falhou e a releitura ainda não voltou.
     await tocar('form-salvar')
+    await assentar(100)
+
     expect(inativo('form-tentar')).toBe(true)
-    expect(texto('form-tentar')).toContain('relendo a lista…')
-    await assentar(50)
+    expect(texto('form-tentar')).toBe('Tentar de novo')
+    // O motivo do inativo mora no mesmo nó que a tabela do §7 dá ao motivo do
+    // `Criar` inativo ("motivo do inativo, incl. validação 3") — um só lugar
+    // na folha onde se lê por que o botão principal não aceita toque.
+    expect(texto('form-salvar-motivo')).toBe('relendo a lista…')
+
+    await assentar(700)
     expect(inativo('form-tentar')).toBe(false)
   })
 })
@@ -366,7 +386,7 @@ describe('(g) T2-R13 / N2-D9 — 401 numa escrita não desloga', () => {
     expect(so('auth-failure')).toEqual([])
     expect(so('login-screen')).toEqual([])
     // T1-R3: a original e uma depois de renovar, nunca uma terceira.
-    expect(so('api status=401')[0]).toMatch(/n=2$/)
+    expect(so('api status=401')[0]).toMatch(/ n=2 ms=\d+$/)
     // Em 401 nada foi gravado: não há "pode já ter sido gravada" (o servidor
     // recusou antes de tocar o banco, pre-check §7.1).
     expect(texto('form-falha')).not.toContain('Pode já ter sido gravada')
@@ -390,9 +410,13 @@ describe('(h) T2-R14 — 429: a frase carrega o N do Retry-After', () => {
     linhas = []
     await tocar('form-tentar')
     await assentar(50)
-    // T2-R14: a família inteira fechou — zero requests.
-    expect(so('api')).toEqual([])
+    // T2-R14: a família inteira fechou — **zero ESCRITAS**. O que sai é a
+    // releitura da regra 3 (um `GET`, de outra família, que não consome a
+    // janela `setlist-mutate`): ela é exatamente o que o congelado manda
+    // fazer depois de uma falha, antes de oferecer repetir.
+    expect(so('write op=')).toEqual([])
     expect(so('write blocked')).toEqual(['write blocked op=create reason=ratelimit'])
+    expect(so('api').filter((l) => !l.includes('path=/api/setlists '))).toEqual([])
   })
 })
 

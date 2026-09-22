@@ -12,6 +12,8 @@
  * `rodarSync`. A releitura da N2-D13 não passa por lá. Logo o T2-R17 **não
  * acontece por construção**: é uma ligação a fazer, e ela é este módulo.
  */
+// ANTES de qualquer import de `src/`: o `api.ts` lê `__DEV__` no topo.
+import './dev-flag'
 import { mkdtempSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
@@ -103,7 +105,13 @@ beforeEach(() => {
   })
 })
 
-afterEach(() => {
+afterEach(async () => {
+  // **Deixa as pendentes assentarem ANTES de limpar** — medido: a releitura
+  // que a folha do teste anterior disparou continua em voo depois do
+  // `desmontar()`, e a linha `resync … reason=reopen` dela caía no `linhas`
+  // do teste SEGUINTE, que então lia a releitura errada como se fosse a sua.
+  // O teste (f) passava sozinho e reprovava na suíte: poluição, não defeito.
+  await assentar(20)
   desmontar()
   vi.restoreAllMocks()
 })

@@ -12,6 +12,8 @@ import { ActivityIndicator, StyleSheet, View } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import type { ContentDTO, SetlistDTO } from '@octavia/core'
+import { ligarPrefetchAposEscrita } from './src/apos-escrita'
+import type { EstadoLocal } from './src/escrita'
 import { presentUrls, sanearArquivos, setFilesUser } from './src/files'
 import { log } from './src/log'
 import { Navigation } from './src/navigation'
@@ -110,6 +112,29 @@ export default function App(): React.JSX.Element {
     },
     [recarregarArquivos, atualizarPresentes],
   )
+
+  /**
+   * **T2-R17 / div. 228 — o gancho do prefetch, ligado aqui.**
+   *
+   * A releitura que segue uma escrita (N2-D13) não passa pelo `planSync`, que
+   * é o caminho que dispara o prefetch nas duas saídas do `rodarSync` abaixo.
+   * A N2-PR2 deixou o gancho `aoRelerSetlists` e o declarou INERTE, para que o
+   * requisito não parecesse atendido por construção; a ligação é esta, e o que
+   * ela faz é dar à releitura de uma escrita o mesmo tratamento que um sync
+   * dá: criar ou datar para os próximos 7 dias baixa os arquivos sem o músico
+   * abrir a setlist.
+   *
+   * O `contentById` vai como FUNÇÃO sobre o `dadosRef`: o índice muda a cada
+   * sync, e um gancho que capturasse o mapa de hoje continuaria trabalhando
+   * sobre ele depois.
+   */
+  useEffect(() => {
+    return ligarPrefetchAposEscrita(
+      () => dadosRef.current.contentById,
+      atualizarPresentes,
+      recarregarArquivos,
+    )
+  }, [atualizarPresentes, recarregarArquivos])
 
   useEffect(() => {
     return onAuth((user) => {
@@ -213,6 +238,32 @@ export default function App(): React.JSX.Element {
     void rodarSync(estado.user.uid, dados)
   }, [estado, dados, rodarSync])
 
+  /**
+   * N2-PR3 — o cache de onde a escrita parte (T2-R9). É o mesmo conjunto que a
+   * tela mostra: a escrita não parte de uma foto sua, parte do que está no
+   * aparelho agora.
+   */
+  const estadoLocal: EstadoLocal | null =
+    estado.fase === 'dentro'
+      ? {
+          uid: estado.user.uid,
+          setlists: dados.setlists,
+          content: dados.content,
+          syncedAtMs: dados.syncedAtMs,
+        }
+      : null
+
+  /**
+   * A releitura de uma escrita já GRAVOU o cache (é o `escrita.ts` que o faz,
+   * T2-R9); o que falta é a tela mostrar o que foi gravado. O `contentById`
+   * não se recria quando o conjunto de content não mudou — a escrita não o
+   * toca (N2-D1), então ele é sempre o anterior.
+   */
+  const aoRelerNaEscrita = useCallback((setlists: SetlistDTO[], syncedAtMs: number | null) => {
+    setDados((atual) => ({ ...atual, setlists, temCache: true, syncedAtMs: syncedAtMs ?? atual.syncedAtMs }))
+    if (syncedAtMs !== null) setSync({ fase: 'ok', syncedAtMs })
+  }, [])
+
   /** T1-R15 manual — "baixar esta setlist" (o botão do S1b/c). */
   const baixarEsta = useCallback(
     (setlistId: string) => {
@@ -273,6 +324,8 @@ export default function App(): React.JSX.Element {
               onAbrirSetlist: () => undefined,
               onBuscar: () => undefined,
               onBaixarSetlist: baixarEsta,
+              estadoLocal,
+              aoRelerNaEscrita,
             }}
           />
         )}

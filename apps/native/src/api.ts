@@ -26,7 +26,23 @@ import { auth } from './firebase'
 import { log } from './log'
 import { signOutSession } from './session'
 
-const BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL ?? ''
+/**
+ * A base da URL, lida **na hora da chamada** e não no carregamento do módulo.
+ *
+ * No aparelho é indiferente: o Metro substitui `process.env.EXPO_PUBLIC_*` por
+ * literal no build, então a expressão é constante das duas formas.
+ *
+ * Em teste não é. `[medido: N2-PR3]` a forma anterior era uma constante de
+ * topo de módulo, e qualquer teste que importasse `src/` **estaticamente**
+ * congelava a base em `''` antes de o `beforeAll` definir a porta do mock —
+ * e aí toda request ia para um path relativo, falhava por rede e o teste lia
+ * `status=net` sem nenhuma pista do porquê. Não é hipótese: foi o que o CN do
+ * gancho do prefetch (`apos-escrita.test.tsx`) mediu, e é armadilha que toda
+ * PR de tela daqui para frente pisaria.
+ */
+function baseUrl(): string {
+  return process.env.EXPO_PUBLIC_API_BASE_URL ?? ''
+}
 
 /**
  * **Caminho de desenvolvimento do aceite A2** (catálogo de logs, E4): só
@@ -135,7 +151,7 @@ export type ApiResult<T> = ApiOk<T> | ApiErro
 async function get<T>(path: string, familia: string): Promise<ApiResult<T>> {
   const t0 = Date.now()
   try {
-    const { response, requests } = await authFetch(`${BASE_URL}${path}`)
+    const { response, requests } = await authFetch(`${baseUrl()}${path}`)
     const ms = Date.now() - t0
     log(`api status=${response.status} path=${path.split('?')[0]} n=${requests} ms=${ms}`)
     const corpo = await response.text()
@@ -232,7 +248,7 @@ export async function mutate(
 ): Promise<RespostaDeEscrita> {
   const t0 = Date.now()
   try {
-    const { response, requests } = await authFetchEscrita(`${BASE_URL}${path}`, {
+    const { response, requests } = await authFetchEscrita(`${baseUrl()}${path}`, {
       method,
       ...(body === null ? {} : { headers: { 'Content-Type': 'application/json' }, body }),
     })

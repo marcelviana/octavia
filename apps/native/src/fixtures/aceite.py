@@ -201,6 +201,15 @@ def com_songs_dos_invalidos(setlists: list, nome: str) -> list:
 #                        /api/setlists` SEGUINTE devolve 500 (o primeiro
 #                        depois da primeira escrita). É a N2-D22:
 #                        "salvo; não foi possível recarregar".
+#   escrita-corta-lento  (N2-PR3) o `escrita-corta` com o `GET` seguinte
+#                        SEGURADO por 600 ms. Existe por causa de UM estado
+#                        do congelado: `N2-F-falhou` com a releitura ainda em
+#                        voo — `Tentar de novo` inativo com o motivo
+#                        `relendo a lista…`. Sem o atraso essa janela fecha
+#                        dentro do mesmo `act()` do teste e o estado nunca é
+#                        observável; um teste que dependesse da corrida não
+#                        seria teste. Os 600 ms são os mesmos do
+#                        `escrita-releitura-fora-de-ordem`.
 #
 # Por que `escrita-corta` fecha a conexão em vez de demorar: o que se quer
 # medir é a espécie `rede` com gravação FEITA, e um timeout mediria a mesma
@@ -437,7 +446,7 @@ def servidor(porta: int, modo: str, setlists_path: str, content_path: str) -> No
 
         def _escreveu(self, code: int, corpo) -> None:
             estado["escritas"] += 1
-            if modo == "escrita-corta":
+            if modo in ("escrita-corta", "escrita-corta-lento"):
                 self._corta(code)
                 return
             self._json(code, corpo)
@@ -501,6 +510,12 @@ def servidor(porta: int, modo: str, setlists_path: str, content_path: str) -> No
                         time.sleep(0.6)
                         self._json(200, foto)
                         return
+                if modo == "escrita-corta-lento" and estado["escritas"] > 0:
+                    # A releitura que a folha dispara depois de falhar (regra
+                    # 3) demora — é a janela do `relendo a lista…`.
+                    time.sleep(0.6)
+                    self._json(200, modelo.setlists)
+                    return
                 if modo == "escrita-resync-500" and estado["escritas"] > 0:
                     # N2-D22: a escrita gravou e a RELEITURA é que falhou.
                     # Só depois da primeira escrita — o sync da abertura

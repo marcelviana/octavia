@@ -122,6 +122,8 @@ git rev-parse --verify --quiet "$BASE^{commit}" >/dev/null || uso "<base> nao re
 #       função e não de texto, e por isso o G3 não precisa de errata.
 EXCECOES='packages/core/src/frases.ts
 apps/native/App.tsx
+apps/native/src/api.ts
+apps/native/src/apos-escrita.ts
 apps/native/src/icones/dados.ts
 apps/native/src/screens/SetlistsScreen.tsx
 apps/native/src/screens/FolhaDeCriar.tsx

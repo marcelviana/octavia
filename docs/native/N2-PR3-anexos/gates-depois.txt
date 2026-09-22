@@ -1,0 +1,86 @@
+=== tsc --noEmit (apps/native) ===
+exit=0
+
+=== gate:a20 ===
+  escopo: ESTENDIDO (V1-A3 §A3.3 + labels em expressão, V1-PR3 + chave de objeto, V1-PR6)
+  raiz: . · não descidos: test, scripts, node_modules, android, ios, .expo, .git, assets (W2, div. 123)
+  arquivos varridos: 27 (inclui 1 de fora da raiz: ../../packages/core/src/frases.ts — N2-PR3, div. 229)
+  vocabulário: 45 termos · isenções do produto: 9
+  literais em posição de texto examinados: 114
+  acusações: 0
+exit=0
+
+=== gate:a20:cn ===
+  ACUSADO scripts/__cn__/A20Falso.tsx:32 [accessibilityLabel] "Zoom in" ← termo "zoom in"
+  ACUSADO scripts/__cn__/A20Falso.tsx:35 [accessibilityHint] "Go back to the previous song" ← termo "previous"
+  ACUSADO scripts/__cn__/A20Falso.tsx:43 [accessibilityLabel{…}] "Auto-scroll, loading" ← termo "loading"
+  ACUSADO scripts/__cn__/A20Falso.tsx:25 [chave: literal] "Loading" ← termo "loading"
+  escopo: ESTENDIDO (V1-A3 §A3.3 + labels em expressão, V1-PR3 + chave de objeto, V1-PR6)
+  raiz: scripts/__cn__ · não descidos: test, scripts, node_modules, android, ios, .expo, .git, assets (W2, div. 123)
+  arquivos varridos: 2
+  vocabulário: 45 termos · isenções do produto: 9
+  literais em posição de texto examinados: 8
+  acusações: 4
+exit=1
+
+=== gate:icones ===
+  AVISO src/icones/dados.ts [pendente] "alca" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  AVISO src/icones/dados.ts [pendente] "renomear" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  AVISO src/icones/dados.ts [pendente] "apagar-setlist" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  AVISO src/icones/dados.ts [pendente] "adicionar" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  AVISO src/icones/dados.ts [pendente] "remover" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  §6.4: 34 linhas → 33 nomes distintos, + 4 fora do catálogo + 6 da tela 2 = 43 esperados
+  anexo D: 34 registros (V1) + 5 (DESIGN-N2, E17) = 39 registros · 68 elementos distintos no do V1
+  tela 2 (E17): 1/6 nomes já no mapa e cobrados · 5 declarados pendentes
+  mapa: 38 nomes · 83 elementos distintos · 38 com 'normal'
+  hex cravado: 0 · tinta por token: 6
+  §6.3 tab: em20 4 cordas · normal 6 cordas · markup de 20 dp no telas.html: idêntico
+  fora do catálogo: 4/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  PENDENTES DECLARADOS E AUSENTES — poda a lista quando desenhar (N2-D33): 5
+  acusações: 0 · avisos: 5
+exit=0
+
+=== gate:icones:cn ===
+  §6.3 tab: em20 6 cordas · normal 6 cordas · markup de 20 dp no telas.html: idêntico
+  fora do catálogo: 3/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  PENDENTES DECLARADOS E AUSENTES — poda a lista quando desenhar (N2-D33): 3
+  acusações: 20 · avisos: 3
+
+=== G1 ===
+base=origin/main head=WORKTREE
+G1a — diff vazio em 34 arquivos DERIVADOS de apps/native + packages/core/src
+      escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+      menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+      EXCEÇÕES DECLARADAS (o escopo desta PR):
+        packages/core/src/frases.ts
+        apps/native/App.tsx
+        apps/native/src/api.ts
+        apps/native/src/apos-escrita.ts
+        apps/native/src/icones/dados.ts
+        apps/native/src/screens/SetlistsScreen.tsx
+        apps/native/src/screens/FolhaDeCriar.tsx
+        apps/native/src/screens/LinhaDeAviso.tsx
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+  G1b: só adição ✓
+
+=== G2/G3 ===
+G2 — testIDs  antes=43  depois=55
+  G2: antes ⊆ depois ✓
+  testID NOVOS:
+      apps/native/src/screens/FolhaDeCriar.tsx	testID="form-cancelar"
+      apps/native/src/screens/FolhaDeCriar.tsx	testID="form-data"
+      apps/native/src/screens/FolhaDeCriar.tsx	testID="form-erro-data"
+      apps/native/src/screens/FolhaDeCriar.tsx	testID="form-erro-nome"
+      apps/native/src/screens/FolhaDeCriar.tsx	testID="form-falha"
+      apps/native/src/screens/FolhaDeCriar.tsx	testID="form-nome"
+      apps/native/src/screens/FolhaDeCriar.tsx	testID="form-salvar"
+      apps/native/src/screens/FolhaDeCriar.tsx	testID="form-salvar-motivo"
+      apps/native/src/screens/FolhaDeCriar.tsx	testID="form-tentar"
+      apps/native/src/screens/LinhaDeAviso.tsx	testID="aviso-acao"
+      apps/native/src/screens/LinhaDeAviso.tsx	testID="aviso-motivo"
+      apps/native/src/screens/SetlistsScreen.tsx	testID="criar-setlist"
+G3 — linhas log( antes=64  depois=64
+      ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+        (nenhuma — nenhuma linha de log pode sumir nesta PR)
+  G3: nenhuma linha sumiu ✓
