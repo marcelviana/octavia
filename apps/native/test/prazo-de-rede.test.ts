@@ -224,4 +224,57 @@ describe('N2-D35 — o prazo de rede de uma escrita', () => {
     // E o cache NÃO mudou: quem grava é a releitura (T2-R9), e ela não voltou.
     expect(saida.setlists).toBeNull()
   })
+
+  /**
+   * **O NÚMERO na releitura, e o caminho `reopen` — div. 272.**
+   *
+   * O `it` acima prova a LIGAÇÃO com um prazo curto passado pela chamada;
+   * este prova que o prazo que roda **de verdade** é o do core, nos DOIS
+   * caminhos de leitura pós-escrita, e com o relógio.
+   *
+   * **O `reopen` é o que não tinha cobertura nenhuma de prazo**, e é o mais
+   * exposto: ele é o `GET` que as QUATRO telas disparam pelo botão
+   * `Tentar recarregar` (`SetlistsScreen.tsx:377`, `IndexScreen.tsx:379`,
+   * `DialogoDeApagar.tsx:87`, `FolhaDeCriar.tsx:212`), todas chamando
+   * `relerAoAbrir(estado)` **sem o segundo argumento**. Quem põe o prazo ali
+   * é o DEFAULT do parâmetro de `reler`, e default que ninguém mede é
+   * promessa, não garantia — ainda mais um que atravessa duas funções e um
+   * `?:` opcional até chegar ao `AbortController`.
+   *
+   * Por que os dois num `it` só: o segundo depende do estado que o primeiro
+   * deixa (é a espécie `ok-nao-relido` que faz a tela oferecer
+   * `Tentar recarregar`), são 20 s cada de qualquer forma, e partir em dois
+   * perderia a sequência que o congelado desenha.
+   */
+  it(
+    'o prazo da releitura é o do CORE (20 s), e vale também no `reopen`',
+    async () => {
+      await servir('resync-pendurado')
+
+      // 1) a releitura POR ESCRITA, sem prazo passado pela chamada.
+      const t0 = Date.now()
+      const saida = await mod.escrever(mod.pedidoAtualizar(SL, { name: 'Outro nome' }), estado())
+      const msEscrita = Date.now() - t0
+      expect(saida.resultado.especie).toBe('ok-nao-relido')
+      expect(so('resync kind=setlists')[0]).toMatch(
+        /^resync kind=setlists reason=write op=update status=net setlists=- ms=\d+$/,
+      )
+      expect(msEscrita).toBeGreaterThan(19_000)
+      expect(msEscrita).toBeLessThan(PRAZO_DE_REDE_MS + 4_000)
+
+      // 2) o `reopen` — o que o botão `Tentar recarregar` das telas chama.
+      linhas = []
+      const t1 = Date.now()
+      const novas = await mod.relerAoAbrir(estado())
+      const msReopen = Date.now() - t1
+      expect(novas).toBeNull()
+      expect(so('resync kind=setlists')).toHaveLength(1)
+      expect(so('resync kind=setlists')[0]).toMatch(
+        /^resync kind=setlists reason=reopen op=- status=net setlists=- ms=\d+$/,
+      )
+      expect(msReopen).toBeGreaterThan(19_000)
+      expect(msReopen).toBeLessThan(PRAZO_DE_REDE_MS + 4_000)
+    },
+    70_000,
+  )
 })
