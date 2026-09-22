@@ -165,6 +165,23 @@ export const desenhos = {
   'nada-encontrado': {
     normal: [{ cx: 10.5, cy: 10.5, r: 6.5 }, { d: 'M15.5 15.5L21 21' }, { d: 'M8 8l5 5M13 8l-5 5' }],
   },
+  // O PRIMEIRO dos cinco do DESIGN-N2 (E17, N2-D33), transcrito do anexo D do
+  // `telas.html` congelado — os outros quatro (`alca`, `renomear`,
+  // `apagar-setlist`, `adicionar`/`remover`) seguem na lista `PENDENTES` do
+  // `gate:icones` até a PR que desenhar a S2 com edição.
+  //
+  // A legenda do anexo: "A lista é a do `n.º de músicas` sem o marcador; a
+  // cruz é a do `zoom +`, com 7 de vão em vez de 8 para caber ao lado."
+  //
+  // `inerte` é a amputação declarada: **a haste vertical sai**, e o que fica
+  // é um traço — o sinal do `zoom −`, que nunca aparece nesta tela. É o único
+  // dos cinco em que a amputação passa pelo limite da R2·2 ("amputa-se só o
+  // que continua reconhecível amputado"); os três botões de salvar caem na
+  // exceção e usam o desenho inteiro em `lineInfo` com traço 1,25.
+  'nova-setlist': {
+    normal: [{ d: 'M4 6.5h12M4 12h8M4 17.5h6' }, { d: 'M17.5 14v7M14 17.5h7' }],
+    inerte: [{ d: 'M4 6.5h12M4 12h8M4 17.5h6' }, { d: 'M14 17.5h7', traco: 1.25 }],
+  },
 } as const satisfies Record<string, Desenho>
 
 export type NomeIcone = keyof typeof desenhos

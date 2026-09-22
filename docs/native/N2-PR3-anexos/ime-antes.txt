@@ -1,0 +1,80 @@
+N2-PR3 · div. 256 — CN DE APARELHO, **ANTES** DO FIX
+O teclado NÃO sobe ao abrir a folha, embora o campo receba foco.
+=====================================================================
+
+POR QUE O CN É DE APARELHO, E NÃO DE TELA
+  O projeto `native-tela` roda em `jsdom` com um duplo de `react-native`
+  (`test/fake-react-native.tsx`). O duplo do `Modal` é:
+
+      export function Modal(p) {
+        if (p.visible === false) return null
+        return createElement('div', {...atributos(p), 'data-modal':'true'}, p.children)
+      }
+
+  — ele ignora `onShow`, e `jsdom` não tem IME. **Nenhum teste de tela pode
+  reprovar aqui**, nem antes nem depois do fix. Por isso o CN é este dumpsys.
+
+APARATO
+  aparelho   Tab S6 (SM-T865, RX2N8000F3D), Android 12
+  commit     c8db83a (n2/pr3-s1-criar) — código idêntico ao 25c00ee do §4
+  dev client app-debug.apk sha256 9447edc7…, instalado 2026-09-22 10:34:25
+  base       prod (Metro sem override; só LEITURA, nenhuma escrita neste CN)
+  caminho    app aberto em S1 → UM toque no botão `criar-setlist` da barra
+             (`adb shell input tap 1878 188`), nada mais
+
+=====================================================================
+1) A FOLHA ABRIU E O CAMPO ESTÁ COM FOCO (árvore do uiautomator)
+=====================================================================
+<node NAF="true" index="6" text="" resource-id="form-nome" class="android.widget.EditText" package="rocks.octavia.app" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="true" focused="true" scrollable="false" long-clickable="true" password="false" selected="false" bounds="[544,485][2016,620]" />
+
+  `focused="true"`. O foco está lá — o defeito não é de foco.
+
+=====================================================================
+2) O IME: `dumpsys input_method` (o comando do prompt, verbatim)
+=====================================================================
+$ adb shell dumpsys input_method | grep -E "mInputShown|mServedView"
+    inputContext=IInputConnectionWrapper{connection=android.view.inputmethod.BaseInputConnection@d031924 finished=false mParentInputMethodManager.isActive()=false mServedView=null}
+  mShowRequested=false mShowExplicitlyRequested=false mShowForced=false mInputShown=false
+  mIInputContext=IInputConnectionWrapper{connection=android.view.inputmethod.BaseInputConnection@5014031 finished=false mParentInputMethodManager.isActive()=true mServedView=null}
+  mServedView=com.facebook.react.views.textinput.ReactEditText{15b6342 VFED..CL. .F...... 544,485-2016,620 #14a aid=1073741825}
+  mServedInputConnectionWrapper=IInputConnectionWrapper{connection=androidx.emoji2.viewsintegration.EmojiInputConnection@2fee497 finished=false mParentInputMethodManager.isActive()=true mServedView=com.facebook.react.views.textinput.ReactEditText{15b6342 VFED..CL. .F...... 544,485-2016,620 #14a aid=1073741825}}
+
+LEITURA, linha a linha:
+  mServedView=…ReactEditText{… 544,485-2016,620 …}
+      O IME **já está ligado a este campo**, e os bounds são exatamente os do
+      `form-nome` nos dumps do §4 (`[544,485][2016,620]`). Não há dúvida de
+      qual view é.
+  mShowRequested=false   mShowExplicitlyRequested=false   mShowForced=false
+      **NINGUÉM PEDIU O TECLADO.** É esta a linha que nomeia o defeito.
+  mInputShown=false
+      E por isso ele não está na tela.
+
+  O `autoFocus` (FolhaDeCriar.tsx:172) faz o `ReactEditText` virar
+  `mServedView` e NÃO dispara `showSoftInput`: dentro de um `Modal`
+  (`:154`) o campo pede foco antes de a janela do modal virar a janela
+  ativa do IME, e o pedido de exibição se perde. O `Modal` **não tem
+  `onShow`** — medido: `<Modal visible transparent animationType="fade"
+  onRequestClose={aoFechar}>`.
+
+=====================================================================
+3) O CUSTO, QUE É O QUE O J3 CONTA
+=====================================================================
+  O congelado manda, e o comentário do `:171` cita verbatim:
+      "Ao abrir, o nome já está em foco e o teclado sobe."
+  Hoje, para chegar a `Criar` com o nome digitado:
+      1 botão `Nova setlist`  ·  2 TOQUE NO CAMPO (só para subir o teclado)
+      ·  3 digitar  ·  4 `Criar`
+  São **4 toques**, contra os **3** que o J3 promete
+  (`Nova setlist` · digitar · `Criar`).
+
+  Provado que o toque extra é o que falta — com UM toque no campo:
+$ adb shell input tap 1280 552   # o campo form-nome
+$ adb shell dumpsys input_method | grep -E "mInputShown|mServedView"
+    inputContext=IInputConnectionWrapper{connection=android.view.inputmethod.BaseInputConnection@d031924 finished=false mParentInputMethodManager.isActive()=false mServedView=null}
+  mShowRequested=true mShowExplicitlyRequested=true mShowForced=false mInputShown=true
+  mIInputContext=IInputConnectionWrapper{connection=android.view.inputmethod.BaseInputConnection@5014031 finished=false mParentInputMethodManager.isActive()=true mServedView=null}
+  mServedView=com.facebook.react.views.textinput.ReactEditText{15b6342 VFED..CL. .F...... 544,485-2016,620 #14a aid=1073741825}
+  mServedInputConnectionWrapper=IInputConnectionWrapper{connection=androidx.emoji2.viewsintegration.EmojiInputConnection@2fee497 finished=false mParentInputMethodManager.isActive()=true mServedView=com.facebook.react.views.textinput.ReactEditText{15b6342 VFED..CL. .F...... 544,485-2016,620 #14a aid=1073741825}}
+
+  `mShowRequested=true` e `mInputShown=true`. O IME funciona; o que falta é
+  o pedido, na abertura.

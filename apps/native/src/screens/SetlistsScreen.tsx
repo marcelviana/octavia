@@ -21,13 +21,38 @@
  * (as propostas da §8 — desabilitados, ordenação por data — ficam fora).
  * Todo ícone aqui acompanha um rótulo, então nenhum leva `accessibilityLabel`
  * próprio; o SVG não é nó de texto e não entra no `content-desc`.
+ *
+ * ## O que a N2-PR3 acrescenta (DESIGN-N2 §1 e §3.3)
+ *
+ * S1 deixa de ser só leitura. Entram três coisas, e nenhuma delas toca o
+ * cartão (*"o cartão não ganha nada: renomear, datar e apagar moram em S2 com
+ * edição, um nível abaixo"*):
+ *
+ *  1. **`Nova setlist`** no grupo da direita da barra de 120 dp, à ESQUERDA de
+ *     `Buscar música`. A ordem do congelado é *status de sync · escrever ·
+ *     ler*: a escrita fica no meio porque o grupo cresce da esquerda para a
+ *     direita e `Buscar música` não muda de lugar em relação ao V1 — quem já
+ *     usa o app não perde o alvo que decorou. É ícone + rótulo, não um FAB
+ *     (*"FAB flutua sobre o conteúdo, e aqui existe barra com folga"*).
+ *
+ *  2. **S1f muda de texto**: sai a frase que manda ir ao web, entra o mesmo
+ *     ato aqui. O alvo central é o único lugar da folha com borda em
+ *     `accentInk`, *"porque é o único controle da tela — e é deliberado"*. Os
+ *     dois caminhos levam o MESMO `testID`, como a tabela do §7 manda.
+ *
+ *  3. **A linha de aviso de 48 dp** (§3.3), entre a barra e o primeiro cartão.
+ *     Dois estados nesta PR — sem rede e salvo-não-relido —, e os outros três
+ *     (falhou, limite, teto de 100) são da S2, na PR-4.
  */
-import { useMemo } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { FlatList, Image, Pressable, StyleSheet, Text, View } from 'react-native'
-import { offlineStatus, type ContentDTO, type OfflineStatus, type SetlistDTO } from '@octavia/core'
+import { frase, offlineStatus, type ContentDTO, type OfflineStatus, type SetlistDTO } from '@octavia/core'
+import { relerAoAbrir, type EstadoLocal } from '../escrita'
 import { Icone } from '../icones/Icone'
 import type { NomeIcone } from '../icones/dados'
 import { bar, dark, font, radius, size, space, touch, tracking } from '../theme'
+import { FolhaDeCriar } from './FolhaDeCriar'
+import { LinhaDeAviso } from './LinhaDeAviso'
 
 export type SyncState =
   | { fase: 'sincronizando' }
@@ -53,6 +78,17 @@ export interface SetlistsScreenProps {
   onBaixarSetlist: (setlistId: string) => void
   /** T1-R22 — busca na biblioteca inteira, sem setlist de contexto. */
   onBuscar: () => void
+  /**
+   * N2-PR3 — o cache de onde a escrita parte (T2-R9). `null` enquanto não há
+   * sessão: sem ele a folha não abre, porque não haveria a que voltar.
+   */
+  estadoLocal: EstadoLocal | null
+  /**
+   * A releitura de uma escrita trouxe conjunto novo — quem grava é o `App`.
+   * S1 **não** toca o cache: quem o faz é o `escrita.ts`, e esta chamada só
+   * avisa a raiz para que a tela mostre o que já foi gravado (T2-R9).
+   */
+  aoRelerNaEscrita: (setlists: SetlistDTO[], syncedAtMs: number | null) => void
 }
 
 /** "há 2 h", "há 15 min", "agora" — o texto do chip de status do design. */
@@ -151,6 +187,54 @@ function chipDoStatus(sync: SyncState): { icone: NomeIcone; cor: string; texto: 
         ? { icone: 'falha', cor: dark.errorInk, texto: textoDoErro(sync.messageKey) }
         : { icone: 'ultima-sincronizacao', cor: dark.muted, texto: 'mostrando dados salvos' }
   }
+}
+
+/**
+ * `Nova setlist` — o MESMO ato nos dois lugares, com o MESMO `testID` (a
+ * tabela do §7: *"botão da barra e do estado vazio (mesmo id nos dois)"*).
+ *
+ * `acentuado` é a única diferença de pintura: em S1f o alvo central ganha
+ * borda em `accentInk` porque é o único controle da tela, e o congelado diz
+ * que é *"o único lugar da folha onde a borda é acentuada, e é deliberado"*.
+ *
+ * Inativo (sem rede) é a §3.2: tinta `lineInfo`, traço 1,25 e o desenho
+ * AMPUTADO — a cruz perde a haste vertical e fica só o traço horizontal. O
+ * motivo não vai aqui: vai na linha de aviso de 48 dp, uma vez (N2-D23).
+ */
+function BotaoNovaSetlist({
+  rotulo,
+  inativo,
+  acentuado = false,
+  onPress,
+}: {
+  rotulo: string
+  inativo: boolean
+  acentuado?: boolean
+  onPress: () => void
+}): React.JSX.Element {
+  const tinta = inativo ? dark.lineInfo : dark.text
+  return (
+    <Pressable
+      style={[
+        styles.botaoSecundario,
+        acentuado ? styles.botaoAcentuado : null,
+        inativo ? styles.botaoInativo : null,
+      ]}
+      onPress={() => (inativo ? undefined : onPress())}
+      accessibilityRole="button"
+      accessibilityState={{ disabled: inativo }}
+      testID="criar-setlist"
+    >
+      {/* §3.1 da folha: escrita é ícone em `accentInk`, rótulo em `text`. */}
+      <Icone
+        nome="nova-setlist"
+        tamanho={24}
+        cor={inativo ? dark.lineInfo : dark.accentInk}
+        estado={inativo ? 'inerte' : 'normal'}
+      />
+      <Text style={[styles.botaoSecundarioTexto, { color: tinta }]}>{rotulo}</Text>
+    </Pressable>
+  )
 }
 
 /** Um metadado do cartão: ícone de 20 em `lineInfo` + texto de 14 em `muted`. */
@@ -260,7 +344,35 @@ export function SetlistsScreen({
   onAbrirSetlist,
   onBaixarSetlist,
   onBuscar,
+  estadoLocal,
+  aoRelerNaEscrita,
 }: SetlistsScreenProps): React.JSX.Element {
+  const [folhaAberta, setFolhaAberta] = useState(false)
+  /** N2-D22 — o nome da setlist que foi criada e que a lista não releu. */
+  const [salvoNaoRelido, setSalvoNaoRelido] = useState<string | null>(null)
+  const [recarregando, setRecarregando] = useState(false)
+
+  /**
+   * §3.3 — **só um aviso por vez; se dois caberiam, vale o que bloqueia
+   * mais**. O congelado nomeia justamente este par: *"se 'salvo; não foi
+   * possível recarregar' e 'sem conexão' coincidirem, vale a de rede"*. A
+   * regra mora aqui, e não no componente: a `LinhaDeAviso` desenha UM aviso e
+   * não sabe da existência de outro.
+   */
+  const recarregar = useCallback(async () => {
+    if (estadoLocal === null || recarregando) return
+    setRecarregando(true)
+    try {
+      const novas = await relerAoAbrir(estadoLocal)
+      if (novas !== null) {
+        aoRelerNaEscrita(novas, Date.now())
+        setSalvoNaoRelido(null)
+      }
+    } finally {
+      setRecarregando(false)
+    }
+  }, [estadoLocal, recarregando, aoRelerNaEscrita])
+
   const status = useMemo(
     () => new Map(setlists.map((s) => [s.id, offlineStatus(s, contentById, filesPresent)])),
     [setlists, contentById, filesPresent],
@@ -274,6 +386,38 @@ export function SetlistsScreen({
   const comBanner = sync.fase === 'falha' && temCache
   const chip = chipDoStatus(sync)
 
+  /**
+   * T2-R12 — sem rede não há escrita, e o motivo fica escrito. Sem
+   * `estadoLocal` também não há: a folha não teria cache a que voltar.
+   */
+  const podeCriar = online && estadoLocal !== null
+
+  /** §3.3 — um aviso por vez, e a de rede vence a de "salvo, não relido". */
+  const aviso = !online
+    ? {
+        icone: 'sem-conexao' as NomeIcone,
+        cor: dark.offlineInk,
+        motivo: frase('sem-rede-s1'),
+        acao: undefined,
+      }
+    : salvoNaoRelido !== null
+      ? {
+          icone: 'ultima-sincronizacao' as NomeIcone,
+          cor: dark.muted,
+          // Div. 227 — o core guarda a segunda oração, verbatim; S1 monta
+          // `<nome> foi criada. ` na frente, porque nome de setlist é DADO e
+          // não texto, e em S1 o objeto da frase não está em lugar nenhum da
+          // tela (em S2 ele é o título).
+          motivo: `${salvoNaoRelido} foi criada. ${frase('salvo-nao-relido-s1')}`,
+          acao: {
+            rotulo: 'Tentar recarregar',
+            onPress: () => void recarregar(),
+            inativo: recarregando,
+            motivoInativo: recarregando ? frase('relendo') : undefined,
+          },
+        }
+      : null
+
   return (
     <View style={styles.tela}>
       <View style={styles.barra}>
@@ -285,11 +429,23 @@ export function SetlistsScreen({
             {chip.complemento !== undefined ? <Text style={styles.statusComplemento}>{chip.complemento}</Text> : null}
           </Text>
         </View>
+        {/* Ordem do congelado: status de sync · ESCREVER · ler. */}
+        <BotaoNovaSetlist rotulo="Nova setlist" inativo={!podeCriar} onPress={() => setFolhaAberta(true)} />
         <Pressable style={styles.botaoSecundario} onPress={onBuscar} testID="buscar">
           <Icone nome="buscar-musica" tamanho={24} cor={dark.text} />
           <Text style={styles.botaoSecundarioTexto}>Buscar música</Text>
         </Pressable>
       </View>
+
+      {aviso !== null ? (
+        <LinhaDeAviso
+          icone={aviso.icone}
+          cor={aviso.cor}
+          motivo={aviso.motivo}
+          acao={aviso.acao}
+          recuo={space.xxl}
+        />
+      ) : null}
 
       {/* (e) falha com cache: banner, e a lista continua embaixo. A causa em
           errorInk; a idade do dado em muted, porque não é erro, é fato. */}
@@ -355,11 +511,16 @@ export function SetlistsScreen({
               resizeMode="stretch"
             />
           </View>
-          <Text style={styles.centroTitulo}>nenhuma setlist</Text>
-          <Text style={styles.centroApoio}>
-            Sua conta não tem setlists. Crie na versão web — elas aparecem aqui na próxima
-            sincronização.
-          </Text>
+          {/* Moldura `N2-S1f-criar`: sai a frase que manda ir ao web, entra o
+              mesmo ato, aqui. O título em caixa alta do V1 sai com ela — o
+              estado vazio passa a ser duas orações e um botão. */}
+          <Text style={styles.centroApoio}>{frase('primeira-setlist')}</Text>
+          <BotaoNovaSetlist
+            rotulo="Criar a primeira setlist"
+            inativo={!podeCriar}
+            acentuado
+            onPress={() => setFolhaAberta(true)}
+          />
         </View>
       ) : (
         // (b) normal e (c) offline com cache — a mesma lista; o que muda é o chip
@@ -380,6 +541,26 @@ export function SetlistsScreen({
           )}
         />
       )}
+
+      {folhaAberta && estadoLocal !== null ? (
+        <FolhaDeCriar
+          estado={estadoLocal}
+          aoFechar={() => setFolhaAberta(false)}
+          aoCriar={(novas, syncedAtMs) => {
+            // Congelado (`N2-F-salvando`): "Confirmado o servidor, a folha
+            // fecha e S1 relê a lista." A releitura já aconteceu no core — o
+            // que chega aqui é o conjunto dela.
+            setFolhaAberta(false)
+            setSalvoNaoRelido(null)
+            if (novas !== null) aoRelerNaEscrita(novas, syncedAtMs)
+          }}
+          aoSalvoNaoRelido={(nome) => {
+            setFolhaAberta(false)
+            setSalvoNaoRelido(nome)
+          }}
+          aoRelerAtras={(novas, syncedAtMs) => aoRelerNaEscrita(novas, syncedAtMs)}
+        />
+      ) : null}
     </View>
   )
 }
@@ -456,6 +637,9 @@ const styles = StyleSheet.create({
   botaoSecundarioTexto: { color: dark.text, fontFamily: font.ui, fontSize: size.bodySmall },
   baixarTexto: { fontFamily: font.ui, fontSize: size.bodySmall },
   botaoInativo: { borderColor: dark.lineInfo },
+  // §3.1, exceção declarada: o ÚNICO lugar da folha com borda em `accentInk`
+  // — o alvo central de S1f, porque é o único controle da tela.
+  botaoAcentuado: { borderColor: dark.accentInk, marginTop: space.sm },
   banner: {
     marginTop: space.xl,
     marginHorizontal: space.xxl,

@@ -71,6 +71,31 @@ export type ChaveDeFrase =
   | 'teto-100'
   /** N2-D18: só em criar e adicionar, os dois casos em que pode ter passado. */
   | 'pode-ter-gravado'
+  /**
+   * **ERRATA DA N2-PR3 — quatro chaves novas, e a razão de cada uma.**
+   *
+   * Acrescentar chave é errata declarada (o cabeçalho deste arquivo). As
+   * quatro são da FOLHA, e as quatro estão verbatim no congelado — nenhuma é
+   * redação nova.
+   *
+   * A que obriga a errata é a primeira. A moldura `N2-X-falhou` (a linha de
+   * aviso de 48 dp, §7) e a moldura `N2-F-falhou` (a folha, §2) dizem coisas
+   * DIFERENTES para o mesmo "pode ter gravado": a linha diz *"pode já ter
+   * sido gravada — confira antes de repetir"* (que é o `pode-ter-gravado`
+   * acima, já no conjunto desde a N2-PR2) e a folha diz *"Pode já ter sido
+   * gravada — confira **a lista** antes de tentar de novo. **A lista atrás
+   * desta folha acabou de ser relida.**"* — uma oração a mais, que só faz
+   * sentido onde há uma folha com uma lista atrás. São duas frases, dois
+   * lugares; ler uma no lugar da outra quebraria o congelado sem que nada
+   * acusasse, que é o que este conjunto existe para impedir.
+   */
+  | 'pode-ter-gravado-folha'
+  /** O título do bloco de falha da folha de criar (`N2-F-falhou`). */
+  | 'falhou-criar'
+  /** O motivo do `Tentar de novo` inativo enquanto a lista é relida (R1·1). */
+  | 'relendo-a-lista'
+  /** O apoio do estado vazio de S1 depois que o ato nasceu aqui (`N2-S1f-criar`). */
+  | 'primeira-setlist'
 
 export const FRASES: Readonly<Record<ChaveDeFrase, string>> = {
   // T2-R15 (`PRD-TELA-2.md`)
@@ -120,6 +145,13 @@ export const FRASES: Readonly<Record<ChaveDeFrase, string>> = {
     'Sem conexão: dá para ler e tocar, não para mudar a setlist. Os controles de escrita voltam quando a rede voltar.',
   'teto-100': 'Acima de 100 músicas, reordenar por arrasto fica inativo. Adicionar e remover continuam.',
   'pode-ter-gravado': 'pode já ter sido gravada — confira antes de repetir',
+
+  // As quatro da N2-PR3, verbatim das molduras `N2-F-falhou` e `N2-S1f-criar`.
+  'pode-ter-gravado-folha':
+    'Pode já ter sido gravada — confira a lista antes de tentar de novo. A lista atrás desta folha acabou de ser relida.',
+  'falhou-criar': 'Não foi possível criar',
+  'relendo-a-lista': 'relendo a lista…',
+  'primeira-setlist': 'Nenhuma setlist por aqui ainda. A primeira pode nascer neste aparelho.',
 }
 
 /** O conjunto, como conjunto — é contra ele que o teste afirma o fechamento. */
