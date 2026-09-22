@@ -342,7 +342,26 @@ Sessão do fix, mesma árvore, sobre `c8db83a`. Anexos:
 | **293** | O rótulo `movida de <n>` só aparece depois de uma FALHA (a moldura); depois de soltar e antes de salvar, não. | A moldura só o desenha em `N2-S2e-ordem-falhou`. Se o Marcel o quiser antes, é uma condição a menos. |
 | **294** | **Aparato**: o Metro com `CI=1` não vigia arquivo, e duas tentativas de conserto da div. 286 rodaram o bundle velho — mediram nada. | Achado por `curl` do bundle; Metro sem `CI=1`; todo reteste começa pelo `curl`. |
 
-**Próxima divergência livre: 295.**
+**N2-E14 — o 400 de permutação inválida descarta o arrasto (N2-D37).** A moldura `N2-S2e-ordem-falhou` preserva o arrasto em TODA falha (R2·1). No 400 de permutação isso dava uma tela sem saída — o arrasto já não é permutação da setlist e todo `Tentar de novo` recebe 400 —, e a frase do T2-R15 para esse caso ("a setlist mudou — a ordem foi recarregada") prometia uma recarga que a tela não mostrava. Com a N2-D37 o modo põe a ordem relida na tela, o aviso fica só com as duas primeiras orações, e não há `Tentar de novo`. Para qualquer outro erro, a moldura vale como está. `[div. 289, fechada]`
+
+### Resolução das três que pediam decisão (Marcel, 2026-09-22)
+
+- **276 → N2-D36 revista**: `Salvar a ordem` inativo com o motivo enquanto nada mudou; ativa ao primeiro movimento. Implementada no commit `fix(N2-PR5)`.
+- **289 → N2-D37 / N2-E14**: o 400 de permutação descarta o arrasto; os outros erros seguem a R2·1.
+- **290 → regra do aparato**: avião permitido em aceite manual com o estado lido, declarado e restaurado; o override da API é o caminho dos automatizados. Registrada no `PRD-TELA-2.md` §8 (o `CLAUDE.md` não tem seção de aparato — div. 299) e no `N2-PR5-anexos/aparato.md` §7.
+
+### Divergências da revisão da N2-PR5, **295 a 300**
+
+| div. | o que | o que foi feito |
+| --- | --- | --- |
+| **295** | O roteiro pede o `code` do contrato para a permutação inválida. **Não existe um próprio**: o `OB601` é SQLSTATE interno da RPC e não sai do servidor; na rede o erro é `400 VALIDATION_ERROR` com `details[].field = "order"` — o mesmo `code` do filtro de nome e dos erros de schema. | A chave é `VALIDATION_ERROR` no `op=reorder`, que o core já chamava de `ordem-mudou` (`packages/core/src/escrita.ts:275`): nada novo é lido da resposta. No `reorder` os outros caminhos até esse `code` (uuid malformado, mais de 100 itens, duplicata, corpo > 1 MB com `field:""`) são inalcançáveis pelo app, que só envia permutação da própria leitura, ≤ 100, e ~4 KB. |
+| **296** | Com o motivo `nada mudou desde que você abriu` na barra, o título do modo encolhe e trunca (`REORDENAR · ENSAIO DE R…`, PNG `12`). A moldura não previa motivo na barra. | Aceito como está: o título é o nome da setlist, que a tela anterior mostra inteiro, e o motivo é o que a N2-D23 exige. Se o Marcel preferir o motivo em outro lugar (segunda linha da barra), é troca de estilo. |
+| **297** | O CN pedido afirma `aviso-acao` ausente depois do 400 — mas no modo o `Tentar de novo` nunca morou na linha de aviso: ele é o `reordenar-salvar` da barra. A asserção pedida passaria também contra o código de ANTES. | O CN afirma as duas coisas: `aviso-acao` ausente **e** `reordenar-salvar` diferente de `Tentar de novo` — a segunda é a que reprovava. |
+| **298** | "Sem `Tentar de novo`" deixa aberto o que o botão principal vira depois do descarte. | `Salvar a ordem`, cheio, pela N2-D36 — inativo com o motivo até o próximo movimento, e então salva o arrasto novo, feito sobre a ordem relida. |
+| **299** | O roteiro manda a regra do avião para "a seção do aparato do `CLAUDE.md`, se ela existir". | `[medido]` `grep -n -i aparato CLAUDE.md` → nada. Foi para o `PRD-TELA-2.md` §8, como o roteiro prevê, com uma nota no T2-R12. |
+| **300** | "Anexos em pt-BR, traduza o que estiver em inglês": a varredura dos anexos commitados acha inglês **só em saída literal de ferramenta** (`Test Files … passed`, `AssertionError: expected …`, `Cannot find module`, `Network is unreachable`). | Nenhuma medição foi reescrita — a regra `[medido]` exige a saída literal. O `N2-PR5-anexos/README.md` ganhou um glossário pt-BR dessas linhas. Todo texto que não é saída de ferramenta já estava em pt-BR. |
+
+**Próxima divergência livre: 301.**
 
 Divergências abertas nesta PR, **221 a 225** (o W4-a parou em 220):
 

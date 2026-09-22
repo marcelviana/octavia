@@ -66,7 +66,8 @@ commit, com `--clear`), e o que eles medem não mudou com o conserto.
 
 **Os três que não têm dump próprio, medidos por log**: N2-D36 (entrar e
 salvar sem mudar → `write blocked op=reorder reason=nada-mudou`, zero request,
-modo fechado); `Cancelar` → zero linha `OCTAVIA:`; e o `Tentar de novo` que
+modo fechado — **a primeira forma da N2-D36, substituída pela revista: ver
+§7.1**); `Cancelar` → zero linha `OCTAVIA:`; e o `Tentar de novo` que
 reenvia **o arrasto** — com o modo em falha (estado 10), o mock foi trocado
 para `escrita` (que recomeça na ordem da fixture, `01 02 03 …`) e um toque em
 `Tentar de novo` deixou o servidor em `01 05 02 03 04 06 07`: o segundo `PUT`
@@ -165,9 +166,9 @@ a faixa do `N2-X-100`, a barra e o aviso da falha).
 2. Tab S6: `stay_on_while_plugged_in` 0 → 7 → **0**; `accelerometer_rotation`
    1 → 0 → **1**; `user_rotation` 0 → 1 → **0**.
 3. Tab S6: **modo avião** ligado para o estado 11 e desligado; `ping` de volta
-   em 16,5 ms. **Isto contraria a regra herdada da V1-PR3** — no Tab S6, "sem
-   rede" é só o override da API — e a N2-PR4 fez o mesmo (§7.4 do aparato
-   dela). Registrado como div. 290.
+   em 16,5 ms. Na hora, isto contrariava a regra herdada da V1-PR3 (no Tab
+   S6, "sem rede" era só o override da API), e a N2-PR4 fez o mesmo (§7.4 do
+   aparato dela) — div. 290. **Decidido depois pelo Marcel: ver §7.3.**
 4. AVD: estava em avião (airplane=1, wifi=0, data=0). Avião desligado e
    `svc data enable` para o §4.2(b); **restaurado** (airplane=1, data=0,
    `ping` → unreachable). `[div. 292]`
@@ -177,3 +178,66 @@ a faixa do `N2-X-100`, a barra e o aviso da falha).
 Estado final medido: Tab S6 `stay_on=0 accel=1 user_rot=0 airplane=0`,
 `reverse` vazio; AVD `airplane=1 wifi=0 data=0`; `.env` inexistente nesta
 árvore.
+
+---
+
+## 7 · Revisão (Marcel, 2026-09-22): N2-D36 revista, N2-D37, regra do avião
+
+Mesma sessão, mesma árvore, sobre `d8d6fe1`. Mesmo aparato do §2: mock na
+8788 (modo `escrita`), Metro **sem `CI=1`**, com o bundle conferido antes
+(`curl …/apps/native/index.bundle | grep -c reordenar-salvar-motivo` → `1`;
+div. 294). Mutações do §6 refeitas e desfeitas do mesmo jeito: estado final
+do Tab S6 `stay_on=0 accel=1 user_rot=0 airplane=0`, `reverse` vazio, `.env`
+ausente.
+
+### 7.1 · Estado novo — modo aberto, ordem intocada (dump `12`, PNG `12`)
+
+```
+reordenar-sair            94.7 x   48.0 @ (542.2,43.6)  en=true
+reordenar-salvar-motivo  237.8 x   21.8 @ (660.4,56.4)  txt='nada mudou desde que você abriu'
+reordenar-salvar         191.1 x   48.0 @ (922.7,43.6)  en=false
+alca-1                    48.0 x   72.0 @ (24.9,136.0)  en=true
+```
+
+Toque no `Salvar a ordem` inativo — o logcat inteiro do toque:
+
+```
+OCTAVIA: write blocked op=reorder reason=nada-mudou
+```
+
+e o modo **continuou aberto** (`alca-*` no dump seguinte). Depois de um
+`input swipe` pela alça, `reordenar-salvar` → `enabled="true"`.
+
+O título do modo trunca com o motivo na barra (`REORDENAR · ENSAIO DE R…`):
+div. 296.
+
+### 7.2 · N2-D37 — o 400 de permutação, do mock (dump `13`)
+
+Modo aberto, `input swipe` 5 → 2, e então uma música removida "por outro
+aparelho", direto no mock (`curl -X DELETE …/api/setlists/songs/<id da 3ª>`
+→ `{"success": true}`). `Salvar a ordem`:
+
+```
+OCTAVIA: api status=400 path=/api/setlists/aaaaaaaa/songs/order n=1 ms=26
+OCTAVIA: write op=reorder setlist=aaaaaaaa items=7 status=400 code=VALIDATION_ERROR ms=33
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=69
+OCTAVIA: resync kind=setlists reason=order op=reorder status=200 setlists=2 ms=73
+OCTAVIA: cache write kind=setlists n=2 invalidated=1
+```
+
+A tela depois: **seis** linhas, na ordem RELIDA (a 3ª sumiu, a 5ª voltou ao
+lugar — o arrasto foi descartado), sem `movida de`, sem "você arrastou";
+`aviso-motivo` = `Não foi possível salvar a ordem  ·  a setlist mudou — a
+ordem foi recarregada`; `aviso-acao` ausente; `Sair sem salvar` e as seis
+alças ativos; `Salvar a ordem` inativo com `nada mudou desde que você abriu`.
+
+### 7.3 · A regra do avião, decidida `[div. 290]`
+
+> *Modo avião é permitido em aceite manual quando o estado anterior é lido,
+> declarado e restaurado; o override da API continua sendo o caminho dos
+> aceites automatizados.*
+
+O estado 11 do §2 e o §4.2(b) no AVD cumprem a regra como ela ficou: nos
+dois o estado anterior foi lido antes, declarado aqui (§6.3 e §6.4) e
+restaurado, com o `ping` como prova. Também no `PRD-TELA-2.md` §8 e numa
+nota do T2-R12 (o `CLAUDE.md` não tem seção de aparato — div. 299).
