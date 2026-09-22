@@ -129,7 +129,11 @@ const REGISTROS_N2 = {
  * Os nomes que o mapa AINDA não tem, e cuja ausência é AVISO e não acusação
  * (ver o cabeçalho). **A PR que desenhar os ícones poda esta lista.**
  */
-const PENDENTES = ['nova-setlist', 'alca', 'renomear', 'apagar-setlist', 'adicionar', 'remover']
+const PENDENTES = ['alca', 'renomear', 'apagar-setlist', 'adicionar', 'remover']
+// N2-PR3 podou `nova-setlist`: o desenho entrou no mapa no commit 2 desta PR
+// (S1 ganhou o botão), e a partir daqui ele é cobrado pela regra 6 como
+// qualquer outro — elemento a elemento contra o registro dele no anexo D.
+// Restam CINCO nomes para quatro registros (o par `adicionar / remover`).
 
 /** §6.3 — cordas da tab por tamanho: quatro em 20 dp, seis nos outros. */
 const CORDAS = { em20: 4, normal: 6 }

@@ -1,0 +1,485 @@
+
+[1m[46m RUN [49m[22m [36mv4.0.16 [39m[90m/Users/marcelviana/projects/octavia-n2-pr3[39m
+
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/gates.test.ts[2m > [22mgate:a20 — nenhum literal de UI em inglês (G4)[2m > [22ma árvore de trabalho PASSA — exit 0, zero acusações[32m 62[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/gates.test.ts[2m > [22mgate:a20 — nenhum literal de UI em inglês (G4)[2m > [22mCONTROLE NEGATIVO: o `__cn__` REPROVA — exit 1, 4 acusações[32m 45[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/files-mensagem.test.ts[2m > [22ma frase que o músico lê (div. 125)[2m > [22mnenhuma mensagem crua de biblioteca chega à tela[32m 2[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/files-mensagem.test.ts[2m > [22ma frase que o músico lê (div. 125)[2m > [22mo nome do objeto do bucket NÃO vai para a tela — vai para o log[32m 1[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/files-mensagem.test.ts[2m > [22ma frase que o músico lê (div. 125)[2m > [22mo `status: NNN` continua traduzido, e sem a URL[32m 0[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/files-mensagem.test.ts[2m > [22ma frase que o músico lê (div. 125)[2m > [22ma URL some do DETALHE também no ramo genérico (regra 2 do catálogo)[32m 0[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/files-mensagem.test.ts[2m > [22ma frase que o músico lê (div. 125)[2m > [22mo que não é `Error` também não vaza[32m 0[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/files-mensagem.test.ts[2m > [22ma frase que o músico lê (div. 125)[2m > [22mCONTROLE NEGATIVO — o conjunto sabe reprovar[32m 0[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/files-mensagem.test.ts[2m > [22ma frase que o músico lê (div. 125)[2m > [22mo HOST NU entre aspas some do detalhe — div. 137[32m 0[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/files-mensagem.test.ts[2m > [22ma frase que o músico lê (div. 125)[2m > [22ma higienização não come o NOME DO ARQUIVO entre aspas[32m 0[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/files-mensagem.test.ts[2m > [22ma frase que o músico lê (div. 125)[2m > [22mCONTROLE NEGATIVO da higienização — o LIMITE é declarado, não esquecido[32m 0[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/files-mensagem.test.ts[2m > [22ma frase que o músico lê (div. 125)[2m > [22ma alternativa `file://` — e o rótulo de cada esquema[32m 0[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/files-mensagem.test.ts[2m > [22ma frase que o músico lê (div. 125)[2m > [22mum erro que nunca passou pelo `falha()` também cai no genérico[32m 0[2mms[22m[39m
+[90mstdout[2m | apps/native/test/files-saneamento.test.ts[2m > [22m[2mW1-A6 — a varredura da abertura repara o que já está no disco[2m > [22m[2mapaga o 0 byte e o truncado, e deixa o íntegro em paz
+[22m[39mOCTAVIA: file-reject name=1786218427769-partitura-1p.pdf kind=empty bytes=0 expected=-
+OCTAVIA: file-reject name=1786295844475-cifra.pdf kind=malformed bytes=2000 expected=-
+
+[90mstdout[2m | apps/native/test/files-saneamento.test.ts[2m > [22m[2mW1-A6 — a varredura da abertura repara o que já está no disco[2m > [22m[2ma ENTRADA do índice fica — é o "(1,2 MB)" que o S3e mostra (Q3)
+[22m[39mOCTAVIA: file-reject name=1786295844475-cifra.pdf kind=malformed bytes=2000 expected=-
+
+[90mstdout[2m | apps/native/test/files-integridade.test.ts[2m > [22m[2mG7 — o que está no disco só conta se estiver completo[2m > [22m[2mo arquivo íntegro continua contando — o gate não pode recusar o que é bom
+[22m[39mOCTAVIA: file src=download name=178621843-partitura-12p.pdf bytes=4000 total=4000 ms=0
+
+[90mstdout[2m | apps/native/test/files-integridade.test.ts[2m > [22m[2mG7 — o que está no disco só conta se estiver completo[2m > [22m[2mo arquivo íntegro continua contando — o gate não pode recusar o que é bom
+[22m[39mOCTAVIA: file src=disk name=178621843-partitura-12p.pdf bytes=4000
+
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/files-saneamento.test.ts[2m > [22mW1-A6 — a varredura da abertura repara o que já está no disco[2m > [22mapaga o 0 byte e o truncado, e deixa o íntegro em paz[32m 6[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/files-saneamento.test.ts[2m > [22mW1-A6 — a varredura da abertura repara o que já está no disco[2m > [22ma ENTRADA do índice fica — é o "(1,2 MB)" que o S3e mostra (Q3)[32m 2[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/files-saneamento.test.ts[2m > [22mW1-A6 — a varredura da abertura repara o que já está no disco[2m > [22mvarre o `.part` que um processo morto deixou para trás[32m 1[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/files-saneamento.test.ts[2m > [22mW1-A6 — a varredura da abertura repara o que já está no disco[2m > [22mnum disco já são, não apaga nada e não custa nada[32m 1[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/files-saneamento.test.ts[2m > [22mW1-A6 — a varredura da abertura repara o que já está no disco[2m > [22mum arquivo que não é PDF não é julgado pela forma do PDF[32m 0[2mms[22m[39m
+[90mstdout[2m | apps/native/test/files-integridade.test.ts[2m > [22m[2mW1-A1 — um download interrompido não deixa arquivo no lugar do bom[2m > [22m[2mdurante o download, o nome final ainda não existe — a promessa não mente enquanto baixa
+[22m[39mOCTAVIA: file src=download name=178621844-partitura-12p.pdf bytes=4000 total=4000 ms=4000
+
+[90mstdout[2m | apps/native/test/files-integridade.test.ts[2m > [22m[2mW1-A2 / W1-A3 — o teto é de inatividade, e a checagem é do corpo[2m > [22m[2mlento mas SEM parar termina — o download demorado não é punido
+[22m[39mOCTAVIA: file src=download name=178621847-partitura-12p.pdf bytes=4000 total=4000 ms=100000
+
+[90mstdout[2m | apps/native/test/files-integridade.test.ts[2m > [22m[2mW1-A2 / W1-A3 — o teto é de inatividade, e a checagem é do corpo[2m > [22m[2mum corpo mais curto que o `Content-Length` é recusado
+[22m[39mOCTAVIA: file-reject name=178621848-partitura-12p.pdf kind=short bytes=2000 expected=4000
+
+[90mstdout[2m | apps/native/test/files-integridade.test.ts[2m > [22m[2mW1-A2 / W1-A3 — o teto é de inatividade, e a checagem é do corpo[2m > [22m[2msem `Content-Length` (`total=-1`) o download vale pela forma do arquivo
+[22m[39mOCTAVIA: file src=download name=178621849-partitura-12p.pdf bytes=4000 total=- ms=0
+
+[90mstdout[2m | apps/native/test/files-integridade.test.ts[2m > [22m[2mW1-A2 / W1-A3 — o teto é de inatividade, e a checagem é do corpo[2m > [22m[2mum PDF sem `%%EOF` é recusado mesmo com o tamanho "certo"
+[22m[39mOCTAVIA: file-reject name=1786218410-partitura-12p.pdf kind=malformed bytes=2000 expected=2000
+
+[90mstdout[2m | apps/native/test/files-integridade.test.ts[2m > [22m[2mo índice continua sendo memória, não oráculo (div. 111)[2m > [22m[2mo tamanho lembrado sobrevive ao arquivo recusado — é o "(1,2 MB)" do S3e
+[22m[39mOCTAVIA: file src=download name=1786218411-partitura-12p.pdf bytes=4000 total=4000 ms=0
+
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/files-integridade.test.ts[2m > [22mG7 — o que está no disco só conta se estiver completo[2m > [22m(a) um arquivo de 0 byte NÃO conta como presente[32m 3[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/files-integridade.test.ts[2m > [22mG7 — o que está no disco só conta se estiver completo[2m > [22m(c) um `.part` sobrando de um download morto não conta como presente[32m 1[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/files-integridade.test.ts[2m > [22mG7 — o que está no disco só conta se estiver completo[2m > [22mo arquivo íntegro continua contando — o gate não pode recusar o que é bom[32m 3[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/files-integridade.test.ts[2m > [22mW1-A1 — um download interrompido não deixa arquivo no lugar do bom[2m > [22mdurante o download, o nome final ainda não existe — a promessa não mente enquanto baixa[32m 2[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/files-integridade.test.ts[2m > [22mW1-A1 — um download interrompido não deixa arquivo no lugar do bom[2m > [22ma conexão que MORRE no meio não deixa nada com o nome final[32m 1[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/files-integridade.test.ts[2m > [22mW1-A1 — um download interrompido não deixa arquivo no lugar do bom[2m > [22mdiv. 126 — NÃO há teto: sem sinal de progresso em voo, o download morto espera para sempre[32m 1[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/files-integridade.test.ts[2m > [22mW1-A2 / W1-A3 — o teto é de inatividade, e a checagem é do corpo[2m > [22mlento mas SEM parar termina — o download demorado não é punido[32m 2[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/files-integridade.test.ts[2m > [22mW1-A2 / W1-A3 — o teto é de inatividade, e a checagem é do corpo[2m > [22mum corpo mais curto que o `Content-Length` é recusado[32m 3[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/files-integridade.test.ts[2m > [22mW1-A2 / W1-A3 — o teto é de inatividade, e a checagem é do corpo[2m > [22msem `Content-Length` (`total=-1`) o download vale pela forma do arquivo[32m 4[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/files-integridade.test.ts[2m > [22mW1-A2 / W1-A3 — o teto é de inatividade, e a checagem é do corpo[2m > [22mum PDF sem `%%EOF` é recusado mesmo com o tamanho "certo"[32m 1[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/files-integridade.test.ts[2m > [22mo índice continua sendo memória, não oráculo (div. 111)[2m > [22mo tamanho lembrado sobrevive ao arquivo recusado — é o "(1,2 MB)" do S3e[32m 1[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/prefetch-fila.test.ts[2m > [22mdiv. 122 — um download lento não pode parar a fila[2m > [22mo quarto arquivo COMEÇA enquanto o primeiro ainda baixa[32m 8[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/prefetch-fila.test.ts[2m > [22mdiv. 122 — um download lento não pode parar a fila[2m > [22mnunca mais de três downloads ao mesmo tempo (T1-R13 passo 3)[32m 3[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/prefetch-fila.test.ts[2m > [22mdiv. 122 — um download lento não pode parar a fila[2m > [22ma ordem de INÍCIO continua sendo a do core — o que muda é a de término[32m 1[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/prefetch-fila.test.ts[2m > [22mW1-A7 — o indicador anda DURANTE o download, não só no fim[2m > [22mo callback por arquivo corre antes de o plano terminar[32m 3[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/prefetch-fila.test.ts[2m > [22mdiv. 114 — nenhuma falha de download é engolida (T1-R37)[2m > [22mtrês falhas, três linhas, e as outras continuam[32m 4[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/prefetch-fila.test.ts[2m > [22mdiv. 114 — nenhuma falha de download é engolida (T1-R37)[2m > [22ma linha de falha não carrega a URL inteira (regra 2 do catálogo)[32m 1[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/prefetch-fila.test.ts[2m > [22mdiv. 114 — nenhuma falha de download é engolida (T1-R37)[2m > [22m"Baixar esta setlist" também reporta a falha[32m 1[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/prefetch-fila.test.ts[2m > [22mdiv. 115 — a promoção não pode derrubar o sync[2m > [22muma promoção que falha vira linha, não rejeição sem dono[32m 3[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/prefetch-fila.test.ts[2m > [22mdiv. 102 — "Baixar esta setlist" grava no DURÁVEL[2m > [22mo arquivo cai em `files/`, não em `cache/`[32m 2[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/prefetch-fila.test.ts[2m > [22mdiv. 137 — o que não passa pelo `falha()` também é higienizado[2m > [22mo HOST NU entre aspas não chega ao log — era o buraco da higienização antiga[32m 1[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/prefetch-fila.test.ts[2m > [22mdiv. 137 — o que não passa pelo `falha()` também é higienizado[2m > [22ma URI `file://` continua coberta — unificar não podia custar cobertura[32m 1[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/prefetch-fila.test.ts[2m > [22mdiv. 137 — o que não passa pelo `falha()` também é higienizado[2m > [22ma URL completa continua coberta[32m 1[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/prefetch-fila.test.ts[2m > [22mdiv. 137 — o que não passa pelo `falha()` também é higienizado[2m > [22mCONTROLE NEGATIVO: o que NÃO é segredo sobrevive inteiro[32m 0[2mms[22m[39m
+ [31m×[39m [30m[42m native [49m[39m apps/native/test/gates.test.ts[2m > [22mgate:icones — o mapa contra as fontes congeladas[2m > [22mo mapa real PASSA — exit 0, zero acusações[32m 70[2mms[22m[39m
+[31m   → 
+exit=1
+  ACUSADO src/icones/dados.ts [nome] falta no mapa: "nova-setlist" (§6.4)
+  AVISO src/icones/dados.ts [pendente] "alca" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  AVISO src/icones/dados.ts [pendente] "renomear" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  AVISO src/icones/dados.ts [pendente] "apagar-setlist" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  AVISO src/icones/dados.ts [pendente] "adicionar" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  AVISO src/icones/dados.ts [pendente] "remover" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  §6.4: 34 linhas → 33 nomes distintos, + 4 fora do catálogo + 6 da tela 2 = 43 esperados
+  anexo D: 34 registros (V1) + 5 (DESIGN-N2, E17) = 39 registros · 68 elementos distintos no do V1
+  tela 2 (E17): 0/6 nomes já no mapa e cobrados · 5 declarados pendentes
+  mapa: 37 nomes · 80 elementos distintos · 37 com 'normal'
+  hex cravado: 0 · tinta por token: 6
+  §6.3 tab: em20 4 cordas · normal 6 cordas · markup de 20 dp no telas.html: idêntico
+  fora do catálogo: 4/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  PENDENTES DECLARADOS E AUSENTES — poda a lista quando desenhar (N2-D33): 5
+  acusações: 1 · avisos: 5
+: expected 1 to be +0 // Object.is equality[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/gates.test.ts[2m > [22mgate:icones — o mapa contra as fontes congeladas[2m > [22mCONTROLE NEGATIVO: o `IconesFalso` REPROVA — exit 1, 20 acusações[32m 68[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/gates.test.ts[2m > [22mgate:icones — o mapa contra as fontes congeladas[2m > [22mo catálogo é 39 registros, e os cinco do DESIGN-N2 entram nessa conta[32m 75[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/sync-t1r10.test.ts[2m > [22mT1-R10 — dois syncs sem mudança no servidor[2m > [22mo segundo loga invalidated=0 nos dois conjuntos[32m 176[2mms[22m[39m
+ [31m×[39m [30m[42m native [49m[39m apps/native/test/gates.test.ts[2m > [22mgate:icones — o mapa contra as fontes congeladas[2m > [22mos cinco nomes pendentes saem como AVISO, e o gate passa mesmo assim[32m 73[2mms[22m[39m
+[31m   → 
+exit=1
+  ACUSADO src/icones/dados.ts [nome] falta no mapa: "nova-setlist" (§6.4)
+  AVISO src/icones/dados.ts [pendente] "alca" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  AVISO src/icones/dados.ts [pendente] "renomear" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  AVISO src/icones/dados.ts [pendente] "apagar-setlist" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  AVISO src/icones/dados.ts [pendente] "adicionar" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  AVISO src/icones/dados.ts [pendente] "remover" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  §6.4: 34 linhas → 33 nomes distintos, + 4 fora do catálogo + 6 da tela 2 = 43 esperados
+  anexo D: 34 registros (V1) + 5 (DESIGN-N2, E17) = 39 registros · 68 elementos distintos no do V1
+  tela 2 (E17): 0/6 nomes já no mapa e cobrados · 5 declarados pendentes
+  mapa: 37 nomes · 80 elementos distintos · 37 com 'normal'
+  hex cravado: 0 · tinta por token: 6
+  §6.3 tab: em20 4 cordas · normal 6 cordas · markup de 20 dp no telas.html: idêntico
+  fora do catálogo: 4/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  PENDENTES DECLARADOS E AUSENTES — poda a lista quando desenhar (N2-D33): 5
+  acusações: 1 · avisos: 5
+: expected 1 to be +0 // Object.is equality[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/gates.test.ts[2m > [22mgate:icones — o mapa contra as fontes congeladas[2m > [22mCONTROLE POSITIVO da regra 6: a `alca` do CN está correta e acusa ZERO[32m 68[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/gates.test.ts[2m > [22msem-comentario.awk — o filtro do coletor do G2[2m > [22mmenção em comentário de bloco NÃO sobrevive ao filtro[32m 5[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/gates.test.ts[2m > [22msem-comentario.awk — o filtro do coletor do G2[2m > [22mmenção em comentário de linha NÃO sobrevive ao filtro[32m 6[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/gates.test.ts[2m > [22msem-comentario.awk — o filtro do coletor do G2[2m > [22mCONTROLE NEGATIVO: o que é CÓDIGO sobrevive inteiro[32m 5[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/gates.test.ts[2m > [22msem-comentario.awk — o filtro do coletor do G2[2m > [22ma guarda do esquema de URI: `https://…` não é comentário[32m 4[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/escrita.test.ts[2m > [22mT2-R9 / N2-D13 — depois de todo 2xx, o cache vem da RELEITURA[2m > [22mcriar: o GET acontece e o cache fica igual ao 200 dele (conjunto, não arquivo)[32m 188[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/escrita.test.ts[2m > [22mT2-R9 / N2-D13 — depois de todo 2xx, o cache vem da RELEITURA[2m > [22ma escrita NÃO toca o content.json (N2-D13: a releitura é só de setlists)[32m 200[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/escrita.test.ts[2m > [22mT2-R9 / N2-D13 — depois de todo 2xx, o cache vem da RELEITURA[2m > [22mnenhuma escrita grava o cache fora do caminho da releitura[32m 129[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/sync-t1r10.test.ts[2m > [22mT1-R10 — dois syncs sem mudança no servidor[2m > [22me não recria derivado nenhum: os conjuntos devolvidos são os MESMOS do anterior[32m 213[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/sync-t1r10.test.ts[2m > [22mT1-R10 — CN: o servidor devolve updated_at diferente para um item[2m > [22mcontent: invalidated=1, e o índice de busca não tem mais a versão velha[32m 258[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/escrita.test.ts[2m > [22mT2-R9 / N2-D13 — depois de todo 2xx, o cache vem da RELEITURA[2m > [22mN2-D22 — 2xx com a releitura em 500: "salvo, não relido", cache intacto, GET refeito ao reabrir[32m 132[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/escrita.test.ts[2m > [22mT2-R13 / N2-D9 — 401 numa escrita NÃO desloga[2m > [22mCONTROLE POSITIVO: no caminho de LEITURA o 401 desloga[32m 129[2mms[22m[39m
+[90mstderr[2m | apps/native/test/s1-criar.test.tsx[2m > [22m[2m(a) T2-R1 — o ato de criar existe em S1 e em S1f, com o MESMO id[2m > [22m[2mS1 com lista: o botão da barra tem testID `criar-setlist` e o rótulo do congelado
+[22m[39mIn HTML, <button> cannot be a descendant of <button>.
+This will cause a hydration error.
+
+  <SetlistsScreen setlists={[...]} contentById={Map} filesPresent={Set} baixando={Set} temCache={true} ...>
+    <View style={{flex:1, ...}}>
+      <div data-style={"{\"flex\..."} ref={null}>
+        <View>
+        <FlatList data={[...]} keyExtractor={function keyExtractor} contentContainerStyle={[...]} ...>
+          <div data-testid={undefined} data-flatlist="true">
+            <div>
+              <CartaoSetlist setlist={{id:"aaaaaa...", ...}} status={{kind:"guar...", ...}} online={true} ...>
+                <Pressable style={[...]} onPress={function onAbrir} accessibilityRole="button" testID="setlist-aa...">
+>                 <button
+>                   data-testid="setlist-aaaaaaaa"
+>                   data-style={"{\"minHeight\":132,\"flexDirection\":\"row\",\"alignItems\":\"center\",\"gap\":16,\"..."}
+>                   data-role="button"
+>                   type="button"
+>                   disabled={false}
+>                   onClick={function onClick}
+>                   ref={null}
+>                 >
+                    <View>
+                    <View style={{...}}>
+                      <div data-style={"{\"flexD..."} ref={null}>
+                        <Pressable style={[...]} onPress={function onPress} accessibilityRole="button" ...>
+>                         <button
+>                           data-testid="baixar-aaaaaaaa"
+>                           data-style={"{\"height\":58,\"paddingHorizontal\":16,\"flexDirection\":\"row\",\"alignIte..."}
+>                           data-role="button"
+>                           data-disabled="true"
+>                           type="button"
+>                           disabled={false}
+>                           onClick={function onClick}
+>                           ref={null}
+>                         >
+                        ...
+
+<button> cannot contain a nested <button>.
+See this log for the ancestor stack trace.
+
+ [31m×[39m [30m[46m native-tela [49m[39m apps/native/test/s1-criar.test.tsx[2m > [22m(a) T2-R1 — o ato de criar existe em S1 e em S1f, com o MESMO id[2m > [22mS1 com lista: o botão da barra tem testID `criar-setlist` e o rótulo do congelado[32m 97[2mms[22m[39m
+[31m   → expected null not to be null[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/sync-t1r10.test.ts[2m > [22mT1-R10 — CN: o servidor devolve updated_at diferente para um item[2m > [22msetlist renomeada no web: kind=setlists invalidated=1, e volta a 0 no sync seguinte[32m 265[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/escrita.test.ts[2m > [22mT2-R13 / N2-D9 — 401 numa escrita NÃO desloga[2m > [22mCN: na escrita o mesmo 401 duplo NÃO chama o logout, e são 2 requests[32m 256[2mms[22m[39m
+ [31m×[39m [30m[46m native-tela [49m[39m apps/native/test/s1-criar.test.tsx[2m > [22m(a) T2-R1 — o ato de criar existe em S1 e em S1f, com o MESMO id[2m > [22mS1f (vazia após sync): o MESMO `criar-setlist`, com o rótulo do estado vazio[32m 153[2mms[22m[39m
+[31m   → expected +0 to be 2 // Object.is equality[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/escrita.test.ts[2m > [22mT2-R3 / A-N2-24 — nada mudou: zero request e nenhuma linha `write op=`[2m > [22mabrir a edição e sair sem mudar nada[32m 130[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/sync-t1r10.test.ts[2m > [22mT1-R10 — CN: o servidor devolve updated_at diferente para um item[2m > [22mitem novo e item removido também invalidam (entram e saem dos derivados)[32m 254[2mms[22m[39m
+ [31m×[39m [30m[46m native-tela [49m[39m apps/native/test/s1-criar.test.tsx[2m > [22m(b) T2-R3 (i) — nome vazio: zero request, motivo visível, ZERO linha de log[2m > [22ma folha abre com `Criar` inativo, o motivo do campo mais alto, e nada sai[32m 127[2mms[22m[39m
+[31m   → sem nó com testID="criar-setlist"[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/sync-t1r10.test.ts[2m > [22mT1-R10 — CN: o servidor devolve updated_at diferente para um item[2m > [22mprimeiro sync, sem cache anterior: todo item é novo[32m 132[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/escrita.test.ts[2m > [22mT2-R3 / A-N2-24 — nada mudou: zero request e nenhuma linha `write op=`[2m > [22me um caractere mudado gera o PUT, só com o campo mudado[32m 131[2mms[22m[39m
+ [31m×[39m [30m[46m native-tela [49m[39m apps/native/test/s1-criar.test.tsx[2m > [22m(c) T2-R3 (ii) — data impossível: zero request, motivo junto do campo[2m > [22muma data que não existe no calendário barra o envio, e o nome válido não salva sozinho[32m 130[2mms[22m[39m
+[31m   → sem nó com testID="criar-setlist"[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/escrita.test.ts[2m > [22mN2-D18 — o servidor gravou e a resposta não chegou[2m > [22m"grava e corta": espécie rede, e o GET seguinte mostra o item gravado[32m 138[2mms[22m[39m
+ [31m×[39m [30m[46m native-tela [49m[39m apps/native/test/s1-criar.test.tsx[2m > [22m(d) T2-R1/T2-R9 — criar: 201, releitura, a folha fecha[2m > [22mum POST, um GET, a folha some e a setlist nova está no topo de S1[32m 136[2mms[22m[39m
+[31m   → sem nó com testID="criar-setlist"[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/escrita.test.ts[2m > [22mT2-R8 — reordenar é UM request por gesto concluído[2m > [22mmover a 8 para a 2 numa setlist de 60 sai como um PUT …/songs/order[32m 132[2mms[22m[39m
+ [31m×[39m [30m[46m native-tela [49m[39m apps/native/test/s1-criar.test.tsx[2m > [22m(e) R1·1 / N2-D18 — "grava e corta": a folha fica, com o banner[2m > [22mo digitado fica, `Tentar de novo` nasce inativo com `relendo a lista…` e depois ativa[32m 129[2mms[22m[39m
+[31m   → sem nó com testID="criar-setlist"[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/escrita.test.ts[2m > [22mT2-R10 — 404 numa escrita: relê e diz que sumiu[2m > [22mapagar uma setlist que já não existe volta relido, sem auth-failure[32m 127[2mms[22m[39m
+ [31m×[39m [30m[46m native-tela [49m[39m apps/native/test/s1-criar.test.tsx[2m > [22m(e) R1·1 / N2-D18 — "grava e corta": a folha fica, com o banner[2m > [22menquanto a releitura está em voo, `Tentar de novo` é inativo com o motivo escrito[32m 128[2mms[22m[39m
+[31m   → sem nó com testID="criar-setlist"[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/escrita.test.ts[2m > [22mT2-R12 / T2-R14 — as escritas barradas, sem request nenhum[2m > [22moffline: zero linhas `api` e `write op=`, e o motivo no log[32m 100[2mms[22m[39m
+ [31m×[39m [30m[46m native-tela [49m[39m apps/native/test/s1-criar.test.tsx[2m > [22m(f) N2-D22 / R1·2b — 201 com a releitura em 500: a linha de aviso de S1[2m > [22ma folha fecha, S1 avisa nomeando a setlist, e `Tentar recarregar` emite reason=reopen[32m 102[2mms[22m[39m
+[31m   → sem nó com testID="criar-setlist"[39m
+ [31m×[39m [30m[46m native-tela [49m[39m apps/native/test/s1-criar.test.tsx[2m > [22m(g) T2-R13 / N2-D9 — 401 numa escrita não desloga[2m > [22mo banner traz a frase do conjunto, a sessão fica e a lista continua[32m 150[2mms[22m[39m
+[31m   → sem nó com testID="criar-setlist"[39m
+ [31m×[39m [30m[46m native-tela [49m[39m apps/native/test/s1-criar.test.tsx[2m > [22m(h) T2-R14 — 429: a frase carrega o N do Retry-After[2m > [22mo prazo do servidor entra na frase, e a escrita seguinte nem sai[32m 102[2mms[22m[39m
+[31m   → sem nó com testID="criar-setlist"[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/escrita.test.ts[2m > [22mT2-R12 / T2-R14 — as escritas barradas, sem request nenhum[2m > [22m429: o prazo fecha a família inteira, e a escrita seguinte nem sai (T2-R14)[32m 251[2mms[22m[39m
+ [31m×[39m [30m[46m native-tela [49m[39m apps/native/test/s1-criar.test.tsx[2m > [22m(i-bis) T2-R2 — a data que o seletor devolve vira data-calendário local[2m > [22mT2-R2 — a data do seletor vira YYYY-MM-DD pelos componentes LOCAIS[32m 103[2mms[22m[39m
+[31m   → sem nó com testID="criar-setlist"[39m
+ [31m×[39m [30m[46m native-tela [49m[39m apps/native/test/s1-criar.test.tsx[2m > [22mR1·2a / T2-R12 — sem rede, a linha de aviso de S1 e o botão amputado[2m > [22m`Nova setlist` fica inativo com a cruz amputada, e o motivo está escrito[32m 104[2mms[22m[39m
+[31m   → sem nó com testID="aviso-motivo"[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/escrita.test.ts[2m > [22mT2-R12 / T2-R14 — as escritas barradas, sem request nenhum[2m > [22muma escrita por vez: com outra em voo, o segundo controle não gera request (T2-R11)[32m 108[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/escrita.test.ts[2m > [22mT2-R11 — a trava cobre o request, não a releitura (N2-P-relendo)[2m > [22muma segunda adição é ACEITA enquanto a releitura da primeira está em voo[33m 710[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/escrita.test.ts[2m > [22mT2-R11 — a trava cobre o request, não a releitura (N2-P-relendo)[2m > [22mduas releituras se SOBREPÕEM — e são duas, não uma enfileirada atrás da outra[33m 804[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/escrita.test.ts[2m > [22mT2-R11 — a trava cobre o request, não a releitura (N2-P-relendo)[2m > [22me o cache acaba igual ao ÚLTIMO 200, não ao último a chegar[33m 740[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/escrita.test.ts[2m > [22mregras 2 e 4 do catálogo — o que NUNCA entra no log[2m > [22mnenhuma linha nova carrega uuid inteiro, nome de setlist ou token[32m 105[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Suites 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m [30m[46m native-tela [49m[39m apps/native/test/apos-escrita.test.tsx[2m [ apps/native/test/apos-escrita.test.tsx ][22m
+[31m[1mError[22m: Failed to resolve import "../src/apos-escrita" from "apps/native/test/apos-escrita.test.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36m/Users/marcelviana/projects/octavia-n2-pr3/apps/native/test/apos-escrita.test.tsx[39m:24:0
+[33m  15 |  const __vi_import_6__ = await import("./mock");
+  16 |  const __vi_import_7__ = await import("./tela");
+  17 |  const __vi_import_8__ = await import("../src/apos-escrita");
+     |                                       ^
+  18 |  
+  19 |  [39m
+[90m [2m❯[22m TransformPluginContext._formatLog node_modules/.pnpm/vite@7.1.5_@types+node@22.18.3_jiti@2.7.0_lightningcss@1.33.0_terser@5.51.2_tsx@4.23.11_yaml@2.9.0/node_modules/vite/dist/node/chunks/dep-M_KD0XSK.js:[2m31527:43[22m[39m
+[90m [2m❯[22m TransformPluginContext.error node_modules/.pnpm/vite@7.1.5_@types+node@22.18.3_jiti@2.7.0_lightningcss@1.33.0_terser@5.51.2_tsx@4.23.11_yaml@2.9.0/node_modules/vite/dist/node/chunks/dep-M_KD0XSK.js:[2m31524:14[22m[39m
+[90m [2m❯[22m normalizeUrl node_modules/.pnpm/vite@7.1.5_@types+node@22.18.3_jiti@2.7.0_lightningcss@1.33.0_terser@5.51.2_tsx@4.23.11_yaml@2.9.0/node_modules/vite/dist/node/chunks/dep-M_KD0XSK.js:[2m29996:18[22m[39m
+[90m [2m❯[22m node_modules/.pnpm/vite@7.1.5_@types+node@22.18.3_jiti@2.7.0_lightningcss@1.33.0_terser@5.51.2_tsx@4.23.11_yaml@2.9.0/node_modules/vite/dist/node/chunks/dep-M_KD0XSK.js:[2m30054:32[22m[39m
+[90m [2m❯[22m TransformPluginContext.transform node_modules/.pnpm/vite@7.1.5_@types+node@22.18.3_jiti@2.7.0_lightningcss@1.33.0_terser@5.51.2_tsx@4.23.11_yaml@2.9.0/node_modules/vite/dist/node/chunks/dep-M_KD0XSK.js:[2m30022:4[22m[39m
+[90m [2m❯[22m EnvironmentPluginContainer.transform node_modules/.pnpm/vite@7.1.5_@types+node@22.18.3_jiti@2.7.0_lightningcss@1.33.0_terser@5.51.2_tsx@4.23.11_yaml@2.9.0/node_modules/vite/dist/node/chunks/dep-M_KD0XSK.js:[2m31325:14[22m[39m
+[90m [2m❯[22m loadAndTransform node_modules/.pnpm/vite@7.1.5_@types+node@22.18.3_jiti@2.7.0_lightningcss@1.33.0_terser@5.51.2_tsx@4.23.11_yaml@2.9.0/node_modules/vite/dist/node/chunks/dep-M_KD0XSK.js:[2m26407:26[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/15]⎯[22m[39m
+
+
+[31m⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 14 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m [30m[42m native [49m[39m apps/native/test/gates.test.ts[2m > [22mgate:icones — o mapa contra as fontes congeladas[2m > [22mo mapa real PASSA — exit 0, zero acusações
+[31m[1mAssertionError[22m: 
+exit=1
+  ACUSADO src/icones/dados.ts [nome] falta no mapa: "nova-setlist" (§6.4)
+  AVISO src/icones/dados.ts [pendente] "alca" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  AVISO src/icones/dados.ts [pendente] "renomear" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  AVISO src/icones/dados.ts [pendente] "apagar-setlist" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  AVISO src/icones/dados.ts [pendente] "adicionar" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  AVISO src/icones/dados.ts [pendente] "remover" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  §6.4: 34 linhas → 33 nomes distintos, + 4 fora do catálogo + 6 da tela 2 = 43 esperados
+  anexo D: 34 registros (V1) + 5 (DESIGN-N2, E17) = 39 registros · 68 elementos distintos no do V1
+  tela 2 (E17): 0/6 nomes já no mapa e cobrados · 5 declarados pendentes
+  mapa: 37 nomes · 80 elementos distintos · 37 com 'normal'
+  hex cravado: 0 · tinta por token: 6
+  §6.3 tab: em20 4 cordas · normal 6 cordas · markup de 20 dp no telas.html: idêntico
+  fora do catálogo: 4/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  PENDENTES DECLARADOS E AUSENTES — poda a lista quando desenhar (N2-D33): 5
+  acusações: 1 · avisos: 5
+: expected 1 to be +0 // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 0[39m
+[31m+ 1[39m
+
+[36m [2m❯[22m apps/native/test/gates.test.ts:[2m113:35[22m[39m
+    [90m111| [39m  [34mit[39m([32m'o mapa real PASSA — exit 0, zero acusações'[39m[33m,[39m () [33m=>[39m {
+    [90m112| [39m    [35mconst[39m s [33m=[39m [34mrodar[39m([32m'scripts/icones.mjs'[39m[33m,[39m [32m'src/icones/dados.ts'[39m)
+    [90m113| [39m    [34mexpect[39m(s[33m.[39mstatus[33m,[39m [34mcomSaida[39m(s))[33m.[39m[34mtoBe[39m([34m0[39m)
+    [90m   | [39m                                  [31m^[39m
+    [90m114| [39m    [34mexpect[39m([34macusacoes[39m(s[33m.[39mtexto)[33m,[39m [34mcomSaida[39m(s))[33m.[39m[34mtoBe[39m([34m0[39m)
+    [90m115| [39m  })
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/15]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[42m native [49m[39m apps/native/test/gates.test.ts[2m > [22mgate:icones — o mapa contra as fontes congeladas[2m > [22mos cinco nomes pendentes saem como AVISO, e o gate passa mesmo assim
+[31m[1mAssertionError[22m: 
+exit=1
+  ACUSADO src/icones/dados.ts [nome] falta no mapa: "nova-setlist" (§6.4)
+  AVISO src/icones/dados.ts [pendente] "alca" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  AVISO src/icones/dados.ts [pendente] "renomear" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  AVISO src/icones/dados.ts [pendente] "apagar-setlist" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  AVISO src/icones/dados.ts [pendente] "adicionar" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  AVISO src/icones/dados.ts [pendente] "remover" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  §6.4: 34 linhas → 33 nomes distintos, + 4 fora do catálogo + 6 da tela 2 = 43 esperados
+  anexo D: 34 registros (V1) + 5 (DESIGN-N2, E17) = 39 registros · 68 elementos distintos no do V1
+  tela 2 (E17): 0/6 nomes já no mapa e cobrados · 5 declarados pendentes
+  mapa: 37 nomes · 80 elementos distintos · 37 com 'normal'
+  hex cravado: 0 · tinta por token: 6
+  §6.3 tab: em20 4 cordas · normal 6 cordas · markup de 20 dp no telas.html: idêntico
+  fora do catálogo: 4/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  PENDENTES DECLARADOS E AUSENTES — poda a lista quando desenhar (N2-D33): 5
+  acusações: 1 · avisos: 5
+: expected 1 to be +0 // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 0[39m
+[31m+ 1[39m
+
+[36m [2m❯[22m apps/native/test/gates.test.ts:[2m154:35[22m[39m
+    [90m152| [39m  it('os cinco nomes pendentes saem como AVISO, e o gate passa mesmo a…
+    [90m153| [39m    [35mconst[39m s [33m=[39m [34mrodar[39m([32m'scripts/icones.mjs'[39m[33m,[39m [32m'src/icones/dados.ts'[39m)
+    [90m154| [39m    [34mexpect[39m(s[33m.[39mstatus[33m,[39m [34mcomSaida[39m(s))[33m.[39m[34mtoBe[39m([34m0[39m)
+    [90m   | [39m                                  [31m^[39m
+    [90m155| [39m    expect((s.texto.match(/AVISO .*\[pendente\]/g) ?? []).length, comS…
+    [90m156| [39m    expect(s.texto, comSaida(s)).toContain('poda a lista quando desenh…
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/15]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[46m native-tela [49m[39m apps/native/test/s1-criar.test.tsx[2m > [22m(a) T2-R1 — o ato de criar existe em S1 e em S1f, com o MESMO id[2m > [22mS1 com lista: o botão da barra tem testID `criar-setlist` e o rótulo do congelado
+[31m[1mAssertionError[22m: expected null not to be null[39m
+[36m [2m❯[22m apps/native/test/s1-criar.test.tsx:[2m160:40[22m[39m
+    [90m158| [39m    [35mawait[39m mock[33m.[39m[34mservir[39m([32m'escrita'[39m[33m,[39m [[34msetlist[39m([33mSL[39m[33m,[39m [32m'Show'[39m[33m,[39m [34m2[39m)][33m,[39m [33mBIBLIOTECA[39m)
+    [90m159| [39m    [35mawait[39m [34mmontar[39m([33m<[39m[33mS1[39m[33m.[39m[33mSetlistsScreen[39m [33m{[39m[33m...[39m([35mawait[39m [34mprops[39m())[33m}[39m [33m/[39m[33m>[39m)
+    [90m160| [39m    [34mexpect[39m([34machar[39m([32m'criar-setlist'[39m))[33m.[39mnot[33m.[39m[34mtoBeNull[39m()
+    [90m   | [39m                                       [31m^[39m
+    [90m161| [39m    [34mexpect[39m([34mtexto[39m([32m'criar-setlist'[39m))[33m.[39m[34mtoBe[39m([32m'Nova setlist'[39m)
+    [90m162| [39m    // `Buscar música` continua onde estava (a moldura N2-S1-criar: o …
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/15]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[46m native-tela [49m[39m apps/native/test/s1-criar.test.tsx[2m > [22m(a) T2-R1 — o ato de criar existe em S1 e em S1f, com o MESMO id[2m > [22mS1f (vazia após sync): o MESMO `criar-setlist`, com o rótulo do estado vazio
+[31m[1mAssertionError[22m: expected +0 to be 2 // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 2[39m
+[31m+ 0[39m
+
+[36m [2m❯[22m apps/native/test/s1-criar.test.tsx:[2m174:26[22m[39m
+    [90m172| [39m    [90m// do DESIGN-N2 diz "mesmo id nos dois".[39m
+    [90m173| [39m    const todos = [...document.querySelectorAll('[data-testid="criar-s…
+    [90m174| [39m    [34mexpect[39m(todos[33m.[39mlength)[33m.[39m[34mtoBe[39m([34m2[39m)
+    [90m   | [39m                         [31m^[39m
+    [90m175| [39m    expect(todos.map((e) => e.textContent)).toContain('Criar a primeir…
+    [90m176| [39m    [90m// Sai a frase que manda ao web (moldura N2-S1f-criar).[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/15]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[46m native-tela [49m[39m apps/native/test/s1-criar.test.tsx[2m > [22m(b) T2-R3 (i) — nome vazio: zero request, motivo visível, ZERO linha de log[2m > [22ma folha abre com `Criar` inativo, o motivo do campo mais alto, e nada sai
+[31m[1mError[22m: sem nó com testID="criar-setlist"[39m
+[36m [2m❯[22m exige apps/native/test/tela.tsx:[2m64:25[22m[39m
+    [90m 62| [39m[35mexport[39m [35mfunction[39m [34mexige[39m(testID[33m:[39m string)[33m:[39m [33mHTMLElement[39m {
+    [90m 63| [39m  [35mconst[39m e [33m=[39m [34machar[39m(testID)
+    [90m 64| [39m  [35mif[39m (e [33m===[39m [35mnull[39m) [35mthrow[39m [35mnew[39m [33mError[39m([32m`sem nó com testID="[39m[36m${[39mtestID[36m}[39m[32m"`[39m)
+    [90m   | [39m                        [31m^[39m
+    [90m 65| [39m  [35mreturn[39m e
+    [90m 66| [39m}
+[90m [2m❯[22m Module.tocar apps/native/test/tela.tsx:[2m93:16[22m[39m
+[90m [2m❯[22m apps/native/test/s1-criar.test.tsx:[2m189:11[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/15]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[46m native-tela [49m[39m apps/native/test/s1-criar.test.tsx[2m > [22m(c) T2-R3 (ii) — data impossível: zero request, motivo junto do campo[2m > [22muma data que não existe no calendário barra o envio, e o nome válido não salva sozinho
+[31m[1mError[22m: sem nó com testID="criar-setlist"[39m
+[36m [2m❯[22m exige apps/native/test/tela.tsx:[2m64:25[22m[39m
+    [90m 62| [39m[35mexport[39m [35mfunction[39m [34mexige[39m(testID[33m:[39m string)[33m:[39m [33mHTMLElement[39m {
+    [90m 63| [39m  [35mconst[39m e [33m=[39m [34machar[39m(testID)
+    [90m 64| [39m  [35mif[39m (e [33m===[39m [35mnull[39m) [35mthrow[39m [35mnew[39m [33mError[39m([32m`sem nó com testID="[39m[36m${[39mtestID[36m}[39m[32m"`[39m)
+    [90m   | [39m                        [31m^[39m
+    [90m 65| [39m  [35mreturn[39m e
+    [90m 66| [39m}
+[90m [2m❯[22m Module.tocar apps/native/test/tela.tsx:[2m93:16[22m[39m
+[90m [2m❯[22m apps/native/test/s1-criar.test.tsx:[2m227:11[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/15]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[46m native-tela [49m[39m apps/native/test/s1-criar.test.tsx[2m > [22m(d) T2-R1/T2-R9 — criar: 201, releitura, a folha fecha[2m > [22mum POST, um GET, a folha some e a setlist nova está no topo de S1
+[31m[1mError[22m: sem nó com testID="criar-setlist"[39m
+[36m [2m❯[22m exige apps/native/test/tela.tsx:[2m64:25[22m[39m
+    [90m 62| [39m[35mexport[39m [35mfunction[39m [34mexige[39m(testID[33m:[39m string)[33m:[39m [33mHTMLElement[39m {
+    [90m 63| [39m  [35mconst[39m e [33m=[39m [34machar[39m(testID)
+    [90m 64| [39m  [35mif[39m (e [33m===[39m [35mnull[39m) [35mthrow[39m [35mnew[39m [33mError[39m([32m`sem nó com testID="[39m[36m${[39mtestID[36m}[39m[32m"`[39m)
+    [90m   | [39m                        [31m^[39m
+    [90m 65| [39m  [35mreturn[39m e
+    [90m 66| [39m}
+[90m [2m❯[22m Module.tocar apps/native/test/tela.tsx:[2m93:16[22m[39m
+[90m [2m❯[22m apps/native/test/s1-criar.test.tsx:[2m257:11[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/15]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[46m native-tela [49m[39m apps/native/test/s1-criar.test.tsx[2m > [22m(e) R1·1 / N2-D18 — "grava e corta": a folha fica, com o banner[2m > [22mo digitado fica, `Tentar de novo` nasce inativo com `relendo a lista…` e depois ativa
+[31m[1mError[22m: sem nó com testID="criar-setlist"[39m
+[36m [2m❯[22m exige apps/native/test/tela.tsx:[2m64:25[22m[39m
+    [90m 62| [39m[35mexport[39m [35mfunction[39m [34mexige[39m(testID[33m:[39m string)[33m:[39m [33mHTMLElement[39m {
+    [90m 63| [39m  [35mconst[39m e [33m=[39m [34machar[39m(testID)
+    [90m 64| [39m  [35mif[39m (e [33m===[39m [35mnull[39m) [35mthrow[39m [35mnew[39m [33mError[39m([32m`sem nó com testID="[39m[36m${[39mtestID[36m}[39m[32m"`[39m)
+    [90m   | [39m                        [31m^[39m
+    [90m 65| [39m  [35mreturn[39m e
+    [90m 66| [39m}
+[90m [2m❯[22m Module.tocar apps/native/test/tela.tsx:[2m93:16[22m[39m
+[90m [2m❯[22m apps/native/test/s1-criar.test.tsx:[2m286:11[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/15]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[46m native-tela [49m[39m apps/native/test/s1-criar.test.tsx[2m > [22m(e) R1·1 / N2-D18 — "grava e corta": a folha fica, com o banner[2m > [22menquanto a releitura está em voo, `Tentar de novo` é inativo com o motivo escrito
+[31m[1mError[22m: sem nó com testID="criar-setlist"[39m
+[36m [2m❯[22m exige apps/native/test/tela.tsx:[2m64:25[22m[39m
+    [90m 62| [39m[35mexport[39m [35mfunction[39m [34mexige[39m(testID[33m:[39m string)[33m:[39m [33mHTMLElement[39m {
+    [90m 63| [39m  [35mconst[39m e [33m=[39m [34machar[39m(testID)
+    [90m 64| [39m  [35mif[39m (e [33m===[39m [35mnull[39m) [35mthrow[39m [35mnew[39m [33mError[39m([32m`sem nó com testID="[39m[36m${[39mtestID[36m}[39m[32m"`[39m)
+    [90m   | [39m                        [31m^[39m
+    [90m 65| [39m  [35mreturn[39m e
+    [90m 66| [39m}
+[90m [2m❯[22m Module.tocar apps/native/test/tela.tsx:[2m93:16[22m[39m
+[90m [2m❯[22m apps/native/test/s1-criar.test.tsx:[2m313:11[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/15]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[46m native-tela [49m[39m apps/native/test/s1-criar.test.tsx[2m > [22m(f) N2-D22 / R1·2b — 201 com a releitura em 500: a linha de aviso de S1[2m > [22ma folha fecha, S1 avisa nomeando a setlist, e `Tentar recarregar` emite reason=reopen
+[31m[1mError[22m: sem nó com testID="criar-setlist"[39m
+[36m [2m❯[22m exige apps/native/test/tela.tsx:[2m64:25[22m[39m
+    [90m 62| [39m[35mexport[39m [35mfunction[39m [34mexige[39m(testID[33m:[39m string)[33m:[39m [33mHTMLElement[39m {
+    [90m 63| [39m  [35mconst[39m e [33m=[39m [34machar[39m(testID)
+    [90m 64| [39m  [35mif[39m (e [33m===[39m [35mnull[39m) [35mthrow[39m [35mnew[39m [33mError[39m([32m`sem nó com testID="[39m[36m${[39mtestID[36m}[39m[32m"`[39m)
+    [90m   | [39m                        [31m^[39m
+    [90m 65| [39m  [35mreturn[39m e
+    [90m 66| [39m}
+[90m [2m❯[22m Module.tocar apps/native/test/tela.tsx:[2m93:16[22m[39m
+[90m [2m❯[22m apps/native/test/s1-criar.test.tsx:[2m330:11[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/15]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[46m native-tela [49m[39m apps/native/test/s1-criar.test.tsx[2m > [22m(g) T2-R13 / N2-D9 — 401 numa escrita não desloga[2m > [22mo banner traz a frase do conjunto, a sessão fica e a lista continua
+[31m[1mError[22m: sem nó com testID="criar-setlist"[39m
+[36m [2m❯[22m exige apps/native/test/tela.tsx:[2m64:25[22m[39m
+    [90m 62| [39m[35mexport[39m [35mfunction[39m [34mexige[39m(testID[33m:[39m string)[33m:[39m [33mHTMLElement[39m {
+    [90m 63| [39m  [35mconst[39m e [33m=[39m [34machar[39m(testID)
+    [90m 64| [39m  [35mif[39m (e [33m===[39m [35mnull[39m) [35mthrow[39m [35mnew[39m [33mError[39m([32m`sem nó com testID="[39m[36m${[39mtestID[36m}[39m[32m"`[39m)
+    [90m   | [39m                        [31m^[39m
+    [90m 65| [39m  [35mreturn[39m e
+    [90m 66| [39m}
+[90m [2m❯[22m Module.tocar apps/native/test/tela.tsx:[2m93:16[22m[39m
+[90m [2m❯[22m apps/native/test/s1-criar.test.tsx:[2m359:11[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/15]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[46m native-tela [49m[39m apps/native/test/s1-criar.test.tsx[2m > [22m(h) T2-R14 — 429: a frase carrega o N do Retry-After[2m > [22mo prazo do servidor entra na frase, e a escrita seguinte nem sai
+[31m[1mError[22m: sem nó com testID="criar-setlist"[39m
+[36m [2m❯[22m exige apps/native/test/tela.tsx:[2m64:25[22m[39m
+    [90m 62| [39m[35mexport[39m [35mfunction[39m [34mexige[39m(testID[33m:[39m string)[33m:[39m [33mHTMLElement[39m {
+    [90m 63| [39m  [35mconst[39m e [33m=[39m [34machar[39m(testID)
+    [90m 64| [39m  [35mif[39m (e [33m===[39m [35mnull[39m) [35mthrow[39m [35mnew[39m [33mError[39m([32m`sem nó com testID="[39m[36m${[39mtestID[36m}[39m[32m"`[39m)
+    [90m   | [39m                        [31m^[39m
+    [90m 65| [39m  [35mreturn[39m e
+    [90m 66| [39m}
+[90m [2m❯[22m Module.tocar apps/native/test/tela.tsx:[2m93:16[22m[39m
+[90m [2m❯[22m apps/native/test/s1-criar.test.tsx:[2m382:11[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/15]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[46m native-tela [49m[39m apps/native/test/s1-criar.test.tsx[2m > [22m(i-bis) T2-R2 — a data que o seletor devolve vira data-calendário local[2m > [22mT2-R2 — a data do seletor vira YYYY-MM-DD pelos componentes LOCAIS
+[31m[1mError[22m: sem nó com testID="criar-setlist"[39m
+[36m [2m❯[22m exige apps/native/test/tela.tsx:[2m64:25[22m[39m
+    [90m 62| [39m[35mexport[39m [35mfunction[39m [34mexige[39m(testID[33m:[39m string)[33m:[39m [33mHTMLElement[39m {
+    [90m 63| [39m  [35mconst[39m e [33m=[39m [34machar[39m(testID)
+    [90m 64| [39m  [35mif[39m (e [33m===[39m [35mnull[39m) [35mthrow[39m [35mnew[39m [33mError[39m([32m`sem nó com testID="[39m[36m${[39mtestID[36m}[39m[32m"`[39m)
+    [90m   | [39m                        [31m^[39m
+    [90m 65| [39m  [35mreturn[39m e
+    [90m 66| [39m}
+[90m [2m❯[22m Module.tocar apps/native/test/tela.tsx:[2m93:16[22m[39m
+[90m [2m❯[22m apps/native/test/s1-criar.test.tsx:[2m405:11[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/15]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[46m native-tela [49m[39m apps/native/test/s1-criar.test.tsx[2m > [22mR1·2a / T2-R12 — sem rede, a linha de aviso de S1 e o botão amputado[2m > [22m`Nova setlist` fica inativo com a cruz amputada, e o motivo está escrito
+[31m[1mError[22m: sem nó com testID="aviso-motivo"[39m
+[36m [2m❯[22m exige apps/native/test/tela.tsx:[2m64:25[22m[39m
+    [90m 62| [39m[35mexport[39m [35mfunction[39m [34mexige[39m(testID[33m:[39m string)[33m:[39m [33mHTMLElement[39m {
+    [90m 63| [39m  [35mconst[39m e [33m=[39m [34machar[39m(testID)
+    [90m 64| [39m  [35mif[39m (e [33m===[39m [35mnull[39m) [35mthrow[39m [35mnew[39m [33mError[39m([32m`sem nó com testID="[39m[36m${[39mtestID[36m}[39m[32m"`[39m)
+    [90m   | [39m                        [31m^[39m
+    [90m 65| [39m  [35mreturn[39m e
+    [90m 66| [39m}
+[90m [2m❯[22m Module.texto apps/native/test/tela.tsx:[2m79:11[22m[39m
+[90m [2m❯[22m apps/native/test/s1-criar.test.tsx:[2m428:12[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/15]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m3 failed[39m[22m[2m | [22m[1m[32m6 passed[39m[22m[90m (9)[39m
+[2m      Tests [22m [1m[31m14 failed[39m[22m[2m | [22m[1m[32m73 passed[39m[22m[90m (87)[39m
+[2m   Start at [22m 08:33:23
+[2m   Duration [22m 4.95s[2m (transform 1.16s, setup 0ms, import 1.40s, tests 8.23s, environment 888ms)[22m
+

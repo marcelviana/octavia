@@ -120,13 +120,12 @@ git rev-parse --verify --quiet "$BASE^{commit}" >/dev/null || uso "<base> nao re
 #       juntos e a releitura da escrita não lê content. A linha
 #       `cache write kind=setlists …` é a MESMA, byte a byte: ela mudou de
 #       função e não de texto, e por isso o G3 não precisa de errata.
-EXCECOES='packages/core/src/escrita.ts
-packages/core/src/validacao.ts
-packages/core/src/frases.ts
-packages/core/src/index.ts
-apps/native/src/escrita.ts
-apps/native/src/api.ts
-apps/native/src/store.ts'
+EXCECOES='packages/core/src/frases.ts
+apps/native/App.tsx
+apps/native/src/icones/dados.ts
+apps/native/src/screens/SetlistsScreen.tsx
+apps/native/src/screens/FolhaDeCriar.tsx
+apps/native/src/screens/LinhaDeAviso.tsx'
 
 listar() {
   if [ "$1" = "WORKTREE" ]; then

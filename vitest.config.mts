@@ -88,6 +88,48 @@ export default defineConfig({
           },
         },
       },
+      // N2-PR3 (commit 1): o QUARTO projeto — as telas do nativo.
+      //
+      // Até aqui NENHUM teste renderizava uma tela: o projeto `native` acima
+      // coleta só `.ts` em ambiente `node`, e é por isso que o
+      // `PRD-TELA-2.md` repete "a parte da TELA é das PRs 3–7" requisito a
+      // requisito. Este projeto coleta os `.tsx` do mesmo diretório, em
+      // `jsdom`, com o `react-dom` 19.2.3 que JÁ é devDependency de
+      // `apps/native` — **nenhuma dependência nova** (o `react-test-renderer`
+      // está deprecado no React 19 e não foi instalado).
+      //
+      // Os três aliases são os módulos que não existem fora do Metro ou do
+      // aparelho: `react-native` (fonte com tipos Flow, que o esbuild do Vite
+      // não analisa), `react-native-svg` e o `datetimepicker`, que é NATIVO.
+      // O `testID` vira `data-testid`, que é a mesma correspondência que o
+      // `uiautomator` faz no aparelho (`testID` → `resource-id`).
+      //
+      // O que este projeto NÃO mede: geometria. Os 190 × 57,8 do botão e os
+      // 48 dp da linha de aviso são do dump do aparelho, como sempre nesta
+      // série — aqui se mede qual nó existe, com que id, com que texto,
+      // ativo ou inativo, e o que acontece ao toque.
+      {
+        test: {
+          name: 'native-tela',
+          environment: 'jsdom',
+          setupFiles: [],
+          globals: false,
+          include: ['apps/native/test/**/*.test.tsx'],
+          exclude: ['node_modules/**'],
+        },
+        esbuild: { jsx: 'automatic' },
+        resolve: {
+          alias: {
+            'expo-file-system': path.resolve(__dirname, 'apps/native/test/fake-expo-file-system.ts'),
+            'react-native-svg': path.resolve(__dirname, 'apps/native/test/fake-react-native-svg.tsx'),
+            'react-native': path.resolve(__dirname, 'apps/native/test/fake-react-native.tsx'),
+            '@react-native-community/datetimepicker': path.resolve(
+              __dirname,
+              'apps/native/test/fake-datetimepicker.tsx',
+            ),
+          },
+        },
+      },
     ],
     coverage: {
       enabled: false, // Disabled by default - use test:coverage script to enable
