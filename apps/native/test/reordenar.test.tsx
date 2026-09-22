@@ -235,7 +235,9 @@ describe('(a) N2-D27 / N2-S2e-reordenar — `Reordenar` entra no modo de coluna 
     expect(tela).toContain('arraste pela alça · a ordem só é salva no fim')
     expect(texto('reordenar-sair')).toBe('Cancelar')
     expect(texto('reordenar-salvar')).toBe('Salvar a ordem')
-    expect(inativo('reordenar-salvar')).toBe(false)
+    // N2-D36 revista: ao abrir, a ordem é a do servidor — inativo, com o motivo.
+    expect(inativo('reordenar-salvar')).toBe(true)
+    expect(texto('reordenar-salvar-motivo')).toBe('nada mudou desde que você abriu')
 
     for (const n of [1, 2, 3, 4, 5]) {
       expect(achar(`alca-${n}`)).not.toBeNull()
@@ -371,32 +373,94 @@ describe('(c) `Cancelar` devolve a ordem do servidor sem escrever nada', () => {
 
 // ------------------------------------------- (d) N2-D36, nada mudou
 
-describe('(d) N2-D36 — `Salvar a ordem` com a ordem inalterada fecha o modo sem request', () => {
-  it('entrar e salvar: zero request e `write blocked op=reorder reason=nada-mudou`', async () => {
+describe('(d) N2-D36 revista — `Salvar a ordem` INATIVO enquanto a ordem é a do servidor', () => {
+  /**
+   * A primeira forma da N2-D36 (commit 2) fechava o modo sem request. A
+   * revista (Marcel, 2026-09-22; div. 276) é a leitura do formulário: o botão
+   * nasce inativo com o motivo escrito ao lado (N2-D23), e o toque nele não
+   * fecha nada — só deixa a linha `write blocked … nada-mudou`.
+   */
+  it('entrar: inativo com o motivo; tocar: zero request, `nada-mudou`, e o modo FICA', async () => {
     await mock.servir('escrita', [setlistDe(5)], BIBLIOTECA)
     await montar(<S2.IndexScreen {...(await props())} />)
     await tocar('reordenar')
+    expect(inativo('reordenar-salvar')).toBe(true)
+    expect(texto('reordenar-salvar-motivo')).toBe('nada mudou desde que você abriu')
+
     await tocar('reordenar-salvar')
     await assentar(30)
-
     expect(so('api')).toEqual([])
     expect(so('write op=')).toEqual([])
     expect(so('write blocked')).toEqual(['write blocked op=reorder reason=nada-mudou'])
-    expect(achar('alca-1')).toBeNull()
-    expect(achar('song-1')).not.toBeNull()
+    expect(achar('alca-1')).not.toBeNull()
   })
 
-  it('arrastar e devolver também é "nada mudou"', async () => {
+  it('ativa ao primeiro movimento, e volta a inativo quando o arrasto devolve a ordem', async () => {
     await mock.servir('escrita', [setlistDe(5)], BIBLIOTECA)
     await montar(<S2.IndexScreen {...(await props())} />)
     await tocar('reordenar')
     await arrastar(5, 2)
+    expect(inativo('reordenar-salvar')).toBe(false)
+    expect(achar('reordenar-salvar-motivo')).toBeNull()
+
     await arrastar(2, 5)
+    expect(inativo('reordenar-salvar')).toBe(true)
+    expect(texto('reordenar-salvar-motivo')).toBe('nada mudou desde que você abriu')
     await tocar('reordenar-salvar')
     await assentar(30)
-
     expect(so('api')).toEqual([])
     expect(so('write blocked')).toEqual(['write blocked op=reorder reason=nada-mudou'])
+  })
+})
+
+// ------------------------------------ (e0) N2-D37, o 400 de permutação
+
+describe('(e0) N2-D37 — 400 de permutação inválida: o arrasto é DESCARTADO e a lista é a relida', () => {
+  /**
+   * O contrato não tem código próprio para isto: o `OB601` da RPC sai como
+   * `400 VALIDATION_ERROR` com `details[].field = "order"` (`SETLISTS.md`
+   * §order; `lib/rpc-errors.ts:23`). No `reorder` o core já o classifica como
+   * `ordem-mudou` — *"a setlist mudou — a ordem foi recarregada"* —, e a N2-D37
+   * faz a frase ser verdade: a tela mostra a ordem relida (div. 295).
+   *
+   * O 400 aqui é REAL no mock: outro aparelho remove uma música depois que o
+   * modo abriu, e o arrasto deixa de ser permutação da setlist.
+   */
+  it('lista = releitura, sem "movida de", aviso com a frase, sem `Tentar de novo`; alça e `Sair sem salvar` ficam', async () => {
+    await mock.servir('escrita', [setlistDe(5)], BIBLIOTECA)
+    await montar(<S2.IndexScreen {...(await props())} />)
+    await tocar('reordenar')
+    await arrastar(5, 2)
+
+    // "Outro aparelho" tira a música 3 — direto no mock, fora do app.
+    const porta = new URL(process.env.EXPO_PUBLIC_API_BASE_URL ?? '').port
+    await globalThis.fetch(`http://127.0.0.1:${porta}/api/setlists/songs/${ss(3)}`, { method: 'DELETE' })
+    linhas = []
+
+    await tocar('reordenar-salvar')
+    await assentar(80)
+    expect(so('write op=reorder')[0]).toMatch(/ items=5 status=400 code=VALIDATION_ERROR /)
+    expect(so('resync kind=setlists')[0]).toMatch(/^resync kind=setlists reason=order op=reorder status=200/)
+
+    // A lista é a RELIDA: quatro linhas, na ordem do servidor, sem rótulo.
+    expect(achar('alca-4')).not.toBeNull()
+    expect(achar('alca-5')).toBeNull()
+    expect(linhaDaAlca(2).textContent).toContain('Segunda')
+    expect(linhaDaAlca(3).textContent).toContain('Quarta')
+    expect(textoDaTela()).not.toContain('movida de')
+    // O aviso diz o que o servidor disse, e não promete o que não é verdade.
+    const aviso = texto('aviso-motivo')
+    expect(aviso).toContain('Não foi possível salvar a ordem')
+    expect(aviso).toContain('a setlist mudou — a ordem foi recarregada')
+    expect(aviso).not.toContain('a ordem dela não foi aplicada aqui')
+    expect(textoDaTela()).not.toContain('a ordem abaixo é a que você arrastou')
+    // Sem `Tentar de novo` — nem na linha, nem na barra.
+    expect(achar('aviso-acao')).toBeNull()
+    expect(texto('reordenar-salvar')).not.toBe('Tentar de novo')
+    expect(inativo('reordenar-salvar')).toBe(true)
+    // `Sair sem salvar` e a alça continuam.
+    expect(texto('reordenar-sair')).toBe('Sair sem salvar')
+    expect(inativo('alca-1')).toBe(false)
   })
 })
 

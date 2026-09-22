@@ -1,0 +1,29 @@
+# N2-PR5 (revisão) — os CNs da N2-D36 revista e da N2-D37 contra o commit a46d8ca
+
+$ npx vitest run --project native-tela apps/native/test/reordenar.test.tsx
+     ✓ a faixa ganha o terceiro controle, e os dois da PR-4 continuam 149ms
+     × o modo: barra própria, linhas de 72 com alça de 48 × 72, grade e `remover` ausentes 155ms
+     ✓ durante o gesto: rótulo, buraco, nenhuma renumeração e NADA escrito 159ms
+     ✓ salvar: um `PUT`, `write op=reorder … status=200`, releitura, modo fechado 265ms
+     ✓ zero request, zero linha de escrita, grade de volta na ordem de antes 267ms
+     ✓ o voltar do sistema é o `Cancelar`: sai do modo, e não da tela 215ms
+     × entrar: inativo com o motivo; tocar: zero request, `nada-mudou`, e o modo FICA 142ms
+     × ativa ao primeiro movimento, e volta a inativo quando o arrasto devolve a ordem 177ms
+     × lista = releitura, sem "movida de", aviso com a frase, sem `Tentar de novo`; alça e `Sair sem salvar` ficam 306ms
+     ✓ aviso, "movida de 5", releitura atrás do modo, e `Tentar de novo` reenvia O ARRASTO  355ms
+     ✓ `Sair sem salvar` descarta o arrasto: a grade volta com a ordem do servidor  311ms
+     ✓ `sumiu`, com a lista da releitura entregue antes da saída 276ms
+     ✓ 101 músicas: só `Reordenar` inativa, a linha de aviso diz por quê, zero request 245ms
+     ✓ 100 músicas ainda reordena 191ms
+     ✓ desenho amputado, a frase de sem rede, e o toque não abre o modo 185ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  |native-tela| apps/native/test/reordenar.test.tsx > (a) N2-D27 / N2-S2e-reordenar — `Reordenar` entra no modo de coluna única > o modo: barra própria, linhas de 72 com alça de 48 × 72, grade e `remover` ausentes
+AssertionError: expected false to be true // Object.is equality
+ ❯ apps/native/test/reordenar.test.tsx:239:41
+AssertionError: expected false to be true // Object.is equality
+ ❯ apps/native/test/reordenar.test.tsx:387:41
+AssertionError: expected false to be true // Object.is equality
+ ❯ apps/native/test/reordenar.test.tsx:407:41
+AssertionError: expected <div data-testid="alca-5" …(3)>…(1)</div> to be null
+ ❯ apps/native/test/reordenar.test.tsx:447:29
+      Tests  4 failed | 11 passed (15)

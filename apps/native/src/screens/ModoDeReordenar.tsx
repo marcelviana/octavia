@@ -40,6 +40,7 @@ import {
   alvoDoArrasto,
   deParaPosicao,
   frase,
+  mesmaOrdem,
   movidaDe,
   mover,
   resolveSong,
@@ -264,7 +265,15 @@ export function ModoDeReordenar({
   // A ordem arrastada nasce da setlist e NÃO acompanha as props (R2·1).
   const [ordem, setOrdem] = useState<SetlistSongDTO[]>(() => ordenadas(setlist))
   /** Posição no servidor de cada linha quando o modo abriu — o "de" do "movida de 5". */
-  const [origem] = useState(() => new Map(ordenadas(setlist).map((s) => [s.id, s.position])))
+  const [origem, setOrigem] = useState(() => new Map(ordenadas(setlist).map((s) => [s.id, s.position])))
+  /**
+   * A setlist como a ÚLTIMA releitura deste modo a trouxe — ou `null`, e aí
+   * vale a das props. É contra ela que o "nada mudou" se mede (N2-D36): depois
+   * de uma falha, "a ordem do servidor" é a relida, não a de quando o modo abriu.
+   */
+  const [relidaAqui, setRelidaAqui] = useState<SetlistDTO | null>(null)
+  /** N2-D37 — o 400 de permutação descartou o arrasto e pôs a relida na tela. */
+  const [descartado, setDescartado] = useState(false)
   /** As linhas que o músico arrastou — só elas levam o "movida de". */
   const [arrastadas, setArrastadas] = useState<ReadonlySet<string>>(() => new Set())
   const [arrasto, setArrasto] = useState<Arrasto | null>(null)
@@ -365,28 +374,58 @@ export function ModoDeReordenar({
 
   // -------------------------------------------------------------- escrita
   /** A releitura da regra 3, com o `reason=order`: atualiza ATRÁS do modo. */
-  const reler = useCallback(async () => {
-    setReleitura('relendo')
-    const r = await relerPelaOrdem(estado)
-    if (r.setlists !== null) aoRelerAtras(r.setlists, r.syncedAtMs)
-    setReleitura(r.leu ? 'ok' : 'falhou')
-  }, [estado, aoRelerAtras])
+  const reler = useCallback(
+    async (descartar: boolean) => {
+      setReleitura('relendo')
+      const r = await relerPelaOrdem(estado)
+      const nova = r.setlists?.find((s) => s.id === setlist.id) ?? null
+      if (r.setlists !== null) aoRelerAtras(r.setlists, r.syncedAtMs)
+      if (nova !== null) {
+        setRelidaAqui(nova)
+        /**
+         * **N2-D37** (div. 289): o 400 de permutação inválida — no contrato,
+         * `VALIDATION_ERROR` com `details[].field = "order"`, que o core chama
+         * de `ordem-mudou` (div. 295) — quer dizer que a setlist mudou atrás
+         * do modo: o arrasto já não é permutação dela, e reenviá-lo daria 400
+         * para sempre. A tela DESCARTA o arrasto e mostra a ordem relida, e a
+         * frase do servidor ("a ordem foi recarregada") passa a ser verdade.
+         * Para todo outro erro, a R2·1 vale como está.
+         */
+        if (descartar) {
+          const relidas = ordenadas(nova)
+          setOrdem(relidas)
+          setOrigem(new Map(relidas.map((s) => [s.id, s.position])))
+          setArrastadas(new Set())
+          setDescartado(true)
+        }
+      }
+      setReleitura(r.leu ? 'ok' : 'falhou')
+    },
+    [estado, setlist.id, aoRelerAtras],
+  )
+
+  const doServidor = relidaAqui ?? setlist
+  /** N2-D36 revista: a ordem na tela é a do servidor → `Salvar a ordem` inativo. */
+  const nadaMudou = mesmaOrdem(
+    ordenadas(doServidor).map((s) => s.id),
+    ordem.map((s) => s.id),
+  )
 
   const salvar = useCallback(async () => {
     if (salvando || !online) return
     const preparo = prepararReordenacao(
       setlist.id,
-      ordenadas(setlist).map((s) => s.id),
+      ordenadas(doServidor).map((s) => s.id),
       ordem.map((s) => s.id),
     )
-    // N2-D36: a ordem inalterada fecha o modo como o `Cancelar` — sem request.
-    if (!preparo.enviar) {
-      aoFechar()
-      return
-    }
+    // N2-D36 revista: o toque no `Salvar a ordem` inativo não fecha nada —
+    // deixa a linha `write blocked … nada-mudou` (quem a escreve é o
+    // `prepararReordenacao`) e o modo continua, como o formulário.
+    if (!preparo.enviar) return
     setFase('salvando')
     setFalha(null)
     setReleitura(null)
+    setDescartado(false)
     const saida = await escrever(preparo.pedido, estado, { contexto: 'setlist' })
     const { especie } = saida.resultado
     if (especie === 'ok') {
@@ -405,8 +444,8 @@ export function ModoDeReordenar({
     // `Tentar de novo` ficar ativo (regra 3).
     setFalha(saida.resultado)
     setFase('falhou')
-    await reler()
-  }, [salvando, online, setlist, ordem, estado, aoFechar, aoSalvar, aoSalvoNaoRelido, aoSumir, reler])
+    await reler(saida.resultado.chave === 'ordem-mudou')
+  }, [salvando, online, setlist.id, doServidor, ordem, estado, aoSalvar, aoSalvoNaoRelido, aoSumir, reler])
 
   // O voltar do sistema é o `Cancelar` / `Sair sem salvar`. Durante o
   // salvamento ele é engolido: o `Cancelar` some de propósito (regra 1), e
@@ -425,6 +464,8 @@ export function ModoDeReordenar({
 
   // ----------------------------------------------------------------- tela
   const falhou = fase === 'falhou'
+  /** A falha que PRESERVA o arrasto (R2·1) — todas, menos a da N2-D37. */
+  const comArrasto = falhou && !descartado
   const relendo = releitura === 'relendo'
   const releituraFalhou = releitura === 'falhou'
   const alcaAtiva = !salvando
@@ -436,9 +477,11 @@ export function ModoDeReordenar({
     // As três orações da moldura `N2-S2e-ordem-falhou`; a terceira só depois
     // da releitura — antes dela seria promessa sobre uma leitura em voo.
     const oracoes = [frase('falhou-ordem'), falha.frase]
-    if (releitura === 'ok') oracoes.push(frase('ordem-relida'))
+    // "a ordem dela não foi aplicada aqui" seria mentira depois da N2-D37,
+    // que aplicou exatamente a ordem relida.
+    if (releitura === 'ok' && !descartado) oracoes.push(frase('ordem-relida'))
     return { icone: 'falha', cor: dark.errorInk, motivo: oracoes.join('  ·  ') }
-  }, [online, falha, releitura])
+  }, [online, falha, releitura, descartado])
 
   const deslocamentoDe = (i: number): number => {
     if (arrasto === null) return 0
@@ -449,8 +492,11 @@ export function ModoDeReordenar({
     return 0
   }
 
-  const principalInativo = salvando || relendo || !online
-  const rotuloPrincipal = falhou ? (releituraFalhou ? 'Tentar recarregar' : 'Tentar de novo') : 'Salvar a ordem'
+  /** `Tentar recarregar` relê, não escreve — o "nada mudou" não o alcança. */
+  const recarregar = comArrasto && releituraFalhou
+  const semMudanca = nadaMudou && !recarregar
+  const principalInativo = salvando || relendo || !online || semMudanca
+  const rotuloPrincipal = comArrasto ? (releituraFalhou ? 'Tentar recarregar' : 'Tentar de novo') : 'Salvar a ordem'
 
   return (
     <View style={styles.tela}>
@@ -466,7 +512,7 @@ export function ModoDeReordenar({
             </View>
           ) : (
             <Text style={styles.apoio} numberOfLines={1}>
-              {frase(falhou ? 'ordem-arrastada' : 'reordenar-apoio')}
+              {frase(comArrasto ? 'ordem-arrastada' : 'reordenar-apoio')}
             </Text>
           )}
         </View>
@@ -481,22 +527,30 @@ export function ModoDeReordenar({
           <Text style={styles.motivoInativo} testID="reordenar-motivo">
             {frase('relendo')}
           </Text>
+        ) : semMudanca && !salvando ? (
+          // N2-D36 revista / N2-D23: o motivo do inativo, escrito ao lado — a
+          // MESMA frase do formulário (T2-R3 (iii)), sem redação nova.
+          <Text style={styles.motivoInativo} testID="reordenar-salvar-motivo">
+            {frase('nada-mudou')}
+          </Text>
         ) : null}
         <Pressable
           style={[
-            falhou ? styles.vazado : styles.cheio,
+            comArrasto ? styles.vazado : styles.cheio,
             principalInativo ? styles.inativo : null,
           ]}
           onPress={() => {
-            if (principalInativo) return
-            if (falhou && releituraFalhou) void reler()
+            // O toque no inativo por "nada mudou" RODA: é ele que deixa a linha
+            // `write blocked … nada-mudou` (o mesmo do `BotaoCheio` da folha).
+            if (salvando || relendo || !online) return
+            if (recarregar) void reler(false)
             else void salvar()
           }}
           accessibilityRole="button"
           accessibilityState={{ disabled: principalInativo }}
           testID="reordenar-salvar"
         >
-          {falhou ? (
+          {comArrasto ? (
             <Icone
               nome="tentar-novamente"
               tamanho={24}
@@ -515,7 +569,7 @@ export function ModoDeReordenar({
           )}
           <Text
             style={[
-              falhou ? styles.vazadoTexto : styles.cheioTexto,
+              comArrasto ? styles.vazadoTexto : styles.cheioTexto,
               principalInativo ? styles.inativoTexto : null,
             ]}
           >
@@ -559,7 +613,7 @@ export function ModoDeReordenar({
             const deOnde = origem.get(song.id)
             const rotulo = erguida
               ? deParaPosicao(i + 1, (arrasto?.alvo ?? i) + 1)
-              : falhou && arrastadas.has(song.id) && deOnde !== undefined && deOnde !== i + 1
+              : comArrasto && arrastadas.has(song.id) && deOnde !== undefined && deOnde !== i + 1
                 ? movidaDe(deOnde)
                 : null
             return (
