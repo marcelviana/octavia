@@ -1,0 +1,131 @@
+N2-PR4 §4.2 — prod, conta principal, Tab S6 online
+===================================================
+
+  aparelho     RX2N8000F3D (SM-T865, Android 12), 2560x1600 @ 360 dpi → 2,25
+  conta        uid xVDJRBh1WpPOatbfWahOLttYn1E3 — a conta PRINCIPAL, a mesma
+               da N2-PR3 §4.2 (`N2-PR3-anexos/device-prod.txt:7`)
+  base         a URL de prod do `.env` (o Metro subiu SEM override inline)
+  bundle       Metro na 8081 sobre a árvore `n2/pr4-s2-edicao`
+  data         2026-09-22
+  objeto       a setlist `N2-PR3 aceite`, criada pelo nativo na PR-3 e
+               povoada com UMA música pelo web (o Marcel), como o roteiro
+               desta PR pede
+  escritas     TRÊS, nesta ordem, uma de cada vez
+
+  Rotação travada em landscape para todo o §4 (`user_rotation 1`); o valor
+  original do aparelho está na lista de mutações do `aparato.md` §7.
+
+---------------------------------------------------------------- abertura
+
+OCTAVIA: net online
+OCTAVIA: auth uid=xVDJRBh1WpPOatbfWahOLttYn1E3 src=restored
+OCTAVIA: cache hit kind=setlists n=2
+OCTAVIA: cache hit kind=content n=4
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=3734
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=485
+OCTAVIA: cache write kind=setlists n=3 invalidated=5
+OCTAVIA: cache write kind=content n=63 invalidated=67
+OCTAVIA: sync ok setlists=3 content=63 pages=1 t=4302
+OCTAVIA: prefetch plan n=0 reason=7d
+
+  O `invalidated=5` e o `=67` são a troca do cache do MOCK (2 setlists
+  sintéticas, 4 contents) pelo de prod (3 setlists, 63 contents) — é o §4.1
+  que acabou de rodar neste aparelho, não um estado de prod.
+
+  S2 da setlist, antes de qualquer escrita:
+    'N2-PR3 ACEITE'  ·  '1 música'  ·  '2026-09-25'
+    setlist-editar  193,8 × 48,0 dp   enabled=true
+    setlist-apagar  166,7 × 48,0 dp   enabled=true
+    song-1         1089,8 × 116,0 dp  (ímpar final, largura inteira)
+    remover-1        48,0 × 48,0 dp   enabled=true
+
+------------------------------------------- escrita 1/3 — renomear E datar
+
+  Um único `PUT`, com os DOIS campos que mudaram: `N2-PR3 aceite` →
+  `N2-PR4 aceite` e 2026-09-25 → 2026-09-27 (hoje + 5, dentro da janela de
+  7 dias do T2-R17). A data saiu do seletor do sistema (dia 27, OK).
+
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists/286a4785 n=1 ms=1364
+OCTAVIA: write op=update setlist=286a4785 items=- status=200 code=- ms=1371
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=308
+OCTAVIA: resync kind=setlists reason=write op=update status=200 setlists=3 ms=321
+OCTAVIA: cache write kind=setlists n=3 invalidated=1
+OCTAVIA: prefetch plan n=0 reason=7d
+
+  A tela depois: 'N2-PR4 ACEITE' · '1 música' · '2026-09-27'.
+  `prefetch plan … reason=7d` disparado pela releitura da EDIÇÃO, sem abrir
+  a setlist — é o T2-R17, e é a primeira vez que ele sai de um `op=update`.
+  `n=0` porque o indicador da setlist já era "garantida offline · nada a
+  baixar": o plano existe e não tem o que baixar, que é o mesmo que a
+  N2-PR3 registrou no `create`.
+
+--------------------------------------------- escrita 2/3 — remover música
+
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists/songs/396201cc n=1 ms=1171
+OCTAVIA: write op=remove setlist=286a4785 items=- status=200 code=- ms=1174
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=328
+OCTAVIA: resync kind=setlists reason=write op=remove status=200 setlists=3 ms=340
+OCTAVIA: cache write kind=setlists n=3 invalidated=1
+OCTAVIA: prefetch plan n=0 reason=7d
+
+  O `path` leva o `setlist_songs.id` recortado a 8 (`396201cc`), que é o id
+  da LINHA — T2-R7. A tela depois: 'N2-PR4 ACEITE' · '0 músicas', sem
+  `song-1` e sem `remover-1`; a faixa segue ativa.
+
+-------------------------------------------- escrita 3/3 — apagar setlist
+
+  Pelo diálogo, com os quatro itens da regra 5 na tela:
+    'Apagar a setlist'
+    'Apagar N2-PR4 aceite, com 0 músicas?'
+    'As músicas continuam na biblioteca, e os arquivos já baixados
+     continuam neste aparelho. Só a setlist deixa de existir.'
+    'Manter a setlist'   'Apagar'
+
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists/286a4785 n=1 ms=337
+OCTAVIA: write op=delete setlist=286a4785 items=- status=200 code=- ms=340
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=302
+OCTAVIA: resync kind=setlists reason=write op=delete status=200 setlists=2 ms=324
+OCTAVIA: cache write kind=setlists n=2 invalidated=1
+OCTAVIA: prefetch plan n=0 reason=7d
+
+  S1 voltou SEM a setlist, na hora — a lista da releitura chega à raiz
+  antes de a tela sair (div. 270, que este §4 achou e consertou).
+
+------------------------------------------------ reabrir → invalidated=0
+
+OCTAVIA: auth uid=xVDJRBh1WpPOatbfWahOLttYn1E3 src=restored
+OCTAVIA: cache hit kind=setlists n=2
+OCTAVIA: cache hit kind=content n=63
+OCTAVIA: sync start
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=568
+OCTAVIA: api status=200 path=/api/content n=1 ms=795
+OCTAVIA: cache write kind=setlists n=2 invalidated=0
+OCTAVIA: cache write kind=content n=63 invalidated=0
+OCTAVIA: sync ok setlists=2 content=63 pages=1 t=1453
+OCTAVIA: prefetch plan n=0 reason=7d
+
+----------------------------------------------------------------- contas
+
+  escritas em prod nesta PR: 3 (uma `update`, uma `remove`, uma `delete`)
+  requests de escrita:       3 — `n=1` em todas, nenhum 401, nenhum retry
+  401:                       nenhum. A H-N2-11 (email não verificado) não
+                             se manifestou, como na N2-PR3
+  auth-failure / login-screen: nenhuma linha (T2-R13 não foi exercitado em
+                             prod; quem o exercita é o CN e o §4.1)
+
+  Regra 4 do LOGS-OCTAVIA.md, sobre este arquivo:
+    grep -n eyJ           → nada
+    grep -n <email>       → nada
+    uuid inteiro          → nada: todo id aparece recortado a 8
+    nome de setlist       → aparece só nas linhas de TELA citadas (o
+                            diálogo e o título), nunca numa linha `write`
+                            ou `resync`

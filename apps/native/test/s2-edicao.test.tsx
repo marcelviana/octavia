@@ -448,6 +448,16 @@ describe('(i) T2-R5 / N2-D14 — apagar tem diálogo, com os quatro itens da reg
     // Volta para S1 SEM aviso: apagar de propósito não é acidente.
     expect(saiuParaS1).toEqual([null])
     expect((await mock.doServidor()).find((s) => s.id === SL)).toBeUndefined()
+    /**
+     * **E o conjunto da releitura chega à raiz ANTES da saída** — div. 270,
+     * achada no §4 e não por este CN, que na primeira forma parava na linha
+     * de cima. No aparelho o cache ficava certo (quem o grava é o
+     * `escrita.ts`) e **S1 voltava mostrando a setlist apagada**, porque o
+     * estado da raiz não tinha sido avisado. A ordem importa: quem sai da
+     * tela entrega a lista nova primeiro.
+     */
+    expect(relido).not.toBeNull()
+    expect((relido ?? []).some((s) => s.id === SL)).toBe(false)
   })
 })
 
@@ -466,6 +476,9 @@ describe('(j) T2-R10 — 404 em qualquer escrita: S2 é abandonada e S1 já vem 
     // T2-R10: o 404 dispara a MESMA leitura, com a razão própria.
     expect(so('resync kind=setlists')[0]).toMatch(/^resync kind=setlists reason=404 op=update status=200/)
     expect(saiuParaS1).toEqual(['sumiu'])
+    // Div. 270, o outro caminho: *"cai em S1 já relida"* — a lista da
+    // releitura do 404 chega à raiz antes de a tela sair.
+    expect(relido).not.toBeNull()
 
     // A outra metade: S1 com a linha de aviso do congelado, SEM botão.
     desmontar()

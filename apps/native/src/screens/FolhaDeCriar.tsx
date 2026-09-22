@@ -95,8 +95,12 @@ export interface FolhaDeSetlistProps {
    * T2-R10 — 404 numa escrita: a folha fecha e quem sai da tela é quem a
    * abriu. Só o modo editar o alcança: um `POST /api/setlists` não tem id
    * para não achar.
+   *
+   * **Leva o conjunto da releitura** (div. 270): o congelado manda cair em
+   * S1 *"já relida"*, e uma S1 que ainda mostra a setlist que não existe
+   * mais é o contrário disso.
    */
-  aoSumir?: () => void
+  aoSumir?: (setlists: SetlistDTO[] | null, syncedAtMs: number | null) => void
   /**
    * A releitura da lista ATRÁS da folha (regra 3) voltou. A folha **não**
    * fecha: ela continua com o digitado e com o banner, e o que muda é a lista
@@ -249,8 +253,9 @@ export function FolhaDeSetlist({
     }
     if (especie === 'sumiu' && aoSumir !== undefined) {
       // T2-R10 — a releitura do 404 já aconteceu (é do `escrever`); o que
-      // falta é abandonar a tela, e quem a abandona é quem abriu a folha.
-      aoSumir()
+      // falta é abandonar a tela COM o que ela trouxe, e quem a abandona é
+      // quem abriu a folha.
+      aoSumir(saida.setlists, saida.syncedAtMs)
       return
     }
     setFalha(saida.resultado)

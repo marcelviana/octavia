@@ -47,10 +47,17 @@ export interface DialogoDeApagarProps {
   estado: EstadoLocal
   /** `Manter a setlist` — fecha sem escrever nada. */
   aoManter: () => void
-  /** 200: a setlist não existe mais, e quem sai de S2 é quem abriu o diálogo. */
-  aoApagar: () => void
-  /** T2-R10 — 404: já tinha sido apagada em outro lugar (N2-D12). */
-  aoSumir: () => void
+  /**
+   * 200: a setlist não existe mais, e quem sai de S2 é quem abriu o diálogo.
+   *
+   * **Leva o conjunto da releitura**, e isso não é detalhe de assinatura:
+   * medido no §4, a primeira forma disto não o levava, o cache ficava certo
+   * (quem o grava é o `escrita.ts`) e **S1 voltava mostrando a setlist
+   * apagada** até o próximo sync. `[div. 270]`
+   */
+  aoApagar: (setlists: SetlistDTO[] | null, syncedAtMs: number | null) => void
+  /** T2-R10 — 404: já tinha sido apagada em outro lugar (N2-D12). Idem. */
+  aoSumir: (setlists: SetlistDTO[] | null, syncedAtMs: number | null) => void
   /** N2-D22 — 2xx com a releitura falhando: o aviso é de S1, na volta. */
   aoSalvoNaoRelido: () => void
   /** A releitura de trás do diálogo trouxe conjunto novo (regra 3). */
@@ -93,7 +100,7 @@ export function DialogoDeApagar({
     const saida = await escrever(pedidoApagar(setlist.id), estado, { contexto: 'setlist' })
     const { especie } = saida.resultado
     if (especie === 'ok') {
-      aoApagar()
+      aoApagar(saida.setlists, saida.syncedAtMs)
       return
     }
     if (especie === 'ok-nao-relido') {
@@ -105,8 +112,9 @@ export function DialogoDeApagar({
     }
     if (especie === 'sumiu') {
       // N2-D12 (#307): já tinha sido apagada em outro aparelho. O app não
-      // trata como erro grave — a releitura já aconteceu, e S1 diz o que houve.
-      aoSumir()
+      // trata como erro grave — a releitura já aconteceu, e S1 diz o que
+      // houve, **com a lista que a releitura trouxe** (div. 270).
+      aoSumir(saida.setlists, saida.syncedAtMs)
       return
     }
     setFalha(saida.resultado)
@@ -143,23 +151,38 @@ export function DialogoDeApagar({
           ) : null}
 
           <View style={styles.rodape}>
-            {apagando ? (
-              <View style={styles.progresso}>
-                <Icone nome="baixando" tamanho={24} cor={dark.accentInk} />
-                <Text style={styles.progressoTexto}>{frase('apagando')}</Text>
-              </View>
-            ) : (
-              <Pressable
-                style={styles.manter}
-                onPress={aoManter}
-                accessibilityRole="button"
-                testID="apagar-manter"
-              >
-                <Text style={styles.manterTexto}>Manter a setlist</Text>
-              </Pressable>
-            )}
+            {/*
+              **Os DOIS botões inativam, e nenhum some** (§6, verbatim: *"o
+              diálogo fica, os dois botões inativam e a frase passa a
+              `Apagando no servidor…`"*).
+
+              É o contrário da folha de criar, e de propósito: lá o `Cancelar`
+              SOME durante a escrita porque ele prometeria cancelar o que já
+              está em voo (regra 1). Aqui o par de botões é a própria pergunta
+              do diálogo — tirar um deles do lugar no meio do ato mudaria a
+              pergunta debaixo de quem está lendo. `[medido no §4: a primeira
+              forma disto somia com o Manter, e o aparelho mostrou o congelado
+              a dizer outra coisa — div. 269]`
+            */}
+            <Pressable
+              style={[styles.manter, apagando ? styles.manterInativo : null]}
+              onPress={() => (apagando ? undefined : aoManter())}
+              accessibilityRole="button"
+              accessibilityState={{ disabled: apagando }}
+              testID="apagar-manter"
+            >
+              <Text style={[styles.manterTexto, apagando ? styles.textoInativo : null]}>
+                Manter a setlist
+              </Text>
+            </Pressable>
 
             <View style={styles.acaoComMotivo}>
+              {apagando ? (
+                <View style={styles.progresso}>
+                  <Icone nome="baixando" tamanho={24} cor={dark.accentInk} />
+                  <Text style={styles.progressoTexto}>{frase('apagando')}</Text>
+                </View>
+              ) : null}
               {relendo ? (
                 <Text style={styles.motivoInativo} testID="apagar-motivo">
                   {frase('relendo-a-lista')}
@@ -256,6 +279,7 @@ const styles = StyleSheet.create({
     borderColor: dark.line,
     borderRadius: radius.control,
   },
+  manterInativo: { borderColor: dark.lineInfo },
   manterTexto: { color: dark.text, fontFamily: font.ui, fontSize: size.button },
   // O único contorno em `errorInk` da tela 2 (§3.1, a primeira exceção).
   destrutivo: {

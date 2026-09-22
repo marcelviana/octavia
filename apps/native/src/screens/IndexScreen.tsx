@@ -419,6 +419,10 @@ export function IndexScreen({
         if (especie === 'sumiu') {
           const aindaExiste = (saida.setlists ?? []).some((s) => s.id === setlist.id)
           if (!aindaExiste) {
+            // A lista que a releitura trouxe vai JUNTO: o congelado manda cair
+            // em S1 "já relida", e sem isto S1 mostraria a setlist que não
+            // existe mais até o próximo sync (div. 270, medido no §4).
+            if (saida.setlists !== null) edicao.aoReler(saida.setlists, saida.syncedAtMs)
             edicao.aoSairParaS1('sumiu')
             return
           }
@@ -633,8 +637,9 @@ export function IndexScreen({
             setFolha(false)
             setSalvoNaoRelido(true)
           }}
-          aoSumir={() => {
+          aoSumir={(novas, syncedAtMs) => {
             setFolha(false)
+            if (novas !== null) edicao.aoReler(novas, syncedAtMs)
             edicao.aoSairParaS1('sumiu')
           }}
           aoRelerAtras={(novas, syncedAtMs) => edicao.aoReler(novas, syncedAtMs)}
@@ -646,12 +651,14 @@ export function IndexScreen({
           setlist={setlist}
           estado={edicao.estado}
           aoManter={() => setDialogo(false)}
-          aoApagar={() => {
+          aoApagar={(novas, syncedAtMs) => {
             setDialogo(false)
+            if (novas !== null) edicao.aoReler(novas, syncedAtMs)
             edicao.aoSairParaS1(null)
           }}
-          aoSumir={() => {
+          aoSumir={(novas, syncedAtMs) => {
             setDialogo(false)
+            if (novas !== null) edicao.aoReler(novas, syncedAtMs)
             edicao.aoSairParaS1('sumiu')
           }}
           aoSalvoNaoRelido={() => {
