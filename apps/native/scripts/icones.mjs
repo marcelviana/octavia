@@ -129,7 +129,7 @@ const REGISTROS_N2 = {
  * Os nomes que o mapa AINDA não tem, e cuja ausência é AVISO e não acusação
  * (ver o cabeçalho). **A PR que desenhar os ícones poda esta lista.**
  */
-const PENDENTES = ['alca', 'adicionar']
+const PENDENTES = ['adicionar']
 // N2-PR3 podou `nova-setlist`: o desenho entrou no mapa no commit 2 daquela
 // PR (S1 ganhou o botão), e a partir dali ele é cobrado pela regra 6 como
 // qualquer outro — elemento a elemento contra o registro dele no anexo D.
@@ -145,6 +145,11 @@ const PENDENTES = ['alca', 'adicionar']
 // a união das três células do registro (onde moram o círculo r 8,5, a corda
 // de 8 e a meia corda de 4), e o `adicionar` segue AVISANDO pela regra 1. O
 // par só sai da lista de pendentes quando o `+` existir — isto é, na PR-6.
+//
+// **N2-PR5 poda a `alca`**, no commit 1 — antes do desenho, de propósito:
+// entre o commit 1 e o commit 2 o mapa real REPROVA por "falta no mapa:
+// alca", que é o gate dizendo "podaram o pendente e não desenharam". Resta
+// UM nome, o `adicionar`, que é do picker (PR-6).
 
 /** §6.3 — cordas da tab por tamanho: quatro em 20 dp, seis nos outros. */
 const CORDAS = { em20: 4, normal: 6 }

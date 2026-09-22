@@ -20,7 +20,7 @@
  * foi nesta série. O que ele mede é o que o DOM sabe dizer: qual nó existe,
  * com que id, com que texto, ativo ou inativo, e o que acontece ao toque.
  */
-import { createElement, forwardRef, type ReactNode } from 'react'
+import { createElement, forwardRef, useImperativeHandle, type ReactNode } from 'react'
 
 /** `StyleSheet.create` é identidade; `flatten` achata arrays e nulos. */
 function achatar(estilo: unknown): Record<string, unknown> {
@@ -53,6 +53,49 @@ interface PropsComuns {
   display?: string
   resizeMode?: string
   source?: unknown
+  /** N2-PR5 — o que o `PanResponder` deste duplo põe nos `panHandlers`. */
+  __pan?: ConfigDoArrasto
+}
+
+/**
+ * N2-PR5 — o `PanResponder` do duplo. O gesto de verdade é do aparelho (§4);
+ * aqui ele é um REGISTRO: o `create` devolve a própria configuração dentro
+ * dos `panHandlers`, o primitivo que os recebe a guarda pelo `testID`, e o
+ * teste chama `onPanResponderGrant/Move/Release` como o RN chamaria. O que
+ * isto mede é a máquina de estados da tela, não o reconhecedor de toque.
+ */
+export interface EstadoDoGesto {
+  dx: number
+  dy: number
+  moveY: number
+  y0: number
+}
+export interface ConfigDoArrasto {
+  onStartShouldSetPanResponder?: () => boolean
+  onPanResponderGrant?: (e: unknown, g: EstadoDoGesto) => void
+  onPanResponderMove?: (e: unknown, g: EstadoDoGesto) => void
+  onPanResponderRelease?: (e: unknown, g: EstadoDoGesto) => void
+  onPanResponderTerminate?: (e: unknown, g: EstadoDoGesto) => void
+  onPanResponderTerminationRequest?: () => boolean
+}
+const arrastos = new Map<string, ConfigDoArrasto>()
+export function __arrasto(testID: string): ConfigDoArrasto | undefined {
+  return arrastos.get(testID)
+}
+export const PanResponder = {
+  create: (c: ConfigDoArrasto): { panHandlers: { __pan: ConfigDoArrasto } } => ({ panHandlers: { __pan: c } }),
+}
+
+/** N2-PR5 — o voltar do sistema: o último ouvinte registrado é o que vale. */
+let aoVoltar: (() => boolean) | null = null
+export const BackHandler = {
+  addEventListener: (_e: string, h: () => boolean): { remove: () => void } => {
+    aoVoltar = h
+    return { remove: () => { if (aoVoltar === h) aoVoltar = null } }
+  },
+}
+export function __voltarDoSistema(): boolean {
+  return aoVoltar?.() ?? false
 }
 
 /**
@@ -76,16 +119,34 @@ function atributos(p: PropsComuns): Record<string, unknown> {
 }
 
 function primitivo(tag: string, nome: string) {
-  const C = forwardRef<unknown, PropsComuns>((p, ref) =>
-    createElement(tag, { ...atributos(p), ref }, p.children as ReactNode),
-  )
+  const C = forwardRef<unknown, PropsComuns>((p, ref) => {
+    if (p.__pan !== undefined && p.testID !== undefined) arrastos.set(p.testID, p.__pan)
+    return createElement(tag, { ...atributos(p), ref }, p.children as ReactNode)
+  })
   C.displayName = nome
   return C
 }
 
 export const View = primitivo('div', 'View')
 export const Text = primitivo('span', 'Text')
-export const ScrollView = primitivo('div', 'ScrollView')
+/**
+ * `ScrollView` com os dois métodos de instância que o modo de reordenar usa
+ * (N2-PR5): `scrollTo` (a rolagem automática a 48 dp das bordas) e
+ * `measureInWindow` (onde a lista está na tela). Aqui não há rolagem: os dois
+ * existem para que a tela não precise perguntar se existem.
+ */
+export const ScrollView = forwardRef<unknown, PropsComuns & { scrollEnabled?: boolean }>((p, ref) => {
+  useImperativeHandle(ref, () => ({
+    scrollTo: (): void => undefined,
+    measureInWindow: (cb: (x: number, y: number, w: number, h: number) => void): void => cb(0, 152, 1138, 475),
+  }))
+  return createElement(
+    'div',
+    { ...atributos(p), 'data-scrollenabled': p.scrollEnabled === false ? 'false' : undefined },
+    p.children as ReactNode,
+  )
+})
+ScrollView.displayName = 'ScrollView'
 export const Image = primitivo('img', 'Image')
 export const ActivityIndicator = primitivo('div', 'ActivityIndicator')
 export const SafeAreaView = primitivo('div', 'SafeAreaView')

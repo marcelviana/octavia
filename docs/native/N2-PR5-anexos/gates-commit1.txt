@@ -1,0 +1,50 @@
+# N2-PR5 — os gates do commit 1, antes do código de tela
+
+$ sh apps/native/scripts/g1.sh origin/main WORKTREE
+base=origin/main head=WORKTREE
+G1a — diff vazio em 38 arquivos DERIVADOS de apps/native + packages/core/src
+      escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+      menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+      EXCEÇÕES DECLARADAS (o escopo desta PR):
+        packages/core/src/ordem.ts
+        packages/core/src/index.ts
+        packages/core/src/frases.ts
+        apps/native/src/escrita.ts
+        apps/native/src/icones/dados.ts
+        apps/native/src/screens/IndexScreen.tsx
+        apps/native/src/screens/ModoDeReordenar.tsx
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+  G1a: EXCEÇÃO DECLARADA E NÃO USADA — poda isto ANTES do merge (div. 141):
+        packages/core/src/ordem.ts
+        packages/core/src/index.ts
+        packages/core/src/frases.ts
+        apps/native/src/escrita.ts
+        apps/native/src/icones/dados.ts
+        apps/native/src/screens/IndexScreen.tsx
+        apps/native/src/screens/ModoDeReordenar.tsx
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+  G1b: só adição ✓
+(exit 0)
+
+$ sh apps/native/scripts/g2g3.sh origin/main WORKTREE
+G2 — testIDs  antes=63  depois=63
+  G2: antes ⊆ depois ✓
+G3 — linhas log( antes=64  depois=64
+      ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+        (nenhuma — nenhuma linha de log pode sumir nesta PR)
+  G3: nenhuma linha sumiu ✓
+(exit 0)
+
+$ pnpm --filter native gate:icones
+  ACUSADO src/icones/dados.ts [nome] falta no mapa: "alca" (§6.4)
+  AVISO src/icones/dados.ts [pendente] "adicionar" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES
+  §6.4: 34 linhas → 33 nomes distintos, + 4 fora do catálogo + 6 da tela 2 = 43 esperados
+  anexo D: 34 registros (V1) + 5 (DESIGN-N2, E17) = 39 registros · 68 elementos distintos no do V1
+  tela 2 (E17): 4/6 nomes já no mapa e cobrados · 1 declarados pendentes
+  mapa: 41 nomes · 89 elementos distintos · 40 com 'normal'
+  hex cravado: 0 · tinta por token: 6
+  §6.3 tab: em20 4 cordas · normal 6 cordas · markup de 20 dp no telas.html: idêntico
+  fora do catálogo: 4/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  PENDENTES DECLARADOS E AUSENTES — poda a lista quando desenhar (N2-D33): 1
+  acusações: 1 · avisos: 1
+(exit 1)
