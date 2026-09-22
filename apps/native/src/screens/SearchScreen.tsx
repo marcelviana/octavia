@@ -143,8 +143,12 @@ function Resultado({
   )
 }
 
-/** A régua de seção: rótulo à esquerda, fio no meio, contagem à direita. */
-function Regua({ texto, n }: { texto: string; n: number }): React.JSX.Element {
+/**
+ * A régua de seção: rótulo à esquerda, fio no meio, contagem à direita.
+ * Exportada na N2-PR6: o picker usa ESTA régua (*"as mesmas réguas em mono
+ * com a contagem à direita"*, §5 do DESIGN-N2), não uma cópia.
+ */
+export function Regua({ texto, n }: { texto: string; n: number }): React.JSX.Element {
   return (
     <View style={styles.regua}>
       <Text style={styles.reguaTexto}>{texto}</Text>

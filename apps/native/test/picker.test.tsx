@@ -23,15 +23,16 @@
  * `escrita-releitura-fora-de-ordem` segura a PRIMEIRA releitura depois de uma
  * escrita por 600 ms (a foto é tirada ANTES do atraso). Entre o `write op=add
  * … status=201` e o `resync … status=200` há, então, uma janela real — e é
- * nela que o CN olha a tela. A linha do tempo de cada CN de ordem é impressa
- * (stdout do teste), e é ela que vai para o anexo.
+ * nela que o CN olha a tela. A linha do tempo de cada CN de ordem vai para o
+ * arquivo de `PICKER_LINHA_DO_TEMPO`, quando a variável existe — e é ela que
+ * vai para o anexo (o `stdout` do `afterEach` o Vitest não mostra).
  *
  * **O que estes CNs NÃO medem**: geometria (o campo de 900 × 48, a linha de
  * 80, o rodapé de 64 e de 112, o `Adicionar` ≥ 48) — é do dump do aparelho,
  * §4 da PR.
  */
 import './dev-flag'
-import { mkdtempSync, rmSync } from 'node:fs'
+import { appendFileSync, mkdtempSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
 import { useState } from 'react'
@@ -219,6 +220,10 @@ async function ate(condicao: () => boolean, oQue: string, limiteMs = 5_000): Pro
 const linhaDoResultado = (n: number): string =>
   ((exige(`picker-estado-${n}`).parentElement?.textContent ?? '').replace(/\s+/g, ' ').trim())
 
+/** O texto do primeiro nó da linha `n` — o número, quando a música está na setlist. */
+const primeiroDaLinha = (n: number): string =>
+  (exige(`picker-estado-${n}`).parentElement?.firstElementChild?.textContent ?? '').trim()
+
 /** Quantos resultados o picker mostra agora. */
 function nResultados(): number {
   let n = 0
@@ -237,11 +242,16 @@ function titulosDoPicker(): string[] {
   return out
 }
 
-/** A linha do tempo de um CN de ordem — vai para o stdout, e daí para o anexo. */
+/** A linha do tempo de um CN de ordem — vai para o anexo (ver o cabeçalho). */
 let tempo: string[] = []
+/** Até onde o log já foi transcrito na linha do tempo. */
+let transcrito = 0
 function marcar(momento: string): void {
   tempo.push(`— ${momento}`)
-  tempo.push(`    log: ${linhas.length === 0 ? '(nenhuma linha)' : linhas[linhas.length - 1]}`)
+  const novas = linhas.slice(transcrito)
+  transcrito = linhas.length
+  if (novas.length === 0) tempo.push('    log: (nenhuma linha nova)')
+  for (const l of novas) tempo.push(`    log: ${l}`)
   tempo.push(`    tela: estado-1=${JSON.stringify(achar('picker-estado-1') === null ? null : texto('picker-estado-1'))} · rodapé=${JSON.stringify(achar('picker-rodape') === null ? null : texto('picker-rodape'))}`)
 }
 
@@ -265,6 +275,7 @@ beforeEach(() => {
   __reset()
   linhas = []
   tempo = []
+  transcrito = 0
   online = true
   logouts = 0
   relidos = []
@@ -279,7 +290,10 @@ afterEach(async () => {
   await assentar(20)
   desmontar()
   vi.restoreAllMocks()
-  if (tempo.length > 0) process.stdout.write(`\n${tempo.join('\n')}\n`)
+  const arquivo = process.env.PICKER_LINHA_DO_TEMPO
+  if (tempo.length > 0 && arquivo !== undefined) {
+    appendFileSync(arquivo, `\n## ${expect.getState().currentTestName ?? '?'}\n${tempo.join('\n')}\n`)
+  }
 })
 
 // ------------------------------------------------------------ (a) a porta
@@ -388,8 +402,10 @@ describe('(c) T1-R21/R22 — a busca do picker É a do S4: mesmo módulo, mesmas
     expect(tela).toContain(`Biblioteca · ${BIBLIOTECA.length} músicas`)
     expect(tela.indexOf('Nesta setlist')).toBeLessThan(tela.indexOf('Biblioteca ·'))
     // "O número à esquerda existe só nos resultados que já estão na setlist."
-    expect(linhaDoResultado(1).startsWith('1 ')).toBe(true)
-    expect(/^\d/.test(linhaDoResultado(esperado.length))).toBe(false)
+    // (O primeiro FILHO da linha, e não o começo do `textContent`: o DOM junta
+    // os nós sem separador, e "1Manhã…" nunca começaria com "1 ".)
+    expect(primeiroDaLinha(1)).toBe('1')
+    expect(primeiroDaLinha(esperado.length)).not.toMatch(/^\d+$/)
     // A normalização é a mesma: "mãn" acha o que "man" acha.
     await digitar('picker-campo', 'mãn')
     expect(titulosDoPicker()).toEqual(esperado)
@@ -697,7 +713,10 @@ describe('(j) N2-D17 / A-N2-9 — acima de 100, adicionar continua e `Reordenar`
     expect(texto('aviso-motivo')).toBe(
       'Acima de 100 músicas, reordenar por arrasto fica inativo. Adicionar e remover continuam.',
     )
-    // E adicionar continua possível.
+    // E adicionar continua possível — numa OUTRA música: a linha 1 está
+    // "adicionada", sem botão, como tem de estar.
+    expect(achar('picker-adicionar-1')).toBeNull()
+    await digitar('picker-campo', 'sétima')
     expect(inativo('picker-adicionar-1')).toBe(false)
 
     await tocar('picker-concluir')

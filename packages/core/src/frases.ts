@@ -149,6 +149,29 @@ export type ChaveDeFrase =
   | 'ordem-arrastada'
   | 'falhou-ordem'
   | 'ordem-relida'
+  /**
+   * **ERRATA DA N2-PR6 (N2-E16) — duas chaves novas, zero redação nova.**
+   *
+   * As duas são do picker e estão verbatim nas molduras `N2-P-resultados` e
+   * `N2-P-relendo` (§5), pela mesma razão da N2-E1, da N2-E7 e da N2-E10.
+   *
+   * `falhou-adicionar` é o título da linha que falhou — *"não entrou na
+   * setlist"* —, que é para o picker o que `falhou-salvar` é para S2. Ele
+   * **não** aparece quando a falha é de rede em `add`: aí a escrita pode ter
+   * passado (N2-D18), e o título seria mentira; no lugar dele vai o
+   * `pode-ter-gravado`, que já está no conjunto (div. 308).
+   *
+   * `adicionada` é o estado da linha depois do 201 (*"Adicionada aparece com
+   * o 201 e perde o contorno de botão"*). Minúscula como as irmãs
+   * `adicionando` e `relendo`, que já estão aqui: a moldura as escreve com
+   * inicial maiúscula dentro da linha, e isso é ESTILO (`textTransform`), não
+   * outra redação — as três ficam uma frase cada (div. 310).
+   *
+   * As redações do picker que carregam DADO — o nome da setlist, uma
+   * contagem — são função, abaixo, pela razão do `perguntaDeApagar`.
+   */
+  | 'falhou-adicionar'
+  | 'adicionada'
 
 export const FRASES: Readonly<Record<ChaveDeFrase, string>> = {
   // T2-R15 (`PRD-TELA-2.md`)
@@ -218,6 +241,10 @@ export const FRASES: Readonly<Record<ChaveDeFrase, string>> = {
   'ordem-arrastada': 'a ordem abaixo é a que você arrastou · a do servidor é outra',
   'falhou-ordem': 'Não foi possível salvar a ordem',
   'ordem-relida': 'a setlist foi relida; a ordem dela não foi aplicada aqui',
+
+  // As duas da N2-PR6, verbatim das molduras `N2-P-resultados` e `N2-P-relendo`.
+  'falhou-adicionar': 'não entrou na setlist',
+  adicionada: 'adicionada',
 }
 
 /**
@@ -274,6 +301,79 @@ export function soltarAquiPosicao(posicao: number): string {
 /** A linha arrastada, depois de uma falha (R2·1): *"movida de 5"*. */
 export function movidaDe(posicao: number): string {
   return `movida de ${posicao}`
+}
+
+/**
+ * **N2-PR6 — as redações do picker que carregam DADO** (§5, molduras
+ * `N2-P-vazio`, `N2-P-resultados` e `N2-P-relendo`). A razão é a do
+ * `perguntaDeApagar` (div. 227): nome de setlist e contagem não moram numa
+ * constante, e a redação fica aqui, ao alcance do `gate:a20`.
+ */
+
+/**
+ * R1·5 (N2-E15) — *"truncado por ellipsis acima de 34 caracteres de nome"*.
+ * A reticência é do TEXTO, e não do componente: o placeholder de um campo não
+ * tem `numberOfLines`, e o que se mede no CN e no dump é a string. Conta
+ * pontos de código (`[...nome]`), não unidades UTF-16: um nome com acento
+ * composto ou emoji não pode ser partido ao meio.
+ */
+export const TETO_DO_NOME_NO_PICKER = 34
+
+function nomeCurto(nome: string): string {
+  const letras = [...nome]
+  return letras.length > TETO_DO_NOME_NO_PICKER ? `${letras.slice(0, TETO_DO_NOME_NO_PICKER).join('')}…` : nome
+}
+
+/** O placeholder do campo: *"Adicionar a Season 3"*. */
+export function placeholderDoPicker(nome: string): string {
+  return `Adicionar a ${nomeCurto(nome)}`
+}
+
+/**
+ * O corpo vazio: *"Digite para achar na biblioteca e adicionar a **Season
+ * 3**."* O nome vai em destaque na moldura, então a frase sai em três
+ * pedaços, e a tela só escolhe o peso do do meio.
+ */
+export function vazioDoPicker(nome: string): { antes: string; nome: string; depois: string } {
+  return { antes: 'Digite para achar na biblioteca e adicionar a ', nome, depois: '.' }
+}
+
+/** A segunda linha do vazio: *"63 músicas disponíveis."* — a biblioteca inteira. */
+export function musicasDisponiveis(n: number): string {
+  return n === 1 ? '1 música disponível.' : `${n} músicas disponíveis.`
+}
+
+/** *"7 músicas"* — o total do rodapé e o da régua da biblioteca. */
+export function nMusicas(n: number): string {
+  return `${n} ${n === 1 ? 'música' : 'músicas'}`
+}
+
+/** A régua do grupo de cima: *"Nesta setlist · Season 3"* (a do S4). */
+export function reguaNestaSetlist(nome: string): string {
+  return `Nesta setlist · ${nome}`
+}
+
+/** A régua do grupo de baixo: *"Biblioteca · 63 músicas"* (a do S4). */
+export function reguaBiblioteca(n: number): string {
+  return `Biblioteca · ${nMusicas(n)}`
+}
+
+/**
+ * A marca da linha (N2-D15): *"já na setlist"* e, com bis, *"já na setlist ·
+ * 2×"*. `vezes` é quantas POSIÇÕES da setlist relida apontam para a música.
+ */
+export function jaNaSetlist(vezes: number): string {
+  return vezes > 1 ? `já na setlist · ${vezes}×` : 'já na setlist'
+}
+
+/**
+ * A terceira parte do rodapé (N2-D30): *"nada adicionado nesta visita"* ·
+ * *"1 adicionada nesta visita"* · *"2 adicionadas nesta visita"*. O `k` é
+ * LOCAL — conta 201 confirmados desde que o picker abriu.
+ */
+export function adicionadasNestaVisita(k: number): string {
+  if (k === 0) return 'nada adicionado nesta visita'
+  return `${k} ${k === 1 ? 'adicionada' : 'adicionadas'} nesta visita`
 }
 
 /** O conjunto, como conjunto — é contra ele que o teste afirma o fechamento. */
