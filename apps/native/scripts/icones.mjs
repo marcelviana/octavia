@@ -129,7 +129,7 @@ const REGISTROS_N2 = {
  * Os nomes que o mapa AINDA não tem, e cuja ausência é AVISO e não acusação
  * (ver o cabeçalho). **A PR que desenhar os ícones poda esta lista.**
  */
-const PENDENTES = ['adicionar']
+const PENDENTES = []
 // N2-PR3 podou `nova-setlist`: o desenho entrou no mapa no commit 2 daquela
 // PR (S1 ganhou o botão), e a partir dali ele é cobrado pela regra 6 como
 // qualquer outro — elemento a elemento contra o registro dele no anexo D.
@@ -150,6 +150,14 @@ const PENDENTES = ['adicionar']
 // entre o commit 1 e o commit 2 o mapa real REPROVA por "falta no mapa:
 // alca", que é o gate dizendo "podaram o pendente e não desenharam". Resta
 // UM nome, o `adicionar`, que é do picker (PR-6).
+//
+// **N2-PR6 poda o ÚLTIMO**, no commit 1, pela mesma razão: entre o commit 1
+// e o commit 2 o mapa real reprova por "falta no mapa: adicionar". Depois
+// dele a lista fica VAZIA — os 39 registros do anexo D estão todos no mapa,
+// o par `adicionar / remover` inteiro, e o aviso de "pendente" deixa de
+// aparecer. A lista continua existindo (vazia) porque o mecanismo é o mesmo
+// das exceções do `g1.sh` e das erratas do `g2g3.sh`: a próxima tela que
+// trouxer desenho novo declara aqui antes de desenhar.
 
 /** §6.3 — cordas da tab por tamanho: quatro em 20 dp, seis nos outros. */
 const CORDAS = { em20: 4, normal: 6 }

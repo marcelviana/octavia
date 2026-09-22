@@ -1,0 +1,287 @@
+
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-n2-pr6
+
+ ❯  native-tela  apps/native/test/picker.test.tsx (20 tests | 19 failed) 3131ms
+     × a faixa ganha o quarto controle, à esquerda de `Reordenar`, com o `+` acentuado 235ms
+     × abrir: o picker toma a tela — campo, fechar do S4, vazio e rodapé; zero request 197ms
+     ✓ a S2 vinda do PALCO não tem porta nenhuma (T2-R19) 135ms
+     × 34 caracteres: o nome inteiro 137ms
+     × 35 caracteres: os 34 primeiros e a reticência 140ms
+     × "man": a ordem do `searchIndex` + `groupResults`, nesta setlist primeiro 153ms
+     × a marca "já na setlist" e o "n×" contam as posições da setlist; `Adicionar` ativo mesmo com marca (N2-D15) 136ms
+     × a ordem dos eventos: adicionando… → 201 → relendo… → resync 200 → 2× e 8 músicas 136ms
+     × duas adições sobrepostas: a segunda sai durante o relendo… da primeira; cache = último 200 140ms
+     × rodapé de 112: a frase do picker, o total em offlineInk, o `k` não; `Tentar recarregar` relê 144ms
+     × 500: "não entrou na setlist" + a frase do servidor; a releitura antes do botão 140ms
+     × rede (pode ter passado): sem botão enquanto relê; depois, o aviso de que pode ter gravado 133ms
+     × a setlist apagada em outro aparelho: `resync reason=404`, sai com `sumiu` 133ms
+     × 401 numa adição não desloga (T2-R13): a frase na linha, a sessão fica 134ms
+     × picker-concluir: zero request, e S2 mostra o conjunto da última releitura 134ms
+     × fechar-busca: zero request, e S2 mostra o conjunto da última releitura 140ms
+     × voltar do sistema: zero request, e S2 mostra o conjunto da última releitura 135ms
+     × sair com o aviso de releitura aberto: S2 mostra o "salvo, não relido" e relê 131ms
+     × inativo, o `+` amputado, e nenhum picker 132ms
+     × 100 → 101: o 201 sai, o aviso do teto aparece, e S2 volta com `Reordenar` inativo 199ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 19 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   native-tela  apps/native/test/picker.test.tsx > (a) regra 7 — a única porta é `Adicionar música` na faixa de S2 com edição > a faixa ganha o quarto controle, à esquerda de `Reordenar`, com o `+` acentuado
+Error: sem nó com testID="picker-abrir"
+ ❯ exige apps/native/test/tela.tsx:64:25
+     62| export function exige(testID: string): HTMLElement {
+     63|   const e = achar(testID)
+     64|   if (e === null) throw new Error(`sem nó com testID="${testID}"`)
+       |                         ^
+     65|   return e
+     66| }
+ ❯ Module.texto apps/native/test/tela.tsx:79:11
+ ❯ apps/native/test/picker.test.tsx:292:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/19]⎯
+
+ FAIL   native-tela  apps/native/test/picker.test.tsx > (a) regra 7 — a única porta é `Adicionar música` na faixa de S2 com edição > abrir: o picker toma a tela — campo, fechar do S4, vazio e rodapé; zero request
+Error: sem nó com testID="picker-abrir"
+ ❯ exige apps/native/test/tela.tsx:64:25
+     62| export function exige(testID: string): HTMLElement {
+     63|   const e = achar(testID)
+     64|   if (e === null) throw new Error(`sem nó com testID="${testID}"`)
+       |                         ^
+     65|   return e
+     66| }
+ ❯ Module.tocar apps/native/test/tela.tsx:93:16
+ ❯ abrir apps/native/test/picker.test.tsx:206:9
+ ❯ apps/native/test/picker.test.tsx:306:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/19]⎯
+
+ FAIL   native-tela  apps/native/test/picker.test.tsx > (b) R1·5 — o placeholder é `Adicionar a <nome>`, com ellipsis acima de 34 caracteres > 34 caracteres: o nome inteiro
+Error: sem nó com testID="picker-abrir"
+ ❯ exige apps/native/test/tela.tsx:64:25
+     62| export function exige(testID: string): HTMLElement {
+     63|   const e = achar(testID)
+     64|   if (e === null) throw new Error(`sem nó com testID="${testID}"`)
+       |                         ^
+     65|   return e
+     66| }
+ ❯ Module.tocar apps/native/test/tela.tsx:93:16
+ ❯ abrir apps/native/test/picker.test.tsx:206:9
+ ❯ apps/native/test/picker.test.tsx:337:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/19]⎯
+
+ FAIL   native-tela  apps/native/test/picker.test.tsx > (b) R1·5 — o placeholder é `Adicionar a <nome>`, com ellipsis acima de 34 caracteres > 35 caracteres: os 34 primeiros e a reticência
+Error: sem nó com testID="picker-abrir"
+ ❯ exige apps/native/test/tela.tsx:64:25
+     62| export function exige(testID: string): HTMLElement {
+     63|   const e = achar(testID)
+     64|   if (e === null) throw new Error(`sem nó com testID="${testID}"`)
+       |                         ^
+     65|   return e
+     66| }
+ ❯ Module.tocar apps/native/test/tela.tsx:93:16
+ ❯ abrir apps/native/test/picker.test.tsx:206:9
+ ❯ apps/native/test/picker.test.tsx:342:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/19]⎯
+
+ FAIL   native-tela  apps/native/test/picker.test.tsx > (c) T1-R21/R22 — a busca do picker É a do S4: mesmo módulo, mesmas linhas, mesma ordem > "man": a ordem do `searchIndex` + `groupResults`, nesta setlist primeiro
+Error: sem nó com testID="picker-abrir"
+ ❯ exige apps/native/test/tela.tsx:64:25
+     62| export function exige(testID: string): HTMLElement {
+     63|   const e = achar(testID)
+     64|   if (e === null) throw new Error(`sem nó com testID="${testID}"`)
+       |                         ^
+     65|   return e
+     66| }
+ ❯ Module.tocar apps/native/test/tela.tsx:93:16
+ ❯ apps/native/test/picker.test.tsx:382:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/19]⎯
+
+ FAIL   native-tela  apps/native/test/picker.test.tsx > (c) T1-R21/R22 — a busca do picker É a do S4: mesmo módulo, mesmas linhas, mesma ordem > a marca "já na setlist" e o "n×" contam as posições da setlist; `Adicionar` ativo mesmo com marca (N2-D15)
+Error: sem nó com testID="picker-abrir"
+ ❯ exige apps/native/test/tela.tsx:64:25
+     62| export function exige(testID: string): HTMLElement {
+     63|   const e = achar(testID)
+     64|   if (e === null) throw new Error(`sem nó com testID="${testID}"`)
+       |                         ^
+     65|   return e
+     66| }
+ ❯ Module.tocar apps/native/test/tela.tsx:93:16
+ ❯ abrir apps/native/test/picker.test.tsx:206:9
+ ❯ apps/native/test/picker.test.tsx:400:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/19]⎯
+
+ FAIL   native-tela  apps/native/test/picker.test.tsx > (d) T2-R6 / N2-D30 — adicionar: 201, releitura, e só então a marca e o total > a ordem dos eventos: adicionando… → 201 → relendo… → resync 200 → 2× e 8 músicas
+Error: sem nó com testID="picker-abrir"
+ ❯ exige apps/native/test/tela.tsx:64:25
+     62| export function exige(testID: string): HTMLElement {
+     63|   const e = achar(testID)
+     64|   if (e === null) throw new Error(`sem nó com testID="${testID}"`)
+       |                         ^
+     65|   return e
+     66| }
+ ❯ Module.tocar apps/native/test/tela.tsx:93:16
+ ❯ abrir apps/native/test/picker.test.tsx:206:9
+ ❯ apps/native/test/picker.test.tsx:417:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/19]⎯
+
+ FAIL   native-tela  apps/native/test/picker.test.tsx > (d) T2-R6 / N2-D30 — adicionar: 201, releitura, e só então a marca e o total > duas adições sobrepostas: a segunda sai durante o relendo… da primeira; cache = último 200
+Error: sem nó com testID="picker-abrir"
+ ❯ exige apps/native/test/tela.tsx:64:25
+     62| export function exige(testID: string): HTMLElement {
+     63|   const e = achar(testID)
+     64|   if (e === null) throw new Error(`sem nó com testID="${testID}"`)
+       |                         ^
+     65|   return e
+     66| }
+ ❯ Module.tocar apps/native/test/tela.tsx:93:16
+ ❯ abrir apps/native/test/picker.test.tsx:206:9
+ ❯ apps/native/test/picker.test.tsx:458:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/19]⎯
+
+ FAIL   native-tela  apps/native/test/picker.test.tsx > (e) N2-D22 / N2-D32 — 201 com a releitura em 500: o aviso assume o rodapé > rodapé de 112: a frase do picker, o total em offlineInk, o `k` não; `Tentar recarregar` relê
+Error: sem nó com testID="picker-abrir"
+ ❯ exige apps/native/test/tela.tsx:64:25
+     62| export function exige(testID: string): HTMLElement {
+     63|   const e = achar(testID)
+     64|   if (e === null) throw new Error(`sem nó com testID="${testID}"`)
+       |                         ^
+     65|   return e
+     66| }
+ ❯ Module.tocar apps/native/test/tela.tsx:93:16
+ ❯ abrir apps/native/test/picker.test.tsx:206:9
+ ❯ apps/native/test/picker.test.tsx:496:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/19]⎯
+
+ FAIL   native-tela  apps/native/test/picker.test.tsx > (f) T2-R11 — a adição que falha: a frase inteira na linha, e `Tentar de novo` só depois de reler > 500: "não entrou na setlist" + a frase do servidor; a releitura antes do botão
+Error: sem nó com testID="picker-abrir"
+ ❯ exige apps/native/test/tela.tsx:64:25
+     62| export function exige(testID: string): HTMLElement {
+     63|   const e = achar(testID)
+     64|   if (e === null) throw new Error(`sem nó com testID="${testID}"`)
+       |                         ^
+     65|   return e
+     66| }
+ ❯ Module.tocar apps/native/test/tela.tsx:93:16
+ ❯ abrir apps/native/test/picker.test.tsx:206:9
+ ❯ apps/native/test/picker.test.tsx:529:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/19]⎯
+
+ FAIL   native-tela  apps/native/test/picker.test.tsx > (f) T2-R11 — a adição que falha: a frase inteira na linha, e `Tentar de novo` só depois de reler > rede (pode ter passado): sem botão enquanto relê; depois, o aviso de que pode ter gravado
+Error: sem nó com testID="picker-abrir"
+ ❯ exige apps/native/test/tela.tsx:64:25
+     62| export function exige(testID: string): HTMLElement {
+     63|   const e = achar(testID)
+     64|   if (e === null) throw new Error(`sem nó com testID="${testID}"`)
+       |                         ^
+     65|   return e
+     66| }
+ ❯ Module.tocar apps/native/test/tela.tsx:93:16
+ ❯ abrir apps/native/test/picker.test.tsx:206:9
+ ❯ apps/native/test/picker.test.tsx:555:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/19]⎯
+
+ FAIL   native-tela  apps/native/test/picker.test.tsx > (g) T2-R10 — 404 numa adição: o picker fecha e S1 aparece já relida > a setlist apagada em outro aparelho: `resync reason=404`, sai com `sumiu`
+Error: sem nó com testID="picker-abrir"
+ ❯ exige apps/native/test/tela.tsx:64:25
+     62| export function exige(testID: string): HTMLElement {
+     63|   const e = achar(testID)
+     64|   if (e === null) throw new Error(`sem nó com testID="${testID}"`)
+       |                         ^
+     65|   return e
+     66| }
+ ❯ Module.tocar apps/native/test/tela.tsx:93:16
+ ❯ abrir apps/native/test/picker.test.tsx:206:9
+ ❯ apps/native/test/picker.test.tsx:581:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/19]⎯
+
+ FAIL   native-tela  apps/native/test/picker.test.tsx > (g) T2-R10 — 404 numa adição: o picker fecha e S1 aparece já relida > 401 numa adição não desloga (T2-R13): a frase na linha, a sessão fica
+Error: sem nó com testID="picker-abrir"
+ ❯ exige apps/native/test/tela.tsx:64:25
+     62| export function exige(testID: string): HTMLElement {
+     63|   const e = achar(testID)
+     64|   if (e === null) throw new Error(`sem nó com testID="${testID}"`)
+       |                         ^
+     65|   return e
+     66| }
+ ❯ Module.tocar apps/native/test/tela.tsx:93:16
+ ❯ abrir apps/native/test/picker.test.tsx:206:9
+ ❯ apps/native/test/picker.test.tsx:601:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/19]⎯
+
+ FAIL   native-tela  apps/native/test/picker.test.tsx > (h) N2-P-vazio — `Concluir` e o `fechar` não escrevem; a volta cai em S2 relida > picker-concluir: zero request, e S2 mostra o conjunto da última releitura
+ FAIL   native-tela  apps/native/test/picker.test.tsx > (h) N2-P-vazio — `Concluir` e o `fechar` não escrevem; a volta cai em S2 relida > fechar-busca: zero request, e S2 mostra o conjunto da última releitura
+ FAIL   native-tela  apps/native/test/picker.test.tsx > (h) N2-P-vazio — `Concluir` e o `fechar` não escrevem; a volta cai em S2 relida > voltar do sistema: zero request, e S2 mostra o conjunto da última releitura
+Error: sem nó com testID="picker-abrir"
+ ❯ exige apps/native/test/tela.tsx:64:25
+     62| export function exige(testID: string): HTMLElement {
+     63|   const e = achar(testID)
+     64|   if (e === null) throw new Error(`sem nó com testID="${testID}"`)
+       |                         ^
+     65|   return e
+     66| }
+ ❯ Module.tocar apps/native/test/tela.tsx:93:16
+ ❯ abrir apps/native/test/picker.test.tsx:206:9
+ ❯ apps/native/test/picker.test.tsx:618:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/19]⎯
+
+ FAIL   native-tela  apps/native/test/picker.test.tsx > (h) N2-P-vazio — `Concluir` e o `fechar` não escrevem; a volta cai em S2 relida > sair com o aviso de releitura aberto: S2 mostra o "salvo, não relido" e relê
+Error: sem nó com testID="picker-abrir"
+ ❯ exige apps/native/test/tela.tsx:64:25
+     62| export function exige(testID: string): HTMLElement {
+     63|   const e = achar(testID)
+     64|   if (e === null) throw new Error(`sem nó com testID="${testID}"`)
+       |                         ^
+     65|   return e
+     66| }
+ ❯ Module.tocar apps/native/test/tela.tsx:93:16
+ ❯ abrir apps/native/test/picker.test.tsx:206:9
+ ❯ apps/native/test/picker.test.tsx:646:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/19]⎯
+
+ FAIL   native-tela  apps/native/test/picker.test.tsx > (i) T2-R12 — sem rede, `Adicionar música` inativo com o motivo, e o toque não abre > inativo, o `+` amputado, e nenhum picker
+Error: sem nó com testID="picker-abrir"
+ ❯ exige apps/native/test/tela.tsx:64:25
+     62| export function exige(testID: string): HTMLElement {
+     63|   const e = achar(testID)
+     64|   if (e === null) throw new Error(`sem nó com testID="${testID}"`)
+       |                         ^
+     65|   return e
+     66| }
+ ❯ Module.inativo apps/native/test/tela.tsx:84:10
+ ❯ apps/native/test/picker.test.tsx:672:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/19]⎯
+
+ FAIL   native-tela  apps/native/test/picker.test.tsx > (j) N2-D17 / A-N2-9 — acima de 100, adicionar continua e `Reordenar` inativa na volta > 100 → 101: o 201 sai, o aviso do teto aparece, e S2 volta com `Reordenar` inativo
+Error: sem nó com testID="picker-abrir"
+ ❯ exige apps/native/test/tela.tsx:64:25
+     62| export function exige(testID: string): HTMLElement {
+     63|   const e = achar(testID)
+     64|   if (e === null) throw new Error(`sem nó com testID="${testID}"`)
+       |                         ^
+     65|   return e
+     66| }
+ ❯ Module.tocar apps/native/test/tela.tsx:93:16
+ ❯ abrir apps/native/test/picker.test.tsx:206:9
+ ❯ apps/native/test/picker.test.tsx:687:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/19]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  19 failed | 1 passed (20)
+   Start at  20:34:00
+   Duration  3.91s (transform 270ms, setup 0ms, import 277ms, tests 3.13s, environment 400ms)
+
