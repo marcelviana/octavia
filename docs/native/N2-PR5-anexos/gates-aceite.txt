@@ -1,0 +1,31 @@
+# N2-PR5 — suíte e gates depois do conserto da div. 286 (commit do §4)
+
+$ npx vitest run --project core --project native --project native-tela
+ Test Files  28 passed (28)
+      Tests  308 passed (308)
+
+$ sh apps/native/scripts/g1.sh origin/main WORKTREE
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+  G1b: só adição ✓
+
+$ sh apps/native/scripts/g2g3.sh origin/main WORKTREE
+G2 — testIDs  antes=63  depois=68
+  G2: antes ⊆ depois ✓
+G3 — linhas log( antes=64  depois=64
+  G3: nenhuma linha sumiu ✓
+
+$ gate:a20
+  literais em posição de texto examinados: 142
+  acusações: 0
+
+$ gate:icones
+  acusações: 0 · avisos: 1
+
+$ tsc --noEmit
+(zero erros)
+
+## CN da div. 286 contra o ModoDeReordenar.tsx do commit 2 (git stash, medido e devolvido)
+  × durante o gesto: rótulo, buraco, nenhuma renumeração e NADA escrito
+  AssertionError: expected <div data-testid="alca-5" …(3)>…(1)</div> to be null
+  Tests  1 failed | 13 passed (14)

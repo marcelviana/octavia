@@ -154,7 +154,9 @@ const Linha = memo(function Linha({
     <View
       style={[
         styles.linha,
-        erguida ? styles.linhaErguida : null,
+        // A erguida fica NO LUGAR, invisível, e segura o toque; quem aparece
+        // é a `LinhaFlutuante`, desenhada por último (div. 286).
+        erguida ? styles.linhaNoLugar : null,
         deslocamento !== 0 ? { transform: [{ translateY: deslocamento }] } : null,
       ]}
     >
@@ -175,7 +177,28 @@ const Linha = memo(function Linha({
             amputação de quatro é a do `Reordenar` da faixa. */}
         <Icone nome="alca" tamanho={24} cor={alcaAtiva ? dark.accentInk : dark.lineInfo} />
       </View>
-      <Text style={[styles.numero, erguida ? { color: dark.accent } : null]}>{numero}</Text>
+      <Texto numero={numero} titulo={titulo} artista={artista} rotulo={erguida ? null : rotulo} acento={false} />
+    </View>
+  )
+})
+
+/** Número, título, "· artista" e o rótulo da direita — o miolo das duas linhas. */
+function Texto({
+  numero,
+  titulo,
+  artista,
+  rotulo,
+  acento,
+}: {
+  numero: number
+  titulo: string
+  artista: string | null
+  rotulo: string | null
+  acento: boolean
+}): React.JSX.Element {
+  return (
+    <>
+      <Text style={[styles.numero, acento ? { color: dark.accent } : null]}>{numero}</Text>
       <Text style={styles.titulo} numberOfLines={1}>
         {titulo}
       </Text>
@@ -186,9 +209,46 @@ const Linha = memo(function Linha({
       ) : null}
       <View style={styles.vao} />
       {rotulo !== null ? <Text style={styles.rotulo}>{rotulo}</Text> : null}
+    </>
+  )
+}
+
+/**
+ * **A linha erguida, como DESENHO** — div. 286, medida no §4.
+ *
+ * A primeira forma erguia a própria linha com `zIndex` e `elevation`, e no
+ * Tab S6 o buraco tracejado (um irmão ANTERIOR, que devia ficar por baixo)
+ * aparecia POR CIMA dela: "soltar aqui · posição 2" escrito dentro da linha
+ * erguida — nem com a linha opaca isso mudou. No Android a ordem de desenho
+ * entre irmãos com `transform` não obedece ao `zIndex` com segurança; o que
+ * obedece sempre é a ordem da árvore. Então a linha que segura o toque fica
+ * no lugar, invisível, e esta cópia — sem gesto e sem `testID` — é desenhada
+ * como o ÚLTIMO filho da lista.
+ */
+function LinhaFlutuante({
+  topo,
+  numero,
+  titulo,
+  artista,
+  rotulo,
+}: {
+  topo: number
+  numero: number
+  titulo: string
+  artista: string | null
+  rotulo: string
+}): React.JSX.Element {
+  return (
+    <View style={[styles.linha, styles.linhaErguida, { top: topo }]} pointerEvents="none">
+      {/* O acento a 12% é uma CAMADA sobre a linha opaca, não o fundo dela. */}
+      <View style={styles.veu} />
+      <View style={styles.alca}>
+        <Icone nome="alca" tamanho={24} cor={dark.accentInk} />
+      </View>
+      <Texto numero={numero} titulo={titulo} artista={artista} rotulo={rotulo} acento />
     </View>
   )
-})
+}
 
 export function ModoDeReordenar({
   setlist,
@@ -517,6 +577,21 @@ export function ModoDeReordenar({
               />
             )
           })}
+          {arrasto !== null && ordem[arrasto.de] !== undefined
+            ? (() => {
+                const song = ordem[arrasto.de] as SetlistSongDTO
+                const { content } = resolveSong(song, contentById)
+                return (
+                  <LinhaFlutuante
+                    topo={space.xl + arrasto.de * PASSO + arrasto.dy}
+                    numero={arrasto.de + 1}
+                    titulo={content?.title ?? '(sem título)'}
+                    artista={content?.artist !== undefined && content?.artist !== null && content.artist.length > 0 ? content.artist : null}
+                    rotulo={deParaPosicao(arrasto.de + 1, arrasto.alvo + 1)}
+                  />
+                )
+              })()
+            : null}
         </ScrollView>
       </View>
     </View>
@@ -596,10 +671,22 @@ const styles = StyleSheet.create({
   // V1 §6.2, estado ATIVO: contorno e fundo de acento a 12% (`1F` = 31/255),
   // e a sombra — no Android, `elevation`, que é a que o aparelho desenha.
   linhaErguida: {
+    position: 'absolute',
+    left: space.xl,
+    right: space.xl,
     borderColor: dark.accent,
-    backgroundColor: `${dark.accent}1F`,
-    zIndex: 2,
     elevation: 8,
+  },
+  // A linha que segura o toque durante o arrasto: no lugar, sem desenho.
+  linhaNoLugar: { opacity: 0 },
+  veu: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    borderRadius: radius.control,
+    backgroundColor: `${dark.accent}1F`,
   },
   alca: { width: touch.min, height: LINHA, alignItems: 'center', justifyContent: 'center' },
   numero: { color: dark.muted, fontFamily: font.ui, fontSize: 20, width: 32 },

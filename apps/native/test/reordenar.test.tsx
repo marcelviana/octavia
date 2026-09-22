@@ -279,6 +279,18 @@ describe('(b) T2-R8 — arrastar 5 → 2 e salvar: UM `PUT` com a ordem inteira'
     expect(so('api')).toEqual([])
     expect(so('write')).toEqual([])
 
+    /**
+     * Div. 286, achada no §4: no Tab S6 o buraco tracejado aparecia DENTRO da
+     * linha erguida. O desenho dela é uma cópia que tem de ser o ÚLTIMO filho
+     * da lista (a ordem da árvore é a ordem de desenho que o Android respeita),
+     * e a linha que segura o toque fica no lugar, invisível.
+     */
+    const lista = linhaDaAlca(1).parentElement as HTMLElement
+    const ultimo = lista.lastElementChild as HTMLElement
+    expect(ultimo.textContent).toContain('de 5 para 2')
+    expect(ultimo.querySelector('[data-testid]')).toBeNull()
+    expect(estilo(linhaDaAlca(5))).toMatchObject({ opacity: 0 })
+
     await g.soltar()
     // Soltou: renumera, e a linha 2 é a que era 5.
     expect(linhaDaAlca(2).textContent).toContain('Quinta')
