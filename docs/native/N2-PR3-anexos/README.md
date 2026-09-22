@@ -11,6 +11,8 @@ Branch `n2/pr3-s1-criar`, sobre `fedfd24` (merge da #314).
 | `gates-depois.txt` | `tsc --noEmit`, os dois gates e os CNs deles, G1, G2 e G3 |
 | `dumps/` | **os 10 dumps do §4.1 e do §4.2**, com `SHA256SUMS.txt` — ver `aparato.md` §3 |
 | `device-prod.txt` | **§4.2 FEITO**: o primeiro `POST` do nativo em prod, `201`, logcat verbatim |
+| `ime-antes.txt` | **CN de aparelho da div. 256**, antes do fix: `mInputShown=false` com a folha aberta |
+| `ime-depois.txt` | o mesmo depois do fix: **10/10 com teclado**, as seis formas medidas e os 3 toques do J3 |
 | `aparato.md` | **o §4 inteiro**: dev client, G5/G6, as medidas contra o congelado (**N2-E6**), os dois defeitos achados, as divs. 250–259 |
 
 ---

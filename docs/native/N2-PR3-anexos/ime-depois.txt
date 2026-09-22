@@ -1,0 +1,122 @@
+N2-PR3 · div. 256 — CN DE APARELHO, **DEPOIS** DO FIX
+O teclado sobe ao abrir a folha, com UM toque no botão. 10/10.
+=====================================================================
+
+APARATO
+  o mesmo do `ime-antes.txt`: Tab S6 (SM-T865, RX2N8000F3D), Android 12,
+  dev client sha256 9447edc7… — **o mesmo binário**, porque o fix é JS e vem
+  do Metro. Nada de nativo mudou entre o antes e o depois.
+  Base: o mock `aceite.py servidor 8788 escrita`. O toque em `Criar` da §3
+  NÃO podia ir para prod: a PR já gastou o seu único POST de produção, e o
+  objeto do aceite da PR-4 (`N2-PR3 aceite`) não pode ganhar companhia.
+
+O FIX
+  `FolhaDeCriar.tsx` — o `TextInput` do nome perde o `autoFocus` e ganha
+  `ref={campoNome}`; o `Modal` ganha:
+
+      onShow={() => {
+        setTimeout(() => campoNome.current?.focus(), MS_FOCO_APOS_ANIMACAO)
+      }}
+
+  com `const MS_FOCO_APOS_ANIMACAO = 350`.
+
+=====================================================================
+1) O IME DEPOIS — UM toque no botão `criar-setlist`, e nada mais
+=====================================================================
+$ adb shell input tap 1878 188          # o botão da barra de S1
+$ adb shell dumpsys input_method | grep -E "mInputShown|mServedView"
+(folha fechada antes: 0 nós `form-nome`; depois do toque: 1 — conferido no
+ mesmo instante da captura)
+    inputContext=IInputConnectionWrapper{connection=android.view.inputmethod.BaseInputConnection@d031924 finished=false mParentInputMethodManager.isActive()=false mServedView=null}
+  mShowRequested=true mShowExplicitlyRequested=true mShowForced=false mInputShown=true
+  mIInputContext=IInputConnectionWrapper{connection=android.view.inputmethod.BaseInputConnection@45e936a finished=false mParentInputMethodManager.isActive()=true mServedView=null}
+  mServedView=com.facebook.react.views.textinput.ReactEditText{4d198f9 VFED..CL. .F...... 544,485-2016,620 #228 aid=1073741827}
+  mServedInputConnectionWrapper=IInputConnectionWrapper{connection=androidx.emoji2.viewsintegration.EmojiInputConnection@f46ea08 finished=false mParentInputMethodManager.isActive()=true mServedView=com.facebook.react.views.textinput.ReactEditText{4d198f9 VFED..CL. .F...... 544,485-2016,620 #228 aid=1073741827}}
+  **mShowRequested=true · mInputShown=true**, contra as duas `false` do
+  `ime-antes.txt` com exatamente o mesmo toque. O `mServedView` continua o
+  mesmo `ReactEditText` nos bounds do `form-nome` (`544,485-2016,620`): não
+  se trocou de campo, trocou-se o MOMENTO do pedido.
+
+=====================================================================
+2) AS SEIS FORMAS, COM n=10 — E UM ERRO DE MÉTODO CORRIGIDO NO CAMINHO
+=====================================================================
+  O prompt prescrevia `onShow` e, se não bastasse, `runAfterInteractions`.
+  **Nenhuma das duas bastou.** E a terceira que pareceu bastar — um
+  `setTimeout(0)` — só pareceu porque foi medida UMA vez.
+
+    forma                                        com teclado
+    -----------------------------------------    -----------
+    `autoFocus` na montagem (o de antes)           0 de 1
+    `focus()` direto no `onShow`                   0 de 1
+    `InteractionManager.runAfterInteractions`      0 de 1
+    `setTimeout(…, 0)`                            **5 de 10**
+    `setTimeout(…, 150)`                          10 de 10
+    `setTimeout(…, 350)`  ← o que ficou           **10 de 10**
+
+  **O ERRO, registrado porque é o mais instrutivo desta rodada.** Depois de
+  `onShow` e `runAfterInteractions` falharem, mediu-se `setTimeout(0)`,
+  `150` e `350` UMA vez cada; as três deram `true`, e daí saiu uma conclusão
+  bonita e errada: *"não é duração, é ordem — basta cair num macrotask
+  posterior"*. A rodada seguinte, com o mesmo código, deu `false`. Com n=10,
+  o `setTimeout(0)` é **cara-ou-coroa (5/10)**. A conclusão certa é a
+  oposta: **é duração**, e o `0` passava por sorte.
+  É a regra da V1-PR5 de novo — *uma medição não vira referência sem n* —
+  e desta vez ela pegou a própria sessão.
+
+  **Um erro de ARNÊS também precisou ser corrigido**, e vale para as PRs
+  4–7. O primeiro laço fechava a folha com `KEYCODE_BACK`. Mas quando o
+  teclado está de pé, o `BACK` fecha **o teclado**, não a folha — então o
+  toque seguinte caía numa folha já aberta e não media nada. O sintoma foi
+  um padrão alternado perfeito (false,true,false,true…) com "folha aberta"
+  em todas as iterações. O laço bom fecha pelo botão `form-cancelar`, lendo
+  os bounds dele no dump, e confirma folha-fechada antes e folha-aberta
+  depois de cada toque. Os números acima são todos do laço bom.
+
+  **Por que 350 e não 150, já que os dois deram 10/10**: o `animationType`
+  da folha é `fade`, cuja animação no RN dura ~300 ms. Em 150 ms o pedido
+  ainda cai DENTRO da animação e passa por causa do tempo deste aparelho;
+  em 350 ms ele cai depois de a janela do modal ter assentado como janela
+  ativa do IME, que é a condição de que o teclado depende. 150 seria
+  apostar no relógio de um Tab S6. **Quem mudar o `animationType` mexe
+  neste número — e mede de novo, com n.**
+
+  DIAGNÓSTICO que separou "foco" de "pedido de teclado" (console.log
+  temporário, removido antes do commit):
+      'DIAG: onShow disparou; ref=', true
+      'DIAG: isFocused ANTES =', false
+      'DIAG: isFocused DEPOIS =', true
+  O `onShow` dispara, a ref existe, o `focus()` é chamado e o campo fica
+  focado — em TODAS as formas, inclusive nas que falham. O foco nunca foi o
+  problema; o pedido de teclado é que se perde.
+
+=====================================================================
+3) OS TRÊS TOQUES DO J3, CONTADOS COM O CÓDIGO FINAL
+=====================================================================
+  O congelado promete `Nova setlist` · digitar · `Criar`. Percorrido
+  inteiro, **sem nenhum toque no campo**:
+
+  TOQUE 1  tap 1878 188   (botão `criar-setlist` da barra)
+           → dumpsys: mShowRequested=true  mInputShown=true
+  DIGITAR  input text "Tres toques final"   (não é toque — e entrou no campo
+           certo justamente porque o teclado já estava de pé)
+           → a árvore mostra text="Tres toques final" no `form-nome`
+           → `form-salvar` enabled="true"
+  TOQUE 3  tap 1875 973   (`form-salvar`)
+           → OCTAVIA: write op=create setlist=- items=- status=201 code=- ms=37
+           → OCTAVIA: resync kind=setlists reason=write op=create status=200 setlists=3 ms=25
+           → OCTAVIA: cache write kind=setlists n=3 invalidated=1
+           → OCTAVIA: prefetch plan n=0 reason=7d
+           → S1 mostra TRES TOQUES FINAL
+
+  **3 toques.** Antes do fix eram 4: o segundo era tocar no campo só para
+  fazer o teclado aparecer.
+
+=====================================================================
+4) O QUE ESTE CN NÃO É
+=====================================================================
+  Não é teste de tela, e não pode ser. O projeto `native-tela` roda em
+  `jsdom` com um duplo de `react-native` cujo `Modal` **não chama `onShow`**,
+  e `jsdom` não tem IME. Os 14 CNs de tela passam igual antes e depois do
+  fix — e passariam também com o `setTimeout(0)` que falha em metade das
+  aberturas no aparelho. Quem mede teclado é o `dumpsys input_method`, com
+  n. É a mesma lição da div. 257.

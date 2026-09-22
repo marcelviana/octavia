@@ -269,7 +269,18 @@ O §4 rodou em sessão própria, sobre `25c00ee`. O anexo é
 | **258** | O §4 do prompt pede uma **N2-E6** para o `form-falha` fora das 25 — que **já é a N2-E4** (div. 245), palavra por palavra. | **Não foi aberta uma segunda errata do mesmo fato.** A N2-E4 ganhou a prova de aparelho que lhe faltava (dump `07`, 654,2 × 87,6 dp). O rótulo **N2-E6** ficou com a medida do botão. |
 | **259** | `grep -rn eyJ` sobre os anexos acha **o enunciado da própria regra 4**, no `README.md:121`. | Registrado. Nenhum arquivo novo do §4 contém o literal. |
 
-**Próxima divergência livre: 260.**
+### Divergências do conserto da div. 256, **260 a 261**
+
+Sessão do fix, mesma árvore, sobre `c8db83a`. Anexos:
+[`ime-antes.txt`](../N2-PR3-anexos/ime-antes.txt) e
+[`ime-depois.txt`](../N2-PR3-anexos/ime-depois.txt).
+
+| div. | o que | o que foi feito |
+| --- | --- | --- |
+| **260** | As **duas** formas prescritas para subir o teclado falharam no Tab S6: `focus()` no `onShow` do `Modal` (0/1) e `InteractionManager.runAfterInteractions` (0/1). E a forma que pareceu resolver — `setTimeout(…, 0)` — é **cara-ou-coroa: 5/10**; ela passou nas primeiras tentativas porque foram amostras de **uma** rodada, e daí saiu a conclusão errada de que *"não é duração, é ordem"*. | Ficou **`setTimeout(…, 350)`**, 10/10 (constante `MS_FOCO_APOS_ANIMACAO`). O `runAfterInteractions` falha **pelo mesmo motivo** que o `focus()` direto: sem interações pendentes ele roda no MESMO tick do `onShow` — as duas formas são a mesma coisa para o IME, e por isso deram o mesmo resultado. **É duração**: o `animationType="fade"` dura ~300 ms, e o pedido precisa cair depois de a janela do modal assentar como janela ativa do IME. 150 ms também deu 10/10 mas fica **dentro** da animação, apostando no relógio deste aparelho. Diagnóstico que separou as duas coisas: o `focus()` É chamado e o campo VAI de `isFocused=false` a `true` em todas as formas — o foco nunca foi o problema, o pedido de teclado é que se perde. **Regra da V1-PR5 outra vez, e desta vez ela pegou a própria sessão.** |
+| **261** | **Erro de arnês, e vale para as PRs 4–7.** O primeiro laço de n=10 fechava a folha com `KEYCODE_BACK` — mas com o teclado de pé o `BACK` fecha **o teclado**, não a folha, e o toque seguinte caía numa folha já aberta. Sintoma: padrão alternado perfeito (`false,true,false,true…`) com "folha aberta" em **todas** as iterações. | O laço bom fecha pelo botão `form-cancelar`, lendo os bounds dele no dump, e **confirma folha-fechada antes e folha-aberta depois** de cada toque. Todos os números publicados são do laço bom. Um arnês que não verifica o próprio pré-requisito mede outra coisa e não avisa. |
+
+**Próxima divergência livre: 262.**
 
 Divergências abertas nesta PR, **221 a 225** (o W4-a parou em 220):
 

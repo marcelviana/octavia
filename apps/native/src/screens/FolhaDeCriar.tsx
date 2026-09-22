@@ -39,7 +39,7 @@
  * resposta significa é o `classificar()`. Aqui só se desenha e se encaminha —
  * é o que faz valer o "as telas usam só o que este módulo expõe" (T2-R9).
  */
-import { useCallback, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { Modal, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
 import DateTimePicker, { type DateTimePickerEvent } from '@react-native-community/datetimepicker'
 import {
@@ -75,12 +75,55 @@ export interface FolhaDeCriarProps {
 /** Os quatro estados do congelado, e só eles. */
 type Fase = 'editando' | 'salvando' | 'falhou'
 
+/**
+ * div. 256 — quanto o foco do campo espera depois de o `Modal` aparecer.
+ * Acima dos ~300 ms do `animationType="fade"`; ver a tabela de n=10 na ref
+ * `campoNome`, abaixo. Não é número de gosto: é medida de aparelho.
+ */
+const MS_FOCO_APOS_ANIMACAO = 350
+
 export function FolhaDeCriar({ estado, aoFechar, aoCriar, aoSalvoNaoRelido, aoRelerAtras }: FolhaDeCriarProps): React.JSX.Element {
   const [nome, setNome] = useState('')
   /** `null` = "sem data", que é estado de primeira classe (T2-R2). */
   const [data, setData] = useState<string | null>(null)
   const [calendario, setCalendario] = useState(false)
   const [fase, setFase] = useState<Fase>('editando')
+  /**
+   * div. 256 — o `autoFocus` não sobe o teclado dentro de um `Modal`.
+   *
+   * Medido no Tab S6 (`N2-PR3-anexos/ime-antes.txt`): com `autoFocus`, o campo
+   * VIRA `mServedView` do IME — o dumpsys mostra o `ReactEditText` nos bounds
+   * exatos do `form-nome` — e mesmo assim `mShowRequested=false`. O foco vai e
+   * **ninguém pede o teclado**. Com `console.log` temporário mediu-se que o
+   * `focus()` é chamado e que o campo passa de `isFocused=false` para `true`:
+   * o foco nunca foi o problema, o pedido de teclado é que se perde.
+   *
+   * O foco passou para o `onShow` do `Modal` (`:186`) **dentro de um
+   * `setTimeout` de 350 ms**, e o ATRASO é a parte que funciona. Medido neste
+   * aparelho, abrindo a folha pelo botão, **n=10 por forma**:
+   *
+   * | forma                                      | com teclado |
+   * |--------------------------------------------|-------------|
+   * | `autoFocus` na montagem (o de antes)       | 0 / 1       |
+   * | `focus()` direto no `onShow`               | 0 / 1       |
+   * | `InteractionManager.runAfterInteractions`  | 0 / 1       |
+   * | `setTimeout(…, 0)`                         | **5 / 10**  |
+   * | `setTimeout(…, 150)`                       | 10 / 10     |
+   * | `setTimeout(…, 350)`                       | **10 / 10** |
+   *
+   * **O `setTimeout(0)` é cara-ou-coroa** — e passou nas primeiras tentativas
+   * porque foram amostras de UMA rodada. Só com n=10 o 5/10 apareceu. É a
+   * regra da V1-PR5 outra vez: uma medição não vira referência sem n.
+   *
+   * Por que **350** e não 150, já que os dois deram 10/10: o `animationType`
+   * desta folha é `fade` (`:184`), cuja animação no RN dura ~300 ms. Em 150 ms
+   * o pedido ainda cai DENTRO da animação e passa por causa do tempo deste
+   * aparelho; em 350 ms ele cai depois de a janela do modal ter assentado como
+   * janela ativa do IME, que é a condição de que o teclado realmente depende.
+   * **Quem mudar o `animationType` ou a duração da animação mexe neste número**
+   * — e mede de novo com n, no aparelho, porque nenhum teste de tela vê isto.
+   */
+  const campoNome = useRef<TextInput>(null)
   const [falha, setFalha] = useState<Resultado | null>(null)
   /** Regra 3: enquanto a lista atrás da folha é relida, não há o que repetir. */
   const [relendo, setRelendo] = useState(false)
@@ -151,7 +194,18 @@ export function FolhaDeCriar({ estado, aoFechar, aoCriar, aoSalvoNaoRelido, aoRe
   const podeCriar = preparo.enviar && !salvando
 
   return (
-    <Modal visible transparent animationType="fade" onRequestClose={aoFechar}>
+    <Modal
+      visible
+      transparent
+      animationType="fade"
+      onRequestClose={aoFechar}
+      // div. 256 — o foco vai aqui, e não no `autoFocus` do campo, e com o
+      // atraso de 350 ms: sem ele o teclado sobe em metade das aberturas.
+      // Ver a tabela das seis formas medidas (n=10) no comentário da ref.
+      onShow={() => {
+        setTimeout(() => campoNome.current?.focus(), MS_FOCO_APOS_ANIMACAO)
+      }}
+    >
       <View style={styles.cortina}>
         <View style={styles.folha}>
           <View style={styles.cabeca}>
@@ -169,7 +223,10 @@ export function FolhaDeCriar({ estado, aoFechar, aoCriar, aoSalvoNaoRelido, aoRe
                 onChangeText={setNome}
                 editable={editavel}
                 // Congelado: "Ao abrir, o nome já está em foco e o teclado sobe."
-                autoFocus
+                // O foco é dado pelo `onShow` do `Modal` acima, não por
+                // `autoFocus`: dentro de um modal o `autoFocus` dá foco e NÃO
+                // sobe o teclado (div. 256).
+                ref={campoNome}
                 style={[styles.entrada, motivo === 'nome-vazio' ? styles.entradaComErro : null]}
                 placeholderTextColor={dark.lineInfo}
                 testID="form-nome"

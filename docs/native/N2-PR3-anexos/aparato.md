@@ -279,7 +279,16 @@ emprestado da linha errada da mesma tabela.**
 Dois defeitos, os dois invisíveis para os 14 CNs de tela. **Nenhum foi
 corrigido aqui** — o roteiro manda parar, registrar e reportar.
 
-### 5.1 — O teclado não sobe sozinho `[div. 256]`
+### 5.1 — O teclado não sobe sozinho `[div. 256]` — **CONSERTADO depois**
+
+> **Nota posterior, mesma sessão de trabalho.** Este defeito foi corrigido num
+> commit próprio: o foco saiu do `autoFocus` e foi para o `onShow` do `Modal`,
+> dentro de um `setTimeout` de 350 ms. **As duas formas que este anexo e o
+> prompt do conserto imaginavam suficientes — `onShow` puro e
+> `InteractionManager.runAfterInteractions` — falharam as duas**, e um
+> `setTimeout(0)` acerta só metade das vezes. Medições com n=10 e o porquê em
+> [`ime-depois.txt`](ime-depois.txt) e na **div. 260**. O que segue abaixo é o
+> registro do defeito como ele foi achado, e fica como estava.
 
 O congelado manda, e o código cita verbatim no comentário do
 `FolhaDeCriar.tsx:171`: *"Ao abrir, o nome já está em foco e o teclado sobe."*
