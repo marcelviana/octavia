@@ -48,11 +48,20 @@ from __future__ import annotations
 import copy
 import datetime
 import json
+# `socket` só para o `shutdown` do modo `escrita-corta` (div. 257) — o alias
+# evita colidir com a variável `socket` de qualquer handler.
+import socket as _socket
 import sys
 import time
 
 #: Segundos que o modo `atraso` segura cada resposta (S1a).
 ATRASO_S = 45
+
+#: Segundos que os modos `escrita-pendurada` e `resync-pendurado` (N2-PR4)
+#: ficam MUDOS com o socket aberto. Maior que o prazo de rede do app
+#: (`PRAZO_DE_REDE_MS`, 20 s): quem tem de desistir é o cliente, e é isso que
+#: o CN mede. O servidor nunca responde — a conexão morre com o processo.
+PENDURADO_S = 90
 
 # --------------------------------------------------------------- fixtures
 
@@ -193,14 +202,29 @@ def com_songs_dos_invalidos(setlists: list, nome: str) -> list:
 #   escrita-429          toda escrita → 429 com `Retry-After` e `retryAfter`
 #   escrita-429-sem-prazo  429 SEM o header e SEM o campo — o ramo
 #                        `retryAfter: null` que a div. 225 deixou aberto
-#   escrita-corta        GRAVA no modelo, responde 201/200 com
-#                        `content-length` e FECHA a conexão antes do corpo.
+#   escrita-corta        GRAVA no modelo e FECHA O SOCKET **sem status
+#                        line** (N2-PR4, div. 257 — a forma de antes mandava
+#                        `201` + `content-length` e cortava o corpo, e isso
+#                        NÃO produzia falha no Android: o `await
+#                        response.text()` do OkHttp devolve o que chegou e um
+#                        201 de corpo vazio passava por escrita boa).
 #                        É a N2-D18 literal: o servidor gravou e o cliente
 #                        não soube. O `GET` seguinte mostra o item gravado.
 #   escrita-resync-500   a escrita grava e responde 2xx; o `GET
 #                        /api/setlists` SEGUINTE devolve 500 (o primeiro
 #                        depois da primeira escrita). É a N2-D22:
 #                        "salvo; não foi possível recarregar".
+#   escrita-pendurada    (N2-PR4) ACEITA a escrita e **nunca responde** — o
+#                        socket fica aberto e mudo por `PENDURADO_S`. É o
+#                        caso que a div. 257 descobriu por baixo: sem prazo
+#                        de rede, o app espera para sempre com a folha
+#                        aberta em "Salvando no servidor…". Não grava nada:
+#                        o que se mede é o prazo, não a gravação.
+#   resync-pendurado     (N2-PR4) a escrita responde 2xx e o `GET
+#                        /api/setlists` SEGUINTE fica mudo por
+#                        `PENDURADO_S`. É o mesmo prazo, do lado da
+#                        releitura (T2-R9): sem ele, a tela fica em
+#                        "relendo…" para sempre.
 #   escrita-corta-lento  (N2-PR3) o `escrita-corta` com o `GET` seguinte
 #                        SEGURADO por 600 ms. Existe por causa de UM estado
 #                        do congelado: `N2-F-falhou` com a releitura ainda em
@@ -213,7 +237,8 @@ def com_songs_dos_invalidos(setlists: list, nome: str) -> list:
 #
 # Por que `escrita-corta` fecha a conexão em vez de demorar: o que se quer
 # medir é a espécie `rede` com gravação FEITA, e um timeout mediria a mesma
-# espécie sem a gravação — o oposto do caso.
+# espécie sem a gravação — o oposto do caso. Os dois modos `pendurado` da
+# N2-PR4 medem exatamente o outro lado, e por isso são modos SEPARADOS.
 
 def _envelope(code: str, error: str, extra: dict | None = None) -> dict:
     corpo = {"error": error, "code": code}
@@ -388,19 +413,29 @@ def servidor(porta: int, modo: str, setlists_path: str, content_path: str) -> No
             self.end_headers()
             self.wfile.write(raw)
 
-        def _corta(self, code: int) -> None:
+        def _corta(self, _code: int) -> None:
             """N2-D18 literal: o servidor GRAVOU e o cliente não soube.
 
-            Anuncia um corpo e não o manda — a conexão morre no meio. No
-            cliente isso é falha de TRANSPORTE (o `fetch` do Node devolve
-            `TypeError: terminated` ao ler o corpo), exatamente como a rede
-            que cai depois do commit no banco. Um timeout mediria a mesma
-            espécie SEM a gravação, que é o oposto do caso.
+            **Fecha o socket SEM STATUS LINE** — nenhum byte de resposta sai.
+
+            A forma de antes mandava `201` + `content-length: 500` e cortava
+            o corpo. Em Node isso basta (o `fetch` estoura com `TypeError:
+            terminated` ao ler o corpo), mas **no Android não**: medido no
+            Tab S6 (`N2-PR3-anexos/aparato.md` §5.2, div. 257), o
+            `await response.text()` do OkHttp devolve o que chegou e o app
+            leu `status=201 code=-` — sucesso limpo. O modo que existia para
+            provar a espécie `rede` da N2-D18 provava o contrário dela no
+            único lugar onde a prova importa, que é o aparelho.
+
+            Sem status line não há resposta nenhuma para interpretar: o
+            OkHttp levanta `unexpected end of stream` e o `fetch` do Node
+            rejeita antes de haver `response`. Nos dois a escrita vira
+            transporte falho com a gravação FEITA, que é o caso.
             """
-            self.send_response(code)
-            self.send_header("content-type", "application/json")
-            self.send_header("content-length", "500")
-            self.end_headers()
+            try:
+                self.connection.shutdown(_socket.SHUT_RDWR)
+            except OSError:
+                pass
             self.close_connection = True
 
         def _corpo(self) -> dict:
@@ -441,6 +476,13 @@ def servidor(porta: int, modo: str, setlists_path: str, content_path: str) -> No
                 return True
             if modo == "escrita-500":
                 self._json(500, _envelope("INTERNAL_ERROR", "Internal server error"))
+                return True
+            if modo == "escrita-pendurada":
+                # N2-PR4 — a escrita que NUNCA responde. Nada é gravado: o que
+                # este modo mede é o PRAZO do cliente, e gravar embaralharia as
+                # duas coisas (quem mede gravação-sem-resposta é o
+                # `escrita-corta`).
+                time.sleep(PENDURADO_S)
                 return True
             return False
 
@@ -515,6 +557,12 @@ def servidor(porta: int, modo: str, setlists_path: str, content_path: str) -> No
                     # 3) demora — é a janela do `relendo a lista…`.
                     time.sleep(0.6)
                     self._json(200, modelo.setlists)
+                    return
+                if modo == "resync-pendurado" and estado["escritas"] > 0:
+                    # N2-PR4 — a releitura que nunca volta. O `GET` da
+                    # abertura funciona (é preciso haver cache antes); o que
+                    # pendura é o `GET` de DEPOIS da primeira escrita.
+                    time.sleep(PENDURADO_S)
                     return
                 if modo == "escrita-resync-500" and estado["escritas"] > 0:
                     # N2-D22: a escrita gravou e a RELEITURA é que falhou.

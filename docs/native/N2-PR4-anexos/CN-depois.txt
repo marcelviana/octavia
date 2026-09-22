@@ -1,0 +1,78 @@
+
+[1m[46m RUN [49m[22m [36mv4.0.16 [39m[90m/Users/marcelviana/projects/octavia-n2-pr4[39m
+
+ [32m✓[39m [30m[45m core [49m[39m packages/core/src/content-contract.test.ts [2m([22m[2m15 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m [30m[45m core [49m[39m packages/core/src/sync.test.ts [2m([22m[2m14 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m [30m[45m core [49m[39m packages/core/src/validacao.test.ts [2m([22m[2m17 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m [30m[45m core [49m[39m packages/core/src/offline.test.ts [2m([22m[2m25 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+ [32m✓[39m [30m[45m core [49m[39m packages/core/src/search.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m [30m[45m core [49m[39m packages/core/src/escrita.test.ts [2m([22m[2m23 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m [30m[45m core [49m[39m packages/core/src/frases.test.ts [2m([22m[2m24 tests[22m[2m)[22m[32m 47[2mms[22m[39m
+ [32m✓[39m [30m[45m core [49m[39m packages/core/src/position.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 2[2mms[22m[39m
+ [32m✓[39m [30m[45m core [49m[39m packages/core/src/errors.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m [30m[45m core [49m[39m packages/core/src/rate-limit.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 4[2mms[22m[39m
+ [32m✓[39m [30m[45m core [49m[39m packages/core/src/token.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 3[2mms[22m[39m
+ [32m✓[39m [30m[45m core [49m[39m packages/core/src/auth-fetch.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m [30m[45m core [49m[39m packages/core/src/normalize.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m [30m[45m core [49m[39m packages/core/src/isolation.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 3[2mms[22m[39m
+ [32m✓[39m [30m[45m core [49m[39m packages/core/src/song.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 3[2mms[22m[39m
+[90mstdout[2m | apps/native/test/files-saneamento.test.ts[2m > [22m[2mW1-A6 — a varredura da abertura repara o que já está no disco[2m > [22m[2mapaga o 0 byte e o truncado, e deixa o íntegro em paz
+[22m[39mOCTAVIA: file-reject name=1786218427769-partitura-1p.pdf kind=empty bytes=0 expected=-
+OCTAVIA: file-reject name=1786295844475-cifra.pdf kind=malformed bytes=2000 expected=-
+
+[90mstdout[2m | apps/native/test/files-saneamento.test.ts[2m > [22m[2mW1-A6 — a varredura da abertura repara o que já está no disco[2m > [22m[2ma ENTRADA do índice fica — é o "(1,2 MB)" que o S3e mostra (Q3)
+[22m[39mOCTAVIA: file-reject name=1786295844475-cifra.pdf kind=malformed bytes=2000 expected=-
+
+[90mstdout[2m | apps/native/test/files-integridade.test.ts[2m > [22m[2mG7 — o que está no disco só conta se estiver completo[2m > [22m[2mo arquivo íntegro continua contando — o gate não pode recusar o que é bom
+[22m[39mOCTAVIA: file src=download name=178621843-partitura-12p.pdf bytes=4000 total=4000 ms=0
+
+[90mstdout[2m | apps/native/test/files-integridade.test.ts[2m > [22m[2mG7 — o que está no disco só conta se estiver completo[2m > [22m[2mo arquivo íntegro continua contando — o gate não pode recusar o que é bom
+[22m[39mOCTAVIA: file src=disk name=178621843-partitura-12p.pdf bytes=4000
+
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/files-saneamento.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+[90mstdout[2m | apps/native/test/files-integridade.test.ts[2m > [22m[2mW1-A1 — um download interrompido não deixa arquivo no lugar do bom[2m > [22m[2mdurante o download, o nome final ainda não existe — a promessa não mente enquanto baixa
+[22m[39mOCTAVIA: file src=download name=178621844-partitura-12p.pdf bytes=4000 total=4000 ms=4000
+
+[90mstdout[2m | apps/native/test/files-integridade.test.ts[2m > [22m[2mW1-A2 / W1-A3 — o teto é de inatividade, e a checagem é do corpo[2m > [22m[2mlento mas SEM parar termina — o download demorado não é punido
+[22m[39mOCTAVIA: file src=download name=178621847-partitura-12p.pdf bytes=4000 total=4000 ms=100000
+
+[90mstdout[2m | apps/native/test/files-integridade.test.ts[2m > [22m[2mW1-A2 / W1-A3 — o teto é de inatividade, e a checagem é do corpo[2m > [22m[2mum corpo mais curto que o `Content-Length` é recusado
+[22m[39mOCTAVIA: file-reject name=178621848-partitura-12p.pdf kind=short bytes=2000 expected=4000
+
+[90mstdout[2m | apps/native/test/files-integridade.test.ts[2m > [22m[2mW1-A2 / W1-A3 — o teto é de inatividade, e a checagem é do corpo[2m > [22m[2msem `Content-Length` (`total=-1`) o download vale pela forma do arquivo
+[22m[39mOCTAVIA: file src=download name=178621849-partitura-12p.pdf bytes=4000 total=- ms=0
+
+[90mstdout[2m | apps/native/test/files-integridade.test.ts[2m > [22m[2mW1-A2 / W1-A3 — o teto é de inatividade, e a checagem é do corpo[2m > [22m[2mum PDF sem `%%EOF` é recusado mesmo com o tamanho "certo"
+[22m[39mOCTAVIA: file-reject name=1786218410-partitura-12p.pdf kind=malformed bytes=2000 expected=2000
+
+[90mstdout[2m | apps/native/test/files-integridade.test.ts[2m > [22m[2mo índice continua sendo memória, não oráculo (div. 111)[2m > [22m[2mo tamanho lembrado sobrevive ao arquivo recusado — é o "(1,2 MB)" do S3e
+[22m[39mOCTAVIA: file src=download name=1786218411-partitura-12p.pdf bytes=4000 total=4000 ms=0
+
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/files-integridade.test.ts [2m([22m[2m11 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/prefetch-fila.test.ts [2m([22m[2m13 tests[22m[2m)[22m[32m 35[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/files-mensagem.test.ts [2m([22m[2m11 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/gates.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 731[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/sync-t1r10.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 1717[2mms[22m[39m
+     [33m[2m✓[22m[39m o segundo loga invalidated=0 nos dois conjuntos [33m 308[2mms[22m[39m
+     [33m[2m✓[22m[39m content: invalidated=1, e o índice de busca não tem mais a versão velha [33m 315[2mms[22m[39m
+     [33m[2m✓[22m[39m setlist renomeada no web: kind=setlists invalidated=1, e volta a 0 no sync seguinte [33m 358[2mms[22m[39m
+ [32m✓[39m [30m[46m native-tela [49m[39m apps/native/test/apos-escrita.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 529[2mms[22m[39m
+ [32m✓[39m [30m[46m native-tela [49m[39m apps/native/test/s2-edicao.test.tsx [2m([22m[2m14 tests[22m[2m)[22m[33m 3407[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/escrita.test.ts [2m([22m[2m18 tests[22m[2m)[22m[33m 4994[2mms[22m[39m
+     [33m[2m✓[22m[39m criar: o GET acontece e o cache fica igual ao 200 dele (conjunto, não arquivo) [33m 309[2mms[22m[39m
+     [33m[2m✓[22m[39m CN: na escrita o mesmo 401 duplo NÃO chama o logout, e são 2 requests [33m 302[2mms[22m[39m
+     [33m[2m✓[22m[39m uma segunda adição é ACEITA enquanto a releitura da primeira está em voo [33m 728[2mms[22m[39m
+     [33m[2m✓[22m[39m duas releituras se SOBREPÕEM — e são duas, não uma enfileirada atrás da outra [33m 715[2mms[22m[39m
+     [33m[2m✓[22m[39m e o cache acaba igual ao ÚLTIMO 200, não ao último a chegar [33m 712[2mms[22m[39m
+ [32m✓[39m [30m[46m native-tela [49m[39m apps/native/test/s1-criar.test.tsx [2m([22m[2m12 tests[22m[2m)[22m[33m 3654[2mms[22m[39m
+     [33m[2m✓[22m[39m enquanto a releitura está em voo, `Tentar de novo` é inativo com o motivo escrito [33m 1012[2mms[22m[39m
+     [33m[2m✓[22m[39m a folha fecha, S1 avisa nomeando a setlist, e `Tentar recarregar` emite reason=reopen [33m 328[2mms[22m[39m
+ [32m✓[39m [30m[42m native [49m[39m apps/native/test/prazo-de-rede.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 20963[2mms[22m[39m
+     [33m[2m✓[22m[39m servidor mudo: a escrita desiste em ≤ 20 s, com espécie `rede` e `status=net` [33m 20318[2mms[22m[39m
+     [33m[2m✓[22m[39m a RELEITURA tem o mesmo prazo: 2xx com o `GET` mudo vira `ok-nao-relido` [33m 541[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m26 passed[39m[22m[90m (26)[39m
+[2m      Tests [22m [1m[32m277 passed[39m[22m[90m (277)[39m
+[2m   Start at [22m 14:33:30
+[2m   Duration [22m 21.86s[2m (transform 2.17s, setup 0ms, import 3.04s, tests 36.20s, environment 1.98s)[22m
+

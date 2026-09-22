@@ -182,6 +182,38 @@ export const desenhos = {
     normal: [{ d: 'M4 6.5h12M4 12h8M4 17.5h6' }, { d: 'M17.5 14v7M14 17.5h7' }],
     inerte: [{ d: 'M4 6.5h12M4 12h8M4 17.5h6' }, { d: 'M14 17.5h7', traco: 1.25 }],
   },
+  /**
+   * TRÊS dos cinco da tela 2 entram na N2-PR4 — os que S2 com edição desenha.
+   * Ficam pendentes a `alca` (PR-5, o modo de reordenar) e o `adicionar`
+   * (PR-6, o picker), e é por isso que a lista `PENDENTES` do `gate:icones`
+   * encolhe de cinco nomes para dois em vez de sumir.
+   *
+   * O par `adicionar / remover` é **um registro** do anexo D e **dois nomes**
+   * no mapa (div. 226). A metade que entra aqui é o `remover` — "o círculo com
+   * menos, 24 em `accentInk`, alvo de 48, no fim da linha" (§3) —, e a
+   * cobrança do gate é contra a UNIÃO das três células do registro, que é o
+   * que torna meio par cobrável sem inventar registro.
+   */
+  'renomear': {
+    normal: [{ d: 'M4.5 19.5h4L20 8l-4-4L4.5 15.5z' }, { d: 'M15 5l4 4' }],
+    // Amputação do anexo D: o corpo deixa de fechar — o lápis perde a ponta,
+    // que é justamente o que escreve.
+    inerte: [{ d: 'M4.5 19.5h4L20 8', traco: 1.25 }, { d: 'M15 5l4 4', traco: 1.25 }],
+  },
+  'apagar-setlist': {
+    normal: [
+      { d: 'M4.5 7h15M9.5 7V4.8h5V7M6.8 7l1 12.2h8.4l1-12.2' },
+      { d: 'M10.2 10.8v5.4M13.8 10.8v5.4' },
+    ],
+    // Amputação: a parede direita e as duas costelas saem. Balde aberto ainda
+    // é lixeira (o limite da R2·2).
+    inerte: [{ d: 'M4.5 7h15M9.5 7V4.8h5V7M6.8 7l1 12.2h8.4', traco: 1.25 }],
+  },
+  'remover': {
+    normal: [{ cx: 12, cy: 12, r: 8.5 }, { d: 'M8 12h8' }],
+    // Amputação: meia corda, 4 — e vale para os dois do par.
+    inerte: [{ cx: 12, cy: 12, r: 8.5, traco: 1.25 }, { d: 'M8 12h4', traco: 1.25 }],
+  },
 } as const satisfies Record<string, Desenho>
 
 export type NomeIcone = keyof typeof desenhos

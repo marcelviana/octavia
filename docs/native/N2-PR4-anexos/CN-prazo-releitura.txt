@@ -1,0 +1,113 @@
+# N2-PR4 — div. 272: o prazo na releitura pós-escrita, MEDIDO
+
+## 1 · A medição, antes de mexer em qualquer coisa
+
+$ grep -n "async function reler|prazoMs|getSetlists" apps/native/src/escrita.ts
+263:async function reler(
+267:  prazoMs: number = PRAZO_DE_REDE_MS,
+274:  const r = await getSetlists({ prazoMs })
+310:export function relerAoAbrir(estado: EstadoLocal, prazoMs?: number): Promise<SetlistDTO[] | null> {
+311:  return reler(estado, 'reopen', null, prazoMs).then((r) => r.setlists)
+427:  const rel = await reler(estado, …, pedido.op, prazoMs)
+
+$ grep -rn "getSetlists(" apps/native/src/
+apps/native/src/api.ts:209:export function getSetlists(opcoes?: { prazoMs?: number }): …
+apps/native/src/escrita.ts:274:  const r = await getSetlists({ prazoMs })      <- COM prazo
+apps/native/src/sync.ts:65:  const rSetlists = await getSetlists()          <- SEM prazo (o sincronizar)
+
+$ grep -rn "relerAoAbrir(" apps/native/src/
+apps/native/src/screens/SetlistsScreen.tsx:377:      const novas = await relerAoAbrir(estadoLocal)
+apps/native/src/screens/IndexScreen.tsx:379:      const novas = await relerAoAbrir(edicao.estado)
+apps/native/src/screens/DialogoDeApagar.tsx:87:      const novas = await relerAoAbrir(estado)
+apps/native/src/screens/FolhaDeCriar.tsx:212:      const novas = await relerAoAbrir(estado)
+
+  As DUAS releituras — a de razão write/404 e a de razão reopen — passam pelo
+  MESMO reler(), que tem o prazo por DEFAULT de parâmetro; as quatro telas
+  chamam relerAoAbrir(estado) sem o segundo argumento e o default se aplica.
+  Nenhuma das duas passa pelo sincronizar() do sync.ts, que é o único
+  getSetlists() sem opções e o que a fixture `atraso` (S1a, 45 s) exercita.
+
+  Conclusão da medição: o defeito descrito NÃO existe na árvore — o prazo da
+  releitura entrou junto com o da escrita, no commit a4e7df6. O que não
+  existia era MEDIÇÃO: o `it` anterior usa prazoMs curto (400 ms) e prova a
+  ligação, não o número; e o caminho `reopen` não tinha CN de prazo nenhum.
+
+
+## 2 · O CN novo contra a árvore da PR — PASSA
+
+$ pnpm exec vitest run --project native apps/native/test/prazo-de-rede.test.ts
+
+  ✓ o número é do CORE, e é 20 s                                          1ms
+  ✓ servidor mudo: a escrita desiste em <= 20 s, com espécie `rede`    20172ms
+  ✓ a RELEITURA tem o mesmo prazo: 2xx com o GET mudo …                  565ms
+  ✓ o prazo da releitura é o do CORE (20 s), e vale também no `reopen` 40139ms
+       Tests  4 passed (4)
+       Duration 60.9s
+
+  Os 40139 ms do `it` novo são os DOIS caminhos, 20 s cada, com o relógio:
+  a releitura POR ESCRITA (sem prazo passado pela chamada, isto é, o default
+  do core) e o `reopen` (o que o botão `Tentar recarregar` das quatro telas
+  dispara). As duas linhas saíram com status=net:
+
+    resync kind=setlists reason=write op=update status=net setlists=- ms=…
+    resync kind=setlists reason=reopen op=-      status=net setlists=- ms=…
+
+
+## 3 · Controle negativo DO INSTRUMENTO — o mecanismo do g7.sh
+
+  Um CN que passa de primeira não prova nada sozinho. Este foi rodado contra
+  o código de ANTES do prazo: `escrita.ts` e `api.ts` de origin/main postos
+  no lugar (zero ocorrências de `prazoMs` nos dois, medido), o teste rodado,
+  os arquivos restaurados.
+
+$ grep -c "prazoMs" apps/native/src/escrita.ts apps/native/src/api.ts
+apps/native/src/api.ts:0
+apps/native/src/escrita.ts:0
+
+  ✓ o número é do CORE, e é 20 s                                          1ms
+  × servidor mudo: a escrita desiste em <= 20 s …                      40008ms
+      Error: Test timed out in 40000ms.
+  × a RELEITURA tem o mesmo prazo …                                     5004ms
+      Error: Test timed out in 5000ms.
+  × o prazo da releitura é o do CORE (20 s), e vale também no `reopen`  70003ms
+      Error: Test timed out in 70000ms.
+       Tests  3 failed | 1 passed (4)
+
+  O `it` novo MORRE NO PRÓPRIO TIMEOUT de 70 s — que é exatamente o que o
+  travamento é: sem prazo, a releitura não termina e a tela fica em
+  "relendo a lista…" para sempre. O primeiro `it` continua passando porque
+  ele afirma a CONSTANTE do core, que não está nos dois arquivos trocados.
+
+  Arquivos restaurados; `git status --short apps/native/src/` vazio em
+  seguida.
+
+
+## 4 · A prova de aparelho — Tab S6, mock em `resync-pendurado`
+
+  O estado que faltava: a N2-D22 chegando por PRAZO (`status=net`) e não por
+  500. Criar pela S1, com o `GET` seguinte mudo.
+
+OCTAVIA: api status=201 path=/api/setlists n=1 ms=46
+OCTAVIA: write op=create setlist=- items=- status=201 code=- ms=52
+OCTAVIA: resync kind=setlists reason=write op=create status=net setlists=- ms=20019
+
+  Durante os 20 s a folha fica em "Criando no servidor…" — o 201 já voltou e
+  quem não volta é a releitura, e a folha não diz "salvo" antes de ela
+  chegar (regra 1). Depois do prazo a folha fecha (o servidor CONFIRMOU) e
+  S1 mostra o estado da N2-D22, nomeando a setlist:
+
+    aviso-motivo  721,8 × 21,8 dp
+      'Prazo da releitura foi criada. Não foi possível recarregar a lista,
+       então ela pode não aparecer abaixo ainda.'
+    aviso-acao    183,6 × 48,0 dp   'Tentar recarregar'
+
+  Dump: dumps/16-N2-X-salvo-nao-relido-net.xml
+
+  E o `reopen`, no mesmo aparelho, tocando `Tentar recarregar`:
+
+OCTAVIA: resync kind=setlists reason=reopen op=- status=net setlists=- ms=20010
+
+  Durante os 20 s o `aviso-acao` fica enabled=false com o motivo 'relendo…'
+  escrito ao lado (N2-D23), e volta a enabled=true depois — o botão não fica
+  preso. **20019 ms e 20010 ms**: o prazo do core, nos dois caminhos, no
+  OkHttp de verdade.

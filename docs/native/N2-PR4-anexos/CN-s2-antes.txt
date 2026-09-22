@@ -1,0 +1,207 @@
+
+[1m[46m RUN [49m[22m [36mv4.0.16 [39m[90m/Users/marcelviana/projects/octavia-n2-pr4[39m
+
+ [31m❯[39m [30m[46m native-tela [49m[39m apps/native/test/s2-edicao.test.tsx [2m([22m[2m14 tests[22m[2m | [22m[31m13 failed[39m[2m)[22m[33m 2151[2mms[22m[39m
+[31m     [31m×[31m vinda de S1: a faixa tem os DOIS controles desta PR, e cada linha tem o seu `remover`[39m[32m 127[2mms[22m[39m
+     [32m✓[39m vinda do palco: ZERO controle de escrita — nem faixa, nem `remover`[32m 181[2mms[22m[39m
+[31m     [31m×[31m a folha de editar abre com os valores do servidor e `Salvar` inativo com o motivo[39m[32m 151[2mms[22m[39m
+[31m     [31m×[31m um PUT com `name`, a releitura, e a tela com o nome novo[39m[32m 131[2mms[22m[39m
+[31m     [31m×[31m o `Limpar` ativa o `Salvar`, e o servidor fica sem data[39m[32m 133[2mms[22m[39m
+[31m     [31m×[31m a releitura da edição corre o mesmo plano de 7 dias do sync[39m[32m 129[2mms[22m[39m
+[31m     [31m×[31m o bis da posição 4 sai e a posição 1 fica; sem diálogo, com releitura[39m[32m 127[2mms[22m[39m
+[31m     [31m×[31m a linha de aviso de S2 traz as três orações do congelado e a ação[39m[32m 132[2mms[22m[39m
+[31m     [31m×[31m o aviso é o da regra 4, e o único botão RECARREGA[39m[32m 132[2mms[22m[39m
+[31m     [31m×[31m `Manter a setlist` não escreve nada; `Apagar` escreve e sai para S1[39m[32m 130[2mms[22m[39m
+[31m     [31m×[31m a folha fecha, a tela sai com `sumiu`, e S1 mostra a frase sem botão[39m[32m 132[2mms[22m[39m
+[31m     [31m×[31m o aviso traz a frase do conjunto, e a sessão fica[39m[32m 133[2mms[22m[39m
+[31m     [31m×[31m faixa e `remover` inativos com o desenho amputado, o motivo escrito uma vez, zero request[39m[32m 132[2mms[22m[39m
+[31m     [31m×[31m a frase carrega o N do `Retry-After`, e a escrita seguinte nem sai[39m[32m 131[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 13 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m [30m[46m native-tela [49m[39m apps/native/test/s2-edicao.test.tsx[2m > [22m(a) T2-R19 / N2-D26 — a faixa de 64 dp distingue as duas S2[2m > [22mvinda de S1: a faixa tem os DOIS controles desta PR, e cada linha tem o seu `remover`
+[31m[1mAssertionError[22m: expected null not to be null[39m
+[36m [2m❯[22m apps/native/test/s2-edicao.test.tsx:[2m201:41[22m[39m
+    [90m199| [39m    [35mawait[39m [34mmontar[39m([33m<[39m[33mS2[39m[33m.[39m[33mIndexScreen[39m [33m{[39m[33m...[39m([35mawait[39m [34mprops[39m())[33m}[39m [33m/[39m[33m>[39m)
+    [90m200| [39m
+    [90m201| [39m    [34mexpect[39m([34machar[39m([32m'setlist-editar'[39m))[33m.[39mnot[33m.[39m[34mtoBeNull[39m()
+    [90m   | [39m                                        [31m^[39m
+    [90m202| [39m    [34mexpect[39m([34mtexto[39m([32m'setlist-editar'[39m))[33m.[39m[34mtoBe[39m([32m'Renomear e datar'[39m)
+    [90m203| [39m    [34mexpect[39m([34machar[39m([32m'setlist-apagar'[39m))[33m.[39mnot[33m.[39m[34mtoBeNull[39m()
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/13]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[46m native-tela [49m[39m apps/native/test/s2-edicao.test.tsx[2m > [22m(b) T2-R3 (iii) / N2-D21 — "nada mudou" não envia, e a linha de log é `blocked`[2m > [22ma folha de editar abre com os valores do servidor e `Salvar` inativo com o motivo
+[31m[1mError[22m: sem nó com testID="setlist-editar"[39m
+[36m [2m❯[22m exige apps/native/test/tela.tsx:[2m64:25[22m[39m
+    [90m 62| [39m[35mexport[39m [35mfunction[39m [34mexige[39m(testID[33m:[39m string)[33m:[39m [33mHTMLElement[39m {
+    [90m 63| [39m  [35mconst[39m e [33m=[39m [34machar[39m(testID)
+    [90m 64| [39m  [35mif[39m (e [33m===[39m [35mnull[39m) [35mthrow[39m [35mnew[39m [33mError[39m([32m`sem nó com testID="[39m[36m${[39mtestID[36m}[39m[32m"`[39m)
+    [90m   | [39m                        [31m^[39m
+    [90m 65| [39m  [35mreturn[39m e
+    [90m 66| [39m}
+[90m [2m❯[22m Module.tocar apps/native/test/tela.tsx:[2m93:16[22m[39m
+[90m [2m❯[22m apps/native/test/s2-edicao.test.tsx:[2m241:11[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/13]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[46m native-tela [49m[39m apps/native/test/s2-edicao.test.tsx[2m > [22m(c) T2-R4 — renomear envia SÓ o campo que mudou, e o `venue` sobrevive[2m > [22mum PUT com `name`, a releitura, e a tela com o nome novo
+[31m[1mError[22m: sem nó com testID="setlist-editar"[39m
+[36m [2m❯[22m exige apps/native/test/tela.tsx:[2m64:25[22m[39m
+    [90m 62| [39m[35mexport[39m [35mfunction[39m [34mexige[39m(testID[33m:[39m string)[33m:[39m [33mHTMLElement[39m {
+    [90m 63| [39m  [35mconst[39m e [33m=[39m [34machar[39m(testID)
+    [90m 64| [39m  [35mif[39m (e [33m===[39m [35mnull[39m) [35mthrow[39m [35mnew[39m [33mError[39m([32m`sem nó com testID="[39m[36m${[39mtestID[36m}[39m[32m"`[39m)
+    [90m   | [39m                        [31m^[39m
+    [90m 65| [39m  [35mreturn[39m e
+    [90m 66| [39m}
+[90m [2m❯[22m Module.tocar apps/native/test/tela.tsx:[2m93:16[22m[39m
+[90m [2m❯[22m apps/native/test/s2-edicao.test.tsx:[2m265:11[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/13]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[46m native-tela [49m[39m apps/native/test/s2-edicao.test.tsx[2m > [22m(d) T2-R4 / C4 — limpar a data conta como mudança e envia `null`[2m > [22mo `Limpar` ativa o `Salvar`, e o servidor fica sem data
+[31m[1mError[22m: sem nó com testID="setlist-editar"[39m
+[36m [2m❯[22m exige apps/native/test/tela.tsx:[2m64:25[22m[39m
+    [90m 62| [39m[35mexport[39m [35mfunction[39m [34mexige[39m(testID[33m:[39m string)[33m:[39m [33mHTMLElement[39m {
+    [90m 63| [39m  [35mconst[39m e [33m=[39m [34machar[39m(testID)
+    [90m 64| [39m  [35mif[39m (e [33m===[39m [35mnull[39m) [35mthrow[39m [35mnew[39m [33mError[39m([32m`sem nó com testID="[39m[36m${[39mtestID[36m}[39m[32m"`[39m)
+    [90m   | [39m                        [31m^[39m
+    [90m 65| [39m  [35mreturn[39m e
+    [90m 66| [39m}
+[90m [2m❯[22m Module.tocar apps/native/test/tela.tsx:[2m93:16[22m[39m
+[90m [2m❯[22m apps/native/test/s2-edicao.test.tsx:[2m294:11[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/13]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[46m native-tela [49m[39m apps/native/test/s2-edicao.test.tsx[2m > [22m(e) T2-R17 — datar para os próximos 7 dias na EDIÇÃO dispara o prefetch[2m > [22ma releitura da edição corre o mesmo plano de 7 dias do sync
+[31m[1mError[22m: sem nó com testID="setlist-editar"[39m
+[36m [2m❯[22m exige apps/native/test/tela.tsx:[2m64:25[22m[39m
+    [90m 62| [39m[35mexport[39m [35mfunction[39m [34mexige[39m(testID[33m:[39m string)[33m:[39m [33mHTMLElement[39m {
+    [90m 63| [39m  [35mconst[39m e [33m=[39m [34machar[39m(testID)
+    [90m 64| [39m  [35mif[39m (e [33m===[39m [35mnull[39m) [35mthrow[39m [35mnew[39m [33mError[39m([32m`sem nó com testID="[39m[36m${[39mtestID[36m}[39m[32m"`[39m)
+    [90m   | [39m                        [31m^[39m
+    [90m 65| [39m  [35mreturn[39m e
+    [90m 66| [39m}
+[90m [2m❯[22m Module.tocar apps/native/test/tela.tsx:[2m93:16[22m[39m
+[90m [2m❯[22m apps/native/test/s2-edicao.test.tsx:[2m319:13[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/13]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[46m native-tela [49m[39m apps/native/test/s2-edicao.test.tsx[2m > [22m(f) T2-R7 / N2-D28 — remover é escrita imediata, por `setlist_songs.id`[2m > [22mo bis da posição 4 sai e a posição 1 fica; sem diálogo, com releitura
+[31m[1mError[22m: sem nó com testID="remover-4"[39m
+[36m [2m❯[22m exige apps/native/test/tela.tsx:[2m64:25[22m[39m
+    [90m 62| [39m[35mexport[39m [35mfunction[39m [34mexige[39m(testID[33m:[39m string)[33m:[39m [33mHTMLElement[39m {
+    [90m 63| [39m  [35mconst[39m e [33m=[39m [34machar[39m(testID)
+    [90m 64| [39m  [35mif[39m (e [33m===[39m [35mnull[39m) [35mthrow[39m [35mnew[39m [33mError[39m([32m`sem nó com testID="[39m[36m${[39mtestID[36m}[39m[32m"`[39m)
+    [90m   | [39m                        [31m^[39m
+    [90m 65| [39m  [35mreturn[39m e
+    [90m 66| [39m}
+[90m [2m❯[22m Module.tocar apps/native/test/tela.tsx:[2m93:16[22m[39m
+[90m [2m❯[22m apps/native/test/s2-edicao.test.tsx:[2m342:11[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/13]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[46m native-tela [49m[39m apps/native/test/s2-edicao.test.tsx[2m > [22m(g) T2-R11 / N2-X-falhou — remover que falha: aviso, e `Tentar de novo` só depois da releitura[2m > [22ma linha de aviso de S2 traz as três orações do congelado e a ação
+[31m[1mError[22m: sem nó com testID="remover-4"[39m
+[36m [2m❯[22m exige apps/native/test/tela.tsx:[2m64:25[22m[39m
+    [90m 62| [39m[35mexport[39m [35mfunction[39m [34mexige[39m(testID[33m:[39m string)[33m:[39m [33mHTMLElement[39m {
+    [90m 63| [39m  [35mconst[39m e [33m=[39m [34machar[39m(testID)
+    [90m 64| [39m  [35mif[39m (e [33m===[39m [35mnull[39m) [35mthrow[39m [35mnew[39m [33mError[39m([32m`sem nó com testID="[39m[36m${[39mtestID[36m}[39m[32m"`[39m)
+    [90m   | [39m                        [31m^[39m
+    [90m 65| [39m  [35mreturn[39m e
+    [90m 66| [39m}
+[90m [2m❯[22m Module.tocar apps/native/test/tela.tsx:[2m93:16[22m[39m
+[90m [2m❯[22m apps/native/test/s2-edicao.test.tsx:[2m371:11[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/13]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[46m native-tela [49m[39m apps/native/test/s2-edicao.test.tsx[2m > [22m(h) N2-D22 — remover com 2xx e releitura em 500: "salvo; não foi possível recarregar"[2m > [22mo aviso é o da regra 4, e o único botão RECARREGA
+[31m[1mError[22m: sem nó com testID="remover-4"[39m
+[36m [2m❯[22m exige apps/native/test/tela.tsx:[2m64:25[22m[39m
+    [90m 62| [39m[35mexport[39m [35mfunction[39m [34mexige[39m(testID[33m:[39m string)[33m:[39m [33mHTMLElement[39m {
+    [90m 63| [39m  [35mconst[39m e [33m=[39m [34machar[39m(testID)
+    [90m 64| [39m  [35mif[39m (e [33m===[39m [35mnull[39m) [35mthrow[39m [35mnew[39m [33mError[39m([32m`sem nó com testID="[39m[36m${[39mtestID[36m}[39m[32m"`[39m)
+    [90m   | [39m                        [31m^[39m
+    [90m 65| [39m  [35mreturn[39m e
+    [90m 66| [39m}
+[90m [2m❯[22m Module.tocar apps/native/test/tela.tsx:[2m93:16[22m[39m
+[90m [2m❯[22m apps/native/test/s2-edicao.test.tsx:[2m396:11[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/13]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[46m native-tela [49m[39m apps/native/test/s2-edicao.test.tsx[2m > [22m(i) T2-R5 / N2-D14 — apagar tem diálogo, com os quatro itens da regra 5[2m > [22m`Manter a setlist` não escreve nada; `Apagar` escreve e sai para S1
+[31m[1mError[22m: sem nó com testID="setlist-apagar"[39m
+[36m [2m❯[22m exige apps/native/test/tela.tsx:[2m64:25[22m[39m
+    [90m 62| [39m[35mexport[39m [35mfunction[39m [34mexige[39m(testID[33m:[39m string)[33m:[39m [33mHTMLElement[39m {
+    [90m 63| [39m  [35mconst[39m e [33m=[39m [34machar[39m(testID)
+    [90m 64| [39m  [35mif[39m (e [33m===[39m [35mnull[39m) [35mthrow[39m [35mnew[39m [33mError[39m([32m`sem nó com testID="[39m[36m${[39mtestID[36m}[39m[32m"`[39m)
+    [90m   | [39m                        [31m^[39m
+    [90m 65| [39m  [35mreturn[39m e
+    [90m 66| [39m}
+[90m [2m❯[22m Module.tocar apps/native/test/tela.tsx:[2m93:16[22m[39m
+[90m [2m❯[22m apps/native/test/s2-edicao.test.tsx:[2m422:11[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/13]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[46m native-tela [49m[39m apps/native/test/s2-edicao.test.tsx[2m > [22m(j) T2-R10 — 404 em qualquer escrita: S2 é abandonada e S1 já vem relida[2m > [22ma folha fecha, a tela sai com `sumiu`, e S1 mostra a frase sem botão
+[31m[1mError[22m: sem nó com testID="setlist-editar"[39m
+[36m [2m❯[22m exige apps/native/test/tela.tsx:[2m64:25[22m[39m
+    [90m 62| [39m[35mexport[39m [35mfunction[39m [34mexige[39m(testID[33m:[39m string)[33m:[39m [33mHTMLElement[39m {
+    [90m 63| [39m  [35mconst[39m e [33m=[39m [34machar[39m(testID)
+    [90m 64| [39m  [35mif[39m (e [33m===[39m [35mnull[39m) [35mthrow[39m [35mnew[39m [33mError[39m([32m`sem nó com testID="[39m[36m${[39mtestID[36m}[39m[32m"`[39m)
+    [90m   | [39m                        [31m^[39m
+    [90m 65| [39m  [35mreturn[39m e
+    [90m 66| [39m}
+[90m [2m❯[22m Module.tocar apps/native/test/tela.tsx:[2m93:16[22m[39m
+[90m [2m❯[22m apps/native/test/s2-edicao.test.tsx:[2m460:11[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/13]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[46m native-tela [49m[39m apps/native/test/s2-edicao.test.tsx[2m > [22m(k) T2-R13 / N2-D9 — 401 numa escrita de S2 não desloga[2m > [22mo aviso traz a frase do conjunto, e a sessão fica
+[31m[1mError[22m: sem nó com testID="remover-4"[39m
+[36m [2m❯[22m exige apps/native/test/tela.tsx:[2m64:25[22m[39m
+    [90m 62| [39m[35mexport[39m [35mfunction[39m [34mexige[39m(testID[33m:[39m string)[33m:[39m [33mHTMLElement[39m {
+    [90m 63| [39m  [35mconst[39m e [33m=[39m [34machar[39m(testID)
+    [90m 64| [39m  [35mif[39m (e [33m===[39m [35mnull[39m) [35mthrow[39m [35mnew[39m [33mError[39m([32m`sem nó com testID="[39m[36m${[39mtestID[36m}[39m[32m"`[39m)
+    [90m   | [39m                        [31m^[39m
+    [90m 65| [39m  [35mreturn[39m e
+    [90m 66| [39m}
+[90m [2m❯[22m Module.tocar apps/native/test/tela.tsx:[2m93:16[22m[39m
+[90m [2m❯[22m apps/native/test/s2-edicao.test.tsx:[2m503:11[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/13]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[46m native-tela [49m[39m apps/native/test/s2-edicao.test.tsx[2m > [22m(l) T2-R12 / N2-X-sem-rede — sem rede, os controles de escrita inativam[2m > [22mfaixa e `remover` inativos com o desenho amputado, o motivo escrito uma vez, zero request
+[31m[1mError[22m: sem nó com testID="aviso-motivo"[39m
+[36m [2m❯[22m exige apps/native/test/tela.tsx:[2m64:25[22m[39m
+    [90m 62| [39m[35mexport[39m [35mfunction[39m [34mexige[39m(testID[33m:[39m string)[33m:[39m [33mHTMLElement[39m {
+    [90m 63| [39m  [35mconst[39m e [33m=[39m [34machar[39m(testID)
+    [90m 64| [39m  [35mif[39m (e [33m===[39m [35mnull[39m) [35mthrow[39m [35mnew[39m [33mError[39m([32m`sem nó com testID="[39m[36m${[39mtestID[36m}[39m[32m"`[39m)
+    [90m   | [39m                        [31m^[39m
+    [90m 65| [39m  [35mreturn[39m e
+    [90m 66| [39m}
+[90m [2m❯[22m Module.texto apps/native/test/tela.tsx:[2m79:11[22m[39m
+[90m [2m❯[22m apps/native/test/s2-edicao.test.tsx:[2m522:12[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/13]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[46m native-tela [49m[39m apps/native/test/s2-edicao.test.tsx[2m > [22m(m) T2-R14 / N2-X-limite — 429 fecha a família e o aviso diz o prazo[2m > [22ma frase carrega o N do `Retry-After`, e a escrita seguinte nem sai
+[31m[1mError[22m: sem nó com testID="remover-4"[39m
+[36m [2m❯[22m exige apps/native/test/tela.tsx:[2m64:25[22m[39m
+    [90m 62| [39m[35mexport[39m [35mfunction[39m [34mexige[39m(testID[33m:[39m string)[33m:[39m [33mHTMLElement[39m {
+    [90m 63| [39m  [35mconst[39m e [33m=[39m [34machar[39m(testID)
+    [90m 64| [39m  [35mif[39m (e [33m===[39m [35mnull[39m) [35mthrow[39m [35mnew[39m [33mError[39m([32m`sem nó com testID="[39m[36m${[39mtestID[36m}[39m[32m"`[39m)
+    [90m   | [39m                        [31m^[39m
+    [90m 65| [39m  [35mreturn[39m e
+    [90m 66| [39m}
+[90m [2m❯[22m Module.tocar apps/native/test/tela.tsx:[2m93:16[22m[39m
+[90m [2m❯[22m apps/native/test/s2-edicao.test.tsx:[2m558:11[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/13]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m13 failed[39m[22m[2m | [22m[1m[32m1 passed[39m[22m[90m (14)[39m
+[2m   Start at [22m 14:18:45
+[2m   Duration [22m 2.71s[2m (transform 250ms, setup 0ms, import 167ms, tests 2.15s, environment 295ms)[22m
+

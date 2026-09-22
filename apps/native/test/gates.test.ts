@@ -114,19 +114,26 @@ describe('gate:icones — o mapa contra as fontes congeladas', () => {
     expect(acusacoes(s.texto), comSaida(s)).toBe(0)
   })
 
-  it('CONTROLE NEGATIVO: o `IconesFalso` REPROVA — exit 1, 20 acusações', () => {
+  it('CONTROLE NEGATIVO: o `IconesFalso` REPROVA — exit 1, 22 acusações', () => {
     const s = rodar('scripts/icones.mjs', 'scripts/__cn__/IconesFalso.ts')
     expect(s.status, comSaida(s)).toBe(1)
     // 18 do V1 + a (8) da N2-PR2 (um pendente que JÁ está no mapa e não casa
     // com o anexo D do DESIGN-N2: a lista `PENDENTES` adia a cobrança da
-    // AUSÊNCIA, nunca a do desenho errado) + **a vigésima, da N2-PR3**: com
-    // `nova-setlist` PODADO da lista, a ausência dele no `IconesFalso` deixa
-    // de ser anistiada e vira `[nome] falta no mapa`. É a prova de que a poda
-    // do commit 1 tem efeito — o CN não foi tocado, e mesmo assim o gate
-    // passou a cobrar um nome a mais.
-    expect(acusacoes(s.texto), comSaida(s)).toBe(20)
+    // AUSÊNCIA, nunca a do desenho errado) + a vigésima, da N2-PR3
+    // (`nova-setlist` podado) + **as duas da N2-PR4**.
+    //
+    // As duas são a mesma prova, outra vez: podados `renomear`,
+    // `apagar-setlist` e `remover`, a ausência deles no `IconesFalso` deixa
+    // de ser anistiada. Só DUAS e não três porque o `IconesFalso` **tem** um
+    // `renomear` — com o `d` errado de propósito (`15.6z` por `15.5z`) —, e
+    // ele já era acusado pelo desenho desde a N2-PR2. O CN não foi tocado
+    // nesta PR e mesmo assim o gate passou a cobrar dois nomes a mais: é o
+    // efeito da poda, medido.
+    expect(acusacoes(s.texto), comSaida(s)).toBe(22)
     expect(s.texto).toContain('[anexo-D-N2]')
     expect(s.texto).toContain('falta no mapa: "nova-setlist"')
+    expect(s.texto).toContain('falta no mapa: "apagar-setlist"')
+    expect(s.texto).toContain('falta no mapa: "remover"')
   })
 
   /**
@@ -140,20 +147,28 @@ describe('gate:icones — o mapa contra as fontes congeladas', () => {
   })
 
   /**
-   * N2-PR3: eram SEIS, e o `nova-setlist` foi podado da lista no commit 1
-   * desta PR — o desenho entrou no mapa no commit 2, e a partir dali ele é
-   * cobrado pela regra 6 como qualquer outro. Restam CINCO nomes para quatro
-   * registros do anexo D (o par `adicionar / remover` é um registro só).
+   * Eram SEIS na N2-PR2, CINCO depois da poda do `nova-setlist` (N2-PR3) e
+   * **DOIS** depois da N2-PR4, que desenhou `renomear`, `apagar-setlist` e
+   * `remover` — os três que S2 com edição usa. Sobram a `alca` (o modo de
+   * reordenar, PR-5) e o `adicionar` (o picker, PR-6).
+   *
+   * **Meio par de propósito** (div. 226/266): `adicionar / remover` é UM
+   * registro do anexo D e DOIS nomes no mapa. Com o `remover` desenhado, ele
+   * é cobrado pela regra 6 contra a união das três células do registro; o
+   * `adicionar` continua avisando. O par só sai da lista na PR-6.
    *
    * Entre o commit 1 e o commit 2 este `it` REPROVA, e é assim que tem de
    * ser: é a forma que o gate tem de dizer "podaram o pendente e não
    * desenharam" — a mesma pressão que a lista `PENDENTES` existe para fazer.
    */
-  it('os cinco nomes pendentes saem como AVISO, e o gate passa mesmo assim', () => {
+  it('os dois nomes pendentes saem como AVISO, e o gate passa mesmo assim', () => {
     const s = rodar('scripts/icones.mjs', 'src/icones/dados.ts')
     expect(s.status, comSaida(s)).toBe(0)
-    expect((s.texto.match(/AVISO .*\[pendente\]/g) ?? []).length, comSaida(s)).toBe(5)
+    expect((s.texto.match(/AVISO .*\[pendente\]/g) ?? []).length, comSaida(s)).toBe(2)
     expect(s.texto, comSaida(s)).toContain('poda a lista quando desenhar')
+    // O meio par: o `remover` JÁ é cobrado, o `adicionar` ainda avisa.
+    expect(s.texto, comSaida(s)).toContain('"adicionar" ainda não está no mapa')
+    expect(s.texto, comSaida(s)).not.toContain('"remover" ainda não está no mapa')
   })
 
   it('CONTROLE POSITIVO da regra 6: a `alca` do CN está correta e acusa ZERO', () => {

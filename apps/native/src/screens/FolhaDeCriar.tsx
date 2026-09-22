@@ -1,15 +1,27 @@
 /**
- * A FOLHA DE CRIAR — 720 × 420 dp a 100 dp do topo, sobre a tela de onde veio,
- * escurecida (DESIGN-N2 §2; molduras `N2-F-criar`, `N2-F-validacao`,
- * `N2-F-salvando`, `N2-F-falhou`).
+ * A FOLHA DE SETLIST — 720 × 420 dp a 100 dp do topo, sobre a tela de onde
+ * veio, escurecida (DESIGN-N2 §2; molduras `N2-F-criar`, `N2-F-validacao`,
+ * `N2-F-salvando`, `N2-F-falhou`, `N2-F-editar-igual`).
  *
  * Verbatim do congelado: *"Não é tela cheia: criar é um ato de dois campos, e
  * sair dele tem que custar um toque. […] o teclado do sistema cobre até 300 dp
  * de altura: a folha fica a 100 dp do topo, então os dois campos e os botões
  * continuam visíveis com o teclado aberto."*
  *
- * **O modo "renomear e datar" NÃO está aqui** — é da PR-4, com a faixa de
- * edição de S2 que o abre. Esta folha só cria.
+ * ## Os DOIS modos (N2-PR4), e por que é a mesma folha
+ *
+ * *"Mesma folha, três diferenças: ícone e título (`renomear`, novo), rótulo
+ * `Salvar`, campos preenchidos."* Criar e editar são o mesmo ato de dois
+ * campos; o que muda é de onde vêm os valores e para onde vai o request.
+ * `Apagar` **não** mora aqui — mora em S2, com diálogo (regra 5), *"para que
+ * o ato destrutivo não fique a um toque de distância do ato de digitar"*.
+ *
+ * **O arquivo mantém o nome `FolhaDeCriar.tsx` de propósito.** O G2 indexa
+ * `testID` por ARQUIVO (`g2g3.sh`, `sed "s|^|$f\t|"`): mover os oito `form-*`
+ * para um arquivo de nome novo os faria "sumir" e reprovaria o gate que
+ * existe para impedir que um alvo desapareça em silêncio. O componente
+ * exportado passa a se chamar `FolhaDeSetlist`; o arquivo espera a PR que
+ * tiver uma razão melhor do que estética para pagar esse preço.
  *
  * ## As quatro regras que a folha obedece, e de onde vêm
  *
@@ -45,28 +57,55 @@ import DateTimePicker, { type DateTimePickerEvent } from '@react-native-communit
 import {
   dataCalendarioLocal,
   frase,
+  validarAtualizacao,
+  type CamposSetlist,
   type MotivoInvalido,
   type Resultado,
   type SetlistDTO,
 } from '@octavia/core'
-import { escrever, prepararCriacao, relerAoAbrir, type EstadoLocal } from '../escrita'
+import { escrever, prepararCriacao, prepararEdicao, relerAoAbrir, type EstadoLocal } from '../escrita'
 import { Icone } from '../icones/Icone'
-import { bar, dark, font, radius, size, space, tracking } from '../theme'
+import type { NomeIcone } from '../icones/dados'
+import { bar, dark, font, radius, size, space, touch, tracking } from '../theme'
 
-export interface FolhaDeCriarProps {
+/**
+ * O modo EDITAR (T2-R4): a setlist que se renomeia e o que o servidor tem
+ * dela agora. `null` = criar. Os valores do servidor entram nos campos ao
+ * abrir e são a referência do "nada mudou" (N2-D21 (iii)) — comparar com o
+ * que a tela mostra, e não com o que o cache tinha na abertura do app, é o
+ * que faz a terceira validação dizer a verdade.
+ */
+export interface Editando {
+  setlistId: string
+  noServidor: CamposSetlist
+}
+
+export interface FolhaDeSetlistProps {
   /** O cache de onde a escrita parte, e ao qual a releitura volta. */
   estado: EstadoLocal
-  /** `Cancelar` / `Fechar` — sai sem ter criado nada. */
+  /** `null` = criar (o modo da N2-PR3); preenchido = renomear e datar. */
+  editando?: Editando | null
+  /** `Cancelar` / `Fechar` — sai sem ter escrito nada. */
   aoFechar: () => void
   /** 2xx com a releitura de volta: o conjunto novo, e a folha fecha. */
-  aoCriar: (setlists: SetlistDTO[] | null, syncedAtMs: number | null) => void
-  /** N2-D22 — 2xx e a releitura falhou: quem avisa é S1, nomeando a setlist. */
+  aoConcluir: (setlists: SetlistDTO[] | null, syncedAtMs: number | null) => void
+  /** N2-D22 — 2xx e a releitura falhou: quem avisa é a tela de trás. */
   aoSalvoNaoRelido: (nome: string) => void
+  /**
+   * T2-R10 — 404 numa escrita: a folha fecha e quem sai da tela é quem a
+   * abriu. Só o modo editar o alcança: um `POST /api/setlists` não tem id
+   * para não achar.
+   *
+   * **Leva o conjunto da releitura** (div. 270): o congelado manda cair em
+   * S1 *"já relida"*, e uma S1 que ainda mostra a setlist que não existe
+   * mais é o contrário disso.
+   */
+  aoSumir?: (setlists: SetlistDTO[] | null, syncedAtMs: number | null) => void
   /**
    * A releitura da lista ATRÁS da folha (regra 3) voltou. A folha **não**
    * fecha: ela continua com o digitado e com o banner, e o que muda é a lista
    * por baixo. Callback separado do `aoCriar` de propósito — a primeira forma
-   * disto reusava o `aoCriar`, e a folha fechava sozinha logo depois de
+   * disto reusava o `aoConcluir`, e a folha fechava sozinha logo depois de
    * falhar, levando junto o que o músico tinha escrito.
    */
   aoRelerAtras: (setlists: SetlistDTO[], syncedAtMs: number | null) => void
@@ -82,10 +121,19 @@ type Fase = 'editando' | 'salvando' | 'falhou'
  */
 const MS_FOCO_APOS_ANIMACAO = 350
 
-export function FolhaDeCriar({ estado, aoFechar, aoCriar, aoSalvoNaoRelido, aoRelerAtras }: FolhaDeCriarProps): React.JSX.Element {
-  const [nome, setNome] = useState('')
+export function FolhaDeSetlist({
+  estado,
+  editando = null,
+  aoFechar,
+  aoConcluir,
+  aoSalvoNaoRelido,
+  aoSumir,
+  aoRelerAtras,
+}: FolhaDeSetlistProps): React.JSX.Element {
+  // Editar abre com os valores DO SERVIDOR (`N2-F-editar-igual`); criar, vazio.
+  const [nome, setNome] = useState(editando?.noServidor.name ?? '')
   /** `null` = "sem data", que é estado de primeira classe (T2-R2). */
-  const [data, setData] = useState<string | null>(null)
+  const [data, setData] = useState<string | null>(editando?.noServidor.performance_date ?? null)
   const [calendario, setCalendario] = useState(false)
   const [fase, setFase] = useState<Fase>('editando')
   /**
@@ -130,8 +178,25 @@ export function FolhaDeCriar({ estado, aoFechar, aoCriar, aoSalvoNaoRelido, aoRe
   /** N2-D32: a releitura também falhou — só `Tentar recarregar`. */
   const [releituraFalhou, setReleituraFalhou] = useState(false)
 
-  const preparo = prepararCriacao({ name: nome, performance_date: data })
-  const motivo: MotivoInvalido | null = preparo.enviar ? null : preparo.motivo
+  /**
+   * **A validação da RENDERIZAÇÃO é pura, e isso não é detalhe.**
+   *
+   * No modo editar quem sabe dizer "nada mudou" é o `validarAtualizacao` do
+   * core; o `prepararEdicao` do `src/escrita.ts` **emite a linha**
+   * `write blocked … reason=nada-mudou`, porque ele é o caminho do TOQUE. Se
+   * a renderização o chamasse, a linha sairia a cada tecla digitada e o
+   * A-N2-24 mediria um log cheio de barradas que ninguém pediu. Por isso:
+   * `validarAtualizacao` aqui, `prepararEdicao` no `salvar()`.
+   */
+  const validacao = editando === null
+    ? prepararCriacao({ name: nome, performance_date: data })
+    : validarAtualizacao(editando.noServidor, { name: nome, performance_date: data })
+  const podeEnviar = editando === null
+    ? (validacao as { enviar: boolean }).enviar
+    : (validacao as { ok: boolean }).ok
+  const motivo: MotivoInvalido | null = podeEnviar
+    ? null
+    : ((validacao as { motivo: MotivoInvalido }).motivo)
   const salvando = fase === 'salvando'
 
   /**
@@ -152,30 +217,51 @@ export function FolhaDeCriar({ estado, aoFechar, aoCriar, aoSalvoNaoRelido, aoRe
     }
   }, [estado, aoRelerAtras])
 
-  const criar = useCallback(async () => {
-    // O botão nasce inativo quando a validação bloqueia (N2-D23): um toque
-    // aqui não é um toque num controle de escrita, e não gera linha de log.
-    if (!preparo.enviar || salvando) return
+  /**
+   * O ato principal da folha, nos dois modos.
+   *
+   * **O toque chega aqui mesmo com o botão inativo**, e é de propósito: o
+   * caso (iii) do T2-R3 — abriu, nada mudou, tocou em `Salvar` — tem linha
+   * de log PRÓPRIA (`write blocked … reason=nada-mudou`, a quinta razão da
+   * N2-PR2), e quem a emite é o `prepararEdicao`. Um `Pressable` que
+   * engolisse o toque apagaria justamente o evento que o A-N2-24 mede. Nas
+   * outras duas validações não sai linha nenhuma — o `prepararCriacao` e o
+   * `validarAtualizacao` não emitem —, e é o que o T2-R3 diz: nome vazio e
+   * data impossível têm o motivo escrito ao lado, não no log.
+   */
+  const salvar = useCallback(async () => {
+    if (salvando) return
+    const preparo = editando === null
+      ? prepararCriacao({ name: nome, performance_date: data })
+      : prepararEdicao(editando.setlistId, editando.noServidor, { name: nome, performance_date: data })
+    if (!preparo.enviar) return
     setFase('salvando')
     setFalha(null)
     setReleituraFalhou(false)
     const saida = await escrever(preparo.pedido, estado, { contexto: 'setlist' })
     const { especie } = saida.resultado
     if (especie === 'ok') {
-      aoCriar(saida.setlists, saida.syncedAtMs)
+      aoConcluir(saida.setlists, saida.syncedAtMs)
       return
     }
     if (especie === 'ok-nao-relido') {
       // Regra 4: nunca "salvo" limpo, nunca "falhou". O servidor CONFIRMOU —
-      // a folha fecha e quem avisa é S1, que é onde o objeto da frase não
-      // está visível (div. 227).
+      // a folha fecha e quem avisa é a tela de trás, que é onde o objeto da
+      // frase está (div. 227).
       aoSalvoNaoRelido(nome.trim())
+      return
+    }
+    if (especie === 'sumiu' && aoSumir !== undefined) {
+      // T2-R10 — a releitura do 404 já aconteceu (é do `escrever`); o que
+      // falta é abandonar a tela COM o que ela trouxe, e quem a abandona é
+      // quem abriu a folha.
+      aoSumir(saida.setlists, saida.syncedAtMs)
       return
     }
     setFalha(saida.resultado)
     setFase('falhou')
     void relerAtras()
-  }, [preparo, salvando, estado, aoCriar, aoSalvoNaoRelido, nome, relerAtras])
+  }, [salvando, editando, nome, data, estado, aoConcluir, aoSalvoNaoRelido, aoSumir, relerAtras])
 
   /**
    * T2-R2 — `YYYY-MM-DD` pelos componentes LOCAIS do `Date` que o seletor do
@@ -191,7 +277,11 @@ export function FolhaDeCriar({ estado, aoFechar, aoCriar, aoSalvoNaoRelido, aoRe
   }, [])
 
   const editavel = fase !== 'salvando'
-  const podeCriar = preparo.enviar && !salvando
+  const podeSalvar = podeEnviar && !salvando
+  /** As três diferenças do congelado, e só elas. */
+  const iconeDoTitulo: NomeIcone = editando === null ? 'nova-setlist' : 'renomear'
+  const titulo = editando === null ? 'Nova setlist' : 'Renomear e datar'
+  const rotuloDoAto = editando === null ? 'Criar' : 'Salvar'
 
   return (
     <Modal
@@ -209,12 +299,19 @@ export function FolhaDeCriar({ estado, aoFechar, aoCriar, aoSalvoNaoRelido, aoRe
       <View style={styles.cortina}>
         <View style={styles.folha}>
           <View style={styles.cabeca}>
-            <Icone nome="nova-setlist" tamanho={24} cor={dark.accentInk} />
-            {/* `telas.html`, moldura `N2-F-criar` — o título da folha. */}
-            <Text style={styles.titulo}>Nova setlist</Text>
+            <Icone nome={iconeDoTitulo} tamanho={24} cor={dark.accentInk} />
+            {/* `telas.html`, molduras `N2-F-criar` e `N2-F-editar-igual`. */}
+            <Text style={styles.titulo}>{titulo}</Text>
           </View>
 
-          {fase === 'falhou' && falha !== null ? <BlocoDeFalha falha={falha} relendo={relendo} caiu={releituraFalhou} /> : null}
+          {fase === 'falhou' && falha !== null ? (
+            <BlocoDeFalha
+              falha={falha}
+              relendo={relendo}
+              caiu={releituraFalhou}
+              criando={editando === null}
+            />
+          ) : null}
 
           <View style={styles.campos}>
             <Campo rotulo="Nome">
@@ -235,18 +332,48 @@ export function FolhaDeCriar({ estado, aoFechar, aoCriar, aoSalvoNaoRelido, aoRe
             </Campo>
 
             <Campo rotulo="Data do show" apoio="opcional">
-              <Pressable
-                style={[styles.entrada, styles.entradaToque, motivo === 'data-impossivel' ? styles.entradaComErro : null]}
-                onPress={() => (editavel ? setCalendario(true) : undefined)}
-                accessibilityRole="button"
-                accessibilityState={{ disabled: !editavel }}
-                testID="form-data"
-              >
-                {/* `dd / mm / aaaa` é placeholder, não valor — tinta `lineInfo`. */}
-                <Text style={data === null ? styles.placeholder : styles.valor}>
-                  {data === null ? 'dd / mm / aaaa' : formatar(data)}
-                </Text>
-              </Pressable>
+              <View style={styles.linhaDoCampo}>
+                <Pressable
+                  style={[
+                    styles.entrada,
+                    styles.entradaToque,
+                    styles.entradaLarga,
+                    motivo === 'data-impossivel' ? styles.entradaComErro : null,
+                  ]}
+                  onPress={() => (editavel ? setCalendario(true) : undefined)}
+                  accessibilityRole="button"
+                  accessibilityState={{ disabled: !editavel }}
+                  testID="form-data"
+                >
+                  {/* `dd / mm / aaaa` é placeholder, não valor — tinta `lineInfo`. */}
+                  <Text style={data === null ? styles.placeholder : styles.valor}>
+                    {data === null ? 'dd / mm / aaaa' : formatar(data)}
+                  </Text>
+                </Pressable>
+                {/*
+                  **Errata N2-E8 — o controle que o congelado não desenha e a
+                  regra exige.** A legenda de `N2-F-editar-igual` diz, verbatim:
+                  *"Limpar a data é permitido e conta como mudança: a data é
+                  opcional na criação e continua opcional depois."* O seletor
+                  do sistema **não sabe devolver "sem data"** (é o outro lado
+                  da div. 244, que já registrou o que ele não sabe produzir),
+                  então sem um controle próprio a permissão do congelado é
+                  inalcançável pela UI. Ele só existe quando há data para
+                  limpar, e por isso não muda nenhuma moldura desenhada.
+                */}
+                {data !== null ? (
+                  <Pressable
+                    style={styles.limpar}
+                    onPress={() => (editavel ? setData(null) : undefined)}
+                    accessibilityRole="button"
+                    accessibilityState={{ disabled: !editavel }}
+                    testID="form-data-limpar"
+                  >
+                    <Icone nome="fechar" tamanho={20} cor={dark.accentInk} />
+                    <Text style={styles.limparTexto}>Limpar</Text>
+                  </Pressable>
+                ) : null}
+              </View>
               {motivo === 'data-impossivel' ? <Erro texto={frase('data-impossivel')} testID="form-erro-data" /> : null}
             </Campo>
           </View>
@@ -259,9 +386,15 @@ export function FolhaDeCriar({ estado, aoFechar, aoCriar, aoSalvoNaoRelido, aoRe
             <View style={styles.rodape}>
               <View style={styles.progresso}>
                 <Icone nome="baixando" tamanho={24} cor={dark.accentInk} />
-                <Text style={styles.progressoTexto}>{frase('criando')}</Text>
+                <Text style={styles.progressoTexto}>{frase(editando === null ? 'criando' : 'salvando')}</Text>
               </View>
-              <BotaoCheio rotulo="Criar" inativo onPress={() => undefined} />
+              {/*
+                div. 254, fechada aqui: o ramo `salvando` renderizava o botão
+                **sem `testID`**, e o G6 ficava sem `resource-id` próprio para
+                o estado `N2-F-salvando`. O alvo é o mesmo dos outros dois
+                ramos, e agora tem o mesmo nome.
+              */}
+              <BotaoCheio rotulo={rotuloDoAto} inativo onPress={() => undefined} testID="form-salvar" />
             </View>
           ) : fase === 'falhou' ? (
             <View style={styles.rodape}>
@@ -292,7 +425,7 @@ export function FolhaDeCriar({ estado, aoFechar, aoCriar, aoSalvoNaoRelido, aoRe
                 <BotaoCheio
                   rotulo={releituraFalhou ? 'Tentar recarregar' : 'Tentar de novo'}
                   inativo={relendo}
-                  onPress={() => (releituraFalhou ? void relerAtras() : void criar())}
+                  onPress={() => (releituraFalhou ? void relerAtras() : void salvar())}
                   testID="form-tentar"
                 />
               </View>
@@ -310,9 +443,9 @@ export function FolhaDeCriar({ estado, aoFechar, aoCriar, aoSalvoNaoRelido, aoRe
                   </Text>
                 ) : null}
                 <BotaoCheio
-                  rotulo="Criar"
-                  inativo={!podeCriar}
-                  onPress={() => void criar()}
+                  rotulo={rotuloDoAto}
+                  inativo={!podeSalvar}
+                  onPress={() => void salvar()}
                   testID="form-salvar"
                 />
               </View>
@@ -331,12 +464,24 @@ export function FolhaDeCriar({ estado, aoFechar, aoCriar, aoSalvoNaoRelido, aoRe
  * ter passado."* Quem sabe se pode ter passado é o core (`podeTerGravado`),
  * que só o diz na rede e só em `create`/`add`.
  */
-function BlocoDeFalha({ falha, relendo, caiu }: { falha: Resultado; relendo: boolean; caiu: boolean }): React.JSX.Element {
+function BlocoDeFalha({
+  falha,
+  relendo,
+  caiu,
+  criando,
+}: {
+  falha: Resultado
+  relendo: boolean
+  caiu: boolean
+  criando: boolean
+}): React.JSX.Element {
   return (
     <View style={styles.falha} testID="form-falha">
       <View style={styles.falhaCabeca}>
         <Icone nome="falha" tamanho={24} cor={dark.errorInk} />
-        <Text style={styles.falhaTitulo}>{frase('falhou-criar')}</Text>
+        {/* Dois títulos, dois atos (N2-E7): o `N2-F-falhou` diz "Não foi
+            possível criar"; o `N2-X-falhou` de S2, "Não foi possível salvar". */}
+        <Text style={styles.falhaTitulo}>{frase(criando ? 'falhou-criar' : 'falhou-salvar')}</Text>
       </View>
       <Text style={styles.falhaCausa}>{falha.frase}</Text>
       {falha.podeTerGravado && !relendo && !caiu ? (
@@ -374,6 +519,11 @@ function Erro({ texto, testID }: { texto: string; testID: string }): React.JSX.E
  * e ele é o que fecha a folha"*. Inativo é o desenho INTEIRO em `lineInfo` com
  * traço 1,25 — a exceção R2·2 do anexo D: o visto não é amputável, porque sem
  * a haste longa sobram 4 dp de traço, que se leem como caractere perdido.
+ *
+ * **O `onPress` roda mesmo inativo** (N2-PR4), e quem decide o que fazer é o
+ * `salvar()`: o caso (iii) do T2-R3 tem linha de log própria, e ela nasce
+ * exatamente de um toque num botão que não aceita o ato. O `enabled=false` do
+ * dump continua vindo do `accessibilityState`, que é o que o G5/G6 lê.
  */
 function BotaoCheio({
   rotulo,
@@ -389,7 +539,7 @@ function BotaoCheio({
   return (
     <Pressable
       style={[styles.cheio, inativo ? styles.cheioInativo : null]}
-      onPress={() => (inativo ? undefined : onPress())}
+      onPress={onPress}
       accessibilityRole="button"
       accessibilityState={{ disabled: inativo }}
       testID={testID}
@@ -453,6 +603,21 @@ const styles = StyleSheet.create({
     borderRadius: radius.control,
   },
   entradaToque: { justifyContent: 'center' },
+  // O campo de data e o `Limpar` na mesma linha (errata N2-E8): o campo
+  // continua com a largura toda quando não há data para limpar.
+  linhaDoCampo: { flexDirection: 'row', alignItems: 'center', gap: space.md },
+  entradaLarga: { flex: 1 },
+  limpar: {
+    height: touch.min,
+    paddingHorizontal: space.lg,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.sm,
+    borderWidth: bar.hairline,
+    borderColor: dark.line,
+    borderRadius: radius.control,
+  },
+  limparTexto: { color: dark.text, fontFamily: font.ui, fontSize: size.bodySmall },
   entradaComErro: { borderColor: dark.errorInk },
   placeholder: { color: dark.lineInfo, fontFamily: font.ui, fontSize: size.input },
   valor: { color: dark.text, fontFamily: font.ui, fontSize: size.input },

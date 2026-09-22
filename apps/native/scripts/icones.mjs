@@ -129,11 +129,22 @@ const REGISTROS_N2 = {
  * Os nomes que o mapa AINDA não tem, e cuja ausência é AVISO e não acusação
  * (ver o cabeçalho). **A PR que desenhar os ícones poda esta lista.**
  */
-const PENDENTES = ['alca', 'renomear', 'apagar-setlist', 'adicionar', 'remover']
-// N2-PR3 podou `nova-setlist`: o desenho entrou no mapa no commit 2 desta PR
-// (S1 ganhou o botão), e a partir daqui ele é cobrado pela regra 6 como
+const PENDENTES = ['alca', 'adicionar']
+// N2-PR3 podou `nova-setlist`: o desenho entrou no mapa no commit 2 daquela
+// PR (S1 ganhou o botão), e a partir dali ele é cobrado pela regra 6 como
 // qualquer outro — elemento a elemento contra o registro dele no anexo D.
-// Restam CINCO nomes para quatro registros (o par `adicionar / remover`).
+//
+// **N2-PR4 poda outros TRÊS**: `renomear`, `apagar-setlist` e `remover`, que
+// são os que S2 com edição desenha. Restam DOIS nomes: a `alca` é do modo de
+// reordenar (PR-5) e o `adicionar` é do picker (PR-6).
+//
+// **Meio par, e o gate o trata sem regra nova.** `adicionar / remover` é UM
+// registro do anexo D e DOIS nomes no mapa (div. 226); com o `remover`
+// desenhado e o `adicionar` não, o gate faz as duas coisas ao mesmo tempo, e
+// é o certo: o `remover` é COBRADO pela regra 6, elemento a elemento, contra
+// a união das três células do registro (onde moram o círculo r 8,5, a corda
+// de 8 e a meia corda de 4), e o `adicionar` segue AVISANDO pela regra 1. O
+// par só sai da lista de pendentes quando o `+` existir — isto é, na PR-6.
 
 /** §6.3 — cordas da tab por tamanho: quatro em 20 dp, seis nos outros. */
 const CORDAS = { em20: 4, normal: 6 }
