@@ -301,6 +301,21 @@ for (const n of esperados) {
   if (PENDENTES.includes(n)) avisar(`${MAPA} [pendente] "${n}" ainda não está no mapa (anexo D do DESIGN-N2, E17) — a PR que o desenhar poda a lista PENDENTES`)
   else acusar(`${MAPA} [nome] falta no mapa: "${n}" (§6.4)`)
 }
+/**
+ * N2-PR5 — **nome que o gate não consegue LER é acusação**, não silêncio.
+ *
+ * O coletor acima lê cada estado de UMA linha (`normal: [ … ],`). Uma entrada
+ * escrita em várias linhas entra em `nomes` — conta como "no mapa" e, na regra
+ * 6, como "cobrada" — mas a lista dela nunca é comparada com nada. Medido
+ * nesta PR: a primeira forma da `alca` passou com `acusações: 0` e o gate
+ * imprimiu `4/6 cobrados` com ela já no mapa; e o `apagar-setlist` da N2-PR4
+ * estava assim desde que entrou — só o `inerte` dele era lido. O desenho dele
+ * estava certo (posto numa linha, zero acusações), mas quem dizia isso era a
+ * sorte, não o gate.
+ */
+for (const [, nome, corpo] of blocos) {
+  if (!/^\s+normal: \[.*\],?$/m.test(corpo)) acusar(`${MAPA} [legível] "${nome}" não tem 'normal' numa linha só — o gate não lê a lista, e o desenho passaria sem ser comparado`)
+}
 for (const n of nomes) if (!esperados.has(n)) acusar(`${MAPA} [nome] sobra no mapa: "${n}" (não está na §6.4)`)
 const repetidos = nomes.filter((n, i) => nomes.indexOf(n) !== i)
 for (const n of repetidos) acusar(`${MAPA} [nome] repetido no mapa: "${n}"`)

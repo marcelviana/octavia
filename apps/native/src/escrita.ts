@@ -36,9 +36,12 @@
  */
 import {
   classificar,
+  mesmaOrdem,
   pedidoAtualizar,
   pedidoCriar,
+  pedidoReordenar,
   rateLimitGate,
+  reordenavel,
   PRAZO_DE_REDE_MS,
   reconcileByUpdatedAt,
   validarAtualizacao,
@@ -208,6 +211,37 @@ export function prepararEdicao(
   return { enviar: true, pedido: pedidoAtualizar(setlistId, v.campos) }
 }
 
+/**
+ * N2-PR5 — o `Salvar a ordem` do modo de reordenar, e a **N2-D36**: a ordem
+ * arrastada igual à do servidor fecha o modo SEM request, como o `Cancelar`,
+ * com a linha `write blocked op=reorder reason=nada-mudou` — o mesmo motivo
+ * do formulário (T2-R3 (iii)), sem frase nova. Acima do teto (que a tela já
+ * não deixa alcançar) a linha é a do `ceiling`, e nada sai.
+ */
+export function prepararReordenacao(
+  setlistId: string,
+  noServidor: readonly string[],
+  arrastada: readonly string[],
+): { enviar: true; pedido: Pedido } | { enviar: false; motivo: 'nada-mudou' | 'ceiling' } {
+  if (!reordenavel(arrastada.length)) {
+    barrar('reorder', 'ceiling')
+    return { enviar: false, motivo: 'ceiling' }
+  }
+  if (mesmaOrdem(noServidor, arrastada)) {
+    barrar('reorder', 'nada-mudou')
+    return { enviar: false, motivo: 'nada-mudou' }
+  }
+  return { enviar: true, pedido: pedidoReordenar(setlistId, arrastada) }
+}
+
+/**
+ * A-N2-9 — o toque no `Reordenar` inativo de uma setlist acima de 100
+ * músicas: zero request e a linha `write blocked op=reorder reason=ceiling`.
+ */
+export function barrarPorTeto(): void {
+  barrar('reorder', 'ceiling')
+}
+
 // -------------------------------------------------------------- releitura
 
 /** Por que a releitura aconteceu — a chave do log (T2-R16). */
@@ -309,6 +343,21 @@ async function reler(
  */
 export function relerAoAbrir(estado: EstadoLocal, prazoMs?: number): Promise<SetlistDTO[] | null> {
   return reler(estado, 'reopen', null, prazoMs).then((r) => r.setlists)
+}
+
+/**
+ * N2-PR5 — a releitura da regra 3 depois de um reorder que FALHOU, com o
+ * `reason=order` que o T2-R16 declarou desde a N2-PR2 e nada emitia (div.
+ * 273). O `escrever` só relê depois de 2xx e de 404; depois de um 500 quem
+ * relê é a tela, antes de oferecer `Tentar de novo` — e é esta a leitura que
+ * torna verdade a frase *"a setlist foi relida"* do modo.
+ *
+ * Devolve a `Releitura` inteira, e não só o conjunto: o modo precisa do `leu`
+ * para saber se pode oferecer `Tentar de novo` (N2-D32 — sem releitura, só
+ * `Tentar recarregar`).
+ */
+export function relerPelaOrdem(estado: EstadoLocal): Promise<Releitura> {
+  return reler(estado, 'order', 'reorder')
 }
 
 // ---------------------------------------------------------------- escrita

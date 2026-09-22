@@ -47,6 +47,15 @@
  * `Adicionar música` é da PR-6 — a faixa do congelado tem quatro, e ela vai
  * ganhá-los sem mudar de forma. Não é errata do congelado; é a ordem das PRs.
  *
+ * ## O que a N2-PR5 acrescenta — `Reordenar` e o modo (DESIGN-N2 §3)
+ *
+ * O terceiro controle da faixa entra no grupo da ESQUERDA, onde a moldura
+ * `N2-S2e` o desenha (logo depois do `Adicionar música` da PR-6) — e por isso
+ * os dois da PR-4, à direita, não mudam de lugar. Tocar nele troca a barra, a
+ * faixa, o aviso e a grade pelo `ModoDeReordenar`, que é outra tela dentro
+ * desta: coluna única, alça, um só `PUT …/order` ao salvar. Acima de 100
+ * músicas ele fica inativo com a linha `N2-X-100` (regra 8: só ele).
+ *
  * **Nada aqui toca o cache.** Toda escrita passa pelo `escrever()` do
  * `src/escrita.ts`, que relê e grava (T2-R9); esta tela recebe o conjunto
  * novo por `edicao.aoReler` e quem o aplica é a raiz. É a mesma regra que a
@@ -57,6 +66,7 @@ import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native'
 import {
   frase,
   labelFor,
+  reordenavel,
   resolveSong,
   songKey,
   type ContentDTO,
@@ -66,7 +76,7 @@ import {
   type SetlistSongDTO,
   type SongLabel,
 } from '@octavia/core'
-import { escrever, pedidoRemover, relerAoAbrir, type EstadoLocal } from '../escrita'
+import { barrarPorTeto, escrever, pedidoRemover, relerAoAbrir, type EstadoLocal } from '../escrita'
 import { Icone, type TamanhoIcone } from '../icones/Icone'
 import type { NomeIcone } from '../icones/dados'
 import { log } from '../log'
@@ -74,6 +84,7 @@ import { bar, dark, font, radius, size, space, touch, tracking } from '../theme'
 import { DialogoDeApagar } from './DialogoDeApagar'
 import { FolhaDeSetlist } from './FolhaDeCriar'
 import { LinhaDeAviso } from './LinhaDeAviso'
+import { ModoDeReordenar } from './ModoDeReordenar'
 
 /**
  * O que S2 precisa para ESCREVER, e ela só o recebe quando veio de S1
@@ -296,6 +307,7 @@ function ControleDaFaixa({
   tinta,
   inativo,
   onPress,
+  aoTocarInativo,
   testID,
 }: {
   icone: NomeIcone
@@ -304,12 +316,18 @@ function ControleDaFaixa({
   tinta: string
   inativo: boolean
   onPress: () => void
+  /**
+   * N2-PR5 — o toque num controle INATIVO que tem linha de log própria: o
+   * `Reordenar` acima de 100 músicas (A-N2-9, `reason=ceiling`). Sem isto o
+   * toque some sem rastro, como nos outros inativos da faixa.
+   */
+  aoTocarInativo?: () => void
   testID: string
 }): React.JSX.Element {
   return (
     <Pressable
       style={[styles.controle, inativo ? styles.controleInativo : null]}
-      onPress={() => (inativo ? undefined : onPress())}
+      onPress={() => (inativo ? aoTocarInativo?.() : onPress())}
       accessibilityRole="button"
       accessibilityState={{ disabled: inativo }}
       testID={testID}
@@ -339,6 +357,8 @@ export function IndexScreen({
   const n = songs.length
 
   const [folha, setFolha] = useState(false)
+  /** N2-PR5 — o modo de reordenar ocupa a tela enquanto dura. */
+  const [reordenando, setReordenando] = useState(false)
   const [dialogo, setDialogo] = useState(false)
   /** O `setlist_songs.id` da linha cuja remoção está em voo, ou `null`. */
   const [removendo, setRemovendo] = useState<string | null>(null)
@@ -370,6 +390,8 @@ export function IndexScreen({
    */
   const escrevendo = removendo !== null
   const podeEscrever = edicao !== null && online && !escrevendo
+  /** N2-X-100 — acima do teto do contrato, só `Reordenar` inativa (regra 8). */
+  const cabeNoTeto = reordenavel(n)
 
   /** A releitura de trás da tela (regra 3 e N2-D22): o mesmo `reason=reopen`. */
   const recarregar = useCallback(async () => {
@@ -449,9 +471,10 @@ export function IndexScreen({
    * "salvo, não relido" não bloqueia nada — só diz que o que está na tela
    * pode estar velho.
    *
-   * O estado do teto de 100 (`N2-X-100`) **não entra nesta PR**: ele inativa
-   * `Reordenar`, que é da PR-5, e um aviso sobre um controle que não existe
-   * seria um aviso sobre nada.
+   * O teto de 100 (`N2-X-100`, N2-PR5) entra DEPOIS da falha e ANTES do
+   * "salvo, não relido": ele bloqueia um controle só — menos que uma falha,
+   * que é de uma escrita que o músico acabou de fazer, e mais que o "salvo",
+   * que não bloqueia nada.
    */
   const aviso = useMemo(() => {
     if (edicao === null) return null
@@ -485,6 +508,11 @@ export function IndexScreen({
               },
       }
     }
+    if (!cabeNoTeto) {
+      // A tinta é `muted` e não a `lineInfo` do ícone da moldura: a linha
+      // pinta ícone e texto com a mesma cor, e `lineInfo` nunca é texto (§3.3).
+      return { icone: 'n-de-musicas' as NomeIcone, cor: dark.muted, motivo: frase('teto-100'), acao: undefined }
+    }
     if (salvoNaoRelido) {
       return {
         icone: 'ultima-sincronizacao' as NomeIcone,
@@ -499,7 +527,34 @@ export function IndexScreen({
       }
     }
     return null
-  }, [edicao, online, falha, salvoNaoRelido, relendo, repetir, podeEscrever, recarregar])
+  }, [edicao, online, falha, cabeNoTeto, salvoNaoRelido, relendo, repetir, podeEscrever, recarregar])
+
+  if (reordenando && edicao !== null) {
+    return (
+      <ModoDeReordenar
+        setlist={setlist}
+        contentById={contentById}
+        estado={edicao.estado}
+        online={online}
+        aoFechar={() => setReordenando(false)}
+        aoSalvar={(novas, syncedAtMs) => {
+          setReordenando(false)
+          setFalha(null)
+          setSalvoNaoRelido(false)
+          if (novas !== null) edicao.aoReler(novas, syncedAtMs)
+        }}
+        aoSalvoNaoRelido={() => {
+          setReordenando(false)
+          setSalvoNaoRelido(true)
+        }}
+        aoSumir={(novas, syncedAtMs) => {
+          if (novas !== null) edicao.aoReler(novas, syncedAtMs)
+          edicao.aoSairParaS1('sumiu')
+        }}
+        aoRelerAtras={(novas, syncedAtMs) => edicao.aoReler(novas, syncedAtMs)}
+      />
+    )
+  }
 
   return (
     <View style={styles.tela}>
@@ -550,8 +605,21 @@ export function IndexScreen({
       */}
       {edicao !== null ? (
         <View style={styles.faixa}>
-          {/* A esquerda é da PR-6 (`Adicionar música`). */}
-          <View style={styles.faixaEsq} />
+          {/* A esquerda é o que acrescenta e o que muda a ordem: o
+              `Adicionar música` (PR-6) entra ANTES do `Reordenar`. */}
+          <View style={styles.faixaEsq}>
+            <ControleDaFaixa
+              icone="alca"
+              rotulo="Reordenar"
+              tinta={dark.accentInk}
+              inativo={!podeEscrever || !cabeNoTeto}
+              onPress={() => setReordenando(true)}
+              // A-N2-9: só o teto tem linha de log; sem rede e "ocupado"
+              // seguem a faixa da PR-4, que não loga toque em inativo.
+              aoTocarInativo={podeEscrever && !cabeNoTeto ? barrarPorTeto : undefined}
+              testID="reordenar"
+            />
+          </View>
           <View style={styles.faixaDir}>
             <ControleDaFaixa
               icone="renomear"
