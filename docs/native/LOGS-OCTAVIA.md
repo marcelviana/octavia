@@ -297,6 +297,11 @@ perigoso: um instrumento que mede **mais** do que a coisa medida.
 > regra que decide APROVA/REPROVA checa tudo o que o nome dela promete, ou só a metade
 > mais fácil de escrever?"*
 >
+> **N2-PR7 — o G1b passa a usar o mecanismo do G3** (div. 321): a alteração de uma
+> asserção do core é um PAR — `velha → nova · razão`, a nova entrando IGUAL, a razão
+> escrita no `g1.sh` —, com o mesmo aviso de par declarado e não usado. Os dois irmãos
+> diferenciais têm agora a mesma regra de aceitação para "isto mudou de propósito".
+>
 > **O 23 é o 2 outra vez, com sete meses de distância.** O caso 2 (div. 21) foi "bounds
 > visíveis no dump lidos como a altura real do item"; o 23 é "dump lido como o instante".
 > As duas vezes o dump respondeu com precisão a uma pergunta que ninguém tinha feito. A

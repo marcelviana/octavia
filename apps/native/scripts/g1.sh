@@ -185,15 +185,125 @@ fi
 # do core só pode ter ADIÇÃO. É o análogo do G2 para teste, e fecha o buraco
 # que a div. 108 abriu — o G1 nunca soube dizer se o comportamento mudou, só se
 # o arquivo mudou.
+#
+# ---------------------------------------------------------------------------
+# N2-PR7 — O G1b GANHA PARES DECLARADOS (div. 321, origem A)
+#
+# Até aqui o G1b não tinha saída nenhuma: "só adição", e uma DECISÃO do core
+# que mudasse de propósito não tinha como passar. A N2-E19 é a primeira
+# mudança de asserção no core desde que o G1b existe — a espécie `rede` deixa
+# de dizer "sem conexão — nada foi salvo" (div. 308) — e a linha velha do
+# teste tem de sair, porque afirma o contrário da decisão nova. Não há forma
+# só-adição honesta: manter a velha seria manter um teste que reprova.
+#
+# O remédio é o do G3 (W4-a, div. 189), e é o MESMO mecanismo nos dois irmãos:
+# a alteração é um PAR — a linha que SAI e a que ENTRA no lugar dela — e mais a
+# RAZÃO, escrita aqui, onde quem mexer no gate vai ler (regra 5 do catálogo).
+# Cada registro são TRÊS linhas da lista abaixo:
+#
+#   1. `velha`  — a linha removida, sem a indentação, IGUAL (não subcadeia);
+#   2. `nova`   — a linha que a substitui, IGUAL, e tem de estar entre as
+#                 ADICIONADAS. Sem isto o par vira permissão de apagar, que é
+#                 exatamente o defeito que a div. 189 achou no G3;
+#   3. `razão:` — obrigatória. Um par sem razão é uma decisão sem autor.
+#
+# O que continua reprovando: linha removida sem par; par cuja `nova` não
+# entrou IGUAL (uma troca diferente da declarada é outra decisão); lista que
+# não fecha em triplas; tripla sem `razão:`.
+#
+# **E os pares são por PR, contra a BASE** — como as exceções do G1a (div.
+# 141) e as erratas do G3 (div. 195). Depois do merge o par fica órfão: a
+# `velha` não existe mais em BASE nenhuma. O gate IMPRIME o par declarado e não
+# usado, alto, e NÃO reprova por isso — reprovar quebraria a regra de que o
+# gate vem ANTES do que ele mede (este commit declara o par que só o commit
+# seguinte usa). A PR seguinte poda.
+#
+# --- OS PARES DESTA PR (N2-PR7) ---------------------------------------------
+#   packages/core/src/escrita.test.ts, `it('falha de transporte → rede')`: a
+#   frase da espécie `rede` (enviou, sem resposta) — decisão do Marcel, N2-E19.
+PARES_G1B=$(cat <<'PARES'
+expect(r.frase).toBe('sem conexão — nada foi salvo')
+expect(r.frase).toBe('sem resposta do servidor')
+razão: N2-E19: a espécie `rede` deixa de afirmar que nada foi salvo
+PARES
+)
 TESTES=$(git ls-tree -r --name-only "$BASE" -- packages/core/src | grep '\.test\.ts$')
 if [ "$HEAD" = "WORKTREE" ]; then
-  REMOVIDAS=$(git diff "$BASE" -- $TESTES | grep -c '^-[^-]' || true)
+  DIFF_T=$(git diff "$BASE" -- $TESTES)
 else
-  REMOVIDAS=$(git diff "$BASE".."$HEAD" -- $TESTES | grep -c '^-[^-]' || true)
+  DIFF_T=$(git diff "$BASE".."$HEAD" -- $TESTES)
 fi
+# Sem a indentação: a comparação é da LINHA, não de onde ela está.
+printf '%s\n' "$DIFF_T" | grep '^-[^-]' | sed 's/^-//; s/^[[:space:]]*//' > "$tmp/g1b.sairam" || true
+printf '%s\n' "$DIFF_T" | grep '^+[^+]' | sed 's/^+//; s/^[[:space:]]*//' > "$tmp/g1b.entraram" || true
+REMOVIDAS=$(grep -c . "$tmp/g1b.sairam" || true)
+# NUNCA `grep -F ""` com a lista: padrão vazio casa com TUDO (a lição do G3).
+printf '%s\n' "$PARES_G1B" | grep . > "$tmp/g1b.pares" || true
+N_PARES=$(grep -c . "$tmp/g1b.pares" || true)
+awk 'NR % 3 == 1' "$tmp/g1b.pares" > "$tmp/g1b.velha"
+awk 'NR % 3 == 2' "$tmp/g1b.pares" > "$tmp/g1b.nova"
+awk 'NR % 3 == 0' "$tmp/g1b.pares" > "$tmp/g1b.razao"
+
 echo "G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: $REMOVIDAS"
-if [ "$REMOVIDAS" -eq 0 ]; then echo "  G1b: só adição ✓"; B=0
-else echo "  G1b: teste existente foi editado ✗"; B=1; fi
+echo "      PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):"
+if [ "$N_PARES" -gt 0 ]; then
+  paste -d '\n' "$tmp/g1b.velha" "$tmp/g1b.nova" "$tmp/g1b.razao" \
+    | awk 'NR % 3 == 1 { print "        " $0 } NR % 3 == 2 { print "          -> " $0 } NR % 3 == 0 { print "          · " $0 }'
+else
+  echo "        (nenhum — nenhuma asserção do core pode mudar nesta PR)"
+fi
+B=0
+if [ $((N_PARES % 3)) -ne 0 ]; then
+  echo "  G1b: lista de PARES com $N_PARES linhas — todo par é velha / nova / razão ✗"
+  B=1
+fi
+while IFS= read -r R; do
+  case "$R" in
+    'razão: '?*) ;;
+    *) echo "  G1b: PAR SEM RAZÃO ✗ — a terceira linha tem de começar por 'razão: ':"; echo "      $R"; B=1 ;;
+  esac
+done < "$tmp/g1b.razao"
+
+if [ "$REMOVIDAS" -eq 0 ]; then
+  [ $B -eq 0 ] && echo "  G1b: só adição ✓"
+else
+  echo "  linhas que SAÍRAM (cada uma precisa de um PAR, e a nova do par tem de entrar IGUAL):"
+  sed 's/^/      /' "$tmp/g1b.sairam"
+  while IFS= read -r L; do
+    [ -n "$L" ] || continue
+    I=$(grep -nxF -- "$L" "$tmp/g1b.velha" | head -1 | cut -d: -f1)
+    if [ -z "$I" ]; then
+      echo "  G1b: teste existente foi editado SEM PAR ✗"
+      echo "      $L"
+      B=1
+      continue
+    fi
+    NOVA=$(sed -n "${I}p" "$tmp/g1b.nova")
+    if ! grep -qxF -- "$NOVA" "$tmp/g1b.entraram"; then
+      echo "  G1b: PAR SEM SUBSTITUTA ✗ — a linha saiu e a nova declarada não entrou IGUAL:"
+      echo "      saiu:          $L"
+      echo "      devia entrar:  $NOVA"
+      B=1
+    fi
+  done < "$tmp/g1b.sairam"
+  [ $B -eq 0 ] && echo "  G1b: cada linha que saiu tem par, e a nova do par entrou ✓"
+fi
+
+# O gêmeo do aviso da div. 141 (G1a) e da div. 195 (G3): não reprova.
+NAOUSADOS=''
+I=0
+while IFS= read -r V; do
+  I=$((I + 1))
+  [ -n "$V" ] || continue
+  grep -qxF -- "$V" "$tmp/g1b.sairam" && continue
+  NAOUSADOS="$NAOUSADOS$V
+  -> $(sed -n "${I}p" "$tmp/g1b.nova")
+"
+done < "$tmp/g1b.velha"
+if [ -n "$NAOUSADOS" ]; then
+  echo "  G1b: PAR DECLARADO E NÃO USADO — poda isto ANTES do merge (div. 321):"
+  printf '%s' "$NAOUSADOS" | sed 's/^/        /'
+fi
 
 rm -rf "$tmp"
 [ $A -eq 0 ] && [ $B -eq 0 ]

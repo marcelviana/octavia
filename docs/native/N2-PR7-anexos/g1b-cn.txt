@@ -1,0 +1,142 @@
+# CN-0 — ANTES do mecanismo: g1.sh de origin/main (426f4cc), árvore = origin/main + a alteração da N2-E19 no teste do core, SEM par
+$ git diff packages/core/src/escrita.test.ts
+diff --git a/packages/core/src/escrita.test.ts b/packages/core/src/escrita.test.ts
+index 8e49c73..4507ffe 100644
+--- a/packages/core/src/escrita.test.ts
++++ b/packages/core/src/escrita.test.ts
+@@ -173,7 +173,7 @@ describe('classificar — o conjunto FECHADO de espécies', () => {
+     const r = classificar('create', { networkError: 'Network request failed' }, null)
+     expect(r.especie).toBe('rede')
+     expect(r.status).toBeNull()
+-    expect(r.frase).toBe('sem conexão — nada foi salvo')
++    expect(r.frase).toBe('sem resposta do servidor')
+   })
+ 
+   it('rede em criar e adicionar PODE ter gravado (N2-D18); nas outras quatro, não', () => {
+
+$ sh apps/native/scripts/g1.sh origin/main WORKTREE
+base=origin/main head=WORKTREE
+G1a — diff vazio em 40 arquivos DERIVADOS de apps/native + packages/core/src
+      escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+      menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+      EXCEÇÕES DECLARADAS (o escopo desta PR):
+        packages/core/src/frases.ts
+        apps/native/src/escrita.ts
+        apps/native/src/icones/dados.ts
+        apps/native/src/screens/IndexScreen.tsx
+        apps/native/src/screens/Picker.tsx
+        apps/native/src/screens/SearchScreen.tsx
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+  G1a: EXCEÇÃO DECLARADA E NÃO USADA — poda isto ANTES do merge (div. 141):
+        packages/core/src/frases.ts
+        apps/native/src/escrita.ts
+        apps/native/src/icones/dados.ts
+        apps/native/src/screens/IndexScreen.tsx
+        apps/native/src/screens/Picker.tsx
+        apps/native/src/screens/SearchScreen.tsx
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 1
+  G1b: teste existente foi editado ✗
+exit=1
+
+
+# CN do G1b com pares (N2-PR7, commit 0) — g1.sh da árvore de trabalho, base origin/main (426f4cc)
+
+## CN-1 · controle positivo: a alteração da N2-E19 COM o par declarado → passa
+
+$ git diff packages/core/src/escrita.test.ts | grep '^[-+][^-+]'
+-    expect(r.frase).toBe('sem conexão — nada foi salvo')
++    expect(r.frase).toBe('sem resposta do servidor')
+$ sh apps/native/scripts/g1.sh origin/main WORKTREE   (só o bloco G1b)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 1
+      PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+        expect(r.frase).toBe('sem conexão — nada foi salvo')
+          -> expect(r.frase).toBe('sem resposta do servidor')
+          · razão: N2-E19: a espécie `rede` deixa de afirmar que nada foi salvo
+  linhas que SAÍRAM (cada uma precisa de um PAR, e a nova do par tem de entrar IGUAL):
+      expect(r.frase).toBe('sem conexão — nada foi salvo')
+  G1b: cada linha que saiu tem par, e a nova do par entrou ✓
+exit=0
+
+## CN-2 · par declarado, mas a linha nova entra DIFERENTE da declarada → reprova
+
+$ git diff packages/core/src/escrita.test.ts | grep '^[-+][^-+]'
+-    expect(r.frase).toBe('sem conexão — nada foi salvo')
++    expect(r.frase).toBe('sem resposta do servidor.')
+$ sh apps/native/scripts/g1.sh origin/main WORKTREE   (só o bloco G1b)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 1
+      PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+        expect(r.frase).toBe('sem conexão — nada foi salvo')
+          -> expect(r.frase).toBe('sem resposta do servidor')
+          · razão: N2-E19: a espécie `rede` deixa de afirmar que nada foi salvo
+  linhas que SAÍRAM (cada uma precisa de um PAR, e a nova do par tem de entrar IGUAL):
+      expect(r.frase).toBe('sem conexão — nada foi salvo')
+  G1b: PAR SEM SUBSTITUTA ✗ — a linha saiu e a nova declarada não entrou IGUAL:
+      saiu:          expect(r.frase).toBe('sem conexão — nada foi salvo')
+      devia entrar:  expect(r.frase).toBe('sem resposta do servidor')
+exit=1
+
+## CN-3 · uma alteração SEM par (outra asserção do mesmo teste) → reprova, mesmo com o par da E19 usado
+
+$ git diff packages/core/src/escrita.test.ts | grep '^[-+][^-+]'
+-    expect(r.status).toBeNull()
+-    expect(r.frase).toBe('sem conexão — nada foi salvo')
++    expect(r.status).toBe(0)
++    expect(r.frase).toBe('sem resposta do servidor')
+$ sh apps/native/scripts/g1.sh origin/main WORKTREE   (só o bloco G1b)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 2
+      PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+        expect(r.frase).toBe('sem conexão — nada foi salvo')
+          -> expect(r.frase).toBe('sem resposta do servidor')
+          · razão: N2-E19: a espécie `rede` deixa de afirmar que nada foi salvo
+  linhas que SAÍRAM (cada uma precisa de um PAR, e a nova do par tem de entrar IGUAL):
+      expect(r.status).toBeNull()
+      expect(r.frase).toBe('sem conexão — nada foi salvo')
+  G1b: teste existente foi editado SEM PAR ✗
+      expect(r.status).toBeNull()
+exit=1
+
+## CN-4 · a velha APAGADA sem nada no lugar (o defeito da div. 189 no G3) → reprova
+
+$ git diff packages/core/src/escrita.test.ts | grep '^[-+][^-+]'
+-    expect(r.frase).toBe('sem conexão — nada foi salvo')
+$ sh apps/native/scripts/g1.sh origin/main WORKTREE   (só o bloco G1b)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 1
+      PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+        expect(r.frase).toBe('sem conexão — nada foi salvo')
+          -> expect(r.frase).toBe('sem resposta do servidor')
+          · razão: N2-E19: a espécie `rede` deixa de afirmar que nada foi salvo
+  linhas que SAÍRAM (cada uma precisa de um PAR, e a nova do par tem de entrar IGUAL):
+      expect(r.frase).toBe('sem conexão — nada foi salvo')
+  G1b: PAR SEM SUBSTITUTA ✗ — a linha saiu e a nova declarada não entrou IGUAL:
+      saiu:          expect(r.frase).toBe('sem conexão — nada foi salvo')
+      devia entrar:  expect(r.frase).toBe('sem resposta do servidor')
+exit=1
+
+## CN-5 · par SEM razão (cópia do g1.sh com a terceira linha trocada) → reprova
+$ sh $SCR/g1-sem-razao.sh origin/main WORKTREE   (só o bloco G1b)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 1
+      PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+        expect(r.frase).toBe('sem conexão — nada foi salvo')
+          -> expect(r.frase).toBe('sem resposta do servidor')
+          · N2-E19 sem o prefixo
+  G1b: PAR SEM RAZÃO ✗ — a terceira linha tem de começar por 'razão: ':
+      N2-E19 sem o prefixo
+  linhas que SAÍRAM (cada uma precisa de um PAR, e a nova do par tem de entrar IGUAL):
+      expect(r.frase).toBe('sem conexão — nada foi salvo')
+exit=1
+
+## CN-6 · lista que não fecha em triplas (cópia sem a linha nova) → reprova
+$ sh $SCR/g1-dupla.sh origin/main WORKTREE   (árvore limpa; só o bloco G1b)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+      PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+        expect(r.frase).toBe('sem conexão — nada foi salvo')
+          -> razão: N2-E19: a espécie `rede` deixa de afirmar que nada foi salvo
+          · 
+  G1b: lista de PARES com 2 linhas — todo par é velha / nova / razão ✗
+  G1b: PAR DECLARADO E NÃO USADO — poda isto ANTES do merge (div. 321):
+        expect(r.frase).toBe('sem conexão — nada foi salvo')
+          -> razão: N2-E19: a espécie `rede` deixa de afirmar que nada foi salvo
+exit=1
+
+## estado final da árvore
+ M apps/native/scripts/g1.sh
