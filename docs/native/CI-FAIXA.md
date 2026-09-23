@@ -1,6 +1,8 @@
 # CI-FAIXA — a série do `android-debug-apk`
 
 **A fonte única de todo número de CI do APK neste projeto** (W4-b2, 2026-09-23).
+A referência é a do **regime 2**, desde a #284 (§ "A referência"); a série inteira fica
+abaixo, em ordem, em dois segmentos.
 As faixas anteriores — a da V1-PR6 (`n=12`, `V1-ENCERRAMENTO.md` §8), as do W1, W2
 e W3 (`n=13…18`) e a série descritiva do N2 (`n=21`, `N2-ENCERRAMENTO.md` §7) —
 **deixam de ser referência**: são recortes desta série, e ficam onde estão, como
@@ -11,38 +13,56 @@ e o nível ao lado** (job, passo ou run; ver a tabela dos níveis no
 `LOGS-OCTAVIA.md`), e a fonte é este arquivo. Um número sem `n` é uma medição, não
 uma referência (div. 80).
 
-## A referência
+## A referência — o regime 2 (desde a #284)
 
-**Nível job** (`startedAt → completedAt` do `android-debug-apk`), **todas as
-corridas que produziram APK**, `pull_request` e `push`, desde a primeira
-(`[medido: gh run list --workflow=native.yml · gh run view <id> --json jobs]`):
+**Nível job** (`startedAt → completedAt` do `android-debug-apk`), as corridas **do
+regime em vigor**, que começa na **#284**: todas as que produziram APK, eventos
+`pull_request` e `push` (`[medido: gh run list --workflow=native.yml · gh run view <id> --json jobs]`).
+Decisão do Marcel, 2026-09-23:
 
 ```
-n=94   mín 4m42s   máx 14m32s   mediana 11m50s   Q1 9m27s   Q3 12m44s   IQR 3m17s
+n=78   mín 8m09s   máx 14m32s   mediana 12m12s   Q1 11m01s   Q3 12m50s   IQR 1m49s
 ```
 
 Quartis pelo método inclusivo (interpolação linear, `statistics.quantiles(…,
-method='inclusive')`, o "tipo 7"). **100 corridas** no total; **6 falhas** ficam na
-tabela, riscadas, e **fora da população**: nenhuma produziu APK (quatro eram
-controle negativo plantado — duas no N0, duas na W4-b2 —, duas o `setup-android@v3`), e o
-tempo delas, de 26 s a 1m14s, é o de um passo que quebrou, não o de um build.
+method='inclusive')`, o "tipo 7"). O regime 2 tem 82 corridas; **4 falhas**
+ficam na tabela, riscadas, e **fora da população**. São as duas **plantadas** da #322
+(o CN da div. 360) e as duas do `setup-android@v3` (#301). Nenhuma produziu APK.
 
-As corridas de causa medida **estão dentro** e marcadas na coluna "causa". **Leia a
-faixa com elas**: o mínimo, 4m42s, é do regime de antes da #284, quando o APK ainda
-não tinha o native-stack nem os peers nativos. Com uma faixa assim, sair **por
-baixo** quase não acontece mais; o alarme útil é o de cima e o da falha rápida.
+## Os segmentos, e a regra que os abre
+
+**Mudança na definição do build abre um segmento novo. Mudança só no gatilho não
+abre** (decisão do Marcel, 2026-09-23; a regra está também no `LOGS-OCTAVIA.md`,
+"Errata W4-b2"). O gatilho decide **quando** o job roda: o `paths`, o H1, o
+`mudou-nativo`. A definição do build é **o que o job compila e como**. O H1 da
+#322, que só decide se o job roda, **não abriu** segmento. A série tem hoje **dois**
+segmentos; a razão do corte está abaixo, `[medido]`.
+
+| segmento | de | até | corridas | falhas | população | faixa |
+|---|---|---|---|---|---|---|
+| **regime 1** — antes da #284 | a 1ª (`34117343294`, #265) | a 18ª (`34488090147`, #283) | 18 | 2 | 16 | 4m42s–9m26s, mediana 6m57s, IQR 0m51s |
+| **regime 2** — desde a #284 (**a referência**) | a 19ª (`34495434672`, #284) | a última | 82 | 4 | 78 | 8m09s–14m32s, mediana 12m12s, IQR 1m49s |
+
+**A razão do corte `[medido]`.** `git log -- .github/workflows/native.yml` mostra que
+**o workflow não mudou na #284**: entre o `6ccf644` (N0-PR3, 2026-09-07) e o `d83d94f`
+(N1-PR8, 2026-09-11, que só recortou o `paths`) não há commit nele. O que mudou foi
+**o que o job compila**. O commit `9806e44` (N1-PR3a, *fundação do app nativo*),
+mergeado na #284 (`6f30f02`), pôs no `apps/native/package.json` os módulos nativos
+`react-native-screens` e `react-native-safe-area-context`, além do
+`@react-navigation/native-stack`, do `expo-font` e das fontes, e pôs o plugin do
+`expo-font` no `app.json` (`git diff 6f30f02^1 6f30f02 -- apps/native/package.json apps/native/app.json`).
+O job passou de ~6–7 min a ~12 min (`N1-ENCERRAMENTO.md:159`) e não voltou.
 
 ### Recortes — descritivos, **não** referência
 
 | recorte | n | mín | máx | mediana | Q1 | Q3 | IQR |
 |---|---|---|---|---|---|---|---|
-| só `pull_request` | 62 | 5m21s | 14m31s | 11m52s | 9m44s | 12m49s | 3m05s |
-| desde a #284 (o regime do native-stack) | 78 | 8m09s | 14m32s | 12m12s | 11m01s | 12m50s | 1m49s |
-| desde o `setup-android@v4` (#302) | 49 | 8m09s | 14m32s | 12m31s | 10m20s | 12m53s | 2m33s |
+| a série inteira, os dois regimes | 94 | 4m42s | 14m32s | 11m50s | 9m27s | 12m44s | 3m17s |
+| regime 2, só `pull_request` | 53 | 8m09s | 14m31s | 12m10s | 11m07s | 12m50s | 1m43s |
+| regime 2, desde o `setup-android@v4` (#302) | 49 | 8m09s | 14m32s | 12m31s | 10m20s | 12m53s | 2m33s |
 
-Escolher um recorte como referência é escolher um corte, e o corte é decisão do
-Marcel. **O teto de 14m11s, "intacto" desde a V1**, caiu na corrida 93 (push da
-#321 na `main`, 14m32s). A causa não foi medida.
+**O teto de 14m11s, "intacto" desde a V1**, caiu na corrida 93 (push da #321 na
+`main`, 14m32s). A causa não foi medida.
 
 ## O preço do B8.1, na série inteira
 
@@ -61,26 +81,35 @@ que o N2 contou entre os seus 7. O H1 da W4-b2 filtra os 14, e os forçados
 fora do filtro** (não tocou nenhum dos três); **push forçado** (o `antes` não é
 ancestral do `depois`). `setup` é a versão do `android-actions/setup-android`.
 
+### Regime 1 — antes da #284
+
+Fora da referência, pela razão acima. Ficam aqui, em ordem, e não se apagam.
+
 | # | run | evento | PR | head | gatilho | setup | início (UTC) | job | causa / nota |
 |---|---|---|---|---|---|---|---|---|---|
 | 1 | `34117343294` | PR | #265 | `dcbebad` | abertura | v3 | 2026-09-07 11:34 | ~~0m40s~~ | **falha plantada** — CN do N0-PR2: plugin inexistente no prebuild `[medido: gh run view --log-failed]` |
-| 2 | `34117642858` | PR | #265 | `322a48c` | nativo | v3 | 2026-09-07 11:47 | **5m33s** | regime pré-#284 |
-| 3 | `34126002356` | push | #265 | `aca0002` | merge na `main` | v3 | 2026-09-07 13:11 | **9m26s** | regime pré-#284 |
+| 2 | `34117642858` | PR | #265 | `322a48c` | nativo | v3 | 2026-09-07 11:47 | **5m33s** | |
+| 3 | `34126002356` | push | #265 | `aca0002` | merge na `main` | v3 | 2026-09-07 13:11 | **9m26s** | |
 | 4 | `34127828871` | PR | #266 | `6ccf644` | abertura | v3 | 2026-09-07 13:31 | ~~1m14s~~ | **falha plantada** — CN do N0-PR3: erro de tipo em `src/api.ts` `[medido: idem]` |
-| 5 | `34128158232` | PR | #266 | `6a5a8bf` | nativo | v3 | 2026-09-07 13:34 | **5m21s** | regime pré-#284 |
-| 6 | `34129780874` | push | #266 | `8bb2948` | merge na `main` | v3 | 2026-09-07 13:52 | **6m46s** | regime pré-#284 |
-| 7 | `34133725283` | PR | #267 | `63d0c4b` | abertura | v3 | 2026-09-07 14:34 | **6m58s** | regime pré-#284 |
-| 8 | `34146190080` | push | #267 | `9310ba7` | merge na `main` | v3 | 2026-09-07 17:06 | **4m42s** | regime pré-#284 |
-| 9 | `34147586179` | PR | #268 | `1fccc4c` | abertura | v3 | 2026-09-07 17:26 | **8m03s** | regime pré-#284 |
-| 10 | `34160851483` | push | #268 | `40da95c` | merge na `main` | v3 | 2026-09-07 20:49 | **7m03s** | regime pré-#284 |
-| 11 | `34389506702` | PR | #277 | `0da66c8` | abertura | v3 | 2026-09-09 18:36 | **6m55s** | regime pré-#284 |
-| 12 | `34391117063` | push | #277 | `3f82390` | merge na `main` | v3 | 2026-09-09 18:47 | **7m19s** | regime pré-#284 |
-| 13 | `34484129145` | PR | #282 | `8bf69a4` | abertura | v3 | 2026-09-10 13:40 | **7m39s** | regime pré-#284 |
-| 14 | `34484255719` | PR | #282 | `fe5f58b` | **só fora do filtro** | v3 | 2026-09-10 13:41 | **7m08s** | regime pré-#284 |
-| 15 | `34485672668` | push | #282 | `1816472` | merge na `main` | v3 | 2026-09-10 13:55 | **6m40s** | regime pré-#284 |
-| 16 | `34486542479` | PR | #283 | `966215e` | abertura | v3 | 2026-09-10 14:03 | **6m56s** | regime pré-#284 |
-| 17 | `34486686394` | PR | #283 | `17d7841` | **só fora do filtro** | v3 | 2026-09-10 14:04 | **5m57s** | regime pré-#284 |
-| 18 | `34488090147` | push | #283 | `db89e82` | merge na `main` | v3 | 2026-09-10 14:17 | **7m24s** | regime pré-#284 |
+| 5 | `34128158232` | PR | #266 | `6a5a8bf` | nativo | v3 | 2026-09-07 13:34 | **5m21s** | |
+| 6 | `34129780874` | push | #266 | `8bb2948` | merge na `main` | v3 | 2026-09-07 13:52 | **6m46s** | |
+| 7 | `34133725283` | PR | #267 | `63d0c4b` | abertura | v3 | 2026-09-07 14:34 | **6m58s** | |
+| 8 | `34146190080` | push | #267 | `9310ba7` | merge na `main` | v3 | 2026-09-07 17:06 | **4m42s** | |
+| 9 | `34147586179` | PR | #268 | `1fccc4c` | abertura | v3 | 2026-09-07 17:26 | **8m03s** | |
+| 10 | `34160851483` | push | #268 | `40da95c` | merge na `main` | v3 | 2026-09-07 20:49 | **7m03s** | |
+| 11 | `34389506702` | PR | #277 | `0da66c8` | abertura | v3 | 2026-09-09 18:36 | **6m55s** | |
+| 12 | `34391117063` | push | #277 | `3f82390` | merge na `main` | v3 | 2026-09-09 18:47 | **7m19s** | |
+| 13 | `34484129145` | PR | #282 | `8bf69a4` | abertura | v3 | 2026-09-10 13:40 | **7m39s** | |
+| 14 | `34484255719` | PR | #282 | `fe5f58b` | **só fora do filtro** | v3 | 2026-09-10 13:41 | **7m08s** | |
+| 15 | `34485672668` | push | #282 | `1816472` | merge na `main` | v3 | 2026-09-10 13:55 | **6m40s** | |
+| 16 | `34486542479` | PR | #283 | `966215e` | abertura | v3 | 2026-09-10 14:03 | **6m56s** | |
+| 17 | `34486686394` | PR | #283 | `17d7841` | **só fora do filtro** | v3 | 2026-09-10 14:04 | **5m57s** | |
+| 18 | `34488090147` | push | #283 | `db89e82` | merge na `main` | v3 | 2026-09-10 14:17 | **7m24s** | |
+
+### Regime 2 — desde a #284 (a referência)
+
+| # | run | evento | PR | head | gatilho | setup | início (UTC) | job | causa / nota |
+|---|---|---|---|---|---|---|---|---|---|
 | 19 | `34495434672` | PR | #284 | `9806e44` | abertura | v3 | 2026-09-10 15:24 | **14m11s** | **entra o native-stack e os peers nativos** — fim do regime de ~6–7 min `[lido: N1-ENCERRAMENTO.md:159]` |
 | 20 | `34499344864` | push | #284 | `6f30f02` | merge na `main` | v3 | 2026-09-10 16:00 | **12m30s** |  |
 | 21 | `34511721960` | PR | #285 | `08b84d6` | abertura | v3 | 2026-09-10 18:01 | **11m57s** |  |
@@ -176,7 +205,9 @@ gh run view <id> --json jobs \
   --jq '.jobs[] | select(.name=="android-debug-apk") | "\(.conclusion) \(.startedAt) \(.completedAt)"'
 ```
 
-O cabeçalho (`n`, mín, máx, mediana, quartis) se **recalcula** a cada linha nova:
+A linha nova entra no fim do segmento em vigor. O cabeçalho (`n`, mín, máx, mediana,
+quartis) se **recalcula** a cada linha nova, e um segmento novo só se abre pela regra
+acima:
 uma estatística que não acompanha a tabela é a div. 110 outra vez. Corrida
 `skipped` (o H1: push sem nativo) **não entra**, porque não houve build; ela vive no
 `gh pr checks` da PR. A corrida que o próprio push de docs de um encerramento

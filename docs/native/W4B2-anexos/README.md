@@ -115,7 +115,7 @@ As 21 do N2 (§7 do encerramento) conferem, run a run e segundo a segundo. Confe
 também a 19ª do W3 (`35096488810`, 11m47s) e as sete de `push` que o N2 listou. A de
 `bc55419`, que ainda corria, deu **10m06s**. As duas diferenças estão na div. 354.
 A série inteira, com as desta PR, está no [`CI-FAIXA.md`](../CI-FAIXA.md):
-**n=91 · 4m42s–14m32s · mediana 11m47s · IQR 3m20s (9m24s–12m43s)** no commit 3; com as corridas das decisões de antes do merge (§7), **n=94 · mediana 11m50s · IQR 3m17s**.
+**n=91 · 4m42s–14m32s · mediana 11m47s · IQR 3m20s (9m24s–12m43s)** no commit 3; com as corridas das decisões de antes do merge (§7), **n=94 · mediana 11m50s · IQR 3m17s**. **Referência final** (o corte do Marcel, §10): o regime 2, desde a #284, **n=78 · 8m09s–14m32s · mediana 12m12s · IQR 1m49s (11m01s–12m50s)**.
 
 ## 5. Divergências — 352 a 360
 
@@ -274,3 +274,27 @@ Copiado do corpo da PR #322 no commit de docs, pela regra da §7.3:
 | **362** | T | as duas reversões (`019469c`, `32bcd91`) saíram com a mensagem padrão do `git revert`, **sem** a linha `Co-Authored-By`. Pôr a linha exigia reescrever dois commits locais, ainda não enviados, e o classificador de permissão da sessão barrou a reescrita | ficaram assim, e registradas aqui. A regra nova (sem push forçado) também não deixaria corrigir depois |
 | **363** | P | "reverta os dois com commits novos": as duas reversões subiram **juntas**, num push que toca o `app.json`. Por isso a reversão da sonda (só docs) não teve um *skipped* próprio | o *skipped* com o último APK verde é o do commit de docs (§7.1, item 6), e antes dele o do `bffe173` |
 | **364** | P | "`mudou-nativo.sh` conta como nativo": ele já contava, porque mora em `apps/native/`. A CN-H1l passou já contra o detector velho (`W4B2-E`) | registrado; o `gates.yml` era o único dos três que faltava |
+
+## 10. O corte da faixa — decisão do Marcel (2026-09-23)
+
+A série inteira continua no `CI-FAIXA.md`, em ordem, agora em **dois segmentos**:
+**regime 1**, antes da #284, e **regime 2**, desde a #284. O **cabeçalho de
+referência** passa a ser calculado **só do regime 2**:
+
+```
+n=78   mín 8m09s   máx 14m32s   mediana 12m12s   Q1 11m01s   Q3 12m50s   IQR 1m49s
+```
+
+O regime 1 tem 18 corridas, 2 falhas (as plantadas do N0) e n=16: 4m42s–9m26s,
+mediana 6m57s, IQR 0m51s. A série inteira (n=94, mediana 11m50s, IQR 3m17s) fica
+como recorte descritivo. As duas plantadas da #322 seguem riscadas, no regime 2.
+
+**A regra**, no `CI-FAIXA.md` e no `LOGS-OCTAVIA.md`: **mudança na definição do
+build abre um segmento novo; mudança só no gatilho (como o H1) não abre.**
+
+## 11. Divergências — 365 e 366
+
+| div. | origem | o que | o que foi feito |
+|---|---|---|---|
+| **365** | P | "cite o commit/PR que **mudou o job**, `[medido]` por `git log -- .github/workflows/native.yml`": o `native.yml` **não mudou na #284**. O log dele pula do `6ccf644` (N0-PR3) para o `d83d94f` (N1-PR8, que só recortou o `paths`). O que mudou na #284 foi o que o job **compila**: o `9806e44` (N1-PR3a) pôs no `apps/native/package.json` os módulos nativos `react-native-screens` e `react-native-safe-area-context`, além do `@react-navigation/native-stack`, do `expo-font` e das fontes, e pôs o plugin do `expo-font` no `app.json` | o corte cita o `9806e44` e o merge `6f30f02`, com os dois comandos `[medido]`. "Definição do build" ficou escrita como **o que o job compila e como**, e não só como o texto do workflow |
+| **366** | P | a regra aplicada ao pé da letra **abriria mais segmentos** que o corte decidido. Entrada de módulo nativo depois da #284 `[medido: git log --first-parent 6f30f02..origin/main -- apps/native/package.json apps/native/app.json .github/workflows/native.yml]`: `expo-network` (#285), `expo-keep-awake` (#286), `react-native-svg` (#296, que o V1 §8 mediu recompilando 38 tarefas por corrida), `@react-native-community/datetimepicker` (#315, div. 234). E o `setup-android@v4` (#302, `717104e`) mudou um passo do job | **não** abri segmento para eles: o corte decidido foi um só, na #284, e os quatro somaram sem mudar o regime de ~12 min (a #284 mudou de ~6–7 para ~12). O recorte "desde o v4" está no `CI-FAIXA.md` como descritivo. Fica para o Marcel: a regra precisa de um limiar (por exemplo, "muda o regime") ou de uma lista do que conta como definição? |

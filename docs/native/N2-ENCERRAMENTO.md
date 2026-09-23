@@ -439,7 +439,7 @@ As PRs só de docs (#306, #308, #310, #311, #313) não escreveram teste.
 ## 7. A série do CI
 
 > **W4-b2 (#322):** esta série está incorporada no [`CI-FAIXA.md`](CI-FAIXA.md),
-> a referência única (nível job; `n=94` quando a #322 fechou, e o número vivo é o do cabeçalho de lá), com a 19ª do W3 e as corridas de `push`.
+> a referência única (nível job; a referência é o regime 2, desde a #284: `n=78` quando a #322 fechou, e o número vivo é o do cabeçalho de lá), com a 19ª do W3 e as corridas de `push`.
 > Das 7 corridas do B8.1 abaixo, **4** foram pushes normais (o H1 as filtra) e **3**
 > (11, 12, 13) foram **pushes forçados**, que o H1 continua rodando (div. 353).
 

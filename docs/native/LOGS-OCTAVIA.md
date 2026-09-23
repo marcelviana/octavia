@@ -877,3 +877,19 @@ para o `README.md` dos seus anexos, numa seção própria, **inclusive quando o 
 não declara nada**. O registro do que a PR declarou é esse texto. O corpo é só o
 lugar de onde o CI o lê. Se o corpo mudar depois do commit de docs, a cópia se
 refaz num commit novo.
+
+### A faixa de CI tem segmentos (decisão do Marcel, 2026-09-23)
+
+A referência do `CI-FAIXA.md` é calculada **só do regime em vigor**. A série
+inteira continua lá, em ordem, dividida em segmentos rotulados, cada um com a razão
+do corte, `[medido]`. **Mudança na definição do build abre um segmento novo;
+mudança só no gatilho (como o H1) não abre.** A definição do build é o que o job
+compila e como (o workflow, os módulos nativos, os plugins do `app.json`). O
+gatilho é quando o job roda (o `paths`, o `mudou-nativo`).
+
+Hoje há dois segmentos: o **regime 1**, antes da #284, e o **regime 2**, desde a
+#284, que é a referência. O corte é o `9806e44` (N1-PR3a): os módulos nativos da
+navegação e das fontes entraram, e o job passou de ~6–7 min a ~12 min. **O
+workflow em si não mudou ali** (div. 365). A entrada de módulos nativos depois da
+#284 não abriu segmento, e o limiar da regra está em aberto com o Marcel
+(div. 366).

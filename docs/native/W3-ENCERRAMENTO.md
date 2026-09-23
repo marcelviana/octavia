@@ -487,7 +487,7 @@ W3 por uma estrutura que ele não tem (divs. 147, 219).
 | commits temporários locais | 3, para controles negativos — `a3b1a5b`, um segundo cujo sha não foi registrado (o CN do conserto do commit 1), e `78ff532` (o da decisão b) —, todos desfeitos, nenhum enviado |
 
 > **W4-b2 (#322):** a série e a faixa abaixo são recortes; a referência de CI é o
-> [`CI-FAIXA.md`](CI-FAIXA.md) (nível job; `n=94` quando a #322 fechou). As três retidas e a 19ª estão lá,
+> [`CI-FAIXA.md`](CI-FAIXA.md) (nível job; a referência é o regime 2, desde a #284: `n=78` quando a #322 fechou). As três retidas e a 19ª estão lá,
 > e a 18ª (`712f054`) **não** foi push só de docs (div. 354).
 
 **CI do `native.yml`**, com a 15ª corrida (a da #303, `pull_request`, **12m37s**):
