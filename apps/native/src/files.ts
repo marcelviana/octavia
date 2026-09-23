@@ -164,21 +164,39 @@ export interface EnsuredFile {
  * orçamento do bucket conta cada um. Com ela, uma requisição e uma linha
  * `file src=download`.
  */
-const emVoo = new Map<string, Promise<EnsuredFile>>()
+const emVoo = new Map<string, { voo: Promise<EnsuredFile>; guaranteed: boolean }>()
 
 /**
  * Garante o arquivo no disco e devolve por onde ele veio (A9: a 2ª abertura
  * é `src=disk`, sem request). `guaranteed` decide a pasta; um arquivo que já
  * está no cache e vira garantido é **movido**, nunca rebaixado de novo.
+ *
+ * **A carona olha as opções** (W4-b3, div. 119). Até aqui o `emVoo` devolvia
+ * o voo alheio a qualquer um que pedisse a mesma URL, com o `guaranteed` de
+ * quem pediu primeiro: o prefetch de 7 dias que chegava enquanto o palco
+ * baixava o mesmo arquivo recebia a promise do palco, e o arquivo ficava no
+ * `Paths.cache` — o `promoteList` só o movia na passada seguinte. Agora um
+ * pedido garantido que encontra um voo NÃO garantido espera esse voo e roda
+ * de novo por cima dele: o arquivo já está no disco, e o `ensureFileUma` o
+ * **move** (a promoção de sempre). Continua UM download do objeto. Se o voo
+ * rejeita, a carona recebe a mesma rejeição — sem retry (T1-R37).
  */
 export function ensureFile(
   url: string,
   opcoes: { guaranteed: boolean } = { guaranteed: false },
 ): Promise<EnsuredFile> {
   const jaVoando = emVoo.get(url)
-  if (jaVoando !== undefined) return jaVoando
-  const voo = ensureFileUma(url, opcoes).finally(() => emVoo.delete(url))
-  emVoo.set(url, voo)
+  if (jaVoando !== undefined && (jaVoando.guaranteed || !opcoes.guaranteed)) return jaVoando.voo
+  const base =
+    jaVoando === undefined
+      ? ensureFileUma(url, opcoes)
+      : jaVoando.voo.then(() => ensureFileUma(url, opcoes))
+  // Só apaga a entrada que é SUA: o voo de baixo assenta antes da carona
+  // que o substituiu na tabela, e não pode levá-la junto.
+  const voo: Promise<EnsuredFile> = base.finally(() => {
+    if (emVoo.get(url)?.voo === voo) emVoo.delete(url)
+  })
+  emVoo.set(url, { voo, guaranteed: opcoes.guaranteed })
   return voo
 }
 

@@ -1,0 +1,11 @@
+# W4-b3, commit 2 — os mesmos CNs com o conserto
+
+ RUN  v4.0.16 <árvore>
+
+ ✓ |native| apps/native/test/palco-divida.test.ts (8 tests) 11ms
+
+ Test Files  1 passed (1)
+      Tests  8 passed (8)
+   Start at  17:57:03
+   Duration  280ms (transform 114ms, setup 0ms, import 174ms, tests 11ms, environment 0ms)
+

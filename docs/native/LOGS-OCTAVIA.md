@@ -44,6 +44,7 @@
 | arquivo | `file src=disk name=<seg> bytes=<n>` · `file src=download name=<seg> bytes=<n> total=<n\|-> ms=<n>` — **errata W1** | T1-R14 (herdado do N0). O `total` (`Content-Length`, `-` se ausente) e o `ms` (início do download → rename) **só no `src=download`**: não houve download, não há total nem duração | A9, A13, **W1-A2/A3/A7** |
 | arquivo recusado | `file-reject name=<seg> kind=empty\|short\|malformed bytes=<n> expected=<n\|->` — **W1** | a checagem de integridade recusa um arquivo, no download ou no saneamento da abertura | W1-A1, W1-A3, W1-A6 |
 | LRU | `lru evict n=<n> bytes=<n>` | T1-R14 | A10 |
+| estouro do teto | `lru over bytes=<n> cap=<n> protected=<n>` — **W4-b3** | T1-R14: depois do despejo o total no disco segue acima do teto porque os protegidos (a janela de 7 dias) sozinhos passam dele. `bytes` é o `bytesAfter` do `lruEvict`, `cap` o `CAP_BYTES` e `protected` o tamanho do conjunto garantido (presentes ou não). Sai a cada `aplicarLru` enquanto o estouro durar. Antes o `bytesAfter` era descartado (`W1-PRECHECK.md:469`) | W4-b3 (CN no `palco-divida.test.ts`) |
 | navegação no palco | `nav n=<i>/<N> setlist=<id8> t=<ms>` | após avançar/voltar/salto (T1-R27/R28/R34) | A12, A14, A17 |
 | fim da setlist | `end-of-setlist n=<N>` | T1-R29 | A14 |
 | índice | `index open` · `index jump n=<i>` | T1-R28 | A14 |
