@@ -21,6 +21,17 @@
 #   CN-H1g  o `native.yml` usa o detector: job `mudou-nativo` e o
 #           `android-debug-apk` com `needs` + `if`.
 #
+#   Antes do merge (decisões do Marcel, 2026-09-23) — a div. 360 e o item 3.
+#   Os controles acima rodam com `ULTIMO_APK=success` (o último APK da PR
+#   verde), que é o caso em que filtrar é seguro.
+#   CN-H1h  só docs, o último APK da PR foi `failure`       → nativo=true
+#   CN-H1i  só docs, a PR não tem APK anterior (`inexistente`) → nativo=true
+#   CN-H1j  só docs, o último APK ainda corre (`in_progress`) → nativo=true
+#   CN-H1k  synchronize, o push só toca o `gates.yml`        → nativo=true
+#   CN-H1l  synchronize, o push só toca o `mudou-nativo.sh`  → nativo=true
+#   CN-H1m  o `native.yml`: o `gates.yml` no `paths` dos dois eventos, e o
+#           `mudou-nativo` com `GH_TOKEN` e `actions: read`.
+#
 # H3 — as declarações dos gates saem da `main` e vêm do corpo da PR, num bloco
 # ```gates … ``` lido por `apps/native/scripts/gates-decl.sh`; os scripts as
 # leem de `GATES_DECL`.
@@ -157,12 +168,16 @@ so_docs()   { printf '\ncn-w4b2: push só de docs\n' >> "$DOC"; }
 nativo()    { printf '\n// cn-w4b2: push nativo\n' >> "$ALVO"; }
 yml()       { printf '\n# cn-w4b2\n' >> .github/workflows/native.yml; }
 workspace() { printf '\n# cn-w4b2\n' >> pnpm-workspace.yaml; }
+gates_yml() { mkdir -p .github/workflows; printf '\n# cn-w4b2\n' >> .github/workflows/gates.yml; }
+detector() { mkdir -p apps/native/scripts; printf '\n# cn-w4b2\n' >> apps/native/scripts/mudou-nativo.sh; }
 troca()     { for f in "$ALVO" "$TESTE"; do sed 's|cn-w4b2 linha=velha|cn-w4b2 linha=nova|' "$f" > "$f.n" && mv "$f.n" "$f"; done; }
 sem_coment() { grep -vF -- "$COMENT" "$ALVO" > "$ALVO.n"; mv "$ALVO.n" "$ALVO"; }
 REF_DOCS=$(de_base 'só docs' so_docs)
 REF_NATIVO=$(de_base 'nativo' nativo)
 REF_YML=$(de_base 'native.yml' yml)
 REF_WS=$(de_base 'pnpm-workspace' workspace)
+REF_GATES=$(de_base 'gates.yml' gates_yml)
+REF_DETECTOR=$(de_base 'mudou-nativo.sh' detector)
 REF_TROCA=$(de_base 'velha -> nova (log e teste)' troca)
 REF_SEMCOM=$(de_base 'o comentario com log( SAI' sem_coment)
 # O push forçado: um `antes` que NÃO é ancestral do head. REF_DOCS e
@@ -172,14 +187,15 @@ git checkout -q "$REF_BASE"
 # =============================================================================
 # H1
 # =============================================================================
-h1() { # $1 = rótulo  $2 = ação  $3 = antes  $4 = head  $5 = esperado
+h1() { # $1 = rótulo  $2 = ação  $3 = antes  $4 = head  $5 = esperado  $6 = ULTIMO_APK (default success)
   titulo "$1"
   if [ ! -f "$MUDOU" ]; then
     echo "  [mudou-nativo.sh ausente — o detector não existe]"
     echo "  *** o esperado era nativo=$5 ***"
     return
   fi
-  sh "$MUDOU" "$2" "$3" "$4" > "$TMP/h1" 2> "$TMP/h1.err"; E=$?
+  echo "  ULTIMO_APK=${6-success}"
+  ULTIMO_APK="${6-success}" sh "$MUDOU" "$2" "$3" "$4" > "$TMP/h1" 2> "$TMP/h1.err"; E=$?
   sed 's/^/  (stderr) /' "$TMP/h1.err"; sed 's/^/  /' "$TMP/h1"; echo "  exit=$E"
   if [ "$E" -ne 0 ]; then echo "  *** o detector saiu com $E ***"
   elif grep -qx "nativo=$5" "$TMP/h1"; then echo "  nativo=$5, como esperado ✓"
@@ -191,6 +207,11 @@ h1 'CP-H1c  synchronize, o native.yml' synchronize "$REF_BASE" "$REF_YML" true
 h1 'CP-H1d  synchronize, o pnpm-workspace.yaml' synchronize "$REF_BASE" "$REF_WS" true
 h1 'CP-H1e  push forçado — antes (só docs) não é ancestral do head' synchronize "$REF_DOCS" "$REF_NATIVO" true
 h1 'CP-H1f  opened — sem antes' opened '' "$REF_DOCS" true
+h1 'CN-H1h  só docs, o último APK da PR foi failure' synchronize "$REF_BASE" "$REF_DOCS" true failure
+h1 'CN-H1i  só docs, a PR não tem APK anterior' synchronize "$REF_BASE" "$REF_DOCS" true inexistente
+h1 'CN-H1j  só docs, o último APK ainda corre' synchronize "$REF_BASE" "$REF_DOCS" true in_progress
+h1 'CN-H1k  synchronize, só o gates.yml' synchronize "$REF_BASE" "$REF_GATES" true
+h1 'CN-H1l  synchronize, só o mudou-nativo.sh' synchronize "$REF_BASE" "$REF_DETECTOR" true
 
 titulo 'CN-H1g  o native.yml usa o detector'
 Y="$RAIZ/.github/workflows/native.yml"
@@ -199,6 +220,16 @@ for p in '  mudou-nativo:' 'sh apps/native/scripts/mudou-nativo.sh' '    needs: 
   if grep -qF -- "$p" "$Y"; then echo "  presente: $p"; else echo "  AUSENTE:  $p"; F=1; fi
 done
 if [ $F -eq 0 ]; then echo "  ✓"; else echo "  *** o native.yml não condiciona o APK ao push ***"; fi
+
+titulo 'CN-H1m  o native.yml: gates.yml no paths dos dois eventos; o detector com token e actions: read'
+F=0
+N=$(grep -c '^    - .github/workflows/gates.yml$' "$Y")
+echo "  '- .github/workflows/gates.yml' no paths: $N vez(es) (esperado 2: pull_request e push)"
+[ "$N" -eq 2 ] || F=1
+for p in 'GH_TOKEN: ${{ github.token }}' 'actions: read'; do
+  if grep -qF -- "$p" "$Y"; then echo "  presente: $p"; else echo "  AUSENTE:  $p"; F=1; fi
+done
+if [ $F -eq 0 ]; then echo "  ✓"; else echo "  *** o native.yml não dá ao detector o que ele precisa ***"; fi
 
 # =============================================================================
 # H3
