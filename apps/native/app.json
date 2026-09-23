@@ -8,7 +8,6 @@
       "package": "rocks.octavia.app"
     },
     "plugins": [
-      "@octavia/plugin-inexistente",
       "@config-plugins/react-native-blob-util",
       "@config-plugins/react-native-pdf",
       [
