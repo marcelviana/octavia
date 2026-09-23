@@ -56,6 +56,19 @@ jobs:
       run: sh apps/native/scripts/g1.sh "$BASE" WORKTREE
     - name: G2/G3 — testIDs antes ⊆ depois, linhas de log com errata declarada
       run: sh apps/native/scripts/g2g3.sh "$BASE" WORKTREE
+    # W4-b1, div. 223: o registro de integridade dos congelados existia desde a
+    # V1-PR2 e nada o lia — o do V1 reprovava desde a V1-PR6 (pelo README, que é
+    # o arquivo VIVO das erratas e saiu da lista) sem que ninguém soubesse. Não
+    # é diferencial: confere a árvore, não um par. O texto do passo é o mesmo
+    # que o `__cn__/cn-w4b1.sh` roda (o CN-223b confere).
+    - name: Congelados — shasum -c dos SHA256SUMS do DESIGN-V1 e do DESIGN-N2
+      run: |
+        F=0
+        for d in docs/native/DESIGN-V1 docs/native/DESIGN-N2; do
+          echo "== $d"
+          (cd "$d" && shasum -a 256 -c SHA256SUMS) || F=1
+        done
+        exit $F
 
   build:
     runs-on: ubuntu-latest

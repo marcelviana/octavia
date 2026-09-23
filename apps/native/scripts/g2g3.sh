@@ -197,6 +197,36 @@ NOVO=$(comm -13 $tmp/a.ids $tmp/b.ids)
 # por isso**, porque reprovar quebraria a regra de que o gate vem ANTES do que
 # ele mede (o commit 1 declara o que só o commit 3 vai usar).
 #
+# **W4-b1, div. 339 — e agora reprova.** O aviso proporcional não sobreviveu
+# ao CI: a `main` carregou exceção e par órfãos no `g1.sh` desde a N2-PR7, com
+# o aviso impresso em toda corrida e o job verde. Errata (e remoção, abaixo)
+# declarada e não usada passa a REPROVAR, como no `g1.sh`. As consequências —
+# o commit 1 que declara antes de usar fica vermelho À MÃO, e a PR seguinte
+# reprova até podar — estão escritas no cabeçalho do W4-b1 do `g1.sh`.
+#
+# ---------------------------------------------------------------------------
+# W4-b1 — O PAR DE REMOÇÃO (N2-D34: o mecanismo que a div. 83 pedia)
+#
+# A 83 fica como está: o COLETOR continua lendo o texto CRU, comentário
+# incluído, e uma linha `log(` que some — de código ou de comentário —
+# continua reprovando como SUMIU. O que a N2-D34 decidiu é o que faltava do
+# outro lado: quando a remoção é DE PROPÓSITO (um comentário que citava a
+# linha de log e foi reescrito, por exemplo), ela se DECLARA, com razão, numa
+# lista própria:
+#
+#     <linha, sem a indentação, IGUAL à que o G3 coletou> → REMOVIDA: <razão>
+#
+# e não numa errata falsa com substituta inventada — a saída de emergência
+# que o par da div. 189 já tinha fechado (div. 216). Três regras:
+#
+#   1. a razão é obrigatória: `→ REMOVIDA:` sem texto depois reprova, como o
+#      par sem razão do G1b;
+#   2. a linha casa IGUAL (não subcadeia, ao contrário da `velha` da errata).
+#      A errata tem contrapeso — a `nova` tem de aparecer —, a remoção não tem
+#      nenhum; uma subcadeia como `log(` autorizaria o contrato inteiro a sumir;
+#   3. remoção declarada cuja linha NÃO sumiu reprova (a regra de cima): ou a
+#      linha ainda existe, e a declaração mente, ou é de uma PR já mergeada.
+#
 # --- AS ERRATAS DESTA PR ----------------------------------------------------
 # Pares, uma linha `velha` seguida da `nova` que a substitui. A lista está
 # VAZIA, e a poda é a correção da div. 195: as três que estavam aqui já tinham
@@ -213,10 +243,17 @@ NOVO=$(comm -13 $tmp/a.ids $tmp/b.ids)
 # forte que a lista pode fazer, e é a verdadeira: o W4-a é PR de instrumento e
 # não toca uma linha de `log(` do app.
 ERRATAS=''
+# --- AS REMOÇÕES DESTA PR ---------------------------------------------------
+# Uma por linha, na forma do cabeçalho. VAZIA: o W4-b1 não remove linha de log.
+REMOCOES=''
 echo "G3 — linhas log( antes=$(wc -l < $tmp/a.log | tr -d ' ')  depois=$(wc -l < $tmp/b.log | tr -d ' ')"
 echo "      ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):"
 if [ -n "$ERRATAS" ]; then printf '%s\n' "$ERRATAS" | sed 's/^/        /'
-else echo "        (nenhuma — nenhuma linha de log pode sumir nesta PR)"; fi
+else echo "        (nenhuma)"; fi
+echo "      REMOÇÕES DECLARADAS (linha → REMOVIDA: razão; N2-D34):"
+if [ -n "$REMOCOES" ]; then printf '%s\n' "$REMOCOES" | sed 's/^/        /'
+else echo "        (nenhuma)"; fi
+[ -z "$ERRATAS" ] && [ -z "$REMOCOES" ] && echo "      — nenhuma linha de log pode sumir nesta PR"
 SUMIRAM=$(comm -23 $tmp/a.log $tmp/b.log)
 NOVAS=$(comm -13 $tmp/a.log $tmp/b.log)
 G3=0
@@ -232,19 +269,39 @@ if [ $((N_ERR % 2)) -ne 0 ]; then
   echo "  G3: lista de ERRATAS com $N_ERR linhas — toda errata é um PAR velha/nova ✗"
   G3=1
 fi
+# A lista de remoções, partida em `linha` e razão. A linha é o texto ANTES da
+# primeira ` → REMOVIDA:`; a razão, o que vem depois, e não pode ser branca.
+printf '%s\n' "$REMOCOES" | grep . > $tmp/rem.todas
+: > $tmp/rem.linha
+while IFS= read -r R; do
+  case "$R" in
+    *' → REMOVIDA:'*) ;;
+    *) echo "  G3: REMOÇÃO MAL FORMADA ✗ — a forma é '<linha> → REMOVIDA: <razão>':"
+       echo "      $R"; G3=1; continue ;;
+  esac
+  RAZAO=${R#* → REMOVIDA:}
+  case "$RAZAO" in
+    *[![:space:]]*) ;;
+    *) echo "  G3: REMOÇÃO SEM RAZÃO ✗ — uma remoção sem razão é uma decisão sem autor:"
+       echo "      $R"; G3=1; continue ;;
+  esac
+  printf '%s\n' "${R%% → REMOVIDA:*}" >> $tmp/rem.linha
+done < $tmp/rem.todas
 
 if [ -n "$SUMIRAM" ]; then
-  echo "  linhas que SUMIRAM (cada uma precisa de um PAR de errata, e a substituta do par tem de entrar):"
+  echo "  linhas que SUMIRAM (cada uma precisa de um PAR de errata com a substituta, ou de uma REMOÇÃO declarada):"
   echo "$SUMIRAM" | sed 's/^/      /'
   echo "$SUMIRAM" | while IFS= read -r L; do
     [ -n "$L" ] || continue
+    # Remoção declarada: a linha (sem o `arquivo<TAB>`) casa IGUAL.
+    grep -qxF -- "${L#*	}" $tmp/rem.linha && continue
     I=0; ACHOU=0
     while IFS= read -r V; do
       I=$((I + 1))
       case "$L" in *"$V"*) ACHOU=$I; break ;; esac
     done < $tmp/err.velha
     if [ "$ACHOU" -eq 0 ]; then
-      echo "  G3: linha sumiu SEM ERRATA ✗"
+      echo "  G3: linha sumiu SEM ERRATA NEM REMOÇÃO ✗"
       echo "      $L"
       exit 1
     fi
@@ -256,15 +313,14 @@ if [ -n "$SUMIRAM" ]; then
       exit 1
     fi
   done || G3=1
-  [ $G3 -eq 0 ] && echo "  G3: cada linha que sumiu tem par de errata, e a substituta entrou ✓"
+  [ $G3 -eq 0 ] && echo "  G3: cada linha que sumiu tem par de errata com a substituta, ou remoção declarada ✓"
 else
   echo "  G3: nenhuma linha sumiu ✓"
 fi
 if [ -n "$NOVAS" ]; then echo "  linhas NOVAS (declarar no commit e no catálogo):"; echo "$NOVAS" | sed 's/^/      /'; fi
 
-# --- Div. 195: errata declarada que NÃO foi usada ---------------------------
-# Não reprova (ver o cabeçalho), mas não passa calada — é o gêmeo do aviso da
-# div. 141 no `g1.sh`, pela mesma razão e com o mesmo remédio.
+# --- Div. 195 → W4-b1, div. 339: errata declarada que NÃO foi usada ---------
+# Reprova (ver o cabeçalho) — o gêmeo da exceção órfã do `g1.sh`.
 NAOUSADAS=''
 I=0
 while IFS= read -r V; do
@@ -276,8 +332,22 @@ while IFS= read -r V; do
 "
 done < $tmp/err.velha
 if [ -n "$NAOUSADAS" ]; then
-  echo "  G3: ERRATA DECLARADA E NÃO USADA — poda isto ANTES do merge (div. 195):"
+  echo "  G3: ERRATA DECLARADA E NÃO USADA ✗ — poda (divs. 195, 339):"
   printf '%s' "$NAOUSADAS" | sed 's/^/        /'
+  G3=1
+fi
+# --- N2-D34: remoção declarada cuja linha NÃO sumiu -------------------------
+printf '%s\n' "$SUMIRAM" | sed 's/^[^	]*	//' > $tmp/sumiram.texto
+NAOUSADAS=''
+while IFS= read -r V; do
+  grep -qxF -- "$V" $tmp/sumiram.texto && continue
+  NAOUSADAS="$NAOUSADAS$V
+"
+done < $tmp/rem.linha
+if [ -n "$NAOUSADAS" ]; then
+  echo "  G3: REMOÇÃO DECLARADA E NÃO USADA ✗ — a linha não sumiu (N2-D34, div. 339):"
+  printf '%s' "$NAOUSADAS" | sed 's/^/        /'
+  G3=1
 fi
 
 rm -rf $tmp

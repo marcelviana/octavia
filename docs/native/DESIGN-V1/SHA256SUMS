@@ -1,8 +1,10 @@
 # DESIGN-V1 — impressão digital do congelamento (V1-PR2, 2026-09-13; README refeito com E10–E12 na V1-PR4
 # e com o acréscimo da V1-PR5 à E10 mais a E13 (a, b, c) na V1-PR5). Os TRÊS congelados — telas.html, icones.html,
 # telas.pdf — não mudam: a errata prevalece sobre a moldura, o arquivo congelado não é reeditado.
+# W4-b1 (div. 223, decisão A do Marcel): o README.md SAIU desta lista. Ele é o arquivo VIVO das erratas
+# (E1–E17 e o que vier) e muda por definição; na lista, o registro reprovava desde a V1-PR6. Os três
+# congelados ficam, com os hashes de sempre. Conferido no CI (job gates-nativos, .github/workflows/ci.yml).
 # Confere com: shasum -a 256 -c SHA256SUMS
-49edf0863a7d2fe6bdccf20141f68a2e7e9cb017e52f3b4875cf20c0271730ab  README.md
 5048169566b172334e39f8bbfb0bb8a9e35975759578c6e4edea89041e37121d  telas.html
 42d28c60b4756b7aa782ab1340fa297c18de720ffe354cdc67e454e8c09793c0  icones.html
 8edc26c2ea2b5c4f1efa253012f7e61f55b51574ffeee1f0ccc379cc2807689d  telas.pdf

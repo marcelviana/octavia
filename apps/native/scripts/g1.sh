@@ -91,42 +91,36 @@ git rev-parse --verify --quiet "$BASE^{commit}" >/dev/null || uso "<base> nao re
 # inverter a ordem. Se o Marcel quiser que passe a reprovar, é uma linha —
 # trocar o aviso por `A=1`. (Pergunta 3 do relatório da W3.)
 #
-# --- As EXCEÇÕES desta PR (o escopo declarado da N2-PR7) ---------------------
-# Poda da div. 141: as SEIS da N2-PR6 saíram — mergearam em `426f4cc`. As
-# QUATRO abaixo são desta PR, e são o escopo inteiro da N2-E19. A N2-E8 e a
-# N2-E20 não tocam código (divs. 319 e 320: já estavam na `main`).
+# ---------------------------------------------------------------------------
+# W4-b1 — A DECLARAÇÃO ÓRFÃ PASSA A REPROVAR (div. 339, que é a 141 medida)
 #
-#   packages/core/src/frases.ts      a errata da N2-PR7 (N2-E19): UMA chave
-#       nova, `sem-resposta` ("sem resposta do servidor"), para a espécie
-#       `rede` — a request saiu e não voltou. O `rede` ("sem conexão — nada
-#       foi salvo") fica só para quem NÃO enviou (barrado offline).
-#   packages/core/src/escrita.ts     `classificar` passa a dar `sem-resposta`
-#       à rede, e o `classificarBarrado` (EXTRA X2, declarado antes do commit
-#       1): a frase do barrado mora no core, não numa rede fingida no app.
-#   apps/native/src/escrita.ts       o `resultadoBarrado` passa a chamar o
-#       `classificarBarrado` do core. Nenhuma regra nova no módulo.
-#   apps/native/src/screens/Picker.tsx   com `rede`, a linha diz "sem resposta
-#       do servidor" e embaixo a dúvida (EXTRA X3); com o barrado, "não entrou
-#       na setlist" e "nada foi salvo", sem a dúvida.
+# O remédio proporcional acima durou uma PR. A N2-PR7 mergeou e deixou SETE
+# exceções e um par do G1b declarados na `main`; o aviso saiu alto em toda
+# corrida do CI desde então, e nada o leu — o job ficou verde. Aviso que não
+# bloqueia, num gate que roda sozinho, é o mesmo silêncio que a div. 141
+# nomeou, com mais tinta. Agora a exceção (G1a) e o par (G1b) declarados e não
+# usados REPROVAM, como a errata e a remoção do G3.
 #
-# E TRÊS do conserto que o §3 achou (decisão do Marcel, commit próprio): com a
-# escrita E a releitura falhando, S2 dizia "a lista abaixo é a que o servidor
-# acabou de devolver" e oferecia `Tentar de novo` (contra a N2-D32), e o 404
-# saía para S1 afirmando uma lista relida que não houve (N2-E21).
-#   apps/native/src/screens/IndexScreen.tsx     `releituraFalhou`: sem a
-#       terceira oração e com `Tentar recarregar`; `AvisoDeSaida` com o
-#       `'sumiu-nao-relido'` nos cinco caminhos de 404 (EXTRA X5).
-#   apps/native/src/screens/SetlistsScreen.tsx  o aviso `sumiu-nao-relido`
-#       com `Tentar recarregar`; relida, volta a frase inteira do 404.
-#   apps/native/src/navigation.tsx              o estado do aviso passa de
-#       booleano a `AvisoDeSaida`.
-EXCECOES='packages/core/src/frases.ts
-packages/core/src/escrita.ts
-apps/native/src/escrita.ts
-apps/native/src/screens/Picker.tsx
-apps/native/src/screens/IndexScreen.tsx
-apps/native/src/screens/SetlistsScreen.tsx
-apps/native/src/navigation.tsx'
+# **A CONSEQUÊNCIA, declarada** (é a razão que a W3 deu para não reprovar, e a
+# div. 188 é onde ela já tinha mordido): uma PR que declara no commit 1 a
+# exceção que só o commit 2 usa fica VERMELHA no commit 1, rodando o gate à
+# mão. O CI mede o HEAD da PR — o commit 1 sozinho nunca é o que ele vê — e ali
+# nada muda. O gate-first continua valendo: quem roda o commit 1 lê a
+# reprovação como "declarado, ainda não usado", que é exatamente o que é.
+#
+# **E A OUTRA CONSEQUÊNCIA**: a exceção de uma PR fica na `main` depois do
+# merge, e a PR SEGUINTE — qualquer uma, de docs inclusive, porque o
+# `gates-nativos` não tem filtro de caminho — reprova até podá-la. A poda deixa
+# de ser disciplina e vira condição de merge. É o que a div. 141 pedia.
+#
+# --- As EXCEÇÕES desta PR (o escopo declarado do W4-b1) ---------------------
+# Poda da div. 339: as SETE da N2-PR7 saíram — mergearam em `bc55419`. A única
+# abaixo é desta PR:
+#
+#   packages/core/src/search.ts   div. 220 (e 194): o docstring de
+#       `buildIndex` dizia "reconstruído por item a cada invalidação", e o
+#       corpo, três linhas abaixo, reconstrói o CONJUNTO. Só o comentário muda.
+EXCECOES='packages/core/src/search.ts'
 
 listar() {
   if [ "$1" = "WORKTREE" ]; then
@@ -170,9 +164,9 @@ if [ -n "$NOVOS" ]; then
 fi
 [ $A -eq 0 ] && echo "  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)"
 
-# --- W3, div. 141: exceção declarada que NÃO foi usada ----------------------
-# Ela não reprova (ver o cabeçalho), mas não passa calada: exceção velha é
-# gate mais permissivo em silêncio, e silêncio é o que o CI não perdoa.
+# --- W3, div. 141 → W4-b1, div. 339: exceção declarada que NÃO foi usada ----
+# Reprova (ver o cabeçalho do W4-b1): exceção velha é gate mais permissivo em
+# silêncio, e um aviso que o job verde engole é silêncio.
 NAOUSADAS=''
 for E in $EXCECOES; do
   if [ "$HEAD" = "WORKTREE" ]; then D=$(git diff --stat "$BASE" -- "$E")
@@ -181,8 +175,9 @@ for E in $EXCECOES; do
 "
 done
 if [ -n "$NAOUSADAS" ]; then
-  echo "  G1a: EXCEÇÃO DECLARADA E NÃO USADA — poda isto ANTES do merge (div. 141):"
+  echo "  G1a: EXCEÇÃO DECLARADA E NÃO USADA ✗ — poda (divs. 141, 339):"
   printf '%s' "$NAOUSADAS" | sed 's/^/        /'
+  A=1
 fi
 
 # --- G1b: invariância de DECISÃO nos módulos tocados -------------------------
@@ -220,20 +215,14 @@ fi
 #
 # **E os pares são por PR, contra a BASE** — como as exceções do G1a (div.
 # 141) e as erratas do G3 (div. 195). Depois do merge o par fica órfão: a
-# `velha` não existe mais em BASE nenhuma. O gate IMPRIME o par declarado e não
-# usado, alto, e NÃO reprova por isso — reprovar quebraria a regra de que o
-# gate vem ANTES do que ele mede (este commit declara o par que só o commit
-# seguinte usa). A PR seguinte poda.
+# `velha` não existe mais em BASE nenhuma. Até o W4-b1 o gate só IMPRIMIA o
+# par órfão; agora ele REPROVA (div. 339 — o par da N2-PR7 ficou na `main`),
+# com as duas consequências escritas no cabeçalho do W4-b1, lá em cima.
 #
-# --- OS PARES DESTA PR (N2-PR7) ---------------------------------------------
-#   packages/core/src/escrita.test.ts, `it('falha de transporte → rede')`: a
-#   frase da espécie `rede` (enviou, sem resposta) — decisão do Marcel, N2-E19.
-PARES_G1B=$(cat <<'PARES'
-expect(r.frase).toBe('sem conexão — nada foi salvo')
-expect(r.frase).toBe('sem resposta do servidor')
-razão: N2-E19: a espécie `rede` deixa de afirmar que nada foi salvo
-PARES
-)
+# --- OS PARES DESTA PR (W4-b1) ----------------------------------------------
+# Nenhum. O par da N2-PR7 (N2-E19, `escrita.test.ts`) saiu na poda: mergeou em
+# `bc55419`. Lista vazia = nenhuma asserção do core pode mudar nesta PR.
+PARES_G1B=''
 TESTES=$(git ls-tree -r --name-only "$BASE" -- packages/core/src | grep '\.test\.ts$')
 if [ "$HEAD" = "WORKTREE" ]; then
   DIFF_T=$(git diff "$BASE" -- $TESTES)
@@ -296,7 +285,7 @@ else
   [ $B -eq 0 ] && echo "  G1b: cada linha que saiu tem par, e a nova do par entrou ✓"
 fi
 
-# O gêmeo do aviso da div. 141 (G1a) e da div. 195 (G3): não reprova.
+# O gêmeo da exceção órfã (G1a) e da errata órfã (G3): reprova (div. 339).
 NAOUSADOS=''
 I=0
 while IFS= read -r V; do
@@ -308,8 +297,9 @@ while IFS= read -r V; do
 "
 done < "$tmp/g1b.velha"
 if [ -n "$NAOUSADOS" ]; then
-  echo "  G1b: PAR DECLARADO E NÃO USADO — poda isto ANTES do merge (div. 321):"
+  echo "  G1b: PAR DECLARADO E NÃO USADO ✗ — poda (divs. 321, 339):"
   printf '%s' "$NAOUSADOS" | sed 's/^/        /'
+  B=1
 fi
 
 rm -rf "$tmp"
