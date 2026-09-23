@@ -31,7 +31,7 @@ esta página no mesmo commit (regra 9 do `LOGS-OCTAVIA.md`, aplicada aqui).
 | estado de repouso | bloqueio + tela de 30 s (div. 202); destravar é do Marcel | conta **de audit**, **em avião** (`airplane=1 wifi=0 data=0`) — divs. 200, 292 |
 
 O canvas dos desenhos é 1138 × 627 dp, o pior caso (N2-D25). Retrato não tem
-composição (`N2-ENCERRAMENTO.md` §10.7).
+composição — herança registrada em `N2-ENCERRAMENTO.md` §10.7, item 1.
 
 ## Metro e mock
 

@@ -15,7 +15,7 @@ errata é reescrito aqui.
   `adb`.
 - **Convenção**: `[medido]` = comando + saída literal, nesta sessão; `[lido]` =
   tirado do documento citado, sem medir de novo.
-- **Divergências desta PR**: **335 a 345** (§12).
+- **Divergências desta PR**: **335 a 346** (§12).
 
 > **A TELA VENCE O LOG.**
 > O log estava perfeito — `write op=delete … 200`, `resync … 200`,
@@ -198,6 +198,8 @@ A/T 1 : 157 · A/X 1 : 152 · P/D 1 : 191 · — 1 : 161
 
 **Atenção a uma colisão de nome**: o `X1…X5` dos extras do `DESIGN-N2` §9 é
 **numeração de extra**, não a origem X (terceiros). Div. 341.
+
+**Fechadas nesta PR**, das que ela mesma abriu (§12): **340** (a div. 254 anotada como consertada na N2-PR4) e **343** (`SHA256SUMS.txt` dos dumps da N2-PR7). As outras de 335–346 ficam registradas, com destino onde têm.
 
 ### 4.2 As que mudaram decisão
 
@@ -409,8 +411,8 @@ DESIGN-V1:  README.md: FAILED · telas.html: OK · icones.html: OK · telas.pdf:
 
 O do V1 reprova **pelo README** desde a V1-PR6 (div. 223); os três congelados
 seguem `OK`. Decisão **A** — o README sai do `SHA256SUMS` do V1 — destino W4-b
-(§10). Os `dumps/SHA256SUMS.txt` das PRs 3–6 conferem todos; a **PR-7 não tem
-`SHA256SUMS.txt`** para os seus 46 dumps (div. 343).
+(§10). Os `dumps/SHA256SUMS.txt` das PRs 3–6 conferem todos; a **PR-7 não tinha
+`SHA256SUMS.txt`** para os seus 46 dumps (div. 343) — **gerado depois, nesta PR**: 46/46 `OK`.
 
 **Suíte** — `pnpm test` na `main`: `Test Files 107 passed | 4 skipped (111)` ·
 `Tests 1029 passed | 85 skipped (1114)` · exit 0.
@@ -638,7 +640,7 @@ decisões já tomadas; não se repetem aqui.
 
 ---
 
-## 12. Divergências desta PR — 335 a 345
+## 12. Divergências desta PR — 335 a 346
 
 | # | origem | o quê | o que foi feito |
 |---|---|---|---|
@@ -647,12 +649,13 @@ decisões já tomadas; não se repetem aqui.
 | **337** | P | "`W3-ENCERRAMENTO.md` §7: os itens que o N2 fechou (**a 83, a poda do g1**)". A poda do g1 é a **div. 141, §3** — não é item da §7. **Terceira vez** que um handoff cita o W3 por uma estrutura que ele não tem (147, 219) | item 8 da §7 marcado (N2-D34, #313); a poda anotada numa nota ao fim da §7, apontando para a #309 e dizendo que não é item dali |
 | **338** | P | O prompt põe o caso 25 na div. **229**. A 229 (PR-2) é o `gate:a20` não alcançar o `packages/core`; o **zero literal** examinado é a **238** (PR-3), quando o escopo foi estendido | o caso 25 cita a 238, com a 229 como a que abriu o escopo |
 | **339** | P | O prompt pede o G1a com "exceções (vazias)". `[medido]` **sete exceções do G1a e um par do G1b declarados e não usados** na `main` — a N2-PR7 entrou sem a poda que o gate pediu | registrado na §6 como está; **não podado** (código); destino §10.1.10 |
-| **340** | D | A **div. 254** (`form-salvar` sem `testID` no ramo `salvando`) foi **consertada na N2-PR4** (`a4e7df6`, comentário em `FolhaDeCriar.tsx`), e os dois registros dela (`DESIGN-N2` §9, `N2-PR3-anexos/aparato.md` §9) ainda dizem "correção de outra rodada" | registrado aqui; os documentos congelados/anexos não são reeditados |
+| **340** | D | A **div. 254** (`form-salvar` sem `testID` no ramo `salvando`) foi **consertada na N2-PR4** (`a4e7df6`, comentário em `FolhaDeCriar.tsx`), e os dois registros dela (`DESIGN-N2` §9, `N2-PR3-anexos/aparato.md` §9) ainda dizem "correção de outra rodada" | **FECHADA** (commit das divs. 340/343): os dois registros ganharam, ao fim da linha, a anotação do conserto — `a4e7df6`, `FolhaDeCriar.tsx:392` (`:397` na `main`) —, sem reescrever o texto deles |
 | **341** | D | A taxonomia de origem só é coluna em 4 dos 8 registros (§4.1): 128 das 183 divergências não a têm, e os "Extra X1…X5" do `DESIGN-N2` §9 usam a letra da origem "terceiros" como numeração | contagem por letra só onde declarada; o resto pelo marcador do texto, marcado `[lido]` |
 | **342** | P | "Anote quais mudaram comportamento (E19, E20, E21, E23)": a E20 **ratificou** comportamento que já estava na `main` desde a N2-PR6 (div. 320); e **E8 e E14** também mudaram comportamento | a §3 classifica pela leitura da §9, com as duas notas |
-| **343** | D | Os 46 dumps da N2-PR7 não têm `SHA256SUMS.txt`; os das PRs 3–6 têm, e conferem | registrado; não gerado aqui (seria anexo novo de outra PR) |
+| **343** | D | Os 46 dumps da N2-PR7 não têm `SHA256SUMS.txt`; os das PRs 3–6 têm, e conferem | **FECHADA** (mesmo commit): `N2-PR7-anexos/dumps/SHA256SUMS.txt`, gerado com `sha256sum`, no formato das PRs 3–6; confere 46/46 |
 | **344** | P | "a regra 3 dos testes (`native-tela` prova árvore, não geometria)" — `[medido]` nenhum documento dá esse nome (`grep -rn "regra 3 dos testes" docs` → vazio). O conteúdo existe: `N2-PR3-anexos/aparato.md` §6.1 e div. 249 | citado pelo conteúdo e pela fonte, sem criar o nome |
 | **345** | P | O prompt lista "A13 fora do aceite" entre o que o V1 deixou aberto. `[medido]` o W1 o deixou sem rodar (`W1-ENCERRAMENTO.md` §10 item 5) e o **W2 o rodou e fechou** (`W2-ENCERRAMENTO.md:78`: *"A13 12/12 páginas do cache em avião, `src=disk` — fecha a dívida 5 do W1"*) | listado na §10.5, riscado, com a fonte do fechamento |
+| **346** | P | O prompt do commit das divs. 340/343 manda marcá-las como fechadas na **§4**, que cobre 144–334; as desta PR moram na **§12** | marcadas nas linhas da §12, onde estão, e citadas numa linha da §4.1 |
 
 ---
 
