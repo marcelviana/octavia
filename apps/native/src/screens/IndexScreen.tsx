@@ -56,6 +56,15 @@
  * desta: coluna única, alça, um só `PUT …/order` ao salvar. Acima de 100
  * músicas ele fica inativo com a linha `N2-X-100` (regra 8: só ele).
  *
+ * ## O que a N2-PR6 acrescenta — `Adicionar música` e o picker (DESIGN-N2 §5)
+ *
+ * O quarto controle entra à ESQUERDA de `Reordenar` (N2-E11), com o contorno
+ * em `accentInk` — *"é o ato principal desta tela"* —, e com ele a faixa fica
+ * completa. Tocar nele troca S2 pelo `Picker`, como o `Reordenar` a troca
+ * pelo modo: S2 continua montada (nenhum `index open` intercalado), e o
+ * conjunto de cada releitura chega à raiz pelo mesmo `aoReler` de sempre — é
+ * por isso que a volta não precisa de request.
+ *
  * **Nada aqui toca o cache.** Toda escrita passa pelo `escrever()` do
  * `src/escrita.ts`, que relê e grava (T2-R9); esta tela recebe o conjunto
  * novo por `edicao.aoReler` e quem o aplica é a raiz. É a mesma regra que a
@@ -85,6 +94,7 @@ import { DialogoDeApagar } from './DialogoDeApagar'
 import { FolhaDeSetlist } from './FolhaDeCriar'
 import { LinhaDeAviso } from './LinhaDeAviso'
 import { ModoDeReordenar } from './ModoDeReordenar'
+import { Picker } from './Picker'
 
 /**
  * O que S2 precisa para ESCREVER, e ela só o recebe quando veio de S1
@@ -308,6 +318,7 @@ function ControleDaFaixa({
   inativo,
   onPress,
   aoTocarInativo,
+  principal,
   testID,
 }: {
   icone: NomeIcone
@@ -322,11 +333,21 @@ function ControleDaFaixa({
    * toque some sem rastro, como nos outros inativos da faixa.
    */
   aoTocarInativo?: () => void
+  /**
+   * N2-PR6 — o ato principal da tela ganha o contorno em `accentInk` (§3:
+   * *"`Adicionar música`, contorno em accentInk porque é o ato principal"*).
+   * Só ativo: inativo é `lineInfo`, como os outros (E3).
+   */
+  principal?: boolean
   testID: string
 }): React.JSX.Element {
   return (
     <Pressable
-      style={[styles.controle, inativo ? styles.controleInativo : null]}
+      style={[
+        styles.controle,
+        principal === true && !inativo ? styles.controlePrincipal : null,
+        inativo ? styles.controleInativo : null,
+      ]}
       onPress={() => (inativo ? aoTocarInativo?.() : onPress())}
       accessibilityRole="button"
       accessibilityState={{ disabled: inativo }}
@@ -359,6 +380,8 @@ export function IndexScreen({
   const [folha, setFolha] = useState(false)
   /** N2-PR5 — o modo de reordenar ocupa a tela enquanto dura. */
   const [reordenando, setReordenando] = useState(false)
+  /** N2-PR6 — o picker também. */
+  const [adicionando, setAdicionando] = useState(false)
   const [dialogo, setDialogo] = useState(false)
   /** O `setlist_songs.id` da linha cuja remoção está em voo, ou `null`. */
   const [removendo, setRemovendo] = useState<string | null>(null)
@@ -529,6 +552,34 @@ export function IndexScreen({
     return null
   }, [edicao, online, falha, cabeNoTeto, salvoNaoRelido, relendo, repetir, podeEscrever, recarregar])
 
+  if (adicionando && edicao !== null) {
+    return (
+      <Picker
+        setlist={setlist}
+        estado={edicao.estado}
+        online={online}
+        aoReler={edicao.aoReler}
+        aoFechar={(releituraFalhou) => {
+          setAdicionando(false)
+          setFalha(null)
+          // A legenda de `N2-P-relendo`: *"Sair com o aviso aberto é
+          // permitido: S2 relê na volta, e se essa releitura também falhar, o
+          // aviso é o mesmo, na linha de 48 de S2."* Sem o aviso, S2 já tem o
+          // conjunto da última releitura, e a volta não pede nada (div. 304).
+          if (releituraFalhou) {
+            setSalvoNaoRelido(true)
+            void recarregar()
+          }
+        }}
+        aoSalvoNaoRelido={() => setSalvoNaoRelido(true)}
+        aoSumir={(novas, syncedAtMs) => {
+          if (novas !== null) edicao.aoReler(novas, syncedAtMs)
+          edicao.aoSairParaS1('sumiu')
+        }}
+      />
+    )
+  }
+
   if (reordenando && edicao !== null) {
     return (
       <ModoDeReordenar
@@ -608,6 +659,17 @@ export function IndexScreen({
           {/* A esquerda é o que acrescenta e o que muda a ordem: o
               `Adicionar música` (PR-6) entra ANTES do `Reordenar`. */}
           <View style={styles.faixaEsq}>
+            {/* N2-D17: acima de 100 ADICIONAR continua — só o `Reordenar`
+                olha o teto. */}
+            <ControleDaFaixa
+              icone="adicionar"
+              rotulo="Adicionar música"
+              tinta={dark.accentInk}
+              inativo={!podeEscrever}
+              principal
+              onPress={() => setAdicionando(true)}
+              testID="picker-abrir"
+            />
             <ControleDaFaixa
               icone="alca"
               rotulo="Reordenar"
@@ -791,6 +853,7 @@ const styles = StyleSheet.create({
   },
   // E3: inativo é tinta na moldura, no ícone e no rótulo — sem opacidade.
   controleInativo: { borderColor: dark.lineInfo },
+  controlePrincipal: { borderColor: dark.accentInk },
   controleTexto: { color: dark.text, fontFamily: font.ui, fontSize: size.bodySmall },
   controleTextoInativo: { color: dark.lineInfo },
   // O alvo de 48 do `remover`, no fim da linha — `width`/`height` e não

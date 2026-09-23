@@ -91,38 +91,35 @@ git rev-parse --verify --quiet "$BASE^{commit}" >/dev/null || uso "<base> nao re
 # inverter a ordem. Se o Marcel quiser que passe a reprovar, é uma linha —
 # trocar o aviso por `A=1`. (Pergunta 3 do relatório da W3.)
 #
-# --- As EXCEÇÕES desta PR (o escopo declarado da N2-PR5) ---------------------
-# Poda da div. 141: as ONZE da N2-PR4 saíram — elas mergearam em `8bd4281` e
+# --- As EXCEÇÕES desta PR (o escopo declarado da N2-PR6) ---------------------
+# Poda da div. 141: as SETE da N2-PR5 saíram — elas mergearam em `f991eb0` e
 # uma exceção mergeada só torna o gate mais permissivo para a PR seguinte. As
-# SETE abaixo são desta PR, e são o escopo inteiro do modo de reordenar.
+# SEIS abaixo são desta PR, e são o escopo inteiro do picker.
 #
-#   packages/core/src/ordem.ts       NOVO. A ordem de um arrasto como decisão
-#       pura: `mover`, `mesmaOrdem` (o "nada mudou" da N2-D36), o teto de 100
-#       do contrato (`SETLISTS.md` §order) e `alvoDoArrasto`. Regra mora no
-#       core — o cabeçalho do `apps/native/src/escrita.ts` diz isso com todas
-#       as letras. EXTRA declarado antes do commit 1.
-#   packages/core/src/index.ts       o `export * from './ordem'`. Uma linha.
-#   packages/core/src/frases.ts      as quatro chaves novas da errata da
-#       N2-PR5 e os quatro construtores com número ou nome dentro (título do
-#       modo, "de 5 para 2", "soltar aqui · posição 2", "movida de 5").
-#   apps/native/src/escrita.ts       a releitura da regra 3 depois de um
-#       reorder que falhou, com o `reason=order` que o T2-R16 declarou e
-#       nada emitia. Nenhuma regra nova: é o `reler` que já existe.
-#   apps/native/src/icones/dados.ts  o QUARTO dos cinco desenhos do anexo D
-#       do DESIGN-N2 — a `alca`. Resta o `adicionar` (PR-6).
-#   apps/native/src/screens/IndexScreen.tsx   `Reordenar` na faixa (o
-#       terceiro controle), a linha N2-X-100, e a troca grade ↔ modo.
-#   apps/native/src/screens/ModoDeReordenar.tsx  NOVO. O modo: barra
-#       própria, coluna única de 72 dp, alça de 48 × 72, arrasto por
-#       `PanResponder`, salvar/cancelar/falhou. Arquivo próprio porque os
-#       `testID` dele são NOVOS: nada se move, tudo se acrescenta.
-EXCECOES='packages/core/src/ordem.ts
-packages/core/src/index.ts
-packages/core/src/frases.ts
+#   packages/core/src/frases.ts      a errata da N2-PR6 (N2-E16): duas chaves
+#       novas, verbatim das molduras `N2-P-*` ("não entrou na setlist",
+#       "adicionada"), e os construtores com nome ou número dentro — o
+#       placeholder com a reticência da R1·5, o vazio, as réguas, a marca
+#       "já na setlist · n×" e o rodapé.
+#   apps/native/src/escrita.ts       o `aoResponder` do `escrever()` (EXTRA
+#       X1, declarado antes deste commit): a tela é avisada do 201 ANTES da
+#       releitura, que é quando a linha vira "adicionada" e o `k` sobe.
+#       Nenhuma regra nova — o módulo continua decidindo.
+#   apps/native/src/icones/dados.ts  o QUINTO e último dos desenhos do anexo
+#       D do DESIGN-N2: o `adicionar`, a outra metade do par.
+#   apps/native/src/screens/IndexScreen.tsx   `Adicionar música` na faixa (o
+#       quarto controle, à esquerda de `Reordenar`), e a troca S2 ↔ picker.
+#   apps/native/src/screens/Picker.tsx   NOVO. O picker: a barra do S4, o
+#       campo, os resultados com os cinco estados, o rodapé de 64/112.
+#       Arquivo próprio porque os `testID` dele são NOVOS.
+#   apps/native/src/screens/SearchScreen.tsx  o `export` do `Regua` (EXTRA
+#       X2): o picker usa a régua do S4, não uma cópia dela.
+EXCECOES='packages/core/src/frases.ts
 apps/native/src/escrita.ts
 apps/native/src/icones/dados.ts
 apps/native/src/screens/IndexScreen.tsx
-apps/native/src/screens/ModoDeReordenar.tsx'
+apps/native/src/screens/Picker.tsx
+apps/native/src/screens/SearchScreen.tsx'
 
 listar() {
   if [ "$1" = "WORKTREE" ]; then

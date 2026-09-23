@@ -226,6 +226,21 @@ export const desenhos = {
     // Amputação: meia corda, 4 — e vale para os dois do par.
     inerte: [{ cx: 12, cy: 12, r: 8.5, traco: 1.25 }, { d: 'M8 12h4', traco: 1.25 }],
   },
+  /**
+   * O QUINTO e último dos cinco (N2-PR6) — a outra metade do par, e com ela
+   * o anexo D do DESIGN-N2 está todo no mapa (39 registros, `PENDENTES`
+   * vazia). Verbatim: *"circle r 8,5 · M12 8v8M8 12h8 (adicionar)"* — o mesmo
+   * círculo e a mesma corda de 8 do `remover`, mais a haste.
+   *
+   * Amputação: *"circle r 8,5 · M8 12h4"* — a MESMA do `remover`, e é o
+   * anexo que a escreve assim ("meia corda, 4, e vale para os dois"): a
+   * haste sai inteira e a corda fica pela metade. Meia corda ainda é o par
+   * mais/menos (o limite da R2·2).
+   */
+  'adicionar': {
+    normal: [{ cx: 12, cy: 12, r: 8.5 }, { d: 'M12 8v8M8 12h8' }],
+    inerte: [{ cx: 12, cy: 12, r: 8.5, traco: 1.25 }, { d: 'M8 12h4', traco: 1.25 }],
+  },
 } as const satisfies Record<string, Desenho>
 
 export type NomeIcone = keyof typeof desenhos

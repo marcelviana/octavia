@@ -114,7 +114,7 @@ describe('gate:icones — o mapa contra as fontes congeladas', () => {
     expect(acusacoes(s.texto), comSaida(s)).toBe(0)
   })
 
-  it('CONTROLE NEGATIVO: o `IconesFalso` REPROVA — exit 1, 22 acusações', () => {
+  it('CONTROLE NEGATIVO: o `IconesFalso` REPROVA — exit 1, 23 acusações', () => {
     const s = rodar('scripts/icones.mjs', 'scripts/__cn__/IconesFalso.ts')
     expect(s.status, comSaida(s)).toBe(1)
     // 18 do V1 + a (8) da N2-PR2 (um pendente que JÁ está no mapa e não casa
@@ -129,7 +129,13 @@ describe('gate:icones — o mapa contra as fontes congeladas', () => {
     // ele já era acusado pelo desenho desde a N2-PR2. O CN não foi tocado
     // nesta PR e mesmo assim o gate passou a cobrar dois nomes a mais: é o
     // efeito da poda, medido.
-    expect(acusacoes(s.texto), comSaida(s)).toBe(22)
+    //
+    // **E a vigésima terceira, da N2-PR6**: podado o `adicionar`, a ausência
+    // dele no `IconesFalso` deixa de ser anistiada — o CN, intocado outra vez,
+    // passa de 22 a 23 pelo efeito da poda. (A `alca`, podada na N2-PR5, não
+    // somou nada: o `IconesFalso` a tem, e certa — ver o controle positivo.)
+    expect(acusacoes(s.texto), comSaida(s)).toBe(23)
+    expect(s.texto).toContain('falta no mapa: "adicionar"')
     expect(s.texto).toContain('[anexo-D-N2]')
     expect(s.texto).toContain('falta no mapa: "nova-setlist"')
     expect(s.texto).toContain('falta no mapa: "apagar-setlist"')
@@ -167,15 +173,21 @@ describe('gate:icones — o mapa contra as fontes congeladas', () => {
    * commit 2 desta PR este `it` e o "mapa real PASSA" acima reprovam por
    * `falta no mapa: "alca"`.
    */
-  it('o único nome pendente sai como AVISO, e o gate passa mesmo assim', () => {
+  /**
+   * **N2-PR6 poda o ÚLTIMO** (o `adicionar`, o picker): a lista fica VAZIA.
+   * O `it` de antes afirmava "um pendente, e ele avisa" — que deixa de ser
+   * verdade por desenho, e por isso ele é SUBSTITUÍDO por este, e não
+   * mantido: um teste que afirmasse o pendente seria um teste contra a PR que
+   * o desenha. Entre o commit 1 e o commit 2 desta PR, este `it` e o "mapa
+   * real PASSA" reprovam por `falta no mapa: "adicionar"`.
+   */
+  it('PENDENTES vazia: zero avisos, 6/6 nomes da tela 2 cobrados, e o gate passa', () => {
     const s = rodar('scripts/icones.mjs', 'src/icones/dados.ts')
     expect(s.status, comSaida(s)).toBe(0)
-    expect((s.texto.match(/AVISO .*\[pendente\]/g) ?? []).length, comSaida(s)).toBe(1)
-    expect(s.texto, comSaida(s)).not.toContain('"alca" ainda não está no mapa')
-    expect(s.texto, comSaida(s)).toContain('poda a lista quando desenhar')
-    // O meio par: o `remover` JÁ é cobrado, o `adicionar` ainda avisa.
-    expect(s.texto, comSaida(s)).toContain('"adicionar" ainda não está no mapa')
-    expect(s.texto, comSaida(s)).not.toContain('"remover" ainda não está no mapa')
+    expect((s.texto.match(/AVISO /g) ?? []).length, comSaida(s)).toBe(0)
+    expect(s.texto, comSaida(s)).not.toContain('poda a lista quando desenhar')
+    expect(s.texto, comSaida(s)).toContain('tela 2 (E17): 6/6 nomes já no mapa e cobrados · 0 declarados pendentes')
+    expect(s.texto, comSaida(s)).toContain('acusações: 0 · avisos: 0')
   })
 
   it('CONTROLE POSITIVO da regra 6: a `alca` do CN está correta e acusa ZERO', () => {

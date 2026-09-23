@@ -1,0 +1,33 @@
+# N2-PR6 — controles negativos ad hoc: cada CN que passa, contra o defeito que ele guarda
+# (o arquivo tocado foi copiado antes e restaurado depois; cmp confirmou os dois byte a byte)
+
+## CN-1 — a S2 do palco sem porta. Defeito injetado: a faixa desenhada sem olhar a edição (a porta aparece no palco).
+$ (IndexScreen.tsx: `edicao !== null ?` → `true ?` na faixa)
+     × a S2 vinda do PALCO não tem porta nenhuma (T2-R19) 138ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+AssertionError: expected <div …(5)>…(2)</div> to be null
+      Tests  1 failed | 19 skipped (20)
+
+## CN-2 — N2-D30. Defeito injetado: o total do rodapé soma o k (sobe com o 201, não com a releitura).
+305:  const n = setlist.setlist_songs.length + k
+     × a ordem dos eventos: adicionando… → 201 → relendo… → resync 200 → 2× e 8 músicas 181ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+AssertionError: expected 'Ensaio do picker · 8 músicas · 1 adic…' to be 'Ensaio do picker · 7 músicas · 1 adic…' // Object.is equality
+      Tests  1 failed | 19 skipped (20)
+
+## CN-3 — "as outras linhas seguem ativas". Defeito injetado: o relendo… também ocupa as outras linhas (a trava da operação inteira).
+200:  const ocupado = Object.values(fases).some((f) => f.fase === 'adicionando' || f.fase === 'relendo')
+     × duas adições sobrepostas: a segunda sai durante o relendo… da primeira; cache = último 200 245ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+AssertionError: expected true to be false // Object.is equality
+      Tests  1 failed | 19 skipped (20)
+
+## CN-4 — div. 313 (o fio do rodapé fora dos 64), o CN endurecido no commit do aceite
+$ (Picker.tsx de 04d9890 no lugar) vitest -t "abrir: o picker"
+     × abrir: o picker toma a tela — campo, fechar do S4, vazio e rodapé; zero request 484ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+AssertionError: expected { height: 64, …(5) } to match object { height: 64, borderTopWidth: 1 }
+      Tests  1 failed | 19 skipped (20)
+
+$ (Picker.tsx com o conserto) vitest picker.test.tsx
+      Tests  20 passed (20)

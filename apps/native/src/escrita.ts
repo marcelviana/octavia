@@ -422,7 +422,23 @@ export async function escrever(
    * número é do core, e uma tela que escolhesse o seu teria cinco prazos
    * diferentes na primeira PR que esquecesse de passar o dele.
    */
-  opcoes?: { contexto?: 'setlist' | 'musica'; prazoMs?: number },
+  opcoes?: {
+    contexto?: 'setlist' | 'musica'
+    prazoMs?: number
+    /**
+     * N2-PR6 — **a tela é avisada quando o REQUEST volta, antes da releitura**
+     * (extra X1, div. 302). O picker precisa disto e nenhuma outra tela
+     * precisou: a moldura `N2-P-resultados` manda a linha virar *adicionada*
+     * **com o 201**, e o rodapé contar **201 confirmados** (N2-D30) — mas este
+     * módulo só devolve depois de reler. Sem o gancho, o `k` subiria junto
+     * com o total, que é exatamente o que a N2-D30 separa.
+     *
+     * Recebe a classificação PRELIMINAR (sem releitura) e não decide nada: o
+     * que ela vale continua sendo o `resultado` que o `escrever()` devolve.
+     * Não é chamado quando nada saiu (barrado ou offline).
+     */
+    aoResponder?: (preliminar: Resultado) => void
+  },
 ): Promise<Saida> {
   const prazoMs = opcoes?.prazoMs ?? PRAZO_DE_REDE_MS
   const semReleitura = (motivo: MotivoBarrado): Saida => {
@@ -467,6 +483,7 @@ export async function escrever(
   }
   if (enviado === null) return semReleitura('offline')
   const { resposta, preliminar } = enviado
+  opcoes?.aoResponder?.(preliminar)
 
   // 3. reler — depois de todo 2xx (T2-R9) e de todo 404 (T2-R10). Fora da
   // trava: daqui para baixo outra escrita já pode ter começado.
