@@ -525,6 +525,11 @@ do nativo ficou em prod** (`N2-ENCERRAMENTO.md` §8).
 bundle que o Metro serve, não o arquivo que se editou. Antes de todo reteste:
 `curl` do bundle e `grep -c` de um símbolo do conserto. (Origem: div. 294, caso 27, e a
 div. 127 antes dela.)
+**Ampliada na W4-b3 (decisão do Marcel, 2026-09-23; div. 374):** conferir no bundle
+servido **o símbolo do conserto e a URL base da API** antes de qualquer reteste. O cache
+do Metro pode servir a URL de prod: na #323, um build de release com a URL do mock
+passada na linha de comando saiu com a de prod, e o app sincronizou com prod. A
+conferência da URL é o que parou a sessão antes da escrita.
 
 **14. "Isto mudou de propósito" é um PAR declarado — no G3 e no G1b.** A errata do G3 é
 `velha → nova`, e a nova tem de entrar (div. 189, W4-a, caso 22); a alteração de uma

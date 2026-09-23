@@ -13,7 +13,7 @@ divergirem, vale a fonte. Nenhum texto de decisão ou de errata é reescrito aqu
 - **Convenção**: `[medido]` = comando + saída literal, na sessão da PR citada;
   `[lido]` = tirado do documento citado, sem medir de novo.
 - **Divergências do bloco**: **215–220** (W4-a), **347–351** (b1), **352–369** (b2),
-  **370–380** (b3).
+  **370–381** (b3).
 
 > **CN QUE NÃO REPROVA É INSTRUMENTO QUEBRADO, e CN que reprova pelo motivo errado
 > também.** O CN do `lruEvict` reprovou na primeira forma, mas porque o duplo não
@@ -53,7 +53,9 @@ Cada uma mora onde quem vai mexer lê. Aqui fica só o endereço.
 | **Segmentos da série**: abre-se um só com (1) mudança da lista **e** (2) mediana das dez seguintes fora do IQR vigente com n ≥ 10. Quem abre é o Marcel; módulo nativo isolado é "divergência a investigar" | W4-b2 (divs. 366–369) | `CI-FAIXA.md`, "Os segmentos" |
 | **Sem push forçado em PR** | W4-b2 (div. 353) | `LOGS-OCTAVIA.md`, "Errata W4-b2" |
 | **Série local ≠ série de CI**: o release local tem arquivo próprio | W4-b3 | [`RELEASE-FAIXA.md`](RELEASE-FAIXA.md) |
-| **Rebuild do dev client nos dois aparelhos**; release e dev client trocam por `install -r`; mock `http` não serve para release; `EXPO_PUBLIC_*` de release exige `metro-cache` limpo | W4-b3 (divs. 371–374) | [`APARATO.md`](APARATO.md) |
+| **Rebuild do dev client nos dois aparelhos**; release e dev client trocam por `install -r`; **aceite de release é contra prod, só leitura, mais escrita descartável pela regra 12; o mock é do dev client**; `EXPO_PUBLIC_*` de release exige `metro-cache` limpo | W4-b3 (divs. 371–374) | [`APARATO.md`](APARATO.md) |
+| **Regra 13 ampliada**: no bundle servido, o símbolo do conserto **e a URL base da API** | W4-b3 (div. 374) | `LOGS-OCTAVIA.md`, regra 13; `APARATO.md` |
+| **Push de docs só depois do APK verde** | W4-b3 (div. 381) | `APARATO.md` |
 
 ---
 
@@ -72,7 +74,11 @@ das §12–§14 de lá) e contam pela letra que tinham.
 | W4-b3 | 370–380 | 5 (370, 372, 375, 376, 380) | 2 (374, 377) | 1 (378) | 3 (371, 373, 379) | 11 |
 | **W4** | | **21** | **10** | **5** | **4** | **40** |
 
-**Mais da metade (21 de 40) é P**: o bloco é de instrumento, e o prompt de
+Mais a **381** (T, W4-b3), registrada no corpo da #323 depois do commit de docs e
+levada ao README dos anexos no fecho: o push de docs antes do APK verde custou um APK.
+Com ela, **41** (T **11**).
+
+**Mais da metade (21 de 41) é P**: o bloco é de instrumento, e o prompt de
 instrumento presume o estado do instrumento. A §5 junta essas.
 
 As que mudaram o que se fez, em uma linha cada:
@@ -82,9 +88,9 @@ As que mudaram o que se fez, em uma linha cada:
   forçado".
 - **368** (b2 → b3): o patamar do `datetimepicker`, medido na b3. É ruído.
 - **373** (b3): o release não alcança `http://`, e o aparato de mock não serve para
-  release.
+  release. **Fechada**: aceite de release é contra prod (§7.2).
 - **374** (b3): o `metro-cache` segurou a URL de prod num build de release. Parei antes
-  de qualquer escrita.
+  de qualquer escrita. Virou a **regra 13 ampliada** (`LOGS-OCTAVIA.md`).
 
 ---
 
@@ -103,8 +109,8 @@ O módulo **custa bytes** (+2.736.644 B, quase tudo C++ do codegen Fabric no
 medianas é −17 s, contra 44–54 s de dispersão dentro de cada variante. O patamar de
 13m04s das dez corridas do #315 não tem causa no módulo e é **ruído**, o mesmo que as
 vinte corridas (mediana 750 s) já sugeriam. **Limite**: M1 local não é o runner do CI.
-A medida exclui um custo grande, não um de poucos segundos. **Fechar a 368 é decisão
-do Marcel** (`CI-FAIXA.md`).
+A medida exclui um custo grande, não um de poucos segundos. **Fechada** (decisão do
+Marcel, 2026-09-23): "ruído — medido com o comando do CI, n=3 intercalado, medianas 283 s com e 300 s sem o módulo, variação de 44–54 s; limite: máquina local, não o runner" (`CI-FAIXA.md`).
 
 ---
 
@@ -147,9 +153,9 @@ ou N5 (`N2-ENCERRAMENTO.md` §10.2–§10.8).
 
 | # | item | origem | destino |
 |---|---|---|---|
-| 1 | **fechar a div. 368** com o veredito "ruído", ou pedir mais `n` | §4; `CI-FAIXA.md` | Marcel |
-| 2 | **mock para release**: aceitar que o release não se testa contra o mock, ou dar a ele um `network_security_config` que libere só `localhost` (código nativo, rebuild) | div. 373 | Marcel |
-| 3 | **a tela do estouro do LRU**: hoje é só a linha `lru over`. O T1-R37 manda a falha aparecer, e aparecer na tela é decisão de produto (teto 200 MB, repertório medido 265.002 B) | div. 380 | Marcel |
+| 1 | ~~**fechar a div. 368**~~ — **fechada** pelo Marcel (2026-09-23), veredito "ruído" (§4) | §4; `CI-FAIXA.md` | — |
+| 2 | ~~**mock para release**~~ — **fechada** pelo Marcel (2026-09-23): "o release não alcança `http://`; aceite de release é contra prod, só leitura, mais escrita descartável pela regra 12; o mock é do dev client" (`APARATO.md`) | div. 373 | — |
+| 3 | **o estouro do LRU fica só em log** (`lru over`), decisão do Marcel (2026-09-23). **Hipótese** a medir: "o indicador ◔ do T1-R17 reflete um `lru over`?" | div. 380 | **N3 pre-check** |
 | 4 | o **"Baixar" do S3e pega carona num voo pendurado** (o resto da div. 119 (a)): sem teto de inatividade (div. 126), o toque do usuário não escapa de um download alheio que nunca termina | div. 370 | junto de qualquer volta ao teto de download |
 | 5 | uma medição **fria** do release: o `metro-cache` estava quente nas três corridas, e o `builds.sh` não o apaga | div. 374; `RELEASE-FAIXA.md` | a próxima PR que medir release |
 | 6 | os `X<n>` não renomeados em `apps/native/src/escrita.ts:429` e `screens/Picker.tsx:310` | div. 350(b) | a próxima PR que tocar esses arquivos |
@@ -158,8 +164,8 @@ ou N5 (`N2-ENCERRAMENTO.md` §10.2–§10.8).
 
 ## 8. Contabilidade da W4-b3
 
-- **Commits**: `299318d` (CNs), `3ffd7c6` (conserto), `7ab865c` (release e 368) e o de
-  docs. **Sem push forçado.**
+- **Commits**: `299318d` (CNs), `3ffd7c6` (conserto), `7ab865c` (release e 368), `0a28628` (encerramento) e o
+  do fecho (as decisões do Marcel). **Sem push forçado.**
 - **Prod**: só `GET`. Foram **5 syncs** do Tab S6 contra prod (dev client antes, dev
   client depois, release R3, o R4 que apontou para prod por engano (div. 374) e a
   restauração do cache), cada um com um `GET /api/setlists` e um `GET /api/content`:

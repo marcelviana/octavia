@@ -85,7 +85,7 @@ aqui aparece depois (div. 380).
 - **extra-5**: o `RELEASE-FAIXA.md`.
 - **extra-6**: refazer o dev client do AVD (div. 371).
 
-## 7. Divergências — 370 a 380
+## 7. Divergências — 370 a 381
 
 | div. | origem | o que | o que foi feito |
 |---|---|---|---|
@@ -100,6 +100,19 @@ aqui aparece depois (div. 380).
 | **378** | D | a "linha de base do 1.4": os dumps do palco do N1 e do V1 são **anteriores ao W2**, que mudou a barra (`576b4ed`, `3ea2247`). A linha de base válida é `W2-anexos/dumps-avd/DEPOIS-*`, só do AVD. **Não há** dump do palco no Tab depois do W2 | AVD comparado com o W2 (`barra-vs-W2.txt`); no Tab, `ANTES` tirado nesta sessão, com o mesmo Metro |
 | **379** | A | a conta do Tab (a do Marcel) não tem arquivo na setlist aberta: as 7 posições são texto. O PDF do palco só se provou no AVD (1/8 e 2/8) | registrado; a invariante "idêntico em dp" vale nos dois, e o caminho de arquivo, no AVD |
 | **380** | P | extras não declarados **antes** (§6), e o `lru over` só em **log**: o T1-R37 manda a falha aparecer, e aparecer na **tela** é decisão de produto que o prompt não tomou | extras declarados aqui; a tela do estouro fica na herança do W4 para o Marcel (o teto é 200 MB e o repertório medido é 265.002 B) |
+
+| **381** | T | o push só de docs (`0a28628`) rodou o APK (13m18s) porque subiu com o APK do `7ab865c` ainda em curso: o H1 só filtra quando o último APK da PR é `success`. A regra funcionou; o custo foi pressa de quem executou. Registrada primeiro no corpo da #323, para não furar a lista fechada | no `APARATO.md`: "push de docs só depois do APK verde; antes, custa um APK" |
+
+## 8. Decisões do Marcel (2026-09-23), verbatim
+
+1. **Div. 368 fechada**: "ruído — medido com o comando do CI, n=3 intercalado, medianas 283 s com e 300 s sem o módulo, variação de 44–54 s; limite: máquina local, não o runner". → `CI-FAIXA.md`, `W4-ENCERRAMENTO.md` §4 e §7.1.
+2. **Div. 373 fechada**: "o release não alcança `http://`; aceite de release é contra prod, só leitura, mais escrita descartável pela regra 12; o mock é do dev client". → `APARATO.md`.
+3. **Estouro do LRU**: fica só em log (`lru over`). Hipótese com dono **N3 pre-check**:
+   "o indicador ◔ do T1-R17 reflete um `lru over`?" → `W4-ENCERRAMENTO.md` §7.3.
+4. **Div. 374 → regra 13 ampliada**: conferir no bundle servido **o símbolo do conserto
+   e a URL base da API** antes de qualquer reteste; cache do Metro pode servir a URL de
+   prod. → `LOGS-OCTAVIA.md` (regra 13) e `APARATO.md`.
+5. **Div. 381 → `APARATO.md`**: "push de docs só depois do APK verde; antes, custa um APK".
 
 **Aparato, sem número** (não é divergência de registro): o primeiro cabo do Tab não
 passava dados, e o macOS não via o aparelho nem no `system_profiler`. O Marcel trocou

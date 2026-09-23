@@ -35,12 +35,15 @@ esta página no mesmo commit (regra 9 do `LOGS-OCTAVIA.md`, aplicada aqui).
   `base.apk` do dev client (`adb shell pm path rocks.octavia.app` + `adb pull`) para
   reinstalá-lo no fim. O release não é `DEBUGGABLE` (sem `run-as`) e não tem o botão
   flutuante do dev client.
-  - **O release não alcança `http://`** (sem `usesCleartextTraffic`, div. 373): o mock
-    na 8788 **não** serve para aceite com release. O controle é o dev client no mesmo
-    mock.
+  - **O release não alcança `http://`; aceite de release é contra prod, só leitura, mais escrita descartável pela regra 12; o mock é do dev client.** (Decisão do Marcel, 2026-09-23; div. 373
+    **fechada**.) A causa é a falta de `usesCleartextTraffic`, que o prebuild só põe
+    nos manifests de debug.
   - **`EXPO_PUBLIC_*` inline num build de release exige apagar o `$TMPDIR/metro-cache`**
     antes: com ele quente, o bundle embutido saiu com a URL de prod (div. 374). Conferir
     sempre: `unzip -p <apk> assets/index.android.bundle | grep -ac <valor>`.
+- **CI: push de docs só depois do APK verde; antes, custa um APK.** (Decisão do Marcel, 2026-09-23; div. 381.) O H1 só pula o APK
+  quando o último APK da PR já é `success`. Na #323, o push de docs subiu com o APK
+  anterior em curso e custou 13m18s.
 - **Cabo do Tab**: se o Tab não aparece nem como `unauthorized`, veja se o macOS o
   enxerga (`system_profiler SPUSBHostDataType`). Na W4-b3 o primeiro cabo só carregava.
 
@@ -64,6 +67,10 @@ composição — herança registrada em `N2-ENCERRAMENTO.md` §10.7, item 1.
   **sem** `CI=1`, e **antes de todo reteste** provar que o bundle servido tem o
   conserto (regra 13; div. 294, a mesma causa da div. 127):
   `curl -s 'http://localhost:8081/apps/native/index.bundle?platform=android&dev=true' | grep -c <símbolo do conserto>`.
+  **Regra 13 ampliada (W4-b3, div. 374)**: conferir no bundle servido **o símbolo do
+  conserto e a URL base da API** antes de qualquer reteste. O cache do Metro pode
+  servir a URL de prod: `grep -c <host da API>` no mesmo `curl`, e no release
+  `unzip -p <apk> assets/index.android.bundle | grep -ac <host da API>`.
 - Voltar ao app depois de `force-stop` (o dev client cai no lançador):
   `exp+octavia://expo-development-client/?url=http%3A%2F%2Flocalhost%3A8081`.
 - **Mock**: a foto do modelo é tirada **antes** do atraso (div. 233); falha de
