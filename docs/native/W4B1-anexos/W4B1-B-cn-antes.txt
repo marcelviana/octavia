@@ -1,0 +1,255 @@
+# W4B1-B — CNs e CPs ANTES do conserto: os scripts da main (origin/main = f1d65d8), commit 1 desta PR.
+# $ sh apps/native/scripts/__cn__/cn-w4b1.sh     (rastro bruto; exit do CN = 0 sempre — o placar é o texto)
+
+cn-w4b1 — scripts lidos de: /Users/marcelviana/projects/octavia-w4b1 (árvore de trabalho), HEAD f1d65d8
+
+==============================================================================
+CN-339a — G1a: exceção ÓRFÃ ao lado de uma usada
+==============================================================================
+exceções: apps/native/src/store.ts (usada) · apps/native/src/api.ts (órfã) — pares do G1b: só o usado
+  base=fc27c4487e2951d195434c2d87b5a6db56ab5481 head=4727dfb3deeaa92ec134c2e9708e0fd9d96b8166
+  G1a — diff vazio em 44 arquivos DERIVADOS de apps/native + packages/core/src
+        escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+        menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+        EXCEÇÕES DECLARADAS (o escopo desta PR):
+          apps/native/src/store.ts
+          apps/native/src/api.ts
+    G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+    G1a: EXCEÇÃO DECLARADA E NÃO USADA — poda isto ANTES do merge (div. 141):
+          apps/native/src/api.ts
+  G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 1
+        PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+          // cn-w4b1 linha=velha
+            -> // cn-w4b1 linha=nova
+            · razão: CN do W4-b1 — par usado
+    linhas que SAÍRAM (cada uma precisa de um PAR, e a nova do par tem de entrar IGUAL):
+        // cn-w4b1 linha=velha
+    G1b: cada linha que saiu tem par, e a nova do par entrou ✓
+  exit=0
+  *** CN REPROVADO: o gate passou (exit 0) ***
+  e disse "EXCEÇÃO DECLARADA E NÃO USADA" ✓
+
+==============================================================================
+CN-339b — G1b: par ÓRFÃO ao lado de um usado
+==============================================================================
+  base=fc27c4487e2951d195434c2d87b5a6db56ab5481 head=4727dfb3deeaa92ec134c2e9708e0fd9d96b8166
+  G1a — diff vazio em 45 arquivos DERIVADOS de apps/native + packages/core/src
+        escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+        menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+        EXCEÇÕES DECLARADAS (o escopo desta PR):
+          apps/native/src/store.ts
+    G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+  G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 1
+        PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+          // cn-w4b1 linha=velha
+            -> // cn-w4b1 linha=nova
+            · razão: CN do W4-b1 — par usado
+          // cn-w4b1 linha=que-nunca-existiu
+            -> // cn-w4b1 substituta-de-ninguem
+            · razão: CN do W4-b1 — par órfão
+    linhas que SAÍRAM (cada uma precisa de um PAR, e a nova do par tem de entrar IGUAL):
+        // cn-w4b1 linha=velha
+    G1b: cada linha que saiu tem par, e a nova do par entrou ✓
+    G1b: PAR DECLARADO E NÃO USADO — poda isto ANTES do merge (div. 321):
+          // cn-w4b1 linha=que-nunca-existiu
+            -> // cn-w4b1 substituta-de-ninguem
+  exit=0
+  *** CN REPROVADO: o gate passou (exit 0) ***
+  e disse "PAR DECLARADO E NÃO USADO" ✓
+
+==============================================================================
+CP-339 (g1) — só o que é usado: a exceção e o par
+==============================================================================
+  base=fc27c4487e2951d195434c2d87b5a6db56ab5481 head=4727dfb3deeaa92ec134c2e9708e0fd9d96b8166
+  G1a — diff vazio em 45 arquivos DERIVADOS de apps/native + packages/core/src
+        escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+        menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+        EXCEÇÕES DECLARADAS (o escopo desta PR):
+          apps/native/src/store.ts
+    G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+  G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 1
+        PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+          // cn-w4b1 linha=velha
+            -> // cn-w4b1 linha=nova
+            · razão: CN do W4-b1 — par usado
+    linhas que SAÍRAM (cada uma precisa de um PAR, e a nova do par tem de entrar IGUAL):
+        // cn-w4b1 linha=velha
+    G1b: cada linha que saiu tem par, e a nova do par entrou ✓
+  exit=0
+  passou ✓
+
+==============================================================================
+CN-339c — G3: errata ÓRFÃ ao lado de uma usada
+==============================================================================
+  [injeta] REMOCOES: o script NÃO define esta variável
+  G2 — testIDs  antes=79  depois=79
+    G2: antes ⊆ depois ✓
+  G3 — linhas log( antes=66  depois=66
+        ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+          log(`cn-w4b1 linha=velha n=${n}`)
+          log(`cn-w4b1 linha=nova n=${n}`)
+          log(`cn-w4b1 linha=que-nunca-existiu`)
+          log(`cn-w4b1 substituta-de-ninguem`)
+    linhas que SUMIRAM (cada uma precisa de um PAR de errata, e a substituta do par tem de entrar):
+        apps/native/src/store.ts	export function __cnW4b1(n) { log(`cn-w4b1 linha=velha n=${n}`) }
+    G3: cada linha que sumiu tem par de errata, e a substituta entrou ✓
+    linhas NOVAS (declarar no commit e no catálogo):
+        apps/native/src/store.ts	export function __cnW4b1(n) { log(`cn-w4b1 linha=nova n=${n}`) }
+    G3: ERRATA DECLARADA E NÃO USADA — poda isto ANTES do merge (div. 195):
+          log(`cn-w4b1 linha=que-nunca-existiu`)
+                -> log(`cn-w4b1 substituta-de-ninguem`)
+  exit=0
+  *** CN REPROVADO: o gate passou (exit 0) ***
+  e disse "ERRATA DECLARADA E NÃO USADA" ✓
+
+==============================================================================
+CP-339 (g2g3) — só a errata usada
+==============================================================================
+  [injeta] REMOCOES: o script NÃO define esta variável
+  G2 — testIDs  antes=79  depois=79
+    G2: antes ⊆ depois ✓
+  G3 — linhas log( antes=66  depois=66
+        ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+          log(`cn-w4b1 linha=velha n=${n}`)
+          log(`cn-w4b1 linha=nova n=${n}`)
+    linhas que SUMIRAM (cada uma precisa de um PAR de errata, e a substituta do par tem de entrar):
+        apps/native/src/store.ts	export function __cnW4b1(n) { log(`cn-w4b1 linha=velha n=${n}`) }
+    G3: cada linha que sumiu tem par de errata, e a substituta entrou ✓
+    linhas NOVAS (declarar no commit e no catálogo):
+        apps/native/src/store.ts	export function __cnW4b1(n) { log(`cn-w4b1 linha=nova n=${n}`) }
+  exit=0
+  passou ✓
+
+==============================================================================
+CN-D34a — o comentário com log( SAI, sem declaração nenhuma
+==============================================================================
+  [injeta] REMOCOES: o script NÃO define esta variável
+  G2 — testIDs  antes=79  depois=79
+    G2: antes ⊆ depois ✓
+  G3 — linhas log( antes=66  depois=65
+        ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+          (nenhuma — nenhuma linha de log pode sumir nesta PR)
+    linhas que SUMIRAM (cada uma precisa de um PAR de errata, e a substituta do par tem de entrar):
+        apps/native/src/store.ts	// log(`cn-w4b1 comentario`)
+    G3: linha sumiu SEM ERRATA ✗
+        apps/native/src/store.ts	// log(`cn-w4b1 comentario`)
+  exit=1
+  reprovou ✓
+  e disse "linha sumiu SEM ERRATA" ✓
+
+==============================================================================
+CN-D34b — a mesma remoção, declarada com razão (a forma da N2-D34)
+==============================================================================
+remoção declarada: // log(`cn-w4b1 comentario`) → REMOVIDA: CN do W4-b1 — comentário que citava a linha de log
+  [injeta] REMOCOES: o script NÃO define esta variável
+  G2 — testIDs  antes=79  depois=79
+    G2: antes ⊆ depois ✓
+  G3 — linhas log( antes=66  depois=65
+        ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+          (nenhuma — nenhuma linha de log pode sumir nesta PR)
+    linhas que SUMIRAM (cada uma precisa de um PAR de errata, e a substituta do par tem de entrar):
+        apps/native/src/store.ts	// log(`cn-w4b1 comentario`)
+    G3: linha sumiu SEM ERRATA ✗
+        apps/native/src/store.ts	// log(`cn-w4b1 comentario`)
+  exit=1
+  *** CP REPROVADO: o gate barrou o caso honesto ***
+
+==============================================================================
+CN-D34c — a remoção declarada, e a linha AINDA EXISTE
+==============================================================================
+  [injeta] REMOCOES: o script NÃO define esta variável
+  G2 — testIDs  antes=79  depois=79
+    G2: antes ⊆ depois ✓
+  G3 — linhas log( antes=66  depois=66
+        ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+          log(`cn-w4b1 linha=velha n=${n}`)
+          log(`cn-w4b1 linha=nova n=${n}`)
+    linhas que SUMIRAM (cada uma precisa de um PAR de errata, e a substituta do par tem de entrar):
+        apps/native/src/store.ts	export function __cnW4b1(n) { log(`cn-w4b1 linha=velha n=${n}`) }
+    G3: cada linha que sumiu tem par de errata, e a substituta entrou ✓
+    linhas NOVAS (declarar no commit e no catálogo):
+        apps/native/src/store.ts	export function __cnW4b1(n) { log(`cn-w4b1 linha=nova n=${n}`) }
+  exit=0
+  *** CN REPROVADO: o gate passou (exit 0) ***
+  *** a saída não traz "REMOÇÃO DECLARADA E NÃO USADA" ***
+
+==============================================================================
+CN-D34d — a remoção declarada SEM razão
+==============================================================================
+remoção declarada: // log(`cn-w4b1 comentario`) → REMOVIDA: 
+  [injeta] REMOCOES: o script NÃO define esta variável
+  G2 — testIDs  antes=79  depois=79
+    G2: antes ⊆ depois ✓
+  G3 — linhas log( antes=66  depois=65
+        ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+          (nenhuma — nenhuma linha de log pode sumir nesta PR)
+    linhas que SUMIRAM (cada uma precisa de um PAR de errata, e a substituta do par tem de entrar):
+        apps/native/src/store.ts	// log(`cn-w4b1 comentario`)
+    G3: linha sumiu SEM ERRATA ✗
+        apps/native/src/store.ts	// log(`cn-w4b1 comentario`)
+  exit=1
+  reprovou ✓
+  *** a saída não traz "REMOÇÃO SEM RAZÃO" ***
+
+==============================================================================
+CP-D34 — remoção usada AO LADO de uma errata usada
+==============================================================================
+  [injeta] REMOCOES: o script NÃO define esta variável
+  G2 — testIDs  antes=79  depois=79
+    G2: antes ⊆ depois ✓
+  G3 — linhas log( antes=66  depois=65
+        ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+          log(`cn-w4b1 linha=velha n=${n}`)
+          log(`cn-w4b1 linha=nova n=${n}`)
+    linhas que SUMIRAM (cada uma precisa de um PAR de errata, e a substituta do par tem de entrar):
+        apps/native/src/store.ts	// log(`cn-w4b1 comentario`)
+        apps/native/src/store.ts	export function __cnW4b1(n) { log(`cn-w4b1 linha=velha n=${n}`) }
+    G3: linha sumiu SEM ERRATA ✗
+        apps/native/src/store.ts	// log(`cn-w4b1 comentario`)
+    linhas NOVAS (declarar no commit e no catálogo):
+        apps/native/src/store.ts	export function __cnW4b1(n) { log(`cn-w4b1 linha=nova n=${n}`) }
+  exit=1
+  *** CP REPROVADO: o gate barrou o caso honesto ***
+
+==============================================================================
+CN-223a — um byte alterado numa cópia do telas.html do V1
+==============================================================================
+  == docs/native/DESIGN-V1
+  README.md: FAILED
+  telas.html: FAILED
+  icones.html: OK
+  telas.pdf: OK
+  shasum: WARNING: 2 computed checksums did NOT match
+  == docs/native/DESIGN-N2
+  telas.html: OK
+  telas.pdf: OK
+  exit=1
+  reprovou ✓
+  e disse "telas.html: FAILED" ✓
+
+==============================================================================
+CP-223 — a cópia intacta da árvore de trabalho
+==============================================================================
+  == docs/native/DESIGN-V1
+  README.md: FAILED
+  telas.html: OK
+  icones.html: OK
+  telas.pdf: OK
+  shasum: WARNING: 1 computed checksum did NOT match
+  == docs/native/DESIGN-N2
+  telas.html: OK
+  telas.pdf: OK
+  exit=1
+  *** CP REPROVADO: o gate barrou o caso honesto ***
+
+==============================================================================
+CN-223b — o passo está no job gates-nativos do ci.yml, com o mesmo texto
+==============================================================================
+  AUSENTE:  F=0
+  AUSENTE:  for d in docs/native/DESIGN-V1 docs/native/DESIGN-N2; do
+  AUSENTE:  echo "== $d"
+  AUSENTE:  (cd "$d" && shasum -a 256 -c SHA256SUMS) || F=1
+  AUSENTE:  done
+  AUSENTE:  exit $F
+  *** CN REPROVADO: o CI não roda o shasum -c dos congelados ***
+

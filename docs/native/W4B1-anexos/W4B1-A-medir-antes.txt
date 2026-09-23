@@ -1,0 +1,131 @@
+# W4B1-A — medir antes (§1 do prompt). Árvore limpa em origin/main = f1d65d8
+# Rastro bruto: comando + saída literal. Gerado 2026-09-23T14:43:26Z.
+
+## 1.1  $ sh apps/native/scripts/g1.sh origin/main WORKTREE
+base=origin/main head=WORKTREE
+G1a — diff vazio em 39 arquivos DERIVADOS de apps/native + packages/core/src
+      escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+      menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+      EXCEÇÕES DECLARADAS (o escopo desta PR):
+        packages/core/src/frases.ts
+        packages/core/src/escrita.ts
+        apps/native/src/escrita.ts
+        apps/native/src/screens/Picker.tsx
+        apps/native/src/screens/IndexScreen.tsx
+        apps/native/src/screens/SetlistsScreen.tsx
+        apps/native/src/navigation.tsx
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+  G1a: EXCEÇÃO DECLARADA E NÃO USADA — poda isto ANTES do merge (div. 141):
+        packages/core/src/frases.ts
+        packages/core/src/escrita.ts
+        apps/native/src/escrita.ts
+        apps/native/src/screens/Picker.tsx
+        apps/native/src/screens/IndexScreen.tsx
+        apps/native/src/screens/SetlistsScreen.tsx
+        apps/native/src/navigation.tsx
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+      PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+        expect(r.frase).toBe('sem conexão — nada foi salvo')
+          -> expect(r.frase).toBe('sem resposta do servidor')
+          · razão: N2-E19: a espécie `rede` deixa de afirmar que nada foi salvo
+  G1b: só adição ✓
+  G1b: PAR DECLARADO E NÃO USADO — poda isto ANTES do merge (div. 321):
+        expect(r.frase).toBe('sem conexão — nada foi salvo')
+          -> expect(r.frase).toBe('sem resposta do servidor')
+exit=0
+
+## 1.1  $ sh apps/native/scripts/g2g3.sh origin/main WORKTREE
+G2 — testIDs  antes=79  depois=79
+  G2: antes ⊆ depois ✓
+G3 — linhas log( antes=64  depois=64
+      ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+        (nenhuma — nenhuma linha de log pode sumir nesta PR)
+  G3: nenhuma linha sumiu ✓
+exit=0
+
+## 1.1  o que o CI mediu no push da main (#320): BASE = merge-base(HEAD~1, HEAD) = HEAD~1
+$ sh apps/native/scripts/g1.sh f1d65d8~1 f1d65d8 | grep -c 'NÃO USAD'
+2
+
+## 1.2  o job gates-nativos (.github/workflows/ci.yml:36-58)
+  gates-nativos:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        # O histórico inteiro: sem ele não há `merge-base`, e sem `merge-base`
+        # não há par. E a HEAD é a do RAMO, não o merge commit que o
+        # `actions/checkout` monta por default — senão o que voltou da `main`
+        # depois do ponto de ramificação apareceria como diff desta PR.
+        fetch-depth: 0
+        ref: ${{ github.event.pull_request.head.sha || github.sha }}
+    - name: A BASE do par — o ponto de ramificação
+      run: |
+        set -e
+        ALVO="${{ github.event.pull_request.base.sha }}"
+        if [ -z "$ALVO" ]; then ALVO=$(git rev-parse HEAD~1); fi
+        BASE=$(git merge-base "$ALVO" HEAD)
+        echo "BASE=$BASE" >> "$GITHUB_ENV"
+        echo "base=$BASE  head=$(git rev-parse HEAD)"
+    - name: G1a/G1b — invariância de comportamento e de decisão
+      run: sh apps/native/scripts/g1.sh "$BASE" WORKTREE
+    - name: G2/G3 — testIDs antes ⊆ depois, linhas de log com errata declarada
+      run: sh apps/native/scripts/g2g3.sh "$BASE" WORKTREE
+
+## 1.3  shasum -a 256 -c dos dois SHA256SUMS
+$ (cd docs/native/DESIGN-V1 && shasum -a 256 -c SHA256SUMS)
+README.md: FAILED
+telas.html: OK
+icones.html: OK
+telas.pdf: OK
+shasum: WARNING: 1 computed checksum did NOT match
+exit=1
+$ (cd docs/native/DESIGN-N2 && shasum -a 256 -c SHA256SUMS)
+telas.html: OK
+telas.pdf: OK
+exit=0
+$ grep -c 'shasum' .github/workflows/ci.yml .github/workflows/native.yml
+.github/workflows/ci.yml:0
+.github/workflows/native.yml:0
+
+## 1.4  div. 220 — packages/core/src/search.ts:29-39
+29	/** Reconstruído por item a cada invalidação do cache (T1-R10). */
+30	export function buildIndex(contents: ContentDTO[]): SearchIndex {
+31	  return {
+32	    entries: contents.map((content) => ({
+33	      id: content.id,
+34	      title: normalizeForSearch(content.title),
+35	      artist: normalizeForSearch(content.artist ?? ''),
+36	      album: normalizeForSearch(content.album ?? ''),
+37	      body: normalizeForSearch(bodyOf(content.content_type, content.content_data) ?? ''),
+38	    })),
+39	  }
+  e os dois chamadores (a reconstrução é do conjunto, memoizada por referência):
+apps/native/src/screens/SearchScreen.tsx:176:  const indice = useMemo(() => buildIndex(contents), [contents])
+apps/native/src/screens/Picker.tsx:155:  const indice = useMemo(() => buildIndex(biblioteca), [biblioteca])
+
+## 1.5  a regra do G3 hoje: apps/native/scripts/g2g3.sh:215-281 (lista ERRATAS, par velha/nova,
+##      'SEM ERRATA' e 'SEM SUBSTITUTA' reprovam; 'DECLARADA E NÃO USADA' só avisa)
+if [ -n "$SUMIRAM" ]; then
+  echo "  linhas que SUMIRAM (cada uma precisa de um PAR de errata, e a substituta do par tem de entrar):"
+  echo "$SUMIRAM" | sed 's/^/      /'
+  echo "$SUMIRAM" | while IFS= read -r L; do
+    [ -n "$L" ] || continue
+    I=0; ACHOU=0
+    while IFS= read -r V; do
+      I=$((I + 1))
+      case "$L" in *"$V"*) ACHOU=$I; break ;; esac
+    done < $tmp/err.velha
+    if [ "$ACHOU" -eq 0 ]; then
+      echo "  G3: linha sumiu SEM ERRATA ✗"
+      echo "      $L"
+      exit 1
+    fi
+    NOVA=$(sed -n "${ACHOU}p" $tmp/err.nova)
+    if ! printf '%s\n' "$NOVAS" | grep -qF -- "$NOVA"; then
+      echo "  G3: ERRATA SEM SUBSTITUTA ✗ (div. 189) — a linha saiu e a do par não entrou:"
+      echo "      saiu:          $L"
+      echo "      devia entrar:  $NOVA"
+      exit 1
+    fi
+  done || G3=1
