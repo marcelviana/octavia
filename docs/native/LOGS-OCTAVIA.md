@@ -898,9 +898,10 @@ do corte, `[medido]`.
 
 (Decisão do Marcel sobre a div. 366.) Aplicada para trás às cinco mudanças que a
 div. 366 listou (com dez corridas e n ≥ 10), a regra não abre segmento sozinha,
-porque quem abre é o Marcel. Mas as duas condições valem para o
-`setup-android@v4`, por 1,5 s (div. 369), e o `datetimepicker` segue fora do IQR
-(div. 368). A tabela está no `CI-FAIXA.md`, "A regra aplicada para trás".
+porque quem abre é o Marcel. As duas condições valeram para o
+`setup-android@v4`, e a **div. 369** está **fechada** (decisão do Marcel,
+2026-09-23): candidato não aberto: mediana fora do IQR por 1,5 s (751,5 s contra Q3 de 750 s), num IQR de 70 s; ruído de corrida. A regra não ganha tolerância numérica: a decisão de abrir é a tolerância, e fica registrada com as medições. O `datetimepicker` segue fora do IQR (div. 368, aberta;
+dono: **W4-b3**, que mede o custo do módulo nativo no build junto com o build de release). A tabela está no `CI-FAIXA.md`, "A regra aplicada para trás".
 
 Hoje há dois segmentos: o **regime 1**, antes da #284, e o **regime 2**, desde a
 #284, que é a referência. O corte é o `9806e44` (N1-PR3a): os módulos nativos da

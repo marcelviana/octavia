@@ -392,3 +392,13 @@ dá "nenhuma" para trás:
 |---|---|---|---|
 | **368** | A | **não fecha pela regra**, ao contrário do esperado no prompt ("o 368 volta ao IQR"). Com **dez** corridas, a mediana do `datetimepicker` é **13m04s** (784 s), acima do Q3 de então, 12m43s (763 s, n=52). Com vinte volta a 750 s, dentro, mas a regra fala em dez | **segue aberta**, como a regra manda para módulo: divergência a investigar. A causa não foi medida |
 | **369** | P | o prompt esperava que nenhuma abrisse. Mas o **`setup-android@v4`** (#302, `717104e`) passa as **duas** condições: (1) é toolchain, está na lista; (2) a mediana das dez seguintes é **751,5 s** (12m31,5s) contra o Q3 do segmento vigente, **750 s** (12m30s, n=29). Fora **por 1,5 s**. A medição `[medido]` está na tabela da §14 | **nenhum segmento aberto**: quem abre é o Marcel, com as duas medições ao lado, e elas estão aqui. Registro que uma margem de 1,5 s num IQR de 70 s é ruído de corrida, mas a regra não tem tolerância. **Decisão do Marcel**: abrir o segmento "regime 3, desde a #302", ou pôr tolerância na (2)? |
+
+## 16. Div. 369 fechada; 368 com dono — decisão do Marcel (2026-09-23)
+
+| div. | estado | registro |
+|---|---|---|
+| **369** | **fechada** | candidato não aberto: mediana fora do IQR por 1,5 s (751,5 s contra Q3 de 750 s), num IQR de 70 s; ruído de corrida. A regra não ganha tolerância numérica: a decisão de abrir é a tolerância, e fica registrada com as medições. |
+| **368** | **aberta**, dono: **W4-b3**, que mede o custo do módulo nativo no build junto com o build de release | o `datetimepicker` segue fora do IQR com dez corridas (784 s contra Q3 de 763 s), a investigar |
+
+A mesma redação está no `CI-FAIXA.md` (a tabela e a lista de "A regra aplicada para
+trás") e no `LOGS-OCTAVIA.md`.

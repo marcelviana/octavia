@@ -70,8 +70,8 @@ O job passou de ~6–7 min a ~12 min (`N1-ENCERRAMENTO.md:159`) e não voltou.
 | `expo-network` (#285, `08b84d6`) | não, é módulo | **2** | 12m55s–13m46s | 21: 11m57s, 22: 12m45s, 23: 11m22s, 24: 13m23s, 25: 11m45s, 26: 8m56s, 27: 10m15s, 28: 11m14s, 29: 11m39s, 30: 12m20s | **11m42s** | **não se avalia** (n<10: série em formação) | **não** |
 | `expo-keep-awake` (#286, `fc079bd`) | não, é módulo | **4** | 12m22s–13m06s | 23: 11m22s, 24: 13m23s, 25: 11m45s, 26: 8m56s, 27: 10m15s, 28: 11m14s, 29: 11m39s, 30: 12m20s, 31: 11m35s, 32: 8m54s | **11m28s** | **não se avalia** (n<10: série em formação) | **não** |
 | `react-native-svg` (#296, `8444b18`) | não, é módulo | **16** | 11m12s–12m22s | 35: 13m18s, 36: 12m01s, 37: 9m16s, 38: 12m21s, 39: 11m20s, 40: 11m55s, 41: 11m53s, 42: 11m52s, 43: 10m41s, 44: 12m32s | **11m54s** | não, dentro | **não** |
-| `setup-android@v4` (#302, `717104e`) | **sim** (toolchain) | **29** | 11m20s–12m30s | 49: 12m43s, 51: 10m27s, 52: 9m19s, 53: 12m26s, 54: 12m37s, 55: 10m59s, 56: 12m46s, 57: 9m44s, 58: 12m53s, 59: 12m52s | **12m32s** | **sim** — por **1,5 s** (751,5 s contra Q3 = 750 s) | **as duas condições valem** — decisão do Marcel (div. 369) |
-| `datetimepicker` (#315, `8681b57`) | não, é módulo | **52** | 11m05s–12m43s | 73: 13m28s, 74: 13m11s, 75: 12m59s, 76: 8m09s, 77: 14m02s, 78: 11m58s, 79: 12m29s, 80: 12m31s, 81: 13m26s, 82: 13m09s | **13m04s** | **sim** — 784 s contra Q3 = 763 s; só volta com vinte corridas (mediana 750 s) | **não** — módulo: divergência a investigar (div. 368) |
+| `setup-android@v4` (#302, `717104e`) | **sim** (toolchain) | **29** | 11m20s–12m30s | 49: 12m43s, 51: 10m27s, 52: 9m19s, 53: 12m26s, 54: 12m37s, 55: 10m59s, 56: 12m46s, 57: 9m44s, 58: 12m53s, 59: 12m52s | **12m32s** | **sim** — por **1,5 s** (751,5 s contra Q3 = 750 s) | **não** — div. 369 **fechada**: candidato não aberto: mediana fora do IQR por 1,5 s (751,5 s contra Q3 de 750 s), num IQR de 70 s; ruído de corrida. A regra não ganha tolerância numérica: a decisão de abrir é a tolerância, e fica registrada com as medições. |
+| `datetimepicker` (#315, `8681b57`) | não, é módulo | **52** | 11m05s–12m43s | 73: 13m28s, 74: 13m11s, 75: 12m59s, 76: 8m09s, 77: 14m02s, 78: 11m58s, 79: 12m29s, 80: 12m31s, 81: 13m26s, 82: 13m09s | **13m04s** | **sim** — 784 s contra Q3 = 763 s; só volta com vinte corridas (mediana 750 s) | **não** — módulo: divergência a investigar (div. 368; dono: **W4-b3**, que mede o custo do módulo nativo no build junto com o build de release) |
 
 Como se mediu `[medido: git log -S… -- apps/native/package.json · git merge-base --is-ancestor <commit> <head da corrida>]`:
 o commit que introduziu a mudança, e as corridas do regime 2 cujo head **contém**
@@ -81,9 +81,10 @@ fora. O "segmento vigente" são as corridas com APK do regime 2 antes da primeir
 que o contém, e o `n` dele está na terceira coluna. Quartis pelo método inclusivo.
 **Nenhum segmento foi aberto**, porque quem abre é o Marcel. Mas a regra **não**
 dá "nenhuma" para trás:
-- o `setup-android@v4` passa a (1) e passa a (2) por 1,5 s (div. 369);
-- o `datetimepicker` segue fora do IQR com dez corridas (div. 368, que continua
-  aberta, a investigar);
+- o `setup-android@v4` passa a (1) e passa a (2) por 1,5 s. A **div. 369** está
+  **fechada** (decisão do Marcel, 2026-09-23): candidato não aberto: mediana fora do IQR por 1,5 s (751,5 s contra Q3 de 750 s), num IQR de 70 s; ruído de corrida. A regra não ganha tolerância numérica: a decisão de abrir é a tolerância, e fica registrada com as medições.
+- o `datetimepicker` segue fora do IQR com dez corridas. A div. 368 continua
+  aberta, a investigar; dono: **W4-b3**, que mede o custo do módulo nativo no build junto com o build de release;
 - os dois primeiros não se avaliam (n=2 e n=4 < 10), o que fecha a div. 367.
 
 ### Recortes — descritivos, **não** referência
