@@ -23,6 +23,7 @@ name: native
     paths:
     - apps/native/**
     - .github/workflows/native.yml
+    - .github/workflows/gates.yml
     - pnpm-workspace.yaml
   push:
     branches:
@@ -30,6 +31,7 @@ name: native
     paths:
     - apps/native/**
     - .github/workflows/native.yml
+    - .github/workflows/gates.yml
     - pnpm-workspace.yaml
 env:
   EXPO_NO_TELEMETRY: '1'
@@ -37,6 +39,9 @@ env:
 jobs:
   mudou-nativo:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
     outputs:
       nativo: ${{ steps.d.outputs.nativo }}
     steps:
@@ -48,6 +53,8 @@ jobs:
       env:
         ACAO: ${{ github.event.action }}
         ANTES: ${{ github.event.before }}
+        BRANCH: ${{ github.head_ref }}
+        GH_TOKEN: ${{ github.token }}
       run: sh apps/native/scripts/mudou-nativo.sh "$ACAO" "$ANTES" HEAD >> "$GITHUB_OUTPUT"
   android-debug-apk:
     needs: mudou-nativo
