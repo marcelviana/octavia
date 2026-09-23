@@ -452,9 +452,11 @@ function falhou(
   return {
     fase: 'falhou',
     // N2-D18: na falha de rede o `add` PODE ter passado — "não entrou" seria
-    // mentira, e a frase é a da dúvida (div. 308).
-    titulo: r.podeTerGravado ? frase('pode-ter-gravado') : frase('falhou-adicionar'),
-    motivo: o.motivo ?? r.frase,
+    // mentira. N2-E19 (div. 308): a primeira linha é a frase da espécie,
+    // "sem resposta do servidor", e a SEGUNDA é a dúvida. O barrado por
+    // offline não saiu: "não entrou" é verdade, e "nada foi salvo" também.
+    titulo: r.podeTerGravado ? r.frase : frase('falhou-adicionar'),
+    motivo: o.motivo ?? (r.podeTerGravado ? frase('pode-ter-gravado') : r.frase),
     repetivel: o.repetivel,
     relendo: o.relendo,
   }

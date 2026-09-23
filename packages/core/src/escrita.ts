@@ -261,7 +261,10 @@ function duplicaSeRepetir(op: Op): boolean {
 function chaveDaFalha(op: Op, especie: Especie, code: string | null, contexto: Contexto, prazo: number | null): ChaveDeFrase {
   switch (especie) {
     case 'rede':
-      return 'rede'
+      // N2-E19: aqui a request SAIU e não voltou. O `rede` ("nada foi salvo")
+      // é do barrado offline, que não passa por esta função — ver
+      // `classificarBarrado`.
+      return 'sem-resposta'
     case 'auth':
       return 'auth'
     case 'limite':
@@ -339,5 +342,48 @@ export function classificar(
     podeTerGravado: especie === 'rede' && duplicaSeRepetir(op),
     chave,
     frase: erro.retryAfter !== null && chave === 'limite-com-prazo' ? frase(chave, erro.retryAfter) : frase(chave),
+  }
+}
+
+/**
+ * Por que uma escrita NÃO saiu — o conjunto do `write blocked … reason=`
+ * (T2-R16, errata N2-PR2 no `LOGS-OCTAVIA.md`).
+ */
+export type MotivoBarrado = 'offline' | 'ratelimit' | 'ceiling' | 'busy' | 'nada-mudou'
+
+/**
+ * **N2-E19 — o que a tela mostra quando a escrita nem sai.**
+ *
+ * Antes, o app fingia uma falha de transporte (`networkError: 'barrado: …'`)
+ * e passava pelo `classificar`: o barrado virava a espécie `rede` com a frase
+ * *"sem conexão — nada foi salvo"* e, em criar e adicionar, com o
+ * `podeTerGravado` ligado — a dúvida de uma request que NÃO saiu. E o `busy`
+ * dizia "sem conexão" com a rede de pé (div. 311).
+ *
+ *  - `offline`: espécie `rede` (as telas tratam igual: nada a repetir antes
+ *    de reler), frase `rede` — agora só dela —, e **nunca** `podeTerGravado`;
+ *  - `ratelimit`: a mesma leitura do 429 sem prazo de antes — o prazo que
+ *    resta é estado do gate, não da resposta;
+ *  - `busy` (e os dois que nenhuma tela manda para cá): a genérica. Nada foi
+ *    enviado, e nenhuma frase do conjunto diz mais do que isso sem mentir.
+ */
+export function classificarBarrado(op: Op, motivo: MotivoBarrado): Resultado {
+  if (motivo === 'ratelimit') {
+    return classificar(
+      op,
+      { status: 429, bodyText: JSON.stringify({ error: 'Rate limit exceeded', code: 'RATE_LIMITED' }) },
+      null,
+    )
+  }
+  const chave: ChaveDeFrase = motivo === 'offline' ? 'rede' : 'generica'
+  return {
+    especie: 'rede',
+    status: null,
+    code: null,
+    retryAfter: null,
+    // Nada saiu: não há dúvida a declarar, em operação nenhuma.
+    podeTerGravado: false,
+    chave,
+    frase: frase(chave),
   }
 }

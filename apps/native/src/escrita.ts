@@ -36,6 +36,7 @@
  */
 import {
   classificar,
+  classificarBarrado,
   mesmaOrdem,
   pedidoAtualizar,
   pedidoCriar,
@@ -50,6 +51,7 @@ import {
   type ContentDTO,
   type MotivoInvalido,
   type Op,
+  type MotivoBarrado as CoreMotivoBarrado,
   type Pedido,
   type Resultado,
   type SetlistDTO,
@@ -100,9 +102,10 @@ export interface Saida {
  * o toque num "Salvar" inativo porque o formulário abriu e nada mudou
  * (T2-R3 (iii)). Sem a linha, esse caso seria indistinguível no log de um
  * toque que não aconteceu, e é justamente o que o A-N2-24 mede. Errata no
- * `LOGS-OCTAVIA.md`, na mesma PR.
+ * `LOGS-OCTAVIA.md`, na mesma PR. **N2-PR7**: o tipo mora no core, junto do
+ * `classificarBarrado` que o lê (N2-E19).
  */
-export type MotivoBarrado = 'offline' | 'ratelimit' | 'ceiling' | 'busy' | 'nada-mudou'
+export type MotivoBarrado = CoreMotivoBarrado
 
 /**
  * Estado de MÓDULO, e de propósito: o limite de taxa é por uid no servidor e
@@ -162,17 +165,13 @@ function barrar(op: Op, motivo: MotivoBarrado): void {
 }
 
 /**
- * O que a tela mostra quando a escrita nem sai. É a espécie `rede` com a
- * frase certa: a operação não aconteceu, e nenhuma delas é "erro do
- * servidor". O `offline` tem frase própria na folha; o `ratelimit` reusa a do
- * 429 sem prazo, porque o prazo que resta é estado do gate e não da resposta.
+ * O que a tela mostra quando a escrita nem sai. **N2-E19**: a decisão mora no
+ * core (`classificarBarrado`) — a primeira forma disto fingia uma falha de
+ * transporte, e o barrado offline herdava a dúvida do "pode já ter sido
+ * gravada" de uma request que não saiu.
  */
 function resultadoBarrado(op: Op, motivo: MotivoBarrado): Resultado {
-  const resposta =
-    motivo === 'ratelimit'
-      ? { status: 429, bodyText: JSON.stringify({ error: 'Rate limit exceeded', code: 'RATE_LIMITED' }) }
-      : { networkError: `barrado: ${motivo}` }
-  return classificar(op, resposta, null)
+  return classificarBarrado(op, motivo)
 }
 
 // ------------------------------------------------------------- preparação

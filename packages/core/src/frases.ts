@@ -172,10 +172,30 @@ export type ChaveDeFrase =
    */
   | 'falhou-adicionar'
   | 'adicionada'
+  /**
+   * **ERRATA DA N2-PR7 (N2-E19, decisão do Marcel sobre a div. 308) — UMA
+   * chave nova, e a razão dela.**
+   *
+   * A espécie `rede` juntava duas coisas que o músico precisa ler diferente:
+   * a request que **nem saiu** (barrada por offline — `write blocked
+   * reason=offline`) e a que **saiu e não voltou** (o prazo da N2-D35, o
+   * socket cortado). Para a primeira, *"sem conexão — nada foi salvo"* é
+   * verdade. Para a segunda é afirmação que o app não tem como fazer — a
+   * N2-D18 existe justamente porque o `POST` pode ter passado — e, ao lado
+   * do `pode-ter-gravado`, as duas frases se contradiziam na mesma linha
+   * (div. 308, Tab S6, dump `07` da N2-PR6).
+   *
+   * `rede` fica com a frase de sempre e passa a valer **só** para o barrado
+   * offline; `sem-resposta` é a da request que saiu. A segunda linha *"pode
+   * já ter sido gravada…"* acompanha só esta, e só em criar e adicionar.
+   */
+  | 'sem-resposta'
 
 export const FRASES: Readonly<Record<ChaveDeFrase, string>> = {
   // T2-R15 (`PRD-TELA-2.md`)
   rede: 'sem conexão — nada foi salvo',
+  // N2-E19: a request saiu e não voltou — o texto é do Marcel (div. 308).
+  'sem-resposta': 'sem resposta do servidor',
   auth: 'não foi possível salvar — confira sua conta no site',
   'limite-com-prazo': 'muitas alterações seguidas — tente de novo em {N} s',
   'limite-sem-prazo': 'Muitas mudanças em pouco tempo. Os controles de escrita voltam em instantes.',
