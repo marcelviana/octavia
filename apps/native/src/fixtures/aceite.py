@@ -399,7 +399,18 @@ def servidor(porta: int, modo: str, setlists_path: str, content_path: str) -> No
     # lista VIVA — o `GET /api/setlists` serve o que o modelo tem agora, que é
     # o que faz a releitura do T2-R9 medir alguma coisa.
     modelo = Modelo(setlists)
-    estado = {"escritas": 0, "gets_pos_escrita": 0}
+    estado = {"escritas": 0, "gets_pos_escrita": 0, "tentativas": 0}
+    # N2-PR7 — o sufixo `-releitura-500` compõe com QUALQUER modo de escrita:
+    # a escrita se comporta como o modo base, e todo `GET /api/setlists` que
+    # vier DEPOIS da primeira tentativa de escrita (passe ou falhe) volta 500.
+    # É o caso que nenhum modo alcançava: a escrita FALHA (500, 404, rede) e
+    # a releitura da regra 3 falha também — onde a N2-D32 manda não oferecer
+    # `Tentar de novo`, e onde S2 oferecia (defeito da N2-PR4, achado no §3
+    # da N2-PR7). O `escrita-resync-500` cobre só o 2xx seguido de releitura
+    # falha (N2-D22).
+    releitura_500 = modo.endswith("-releitura-500")
+    if releitura_500:
+        modo = modo[: -len("-releitura-500")]
 
     class H(BaseHTTPRequestHandler):
         def _json(self, code: int, body, extra: dict | None = None) -> None:
@@ -454,6 +465,7 @@ def servidor(porta: int, modo: str, setlists_path: str, content_path: str) -> No
             chegar ao banco (pre-check §7.1), e é por isso que o 401 de uma
             escrita nunca duplica nada (N2-D9).
             """
+            estado["tentativas"] += 1
             if modo in ("401", "escrita-401"):
                 self._json(401, _envelope("AUTH_REQUIRED", "Authentication required"),
                            {"WWW-Authenticate": "Bearer"})
@@ -563,6 +575,9 @@ def servidor(porta: int, modo: str, setlists_path: str, content_path: str) -> No
                     # abertura funciona (é preciso haver cache antes); o que
                     # pendura é o `GET` de DEPOIS da primeira escrita.
                     time.sleep(PENDURADO_S)
+                    return
+                if releitura_500 and estado["tentativas"] > 0:
+                    self._json(500, _envelope("INTERNAL_ERROR", "Internal server error"))
                     return
                 if modo == "escrita-resync-500" and estado["escritas"] > 0:
                     # N2-D22: a escrita gravou e a RELEITURA é que falhou.
@@ -701,7 +716,7 @@ def servidor(porta: int, modo: str, setlists_path: str, content_path: str) -> No
         def log_message(self, *_args) -> None:
             return
 
-    print(f"fixture: servidor em :{porta} modo={modo} "
+    print(f"fixture: servidor em :{porta} modo={modo}{'-releitura-500' if releitura_500 else ''} "
           f"setlists={len(modelo.setlists)} content={len(content)} paginas={[len(p) for p in paginas]}",
           flush=True)
     servidor_http = ThreadingHTTPServer(("127.0.0.1", porta), H)

@@ -177,3 +177,15 @@ describe('toda saída de classificar() pertence ao conjunto', () => {
     expect(n).toBe(OPS.length * 3)
   })
 })
+
+describe('N2-E21 — `sumiu-nao-relido`: duas orações de origem, cortadas na fronteira', () => {
+  it('cada oração é prefixo literal da frase de onde veio (sem o ponto final do corte)', () => {
+    const [primeira, segunda] = FRASES['sumiu-nao-relido'].split(/(?<=\.) /)
+    expect(primeira).toBe('Essa setlist não existe mais.')
+    expect(segunda).toBe('Não foi possível recarregar a lista.')
+    expect(FRASES['sumiu-declarado'].startsWith(primeira)).toBe(true)
+    expect(FRASES['salvo-nao-relido-s1'].startsWith(segunda.slice(0, -1))).toBe(true)
+    // E NADA além das duas: a segunda oração de cada origem ficou de fora.
+    expect(FRASES['sumiu-nao-relido']).toBe(`${primeira} ${segunda}`)
+  })
+})
