@@ -882,14 +882,23 @@ refaz num commit novo.
 
 A referência do `CI-FAIXA.md` é calculada **só do regime em vigor**. A série
 inteira continua lá, em ordem, dividida em segmentos rotulados, cada um com a razão
-do corte, `[medido]`. **Mudança na definição do build abre um segmento novo;
-mudança só no gatilho (como o H1) não abre.** A definição do build é o que o job
-compila e como (o workflow, os módulos nativos, os plugins do `app.json`). O
-gatilho é quando o job roda (o `paths`, o `mudou-nativo`).
+do corte, `[medido]`.
+
+> **Segmentos da série.** Um segmento novo abre só quando as duas
+> condições valem: (1) mudou um item da lista fechada — passos do job,
+> toolchain (JDK, Gradle, `setup-android`, SDK Android), versão do Expo
+> SDK ou do React Native, número de ABIs do APK —, e (2) as cinco
+> corridas seguintes têm mediana fora do IQR do segmento vigente,
+> `[medido]`. Módulo nativo isolado não está na lista: se mudar o
+> patamar, entra pela condição (2) como divergência a investigar, não
+> como segmento. Quem abre o segmento é o Marcel, com as duas medições
+> ao lado. O corte na #284 foi decisão (div. 365) e é o único até aqui.
+
+(Decisão do Marcel sobre a div. 366.) Aplicada para trás às cinco mudanças que a
+div. 366 listou, a regra **não abre nenhum segmento**; a tabela está no
+`CI-FAIXA.md`, "A regra aplicada para trás".
 
 Hoje há dois segmentos: o **regime 1**, antes da #284, e o **regime 2**, desde a
 #284, que é a referência. O corte é o `9806e44` (N1-PR3a): os módulos nativos da
 navegação e das fontes entraram, e o job passou de ~6–7 min a ~12 min. **O
-workflow em si não mudou ali** (div. 365). A entrada de módulos nativos depois da
-#284 não abriu segmento, e o limiar da regra está em aberto com o Marcel
-(div. 366).
+workflow em si não mudou ali** (div. 365).

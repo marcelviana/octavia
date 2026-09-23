@@ -297,4 +297,52 @@ build abre um segmento novo; mudança só no gatilho (como o H1) não abre.**
 | div. | origem | o que | o que foi feito |
 |---|---|---|---|
 | **365** | P | "cite o commit/PR que **mudou o job**, `[medido]` por `git log -- .github/workflows/native.yml`": o `native.yml` **não mudou na #284**. O log dele pula do `6ccf644` (N0-PR3) para o `d83d94f` (N1-PR8, que só recortou o `paths`). O que mudou na #284 foi o que o job **compila**: o `9806e44` (N1-PR3a) pôs no `apps/native/package.json` os módulos nativos `react-native-screens` e `react-native-safe-area-context`, além do `@react-navigation/native-stack`, do `expo-font` e das fontes, e pôs o plugin do `expo-font` no `app.json` | o corte cita o `9806e44` e o merge `6f30f02`, com os dois comandos `[medido]`. "Definição do build" ficou escrita como **o que o job compila e como**, e não só como o texto do workflow |
-| **366** | P | a regra aplicada ao pé da letra **abriria mais segmentos** que o corte decidido. Entrada de módulo nativo depois da #284 `[medido: git log --first-parent 6f30f02..origin/main -- apps/native/package.json apps/native/app.json .github/workflows/native.yml]`: `expo-network` (#285), `expo-keep-awake` (#286), `react-native-svg` (#296, que o V1 §8 mediu recompilando 38 tarefas por corrida), `@react-native-community/datetimepicker` (#315, div. 234). E o `setup-android@v4` (#302, `717104e`) mudou um passo do job | **não** abri segmento para eles: o corte decidido foi um só, na #284, e os quatro somaram sem mudar o regime de ~12 min (a #284 mudou de ~6–7 para ~12). O recorte "desde o v4" está no `CI-FAIXA.md` como descritivo. Fica para o Marcel: a regra precisa de um limiar (por exemplo, "muda o regime") ou de uma lista do que conta como definição? |
+| **366** | P | ~~a regra aplicada ao pé da letra **abriria mais segmentos** que o corte decidido. Entrada de módulo nativo depois da #284 `[medido: git log --first-parent 6f30f02..origin/main -- apps/native/package.json apps/native/app.json .github/workflows/native.yml]`: `expo-network` (#285), `expo-keep-awake` (#286), `react-native-svg` (#296, que o V1 §8 mediu recompilando 38 tarefas por corrida), `@react-native-community/datetimepicker` (#315, div. 234). E o `setup-android@v4` (#302, `717104e`) mudou um passo do job | **não** abri segmento para eles: o corte decidido foi um só, na #284, e os quatro somaram sem mudar o regime de ~12 min (a #284 mudou de ~6–7 para ~12). O recorte "desde o v4" está no `CI-FAIXA.md` como descritivo. Fica para o Marcel: a regra precisa de um limiar (por exemplo, "muda o regime") ou de uma lista do que conta como definição?~~ — **decidida** (§12): lista fechada + condição medida |
+
+## 12. A regra dos segmentos — decisão do Marcel sobre a div. 366 (2026-09-23)
+
+Verbatim, no `CI-FAIXA.md` e no `LOGS-OCTAVIA.md`, no lugar de "mudança na
+definição do build abre um segmento novo; mudança só no gatilho não abre":
+
+> **Segmentos da série.** Um segmento novo abre só quando as duas
+> condições valem: (1) mudou um item da lista fechada — passos do job,
+> toolchain (JDK, Gradle, `setup-android`, SDK Android), versão do Expo
+> SDK ou do React Native, número de ABIs do APK —, e (2) as cinco
+> corridas seguintes têm mediana fora do IQR do segmento vigente,
+> `[medido]`. Módulo nativo isolado não está na lista: se mudar o
+> patamar, entra pela condição (2) como divergência a investigar, não
+> como segmento. Quem abre o segmento é o Marcel, com as duas medições
+> ao lado. O corte na #284 foi decisão (div. 365) e é o único até aqui.
+
+**A regra aplicada para trás** às cinco mudanças da div. 366 (também no `CI-FAIXA.md`):
+
+| mudança | (1) na lista? | IQR do segmento vigente, antes da 1ª corrida com a mudança | as cinco corridas seguintes (# da série: job) | mediana | (2) fora do IQR? | abre? |
+|---|---|---|---|---|---|---|
+| `expo-network` (#285, `08b84d6`) | não — módulo nativo | 12m55s–13m46s (n=2) | 21: 11m57s, 22: 12m45s, 23: 11m22s, 24: 13m23s, 25: 11m45s | **11m57s** | **sim** — IQR de **n=2** (corridas 19 e 20), sem população. Mediana **abaixo**: o patamar não subiu | **não** |
+| `expo-keep-awake` (#286, `fc079bd`) | não — módulo nativo | 12m22s–13m06s (n=4) | 23: 11m22s, 24: 13m23s, 25: 11m45s, 26: 8m56s, 27: 10m15s | **11m22s** | **sim** — IQR de **n=4**. Mediana **abaixo**, e a 26 (8m56s) puxa | **não** |
+| `react-native-svg` (#296, `8444b18`) | não — módulo nativo | 11m12s–12m22s (n=16) | 35: 13m18s, 36: 12m01s, 37: 9m16s, 38: 12m21s, 39: 11m20s | **12m01s** | não — dentro | **não** |
+| `setup-android@v4` (#302, `717104e`) | **sim** — toolchain (`setup-android`) | 11m20s–12m30s (n=29) | 49: 12m43s, 51: 10m27s, 52: 9m19s, 53: 12m26s, 54: 12m37s | **12m26s** | não — dentro | **não** |
+| `datetimepicker` (#315, `8681b57`) | não — módulo nativo | 11m05s–12m43s (n=52) | 73: 13m28s, 74: 13m11s, 75: 12m59s, 76: 8m09s, 77: 14m02s | **13m11s** | **sim** — **acima** do Q3. Não se sustenta: da 73 à 100, mediana **12m30s** (n=26), dentro do IQR de antes (div. 368) | **não** |
+
+Como se mediu `[medido: git log -S… -- apps/native/package.json · git merge-base --is-ancestor <commit> <head da corrida>]`:
+o commit que introduziu a mudança, e as corridas do regime 2 cujo head **contém**
+esse commit. "As cinco seguintes" são as cinco primeiras corridas com APK que o
+contêm, em ordem. Corridas de branches paralelas que ainda não o continham ficam
+fora. O "segmento vigente" são as corridas com APK do regime 2 antes da primeira
+que o contém. Quartis pelo método inclusivo. **Nenhuma das cinco abre segmento**:
+os quatro módulos falham a (1), e o `setup-android@v4` passa a (1) mas falha a (2).
+A (2) vale para três módulos, e cada um virou divergência, como a regra manda
+(divs. 367 e 368).
+
+Os outros itens da lista, conferidos no regime 2 `[medido]`:
+- **Expo SDK e React Native**: a última mudança de versão foi na #268, no regime 1 (`git log --first-parent -G'"(expo|react-native)": ' -- apps/native/package.json`).
+- **JDK**: `java-version: 17` o tempo todo.
+- **ABIs**: nenhuma configuração no `app.json`, então vale o padrão, que não mudou.
+- **Passos do job**: só o `setup-android@v4` (#302). O `d83d94f` (N1-PR8) mexeu no `paths`, e a #322 no gatilho (`mudou-nativo`, `needs`, `if`), fora dos passos do `android-debug-apk`.
+
+## 13. Divergências — 367 e 368
+
+| div. | origem | o que | o que foi feito |
+|---|---|---|---|
+| **367** | T | a condição (2) **vale** para o `expo-network` e o `expo-keep-awake`, mas por artefato: o "segmento vigente" tinha **n=2** (as duas corridas da #284) e **n=4**, e a mediana das cinco caiu **abaixo** do IQR, não acima. A regra não fixa um `n` mínimo para o IQR, nem a direção. E "as cinco corridas seguintes" precisou de uma leitura: as cinco primeiras corridas com APK cujo head **contém** o commit da mudança, fora as de branches paralelas que ainda não o continham | como a regra manda para módulo, registrado como divergência, não segmento. Fica para o Marcel: `n` mínimo e direção da (2) |
+| **368** | A | `datetimepicker` (#315): a mediana das cinco (13m11s) ficou **acima** do Q3 de então (12m43s, n=52). Isto é a (2) valendo para um módulo, o caso que a regra chama de "divergência a investigar". **Não se sustenta**: da corrida 73 à 100, a mediana é **12m30s** (n=26), dentro do IQR de antes. As cinco incluem a 77 (14m02s) e a 76 (8m09s, o cache da div. 253). A causa não foi medida | registrada, a investigar. Nenhum segmento aberto |

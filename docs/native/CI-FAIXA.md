@@ -31,12 +31,20 @@ ficam na tabela, riscadas, e **fora da população**. São as duas **plantadas**
 
 ## Os segmentos, e a regra que os abre
 
-**Mudança na definição do build abre um segmento novo. Mudança só no gatilho não
-abre** (decisão do Marcel, 2026-09-23; a regra está também no `LOGS-OCTAVIA.md`,
-"Errata W4-b2"). O gatilho decide **quando** o job roda: o `paths`, o H1, o
-`mudou-nativo`. A definição do build é **o que o job compila e como**. O H1 da
-#322, que só decide se o job roda, **não abriu** segmento. A série tem hoje **dois**
-segmentos; a razão do corte está abaixo, `[medido]`.
+> **Segmentos da série.** Um segmento novo abre só quando as duas
+> condições valem: (1) mudou um item da lista fechada — passos do job,
+> toolchain (JDK, Gradle, `setup-android`, SDK Android), versão do Expo
+> SDK ou do React Native, número de ABIs do APK —, e (2) as cinco
+> corridas seguintes têm mediana fora do IQR do segmento vigente,
+> `[medido]`. Módulo nativo isolado não está na lista: se mudar o
+> patamar, entra pela condição (2) como divergência a investigar, não
+> como segmento. Quem abre o segmento é o Marcel, com as duas medições
+> ao lado. O corte na #284 foi decisão (div. 365) e é o único até aqui.
+
+(Decisão do Marcel sobre a div. 366, 2026-09-23. O mesmo texto está no
+`LOGS-OCTAVIA.md`, "Errata W4-b2".) Mudança só no gatilho, como o `paths`, o H1 ou o
+`mudou-nativo`, não está na lista: o H1 da #322 **não abriu** segmento. A série
+tem hoje **dois** segmentos; a razão do corte está abaixo, `[medido]`.
 
 | segmento | de | até | corridas | falhas | população | faixa |
 |---|---|---|---|---|---|---|
@@ -52,6 +60,26 @@ mergeado na #284 (`6f30f02`), pôs no `apps/native/package.json` os módulos nat
 `@react-navigation/native-stack`, do `expo-font` e das fontes, e pôs o plugin do
 `expo-font` no `app.json` (`git diff 6f30f02^1 6f30f02 -- apps/native/package.json apps/native/app.json`).
 O job passou de ~6–7 min a ~12 min (`N1-ENCERRAMENTO.md:159`) e não voltou.
+
+### A regra aplicada para trás — as cinco mudanças da div. 366
+
+| mudança | (1) na lista? | IQR do segmento vigente, antes da 1ª corrida com a mudança | as cinco corridas seguintes (# da série: job) | mediana | (2) fora do IQR? | abre? |
+|---|---|---|---|---|---|---|
+| `expo-network` (#285, `08b84d6`) | não — módulo nativo | 12m55s–13m46s (n=2) | 21: 11m57s, 22: 12m45s, 23: 11m22s, 24: 13m23s, 25: 11m45s | **11m57s** | **sim** — IQR de **n=2** (corridas 19 e 20), sem população. Mediana **abaixo**: o patamar não subiu | **não** |
+| `expo-keep-awake` (#286, `fc079bd`) | não — módulo nativo | 12m22s–13m06s (n=4) | 23: 11m22s, 24: 13m23s, 25: 11m45s, 26: 8m56s, 27: 10m15s | **11m22s** | **sim** — IQR de **n=4**. Mediana **abaixo**, e a 26 (8m56s) puxa | **não** |
+| `react-native-svg` (#296, `8444b18`) | não — módulo nativo | 11m12s–12m22s (n=16) | 35: 13m18s, 36: 12m01s, 37: 9m16s, 38: 12m21s, 39: 11m20s | **12m01s** | não — dentro | **não** |
+| `setup-android@v4` (#302, `717104e`) | **sim** — toolchain (`setup-android`) | 11m20s–12m30s (n=29) | 49: 12m43s, 51: 10m27s, 52: 9m19s, 53: 12m26s, 54: 12m37s | **12m26s** | não — dentro | **não** |
+| `datetimepicker` (#315, `8681b57`) | não — módulo nativo | 11m05s–12m43s (n=52) | 73: 13m28s, 74: 13m11s, 75: 12m59s, 76: 8m09s, 77: 14m02s | **13m11s** | **sim** — **acima** do Q3. Não se sustenta: da 73 à 100, mediana **12m30s** (n=26), dentro do IQR de antes (div. 368) | **não** |
+
+Como se mediu `[medido: git log -S… -- apps/native/package.json · git merge-base --is-ancestor <commit> <head da corrida>]`:
+o commit que introduziu a mudança, e as corridas do regime 2 cujo head **contém**
+esse commit. "As cinco seguintes" são as cinco primeiras corridas com APK que o
+contêm, em ordem. Corridas de branches paralelas que ainda não o continham ficam
+fora. O "segmento vigente" são as corridas com APK do regime 2 antes da primeira
+que o contém. Quartis pelo método inclusivo. **Nenhuma das cinco abre segmento**:
+os quatro módulos falham a (1), e o `setup-android@v4` passa a (1) mas falha a (2).
+A (2) vale para três módulos, e cada um virou divergência, como a regra manda
+(divs. 367 e 368).
 
 ### Recortes — descritivos, **não** referência
 
@@ -207,7 +235,7 @@ gh run view <id> --json jobs \
 
 A linha nova entra no fim do segmento em vigor. O cabeçalho (`n`, mín, máx, mediana,
 quartis) se **recalcula** a cada linha nova, e um segmento novo só se abre pela regra
-acima:
+acima ("Segmentos da série"), pelo Marcel:
 uma estatística que não acompanha a tabela é a div. 110 outra vez. Corrida
 `skipped` (o H1: push sem nativo) **não entra**, porque não houve build; ela vive no
 `gh pr checks` da PR. A corrida que o próprio push de docs de um encerramento
