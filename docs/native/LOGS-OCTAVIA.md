@@ -792,3 +792,118 @@ assinatura do descarte, contada com duas linhas que o catálogo já tem.
 O que isso custa, declarado: um `grep` por `resync` sozinho não diz qual das
 duas venceu. Se um aceite no aparelho precisar disso, é um campo na linha
 `resync`, com errata — e aí o T2-R16 muda junto.
+
+---
+
+## Errata W4-b2 (2026-09-23) — números de CI têm uma fonte, e as declarações dos gates moram na PR
+
+### Número de CI: com `n`, com nível, e do `CI-FAIXA.md`
+
+A regra da div. 80 (**uma medição não vira referência sem `n`**) e a dos níveis
+(passo, job, run e relógio são quatro números, mais acima) ganham **uma fonte**:
+[`CI-FAIXA.md`](CI-FAIXA.md), a série inteira do `android-debug-apk`, nível job,
+uma linha por corrida, com o cabeçalho recalculado a cada linha. **Todo número de CI
+se cita com `n` e nível ao lado, e a fonte é esse arquivo.** A faixa da V1-PR6
+(`n=12`) e as que a sucederam (`n=13…18`, e a série do N2, `n=21`) deixam de ser
+referência. Ficam onde estão, como registro de cada momento.
+
+### O bloco ```` ```gates ```` — o contrato
+
+As exceções do G1a, os pares do G1b e as erratas e remoções do G3 são **estado de
+uma PR** (div. 141). Até o W4-b1 elas moravam nas listas dos scripts, sobreviviam à
+PR e, com a órfã reprovando (div. 339), a PR seguinte herdava a poda (div. 348).
+Desde a W4-b2 elas moram **no corpo da PR**, num único bloco:
+
+````
+```gates
+# comentário e linha em branco são ignorados
+g1a: <caminho>                             exceção do G1a, uma por linha
+g1b-velha: <linha que sai do teste>        par do G1b: as três, nesta ordem
+g1b-nova: <linha que entra no lugar>
+g1b-razao: <razão>
+g3-velha: <linha de log que sai>           errata do G3: as duas, nesta ordem
+g3-nova: <linha que entra no lugar>
+g3-removida: <linha> → REMOVIDA: <razão>   remoção do G3 (N2-D34)
+```
+````
+
+- O **`gates.yml`** lê o corpo **pela API** a cada corrida e roda de novo quando o
+  corpo é editado (`edited`). Editar o corpo é, portanto, mudar o que o gate
+  afirma, e o gate reage em segundos (medido: 16 s até o vermelho, 23 s até o
+  verde; `W4B2-anexos/README.md` §3).
+- **No CI, as listas locais dos scripts têm de estar vazias.** Lista local não vazia
+  reprova (`LISTA LOCAL NÃO VAZIA com GATES_DECL ✗`). Por isso a `main` não carrega
+  declaração nenhuma, e uma PR só de docs volta a ser só de docs.
+- O extrator (`apps/native/scripts/gates-decl.sh`) recusa só o que tornaria a
+  leitura ambígua: chave desconhecida, valor vazio, par fora de ordem ou
+  incompleto, bloco não fechado, mais de um bloco. As regras de cada lista (casar
+  IGUAL ou por subcadeia, razão obrigatória, órfã reprova) continuam nos scripts.
+- **Rodar à mão**: sem `GATES_DECL`, a lista local vale como sempre valeu. Com a PR
+  aberta:
+  `gh pr view <n> --json body -q .body | sh apps/native/scripts/gates-decl.sh > /tmp/decl`
+  e depois `GATES_DECL=/tmp/decl sh apps/native/scripts/g1.sh <base> WORKTREE`.
+- **O gate-first muda de lugar.** A declaração que o commit 1 fazia no script, o
+  corpo da PR faz agora, e o CI mede o head contra o corpo **atual**. O "commit 1
+  vermelho à mão" do W4-b1 deixa de existir: o corpo não pertence a commit nenhum.
+  Em troca, o corpo **não tem histórico no git**. O registro do que foi declarado
+  é o anexo da PR, que tem de colar o bloco como ele ficou.
+
+### Sem push forçado em PR (decisão do Marcel, 2026-09-23, div. 353)
+
+**Numa PR aberta não se faz push forçado**: nada de `commit --amend`, `rebase` nem
+`reset` depois do push. Uma correção entra como **commit novo**, e uma reversão como
+**commit de reversão**. A razão é o rito: os CNs deste projeto são provados **por
+commit** (o commit 1 reprova, o commit 2 passa, o push de docs sai *skipped*), e um
+amend depois do push apaga o commit que carregava a prova e o `gh pr checks` dele.
+A exceção precisa de decisão do Marcel **antes**, como a do `CLAUDE.md` (o
+`reset --soft` + `push --force-with-lease` do B7-PR0, que tirou da branch arquivos
+alheios).
+
+O detector do APK (`mudou-nativo.sh`) trata o push forçado pelo **padrão seguro**: o
+`before` não é ancestral do head, então o APK roda. **Hipótese, não medida:**
+comparar **árvore contra árvore** (`git diff before head`, que vale sem
+ancestralidade) filtraria também o push forçado só de docs. Seria preciso buscar
+pelo sha um commit órfão que o GitHub pode já não servir, e o preço disso em
+produção nunca foi medido. **O número que a motiva**: no N2, **3 dos 7** pushes só de
+docs que custaram APK foram forçados (#315: `a3061e6`, `a1f3f54`, `c8db83a`,
+35m10s). Com a regra acima, esse caso não deveria mais acontecer. Se voltar a
+acontecer, a hipótese se mede.
+
+### Toda PR copia o seu bloco ```` ```gates ```` para o README dos anexos (decisão do Marcel, 2026-09-23)
+
+O corpo da PR **não tem histórico no git** e pode ser editado depois do merge. Por
+isso, **no commit de docs, toda PR copia o seu bloco ```` ```gates ```` verbatim**
+para o `README.md` dos seus anexos, numa seção própria, **inclusive quando o bloco
+não declara nada**. O registro do que a PR declarou é esse texto. O corpo é só o
+lugar de onde o CI o lê. Se o corpo mudar depois do commit de docs, a cópia se
+refaz num commit novo.
+
+### A faixa de CI tem segmentos (decisão do Marcel, 2026-09-23)
+
+A referência do `CI-FAIXA.md` é calculada **só do regime em vigor**. A série
+inteira continua lá, em ordem, dividida em segmentos rotulados, cada um com a razão
+do corte, `[medido]`.
+
+> **Segmentos da série.** Um segmento novo abre só quando as duas
+> condições valem: (1) mudou um item da lista fechada — passos do job,
+> toolchain (JDK, Gradle, `setup-android`, SDK Android), versão do Expo
+> SDK ou do React Native, número de ABIs do APK —, e (2) as **dez**
+> corridas seguintes têm mediana fora do IQR do segmento vigente, para
+> cima ou para baixo, e a condição só se avalia quando o segmento vigente
+> tem **n ≥ 10** — abaixo disso a série está em formação e não abre
+> segmento. Módulo nativo isolado não está na lista: se mudar o
+> patamar, entra pela condição (2) como divergência a investigar, não
+> como segmento. Quem abre o segmento é o Marcel, com as duas medições
+> ao lado. O corte na #284 foi decisão (div. 365) e é o único até aqui.
+
+(Decisão do Marcel sobre a div. 366.) Aplicada para trás às cinco mudanças que a
+div. 366 listou (com dez corridas e n ≥ 10), a regra não abre segmento sozinha,
+porque quem abre é o Marcel. As duas condições valeram para o
+`setup-android@v4`, e a **div. 369** está **fechada** (decisão do Marcel,
+2026-09-23): candidato não aberto: mediana fora do IQR por 1,5 s (751,5 s contra Q3 de 750 s), num IQR de 70 s; ruído de corrida. A regra não ganha tolerância numérica: a decisão de abrir é a tolerância, e fica registrada com as medições. O `datetimepicker` segue fora do IQR (div. 368, aberta;
+dono: **W4-b3**, que mede o custo do módulo nativo no build junto com o build de release). A tabela está no `CI-FAIXA.md`, "A regra aplicada para trás".
+
+Hoje há dois segmentos: o **regime 1**, antes da #284, e o **regime 2**, desde a
+#284, que é a referência. O corte é o `9806e44` (N1-PR3a): os módulos nativos da
+navegação e das fontes entraram, e o job passou de ~6–7 min a ~12 min. **O
+workflow em si não mudou ali** (div. 365).

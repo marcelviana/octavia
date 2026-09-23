@@ -1,0 +1,365 @@
+W4B2-A — medir antes (§1). Rastro: saída literal dos comandos, contra origin/main e9b4196 (#321 mergeada).
+Data da medição: 2026-09-23T15:49Z
+
+################################################################################
+§1.1 — os workflows
+################################################################################
+$ ls .github/workflows/
+ci.yml
+native.yml
+
+$ git show origin/main:.github/workflows/native.yml
+# N0-PR2 (N0-PRECHECK C4-2): build verificável do nativo por PR — APK de debug local, sem EAS, sem segredo.
+# Só roda quando o nativo muda (filtro de paths); PRs de web ou de core não o executam.
+# Recorte da N1-PR8 (decisão do Marcel, 2026-09-10, N1-h3): `packages/core/**` e
+# `pnpm-lock.yaml` saíram do filtro. O gate custou 10m15s–14m15s nas sete medições do
+# N1 (mediana ~11m45s), acima dos ~9 min aceitáveis, e mudança só de core já é coberta
+# pelo `build` (que roda o `pnpm test` inteiro, incluindo o projeto `core`). O que o
+# APK de fato depende — `apps/native/**`, o próprio workflow e o `pnpm-workspace.yaml` —
+# continua disparando.
+name: native
+'on':
+  pull_request:
+    paths:
+    - apps/native/**
+    - .github/workflows/native.yml
+    - pnpm-workspace.yaml
+  push:
+    branches:
+    - main
+    paths:
+    - apps/native/**
+    - .github/workflows/native.yml
+    - pnpm-workspace.yaml
+env:
+  EXPO_NO_TELEMETRY: '1'
+  CI: '1'
+jobs:
+  android-debug-apk:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: pnpm/action-setup@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 22
+        cache: pnpm
+    - uses: actions/setup-java@v4
+      with:
+        distribution: temurin
+        java-version: 17
+    # Bump para v4 + `packages` explícito (2026-09-14). O `v3` com o default
+    # `tools platform-tools` passou a reprovar em ~27 s no `sdkmanager`
+    # (`Failed to find package 'tools'`) — o `tools` é pacote APOSENTADO do SDK,
+    # e o cmdline-tools 16.0 da imagem do runner deixou de tolerá-lo.
+    # O `v4` sozinho NÃO basta: o default dele continua sendo
+    # `tools platform-tools` (lido no `action.yml` da tag v4). Quem tira a causa
+    # é o `packages` explícito — o build não precisa do `tools`: o Gradle baixa
+    # a `platform`/`build-tools` de que precisa, e o `platform-tools` é o que a
+    # imagem usa para `adb`.
+    - uses: android-actions/setup-android@v4
+      with:
+        packages: platform-tools
+    - uses: actions/cache@v4
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: gradle-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml', 'apps/native/app.json') }}
+        restore-keys: |
+          gradle-${{ runner.os }}-
+    - name: Install dependencies
+      run: pnpm install --frozen-lockfile
+    - name: Type-check apps/native
+      run: pnpm --filter native run type-check
+    - name: Prebuild (android)
+      run: cd apps/native && npx expo prebuild --platform android --no-install
+    - name: Gradle assembleDebug
+      run: cd apps/native/android && ./gradlew assembleDebug --no-daemon
+    - uses: actions/upload-artifact@v4
+      with:
+        name: app-debug.apk
+        path: apps/native/android/app/build/outputs/apk/debug/app-debug.apk
+        retention-days: 7
+
+$ git show origin/main:.github/workflows/ci.yml
+# W3 (div. 129): os gates deixam de só medir.
+#
+# Até a W2, `gate:a20`, `gate:icones`, G1, G2/G3 e G7 rodavam quando o executor
+# os rodava, à mão, e o relatório da PR dizia que rodaram. A disciplina do
+# projeto é real e está medida em todas as PRs — e é exatamente por isso que a
+# distinção importa: **o gate mede, o gate não IMPEDE**. Nada barrava a entrada
+# na `main` de um commit que os reprovasse; o que barrava era alguém ter rodado
+# e lido.
+#
+# Onde cada um passa a rodar (a tabela inteira, com o que fica de FORA e por quê,
+# está em `docs/native/W3-anexos/W3-B-os-cinco-gates-e-o-ci.txt`):
+#   • `gate:a20` + CN, `gate:icones` + CN  → `apps/native/test/gates.test.ts`,
+#     dentro do projeto `native` do Vitest, logo dentro do `pnpm test:unit` do
+#     job `build` abaixo. Reprovar = `build` vermelho.
+#   • G7 (árvore de trabalho)              → já rodava: ele É
+#     `vitest run --project native`, um subconjunto do mesmo `pnpm test:unit`.
+#   • G1a/G1b e G2/G3                      → o job `gates-nativos` daqui. São
+#     gates DIFERENCIAIS: a verdade deles é um PAR de refs git, não uma árvore.
+#     Não cabem num `it` (um teste não sabe qual é a BASE da PR) e precisam do
+#     histórico inteiro — por isso job próprio, com `fetch-depth: 0`.
+#   • os CN de G1/G2/G3/G7                 → FORA, e declarado: os do G1/G2/G3
+#     exigem um par de refs fabricado, e o do G7 TROCA arquivo da árvore de
+#     trabalho para rodar o código de ontem contra as asserções de hoje. Um job
+#     que muta a própria árvore para provar um ponto é instrumento de mão.
+name: CI
+'on':
+  push:
+    branches:
+    - main
+  pull_request: null
+jobs:
+  # Os dois gates DIFERENCIAIS. Custam segundos: é `sh`, `git` e `awk`, sem
+  # `pnpm install`, sem build. Não têm filtro de caminho de propósito — o
+  # escopo do G2/G3 inclui `packages/core/src`, que o `native.yml` não cobre, e
+  # numa PR que não toca o nativo os dois passam num diff vazio.
+  gates-nativos:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        # O histórico inteiro: sem ele não há `merge-base`, e sem `merge-base`
+        # não há par. E a HEAD é a do RAMO, não o merge commit que o
+        # `actions/checkout` monta por default — senão o que voltou da `main`
+        # depois do ponto de ramificação apareceria como diff desta PR.
+        fetch-depth: 0
+        ref: ${{ github.event.pull_request.head.sha || github.sha }}
+    - name: A BASE do par — o ponto de ramificação
+      run: |
+        set -e
+        ALVO="${{ github.event.pull_request.base.sha }}"
+        if [ -z "$ALVO" ]; then ALVO=$(git rev-parse HEAD~1); fi
+        BASE=$(git merge-base "$ALVO" HEAD)
+        echo "BASE=$BASE" >> "$GITHUB_ENV"
+        echo "base=$BASE  head=$(git rev-parse HEAD)"
+    - name: G1a/G1b — invariância de comportamento e de decisão
+      run: sh apps/native/scripts/g1.sh "$BASE" WORKTREE
+    - name: G2/G3 — testIDs antes ⊆ depois, linhas de log com errata declarada
+      run: sh apps/native/scripts/g2g3.sh "$BASE" WORKTREE
+    # W4-b1, div. 223: o registro de integridade dos congelados existia desde a
+    # V1-PR2 e nada o lia — o do V1 reprovava desde a V1-PR6 (pelo README, que é
+    # o arquivo VIVO das erratas e saiu da lista) sem que ninguém soubesse. Não
+    # é diferencial: confere a árvore, não um par. O texto do passo é o mesmo
+    # que o `__cn__/cn-w4b1.sh` roda (o CN-223b confere).
+    - name: Congelados — shasum -c dos SHA256SUMS do DESIGN-V1 e do DESIGN-N2
+      run: |
+        F=0
+        for d in docs/native/DESIGN-V1 docs/native/DESIGN-N2; do
+          echo "== $d"
+          (cd "$d" && shasum -a 256 -c SHA256SUMS) || F=1
+        done
+        exit $F
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: pnpm/action-setup@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 22
+        cache: pnpm
+    - name: Install dependencies
+      run: pnpm install --frozen-lockfile
+    - name: Lint
+      run: pnpm lint
+    - name: Type-check dos testes (informativo — zerar o passivo e promover a bloqueante, PLANO-TRANSICAO B8)
+      run: pnpm exec tsc -p tsconfig.test.json --noEmit
+      continue-on-error: true
+    - name: Type-check packages/core
+      run: pnpm exec tsc -p packages/core/tsconfig.json --noEmit
+    # Aqui dentro correm o `gate:a20`, o `gate:icones` e os CN dos dois
+    # (`apps/native/test/gates.test.ts`), e o G7 sobre a árvore de trabalho.
+    # Este passo NÃO tem `continue-on-error`: um gate que reprova reprova o job.
+    - name: Test — a suíte, e com ela os gates embrulhados (W3, div. 129)
+      run: pnpm test:unit
+    - name: Test coverage
+      run: pnpm test:ci
+    - name: Upload coverage to Codecov
+      if: always()
+      uses: codecov/codecov-action@v4
+      with:
+        file: ./coverage/coverage-final.json
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+        verbose: true
+    - name: Upload coverage artifacts
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage
+        path: coverage
+    - name: Build
+      run: pnpm build
+
+$ gh api repos/marcelviana/octavia/rulesets/23545697 --jq "{name, enforcement, conditions, rules}"
+{"conditions":{"ref_name":{"exclude":[],"include":["~DEFAULT_BRANCH"]}},"enforcement":"active","name":"maion","rules":[{"type":"deletion"},{"type":"non_fast_forward"},{"parameters":{"do_not_enforce_on_create":false,"required_status_checks":[{"context":"gates-nativos","integration_id":15368},{"context":"build","integration_id":15368}],"strict_required_status_checks_policy":true},"type":"required_status_checks"},{"parameters":{"allowed_merge_methods":["merge"],"dismiss_stale_reviews_on_push":false,"require_code_owner_review":false,"require_extra_approval_for_unattributed_changes":true,"require_last_push_approval":false,"required_approving_review_count":0,"required_review_thread_resolution":false,"required_reviewers":[]},"type":"pull_request"}]}
+
+$ gh api repos/marcelviana/octavia/actions/permissions/workflow
+{"default_workflow_permissions":"read","can_approve_pull_request_reviews":false}
+Leitura: dois workflows. native.yml = pull_request + push(main), ambos com paths
+(apps/native/**, .github/workflows/native.yml, pnpm-workspace.yaml), um job
+(android-debug-apk). ci.yml = push(main) + pull_request sem filtro, dois jobs
+(gates-nativos, build). O ruleset 'maion' exige gates-nativos e build
+(integration_id 15368 = GitHub Actions, qualquer workflow), strict; o APK não é
+exigido. Token default dos workflows: read.
+
+################################################################################
+§1.2 — a série do android-debug-apk, nível job (startedAt → completedAt)
+################################################################################
+$ gh run list --workflow=native.yml --limit 200 --json databaseId,event,headBranch,headSha,status,conclusion,createdAt,displayTitle
+  → 93 corridas (todas as do workflow desde a primeira)
+$ gh run view <id> --json jobs -q ".jobs[] | [id, .name, .conclusion, .startedAt, .completedAt] | @tsv"   (para cada id)
+$ gh pr list --state all --limit 400 --json number,headRefName,headRefOid,mergeCommit
+  PR: pull_request → pela branch; push na main → pelo mergeCommit.
+
+#	run	evento	PR	branch	head	conclusão	início (UTC)	job
+1	34117343294	pull_request	265	n0/pr2-native-blank	dcbebad	failure	2026-09-07T11:34:52Z	0m40s
+2	34117642858	pull_request	265	n0/pr2-native-blank	322a48c	success	2026-09-07T11:47:06Z	5m33s
+3	34126002356	push	265	main	aca0002	success	2026-09-07T13:11:39Z	9m26s
+4	34127828871	pull_request	266	n0/pr3-auth-setlists	6ccf644	failure	2026-09-07T13:31:07Z	1m14s
+5	34128158232	pull_request	266	n0/pr3-auth-setlists	6a5a8bf	success	2026-09-07T13:34:40Z	5m21s
+6	34129780874	push	266	main	8bb2948	success	2026-09-07T13:52:00Z	6m46s
+7	34133725283	pull_request	267	n0/pr4-h15	63d0c4b	success	2026-09-07T14:34:55Z	6m58s
+8	34146190080	push	267	main	9310ba7	success	2026-09-07T17:06:22Z	4m42s
+9	34147586179	pull_request	268	n0/pr5-pdf-h16	1fccc4c	success	2026-09-07T17:26:02Z	8m03s
+10	34160851483	push	268	main	40da95c	success	2026-09-07T20:49:27Z	7m03s
+11	34389506702	pull_request	277	b7/pr7-aparato	0da66c8	success	2026-09-09T18:36:52Z	6m55s
+12	34391117063	push	277	main	3f82390	success	2026-09-09T18:47:02Z	7m19s
+13	34484129145	pull_request	282	n1/pr2a-core-contrato	8bf69a4	success	2026-09-10T13:40:40Z	7m39s
+14	34484255719	pull_request	282	n1/pr2a-core-contrato	fe5f58b	success	2026-09-10T13:41:53Z	7m08s
+15	34485672668	push	282	main	1816472	success	2026-09-10T13:55:16Z	6m40s
+16	34486542479	pull_request	283	n1/pr2b-core-sync	966215e	success	2026-09-10T14:03:25Z	6m56s
+17	34486686394	pull_request	283	n1/pr2b-core-sync	17d7841	success	2026-09-10T14:04:44Z	5m57s
+18	34488090147	push	283	main	db89e82	success	2026-09-10T14:17:38Z	7m24s
+19	34495434672	pull_request	284	n1/pr3a-fundacao-s0	9806e44	success	2026-09-10T15:24:33Z	14m11s
+20	34499344864	push	284	main	6f30f02	success	2026-09-10T16:00:39Z	12m30s
+21	34511721960	pull_request	285	n1/pr3b-store-s1	08b84d6	success	2026-09-10T18:01:02Z	11m57s
+22	34513868030	push	285	main	5d5cf1d	success	2026-09-10T18:22:01Z	12m45s
+23	34517017178	pull_request	286	n1/pr4-palco-texto	fc079bd	success	2026-09-10T18:52:48Z	11m22s
+24	34522240072	push	286	main	23c00d2	success	2026-09-10T19:45:07Z	13m23s
+25	34526729763	pull_request	287	n1/pr5-pdf-arquivos	b1090a5	success	2026-09-10T20:29:56Z	11m45s
+26	34533092029	push	287	main	dc261df	success	2026-09-10T21:36:19Z	8m56s
+27	34535253485	pull_request	288	n1/pr6-busca	898d07f	success	2026-09-10T22:01:01Z	10m15s
+28	34541666142	push	288	main	568db1e	success	2026-09-10T23:20:01Z	11m14s
+29	34597905011	pull_request	289	n1/pr7-aceite	f43f81a	success	2026-09-11T12:14:31Z	11m39s
+30	34599949499	push	289	main	c2fa635	success	2026-09-11T12:38:19Z	12m20s
+31	34602544498	pull_request	290	n1/pr8-correcoes	d83d94f	success	2026-09-11T13:07:34Z	11m35s
+32	34610061441	push	290	main	6a9315d	success	2026-09-11T14:25:49Z	8m54s
+33	34720311405	pull_request	294	v1/pr1-alvos-geometria	4d70445	success	2026-09-12T21:33:56Z	11m07s
+34	34726569641	push	294	main	26452f9	success	2026-09-12T23:53:21Z	12m00s
+35	34771766466	pull_request	296	v1/pr3-svg-icones	da5bbf1	success	2026-09-13T17:30:01Z	13m18s
+36	34772936264	push	296	main	2db81ce	success	2026-09-13T17:53:16Z	12m01s
+37	34777518972	pull_request	297	v1/pr4-s1	cb31a40	success	2026-09-13T19:23:01Z	9m16s
+38	34778219856	pull_request	297	v1/pr4-s1	b95a6bc	success	2026-09-13T19:36:40Z	12m21s
+39	34778251051	push	297	main	9a7fa6e	success	2026-09-13T19:37:19Z	11m20s
+40	34780911672	pull_request	298	v1/pr5-s2	4cb3b22	success	2026-09-13T20:29:19Z	11m55s
+41	34781671264	pull_request	298	v1/pr5-s2	74b339b	success	2026-09-13T20:43:59Z	11m53s
+42	34782356827	pull_request	298	v1/pr5-s2	b1f7b4c	success	2026-09-13T20:57:49Z	11m52s
+43	34784211143	pull_request	298	v1/pr5-s2	1e5ad7c	success	2026-09-13T21:34:07Z	10m41s
+44	34788589042	push	298	main	1ba1557	success	2026-09-13T23:03:50Z	12m32s
+45	34791936599	pull_request	299	v1/pr6-acabamento	b348da9	success	2026-09-14T00:12:15Z	12m32s
+46	34792694124	pull_request	299	v1/pr6-acabamento	615d6a8	success	2026-09-14T00:26:15Z	11m40s
+47	34841137826	push	299	main	72bdb38	success	2026-09-14T12:01:08Z	13m22s
+48	34909653662	pull_request	301	w1/garantia-offline	83a11b4	failure	2026-09-14T23:38:41Z	0m31s
+49	34910579325	pull_request	302	infra/setup-android-v4	717104e	success	2026-09-14T23:49:43Z	12m43s
+50	34910768494	pull_request	301	w1/garantia-offline	c7b10d5	failure	2026-09-14T23:52:24Z	0m26s
+51	34966363353	push	302	main	7a13452	success	2026-09-15T12:00:17Z	10m27s
+52	34966774801	pull_request	301	w1/garantia-offline	5b80df0	success	2026-09-15T12:04:36Z	9m19s
+53	34975012521	push	301	main	f58259e	success	2026-09-15T13:26:36Z	12m26s
+54	35015930984	pull_request	303	w2/gate-barra-mensagem	f498f6c	success	2026-09-15T19:49:36Z	12m37s
+55	35026669769	push	303	main	cbff070	success	2026-09-15T21:37:32Z	10m59s
+56	35044913963	pull_request	304	w3/cn-ci	192b954	success	2026-09-16T01:39:03Z	12m46s
+57	35045454235	pull_request	305	w3/gates-no-ci	440aa1a	success	2026-09-16T01:47:25Z	9m44s
+58	35046199666	pull_request	305	w3/gates-no-ci	f70d988	success	2026-09-16T01:59:06Z	12m53s
+59	35094310127	pull_request	305	w3/gates-no-ci	712f054	success	2026-09-16T12:10:32Z	12m52s
+60	35096488810	pull_request	305	w3/gates-no-ci	3575e4b	success	2026-09-16T12:33:10Z	11m47s
+61	35098537171	push	305	main	9e14042	success	2026-09-16T12:54:06Z	9m55s
+62	35155759267	pull_request	309	n2/pr1-t1r10	9e88c3c	success	2026-09-16T22:04:06Z	12m33s
+63	35156800868	pull_request	309	n2/pr1-t1r10	e5c1ec1	success	2026-09-16T22:16:02Z	12m50s
+64	35538341300	pull_request	309	n2/pr1-t1r10	e949cc9	success	2026-09-20T21:19:31Z	12m50s
+65	35586376779	pull_request	309	n2/pr1-t1r10	cbe1a4b	success	2026-09-21T10:00:28Z	9m31s
+66	35610812531	pull_request	309	n2/pr1-t1r10	bd250f3	success	2026-09-21T14:14:29Z	12m50s
+67	35642620083	push	309	main	adf32e6	success	2026-09-21T19:05:38Z	8m31s
+68	35655296020	pull_request	312	w4a/gates	4b6a510	success	2026-09-21T21:07:28Z	12m10s
+69	35658439776	push	312	main	5f1c226	success	2026-09-21T21:39:34Z	13m42s
+70	35663577954	pull_request	314	n2/pr2-core-escrita	70e77be	success	2026-09-21T22:36:52Z	9m21s
+71	35665914430	pull_request	314	n2/pr2-core-escrita	da67e45	success	2026-09-21T23:05:26Z	12m39s
+72	35668235295	push	314	main	fedfd24	success	2026-09-21T23:35:20Z	12m43s
+73	35723549642	pull_request	315	n2/pr3-s1-criar	25c00ee	success	2026-09-22T11:48:50Z	13m28s
+74	35738242548	pull_request	315	n2/pr3-s1-criar	bb9a427	success	2026-09-22T14:08:38Z	13m11s
+75	35739888971	pull_request	315	n2/pr3-s1-criar	a3061e6	success	2026-09-22T14:22:44Z	12m59s
+76	35739924367	pull_request	315	n2/pr3-s1-criar	a1f3f54	success	2026-09-22T14:23:03Z	8m09s
+77	35740988227	pull_request	315	n2/pr3-s1-criar	c8db83a	success	2026-09-22T14:32:17Z	14m02s
+78	35746115122	pull_request	315	n2/pr3-s1-criar	a904057	success	2026-09-22T15:16:04Z	11m58s
+79	35757759179	push	315	main	0fa1b75	success	2026-09-22T16:59:49Z	12m29s
+80	35766146681	pull_request	316	n2/pr4-s2-edicao	7aea968	success	2026-09-22T18:17:11Z	12m31s
+81	35772931849	pull_request	316	n2/pr4-s2-edicao	93c8a13	success	2026-09-22T19:18:30Z	13m26s
+82	35775486850	push	316	main	8bd4281	success	2026-09-22T19:42:19Z	13m09s
+83	35780792936	pull_request	317	n2/pr5-reordenar	53cafdd	success	2026-09-22T20:31:04Z	10m19s
+84	35785657879	pull_request	317	n2/pr5-reordenar	85f2988	success	2026-09-22T21:16:54Z	12m52s
+85	35797083138	push	317	main	f991eb0	success	2026-09-22T23:22:22Z	13m05s
+86	35801102126	pull_request	318	n2/pr6-picker	4dcdb94	success	2026-09-23T00:13:34Z	8m37s
+87	35846524323	push	318	main	426f4cc	success	2026-09-23T10:03:08Z	11m41s
+88	35865083143	pull_request	319	n2/pr7-transversais	f4f88db	success	2026-09-23T13:09:03Z	10m20s
+89	35867694118	pull_request	319	n2/pr7-transversais	de9e655	success	2026-09-23T13:31:48Z	12m15s
+90	35871287733	push	319	main	bc55419	success	2026-09-23T14:02:36Z	10m06s
+91	35878220044	pull_request	321	w4b/gates	de79967	success	2026-09-23T14:59:25Z	13m38s
+92	35878553708	pull_request	321	w4b/gates	b00f7b5	success	2026-09-23T15:02:01Z	12m17s
+93	35883169067	push	321	main	e9b4196	in_progress	2026-09-23T15:40:10Z	—
+
+################################################################################
+§1.3 — como o gates-nativos obtém base e head; acesso ao corpo da PR
+################################################################################
+$ git show origin/main:.github/workflows/ci.yml | sed -n "/gates-nativos:/,/^  build:/p" | grep -n "ref:\|ALVO\|merge-base\|BASE\|WORKTREE"
+6:        # O histórico inteiro: sem ele não há `merge-base`, e sem `merge-base`
+11:        ref: ${{ github.event.pull_request.head.sha || github.sha }}
+12:    - name: A BASE do par — o ponto de ramificação
+15:        ALVO="${{ github.event.pull_request.base.sha }}"
+16:        if [ -z "$ALVO" ]; then ALVO=$(git rev-parse HEAD~1); fi
+17:        BASE=$(git merge-base "$ALVO" HEAD)
+18:        echo "BASE=$BASE" >> "$GITHUB_ENV"
+19:        echo "base=$BASE  head=$(git rev-parse HEAD)"
+21:      run: sh apps/native/scripts/g1.sh "$BASE" WORKTREE
+23:      run: sh apps/native/scripts/g2g3.sh "$BASE" WORKTREE
+
+Leitura: checkout com fetch-depth 0 do head.sha da PR (não do merge commit);
+BASE = merge-base(pull_request.base.sha, HEAD), ou HEAD~1 no push da main; head =
+a árvore de trabalho (WORKTREE). As listas (EXCECOES, PARES_G1B, ERRATAS, REMOCOES)
+são lidas do próprio script, no HEAD.
+
+Corpo da PR: o evento pull_request traz github.event.pull_request.body, mas é o
+corpo NO MOMENTO DO EVENTO — e um 're-run' reusa o payload original. Ler pela API
+(GET /repos/{r}/pulls/{n}) no passo dá o corpo atual. O token default é read, e o
+read cobre pull-requests. No push da main não há PR no evento: a PR sai de
+GET /repos/{r}/commits/{sha}/pulls (a de merge_commit_sha == sha). Medido:
+$ gh api repos/marcelviana/octavia/commits/e9b4196ff/pulls --jq ".[] | {number, merge_commit_sha, body_len: (.body|length)}"
+{"body_len":3117,"merge_commit_sha":"e9b41960e4988a4f087c9db66b7486a7956693fe","number":321}
+
+Trailers: o checkout tem o histórico inteiro, então 'git log BASE..HEAD
+--format=%(trailers)' seria legível no job. Não é o caminho escolhido (ver o README).
+
+################################################################################
+Divergências — o grep do prompt para o maior número na main
+################################################################################
+$ grep -rhoE "\*?\*?3[0-9]{2}\*?\*?" docs/native/*ENCERRAMENTO*.md docs/native/W4B1-anexos | sort -u | tail
+376
+380
+382
+383
+392
+394
+396
+397
+398
+399
+$ grep -rhoE "\| \*\*3[0-9]{2}\*\* \|" docs/native | sort -u | tail -3
+| **349** |
+| **350** |
+| **351** |

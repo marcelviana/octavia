@@ -1,0 +1,365 @@
+W4B2-E — os CNs das decisões de antes do merge (div. 360, item 3) contra o detector do commit 34bc96a. Rastro: saída literal de
+$ sh apps/native/scripts/__cn__/cn-w4b2.sh
+
+cn-w4b2 — scripts lidos de: /Users/marcelviana/projects/octavia-w4b2 (árvore de trabalho), HEAD bffe173
+
+==============================================================================
+CN-H1a  synchronize, só docs
+==============================================================================
+  ULTIMO_APK=success
+  (stderr) desde o push anterior (37690423894419cfdd3fc27a3ebe21f61e7e2c3d..22554bd36e0f24a64b86039fc090d066a6b1021e):
+  (stderr)   docs/native/LOGS-OCTAVIA.md
+  nativo=false
+  exit=0
+  nativo=false, como esperado ✓
+
+==============================================================================
+CP-H1b  synchronize, apps/native/src
+==============================================================================
+  ULTIMO_APK=success
+  (stderr) desde o push anterior (37690423894419cfdd3fc27a3ebe21f61e7e2c3d..cebdede9fe97dff7852fea2841305aa687a83b6a):
+  (stderr)   apps/native/src/store.ts
+  nativo=true
+  exit=0
+  nativo=true, como esperado ✓
+
+==============================================================================
+CP-H1c  synchronize, o native.yml
+==============================================================================
+  ULTIMO_APK=success
+  (stderr) desde o push anterior (37690423894419cfdd3fc27a3ebe21f61e7e2c3d..3195531572225eb17be6b54dc8494b04f4a83724):
+  (stderr)   .github/workflows/native.yml
+  nativo=true
+  exit=0
+  nativo=true, como esperado ✓
+
+==============================================================================
+CP-H1d  synchronize, o pnpm-workspace.yaml
+==============================================================================
+  ULTIMO_APK=success
+  (stderr) desde o push anterior (37690423894419cfdd3fc27a3ebe21f61e7e2c3d..9c83b5b326c01494922be1123a252dd3b72900c5):
+  (stderr)   pnpm-workspace.yaml
+  nativo=true
+  exit=0
+  nativo=true, como esperado ✓
+
+==============================================================================
+CP-H1e  push forçado — antes (só docs) não é ancestral do head
+==============================================================================
+  ULTIMO_APK=success
+  (stderr) ação 'synchronize' sem push anterior ancestral: roda
+  nativo=true
+  exit=0
+  nativo=true, como esperado ✓
+
+==============================================================================
+CP-H1f  opened — sem antes
+==============================================================================
+  ULTIMO_APK=success
+  (stderr) ação 'opened' sem push anterior ancestral: roda
+  nativo=true
+  exit=0
+  nativo=true, como esperado ✓
+
+==============================================================================
+CN-H1h  só docs, o último APK da PR foi failure
+==============================================================================
+  ULTIMO_APK=failure
+  (stderr) desde o push anterior (37690423894419cfdd3fc27a3ebe21f61e7e2c3d..22554bd36e0f24a64b86039fc090d066a6b1021e):
+  (stderr)   docs/native/LOGS-OCTAVIA.md
+  nativo=false
+  exit=0
+  *** o esperado era nativo=true ***
+
+==============================================================================
+CN-H1i  só docs, a PR não tem APK anterior
+==============================================================================
+  ULTIMO_APK=inexistente
+  (stderr) desde o push anterior (37690423894419cfdd3fc27a3ebe21f61e7e2c3d..22554bd36e0f24a64b86039fc090d066a6b1021e):
+  (stderr)   docs/native/LOGS-OCTAVIA.md
+  nativo=false
+  exit=0
+  *** o esperado era nativo=true ***
+
+==============================================================================
+CN-H1j  só docs, o último APK ainda corre
+==============================================================================
+  ULTIMO_APK=in_progress
+  (stderr) desde o push anterior (37690423894419cfdd3fc27a3ebe21f61e7e2c3d..22554bd36e0f24a64b86039fc090d066a6b1021e):
+  (stderr)   docs/native/LOGS-OCTAVIA.md
+  nativo=false
+  exit=0
+  *** o esperado era nativo=true ***
+
+==============================================================================
+CN-H1k  synchronize, só o gates.yml
+==============================================================================
+  ULTIMO_APK=success
+  (stderr) desde o push anterior (37690423894419cfdd3fc27a3ebe21f61e7e2c3d..c8847c1d4907a15d48c723f7b436490bee60c89f):
+  (stderr)   .github/workflows/gates.yml
+  nativo=false
+  exit=0
+  *** o esperado era nativo=true ***
+
+==============================================================================
+CN-H1l  synchronize, só o mudou-nativo.sh
+==============================================================================
+  ULTIMO_APK=success
+  (stderr) desde o push anterior (37690423894419cfdd3fc27a3ebe21f61e7e2c3d..f97f084f6eb473bf53c554a090d983356446f733):
+  (stderr)   apps/native/scripts/mudou-nativo.sh
+  nativo=true
+  exit=0
+  nativo=true, como esperado ✓
+
+==============================================================================
+CN-H1g  o native.yml usa o detector
+==============================================================================
+  presente:   mudou-nativo:
+  presente: sh apps/native/scripts/mudou-nativo.sh
+  presente:     needs: mudou-nativo
+  presente:     if: needs.mudou-nativo.outputs.nativo == 'true'
+  ✓
+
+==============================================================================
+CN-H1m  o native.yml: gates.yml no paths dos dois eventos; o detector com token e actions: read
+==============================================================================
+  '- .github/workflows/gates.yml' no paths: 0 vez(es) (esperado 2: pull_request e push)
+  AUSENTE:  GH_TOKEN: ${{ github.token }}
+  AUSENTE:  actions: read
+  *** o native.yml não dá ao detector o que ele precisa ***
+
+==============================================================================
+CP-H3a  exceção do G1a no CORPO, e não no script; o arquivo mudou → passa
+==============================================================================
+  declarações: do corpo da PR (GATES_DECL=/var/folders/y9/tw0zmy8x5rs4ybgyt8lys8vw0000gn/T/tmp.oXUVvZujDm/decl)
+  base=37690423894419cfdd3fc27a3ebe21f61e7e2c3d head=cebdede9fe97dff7852fea2841305aa687a83b6a
+  G1a — diff vazio em 45 arquivos DERIVADOS de apps/native + packages/core/src
+        escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+        menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+        EXCEÇÕES DECLARADAS (o escopo desta PR):
+          apps/native/src/store.ts
+    G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+  G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+        PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+          (nenhum — nenhuma asserção do core pode mudar nesta PR)
+    G1b: só adição ✓
+  exit=0
+  passou ✓
+
+==============================================================================
+CN-H3b  exceção nem no corpo nem no script; o arquivo mudou → reprova
+==============================================================================
+  declarações: do corpo da PR (GATES_DECL=/var/folders/y9/tw0zmy8x5rs4ybgyt8lys8vw0000gn/T/tmp.oXUVvZujDm/decl)
+  base=37690423894419cfdd3fc27a3ebe21f61e7e2c3d head=cebdede9fe97dff7852fea2841305aa687a83b6a
+  G1a — diff vazio em 46 arquivos DERIVADOS de apps/native + packages/core/src
+        escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+        menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+        EXCEÇÕES DECLARADAS (o escopo desta PR):
+          (nenhuma — nenhum arquivo de comportamento está fora da invariância)
+    G1a: DIFF NÃO VAZIO ✗
+         apps/native/src/store.ts | 2 ++
+         1 file changed, 2 insertions(+)
+  G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+        PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+          (nenhum — nenhuma asserção do core pode mudar nesta PR)
+    G1b: só adição ✓
+  exit=1
+  reprovou ✓
+  e disse "DIFF NÃO VAZIO" ✓
+
+==============================================================================
+CN-H3c  lista LOCAL não vazia, com GATES_DECL (o CI) → reprova
+==============================================================================
+    G1a (EXCECOES): LISTA LOCAL NÃO VAZIA com GATES_DECL ✗ — no CI a declaração vem do bloco ```gates do corpo da PR (W4-b2, div. 348):
+          apps/native/src/store.ts
+  exit=1
+  reprovou ✓
+  e disse "LISTA LOCAL NÃO VAZIA" ✓
+  — e o irmão (g2g3), com a errata local:
+  G2 — testIDs  antes=79  depois=79
+    G2: antes ⊆ depois ✓
+    G3: LISTA LOCAL NÃO VAZIA com GATES_DECL ✗ — no CI a declaração vem do bloco ```gates do corpo da PR (W4-b2, div. 348):
+          log(`cn-w4b2 linha=velha n=${n}`)
+          log(`cn-w4b2 linha=nova n=${n}`)
+  exit=1
+  reprovou ✓
+  e disse "LISTA LOCAL NÃO VAZIA" ✓
+
+==============================================================================
+CN-H3d  exceção no corpo e NÃO usada (ao lado de uma usada) → reprova
+==============================================================================
+  declarações: do corpo da PR (GATES_DECL=/var/folders/y9/tw0zmy8x5rs4ybgyt8lys8vw0000gn/T/tmp.oXUVvZujDm/decl)
+  base=37690423894419cfdd3fc27a3ebe21f61e7e2c3d head=cebdede9fe97dff7852fea2841305aa687a83b6a
+  G1a — diff vazio em 44 arquivos DERIVADOS de apps/native + packages/core/src
+        escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+        menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+        EXCEÇÕES DECLARADAS (o escopo desta PR):
+          apps/native/src/store.ts
+          apps/native/src/api.ts
+    G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+    G1a: EXCEÇÃO DECLARADA E NÃO USADA ✗ — poda (divs. 141, 339):
+          apps/native/src/api.ts
+  G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+        PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+          (nenhum — nenhuma asserção do core pode mudar nesta PR)
+    G1b: só adição ✓
+  exit=1
+  reprovou ✓
+  e disse "NÃO USADA" ✓
+
+==============================================================================
+CP-H3e  exceção + par do G1b + errata do G3, tudo no corpo → passa (g1 e g2g3)
+==============================================================================
+  declarações extraídas:
+    g1a: apps/native/src/store.ts
+    g1b-velha: // cn-w4b2 linha=velha
+    g1b-nova: // cn-w4b2 linha=nova
+    g1b-razao: CN do W4-b2 — par do G1b pelo corpo
+    g3-velha: log(`cn-w4b2 linha=velha n=${n}`)
+    g3-nova: log(`cn-w4b2 linha=nova n=${n}`)
+  declarações: do corpo da PR (GATES_DECL=/var/folders/y9/tw0zmy8x5rs4ybgyt8lys8vw0000gn/T/tmp.oXUVvZujDm/decl)
+  base=37690423894419cfdd3fc27a3ebe21f61e7e2c3d head=ca5be7d111aafe98e6c79c25b4cef213441f6657
+  G1a — diff vazio em 45 arquivos DERIVADOS de apps/native + packages/core/src
+        escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+        menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+        EXCEÇÕES DECLARADAS (o escopo desta PR):
+          apps/native/src/store.ts
+    G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+  G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 1
+        PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+          // cn-w4b2 linha=velha
+            -> // cn-w4b2 linha=nova
+            · razão: CN do W4-b2 — par do G1b pelo corpo
+    linhas que SAÍRAM (cada uma precisa de um PAR, e a nova do par tem de entrar IGUAL):
+        // cn-w4b2 linha=velha
+    G1b: cada linha que saiu tem par, e a nova do par entrou ✓
+  exit=0
+  passou ✓
+  G2 — testIDs  antes=79  depois=79
+    G2: antes ⊆ depois ✓
+  G3 — declarações: do corpo da PR (GATES_DECL=/var/folders/y9/tw0zmy8x5rs4ybgyt8lys8vw0000gn/T/tmp.oXUVvZujDm/decl)
+  G3 — linhas log( antes=66  depois=66
+        ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+          log(`cn-w4b2 linha=velha n=${n}`)
+          log(`cn-w4b2 linha=nova n=${n}`)
+        REMOÇÕES DECLARADAS (linha → REMOVIDA: razão; N2-D34):
+          (nenhuma)
+    linhas que SUMIRAM (cada uma precisa de um PAR de errata com a substituta, ou de uma REMOÇÃO declarada):
+        apps/native/src/store.ts	export function __cnW4b2(n) { log(`cn-w4b2 linha=velha n=${n}`) }
+    G3: cada linha que sumiu tem par de errata com a substituta, ou remoção declarada ✓
+    linhas NOVAS (declarar no commit e no catálogo):
+        apps/native/src/store.ts	export function __cnW4b2(n) { log(`cn-w4b2 linha=nova n=${n}`) }
+  exit=0
+  passou ✓
+
+==============================================================================
+CN-H3f  o mesmo corpo SEM a errata → o g2g3 reprova
+==============================================================================
+  G2 — testIDs  antes=79  depois=79
+    G2: antes ⊆ depois ✓
+  G3 — declarações: do corpo da PR (GATES_DECL=/var/folders/y9/tw0zmy8x5rs4ybgyt8lys8vw0000gn/T/tmp.oXUVvZujDm/decl)
+  G3 — linhas log( antes=66  depois=66
+        ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+          (nenhuma)
+        REMOÇÕES DECLARADAS (linha → REMOVIDA: razão; N2-D34):
+          (nenhuma)
+        — nenhuma linha de log pode sumir nesta PR
+    linhas que SUMIRAM (cada uma precisa de um PAR de errata com a substituta, ou de uma REMOÇÃO declarada):
+        apps/native/src/store.ts	export function __cnW4b2(n) { log(`cn-w4b2 linha=velha n=${n}`) }
+    G3: linha sumiu SEM ERRATA NEM REMOÇÃO ✗
+        apps/native/src/store.ts	export function __cnW4b2(n) { log(`cn-w4b2 linha=velha n=${n}`) }
+    linhas NOVAS (declarar no commit e no catálogo):
+        apps/native/src/store.ts	export function __cnW4b2(n) { log(`cn-w4b2 linha=nova n=${n}`) }
+  exit=1
+  reprovou ✓
+  e disse "SEM ERRATA" ✓
+
+==============================================================================
+CP-H3g  remoção do G3 no corpo → passa
+==============================================================================
+  G2 — testIDs  antes=79  depois=79
+    G2: antes ⊆ depois ✓
+  G3 — declarações: do corpo da PR (GATES_DECL=/var/folders/y9/tw0zmy8x5rs4ybgyt8lys8vw0000gn/T/tmp.oXUVvZujDm/decl)
+  G3 — linhas log( antes=66  depois=65
+        ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+          (nenhuma)
+        REMOÇÕES DECLARADAS (linha → REMOVIDA: razão; N2-D34):
+          // log(`cn-w4b2 comentario`) → REMOVIDA: CN do W4-b2 — o comentário que citava a linha saiu
+    linhas que SUMIRAM (cada uma precisa de um PAR de errata com a substituta, ou de uma REMOÇÃO declarada):
+        apps/native/src/store.ts	// log(`cn-w4b2 comentario`)
+    G3: cada linha que sumiu tem par de errata com a substituta, ou remoção declarada ✓
+  exit=0
+  passou ✓
+
+==============================================================================
+CN-H3h  extrator: chave desconhecida
+==============================================================================
+  (stderr) gates-decl: chave desconhecida: g1 (linha 2 do corpo)
+  exit=1
+  reprovou ✓
+  e disse "chave desconhecida" ✓
+
+==============================================================================
+CN-H3i  extrator: dois blocos
+==============================================================================
+  (stdout) g1a: apps/native/src/store.ts
+  (stderr) gates-decl: mais de um bloco ```gates (linha 5 do corpo)
+  exit=1
+  reprovou ✓
+  e disse "mais de um bloco" ✓
+
+==============================================================================
+CN-H3j  extrator: bloco não fechado
+==============================================================================
+  (stdout) g1a: apps/native/src/store.ts
+  (stderr) gates-decl: bloco ```gates não fechado (linha 2 do corpo)
+  exit=1
+  reprovou ✓
+  e disse "não fechado" ✓
+
+==============================================================================
+CN-H3k  extrator: par do G1b fora de ordem
+==============================================================================
+  (stderr) gates-decl: fora de ordem: g1b-nova sem g1b-velha antes (linha 2 do corpo)
+  exit=1
+  reprovou ✓
+  e disse "fora de ordem" ✓
+
+==============================================================================
+CP-H3l  extrator: CRLF, prosa em volta, comentário e linha em branco
+==============================================================================
+  (stdout) g1a: apps/native/src/store.ts
+  exit=0
+  passou ✓
+  a saída é exatamente "g1a: apps/native/src/store.ts", sem CR ✓
+
+==============================================================================
+CP-H3m  extrator: corpo sem bloco
+==============================================================================
+  exit=0
+  passou ✓
+  saída vazia ✓
+
+==============================================================================
+CN-H3n  o gates.yml lê o corpo; o ci.yml não tem mais o gates-nativos
+==============================================================================
+  gates.yml, presente:   gates-nativos:
+  gates.yml, presente: edited
+  gates.yml, presente: sh apps/native/scripts/gates-decl.sh
+  gates.yml, presente: GATES_DECL=
+  gates.yml, presente: sh apps/native/scripts/g1.sh
+  gates.yml, presente: sh apps/native/scripts/g2g3.sh
+  gates.yml, presente: shasum -a 256 -c SHA256SUMS
+  ci.yml sem o gates-nativos
+  ✓
+
+==============================================================================
+CP-H3o  as listas locais da árvore de trabalho estão vazias (a poda)
+==============================================================================
+  g1.sh: 120:EXCECOES=''
+  g1.sh: 246:PARES_G1B=''
+  g2g3.sh: 245:ERRATAS=''
+  g2g3.sh: 248:REMOCOES=''
+  ✓
+
+fim — linhas '***' acima são controles reprovados.

@@ -1,0 +1,81 @@
+# W4-b2 (div. 348, H3): o `gates-nativos` sai do `ci.yml` e passa a ter
+# workflow próprio, pela razão que o move: as declarações dos gates
+# diferenciais — exceção do G1a, par do G1b, errata e remoção do G3 — deixam de
+# morar em listas DENTRO dos scripts (estado de uma PR num arquivo que
+# sobrevive a ela, div. 141; a poda como herança da PR seguinte, div. 348) e
+# passam a vir de um bloco ```gates … ``` do CORPO da PR, extraído pelo
+# `apps/native/scripts/gates-decl.sh` (o contrato está lá e no
+# `docs/native/LOGS-OCTAVIA.md`, "Errata W4-b2"). No CI as listas locais têm de
+# estar VAZIAS: lista local não vazia reprova.
+#
+# Por que workflow próprio: editar o corpo muda o que o gate afirma, então o
+# gate tem de rodar de novo em `edited` — e o `build` não. Um `if` que pulasse
+# o `build` em `edited` criaria um check `build` SKIPPED no mesmo head, que o
+# ruleset lê como verde, e esconderia um `build` vermelho. O nome do job é o
+# que o ruleset exige (`gates-nativos`, integration 15368 = GitHub Actions,
+# qualquer workflow).
+#
+# O corpo é lido PELA API, não do `github.event`: o payload é o corpo no
+# momento do evento, e um "re-run" reusa o payload velho. No push da `main` não
+# há PR no evento; a PR é a do merge commit (`commits/{sha}/pulls`).
+#
+# O resto — base e head, `fetch-depth: 0`, o `shasum -c` — é o que a W3 e o
+# W4-b1 escreveram no `ci.yml`, sem mudança; a razão de cada passo está lá.
+name: gates
+'on':
+  pull_request:
+    types:
+    - opened
+    - synchronize
+    - reopened
+    - edited
+  push:
+    branches:
+    - main
+permissions:
+  contents: read
+  pull-requests: read
+jobs:
+  gates-nativos:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        ref: ${{ github.event.pull_request.head.sha || github.sha }}
+    - name: A BASE do par — o ponto de ramificação
+      run: |
+        set -e
+        ALVO="${{ github.event.pull_request.base.sha }}"
+        if [ -z "$ALVO" ]; then ALVO=$(git rev-parse HEAD~1); fi
+        BASE=$(git merge-base "$ALVO" HEAD)
+        echo "BASE=$BASE" >> "$GITHUB_ENV"
+        echo "base=$BASE  head=$(git rev-parse HEAD)"
+    - name: As declarações — o bloco ```gates do corpo da PR (W4-b2, H3)
+      env:
+        GH_TOKEN: ${{ github.token }}
+        PR: ${{ github.event.pull_request.number }}
+      run: |
+        set -e
+        if [ -n "$PR" ]; then
+          gh api "repos/$GITHUB_REPOSITORY/pulls/$PR" --jq '.body // ""' > "$RUNNER_TEMP/corpo"
+        else
+          gh api "repos/$GITHUB_REPOSITORY/commits/$GITHUB_SHA/pulls" \
+            --jq "[.[] | select(.merge_commit_sha == \"$GITHUB_SHA\")][0].body // \"\"" > "$RUNNER_TEMP/corpo"
+        fi
+        sh apps/native/scripts/gates-decl.sh < "$RUNNER_TEMP/corpo" > "$RUNNER_TEMP/decl"
+        echo "GATES_DECL=$RUNNER_TEMP/decl" >> "$GITHUB_ENV"
+        echo "declarações ($(grep -c . "$RUNNER_TEMP/decl" || true) linhas):"
+        sed 's/^/  /' "$RUNNER_TEMP/decl"
+    - name: G1a/G1b — invariância de comportamento e de decisão
+      run: sh apps/native/scripts/g1.sh "$BASE" WORKTREE
+    - name: G2/G3 — testIDs antes ⊆ depois, linhas de log com errata declarada
+      run: sh apps/native/scripts/g2g3.sh "$BASE" WORKTREE
+    - name: Congelados — shasum -c dos SHA256SUMS do DESIGN-V1 e do DESIGN-N2
+      run: |
+        F=0
+        for d in docs/native/DESIGN-V1 docs/native/DESIGN-N2; do
+          echo "== $d"
+          (cd "$d" && shasum -a 256 -c SHA256SUMS) || F=1
+        done
+        exit $F

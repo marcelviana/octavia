@@ -1,0 +1,288 @@
+W4B2-B — os CNs e CPs de H1 e H3 contra os scripts do commit 1 (os de antes, com a poda). Rastro: saída literal de
+$ sh apps/native/scripts/__cn__/cn-w4b2.sh
+
+cn-w4b2 — scripts lidos de: /Users/marcelviana/projects/octavia-w4b2 (árvore de trabalho), HEAD e9b4196
+
+==============================================================================
+CN-H1a  synchronize, só docs
+==============================================================================
+  [mudou-nativo.sh ausente — o detector não existe]
+  *** o esperado era nativo=false ***
+
+==============================================================================
+CP-H1b  synchronize, apps/native/src
+==============================================================================
+  [mudou-nativo.sh ausente — o detector não existe]
+  *** o esperado era nativo=true ***
+
+==============================================================================
+CP-H1c  synchronize, o native.yml
+==============================================================================
+  [mudou-nativo.sh ausente — o detector não existe]
+  *** o esperado era nativo=true ***
+
+==============================================================================
+CP-H1d  synchronize, o pnpm-workspace.yaml
+==============================================================================
+  [mudou-nativo.sh ausente — o detector não existe]
+  *** o esperado era nativo=true ***
+
+==============================================================================
+CP-H1e  push forçado — antes (só docs) não é ancestral do head
+==============================================================================
+  [mudou-nativo.sh ausente — o detector não existe]
+  *** o esperado era nativo=true ***
+
+==============================================================================
+CP-H1f  opened — sem antes
+==============================================================================
+  [mudou-nativo.sh ausente — o detector não existe]
+  *** o esperado era nativo=true ***
+
+==============================================================================
+CN-H1g  o native.yml usa o detector
+==============================================================================
+  AUSENTE:    mudou-nativo:
+  AUSENTE:  sh apps/native/scripts/mudou-nativo.sh
+  AUSENTE:      needs: mudou-nativo
+  AUSENTE:      if: needs.mudou-nativo.outputs.nativo == 'true'
+  *** o native.yml não condiciona o APK ao push ***
+
+==============================================================================
+CP-H3a  exceção do G1a no CORPO, e não no script; o arquivo mudou → passa
+==============================================================================
+  [gates-decl.sh ausente — o mecanismo não existe]
+  base=c1d494d5b8883f4b4885aa8483e787a5aaa2d17b head=569f28d156e8ae18e5f1345c3197cfe62f688b31
+  G1a — diff vazio em 46 arquivos DERIVADOS de apps/native + packages/core/src
+        escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+        menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+        EXCEÇÕES DECLARADAS (o escopo desta PR):
+          (nenhuma — nenhum arquivo de comportamento está fora da invariância)
+    G1a: DIFF NÃO VAZIO ✗
+         apps/native/src/store.ts | 2 ++
+         1 file changed, 2 insertions(+)
+  G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+        PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+          (nenhum — nenhuma asserção do core pode mudar nesta PR)
+    G1b: só adição ✓
+  exit=1
+  *** CP REPROVADO: o gate barrou o caso honesto ***
+
+==============================================================================
+CN-H3b  exceção nem no corpo nem no script; o arquivo mudou → reprova
+==============================================================================
+  [gates-decl.sh ausente — o mecanismo não existe]
+  base=c1d494d5b8883f4b4885aa8483e787a5aaa2d17b head=569f28d156e8ae18e5f1345c3197cfe62f688b31
+  G1a — diff vazio em 46 arquivos DERIVADOS de apps/native + packages/core/src
+        escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+        menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+        EXCEÇÕES DECLARADAS (o escopo desta PR):
+          (nenhuma — nenhum arquivo de comportamento está fora da invariância)
+    G1a: DIFF NÃO VAZIO ✗
+         apps/native/src/store.ts | 2 ++
+         1 file changed, 2 insertions(+)
+  G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+        PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+          (nenhum — nenhuma asserção do core pode mudar nesta PR)
+    G1b: só adição ✓
+  exit=1
+  reprovou ✓
+  e disse "DIFF NÃO VAZIO" ✓
+
+==============================================================================
+CN-H3c  lista LOCAL não vazia, com GATES_DECL (o CI) → reprova
+==============================================================================
+  [gates-decl.sh ausente — o mecanismo não existe]
+  base=c1d494d5b8883f4b4885aa8483e787a5aaa2d17b head=569f28d156e8ae18e5f1345c3197cfe62f688b31
+  G1a — diff vazio em 45 arquivos DERIVADOS de apps/native + packages/core/src
+        escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+        menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+        EXCEÇÕES DECLARADAS (o escopo desta PR):
+          apps/native/src/store.ts
+    G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+  G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+        PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+          (nenhum — nenhuma asserção do core pode mudar nesta PR)
+    G1b: só adição ✓
+  exit=0
+  *** CN REPROVADO: o gate passou (exit 0) ***
+  *** a saída não traz "LISTA LOCAL NÃO VAZIA" ***
+  — e o irmão (g2g3), com a errata local:
+  G2 — testIDs  antes=79  depois=79
+    G2: antes ⊆ depois ✓
+  G3 — linhas log( antes=66  depois=66
+        ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+          log(`cn-w4b2 linha=velha n=${n}`)
+          log(`cn-w4b2 linha=nova n=${n}`)
+        REMOÇÕES DECLARADAS (linha → REMOVIDA: razão; N2-D34):
+          (nenhuma)
+    linhas que SUMIRAM (cada uma precisa de um PAR de errata com a substituta, ou de uma REMOÇÃO declarada):
+        apps/native/src/store.ts	export function __cnW4b2(n) { log(`cn-w4b2 linha=velha n=${n}`) }
+    G3: cada linha que sumiu tem par de errata com a substituta, ou remoção declarada ✓
+    linhas NOVAS (declarar no commit e no catálogo):
+        apps/native/src/store.ts	export function __cnW4b2(n) { log(`cn-w4b2 linha=nova n=${n}`) }
+  exit=0
+  *** CN REPROVADO: o gate passou (exit 0) ***
+  *** a saída não traz "LISTA LOCAL NÃO VAZIA" ***
+
+==============================================================================
+CN-H3d  exceção no corpo e NÃO usada (ao lado de uma usada) → reprova
+==============================================================================
+  [gates-decl.sh ausente — o mecanismo não existe]
+  base=c1d494d5b8883f4b4885aa8483e787a5aaa2d17b head=569f28d156e8ae18e5f1345c3197cfe62f688b31
+  G1a — diff vazio em 46 arquivos DERIVADOS de apps/native + packages/core/src
+        escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+        menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+        EXCEÇÕES DECLARADAS (o escopo desta PR):
+          (nenhuma — nenhum arquivo de comportamento está fora da invariância)
+    G1a: DIFF NÃO VAZIO ✗
+         apps/native/src/store.ts | 2 ++
+         1 file changed, 2 insertions(+)
+  G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+        PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+          (nenhum — nenhuma asserção do core pode mudar nesta PR)
+    G1b: só adição ✓
+  exit=1
+  reprovou ✓
+  *** a saída não traz "NÃO USADA" ***
+
+==============================================================================
+CP-H3e  exceção + par do G1b + errata do G3, tudo no corpo → passa (g1 e g2g3)
+==============================================================================
+  [gates-decl.sh ausente — o mecanismo não existe]
+  declarações extraídas:
+  base=c1d494d5b8883f4b4885aa8483e787a5aaa2d17b head=bef2e79e79c5285a9f88fe8ae96f16415a9e3a7e
+  G1a — diff vazio em 46 arquivos DERIVADOS de apps/native + packages/core/src
+        escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+        menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+        EXCEÇÕES DECLARADAS (o escopo desta PR):
+          (nenhuma — nenhum arquivo de comportamento está fora da invariância)
+    G1a: DIFF NÃO VAZIO ✗
+         apps/native/src/store.ts | 2 +-
+         1 file changed, 1 insertion(+), 1 deletion(-)
+  G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 1
+        PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+          (nenhum — nenhuma asserção do core pode mudar nesta PR)
+    linhas que SAÍRAM (cada uma precisa de um PAR, e a nova do par tem de entrar IGUAL):
+        // cn-w4b2 linha=velha
+    G1b: teste existente foi editado SEM PAR ✗
+        // cn-w4b2 linha=velha
+  exit=1
+  *** CP REPROVADO: o gate barrou o caso honesto ***
+  G2 — testIDs  antes=79  depois=79
+    G2: antes ⊆ depois ✓
+  G3 — linhas log( antes=66  depois=66
+        ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+          (nenhuma)
+        REMOÇÕES DECLARADAS (linha → REMOVIDA: razão; N2-D34):
+          (nenhuma)
+        — nenhuma linha de log pode sumir nesta PR
+    linhas que SUMIRAM (cada uma precisa de um PAR de errata com a substituta, ou de uma REMOÇÃO declarada):
+        apps/native/src/store.ts	export function __cnW4b2(n) { log(`cn-w4b2 linha=velha n=${n}`) }
+    G3: linha sumiu SEM ERRATA NEM REMOÇÃO ✗
+        apps/native/src/store.ts	export function __cnW4b2(n) { log(`cn-w4b2 linha=velha n=${n}`) }
+    linhas NOVAS (declarar no commit e no catálogo):
+        apps/native/src/store.ts	export function __cnW4b2(n) { log(`cn-w4b2 linha=nova n=${n}`) }
+  exit=1
+  *** CP REPROVADO: o gate barrou o caso honesto ***
+
+==============================================================================
+CN-H3f  o mesmo corpo SEM a errata → o g2g3 reprova
+==============================================================================
+  [gates-decl.sh ausente — o mecanismo não existe]
+  G2 — testIDs  antes=79  depois=79
+    G2: antes ⊆ depois ✓
+  G3 — linhas log( antes=66  depois=66
+        ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+          (nenhuma)
+        REMOÇÕES DECLARADAS (linha → REMOVIDA: razão; N2-D34):
+          (nenhuma)
+        — nenhuma linha de log pode sumir nesta PR
+    linhas que SUMIRAM (cada uma precisa de um PAR de errata com a substituta, ou de uma REMOÇÃO declarada):
+        apps/native/src/store.ts	export function __cnW4b2(n) { log(`cn-w4b2 linha=velha n=${n}`) }
+    G3: linha sumiu SEM ERRATA NEM REMOÇÃO ✗
+        apps/native/src/store.ts	export function __cnW4b2(n) { log(`cn-w4b2 linha=velha n=${n}`) }
+    linhas NOVAS (declarar no commit e no catálogo):
+        apps/native/src/store.ts	export function __cnW4b2(n) { log(`cn-w4b2 linha=nova n=${n}`) }
+  exit=1
+  reprovou ✓
+  e disse "SEM ERRATA" ✓
+
+==============================================================================
+CP-H3g  remoção do G3 no corpo → passa
+==============================================================================
+  [gates-decl.sh ausente — o mecanismo não existe]
+  G2 — testIDs  antes=79  depois=79
+    G2: antes ⊆ depois ✓
+  G3 — linhas log( antes=66  depois=65
+        ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+          (nenhuma)
+        REMOÇÕES DECLARADAS (linha → REMOVIDA: razão; N2-D34):
+          (nenhuma)
+        — nenhuma linha de log pode sumir nesta PR
+    linhas que SUMIRAM (cada uma precisa de um PAR de errata com a substituta, ou de uma REMOÇÃO declarada):
+        apps/native/src/store.ts	// log(`cn-w4b2 comentario`)
+    G3: linha sumiu SEM ERRATA NEM REMOÇÃO ✗
+        apps/native/src/store.ts	// log(`cn-w4b2 comentario`)
+  exit=1
+  *** CP REPROVADO: o gate barrou o caso honesto ***
+
+==============================================================================
+CN-H3h  extrator: chave desconhecida
+==============================================================================
+  [gates-decl.sh ausente — o mecanismo não existe]
+  exit=127
+  *** o extrator não existe ***
+
+==============================================================================
+CN-H3i  extrator: dois blocos
+==============================================================================
+  [gates-decl.sh ausente — o mecanismo não existe]
+  exit=127
+  *** o extrator não existe ***
+
+==============================================================================
+CN-H3j  extrator: bloco não fechado
+==============================================================================
+  [gates-decl.sh ausente — o mecanismo não existe]
+  exit=127
+  *** o extrator não existe ***
+
+==============================================================================
+CN-H3k  extrator: par do G1b fora de ordem
+==============================================================================
+  [gates-decl.sh ausente — o mecanismo não existe]
+  exit=127
+  *** o extrator não existe ***
+
+==============================================================================
+CP-H3l  extrator: CRLF, prosa em volta, comentário e linha em branco
+==============================================================================
+  [gates-decl.sh ausente — o mecanismo não existe]
+  exit=127
+  *** o extrator não existe ***
+
+==============================================================================
+CP-H3m  extrator: corpo sem bloco
+==============================================================================
+  [gates-decl.sh ausente — o mecanismo não existe]
+  exit=127
+  *** o extrator não existe ***
+
+==============================================================================
+CN-H3n  o gates.yml lê o corpo; o ci.yml não tem mais o gates-nativos
+==============================================================================
+  gates.yml AUSENTE
+  ci.yml ainda define o gates-nativos
+  *** o CI não lê as declarações da PR ***
+
+==============================================================================
+CP-H3o  as listas locais da árvore de trabalho estão vazias (a poda)
+==============================================================================
+  g1.sh: 120:EXCECOES=''
+  g1.sh: 222:PARES_G1B=''
+  g2g3.sh: 245:ERRATAS=''
+  g2g3.sh: 248:REMOCOES=''
+  ✓
+
+fim — linhas '***' acima são controles reprovados.
