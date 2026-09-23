@@ -792,3 +792,58 @@ assinatura do descarte, contada com duas linhas que o catálogo já tem.
 O que isso custa, declarado: um `grep` por `resync` sozinho não diz qual das
 duas venceu. Se um aceite no aparelho precisar disso, é um campo na linha
 `resync`, com errata — e aí o T2-R16 muda junto.
+
+---
+
+## Errata W4-b2 (2026-09-23) — números de CI têm uma fonte, e as declarações dos gates moram na PR
+
+### Número de CI: com `n`, com nível, e do `CI-FAIXA.md`
+
+A regra da div. 80 (**uma medição não vira referência sem `n`**) e a dos níveis
+(passo, job, run e relógio são quatro números, mais acima) ganham **uma fonte**:
+[`CI-FAIXA.md`](CI-FAIXA.md), a série inteira do `android-debug-apk`, nível job,
+uma linha por corrida, com o cabeçalho recalculado a cada linha. **Todo número de CI
+se cita com `n` e nível ao lado, e a fonte é esse arquivo.** A faixa da V1-PR6
+(`n=12`) e as que a sucederam (`n=13…18`, e a série do N2, `n=21`) deixam de ser
+referência. Ficam onde estão, como registro de cada momento.
+
+### O bloco ```` ```gates ```` — o contrato
+
+As exceções do G1a, os pares do G1b e as erratas e remoções do G3 são **estado de
+uma PR** (div. 141). Até o W4-b1 elas moravam nas listas dos scripts, sobreviviam à
+PR e, com a órfã reprovando (div. 339), a PR seguinte herdava a poda (div. 348).
+Desde a W4-b2 elas moram **no corpo da PR**, num único bloco:
+
+````
+```gates
+# comentário e linha em branco são ignorados
+g1a: <caminho>                             exceção do G1a, uma por linha
+g1b-velha: <linha que sai do teste>        par do G1b: as três, nesta ordem
+g1b-nova: <linha que entra no lugar>
+g1b-razao: <razão>
+g3-velha: <linha de log que sai>           errata do G3: as duas, nesta ordem
+g3-nova: <linha que entra no lugar>
+g3-removida: <linha> → REMOVIDA: <razão>   remoção do G3 (N2-D34)
+```
+````
+
+- O **`gates.yml`** lê o corpo **pela API** a cada corrida e roda de novo quando o
+  corpo é editado (`edited`). Editar o corpo é, portanto, mudar o que o gate
+  afirma, e o gate reage em segundos (medido: 16 s até o vermelho, 23 s até o
+  verde; `W4B2-anexos/README.md` §3).
+- **No CI, as listas locais dos scripts têm de estar vazias.** Lista local não vazia
+  reprova (`LISTA LOCAL NÃO VAZIA com GATES_DECL ✗`). Por isso a `main` não carrega
+  declaração nenhuma, e uma PR só de docs volta a ser só de docs.
+- O extrator (`apps/native/scripts/gates-decl.sh`) recusa só o que tornaria a
+  leitura ambígua: chave desconhecida, valor vazio, par fora de ordem ou
+  incompleto, bloco não fechado, mais de um bloco. As regras de cada lista (casar
+  IGUAL ou por subcadeia, razão obrigatória, órfã reprova) continuam nos scripts.
+- **Rodar à mão**: sem `GATES_DECL`, a lista local vale como sempre valeu. Com a PR
+  aberta:
+  `gh pr view <n> --json body -q .body | sh apps/native/scripts/gates-decl.sh > /tmp/decl`
+  e depois `GATES_DECL=/tmp/decl sh apps/native/scripts/g1.sh <base> WORKTREE`.
+- **O gate-first muda de lugar.** A declaração que o commit 1 fazia no script, o
+  corpo da PR faz agora, e o CI mede o head contra o corpo **atual**. O "commit 1
+  vermelho à mão" do W4-b1 deixa de existir: o corpo não pertence a commit nenhum.
+  Em troca, o corpo **não tem histórico no git**. O registro do que foi declarado
+  é o anexo da PR, que tem de colar o bloco como ele ficou.

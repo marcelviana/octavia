@@ -438,6 +438,11 @@ As PRs só de docs (#306, #308, #310, #311, #313) não escreveram teste.
 
 ## 7. A série do CI
 
+> **W4-b2 (#322):** esta série está incorporada no [`CI-FAIXA.md`](CI-FAIXA.md),
+> a referência única (nível job, `n=91`), com a 19ª do W3 e as corridas de `push`.
+> Das 7 corridas do B8.1 abaixo, **4** foram pushes normais (o H1 as filtra) e **3**
+> (11, 12, 13) foram **pushes forçados**, que o H1 continua rodando (div. 353).
+
 Todas as corridas do `android-debug-apk` das PRs do N2, evento
 `pull_request`, **nível job** (`startedAt → completedAt`), todas `success`
 `[medido: gh run list --workflow=native.yml --branch <ramo> · gh run view <id> --json jobs]`.
@@ -552,11 +557,12 @@ A numeração abaixo é estável — cite por **§10.<bloco>.<n>** (a lição da
 | 3 | div. 119 (`emVoo`) | N2-D3 |
 | 4 | o estouro do `lruEvict` | N2-D3 |
 | 5 | medição do build de release | N2-D3 |
-| 6 | **B8.1** — o APK re-roda em push só de docs: **no N2, 7 corridas, 83m32s** (§7) | `W3-ENCERRAMENTO.md` §7 item 7 |
-| 7 | `CI-FAIXA.md`: a faixa com corte, incorporando as 21 do N2, a 19ª do W3 e as de `push` (§7) | §7; div. 80 |
+| 6 | ~~**B8.1** — o APK re-roda em push só de docs: **no N2, 7 corridas, 83m32s** (§7)~~ — **fechado na #322 (W4-b2)** para push normal; push forçado segue rodando (div. 353) | `W3-ENCERRAMENTO.md` §7 item 7 |
+| 7 | ~~`CI-FAIXA.md`: a faixa com corte, incorporando as 21 do N2, a 19ª do W3 e as de `push` (§7)~~ — **fechado na #322 (W4-b2)**: série inteira, `n=91`; o corte fica com o Marcel | §7; div. 80 |
 | 8 | ~~`shasum -c` dos congelados no `gates-nativos`~~ — **fechado na #321 (W4-b1)** | div. 223 |
 | 9 | ~~**README fora do `SHA256SUMS` do V1** — decisão A~~ — **fechado na #321 (W4-b1)** | div. 223 |
 | 10 | ~~**podar o G1**: sete exceções do G1a e o par do G1b que a N2-PR7 deixou~~ — **fechado na #321 (W4-b1)**, e a declaração órfã passa a reprovar | div. 339 (§6) |
+| 11 | ~~**exceções dos gates fora da `main`** (div. 348)~~ — **fechado na #322 (W4-b2)**: bloco ```` ```gates ```` no corpo da PR; lista local não vazia reprova no CI | div. 348 |
 
 ### 10.2 N3 (content nos apps)
 
