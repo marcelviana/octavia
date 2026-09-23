@@ -460,30 +460,32 @@ Esse teste existente **fixava o bug** (`expect(response.status).toBe(200) // API
 
 ## 5. Divergências
 
-- **170** — extra fora da lista fechada, declarado antes do commit: `app/api/setlists/[id]/__tests__/route.test.ts` muda 2 linhas — a asserção do teste "only deletes setlists owned by the authenticated user" (200 → 404) e o nome do teste vizinho, que afirmava "delete de inexistente real é 200 idempotente" (decisão da B3 PR-3a, superada pela **N2-D12** — §1.1).
-- **171** — o prompt cita `SETLISTS.md:41-43` para a regra "inexistente-ou-alheia → 404 sem oráculo"; o texto está em `:78-80` na main (e repetido em `:100` e `:113`); nesta branch, deslocado +20 linhas pelo parágrafo do DELETE.
-- **172** — efeito observável no único caller web (2.5): delete de setlist já apagada vira toast de erro em vez de sucesso silencioso. Não adaptado nesta PR. **Destino: Bloco D.**
-- **173** — o prompt pede `pnpm test <arquivo>`; o filtro do Vitest não casa caminho com `[id]` (`No test files found`, com e sem escape). Rodado por nome (`pnpm test delete-owner`), que casa só o arquivo novo.
+> **Origem** — marca entre parênteses acrescentada no W4-b1 (#321, div. 341), lida do texto de cada divergência: **P** premissa do prompt · **D** doc anterior · **A** ambiente, dado real ou defeito do produto · **T** toolchain/aparato · **X** terceiros (`N1-ENCERRAMENTO.md` §7).
+
+- **170** (P) — extra fora da lista fechada, declarado antes do commit: `app/api/setlists/[id]/__tests__/route.test.ts` muda 2 linhas — a asserção do teste "only deletes setlists owned by the authenticated user" (200 → 404) e o nome do teste vizinho, que afirmava "delete de inexistente real é 200 idempotente" (decisão da B3 PR-3a, superada pela **N2-D12** — §1.1).
+- **171** (P) — o prompt cita `SETLISTS.md:41-43` para a regra "inexistente-ou-alheia → 404 sem oráculo"; o texto está em `:78-80` na main (e repetido em `:100` e `:113`); nesta branch, deslocado +20 linhas pelo parágrafo do DELETE.
+- **172** (A) — efeito observável no único caller web (2.5): delete de setlist já apagada vira toast de erro em vez de sucesso silencioso. Não adaptado nesta PR. **Destino: Bloco D.**
+- **173** (P) — o prompt pede `pnpm test <arquivo>`; o filtro do Vitest não casa caminho com `[id]` (`No test files found`, com e sem escape). Rodado por nome (`pnpm test delete-owner`), que casa só o arquivo novo.
 - Numeração: a PR #306 (`n2/precheck`) usa até a div. 160 (`git grep -E "[Dd]iv\. ?1[5-9][0-9]" FETCH_HEAD -- docs` → maior = 160); 170+ sem colisão.
-- **174** — a decisão da B3 PR-3a cobria **setlist E content**. A N2-D12 supera só a de setlist: `DELETE /api/content/[id]` segue com o 200 idempotente para inexistente. É assimetria de contrato entre as duas rotas, registrada sem mexer em content. **Destino: pre-check do N3, junto do B9.**
-- **175** — o 2.1 do complemento (para qual Supabase o preview aponta) **não foi medido pela sessão** (depois, o Marcel mediu no painel, §3.1):
+- **174** (D) — a decisão da B3 PR-3a cobria **setlist E content**. A N2-D12 supera só a de setlist: `DELETE /api/content/[id]` segue com o 200 idempotente para inexistente. É assimetria de contrato entre as duas rotas, registrada sem mexer em content. **Destino: pre-check do N3, junto do B9.**
+- **175** (A) — o 2.1 do complemento (para qual Supabase o preview aponta) **não foi medido pela sessão** (depois, o Marcel mediu no painel, §3.1):
   - a CLI `vercel` não está instalada (`which vercel` → `vercel not found`), e instalar ou fazer `vercel link` mexeria em config local;
   - os chunks JS do `/login` do preview não contêm host `*.supabase.co` (o cliente não usa Supabase);
   - a prova alternativa (`GET /api/setlists` da conta de audit no preview **e** na prod, comparando o sha dos ids) foi **negada** na leitura de prod pelo classificador de permissões da sessão.
 
   Pelo prompt, o 2.2 ficou parado até o Marcel medir o 2.1 no painel da Vercel (2026-09-16). Depois disso, o 2.2 rodou uma vez (§3.1).
-- **176** — a decisão do 200 idempotente (B3 PR-3a) vive só no `B3-DESENHO.md:312-317` e no commit `effe847`; o `B3-ENCERRAMENTO.md` não a cita. **Vira regra 9 na PR-0 do N2.**
+- **176** (D) — a decisão do 200 idempotente (B3 PR-3a) vive só no `B3-DESENHO.md:312-317` e no commit `effe847`; o `B3-ENCERRAMENTO.md` não a cita. **Vira regra 9 na PR-0 do N2.**
 - Numeração (2026-09-21, §3.2): o maior número na `main` é **211**
   (`git grep -hoE "div\. ?2[0-9][0-9]" origin/main -- docs` → 201, 202, 203,
   204, 208, 210, 211); esta sessão começa em **212**.
-- **212** — **FECHADA** (confirmação do Marcel, 2026-09-21, §3.2: a setlist
+- **212** (T) — **FECHADA** (confirmação do Marcel, 2026-09-21, §3.2: a setlist
   continua existindo, vazia). **O request do ramo "alheia", sozinho, não prova
   que a linha sobreviveu.** O 404 é byte-idêntico ao do inexistente por decisão (N2-D12,
   §1.1), então a própria resposta não distingue "alheia" de "inexistente". A
   prova do ramo é a soma de duas partes: a medição da §3.2 (a sessão) e a
   confirmação de que `b100382e…` continua na conta principal (o Marcel, no
   web) — as duas partes estão na §3.2, e o ramo está fechado.
-- **213** — **os headers de prod e do preview diferem; só o corpo se compara.**
+- **213** (A) — **os headers de prod e do preview diferem; só o corpo se compara.**
   Em prod (§3.2): `strict-transport-security: max-age=63072000`, sem
   `x-robots-tag`. No preview (§3.1): `max-age=63072000; includeSubDomains; preload`
   e `x-robots-tag: noindex`. É da plataforma, não do código: o matcher do
@@ -494,7 +496,7 @@ Esse teste existente **fixava o bug** (`expect(response.status).toBe(200) // API
   três em `B7-PRECHECK-anexos/prod-probes-headers.txt`). Consequência prática: **não
   comparar sha do arquivo bruto entre preview e prod** — o do corpo é o que
   vale (48 B, `9b7d9169…`, igual nos dois). Nada adaptado aqui.
-- **214** — **FECHADA** (§3.2, "ramo alheia **com músicas**", 2026-09-21:
+- **214** (A) — **FECHADA** (§3.2, "ramo alheia **com músicas**", 2026-09-21:
   medição + confirmação do Marcel).
   Nascera assim: a setlist descartável estava **vazia**, então o primeiro
   request de prod não pôde exercer o observável mais visível da div. 150

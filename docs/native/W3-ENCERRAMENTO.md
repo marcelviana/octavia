@@ -186,6 +186,13 @@ NÃO reprova**. Reprovar quebraria *o gate vem antes do que ele mede* — o comm
 1 de uma PR declara a exceção que só o commit 3 vai usar. Se a ordem um dia
 inverter, é trocar o `echo` por `A=1`.
 
+> **FECHADA no W4-b1 (#321)**, pela troca que o parágrafo acima previa: a `main`
+> carregou sete exceções do G1a e um par do G1b órfãos desde a N2-PR7, com o
+> aviso impresso em toda corrida e o job verde (div. 339). A declaração órfã —
+> no G1a, no G1b e no G3 — agora dá `exit ≠ 0`; o commit 1 que declara antes de
+> usar fica vermelho à mão, e o CI, que mede o head, não muda (cabeçalho do
+> W4-b1 no `g1.sh`). O texto acima fica como estava.
+
 ```
 G1a: EXCEÇÃO DECLARADA E NÃO USADA — poda isto ANTES do merge (div. 141):
       apps/native/src/files.ts
@@ -281,6 +288,11 @@ G3 — linhas log( antes=58  depois=57
 A acusação do G3 é autoexplicativa: a linha que "sumiu" começa com `*`.
 
 ### A proposta de revisão da div. 83 — PENDENTE, e não pode se perder
+
+> **FECHADA no W4-b1 (#321).** Decidida pela N2-D34 (o G3 continua contando
+> comentário); o mecanismo — `linha → REMOVIDA: <razão>`, lista `REMOCOES` do
+> `g2g3.sh` — entrou no W4-b1, com os CNs D34a–d e o CP-D34
+> (`W4B1-anexos/`). O texto abaixo fica como estava.
 
 O argumento da opção (a) tem **fato novo de verdade**, e fica registrado aqui por
 inteiro:
@@ -429,7 +441,8 @@ decide por dentro se pula o build — não o filtro de paths.)
    N2-D34** — `DESIGN-N2/README.md` §2, PR #313: o G3 continua contando comentário; a
    remoção de um comentário com `log(` se declara como par com razão, e esse
    **mecanismo é do W4-b** — `N2-ENCERRAMENTO.md` §10.1.1. O texto abaixo fica como
-   estava.)* O que esta herança pedia era *"revisa-se a
+   estava.)* *(Anotação do W4-b1: **FECHADA na #321** — o par de remoção está no
+   `g2g3.sh`, e a div. 141 fechou junto: declaração órfã reprova.)* O que esta herança pedia era *"revisa-se a
    83 por escrito, em PR própria, com o texto dela ao lado"*. O W4-a é a PR
    própria, e a razão da forma nova do G3 está escrita no cabeçalho do
    `g2g3.sh`, encostada no texto da 83 — que era o remédio da div. 142 e da

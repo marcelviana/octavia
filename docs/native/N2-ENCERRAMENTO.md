@@ -199,6 +199,12 @@ A/T 1 : 157 · A/X 1 : 152 · P/D 1 : 191 · — 1 : 161
 **Atenção a uma colisão de nome**: o `X1…X5` dos extras do `DESIGN-N2` §9 é
 **numeração de extra**, não a origem X (terceiros). Div. 341.
 
+> **Div. 341 fechada no W4-b1 (#321)**: a coluna de origem entrou nos registros
+> que não a tinham (hotfix, brief, `DESIGN-N2` §9), lida do texto de cada
+> divergência, e os extras passaram a `extra-1…` nos docs. A contagem acima fica
+> como estava — é a medição do encerramento; a nova está em
+> `W4B1-anexos/README.md`.
+
 **Fechadas nesta PR**, das que ela mesma abriu (§12): **340** (a div. 254 anotada como consertada na N2-PR4) e **343** (`SHA256SUMS.txt` dos dumps da N2-PR7). As outras de 335–346 ficam registradas, com destino onde têm.
 
 ### 4.2 As que mudaram decisão
@@ -541,16 +547,16 @@ A numeração abaixo é estável — cite por **§10.<bloco>.<n>** (a lição da
 
 | # | item | origem |
 |---|---|---|
-| 1 | **o mecanismo da 83**: par de remoção com razão (`linha → REMOVIDA: <razão>`) no `g2g3.sh` | N2-D34; `W3-ENCERRAMENTO.md` §7 item 8 |
-| 2 | docstring do `buildIndex` que o código desmente | div. 220 (e 194) |
+| 1 | ~~**o mecanismo da 83**: par de remoção com razão (`linha → REMOVIDA: <razão>`) no `g2g3.sh`~~ — **fechado na #321 (W4-b1)** | N2-D34; `W3-ENCERRAMENTO.md` §7 item 8 |
+| 2 | ~~docstring do `buildIndex` que o código desmente~~ — **fechado na #321 (W4-b1)** | div. 220 (e 194) |
 | 3 | div. 119 (`emVoo`) | N2-D3 |
 | 4 | o estouro do `lruEvict` | N2-D3 |
 | 5 | medição do build de release | N2-D3 |
 | 6 | **B8.1** — o APK re-roda em push só de docs: **no N2, 7 corridas, 83m32s** (§7) | `W3-ENCERRAMENTO.md` §7 item 7 |
 | 7 | `CI-FAIXA.md`: a faixa com corte, incorporando as 21 do N2, a 19ª do W3 e as de `push` (§7) | §7; div. 80 |
-| 8 | `shasum -c` dos congelados no `gates-nativos` | div. 223 |
-| 9 | **README fora do `SHA256SUMS` do V1** — decisão A | div. 223 |
-| 10 | **podar o G1**: sete exceções do G1a e o par do G1b que a N2-PR7 deixou | div. 339 (§6) |
+| 8 | ~~`shasum -c` dos congelados no `gates-nativos`~~ — **fechado na #321 (W4-b1)** | div. 223 |
+| 9 | ~~**README fora do `SHA256SUMS` do V1** — decisão A~~ — **fechado na #321 (W4-b1)** | div. 223 |
+| 10 | ~~**podar o G1**: sete exceções do G1a e o par do G1b que a N2-PR7 deixou~~ — **fechado na #321 (W4-b1)**, e a declaração órfã passa a reprovar | div. 339 (§6) |
 
 ### 10.2 N3 (content nos apps)
 
