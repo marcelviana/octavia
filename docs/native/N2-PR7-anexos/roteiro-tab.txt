@@ -1,0 +1,334 @@
+== 01 S1 (escrita)
+  [dump t-01-s1]
+    criar-setlist                152.0 x   57.8 @ ( 758.7,  54.7) en=true ck=true txt=''
+    buscar                       171.1 x   57.8 @ ( 934.7,  54.7) en=true ck=true txt=''
+    setlist-aaaaaaaa            1073.8 x  132.0 @ (  32.0, 176.0) en=true ck=true txt=''
+    setlist-bbbbbbbb            1073.8 x  132.0 @ (  32.0, 320.0) en=true ck=true txt=''
+== 02 S2e
+  09:33:07.295 toque setlist-aaaaaaaa @ 1280 544 px (RX2N8000F3D)
+  [dump t-02-s2e]
+    voltar                        48.0 x   48.0 @ (  24.0,  43.6) en=true ck=true txt=''
+    buscar                       210.2 x   57.8 @ ( 903.6,  38.7) en=true ck=true txt=''
+    picker-abrir                 188.9 x   48.0 @ (  24.0, 119.6) en=true ck=true txt=''
+    reordenar                    143.1 x   48.0 @ ( 228.9, 119.6) en=true ck=true txt=''
+    setlist-editar               193.8 x   48.0 @ ( 737.3, 119.6) en=true ck=true txt=''
+    setlist-apagar               166.7 x   48.0 @ ( 947.1, 119.6) en=true ck=true txt=''
+    song-1                       536.9 x  116.0 @ (  24.0, 200.0) en=true ck=true txt=''
+    remover-1                     48.0 x   48.0 @ ( 488.0, 234.2) en=true ck=true txt=''
+== 03/04 E8 — folha com data, Limpar
+  09:33:13.814 toque setlist-editar @ 1877 323 px (RX2N8000F3D)
+  [dump t-03-e8-folha]
+    form-nome                    654.2 x   60.0 @ ( 241.8, 215.6) en=true ck=true txt='Ensaio do picker'
+    form-data                    532.9 x   60.0 @ ( 241.8, 319.6) en=true ck=true txt=''
+    form-data-limpar             109.3 x   48.0 @ ( 786.7, 325.8) en=true ck=true txt=''
+    form-cancelar                122.2 x   58.2 @ ( 241.8, 403.6) en=true ck=true txt=''
+    form-salvar-motivo           237.8 x   21.8 @ ( 508.9, 421.3) en=true ck=false txt='nada mudou desde que você abriu'
+    form-salvar                  137.3 x   58.2 @ ( 758.7, 403.6) en=false ck=true txt=''
+  09:33:21.102 toque form-data-limpar @ 1893 787 px (RX2N8000F3D)
+  [dump t-04-e8-limpo]
+    form-nome                    654.2 x   60.0 @ ( 241.8, 215.6) en=true ck=true txt='Ensaio do picker'
+    form-data                    654.2 x   60.0 @ ( 241.8, 319.6) en=true ck=true txt=''
+                                 620.0 x   25.8 @ ( 258.7, 336.4) en=true ck=false txt='dd / mm / aaaa'
+    form-cancelar                122.2 x   58.2 @ ( 241.8, 403.6) en=true ck=true txt=''
+    form-salvar                  135.1 x   58.2 @ ( 760.9, 403.6) en=true ck=true txt=''
+  09:33:26.814 toque form-salvar @ 1864 973 px (RX2N8000F3D)
+    log: auth refresh=cached
+    log: api status=200 path=/api/setlists/aaaaaaaa n=1 ms=23
+    log: write op=update setlist=aaaaaaaa items=- status=200 code=- ms=30
+    log: auth refresh=cached
+    log: api status=200 path=/api/setlists n=1 ms=29
+    log: resync kind=setlists reason=write op=update status=200 setlists=2 ms=31
+    log: cache write kind=setlists n=2 invalidated=1
+    log: prefetch plan n=0 reason=7d
+== 05/06 sem rede (avião)
+  avião antes: 0
+  avião: 1 · ping: connect: Network is unreachable
+  [dump t-05-s2-sem-rede]
+    voltar                        48.0 x   48.0 @ (  24.0,  43.6) en=true ck=true txt=''
+    buscar                       210.2 x   57.8 @ ( 903.6,  38.7) en=true ck=true txt=''
+    picker-abrir                 188.9 x   48.0 @ (  24.0, 119.6) en=false ck=true txt=''
+    reordenar                    143.1 x   48.0 @ ( 228.9, 119.6) en=false ck=true txt=''
+    setlist-editar               193.8 x   48.0 @ ( 737.3, 119.6) en=false ck=true txt=''
+    setlist-apagar               166.7 x   48.0 @ ( 947.1, 119.6) en=false ck=true txt=''
+    aviso-motivo                 762.2 x   21.8 @ (  56.0, 189.3) en=true ck=false txt='Sem conexão: dá para ler e tocar, não para mudar a setlist. Os controles de escrita voltam'
+    song-1                       536.9 x  116.0 @ (  24.0, 248.0) en=true ck=true txt=''
+    remover-1                     48.0 x   48.0 @ ( 488.0, 282.2) en=false ck=true txt=''
+  09:33:40.246 toque picker-abrir @ 266 323 px (RX2N8000F3D)
+  09:33:43.632 toque remover-1 @ 1152 689 px (RX2N8000F3D)
+  09:33:46.087 toque setlist-editar @ 1877 323 px (RX2N8000F3D)
+  09:33:48.575 toque reordenar @ 676 323 px (RX2N8000F3D)
+  09:33:51.068 toque setlist-apagar @ 2318 323 px (RX2N8000F3D)
+  toques nos inertes:
+    (fim)
+  09:33:54.626 toque song-1 @ 658 688 px (RX2N8000F3D)
+    log: index jump n=1
+    log: keepawake on
+  09:34:00.800 toque voltar @ 108 152 px (RX2N8000F3D)
+  [dump t-06-s1-sem-rede]
+    criar-setlist                152.0 x   57.8 @ ( 758.7,  54.7) en=false ck=true txt=''
+    buscar                       171.1 x   57.8 @ ( 934.7,  54.7) en=true ck=true txt=''
+    aviso-motivo                 747.6 x   21.8 @ (  64.0, 157.3) en=true ck=false txt='Sem conexão: dá para abrir e tocar o que está no aparelho, não para criar setlist. O contr'
+    setlist-aaaaaaaa            1073.8 x  132.0 @ (  32.0, 224.0) en=true ck=true txt=''
+    setlist-bbbbbbbb            1073.8 x  132.0 @ (  32.0, 368.0) en=true ck=true txt=''
+  09:34:07.208 toque criar-setlist @ 1878 188 px (RX2N8000F3D)
+    (fim)
+  avião: 0 · ping: connect: Network is unreachable
+== 07 S1 salvo-não-relido
+  [mock escrita-resync-500]
+    fixture: servidor em :8788 modo=escrita-resync-500 setlists=2 content=12 paginas=[12]
+  09:34:18.628 toque criar-setlist @ 1878 188 px (RX2N8000F3D)
+  09:34:24.394 toque form-salvar @ 1875 973 px (RX2N8000F3D)
+    log: auth refresh=cached
+    log: api status=201 path=/api/setlists n=1 ms=24
+    log: write op=create setlist=- items=- status=201 code=- ms=29
+    log: auth refresh=cached
+    log: api status=500 path=/api/setlists n=1 ms=23
+    log: resync kind=setlists reason=write op=create status=500 setlists=- ms=26
+  [dump t-07-s1-salvo-nao-relido]
+    criar-setlist                152.0 x   57.8 @ ( 758.7,  54.7) en=true ck=true txt=''
+    buscar                       171.1 x   57.8 @ ( 934.7,  54.7) en=true ck=true txt=''
+    aviso-motivo                 701.3 x   21.8 @ (  64.0, 157.3) en=true ck=false txt='Aceite PR7 tab foi criada. Não foi possível recarregar a lista, então ela pode não aparece'
+    aviso-acao                   183.6 x   48.0 @ ( 922.2, 144.0) en=true ck=true txt=''
+    setlist-aaaaaaaa            1073.8 x  132.0 @ (  32.0, 224.0) en=true ck=true txt=''
+    setlist-bbbbbbbb            1073.8 x  132.0 @ (  32.0, 368.0) en=true ck=true txt=''
+== 08 S2 salvo-não-relido (remover)
+  09:34:32.233 toque setlist-aaaaaaaa @ 1280 652 px (RX2N8000F3D)
+  09:34:36.366 toque remover-1 @ 1152 581 px (RX2N8000F3D)
+    log: auth refresh=cached
+    log: api status=200 path=/api/setlists/songs/aaaaaaaa-ss00-4000-8000-000000000001 n=1 ms=25
+    log: write op=remove setlist=aaaaaaaa items=- status=200 code=- ms=29
+    log: auth refresh=cached
+    log: api status=500 path=/api/setlists n=1 ms=20
+    log: resync kind=setlists reason=write op=remove status=500 setlists=- ms=23
+  [dump t-08-s2-salvo-nao-relido]
+    voltar                        48.0 x   48.0 @ (  24.0,  43.6) en=true ck=true txt=''
+    buscar                       210.2 x   57.8 @ ( 903.6,  38.7) en=true ck=true txt=''
+    picker-abrir                 188.9 x   48.0 @ (  24.0, 119.6) en=true ck=true txt=''
+    reordenar                    143.1 x   48.0 @ ( 228.9, 119.6) en=true ck=true txt=''
+    setlist-editar               193.8 x   48.0 @ ( 737.3, 119.6) en=true ck=true txt=''
+    setlist-apagar               166.7 x   48.0 @ ( 947.1, 119.6) en=true ck=true txt=''
+    aviso-motivo                 583.6 x   21.8 @ (  56.0, 189.3) en=true ck=false txt='Salvo. Não foi possível recarregar a setlist, então o que está na tela pode estar velho.'
+    aviso-acao                   183.6 x   48.0 @ ( 930.2, 176.0) en=true ck=true txt=''
+    song-1                       536.9 x  116.0 @ (  24.0, 248.0) en=true ck=true txt=''
+    remover-1                     48.0 x   48.0 @ ( 488.0, 282.2) en=true ck=true txt=''
+== 09 picker salvo-não-relido
+  09:34:44.368 toque picker-abrir @ 266 323 px (RX2N8000F3D)
+  09:34:49.957 toque picker-adicionar-1 @ 2297 473 px (RX2N8000F3D)
+    log: auth refresh=cached
+    log: api status=201 path=/api/setlists/aaaaaaaa/songs n=1 ms=27
+    log: write op=add setlist=aaaaaaaa items=- status=201 code=- ms=30
+    log: auth refresh=cached
+    log: api status=500 path=/api/setlists n=1 ms=35
+    log: resync kind=setlists reason=write op=add status=500 setlists=- ms=39
+  [dump t-09-picker-salvo-nao-relido]
+    picker-estado-1              148.0 x   48.0 @ ( 940.9, 186.2) en=true ck=false txt=''
+    aviso-motivo                 591.6 x   21.8 @ (  56.0, 564.4) en=true ck=false txt='Salvo. Não foi possível recarregar a setlist, então a contagem abaixo pode estar velha.'
+    aviso-acao                   183.6 x   48.0 @ ( 930.2, 551.1) en=true ck=true txt=''
+    picker-rodape                965.3 x   20.0 @ (  24.0, 621.8) en=true ck=false txt=''
+    picker-total                  65.8 x   20.0 @ ( 139.1, 621.8) en=true ck=false txt='8 músicas'
+    picker-concluir              108.4 x   48.0 @ (1005.3, 607.6) en=true ck=true txt=''
+  09:34:58.882 toque picker-concluir @ 2384 1421 px (RX2N8000F3D)
+    log: auth refresh=cached
+    log: api status=500 path=/api/setlists n=1 ms=205
+    log: resync kind=setlists reason=reopen op=- status=500 setlists=- ms=209
+== 10 S2 falhou (500) com Tentar de novo depois da releitura
+  [mock escrita-500]
+    fixture: servidor em :8788 modo=escrita-500 setlists=2 content=12 paginas=[12]
+  09:35:06.177 toque aviso-acao @ 2299 450 px (RX2N8000F3D)
+    log: auth refresh=cached
+    log: api status=200 path=/api/setlists n=1 ms=143
+    log: resync kind=setlists reason=reopen op=- status=200 setlists=2 ms=146
+    log: cache write kind=setlists n=2 invalidated=0
+    log: prefetch plan n=0 reason=7d
+  09:35:10.764 toque remover-1 @ 1152 581 px (RX2N8000F3D)
+    log: auth refresh=cached
+    log: api status=500 path=/api/setlists/songs/aaaaaaaa-ss00-4000-8000-000000000001 n=1 ms=27
+    log: write op=remove setlist=aaaaaaaa items=- status=500 code=INTERNAL_ERROR ms=30
+    log: auth refresh=cached
+    log: api status=200 path=/api/setlists n=1 ms=114
+    log: resync kind=setlists reason=reopen op=- status=200 setlists=2 ms=123
+    log: cache write kind=setlists n=2 invalidated=0
+    log: prefetch plan n=0 reason=7d
+  [dump t-10-s2-falhou]
+    voltar                        48.0 x   48.0 @ (  24.0,  43.6) en=true ck=true txt=''
+    buscar                       210.2 x   57.8 @ ( 903.6,  38.7) en=true ck=true txt=''
+    picker-abrir                 188.9 x   48.0 @ (  24.0, 119.6) en=true ck=true txt=''
+    reordenar                    143.1 x   48.0 @ ( 228.9, 119.6) en=true ck=true txt=''
+    setlist-editar               193.8 x   48.0 @ ( 737.3, 119.6) en=true ck=true txt=''
+    setlist-apagar               166.7 x   48.0 @ ( 947.1, 119.6) en=true ck=true txt=''
+    aviso-motivo                 817.8 x   21.8 @ (  56.0, 189.3) en=true ck=false txt='Não foi possível salvar  ·  falha no servidor — nada foi alterado aqui  ·  a lista abaixo '
+    aviso-acao                   164.9 x   48.0 @ ( 948.9, 176.0) en=true ck=true txt=''
+    song-1                       536.9 x  116.0 @ (  24.0, 248.0) en=true ck=true txt=''
+    remover-1                     48.0 x   48.0 @ ( 488.0, 282.2) en=true ck=true txt=''
+== 11 picker falhou (500)
+  09:35:18.891 toque picker-abrir @ 266 323 px (RX2N8000F3D)
+  09:35:24.506 toque picker-adicionar-1 @ 2297 473 px (RX2N8000F3D)
+    log: auth refresh=cached
+    log: api status=500 path=/api/setlists/aaaaaaaa/songs n=1 ms=24
+    log: write op=add setlist=aaaaaaaa items=- status=500 code=INTERNAL_ERROR ms=26
+    log: auth refresh=cached
+    log: api status=200 path=/api/setlists n=1 ms=51
+    log: resync kind=setlists reason=reopen op=- status=200 setlists=2 ms=56
+    log: cache write kind=setlists n=2 invalidated=0
+    log: prefetch plan n=0 reason=7d
+  [dump t-11-picker-falhou]
+    picker-estado-1              520.0 x   48.0 @ ( 568.9, 186.2) en=true ck=false txt=''
+    picker-adicionar-1           173.3 x   48.0 @ ( 915.6, 186.2) en=true ck=true txt=''
+    picker-rodape                965.3 x   20.0 @ (  24.0, 621.8) en=true ck=false txt=''
+    picker-total                  65.8 x   20.0 @ ( 139.1, 621.8) en=true ck=false txt='8 músicas'
+    picker-concluir              108.4 x   48.0 @ (1005.3, 607.6) en=true ck=true txt=''
+  09:35:33.372 toque picker-concluir @ 2384 1421 px (RX2N8000F3D)
+== 12 (conserto) S2: 500 e releitura 500
+  [mock escrita-500-releitura-500]
+    fixture: servidor em :8788 modo=escrita-500-releitura-500 setlists=2 content=12 paginas=[12]
+  09:35:39.654 toque remover-1 @ 1152 581 px (RX2N8000F3D)
+    log: auth refresh=cached
+    log: api status=500 path=/api/setlists/songs/aaaaaaaa-ss00-4000-8000-000000000001 n=1 ms=28
+    log: write op=remove setlist=aaaaaaaa items=- status=500 code=INTERNAL_ERROR ms=32
+    log: auth refresh=cached
+    log: api status=500 path=/api/setlists n=1 ms=110
+    log: resync kind=setlists reason=reopen op=- status=500 setlists=- ms=121
+  [dump t-12-s2-falhou-sem-releitura]
+    voltar                        48.0 x   48.0 @ (  24.0,  43.6) en=true ck=true txt=''
+    buscar                       210.2 x   57.8 @ ( 903.6,  38.7) en=true ck=true txt=''
+    picker-abrir                 188.9 x   48.0 @ (  24.0, 119.6) en=true ck=true txt=''
+    reordenar                    143.1 x   48.0 @ ( 228.9, 119.6) en=true ck=true txt=''
+    setlist-editar               193.8 x   48.0 @ ( 737.3, 119.6) en=true ck=true txt=''
+    setlist-apagar               166.7 x   48.0 @ ( 947.1, 119.6) en=true ck=true txt=''
+    aviso-motivo                 449.8 x   21.8 @ (  56.0, 189.3) en=true ck=false txt='Não foi possível salvar  ·  falha no servidor — nada foi alterado aqui'
+    aviso-acao                   183.6 x   48.0 @ ( 930.2, 176.0) en=true ck=true txt=''
+    song-1                       536.9 x  116.0 @ (  24.0, 248.0) en=true ck=true txt=''
+    remover-1                     48.0 x   48.0 @ ( 488.0, 282.2) en=true ck=true txt=''
+== 13/14 (conserto, N2-E21) 404 e releitura 500 → S1
+  [mock escrita-404-releitura-500]
+    fixture: servidor em :8788 modo=escrita-404-releitura-500 setlists=2 content=12 paginas=[12]
+  09:35:49.437 toque remover-1 @ 1152 689 px (RX2N8000F3D)
+    log: auth refresh=cached
+    log: api status=404 path=/api/setlists/songs/aaaaaaaa-ss00-4000-8000-000000000001 n=1 ms=27
+    log: write op=remove setlist=aaaaaaaa items=- status=404 code=NOT_FOUND ms=30
+    log: auth refresh=cached
+    log: api status=500 path=/api/setlists n=1 ms=18
+    log: resync kind=setlists reason=404 op=remove status=500 setlists=- ms=19
+  [dump t-13-s1-sumiu-nao-relido]
+    criar-setlist                152.0 x   57.8 @ ( 758.7,  54.7) en=true ck=true txt=''
+    buscar                       171.1 x   57.8 @ ( 934.7,  54.7) en=true ck=true txt=''
+    aviso-motivo                 429.3 x   21.8 @ (  64.0, 157.3) en=true ck=false txt='Essa setlist não existe mais. Não foi possível recarregar a lista.'
+    aviso-acao                   183.6 x   48.0 @ ( 922.2, 144.0) en=true ck=true txt=''
+    setlist-aaaaaaaa            1073.8 x  132.0 @ (  32.0, 224.0) en=true ck=true txt=''
+    setlist-bbbbbbbb            1073.8 x  132.0 @ (  32.0, 368.0) en=true ck=true txt=''
+  [mock escrita]
+    fixture: servidor em :8788 modo=escrita setlists=2 content=12 paginas=[12]
+  09:35:59.006 toque aviso-acao @ 2281 378 px (RX2N8000F3D)
+    log: auth refresh=cached
+    log: api status=200 path=/api/setlists n=1 ms=97
+    log: resync kind=setlists reason=reopen op=- status=200 setlists=2 ms=99
+    log: cache write kind=setlists n=2 invalidated=0
+    log: prefetch plan n=0 reason=7d
+  [dump t-14-s1-sumiu-relido]
+    criar-setlist                152.0 x   57.8 @ ( 758.7,  54.7) en=true ck=true txt=''
+    buscar                       171.1 x   57.8 @ ( 934.7,  54.7) en=true ck=true txt=''
+    aviso-motivo                 489.8 x   21.8 @ (  64.0, 157.3) en=true ck=false txt='Essa setlist não existe mais. A lista abaixo é a que o servidor tem agora.'
+    setlist-aaaaaaaa            1073.8 x  132.0 @ (  32.0, 224.0) en=true ck=true txt=''
+    setlist-bbbbbbbb            1073.8 x  132.0 @ (  32.0, 368.0) en=true ck=true txt=''
+== 15 limite (429, Retry-After 30)
+  [mock escrita-429]
+    fixture: servidor em :8788 modo=escrita-429 setlists=2 content=12 paginas=[12]
+  09:36:07.465 toque setlist-aaaaaaaa @ 1280 652 px (RX2N8000F3D)
+  09:36:11.554 toque remover-1 @ 1152 581 px (RX2N8000F3D)
+    log: auth refresh=cached
+    log: api status=429 path=/api/setlists/songs/aaaaaaaa-ss00-4000-8000-000000000001 n=1 ms=27
+    log: ratelimit retry-after=30 family=setlist-mutate
+    log: write op=remove setlist=aaaaaaaa items=- status=429 code=RATE_LIMITED ms=31
+    log: auth refresh=cached
+    log: api status=200 path=/api/setlists n=1 ms=105
+    log: resync kind=setlists reason=reopen op=- status=200 setlists=2 ms=115
+    log: cache write kind=setlists n=2 invalidated=0
+    log: prefetch plan n=0 reason=7d
+  [dump t-15-s2-limite]
+    voltar                        48.0 x   48.0 @ (  24.0,  43.6) en=true ck=true txt=''
+    buscar                       210.2 x   57.8 @ ( 903.6,  38.7) en=true ck=true txt=''
+    picker-abrir                 188.9 x   48.0 @ (  24.0, 119.6) en=true ck=true txt=''
+    reordenar                    143.1 x   48.0 @ ( 228.9, 119.6) en=true ck=true txt=''
+    setlist-editar               193.8 x   48.0 @ ( 737.3, 119.6) en=true ck=true txt=''
+    setlist-apagar               166.7 x   48.0 @ ( 947.1, 119.6) en=true ck=true txt=''
+    aviso-motivo                 360.9 x   21.8 @ (  56.0, 189.3) en=true ck=false txt='muitas alterações seguidas — tente de novo em 30 s'
+    song-1                       536.9 x  116.0 @ (  24.0, 248.0) en=true ck=true txt=''
+    remover-1                     48.0 x   48.0 @ ( 488.0, 282.2) en=true ck=true txt=''
+== (16–18 do Tab refeitos — primeira forma abortou: ver aparato.md §4)
+== 16/17 acima de 100 (depois de 31 s: a janela do 429 fecha)
+  [mock escrita]
+    fixture: servidor em :8788 modo=escrita setlists=2 content=12 paginas=[12]
+  09:39:09.644 toque setlist-bbbbbbbb @ 1280 868 px (RX2N8000F3D)
+  [dump t-16a-s2-100]
+    voltar                        48.0 x   48.0 @ (  24.0,  43.6) en=true ck=true txt=''
+    buscar                       210.2 x   57.8 @ ( 903.6,  38.7) en=true ck=true txt=''
+    picker-abrir                 188.9 x   48.0 @ (  24.0, 119.6) en=true ck=true txt=''
+    reordenar                    143.1 x   48.0 @ ( 228.9, 119.6) en=true ck=true txt=''
+    setlist-editar               193.8 x   48.0 @ ( 737.3, 119.6) en=true ck=true txt=''
+    setlist-apagar               166.7 x   48.0 @ ( 947.1, 119.6) en=true ck=true txt=''
+    song-1                       536.9 x  116.0 @ (  24.0, 200.0) en=true ck=true txt=''
+    remover-1                     48.0 x   48.0 @ ( 488.0, 234.2) en=true ck=true txt=''
+  100 → 101 pelo picker (adicionar segue ativo no teto)
+  09:39:17.281 toque picker-abrir @ 266 323 px (RX2N8000F3D)
+  09:39:21.313 toque picker-campo @ 1397 152 px (RX2N8000F3D)
+  09:39:26.504 toque picker-adicionar-1 @ 2297 473 px (RX2N8000F3D)
+    log: auth refresh=cached
+    log: api status=201 path=/api/setlists/bbbbbbbb/songs n=1 ms=35
+    log: write op=add setlist=bbbbbbbb items=- status=201 code=- ms=40
+    log: auth refresh=cached
+    log: api status=200 path=/api/setlists n=1 ms=31
+    log: resync kind=setlists reason=write op=add status=200 setlists=2 ms=42
+    log: cache write kind=setlists n=2 invalidated=1
+    log: prefetch plan n=0 reason=7d
+  [dump t-16b-picker-101]
+    picker-estado-1              148.0 x   48.0 @ ( 940.9, 186.2) en=true ck=false txt=''
+    aviso-motivo                 611.1 x   21.8 @ (  56.0, 564.4) en=true ck=false txt='Acima de 100 músicas, reordenar por arrasto fica inativo. Adicionar e remover continuam.'
+    picker-rodape                965.3 x   20.0 @ (  24.0, 621.8) en=true ck=false txt=''
+    picker-total                  77.3 x   20.0 @ ( 124.0, 621.8) en=true ck=false txt='101 músicas'
+    picker-concluir              108.4 x   48.0 @ (1005.3, 607.6) en=true ck=true txt=''
+  09:39:35.272 toque picker-concluir @ 2384 1421 px (RX2N8000F3D)
+  [dump t-16c-s2-101]
+    voltar                        48.0 x   48.0 @ (  24.0,  43.6) en=true ck=true txt=''
+    buscar                       210.2 x   57.8 @ ( 903.6,  38.7) en=true ck=true txt=''
+    picker-abrir                 188.9 x   48.0 @ (  24.0, 119.6) en=true ck=true txt=''
+    reordenar                    143.1 x   48.0 @ ( 228.9, 119.6) en=false ck=true txt=''
+    setlist-editar               193.8 x   48.0 @ ( 737.3, 119.6) en=true ck=true txt=''
+    setlist-apagar               166.7 x   48.0 @ ( 947.1, 119.6) en=true ck=true txt=''
+    aviso-motivo                 611.1 x   21.8 @ (  56.0, 189.3) en=true ck=false txt='Acima de 100 músicas, reordenar por arrasto fica inativo. Adicionar e remover continuam.'
+    song-1                       536.9 x  116.0 @ (  24.0, 248.0) en=true ck=true txt=''
+    remover-1                     48.0 x   48.0 @ ( 488.0, 282.2) en=true ck=true txt=''
+  09:39:42.824 toque reordenar @ 676 323 px (RX2N8000F3D)
+    log: write blocked op=reorder reason=ceiling
+  09:39:46.319 toque setlist-editar @ 1877 323 px (RX2N8000F3D)
+  [dump t-17-e8-sem-data]
+    form-nome                    654.2 x   60.0 @ ( 241.8, 215.6) en=true ck=true txt='Fixture de 100'
+    form-data                    654.2 x   60.0 @ ( 241.8, 319.6) en=true ck=true txt=''
+                                 620.0 x   25.8 @ ( 258.7, 336.4) en=true ck=false txt='dd / mm / aaaa'
+    form-cancelar                122.2 x   58.2 @ ( 241.8, 403.6) en=true ck=true txt=''
+    form-salvar-motivo           237.8 x   21.8 @ ( 508.9, 421.3) en=true ck=false txt='nada mudou desde que você abriu'
+    form-salvar                  137.3 x   58.2 @ ( 758.7, 403.6) en=false ck=true txt=''
+  09:39:53.497 toque form-cancelar @ 681 973 px (RX2N8000F3D)
+== 18 (E19) picker: rede (escrita-pendurada, 20 s)
+  [mock escrita-pendurada]
+    fixture: servidor em :8788 modo=escrita-pendurada setlists=2 content=12 paginas=[12]
+  09:39:58.790 toque voltar @ 108 152 px (RX2N8000F3D)
+  09:40:02.826 toque setlist-aaaaaaaa @ 1280 544 px (RX2N8000F3D)
+  09:40:06.855 toque picker-abrir @ 266 323 px (RX2N8000F3D)
+  09:40:10.878 toque picker-campo @ 1397 152 px (RX2N8000F3D)
+  09:40:16.121 toque picker-adicionar-1 @ 2297 473 px (RX2N8000F3D)
+    log: auth refresh=cached
+    log: write op=add setlist=aaaaaaaa items=- status=net code=net ms=20015
+    log: auth refresh=cached
+    log: api status=200 path=/api/setlists n=1 ms=54
+    log: resync kind=setlists reason=reopen op=- status=200 setlists=2 ms=60
+    log: cache write kind=setlists n=2 invalidated=0
+    log: prefetch plan n=0 reason=7d
+  [dump t-18-picker-sem-resposta]
+    picker-estado-1              520.0 x   55.6 @ ( 568.9, 183.1) en=true ck=false txt=''
+    picker-adicionar-1           173.3 x   48.0 @ ( 916.0, 187.1) en=true ck=true txt=''
+    picker-rodape                965.3 x   20.0 @ (  24.0, 621.8) en=true ck=false txt=''
+    picker-total                  65.8 x   20.0 @ ( 139.1, 621.8) en=true ck=false txt='8 músicas'
+    picker-concluir              108.4 x   48.0 @ (1005.3, 607.6) en=true ck=true txt=''
+  09:40:47.887 toque picker-concluir @ 2384 1421 px (RX2N8000F3D)
+  [mock escrita]
+    fixture: servidor em :8788 modo=escrita setlists=2 content=12 paginas=[12]

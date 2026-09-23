@@ -1,0 +1,2 @@
+aviso-motivo [enabled=true]: Não foi possível salvar  ·  sem resposta do servidor  ·  a lista abaixo é a que o servidor acabou de devolver
+aviso-acao [enabled=true]: Tentar de novo

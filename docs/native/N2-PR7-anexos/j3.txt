@@ -1,0 +1,65 @@
+# N2-PR7 §3.2 — J3 ponta a ponta, Tab S6, mock `escrita`, bundle fb9acd5 (a corrida boa; as duas primeiras abortaram — aparato.md §4)
+$ j3.sh
+T0 = primeiro toque
+passo 1 — criar vazia
+  gesto 1 · toque criar-setlist · t=2.6 s
+  gesto 2 · digitar o nome (input text) · t=4.0 s
+  gesto 3 · toque form-salvar (Criar) · t=7.0 s
+  write op=create 201: 1
+passo 1b — abrir a setlist nova (a navegação de S1 para S2)
+  gesto 4 · toque setlist-aa0011-0 (abrir) · t=14.0 s
+passo 2 — 5 músicas pelo picker
+  gesto 5 · toque picker-abrir · t=18.0 s
+  gesto 6 · digitar a busca (input text) · t=19.9 s
+  gesto 7 · toque picker-adicionar-1 (música 1) · t=25.9 s
+  gesto 8 · toque picker-adicionar-2 (música 2) · t=32.0 s
+  gesto 9 · toque picker-adicionar-3 (música 3) · t=38.1 s
+  gesto 10 · toque picker-adicionar-4 (música 4) · t=44.2 s
+  gesto 11 · rolar a lista de resultados (swipe) · t=48.3 s
+  gesto 12 · toque picker-adicionar-6 (música 5) · t=54.3 s
+  gesto 13 · toque picker-concluir (sair do picker) · t=58.0 s
+passo 3 — reordenar: a 5 para a 1
+  gesto 14 · toque reordenar (entrar no modo) · t=62.1 s
+  gesto 15 · arrasto alca-5 → posição 1 (DOWN/12×MOVE/UP) · t=67.7 s
+  gesto 16 · toque reordenar-salvar (Salvar a ordem) · t=71.2 s
+fim: t=73.2 s de parede, 16 gestos
+log do fluxo:
+    write op=create setlist=- items=- status=201 code=- ms=501
+    resync kind=setlists reason=write op=create status=200 setlists=5 ms=37
+    cache write kind=setlists n=5 invalidated=1
+    write op=add setlist=aa0011-0 items=- status=201 code=- ms=36
+    resync kind=setlists reason=write op=add status=200 setlists=5 ms=132
+    cache write kind=setlists n=5 invalidated=1
+    write op=add setlist=aa0011-0 items=- status=201 code=- ms=26
+    resync kind=setlists reason=write op=add status=200 setlists=5 ms=98
+    cache write kind=setlists n=5 invalidated=1
+    write op=add setlist=aa0011-0 items=- status=201 code=- ms=33
+    resync kind=setlists reason=write op=add status=200 setlists=5 ms=99
+    cache write kind=setlists n=5 invalidated=1
+    write op=add setlist=aa0011-0 items=- status=201 code=- ms=28
+    resync kind=setlists reason=write op=add status=200 setlists=5 ms=97
+    cache write kind=setlists n=5 invalidated=1
+    write op=add setlist=aa0011-0 items=- status=201 code=- ms=24
+    resync kind=setlists reason=write op=add status=200 setlists=5 ms=117
+    cache write kind=setlists n=5 invalidated=1
+    write op=reorder setlist=aa0011-0 items=5 status=200 code=- ms=30
+    resync kind=setlists reason=write op=reorder status=200 setlists=5 ms=29
+    cache write kind=setlists n=5 invalidated=1
+
+## custo-dump — o preço do instrumento, medido antes da corrida
+$ for i in 1..5: time adb shell uiautomator dump
+real 2.36
+real 2.31
+real 2.36
+real 2.26
+real 2.33
+
+## conta (não medição): 20 dumps × ~2,31 s ≈ 46 s + 21,1 s de pausas do script ≈ 67 s de arnês nos 73,2 s
+## lado do app, somado do log: 501+37 · 36+132 · 26+98 · 33+99 · 28+97 · 24+117 · 30+29 = 1287 ms (7 escritas)
+
+## a listagem final (dumps/t-j3-final.xml), sem abrir item
+song-1 [enabled=true]: 1, Sexta do ensaio, Banda da fixture, Letra | 1 | Sexta do ensaio | Banda da fixture | Letra | Remover da setlist
+song-2 [enabled=true]: 2, Manhã de ensaio, Banda da fixture, Letra | 2 | Manhã de ensaio | Banda da fixture | Letra | Remover da setlist
+song-3 [enabled=true]: 3, Segunda do ensaio, Duo Manacá, Cifra | 3 | Segunda do ensaio | Duo Manacá | Cifra | Remover da setlist
+song-4 [enabled=true]: 4, Terceira do ensaio, Banda da fixture, Tab | 4 | Terceira do ensaio | Banda da fixture | Tab | Remover da setlist
+song-5 [enabled=true]: 5, Quarta do ensaio, Banda da fixture, Letra | 5 | Quarta do ensaio | Banda da fixture | Letra | Remover da setlist

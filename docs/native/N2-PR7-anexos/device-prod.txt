@@ -1,0 +1,108 @@
+# N2-PR7 — logcat de prod (tag ReactNativeJS, só as linhas OCTAVIA:), bundle fb9acd5 servido pelo Metro sem o override do mock
+# As linhas 'auth …' (uid e renovação de token) ficam fora; nenhuma linha de prod carrega título, nome de música ou token.
+
+## §3.3 — AVD octavia_tab32, conta de audit (09:56–10:00)
+OCTAVIA: api status=201 path=/api/setlists n=1 ms=1628
+OCTAVIA: write op=create setlist=- items=- status=201 code=- ms=1642
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=333
+OCTAVIA: resync kind=setlists reason=write op=create status=200 setlists=4 ms=345
+OCTAVIA: cache write kind=setlists n=4 invalidated=1
+OCTAVIA: prefetch plan n=0 reason=7d
+OCTAVIA: index open
+OCTAVIA: api status=201 path=/api/setlists/750043aa/songs n=1 ms=550
+OCTAVIA: write op=add setlist=750043aa items=- status=201 code=- ms=563
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=219
+OCTAVIA: resync kind=setlists reason=write op=add status=200 setlists=4 ms=226
+OCTAVIA: cache write kind=setlists n=4 invalidated=1
+OCTAVIA: prefetch plan n=0 reason=7d
+OCTAVIA: api status=201 path=/api/setlists/750043aa/songs n=1 ms=585
+OCTAVIA: write op=add setlist=750043aa items=- status=201 code=- ms=590
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=407
+OCTAVIA: resync kind=setlists reason=write op=add status=200 setlists=4 ms=416
+OCTAVIA: cache write kind=setlists n=4 invalidated=1
+OCTAVIA: prefetch plan n=0 reason=7d
+OCTAVIA: api status=201 path=/api/setlists/750043aa/songs n=1 ms=689
+OCTAVIA: write op=add setlist=750043aa items=- status=201 code=- ms=699
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=239
+OCTAVIA: resync kind=setlists reason=write op=add status=200 setlists=4 ms=248
+OCTAVIA: cache write kind=setlists n=4 invalidated=1
+OCTAVIA: prefetch plan n=0 reason=7d
+OCTAVIA: api status=201 path=/api/setlists/750043aa/songs n=1 ms=322
+OCTAVIA: write op=add setlist=750043aa items=- status=201 code=- ms=327
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=244
+OCTAVIA: resync kind=setlists reason=write op=add status=200 setlists=4 ms=254
+OCTAVIA: cache write kind=setlists n=4 invalidated=1
+OCTAVIA: prefetch plan n=0 reason=7d
+OCTAVIA: api status=201 path=/api/setlists/750043aa/songs n=1 ms=368
+OCTAVIA: write op=add setlist=750043aa items=- status=201 code=- ms=374
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=209
+OCTAVIA: resync kind=setlists reason=write op=add status=200 setlists=4 ms=212
+OCTAVIA: cache write kind=setlists n=4 invalidated=1
+OCTAVIA: prefetch plan n=0 reason=7d
+OCTAVIA: api status=201 path=/api/setlists/750043aa/songs n=1 ms=325
+OCTAVIA: write op=add setlist=750043aa items=- status=201 code=- ms=331
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=209
+OCTAVIA: resync kind=setlists reason=write op=add status=200 setlists=4 ms=217
+OCTAVIA: cache write kind=setlists n=4 invalidated=1
+OCTAVIA: prefetch plan n=0 reason=7d
+OCTAVIA: api status=201 path=/api/setlists/750043aa/songs n=1 ms=321
+OCTAVIA: write op=add setlist=750043aa items=- status=201 code=- ms=330
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=224
+OCTAVIA: resync kind=setlists reason=write op=add status=200 setlists=4 ms=230
+OCTAVIA: cache write kind=setlists n=4 invalidated=1
+OCTAVIA: prefetch plan n=0 reason=7d
+OCTAVIA: api status=201 path=/api/setlists/750043aa/songs n=1 ms=421
+OCTAVIA: write op=add setlist=750043aa items=- status=201 code=- ms=426
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=336
+OCTAVIA: resync kind=setlists reason=write op=add status=200 setlists=4 ms=345
+OCTAVIA: cache write kind=setlists n=4 invalidated=1
+OCTAVIA: prefetch plan n=0 reason=7d
+OCTAVIA: api status=201 path=/api/setlists/750043aa/songs n=1 ms=369
+OCTAVIA: write op=add setlist=750043aa items=- status=201 code=- ms=377
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=580
+OCTAVIA: resync kind=setlists reason=write op=add status=200 setlists=4 ms=589
+OCTAVIA: cache write kind=setlists n=4 invalidated=1
+OCTAVIA: prefetch plan n=0 reason=7d
+OCTAVIA: api status=201 path=/api/setlists/750043aa/songs n=1 ms=393
+OCTAVIA: write op=add setlist=750043aa items=- status=201 code=- ms=403
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=218
+OCTAVIA: resync kind=setlists reason=write op=add status=200 setlists=4 ms=222
+OCTAVIA: cache write kind=setlists n=4 invalidated=1
+OCTAVIA: prefetch plan n=0 reason=7d
+OCTAVIA: api status=200 path=/api/setlists/750043aa/songs/order n=1 ms=366
+OCTAVIA: write op=reorder setlist=750043aa items=10 status=200 code=- ms=377
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=230
+OCTAVIA: resync kind=setlists reason=write op=reorder status=200 setlists=4 ms=240
+OCTAVIA: cache write kind=setlists n=4 invalidated=1
+OCTAVIA: prefetch plan n=0 reason=7d
+OCTAVIA: api status=200 path=/api/setlists/750043aa n=1 ms=353
+OCTAVIA: write op=delete setlist=750043aa items=- status=200 code=- ms=363
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=286
+OCTAVIA: resync kind=setlists reason=write op=delete status=200 setlists=3 ms=302
+OCTAVIA: cache write kind=setlists n=3 invalidated=1
+OCTAVIA: prefetch plan n=0 reason=7d
+
+## §3.4 — Tab S6, conta principal: apagar 'N2-PR5 aceite' (setlist 3ccef313) pelo diálogo
+OCTAVIA: index open
+OCTAVIA: api status=200 path=/api/setlists/3ccef313 n=1 ms=1993
+OCTAVIA: write op=delete setlist=3ccef313 items=- status=200 code=- ms=1999
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=3496
+OCTAVIA: resync kind=setlists reason=write op=delete status=200 setlists=2 ms=3501
+OCTAVIA: cache write kind=setlists n=2 invalidated=1
+OCTAVIA: prefetch plan n=0 reason=7d
+
+## §3.4 — Tab S6, reabrir o app
+OCTAVIA: net online
+OCTAVIA: cache hit kind=setlists n=2
+OCTAVIA: cache hit kind=content n=63
+OCTAVIA: sync start
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=475
+OCTAVIA: api status=200 path=/api/content n=1 ms=397
+OCTAVIA: cache write kind=setlists n=2 invalidated=0
+OCTAVIA: cache write kind=content n=63 invalidated=0
+OCTAVIA: sync ok setlists=2 content=63 pages=1 t=962
+OCTAVIA: prefetch plan n=0 reason=7d
+
+## contagem
+AVD (audit):   13 linhas 'write op=' · 429: 0
+Tab S6 (principal): 1 linha 'write op='
