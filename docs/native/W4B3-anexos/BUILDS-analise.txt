@@ -1,0 +1,81 @@
+# W4-b3 — a série de builds local: release (n=3) e a div. 368 (debug com × sem datetimepicker, n=3 cada)
+# [medido] — saída do builds.sh (BUILDS-serie.tsv) e unzip/shasum dos APKs; esta sessão, 2026-09-23
+
+## Máquina
+   Wed Sep 23 18:05:48 -03 2026
+   Apple M1
+   8
+   17179869184
+   26.6.2
+   java version "21.0.1" 2023-10-17 LTS
+   v22.23.1
+   18:05  up  1:36, 2 users, load averages: 4.34 5.26 4.65
+
+Ordem das corridas, intercalada para espalhar deriva: R1 C1 S1 R2 C2 S2 R3 C3 S3 (18:05–18:53).
+Cada corrida: android/ apagado + build/.cxx/.gradle gerados em node_modules apagados; prebuild; ./gradlew <tarefa> --no-daemon --no-build-cache.
+Quente em todas: ~/.gradle/caches (como o actions/cache do CI) e — descoberto depois, ver §4 — o $TMPDIR/metro-cache.
+
+## release (n=3)
+   R1  início 18:05:59  prebuild  2 s  gradle 356 s  total 358 s (5m58s)  exit 0  APK 105,129,893 B
+   R2  início 18:21:04  prebuild  5 s  gradle 327 s  total 332 s (5m32s)  exit 0  APK 105,129,893 B
+   R3  início 18:36:48  prebuild  5 s  gradle 382 s  total 387 s (6m27s)  exit 0  APK 105,129,893 B
+   total: mín 5m32s  máx 6m27s  mediana 5m58s  média 359.0 s  amplitude 55 s
+   sha256 dos APKs: 11ae2e9462e233ce c7ebadff2a814a79 f751d933a3b5bdf6  (diferem)
+   lib/ por ABI (bytes descomprimidos, unzip -l): armeabi-v7a 16,783,136 · arm64-v8a 24,296,128 · x86 25,297,232 · x86_64 25,078,448
+   picker no APK: so=0,dex=5 (so = arquivos com o nome do módulo; dex = ocorrências de reactcommunity/rndatetimepicker nos classes*.dex)
+
+## debug-com (n=3)
+   C1  início 18:12:10  prebuild  3 s  gradle 255 s  total 258 s (4m18s)  exit 0  APK 234,114,536 B
+   C2  início 18:26:48  prebuild  4 s  gradle 279 s  total 283 s (4m43s)  exit 0  APK 234,114,536 B
+   C3  início 18:43:25  prebuild  3 s  gradle 309 s  total 312 s (5m12s)  exit 0  APK 234,114,536 B
+   total: mín 4m18s  máx 5m12s  mediana 4m43s  média 284.3 s  amplitude 54 s
+   sha256 dos APKs: 17455d2ba91fb4e2 17455d2ba91fb4e2 17455d2ba91fb4e2  (byte-idênticos)
+   lib/ por ABI (bytes descomprimidos, unzip -l): armeabi-v7a 35,669,944 · arm64-v8a 56,989,704 · x86 58,141,628 · x86_64 57,737,296
+   picker no APK: so=0,dex=8 (so = arquivos com o nome do módulo; dex = ocorrências de reactcommunity/rndatetimepicker nos classes*.dex)
+
+## debug-sem (n=3)
+   S1  início 18:16:38  prebuild  5 s  gradle 253 s  total 258 s (4m18s)  exit 0  APK 231,377,892 B
+   S2  início 18:31:39  prebuild  5 s  gradle 295 s  total 300 s (5m00s)  exit 0  APK 231,377,892 B
+   S3  início 18:48:45  prebuild  3 s  gradle 299 s  total 302 s (5m02s)  exit 0  APK 231,377,892 B
+   total: mín 4m18s  máx 5m02s  mediana 5m00s  média 286.7 s  amplitude 44 s
+   sha256 dos APKs: 72912a0e948c41e8 72912a0e948c41e8 72912a0e948c41e8  (byte-idênticos)
+   lib/ por ABI (bytes descomprimidos, unzip -l): armeabi-v7a 35,175,596 · arm64-v8a 56,245,424 · x86 57,399,612 · x86_64 56,998,936
+   picker no APK: so=0,dex=0 (so = arquivos com o nome do módulo; dex = ocorrências de reactcommunity/rndatetimepicker nos classes*.dex)
+
+## Div. 368 — o custo do módulo no build (debug, 4 ABIs, o comando do CI)
+   com: [258, 283, 312]  mediana 283 s · sem: [258, 300, 302]  mediana 300 s
+   com − sem: medianas -17 s · médias -2.3 s · pares na ordem (C1−S1, C2−S2, C3−S3): [0, -17, 10]
+   dispersão dentro de cada variante: com 54 s, sem 44 s
+   tamanho: com 234,114,536 B · sem 231,377,892 B · diferença 2,736,644 B
+     lib/armeabi-v7a: +494,348 B
+     lib/arm64-v8a: +744,280 B
+     lib/x86: +742,016 B
+     lib/x86_64: +738,360 B
+   onde (arm64-v8a; as outras ABIs idem): lib/arm64-v8a/libappmodules.so 4.984.576 → 5.728.856 B (+744.280 — o codegen C++ do componente Fabric, compilado no CMake do app);
+   classes2/3/4.dex +53.376 / +656 / +96 B. Nenhum .so próprio do módulo.
+   O APK 'sem' tem 231.377.892 B — o MESMO número do APK do CI da V1-PR3, antes do picker (APARATO.md, div. 253).
+
+## Os três releases: conteúdo idêntico, envelope não
+   `unzip -lv` R1×R2 e R2×R3: CRC de TODA entrada igual (diff vazio). O sha256 difere pelo envelope do zip/assinatura,
+   não pelo conteúdo. Os três debug de cada variante saem byte-idênticos.
+
+## §4 — o que o "limpo" não limpava: o cache do Metro [medido]
+   O builds.sh apaga android/ e os build/ de node_modules, mas NÃO o $TMPDIR/metro-cache (46 MB, criado às 17:58
+   pelo Metro do dev client desta sessão). Efeitos:
+   (a) R1–R3 empacotaram o JS (createBundleReleaseJsAndAssets) com cache de transformação quente; no CI ele é frio.
+       O assembleDebug não empacota JS — a série da 368 não é afetada.
+   (b) o R4, com EXPO_PUBLIC_API_BASE_URL=http://localhost:8788 inline, saiu com a URL de PROD no bundle:
+       `unzip -p R4.apk assets/index.android.bundle | grep -ac localhost:8788` → 0; o app sincronizou 2 setlists e 63
+       contents de prod, e o mock não recebeu nada. O log do Gradle mostra o .env carregado e a variável NÃO reexportada
+       (vinha do ambiente) — o valor velho veio do api.ts já transformado, no cache. Apagado o metro-cache e refeito só
+       o bundle (R4b): → 1. NENHUMA escrita foi tentada com o R4.
+
+## Veredito da div. 368
+   Local, debug com as 4 ABIs (o comando do CI), n=3 por variante, intercaladas: tirar o datetimepicker NÃO deixa o
+   build mais rápido — medianas 283 s com × 300 s sem (−17 s), médias −2,3 s, pares 0/−17/+10 s, contra 44–54 s de
+   dispersão dentro de cada variante. O módulo acrescenta trabalho real (C++ do codegen Fabric no libappmodules.so,
+   nas 4 ABIs: +2.736.644 B no APK), mas o custo em tempo fica abaixo do que n=3 resolve aqui (~±50 s).
+   O patamar do CI (10 corridas, mediana 784 s contra Q3 763 s; com vinte, 750 s — CI-FAIXA.md) pedia um efeito de
+   ~20–35 s. Não se achou causa no módulo: o patamar é lido como RUÍDO de corrida, o mesmo que as vinte corridas já
+   mostravam. Limite declarado: M1 local não é o runner ubuntu do CI (APARATO.md, div. 253) — a medida exclui um custo
+   grande do módulo, não um custo de alguns segundos no runner.

@@ -1,0 +1,114 @@
+# W4-b3 — o build de release no Tab S6 (RX2N8000F3D, SM-T865, Android 12), [medido] nesta sessão
+# conta do aparelho = a do Marcel (uid abreviado); só GET em prod; a escrita foi contra o mock
+
+## 0. Instalação
+applicationId do release = rocks.octavia.app = o do dev client; certificado SHA-256 fac61745dc0903786fb9ede62a962b399f7348f0bb6f899b8332667591033b9c
+("CN=Android Debug") nos DOIS (apksigner verify --print-certs). Logo: adb install -r SUBSTITUI mantendo dados e sessão —
+o dev client NÃO foi desinstalado. Guardado antes: o base.apk do dev client do Tab (82.030.412 B), reinstalado no fim.
+Depois do install -r do R3: pkgFlags sem DEBUGGABLE; firstInstallTime 2026-09-07 18:08:54 preservado.
+
+## 1. S1 (abertura a frio, am start -W: TotalTime 268 ms)
+09-23 18:59:19.792 OCTAVIA: net online
+09-23 18:59:20.411 OCTAVIA: auth uid=xVDJ… src=restored
+09-23 18:59:20.476 OCTAVIA: cache hit kind=setlists n=2
+09-23 18:59:20.476 OCTAVIA: cache hit kind=content n=63
+09-23 18:59:20.507 OCTAVIA: sync start
+09-23 18:59:20.508 OCTAVIA: auth refresh=cached
+09-23 18:59:21.119 OCTAVIA: api status=200 path=/api/setlists n=1 ms=611
+09-23 18:59:21.163 OCTAVIA: auth refresh=cached
+09-23 18:59:21.523 OCTAVIA: api status=200 path=/api/content n=1 ms=360
+09-23 18:59:21.549 OCTAVIA: cache write kind=setlists n=2 invalidated=0
+09-23 18:59:21.558 OCTAVIA: cache write kind=content n=63 invalidated=0
+09-23 18:59:21.558 OCTAVIA: sync ok setlists=2 content=63 pages=1 t=1051
+09-23 18:59:21.560 OCTAVIA: prefetch plan n=0 reason=7d
+
+## 2. Palco + rotação (Season 3, 1/7 → 3/7, user_rotation 1→0→1)
+09-23 18:59:21.560 OCTAVIA: prefetch plan n=0 reason=7d
+09-23 18:59:45.511 OCTAVIA: index open
+09-23 18:59:49.571 OCTAVIA: index jump n=1
+09-23 18:59:49.596 OCTAVIA: keepawake on
+09-23 18:59:49.596 OCTAVIA: prefetch plan n=0 reason=demand
+09-23 18:59:57.062 OCTAVIA: nav n=2/7 setlist=e39d57cf t=19
+09-23 18:59:57.062 OCTAVIA: prefetch plan n=0 reason=demand
+09-23 19:00:01.162 OCTAVIA: nav n=3/7 setlist=e39d57cf t=18
+09-23 19:00:01.162 OCTAVIA: prefetch plan n=0 reason=demand
+09-23 19:00:05.368 OCTAVIA: rotation=portrait n=3/7
+09-23 19:00:09.452 OCTAVIA: rotation=landscape n=3/7
+
+dump do palco, release × dev client (DEPOIS), em dp:
+--- diff TAB-DEPOIS-1de7.dp TAB-RELEASE-1de7.dp
+7,14d6
+< android.widget.LinearLayout - [0.0,0.0][1137.8,663.1] en=true ck=false
+< androidx.compose.ui.platform.ComposeView - [0.0,0.0][1137.8,663.1] en=true ck=false
+< android.view.View - [0.0,0.0][1137.8,663.1] en=true ck=false
+< android.view.View - [0.0,24.0][84.0,108.0] en=true ck=false
+< android.view.View - [1069.8,40.0][1121.8,92.0] en=true ck=false
+< android.view.View - [1072.0,42.2][1120.0,90.2] en=true ck=false
+< android.widget.ImageView - [1082.7,52.9][1108.9,79.1] en=true ck=false
+< android.widget.FrameLayout - [0.0,0.0][1137.8,663.1] en=true ck=false
+16d7
+< android.view.View - [0.0,0.0][1137.8,663.1] en=true ck=false
+18d8
+< android.view.ViewGroup - [0.0,0.0][1137.8,663.1] en=true ck=false
+--- diff TAB-DEPOIS-3de7.dp TAB-RELEASE-3de7-volta.dp
+7,14d6
+< android.widget.LinearLayout - [0.0,0.0][1137.8,663.1] en=true ck=false
+< androidx.compose.ui.platform.ComposeView - [0.0,0.0][1137.8,663.1] en=true ck=false
+< android.view.View - [0.0,0.0][1137.8,663.1] en=true ck=false
+< android.view.View - [0.0,24.0][84.0,108.0] en=true ck=false
+< android.view.View - [1069.8,40.0][1121.8,92.0] en=true ck=false
+< android.view.View - [1072.0,42.2][1120.0,90.2] en=true ck=false
+< android.widget.ImageView - [1082.7,52.9][1108.9,79.1] en=true ck=false
+< android.widget.FrameLayout - [0.0,0.0][1137.8,663.1] en=true ck=false
+16d7
+< android.view.View - [0.0,0.0][1137.8,663.1] en=true ck=false
+18d8
+< android.view.ViewGroup - [0.0,0.0][1137.8,663.1] en=true ck=false
+→ SÓ remoções (72 → 62 nós): o ComposeView do botão flutuante do dev client ([1069.8,40.0][1121.8,92.0] dp) e três
+  invólucros. Nenhum nó do app muda: todo nó do release é idêntico em dp ao do dev client. O 3/7 depois de
+  retrato→paisagem idem. Navegação: `nav … t=18–19` ms no release contra `t=68–78` ms no dev client (mesmo aparelho,
+  mesmas posições — o dev client carrega o bundle de desenvolvimento).
+
+## 3. Criar setlist contra o mock (nenhuma escrita em prod)
+Mock: `aceite.py servidor 8788 normal` com fixture do projeto (0 setlists, 1 content "[W4-b3] Fixture de texto").
+
+3a. R4 (URL do mock inline) — O BUNDLE SAIU COM A URL DE PROD (BUILDS-analise.txt §4). Sync [colado do logcat]:
+    OCTAVIA: api status=200 path=/api/setlists n=1 ms=2358
+    OCTAVIA: cache write kind=setlists n=2 invalidated=0
+    OCTAVIA: sync ok setlists=2 content=63 pages=1 t=2699
+    — 2/63 são os números de prod; o log do mock não registrou request do aparelho. Parado aqui: NENHUM toque em
+    "Nova setlist" com o R4.
+
+3b. R4b (metro-cache apagado; `grep -ac localhost:8788` no bundle embutido = 1):
+    09-23 19:09:58.716 OCTAVIA: net online
+    09-23 19:09:59.294 OCTAVIA: auth uid=xVDJ… src=restored
+    09-23 19:09:59.338 OCTAVIA: cache hit kind=setlists n=2
+    09-23 19:09:59.338 OCTAVIA: cache hit kind=content n=63
+    09-23 19:09:59.368 OCTAVIA: sync start
+    09-23 19:09:59.368 OCTAVIA: auth refresh=cached
+    09-23 19:09:59.375 OCTAVIA: sync fail stage=setlists page=1 code=network status=-
+    09-23 19:09:59.378 OCTAVIA: prefetch plan n=0 reason=7d
+    tela: "sem conexão · mostrando dados de há 1 min" + "Tentar novamente".
+    "Nova setlist" → nome "W4B3 release mock" → Criar [colado do logcat]:
+    OCTAVIA: write op=create setlist=- items=- status=net code=net ms=10
+    OCTAVIA: resync kind=setlists reason=reopen op=- status=net setlists=- ms=14
+    tela: "Não foi possível criar · sem resposta do servidor", botões "Fechar" e "Tentar recarregar" (T2-R11).
+    log do mock depois: só a request do curl de conferência — ZERO requests do aparelho.
+
+3c. CONTROLE POSITIVO — o mesmo dev client de antes (reinstalado), Metro com a mesma URL do mock (`--clear`;
+    `grep -c localhost:8788` no bundle servido = 1), a mesma tela, o mesmo nome [colado do logcat]:
+    OCTAVIA: api status=200 path=/api/setlists n=1 ms=30
+    OCTAVIA: sync ok setlists=0 content=1 pages=1 t=86
+    OCTAVIA: write op=create setlist=- items=- status=201 code=- ms=28
+    OCTAVIA: resync kind=setlists reason=write op=create status=200 setlists=1 ms=22
+    mock: REQ POST /api/setlists auth=sim; GET /api/setlists → ['W4B3 dev mock']
+
+→ A causa é o build: o release não tem `android:usesCleartextTraffic` (o prebuild só o põe em
+  src/debug/ e src/debugOptimized/AndroidManifest.xml), e o Android 9+ recusa http:// em texto puro. Prod é https —
+  o app de release em prod não é afetado. O afetado é o APARATO: o mock http não serve para aceite com build de release.
+
+## 4. Restauração
+- dev client reinstalado (o base.apk guardado): pkgFlags DEBUGGABLE, firstInstallTime 2026-09-07 18:08:54.
+- o sync do controle positivo (3c) trocou o cache local pelo do mock; reaberto o dev client contra prod (Metro sem a
+  variável, `--clear`, `grep -c localhost:8788` = 0): `sync ok setlists=2 content=63` — só GET.
+- settings: ver ESTADO-aparelhos.txt.
