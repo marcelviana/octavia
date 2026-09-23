@@ -1,0 +1,26 @@
+# N2-PR7 — commit 1: os CNs contra o código de hoje (árvore = 6fbf0fb + os testes do commit 1)
+$ npx vitest run --project core --project native --project native-tela <os 8 arquivos tocados>
+     × falha de transporte → rede 8ms
+     × offline (não enviou): "sem conexão — nada foi salvo", e nunca "pode ter gravado" 0ms
+     × busy (outra escrita em voo): a genérica — "sem conexão" seria mentira com a rede de pé 0ms
+     × ratelimit (a família fechada): a frase do 429 sem prazo, como antes 0ms
+     × a mesma op com rede de verdade continua podendo ter gravado — em criar e adicionar 1ms
+     × sem-resposta 5ms
+     × N2-E19 — e o barrado (a escrita que nem saiu) também pertence ao conjunto 1ms
+     × o digitado fica, `Tentar de novo` nasce inativo com `relendo a lista…` e depois ativa 263ms
+     × offline: zero linhas `api` e `write op=`, e o motivo no log 165ms
+     × uma escrita por vez: com outra em voo, o segundo controle não gera request (T2-R11) 133ms
+     × rede (pode ter passado): sem botão enquanto relê; depois, o aviso de que pode ter gravado 785ms
+     × N2-E19 — barrada por offline (não enviou): "nada foi salvo", e SEM a segunda linha 212ms
+     × servidor mudo: a escrita desiste em ≤ 20 s, com espécie `rede` e `status=net` 20170ms
+⎯⎯⎯⎯⎯⎯ Failed Tests 13 ⎯⎯⎯⎯⎯⎯⎯
+AssertionError: expected true to be false // Object.is equality
+AssertionError: expected 'sem conexão — nada foi salvo' to be 'não foi possível salvar' // Object.is equality
+AssertionError: expected 'sem conexão — nada foi salvo' to be 'sem resposta do servidor' // Object.is equality
+AssertionError: expected 'pode já ter sido gravada — confira an…' to be 'sem resposta do servidor' // Object.is equality
+AssertionError: expected 'pode já ter sido gravada — confira an…' to be 'não entrou na setlist' // Object.is equality
+AssertionError: expected 'Não foi possível criarsem conexão — n…' to contain 'sem resposta do servidor'
+AssertionError: expected 'sem conexão — nada foi salvo' to be 'sem resposta do servidor' // Object.is equality
+AssertionError: expected undefined to be 'sem resposta do servidor' // Object.is equality
+ Test Files  6 failed | 1 passed (7)
+      Tests  13 failed | 110 passed (123)

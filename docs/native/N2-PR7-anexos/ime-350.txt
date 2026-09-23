@@ -1,0 +1,27 @@
+# AVD octavia_tab32 (emulator-5554), bundle ba3836c
+$ ime.sh emulator-5554 10
+i=1 antes: folha fechada, mInputShown=false · 1,2 s depois: folha aberta, mInputShown=true
+i=2 antes: folha fechada, mInputShown=false · 1,2 s depois: folha aberta, mInputShown=true
+i=3 antes: folha fechada, mInputShown=false · 1,2 s depois: folha aberta, mInputShown=true
+i=4 antes: folha fechada, mInputShown=false · 1,2 s depois: folha aberta, mInputShown=true
+i=5 antes: folha fechada, mInputShown=false · 1,2 s depois: folha aberta, mInputShown=true
+i=6 antes: folha fechada, mInputShown=false · 1,2 s depois: folha aberta, mInputShown=true
+i=7 antes: folha fechada, mInputShown=false · 1,2 s depois: folha aberta, mInputShown=true
+i=8 antes: folha fechada, mInputShown=false · 1,2 s depois: folha aberta, mInputShown=true
+i=9 antes: folha fechada, mInputShown=false · 1,2 s depois: folha aberta, mInputShown=true
+i=10 antes: folha fechada, mInputShown=false · 1,2 s depois: folha aberta, mInputShown=true
+mInputShown=true em 10/10
+
+# Tab S6 (RX2N8000F3D), bundle ba3836c
+$ ime.sh RX2N8000F3D 10
+i=1 antes: folha fechada, mInputShown=false · 1,2 s depois: folha aberta, mInputShown=true
+i=2 antes: folha fechada, mInputShown=false · 1,2 s depois: folha aberta, mInputShown=true
+i=3 antes: folha fechada, mInputShown=false · 1,2 s depois: folha aberta, mInputShown=true
+i=4 antes: folha fechada, mInputShown=false · 1,2 s depois: folha aberta, mInputShown=true
+i=5 antes: folha fechada, mInputShown=false · 1,2 s depois: folha aberta, mInputShown=true
+i=6 antes: folha fechada, mInputShown=false · 1,2 s depois: folha aberta, mInputShown=true
+i=7 antes: folha fechada, mInputShown=false · 1,2 s depois: folha aberta, mInputShown=true
+i=8 antes: folha fechada, mInputShown=false · 1,2 s depois: folha aberta, mInputShown=true
+i=9 antes: folha fechada, mInputShown=false · 1,2 s depois: folha aberta, mInputShown=true
+i=10 antes: folha fechada, mInputShown=false · 1,2 s depois: folha aberta, mInputShown=true
+mInputShown=true em 10/10

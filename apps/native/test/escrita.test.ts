@@ -23,6 +23,7 @@ import { tmpdir } from 'node:os'
 import path from 'node:path'
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { ContentDTO, SetlistDTO } from '@octavia/core'
+import { exatas } from './ajuda'
 import { Directory, File, Paths, __reset } from './fake-expo-file-system'
 
 /** O espião da N2-D9: quem chama isto é o app deslogando. */
@@ -282,6 +283,9 @@ describe('T2-R13 / N2-D9 — 401 numa escrita NÃO desloga', () => {
     const r = await mod.relerAoAbrir({ uid: UID, setlists: [], content: [], syncedAtMs: null })
     expect(r).toBeNull()
     expect(deslogou).toHaveBeenCalled()
+    // A-N2-15 por linha EXATA: o controle positivo é o que prova que o
+    // instrumento acha a linha quando ela existe — uma, e igual ao evento.
+    expect(exatas(linhas, 'auth-failure')).toEqual(['OCTAVIA: auth-failure'])
   })
 
   it('CN: na escrita o mesmo 401 duplo NÃO chama o logout, e são 2 requests', async () => {
@@ -291,8 +295,9 @@ describe('T2-R13 / N2-D9 — 401 numa escrita NÃO desloga', () => {
 
     expect(saida.resultado.especie).toBe('auth')
     expect(deslogou).not.toHaveBeenCalled()
-    expect(linhas.join('\n')).not.toContain('auth-failure')
-    expect(linhas.join('\n')).not.toContain('login-screen')
+    // A-N2-15: `grep -x`, não subcadeia (ver `exatas`).
+    expect(exatas(linhas, 'auth-failure')).toEqual([])
+    expect(exatas(linhas, 'login-screen')).toEqual([])
     // T1-R3 continua valendo: a original e UMA depois de renovar. Nunca 3.
     expect(so('api status=401')).toEqual([
       expect.stringMatching(/^api status=401 path=\/api\/setlists n=2 ms=\d+$/),
@@ -390,6 +395,10 @@ describe('T2-R12 / T2-R14 — as escritas barradas, sem request nenhum', () => {
     const saida = await mod.escrever(mod.pedidoCriar({ name: 'x', performance_date: null }), estado)
 
     expect(saida.resultado.especie).toBe('rede')
+    // N2-E19: nada saiu — "nada foi salvo" é verdade, e em CRIAR também não
+    // há "pode já ter sido gravada" (a dúvida é de quem enviou).
+    expect(saida.resultado.frase).toBe('sem conexão — nada foi salvo')
+    expect(saida.resultado.podeTerGravado).toBe(false)
     expect(so('write blocked')).toEqual(['write blocked op=create reason=offline'])
     expect(so('api ')).toEqual([])
     expect(so('write op=')).toEqual([])
@@ -423,6 +432,10 @@ describe('T2-R12 / T2-R14 — as escritas barradas, sem request nenhum', () => {
     await emVoo
 
     expect(segunda.resultado.especie).toBe('rede')
+    // N2-E19 (extra X1): com a rede de pé, "sem conexão" seria mentira — o
+    // barrado por `busy` diz a genérica, sem a dúvida do "pode ter gravado".
+    expect(segunda.resultado.frase).toBe('não foi possível salvar')
+    expect(segunda.resultado.podeTerGravado).toBe(false)
     expect(so('write blocked')).toEqual(['write blocked op=add reason=busy'])
     expect(so('write op=')).toHaveLength(1)
   })

@@ -1,0 +1,30 @@
+# N2-PR7 — CN do defeito de S2 (achado no §3.1, AVD) contra o código de ba3836c; mock com o sufixo -releitura-500
+$ npx vitest run --project core --project native-tela packages/core/src/frases.test.ts apps/native/test/s2-edicao.test.tsx
+     × cada oração é prefixo literal da frase de onde veio (sem o ponto final do corte) 3ms
+     × 500 no remover e 500 na releitura: sem "lista relida", e o botão RECARREGA 327ms
+     × 404 no remover e 500 na releitura: sai para S1 com `sumiu-nao-relido`, sem a lista 330ms
+     × extra X5 — o mesmo vale para o 404 do editar (e dos outros caminhos de saída) 340ms
+     × S1 com `sumiu-nao-relido`: as duas orações, `Tentar recarregar`, e depois do 200 a frase do 404 188ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+AssertionError: expected 'Não foi possível salvar · falha no se…' not to contain 'a lista abaixo é a que o servidor aca…'
+AssertionError: expected [ 'sumiu' ] to deeply equal [ 'sumiu-nao-relido' ]
+AssertionError: expected [ 'sumiu' ] to deeply equal [ 'sumiu-nao-relido' ]
+AssertionError: expected 'Essa setlist não existe mais. A lista…' to be 'Essa setlist não existe mais. Não foi…' // Object.is equality
+TypeError: Cannot read properties of undefined (reading 'split')
+ Test Files  2 failed (2)
+      Tests  5 failed | 41 passed (46)
+
+## O mesmo CN, depois do ajuste do próprio CN (o GET do mock em 500 no modo -releitura-500: o recarregar parte do setlistComBis()), com IndexScreen/SetlistsScreen/navigation/frases de ba3836c no lugar (git stash só desses quatro):
+     × cada oração é prefixo literal da frase de onde veio (sem o ponto final do corte) 2ms
+     × 500 no remover e 500 na releitura: sem "lista relida", e o botão RECARREGA 282ms
+     × 404 no remover e 500 na releitura: sai para S1 com `sumiu-nao-relido`, sem a lista 339ms
+     × extra X5 — o mesmo vale para o 404 do editar (e dos outros caminhos de saída) 318ms
+     × S1 com `sumiu-nao-relido`: as duas orações, `Tentar recarregar`, e depois do 200 a frase do 404 192ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+AssertionError: expected 'Não foi possível salvar · falha no se…' not to contain 'a lista abaixo é a que o servidor aca…'
+AssertionError: expected [ 'sumiu' ] to deeply equal [ 'sumiu-nao-relido' ]
+AssertionError: expected [ 'sumiu' ] to deeply equal [ 'sumiu-nao-relido' ]
+AssertionError: expected 'Essa setlist não existe mais. A lista…' to be 'Essa setlist não existe mais. Não foi…' // Object.is equality
+TypeError: Cannot read properties of undefined (reading 'split')
+ Test Files  2 failed (2)
+      Tests  5 failed | 41 passed (46)

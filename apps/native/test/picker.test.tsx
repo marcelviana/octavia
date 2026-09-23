@@ -38,6 +38,7 @@ import path from 'node:path'
 import { useState } from 'react'
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { buildIndex, groupResults, searchIndex, type ContentDTO, type SetlistDTO } from '@octavia/core'
+import { exatas } from './ajuda'
 import { Directory, File, Paths, __reset } from './fake-expo-file-system'
 import { __voltarDoSistema } from './fake-react-native'
 import { Mock, portaLivre } from './mock'
@@ -159,7 +160,7 @@ function doCache(): { setlists: SetlistDTO[] } | null {
 
 /** O que a raiz recebeu — cada releitura que chegou, e cada saída para S1. */
 let relidos: SetlistDTO[][] = []
-let saiuParaS1: Array<'sumiu' | null> = []
+let saiuParaS1: Array<import('../src/screens/IndexScreen').AvisoDeSaida> = []
 
 /**
  * A RAIZ do app, reduzida ao que S2 precisa: o conjunto em `useState`, o
@@ -190,7 +191,7 @@ function Raiz({ inicial, palco = false }: { inicial: SetlistDTO[]; palco?: boole
                 relidos.push(novas)
                 setConjunto(novas)
               },
-              aoSairParaS1: (aviso: 'sumiu' | null) => {
+              aoSairParaS1: (aviso: import('../src/screens/IndexScreen').AvisoDeSaida) => {
                 saiuParaS1.push(aviso)
                 setEmS1(true)
               },
@@ -219,6 +220,17 @@ async function ate(condicao: () => boolean, oQue: string, limiteMs = 5_000): Pro
 /** A linha inteira do resultado `n` (o nó que contém o estado dela). */
 const linhaDoResultado = (n: number): string =>
   ((exige(`picker-estado-${n}`).parentElement?.textContent ?? '').replace(/\s+/g, ' ').trim())
+
+/** As duas linhas do bloco de falha da linha `n`: o título e o motivo. */
+function linhasDaFalha(n: number): string[] {
+  const nos = [...exige(`picker-estado-${n}`).querySelectorAll('span, div')]
+    .filter((e) => e.children.length === 0)
+    .map((e) => (e.textContent ?? '').trim())
+    .filter((t) => t !== '')
+  return nos
+}
+const textoDoTitulo = (n: number): string => linhasDaFalha(n)[0] ?? ''
+const textoDoMotivo = (n: number): string => linhasDaFalha(n)[1] ?? ''
 
 /** O texto do primeiro nó da linha `n` — o número, quando a música está na setlist. */
 const primeiroDaLinha = (n: number): string =>
@@ -484,6 +496,11 @@ describe('(d) T2-R6 / N2-D30 — adicionar: 201, releitura, e só então a marca
     await tocar('picker-adicionar-1')
     // Durante o REQUEST, os outros ficam ocupados (T2-R11): nada de `busy`.
     expect(inativo(`picker-adicionar-${alvoB}`)).toBe(true)
+    // N2-E20 — inertes SEM frase: o motivo é a linha "adicionando…" ao lado.
+    // O alvo diz só o próprio rótulo, e nenhuma linha de aviso aparece.
+    expect(texto(`picker-adicionar-${alvoB}`)).toBe('Adicionar')
+    expect(texto(`picker-estado-${alvoB}`)).not.toMatch(/adicionando|aguarde|ocupad|em voo/i)
+    expect(achar('aviso-motivo')).toBeNull()
     await ate(() => so('write op=add').length === 1, 'o 201 da primeira')
     await assentar(20)
     marcar('201 da primeira, releitura dela em voo')
@@ -586,13 +603,38 @@ describe('(f) T2-R11 — a adição que falha: a frase inteira na linha, e `Tent
 
     await ate(() => so('resync').length === 1, 'a releitura')
     await assentar(20)
+    // N2-E19 (div. 308): a frase da espécie `rede` é "sem resposta do
+    // servidor", e a SEGUNDA linha é a dúvida. "Nada foi salvo" ao lado de
+    // "pode já ter sido gravada" era a contradição que a div. 308 mediu.
+    expect(textoDoTitulo(1)).toBe('sem resposta do servidor')
+    expect(textoDoMotivo(1)).toBe('pode já ter sido gravada — confira antes de repetir')
     const estado = texto('picker-estado-1')
-    expect(estado).toContain('pode já ter sido gravada — confira antes de repetir')
-    expect(estado).toContain('sem conexão — nada foi salvo')
+    expect(estado).not.toContain('nada foi salvo')
     expect(estado).not.toContain('não entrou na setlist')
     expect(texto('picker-adicionar-1')).toBe('Tentar de novo')
     // E a releitura mostra o estado real: a música ENTROU.
     expect(linhaDoResultado(1)).toContain('já na setlist')
+  })
+
+  it('N2-E19 — barrada por offline (não enviou): "nada foi salvo", e SEM a segunda linha', async () => {
+    // A corrida real: a tela ainda acha que há rede (o `online` dela é o do
+    // último evento), e o `estaOnline()` da escrita já diz que não há.
+    await abrir('escrita')
+    await digitar('picker-campo', 'romance')
+    online = false
+    linhas = []
+    await tocar('picker-adicionar-1')
+    await ate(() => so('write blocked').length === 1, 'o barrado')
+    await assentar(40)
+
+    expect(so('write blocked')).toEqual(['write blocked op=add reason=offline'])
+    expect(so('write op=')).toEqual([])
+    expect(pedidosDeAdicao()).toEqual([])
+    // Nada saiu: "não entrou na setlist" é verdade, e "nada foi salvo" também.
+    expect(textoDoTitulo(1)).toBe('não entrou na setlist')
+    expect(textoDoMotivo(1)).toBe('sem conexão — nada foi salvo')
+    expect(texto('picker-estado-1')).not.toContain('pode já ter sido gravada')
+    expect(texto('picker-estado-1')).not.toContain('sem resposta do servidor')
   })
 })
 
@@ -628,7 +670,9 @@ describe('(g) T2-R10 — 404 numa adição: o picker fecha e S1 aparece já reli
     expect(so('write op=add')[0]).toMatch(/ status=401 code=AUTH_REQUIRED /)
     expect(texto('picker-estado-1')).toContain('não foi possível salvar — confira sua conta no site')
     expect(logouts).toBe(0)
-    expect(so('auth-failure')).toEqual([])
+    // A-N2-15 por linha exata (`grep -x`), não por prefixo.
+    expect(exatas(linhas, 'auth-failure')).toEqual([])
+    expect(exatas(linhas, 'login-screen')).toEqual([])
   })
 })
 

@@ -91,35 +91,42 @@ git rev-parse --verify --quiet "$BASE^{commit}" >/dev/null || uso "<base> nao re
 # inverter a ordem. Se o Marcel quiser que passe a reprovar, é uma linha —
 # trocar o aviso por `A=1`. (Pergunta 3 do relatório da W3.)
 #
-# --- As EXCEÇÕES desta PR (o escopo declarado da N2-PR6) ---------------------
-# Poda da div. 141: as SETE da N2-PR5 saíram — elas mergearam em `f991eb0` e
-# uma exceção mergeada só torna o gate mais permissivo para a PR seguinte. As
-# SEIS abaixo são desta PR, e são o escopo inteiro do picker.
+# --- As EXCEÇÕES desta PR (o escopo declarado da N2-PR7) ---------------------
+# Poda da div. 141: as SEIS da N2-PR6 saíram — mergearam em `426f4cc`. As
+# QUATRO abaixo são desta PR, e são o escopo inteiro da N2-E19. A N2-E8 e a
+# N2-E20 não tocam código (divs. 319 e 320: já estavam na `main`).
 #
-#   packages/core/src/frases.ts      a errata da N2-PR6 (N2-E16): duas chaves
-#       novas, verbatim das molduras `N2-P-*` ("não entrou na setlist",
-#       "adicionada"), e os construtores com nome ou número dentro — o
-#       placeholder com a reticência da R1·5, o vazio, as réguas, a marca
-#       "já na setlist · n×" e o rodapé.
-#   apps/native/src/escrita.ts       o `aoResponder` do `escrever()` (EXTRA
-#       X1, declarado antes deste commit): a tela é avisada do 201 ANTES da
-#       releitura, que é quando a linha vira "adicionada" e o `k` sobe.
-#       Nenhuma regra nova — o módulo continua decidindo.
-#   apps/native/src/icones/dados.ts  o QUINTO e último dos desenhos do anexo
-#       D do DESIGN-N2: o `adicionar`, a outra metade do par.
-#   apps/native/src/screens/IndexScreen.tsx   `Adicionar música` na faixa (o
-#       quarto controle, à esquerda de `Reordenar`), e a troca S2 ↔ picker.
-#   apps/native/src/screens/Picker.tsx   NOVO. O picker: a barra do S4, o
-#       campo, os resultados com os cinco estados, o rodapé de 64/112.
-#       Arquivo próprio porque os `testID` dele são NOVOS.
-#   apps/native/src/screens/SearchScreen.tsx  o `export` do `Regua` (EXTRA
-#       X2): o picker usa a régua do S4, não uma cópia dela.
+#   packages/core/src/frases.ts      a errata da N2-PR7 (N2-E19): UMA chave
+#       nova, `sem-resposta` ("sem resposta do servidor"), para a espécie
+#       `rede` — a request saiu e não voltou. O `rede` ("sem conexão — nada
+#       foi salvo") fica só para quem NÃO enviou (barrado offline).
+#   packages/core/src/escrita.ts     `classificar` passa a dar `sem-resposta`
+#       à rede, e o `classificarBarrado` (EXTRA X2, declarado antes do commit
+#       1): a frase do barrado mora no core, não numa rede fingida no app.
+#   apps/native/src/escrita.ts       o `resultadoBarrado` passa a chamar o
+#       `classificarBarrado` do core. Nenhuma regra nova no módulo.
+#   apps/native/src/screens/Picker.tsx   com `rede`, a linha diz "sem resposta
+#       do servidor" e embaixo a dúvida (EXTRA X3); com o barrado, "não entrou
+#       na setlist" e "nada foi salvo", sem a dúvida.
+#
+# E TRÊS do conserto que o §3 achou (decisão do Marcel, commit próprio): com a
+# escrita E a releitura falhando, S2 dizia "a lista abaixo é a que o servidor
+# acabou de devolver" e oferecia `Tentar de novo` (contra a N2-D32), e o 404
+# saía para S1 afirmando uma lista relida que não houve (N2-E21).
+#   apps/native/src/screens/IndexScreen.tsx     `releituraFalhou`: sem a
+#       terceira oração e com `Tentar recarregar`; `AvisoDeSaida` com o
+#       `'sumiu-nao-relido'` nos cinco caminhos de 404 (EXTRA X5).
+#   apps/native/src/screens/SetlistsScreen.tsx  o aviso `sumiu-nao-relido`
+#       com `Tentar recarregar`; relida, volta a frase inteira do 404.
+#   apps/native/src/navigation.tsx              o estado do aviso passa de
+#       booleano a `AvisoDeSaida`.
 EXCECOES='packages/core/src/frases.ts
+packages/core/src/escrita.ts
 apps/native/src/escrita.ts
-apps/native/src/icones/dados.ts
-apps/native/src/screens/IndexScreen.tsx
 apps/native/src/screens/Picker.tsx
-apps/native/src/screens/SearchScreen.tsx'
+apps/native/src/screens/IndexScreen.tsx
+apps/native/src/screens/SetlistsScreen.tsx
+apps/native/src/navigation.tsx'
 
 listar() {
   if [ "$1" = "WORKTREE" ]; then
@@ -185,15 +192,125 @@ fi
 # do core só pode ter ADIÇÃO. É o análogo do G2 para teste, e fecha o buraco
 # que a div. 108 abriu — o G1 nunca soube dizer se o comportamento mudou, só se
 # o arquivo mudou.
+#
+# ---------------------------------------------------------------------------
+# N2-PR7 — O G1b GANHA PARES DECLARADOS (div. 321, origem A)
+#
+# Até aqui o G1b não tinha saída nenhuma: "só adição", e uma DECISÃO do core
+# que mudasse de propósito não tinha como passar. A N2-E19 é a primeira
+# mudança de asserção no core desde que o G1b existe — a espécie `rede` deixa
+# de dizer "sem conexão — nada foi salvo" (div. 308) — e a linha velha do
+# teste tem de sair, porque afirma o contrário da decisão nova. Não há forma
+# só-adição honesta: manter a velha seria manter um teste que reprova.
+#
+# O remédio é o do G3 (W4-a, div. 189), e é o MESMO mecanismo nos dois irmãos:
+# a alteração é um PAR — a linha que SAI e a que ENTRA no lugar dela — e mais a
+# RAZÃO, escrita aqui, onde quem mexer no gate vai ler (regra 5 do catálogo).
+# Cada registro são TRÊS linhas da lista abaixo:
+#
+#   1. `velha`  — a linha removida, sem a indentação, IGUAL (não subcadeia);
+#   2. `nova`   — a linha que a substitui, IGUAL, e tem de estar entre as
+#                 ADICIONADAS. Sem isto o par vira permissão de apagar, que é
+#                 exatamente o defeito que a div. 189 achou no G3;
+#   3. `razão:` — obrigatória. Um par sem razão é uma decisão sem autor.
+#
+# O que continua reprovando: linha removida sem par; par cuja `nova` não
+# entrou IGUAL (uma troca diferente da declarada é outra decisão); lista que
+# não fecha em triplas; tripla sem `razão:`.
+#
+# **E os pares são por PR, contra a BASE** — como as exceções do G1a (div.
+# 141) e as erratas do G3 (div. 195). Depois do merge o par fica órfão: a
+# `velha` não existe mais em BASE nenhuma. O gate IMPRIME o par declarado e não
+# usado, alto, e NÃO reprova por isso — reprovar quebraria a regra de que o
+# gate vem ANTES do que ele mede (este commit declara o par que só o commit
+# seguinte usa). A PR seguinte poda.
+#
+# --- OS PARES DESTA PR (N2-PR7) ---------------------------------------------
+#   packages/core/src/escrita.test.ts, `it('falha de transporte → rede')`: a
+#   frase da espécie `rede` (enviou, sem resposta) — decisão do Marcel, N2-E19.
+PARES_G1B=$(cat <<'PARES'
+expect(r.frase).toBe('sem conexão — nada foi salvo')
+expect(r.frase).toBe('sem resposta do servidor')
+razão: N2-E19: a espécie `rede` deixa de afirmar que nada foi salvo
+PARES
+)
 TESTES=$(git ls-tree -r --name-only "$BASE" -- packages/core/src | grep '\.test\.ts$')
 if [ "$HEAD" = "WORKTREE" ]; then
-  REMOVIDAS=$(git diff "$BASE" -- $TESTES | grep -c '^-[^-]' || true)
+  DIFF_T=$(git diff "$BASE" -- $TESTES)
 else
-  REMOVIDAS=$(git diff "$BASE".."$HEAD" -- $TESTES | grep -c '^-[^-]' || true)
+  DIFF_T=$(git diff "$BASE".."$HEAD" -- $TESTES)
 fi
+# Sem a indentação: a comparação é da LINHA, não de onde ela está.
+printf '%s\n' "$DIFF_T" | grep '^-[^-]' | sed 's/^-//; s/^[[:space:]]*//' > "$tmp/g1b.sairam" || true
+printf '%s\n' "$DIFF_T" | grep '^+[^+]' | sed 's/^+//; s/^[[:space:]]*//' > "$tmp/g1b.entraram" || true
+REMOVIDAS=$(grep -c . "$tmp/g1b.sairam" || true)
+# NUNCA `grep -F ""` com a lista: padrão vazio casa com TUDO (a lição do G3).
+printf '%s\n' "$PARES_G1B" | grep . > "$tmp/g1b.pares" || true
+N_PARES=$(grep -c . "$tmp/g1b.pares" || true)
+awk 'NR % 3 == 1' "$tmp/g1b.pares" > "$tmp/g1b.velha"
+awk 'NR % 3 == 2' "$tmp/g1b.pares" > "$tmp/g1b.nova"
+awk 'NR % 3 == 0' "$tmp/g1b.pares" > "$tmp/g1b.razao"
+
 echo "G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: $REMOVIDAS"
-if [ "$REMOVIDAS" -eq 0 ]; then echo "  G1b: só adição ✓"; B=0
-else echo "  G1b: teste existente foi editado ✗"; B=1; fi
+echo "      PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):"
+if [ "$N_PARES" -gt 0 ]; then
+  paste -d '\n' "$tmp/g1b.velha" "$tmp/g1b.nova" "$tmp/g1b.razao" \
+    | awk 'NR % 3 == 1 { print "        " $0 } NR % 3 == 2 { print "          -> " $0 } NR % 3 == 0 { print "          · " $0 }'
+else
+  echo "        (nenhum — nenhuma asserção do core pode mudar nesta PR)"
+fi
+B=0
+if [ $((N_PARES % 3)) -ne 0 ]; then
+  echo "  G1b: lista de PARES com $N_PARES linhas — todo par é velha / nova / razão ✗"
+  B=1
+fi
+while IFS= read -r R; do
+  case "$R" in
+    'razão: '?*) ;;
+    *) echo "  G1b: PAR SEM RAZÃO ✗ — a terceira linha tem de começar por 'razão: ':"; echo "      $R"; B=1 ;;
+  esac
+done < "$tmp/g1b.razao"
+
+if [ "$REMOVIDAS" -eq 0 ]; then
+  [ $B -eq 0 ] && echo "  G1b: só adição ✓"
+else
+  echo "  linhas que SAÍRAM (cada uma precisa de um PAR, e a nova do par tem de entrar IGUAL):"
+  sed 's/^/      /' "$tmp/g1b.sairam"
+  while IFS= read -r L; do
+    [ -n "$L" ] || continue
+    I=$(grep -nxF -- "$L" "$tmp/g1b.velha" | head -1 | cut -d: -f1)
+    if [ -z "$I" ]; then
+      echo "  G1b: teste existente foi editado SEM PAR ✗"
+      echo "      $L"
+      B=1
+      continue
+    fi
+    NOVA=$(sed -n "${I}p" "$tmp/g1b.nova")
+    if ! grep -qxF -- "$NOVA" "$tmp/g1b.entraram"; then
+      echo "  G1b: PAR SEM SUBSTITUTA ✗ — a linha saiu e a nova declarada não entrou IGUAL:"
+      echo "      saiu:          $L"
+      echo "      devia entrar:  $NOVA"
+      B=1
+    fi
+  done < "$tmp/g1b.sairam"
+  [ $B -eq 0 ] && echo "  G1b: cada linha que saiu tem par, e a nova do par entrou ✓"
+fi
+
+# O gêmeo do aviso da div. 141 (G1a) e da div. 195 (G3): não reprova.
+NAOUSADOS=''
+I=0
+while IFS= read -r V; do
+  I=$((I + 1))
+  [ -n "$V" ] || continue
+  grep -qxF -- "$V" "$tmp/g1b.sairam" && continue
+  NAOUSADOS="$NAOUSADOS$V
+  -> $(sed -n "${I}p" "$tmp/g1b.nova")
+"
+done < "$tmp/g1b.velha"
+if [ -n "$NAOUSADOS" ]; then
+  echo "  G1b: PAR DECLARADO E NÃO USADO — poda isto ANTES do merge (div. 321):"
+  printf '%s' "$NAOUSADOS" | sed 's/^/        /'
+fi
 
 rm -rf "$tmp"
 [ $A -eq 0 ] && [ $B -eq 0 ]

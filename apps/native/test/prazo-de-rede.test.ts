@@ -188,7 +188,8 @@ describe('N2-D35 — o prazo de rede de uma escrita', () => {
       // servidor — o servidor não disse nada.
       expect(saida.resultado.especie).toBe('rede')
       expect(saida.resultado.status).toBeNull()
-      expect(saida.resultado.frase).toBe('sem conexão — nada foi salvo')
+      // N2-E19: a request saiu e não voltou — "sem resposta", não "nada foi salvo".
+      expect(saida.resultado.frase).toBe('sem resposta do servidor')
       // Um `PUT` repetido não duplica: não há "pode já ter sido gravada".
       expect(saida.resultado.podeTerGravado).toBe(false)
       expect(so('write op=update')).toHaveLength(1)

@@ -31,6 +31,7 @@ import path from 'node:path'
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { ContentDTO, SetlistDTO } from '@octavia/core'
 import type { IndexScreenProps } from '../src/screens/IndexScreen'
+import { exatas } from './ajuda'
 import { Directory, File, Paths, __reset } from './fake-expo-file-system'
 import { __proximaData } from './fake-datetimepicker'
 import { Mock, portaLivre } from './mock'
@@ -117,7 +118,7 @@ function daquiA(dias: number): Date {
 
 /** O que a releitura devolveu — o pai re-renderiza com isto, como o app faz. */
 let relido: SetlistDTO[] | null = null
-let saiuParaS1: Array<'sumiu' | null> = []
+let saiuParaS1: unknown[] = []
 
 const contentById = new Map(BIBLIOTECA.map((c) => [c.id, c]))
 
@@ -137,7 +138,7 @@ async function props(extra: Partial<IndexScreenProps> = {}): Promise<IndexScreen
       estado: { uid: UID, setlists: doServidor, content: BIBLIOTECA, syncedAtMs: 1 },
       online,
       aoReler: (novas: SetlistDTO[]) => { relido = novas },
-      aoSairParaS1: (aviso: 'sumiu' | null) => { saiuParaS1.push(aviso) },
+      aoSairParaS1: (aviso: unknown) => { saiuParaS1.push(aviso) },
     },
     ...extra,
   }
@@ -297,14 +298,37 @@ describe('(d) T2-R4 / C4 — limpar a data conta como mudança e envia `null`', 
     await tocar('form-data-limpar')
     expect(inativo('form-salvar')).toBe(false)
     expect(texto('form-data')).toBe('dd / mm / aaaa')
+    // N2-PR7 (c) — sem data, não há o que limpar: o alvo SOME no mesmo toque.
+    expect(achar('form-data-limpar')).toBeNull()
+    // O corpo do `PUT` lido na saída do app (o mock não guarda corpos).
+    const espia = vi.spyOn(globalThis, 'fetch')
     await tocar('form-salvar')
     await assentar(50)
+    const corposDoPut = (): unknown[] =>
+      espia.mock.calls
+        .filter(([, init]) => (init as RequestInit | undefined)?.method === 'PUT')
+        .map(([, init]) => JSON.parse(String((init as RequestInit).body)))
 
     expect(so('write op=update')).toHaveLength(1)
+    // O `PUT` levou `performance_date: null` e só isso (contrato §PUT) …
+    expect(corposDoPut()).toEqual([{ performance_date: null }])
+    // … e a tela foi relida depois dele (regra 3).
+    expect(so('resync')).toEqual([
+      expect.stringMatching(/^resync kind=setlists reason=write op=update status=200 setlists=\d+ ms=\d+$/),
+    ])
     const noServidor = (await mock.doServidor()).find((s) => s.id === SL)
     expect(noServidor?.performance_date).toBeNull()
     // O nome NÃO foi enviado: ele não mudou (ausente = não mexe).
     expect(noServidor?.name).toBe('Show')
+  })
+
+  it('N2-PR7 (c) — setlist sem data: o `Limpar` não existe, e sem frase nova', async () => {
+    const semData = { ...setlistComBis(), performance_date: null }
+    await mock.servir('escrita', [semData], BIBLIOTECA)
+    await montar(<S2.IndexScreen {...(await props())} />)
+    await tocar('setlist-editar')
+    expect(texto('form-data')).toBe('dd / mm / aaaa')
+    expect(achar('form-data-limpar')).toBeNull()
   })
 })
 
@@ -507,6 +531,181 @@ describe('(j) T2-R10 — 404 em qualquer escrita: S2 é abandonada e S1 já vem 
   })
 })
 
+// ------------------------------------- (n) N2-PR7 — N2-D32 e N2-E21 em S2
+
+/**
+ * **O defeito que o §3 da N2-PR7 achou no AVD** (`remove … status=net` e
+ * `resync … reason=reopen … status=net`): com a releitura da regra 3 FALHA,
+ * S2 dizia *"a lista abaixo é a que o servidor acabou de devolver"* e
+ * oferecia `Tentar de novo` — as duas coisas contra a N2-D32. E um 404 com a
+ * releitura falha saía para S1 dizendo que *"a lista abaixo é a que o
+ * servidor tem agora"*, sem ter lido lista nenhuma. O modo do mock com o
+ * sufixo `-releitura-500` (N2-PR7) é o que alcança os dois casos.
+ */
+describe('(n) N2-D32 / N2-E21 — a escrita falhou E a releitura também', () => {
+  it('500 no remover e 500 na releitura: sem "lista relida", e o botão RECARREGA', async () => {
+    await mock.servir('escrita-500-releitura-500', [setlistComBis()], BIBLIOTECA)
+    await montar(<S2.IndexScreen {...(await props())} />)
+    await tocar('remover-4')
+    await assentar(120)
+
+    expect(so('write op=remove')[0]).toMatch(/ status=500 code=INTERNAL_ERROR /)
+    expect(so('resync')).toEqual([
+      expect.stringMatching(/^resync kind=setlists reason=reopen op=- status=500 setlists=- ms=\d+$/),
+    ])
+    const aviso = texto('aviso-motivo')
+    expect(aviso).toContain('Não foi possível salvar')
+    expect(aviso).toContain('falha no servidor — nada foi alterado aqui')
+    // A terceira oração é uma afirmação sobre uma releitura que NÃO houve.
+    expect(aviso).not.toContain('a lista abaixo é a que o servidor acabou de devolver')
+    // N2-D32: sem estado real, nenhuma repetição de escrita — só recarregar.
+    expect(texto('aviso-acao')).toBe('Tentar recarregar')
+    expect(inativo('aviso-acao')).toBe(false)
+
+    // Recarregar com a leitura de pé: agora sim, a regra 3 foi cumprida, e o
+    // `Tentar de novo` aparece com a terceira oração.
+    // (O `GET` do próprio mock está em 500 neste modo: o estado do servidor
+    // de antes da remoção — que falhou — é o `setlistComBis()` de partida.)
+    await mock.servir('escrita-500', [setlistComBis()], BIBLIOTECA)
+    linhas = []
+    await tocar('aviso-acao')
+    await assentar(80)
+    expect(so('resync')[0]).toMatch(/^resync kind=setlists reason=reopen op=- status=200/)
+    expect(texto('aviso-motivo')).toContain('a lista abaixo é a que o servidor acabou de devolver')
+    expect(texto('aviso-acao')).toBe('Tentar de novo')
+  })
+
+  it('404 no remover e 500 na releitura: sai para S1 com `sumiu-nao-relido`, sem a lista', async () => {
+    await mock.servir('escrita-404-releitura-500', [setlistComBis()], BIBLIOTECA)
+    await montar(<S2.IndexScreen {...(await props())} />)
+    await tocar('remover-4')
+    await assentar(120)
+
+    expect(so('write op=remove')[0]).toMatch(/ status=404 code=NOT_FOUND /)
+    expect(so('resync')[0]).toMatch(/^resync kind=setlists reason=404 op=remove status=500/)
+    // T2-R10: o 404 é conhecimento — a tela SAI. Mas não "já relida".
+    expect(saiuParaS1).toEqual(['sumiu-nao-relido'])
+    expect(relido).toBeNull()
+  })
+
+  it('extra X5 — o mesmo vale para o 404 do editar (e dos outros caminhos de saída)', async () => {
+    await mock.servir('escrita-404-releitura-500', [setlistComBis()], BIBLIOTECA)
+    await montar(<S2.IndexScreen {...(await props())} />)
+    await tocar('setlist-editar')
+    await digitar('form-nome', 'Season 4')
+    await tocar('form-salvar')
+    await assentar(120)
+
+    expect(so('write op=update')[0]).toMatch(/ status=404 code=NOT_FOUND /)
+    expect(saiuParaS1).toEqual(['sumiu-nao-relido'])
+    expect(relido).toBeNull()
+  })
+
+  it('S1 com `sumiu-nao-relido`: as duas orações, `Tentar recarregar`, e depois do 200 a frase do 404', async () => {
+    await mock.servir('escrita', [], BIBLIOTECA)
+    const estadoLocal = { uid: UID, setlists: [setlistComBis()], content: BIBLIOTECA, syncedAtMs: 1 }
+    let relidoEmS1: SetlistDTO[] | null = null
+    await montar(
+      <S1.SetlistsScreen
+        setlists={[setlistComBis()]}
+        contentById={contentById}
+        filesPresent={new Set()}
+        baixando={new Set()}
+        temCache
+        sync={{ fase: 'ok', syncedAtMs: Date.now() }}
+        online
+        sumiu
+        sumiuNaoRelido
+        onTentarNovamente={() => undefined}
+        onAbrirSetlist={() => undefined}
+        onBaixarSetlist={() => undefined}
+        onBuscar={() => undefined}
+        estadoLocal={estadoLocal}
+        aoRelerNaEscrita={(novas: SetlistDTO[]) => { relidoEmS1 = novas }}
+      />,
+    )
+    // N2-E21: as duas primeiras orações das frases de origem, e nada mais —
+    // "a lista abaixo é a que o servidor tem agora" seria falso aqui.
+    expect(texto('aviso-motivo')).toBe('Essa setlist não existe mais. Não foi possível recarregar a lista.')
+    expect(texto('aviso-acao')).toBe('Tentar recarregar')
+
+    await tocar('aviso-acao')
+    await assentar(80)
+    expect(so('resync')[0]).toMatch(/^resync kind=setlists reason=reopen op=- status=200/)
+    expect(relidoEmS1).toEqual([])
+    // Relida, a frase inteira do 404 volta a ser verdade — e não há botão.
+    expect(texto('aviso-motivo')).toBe(
+      'Essa setlist não existe mais. A lista abaixo é a que o servidor tem agora.',
+    )
+    expect(achar('aviso-acao')).toBeNull()
+  })
+})
+
+// ------------------------------------------ (o) div. 333 — N2-D22 no apagar
+
+/**
+ * **Div. 333** (lida no código na N2-PR7): apagar com 200 e a releitura
+ * falhando saía para S1 com `aoSairParaS1(null)` — nenhuma linha de aviso, e
+ * a lista (o cache não muda sem releitura, N2-D22) seguia mostrando a setlist
+ * apagada: "salvo" limpo. O modo `delete-releitura-500` é o sufixo da N2-PR7
+ * sobre o comportamento normal: o `DELETE` responde 200 e o `GET` seguinte,
+ * 500. As duas metades são medidas aqui como no CN (j): a saída de S2 e o S1
+ * que a recebe; o mapeamento entre elas (`navigation.tsx`) é do aparelho.
+ */
+describe('(o) div. 333 / N2-E23 — apagada, não relida', () => {
+  it('S2: apagar 200 e releitura 500 → sai para S1 COM o aviso e o nome', async () => {
+    await mock.servir('delete-releitura-500', [setlistComBis()], BIBLIOTECA)
+    await montar(<S2.IndexScreen {...(await props())} />)
+    await tocar('setlist-apagar')
+    await tocar('apagar-confirmar')
+    await assentar(120)
+
+    expect(so('write op=delete')[0]).toMatch(/ status=200 code=- /)
+    expect(so('resync')[0]).toMatch(/^resync kind=setlists reason=write op=delete status=500/)
+    expect(saiuParaS1).toEqual([{ apagadaNaoRelida: 'Show' }])
+    expect(relido).toBeNull()
+  })
+
+  it('S1: a linha de aviso diz que foi apagada e não relida; `Tentar recarregar` tira a setlist da lista', async () => {
+    await mock.servir('escrita', [], BIBLIOTECA)
+    const noCache = [setlistComBis()]
+    const estadoLocal = { uid: UID, setlists: noCache, content: BIBLIOTECA, syncedAtMs: 1 }
+    let lista: SetlistDTO[] = noCache
+    const tela = (): React.JSX.Element => (
+      <S1.SetlistsScreen
+        setlists={lista}
+        contentById={contentById}
+        filesPresent={new Set()}
+        baixando={new Set()}
+        temCache
+        sync={{ fase: 'ok', syncedAtMs: Date.now() }}
+        online
+        apagadaNaoRelida="Show"
+        onTentarNovamente={() => undefined}
+        onAbrirSetlist={() => undefined}
+        onBaixarSetlist={() => undefined}
+        onBuscar={() => undefined}
+        estadoLocal={estadoLocal}
+        aoRelerNaEscrita={(novas: SetlistDTO[]) => { lista = novas }}
+      />
+    )
+    await montar(tela())
+    // Hoje: nenhum aviso — e a setlist apagada está na lista.
+    expect(achar(`setlist-${SL.slice(0, 8)}`)).not.toBeNull()
+    expect(texto('aviso-motivo')).toBe(
+      'Show foi apagada. Não foi possível recarregar a lista, então ela pode ainda aparecer abaixo.',
+    )
+    expect(texto('aviso-acao')).toBe('Tentar recarregar')
+
+    await tocar('aviso-acao')
+    await assentar(80)
+    await rerender(tela())
+    expect(so('resync')[0]).toMatch(/^resync kind=setlists reason=reopen op=- status=200/)
+    expect(achar(`setlist-${SL.slice(0, 8)}`)).toBeNull()
+    expect(achar('aviso-motivo')).toBeNull()
+  })
+})
+
 // ------------------------------------------------------ (k) o 401
 
 describe('(k) T2-R13 / N2-D9 — 401 numa escrita de S2 não desloga', () => {
@@ -518,8 +717,9 @@ describe('(k) T2-R13 / N2-D9 — 401 numa escrita de S2 não desloga', () => {
 
     expect(texto('aviso-motivo')).toContain('não foi possível salvar — confira sua conta no site')
     expect(deslogou).not.toHaveBeenCalled()
-    expect(so('auth-failure')).toEqual([])
-    expect(so('login-screen')).toEqual([])
+    // A-N2-15 por linha exata (`grep -x`), não por prefixo.
+    expect(exatas(linhas, 'auth-failure')).toEqual([])
+    expect(exatas(linhas, 'login-screen')).toEqual([])
     expect(so('api status=401')[0]).toMatch(/ n=2 ms=\d+$/)
   })
 })

@@ -1,0 +1,62 @@
+# N2-PR7 — div. 333, commit do conserto (árvore de trabalho sobre da69bb2; base origin/main = 426f4cc)
+
+$ npx vitest run --project native-tela apps/native/test/s2-edicao.test.tsx -t "div. 333"
+ ✓  native-tela  apps/native/test/s2-edicao.test.tsx (21 tests | 19 skipped) 908ms
+     ✓ S2: apagar 200 e releitura 500 → sai para S1 COM o aviso e o nome  322ms
+      Tests  2 passed | 19 skipped (21)
+
+$ pnpm test:unit
+ Test Files  107 passed | 4 skipped (111)
+      Tests  1029 passed | 85 skipped (1114)
+
+$ pnpm lint
+exit=0
+
+$ pnpm exec tsc -p packages/core/tsconfig.json --noEmit
+exit=0
+
+$ (cd apps/native && npx tsc --noEmit -p .)
+exit=0
+
+$ sh apps/native/scripts/g1.sh origin/main WORKTREE
+base=origin/main head=WORKTREE
+G1a — diff vazio em 39 arquivos DERIVADOS de apps/native + packages/core/src
+      escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+      menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+      EXCEÇÕES DECLARADAS (o escopo desta PR):
+        packages/core/src/frases.ts
+        packages/core/src/escrita.ts
+        apps/native/src/escrita.ts
+        apps/native/src/screens/Picker.tsx
+        apps/native/src/screens/IndexScreen.tsx
+        apps/native/src/screens/SetlistsScreen.tsx
+        apps/native/src/navigation.tsx
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 1
+      PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+        expect(r.frase).toBe('sem conexão — nada foi salvo')
+          -> expect(r.frase).toBe('sem resposta do servidor')
+          · razão: N2-E19: a espécie `rede` deixa de afirmar que nada foi salvo
+  linhas que SAÍRAM (cada uma precisa de um PAR, e a nova do par tem de entrar IGUAL):
+      expect(r.frase).toBe('sem conexão — nada foi salvo')
+  G1b: cada linha que saiu tem par, e a nova do par entrou ✓
+exit=0
+
+$ sh apps/native/scripts/g2g3.sh origin/main WORKTREE
+G2 — testIDs  antes=79  depois=79
+  G2: antes ⊆ depois ✓
+G3 — linhas log( antes=64  depois=64
+      ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+        (nenhuma — nenhuma linha de log pode sumir nesta PR)
+  G3: nenhuma linha sumiu ✓
+exit=0
+
+$ pnpm --filter native gate:a20
+  vocabulário: 45 termos · isenções do produto: 9
+  literais em posição de texto examinados: 170
+  acusações: 0
+exit=0
+
+$ pnpm --filter native gate:icones
+  acusações: 0 · avisos: 0
+exit=0

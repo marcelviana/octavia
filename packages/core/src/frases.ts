@@ -172,10 +172,60 @@ export type ChaveDeFrase =
    */
   | 'falhou-adicionar'
   | 'adicionada'
+  /**
+   * **ERRATA DA N2-PR7 (N2-E19, decisão do Marcel sobre a div. 308) — UMA
+   * chave nova, e a razão dela.**
+   *
+   * A espécie `rede` juntava duas coisas que o músico precisa ler diferente:
+   * a request que **nem saiu** (barrada por offline — `write blocked
+   * reason=offline`) e a que **saiu e não voltou** (o prazo da N2-D35, o
+   * socket cortado). Para a primeira, *"sem conexão — nada foi salvo"* é
+   * verdade. Para a segunda é afirmação que o app não tem como fazer — a
+   * N2-D18 existe justamente porque o `POST` pode ter passado — e, ao lado
+   * do `pode-ter-gravado`, as duas frases se contradiziam na mesma linha
+   * (div. 308, Tab S6, dump `07` da N2-PR6).
+   *
+   * `rede` fica com a frase de sempre e passa a valer **só** para o barrado
+   * offline; `sem-resposta` é a da request que saiu. A segunda linha *"pode
+   * já ter sido gravada…"* acompanha só esta, e só em criar e adicionar.
+   */
+  | 'sem-resposta'
+  /**
+   * **ERRATA DA N2-PR7 (N2-E21, decisão do Marcel) — o 404 com a releitura
+   * falha.** O congelado não previa o caso: o 404 é conhecimento (o servidor
+   * disse que a setlist não existe) e o T2-R10 manda sair para S1, mas a
+   * frase do 404 (`sumiu-declarado`) afirma *"a lista abaixo é a que o
+   * servidor tem agora"* — e não há lista relida nenhuma.
+   *
+   * São as duas PRIMEIRAS orações das frases de origem, cortadas na
+   * fronteira da oração, e zero palavra nova: *"Essa setlist não existe
+   * mais."* (de `sumiu-declarado`) e *"Não foi possível recarregar a
+   * lista."* (de `salvo-nao-relido-s1`). A segunda oração de
+   * `salvo-nao-relido-s1` afirmaria o contrário do caso: *"ela pode não
+   * aparecer abaixo ainda"* é de uma setlist CRIADA, e aqui a apagada pode
+   * CONTINUAR aparecendo até o recarregar — o que as duas orações dizem.
+   */
+  | 'sumiu-nao-relido'
+  /**
+   * **ERRATA DA N2-PR7 (N2-E23, decisão do Marcel sobre a div. 333) — apagar
+   * com a releitura falha.** O congelado não previa o caso: o `DELETE`
+   * voltou 200 (o servidor CONFIRMOU) e a releitura falhou, então o cache
+   * não mudou (N2-D22) e S1 continua mostrando a setlist apagada. Sem uma
+   * frase, a tela era o "salvo" limpo que a N2-D22 proíbe.
+   *
+   * Construção ESPELHADA de `salvo-nao-relido-s1` (div. 227): o core guarda
+   * a metade fixa e S1 monta `<nome> foi apagada. ` na frente — nome de
+   * setlist é dado, não texto. E a segunda oração diz o contrário da do
+   * criar, porque o caso é o contrário: a criada pode AINDA NÃO aparecer; a
+   * apagada pode AINDA aparecer.
+   */
+  | 'apagada-nao-relida'
 
 export const FRASES: Readonly<Record<ChaveDeFrase, string>> = {
   // T2-R15 (`PRD-TELA-2.md`)
   rede: 'sem conexão — nada foi salvo',
+  // N2-E19: a request saiu e não voltou — o texto é do Marcel (div. 308).
+  'sem-resposta': 'sem resposta do servidor',
   auth: 'não foi possível salvar — confira sua conta no site',
   'limite-com-prazo': 'muitas alterações seguidas — tente de novo em {N} s',
   'limite-sem-prazo': 'Muitas mudanças em pouco tempo. Os controles de escrita voltam em instantes.',
@@ -215,6 +265,10 @@ export const FRASES: Readonly<Record<ChaveDeFrase, string>> = {
   'salvo-nao-relido-picker':
     'Salvo. Não foi possível recarregar a setlist, então a contagem abaixo pode estar velha.',
   'sumiu-declarado': 'Essa setlist não existe mais. A lista abaixo é a que o servidor tem agora.',
+  // N2-E21: as duas primeiras orações de `sumiu-declarado` e de `salvo-nao-relido-s1`.
+  'sumiu-nao-relido': 'Essa setlist não existe mais. Não foi possível recarregar a lista.',
+  // N2-E23: a metade fixa; S1 monta `<nome> foi apagada. ` na frente (div. 227).
+  'apagada-nao-relida': 'Não foi possível recarregar a lista, então ela pode ainda aparecer abaixo.',
   'sem-rede-s1':
     'Sem conexão: dá para abrir e tocar o que está no aparelho, não para criar setlist. O controle volta com a rede.',
   'sem-rede-s2':

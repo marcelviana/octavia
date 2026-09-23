@@ -1,0 +1,81 @@
+# N2-PR7 — controles negativos ad hoc dos CNs que PASSAM contra a main (b, c, d)
+# Cada um: a mutação à mão no código (diff), o CN reprovando, e a árvore restaurada.
+
+## (b) N2-E20 — tirar o 'ocupado' da inércia dos outros Adicionar
+-                inativo={!online || ocupado}
++                inativo={!online}
+     × duas adições sobrepostas: a segunda sai durante o relendo… da primeira; cache = último 200 322ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+AssertionError: expected false to be true // Object.is equality
+ Test Files  1 failed (1)
+      Tests  1 failed | 20 skipped (21)
+
+## (b') N2-E20 'sem frase' — o alvo inerte ganha um motivo ao lado do rótulo
+-      <Text style={[styles.alvoTexto, inativo ? styles.textoInativo : null]}>{rotulo}</Text>
++      <Text style={[styles.alvoTexto, inativo ? styles.textoInativo : null]}>{inativo ? `${rotulo} · aguarde` : rotulo}</Text>
+     × duas adições sobrepostas: a segunda sai durante o relendo… da primeira; cache = último 200 216ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+AssertionError: expected 'Adicionar · aguarde' to be 'Adicionar' // Object.is equality
+ Test Files  1 failed (1)
+      Tests  1 failed | 20 skipped (21)
+
+## (c) N2-E8 — o Limpar sempre visível (sem a condição 'há data')
+-                {data !== null ? (
++                {true ? (
+     × o `Limpar` ativa o `Salvar`, e o servidor fica sem data 191ms
+     × N2-PR7 (c) — setlist sem data: o `Limpar` não existe, e sem frase nova 144ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+AssertionError: expected <div …(4)>…(2)</div> to be null
+AssertionError: expected <div …(4)>…(2)</div> to be null
+ Test Files  1 failed (1)
+      Tests  2 failed | 13 skipped (15)
+
+## (c') N2-E8 — limpar sem contar como mudança (o toque não mexe no estado)
+-                    onPress={() => (editavel ? setData(null) : undefined)}
++                    onPress={() => undefined}
+     × o `Limpar` ativa o `Salvar`, e o servidor fica sem data 155ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+AssertionError: expected true to be false // Object.is equality
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed | 13 skipped (15)
+
+## (d) A-N2-15 — a escrita passa a emitir a linha EXATA 'auth-failure' no 401 duplo
+-  onAuthFailure: () => undefined,
++  onAuthFailure: () => { log('auth-failure') },
+     × CN: na escrita o mesmo 401 duplo NÃO chama o logout, e são 2 requests 125ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+AssertionError: expected [ 'OCTAVIA: auth-failure' ] to deeply equal []
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed | 16 skipped (18)
+     × o banner traz a frase do conjunto, a sessão fica e a lista continua 219ms
+     × o aviso traz a frase do conjunto, e a sessão fica 249ms
+     × 401 numa adição não desloga (T2-R13): a frase na linha, a sessão fica 309ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+AssertionError: expected [ 'OCTAVIA: auth-failure' ] to deeply equal []
+AssertionError: expected [ 'OCTAVIA: auth-failure' ] to deeply equal []
+AssertionError: expected [ 'OCTAVIA: auth-failure' ] to deeply equal []
+ Test Files  3 failed (3)
+      Tests  3 failed | 45 skipped (48)
+
+## (d') A-N2-15 — uma linha que só CONTÉM a subcadeia ('write auth-failure-guard')
+-  onAuthFailure: () => undefined,
++  onAuthFailure: () => { log('write auth-failure-guard') },
+### o CN novo (linha exata) — NÃO acusa: não houve logout
+      Tests  2 passed | 16 skipped (18)
+### o CN da main (subcadeia), o mesmo arquivo de origin/main copiado para um temporário — acusa um logout que não houve:
+     × CN: na escrita o mesmo 401 duplo NÃO chama o logout, e são 2 requests 134ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+AssertionError: expected 'OCTAVIA: auth refresh=cached\nOCTAVIA…' not to contain 'auth-failure'
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed | 16 skipped (18)
+
+## estado final (só os arquivos do commit 1)
+ M apps/native/scripts/g1.sh
+ M apps/native/test/ajuda.ts
+ M apps/native/test/escrita.test.ts
+ M apps/native/test/picker.test.tsx
+ M apps/native/test/prazo-de-rede.test.ts
+ M apps/native/test/s1-criar.test.tsx
+ M apps/native/test/s2-edicao.test.tsx
+ M packages/core/src/escrita.test.ts
+ M packages/core/src/frases.test.ts

@@ -8,6 +8,19 @@
  */
 import type { ContentDTO, SetlistDTO, SetlistSongDTO } from '@octavia/core'
 
+/**
+ * **A-N2-15 — as linhas IGUAIS ao evento, e não as que o contêm** (N2-PR7).
+ *
+ * `so('auth-failure')` (prefixo) e `not.toContain('auth-failure')` (subcadeia)
+ * falham para os dois lados: uma linha nova como `write auth-failure-guard`
+ * acusaria um logout que não houve, e o prefixo acharia qualquer evento que
+ * COMECE com o nome. O aceite é `grep -x` no logcat — o formato real da linha
+ * (`log.ts`) é `OCTAVIA: <evento>`, e é ele, inteiro, que se compara.
+ */
+export function exatas(linhas: readonly string[], evento: string): string[] {
+  return linhas.filter((l) => l === `OCTAVIA: ${evento}`)
+}
+
 export const BUCKET = 'https://host/storage/v1/object/public/content-files'
 
 /** Um PDF bem formado de ~`bytes` bytes. */

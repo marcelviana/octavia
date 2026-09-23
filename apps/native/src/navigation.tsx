@@ -13,7 +13,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { StyleSheet, Text, View } from 'react-native'
 import type { ContentDTO, SetlistDTO } from '@octavia/core'
 import { EndScreen } from './screens/EndScreen'
-import { IndexScreen } from './screens/IndexScreen'
+import { IndexScreen, type AvisoDeSaida } from './screens/IndexScreen'
 import { LoginScreen } from './screens/LoginScreen'
 import { SearchScreen } from './screens/SearchScreen'
 import { SetlistsScreen, type SetlistsScreenProps } from './screens/SetlistsScreen'
@@ -87,8 +87,12 @@ export function Navigation({ signedIn, setlists, dados }: NavigationProps): Reac
    *
    * Ele se apaga ao abrir qualquer setlist — a partir daí a tela já não é a
    * que mudou debaixo do músico.
+   *
+   * **N2-E21**: o aviso tem duas formas, porque o 404 pode chegar sem a lista
+   * relida (`'sumiu-nao-relido'`) — e aí S1 não pode dizer que ela é a do
+   * servidor.
    */
-  const [sumiu, setSumiu] = useState(false)
+  const [sumiu, setSumiu] = useState<AvisoDeSaida>(null)
 
   /**
    * N2-PR4 — o que S2 precisa para escrever (T2-R19). O `estadoLocal` e o
@@ -96,7 +100,7 @@ export function Navigation({ signedIn, setlists, dados }: NavigationProps): Reac
    * a tela mostra, e quem grava é o `escrita.ts` nas duas telas.
    */
   const edicaoDeS2 = useCallback(
-    (sair: (aviso: 'sumiu' | null) => void) =>
+    (sair: (aviso: AvisoDeSaida) => void) =>
       setlists.estadoLocal === null
         ? null
         : {
@@ -119,9 +123,11 @@ export function Navigation({ signedIn, setlists, dados }: NavigationProps): Reac
               {({ navigation }) => (
                 <SetlistsScreen
                   {...setlists}
-                  sumiu={sumiu}
+                  sumiu={sumiu === 'sumiu' || sumiu === 'sumiu-nao-relido'}
+                  sumiuNaoRelido={sumiu === 'sumiu-nao-relido'}
+                  apagadaNaoRelida={typeof sumiu === 'object' && sumiu !== null ? sumiu.apagadaNaoRelida : null}
                   onAbrirSetlist={(setlistId) => {
-                    setSumiu(false)
+                    setSumiu(null)
                     navigation.navigate('Index', { setlistId })
                   }}
                   onBuscar={() => navigation.navigate('Search', {})}
@@ -152,7 +158,7 @@ export function Navigation({ signedIn, setlists, dados }: NavigationProps): Reac
                     edicao={
                       route.params.posicaoAtual === undefined
                         ? edicaoDeS2((aviso) => {
-                            setSumiu(aviso === 'sumiu')
+                            setSumiu(aviso)
                             navigation.navigate('Setlists')
                           })
                         : null
