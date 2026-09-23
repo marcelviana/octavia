@@ -1,0 +1,89 @@
+### W4B1-D — gates e suíte, commit 2 (árvore de trabalho antes do commit)
+### 2026-09-23T14:51:24Z   branch=w4b/gates   BASE=origin/main=f1d65d8984a12c8e4d33cf2a888eb1129fa9dd05
+
+=== $ sh apps/native/scripts/g1.sh origin/main WORKTREE ===
+base=origin/main head=WORKTREE
+G1a — diff vazio em 45 arquivos DERIVADOS de apps/native + packages/core/src
+      escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+      menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+      EXCEÇÕES DECLARADAS (o escopo desta PR):
+        packages/core/src/search.ts
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+      PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+        (nenhum — nenhuma asserção do core pode mudar nesta PR)
+  G1b: só adição ✓
+exit=0
+
+=== $ sh apps/native/scripts/g2g3.sh origin/main WORKTREE ===
+G2 — testIDs  antes=79  depois=79
+  G2: antes ⊆ depois ✓
+G3 — linhas log( antes=64  depois=64
+      ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+        (nenhuma)
+      REMOÇÕES DECLARADAS (linha → REMOVIDA: razão; N2-D34):
+        (nenhuma)
+      — nenhuma linha de log pode sumir nesta PR
+  G3: nenhuma linha sumiu ✓
+exit=0
+
+=== o passo do CI: shasum -c dos congelados (texto idêntico ao ci.yml) ===
+== docs/native/DESIGN-V1
+telas.html: OK
+icones.html: OK
+telas.pdf: OK
+== docs/native/DESIGN-N2
+telas.html: OK
+telas.pdf: OK
+exit=0
+
+=== gate:a20 / gate:a20:cn / gate:icones / gate:icones:cn (os :cn TÊM de reprovar) ===
+--- pnpm -s -C apps/native gate:a20
+  arquivos varridos: 30 (inclui 1 de fora da raiz: ../../packages/core/src/frases.ts — N2-PR3, div. 229)
+  vocabulário: 45 termos · isenções do produto: 9
+  literais em posição de texto examinados: 170
+  acusações: 0
+exit=0
+--- pnpm -s -C apps/native gate:a20:cn
+  arquivos varridos: 2
+  vocabulário: 45 termos · isenções do produto: 9
+  literais em posição de texto examinados: 8
+  acusações: 4
+exit=1
+--- pnpm -s -C apps/native gate:icones
+  hex cravado: 0 · tinta por token: 6
+  §6.3 tab: em20 4 cordas · normal 6 cordas · markup de 20 dp no telas.html: idêntico
+  fora do catálogo: 4/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  acusações: 0 · avisos: 0
+exit=0
+--- pnpm -s -C apps/native gate:icones:cn
+  hex cravado: 1 · tinta por token: 6
+  §6.3 tab: em20 6 cordas · normal 6 cordas · markup de 20 dp no telas.html: idêntico
+  fora do catálogo: 3/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  acusações: 23 · avisos: 0
+exit=1
+
+=== $ sh apps/native/scripts/g7.sh WORKTREE ===
+     ✓ o prazo da releitura é o do CORE (20 s), e vale também no `reopen`  40120ms
+
+ Test Files  8 passed (8)
+      Tests  79 passed (79)
+   Start at  11:52:54
+   Duration  61.53s (transform 1.51s, setup 0ms, import 1.83s, tests 68.03s, environment 1ms)
+
+G7: PASSOU ✓
+exit=0
+
+=== $ pnpm exec tsc -p packages/core/tsconfig.json --noEmit ===
+exit=0
+
+=== $ pnpm test (suíte completa) ===
+     ✓ a RELEITURA tem o mesmo prazo: 2xx com o `GET` mudo vira `ok-nao-relido`  605ms
+     ✓ o prazo da releitura é o do CORE (20 s), e vale também no `reopen`  40283ms
+
+ Test Files  107 passed | 4 skipped (111)
+      Tests  1029 passed | 85 skipped (1114)
+   Start at  11:53:57
+   Duration  62.51s (transform 5.79s, setup 22.55s, import 12.99s, tests 102.65s, environment 86.69s)
+
+exit=0

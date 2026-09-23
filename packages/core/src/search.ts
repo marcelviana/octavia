@@ -26,7 +26,12 @@ export interface SearchIndex {
   entries: SearchEntry[]
 }
 
-/** Reconstruído por item a cada invalidação do cache (T1-R10). */
+/**
+ * Reconstrói o índice do CONJUNTO inteiro a cada chamada — não há atualização
+ * por item (divs. 194 e 220). Quem chama memoiza por referência
+ * (`useMemo(() => buildIndex(…), [lista])` na S4 e no picker): o índice se
+ * refaz quando o cache entrega uma lista nova, que é a invalidação do T1-R10.
+ */
 export function buildIndex(contents: ContentDTO[]): SearchIndex {
   return {
     entries: contents.map((content) => ({

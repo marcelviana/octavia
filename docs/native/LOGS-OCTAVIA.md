@@ -528,8 +528,14 @@ div. 127 antes dela.)
 **14. "Isto mudou de propósito" é um PAR declarado — no G3 e no G1b.** A errata do G3 é
 `velha → nova`, e a nova tem de entrar (div. 189, W4-a, caso 22); a alteração de uma
 asserção do core no G1b é `velha → nova · razão`, a nova entrando igual e a razão
-escrita no `g1.sh` (div. 321, N2-PR7). Os dois imprimem o par declarado e não usado.
-Um lado só do par é o que deixa o contrato encolher com a bênção do gate.
+escrita no `g1.sh` (div. 321, N2-PR7). Um lado só do par é o que deixa o contrato
+encolher com a bênção do gate.
+**W4-b1:** a remoção de propósito também é par — `linha → REMOVIDA: <razão>` na lista
+`REMOCOES` do `g2g3.sh` (N2-D34, **fechada**): a linha casa IGUAL, não por subcadeia, e a
+razão é obrigatória; o coletor continua lendo comentário (div. 83). E **declaração órfã
+reprova**: exceção do G1a, par do G1b, errata e remoção do G3 declaradas e não usadas dão
+`exit ≠ 0` (div. 339, que é a 141 medida na `main` — o aviso saía em toda corrida e o job
+ficava verde). A poda deixa de ser disciplina e vira condição de merge.
 
 **15. A TELA VENCE O LOG.** (Origem: div. 270, N2-PR4.) O log estava perfeito —
 `write op=delete … 200`, `resync … 200`, `cache write … invalidated=1` — e S1 voltava
