@@ -326,6 +326,12 @@ describe('(a) regra 7 — a única porta é `Adicionar música` na faixa de S2 c
       `Digite para achar na biblioteca e adicionar a ${NOME}. ${BIBLIOTECA.length} músicas disponíveis.`,
     )
     expect(texto('picker-rodape')).toBe(`${NOME} · 7 músicas · nada adicionado nesta visita`)
+    // Div. 313, achada no §4: o rodapé é 64 COM o fio dentro (o congelado é
+    // `border-box`). A primeira forma punha o fio num invólucro, e o Tab S6
+    // mediu 64,9. O CN lê o estilo — a geometria continua sendo do dump.
+    const barraDoRodape = exige('picker-concluir').parentElement as HTMLElement
+    expect(estilo(barraDoRodape)).toMatchObject({ height: 64, borderTopWidth: 1 })
+    expect(estilo(barraDoRodape.parentElement as HTMLElement).borderTopWidth).toBeUndefined()
     // S2 some enquanto o picker dura: grade, faixa e `remover`.
     expect(achar('song-1')).toBeNull()
     expect(achar('picker-abrir')).toBeNull()

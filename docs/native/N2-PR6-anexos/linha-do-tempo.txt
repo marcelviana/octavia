@@ -1,0 +1,42 @@
+# N2-PR6 — a linha do tempo dos CNs de ordem (picker.test.tsx, (d))
+# gerada com PICKER_LINHA_DO_TEMPO=<arquivo>; cada marca traz as linhas de log NOVAS desde a anterior e a tela naquele instante
+
+## (d) T2-R6 / N2-D30 — adicionar: 201, releitura, e só então a marca e o total > a ordem dos eventos: adicionando… → 201 → relendo… → resync 200 → 2× e 8 músicas
+— antes do toque
+    log: OCTAVIA: index open
+    tela: estado-1="Adicionar" · rodapé="Ensaio do picker · 7 músicas · nada adicionado nesta visita"
+— no toque (o request em voo)
+    log: OCTAVIA: auth refresh=cached
+    tela: estado-1="adicionando…" · rodapé="Ensaio do picker · 7 músicas · nada adicionado nesta visita"
+— 201 recebido, releitura em voo
+    log: OCTAVIA: api status=201 path=/api/setlists/aaaaaaaa/songs n=1 ms=4
+    log: OCTAVIA: write op=add setlist=aaaaaaaa items=- status=201 code=- ms=4
+    log: OCTAVIA: auth refresh=cached
+    tela: estado-1="relendo…" · rodapé="Ensaio do picker · 7 músicas · 1 adicionada nesta visita"
+— resync 200
+    log: OCTAVIA: api status=200 path=/api/setlists n=1 ms=604
+    log: OCTAVIA: resync kind=setlists reason=write op=add status=200 setlists=1 ms=604
+    log: OCTAVIA: cache write kind=setlists n=1 invalidated=1
+    tela: estado-1="adicionada" · rodapé="Ensaio do picker · 8 músicas · 1 adicionada nesta visita"
+
+## (d) T2-R6 / N2-D30 — adicionar: 201, releitura, e só então a marca e o total > duas adições sobrepostas: a segunda sai durante o relendo… da primeira; cache = último 200
+— 201 da primeira, releitura dela em voo
+    log: OCTAVIA: index open
+    log: OCTAVIA: auth refresh=cached
+    log: OCTAVIA: api status=201 path=/api/setlists/aaaaaaaa/songs n=1 ms=2
+    log: OCTAVIA: write op=add setlist=aaaaaaaa items=- status=201 code=- ms=2
+    log: OCTAVIA: auth refresh=cached
+    tela: estado-1="relendo…" · rodapé="Ensaio do picker · 7 músicas · 1 adicionada nesta visita"
+— segunda adição disparada
+    log: OCTAVIA: auth refresh=cached
+    tela: estado-1="relendo…" · rodapé="Ensaio do picker · 7 músicas · 1 adicionada nesta visita"
+— as duas releituras voltaram
+    log: OCTAVIA: api status=201 path=/api/setlists/aaaaaaaa/songs n=1 ms=2
+    log: OCTAVIA: write op=add setlist=aaaaaaaa items=- status=201 code=- ms=2
+    log: OCTAVIA: auth refresh=cached
+    log: OCTAVIA: api status=200 path=/api/setlists n=1 ms=1
+    log: OCTAVIA: resync kind=setlists reason=write op=add status=200 setlists=1 ms=1
+    log: OCTAVIA: cache write kind=setlists n=1 invalidated=1
+    log: OCTAVIA: api status=200 path=/api/setlists n=1 ms=611
+    log: OCTAVIA: resync kind=setlists reason=write op=add status=200 setlists=1 ms=611
+    tela: estado-1="adicionada" · rodapé="Ensaio do picker · 9 músicas · 2 adicionadas nesta visita"

@@ -1,0 +1,125 @@
+N2-PR6 §4.2 — prod, conta principal, Tab S6 online
+DUAS ADIÇÕES PELO PICKER, UMA CADA
+===============================================================
+
+APARATO
+  aparelho     Tab S6 (SM-T865, RX2N8000F3D), Android 12, densidade 360 (fator 2,25)
+  conta        uid xVDJRBh1WpPOatbfWahOLttYn1E3 — a conta PRINCIPAL
+  código       o commit 2 (04d9890) + o conserto do fio do rodapé (div. 313),
+               bundle conferido por `curl` antes de abrir (div. 294):
+                 localhost:8788 → 0 · picker-abrir → 1 · base https://octavia.rocks
+  dev client   o da N2-PR3 (lastUpdateTime=2026-09-22 10:34:25) — sem build nativo
+  Metro        `npx expo start --dev-client --clear` SEM override (a base sai do
+               `apps/native/.env`). O mock foi MORTO e o `adb reverse tcp:8788`
+               REMOVIDO antes; conferido: `curl -m 2 http://localhost:8788/…` → 000.
+  data/hora    2026-09-22, ~21:03–21:08 (America/Sao_Paulo)
+  setlist      `N2-PR5 aceite` (id8 3ccef313), 3 músicas ao abrir — NÃO APAGADA
+               (é da PR-7)
+
+Os títulos da biblioteca do músico NÃO entram neste arquivo (regra "anexo não
+carrega texto de música"): as músicas são descritas pela posição e pelo grupo
+em que o picker as mostrou. Os dumps de prod (`p1…p8.xml`) ficaram fora do
+repositório, de propósito.
+
+CONTAGEM DE ESCRITAS EM PROD NESTA PR: 2
+
+===============================================================
+1) A ABERTURA CONTRA PROD
+===============================================================
+$ adb -s RX2N8000F3D logcat -d | grep OCTAVIA
+OCTAVIA: net online
+OCTAVIA: auth uid=xVDJRBh1WpPOatbfWahOLttYn1E3 src=restored
+OCTAVIA: cache hit kind=setlists n=2
+OCTAVIA: cache hit kind=content n=12
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=3752
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=546
+OCTAVIA: cache write kind=setlists n=3 invalidated=5
+OCTAVIA: cache write kind=content n=63 invalidated=75
+OCTAVIA: sync ok setlists=3 content=63 pages=1 t=4401
+OCTAVIA: prefetch plan n=0 reason=7d
+
+S1 com três setlists; `N2-PR5 aceite` = `setlist-3ccef313`. S2 dela: `3 músicas`,
+`picker-abrir` e `reordenar` ativos, `remover-1…3`.
+`Adicionar música` → o vazio: placeholder `Adicionar a N2-PR5 aceite`,
+"… 63 músicas disponíveis.", rodapé `N2-PR5 aceite · 3 músicas · nada adicionado
+nesta visita`. Busca por uma letra: régua "Nesta setlist" com 2 resultados,
+"Biblioteca · 63 músicas" com 48. As linhas 1 e 2 têm a marca `já na setlist`;
+a 3 não tem marca nenhuma (lido no dump antes do toque).
+
+===============================================================
+2) ESCRITA 1 — uma música da biblioteca que NÃO está na setlist
+   (toque em `picker-adicionar-3`, a primeira linha da biblioteca)
+===============================================================
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=201 path=/api/setlists/3ccef313/songs n=1 ms=2082
+OCTAVIA: write op=add setlist=3ccef313 items=- status=201 code=- ms=2090
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=496
+OCTAVIA: resync kind=setlists reason=write op=add status=200 setlists=3 ms=509
+OCTAVIA: cache write kind=setlists n=3 invalidated=1
+OCTAVIA: prefetch plan n=0 reason=7d
+
+Depois da releitura: a música subiu para "Nesta setlist" (réguas 3 · 47) com a
+marca `já na setlist`; rodapé `… · 4 músicas · 1 adicionada nesta visita`.
+
+===============================================================
+3) ESCRITA 2 — o BIS: uma música que JÁ está na setlist
+   (toque em `picker-adicionar-2`; a linha 1 passou a ser a recém-adicionada,
+   `Adicionada`, sem botão — e o primeiro toque, em `picker-adicionar-1`, não
+   achou alvo e NÃO saiu: nenhuma linha de log, nenhuma escrita)
+===============================================================
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=201 path=/api/setlists/3ccef313/songs n=1 ms=520
+OCTAVIA: write op=add setlist=3ccef313 items=- status=201 code=- ms=524
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=433
+OCTAVIA: resync kind=setlists reason=write op=add status=200 setlists=3 ms=444
+OCTAVIA: cache write kind=setlists n=3 invalidated=1
+OCTAVIA: prefetch plan n=0 reason=7d
+
+Depois da releitura: a linha ganhou `já na setlist · 2×` (uma ocorrência no
+dump) e o rodapé leu, verbatim:
+    N2-PR5 aceite · 5 músicas · 2 adicionadas nesta visita
+
+Sem diálogo, sem confirmação (N2-D15).
+
+===============================================================
+4) `Concluir` → S2
+===============================================================
+$ adb logcat -c ; toque em picker-concluir ; adb logcat -d | grep -c OCTAVIA
+0
+
+S2: `song-1…5` e `remover-1…5` — CINCO linhas. O bis é linha própria: as
+posições 2 e 5 têm o mesmo título (comparado no dump, não transcrito aqui),
+cada uma com o seu `remover-<n>`. A 5ª, ímpar final, mede 1089,8 dp.
+
+===============================================================
+5) REABRIR (force-stop + abrir) — o sync
+===============================================================
+OCTAVIA: net online
+OCTAVIA: auth uid=xVDJRBh1WpPOatbfWahOLttYn1E3 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=63
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=454
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=362
+OCTAVIA: cache write kind=setlists n=3 invalidated=0
+OCTAVIA: cache write kind=content n=63 invalidated=0
+OCTAVIA: sync ok setlists=3 content=63 pages=1 t=951
+OCTAVIA: prefetch plan n=0 reason=7d
+
+`invalidated=0` nos dois conjuntos: o cache que a releitura gravou é o que o
+servidor tem.
+
+===============================================================
+6) REGRA 4 DO CATÁLOGO
+===============================================================
+$ grep -c eyJ <as quatro capturas de logcat acima>
+0 · 0 · 0 · 0
+Nenhuma linha `write op=` / `resync kind=` tem uuid inteiro, nome de setlist ou
+título: o `setlist=` é o id8 (3ccef313).

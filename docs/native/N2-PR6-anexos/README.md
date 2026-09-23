@@ -26,6 +26,14 @@ Ver `DESIGN-N2/README.md` §9, "Divergências abertas na N2-PR6".
 |---|---|
 | `CN-antes.txt` | os CNs do commit 1 contra a árvore de `f991eb0`: **19 reprovam por ausência** (`sem nó com testID="picker-abrir"`), 1 passa — o "S2 do palco não tem porta", que é guarda de regressão (ver §4) |
 | `gates-commit1.txt` | G1, G2/G3, `gate:icones` (reprova por `falta no mapa: "adicionar"` — a poda antes do desenho), `gate:icones:cn` (22 → 23) e `gate:a20`, verbatim |
+| `gates-commit2.txt` | os mesmos gates sobre `04d9890` (refs commitados): G1 com as seis exceções usadas, G2 69 → 79, G3 64 = 64, `gate:icones` 39 registros · 0 acusações · 0 avisos, `gate:a20` 163 literais · 0; suíte e `tsc` |
+| `CN-depois.txt` | os 20 CNs passando, depois do conserto da div. 313 |
+| `CN-controles.txt` | quatro controles negativos ad hoc — cada CN que passa, contra o defeito que ele guarda (a porta no palco, o total que sobe com o 201, o relendo… que ocupa as outras linhas, o fio fora dos 64) |
+| `linha-do-tempo.txt` | a ordem dos eventos dos CNs (d), log e tela a cada marca |
+| `aparato.md` | o §4: G6, G5, as medidas contra o congelado, os toques, o defeito da div. 313, prod, as mutações |
+| `device-prod.txt` | o logcat verbatim do §4.2 (duas escritas em prod), sem título nenhum |
+| `dumps/` | 15 dumps do MOCK (`SHA256SUMS.txt`) e o resumo em dp de cada um |
+| `png/` | `06` (os quatro estados), `08` (relendo… + aviso, rodapé de 112), `13` (a faixa sem rede, recorte) |
 
 ## 4 · O CN que não reprova hoje
 

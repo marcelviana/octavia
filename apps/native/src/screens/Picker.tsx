@@ -412,7 +412,7 @@ export function Picker({
         />
       )}
 
-      <View style={styles.rodape}>
+      <View>
         {/* Releitura falhou: *"o aviso assume o rodapé, na linha de 48 dp do
             §7, empurrando a barra de 64 para baixo (48 + 64 = 112)"*. */}
         {aviso !== null ? (
@@ -691,11 +691,16 @@ const styles = StyleSheet.create({
   falhaTexto: { flexShrink: 1, gap: 2 },
   falhaTitulo: { color: dark.errorInk, fontFamily: font.ui, fontSize: size.label },
   falhaMotivo: { color: dark.muted, fontFamily: font.mono, fontSize: size.labelSmall },
-  rodape: { borderTopWidth: bar.hairline, borderTopColor: dark.line },
-  avisoDoRodape: { borderBottomWidth: bar.hairline, borderBottomColor: dark.line },
-  // §5: "rodapé 64 (novo)".
+  // O fio que separa o aviso da lista. A linha de aviso é o componente de 48
+  // do §3.3 e não se deforma; o fio fica por cima dela (div. 313).
+  avisoDoRodape: { borderTopWidth: bar.hairline, borderTopColor: dark.line },
+  // §5: "rodapé 64 (novo)" — com o fio DENTRO dos 64, como o congelado o
+  // desenha (`border-box`). A primeira forma punha o fio num invólucro, fora
+  // dos 64, e o Tab S6 mediu 64,9 (div. 313).
   barraDoRodape: {
     height: touch.stage,
+    borderTopWidth: bar.hairline,
+    borderTopColor: dark.line,
     paddingHorizontal: space.xl,
     flexDirection: 'row',
     alignItems: 'center',
