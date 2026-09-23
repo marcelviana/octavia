@@ -1,0 +1,61 @@
+# W4-b3, commit 2 — suíte e gates sobre a árvore com o conserto (base 796abe5b93b15f504cbebebd3f4002c14e273d9c)
+# declarações (bloco gates do corpo da PR):
+#   g1a: apps/native/src/files.ts
+#   g1a: apps/native/src/prefetch.ts
+== pnpm lint
+
+✔ No ESLint warnings or errors
+== tsc tsconfig.test.json
+tests/ux-audit/harvest-populated.spec.ts(292,26): error TS2532: Object is possibly 'undefined'.
+tests/ux-audit/harvest-populated.spec.ts(293,17): error TS2532: Object is possibly 'undefined'.
+tests/ux-audit/harvest-populated.spec.ts(525,26): error TS2532: Object is possibly 'undefined'.
+ok
+== tsc packages/core
+ok
+== type-check native
+
+== pnpm test
+ Test Files  108 passed | 4 skipped (112)
+      Tests  1037 passed | 85 skipped (1122)
+== g1
+declarações: do corpo da PR (GATES_DECL=<scratchpad>/decl)
+base=796abe5b93b15f504cbebebd3f4002c14e273d9c head=WORKTREE
+G1a — diff vazio em 44 arquivos DERIVADOS de apps/native + packages/core/src
+      escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+      menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+      EXCEÇÕES DECLARADAS (o escopo desta PR):
+        apps/native/src/files.ts
+        apps/native/src/prefetch.ts
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+      PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+        (nenhum — nenhuma asserção do core pode mudar nesta PR)
+  G1b: só adição ✓
+exit=0
+== g2g3
+G2 — testIDs  antes=79  depois=79
+  G2: antes ⊆ depois ✓
+G3 — declarações: do corpo da PR (GATES_DECL=<scratchpad>/decl)
+G3 — linhas log( antes=64  depois=65
+      ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+        (nenhuma)
+      REMOÇÕES DECLARADAS (linha → REMOVIDA: razão; N2-D34):
+        (nenhuma)
+      — nenhuma linha de log pode sumir nesta PR
+  G3: nenhuma linha sumiu ✓
+  linhas NOVAS (declarar no commit e no catálogo):
+      apps/native/src/prefetch.ts	log(`lru over bytes=${bytesAfter} cap=${CAP_BYTES} protected=${protegidos.size}`)
+exit=0
+== g7
+G7 — integridade sobre a ÁRVORE DE TRABALHO
+ Test Files  9 passed (9)
+      Tests  87 passed (87)
+G7: PASSOU ✓
+== gate:a20 / a20:cn / icones / icones:cn (os :cn TÊM de reprovar: exit=1 é o instrumento funcionando)
+gate:a20 exit=0
+gate:a20:cn exit=1
+gate:icones exit=0
+gate:icones:cn exit=1
+== congelados (linhas que NÃO são OK, por diretório)
+0
+0

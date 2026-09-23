@@ -16,10 +16,36 @@ esta página no mesmo commit (regra 9 do `LOGS-OCTAVIA.md`, aplicada aqui).
   (JDK Corretto 17). O `--device` quer o nome do `getDevicesAsync` do Expo,
   **com sublinhado**; o serial `RX2N8000F3D` e o `SM-T865` do `getprop` são
   recusados. Div. 251. Só se rebuilda quando entra **módulo nativo** (div. 234);
-  fora disso o dev client carrega o bundle do Metro.
+  fora disso o dev client carrega o bundle do Metro. **O rebuild vale para os dois
+  aparelhos**: a #315 refez o Tab e deixou o AVD com um dev client sem o
+  `datetimepicker`, que quebrava na carga (div. 371). Antes de medir, confira a data:
+  `adb shell dumpsys package rocks.octavia.app | grep lastUpdateTime`. No AVD:
+  `ANDROID_HOME=$HOME/Library/Android/sdk npx expo run:android --device octavia_tab32`
+  (sem o `ANDROID_HOME` o Gradle não acha o SDK). O `expo run:android` liga o
+  **build cache** do Gradle (`--build-cache`), então o tempo dele não é tempo de build.
 - **APK local é single-ABI** (`arm64-v8a`, 82.030.412 B) e o do CI tem quatro
   (231.377.892 B, V1-PR3): **nem tamanho nem tempo se comparam com a série do
   CI**. Div. 253.
+
+- **Build de release** (W4-b3, série em [`RELEASE-FAIXA.md`](RELEASE-FAIXA.md)):
+  `sh docs/native/W4B3-anexos/builds.sh <saida.tsv> R1` da raiz (limpo, `assembleRelease
+  --no-daemon --no-build-cache`). Assina com a **chave de debug**, o mesmo
+  `rocks.octavia.app` e o mesmo certificado do dev client: `adb install -r` troca um
+  pelo outro **mantendo dados e sessão**, sem desinstalar (div. 372). Guarde antes o
+  `base.apk` do dev client (`adb shell pm path rocks.octavia.app` + `adb pull`) para
+  reinstalá-lo no fim. O release não é `DEBUGGABLE` (sem `run-as`) e não tem o botão
+  flutuante do dev client.
+  - **O release não alcança `http://`; aceite de release é contra prod, só leitura, mais escrita descartável pela regra 12; o mock é do dev client.** (Decisão do Marcel, 2026-09-23; div. 373
+    **fechada**.) A causa é a falta de `usesCleartextTraffic`, que o prebuild só põe
+    nos manifests de debug.
+  - **`EXPO_PUBLIC_*` inline num build de release exige apagar o `$TMPDIR/metro-cache`**
+    antes: com ele quente, o bundle embutido saiu com a URL de prod (div. 374). Conferir
+    sempre: `unzip -p <apk> assets/index.android.bundle | grep -ac <valor>`.
+- **CI: push de docs só depois do APK verde; antes, custa um APK.** (Decisão do Marcel, 2026-09-23; div. 381.) O H1 só pula o APK
+  quando o último APK da PR já é `success`. Na #323, o push de docs subiu com o APK
+  anterior em curso e custou 13m18s.
+- **Cabo do Tab**: se o Tab não aparece nem como `unauthorized`, veja se o macOS o
+  enxerga (`system_profiler SPUSBHostDataType`). Na W4-b3 o primeiro cabo só carregava.
 
 ## Aparelhos
 
@@ -41,6 +67,10 @@ composição — herança registrada em `N2-ENCERRAMENTO.md` §10.7, item 1.
   **sem** `CI=1`, e **antes de todo reteste** provar que o bundle servido tem o
   conserto (regra 13; div. 294, a mesma causa da div. 127):
   `curl -s 'http://localhost:8081/apps/native/index.bundle?platform=android&dev=true' | grep -c <símbolo do conserto>`.
+  **Regra 13 ampliada (W4-b3, div. 374)**: conferir no bundle servido **o símbolo do
+  conserto e a URL base da API** antes de qualquer reteste. O cache do Metro pode
+  servir a URL de prod: `grep -c <host da API>` no mesmo `curl`, e no release
+  `unzip -p <apk> assets/index.android.bundle | grep -ac <host da API>`.
 - Voltar ao app depois de `force-stop` (o dev client cai no lançador):
   `exp+octavia://expo-development-client/?url=http%3A%2F%2Flocalhost%3A8081`.
 - **Mock**: a foto do modelo é tirada **antes** do atraso (div. 233); falha de

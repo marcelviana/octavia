@@ -261,11 +261,23 @@ export async function baixarSetlist(
  * T1-R14 — LRU com teto, os garantidos como `protectedUrls`. Só loga quando
  * despeja: uma linha `lru evict n=0` por abertura seria ruído no instrumento
  * dos aceites.
+ *
+ * **O estouro aparece** (W4-b3). O `lruEvict` nunca despeja um protegido, e
+ * quando só os protegidos já passam do teto ele devolve o `bytesAfter` real,
+ * acima do `CAP_BYTES` — "quem chama decide o que fazer com o estouro". Quem
+ * chama o descartava (registro do W1, `W1-PRECHECK.md:469`). Agora ele vira
+ * uma linha, `lru over`, com o total, o teto e quantos protegidos o seguram.
+ * O que o app faz com isso, além de dizer, é decisão de produto, não desta
+ * função: o teto é 200 MB e o repertório medido é 265.002 B.
  */
 export function aplicarLru(setlists: SetlistDTO[], contentById: Map<string, ContentDTO>): void {
   const protegidos = urlsGarantidas(setlists, contentById)
-  const { evict } = lruEvict(listFiles(), CAP_BYTES, protegidos)
-  if (evict.length === 0) return
-  const bytes = remove(evict)
-  log(`lru evict n=${evict.length} bytes=${bytes}`)
+  const { evict, bytesAfter } = lruEvict(listFiles(), CAP_BYTES, protegidos)
+  if (evict.length > 0) {
+    const bytes = remove(evict)
+    log(`lru evict n=${evict.length} bytes=${bytes}`)
+  }
+  if (bytesAfter > CAP_BYTES) {
+    log(`lru over bytes=${bytesAfter} cap=${CAP_BYTES} protected=${protegidos.size}`)
+  }
 }

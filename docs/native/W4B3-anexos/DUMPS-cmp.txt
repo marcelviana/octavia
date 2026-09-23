@@ -1,0 +1,15 @@
+# cmp dos dumps do palco em dp (dp.mjs: classe, id, bounds/2,25, enabled, clickable — sem texto)
+AVD 1de8-pdf12p: cmp idêntico (74 nós)
+AVD 2de8-pdf1p: cmp idêntico (72 nós)
+AVD 3de8-texto: cmp idêntico (72 nós)
+TAB 1de7: cmp idêntico (72 nós)
+TAB 2de7: cmp idêntico (72 nós)
+TAB 3de7: cmp idêntico (72 nós)
+TAB 4de7: cmp idêntico (72 nós)
+TAB 5de7: cmp idêntico (72 nós)
+TAB 6de7: cmp idêntico (72 nós)
+TAB 7de7: cmp idêntico (72 nós)
+
+# janela do app (raiz rocks.octavia.app) em dp
+android.widget.FrameLayout - [0.0,0.0][1137.8,711.1] en=true ck=false
+android.widget.FrameLayout - [0.0,0.0][1137.8,663.1] en=true ck=false

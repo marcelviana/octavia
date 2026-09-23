@@ -554,9 +554,9 @@ A numeração abaixo é estável — cite por **§10.<bloco>.<n>** (a lição da
 |---|---|---|
 | 1 | ~~**o mecanismo da 83**: par de remoção com razão (`linha → REMOVIDA: <razão>`) no `g2g3.sh`~~ — **fechado na #321 (W4-b1)** | N2-D34; `W3-ENCERRAMENTO.md` §7 item 8 |
 | 2 | ~~docstring do `buildIndex` que o código desmente~~ — **fechado na #321 (W4-b1)** | div. 220 (e 194) |
-| 3 | div. 119 (`emVoo`) | N2-D3 |
-| 4 | o estouro do `lruEvict` | N2-D3 |
-| 5 | medição do build de release | N2-D3 |
+| 3 | ~~div. 119 (`emVoo`)~~ — **fechado na #323 (W4-b3)**: a carona garantida num voo não garantido termina no não-purgável; o efeito (a) não se sustentava (div. 370) | N2-D3 |
+| 4 | ~~o estouro do `lruEvict`~~ — **fechado na #323 (W4-b3)**: vira a linha `lru over`; a tela do estouro fica com o Marcel (div. 380) | N2-D3 |
+| 5 | ~~medição do build de release~~ — **fechado na #323 (W4-b3)**: `RELEASE-FAIXA.md`, n=3, mediana 5m58s; o release não alcança `http://` (div. 373) | N2-D3 |
 | 6 | ~~**B8.1** — o APK re-roda em push só de docs: **no N2, 7 corridas, 83m32s** (§7)~~ — **fechado na #322 (W4-b2)** para push normal; push forçado segue rodando (div. 353) | `W3-ENCERRAMENTO.md` §7 item 7 |
 | 7 | ~~`CI-FAIXA.md`: a faixa com corte, incorporando as 21 do N2, a 19ª do W3 e as de `push` (§7)~~ — **fechado na #322 (W4-b2)**: série inteira, `n=91`; o corte fica com o Marcel | §7; div. 80 |
 | 8 | ~~`shasum -c` dos congelados no `gates-nativos`~~ — **fechado na #321 (W4-b1)** | div. 223 |

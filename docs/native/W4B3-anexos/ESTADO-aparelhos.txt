@@ -1,0 +1,36 @@
+# W4-b3 — estado dos aparelhos: lido, declarado, restaurado (APARATO.md, "Estado do aparelho") [medido]
+
+## AVD octavia_tab32 (emulator-5554) — estava DESLIGADO; ligado nesta sessão e desligado no fim (adb emu kill)
+| setting                          | lido no início | mudado? | no fim |
+| global airplane_mode_on          | 1              | não     | 1      |
+| global wifi_on                   | 0              | não     | 0      |
+| global mobile_data               | 0              | não     | 0      |
+| global stay_on_while_plugged_in  | 1              | não     | 1      |
+| system accelerometer_rotation    | 1              | não     | 1      |
+| system user_rotation             | 0              | não     | 0      |
+| adb reverse                      | (vazio)        | tcp:8081| removido (--remove-all) |
+Dev client: lastUpdateTime 2026-09-13 12:17:01 — ANTERIOR à #315: o bundle atual quebrava na carga com
+"TurboModuleRegistry.getEnforcing(...): 'RNCDatePicker' could not be found". Refeito com
+`npx expo run:android --device octavia_tab32` (ANDROID_HOME inline; 1m23s, quase tudo FROM-CACHE do build cache do
+Gradle), install -r: firstInstallTime 2026-09-10 11:42:54 preservado, sessão restaurada (auth src=restored).
+FICA assim: o dev client do AVD agora é de 2026-09-23 (desta árvore). Não se restaura o binário velho — ele não roda
+o bundle da main.
+
+## Tab S6 (RX2N8000F3D) — conectado pelo Marcel no meio da sessão (o 1º cabo não dava dados: nem o macOS o via)
+| setting                          | lido       | mudado para | por quê                         | no fim |
+| global airplane_mode_on          | 0          | —           |                                 | 0      |
+| global wifi_on                   | 1          | —           |                                 | 1      |
+| global mobile_data               | 1          | —           |                                 | 1      |
+| global stay_on_while_plugged_in  | 0          | 7           | tela de 30 s travaria na espera | 0      |
+| system accelerometer_rotation    | 1          | 0           | paisagem fixa para os dumps     | 1      |
+| system user_rotation             | 0          | 1 (e 0→1 no aceite de rotação) | paisagem | 0      |
+| system screen_off_timeout        | 30000      | —           |                                 | 30000  |
+| adb reverse                      | (vazio)    | 8081, 8788  | Metro e mock                    | (vazio)|
+App: dev client (lastUpdateTime 2026-09-22 10:34:25) → release R3 → R4 → R4b (install -r, mesma chave) → o MESMO
+dev client de volta (base.apk guardado, 82.030.412 B). firstInstallTime 2026-09-07 18:08:54 do começo ao fim.
+Cache local: trocado pelo do mock no controle positivo (RELEASE-aparelho.txt §3c) e devolvido por um sync contra
+prod (só GET): `sync ok setlists=2 content=63`.
+
+## Segredo
+apps/native/.env copiado do checkout principal (sha256 f2bfa179…, igual nos dois) só para o Metro e o bundle de
+release; APAGADO no fim desta sessão.

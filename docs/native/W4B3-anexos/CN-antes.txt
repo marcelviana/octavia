@@ -1,0 +1,63 @@
+# W4-b3, commit 1 — CNs sobre a base 796abe5 (antes do conserto)
+# comando: pnpm exec vitest run --project native apps/native/test/palco-divida.test.ts
+
+ RUN  v4.0.16 <árvore>
+
+ ❯ |native| apps/native/test/palco-divida.test.ts (8 tests | 2 failed) 15ms
+     × CN: o pedido garantido termina com o arquivo no NÃO-purgável, sem segundo download 7ms
+     ✓ controle: dois pedidos `false` seguem sendo UM download e a mesma promise 1ms
+     ✓ controle: carona `false` num voo garantido fica no garantido (nunca rebaixa) 1ms
+     ✓ controle: carona garantida num voo que REJEITA recebe a rejeição (sem retry) 1ms
+     ✓ controle (passa hoje): voo alheio que rejeita chega ao `catch` do palco 0ms
+     × CN: os protegidos sozinhos passam do teto — o estouro aparece numa linha 3ms
+     ✓ controle: abaixo do teto, nenhuma linha de estouro 1ms
+     ✓ controle: acima do teto, mas o despejo resolve — sem linha de estouro 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |native| apps/native/test/palco-divida.test.ts > div. 119 (b) — carona `guaranteed:true` num voo `false` > CN: o pedido garantido termina com o arquivo no NÃO-purgável, sem segundo download
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ apps/native/test/palco-divida.test.ts:77:59
+     75|     // Hoje: o segundo pedido recebe a promise do primeiro e o arquivo…
+     76|     // em `Paths.cache` — o Android pode apagá-lo na véspera do show.
+     77|     expect(__existe(`${filesDirs().guaranteed}/${NOME}`)).toBe(true)
+       |                                                           ^
+     78|     expect(__existe(`${filesDirs().demand}/${NOME}`)).toBe(false)
+     79|     expect(listFiles().find((f) => f.url === URL_A)?.guaranteed).toBe(…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  |native| apps/native/test/palco-divida.test.ts > o estouro do `lruEvict` — `bytesAfter` acima do teto > CN: os protegidos sozinhos passam do teto — o estouro aparece numa linha
+AssertionError: expected [] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+- [
+-   "OCTAVIA: lru over bytes=251658240 cap=209715200 protected=3",
+- ]
++ []
+
+ ❯ apps/native/test/palco-divida.test.ts:159:33
+    157|     expect(octavia('lru evict')).toEqual([`OCTAVIA: lru evict n=1 byte…
+    158|     // Hoje o `bytesAfter` é descartado: nenhuma linha diz que o teto …
+    159|     expect(octavia('lru over')).toEqual([
+       |                                 ^
+    160|       `OCTAVIA: lru over bytes=${240 * MB} cap=${CAP_BYTES} protected=…
+    161|     ])
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 6 passed (8)
+   Start at  17:51:39
+   Duration  283ms (transform 116ms, setup 0ms, import 172ms, tests 15ms, environment 0ms)
+

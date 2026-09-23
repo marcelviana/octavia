@@ -31,6 +31,13 @@
 
 const arquivos = new Map<string, Uint8Array>()
 const diretorios = new Set<string>()
+/**
+ * W4-b3 — tamanho DECLARADO, para o arquivo que o teste não pode alocar: o
+ * teto do LRU é 200 MB, e estourá-lo com bytes de verdade custaria 200 MB de
+ * memória por teste. O `size` lê daqui quando há entrada; `delete` e
+ * `moveSync` levam a entrada junto. Só o `__plantarGrande` escreve aqui.
+ */
+const tamanhos = new Map<string, number>()
 
 function chave(uri: string): string {
   return uri.replace(/\/+$/, '')
@@ -143,7 +150,8 @@ export class File {
   }
 
   get size(): number {
-    return arquivos.get(this.uri)?.length ?? 0
+    if (!arquivos.has(this.uri)) return 0
+    return tamanhos.get(this.uri) ?? arquivos.get(this.uri)?.length ?? 0
   }
 
   get name(): string {
@@ -180,6 +188,7 @@ export class File {
     const m = deletesQuebrados.get(this.name)
     if (m !== undefined) throw new Error(m)
     arquivos.delete(this.uri)
+    tamanhos.delete(this.uri)
   }
 
   moveSync(destino: File | Directory): void {
@@ -189,6 +198,9 @@ export class File {
     if (b === undefined) throw new Error(`fake: arquivo ausente ${this.uri}`)
     arquivos.delete(this.uri)
     arquivos.set(alvo, b)
+    const declarado = tamanhos.get(this.uri)
+    tamanhos.delete(this.uri)
+    if (declarado !== undefined) tamanhos.set(alvo, declarado)
     this.uri = alvo
   }
 
@@ -275,6 +287,7 @@ export function __quebrarDelete(nome: string, mensagem: string): void {
 
 export function __reset(): void {
   arquivos.clear()
+  tamanhos.clear()
   diretorios.clear()
   respostas.clear()
   movesQuebrados.clear()
@@ -289,6 +302,15 @@ export function __plantar(uri: string, conteudo: string | Uint8Array): void {
   const partes = chave(uri).split('/')
   for (let i = 4; i < partes.length; i++) diretorios.add(partes.slice(0, i).join('/'))
   arquivos.set(chave(uri), textoEmBytes(conteudo))
+}
+
+/**
+ * Planta um arquivo que o app lê com `size = bytes`, sem alocar os bytes
+ * (W4-b3, o estouro do `lruEvict`). O conteúdo real é um PDF pequeno.
+ */
+export function __plantarGrande(uri: string, conteudo: string, bytes: number): void {
+  __plantar(uri, conteudo)
+  tamanhos.set(chave(uri), bytes)
 }
 
 export function __existe(uri: string): boolean {

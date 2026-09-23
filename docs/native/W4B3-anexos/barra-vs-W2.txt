@@ -1,0 +1,6 @@
+estado                      auto-s zoom-m zoom-m   tema indice  busca   sair   mEsq  mDir   vão   enabled=false
+DEPOIS-03-S3d-escuro         24.0  106.2  188.0  270.2  884.0  965.8 1048.0   24.0  24.0  548.0   auto-scroll,zoom-menos,zoom-mais
+DEPOIS-01-S3letra-escuro     24.0  106.2  188.0  270.2  884.0  965.8 1048.0   24.0  24.0  548.0   (nenhum)
+AVD-ANTES-1de8-pdf12p        24.0  106.2  188.0  270.2  884.0  965.8 1048.0   24.0  24.0  548.0   auto-scroll,zoom-menos,zoom-mais
+AVD-DEPOIS-1de8-pdf12p       24.0  106.2  188.0  270.2  884.0  965.8 1048.0   24.0  24.0  548.0   auto-scroll,zoom-menos,zoom-mais
+AVD-DEPOIS-3de8-texto        24.0  106.2  188.0  270.2  884.0  965.8 1048.0   24.0  24.0  548.0   (nenhum)
