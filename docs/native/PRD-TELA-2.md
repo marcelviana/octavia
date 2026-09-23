@@ -1,5 +1,7 @@
 # PRD — Tela 2 do nativo: escrita de setlist
 
+> **Bloco encerrado em 2026-09-23; estado em [`N2-ENCERRAMENTO.md`](N2-ENCERRAMENTO.md).** Este PRD fica como está — requisitos, decisões N2-D13…D22 e D35…D37, e as linhas *Atendido na N2-PRn* —; o que ficou aberto e para onde foi está na §10 do encerramento.
+
 > **Bloco N2 · PR-0** (só docs). Data: 2026-09-16. Base: `origin/main` = `c33c794`, com o pre-check do N2 (#306) e o hotfix da div. 150 (#307, `e20c0a4`) mergeados.
 > **Fontes de fato**: [`N2-PRECHECK.md`](N2-PRECHECK.md) (Fases A e B, decisões N2-D1…D11), [`docs/ux/HOTFIX-150.md`](../ux/HOTFIX-150.md) (N2-D12, divs. 170–176), os contratos [`docs/api/SETLISTS.md`](../api/SETLISTS.md) (com a errata desta PR) e [`docs/api/CONTRATO-DE-ERRO.md`](../api/CONTRATO-DE-ERRO.md), e os handlers na `main`. **Fonte de requisitos**: [`docs/ux/JOBS.md`](../ux/JOBS.md) J3 e as decisões N2-D1…D22 (D1–D12 no pre-check e no hotfix; D13–D22 no §0).
 > **Formato**: o do [`PRD-TELA-1.md`](PRD-TELA-1.md). Todo requisito `T2-Rn` cita a fonte e tem *Aceite* verificável. `[medido: …]` = comando e saída literal (no pre-check, no hotfix ou nas notas deste arquivo). `[análise]` = inferência sobre o medido. `[hipótese]` = não medido, com dono no §9.

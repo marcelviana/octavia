@@ -97,6 +97,10 @@ banco** — a fonte é o arquivo de migração. Primeira migração da série:
   (`docs/native/V1-PR7-anexos/dumps-tabs6/`) traziam letras reais. Registro:
   `docs/native/N2-BRIEF-anexos/README.md`, div. 204.
 
+## Aparato do nativo
+
+- **Antes de tocar em aparelho, emulador, Metro ou mock, ler [`docs/native/APARATO.md`](docs/native/APARATO.md)** — a fonte única (N2, 2026-09-23); os `aparato.md` dos anexos são rastro.
+
 ## Project Architecture
 
 ### Core Technology Stack
