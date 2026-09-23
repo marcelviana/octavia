@@ -118,7 +118,7 @@ function daquiA(dias: number): Date {
 
 /** O que a releitura devolveu — o pai re-renderiza com isto, como o app faz. */
 let relido: SetlistDTO[] | null = null
-let saiuParaS1: Array<'sumiu' | 'sumiu-nao-relido' | null> = []
+let saiuParaS1: unknown[] = []
 
 const contentById = new Map(BIBLIOTECA.map((c) => [c.id, c]))
 
@@ -138,7 +138,7 @@ async function props(extra: Partial<IndexScreenProps> = {}): Promise<IndexScreen
       estado: { uid: UID, setlists: doServidor, content: BIBLIOTECA, syncedAtMs: 1 },
       online,
       aoReler: (novas: SetlistDTO[]) => { relido = novas },
-      aoSairParaS1: (aviso: 'sumiu' | 'sumiu-nao-relido' | null) => { saiuParaS1.push(aviso) },
+      aoSairParaS1: (aviso: unknown) => { saiuParaS1.push(aviso) },
     },
     ...extra,
   }
@@ -638,6 +638,71 @@ describe('(n) N2-D32 / N2-E21 — a escrita falhou E a releitura também', () =>
       'Essa setlist não existe mais. A lista abaixo é a que o servidor tem agora.',
     )
     expect(achar('aviso-acao')).toBeNull()
+  })
+})
+
+// ------------------------------------------ (o) div. 333 — N2-D22 no apagar
+
+/**
+ * **Div. 333** (lida no código na N2-PR7): apagar com 200 e a releitura
+ * falhando saía para S1 com `aoSairParaS1(null)` — nenhuma linha de aviso, e
+ * a lista (o cache não muda sem releitura, N2-D22) seguia mostrando a setlist
+ * apagada: "salvo" limpo. O modo `delete-releitura-500` é o sufixo da N2-PR7
+ * sobre o comportamento normal: o `DELETE` responde 200 e o `GET` seguinte,
+ * 500. As duas metades são medidas aqui como no CN (j): a saída de S2 e o S1
+ * que a recebe; o mapeamento entre elas (`navigation.tsx`) é do aparelho.
+ */
+describe('(o) div. 333 / N2-E23 — apagada, não relida', () => {
+  it('S2: apagar 200 e releitura 500 → sai para S1 COM o aviso e o nome', async () => {
+    await mock.servir('delete-releitura-500', [setlistComBis()], BIBLIOTECA)
+    await montar(<S2.IndexScreen {...(await props())} />)
+    await tocar('setlist-apagar')
+    await tocar('apagar-confirmar')
+    await assentar(120)
+
+    expect(so('write op=delete')[0]).toMatch(/ status=200 code=- /)
+    expect(so('resync')[0]).toMatch(/^resync kind=setlists reason=write op=delete status=500/)
+    expect(saiuParaS1).toEqual([{ apagadaNaoRelida: 'Show' }])
+    expect(relido).toBeNull()
+  })
+
+  it('S1: a linha de aviso diz que foi apagada e não relida; `Tentar recarregar` tira a setlist da lista', async () => {
+    await mock.servir('escrita', [], BIBLIOTECA)
+    const noCache = [setlistComBis()]
+    const estadoLocal = { uid: UID, setlists: noCache, content: BIBLIOTECA, syncedAtMs: 1 }
+    let lista: SetlistDTO[] = noCache
+    const tela = (): React.JSX.Element => (
+      <S1.SetlistsScreen
+        setlists={lista}
+        contentById={contentById}
+        filesPresent={new Set()}
+        baixando={new Set()}
+        temCache
+        sync={{ fase: 'ok', syncedAtMs: Date.now() }}
+        online
+        apagadaNaoRelida="Show"
+        onTentarNovamente={() => undefined}
+        onAbrirSetlist={() => undefined}
+        onBaixarSetlist={() => undefined}
+        onBuscar={() => undefined}
+        estadoLocal={estadoLocal}
+        aoRelerNaEscrita={(novas: SetlistDTO[]) => { lista = novas }}
+      />
+    )
+    await montar(tela())
+    // Hoje: nenhum aviso — e a setlist apagada está na lista.
+    expect(achar(`setlist-${SL.slice(0, 8)}`)).not.toBeNull()
+    expect(texto('aviso-motivo')).toBe(
+      'Show foi apagada. Não foi possível recarregar a lista, então ela pode ainda aparecer abaixo.',
+    )
+    expect(texto('aviso-acao')).toBe('Tentar recarregar')
+
+    await tocar('aviso-acao')
+    await assentar(80)
+    await rerender(tela())
+    expect(so('resync')[0]).toMatch(/^resync kind=setlists reason=reopen op=- status=200/)
+    expect(achar(`setlist-${SL.slice(0, 8)}`)).toBeNull()
+    expect(achar('aviso-motivo')).toBeNull()
   })
 })
 

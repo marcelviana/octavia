@@ -1,0 +1,9 @@
+# N2-PR7 — div. 333: CN contra o código de f4f88db (mock 'delete-releitura-500' = sufixo -releitura-500 sobre o comportamento normal)
+$ npx vitest run --project native-tela apps/native/test/s2-edicao.test.tsx -t "div. 333"
+     × S2: apagar 200 e releitura 500 → sai para S1 COM o aviso e o nome 357ms
+     × S1: a linha de aviso diz que foi apagada e não relida; `Tentar recarregar` tira a setlist da lista 182ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+AssertionError: expected [ null ] to deeply equal [ { apagadaNaoRelida: 'Show' } ]
+Error: sem nó com testID="aviso-motivo"
+ Test Files  1 failed (1)
+      Tests  2 failed | 19 skipped (21)
