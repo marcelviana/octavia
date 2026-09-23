@@ -18,14 +18,14 @@ corridas que produziram APK**, `pull_request` e `push`, desde a primeira
 (`[medido: gh run list --workflow=native.yml · gh run view <id> --json jobs]`):
 
 ```
-n=91   mín 4m42s   máx 14m32s   mediana 11m47s   Q1 9m24s   Q3 12m43s   IQR 3m20s
+n=94   mín 4m42s   máx 14m32s   mediana 11m50s   Q1 9m27s   Q3 12m44s   IQR 3m17s
 ```
 
 Quartis pelo método inclusivo (interpolação linear, `statistics.quantiles(…,
-method='inclusive')`, o "tipo 7"). **95 corridas** no total; **4 falhas** ficam na
-tabela, riscadas, e **fora da população**: nenhuma produziu APK (duas eram
-controle negativo plantado, duas o `setup-android@v3`), e o tempo delas, de 26 s a
-1m14s, é o de um passo que quebrou, não o de um build.
+method='inclusive')`, o "tipo 7"). **100 corridas** no total; **6 falhas** ficam na
+tabela, riscadas, e **fora da população**: nenhuma produziu APK (quatro eram
+controle negativo plantado — duas no N0, duas na W4-b2 —, duas o `setup-android@v3`), e o
+tempo delas, de 26 s a 1m14s, é o de um passo que quebrou, não o de um build.
 
 As corridas de causa medida **estão dentro** e marcadas na coluna "causa". **Leia a
 faixa com elas**: o mínimo, 4m42s, é do regime de antes da #284, quando o APK ainda
@@ -36,9 +36,9 @@ baixo** quase não acontece mais; o alarme útil é o de cima e o da falha rápi
 
 | recorte | n | mín | máx | mediana | Q1 | Q3 | IQR |
 |---|---|---|---|---|---|---|---|
-| só `pull_request` | 59 | 5m21s | 14m11s | 11m52s | 9m38s | 12m44s | 3m07s |
-| desde a #284 (o regime do native-stack) | 75 | 8m09s | 14m32s | 12m10s | 11m03s | 12m50s | 1m47s |
-| desde o `setup-android@v4` (#302) | 46 | 8m09s | 14m32s | 12m30s | 10m22s | 12m52s | 2m30s |
+| só `pull_request` | 62 | 5m21s | 14m31s | 11m52s | 9m44s | 12m49s | 3m05s |
+| desde a #284 (o regime do native-stack) | 78 | 8m09s | 14m32s | 12m12s | 11m01s | 12m50s | 1m49s |
+| desde o `setup-android@v4` (#302) | 49 | 8m09s | 14m32s | 12m31s | 10m20s | 12m53s | 2m33s |
 
 Escolher um recorte como referência é escolher um corte, e o corte é decisão do
 Marcel. **O teto de 14m11s, "intacto" desde a V1**, caiu na corrida 93 (push da
@@ -158,6 +158,11 @@ ancestral do `depois`). `setup` é a versão do `android-actions/setup-android`.
 | 93 | `35883169067` | push | #321 | `e9b4196` | merge na `main` | v4 | 2026-09-23 15:40 | **14m32s** | **acima do teto de todas as faixas anteriores** (14m11s); causa não medida |
 | 94 | `35884529077` | PR | #322 | `931f3e0` | abertura | v4 | 2026-09-23 15:50 | **10m10s** |  |
 | 95 | `35885921847` | PR | #322 | `34bc96a` | nativo | v4 | 2026-09-23 16:02 | **11m29s** |  |
+| 96 | `35893874401` | PR | #322 | `f32a2ba` | nativo | v4 | 2026-09-23 17:11 | **14m31s** | o detector novo (div. 360) no próprio push; `último APK desta PR: success` |
+| 97 | `35895625003` | PR | #322 | `56e3d04` | nativo | v4 | 2026-09-23 17:26 | ~~0m59s~~ | **falha plantada** — CN da div. 360: `@octavia/plugin-inexistente` no `app.json` `[medido: --log-failed]` |
+| 98 | `35899526353` | PR | #322 | `c547766` | **só fora do filtro** | v4 | 2026-09-23 18:01 | ~~1m09s~~ | **falha plantada** (a mesma) — a sonda: push só de docs com o último APK `failure`, e o APK **rodou** (div. 360) |
+| 99 | `35900151568` | PR | #322 | `32bcd91` | nativo | v4 | 2026-09-23 18:06 | **13m27s** | a reversão da sonda e do plantado; rodou pelo `failure` anterior |
+| 100 | `35901808803` | PR | #322 | `3be7718` | nativo | v4 | 2026-09-23 18:21 | **9m45s** | CN do item 3: o push só toca o `native.yml` |
 
 ## Como acrescentar uma linha
 
@@ -175,5 +180,6 @@ O cabeçalho (`n`, mín, máx, mediana, quartis) se **recalcula** a cada linha n
 uma estatística que não acompanha a tabela é a div. 110 outra vez. Corrida
 `skipped` (o H1: push sem nativo) **não entra**, porque não houve build; ela vive no
 `gh pr checks` da PR. A corrida que o próprio push de docs de um encerramento
-dispara entra na PR **seguinte** (o precedente do W3, §7). A primeira a entrar
-depois desta é o push da #322 na `main`.
+dispara entra na PR **seguinte** (o precedente do W3, §7). As corridas da #322 entraram até a 100ª. A primeira a entrar
+depois é o push da #322 na `main`. As `skipped` desta PR (a do `bffe173` e a do commit de
+docs das decisões) não entram, pela regra acima.

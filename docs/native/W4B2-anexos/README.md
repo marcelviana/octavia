@@ -115,7 +115,7 @@ As 21 do N2 (§7 do encerramento) conferem, run a run e segundo a segundo. Confe
 também a 19ª do W3 (`35096488810`, 11m47s) e as sete de `push` que o N2 listou. A de
 `bc55419`, que ainda corria, deu **10m06s**. As duas diferenças estão na div. 354.
 A série inteira, com as desta PR, está no [`CI-FAIXA.md`](../CI-FAIXA.md):
-**n=91 · 4m42s–14m32s · mediana 11m47s · IQR 3m20s (9m24s–12m43s)**.
+**n=91 · 4m42s–14m32s · mediana 11m47s · IQR 3m20s (9m24s–12m43s)** no commit 3; com as corridas das decisões de antes do merge (§7), **n=94 · mediana 11m50s · IQR 3m17s**.
 
 ## 5. Divergências — 352 a 360
 
@@ -137,6 +137,140 @@ A série inteira, com as desta PR, está no [`CI-FAIXA.md`](../CI-FAIXA.md):
 |---|---|
 | requests a `/api/*` em prod | **0** |
 | comandos a aparelho | **0** |
-| APKs gastos | 2 (a abertura e o commit 2); o commit 3 tem de sair *skipped* |
+| APKs gastos | 2 (a abertura e o commit 2), e o commit 3 saiu *skipped*; nas decisões, mais 5: 3 verdes (14m31s, 13m27s, 9m45s) e 2 vermelhos plantados (59 s, 1m09s) |
 | edições do corpo da PR | 2 (o CN ao vivo e o desfazer) |
 | outras mudanças fora da lista | `cn-w4b1.sh`: o CN-223b procura o passo no `gates.yml` quando ele existe (3 linhas), senão reprovaria por o job ter mudado de arquivo |
+
+## 7. Antes do merge — as decisões do Marcel (2026-09-23)
+
+Cinco decisões depois do relatório: as divs. 353, 360 e 354, a regra do H3 e o
+detector contando o próprio workflow. **Gate primeiro**: os CNs novos entraram em
+`b8dcec8` e reprovaram contra o detector de então (`W4B2-E`: 5 reprovados, H1h, H1i,
+H1j, H1k e H1m). Contra o detector novo (`f32a2ba`, `W4B2-F`), zero reprovados.
+
+**Extras, declarados antes dos commits que os usam**:
+- **extra-4**: o commit `test(W4-b2)` dos CNs, antes do de `ci`. Os dois subiram
+  num push só, então custaram um APK.
+- **extra-5**: as sondas do CN da div. 360: o vermelho plantado, o push só de docs
+  e as duas reversões.
+- **extra-6**: um commit que toca só o `native.yml` (o CN do item 3).
+- **extra-7**: o `gates.yml` também no `paths` do `native.yml`. Sem isso, uma PR
+  que só tocasse o `gates.yml` nem dispararia o workflow.
+
+### 7.1 Os `gh pr checks` de cada push `[medido]`
+
+A última linha de cada bloco é a do log do `mudou-nativo`.
+
+**1. `b8dcec8` + `f32a2ba`** — CNs e o detector novo (toca o nativo):
+```
+Vercel	pass	0	https://vercel.com/marcelvianas-projects/octavia/FFZhHcAkvz1xdKxzAT1otSnEuQng	Deployment has completed
+Vercel Preview Comments	pass	0	https://vercel.com/github	
+android-debug-apk	pass	14m31s	https://github.com/marcelviana/octavia/actions/runs/35893874401/job/107292880818	
+build	pass	3m48s	https://github.com/marcelviana/octavia/actions/runs/35893874062/job/107292811339	
+gates-nativos	pass	10s	https://github.com/marcelviana/octavia/actions/runs/35893874274/job/107292811945	
+mudou-nativo	pass	8s	https://github.com/marcelviana/octavia/actions/runs/35893874401/job/107292813082	
+último APK desta PR: success. Desde o push anterior (bffe173fbd7c1c35ce2db19bc3179eab6dcc1b4c..HEAD):
+  .github/workflows/native.yml
+  apps/native/scripts/__cn__/cn-w4b2.sh
+  apps/native/scripts/mudou-nativo.sh
+  docs/native/W4B2-anexos/W4B2-E-cn-decisoes-antes.txt
+  docs/native/W4B2-anexos/W4B2-F-cn-decisoes-depois.txt
+mudou-nativo success 2026-09-23T17:11:16Z 2026-09-23T17:11:24Z
+android-debug-apk success 2026-09-23T17:11:28Z 2026-09-23T17:25:59Z
+
+```
+**2. `56e3d04`** — o vermelho **plantado** (`app.json` com `@octavia/plugin-inexistente`):
+```
+android-debug-apk	fail	59s	https://github.com/marcelviana/octavia/actions/runs/35895625003/job/107298786545	
+Vercel	pass	0	https://vercel.com/marcelvianas-projects/octavia/2P9r4ZVWFxp8EzZegPckPfurveY2	Deployment has completed
+Vercel Preview Comments	pass	0	https://vercel.com/github	
+build	pass	3m40s	https://github.com/marcelviana/octavia/actions/runs/35895624885/job/107298710942	
+gates-nativos	pass	9s	https://github.com/marcelviana/octavia/actions/runs/35895624946/job/107298710723	
+mudou-nativo	pass	8s	https://github.com/marcelviana/octavia/actions/runs/35895625003/job/107298711120	
+último APK desta PR: success. Desde o push anterior (f32a2baa1953aa474e159096a65d3ae7f9026a00..HEAD):
+  apps/native/app.json
+mudou-nativo success 2026-09-23T17:26:40Z 2026-09-23T17:26:48Z
+android-debug-apk failure 2026-09-23T17:26:50Z 2026-09-23T17:27:49Z
+
+```
+`--log-failed`: `Prebuild (android) … PluginError: Failed to resolve plugin for module "@octavia/plugin-inexistente"`.
+
+**3. `c547766`** — **CN da div. 360**: push só de docs, com o último APK da PR
+`failure`. **O APK rodou** e falhou de novo, porque o plantado ainda estava lá:
+```
+android-debug-apk	fail	1m9s	https://github.com/marcelviana/octavia/actions/runs/35899526353/job/107311922062	
+Vercel	pass	0	https://vercel.com/marcelvianas-projects/octavia/7z29NwjZDjZ54Whr8i2xT36CA9M5	Deployment has completed
+Vercel Preview Comments	pass	0	https://vercel.com/github	
+build	pass	3m54s	https://github.com/marcelviana/octavia/actions/runs/35899526395/job/107311829222	
+gates-nativos	pass	13s	https://github.com/marcelviana/octavia/actions/runs/35899526373/job/107311829225	
+mudou-nativo	pass	10s	https://github.com/marcelviana/octavia/actions/runs/35899526353/job/107311828500	
+último APK desta PR: 'failure', não success (div. 360): roda
+mudou-nativo success 2026-09-23T18:00:48Z 2026-09-23T18:00:58Z
+android-debug-apk failure 2026-09-23T18:01:01Z 2026-09-23T18:02:10Z
+```
+**4. `019469c` + `32bcd91`** — as duas reversões, com commits novos e sem push
+forçado. O `app.json` voltou idêntico ao da `main`:
+```
+Vercel	pass	0	https://vercel.com/marcelvianas-projects/octavia/5uzx91nvdYvKWQWupSdwvaBJdtLY	Deployment has completed
+Vercel Preview Comments	pass	0	https://vercel.com/github	
+android-debug-apk	pass	13m27s	https://github.com/marcelviana/octavia/actions/runs/35900151568/job/107314006023	
+build	pass	3m49s	https://github.com/marcelviana/octavia/actions/runs/35900151421/job/107313934054	
+gates-nativos	pass	7s	https://github.com/marcelviana/octavia/actions/runs/35900151500/job/107313934138	
+mudou-nativo	pass	9s	https://github.com/marcelviana/octavia/actions/runs/35900151568/job/107313934226	
+
+32bcd91 mudou-nativo success 2026-09-23T18:06:12Z 2026-09-23T18:06:21Z | android-debug-apk success 2026-09-23T18:06:24Z 2026-09-23T18:19:51Z
+último APK desta PR: 'failure', não success (div. 360): roda
+```
+**5. `3be7718`** — **CN do item 3**: o push só toca o `native.yml`, e o APK rodou:
+```
+Vercel	pass	0	https://vercel.com/marcelvianas-projects/octavia/6NwUHM4jaGzJSS5HF8iCkbVebsrz	Deployment has completed
+Vercel Preview Comments	pass	0	https://vercel.com/github	
+android-debug-apk	pass	9m45s	https://github.com/marcelviana/octavia/actions/runs/35901808803/job/107319710267	
+build	pass	3m57s	https://github.com/marcelviana/octavia/actions/runs/35901808843/job/107319617576	
+gates-nativos	pass	11s	https://github.com/marcelviana/octavia/actions/runs/35901808619/job/107319616519	
+mudou-nativo	pass	10s	https://github.com/marcelviana/octavia/actions/runs/35901808803/job/107319617860	
+
+3be7718 run 35901808803 mudou-nativo success 2026-09-23T18:20:50Z 2026-09-23T18:21:00Z | android-debug-apk success 2026-09-23T18:21:03Z 2026-09-23T18:30:48Z
+último APK desta PR: success. Desde o push anterior (32bcd9176f19ee76b7148356a1fafe6993dc21c6..HEAD):
+  .github/workflows/native.yml
+```
+**6. O commit de docs destas decisões** — com o último APK `success` e só docs, tem
+de sair **skipped**. Os checks dele vão no corpo da PR e no relatório, pela
+div. 359.
+
+### 7.2 O `mudou-nativo.sh` final
+
+Está em `apps/native/scripts/mudou-nativo.sh` (`f32a2ba`). Ele só filtra quando as
+três condições valem: `synchronize`, `before` ancestral do head e **último APK da
+PR `success`**. Em qualquer outro caso, roda. O que conta como nativo:
+`apps/native/**` (o script incluído), `native.yml`, `gates.yml` e
+`pnpm-workspace.yaml`. A consulta real ao `gh`, feita à mão contra esta PR, está no
+`W4B2-F`. No CI, as linhas 1, 2 e 5 acima mostram a consulta funcionando com o
+`GITHUB_TOKEN`.
+
+### 7.3 As regras
+
+As duas regras novas estão no `LOGS-OCTAVIA.md`, "Errata W4-b2": **sem push forçado
+em PR** (com a hipótese de comparar árvore contra árvore e o número do N2, 3 de 7)
+e **toda PR copia o seu bloco ```` ```gates ```` para o README dos anexos no
+commit de docs**. A errata da div. 354 está no `W3-ENCERRAMENTO.md`, nos dois
+trechos que o `gh` desmente.
+
+## 8. O bloco ```` ```gates ```` desta PR, verbatim
+
+Copiado do corpo da PR #322 no commit de docs, pela regra da §7.3:
+
+````
+```gates
+# W4-b2: nenhuma declaração — esta PR não muda arquivo de comportamento, teste do core nem linha de log.
+```
+````
+
+## 9. Divergências — 361 a 364
+
+| div. | origem | o que | o que foi feito |
+|---|---|---|---|
+| **361** | T | o instrumento de espera desta sessão (um script de scratch) lia o `HEAD` do checkout principal (`5f1c226`), e não o da worktree. Na espera do push 2 ele rodou até o limite, sem achar as corridas do sha errado | os `gh pr checks` colados são os da corrida certa, conferidos pelo sha no log do `mudou-nativo`; o script ganhou `cd` na worktree |
+| **362** | T | as duas reversões (`019469c`, `32bcd91`) saíram com a mensagem padrão do `git revert`, **sem** a linha `Co-Authored-By`. Pôr a linha exigia reescrever dois commits locais, ainda não enviados, e o classificador de permissão da sessão barrou a reescrita | ficaram assim, e registradas aqui. A regra nova (sem push forçado) também não deixaria corrigir depois |
+| **363** | P | "reverta os dois com commits novos": as duas reversões subiram **juntas**, num push que toca o `app.json`. Por isso a reversão da sonda (só docs) não teve um *skipped* próprio | o *skipped* com o último APK verde é o do commit de docs (§7.1, item 6), e antes dele o do `bffe173` |
+| **364** | P | "`mudou-nativo.sh` conta como nativo": ele já contava, porque mora em `apps/native/`. A CN-H1l passou já contra o detector velho (`W4B2-E`) | registrado; o `gates.yml` era o único dos três que faltava |

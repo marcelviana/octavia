@@ -487,7 +487,7 @@ W3 por uma estrutura que ele não tem (divs. 147, 219).
 | commits temporários locais | 3, para controles negativos — `a3b1a5b`, um segundo cujo sha não foi registrado (o CN do conserto do commit 1), e `78ff532` (o da decisão b) —, todos desfeitos, nenhum enviado |
 
 > **W4-b2 (#322):** a série e a faixa abaixo são recortes; a referência de CI é o
-> [`CI-FAIXA.md`](CI-FAIXA.md) (nível job, `n=91`). As três retidas e a 19ª estão lá,
+> [`CI-FAIXA.md`](CI-FAIXA.md) (nível job; `n=94` quando a #322 fechou). As três retidas e a 19ª estão lá,
 > e a 18ª (`712f054`) **não** foi push só de docs (div. 354).
 
 **CI do `native.yml`**, com a 15ª corrida (a da #303, `pull_request`, **12m37s**):
@@ -505,6 +505,11 @@ A corrida do `native.yml` na PR **#304** **não entra na população**: a branch
 artificial e foi apagada (e o job foi cancelado pelo `--delete-branch`, com o
 `Type-check apps/native` já concluído em verde, que era o que interessava).
 
+> **Errata W4-b2 (div. 354, `[medido: gh run view 35044913963 --json jobs]`):** a
+> corrida da #304 **não foi cancelada**. Ela terminou `success`, com todos os passos
+> verdes, em **12m46s** (nível job, 01:39:03Z → 01:51:49Z). O `--delete-branch` não
+> a alcançou. Ela entra na série do [`CI-FAIXA.md`](CI-FAIXA.md), com nota.
+
 ### As três corridas RETIDAS — escritas aqui, para não se perderem
 
 Pelo precedente do W1 — *"o encerramento do W1 segurou a corrida da própria #301
@@ -518,6 +523,12 @@ repositório seria a div. 110 — achado que existe e não se relê.
 | **16ª** | `35045454235` | `440aa1a` | a abertura da #305 | 01:47:25Z → 01:57:09Z | **9m44s** |
 | **17ª** | `35046199666` | `f70d988` | push **só de docs** | 01:59:06Z → 02:11:59Z | **12m53s** |
 | **18ª** | `35094310127` | `712f054` | push **só de docs** | 12:10:32Z → 12:23:24Z | **12m52s** |
+
+> **Errata W4-b2 (div. 354, `[medido: git diff --name-only f70d988 712f054]`):** a
+> 18ª **não** foi push só de docs. O push tocou `apps/native/scripts/g2g3.sh`,
+> `apps/native/scripts/sem-comentario.awk` e `apps/native/test/gates.test.ts`, além de
+> três documentos. É uma corrida legítima, não preço do B8.1. No
+> [`CI-FAIXA.md`](CI-FAIXA.md) o gatilho dela é **nativo**.
 
 Todas `pull_request`, todas `success`, todas `v4`. Durações pelos carimbos do
 **job**, que é o nível da população (ver a linha sobre níveis no

@@ -847,3 +847,33 @@ g3-removida: <linha> → REMOVIDA: <razão>   remoção do G3 (N2-D34)
   vermelho à mão" do W4-b1 deixa de existir: o corpo não pertence a commit nenhum.
   Em troca, o corpo **não tem histórico no git**. O registro do que foi declarado
   é o anexo da PR, que tem de colar o bloco como ele ficou.
+
+### Sem push forçado em PR (decisão do Marcel, 2026-09-23, div. 353)
+
+**Numa PR aberta não se faz push forçado**: nada de `commit --amend`, `rebase` nem
+`reset` depois do push. Uma correção entra como **commit novo**, e uma reversão como
+**commit de reversão**. A razão é o rito: os CNs deste projeto são provados **por
+commit** (o commit 1 reprova, o commit 2 passa, o push de docs sai *skipped*), e um
+amend depois do push apaga o commit que carregava a prova e o `gh pr checks` dele.
+A exceção precisa de decisão do Marcel **antes**, como a do `CLAUDE.md` (o
+`reset --soft` + `push --force-with-lease` do B7-PR0, que tirou da branch arquivos
+alheios).
+
+O detector do APK (`mudou-nativo.sh`) trata o push forçado pelo **padrão seguro**: o
+`before` não é ancestral do head, então o APK roda. **Hipótese, não medida:**
+comparar **árvore contra árvore** (`git diff before head`, que vale sem
+ancestralidade) filtraria também o push forçado só de docs. Seria preciso buscar
+pelo sha um commit órfão que o GitHub pode já não servir, e o preço disso em
+produção nunca foi medido. **O número que a motiva**: no N2, **3 dos 7** pushes só de
+docs que custaram APK foram forçados (#315: `a3061e6`, `a1f3f54`, `c8db83a`,
+35m10s). Com a regra acima, esse caso não deveria mais acontecer. Se voltar a
+acontecer, a hipótese se mede.
+
+### Toda PR copia o seu bloco ```` ```gates ```` para o README dos anexos (decisão do Marcel, 2026-09-23)
+
+O corpo da PR **não tem histórico no git** e pode ser editado depois do merge. Por
+isso, **no commit de docs, toda PR copia o seu bloco ```` ```gates ```` verbatim**
+para o `README.md` dos seus anexos, numa seção própria, **inclusive quando o bloco
+não declara nada**. O registro do que a PR declarou é esse texto. O corpo é só o
+lugar de onde o CI o lê. Se o corpo mudar depois do commit de docs, a cópia se
+refaz num commit novo.
