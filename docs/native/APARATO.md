@@ -16,10 +16,33 @@ esta página no mesmo commit (regra 9 do `LOGS-OCTAVIA.md`, aplicada aqui).
   (JDK Corretto 17). O `--device` quer o nome do `getDevicesAsync` do Expo,
   **com sublinhado**; o serial `RX2N8000F3D` e o `SM-T865` do `getprop` são
   recusados. Div. 251. Só se rebuilda quando entra **módulo nativo** (div. 234);
-  fora disso o dev client carrega o bundle do Metro.
+  fora disso o dev client carrega o bundle do Metro. **O rebuild vale para os dois
+  aparelhos**: a #315 refez o Tab e deixou o AVD com um dev client sem o
+  `datetimepicker`, que quebrava na carga (div. 371). Antes de medir, confira a data:
+  `adb shell dumpsys package rocks.octavia.app | grep lastUpdateTime`. No AVD:
+  `ANDROID_HOME=$HOME/Library/Android/sdk npx expo run:android --device octavia_tab32`
+  (sem o `ANDROID_HOME` o Gradle não acha o SDK). O `expo run:android` liga o
+  **build cache** do Gradle (`--build-cache`), então o tempo dele não é tempo de build.
 - **APK local é single-ABI** (`arm64-v8a`, 82.030.412 B) e o do CI tem quatro
   (231.377.892 B, V1-PR3): **nem tamanho nem tempo se comparam com a série do
   CI**. Div. 253.
+
+- **Build de release** (W4-b3, série em [`RELEASE-FAIXA.md`](RELEASE-FAIXA.md)):
+  `sh docs/native/W4B3-anexos/builds.sh <saida.tsv> R1` da raiz (limpo, `assembleRelease
+  --no-daemon --no-build-cache`). Assina com a **chave de debug**, o mesmo
+  `rocks.octavia.app` e o mesmo certificado do dev client: `adb install -r` troca um
+  pelo outro **mantendo dados e sessão**, sem desinstalar (div. 372). Guarde antes o
+  `base.apk` do dev client (`adb shell pm path rocks.octavia.app` + `adb pull`) para
+  reinstalá-lo no fim. O release não é `DEBUGGABLE` (sem `run-as`) e não tem o botão
+  flutuante do dev client.
+  - **O release não alcança `http://`** (sem `usesCleartextTraffic`, div. 373): o mock
+    na 8788 **não** serve para aceite com release. O controle é o dev client no mesmo
+    mock.
+  - **`EXPO_PUBLIC_*` inline num build de release exige apagar o `$TMPDIR/metro-cache`**
+    antes: com ele quente, o bundle embutido saiu com a URL de prod (div. 374). Conferir
+    sempre: `unzip -p <apk> assets/index.android.bundle | grep -ac <valor>`.
+- **Cabo do Tab**: se o Tab não aparece nem como `unauthorized`, veja se o macOS o
+  enxerga (`system_profiler SPUSBHostDataType`). Na W4-b3 o primeiro cabo só carregava.
 
 ## Aparelhos
 
