@@ -274,6 +274,10 @@ perigoso: um instrumento que mede **mais** do que a coisa medida.
 | 21 | **div. 157** (N2 pre-check) | a linha `cache write kind=… invalidated=<n>` que este catálogo liga ao **A7** (tabela acima: *"T1-R10: `invalidated=0` em sync sem mudança"*) — no V1 o A7 foi dispensado pelo G1 com `cache write kind=setlists n=2 invalidated=0` no device como o que se viu de raspão (`V1-ENCERRAMENTO.md:122`) | "o versionamento por `updated_at` do T1-R10 funciona — dois syncs sem mudança não invalidam nada". O `0` é **LITERAL** em `store.ts:123-124`, e o `diffByUpdatedAt` (`core/sync.ts:87`), a função que calcularia o número, **não tem chamador fora dos testes**. O aceite passou lendo uma **constante**: não havia valor que o fizesse reprovar. Correção: **N2-D8** (primeira PR de código do N2 — ligar o `diffByUpdatedAt` no sync, contador real no log, CN com `invalidated=1` sob mock de `updated_at` diferente, errata do A7 no `PRD-TELA-1.md`). **Corrigido em N2-PR1 (#309)**: `reconcileByUpdatedAt` no sync, contador real nas duas linhas (mesmo formato), CN `apps/native/test/sync-t1r10.test.ts` — reprovou 5 de 6 contra o código de antes e passa 6 de 6 depois (`N2-PR1-anexos/`) |
 | 22 | **div. 189** (N2-PR1, corrigida no W4-a) | a **ERRATA do G3**, na forma que a W1 lhe deu: a lista declarava a linha que **SAI**, e o gate checava só isso | "esta linha de log VIROU aquela" — que é o que a palavra *errata* diz e o que os três registros dela descrevem (`W1-PRECHECK.md` §9.3, a N2-D8, o comentário do próprio script). O que ela de fato autorizava era **"esta linha SUMIU"**: com a errata declarada, apagar a velha e não pôr nada no lugar dava *"as que sumiram estão na lista de erratas ✓"* e **exit 0**. O contrato de log podia **encolher com a bênção do gate**, e o G3 é o único lugar onde esse encolhimento apareceria — os aceites desta série são lidos **pelo logcat**. É o **primeiro caso em que o instrumento mede MENOS do que o seu próprio nome promete**: não é o coletor que erra o recorte (19, 20), é a REGRA DE ACEITAÇÃO que checa metade do par. Corrigido no W4-a: a errata passa a ser um PAR, e a `nova` tem de aparecer entre as adicionadas |
 | 23 | **div. 211** (N2, brief) | o **`uiautomator dump` do palco**: a árvore de nós do app — 72 nós, `package="rocks.octavia.app"` em todos, **sem barra de status, sem relógio, sem um só atributo que varie com o tempo** `[medido: W4-a]` | "o estado da tela **naquele instante**". Três arquivos com três nomes — `A16-palco-inicio.xml`, `A16-palco-fim.xml`, `S3-palco-1de7.xml` — sugerem três medições de três momentos, e o A16 trata "início" e "fim" como **dois estados**. Os bytes dizem outra coisa: os três são **byte a byte idênticos**, e nasceram assim num único commit (`8f62e3c`, V1-PR7). Não são três medições que convergiram; são a mesma medição, e o instrumento **nunca poderia** ter distinguido os dois momentos — numa tela que não muda, ele não tem o que registrar de diferente. **O A16 não cai**: o veredito é sustentado pelo `dumpsys` (`SCREEN_BRIGHT_WAKE_LOCK … ACQ=-22m48s848ms`), pelas 17 leituras do `a16.sh` e pelo relógio das PNGs irmãs (10:37 / 11:00 / 10:29) — o dump só atesta *"é a mesma tela, música 1 de 7"*, que é exatamente a invariante que o A16 afirma. O que estava errado era o **nome do arquivo prometendo o que o arquivo não carrega** |
+| 24 | **div. 233** (N2-PR2) | o **modo `escrita-releitura-fora-de-ordem` do mock**, que atrasava a resposta de uma releitura para inverter a ordem de chegada | "a releitura que chega por último traz a foto mais velha — o terceiro CN da trava mede isso". A primeira forma **dormia e só então lia o modelo**: a resposta lenta voltava com dado FRESCO, a inversão não existia e o CN passava **sem medir nada**. Num servidor real a leitura acontece na hora do request e o atraso é de transporte. A foto passou a ser tirada **antes** do atraso (`N2-PR2-anexos/README.md`, "Nota sobre o instrumento"; `trava.txt`). É o 15 pelo outro lado: lá o duplo era mais capaz que a biblioteca; aqui o duplo do **servidor** era mais gentil que qualquer servidor |
+| 25 | **div. 238** (N2-PR3; o escopo era a 229, N2-PR2) | o **`gate:a20` estendido ao `packages/core/src/frases.ts`** | "o texto de falha da tela 2 está sob o G4". O gate **lia o arquivo e examinava ZERO literais**: 24 arquivos e **72** literais, o mesmo número de antes de o `frases.ts` entrar. As posições da varredura são as do JSX, e o `FRASES` é um objeto chaveado. Com a posição `EXTRAS: valor de chave`: **100** literais, 0 acusações, e o controle negativo ad hoc (três frases trocadas por inglês) acusou. **Gate que lê e não examina é instrumento quebrado** — e é por isso que o `a20` imprime "literais examinados", não "arquivos lidos" (regra 4) |
+| 26 | **div. 282** (N2-PR5) | o **`gate:icones`**: o coletor lê cada estado de um ícone em UMA linha do `dados.ts` | "todo ícone da tela 2 é cobrado contra o anexo D". A primeira forma da `alca`, escrita em várias linhas, passou com **0 acusações e "4/6 cobrados"** — e o `apagar-setlist` da N2-PR4 **estava assim desde que entrou**: só o `inerte` dele era comparado. O desenho estava certo, mas quem dizia isso era a sorte, não o gate. Regra nova `[legível]`: entrada sem `normal` numa linha é ACUSADA; CN ad hoc com 2 acusações. É o 22 no coletor: o que ficou de fora não foi uma população, foi uma **forma de escrever** a mesma entrada |
+| 27 | **div. 294** (N2-PR5) | o **Metro com `CI=1`**, que não observa o disco | "o aparelho está rodando o conserto". Duas tentativas de conserto da div. 286 rodaram o **bundle velho** e "reprovaram" — mediram nada. Achado por `curl …/index.bundle \| grep -c LinhaFlutuante` → `0`. **É o mesmo mecanismo da div. 127 (W1), que já estava escrito aqui, na regra 4** — *"com `CI=1` o Metro não relê o disco"*. O caso não é o instrumento: é **o registro que existia e não estava onde quem subiu o Metro lê** — o 8 e o 20 outra vez. Daí a regra 13 e o [`APARATO.md`](APARATO.md) |
 
 > **O 19 é o 15 outra vez, e a segunda vez muda o que a primeira parecia ser.** Quando o
 > 15 apareceu, o texto acima o chamou de *"a primeira vez no projeto em que o instrumento
@@ -288,6 +292,12 @@ perigoso: um instrumento que mede **mais** do que a coisa medida.
 > 83 escolheu**: num gate de invariância, falar demais custa uma errata; calar deixa uma
 > linha de log sumir. Saber para que lado um instrumento erra não obriga a corrigi-lo —
 > obriga a **decidir**, e a escrever a decisão.
+
+> **O N2 acrescentou sete casos (21–27), e dois deles não são novos.** O 25 é a regra 4
+> escrita em forma de gate — ler sem examinar; o 27 é a div. 127 do W1 repetida palavra por
+> palavra, com a razão já escrita neste arquivo. A contagem do parágrafo que abre esta seção
+> ("são dezoito") é da W2 e não é reescrita; a tabela é a conta. *(Encerramento do N2,
+> 2026-09-23.)*
 
 > **O 22 abre uma terceira coluna na tabela, e vale nomeá-la.** Do 1 ao 21 o padrão foi
 > sempre sobre o **COLETOR**: o que ele varre, de onde, com ou sem comentário — o recorte
@@ -471,6 +481,62 @@ razão não estava onde quem mexe no gate lê. **Uma decisão de deixar um instr
 é uma decisão sobre o instrumento, e mora NO instrumento**: no cabeçalho do script, com o
 lado escolhido e o porquê. Um anexo de PR antiga não é onde alguém vai procurar antes de
 "consertar".
+
+### As regras que o N2 firmou — 9 a 15
+
+*(Encerramento do N2, 2026-09-23; fonte: `N2-ENCERRAMENTO.md` §5.)* **Numeração**: as
+oito anteriores são a 0–5 acima e as duas de método da seção seguinte, que não têm
+número. As do N2 começam em **9** porque a 9 já era citada por esse número no
+`docs/api/SETLISTS.md` e no `PRD-TELA-2.md` (div. 176). **Não existem regras 6, 7 e 8**
+(div. 335) — quem procurar por elas não achará nada, e é isto que diz por quê.
+
+**9. Comportamento de contrato vive no arquivo do contrato.** Decisão registrada só num
+desenho ou só numa mensagem de commit não é contrato: o cliente não a lê e a próxima
+correção a desfaz sem saber. (Origem: div. 176 — o `200 {success:true}` do DELETE de
+setlist inexistente vivia só em `B3-DESENHO.md` e no commit `effe847`, e o hotfix #307 o
+tratou como defeito antes de achá-lo.) Texto normativo: `docs/api/SETLISTS.md`, "Onde o
+contrato vive". É a regra 5 aplicada à API.
+
+**10. Anexo não carrega texto de música de terceiro** — nem corpo JSON, nem dump de UI,
+nem imagem. O que a prova usa é posição, tamanho e comprimento, não o verso. (Origem:
+div. 204, N2 — o `C6.xml` do brief trazia 914 caracteres de letra, e cinco dumps do V1
+já na `main` também.) Texto normativo e forma da omissão: `CLAUDE.md`, "Anexo não carrega
+texto de música".
+
+**11. Avião em aceite manual: lido, declarado, restaurado.** *"Modo avião é permitido em
+aceite manual quando o estado anterior é lido, declarado e restaurado; o override da API
+continua sendo o caminho dos aceites automatizados."* (Marcel, 2026-09-22; div. 290,
+`N2-PR5-anexos/aparato.md` §7.3.) **Revê a exceção do Tab S6 na regra 1** — *"ali 'avião'
+é só o override da API, nunca o rádio"* —, que fica acima como registro de onde veio; a
+prova continua sendo o `ping` falhando, nunca o setting. Vale para todo estado do
+aparelho (`stay_on`, rotação, `reverse`): [`APARATO.md`](APARATO.md).
+
+**12. Prova de escrita em prod usa um recurso DESCARTÁVEL da conta, e o que o nativo cria
+sai no fim.** Nenhuma escrita de aceite toca um objeto que o músico usa: a `DESCARTÁVEL N2`
+(criada pelo Marcel no web, alvo do T1-R10 na #309 e do ramo "alheia" na #311 — o
+destino dela é dele), a `N2-PR3 aceite` (criada na PR-3,
+apagada na PR-4 como objeto do aceite de apagar), a `N2-PR5 aceite` (PR-5 a PR-7,
+apagada no fim), a `N2-PR7 audit` (criada e apagada na mesma sessão) e a setlist de 60
+da audit, reordenada e **devolvida** elemento a elemento. **23 escritas, nenhuma setlist
+do nativo ficou em prod** (`N2-ENCERRAMENTO.md` §8).
+
+**13. Conferir o bundle SERVIDO antes de retestar.** Um reteste no aparelho mede o
+bundle que o Metro serve, não o arquivo que se editou. Antes de todo reteste:
+`curl` do bundle e `grep -c` de um símbolo do conserto. (Origem: div. 294, caso 27, e a
+div. 127 antes dela.)
+
+**14. "Isto mudou de propósito" é um PAR declarado — no G3 e no G1b.** A errata do G3 é
+`velha → nova`, e a nova tem de entrar (div. 189, W4-a, caso 22); a alteração de uma
+asserção do core no G1b é `velha → nova · razão`, a nova entrando igual e a razão
+escrita no `g1.sh` (div. 321, N2-PR7). Os dois imprimem o par declarado e não usado.
+Um lado só do par é o que deixa o contrato encolher com a bênção do gate.
+
+**15. A TELA VENCE O LOG.** (Origem: div. 270, N2-PR4.) O log estava perfeito —
+`write op=delete … 200`, `resync … 200`, `cache write … invalidated=1` — e S1 voltava
+mostrando a setlist apagada: o cache estava certo, a raiz não era avisada, e S1 desenha
+o que a raiz tem. **O aceite é no aparelho**, e o G6 mede o que o músico vê
+(`resource-id` e texto por estado), não o que o log diz que aconteceu. Um CN verde no
+`native-tela` também não substitui o aparelho: ele prova árvore, não tela.
 
 ### A regra de método que o padrão implica
 

@@ -425,7 +425,11 @@ decide por dentro se pula o build — não o filtro de paths.)
    já tinha sido **delimitado** na #300: numa PR que NUNCA tocou `apps/native/**`,
    o filtro funciona.)
 8. **A proposta de revisão da div. 83** (§3a) — **a dívida de ESCRITA fechou no
-   W4-a; a DECISÃO segue pendente.** O que esta herança pedia era *"revisa-se a
+   W4-a; a DECISÃO segue pendente.** *(Anotação do N2, 2026-09-23: **DECIDIDA pela
+   N2-D34** — `DESIGN-N2/README.md` §2, PR #313: o G3 continua contando comentário; a
+   remoção de um comentário com `log(` se declara como par com razão, e esse
+   **mecanismo é do W4-b** — `N2-ENCERRAMENTO.md` §10.1.1. O texto abaixo fica como
+   estava.)* O que esta herança pedia era *"revisa-se a
    83 por escrito, em PR própria, com o texto dela ao lado"*. O W4-a é a PR
    própria, e a razão da forma nova do G3 está escrita no cabeçalho do
    `g2g3.sh`, encostada no texto da 83 — que era o remédio da div. 142 e da
@@ -445,6 +449,12 @@ decide por dentro se pula o build — não o filtro de paths.)
    reaparecer, a saída já estará guardada.
 10. **O `W2-ENCERRAMENTO.md`** — **escrito nesta PR**, fora de ordem e declarado
     como tal na abertura dele.
+
+*Nota do N2 (2026-09-23), fora da numeração acima:* a **poda do g1** — a lista de
+exceções do G1a da div. 141 (§3) — **não é item desta §7**; o N2 a fez na PR #309
+(`N2-PR1-anexos/g1-antes-depois.txt`). Anotada aqui porque o handoff do encerramento do
+N2 a citou como item da §7 (div. 337, `N2-ENCERRAMENTO.md` §12) — a terceira citação do
+W3 por uma estrutura que ele não tem (divs. 147, 219).
 
 ---
 
