@@ -123,8 +123,9 @@ export function Navigation({ signedIn, setlists, dados }: NavigationProps): Reac
               {({ navigation }) => (
                 <SetlistsScreen
                   {...setlists}
-                  sumiu={sumiu !== null}
+                  sumiu={sumiu === 'sumiu' || sumiu === 'sumiu-nao-relido'}
                   sumiuNaoRelido={sumiu === 'sumiu-nao-relido'}
+                  apagadaNaoRelida={typeof sumiu === 'object' && sumiu !== null ? sumiu.apagadaNaoRelida : null}
                   onAbrirSetlist={(setlistId) => {
                     setSumiu(null)
                     navigation.navigate('Index', { setlistId })

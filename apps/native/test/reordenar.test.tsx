@@ -119,7 +119,7 @@ function semEmbutido(setlists: SetlistDTO[]): SetlistDTO[] {
 }
 
 let relido: SetlistDTO[] | null = null
-let saiuParaS1: Array<'sumiu' | 'sumiu-nao-relido' | null> = []
+let saiuParaS1: Array<import('../src/screens/IndexScreen').AvisoDeSaida> = []
 
 async function props(extra: Partial<IndexScreenProps> = {}): Promise<IndexScreenProps> {
   const doServidor = semEmbutido(await mock.doServidor())
@@ -136,7 +136,7 @@ async function props(extra: Partial<IndexScreenProps> = {}): Promise<IndexScreen
       estado: { uid: UID, setlists: doServidor, content: BIBLIOTECA, syncedAtMs: 1 },
       online,
       aoReler: (novas: SetlistDTO[]) => { relido = novas },
-      aoSairParaS1: (aviso: 'sumiu' | 'sumiu-nao-relido' | null) => { saiuParaS1.push(aviso) },
+      aoSairParaS1: (aviso: import('../src/screens/IndexScreen').AvisoDeSaida) => { saiuParaS1.push(aviso) },
     },
     ...extra,
   }

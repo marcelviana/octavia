@@ -106,6 +106,11 @@ export interface SetlistsScreenProps {
    * inteira do 404 volta a ser verdade e o botão some.
    */
   sumiuNaoRelido?: boolean
+  /**
+   * **N2-E23** (div. 333) — o nome da setlist que S2 apagou com 200 e cuja
+   * releitura falhou: o cache não mudou e ela pode ainda aparecer na lista.
+   */
+  apagadaNaoRelida?: string | null
 }
 
 /** "há 2 h", "há 15 min", "agora" — o texto do chip de status do design. */
@@ -365,6 +370,7 @@ export function SetlistsScreen({
   aoRelerNaEscrita,
   sumiu = false,
   sumiuNaoRelido = false,
+  apagadaNaoRelida = null,
 }: SetlistsScreenProps): React.JSX.Element {
   const [folhaAberta, setFolhaAberta] = useState(false)
   /** N2-D22 — o nome da setlist que foi criada e que a lista não releu. */
@@ -373,6 +379,9 @@ export function SetlistsScreen({
   /** N2-E21 — o `Tentar recarregar` do 404 sem lista já trouxe a lista. */
   const [relidaDepoisDoSumico, setRelidaDepoisDoSumico] = useState(false)
   useEffect(() => setRelidaDepoisDoSumico(false), [sumiuNaoRelido])
+  /** N2-E23 — o `Tentar recarregar` do apagar sem releitura já trouxe a lista. */
+  const [relidaDepoisDoApagar, setRelidaDepoisDoApagar] = useState(false)
+  useEffect(() => setRelidaDepoisDoApagar(false), [apagadaNaoRelida])
 
   /**
    * §3.3 — **só um aviso por vez; se dois caberiam, vale o que bloqueia
@@ -390,6 +399,7 @@ export function SetlistsScreen({
         aoRelerNaEscrita(novas, Date.now())
         setSalvoNaoRelido(null)
         setRelidaDepoisDoSumico(true)
+        setRelidaDepoisDoApagar(true)
       }
     } finally {
       setRecarregando(false)
@@ -451,6 +461,20 @@ export function SetlistsScreen({
           cor: dark.muted,
           motivo: frase('sumiu-declarado'),
           acao: undefined,
+        }
+    : apagadaNaoRelida !== null && !relidaDepoisDoApagar
+      ? {
+          icone: 'ultima-sincronizacao' as NomeIcone,
+          cor: dark.muted,
+          // N2-E23 — espelho do "foi criada" abaixo (div. 227): o core guarda
+          // a metade fixa, S1 monta `<nome> foi apagada. ` na frente.
+          motivo: `${apagadaNaoRelida} foi apagada. ${frase('apagada-nao-relida')}`,
+          acao: {
+            rotulo: 'Tentar recarregar',
+            onPress: () => void recarregar(),
+            inativo: recarregando,
+            motivoInativo: recarregando ? frase('relendo') : undefined,
+          },
         }
     : salvoNaoRelido !== null
       ? {

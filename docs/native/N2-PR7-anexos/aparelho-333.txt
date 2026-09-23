@@ -1,0 +1,71 @@
+# N2-PR7 — div. 333 no aparelho, mock, bundle da árvore do conserto (sobre da69bb2)
+# bundle: localhost:8788 1 · apagada-nao-relida 2 · "foi apagada. " 3 · apagadaNaoRelida 8
+
+## Tab S6
+== apagar com 200 e releitura 500 (mock delete-releitura-500)
+  10:29:29.826 toque setlist-aaaaaaaa @ 1280 544 px (RX2N8000F3D)
+  10:29:33.841 toque setlist-apagar @ 2318 323 px (RX2N8000F3D)
+  10:29:37.507 toque apagar-confirmar @ 1742 998 px (RX2N8000F3D)
+    log: api status=200 path=/api/setlists/aaaaaaaa n=1 ms=20
+    log: write op=delete setlist=aaaaaaaa items=- status=200 code=- ms=27
+    log: api status=500 path=/api/setlists n=1 ms=17
+    log: resync kind=setlists reason=write op=delete status=500 setlists=- ms=20
+  [dump t-19-s1-apagada-nao-relida]
+    criar-setlist                152.0 x   57.8 @ ( 758.7,  54.7) en=true ck=true txt=''
+    aviso-motivo                 701.3 x   21.8 @ (  64.0, 157.3) en=true ck=false txt='Ensaio do picker foi apagada. Não foi possível recarregar a lista, então ela pode ainda ap'
+    aviso-acao                   183.6 x   48.0 @ ( 922.2, 144.0) en=true ck=true txt=''
+    setlist-aaaaaaaa            1073.8 x  132.0 @ (  32.0, 224.0) en=true ck=true txt=''
+    setlist-bbbbbbbb            1073.8 x  132.0 @ (  32.0, 368.0) en=true ck=true txt=''
+    aviso-motivo [enabled=true]: Ensaio do picker foi apagada. Não foi possível recarregar a lista, então ela pode ainda aparecer abaixo.
+    aviso-acao [enabled=true]: Tentar recarregar
+== o servidor sem ela e a leitura de pé (mock escrita, a setlist fora do arquivo)
+    fixture: servidor em :8788 modo=escrita setlists=1 content=12 paginas=[12]
+  10:29:47.154 toque aviso-acao @ 2281 378 px (RX2N8000F3D)
+    log: api status=200 path=/api/setlists n=1 ms=80
+    log: resync kind=setlists reason=reopen op=- status=200 setlists=1 ms=83
+    log: cache write kind=setlists n=1 invalidated=1
+    log: prefetch plan n=0 reason=7d
+  [dump t-20-s1-apagada-relida]
+    criar-setlist                152.0 x   57.8 @ ( 758.7,  54.7) en=true ck=true txt=''
+    setlist-bbbbbbbb            1073.8 x  132.0 @ (  32.0, 176.0) en=true ck=true txt=''
+    aviso-motivo: AUSENTE
+    setlist-aaaaaaaa: AUSENTE
+
+## AVD octavia_tab32
+== apagar com 200 e releitura 500 (mock delete-releitura-500)
+  10:30:07.442 toque setlist-aaaaaaaa @ 1280 544 px (emulator-5554)
+  10:30:11.281 toque setlist-apagar @ 2318 323 px (emulator-5554)
+  10:30:14.738 toque apagar-confirmar @ 1742 998 px (emulator-5554)
+    log: api status=200 path=/api/setlists/aaaaaaaa n=1 ms=25
+    log: write op=delete setlist=aaaaaaaa items=- status=200 code=- ms=40
+    log: api status=500 path=/api/setlists n=1 ms=20
+    log: resync kind=setlists reason=write op=delete status=500 setlists=- ms=24
+  [dump a-19-s1-apagada-nao-relida]
+    criar-setlist                152.0 x   57.8 @ ( 758.7,  54.7) en=true ck=true txt=''
+    aviso-motivo                 701.3 x   21.8 @ (  64.0, 157.3) en=true ck=false txt='Ensaio do picker foi apagada. Não foi possível recarregar a lista, então ela pode ainda ap'
+    aviso-acao                   183.6 x   48.0 @ ( 922.2, 144.0) en=true ck=true txt=''
+    setlist-aaaaaaaa            1073.8 x  132.0 @ (  32.0, 224.0) en=true ck=true txt=''
+    setlist-bbbbbbbb            1073.8 x  132.0 @ (  32.0, 368.0) en=true ck=true txt=''
+    aviso-motivo [enabled=true]: Ensaio do picker foi apagada. Não foi possível recarregar a lista, então ela pode ainda aparecer abaixo.
+    aviso-acao [enabled=true]: Tentar recarregar
+== o servidor sem ela e a leitura de pé (mock escrita, a setlist fora do arquivo)
+    fixture: servidor em :8788 modo=escrita setlists=1 content=12 paginas=[12]
+  10:30:24.001 toque aviso-acao @ 2281 378 px (emulator-5554)
+    log: api status=200 path=/api/setlists n=1 ms=640
+    log: resync kind=setlists reason=reopen op=- status=200 setlists=1 ms=648
+    log: cache write kind=setlists n=1 invalidated=1
+    log: prefetch plan n=0 reason=7d
+  [dump a-20-s1-apagada-relida]
+    criar-setlist                152.0 x   57.8 @ ( 758.7,  54.7) en=true ck=true txt=''
+    setlist-bbbbbbbb            1073.8 x  132.0 @ (  32.0, 176.0) en=true ck=true txt=''
+    aviso-motivo: AUSENTE
+    setlist-aaaaaaaa: AUSENTE
+
+## estado dos aparelhos (lido antes = medido depois)
+-- tab
+stay_on=0 accel=1 user_rot=0 airplane=0 wifi=1 data=1
+
+-- avd
+stay_on=1 accel=1 user_rot=0 airplane=1 wifi=0 data=0
+host-43 tcp:8081 tcp:8081
+

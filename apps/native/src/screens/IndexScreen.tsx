@@ -119,11 +119,15 @@ export interface EdicaoDeS2 {
 }
 
 /**
- * N2-E21 — por que S2 acabou. `'sumiu-nao-relido'` é o 404 (conhecimento: o
+ * N2-E21/N2-E23 — por que S2 acabou. `{ apagadaNaoRelida }` é o apagar com
+ * 200 e a releitura falha (div. 333): S1 diz, com o nome, que a lista pode
+ * ainda mostrar a setlist, e oferece `Tentar recarregar`.
+ *
+ * (N2-E21) `'sumiu-nao-relido'` é o 404 (conhecimento: o
  * T2-R10 manda sair) SEM a lista relida; S1 diz as duas coisas e oferece
  * `Tentar recarregar`.
  */
-export type AvisoDeSaida = 'sumiu' | 'sumiu-nao-relido' | null
+export type AvisoDeSaida = 'sumiu' | 'sumiu-nao-relido' | { apagadaNaoRelida: string } | null
 
 /** O 404 saiu da tela: com a lista relida ou sem ela (N2-E21). */
 function avisoDoSumico(novas: SetlistDTO[] | null): AvisoDeSaida {
@@ -828,9 +832,10 @@ export function IndexScreen({
           aoSalvoNaoRelido={() => {
             // A setlist FOI apagada; o que não se conseguiu foi reler a
             // lista. Quem mostra isso é S1, que é onde a lista está — e por
-            // isso a tela sai, como sai no sucesso.
+            // isso a tela sai, como sai no sucesso. **Div. 333**: saía com
+            // `null`, e S1 não mostrava nada (N2-E23).
             setDialogo(false)
-            edicao.aoSairParaS1(null)
+            edicao.aoSairParaS1({ apagadaNaoRelida: setlist.name })
           }}
           aoRelerAtras={(novas, syncedAtMs) => edicao.aoReler(novas, syncedAtMs)}
         />

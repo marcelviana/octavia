@@ -206,6 +206,20 @@ export type ChaveDeFrase =
    * CONTINUAR aparecendo até o recarregar — o que as duas orações dizem.
    */
   | 'sumiu-nao-relido'
+  /**
+   * **ERRATA DA N2-PR7 (N2-E23, decisão do Marcel sobre a div. 333) — apagar
+   * com a releitura falha.** O congelado não previa o caso: o `DELETE`
+   * voltou 200 (o servidor CONFIRMOU) e a releitura falhou, então o cache
+   * não mudou (N2-D22) e S1 continua mostrando a setlist apagada. Sem uma
+   * frase, a tela era o "salvo" limpo que a N2-D22 proíbe.
+   *
+   * Construção ESPELHADA de `salvo-nao-relido-s1` (div. 227): o core guarda
+   * a metade fixa e S1 monta `<nome> foi apagada. ` na frente — nome de
+   * setlist é dado, não texto. E a segunda oração diz o contrário da do
+   * criar, porque o caso é o contrário: a criada pode AINDA NÃO aparecer; a
+   * apagada pode AINDA aparecer.
+   */
+  | 'apagada-nao-relida'
 
 export const FRASES: Readonly<Record<ChaveDeFrase, string>> = {
   // T2-R15 (`PRD-TELA-2.md`)
@@ -253,6 +267,8 @@ export const FRASES: Readonly<Record<ChaveDeFrase, string>> = {
   'sumiu-declarado': 'Essa setlist não existe mais. A lista abaixo é a que o servidor tem agora.',
   // N2-E21: as duas primeiras orações de `sumiu-declarado` e de `salvo-nao-relido-s1`.
   'sumiu-nao-relido': 'Essa setlist não existe mais. Não foi possível recarregar a lista.',
+  // N2-E23: a metade fixa; S1 monta `<nome> foi apagada. ` na frente (div. 227).
+  'apagada-nao-relida': 'Não foi possível recarregar a lista, então ela pode ainda aparecer abaixo.',
   'sem-rede-s1':
     'Sem conexão: dá para abrir e tocar o que está no aparelho, não para criar setlist. O controle volta com a rede.',
   'sem-rede-s2':
