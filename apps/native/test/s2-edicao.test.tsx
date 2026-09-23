@@ -31,6 +31,7 @@ import path from 'node:path'
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { ContentDTO, SetlistDTO } from '@octavia/core'
 import type { IndexScreenProps } from '../src/screens/IndexScreen'
+import { exatas } from './ajuda'
 import { Directory, File, Paths, __reset } from './fake-expo-file-system'
 import { __proximaData } from './fake-datetimepicker'
 import { Mock, portaLivre } from './mock'
@@ -297,14 +298,37 @@ describe('(d) T2-R4 / C4 — limpar a data conta como mudança e envia `null`', 
     await tocar('form-data-limpar')
     expect(inativo('form-salvar')).toBe(false)
     expect(texto('form-data')).toBe('dd / mm / aaaa')
+    // N2-PR7 (c) — sem data, não há o que limpar: o alvo SOME no mesmo toque.
+    expect(achar('form-data-limpar')).toBeNull()
+    // O corpo do `PUT` lido na saída do app (o mock não guarda corpos).
+    const espia = vi.spyOn(globalThis, 'fetch')
     await tocar('form-salvar')
     await assentar(50)
+    const corposDoPut = (): unknown[] =>
+      espia.mock.calls
+        .filter(([, init]) => (init as RequestInit | undefined)?.method === 'PUT')
+        .map(([, init]) => JSON.parse(String((init as RequestInit).body)))
 
     expect(so('write op=update')).toHaveLength(1)
+    // O `PUT` levou `performance_date: null` e só isso (contrato §PUT) …
+    expect(corposDoPut()).toEqual([{ performance_date: null }])
+    // … e a tela foi relida depois dele (regra 3).
+    expect(so('resync')).toEqual([
+      expect.stringMatching(/^resync kind=setlists reason=write op=update status=200 setlists=\d+ ms=\d+$/),
+    ])
     const noServidor = (await mock.doServidor()).find((s) => s.id === SL)
     expect(noServidor?.performance_date).toBeNull()
     // O nome NÃO foi enviado: ele não mudou (ausente = não mexe).
     expect(noServidor?.name).toBe('Show')
+  })
+
+  it('N2-PR7 (c) — setlist sem data: o `Limpar` não existe, e sem frase nova', async () => {
+    const semData = { ...setlistComBis(), performance_date: null }
+    await mock.servir('escrita', [semData], BIBLIOTECA)
+    await montar(<S2.IndexScreen {...(await props())} />)
+    await tocar('setlist-editar')
+    expect(texto('form-data')).toBe('dd / mm / aaaa')
+    expect(achar('form-data-limpar')).toBeNull()
   })
 })
 
@@ -518,8 +542,9 @@ describe('(k) T2-R13 / N2-D9 — 401 numa escrita de S2 não desloga', () => {
 
     expect(texto('aviso-motivo')).toContain('não foi possível salvar — confira sua conta no site')
     expect(deslogou).not.toHaveBeenCalled()
-    expect(so('auth-failure')).toEqual([])
-    expect(so('login-screen')).toEqual([])
+    // A-N2-15 por linha exata (`grep -x`), não por prefixo.
+    expect(exatas(linhas, 'auth-failure')).toEqual([])
+    expect(exatas(linhas, 'login-screen')).toEqual([])
     expect(so('api status=401')[0]).toMatch(/ n=2 ms=\d+$/)
   })
 })

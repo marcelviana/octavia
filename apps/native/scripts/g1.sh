@@ -91,35 +91,27 @@ git rev-parse --verify --quiet "$BASE^{commit}" >/dev/null || uso "<base> nao re
 # inverter a ordem. Se o Marcel quiser que passe a reprovar, é uma linha —
 # trocar o aviso por `A=1`. (Pergunta 3 do relatório da W3.)
 #
-# --- As EXCEÇÕES desta PR (o escopo declarado da N2-PR6) ---------------------
-# Poda da div. 141: as SETE da N2-PR5 saíram — elas mergearam em `f991eb0` e
-# uma exceção mergeada só torna o gate mais permissivo para a PR seguinte. As
-# SEIS abaixo são desta PR, e são o escopo inteiro do picker.
+# --- As EXCEÇÕES desta PR (o escopo declarado da N2-PR7) ---------------------
+# Poda da div. 141: as SEIS da N2-PR6 saíram — mergearam em `426f4cc`. As
+# QUATRO abaixo são desta PR, e são o escopo inteiro da N2-E19. A N2-E8 e a
+# N2-E20 não tocam código (divs. 319 e 320: já estavam na `main`).
 #
-#   packages/core/src/frases.ts      a errata da N2-PR6 (N2-E16): duas chaves
-#       novas, verbatim das molduras `N2-P-*` ("não entrou na setlist",
-#       "adicionada"), e os construtores com nome ou número dentro — o
-#       placeholder com a reticência da R1·5, o vazio, as réguas, a marca
-#       "já na setlist · n×" e o rodapé.
-#   apps/native/src/escrita.ts       o `aoResponder` do `escrever()` (EXTRA
-#       X1, declarado antes deste commit): a tela é avisada do 201 ANTES da
-#       releitura, que é quando a linha vira "adicionada" e o `k` sobe.
-#       Nenhuma regra nova — o módulo continua decidindo.
-#   apps/native/src/icones/dados.ts  o QUINTO e último dos desenhos do anexo
-#       D do DESIGN-N2: o `adicionar`, a outra metade do par.
-#   apps/native/src/screens/IndexScreen.tsx   `Adicionar música` na faixa (o
-#       quarto controle, à esquerda de `Reordenar`), e a troca S2 ↔ picker.
-#   apps/native/src/screens/Picker.tsx   NOVO. O picker: a barra do S4, o
-#       campo, os resultados com os cinco estados, o rodapé de 64/112.
-#       Arquivo próprio porque os `testID` dele são NOVOS.
-#   apps/native/src/screens/SearchScreen.tsx  o `export` do `Regua` (EXTRA
-#       X2): o picker usa a régua do S4, não uma cópia dela.
+#   packages/core/src/frases.ts      a errata da N2-PR7 (N2-E19): UMA chave
+#       nova, `sem-resposta` ("sem resposta do servidor"), para a espécie
+#       `rede` — a request saiu e não voltou. O `rede` ("sem conexão — nada
+#       foi salvo") fica só para quem NÃO enviou (barrado offline).
+#   packages/core/src/escrita.ts     `classificar` passa a dar `sem-resposta`
+#       à rede, e o `classificarBarrado` (EXTRA X2, declarado antes do commit
+#       1): a frase do barrado mora no core, não numa rede fingida no app.
+#   apps/native/src/escrita.ts       o `resultadoBarrado` passa a chamar o
+#       `classificarBarrado` do core. Nenhuma regra nova no módulo.
+#   apps/native/src/screens/Picker.tsx   com `rede`, a linha diz "sem resposta
+#       do servidor" e embaixo a dúvida (EXTRA X3); com o barrado, "não entrou
+#       na setlist" e "nada foi salvo", sem a dúvida.
 EXCECOES='packages/core/src/frases.ts
+packages/core/src/escrita.ts
 apps/native/src/escrita.ts
-apps/native/src/icones/dados.ts
-apps/native/src/screens/IndexScreen.tsx
-apps/native/src/screens/Picker.tsx
-apps/native/src/screens/SearchScreen.tsx'
+apps/native/src/screens/Picker.tsx'
 
 listar() {
   if [ "$1" = "WORKTREE" ]; then

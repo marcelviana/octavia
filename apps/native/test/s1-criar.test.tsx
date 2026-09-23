@@ -25,6 +25,7 @@ import path from 'node:path'
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { ContentDTO, SetlistDTO } from '@octavia/core'
 import type { SetlistsScreenProps } from '../src/screens/SetlistsScreen'
+import { exatas } from './ajuda'
 import { Directory, File, Paths, __reset } from './fake-expo-file-system'
 import { __proximaData } from './fake-datetimepicker'
 import { Mock, portaLivre } from './mock'
@@ -301,7 +302,10 @@ describe('(e) R1·1 / N2-D18 — "grava e corta": a folha fica, com o banner', (
     // O banner: a frase do CONJUNTO FECHADO, e a segunda oração fixa.
     const banner = texto('form-falha')
     expect(banner).toContain('Não foi possível criar')
-    expect(banner).toContain('sem conexão — nada foi salvo')
+    // N2-E19: a request SAIU e não voltou — "sem resposta do servidor"; o
+    // "nada foi salvo" mentiria ao lado da oração que diz que pode ter sido.
+    expect(banner).toContain('sem resposta do servidor')
+    expect(banner).not.toContain('nada foi salvo')
     expect(banner).toContain(
       'Pode já ter sido gravada — confira a lista antes de tentar de novo. A lista atrás desta folha acabou de ser relida.',
     )
@@ -383,8 +387,9 @@ describe('(g) T2-R13 / N2-D9 — 401 numa escrita não desloga', () => {
 
     expect(texto('form-falha')).toContain('não foi possível salvar — confira sua conta no site')
     expect(deslogou).not.toHaveBeenCalled()
-    expect(so('auth-failure')).toEqual([])
-    expect(so('login-screen')).toEqual([])
+    // A-N2-15 por linha exata (`grep -x`), não por prefixo.
+    expect(exatas(linhas, 'auth-failure')).toEqual([])
+    expect(exatas(linhas, 'login-screen')).toEqual([])
     // T1-R3: a original e uma depois de renovar, nunca uma terceira.
     expect(so('api status=401')[0]).toMatch(/ n=2 ms=\d+$/)
     // Em 401 nada foi gravado: não há "pode já ter sido gravada" (o servidor

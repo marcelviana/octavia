@@ -9,6 +9,7 @@
 import { describe, expect, it } from 'vitest'
 import {
   classificar,
+  classificarBarrado,
   id8,
   pedidoAdicionar,
   pedidoApagar,
@@ -173,7 +174,11 @@ describe('classificar — o conjunto FECHADO de espécies', () => {
     const r = classificar('create', { networkError: 'Network request failed' }, null)
     expect(r.especie).toBe('rede')
     expect(r.status).toBeNull()
-    expect(r.frase).toBe('sem conexão — nada foi salvo')
+    expect(r.frase).toBe('sem resposta do servidor')
+    // N2-E19 (div. 308): a request SAIU e não voltou — ninguém sabe se foi
+    // gravada, e "nada foi salvo" seria uma afirmação que o app não tem como
+    // fazer. A frase de "não saiu" é a do barrado, abaixo.
+    expect(r.chave).toBe('sem-resposta')
   })
 
   it('rede em criar e adicionar PODE ter gravado (N2-D18); nas outras quatro, não', () => {
@@ -210,5 +215,46 @@ describe('classificar — o conjunto FECHADO de espécies', () => {
     expect([...vistas].sort()).toEqual(
       ['auth', 'limite', 'ok', 'ok-nao-relido', 'rede', 'servidor', 'sumiu'].sort(),
     )
+  })
+})
+
+describe('N2-E19 — a escrita BARRADA não é a escrita sem resposta', () => {
+  const OPS = ['create', 'update', 'delete', 'add', 'remove', 'reorder'] as const
+
+  it('offline (não enviou): "sem conexão — nada foi salvo", e nunca "pode ter gravado"', () => {
+    for (const op of OPS) {
+      const r = classificarBarrado(op, 'offline')
+      expect(r.especie).toBe('rede')
+      expect(r.status).toBeNull()
+      expect(r.chave).toBe('rede')
+      expect(r.frase).toBe('sem conexão — nada foi salvo')
+      // Nada saiu: em criar e adicionar também não há dúvida a declarar.
+      expect(r.podeTerGravado).toBe(false)
+    }
+  })
+
+  it('busy (outra escrita em voo): a genérica — "sem conexão" seria mentira com a rede de pé', () => {
+    for (const op of OPS) {
+      const r = classificarBarrado(op, 'busy')
+      expect(r.chave).toBe('generica')
+      expect(r.frase).toBe('não foi possível salvar')
+      expect(r.podeTerGravado).toBe(false)
+    }
+  })
+
+  it('ratelimit (a família fechada): a frase do 429 sem prazo, como antes', () => {
+    for (const op of OPS) {
+      const r = classificarBarrado(op, 'ratelimit')
+      expect(r.especie).toBe('limite')
+      expect(r.chave).toBe('limite-sem-prazo')
+      expect(r.podeTerGravado).toBe(false)
+    }
+  })
+
+  it('a mesma op com rede de verdade continua podendo ter gravado — em criar e adicionar', () => {
+    for (const op of ['create', 'add'] as const) {
+      expect(classificar(op, { networkError: 'x' }, null).podeTerGravado).toBe(true)
+      expect(classificarBarrado(op, 'offline').podeTerGravado).toBe(false)
+    }
   })
 })

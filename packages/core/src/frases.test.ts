@@ -9,6 +9,8 @@
  */
 import { describe, expect, it } from 'vitest'
 import { classificar, type Op } from './escrita'
+// N2-E19: o barrado (a escrita que nem saiu) também pertence ao conjunto.
+import { classificarBarrado } from './escrita'
 import { CHAVES, FRASES, frase, type ChaveDeFrase } from './frases'
 
 describe('o conjunto é fechado', () => {
@@ -46,7 +48,10 @@ describe('o conjunto é fechado', () => {
 
 describe('as onze frases do T2-R15, verbatim', () => {
   const esperado: Array<[ChaveDeFrase, string]> = [
+    // N2-E19 (div. 308): "nada foi salvo" é só de quem NÃO enviou (barrado
+    // offline); quem enviou e ficou sem resposta não sabe se foi salvo.
     ['rede', 'sem conexão — nada foi salvo'],
+    ['sem-resposta', 'sem resposta do servidor'],
     ['auth', 'não foi possível salvar — confira sua conta no site'],
     ['limite-com-prazo', 'muitas alterações seguidas — tente de novo em {N} s'],
     ['limite-sem-prazo', 'Muitas mudanças em pouco tempo. Os controles de escrita voltam em instantes.'],
@@ -156,5 +161,19 @@ describe('toda saída de classificar() pertence ao conjunto', () => {
       n++
     }
     expect(n).toBe(OPS.length * STATUS.length * (CODES.length + 1) * 3 + OPS.length)
+  })
+
+  it('N2-E19 — e o barrado (a escrita que nem saiu) também pertence ao conjunto', () => {
+    const textos = new Set(Object.values(FRASES))
+    let n = 0
+    for (const op of OPS) {
+      for (const motivo of ['offline', 'ratelimit', 'busy'] as const) {
+        const r = classificarBarrado(op, motivo)
+        expect(textos.has(r.frase)).toBe(true)
+        expect(CHAVES.has(r.chave)).toBe(true)
+        n++
+      }
+    }
+    expect(n).toBe(OPS.length * 3)
   })
 })
