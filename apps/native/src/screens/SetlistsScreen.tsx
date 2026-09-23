@@ -44,7 +44,7 @@
  *     Dois estados nesta PR — sem rede e salvo-não-relido —, e os outros três
  *     (falhou, limite, teto de 100) são da S2, na PR-4.
  */
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { FlatList, Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import { frase, offlineStatus, type ContentDTO, type OfflineStatus, type SetlistDTO } from '@octavia/core'
 import { relerAoAbrir, type EstadoLocal } from '../escrita'
@@ -99,6 +99,13 @@ export interface SetlistsScreenProps {
    * aparece, S2 já não existe.
    */
   sumiu?: boolean
+  /**
+   * **N2-E21** — o 404 chegou e a releitura FALHOU: S1 não tem a lista do
+   * servidor. A frase é `sumiu-nao-relido` (as duas primeiras orações de
+   * origem) e o botão é `Tentar recarregar`; relida com sucesso, a frase
+   * inteira do 404 volta a ser verdade e o botão some.
+   */
+  sumiuNaoRelido?: boolean
 }
 
 /** "há 2 h", "há 15 min", "agora" — o texto do chip de status do design. */
@@ -357,11 +364,15 @@ export function SetlistsScreen({
   estadoLocal,
   aoRelerNaEscrita,
   sumiu = false,
+  sumiuNaoRelido = false,
 }: SetlistsScreenProps): React.JSX.Element {
   const [folhaAberta, setFolhaAberta] = useState(false)
   /** N2-D22 — o nome da setlist que foi criada e que a lista não releu. */
   const [salvoNaoRelido, setSalvoNaoRelido] = useState<string | null>(null)
   const [recarregando, setRecarregando] = useState(false)
+  /** N2-E21 — o `Tentar recarregar` do 404 sem lista já trouxe a lista. */
+  const [relidaDepoisDoSumico, setRelidaDepoisDoSumico] = useState(false)
+  useEffect(() => setRelidaDepoisDoSumico(false), [sumiuNaoRelido])
 
   /**
    * §3.3 — **só um aviso por vez; se dois caberiam, vale o que bloqueia
@@ -378,6 +389,7 @@ export function SetlistsScreen({
       if (novas !== null) {
         aoRelerNaEscrita(novas, Date.now())
         setSalvoNaoRelido(null)
+        setRelidaDepoisDoSumico(true)
       }
     } finally {
       setRecarregando(false)
@@ -421,6 +433,18 @@ export function SetlistsScreen({
         motivo: frase('sem-rede-s1'),
         acao: undefined,
       }
+    : sumiu && sumiuNaoRelido && !relidaDepoisDoSumico
+      ? {
+          icone: 'falha' as NomeIcone,
+          cor: dark.muted,
+          motivo: frase('sumiu-nao-relido'),
+          acao: {
+            rotulo: 'Tentar recarregar',
+            onPress: () => void recarregar(),
+            inativo: recarregando,
+            motivoInativo: recarregando ? frase('relendo') : undefined,
+          },
+        }
     : sumiu
       ? {
           icone: 'falha' as NomeIcone,

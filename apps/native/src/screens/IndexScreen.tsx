@@ -111,9 +111,23 @@ export interface EdicaoDeS2 {
   /**
    * A tela acabou: ou a setlist foi apagada aqui (`null`), ou ela sumiu
    * debaixo do músico (`'sumiu'`, T2-R10 — e aí S1 explica por quê). Nos dois
-   * casos a releitura **já aconteceu** antes desta chamada.
+   * casos a releitura **já aconteceu** antes desta chamada — **salvo** em
+   * `'sumiu-nao-relido'` (N2-E21): o 404 disse que a setlist não existe e a
+   * releitura falhou, então S1 não pode dizer que a lista é a do servidor.
    */
-  aoSairParaS1: (aviso: 'sumiu' | null) => void
+  aoSairParaS1: (aviso: AvisoDeSaida) => void
+}
+
+/**
+ * N2-E21 — por que S2 acabou. `'sumiu-nao-relido'` é o 404 (conhecimento: o
+ * T2-R10 manda sair) SEM a lista relida; S1 diz as duas coisas e oferece
+ * `Tentar recarregar`.
+ */
+export type AvisoDeSaida = 'sumiu' | 'sumiu-nao-relido' | null
+
+/** O 404 saiu da tela: com a lista relida ou sem ela (N2-E21). */
+function avisoDoSumico(novas: SetlistDTO[] | null): AvisoDeSaida {
+  return novas === null ? 'sumiu-nao-relido' : 'sumiu'
 }
 
 export interface IndexScreenProps {
@@ -390,6 +404,13 @@ export function IndexScreen({
   /** N2-D22 — 2xx com a releitura falhando. */
   const [salvoNaoRelido, setSalvoNaoRelido] = useState(false)
   const [relendo, setRelendo] = useState(false)
+  /**
+   * N2-D32 — a última releitura da regra 3 FALHOU. Sem estado real, a linha
+   * de aviso não diz que a lista é a do servidor e não oferece repetir a
+   * escrita: o botão é `Tentar recarregar` (como o picker, a folha — N2-E3 —
+   * e o reordenar — div. 287). Defeito achado no §3 da N2-PR7.
+   */
+  const [releituraFalhou, setReleituraFalhou] = useState(false)
   /** O que `Tentar de novo` repete, quando há o que repetir. */
   const [repetir, setRepetir] = useState<(() => void) | null>(null)
 
@@ -422,6 +443,7 @@ export function IndexScreen({
     setRelendo(true)
     try {
       const novas = await relerAoAbrir(edicao.estado)
+      setReleituraFalhou(novas === null)
       if (novas !== null) {
         edicao.aoReler(novas, Date.now())
         setSalvoNaoRelido(false)
@@ -445,6 +467,7 @@ export function IndexScreen({
       setRemovendo(song.id)
       setFalha(null)
       setSalvoNaoRelido(false)
+      setReleituraFalhou(false)
       // Nada de `Tentar de novo` herdado da falha anterior: o botão da linha
       // de aviso repete a ÚLTIMA escrita, e a última é esta.
       setRepetir(null)
@@ -462,13 +485,15 @@ export function IndexScreen({
           return
         }
         if (especie === 'sumiu') {
-          const aindaExiste = (saida.setlists ?? []).some((s) => s.id === setlist.id)
+          // N2-E21: sem a releitura não se sabe QUEM sumiu, mas o 404 é
+          // conhecimento e o T2-R10 manda sair — S1 diz que não releu.
+          const aindaExiste = saida.setlists !== null && saida.setlists.some((s) => s.id === setlist.id)
           if (!aindaExiste) {
             // A lista que a releitura trouxe vai JUNTO: o congelado manda cair
             // em S1 "já relida", e sem isto S1 mostraria a setlist que não
             // existe mais até o próximo sync (div. 270, medido no §4).
             if (saida.setlists !== null) edicao.aoReler(saida.setlists, saida.syncedAtMs)
-            edicao.aoSairParaS1('sumiu')
+            edicao.aoSairParaS1(avisoDoSumico(saida.setlists))
             return
           }
           // A setlist está lá; a música é que não. A lista nova já chegou, e
@@ -515,7 +540,9 @@ export function IndexScreen({
       // terceira só existe DEPOIS da releitura (regra 3) — antes dela seria
       // uma promessa sobre uma lista que ainda não chegou.
       const oracoes = [frase('falhou-salvar'), falha.frase]
-      if (!relendo) oracoes.push(frase('lista-relida'))
+      // N2-D32: a terceira oração só com a releitura FEITA — nem durante
+      // ela, nem depois de ela falhar.
+      if (!relendo && !releituraFalhou) oracoes.push(frase('lista-relida'))
       return {
         icone: 'falha' as NomeIcone,
         cor: dark.errorInk,
@@ -523,7 +550,14 @@ export function IndexScreen({
         acao:
           repetir === null
             ? undefined
-            : {
+            : releituraFalhou
+              ? {
+                  rotulo: 'Tentar recarregar',
+                  onPress: () => void recarregar(),
+                  inativo: relendo,
+                  motivoInativo: relendo ? frase('relendo') : undefined,
+                }
+              : {
                 rotulo: 'Tentar de novo',
                 onPress: repetir,
                 inativo: relendo || !podeEscrever,
@@ -550,7 +584,7 @@ export function IndexScreen({
       }
     }
     return null
-  }, [edicao, online, falha, cabeNoTeto, salvoNaoRelido, relendo, repetir, podeEscrever, recarregar])
+  }, [edicao, online, falha, cabeNoTeto, salvoNaoRelido, relendo, releituraFalhou, repetir, podeEscrever, recarregar])
 
   if (adicionando && edicao !== null) {
     return (
@@ -574,7 +608,7 @@ export function IndexScreen({
         aoSalvoNaoRelido={() => setSalvoNaoRelido(true)}
         aoSumir={(novas, syncedAtMs) => {
           if (novas !== null) edicao.aoReler(novas, syncedAtMs)
-          edicao.aoSairParaS1('sumiu')
+          edicao.aoSairParaS1(avisoDoSumico(novas))
         }}
       />
     )
@@ -600,7 +634,7 @@ export function IndexScreen({
         }}
         aoSumir={(novas, syncedAtMs) => {
           if (novas !== null) edicao.aoReler(novas, syncedAtMs)
-          edicao.aoSairParaS1('sumiu')
+          edicao.aoSairParaS1(avisoDoSumico(novas))
         }}
         aoRelerAtras={(novas, syncedAtMs) => edicao.aoReler(novas, syncedAtMs)}
       />
@@ -770,7 +804,7 @@ export function IndexScreen({
           aoSumir={(novas, syncedAtMs) => {
             setFolha(false)
             if (novas !== null) edicao.aoReler(novas, syncedAtMs)
-            edicao.aoSairParaS1('sumiu')
+            edicao.aoSairParaS1(avisoDoSumico(novas))
           }}
           aoRelerAtras={(novas, syncedAtMs) => edicao.aoReler(novas, syncedAtMs)}
         />
@@ -789,7 +823,7 @@ export function IndexScreen({
           aoSumir={(novas, syncedAtMs) => {
             setDialogo(false)
             if (novas !== null) edicao.aoReler(novas, syncedAtMs)
-            edicao.aoSairParaS1('sumiu')
+            edicao.aoSairParaS1(avisoDoSumico(novas))
           }}
           aoSalvoNaoRelido={() => {
             // A setlist FOI apagada; o que não se conseguiu foi reler a

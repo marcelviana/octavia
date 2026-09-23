@@ -564,7 +564,9 @@ describe('(n) N2-D32 / N2-E21 — a escrita falhou E a releitura também', () =>
 
     // Recarregar com a leitura de pé: agora sim, a regra 3 foi cumprida, e o
     // `Tentar de novo` aparece com a terceira oração.
-    await mock.servir('escrita-500', semEmbutido(await mock.doServidor()), BIBLIOTECA)
+    // (O `GET` do próprio mock está em 500 neste modo: o estado do servidor
+    // de antes da remoção — que falhou — é o `setlistComBis()` de partida.)
+    await mock.servir('escrita-500', [setlistComBis()], BIBLIOTECA)
     linhas = []
     await tocar('aviso-acao')
     await assentar(80)

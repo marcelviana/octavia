@@ -108,10 +108,25 @@ git rev-parse --verify --quiet "$BASE^{commit}" >/dev/null || uso "<base> nao re
 #   apps/native/src/screens/Picker.tsx   com `rede`, a linha diz "sem resposta
 #       do servidor" e embaixo a dúvida (EXTRA X3); com o barrado, "não entrou
 #       na setlist" e "nada foi salvo", sem a dúvida.
+#
+# E TRÊS do conserto que o §3 achou (decisão do Marcel, commit próprio): com a
+# escrita E a releitura falhando, S2 dizia "a lista abaixo é a que o servidor
+# acabou de devolver" e oferecia `Tentar de novo` (contra a N2-D32), e o 404
+# saía para S1 afirmando uma lista relida que não houve (N2-E21).
+#   apps/native/src/screens/IndexScreen.tsx     `releituraFalhou`: sem a
+#       terceira oração e com `Tentar recarregar`; `AvisoDeSaida` com o
+#       `'sumiu-nao-relido'` nos cinco caminhos de 404 (EXTRA X5).
+#   apps/native/src/screens/SetlistsScreen.tsx  o aviso `sumiu-nao-relido`
+#       com `Tentar recarregar`; relida, volta a frase inteira do 404.
+#   apps/native/src/navigation.tsx              o estado do aviso passa de
+#       booleano a `AvisoDeSaida`.
 EXCECOES='packages/core/src/frases.ts
 packages/core/src/escrita.ts
 apps/native/src/escrita.ts
-apps/native/src/screens/Picker.tsx'
+apps/native/src/screens/Picker.tsx
+apps/native/src/screens/IndexScreen.tsx
+apps/native/src/screens/SetlistsScreen.tsx
+apps/native/src/navigation.tsx'
 
 listar() {
   if [ "$1" = "WORKTREE" ]; then

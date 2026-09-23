@@ -160,7 +160,7 @@ function doCache(): { setlists: SetlistDTO[] } | null {
 
 /** O que a raiz recebeu — cada releitura que chegou, e cada saída para S1. */
 let relidos: SetlistDTO[][] = []
-let saiuParaS1: Array<'sumiu' | null> = []
+let saiuParaS1: Array<'sumiu' | 'sumiu-nao-relido' | null> = []
 
 /**
  * A RAIZ do app, reduzida ao que S2 precisa: o conjunto em `useState`, o
@@ -191,7 +191,7 @@ function Raiz({ inicial, palco = false }: { inicial: SetlistDTO[]; palco?: boole
                 relidos.push(novas)
                 setConjunto(novas)
               },
-              aoSairParaS1: (aviso: 'sumiu' | null) => {
+              aoSairParaS1: (aviso: 'sumiu' | 'sumiu-nao-relido' | null) => {
                 saiuParaS1.push(aviso)
                 setEmS1(true)
               },
