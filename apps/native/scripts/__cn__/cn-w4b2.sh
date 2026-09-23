@@ -296,7 +296,7 @@ g1b-razao: r
 \`\`\`" reprova 'fora de ordem'
 ext 'CP-H3l  extrator: CRLF, prosa em volta, comentário e linha em branco' "$(printf 'Resumo da PR.\r\n\r\n```gates\r\n# comentário\r\n\r\ng1a: %s\r\n```\r\n\r\nFim.\r' "$ALVO")" passa
 if [ "$X" -ne 127 ]; then
-  if [ "$(cat "$TMP/decl")" = "g1a: $ALVO" ]; then echo "  a saída é exatamente \"g1a: $ALVO\", sem \\r ✓"
+  if [ "$(cat "$TMP/decl")" = "g1a: $ALVO" ]; then echo "  a saída é exatamente \"g1a: $ALVO\", sem CR ✓"
   else echo "  *** a saída não é exatamente \"g1a: $ALVO\" ***"; fi
 fi
 ext 'CP-H3m  extrator: corpo sem bloco' 'Só prosa, nenhum bloco.' passa

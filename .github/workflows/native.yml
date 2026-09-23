@@ -6,6 +6,17 @@
 # pelo `build` (que roda o `pnpm test` inteiro, incluindo o projeto `core`). O que o
 # APK de fato depende — `apps/native/**`, o próprio workflow e o `pnpm-workspace.yaml` —
 # continua disparando.
+#
+# W4-b2, H1 (o B8.1): o `paths` do `pull_request` é avaliado contra o diff
+# ACUMULADO da PR, então um push só de docs numa PR que já tocou o nativo
+# custava um APK inteiro (no N2, 7 corridas, 83m32s — `N2-ENCERRAMENTO.md` §7).
+# O `paths` fica como filtro de FORA (PR que nunca tocou o nativo nem dispara);
+# por dentro, o job `mudou-nativo` olha o que ESTE push mudou (`before..head`)
+# e o APK só roda se o push tocou um dos três caminhos. Push só de docs → o
+# `android-debug-apk` aparece `skipped`. Ele não é exigido pelo ruleset, então
+# nada bloqueia. Na dúvida — abertura, reopen, push forçado, push na `main` —
+# roda. A lista de caminhos está escrita duas vezes (aqui e no script); mudar
+# uma é mudar as duas.
 name: native
 'on':
   pull_request:
@@ -24,7 +35,23 @@ env:
   EXPO_NO_TELEMETRY: '1'
   CI: '1'
 jobs:
+  mudou-nativo:
+    runs-on: ubuntu-latest
+    outputs:
+      nativo: ${{ steps.d.outputs.nativo }}
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        ref: ${{ github.event.pull_request.head.sha || github.sha }}
+    - id: d
+      env:
+        ACAO: ${{ github.event.action }}
+        ANTES: ${{ github.event.before }}
+      run: sh apps/native/scripts/mudou-nativo.sh "$ACAO" "$ANTES" HEAD >> "$GITHUB_OUTPUT"
   android-debug-apk:
+    needs: mudou-nativo
+    if: needs.mudou-nativo.outputs.nativo == 'true'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4

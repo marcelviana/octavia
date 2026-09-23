@@ -14,7 +14,8 @@
 #     job `build` abaixo. Reprovar = `build` vermelho.
 #   • G7 (árvore de trabalho)              → já rodava: ele É
 #     `vitest run --project native`, um subconjunto do mesmo `pnpm test:unit`.
-#   • G1a/G1b e G2/G3                      → o job `gates-nativos` daqui. São
+#   • G1a/G1b e G2/G3                      → o job `gates-nativos` (no `gates.yml`
+#                                            desde a W4-b2). São
 #     gates DIFERENCIAIS: a verdade deles é um PAR de refs git, não uma árvore.
 #     Não cabem num `it` (um teste não sabe qual é a BASE da PR) e precisam do
 #     histórico inteiro — por isso job próprio, com `fetch-depth: 0`.
@@ -29,47 +30,10 @@ name: CI
     - main
   pull_request: null
 jobs:
-  # Os dois gates DIFERENCIAIS. Custam segundos: é `sh`, `git` e `awk`, sem
-  # `pnpm install`, sem build. Não têm filtro de caminho de propósito — o
-  # escopo do G2/G3 inclui `packages/core/src`, que o `native.yml` não cobre, e
-  # numa PR que não toca o nativo os dois passam num diff vazio.
-  gates-nativos:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        # O histórico inteiro: sem ele não há `merge-base`, e sem `merge-base`
-        # não há par. E a HEAD é a do RAMO, não o merge commit que o
-        # `actions/checkout` monta por default — senão o que voltou da `main`
-        # depois do ponto de ramificação apareceria como diff desta PR.
-        fetch-depth: 0
-        ref: ${{ github.event.pull_request.head.sha || github.sha }}
-    - name: A BASE do par — o ponto de ramificação
-      run: |
-        set -e
-        ALVO="${{ github.event.pull_request.base.sha }}"
-        if [ -z "$ALVO" ]; then ALVO=$(git rev-parse HEAD~1); fi
-        BASE=$(git merge-base "$ALVO" HEAD)
-        echo "BASE=$BASE" >> "$GITHUB_ENV"
-        echo "base=$BASE  head=$(git rev-parse HEAD)"
-    - name: G1a/G1b — invariância de comportamento e de decisão
-      run: sh apps/native/scripts/g1.sh "$BASE" WORKTREE
-    - name: G2/G3 — testIDs antes ⊆ depois, linhas de log com errata declarada
-      run: sh apps/native/scripts/g2g3.sh "$BASE" WORKTREE
-    # W4-b1, div. 223: o registro de integridade dos congelados existia desde a
-    # V1-PR2 e nada o lia — o do V1 reprovava desde a V1-PR6 (pelo README, que é
-    # o arquivo VIVO das erratas e saiu da lista) sem que ninguém soubesse. Não
-    # é diferencial: confere a árvore, não um par. O texto do passo é o mesmo
-    # que o `__cn__/cn-w4b1.sh` roda (o CN-223b confere).
-    - name: Congelados — shasum -c dos SHA256SUMS do DESIGN-V1 e do DESIGN-N2
-      run: |
-        F=0
-        for d in docs/native/DESIGN-V1 docs/native/DESIGN-N2; do
-          echo "== $d"
-          (cd "$d" && shasum -a 256 -c SHA256SUMS) || F=1
-        done
-        exit $F
-
+  # O `gates-nativos` (G1a/G1b, G2/G3 e o `shasum -c` dos congelados) saiu
+  # daqui na W4-b2 para o `gates.yml`: ele passa a ler as declarações do corpo
+  # da PR, e editar o corpo tem de rodá-lo de novo (`edited`) SEM rodar o
+  # `build` junto. O nome do job — o que o ruleset exige — é o mesmo.
   build:
     runs-on: ubuntu-latest
     steps:

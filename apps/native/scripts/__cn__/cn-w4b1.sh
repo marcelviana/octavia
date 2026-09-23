@@ -248,7 +248,10 @@ roda_passo "$TMP/esp-cp"
 espera_passa
 
 titulo "CN-223b — o passo está no job gates-nativos do ci.yml, com o mesmo texto"
+# W4-b2: o job `gates-nativos` saiu do `ci.yml` para o `gates.yml`. O CN
+# procura onde ele estiver — o que ele afirma é o passo no JOB, não o arquivo.
 CI="$RAIZ/.github/workflows/ci.yml"
+[ -f "$RAIZ/.github/workflows/gates.yml" ] && CI="$RAIZ/.github/workflows/gates.yml"
 FALTA=0
 printf '%s\n' "$PASSO" | sed 's/^ *//' > "$TMP/passo"
 sed -n '/^  gates-nativos:/,/^  [a-z]/p' "$CI" | sed 's/^ *//' > "$TMP/job"

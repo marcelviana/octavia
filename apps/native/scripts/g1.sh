@@ -118,6 +118,30 @@ git rev-parse --verify --quiet "$BASE^{commit}" >/dev/null || uso "<base> nao re
 # do W4-b1 e mergeou em `e9b4196`. Lista vazia = nenhum arquivo de
 # comportamento pode mudar nesta PR.
 EXCECOES=''
+#
+# ---------------------------------------------------------------------------
+# W4-b2, H3 (div. 348) — NO CI, A DECLARAÇÃO VEM DA PR, NÃO DAQUI
+#
+# A lista acima é estado de UMA PR guardado num arquivo que sobrevive a ela
+# (div. 141); com a órfã reprovando (div. 339), a PR seguinte herdava a poda
+# (div. 348). Com `GATES_DECL` apontando para as declarações extraídas do corpo
+# da PR (`gates-decl.sh`; o `gates.yml` faz isso), as listas deste arquivo têm
+# de estar VAZIAS — uma lista local não vazia no CI reprova, e é assim que a
+# `main` fica sem lista nenhuma. Sem `GATES_DECL` (à mão), a lista local vale
+# como sempre valeu.
+lista_local_nao_vazia() {
+  echo "  $1: LISTA LOCAL NÃO VAZIA com GATES_DECL ✗ — no CI a declaração vem do bloco \`\`\`gates do corpo da PR (W4-b2, div. 348):"
+  printf '%s\n' "$2" | sed 's/^/        /'
+  exit 1
+}
+if [ -n "$GATES_DECL" ]; then
+  [ -r "$GATES_DECL" ] || uso "GATES_DECL nao e um arquivo legivel: $GATES_DECL"
+  [ -z "$EXCECOES" ] || lista_local_nao_vazia "G1a (EXCECOES)" "$EXCECOES"
+  EXCECOES=$(sed -n 's/^g1a: //p' "$GATES_DECL")
+  echo "declarações: do corpo da PR (GATES_DECL=$GATES_DECL)"
+else
+  echo "declarações: as listas locais deste script (sem GATES_DECL — rodada à mão)"
+fi
 
 listar() {
   if [ "$1" = "WORKTREE" ]; then
@@ -220,6 +244,10 @@ fi
 # Nenhum. O par da N2-PR7 (N2-E19, `escrita.test.ts`) saiu na poda: mergeou em
 # `bc55419`. Lista vazia = nenhuma asserção do core pode mudar nesta PR.
 PARES_G1B=''
+if [ -n "$GATES_DECL" ]; then
+  [ -z "$PARES_G1B" ] || lista_local_nao_vazia "G1b (PARES_G1B)" "$PARES_G1B"
+  PARES_G1B=$(sed -n 's/^g1b-velha: //p; s/^g1b-nova: //p; s/^g1b-razao: /razão: /p' "$GATES_DECL")
+fi
 TESTES=$(git ls-tree -r --name-only "$BASE" -- packages/core/src | grep '\.test\.ts$')
 if [ "$HEAD" = "WORKTREE" ]; then
   DIFF_T=$(git diff "$BASE" -- $TESTES)

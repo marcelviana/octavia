@@ -1,0 +1,68 @@
+W4B2-D — os gates no modo do CI, contra origin/main, e o que mais roda. Rastro: saída literal.
+
+$ gh pr view 322 --json body -q .body | sh apps/native/scripts/gates-decl.sh > decl
+exit=0  linhas=0
+
+$ GATES_DECL=decl sh apps/native/scripts/g1.sh origin/main WORKTREE
+declarações: do corpo da PR (GATES_DECL=<tmp>/decl)
+base=origin/main head=WORKTREE
+G1a — diff vazio em 46 arquivos DERIVADOS de apps/native + packages/core/src
+      escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+      menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+      EXCEÇÕES DECLARADAS (o escopo desta PR):
+        (nenhuma — nenhum arquivo de comportamento está fora da invariância)
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+      PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+        (nenhum — nenhuma asserção do core pode mudar nesta PR)
+  G1b: só adição ✓
+exit=0
+
+$ GATES_DECL=decl sh apps/native/scripts/g2g3.sh origin/main WORKTREE
+G2 — testIDs  antes=79  depois=79
+  G2: antes ⊆ depois ✓
+G3 — declarações: do corpo da PR (GATES_DECL=<tmp>/decl)
+G3 — linhas log( antes=64  depois=64
+      ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+        (nenhuma)
+      REMOÇÕES DECLARADAS (linha → REMOVIDA: razão; N2-D34):
+        (nenhuma)
+      — nenhuma linha de log pode sumir nesta PR
+  G3: nenhuma linha sumiu ✓
+exit=0
+
+$ sh apps/native/scripts/g1.sh origin/main WORKTREE   # à mão, sem GATES_DECL
+declarações: as listas locais deste script (sem GATES_DECL — rodada à mão)
+base=origin/main head=WORKTREE
+G1a — diff vazio em 46 arquivos DERIVADOS de apps/native + packages/core/src
+      escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+      menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+      EXCEÇÕES DECLARADAS (o escopo desta PR):
+        (nenhuma — nenhum arquivo de comportamento está fora da invariância)
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+      PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+        (nenhum — nenhuma asserção do core pode mudar nesta PR)
+  G1b: só adição ✓
+exit=0
+
+$ sh apps/native/scripts/__cn__/cn-w4b1.sh   # o instrumento do W4-b1, com o CN-223b apontando para o gates.yml — só as linhas "***" e o CN-223b
+exit=0
+CN-223b — o passo está no job gates-nativos do ci.yml, com o mesmo texto
+==============================================================================
+  presente: F=0
+  presente: for d in docs/native/DESIGN-V1 docs/native/DESIGN-N2; do
+  presente: echo "== $d"
+  presente: (cd "$d" && shasum -a 256 -c SHA256SUMS) || F=1
+  presente: done
+  presente: exit $F
+  o passo está no gates-nativos ✓
+
+
+$ pnpm test:unit | tail -5
+exit=0
+ Test Files  107 passed | 4 skipped (111)
+      Tests  1029 passed | 85 skipped (1114)
+   Start at  13:01:00
+   Duration  61.80s (transform 4.18s, setup 17.18s, import 9.52s, tests 97.81s, environment 40.18s)
+

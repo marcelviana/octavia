@@ -246,6 +246,22 @@ ERRATAS=''
 # --- AS REMOÇÕES DESTA PR ---------------------------------------------------
 # Uma por linha, na forma do cabeçalho. VAZIA: o W4-b1 não remove linha de log.
 REMOCOES=''
+# --- W4-b2, H3 (div. 348): no CI, as duas listas vêm do corpo da PR ----------
+# A razão está no `g1.sh` (cabeçalho do W4-b2) e no `gates-decl.sh`. Com
+# `GATES_DECL`, as listas locais acima têm de estar VAZIAS.
+if [ -n "$GATES_DECL" ]; then
+  [ -r "$GATES_DECL" ] || uso "GATES_DECL nao e um arquivo legivel: $GATES_DECL"
+  if [ -n "$ERRATAS$REMOCOES" ]; then
+    echo "  G3: LISTA LOCAL NÃO VAZIA com GATES_DECL ✗ — no CI a declaração vem do bloco \`\`\`gates do corpo da PR (W4-b2, div. 348):"
+    printf '%s\n' "$ERRATAS" "$REMOCOES" | grep . | sed 's/^/        /'
+    rm -rf $tmp; exit 1
+  fi
+  ERRATAS=$(sed -n 's/^g3-velha: //p; s/^g3-nova: //p' "$GATES_DECL")
+  REMOCOES=$(sed -n 's/^g3-removida: //p' "$GATES_DECL")
+  echo "G3 — declarações: do corpo da PR (GATES_DECL=$GATES_DECL)"
+else
+  echo "G3 — declarações: as listas locais deste script (sem GATES_DECL — rodada à mão)"
+fi
 echo "G3 — linhas log( antes=$(wc -l < $tmp/a.log | tr -d ' ')  depois=$(wc -l < $tmp/b.log | tr -d ' ')"
 echo "      ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):"
 if [ -n "$ERRATAS" ]; then printf '%s\n' "$ERRATAS" | sed 's/^/        /'
