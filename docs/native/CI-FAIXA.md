@@ -34,9 +34,11 @@ ficam na tabela, riscadas, e **fora da população**. São as duas **plantadas**
 > **Segmentos da série.** Um segmento novo abre só quando as duas
 > condições valem: (1) mudou um item da lista fechada — passos do job,
 > toolchain (JDK, Gradle, `setup-android`, SDK Android), versão do Expo
-> SDK ou do React Native, número de ABIs do APK —, e (2) as cinco
-> corridas seguintes têm mediana fora do IQR do segmento vigente,
-> `[medido]`. Módulo nativo isolado não está na lista: se mudar o
+> SDK ou do React Native, número de ABIs do APK —, e (2) as **dez**
+> corridas seguintes têm mediana fora do IQR do segmento vigente, para
+> cima ou para baixo, e a condição só se avalia quando o segmento vigente
+> tem **n ≥ 10** — abaixo disso a série está em formação e não abre
+> segmento. Módulo nativo isolado não está na lista: se mudar o
 > patamar, entra pela condição (2) como divergência a investigar, não
 > como segmento. Quem abre o segmento é o Marcel, com as duas medições
 > ao lado. O corte na #284 foi decisão (div. 365) e é o único até aqui.
@@ -61,25 +63,28 @@ mergeado na #284 (`6f30f02`), pôs no `apps/native/package.json` os módulos nat
 `expo-font` no `app.json` (`git diff 6f30f02^1 6f30f02 -- apps/native/package.json apps/native/app.json`).
 O job passou de ~6–7 min a ~12 min (`N1-ENCERRAMENTO.md:159`) e não voltou.
 
-### A regra aplicada para trás — as cinco mudanças da div. 366
+### A regra aplicada para trás — as cinco mudanças da div. 366, com dez corridas
 
-| mudança | (1) na lista? | IQR do segmento vigente, antes da 1ª corrida com a mudança | as cinco corridas seguintes (# da série: job) | mediana | (2) fora do IQR? | abre? |
-|---|---|---|---|---|---|---|
-| `expo-network` (#285, `08b84d6`) | não — módulo nativo | 12m55s–13m46s (n=2) | 21: 11m57s, 22: 12m45s, 23: 11m22s, 24: 13m23s, 25: 11m45s | **11m57s** | **sim** — IQR de **n=2** (corridas 19 e 20), sem população. Mediana **abaixo**: o patamar não subiu | **não** |
-| `expo-keep-awake` (#286, `fc079bd`) | não — módulo nativo | 12m22s–13m06s (n=4) | 23: 11m22s, 24: 13m23s, 25: 11m45s, 26: 8m56s, 27: 10m15s | **11m22s** | **sim** — IQR de **n=4**. Mediana **abaixo**, e a 26 (8m56s) puxa | **não** |
-| `react-native-svg` (#296, `8444b18`) | não — módulo nativo | 11m12s–12m22s (n=16) | 35: 13m18s, 36: 12m01s, 37: 9m16s, 38: 12m21s, 39: 11m20s | **12m01s** | não — dentro | **não** |
-| `setup-android@v4` (#302, `717104e`) | **sim** — toolchain (`setup-android`) | 11m20s–12m30s (n=29) | 49: 12m43s, 51: 10m27s, 52: 9m19s, 53: 12m26s, 54: 12m37s | **12m26s** | não — dentro | **não** |
-| `datetimepicker` (#315, `8681b57`) | não — módulo nativo | 11m05s–12m43s (n=52) | 73: 13m28s, 74: 13m11s, 75: 12m59s, 76: 8m09s, 77: 14m02s | **13m11s** | **sim** — **acima** do Q3. Não se sustenta: da 73 à 100, mediana **12m30s** (n=26), dentro do IQR de antes (div. 368) | **não** |
+| mudança | (1) está na lista? | n do segmento vigente | IQR vigente | as dez corridas seguintes (# da série: job) | mediana das dez | (2) fora do IQR, para cima ou para baixo? | abre? |
+|---|---|---|---|---|---|---|---|
+| `expo-network` (#285, `08b84d6`) | não, é módulo | **2** | 12m55s–13m46s | 21: 11m57s, 22: 12m45s, 23: 11m22s, 24: 13m23s, 25: 11m45s, 26: 8m56s, 27: 10m15s, 28: 11m14s, 29: 11m39s, 30: 12m20s | **11m42s** | **não se avalia** (n<10: série em formação) | **não** |
+| `expo-keep-awake` (#286, `fc079bd`) | não, é módulo | **4** | 12m22s–13m06s | 23: 11m22s, 24: 13m23s, 25: 11m45s, 26: 8m56s, 27: 10m15s, 28: 11m14s, 29: 11m39s, 30: 12m20s, 31: 11m35s, 32: 8m54s | **11m28s** | **não se avalia** (n<10: série em formação) | **não** |
+| `react-native-svg` (#296, `8444b18`) | não, é módulo | **16** | 11m12s–12m22s | 35: 13m18s, 36: 12m01s, 37: 9m16s, 38: 12m21s, 39: 11m20s, 40: 11m55s, 41: 11m53s, 42: 11m52s, 43: 10m41s, 44: 12m32s | **11m54s** | não, dentro | **não** |
+| `setup-android@v4` (#302, `717104e`) | **sim** (toolchain) | **29** | 11m20s–12m30s | 49: 12m43s, 51: 10m27s, 52: 9m19s, 53: 12m26s, 54: 12m37s, 55: 10m59s, 56: 12m46s, 57: 9m44s, 58: 12m53s, 59: 12m52s | **12m32s** | **sim** — por **1,5 s** (751,5 s contra Q3 = 750 s) | **as duas condições valem** — decisão do Marcel (div. 369) |
+| `datetimepicker` (#315, `8681b57`) | não, é módulo | **52** | 11m05s–12m43s | 73: 13m28s, 74: 13m11s, 75: 12m59s, 76: 8m09s, 77: 14m02s, 78: 11m58s, 79: 12m29s, 80: 12m31s, 81: 13m26s, 82: 13m09s | **13m04s** | **sim** — 784 s contra Q3 = 763 s; só volta com vinte corridas (mediana 750 s) | **não** — módulo: divergência a investigar (div. 368) |
 
 Como se mediu `[medido: git log -S… -- apps/native/package.json · git merge-base --is-ancestor <commit> <head da corrida>]`:
 o commit que introduziu a mudança, e as corridas do regime 2 cujo head **contém**
-esse commit. "As cinco seguintes" são as cinco primeiras corridas com APK que o
+esse commit. "As dez seguintes" são as dez primeiras corridas com APK que o
 contêm, em ordem. Corridas de branches paralelas que ainda não o continham ficam
 fora. O "segmento vigente" são as corridas com APK do regime 2 antes da primeira
-que o contém. Quartis pelo método inclusivo. **Nenhuma das cinco abre segmento**:
-os quatro módulos falham a (1), e o `setup-android@v4` passa a (1) mas falha a (2).
-A (2) vale para três módulos, e cada um virou divergência, como a regra manda
-(divs. 367 e 368).
+que o contém, e o `n` dele está na terceira coluna. Quartis pelo método inclusivo.
+**Nenhum segmento foi aberto**, porque quem abre é o Marcel. Mas a regra **não**
+dá "nenhuma" para trás:
+- o `setup-android@v4` passa a (1) e passa a (2) por 1,5 s (div. 369);
+- o `datetimepicker` segue fora do IQR com dez corridas (div. 368, que continua
+  aberta, a investigar);
+- os dois primeiros não se avaliam (n=2 e n=4 < 10), o que fecha a div. 367.
 
 ### Recortes — descritivos, **não** referência
 

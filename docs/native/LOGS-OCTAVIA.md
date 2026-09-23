@@ -887,16 +887,20 @@ do corte, `[medido]`.
 > **Segmentos da série.** Um segmento novo abre só quando as duas
 > condições valem: (1) mudou um item da lista fechada — passos do job,
 > toolchain (JDK, Gradle, `setup-android`, SDK Android), versão do Expo
-> SDK ou do React Native, número de ABIs do APK —, e (2) as cinco
-> corridas seguintes têm mediana fora do IQR do segmento vigente,
-> `[medido]`. Módulo nativo isolado não está na lista: se mudar o
+> SDK ou do React Native, número de ABIs do APK —, e (2) as **dez**
+> corridas seguintes têm mediana fora do IQR do segmento vigente, para
+> cima ou para baixo, e a condição só se avalia quando o segmento vigente
+> tem **n ≥ 10** — abaixo disso a série está em formação e não abre
+> segmento. Módulo nativo isolado não está na lista: se mudar o
 > patamar, entra pela condição (2) como divergência a investigar, não
 > como segmento. Quem abre o segmento é o Marcel, com as duas medições
 > ao lado. O corte na #284 foi decisão (div. 365) e é o único até aqui.
 
 (Decisão do Marcel sobre a div. 366.) Aplicada para trás às cinco mudanças que a
-div. 366 listou, a regra **não abre nenhum segmento**; a tabela está no
-`CI-FAIXA.md`, "A regra aplicada para trás".
+div. 366 listou (com dez corridas e n ≥ 10), a regra não abre segmento sozinha,
+porque quem abre é o Marcel. Mas as duas condições valem para o
+`setup-android@v4`, por 1,5 s (div. 369), e o `datetimepicker` segue fora do IQR
+(div. 368). A tabela está no `CI-FAIXA.md`, "A regra aplicada para trás".
 
 Hoje há dois segmentos: o **regime 1**, antes da #284, e o **regime 2**, desde a
 #284, que é a referência. O corte é o `9806e44` (N1-PR3a): os módulos nativos da

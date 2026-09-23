@@ -344,5 +344,51 @@ Os outros itens da lista, conferidos no regime 2 `[medido]`:
 
 | div. | origem | o que | o que foi feito |
 |---|---|---|---|
-| **367** | T | a condição (2) **vale** para o `expo-network` e o `expo-keep-awake`, mas por artefato: o "segmento vigente" tinha **n=2** (as duas corridas da #284) e **n=4**, e a mediana das cinco caiu **abaixo** do IQR, não acima. A regra não fixa um `n` mínimo para o IQR, nem a direção. E "as cinco corridas seguintes" precisou de uma leitura: as cinco primeiras corridas com APK cujo head **contém** o commit da mudança, fora as de branches paralelas que ainda não o continham | como a regra manda para módulo, registrado como divergência, não segmento. Fica para o Marcel: `n` mínimo e direção da (2) |
+| **367** | T | ~~a condição (2) **vale** para o `expo-network` e o `expo-keep-awake`, mas por artefato: o "segmento vigente" tinha **n=2** (as duas corridas da #284) e **n=4**, e a mediana das cinco caiu **abaixo** do IQR, não acima. A regra não fixa um `n` mínimo para o IQR, nem a direção. E "as cinco corridas seguintes" precisou de uma leitura: as cinco primeiras corridas com APK cujo head **contém** o commit da mudança, fora as de branches paralelas que ainda não o continham | como a regra manda para módulo, registrado como divergência, não segmento. Fica para o Marcel: `n` mínimo e direção da (2)~~ — **fechada pela regra** (§14): n ≥ 10 e as duas direções; com n=2 e n=4, a (2) não se avalia |
 | **368** | A | `datetimepicker` (#315): a mediana das cinco (13m11s) ficou **acima** do Q3 de então (12m43s, n=52). Isto é a (2) valendo para um módulo, o caso que a regra chama de "divergência a investigar". **Não se sustenta**: da corrida 73 à 100, a mediana é **12m30s** (n=26), dentro do IQR de antes. As cinco incluem a 77 (14m02s) e a 76 (8m09s, o cache da div. 253). A causa não foi medida | registrada, a investigar. Nenhum segmento aberto |
+
+## 14. A condição (2) com n ≥ 10 e dez corridas — decisão do Marcel sobre as divs. 367 e 368 (2026-09-23)
+
+A regra final, verbatim, no `CI-FAIXA.md` e no `LOGS-OCTAVIA.md`:
+
+> **Segmentos da série.** Um segmento novo abre só quando as duas
+> condições valem: (1) mudou um item da lista fechada — passos do job,
+> toolchain (JDK, Gradle, `setup-android`, SDK Android), versão do Expo
+> SDK ou do React Native, número de ABIs do APK —, e (2) as **dez**
+> corridas seguintes têm mediana fora do IQR do segmento vigente, para
+> cima ou para baixo, e a condição só se avalia quando o segmento vigente
+> tem **n ≥ 10** — abaixo disso a série está em formação e não abre
+> segmento. Módulo nativo isolado não está na lista: se mudar o
+> patamar, entra pela condição (2) como divergência a investigar, não
+> como segmento. Quem abre o segmento é o Marcel, com as duas medições
+> ao lado. O corte na #284 foi decisão (div. 365) e é o único até aqui.
+
+A tabela refeita, com dez corridas:
+
+| mudança | (1) está na lista? | n do segmento vigente | IQR vigente | as dez corridas seguintes (# da série: job) | mediana das dez | (2) fora do IQR, para cima ou para baixo? | abre? |
+|---|---|---|---|---|---|---|---|
+| `expo-network` (#285, `08b84d6`) | não, é módulo | **2** | 12m55s–13m46s | 21: 11m57s, 22: 12m45s, 23: 11m22s, 24: 13m23s, 25: 11m45s, 26: 8m56s, 27: 10m15s, 28: 11m14s, 29: 11m39s, 30: 12m20s | **11m42s** | **não se avalia** (n<10: série em formação) | **não** |
+| `expo-keep-awake` (#286, `fc079bd`) | não, é módulo | **4** | 12m22s–13m06s | 23: 11m22s, 24: 13m23s, 25: 11m45s, 26: 8m56s, 27: 10m15s, 28: 11m14s, 29: 11m39s, 30: 12m20s, 31: 11m35s, 32: 8m54s | **11m28s** | **não se avalia** (n<10: série em formação) | **não** |
+| `react-native-svg` (#296, `8444b18`) | não, é módulo | **16** | 11m12s–12m22s | 35: 13m18s, 36: 12m01s, 37: 9m16s, 38: 12m21s, 39: 11m20s, 40: 11m55s, 41: 11m53s, 42: 11m52s, 43: 10m41s, 44: 12m32s | **11m54s** | não, dentro | **não** |
+| `setup-android@v4` (#302, `717104e`) | **sim** (toolchain) | **29** | 11m20s–12m30s | 49: 12m43s, 51: 10m27s, 52: 9m19s, 53: 12m26s, 54: 12m37s, 55: 10m59s, 56: 12m46s, 57: 9m44s, 58: 12m53s, 59: 12m52s | **12m32s** | **sim** — por **1,5 s** (751,5 s contra Q3 = 750 s) | **as duas condições valem** — decisão do Marcel (div. 369) |
+| `datetimepicker` (#315, `8681b57`) | não, é módulo | **52** | 11m05s–12m43s | 73: 13m28s, 74: 13m11s, 75: 12m59s, 76: 8m09s, 77: 14m02s, 78: 11m58s, 79: 12m29s, 80: 12m31s, 81: 13m26s, 82: 13m09s | **13m04s** | **sim** — 784 s contra Q3 = 763 s; só volta com vinte corridas (mediana 750 s) | **não** — módulo: divergência a investigar (div. 368) |
+
+Como se mediu `[medido: git log -S… -- apps/native/package.json · git merge-base --is-ancestor <commit> <head da corrida>]`:
+o commit que introduziu a mudança, e as corridas do regime 2 cujo head **contém**
+esse commit. "As dez seguintes" são as dez primeiras corridas com APK que o
+contêm, em ordem. Corridas de branches paralelas que ainda não o continham ficam
+fora. O "segmento vigente" são as corridas com APK do regime 2 antes da primeira
+que o contém, e o `n` dele está na terceira coluna. Quartis pelo método inclusivo.
+**Nenhum segmento foi aberto**, porque quem abre é o Marcel. Mas a regra **não**
+dá "nenhuma" para trás:
+- o `setup-android@v4` passa a (1) e passa a (2) por 1,5 s (div. 369);
+- o `datetimepicker` segue fora do IQR com dez corridas (div. 368, que continua
+  aberta, a investigar);
+- os dois primeiros não se avaliam (n=2 e n=4 < 10), o que fecha a div. 367.
+
+## 15. Divergências — 368 (segue aberta) e 369
+
+| div. | origem | o que | o que foi feito |
+|---|---|---|---|
+| **368** | A | **não fecha pela regra**, ao contrário do esperado no prompt ("o 368 volta ao IQR"). Com **dez** corridas, a mediana do `datetimepicker` é **13m04s** (784 s), acima do Q3 de então, 12m43s (763 s, n=52). Com vinte volta a 750 s, dentro, mas a regra fala em dez | **segue aberta**, como a regra manda para módulo: divergência a investigar. A causa não foi medida |
+| **369** | P | o prompt esperava que nenhuma abrisse. Mas o **`setup-android@v4`** (#302, `717104e`) passa as **duas** condições: (1) é toolchain, está na lista; (2) a mediana das dez seguintes é **751,5 s** (12m31,5s) contra o Q3 do segmento vigente, **750 s** (12m30s, n=29). Fora **por 1,5 s**. A medição `[medido]` está na tabela da §14 | **nenhum segmento aberto**: quem abre é o Marcel, com as duas medições ao lado, e elas estão aqui. Registro que uma margem de 1,5 s num IQR de 70 s é ruído de corrida, mas a regra não tem tolerância. **Decisão do Marcel**: abrir o segmento "regime 3, desde a #302", ou pôr tolerância na (2)? |
