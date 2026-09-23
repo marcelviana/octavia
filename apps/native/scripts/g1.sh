@@ -113,14 +113,11 @@ git rev-parse --verify --quiet "$BASE^{commit}" >/dev/null || uso "<base> nao re
 # `gates-nativos` não tem filtro de caminho — reprova até podá-la. A poda deixa
 # de ser disciplina e vira condição de merge. É o que a div. 141 pedia.
 #
-# --- As EXCEÇÕES desta PR (o escopo declarado do W4-b1) ---------------------
-# Poda da div. 339: as SETE da N2-PR7 saíram — mergearam em `bc55419`. A única
-# abaixo é desta PR:
-#
-#   packages/core/src/search.ts   div. 220 (e 194): o docstring de
-#       `buildIndex` dizia "reconstruído por item a cada invalidação", e o
-#       corpo, três linhas abaixo, reconstrói o CONJUNTO. Só o comentário muda.
-EXCECOES='packages/core/src/search.ts'
+# --- As EXCEÇÕES desta PR (o escopo declarado do W4-b2) ---------------------
+# Nenhuma. Poda da div. 348: a do `packages/core/src/search.ts` (div. 220) era
+# do W4-b1 e mergeou em `e9b4196`. Lista vazia = nenhum arquivo de
+# comportamento pode mudar nesta PR.
+EXCECOES=''
 
 listar() {
   if [ "$1" = "WORKTREE" ]; then
