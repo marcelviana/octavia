@@ -2,7 +2,7 @@
 
 **Rastro.** A fonte é o [`N3-PRECHECK.md`](../N3-PRECHECK.md); onde este índice e o
 documento divergirem, vale o documento. Árvore `../octavia-n3-pre`, branch
-`n3/precheck`, sobre `origin/main` = `aa91b5d`. Divergências **382–391**.
+`n3/precheck`, sobre `origin/main` = `aa91b5d`. Divergências **382–392**.
 
 **Nenhum texto de música de terceiro**: todo dump e PNG é do **mock**, com a fixture
 escrita por este pre-check (`instrumentos/fixture.py`: "Quando a noite chega…
@@ -26,7 +26,7 @@ base64 de JWT), de e-mail e de uid nos anexos deu vazia.
 | `B3-controle-paisagem.jsonl` | o instrumento contra a própria paisagem: (a)=(b)=(c)=(d)=0 nas 34 telas de lista; no palco, só as zonas de 15 % |
 | `instrumentos/` | `fixture.py` (mock + PDFs), `servidores.sh` (mock 8788 + arquivos 8790), `n3.py` (driver por `resource-id`), `roteiro.py` (os estados do B2/B4/B5), `cap.sh` (PNG + dump), `rot.sh` (rotação), `b6.py`, `por-superficie.mjs` |
 | `roteiros/` | a saída de cada rodada do roteiro, verbatim — `roteiro-phone-pai.txt` é a rodada ruim da div. 387 (as capturas dela foram apagadas) |
-| `estado/` | o estado dos aparelhos lido no começo e o do fim, e as duas conferências do bundle (regra 13 ampliada) |
+| `estado/` | o estado dos aparelhos lido no começo e o do fim, as duas conferências do bundle (regra 13 ampliada) e `avd-snapshot-conserto.txt` (o conserto da div. 383 no aval, com a prova do reboot) |
 | `faseA/` | A1–A4, a Fase A estática inteira, com comandos e saídas (rastro) |
 | `SHA256SUMS.txt` | sha256 de todo arquivo desta pasta, menos ele mesmo |
 
@@ -69,7 +69,7 @@ que não bate) e cada PNG foi olhado numa folha de miniaturas antes de ficar.
 | aparelho | lido (`estado/*-lido.txt`) | mudado, e por quê | no fim (`estado/*-restaurado.txt`, `phone-fim.txt`) |
 |---|---|---|---|
 | **Tab S6** | `stay_on=0 accel=1 user_rot=0 airplane=0 wifi=1 data=1`, `reverse` vazio, **bloqueado** (o Marcel destravou) | `stay_on` 0→7 (tela de 30 s); `accel` 1→0 e `user_rot` 0/1 (retrato/paisagem); avião ligado e desligado nos estados sem rede; `reverse` 8081/8788/8790; **cache do app trocado pelo do mock** | **igual ao lido**, campo por campo; `reverse` vazio. **O cache do app** foi guardado antes (`run-as … tar` de `files/octavia-<uid>` e `cache/octavia-<uid>`, 4 arquivos) e **restaurado** com o app parado: md5 dos 4 arquivos idêntico ao de antes. O tar (que tinha um arquivo da biblioteca do Marcel) foi **apagado** do host. Nenhum `GET` a prod para restaurar |
-| **AVD `octavia_tab32`** | desligado; ligado nesta sessão; `stay_on=1 accel=1 user_rot=0 airplane=1 wifi=0 data=0`, conta de audit, dev client de **2026-09-13** | dev client refeito (div. 383); avião desligado + `svc wifi/data enable` para o mock; rotação; `reverse`; logout pelo `401` (S0) | settings **iguais ao lido**, `ping` → `Network is unreachable`, `reverse` vazio; **desligado** (`adb emu kill`). Subiu com `-no-snapshot-save`: o próximo boot volta ao snapshot de 2026-09-14, **com a conta de audit** e **com o dev client velho** (div. 383) |
+| **AVD `octavia_tab32`** | desligado; ligado nesta sessão; `stay_on=1 accel=1 user_rot=0 airplane=1 wifi=0 data=0`, conta de audit, dev client de **2026-09-13** | dev client refeito (div. 383); avião desligado + `svc wifi/data enable` para o mock; rotação; `reverse`; logout pelo `401` (S0) | settings **iguais ao lido**, `ping` → `Network is unreachable`, `reverse` vazio; **desligado** (`adb emu kill`). Subiu com `-no-snapshot-save`. **No aval (2026-09-24, N3-D11)**, o dev client atual foi instalado sobre o snapshot e o `default_boot` foi **regravado**. O reboot provou `lastUpdateTime` `2026-09-24 14:00:01`, a conta de audit (`files/octavia-<uid>`) e o avião (`estado/avd-snapshot-conserto.txt`) |
 | **`octavia_phone`** | criado nesta sessão; `stay_on=1 accel=1 user_rot=0 airplane=0 wifi=1 data=1` | rotação; avião no S0 com erro; `reverse`; login de audit (Marcel) e depois logout pelo `401` | settings iguais ao lido, `reverse` vazio, **sem sessão** (o S0 é o repouso dele); desligado |
 | **host** | 8081/8788/8790 livres | Metro, mock e arquivos; `apps/native/.env` copiado do checkout principal (sha256 `f2bfa179cd8e4b1f…`, igual nos dois) só para o Metro | as três portas livres; `.env` **apagado** desta árvore |
 

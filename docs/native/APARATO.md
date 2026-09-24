@@ -63,12 +63,20 @@ As janelas de retrato e a do celular são do `N3-PRECHECK-anexos/B1-janelas.txt`
 (JDK 17); o dev client entra por `adb -s emulator-5556 install -r <app-debug.apk>`
 do build do `octavia_tab32` (mesmo APK, arm64).
 
-**O `octavia_tab32` volta ao snapshot `default_boot` (2026-09-14) a cada boot
-rápido**: o que se instala numa sessão some na seguinte, se o emulador não salvar o
-snapshot na saída. O dev client refeito na W4-b3 (div. 371) estava de volta a
-2026-09-13 no N3 (div. 383). Antes de medir, a data (`lastUpdateTime`) se confere
-**toda sessão**, e o rebuild da div. 371 se repete. O lado bom: o estado do AVD
-(avião, conta, cache) também volta sozinho.
+**O `octavia_tab32` sobe do snapshot `default_boot`**: o que se instala numa sessão
+some na seguinte, a menos que o snapshot seja salvo de novo. Até 2026-09-24 o
+snapshot era de 2026-09-14, e o dev client refeito na W4-b3 (div. 371) estava de
+volta a 2026-09-13 no N3 (div. 383). **Consertado em 2026-09-24**: o dev client atual
+foi instalado sobre o snapshot, já com a conta de audit e em avião, e o snapshot foi
+regravado. Depois de um reboot, o `lastUpdateTime` continua `2026-09-24 14:00:01`
+(`N3-PRECHECK-anexos/estado/avd-snapshot-conserto.txt`). **Todo rebuild do dev client
+no AVD termina assim**, com o app parado e o estado de repouso lido:
+`adb -s emulator-5554 install -r <app-debug.apk>` (ou `expo run:android --device
+octavia_tab32 --no-bundler`), `adb -s emulator-5554 shell am force-stop rocks.octavia.app`
+e `adb -s emulator-5554 emu avd snapshot save default_boot`. Para medir sem deixar
+rastro no AVD, sobe-se com `-no-snapshot-save`: o estado da sessão (rede, rotação,
+cache do mock) some no boot seguinte. A data (`lastUpdateTime`) continua sendo
+conferida antes de medir.
 
 O canvas dos desenhos é 1138 × 627 dp, o pior caso (N2-D25). Retrato não tem
 composição — herança registrada em `N2-ENCERRAMENTO.md` §10.7, item 1; o N3

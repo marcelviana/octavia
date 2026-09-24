@@ -14,7 +14,7 @@
 > citado; `[derivado]` = conta feita sobre números medidos, com a conta à vista;
 > `[lido]` = tirado do documento citado; `[hipótese]` = não medido, com dono em §6.
 > **Divergências**: a maior na `main` era a **381** nas duas formas (`div. nnn` e
-> `| **nnn** |`); este pre-check vai de **382 a 391** (§9).
+> `| **nnn** |`); este pre-check vai de **382 a 392** (§9).
 > **Anexos**: [`N3-PRECHECK-anexos/`](N3-PRECHECK-anexos/README.md).
 
 ---
@@ -34,7 +34,19 @@
 | **N3-D6** | Nome: N3 — faixas de largura. Content = N4, celular = N5. O bloco web vem depois do N3. |
 | **N3-D7** | O palco **existe no celular**; o brief o desenha nas três faixas. |
 
-### 0.2 Premissas do prompt, com veredito
+### 0.2 Aval do pre-check (Marcel, 2026-09-24) — N3-D8…D11
+
+| # | Decisão |
+|---|---|
+| **N3-D8** | **Errata da N3-D1** (Q1, Q2): faixas **< 600 · 600–960 · > 960** dp de largura; a faixa média é desenhada para **711,1 × 1053,8** (pior caso, AVD). A condição de altura (janela útil < ~480 dp → composição compacta) fica registrada como regra do **N5**, não desenhada no N3. |
+| **N3-D9** | **Errata da N3-D2** (Q5): o critério é **defeito novo em relação à paisagem do mesmo estado** (as sobreposições das zonas de 15 % do palco já existem na paisagem congelada). O palco entra no brief **só pela barra superior** na faixa média, e nas três faixas pela N3-D7. |
+| **N3-D10** | Q3, Q4, Q6, Q7 como recomendado: S1 com título em linha própria; S2 com rótulos curtos, senão dois controles só ícone com rótulo acessível — o brief mede e decide; mesma escala de leitura, degrau de display menor só em < 600; **(e)** critério duro e **(d′)** triagem com PNG como definição do gate do N3; S0 no Tab fica para a PR que mexer no S0. |
+| **N3-D11** | Div. 385: errata no `N2-ENCERRAMENTO.md` §10.2 — content é N4. Div. 383: o aparato do AVD `octavia_tab32` se conserta (dev client atual instalado, snapshot `default_boot` regravado, provado por reboot) e se registra no `APARATO.md`. |
+
+O aval veio em cinco itens para quatro números. A N3-D11 junta os itens 4 e 5
+(div. 392).
+
+### 0.3 Premissas do prompt, com veredito
 
 | # | premissa | veredito |
 |---|---|---|
@@ -563,14 +575,14 @@ Todas de fixture do projeto, sem letra de terceiro, em `N3-PRECHECK-anexos/`:
 
 | # | hipótese | estado | dono |
 |---|---|---|---|
-| **H-N3-1** | "o palco em retrato (tablet) passa sem desenho" | **contra a letra da N3-D2**: (a) ≠ 0 em 3 estados; a favor pela classe (só zonas de 15 %) e contra pela barra superior (título elidido) — §4.4 | **Marcel (Q5)** |
+| **H-N3-1** | "o palco em retrato (tablet) passa sem desenho" | **contra a letra da N3-D2**: (a) ≠ 0 em 3 estados; a favor pela classe (só zonas de 15 %) e contra pela barra superior (título elidido) — §4.4 | **decidida: N3-D9** — o palco entra só pela barra superior na faixa média |
 | **H-N3-2** | "o indicador ◔ do T1-R17 reflete um `lru over`?" (`W4-ENCERRAMENTO.md` §7.3) | **fechada, sem defeito**: depois do `lru over`, a setlist cujo arquivo foi despejado mostra **◔ "0 de 1"** e a acima do teto mostra ✓ **com os três arquivos no disco** — nenhum ✓ com arquivo fora (§6.1) | este pre-check |
 | H-N3-3 | o S5 com N ≥ 24 transborda abaixo de ~883 dp (a fileira calcula contra 900 fixos) | `[derivado: faseA/A2.md §2.5]`, não medido (a fixture tem 8) | aceite da PR de implementação do N3 (Fixture de 60) |
 | H-N3-4 | o picker em falha (682 dp) cabe em 711 e quebra no celular | `[derivado]`, não medido | aceite do N3 / N5 |
 | H-N3-5 | a faixa > 900 não muda (N3-D3) | linha de base pronta: `B5-baseline/` + `W4B3-anexos/dumps-palco/` | PRs de implementação do N3 (gate) |
 | H-N3-6 | o iPad herda a composição (N3-D5) | não medido: nenhum aparelho iOS; os canvas são de Android | bloco iOS (`N2-ENCERRAMENTO.md` §10.7.2) |
 | H-N3-7 | "os elementos se encavalam" (§10.7.1 do N2) | **medida, falsa na forma**: (a) = 0 nas listas em retrato; o que há é espremer, cortar e sumir (§4.1) | — (fechada aqui) |
-| H-N3-8 | o celular deitado pertence à faixa 600–900 | **caiu** (914,3 dp) — div. 388 | Marcel (Q1, Q2) |
+| H-N3-8 | o celular deitado pertence à faixa 600–900 | **caiu** (914,3 dp) — div. 388 | **decidida: N3-D8** — pela largura (914,3), o celular deitado fica na faixa 600–960; a condição de altura que o separa do tablet é regra do N5 |
 
 ### 6.1 B6, o veredito do ◔ `[medido: B6/B6-saida.txt, B6/B6-logcat.txt]`
 
@@ -615,7 +627,7 @@ log, como o Marcel decidiu (§7.3 do W4).
 
 ## 8. Perguntas ao Marcel
 
-**Q1 — As fronteiras 600/900, contra os aparelhos medidos.** As larguras são
+**[Decidida: N3-D8]** **Q1 — As fronteiras 600/900, contra os aparelhos medidos.** As larguras são
 **411,4** (celular em retrato), **711,1** (os dois tablets em retrato), **914,3**
 (celular deitado) e **1137,8** (tablets deitados). A fronteira de 600 separa bem o
 celular do tablet. **A de 900 cai entre 711 e 914 e põe o celular deitado junto do
@@ -625,12 +637,12 @@ a de cima para **~960** (entre 914,3 e 1137,8) e acrescentar à regra uma condi�
 o S0 e a folha precisam). Alternativa: faixa só por largura, e o celular deitado
 entra no congelado com dois consertos pontuais (S0 com rolagem, folha com rolagem).
 
-**Q2 — A faixa 600–900 é uma composição só, para tablet em retrato e celular
+**[Decidida: N3-D8]** **Q2 — A faixa 600–900 é uma composição só, para tablet em retrato e celular
 deitado?** Medido, eles não se parecem: 711 × 1054 contra 914 × 371. **Recomendo
 que não**: a faixa média é desenhada para **711 × 1054** (o pior caso, AVD), e o
 celular deitado vai para o N5, pela regra de altura da Q1.
 
-**Q3 — A barra de 120 do S1 e a faixa de 64 do S2 em 711 dp.** Medido: na barra do
+**[Decidida: N3-D10]** **Q3 — A barra de 120 do S1 e a faixa de 64 do S2 em 711 dp.** Medido: na barra do
 S1 o título "SETLISTS" quebra no meio da palavra e, com o chip de "sem conexão",
 **some**; na faixa do S2 **faltam 77,4 dp** (788,5 contra 711,1) e o `Apagar` fica
 cortado. **Recomendo**: S1 com o título numa linha própria acima de chip e botões
@@ -639,37 +651,37 @@ a faixa de 64 com **rótulos curtos** ("Adicionar", "Reordenar", "Editar", "Apag
 — o brief confirma que os 77,4 dp saem daí; se não saírem, dois controles viram só
 ícone, com rótulo na acessibilidade.
 
-**Q4 — O celular usa o mesmo canvas de fonte?** Os tokens são em dp e valem igual;
+**[Decidida: N3-D10]** **Q4 — O celular usa o mesmo canvas de fonte?** Os tokens são em dp e valem igual;
 o que quebra no celular é o **display** (o "FIM DA SETLIST" de 52 dp dobra de altura
 em 411) e as barras com rótulo. **Recomendo**: mesma escala de texto de leitura (o
 palco é o produto, e o corpo já rola) e um degrau de display menor só para a faixa
 < 600, decidido no brief.
 
-**Q5 — O palco em retrato vai ao brief?** Pela letra da N3-D2, **sim** ((a) ≠ 0
+**[Decidida: N3-D9]** **Q5 — O palco em retrato vai ao brief?** Pela letra da N3-D2, **sim** ((a) ≠ 0
 em 3 estados). Pelo que o (a) mede, o único defeito de classe nova é a **barra
 superior** (título elidido, 832 → 405 dp). **Recomendo**: o palco vai ao brief na
 faixa 600–900 **só pela barra superior** (a proposta 08, "2 linhas", como ponto de
 partida), e as zonas de 15 % seguem como estão; nas três faixas, pelo N3-D7.
 
-**Q6 — O (d′) e o (e) valem como o (d) da regra?** O (d) literal do prompt não mede
+**[Decidida: N3-D10]** **Q6 — O (d′) e o (e) valem como o (d) da regra?** O (d) literal do prompt não mede
 nada no RN (div. 384). **Recomendo**: o gate do N3 (N3-D3/D4) usar **(e)** como
 critério duro (texto que some é defeito sem discussão) e o **(d′)** como triagem
 confirmada no PNG, que é como este pre-check os usou.
 
-**Q7 — O S0 do Tab S6.** Não capturado (div. 386). **Recomendo** aceitar o AVD como
+**[Decidida: N3-D10]** **Q7 — O S0 do Tab S6.** Não capturado (div. 386). **Recomendo** aceitar o AVD como
 cobertura da largura de 711,1 (a mesma) e deixar o Tab para o aceite da PR que mexer
 no S0, quando o logout e o login forem passo combinado.
 
 ---
 
-## 9. Divergências — 382 a 391
+## 9. Divergências — 382 a 392
 
 | div. | origem | o que | o que foi feito |
 |---|---|---|---|
 | **382** | P | *"`git rev-parse origin/main` — registre: é o sha do levantamento (W4 encerrado)"*: era **`796abe5`** (W4-b2); a #323 (W4-b3, o encerramento do W4) estava **aberta** (CLEAN, verde). O pre-check depende dela (§7.3 do W4, regra 13 ampliada, `W4B3-anexos/`, o `lru over`) | parei antes da árvore e perguntei; o Marcel mergeou na hora. Árvore sobre **`aa91b5d`** |
-| **383** | A | o dev client do `octavia_tab32` estava de **2026-09-13** (`lastUpdateTime`), anterior à #315, embora o `W4B3-anexos/ESTADO-aparelhos.txt` diga que ele "fica" em 2026-09-23. Causa: o AVD sobe do snapshot `default_boot` de **2026-09-14**, e o que a W4-b3 instalou se perdeu quando ele desligou sem salvar | refeito (`expo run:android --device octavia_tab32 --no-bundler`, 2m12s, `install -r`, `firstInstallTime` 2026-09-10 preservado). Registrado no `APARATO.md`: conferir a data **toda sessão**. Vai sumir de novo no próximo boot |
+| **383** | A | o dev client do `octavia_tab32` estava de **2026-09-13** (`lastUpdateTime`), anterior à #315, embora o `W4B3-anexos/ESTADO-aparelhos.txt` diga que ele "fica" em 2026-09-23. Causa: o AVD sobe do snapshot `default_boot` de **2026-09-14**, e o que a W4-b3 instalou se perdeu quando ele desligou sem salvar | refeito (`expo run:android --device octavia_tab32 --no-bundler`, 2m12s, `install -r`, `firstInstallTime` 2026-09-10 preservado). Registrado no `APARATO.md`. **Consertado no aval (N3-D11)**: dev client atual instalado sobre o snapshot, `adb emu avd snapshot save default_boot`, e reboot com `lastUpdateTime` `2026-09-24 14:00:01` (`estado/avd-snapshot-conserto.txt`) |
 | **384** | P | (d) *"nós com `text` terminando em `…`"*: o RN elipsa no desenho e o `uiautomator` devolve o texto inteiro — (d) = 0 em todos os 105 dumps, inclusive onde o PNG mostra "ENSAIO …" | (d) mantido, literal, e zero; o instrumento ganhou (d′) e (e) (§3.1), declarados; o uso deles é a Q6 |
-| **385** | D | `N2-ENCERRAMENTO.md` §10.2 se chama *"N3 (content nos apps)"*; pela N3-D6, **content é o N4** e o N3 é faixas de largura. A §10.8 diz ainda que o próximo bloco decidido é o web | registrada; o encerramento do N2 não se reescreve aqui. Quem ler §10.2 lê "N4" |
+| **385** | D | `N2-ENCERRAMENTO.md` §10.2 se chama *"N3 (content nos apps)"*; pela N3-D6, **content é o N4** e o N3 é faixas de largura. A §10.8 diz ainda que o próximo bloco decidido é o web | **errata feita no aval (N3-D11)**: nota no topo da §10.2 do `N2-ENCERRAMENTO.md` — content é N4; o título fica, para as citações continuarem achando a seção |
 | **386** | P | *"S0 (vazio e com erro)"* no Tab com *"a conta que estiver (sem escrita)"*: o app **não tem botão de sair** — o logout só acontece num 401 de leitura (`api.ts:108`), e voltar exige a senha do Marcel | S0 capturado no AVD (modo `401` do mock; a sessão volta com o snapshot, div. 383) e no celular (antes do login e depois, pelo `401`). O erro: avião ligado, e-mail e senha **de fixture** (`fixture@exemplo.invalid`), nada sai do aparelho → `erro.sem_conexao`. No Tab, não (Q7) |
 | **387** | T | **queda de arnês no celular deitado**: o lançador (travado em retrato) devolveu o `user_rotation` a 0 a cada força-parada do `ir_s1`, e **22 dos 24 dumps "phone-pai" saíram em retrato** (raiz 1080 × 2400). Junto, três quedas menores: o toque em `senha` com o teclado de pé caiu na barra do Gboard (tela de temas; nada digitado saiu do aparelho); o `B4-S0-login-phone-pai.png` saiu branco (dev client carregando); o S3d do AVD e o S3b do celular pegaram o banner "Refreshing…" do dev client | os 22 pares **apagados antes de qualquer uso**; o `roteiro.py` passou a reaplicar a rotação depois de cada recarga e antes de cada captura, e a **recusar** captura cuja raiz não está na orientação do sufixo (nome de anexo é afirmação, caso 23); refeitos. O S0 limpo, o S3d e o S3b recapturados. `roteiros/roteiro-phone-pai.txt` é o registro da rodada ruim |
 | **388** | P | N3-D1: *"paisagem de celular cai na faixa 600–900"*: o `octavia_phone` deitado tem **914,3 dp** de largura (1080 × 2400 px, 420) — pela largura, cai na faixa **> 900**, com 371,4 dp de altura | medido e capturado como pedido; a consequência (S0 sem login, folha sem botões) está em §4.3; a regra é a Q1/Q2 |
@@ -677,6 +689,7 @@ no S0, quando o logout e o login forem passo combinado.
 | **390** | D | `StageScreen.tsx:467` cita `App.tsx:206` para o `SafeAreaView`; ele está em `App.tsx:295` `[medido: faseA/A1.md §1.2]` | registrada; a próxima PR que tocar o `StageScreen.tsx` corrige |
 
 | **391** | P | *"`gh pr checks` (APK skipped — só docs + `APARATO.md`)"*: na #324 o APK **não aparece nem como skipped** — o workflow `native` nem dispara, porque o `pull_request` dele tem filtro de `paths` (`apps/native/**`, `.github/workflows/native.yml`, `.github/workflows/gates.yml`, `pnpm-workspace.yaml`) e esta PR só toca `docs/`. `gh pr checks 324`: `Vercel` pass, `Vercel Preview Comments` pass, `build` pass 3m53s, `gates-nativos` pass 11s; `gh run list --branch n3/precheck` → só `gates` e `CI` | registrada; nada a fazer — é o filtro do W4-b2 funcionando antes do H1. O "skipped" do prompt é o caso de PR que toca `apps/native/` sem mudar nativo |
+| **392** | P | o aval tem **cinco** itens de decisão e pede *"as decisões acima como **N3-D8…D11**"* — **quatro** números | D8 = item 1, D9 = item 2, D10 = item 3, e a **N3-D11 junta os itens 4 e 5** (as duas divergências com destino, 385 e 383). Nenhum texto de decisão foi reescrito |
 
 ---
 

@@ -566,6 +566,11 @@ A numeração abaixo é estável — cite por **§10.<bloco>.<n>** (a lição da
 
 ### 10.2 N3 (content nos apps)
 
+> **Errata do N3 pre-check (2026-09-24, div. 385; decisão do Marcel, N3-D6/N3-D11):**
+> content nos apps é o **N4**. O N3 passou a ser **faixas de largura**, e o celular
+> é o N5. Os itens abaixo seguem valendo, com destino **N4**. O título fica como
+> estava, para as citações de "§10.2" continuarem achando esta seção.
+
 | # | item | origem |
 |---|---|---|
 | 1 | **B9 na frente** | N2-D1 |
