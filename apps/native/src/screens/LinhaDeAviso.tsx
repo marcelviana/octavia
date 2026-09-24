@@ -17,6 +17,18 @@
  * O botão é opcional e, quando existe, tem 48 dp de alvo próprio (G5, a regra
  * das duas bordas) — o mesmo tratamento que a V1-PR1 deu ao "Tentar
  * novamente" do banner de S1e, que era o alvo mais baixo do app.
+ *
+ * **N3-D19 (N3-PR2): a linha cresce e nunca elide.** *"48 dp mínimos, +20 por
+ * linha de texto"*, em toda faixa — é regra do componente, então S1, S2, o
+ * reordenar e o picker a herdam sem mudar nada. O motivo não tem mais teto de
+ * linhas (o `numberOfLines={2}` da N2 cortava o terceiro verso em A e,
+ * com a altura fixa de 48, desenhava a segunda linha por cima da borda). O
+ * crescimento vem do respiro de 12 acima e abaixo do TEXTO: com uma linha
+ * (≈ 21,8 dp no aparelho) o texto pede 45,8 e a linha fica nos 48 mínimos,
+ * com o texto no mesmo lugar de antes — em C nada muda, e o G-inv prova; com
+ * duas, 12 + 2 linhas + 12 ≈ 68 (N3-B-X-sem-rede). O alvo da ação continua
+ * com 48 próprios e centrado na altura da linha, à direita, em B e C; em A a
+ * ação desce para baixo do texto, e isso é do N5.
  */
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { Icone } from '../icones/Icone'
@@ -53,7 +65,7 @@ export function LinhaDeAviso({
     <View style={[styles.linha, { marginHorizontal: recuo }]}>
       <View style={styles.esq}>
         <Icone nome={icone} tamanho={20} cor={cor} />
-        <Text style={[styles.motivo, { color: cor }]} numberOfLines={2} testID="aviso-motivo">
+        <Text style={[styles.motivo, { color: cor }]} testID="aviso-motivo">
           {motivo}
         </Text>
       </View>
@@ -84,15 +96,16 @@ export function LinhaDeAviso({
 }
 
 const styles = StyleSheet.create({
-  // 48 dp exatos (§7 — "aviso 48 (novo)"), e é ele que a lista desconta.
+  // 48 dp MÍNIMOS (§7 — "aviso 48 (novo)"; N3-D19): é o que a lista desconta
+  // com uma linha de texto, e a linha cresce com o texto.
   linha: {
-    height: touch.min,
+    minHeight: touch.min,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     gap: space.lg,
   },
-  esq: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: space.md },
+  esq: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: space.md, paddingVertical: space.md },
   motivo: { fontFamily: font.ui, fontSize: size.bodySmall, flexShrink: 1 },
   dir: { flexDirection: 'row', alignItems: 'center', gap: space.md },
   motivoInativo: { color: dark.muted, fontFamily: font.ui, fontSize: 13 },

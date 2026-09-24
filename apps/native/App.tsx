@@ -14,7 +14,7 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import type { ContentDTO, SetlistDTO } from '@octavia/core'
 import { ligarPrefetchAposEscrita } from './src/apos-escrita'
 import type { EstadoLocal } from './src/escrita'
-import { useFaixa } from './src/useFaixa'
+import { useLinhaDaFaixa } from './src/useFaixa'
 import { presentUrls, sanearArquivos, setFilesUser } from './src/files'
 import { log } from './src/log'
 import { Navigation } from './src/navigation'
@@ -62,9 +62,9 @@ export default function App(): React.JSX.Element {
   const [filesPresent, setFilesPresent] = useState<Set<string>>(new Set())
   const [baixando, setBaixando] = useState<Set<string>>(new Set())
   const online = useOnline()
-  // T3-R1: a decisão da faixa e a linha `faixa=` no boot e na rotação. Nenhuma
-  // tela lê o valor ainda (N3-PR1); as PRs de superfície passam a ler.
-  useFaixa()
+  // T3-R1: a linha `faixa=` no boot e na rotação, daqui e só daqui. As telas
+  // leem a faixa pelo `useFaixa()`, que não loga (N3-PR2).
+  useLinhaDaFaixa()
 
   /**
    * O indicador ✓ ◔ ✗ (T1-R17) conta ARQUIVOS, e arquivo é estado de disco:
