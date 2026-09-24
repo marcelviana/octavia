@@ -1,0 +1,75 @@
+B5-S1-setlists-avd-pai mCurrentRotation=ROTATION_0 png=226059 xml=40520 179ed0d01bb5
+21:01:11 avião=1 (emulator-5554)
+B5-S1-aviso-sem-rede-avd-pai mCurrentRotation=ROTATION_0 png=257140 xml=42982 018ee101e1f1
+21:01:32 avião=0 (emulator-5554)
+21:01:34 mock modo=500-pagina-1 vazio=False
+B5-S1-S1e-falha-com-cache-avd-pai mCurrentRotation=ROTATION_0 png=254388 xml=45518 dd9d11630cc5
+21:01:58 mock modo=normal vazio=False
+21:02:00 mock modo=normal vazio=True
+B5-S1-S1f-vazia-avd-pai mCurrentRotation=ROTATION_0 png=116723 xml=17992 cb426b582744
+21:02:23 mock modo=normal vazio=False
+21:02:51 toque 'ENSAIO DE RETRATO' @ 758,508 (emulator-5554)
+B5-S2-com-edicao-avd-pai mCurrentRotation=ROTATION_0 png=250350 xml=60308 5f679d9c6814
+21:03:03 avião=1 (emulator-5554)
+B5-S2-com-edicao-aviso-sem-rede-avd-pai mCurrentRotation=ROTATION_0 png=241740 xml=54802 854a73c03d02
+21:03:19 avião=0 (emulator-5554)
+21:03:50 toque 'ENSAIO DE RETRATO' @ 758,508 (emulator-5554)
+21:03:56 toque 'reordenar' @ 676,323 (emulator-5554)
+B5-reordenar-aberto-avd-pai mCurrentRotation=ROTATION_0 png=242793 xml=41986 3e734b76e8ff
+21:04:04 toque 'reordenar-sair' @ 1326,152 (emulator-5554)
+FALHA picker: ESPERA ESGOTADA: 'criar-setlist'
+21:05:17 avião=0 (emulator-5554)
+21:05:18 mock modo=normal vazio=False
+21:05:41 toque 'criar-setlist' @ 1878,188 (emulator-5554)
+B5-folha-criar-avd-pai mCurrentRotation=ROTATION_0 png=208032 xml=11723 2b058ced40b6
+21:05:50 toque 'form-cancelar' @ 681,1040 (emulator-5554)
+21:05:55 toque 'ENSAIO DE RETRATO' @ 758,508 (emulator-5554)
+21:06:01 toque 'setlist-editar' @ 1877,323 (emulator-5554)
+21:06:06 toque 'form-nome' @ 1280,552 (emulator-5554)
+B5-folha-validacao-avd-pai mCurrentRotation=ROTATION_0 png=238734 xml=11730 1016ab28bc1a
+21:06:21 toque 'form-cancelar' @ 681,1040 (emulator-5554)
+21:06:23 mock modo=escrita-500 vazio=False
+21:06:36 toque 'criar-setlist' @ 1878,188 (emulator-5554)
+21:06:40 toque 'form-nome' @ 1280,552 (emulator-5554)
+21:06:46 toque 'form-salvar' @ 1875,973 (emulator-5554)
+B5-folha-falhou-avd-pai mCurrentRotation=ROTATION_0 png=202843 xml=12051 d32c9b6f2efc
+21:06:57 toque 'form-cancelar' @ 662,1224 (emulator-5554)
+21:07:00 mock modo=normal vazio=False
+21:07:15 toque 'ENSAIO DE RETRATO' @ 758,508 (emulator-5554)
+21:07:21 toque 'setlist-apagar' @ 2318,323 (emulator-5554)
+B5-dialogo-apagar-avd-pai mCurrentRotation=ROTATION_0 png=265735 xml=8486 159dc723400f
+21:07:28 toque 'apagar-manter' @ 853,998 (emulator-5554)
+21:07:44 toque 'ENSAIO DE RETRATO' @ 758,508 (emulator-5554)
+21:07:50 toque 'song-1' @ 658,580 (emulator-5554)
+B5-S3-S3a-letra-1a-avd-pai mCurrentRotation=ROTATION_0 png=231333 xml=26380 f8e18747289d
+21:07:59 toque 'indice' @ 2063,1358 (emulator-5554)
+B5-S2-sem-edicao-S2p-avd-pai mCurrentRotation=ROTATION_0 png=228892 xml=37368 f0faee1f176d
+21:08:08 toque 'borda-avancar' @ 2368,723 (emulator-5554)
+B5-S3-S3b-cifra-escuro-avd-pai mCurrentRotation=ROTATION_0 png=257406 xml=25410 3a0b6700b09d
+21:08:17 toque 'tema' @ 682,1358 (emulator-5554)
+B5-S3-S3b-cifra-claro-avd-pai mCurrentRotation=ROTATION_0 png=258458 xml=25084 fee0ff3c423a
+21:08:24 toque 'tema' @ 682,1358 (emulator-5554)
+21:08:27 toque 'borda-avancar' @ 2368,723 (emulator-5554)
+21:08:32 toque 'auto-scroll' @ 128,1358 (emulator-5554)
+B5-S3-S3c-tab-autoscroll-avd-pai mCurrentRotation=ROTATION_0 png=129819 xml=25084 fee0ff3c423a
+21:08:52 toque 'auto-scroll' @ 128,1358 (emulator-5554)
+21:08:55 toque 'borda-avancar' @ 2368,723 (emulator-5554)
+B5-S3-S3d-pdf-12p-avd-pai mCurrentRotation=ROTATION_0 png=203674 xml=23840 29ab9b3dd74f
+21:09:09 avião=1 (emulator-5554)
+21:09:14 toque 'borda-avancar' @ 2368,723 (emulator-5554)
+B5-S3-S3e-nao-baixado-avd-pai mCurrentRotation=ROTATION_0 png=144056 xml=24219 ddb7c7fe47dc
+21:09:28 avião=0 (emulator-5554)
+21:09:32 toque 'borda-avancar' @ 2368,723 (emulator-5554)
+B5-S3-titulo-longo-avd-pai mCurrentRotation=ROTATION_0 png=237167 xml=26490 7d807b075071
+21:09:41 toque 'borda-avancar' @ 2368,723 (emulator-5554)
+21:09:46 toque 'borda-avancar' @ 2368,723 (emulator-5554)
+B5-S3-ultima-avd-pai mCurrentRotation=ROTATION_0 png=232864 xml=26380 d0efa7d96cac
+21:09:54 toque 'borda-avancar' @ 2368,723 (emulator-5554)
+B5-S5-fim-avd-pai mCurrentRotation=ROTATION_0 png=99875 xml=17850 572893035237
+21:10:17 toque 'buscar' @ 2295,188 (emulator-5554)
+B5-S4-vazio-avd-pai mCurrentRotation=ROTATION_0 png=87604 xml=13968 e8ea9f2531aa
+21:10:25 toque 'campo-busca' @ 1397,152 (emulator-5554)
+B5-S4-resultados-avd-pai mCurrentRotation=ROTATION_0 png=171731 xml=26535 89de89e4efe4
+21:10:35 toque 'fechar-busca' @ 108,152 (emulator-5554)
+capturas=23 falhas=1
+  picker: ESPERA ESGOTADA: 'criar-setlist'

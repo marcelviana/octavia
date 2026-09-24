@@ -49,15 +49,30 @@ esta página no mesmo commit (regra 9 do `LOGS-OCTAVIA.md`, aplicada aqui).
 
 ## Aparelhos
 
-| | Tab S6 | AVD `octavia_tab32` |
-|---|---|---|
-| id | `RX2N8000F3D`, `SM-T865`, Android 12 | `emulator-5554`, `sdk_gphone64_arm64`, Android 12 |
-| tela | 2560 × 1600 px, densidade 360 → **fator 2,25** | idem |
-| janela do app (paisagem) | 1137,8 × 663,1 dp; **639,1** abaixo da barra de 24 | 1137,8 × 711,1 dp |
-| estado de repouso | bloqueio + tela de 30 s (div. 202); destravar é do Marcel | conta **de audit**, **em avião** (`airplane=1 wifi=0 data=0`) — divs. 200, 292 |
+| | Tab S6 | AVD `octavia_tab32` | AVD `octavia_phone` (N3 pre-check) |
+|---|---|---|---|
+| id | `RX2N8000F3D`, `SM-T865`, Android 12 | `emulator-5554`, `sdk_gphone64_arm64`, Android 12 | `emulator-5556`, `sdk_gphone64_arm64`, Android 12 (API 32) |
+| tela | 2560 × 1600 px, densidade 360 → **fator 2,25** | idem | 1080 × 2400 px, densidade 420 → **fator 2,625** |
+| janela do app (paisagem) | 1137,8 × 663,1 dp; **639,1** abaixo da barra de 24 | 1137,8 × 711,1 dp; **627,1** entre as barras de 24 e 60 | 914,3 × 411,4 dp; **371,4** entre a de 24 e a de gestos de 16 |
+| janela do app (retrato, N3) | 711,1 × 1089,8 dp; **1065,8** abaixo da barra de 24 | 711,1 × 1137,8 dp; **1053,8** entre 24 e 60 | 411,4 × 914,3 dp; **874,3** entre 24 e 16 |
+| estado de repouso | bloqueio + tela de 30 s (div. 202); destravar é do Marcel | conta **de audit**, **em avião** (`airplane=1 wifi=0 data=0`) — divs. 200, 292 | sem conta: o S0 é o repouso (o login é do Marcel); rede ligada |
+
+As janelas de retrato e a do celular são do `N3-PRECHECK-anexos/B1-janelas.txt`
+(raiz e janela útil do dump do S1). Criar o celular:
+`echo no | ~/Library/Android/sdk/cmdline-tools/latest/bin/avdmanager create avd -n octavia_phone -k "system-images;android-32;google_apis;arm64-v8a" -d pixel_6`
+(JDK 17); o dev client entra por `adb -s emulator-5556 install -r <app-debug.apk>`
+do build do `octavia_tab32` (mesmo APK, arm64).
+
+**O `octavia_tab32` volta ao snapshot `default_boot` (2026-09-14) a cada boot
+rápido**: o que se instala numa sessão some na seguinte, se o emulador não salvar o
+snapshot na saída. O dev client refeito na W4-b3 (div. 371) estava de volta a
+2026-09-13 no N3 (div. 383). Antes de medir, a data (`lastUpdateTime`) se confere
+**toda sessão**, e o rebuild da div. 371 se repete. O lado bom: o estado do AVD
+(avião, conta, cache) também volta sozinho.
 
 O canvas dos desenhos é 1138 × 627 dp, o pior caso (N2-D25). Retrato não tem
-composição — herança registrada em `N2-ENCERRAMENTO.md` §10.7, item 1.
+composição — herança registrada em `N2-ENCERRAMENTO.md` §10.7, item 1; o N3
+mede o que isso custa (`N3-PRECHECK.md`).
 
 ## Metro e mock
 

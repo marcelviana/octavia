@@ -1,0 +1,6 @@
+# regra 13 ampliada — 2026-09-24 09:08:21, antes do Tab S6 e do celular
+bytes 7184663
+localhost:8788 1
+octavia.rocks 0
+lru over 2
+jaVoando.guaranteed 1

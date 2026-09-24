@@ -1,0 +1,70 @@
+B4-S1-setlists-phone-pai mCurrentRotation=ROTATION_90 png=143371 xml=26744 475534a9fbf9
+09:55:05 avião=1 (emulator-5556)
+B4-S1-aviso-sem-rede-phone-pai mCurrentRotation=ROTATION_90 png=143843 xml=26789 7bfc18196f19
+09:55:25 avião=0 (emulator-5556)
+09:55:26 mock modo=500-pagina-1 vazio=False
+B4-S1-S1e-falha-com-cache-phone-pai mCurrentRotation=ROTATION_90 png=143387 xml=28731 8f19a2760943
+09:55:50 mock modo=normal vazio=False
+09:55:52 mock modo=normal vazio=True
+B4-S1-S1f-vazia-phone-pai mCurrentRotation=ROTATION_90 png=106123 xml=17970 ddba210633cf
+09:56:18 mock modo=normal vazio=False
+09:56:48 toque canto de setlist-00000001 @ 108,486
+B4-S2-com-edicao-phone-pai mCurrentRotation=ROTATION_90 png=151650 xml=42595 90402d3e09f4
+09:57:03 avião=1 (emulator-5556)
+B4-S2-com-edicao-aviso-sem-rede-phone-pai mCurrentRotation=ROTATION_90 png=150030 xml=34429 8d62ef3766a1
+09:57:21 avião=0 (emulator-5556)
+09:58:21 toque canto de setlist-00000001 @ 108,486
+09:58:28 toque 'reordenar' @ 792,377 (emulator-5556)
+FALHA reordenar: ORIENTAÇÃO ERRADA para B4-reordenar-aberto-phone-pai: raiz [0, 0, 1080, 2400]
+09:58:40 avião=0 (emulator-5556)
+09:58:42 mock modo=normal vazio=False
+09:59:04 toque canto de setlist-00000001 @ 108,486
+09:59:11 toque 'picker-abrir' @ 312,377 (emulator-5556)
+B4-picker-vazio-phone-pai mCurrentRotation=ROTATION_90 png=104835 xml=16377 81de4a5ddbaf
+09:59:22 toque 'picker-campo' @ 1336,177 (emulator-5556)
+B4-picker-resultados-phone-pai mCurrentRotation=ROTATION_90 png=145558 xml=27589 2f97db26e296
+09:59:36 toque 'fechar-busca' @ 126,177 (emulator-5556)
+09:59:48 toque 'criar-setlist' @ 1600,219 (emulator-5556)
+B4-folha-criar-phone-pai mCurrentRotation=ROTATION_90 png=105937 xml=8678 7e9be9c3bf71
+FALHA folha: TOQUE FALHOU: sem 'form-cancelar' (n=1)
+10:00:07 avião=0 (emulator-5556)
+10:00:09 mock modo=normal vazio=False
+10:00:28 toque canto de setlist-00000001 @ 108,486
+10:00:34 toque 'setlist-apagar' @ 2118,377 (emulator-5556)
+B4-dialogo-apagar-phone-pai mCurrentRotation=ROTATION_90 png=176317 xml=8476 418a8a6eac65
+10:00:44 toque 'apagar-manter' @ 700,771 (emulator-5556)
+10:00:57 toque canto de setlist-00000001 @ 108,486
+10:01:03 toque 'song-1' @ 621,677 (emulator-5556)
+B4-S3-S3a-letra-1a-phone-pai mCurrentRotation=ROTATION_90 png=128749 xml=26312 6c8e7d28a38b
+10:01:15 toque 'indice' @ 1820,913 (emulator-5556)
+B4-S2-sem-edicao-S2p-phone-pai mCurrentRotation=ROTATION_90 png=140706 xml=27172 dcc90a8f2fd0
+10:01:27 toque 'borda-avancar' @ 2220,508 (emulator-5556)
+B4-S3-S3b-cifra-escuro-phone-pai mCurrentRotation=ROTATION_90 png=96198 xml=25342 e183a67a6c7e
+10:01:39 toque 'tema' @ 795,913 (emulator-5556)
+B4-S3-S3b-cifra-claro-phone-pai mCurrentRotation=ROTATION_90 png=97731 xml=25018 fc0be23c9390
+10:01:48 toque 'tema' @ 795,913 (emulator-5556)
+10:01:52 toque 'borda-avancar' @ 2220,508 (emulator-5556)
+10:01:57 toque 'auto-scroll' @ 149,913 (emulator-5556)
+B4-S3-S3c-tab-autoscroll-phone-pai mCurrentRotation=ROTATION_90 png=85663 xml=26890 2ad2a2e9086f
+10:02:24 toque 'auto-scroll' @ 149,913 (emulator-5556)
+10:02:27 toque 'borda-avancar' @ 2220,508 (emulator-5556)
+B4-S3-S3d-pdf-12p-phone-pai mCurrentRotation=ROTATION_90 png=162431 xml=23772 271cd2328916
+10:02:44 avião=1 (emulator-5556)
+10:02:47 toque 'borda-avancar' @ 2220,508 (emulator-5556)
+B4-S3-S3e-nao-baixado-phone-pai mCurrentRotation=ROTATION_90 png=137382 xml=24156 9e210e478186
+10:03:03 avião=0 (emulator-5556)
+10:03:09 toque 'borda-avancar' @ 2220,508 (emulator-5556)
+B4-S3-titulo-longo-phone-pai mCurrentRotation=ROTATION_90 png=132555 xml=26422 d92bce6e284a
+10:03:21 toque 'borda-avancar' @ 2220,508 (emulator-5556)
+10:03:26 toque 'borda-avancar' @ 2220,508 (emulator-5556)
+B4-S3-ultima-phone-pai mCurrentRotation=ROTATION_90 png=132564 xml=26312 c59d73a5dc6b
+10:03:39 toque 'borda-avancar' @ 2220,508 (emulator-5556)
+B4-S5-fim-phone-pai mCurrentRotation=ROTATION_90 png=79265 xml=17836 a7e9d70c1028
+10:04:33 toque 'buscar' @ 1066,219 (emulator-5556)
+FALHA S4: ORIENTAÇÃO ERRADA para B4-S4-vazio-phone-pai: raiz [0, 0, 1080, 2400]
+10:04:46 avião=0 (emulator-5556)
+10:04:48 mock modo=normal vazio=False
+capturas=20 falhas=3
+  reordenar: ORIENTAÇÃO ERRADA para B4-reordenar-aberto-phone-pai: raiz [0, 0, 1080, 2400]
+  folha: TOQUE FALHOU: sem 'form-cancelar' (n=1)
+  S4: ORIENTAÇÃO ERRADA para B4-S4-vazio-phone-pai: raiz [0, 0, 1080, 2400]

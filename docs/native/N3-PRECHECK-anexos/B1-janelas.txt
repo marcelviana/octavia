@@ -1,0 +1,17 @@
+# B1 — janela útil por aparelho × orientação [medido]
+# wm size / wm density: estado/*-lido.txt. Raiz e janela: dump do S1 (setlists), convertidos por inventario.mjs
+# (fator 2,25 = 360/160 nos tablets; 2,625 = 420/160 no celular). Janela útil = a maior ViewGroup do app de largura inteira
+# abaixo da barra de status; a altura acaba na barra de tarefas (tablets) ou na navegação por gestos (celular).
+
+$ grep -o 'bounds="\[0,0\]\[[0-9]*,[0-9]*\]"' B2/B2-S1-setlists-tab.xml | head -1  →  bounds="[0,0][1600,2452]"
+   raiz (dp) 711.1 × 1089.8 · janela útil y 24…1089.8 → 711.1 × 1065.8 dp
+$ grep -o 'bounds="\[0,0\]\[[0-9]*,[0-9]*\]"' B5-baseline/B5-S1-setlists-tab-pai.xml | head -1  →  bounds="[0,0][2560,1492]"
+   raiz (dp) 1137.8 × 663.1 · janela útil y 24…663.1 → 1137.8 × 639.1 dp
+$ grep -o 'bounds="\[0,0\]\[[0-9]*,[0-9]*\]"' B2/B2-S1-setlists-avd.xml | head -1  →  bounds="[0,0][1600,2560]"
+   raiz (dp) 711.1 × 1137.8 · janela útil y 24…1077.8 → 711.1 × 1053.8 dp
+$ grep -o 'bounds="\[0,0\]\[[0-9]*,[0-9]*\]"' B5-baseline/B5-S1-setlists-avd-pai.xml | head -1  →  bounds="[0,0][2560,1600]"
+   raiz (dp) 1137.8 × 711.1 · janela útil y 24…651.1 → 1137.8 × 627.1 dp
+$ grep -o 'bounds="\[0,0\]\[[0-9]*,[0-9]*\]"' B4/B4-S1-setlists-phone-ret.xml | head -1  →  bounds="[0,0][1080,2400]"
+   raiz (dp) 411.4 × 914.3 · janela útil y 24…898.3 → 411.4 × 874.3 dp
+$ grep -o 'bounds="\[0,0\]\[[0-9]*,[0-9]*\]"' B4/B4-S1-setlists-phone-pai.xml | head -1  →  bounds="[0,0][2400,1080]"
+   raiz (dp) 914.3 × 411.4 · janela útil y 24…395.4 → 914.3 × 371.4 dp

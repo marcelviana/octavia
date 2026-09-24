@@ -1,0 +1,82 @@
+B2-S1-setlists-avd mCurrentRotation=ROTATION_90 png=185867 xml=40446 fb03939c561e
+20:50:28 avião=1 (emulator-5554)
+B2-S1-aviso-sem-rede-avd mCurrentRotation=ROTATION_90 png=216927 xml=42578 4f75c9d8977a
+20:50:45 avião=0 (emulator-5554)
+20:50:47 mock modo=500-pagina-1 vazio=False
+B2-S1-S1e-falha-com-cache-avd mCurrentRotation=ROTATION_90 png=214026 xml=45439 5144e2b139ab
+20:51:07 mock modo=normal vazio=False
+20:51:08 mock modo=normal vazio=True
+B2-S1-S1f-vazia-avd mCurrentRotation=ROTATION_90 png=116999 xml=17962 6538c7ff7955
+20:51:29 mock modo=normal vazio=False
+FALHA S2e: TOQUE FALHOU: sem 'ENSAIO DE RETRATO' (n=1)
+20:51:53 avião=0 (emulator-5554)
+20:51:54 mock modo=normal vazio=False
+20:52:14 toque 'ENSAIO DE RETRATO' @ 278,508 (emulator-5554)
+20:52:20 toque 'reordenar' @ 676,323 (emulator-5554)
+B2-reordenar-aberto-avd mCurrentRotation=ROTATION_90 png=241329 xml=46949 c4a9ba771d0b
+20:52:28 toque 'reordenar-sair' @ 365,152 (emulator-5554)
+20:52:41 toque 'ENSAIO DE RETRATO' @ 278,508 (emulator-5554)
+20:52:48 toque 'picker-abrir' @ 266,323 (emulator-5554)
+B2-picker-vazio-avd mCurrentRotation=ROTATION_90 png=117788 xml=16385 a1e8fa8fa988
+20:52:57 toque 'picker-campo' @ 917,152 (emulator-5554)
+B2-picker-resultados-avd mCurrentRotation=ROTATION_90 png=356241 xml=59739 afaeed4618b6
+20:53:09 toque 'fechar-busca' @ 108,152 (emulator-5554)
+20:53:26 toque 'criar-setlist' @ 918,188 (emulator-5554)
+B2-folha-criar-avd mCurrentRotation=ROTATION_90 png=153274 xml=11703 a9ed07e22907
+20:53:35 toque 'form-cancelar' @ 201,1040 (emulator-5554)
+20:53:38 toque 'ENSAIO DE RETRATO' @ 278,508 (emulator-5554)
+20:53:45 toque 'setlist-editar' @ 1091,323 (emulator-5554)
+20:53:49 toque 'form-nome' @ 800,552 (emulator-5554)
+B2-folha-validacao-avd mCurrentRotation=ROTATION_90 png=162316 xml=11709 5fba80c2e1e1
+20:54:04 toque 'form-cancelar' @ 201,1040 (emulator-5554)
+20:54:07 mock modo=escrita-500 vazio=False
+20:54:25 toque 'criar-setlist' @ 918,188 (emulator-5554)
+20:54:29 toque 'form-nome' @ 800,552 (emulator-5554)
+20:54:35 toque 'form-salvar' @ 1395,973 (emulator-5554)
+B2-folha-falhou-avd mCurrentRotation=ROTATION_90 png=142408 xml=12038 c705df848169
+20:54:47 toque 'form-cancelar' @ 182,1224 (emulator-5554)
+20:54:50 mock modo=normal vazio=False
+20:55:05 toque 'ENSAIO DE RETRATO' @ 278,508 (emulator-5554)
+20:55:12 toque 'setlist-apagar' @ 1472,323 (emulator-5554)
+B2-dialogo-apagar-avd mCurrentRotation=ROTATION_90 png=209910 xml=8506 f8ee21799143
+20:55:19 toque 'apagar-manter' @ 373,1478 (emulator-5554)
+20:55:32 toque 'ENSAIO DE RETRATO' @ 278,508 (emulator-5554)
+20:55:38 toque 'song-1' @ 418,580 (emulator-5554)
+B2-S3-S3a-letra-1a-avd mCurrentRotation=ROTATION_90 png=396028 xml=26380 fcb9214a9a98
+20:55:47 toque 'indice' @ 1103,2318 (emulator-5554)
+B2-S2-sem-edicao-S2p-avd mCurrentRotation=ROTATION_90 png=189208 xml=37308 48369521c449
+20:55:57 toque 'borda-avancar' @ 1480,1203 (emulator-5554)
+B2-S3-S3b-cifra-escuro-avd mCurrentRotation=ROTATION_90 png=483150 xml=25410 8c852700e114
+20:56:06 toque 'tema' @ 682,2318 (emulator-5554)
+B2-S3-S3b-cifra-claro-avd mCurrentRotation=ROTATION_90 png=485124 xml=25084 d063beb63a8e
+20:56:13 toque 'tema' @ 682,2318 (emulator-5554)
+20:56:16 toque 'borda-avancar' @ 1480,1203 (emulator-5554)
+20:56:21 toque 'auto-scroll' @ 128,2318 (emulator-5554)
+B2-S3-S3c-tab-autoscroll-avd mCurrentRotation=ROTATION_90 png=149675 xml=26960 23d775a3a220
+20:56:36 toque 'auto-scroll' @ 128,2318 (emulator-5554)
+20:56:39 toque 'borda-avancar' @ 1480,1203 (emulator-5554)
+B2-S3-S3d-pdf-12p-avd mCurrentRotation=ROTATION_90 png=150326 xml=23840 52ae8ba10393
+20:56:54 avião=1 (emulator-5554)
+20:56:59 toque 'borda-avancar' @ 1480,1203 (emulator-5554)
+B2-S3-S3e-nao-baixado-avd mCurrentRotation=ROTATION_90 png=138034 xml=24215 655343016fb9
+20:57:13 avião=0 (emulator-5554)
+20:57:17 toque 'borda-avancar' @ 1480,1203 (emulator-5554)
+B2-S3-titulo-longo-avd mCurrentRotation=ROTATION_90 png=396683 xml=26490 3f28469d325c
+20:57:26 toque 'borda-avancar' @ 1480,1203 (emulator-5554)
+20:57:31 toque 'borda-avancar' @ 1480,1203 (emulator-5554)
+B2-S3-ultima-avd mCurrentRotation=ROTATION_90 png=397968 xml=26380 1019b7399b85
+20:57:39 toque 'borda-avancar' @ 1480,1203 (emulator-5554)
+B2-S5-fim-avd mCurrentRotation=ROTATION_90 png=100280 xml=17858 696eaf4376a9
+20:58:09 toque 'buscar' @ 1335,188 (emulator-5554)
+B2-S4-vazio-avd mCurrentRotation=ROTATION_90 png=88272 xml=13970 03d24a726be1
+20:58:17 toque 'campo-busca' @ 917,152 (emulator-5554)
+B2-S4-resultados-avd mCurrentRotation=ROTATION_90 png=255305 xml=34884 f65a57c2a66a
+20:58:27 toque 'fechar-busca' @ 108,152 (emulator-5554)
+capturas=23 falhas=1
+  S2e: TOQUE FALHOU: sem 'ENSAIO DE RETRATO' (n=1)
+20:59:00 toque 'ENSAIO DE RETRATO' @ 278,508 (emulator-5554)
+B2-S2-com-edicao-avd mCurrentRotation=ROTATION_90 png=183959 xml=60230 5aa02d891c3c
+20:59:11 avião=1 (emulator-5554)
+B2-S2-com-edicao-aviso-sem-rede-avd mCurrentRotation=ROTATION_90 png=209611 xml=61344 d7a27c2004d0
+20:59:27 avião=0 (emulator-5554)
+capturas=2 falhas=0
