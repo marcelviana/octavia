@@ -1,0 +1,77 @@
+B2-S1-setlists-tab mCurrentRotation=ROTATION_0 png=198312 xml=40789 1bd84f8c3eab
+09:08:51 avião=1 (RX2N8000F3D)
+B2-S1-aviso-sem-rede-tab mCurrentRotation=ROTATION_0 png=228903 xml=42898 95656a2567fe
+09:09:04 avião=0 (RX2N8000F3D)
+09:09:06 mock modo=500-pagina-1 vazio=False
+B2-S1-S1e-falha-com-cache-tab mCurrentRotation=ROTATION_0 png=227399 xml=44807 87c414e07221
+09:09:25 mock modo=normal vazio=False
+09:09:27 mock modo=normal vazio=True
+B2-S1-S1f-vazia-tab mCurrentRotation=ROTATION_0 png=128596 xml=18305 4041816ecd2e
+09:09:45 mock modo=normal vazio=False
+09:10:11 toque 'ENSAIO DE RETRATO' @ 278,508 (RX2N8000F3D)
+B2-S2-com-edicao-tab mCurrentRotation=ROTATION_0 png=195284 xml=60572 de761c594cb0
+09:10:23 avião=1 (RX2N8000F3D)
+B2-S2-com-edicao-aviso-sem-rede-tab mCurrentRotation=ROTATION_0 png=220471 xml=61686 1c26f77980df
+09:10:37 avião=0 (RX2N8000F3D)
+09:10:52 toque 'ENSAIO DE RETRATO' @ 278,508 (RX2N8000F3D)
+09:11:00 toque 'reordenar' @ 676,323 (RX2N8000F3D)
+B2-reordenar-aberto-tab mCurrentRotation=ROTATION_0 png=255531 xml=47291 1fc9128c8842
+09:11:08 toque 'reordenar-sair' @ 365,152 (RX2N8000F3D)
+09:11:25 toque 'ENSAIO DE RETRATO' @ 278,508 (RX2N8000F3D)
+09:11:32 toque 'picker-abrir' @ 266,323 (RX2N8000F3D)
+B2-picker-vazio-tab mCurrentRotation=ROTATION_0 png=128555 xml=16727 5105bc487454
+09:11:41 toque 'picker-campo' @ 917,152 (RX2N8000F3D)
+B2-picker-resultados-tab mCurrentRotation=ROTATION_0 png=374107 xml=60081 c946e1917fd4
+09:11:52 toque 'fechar-busca' @ 108,152 (RX2N8000F3D)
+09:12:06 toque 'criar-setlist' @ 918,188 (RX2N8000F3D)
+B2-folha-criar-tab mCurrentRotation=ROTATION_0 png=161780 xml=12045 a8710c3fcc07
+09:12:15 toque 'form-cancelar' @ 201,1040 (RX2N8000F3D)
+09:12:21 toque 'ENSAIO DE RETRATO' @ 278,508 (RX2N8000F3D)
+09:12:28 toque 'setlist-editar' @ 1091,323 (RX2N8000F3D)
+09:12:33 toque 'form-nome' @ 800,552 (RX2N8000F3D)
+B2-folha-validacao-tab mCurrentRotation=ROTATION_0 png=171522 xml=12051 6d461c8b3d5b
+09:12:48 toque 'form-cancelar' @ 201,1040 (RX2N8000F3D)
+09:12:50 mock modo=escrita-500 vazio=False
+09:13:03 toque 'criar-setlist' @ 918,188 (RX2N8000F3D)
+09:13:08 toque 'form-nome' @ 800,552 (RX2N8000F3D)
+09:13:15 toque 'form-salvar' @ 1395,973 (RX2N8000F3D)
+B2-folha-falhou-tab mCurrentRotation=ROTATION_0 png=155721 xml=12380 6467c5e2eb2c
+09:13:26 toque 'form-cancelar' @ 182,1224 (RX2N8000F3D)
+09:13:29 mock modo=normal vazio=False
+09:13:44 toque 'ENSAIO DE RETRATO' @ 278,508 (RX2N8000F3D)
+09:13:51 toque 'setlist-apagar' @ 1472,323 (RX2N8000F3D)
+B2-dialogo-apagar-tab mCurrentRotation=ROTATION_0 png=221965 xml=8848 34e7f72e7fe3
+09:14:00 toque 'apagar-manter' @ 373,1478 (RX2N8000F3D)
+09:14:16 toque 'ENSAIO DE RETRATO' @ 278,508 (RX2N8000F3D)
+09:14:23 toque 'song-1' @ 418,580 (RX2N8000F3D)
+B2-S3-S3a-letra-1a-tab mCurrentRotation=ROTATION_0 png=417272 xml=26722 ba9a7e81c8fe
+09:14:33 toque 'indice' @ 1103,2345 (RX2N8000F3D)
+B2-S2-sem-edicao-S2p-tab mCurrentRotation=ROTATION_0 png=201039 xml=37650 ff22abb327f8
+09:14:43 toque 'borda-avancar' @ 1480,1217 (RX2N8000F3D)
+B2-S3-S3b-cifra-escuro-tab mCurrentRotation=ROTATION_0 png=509708 xml=25752 eb3f6f627f3c
+09:14:53 toque 'tema' @ 682,2345 (RX2N8000F3D)
+B2-S3-S3b-cifra-claro-tab mCurrentRotation=ROTATION_0 png=510395 xml=25426 f1c5cfbd0ff4
+09:15:01 toque 'tema' @ 682,2345 (RX2N8000F3D)
+09:15:04 toque 'borda-avancar' @ 1480,1217 (RX2N8000F3D)
+09:15:10 toque 'auto-scroll' @ 128,2345 (RX2N8000F3D)
+B2-S3-S3c-tab-autoscroll-tab mCurrentRotation=ROTATION_0 png=162284 xml=27302 890c7493b74d
+09:15:23 toque 'auto-scroll' @ 128,2345 (RX2N8000F3D)
+09:15:27 toque 'borda-avancar' @ 1480,1217 (RX2N8000F3D)
+B2-S3-S3d-pdf-12p-tab mCurrentRotation=ROTATION_0 png=180330 xml=24182 f3b0efcdb3fd
+09:15:41 avião=1 (RX2N8000F3D)
+09:15:43 toque 'borda-avancar' @ 1480,1217 (RX2N8000F3D)
+B2-S3-S3e-nao-baixado-tab mCurrentRotation=ROTATION_0 png=148362 xml=24557 f565339be792
+09:15:57 avião=0 (RX2N8000F3D)
+09:16:01 toque 'borda-avancar' @ 1480,1217 (RX2N8000F3D)
+B2-S3-titulo-longo-tab mCurrentRotation=ROTATION_0 png=419392 xml=26832 7cde3794c329
+09:16:10 toque 'borda-avancar' @ 1480,1217 (RX2N8000F3D)
+09:16:15 toque 'borda-avancar' @ 1480,1217 (RX2N8000F3D)
+B2-S3-ultima-tab mCurrentRotation=ROTATION_0 png=420942 xml=26722 d3b829784b94
+09:16:25 toque 'borda-avancar' @ 1480,1217 (RX2N8000F3D)
+B2-S5-fim-tab mCurrentRotation=ROTATION_0 png=113639 xml=18200 5cdaf5365aab
+09:16:45 toque 'buscar' @ 1335,188 (RX2N8000F3D)
+B2-S4-vazio-tab mCurrentRotation=ROTATION_0 png=100044 xml=14312 2f530b57f132
+09:16:54 toque 'campo-busca' @ 917,152 (RX2N8000F3D)
+B2-S4-resultados-tab mCurrentRotation=ROTATION_0 png=270728 xml=35226 7cb986fac916
+09:17:04 toque 'fechar-busca' @ 108,152 (RX2N8000F3D)
+capturas=25 falhas=0

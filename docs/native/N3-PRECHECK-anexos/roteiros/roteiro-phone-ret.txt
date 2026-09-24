@@ -1,0 +1,100 @@
+B4-S1-setlists-phone-ret mCurrentRotation=ROTATION_0 png=123655 xml=34740 fe72527aa8a7
+09:27:06 avião=1 (emulator-5556)
+B4-S1-aviso-sem-rede-phone-ret mCurrentRotation=ROTATION_0 png=155693 xml=36506 ff4614c30dc3
+09:27:21 avião=0 (emulator-5556)
+09:27:23 mock modo=500-pagina-1 vazio=False
+B4-S1-S1e-falha-com-cache-phone-ret mCurrentRotation=ROTATION_0 png=147632 xml=39369 c72b81b943c4
+09:27:42 mock modo=normal vazio=False
+09:27:44 mock modo=normal vazio=True
+B4-S1-S1f-vazia-phone-ret mCurrentRotation=ROTATION_0 png=98060 xml=15321 66aa943a25aa
+09:28:05 mock modo=normal vazio=False
+09:28:28 toque 'ENSAIO DE RETRATO' @ 540,635 (emulator-5556)
+FALHA S2e: ESPERA ESGOTADA: 'picker-abrir'
+09:29:08 avião=0 (emulator-5556)
+09:29:10 mock modo=normal vazio=False
+09:29:27 toque 'ENSAIO DE RETRATO' @ 540,635 (emulator-5556)
+FALHA reordenar: ESPERA ESGOTADA: 'picker-abrir'
+09:30:07 avião=0 (emulator-5556)
+09:30:08 mock modo=normal vazio=False
+09:30:24 toque 'ENSAIO DE RETRATO' @ 540,635 (emulator-5556)
+FALHA picker: ESPERA ESGOTADA: 'picker-abrir'
+09:31:03 avião=0 (emulator-5556)
+09:31:05 mock modo=normal vazio=False
+09:31:16 toque 'criar-setlist' @ 733,219 (emulator-5556)
+B4-folha-criar-phone-ret mCurrentRotation=ROTATION_0 png=82644 xml=6446 427f50a404fe
+FALHA folha: TOQUE FALHOU: sem 'form-cancelar' (n=1)
+09:31:32 avião=0 (emulator-5556)
+09:31:34 mock modo=normal vazio=False
+09:31:54 toque 'ENSAIO DE RETRATO' @ 540,635 (emulator-5556)
+FALHA dialogo: ESPERA ESGOTADA: 'picker-abrir'
+09:32:33 avião=0 (emulator-5556)
+09:32:35 mock modo=normal vazio=False
+09:32:52 toque 'ENSAIO DE RETRATO' @ 540,635 (emulator-5556)
+FALHA palco: ESPERA ESGOTADA: 'picker-abrir'
+09:33:32 avião=0 (emulator-5556)
+09:33:34 mock modo=normal vazio=False
+FALHA S4: TOQUE FALHOU: sem 'buscar' (n=1)
+09:33:50 avião=0 (emulator-5556)
+09:33:52 mock modo=normal vazio=False
+capturas=5 falhas=7
+  S2e: ESPERA ESGOTADA: 'picker-abrir'
+  reordenar: ESPERA ESGOTADA: 'picker-abrir'
+  picker: ESPERA ESGOTADA: 'picker-abrir'
+  folha: TOQUE FALHOU: sem 'form-cancelar' (n=1)
+  dialogo: ESPERA ESGOTADA: 'picker-abrir'
+  palco: ESPERA ESGOTADA: 'picker-abrir'
+  S4: TOQUE FALHOU: sem 'buscar' (n=1)
+FALHA reordenar: ESPERA ESGOTADA: 'criar-setlist'
+09:36:33 avião=0 (emulator-5556)
+09:36:35 mock modo=normal vazio=False
+09:36:55 toque canto de setlist-00000001 @ 108,486
+09:37:02 toque 'picker-abrir' @ 312,377 (emulator-5556)
+B4-picker-vazio-phone-ret mCurrentRotation=ROTATION_0 png=103553 xml=16036 d14ae380a6f0
+09:37:11 toque 'picker-campo' @ 676,177 (emulator-5556)
+B4-picker-resultados-phone-ret mCurrentRotation=ROTATION_0 png=216368 xml=48412 3801167d6599
+09:37:23 toque 'fechar-busca' @ 126,177 (emulator-5556)
+09:37:37 toque 'criar-setlist' @ 790,219 (emulator-5556)
+B4-folha-criar-phone-ret mCurrentRotation=ROTATION_0 png=82928 xml=6446 427f50a404fe
+FALHA folha: TOQUE FALHOU: sem 'form-cancelar' (n=1)
+09:37:53 avião=0 (emulator-5556)
+09:37:55 mock modo=normal vazio=False
+09:38:13 toque canto de setlist-00000001 @ 108,486
+FALHA dialogo: TOQUE FALHOU: sem 'setlist-apagar' (n=1)
+09:38:27 avião=0 (emulator-5556)
+09:38:28 mock modo=normal vazio=False
+09:38:51 toque canto de setlist-00000001 @ 108,486
+09:38:57 toque 'song-1' @ 291,677 (emulator-5556)
+B4-S3-S3a-letra-1a-phone-ret mCurrentRotation=ROTATION_0 png=260049 xml=23368 6b0e3537e304
+09:39:07 toque 'indice' @ 1023,2233 (emulator-5556)
+B4-S2-sem-edicao-S2p-phone-ret mCurrentRotation=ROTATION_0 png=85615 xml=31718 8dfd74bb11a0
+09:39:16 toque 'borda-avancar' @ 999,1168 (emulator-5556)
+B4-S3-S3b-cifra-escuro-phone-ret mCurrentRotation=ROTATION_0 png=208657 xml=22398 99999f0ecea8
+09:39:26 toque 'tema' @ 795,2233 (emulator-5556)
+B4-S3-S3b-cifra-claro-phone-ret mCurrentRotation=ROTATION_0 png=220861 xml=22072 03e631664687
+09:39:33 toque 'tema' @ 795,2233 (emulator-5556)
+09:39:36 toque 'borda-avancar' @ 999,1168 (emulator-5556)
+09:39:41 toque 'auto-scroll' @ 149,2233 (emulator-5556)
+B4-S3-S3c-tab-autoscroll-phone-ret mCurrentRotation=ROTATION_0 png=116061 xml=23948 38a95f1e53d2
+09:40:01 toque 'auto-scroll' @ 149,2233 (emulator-5556)
+09:40:05 toque 'borda-avancar' @ 999,1168 (emulator-5556)
+B4-S3-S3d-pdf-12p-phone-ret mCurrentRotation=ROTATION_0 png=111604 xml=20444 2eb468f5346a
+09:40:19 avião=1 (emulator-5556)
+09:40:22 toque 'borda-avancar' @ 999,1168 (emulator-5556)
+B4-S3-S3e-nao-baixado-phone-ret mCurrentRotation=ROTATION_0 png=114049 xml=21201 9c7e11825f5e
+09:40:36 avião=0 (emulator-5556)
+09:40:39 toque 'borda-avancar' @ 999,1168 (emulator-5556)
+B4-S3-titulo-longo-phone-ret mCurrentRotation=ROTATION_0 png=259945 xml=23478 a55d14767bb9
+09:40:49 toque 'borda-avancar' @ 999,1168 (emulator-5556)
+09:40:54 toque 'borda-avancar' @ 999,1168 (emulator-5556)
+B4-S3-ultima-phone-ret mCurrentRotation=ROTATION_0 png=261664 xml=23368 9668946266f4
+09:41:03 toque 'borda-avancar' @ 999,1168 (emulator-5556)
+B4-S5-fim-phone-ret mCurrentRotation=ROTATION_0 png=82952 xml=17843 4aa16971f0eb
+09:41:34 toque 'buscar' @ 1066,219 (emulator-5556)
+B4-S4-vazio-phone-ret mCurrentRotation=ROTATION_0 png=69038 xml=13972 183abff0459b
+09:41:44 toque 'campo-busca' @ 676,177 (emulator-5556)
+B4-S4-resultados-phone-ret mCurrentRotation=ROTATION_0 png=214780 xml=32429 dd822a6920f3
+09:41:54 toque 'fechar-busca' @ 126,177 (emulator-5556)
+capturas=15 falhas=3
+  reordenar: ESPERA ESGOTADA: 'criar-setlist'
+  folha: TOQUE FALHOU: sem 'form-cancelar' (n=1)
+  dialogo: TOQUE FALHOU: sem 'setlist-apagar' (n=1)

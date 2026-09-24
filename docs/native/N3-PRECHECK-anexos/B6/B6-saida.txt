@@ -1,0 +1,19 @@
+10:10:19 mock B6 setlists=fase1.json
+  setlist-000000b7 → B6 — SEM DATA, sem data, 1 música, garantida offline, todos os arquivos neste aparelho
+B6-1-S1-sem-data-baixada mCurrentRotation=ROTATION_0 png=121812 xml=23610 f2d997b7be53
+10:10:57 mock B6 setlists=setlists.json
+  setlist-000000b6 → B6 — ACIMA DO TETO, 2026-09-25, 3 músicas, garantida offline, todos os arquivos neste aparelho
+  setlist-000000b7 → B6 — SEM DATA, sem data, 1 música, parcial, 0 de 1 arquivos baixados
+B6-2-S1-depois-do-lru-over mCurrentRotation=ROTATION_0 png=158432 xml=30281 d7d39fea5eb8
+logcat: 27 linhas OCTAVIA (sem auth)
+  sync ok setlists=1 content=16 pages=1 t=627
+  prefetch plan n=0 reason=7d
+  prefetch plan n=1 reason=manual
+  file src=download name=b6-pequena.pdf bytes=638 total=638 ms=873
+  sync ok setlists=2 content=16 pages=1 t=640
+  prefetch plan n=3 reason=7d
+  file src=download name=grande-3.pdf bytes=83885944 total=83885944 ms=6152
+  file src=download name=grande-1.pdf bytes=83885944 total=83885944 ms=6469
+  file src=download name=grande-2.pdf bytes=83885944 total=83885944 ms=6791
+  lru evict n=5 bytes=268476
+  lru over bytes=251657832 cap=209715200 protected=3

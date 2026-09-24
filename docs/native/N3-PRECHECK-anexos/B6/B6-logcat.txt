@@ -1,0 +1,27 @@
+09-24 10:10:32.507 11872 11962 I ReactNativeJS: OCTAVIA: net online
+09-24 10:10:35.493 11872 11962 I ReactNativeJS: OCTAVIA: cache hit kind=setlists n=3
+09-24 10:10:35.496 11872 11962 I ReactNativeJS: OCTAVIA: cache hit kind=content n=12
+09-24 10:10:35.596 11872 11962 I ReactNativeJS: OCTAVIA: sync start
+09-24 10:10:36.035 11872 11962 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=433
+09-24 10:10:36.135 11872 11962 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=79
+09-24 10:10:36.201 11872 11962 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=1 invalidated=4
+09-24 10:10:36.221 11872 11962 I ReactNativeJS: OCTAVIA: cache write kind=content n=16 invalidated=4
+09-24 10:10:36.222 11872 11962 I ReactNativeJS: OCTAVIA: sync ok setlists=1 content=16 pages=1 t=627
+09-24 10:10:36.296 11872 11962 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=7d
+09-24 10:10:47.783 11872 11962 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=manual
+09-24 10:10:48.710 11872 11962 I ReactNativeJS: OCTAVIA: file src=download name=b6-pequena.pdf bytes=638 total=638 ms=873
+09-24 10:11:08.880 12197 12279 I ReactNativeJS: OCTAVIA: net online
+09-24 10:11:10.284 12197 12279 I ReactNativeJS: OCTAVIA: cache hit kind=setlists n=1
+09-24 10:11:10.287 12197 12279 I ReactNativeJS: OCTAVIA: cache hit kind=content n=16
+09-24 10:11:10.446 12197 12279 I ReactNativeJS: OCTAVIA: sync start
+09-24 10:11:10.869 12197 12279 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=416
+09-24 10:11:11.021 12197 12279 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=121
+09-24 10:11:11.069 12197 12279 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=2 invalidated=1
+09-24 10:11:11.083 12197 12279 I ReactNativeJS: OCTAVIA: cache write kind=content n=16 invalidated=0
+09-24 10:11:11.083 12197 12279 I ReactNativeJS: OCTAVIA: sync ok setlists=2 content=16 pages=1 t=640
+09-24 10:11:11.153 12197 12279 I ReactNativeJS: OCTAVIA: prefetch plan n=3 reason=7d
+09-24 10:11:17.398 12197 12279 I ReactNativeJS: OCTAVIA: file src=download name=grande-3.pdf bytes=83885944 total=83885944 ms=6152
+09-24 10:11:17.647 12197 12279 I ReactNativeJS: OCTAVIA: file src=download name=grande-1.pdf bytes=83885944 total=83885944 ms=6469
+09-24 10:11:18.013 12197 12279 I ReactNativeJS: OCTAVIA: file src=download name=grande-2.pdf bytes=83885944 total=83885944 ms=6791
+09-24 10:11:18.275 12197 12279 I ReactNativeJS: OCTAVIA: lru evict n=5 bytes=268476
+09-24 10:11:18.276 12197 12279 I ReactNativeJS: OCTAVIA: lru over bytes=251657832 cap=209715200 protected=3
