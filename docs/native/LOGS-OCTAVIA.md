@@ -915,3 +915,12 @@ Hoje há dois segmentos: o **regime 1**, antes da #284, e o **regime 2**, desde 
 #284, que é a referência. O corte é o `9806e44` (N1-PR3a): os módulos nativos da
 navegação e das fontes entraram, e o job passou de ~6–7 min a ~12 min. **O
 workflow em si não mudou ali** (div. 365).
+
+## Errata N3-PR1 (2026-09-24) — dois gates que leem DUMP, não código
+
+Os gates desta série liam código (G1, G2/G3, a20, ícones). O N3 é o primeiro bloco cujo aceite é **geometria**, e geometria só existe no dump do aparelho. Os dois gates novos leem `uiautomator dump` e rodam **à mão**, sobre os dumps que a PR anexa — **não estão no CI** (o CI não tem aparelho); o `cn-n3pr1.sh` é o controle deles.
+
+**G-inv** (`apps/native/scripts/g-inv.sh <dir-base> <dir-novos>`, T3-R2). *Mede*: nó a nó, na ordem do dump, `classe resource-id bounds` em dp (0,1 dp), para **toda** chave da base — chave sem dump novo reprova, raiz fora de paisagem reprova. *Não mede*: texto (só o lugar que ele ocupa), `enabled`/`clickable`, nós de outro pacote, o botão do dev client (div. 402). *Não separa*: geometria que é **dado** — o arco do ◔ e a largura de um texto vivo reprovam igual a um layout mudado; quem separa é o arnês, reproduzindo o estado da base (div. 403).
+
+**G-N3** (`apps/native/scripts/g-n3.mjs --pai <dir>… --faixa <dir>`, T3-R4). *Mede*, por par (paisagem, faixa) do mesmo estado: **(e)** texto que some da faixa — **reprova**; **(d′)** texto com menos espaço (> 1 dp mais estreito ou > 40 % mais alto) — **triagem**, confirmar no PNG; **4 dp** contra o `DESIGN-N3/medidas.json`, na faixa em que a folha declara a medida — **errata candidata**. (e) e (d′) são os do `inventario.mjs` do pre-check, copiados; o controle é a contagem igual à do `B3-inventario.jsonl` em 105 dumps. *Não mede*: o `(d)` literal (zero por construção no RN, div. 384); sobreposição, corte e alvo < 48 (o (a)/(b)/(c) do pre-check — o G5/G6 da T3-R5 são outro gate); medida sem nó próprio no dump (`casa: null` — a régua de dev mede).
+

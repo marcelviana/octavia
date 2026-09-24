@@ -85,3 +85,19 @@ O N3 está pronto quando **todos** abaixo passam, no **Tab S6 e no AVD `octavia_
 | 6 | **P1** — o FAB do dev client cobre o canto superior direito nas capturas de retrato | N3-D25 | **aparato** — hipótese no `APARATO.md`, dono a N3-PR1 |
 | 7 | **P2** — a faixa como tokens no `theme.ts` | N3-D25 | **N3-PR1** (decisão com a invariante de C medida) |
 | 8 | Bloco D | — | **nada**: o N3 não toca backend |
+
+---
+
+## 5. O que a N3-PR1 fechou (o gate)
+
+Evidência em [`N3-PR1-anexos/`](N3-PR1-anexos/README.md); erratas e divergências no `DESIGN-N3/README.md` §9 (N3-E3…E12, divs. 401–411).
+
+| # | estado | evidência |
+|---|---|---|
+| **T3-R1** | **atendido** — `faixaDe()` em `apps/native/src/faixa.ts`, o único arquivo com 700 e 960 (`test/faixa.test.ts` o garante); a linha `faixa=` sai da raiz do app (`useFaixa.ts`) no boot e a cada troca de orientação ou de faixa, e está no catálogo. **Nenhuma tela lê a faixa ainda** | `faixa-test-commit1.txt` (reprova por ausência) e `-commit2.txt` (4/4) |
+| **A-N3-1** | **atende**: Tab deitado `faixa=C w=1137.8` · Tab em pé `faixa=B w=711.1` · celular em pé `faixa=A w=411.4` · celular deitado `faixa=B w=914.3`, uma linha por troca; limiar numa ocorrência | `faixa-tab.txt`, `faixa-phone.txt`, `faixa-avd.txt`; o `h` é a janela com as barras (div. 410) |
+| **A-N3-2** | **atende na N3-PR1**: os 52 dumps de paisagem do build desta PR, **idênticos em dp** à `B5-baseline/` (AVD 18, Tab 16 — **34 de 34**) e ao palco (AVD 9, Tab 9 — **18 de 18**), pelo `apps/native/scripts/g-inv.sh`. O palco contra `B3-referencia-paisagem/`, não contra `W4B3-anexos/dumps-palco/` (div. 401). Vale de novo em **toda** PR de implementação, reproduzindo o estado de dados da base (div. 403) | `G-inv-B5.txt`, `G-inv-palco.txt` |
+| **A-N3-4** | **metade da N3-PR1 atende**: o G-N3 (`apps/native/scripts/g-n3.mjs`) **reprova a `main` de hoje em retrato** — (e) = 1 no tablet, 101 em 11 dumps no celular, dump a dump igual ao B3 do pre-check; as dez `[estimado]` e as duas `[soma]` medidas na ordem da folha, com nove erratas abertas (N3-E3…E11) e a da div. 395 (N3-E12). **Falta**: o G-N3 passar, nas PRs de superfície | `G-N3-main-*.txt`; tabela das doze no `N3-PR1-anexos/README.md` §1 |
+
+A **P2** (tokens por faixa, herança item 7) **não foi decidida** nesta PR — div. 406, com a recomendação. A **P1** (herança item 6) tem a hipótese escrita no `APARATO.md`, sem medida: nenhuma captura de retrato nova nesta PR.
+
