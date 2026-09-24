@@ -23,7 +23,7 @@ Conteúdo desta pasta:
 | **B** | **700–960** dp | **711 × 1054** | tablet em retrato; janela reduzida |
 | **A** | **< 700** dp | **411 × 874** | celular em retrato — desenhada no N3, implementada no **N5** (N3-D0) |
 
-O limite **A | B em 700** é da **N3-D12** (errata da N3-D8, que dizia 600); o cabeçalho da folha ainda diz "600–960" e "< 600" — [div. 393](#9--divergências-e-erratas).
+O limite **A | B em 700** é da **N3-D12** (errata da N3-D8, que dizia 600); o cabeçalho da folha ainda diz "600–960" e "< 600", e a **N3-E1** prevalece sobre ele (§9; div. 393).
 
 O que a folha traz, medido no arquivo congelado:
 
@@ -107,7 +107,7 @@ A Q13 (que a R1·2 devolveu) foi decidida **não**: tudo segue a faixa, e em 600
 
 ## 4 · As medidas a conferir primeiro
 
-A tabela "medidas por origem" da folha (R1·4) tem seis origens. As **`[estimado]`** e as **`[soma]`** são contas do designer, *"as primeiras a conferir"* (folha); a **N3-D23** manda medi-las **primeiro, na ordem da folha**, e diferença **> 4 dp** contra o dump é errata desta folha (N3-E1, N3-E2, …).
+A tabela "medidas por origem" da folha (R1·4) tem seis origens. As **`[estimado]`** e as **`[soma]`** são contas do designer, *"as primeiras a conferir"* (folha); a **N3-D23** manda medi-las **primeiro, na ordem da folha**, e diferença **> 4 dp** contra o dump é errata desta folha (a partir da **N3-E3**; a E1 e a E2 já estão na §9).
 
 ### 4.1 As dez `[estimado]` e as duas `[soma]`, na ordem da folha
 
@@ -150,10 +150,10 @@ A tabela da folha tem uma terceira linha `[soma]` — *"barras novas 144 · 152 
 | `Concluir` | 108 | 109,0 | 1,0 | idem, `picker-concluir` |
 | `Voltar ao início` · `Sair` (S5) | 227 · 118 | 227,4 · 118,5 | 0,4 · 0,5 | `B4-S5-fim-phone-ret.xml` |
 | **`FIM DA SETLIST` em 52** | **543** | **550,2** | **7,2** | `B2-S5-fim-avd.xml` — [div. 395](#9--divergências-e-erratas) |
-| **`Nova setlist`** (`[C]`) | **190** | **152,0** | **38,0** | `B2-S1-setlists-avd.xml`, `criar-setlist` — [div. 394](#9--divergências-e-erratas) |
+| **`Nova setlist`** (`[C]`) | **190** | **152,0** | **38,0** | `B2-S1-setlists-avd.xml`, `criar-setlist` — **N3-E2** (div. 394) |
 | `Apagar setlist` (s2, `[soma]`) | ≈ 169 | 166,7 | 2,3 | `B5-baseline/B5-S2-com-edicao-avd-pai.xml`, `setlist-apagar` (paisagem) |
 
-**Leitura**: das **13** linhas `[captura]` comparáveis, **12** conferem dentro de **1,2 dp** e a 13ª é o `FIM DA SETLIST` (7,2); a `[medido]` `Buscar na biblioteca` confere em 0,0 e a `[soma]` s2 dentro de 2,3. Duas passam de 4 dp e ficam como divergência com destino na N3-PR1 — **não viram errata aqui**, porque a N3-D23 manda a errata nascer do dump da implementação, e esta seção é só antecipação. O divisor que a folha declara para B (2,127) não é o fator do aparelho (2,25), mas os valores conferem — [div. 399](#9--divergências-e-erratas).
+**Leitura**: das **13** linhas `[captura]` comparáveis, **12** conferem dentro de **1,2 dp** e a 13ª é o `FIM DA SETLIST` (7,2); a `[medido]` `Buscar na biblioteca` confere em 0,0 e a `[soma]` s2 dentro de 2,3. Duas passam de 4 dp: `Nova setlist` virou a **N3-E2** (decisão do Marcel antes do merge, §9); `FIM DA SETLIST` fica como divergência com destino na N3-PR1 (div. 395). O divisor que a folha declara para B (2,127) não é o fator do aparelho (2,25), mas os valores conferem — [div. 399](#9--divergências-e-erratas).
 
 ---
 
@@ -236,18 +236,30 @@ Duas mudanças de **posição** que o G6 vai notar e que são desenho, não defe
 
 > **Origem**: **P** premissa do prompt · **D** doc anterior · **A** ambiente, dado real ou defeito do produto · **T** toolchain/aparato · **X** terceiros (`N1-ENCERRAMENTO.md` §7).
 
-**Erratas desta folha: nenhuma.** A primeira nasce do dump da implementação (N3-D23), no formato **N3-E1, N3-E2, …**.
+### Erratas desta folha
+
+*(Decisão do Marcel, 2026-09-24, antes do merge desta PR.)* As próximas nascem do dump da implementação (N3-D23), a partir da **N3-E3**.
+
+**N3-E1 — o limite A | B é 700, não 600** (div. 393). O cabeçalho de `telas.html` diz *"Faixa B (600–960 dp, tablet em pé) … faixa A (< 600, celular em pé)"*; vale a **N3-D12**: **A < 700, B 700–960** (C > 960 não muda). O congelado não se reescreve; **esta errata prevalece sobre a moldura** — e sobre qualquer outro "600" da folha que descreva o limite das faixas.
+
+**N3-E2 — `Nova setlist` mede 152,0 dp, não 190** (div. 394). A folha usa `Nova setlist` = **190** dp (`[C]`, "N2, valor desenhado") na tabela de origem e nas somas da barra de S1; a **N2-E6** mediu **152,0 × 57,8 dp** no Tab S6 (e o dump de retrato do pre-check dá o mesmo 152,0, §4.2). Consequência: a segunda linha da barra de S1 em B soma **145 + 16 + 152 + 16 + 171,1 = 500**, não 538, em 647 úteis — **folga de 147, não 109**. Nada muda no desenho; a implementação usa **152**.
 
 ### Divergências abertas nesta PR, **393 a 399** (o pre-check parou em 392)
 
 | div. | origem | o que | o que foi feito |
 |---|---|---|---|
-| **393** | D | O cabeçalho da folha diz *"Faixa B (600–960 dp, tablet em pé) … faixa A (< 600, celular em pé)"*. É o valor da N3-D8, de antes da Q1; a **N3-D12** move o limite para **700** — e a própria folha, no quadro da revisão 1 e na §11, já trabalha com 700. | **O congelado não se reescreve.** Vale a N3-D12; esta README (§1) e o `N3-REQUISITOS.md` (T3-R1) dizem 700. Quem ler só o cabeçalho da folha lê o número velho. |
-| **394** | D | A tabela de origem da folha dá `Nova setlist` = **190 `[C]`** ("N2, valor desenhado"), e as somas da barra de S1 em B (*"sync 145 + 16 + 190 + 16 + 171,1 = 538"*) e da §11 usam esse número. A **N2-E6** já tinha medido **152,0 × 57,8 dp** no Tab S6, e o dump de retrato do pre-check dá o mesmo **152,0** (§4.2). Δ = 38 dp. | **Não é errata aqui** (N3-D23: a errata nasce do dump da implementação). A consequência só **folga**: a segunda linha da barra B cai de 538 para **500** em 647 úteis. Destino: a **N3-PR1** confirma no dump de B e registra a **N3-E1** se se confirmar. |
+| **393** | D | O cabeçalho da folha diz *"Faixa B (600–960 dp, tablet em pé) … faixa A (< 600, celular em pé)"*. É o valor da N3-D8, de antes da Q1; a **N3-D12** move o limite para **700** — e a própria folha, no quadro da revisão 1 e na §11, já trabalha com 700. | **N3-E1**. O congelado não se reescreve; vale a N3-D12, e esta README (§1) e o `N3-REQUISITOS.md` (T3-R1) dizem 700. |
+| **394** | D | A tabela de origem da folha dá `Nova setlist` = **190 `[C]`** ("N2, valor desenhado"), e as somas da barra de S1 em B (*"sync 145 + 16 + 190 + 16 + 171,1 = 538"*) e da §11 usam esse número. A **N2-E6** já tinha medido **152,0 × 57,8 dp** no Tab S6, e o dump de retrato do pre-check dá o mesmo **152,0** (§4.2). Δ = 38 dp. | **N3-E2** (decisão do Marcel antes do merge). A consequência só **folga**: a segunda linha da barra B cai de 538 para **500** em 647 úteis. A N3-PR1 confere no dump de B, como qualquer medida da folha. |
 | **395** | D | `FIM DA SETLIST` em 52: a folha diz **543** `[captura]`; o nó do dump de retrato mede **550,2** (`B2-S5-fim-avd.xml`) — Δ 7,2 > 4. Causa provável: o rastreamento de .2em põe 0,2 × 52 = 10,4 dp **depois** da última letra, dentro do nó e fora da tinta (550,2 − 10,4 = 539,8). A `[soma]` s1 herda: pelo nó, 550,2 × 32 / 52 = **338,6** (folga de 40,4 em 379, contra os 45 da folha). | Destino: a **N3-PR1** registra contra qual medida o 4 dp se compara (a N3-D23 diz "dumps … no formato do `MEDIDAS.md`", que é o `bounds` do nó) e abre a errata se for o caso. Não muda desenho: 32 continua cabendo. |
 | **396** | P | O prompt pede *"as dez `[estimado]` e as duas `[soma]`"*; a tabela da folha tem **três** linhas `[soma]`. A terceira é o grupo *"barras novas 144 · 152 · 168 · 184 · 200 · faixa 128"*, sem valor único. | A §4.1 lista as duas com valor (s1, s2) e registra a terceira como grupo, conferido pelas alturas nos dumps de cada superfície. |
 | **397** | P | O prompt manda marcar *"o item 'retrato'"* no **`W4-ENCERRAMENTO.md` §7**. A §7 do W4 tem seis itens e nenhum é retrato; o cabeçalho dela diz que *"nada aqui repete o que já está em N3, N4 ou N5 (`N2-ENCERRAMENTO.md` §10.2–§10.8)"*. O item vive só no **`N2-ENCERRAMENTO.md` §10.7.1**. O único item do W4 §7 com destino N3 é o **§7.3** (a hipótese do ◔), já fechado pelo pre-check (H-N3-2). | Marcado só no N2 §10.7.1. **O `W4-ENCERRAMENTO.md` não foi tocado**; se o Marcel quiser o §7.3 riscado como fechado, é uma linha na próxima PR que tocar o arquivo. |
 | **398** | T | O passo *"Congelados — `shasum -c`"* do `gates-nativos` (`.github/workflows/gates.yml:74-79`) itera sobre `DESIGN-V1` e `DESIGN-N2` só. O `SHA256SUMS` do DESIGN-N3 entra na `main` **sem gate que o cobre**. | Esta PR é só docs — mexer no workflow seria código. Destino: **commit 1 da N3-PR1** (o gate vem antes do que ele mede, `V1-ENCERRAMENTO.md:204`), junto com o G-N3. Conferido à mão nesta PR (§6). |
 | **399** | D | A folha converte px das capturas por **2,127** em B e **2,628** em A; o fator dos aparelhos é **2,25** (360/160) e **2,625** (420/160) (`B1-janelas.txt`), e as PNGs de B têm 1600 px de largura. Pelo fator, os `[captura]` de B estariam ~6 % acima do real. | **Medido, sem consequência**: 12 dos 13 `[captura]` comparáveis conferem com os dumps dentro de 1,2 dp, e o 13º (div. 395) tem causa própria (§4.2). O 2,127 é o divisor da imagem que o designer recebeu, não do aparelho; a folha é consistente com ela mesma. Registrado para quem refizer a conta a partir do texto da folha. |
 
-**Próxima divergência livre: 400.**
+### Divergência do commit das erratas, **400**
+
+| div. | origem | o que | o que foi feito |
+|---|---|---|---|
+| **400** | D | A **N3-D23** faz a errata nascer do **dump da implementação** (*"diferença > 4 dp contra a tabela de origem da folha é errata"*). As duas primeiras não nasceram assim: a **N3-E1** não é medida (é o cabeçalho contra a N3-D12), e a **N3-E2** vem de um dump que **já existia** — o da N2-E6, em paisagem no Tab S6, e o de retrato do pre-check —, não de um dump de B da implementação. | Decisão do Marcel, antes do merge: as duas entram agora. A N3-D23 continua valendo para as seguintes (a partir da N3-E3); a N3-PR1 confere o 152,0 no dump de B como qualquer outra medida. |
+
+**Próxima divergência livre: 401.**

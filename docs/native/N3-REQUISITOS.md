@@ -4,7 +4,7 @@
 > **O N3 não teve PRD separado; este documento faz esse papel.** Formato: o do [`PRD-TELA-2.md`](PRD-TELA-2.md) — todo requisito `T3-Rn` cita a fonte e tem *Aceite* verificável.
 > **Fontes**: [`N3-PRECHECK.md`](N3-PRECHECK.md) (N3-D0…D11, §3 a tabela por dump, §8 as perguntas), [`DESIGN-N3/README.md`](DESIGN-N3/README.md) (N3-D12…D25, a folha congelada, as medidas a conferir) e os congelados [`DESIGN-V1/`](DESIGN-V1/) e [`DESIGN-N2/`](DESIGN-N2/) (a faixa C).
 > **Regra de leitura**: `[lido]` = do documento citado; `[derivado]` = conta ou consequência de decisões, com a conta à vista. Nada aqui é `[medido]` novo: as medidas desta PR estão no `DESIGN-N3/README.md` §4.2.
-> **Divergências**: as desta PR estão no `DESIGN-N3/README.md` §9 (**393 a 399**).
+> **Divergências**: as desta PR estão no `DESIGN-N3/README.md` §9 (**393 a 400**).
 
 ---
 
@@ -35,7 +35,7 @@ Fontes: N3-D8 (faixas e canvas), **N3-D12** (limite A \| B em 700), **N3-D24** (
 **T3-R4 — O gate G-N3, contra a folha** `[N3-D10; N3-D23; N3-D9; div. 384]`. Cada estado de B e A é comparado ao **mesmo estado em paisagem** (o critério é defeito **novo** em relação à paisagem, N3-D9), com o instrumento do pre-check (`N3-PRECHECK-anexos/inventario.mjs`):
 - **(e)** texto que está no dump da paisagem e **some** do dump da faixa = **reprova** (critério duro);
 - **(d′)** texto com **menos espaço** que na paisagem = **triagem**, confirmada no PNG antes de virar defeito;
-- **4 dp**: medida do dump **> 4 dp** diferente da tabela de origem da folha = **errata** do `DESIGN-N3` (N3-E1, …), não reprova. As dez `[estimado]` e as duas `[soma]` (`DESIGN-N3/README.md` §4.1) se medem **primeiro, na ordem da folha**; os dumps saem no formato do [`MEDIDAS.md`](N2-BRIEF-anexos/MEDIDAS.md).
+- **4 dp**: medida do dump **> 4 dp** diferente da tabela de origem da folha = **errata** do `DESIGN-N3`, não reprova. As duas primeiras erratas da folha já existem, decididas antes do merge do desenho: **N3-E1** (o limite A | B é 700, não os 600 do cabeçalho) e **N3-E2** (`Nova setlist` = 152,0, não 190; `DESIGN-N3/README.md` §9) — as do dump começam na **N3-E3**. As dez `[estimado]` e as duas `[soma]` (`DESIGN-N3/README.md` §4.1) se medem **primeiro, na ordem da folha**; os dumps saem no formato do [`MEDIDAS.md`](N2-BRIEF-anexos/MEDIDAS.md).
 
 O `(d)` literal (texto terminando em `…`) é zero por construção no RN (div. 384) e não é critério. **O gate vem antes do que ele mede**: ele entra, e **reprova contra a `main` atual em retrato**, antes de qualquer tela mudar.
 *Aceite*: A-N3-4.
@@ -69,7 +69,7 @@ O N3 está pronto quando **todos** abaixo passam, no **Tab S6 e no AVD `octavia_
 
 ## 3. A ordem
 
-**O gate vem antes do que ele mede** (`V1-ENCERRAMENTO.md:204`). A **N3-PR1 é o gate**, sem tela: o commit 1 mede as dez `[estimado]` no aparelho (a primeira errata provável é o `Adicionar`, se não der 137), a invariante de C contra a B5, a linha de log de faixa, e o **G-N3 reprovando contra a `main` atual em retrato**. Na mesma PR entra o `DESIGN-N3` no laço do `shasum -c` do `gates-nativos` (div. 398) e se decide a P2 (tokens por faixa, N3-D25). As PRs de superfície vêm depois.
+**O gate vem antes do que ele mede** (`V1-ENCERRAMENTO.md:204`). A **N3-PR1 é o gate**, sem tela: o commit 1 mede as dez `[estimado]` no aparelho (a próxima errata provável — seria a N3-E3 — é o `Adicionar`, se não der 137), a invariante de C contra a B5, a linha de log de faixa, e o **G-N3 reprovando contra a `main` atual em retrato**. Na mesma PR entra o `DESIGN-N3` no laço do `shasum -c` do `gates-nativos` (div. 398) e se decide a P2 (tokens por faixa, N3-D25). As PRs de superfície vêm depois.
 
 ---
 
