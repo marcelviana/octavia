@@ -1,0 +1,10 @@
+# AVD octavia_tab32 — restaurado 2026-09-24 17:32:39
+global stay_on_while_plugged_in=1
+system accelerometer_rotation=1
+system user_rotation=0
+global airplane_mode_on=1
+global wifi_on=0
+global mobile_data=0
+reverse:  
+ping: connect: Network is unreachable
+sessão: perdida nesta sessão pelo S0 (mock 401); volta no próximo boot — o AVD subiu com -no-snapshot-save

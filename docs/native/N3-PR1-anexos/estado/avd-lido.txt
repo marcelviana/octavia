@@ -1,0 +1,15 @@
+# AVD octavia_tab32 — lido 2026-09-24 17:09:12
+global stay_on_while_plugged_in=1
+system accelerometer_rotation=1
+system user_rotation=0
+global airplane_mode_on=1
+global wifi_on=0
+global mobile_data=0
+reverse:  
+    versionName=0.0.1
+    lastUpdateTime=2026-09-24 14:00:01
+DevLauncherApp-BridgelessReactNativeDevBundle.js
+octavia-<uid>
+profileInstalled
+Physical size: 2560x1600
+Physical density: 360

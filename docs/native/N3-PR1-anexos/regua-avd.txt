@@ -1,0 +1,23 @@
+regua t="FIM DA SETLIST" s=fim-32 w=338.7
+regua t="Adicionar" s=faixa w=65.8
+regua t="Apagar" s=faixa w=49.8
+regua t="Apagar setlist" s=faixa w=96.9
+regua t="nada mudou desde que você abriu" s=motivo w=237.8
+regua t="sem conexão" s=chip w=81.3
+regua t="última sincronização agora" s=chip w=164.4
+regua t="sem conexão · última sincronização agora" s=chip w=253.8
+regua t="Sem conexão: dá para abrir e tocar o que está no aparelho, não para criar setlist. O controle volta com a rede." s=aviso w=747.6
+regua t="Reordenar · Ensaio de retrato" s=reordenar-titulo w=605.8
+regua t="Nesta setlist · Ensaio de retrato" s=regua-picker w=293.3
+regua t="6 resultados" s=regua-picker w=106.7
+regua t="já na setlist · 2×" s=marca w=92.9
+regua t="Tentar de novo" s=picker-alvo w=103.1
+regua t="Adicionar música" s=faixa w=118.7
+regua t="Reordenar" s=faixa w=73.3
+regua t="Renomear e datar" s=faixa w=123.6
+regua t="Adicionar" s=picker-alvo w=65.8
+regua t="a setlist precisa de um nome" s=motivo w=197.8
+regua t="sincronizado agora" s=chip w=116.9
+regua t="FIM DA SETLIST" s=fim w=550.2
+regua t="já na setlist" s=marca w=70.2
+regua t="token que não existe" s=x-desconhecido w=-

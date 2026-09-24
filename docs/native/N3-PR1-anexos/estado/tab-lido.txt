@@ -1,0 +1,21 @@
+# Tab S6 — lido 2026-09-24 17:47:18
+global stay_on_while_plugged_in=0
+system accelerometer_rotation=1
+system user_rotation=0
+global airplane_mode_on=0
+global wifi_on=1
+global mobile_data=1
+reverse:  
+    lastUpdateTime=2026-09-23 19:11:34
+cache:
+WebView
+http-cache
+image_cache
+octavia-<uid>
+
+files:
+DevLauncherApp-BridgelessReactNativeDevBundle.js
+octavia-<uid>
+profileInstalled
+profileinstaller_profileWrittenFor_lastUpdateTime.dat
+rList

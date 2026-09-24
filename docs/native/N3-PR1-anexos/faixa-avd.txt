@@ -1,0 +1,4 @@
+# AVD octavia_tab32 — boot deitado (17:10) e rotação em pé → deitado (17:13), linhas OCTAVIA: faixa= verbatim
+09-24 17:10:02.236 21307 21373 I ReactNativeJS: OCTAVIA: faixa=C w=1137.8 h=711.1
+09-24 17:13:01.671 21307 21373 I ReactNativeJS: OCTAVIA: faixa=B w=711.1 h=1137.8
+09-24 17:13:05.415 21307 21373 I ReactNativeJS: OCTAVIA: faixa=C w=1137.8 h=711.1

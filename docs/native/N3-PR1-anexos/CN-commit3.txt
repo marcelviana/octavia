@@ -1,0 +1,52 @@
+== div. 398 — shasum do DESIGN-N3
+  CP-S2: exit 0 ✓
+      telas.html: OK
+      telas.pdf: OK
+  CN-S1: exit 1 ✓
+      telas.html: FAILED
+      telas.pdf: OK
+      shasum: WARNING: 1 computed checksum did NOT match
+  CN-S3: exit 0 ✓
+      80:        for d in docs/native/DESIGN-V1 docs/native/DESIGN-N2 docs/native/DESIGN-N3; do
+== G-inv
+  CN-I0: exit 2 ✓
+      g-inv.sh: falta <dir-da-base>
+      uso: sh apps/native/scripts/g-inv.sh <dir-da-base> <dir-dos-novos>
+           da RAIZ do repositório. Um gate de invariância sem par não mede nada.
+  CP-I1: exit 0 ✓
+      G-inv: 34 de 34 idênticos
+      G-inv: IDÊNTICO EM DP ✓
+  CN-I2: exit 1 ✓
+        ✗ S2-com-edicao-avd-pai: DIFERENTE — base 174 nós, novo 174 (CP-S2-com-edicao-avd-pai.xml)
+            base: android.widget.Button picker-abrir [24.0,119.6][212.9,167.6]
+            novo: android.widget.Button picker-abrir [24.9,119.6][213.8,167.6]
+        ✓ S2-com-edicao-aviso-sem-rede-avd-pai: idêntico (157 nós)
+      G-inv: 33 de 34 idênticos
+      G-inv: REPROVA ✗
+  CN-I3: exit 1 ✓
+        ✗ S1-setlists-tab-pai: SEM DUMP NOVO — a invariante é para toda tela e estado da base
+  CN-I4: exit 1 ✓
+        ✗ S1-setlists-tab-pai: o dump novo não está em paisagem (RAIZ 711.1 1089.8) — CP-S1-setlists-tab-pai.xml
+== G-N3
+  CN-N1: exit 1 ✓
+      (e) TEXTO QUE SOME — REPROVA: 1
+      (d′) MENOS ESPAÇO QUE NA PAISAGEM — TRIAGEM (confirmar no PNG): 267
+      4 dp CONTRA A FOLHA — ERRATA CANDIDATA: 4
+      G-N3: REPROVA ✗ — 1 texto(s) somem da faixa em 1 dump(s)
+  CN-N2: exit 1 ✓
+      (e) TEXTO QUE SOME — REPROVA: 101
+      (d′) MENOS ESPAÇO QUE NA PAISAGEM — TRIAGEM (confirmar no PNG): 183
+      4 dp CONTRA A FOLHA — ERRATA CANDIDATA: 2
+      G-N3: REPROVA ✗ — 101 texto(s) somem da faixa em 11 dump(s)
+      105 dumps com referência no B3-inventario.jsonl; 0 com contagem diferente
+  CT-N3: exit 0 ✓
+  CP-N4: exit 0 ✓
+      G-N3 — 52 par(es) (paisagem × faixa); medidas: docs/native/DESIGN-N3/medidas.json (tolerância 4 dp)
+      (e) TEXTO QUE SOME — REPROVA: 0
+      (d′) MENOS ESPAÇO QUE NA PAISAGEM — TRIAGEM (confirmar no PNG): 0
+      4 dp CONTRA A FOLHA — ERRATA CANDIDATA: 0
+      G-N3: nenhum texto some ✓ (d′ e 4 dp não reprovam: triagem e errata)
+  CN-N5: exit 2 ✓
+      g-n3.mjs: falta --faixa <dir>
+
+cn-n3pr1: todos os controles como esperado ✓

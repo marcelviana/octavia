@@ -15,9 +15,20 @@
 # diferença de CONTAGEM de nós (um nó que some ou nasce) também reprova.
 #
 # O QUE NÃO COMPARA. `enabled`/`clickable` (estado, não geometria); os nós de
-# outro pacote (teclado, barra do sistema). O botão do dev client (ComposeView,
-# mesmo pacote) ENTRA, como no W4-b3: é fixo, e um dump de release não se
-# compara com um de dev client (`APARATO.md`).
+# outro pacote (teclado, barra do sistema); e a SUBÁRVORE do `ComposeView` — o
+# botão "Tools" do dev client, mesmo pacote, que só existe no dev client e muda
+# de tamanho sozinho (expande com o rótulo "Tools" por alguns segundos depois de
+# carregar o bundle; medido na N3-PR1: 84 × 126 na base, 84 × 84 no novo, no
+# mesmo estado). O `inventario.mjs` do pre-check e o `g-n3.mjs` já o tiram da
+# conta pela mesma razão (`APARATO.md`, "O dev client…"). O `dp.mjs` do W4-b3
+# o incluía; lá os dois lados eram capturados na mesma sessão.
+#
+# O QUE O DUMP NÃO SEPARA, E O ARNÊS TEM DE REPRODUZIR. Geometria que depende
+# de ESTADO DE DADOS entra na comparação e reprova, porque não há como o gate
+# distinguir "o layout mudou" de "o dado mudou": o arco do ◔ desenha a fração
+# de arquivos no disco ("1 de 2" × "0 de 2"), e a largura de "há 1 min" ×
+# "agora" é texto vivo. O remédio é o arnês capturar no MESMO estado da base
+# (os arquivos que ela tinha, o tempo desde o sync) — ver `N3-PR1-anexos/`.
 #
 # PAREAMENTO. Pelo nome, que é afirmação (caso 23): `<PREFIXO>-<resto>.xml`, e a
 # chave é `<resto>` — `B5-S1-setlists-avd-pai.xml` na base casa com
@@ -49,10 +60,15 @@ ls "$BASE"/*.xml > /dev/null 2>&1 || uso "nenhum .xml em $BASE"
 # (larg alt) para a guarda de orientação.
 dp() {
   case "$(basename "$1")" in *phone*) FT=2.625 ;; *) FT=2.25 ;; esac
-  grep -o '<node [^>]*>' "$1" | awk -v F="$FT" '
+  grep -oE '<node [^>]*>|</node>' "$1" | awk -v F="$FT" '
     function at(k,   r) { if (match($0, " " k "=\"[^\"]*\"")) { r = substr($0, RSTART + length(k) + 3, RLENGTH - length(k) - 4); return r } return "" }
     function d(v) { v = v / F; return sprintf("%.1f", (v >= 0 ? int(v * 10 + 0.5) : -int(-v * 10 + 0.5)) / 10) }
+    $0 == "</node>" { prof--; if (fora && prof < fora) fora = 0; next }
     {
+      aberto = ($0 !~ /\/>$/)
+      if (aberto) prof++
+      if (fora) next
+      if (at("class") ~ /ComposeView$/) { if (aberto) fora = prof; next }
       if (at("package") != "rocks.octavia.app") next
       split(at("bounds"), b, /[^0-9-]+/)
       id = at("resource-id"); sub(/^.*:id\//, "", id); if (id == "") id = "-"

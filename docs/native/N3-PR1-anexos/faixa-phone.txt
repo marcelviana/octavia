@@ -1,0 +1,6 @@
+# octavia_phone — boot em retrato (17:33:18) e depois deitado → em pé (rot.sh 1, 0)
+09-24 17:33:18.086  2847  2911 I ReactNativeJS: OCTAVIA: faixa=A w=411.4 h=914.3
+09-24 17:33:18.126  2847  2911 I ReactNativeJS: OCTAVIA: login-screen
+# 17:33:38, rot.sh 1:
+09-24 17:33:38.422  2847  2911 I ReactNativeJS: OCTAVIA: faixa=B w=914.3 h=411.4
+09-24 17:34:03.519  2847  2911 I ReactNativeJS: OCTAVIA: faixa=A w=411.4 h=914.3
