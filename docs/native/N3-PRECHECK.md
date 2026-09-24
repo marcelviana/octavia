@@ -14,7 +14,7 @@
 > citado; `[derivado]` = conta feita sobre números medidos, com a conta à vista;
 > `[lido]` = tirado do documento citado; `[hipótese]` = não medido, com dono em §6.
 > **Divergências**: a maior na `main` era a **381** nas duas formas (`div. nnn` e
-> `| **nnn** |`); este pre-check vai de **382 a 390** (§9).
+> `| **nnn** |`); este pre-check vai de **382 a 391** (§9).
 > **Anexos**: [`N3-PRECHECK-anexos/`](N3-PRECHECK-anexos/README.md).
 
 ---
@@ -662,7 +662,7 @@ no S0, quando o logout e o login forem passo combinado.
 
 ---
 
-## 9. Divergências — 382 a 390
+## 9. Divergências — 382 a 391
 
 | div. | origem | o que | o que foi feito |
 |---|---|---|---|
@@ -675,6 +675,8 @@ no S0, quando o logout e o login forem passo combinado.
 | **388** | P | N3-D1: *"paisagem de celular cai na faixa 600–900"*: o `octavia_phone` deitado tem **914,3 dp** de largura (1080 × 2400 px, 420) — pela largura, cai na faixa **> 900**, com 371,4 dp de altura | medido e capturado como pedido; a consequência (S0 sem login, folha sem botões) está em §4.3; a regra é a Q1/Q2 |
 | **389** | T | o dump do S3c do AVD em paisagem saiu com o **mesmo sha** do S3b-claro: com o auto-scroll animando, o `uiautomator dump` falha e o `pull` trouxe o arquivo anterior do `/sdcard` | o `cap.sh` passou a apagar o arquivo antes, tentar três vezes e acusar `DUMP FALHOU`; S3c refeito; varredura de sha repetido em todos os XML = **0** |
 | **390** | D | `StageScreen.tsx:467` cita `App.tsx:206` para o `SafeAreaView`; ele está em `App.tsx:295` `[medido: faseA/A1.md §1.2]` | registrada; a próxima PR que tocar o `StageScreen.tsx` corrige |
+
+| **391** | P | *"`gh pr checks` (APK skipped — só docs + `APARATO.md`)"*: na #324 o APK **não aparece nem como skipped** — o workflow `native` nem dispara, porque o `pull_request` dele tem filtro de `paths` (`apps/native/**`, `.github/workflows/native.yml`, `.github/workflows/gates.yml`, `pnpm-workspace.yaml`) e esta PR só toca `docs/`. `gh pr checks 324`: `Vercel` pass, `Vercel Preview Comments` pass, `build` pass 3m53s, `gates-nativos` pass 11s; `gh run list --branch n3/precheck` → só `gates` e `CI` | registrada; nada a fazer — é o filtro do W4-b2 funcionando antes do H1. O "skipped" do prompt é o caso de PR que toca `apps/native/` sem mudar nativo |
 
 ---
 

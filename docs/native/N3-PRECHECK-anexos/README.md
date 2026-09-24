@@ -2,7 +2,7 @@
 
 **Rastro.** A fonte é o [`N3-PRECHECK.md`](../N3-PRECHECK.md); onde este índice e o
 documento divergirem, vale o documento. Árvore `../octavia-n3-pre`, branch
-`n3/precheck`, sobre `origin/main` = `aa91b5d`. Divergências **382–390**.
+`n3/precheck`, sobre `origin/main` = `aa91b5d`. Divergências **382–391**.
 
 **Nenhum texto de música de terceiro**: todo dump e PNG é do **mock**, com a fixture
 escrita por este pre-check (`instrumentos/fixture.py`: "Quando a noite chega…
