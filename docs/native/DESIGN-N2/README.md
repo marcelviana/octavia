@@ -433,6 +433,21 @@ O aceite do §3 está em [`N2-PR7-anexos/aparato.md`](../N2-PR7-anexos/aparato.m
 
 **N2-E23 — apagar com 200 e a releitura falha: S1 diz, com o nome, que a lista pode ainda mostrar a setlist.** O congelado não previa o caso (div. 333). O servidor CONFIRMOU o `DELETE`; o que falhou foi reler, então o cache não mudou (N2-D22) e a setlist apagada continua na lista de S1 até uma leitura. Decisão do Marcel: **uma chave nova, `apagada-nao-relida`** = *"Não foi possível recarregar a lista, então ela pode ainda aparecer abaixo."*, e S1 monta `<nome> foi apagada. ` na frente — construção **espelhada** de `salvo-nao-relido-s1` (div. 227: nome de setlist é dado, não texto), com a razão escrita na chave; a segunda oração diz o contrário da do criar porque o caso é o contrário. A linha de aviso de S1 traz `Tentar recarregar` (`resync reason=reopen`); relida, o aviso some com a setlist. A ordem do §3.3 continua: **sem rede vence tudo**, e o aviso novo fica no degrau do "salvo, não relido". `[medido]` Tab S6 e AVD, mock `delete-releitura-500`: `write op=delete … status=200` + `resync … reason=write op=delete status=500`, e o dump `19` mostra `Ensaio do picker foi apagada. Não foi possível recarregar a lista, então ela pode ainda aparecer abaixo.` + `Tentar recarregar` **com** `setlist-aaaaaaaa` ainda na lista; `Tentar recarregar` → `resync reason=reopen … 200 setlists=1`, e o dump `20` não tem nem o aviso nem a setlist (`N2-PR7-anexos/aparelho-333.txt`).
 
+### Errata do N3 (as faixas de largura)
+
+**N2-E24 — a tela 2 ganha as faixas B e A em [`DESIGN-N3/`](../DESIGN-N3/).** *(Decisão do Marcel, 2026-09-24, no aval do desenho do N3; errata SEM redesenhar moldura, pelo precedente da E16.)* As 18 molduras desta folha são a **faixa C** (> 960 dp) e **não mudam** (N3-D3). Nas faixas novas — B de 700 a 960 dp, desenhada em 711 × 1054; A abaixo de 700, em 411 × 874 (N3-D12) —, o que muda:
+
+| onde | o que esta folha diz (faixa C) | o que passa a valer em B e A |
+| --- | --- | --- |
+| faixa de edição de S2 (N2-D26) | 64 dp, quatro rótulos longos (788,5 dp) | **B**: 64 dp com **rótulos curtos** `Adicionar` e `Apagar` — frases existentes, nome acessível longo (`Adicionar música`, `Apagar setlist`) (N3-D17); soma 683,5 de 711. **A**: **duas linhas de 48 (128)**, os dois grupos de C, sem menu (N3-D16) |
+| folha criar/editar | 720 × 420, topo 100 | **663** × conteúdo (topo 96) em B; **379** × conteúdo em A, cartão ancorado no topo com margem 16, acima do teclado, sem gesto de arrastar (N3-D20); em A o motivo do inativo sobe para uma linha própria |
+| modo de reordenar | barra de 88, uma linha | barra de **144** em B (título / ações) e **200** em A (título em duas linhas / ações / motivo); alça de 48 × 72 nas duas |
+| picker | linha de 80 | **passa em B**; em A a linha de resultado tem **dois andares** (124: o que se lê em cima, o que se decide embaixo; ≈ 170 na falha), régua em duas linhas, rodapé de 64 (198 com aviso) |
+| diálogo de apagar | botões lado a lado | **passa em B** (620 em 711); em A, **empilhados**, `Manter a setlist` em cima, `Apagar` embaixo (N3-D22) |
+| linha de aviso (§3.3) | 48 dp, uma linha | **cresce**: 48 mínimos, +20 por linha de texto, **nunca elide**; em A a ação desce para baixo do texto. Regra do componente, **válida também em C** — onde hoje todas as frases cabem numa linha e nada muda no dump (N3-D19; a invariante T3-R2 prova) |
+
+**O `SHA256SUMS` do N2 não muda com esta errata**; os dois congelados seguem conferindo. Nenhum `testID` novo — a posição de cada um por faixa está na seção "testIDs" do `DESIGN-N3/telas.html`. Divs. 393–399 do `DESIGN-N3/README.md` §9.
+
 **Próxima divergência livre: 335.**
 
 Divergências abertas nesta PR, **221 a 225** (o W4-a parou em 220):

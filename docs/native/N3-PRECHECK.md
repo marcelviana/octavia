@@ -46,6 +46,15 @@
 O aval veio em cinco itens para quatro números. A N3-D11 junta os itens 4 e 5
 (div. 392).
 
+### 0.2.1 Decisões do desenho (Marcel, 2026-09-24) — N3-D12…D25 → [`DESIGN-N3/README.md` §2](DESIGN-N3/README.md#2--decisões-do-marcel-no-desenho--n3-d12d25)
+
+> Acrescentado na PR do desenho congelado. As catorze decisões do aval do desenho
+> estão verbatim no `DESIGN-N3/README.md` §2; os requisitos e aceites que elas geram,
+> no [`N3-REQUISITOS.md`](N3-REQUISITOS.md). Duas delas corrigem este pre-check:
+> **N3-D12** é errata da N3-D8 — o limite A | B passa de 600 para **700** dp (B vale
+> 700–960), e com ele o "< 600" da N3-D10 (degrau de display) passa a ler "< 700";
+> **N3-D24** fixa que tudo decide pela faixa. Este §0 não é reescrito.
+
 ### 0.3 Premissas do prompt, com veredito
 
 | # | premissa | veredito |

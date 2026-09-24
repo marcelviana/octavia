@@ -632,7 +632,7 @@ A numeração abaixo é estável — cite por **§10.<bloco>.<n>** (a lição da
 
 | # | item |
 |---|---|
-| 1 | o tablet em **retrato** precisa de composição própria — os elementos se encavalam; o canvas do N1/N2 é só paisagem (N2-D25) |
+| 1 | o tablet em **retrato** precisa de composição própria — os elementos se encavalam; o canvas do N1/N2 é só paisagem (N2-D25) — **N3 em curso** (decidido pelo Marcel, N3-D6): pre-check #324 ([`N3-PRECHECK.md`](N3-PRECHECK.md); "se encavalam" medido falso na forma, H-N3-7) e desenho congelado em [`DESIGN-N3/`](DESIGN-N3/) (N3-D12…D25); requisitos em [`N3-REQUISITOS.md`](N3-REQUISITOS.md) |
 | 2 | app **iOS** |
 
 ### 10.8 Próximo bloco decidido
