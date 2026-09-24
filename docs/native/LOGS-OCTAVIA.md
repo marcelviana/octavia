@@ -55,6 +55,8 @@
 | placeholder | `placeholder kind=no-body\|no-key\|not-string\|unknown-type\|content-missing` · `placeholder kind=file-missing name=<seg>` — **E8(1)** | T1-R7(b)(c)(d), R11, R26 | A6, A8, A13 |
 | rede | `net online\|offline` | mudança de estado (`expo-network`, N1-D11) | A5, A19 |
 | rotação | `rotation=landscape\|portrait n=<i>/<N>` | T1-R27 (N1-D12: rotação preserva posição). **Só na MUDANÇA de orientação**, nunca na montagem do palco — implementada na N1-PR8 (**E7**) | A14 |
+| **faixa** | `faixa=A\|B\|C w=<dp> h=<dp>` — **N3-PR1** | T3-R1: a decisão da faixa pela largura útil da janela (`src/faixa.ts`, o único ponto que conhece 700 e 960). Sai **no boot** (a primeira medida da janela, na raiz do app — antes de qualquer tela, inclusive no S0) e a cada **troca de orientação ou de faixa**; `w`/`h` são a janela do `useWindowDimensions` em dp, uma casa. Não substitui a `rotation=`, que continua só no palco e só na mudança de orientação | A-N3-1 |
+| **régua de dev** | `regua t="<texto>" s=<token> w=<dp\|->` — **N3-PR1, só no dev client** | a régua de desenvolvimento (`src/screens/ReguaDeDev.tsx`, `exp+octavia://regua?t=…&s=…`) mediu a largura do texto com o estilo `<token>` (`onLayout`); `w=-` quando o token não existe. **Exceção declarada à regra 1**: `t` vai entre aspas e pode ter espaço — é a frase medida, e nunca corpo de música (regra 2: só frases do conjunto fechado e da folha). Fora do release pelo `__DEV__` | A-N3-4 (as doze medidas) |
 | wake lock | `keepawake on\|off` | entrar/sair do palco (T1-R33) | A16 |
 | palco restaurado | `stage restore n=<i>/<N>` | o palco reganha foco vindo de uma tela EMPILHADA (índice, busca, palco avulso) — não na montagem inicial, não no palco avulso — **N1-D17** | A11, A14 |
 | pdf | `pdf-render pages=<n> src=disk` · `pdf-page n=<i>/<N>` · `pdf-error <msg>` | herdado do N0 (T1-R26) | A13 |
@@ -913,3 +915,12 @@ Hoje há dois segmentos: o **regime 1**, antes da #284, e o **regime 2**, desde 
 #284, que é a referência. O corte é o `9806e44` (N1-PR3a): os módulos nativos da
 navegação e das fontes entraram, e o job passou de ~6–7 min a ~12 min. **O
 workflow em si não mudou ali** (div. 365).
+
+## Errata N3-PR1 (2026-09-24) — dois gates que leem DUMP, não código
+
+Os gates desta série liam código (G1, G2/G3, a20, ícones). O N3 é o primeiro bloco cujo aceite é **geometria**, e geometria só existe no dump do aparelho. Os dois gates novos leem `uiautomator dump` e rodam **à mão**, sobre os dumps que a PR anexa — **não estão no CI** (o CI não tem aparelho); o `cn-n3pr1.sh` é o controle deles.
+
+**G-inv** (`apps/native/scripts/g-inv.sh <dir-base> <dir-novos>`, T3-R2). *Mede*: nó a nó, na ordem do dump, `classe resource-id bounds` em dp (0,1 dp), para **toda** chave da base — chave sem dump novo reprova, raiz fora de paisagem reprova. *Não mede*: texto (só o lugar que ele ocupa), `enabled`/`clickable`, nós de outro pacote, o botão do dev client (div. 402). *Não separa*: geometria que é **dado** — o arco do ◔ e a largura de um texto vivo reprovam igual a um layout mudado; quem separa é o arnês, reproduzindo o estado da base (div. 403).
+
+**G-N3** (`apps/native/scripts/g-n3.mjs --pai <dir>… --faixa <dir>`, T3-R4). *Mede*, por par (paisagem, faixa) do mesmo estado: **(e)** texto que some da faixa — **reprova**; **(d′)** texto com menos espaço (> 1 dp mais estreito ou > 40 % mais alto) — **triagem**, confirmar no PNG; **4 dp** contra o `DESIGN-N3/medidas.json`, na faixa em que a folha declara a medida — **errata candidata**. (e) e (d′) são os do `inventario.mjs` do pre-check, copiados; o controle é a contagem igual à do `B3-inventario.jsonl` em 105 dumps. *Não mede*: o `(d)` literal (zero por construção no RN, div. 384); sobreposição, corte e alvo < 48 (o (a)/(b)/(c) do pre-check — o G5/G6 da T3-R5 são outro gate); medida sem nó próprio no dump (`casa: null` — a régua de dev mede).
+

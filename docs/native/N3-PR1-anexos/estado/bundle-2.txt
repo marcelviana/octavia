@@ -1,0 +1,7 @@
+# bundle servido 2026-09-24 17:47:45 — antes do Tab
+localhost:8788 1
+octavia.rocks 0
+faixa= 3
+regua t= 3
+lru over 2
+jaVoando.guaranteed 1

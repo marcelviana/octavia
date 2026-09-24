@@ -1,0 +1,25 @@
+# as doze, na ordem da folha (DESIGN-N3/README.md §4.1)
+fim-32	FIM DA SETLIST
+faixa	Adicionar
+faixa	Apagar
+faixa	Apagar setlist
+motivo	nada mudou desde que você abriu
+chip	sem conexão
+chip	última sincronização agora
+chip	sem conexão · última sincronização agora
+aviso	Sem conexão: dá para abrir e tocar o que está no aparelho, não para criar setlist. O controle volta com a rede.
+reordenar-titulo	Reordenar · Ensaio de retrato
+regua-picker	Nesta setlist · Ensaio de retrato
+regua-picker	6 resultados
+marca	já na setlist · 2×
+picker-alvo	Tentar de novo
+# controles régua × dump (o mesmo texto já desenhado numa tela, B5 em paisagem)
+faixa	Adicionar música
+faixa	Reordenar
+faixa	Renomear e datar
+picker-alvo	Adicionar
+motivo	a setlist precisa de um nome
+chip	sincronizado agora
+fim	FIM DA SETLIST
+marca	já na setlist
+x-desconhecido	token que não existe

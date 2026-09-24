@@ -1,0 +1,1 @@
+regua t="Ensaio de retrato" s=reordenar-titulo w=359.1

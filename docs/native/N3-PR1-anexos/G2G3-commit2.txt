@@ -1,0 +1,16 @@
+G2 — testIDs  antes=79  depois=80
+  G2: antes ⊆ depois ✓
+  testID NOVOS:
+      apps/native/src/screens/ReguaDeDev.tsx	testID="regua-texto"
+G3 — declarações: do corpo da PR (GATES_DECL=<scratch>/decl)
+G3 — linhas log( antes=65  depois=68
+      ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+        (nenhuma)
+      REMOÇÕES DECLARADAS (linha → REMOVIDA: razão; N2-D34):
+        (nenhuma)
+      — nenhuma linha de log pode sumir nesta PR
+  G3: nenhuma linha sumiu ✓
+  linhas NOVAS (declarar no commit e no catálogo):
+      apps/native/src/screens/ReguaDeDev.tsx	<Text style={styles.erro} onLayout={() => log(`regua t="${pedido.t}" s=${pedido.s} w=-`)}>
+      apps/native/src/screens/ReguaDeDev.tsx	log(`regua t="${pedido.t}" s=${pedido.s} w=${e.nativeEvent.layout.width.toFixed(1)}`)
+      apps/native/src/useFaixa.ts	log(`faixa=${faixa} w=${width.toFixed(1)} h=${height.toFixed(1)}`)

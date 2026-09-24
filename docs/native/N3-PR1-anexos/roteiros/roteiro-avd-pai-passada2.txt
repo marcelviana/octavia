@@ -1,0 +1,18 @@
+N3P1-S1-setlists-avd-pai mCurrentRotation=ROTATION_0 png=227158 xml=40520 179ed0d01bb5
+17:26:58 avião=1 (emulator-5554)
+Traceback (most recent call last):
+  File "<scratch>/passada2.py", line 11, in <module>
+    R.aviao(s, True); R.esperar(s, rid="aviso-motivo"); R.esperar(s, texto="sem conexão · última", prazo=40)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "~/projects/octavia-n3-pr1/docs/native/N3-PRECHECK-anexos/instrumentos/roteiro.py", line 60, in esperar
+    raise RuntimeError(f"ESPERA ESGOTADA: {rid or texto!r}")
+RuntimeError: ESPERA ESGOTADA: 'sem conexão · última'
+17:28:07 avião=0 (emulator-5554)
+17:28:26 avião=1 (emulator-5554)
+N3P1-S1-aviso-sem-rede-avd-pai mCurrentRotation=ROTATION_0 png=257365 xml=42982 018ee101e1f1
+17:29:00 avião=0 (emulator-5554)
+17:29:02 mock modo=500-pagina-1 vazio=False
+espera 30s para o cache ter 1 min
+N3P1-S1-S1e-falha-com-cache-avd-pai mCurrentRotation=ROTATION_0 png=254965 xml=44543 dd1e04be3f52
+17:30:02 mock modo=normal vazio=False
+capturas=2

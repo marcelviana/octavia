@@ -1,0 +1,11 @@
+# AVD octavia_phone (emulator-5554) — lido 2026-09-24 17:33:03
+global stay_on_while_plugged_in=1
+system accelerometer_rotation=0
+system user_rotation=0
+global airplane_mode_on=0
+global wifi_on=1
+global mobile_data=1
+reverse:  
+    lastUpdateTime=2026-09-23 21:10:37
+Physical size: 1080x2400
+Physical density: 420

@@ -1,0 +1,281 @@
+G-N3 — 52 par(es) (paisagem × faixa); medidas: docs/native/DESIGN-N3/medidas.json (tolerância 4 dp)
+
+(e) TEXTO QUE SOME — REPROVA: 1
+  B2-S1-aviso-sem-rede-avd: 1 — "SETLISTS"
+
+(d′) MENOS ESPAÇO QUE NA PAISAGEM — TRIAGEM (confirmar no PNG): 267
+  B2-S1-S1e-falha-com-cache-avd: "SETLISTS" 501.3 → 74.7 dp (altura ×2.7)
+  B2-S1-S1e-falha-com-cache-avd: "ENSAIO DE RETRATO" 544 → 117.3 dp
+  B2-S1-S1e-falha-com-cache-avd: "sem data" 60.4 → 17.3 dp
+  B2-S1-S1e-falha-com-cache-avd: "8 músicas" 65.8 → 20.4 dp
+  B2-S1-S1e-falha-com-cache-avd: "SHOW DE SEXTA NO TEATRO DA FIXTURE" 762.2 → 335.1 dp
+  B2-S1-S1e-falha-com-cache-avd: "2026-09-26" 80.4 → 64.4 dp
+  B2-S1-S1e-falha-com-cache-avd: "Teatro da fixture" 108.4 → 88 dp
+  B2-S1-S1e-falha-com-cache-avd: "4 músicas" 65.8 → 52 dp
+  B2-S1-S1e-falha-com-cache-avd: "SETLIST DE NOME BEM COMPRIDO PARA MEDIR " 544 → 117.3 dp
+  B2-S1-S1e-falha-com-cache-avd: "sem data" 60.4 → 17.3 dp
+  B2-S1-S1e-falha-com-cache-avd: "2 músicas" 65.8 → 20.4 dp
+  B2-S1-S1e-falha-com-cache-tab: "SETLISTS" 501.3 → 74.7 dp (altura ×2.7)
+  B2-S1-S1e-falha-com-cache-tab: "ENSAIO DE RETRATO" 544 → 117.3 dp
+  B2-S1-S1e-falha-com-cache-tab: "sem data" 60.4 → 17.3 dp
+  B2-S1-S1e-falha-com-cache-tab: "8 músicas" 65.8 → 20.4 dp
+  B2-S1-S1e-falha-com-cache-tab: "SHOW DE SEXTA NO TEATRO DA FIXTURE" 762.2 → 335.1 dp
+  B2-S1-S1e-falha-com-cache-tab: "2026-09-26" 80.4 → 64.4 dp
+  B2-S1-S1e-falha-com-cache-tab: "Teatro da fixture" 108.4 → 88 dp
+  B2-S1-S1e-falha-com-cache-tab: "4 músicas" 65.8 → 52 dp
+  B2-S1-S1e-falha-com-cache-tab: "SETLIST DE NOME BEM COMPRIDO PARA MEDIR " 544 → 117.3 dp
+  B2-S1-S1e-falha-com-cache-tab: "sem data" 60.4 → 17.3 dp
+  B2-S1-S1e-falha-com-cache-tab: "2 músicas" 65.8 → 20.4 dp
+  B2-S1-S1f-vazia-avd: "SETLISTS" 534.2 → 107.1 dp (altura ×1.9)
+  B2-S1-S1f-vazia-tab: "SETLISTS" 534.2 → 107.1 dp (altura ×1.9)
+  B2-S1-aviso-sem-rede-avd: aviso-motivo 747.6 → 615.1 dp (altura ×1.9)
+  B2-S1-aviso-sem-rede-avd: "ENSAIO DE RETRATO" 544 → 117.3 dp
+  B2-S1-aviso-sem-rede-avd: "sem data" 60.4 → 17.3 dp
+  B2-S1-aviso-sem-rede-avd: "8 músicas" 65.8 → 20.4 dp
+  B2-S1-aviso-sem-rede-avd: "SHOW DE SEXTA NO TEATRO DA FIXTURE" 762.2 → 335.1 dp
+  B2-S1-aviso-sem-rede-avd: "2026-09-26" 80.4 → 64.4 dp
+  B2-S1-aviso-sem-rede-avd: "Teatro da fixture" 108.4 → 88 dp
+  B2-S1-aviso-sem-rede-avd: "4 músicas" 65.8 → 52 dp
+  B2-S1-aviso-sem-rede-avd: "SETLIST DE NOME BEM COMPRIDO PARA MEDIR " 544 → 117.3 dp
+  B2-S1-aviso-sem-rede-avd: "sem data" 60.4 → 17.3 dp
+  B2-S1-aviso-sem-rede-avd: "2 músicas" 65.8 → 20.4 dp
+  B2-S1-aviso-sem-rede-tab: "SETLISTS" 534.2 → 107.1 dp (altura ×1.9)
+  B2-S1-aviso-sem-rede-tab: aviso-motivo 747.6 → 615.1 dp (altura ×1.9)
+  B2-S1-aviso-sem-rede-tab: "ENSAIO DE RETRATO" 544 → 117.3 dp
+  B2-S1-aviso-sem-rede-tab: "sem data" 60.4 → 17.3 dp
+  B2-S1-aviso-sem-rede-tab: "8 músicas" 65.8 → 20.4 dp
+  B2-S1-aviso-sem-rede-tab: "SHOW DE SEXTA NO TEATRO DA FIXTURE" 762.2 → 335.1 dp
+  B2-S1-aviso-sem-rede-tab: "2026-09-26" 80.4 → 64.4 dp
+  B2-S1-aviso-sem-rede-tab: "Teatro da fixture" 108.4 → 88 dp
+  B2-S1-aviso-sem-rede-tab: "4 músicas" 65.8 → 52 dp
+  B2-S1-aviso-sem-rede-tab: "SETLIST DE NOME BEM COMPRIDO PARA MEDIR " 544 → 117.3 dp
+  B2-S1-aviso-sem-rede-tab: "sem data" 60.4 → 17.3 dp
+  B2-S1-aviso-sem-rede-tab: "2 músicas" 65.8 → 20.4 dp
+  B2-S1-setlists-avd: "SETLISTS" 534.2 → 107.1 dp (altura ×1.9)
+  B2-S1-setlists-avd: "ENSAIO DE RETRATO" 544 → 117.3 dp
+  B2-S1-setlists-avd: "sem data" 60.4 → 17.3 dp
+  B2-S1-setlists-avd: "8 músicas" 65.8 → 20.4 dp
+  B2-S1-setlists-avd: "SHOW DE SEXTA NO TEATRO DA FIXTURE" 762.2 → 335.1 dp
+  B2-S1-setlists-avd: "2026-09-26" 80.4 → 64.4 dp
+  B2-S1-setlists-avd: "Teatro da fixture" 108.4 → 88 dp
+  B2-S1-setlists-avd: "4 músicas" 65.8 → 52 dp
+  B2-S1-setlists-avd: "SETLIST DE NOME BEM COMPRIDO PARA MEDIR " 544 → 117.3 dp
+  B2-S1-setlists-avd: "sem data" 60.4 → 17.3 dp
+  B2-S1-setlists-avd: "2 músicas" 65.8 → 20.4 dp
+  B2-S1-setlists-tab: "SETLISTS" 534.2 → 107.1 dp (altura ×1.9)
+  B2-S1-setlists-tab: "ENSAIO DE RETRATO" 544 → 117.3 dp
+  B2-S1-setlists-tab: "sem data" 60.4 → 17.3 dp
+  B2-S1-setlists-tab: "8 músicas" 65.8 → 20.4 dp
+  B2-S1-setlists-tab: "SHOW DE SEXTA NO TEATRO DA FIXTURE" 762.2 → 335.1 dp
+  B2-S1-setlists-tab: "2026-09-26" 80.4 → 64.4 dp
+  B2-S1-setlists-tab: "Teatro da fixture" 108.4 → 88 dp
+  B2-S1-setlists-tab: "4 músicas" 65.8 → 52 dp
+  B2-S1-setlists-tab: "SETLIST DE NOME BEM COMPRIDO PARA MEDIR " 544 → 117.3 dp
+  B2-S1-setlists-tab: "sem data" 60.4 → 17.3 dp
+  B2-S1-setlists-tab: "2 músicas" 65.8 → 20.4 dp
+  B2-S2-com-edicao-avd: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  B2-S2-com-edicao-avd: "Apagar setlist" 96.9 → 60.4 dp
+  B2-S2-com-edicao-avd: "Manhã de ensaio" 272 → 58.7 dp
+  B2-S2-com-edicao-avd: "Banda da fixture" 272 → 58.7 dp
+  B2-S2-com-edicao-avd: "Segunda do ensaio" 272 → 58.7 dp
+  B2-S2-com-edicao-avd: "Duo Manacá" 272 → 58.7 dp
+  B2-S2-com-edicao-avd: "Terceira do ensaio" 272 → 58.7 dp
+  B2-S2-com-edicao-avd: "Trio de fixture" 272 → 58.7 dp
+  B2-S2-com-edicao-avd: "Partitura de doze páginas" 272 → 58.7 dp
+  B2-S2-com-edicao-avd: "Orquestra de fixture" 272 → 58.7 dp
+  B2-S2-com-edicao-avd: "Partitura que nunca baixou" 272 → 58.7 dp
+  B2-S2-com-edicao-avd: "Orquestra de fixture" 272 → 58.7 dp
+  B2-S2-com-edicao-avd: "Uma música de título bem comprido, para " 272 → 58.7 dp
+  B2-S2-com-edicao-avd: "Artista de nome igualmente comprido da f" 272 → 58.7 dp
+  B2-S2-com-edicao-avd: "Sétima do ensaio" 272 → 58.7 dp
+  B2-S2-com-edicao-avd: "Banda da fixture" 272 → 58.7 dp
+  B2-S2-com-edicao-avd: "Oitava do ensaio" 272 → 58.7 dp
+  B2-S2-com-edicao-avd: "Banda da fixture" 272 → 58.7 dp
+  B2-S2-com-edicao-aviso-sem-rede-avd: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  B2-S2-com-edicao-aviso-sem-rede-avd: "Apagar setlist" 96.9 → 60.4 dp
+  B2-S2-com-edicao-aviso-sem-rede-avd: aviso-motivo 762.2 → 631.1 dp (altura ×1.9)
+  B2-S2-com-edicao-aviso-sem-rede-avd: "Manhã de ensaio" 272 → 58.7 dp
+  B2-S2-com-edicao-aviso-sem-rede-avd: "Banda da fixture" 272 → 58.7 dp
+  B2-S2-com-edicao-aviso-sem-rede-avd: "Segunda do ensaio" 272 → 58.7 dp
+  B2-S2-com-edicao-aviso-sem-rede-avd: "Duo Manacá" 272 → 58.7 dp
+  B2-S2-com-edicao-aviso-sem-rede-avd: "Terceira do ensaio" 272 → 58.7 dp
+  B2-S2-com-edicao-aviso-sem-rede-avd: "Trio de fixture" 272 → 58.7 dp
+  B2-S2-com-edicao-aviso-sem-rede-avd: "Partitura de doze páginas" 272 → 58.7 dp
+  B2-S2-com-edicao-aviso-sem-rede-avd: "Orquestra de fixture" 272 → 58.7 dp
+  B2-S2-com-edicao-aviso-sem-rede-avd: "Partitura que nunca baixou" 272 → 58.7 dp
+  B2-S2-com-edicao-aviso-sem-rede-avd: "Orquestra de fixture" 272 → 58.7 dp
+  B2-S2-com-edicao-aviso-sem-rede-avd: "Uma música de título bem comprido, para " 272 → 58.7 dp
+  B2-S2-com-edicao-aviso-sem-rede-avd: "Artista de nome igualmente comprido da f" 272 → 58.7 dp
+  B2-S2-com-edicao-aviso-sem-rede-avd: "Sétima do ensaio" 272 → 58.7 dp (altura ×22.3)
+  B2-S2-com-edicao-aviso-sem-rede-avd: "Banda da fixture" 272 → 58.7 dp
+  B2-S2-com-edicao-aviso-sem-rede-avd: "Oitava do ensaio" 272 → 58.7 dp (altura ×22.3)
+  B2-S2-com-edicao-aviso-sem-rede-avd: "Banda da fixture" 272 → 58.7 dp
+  B2-S2-com-edicao-aviso-sem-rede-tab: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  B2-S2-com-edicao-aviso-sem-rede-tab: "Apagar setlist" 96.9 → 60.4 dp
+  B2-S2-com-edicao-aviso-sem-rede-tab: aviso-motivo 762.2 → 631.1 dp (altura ×1.9)
+  B2-S2-com-edicao-aviso-sem-rede-tab: "Manhã de ensaio" 272 → 58.7 dp
+  B2-S2-com-edicao-aviso-sem-rede-tab: "Banda da fixture" 272 → 58.7 dp
+  B2-S2-com-edicao-aviso-sem-rede-tab: "Segunda do ensaio" 272 → 58.7 dp
+  B2-S2-com-edicao-aviso-sem-rede-tab: "Duo Manacá" 272 → 58.7 dp
+  B2-S2-com-edicao-aviso-sem-rede-tab: "Terceira do ensaio" 272 → 58.7 dp
+  B2-S2-com-edicao-aviso-sem-rede-tab: "Trio de fixture" 272 → 58.7 dp
+  B2-S2-com-edicao-aviso-sem-rede-tab: "Partitura de doze páginas" 272 → 58.7 dp
+  B2-S2-com-edicao-aviso-sem-rede-tab: "Orquestra de fixture" 272 → 58.7 dp
+  B2-S2-com-edicao-aviso-sem-rede-tab: "Partitura que nunca baixou" 272 → 58.7 dp
+  B2-S2-com-edicao-aviso-sem-rede-tab: "Orquestra de fixture" 272 → 58.7 dp
+  B2-S2-com-edicao-aviso-sem-rede-tab: "Uma música de título bem comprido, para " 272 → 58.7 dp
+  B2-S2-com-edicao-aviso-sem-rede-tab: "Artista de nome igualmente comprido da f" 272 → 58.7 dp
+  B2-S2-com-edicao-aviso-sem-rede-tab: "Sétima do ensaio" 272 → 58.7 dp (altura ×2.2)
+  B2-S2-com-edicao-aviso-sem-rede-tab: "Banda da fixture" 272 → 58.7 dp
+  B2-S2-com-edicao-aviso-sem-rede-tab: "Oitava do ensaio" 272 → 58.7 dp (altura ×2.2)
+  B2-S2-com-edicao-aviso-sem-rede-tab: "Banda da fixture" 272 → 58.7 dp
+  B2-S2-com-edicao-tab: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  B2-S2-com-edicao-tab: "Apagar setlist" 96.9 → 60.4 dp
+  B2-S2-com-edicao-tab: "Manhã de ensaio" 272 → 58.7 dp
+  B2-S2-com-edicao-tab: "Banda da fixture" 272 → 58.7 dp
+  B2-S2-com-edicao-tab: "Segunda do ensaio" 272 → 58.7 dp
+  B2-S2-com-edicao-tab: "Duo Manacá" 272 → 58.7 dp
+  B2-S2-com-edicao-tab: "Terceira do ensaio" 272 → 58.7 dp
+  B2-S2-com-edicao-tab: "Trio de fixture" 272 → 58.7 dp
+  B2-S2-com-edicao-tab: "Partitura de doze páginas" 272 → 58.7 dp
+  B2-S2-com-edicao-tab: "Orquestra de fixture" 272 → 58.7 dp
+  B2-S2-com-edicao-tab: "Partitura que nunca baixou" 272 → 58.7 dp
+  B2-S2-com-edicao-tab: "Orquestra de fixture" 272 → 58.7 dp
+  B2-S2-com-edicao-tab: "Uma música de título bem comprido, para " 272 → 58.7 dp
+  B2-S2-com-edicao-tab: "Artista de nome igualmente comprido da f" 272 → 58.7 dp
+  B2-S2-com-edicao-tab: "Sétima do ensaio" 272 → 58.7 dp
+  B2-S2-com-edicao-tab: "Banda da fixture" 272 → 58.7 dp
+  B2-S2-com-edicao-tab: "Oitava do ensaio" 272 → 58.7 dp
+  B2-S2-com-edicao-tab: "Banda da fixture" 272 → 58.7 dp
+  B2-S2-sem-edicao-S2p-avd: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  B2-S2-sem-edicao-S2p-avd: "Manhã de ensaio" 336 → 122.7 dp
+  B2-S2-sem-edicao-S2p-avd: "Banda da fixture" 336 → 122.7 dp
+  B2-S2-sem-edicao-S2p-avd: "Segunda do ensaio" 336 → 122.7 dp
+  B2-S2-sem-edicao-S2p-avd: "Duo Manacá" 336 → 122.7 dp
+  B2-S2-sem-edicao-S2p-avd: "Terceira do ensaio" 336 → 122.7 dp
+  B2-S2-sem-edicao-S2p-avd: "Trio de fixture" 336 → 122.7 dp
+  B2-S2-sem-edicao-S2p-avd: "Partitura de doze páginas" 336 → 122.7 dp
+  B2-S2-sem-edicao-S2p-avd: "Orquestra de fixture" 336 → 122.7 dp
+  B2-S2-sem-edicao-S2p-avd: "Partitura que nunca baixou" 336 → 122.7 dp
+  B2-S2-sem-edicao-S2p-avd: "Orquestra de fixture" 336 → 122.7 dp
+  B2-S2-sem-edicao-S2p-avd: "Uma música de título bem comprido, para " 336 → 122.7 dp
+  B2-S2-sem-edicao-S2p-avd: "Artista de nome igualmente comprido da f" 336 → 122.7 dp
+  B2-S2-sem-edicao-S2p-avd: "Sétima do ensaio" 336 → 122.7 dp
+  B2-S2-sem-edicao-S2p-avd: "Banda da fixture" 336 → 122.7 dp
+  B2-S2-sem-edicao-S2p-avd: "Oitava do ensaio" 336 → 122.7 dp
+  B2-S2-sem-edicao-S2p-avd: "Banda da fixture" 336 → 122.7 dp
+  B2-S2-sem-edicao-S2p-tab: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  B2-S2-sem-edicao-S2p-tab: "Manhã de ensaio" 336 → 122.7 dp
+  B2-S2-sem-edicao-S2p-tab: "Banda da fixture" 336 → 122.7 dp
+  B2-S2-sem-edicao-S2p-tab: "Segunda do ensaio" 336 → 122.7 dp
+  B2-S2-sem-edicao-S2p-tab: "Duo Manacá" 336 → 122.7 dp
+  B2-S2-sem-edicao-S2p-tab: "Terceira do ensaio" 336 → 122.7 dp
+  B2-S2-sem-edicao-S2p-tab: "Trio de fixture" 336 → 122.7 dp
+  B2-S2-sem-edicao-S2p-tab: "Partitura de doze páginas" 336 → 122.7 dp
+  B2-S2-sem-edicao-S2p-tab: "Orquestra de fixture" 336 → 122.7 dp
+  B2-S2-sem-edicao-S2p-tab: "Partitura que nunca baixou" 336 → 122.7 dp
+  B2-S2-sem-edicao-S2p-tab: "Orquestra de fixture" 336 → 122.7 dp
+  B2-S2-sem-edicao-S2p-tab: "Uma música de título bem comprido, para " 336 → 122.7 dp
+  B2-S2-sem-edicao-S2p-tab: "Artista de nome igualmente comprido da f" 336 → 122.7 dp
+  B2-S2-sem-edicao-S2p-tab: "Sétima do ensaio" 336 → 122.7 dp
+  B2-S2-sem-edicao-S2p-tab: "Banda da fixture" 336 → 122.7 dp
+  B2-S2-sem-edicao-S2p-tab: "Oitava do ensaio" 336 → 122.7 dp
+  B2-S2-sem-edicao-S2p-tab: "Banda da fixture" 336 → 122.7 dp
+  B2-S3-S3a-letra-1a-avd: "Manhã de ensaio · Banda da fixture · Let" 832 → 404.9 dp
+  B2-S3-S3a-letra-1a-avd: corpo 1073.8 → 647.1 dp (altura ×2)
+  B2-S3-S3a-letra-1a-tab: "Manhã de ensaio · Banda da fixture · Let" 832 → 404.9 dp
+  B2-S3-S3a-letra-1a-tab: corpo 1073.8 → 647.1 dp (altura ×2)
+  B2-S3-S3b-cifra-claro-avd: "Segunda do ensaio · Duo Manacá · Cifra" 830.2 → 403.1 dp
+  B2-S3-S3b-cifra-claro-avd: corpo 906.7 → 647.1 dp (altura ×2)
+  B2-S3-S3b-cifra-claro-tab: "Segunda do ensaio · Duo Manacá · Cifra" 830.2 → 403.1 dp
+  B2-S3-S3b-cifra-claro-tab: corpo 906.7 → 647.1 dp (altura ×2)
+  B2-S3-S3b-cifra-escuro-avd: "Segunda do ensaio · Duo Manacá · Cifra" 830.2 → 403.1 dp
+  B2-S3-S3b-cifra-escuro-avd: corpo 906.7 → 647.1 dp (altura ×2)
+  B2-S3-S3b-cifra-escuro-tab: "Segunda do ensaio · Duo Manacá · Cifra" 830.2 → 403.1 dp
+  B2-S3-S3b-cifra-escuro-tab: corpo 906.7 → 647.1 dp (altura ×2)
+  B2-S3-S3c-tab-autoscroll-avd: "Terceira do ensaio · Trio de fixture · T" 830.2 → 403.1 dp
+  B2-S3-S3c-tab-autoscroll-avd: corpo 1040 → 647.1 dp (altura ×2)
+  B2-S3-S3c-tab-autoscroll-tab: "Terceira do ensaio · Trio de fixture · T" 830.2 → 403.1 dp
+  B2-S3-S3c-tab-autoscroll-tab: corpo 1040 → 647.1 dp (altura ×2)
+  B2-S3-S3d-pdf-12p-avd: "Partitura de doze páginas · Orquestra de" 694.2 → 267.1 dp
+  B2-S3-S3d-pdf-12p-avd: linha-motivo 1137.8 → 711.1 dp
+  B2-S3-S3d-pdf-12p-tab: "Partitura de doze páginas · Orquestra de" 694.2 → 267.1 dp
+  B2-S3-S3d-pdf-12p-tab: linha-motivo 1137.8 → 711.1 dp
+  B2-S3-S3e-nao-baixado-avd: "Partitura que nunca baixou · Orquestra d" 806.2 → 379.1 dp
+  B2-S3-S3e-nao-baixado-tab: "Partitura que nunca baixou · Orquestra d" 806.2 → 379.1 dp
+  B2-S3-titulo-longo-avd: "Uma música de título bem comprido, para " 828.4 → 401.3 dp
+  B2-S3-titulo-longo-avd: corpo 1073.8 → 647.1 dp (altura ×2)
+  B2-S3-titulo-longo-tab: "Uma música de título bem comprido, para " 828.4 → 401.3 dp
+  B2-S3-titulo-longo-tab: corpo 1073.8 → 647.1 dp (altura ×2)
+  B2-S3-ultima-avd: "Oitava do ensaio · Banda da fixture · Le" 828.4 → 401.3 dp
+  B2-S3-ultima-avd: corpo 1073.8 → 647.1 dp (altura ×2)
+  B2-S3-ultima-tab: "Oitava do ensaio · Banda da fixture · Le" 828.4 → 401.3 dp
+  B2-S3-ultima-tab: corpo 1073.8 → 647.1 dp (altura ×2)
+  B2-S4-resultados-avd: "Manhã de ensaio" 892 → 465.3 dp
+  B2-S4-resultados-avd: "Banda da fixture  ·  Disco de fixture" 892 → 465.3 dp
+  B2-S4-resultados-avd: "Segunda do ensaio" 892 → 465.3 dp
+  B2-S4-resultados-avd: "Duo Manacá" 892 → 465.3 dp
+  B2-S4-resultados-avd: "Terceira do ensaio" 892 → 465.3 dp
+  B2-S4-resultados-avd: "Trio de fixture" 892 → 465.3 dp
+  B2-S4-resultados-avd: "Sétima do ensaio" 892 → 465.3 dp
+  B2-S4-resultados-avd: "Banda da fixture" 892 → 465.3 dp
+  B2-S4-resultados-avd: "Oitava do ensaio" 892 → 465.3 dp
+  B2-S4-resultados-avd: "Banda da fixture" 892 → 465.3 dp
+  B2-S4-resultados-avd: "Nona do ensaio" 892 → 465.3 dp (altura ×4.2)
+  B2-S4-resultados-avd: "Duo Manacá" 892 → 465.3 dp
+  B2-S4-resultados-avd: "Banda da fixture" 892 → 465.3 dp
+  B2-S4-resultados-tab: "Manhã de ensaio" 892 → 465.3 dp
+  B2-S4-resultados-tab: "Banda da fixture  ·  Disco de fixture" 892 → 465.3 dp
+  B2-S4-resultados-tab: "Segunda do ensaio" 892 → 465.3 dp
+  B2-S4-resultados-tab: "Duo Manacá" 892 → 465.3 dp
+  B2-S4-resultados-tab: "Terceira do ensaio" 892 → 465.3 dp
+  B2-S4-resultados-tab: "Trio de fixture" 892 → 465.3 dp
+  B2-S4-resultados-tab: "Sétima do ensaio" 892 → 465.3 dp
+  B2-S4-resultados-tab: "Banda da fixture" 892 → 465.3 dp
+  B2-S4-resultados-tab: "Oitava do ensaio" 892 → 465.3 dp
+  B2-S4-resultados-tab: "Banda da fixture" 892 → 465.3 dp
+  B2-S4-resultados-tab: "Nona do ensaio" 892 → 465.3 dp (altura ×1.6)
+  B2-S4-resultados-tab: "Duo Manacá" 892 → 465.3 dp
+  B2-S4-resultados-tab: "Banda da fixture" 892 → 465.3 dp
+  B2-picker-resultados-avd: "Manhã de ensaio" 726.2 → 299.1 dp
+  B2-picker-resultados-avd: "Banda da fixture" 726.2 → 299.1 dp
+  B2-picker-resultados-avd: "Segunda do ensaio" 726.2 → 299.1 dp
+  B2-picker-resultados-avd: "Duo Manacá" 726.2 → 299.1 dp
+  B2-picker-resultados-avd: "Terceira do ensaio" 726.2 → 299.1 dp
+  B2-picker-resultados-avd: "Trio de fixture" 726.2 → 299.1 dp
+  B2-picker-resultados-avd: "Sétima do ensaio" 726.2 → 299.1 dp
+  B2-picker-resultados-avd: "Banda da fixture" 726.2 → 299.1 dp
+  B2-picker-resultados-avd: "Oitava do ensaio" 726.2 → 299.1 dp
+  B2-picker-resultados-avd: "Banda da fixture" 726.2 → 299.1 dp
+  B2-picker-resultados-avd: "Duo Manacá" 726.2 → 461.3 dp
+  B2-picker-resultados-avd: "Banda da fixture" 726.2 → 461.3 dp
+  B2-picker-resultados-tab: "Manhã de ensaio" 726.2 → 299.1 dp
+  B2-picker-resultados-tab: "Banda da fixture" 726.2 → 299.1 dp
+  B2-picker-resultados-tab: "Segunda do ensaio" 726.2 → 299.1 dp
+  B2-picker-resultados-tab: "Duo Manacá" 726.2 → 299.1 dp
+  B2-picker-resultados-tab: "Terceira do ensaio" 726.2 → 299.1 dp
+  B2-picker-resultados-tab: "Trio de fixture" 726.2 → 299.1 dp
+  B2-picker-resultados-tab: "Sétima do ensaio" 726.2 → 299.1 dp
+  B2-picker-resultados-tab: "Banda da fixture" 726.2 → 299.1 dp
+  B2-picker-resultados-tab: "Oitava do ensaio" 726.2 → 299.1 dp
+  B2-picker-resultados-tab: "Banda da fixture" 726.2 → 299.1 dp
+  B2-picker-resultados-tab: "Duo Manacá" 726.2 → 461.3 dp
+  B2-picker-resultados-tab: "Banda da fixture" 726.2 → 461.3 dp
+  B2-reordenar-aberto-avd: "REORDENAR · ENSAIO DE RETRATO" 494.2 → 67.6 dp
+  B2-reordenar-aberto-avd: "arraste pela alça · a ordem só é salva n" 494.2 → 67.6 dp
+  B2-reordenar-aberto-avd: "Uma música de título bem comprido, para " 641.8 → 316.4 dp
+  B2-reordenar-aberto-avd: "· Artista de nome igualmente comprido da" 278.7 → 177.3 dp
+  B2-reordenar-aberto-avd: "7" 32 → 32 dp (altura ×2.1)
+  B2-reordenar-aberto-avd: "Sétima do ensaio" 163.6 → 163.6 dp (altura ×2.1)
+  B2-reordenar-aberto-tab: "REORDENAR · ENSAIO DE RETRATO" 494.2 → 67.6 dp
+  B2-reordenar-aberto-tab: "arraste pela alça · a ordem só é salva n" 494.2 → 67.6 dp
+  B2-reordenar-aberto-tab: "Uma música de título bem comprido, para " 641.8 → 316.4 dp
+  B2-reordenar-aberto-tab: "· Artista de nome igualmente comprido da" 278.7 → 177.3 dp
+
+4 dp CONTRA A FOLHA — ERRATA CANDIDATA: 4
+  B2-S5-fim-avd [B]: c16 FIM DA SETLIST em 52 — folha 543 · dump 550.2 · Δ +7.2
+  B2-S5-fim-tab [B]: c16 FIM DA SETLIST em 52 — folha 543 · dump 550.2 · Δ +7.2
+  B2-reordenar-aberto-avd [B]: e3 motivo “nada mudou desde que você abriu” — folha 205 · dump 237.8 · Δ +32.8
+  B2-reordenar-aberto-tab [B]: e3 motivo “nada mudou desde que você abriu” — folha 205 · dump 237.8 · Δ +32.8
+
+G-N3: REPROVA ✗ — 1 texto(s) somem da faixa em 1 dump(s)

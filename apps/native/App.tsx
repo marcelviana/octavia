@@ -14,6 +14,7 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import type { ContentDTO, SetlistDTO } from '@octavia/core'
 import { ligarPrefetchAposEscrita } from './src/apos-escrita'
 import type { EstadoLocal } from './src/escrita'
+import { useFaixa } from './src/useFaixa'
 import { presentUrls, sanearArquivos, setFilesUser } from './src/files'
 import { log } from './src/log'
 import { Navigation } from './src/navigation'
@@ -36,6 +37,16 @@ interface Dados {
   syncedAtMs: number | null
 }
 
+/**
+ * N3-PR1 — a régua de desenvolvimento (`src/screens/ReguaDeDev.tsx`). Por
+ * `require` atrás de `__DEV__`, e não por `import`: no release o Metro troca
+ * `__DEV__` por `false` e dobra a expressão ANTES de coletar as dependências,
+ * então o módulo nem entra no bundle — não basta não desenhar.
+ */
+const ReguaDeDev: (() => React.JSX.Element | null) | null = __DEV__
+  ? (require('./src/screens/ReguaDeDev') as typeof import('./src/screens/ReguaDeDev')).ReguaDeDev
+  : null
+
 const SEM_DADOS: Dados = {
   setlists: [],
   content: [],
@@ -51,6 +62,9 @@ export default function App(): React.JSX.Element {
   const [filesPresent, setFilesPresent] = useState<Set<string>>(new Set())
   const [baixando, setBaixando] = useState<Set<string>>(new Set())
   const online = useOnline()
+  // T3-R1: a decisão da faixa e a linha `faixa=` no boot e na rotação. Nenhuma
+  // tela lê o valor ainda (N3-PR1); as PRs de superfície passam a ler.
+  useFaixa()
 
   /**
    * O indicador ✓ ◔ ✗ (T1-R17) conta ARQUIVOS, e arquivo é estado de disco:
@@ -329,6 +343,7 @@ export default function App(): React.JSX.Element {
             }}
           />
         )}
+        {ReguaDeDev !== null ? <ReguaDeDev /> : null}
       </SafeAreaView>
     </SafeAreaProvider>
   )

@@ -1,0 +1,6 @@
+# Tab S6 — boot em pé (user_rotation 0) e depois deitado (rot.sh 1); linhas OCTAVIA verbatim (faixa=, api, sync)
+09-24 17:48:03.198 12694 12861 I ReactNativeJS: OCTAVIA: faixa=B w=711.1 h=1137.8
+09-24 17:48:04.711 12694 12861 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=38
+09-24 17:48:04.743 12694 12861 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=29
+09-24 17:48:04.775 12694 12861 I ReactNativeJS: OCTAVIA: sync ok setlists=3 content=12 pages=1 t=104
+09-24 17:48:05.753 12694 12861 I ReactNativeJS: OCTAVIA: faixa=C w=1137.8 h=711.1

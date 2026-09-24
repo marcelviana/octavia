@@ -126,6 +126,13 @@ override da API.
   direito**: cobre o `apagar` do campo da S4 e do picker e controles da barra
   (divs. 199, 205, 317). Tocar ali abre o menu de desenvolvimento. Limpar campo
   com `KEYCODE_MOVE_END` + `DEL`. Só existe no dev client.
+  **P1 do N3 (N3-D25), hipótese de aparato, sem medida ainda**: em retrato o
+  FAB cobre controles da barra (o `buscar` de S1, o `apagar` do picker). A
+  N3-PR1 não capturou retrato novo (o G-N3 rodou sobre os dumps do pre-check);
+  quem capturar retrato de B primeiro (a PR de S1) mede se o FAB some pelo menu
+  do dev client ("Tools button") ou se o arnês toca pela margem. Até lá, alvo
+  sob o FAB se toca pelo `resource-id` com o menu fechado, e o FAB fica fora da
+  conta do G-N3 e do inventário (ComposeView).
 - **`input text` fora de um campo recarrega o dev client** (a tecla `r`). Div. 330.
 - **O teclado encaixado do AVD cobre a metade de baixo** — `form-cancelar`, os
   `Adicionar` de baixo; o toque cai numa tecla. Antes de procurar alvo:
@@ -137,6 +144,35 @@ override da API.
 - **IME na folha**: `MS_FOCO_APOS_ANIMACAO = 350` — **10/10 no Tab S6 e 10/10 no
   AVD** (`N2-PR7-anexos/ime-350.txt`); `setTimeout(…, 0)` é 5/10 (div. 260). O
   arnês confirma folha fechada **e** `mInputShown=false` antes de cada toque.
+
+## A régua de desenvolvimento (N3-PR1)
+
+**Para medir a largura de um texto que ainda não está em tela nenhuma** (as
+`[estimado]` e `[soma]` da folha do N3: `Adicionar` no lugar de `Adicionar
+música`, o chip empilhado, o `FIM DA SETLIST` em 32). Só existe no **dev client**
+(`src/screens/ReguaDeDev.tsx`, carregada por `require` atrás de `__DEV__`).
+
+```
+adb -s <serial> shell am start -a android.intent.action.VIEW \
+  -d "'exp+octavia://regua?t=<texto%20codificado>&s=<token>'" rocks.octavia.app
+```
+
+- Sai `OCTAVIA: regua t="<texto>" s=<token> w=<dp>` no logcat (`onLayout`) e o
+  nó `regua-texto` no dump. `exp+octavia://regua` sem `t` fecha a régua; token
+  desconhecido dá `w=-`. As **aspas simples dentro das duplas** são do `am start`
+  (sem elas o `&` corta a URL no shell do aparelho).
+- Os **tokens** são cópias declaradas dos estilos das telas (`faixa`, `chip`,
+  `aviso`, `motivo`, `reordenar-titulo`, `regua-picker`, `marca`,
+  `picker-alvo`, `fim`, `fim-32`), com a origem ao lado de cada um no arquivo.
+  **Mudou o estilo da tela, muda o token no mesmo commit** — senão a régua mede
+  outra coisa. O controle é o **régua × dump**: o mesmo texto, já desenhado numa
+  tela, tem de dar a mesma largura nos dois (13 de 13 iguais na N3-PR1,
+  `N3-PR1-anexos/`).
+- Largura de **botão** = texto + o "chrome" do próprio botão, medido no dump
+  (botão − texto). Na faixa de S2 e no picker o chrome é 69,8–70,2 dp.
+- Em lote: `N3-PR1-anexos/instrumentos/regua.py <serial> <lista.tsv>` (token, TAB, texto).
+- Funciona em qualquer tela, inclusive no S0 sem sessão: a régua é a camada de
+  cima da raiz do app.
 
 ## `uiautomator dump`
 

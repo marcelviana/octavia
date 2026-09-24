@@ -214,6 +214,8 @@ telas.pdf: OK
 
 O `gates-nativos` do CI ainda **não** confere esta pasta: o laço do `gates.yml:77` lista só `DESIGN-V1` e `DESIGN-N2` ([div. 398](#9--divergências-e-erratas)).
 
+**Desde a N3-PR1 confere**: o laço lista também `docs/native/DESIGN-N3` (div. 398 fechada; CN no `N3-PR1-anexos/CN-commit1.txt`). O `medidas.json` desta pasta — a tabela "medidas por origem" extraída para o G-N3 — é derivado e fica fora do `SHA256SUMS`, como este README.
+
 ---
 
 ## 7 · testIDs — os mesmos, com posição por faixa
@@ -262,4 +264,37 @@ Duas mudanças de **posição** que o G6 vai notar e que são desenho, não defe
 |---|---|---|---|
 | **400** | D | A **N3-D23** faz a errata nascer do **dump da implementação** (*"diferença > 4 dp contra a tabela de origem da folha é errata"*). As duas primeiras não nasceram assim: a **N3-E1** não é medida (é o cabeçalho contra a N3-D12), e a **N3-E2** vem de um dump que **já existia** — o da N2-E6, em paisagem no Tab S6, e o de retrato do pre-check —, não de um dump de B da implementação. | Decisão do Marcel, antes do merge: as duas entram agora. A N3-D23 continua valendo para as seguintes (a partir da N3-E3); a N3-PR1 confere o 152,0 no dump de B como qualquer outra medida. |
 
-**Próxima divergência livre: 401.**
+### Erratas da N3-PR1 — N3-E3 a N3-E12 (N3-D23)
+
+Medidas pela régua de desenvolvimento no Tab S6 e no AVD `octavia_tab32` (iguais nas 24 linhas; 13 de 13 controles régua × dump iguais ao nó), na ordem da folha; tabela completa e contas em [`N3-PR1-anexos/README.md`](../N3-PR1-anexos/README.md) §1. **O 4 dp se compara contra o `bounds` do nó** (o formato do `MEDIDAS.md` que a N3-D23 nomeia) — **div. 395 fechada**: o rastreamento depois da última letra conta. Confere dentro de 4 dp: e1 `Adicionar` **136,0** (137), s2 `Apagar setlist` **166,7** (169), e10 `Tentar de novo` **173,3** (170). O desenho não muda em nenhuma: nenhuma errata tira folga abaixo de zero em B.
+
+| errata | medida | folha → medido (Δ) | consequência declarada |
+|---|---|---|---|
+| **N3-E3** | s1 `FIM DA SETLIST` em 32 | 334 → **338,7** (+4,7) | display de S5 em A: 338,7 em 379, folga **40,3** (não 45); 36 continua sem caber (381,0). Nada muda |
+| **N3-E4** | e2 `Apagar` (faixa) | 115 → **119,6** (+4,6) | faixa de edição em B: 683,5 − 137 − 115 + 136,0 + 119,6 = **687,1** em 711, folga **23,9** (não 27,5) — **cabe em uma linha; a faixa de B não vira a de A** |
+| **N3-E5** | e3 motivo `nada mudou desde que você abriu` | 205 → **237,8** (+32,8) | o motivo é 15 dp no app (`motivoInativo`, `size.bodySmall`), não 13 (div. 409). Segunda linha do reordenar em B: 96 + 237,8 + 191 em 663, sobram **≈ 127** (não ≈ 160). Em A a linha própria do motivo tem 379: cabe |
+| **N3-E6** | e4 chip `sem conexão` empilhado (B) | 198 → **192,4** (−5,6) | só folga: com a N3-E2, a segunda linha da barra de S1 em B soma 192,4 + 16 + 152 + 16 + 171,1 = **547,5** em 647 |
+| **N3-E7** | e5 chip em uma linha (A) | 292 → **281,8** (−10,2) | só folga: 281,8 em 379 |
+| **N3-E8** | e6 frase de aviso de S1 sem rede | 800 → **747,6** (−52,4) | a altura da linha de aviso depende da largura útil do TEXTO em cada faixa, não da frase inteira: duas linhas em B e três em A (68 e 88) a conferir nos dumps de B da PR de S1 (A-N3-7). Em C, uma linha — como hoje |
+| **N3-E9** | e7 título `Reordenar · Ensaio de retrato` | 464 → **605,8** (+141,8) | o título do reordenar é 26 dp, .22em (`titulo26`), e a folha usou os 16 dp/caractere do título de S2, que no app é 22 dp, .14em (div. 409; `Ensaio de retrato` no estilo do reordenar = 359,1, não 271). **B**: o título tem a primeira linha inteira (663): cabe, folga 57,2. **A**: 605,8 em 379 **não cabe em uma linha** — a barra de A (200) ganha a segunda linha do título; vai como T5-R do N5 |
+| **N3-E10** | e8 régua do picker (rótulo + contador) | 400 → **424,0** (+24,0) | B: 424 em 663, passa. A: a régua já é de duas linhas na folha |
+| **N3-E11** | e9 marca `já na setlist · 2×` | 108 → **120,9** (+12,9) | A: o segundo andar da linha (marca + `Adicionar` 135,5) soma 272,4 em 351: cabe. B: passa |
+| **N3-E12** | `FIM DA SETLIST` em 52 (`[captura]`, não é das doze) | 543 → **550,2** (+7,2) | a div. 395: o nó inclui 0,22 × 52 = 11,4 dp de rastreamento depois do T. B: 550,2 em 663, passa |
+
+### Divergências abertas na N3-PR1, **401 a 411**
+
+| div. | origem | o que | o que foi feito |
+|---|---|---|---|
+| **401** | P | A T3-R2 põe na linha de base do palco os dumps do W4-b3 (`W4B3-anexos/dumps-palco/`). Eles foram tirados com conteúdo de **prod** — a conta do Marcel no Tab, a de audit no AVD (W4-b3 div. 379) — e a largura de cada título entra no `bounds`: não se reproduzem com o mock, e esta PR não lê prod. | O palco se provou contra `N3-PRECHECK-anexos/B3-referencia-paisagem/` (mock, a mesma fixture), capturada em `aa91b5d`: `git diff --stat aa91b5d d25e00d -- apps packages` é vazio. **18 de 18 idênticos.** Decisão do Marcel: aceitar a B3-referência como linha de base do palco no N3, ou pedir uma leitura de prod por PR. |
+| **402** | T | O botão "Tools" do dev client (`ComposeView`, mesmo pacote) muda de tamanho sozinho — expande com o rótulo por alguns segundos depois de carregar o bundle (84 × 126 na base do S1e, 84 × 84 no novo). O G-inv do commit 1 o comparava, como o `dp.mjs` do W4-b3. | O G-inv tira a subárvore do `ComposeView` da conta (commit 3), como o `inventario.mjs` do pre-check e o G-N3 já faziam; CN rodado de novo (`CN-commit3.txt`). |
+| **403** | T | O G-inv reprova diferença de **estado de dados**, não só de layout: o arco do ◔ desenha a fração de arquivos no disco ("1 de 2" × "0 de 2"), e "há 1 min" × "agora" é texto vivo. E a base não tem o mesmo estado nos dois aparelhos: o aviso de S1 do AVD foi capturado com o app aberto **já sem rede**, o do Tab com o avião ligado **com o app aberto**; o S1e do AVD com o cache de 1 min, o do Tab logo depois do sync. | O arnês reproduz o estado da base por aparelho (`N3-PR1-anexos/README.md` §3). Cinco XML de S1 saíram byte a byte iguais aos do pre-check. **Quem rodar o G-inv nas PRs de superfície herda isso**: palco antes das telas de S1, e cada estado de S1 pelo caminho da base do seu aparelho. |
+| **404** | A | O S0-login do AVD alcançado por **logout dentro da sessão** (mock `401`) mede os dois campos com 1 px (0,5 dp) a mais que o S0 de **abertura fria** — que é o caminho da base, e deu idêntico. Não é código desta PR (nenhuma tela mudou; o G-inv do resto prova). | Registrado; o dump do logout está em `N3-PR1-anexos/dumps-descartados/`. Destino: nenhum no N3 — o S0 de B é "passa" na folha. |
+| **405** | P | O prompt lista as doze numa ordem (`Adicionar`, `Apagar`, o chip empilhado…) diferente da folha (s1 `FIM` em 32 primeiro, depois e1, e2, s2, e3…e10). | A N3-D23 manda "na ordem da folha": seguida a da folha. |
+| **406** | P | O `N3-REQUISITOS.md` (§3; herança item 7) põe a decisão da **P2** (a faixa como tokens no `theme.ts`, N3-D25) nesta PR, "com a invariante de C medida"; o prompt da N3-PR1 não a menciona. | **Não decidida aqui.** Recomendação: decidir na primeira PR de superfície, que é a primeira a ter o que trocar — nesta nenhuma tela lê a faixa. A invariante que a P2 pede está medida (G-inv 34 + 18). Decisão do Marcel. |
+| **407** | P | "O G-N3 reprovando a `main` em retrato": nenhum dump de retrato novo foi tirado. | Rodado sobre os dumps de retrato do pre-check (`B2/`, `B4/`), que são da `main` de hoje em código (div. 401, o mesmo `diff` vazio); o commit 2 não muda tela (G-inv). |
+| **408** | D | A folha diz ".2em" para o display de S5 (e o 543 × 32 / 52 supõe o mesmo rastreamento); o app usa **.22em** (`tracking.displayWide`). | A s1 foi medida com o token do app (`fim-32` = o `EndScreen.titulo` em 32). A N3-D18 diz ".2em": se o degrau de A usar .2em, a s1 cai 0,02 × 32 × 14 caracteres = 9,0 dp, para ≈ 329,7 — a conferir no dump de A (N5). |
+| **409** | D | Os tamanhos que a folha usou nas estimativas não são os do app: frase de aviso "14 dp" (app 15), motivo "13 dp" (app 15), título do reordenar "16 dp/caractere" (tirado do título de S2, 22 dp .14em; o do reordenar é 26 dp .22em). | É a raiz das N3-E5 e N3-E9. A régua mede com o token do app; a folha não se reescreve. |
+| **410** | T | O `h` da linha `faixa=` é a janela do `useWindowDimensions`, **com** as barras do sistema (Tab deitado `h=711.1`, não os 663,1 úteis do `APARATO.md`). | O A-N3-1 decide pelo `w`, que é a largura útil (nenhuma barra lateral nos quatro casos). Registrado no catálogo. |
+| **411** | T | O prompt pede `faixaDe()` "num ponto só". O teste de unidade roda no projeto `native` do Vitest, que não troca o `react-native` por duplo: um `faixa.ts` com o hook quebrava a suíte (`Expected 'from', got 'typeOf'`). | A decisão (e os dois limiares) fica em `src/faixa.ts`, pura; o hook do log em `src/useFaixa.ts`, que a importa. O teste garante que 700 e 960 só existem no `faixa.ts`. |
+
+**Próxima divergência livre: 412.**

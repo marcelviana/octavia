@@ -71,10 +71,13 @@ jobs:
       run: sh apps/native/scripts/g1.sh "$BASE" WORKTREE
     - name: G2/G3 — testIDs antes ⊆ depois, linhas de log com errata declarada
       run: sh apps/native/scripts/g2g3.sh "$BASE" WORKTREE
-    - name: Congelados — shasum -c dos SHA256SUMS do DESIGN-V1 e do DESIGN-N2
+    # N3-PR1 (div. 398): o DESIGN-N3 entrou na `main` (#325) sem gate que o
+    # cobrisse; o laço passa a conferi-lo. O `medidas.json` da pasta é derivado
+    # e fica fora do SHA256SUMS, como o README.
+    - name: Congelados — shasum -c dos SHA256SUMS do DESIGN-V1, do DESIGN-N2 e do DESIGN-N3
       run: |
         F=0
-        for d in docs/native/DESIGN-V1 docs/native/DESIGN-N2; do
+        for d in docs/native/DESIGN-V1 docs/native/DESIGN-N2 docs/native/DESIGN-N3; do
           echo "== $d"
           (cd "$d" && shasum -a 256 -c SHA256SUMS) || F=1
         done
