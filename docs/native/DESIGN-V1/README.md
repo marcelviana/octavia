@@ -613,6 +613,23 @@ Medido no AVD `octavia_tab32` (2560 × 1600 @ 360 = 1137,8 dp), **nas seis varia
 
 Onde: §5.3, §6.1, §6.2, §6.4, §7, §8 e §8.3. Divs. 221–225 do `DESIGN-N2/README.md` §9.
 
+**E18 — a tela 1 ganha as faixas B e A, e é o DESIGN-N3 que anota este documento por cima.** *(Decisão do Marcel, 2026-09-24, no aval do desenho do N3; errata SEM redesenhar moldura, pelo precedente da E16 e da E17.)*
+
+**O desenho das faixas vive em [`docs/native/DESIGN-N3/`](../DESIGN-N3/)** — 27 molduras: faixa **B** (700–960 dp) desenhada em 711 × 1054, faixa **A** (< 700 dp) em 411 × 874, e três molduras de A em 699 × 1054; `telas.html`, `telas.pdf` e `SHA256SUMS` próprios. As decisões são as **N3-D12…D25**, na §2 do `DESIGN-N3/README.md`. **A faixa C (> 960 dp) é este documento, e não muda** (N3-D3): as 22 molduras continuam valendo, em 1138 × 627, sem uma vírgula de diferença. O que muda, só nas faixas novas:
+
+| onde | o que o V1 diz (faixa C) | o que passa a valer em B e A |
+| --- | --- | --- |
+| §5.3 e §7 · `S1` | barra de 120, uma linha; cartão de 1073,8 × 132 | **barra de 144 em B** (título em linha própria; chip de sync e os dois botões na segunda) e **168 em A** (título / chip / botões); **cartão** de 647 × 184 em B e 379 × conteúdo (mín. 132, nome até duas linhas) em A — o que era uma linha vira três andares, **nada sai do cartão**. O chip de sem conexão empilha em B sem o "·" (N3-D21) |
+| §7 · `S2` | grade de duas colunas | **coluna única** nas duas faixas; linha de 116 com os mesmos elementos (em A, o tipo desce para um terceiro andar). Em A, a barra de S2 tem 152 ou 184 (busca em linha própria) |
+| §7 · `S3` | barra superior de 64 em uma linha; base de 96 com os sete controles | **B**: barra superior de **88 em duas linhas** (posição + setlist / título · artista · tipo), corpo 870, base igual a C (N3-D13). **A**: índice, busca e sair **na barra superior** (144), leitura na base (96) (N3-D14). O corpo não quebra linha em nenhuma faixa (N3-D15); as zonas de toque continuam em 15 % |
+| §7 · `S4` | — | **passa** nas duas faixas: barra 88, régua, resultados de 80; em A o título elide e continua legível |
+| §7 · `S5` e §7.1 | display de 52, .2em | **passa em B**; **display de 32 em A**, .2em, uma linha (N3-D18) |
+| §7 · `S0` | formulário de 420 centrado | **passa em B**; em A o formulário é min(420, largura − 32) = **379**, margem 16 |
+
+**O `SHA256SUMS` do V1 não muda com esta errata**, e os três congelados seguem conferindo. Nenhum ícone novo (o catálogo continua em 39), nenhuma frase nova, nenhum `testID` novo.
+
+Onde: §5.3, §7 e §7.1. Divs. 393–399 do `DESIGN-N3/README.md` §9.
+
 ---
 
 ## 10 · Proveniência
