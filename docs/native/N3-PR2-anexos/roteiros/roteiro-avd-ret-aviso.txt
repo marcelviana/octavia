@@ -1,0 +1,4 @@
+19:45:43 avião=1 (emulator-5554)
+N3P2-S1-aviso-sem-rede-avd-ret mCurrentRotation=ROTATION_90 png=262240 xml=43227 a59e537bd777
+19:46:18 avião=0 (emulator-5554)
+capturas=1 falhas=0

@@ -1,0 +1,11 @@
+$ GATES_DECL=decl sh apps/native/scripts/g2g3.sh origin/main WORKTREE
+G2 — testIDs  antes=80  depois=80
+  G2: antes ⊆ depois ✓
+G3 — declarações: do corpo da PR (GATES_DECL=/private/tmp/claude-501/-Users-marcelviana-projects-octavia/72a4fb4f-c27b-4992-9c8e-80a60cfaba0e/scratchpad/decl)
+G3 — linhas log( antes=68  depois=68
+      ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+        (nenhuma)
+      REMOÇÕES DECLARADAS (linha → REMOVIDA: razão; N2-D34):
+        (nenhuma)
+      — nenhuma linha de log pode sumir nesta PR
+  G3: nenhuma linha sumiu ✓

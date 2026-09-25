@@ -1,0 +1,14 @@
+emulator-5554 accel=0 user_rot=0 mCurrentRotation=ROTATION_0 Physical size: 1080x2400
+N3P2-S1-setlists-phone-ret mCurrentRotation=ROTATION_0 png=182739 xml=40117 134621c8d490
+20:24:28 toque 'criar-setlist' @ 326,396 (emulator-5554)
+N3P2-folha-criar-phone-ret mCurrentRotation=ROTATION_0 png=104108 xml=6446 427f50a404fe
+Traceback (most recent call last):
+  File "<string>", line 6, in <module>
+  File "/Users/marcelviana/projects/octavia-n3-pr2/docs/native/N3-PRECHECK-anexos/instrumentos/n3.py", line 59, in tap
+    raise RuntimeError(f"TOQUE FALHOU: sem {rid or texto!r} (n={n})")
+RuntimeError: TOQUE FALHOU: sem 'form-cancelar' (n=1)
+folha fechada pelo BACK; S1
+20:25:14 toque 'buscar' @ 794,396 (emulator-5554)
+N3P2-S4-vazio-phone-ret mCurrentRotation=ROTATION_0 png=69976 xml=13972 183abff0459b
+20:25:28 toque 'fechar-busca' @ 126,177 (emulator-5554)
+de volta ao S1

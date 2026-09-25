@@ -1,0 +1,23 @@
+# o salvo-não-relido não tem par na B5: a referência é a paisagem desta PR (dumps-pai/N3P2-S1-salvo-nao-relido-*-pai.xml), num diretório à parte para o gate
+$ node apps/native/scripts/g-n3.mjs --pai docs/native/N3-PRECHECK-anexos/B5-baseline --pai <os dois salvo-nao-relido-*-pai> --faixa docs/native/N3-PR2-anexos/dumps-ret
+G-N3 — 10 par(es) (paisagem × faixa); medidas: docs/native/DESIGN-N3/medidas.json (tolerância 4 dp)
+
+(e) TEXTO QUE SOME — REPROVA: 0
+
+(d′) MENOS ESPAÇO QUE NA PAISAGEM — TRIAGEM (confirmar no PNG): 12
+  N3P2-S1-S1e-falha-com-cache-avd-ret: "SHOW DE SEXTA NO TEATRO DA FIXTURE" 762.2 → 581.3 dp
+  N3P2-S1-S1e-falha-com-cache-tab-ret: "SHOW DE SEXTA NO TEATRO DA FIXTURE" 762.2 → 581.3 dp
+  N3P2-S1-aviso-sem-rede-avd-ret: aviso-motivo 747.6 → 615.1 dp (altura ×1.9)
+  N3P2-S1-aviso-sem-rede-avd-ret: "SHOW DE SEXTA NO TEATRO DA FIXTURE" 762.2 → 581.3 dp
+  N3P2-S1-aviso-sem-rede-tab-ret: aviso-motivo 747.6 → 615.1 dp (altura ×1.9)
+  N3P2-S1-aviso-sem-rede-tab-ret: "SHOW DE SEXTA NO TEATRO DA FIXTURE" 762.2 → 581.3 dp
+  N3P2-S1-salvo-nao-relido-avd-ret: aviso-motivo 701.3 → 415.6 dp (altura ×1.9)
+  N3P2-S1-salvo-nao-relido-avd-ret: "SHOW DE SEXTA NO TEATRO DA FIXTURE" 762.2 → 581.3 dp
+  N3P2-S1-salvo-nao-relido-tab-ret: aviso-motivo 701.3 → 415.6 dp (altura ×1.9)
+  N3P2-S1-salvo-nao-relido-tab-ret: "SHOW DE SEXTA NO TEATRO DA FIXTURE" 762.2 → 581.3 dp
+  N3P2-S1-setlists-avd-ret: "SHOW DE SEXTA NO TEATRO DA FIXTURE" 762.2 → 581.3 dp
+  N3P2-S1-setlists-tab-ret: "SHOW DE SEXTA NO TEATRO DA FIXTURE" 762.2 → 581.3 dp
+
+4 dp CONTRA A FOLHA — ERRATA CANDIDATA: 0
+
+G-N3: nenhum texto some ✓ (d′ e 4 dp não reprovam: triagem e errata)

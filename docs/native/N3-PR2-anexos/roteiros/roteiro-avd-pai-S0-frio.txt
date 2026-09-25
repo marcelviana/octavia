@@ -1,0 +1,1 @@
+N3P2-S0-login-avd-pai mCurrentRotation=ROTATION_0 png=112071 xml=14552 4b1358d4c509

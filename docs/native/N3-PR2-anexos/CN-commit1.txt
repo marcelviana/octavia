@@ -1,0 +1,20 @@
+$ npx vitest run --project native-tela apps/native/test/s1-faixa.test.tsx   # commit 1, árvore de 3a9b24f + o teste
+     × SETLISTS fica fora da linha de botões, acima dela; chip, `criar-setlist` e `buscar` na mesma linha 136ms
+     × nome · metadados · `Baixar` + estado, cada andar abaixo do anterior e nada sai 136ms
+     × a barra de 144 e o alvo central, com o MESMO id 130ms
+     × as duas partes do chip em dois nós, sem o "·"; o motivo sem teto de linhas (N3-D19) 131ms
+     × 201 com a releitura em 500: a linha avisa, nomeia a setlist e traz `aviso-acao` 206ms
+     ✓ SETLISTS divide a linha com chip e botões; o cartão tem duas colunas 158ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL   native-tela  apps/native/test/s1-faixa.test.tsx > N3-B-S1 — a barra de 144: o título em linha própria > SETLISTS fica fora da linha de botões, acima dela; chip, `criar-setlist` e `buscar` na mesma linha
+AssertionError: expected true to be false // Object.is equality
+ FAIL   native-tela  apps/native/test/s1-faixa.test.tsx > N3-B-S1 — o cartão de 184 em três andares > nome · metadados · `Baixar` + estado, cada andar abaixo do anterior e nada sai
+AssertionError: expected [ <div …(1)>…(2)</div>, …(1) ] to have a length of 3 but got 2
+ FAIL   native-tela  apps/native/test/s1-faixa.test.tsx > N3-B-S1f — só a barra muda: `criar-setlist` nos dois lugares > a barra de 144 e o alvo central, com o MESMO id
+AssertionError: expected true to be false // Object.is equality
+ FAIL   native-tela  apps/native/test/s1-faixa.test.tsx > N3-B-S1-sem-rede — o chip empilha, `Nova setlist` inerte, o aviso inteiro > as duas partes do chip em dois nós, sem o "·"; o motivo sem teto de linhas (N3-D19)
+Error: sem nó de texto "sem conexão"
+ FAIL   native-tela  apps/native/test/s1-faixa.test.tsx > N3-B-X-salvo-nao-relido em S1 — a ação continua na linha > 201 com a releitura em 500: a linha avisa, nomeia a setlist e traz `aviso-acao`
+AssertionError: expected '2' to be null
+ Test Files  1 failed (1)
+      Tests  5 failed | 1 passed (6)

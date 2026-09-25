@@ -1,0 +1,7 @@
+$ npx vitest run --project native-tela apps/native/test/s1-faixa.test.tsx apps/native/test/s1-criar.test.tsx   # commit 2
+ ✓  native-tela  apps/native/test/s1-faixa.test.tsx (6 tests) 1115ms
+ ✓  native-tela  apps/native/test/s1-criar.test.tsx (12 tests) 3591ms
+     ✓ enquanto a releitura está em voo, `Tentar de novo` é inativo com o motivo escrito  990ms
+     ✓ a folha fecha, S1 avisa nomeando a setlist, e `Tentar recarregar` emite reason=reopen  343ms
+ Test Files  2 passed (2)
+      Tests  18 passed (18)

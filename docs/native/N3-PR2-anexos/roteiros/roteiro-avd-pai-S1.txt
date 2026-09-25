@@ -1,0 +1,12 @@
+19:35:30 avião=0 (emulator-5554)
+N3P2-S1-setlists-avd-pai mCurrentRotation=ROTATION_0 png=226707 xml=40520 179ed0d01bb5
+19:35:57 avião=1 (emulator-5554)
+Traceback (most recent call last):
+  File "/private/tmp/claude-501/-Users-marcelviana-projects-octavia/72a4fb4f-c27b-4992-9c8e-80a60cfaba0e/scratchpad/n3pr2/passada4.py", line 9, in <module>
+    R.aviao(s, True); R.ir_s1(s)
+                      ^^^^^^^^^^
+  File "/Users/marcelviana/projects/octavia-n3-pr2/docs/native/N3-PRECHECK-anexos/instrumentos/roteiro.py", line 69, in ir_s1
+    esperar(s, rid="criar-setlist", prazo=60)
+  File "/Users/marcelviana/projects/octavia-n3-pr2/docs/native/N3-PRECHECK-anexos/instrumentos/roteiro.py", line 60, in esperar
+    raise RuntimeError(f"ESPERA ESGOTADA: {rid or texto!r}")
+RuntimeError: ESPERA ESGOTADA: 'criar-setlist'
