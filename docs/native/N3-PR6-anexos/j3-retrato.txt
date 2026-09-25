@@ -1,0 +1,79 @@
+# J3 ponta a ponta em RETRATO (faixa B), Tab S6, mock `escrita`, build de 55bbd40 — o método da N2-PR7
+# (N2-PR7-anexos/instrumentos/j3.sh): gesto a gesto com relógio de parede desde o 1º toque; lado do app = soma dos
+# ms= de write + resync no logcat (limpo uma vez, antes). Instrumento: instrumentos/j3.py. A 1ª rodada caiu no
+# passo 3 (roteiros/j3-tab-ret-1.txt): o teclado ENCAIXADO de retrato cobre o Concluir; o toque caiu numa tecla.
+
+$ SCR=$SCR/tab PORTA=8789 ROT=0 python3 j3.py <pre-check>/instrumentos RX2N8000F3D <dumps-ret>
+18:51:57 mock modo=escrita vazio=False
+T0 = primeiro toque
+passo 1 — criar vazia
+  gesto 1 · toque criar-setlist · t=2.5 s
+  gesto 2 · digitar o nome (input text) · t=3.9 s
+  gesto 3 · toque form-salvar (Criar) · t=7.6 s
+passo 1b — abrir a setlist nova (a navegação de S1 para S2)
+  gesto 4 · toque setlist-aa0001-0 (abrir) · t=12.2 s
+passo 2 — 5 músicas pelo picker
+  gesto 5 · toque picker-abrir · t=16.2 s
+  gesto 6 · digitar a busca (input text) · t=18.1 s
+  gesto 7 · toque picker-adicionar-1 (música 1) · t=24.5 s
+  gesto 8 · toque picker-adicionar-2 (música 2) · t=30.9 s
+  gesto 9 · toque picker-adicionar-3 (música 3) · t=37.2 s
+  gesto 10 · toque picker-adicionar-4 (música 4) · t=43.5 s
+  gesto 11 · toque picker-adicionar-5 (música 5) · t=50.0 s
+  gesto 12 · fechar o teclado (BACK) — ele cobre o Concluir em retrato · t=51.4 s
+  gesto 13 · toque picker-concluir (sair do picker) · t=55.0 s
+passo 3 — reordenar: a 5 para a 1
+  gesto 14 · toque reordenar (entrar no modo) · t=59.0 s
+  gesto 15 · arrasto alca-5 → posição 1 (DOWN/12×MOVE/UP) · t=64.6 s
+  gesto 16 · toque reordenar-salvar (Salvar a ordem) · t=68.0 s
+fim: t=70.0 s de parede, 16 gestos
+log do fluxo:
+    write op=create setlist=- items=- status=201 code=- ms=45
+    resync kind=setlists reason=write op=create status=200 setlists=4 ms=34
+    cache write kind=setlists n=4 invalidated=1
+    write op=add setlist=aa0001-0 items=- status=201 code=- ms=35
+    resync kind=setlists reason=write op=add status=200 setlists=4 ms=93
+    cache write kind=setlists n=4 invalidated=1
+    write op=add setlist=aa0001-0 items=- status=201 code=- ms=31
+    resync kind=setlists reason=write op=add status=200 setlists=4 ms=89
+    cache write kind=setlists n=4 invalidated=1
+    write op=add setlist=aa0001-0 items=- status=201 code=- ms=37
+    resync kind=setlists reason=write op=add status=200 setlists=4 ms=90
+    cache write kind=setlists n=4 invalidated=1
+    write op=add setlist=aa0001-0 items=- status=201 code=- ms=44
+    resync kind=setlists reason=write op=add status=200 setlists=4 ms=83
+    cache write kind=setlists n=4 invalidated=1
+    write op=add setlist=aa0001-0 items=- status=201 code=- ms=33
+    resync kind=setlists reason=write op=add status=200 setlists=4 ms=90
+    cache write kind=setlists n=4 invalidated=1
+    write op=reorder setlist=aa0001-0 items=5 status=200 code=- ms=36
+    resync kind=setlists reason=write op=reorder status=200 setlists=4 ms=24
+    cache write kind=setlists n=4 invalidated=1
+lado do app, somado do log (write + resync): 764 ms
+FATAL no logcat da rodada: 0
+N3P6-S2-j3-final-tab-ret mCurrentRotation=ROTATION_0 png=210643 xml=45949 e0c0e2d40a7e
+a listagem final, sem abrir item:
+  song-1 [enabled=true]: 1, Oitava do ensaio, Banda da fixture, Letra
+  song-2 [enabled=true]: 2, Manhã de ensaio, Banda da fixture, Letra
+  song-3 [enabled=true]: 3, Segunda do ensaio, Duo Manacá, Cifra
+  song-4 [enabled=true]: 4, Terceira do ensaio, Trio de fixture, Tab
+  song-5 [enabled=true]: 5, Sétima do ensaio, Banda da fixture, Cifra
+18:53:33 mock modo=normal vazio=False
+
+## retrato × paisagem (N2-PR7, N2-PR7-anexos/j3.txt)
+
+| passo | paisagem (N2-PR7) | retrato (N3-PR6) |
+|---|---|---|
+| 1 · criar vazia | 3 gestos · t=7,0 s | 3 gestos · t=7,6 s |
+| 1b · abrir a setlist nova | 1 · t=14,0 s | 1 · t=12,2 s |
+| 2 · 5 músicas pelo picker | 9 (abrir, digitar, 4 adicionar, **rolar**, 1 adicionar, concluir) · t=58,0 s | 9 (abrir, digitar, 5 adicionar, **fechar o teclado**, concluir) · t=55,0 s |
+| 3 · reordenar a 5 para a 1 | 3 · t=71,2 s | 3 · t=68,0 s |
+| **total** | **16 gestos · 73,2 s de parede** | **16 gestos · 70,0 s de parede** |
+| lado do app (7 escritas) | 1287 ms | 764 ms |
+| FATAL | — | 0 |
+
+A mesma contagem, por troca: em paisagem a 5ª música fica abaixo da dobra e pede rolar; em retrato as cinco cabem acima
+do teclado, mas o teclado ENCAIXADO (topo 761,3 dp, APARATO) cobre o rodapé e o `Concluir` (y 1034,2–1082,2 dp): o
+músico fecha o teclado antes. O relógio de parede inclui o arnês (~2,3 s por dump, APARATO): não é tempo de usuário.
+O lado do app é menor em retrato (764 × 1287 ms) — a 1ª escrita (create) de 501 ms na N2-PR7 contra 45 ms aqui; é o
+mock local, não prova de desempenho (uma medição não vira referência sem n).

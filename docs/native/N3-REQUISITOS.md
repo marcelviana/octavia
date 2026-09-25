@@ -156,3 +156,27 @@ Evidência em [`N3-PR5-anexos/`](N3-PR5-anexos/README.md); errata e divergência
 | **T1-R27 / A14 em B** | **atende**: girar o palco da música 3 dá `rotation=portrait n=3/8` e `3 DE 8`, e a volta `rotation=landscape n=3/8`; a barra muda de forma (64 ↔ 88), a posição fica — errata no `PRD-TELA-1.md` | `a14-retrato.txt` |
 
 **A div. 442** fica com o Marcel: em B a barra superior da S5 continua com 64 (*"passa"*), e a do palco tem 88.
+
+## 10. O que a N3-PR6 fechou (o aceite completo em B) — e o que ficou aberto
+
+Evidência em [`N3-PR6-anexos/`](N3-PR6-anexos/README.md); erratas e divergências no `DESIGN-N3/README.md` §9 (N3-E17, N3-E18; divs. 445–456). A S5 lê o token da barra do palco (N3-E17); o picker ganha o token `picker` da linha que falha (N3-E18, o defeito que o aceite achou, consertado nesta PR por decisão do Marcel).
+
+| # | estado | evidência |
+|---|---|---|
+| **A-N3-1** | **fechado** (N3-PR1): `faixa=C w=1137.8` · `B w=711.1` · `A w=411.4` · `B w=914.3`, limiar numa ocorrência. Nesta PR, de novo no celular: 31 linhas `faixa=A w=411.4` e 31 `faixa=B w=914.3` na sessão | `N3-PR1-anexos/faixa-*.txt`; `N3-PR6-anexos/phone-logcat.txt` |
+| **A-N3-2** | **fechado**: G-inv 34/34 e 18/18 em toda PR de implementação (PR1…PR6) e, **no fim de tudo**, sobre o build do conserto da N3-E18: 34/34 e 18/18 | `N3-PR6-anexos/G-inv-commit2.txt`, `G-inv-final.txt` |
+| **A-N3-3** | **fechado**. **B**: toda superfície confere com a sua moldura ou prova o "passa" (PR2…PR5), mais a S5 com a barra de 88 (N3-E17: salto 0) e o picker com falha e limite em dois andares (N3-E18). **A**, em pé: nenhum crash e a **lista final** — inalcançáveis `setlist-apagar` (e com ele o diálogo), `busca` e `sair` do palco; cortados e tocados, `setlist-editar`, `form-cancelar`, `form-salvar`, `indice`. **Celular deitado** (a primeira prova do bloco): nada inalcançável, a folha passa do fundo da janela. FATAL 0 | `N3-PR6-anexos/s5-barra.txt`, `CN-E18-*.txt`, `inalcancaveis-A.txt`, `phone-logcat.txt` |
+| **A-N3-4** | **fechado**: o G-N3 reprovou a `main` de antes (N3-PR1) e passa no bloco inteiro — **102 pares, (e)=0 · nome-acessível=28 · rolagem=18 · 4 dp = 0**, um relatório só; (d′) = 354, conferidos no PNG. As doze medidas da folha, na N3-PR1 | `N3-PR6-anexos/G-N3-consolidado.txt` (e o controle com o defeito, `G-N3-controle-defeito.txt`: (e)=2) |
+| **A-N3-5** | **fechado para o N2 e para 13 das 20 molduras do V1; aberto para 7**. G5/G6 consolidados: 55 estados × quatro colunas, 209 de 220 células (as 11 vazias por construção: S0 só no AVD, div. 436; J3 e A14 numa orientação), todo alvo ≥ 48 e com `testID`, os mesmos ids nas quatro. **As 18 molduras do N2** e os estados de edição têm dump nas quatro colunas. **Do V1, 7 não**: `S1a` (sincronizando sem cache) e `S1d` (offline sem cache) pedem o app sem cache nenhum; `S2-invalidos` e `S3-nobody` pedem a fixture de itens sem corpo (o `placeholder` da N3-PR5 é a música ausente da biblioteca, outro estado); `S3-avulsa` (o palco aberto pela busca), `S4b` (busca sem resultados) e `S5-n-grande` (60 músicas) não estão em nenhum roteiro do bloco — a folha não os desenha em B, e as capturas são de paisagem só (V1-PR7). **Razão de ficarem abertos**: nenhum arnês do N3 os alcança; é arnês novo, não tela. Destino: o encerramento do N3 decide (herança, item 10) | `N3-PR6-anexos/G5G6-consolidado.txt` |
+| **A-N3-6** | **fechado** (N3-PR3): `Adicionar`/`Adicionar música`, `Apagar`/`Apagar setlist`, `gate:a20` 0 — e de novo nesta PR: nome-acessível = 28 no G-N3, a20 0 | `N3-PR3-anexos/a20-commit2.txt`; `N3-PR6-anexos/gates-E18.txt` |
+| **A-N3-7** | **fechado**: a linha de aviso em **toda superfície que a tem**, retrato, Tab = AVD — sem rede, salvo-não-relido e falhou **66,2**; limite e acima de 100 **48,0**; no picker +0,9 (o fio do rodapé, div. 449); nenhum motivo elidido; a folha tem o cartão `form-falha` (87,6); em C **48,0** em todo estado e nenhum `bounds` de C mudou. A matriz de quem tem o quê (div. 448) no README dos anexos, §3 | `N3-PR6-anexos/medidas-x.txt` |
+
+**T3-R1…R7**: atendidos, com o A-N3-5 aberto nos 7 estados do V1 acima.
+
+**Herança nova, com destino** (acrescenta ao §4):
+
+| # | item | origem | destino |
+|---|---|---|---|
+| 10 | os 7 estados do V1 sem dump de retrato (`S1a`, `S1d`, `S2-invalidos`, `S3-nobody`, `S3-avulsa`, `S4b`, `S5-n-grande`) — A-N3-5 | N3-PR6 | **encerramento do N3** (decide: arnês novo no bloco, ou herança) |
+| 11 | em B, o teclado encaixado cobre o rodapé do picker (`Concluir`): um gesto a mais no J3 em retrato | div. 450 | **com o Marcel** (desenho) |
+| 12 | na S5 em B, o `8 DE 8` centrado nos 88 fica 16 dp abaixo da linha 1 do palco | div. 447 | **com o Marcel** |

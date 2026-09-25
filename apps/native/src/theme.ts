@@ -129,7 +129,10 @@ export const tracking = { display: 0.14, displayWide: 0.22, label: 0.08 } as con
  * Cada superfície entra aqui na PR que a implementa: S1 na N3-PR2, S2 na
  * N3-PR3, o reordenar e a folha na N3-PR4 (o diálogo de apagar "em B passa":
  * 620 em 711, sem token), a barra superior do palco na N3-PR5 (picker, S0, S4
- * e S5 "em B passam", sem token).
+ * e S5 "em B passam", sem token). Na N3-PR6 a S5 passa a ler o token da barra
+ * do palco (N3-E17, div. 442): sem salto de 24 dp ao chegar ao fim em B. E
+ * o picker ganha o token da linha que falha (N3-E18, div. 445): o aceite
+ * completo mediu que "picker, B: passa" só valia no estado base.
  */
 export interface TokensDaFaixa {
   s1: {
@@ -208,13 +211,34 @@ export interface TokensDaFaixa {
     topo: number
     alturaMin: number | undefined
   }
+  picker: {
+    /**
+     * **N3-E18** (decisão do Marcel, 2026-09-25; div. 445): a linha do picker
+     * na fase `falhou` — a falha e o limite. Em C a frase e o `Tentar de novo`
+     * ficam na fileira de 80, ao lado do título, como hoje. Em B eles não
+     * cabem (o título ia a largura zero e o botão passava da janela): descem
+     * para um SEGUNDO ANDAR, abaixo do título, com recuo alinhado a ele — o
+     * molde dos dois andares de A. Os estados adicionar, adicionando…,
+     * adicionada e relendo… não mudam em faixa nenhuma.
+     */
+    empilhaFalha: boolean
+    /**
+     * A altura mínima da linha na fase `falhou`: 80 em C (a de sempre); em B
+     * 138,7 — a linha empilhada com o `Tentar de novo`, MEDIDA no dump do Tab
+     * (`N3-PR6-anexos/`: 24,0 → 687,1 × 170,2 → 308,9). O limite, sem botão,
+     * mede 131,1 sozinho; o mínimo o iguala, e a linha não cresce quando o
+     * botão aparece depois da releitura.
+     */
+    linhaFalha: number
+  }
   palco: {
     /**
      * A barra superior do palco: 64 em C (uma linha — posição, setlist e
      * título · artista · tipo lado a lado, o título elidido em ≈ 405); 88 em
      * B (N3-B-S3, N3-D13: *"o número 88 é o de bar.top + 24 que S2 e S4 já
      * usam"*). O corpo perde os 24 e fica com 870; a base, o corpo e as zonas
-     * de 15 % são os de C — nada mais do palco é token.
+     * de 15 % são os de C — nada mais do palco é token. A S5 lê o mesmo
+     * token para a barra superior dela (N3-E17): a altura não salta de S3 a S5.
      */
     barra: number
     /**
@@ -233,6 +257,7 @@ const faixaC: TokensDaFaixa = {
     artistaCede: 1, artistaMin: undefined,
   },
   folha: { largura: 720, topo: 100, alturaMin: 420 },
+  picker: { empilhaFalha: false, linhaFalha: 80 },
   palco: { barra: bar.top, empilha: false },
 }
 
@@ -244,6 +269,7 @@ const faixaB: TokensDaFaixa = {
     artistaCede: 100, artistaMin: 60,
   },
   folha: { largura: 663, topo: 96, alturaMin: undefined },
+  picker: { empilhaFalha: true, linhaFalha: 138.7 },
   palco: { barra: bar.top + space.xl, empilha: true },
 }
 

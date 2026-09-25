@@ -226,6 +226,7 @@ Herança do plano: a tela 1 **iguala ou supera cada ✅ e fecha cada ❌/⚠️*
 
 **T1-R29 — Fim de setlist** `[JOBS J1 ponto de observação "última música: beco sem saída ou fim elegante"; PLANO PERF-07 é D (web), o comportamento nativo é novo]`. Na última música, "avançar" mostra "fim da setlist" com ações "voltar ao início" e "sair" — nunca tela em branco nem saída acidental.
 *Aceite*: avançar na música N → tela de fim; nenhuma navegação para fora do app.
+*Errata da N3-PR6 (2026-09-25; N3-E17, div. 442) — a forma em **retrato** (faixa B)*: a barra superior do fim de setlist tem a altura da do palco em B, **88** (a do palco ganhou 88 na N3-PR5, N3-D13), e não mais 64 — chegar ao fim não encolhe a barra (salto 0, `N3-PR6-anexos/s5-barra.txt`). O conteúdo é o de C: `N DE N` e a setlist numa linha. Em C, 64 como sempre. O aceite não muda.
 
 **T1-R30 — Auto-scroll com estado por tipo** `[JOBS J1 passo 5 e critério 3; PLANO PERF-09; C3-5]`. Play/pause do auto-scroll em 1 tap com resposta < 100 ms para conteúdo de texto; em PDF/imagem o controle aparece **desabilitado com motivo** ("auto-scroll só em texto"), não mudo.
 *Aceite*: em Lyrics, play inicia rolagem visível em < 100 ms; em Sheet, o botão está desabilitado e mostra o motivo ao toque.

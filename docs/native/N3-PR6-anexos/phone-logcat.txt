@@ -1,0 +1,16 @@
+# octavia_phone — o logcat da sessão INTEIRA (buffer limpo UMA vez, às 17:58, antes da 1ª rodada; lido no fim, 19:43)
+# (div. 440: a contagem de FATAL tem de cobrir a rodada inteira). Só as contagens e as linhas de faixa — o bruto fica fora do anexo.
+linhas no buffer: 66455
+FATAL: 0
+AndroidRuntime E: 0
+linhas OCTAVIA: 1377
+as linhas de faixa (T3-R1), com a contagem:
+  31 OCTAVIA: faixa=A w=411.4 h=914.3
+  31 OCTAVIA: faixa=B w=914.3 h=411.4
+as escritas (mock), por status:
+   2 OCTAVIA: write op=add status=201
+   1 OCTAVIA: write op=add status=500
+   2 OCTAVIA: write op=create status=201
+   1 OCTAVIA: write op=delete status=200
+   2 OCTAVIA: write op=remove status=200
+   2 OCTAVIA: write op=reorder status=200

@@ -1,0 +1,8 @@
+19:21:48 toque canto de setlist-00000001 @ 96,420
+19:21:55 toque 'picker-abrir' @ 266,323 (emulator-5554)
+19:21:59 toque 'picker-campo' @ 1397,152 (emulator-5554)
+19:22:04 mock modo=resync-pendurado vazio=False
+19:22:07 toque 'picker-adicionar-1' @ 2297,473 (emulator-5554)
+N3P6-picker-relendo-avd-pai mCurrentRotation=ROTATION_0 png=235598 xml=43901 152e2a19a1f8
+19:22:19 mock modo=normal vazio=False
+capturas=1 falhas=0

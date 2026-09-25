@@ -1,0 +1,7 @@
+19:26:12 toque canto de setlist-00000001 @ 96,474
+19:26:19 toque 'picker-abrir' @ 207,323 (RX2N8000F3D)
+N3P6-picker-vazio-tab-ret mCurrentRotation=ROTATION_0 png=128218 xml=16727 5105bc487454
+19:26:33 toque 'picker-campo' @ 917,152 (RX2N8000F3D)
+N3P6-picker-resultados-tab-ret mCurrentRotation=ROTATION_0 png=374877 xml=60081 c946e1917fd4
+19:26:48 toque 'fechar-busca' @ 108,152 (RX2N8000F3D)
+capturas=2 falhas=0

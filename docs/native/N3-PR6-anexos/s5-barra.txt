@@ -1,0 +1,20 @@
+$ python3 docs/native/N3-PR6-anexos/instrumentos/s5-barra.py docs/native/N3-PR6-anexos/dumps-ret docs/native/N3-PR6-anexos/dumps-pai
+tab ret: palco na última (N3P6-S3-ultima-tab-ret.xml) barra [24.0 → 112.0] = 88.0 · `8 DE 8` y 36.0
+         S5 (N3P6-S5-fim-tab-ret.xml) barra [24.0 → 112.0] = 88.0 · `8 DE 8` y 52.0  → salto +0.0 dp ✓ sem salto
+tab pai: palco na última (N3P6F-S3-ultima-tab-pai.xml) barra [24.0 → 88.0] = 64.0 · `8 DE 8` y 40.0
+         S5 (N3P6F-S5-fim-tab-pai.xml) barra [24.0 → 88.0] = 64.0 · `8 DE 8` y 40.0  → salto +0.0 dp ✓ sem salto
+avd ret: palco na última (N3P6-S3-ultima-avd-ret.xml) barra [24.0 → 112.0] = 88.0 · `8 DE 8` y 36.0
+         S5 (N3P6-S5-fim-avd-ret.xml) barra [24.0 → 112.0] = 88.0 · `8 DE 8` y 52.0  → salto +0.0 dp ✓ sem salto
+avd pai: palco na última (N3P6F-S3-ultima-avd-pai.xml) barra [24.0 → 88.0] = 64.0 · `8 DE 8` y 40.0
+         S5 (N3P6F-S5-fim-avd-pai.xml) barra [24.0 → 88.0] = 64.0 · `8 DE 8` y 40.0  → salto +0.0 dp ✓ sem salto
+
+# controle: os dumps da N3-PR5 (a main antes da N3-E17)
+$ python3 docs/native/N3-PR6-anexos/instrumentos/s5-barra.py docs/native/N3-PR5-anexos/dumps-ret docs/native/N3-PR5-anexos/dumps-pai
+tab ret: palco na última (N3P5-S3-ultima-tab-ret.xml) barra [24.0 → 112.0] = 88.0 · `8 DE 8` y 36.0
+         S5 (N3P5-S5-fim-tab-ret.xml) barra [24.0 → 88.0] = 64.0 · `8 DE 8` y 40.0  → salto -24.0 dp ✗
+tab pai: palco na última (N3P5-S3-ultima-tab-pai.xml) barra [24.0 → 88.0] = 64.0 · `8 DE 8` y 40.0
+         S5 (N3P5-S5-fim-tab-pai.xml) barra [24.0 → 88.0] = 64.0 · `8 DE 8` y 40.0  → salto +0.0 dp ✓ sem salto
+avd ret: palco na última (N3P5-S3-ultima-avd-ret.xml) barra [24.0 → 112.0] = 88.0 · `8 DE 8` y 36.0
+         S5 (N3P5-S5-fim-avd-ret.xml) barra [24.0 → 88.0] = 64.0 · `8 DE 8` y 40.0  → salto -24.0 dp ✗
+avd pai: palco na última (N3P5-S3-ultima-avd-pai.xml) barra [24.0 → 88.0] = 64.0 · `8 DE 8` y 40.0
+         S5 (N3P5-S5-fim-avd-pai.xml) barra [24.0 → 88.0] = 64.0 · `8 DE 8` y 40.0  → salto +0.0 dp ✓ sem salto

@@ -1,0 +1,10 @@
+# CONTROLE: o mesmo G-N3 com os 4 dumps de ANTES do conserto (dumps-defeito/) no lugar dos de depois
+(e) TEXTO QUE SOME — REPROVA: 2
+  N3P6-picker-X-falhou-avd-ret: 1 — "Manhã de ensaio"
+  N3P6-picker-X-falhou-tab-ret: 1 — "Manhã de ensaio"
+
+4 dp CONTRA A FOLHA — ERRATA CANDIDATA: 2
+  N3P6-picker-X-falhou-avd-ret [B]: e10 Tentar de novo (linha do picker) — folha 170 · dump 137.3 · Δ -32.7
+  N3P6-picker-X-falhou-tab-ret [B]: e10 Tentar de novo (linha do picker) — folha 170 · dump 137.3 · Δ -32.7
+
+G-N3: REPROVA ✗ — (e)=2 em 2 dump(s) · nome-acessível=28 · rolagem=18

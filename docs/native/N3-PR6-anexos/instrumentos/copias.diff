@@ -1,0 +1,112 @@
+# as cópias dos arneses das PRs anteriores, como rodaram nesta PR (diff contra o original commitado):
+# o prefixo N3P6, a porta do mock por aparelho (PORTA, div. 446), a árvore do mock (R.ARVORE) — nada no que eles medem
+--- N3-PRECHECK-anexos/instrumentos/roteiro.py	2026-09-25 17:14:23
++++ copia/roteiro.py	2026-09-25 17:26:21
+@@ -24,13 +24,14 @@
+ import n3  # noqa: E402
+ 
+ AQUI = os.path.dirname(os.path.abspath(__file__))
+-ARVORE = os.path.abspath(os.path.join(AQUI, "../../../.."))
++ARVORE = "<árvore>"
+ SCR = os.environ["SCR"]
++PORTA = os.environ.get("PORTA", "8788")
+ DEEP = "exp+octavia://expo-development-client/?url=http%3A%2F%2Flocalhost%3A8081"
+ 
+ 
+ def mock(modo: str = "normal", vazio: bool = False) -> None:
+-    p = subprocess.run(["lsof", "-tiTCP:8788", "-sTCP:LISTEN"], capture_output=True, text=True).stdout.split()
++    p = subprocess.run(["lsof", f"-tiTCP:{PORTA}", "-sTCP:LISTEN"], capture_output=True, text=True).stdout.split()
+     for pid in p:
+         subprocess.run(["kill", pid])
+     time.sleep(0.6)
+@@ -38,7 +39,7 @@
+     if vazio and not os.path.exists(sl):
+         open(sl, "w").write("[]")
+     log = open(os.path.join(SCR, "mock", f"log-{modo}{'-vazio' if vazio else ''}.txt"), "w")
+-    subprocess.Popen(["python3", os.path.join(ARVORE, "apps/native/src/fixtures/aceite.py"), "servidor", "8788",
++    subprocess.Popen(["python3", os.path.join(ARVORE, "apps/native/src/fixtures/aceite.py"), "servidor", PORTA,
+                       modo, sl, os.path.join(SCR, "mock", "content.json")], stdout=log, stderr=log)
+     time.sleep(1.0)
+     print(f"{time.strftime('%H:%M:%S')} mock modo={modo} vazio={vazio}", flush=True)
+--- N3-PR3-anexos/instrumentos/n3pr3.py	2026-09-25 17:14:22
++++ copia/n3pr3.py	2026-09-25 17:26:21
+@@ -25,7 +25,7 @@
+ import roteiro as R
+ 
+ s, saida, suf = sys.argv[2], sys.argv[3], sys.argv[4]
+-r = R.Roteiro(s, saida, "N3P3", suf)
++r = R.Roteiro(s, saida, "N3P6", suf)
+ SCR = os.environ["SCR"]
+ ROLAR = os.environ.get("ROLAR") == "1"
+ 
+@@ -58,11 +58,11 @@
+     sl[0] = dict(sl[0], setlist_songs=songs, updated_at="2026-09-23T13:00:00.000+00:00")
+     arq = os.path.join(SCR, "mock", "setlists-101.json")
+     json.dump(sl, open(arq, "w"), ensure_ascii=False)
+-    for pid in subprocess.run(["lsof", "-tiTCP:8788", "-sTCP:LISTEN"], capture_output=True, text=True).stdout.split():
++    for pid in subprocess.run(["lsof", f"-tiTCP:{R.PORTA}", "-sTCP:LISTEN"], capture_output=True, text=True).stdout.split():
+         subprocess.run(["kill", pid])
+     time.sleep(0.6)
+     log = open(os.path.join(SCR, "mock", "log-normal-101.txt"), "w")
+-    subprocess.Popen(["python3", os.path.join(R.ARVORE, "apps/native/src/fixtures/aceite.py"), "servidor", "8788",
++    subprocess.Popen(["python3", os.path.join(R.ARVORE, "apps/native/src/fixtures/aceite.py"), "servidor", R.PORTA,
+                       "normal", arq, os.path.join(SCR, "mock", "content.json")], stdout=log, stderr=log)
+     time.sleep(1.0)
+     print(f"{time.strftime('%H:%M:%S')} mock modo=normal setlists-101", flush=True)
+--- N3-PR4-anexos/instrumentos/n3pr4.py	2026-09-25 17:14:22
++++ copia/n3pr4.py	2026-09-25 17:26:21
+@@ -40,7 +40,7 @@
+ import roteiro as R
+ 
+ s, saida, suf = sys.argv[2], sys.argv[3], sys.argv[4]
+-r = R.Roteiro(s, saida, "N3P4", suf)
++r = R.Roteiro(s, saida, "N3P6", suf)
+ AQUI_PRE = sys.argv[1]
+ SL = "00000001-0000-4000-8000-000000000003"
+ MUSICA_3 = "00010003-0000-4000-8000-000000000004"
+@@ -70,7 +70,7 @@
+     """A captura com o teclado DE PÉ (o `Roteiro.cap` o esconde antes)."""
+     R.rotacionar(s)
+     time.sleep(0.8)
+-    nome = f"N3P4-{tela}-{estado}-{suf}"
++    nome = f"N3P6-{tela}-{estado}-{suf}"
+     raiz = n3.dump(s)[0]["b"]
+     if (raiz[2] > raiz[3]) != suf.endswith("-pai"):
+         raise RuntimeError(f"ORIENTAÇÃO ERRADA para {nome}: raiz {raiz}")
+@@ -181,7 +181,7 @@
+     R.mock("normal")
+     abrir_reordenar(); arrastar_5_para_2()
+     c = subprocess.run(["curl", "-s", "-o", "/dev/null", "-w", "%{http_code}", "-X", "DELETE",
+-                        f"http://localhost:8788/api/setlists/songs/{MUSICA_3}"], capture_output=True, text=True)
++                        f"http://localhost:{R.PORTA}/api/setlists/songs/{MUSICA_3}"], capture_output=True, text=True)
+     print(f"{hora()} outro aparelho: DELETE /api/setlists/songs/{MUSICA_3} → {c.stdout}", flush=True)
+     n3.tap(s, rid="reordenar-salvar", espera=1.5)
+     R.esperar(s, texto="a ordem foi recarregada")
+--- N3-PR5-anexos/instrumentos/n3pr5.py	2026-09-25 17:14:22
++++ copia/n3pr5.py	2026-09-25 18:35:18
+@@ -29,7 +29,7 @@
+ import roteiro as R
+ 
+ s, saida, suf = sys.argv[2], sys.argv[3], sys.argv[4]
+-r = R.Roteiro(s, saida, "N3P5", suf)
++r = R.Roteiro(s, saida, "N3P6", suf)
+ F = 2.625 if "phone" in suf else 2.25
+ 
+ 
+@@ -161,13 +161,13 @@
+             })
+     alt = os.path.join(mock_dir, "setlists-placeholder.json")
+     json.dump(out, open(alt, "w"), ensure_ascii=False)
+-    p = subprocess.run(["lsof", "-tiTCP:8788", "-sTCP:LISTEN"], capture_output=True, text=True).stdout.split()
++    p = subprocess.run(["lsof", f"-tiTCP:{R.PORTA}", "-sTCP:LISTEN"], capture_output=True, text=True).stdout.split()
+     for pid in p:
+         subprocess.run(["kill", pid])
+     time.sleep(0.6)
+-    arvore = os.path.abspath(os.path.join(sys.argv[1], "../../../.."))
++    arvore = R.ARVORE  # a cópia do instrumento não mora na árvore (queda da N3-PR6)
+     log = open(os.path.join(mock_dir, "log-placeholder.txt"), "w")
+-    subprocess.Popen(["python3", os.path.join(arvore, "apps/native/src/fixtures/aceite.py"), "servidor", "8788",
++    subprocess.Popen(["python3", os.path.join(arvore, "apps/native/src/fixtures/aceite.py"), "servidor", R.PORTA,
+                       "normal", alt, os.path.join(mock_dir, "content.json")], stdout=log, stderr=log)
+     time.sleep(1.0)
+     print(f"{hora()} mock normal com a música 9 sem content (setlists-placeholder.json)", flush=True)

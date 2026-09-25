@@ -1,0 +1,4 @@
+18:51:22 mock modo=normal vazio=True
+N3P6-S1-S1f-vazia-avd-ret mCurrentRotation=ROTATION_90 png=114928 xml=17958 d26c96710847
+18:51:57 mock modo=normal vazio=False
+capturas=1 falhas=0

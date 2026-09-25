@@ -1,0 +1,25 @@
+18:56:22 mock modo=escrita vazio=False
+18:56:47 toque canto de setlist-00000001 @ 108,549
+18:56:55 toque 'song-1' @ 1200,677 (emulator-5556)
+N3P6-S3-S3a-letra-1a-phone-pai mCurrentRotation=ROTATION_90 png=127776 xml=26311 9f7ae1af2b21
+palco      sair                 alcançável    bounds [824.4,315.0][890.3,381.0] · visível 65.9 × 65.9 dp · toque @ 2250,913 → ✓ 'criar-setlist' no dump seguinte
+18:57:23 mock modo=escrita vazio=False
+18:57:47 toque canto de setlist-00000001 @ 108,549
+18:57:55 toque 'song-1' @ 1200,677 (emulator-5556)
+18:58:05 toque 'borda-avancar' @ 2220,540 (emulator-5556)
+18:58:10 toque 'borda-avancar' @ 2220,540 (emulator-5556)
+18:58:15 toque 'borda-avancar' @ 2220,540 (emulator-5556)
+18:58:21 toque 'borda-avancar' @ 2220,540 (emulator-5556)
+18:58:26 toque 'borda-avancar' @ 2220,540 (emulator-5556)
+18:58:31 toque 'borda-avancar' @ 2220,540 (emulator-5556)
+18:58:37 toque 'borda-avancar' @ 2220,540 (emulator-5556)
+18:58:45 toque 'borda-avancar' @ 2220,540 (emulator-5556)
+N3P6-S5-fim-phone-pai mCurrentRotation=ROTATION_90 png=80175 xml=17836 b3087cd077a7
+S5         sair                 alcançável    bounds [520.0,256.8][638.5,320.8] · visível 118.5 × 64.0 dp · toque @ 1520,758 → ✓ 'criar-setlist' no dump seguinte
+18:59:13 mock modo=escrita vazio=False
+18:59:15 mock modo=normal vazio=False
+
+# lista final — phone-pai
+palco      sair                 alcançável    bounds [824.4,315.0][890.3,381.0] · visível 65.9 × 65.9 dp · toque @ 2250,913 → ✓ 'criar-setlist' no dump seguinte
+S5         sair                 alcançável    bounds [520.0,256.8][638.5,320.8] · visível 118.5 × 64.0 dp · toque @ 1520,758 → ✓ 'criar-setlist' no dump seguinte
+capturas=2

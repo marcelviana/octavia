@@ -1,0 +1,24 @@
+18:53:13 mock modo=escrita vazio=False
+18:53:46 toque canto de setlist-00000001 @ 108,549
+18:53:55 toque 'song-1' @ 540,677 (emulator-5556)
+N3P6-S3-S3a-letra-1a-phone-ret mCurrentRotation=ROTATION_0 png=262408 xml=23367 1bc663723af4
+palco      sair                 INALCANÇÁVEL  sem nó no dump
+18:54:43 toque canto de setlist-00000001 @ 108,549
+18:54:51 toque 'song-1' @ 540,677 (emulator-5556)
+18:55:00 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+18:55:06 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+18:55:11 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+18:55:17 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+18:55:23 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+18:55:29 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+18:55:34 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+18:55:42 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+N3P6-S5-fim-phone-ret mCurrentRotation=ROTATION_0 png=82870 xml=17843 352e99b8ad1d
+S5         sair                 alcançável    bounds [268.6,534.1][387.0,598.1] · visível 118.5 × 64.0 dp · toque @ 860,1486 → ✓ 'criar-setlist' no dump seguinte
+18:56:19 mock modo=escrita vazio=False
+18:56:21 mock modo=normal vazio=False
+
+# lista final — phone-ret
+palco      sair                 INALCANÇÁVEL  sem nó no dump
+S5         sair                 alcançável    bounds [268.6,534.1][387.0,598.1] · visível 118.5 × 64.0 dp · toque @ 860,1486 → ✓ 'criar-setlist' no dump seguinte
+capturas=2

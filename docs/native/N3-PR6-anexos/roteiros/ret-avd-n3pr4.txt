@@ -1,0 +1,86 @@
+18:07:00 toque canto de setlist-00000001 @ 96,474
+18:07:09 toque 'reordenar' @ 557,323 (emulator-5554)
+N3P6-reordenar-aberto-avd-ret mCurrentRotation=ROTATION_90 png=261591 xml=46973 5765dcd0124d
+18:07:31 toque 'reordenar-sair' @ 160,311 (emulator-5554)
+18:08:00 toque canto de setlist-00000001 @ 96,474
+18:08:09 toque 'reordenar' @ 557,323 (emulator-5554)
+18:08:21 motionevent DOWN alca-5 (110,1233) → MOVE até (110,693), dedo no vidro
+N3P6-reordenar-arrastando-avd-ret mCurrentRotation=ROTATION_90 png=267025 xml=47944 ae6fa6cdca0d
+18:08:34 motionevent UP
+18:08:38 toque 'reordenar-sair' @ 160,311 (emulator-5554)
+18:08:41 mock modo=escrita-pendurada vazio=False
+18:09:09 toque canto de setlist-00000001 @ 96,474
+18:09:17 toque 'reordenar' @ 557,323 (emulator-5554)
+18:09:29 swipe alca-5 (110,1233) → alca-2 (110,693) 1500 ms
+18:09:34 toque 'reordenar-salvar' @ 1333,311 (emulator-5554)
+N3P6-reordenar-salvando-avd-ret mCurrentRotation=ROTATION_90 png=248133 xml=47529 056269be4a9a
+18:09:45 salvando capturado 9.7 s depois do toque (prazo do cliente: 20 s)
+18:10:03 toque 'reordenar-sair' @ 206,311 (emulator-5554)
+18:10:06 mock modo=normal vazio=False
+18:10:08 mock modo=escrita-500 vazio=False
+18:10:31 toque canto de setlist-00000001 @ 96,474
+18:10:39 toque 'reordenar' @ 557,323 (emulator-5554)
+18:10:53 swipe alca-5 (110,1233) → alca-2 (110,693) 1500 ms
+18:10:59 toque 'reordenar-salvar' @ 1333,311 (emulator-5554)
+N3P6-reordenar-falhou-avd-ret mCurrentRotation=ROTATION_90 png=286082 xml=48752 09d478324a96
+18:11:21 toque 'reordenar-sair' @ 206,311 (emulator-5554)
+18:11:24 mock modo=normal vazio=False
+18:11:26 mock modo=normal vazio=False
+18:12:00 toque canto de setlist-00000001 @ 96,474
+18:12:08 toque 'reordenar' @ 557,323 (emulator-5554)
+18:12:22 swipe alca-5 (110,1233) → alca-2 (110,693) 1500 ms
+18:12:25 outro aparelho: DELETE /api/setlists/songs/00010003-0000-4000-8000-000000000004 → 200
+18:12:28 toque 'reordenar-salvar' @ 1333,311 (emulator-5554)
+N3P6-reordenar-descartado-avd-ret mCurrentRotation=ROTATION_90 png=262770 xml=44711 7c5278d6b775
+18:12:47 toque 'reordenar-sair' @ 206,311 (emulator-5554)
+18:12:50 mock modo=normal vazio=False
+18:13:20 toque 'criar-setlist' @ 936,281 (emulator-5554)
+N3P6-folha-criar-avd-ret mCurrentRotation=ROTATION_90 png=224506 xml=11720 63acee779816
+18:13:34 teclado antes: mInputShown=true região=(0, 1693, 1600, 2452) · depois: mInputShown=true região=(0, 1693, 1600, 2452) · topo do teclado 1693 px = 752.4 dp
+18:13:38 toque 'form-cancelar' @ 265,1031 (emulator-5554)
+18:14:15 toque canto de setlist-00000001 @ 96,474
+18:14:23 toque 'setlist-editar' @ 1023,323 (emulator-5554)
+18:14:28 toque 'form-nome' @ 800,543 (emulator-5554)
+N3P6-folha-validacao-avd-ret mCurrentRotation=ROTATION_90 png=229087 xml=11726 8830951610f1
+18:14:51 teclado antes: mInputShown=true região=(0, 1693, 1600, 2452) · depois: mInputShown=true região=(0, 1693, 1600, 2452) · topo do teclado 1693 px = 752.4 dp
+18:14:55 toque 'form-cancelar' @ 265,1031 (emulator-5554)
+18:14:58 mock modo=escrita-pendurada vazio=False
+18:15:20 toque 'criar-setlist' @ 936,281 (emulator-5554)
+18:15:26 toque 'form-nome' @ 800,543 (emulator-5554)
+18:15:35 toque 'form-salvar' @ 1330,964 (emulator-5554)
+N3P6-folha-salvando-avd-ret mCurrentRotation=ROTATION_90 png=167944 xml=10642 502d8de5dbff
+18:15:49 salvando capturado 12.7 s depois do toque (prazo do cliente: 20 s)
+18:16:07 toque 'form-cancelar' @ 246,1331 (emulator-5554)
+18:16:10 mock modo=normal vazio=False
+18:16:11 mock modo=escrita-500 vazio=False
+18:16:36 toque 'criar-setlist' @ 936,281 (emulator-5554)
+18:16:41 toque 'form-nome' @ 800,543 (emulator-5554)
+18:16:51 toque 'form-salvar' @ 1330,964 (emulator-5554)
+N3P6-folha-falhou-avd-ret mCurrentRotation=ROTATION_90 png=169584 xml=12048 c38710e826a6
+18:17:10 toque 'form-cancelar' @ 246,1215 (emulator-5554)
+18:17:13 mock modo=normal vazio=False
+18:17:48 toque canto de setlist-00000001 @ 96,474
+18:17:56 toque 'setlist-editar' @ 1023,323 (emulator-5554)
+N3P6-folha-editar-igual-avd-ret mCurrentRotation=ROTATION_90 png=250301 xml=9729 857ee930324f
+18:18:15 toque 'form-cancelar' @ 265,964 (emulator-5554)
+18:18:51 toque canto de setlist-00000001 @ 96,474
+18:19:00 toque 'setlist-editar' @ 1023,323 (emulator-5554)
+18:19:07 toque 'form-data' @ 800,777 (emulator-5554)
+18:19:12 seletor do sistema: OK (OK)
+N3P6-folha-editar-data-avd-ret mCurrentRotation=ROTATION_90 png=245734 xml=11017 4e2e2eab6cbf
+18:19:30 toque 'form-data-limpar' @ 1349,778 (emulator-5554)
+N3P6-folha-editar-limpa-avd-ret mCurrentRotation=ROTATION_90 png=250046 xml=9729 857ee930324f
+18:19:47 toque 'form-cancelar' @ 265,964 (emulator-5554)
+18:20:24 toque canto de setlist-00000001 @ 96,474
+18:20:31 toque 'setlist-apagar' @ 1411,323 (emulator-5554)
+N3P6-dialogo-apagar-avd-ret mCurrentRotation=ROTATION_90 png=281896 xml=8506 f8ee21799143
+18:20:46 toque 'apagar-manter' @ 373,1478 (emulator-5554)
+18:20:49 mock modo=escrita-pendurada vazio=False
+18:21:15 toque canto de setlist-00000001 @ 96,474
+18:21:24 toque 'setlist-apagar' @ 1411,323 (emulator-5554)
+18:21:32 toque 'apagar-confirmar' @ 1262,1478 (emulator-5554)
+N3P6-dialogo-apagando-avd-ret mCurrentRotation=ROTATION_90 png=288508 xml=10167 fd12523760b7
+18:21:45 apagando capturado 13.2 s depois do toque (prazo do cliente: 20 s)
+18:22:01 toque 'apagar-manter' @ 373,1565 (emulator-5554)
+18:22:04 mock modo=normal vazio=False
+capturas=14 falhas=0

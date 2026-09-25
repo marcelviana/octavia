@@ -1,0 +1,109 @@
+17:36:27 avião=1 (emulator-5554)
+N3P6-S1-aviso-sem-rede-avd-pai mCurrentRotation=ROTATION_0 png=257544 xml=42982 dd545b5983ab
+17:36:58 avião=0 (emulator-5554)
+17:37:01 mock modo=escrita-resync-500 vazio=False
+FALHA s1Salvo: TOQUE FALHOU: sem 'criar-setlist' (n=1)
+17:37:23 avião=0 (emulator-5554)
+17:37:24 mock modo=normal vazio=False
+17:37:49 toque canto de setlist-00000001 @ 96,420
+17:37:58 avião=1 (emulator-5554)
+N3P6-S2-com-edicao-aviso-sem-rede-avd-pai mCurrentRotation=ROTATION_0 png=241833 xml=54802 854a73c03d02
+17:38:20 avião=0 (emulator-5554)
+17:38:22 mock modo=escrita-resync-500 vazio=False
+17:38:51 toque canto de setlist-00000001 @ 96,420
+17:38:59 toque 'remover-1' @ 1152,581 (emulator-5554)
+N3P6-S2-com-edicao-salvo-nao-relido-avd-pai mCurrentRotation=ROTATION_0 png=253559 xml=57100 fe375a720b38
+17:39:15 mock modo=normal vazio=False
+17:39:17 mock modo=escrita-500 vazio=False
+17:39:44 toque canto de setlist-00000001 @ 96,420
+17:39:51 toque 'remover-1' @ 1152,581 (emulator-5554)
+N3P6-S2-com-edicao-falhou-avd-pai mCurrentRotation=ROTATION_0 png=249766 xml=57459 cd583062b53b
+17:40:08 mock modo=normal vazio=False
+17:40:09 mock modo=escrita-429 vazio=False
+17:40:35 toque canto de setlist-00000001 @ 96,420
+17:40:43 toque 'remover-1' @ 1152,581 (emulator-5554)
+N3P6-S2-com-edicao-limite-avd-pai mCurrentRotation=ROTATION_0 png=238394 xml=55382 570124243f25
+17:40:59 mock modo=normal vazio=False
+17:41:00 mock modo=normal setlists-101.json
+17:41:26 toque canto de setlist-00000001 @ 96,420
+N3P6-S2-com-edicao-acima-de-100-avd-pai mCurrentRotation=ROTATION_0 png=244385 xml=55094 2b179073e534
+17:41:47 mock modo=normal vazio=False
+17:42:14 toque canto de setlist-00000001 @ 96,420
+17:42:22 toque 'reordenar' @ 676,323 (emulator-5554)
+17:42:31 avião=1 (emulator-5554)
+N3P6-reordenar-X-sem-rede-avd-pai mCurrentRotation=ROTATION_0 png=261236 xml=40410 a48a6857c5e8
+17:42:52 avião=0 (emulator-5554)
+17:42:59 toque 'reordenar-sair' @ 1326,152 (emulator-5554)
+17:43:01 mock modo=escrita-500 vazio=False
+17:43:29 toque canto de setlist-00000001 @ 96,420
+17:43:37 toque 'reordenar' @ 676,323 (emulator-5554)
+17:43:50 swipe alca-5 (110,1107) → alca-2 (110,567) 1500 ms
+17:43:56 toque 'reordenar-salvar' @ 2293,152 (emulator-5554)
+N3P6-reordenar-falhou-avd-pai mCurrentRotation=ROTATION_0 png=259514 xml=40099 5b4d98ac3101
+17:44:16 toque 'reordenar-sair' @ 1875,152 (emulator-5554)
+17:44:19 mock modo=normal vazio=False
+17:44:21 mock modo=escrita-429 vazio=False
+17:44:46 toque canto de setlist-00000001 @ 96,420
+17:44:54 toque 'reordenar' @ 676,323 (emulator-5554)
+17:45:07 swipe alca-5 (110,1107) → alca-2 (110,567) 1500 ms
+17:45:13 toque 'reordenar-salvar' @ 2293,152 (emulator-5554)
+N3P6-reordenar-X-limite-avd-pai mCurrentRotation=ROTATION_0 png=254301 xml=39683 c755de7a4946
+17:45:30 toque 'reordenar-sair' @ 1875,152 (emulator-5554)
+17:45:32 mock modo=normal vazio=False
+17:45:53 toque 'criar-setlist' @ 1878,188 (emulator-5554)
+17:45:58 toque 'form-nome' @ 1280,552 (emulator-5554)
+17:46:07 avião=1 (emulator-5554)
+FALHA fSemRede: ESPERA ESGOTADA: 'form-salvar-motivo'
+17:46:47 avião=0 (emulator-5554)
+17:46:49 mock modo=normal vazio=False
+17:46:51 mock modo=escrita-500 vazio=False
+17:47:14 toque 'criar-setlist' @ 1878,188 (emulator-5554)
+17:47:19 toque 'form-nome' @ 1280,552 (emulator-5554)
+17:47:27 toque 'form-salvar' @ 1875,973 (emulator-5554)
+N3P6-folha-falhou-avd-pai mCurrentRotation=ROTATION_0 png=202036 xml=12051 d32c9b6f2efc
+17:47:45 toque 'form-cancelar' @ 662,1224 (emulator-5554)
+17:47:48 mock modo=normal vazio=False
+17:47:50 mock modo=escrita-429 vazio=False
+17:48:01 toque 'criar-setlist' @ 1878,188 (emulator-5554)
+17:48:06 toque 'form-nome' @ 1280,552 (emulator-5554)
+17:48:12 toque 'form-salvar' @ 1875,973 (emulator-5554)
+N3P6-folha-X-limite-avd-pai mCurrentRotation=ROTATION_0 png=205993 xml=12061 34817f705511
+17:48:26 toque 'form-cancelar' @ 662,1224 (emulator-5554)
+17:48:29 mock modo=normal vazio=False
+17:48:42 toque canto de setlist-00000001 @ 96,420
+17:48:48 toque 'picker-abrir' @ 266,323 (emulator-5554)
+17:48:52 toque 'picker-campo' @ 1397,152 (emulator-5554)
+17:49:00 avião=1 (emulator-5554)
+N3P6-picker-X-sem-rede-avd-pai mCurrentRotation=ROTATION_0 png=239739 xml=40666 5a8c2356292a
+17:49:18 avião=0 (emulator-5554)
+17:49:22 toque 'fechar-busca' @ 108,152 (emulator-5554)
+17:49:48 toque canto de setlist-00000001 @ 96,420
+17:49:56 toque 'picker-abrir' @ 266,323 (emulator-5554)
+17:50:00 toque 'picker-campo' @ 1397,152 (emulator-5554)
+17:50:07 mock modo=escrita-resync-500 vazio=False
+17:50:09 toque 'picker-adicionar-1' @ 2297,473 (emulator-5554)
+N3P6-picker-X-salvo-nao-relido-avd-pai mCurrentRotation=ROTATION_0 png=244563 xml=41972 f20b277f5ac1
+17:50:26 mock modo=normal vazio=False
+17:50:48 toque canto de setlist-00000001 @ 96,420
+17:50:56 toque 'picker-abrir' @ 266,323 (emulator-5554)
+17:51:00 toque 'picker-campo' @ 1397,152 (emulator-5554)
+17:51:07 mock modo=escrita-500 vazio=False
+17:51:09 toque 'picker-adicionar-1' @ 2297,473 (emulator-5554)
+N3P6-picker-X-falhou-avd-pai mCurrentRotation=ROTATION_0 png=256591 xml=45640 6c33791129f3
+17:51:27 mock modo=normal vazio=False
+17:51:51 toque canto de setlist-00000001 @ 96,420
+17:51:59 toque 'picker-abrir' @ 266,323 (emulator-5554)
+17:52:04 toque 'picker-campo' @ 1397,152 (emulator-5554)
+17:52:10 mock modo=escrita-429 vazio=False
+17:52:13 toque 'picker-adicionar-1' @ 2297,473 (emulator-5554)
+N3P6-picker-X-limite-avd-pai mCurrentRotation=ROTATION_0 png=252414 xml=43971 9f79f83c1b5e
+17:52:28 mock modo=normal vazio=False
+17:52:30 mock modo=normal setlists-101.json
+17:52:55 toque canto de setlist-00000001 @ 96,420
+17:53:03 toque 'picker-abrir' @ 266,323 (emulator-5554)
+17:53:07 toque 'picker-campo' @ 1397,152 (emulator-5554)
+N3P6-picker-X-acima-de-100-avd-pai mCurrentRotation=ROTATION_0 png=241264 xml=40670 ce8ce603ec26
+17:53:27 mock modo=normal vazio=False
+capturas=16 falhas=2
+  s1Salvo: TOQUE FALHOU: sem 'criar-setlist' (n=1)
+  fSemRede: ESPERA ESGOTADA: 'form-salvar-motivo'

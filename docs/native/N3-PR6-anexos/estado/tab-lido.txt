@@ -1,0 +1,9 @@
+# Tab S6 lido 2026-09-25 17:48:23 (o Marcel destravou)
+stay_on_while_plugged_in=0 (lido antes do destravar; posto a 7)
+accelerometer_rotation=1
+user_rotation=0
+airplane_mode_on=0
+wifi_on=1
+mobile_data=1
+reverse: []
+    lastUpdateTime=2026-09-23 19:11:34

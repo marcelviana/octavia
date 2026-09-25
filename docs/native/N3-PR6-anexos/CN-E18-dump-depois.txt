@@ -1,0 +1,15 @@
+$ python3 docs/native/N3-PR6-anexos/instrumentos/cn-picker-b.py docs/native/N3-PR6-anexos/dumps-ret docs/native/N3-PR6-anexos/dumps-ret docs/native/N3-PR5-anexos/dumps-ret   # build de 017570c
+(1) título da linha 1 e (2) o `Tentar de novo` dentro da janela — picker com falha e limite, retrato
+  N3P6-picker-X-falhou-avd-ret.xml: título 451.1 dp ✓ · picker-adicionar-1 x1 616.9 (limite 687.1) ✓
+  N3P6-picker-X-falhou-tab-ret.xml: título 451.1 dp ✓ · picker-adicionar-1 x1 616.9 (limite 687.1) ✓
+  N3P6-picker-X-limite-avd-ret.xml: título 451.1 dp ✓ · sem alvo (o limite não repete) ✓
+  N3P6-picker-X-limite-tab-ret.xml: título 451.1 dp ✓ · sem alvo (o limite não repete) ✓
+(3) CP — os estados base do picker em B, nó a nó contra a N3-PR5
+  picker-vazio tab: 44 × 44 nós · idênticos ✓
+  picker-vazio avd: 43 × 43 nós · idênticos ✓
+  picker-resultados tab: 174 × 174 nós · idênticos ✓
+  picker-resultados avd: 173 × 173 nós · idênticos ✓
+  picker-relendo tab: 175 × 175 nós · idênticos ✓
+  picker-relendo avd: 174 × 174 nós · idênticos ✓
+CN-picker-B: passa ✓
+exit=0

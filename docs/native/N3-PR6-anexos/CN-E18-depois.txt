@@ -1,0 +1,15 @@
+$ npx vitest run --project native-tela apps/native/test/picker.test.tsx -t "N3-E18" --reporter=verbose   # fix
+ ✓ apps/native/test/picker.test.tsx > (k) N3-E18 — em B a linha que falha empilha: a frase e o `Tentar de novo` num 2º andar > B, escrita-500: título no 1º andar, o estado no 2º; a altura é o token `picker.linhaFalha` de B 238ms
+ ✓ apps/native/test/picker.test.tsx > (k) N3-E18 — em B a linha que falha empilha: a frase e o `Tentar de novo` num 2º andar > B, escrita-429: título no 1º andar, o estado no 2º; a altura é o token `picker.linhaFalha` de B 196ms
+ ✓ apps/native/test/picker.test.tsx > (k) N3-E18 — em B a linha que falha empilha: a frase e o `Tentar de novo` num 2º andar > B, os estados base não mudam: adicionar e adicionada na fileira de 80 234ms
+ ✓ apps/native/test/picker.test.tsx > (k) N3-E18 — em B a linha que falha empilha: a frase e o `Tentar de novo` num 2º andar > C (CP), escrita-500: a fileira de 80 de sempre — o estado ao lado do título 226ms
+ Test Files  1 passed (1)
+      Tests  4 passed | 21 skipped (25)
+$ npx vitest run --project native --project native-tela
+ Test Files  20 passed (20)
+      Tests  205 passed (205)
+$ npx vitest run --project core
+ Test Files  17 passed (17)
+      Tests  202 passed (202)
+$ (cd apps/native && npx tsc --noEmit -p .); echo exit=$?
+exit=0

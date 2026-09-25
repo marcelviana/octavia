@@ -1,0 +1,50 @@
+18:36:26 mock modo=escrita vazio=False
+18:37:01 toque canto de setlist-00000001 @ 108,549
+N3P6-S2-com-edicao-phone-ret mCurrentRotation=ROTATION_0 png=166194 xml=50148 baac2f9a2437
+S2e        remover-1            alcançável    bounds [314.3,233.9][362.3,281.9] · visível 48.0 × 48.0 dp · toque @ 888,677 → ✓ '7 músicas' no dump seguinte
+18:37:31 mock modo=escrita vazio=False
+18:38:04 toque canto de setlist-00000001 @ 108,549
+18:38:13 toque 'song-1' @ 540,677 (emulator-5556)
+18:38:21 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+18:38:27 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+18:38:32 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+18:38:38 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+18:38:43 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+18:38:48 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+18:38:54 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+18:39:02 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+N3P6-S5-fim-phone-ret mCurrentRotation=ROTATION_0 png=83733 xml=17843 352e99b8ad1d
+S5         voltar-inicio        alcançável    bounds [24.8,534.1][252.2,598.1] · visível 227.4 × 64.0 dp · toque @ 363,1486 → ✓ '1 DE 8' no dump seguinte
+18:39:31 mock modo=escrita vazio=False
+18:40:02 toque canto de setlist-00000001 @ 108,549
+18:40:11 toque 'song-1' @ 540,677 (emulator-5556)
+18:40:20 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+18:40:25 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+18:40:30 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+18:40:36 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+18:40:42 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+18:40:47 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+18:40:53 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+18:41:02 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+S5         sair                 SEM EFEITO     bounds [268.6,534.1][387.0,598.1] · visível 118.5 × 64.0 dp · toque @ 860,1486 → ✗ sem 'picker-abrir' depois do toque
+18:41:31 mock modo=escrita vazio=False
+18:41:55 toque canto de setlist-00000001 @ 108,549
+18:42:04 toque 'song-1' @ 540,677 (emulator-5556)
+18:42:13 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+18:42:19 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+18:42:24 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+18:42:30 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+18:42:36 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+18:42:41 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+18:42:46 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+18:42:54 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+S5         borda-voltar         alcançável    bounds [0.0,112.0][61.7,802.3] · visível 61.7 × 690.3 dp · toque @ 81,1200 → ✓ '8 DE 8' no dump seguinte
+18:43:10 mock modo=escrita vazio=False
+18:43:12 mock modo=normal vazio=False
+
+# lista final — phone-ret
+S2e        remover-1            alcançável    bounds [314.3,233.9][362.3,281.9] · visível 48.0 × 48.0 dp · toque @ 888,677 → ✓ '7 músicas' no dump seguinte
+S5         voltar-inicio        alcançável    bounds [24.8,534.1][252.2,598.1] · visível 227.4 × 64.0 dp · toque @ 363,1486 → ✓ '1 DE 8' no dump seguinte
+S5         sair                 SEM EFEITO     bounds [268.6,534.1][387.0,598.1] · visível 118.5 × 64.0 dp · toque @ 860,1486 → ✗ sem 'picker-abrir' depois do toque
+S5         borda-voltar         alcançável    bounds [0.0,112.0][61.7,802.3] · visível 61.7 × 690.3 dp · toque @ 81,1200 → ✓ '8 DE 8' no dump seguinte
+capturas=2

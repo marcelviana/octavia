@@ -1,0 +1,62 @@
+18:43:14 mock modo=escrita vazio=False
+18:43:45 toque canto de setlist-00000001 @ 108,549
+18:43:53 toque 'reordenar' @ 652,377 (emulator-5556)
+N3P6-reordenar-aberto-phone-pai mCurrentRotation=ROTATION_90 png=144776 xml=25286 f6919a4b5c59
+reordenar  reordenar-sair       alcançável    bounds [24.0,114.3][119.2,162.3] · visível 95.2 × 48.0 dp · toque @ 188,363 → ✓ 'picker-abrir' no dump seguinte
+18:44:24 mock modo=escrita vazio=False
+18:45:12 toque canto de setlist-00000001 @ 108,549
+18:45:22 toque 'reordenar' @ 652,377 (emulator-5556)
+reordenar  reordenar-salvar     alcançável    bounds [700.2,114.3][890.3,162.3] · visível 190.1 × 48.0 dp · toque @ 2087,363 → ✓ 'picker-abrir' no dump seguinte
+18:45:46 mock modo=escrita vazio=False
+18:46:17 toque canto de setlist-00000001 @ 108,549
+18:46:26 toque 'song-1' @ 1200,677 (emulator-5556)
+N3P6-S3-S3a-letra-1a-phone-pai mCurrentRotation=ROTATION_90 png=127094 xml=26311 9f7ae1af2b21
+palco      sair                 SEM EFEITO     bounds [824.4,315.0][890.3,381.0] · visível 65.9 × 65.9 dp · toque @ 2250,913 → ✗ sem 'picker-abrir' depois do toque
+18:47:07 mock modo=escrita vazio=False
+18:47:31 toque canto de setlist-00000001 @ 108,549
+18:47:39 toque 'song-1' @ 1200,677 (emulator-5556)
+18:47:47 toque 'borda-avancar' @ 2220,540 (emulator-5556)
+18:47:53 toque 'borda-avancar' @ 2220,540 (emulator-5556)
+18:47:58 toque 'borda-avancar' @ 2220,540 (emulator-5556)
+18:48:03 toque 'borda-avancar' @ 2220,540 (emulator-5556)
+18:48:09 toque 'borda-avancar' @ 2220,540 (emulator-5556)
+18:48:14 toque 'borda-avancar' @ 2220,540 (emulator-5556)
+18:48:19 toque 'borda-avancar' @ 2220,540 (emulator-5556)
+18:48:28 toque 'borda-avancar' @ 2220,540 (emulator-5556)
+N3P6-S5-fim-phone-pai mCurrentRotation=ROTATION_90 png=80045 xml=17836 b3087cd077a7
+S5         voltar-inicio        alcançável    bounds [276.2,256.8][503.6,320.8] · visível 227.4 × 64.0 dp · toque @ 1023,758 → ✓ '1 DE 8' no dump seguinte
+18:48:59 mock modo=escrita vazio=False
+18:49:35 toque canto de setlist-00000001 @ 108,549
+18:49:43 toque 'song-1' @ 1200,677 (emulator-5556)
+18:49:51 toque 'borda-avancar' @ 2220,540 (emulator-5556)
+18:49:57 toque 'borda-avancar' @ 2220,540 (emulator-5556)
+18:50:02 toque 'borda-avancar' @ 2220,540 (emulator-5556)
+18:50:07 toque 'borda-avancar' @ 2220,540 (emulator-5556)
+18:50:12 toque 'borda-avancar' @ 2220,540 (emulator-5556)
+18:50:18 toque 'borda-avancar' @ 2220,540 (emulator-5556)
+18:50:24 toque 'borda-avancar' @ 2220,540 (emulator-5556)
+18:50:32 toque 'borda-avancar' @ 2220,540 (emulator-5556)
+S5         sair                 SEM EFEITO     bounds [520.0,256.8][638.5,320.8] · visível 118.5 × 64.0 dp · toque @ 1520,758 → ✗ sem 'picker-abrir' depois do toque
+18:51:00 mock modo=escrita vazio=False
+18:51:27 toque canto de setlist-00000001 @ 108,549
+18:51:35 toque 'song-1' @ 1200,677 (emulator-5556)
+18:51:45 toque 'borda-avancar' @ 2220,540 (emulator-5556)
+18:51:52 toque 'borda-avancar' @ 2220,540 (emulator-5556)
+18:51:59 toque 'borda-avancar' @ 2220,540 (emulator-5556)
+18:52:09 toque 'borda-avancar' @ 2220,540 (emulator-5556)
+18:52:18 toque 'borda-avancar' @ 2220,540 (emulator-5556)
+18:52:24 toque 'borda-avancar' @ 2220,540 (emulator-5556)
+18:52:29 toque 'borda-avancar' @ 2220,540 (emulator-5556)
+18:52:37 toque 'borda-avancar' @ 2220,540 (emulator-5556)
+S5         borda-voltar         alcançável    bounds [0.0,112.0][137.1,299.4] · visível 137.1 × 187.4 dp · toque @ 180,540 → ✓ '8 DE 8' no dump seguinte
+18:52:53 mock modo=escrita vazio=False
+18:52:55 mock modo=normal vazio=False
+
+# lista final — phone-pai
+reordenar  reordenar-sair       alcançável    bounds [24.0,114.3][119.2,162.3] · visível 95.2 × 48.0 dp · toque @ 188,363 → ✓ 'picker-abrir' no dump seguinte
+reordenar  reordenar-salvar     alcançável    bounds [700.2,114.3][890.3,162.3] · visível 190.1 × 48.0 dp · toque @ 2087,363 → ✓ 'picker-abrir' no dump seguinte
+palco      sair                 SEM EFEITO     bounds [824.4,315.0][890.3,381.0] · visível 65.9 × 65.9 dp · toque @ 2250,913 → ✗ sem 'picker-abrir' depois do toque
+S5         voltar-inicio        alcançável    bounds [276.2,256.8][503.6,320.8] · visível 227.4 × 64.0 dp · toque @ 1023,758 → ✓ '1 DE 8' no dump seguinte
+S5         sair                 SEM EFEITO     bounds [520.0,256.8][638.5,320.8] · visível 118.5 × 64.0 dp · toque @ 1520,758 → ✗ sem 'picker-abrir' depois do toque
+S5         borda-voltar         alcançável    bounds [0.0,112.0][137.1,299.4] · visível 137.1 × 187.4 dp · toque @ 180,540 → ✓ '8 DE 8' no dump seguinte
+capturas=3

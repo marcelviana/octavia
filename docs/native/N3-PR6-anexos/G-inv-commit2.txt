@@ -1,0 +1,118 @@
+# G-inv do COMMIT 2 (55bbd40, N3-E17) — a 1ª passada de paisagem, Tab e AVD (os dumps em $SCR/dumps-pai, não commitados:
+# 51 dos 52 são byte a byte iguais aos da passada final, que está em dumps-pai/; o cmp abaixo)
+
+$ sh apps/native/scripts/g-inv.sh docs/native/N3-PRECHECK-anexos/B5-baseline <dumps-do-commit-2>
+  ✓ S4-resultados-avd-pai: idêntico (73 nós)
+  ✓ S4-resultados-tab-pai: idêntico (76 nós)
+  ✓ S4-vazio-avd-pai: idêntico (36 nós)
+  ✓ S4-vazio-tab-pai: idêntico (37 nós)
+  ✓ dialogo-apagar-avd-pai: idêntico (25 nós)
+  ✓ dialogo-apagar-tab-pai: idêntico (26 nós)
+  ✓ folha-criar-avd-pai: idêntico (35 nós)
+  ✓ folha-criar-tab-pai: idêntico (36 nós)
+  ✓ folha-falhou-avd-pai: idêntico (36 nós)
+  ✓ folha-falhou-tab-pai: idêntico (37 nós)
+  ✓ folha-validacao-avd-pai: idêntico (35 nós)
+  ✓ folha-validacao-tab-pai: idêntico (36 nós)
+  ✓ picker-resultados-avd-pai: idêntico (125 nós)
+  ✓ picker-resultados-tab-pai: idêntico (126 nós)
+  ✓ picker-vazio-avd-pai: idêntico (43 nós)
+  ✓ picker-vazio-tab-pai: idêntico (44 nós)
+  ✓ reordenar-aberto-avd-pai: idêntico (120 nós)
+  ✓ reordenar-aberto-tab-pai: idêntico (123 nós)
+  · N3P6-S3-S3a-letra-1a-avd-pai: sem chave na base (fora da conta)
+  · N3P6-S3-S3a-letra-1a-tab-pai: sem chave na base (fora da conta)
+  · N3P6-S3-S3b-cifra-claro-avd-pai: sem chave na base (fora da conta)
+  · N3P6-S3-S3b-cifra-claro-tab-pai: sem chave na base (fora da conta)
+  · N3P6-S3-S3b-cifra-escuro-avd-pai: sem chave na base (fora da conta)
+  · N3P6-S3-S3b-cifra-escuro-tab-pai: sem chave na base (fora da conta)
+  · N3P6-S3-S3c-tab-autoscroll-avd-pai: sem chave na base (fora da conta)
+  · N3P6-S3-S3c-tab-autoscroll-tab-pai: sem chave na base (fora da conta)
+  · N3P6-S3-S3d-pdf-12p-avd-pai: sem chave na base (fora da conta)
+  · N3P6-S3-S3d-pdf-12p-tab-pai: sem chave na base (fora da conta)
+  · N3P6-S3-S3e-nao-baixado-avd-pai: sem chave na base (fora da conta)
+  · N3P6-S3-S3e-nao-baixado-tab-pai: sem chave na base (fora da conta)
+  · N3P6-S3-titulo-longo-avd-pai: sem chave na base (fora da conta)
+  · N3P6-S3-titulo-longo-tab-pai: sem chave na base (fora da conta)
+  · N3P6-S3-ultima-avd-pai: sem chave na base (fora da conta)
+  · N3P6-S3-ultima-tab-pai: sem chave na base (fora da conta)
+  · N3P6-S5-fim-avd-pai: sem chave na base (fora da conta)
+  · N3P6-S5-fim-tab-pai: sem chave na base (fora da conta)
+G-inv: 34 de 34 idênticos
+G-inv: IDÊNTICO EM DP ✓
+
+$ sh apps/native/scripts/g-inv.sh docs/native/N3-PRECHECK-anexos/B3-referencia-paisagem <dumps-do-commit-2>
+  ✓ S3-S3a-letra-1a-avd-pai: idêntico (65 nós)
+  ✓ S3-S3a-letra-1a-tab-pai: idêntico (66 nós)
+  ✓ S3-S3b-cifra-claro-avd-pai: idêntico (64 nós)
+  ✓ S3-S3b-cifra-claro-tab-pai: idêntico (65 nós)
+  ✓ S3-S3b-cifra-escuro-avd-pai: idêntico (65 nós)
+  ✓ S3-S3b-cifra-escuro-tab-pai: idêntico (66 nós)
+  ✓ S3-S3c-tab-autoscroll-avd-pai: idêntico (66 nós)
+  ✓ S3-S3c-tab-autoscroll-tab-pai: idêntico (67 nós)
+  ✓ S3-S3d-pdf-12p-avd-pai: idêntico (65 nós)
+  ✓ S3-S3d-pdf-12p-tab-pai: idêntico (66 nós)
+  ✓ S3-S3e-nao-baixado-avd-pai: idêntico (66 nós)
+  ✓ S3-S3e-nao-baixado-tab-pai: idêntico (67 nós)
+  ✓ S3-titulo-longo-avd-pai: idêntico (65 nós)
+  ✓ S3-titulo-longo-tab-pai: idêntico (66 nós)
+  ✓ S3-ultima-avd-pai: idêntico (65 nós)
+  ✓ S3-ultima-tab-pai: idêntico (66 nós)
+  ✓ S5-fim-avd-pai: idêntico (48 nós)
+  ✓ S5-fim-tab-pai: idêntico (49 nós)
+G-inv: 18 de 18 idênticos
+G-inv: IDÊNTICO EM DP ✓
+
+# cmp: passada do commit 2 × passada final (dumps-pai/, build de 017570c)
+  igual      N3P6-S0-erro-avd-pai.xml
+  DIFERENTE  N3P6-S0-login-avd-pai.xml — sha256 4b1358d4c509
+  igual      N3P6-S1-S1e-falha-com-cache-avd-pai.xml
+  igual      N3P6-S1-S1e-falha-com-cache-tab-pai.xml
+  igual      N3P6-S1-S1f-vazia-avd-pai.xml
+  igual      N3P6-S1-S1f-vazia-tab-pai.xml
+  igual      N3P6-S1-aviso-sem-rede-avd-pai.xml
+  igual      N3P6-S1-aviso-sem-rede-tab-pai.xml
+  igual      N3P6-S1-setlists-avd-pai.xml
+  igual      N3P6-S1-setlists-tab-pai.xml
+  igual      N3P6-S2-com-edicao-avd-pai.xml
+  igual      N3P6-S2-com-edicao-aviso-sem-rede-avd-pai.xml
+  igual      N3P6-S2-com-edicao-aviso-sem-rede-tab-pai.xml
+  igual      N3P6-S2-com-edicao-tab-pai.xml
+  igual      N3P6-S2-sem-edicao-S2p-avd-pai.xml
+  igual      N3P6-S2-sem-edicao-S2p-tab-pai.xml
+  igual      N3P6-S3-S3a-letra-1a-avd-pai.xml
+  igual      N3P6-S3-S3a-letra-1a-tab-pai.xml
+  igual      N3P6-S3-S3b-cifra-claro-avd-pai.xml
+  igual      N3P6-S3-S3b-cifra-claro-tab-pai.xml
+  igual      N3P6-S3-S3b-cifra-escuro-avd-pai.xml
+  igual      N3P6-S3-S3b-cifra-escuro-tab-pai.xml
+  igual      N3P6-S3-S3c-tab-autoscroll-avd-pai.xml
+  igual      N3P6-S3-S3c-tab-autoscroll-tab-pai.xml
+  igual      N3P6-S3-S3d-pdf-12p-avd-pai.xml
+  igual      N3P6-S3-S3d-pdf-12p-tab-pai.xml
+  igual      N3P6-S3-S3e-nao-baixado-avd-pai.xml
+  igual      N3P6-S3-S3e-nao-baixado-tab-pai.xml
+  igual      N3P6-S3-titulo-longo-avd-pai.xml
+  igual      N3P6-S3-titulo-longo-tab-pai.xml
+  igual      N3P6-S3-ultima-avd-pai.xml
+  igual      N3P6-S3-ultima-tab-pai.xml
+  igual      N3P6-S4-resultados-avd-pai.xml
+  igual      N3P6-S4-resultados-tab-pai.xml
+  igual      N3P6-S4-vazio-avd-pai.xml
+  igual      N3P6-S4-vazio-tab-pai.xml
+  igual      N3P6-S5-fim-avd-pai.xml
+  igual      N3P6-S5-fim-tab-pai.xml
+  igual      N3P6-dialogo-apagar-avd-pai.xml
+  igual      N3P6-dialogo-apagar-tab-pai.xml
+  igual      N3P6-folha-criar-avd-pai.xml
+  igual      N3P6-folha-criar-tab-pai.xml
+  igual      N3P6-folha-falhou-avd-pai.xml
+  igual      N3P6-folha-falhou-tab-pai.xml
+  igual      N3P6-folha-validacao-avd-pai.xml
+  igual      N3P6-folha-validacao-tab-pai.xml
+  igual      N3P6-picker-resultados-avd-pai.xml
+  igual      N3P6-picker-resultados-tab-pai.xml
+  igual      N3P6-picker-vazio-avd-pai.xml
+  igual      N3P6-picker-vazio-tab-pai.xml
+  igual      N3P6-reordenar-aberto-avd-pai.xml
+  igual      N3P6-reordenar-aberto-tab-pai.xml

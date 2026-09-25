@@ -1,0 +1,75 @@
+$ python3 docs/native/N3-PR6-anexos/instrumentos/medidas-x.py docs/native/N3-PR6-anexos/dumps-pai-extra docs/native/N3-PR6-anexos/dumps-ret
+# em paisagem (C) a régua esperada é 48,0 em todo estado (T3-R7: "em C, 48"); o ✗ das linhas -pai é a régua de B do script, não defeito
+linha de aviso — altura (vão entre o nó cheio de cima e o de baixo), texto do motivo, elide?
+dump                                                       espécie            altura  folha  errata    motivo (larg × alt)  elide
+S1-aviso-sem-rede-avd-pai                             sem-rede             48.0     68    66.2      747.6 ×  21.8  não ✗
+S1-aviso-sem-rede-tab-pai                             sem-rede             48.0     68    66.2      747.6 ×  21.8  não ✗
+S1-salvo-nao-relido-avd-pai                           salvo-nao-relido     48.0     68    66.2      671.1 ×  21.8  não ✗
+S1-salvo-nao-relido-tab-pai                           salvo-nao-relido     48.0     68    66.2      671.1 ×  21.8  não ✗
+S2-com-edicao-acima-de-100-avd-pai                    acima-de-100         48.0     68    48.0      611.1 ×  21.8  não ✓
+S2-com-edicao-acima-de-100-tab-pai                    acima-de-100         48.0     68    48.0      611.1 ×  21.8  não ✓
+S2-com-edicao-aviso-sem-rede-avd-pai                  sem-rede             48.0     68    66.2      762.2 ×  21.8  não ✗
+S2-com-edicao-aviso-sem-rede-tab-pai                  sem-rede             48.0     68    66.2      762.2 ×  21.8  não ✗
+S2-com-edicao-falhou-avd-pai                          falhou               48.0     70    66.2      817.8 ×  21.8  não ✗
+S2-com-edicao-falhou-tab-pai                          falhou               48.0     70    66.2      817.8 ×  21.8  não ✗
+S2-com-edicao-limite-avd-pai                          limite               48.0     48    48.0      360.9 ×  21.8  não ✓
+S2-com-edicao-limite-tab-pai                          limite               48.0     48    48.0      360.9 ×  21.8  não ✓
+S2-com-edicao-salvo-nao-relido-avd-pai                salvo-nao-relido     48.0     68    66.2      583.6 ×  21.8  não ✗
+S2-com-edicao-salvo-nao-relido-tab-pai                salvo-nao-relido     48.0     68    66.2      583.6 ×  21.8  não ✗
+folha-X-limite-avd-pai                                folha: form-falha    87.6      —       —      654.2 ×  87.6  (cartão)
+folha-X-limite-tab-pai                                folha: form-falha    87.6      —       —      654.2 ×  87.6  (cartão)
+folha-falhou-avd-pai                                  folha: form-falha    87.6      —       —      654.2 ×  87.6  (cartão)
+folha-falhou-tab-pai                                  folha: form-falha    87.6      —       —      654.2 ×  87.6  (cartão)
+picker-X-acima-de-100-avd-pai                         acima-de-100         48.9     68    48.0      611.1 ×  21.8  não ✗
+picker-X-acima-de-100-tab-pai                         acima-de-100         48.9     68    48.0      611.1 ×  21.8  não ✗
+picker-X-salvo-nao-relido-avd-pai                     salvo-nao-relido     48.9     68    66.2      591.6 ×  21.8  não ✗
+picker-X-salvo-nao-relido-tab-pai                     salvo-nao-relido     48.9     68    66.2      591.6 ×  21.8  não ✗
+picker-X-sem-rede-avd-pai                             sem-rede             48.9     68    66.2      762.2 ×  21.8  não ✗
+picker-X-sem-rede-tab-pai                             sem-rede             48.9     68    66.2      762.2 ×  21.8  não ✗
+reordenar-X-limite-avd-pai                            limite               48.0     48    48.0      360.9 ×  21.8  não ✓
+reordenar-X-limite-tab-pai                            limite               48.0     48    48.0      360.9 ×  21.8  não ✓
+reordenar-X-sem-rede-avd-pai                          sem-rede             48.0     68    66.2      762.2 ×  21.8  não ✗
+reordenar-X-sem-rede-tab-pai                          sem-rede             48.0     68    66.2      762.2 ×  21.8  não ✗
+reordenar-falhou-avd-pai                              falhou               48.0     70    66.2      882.2 ×  21.8  não ✗
+reordenar-falhou-tab-pai                              falhou               48.0     70    66.2      882.2 ×  21.8  não ✗
+S1-aviso-sem-rede-avd-ret                             sem-rede             66.2     68    66.2      615.1 ×  42.2  não ✓
+S1-aviso-sem-rede-tab-ret                             sem-rede             66.2     68    66.2      615.1 ×  42.2  não ✓
+S1-salvo-nao-relido-avd-ret                           salvo-nao-relido     66.2     68    66.2      415.6 ×  42.2  não ✓
+S1-salvo-nao-relido-tab-ret                           salvo-nao-relido     66.2     68    66.2      415.6 ×  42.2  não ✓
+S2-com-edicao-acima-de-100-avd-ret                    acima-de-100         48.0     68    48.0      611.1 ×  21.8  não ✓
+S2-com-edicao-acima-de-100-tab-ret                    acima-de-100         48.0     68    48.0      611.1 ×  21.8  não ✓
+S2-com-edicao-aviso-sem-rede-avd-ret                  sem-rede             66.2     68    66.2      631.1 ×  42.2  não ✓
+S2-com-edicao-aviso-sem-rede-tab-ret                  sem-rede             66.2     68    66.2      631.1 ×  42.2  não ✓
+S2-com-edicao-falhou-avd-ret                          falhou               66.2     70    66.2      450.2 ×  42.2  não ✓
+S2-com-edicao-falhou-tab-ret                          falhou               66.2     70    66.2      450.2 ×  42.2  não ✓
+S2-com-edicao-limite-avd-ret                          limite               48.0     48    48.0      360.9 ×  21.8  não ✓
+S2-com-edicao-limite-tab-ret                          limite               48.0     48    48.0      360.9 ×  21.8  não ✓
+S2-com-edicao-salvo-nao-relido-avd-ret                salvo-nao-relido     66.2     68    66.2      431.6 ×  42.2  não ✓
+S2-com-edicao-salvo-nao-relido-tab-ret                salvo-nao-relido     66.2     68    66.2      431.6 ×  42.2  não ✓
+folha-X-limite-avd-ret                                folha: form-falha    87.6      —       —      597.3 ×  87.6  (cartão)
+folha-X-limite-tab-ret                                folha: form-falha    87.6      —       —      597.3 ×  87.6  (cartão)
+folha-criar-avd-ret                                   folha: motivo           —      —       —      197.8 ×  21.8  não
+folha-criar-tab-ret                                   folha: motivo           —      —       —      197.8 ×  21.8  não
+folha-editar-igual-avd-ret                            folha: motivo           —      —       —      237.8 ×  21.8  não
+folha-editar-igual-tab-ret                            folha: motivo           —      —       —      237.8 ×  21.8  não
+folha-editar-limpa-avd-ret                            folha: motivo           —      —       —      237.8 ×  21.8  não
+folha-editar-limpa-tab-ret                            folha: motivo           —      —       —      237.8 ×  21.8  não
+folha-falhou-avd-ret                                  folha: form-falha    87.6      —       —      597.3 ×  87.6  (cartão)
+folha-falhou-tab-ret                                  folha: form-falha    87.6      —       —      597.3 ×  87.6  (cartão)
+folha-validacao-avd-ret                               folha: motivo           —      —       —      197.8 ×  21.8  não
+folha-validacao-tab-ret                               folha: motivo           —      —       —      197.8 ×  21.8  não
+picker-X-acima-de-100-avd-ret                         acima-de-100         48.9     68    48.0      611.1 ×  21.8  não ✗
+picker-X-acima-de-100-tab-ret                         acima-de-100         48.9     68    48.0      611.1 ×  21.8  não ✗
+picker-X-salvo-nao-relido-avd-ret                     salvo-nao-relido     67.1     68    66.2      431.6 ×  42.2  não ✗
+picker-X-salvo-nao-relido-tab-ret                     salvo-nao-relido     67.1     68    66.2      431.6 ×  42.2  não ✗
+picker-X-sem-rede-avd-ret                             sem-rede             67.1     68    66.2      631.1 ×  42.2  não ✗
+picker-X-sem-rede-tab-ret                             sem-rede             67.1     68    66.2      631.1 ×  42.2  não ✗
+reordenar-X-limite-avd-ret                            limite               48.0     48    48.0      360.9 ×  21.8  não ✓
+reordenar-X-limite-tab-ret                            limite               48.0     48    48.0      360.9 ×  21.8  não ✓
+reordenar-X-sem-rede-avd-ret                          sem-rede             66.2     68    66.2      631.1 ×  42.2  não ✓
+reordenar-X-sem-rede-tab-ret                          sem-rede             66.2     68    66.2      631.1 ×  42.2  não ✓
+reordenar-descartado-avd-ret                          ?                    48.0      —       —      516.4 ×  21.8  não 
+reordenar-descartado-tab-ret                          ?                    48.0      —       —      516.4 ×  21.8  não 
+reordenar-falhou-avd-ret                              falhou               66.2     70    66.2      631.1 ×  42.2  não ✓
+reordenar-falhou-tab-ret                              falhou               66.2     70    66.2      631.1 ×  42.2  não ✓
+# o picker mede +0,9 (48,9 · 67,1): o invólucro `avisoDoRodape` tem o fio de 1 dp (`bar.hairline`, 2 px) em cima da linha — a linha em si é o componente de 48 / 66,2 (div. 313 do N2); `reordenar-descartado` é a frase da N2-D37 (uma linha, 48,0)

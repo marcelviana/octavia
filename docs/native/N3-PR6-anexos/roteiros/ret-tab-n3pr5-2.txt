@@ -1,0 +1,8 @@
+18:53:46 mock normal com a música 9 sem content (setlists-placeholder.json)
+18:53:58 toque canto de setlist-00000001 @ 96,474
+18:54:05 toque 'song-7' @ 800,2254 (RX2N8000F3D)
+18:54:13 toque 'borda-avancar' @ 1480,1244 (RX2N8000F3D)
+18:54:19 toque 'borda-avancar' @ 1480,1244 (RX2N8000F3D)
+N3P6-S3-placeholder-tab-ret mCurrentRotation=ROTATION_0 png=126318 xml=24070 3741418b90ec
+18:54:34 mock modo=normal vazio=False
+capturas=1 falhas=0

@@ -1,0 +1,9 @@
+# octavia_phone restaurado 2026-09-25 19:43:34
+stay_on_while_plugged_in=1
+accelerometer_rotation=0
+user_rotation=0
+airplane_mode_on=0
+wifi_on=1
+mobile_data=1
+reverse: []
+sessão: derrubada pelo 401 do mock (S0 no dump)
