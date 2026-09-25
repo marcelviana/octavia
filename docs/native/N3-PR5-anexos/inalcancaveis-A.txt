@@ -1,0 +1,21 @@
+# N3-PR5 — aceite mínimo de A no palco (errata do T3-R3): octavia_phone em retrato (faixa A w=411.4, com os tokens de B — N3-D28).
+# Roteiro: roteiros/roteiro-phone-ret.txt; instrumento: instrumentos/phone-palco.py; logcat: phone-logcat.txt (FATAL: 0).
+# O palco não tem controle de ESCRITA: a lista é a dos controles dele. Alcançável = nó no dump, área dentro da janela, e o toque no
+# centro da parte visível faz o que o controle faz, conferido no dump seguinte. O uiautomator recorta o bounds à janela.
+
+# lista (grupo, controle, alcance, detalhe)
+bordas     borda-avancar  alcançável    bounds [918,294][1080,2106] = 61.7 × 690.3 dp, x0 349.7; toque @ 999,1200 → 2 DE 8
+bordas     borda-voltar   alcançável    bounds [0,294][162,2106] = 61.7 × 690.3 dp, x0 0.0; toque @ 81,1200 → 1 DE 8
+leitura    auto-scroll    alcançável    bounds [63,2147][236,2320] = 65.9 × 65.9 dp, x0 24.0; toque @ 149,2233 → o nome acessível virou “…, ligada”
+leitura    zoom-mais      alcançável    bounds [494,2147][667,2320] = 65.9 × 65.9 dp, x0 188.2; toque @ 580,2233 → `zoom dp=26`
+leitura    zoom-menos     alcançável    bounds [278,2147][452,2320] = 66.3 × 65.9 dp, x0 105.9; toque @ 365,2233 → `zoom dp=22`
+leitura    tema           alcançável    bounds [709,2147][882,2320] = 65.9 × 65.9 dp, x0 270.1; toque @ 795,2233 → o nome acessível trocou de tema
+navegação  indice         alcançável    bounds [966,2147][1080,2320] = 43.4 × 65.9 dp, x0 368.0; toque @ 1023,2233 → abriu S2p
+navegação  busca          INALCANÇÁVEL  sem nó no dump
+navegação  sair           INALCANÇÁVEL  sem nó no dump
+capturas=2
+
+# indice: 43,4 × 65,9 dp VISÍVEIS (o controle tem 65,8 em B e C: x0 368,0 + 65,8 passa da janela de 411,4) — cortado, tocado com efeito.
+# busca e sair: SEM NÓ — em A a base de C (4 × 66 + 3 × 16 à esquerda, o espaçador, 3 × 66 + 2 × 16 à direita) passa de 411,4.
+# Destino: N5 — a moldura N3-A-S3 (N3-D14) sobe indice · busca · sair para a barra superior de 144 e deixa a base com os 4 de leitura.
+# A barra superior em A, com o token de B: 88 em duas linhas, o título 363,4 (medidas-palco-B.txt não mede A; o dump está em dumps-phone/).

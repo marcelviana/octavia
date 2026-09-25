@@ -1,0 +1,18 @@
+# N3-PR5 — A14 em B (T1-R27): o palco na música 3 em PAISAGEM, gira para RETRATO e volta (n3pr5.py, a14).
+# A linha é a do T1-R27 (`rotation=<orientação> n=<i>/<N>`), lida do logcat limpo antes de cada giro; a posição, do dump.
+
+## tab
+15:41:21 paisagem: 3 DE 8
+15:41:29 girou para retrato: 3 DE 8 · log: ['OCTAVIA: rotation=portrait n=3/8']
+N3P5-S3-a14-retrato-tab-ret mCurrentRotation=ROTATION_0 png=166776 xml=26980 6896d1b00536
+15:41:45 voltou para paisagem: 3 DE 8 · log: ['OCTAVIA: rotation=landscape n=3/8']
+N3P5-S3-a14-volta-tab-pai mCurrentRotation=ROTATION_90 png=137984 xml=26980 66075e9d8b8e
+
+## avd
+15:55:53 paisagem: 3 DE 8
+15:56:01 girou para retrato: 3 DE 8 · log: ['OCTAVIA: rotation=portrait n=3/8']
+N3P5-S3-a14-retrato-avd-ret mCurrentRotation=ROTATION_90 png=153697 xml=26638 1b1443fa531d
+15:56:18 voltou para paisagem: 3 DE 8 · log: ['OCTAVIA: rotation=landscape n=3/8']
+N3P5-S3-a14-volta-avd-pai mCurrentRotation=ROTATION_0 png=124048 xml=26638 034a37c5c919
+
+# e as medidas do dump em retrato (barra 88 · 2 linhas · título 663,1 · zonas 106,7): medidas-palco-B.txt, N3P5-S3-a14-retrato-*

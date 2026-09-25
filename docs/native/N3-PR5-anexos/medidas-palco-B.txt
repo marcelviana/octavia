@@ -1,0 +1,275 @@
+$ python3 docs/native/N3-PR5-anexos/instrumentos/medidas-palco.py docs/native/N3-PR5-anexos/dumps-ret/N3P5-S3-*-ret.xml
+== N3P5-S3-S3a-letra-1a-avd-ret.xml  (janela 711.1 dp · 1 DE 8 · barra y (24.0, 112.0) · título x (24.0, 687.1) · controle 66.2)
+  barra            folha     88  dump    88.0  Δ +0.0  confere
+  linhas           folha      2  dump       2  Δ +0.0  confere
+  título           folha    663  dump   663.1  Δ +0.1  confere
+  corpo            folha    870  dump   869.8  Δ -0.2  confere
+  zona             folha  106.7  dump   106.7  Δ -0.0  confere
+  zona (avançar)   folha  106.7  dump   106.7  Δ -0.0  confere
+  base (altura)    folha     96  dump    96.0  Δ +0.0  confere
+  base (esquerda)  folha    304  dump   312.0  Δ +8.0  > 4 dp
+  base (direita)   folha    224  dump   229.8  Δ +5.8  > 4 dp
+  base (vão)       folha    135  dump   121.3  Δ -13.7  > 4 dp
+  base (x)         [24.0, 106.2, 188.0, 270.2, 457.3, 539.1, 621.3]
+  corpo × regra    janela útil 1053.8 − barra − base = 869.8; dump 869.8  Δ +0.0
+== N3P5-S3-S3a-letra-1a-tab-ret.xml  (janela 711.1 dp · 1 DE 8 · barra y (24.0, 112.0) · título x (24.0, 687.1) · controle 66.2)
+  barra            folha     88  dump    88.0  Δ +0.0  confere
+  linhas           folha      2  dump       2  Δ +0.0  confere
+  título           folha    663  dump   663.1  Δ +0.1  confere
+  corpo            folha    870  dump   881.8  Δ +11.8  > 4 dp
+  zona             folha  106.7  dump   106.7  Δ -0.0  confere
+  zona (avançar)   folha  106.7  dump   106.7  Δ -0.0  confere
+  base (altura)    folha     96  dump    96.0  Δ +0.0  confere
+  base (esquerda)  folha    304  dump   312.0  Δ +8.0  > 4 dp
+  base (direita)   folha    224  dump   229.8  Δ +5.8  > 4 dp
+  base (vão)       folha    135  dump   121.3  Δ -13.7  > 4 dp
+  base (x)         [24.0, 106.2, 188.0, 270.2, 457.3, 539.1, 621.3]
+  corpo × regra    janela útil 1065.8 − barra − base = 881.8; dump 881.8  Δ +0.0
+== N3P5-S3-S3b-cifra-claro-avd-ret.xml  (janela 711.1 dp · 2 DE 8 · barra y (24.0, 112.0) · título x (24.0, 687.1) · controle 66.2)
+  barra            folha     88  dump    88.0  Δ +0.0  confere
+  linhas           folha      2  dump       2  Δ +0.0  confere
+  título           folha    663  dump   663.1  Δ +0.1  confere
+  corpo            folha    870  dump   869.8  Δ -0.2  confere
+  zona             folha  106.7  dump   106.7  Δ -0.0  confere
+  zona (avançar)   folha  106.7  dump   106.7  Δ -0.0  confere
+  base (altura)    folha     96  dump    96.0  Δ +0.0  confere
+  base (esquerda)  folha    304  dump   312.0  Δ +8.0  > 4 dp
+  base (direita)   folha    224  dump   229.8  Δ +5.8  > 4 dp
+  base (vão)       folha    135  dump   121.3  Δ -13.7  > 4 dp
+  base (x)         [24.0, 106.2, 188.0, 270.2, 457.3, 539.1, 621.3]
+  corpo × regra    janela útil 1053.8 − barra − base = 869.8; dump 869.8  Δ +0.0
+== N3P5-S3-S3b-cifra-claro-tab-ret.xml  (janela 711.1 dp · 2 DE 8 · barra y (24.0, 112.0) · título x (24.0, 687.1) · controle 66.2)
+  barra            folha     88  dump    88.0  Δ +0.0  confere
+  linhas           folha      2  dump       2  Δ +0.0  confere
+  título           folha    663  dump   663.1  Δ +0.1  confere
+  corpo            folha    870  dump   881.8  Δ +11.8  > 4 dp
+  zona             folha  106.7  dump   106.7  Δ -0.0  confere
+  zona (avançar)   folha  106.7  dump   106.7  Δ -0.0  confere
+  base (altura)    folha     96  dump    96.0  Δ +0.0  confere
+  base (esquerda)  folha    304  dump   312.0  Δ +8.0  > 4 dp
+  base (direita)   folha    224  dump   229.8  Δ +5.8  > 4 dp
+  base (vão)       folha    135  dump   121.3  Δ -13.7  > 4 dp
+  base (x)         [24.0, 106.2, 188.0, 270.2, 457.3, 539.1, 621.3]
+  corpo × regra    janela útil 1065.8 − barra − base = 881.8; dump 881.8  Δ +0.0
+== N3P5-S3-S3b-cifra-escuro-avd-ret.xml  (janela 711.1 dp · 2 DE 8 · barra y (24.0, 112.0) · título x (24.0, 687.1) · controle 66.2)
+  barra            folha     88  dump    88.0  Δ +0.0  confere
+  linhas           folha      2  dump       2  Δ +0.0  confere
+  título           folha    663  dump   663.1  Δ +0.1  confere
+  corpo            folha    870  dump   869.8  Δ -0.2  confere
+  zona             folha  106.7  dump   106.7  Δ -0.0  confere
+  zona (avançar)   folha  106.7  dump   106.7  Δ -0.0  confere
+  base (altura)    folha     96  dump    96.0  Δ +0.0  confere
+  base (esquerda)  folha    304  dump   312.0  Δ +8.0  > 4 dp
+  base (direita)   folha    224  dump   229.8  Δ +5.8  > 4 dp
+  base (vão)       folha    135  dump   121.3  Δ -13.7  > 4 dp
+  base (x)         [24.0, 106.2, 188.0, 270.2, 457.3, 539.1, 621.3]
+  corpo × regra    janela útil 1053.8 − barra − base = 869.8; dump 869.8  Δ +0.0
+== N3P5-S3-S3b-cifra-escuro-tab-ret.xml  (janela 711.1 dp · 2 DE 8 · barra y (24.0, 112.0) · título x (24.0, 687.1) · controle 66.2)
+  barra            folha     88  dump    88.0  Δ +0.0  confere
+  linhas           folha      2  dump       2  Δ +0.0  confere
+  título           folha    663  dump   663.1  Δ +0.1  confere
+  corpo            folha    870  dump   881.8  Δ +11.8  > 4 dp
+  zona             folha  106.7  dump   106.7  Δ -0.0  confere
+  zona (avançar)   folha  106.7  dump   106.7  Δ -0.0  confere
+  base (altura)    folha     96  dump    96.0  Δ +0.0  confere
+  base (esquerda)  folha    304  dump   312.0  Δ +8.0  > 4 dp
+  base (direita)   folha    224  dump   229.8  Δ +5.8  > 4 dp
+  base (vão)       folha    135  dump   121.3  Δ -13.7  > 4 dp
+  base (x)         [24.0, 106.2, 188.0, 270.2, 457.3, 539.1, 621.3]
+  corpo × regra    janela útil 1065.8 − barra − base = 881.8; dump 881.8  Δ +0.0
+== N3P5-S3-S3c-tab-autoscroll-avd-ret.xml  (janela 711.1 dp · 3 DE 8 · barra y (24.0, 112.0) · título x (24.0, 687.1) · controle 66.2)
+  barra            folha     88  dump    88.0  Δ +0.0  confere
+  linhas           folha      2  dump       2  Δ +0.0  confere
+  título           folha    663  dump   663.1  Δ +0.1  confere
+  corpo            folha    870  dump   869.8  Δ -0.2  confere
+  zona             folha  106.7  dump   106.7  Δ -0.0  confere
+  zona (avançar)   folha  106.7  dump   106.7  Δ -0.0  confere
+  base (altura)    folha     96  dump    96.0  Δ +0.0  confere
+  base (esquerda)  folha    304  dump   312.0  Δ +8.0  > 4 dp
+  base (direita)   folha    224  dump   229.8  Δ +5.8  > 4 dp
+  base (vão)       folha    135  dump   121.3  Δ -13.7  > 4 dp
+  base (x)         [24.0, 106.2, 188.0, 270.2, 457.3, 539.1, 621.3]
+  corpo × regra    janela útil 1053.8 − barra − base = 869.8; dump 869.8  Δ +0.0
+== N3P5-S3-S3c-tab-autoscroll-tab-ret.xml  (janela 711.1 dp · 3 DE 8 · barra y (24.0, 112.0) · título x (24.0, 687.1) · controle 66.2)
+  barra            folha     88  dump    88.0  Δ +0.0  confere
+  linhas           folha      2  dump       2  Δ +0.0  confere
+  título           folha    663  dump   663.1  Δ +0.1  confere
+  corpo            folha    870  dump   881.8  Δ +11.8  > 4 dp
+  zona             folha  106.7  dump   106.7  Δ -0.0  confere
+  zona (avançar)   folha  106.7  dump   106.7  Δ -0.0  confere
+  base (altura)    folha     96  dump    96.0  Δ +0.0  confere
+  base (esquerda)  folha    304  dump   312.0  Δ +8.0  > 4 dp
+  base (direita)   folha    224  dump   229.8  Δ +5.8  > 4 dp
+  base (vão)       folha    135  dump   121.3  Δ -13.7  > 4 dp
+  base (x)         [24.0, 106.2, 188.0, 270.2, 457.3, 539.1, 621.3]
+  corpo × regra    janela útil 1065.8 − barra − base = 881.8; dump 881.8  Δ +0.0
+== N3P5-S3-S3d-pdf-12p-avd-ret.xml  (janela 711.1 dp · 4 DE 8 · barra y (24.0, 112.0) · título x (24.0, 687.1) · controle 66.2)
+  barra            folha     88  dump    88.0  Δ +0.0  confere
+  linhas           folha      2  dump       2  Δ +0.0  confere
+  título           folha    663  dump   663.1  Δ +0.1  confere
+  corpo            folha    870  dump   869.8  Δ -0.2  confere
+  zona             folha  106.7  dump   106.7  Δ -0.0  confere
+  zona (avançar)   folha  106.7  dump   106.7  Δ -0.0  confere
+  base (altura)    folha     96  dump    96.0  Δ +0.0  confere
+  base (esquerda)  folha    304  dump   312.0  Δ +8.0  > 4 dp
+  base (direita)   folha    224  dump   229.8  Δ +5.8  > 4 dp
+  base (vão)       folha    135  dump   121.3  Δ -13.7  > 4 dp
+  base (x)         [24.0, 106.2, 188.0, 270.2, 457.3, 539.1, 621.3]
+  corpo × regra    janela útil 1053.8 − barra − base = 869.8; dump 869.8  Δ +0.0
+== N3P5-S3-S3d-pdf-12p-tab-ret.xml  (janela 711.1 dp · 4 DE 8 · barra y (24.0, 112.0) · título x (24.0, 687.1) · controle 66.2)
+  barra            folha     88  dump    88.0  Δ +0.0  confere
+  linhas           folha      2  dump       2  Δ +0.0  confere
+  título           folha    663  dump   663.1  Δ +0.1  confere
+  corpo            folha    870  dump   881.8  Δ +11.8  > 4 dp
+  zona             folha  106.7  dump   106.7  Δ -0.0  confere
+  zona (avançar)   folha  106.7  dump   106.7  Δ -0.0  confere
+  base (altura)    folha     96  dump    96.0  Δ +0.0  confere
+  base (esquerda)  folha    304  dump   312.0  Δ +8.0  > 4 dp
+  base (direita)   folha    224  dump   229.8  Δ +5.8  > 4 dp
+  base (vão)       folha    135  dump   121.3  Δ -13.7  > 4 dp
+  base (x)         [24.0, 106.2, 188.0, 270.2, 457.3, 539.1, 621.3]
+  corpo × regra    janela útil 1065.8 − barra − base = 881.8; dump 881.8  Δ +0.0
+== N3P5-S3-S3e-nao-baixado-avd-ret.xml  (janela 711.1 dp · 5 DE 8 · barra y (24.0, 112.0) · título x (24.0, 687.1) · controle 66.2)
+  barra            folha     88  dump    88.0  Δ +0.0  confere
+  linhas           folha      2  dump       2  Δ +0.0  confere
+  título           folha    663  dump   663.1  Δ +0.1  confere
+  corpo            folha    870  dump   869.8  Δ -0.2  confere
+  zona             folha  106.7  dump   106.7  Δ -0.0  confere
+  zona (avançar)   folha  106.7  dump   106.7  Δ -0.0  confere
+  base (altura)    folha     96  dump    96.0  Δ +0.0  confere
+  base (esquerda)  folha    304  dump   312.0  Δ +8.0  > 4 dp
+  base (direita)   folha    224  dump   229.8  Δ +5.8  > 4 dp
+  base (vão)       folha    135  dump   121.3  Δ -13.7  > 4 dp
+  base (x)         [24.0, 106.2, 188.0, 270.2, 457.3, 539.1, 621.3]
+  corpo × regra    janela útil 1053.8 − barra − base = 869.8; dump 869.8  Δ +0.0
+== N3P5-S3-S3e-nao-baixado-tab-ret.xml  (janela 711.1 dp · 5 DE 8 · barra y (24.0, 112.0) · título x (24.0, 687.1) · controle 66.2)
+  barra            folha     88  dump    88.0  Δ +0.0  confere
+  linhas           folha      2  dump       2  Δ +0.0  confere
+  título           folha    663  dump   663.1  Δ +0.1  confere
+  corpo            folha    870  dump   881.8  Δ +11.8  > 4 dp
+  zona             folha  106.7  dump   106.7  Δ -0.0  confere
+  zona (avançar)   folha  106.7  dump   106.7  Δ -0.0  confere
+  base (altura)    folha     96  dump    96.0  Δ +0.0  confere
+  base (esquerda)  folha    304  dump   312.0  Δ +8.0  > 4 dp
+  base (direita)   folha    224  dump   229.8  Δ +5.8  > 4 dp
+  base (vão)       folha    135  dump   121.3  Δ -13.7  > 4 dp
+  base (x)         [24.0, 106.2, 188.0, 270.2, 457.3, 539.1, 621.3]
+  corpo × regra    janela útil 1065.8 − barra − base = 881.8; dump 881.8  Δ +0.0
+== N3P5-S3-a14-retrato-avd-ret.xml  (janela 711.1 dp · 3 DE 8 · barra y (24.0, 112.0) · título x (24.0, 687.1) · controle 66.2)
+  barra            folha     88  dump    88.0  Δ +0.0  confere
+  linhas           folha      2  dump       2  Δ +0.0  confere
+  título           folha    663  dump   663.1  Δ +0.1  confere
+  corpo            folha    870  dump   869.8  Δ -0.2  confere
+  zona             folha  106.7  dump   106.7  Δ -0.0  confere
+  zona (avançar)   folha  106.7  dump   106.7  Δ -0.0  confere
+  base (altura)    folha     96  dump    96.0  Δ +0.0  confere
+  base (esquerda)  folha    304  dump   312.0  Δ +8.0  > 4 dp
+  base (direita)   folha    224  dump   229.8  Δ +5.8  > 4 dp
+  base (vão)       folha    135  dump   121.3  Δ -13.7  > 4 dp
+  base (x)         [24.0, 106.2, 188.0, 270.2, 457.3, 539.1, 621.3]
+  corpo × regra    janela útil 1053.8 − barra − base = 869.8; dump 869.8  Δ +0.0
+== N3P5-S3-a14-retrato-tab-ret.xml  (janela 711.1 dp · 3 DE 8 · barra y (24.0, 112.0) · título x (24.0, 687.1) · controle 66.2)
+  barra            folha     88  dump    88.0  Δ +0.0  confere
+  linhas           folha      2  dump       2  Δ +0.0  confere
+  título           folha    663  dump   663.1  Δ +0.1  confere
+  corpo            folha    870  dump   881.8  Δ +11.8  > 4 dp
+  zona             folha  106.7  dump   106.7  Δ -0.0  confere
+  zona (avançar)   folha  106.7  dump   106.7  Δ -0.0  confere
+  base (altura)    folha     96  dump    96.0  Δ +0.0  confere
+  base (esquerda)  folha    304  dump   312.0  Δ +8.0  > 4 dp
+  base (direita)   folha    224  dump   229.8  Δ +5.8  > 4 dp
+  base (vão)       folha    135  dump   121.3  Δ -13.7  > 4 dp
+  base (x)         [24.0, 106.2, 188.0, 270.2, 457.3, 539.1, 621.3]
+  corpo × regra    janela útil 1065.8 − barra − base = 881.8; dump 881.8  Δ +0.0
+== N3P5-S3-placeholder-avd-ret.xml  (janela 711.1 dp · 9 DE 9 · barra y (24.0, 112.0) · título x (24.0, 687.1) · controle 66.2)
+  barra            folha     88  dump    88.0  Δ +0.0  confere
+  linhas           folha      2  dump       2  Δ +0.0  confere
+  título           folha    663  dump   663.1  Δ +0.1  confere
+  corpo            folha    870  dump   869.8  Δ -0.2  confere
+  zona             folha  106.7  dump   106.7  Δ -0.0  confere
+  zona (avançar)   folha  106.7  dump   106.7  Δ -0.0  confere
+  base (altura)    folha     96  dump    96.0  Δ +0.0  confere
+  base (esquerda)  folha    304  dump   312.0  Δ +8.0  > 4 dp
+  base (direita)   folha    224  dump   229.8  Δ +5.8  > 4 dp
+  base (vão)       folha    135  dump   121.3  Δ -13.7  > 4 dp
+  base (x)         [24.0, 106.2, 188.0, 270.2, 457.3, 539.1, 621.3]
+  corpo × regra    janela útil 1053.8 − barra − base = 869.8; dump 869.8  Δ +0.0
+== N3P5-S3-placeholder-tab-ret.xml  (janela 711.1 dp · 9 DE 9 · barra y (24.0, 112.0) · título x (24.0, 687.1) · controle 66.2)
+  barra            folha     88  dump    88.0  Δ +0.0  confere
+  linhas           folha      2  dump       2  Δ +0.0  confere
+  título           folha    663  dump   663.1  Δ +0.1  confere
+  corpo            folha    870  dump   881.8  Δ +11.8  > 4 dp
+  zona             folha  106.7  dump   106.7  Δ -0.0  confere
+  zona (avançar)   folha  106.7  dump   106.7  Δ -0.0  confere
+  base (altura)    folha     96  dump    96.0  Δ +0.0  confere
+  base (esquerda)  folha    304  dump   312.0  Δ +8.0  > 4 dp
+  base (direita)   folha    224  dump   229.8  Δ +5.8  > 4 dp
+  base (vão)       folha    135  dump   121.3  Δ -13.7  > 4 dp
+  base (x)         [24.0, 106.2, 188.0, 270.2, 457.3, 539.1, 621.3]
+  corpo × regra    janela útil 1065.8 − barra − base = 881.8; dump 881.8  Δ +0.0
+== N3P5-S3-titulo-longo-avd-ret.xml  (janela 711.1 dp · 6 DE 8 · barra y (24.0, 112.0) · título x (24.0, 687.1) · controle 66.2)
+  barra            folha     88  dump    88.0  Δ +0.0  confere
+  linhas           folha      2  dump       2  Δ +0.0  confere
+  título           folha    663  dump   663.1  Δ +0.1  confere
+  corpo            folha    870  dump   869.8  Δ -0.2  confere
+  zona             folha  106.7  dump   106.7  Δ -0.0  confere
+  zona (avançar)   folha  106.7  dump   106.7  Δ -0.0  confere
+  base (altura)    folha     96  dump    96.0  Δ +0.0  confere
+  base (esquerda)  folha    304  dump   312.0  Δ +8.0  > 4 dp
+  base (direita)   folha    224  dump   229.8  Δ +5.8  > 4 dp
+  base (vão)       folha    135  dump   121.3  Δ -13.7  > 4 dp
+  base (x)         [24.0, 106.2, 188.0, 270.2, 457.3, 539.1, 621.3]
+  corpo × regra    janela útil 1053.8 − barra − base = 869.8; dump 869.8  Δ +0.0
+== N3P5-S3-titulo-longo-tab-ret.xml  (janela 711.1 dp · 6 DE 8 · barra y (24.0, 112.0) · título x (24.0, 687.1) · controle 66.2)
+  barra            folha     88  dump    88.0  Δ +0.0  confere
+  linhas           folha      2  dump       2  Δ +0.0  confere
+  título           folha    663  dump   663.1  Δ +0.1  confere
+  corpo            folha    870  dump   881.8  Δ +11.8  > 4 dp
+  zona             folha  106.7  dump   106.7  Δ -0.0  confere
+  zona (avançar)   folha  106.7  dump   106.7  Δ -0.0  confere
+  base (altura)    folha     96  dump    96.0  Δ +0.0  confere
+  base (esquerda)  folha    304  dump   312.0  Δ +8.0  > 4 dp
+  base (direita)   folha    224  dump   229.8  Δ +5.8  > 4 dp
+  base (vão)       folha    135  dump   121.3  Δ -13.7  > 4 dp
+  base (x)         [24.0, 106.2, 188.0, 270.2, 457.3, 539.1, 621.3]
+  corpo × regra    janela útil 1065.8 − barra − base = 881.8; dump 881.8  Δ +0.0
+== N3P5-S3-ultima-avd-ret.xml  (janela 711.1 dp · 8 DE 8 · barra y (24.0, 112.0) · título x (24.0, 687.1) · controle 66.2)
+  barra            folha     88  dump    88.0  Δ +0.0  confere
+  linhas           folha      2  dump       2  Δ +0.0  confere
+  título           folha    663  dump   663.1  Δ +0.1  confere
+  corpo            folha    870  dump   869.8  Δ -0.2  confere
+  zona             folha  106.7  dump   106.7  Δ -0.0  confere
+  zona (avançar)   folha  106.7  dump   106.7  Δ -0.0  confere
+  base (altura)    folha     96  dump    96.0  Δ +0.0  confere
+  base (esquerda)  folha    304  dump   312.0  Δ +8.0  > 4 dp
+  base (direita)   folha    224  dump   229.8  Δ +5.8  > 4 dp
+  base (vão)       folha    135  dump   121.3  Δ -13.7  > 4 dp
+  base (x)         [24.0, 106.2, 188.0, 270.2, 457.3, 539.1, 621.3]
+  corpo × regra    janela útil 1053.8 − barra − base = 869.8; dump 869.8  Δ +0.0
+== N3P5-S3-ultima-tab-ret.xml  (janela 711.1 dp · 8 DE 8 · barra y (24.0, 112.0) · título x (24.0, 687.1) · controle 66.2)
+  barra            folha     88  dump    88.0  Δ +0.0  confere
+  linhas           folha      2  dump       2  Δ +0.0  confere
+  título           folha    663  dump   663.1  Δ +0.1  confere
+  corpo            folha    870  dump   881.8  Δ +11.8  > 4 dp
+  zona             folha  106.7  dump   106.7  Δ -0.0  confere
+  zona (avançar)   folha  106.7  dump   106.7  Δ -0.0  confere
+  base (altura)    folha     96  dump    96.0  Δ +0.0  confere
+  base (esquerda)  folha    304  dump   312.0  Δ +8.0  > 4 dp
+  base (direita)   folha    224  dump   229.8  Δ +5.8  > 4 dp
+  base (vão)       folha    135  dump   121.3  Δ -13.7  > 4 dp
+  base (x)         [24.0, 106.2, 188.0, 270.2, 457.3, 539.1, 621.3]
+  corpo × regra    janela útil 1065.8 − barra − base = 881.8; dump 881.8  Δ +0.0
+$ python3 docs/native/N3-PR5-anexos/instrumentos/medidas-palco.py docs/native/N3-PRECHECK-anexos/B2/B2-S3-S3a-letra-1a-avd.xml   # controle: a main de antes, C espremida em 711
+== B2-S3-S3a-letra-1a-avd.xml  (janela 711.1 dp · 1 DE 8 · barra y (24.0, 88.0) · título x (282.2, 687.1) · controle 66.2)
+  barra            folha     88  dump    64.0  Δ -24.0  > 4 dp
+  linhas           folha      2  dump       1  Δ -1.0  DIFERE
+  título           folha    663  dump   404.9  Δ -258.1  > 4 dp
+  corpo            folha    870  dump   893.8  Δ +23.8  > 4 dp
+  zona             folha  106.7  dump   106.7  Δ -0.0  confere
+  zona (avançar)   folha  106.7  dump   106.7  Δ -0.0  confere
+  base (altura)    folha     96  dump    96.0  Δ +0.0  confere
+  base (esquerda)  folha    304  dump   312.0  Δ +8.0  > 4 dp
+  base (direita)   folha    224  dump   229.8  Δ +5.8  > 4 dp
+  base (vão)       folha    135  dump   121.3  Δ -13.7  > 4 dp
+  base (x)         [24.0, 106.2, 188.0, 270.2, 457.3, 539.1, 621.3]
+  corpo × regra    janela útil 1053.8 − barra − base = 893.8; dump 893.8  Δ +0.0

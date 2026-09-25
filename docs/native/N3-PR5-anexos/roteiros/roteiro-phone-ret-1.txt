@@ -1,0 +1,29 @@
+16:04:45 mock modo=normal vazio=False
+16:05:01 toque canto de setlist-00000001 @ 108,549
+16:05:08 toque 'song-1' @ 540,677 (emulator-5556)
+N3P5-S3-S3a-letra-1a-phone-ret mCurrentRotation=ROTATION_0 png=262247 xml=23367 1bc663723af4
+16:05:24 toque 'borda-avancar' @ 999,1200 (emulator-5556)
+16:05:31 toque 'borda-voltar' @ 81,1200 (emulator-5556)
+16:05:39 toque 'auto-scroll' @ 149,2233 (emulator-5556)
+16:06:01 toque 'auto-scroll' @ 149,2233 (emulator-5556)
+16:06:07 toque 'zoom-mais' @ 580,2233 (emulator-5556)
+16:06:13 toque 'zoom-menos' @ 365,2233 (emulator-5556)
+16:06:22 toque 'tema' @ 795,2233 (emulator-5556)
+16:06:29 toque 'tema' @ 795,2233 (emulator-5556)
+16:06:35 toque 'indice' @ 1023,2233 (emulator-5556)
+16:07:12 toque canto de setlist-00000001 @ 108,549
+16:07:18 toque 'song-4' @ 540,1654 (emulator-5556)
+N3P5-S3-S3d-pdf-12p-phone-ret mCurrentRotation=ROTATION_0 png=135459 xml=20828 e4814b37c07e
+16:07:39 mock modo=normal vazio=False
+
+# lista (grupo, controle, alcance, detalhe)
+bordas     borda-avancar  alcançável    bounds [918,294][1080,2106] = 61.7 × 690.3 dp, x0 349.7; toque @ 999,1200 → 2 DE 8
+bordas     borda-voltar   alcançável    bounds [0,294][162,2106] = 61.7 × 690.3 dp, x0 0.0; toque @ 81,1200 → 1 DE 8
+leitura    auto-scroll    alcançável    bounds [63,2147][236,2320] = 65.9 × 65.9 dp, x0 24.0; toque @ 149,2233 → o nome acessível virou “…, ligada”
+leitura    zoom-mais      alcançável    bounds [494,2147][667,2320] = 65.9 × 65.9 dp, x0 188.2; toque @ 580,2233 → `zoom dp=26`
+leitura    zoom-menos     alcançável    bounds [278,2147][452,2320] = 66.3 × 65.9 dp, x0 105.9; toque @ 365,2233 → `zoom dp=22`
+leitura    tema           alcançável    bounds [709,2147][882,2320] = 65.9 × 65.9 dp, x0 270.1; toque @ 795,2233 → o nome acessível trocou de tema
+navegação  indice         alcançável    bounds [966,2147][1080,2320] = 43.4 × 65.9 dp, x0 368.0; toque @ 1023,2233 → abriu S2p
+navegação  busca          INALCANÇÁVEL  sem nó no dump
+navegação  sair           INALCANÇÁVEL  sem nó no dump
+capturas=2

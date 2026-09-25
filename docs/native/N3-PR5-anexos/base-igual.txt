@@ -1,0 +1,19 @@
+$ python3 docs/native/N3-PR5-anexos/instrumentos/base-igual.py docs/native/N3-PRECHECK-anexos/B2 docs/native/N3-PR5-anexos/dumps-ret S3-S3a-letra-1a-avd S3-S3b-cifra-claro-avd S3-S3b-cifra-escuro-avd S3-S3c-tab-autoscroll-avd S3-S3d-pdf-12p-avd S3-S3e-nao-baixado-avd S3-titulo-longo-avd S3-ultima-avd S3-S3a-letra-1a-tab S3-S3b-cifra-claro-tab S3-S3b-cifra-escuro-tab S3-S3c-tab-autoscroll-tab S3-S3d-pdf-12p-tab S3-S3e-nao-baixado-tab S3-titulo-longo-tab S3-ultima-tab
+  ✓ S3-S3a-letra-1a-avd: a base é a mesma (37 nós); bordas: largura e fundo iguais (106.7 · 981.8), topo 88.0 → 112.0
+  ✓ S3-S3b-cifra-claro-avd: a base é a mesma (36 nós); bordas: largura e fundo iguais (106.7 · 981.8), topo 88.0 → 112.0
+  ✓ S3-S3b-cifra-escuro-avd: a base é a mesma (37 nós); bordas: largura e fundo iguais (106.7 · 981.8), topo 88.0 → 112.0
+  ✓ S3-S3c-tab-autoscroll-avd: a base é a mesma (38 nós); bordas: largura e fundo iguais (106.7 · 981.8), topo 88.0 → 112.0
+  ✓ S3-S3d-pdf-12p-avd: a base é a mesma (37 nós); bordas: largura e fundo iguais (106.7 · 981.8), topo 88.0 → 112.0
+  ✓ S3-S3e-nao-baixado-avd: a base é a mesma (37 nós); bordas: largura e fundo iguais (106.7 · 981.8), topo 88.0 → 112.0
+  ✓ S3-titulo-longo-avd: a base é a mesma (37 nós); bordas: largura e fundo iguais (106.7 · 981.8), topo 88.0 → 112.0
+  ✓ S3-ultima-avd: a base é a mesma (37 nós); bordas: largura e fundo iguais (106.7 · 981.8), topo 88.0 → 112.0
+  ✓ S3-S3a-letra-1a-tab: a base é a mesma (37 nós); bordas: largura e fundo iguais (106.7 · 993.8), topo 88.0 → 112.0
+  ✓ S3-S3b-cifra-claro-tab: a base é a mesma (36 nós); bordas: largura e fundo iguais (106.7 · 993.8), topo 88.0 → 112.0
+  ✓ S3-S3b-cifra-escuro-tab: a base é a mesma (37 nós); bordas: largura e fundo iguais (106.7 · 993.8), topo 88.0 → 112.0
+  ✓ S3-S3c-tab-autoscroll-tab: a base é a mesma (38 nós); bordas: largura e fundo iguais (106.7 · 993.8), topo 88.0 → 112.0
+  ✓ S3-S3d-pdf-12p-tab: a base é a mesma (37 nós); bordas: largura e fundo iguais (106.7 · 993.8), topo 88.0 → 112.0
+  ✓ S3-S3e-nao-baixado-tab: a base é a mesma (37 nós); bordas: largura e fundo iguais (106.7 · 993.8), topo 88.0 → 112.0
+  ✓ S3-titulo-longo-tab: a base é a mesma (37 nós); bordas: largura e fundo iguais (106.7 · 993.8), topo 88.0 → 112.0
+  ✓ S3-ultima-tab: a base é a mesma (37 nós); bordas: largura e fundo iguais (106.7 · 993.8), topo 88.0 → 112.0
+base = C: a mesma barra inferior em todos os pares ✓
+exit=0

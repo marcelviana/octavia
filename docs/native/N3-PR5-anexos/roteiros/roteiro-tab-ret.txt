@@ -1,0 +1,55 @@
+15:33:26 toque canto de setlist-00000001 @ 96,474
+15:33:33 toque 'song-1' @ 800,580 (RX2N8000F3D)
+N3P5-S3-S3a-letra-1a-tab-ret mCurrentRotation=ROTATION_0 png=412695 xml=26722 6a36d133f29a
+15:33:47 toque 'indice' @ 1103,2345 (RX2N8000F3D)
+N3P5-S2-sem-edicao-S2p-tab-ret mCurrentRotation=ROTATION_0 png=273656 xml=37741 1aa7ac6776d3
+15:34:02 toque 'borda-avancar' @ 1480,1244 (RX2N8000F3D)
+N3P5-S3-S3b-cifra-escuro-tab-ret mCurrentRotation=ROTATION_0 png=500660 xml=25752 fdc1f9c00032
+15:34:16 toque 'tema' @ 682,2345 (RX2N8000F3D)
+N3P5-S3-S3b-cifra-claro-tab-ret mCurrentRotation=ROTATION_0 png=500886 xml=25426 d173eca5d148
+15:34:28 toque 'tema' @ 682,2345 (RX2N8000F3D)
+15:34:32 toque 'borda-avancar' @ 1480,1244 (RX2N8000F3D)
+15:34:37 toque 'auto-scroll' @ 128,2345 (RX2N8000F3D)
+N3P5-S3-S3c-tab-autoscroll-tab-ret mCurrentRotation=ROTATION_0 png=162339 xml=27302 34fbd880896f
+15:34:54 toque 'auto-scroll' @ 128,2345 (RX2N8000F3D)
+15:34:57 toque 'borda-avancar' @ 1480,1244 (RX2N8000F3D)
+N3P5-S3-S3d-pdf-12p-tab-ret mCurrentRotation=ROTATION_0 png=193780 xml=24181 f36c7bfbf2d8
+15:35:16 avião=1 (RX2N8000F3D)
+15:35:18 toque 'borda-avancar' @ 1480,1244 (RX2N8000F3D)
+N3P5-S3-S3e-nao-baixado-tab-ret mCurrentRotation=ROTATION_0 png=156110 xml=24557 e000242e0351
+15:35:37 avião=0 (RX2N8000F3D)
+15:35:40 toque 'borda-avancar' @ 1480,1244 (RX2N8000F3D)
+N3P5-S3-titulo-longo-tab-ret mCurrentRotation=ROTATION_0 png=417161 xml=26832 ed24b0079dda
+15:35:54 toque 'borda-avancar' @ 1480,1244 (RX2N8000F3D)
+15:35:59 toque 'borda-avancar' @ 1480,1244 (RX2N8000F3D)
+N3P5-S3-ultima-tab-ret mCurrentRotation=ROTATION_0 png=415047 xml=26722 158863cf1eb8
+15:36:13 toque 'borda-avancar' @ 1480,1244 (RX2N8000F3D)
+N3P5-S5-fim-tab-ret mCurrentRotation=ROTATION_0 png=114734 xml=18200 5cdaf5365aab
+15:36:37 toque canto de setlist-00000001 @ 96,474
+15:36:44 toque 'picker-abrir' @ 207,323 (RX2N8000F3D)
+N3P5-picker-vazio-tab-ret mCurrentRotation=ROTATION_0 png=129760 xml=16727 5105bc487454
+15:36:57 toque 'picker-campo' @ 917,152 (RX2N8000F3D)
+N3P5-picker-resultados-tab-ret mCurrentRotation=ROTATION_0 png=375185 xml=60081 c946e1917fd4
+15:37:13 toque 'fechar-busca' @ 108,152 (RX2N8000F3D)
+15:37:26 toque canto de setlist-00000001 @ 96,474
+15:37:33 toque 'picker-abrir' @ 207,323 (RX2N8000F3D)
+15:37:38 toque 'picker-campo' @ 917,152 (RX2N8000F3D)
+15:37:44 mock modo=resync-pendurado vazio=False
+15:37:46 toque 'picker-adicionar-1' @ 1337,473 (RX2N8000F3D)
+FALHA pickerRelendo: ESPERA ESGOTADA: 'relendo'
+15:38:13 avião=0 (RX2N8000F3D)
+15:38:14 mock modo=normal vazio=False
+15:38:27 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+N3P5-S4-vazio-tab-ret mCurrentRotation=ROTATION_0 png=100947 xml=14312 2f530b57f132
+15:38:40 toque 'campo-busca' @ 917,152 (RX2N8000F3D)
+N3P5-S4-resultados-tab-ret mCurrentRotation=ROTATION_0 png=271398 xml=35226 7cb986fac916
+15:38:56 toque 'fechar-busca' @ 108,152 (RX2N8000F3D)
+15:39:09 toque canto de setlist-00000001 @ 96,474
+15:39:16 toque 'song-3' @ 800,1138 (RX2N8000F3D)
+15:39:26 janela 1600 px = 711.1 dp · borda-avancar [1360, 252, 1600, 2236] · y=1244
+15:39:34 toque direita, 104 dp da borda @ x=1366 px (607.1 dp): 3 DE 8 → 4 DE 8 · log: ['OCTAVIA: nav n=4/8 setlist=00000001 t=71']
+15:39:41 toque direita, 112 dp da borda @ x=1348 px (599.1 dp): 4 DE 8 → 4 DE 8 · log: []
+15:39:49 toque esquerda, 104 dp da borda @ x=234 px (104.0 dp): 4 DE 8 → 3 DE 8 · log: ['OCTAVIA: nav n=3/8 setlist=00000001 t=68']
+15:39:56 toque esquerda, 112 dp da borda @ x=252 px (112.0 dp): 3 DE 8 → 3 DE 8 · log: []
+capturas=14 falhas=1
+  pickerRelendo: ESPERA ESGOTADA: 'relendo'

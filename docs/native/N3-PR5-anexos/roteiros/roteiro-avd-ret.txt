@@ -1,0 +1,60 @@
+15:45:47 toque canto de setlist-00000001 @ 96,474
+15:45:54 toque 'song-1' @ 800,580 (emulator-5554)
+N3P5-S3-S3a-letra-1a-avd-ret mCurrentRotation=ROTATION_90 png=388033 xml=26380 76b8201e1687
+15:46:09 toque 'indice' @ 1103,2318 (emulator-5554)
+N3P5-S2-sem-edicao-S2p-avd-ret mCurrentRotation=ROTATION_90 png=253995 xml=37399 7ae35c935baa
+15:46:26 toque 'borda-avancar' @ 1480,1230 (emulator-5554)
+N3P5-S3-S3b-cifra-escuro-avd-ret mCurrentRotation=ROTATION_90 png=471499 xml=25410 395df0c23676
+15:46:42 toque 'tema' @ 682,2318 (emulator-5554)
+N3P5-S3-S3b-cifra-claro-avd-ret mCurrentRotation=ROTATION_90 png=474234 xml=25084 3352c0a05ac1
+15:46:55 toque 'tema' @ 682,2318 (emulator-5554)
+15:46:59 toque 'borda-avancar' @ 1480,1230 (emulator-5554)
+15:47:04 toque 'auto-scroll' @ 128,2318 (emulator-5554)
+N3P5-S3-S3c-tab-autoscroll-avd-ret mCurrentRotation=ROTATION_90 png=148060 xml=26960 fc524823eec6
+15:47:21 toque 'auto-scroll' @ 128,2318 (emulator-5554)
+15:47:24 toque 'borda-avancar' @ 1480,1230 (emulator-5554)
+N3P5-S3-S3d-pdf-12p-avd-ret mCurrentRotation=ROTATION_90 png=179961 xml=23839 95a4d979932d
+15:47:44 avião=1 (emulator-5554)
+15:47:47 toque 'borda-avancar' @ 1480,1230 (emulator-5554)
+N3P5-S3-S3e-nao-baixado-avd-ret mCurrentRotation=ROTATION_90 png=142844 xml=24215 46a878edf60e
+15:48:06 avião=0 (emulator-5554)
+15:48:13 toque 'borda-avancar' @ 1480,1230 (emulator-5554)
+N3P5-S3-titulo-longo-avd-ret mCurrentRotation=ROTATION_90 png=392172 xml=26490 e370a4d8743a
+15:48:29 toque 'borda-avancar' @ 1480,1230 (emulator-5554)
+15:48:34 toque 'borda-avancar' @ 1480,1230 (emulator-5554)
+N3P5-S3-ultima-avd-ret mCurrentRotation=ROTATION_90 png=389540 xml=26380 5b9a0f47b13e
+15:48:49 toque 'borda-avancar' @ 1480,1230 (emulator-5554)
+N3P5-S5-fim-avd-ret mCurrentRotation=ROTATION_90 png=100516 xml=17858 696eaf4376a9
+15:49:24 toque canto de setlist-00000001 @ 96,474
+15:49:31 toque 'picker-abrir' @ 207,323 (emulator-5554)
+N3P5-picker-vazio-avd-ret mCurrentRotation=ROTATION_90 png=117823 xml=16385 a1e8fa8fa988
+15:49:45 toque 'picker-campo' @ 917,152 (emulator-5554)
+N3P5-picker-resultados-avd-ret mCurrentRotation=ROTATION_90 png=356036 xml=59739 afaeed4618b6
+15:50:02 toque 'fechar-busca' @ 108,152 (emulator-5554)
+15:50:17 toque canto de setlist-00000001 @ 96,474
+15:50:24 toque 'picker-abrir' @ 207,323 (emulator-5554)
+15:50:28 toque 'picker-campo' @ 917,152 (emulator-5554)
+15:50:34 mock modo=resync-pendurado vazio=False
+15:50:36 toque 'picker-adicionar-1' @ 1337,473 (emulator-5554)
+N3P5-picker-relendo-avd-ret mCurrentRotation=ROTATION_90 png=352654 xml=60035 12a1ac70e0b2
+15:50:51 mock modo=normal vazio=False
+15:51:12 toque 'buscar' @ 1335,281 (emulator-5554)
+N3P5-S4-vazio-avd-ret mCurrentRotation=ROTATION_90 png=88277 xml=13970 03d24a726be1
+15:51:27 toque 'campo-busca' @ 917,152 (emulator-5554)
+N3P5-S4-resultados-avd-ret mCurrentRotation=ROTATION_90 png=255389 xml=34884 f65a57c2a66a
+15:51:42 toque 'fechar-busca' @ 108,152 (emulator-5554)
+15:51:56 toque canto de setlist-00000001 @ 96,474
+15:52:02 toque 'song-3' @ 800,1138 (emulator-5554)
+15:52:12 janela 1600 px = 711.1 dp · borda-avancar [1360, 252, 1600, 2209] · y=1230
+15:52:19 toque direita, 104 dp da borda @ x=1366 px (607.1 dp): 3 DE 8 → 4 DE 8 · log: ['OCTAVIA: nav n=4/8 setlist=00000001 t=83']
+15:52:26 toque direita, 112 dp da borda @ x=1348 px (599.1 dp): 4 DE 8 → 4 DE 8 · log: []
+15:52:33 toque esquerda, 104 dp da borda @ x=234 px (104.0 dp): 4 DE 8 → 3 DE 8 · log: ['OCTAVIA: nav n=3/8 setlist=00000001 t=84']
+15:52:41 toque esquerda, 112 dp da borda @ x=252 px (112.0 dp): 3 DE 8 → 3 DE 8 · log: []
+15:52:42 mock normal com a música 9 sem content (setlists-placeholder.json)
+15:53:02 toque canto de setlist-00000001 @ 96,474
+15:53:08 toque 'song-7' @ 800,2254 (emulator-5554)
+15:53:15 toque 'borda-avancar' @ 1480,1230 (emulator-5554)
+15:53:20 toque 'borda-avancar' @ 1480,1230 (emulator-5554)
+N3P5-S3-placeholder-avd-ret mCurrentRotation=ROTATION_90 png=112712 xml=23728 8164a9407403
+15:53:36 mock modo=normal vazio=False
+capturas=16 falhas=0
