@@ -72,6 +72,10 @@ As janelas de retrato e a do celular são do `N3-PRECHECK-anexos/B1-janelas.txt`
 (JDK 17); o dev client entra por `adb -s emulator-5556 install -r <app-debug.apk>`
 do build do `octavia_tab32` (mesmo APK, arm64).
 
+**O `snapshot.pb` muda de data a cada subida**, mesmo com `-no-snapshot-save` (N3-PR6, div. 453): é o metadado da
+carga. O estado é o `ram.bin` — em 2026-09-25 ainda de 2026-09-24 14:00 — e a prova de que nada foi regravado é
+ele e o `lastUpdateTime` do dev client, não o `.pb`.
+
 **O `octavia_tab32` sobe do snapshot `default_boot`**: o que se instala numa sessão
 some na seguinte, a menos que o snapshot seja salvo de novo. Até 2026-09-24 o
 snapshot era de 2026-09-14, e o dev client refeito na W4-b3 (div. 371) estava de
@@ -103,6 +107,11 @@ mede o que isso custa (`N3-PRECHECK.md`).
   conserto e a URL base da API** antes de qualquer reteste. O cache do Metro pode
   servir a URL de prod: `grep -c <host da API>` no mesmo `curl`, e no release
   `unzip -p <apk> assets/index.android.bundle | grep -ac <host da API>`.
+- **Um mock por aparelho, para rodar em paralelo** (N3-PR6, div. 446): cada estado transversal troca o modo do
+  mock, e um mock só derruba a rodada do outro aparelho. Um `aceite.py servidor` por aparelho, cada um com a sua
+  cópia da fixture — AVD **8788**, Tab **8789**, celular **8792** — e, no aparelho, a porta continua a 8788:
+  `adb -s <serial> reverse tcp:8788 tcp:<porta>`. O bundle não muda (a URL base é a mesma); arquivos (8790) e
+  Metro (8081) se compartilham. Nos arneses, a porta vem de `PORTA` (`N3-PR6-anexos/instrumentos/`).
 - Voltar ao app depois de `force-stop` (o dev client cai no lançador):
   `exp+octavia://expo-development-client/?url=http%3A%2F%2Flocalhost%3A8081`.
 - **Mock**: a foto do modelo é tirada **antes** do atraso (div. 233); falha de
@@ -147,7 +156,8 @@ macOS deixa arquivos AppleDouble `._*` no cache (div. 420). No fim: apagar de
 `files.ts` `dirDemanda`), fora do `files/octavia-<uid>/` acima (N3-PR5, div. 444): antes de medir,
 `run-as rocks.octavia.app ls -la cache/octavia-<uid>/files/`, e o que estava lá se declara no anexo.
 Em 2026-09-25 ela tinha só a `partitura-12p.pdf` da fixture (4198 B, de 2026-09-24 21:11), de uma
-PR anterior.
+PR anterior; **a N3-PR6 a apagou no fim** (`N3-PR6-anexos/limpeza-444.txt`), e a pasta ficou vazia. Daí em
+diante, a receita de guardar e regravar vale para ela também: o que a fixture deixar lá sai no fim da rodada.
 
 ## O dev client e os teclados atrapalham o arnês
 
@@ -184,6 +194,9 @@ PR anterior.
 - **O teclado flutuante da Samsung** fica no meio da tela do Tab S6: rolar pela
   margem esquerda (`N2-PR7-anexos/aparato.md` §4). **Em retrato (N3-PR4) ele veio
   encaixado**, com topo em 1713 px = 761,3 dp.
+- **Em retrato o teclado encaixado cobre o rodapé do picker** (N3-PR6, div. 450): o `Concluir` (y 1034,2 dp no
+  Tab) fica sob o teclado (topo 761,3); tocar nele com o teclado de pé toca uma tecla. O arnês fecha o teclado
+  (`BACK`) antes — e, num fluxo contado (o J3), isso é um gesto.
 - **O topo do teclado** (a prova de que a folha fica acima dele, N3-PR4, div. 428):
   a região tocável da janela do IME, `dumpsys window windows` → bloco
   `InputMethod` → `touchable region=SkRegion((x0,y0,x1,y1))`; o `y0` é o topo, em
@@ -210,6 +223,10 @@ fosse layout. Para dar idêntico à base, cada aparelho segue o caminho **dela**
 - **palco antes das telas de S1** (baixa a partitura de 12 p: o ◔ vira "1 de 2");
 - **AVD**: aviso de S1 com o app **aberto já sem rede**; S1e com o cache de 60–119 s ("há 1 min");
 - **Tab**: aviso de S1 com o avião ligado **com o app aberto**; S1e logo depois do sync ("agora");
+- **O S0 pelo mock `401`**: o `401` fica ligado **até o S0 aparecer** — com a espera fixa de 12 s o app leu depois
+  de o mock voltar ao normal e ficou em S1 (N3-PR6, div. 451). E o S0 frio pode sair com os campos 0,5 dp mais
+  altos mesmo pelo caminho frio (a div. 404 de novo, N3-PR6, div. 452): se o G-inv acusar exatamente isso, o S0 se
+  refaz numa subida limpa do AVD antes de qualquer conclusão.
 - **S0 por abertura fria**: o S0 alcançado por logout na sessão (mock `401`) tem os
   campos 0,5 dp mais altos (div. 404; aconteceu de novo na N3-PR2) — depois do
   logout, `force-stop` e abrir de novo.

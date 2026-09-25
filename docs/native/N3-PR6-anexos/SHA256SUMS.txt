@@ -10,7 +10,7 @@ b90a7e049e68340840ccf40a3205380b9548774d0614d196d51fd5fbe0ca6dc6  ./G-inv-final.
 82c8821cfcd2a19183904fb70bd4d0cbb5fa414e1953889c5332b9f5d28b065e  ./G1-commit2.txt
 95e43c8327cc6d7239fcafbaca506bf42eed9e27fe5b05f34c6537239a217c7a  ./G2G3-commit2.txt
 1ac9e77627f62e00e85ae23471aa971315619dcdff82464256766594aceaa948  ./G5G6-consolidado.txt
-8bcd3b09fb0b01225bfddcdd2fed565905c5566689c0cb8321574ec597130558  ./README.md
+694f9f89ad5e5ab4f4046760e9d439617c9e632ed0eaf8de3bd82cd3d7a21ba0  ./README.md
 2d0c1894895f53795b966c22bf3065d404b4a423726aa8d64f94d3627a56d8a8  ./a20-commit2.txt
 7b9dd034edcd0c79ba09cb2e48de846531134b99c3d84ecc1247133136319216  ./dumps-defeito/N3P6-antes-do-conserto-picker-X-falhou-avd-ret.xml
 e4c8a2b0576ddb9781f6a9efa388cc8108734a6b74ec09ec089ce3f295fe8b2d  ./dumps-defeito/N3P6-antes-do-conserto-picker-X-falhou-tab-ret.xml

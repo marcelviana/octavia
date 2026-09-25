@@ -129,6 +129,10 @@ tecla (`roteiros/j3-tab-ret-1.txt`). Div. 450.
 - **G5/G6** (A-N3-5): **55 estados × quatro colunas, 209 de 220 células**, todo alvo ≥ 48 dp e com `testID`, os
   mesmos ids nas quatro. As 11 vazias são por construção: o S0 não roda no Tab (div. 436), o J3 só no Tab em
   retrato, o A14 numa orientação cada. Abaixo de 48, só linhas cortadas pela borda da lista (div. 291).
+  **Contra as molduras do congelado** (T3-R5: *"todo estado do congelado alcançável nas duas orientações"*): as
+  **18 do N2** têm dump nas quatro colunas; das **20 do V1**, 13 têm e **7 não** — `S1a` e `S1d` (sem cache
+  nenhum), `S2-invalidos` e `S3-nobody` (itens sem corpo), `S3-avulsa`, `S4b` (sem resultados) e `S5-n-grande` (60
+  músicas): nenhum roteiro do bloco os alcança. Aberto no A-N3-5 (`N3-REQUISITOS.md` §10).
 
 ## 6. O celular (`inalcancaveis-A.txt`; A-N3-3)
 
