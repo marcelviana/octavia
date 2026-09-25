@@ -1,0 +1,92 @@
+$ node apps/native/scripts/g-n3.mjs --pai docs/native/N3-PRECHECK-anexos/B5-baseline --pai docs/native/N3-PR4-anexos/dumps-pai --faixa docs/native/N3-PR4-anexos/dumps-ret --rolada docs/native/N3-PR4-anexos/dumps-ret
+G-N3 — 28 par(es) (paisagem × faixa); medidas: docs/native/DESIGN-N3/medidas.json (tolerância 4 dp)
+
+(e) TEXTO QUE SOME — REPROVA: 0
+
+(d′) MENOS ESPAÇO QUE NA PAISAGEM — TRIAGEM (confirmar no PNG): 78
+  N3P4-folha-criar-avd-ret: "Nome" 654.2 → 597.3 dp
+  N3P4-folha-criar-avd-ret: "Data do show · opcional" 654.2 → 597.3 dp
+  N3P4-folha-criar-avd-ret: "dd / mm / aaaa" 620 → 563.6 dp
+  N3P4-folha-criar-tab-ret: "Nome" 654.2 → 597.3 dp
+  N3P4-folha-criar-tab-ret: "Data do show · opcional" 654.2 → 597.3 dp
+  N3P4-folha-criar-tab-ret: "dd / mm / aaaa" 620 → 563.6 dp
+  N3P4-folha-editar-data-avd-ret: "Nome" 654.2 → 597.3 dp
+  N3P4-folha-editar-data-avd-ret: "Data do show · opcional" 654.2 → 597.3 dp
+  N3P4-folha-editar-data-avd-ret: "25 / 09 / 2026" 499.6 → 442.2 dp
+  N3P4-folha-editar-data-tab-ret: "Nome" 654.2 → 597.3 dp
+  N3P4-folha-editar-data-tab-ret: "Data do show · opcional" 654.2 → 597.3 dp
+  N3P4-folha-editar-data-tab-ret: "25 / 09 / 2026" 499.6 → 442.2 dp
+  N3P4-folha-editar-igual-avd-ret: "Nome" 654.2 → 597.3 dp
+  N3P4-folha-editar-igual-avd-ret: "Data do show · opcional" 654.2 → 597.3 dp
+  N3P4-folha-editar-igual-avd-ret: "dd / mm / aaaa" 620 → 563.6 dp
+  N3P4-folha-editar-igual-tab-ret: "Nome" 654.2 → 597.3 dp
+  N3P4-folha-editar-igual-tab-ret: "Data do show · opcional" 654.2 → 597.3 dp
+  N3P4-folha-editar-igual-tab-ret: "dd / mm / aaaa" 620 → 563.6 dp
+  N3P4-folha-editar-limpa-avd-ret: "Nome" 654.2 → 597.3 dp
+  N3P4-folha-editar-limpa-avd-ret: "Data do show · opcional" 654.2 → 597.3 dp
+  N3P4-folha-editar-limpa-avd-ret: "dd / mm / aaaa" 620 → 563.6 dp
+  N3P4-folha-editar-limpa-tab-ret: "Nome" 654.2 → 597.3 dp
+  N3P4-folha-editar-limpa-tab-ret: "Data do show · opcional" 654.2 → 597.3 dp
+  N3P4-folha-editar-limpa-tab-ret: "dd / mm / aaaa" 620 → 563.6 dp
+  N3P4-folha-falhou-avd-ret: "falha no servidor — nada foi alterado aq" 620 → 563.6 dp
+  N3P4-folha-falhou-avd-ret: "Nome" 654.2 → 597.3 dp
+  N3P4-folha-falhou-avd-ret: "Data do show · opcional" 654.2 → 597.3 dp
+  N3P4-folha-falhou-avd-ret: "dd / mm / aaaa" 620 → 563.6 dp
+  N3P4-folha-falhou-tab-ret: "falha no servidor — nada foi alterado aq" 620 → 563.6 dp
+  N3P4-folha-falhou-tab-ret: "Nome" 654.2 → 597.3 dp
+  N3P4-folha-falhou-tab-ret: "Data do show · opcional" 654.2 → 597.3 dp
+  N3P4-folha-falhou-tab-ret: "dd / mm / aaaa" 620 → 563.6 dp
+  N3P4-folha-salvando-avd-ret: "Nome" 654.2 → 597.3 dp
+  N3P4-folha-salvando-avd-ret: "Data do show · opcional" 654.2 → 597.3 dp
+  N3P4-folha-salvando-avd-ret: "dd / mm / aaaa" 620 → 563.6 dp
+  N3P4-folha-salvando-tab-ret: "Nome" 654.2 → 597.3 dp
+  N3P4-folha-salvando-tab-ret: "Data do show · opcional" 654.2 → 597.3 dp
+  N3P4-folha-salvando-tab-ret: "dd / mm / aaaa" 620 → 563.6 dp
+  N3P4-folha-validacao-avd-ret: "Nome" 654.2 → 597.3 dp
+  N3P4-folha-validacao-avd-ret: "Data do show · opcional" 654.2 → 597.3 dp
+  N3P4-folha-validacao-avd-ret: "dd / mm / aaaa" 620 → 563.6 dp
+  N3P4-folha-validacao-tab-ret: "Nome" 654.2 → 597.3 dp
+  N3P4-folha-validacao-tab-ret: "Data do show · opcional" 654.2 → 597.3 dp
+  N3P4-folha-validacao-tab-ret: "dd / mm / aaaa" 620 → 563.6 dp
+  N3P4-reordenar-aberto-avd-ret: "Uma música de título bem comprido, para " 641.8 → 433.3 dp
+  N3P4-reordenar-aberto-avd-ret: "· Artista de nome igualmente comprido da" 278.7 → 60 dp
+  N3P4-reordenar-aberto-avd-ret: "7" 32 → 32 dp (altura ×2.1)
+  N3P4-reordenar-aberto-avd-ret: "Sétima do ensaio" 163.6 → 163.6 dp (altura ×2.1)
+  N3P4-reordenar-aberto-tab-ret: "Uma música de título bem comprido, para " 641.8 → 433.3 dp
+  N3P4-reordenar-aberto-tab-ret: "· Artista de nome igualmente comprido da" 278.7 → 60 dp
+  N3P4-reordenar-arrastando-avd-ret: "Uma música de título bem comprido, para " 641.8 → 433.3 dp
+  N3P4-reordenar-arrastando-avd-ret: "· Artista de nome igualmente comprido da" 278.7 → 60 dp
+  N3P4-reordenar-arrastando-avd-ret: "7" 32 → 32 dp (altura ×2.1)
+  N3P4-reordenar-arrastando-avd-ret: "Sétima do ensaio" 163.6 → 163.6 dp (altura ×2.1)
+  N3P4-reordenar-arrastando-tab-ret: "Uma música de título bem comprido, para " 641.8 → 433.3 dp
+  N3P4-reordenar-arrastando-tab-ret: "· Artista de nome igualmente comprido da" 278.7 → 60 dp
+  N3P4-reordenar-descartado-avd-ret: "Uma música de título bem comprido, para " 641.8 → 433.3 dp
+  N3P4-reordenar-descartado-avd-ret: "· Artista de nome igualmente comprido da" 278.7 → 60 dp
+  N3P4-reordenar-descartado-tab-ret: "Uma música de título bem comprido, para " 641.8 → 433.3 dp
+  N3P4-reordenar-descartado-tab-ret: "· Artista de nome igualmente comprido da" 278.7 → 60 dp
+  N3P4-reordenar-falhou-avd-ret: "REORDENAR · ENSAIO DE RETRATO" 717.8 → 663.1 dp
+  N3P4-reordenar-falhou-avd-ret: "a ordem abaixo é a que você arrastou · a" 717.8 → 663.1 dp
+  N3P4-reordenar-falhou-avd-ret: aviso-motivo 882.2 → 631.1 dp (altura ×1.9)
+  N3P4-reordenar-falhou-avd-ret: "Uma música de título bem comprido, para " 641.8 → 433.3 dp
+  N3P4-reordenar-falhou-avd-ret: "· Artista de nome igualmente comprido da" 278.7 → 60 dp
+  N3P4-reordenar-falhou-tab-ret: "REORDENAR · ENSAIO DE RETRATO" 717.8 → 663.1 dp
+  N3P4-reordenar-falhou-tab-ret: "a ordem abaixo é a que você arrastou · a" 717.8 → 663.1 dp
+  N3P4-reordenar-falhou-tab-ret: aviso-motivo 882.2 → 631.1 dp (altura ×1.9)
+  N3P4-reordenar-falhou-tab-ret: "Uma música de título bem comprido, para " 641.8 → 433.3 dp
+  N3P4-reordenar-falhou-tab-ret: "· Artista de nome igualmente comprido da" 278.7 → 60 dp
+  N3P4-reordenar-salvando-avd-ret: "REORDENAR · ENSAIO DE RETRATO" 874.7 → 663.1 dp
+  N3P4-reordenar-salvando-avd-ret: "Uma música de título bem comprido, para " 641.8 → 433.3 dp
+  N3P4-reordenar-salvando-avd-ret: "· Artista de nome igualmente comprido da" 278.7 → 60 dp
+  N3P4-reordenar-salvando-avd-ret: "7" 32 → 32 dp (altura ×2.1)
+  N3P4-reordenar-salvando-avd-ret: "Sétima do ensaio" 163.6 → 163.6 dp (altura ×2.1)
+  N3P4-reordenar-salvando-tab-ret: "REORDENAR · ENSAIO DE RETRATO" 874.7 → 663.1 dp
+  N3P4-reordenar-salvando-tab-ret: "Uma música de título bem comprido, para " 641.8 → 433.3 dp
+  N3P4-reordenar-salvando-tab-ret: "· Artista de nome igualmente comprido da" 278.7 → 60 dp
+
+4 dp CONTRA A FOLHA — ERRATA CANDIDATA: 0
+
+NOME ACESSÍVEL — o texto está no content-desc do nó de mesmo resource-id (N3-D17); não reprova, não soma ao (e): 0
+
+ROLAGEM — o texto está no dump rolado do mesmo estado; não reprova, não soma ao (e): 0
+
+G-N3: (e)=0 · nome-acessível=0 · rolagem=0 ✓ (d′ e 4 dp não reprovam: triagem e errata)

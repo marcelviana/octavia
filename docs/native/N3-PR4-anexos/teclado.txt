@@ -1,0 +1,22 @@
+# N3-PR4 — a folha acima do teclado (N3-B-F-validacao): o form-salvar contra o topo do teclado.
+# Topo do teclado = a região tocável da janela do IME (dumpsys window windows, 'touchable region'),
+# lida antes e depois do dump; mInputShown do dumpsys input_method. Fator 2,25.
+
+## N3P4-folha-criar-avd-ret
+  roteiro-avd-ret-teclado.txt: 13:24:59 teclado antes: mInputShown=true região=(0, 1693, 1600, 2452) · depois: mInputShown=true região=(0, 1693, 1600, 2452) · topo do teclado 1693 px = 752.4 dp
+  roteiro-avd-ret.txt (1ª rodada, o ime() lia a moldura da janela — div. 428): 13:18:14 teclado antes: mInputShown=true janela=((0, 54, 1600, 2560), True) · depois: mInputShown=true janela=((0, 54, 1600, 2560), True)
+    cartão (fundo)               520.4
+    form-salvar bounds         px [1186, 966, 1472, 1097] = dp [527.1,429.3][654.2,487.6]
+## N3P4-folha-validacao-avd-ret
+  roteiro-avd-ret.txt (1ª rodada, o ime() lia a moldura da janela — div. 428): 13:18:59 teclado antes: mInputShown=true janela=((0, 54, 1600, 2560), True) · depois: mInputShown=true janela=((0, 54, 1600, 2560), True)
+  roteiro-avd-ret-teclado.txt: 13:25:43 teclado antes: mInputShown=true região=(0, 1693, 1600, 2452) · depois: mInputShown=true região=(0, 1693, 1600, 2452) · topo do teclado 1693 px = 752.4 dp
+    cartão (fundo)               520.4
+    form-salvar bounds         px [1163, 966, 1472, 1097] = dp [516.9,429.3][654.2,487.6]
+## N3P4-folha-criar-tab-ret
+  13:49:36 teclado antes: mInputShown=true região=(0, 1713, 1600, 2452) · depois: mInputShown=true região=(0, 1713, 1600, 2452) · topo do teclado 1713 px = 761.3 dp
+    cartão (fundo)               520.4
+    form-salvar bounds         px [1186, 966, 1472, 1097] = dp [527.1,429.3][654.2,487.6]
+## N3P4-folha-validacao-tab-ret
+  13:50:23 teclado antes: mInputShown=true região=(0, 1713, 1600, 2452) · depois: mInputShown=true região=(0, 1713, 1600, 2452) · topo do teclado 1713 px = 761.3 dp
+    cartão (fundo)               520.4
+    form-salvar bounds         px [1163, 966, 1472, 1097] = dp [516.9,429.3][654.2,487.6]

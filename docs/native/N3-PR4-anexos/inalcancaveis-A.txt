@@ -1,0 +1,35 @@
+# N3-PR4 — aceite mínimo de A (errata do T3-R3): reordenar, folha e diálogo no octavia_phone em retrato
+# (faixa A w=411.4, com os tokens de B — N3-D28). Roteiro: roteiros/roteiro-phone-ret.txt;
+# instrumento: instrumentos/phone-a-n3p4.py; logcat: phone-logcat.txt (FATAL: 0).
+#
+# Alcançável = o nó existe no dump, tem área dentro da janela, e o toque no centro da parte visível
+# faz o que o controle faz, conferido no dump seguinte. O uiautomator RECORTA o `bounds` à janela:
+# a coluna "visível" é o dump; "inteiro" é a largura do mesmo controle em B (dumps-ret/, a mesma
+# folha de 663 — em A ela passa das duas bordas da janela de 411,4).
+
+superfície  controle           alcance        visível (dp)          inteiro (dp)   o que o toque fez
+reordenar   reordenar-sair     alcançável     95,2 × 48,0           94,7 × 48,0    voltou a S2
+reordenar   alca-5             alcançável     48,0 × 72,0           48,0 × 72,0    `input swipe` até a alça 2: `reordenar-salvar` ativo
+reordenar   reordenar-salvar   alcançável     192,4 × 48,0          191,6 × 48,0   `write op=reorder items=8 status=200`, o modo fechou
+folha       form-nome          alcançável     411,4 (CORTADO)       597,3          o teclado subiu, "Fixture N3" entrou
+folha       form-data          alcançável     383,2 (CORTADO)       ≈ 476          abriu o seletor do sistema (OK)
+folha       form-data-limpar   alcançável     16,4 × 48,0 (CORTADO) 109,3 × 48,0   a data saiu
+folha       form-cancelar      alcançável     29,0 × 57,9 (CORTADO) 122,2 × 58,2   a folha fechou
+folha       form-salvar        alcançável     31,2 × 57,9 (CORTADO) 127,1 × 58,2   `write op=create status=201`, a folha fechou
+dialogo     setlist-apagar     INALCANÇÁVEL   sem nó no dump        119,6 × 48,0   — (a entrada do diálogo; o mesmo da N3-PR3)
+dialogo     apagar-manter      INALCANÇÁVEL   —                     174,2 × 58,2   — o diálogo não abre em A
+dialogo     apagar-confirmar   INALCANÇÁVEL   —                     143,1 × 58,2   — o diálogo não abre em A
+
+# A div. 417, medida de novo (a folha de CRIAR, `N3P4-folha-criar-phone-ret`, contra o
+# `N3-PRECHECK-anexos/B4/B4-folha-criar-phone-ret`, a mesma que a N3-PR2 viu):
+#   pre-check (folha de 720): `form-cancelar` SEM NÓ no dump; `form-salvar` 4,6 dp visíveis (12 px)
+#   N3-PR4    (folha de 663): `form-cancelar` 29,0 dp e `form-salvar` 33,1 dp visíveis, os dois TOCADOS
+#             com efeito (a folha fechou; a setlist foi criada no mock) — cortados pelas duas bordas
+#   A folha de 663 centrada em 411,4 passa 125,9 dp de cada lado. Destino confirmado: a composição de
+#   A (`N3-A-F-*`: 379 × conteúdo, topo 16, botões nas pontas e o motivo em linha própria) é do N5.
+#
+# Fora da lista (não é controle de escrita), declarado: no reordenar de A o motivo
+# `reordenar-salvar-motivo` fica espremido em 4,2 × 48,0 dp — o `flexShrink` que em B deixa o motivo
+# quebrar linha em vez de empurrar `Salvar a ordem` para fora da janela. Em A ele mantém o botão
+# alcançável, mas o texto não se lê. Em B o motivo cabe inteiro (237,8). A moldura `N3-A-reordenar`
+# põe o motivo numa terceira linha: N5.

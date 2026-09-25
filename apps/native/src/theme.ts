@@ -127,7 +127,8 @@ export const tracking = { display: 0.14, displayWide: 0.22, label: 0.08 } as con
  *    escrita inalcançável (T3-R3).
  *
  * Cada superfície entra aqui na PR que a implementa: S1 na N3-PR2, S2 na
- * N3-PR3.
+ * N3-PR3, o reordenar e a folha na N3-PR4 (o diálogo de apagar "em B passa":
+ * 620 em 711, sem token).
  */
 export interface TokensDaFaixa {
   s1: {
@@ -166,16 +167,66 @@ export interface TokensDaFaixa {
      */
     rotulosCurtos: boolean
   }
+  reordenar: {
+    /**
+     * A barra do modo: 88 em C (uma linha — título, `Cancelar`, motivo e
+     * `Salvar a ordem` lado a lado); 144 em B (N3-B-reordenar: *"20 + título
+     * 31 + 6 + subtítulo 19 + 14 + ações 48 + 6"*) — o título ganha a
+     * primeira linha inteira e as ações descem para a segunda.
+     */
+    barra: number
+    /** A composição de duas linhas (B); em C, uma linha, como hoje. */
+    empilha: boolean
+    /** Respiro acima do título e abaixo das ações: 20 e 6 em B. */
+    barraTopo: number
+    barraBase: number
+    /**
+     * O vão entre título e apoio: 8 em C; 0 em B. A caixa do título de 26 dp
+     * mede 36 no aparelho (a folha conta *"título 31 + 6"*): o respiro já
+     * está dentro dela.
+     */
+    vaoDoTitulo: number
+    /** Entre o título/apoio e a linha de ações, em B: 14. */
+    vaoDasAcoes: number
+    /**
+     * *"título e · artista numa linha (o artista cede primeiro, mínimo 60
+     * dp)"*. Em C os dois encolhem por igual (peso 1, sem mínimo), como hoje;
+     * em B o artista encolhe com peso maior até os 60, e só então o título.
+     */
+    artistaCede: number
+    artistaMin: number | undefined
+  }
+  folha: {
+    /**
+     * A folha criar/editar: 720 × 420 a 100 do topo em C (N2 §2); em B
+     * *"a largura da tela menos a margem da faixa (663 em B)"*, altura de
+     * conteúdo, topo 96 — com as duas validações abertas o fundo fica em
+     * ≈ 582 e o teclado de 300 começa em 754.
+     */
+    largura: number
+    topo: number
+    alturaMin: number | undefined
+  }
 }
 
 const faixaC: TokensDaFaixa = {
   s1: { barra: 120, barraTopo: 0, barraBase: 0, vaoDaBarra: space.xl, empilha: false, cartao: 132, cartaoCompacto: 112 },
   s2: { colunas: 2, rotulosCurtos: false },
+  reordenar: {
+    barra: bar.top + space.xl, empilha: false, barraTopo: 0, barraBase: 0, vaoDoTitulo: space.sm, vaoDasAcoes: 0,
+    artistaCede: 1, artistaMin: undefined,
+  },
+  folha: { largura: 720, topo: 100, alturaMin: 420 },
 }
 
 const faixaB: TokensDaFaixa = {
   s1: { barra: 144, barraTopo: 20, barraBase: 14, vaoDaBarra: space.lg, empilha: true, cartao: 184, cartaoCompacto: 184 },
   s2: { colunas: 1, rotulosCurtos: true },
+  reordenar: {
+    barra: 144, empilha: true, barraTopo: 20, barraBase: 6, vaoDoTitulo: 0, vaoDasAcoes: 14,
+    artistaCede: 100, artistaMin: 60,
+  },
+  folha: { largura: 663, topo: 96, alturaMin: undefined },
 }
 
 export const faixas: Readonly<Record<Faixa, TokensDaFaixa>> = { A: faixaB, B: faixaB, C: faixaC }

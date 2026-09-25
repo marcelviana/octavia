@@ -1,0 +1,16 @@
+$ sh apps/native/scripts/gates-decl.sh < corpo > decl; GATES_DECL=decl sh apps/native/scripts/g1.sh origin/main WORKTREE
+declarações: do corpo da PR (GATES_DECL=<scratch>/decl)
+base=origin/main head=WORKTREE
+G1a — diff vazio em 46 arquivos DERIVADOS de apps/native + packages/core/src
+      escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+      menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+      EXCEÇÕES DECLARADAS (o escopo desta PR):
+        apps/native/src/theme.ts
+        apps/native/src/screens/ModoDeReordenar.tsx
+        apps/native/src/screens/FolhaDeCriar.tsx
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+      PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+        (nenhum — nenhuma asserção do core pode mudar nesta PR)
+  G1b: só adição ✓
+exit=0

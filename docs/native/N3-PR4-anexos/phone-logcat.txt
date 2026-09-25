@@ -1,0 +1,62 @@
+# octavia_phone — logcat da rodada do aceite de A (2026-09-25 14:05:35); só as linhas OCTAVIA e a contagem de FATAL
+FATAL: 0
+OCTAVIA: faixa=A w=411.4 h=914.3
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=12
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=39
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=50
+OCTAVIA: cache write kind=setlists n=3 invalidated=0
+OCTAVIA: cache write kind=content n=12 invalidated=0
+OCTAVIA: sync ok setlists=3 content=12 pages=1 t=125
+OCTAVIA: prefetch plan n=0 reason=7d
+OCTAVIA: index open
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists/00000001/songs/order n=1 ms=35
+OCTAVIA: write op=reorder setlist=00000001 items=8 status=200 code=- ms=41
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=12
+OCTAVIA: resync kind=setlists reason=write op=reorder status=200 setlists=3 ms=16
+OCTAVIA: cache write kind=setlists n=3 invalidated=1
+OCTAVIA: prefetch plan n=0 reason=7d
+OCTAVIA: faixa=A w=411.4 h=914.3
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=12
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=394
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=62
+OCTAVIA: cache write kind=setlists n=3 invalidated=1
+OCTAVIA: cache write kind=content n=12 invalidated=0
+OCTAVIA: sync ok setlists=3 content=12 pages=1 t=535
+OCTAVIA: prefetch plan n=0 reason=7d
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=201 path=/api/setlists n=1 ms=34
+OCTAVIA: write op=create setlist=- items=- status=201 code=- ms=39
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=20
+OCTAVIA: resync kind=setlists reason=write op=create status=200 setlists=4 ms=22
+OCTAVIA: cache write kind=setlists n=4 invalidated=1
+OCTAVIA: prefetch plan n=0 reason=7d
+OCTAVIA: faixa=A w=411.4 h=914.3
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=4
+OCTAVIA: cache hit kind=content n=12
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=76
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=66
+OCTAVIA: cache write kind=setlists n=3 invalidated=1
+OCTAVIA: cache write kind=content n=12 invalidated=0
+OCTAVIA: sync ok setlists=3 content=12 pages=1 t=239
+OCTAVIA: prefetch plan n=0 reason=7d
+OCTAVIA: index open

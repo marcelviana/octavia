@@ -1,0 +1,8 @@
+$ pnpm --filter native gate:a20   # árvore do commit 2
+  escopo: ESTENDIDO (V1-A3 §A3.3 + labels em expressão, V1-PR3 + chave de objeto, V1-PR6)
+  raiz: . · não descidos: test, scripts, node_modules, android, ios, .expo, .git, assets (W2, div. 123)
+  arquivos varridos: 33 (inclui 1 de fora da raiz: ../../packages/core/src/frases.ts — N2-PR3, div. 229)
+  vocabulário: 45 termos · isenções do produto: 9
+  literais em posição de texto examinados: 169
+  acusações: 0
+exit=0

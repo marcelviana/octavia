@@ -1,0 +1,112 @@
+$ python3 docs/native/N3-PR4-anexos/instrumentos/g5g6-r-f.py docs/native/N3-PR4-anexos/dumps-pai docs/native/N3-PR4-anexos/dumps-ret
+G5/G6 — reordenar, folha e diálogo, quatro colunas: tab pai · tab ret · avd pai · avd ret
+
+## dialogo-apagando
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `apagar-confirmar` | 143.1 × 57.8 | 143.1 × 57.8 | 143.1 × 57.8 | 143.1 × 57.8 |
+  | `apagar-manter` | 174.2 × 57.8 | 174.2 × 57.8 | 174.2 × 57.8 | 174.2 × 57.8 |
+
+## dialogo-apagar
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `apagar-confirmar` | 143.1 × 57.8 | 143.1 × 57.8 | 143.1 × 58.2 | 143.1 × 58.2 |
+  | `apagar-manter` | 174.2 × 57.8 | 174.2 × 57.8 | 174.2 × 58.2 | 174.2 × 58.2 |
+
+## folha-criar
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `form-cancelar` | 122.2 × 58.2 | 122.2 × 58.2 | 122.2 × 58.2 | 122.2 × 58.2 |
+  | `form-data` | 654.2 × 60.0 | 597.3 × 60.0 | 654.2 × 60.0 | 597.3 × 60.0 |
+  | `form-nome` | 654.2 × 60.0 | 597.3 × 60.0 | 654.2 × 60.0 | 597.3 × 60.0 |
+  | `form-salvar` | 127.1 × 58.2 | 127.1 × 58.2 | 127.1 × 58.2 | 127.1 × 58.2 |
+
+## folha-editar-data
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `form-cancelar` | 122.2 × 58.2 | 122.2 × 58.2 | 122.2 × 58.2 | 122.2 × 58.2 |
+  | `form-data` | 532.9 × 60.0 | 476.0 × 60.0 | 532.9 × 60.0 | 476.0 × 60.0 |
+  | `form-data-limpar` | 109.3 × 48.0 | 109.3 × 48.0 | 109.3 × 48.0 | 109.3 × 48.0 |
+  | `form-nome` | 654.2 × 60.0 | 597.3 × 60.0 | 654.2 × 60.0 | 597.3 × 60.0 |
+  | `form-salvar` | 135.1 × 58.2 | 135.1 × 58.2 | 135.1 × 58.2 | 135.1 × 58.2 |
+
+## folha-editar-igual
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `form-cancelar` | 122.2 × 58.2 | 122.2 × 58.2 | 122.2 × 58.2 | 122.2 × 58.2 |
+  | `form-data` | 654.2 × 60.0 | 597.3 × 60.0 | 654.2 × 60.0 | 597.3 × 60.0 |
+  | `form-nome` | 654.2 × 60.0 | 597.3 × 60.0 | 654.2 × 60.0 | 597.3 × 60.0 |
+  | `form-salvar` | 137.3 × 58.2 | 137.3 × 58.2 | 137.3 × 58.2 | 137.3 × 58.2 |
+
+## folha-editar-limpa
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `form-cancelar` | 122.2 × 58.2 | 122.2 × 58.2 | 122.2 × 58.2 | 122.2 × 58.2 |
+  | `form-data` | 654.2 × 60.0 | 597.3 × 60.0 | 654.2 × 60.0 | 597.3 × 60.0 |
+  | `form-nome` | 654.2 × 60.0 | 597.3 × 60.0 | 654.2 × 60.0 | 597.3 × 60.0 |
+  | `form-salvar` | 137.3 × 58.2 | 137.3 × 58.2 | 137.3 × 58.2 | 137.3 × 58.2 |
+
+## folha-falhou
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `form-cancelar` | 104.9 × 57.8 | 104.9 × 57.8 | 104.9 × 57.8 | 104.9 × 57.8 |
+  | `form-data` | 654.2 × 60.0 | 597.3 × 60.0 | 654.2 × 60.0 | 597.3 × 60.0 |
+  | `form-nome` | 654.2 × 60.0 | 597.3 × 60.0 | 654.2 × 60.0 | 597.3 × 60.0 |
+  | `form-tentar` | 206.2 × 57.8 | 206.2 × 57.8 | 206.2 × 57.8 | 206.2 × 57.8 |
+
+## folha-salvando
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `form-data` | 654.2 × 60.0 | 597.3 × 60.0 | 654.2 × 60.0 | 597.3 × 60.0 |
+  | `form-nome` | 654.2 × 60.0 | 597.3 × 60.0 | 654.2 × 60.0 | 597.3 × 60.0 |
+  | `form-salvar` | 127.1 × 58.2 | 127.1 × 58.2 | 127.1 × 58.2 | 127.1 × 58.2 |
+
+## folha-validacao
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `form-cancelar` | 122.2 × 58.2 | 122.2 × 58.2 | 122.2 × 58.2 | 122.2 × 58.2 |
+  | `form-data` | 654.2 × 60.0 | 597.3 × 60.0 | 654.2 × 60.0 | 597.3 × 60.0 |
+  | `form-nome` | 654.2 × 60.0 | 597.3 × 60.0 | 654.2 × 60.0 | 597.3 × 60.0 |
+  | `form-salvar` | 137.3 × 58.2 | 137.3 × 58.2 | 137.3 × 58.2 | 137.3 × 58.2 |
+
+## reordenar-aberto
+  G5 · tab pai: alca-7 48.0 × 47.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: alca-7 48.0 × 35.1 — cortado pela rolagem (div. 291), não reprova
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `alca-<n>` | 48.0 × 72.0 ×6 · 48.0 × 47.1 | 48.0 × 72.0 ×8 | 48.0 × 72.0 ×6 · 48.0 × 35.1 | 48.0 × 72.0 ×8 |
+  | `reordenar-sair` | 94.7 × 48.0 | 94.7 × 48.0 | 94.7 × 48.0 | 94.7 × 48.0 |
+  | `reordenar-salvar` | 191.1 × 48.0 | 191.6 × 48.0 | 191.1 × 48.0 | 191.6 × 48.0 |
+
+## reordenar-arrastando
+  G5 · tab pai: alca-7 48.0 × 47.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: alca-7 48.0 × 35.1 — cortado pela rolagem (div. 291), não reprova
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `alca-<n>` | 48.0 × 72.0 ×5 · 48.0 × 47.1 | 48.0 × 72.0 ×7 | 48.0 × 72.0 ×5 · 48.0 × 35.1 | 48.0 × 72.0 ×7 |
+  | `reordenar-sair` | 94.7 × 48.0 | 94.7 × 48.0 | 94.7 × 48.0 | 94.7 × 48.0 |
+  | `reordenar-salvar` | 191.1 × 48.0 | 191.6 × 48.0 | 191.1 × 48.0 | 191.6 × 48.0 |
+
+## reordenar-descartado
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `alca-<n>` | 48.0 × 72.0 ×6 | 48.0 × 72.0 ×7 | 48.0 × 72.0 ×5 · 48.0 × 67.1 | 48.0 × 72.0 ×7 |
+  | `reordenar-sair` | 135.1 × 48.0 | 135.1 × 48.0 | 135.1 × 48.0 | 135.1 × 48.0 |
+  | `reordenar-salvar` | 191.1 × 48.0 | 191.1 × 48.0 | 191.1 × 48.0 | 191.1 × 48.0 |
+
+## reordenar-falhou
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `alca-<n>` | 48.0 × 72.0 ×6 | 48.0 × 72.0 ×8 | 48.0 × 72.0 ×5 · 48.0 × 67.1 | 48.0 × 72.0 ×8 |
+  | `reordenar-sair` | 135.1 × 48.0 | 135.1 × 48.0 | 135.1 × 48.0 | 135.1 × 48.0 |
+  | `reordenar-salvar` | 188.9 × 48.0 | 188.9 × 48.0 | 188.9 × 48.0 | 188.9 × 48.0 |
+
+## reordenar-salvando
+  G5 · tab pai: alca-7 48.0 × 47.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: alca-7 48.0 × 35.1 — cortado pela rolagem (div. 291), não reprova
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `alca-<n>` | 48.0 × 72.0 ×6 · 48.0 × 47.1 | 48.0 × 72.0 ×8 | 48.0 × 72.0 ×6 · 48.0 × 35.1 | 48.0 × 72.0 ×8 |
+  | `reordenar-salvar` | 191.1 × 48.0 | 191.1 × 48.0 | 191.1 × 48.0 | 191.1 × 48.0 |
+
+G5: todo alvo ≥ 48 dp ✓ · G6: todo alvo com testID ✓

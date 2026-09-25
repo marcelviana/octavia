@@ -44,6 +44,15 @@
  * de 48 dp — e o único botão recarrega. *"Sem estado real, repetir escrita é
  * apostar."*
  *
+ * ## A faixa (N3-PR4; `DESIGN-N3/telas.html` §4, `N3-B-F-validacao`)
+ *
+ * *"A folha de 720 dp não cabe em 711. Ela passa a ter a largura da tela menos
+ * a margem da faixa (663 em B […]) e altura de conteúdo, ancorada no topo
+ * para que o teclado de 300 dp nunca cubra campo nem botão. Mesma folha,
+ * mesmos campos, mesma ordem, mesmas frases de C."* Largura, topo e altura
+ * mínima são token (`faixas[…].folha`, N3-D28); a linha de botões é a de C
+ * (`Cancelar` à esquerda, motivo + ato à direita), que cabe em 599.
+ *
  * ## O que esta folha não decide
  *
  * Nada. Quem valida é o `validarCriacao` do core (pelo `prepararCriacao`),
@@ -66,7 +75,8 @@ import {
 import { escrever, prepararCriacao, prepararEdicao, relerAoAbrir, type EstadoLocal } from '../escrita'
 import { Icone } from '../icones/Icone'
 import type { NomeIcone } from '../icones/dados'
-import { bar, dark, font, radius, size, space, touch, tracking } from '../theme'
+import { bar, dark, faixas, font, radius, size, space, touch, tracking } from '../theme'
+import { useFaixa } from '../useFaixa'
 
 /**
  * O modo EDITAR (T2-R4): a setlist que se renomeia e o que o servidor tem
@@ -130,6 +140,7 @@ export function FolhaDeSetlist({
   aoSumir,
   aoRelerAtras,
 }: FolhaDeSetlistProps): React.JSX.Element {
+  const f = faixas[useFaixa()].folha
   // Editar abre com os valores DO SERVIDOR (`N2-F-editar-igual`); criar, vazio.
   const [nome, setNome] = useState(editando?.noServidor.name ?? '')
   /** `null` = "sem data", que é estado de primeira classe (T2-R2). */
@@ -297,7 +308,7 @@ export function FolhaDeSetlist({
       }}
     >
       <View style={styles.cortina}>
-        <View style={styles.folha}>
+        <View style={[styles.folha, { width: f.largura, marginTop: f.topo, minHeight: f.alturaMin }]}>
           <View style={styles.cabeca}>
             <Icone nome={iconeDoTitulo} tamanho={24} cor={dark.accentInk} />
             {/* `telas.html`, molduras `N2-F-criar` e `N2-F-editar-igual`. */}
@@ -567,12 +578,9 @@ function formatar(iso: string): string {
 const styles = StyleSheet.create({
   // A folha escurece a tela atrás — não é tela cheia (§2).
   cortina: { flex: 1, backgroundColor: '#000000A8', alignItems: 'center' },
-  // 720 × 420 a 100 dp do topo: com o teclado de até 300 dp, campos e botões
-  // continuam visíveis.
+  // 720 × 420 a 100 dp do topo em C (663 × conteúdo a 96 em B — a faixa):
+  // com o teclado de até 300 dp, campos e botões continuam visíveis.
   folha: {
-    marginTop: 100,
-    width: 720,
-    minHeight: 420,
     padding: space.xxl,
     gap: space.xl,
     backgroundColor: dark.bg,

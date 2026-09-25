@@ -1,0 +1,33 @@
+13:09:00 toque canto de setlist-00000001 @ 96,420
+13:09:07 toque 'reordenar' @ 676,323 (emulator-5554)
+13:09:17 motionevent DOWN alca-5 (110,1107) → MOVE até (110,567), dedo no vidro
+N3P4-reordenar-arrastando-avd-pai mCurrentRotation=ROTATION_0 png=247816 xml=42959 d46ba8140b7f
+13:09:29 motionevent UP
+13:09:32 toque 'reordenar-sair' @ 1919,152 (emulator-5554)
+13:09:35 mock modo=escrita-pendurada vazio=False
+13:09:51 toque canto de setlist-00000001 @ 96,420
+13:09:57 toque 'reordenar' @ 676,323 (emulator-5554)
+13:10:08 swipe alca-5 (110,1107) → alca-2 (110,567) 1500 ms
+13:10:13 toque 'reordenar-salvar' @ 2293,152 (emulator-5554)
+N3P4-reordenar-salvando-avd-pai mCurrentRotation=ROTATION_0 png=231184 xml=42535 9de3c1a8cb0c
+13:10:22 salvando capturado 8.2 s depois do toque (prazo do cliente: 20 s)
+13:10:42 toque 'reordenar-sair' @ 1875,152 (emulator-5554)
+13:10:45 mock modo=normal vazio=False
+13:10:46 mock modo=escrita-500 vazio=False
+13:11:05 toque canto de setlist-00000001 @ 96,420
+13:11:11 toque 'reordenar' @ 676,323 (emulator-5554)
+13:11:22 swipe alca-5 (110,1107) → alca-2 (110,567) 1500 ms
+13:11:27 toque 'reordenar-salvar' @ 2293,152 (emulator-5554)
+N3P4-reordenar-falhou-avd-pai mCurrentRotation=ROTATION_0 png=258632 xml=40099 5b4d98ac3101
+13:11:44 toque 'reordenar-sair' @ 1875,152 (emulator-5554)
+13:11:47 mock modo=normal vazio=False
+13:11:48 mock modo=normal vazio=False
+13:12:06 toque canto de setlist-00000001 @ 96,420
+13:12:12 toque 'reordenar' @ 676,323 (emulator-5554)
+13:12:24 swipe alca-5 (110,1107) → alca-2 (110,567) 1500 ms
+13:12:26 outro aparelho: DELETE /api/setlists/songs/00010003-0000-4000-8000-000000000004 → 200
+13:12:29 toque 'reordenar-salvar' @ 2293,152 (emulator-5554)
+N3P4-reordenar-descartado-avd-pai mCurrentRotation=ROTATION_0 png=256889 xml=40391 af9a284eb4bc
+13:12:44 toque 'reordenar-sair' @ 1281,152 (emulator-5554)
+13:12:46 mock modo=normal vazio=False
+capturas=4 falhas=0

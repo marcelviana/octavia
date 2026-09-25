@@ -33,6 +33,17 @@
  *
  * Nada é escrito durante o gesto: o único request é o `PUT …/order` do
  * `Salvar a ordem`, com a ordem inteira (T2-R8).
+ *
+ * ## A faixa (N3-PR4; `DESIGN-N3/telas.html` §3, moldura `N3-B-reordenar`)
+ *
+ * *"O título da barra caía para 67,6 dp em B […] porque título, `Cancelar`,
+ * motivo e botão disputavam uma linha só. Aqui o título tem a primeira linha
+ * inteira; as ações vão para a segunda."* Em B a barra é de 144 (título e
+ * apoio em cima; `Cancelar` à esquerda, motivo + `Salvar a ordem` à direita
+ * embaixo) e, na linha de 72, o artista cede antes do título, até 60 dp. Os
+ * estados da N2 continuam nos mesmos lugares. Quem diz a faixa é o
+ * `useFaixa()`, e o que muda é token (`faixas[…].reordenar`, N3-D28); C é a
+ * barra de 88 de sempre.
  */
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { BackHandler, PanResponder, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
@@ -54,7 +65,8 @@ import {
 import { escrever, prepararReordenacao, relerPelaOrdem, type EstadoLocal } from '../escrita'
 import { Icone } from '../icones/Icone'
 import type { NomeIcone } from '../icones/dados'
-import { bar, dark, font, radius, size, space, touch, tracking } from '../theme'
+import { bar, dark, faixas, font, radius, size, space, touch, tracking, type TokensDaFaixa } from '../theme'
+import { useFaixa } from '../useFaixa'
 import { LinhaDeAviso } from './LinhaDeAviso'
 
 /** A linha do modo: *"A linha cai de 116 para 72 dp"* (`N2-S2e-reordenar`). */
@@ -67,6 +79,8 @@ const BORDA_DE_ROLAGEM = touch.min
 const ROLAGEM_POR_QUADRO = 12
 
 type Fase = 'editando' | 'salvando' | 'falhou'
+/** O que a linha de 72 lê da faixa: quem cede primeiro, título ou artista. */
+type TokensDaLinha = Pick<TokensDaFaixa['reordenar'], 'artistaCede' | 'artistaMin'>
 type EstadoDaReleitura = 'relendo' | 'ok' | 'falhou'
 
 interface Arrasto {
@@ -117,6 +131,7 @@ interface LinhaProps {
   rotulo: string | null
   alcaAtiva: boolean
   gesto: React.RefObject<Gesto | null>
+  faixa: TokensDaLinha
 }
 
 /**
@@ -134,6 +149,7 @@ const Linha = memo(function Linha({
   rotulo,
   alcaAtiva,
   gesto,
+  faixa,
 }: LinhaProps): React.JSX.Element {
   const ativa = useRef(alcaAtiva)
   ativa.current = alcaAtiva
@@ -178,7 +194,7 @@ const Linha = memo(function Linha({
             amputação de quatro é a do `Reordenar` da faixa. */}
         <Icone nome="alca" tamanho={24} cor={alcaAtiva ? dark.accentInk : dark.lineInfo} />
       </View>
-      <Texto numero={numero} titulo={titulo} artista={artista} rotulo={erguida ? null : rotulo} acento={false} />
+      <Texto numero={numero} titulo={titulo} artista={artista} rotulo={erguida ? null : rotulo} acento={false} faixa={faixa} />
     </View>
   )
 })
@@ -190,12 +206,14 @@ function Texto({
   artista,
   rotulo,
   acento,
+  faixa,
 }: {
   numero: number
   titulo: string
   artista: string | null
   rotulo: string | null
   acento: boolean
+  faixa: TokensDaLinha
 }): React.JSX.Element {
   return (
     <>
@@ -204,7 +222,14 @@ function Texto({
         {titulo}
       </Text>
       {artista !== null ? (
-        <Text style={styles.artista} numberOfLines={1}>
+        <Text
+          style={[
+            styles.artista,
+            // B: o artista cede primeiro, até o mínimo; em C, o de sempre.
+            faixa.artistaMin !== undefined ? { flexShrink: faixa.artistaCede, minWidth: faixa.artistaMin } : null,
+          ]}
+          numberOfLines={1}
+        >
           {`· ${artista}`}
         </Text>
       ) : null}
@@ -232,12 +257,14 @@ function LinhaFlutuante({
   titulo,
   artista,
   rotulo,
+  faixa,
 }: {
   topo: number
   numero: number
   titulo: string
   artista: string | null
   rotulo: string
+  faixa: TokensDaLinha
 }): React.JSX.Element {
   return (
     <View style={[styles.linha, styles.linhaErguida, { top: topo }]} pointerEvents="none">
@@ -246,7 +273,7 @@ function LinhaFlutuante({
       <View style={styles.alca}>
         <Icone nome="alca" tamanho={24} cor={dark.accentInk} />
       </View>
-      <Texto numero={numero} titulo={titulo} artista={artista} rotulo={rotulo} acento />
+      <Texto numero={numero} titulo={titulo} artista={artista} rotulo={rotulo} acento faixa={faixa} />
     </View>
   )
 }
@@ -262,6 +289,7 @@ export function ModoDeReordenar({
   aoSumir,
   aoRelerAtras,
 }: ModoDeReordenarProps): React.JSX.Element {
+  const t = faixas[useFaixa()].reordenar
   // A ordem arrastada nasce da setlist e NÃO acompanha as props (R2·1).
   const [ordem, setOrdem] = useState<SetlistSongDTO[]>(() => ordenadas(setlist))
   /** Posição no servidor de cada linha quando o modo abriu — o "de" do "movida de 5". */
@@ -498,85 +526,116 @@ export function ModoDeReordenar({
   const principalInativo = salvando || relendo || !online || semMudanca
   const rotuloPrincipal = comArrasto ? (releituraFalhou ? 'Tentar recarregar' : 'Tentar de novo') : 'Salvar a ordem'
 
+  const cabecalho = (
+    <View style={t.empilha ? { gap: t.vaoDoTitulo } : styles.barraTexto}>
+      <Text style={styles.titulo26} numberOfLines={1}>
+        {tituloDoReordenar(setlist.name)}
+      </Text>
+      {salvando ? (
+        <View style={styles.progresso}>
+          <Icone nome="baixando" tamanho={20} cor={dark.accentInk} />
+          <Text style={styles.progressoTexto}>{frase('salvando-ordem')}</Text>
+        </View>
+      ) : (
+        <Text style={styles.apoio} numberOfLines={1}>
+          {frase(comArrasto ? 'ordem-arrastada' : 'reordenar-apoio')}
+        </Text>
+      )}
+    </View>
+  )
+  /* Regra 1: durante o salvamento o `Cancelar` some — sair da tela não
+     cancelaria a escrita, e prometer isso seria mentira. */
+  const sair = !salvando ? (
+    <Pressable style={styles.texto} onPress={aoFechar} accessibilityRole="button" testID="reordenar-sair">
+      <Text style={styles.textoRotulo}>{falhou ? 'Sair sem salvar' : 'Cancelar'}</Text>
+    </Pressable>
+  ) : null
+  // Em B o motivo pode quebrar em vez de empurrar o botão para fora (nunca
+  // elide: é a frase inteira, como a linha de aviso). Em 663 ele cabe.
+  const motivoEstilo = t.empilha ? [styles.motivoInativo, styles.motivoQuebra] : styles.motivoInativo
+  const motivo = relendo ? (
+    <Text style={motivoEstilo} testID="reordenar-motivo">
+      {frase('relendo')}
+    </Text>
+  ) : semMudanca && !salvando ? (
+    // N2-D36 revista / N2-D23: o motivo do inativo, escrito ao lado — a
+    // MESMA frase do formulário (T2-R3 (iii)), sem redação nova.
+    <Text style={motivoEstilo} testID="reordenar-salvar-motivo">
+      {frase('nada-mudou')}
+    </Text>
+  ) : null
+  const botaoPrincipal = (
+    <Pressable
+      style={[
+        comArrasto ? styles.vazado : styles.cheio,
+        principalInativo ? styles.inativo : null,
+      ]}
+      onPress={() => {
+        // O toque no inativo por "nada mudou" RODA: é ele que deixa a linha
+        // `write blocked … nada-mudou` (o mesmo do `BotaoCheio` da folha).
+        if (salvando || relendo || !online) return
+        if (recarregar) void reler(false)
+        else void salvar()
+      }}
+      accessibilityRole="button"
+      accessibilityState={{ disabled: principalInativo }}
+      testID="reordenar-salvar"
+    >
+      {comArrasto ? (
+        <Icone
+          nome="tentar-novamente"
+          tamanho={24}
+          cor={principalInativo ? dark.lineInfo : dark.text}
+          estado={principalInativo ? 'inerte' : 'normal'}
+        />
+      ) : (
+        // O visto não é amputável (exceção R2·2): inativo é o desenho
+        // inteiro em `lineInfo`, traço 1,25.
+        <Icone
+          nome="garantida"
+          tamanho={24}
+          cor={principalInativo ? dark.lineInfo : dark.bg}
+          estado={principalInativo ? 'inerte' : 'normal'}
+        />
+      )}
+      <Text
+        style={[
+          comArrasto ? styles.vazadoTexto : styles.cheioTexto,
+          principalInativo ? styles.inativoTexto : null,
+        ]}
+      >
+        {rotuloPrincipal}
+      </Text>
+    </Pressable>
+  )
+
   return (
     <View style={styles.tela}>
-      <View style={styles.barra}>
-        <View style={styles.barraTexto}>
-          <Text style={styles.titulo26} numberOfLines={1}>
-            {tituloDoReordenar(setlist.name)}
-          </Text>
-          {salvando ? (
-            <View style={styles.progresso}>
-              <Icone nome="baixando" tamanho={20} cor={dark.accentInk} />
-              <Text style={styles.progressoTexto}>{frase('salvando-ordem')}</Text>
-            </View>
-          ) : (
-            <Text style={styles.apoio} numberOfLines={1}>
-              {frase(comArrasto ? 'ordem-arrastada' : 'reordenar-apoio')}
-            </Text>
-          )}
-        </View>
-        {/* Regra 1: durante o salvamento o `Cancelar` some — sair da tela não
-            cancelaria a escrita, e prometer isso seria mentira. */}
-        {!salvando ? (
-          <Pressable style={styles.texto} onPress={aoFechar} accessibilityRole="button" testID="reordenar-sair">
-            <Text style={styles.textoRotulo}>{falhou ? 'Sair sem salvar' : 'Cancelar'}</Text>
-          </Pressable>
-        ) : null}
-        {relendo ? (
-          <Text style={styles.motivoInativo} testID="reordenar-motivo">
-            {frase('relendo')}
-          </Text>
-        ) : semMudanca && !salvando ? (
-          // N2-D36 revista / N2-D23: o motivo do inativo, escrito ao lado — a
-          // MESMA frase do formulário (T2-R3 (iii)), sem redação nova.
-          <Text style={styles.motivoInativo} testID="reordenar-salvar-motivo">
-            {frase('nada-mudou')}
-          </Text>
-        ) : null}
-        <Pressable
+      {t.empilha ? (
+        // B (`N3-B-reordenar`): título e apoio na primeira parte; na segunda,
+        // `Cancelar` à esquerda e motivo + `Salvar a ordem` à direita.
+        <View
           style={[
-            comArrasto ? styles.vazado : styles.cheio,
-            principalInativo ? styles.inativo : null,
+            styles.barraEmpilhada,
+            { height: t.barra, paddingTop: t.barraTopo, paddingBottom: t.barraBase, gap: t.vaoDasAcoes },
           ]}
-          onPress={() => {
-            // O toque no inativo por "nada mudou" RODA: é ele que deixa a linha
-            // `write blocked … nada-mudou` (o mesmo do `BotaoCheio` da folha).
-            if (salvando || relendo || !online) return
-            if (recarregar) void reler(false)
-            else void salvar()
-          }}
-          accessibilityRole="button"
-          accessibilityState={{ disabled: principalInativo }}
-          testID="reordenar-salvar"
         >
-          {comArrasto ? (
-            <Icone
-              nome="tentar-novamente"
-              tamanho={24}
-              cor={principalInativo ? dark.lineInfo : dark.text}
-              estado={principalInativo ? 'inerte' : 'normal'}
-            />
-          ) : (
-            // O visto não é amputável (exceção R2·2): inativo é o desenho
-            // inteiro em `lineInfo`, traço 1,25.
-            <Icone
-              nome="garantida"
-              tamanho={24}
-              cor={principalInativo ? dark.lineInfo : dark.bg}
-              estado={principalInativo ? 'inerte' : 'normal'}
-            />
-          )}
-          <Text
-            style={[
-              comArrasto ? styles.vazadoTexto : styles.cheioTexto,
-              principalInativo ? styles.inativoTexto : null,
-            ]}
-          >
-            {rotuloPrincipal}
-          </Text>
-        </Pressable>
-      </View>
+          {cabecalho}
+          <View style={styles.linhaDeAcoes}>
+            {sair}
+            <View style={styles.vao} />
+            {motivo}
+            {botaoPrincipal}
+          </View>
+        </View>
+      ) : (
+        <View style={[styles.barra, { height: t.barra }]}>
+          {cabecalho}
+          {sair}
+          {motivo}
+          {botaoPrincipal}
+        </View>
+      )}
 
       {aviso !== null ? (
         <LinhaDeAviso icone={aviso.icone} cor={aviso.cor} motivo={aviso.motivo} recuo={space.xl} />
@@ -628,6 +687,7 @@ export function ModoDeReordenar({
                 rotulo={rotulo}
                 alcaAtiva={alcaAtiva}
                 gesto={gesto}
+                faixa={t}
               />
             )
           })}
@@ -642,6 +702,7 @@ export function ModoDeReordenar({
                     titulo={content?.title ?? '(sem título)'}
                     artista={content?.artist !== undefined && content?.artist !== null && content.artist.length > 0 ? content.artist : null}
                     rotulo={deParaPosicao(arrasto.de + 1, arrasto.alvo + 1)}
+                    faixa={t}
                   />
                 )
               })()
@@ -672,6 +733,13 @@ const styles = StyleSheet.create({
     borderBottomColor: dark.line,
   },
   barraTexto: { flex: 1, minWidth: 0, gap: space.sm },
+  // B: a barra em duas partes — altura e respiros vêm da faixa.
+  barraEmpilhada: {
+    paddingHorizontal: space.xl,
+    borderBottomWidth: bar.hairline,
+    borderBottomColor: dark.line,
+  },
+  linhaDeAcoes: { height: touch.min, flexDirection: 'row', alignItems: 'center', gap: space.xl },
   titulo26: {
     color: dark.text,
     fontFamily: font.display,
@@ -685,6 +753,7 @@ const styles = StyleSheet.create({
   texto: { height: touch.min, paddingHorizontal: space.lg, justifyContent: 'center', borderRadius: radius.control },
   textoRotulo: { color: dark.muted, fontFamily: font.ui, fontSize: size.bodySmall },
   motivoInativo: { color: dark.muted, fontFamily: font.ui, fontSize: size.bodySmall },
+  motivoQuebra: { flexShrink: 1 },
   cheio: {
     height: touch.min,
     paddingHorizontal: space.xl,

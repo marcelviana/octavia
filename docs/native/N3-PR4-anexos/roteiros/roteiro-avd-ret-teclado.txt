@@ -1,0 +1,11 @@
+13:24:47 toque 'criar-setlist' @ 936,281 (emulator-5554)
+N3P4-folha-criar-avd-ret mCurrentRotation=ROTATION_90 png=224008 xml=11720 63acee779816
+13:24:59 teclado antes: mInputShown=true região=(0, 1693, 1600, 2452) · depois: mInputShown=true região=(0, 1693, 1600, 2452) · topo do teclado 1693 px = 752.4 dp
+13:25:02 toque 'form-cancelar' @ 265,1031 (emulator-5554)
+13:25:17 toque canto de setlist-00000001 @ 96,474
+13:25:23 toque 'setlist-editar' @ 1023,323 (emulator-5554)
+13:25:27 toque 'form-nome' @ 800,543 (emulator-5554)
+N3P4-folha-validacao-avd-ret mCurrentRotation=ROTATION_90 png=229103 xml=11726 8830951610f1
+13:25:43 teclado antes: mInputShown=true região=(0, 1693, 1600, 2452) · depois: mInputShown=true região=(0, 1693, 1600, 2452) · topo do teclado 1693 px = 752.4 dp
+13:25:46 toque 'form-cancelar' @ 265,1031 (emulator-5554)
+capturas=2 falhas=0

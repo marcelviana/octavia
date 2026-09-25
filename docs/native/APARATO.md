@@ -44,6 +44,15 @@ esta página no mesmo commit (regra 9 do `LOGS-OCTAVIA.md`, aplicada aqui).
 - **CI: push de docs só depois do APK verde; antes, custa um APK.** (Decisão do Marcel, 2026-09-23; div. 381.) O H1 só pula o APK
   quando o último APK da PR já é `success`. Na #323, o push de docs subiu com o APK
   anterior em curso e custou 13m18s.
+- **Check vermelho no CI → classificar antes de agir** (decisão do Marcel, 2026-09-25; div. 432):
+  **(a) árvore** — o commit quebrou algo (o que o CI tem que a máquina não tem?);
+  **(b) runner** — a mesma árvore passaria de novo; **(c) defeito** que os gates locais não
+  pegaram (caso do catálogo: instrumento com escopo menor do que parece). Sempre com o log:
+  `gh pr checks <n>`, `gh run view <run-id>` (as anotações) e `gh run view <run-id>
+  --log-failed` (job, passo, erro). **O rerun uma vez só (`gh run rerun <run-id> --failed`)
+  prova (b)** junto de **5/5 local** e do **`diff` mostrando que a PR não toca o caminho** —
+  nunca sozinho, e nunca um segundo rerun. (c) se conserta em commit NOVO, gate primeiro se
+  for gate; o commit de docs só sobe com tudo verde e ganha a divergência.
 - **Cabo do Tab**: se o Tab não aparece nem como `unauthorized`, veja se o macOS o
   enxerga (`system_profiler SPUSBHostDataType`). Na W4-b3 o primeiro cabo só carregava.
 
@@ -154,6 +163,10 @@ macOS deixa arquivos AppleDouble `._*` no cache (div. 420). No fim: apagar de
   **Medido na N3-PR3, para S2**: em B o FAB fica sobre o **fim do rótulo** de
   `Buscar na biblioteca` (barra de 88, à direita); o alvo continua tocável pela
   esquerda, e nenhum controle da faixa de 64 fica sob ele.
+  **Medido na N3-PR4, reordenar e folha**: em B o FAB fica logo depois do fim do
+  título do reordenar (o texto de 605,8 termina antes dele; as ações estão na
+  linha 2), e na folha fica sobre a barra de S1, fora do cartão. Nenhum controle
+  das duas fica sob ele.
 - **`input text` fora de um campo recarrega o dev client** (a tecla `r`). Div. 330.
 - **O teclado encaixado do AVD cobre a metade de baixo** — `form-cancelar`, os
   `Adicionar` de baixo; o toque cai numa tecla. Antes de procurar alvo:
@@ -161,7 +174,21 @@ macOS deixa arquivos AppleDouble `._*` no cache (div. 420). No fim: apagar de
   Div. 330. E `BACK` com o teclado de pé fecha **o teclado**, não a folha
   (div. 261).
 - **O teclado flutuante da Samsung** fica no meio da tela do Tab S6: rolar pela
-  margem esquerda (`N2-PR7-anexos/aparato.md` §4).
+  margem esquerda (`N2-PR7-anexos/aparato.md` §4). **Em retrato (N3-PR4) ele veio
+  encaixado**, com topo em 1713 px = 761,3 dp.
+- **O topo do teclado** (a prova de que a folha fica acima dele, N3-PR4, div. 428):
+  a região tocável da janela do IME, `dumpsys window windows` → bloco
+  `InputMethod` → `touchable region=SkRegion((x0,y0,x1,y1))`; o `y0` é o topo, em
+  px. A moldura (`mFrame`) da janela do IME é a tela inteira e não serve. Em
+  retrato: AVD 1693 px = 752,4 dp; Tab 1713 px = 761,3 dp. Para capturar com o
+  teclado de pé, não passar pelo `Roteiro.cap`, que o esconde
+  (`N3-PR4-anexos/instrumentos/n3pr4.py`, `cap_teclado`).
+- **O arrasto no meio do gesto** (o estado "arrastando" do reordenar, N3-PR4, div.
+  431): `input swipe` termina o gesto antes de o dump ler a tela. Com o dedo no
+  vidro: `input motionevent DOWN <x> <y>`, os `MOVE` até o destino, o dump, e só
+  então o `UP`. Durante o arrasto o `ScrollView` perde o `scrollable="true"`
+  (`scrollEnabled={false}`): instrumento que acha a lista por esse atributo tem de
+  achá-la também pela classe (div. 429).
 - **IME na folha**: `MS_FOCO_APOS_ANIMACAO = 350` — **10/10 no Tab S6 e 10/10 no
   AVD** (`N2-PR7-anexos/ime-350.txt`); `setTimeout(…, 0)` é 5/10 (div. 260). O
   arnês confirma folha fechada **e** `mInputShown=false` antes de cada toque.

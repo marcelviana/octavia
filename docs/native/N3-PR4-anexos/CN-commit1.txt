@@ -1,0 +1,24 @@
+$ npx vitest run --project native-tela apps/native/test/reordenar-folha-faixa.test.tsx   # commit 1, árvore de c1d845f + o teste
+     × título fora da linha de ações e acima dela; `Cancelar` à esquerda, motivo + `Salvar a ordem` à direita 243ms
+     ✓ a alça 48 × 72 em toda linha (passa hoje — "nas duas faixas") 209ms
+     × título · artista numa linha, e o ARTISTA cede primeiro, com mínimo de 60 222ms
+     × arrastando: a alça responde, e a linha de ações é a mesma 151ms
+     × falhou (500): `Sair sem salvar` e `Tentar de novo` na linha 2, o aviso ABAIXO da barra 255ms
+     × criar, validação (N3-B-F-validacao): largura e topo de token, `Cancelar` · motivo · `Criar` na mesma linha 141ms
+     × editar igual: `Salvar` inativo com "nada mudou", `form-data-limpar` quando há data (passa hoje) 140ms
+     ✓ 620 de largura e os dois botões lado a lado, manter antes de apagar (passa hoje) 159ms
+     ✓ reordenar: barra de uma linha só — título e ações no mesmo nó; o artista sem mínimo 143ms
+     ✓ folha: 720 × 420 mín., a 100 do topo 132ms
+     ✓ diálogo: 620, lado a lado 140ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+AssertionError: expected true to be false // Object.is equality
+AssertionError: expected undefined to be 60 // Object.is equality
+AssertionError: expected true to be false // Object.is equality
+AssertionError: expected true to be false // Object.is equality
+AssertionError: expected 720 to be 663 // Object.is equality
+AssertionError: expected 720 to be 663 // Object.is equality
+ Test Files  1 failed (1)
+      Tests  6 failed | 5 passed (11)
+$ npx vitest run --project native-tela apps/native/test/reordenar.test.tsx apps/native/test/s2-edicao.test.tsx apps/native/test/s1-criar.test.tsx   # CP: a N2 em C, sem mudança
+ Test Files  3 passed (3)
+      Tests  48 passed (48)
