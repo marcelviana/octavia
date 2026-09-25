@@ -72,7 +72,8 @@ import {
 import { escrever, pedidoAdicionar, relerAoAbrir, type EstadoLocal } from '../escrita'
 import { Icone } from '../icones/Icone'
 import type { NomeIcone } from '../icones/dados'
-import { bar, dark, font, radius, size, space, touch } from '../theme'
+import { bar, dark, faixas, font, radius, size, space, touch } from '../theme'
+import { useFaixa } from '../useFaixa'
 import { LinhaDeAviso } from './LinhaDeAviso'
 import { Regua } from './SearchScreen'
 
@@ -493,63 +494,93 @@ function Resultado({
   onAdicionar: () => void
 }): React.JSX.Element {
   const falhou = fase?.fase === 'falhou' ? fase : null
+  // N3-E18: em B a linha que falha empilha — a frase e o `Tentar de novo` no
+  // 2º andar, abaixo do título. Qualquer outra fase fica na fileira de 80.
+  const t = faixas[useFaixa()].picker
+  const empilha = falhou !== null && t.empilhaFalha
+  const numero = posicao !== null ? <Text style={styles.numero}>{posicao}</Text> : null
+  const textoDaLinha = (
+    <View style={styles.itemTexto}>
+      <Text style={styles.titulo} numberOfLines={1}>
+        {content.title}
+      </Text>
+      {content.artist !== null && content.artist.length > 0 ? (
+        <Text style={styles.sublinha} numberOfLines={1}>
+          {content.artist}
+        </Text>
+      ) : null}
+    </View>
+  )
+  const marca =
+    vezes > 0 ? (
+      // "A marca usa o visto de 20 em lineInfo — é contorno informativo."
+      <View style={styles.marca}>
+        <Icone nome="garantida" tamanho={20} cor={dark.lineInfo} />
+        <Text style={styles.marcaTexto}>{jaNaSetlist(vezes)}</Text>
+      </View>
+    ) : null
+  const estadoEl = (
+    <View style={[styles.estado, empilha ? styles.estadoNoAndar : null]} testID={`picker-estado-${n}`}>
+      {fase === null ? (
+        <Alvo n={n} inativo={inativo} icone="adicionar" rotulo="Adicionar" onPress={onAdicionar} />
+      ) : fase.fase === 'adicionando' ? (
+        // Mantém o contorno: o request ainda é do botão.
+        <View style={styles.alvo}>
+          <Icone nome="baixando" tamanho={24} cor={dark.accentInk} />
+          <Text style={[styles.alvoTexto, styles.capital]}>{frase('adicionando')}</Text>
+        </View>
+      ) : fase.fase === 'relendo' ? (
+        // "Mesmo arco partido, mesma tinta de acento, sem contorno."
+        <View style={[styles.alvo, styles.semContorno]}>
+          <Icone nome="baixando" tamanho={24} cor={dark.accentInk} />
+          <Text style={[styles.alvoTexto, styles.acento, styles.capital]}>{frase('relendo')}</Text>
+        </View>
+      ) : fase.fase === 'adicionada' ? (
+        // "Adicionada aparece com o 201 e perde o contorno de botão."
+        <View style={[styles.alvo, styles.semContorno]}>
+          <Icone nome="garantida" tamanho={24} cor={dark.accentInk} />
+          <Text style={[styles.alvoTexto, styles.acento, styles.capital]}>{frase('adicionada')}</Text>
+        </View>
+      ) : (
+        <View style={[styles.falha, empilha ? styles.falhaNoAndar : null]}>
+          <Icone nome="falha" tamanho={20} cor={dark.errorInk} />
+          <View style={styles.falhaTexto}>
+            <Text style={styles.falhaTitulo}>{fase.titulo}</Text>
+            <Text style={styles.falhaMotivo}>{fase.motivo}</Text>
+          </View>
+          {/* Regra 3: o botão só depois da releitura — e nunca sem ela. */}
+          {fase.repetivel && !fase.relendo && !semEstadoReal ? (
+            <Alvo n={n} inativo={inativo} icone="tentar-novamente" rotulo="Tentar de novo" onPress={onAdicionar} />
+          ) : null}
+        </View>
+      )}
+    </View>
+  )
+
+  if (empilha) {
+    // B: dois andares. O recuo do 2º é o do título (o lugar do número).
+    return (
+      <View style={[styles.item, styles.itemFalhou, styles.itemEmpilhado, { minHeight: t.linhaFalha }]}>
+        <View style={styles.andar}>
+          {numero}
+          {textoDaLinha}
+          {marca}
+        </View>
+        <View style={styles.andar}>
+          {posicao !== null ? <View style={styles.recuoDoNumero} /> : null}
+          {estadoEl}
+        </View>
+      </View>
+    )
+  }
   return (
-    <View style={[styles.item, falhou !== null ? styles.itemFalhou : null]}>
+    <View style={[styles.item, falhou !== null ? styles.itemFalhou : null, { minHeight: falhou !== null ? t.linhaFalha : 80 }]}>
       {/* "O número à esquerda existe só nos resultados que já estão na
           setlist, como no S4 de hoje: na biblioteca não há posição." */}
-      {posicao !== null ? <Text style={styles.numero}>{posicao}</Text> : null}
-      <View style={styles.itemTexto}>
-        <Text style={styles.titulo} numberOfLines={1}>
-          {content.title}
-        </Text>
-        {content.artist !== null && content.artist.length > 0 ? (
-          <Text style={styles.sublinha} numberOfLines={1}>
-            {content.artist}
-          </Text>
-        ) : null}
-      </View>
-      {vezes > 0 ? (
-        // "A marca usa o visto de 20 em lineInfo — é contorno informativo."
-        <View style={styles.marca}>
-          <Icone nome="garantida" tamanho={20} cor={dark.lineInfo} />
-          <Text style={styles.marcaTexto}>{jaNaSetlist(vezes)}</Text>
-        </View>
-      ) : null}
-      <View style={styles.estado} testID={`picker-estado-${n}`}>
-        {fase === null ? (
-          <Alvo n={n} inativo={inativo} icone="adicionar" rotulo="Adicionar" onPress={onAdicionar} />
-        ) : fase.fase === 'adicionando' ? (
-          // Mantém o contorno: o request ainda é do botão.
-          <View style={styles.alvo}>
-            <Icone nome="baixando" tamanho={24} cor={dark.accentInk} />
-            <Text style={[styles.alvoTexto, styles.capital]}>{frase('adicionando')}</Text>
-          </View>
-        ) : fase.fase === 'relendo' ? (
-          // "Mesmo arco partido, mesma tinta de acento, sem contorno."
-          <View style={[styles.alvo, styles.semContorno]}>
-            <Icone nome="baixando" tamanho={24} cor={dark.accentInk} />
-            <Text style={[styles.alvoTexto, styles.acento, styles.capital]}>{frase('relendo')}</Text>
-          </View>
-        ) : fase.fase === 'adicionada' ? (
-          // "Adicionada aparece com o 201 e perde o contorno de botão."
-          <View style={[styles.alvo, styles.semContorno]}>
-            <Icone nome="garantida" tamanho={24} cor={dark.accentInk} />
-            <Text style={[styles.alvoTexto, styles.acento, styles.capital]}>{frase('adicionada')}</Text>
-          </View>
-        ) : (
-          <View style={styles.falha}>
-            <Icone nome="falha" tamanho={20} cor={dark.errorInk} />
-            <View style={styles.falhaTexto}>
-              <Text style={styles.falhaTitulo}>{fase.titulo}</Text>
-              <Text style={styles.falhaMotivo}>{fase.motivo}</Text>
-            </View>
-            {/* Regra 3: o botão só depois da releitura — e nunca sem ela. */}
-            {fase.repetivel && !fase.relendo && !semEstadoReal ? (
-              <Alvo n={n} inativo={inativo} icone="tentar-novamente" rotulo="Tentar de novo" onPress={onAdicionar} />
-            ) : null}
-          </View>
-        )}
-      </View>
+      {numero}
+      {textoDaLinha}
+      {marca}
+      {estadoEl}
     </View>
   )
 }
@@ -663,6 +694,13 @@ const styles = StyleSheet.create({
   },
   // A linha que falhou ganha o contorno de erro (moldura `N2-P-resultados`).
   itemFalhou: { borderColor: dark.errorInk },
+  // N3-E18 (B): a linha que falha em dois andares; o vão entre eles é o da fileira.
+  itemEmpilhado: { flexDirection: 'column', alignItems: 'stretch', gap: space.md },
+  andar: { flexDirection: 'row', alignItems: 'center', gap: space.lg },
+  // o lugar do número (`numero.minWidth`), para o 2º andar começar sob o título
+  recuoDoNumero: { width: 32 },
+  estadoNoAndar: { flex: 1 },
+  falhaNoAndar: { flex: 1, maxWidth: undefined },
   numero: { color: dark.muted, fontFamily: font.mono, fontSize: 20, minWidth: 32, textAlign: 'right' },
   itemTexto: { flex: 1, gap: space.xs },
   titulo: { color: dark.text, fontFamily: font.uiBold, fontSize: 20 },
