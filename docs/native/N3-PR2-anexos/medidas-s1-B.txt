@@ -1,0 +1,83 @@
+$ python3 docs/native/N3-PR2-anexos/instrumentos/medidas-s1.py docs/native/N3-PR2-anexos/dumps-ret/*.xml
+== N3P2-S1-S1e-falha-com-cache-avd-ret.xml
+  barra                    144.0  folha 144  Δ +0.0
+  cartão                   184.0  folha 184  Δ +0.0
+  nome                     581.3  folha 583  Δ -1.7
+  Nova setlist             152.0  folha 152  Δ +0.0
+  Buscar música            171.1  folha 171.1  Δ +0.0
+  Baixar esta setlist      194.2  folha 193.8  Δ +0.4
+  chip (mostrando dados salvos)   177.3
+== N3P2-S1-S1e-falha-com-cache-tab-ret.xml
+  barra                    144.0  folha 144  Δ +0.0
+  cartão                   184.0  folha 184  Δ +0.0
+  nome                     581.3  folha 583  Δ -1.7
+  Nova setlist             152.0  folha 152  Δ +0.0
+  Buscar música            171.1  folha 171.1  Δ +0.0
+  Baixar esta setlist      194.2  folha 193.8  Δ +0.4
+  chip (mostrando dados salvos)   177.3
+== N3P2-S1-S1f-vazia-avd-ret.xml
+  barra                    144.0  folha 144  Δ +0.0
+  Nova setlist             152.0  folha 152  Δ +0.0
+  Buscar música            171.1  folha 171.1  Δ +0.0
+  chip (sincronizado agora)   144.9  folha 144.9  Δ -0.0
+== N3P2-S1-S1f-vazia-tab-ret.xml
+  barra                    144.0  folha 144  Δ +0.0
+  Nova setlist             152.0  folha 152  Δ +0.0
+  Buscar música            171.1  folha 171.1  Δ +0.0
+  chip (sincronizado agora)   144.9  folha 144.9  Δ -0.0
+== N3P2-S1-aviso-sem-rede-avd-ret.xml
+  barra                    144.0  folha 144  Δ +0.0
+  cartão                   184.0  folha 184  Δ +0.0
+  nome                     581.3  folha 583  Δ -1.7
+  Nova setlist             152.0  folha 152  Δ +0.0
+  Buscar música            171.1  folha 171.1  Δ +0.0
+  Baixar esta setlist      194.2  folha 193.8  Δ +0.4
+  chip (sem rede, empilhado)   192.4  folha 192.4  Δ +0.0
+  aviso                     66.2  folha 68  Δ -1.8
+  aviso-motivo (texto)      42.2
+== N3P2-S1-aviso-sem-rede-tab-ret.xml
+  barra                    144.0  folha 144  Δ +0.0
+  cartão                   184.0  folha 184  Δ +0.0
+  nome                     581.3  folha 583  Δ -1.7
+  Nova setlist             152.0  folha 152  Δ +0.0
+  Buscar música            171.1  folha 171.1  Δ +0.0
+  Baixar esta setlist      194.2  folha 193.8  Δ +0.4
+  chip (sem rede, empilhado)   192.4  folha 192.4  Δ +0.0
+  aviso                     66.2  folha 68  Δ -1.8
+  aviso-motivo (texto)      42.2
+== N3P2-S1-salvo-nao-relido-avd-ret.xml
+  barra                    144.0  folha 144  Δ +0.0
+  cartão                   184.0  folha 184  Δ +0.0
+  nome                     581.3  folha 583  Δ -1.7
+  Nova setlist             152.0  folha 152  Δ +0.0
+  Buscar música            171.1  folha 171.1  Δ +0.0
+  Baixar esta setlist      194.2  folha 193.8  Δ +0.4
+  chip (sincronizado agora)   144.9  folha 144.9  Δ -0.0
+  aviso                     66.2  folha 68  Δ -1.8
+  aviso-motivo (texto)      42.2
+== N3P2-S1-salvo-nao-relido-tab-ret.xml
+  barra                    144.0  folha 144  Δ +0.0
+  cartão                   184.0  folha 184  Δ +0.0
+  nome                     581.3  folha 583  Δ -1.7
+  Nova setlist             152.0  folha 152  Δ +0.0
+  Buscar música            171.1  folha 171.1  Δ +0.0
+  Baixar esta setlist      194.2  folha 193.8  Δ +0.4
+  chip (sincronizado agora)   144.9  folha 144.9  Δ -0.0
+  aviso                     66.2  folha 68  Δ -1.8
+  aviso-motivo (texto)      42.2
+== N3P2-S1-setlists-avd-ret.xml
+  barra                    144.0  folha 144  Δ +0.0
+  cartão                   184.0  folha 184  Δ +0.0
+  nome                     581.3  folha 583  Δ -1.7
+  Nova setlist             152.0  folha 152  Δ +0.0
+  Buscar música            171.1  folha 171.1  Δ +0.0
+  Baixar esta setlist      194.2  folha 193.8  Δ +0.4
+  chip (sincronizado agora)   144.9  folha 144.9  Δ -0.0
+== N3P2-S1-setlists-tab-ret.xml
+  barra                    144.0  folha 144  Δ +0.0
+  cartão                   184.0  folha 184  Δ +0.0
+  nome                     581.3  folha 583  Δ -1.7
+  Nova setlist             152.0  folha 152  Δ +0.0
+  Buscar música            171.1  folha 171.1  Δ +0.0
+  Baixar esta setlist      194.2  folha 193.8  Δ +0.4
+  chip (sincronizado agora)   144.9  folha 144.9  Δ -0.0

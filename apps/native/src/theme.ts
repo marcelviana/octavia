@@ -8,6 +8,7 @@
  * o Tab S6 e o AVD `octavia_tab32` medem **1138×711 dp** (E1) — por isso os
  * layouts são fluidos e nenhuma medida abaixo é posição absoluta.
  */
+import type { Faixa } from './faixa'
 
 /** Tema escuro: o padrão do palco e de toda a tela 1. */
 export const dark = {
@@ -108,3 +109,54 @@ export const lineHeight = { text: 1.55, tab: 1.45 } as const
 
 /** Tracking do display (Raleway) — o design usa .14–.22em. */
 export const tracking = { display: 0.14, displayWide: 0.22, label: 0.08 } as const
+
+/**
+ * **TOKENS POR FAIXA** (N3-D28, a P2 do DESIGN-N3 adotada). O que muda de uma
+ * faixa de largura para outra é **valor**, e mora aqui: nenhuma tela faz
+ * aritmética de largura nem compara largura (quem decide a faixa é só o
+ * `faixa.ts`, T3-R1); a tela pede `faixas[useFaixa()]` e desenha com o que
+ * vier. A fonte dos valores é o `docs/native/DESIGN-N3/README.md` (e a folha
+ * congelada que ele aponta), com as erratas da §9 prevalecendo.
+ *
+ *  - **C** são os valores de hoje — o congelado V1/N2, que não muda (N3-D3;
+ *    a invariante T3-R2 é gate de toda PR). Onde um token de C já existia
+ *    (`space.xl`), ele entra por referência, não por cópia.
+ *  - **B** é a faixa desenhada para 711 × 1054.
+ *  - **A** é o N5 (N3-D0). Até lá, **A usa os valores de B** — declarado, por
+ *    referência, e o aceite de A no N3 é o mínimo: sem crash, sem controle de
+ *    escrita inalcançável (T3-R3).
+ *
+ * Cada superfície entra aqui na PR que a implementa; na N3-PR2, só S1.
+ */
+export interface TokensDaFaixa {
+  s1: {
+    /** Altura da barra superior: 120 em C (§5.3 do V1); 144 em B (N3-B-S1: 20 + título 36 + 16 + botões 58 + 14). */
+    barra: number
+    /** Respiro acima e abaixo do conteúdo da barra: 0 em C (uma linha centrada); 20 e 14 em B. */
+    barraTopo: number
+    barraBase: number
+    /** Vão entre os itens da barra: 24 em C; 16 em B, entre título e linha 2 e dentro da linha 2. */
+    vaoDaBarra: number
+    /**
+     * A composição de B — "quando não cabe, a composição empilha": o título
+     * ganha linha própria acima de chip e botões; o chip sem rede empilha as
+     * duas partes da frase (N3-D21); o cartão vira três andares (nome ·
+     * metadados · `Baixar` + estado). Em C, tudo numa linha, como hoje.
+     */
+    empilha: boolean
+    /** Altura mínima do cartão: 132 em C; 184 em B (N3-B-S1, ritmo de lista). */
+    cartao: number
+    /** O cartão do S1e, com o banner em cima: 112 em C (§5.4 do V1); em B o cartão não encolhe. */
+    cartaoCompacto: number
+  }
+}
+
+const faixaC: TokensDaFaixa = {
+  s1: { barra: 120, barraTopo: 0, barraBase: 0, vaoDaBarra: space.xl, empilha: false, cartao: 132, cartaoCompacto: 112 },
+}
+
+const faixaB: TokensDaFaixa = {
+  s1: { barra: 144, barraTopo: 20, barraBase: 14, vaoDaBarra: space.lg, empilha: true, cartao: 184, cartaoCompacto: 184 },
+}
+
+export const faixas: Readonly<Record<Faixa, TokensDaFaixa>> = { A: faixaB, B: faixaB, C: faixaC }

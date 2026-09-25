@@ -1,0 +1,7 @@
+# bundle servido pelo Metro (2026-09-24 19:22:43), 7203868 B
+localhost:8788 1
+octavia.rocks 0
+cartaoEmAndares 2
+tituloEmLinhaPropria 2
+useLinhaDaFaixa 6
+faixa= 4

@@ -43,6 +43,18 @@
  *  3. **A linha de aviso de 48 dp** (§3.3), entre a barra e o primeiro cartão.
  *     Dois estados nesta PR — sem rede e salvo-não-relido —, e os outros três
  *     (falhou, limite, teto de 100) são da S2, na PR-4.
+ *
+ * ## O que a N3-PR2 acrescenta: S1 na faixa B (DESIGN-N3 §1; N3-D28)
+ *
+ * S1 é a primeira tela a ler a faixa (`useFaixa()`), e o que muda de uma faixa
+ * para outra vem dos **tokens por faixa** do `theme.ts` — esta tela não faz
+ * conta de largura. Em C tudo continua como no congelado (a invariante T3-R2
+ * prova, dump a dump). Em B, a regra única da folha — *"quando não cabe, a
+ * composição empilha; o conteúdo não sai"* — em três lugares (moldura
+ * `N3-B-S1`): o título ganha **linha própria** acima de chip e botões; o chip
+ * sem rede **empilha** as duas partes da frase, sem o "·" (N3-D21); o cartão
+ * vira **três andares** — nome · metadados · `Baixar` + estado. Nenhum
+ * controle some, nenhum texto encolhe, nenhum `testID` muda.
  */
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { FlatList, Image, Pressable, StyleSheet, Text, View } from 'react-native'
@@ -50,7 +62,8 @@ import { frase, offlineStatus, type ContentDTO, type OfflineStatus, type Setlist
 import { relerAoAbrir, type EstadoLocal } from '../escrita'
 import { Icone } from '../icones/Icone'
 import type { NomeIcone } from '../icones/dados'
-import { bar, dark, font, radius, size, space, touch, tracking } from '../theme'
+import { bar, dark, faixas, font, radius, size, space, touch, tracking, type TokensDaFaixa } from '../theme'
+import { useFaixa } from '../useFaixa'
 import { FolhaDeSetlist } from './FolhaDeCriar'
 import { LinhaDeAviso } from './LinhaDeAviso'
 
@@ -186,8 +199,10 @@ function textoDoErro(messageKey: string): string {
  * estado (as molduras): `tentar-novamente` no acento enquanto sincroniza,
  * `ultima-sincronizacao` em `muted` quando há dado, `sem-conexao` em
  * `offlineInk` sem rede — e aí a hora da última sincronização vai em `muted`,
- * como `complemento`, no MESMO nó de texto (a string não muda). A falha sem
- * cache não tem moldura: leva `falha` em `errorInk`, por paralelo com o S1d.
+ * como `complemento`: em C no MESMO nó de texto, depois de " · " (a string não
+ * muda); em B, empilhado numa segunda linha, e a quebra faz o papel do
+ * separador (N3-D21). A falha sem cache não tem moldura: leva `falha` em
+ * `errorInk`, por paralelo com o S1d.
  */
 function chipDoStatus(sync: SyncState): { icone: NomeIcone; cor: string; texto: string; complemento?: string } {
   switch (sync.fase) {
@@ -202,7 +217,7 @@ function chipDoStatus(sync: SyncState): { icone: NomeIcone; cor: string; texto: 
             icone: 'sem-conexao',
             cor: dark.offlineInk,
             texto: 'sem conexão',
-            complemento: ` · última sincronização ${haQuantoTempo(sync.syncedAtMs)}`,
+            complemento: `última sincronização ${haQuantoTempo(sync.syncedAtMs)}`,
           }
     case 'falha':
       return sync.syncedAtMs === null
@@ -277,6 +292,7 @@ function CartaoSetlist({
   online,
   baixando,
   compacto,
+  tokens,
   onAbrir,
   onBaixar,
 }: {
@@ -284,8 +300,9 @@ function CartaoSetlist({
   status: OfflineStatus
   online: boolean
   baixando: boolean
-  /** §5.4 — o cartão do S1e, com o banner em cima, é 112; os outros, 132. */
+  /** §5.4 — o cartão do S1e, com o banner em cima (em C, 112 contra 132). */
   compacto: boolean
+  tokens: TokensDaFaixa['s1']
   onAbrir: () => void
   onBaixar: () => void
 }): React.JSX.Element {
@@ -301,9 +318,53 @@ function CartaoSetlist({
   const tintaBaixar = podeBaixar ? dark.muted : dark.lineInfo
   const n = setlist.setlist_songs.length
 
+  const nome = (
+    <Text style={styles.nome} numberOfLines={1}>
+      {setlist.name}
+    </Text>
+  )
+  // data · local · N músicas — o separador do design agora é o ícone; "sem data" continua escrito
+  const meta = (
+    <View style={styles.meta}>
+      <Metadado icone="data" texto={setlist.performance_date ?? 'sem data'} />
+      {setlist.venue !== null && setlist.venue.length > 0 ? <Metadado icone="local" texto={setlist.venue} /> : null}
+      <Metadado icone="n-de-musicas" texto={`${n} ${n === 1 ? 'música' : 'músicas'}`} />
+    </View>
+  )
+  const baixar = mostrarBaixar ? (
+    <Pressable
+      style={[styles.botaoSecundario, podeBaixar ? null : styles.botaoInativo]}
+      onPress={() => (podeBaixar ? onBaixar() : undefined)}
+      accessibilityRole="button"
+      accessibilityState={{ disabled: !podeBaixar }}
+      testID={`baixar-${setlist.id.slice(0, 8)}`}
+    >
+      <Icone nome={baixando ? 'baixando-acao' : 'baixar-setlist'} tamanho={24} cor={tintaBaixar} />
+      <Text style={[styles.baixarTexto, { color: tintaBaixar }]}>{baixando ? 'Baixando…' : 'Baixar esta setlist'}</Text>
+    </Pressable>
+  ) : null
+  const estado = (
+    <View style={styles.indicador}>
+      <Icone
+        nome={indicador.icone}
+        tamanho={28}
+        cor={indicador.cor}
+        fracao={status.kind === 'partial' && status.need > 0 ? status.have / status.need : undefined}
+      />
+      <View style={styles.indicadorTexto}>
+        <Text style={[styles.indicadorRotulo, { color: indicador.corRotulo }]}>{indicador.rotulo}</Text>
+        <Text style={styles.indicadorSub}>{sublinha(status, online)}</Text>
+      </View>
+    </View>
+  )
+
   return (
     <Pressable
-      style={[styles.cartao, compacto ? styles.cartaoCompacto : null]}
+      style={[
+        styles.cartao,
+        { minHeight: compacto ? tokens.cartaoCompacto : tokens.cartao },
+        tokens.empilha ? styles.cartaoEmAndares : null,
+      ]}
       onPress={onAbrir}
       accessibilityRole="button"
       // O alvo principal do S1 não tinha identidade: invisível para o G2 e
@@ -311,45 +372,30 @@ function CartaoSetlist({
       // `baixar-<id8>` abaixo, para que os dois se correspondam no dump.
       testID={`setlist-${setlist.id.slice(0, 8)}`}
     >
-      <View style={styles.cartaoEsq}>
-        <Text style={styles.nome} numberOfLines={1}>
-          {setlist.name}
-        </Text>
-        {/* data · local · N músicas — o separador do design agora é o ícone; "sem data" continua escrito */}
-        <View style={styles.meta}>
-          <Metadado icone="data" texto={setlist.performance_date ?? 'sem data'} />
-          {setlist.venue !== null && setlist.venue.length > 0 ? <Metadado icone="local" texto={setlist.venue} /> : null}
-          <Metadado icone="n-de-musicas" texto={`${n} ${n === 1 ? 'música' : 'músicas'}`} />
-        </View>
-      </View>
-
-      <View style={styles.cartaoDir}>
-        {mostrarBaixar ? (
-          <Pressable
-            style={[styles.botaoSecundario, podeBaixar ? null : styles.botaoInativo]}
-            onPress={() => (podeBaixar ? onBaixar() : undefined)}
-            accessibilityRole="button"
-            accessibilityState={{ disabled: !podeBaixar }}
-            testID={`baixar-${setlist.id.slice(0, 8)}`}
-          >
-            <Icone nome={baixando ? 'baixando-acao' : 'baixar-setlist'} tamanho={24} cor={tintaBaixar} />
-            <Text style={[styles.baixarTexto, { color: tintaBaixar }]}>{baixando ? 'Baixando…' : 'Baixar esta setlist'}</Text>
-          </Pressable>
-        ) : null}
-
-        <View style={styles.indicador}>
-          <Icone
-            nome={indicador.icone}
-            tamanho={28}
-            cor={indicador.cor}
-            fracao={status.kind === 'partial' && status.need > 0 ? status.have / status.need : undefined}
-          />
-          <View style={styles.indicadorTexto}>
-            <Text style={[styles.indicadorRotulo, { color: indicador.corRotulo }]}>{indicador.rotulo}</Text>
-            <Text style={styles.indicadorSub}>{sublinha(status, online)}</Text>
+      {tokens.empilha ? (
+        // B — três andares (N3-B-S1): o nome tem a largura toda, com
+        // reticência; `Baixar` e o estado dividem o andar de baixo.
+        <>
+          {nome}
+          {meta}
+          <View style={styles.andarDeAcao}>
+            {baixar}
+            {estado}
           </View>
-        </View>
-      </View>
+        </>
+      ) : (
+        // C — duas colunas, como no congelado.
+        <>
+          <View style={styles.cartaoEsq}>
+            {nome}
+            {meta}
+          </View>
+          <View style={styles.cartaoDir}>
+            {baixar}
+            {estado}
+          </View>
+        </>
+      )}
     </Pressable>
   )
 }
@@ -372,6 +418,7 @@ export function SetlistsScreen({
   sumiuNaoRelido = false,
   apagadaNaoRelida = null,
 }: SetlistsScreenProps): React.JSX.Element {
+  const t = faixas[useFaixa()].s1
   const [folhaAberta, setFolhaAberta] = useState(false)
   /** N2-D22 — o nome da setlist que foi criada e que a lista não releu. */
   const [salvoNaoRelido, setSalvoNaoRelido] = useState<string | null>(null)
@@ -494,23 +541,54 @@ export function SetlistsScreen({
         }
       : null
 
-  return (
-    <View style={styles.tela}>
-      <View style={styles.barra}>
-        <Text style={styles.titulo}>SETLISTS</Text>
-        <View style={styles.chip}>
-          <Icone nome={chip.icone} tamanho={20} cor={chip.cor} />
+  const linhaDaBarra = (
+    <>
+      <View style={[styles.chip, t.empilha ? styles.chipNaLinha : null]}>
+        <Icone nome={chip.icone} tamanho={20} cor={chip.cor} />
+        {t.empilha && chip.complemento !== undefined ? (
+          // B — as duas partes da frase empilhadas; a quebra é o separador.
+          <View>
+            <Text style={[styles.status, { color: chip.cor }]}>{chip.texto}</Text>
+            <Text style={[styles.status, styles.statusComplemento]}>{chip.complemento}</Text>
+          </View>
+        ) : (
           <Text style={[styles.status, { color: chip.cor }]}>
             {chip.texto}
-            {chip.complemento !== undefined ? <Text style={styles.statusComplemento}>{chip.complemento}</Text> : null}
+            {chip.complemento !== undefined ? <Text style={styles.statusComplemento}>{` · ${chip.complemento}`}</Text> : null}
           </Text>
-        </View>
-        {/* Ordem do congelado: status de sync · ESCREVER · ler. */}
-        <BotaoNovaSetlist rotulo="Nova setlist" inativo={!podeCriar} onPress={() => setFolhaAberta(true)} />
-        <Pressable style={styles.botaoSecundario} onPress={onBuscar} testID="buscar">
-          <Icone nome="buscar-musica" tamanho={24} cor={dark.text} />
-          <Text style={styles.botaoSecundarioTexto}>Buscar música</Text>
-        </Pressable>
+        )}
+      </View>
+      {/* Ordem do congelado: status de sync · ESCREVER · ler. */}
+      <BotaoNovaSetlist rotulo="Nova setlist" inativo={!podeCriar} onPress={() => setFolhaAberta(true)} />
+      <Pressable style={styles.botaoSecundario} onPress={onBuscar} testID="buscar">
+        <Icone nome="buscar-musica" tamanho={24} cor={dark.text} />
+        <Text style={styles.botaoSecundarioTexto}>Buscar música</Text>
+      </Pressable>
+    </>
+  )
+
+  return (
+    <View style={styles.tela}>
+      <View
+        style={[
+          styles.barra,
+          { height: t.barra, paddingTop: t.barraTopo, paddingBottom: t.barraBase, gap: t.vaoDaBarra },
+          t.empilha ? styles.barraEmpilhada : null,
+        ]}
+      >
+        {t.empilha ? (
+          // B — o título em linha própria, que não divide o espaço com nada e
+          // não sai quando há aviso (N3-S1-sem-rede, "o título fica").
+          <>
+            <Text style={[styles.titulo, styles.tituloEmLinhaPropria]}>SETLISTS</Text>
+            <View style={[styles.linhaDaBarra, { gap: t.vaoDaBarra }]}>{linhaDaBarra}</View>
+          </>
+        ) : (
+          <>
+            <Text style={styles.titulo}>SETLISTS</Text>
+            {linhaDaBarra}
+          </>
+        )}
       </View>
 
       {aviso !== null ? (
@@ -611,6 +689,7 @@ export function SetlistsScreen({
               online={online}
               baixando={baixando.has(item.id)}
               compacto={comBanner}
+              tokens={t}
               onAbrir={() => onAbrirSetlist(item.id)}
               onBaixar={() => onBaixarSetlist(item.id)}
             />
@@ -645,21 +724,23 @@ export function SetlistsScreen({
  * Medidas das molduras. Onde a moldura usa um número fora das escalas do
  * `theme.ts`, entra o degrau mais próximo (o mesmo critério da E6: a escala
  * declarada vence o número desenhado) — a lista está no anexo da PR. Ficam
- * como literal, declarados, os que não têm degrau nem escala: a barra do S1
- * (120, §5.3 "minha"), o cartão (132 / 112, §5.4), o banner (66), o
- * indicador (230) e o corpo de 13 do chip e da sublinha (§4.3).
+ * como literal, declarados, os que não têm degrau nem escala: o banner (66),
+ * o indicador (230) e o corpo de 13 do chip e da sublinha (§4.3). A altura da
+ * barra (120 / 144) e a do cartão (132 / 112 / 184) variam por faixa e moram
+ * nos tokens por faixa do `theme.ts` (N3-D28).
  */
 const styles = StyleSheet.create({
   tela: { flex: 1, backgroundColor: dark.bg },
   barra: {
-    height: 120,
     paddingHorizontal: space.xxl,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: space.xl,
     borderBottomWidth: bar.hairline,
     borderBottomColor: dark.line,
   },
+  // B — a barra em duas linhas: título, depois chip e botões.
+  barraEmpilhada: { flexDirection: 'column', alignItems: 'stretch' },
+  linhaDaBarra: { flexDirection: 'row', alignItems: 'center' },
   titulo: {
     flex: 1,
     color: dark.text,
@@ -667,13 +748,16 @@ const styles = StyleSheet.create({
     fontSize: size.titleSmall,
     letterSpacing: size.titleSmall * tracking.displayWide,
   },
+  // Em B o título não cresce: a linha dele é a altura do texto (36).
+  tituloEmLinhaPropria: { flex: 0 },
   chip: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
+  // Em B o chip ocupa o que os dois botões deixam na linha 2.
+  chipNaLinha: { flex: 1, minWidth: 0 },
   status: { fontFamily: font.ui, fontSize: 13 },
   statusComplemento: { color: dark.muted },
   lista: { padding: space.xxl, gap: space.md },
   listaComBanner: { paddingTop: space.md },
   cartao: {
-    minHeight: 132,
     flexDirection: 'row',
     alignItems: 'center',
     gap: space.lg,
@@ -683,7 +767,15 @@ const styles = StyleSheet.create({
     borderColor: dark.line,
     borderRadius: radius.control,
   },
-  cartaoCompacto: { minHeight: 112 },
+  // B — três andares, centrados na altura do cartão (N3-B-S1).
+  cartaoEmAndares: { flexDirection: 'column', alignItems: 'stretch', justifyContent: 'center', gap: space.md },
+  andarDeAcao: {
+    height: touch.list + 2,
+    marginTop: space.xs,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.xl,
+  },
   cartaoEsq: { flex: 1, gap: space.md },
   nome: {
     color: dark.text,

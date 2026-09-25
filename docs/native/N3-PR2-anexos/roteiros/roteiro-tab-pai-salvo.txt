@@ -1,0 +1,7 @@
+21:22:07 mock modo=escrita-resync-500 vazio=False
+21:22:22 toque 'criar-setlist' @ 1878,188 (RX2N8000F3D)
+21:22:27 toque 'form-nome' @ 1280,552 (RX2N8000F3D)
+21:22:33 toque 'form-salvar' @ 1875,973 (RX2N8000F3D)
+N3P2-S1-salvo-nao-relido-tab-pai mCurrentRotation=ROTATION_90 png=275182 xml=44318 a2608487c578
+21:22:51 mock modo=normal vazio=False
+capturas=1 falhas=0

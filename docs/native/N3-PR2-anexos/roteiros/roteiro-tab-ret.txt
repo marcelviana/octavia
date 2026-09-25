@@ -1,0 +1,17 @@
+N3P2-S1-setlists-tab-ret mCurrentRotation=ROTATION_0 png=239416 xml=40823 a7025adf835c
+21:23:26 avião=1 (RX2N8000F3D)
+N3P2-S1-aviso-sem-rede-tab-ret mCurrentRotation=ROTATION_0 png=276121 xml=43569 22d8a4f44aeb
+21:23:55 avião=0 (RX2N8000F3D)
+21:23:57 mock modo=500-pagina-1 vazio=False
+N3P2-S1-S1e-falha-com-cache-tab-ret mCurrentRotation=ROTATION_0 png=267701 xml=44826 5b8e02040a85
+21:24:20 mock modo=normal vazio=False
+21:24:22 mock modo=normal vazio=True
+N3P2-S1-S1f-vazia-tab-ret mCurrentRotation=ROTATION_0 png=126868 xml=18300 5a5ccec472e4
+21:24:44 mock modo=normal vazio=False
+21:24:46 mock modo=escrita-resync-500 vazio=False
+21:25:00 toque 'criar-setlist' @ 936,281 (RX2N8000F3D)
+21:25:05 toque 'form-nome' @ 800,552 (RX2N8000F3D)
+21:25:12 toque 'form-salvar' @ 1395,973 (RX2N8000F3D)
+N3P2-S1-salvo-nao-relido-tab-ret mCurrentRotation=ROTATION_0 png=277935 xml=44246 093cefb14d44
+21:25:28 mock modo=normal vazio=False
+capturas=5 falhas=0

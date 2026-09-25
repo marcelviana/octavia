@@ -1,0 +1,15 @@
+RX2N8000F3D accel=0 user_rot=1 mCurrentRotation=ROTATION_90 Physical size: 1600x2560
+FALHA palco: ESPERA ESGOTADA: 'criar-setlist'
+FALHA S1f: ESPERA ESGOTADA: 'criar-setlist'
+FALHA S2e: ESPERA ESGOTADA: 'criar-setlist'
+FALHA reordenar: ESPERA ESGOTADA: 'criar-setlist'
+FALHA picker: ESPERA ESGOTADA: 'criar-setlist'
+FALHA folha: ESPERA ESGOTADA: 'criar-setlist'
+FALHA dialogo: ESPERA ESGOTADA: 'criar-setlist'
+FALHA S4: ESPERA ESGOTADA: 'criar-setlist'
+FALHA S1: ESPERA ESGOTADA: 'criar-setlist'
+FALHA S1_aviso: ESPERA ESGOTADA: 'criar-setlist'
+FALHA S1e: ESPERA ESGOTADA: 'criar-setlist'
+capturas=0 falhas=11
+
+[exited with code 0]

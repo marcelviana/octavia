@@ -1,0 +1,19 @@
+N3P2-S1-setlists-avd-ret mCurrentRotation=ROTATION_90 png=225222 xml=40481 97e9aeb0cbe2
+19:42:21 avião=1 (emulator-5554)
+FALHA aviso: ESPERA ESGOTADA: 'última sincronização'
+19:43:12 avião=0 (emulator-5554)
+19:43:13 mock modo=normal vazio=False
+19:43:15 mock modo=500-pagina-1 vazio=False
+N3P2-S1-S1e-falha-com-cache-avd-ret mCurrentRotation=ROTATION_90 png=253604 xml=44488 f8ef783e6e31
+19:43:44 mock modo=normal vazio=False
+19:43:46 mock modo=normal vazio=True
+N3P2-S1-S1f-vazia-avd-ret mCurrentRotation=ROTATION_90 png=113929 xml=17958 d26c96710847
+19:44:08 mock modo=normal vazio=False
+19:44:10 mock modo=escrita-resync-500 vazio=False
+19:44:29 toque 'criar-setlist' @ 936,281 (emulator-5554)
+19:44:34 toque 'form-nome' @ 800,552 (emulator-5554)
+19:44:41 toque 'form-salvar' @ 1395,973 (emulator-5554)
+N3P2-S1-salvo-nao-relido-avd-ret mCurrentRotation=ROTATION_90 png=262667 xml=43904 520d9d55693a
+19:44:59 mock modo=normal vazio=False
+capturas=4 falhas=1
+  aviso: ESPERA ESGOTADA: 'última sincronização'

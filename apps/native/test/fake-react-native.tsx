@@ -240,4 +240,19 @@ export const StyleSheet = {
 
 export const Platform = { OS: 'android' as const, select: (o: Record<string, unknown>) => o.android ?? o.default }
 export const Keyboard = { dismiss: (): void => undefined }
-export const Dimensions = { get: () => ({ width: 1138, height: 627, scale: 1, fontScale: 1 }) }
+/**
+ * N3-PR2 — a JANELA do duplo, que decide a faixa (T3-R1). O padrão é o canvas
+ * de C (1138 × 627): todo teste de tela anterior ao N3 continua em C sem
+ * mudança, e é isso que o CP da invariante em jsdom afirma. Quem quer outra
+ * faixa chama `__janela(largura, altura)` antes de montar e `__janela()` no
+ * fim. Nada aqui resolve geometria: só a largura que o `faixaDe()` lê.
+ */
+const C_PADRAO = { width: 1138, height: 627, scale: 1, fontScale: 1 }
+let janela = C_PADRAO
+export function __janela(width?: number, height?: number): void {
+  janela = width === undefined || height === undefined ? C_PADRAO : { ...C_PADRAO, width, height }
+}
+export const Dimensions = { get: () => janela }
+export function useWindowDimensions(): typeof janela {
+  return janela
+}

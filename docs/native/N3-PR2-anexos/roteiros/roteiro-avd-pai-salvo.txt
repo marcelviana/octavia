@@ -1,0 +1,7 @@
+19:40:30 mock modo=escrita-resync-500 vazio=False
+19:40:49 toque 'criar-setlist' @ 1878,188 (emulator-5554)
+19:40:54 toque 'form-nome' @ 1280,552 (emulator-5554)
+19:41:01 toque 'form-salvar' @ 1875,973 (emulator-5554)
+N3P2-S1-salvo-nao-relido-avd-pai mCurrentRotation=ROTATION_0 png=257963 xml=43976 a7a1e6e89cda
+19:41:18 mock modo=normal vazio=False
+capturas=1 falhas=0
