@@ -1,0 +1,24 @@
+$ npx vitest run --project native-tela apps/native/test/picker.test.tsx -t "N3-E18" --reporter=verbose   # árvore de 55bbd40 + o CN (commit do gate)
+ × apps/native/test/picker.test.tsx > (k) N3-E18 — em B a linha que falha empilha: a frase e o `Tentar de novo` num 2º andar > B, escrita-500: título no 1º andar, o estado no 2º; a altura é o token `picker.linhaFalha` de B 321ms
+ × apps/native/test/picker.test.tsx > (k) N3-E18 — em B a linha que falha empilha: a frase e o `Tentar de novo` num 2º andar > B, escrita-429: título no 1º andar, o estado no 2º; a altura é o token `picker.linhaFalha` de B 251ms
+ ✓ apps/native/test/picker.test.tsx > (k) N3-E18 — em B a linha que falha empilha: a frase e o `Tentar de novo` num 2º andar > B, os estados base não mudam: adicionar e adicionada na fileira de 80 212ms
+ ✓ apps/native/test/picker.test.tsx > (k) N3-E18 — em B a linha que falha empilha: a frase e o `Tentar de novo` num 2º andar > C (CP), escrita-500: a fileira de 80 de sempre — o estado ao lado do título 177ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+AssertionError: expected 'row' to be 'column' // Object.is equality
+ Test Files  1 failed (1)
+      Tests  2 failed | 2 passed | 21 skipped (25)
+$ python3 docs/native/N3-PR6-anexos/instrumentos/cn-picker-b.py <dumps-x> <dumps-ret> docs/native/N3-PR5-anexos/dumps-ret   # os dumps do build de 55bbd40 (antes do conserto)
+(1) título da linha 1 e (2) o `Tentar de novo` dentro da janela — picker com falha e limite, retrato
+  N3P6-picker-X-falhou-avd-ret.xml: título AUSENTE ✗ · picker-adicionar-1 x1 711.1 (limite 687.1) ✗
+  N3P6-picker-X-falhou-tab-ret.xml: título AUSENTE ✗ · picker-adicionar-1 x1 711.1 (limite 687.1) ✗
+  N3P6-picker-X-limite-avd-ret.xml: título 43.1 dp ✗ · sem alvo (o limite não repete) ✓
+  N3P6-picker-X-limite-tab-ret.xml: título 43.1 dp ✗ · sem alvo (o limite não repete) ✓
+(3) CP — os estados base do picker em B, nó a nó contra a N3-PR5
+  picker-vazio tab: 44 × 44 nós · idênticos ✓
+  picker-vazio avd: 43 × 43 nós · idênticos ✓
+  picker-resultados tab: 174 × 174 nós · idênticos ✓
+  picker-resultados avd: 173 × 173 nós · idênticos ✓
+  picker-relendo tab: 175 × 175 nós · idênticos ✓
+  picker-relendo avd: 174 × 174 nós · idênticos ✓
+CN-picker-B: REPROVA ✗
+exit=1

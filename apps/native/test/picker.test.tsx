@@ -40,8 +40,9 @@ import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } 
 import { buildIndex, groupResults, searchIndex, type ContentDTO, type SetlistDTO } from '@octavia/core'
 import { exatas } from './ajuda'
 import { Directory, File, Paths, __reset } from './fake-expo-file-system'
-import { __voltarDoSistema } from './fake-react-native'
+import { __janela, __voltarDoSistema } from './fake-react-native'
 import { Mock, portaLivre } from './mock'
+import { faixas } from '../src/theme'
 import {
   achar,
   assentar,
@@ -773,5 +774,102 @@ describe('(j) N2-D17 / A-N2-9 — acima de 100, adicionar continua e `Reordenar`
     await assentar(20)
     expect(inativo('reordenar')).toBe(true)
     expect(inativo('picker-abrir')).toBe(false)
+  })
+})
+
+// ------------------------------------------------ (k) N3-E18 — a linha que falha, em B
+
+/**
+ * CONTROLES NEGATIVOS — N3-PR6 (decisão do Marcel, 2026-09-25: N3-E18). O
+ * aceite completo em B achou, no picker em retrato (711 dp), a linha com FALHA
+ * ou LIMITE quebrada: o bloco de estado (frase + `Tentar de novo`) fica na
+ * mesma fileira de 80 do título, não cabe, o título vai a largura zero e SOME
+ * do dump, e o `Tentar de novo` passa do cartão e é cortado na borda da janela
+ * (`N3-PR6-anexos/`). A folha só mediu o picker em B no estado base.
+ *
+ * A decisão: **só a fase `falhou`** (falha e limite são ela) muda, e só em B
+ * (A usa os valores de B até o N5): a frase e o `Tentar de novo` descem para
+ * um SEGUNDO ANDAR, abaixo do título, com recuo alinhado a ele — o molde dos
+ * dois andares de A —, e a altura da linha nessa fase é token de faixa. Nos
+ * estados adicionar / adicionando… / adicionada / relendo… a linha continua a
+ * fileira de 80, como em C.
+ *
+ * O que estes CNs medem é a ÁRVORE (quem fica em que andar, a altura que a
+ * tela pediu ao `theme.ts`); o título ausente e o botão cortado se medem no
+ * dump (`N3-PR6-anexos/`, o CN de dump do commit do conserto).
+ */
+const B = { w: 711.1, h: 1053.8 }
+
+/** O cartão da linha `n` e os dois nós que importam nele: o título e o estado. */
+function cartao(n: number, titulo: string): { item: HTMLElement; tit: HTMLElement; est: HTMLElement } {
+  const est = exige(`picker-estado-${n}`)
+  const tit = [...document.querySelectorAll<HTMLElement>('span')].find((e) => (e.textContent ?? '').trim() === titulo)
+  if (tit === undefined) throw new Error(`sem o título ${titulo}`)
+  let item: HTMLElement | null = est
+  while (item !== null && !item.contains(tit)) item = item.parentElement
+  if (item === null) throw new Error('título e estado sem ancestral comum')
+  return { item, tit, est }
+}
+
+/** O filho direto de `pai` que contém `e`: a "fileira" ou o "andar" em que ele está. */
+const andarDe = (pai: HTMLElement, e: HTMLElement): Element | undefined => [...pai.children].find((c) => c.contains(e))
+
+/** A fileira de 80 de sempre: título e estado no MESMO nó em linha, de 80. */
+function fileiraDeOitenta(n: number, titulo: string): void {
+  const { item, est } = cartao(n, titulo)
+  expect(est.parentElement).toBe(item)
+  expect(estilo(item).flexDirection).toBe('row')
+  expect(estilo(item).minHeight).toBe(80)
+}
+
+describe('(k) N3-E18 — em B a linha que falha empilha: a frase e o `Tentar de novo` num 2º andar', () => {
+  afterEach(() => __janela())
+
+  for (const [modo, frase] of [
+    ['escrita-500', 'falha no servidor — nada foi alterado aqui'],
+    ['escrita-429', 'não entrou na setlist'],
+  ] as const) {
+    it(`B, ${modo}: título no 1º andar, o estado no 2º; a altura é o token \`picker.linhaFalha\` de B`, async () => {
+      __janela(B.w, B.h)
+      await abrir(modo)
+      await digitar('picker-campo', 'romance')
+      await tocar('picker-adicionar-1')
+      // o 500 relê antes do botão (regra 3); o 429 não relê — espera-se a frase
+      await ate(() => achar('picker-estado-1') !== null && texto('picker-estado-1').includes(frase), 'a frase da falha')
+      if (modo === 'escrita-500') await ate(() => achar('picker-adicionar-1') !== null, 'o `Tentar de novo` depois da releitura')
+      await assentar(20)
+      const { item, tit, est } = cartao(1, 'Romance da fixture')
+      expect(estilo(item).flexDirection).toBe('column')
+      const a1 = andarDe(item, tit)
+      const a2 = andarDe(item, est)
+      expect(a1).toBeDefined()
+      expect(a2).toBeDefined()
+      expect(a1).not.toBe(a2)
+      expect([...item.children].indexOf(a1 as Element)).toBeLessThan([...item.children].indexOf(a2 as Element))
+      expect(estilo(item).minHeight).toBe(faixas.B.picker.linhaFalha)
+      if (modo === 'escrita-500') expect(a2?.contains(exige('picker-adicionar-1'))).toBe(true)
+    })
+  }
+
+  it('B, os estados base não mudam: adicionar e adicionada na fileira de 80', async () => {
+    __janela(B.w, B.h)
+    await abrir('escrita')
+    await digitar('picker-campo', 'romance')
+    fileiraDeOitenta(1, 'Romance da fixture')
+    await tocar('picker-adicionar-1')
+    await ate(() => so('resync').length === 1, 'a releitura')
+    await assentar(20)
+    expect(texto('picker-estado-1').toLowerCase()).toContain('adicionada')
+    fileiraDeOitenta(1, 'Romance da fixture')
+  })
+
+  it('C (CP), escrita-500: a fileira de 80 de sempre — o estado ao lado do título', async () => {
+    await abrir('escrita-500')
+    await digitar('picker-campo', 'romance')
+    await tocar('picker-adicionar-1')
+    await ate(() => so('resync').length === 1, 'a releitura')
+    await assentar(20)
+    expect(texto('picker-adicionar-1')).toBe('Tentar de novo')
+    fileiraDeOitenta(1, 'Romance da fixture')
   })
 })
