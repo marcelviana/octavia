@@ -141,3 +141,18 @@ Evidência em [`N3-PR4-anexos/`](N3-PR4-anexos/README.md); errata e divergência
 | **A-N3-5 — reordenar, folha, diálogo** | **atende**: 14 estados × quatro colunas, todo alvo ≥ 48 e com `testID`, os mesmos ids nas quatro | `G5G6-r-f.txt` |
 
 **A div. 417** (a folha no celular), medida de novo: não fecha, e o destino N5 fica confirmado — a lista da folha em A deixa de ter controle inalcançável, mas os dois botões da linha só aparecem pela ponta (div. 425).
+
+## 9. O que a N3-PR5 fechou (a barra superior do palco em B, e as provas de "passa")
+
+Evidência em [`N3-PR5-anexos/`](N3-PR5-anexos/README.md); errata e divergências no `DESIGN-N3/README.md` §9 (N3-E16; divs. 433–444). O palco lê a faixa (`useFaixa()`) com o token `palco` do `theme.ts` — **só a barra superior**: 64 em C, 88 em B em duas linhas (N3-D13). Picker, S0, S4 e S5 *"em B passam"* e não mudam. Com esta PR, **toda superfície da T3-R3 tem B implementada ou provada**.
+
+| # | estado | evidência |
+|---|---|---|
+| **A-N3-2** | **atende de novo**: 34/34 (B5) e **18/18 (palco)**; os 52 dumps de paisagem iguais aos da N3-PR4 byte a byte | `G-inv-B5.txt`, `G-inv-palco.txt` |
+| **A-N3-3 — palco** | **B atende**: `N3-B-S3` nos dez estados do palco (S3a 1ª, S3b claro e escuro, S3c, S3d, S3e, título longo, última, placeholder, A14) no Tab e no AVD — barra 88,0 em duas linhas · título 663,1 · corpo 869,8 (AVD; 881,8 no Tab) · zonas 106,7 · a base **nó a nó** a do pre-check —, com a **N3-E16** (a soma da base, controles de 66). As zonas de 106,7 navegam a 104 dp da borda e não a 112. **A, mínimo** (errata do T3-R3): sem `FATAL`; o palco não tem controle de escrita, e em A `busca` e `sair` ficam sem nó e `indice` cortado — **herança do N5** (`N3-A-S3`, N3-D14) | `medidas-palco-B.txt`, `base-igual.txt`, `zonas-B.txt`, `dumps-ret/`, `inalcancaveis-A.txt`, `phone-logcat.txt` |
+| **A-N3-3 — picker, S0, S4, S5** | **B passa, provado**: os dumps de retrato têm **os mesmos `bounds` do pre-check**, 12 de 12 (picker vazio e resultados, S4 vazio e resultados, S5 nos dois aparelhos; S0 login e erro no AVD). O `picker-relendo` (sem par no pre-check, div. 436), pelo G-N3 | `prova-passa.txt` |
+| **A-N3-4 — palco e provas** | **o G-N3 passa**: (e)=0 · nome-acessível=0 · rolagem=0 nos 34 pares; 4 dp = 0; (d′) = 108, conferidos no PNG, nenhum defeito | `G-N3-retrato.txt` |
+| **A-N3-5 — palco e provas** | **atende**: 20 estados × quatro colunas, todo alvo ≥ 48 e com `testID`, os mesmos ids nas quatro (o S0 só no AVD, div. 436) | `G5G6-palco.txt` |
+| **T1-R27 / A14 em B** | **atende**: girar o palco da música 3 dá `rotation=portrait n=3/8` e `3 DE 8`, e a volta `rotation=landscape n=3/8`; a barra muda de forma (64 ↔ 88), a posição fica — errata no `PRD-TELA-1.md` | `a14-retrato.txt` |
+
+**A div. 442** fica com o Marcel: em B a barra superior da S5 continua com 64 (*"passa"*), e a do palco tem 88.
