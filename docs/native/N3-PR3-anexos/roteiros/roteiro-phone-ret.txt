@@ -1,0 +1,23 @@
+09:58:22 toque canto de setlist-00000001 @ 108,549
+N3P3-S2-com-edicao-phone-ret mCurrentRotation=ROTATION_0 png=166589 xml=50148 baac2f9a2437
+09:58:40 toque 'picker-abrir' @ 242,377 (emulator-5556)
+09:58:44 toque 'fechar-busca' @ 126,177 (emulator-5556)
+09:58:53 toque 'reordenar' @ 652,377 (emulator-5556)
+09:58:57 toque 'reordenar-sair' @ 251,177 (emulator-5556)
+09:59:05 toque 'setlist-editar' @ 981,377 (emulator-5556)
+09:59:20 toque 'remover-1' @ 888,677 (emulator-5556)
+09:59:23 mock modo=normal vazio=False
+09:59:47 toque canto de setlist-00000001 @ 108,549
+09:59:53 toque 'song-1' @ 540,677 (emulator-5556)
+09:59:59 toque 'indice' @ 1023,2233 (emulator-5556)
+N3P3-S2-sem-edicao-S2p-phone-ret mCurrentRotation=ROTATION_0 png=173576 xml=32956 2b18ef665d20
+
+## S2e (faixa A, octavia_phone em retrato) — controles de escrita
+  picker-abrir     alcançável    bounds [63,314][421,440]; toque @ 242,377 → abriu (picker-campo)
+  reordenar        alcançável    bounds [463,314][841,440]; toque @ 652,377 → abriu (reordenar-sair)
+  setlist-editar   alcançável    bounds [883,314][1080,440]; toque @ 981,377 → abriu (form-nome)
+  setlist-apagar   INALCANÇÁVEL  sem nó no dump
+  remover-1        alcançável    bounds [825,614][951,740]; toque @ 888,677
+
+## S2p — controles de escrita no dump: nenhum (a moldura não tem nenhum)
+capturas=2

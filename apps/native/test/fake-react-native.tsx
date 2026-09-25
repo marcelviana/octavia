@@ -210,17 +210,23 @@ export function Modal(p: PropsComuns & { visible?: boolean }): React.JSX.Element
   return createElement('div', { ...atributos(p), 'data-modal': 'true' }, p.children as ReactNode)
 }
 
-/** `FlatList`: renderiza tudo — virtualização não é o que estes CNs medem. */
+/**
+ * `FlatList`: renderiza tudo — virtualização não é o que estes CNs medem.
+ * N3-PR3: o `numColumns` vai para `data-numcolumns` — a grade de duas colunas
+ * de C e a coluna única de B (moldura `N3-B-S2e`) são a mesma lista com outro
+ * número, e o duplo não tem geometria para mostrar a diferença de outro jeito.
+ */
 export function FlatList<T>(p: {
   data: readonly T[]
   keyExtractor?: (item: T, i: number) => string
   renderItem: (info: { item: T; index: number }) => ReactNode
   contentContainerStyle?: unknown
+  numColumns?: number
   testID?: string
 }): React.JSX.Element {
   return createElement(
     'div',
-    { 'data-testid': p.testID, 'data-flatlist': 'true' },
+    { 'data-testid': p.testID, 'data-flatlist': 'true', 'data-numcolumns': p.numColumns ?? 1 },
     p.data.map((item, index) =>
       createElement(
         'div',

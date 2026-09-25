@@ -120,6 +120,21 @@ declarado e restaurado; a prova é o `ping` falhando (`connect: Network is
 unreachable`), não o setting (regra 1). Nos automatizados o caminho é o
 override da API.
 
+**O AVD em repouso tem o rádio desligado** (`wifi=0 data=0`) e desligar o avião
+**não o religa** (N3-PR3, div. 418): depois de `cmd connectivity airplane-mode
+disable`, `svc wifi enable` e `svc data enable`, e o `ping` respondendo antes da
+primeira captura. No fim, na ordem inversa: `svc wifi disable`, `svc data
+disable`, avião ligado, `ping` → `Network is unreachable`.
+
+**O cache do app no Tab** (a conta do Marcel) se guarda **arquivo a arquivo**, com o
+app parado: `adb exec-out run-as rocks.octavia.app cat files/octavia-<uid>/<arq> >
+<cópia>` para `setlists.json`, `content.json`, `files-index.json` e cada arquivo de
+`files/`; e se regrava por `adb exec-in run-as rocks.octavia.app sh -c "cat >
+files/octavia-<uid>/<arq>" < <cópia>`, conferindo o `md5sum` dos quatro antes e
+depois. O `tar cf -` por `exec-out` sai truncado (div. 419), e um `tar` feito no
+macOS deixa arquivos AppleDouble `._*` no cache (div. 420). No fim: apagar de
+`files/` o que a fixture baixou e apagar as cópias do host.
+
 ## O dev client e os teclados atrapalham o arnês
 
 - **O FAB do dev client** (engrenagem / "Tools") fica sobre o **canto superior
@@ -136,6 +151,9 @@ override da API.
   **Medido na N3-PR2, para S1**: em B o FAB fica na linha do **título**, à
   direita, e **não cobre** `buscar` nem `criar-setlist`, que desceram para a
   linha 2 da barra. As outras superfícies se medem nas PRs delas.
+  **Medido na N3-PR3, para S2**: em B o FAB fica sobre o **fim do rótulo** de
+  `Buscar na biblioteca` (barra de 88, à direita); o alvo continua tocável pela
+  esquerda, e nenhum controle da faixa de 64 fica sob ele.
 - **`input text` fora de um campo recarrega o dev client** (a tecla `r`). Div. 330.
 - **O teclado encaixado do AVD cobre a metade de baixo** — `form-cancelar`, os
   `Adicionar` de baixo; o toque cai numa tecla. Antes de procurar alvo:
@@ -163,6 +181,24 @@ fosse layout. Para dar idêntico à base, cada aparelho segue o caminho **dela**
 
 **Retrato de S1 sem rede** (N3-PR2, div. 415): o app **abre já sem rede** nos dois
 aparelhos — só assim o chip empilhado da moldura aparece.
+
+**S2 (N3-PR3)**: em retrato a coluna única deixa a linha 8 **abaixo da dobra** — o
+arnês remove a linha 1, não a 8. A setlist de 101 (o teto) precisa de `updated_at`
+diferente do da fixture, senão o sync guarda a de 8 do cache (o sync compara com
+`!==`, então voltar à de 8 também troca). E o **prazo de 20 s do cliente**
+(N2-D35) vale para o `removendo…`: uma captura com rotação reaplicada leva ~9 s,
+então a lista rolada do mesmo voo se tira **rolando logo depois do toque** e sem
+reaplicar rotação (`N3-PR3-anexos/instrumentos/n3pr3.py`, `removendoRolado`).
+
+**O dump rolado do G-N3** (N3-D29): `g-n3.mjs … --rolada <dir>` lê
+`<estado>-rolada-<aparelho>-<orient>.xml` como prova de que um texto está abaixo da
+dobra **no mesmo estado**. O gate pareia pelo nome; que é o mesmo estado, prova o
+roteiro e o próprio dump (por exemplo, `enabled=false` nos alvos durante uma escrita
+em voo). Com `ROLAR=1`, o `n3pr3.py` tira o rolado de cada estado de S2.
+
+**Celular (faixa A) com os tokens de B**: o chip de S1 encolhe até sobrar o ícone
+(div. 416), então "sincronizado agora" não chega ao dump — o arnês espera o cartão
+da fixture.
 
 **Tab**: `stay_on` a 7 **antes** de qualquer rodada longa. Na N3-PR2 a tela de 30 s
 apagou enquanto o celular rodava, e a passada inteira caiu (0 capturas).

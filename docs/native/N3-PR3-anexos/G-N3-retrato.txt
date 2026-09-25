@@ -1,0 +1,121 @@
+$ node apps/native/scripts/g-n3.mjs --pai docs/native/N3-PRECHECK-anexos/B5-baseline --pai docs/native/N3-PR3-anexos/dumps-pai --faixa docs/native/N3-PR3-anexos/dumps-ret --rolada docs/native/N3-PR3-anexos/dumps-ret
+G-N3 — 16 par(es) (paisagem × faixa); medidas: docs/native/DESIGN-N3/medidas.json (tolerância 4 dp)
+
+(e) TEXTO QUE SOME — REPROVA: 0
+
+(d′) MENOS ESPAÇO QUE NA PAISAGEM — TRIAGEM (confirmar no PNG): 32
+  N3P3-S2-com-edicao-acima-de-100-avd-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P3-S2-com-edicao-acima-de-100-avd-ret: "Sétima do ensaio" 272 → 398.2 dp (altura ×22.3)
+  N3P3-S2-com-edicao-acima-de-100-tab-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P3-S2-com-edicao-acima-de-100-tab-ret: "Sétima do ensaio" 272 → 398.2 dp (altura ×2.2)
+  N3P3-S2-com-edicao-avd-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P3-S2-com-edicao-aviso-sem-rede-avd-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P3-S2-com-edicao-aviso-sem-rede-avd-ret: aviso-motivo 762.2 → 631.1 dp (altura ×1.9)
+  N3P3-S2-com-edicao-aviso-sem-rede-avd-ret: "Sétima do ensaio" 272 → 398.2 dp (altura ×22.3)
+  N3P3-S2-com-edicao-aviso-sem-rede-tab-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P3-S2-com-edicao-aviso-sem-rede-tab-ret: aviso-motivo 762.2 → 631.1 dp (altura ×1.9)
+  N3P3-S2-com-edicao-aviso-sem-rede-tab-ret: "Sétima do ensaio" 272 → 398.2 dp (altura ×2.2)
+  N3P3-S2-com-edicao-falhou-avd-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P3-S2-com-edicao-falhou-avd-ret: aviso-motivo 817.8 → 450.2 dp (altura ×1.9)
+  N3P3-S2-com-edicao-falhou-avd-ret: "Sétima do ensaio" 272 → 398.2 dp (altura ×22.3)
+  N3P3-S2-com-edicao-falhou-tab-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P3-S2-com-edicao-falhou-tab-ret: aviso-motivo 817.8 → 450.2 dp (altura ×1.9)
+  N3P3-S2-com-edicao-falhou-tab-ret: "Sétima do ensaio" 272 → 398.2 dp (altura ×2.2)
+  N3P3-S2-com-edicao-limite-avd-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P3-S2-com-edicao-limite-avd-ret: "Sétima do ensaio" 272 → 398.2 dp (altura ×22.3)
+  N3P3-S2-com-edicao-limite-tab-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P3-S2-com-edicao-limite-tab-ret: "Sétima do ensaio" 272 → 398.2 dp (altura ×2.2)
+  N3P3-S2-com-edicao-removendo-avd-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P3-S2-com-edicao-removendo-tab-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P3-S2-com-edicao-salvo-nao-relido-avd-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P3-S2-com-edicao-salvo-nao-relido-avd-ret: aviso-motivo 583.6 → 431.6 dp (altura ×1.9)
+  N3P3-S2-com-edicao-salvo-nao-relido-avd-ret: "Sétima do ensaio" 272 → 398.2 dp (altura ×22.3)
+  N3P3-S2-com-edicao-salvo-nao-relido-tab-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P3-S2-com-edicao-salvo-nao-relido-tab-ret: aviso-motivo 583.6 → 431.6 dp (altura ×1.9)
+  N3P3-S2-com-edicao-salvo-nao-relido-tab-ret: "Sétima do ensaio" 272 → 398.2 dp (altura ×2.2)
+  N3P3-S2-com-edicao-tab-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P3-S2-sem-edicao-S2p-avd-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P3-S2-sem-edicao-S2p-tab-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+
+4 dp CONTRA A FOLHA — ERRATA CANDIDATA: 14
+  N3P3-S2-com-edicao-acima-de-100-avd-ret [B]: e2 Apagar (faixa, rótulo curto) — folha 115 · dump 119.6 · Δ +4.6
+  N3P3-S2-com-edicao-acima-de-100-tab-ret [B]: e2 Apagar (faixa, rótulo curto) — folha 115 · dump 119.6 · Δ +4.6
+  N3P3-S2-com-edicao-avd-ret [B]: e2 Apagar (faixa, rótulo curto) — folha 115 · dump 119.6 · Δ +4.6
+  N3P3-S2-com-edicao-aviso-sem-rede-avd-ret [B]: e2 Apagar (faixa, rótulo curto) — folha 115 · dump 119.6 · Δ +4.6
+  N3P3-S2-com-edicao-aviso-sem-rede-tab-ret [B]: e2 Apagar (faixa, rótulo curto) — folha 115 · dump 119.6 · Δ +4.6
+  N3P3-S2-com-edicao-falhou-avd-ret [B]: e2 Apagar (faixa, rótulo curto) — folha 115 · dump 119.6 · Δ +4.6
+  N3P3-S2-com-edicao-falhou-tab-ret [B]: e2 Apagar (faixa, rótulo curto) — folha 115 · dump 119.6 · Δ +4.6
+  N3P3-S2-com-edicao-limite-avd-ret [B]: e2 Apagar (faixa, rótulo curto) — folha 115 · dump 119.6 · Δ +4.6
+  N3P3-S2-com-edicao-limite-tab-ret [B]: e2 Apagar (faixa, rótulo curto) — folha 115 · dump 119.6 · Δ +4.6
+  N3P3-S2-com-edicao-removendo-avd-ret [B]: e2 Apagar (faixa, rótulo curto) — folha 115 · dump 119.6 · Δ +4.6
+  N3P3-S2-com-edicao-removendo-tab-ret [B]: e2 Apagar (faixa, rótulo curto) — folha 115 · dump 119.6 · Δ +4.6
+  N3P3-S2-com-edicao-salvo-nao-relido-avd-ret [B]: e2 Apagar (faixa, rótulo curto) — folha 115 · dump 119.6 · Δ +4.6
+  N3P3-S2-com-edicao-salvo-nao-relido-tab-ret [B]: e2 Apagar (faixa, rótulo curto) — folha 115 · dump 119.6 · Δ +4.6
+  N3P3-S2-com-edicao-tab-ret [B]: e2 Apagar (faixa, rótulo curto) — folha 115 · dump 119.6 · Δ +4.6
+
+NOME ACESSÍVEL — o texto está no content-desc do nó de mesmo resource-id (N3-D17); não reprova, não soma ao (e): 28
+  N3P3-S2-com-edicao-acima-de-100-avd-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N3P3-S2-com-edicao-acima-de-100-avd-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+  N3P3-S2-com-edicao-acima-de-100-tab-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N3P3-S2-com-edicao-acima-de-100-tab-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+  N3P3-S2-com-edicao-avd-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N3P3-S2-com-edicao-avd-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+  N3P3-S2-com-edicao-aviso-sem-rede-avd-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N3P3-S2-com-edicao-aviso-sem-rede-avd-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+  N3P3-S2-com-edicao-aviso-sem-rede-tab-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N3P3-S2-com-edicao-aviso-sem-rede-tab-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+  N3P3-S2-com-edicao-falhou-avd-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N3P3-S2-com-edicao-falhou-avd-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+  N3P3-S2-com-edicao-falhou-tab-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N3P3-S2-com-edicao-falhou-tab-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+  N3P3-S2-com-edicao-limite-avd-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N3P3-S2-com-edicao-limite-avd-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+  N3P3-S2-com-edicao-limite-tab-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N3P3-S2-com-edicao-limite-tab-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+  N3P3-S2-com-edicao-removendo-avd-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N3P3-S2-com-edicao-removendo-avd-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+  N3P3-S2-com-edicao-removendo-tab-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N3P3-S2-com-edicao-removendo-tab-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+  N3P3-S2-com-edicao-salvo-nao-relido-avd-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N3P3-S2-com-edicao-salvo-nao-relido-avd-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+  N3P3-S2-com-edicao-salvo-nao-relido-tab-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N3P3-S2-com-edicao-salvo-nao-relido-tab-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+  N3P3-S2-com-edicao-tab-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N3P3-S2-com-edicao-tab-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+
+ROLAGEM — o texto está no dump rolado do mesmo estado; não reprova, não soma ao (e): 18
+  N3P3-S2-com-edicao-acima-de-100-avd-ret: "Oitava do ensaio" → N3P3-S2-com-edicao-acima-de-100-rolada-avd-ret
+  N3P3-S2-com-edicao-acima-de-100-tab-ret: "Oitava do ensaio" → N3P3-S2-com-edicao-acima-de-100-rolada-tab-ret
+  N3P3-S2-com-edicao-avd-ret: "8" → N3P3-S2-com-edicao-rolada-avd-ret
+  N3P3-S2-com-edicao-avd-ret: "Oitava do ensaio" → N3P3-S2-com-edicao-rolada-avd-ret
+  N3P3-S2-com-edicao-aviso-sem-rede-avd-ret: "Oitava do ensaio" → N3P3-S2-com-edicao-aviso-sem-rede-rolada-avd-ret
+  N3P3-S2-com-edicao-aviso-sem-rede-tab-ret: "Oitava do ensaio" → N3P3-S2-com-edicao-aviso-sem-rede-rolada-tab-ret
+  N3P3-S2-com-edicao-falhou-avd-ret: "Oitava do ensaio" → N3P3-S2-com-edicao-falhou-rolada-avd-ret
+  N3P3-S2-com-edicao-falhou-tab-ret: "Oitava do ensaio" → N3P3-S2-com-edicao-falhou-rolada-tab-ret
+  N3P3-S2-com-edicao-limite-avd-ret: "Oitava do ensaio" → N3P3-S2-com-edicao-limite-rolada-avd-ret
+  N3P3-S2-com-edicao-limite-tab-ret: "Oitava do ensaio" → N3P3-S2-com-edicao-limite-rolada-tab-ret
+  N3P3-S2-com-edicao-removendo-avd-ret: "8" → N3P3-S2-com-edicao-removendo-rolada-avd-ret
+  N3P3-S2-com-edicao-removendo-avd-ret: "Oitava do ensaio" → N3P3-S2-com-edicao-removendo-rolada-avd-ret
+  N3P3-S2-com-edicao-removendo-tab-ret: "8" → N3P3-S2-com-edicao-removendo-rolada-tab-ret
+  N3P3-S2-com-edicao-removendo-tab-ret: "Oitava do ensaio" → N3P3-S2-com-edicao-removendo-rolada-tab-ret
+  N3P3-S2-com-edicao-salvo-nao-relido-avd-ret: "Oitava do ensaio" → N3P3-S2-com-edicao-salvo-nao-relido-rolada-avd-ret
+  N3P3-S2-com-edicao-salvo-nao-relido-tab-ret: "Oitava do ensaio" → N3P3-S2-com-edicao-salvo-nao-relido-rolada-tab-ret
+  N3P3-S2-com-edicao-tab-ret: "8" → N3P3-S2-com-edicao-rolada-tab-ret
+  N3P3-S2-com-edicao-tab-ret: "Oitava do ensaio" → N3P3-S2-com-edicao-rolada-tab-ret
+  dumps rolados usados (sha256, 12):
+    8d9583348f8a  N3P3-S2-com-edicao-acima-de-100-rolada-avd-ret.xml
+    d21547d3f684  N3P3-S2-com-edicao-acima-de-100-rolada-tab-ret.xml
+    53dcd17d5645  N3P3-S2-com-edicao-aviso-sem-rede-rolada-avd-ret.xml
+    16f0f139c11d  N3P3-S2-com-edicao-aviso-sem-rede-rolada-tab-ret.xml
+    a75ca4735d1c  N3P3-S2-com-edicao-falhou-rolada-avd-ret.xml
+    3e6baf229522  N3P3-S2-com-edicao-falhou-rolada-tab-ret.xml
+    f54c38956713  N3P3-S2-com-edicao-limite-rolada-avd-ret.xml
+    a1f519d7f882  N3P3-S2-com-edicao-limite-rolada-tab-ret.xml
+    3197468fdbb2  N3P3-S2-com-edicao-removendo-rolada-avd-ret.xml
+    c23ac7e0663d  N3P3-S2-com-edicao-removendo-rolada-tab-ret.xml
+    a829f0685b42  N3P3-S2-com-edicao-rolada-avd-ret.xml
+    477784d38559  N3P3-S2-com-edicao-rolada-tab-ret.xml
+    62120930000c  N3P3-S2-com-edicao-salvo-nao-relido-rolada-avd-ret.xml
+    aaa7ac8e55f5  N3P3-S2-com-edicao-salvo-nao-relido-rolada-tab-ret.xml
+
+G-N3: (e)=0 · nome-acessível=28 · rolagem=18 ✓ (d′ e 4 dp não reprovam: triagem e errata)

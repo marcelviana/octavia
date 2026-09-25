@@ -1,0 +1,25 @@
+09:44:54 mock modo=escrita-resync-500 vazio=False
+09:45:14 toque canto de setlist-00000001 @ 96,420
+09:45:22 toque 'remover-1' @ 1152,581 (emulator-5554)
+N3P3-S2-com-edicao-salvo-nao-relido-avd-pai mCurrentRotation=ROTATION_0 png=253161 xml=57100 fe375a720b38
+09:45:42 mock modo=normal vazio=False
+09:45:43 mock modo=escrita-500 vazio=False
+09:46:15 toque canto de setlist-00000001 @ 96,420
+09:46:22 toque 'remover-1' @ 1152,581 (emulator-5554)
+N3P3-S2-com-edicao-falhou-avd-pai mCurrentRotation=ROTATION_0 png=249947 xml=57459 cd583062b53b
+09:46:35 mock modo=normal vazio=False
+09:46:37 mock modo=escrita-429 vazio=False
+09:46:57 toque canto de setlist-00000001 @ 96,420
+09:47:04 toque 'remover-1' @ 1152,581 (emulator-5554)
+N3P3-S2-com-edicao-limite-avd-pai mCurrentRotation=ROTATION_0 png=238370 xml=55382 570124243f25
+09:47:17 mock modo=normal vazio=False
+09:47:19 mock modo=normal setlists-101
+09:47:39 toque canto de setlist-00000001 @ 96,420
+N3P3-S2-com-edicao-acima-de-100-avd-pai mCurrentRotation=ROTATION_0 png=244739 xml=55094 2b179073e534
+09:47:56 mock modo=normal vazio=False
+09:47:57 mock modo=escrita-pendurada vazio=False
+09:48:16 toque canto de setlist-00000001 @ 96,420
+09:48:22 toque 'remover-1' @ 1152,581 (emulator-5554)
+N3P3-S2-com-edicao-removendo-avd-pai mCurrentRotation=ROTATION_0 png=252212 xml=59990 bbf380f2a05f
+09:48:36 mock modo=normal vazio=False
+capturas=5 falhas=0

@@ -1,0 +1,35 @@
+11:13:22 toque canto de setlist-00000001 @ 96,474
+11:13:30 avião=1 (emulator-5554)
+N3P3-S2-com-edicao-aviso-sem-rede-avd-ret mCurrentRotation=ROTATION_90 png=288916 xml=56757 f4790da304c5
+N3P3-S2-com-edicao-aviso-sem-rede-rolada-avd-ret mCurrentRotation=ROTATION_90 png=289576 xml=57080 53dcd17d5645
+11:14:04 avião=0 (emulator-5554)
+11:14:06 mock modo=escrita-resync-500 vazio=False
+11:14:42 toque canto de setlist-00000001 @ 96,474
+11:14:48 toque 'remover-1' @ 1436,581 (emulator-5554)
+N3P3-S2-com-edicao-salvo-nao-relido-avd-ret mCurrentRotation=ROTATION_90 png=298298 xml=59054 61e0085e5da3
+N3P3-S2-com-edicao-salvo-nao-relido-rolada-avd-ret mCurrentRotation=ROTATION_90 png=299241 xml=59377 62120930000c
+11:15:17 mock modo=normal vazio=False
+11:15:19 mock modo=escrita-500 vazio=False
+11:15:46 toque canto de setlist-00000001 @ 96,474
+11:15:53 toque 'remover-1' @ 1436,581 (emulator-5554)
+N3P3-S2-com-edicao-falhou-avd-ret mCurrentRotation=ROTATION_90 png=299186 xml=59413 75c7f0870b14
+N3P3-S2-com-edicao-falhou-rolada-avd-ret mCurrentRotation=ROTATION_90 png=299943 xml=59736 a75ca4735d1c
+11:16:22 mock modo=normal vazio=False
+11:16:23 mock modo=escrita-429 vazio=False
+11:16:48 toque canto de setlist-00000001 @ 96,474
+11:16:54 toque 'remover-1' @ 1436,581 (emulator-5554)
+N3P3-S2-com-edicao-limite-avd-ret mCurrentRotation=ROTATION_90 png=285106 xml=57668 f05c5100d1b6
+N3P3-S2-com-edicao-limite-rolada-avd-ret mCurrentRotation=ROTATION_90 png=285699 xml=57659 f54c38956713
+11:17:23 mock modo=normal vazio=False
+11:17:25 mock modo=normal setlists-101
+11:17:44 toque canto de setlist-00000001 @ 96,474
+N3P3-S2-com-edicao-acima-de-100-avd-ret mCurrentRotation=ROTATION_90 png=292199 xml=57380 b4b951555056
+N3P3-S2-com-edicao-acima-de-100-rolada-avd-ret mCurrentRotation=ROTATION_90 png=290372 xml=61111 8d9583348f8a
+11:18:14 mock modo=normal vazio=False
+11:18:16 mock modo=escrita-pendurada vazio=False
+11:18:35 toque canto de setlist-00000001 @ 96,474
+11:18:41 toque 'remover-1' @ 1436,581 (emulator-5554)
+N3P3-S2-com-edicao-removendo-avd-ret mCurrentRotation=ROTATION_90 png=271104 xml=56058 bc432d32878e
+N3P3-S2-com-edicao-removendo-rolada-avd-ret mCurrentRotation=ROTATION_90 png=299520 xml=64082 e0f4ef5b2bd2
+11:19:09 mock modo=normal vazio=False
+capturas=12 falhas=0

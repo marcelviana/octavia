@@ -69,6 +69,21 @@
  * `src/escrita.ts`, que relê e grava (T2-R9); esta tela recebe o conjunto
  * novo por `edicao.aoReler` e quem o aplica é a raiz. É a mesma regra que a
  * folha de criar já obedecia.
+ *
+ * ## O que a N3-PR3 acrescenta: S2 na faixa B (DESIGN-N3 §2; N3-D17, N3-D28)
+ *
+ * S2 lê a faixa (`useFaixa()`) e desenha com os **tokens por faixa** do
+ * `theme.ts` — sem conta de largura aqui. Em C nada muda (a invariante T3-R2
+ * prova, dump a dump). Em B (molduras `N3-B-S2e` e `N3-B-S2p`), duas coisas:
+ *
+ *  - a **grade de duas colunas vira uma** — nas duas S2, com a mesma linha de
+ *    116 e os mesmos elementos (número · título/artista · tipo · `remover`);
+ *  - a faixa de 64 mostra os **rótulos curtos** `Adicionar` e `Apagar`
+ *    (N3-D17), e o nome acessível continua o longo — é o que faz os quatro
+ *    controles caberem numa linha só em 711 (687,1 pela N3-E4).
+ *
+ * A barra de 88 é a de C. A S2 do palco continua sem um controle de escrita:
+ * a distinção entre as duas S2 é a faixa, em toda faixa de largura.
  */
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native'
@@ -89,7 +104,8 @@ import { barrarPorTeto, escrever, pedidoRemover, relerAoAbrir, type EstadoLocal 
 import { Icone, type TamanhoIcone } from '../icones/Icone'
 import type { NomeIcone } from '../icones/dados'
 import { log } from '../log'
-import { bar, dark, font, radius, size, space, touch, tracking } from '../theme'
+import { bar, dark, faixas, font, radius, size, space, touch, tracking } from '../theme'
+import { useFaixa } from '../useFaixa'
 import { DialogoDeApagar } from './DialogoDeApagar'
 import { FolhaDeSetlist } from './FolhaDeCriar'
 import { LinhaDeAviso } from './LinhaDeAviso'
@@ -249,6 +265,7 @@ function Item({
   contentById,
   syncDone,
   atual,
+  naGrade,
   remover,
   onAbrir,
 }: {
@@ -256,6 +273,8 @@ function Item({
   contentById: Map<string, ContentDTO>
   syncDone: boolean
   atual: boolean
+  /** Duas colunas (C): a linha divide a largura com a vizinha; na coluna única (B), não. */
+  naGrade: boolean
   /** `null` na S2 do palco: lá a linha não tem alvo de escrita nenhum. */
   remover: { inativo: boolean; removendo: boolean; onPress: () => void } | null
   onAbrir: () => void
@@ -278,7 +297,12 @@ function Item({
 
   return (
     <Pressable
-      style={[styles.item, atual && styles.itemAtual, invalido !== null && styles.itemInvalido]}
+      style={[
+        styles.item,
+        naGrade && styles.itemNaGrade,
+        atual && styles.itemAtual,
+        invalido !== null && styles.itemInvalido,
+      ]}
       onPress={onAbrir}
       accessibilityRole="button"
       testID={`song-${song.position}`}
@@ -332,6 +356,7 @@ function Metadado({ icone, texto }: { icone: NomeIcone; texto: string }): React.
 function ControleDaFaixa({
   icone,
   rotulo,
+  nome,
   tinta,
   inativo,
   onPress,
@@ -341,6 +366,11 @@ function ControleDaFaixa({
 }: {
   icone: NomeIcone
   rotulo: string
+  /**
+   * N3-D17 — o nome acessível, quando o rótulo visível é o curto (`Adicionar`,
+   * `Apagar` em B). Sem ele, o nome é o próprio rótulo, como sempre foi.
+   */
+  nome?: string
   /** §3.1: escrita é `accentInk`; `apagar setlist` é a única exceção. */
   tinta: string
   inativo: boolean
@@ -368,6 +398,7 @@ function ControleDaFaixa({
       ]}
       onPress={() => (inativo ? aoTocarInativo?.() : onPress())}
       accessibilityRole="button"
+      accessibilityLabel={nome}
       accessibilityState={{ disabled: inativo }}
       testID={testID}
     >
@@ -394,6 +425,9 @@ export function IndexScreen({
 }: IndexScreenProps): React.JSX.Element {
   const songs = [...setlist.setlist_songs].sort((a, b) => a.position - b.position)
   const n = songs.length
+  /** N3-D28 — o que muda de C para B é valor, e vem daqui. */
+  const tokens = faixas[useFaixa()].s2
+  const naGrade = tokens.colunas === 2
 
   const [folha, setFolha] = useState(false)
   /** N2-PR5 — o modo de reordenar ocupa a tela enquanto dura. */
@@ -701,7 +735,8 @@ export function IndexScreen({
                 olha o teto. */}
             <ControleDaFaixa
               icone="adicionar"
-              rotulo="Adicionar música"
+              rotulo={tokens.rotulosCurtos ? 'Adicionar' : 'Adicionar música'}
+              nome={tokens.rotulosCurtos ? 'Adicionar música' : undefined}
               tinta={dark.accentInk}
               inativo={!podeEscrever}
               principal
@@ -733,7 +768,8 @@ export function IndexScreen({
                 `errorInk` — e mesmo assim exige diálogo (§6). */}
             <ControleDaFaixa
               icone="apagar-setlist"
-              rotulo="Apagar setlist"
+              rotulo={tokens.rotulosCurtos ? 'Apagar' : 'Apagar setlist'}
+              nome={tokens.rotulosCurtos ? 'Apagar setlist' : undefined}
               tinta={dark.errorInk}
               inativo={!podeEscrever}
               onPress={() => setDialogo(true)}
@@ -754,11 +790,14 @@ export function IndexScreen({
         />
       ) : null}
 
+      {/* N3-B-S2e/S2p: a coluna única de B. O RN não troca `numColumns` numa
+          lista montada — a `key` remonta a lista quando a faixa muda (rotação). */}
       <FlatList
+        key={`colunas-${tokens.colunas}`}
         data={songs}
         keyExtractor={songKey}
-        numColumns={2}
-        columnWrapperStyle={styles.coluna}
+        numColumns={tokens.colunas}
+        columnWrapperStyle={naGrade ? styles.coluna : undefined}
         contentContainerStyle={styles.lista}
         renderItem={({ item }) => (
           <Item
@@ -766,6 +805,7 @@ export function IndexScreen({
             contentById={contentById}
             syncDone={syncDone}
             atual={item.position === posicaoAtual}
+            naGrade={naGrade}
             remover={
               edicao === null
                 ? null
@@ -914,7 +954,6 @@ const styles = StyleSheet.create({
   lista: { padding: space.xl, gap: space.sm },
   coluna: { gap: space.lg },
   item: {
-    flex: 1,
     minHeight: 116,
     flexDirection: 'row',
     alignItems: 'center',
@@ -929,6 +968,9 @@ const styles = StyleSheet.create({
     borderLeftColor: dark.line,
     borderRadius: radius.control,
   },
+  // Na grade de C as duas linhas dividem a largura; na coluna única de B a
+  // linha se estica pelo `alignItems` da lista, sem `flex` no eixo vertical.
+  itemNaGrade: { flex: 1 },
   itemAtual: { borderLeftColor: dark.accent, backgroundColor: dark.line },
   // §3.3 — o fundo a 5% separa o inválido do normal sem inventar cor; a
   // altura é a MESMA, 116, porque inválido não é desabilitado (§5.4).

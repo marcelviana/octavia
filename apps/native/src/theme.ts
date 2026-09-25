@@ -126,7 +126,8 @@ export const tracking = { display: 0.14, displayWide: 0.22, label: 0.08 } as con
  *    referência, e o aceite de A no N3 é o mínimo: sem crash, sem controle de
  *    escrita inalcançável (T3-R3).
  *
- * Cada superfície entra aqui na PR que a implementa; na N3-PR2, só S1.
+ * Cada superfície entra aqui na PR que a implementa: S1 na N3-PR2, S2 na
+ * N3-PR3.
  */
 export interface TokensDaFaixa {
   s1: {
@@ -149,14 +150,32 @@ export interface TokensDaFaixa {
     /** O cartão do S1e, com o banner em cima: 112 em C (§5.4 do V1); em B o cartão não encolhe. */
     cartaoCompacto: number
   }
+  s2: {
+    /**
+     * Colunas da lista de músicas: 2 em C (a grade do V1, linha 536,9 × 116);
+     * 1 em B (N3-B-S2e/S2p: *"duas colunas em 663 dariam 323,5 por linha e
+     * deixariam 63 dp para o título"*). A linha continua com 116 e com os
+     * mesmos elementos — número, título/artista, tipo, `remover` — na mesma
+     * ordem; só a coluna muda.
+     */
+    colunas: 1 | 2
+    /**
+     * N3-D17: em B a faixa de edição mostra os rótulos curtos `Adicionar` e
+     * `Apagar` (frases existentes: o botão do picker e o do diálogo), e o nome
+     * acessível continua o longo. Em C, os rótulos de sempre.
+     */
+    rotulosCurtos: boolean
+  }
 }
 
 const faixaC: TokensDaFaixa = {
   s1: { barra: 120, barraTopo: 0, barraBase: 0, vaoDaBarra: space.xl, empilha: false, cartao: 132, cartaoCompacto: 112 },
+  s2: { colunas: 2, rotulosCurtos: false },
 }
 
 const faixaB: TokensDaFaixa = {
   s1: { barra: 144, barraTopo: 20, barraBase: 14, vaoDaBarra: space.lg, empilha: true, cartao: 184, cartaoCompacto: 184 },
+  s2: { colunas: 1, rotulosCurtos: true },
 }
 
 export const faixas: Readonly<Record<Faixa, TokensDaFaixa>> = { A: faixaB, B: faixaB, C: faixaC }

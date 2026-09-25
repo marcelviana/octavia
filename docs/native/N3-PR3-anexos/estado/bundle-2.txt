@@ -1,0 +1,8 @@
+# bundle servido pelo Metro, 2ª sessão (2026-09-25 11:23:22), 7205798 B
+localhost:8788 1
+octavia.rocks 0
+rotulosCurtos 6
+itemNaGrade 2
+colunas- 1
+useLinhaDaFaixa 6
+faixa= 4

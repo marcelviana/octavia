@@ -1,0 +1,10 @@
+# AVD octavia_tab32 — restaurado (2026-09-25 11:21:27)
+global stay_on_while_plugged_in=1
+system accelerometer_rotation=1
+system user_rotation=0
+global airplane_mode_on=1
+global wifi_on=0
+global mobile_data=0
+reverse: 
+connect: Network is unreachable
+sessão: derrubada pelo S0 (mock 401) na 1ª sessão; a 2ª subiu do snapshot com a de audit; desligado sem salvar snapshot (-no-snapshot-save)

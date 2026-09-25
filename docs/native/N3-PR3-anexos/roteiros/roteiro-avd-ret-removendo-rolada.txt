@@ -1,0 +1,7 @@
+11:23:33 mock modo=escrita-pendurada vazio=False
+11:23:52 toque canto de setlist-00000001 @ 96,474
+11:24:00 toque 'remover-1' @ 1436,581 (emulator-5554)
+N3P3-S2-com-edicao-removendo-rolada-avd-ret mCurrentRotation=ROTATION_90 png=267251 xml=60016 3197468fdbb2
+11:24:09 rolada capturada 8.0 s depois do toque (prazo do cliente: 20 s)
+11:24:10 mock modo=normal vazio=False
+capturas=1 falhas=0

@@ -32,6 +32,8 @@ Fontes: N3-D8 (faixas e canvas), **N3-D12** (limite A \| B em 700), **N3-D24** (
 `[derivado]`: pela largura, o **celular deitado** (914,3 × 371,4 dp, pre-check §2.1) cai na faixa **B**, que foi desenhada para 1054 de altura. A regra de altura (janela útil < ~480 dp → composição compacta) é do **N5** (N3-D8); no N3 ele tem o mesmo aceite mínimo de A.
 *Aceite*: A-N3-3.
 
+> **Errata do T3-R3 (decisão do Marcel, 2026-09-25, no prompt da N3-PR3; divs. 416, 417).** O aceite mínimo de **A** no N3 é **nenhum crash** mais **a lista dos controles de escrita inalcançáveis, por superfície** — e a lista é **herança do N5**, não reprovação. O *"nenhum controle de escrita inalcançável"* acima não vale mais para A no N3: com os tokens de B em 411 dp (N3-D28, div. 416) a composição não cabe, e é a faixa de A do N5 que devolve os controles. A lista de cada superfície sai da PR dela; a da folha (`form-cancelar` ausente, `form-salvar` de 12 px) tem destino na PR-4 (div. 417).
+
 **T3-R4 — O gate G-N3, contra a folha** `[N3-D10; N3-D23; N3-D9; div. 384]`. Cada estado de B e A é comparado ao **mesmo estado em paisagem** (o critério é defeito **novo** em relação à paisagem, N3-D9), com o instrumento do pre-check (`N3-PRECHECK-anexos/inventario.mjs`):
 - **(e)** texto que está no dump da paisagem e **some** do dump da faixa = **reprova** (critério duro);
 - **(d′)** texto com **menos espaço** que na paisagem = **triagem**, confirmada no PNG antes de virar defeito;
@@ -59,7 +61,7 @@ O N3 está pronto quando **todos** abaixo passam, no **Tab S6 e no AVD `octavia_
 |---|---|---|---|
 | A-N3-1 | A linha `faixa=` sai no boot e em cada rotação, com a faixa certa: **C** w=1137,8 (tablet deitado), **B** w=711,1 (tablet em pé), **A** w=411,4 (celular em pé), **B** w=914,3 (celular deitado); a linha está no catálogo; um só ponto de decisão no código | logcat nos quatro casos; `grep` do limiar no `apps/native/src` com uma ocorrência; `LOGS-OCTAVIA.md` | T3-R1 |
 | A-N3-2 | Dumps de paisagem **idênticos em dp** à `B5-baseline/` (AVD 18, Tab 16) e à `W4B3-anexos/dumps-palco/` (AVD 3, Tab 7), em **toda** PR de implementação | saída do gate (diff de `bounds` vazio), por PR | T3-R2 |
-| A-N3-3 | **B**: cada superfície confere com a sua moldura `N3-B-…` (ou com C onde a folha diz "passa"); **A** e celular deitado: nenhum crash e nenhum controle de escrita inalcançável | dumps + PNG de B por superfície; roteiro de A e do celular deitado com logcat sem `FATAL` e o toque em cada controle de escrita | T3-R3 |
+| A-N3-3 | **B**: cada superfície confere com a sua moldura `N3-B-…` (ou com C onde a folha diz "passa"); **A** e celular deitado: nenhum crash, e a **lista dos controles de escrita inalcançáveis** por superfície, herdada pelo N5 (errata do T3-R3) | dumps + PNG de B por superfície; roteiro de A e do celular deitado com logcat sem `FATAL` e o toque em cada controle de escrita | T3-R3 |
 | A-N3-4 | O G-N3 **reprova a `main` de hoje em retrato** (antes de qualquer tela) e passa depois; as dez `[estimado]` e as duas `[soma]` medidas na ordem da folha, cada uma com o valor do dump e, se > 4 dp, a errata N3-En aberta | saída do gate contra a `main` (reprovando) e contra a PR; tabela das doze medidas no formato do `MEDIDAS.md` | T3-R4 |
 | A-N3-5 | G5 e G6 com **quatro colunas** (Tab × AVD, paisagem × retrato), todos os estados do congelado alcançados nas duas orientações do tablet | relatório do G5/G6 com as quatro colunas | T3-R5 |
 | A-N3-6 | Em B, `picker-abrir` com texto `Adicionar` e nome acessível `Adicionar música`; `setlist-apagar` com `Apagar` e `Apagar setlist`; `gate:a20` com 0 acusações | dump (`text` e `content-desc`); saída do `gate:a20` | T3-R6 |
@@ -112,3 +114,16 @@ Evidência em [`N3-PR2-anexos/`](N3-PR2-anexos/README.md); decisões, divergênc
 | **A-N3-4 — S1** | **o G-N3 passa em S1**: (e) = 0 nos 10 pares de retrato (era 1 na `main`); (d′) = 12, conferidos no PNG, nenhum defeito | `G-N3-retrato.txt` |
 | **A-N3-5 — S1** | **atende para S1**: cinco estados × quatro colunas (Tab/AVD × paisagem/retrato), todo alvo ≥ 48 e com `testID`, os mesmos ids nas quatro | `G5G6-S1.txt` |
 | **A-N3-7 — S1** | **atende para S1**: sem rede 66,2 e salvo-não-relido 66,2 (68 na folha), nenhum dos dois elidido, a ação à direita e centrada; em C, 48 e **nenhum `bounds` diferente** (A-N3-2). A regra é do componente: S2, reordenar e picker a herdam. As outras três amostras (falhou, limite, teto de 100) são de S2 — S1 não tem estado de limite (div. 413) | `dumps-ret/*aviso*`, `*salvo*`; `G-inv-B5.txt` |
+
+## 7. O que a N3-PR3 fechou (S2 na faixa B)
+
+Evidência em [`N3-PR3-anexos/`](N3-PR3-anexos/README.md); decisão, erratas e divergências no `DESIGN-N3/README.md` §9 (N3-D29; N3-E13, N3-E14; divs. 418–424). S2 lê a faixa (`useFaixa()`), com os tokens `s2` do `theme.ts`: em B, coluna única nas duas entradas e os rótulos curtos da faixa.
+
+| # | estado | evidência |
+|---|---|---|
+| **A-N3-2** | **atende de novo**: 34/34 (B5) e 18/18 (palco); os 52 dumps de paisagem iguais aos da N3-PR2 byte a byte | `G-inv-B5.txt`, `G-inv-palco.txt` |
+| **A-N3-3 — S2** | **B atende**: S2e e S2p conferem com `N3-B-S2e` e `N3-B-S2p` no Tab e no AVD (barra 88,0 · faixa 64,0 com soma 688,4 · linha 663,1 × 116,0 no mesmo x · `remover` 48,0), com a N3-E13 (título 398,2, tipo 84,0 — "como em C"). **A, mínimo de S2** (errata do T3-R3): sem `FATAL`; S2e com **`setlist-apagar` inalcançável** e `setlist-editar` cortado mas tocável; S2p sem controle de escrita — **herança do N5** | `medidas-s2-B.txt`, `dumps-ret/`, `inalcancaveis-A.txt`, `phone-logcat.txt` |
+| **A-N3-4 — S2** | **o G-N3 passa em S2**: (e)=0 · nome-acessível=28 · rolagem=18 nos 16 pares (N3-D29); (d′) = 32, conferidos no PNG, nenhum defeito; 4 dp = 0 depois do `medidas.json` com as erratas (div. 424) | `G-N3-retrato.txt`, `G-N3-retrato-commit4.txt`, `CN-g-n3.txt` |
+| **A-N3-5 — S2** | **atende para S2**: oito estados × quatro colunas, todo alvo ≥ 48 e com `testID`, os mesmos ids nas quatro | `G5G6-S2.txt` |
+| **A-N3-6** | **atende**: em B, `picker-abrir` com `Adicionar` e `content-desc` `Adicionar música`; `setlist-apagar` com `Apagar` e `Apagar setlist`; `gate:a20` 0 acusações | `dumps-ret/`, `a20-commit2.txt` |
+| **A-N3-7 — S2** | **atende**: as cinco amostras em B — sem rede 66,2 · salvo-não-relido 66,2 · falhou 66,2 · limite 48,0 · teto de 100 48,0 (N3-E14: uma linha no app) —, nenhuma elidida; em C, nenhum `bounds` diferente (A-N3-2). Com a de limite, a div. 413 fica fechada | `medidas-s2-B.txt` |

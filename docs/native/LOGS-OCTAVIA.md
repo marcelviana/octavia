@@ -924,3 +924,13 @@ Os gates desta série liam código (G1, G2/G3, a20, ícones). O N3 é o primeiro
 
 **G-N3** (`apps/native/scripts/g-n3.mjs --pai <dir>… --faixa <dir>`, T3-R4). *Mede*, por par (paisagem, faixa) do mesmo estado: **(e)** texto que some da faixa — **reprova**; **(d′)** texto com menos espaço (> 1 dp mais estreito ou > 40 % mais alto) — **triagem**, confirmar no PNG; **4 dp** contra o `DESIGN-N3/medidas.json`, na faixa em que a folha declara a medida — **errata candidata**. (e) e (d′) são os do `inventario.mjs` do pre-check, copiados; o controle é a contagem igual à do `B3-inventario.jsonl` em 105 dumps. *Não mede*: o `(d)` literal (zero por construção no RN, div. 384); sobreposição, corte e alvo < 48 (o (a)/(b)/(c) do pre-check — o G5/G6 da T3-R5 são outro gate); medida sem nó próprio no dump (`casa: null` — a régua de dev mede).
 
+## Errata N3-PR3 (2026-09-25) — o G-N3 distingue três destinos para o texto que falta
+
+Decisão do Marcel na N3-PR3 (N3-D29). Em S2 na faixa B, o (e) cru deu **46** em 14 dumps, e toda ocorrência tinha uma de duas causas de **desenho**: o rótulo curto da N3-D17 (`Adicionar música` → `Adicionar`, `Apagar setlist` → `Apagar`) e a linha 8 abaixo da dobra quando a grade de duas colunas vira uma. O G-N3 passa a separar, e a **contar à parte**:
+
+- **(e)** — o texto da paisagem falta no dump da faixa e não cai em nenhuma das duas abaixo: **reprova**, como antes.
+- **nome-acessível** — o nó de **mesmo `resource-id`** existe na faixa, o `content-desc` **dele** é o texto, e ele **mostra outro rótulo** (um `TextView` descendente com texto diferente). A última condição fecha a brecha do Android: o `content-desc` de um alvo sem `accessibilityLabel` é o texto dos filhos **mesmo quando o filho foi cortado para fora do dump** (os `B4-…-phone-ret` do pre-check). **Não reprova, não soma ao (e).**
+- **rolagem** — o texto está no **dump rolado do mesmo estado**, passado explicitamente por `--rolada <dir>` (`<estado>-rolada-<aparelho>-<orient>.xml`, pareado pelo nome, com sha256 na saída do gate e nos anexos). Sem o rolado, ou sem o texto nele, é (e). Que o rolado é do **mesmo estado** o gate não sabe (o nome é afirmação, caso 23): prova-se no roteiro e no próprio dump. **Não reprova, não soma ao (e).**
+
+O veredito diz as três contagens — `G-N3: (e)=0 · nome-acessível=28 · rolagem=18 ✓` —, nunca só "(e)=0". Os dois blocos novos saem **depois** do de 4 dp: o CT-N3 do `cn-n3pr1.sh` lê o (e) até o cabeçalho do (d′), e o filtro de distância do topo **na paisagem** (o critério copiado do pre-check) não mudou — o CT-N3 continua igual ao `B3-inventario.jsonl`. Controles: `apps/native/scripts/__cn__/cn-n3pr3.sh` (saída em `N3-PR3-anexos/CN-g-n3.txt`).
+

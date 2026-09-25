@@ -1,0 +1,35 @@
+09:49:21 toque canto de setlist-00000001 @ 96,474
+N3P3-S2-com-edicao-avd-ret mCurrentRotation=ROTATION_90 png=270462 xml=56370 1958c1c43fe7
+09:49:57 toque canto de setlist-00000001 @ 96,474
+09:50:03 toque 'song-1' @ 800,580 (emulator-5554)
+09:50:09 toque 'indice' @ 1103,2318 (emulator-5554)
+N3P3-S2-sem-edicao-S2p-avd-ret mCurrentRotation=ROTATION_90 png=254064 xml=37399 7ae35c935baa
+09:50:43 toque canto de setlist-00000001 @ 96,474
+09:50:51 avião=1 (emulator-5554)
+N3P3-S2-com-edicao-aviso-sem-rede-avd-ret mCurrentRotation=ROTATION_90 png=290243 xml=56757 f4790da304c5
+09:51:10 avião=0 (emulator-5554)
+09:51:16 mock modo=escrita-resync-500 vazio=False
+09:51:44 toque canto de setlist-00000001 @ 96,474
+09:51:50 toque 'remover-1' @ 1436,581 (emulator-5554)
+N3P3-S2-com-edicao-salvo-nao-relido-avd-ret mCurrentRotation=ROTATION_90 png=299218 xml=59054 61e0085e5da3
+09:52:04 mock modo=normal vazio=False
+09:52:06 mock modo=escrita-500 vazio=False
+09:52:28 toque canto de setlist-00000001 @ 96,474
+09:52:34 toque 'remover-1' @ 1436,581 (emulator-5554)
+N3P3-S2-com-edicao-falhou-avd-ret mCurrentRotation=ROTATION_90 png=300451 xml=59413 75c7f0870b14
+09:52:49 mock modo=normal vazio=False
+09:52:51 mock modo=escrita-429 vazio=False
+09:53:22 toque canto de setlist-00000001 @ 96,474
+09:53:28 toque 'remover-1' @ 1436,581 (emulator-5554)
+N3P3-S2-com-edicao-limite-avd-ret mCurrentRotation=ROTATION_90 png=286774 xml=57668 f05c5100d1b6
+09:53:43 mock modo=normal vazio=False
+09:53:45 mock modo=normal setlists-101
+09:54:14 toque canto de setlist-00000001 @ 96,474
+N3P3-S2-com-edicao-acima-de-100-avd-ret mCurrentRotation=ROTATION_90 png=293178 xml=57380 b4b951555056
+09:54:32 mock modo=normal vazio=False
+09:54:34 mock modo=escrita-pendurada vazio=False
+09:55:19 toque canto de setlist-00000001 @ 96,474
+09:55:26 toque 'remover-1' @ 1436,581 (emulator-5554)
+N3P3-S2-com-edicao-removendo-avd-ret mCurrentRotation=ROTATION_90 png=271521 xml=56058 bc432d32878e
+09:55:40 mock modo=normal vazio=False
+capturas=8 falhas=0

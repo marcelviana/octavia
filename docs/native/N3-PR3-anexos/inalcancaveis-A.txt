@@ -1,0 +1,9 @@
+## S2e (faixa A, octavia_phone em retrato) — controles de escrita
+  picker-abrir     alcançável    bounds [63,314][421,440]; toque @ 242,377 → abriu (picker-campo)
+  reordenar        alcançável    bounds [463,314][841,440]; toque @ 652,377 → abriu (reordenar-sair)
+  setlist-editar   alcançável    bounds [883,314][1080,440]; toque @ 981,377 → abriu (form-nome)
+  setlist-apagar   INALCANÇÁVEL  sem nó no dump
+  remover-1        alcançável    bounds [825,614][951,740]; toque @ 888,677
+
+## S2p — controles de escrita no dump: nenhum (a moldura não tem nenhum)
+capturas=2

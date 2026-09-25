@@ -1,0 +1,41 @@
+09:29:22 toque canto de setlist-00000001 @ 96,474
+N3P3-S2-com-edicao-tab-ret mCurrentRotation=ROTATION_0 png=285627 xml=56712 57fe64b3e993
+09:29:49 toque canto de setlist-00000001 @ 96,474
+09:29:56 toque 'song-1' @ 800,580 (RX2N8000F3D)
+09:30:02 toque 'indice' @ 1103,2345 (RX2N8000F3D)
+N3P3-S2-sem-edicao-S2p-tab-ret mCurrentRotation=ROTATION_0 png=274138 xml=37741 1aa7ac6776d3
+09:30:29 toque canto de setlist-00000001 @ 96,474
+09:30:38 avião=1 (RX2N8000F3D)
+N3P3-S2-com-edicao-aviso-sem-rede-tab-ret mCurrentRotation=ROTATION_0 png=306370 xml=57440 65a28596ddde
+09:30:56 avião=0 (RX2N8000F3D)
+09:30:58 mock modo=escrita-resync-500 vazio=False
+09:31:13 toque canto de setlist-00000001 @ 96,474
+FALHA salvo: TOQUE FALHOU: sem 'remover-8' (n=1)
+09:31:27 avião=0 (RX2N8000F3D)
+09:31:29 mock modo=normal vazio=False
+09:31:30 mock modo=escrita-500 vazio=False
+09:31:45 toque canto de setlist-00000001 @ 96,474
+FALHA falhou: TOQUE FALHOU: sem 'remover-8' (n=1)
+09:31:59 avião=0 (RX2N8000F3D)
+09:32:01 mock modo=normal vazio=False
+09:32:03 mock modo=escrita-429 vazio=False
+09:32:17 toque canto de setlist-00000001 @ 96,474
+FALHA limite: TOQUE FALHOU: sem 'remover-8' (n=1)
+09:32:31 avião=0 (RX2N8000F3D)
+09:32:33 mock modo=normal vazio=False
+09:32:35 mock modo=normal setlists-101
+09:32:49 toque canto de setlist-00000001 @ 96,474
+FALHA cem: ESPERA ESGOTADA: 'aviso-motivo'
+09:33:32 avião=0 (RX2N8000F3D)
+09:33:33 mock modo=normal vazio=False
+09:33:35 mock modo=escrita-pendurada vazio=False
+09:33:50 toque canto de setlist-00000001 @ 96,474
+FALHA removendo: TOQUE FALHOU: sem 'remover-8' (n=1)
+09:34:04 avião=0 (RX2N8000F3D)
+09:34:05 mock modo=normal vazio=False
+capturas=3 falhas=5
+  salvo: TOQUE FALHOU: sem 'remover-8' (n=1)
+  falhou: TOQUE FALHOU: sem 'remover-8' (n=1)
+  limite: TOQUE FALHOU: sem 'remover-8' (n=1)
+  cem: ESPERA ESGOTADA: 'aviso-motivo'
+  removendo: TOQUE FALHOU: sem 'remover-8' (n=1)
