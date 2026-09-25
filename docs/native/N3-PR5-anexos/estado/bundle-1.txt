@@ -1,0 +1,10 @@
+# bundle servido, conferido antes da primeira captura 15:05:32 (regra 13 ampliada)
+tamanho=7212596
+localhost:8788 1
+octavia.rocks 0
+barraEmpilhada 6
+linhaDaBarra 7
+tituloNaLinha 2
+nomeSetlistNaLinha 2
+useFaixa 26
+faixa= 4

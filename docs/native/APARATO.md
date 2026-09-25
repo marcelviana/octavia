@@ -143,6 +143,11 @@ files/octavia-<uid>/<arq>" < <cópia>`, conferindo o `md5sum` dos quatro antes e
 depois. O `tar cf -` por `exec-out` sai truncado (div. 419), e um `tar` feito no
 macOS deixa arquivos AppleDouble `._*` no cache (div. 420). No fim: apagar de
 `files/` o que a fixture baixou e apagar as cópias do host.
+**O app tem uma segunda pasta de arquivos**, a de **demanda** (`cache/octavia-<uid>/files/`,
+`files.ts` `dirDemanda`), fora do `files/octavia-<uid>/` acima (N3-PR5, div. 444): antes de medir,
+`run-as rocks.octavia.app ls -la cache/octavia-<uid>/files/`, e o que estava lá se declara no anexo.
+Em 2026-09-25 ela tinha só a `partitura-12p.pdf` da fixture (4198 B, de 2026-09-24 21:11), de uma
+PR anterior.
 
 ## O dev client e os teclados atrapalham o arnês
 
@@ -167,6 +172,9 @@ macOS deixa arquivos AppleDouble `._*` no cache (div. 420). No fim: apagar de
   título do reordenar (o texto de 605,8 termina antes dele; as ações estão na
   linha 2), e na folha fica sobre a barra de S1, fora do cartão. Nenhum controle
   das duas fica sob ele.
+  **Medido na N3-PR5, palco**: em B o FAB fica na **linha 1** da barra de 88, à direita
+  (`[643,1,40,0][695,1,92,0]` dp), sobre o **ponto de sem rede** e o fim da linha do título; em C o
+  ponto também fica sob ele. Nenhum controle do palco fica sob o FAB (div. 441).
 - **`input text` fora de um campo recarrega o dev client** (a tecla `r`). Div. 330.
 - **O teclado encaixado do AVD cobre a metade de baixo** — `form-cancelar`, os
   `Adicionar` de baixo; o toque cai numa tecla. Antes de procurar alvo:
@@ -205,6 +213,11 @@ fosse layout. Para dar idêntico à base, cada aparelho segue o caminho **dela**
 - **S0 por abertura fria**: o S0 alcançado por logout na sessão (mock `401`) tem os
   campos 0,5 dp mais altos (div. 404; aconteceu de novo na N3-PR2) — depois do
   logout, `force-stop` e abrir de novo.
+- **…mas o S0 de RETRATO do pre-check (`B2-S0-*`) é o do logout** (o `S0()` do `roteiro.py`):
+  contra ele, o S0 de abertura fria mede os campos 0,4 dp mais baixos (N3-PR5, div. 437). **Cada
+  base pelo caminho dela**: paisagem (`B5`) fria; retrato (`B2`) por logout na sessão. As duas
+  derrubam a sessão do AVD — o S0 vai por último, e o AVD sobe de novo (do snapshot, com a de
+  audit) se ainda houver o que capturar.
 
 **Retrato de S1 sem rede** (N3-PR2, div. 415): o app **abre já sem rede** nos dois
 aparelhos — só assim o chip empilhado da moldura aparece.
@@ -259,6 +272,13 @@ adb -s <serial> shell am start -a android.intent.action.VIEW \
 - Funciona em qualquer tela, inclusive no S0 sem sessão: a régua é a camada de
   cima da raiz do app.
 
+## logcat
+
+- **Limpar o buffer (`logcat -c`) uma vez, antes da rodada** — nunca a cada toque: a contagem de
+  `FATAL` do aceite tem de cobrir a rodada inteira (N3-PR5, div. 440). Para ler a linha que um toque
+  produziu, conte as linhas `OCTAVIA:` antes dele e leia só as que vieram depois
+  (`N3-PR5-anexos/instrumentos/phone-palco.py`).
+
 ## `uiautomator dump`
 
 - **Custa ~2,3 s** por chamada (2,26–2,36 s, n=5, `N2-PR7-anexos/j3.txt`):
@@ -274,8 +294,11 @@ adb -s <serial> shell am start -a android.intent.action.VIEW \
 ## O que o `native-tela` prova, e o que não prova
 
 O projeto `native-tela` do Vitest (`.tsx` em `jsdom`) troca `react-native`,
-`react-native-svg`, o `datetimepicker` e o `expo-file-system` por duplos
-(`apps/native/test/fake-*`). **Prova árvore e ligação**: que nó existe, com que
+`react-native-svg`, o `datetimepicker`, o `expo-file-system` e — desde a N3-PR5 — o
+`react-native-pdf` por duplos (`apps/native/test/fake-*`, por alias no `vitest.config.mts`: o
+`react-native-pdf` traz JSX num `.js`, que o `import-analysis` recusa antes de qualquer `vi.mock`,
+div. 434). O palco se monta com o `expo-keep-awake`, o `useFocusEffect` e o `prefetch` por `vi.mock`
+no próprio teste (`palco-faixa.test.tsx`). **Prova árvore e ligação**: que nó existe, com que
 `testID`, se está desabilitado, que texto carrega, e que requests e linhas de
 log saem, contra o mesmo `aceite.py`. **Não prova**: geometria (`StyleSheet` é
 identidade, `Dimensions` é constante — os dp vêm do dump), IME, seletor do

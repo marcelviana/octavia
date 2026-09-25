@@ -1,0 +1,10 @@
+# AVD octavia_tab32 restaurado 2026-09-25 16:18:31 (3ª subida; as três com -no-snapshot-save)
+stay_on_while_plugged_in=1
+accelerometer_rotation=1
+user_rotation=0
+airplane_mode_on=1
+wifi_on=0
+mobile_data=0
+reverse: []
+ping: connect: Network is unreachable
+sessão: S0 (derrubada pelo 401 do mock nesta subida); o snapshot default_boot não foi regravado — a próxima subida volta com a conta de audit

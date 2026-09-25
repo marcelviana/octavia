@@ -1,0 +1,59 @@
+# octavia_phone — logcat da rodada do aceite de A no palco (roteiros/roteiro-phone-ret.txt, 2026-09-25 16:13:08); o buffer limpo UMA vez, antes da rodada; só as linhas OCTAVIA e a contagem de FATAL
+FATAL: 0
+OCTAVIA: faixa=A w=411.4 h=914.3
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=12
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=157
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=97
+OCTAVIA: cache write kind=setlists n=3 invalidated=0
+OCTAVIA: cache write kind=content n=12 invalidated=0
+OCTAVIA: sync ok setlists=3 content=12 pages=1 t=420
+OCTAVIA: prefetch plan n=0 reason=7d
+OCTAVIA: index open
+OCTAVIA: index jump n=1
+OCTAVIA: keepawake on
+OCTAVIA: prefetch plan n=1 reason=demand
+OCTAVIA: download-error nao-existe.pdf: Call to function 'FileSystemDownloadTask.start' has been rejected.
+OCTAVIA: nav n=2/8 setlist=00000001 t=634
+OCTAVIA: prefetch plan n=1 reason=demand
+OCTAVIA: download-error nao-existe.pdf: Call to function 'FileSystemDownloadTask.start' has been rejected.
+OCTAVIA: nav n=1/8 setlist=00000001 t=602
+OCTAVIA: prefetch plan n=1 reason=demand
+OCTAVIA: download-error nao-existe.pdf: Call to function 'FileSystemDownloadTask.start' has been rejected.
+OCTAVIA: autoscroll on t=598
+OCTAVIA: autoscroll off t=0
+OCTAVIA: zoom dp=26
+OCTAVIA: zoom dp=22
+OCTAVIA: theme=light
+OCTAVIA: theme=dark
+OCTAVIA: index open
+OCTAVIA: keepawake off
+OCTAVIA: keepawake on
+OCTAVIA: stage restore n=1/8
+OCTAVIA: faixa=A w=411.4 h=914.3
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=12
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=75
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=85
+OCTAVIA: cache write kind=setlists n=3 invalidated=0
+OCTAVIA: cache write kind=content n=12 invalidated=0
+OCTAVIA: sync ok setlists=3 content=12 pages=1 t=259
+OCTAVIA: prefetch plan n=0 reason=7d
+OCTAVIA: index open
+OCTAVIA: index jump n=4
+OCTAVIA: keepawake on
+OCTAVIA: file src=disk name=partitura-12p.pdf bytes=4198
+OCTAVIA: prefetch plan n=1 reason=demand
+OCTAVIA: download-error nao-existe.pdf: Call to function 'FileSystemDownloadTask.start' has been rejected.
+OCTAVIA: pdf-render pages=12 src=disk
+OCTAVIA: pdf-page n=1/12

@@ -1,0 +1,9 @@
+# Tab S6 restaurado 2026-09-25 16:18:15
+stay_on_while_plugged_in=0
+accelerometer_rotation=1
+user_rotation=0
+airplane_mode_on=0
+wifi_on=1
+mobile_data=1
+reverse: []
+app parado; cache do app regravado (md5-antes = md5-depois); cache/octavia-<uid>/files/partitura-12p.pdf (4198 B, 2026-09-24 21:11) já estava lá antes desta sessão, não foi tocado

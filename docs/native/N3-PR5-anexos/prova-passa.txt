@@ -1,0 +1,22 @@
+$ python3 docs/native/N3-PR5-anexos/instrumentos/prova-passa.py docs/native/N3-PRECHECK-anexos/B2 docs/native/N3-PR5-anexos/dumps-ret picker-vazio-avd picker-resultados-avd S4-vazio-avd S4-resultados-avd S5-fim-avd S0-login-avd S0-erro-avd picker-vazio-tab picker-resultados-tab S4-vazio-tab S4-resultados-tab S5-fim-tab
+  ✓ picker-vazio-avd: mesmos bounds (43 nós) — B2-picker-vazio-avd.xml × N3P5-picker-vazio-avd-ret.xml
+  ✓ picker-resultados-avd: mesmos bounds (173 nós) — B2-picker-resultados-avd.xml × N3P5-picker-resultados-avd-ret.xml
+  ✓ S4-vazio-avd: mesmos bounds (36 nós) — B2-S4-vazio-avd.xml × N3P5-S4-vazio-avd-ret.xml
+  ✓ S4-resultados-avd: mesmos bounds (97 nós) — B2-S4-resultados-avd.xml × N3P5-S4-resultados-avd-ret.xml
+  ✓ S5-fim-avd: mesmos bounds (48 nós) — B2-S5-fim-avd.xml × N3P5-S5-fim-avd-ret.xml
+  ✓ S0-login-avd: mesmos bounds (38 nós) — B2-S0-login-avd.xml × N3P5-S0-login-avd-ret.xml
+  ✓ S0-erro-avd: mesmos bounds (44 nós) — B2-S0-erro-avd.xml × N3P5-S0-erro-avd-ret.xml
+  ✓ picker-vazio-tab: mesmos bounds (44 nós) — B2-picker-vazio-tab.xml × N3P5-picker-vazio-tab-ret.xml
+  ✓ picker-resultados-tab: mesmos bounds (174 nós) — B2-picker-resultados-tab.xml × N3P5-picker-resultados-tab-ret.xml
+  ✓ S4-vazio-tab: mesmos bounds (37 nós) — B2-S4-vazio-tab.xml × N3P5-S4-vazio-tab-ret.xml
+  ✓ S4-resultados-tab: mesmos bounds (98 nós) — B2-S4-resultados-tab.xml × N3P5-S4-resultados-tab-ret.xml
+  ✓ S5-fim-tab: mesmos bounds (49 nós) — B2-S5-fim-tab.xml × N3P5-S5-fim-tab-ret.xml
+prova de passa: mesmos bounds em todos os pares ✓
+exit=0
+
+# controle: o S0-login de ABERTURA FRIA em retrato (dumps-descartados/), o caminho da base de PAISAGEM (div. 404) — difere do pre-check de retrato, que foi por logout na sessão
+$ python3 docs/native/N3-PR5-anexos/instrumentos/prova-passa.py docs/native/N3-PRECHECK-anexos/B2 <dir com o frio> S0-login-avd
+  ✗ S0-login-avd: 38 × 38 nós
+      nó 26: pre-check EditText email [194.7,593.8,549.3,652.4]  ·  esta PR EditText email [194.7,593.8,549.3,652.0]
+prova de passa: DIFERE ✗
+exit=1

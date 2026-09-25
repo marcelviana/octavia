@@ -1,0 +1,16 @@
+# N3-PR5 — as zonas de 15 % em B (106,7 dp): toques a 104 dp de cada borda (dentro) e a 112 dp (fora), música 3, retrato (n3pr5.py, zonas).
+# O de dentro navega (a linha `nav n=` do logcat, limpo antes de cada toque); o de fora não.
+
+## tab
+15:39:26 janela 1600 px = 711.1 dp · borda-avancar [1360, 252, 1600, 2236] · y=1244
+15:39:34 toque direita, 104 dp da borda @ x=1366 px (607.1 dp): 3 DE 8 → 4 DE 8 · log: ['OCTAVIA: nav n=4/8 setlist=00000001 t=71']
+15:39:41 toque direita, 112 dp da borda @ x=1348 px (599.1 dp): 4 DE 8 → 4 DE 8 · log: []
+15:39:49 toque esquerda, 104 dp da borda @ x=234 px (104.0 dp): 4 DE 8 → 3 DE 8 · log: ['OCTAVIA: nav n=3/8 setlist=00000001 t=68']
+15:39:56 toque esquerda, 112 dp da borda @ x=252 px (112.0 dp): 3 DE 8 → 3 DE 8 · log: []
+
+## avd
+15:52:12 janela 1600 px = 711.1 dp · borda-avancar [1360, 252, 1600, 2209] · y=1230
+15:52:19 toque direita, 104 dp da borda @ x=1366 px (607.1 dp): 3 DE 8 → 4 DE 8 · log: ['OCTAVIA: nav n=4/8 setlist=00000001 t=83']
+15:52:26 toque direita, 112 dp da borda @ x=1348 px (599.1 dp): 4 DE 8 → 4 DE 8 · log: []
+15:52:33 toque esquerda, 104 dp da borda @ x=234 px (104.0 dp): 4 DE 8 → 3 DE 8 · log: ['OCTAVIA: nav n=3/8 setlist=00000001 t=84']
+15:52:41 toque esquerda, 112 dp da borda @ x=252 px (112.0 dp): 3 DE 8 → 3 DE 8 · log: []

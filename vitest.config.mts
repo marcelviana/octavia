@@ -127,6 +127,8 @@ export default defineConfig({
               __dirname,
               'apps/native/test/fake-datetimepicker.tsx',
             ),
+            // N3-PR5: o palco (`StageScreen`) importa o PDF nativo, com JSX em `.js`.
+            'react-native-pdf': path.resolve(__dirname, 'apps/native/test/fake-react-native-pdf.tsx'),
           },
         },
       },

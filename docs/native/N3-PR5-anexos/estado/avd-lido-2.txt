@@ -1,0 +1,8 @@
+# AVD 2ª subida 15:24:42 (-no-snapshot-save; do snapshot default_boot, com a conta de audit)
+stay_on_while_plugged_in=1
+accelerometer_rotation=1
+user_rotation=0
+airplane_mode_on=1
+wifi_on=0
+mobile_data=0
+lastUpdateTime=2026-09-24 14:00:01

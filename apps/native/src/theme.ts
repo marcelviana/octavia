@@ -128,7 +128,8 @@ export const tracking = { display: 0.14, displayWide: 0.22, label: 0.08 } as con
  *
  * Cada superfície entra aqui na PR que a implementa: S1 na N3-PR2, S2 na
  * N3-PR3, o reordenar e a folha na N3-PR4 (o diálogo de apagar "em B passa":
- * 620 em 711, sem token).
+ * 620 em 711, sem token), a barra superior do palco na N3-PR5 (picker, S0, S4
+ * e S5 "em B passam", sem token).
  */
 export interface TokensDaFaixa {
   s1: {
@@ -207,6 +208,21 @@ export interface TokensDaFaixa {
     topo: number
     alturaMin: number | undefined
   }
+  palco: {
+    /**
+     * A barra superior do palco: 64 em C (uma linha — posição, setlist e
+     * título · artista · tipo lado a lado, o título elidido em ≈ 405); 88 em
+     * B (N3-B-S3, N3-D13: *"o número 88 é o de bar.top + 24 que S2 e S4 já
+     * usam"*). O corpo perde os 24 e fica com 870; a base, o corpo e as zonas
+     * de 15 % são os de C — nada mais do palco é token.
+     */
+    barra: number
+    /**
+     * A composição de B: *"posição + setlist na primeira linha, título ·
+     * artista · tipo na segunda, com os 663 dp inteiros"*. Em C, uma linha.
+     */
+    empilha: boolean
+  }
 }
 
 const faixaC: TokensDaFaixa = {
@@ -217,6 +233,7 @@ const faixaC: TokensDaFaixa = {
     artistaCede: 1, artistaMin: undefined,
   },
   folha: { largura: 720, topo: 100, alturaMin: 420 },
+  palco: { barra: bar.top, empilha: false },
 }
 
 const faixaB: TokensDaFaixa = {
@@ -227,6 +244,7 @@ const faixaB: TokensDaFaixa = {
     artistaCede: 100, artistaMin: 60,
   },
   folha: { largura: 663, topo: 96, alturaMin: undefined },
+  palco: { barra: bar.top + space.xl, empilha: true },
 }
 
 export const faixas: Readonly<Record<Faixa, TokensDaFaixa>> = { A: faixaB, B: faixaB, C: faixaC }
