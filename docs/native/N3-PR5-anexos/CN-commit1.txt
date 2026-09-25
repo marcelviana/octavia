@@ -1,0 +1,24 @@
+$ npx vitest run --project native-tela apps/native/test/palco-faixa.test.tsx --reporter=verbose   # commit 1, árvore de 59269a0 + o teste + o duplo do PDF
+ × N3-B-S3 — a barra superior de 88 em duas linhas (N3-D13) > letra, 1ª: `1 DE 8` + setlist na linha 1; `Manhã de ensaio · Banda da fixture · Letra` na linha 2 54ms
+ × N3-B-S3 — a barra superior de 88 em duas linhas (N3-D13) > a última (`8 DE 8`): a mesma barra 30ms
+ × N3-B-S3 — a barra superior de 88 em duas linhas (N3-D13) > S3e (PDF não baixado, sem rede): a barra de duas linhas, e o ponto de sem rede na linha 1 54ms
+ × N3-B-S3 — a barra superior de 88 em duas linhas (N3-D13) > avulsa (aberta pela busca): `AVULSA` na linha 1 30ms
+ × N3-B-S3 — a barra superior de 88 em duas linhas (N3-D13) > placeholder (a música sumiu da biblioteca): `—` na linha 2 31ms
+ × N3-B-S3 — a barra superior de 88 em duas linhas (N3-D13) > com nota: a nota fica na linha 1, fora da linha do título 30ms
+ ✓ C — a barra de 64 de uma linha, como hoje (a invariante em jsdom) > janela de C escrita: posição, setlist e título lado a lado no mesmo nó de 64 33ms
+ ✓ C — a barra de 64 de uma linha, como hoje (a invariante em jsdom) > padrão do duplo: posição, setlist e título lado a lado no mesmo nó de 64 30ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+AssertionError: expected 64 to be 88 // Object.is equality
+AssertionError: expected 64 to be 88 // Object.is equality
+AssertionError: expected 64 to be 88 // Object.is equality
+AssertionError: expected 64 to be 88 // Object.is equality
+AssertionError: expected 64 to be 88 // Object.is equality
+AssertionError: expected 64 to be 88 // Object.is equality
+ Test Files  1 failed (1)
+      Tests  6 failed | 2 passed (8)
+$ npx vitest run --project native --project native-tela   # CP: o resto da suíte, sem mudança
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+ Test Files  1 failed | 18 passed (19)
+      Tests  6 failed | 191 passed (197)
+$ (cd apps/native && npx tsc --noEmit -p .); echo exit=$?
+exit=0
