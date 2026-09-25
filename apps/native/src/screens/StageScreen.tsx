@@ -8,7 +8,8 @@
  *    placeholder "arquivo não baixado" quando ele não está aqui.
  *
  * Layout do design: barra superior de 64 dp com "n de N", nome da setlist,
- * título · artista · tipo, a nota da música e o chip de rede; conteúdo em
+ * título · artista · tipo, a nota da música e o chip de rede (em B, 88 em
+ * duas linhas — N3-D13, abaixo); conteúdo em
  * IBM Plex Mono com entrelinha 1,55; barra inferior de 96 dp com sete
  * controles **só ícone** (V1-PR3, DESIGN-V1 §6 — o nome de cada um está no
  * `accessibilityLabel`); e as **bordas invisíveis** de 15% da largura, ocupando só a
@@ -59,6 +60,7 @@ import {
   bar,
   colors,
   dark,
+  faixas,
   font,
   lineHeight,
   radius,
@@ -70,6 +72,7 @@ import {
   zoomSteps,
   type ThemeName,
 } from '../theme'
+import { useFaixa } from '../useFaixa'
 
 export interface StageScreenProps {
   setlist: SetlistDTO
@@ -210,6 +213,15 @@ export function StageScreen({
   )
 
   const { width, height } = useWindowDimensions()
+  /**
+   * N3-PR5 — a barra superior é a ÚNICA coisa do palco que muda de faixa
+   * (N3-D13, `N3-B-S3`): em B, 88 em duas linhas — posição + setlist (e a
+   * página, a nota e o ponto de sem rede) na primeira, título · artista ·
+   * tipo na segunda, com a largura inteira. A base, o corpo e as bordas de 15 %
+   * são os de C: as bordas continuam medindo o `meio` (que fica 24 mais baixo),
+   * não a faixa. Em C, a barra de uma linha de sempre, nó por nó (T3-R2).
+   */
+  const t = faixas[useFaixa()].palco
 
   /**
    * D-c / T1-R27 — `rotation=landscape|portrait n=<i>/<N>`: a linha que o
@@ -494,38 +506,64 @@ export function StageScreen({
   // gesto do PDF (só no S3d, e só com o arquivo pronto), senão nada.
   const linha = motivoVisivel ?? (arquivo.fase === 'pronto' && urlArquivo !== null ? DICA_PDF : null)
 
+  // Os nós da barra superior — os mesmos nas duas faixas; o que muda é onde
+  // ficam (N3-D13). Em C a ordem é a de sempre: posição, setlist, título,
+  // página, nota, ponto.
+  const posicaoEl = (
+    <Text style={[styles.posicao, { color: cor.text }]}>{avulsa ? 'AVULSA' : `${posicao} DE ${n}`}</Text>
+  )
+  const tituloEl = (extra: typeof styles.tituloNaLinha | null): React.JSX.Element => (
+    <Text style={[styles.titulo, extra, { color: cor.text }]} numberOfLines={1}>
+      {content?.title ?? '—'}
+      <Text style={{ color: cor.muted }}>
+        {content?.artist !== null && content?.artist !== undefined ? ` · ${content.artist}` : ''}
+        {content !== null ? ` · ${TIPO[content.content_type] ?? content.content_type}` : ''}
+      </Text>
+    </Text>
+  )
+  const extrasDaBarra = (
+    <>
+      {/* S3d: "página n de N" — só no PDF, e só depois de ele carregar. */}
+      {pagina.total > 0 ? (
+        <Text style={[styles.paginaTexto, { color: cor.muted }]} testID="pagina">
+          {`página ${pagina.n} de ${pagina.total}`}
+        </Text>
+      ) : null}
+      {/* T1-R35: a nota da POSIÇÃO, discreta; sem área vazia quando é nula. */}
+      {song?.notes !== null && song?.notes !== undefined && song.notes.length > 0 ? (
+        <View style={[styles.nota, { borderColor: cor.line }]}>
+          <Text style={[styles.notaTexto, { color: cor.muted }]} numberOfLines={1}>
+            {`Nota: ${song.notes}`}
+          </Text>
+        </View>
+      ) : null}
+      {!online ? <View style={styles.pontoOffline} /> : null}
+    </>
+  )
+
   return (
     <View style={[styles.tela, { backgroundColor: cor.bg }]}>
-      <View style={[styles.barraTopo, { borderBottomColor: cor.line }]}>
-        <Text style={[styles.posicao, { color: cor.text }]}>
-          {avulsa ? 'AVULSA' : `${posicao} DE ${n}`}
-        </Text>
-        <Text style={[styles.nomeSetlist, { color: cor.muted }]} numberOfLines={1}>
-          {setlist.name}
-        </Text>
-        <Text style={[styles.titulo, { color: cor.text }]} numberOfLines={1}>
-          {content?.title ?? '—'}
-          <Text style={{ color: cor.muted }}>
-            {content?.artist !== null && content?.artist !== undefined ? ` · ${content.artist}` : ''}
-            {content !== null ? ` · ${TIPO[content.content_type] ?? content.content_type}` : ''}
-          </Text>
-        </Text>
-        {/* S3d: "página n de N" — só no PDF, e só depois de ele carregar. */}
-        {pagina.total > 0 ? (
-          <Text style={[styles.paginaTexto, { color: cor.muted }]} testID="pagina">
-            {`página ${pagina.n} de ${pagina.total}`}
-          </Text>
-        ) : null}
-        {/* T1-R35: a nota da POSIÇÃO, discreta; sem área vazia quando é nula. */}
-        {song?.notes !== null && song?.notes !== undefined && song.notes.length > 0 ? (
-          <View style={[styles.nota, { borderColor: cor.line }]}>
-            <Text style={[styles.notaTexto, { color: cor.muted }]} numberOfLines={1}>
-              {`Nota: ${song.notes}`}
+      {t.empilha ? (
+        <View style={[styles.barraTopo, styles.barraEmpilhada, { height: t.barra, borderBottomColor: cor.line }]}>
+          <View style={styles.linhaDaBarra}>
+            {posicaoEl}
+            <Text style={[styles.nomeSetlist, styles.nomeSetlistNaLinha, { color: cor.muted }]} numberOfLines={1}>
+              {setlist.name}
             </Text>
+            {extrasDaBarra}
           </View>
-        ) : null}
-        {!online ? <View style={styles.pontoOffline} /> : null}
-      </View>
+          {tituloEl(styles.tituloNaLinha)}
+        </View>
+      ) : (
+        <View style={[styles.barraTopo, { height: t.barra, borderBottomColor: cor.line }]}>
+          {posicaoEl}
+          <Text style={[styles.nomeSetlist, { color: cor.muted }]} numberOfLines={1}>
+            {setlist.name}
+          </Text>
+          {tituloEl(null)}
+          {extrasDaBarra}
+        </View>
+      )}
 
       <View style={styles.meio} onLayout={medirMeio}>
         {urlArquivo !== null ? (
@@ -877,14 +915,19 @@ function Controle({
 
 const styles = StyleSheet.create({
   tela: { flex: 1 },
+  // A altura é token de faixa (`faixas[…].palco.barra`): 64 em C, 88 em B.
   barraTopo: {
-    height: bar.top,
     paddingHorizontal: space.xl,
     flexDirection: 'row',
     alignItems: 'center',
     gap: space.lg,
     borderBottomWidth: bar.hairline,
   },
+  // B (`N3-B-S3`): duas linhas empilhadas e centradas nos 88; a segunda é o
+  // título, na largura inteira (663 em 711).
+  barraEmpilhada: { flexDirection: 'column', alignItems: 'stretch', justifyContent: 'center', gap: space.xs },
+  linhaDaBarra: { flexDirection: 'row', alignItems: 'center', gap: space.lg },
+  nomeSetlistNaLinha: { flex: 1 },
   posicao: {
     fontFamily: font.display,
     fontSize: size.title,
@@ -897,6 +940,8 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   titulo: { flex: 1, textAlign: 'center', fontFamily: font.ui, fontSize: 20 },
+  // Em B o título tem a linha só para ele: não cresce na vertical e começa à esquerda.
+  tituloNaLinha: { flex: 0, textAlign: 'left' },
   nota: {
     maxWidth: 260,
     paddingHorizontal: space.md,
