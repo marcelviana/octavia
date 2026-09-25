@@ -1,0 +1,15 @@
+$ npx vitest run --project native-tela apps/native/test/s5-faixa.test.tsx --reporter=verbose   # commit 2
+ ✓ apps/native/test/s5-faixa.test.tsx > N3-E17 — em B a barra superior da S5 tem a altura da do palco (88), sem conteúdo novo > B: a barra de `8 DE 8` tem 88 — o token `palco.barra` da faixa B 42ms
+ ✓ apps/native/test/s5-faixa.test.tsx > N3-E17 — em B a barra superior da S5 tem a altura da do palco (88), sem conteúdo novo > B: "vazia" — os mesmos dois textos de C, numa linha, e mais nada 27ms
+ ✓ apps/native/test/s5-faixa.test.tsx > C — a barra de 64, como hoje (CP) > janela de C escrita: 64, o token `palco.barra` de C 26ms
+ ✓ apps/native/test/s5-faixa.test.tsx > C — a barra de 64, como hoje (CP) > padrão do duplo: 64, o token `palco.barra` de C 25ms
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+$ npx vitest run --project native --project native-tela
+ Test Files  20 passed (20)
+      Tests  201 passed (201)
+$ npx vitest run --project core
+ Test Files  17 passed (17)
+      Tests  202 passed (202)
+$ (cd apps/native && npx tsc --noEmit -p .); echo exit=$?
+exit=0

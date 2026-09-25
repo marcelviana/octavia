@@ -1,0 +1,15 @@
+$ GATES_DECL=<bloco gates abaixo> sh apps/native/scripts/g1.sh 0a71da8a78b2b14ef8c1829579680539cf71d0b0 WORKTREE
+declarações: do corpo da PR (GATES_DECL=$SCR/decl)
+base=0a71da8a78b2b14ef8c1829579680539cf71d0b0 head=WORKTREE
+G1a — diff vazio em 47 arquivos DERIVADOS de apps/native + packages/core/src
+      escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+      menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+      EXCEÇÕES DECLARADAS (o escopo desta PR):
+        apps/native/src/screens/EndScreen.tsx
+        apps/native/src/theme.ts
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+      PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+        (nenhum — nenhuma asserção do core pode mudar nesta PR)
+  G1b: só adição ✓
+exit=0

@@ -27,12 +27,20 @@
  * atravessa deslizando — que é exatamente o salto que a nota da própria
  * moldura `S5` diz querer evitar quando explica por que manteve a barra
  * inferior vazia. As duas mudam juntas, na PR que tocar o S3, ou não mudam.
+ *
+ * **N3-E17** (decisão do Marcel, 2026-09-25; div. 442): a N3-PR5 deu à barra
+ * do palco 88 em B (N3-D13), e a S5 ficou com 64 — o salto de 24 dp ao chegar
+ * ao fim. A altura da barra superior passa a ser o token da barra do palco
+ * (`faixas[…].palco.barra`, o mesmo nó do `theme.ts`, não uma cópia): 64 em
+ * C, 88 em B. "Vazia": o conteúdo é o de C — `n DE N` e a setlist, numa
+ * linha —, sem a segunda linha do palco.
  */
 import { useCallback, useState } from 'react'
 import { Pressable, StyleSheet, Text, View, type LayoutChangeEvent } from 'react-native'
 import { Icone } from '../icones/Icone'
 import { log } from '../log'
-import { bar, dark, font, radius, size, space, touch, tracking } from '../theme'
+import { bar, dark, faixas, font, radius, size, space, touch, tracking } from '../theme'
+import { useFaixa } from '../useFaixa'
 
 export interface EndScreenProps {
   nomeSetlist: string
@@ -101,10 +109,11 @@ export function EndScreen({
   }, [])
   const larguraBorda = meio === null ? 0 : Math.max(meio.largura * 0.15, touch.min)
   const alturaConteudo = meio === null ? 0 : Math.max(meio.altura, touch.min)
+  const t = faixas[useFaixa()].palco
 
   return (
     <View style={styles.tela}>
-      <View style={styles.barraTopo}>
+      <View style={[styles.barraTopo, { height: t.barra }]}>
         <Text style={styles.posicao}>{`${total} DE ${total}`}</Text>
         <Text style={styles.nomeSetlist} numberOfLines={1}>
           {nomeSetlist}
@@ -164,8 +173,8 @@ export function EndScreen({
  */
 const styles = StyleSheet.create({
   tela: { flex: 1, backgroundColor: dark.bg },
+  // A altura é o token da barra do palco (N3-E17): 64 em C, 88 em B.
   barraTopo: {
-    height: bar.top,
     paddingHorizontal: space.xl,
     flexDirection: 'row',
     alignItems: 'center',

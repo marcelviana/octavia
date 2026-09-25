@@ -129,7 +129,8 @@ export const tracking = { display: 0.14, displayWide: 0.22, label: 0.08 } as con
  * Cada superfície entra aqui na PR que a implementa: S1 na N3-PR2, S2 na
  * N3-PR3, o reordenar e a folha na N3-PR4 (o diálogo de apagar "em B passa":
  * 620 em 711, sem token), a barra superior do palco na N3-PR5 (picker, S0, S4
- * e S5 "em B passam", sem token).
+ * e S5 "em B passam", sem token). Na N3-PR6 a S5 passa a ler o token da barra
+ * do palco (N3-E17, div. 442): sem salto de 24 dp ao chegar ao fim em B.
  */
 export interface TokensDaFaixa {
   s1: {
@@ -214,7 +215,8 @@ export interface TokensDaFaixa {
      * título · artista · tipo lado a lado, o título elidido em ≈ 405); 88 em
      * B (N3-B-S3, N3-D13: *"o número 88 é o de bar.top + 24 que S2 e S4 já
      * usam"*). O corpo perde os 24 e fica com 870; a base, o corpo e as zonas
-     * de 15 % são os de C — nada mais do palco é token.
+     * de 15 % são os de C — nada mais do palco é token. A S5 lê o mesmo
+     * token para a barra superior dela (N3-E17): a altura não salta de S3 a S5.
      */
     barra: number
     /**
