@@ -101,3 +101,14 @@ Evidência em [`N3-PR1-anexos/`](N3-PR1-anexos/README.md); erratas e divergênci
 
 A **P2** (tokens por faixa, herança item 7) **não foi decidida** nesta PR — div. 406, com a recomendação. A **P1** (herança item 6) tem a hipótese escrita no `APARATO.md`, sem medida: nenhuma captura de retrato nova nesta PR.
 
+## 6. O que a N3-PR2 fechou (S1 na faixa B)
+
+Evidência em [`N3-PR2-anexos/`](N3-PR2-anexos/README.md); decisões, divergências e a ausência de errata nova no `DESIGN-N3/README.md` §9 (N3-D27, N3-D28; divs. 412–417). **A P2 foi adotada** (N3-D28): `faixas` no `theme.ts`, e S1 é a primeira tela que lê a faixa (`useFaixa()`).
+
+| # | estado | evidência |
+|---|---|---|
+| **A-N3-2** | **atende de novo**: 34/34 (B5) e 18/18 (palco, `B3-referencia-paisagem/` pela N3-D27). Os 52 dumps de paisagem com par na N3-PR1 são iguais a ele byte a byte | `G-inv-B5.txt`, `G-inv-palco.txt` |
+| **A-N3-3 — S1** | **B atende**: S1, S1-sem-rede e S1f conferem com `N3-B-S1`, `N3-B-S1-sem-rede` e `N3-B-S1f` no Tab e no AVD (barra 144,0 · cartão 184,0 · nome 581,3 · botões 152,0/171,1 · chip 192,4; nada > 4 dp). **A, mínimo de S1**: sem `FATAL`, `Nova setlist` e `Buscar música` alcançáveis — com a composição de B, que não cabe em 411 (div. 416, a de A é do N5). **A não fecha para a folha** (div. 417, anterior a esta PR) | `medidas-s1-B.txt`, `dumps-ret/`, `dumps-phone/`, `phone-logcat.txt` |
+| **A-N3-4 — S1** | **o G-N3 passa em S1**: (e) = 0 nos 10 pares de retrato (era 1 na `main`); (d′) = 12, conferidos no PNG, nenhum defeito | `G-N3-retrato.txt` |
+| **A-N3-5 — S1** | **atende para S1**: cinco estados × quatro colunas (Tab/AVD × paisagem/retrato), todo alvo ≥ 48 e com `testID`, os mesmos ids nas quatro | `G5G6-S1.txt` |
+| **A-N3-7 — S1** | **atende para S1**: sem rede 66,2 e salvo-não-relido 66,2 (68 na folha), nenhum dos dois elidido, a ação à direita e centrada; em C, 48 e **nenhum `bounds` diferente** (A-N3-2). A regra é do componente: S2, reordenar e picker a herdam. As outras três amostras (falhou, limite, teto de 100) são de S2 — S1 não tem estado de limite (div. 413) | `dumps-ret/*aviso*`, `*salvo*`; `G-inv-B5.txt` |

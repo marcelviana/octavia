@@ -297,4 +297,29 @@ Medidas pela régua de desenvolvimento no Tab S6 e no AVD `octavia_tab32` (iguai
 | **410** | T | O `h` da linha `faixa=` é a janela do `useWindowDimensions`, **com** as barras do sistema (Tab deitado `h=711.1`, não os 663,1 úteis do `APARATO.md`). | O A-N3-1 decide pelo `w`, que é a largura útil (nenhuma barra lateral nos quatro casos). Registrado no catálogo. |
 | **411** | T | O prompt pede `faixaDe()` "num ponto só". O teste de unidade roda no projeto `native` do Vitest, que não troca o `react-native` por duplo: um `faixa.ts` com o hook quebrava a suíte (`Expected 'from', got 'typeOf'`). | A decisão (e os dois limiares) fica em `src/faixa.ts`, pura; o hook do log em `src/useFaixa.ts`, que a importa. O teste garante que 700 e 960 só existem no `faixa.ts`. |
 
-**Próxima divergência livre: 412.**
+### Decisões do Marcel para a N3-PR2 — N3-D27 e N3-D28 (2026-09-24)
+
+Texto do prompt da N3-PR2, verbatim:
+
+**N3-D27** A base do G-inv para o palco é `B3-referencia-paisagem/` (mock, mesmo código); os dumps do W4-b3 são registro de prod. — **fecha a div. 401.**
+
+**N3-D28** P2 adotada: **tokens por faixa** em `theme.ts` (três jogos de valores, C = os de hoje); nenhuma tela faz aritmética de largura; o que varia por faixa é token; o README do DESIGN-N3 é a fonte dos valores. — **fecha a div. 406** e a herança item 7 do `N3-REQUISITOS.md`.
+
+(A N3-D26 é a régua de desenvolvimento da N3-PR1, citada no cabeçalho de `apps/native/src/screens/ReguaDeDev.tsx` como *"N3-D26 se aceita"*.)
+
+### Erratas da N3-PR2 — nenhuma
+
+S1 em B medido no Tab S6 e no AVD em retrato (os dois deram o mesmo valor em toda linha; tabela em [`N3-PR2-anexos/README.md`](../N3-PR2-anexos/README.md) §2): barra **144,0** (144) · cartão **184,0** (184) · nome **581,3** (583) · `Nova setlist` **152,0** (E2) · `Buscar música` **171,1** · `Baixar esta setlist` **194,2** (193,8) · chip sem rede empilhado **192,4** (E6) · linha de aviso de duas linhas **66,2** (68). **Nenhuma diferença > 4 dp**; a próxima errata continua sendo a **N3-E13**. A linha de aviso tem 21,1 dp por linha de texto no app (motivo em 15 dp, não 14 — a div. 409), com respiro de 12 + 12: "48 mín., +20 por linha" fica dentro da tolerância em B (66,2 × 68) e, estimado, em A (≈ 87,3 × 88).
+
+### Divergências abertas na N3-PR2, **412 a 417**
+
+| div. | origem | o que | o que foi feito |
+|---|---|---|---|
+| **412** | P | O prompt pede nos CNs *"os três testIDs (`criar-setlist`, `buscar`, o chip)"*. O chip de sync de S1 **não tem `testID`** no app (o único chip com id é o `chip-offline` da S4), e a folha manda os ids inalterados (§7). | Nenhum id novo (G2 80 → 80). Os CNs acham o chip pelo texto e afirmam que ele está na linha 2 da barra, antes de `criar-setlist`. |
+| **413** | P | O aceite do prompt pede S1 *"com aviso de limite"*. **S1 não tem estado de limite**: a frase de limite (`limite-sem-prazo`/`-com-prazo`) é da S2 e do picker; em S1 o 429 da criação aparece **dentro da folha**, não na linha de aviso. | S1 foi aceita nos estados que existem (com setlists, S1f, sem rede, salvo-não-relido, e S1e). A amostra `N3-B-X-limite` (1 linha, 48) é de S2 e se mede na PR de S2 — a `LinhaDeAviso` é a mesma, e a N3-D19 já vale para ela. |
+| **414** | P | *"S1 lendo `useFaixa()`"*: o `useFaixa()` da N3-PR1 era o hook da raiz, que **loga** a linha `faixa=`. Uma tela que o chamasse repetiria a linha a cada montagem. | `useFaixa()` passou a só **ler** a faixa (as telas); a linha `faixa=` ficou na raiz, em `useLinhaDaFaixa()`, com o mesmo texto e no mesmo momento (G3 68 → 68). O `App.tsx` mudou uma chamada — está no `g1a` do bloco `gates`. |
+| **415** | T | S1 **sem rede em retrato**: com o avião ligado com o app aberto (o caminho do Tab na base, div. 403), o chip continua `sincronizado agora` até a próxima abertura, e a moldura `N3-B-S1-sem-rede` desenha o chip de rede empilhado. | Em retrato o app **abre já sem rede** nos dois aparelhos (`n3pr2.py`, `aviso`); em paisagem cada aparelho seguiu o caminho da sua base, e o G-inv deu idêntico. |
+| **416** | A | **Faixa A com os tokens de B** (declarado, N3-D28: A usa B até o N5): no `octavia_phone` (411,4 dp) a composição de B **não cabe** — a linha de botões passa da borda da barra de 144, o chip encolhe até sobrar só o ícone, o andar de ação do cartão estoura à direita e os metadados elidem. Os dois controles de S1 continuam alcançáveis (tocados), e não há `FATAL`. | É o aceite mínimo de A (T3-R3), e passa. A composição de A (`N3-A-S1`: barra de 168, chip em linha própria, botões dividindo 379) é **T5-R do N5**. |
+| **417** | A | No celular (faixa A), a **folha de criar** não tem `form-cancelar` no dump e o `form-salvar` tem **12 px** de largura (`[1068,1138][1080,1290]`) — **controle de escrita inalcançável**, que o aceite mínimo de A proíbe. **Igual ao pre-check** (`B4-folha-criar-phone-ret`, mesmos `bounds`): não vem desta PR, e a folha não é superfície dela. | Registrado com destino: a **PR da folha** (`N3-B-F`), que ou resolve A junto ou declara o que fica para o N5. Até lá, A-N3-3 **não fecha para a folha**. Fechar a folha pelo `BACK` funciona. |
+
+**Próxima divergência livre: 418.**

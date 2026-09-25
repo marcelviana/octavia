@@ -133,6 +133,9 @@ override da API.
   do dev client ("Tools button") ou se o arnês toca pela margem. Até lá, alvo
   sob o FAB se toca pelo `resource-id` com o menu fechado, e o FAB fica fora da
   conta do G-N3 e do inventário (ComposeView).
+  **Medido na N3-PR2, para S1**: em B o FAB fica na linha do **título**, à
+  direita, e **não cobre** `buscar` nem `criar-setlist`, que desceram para a
+  linha 2 da barra. As outras superfícies se medem nas PRs delas.
 - **`input text` fora de um campo recarrega o dev client** (a tecla `r`). Div. 330.
 - **O teclado encaixado do AVD cobre a metade de baixo** — `form-cancelar`, os
   `Adicionar` de baixo; o toque cai numa tecla. Antes de procurar alvo:
@@ -144,6 +147,25 @@ override da API.
 - **IME na folha**: `MS_FOCO_APOS_ANIMACAO = 350` — **10/10 no Tab S6 e 10/10 no
   AVD** (`N2-PR7-anexos/ime-350.txt`); `setTimeout(…, 0)` é 5/10 (div. 260). O
   arnês confirma folha fechada **e** `mInputShown=false` antes de cada toque.
+
+## O estado de dados do G-inv (N3-PR1, div. 403; revisto na N3-PR2)
+
+O G-inv compara `bounds`, e geometria que depende de **dado** reprova como se
+fosse layout. Para dar idêntico à base, cada aparelho segue o caminho **dela**
+(o `roteiro.py` e a `passada4.py` da N3-PR1 fazem isso):
+
+- **palco antes das telas de S1** (baixa a partitura de 12 p: o ◔ vira "1 de 2");
+- **AVD**: aviso de S1 com o app **aberto já sem rede**; S1e com o cache de 60–119 s ("há 1 min");
+- **Tab**: aviso de S1 com o avião ligado **com o app aberto**; S1e logo depois do sync ("agora");
+- **S0 por abertura fria**: o S0 alcançado por logout na sessão (mock `401`) tem os
+  campos 0,5 dp mais altos (div. 404; aconteceu de novo na N3-PR2) — depois do
+  logout, `force-stop` e abrir de novo.
+
+**Retrato de S1 sem rede** (N3-PR2, div. 415): o app **abre já sem rede** nos dois
+aparelhos — só assim o chip empilhado da moldura aparece.
+
+**Tab**: `stay_on` a 7 **antes** de qualquer rodada longa. Na N3-PR2 a tela de 30 s
+apagou enquanto o celular rodava, e a passada inteira caiu (0 capturas).
 
 ## A régua de desenvolvimento (N3-PR1)
 
