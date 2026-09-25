@@ -21,6 +21,8 @@ frases do app (`removendo…`, o motivo do teto, do limite, da falha e do salvo-
 | `G1-commit2.txt` · `G2G3-commit2.txt` | G1 e G2/G3 contra `origin/main` com o bloco `gates` abaixo |
 | `G-inv-B5.txt` · `G-inv-palco.txt` | **o G-inv do commit 2**: 34/34 contra `B5-baseline/` e 18/18 contra `B3-referencia-paisagem/` |
 | `G-N3-retrato.txt` | o G-N3 nos 16 pares de S2 em retrato, com `--rolada` (N3-D29): **(e)=0 · nome-acessível=28 · rolagem=18** |
+| `G-N3-retrato-commit4.txt` | o mesmo G-N3 depois de o commit 4 levar as erratas N3-E3…E12 ao `medidas.json` (div. 424): 4 dp = 0 |
+| `a20-commit2.txt` | o `gate:a20` da árvore do commit 2: 0 acusações (A-N3-6) |
 | `CN-g-n3.txt` · `CN-n3pr1-apos.txt` | os controles da mudança do `g-n3.mjs` (`cn-n3pr3.sh`) e o CN da N3-PR1 rodado de novo depois dela |
 | `medidas-s2-B.txt` | as medidas de S2 em B contra a folha, dump a dump (§2) |
 | `G5G6-S2.txt` | G5 e G6 dos oito estados de S2 em quatro colunas (§4) |
@@ -97,7 +99,8 @@ com sha na saída do gate. **(d′) = 32**, três causas, conferidas no PNG, nen
 de S2 (`ENSAIO DE RETRATO`, 783,6 → 356,9) é a caixa flex e o título aparece inteiro; o motivo do aviso
 quebra em duas linhas inteiras (N3-D19); e `Sétima do ensaio` "cresce" 22× porque na paisagem a linha 7
 está cortada pela borda da lista. **4 dp = 14**, todas `e2 Apagar` 119,6 contra os 115 da folha: é a N3-E4,
-que a N3-PR1 abriu no README mas não levou ao `medidas.json` (div. 424; o commit 4 leva).
+que a N3-PR1 abriu no README mas não levou ao `medidas.json` (div. 424). O commit 4 leva as dez e o
+G-N3 de novo dá **4 dp = 0**, com o resto igual (`G-N3-retrato-commit4.txt`).
 
 ## 3. O celular (faixa A, aceite mínimo — a errata do T3-R3)
 
