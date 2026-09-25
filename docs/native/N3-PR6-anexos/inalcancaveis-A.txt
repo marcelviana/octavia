@@ -1,0 +1,61 @@
+# N3-PR6 — a LISTA FINAL do celular (errata do T3-R3; A-N3-3). octavia_phone, conta de audit logada pelo Marcel nesta
+# sessão, dados do mock (aceite.py na 8792). EM PÉ = faixa A (w=411.4); DEITADO = faixa B pela largura (w=914.3 × 371.4,
+# div. 388). Instrumento: instrumentos/phone-a-n3p6.py; roteiros: roteiros/phone-*.txt; logcat: phone-logcat.txt (FATAL: 0).
+# Alcançável = nó no dump, área na janela, e o toque no centro da parte VISÍVEL faz o que o controle faz, conferido no dump
+# seguinte. O uiautomator RECORTA o bounds à janela: "CORTADO" compara o visível com o MESMO controle na MESMA tela em B
+# (Tab em retrato, dumps-ret/); as bordas do palco e da S5 ficam fora da comparação (a altura delas é a da janela).
+# Cada linha é a da última rodada daquele controle; as quedas de arnês (S5 por song-8 abaixo da dobra, a alça 5 abaixo da
+# dobra deitado, a prova errada de "sair" — que vai a S1, navigation.tsx) estão em roteiros/ e no README §7.
+
+## EM PÉ — faixa A (411,4 dp)
+S1         criar-setlist        alcançável    bounds [48.0,121.9][200.4,180.2] · visível 152.4 × 58.3 dp · toque @ 326,396 → ✓ 'form-nome' no dump seguinte  (inteiro; em B 152.0 × 58.2)   [phone-ret.txt]
+S1         buscar               alcançável    bounds [216.4,121.9][389.0,180.2] · visível 172.6 × 58.3 dp · toque @ 794,396 → ✓ 'campo-busca' no dump seguinte  (inteiro; em B 171.1 × 58.2)   [phone-ret.txt]
+S1         baixar-00000001      alcançável    bounds [65.1,302.5][259.8,360.4] · visível 194.7 × 57.9 dp · toque @ 426,870 → ✓ 'baixado' no dump seguinte  (inteiro; em B 194.2 × 58.2)   [phone-ret.txt]
+S2e        picker-abrir         alcançável    bounds [24.0,119.6][160.4,167.6] · visível 136.4 × 48.0 dp · toque @ 242,377 → ✓ 'picker-campo' no dump seguinte  (inteiro; em B 136.0 × 48.0)   [phone-ret.txt]
+S2e        reordenar            alcançável    bounds [176.4,119.6][320.4,167.6] · visível 144.0 × 48.0 dp · toque @ 652,377 → ✓ 'reordenar-sair' no dump seguinte  (inteiro; em B 143.1 × 48.0)   [phone-ret.txt]
+S2e        setlist-editar       alcançável    bounds [336.4,119.6][411.4,167.6] · visível 75.0 × 48.0 dp · toque @ 981,377 → ✓ 'form-nome' no dump seguinte  ⟵ CORTADO: 75.0 × 48.0 visíveis de 193.8 × 48.0 (em B)   [phone-ret.txt]
+S2e        setlist-apagar       INALCANÇÁVEL  sem nó no dump   [phone-ret.txt]
+S2e        remover-1            alcançável    bounds [314.3,233.9][362.3,281.9] · visível 48.0 × 48.0 dp · toque @ 888,677 → ✓ '7 músicas' no dump seguinte  (inteiro; em B 48.0 × 48.0)   [phone-ret-2.txt]
+picker     picker-adicionar-1   alcançável    bounds [227.4,185.9][363.8,233.9] · visível 136.4 × 48.0 dp · toque @ 776,551 → ✓ 'adicionada' no dump seguinte  (inteiro; em B 136.0 × 48.0)   [phone-ret.txt]
+picker     picker-concluir      alcançável    bounds [278.5,842.7][387.4,890.7] · visível 109.0 × 48.0 dp · toque @ 874,2275 → ✓ 'reordenar' no dump seguinte  (inteiro; em B 108.9 × 48.0)   [phone-ret.txt]
+S4         fechar-busca         alcançável    bounds [24.0,43.4][72.0,91.4] · visível 48.0 × 48.0 dp · toque @ 126,177 → ✓ 'criar-setlist' no dump seguinte  (inteiro; em B 48.0 × 48.0)   [phone-ret.txt]
+reordenar  reordenar-sair       alcançável    bounds [24.0,114.3][119.2,162.3] · visível 95.2 × 48.0 dp · toque @ 188,363 → ✓ 'picker-abrir' no dump seguinte  (inteiro; em B 94.7 × 48.0)   [phone-ret.txt]
+reordenar  reordenar-salvar     alcançável    bounds [197.3,114.3][387.4,162.3] · visível 190.1 × 48.0 dp · toque @ 767,363 → ✓ 'picker-abrir' no dump seguinte  (inteiro; em B 191.6 × 48.0)   [phone-ret.txt]
+folha      form-cancelar        alcançável    bounds [0.0,400.0][29.0,457.9] · visível 29.0 × 57.9 dp · toque @ 38,1126 → ✓ 'criar-setlist' no dump seguinte  ⟵ CORTADO: 29.0 × 57.9 visíveis de 122.2 × 58.2 (em B)   [phone-ret.txt]
+folha      form-salvar          alcançável    bounds [380.2,400.0][411.4,457.9] · visível 31.2 × 57.9 dp · toque @ 1039,1126 → ✓ 'FIXTURE N3' no dump seguinte  ⟵ CORTADO: 31.2 × 57.9 visíveis de 127.1 × 58.2 (em B)   [phone-ret.txt]
+dialogo    apagar-manter        INALCANÇÁVEL  a superfície não abre em phone-ret: TOQUE FALHOU: sem 'setlist-apagar' (n=1)   [phone-ret.txt]
+dialogo    apagar-confirmar     INALCANÇÁVEL  a superfície não abre em phone-ret: TOQUE FALHOU: sem 'setlist-apagar' (n=1)   [phone-ret.txt]
+palco      indice               alcançável    bounds [368.0,817.9][411.4,883.8] · visível 43.4 × 65.9 dp · toque @ 1023,2233 → ✓ 'song-1' no dump seguinte  ⟵ CORTADO: 43.4 × 65.9 visíveis de 65.8 × 65.8 (em B)   [phone-ret.txt]
+palco      busca                INALCANÇÁVEL  sem nó no dump   [phone-ret.txt]
+palco      sair                 INALCANÇÁVEL  sem nó no dump   [phone-ret-3.txt]
+S5         voltar-inicio        alcançável    bounds [24.8,534.1][252.2,598.1] · visível 227.4 × 64.0 dp · toque @ 363,1486 → ✓ '1 DE 8' no dump seguinte  (inteiro; em B 227.1 × 64.0)   [phone-ret-2.txt]
+S5         sair                 alcançável    bounds [268.6,534.1][387.0,598.1] · visível 118.5 × 64.0 dp · toque @ 860,1486 → ✓ 'criar-setlist' no dump seguinte  (inteiro; em B 118.7 × 64.0)   [phone-ret-3.txt]
+S5         borda-voltar         alcançável    bounds [0.0,112.0][61.7,802.3] · visível 61.7 × 690.3 dp · toque @ 81,1200 → ✓ '8 DE 8' no dump seguinte   [phone-ret-2.txt]
+
+## DEITADO — faixa B pela largura (914,3 × 371,4 dp)
+S1         criar-setlist        alcançável    bounds [541.7,96.4][693.7,154.3] · visível 152.0 × 57.9 dp · toque @ 1621,329 → ✓ 'form-nome' no dump seguinte  (inteiro; em B 152.0 × 58.2)   [phone-pai.txt]
+S1         buscar               alcançável    bounds [709.7,96.4][882.3,154.3] · visível 172.6 × 57.9 dp · toque @ 2089,329 → ✓ 'campo-busca' no dump seguinte  (inteiro; em B 171.1 × 58.2)   [phone-pai.txt]
+S1         baixar-00000001      alcançável    bounds [65.1,302.5][259.8,360.4] · visível 194.7 × 57.9 dp · toque @ 426,870 → ✓ 'baixado' no dump seguinte  (inteiro; em B 194.2 × 58.2)   [phone-pai.txt]
+S2e        picker-abrir         alcançável    bounds [24.0,119.6][160.4,167.6] · visível 136.4 × 48.0 dp · toque @ 242,377 → ✓ 'picker-campo' no dump seguinte  (inteiro; em B 136.0 × 48.0)   [phone-pai.txt]
+S2e        reordenar            alcançável    bounds [176.4,119.6][320.4,167.6] · visível 144.0 × 48.0 dp · toque @ 652,377 → ✓ 'reordenar-sair' no dump seguinte  (inteiro; em B 143.1 × 48.0)   [phone-pai.txt]
+S2e        setlist-editar       alcançável    bounds [559.6,119.6][753.9,167.6] · visível 194.3 × 48.0 dp · toque @ 1724,377 → ✓ 'form-nome' no dump seguinte  (inteiro; em B 193.8 × 48.0)   [phone-pai.txt]
+S2e        setlist-apagar       alcançável    bounds [770.3,119.6][890.7,167.6] · visível 120.4 × 48.0 dp · toque @ 2180,377 → ✓ 'apagar-manter' no dump seguinte  (inteiro; em B 119.6 × 48.0)   [phone-pai.txt]
+S2e        remover-1            alcançável    bounds [817.1,233.9][865.1,281.9] · visível 48.0 × 48.0 dp · toque @ 2208,677 → ✓ '7 músicas' no dump seguinte  (inteiro; em B 48.0 × 48.0)   [phone-pai.txt]
+picker     picker-adicionar-1   alcançável    bounds [729.1,185.9][865.1,233.9] · visível 136.0 × 48.0 dp · toque @ 2092,551 → ✓ 'adicionada' no dump seguinte  (inteiro; em B 136.0 × 48.0)   [phone-pai.txt]
+picker     picker-concluir      alcançável    bounds [781.3,339.8][890.3,387.8] · visível 109.0 × 48.0 dp · toque @ 2194,955 → ✓ 'reordenar' no dump seguinte  (inteiro; em B 108.9 × 48.0)   [phone-pai.txt]
+S4         fechar-busca         alcançável    bounds [24.0,43.4][72.0,91.4] · visível 48.0 × 48.0 dp · toque @ 126,177 → ✓ 'criar-setlist' no dump seguinte  (inteiro; em B 48.0 × 48.0)   [phone-pai.txt]
+reordenar  reordenar-sair       alcançável    bounds [24.0,114.3][119.2,162.3] · visível 95.2 × 48.0 dp · toque @ 188,363 → ✓ 'picker-abrir' no dump seguinte  (inteiro; em B 94.7 × 48.0)   [phone-pai-2.txt]
+reordenar  reordenar-salvar     alcançável    bounds [700.2,114.3][890.3,162.3] · visível 190.1 × 48.0 dp · toque @ 2087,363 → ✓ 'picker-abrir' no dump seguinte  (inteiro; em B 191.6 × 48.0)   [phone-pai-2.txt]
+folha      form-cancelar        alcançável    bounds [158.9,400.0][280.4,411.4] · visível 121.5 × 11.4 dp · toque @ 576,1065 → ✓ 'criar-setlist' no dump seguinte  ⟵ CORTADO: 121.5 × 11.4 visíveis de 122.2 × 58.2 (em B)   [phone-pai.txt]
+folha      form-salvar          alcançável    bounds [631.6,400.0][756.2,411.4] · visível 124.6 × 11.4 dp · toque @ 1821,1065 → ✓ 'FIXTURE N3' no dump seguinte  ⟵ CORTADO: 124.6 × 11.4 visíveis de 127.1 × 58.2 (em B)   [phone-pai.txt]
+dialogo    apagar-manter        alcançável    bounds [180.2,264.8][353.1,323.0] · visível 173.0 × 58.3 dp · toque @ 700,771 → ✓ 'picker-abrir' no dump seguinte  (inteiro; em B 174.2 × 57.8)   [phone-pai.txt]
+dialogo    apagar-confirmar     alcançável    bounds [592.0,264.8][734.5,323.0] · visível 142.5 × 58.3 dp · toque @ 1741,771 → ✓ 'criar-setlist' no dump seguinte  (inteiro; em B 143.1 × 57.8)   [phone-pai.txt]
+palco      indice               alcançável    bounds [660.2,315.0][726.5,381.0] · visível 66.3 × 65.9 dp · toque @ 1820,913 → ✓ 'song-1' no dump seguinte  (inteiro; em B 65.8 × 65.8)   [phone-pai.txt]
+palco      busca                alcançável    bounds [742.5,315.0][808.4,381.0] · visível 65.9 × 65.9 dp · toque @ 2035,913 → ✓ 'campo-busca' no dump seguinte  (inteiro; em B 66.2 × 65.8)   [phone-pai.txt]
+palco      sair                 alcançável    bounds [824.4,315.0][890.3,381.0] · visível 65.9 × 65.9 dp · toque @ 2250,913 → ✓ 'criar-setlist' no dump seguinte  (inteiro; em B 65.8 × 65.8)   [phone-pai-3.txt]
+S5         voltar-inicio        alcançável    bounds [276.2,256.8][503.6,320.8] · visível 227.4 × 64.0 dp · toque @ 1023,758 → ✓ '1 DE 8' no dump seguinte  (inteiro; em B 227.1 × 64.0)   [phone-pai-2.txt]
+S5         sair                 alcançável    bounds [520.0,256.8][638.5,320.8] · visível 118.5 × 64.0 dp · toque @ 1520,758 → ✓ 'criar-setlist' no dump seguinte  (inteiro; em B 118.7 × 64.0)   [phone-pai-3.txt]
+S5         borda-voltar         alcançável    bounds [0.0,112.0][137.1,299.4] · visível 137.1 × 187.4 dp · toque @ 180,540 → ✓ '8 DE 8' no dump seguinte   [phone-pai-2.txt]
+
+## picker com falha em A, depois da N3-E18 (dumps-phone/N3P6-picker-X-falhou-phone-ret.xml)
+picker     picker-adicionar-1   alcançável (inteiro na janela) bounds [188.6,320.8][362.3,368.8] · o título 'Manhã de ensaio' 151,3 dp no 1º andar: a E18 vale em A (os tokens de B)

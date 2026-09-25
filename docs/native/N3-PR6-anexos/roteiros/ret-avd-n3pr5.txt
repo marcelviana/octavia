@@ -1,0 +1,15 @@
+18:22:34 toque canto de setlist-00000001 @ 96,474
+18:22:42 toque 'picker-abrir' @ 207,323 (emulator-5554)
+18:22:48 toque 'picker-campo' @ 917,152 (emulator-5554)
+18:22:55 mock modo=resync-pendurado vazio=False
+18:22:59 toque 'picker-adicionar-1' @ 1337,473 (emulator-5554)
+N3P6-picker-relendo-avd-ret mCurrentRotation=ROTATION_90 png=352672 xml=60035 12a1ac70e0b2
+18:23:20 mock modo=normal vazio=False
+18:23:21 mock normal com a música 9 sem content (setlists-placeholder.json)
+18:23:48 toque canto de setlist-00000001 @ 96,632
+18:23:55 toque 'song-7' @ 800,2254 (emulator-5554)
+FALHA placeholder: ESPERA ESGOTADA: '7 DE 9'
+18:24:28 avião=0 (emulator-5554)
+18:24:30 mock modo=normal vazio=False
+capturas=1 falhas=1
+  placeholder: ESPERA ESGOTADA: '7 DE 9'

@@ -1,0 +1,109 @@
+17:58:41 mock modo=escrita vazio=False
+N3P6-S1-setlists-phone-ret mCurrentRotation=ROTATION_0 png=182272 xml=40117 134621c8d490
+S1         criar-setlist        alcançável    bounds [48.0,121.9][200.4,180.2] · visível 152.4 × 58.3 dp · toque @ 326,396 → ✓ 'form-nome' no dump seguinte
+17:59:11 mock modo=escrita vazio=False
+S1         buscar               alcançável    bounds [216.4,121.9][389.0,180.2] · visível 172.6 × 58.3 dp · toque @ 794,396 → ✓ 'campo-busca' no dump seguinte
+17:59:31 mock modo=escrita vazio=False
+S1         baixar-00000001      alcançável    bounds [65.1,302.5][259.8,360.4] · visível 194.7 × 57.9 dp · toque @ 426,870 → ✓ 'baixado' no dump seguinte
+17:59:54 mock modo=escrita vazio=False
+18:00:21 toque canto de setlist-00000001 @ 108,549
+N3P6-S2-com-edicao-phone-ret mCurrentRotation=ROTATION_0 png=165613 xml=50148 baac2f9a2437
+S2e        picker-abrir         alcançável    bounds [24.0,119.6][160.4,167.6] · visível 136.4 × 48.0 dp · toque @ 242,377 → ✓ 'picker-campo' no dump seguinte
+18:00:53 mock modo=escrita vazio=False
+18:01:28 toque canto de setlist-00000001 @ 108,549
+S2e        reordenar            alcançável    bounds [176.4,119.6][320.4,167.6] · visível 144.0 × 48.0 dp · toque @ 652,377 → ✓ 'reordenar-sair' no dump seguinte
+18:01:44 mock modo=escrita vazio=False
+18:01:59 toque canto de setlist-00000001 @ 108,549
+S2e        setlist-editar       alcançável    bounds [336.4,119.6][411.4,167.6] · visível 75.0 × 48.0 dp · toque @ 981,377 → ✓ 'form-nome' no dump seguinte
+18:02:12 mock modo=escrita vazio=False
+18:02:25 toque canto de setlist-00000001 @ 108,549
+S2e        setlist-apagar       INALCANÇÁVEL  sem nó no dump
+S2e        remover-1            INALCANÇÁVEL  a superfície não abre em phone-ret: ESPERA ESGOTADA: 'setlist-00000001'
+18:03:15 mock modo=escrita vazio=False
+18:03:28 toque canto de setlist-00000001 @ 108,549
+18:03:34 toque 'picker-abrir' @ 242,377 (emulator-5556)
+18:03:38 toque 'picker-campo' @ 676,177 (emulator-5556)
+N3P6-picker-resultados-phone-ret mCurrentRotation=ROTATION_0 png=216636 xml=48412 3801167d6599
+picker     picker-adicionar-1   alcançável    bounds [227.4,185.9][363.8,233.9] · visível 136.4 × 48.0 dp · toque @ 776,551 → ✓ 'adicionada' no dump seguinte
+18:04:08 mock modo=escrita vazio=False
+18:04:39 toque canto de setlist-00000001 @ 108,549
+18:04:47 toque 'picker-abrir' @ 242,377 (emulator-5556)
+18:04:51 toque 'picker-campo' @ 676,177 (emulator-5556)
+picker     picker-concluir      alcançável    bounds [278.5,842.7][387.4,890.7] · visível 109.0 × 48.0 dp · toque @ 874,2275 → ✓ 'reordenar' no dump seguinte
+18:05:04 mock modo=escrita vazio=False
+18:05:17 toque 'buscar' @ 794,396 (emulator-5556)
+18:05:21 toque 'campo-busca' @ 676,177 (emulator-5556)
+N3P6-S4-resultados-phone-ret mCurrentRotation=ROTATION_0 png=215744 xml=32429 dd822a6920f3
+S4         fechar-busca         alcançável    bounds [24.0,43.4][72.0,91.4] · visível 48.0 × 48.0 dp · toque @ 126,177 → ✓ 'criar-setlist' no dump seguinte
+18:05:43 mock modo=escrita vazio=False
+18:06:15 toque canto de setlist-00000001 @ 108,549
+18:06:22 toque 'reordenar' @ 652,377 (emulator-5556)
+N3P6-reordenar-aberto-phone-ret mCurrentRotation=ROTATION_0 png=187326 xml=47011 703a42530a08
+reordenar  reordenar-sair       alcançável    bounds [24.0,114.3][119.2,162.3] · visível 95.2 × 48.0 dp · toque @ 188,363 → ✓ 'picker-abrir' no dump seguinte
+18:06:52 mock modo=escrita vazio=False
+18:07:18 toque canto de setlist-00000001 @ 108,549
+18:07:26 toque 'reordenar' @ 652,377 (emulator-5556)
+reordenar  reordenar-salvar     alcançável    bounds [197.3,114.3][387.4,162.3] · visível 190.1 × 48.0 dp · toque @ 767,363 → ✓ 'picker-abrir' no dump seguinte
+18:07:51 mock modo=escrita vazio=False
+18:08:18 toque 'criar-setlist' @ 326,396 (emulator-5556)
+18:08:23 toque 'form-nome' @ 540,635 (emulator-5556)
+N3P6-folha-criar-phone-ret mCurrentRotation=ROTATION_0 png=101799 xml=7374 939ac8e70c95
+folha      form-cancelar        alcançável    bounds [0.0,400.0][29.0,457.9] · visível 29.0 × 57.9 dp · toque @ 38,1126 → ✓ 'criar-setlist' no dump seguinte
+18:08:51 mock modo=escrita vazio=False
+18:09:10 toque 'criar-setlist' @ 326,396 (emulator-5556)
+18:09:14 toque 'form-nome' @ 540,635 (emulator-5556)
+folha      form-salvar          alcançável    bounds [380.2,400.0][411.4,457.9] · visível 31.2 × 57.9 dp · toque @ 1039,1126 → ✓ 'FIXTURE N3' no dump seguinte
+18:09:27 mock modo=escrita vazio=False
+18:09:40 toque canto de setlist-00000001 @ 108,549
+dialogo    apagar-manter        INALCANÇÁVEL  a superfície não abre em phone-ret: TOQUE FALHOU: sem 'setlist-apagar' (n=1)
+18:09:48 mock modo=escrita vazio=False
+18:10:01 toque canto de setlist-00000001 @ 108,549
+dialogo    apagar-confirmar     INALCANÇÁVEL  a superfície não abre em phone-ret: TOQUE FALHOU: sem 'setlist-apagar' (n=1)
+18:10:09 mock modo=escrita vazio=False
+18:10:22 toque canto de setlist-00000001 @ 108,549
+18:10:28 toque 'song-1' @ 540,677 (emulator-5556)
+N3P6-S3-S3a-letra-1a-phone-ret mCurrentRotation=ROTATION_0 png=261984 xml=23367 1bc663723af4
+palco      indice               alcançável    bounds [368.0,817.9][411.4,883.8] · visível 43.4 × 65.9 dp · toque @ 1023,2233 → ✓ 'song-1' no dump seguinte
+18:10:53 mock modo=escrita vazio=False
+18:11:18 toque canto de setlist-00000001 @ 108,549
+18:11:26 toque 'song-1' @ 540,677 (emulator-5556)
+palco      busca                INALCANÇÁVEL  sem nó no dump
+18:12:07 toque canto de setlist-00000001 @ 108,549
+18:12:15 toque 'song-1' @ 540,677 (emulator-5556)
+palco      sair                 INALCANÇÁVEL  sem nó no dump
+18:12:52 toque canto de setlist-00000001 @ 108,549
+S5         voltar-inicio        INALCANÇÁVEL  a superfície não abre em phone-ret: TOQUE FALHOU: sem 'song-8' (n=1)
+18:13:02 mock modo=escrita vazio=False
+18:13:30 toque canto de setlist-00000001 @ 108,549
+S5         sair                 INALCANÇÁVEL  a superfície não abre em phone-ret: TOQUE FALHOU: sem 'song-8' (n=1)
+18:13:40 mock modo=escrita vazio=False
+18:14:19 toque canto de setlist-00000001 @ 108,549
+S5         borda-voltar         INALCANÇÁVEL  a superfície não abre em phone-ret: TOQUE FALHOU: sem 'song-8' (n=1)
+18:14:29 mock modo=escrita vazio=False
+18:14:30 mock modo=normal vazio=False
+
+# lista final — phone-ret
+S1         criar-setlist        alcançável    bounds [48.0,121.9][200.4,180.2] · visível 152.4 × 58.3 dp · toque @ 326,396 → ✓ 'form-nome' no dump seguinte
+S1         buscar               alcançável    bounds [216.4,121.9][389.0,180.2] · visível 172.6 × 58.3 dp · toque @ 794,396 → ✓ 'campo-busca' no dump seguinte
+S1         baixar-00000001      alcançável    bounds [65.1,302.5][259.8,360.4] · visível 194.7 × 57.9 dp · toque @ 426,870 → ✓ 'baixado' no dump seguinte
+S2e        picker-abrir         alcançável    bounds [24.0,119.6][160.4,167.6] · visível 136.4 × 48.0 dp · toque @ 242,377 → ✓ 'picker-campo' no dump seguinte
+S2e        reordenar            alcançável    bounds [176.4,119.6][320.4,167.6] · visível 144.0 × 48.0 dp · toque @ 652,377 → ✓ 'reordenar-sair' no dump seguinte
+S2e        setlist-editar       alcançável    bounds [336.4,119.6][411.4,167.6] · visível 75.0 × 48.0 dp · toque @ 981,377 → ✓ 'form-nome' no dump seguinte
+S2e        setlist-apagar       INALCANÇÁVEL  sem nó no dump
+S2e        remover-1            INALCANÇÁVEL  a superfície não abre em phone-ret: ESPERA ESGOTADA: 'setlist-00000001'
+picker     picker-adicionar-1   alcançável    bounds [227.4,185.9][363.8,233.9] · visível 136.4 × 48.0 dp · toque @ 776,551 → ✓ 'adicionada' no dump seguinte
+picker     picker-concluir      alcançável    bounds [278.5,842.7][387.4,890.7] · visível 109.0 × 48.0 dp · toque @ 874,2275 → ✓ 'reordenar' no dump seguinte
+S4         fechar-busca         alcançável    bounds [24.0,43.4][72.0,91.4] · visível 48.0 × 48.0 dp · toque @ 126,177 → ✓ 'criar-setlist' no dump seguinte
+reordenar  reordenar-sair       alcançável    bounds [24.0,114.3][119.2,162.3] · visível 95.2 × 48.0 dp · toque @ 188,363 → ✓ 'picker-abrir' no dump seguinte
+reordenar  reordenar-salvar     alcançável    bounds [197.3,114.3][387.4,162.3] · visível 190.1 × 48.0 dp · toque @ 767,363 → ✓ 'picker-abrir' no dump seguinte
+folha      form-cancelar        alcançável    bounds [0.0,400.0][29.0,457.9] · visível 29.0 × 57.9 dp · toque @ 38,1126 → ✓ 'criar-setlist' no dump seguinte
+folha      form-salvar          alcançável    bounds [380.2,400.0][411.4,457.9] · visível 31.2 × 57.9 dp · toque @ 1039,1126 → ✓ 'FIXTURE N3' no dump seguinte
+dialogo    apagar-manter        INALCANÇÁVEL  a superfície não abre em phone-ret: TOQUE FALHOU: sem 'setlist-apagar' (n=1)
+dialogo    apagar-confirmar     INALCANÇÁVEL  a superfície não abre em phone-ret: TOQUE FALHOU: sem 'setlist-apagar' (n=1)
+palco      indice               alcançável    bounds [368.0,817.9][411.4,883.8] · visível 43.4 × 65.9 dp · toque @ 1023,2233 → ✓ 'song-1' no dump seguinte
+palco      busca                INALCANÇÁVEL  sem nó no dump
+palco      sair                 INALCANÇÁVEL  sem nó no dump
+S5         voltar-inicio        INALCANÇÁVEL  a superfície não abre em phone-ret: TOQUE FALHOU: sem 'song-8' (n=1)
+S5         sair                 INALCANÇÁVEL  a superfície não abre em phone-ret: TOQUE FALHOU: sem 'song-8' (n=1)
+S5         borda-voltar         INALCANÇÁVEL  a superfície não abre em phone-ret: TOQUE FALHOU: sem 'song-8' (n=1)
+capturas=7

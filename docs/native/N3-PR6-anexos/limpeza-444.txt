@@ -1,0 +1,30 @@
+# Limpeza da div. 444 — o cache de DEMANDA do Tab S6 (cache/octavia-<uid>/files/, files.ts dirDemanda)
+# Declarada: a N3-PR5 achou lá a partitura-12p.pdf da fixture (4198 B, 2026-09-24 21:11, de uma PR anterior) e não a
+# tocou (o estado de partida do Tab tinha de ser o mesmo nas PRs do bloco, div. 403). Esta PR fecha o bloco: a fixture
+# sai no fim, depois da passada final do G-inv (que usa o estado de partida), com o app parado.
+
+## lido no início (17:48, app parado) — estado/md5-antes.txt
+42ce8bbdd9d229d91880e3de1d034314  files/octavia-<uid>/setlists.json
+62d555598c8fc1972277edad745e7f6e  files/octavia-<uid>/content.json
+10480521b6276d88e1e7966dcb224745  files/octavia-<uid>/files-index.json
+05253d4239dadb2696115b934a546bb1  files/octavia-<uid>/files/<o arquivo do Marcel>.pdf
+ad81bb819e797cc5c3feee5d2968027b  cache/octavia-<uid>/files/partitura-12p.pdf      ← a fixture (div. 444)
+# os quatro primeiros: idênticos ao fim da N3-PR5 (N3-PR5-anexos/estado/md5-depois.txt)
+
+## a limpeza (19:42, app parado)
+$ adb -s RX2N8000F3D shell "run-as rocks.octavia.app ls -la cache/<uid>/files"
+-rw------- 1 u0_a292 u0_a292       4198 2026-09-24 21:11 partitura-12p.pdf
+$ adb -s RX2N8000F3D shell "run-as rocks.octavia.app md5sum cache/<uid>/files/*"
+ad81bb819e797cc5c3feee5d2968027b  cache/<uid>/files/partitura-12p.pdf     (= a partitura-12p.pdf do fixture.py, 4198 B)
+$ adb -s RX2N8000F3D shell "run-as rocks.octavia.app rm cache/<uid>/files/partitura-12p.pdf"
+$ adb -s RX2N8000F3D shell "run-as rocks.octavia.app ls -la cache/<uid>/files"
+total 6            (vazia: só . e ..)
+
+## depois (19:42) — estado/md5-depois.txt: o md5 do resto IDÊNTICO ao lido
+42ce8bbdd9d229d91880e3de1d034314  files/octavia-<uid>/setlists.json
+62d555598c8fc1972277edad745e7f6e  files/octavia-<uid>/content.json
+10480521b6276d88e1e7966dcb224745  files/octavia-<uid>/files-index.json
+05253d4239dadb2696115b934a546bb1  files/octavia-<uid>/files/<o arquivo do Marcel>.pdf
+0 arquivo(s) no cache de demanda
+# e fora do cache de demanda: a partitura-1p.pdf que a fixture baixou em files/ nesta sessão (17:49) apagada, como na
+# receita do APARATO; os ._* (AppleDouble, div. 420) de antes do N3 não foram tocados.

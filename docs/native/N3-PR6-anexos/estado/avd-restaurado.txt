@@ -1,0 +1,4 @@
+# AVD octavia_tab32 no fim 2026-09-25 19:53:47
+subiu 5 vezes, sempre do snapshot default_boot com -no-snapshot-save; desligado sem salvar (emu kill)
+o estado de sessão (rede, rotação, reverse, cache do mock, a sessão derrubada pelos S0) some com o boot seguinte
+snapshot: Sep 25 19:52

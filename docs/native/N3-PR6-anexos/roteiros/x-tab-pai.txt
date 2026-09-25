@@ -1,0 +1,103 @@
+17:59:37 avião=1 (RX2N8000F3D)
+N3P6-S1-aviso-sem-rede-tab-pai mCurrentRotation=ROTATION_90 png=272579 xml=43324 47923e20b47c
+18:00:04 avião=0 (RX2N8000F3D)
+18:00:06 mock modo=escrita-resync-500 vazio=False
+18:00:20 toque 'criar-setlist' @ 1878,188 (RX2N8000F3D)
+18:00:25 toque 'form-nome' @ 1280,552 (RX2N8000F3D)
+18:00:32 toque 'form-salvar' @ 1875,973 (RX2N8000F3D)
+N3P6-S1-salvo-nao-relido-tab-pai mCurrentRotation=ROTATION_90 png=275359 xml=44314 3cee76d48269
+18:00:46 mock modo=normal vazio=False
+18:01:02 toque canto de setlist-00000001 @ 96,420
+18:01:10 avião=1 (RX2N8000F3D)
+N3P6-S2-com-edicao-aviso-sem-rede-tab-pai mCurrentRotation=ROTATION_90 png=260463 xml=55804 8327cdd2120e
+18:01:29 avião=0 (RX2N8000F3D)
+18:01:30 mock modo=escrita-resync-500 vazio=False
+18:01:45 toque canto de setlist-00000001 @ 96,420
+18:01:52 toque 'remover-1' @ 1152,581 (RX2N8000F3D)
+N3P6-S2-com-edicao-salvo-nao-relido-tab-pai mCurrentRotation=ROTATION_90 png=270040 xml=58100 3e7793541fa2
+18:02:07 mock modo=normal vazio=False
+18:02:08 mock modo=escrita-500 vazio=False
+18:02:23 toque canto de setlist-00000001 @ 96,420
+18:02:30 toque 'remover-1' @ 1152,581 (RX2N8000F3D)
+N3P6-S2-com-edicao-falhou-tab-pai mCurrentRotation=ROTATION_90 png=267308 xml=58459 2621cb853498
+18:02:44 mock modo=normal vazio=False
+18:02:46 mock modo=escrita-429 vazio=False
+18:03:01 toque canto de setlist-00000001 @ 96,420
+18:03:08 toque 'remover-1' @ 1152,581 (RX2N8000F3D)
+N3P6-S2-com-edicao-limite-tab-pai mCurrentRotation=ROTATION_90 png=259224 xml=56382 2ef24be99608
+18:03:21 mock modo=normal vazio=False
+18:03:23 mock modo=normal setlists-101.json
+18:03:38 toque canto de setlist-00000001 @ 96,420
+N3P6-S2-com-edicao-acima-de-100-tab-pai mCurrentRotation=ROTATION_90 png=264212 xml=56094 c9745a353c33
+18:03:56 mock modo=normal vazio=False
+18:04:11 toque canto de setlist-00000001 @ 96,420
+18:04:18 toque 'reordenar' @ 676,323 (RX2N8000F3D)
+18:04:27 avião=1 (RX2N8000F3D)
+N3P6-reordenar-X-sem-rede-tab-pai mCurrentRotation=ROTATION_90 png=276020 xml=40752 fc3233872af8
+18:04:45 avião=0 (RX2N8000F3D)
+18:04:48 toque 'reordenar-sair' @ 1326,152 (RX2N8000F3D)
+18:04:51 mock modo=escrita-500 vazio=False
+18:05:05 toque canto de setlist-00000001 @ 96,420
+18:05:12 toque 'reordenar' @ 676,323 (RX2N8000F3D)
+18:05:24 swipe alca-5 (110,1107) → alca-2 (110,567) 1500 ms
+18:05:29 toque 'reordenar-salvar' @ 2293,152 (RX2N8000F3D)
+N3P6-reordenar-falhou-tab-pai mCurrentRotation=ROTATION_90 png=276158 xml=40441 b72486825a64
+18:05:46 toque 'reordenar-sair' @ 1875,152 (RX2N8000F3D)
+18:05:49 mock modo=normal vazio=False
+18:05:51 mock modo=escrita-429 vazio=False
+18:06:06 toque canto de setlist-00000001 @ 96,420
+18:06:13 toque 'reordenar' @ 676,323 (RX2N8000F3D)
+18:06:25 swipe alca-5 (110,1107) → alca-2 (110,567) 1500 ms
+18:06:30 toque 'reordenar-salvar' @ 2293,152 (RX2N8000F3D)
+N3P6-reordenar-X-limite-tab-pai mCurrentRotation=ROTATION_90 png=272310 xml=40025 a5b172bce4fc
+18:06:45 toque 'reordenar-sair' @ 1875,152 (RX2N8000F3D)
+18:06:48 mock modo=normal vazio=False
+18:06:50 mock modo=escrita-500 vazio=False
+18:07:03 toque 'criar-setlist' @ 1878,188 (RX2N8000F3D)
+18:07:07 toque 'form-nome' @ 1280,552 (RX2N8000F3D)
+18:07:14 toque 'form-salvar' @ 1875,973 (RX2N8000F3D)
+N3P6-folha-falhou-tab-pai mCurrentRotation=ROTATION_90 png=216974 xml=12393 e78e4729c783
+18:07:30 toque 'form-cancelar' @ 662,1224 (RX2N8000F3D)
+18:07:33 mock modo=normal vazio=False
+18:07:34 mock modo=escrita-429 vazio=False
+18:07:47 toque 'criar-setlist' @ 1878,188 (RX2N8000F3D)
+18:07:51 toque 'form-nome' @ 1280,552 (RX2N8000F3D)
+18:07:58 toque 'form-salvar' @ 1875,973 (RX2N8000F3D)
+N3P6-folha-X-limite-tab-pai mCurrentRotation=ROTATION_90 png=221538 xml=12403 2c4fffe0be6d
+18:08:14 toque 'form-cancelar' @ 662,1224 (RX2N8000F3D)
+18:08:17 mock modo=normal vazio=False
+18:08:31 toque canto de setlist-00000001 @ 96,420
+18:08:38 toque 'picker-abrir' @ 266,323 (RX2N8000F3D)
+18:08:43 toque 'picker-campo' @ 1397,152 (RX2N8000F3D)
+18:08:51 avião=1 (RX2N8000F3D)
+N3P6-picker-X-sem-rede-tab-pai mCurrentRotation=ROTATION_90 png=256012 xml=41332 364aeaa9eb5a
+18:09:09 avião=0 (RX2N8000F3D)
+18:09:13 toque 'fechar-busca' @ 108,152 (RX2N8000F3D)
+18:09:28 toque canto de setlist-00000001 @ 96,420
+18:09:36 toque 'picker-abrir' @ 266,323 (RX2N8000F3D)
+18:09:40 toque 'picker-campo' @ 1397,152 (RX2N8000F3D)
+18:09:46 mock modo=escrita-resync-500 vazio=False
+18:09:48 toque 'picker-adicionar-1' @ 2297,473 (RX2N8000F3D)
+N3P6-picker-X-salvo-nao-relido-tab-pai mCurrentRotation=ROTATION_90 png=262240 xml=42638 79ee4987cfaa
+18:10:03 mock modo=normal vazio=False
+18:10:17 toque canto de setlist-00000001 @ 96,420
+18:10:25 toque 'picker-abrir' @ 266,323 (RX2N8000F3D)
+18:10:29 toque 'picker-campo' @ 1397,152 (RX2N8000F3D)
+18:10:35 mock modo=escrita-500 vazio=False
+18:10:38 toque 'picker-adicionar-1' @ 2297,473 (RX2N8000F3D)
+N3P6-picker-X-falhou-tab-pai mCurrentRotation=ROTATION_90 png=278670 xml=45982 0437fc2af331
+18:10:52 mock modo=normal vazio=False
+18:11:07 toque canto de setlist-00000001 @ 96,420
+18:11:14 toque 'picker-abrir' @ 266,323 (RX2N8000F3D)
+18:11:18 toque 'picker-campo' @ 1397,152 (RX2N8000F3D)
+18:11:24 mock modo=escrita-429 vazio=False
+18:11:27 toque 'picker-adicionar-1' @ 2297,473 (RX2N8000F3D)
+N3P6-picker-X-limite-tab-pai mCurrentRotation=ROTATION_90 png=274494 xml=44313 459931b03f9f
+18:11:41 mock modo=normal vazio=False
+18:11:43 mock modo=normal setlists-101.json
+18:11:57 toque canto de setlist-00000001 @ 96,420
+18:12:05 toque 'picker-abrir' @ 266,323 (RX2N8000F3D)
+18:12:10 toque 'picker-campo' @ 1397,152 (RX2N8000F3D)
+N3P6-picker-X-acima-de-100-tab-pai mCurrentRotation=ROTATION_90 png=258767 xml=41336 318ab5240eec
+18:12:27 mock modo=normal vazio=False
+capturas=17 falhas=0

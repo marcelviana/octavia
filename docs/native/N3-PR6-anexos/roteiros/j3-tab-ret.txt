@@ -1,0 +1,55 @@
+18:51:57 mock modo=escrita vazio=False
+T0 = primeiro toque
+passo 1 — criar vazia
+  gesto 1 · toque criar-setlist · t=2.5 s
+  gesto 2 · digitar o nome (input text) · t=3.9 s
+  gesto 3 · toque form-salvar (Criar) · t=7.6 s
+passo 1b — abrir a setlist nova (a navegação de S1 para S2)
+  gesto 4 · toque setlist-aa0001-0 (abrir) · t=12.2 s
+passo 2 — 5 músicas pelo picker
+  gesto 5 · toque picker-abrir · t=16.2 s
+  gesto 6 · digitar a busca (input text) · t=18.1 s
+  gesto 7 · toque picker-adicionar-1 (música 1) · t=24.5 s
+  gesto 8 · toque picker-adicionar-2 (música 2) · t=30.9 s
+  gesto 9 · toque picker-adicionar-3 (música 3) · t=37.2 s
+  gesto 10 · toque picker-adicionar-4 (música 4) · t=43.5 s
+  gesto 11 · toque picker-adicionar-5 (música 5) · t=50.0 s
+  gesto 12 · fechar o teclado (BACK) — ele cobre o Concluir em retrato · t=51.4 s
+  gesto 13 · toque picker-concluir (sair do picker) · t=55.0 s
+passo 3 — reordenar: a 5 para a 1
+  gesto 14 · toque reordenar (entrar no modo) · t=59.0 s
+  gesto 15 · arrasto alca-5 → posição 1 (DOWN/12×MOVE/UP) · t=64.6 s
+  gesto 16 · toque reordenar-salvar (Salvar a ordem) · t=68.0 s
+fim: t=70.0 s de parede, 16 gestos
+log do fluxo:
+    write op=create setlist=- items=- status=201 code=- ms=45
+    resync kind=setlists reason=write op=create status=200 setlists=4 ms=34
+    cache write kind=setlists n=4 invalidated=1
+    write op=add setlist=aa0001-0 items=- status=201 code=- ms=35
+    resync kind=setlists reason=write op=add status=200 setlists=4 ms=93
+    cache write kind=setlists n=4 invalidated=1
+    write op=add setlist=aa0001-0 items=- status=201 code=- ms=31
+    resync kind=setlists reason=write op=add status=200 setlists=4 ms=89
+    cache write kind=setlists n=4 invalidated=1
+    write op=add setlist=aa0001-0 items=- status=201 code=- ms=37
+    resync kind=setlists reason=write op=add status=200 setlists=4 ms=90
+    cache write kind=setlists n=4 invalidated=1
+    write op=add setlist=aa0001-0 items=- status=201 code=- ms=44
+    resync kind=setlists reason=write op=add status=200 setlists=4 ms=83
+    cache write kind=setlists n=4 invalidated=1
+    write op=add setlist=aa0001-0 items=- status=201 code=- ms=33
+    resync kind=setlists reason=write op=add status=200 setlists=4 ms=90
+    cache write kind=setlists n=4 invalidated=1
+    write op=reorder setlist=aa0001-0 items=5 status=200 code=- ms=36
+    resync kind=setlists reason=write op=reorder status=200 setlists=4 ms=24
+    cache write kind=setlists n=4 invalidated=1
+lado do app, somado do log (write + resync): 764 ms
+FATAL no logcat da rodada: 0
+N3P6-S2-j3-final-tab-ret mCurrentRotation=ROTATION_0 png=210643 xml=45949 e0c0e2d40a7e
+a listagem final, sem abrir item:
+  song-1 [enabled=true]: 1, Oitava do ensaio, Banda da fixture, Letra
+  song-2 [enabled=true]: 2, Manhã de ensaio, Banda da fixture, Letra
+  song-3 [enabled=true]: 3, Segunda do ensaio, Duo Manacá, Cifra
+  song-4 [enabled=true]: 4, Terceira do ensaio, Trio de fixture, Tab
+  song-5 [enabled=true]: 5, Sétima do ensaio, Banda da fixture, Cifra
+18:53:33 mock modo=normal vazio=False

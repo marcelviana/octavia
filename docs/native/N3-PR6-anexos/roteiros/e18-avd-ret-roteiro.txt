@@ -1,0 +1,7 @@
+19:27:30 toque canto de setlist-00000001 @ 96,474
+19:27:37 toque 'picker-abrir' @ 207,323 (emulator-5554)
+N3P6-picker-vazio-avd-ret mCurrentRotation=ROTATION_90 png=116746 xml=16385 a1e8fa8fa988
+19:27:52 toque 'picker-campo' @ 917,152 (emulator-5554)
+N3P6-picker-resultados-avd-ret mCurrentRotation=ROTATION_90 png=355869 xml=59739 afaeed4618b6
+19:28:09 toque 'fechar-busca' @ 108,152 (emulator-5554)
+capturas=2 falhas=0

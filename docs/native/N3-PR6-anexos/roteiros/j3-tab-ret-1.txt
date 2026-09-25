@@ -1,0 +1,25 @@
+18:50:01 mock modo=escrita vazio=False
+T0 = primeiro toque
+passo 1 — criar vazia
+  gesto 1 · toque criar-setlist · t=2.4 s
+  gesto 2 · digitar o nome (input text) · t=3.9 s
+  gesto 3 · toque form-salvar (Criar) · t=6.9 s
+passo 1b — abrir a setlist nova (a navegação de S1 para S2)
+  gesto 4 · toque setlist-aa0001-0 (abrir) · t=11.5 s
+passo 2 — 5 músicas pelo picker
+  gesto 5 · toque picker-abrir · t=15.4 s
+  gesto 6 · digitar a busca (input text) · t=17.4 s
+  gesto 7 · toque picker-adicionar-1 (música 1) · t=23.7 s
+  gesto 8 · toque picker-adicionar-2 (música 2) · t=30.1 s
+  gesto 9 · toque picker-adicionar-3 (música 3) · t=36.4 s
+  gesto 10 · toque picker-adicionar-4 (música 4) · t=42.7 s
+  gesto 11 · toque picker-adicionar-5 (música 5) · t=49.2 s
+  gesto 12 · toque picker-concluir (sair do picker) · t=52.9 s
+passo 3 — reordenar: a 5 para a 1
+Traceback (most recent call last):
+  File "$SCR/instr/j3.py", line 81, in <module>
+    toque("reordenar", "toque reordenar (entrar no modo)"); time.sleep(1.2)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$SCR/instr/j3.py", line 31, in toque
+    raise RuntimeError(f"ABORTA: sem {rid}")
+RuntimeError: ABORTA: sem reordenar

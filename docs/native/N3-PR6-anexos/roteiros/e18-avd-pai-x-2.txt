@@ -1,0 +1,7 @@
+19:49:30 mock modo=normal setlists-101.json
+19:49:46 toque canto de setlist-00000001 @ 96,420
+19:49:52 toque 'picker-abrir' @ 266,323 (emulator-5554)
+19:49:57 toque 'picker-campo' @ 1397,152 (emulator-5554)
+N3P6-picker-X-acima-de-100-avd-pai mCurrentRotation=ROTATION_0 png=241405 xml=40670 ce8ce603ec26
+19:50:13 mock modo=normal vazio=False
+capturas=1 falhas=0

@@ -1,0 +1,15 @@
+18:33:22 toque canto de setlist-00000001 @ 96,474
+18:33:29 toque 'picker-abrir' @ 207,323 (RX2N8000F3D)
+18:33:34 toque 'picker-campo' @ 917,152 (RX2N8000F3D)
+18:33:40 mock modo=resync-pendurado vazio=False
+18:33:42 toque 'picker-adicionar-1' @ 1337,473 (RX2N8000F3D)
+N3P6-picker-relendo-tab-ret mCurrentRotation=ROTATION_0 png=371597 xml=60377 d2e6b15ea2db
+18:33:57 mock modo=normal vazio=False
+18:33:58 mock normal com a música 9 sem content (setlists-placeholder.json)
+18:34:11 toque canto de setlist-00000001 @ 96,632
+18:34:19 toque 'song-7' @ 800,2254 (RX2N8000F3D)
+FALHA placeholder: ESPERA ESGOTADA: '7 DE 9'
+18:34:49 avião=0 (RX2N8000F3D)
+18:34:51 mock modo=normal vazio=False
+capturas=1 falhas=1
+  placeholder: ESPERA ESGOTADA: '7 DE 9'

@@ -1,0 +1,135 @@
+# INVARIANTE C NO FIM DE TUDO — o G-inv sobre o estado final: build de 017570c (o conserto da N3-E18), a passada
+# final de paisagem nos dois aparelhos, depois de todo o aceite (Tab 19:31–19:42; AVD 19:34–19:48, e o S0 frio refeito
+# numa subida limpa às 19:50 — a 1ª tentativa saiu com os campos 0,5 dp mais altos, a assinatura da div. 404:
+# dumps-descartados/). Os 52 dumps estão em dumps-pai/.
+
+$ sh apps/native/scripts/g-inv.sh docs/native/N3-PRECHECK-anexos/B5-baseline docs/native/N3-PR6-anexos/dumps-pai
+G-inv — invariante C (T3-R2): bounds em dp, nó a nó
+  base:  docs/native/N3-PRECHECK-anexos/B5-baseline
+  novos: docs/native/N3-PR6-anexos/dumps-pai
+  ✓ S0-erro-avd-pai: idêntico (44 nós)
+  ✓ S0-login-avd-pai: idêntico (38 nós)
+  ✓ S1-S1e-falha-com-cache-avd-pai: idêntico (127 nós)
+  ✓ S1-S1e-falha-com-cache-tab-pai: idêntico (128 nós)
+  ✓ S1-S1f-vazia-avd-pai: idêntico (48 nós)
+  ✓ S1-S1f-vazia-tab-pai: idêntico (49 nós)
+  ✓ S1-aviso-sem-rede-avd-pai: idêntico (122 nós)
+  ✓ S1-aviso-sem-rede-tab-pai: idêntico (122 nós)
+  ✓ S1-setlists-avd-pai: idêntico (115 nós)
+  ✓ S1-setlists-tab-pai: idêntico (116 nós)
+  ✓ S2-com-edicao-avd-pai: idêntico (174 nós)
+  ✓ S2-com-edicao-aviso-sem-rede-avd-pai: idêntico (157 nós)
+  ✓ S2-com-edicao-aviso-sem-rede-tab-pai: idêntico (160 nós)
+  ✓ S2-com-edicao-tab-pai: idêntico (175 nós)
+  ✓ S2-sem-edicao-S2p-avd-pai: idêntico (105 nós)
+  ✓ S2-sem-edicao-S2p-tab-pai: idêntico (106 nós)
+  ✓ S4-resultados-avd-pai: idêntico (73 nós)
+  ✓ S4-resultados-tab-pai: idêntico (76 nós)
+  ✓ S4-vazio-avd-pai: idêntico (36 nós)
+  ✓ S4-vazio-tab-pai: idêntico (37 nós)
+  ✓ dialogo-apagar-avd-pai: idêntico (25 nós)
+  ✓ dialogo-apagar-tab-pai: idêntico (26 nós)
+  ✓ folha-criar-avd-pai: idêntico (35 nós)
+  ✓ folha-criar-tab-pai: idêntico (36 nós)
+  ✓ folha-falhou-avd-pai: idêntico (36 nós)
+  ✓ folha-falhou-tab-pai: idêntico (37 nós)
+  ✓ folha-validacao-avd-pai: idêntico (35 nós)
+  ✓ folha-validacao-tab-pai: idêntico (36 nós)
+  ✓ picker-resultados-avd-pai: idêntico (125 nós)
+  ✓ picker-resultados-tab-pai: idêntico (126 nós)
+  ✓ picker-vazio-avd-pai: idêntico (43 nós)
+  ✓ picker-vazio-tab-pai: idêntico (44 nós)
+  ✓ reordenar-aberto-avd-pai: idêntico (120 nós)
+  ✓ reordenar-aberto-tab-pai: idêntico (123 nós)
+  · N3P6F-S3-S3a-letra-1a-avd-pai: sem chave na base (fora da conta)
+  · N3P6F-S3-S3a-letra-1a-tab-pai: sem chave na base (fora da conta)
+  · N3P6F-S3-S3b-cifra-claro-avd-pai: sem chave na base (fora da conta)
+  · N3P6F-S3-S3b-cifra-claro-tab-pai: sem chave na base (fora da conta)
+  · N3P6F-S3-S3b-cifra-escuro-avd-pai: sem chave na base (fora da conta)
+  · N3P6F-S3-S3b-cifra-escuro-tab-pai: sem chave na base (fora da conta)
+  · N3P6F-S3-S3c-tab-autoscroll-avd-pai: sem chave na base (fora da conta)
+  · N3P6F-S3-S3c-tab-autoscroll-tab-pai: sem chave na base (fora da conta)
+  · N3P6F-S3-S3d-pdf-12p-avd-pai: sem chave na base (fora da conta)
+  · N3P6F-S3-S3d-pdf-12p-tab-pai: sem chave na base (fora da conta)
+  · N3P6F-S3-S3e-nao-baixado-avd-pai: sem chave na base (fora da conta)
+  · N3P6F-S3-S3e-nao-baixado-tab-pai: sem chave na base (fora da conta)
+  · N3P6F-S3-titulo-longo-avd-pai: sem chave na base (fora da conta)
+  · N3P6F-S3-titulo-longo-tab-pai: sem chave na base (fora da conta)
+  · N3P6F-S3-ultima-avd-pai: sem chave na base (fora da conta)
+  · N3P6F-S3-ultima-tab-pai: sem chave na base (fora da conta)
+  · N3P6F-S5-fim-avd-pai: sem chave na base (fora da conta)
+  · N3P6F-S5-fim-tab-pai: sem chave na base (fora da conta)
+G-inv: 34 de 34 idênticos
+G-inv: IDÊNTICO EM DP ✓
+exit=0
+
+$ sh apps/native/scripts/g-inv.sh docs/native/N3-PRECHECK-anexos/B3-referencia-paisagem docs/native/N3-PR6-anexos/dumps-pai
+G-inv — invariante C (T3-R2): bounds em dp, nó a nó
+  base:  docs/native/N3-PRECHECK-anexos/B3-referencia-paisagem
+  novos: docs/native/N3-PR6-anexos/dumps-pai
+  ✓ S3-S3a-letra-1a-avd-pai: idêntico (65 nós)
+  ✓ S3-S3a-letra-1a-tab-pai: idêntico (66 nós)
+  ✓ S3-S3b-cifra-claro-avd-pai: idêntico (64 nós)
+  ✓ S3-S3b-cifra-claro-tab-pai: idêntico (65 nós)
+  ✓ S3-S3b-cifra-escuro-avd-pai: idêntico (65 nós)
+  ✓ S3-S3b-cifra-escuro-tab-pai: idêntico (66 nós)
+  ✓ S3-S3c-tab-autoscroll-avd-pai: idêntico (66 nós)
+  ✓ S3-S3c-tab-autoscroll-tab-pai: idêntico (67 nós)
+  ✓ S3-S3d-pdf-12p-avd-pai: idêntico (65 nós)
+  ✓ S3-S3d-pdf-12p-tab-pai: idêntico (66 nós)
+  ✓ S3-S3e-nao-baixado-avd-pai: idêntico (66 nós)
+  ✓ S3-S3e-nao-baixado-tab-pai: idêntico (67 nós)
+  ✓ S3-titulo-longo-avd-pai: idêntico (65 nós)
+  ✓ S3-titulo-longo-tab-pai: idêntico (66 nós)
+  ✓ S3-ultima-avd-pai: idêntico (65 nós)
+  ✓ S3-ultima-tab-pai: idêntico (66 nós)
+  ✓ S5-fim-avd-pai: idêntico (48 nós)
+  ✓ S5-fim-tab-pai: idêntico (49 nós)
+  · N3P6F-S0-erro-avd-pai: sem chave na base (fora da conta)
+  · N3P6F-S0-login-avd-pai: sem chave na base (fora da conta)
+  · N3P6F-S1-S1e-falha-com-cache-avd-pai: sem chave na base (fora da conta)
+  · N3P6F-S1-S1e-falha-com-cache-tab-pai: sem chave na base (fora da conta)
+  · N3P6F-S1-S1f-vazia-avd-pai: sem chave na base (fora da conta)
+  · N3P6F-S1-S1f-vazia-tab-pai: sem chave na base (fora da conta)
+  · N3P6F-S1-aviso-sem-rede-avd-pai: sem chave na base (fora da conta)
+  · N3P6F-S1-aviso-sem-rede-tab-pai: sem chave na base (fora da conta)
+  · N3P6F-S1-setlists-avd-pai: sem chave na base (fora da conta)
+  · N3P6F-S1-setlists-tab-pai: sem chave na base (fora da conta)
+  · N3P6F-S2-com-edicao-avd-pai: sem chave na base (fora da conta)
+  · N3P6F-S2-com-edicao-aviso-sem-rede-avd-pai: sem chave na base (fora da conta)
+  · N3P6F-S2-com-edicao-aviso-sem-rede-tab-pai: sem chave na base (fora da conta)
+  · N3P6F-S2-com-edicao-tab-pai: sem chave na base (fora da conta)
+  · N3P6F-S2-sem-edicao-S2p-avd-pai: sem chave na base (fora da conta)
+  · N3P6F-S2-sem-edicao-S2p-tab-pai: sem chave na base (fora da conta)
+  · N3P6F-S4-resultados-avd-pai: sem chave na base (fora da conta)
+  · N3P6F-S4-resultados-tab-pai: sem chave na base (fora da conta)
+  · N3P6F-S4-vazio-avd-pai: sem chave na base (fora da conta)
+  · N3P6F-S4-vazio-tab-pai: sem chave na base (fora da conta)
+  · N3P6F-dialogo-apagar-avd-pai: sem chave na base (fora da conta)
+  · N3P6F-dialogo-apagar-tab-pai: sem chave na base (fora da conta)
+  · N3P6F-folha-criar-avd-pai: sem chave na base (fora da conta)
+  · N3P6F-folha-criar-tab-pai: sem chave na base (fora da conta)
+  · N3P6F-folha-falhou-avd-pai: sem chave na base (fora da conta)
+  · N3P6F-folha-falhou-tab-pai: sem chave na base (fora da conta)
+  · N3P6F-folha-validacao-avd-pai: sem chave na base (fora da conta)
+  · N3P6F-folha-validacao-tab-pai: sem chave na base (fora da conta)
+  · N3P6F-picker-resultados-avd-pai: sem chave na base (fora da conta)
+  · N3P6F-picker-resultados-tab-pai: sem chave na base (fora da conta)
+  · N3P6F-picker-vazio-avd-pai: sem chave na base (fora da conta)
+  · N3P6F-picker-vazio-tab-pai: sem chave na base (fora da conta)
+  · N3P6F-reordenar-aberto-avd-pai: sem chave na base (fora da conta)
+  · N3P6F-reordenar-aberto-tab-pai: sem chave na base (fora da conta)
+G-inv: 18 de 18 idênticos
+G-inv: IDÊNTICO EM DP ✓
+exit=0
+
+# e a 1ª tentativa do S0 frio, descartada:
+$ (a mesma chamada, com o dump descartado no lugar do S0-login)
+  ✗ S0-login-avd-pai: DIFERENTE — base 38 nós, novo 38 (N3P6F-S0-login-avd-pai.xml)
+      base: android.widget.EditText email [648.0,255.1][1002.7,313.3]
+      novo: android.widget.EditText email [648.0,255.1][1002.7,313.8]
+      base: android.widget.EditText senha [648.0,327.1][1002.7,385.3]
+      novo: android.widget.EditText senha [648.0,327.1][1002.7,385.8]
+--
+G-inv: 33 de 34 idênticos
+G-inv: REPROVA ✗

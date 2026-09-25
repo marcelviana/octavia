@@ -1,0 +1,16 @@
+18:03:16 toque canto de setlist-00000001 @ 96,474
+N3P6-S2-com-edicao-avd-ret mCurrentRotation=ROTATION_90 png=271739 xml=56370 1958c1c43fe7
+N3P6-S2-com-edicao-rolada-avd-ret mCurrentRotation=ROTATION_90 png=272550 xml=60327 a829f0685b42
+18:03:47 mock modo=escrita-pendurada vazio=False
+18:04:17 toque canto de setlist-00000001 @ 96,474
+18:04:26 toque 'remover-1' @ 1436,581 (emulator-5554)
+N3P6-S2-com-edicao-removendo-avd-ret mCurrentRotation=ROTATION_90 png=272023 xml=56058 bc432d32878e
+N3P6-S2-com-edicao-removendo-rolada-avd-ret mCurrentRotation=ROTATION_90 png=300532 xml=64082 e0f4ef5b2bd2
+18:04:58 mock modo=normal vazio=False
+18:05:21 mock modo=escrita-pendurada vazio=False
+18:05:42 toque canto de setlist-00000001 @ 96,474
+18:05:55 toque 'remover-1' @ 1436,581 (emulator-5554)
+N3P6-S2-com-edicao-removendo-rolada-avd-ret mCurrentRotation=ROTATION_90 png=267447 xml=60016 3197468fdbb2
+18:06:09 rolada capturada 12.8 s depois do toque (prazo do cliente: 20 s)
+18:06:10 mock modo=normal vazio=False
+capturas=5 falhas=0

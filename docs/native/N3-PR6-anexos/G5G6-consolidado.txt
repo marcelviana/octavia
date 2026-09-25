@@ -1,0 +1,594 @@
+$ python3 docs/native/N3-PR6-anexos/instrumentos/g5g6-todos.py docs/native/N3-PR3-anexos/dumps-pai docs/native/N3-PR4-anexos/dumps-pai docs/native/N3-PR5-anexos/dumps-pai docs/native/N3-PR6-anexos/dumps-pai docs/native/N3-PR6-anexos/dumps-pai-extra docs/native/N3-PR6-anexos/dumps-ret   # o último diretório com o estado vence
+G5/G6 — 55 estados, quatro colunas: tab pai · tab ret · avd pai · avd ret
+
+## S0-erro
+  (sem dump: tab pai, tab ret)
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `email` | — | — | 354.7 × 58.2 | 354.7 × 58.7 |
+  | `entrar` | — | — | 420.0 × 56.0 | 420.0 × 56.0 |
+  | `senha` | — | — | 354.7 × 58.2 | 354.7 × 58.7 |
+
+## S0-login
+  (sem dump: tab pai, tab ret)
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `email` | — | — | 354.7 × 58.2 | 354.7 × 58.7 |
+  | `entrar` | — | — | 420.0 × 56.0 | 420.0 × 56.0 |
+  | `senha` | — | — | 354.7 × 58.2 | 354.7 × 58.7 |
+
+## S1-S1e-falha-com-cache
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `baixar-<id8>` | 193.8 × 58.2 ×2 | 194.2 × 58.2 ×2 | 193.8 × 58.2 ×2 | 194.2 × 58.2 ×2 |
+  | `buscar` | 171.1 × 57.8 | 171.1 × 58.2 | 171.1 × 57.8 | 171.1 × 58.2 |
+  | `criar-setlist` | 152.0 × 57.8 | 152.0 × 58.2 | 152.0 × 57.8 | 152.0 × 58.2 |
+  | `setlist-<id8>` | 1073.8 × 112.0 ×3 | 647.1 × 184.0 ×3 | 1073.8 × 112.0 ×3 | 647.1 × 184.0 ×3 |
+  | `tentar-banner` | 196.9 × 48.0 | 196.9 × 48.0 | 196.9 × 48.0 | 196.9 × 48.0 |
+
+## S1-S1f-vazia
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `buscar` | 171.1 × 57.8 | 171.1 × 58.2 | 171.1 × 57.8 | 171.1 × 58.2 |
+  | `criar-setlist` | 152.0 × 57.8 · 221.3 × 57.8 | 152.0 × 58.2 · 221.3 × 57.8 | 152.0 × 57.8 · 221.3 × 58.2 | 152.0 × 58.2 · 221.3 × 58.2 |
+
+## S1-aviso-sem-rede
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `baixar-<id8>` | 193.8 × 58.2 ×2 | 194.2 × 58.2 ×2 | 193.8 × 58.2 ×2 | 194.2 × 58.2 ×2 |
+  | `buscar` | 171.1 × 57.8 | 171.1 × 58.2 | 171.1 × 57.8 | 171.1 × 58.2 |
+  | `criar-setlist` | 152.0 × 57.8 | 152.0 × 58.2 | 152.0 × 57.8 | 152.0 × 58.2 |
+  | `setlist-<id8>` | 1073.8 × 132.0 ×3 | 647.1 × 184.0 ×3 | 1073.8 × 132.0 ×3 | 647.1 × 184.0 ×3 |
+
+## S1-salvo-nao-relido
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `aviso-acao` | 183.6 × 48.0 | 183.6 × 48.0 | 183.6 × 48.0 | 183.6 × 48.0 |
+  | `baixar-<id8>` | 193.8 × 58.2 ×2 | 194.2 × 58.2 ×2 | 193.8 × 58.2 ×2 | 194.2 × 58.2 ×2 |
+  | `buscar` | 171.1 × 57.8 | 171.1 × 58.2 | 171.1 × 57.8 | 171.1 × 58.2 |
+  | `criar-setlist` | 152.0 × 57.8 | 152.0 × 58.2 | 152.0 × 57.8 | 152.0 × 58.2 |
+  | `setlist-<id8>` | 1073.8 × 132.0 ×3 | 647.1 × 184.0 ×3 | 1073.8 × 132.0 ×3 | 647.1 × 184.0 ×3 |
+
+## S1-setlists
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `baixar-<id8>` | 193.8 × 58.2 ×2 | 194.2 × 58.2 ×2 | 193.8 × 58.2 ×2 | 194.2 × 58.2 ×2 |
+  | `buscar` | 171.1 × 57.8 | 171.1 × 58.2 | 171.1 × 57.8 | 171.1 × 58.2 |
+  | `criar-setlist` | 152.0 × 57.8 | 152.0 × 58.2 | 152.0 × 57.8 | 152.0 × 58.2 |
+  | `setlist-<id8>` | 1073.8 × 132.0 ×3 | 647.1 × 184.0 ×3 | 1073.8 × 132.0 ×3 | 647.1 × 184.0 ×3 |
+
+## S2-com-edicao
+  G5 · tab ret: song-8 663.1 × 21.8 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: remover-7 48.0 × 44.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: remover-8 48.0 × 44.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd ret: song-8 663.1 × 9.8 — cortado pela rolagem (div. 291), não reprova
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `buscar` | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 |
+  | `picker-abrir` | 188.9 × 48.0 | 136.0 × 48.0 | 188.9 × 48.0 | 136.0 × 48.0 |
+  | `remover-<n>` | 48.0 × 48.0 ×8 | 48.0 × 48.0 ×7 | 48.0 × 48.0 ×6 · 48.0 × 44.9 ×2 | 48.0 × 48.0 ×7 |
+  | `reordenar` | 143.1 × 48.0 | 143.1 × 48.0 | 143.1 × 48.0 | 143.1 × 48.0 |
+  | `setlist-apagar` | 166.7 × 48.0 | 119.6 × 48.0 | 166.7 × 48.0 | 119.6 × 48.0 |
+  | `setlist-editar` | 193.8 × 48.0 | 193.8 × 48.0 | 193.8 × 48.0 | 193.8 × 48.0 |
+  | `song-<n>` | 536.9 × 116.0 ×6 · 536.9 × 91.1 ×2 | 663.1 × 116.0 ×7 · 663.1 × 21.8 | 536.9 × 116.0 ×6 · 536.9 × 79.1 ×2 | 663.1 × 116.0 ×7 · 663.1 × 9.8 |
+  | `voltar` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## S2-com-edicao-acima-de-100
+  G5 · tab pai: song-7 536.9 × 43.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab pai: remover-7 48.0 × 8.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab pai: song-8 536.9 × 43.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab pai: remover-8 48.0 × 8.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: song-7 536.9 × 31.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: song-8 536.9 × 31.1 — cortado pela rolagem (div. 291), não reprova
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `buscar` | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 |
+  | `picker-abrir` | 188.9 × 48.0 | 136.0 × 48.0 | 188.9 × 48.0 | 136.0 × 48.0 |
+  | `remover-<n>` | 48.0 × 48.0 ×6 · 48.0 × 8.9 ×2 | 48.0 × 48.0 ×7 | 48.0 × 48.0 ×6 | 48.0 × 48.0 ×7 |
+  | `reordenar` | 143.1 × 48.0 | 143.1 × 48.0 | 143.1 × 48.0 | 143.1 × 48.0 |
+  | `setlist-apagar` | 166.7 × 48.0 | 119.6 × 48.0 | 166.7 × 48.0 | 119.6 × 48.0 |
+  | `setlist-editar` | 193.8 × 48.0 | 193.8 × 48.0 | 193.8 × 48.0 | 193.8 × 48.0 |
+  | `song-<n>` | 536.9 × 116.0 ×6 · 536.9 × 43.1 ×2 | 663.1 × 116.0 ×6 · 663.1 × 97.8 | 536.9 × 116.0 ×6 · 536.9 × 31.1 ×2 | 663.1 × 116.0 ×6 · 663.1 × 85.8 |
+  | `voltar` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## S2-com-edicao-aviso-sem-rede
+  G5 · tab pai: song-7 536.9 × 43.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab pai: remover-7 48.0 × 8.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab pai: song-8 536.9 × 43.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab pai: remover-8 48.0 × 8.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab ret: remover-7 48.0 × 45.3 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: song-7 536.9 × 31.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: song-8 536.9 × 31.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd ret: remover-7 48.0 × 33.3 — cortado pela rolagem (div. 291), não reprova
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `buscar` | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 |
+  | `picker-abrir` | 188.9 × 48.0 | 136.0 × 48.0 | 188.9 × 48.0 | 136.0 × 48.0 |
+  | `remover-<n>` | 48.0 × 48.0 ×6 · 48.0 × 8.9 ×2 | 48.0 × 48.0 ×6 · 48.0 × 45.3 | 48.0 × 48.0 ×6 | 48.0 × 48.0 ×6 · 48.0 × 33.3 |
+  | `reordenar` | 143.1 × 48.0 | 143.1 × 48.0 | 143.1 × 48.0 | 143.1 × 48.0 |
+  | `setlist-apagar` | 166.7 × 48.0 | 119.6 × 48.0 | 166.7 × 48.0 | 119.6 × 48.0 |
+  | `setlist-editar` | 193.8 × 48.0 | 193.8 × 48.0 | 193.8 × 48.0 | 193.8 × 48.0 |
+  | `song-<n>` | 536.9 × 116.0 ×6 · 536.9 × 43.1 ×2 | 663.1 × 116.0 ×6 · 663.1 × 79.6 | 536.9 × 116.0 ×6 · 536.9 × 31.1 ×2 | 663.1 × 116.0 ×6 · 663.1 × 67.6 |
+  | `voltar` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## S2-com-edicao-falhou
+  G5 · tab pai: song-7 536.9 × 43.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab pai: remover-7 48.0 × 8.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab pai: song-8 536.9 × 43.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab pai: remover-8 48.0 × 8.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab ret: remover-7 48.0 × 45.3 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: song-7 536.9 × 31.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: song-8 536.9 × 31.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd ret: remover-7 48.0 × 33.3 — cortado pela rolagem (div. 291), não reprova
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `aviso-acao` | 164.9 × 48.0 | 164.9 × 48.0 | 164.9 × 48.0 | 164.9 × 48.0 |
+  | `buscar` | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 |
+  | `picker-abrir` | 188.9 × 48.0 | 136.0 × 48.0 | 188.9 × 48.0 | 136.0 × 48.0 |
+  | `remover-<n>` | 48.0 × 48.0 ×6 · 48.0 × 8.9 ×2 | 48.0 × 48.0 ×6 · 48.0 × 45.3 | 48.0 × 48.0 ×6 | 48.0 × 48.0 ×6 · 48.0 × 33.3 |
+  | `reordenar` | 143.1 × 48.0 | 143.1 × 48.0 | 143.1 × 48.0 | 143.1 × 48.0 |
+  | `setlist-apagar` | 166.7 × 48.0 | 119.6 × 48.0 | 166.7 × 48.0 | 119.6 × 48.0 |
+  | `setlist-editar` | 193.8 × 48.0 | 193.8 × 48.0 | 193.8 × 48.0 | 193.8 × 48.0 |
+  | `song-<n>` | 536.9 × 116.0 ×6 · 536.9 × 43.1 ×2 | 663.1 × 116.0 ×6 · 663.1 × 79.6 | 536.9 × 116.0 ×6 · 536.9 × 31.1 ×2 | 663.1 × 116.0 ×6 · 663.1 × 67.6 |
+  | `voltar` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## S2-com-edicao-limite
+  G5 · tab pai: song-7 536.9 × 43.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab pai: remover-7 48.0 × 8.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab pai: song-8 536.9 × 43.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab pai: remover-8 48.0 × 8.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: song-7 536.9 × 31.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: song-8 536.9 × 31.1 — cortado pela rolagem (div. 291), não reprova
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `buscar` | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 |
+  | `picker-abrir` | 188.9 × 48.0 | 136.0 × 48.0 | 188.9 × 48.0 | 136.0 × 48.0 |
+  | `remover-<n>` | 48.0 × 48.0 ×6 · 48.0 × 8.9 ×2 | 48.0 × 48.0 ×7 | 48.0 × 48.0 ×6 | 48.0 × 48.0 ×7 |
+  | `reordenar` | 143.1 × 48.0 | 143.1 × 48.0 | 143.1 × 48.0 | 143.1 × 48.0 |
+  | `setlist-apagar` | 166.7 × 48.0 | 119.6 × 48.0 | 166.7 × 48.0 | 119.6 × 48.0 |
+  | `setlist-editar` | 193.8 × 48.0 | 193.8 × 48.0 | 193.8 × 48.0 | 193.8 × 48.0 |
+  | `song-<n>` | 536.9 × 116.0 ×6 · 536.9 × 43.1 ×2 | 663.1 × 116.0 ×6 · 663.1 × 97.8 | 536.9 × 116.0 ×6 · 536.9 × 31.1 ×2 | 663.1 × 116.0 ×6 · 663.1 × 85.8 |
+  | `voltar` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## S2-com-edicao-removendo
+  G5 · tab ret: song-8 663.1 × 21.8 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: remover-7 48.0 × 44.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: remover-8 48.0 × 44.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd ret: song-8 663.1 × 9.8 — cortado pela rolagem (div. 291), não reprova
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `buscar` | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 |
+  | `picker-abrir` | 188.9 × 48.0 | 136.0 × 48.0 | 188.9 × 48.0 | 136.0 × 48.0 |
+  | `remover-<n>` | 48.0 × 48.0 ×7 | 48.0 × 48.0 ×6 | 48.0 × 48.0 ×5 · 48.0 × 44.9 ×2 | 48.0 × 48.0 ×6 |
+  | `reordenar` | 143.1 × 48.0 | 143.1 × 48.0 | 143.1 × 48.0 | 143.1 × 48.0 |
+  | `setlist-apagar` | 166.7 × 48.0 | 119.6 × 48.0 | 166.7 × 48.0 | 119.6 × 48.0 |
+  | `setlist-editar` | 193.8 × 48.0 | 193.8 × 48.0 | 193.8 × 48.0 | 193.8 × 48.0 |
+  | `song-<n>` | 536.9 × 116.0 ×6 · 536.9 × 91.1 ×2 | 663.1 × 116.0 ×7 · 663.1 × 21.8 | 536.9 × 116.0 ×6 · 536.9 × 79.1 ×2 | 663.1 × 116.0 ×7 · 663.1 × 9.8 |
+  | `voltar` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## S2-com-edicao-salvo-nao-relido
+  G5 · tab pai: song-7 536.9 × 43.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab pai: remover-7 48.0 × 8.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab pai: song-8 536.9 × 43.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab pai: remover-8 48.0 × 8.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab ret: remover-7 48.0 × 45.3 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: song-7 536.9 × 31.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: song-8 536.9 × 31.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd ret: remover-7 48.0 × 33.3 — cortado pela rolagem (div. 291), não reprova
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `aviso-acao` | 183.6 × 48.0 | 183.6 × 48.0 | 183.6 × 48.0 | 183.6 × 48.0 |
+  | `buscar` | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 |
+  | `picker-abrir` | 188.9 × 48.0 | 136.0 × 48.0 | 188.9 × 48.0 | 136.0 × 48.0 |
+  | `remover-<n>` | 48.0 × 48.0 ×6 · 48.0 × 8.9 ×2 | 48.0 × 48.0 ×6 · 48.0 × 45.3 | 48.0 × 48.0 ×6 | 48.0 × 48.0 ×6 · 48.0 × 33.3 |
+  | `reordenar` | 143.1 × 48.0 | 143.1 × 48.0 | 143.1 × 48.0 | 143.1 × 48.0 |
+  | `setlist-apagar` | 166.7 × 48.0 | 119.6 × 48.0 | 166.7 × 48.0 | 119.6 × 48.0 |
+  | `setlist-editar` | 193.8 × 48.0 | 193.8 × 48.0 | 193.8 × 48.0 | 193.8 × 48.0 |
+  | `song-<n>` | 536.9 × 116.0 ×6 · 536.9 × 43.1 ×2 | 663.1 × 116.0 ×6 · 663.1 × 79.6 | 536.9 × 116.0 ×6 · 536.9 × 31.1 ×2 | 663.1 × 116.0 ×6 · 663.1 × 67.6 |
+  | `voltar` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## S2-j3-final
+  (sem dump: tab pai, avd pai, avd ret)
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `buscar` | — | 210.2 × 57.8 | — | — |
+  | `picker-abrir` | — | 136.0 × 48.0 | — | — |
+  | `remover-<n>` | — | 48.0 × 48.0 ×5 | — | — |
+  | `reordenar` | — | 143.1 × 48.0 | — | — |
+  | `setlist-apagar` | — | 119.6 × 48.0 | — | — |
+  | `setlist-editar` | — | 193.8 × 48.0 | — | — |
+  | `song-<n>` | — | 663.1 × 116.0 ×5 | — | — |
+  | `voltar` | — | 48.0 × 48.0 | — | — |
+
+## S2-sem-edicao-S2p
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `buscar` | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 |
+  | `song-<n>` | 536.9 × 116.0 ×8 | 663.1 × 116.0 ×7 · 663.1 × 85.8 | 536.9 × 116.0 ×8 | 663.1 × 116.0 ×7 · 663.1 × 73.8 |
+  | `voltar` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## S3-S3a-letra-1a
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `auto-scroll` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `borda-avancar` | 170.7 × 479.1 | 106.7 × 881.8 | 170.7 × 467.1 | 106.7 × 869.8 |
+  | `borda-voltar` | 170.7 × 479.1 | 106.7 × 881.8 | 170.7 × 467.1 | 106.7 × 869.8 |
+  | `busca` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `indice` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `sair` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `tema` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `zoom-mais` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `zoom-menos` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+
+## S3-S3b-cifra-claro
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `auto-scroll` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `borda-avancar` | 170.7 × 479.1 | 106.7 × 881.8 | 170.7 × 467.1 | 106.7 × 869.8 |
+  | `borda-voltar` | 170.7 × 479.1 | 106.7 × 881.8 | 170.7 × 467.1 | 106.7 × 869.8 |
+  | `busca` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `indice` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `sair` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `tema` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `zoom-mais` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `zoom-menos` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+
+## S3-S3b-cifra-escuro
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `auto-scroll` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `borda-avancar` | 170.7 × 479.1 | 106.7 × 881.8 | 170.7 × 467.1 | 106.7 × 869.8 |
+  | `borda-voltar` | 170.7 × 479.1 | 106.7 × 881.8 | 170.7 × 467.1 | 106.7 × 869.8 |
+  | `busca` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `indice` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `sair` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `tema` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `zoom-mais` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `zoom-menos` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+
+## S3-S3c-tab-autoscroll
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `auto-scroll` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `borda-avancar` | 170.7 × 479.1 | 106.7 × 881.8 | 170.7 × 467.1 | 106.7 × 869.8 |
+  | `borda-voltar` | 170.7 × 479.1 | 106.7 × 881.8 | 170.7 × 467.1 | 106.7 × 869.8 |
+  | `busca` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `indice` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `sair` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `tema` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `zoom-mais` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `zoom-menos` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+
+## S3-S3d-pdf-12p
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `auto-scroll` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `borda-avancar` | 170.7 × 479.1 | 106.7 × 881.8 | 170.7 × 467.1 | 106.7 × 869.8 |
+  | `borda-voltar` | 170.7 × 479.1 | 106.7 × 881.8 | 170.7 × 467.1 | 106.7 × 869.8 |
+  | `busca` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `indice` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `sair` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `tema` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `zoom-mais` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `zoom-menos` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+
+## S3-S3e-nao-baixado
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `auto-scroll` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `baixar` | 117.3 × 64.0 | 117.3 × 64.0 | 117.3 × 64.0 | 117.3 × 64.0 |
+  | `borda-avancar` | 170.7 × 479.1 | 106.7 × 881.8 | 170.7 × 467.1 | 106.7 × 869.8 |
+  | `borda-voltar` | 170.7 × 479.1 | 106.7 × 881.8 | 170.7 × 467.1 | 106.7 × 869.8 |
+  | `busca` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `indice` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `sair` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `tema` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `zoom-mais` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `zoom-menos` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+
+## S3-a14-retrato
+  (sem dump: tab pai, avd pai)
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `auto-scroll` | — | 66.2 × 65.8 | — | 66.2 × 65.8 |
+  | `borda-avancar` | — | 106.7 × 881.8 | — | 106.7 × 869.8 |
+  | `borda-voltar` | — | 106.7 × 881.8 | — | 106.7 × 869.8 |
+  | `busca` | — | 66.2 × 65.8 | — | 66.2 × 65.8 |
+  | `indice` | — | 65.8 × 65.8 | — | 65.8 × 65.8 |
+  | `sair` | — | 65.8 × 65.8 | — | 65.8 × 65.8 |
+  | `tema` | — | 65.8 × 65.8 | — | 65.8 × 65.8 |
+  | `zoom-mais` | — | 66.2 × 65.8 | — | 66.2 × 65.8 |
+  | `zoom-menos` | — | 65.8 × 65.8 | — | 65.8 × 65.8 |
+
+## S3-a14-volta
+  (sem dump: tab ret, avd ret)
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `auto-scroll` | 66.2 × 65.8 | — | 66.2 × 65.8 | — |
+  | `borda-avancar` | 170.7 × 479.1 | — | 170.7 × 467.1 | — |
+  | `borda-voltar` | 170.7 × 479.1 | — | 170.7 × 467.1 | — |
+  | `busca` | 66.2 × 65.8 | — | 66.2 × 65.8 | — |
+  | `indice` | 65.8 × 65.8 | — | 65.8 × 65.8 | — |
+  | `sair` | 65.8 × 65.8 | — | 65.8 × 65.8 | — |
+  | `tema` | 65.8 × 65.8 | — | 65.8 × 65.8 | — |
+  | `zoom-mais` | 66.2 × 65.8 | — | 66.2 × 65.8 | — |
+  | `zoom-menos` | 65.8 × 65.8 | — | 65.8 × 65.8 | — |
+
+## S3-placeholder
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `auto-scroll` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `borda-avancar` | 170.7 × 479.1 | 106.7 × 881.8 | 170.7 × 467.1 | 106.7 × 869.8 |
+  | `borda-voltar` | 170.7 × 479.1 | 106.7 × 881.8 | 170.7 × 467.1 | 106.7 × 869.8 |
+  | `busca` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `indice` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `sair` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `tema` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `zoom-mais` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `zoom-menos` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+
+## S3-titulo-longo
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `auto-scroll` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `borda-avancar` | 170.7 × 479.1 | 106.7 × 881.8 | 170.7 × 467.1 | 106.7 × 869.8 |
+  | `borda-voltar` | 170.7 × 479.1 | 106.7 × 881.8 | 170.7 × 467.1 | 106.7 × 869.8 |
+  | `busca` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `indice` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `sair` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `tema` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `zoom-mais` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `zoom-menos` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+
+## S3-ultima
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `auto-scroll` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `borda-avancar` | 170.7 × 479.1 | 106.7 × 881.8 | 170.7 × 467.1 | 106.7 × 869.8 |
+  | `borda-voltar` | 170.7 × 479.1 | 106.7 × 881.8 | 170.7 × 467.1 | 106.7 × 869.8 |
+  | `busca` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `indice` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `sair` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `tema` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `zoom-mais` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `zoom-menos` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+
+## S4-resultados
+  G5 · tab pai: resultado-00000000 1089.8 × 32.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: resultado-00000000 1089.8 × 20.9 — cortado pela rolagem (div. 291), não reprova
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `apagar` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `campo-busca` | 900.0 × 48.0 | 473.3 × 48.0 | 900.0 × 48.0 | 473.3 × 48.0 |
+  | `fechar-busca` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `resultado-<id8>` | 1089.8 × 80.0 ×5 · 1089.8 × 32.9 | 663.1 × 80.0 ×9 | 1089.8 × 80.0 ×5 · 1089.8 × 20.9 | 663.1 × 80.0 ×9 |
+
+## S4-vazio
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `campo-busca` | 960.0 × 48.0 | 533.3 × 48.0 | 960.0 × 48.0 | 533.3 × 48.0 |
+  | `fechar-busca` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## S5-fim
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `borda-voltar` | 170.7 × 479.1 | 106.7 × 881.8 | 170.7 × 467.1 | 106.7 × 869.8 |
+  | `sair` | 118.7 × 64.0 | 118.7 × 64.0 | 118.7 × 64.0 | 118.7 × 64.0 |
+  | `voltar-inicio` | 227.1 × 64.0 | 227.1 × 64.0 | 227.1 × 64.0 | 227.1 × 64.0 |
+
+## dialogo-apagando
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `apagar-confirmar` | 143.1 × 57.8 | 143.1 × 57.8 | 143.1 × 57.8 | 143.1 × 57.8 |
+  | `apagar-manter` | 174.2 × 57.8 | 174.2 × 57.8 | 174.2 × 57.8 | 174.2 × 57.8 |
+
+## dialogo-apagar
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `apagar-confirmar` | 143.1 × 57.8 | 143.1 × 57.8 | 143.1 × 58.2 | 143.1 × 58.2 |
+  | `apagar-manter` | 174.2 × 57.8 | 174.2 × 57.8 | 174.2 × 58.2 | 174.2 × 58.2 |
+
+## folha-X-limite
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `form-cancelar` | 104.9 × 57.8 | 104.9 × 57.8 | 104.9 × 57.8 | 104.9 × 57.8 |
+  | `form-data` | 654.2 × 60.0 | 597.3 × 60.0 | 654.2 × 60.0 | 597.3 × 60.0 |
+  | `form-nome` | 654.2 × 60.0 | 597.3 × 60.0 | 654.2 × 60.0 | 597.3 × 60.0 |
+  | `form-tentar` | 206.2 × 57.8 | 206.2 × 57.8 | 206.2 × 57.8 | 206.2 × 57.8 |
+
+## folha-criar
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `form-cancelar` | 122.2 × 58.2 | 122.2 × 58.2 | 122.2 × 58.2 | 122.2 × 58.2 |
+  | `form-data` | 654.2 × 60.0 | 597.3 × 60.0 | 654.2 × 60.0 | 597.3 × 60.0 |
+  | `form-nome` | 654.2 × 60.0 | 597.3 × 60.0 | 654.2 × 60.0 | 597.3 × 60.0 |
+  | `form-salvar` | 127.1 × 58.2 | 127.1 × 58.2 | 127.1 × 58.2 | 127.1 × 58.2 |
+
+## folha-editar-data
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `form-cancelar` | 122.2 × 58.2 | 122.2 × 58.2 | 122.2 × 58.2 | 122.2 × 58.2 |
+  | `form-data` | 532.9 × 60.0 | 476.0 × 60.0 | 532.9 × 60.0 | 476.0 × 60.0 |
+  | `form-data-limpar` | 109.3 × 48.0 | 109.3 × 48.0 | 109.3 × 48.0 | 109.3 × 48.0 |
+  | `form-nome` | 654.2 × 60.0 | 597.3 × 60.0 | 654.2 × 60.0 | 597.3 × 60.0 |
+  | `form-salvar` | 135.1 × 58.2 | 135.1 × 58.2 | 135.1 × 58.2 | 135.1 × 58.2 |
+
+## folha-editar-igual
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `form-cancelar` | 122.2 × 58.2 | 122.2 × 58.2 | 122.2 × 58.2 | 122.2 × 58.2 |
+  | `form-data` | 654.2 × 60.0 | 597.3 × 60.0 | 654.2 × 60.0 | 597.3 × 60.0 |
+  | `form-nome` | 654.2 × 60.0 | 597.3 × 60.0 | 654.2 × 60.0 | 597.3 × 60.0 |
+  | `form-salvar` | 137.3 × 58.2 | 137.3 × 58.2 | 137.3 × 58.2 | 137.3 × 58.2 |
+
+## folha-editar-limpa
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `form-cancelar` | 122.2 × 58.2 | 122.2 × 58.2 | 122.2 × 58.2 | 122.2 × 58.2 |
+  | `form-data` | 654.2 × 60.0 | 597.3 × 60.0 | 654.2 × 60.0 | 597.3 × 60.0 |
+  | `form-nome` | 654.2 × 60.0 | 597.3 × 60.0 | 654.2 × 60.0 | 597.3 × 60.0 |
+  | `form-salvar` | 137.3 × 58.2 | 137.3 × 58.2 | 137.3 × 58.2 | 137.3 × 58.2 |
+
+## folha-falhou
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `form-cancelar` | 104.9 × 57.8 | 104.9 × 57.8 | 104.9 × 57.8 | 104.9 × 57.8 |
+  | `form-data` | 654.2 × 60.0 | 597.3 × 60.0 | 654.2 × 60.0 | 597.3 × 60.0 |
+  | `form-nome` | 654.2 × 60.0 | 597.3 × 60.0 | 654.2 × 60.0 | 597.3 × 60.0 |
+  | `form-tentar` | 206.2 × 57.8 | 206.2 × 57.8 | 206.2 × 57.8 | 206.2 × 57.8 |
+
+## folha-salvando
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `form-data` | 654.2 × 60.0 | 597.3 × 60.0 | 654.2 × 60.0 | 597.3 × 60.0 |
+  | `form-nome` | 654.2 × 60.0 | 597.3 × 60.0 | 654.2 × 60.0 | 597.3 × 60.0 |
+  | `form-salvar` | 127.1 × 58.2 | 127.1 × 58.2 | 127.1 × 58.2 | 127.1 × 58.2 |
+
+## folha-validacao
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `form-cancelar` | 122.2 × 58.2 | 122.2 × 58.2 | 122.2 × 58.2 | 122.2 × 58.2 |
+  | `form-data` | 654.2 × 60.0 | 597.3 × 60.0 | 654.2 × 60.0 | 597.3 × 60.0 |
+  | `form-nome` | 654.2 × 60.0 | 597.3 × 60.0 | 654.2 × 60.0 | 597.3 × 60.0 |
+  | `form-salvar` | 137.3 × 58.2 | 137.3 × 58.2 | 137.3 × 58.2 | 137.3 × 58.2 |
+
+## picker-X-acima-de-100
+  G5 · tab ret: picker-adicionar-9 136.0 × 4.9 — cortado pela rolagem (div. 291), não reprova
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `apagar` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `fechar-busca` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `picker-adicionar-<n>` | 136.0 × 48.0 ×4 | 136.0 × 48.0 ×8 · 136.0 × 4.9 | 136.0 × 48.0 ×4 | 136.0 × 48.0 ×8 |
+  | `picker-campo` | 900.0 × 48.0 | 473.3 × 48.0 | 900.0 × 48.0 | 473.3 × 48.0 |
+  | `picker-concluir` | 108.4 × 48.0 | 108.9 × 48.0 | 108.4 × 48.0 | 108.9 × 48.0 |
+
+## picker-X-falhou
+  G5 · tab pai: picker-adicionar-5 136.0 × 44.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: picker-adicionar-5 136.0 × 32.9 — cortado pela rolagem (div. 291), não reprova
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `apagar` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `fechar-busca` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `picker-adicionar-<n>` | 173.3 × 48.0 · 136.0 × 48.0 ×3 · 136.0 × 44.9 | 173.3 × 48.0 · 136.0 × 48.0 ×7 | 173.3 × 48.0 · 136.0 × 48.0 ×3 · 136.0 × 32.9 | 173.3 × 48.0 · 136.0 × 48.0 ×7 |
+  | `picker-campo` | 900.0 × 48.0 | 473.3 × 48.0 | 900.0 × 48.0 | 473.3 × 48.0 |
+  | `picker-concluir` | 108.4 × 48.0 | 108.9 × 48.0 | 108.4 × 48.0 | 108.9 × 48.0 |
+
+## picker-X-limite
+  G5 · tab pai: picker-adicionar-5 136.0 × 44.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: picker-adicionar-5 136.0 × 32.9 — cortado pela rolagem (div. 291), não reprova
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `apagar` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `fechar-busca` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `picker-adicionar-<n>` | 136.0 × 48.0 ×3 · 136.0 × 44.9 | 136.0 × 48.0 ×7 | 136.0 × 48.0 ×3 · 136.0 × 32.9 | 136.0 × 48.0 ×7 |
+  | `picker-campo` | 900.0 × 48.0 | 473.3 × 48.0 | 900.0 × 48.0 | 473.3 × 48.0 |
+  | `picker-concluir` | 108.4 × 48.0 | 108.9 × 48.0 | 108.4 × 48.0 | 108.9 × 48.0 |
+
+## picker-X-salvo-nao-relido
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `apagar` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `aviso-acao` | 183.6 × 48.0 | 183.6 × 48.0 | 183.6 × 48.0 | 183.6 × 48.0 |
+  | `fechar-busca` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `picker-adicionar-<n>` | 136.0 × 48.0 ×3 | 136.0 × 48.0 ×7 | 136.0 × 48.0 ×3 | 136.0 × 48.0 ×7 |
+  | `picker-campo` | 900.0 × 48.0 | 473.3 × 48.0 | 900.0 × 48.0 | 473.3 × 48.0 |
+  | `picker-concluir` | 108.4 × 48.0 | 108.9 × 48.0 | 108.4 × 48.0 | 108.9 × 48.0 |
+
+## picker-X-sem-rede
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `apagar` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `fechar-busca` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `picker-adicionar-<n>` | 136.0 × 48.0 ×4 | 136.0 × 48.0 ×8 | 136.0 × 48.0 ×4 | 136.0 × 48.0 ×8 |
+  | `picker-campo` | 900.0 × 48.0 | 473.3 × 48.0 | 900.0 × 48.0 | 473.3 × 48.0 |
+  | `picker-concluir` | 108.4 × 48.0 | 108.9 × 48.0 | 108.4 × 48.0 | 108.9 × 48.0 |
+
+## picker-relendo
+  G5 · tab pai: picker-adicionar-5 136.0 × 44.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: picker-adicionar-5 136.0 × 32.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd ret: picker-adicionar-9 136.0 × 41.8 — cortado pela rolagem (div. 291), não reprova
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `apagar` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `fechar-busca` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `picker-adicionar-<n>` | 136.0 × 48.0 ×3 · 136.0 × 44.9 | 136.0 × 48.0 ×8 | 136.0 × 48.0 ×3 · 136.0 × 32.9 | 136.0 × 48.0 ×7 · 136.0 × 41.8 |
+  | `picker-campo` | 900.0 × 48.0 | 473.3 × 48.0 | 900.0 × 48.0 | 473.3 × 48.0 |
+  | `picker-concluir` | 108.4 × 48.0 | 108.9 × 48.0 | 108.4 × 48.0 | 108.9 × 48.0 |
+
+## picker-resultados
+  G5 · tab pai: picker-adicionar-5 136.0 × 44.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: picker-adicionar-5 136.0 × 32.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd ret: picker-adicionar-9 136.0 × 41.8 — cortado pela rolagem (div. 291), não reprova
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `apagar` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `fechar-busca` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `picker-adicionar-<n>` | 136.0 × 48.0 ×4 · 136.0 × 44.9 | 136.0 × 48.0 ×9 | 136.0 × 48.0 ×4 · 136.0 × 32.9 | 136.0 × 48.0 ×8 · 136.0 × 41.8 |
+  | `picker-campo` | 900.0 × 48.0 | 473.3 × 48.0 | 900.0 × 48.0 | 473.3 × 48.0 |
+  | `picker-concluir` | 108.4 × 48.0 | 108.9 × 48.0 | 108.4 × 48.0 | 108.9 × 48.0 |
+
+## picker-vazio
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `fechar-busca` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `picker-campo` | 960.0 × 48.0 | 533.3 × 48.0 | 960.0 × 48.0 | 533.3 × 48.0 |
+  | `picker-concluir` | 108.4 × 48.0 | 108.9 × 48.0 | 108.4 × 48.0 | 108.9 × 48.0 |
+
+## reordenar-X-limite
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `alca-<n>` | 48.0 × 72.0 ×6 | 48.0 × 72.0 ×8 | 48.0 × 72.0 ×5 · 48.0 × 67.1 | 48.0 × 72.0 ×8 |
+  | `reordenar-sair` | 135.1 × 48.0 | 135.1 × 48.0 | 135.1 × 48.0 | 135.1 × 48.0 |
+  | `reordenar-salvar` | 188.9 × 48.0 | 188.9 × 48.0 | 188.9 × 48.0 | 188.9 × 48.0 |
+
+## reordenar-X-sem-rede
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `alca-<n>` | 48.0 × 72.0 ×6 | 48.0 × 72.0 ×8 | 48.0 × 72.0 ×5 · 48.0 × 67.1 | 48.0 × 72.0 ×8 |
+  | `reordenar-sair` | 94.7 × 48.0 | 94.7 × 48.0 | 94.7 × 48.0 | 94.7 × 48.0 |
+  | `reordenar-salvar` | 191.1 × 48.0 | 191.6 × 48.0 | 191.1 × 48.0 | 191.6 × 48.0 |
+
+## reordenar-aberto
+  G5 · tab pai: alca-7 48.0 × 47.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: alca-7 48.0 × 35.1 — cortado pela rolagem (div. 291), não reprova
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `alca-<n>` | 48.0 × 72.0 ×6 · 48.0 × 47.1 | 48.0 × 72.0 ×8 | 48.0 × 72.0 ×6 · 48.0 × 35.1 | 48.0 × 72.0 ×8 |
+  | `reordenar-sair` | 94.7 × 48.0 | 94.7 × 48.0 | 94.7 × 48.0 | 94.7 × 48.0 |
+  | `reordenar-salvar` | 191.1 × 48.0 | 191.6 × 48.0 | 191.1 × 48.0 | 191.6 × 48.0 |
+
+## reordenar-arrastando
+  G5 · tab pai: alca-7 48.0 × 47.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: alca-7 48.0 × 35.1 — cortado pela rolagem (div. 291), não reprova
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `alca-<n>` | 48.0 × 72.0 ×5 · 48.0 × 47.1 | 48.0 × 72.0 ×7 | 48.0 × 72.0 ×5 · 48.0 × 35.1 | 48.0 × 72.0 ×7 |
+  | `reordenar-sair` | 94.7 × 48.0 | 94.7 × 48.0 | 94.7 × 48.0 | 94.7 × 48.0 |
+  | `reordenar-salvar` | 191.1 × 48.0 | 191.6 × 48.0 | 191.1 × 48.0 | 191.6 × 48.0 |
+
+## reordenar-descartado
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `alca-<n>` | 48.0 × 72.0 ×6 | 48.0 × 72.0 ×7 | 48.0 × 72.0 ×5 · 48.0 × 67.1 | 48.0 × 72.0 ×7 |
+  | `reordenar-sair` | 135.1 × 48.0 | 135.1 × 48.0 | 135.1 × 48.0 | 135.1 × 48.0 |
+  | `reordenar-salvar` | 191.1 × 48.0 | 191.1 × 48.0 | 191.1 × 48.0 | 191.1 × 48.0 |
+
+## reordenar-falhou
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `alca-<n>` | 48.0 × 72.0 ×6 | 48.0 × 72.0 ×8 | 48.0 × 72.0 ×5 · 48.0 × 67.1 | 48.0 × 72.0 ×8 |
+  | `reordenar-sair` | 135.1 × 48.0 | 135.1 × 48.0 | 135.1 × 48.0 | 135.1 × 48.0 |
+  | `reordenar-salvar` | 188.9 × 48.0 | 188.9 × 48.0 | 188.9 × 48.0 | 188.9 × 48.0 |
+
+## reordenar-salvando
+  G5 · tab pai: alca-7 48.0 × 47.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: alca-7 48.0 × 35.1 — cortado pela rolagem (div. 291), não reprova
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `alca-<n>` | 48.0 × 72.0 ×6 · 48.0 × 47.1 | 48.0 × 72.0 ×8 | 48.0 × 72.0 ×6 · 48.0 × 35.1 | 48.0 × 72.0 ×8 |
+  | `reordenar-salvar` | 191.1 × 48.0 | 191.1 × 48.0 | 191.1 × 48.0 | 191.1 × 48.0 |
+
+estados: 55 · células (estado × coluna com dump): 209 de 220
+
+G5: todo alvo ≥ 48 dp ✓ · G6: todo alvo com testID ✓
+exit=0

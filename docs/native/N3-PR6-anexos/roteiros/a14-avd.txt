@@ -1,0 +1,8 @@
+18:24:55 toque canto de setlist-00000001 @ 96,420
+18:25:03 toque 'song-3' @ 658,859 (emulator-5554)
+18:25:09 paisagem: 3 DE 8
+18:25:19 girou para retrato: 3 DE 8 · log: ['OCTAVIA: rotation=portrait n=3/8']
+N3P6-S3-a14-retrato-avd-ret mCurrentRotation=ROTATION_90 png=153340 xml=26638 1b1443fa531d
+18:25:38 voltou para paisagem: 3 DE 8 · log: ['OCTAVIA: rotation=landscape n=3/8']
+N3P6-S3-a14-volta-avd-pai mCurrentRotation=ROTATION_0 png=123802 xml=26638 034a37c5c919
+capturas=2 falhas=0

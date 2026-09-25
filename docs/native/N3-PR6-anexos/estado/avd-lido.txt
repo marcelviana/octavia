@@ -1,0 +1,9 @@
+# AVD octavia_tab32 lido 2026-09-25 17:21:45 (subiu com -no-snapshot-save)
+global stay_on_while_plugged_in=1
+system accelerometer_rotation=1
+system user_rotation=0
+global airplane_mode_on=1
+global wifi_on=0
+global mobile_data=0
+reverse: 
+    lastUpdateTime=2026-09-24 14:00:01

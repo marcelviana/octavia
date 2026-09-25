@@ -1,0 +1,16 @@
+18:19:33 toque canto de setlist-00000001 @ 96,474
+N3P6-S2-com-edicao-tab-ret mCurrentRotation=ROTATION_0 png=285640 xml=56712 57fe64b3e993
+N3P6-S2-com-edicao-rolada-tab-ret mCurrentRotation=ROTATION_0 png=285761 xml=60671 477784d38559
+18:20:02 mock modo=escrita-pendurada vazio=False
+18:20:17 toque canto de setlist-00000001 @ 96,474
+18:20:24 toque 'remover-1' @ 1436,581 (RX2N8000F3D)
+N3P6-S2-com-edicao-removendo-tab-ret mCurrentRotation=ROTATION_0 png=286165 xml=56400 02c64583c8a4
+N3P6-S2-com-edicao-removendo-rolada-tab-ret mCurrentRotation=ROTATION_0 png=315238 xml=64435 177cc161bba0
+18:20:51 mock modo=normal vazio=False
+18:21:15 mock modo=escrita-pendurada vazio=False
+18:21:30 toque canto de setlist-00000001 @ 96,474
+18:21:39 toque 'remover-1' @ 1436,581 (RX2N8000F3D)
+N3P6-S2-com-edicao-removendo-rolada-tab-ret mCurrentRotation=ROTATION_0 png=282391 xml=60360 c23ac7e0663d
+18:21:48 rolada capturada 8.3 s depois do toque (prazo do cliente: 20 s)
+18:21:49 mock modo=normal vazio=False
+capturas=5 falhas=0

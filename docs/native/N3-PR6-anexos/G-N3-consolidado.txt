@@ -1,0 +1,431 @@
+$ node apps/native/scripts/g-n3.mjs --pai docs/native/N3-PRECHECK-anexos/B5-baseline --pai docs/native/N3-PRECHECK-anexos/B3-referencia-paisagem --pai docs/native/N3-PR6-anexos/dumps-pai --pai docs/native/N3-PR6-anexos/dumps-pai-extra --pai docs/native/N3-PR5-anexos/dumps-pai --pai docs/native/N3-PR4-anexos/dumps-pai --pai docs/native/N3-PR3-anexos/dumps-pai --faixa docs/native/N3-PR6-anexos/dumps-ret --rolada docs/native/N3-PR6-anexos/dumps-ret-rolada
+G-N3 — 102 par(es) (paisagem × faixa); medidas: docs/native/DESIGN-N3/medidas.json (tolerância 4 dp)
+  sem paisagem de referência (fora da conta): N3P6-S2-j3-final-tab-ret, N3P6-S3-a14-retrato-avd-ret, N3P6-S3-a14-retrato-tab-ret
+
+(e) TEXTO QUE SOME — REPROVA: 0
+
+(d′) MENOS ESPAÇO QUE NA PAISAGEM — TRIAGEM (confirmar no PNG): 354
+  N3P6-S1-S1e-falha-com-cache-avd-ret: "SHOW DE SEXTA NO TEATRO DA FIXTURE" 762.2 → 581.3 dp
+  N3P6-S1-S1e-falha-com-cache-tab-ret: "SHOW DE SEXTA NO TEATRO DA FIXTURE" 762.2 → 581.3 dp
+  N3P6-S1-aviso-sem-rede-avd-ret: aviso-motivo 747.6 → 615.1 dp (altura ×1.9)
+  N3P6-S1-aviso-sem-rede-avd-ret: "SHOW DE SEXTA NO TEATRO DA FIXTURE" 762.2 → 581.3 dp
+  N3P6-S1-aviso-sem-rede-tab-ret: aviso-motivo 747.6 → 615.1 dp (altura ×1.9)
+  N3P6-S1-aviso-sem-rede-tab-ret: "SHOW DE SEXTA NO TEATRO DA FIXTURE" 762.2 → 581.3 dp
+  N3P6-S1-salvo-nao-relido-avd-ret: aviso-motivo 671.1 → 415.6 dp (altura ×1.9)
+  N3P6-S1-salvo-nao-relido-avd-ret: "SHOW DE SEXTA NO TEATRO DA FIXTURE" 762.2 → 581.3 dp
+  N3P6-S1-salvo-nao-relido-tab-ret: aviso-motivo 671.1 → 415.6 dp (altura ×1.9)
+  N3P6-S1-salvo-nao-relido-tab-ret: "SHOW DE SEXTA NO TEATRO DA FIXTURE" 762.2 → 581.3 dp
+  N3P6-S1-setlists-avd-ret: "SHOW DE SEXTA NO TEATRO DA FIXTURE" 762.2 → 581.3 dp
+  N3P6-S1-setlists-tab-ret: "SHOW DE SEXTA NO TEATRO DA FIXTURE" 762.2 → 581.3 dp
+  N3P6-S2-com-edicao-acima-de-100-avd-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P6-S2-com-edicao-acima-de-100-avd-ret: "Sétima do ensaio" 272 → 398.2 dp (altura ×22.3)
+  N3P6-S2-com-edicao-acima-de-100-tab-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P6-S2-com-edicao-acima-de-100-tab-ret: "Sétima do ensaio" 272 → 398.2 dp (altura ×2.2)
+  N3P6-S2-com-edicao-avd-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P6-S2-com-edicao-aviso-sem-rede-avd-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P6-S2-com-edicao-aviso-sem-rede-avd-ret: aviso-motivo 762.2 → 631.1 dp (altura ×1.9)
+  N3P6-S2-com-edicao-aviso-sem-rede-avd-ret: "Sétima do ensaio" 272 → 398.2 dp (altura ×22.3)
+  N3P6-S2-com-edicao-aviso-sem-rede-tab-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P6-S2-com-edicao-aviso-sem-rede-tab-ret: aviso-motivo 762.2 → 631.1 dp (altura ×1.9)
+  N3P6-S2-com-edicao-aviso-sem-rede-tab-ret: "Sétima do ensaio" 272 → 398.2 dp (altura ×2.2)
+  N3P6-S2-com-edicao-falhou-avd-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P6-S2-com-edicao-falhou-avd-ret: aviso-motivo 817.8 → 450.2 dp (altura ×1.9)
+  N3P6-S2-com-edicao-falhou-avd-ret: "Sétima do ensaio" 272 → 398.2 dp (altura ×22.3)
+  N3P6-S2-com-edicao-falhou-tab-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P6-S2-com-edicao-falhou-tab-ret: aviso-motivo 817.8 → 450.2 dp (altura ×1.9)
+  N3P6-S2-com-edicao-falhou-tab-ret: "Sétima do ensaio" 272 → 398.2 dp (altura ×2.2)
+  N3P6-S2-com-edicao-limite-avd-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P6-S2-com-edicao-limite-avd-ret: "Sétima do ensaio" 272 → 398.2 dp (altura ×22.3)
+  N3P6-S2-com-edicao-limite-tab-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P6-S2-com-edicao-limite-tab-ret: "Sétima do ensaio" 272 → 398.2 dp (altura ×2.2)
+  N3P6-S2-com-edicao-removendo-avd-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P6-S2-com-edicao-removendo-tab-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P6-S2-com-edicao-salvo-nao-relido-avd-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P6-S2-com-edicao-salvo-nao-relido-avd-ret: aviso-motivo 583.6 → 431.6 dp (altura ×1.9)
+  N3P6-S2-com-edicao-salvo-nao-relido-avd-ret: "Sétima do ensaio" 272 → 398.2 dp (altura ×22.3)
+  N3P6-S2-com-edicao-salvo-nao-relido-tab-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P6-S2-com-edicao-salvo-nao-relido-tab-ret: aviso-motivo 583.6 → 431.6 dp (altura ×1.9)
+  N3P6-S2-com-edicao-salvo-nao-relido-tab-ret: "Sétima do ensaio" 272 → 398.2 dp (altura ×2.2)
+  N3P6-S2-com-edicao-tab-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P6-S2-sem-edicao-S2p-avd-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P6-S2-sem-edicao-S2p-tab-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P6-S3-S3a-letra-1a-avd-ret: "Manhã de ensaio · Banda da fixture · Let" 832 → 663.1 dp
+  N3P6-S3-S3a-letra-1a-avd-ret: corpo 1073.8 → 647.1 dp (altura ×1.9)
+  N3P6-S3-S3a-letra-1a-tab-ret: "Manhã de ensaio · Banda da fixture · Let" 832 → 663.1 dp
+  N3P6-S3-S3a-letra-1a-tab-ret: corpo 1073.8 → 647.1 dp (altura ×1.9)
+  N3P6-S3-S3b-cifra-claro-avd-ret: "Segunda do ensaio · Duo Manacá · Cifra" 830.2 → 663.1 dp
+  N3P6-S3-S3b-cifra-claro-avd-ret: corpo 906.7 → 647.1 dp (altura ×1.9)
+  N3P6-S3-S3b-cifra-claro-tab-ret: "Segunda do ensaio · Duo Manacá · Cifra" 830.2 → 663.1 dp
+  N3P6-S3-S3b-cifra-claro-tab-ret: corpo 906.7 → 647.1 dp (altura ×1.9)
+  N3P6-S3-S3b-cifra-escuro-avd-ret: "Segunda do ensaio · Duo Manacá · Cifra" 830.2 → 663.1 dp
+  N3P6-S3-S3b-cifra-escuro-avd-ret: corpo 906.7 → 647.1 dp (altura ×1.9)
+  N3P6-S3-S3b-cifra-escuro-tab-ret: "Segunda do ensaio · Duo Manacá · Cifra" 830.2 → 663.1 dp
+  N3P6-S3-S3b-cifra-escuro-tab-ret: corpo 906.7 → 647.1 dp (altura ×1.9)
+  N3P6-S3-S3c-tab-autoscroll-avd-ret: "Terceira do ensaio · Trio de fixture · T" 830.2 → 663.1 dp
+  N3P6-S3-S3c-tab-autoscroll-avd-ret: corpo 1040 → 647.1 dp (altura ×2)
+  N3P6-S3-S3c-tab-autoscroll-tab-ret: "Terceira do ensaio · Trio de fixture · T" 830.2 → 663.1 dp
+  N3P6-S3-S3c-tab-autoscroll-tab-ret: corpo 1040 → 647.1 dp (altura ×1.9)
+  N3P6-S3-S3d-pdf-12p-avd-ret: "Partitura de doze páginas · Orquestra de" 694.2 → 663.1 dp
+  N3P6-S3-S3d-pdf-12p-avd-ret: linha-motivo 1137.8 → 711.1 dp
+  N3P6-S3-S3d-pdf-12p-tab-ret: "Partitura de doze páginas · Orquestra de" 694.2 → 663.1 dp
+  N3P6-S3-S3d-pdf-12p-tab-ret: linha-motivo 1137.8 → 711.1 dp
+  N3P6-S3-S3e-nao-baixado-avd-ret: "Partitura que nunca baixou · Orquestra d" 806.2 → 663.1 dp
+  N3P6-S3-S3e-nao-baixado-tab-ret: "Partitura que nunca baixou · Orquestra d" 806.2 → 663.1 dp
+  N3P6-S3-placeholder-avd-ret: "—" 828.9 → 663.1 dp
+  N3P6-S3-placeholder-tab-ret: "—" 828.9 → 663.1 dp
+  N3P6-S3-titulo-longo-avd-ret: "Uma música de título bem comprido, para " 828.4 → 663.1 dp
+  N3P6-S3-titulo-longo-avd-ret: corpo 1073.8 → 647.1 dp (altura ×1.9)
+  N3P6-S3-titulo-longo-tab-ret: "Uma música de título bem comprido, para " 828.4 → 663.1 dp
+  N3P6-S3-titulo-longo-tab-ret: corpo 1073.8 → 647.1 dp (altura ×1.9)
+  N3P6-S3-ultima-avd-ret: "Oitava do ensaio · Banda da fixture · Le" 828.4 → 663.1 dp
+  N3P6-S3-ultima-avd-ret: corpo 1073.8 → 647.1 dp (altura ×1.9)
+  N3P6-S3-ultima-tab-ret: "Oitava do ensaio · Banda da fixture · Le" 828.4 → 663.1 dp
+  N3P6-S3-ultima-tab-ret: corpo 1073.8 → 647.1 dp (altura ×1.9)
+  N3P6-S4-resultados-avd-ret: "Manhã de ensaio" 892 → 465.3 dp
+  N3P6-S4-resultados-avd-ret: "Banda da fixture  ·  Disco de fixture" 892 → 465.3 dp
+  N3P6-S4-resultados-avd-ret: "Segunda do ensaio" 892 → 465.3 dp
+  N3P6-S4-resultados-avd-ret: "Duo Manacá" 892 → 465.3 dp
+  N3P6-S4-resultados-avd-ret: "Terceira do ensaio" 892 → 465.3 dp
+  N3P6-S4-resultados-avd-ret: "Trio de fixture" 892 → 465.3 dp
+  N3P6-S4-resultados-avd-ret: "Sétima do ensaio" 892 → 465.3 dp
+  N3P6-S4-resultados-avd-ret: "Banda da fixture" 892 → 465.3 dp
+  N3P6-S4-resultados-avd-ret: "Oitava do ensaio" 892 → 465.3 dp
+  N3P6-S4-resultados-avd-ret: "Banda da fixture" 892 → 465.3 dp
+  N3P6-S4-resultados-avd-ret: "Nona do ensaio" 892 → 465.3 dp (altura ×4.2)
+  N3P6-S4-resultados-avd-ret: "Duo Manacá" 892 → 465.3 dp
+  N3P6-S4-resultados-avd-ret: "Banda da fixture" 892 → 465.3 dp
+  N3P6-S4-resultados-tab-ret: "Manhã de ensaio" 892 → 465.3 dp
+  N3P6-S4-resultados-tab-ret: "Banda da fixture  ·  Disco de fixture" 892 → 465.3 dp
+  N3P6-S4-resultados-tab-ret: "Segunda do ensaio" 892 → 465.3 dp
+  N3P6-S4-resultados-tab-ret: "Duo Manacá" 892 → 465.3 dp
+  N3P6-S4-resultados-tab-ret: "Terceira do ensaio" 892 → 465.3 dp
+  N3P6-S4-resultados-tab-ret: "Trio de fixture" 892 → 465.3 dp
+  N3P6-S4-resultados-tab-ret: "Sétima do ensaio" 892 → 465.3 dp
+  N3P6-S4-resultados-tab-ret: "Banda da fixture" 892 → 465.3 dp
+  N3P6-S4-resultados-tab-ret: "Oitava do ensaio" 892 → 465.3 dp
+  N3P6-S4-resultados-tab-ret: "Banda da fixture" 892 → 465.3 dp
+  N3P6-S4-resultados-tab-ret: "Nona do ensaio" 892 → 465.3 dp (altura ×1.6)
+  N3P6-S4-resultados-tab-ret: "Duo Manacá" 892 → 465.3 dp
+  N3P6-S4-resultados-tab-ret: "Banda da fixture" 892 → 465.3 dp
+  N3P6-folha-X-limite-avd-ret: "muitas alterações seguidas — tente de no" 620 → 563.6 dp
+  N3P6-folha-X-limite-avd-ret: "Nome" 654.2 → 597.3 dp
+  N3P6-folha-X-limite-avd-ret: "Data do show · opcional" 654.2 → 597.3 dp
+  N3P6-folha-X-limite-avd-ret: "dd / mm / aaaa" 620 → 563.6 dp
+  N3P6-folha-X-limite-tab-ret: "muitas alterações seguidas — tente de no" 620 → 563.6 dp
+  N3P6-folha-X-limite-tab-ret: "Nome" 654.2 → 597.3 dp
+  N3P6-folha-X-limite-tab-ret: "Data do show · opcional" 654.2 → 597.3 dp
+  N3P6-folha-X-limite-tab-ret: "dd / mm / aaaa" 620 → 563.6 dp
+  N3P6-folha-criar-avd-ret: "Nome" 654.2 → 597.3 dp
+  N3P6-folha-criar-avd-ret: "Data do show · opcional" 654.2 → 597.3 dp
+  N3P6-folha-criar-avd-ret: "dd / mm / aaaa" 620 → 563.6 dp
+  N3P6-folha-criar-tab-ret: "Nome" 654.2 → 597.3 dp
+  N3P6-folha-criar-tab-ret: "Data do show · opcional" 654.2 → 597.3 dp
+  N3P6-folha-criar-tab-ret: "dd / mm / aaaa" 620 → 563.6 dp
+  N3P6-folha-editar-data-avd-ret: "Nome" 654.2 → 597.3 dp
+  N3P6-folha-editar-data-avd-ret: "Data do show · opcional" 654.2 → 597.3 dp
+  N3P6-folha-editar-data-avd-ret: "25 / 09 / 2026" 499.6 → 442.2 dp
+  N3P6-folha-editar-data-tab-ret: "Nome" 654.2 → 597.3 dp
+  N3P6-folha-editar-data-tab-ret: "Data do show · opcional" 654.2 → 597.3 dp
+  N3P6-folha-editar-data-tab-ret: "25 / 09 / 2026" 499.6 → 442.2 dp
+  N3P6-folha-editar-igual-avd-ret: "Nome" 654.2 → 597.3 dp
+  N3P6-folha-editar-igual-avd-ret: "Data do show · opcional" 654.2 → 597.3 dp
+  N3P6-folha-editar-igual-avd-ret: "dd / mm / aaaa" 620 → 563.6 dp
+  N3P6-folha-editar-igual-tab-ret: "Nome" 654.2 → 597.3 dp
+  N3P6-folha-editar-igual-tab-ret: "Data do show · opcional" 654.2 → 597.3 dp
+  N3P6-folha-editar-igual-tab-ret: "dd / mm / aaaa" 620 → 563.6 dp
+  N3P6-folha-editar-limpa-avd-ret: "Nome" 654.2 → 597.3 dp
+  N3P6-folha-editar-limpa-avd-ret: "Data do show · opcional" 654.2 → 597.3 dp
+  N3P6-folha-editar-limpa-avd-ret: "dd / mm / aaaa" 620 → 563.6 dp
+  N3P6-folha-editar-limpa-tab-ret: "Nome" 654.2 → 597.3 dp
+  N3P6-folha-editar-limpa-tab-ret: "Data do show · opcional" 654.2 → 597.3 dp
+  N3P6-folha-editar-limpa-tab-ret: "dd / mm / aaaa" 620 → 563.6 dp
+  N3P6-folha-falhou-avd-ret: "falha no servidor — nada foi alterado aq" 620 → 563.6 dp
+  N3P6-folha-falhou-avd-ret: "Nome" 654.2 → 597.3 dp
+  N3P6-folha-falhou-avd-ret: "Data do show · opcional" 654.2 → 597.3 dp
+  N3P6-folha-falhou-avd-ret: "dd / mm / aaaa" 620 → 563.6 dp
+  N3P6-folha-falhou-tab-ret: "falha no servidor — nada foi alterado aq" 620 → 563.6 dp
+  N3P6-folha-falhou-tab-ret: "Nome" 654.2 → 597.3 dp
+  N3P6-folha-falhou-tab-ret: "Data do show · opcional" 654.2 → 597.3 dp
+  N3P6-folha-falhou-tab-ret: "dd / mm / aaaa" 620 → 563.6 dp
+  N3P6-folha-salvando-avd-ret: "Nome" 654.2 → 597.3 dp
+  N3P6-folha-salvando-avd-ret: "Data do show · opcional" 654.2 → 597.3 dp
+  N3P6-folha-salvando-avd-ret: "dd / mm / aaaa" 620 → 563.6 dp
+  N3P6-folha-salvando-tab-ret: "Nome" 654.2 → 597.3 dp
+  N3P6-folha-salvando-tab-ret: "Data do show · opcional" 654.2 → 597.3 dp
+  N3P6-folha-salvando-tab-ret: "dd / mm / aaaa" 620 → 563.6 dp
+  N3P6-folha-validacao-avd-ret: "Nome" 654.2 → 597.3 dp
+  N3P6-folha-validacao-avd-ret: "Data do show · opcional" 654.2 → 597.3 dp
+  N3P6-folha-validacao-avd-ret: "dd / mm / aaaa" 620 → 563.6 dp
+  N3P6-folha-validacao-tab-ret: "Nome" 654.2 → 597.3 dp
+  N3P6-folha-validacao-tab-ret: "Data do show · opcional" 654.2 → 597.3 dp
+  N3P6-folha-validacao-tab-ret: "dd / mm / aaaa" 620 → 563.6 dp
+  N3P6-picker-X-acima-de-100-avd-ret: "Manhã de ensaio" 698.7 → 271.6 dp
+  N3P6-picker-X-acima-de-100-avd-ret: "Banda da fixture" 698.7 → 271.6 dp
+  N3P6-picker-X-acima-de-100-avd-ret: "Segunda do ensaio" 698.7 → 271.6 dp
+  N3P6-picker-X-acima-de-100-avd-ret: "Duo Manacá" 698.7 → 271.6 dp
+  N3P6-picker-X-acima-de-100-avd-ret: "Terceira do ensaio" 698.7 → 271.6 dp
+  N3P6-picker-X-acima-de-100-avd-ret: "Trio de fixture" 698.7 → 271.6 dp
+  N3P6-picker-X-acima-de-100-avd-ret: "Sétima do ensaio" 698.7 → 271.6 dp
+  N3P6-picker-X-acima-de-100-avd-ret: "Banda da fixture" 698.7 → 271.6 dp
+  N3P6-picker-X-acima-de-100-avd-ret: "Banda da fixture" 698.7 → 271.6 dp
+  N3P6-picker-X-acima-de-100-avd-ret: "Duo Manacá" 698.7 → 461.3 dp
+  N3P6-picker-X-acima-de-100-tab-ret: "Manhã de ensaio" 698.7 → 271.6 dp
+  N3P6-picker-X-acima-de-100-tab-ret: "Banda da fixture" 698.7 → 271.6 dp
+  N3P6-picker-X-acima-de-100-tab-ret: "Segunda do ensaio" 698.7 → 271.6 dp
+  N3P6-picker-X-acima-de-100-tab-ret: "Duo Manacá" 698.7 → 271.6 dp
+  N3P6-picker-X-acima-de-100-tab-ret: "Terceira do ensaio" 698.7 → 271.6 dp
+  N3P6-picker-X-acima-de-100-tab-ret: "Trio de fixture" 698.7 → 271.6 dp
+  N3P6-picker-X-acima-de-100-tab-ret: "Sétima do ensaio" 698.7 → 271.6 dp
+  N3P6-picker-X-acima-de-100-tab-ret: "Banda da fixture" 698.7 → 271.6 dp
+  N3P6-picker-X-acima-de-100-tab-ret: "Banda da fixture" 698.7 → 271.6 dp
+  N3P6-picker-X-acima-de-100-tab-ret: "Duo Manacá" 698.7 → 461.3 dp
+  N3P6-picker-X-falhou-avd-ret: "Segunda do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-X-falhou-avd-ret: "Duo Manacá" 726.2 → 299.1 dp
+  N3P6-picker-X-falhou-avd-ret: "Terceira do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-X-falhou-avd-ret: "Trio de fixture" 726.2 → 299.1 dp
+  N3P6-picker-X-falhou-avd-ret: "Sétima do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-X-falhou-avd-ret: "Banda da fixture" 342.2 → 299.1 dp
+  N3P6-picker-X-falhou-avd-ret: "Oitava do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-X-falhou-avd-ret: "Banda da fixture" 342.2 → 299.1 dp
+  N3P6-picker-X-falhou-avd-ret: "Duo Manacá" 726.2 → 461.3 dp
+  N3P6-picker-X-falhou-tab-ret: "Segunda do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-X-falhou-tab-ret: "Duo Manacá" 726.2 → 299.1 dp
+  N3P6-picker-X-falhou-tab-ret: "Terceira do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-X-falhou-tab-ret: "Trio de fixture" 726.2 → 299.1 dp
+  N3P6-picker-X-falhou-tab-ret: "Sétima do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-X-falhou-tab-ret: "Banda da fixture" 342.2 → 299.1 dp
+  N3P6-picker-X-falhou-tab-ret: "Oitava do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-X-falhou-tab-ret: "Banda da fixture" 342.2 → 299.1 dp
+  N3P6-picker-X-falhou-tab-ret: "Duo Manacá" 726.2 → 461.3 dp
+  N3P6-picker-X-limite-avd-ret: "Manhã de ensaio" 469.8 → 451.1 dp
+  N3P6-picker-X-limite-avd-ret: "Banda da fixture" 469.8 → 451.1 dp
+  N3P6-picker-X-limite-avd-ret: "Segunda do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-X-limite-avd-ret: "Duo Manacá" 726.2 → 299.1 dp
+  N3P6-picker-X-limite-avd-ret: "Terceira do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-X-limite-avd-ret: "Trio de fixture" 726.2 → 299.1 dp
+  N3P6-picker-X-limite-avd-ret: "Sétima do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-X-limite-avd-ret: "Banda da fixture" 469.8 → 299.1 dp
+  N3P6-picker-X-limite-avd-ret: "Oitava do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-X-limite-avd-ret: "Banda da fixture" 469.8 → 299.1 dp
+  N3P6-picker-X-limite-avd-ret: "Duo Manacá" 726.2 → 461.3 dp
+  N3P6-picker-X-limite-tab-ret: "Manhã de ensaio" 469.8 → 451.1 dp
+  N3P6-picker-X-limite-tab-ret: "Banda da fixture" 469.8 → 451.1 dp
+  N3P6-picker-X-limite-tab-ret: "Segunda do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-X-limite-tab-ret: "Duo Manacá" 726.2 → 299.1 dp
+  N3P6-picker-X-limite-tab-ret: "Terceira do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-X-limite-tab-ret: "Trio de fixture" 726.2 → 299.1 dp
+  N3P6-picker-X-limite-tab-ret: "Sétima do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-X-limite-tab-ret: "Banda da fixture" 469.8 → 299.1 dp
+  N3P6-picker-X-limite-tab-ret: "Oitava do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-X-limite-tab-ret: "Banda da fixture" 469.8 → 299.1 dp
+  N3P6-picker-X-limite-tab-ret: "Duo Manacá" 726.2 → 461.3 dp
+  N3P6-picker-X-salvo-nao-relido-avd-ret: "Manhã de ensaio" 714.2 → 287.1 dp
+  N3P6-picker-X-salvo-nao-relido-avd-ret: "Banda da fixture" 714.2 → 287.1 dp
+  N3P6-picker-X-salvo-nao-relido-avd-ret: "Segunda do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-X-salvo-nao-relido-avd-ret: "Duo Manacá" 726.2 → 299.1 dp
+  N3P6-picker-X-salvo-nao-relido-avd-ret: "Terceira do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-X-salvo-nao-relido-avd-ret: "Trio de fixture" 726.2 → 299.1 dp
+  N3P6-picker-X-salvo-nao-relido-avd-ret: "Sétima do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-X-salvo-nao-relido-avd-ret: "Banda da fixture" 714.2 → 299.1 dp
+  N3P6-picker-X-salvo-nao-relido-avd-ret: "Banda da fixture" 714.2 → 299.1 dp
+  N3P6-picker-X-salvo-nao-relido-avd-ret: "Duo Manacá" 726.2 → 461.3 dp
+  N3P6-picker-X-salvo-nao-relido-avd-ret: aviso-motivo 591.6 → 431.6 dp (altura ×1.9)
+  N3P6-picker-X-salvo-nao-relido-tab-ret: "Manhã de ensaio" 714.2 → 287.1 dp
+  N3P6-picker-X-salvo-nao-relido-tab-ret: "Banda da fixture" 714.2 → 287.1 dp
+  N3P6-picker-X-salvo-nao-relido-tab-ret: "Segunda do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-X-salvo-nao-relido-tab-ret: "Duo Manacá" 726.2 → 299.1 dp
+  N3P6-picker-X-salvo-nao-relido-tab-ret: "Terceira do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-X-salvo-nao-relido-tab-ret: "Trio de fixture" 726.2 → 299.1 dp
+  N3P6-picker-X-salvo-nao-relido-tab-ret: "Sétima do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-X-salvo-nao-relido-tab-ret: "Banda da fixture" 714.2 → 299.1 dp
+  N3P6-picker-X-salvo-nao-relido-tab-ret: "Banda da fixture" 714.2 → 299.1 dp
+  N3P6-picker-X-salvo-nao-relido-tab-ret: "Duo Manacá" 726.2 → 461.3 dp
+  N3P6-picker-X-salvo-nao-relido-tab-ret: aviso-motivo 591.6 → 431.6 dp (altura ×1.9)
+  N3P6-picker-X-sem-rede-avd-ret: "Manhã de ensaio" 726.2 → 299.1 dp
+  N3P6-picker-X-sem-rede-avd-ret: "Banda da fixture" 726.2 → 299.1 dp
+  N3P6-picker-X-sem-rede-avd-ret: "Segunda do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-X-sem-rede-avd-ret: "Duo Manacá" 726.2 → 299.1 dp
+  N3P6-picker-X-sem-rede-avd-ret: "Terceira do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-X-sem-rede-avd-ret: "Trio de fixture" 726.2 → 299.1 dp
+  N3P6-picker-X-sem-rede-avd-ret: "Sétima do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-X-sem-rede-avd-ret: "Banda da fixture" 726.2 → 299.1 dp
+  N3P6-picker-X-sem-rede-avd-ret: "Banda da fixture" 726.2 → 299.1 dp
+  N3P6-picker-X-sem-rede-avd-ret: "Duo Manacá" 726.2 → 461.3 dp
+  N3P6-picker-X-sem-rede-avd-ret: aviso-motivo 762.2 → 631.1 dp (altura ×1.9)
+  N3P6-picker-X-sem-rede-tab-ret: "Manhã de ensaio" 726.2 → 299.1 dp
+  N3P6-picker-X-sem-rede-tab-ret: "Banda da fixture" 726.2 → 299.1 dp
+  N3P6-picker-X-sem-rede-tab-ret: "Segunda do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-X-sem-rede-tab-ret: "Duo Manacá" 726.2 → 299.1 dp
+  N3P6-picker-X-sem-rede-tab-ret: "Terceira do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-X-sem-rede-tab-ret: "Trio de fixture" 726.2 → 299.1 dp
+  N3P6-picker-X-sem-rede-tab-ret: "Sétima do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-X-sem-rede-tab-ret: "Banda da fixture" 726.2 → 299.1 dp
+  N3P6-picker-X-sem-rede-tab-ret: "Banda da fixture" 726.2 → 299.1 dp
+  N3P6-picker-X-sem-rede-tab-ret: "Duo Manacá" 726.2 → 461.3 dp
+  N3P6-picker-X-sem-rede-tab-ret: aviso-motivo 762.2 → 631.1 dp (altura ×1.9)
+  N3P6-picker-relendo-avd-ret: "Manhã de ensaio" 724.4 → 297.8 dp
+  N3P6-picker-relendo-avd-ret: "Banda da fixture" 724.4 → 297.8 dp
+  N3P6-picker-relendo-avd-ret: "Segunda do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-relendo-avd-ret: "Duo Manacá" 726.2 → 299.1 dp
+  N3P6-picker-relendo-avd-ret: "Terceira do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-relendo-avd-ret: "Trio de fixture" 726.2 → 299.1 dp
+  N3P6-picker-relendo-avd-ret: "Sétima do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-relendo-avd-ret: "Banda da fixture" 724.4 → 299.1 dp
+  N3P6-picker-relendo-avd-ret: "Oitava do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-relendo-avd-ret: "Banda da fixture" 724.4 → 299.1 dp
+  N3P6-picker-relendo-avd-ret: "Duo Manacá" 726.2 → 461.3 dp
+  N3P6-picker-relendo-avd-ret: "Banda da fixture" 724.4 → 461.3 dp
+  N3P6-picker-relendo-tab-ret: "Manhã de ensaio" 724.4 → 297.8 dp
+  N3P6-picker-relendo-tab-ret: "Banda da fixture" 724.4 → 297.8 dp
+  N3P6-picker-relendo-tab-ret: "Segunda do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-relendo-tab-ret: "Duo Manacá" 726.2 → 299.1 dp
+  N3P6-picker-relendo-tab-ret: "Terceira do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-relendo-tab-ret: "Trio de fixture" 726.2 → 299.1 dp
+  N3P6-picker-relendo-tab-ret: "Sétima do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-relendo-tab-ret: "Banda da fixture" 724.4 → 299.1 dp
+  N3P6-picker-relendo-tab-ret: "Oitava do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-relendo-tab-ret: "Banda da fixture" 724.4 → 299.1 dp
+  N3P6-picker-relendo-tab-ret: "Duo Manacá" 726.2 → 461.3 dp
+  N3P6-picker-relendo-tab-ret: "Banda da fixture" 724.4 → 461.3 dp
+  N3P6-picker-resultados-avd-ret: "Manhã de ensaio" 726.2 → 299.1 dp
+  N3P6-picker-resultados-avd-ret: "Banda da fixture" 726.2 → 299.1 dp
+  N3P6-picker-resultados-avd-ret: "Segunda do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-resultados-avd-ret: "Duo Manacá" 726.2 → 299.1 dp
+  N3P6-picker-resultados-avd-ret: "Terceira do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-resultados-avd-ret: "Trio de fixture" 726.2 → 299.1 dp
+  N3P6-picker-resultados-avd-ret: "Sétima do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-resultados-avd-ret: "Banda da fixture" 726.2 → 299.1 dp
+  N3P6-picker-resultados-avd-ret: "Oitava do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-resultados-avd-ret: "Banda da fixture" 726.2 → 299.1 dp
+  N3P6-picker-resultados-avd-ret: "Duo Manacá" 726.2 → 461.3 dp
+  N3P6-picker-resultados-avd-ret: "Banda da fixture" 726.2 → 461.3 dp
+  N3P6-picker-resultados-tab-ret: "Manhã de ensaio" 726.2 → 299.1 dp
+  N3P6-picker-resultados-tab-ret: "Banda da fixture" 726.2 → 299.1 dp
+  N3P6-picker-resultados-tab-ret: "Segunda do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-resultados-tab-ret: "Duo Manacá" 726.2 → 299.1 dp
+  N3P6-picker-resultados-tab-ret: "Terceira do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-resultados-tab-ret: "Trio de fixture" 726.2 → 299.1 dp
+  N3P6-picker-resultados-tab-ret: "Sétima do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-resultados-tab-ret: "Banda da fixture" 726.2 → 299.1 dp
+  N3P6-picker-resultados-tab-ret: "Oitava do ensaio" 726.2 → 299.1 dp
+  N3P6-picker-resultados-tab-ret: "Banda da fixture" 726.2 → 299.1 dp
+  N3P6-picker-resultados-tab-ret: "Duo Manacá" 726.2 → 461.3 dp
+  N3P6-picker-resultados-tab-ret: "Banda da fixture" 726.2 → 461.3 dp
+  N3P6-reordenar-X-limite-avd-ret: "REORDENAR · ENSAIO DE RETRATO" 717.8 → 663.1 dp
+  N3P6-reordenar-X-limite-avd-ret: "a ordem abaixo é a que você arrastou · a" 717.8 → 663.1 dp
+  N3P6-reordenar-X-limite-avd-ret: "Uma música de título bem comprido, para " 641.8 → 433.3 dp
+  N3P6-reordenar-X-limite-avd-ret: "· Artista de nome igualmente comprido da" 278.7 → 60 dp
+  N3P6-reordenar-X-limite-tab-ret: "REORDENAR · ENSAIO DE RETRATO" 717.8 → 663.1 dp
+  N3P6-reordenar-X-limite-tab-ret: "a ordem abaixo é a que você arrastou · a" 717.8 → 663.1 dp
+  N3P6-reordenar-X-limite-tab-ret: "Uma música de título bem comprido, para " 641.8 → 433.3 dp
+  N3P6-reordenar-X-limite-tab-ret: "· Artista de nome igualmente comprido da" 278.7 → 60 dp
+  N3P6-reordenar-X-sem-rede-avd-ret: aviso-motivo 762.2 → 631.1 dp (altura ×1.9)
+  N3P6-reordenar-X-sem-rede-avd-ret: "Uma música de título bem comprido, para " 641.8 → 433.3 dp
+  N3P6-reordenar-X-sem-rede-avd-ret: "· Artista de nome igualmente comprido da" 278.7 → 60 dp
+  N3P6-reordenar-X-sem-rede-tab-ret: aviso-motivo 762.2 → 631.1 dp (altura ×1.9)
+  N3P6-reordenar-X-sem-rede-tab-ret: "Uma música de título bem comprido, para " 641.8 → 433.3 dp
+  N3P6-reordenar-X-sem-rede-tab-ret: "· Artista de nome igualmente comprido da" 278.7 → 60 dp
+  N3P6-reordenar-aberto-avd-ret: "Uma música de título bem comprido, para " 641.8 → 433.3 dp
+  N3P6-reordenar-aberto-avd-ret: "· Artista de nome igualmente comprido da" 278.7 → 60 dp
+  N3P6-reordenar-aberto-avd-ret: "7" 32 → 32 dp (altura ×2.1)
+  N3P6-reordenar-aberto-avd-ret: "Sétima do ensaio" 163.6 → 163.6 dp (altura ×2.1)
+  N3P6-reordenar-aberto-tab-ret: "Uma música de título bem comprido, para " 641.8 → 433.3 dp
+  N3P6-reordenar-aberto-tab-ret: "· Artista de nome igualmente comprido da" 278.7 → 60 dp
+  N3P6-reordenar-arrastando-avd-ret: "Uma música de título bem comprido, para " 641.8 → 433.3 dp
+  N3P6-reordenar-arrastando-avd-ret: "· Artista de nome igualmente comprido da" 278.7 → 60 dp
+  N3P6-reordenar-arrastando-avd-ret: "7" 32 → 32 dp (altura ×2.1)
+  N3P6-reordenar-arrastando-avd-ret: "Sétima do ensaio" 163.6 → 163.6 dp (altura ×2.1)
+  N3P6-reordenar-arrastando-tab-ret: "Uma música de título bem comprido, para " 641.8 → 433.3 dp
+  N3P6-reordenar-arrastando-tab-ret: "· Artista de nome igualmente comprido da" 278.7 → 60 dp
+  N3P6-reordenar-descartado-avd-ret: "Uma música de título bem comprido, para " 641.8 → 433.3 dp
+  N3P6-reordenar-descartado-avd-ret: "· Artista de nome igualmente comprido da" 278.7 → 60 dp
+  N3P6-reordenar-descartado-tab-ret: "Uma música de título bem comprido, para " 641.8 → 433.3 dp
+  N3P6-reordenar-descartado-tab-ret: "· Artista de nome igualmente comprido da" 278.7 → 60 dp
+  N3P6-reordenar-falhou-avd-ret: "REORDENAR · ENSAIO DE RETRATO" 717.8 → 663.1 dp
+  N3P6-reordenar-falhou-avd-ret: "a ordem abaixo é a que você arrastou · a" 717.8 → 663.1 dp
+  N3P6-reordenar-falhou-avd-ret: aviso-motivo 882.2 → 631.1 dp (altura ×1.9)
+  N3P6-reordenar-falhou-avd-ret: "Uma música de título bem comprido, para " 641.8 → 433.3 dp
+  N3P6-reordenar-falhou-avd-ret: "· Artista de nome igualmente comprido da" 278.7 → 60 dp
+  N3P6-reordenar-falhou-tab-ret: "REORDENAR · ENSAIO DE RETRATO" 717.8 → 663.1 dp
+  N3P6-reordenar-falhou-tab-ret: "a ordem abaixo é a que você arrastou · a" 717.8 → 663.1 dp
+  N3P6-reordenar-falhou-tab-ret: aviso-motivo 882.2 → 631.1 dp (altura ×1.9)
+  N3P6-reordenar-falhou-tab-ret: "Uma música de título bem comprido, para " 641.8 → 433.3 dp
+  N3P6-reordenar-falhou-tab-ret: "· Artista de nome igualmente comprido da" 278.7 → 60 dp
+  N3P6-reordenar-salvando-avd-ret: "REORDENAR · ENSAIO DE RETRATO" 874.7 → 663.1 dp
+  N3P6-reordenar-salvando-avd-ret: "Uma música de título bem comprido, para " 641.8 → 433.3 dp
+  N3P6-reordenar-salvando-avd-ret: "· Artista de nome igualmente comprido da" 278.7 → 60 dp
+  N3P6-reordenar-salvando-avd-ret: "7" 32 → 32 dp (altura ×2.1)
+  N3P6-reordenar-salvando-avd-ret: "Sétima do ensaio" 163.6 → 163.6 dp (altura ×2.1)
+  N3P6-reordenar-salvando-tab-ret: "REORDENAR · ENSAIO DE RETRATO" 874.7 → 663.1 dp
+  N3P6-reordenar-salvando-tab-ret: "Uma música de título bem comprido, para " 641.8 → 433.3 dp
+  N3P6-reordenar-salvando-tab-ret: "· Artista de nome igualmente comprido da" 278.7 → 60 dp
+
+4 dp CONTRA A FOLHA — ERRATA CANDIDATA: 0
+
+NOME ACESSÍVEL — o texto está no content-desc do nó de mesmo resource-id (N3-D17); não reprova, não soma ao (e): 28
+  N3P6-S2-com-edicao-acima-de-100-avd-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N3P6-S2-com-edicao-acima-de-100-avd-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+  N3P6-S2-com-edicao-acima-de-100-tab-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N3P6-S2-com-edicao-acima-de-100-tab-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+  N3P6-S2-com-edicao-avd-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N3P6-S2-com-edicao-avd-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+  N3P6-S2-com-edicao-aviso-sem-rede-avd-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N3P6-S2-com-edicao-aviso-sem-rede-avd-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+  N3P6-S2-com-edicao-aviso-sem-rede-tab-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N3P6-S2-com-edicao-aviso-sem-rede-tab-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+  N3P6-S2-com-edicao-falhou-avd-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N3P6-S2-com-edicao-falhou-avd-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+  N3P6-S2-com-edicao-falhou-tab-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N3P6-S2-com-edicao-falhou-tab-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+  N3P6-S2-com-edicao-limite-avd-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N3P6-S2-com-edicao-limite-avd-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+  N3P6-S2-com-edicao-limite-tab-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N3P6-S2-com-edicao-limite-tab-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+  N3P6-S2-com-edicao-removendo-avd-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N3P6-S2-com-edicao-removendo-avd-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+  N3P6-S2-com-edicao-removendo-tab-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N3P6-S2-com-edicao-removendo-tab-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+  N3P6-S2-com-edicao-salvo-nao-relido-avd-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N3P6-S2-com-edicao-salvo-nao-relido-avd-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+  N3P6-S2-com-edicao-salvo-nao-relido-tab-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N3P6-S2-com-edicao-salvo-nao-relido-tab-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+  N3P6-S2-com-edicao-tab-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N3P6-S2-com-edicao-tab-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+
+ROLAGEM — o texto está no dump rolado do mesmo estado; não reprova, não soma ao (e): 18
+  N3P6-S2-com-edicao-acima-de-100-avd-ret: "Oitava do ensaio" → N3P6-S2-com-edicao-acima-de-100-rolada-avd-ret
+  N3P6-S2-com-edicao-acima-de-100-tab-ret: "Oitava do ensaio" → N3P6-S2-com-edicao-acima-de-100-rolada-tab-ret
+  N3P6-S2-com-edicao-avd-ret: "8" → N3P6-S2-com-edicao-rolada-avd-ret
+  N3P6-S2-com-edicao-avd-ret: "Oitava do ensaio" → N3P6-S2-com-edicao-rolada-avd-ret
+  N3P6-S2-com-edicao-aviso-sem-rede-avd-ret: "Oitava do ensaio" → N3P6-S2-com-edicao-aviso-sem-rede-rolada-avd-ret
+  N3P6-S2-com-edicao-aviso-sem-rede-tab-ret: "Oitava do ensaio" → N3P6-S2-com-edicao-aviso-sem-rede-rolada-tab-ret
+  N3P6-S2-com-edicao-falhou-avd-ret: "Oitava do ensaio" → N3P6-S2-com-edicao-falhou-rolada-avd-ret
+  N3P6-S2-com-edicao-falhou-tab-ret: "Oitava do ensaio" → N3P6-S2-com-edicao-falhou-rolada-tab-ret
+  N3P6-S2-com-edicao-limite-avd-ret: "Oitava do ensaio" → N3P6-S2-com-edicao-limite-rolada-avd-ret
+  N3P6-S2-com-edicao-limite-tab-ret: "Oitava do ensaio" → N3P6-S2-com-edicao-limite-rolada-tab-ret
+  N3P6-S2-com-edicao-removendo-avd-ret: "8" → N3P6-S2-com-edicao-removendo-rolada-avd-ret
+  N3P6-S2-com-edicao-removendo-avd-ret: "Oitava do ensaio" → N3P6-S2-com-edicao-removendo-rolada-avd-ret
+  N3P6-S2-com-edicao-removendo-tab-ret: "8" → N3P6-S2-com-edicao-removendo-rolada-tab-ret
+  N3P6-S2-com-edicao-removendo-tab-ret: "Oitava do ensaio" → N3P6-S2-com-edicao-removendo-rolada-tab-ret
+  N3P6-S2-com-edicao-salvo-nao-relido-avd-ret: "Oitava do ensaio" → N3P6-S2-com-edicao-salvo-nao-relido-rolada-avd-ret
+  N3P6-S2-com-edicao-salvo-nao-relido-tab-ret: "Oitava do ensaio" → N3P6-S2-com-edicao-salvo-nao-relido-rolada-tab-ret
+  N3P6-S2-com-edicao-tab-ret: "8" → N3P6-S2-com-edicao-rolada-tab-ret
+  N3P6-S2-com-edicao-tab-ret: "Oitava do ensaio" → N3P6-S2-com-edicao-rolada-tab-ret
+  dumps rolados usados (sha256, 12):
+    dad69dffbb40  N3P6-S2-com-edicao-acima-de-100-rolada-avd-ret.xml
+    bd309af10ac4  N3P6-S2-com-edicao-acima-de-100-rolada-tab-ret.xml
+    53dcd17d5645  N3P6-S2-com-edicao-aviso-sem-rede-rolada-avd-ret.xml
+    16f0f139c11d  N3P6-S2-com-edicao-aviso-sem-rede-rolada-tab-ret.xml
+    a75ca4735d1c  N3P6-S2-com-edicao-falhou-rolada-avd-ret.xml
+    3e6baf229522  N3P6-S2-com-edicao-falhou-rolada-tab-ret.xml
+    f54c38956713  N3P6-S2-com-edicao-limite-rolada-avd-ret.xml
+    a1f519d7f882  N3P6-S2-com-edicao-limite-rolada-tab-ret.xml
+    3197468fdbb2  N3P6-S2-com-edicao-removendo-rolada-avd-ret.xml
+    c23ac7e0663d  N3P6-S2-com-edicao-removendo-rolada-tab-ret.xml
+    a829f0685b42  N3P6-S2-com-edicao-rolada-avd-ret.xml
+    477784d38559  N3P6-S2-com-edicao-rolada-tab-ret.xml
+    62120930000c  N3P6-S2-com-edicao-salvo-nao-relido-rolada-avd-ret.xml
+    aaa7ac8e55f5  N3P6-S2-com-edicao-salvo-nao-relido-rolada-tab-ret.xml
+
+G-N3: (e)=0 · nome-acessível=28 · rolagem=18 ✓ (d′ e 4 dp não reprovam: triagem e errata)
+exit=0

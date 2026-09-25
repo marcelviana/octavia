@@ -1,0 +1,8 @@
+19:23:02 toque canto de setlist-00000001 @ 108,549
+19:23:09 toque 'picker-abrir' @ 242,377 (emulator-5556)
+19:23:13 toque 'picker-campo' @ 676,177 (emulator-5556)
+19:23:19 mock modo=escrita-500 vazio=False
+19:23:22 toque 'picker-adicionar-1' @ 776,551 (emulator-5556)
+N3P6-picker-X-falhou-phone-ret mCurrentRotation=ROTATION_0 png=205200 xml=42162 6dcf608d88b1
+19:23:37 mock modo=normal vazio=False
+capturas=1 falhas=0

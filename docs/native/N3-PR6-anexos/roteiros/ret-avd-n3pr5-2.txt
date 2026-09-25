@@ -1,0 +1,8 @@
+18:52:09 mock normal com a música 9 sem content (setlists-placeholder.json)
+18:52:38 toque canto de setlist-00000001 @ 96,474
+18:52:46 toque 'song-7' @ 800,2254 (emulator-5554)
+18:52:55 toque 'borda-avancar' @ 1480,1230 (emulator-5554)
+18:53:01 toque 'borda-avancar' @ 1480,1230 (emulator-5554)
+N3P6-S3-placeholder-avd-ret mCurrentRotation=ROTATION_90 png=113358 xml=23728 8164a9407403
+18:53:19 mock modo=normal vazio=False
+capturas=1 falhas=0

@@ -1,0 +1,8 @@
+19:27:02 toque canto de setlist-00000001 @ 96,474
+19:27:09 toque 'picker-abrir' @ 207,323 (RX2N8000F3D)
+19:27:13 toque 'picker-campo' @ 917,152 (RX2N8000F3D)
+19:27:19 mock modo=resync-pendurado vazio=False
+19:27:22 toque 'picker-adicionar-1' @ 1337,473 (RX2N8000F3D)
+N3P6-picker-relendo-tab-ret mCurrentRotation=ROTATION_0 png=371318 xml=60377 d2e6b15ea2db
+19:27:36 mock modo=normal vazio=False
+capturas=1 falhas=0
