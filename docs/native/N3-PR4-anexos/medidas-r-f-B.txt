@@ -1,0 +1,307 @@
+$ python3 docs/native/N3-PR4-anexos/instrumentos/medidas-r-f.py docs/native/N3-PR4-anexos/dumps-ret/*.xml
+== N3P4-dialogo-apagando-avd-ret.xml
+  diálogo (largura)            620.0  folha  620.0  Δ   +0.0  confere
+  diálogo (altura)             300.0
+  Manter a setlist             174.2  folha  173.0  Δ   +1.2  confere
+  Apagar (diálogo)             143.1  folha  142.0  Δ   +1.1  confere
+== N3P4-dialogo-apagando-tab-ret.xml
+  diálogo (largura)            620.0  folha  620.0  Δ   +0.0  confere
+  diálogo (altura)             300.0
+  Manter a setlist             174.2  folha  173.0  Δ   +1.2  confere
+  Apagar (diálogo)             143.1  folha  142.0  Δ   +1.1  confere
+== N3P4-dialogo-apagar-avd-ret.xml
+  diálogo (largura)            620.0  folha  620.0  Δ   +0.0  confere
+  diálogo (altura)             300.0
+  Manter a setlist             174.2  folha  173.0  Δ   +1.2  confere
+  Apagar (diálogo)             143.1  folha  142.0  Δ   +1.1  confere
+== N3P4-dialogo-apagar-tab-ret.xml
+  diálogo (largura)            620.0  folha  620.0  Δ   +0.0  confere
+  diálogo (altura)             300.0
+  Manter a setlist             174.2  folha  173.0  Δ   +1.2  confere
+  Apagar (diálogo)             143.1  folha  142.0  Δ   +1.1  confere
+== N3P4-folha-criar-avd-ret.xml
+  cartão (largura)             663.1  folha  663.0  Δ   +0.1  confere
+  cartão (altura)              424.4
+  cartão (topo)                 96.0  folha   96.0  Δ   +0.0  confere
+  cartão (fundo)               520.4
+  campo                        597.3  folha  599.0  Δ   -1.7  confere
+  Cancelar (folha)             122.2  folha  121.0  Δ   +1.2  confere
+  linha de botões (vão)        597.3  folha  599.0  Δ   -1.7  confere
+  botões (soma)                447.1  folha  444.0  Δ   +3.1  confere
+  motivo nome vazio            197.8  folha  197.0  Δ   +0.8  confere
+  Criar                        127.1  folha  126.0  Δ   +1.1  confere
+  form-salvar bounds         px [1186, 966, 1472, 1097] = dp [527.1,429.3][654.2,487.6]
+== N3P4-folha-criar-tab-ret.xml
+  cartão (largura)             663.1  folha  663.0  Δ   +0.1  confere
+  cartão (altura)              424.4
+  cartão (topo)                 96.0  folha   96.0  Δ   +0.0  confere
+  cartão (fundo)               520.4
+  campo                        597.3  folha  599.0  Δ   -1.7  confere
+  Cancelar (folha)             122.2  folha  121.0  Δ   +1.2  confere
+  linha de botões (vão)        597.3  folha  599.0  Δ   -1.7  confere
+  botões (soma)                447.1  folha  444.0  Δ   +3.1  confere
+  motivo nome vazio            197.8  folha  197.0  Δ   +0.8  confere
+  Criar                        127.1  folha  126.0  Δ   +1.1  confere
+  form-salvar bounds         px [1186, 966, 1472, 1097] = dp [527.1,429.3][654.2,487.6]
+== N3P4-folha-editar-data-avd-ret.xml
+  cartão (largura)             663.1  folha  663.0  Δ   +0.1  confere
+  cartão (altura)              394.7
+  cartão (topo)                 96.0  folha   96.0  Δ   +0.0  confere
+  cartão (fundo)               490.7
+  campo                        597.3  folha  599.0  Δ   -1.7  confere
+  Cancelar (folha)             122.2  folha  121.0  Δ   +1.2  confere
+  linha de botões (vão)        596.9  folha  599.0  Δ   -2.1  confere
+  botões (soma, outro estado)   257.3
+  Salvar (form-salvar)         135.1
+  form-salvar bounds         px [1167, 899, 1471, 1030] = dp [518.7,399.6][653.8,457.8]
+== N3P4-folha-editar-data-tab-ret.xml
+  cartão (largura)             663.1  folha  663.0  Δ   +0.1  confere
+  cartão (altura)              394.7
+  cartão (topo)                 96.0  folha   96.0  Δ   +0.0  confere
+  cartão (fundo)               490.7
+  campo                        597.3  folha  599.0  Δ   -1.7  confere
+  Cancelar (folha)             122.2  folha  121.0  Δ   +1.2  confere
+  linha de botões (vão)        596.9  folha  599.0  Δ   -2.1  confere
+  botões (soma, outro estado)   257.3
+  Salvar (form-salvar)         135.1
+  form-salvar bounds         px [1167, 899, 1471, 1030] = dp [518.7,399.6][653.8,457.8]
+== N3P4-folha-editar-igual-avd-ret.xml
+  cartão (largura)             663.1  folha  663.0  Δ   +0.1  confere
+  cartão (altura)              394.7
+  cartão (topo)                 96.0  folha   96.0  Δ   +0.0  confere
+  cartão (fundo)               490.7
+  campo                        597.3  folha  599.0  Δ   -1.7  confere
+  Cancelar (folha)             122.2  folha  121.0  Δ   +1.2  confere
+  linha de botões (vão)        597.3  folha  599.0  Δ   -1.7  confere
+  botões (soma, outro estado)   497.3
+  motivo “nada mudou desde que você abriu”   237.8
+  Salvar (form-salvar)         137.3
+  form-salvar bounds         px [1163, 899, 1472, 1030] = dp [516.9,399.6][654.2,457.8]
+== N3P4-folha-editar-igual-tab-ret.xml
+  cartão (largura)             663.1  folha  663.0  Δ   +0.1  confere
+  cartão (altura)              394.7
+  cartão (topo)                 96.0  folha   96.0  Δ   +0.0  confere
+  cartão (fundo)               490.7
+  campo                        597.3  folha  599.0  Δ   -1.7  confere
+  Cancelar (folha)             122.2  folha  121.0  Δ   +1.2  confere
+  linha de botões (vão)        597.3  folha  599.0  Δ   -1.7  confere
+  botões (soma, outro estado)   497.3
+  motivo “nada mudou desde que você abriu”   237.8
+  Salvar (form-salvar)         137.3
+  form-salvar bounds         px [1163, 899, 1472, 1030] = dp [516.9,399.6][654.2,457.8]
+== N3P4-folha-editar-limpa-avd-ret.xml
+  cartão (largura)             663.1  folha  663.0  Δ   +0.1  confere
+  cartão (altura)              394.7
+  cartão (topo)                 96.0  folha   96.0  Δ   +0.0  confere
+  cartão (fundo)               490.7
+  campo                        597.3  folha  599.0  Δ   -1.7  confere
+  Cancelar (folha)             122.2  folha  121.0  Δ   +1.2  confere
+  linha de botões (vão)        597.3  folha  599.0  Δ   -1.7  confere
+  botões (soma, outro estado)   497.3
+  motivo “nada mudou desde que você abriu”   237.8
+  Salvar (form-salvar)         137.3
+  form-salvar bounds         px [1163, 899, 1472, 1030] = dp [516.9,399.6][654.2,457.8]
+== N3P4-folha-editar-limpa-tab-ret.xml
+  cartão (largura)             663.1  folha  663.0  Δ   +0.1  confere
+  cartão (altura)              394.7
+  cartão (topo)                 96.0  folha   96.0  Δ   +0.0  confere
+  cartão (fundo)               490.7
+  campo                        597.3  folha  599.0  Δ   -1.7  confere
+  Cancelar (folha)             122.2  folha  121.0  Δ   +1.2  confere
+  linha de botões (vão)        597.3  folha  599.0  Δ   -1.7  confere
+  botões (soma, outro estado)   497.3
+  motivo “nada mudou desde que você abriu”   237.8
+  Salvar (form-salvar)         137.3
+  form-salvar bounds         px [1163, 899, 1472, 1030] = dp [516.9,399.6][654.2,457.8]
+== N3P4-folha-falhou-avd-ret.xml
+  cartão (largura)             663.1  folha  663.0  Δ   +0.1  confere
+  cartão (altura)              506.2
+  cartão (topo)                 96.0  folha   96.0  Δ   +0.0  confere
+  cartão (fundo)               602.2
+  campo                        597.3  folha  599.0  Δ   -1.7  confere
+  Fechar (form-cancelar)       104.9
+  linha de botões (vão)        596.9  folha  599.0  Δ   -2.1  confere
+  botões (soma, outro estado)   311.1
+  Tentar de novo (form-tentar)   206.2
+  form-tentar bounds         px [1007, 1150, 1471, 1280] = dp [447.6,511.1][653.8,568.9]
+== N3P4-folha-falhou-tab-ret.xml
+  cartão (largura)             663.1  folha  663.0  Δ   +0.1  confere
+  cartão (altura)              506.2
+  cartão (topo)                 96.0  folha   96.0  Δ   +0.0  confere
+  cartão (fundo)               602.2
+  campo                        597.3  folha  599.0  Δ   -1.7  confere
+  Fechar (form-cancelar)       104.9
+  linha de botões (vão)        596.9  folha  599.0  Δ   -2.1  confere
+  botões (soma, outro estado)   311.1
+  Tentar de novo (form-tentar)   206.2
+  form-tentar bounds         px [1007, 1150, 1471, 1280] = dp [447.6,511.1][653.8,568.9]
+== N3P4-folha-salvando-avd-ret.xml
+  cartão (largura)             663.1  folha  663.0  Δ   +0.1  confere
+  cartão (altura)              394.7
+  cartão (topo)                 96.0  folha   96.0  Δ   +0.0  confere
+  cartão (fundo)               490.7
+  campo                        597.3  folha  599.0  Δ   -1.7  confere
+  Criar                        127.1  folha  126.0  Δ   +1.1  confere
+  form-salvar bounds         px [1186, 899, 1472, 1030] = dp [527.1,399.6][654.2,457.8]
+== N3P4-folha-salvando-tab-ret.xml
+  cartão (largura)             663.1  folha  663.0  Δ   +0.1  confere
+  cartão (altura)              394.7
+  cartão (topo)                 96.0  folha   96.0  Δ   +0.0  confere
+  cartão (fundo)               490.7
+  campo                        597.3  folha  599.0  Δ   -1.7  confere
+  Criar                        127.1  folha  126.0  Δ   +1.1  confere
+  form-salvar bounds         px [1186, 899, 1472, 1030] = dp [527.1,399.6][654.2,457.8]
+== N3P4-folha-validacao-avd-ret.xml
+  cartão (largura)             663.1  folha  663.0  Δ   +0.1  confere
+  cartão (altura)              424.4
+  cartão (topo)                 96.0  folha   96.0  Δ   +0.0  confere
+  cartão (fundo)               520.4
+  campo                        597.3  folha  599.0  Δ   -1.7  confere
+  Cancelar (folha)             122.2  folha  121.0  Δ   +1.2  confere
+  linha de botões (vão)        597.3  folha  599.0  Δ   -1.7  confere
+  botões (soma, outro estado)   457.3
+  motivo nome vazio            197.8  folha  197.0  Δ   +0.8  confere
+  Salvar (form-salvar)         137.3
+  form-salvar bounds         px [1163, 966, 1472, 1097] = dp [516.9,429.3][654.2,487.6]
+== N3P4-folha-validacao-tab-ret.xml
+  cartão (largura)             663.1  folha  663.0  Δ   +0.1  confere
+  cartão (altura)              424.4
+  cartão (topo)                 96.0  folha   96.0  Δ   +0.0  confere
+  cartão (fundo)               520.4
+  campo                        597.3  folha  599.0  Δ   -1.7  confere
+  Cancelar (folha)             122.2  folha  121.0  Δ   +1.2  confere
+  linha de botões (vão)        597.3  folha  599.0  Δ   -1.7  confere
+  botões (soma, outro estado)   457.3
+  motivo nome vazio            197.8  folha  197.0  Δ   +0.8  confere
+  Salvar (form-salvar)         137.3
+  form-salvar bounds         px [1163, 966, 1472, 1097] = dp [516.9,429.3][654.2,487.6]
+== N3P4-reordenar-aberto-avd-ret.xml
+  barra                        144.0  folha  144.0  Δ   +0.0  confere
+  título                       663.1
+  Cancelar (reordenar)          94.7  folha   96.0  Δ   -1.3  confere
+  motivo nada mudou            237.8  folha  237.8  Δ   -0.0  confere
+  Salvar a ordem               191.6  folha  191.0  Δ   +0.6  confere
+  linha de ações               663.1
+  folga da linha de ações      139.1
+  linha (largura)              663.1  folha  663.0  Δ   +0.1  confere
+  linha (altura)                72.0  folha   72.0  Δ   +0.0  confere
+  alça (largura)                48.0  folha   48.0  Δ   +0.0  confere
+  alça (altura)                 72.0  folha   72.0  Δ   +0.0  confere
+  x das alças                24.9
+  artista mín.                  60.0
+== N3P4-reordenar-aberto-tab-ret.xml
+  barra                        144.0  folha  144.0  Δ   +0.0  confere
+  título                       663.1
+  Cancelar (reordenar)          94.7  folha   96.0  Δ   -1.3  confere
+  motivo nada mudou            237.8  folha  237.8  Δ   -0.0  confere
+  Salvar a ordem               191.6  folha  191.0  Δ   +0.6  confere
+  linha de ações               663.1
+  folga da linha de ações      139.1
+  linha (largura)              663.1  folha  663.0  Δ   +0.1  confere
+  linha (altura)                72.0  folha   72.0  Δ   +0.0  confere
+  alça (largura)                48.0  folha   48.0  Δ   +0.0  confere
+  alça (altura)                 72.0  folha   72.0  Δ   +0.0  confere
+  x das alças                24.9
+  artista mín.                  60.0
+== N3P4-reordenar-arrastando-avd-ret.xml
+  barra                        144.0  folha  144.0  Δ   +0.0  confere
+  título                       663.1
+  Cancelar (reordenar)          94.7  folha   96.0  Δ   -1.3  confere
+  motivo nada mudou            237.8  folha  237.8  Δ   -0.0  confere
+  Salvar a ordem               191.6  folha  191.0  Δ   +0.6  confere
+  linha de ações               663.1
+  folga da linha de ações      139.1
+  linha (largura)              663.1  folha  663.0  Δ   +0.1  confere
+  linha (altura)                72.0  folha   72.0  Δ   +0.0  confere
+  alça (largura)                48.0  folha   48.0  Δ   +0.0  confere
+  alça (altura)                 72.0  folha   72.0  Δ   +0.0  confere
+  x das alças                24.9
+  artista mín.                  60.0
+== N3P4-reordenar-arrastando-tab-ret.xml
+  barra                        144.0  folha  144.0  Δ   +0.0  confere
+  título                       663.1
+  Cancelar (reordenar)          94.7  folha   96.0  Δ   -1.3  confere
+  motivo nada mudou            237.8  folha  237.8  Δ   -0.0  confere
+  Salvar a ordem               191.6  folha  191.0  Δ   +0.6  confere
+  linha de ações               663.1
+  folga da linha de ações      139.1
+  linha (largura)              663.1  folha  663.0  Δ   +0.1  confere
+  linha (altura)                72.0  folha   72.0  Δ   +0.0  confere
+  alça (largura)                48.0  folha   48.0  Δ   +0.0  confere
+  alça (altura)                 72.0  folha   72.0  Δ   +0.0  confere
+  x das alças                24.9
+  artista mín.                  60.0
+== N3P4-reordenar-descartado-avd-ret.xml
+  barra                        144.0  folha  144.0  Δ   +0.0  confere
+  título                       663.1
+  Sair sem salvar (reordenar-sair)   135.1
+  motivo nada mudou            237.8  folha  237.8  Δ   -0.0  confere
+  Salvar a ordem               191.1  folha  191.0  Δ   +0.1  confere
+  linha de ações               663.1
+  folga da linha de ações       99.1
+  linha (largura)              663.1  folha  663.0  Δ   +0.1  confere
+  linha (altura)                72.0  folha   72.0  Δ   +0.0  confere
+  alça (largura)                48.0  folha   48.0  Δ   +0.0  confere
+  alça (altura)                 72.0  folha   72.0  Δ   +0.0  confere
+  x das alças                24.9
+  artista mín.                  60.0
+== N3P4-reordenar-descartado-tab-ret.xml
+  barra                        144.0  folha  144.0  Δ   +0.0  confere
+  título                       663.1
+  Sair sem salvar (reordenar-sair)   135.1
+  motivo nada mudou            237.8  folha  237.8  Δ   -0.0  confere
+  Salvar a ordem               191.1  folha  191.0  Δ   +0.1  confere
+  linha de ações               663.1
+  folga da linha de ações       99.1
+  linha (largura)              663.1  folha  663.0  Δ   +0.1  confere
+  linha (altura)                72.0  folha   72.0  Δ   +0.0  confere
+  alça (largura)                48.0  folha   48.0  Δ   +0.0  confere
+  alça (altura)                 72.0  folha   72.0  Δ   +0.0  confere
+  x das alças                24.9
+  artista mín.                  60.0
+== N3P4-reordenar-falhou-avd-ret.xml
+  barra                        144.0  folha  144.0  Δ   +0.0  confere
+  título                       663.1
+  Sair sem salvar (reordenar-sair)   135.1
+  Tentar de novo (reordenar-salvar)   188.9
+  linha de ações               663.1
+  folga da linha de ações      339.1
+  linha (largura)              663.1  folha  663.0  Δ   +0.1  confere
+  linha (altura)                72.0  folha   72.0  Δ   +0.0  confere
+  alça (largura)                48.0  folha   48.0  Δ   +0.0  confere
+  alça (altura)                 72.0  folha   72.0  Δ   +0.0  confere
+  x das alças                24.9
+  artista mín.                  60.0
+== N3P4-reordenar-falhou-tab-ret.xml
+  barra                        144.0  folha  144.0  Δ   +0.0  confere
+  título                       663.1
+  Sair sem salvar (reordenar-sair)   135.1
+  Tentar de novo (reordenar-salvar)   188.9
+  linha de ações               663.1
+  folga da linha de ações      339.1
+  linha (largura)              663.1  folha  663.0  Δ   +0.1  confere
+  linha (altura)                72.0  folha   72.0  Δ   +0.0  confere
+  alça (largura)                48.0  folha   48.0  Δ   +0.0  confere
+  alça (altura)                 72.0  folha   72.0  Δ   +0.0  confere
+  x das alças                24.9
+  artista mín.                  60.0
+== N3P4-reordenar-salvando-avd-ret.xml
+  barra                        144.0  folha  144.0  Δ   +0.0  confere
+  título                       663.1
+  Salvar a ordem               191.1  folha  191.0  Δ   +0.1  confere
+  linha (largura)              663.1  folha  663.0  Δ   +0.1  confere
+  linha (altura)                72.0  folha   72.0  Δ   +0.0  confere
+  alça (largura)                48.0  folha   48.0  Δ   +0.0  confere
+  alça (altura)                 72.0  folha   72.0  Δ   +0.0  confere
+  x das alças                24.9
+  artista mín.                  60.0
+== N3P4-reordenar-salvando-tab-ret.xml
+  barra                        144.0  folha  144.0  Δ   +0.0  confere
+  título                       663.1
+  Salvar a ordem               191.1  folha  191.0  Δ   +0.1  confere
+  linha (largura)              663.1  folha  663.0  Δ   +0.1  confere
+  linha (altura)                72.0  folha   72.0  Δ   +0.0  confere
+  alça (largura)                48.0  folha   48.0  Δ   +0.0  confere
+  alça (altura)                 72.0  folha   72.0  Δ   +0.0  confere
+  x das alças                24.9
+  artista mín.                  60.0

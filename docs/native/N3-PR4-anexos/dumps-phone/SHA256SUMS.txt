@@ -1,0 +1,4 @@
+515e3506a1727a9cfad153707dca780860b0e04381c75709e99c1580a81e6c71  N3P4-folha-com-data-phone-ret.xml
+29f14f77a330f2394a0a847c2be04e2d0b5bb75a2be472928d5b090fd484e2bb  N3P4-folha-criar-phone-ret.xml
+703a42530a08447eca0856208355488cfc9ff2a5a66f7d2e8279cd8a4bc3e67d  N3P4-reordenar-aberto-phone-ret.xml
+93d3919b19a32fc5456c96d1e664f0b5f859df5ee5ce3aeac680929236233438  N3P4-reordenar-arrastado-phone-ret.xml

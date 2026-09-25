@@ -1,0 +1,17 @@
+$ npx vitest run --project native-tela apps/native/test/reordenar-folha-faixa.test.tsx apps/native/test/reordenar.test.tsx apps/native/test/s2-edicao.test.tsx apps/native/test/s1-criar.test.tsx apps/native/test/s1-faixa.test.tsx apps/native/test/s2-faixa.test.tsx   # commit 2
+ ✓ |native-tela| apps/native/test/s1-faixa.test.tsx (6 tests) 1556ms
+ ✓ |native-tela| apps/native/test/s2-faixa.test.tsx (10 tests) 2528ms
+ ✓ |native-tela| apps/native/test/reordenar-folha-faixa.test.tsx (11 tests) 2541ms
+ ✓ |native-tela| apps/native/test/s1-criar.test.tsx (12 tests) 3781ms
+ ✓ |native-tela| apps/native/test/reordenar.test.tsx (15 tests) 4090ms
+ ✓ |native-tela| apps/native/test/s2-edicao.test.tsx (21 tests) 6142ms
+ Test Files  6 passed (6)
+      Tests  75 passed (75)
+$ npx vitest run --project native --project native-tela   # a suíte inteira do nativo
+ Test Files  18 passed (18)
+      Tests  189 passed (189)
+$ npx vitest run --project core
+ Test Files  17 passed (17)
+      Tests  202 passed (202)
+$ (cd apps/native && npx tsc --noEmit -p .); echo exit=$?
+exit=0

@@ -1,0 +1,9 @@
+# AVD octavia_tab32 — 2ª subida, lido (2026-09-25 12:59:41)
+global stay_on_while_plugged_in=1
+system accelerometer_rotation=1
+system user_rotation=0
+global airplane_mode_on=1
+global wifi_on=0
+global mobile_data=0
+reverse: 
+    lastUpdateTime=2026-09-24 14:00:01

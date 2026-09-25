@@ -1,0 +1,11 @@
+# bundle servido pelo Metro (2026-09-25 12:43:04), 7210057 B
+localhost:8788 1
+octavia.rocks 0
+rotulosCurtos 6
+artistaCede 3
+barraEmpilhada 4
+linhaDeAcoes 2
+motivoQuebra 2
+alturaMin 3
+useLinhaDaFaixa 6
+faixa= 4

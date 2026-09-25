@@ -1,0 +1,61 @@
+13:37:07 toque canto de setlist-00000001 @ 96,420
+13:37:14 toque 'reordenar' @ 676,323 (RX2N8000F3D)
+13:37:25 motionevent DOWN alca-5 (110,1107) → MOVE até (110,567), dedo no vidro
+N3P4-reordenar-arrastando-tab-pai mCurrentRotation=ROTATION_90 png=277156 xml=43954 70d6dc4b300e
+13:37:37 motionevent UP
+13:37:41 toque 'reordenar-sair' @ 1919,152 (RX2N8000F3D)
+13:37:44 mock modo=escrita-pendurada vazio=False
+13:37:59 toque canto de setlist-00000001 @ 96,420
+13:38:06 toque 'reordenar' @ 676,323 (RX2N8000F3D)
+13:38:18 swipe alca-5 (110,1107) → alca-2 (110,567) 1500 ms
+13:38:23 toque 'reordenar-salvar' @ 2293,152 (RX2N8000F3D)
+N3P4-reordenar-salvando-tab-pai mCurrentRotation=ROTATION_90 png=261642 xml=43530 7c6ab44423cc
+13:38:32 salvando capturado 8.6 s depois do toque (prazo do cliente: 20 s)
+13:38:51 toque 'reordenar-sair' @ 1875,152 (RX2N8000F3D)
+13:38:54 mock modo=normal vazio=False
+13:38:56 mock modo=escrita-500 vazio=False
+13:39:11 toque canto de setlist-00000001 @ 96,420
+13:39:17 toque 'reordenar' @ 676,323 (RX2N8000F3D)
+13:39:30 swipe alca-5 (110,1107) → alca-2 (110,567) 1500 ms
+13:39:34 toque 'reordenar-salvar' @ 2293,152 (RX2N8000F3D)
+N3P4-reordenar-falhou-tab-pai mCurrentRotation=ROTATION_90 png=278424 xml=40441 b72486825a64
+13:39:52 toque 'reordenar-sair' @ 1875,152 (RX2N8000F3D)
+13:39:55 mock modo=normal vazio=False
+13:39:56 mock modo=normal vazio=False
+13:40:11 toque canto de setlist-00000001 @ 96,420
+13:40:18 toque 'reordenar' @ 676,323 (RX2N8000F3D)
+13:40:30 swipe alca-5 (110,1107) → alca-2 (110,567) 1500 ms
+13:40:33 outro aparelho: DELETE /api/setlists/songs/00010003-0000-4000-8000-000000000004 → 200
+13:40:35 toque 'reordenar-salvar' @ 2293,152 (RX2N8000F3D)
+N3P4-reordenar-descartado-tab-pai mCurrentRotation=ROTATION_90 png=275396 xml=40733 1bfe7c847d3e
+13:40:50 toque 'reordenar-sair' @ 1281,152 (RX2N8000F3D)
+13:40:53 mock modo=normal vazio=False
+13:40:55 mock modo=escrita-pendurada vazio=False
+13:41:07 toque 'criar-setlist' @ 1878,188 (RX2N8000F3D)
+13:41:11 toque 'form-nome' @ 1280,552 (RX2N8000F3D)
+13:41:18 toque 'form-salvar' @ 1875,973 (RX2N8000F3D)
+N3P4-folha-salvando-tab-pai mCurrentRotation=ROTATION_90 png=213524 xml=10988 122e0771b788
+13:41:30 salvando capturado 10.7 s depois do toque (prazo do cliente: 20 s)
+13:41:47 toque 'form-cancelar' @ 662,1340 (RX2N8000F3D)
+13:41:49 mock modo=normal vazio=False
+13:42:04 toque canto de setlist-00000001 @ 96,420
+13:42:11 toque 'setlist-editar' @ 1877,323 (RX2N8000F3D)
+N3P4-folha-editar-igual-tab-pai mCurrentRotation=ROTATION_90 png=253930 xml=10077 d5e550cf0890
+13:42:27 toque 'form-cancelar' @ 681,973 (RX2N8000F3D)
+13:42:43 toque canto de setlist-00000001 @ 96,420
+13:42:50 toque 'setlist-editar' @ 1877,323 (RX2N8000F3D)
+13:42:55 toque 'form-data' @ 1280,786 (RX2N8000F3D)
+13:43:00 seletor do sistema: OK (OK)
+N3P4-folha-editar-data-tab-pai mCurrentRotation=ROTATION_90 png=249766 xml=11364 53570098ed5a
+13:43:14 toque 'form-data-limpar' @ 1893,787 (RX2N8000F3D)
+N3P4-folha-editar-limpa-tab-pai mCurrentRotation=ROTATION_90 png=254010 xml=10077 d5e550cf0890
+13:43:29 toque 'form-cancelar' @ 681,973 (RX2N8000F3D)
+13:43:32 mock modo=escrita-pendurada vazio=False
+13:43:47 toque canto de setlist-00000001 @ 96,420
+13:43:54 toque 'setlist-apagar' @ 2318,323 (RX2N8000F3D)
+13:43:58 toque 'apagar-confirmar' @ 1742,998 (RX2N8000F3D)
+N3P4-dialogo-apagando-tab-pai mCurrentRotation=ROTATION_90 png=288838 xml=10496 f1feb696ab0c
+13:44:09 apagando capturado 10.6 s depois do toque (prazo do cliente: 20 s)
+13:44:26 toque 'apagar-manter' @ 853,1085 (RX2N8000F3D)
+13:44:29 mock modo=normal vazio=False
+capturas=9 falhas=0

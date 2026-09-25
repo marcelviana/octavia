@@ -1,0 +1,36 @@
+14:01:47 mock modo=normal vazio=False
+14:02:04 toque canto de setlist-00000001 @ 108,549
+14:02:10 toque 'reordenar' @ 652,377 (emulator-5556)
+N3P4-reordenar-aberto-phone-ret mCurrentRotation=ROTATION_0 png=187128 xml=47011 703a42530a08
+14:02:27 toque 'reordenar-sair' @ 188,363 (emulator-5556)
+14:02:34 toque 'reordenar' @ 652,377 (emulator-5556)
+N3P4-reordenar-arrastado-phone-ret mCurrentRotation=ROTATION_0 png=186359 xml=46633 93d3919b19a3
+14:02:57 toque 'reordenar-salvar' @ 767,363 (emulator-5556)
+14:03:01 mock modo=normal vazio=False
+14:03:22 toque 'criar-setlist' @ 326,396 (emulator-5556)
+N3P4-folha-criar-phone-ret mCurrentRotation=ROTATION_0 png=114043 xml=8113 29f14f77a330
+14:03:40 toque 'form-cancelar' @ 38,1203 (emulator-5556)
+14:03:47 toque 'criar-setlist' @ 326,396 (emulator-5556)
+14:03:53 toque 'form-nome' @ 540,635 (emulator-5556)
+14:04:02 toque 'form-data' @ 540,909 (emulator-5556)
+14:04:09 seletor do sistema: OK
+N3P4-folha-com-data-phone-ret mCurrentRotation=ROTATION_0 png=104544 xml=7716 515e3506a172
+14:04:21 toque 'form-data-limpar' @ 1058,909 (emulator-5556)
+14:04:27 toque 'form-salvar' @ 1039,1126 (emulator-5556)
+14:04:31 mock modo=normal vazio=False
+14:04:54 toque canto de setlist-00000001 @ 108,549
+14:05:02 mock modo=normal vazio=False
+
+## faixa A (octavia_phone em retrato) — controles de escrita, por superfície
+  reordenar  reordenar-sair     alcançável    bounds [63,300][313,426]; toque @ 188,363 → voltou a S2 (picker-abrir)
+  reordenar  alca-5             alcançável    bounds [66,1344][192,1533]; swipe 129,1438 → 129,808 → `reordenar-salvar` ativo
+  reordenar  reordenar-salvar   alcançável    bounds [518,300][1017,426]; toque @ 767,363 → gravou e o modo fechou (sem alca-1)
+  folha      form-cancelar      alcançável    bounds [0,1127][76,1279]; toque @ 38,1203 → a folha fechou
+  folha      form-nome          alcançável    bounds [0,556][1080,715]; toque @ 540,635 → o teclado subiu
+  folha      form-data          alcançável    bounds [0,830][1080,988]; toque @ 540,909 → abriu o seletor do sistema
+  folha      form-data-limpar   alcançável    bounds [1037,846][1080,972]; toque @ 1058,909 → a data saiu (sem form-data-limpar)
+  folha      form-salvar        alcançável    bounds [998,1050][1080,1202]; toque @ 1039,1126 → gravou e a folha fechou
+  dialogo    setlist-apagar     INALCANÇÁVEL  sem nó no dump
+  dialogo    apagar-manter      INALCANÇÁVEL  a entrada (`setlist-apagar`) é inalcançável em A
+  dialogo    apagar-confirmar   INALCANÇÁVEL  a entrada (`setlist-apagar`) é inalcançável em A
+capturas=4
