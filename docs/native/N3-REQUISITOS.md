@@ -87,6 +87,7 @@ O N3 está pronto quando **todos** abaixo passam, no **Tab S6 e no AVD `octavia_
 | 6 | **P1** — o FAB do dev client cobre o canto superior direito nas capturas de retrato | N3-D25 | **aparato** — hipótese no `APARATO.md`, dono a N3-PR1 |
 | 7 | **P2** — a faixa como tokens no `theme.ts` | N3-D25 | **N3-PR1** (decisão com a invariante de C medida) |
 | 8 | Bloco D | — | **nada**: o N3 não toca backend |
+| 9 | **o flake do `escrita.test.ts` › "ÚLTIMO 200"**: o modo `escrita-releitura-fora-de-ordem` do `aceite.py` passa a segurar a 1ª releitura **até a 2ª chegar** (evento, não a janela de 600 ms), com **CN que reprova quando a inversão não acontece** | div. 432 (N3-PR4) | **W5** |
 
 ---
 
@@ -127,3 +128,16 @@ Evidência em [`N3-PR3-anexos/`](N3-PR3-anexos/README.md); decisão, erratas e d
 | **A-N3-5 — S2** | **atende para S2**: oito estados × quatro colunas, todo alvo ≥ 48 e com `testID`, os mesmos ids nas quatro | `G5G6-S2.txt` |
 | **A-N3-6** | **atende**: em B, `picker-abrir` com `Adicionar` e `content-desc` `Adicionar música`; `setlist-apagar` com `Apagar` e `Apagar setlist`; `gate:a20` 0 acusações | `dumps-ret/`, `a20-commit2.txt` |
 | **A-N3-7 — S2** | **atende**: as cinco amostras em B — sem rede 66,2 · salvo-não-relido 66,2 · falhou 66,2 · limite 48,0 · teto de 100 48,0 (N3-E14: uma linha no app) —, nenhuma elidida; em C, nenhum `bounds` diferente (A-N3-2). Com a de limite, a div. 413 fica fechada | `medidas-s2-B.txt` |
+
+## 8. O que a N3-PR4 fechou (reordenar, folha e diálogo na faixa B)
+
+Evidência em [`N3-PR4-anexos/`](N3-PR4-anexos/README.md); errata e divergências no `DESIGN-N3/README.md` §9 (N3-E15; divs. 425–431). O reordenar e a folha leem a faixa (`useFaixa()`), com os tokens `reordenar` e `folha` do `theme.ts`; o diálogo "em B passa" e não muda.
+
+| # | estado | evidência |
+|---|---|---|
+| **A-N3-2** | **atende de novo**: 34/34 (B5) e 18/18 (palco); os 52 dumps de paisagem iguais aos da N3-PR3 byte a byte | `G-inv-B5.txt`, `G-inv-palco.txt` |
+| **A-N3-3 — reordenar, folha, diálogo** | **B atende**: o reordenar confere com `N3-B-reordenar` (barra 144,0 · linha 663,1 × 72,0 · alça 48 × 72 · artista mínimo 60,0 · `Cancelar` 94,7 · motivo 237,8 · `Salvar a ordem` 191,6), nos estados da N2 (arrastando, salvando, falhou com o arrasto, 400 com o arrasto descartado); a folha confere com `N3-B-F-validacao` (663,1 a 96,0, botões numa linha, acima do teclado: `form-salvar` termina em 487,6 com o teclado em 752,4/761,3), com a **N3-E15** (altura 424,4); o diálogo, 620 × 300, passa. **A, mínimo** (errata do T3-R3): sem `FATAL`; reordenar e folha sem controle de escrita inalcançável (a folha com `form-cancelar` e `form-salvar` **cortados**, tocados com efeito — div. 425); o diálogo **não abre** em A (a entrada, `setlist-apagar`, é inalcançável desde a N3-PR3) — **herança do N5** | `medidas-r-f-B.txt`, `teclado.txt`, `dumps-ret/`, `inalcancaveis-A.txt`, `phone-logcat.txt` |
+| **A-N3-4 — reordenar, folha, diálogo** | **o G-N3 passa**: (e)=0 · nome-acessível=0 · rolagem=0 nos 28 pares; 4 dp = 0; (d′) = 78, conferidos no PNG, nenhum defeito | `G-N3-retrato.txt` |
+| **A-N3-5 — reordenar, folha, diálogo** | **atende**: 14 estados × quatro colunas, todo alvo ≥ 48 e com `testID`, os mesmos ids nas quatro | `G5G6-r-f.txt` |
+
+**A div. 417** (a folha no celular), medida de novo: não fecha, e o destino N5 fica confirmado — a lista da folha em A deixa de ter controle inalcançável, mas os dois botões da linha só aparecem pela ponta (div. 425).
