@@ -1,0 +1,9 @@
+# Tab S6 — restaurado, 2ª sessão (2026-09-25 11:43:32)
+global stay_on_while_plugged_in=0
+system accelerometer_rotation=1
+system user_rotation=0
+global airplane_mode_on=0
+global wifi_on=1
+global mobile_data=1
+reverse: 
+cache: os 4 regravados com o app parado; md5 dos 4 idêntico (md5-depois-2); arquivos da fixture apagados; cópia do host apagada

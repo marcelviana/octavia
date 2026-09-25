@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "<scratch>/anexos/instrumentos/phone-a.py", line 44, in <module>
+    abrir()
+  File "<scratch>/anexos/instrumentos/phone-a.py", line 40, in abrir
+    R.esperar(s, texto="sincronizado agora", prazo=60)
+  File "/Users/marcelviana/projects/octavia-n3-pr3/docs/native/N3-PRECHECK-anexos/instrumentos/roteiro.py", line 60, in esperar
+    raise RuntimeError(f"ESPERA ESGOTADA: {rid or texto!r}")
+RuntimeError: ESPERA ESGOTADA: 'sincronizado agora'

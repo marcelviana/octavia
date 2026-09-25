@@ -1,0 +1,142 @@
+$ python3 docs/native/N3-PR3-anexos/instrumentos/g5g6-s2.py <dumps-pai/N3P3-S2-* + dumps-ret/N3P3-S2-*>
+G5/G6 — S2, quatro colunas: tab pai · tab ret · avd pai · avd ret
+
+## com-edicao-acima-de-100
+  G5 · tab pai: song-7 536.9 × 43.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab pai: remover-7 48.0 × 8.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab pai: song-8 536.9 × 43.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab pai: remover-8 48.0 × 8.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: song-7 536.9 × 31.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: song-8 536.9 × 31.1 — cortado pela rolagem (div. 291), não reprova
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `buscar` | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 |
+  | `picker-abrir` | 188.9 × 48.0 | 136.0 × 48.0 | 188.9 × 48.0 | 136.0 × 48.0 |
+  | `remover-<n>` | 48.0 × 48.0 ×6 · 48.0 × 8.9 ×2 | 48.0 × 48.0 ×7 | 48.0 × 48.0 ×6 | 48.0 × 48.0 ×7 |
+  | `reordenar` | 143.1 × 48.0 | 143.1 × 48.0 | 143.1 × 48.0 | 143.1 × 48.0 |
+  | `setlist-apagar` | 166.7 × 48.0 | 119.6 × 48.0 | 166.7 × 48.0 | 119.6 × 48.0 |
+  | `setlist-editar` | 193.8 × 48.0 | 193.8 × 48.0 | 193.8 × 48.0 | 193.8 × 48.0 |
+  | `song-<n>` | 536.9 × 116.0 ×6 · 536.9 × 43.1 ×2 | 663.1 × 116.0 ×6 · 663.1 × 97.8 | 536.9 × 116.0 ×6 · 536.9 × 31.1 ×2 | 663.1 × 116.0 ×6 · 663.1 × 85.8 |
+  | `voltar` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## com-edicao
+  G5 · tab ret: song-8 663.1 × 21.8 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: remover-7 48.0 × 44.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: remover-8 48.0 × 44.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd ret: song-8 663.1 × 9.8 — cortado pela rolagem (div. 291), não reprova
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `buscar` | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 |
+  | `picker-abrir` | 188.9 × 48.0 | 136.0 × 48.0 | 188.9 × 48.0 | 136.0 × 48.0 |
+  | `remover-<n>` | 48.0 × 48.0 ×8 | 48.0 × 48.0 ×7 | 48.0 × 48.0 ×6 · 48.0 × 44.9 ×2 | 48.0 × 48.0 ×7 |
+  | `reordenar` | 143.1 × 48.0 | 143.1 × 48.0 | 143.1 × 48.0 | 143.1 × 48.0 |
+  | `setlist-apagar` | 166.7 × 48.0 | 119.6 × 48.0 | 166.7 × 48.0 | 119.6 × 48.0 |
+  | `setlist-editar` | 193.8 × 48.0 | 193.8 × 48.0 | 193.8 × 48.0 | 193.8 × 48.0 |
+  | `song-<n>` | 536.9 × 116.0 ×6 · 536.9 × 91.1 ×2 | 663.1 × 116.0 ×7 · 663.1 × 21.8 | 536.9 × 116.0 ×6 · 536.9 × 79.1 ×2 | 663.1 × 116.0 ×7 · 663.1 × 9.8 |
+  | `voltar` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## com-edicao-aviso-sem-rede
+  G5 · tab pai: song-7 536.9 × 43.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab pai: remover-7 48.0 × 8.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab pai: song-8 536.9 × 43.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab pai: remover-8 48.0 × 8.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab ret: remover-7 48.0 × 45.3 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: song-7 536.9 × 31.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: song-8 536.9 × 31.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd ret: remover-7 48.0 × 33.3 — cortado pela rolagem (div. 291), não reprova
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `buscar` | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 |
+  | `picker-abrir` | 188.9 × 48.0 | 136.0 × 48.0 | 188.9 × 48.0 | 136.0 × 48.0 |
+  | `remover-<n>` | 48.0 × 48.0 ×6 · 48.0 × 8.9 ×2 | 48.0 × 48.0 ×6 · 48.0 × 45.3 | 48.0 × 48.0 ×6 | 48.0 × 48.0 ×6 · 48.0 × 33.3 |
+  | `reordenar` | 143.1 × 48.0 | 143.1 × 48.0 | 143.1 × 48.0 | 143.1 × 48.0 |
+  | `setlist-apagar` | 166.7 × 48.0 | 119.6 × 48.0 | 166.7 × 48.0 | 119.6 × 48.0 |
+  | `setlist-editar` | 193.8 × 48.0 | 193.8 × 48.0 | 193.8 × 48.0 | 193.8 × 48.0 |
+  | `song-<n>` | 536.9 × 116.0 ×6 · 536.9 × 43.1 ×2 | 663.1 × 116.0 ×6 · 663.1 × 79.6 | 536.9 × 116.0 ×6 · 536.9 × 31.1 ×2 | 663.1 × 116.0 ×6 · 663.1 × 67.6 |
+  | `voltar` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## com-edicao-falhou
+  G5 · tab pai: song-7 536.9 × 43.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab pai: remover-7 48.0 × 8.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab pai: song-8 536.9 × 43.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab pai: remover-8 48.0 × 8.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab ret: remover-7 48.0 × 45.3 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: song-7 536.9 × 31.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: song-8 536.9 × 31.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd ret: remover-7 48.0 × 33.3 — cortado pela rolagem (div. 291), não reprova
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `aviso-acao` | 164.9 × 48.0 | 164.9 × 48.0 | 164.9 × 48.0 | 164.9 × 48.0 |
+  | `buscar` | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 |
+  | `picker-abrir` | 188.9 × 48.0 | 136.0 × 48.0 | 188.9 × 48.0 | 136.0 × 48.0 |
+  | `remover-<n>` | 48.0 × 48.0 ×6 · 48.0 × 8.9 ×2 | 48.0 × 48.0 ×6 · 48.0 × 45.3 | 48.0 × 48.0 ×6 | 48.0 × 48.0 ×6 · 48.0 × 33.3 |
+  | `reordenar` | 143.1 × 48.0 | 143.1 × 48.0 | 143.1 × 48.0 | 143.1 × 48.0 |
+  | `setlist-apagar` | 166.7 × 48.0 | 119.6 × 48.0 | 166.7 × 48.0 | 119.6 × 48.0 |
+  | `setlist-editar` | 193.8 × 48.0 | 193.8 × 48.0 | 193.8 × 48.0 | 193.8 × 48.0 |
+  | `song-<n>` | 536.9 × 116.0 ×6 · 536.9 × 43.1 ×2 | 663.1 × 116.0 ×6 · 663.1 × 79.6 | 536.9 × 116.0 ×6 · 536.9 × 31.1 ×2 | 663.1 × 116.0 ×6 · 663.1 × 67.6 |
+  | `voltar` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## com-edicao-limite
+  G5 · tab pai: song-7 536.9 × 43.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab pai: remover-7 48.0 × 8.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab pai: song-8 536.9 × 43.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab pai: remover-8 48.0 × 8.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: song-7 536.9 × 31.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: song-8 536.9 × 31.1 — cortado pela rolagem (div. 291), não reprova
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `buscar` | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 |
+  | `picker-abrir` | 188.9 × 48.0 | 136.0 × 48.0 | 188.9 × 48.0 | 136.0 × 48.0 |
+  | `remover-<n>` | 48.0 × 48.0 ×6 · 48.0 × 8.9 ×2 | 48.0 × 48.0 ×7 | 48.0 × 48.0 ×6 | 48.0 × 48.0 ×7 |
+  | `reordenar` | 143.1 × 48.0 | 143.1 × 48.0 | 143.1 × 48.0 | 143.1 × 48.0 |
+  | `setlist-apagar` | 166.7 × 48.0 | 119.6 × 48.0 | 166.7 × 48.0 | 119.6 × 48.0 |
+  | `setlist-editar` | 193.8 × 48.0 | 193.8 × 48.0 | 193.8 × 48.0 | 193.8 × 48.0 |
+  | `song-<n>` | 536.9 × 116.0 ×6 · 536.9 × 43.1 ×2 | 663.1 × 116.0 ×6 · 663.1 × 97.8 | 536.9 × 116.0 ×6 · 536.9 × 31.1 ×2 | 663.1 × 116.0 ×6 · 663.1 × 85.8 |
+  | `voltar` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## com-edicao-removendo
+  G5 · tab ret: song-8 663.1 × 21.8 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: remover-7 48.0 × 44.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: remover-8 48.0 × 44.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd ret: song-8 663.1 × 9.8 — cortado pela rolagem (div. 291), não reprova
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `buscar` | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 |
+  | `picker-abrir` | 188.9 × 48.0 | 136.0 × 48.0 | 188.9 × 48.0 | 136.0 × 48.0 |
+  | `remover-<n>` | 48.0 × 48.0 ×7 | 48.0 × 48.0 ×6 | 48.0 × 48.0 ×5 · 48.0 × 44.9 ×2 | 48.0 × 48.0 ×6 |
+  | `reordenar` | 143.1 × 48.0 | 143.1 × 48.0 | 143.1 × 48.0 | 143.1 × 48.0 |
+  | `setlist-apagar` | 166.7 × 48.0 | 119.6 × 48.0 | 166.7 × 48.0 | 119.6 × 48.0 |
+  | `setlist-editar` | 193.8 × 48.0 | 193.8 × 48.0 | 193.8 × 48.0 | 193.8 × 48.0 |
+  | `song-<n>` | 536.9 × 116.0 ×6 · 536.9 × 91.1 ×2 | 663.1 × 116.0 ×7 · 663.1 × 21.8 | 536.9 × 116.0 ×6 · 536.9 × 79.1 ×2 | 663.1 × 116.0 ×7 · 663.1 × 9.8 |
+  | `voltar` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## com-edicao-salvo-nao-relido
+  G5 · tab pai: song-7 536.9 × 43.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab pai: remover-7 48.0 × 8.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab pai: song-8 536.9 × 43.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab pai: remover-8 48.0 × 8.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · tab ret: remover-7 48.0 × 45.3 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: song-7 536.9 × 31.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: song-8 536.9 × 31.1 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd ret: remover-7 48.0 × 33.3 — cortado pela rolagem (div. 291), não reprova
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `aviso-acao` | 183.6 × 48.0 | 183.6 × 48.0 | 183.6 × 48.0 | 183.6 × 48.0 |
+  | `buscar` | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 |
+  | `picker-abrir` | 188.9 × 48.0 | 136.0 × 48.0 | 188.9 × 48.0 | 136.0 × 48.0 |
+  | `remover-<n>` | 48.0 × 48.0 ×6 · 48.0 × 8.9 ×2 | 48.0 × 48.0 ×6 · 48.0 × 45.3 | 48.0 × 48.0 ×6 | 48.0 × 48.0 ×6 · 48.0 × 33.3 |
+  | `reordenar` | 143.1 × 48.0 | 143.1 × 48.0 | 143.1 × 48.0 | 143.1 × 48.0 |
+  | `setlist-apagar` | 166.7 × 48.0 | 119.6 × 48.0 | 166.7 × 48.0 | 119.6 × 48.0 |
+  | `setlist-editar` | 193.8 × 48.0 | 193.8 × 48.0 | 193.8 × 48.0 | 193.8 × 48.0 |
+  | `song-<n>` | 536.9 × 116.0 ×6 · 536.9 × 43.1 ×2 | 663.1 × 116.0 ×6 · 663.1 × 79.6 | 536.9 × 116.0 ×6 · 536.9 × 31.1 ×2 | 663.1 × 116.0 ×6 · 663.1 × 67.6 |
+  | `voltar` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## sem-edicao-S2p
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `buscar` | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 |
+  | `song-<n>` | 536.9 × 116.0 ×8 | 663.1 × 116.0 ×7 · 663.1 × 85.8 | 536.9 × 116.0 ×8 | 663.1 × 116.0 ×7 · 663.1 × 73.8 |
+  | `voltar` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+
+G5: todo alvo ≥ 48 dp ✓ · G6: todo alvo com testID ✓
+exit=0

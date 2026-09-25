@@ -35,6 +35,27 @@
  * O `(d)` literal (texto terminando em `…`) é zero por construção no RN (div.
  * 384) e não é critério.
  *
+ * DUAS SAÍDAS DO (e), N3-PR3 (decisão do Marcel, 2026-09-25). Um texto da
+ * paisagem que falta no dump da faixa NÃO conta como (e) em dois casos, e só
+ * com a prova no próprio dump — cada um com contagem PRÓPRIA no relatório,
+ * nunca somada ao zero de (e) ("(e)=0 · nome-acessível=n · rolagem=n"):
+ *
+ *   nome-acessível  o texto virou NOME ACESSÍVEL (N3-D17: `Adicionar música` →
+ *                   `Adicionar`): o nó de MESMO `resource-id` que o continha
+ *                   na paisagem existe na faixa, o `content-desc` DELE é o
+ *                   texto, e ele MOSTRA outro rótulo (`rotuloVisivel`). Sem o
+ *                   nó, com outro `content-desc`, ou sem rótulo visível (texto
+ *                   cortado), é (e).
+ *   rolagem         o texto está ABAIXO DA DOBRA no mesmo estado (a grade de
+ *                   duas colunas que vira uma empurra a linha 8 para baixo): ele
+ *                   está no dump ROLADO desse estado, passado explicitamente por
+ *                   `--rolada <dir>` (nome `<estado>-rolada-<aparelho>-<orient>`,
+ *                   pareado com o dump `<estado>-<aparelho>-<orient>` da faixa).
+ *                   Sem o dump rolado, ou sem o texto nele, é (e). O filtro de
+ *                   distância do topo na PAISAGEM (acima) não muda: é o critério
+ *                   do pre-check, e o CT-N3 do `cn-n3pr1.sh` exige a contagem
+ *                   igual à do `B3-inventario.jsonl`.
+ *
  * PAREAMENTO. O nome do dump é afirmação (caso 23): `<PREFIXO>-<tela>-<estado>-
  * <aparelho>[-<orientação>].xml`. A chave do par é `<tela>-<estado>` + o tipo de
  * aparelho. O celular (`phone`) não tem paisagem de tablet própria no pre-check
@@ -43,19 +64,24 @@
  * mais larga que alta, e a faixa, a que o nome diz.
  *
  * Uso (da raiz do repositório):
- *   node apps/native/scripts/g-n3.mjs --pai <dir> [--pai <dir>…] --faixa <dir> [--medidas <json>]
+ *   node apps/native/scripts/g-n3.mjs --pai <dir> [--pai <dir>…] --faixa <dir> [--rolada <dir>] [--medidas <json>]
  *
  *   --pai     diretório(s) com a paisagem de referência (`B5-baseline/` e, para
  *             o palco, `B3-referencia-paisagem/`)
  *   --faixa   diretório com os dumps da faixa (retrato do tablet = B, celular
  *             em retrato = A)
+ *   --rolada  diretório com os dumps ROLADOS (`<estado>-rolada-…`); cada um
+ *             usado é listado com o sha256 (os 12 primeiros)
  *   --medidas o `docs/native/DESIGN-N3/medidas.json` (padrão)
  *
- * Saída literal em três blocos, nesta ordem, e o veredito. Exit 1 se houver
+ * Saída literal em cinco blocos, nesta ordem — (e), (d′), 4 dp, nome-acessível,
+ * rolagem (os dois últimos DEPOIS do 4 dp: o CT-N3 do `cn-n3pr1.sh` lê o (e)
+ * até o cabeçalho do (d′)) — e o veredito. Exit 1 se houver
  * (e); exit 2 se a chamada não mede nada (sem par, diretório vazio).
  */
 import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { basename, join } from 'node:path'
+import { createHash } from 'node:crypto'
 
 const PKG = 'rocks.octavia.app'
 /** As mesmas fronteiras do `apps/native/src/faixa.ts` (T3-R1): A < 700 · B 700–960 · C > 960. */
@@ -63,7 +89,7 @@ const faixaDe = (w) => (w < 700 ? 'A' : w <= 960 ? 'B' : 'C')
 
 function uso(msg) {
   console.error(`g-n3.mjs: ${msg}`)
-  console.error('uso: node apps/native/scripts/g-n3.mjs --pai <dir> [--pai <dir>…] --faixa <dir> [--medidas <json>]')
+  console.error('uso: node apps/native/scripts/g-n3.mjs --pai <dir> [--pai <dir>…] --faixa <dir> [--rolada <dir>] [--medidas <json>]')
   console.error('     da RAIZ do repositório. Um gate de par sem par não mede nada.')
   process.exit(2)
 }
@@ -71,22 +97,32 @@ function uso(msg) {
 const args = process.argv.slice(2)
 const pais = []
 let dirFaixa = null
+let dirRolada = null
 let arqMedidas = 'docs/native/DESIGN-N3/medidas.json'
 for (let i = 0; i < args.length; i++) {
   const v = args[i + 1]
   if (args[i] === '--pai' && v) { pais.push(v); i++ }
   else if (args[i] === '--faixa' && v) { dirFaixa = v; i++ }
+  else if (args[i] === '--rolada' && v) { dirRolada = v; i++ }
   else if (args[i] === '--medidas' && v) { arqMedidas = v; i++ }
   else uso(`argumento desconhecido ou sem valor: ${args[i]}`)
 }
 if (pais.length === 0) uso('falta --pai <dir>')
 if (dirFaixa === null) uso('falta --faixa <dir>')
-for (const d of [...pais, dirFaixa]) if (!existsSync(d)) uso(`diretório não existe: ${d}`)
+for (const d of [...pais, dirFaixa, ...(dirRolada ? [dirRolada] : [])]) if (!existsSync(d)) uso(`diretório não existe: ${d}`)
 if (!existsSync(arqMedidas)) uso(`medidas não existe: ${arqMedidas}`)
 const MEDIDAS = JSON.parse(readFileSync(arqMedidas, 'utf8'))
 const TOL = MEDIDAS['tolerancia-dp']
 
 const fator = (arquivo) => (/phone/.test(basename(arquivo)) ? 2.625 : 2.25) // 420/160 · 360/160
+
+const ent = (t) => t.replace(/&#10;/g, '\n').replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+
+/** O `resource-id` do próprio nó ou do ancestral mais próximo que tem um. */
+function idAcima(n) {
+  for (let p = n; p; p = p.pai) if (p.id) return p.id
+  return ''
+}
 
 function ler(arquivo) {
   const xml = readFileSync(arquivo, 'utf8')
@@ -103,7 +139,8 @@ function ler(arquivo) {
     const no = {
       cls: (a.class ?? '').split('.').pop(),
       id: (a['resource-id'] ?? '').replace(/^.*:id\//, ''),
-      text: (a.text ?? '').replace(/&#10;/g, '\n').replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>'),
+      text: ent(a.text ?? ''),
+      cd: ent(a['content-desc'] ?? ''),
       pkg: a.package ?? '',
       b: b.map((v) => v / F),
       filhos: [],
@@ -133,7 +170,7 @@ function medir(arquivo) {
   const { todos, tela } = ler(arquivo)
   const app = todos.filter((n) => n.pkg === PKG && !n.compose && larg(n.b) > 0 && alt(n.b) > 0)
   const janela = janelaUtil(todos, tela)
-  const textos = app.filter((n) => n.text && n.filhos.length === 0 && n.cls === 'TextView').map((n) => ({ text: n.text, b: n.b, s: sig(n) }))
+  const textos = app.filter((n) => n.text && n.filhos.length === 0 && n.cls === 'TextView').map((n) => ({ text: n.text, b: n.b, s: sig(n), rid: idAcima(n) }))
   return { arquivo, tela, janela, app, textos }
 }
 
@@ -155,7 +192,16 @@ for (const d of pais) {
     if (!refs.has(id)) refs.set(id, f)
   }
 }
-const faixas = xmls(dirFaixa).filter((f) => chave(f) !== null)
+// um dump rolado é PROVA de um estado, não um estado: fica fora dos pares
+const rolada = (k) => k !== null && k.estado.endsWith('-rolada')
+const faixas = xmls(dirFaixa).filter((f) => chave(f) !== null && !rolada(chave(f)))
+const rolados = new Map()
+if (dirRolada) {
+  for (const f of xmls(dirRolada)) {
+    const k = chave(f)
+    if (rolada(k)) rolados.set(`${k.estado.slice(0, -'-rolada'.length)}|${k.aparelho}|${k.orient}`, f)
+  }
+}
 if (faixas.length === 0) uso(`nenhum dump com nome no padrão em ${dirFaixa}`)
 
 const pares = []
@@ -182,7 +228,21 @@ function casar(app, casa) {
 }
 
 // ---- o gate -----------------------------------------------------------------
+/**
+ * O nó MOSTRA outro rótulo: um TextView descendente com texto não vazio e
+ * diferente do nome acessível. É o que separa a N3-D17 (rótulo curto na tela,
+ * o longo no nome) de um texto CORTADO para fora do dump — no Android o
+ * `content-desc` de um alvo sem `accessibilityLabel` é o texto dos filhos,
+ * mesmo quando o filho não chega ao dump (os `B4-…-phone-ret` do pre-check).
+ */
+function rotuloVisivel(n, nomeAcessivel) {
+  return descendentes(n).some((d) => d.cls === 'TextView' && d.text && d.text !== nomeAcessivel && larg(d.b) > 0 && alt(d.b) > 0)
+}
+
 const E = []
+const NA = []
+const RO = []
+const roladosUsados = new Set()
 const DL = []
 const Q = []
 const vivos = /sincroniz|última|agora|há \d|arquivos baixados/
@@ -195,6 +255,10 @@ for (const { ref, f } of pares) {
   const cabe = (t) => t.b[3] - antes.janela[1] <= agora.janela[3] - agora.janela[1]
   for (const t of antes.textos) {
     if (!cabe(t) || vivos.test(t.text) || agora.textos.some((u) => u.text === t.text)) continue
+    if (t.rid && agora.app.some((n) => n.id === t.rid && n.cd === t.text && rotuloVisivel(n, t.text))) { NA.push({ nome, no: t.s, rid: t.rid }); continue }
+    const k = chave(f)
+    const rol = rolados.get(`${k.estado}|${k.aparelho}|${k.orient}`)
+    if (rol && medir(rol).textos.some((u) => u.text === t.text)) { RO.push({ nome, no: t.s, rol: basename(rol, '.xml') }); roladosUsados.add(rol); continue }
     E.push({ nome, no: t.s })
   }
   for (const t of agora.textos) {
@@ -236,5 +300,15 @@ console.log('')
 console.log(`4 dp CONTRA A FOLHA — ERRATA CANDIDATA: ${Qu.length}`)
 for (const q of Qu) console.log(`  ${q.nome} [${q.lado}]: ${q.id} ${q.elemento} — folha ${q.folha} · dump ${q.dump} · Δ ${q.d > 0 ? '+' : ''}${q.d}`)
 console.log('')
-if (E.length > 0) { console.log(`G-N3: REPROVA ✗ — ${E.length} texto(s) somem da faixa em ${porDump.size} dump(s)`); process.exitCode = 1 }
-else if (process.exitCode !== 1) console.log('G-N3: nenhum texto some ✓ (d′ e 4 dp não reprovam: triagem e errata)')
+console.log(`NOME ACESSÍVEL — o texto está no content-desc do nó de mesmo resource-id (N3-D17); não reprova, não soma ao (e): ${NA.length}`)
+for (const x of NA) console.log(`  ${x.nome}: ${x.no} → content-desc de \`${x.rid}\``)
+console.log('')
+console.log(`ROLAGEM — o texto está no dump rolado do mesmo estado; não reprova, não soma ao (e): ${RO.length}`)
+for (const x of RO) console.log(`  ${x.nome}: ${x.no} → ${x.rol}`)
+if (roladosUsados.size) {
+  console.log('  dumps rolados usados (sha256, 12):')
+  for (const r of [...roladosUsados].sort()) console.log(`    ${createHash('sha256').update(readFileSync(r)).digest('hex').slice(0, 12)}  ${basename(r)}`)
+}
+console.log('')
+if (E.length > 0) { console.log(`G-N3: REPROVA ✗ — (e)=${E.length} em ${porDump.size} dump(s) · nome-acessível=${NA.length} · rolagem=${RO.length}`); process.exitCode = 1 }
+else if (process.exitCode !== 1) console.log(`G-N3: (e)=0 · nome-acessível=${NA.length} · rolagem=${RO.length} ✓ (d′ e 4 dp não reprovam: triagem e errata)`)

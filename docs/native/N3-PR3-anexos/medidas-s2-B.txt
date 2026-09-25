@@ -1,0 +1,205 @@
+$ python3 docs/native/N3-PR3-anexos/instrumentos/medidas-s2.py docs/native/N3-PR3-anexos/dumps-ret/N3P3-S2-*-ret.xml   # sem os rolados
+== N3P3-S2-com-edicao-acima-de-100-avd-ret.xml
+  barra                 88.0  folha 88  Δ +0.0
+  faixa                 64.0  folha 64  Δ +0.0
+  Adicionar            136.0  folha 136  Δ +0.0   texto 'Adicionar' · nome 'Adicionar música'
+  Reordenar            143.1  folha 142.5  Δ +0.6   texto 'Reordenar' · nome 'Reordenar'
+  Renomear e datar     193.8  folha 193  Δ +0.8   texto 'Renomear e datar' · nome 'Renomear e datar'
+  Apagar               119.6  folha 119.6  Δ -0.0   texto 'Apagar' · nome 'Apagar setlist'
+  soma da faixa        688.4  folha 687.1  Δ +1.3   24.0 + 136.0 + 16.0 + 143.1 + 16 + 193.8 + 16.0 + 119.6 + 24.0; faixa 711.1, folga 22.7 (vão real entre os grupos 38.7)
+  linha (largura)      663.1  folha 663  Δ +0.1   x0 das 7 linhas no dump: [24.0]
+  linha (altura)       116.0  folha 116  Δ +0.0
+  título               398.2  folha 377  Δ +21.2  > 4 → ERRATA   'Manhã de ensaio'
+  tipo                  84.0  folha 104  Δ -20.0  > 4 → ERRATA
+  remover               48.0  folha 48  Δ +0.0
+  aviso                 48.0  folha 68  Δ -20.0  > 4 → ERRATA   aviso-motivo 611.1 × 21.8
+== N3P3-S2-com-edicao-acima-de-100-tab-ret.xml
+  barra                 88.0  folha 88  Δ +0.0
+  faixa                 64.0  folha 64  Δ +0.0
+  Adicionar            136.0  folha 136  Δ +0.0   texto 'Adicionar' · nome 'Adicionar música'
+  Reordenar            143.1  folha 142.5  Δ +0.6   texto 'Reordenar' · nome 'Reordenar'
+  Renomear e datar     193.8  folha 193  Δ +0.8   texto 'Renomear e datar' · nome 'Renomear e datar'
+  Apagar               119.6  folha 119.6  Δ -0.0   texto 'Apagar' · nome 'Apagar setlist'
+  soma da faixa        688.4  folha 687.1  Δ +1.3   24.0 + 136.0 + 16.0 + 143.1 + 16 + 193.8 + 16.0 + 119.6 + 24.0; faixa 711.1, folga 22.7 (vão real entre os grupos 38.7)
+  linha (largura)      663.1  folha 663  Δ +0.1   x0 das 7 linhas no dump: [24.0]
+  linha (altura)       116.0  folha 116  Δ +0.0
+  título               398.2  folha 377  Δ +21.2  > 4 → ERRATA   'Manhã de ensaio'
+  tipo                  84.0  folha 104  Δ -20.0  > 4 → ERRATA
+  remover               48.0  folha 48  Δ +0.0
+  aviso                 48.0  folha 68  Δ -20.0  > 4 → ERRATA   aviso-motivo 611.1 × 21.8
+== N3P3-S2-com-edicao-avd-ret.xml
+  barra                 88.0  folha 88  Δ +0.0
+  faixa                 64.0  folha 64  Δ +0.0
+  Adicionar            136.0  folha 136  Δ +0.0   texto 'Adicionar' · nome 'Adicionar música'
+  Reordenar            143.1  folha 142.5  Δ +0.6   texto 'Reordenar' · nome 'Reordenar'
+  Renomear e datar     193.8  folha 193  Δ +0.8   texto 'Renomear e datar' · nome 'Renomear e datar'
+  Apagar               119.6  folha 119.6  Δ -0.0   texto 'Apagar' · nome 'Apagar setlist'
+  soma da faixa        688.4  folha 687.1  Δ +1.3   24.0 + 136.0 + 16.0 + 143.1 + 16 + 193.8 + 16.0 + 119.6 + 24.0; faixa 711.1, folga 22.7 (vão real entre os grupos 38.7)
+  linha (largura)      663.1  folha 663  Δ +0.1   x0 das 8 linhas no dump: [24.0]
+  linha (altura)       116.0  folha 116  Δ +0.0
+  título               398.2  folha 377  Δ +21.2  > 4 → ERRATA   'Manhã de ensaio'
+  tipo                  84.0  folha 104  Δ -20.0  > 4 → ERRATA
+  remover               48.0  folha 48  Δ +0.0
+== N3P3-S2-com-edicao-aviso-sem-rede-avd-ret.xml
+  barra                 88.0  folha 88  Δ +0.0
+  faixa                 64.0  folha 64  Δ +0.0
+  Adicionar            136.0  folha 136  Δ +0.0   texto 'Adicionar' · nome 'Adicionar música'
+  Reordenar            143.1  folha 142.5  Δ +0.6   texto 'Reordenar' · nome 'Reordenar'
+  Renomear e datar     193.8  folha 193  Δ +0.8   texto 'Renomear e datar' · nome 'Renomear e datar'
+  Apagar               119.6  folha 119.6  Δ -0.0   texto 'Apagar' · nome 'Apagar setlist'
+  soma da faixa        688.4  folha 687.1  Δ +1.3   24.0 + 136.0 + 16.0 + 143.1 + 16 + 193.8 + 16.0 + 119.6 + 24.0; faixa 711.1, folga 22.7 (vão real entre os grupos 38.7)
+  linha (largura)      663.1  folha 663  Δ +0.1   x0 das 7 linhas no dump: [24.0]
+  linha (altura)       116.0  folha 116  Δ +0.0
+  título               398.2  folha 377  Δ +21.2  > 4 → ERRATA   'Manhã de ensaio'
+  tipo                  84.0  folha 104  Δ -20.0  > 4 → ERRATA
+  remover               48.0  folha 48  Δ +0.0
+  aviso                 66.2  folha 68  Δ -1.8   aviso-motivo 631.1 × 42.2
+== N3P3-S2-com-edicao-aviso-sem-rede-tab-ret.xml
+  barra                 88.0  folha 88  Δ +0.0
+  faixa                 64.0  folha 64  Δ +0.0
+  Adicionar            136.0  folha 136  Δ +0.0   texto 'Adicionar' · nome 'Adicionar música'
+  Reordenar            143.1  folha 142.5  Δ +0.6   texto 'Reordenar' · nome 'Reordenar'
+  Renomear e datar     193.8  folha 193  Δ +0.8   texto 'Renomear e datar' · nome 'Renomear e datar'
+  Apagar               119.6  folha 119.6  Δ -0.0   texto 'Apagar' · nome 'Apagar setlist'
+  soma da faixa        688.4  folha 687.1  Δ +1.3   24.0 + 136.0 + 16.0 + 143.1 + 16 + 193.8 + 16.0 + 119.6 + 24.0; faixa 711.1, folga 22.7 (vão real entre os grupos 38.7)
+  linha (largura)      663.1  folha 663  Δ +0.1   x0 das 7 linhas no dump: [24.0]
+  linha (altura)       116.0  folha 116  Δ +0.0
+  título               398.2  folha 377  Δ +21.2  > 4 → ERRATA   'Manhã de ensaio'
+  tipo                  84.0  folha 104  Δ -20.0  > 4 → ERRATA
+  remover               48.0  folha 48  Δ +0.0
+  aviso                 66.2  folha 68  Δ -1.8   aviso-motivo 631.1 × 42.2
+== N3P3-S2-com-edicao-falhou-avd-ret.xml
+  barra                 88.0  folha 88  Δ +0.0
+  faixa                 64.0  folha 64  Δ +0.0
+  Adicionar            136.0  folha 136  Δ +0.0   texto 'Adicionar' · nome 'Adicionar música'
+  Reordenar            143.1  folha 142.5  Δ +0.6   texto 'Reordenar' · nome 'Reordenar'
+  Renomear e datar     193.8  folha 193  Δ +0.8   texto 'Renomear e datar' · nome 'Renomear e datar'
+  Apagar               119.6  folha 119.6  Δ -0.0   texto 'Apagar' · nome 'Apagar setlist'
+  soma da faixa        688.4  folha 687.1  Δ +1.3   24.0 + 136.0 + 16.0 + 143.1 + 16 + 193.8 + 16.0 + 119.6 + 24.0; faixa 711.1, folga 22.7 (vão real entre os grupos 38.7)
+  linha (largura)      663.1  folha 663  Δ +0.1   x0 das 7 linhas no dump: [24.0]
+  linha (altura)       116.0  folha 116  Δ +0.0
+  título               398.2  folha 377  Δ +21.2  > 4 → ERRATA   'Manhã de ensaio'
+  tipo                  84.0  folha 104  Δ -20.0  > 4 → ERRATA
+  remover               48.0  folha 48  Δ +0.0
+  aviso                 66.2  folha 70  Δ -3.8   aviso-motivo 450.2 × 42.2
+== N3P3-S2-com-edicao-falhou-tab-ret.xml
+  barra                 88.0  folha 88  Δ +0.0
+  faixa                 64.0  folha 64  Δ +0.0
+  Adicionar            136.0  folha 136  Δ +0.0   texto 'Adicionar' · nome 'Adicionar música'
+  Reordenar            143.1  folha 142.5  Δ +0.6   texto 'Reordenar' · nome 'Reordenar'
+  Renomear e datar     193.8  folha 193  Δ +0.8   texto 'Renomear e datar' · nome 'Renomear e datar'
+  Apagar               119.6  folha 119.6  Δ -0.0   texto 'Apagar' · nome 'Apagar setlist'
+  soma da faixa        688.4  folha 687.1  Δ +1.3   24.0 + 136.0 + 16.0 + 143.1 + 16 + 193.8 + 16.0 + 119.6 + 24.0; faixa 711.1, folga 22.7 (vão real entre os grupos 38.7)
+  linha (largura)      663.1  folha 663  Δ +0.1   x0 das 7 linhas no dump: [24.0]
+  linha (altura)       116.0  folha 116  Δ +0.0
+  título               398.2  folha 377  Δ +21.2  > 4 → ERRATA   'Manhã de ensaio'
+  tipo                  84.0  folha 104  Δ -20.0  > 4 → ERRATA
+  remover               48.0  folha 48  Δ +0.0
+  aviso                 66.2  folha 70  Δ -3.8   aviso-motivo 450.2 × 42.2
+== N3P3-S2-com-edicao-limite-avd-ret.xml
+  barra                 88.0  folha 88  Δ +0.0
+  faixa                 64.0  folha 64  Δ +0.0
+  Adicionar            136.0  folha 136  Δ +0.0   texto 'Adicionar' · nome 'Adicionar música'
+  Reordenar            143.1  folha 142.5  Δ +0.6   texto 'Reordenar' · nome 'Reordenar'
+  Renomear e datar     193.8  folha 193  Δ +0.8   texto 'Renomear e datar' · nome 'Renomear e datar'
+  Apagar               119.6  folha 119.6  Δ -0.0   texto 'Apagar' · nome 'Apagar setlist'
+  soma da faixa        688.4  folha 687.1  Δ +1.3   24.0 + 136.0 + 16.0 + 143.1 + 16 + 193.8 + 16.0 + 119.6 + 24.0; faixa 711.1, folga 22.7 (vão real entre os grupos 38.7)
+  linha (largura)      663.1  folha 663  Δ +0.1   x0 das 7 linhas no dump: [24.0]
+  linha (altura)       116.0  folha 116  Δ +0.0
+  título               398.2  folha 377  Δ +21.2  > 4 → ERRATA   'Manhã de ensaio'
+  tipo                  84.0  folha 104  Δ -20.0  > 4 → ERRATA
+  remover               48.0  folha 48  Δ +0.0
+  aviso                 48.0  folha 48  Δ +0.0   aviso-motivo 360.9 × 21.8
+== N3P3-S2-com-edicao-limite-tab-ret.xml
+  barra                 88.0  folha 88  Δ +0.0
+  faixa                 64.0  folha 64  Δ +0.0
+  Adicionar            136.0  folha 136  Δ +0.0   texto 'Adicionar' · nome 'Adicionar música'
+  Reordenar            143.1  folha 142.5  Δ +0.6   texto 'Reordenar' · nome 'Reordenar'
+  Renomear e datar     193.8  folha 193  Δ +0.8   texto 'Renomear e datar' · nome 'Renomear e datar'
+  Apagar               119.6  folha 119.6  Δ -0.0   texto 'Apagar' · nome 'Apagar setlist'
+  soma da faixa        688.4  folha 687.1  Δ +1.3   24.0 + 136.0 + 16.0 + 143.1 + 16 + 193.8 + 16.0 + 119.6 + 24.0; faixa 711.1, folga 22.7 (vão real entre os grupos 38.7)
+  linha (largura)      663.1  folha 663  Δ +0.1   x0 das 7 linhas no dump: [24.0]
+  linha (altura)       116.0  folha 116  Δ +0.0
+  título               398.2  folha 377  Δ +21.2  > 4 → ERRATA   'Manhã de ensaio'
+  tipo                  84.0  folha 104  Δ -20.0  > 4 → ERRATA
+  remover               48.0  folha 48  Δ +0.0
+  aviso                 48.0  folha 48  Δ +0.0   aviso-motivo 360.9 × 21.8
+== N3P3-S2-com-edicao-removendo-avd-ret.xml
+  barra                 88.0  folha 88  Δ +0.0
+  faixa                 64.0  folha 64  Δ +0.0
+  Adicionar            136.0  folha 136  Δ +0.0   texto 'Adicionar' · nome 'Adicionar música'
+  Reordenar            143.1  folha 142.5  Δ +0.6   texto 'Reordenar' · nome 'Reordenar'
+  Renomear e datar     193.8  folha 193  Δ +0.8   texto 'Renomear e datar' · nome 'Renomear e datar'
+  Apagar               119.6  folha 119.6  Δ -0.0   texto 'Apagar' · nome 'Apagar setlist'
+  soma da faixa        688.4  folha 687.1  Δ +1.3   24.0 + 136.0 + 16.0 + 143.1 + 16 + 193.8 + 16.0 + 119.6 + 24.0; faixa 711.1, folga 22.7 (vão real entre os grupos 38.7)
+  linha (largura)      663.1  folha 663  Δ +0.1   x0 das 8 linhas no dump: [24.0]
+  linha (altura)       116.0  folha 116  Δ +0.0
+  título               336.9  folha 377  Δ -40.1  > 4 → ERRATA   'Manhã de ensaio'
+  tipo                  84.0  folha 104  Δ -20.0  > 4 → ERRATA
+  remover              109.3  folha 48  Δ +61.3  > 4 → ERRATA
+== N3P3-S2-com-edicao-removendo-tab-ret.xml
+  barra                 88.0  folha 88  Δ +0.0
+  faixa                 64.0  folha 64  Δ +0.0
+  Adicionar            136.0  folha 136  Δ +0.0   texto 'Adicionar' · nome 'Adicionar música'
+  Reordenar            143.1  folha 142.5  Δ +0.6   texto 'Reordenar' · nome 'Reordenar'
+  Renomear e datar     193.8  folha 193  Δ +0.8   texto 'Renomear e datar' · nome 'Renomear e datar'
+  Apagar               119.6  folha 119.6  Δ -0.0   texto 'Apagar' · nome 'Apagar setlist'
+  soma da faixa        688.4  folha 687.1  Δ +1.3   24.0 + 136.0 + 16.0 + 143.1 + 16 + 193.8 + 16.0 + 119.6 + 24.0; faixa 711.1, folga 22.7 (vão real entre os grupos 38.7)
+  linha (largura)      663.1  folha 663  Δ +0.1   x0 das 8 linhas no dump: [24.0]
+  linha (altura)       116.0  folha 116  Δ +0.0
+  título               336.9  folha 377  Δ -40.1  > 4 → ERRATA   'Manhã de ensaio'
+  tipo                  84.0  folha 104  Δ -20.0  > 4 → ERRATA
+  remover              109.3  folha 48  Δ +61.3  > 4 → ERRATA
+== N3P3-S2-com-edicao-salvo-nao-relido-avd-ret.xml
+  barra                 88.0  folha 88  Δ +0.0
+  faixa                 64.0  folha 64  Δ +0.0
+  Adicionar            136.0  folha 136  Δ +0.0   texto 'Adicionar' · nome 'Adicionar música'
+  Reordenar            143.1  folha 142.5  Δ +0.6   texto 'Reordenar' · nome 'Reordenar'
+  Renomear e datar     193.8  folha 193  Δ +0.8   texto 'Renomear e datar' · nome 'Renomear e datar'
+  Apagar               119.6  folha 119.6  Δ -0.0   texto 'Apagar' · nome 'Apagar setlist'
+  soma da faixa        688.4  folha 687.1  Δ +1.3   24.0 + 136.0 + 16.0 + 143.1 + 16 + 193.8 + 16.0 + 119.6 + 24.0; faixa 711.1, folga 22.7 (vão real entre os grupos 38.7)
+  linha (largura)      663.1  folha 663  Δ +0.1   x0 das 7 linhas no dump: [24.0]
+  linha (altura)       116.0  folha 116  Δ +0.0
+  título               398.2  folha 377  Δ +21.2  > 4 → ERRATA   'Manhã de ensaio'
+  tipo                  84.0  folha 104  Δ -20.0  > 4 → ERRATA
+  remover               48.0  folha 48  Δ +0.0
+  aviso                 66.2  folha 68  Δ -1.8   aviso-motivo 431.6 × 42.2
+== N3P3-S2-com-edicao-salvo-nao-relido-tab-ret.xml
+  barra                 88.0  folha 88  Δ +0.0
+  faixa                 64.0  folha 64  Δ +0.0
+  Adicionar            136.0  folha 136  Δ +0.0   texto 'Adicionar' · nome 'Adicionar música'
+  Reordenar            143.1  folha 142.5  Δ +0.6   texto 'Reordenar' · nome 'Reordenar'
+  Renomear e datar     193.8  folha 193  Δ +0.8   texto 'Renomear e datar' · nome 'Renomear e datar'
+  Apagar               119.6  folha 119.6  Δ -0.0   texto 'Apagar' · nome 'Apagar setlist'
+  soma da faixa        688.4  folha 687.1  Δ +1.3   24.0 + 136.0 + 16.0 + 143.1 + 16 + 193.8 + 16.0 + 119.6 + 24.0; faixa 711.1, folga 22.7 (vão real entre os grupos 38.7)
+  linha (largura)      663.1  folha 663  Δ +0.1   x0 das 7 linhas no dump: [24.0]
+  linha (altura)       116.0  folha 116  Δ +0.0
+  título               398.2  folha 377  Δ +21.2  > 4 → ERRATA   'Manhã de ensaio'
+  tipo                  84.0  folha 104  Δ -20.0  > 4 → ERRATA
+  remover               48.0  folha 48  Δ +0.0
+  aviso                 66.2  folha 68  Δ -1.8   aviso-motivo 431.6 × 42.2
+== N3P3-S2-com-edicao-tab-ret.xml
+  barra                 88.0  folha 88  Δ +0.0
+  faixa                 64.0  folha 64  Δ +0.0
+  Adicionar            136.0  folha 136  Δ +0.0   texto 'Adicionar' · nome 'Adicionar música'
+  Reordenar            143.1  folha 142.5  Δ +0.6   texto 'Reordenar' · nome 'Reordenar'
+  Renomear e datar     193.8  folha 193  Δ +0.8   texto 'Renomear e datar' · nome 'Renomear e datar'
+  Apagar               119.6  folha 119.6  Δ -0.0   texto 'Apagar' · nome 'Apagar setlist'
+  soma da faixa        688.4  folha 687.1  Δ +1.3   24.0 + 136.0 + 16.0 + 143.1 + 16 + 193.8 + 16.0 + 119.6 + 24.0; faixa 711.1, folga 22.7 (vão real entre os grupos 38.7)
+  linha (largura)      663.1  folha 663  Δ +0.1   x0 das 8 linhas no dump: [24.0]
+  linha (altura)       116.0  folha 116  Δ +0.0
+  título               398.2  folha 377  Δ +21.2  > 4 → ERRATA   'Manhã de ensaio'
+  tipo                  84.0  folha 104  Δ -20.0  > 4 → ERRATA
+  remover               48.0  folha 48  Δ +0.0
+== N3P3-S2-sem-edicao-S2p-avd-ret.xml
+  barra                 88.0  folha 88  Δ +0.0
+  linha (largura)      663.1  folha 663  Δ +0.1   x0 das 8 linhas no dump: [24.0]
+  linha (altura)       116.0  folha 116  Δ +0.0
+  título               462.2  folha 377  Δ +85.2  > 4 → ERRATA   'Manhã de ensaio'
+  tipo                  84.0  folha 104  Δ -20.0  > 4 → ERRATA
+== N3P3-S2-sem-edicao-S2p-tab-ret.xml
+  barra                 88.0  folha 88  Δ +0.0
+  linha (largura)      663.1  folha 663  Δ +0.1   x0 das 8 linhas no dump: [24.0]
+  linha (altura)       116.0  folha 116  Δ +0.0
+  título               462.2  folha 377  Δ +85.2  > 4 → ERRATA   'Manhã de ensaio'
+  tipo                  84.0  folha 104  Δ -20.0  > 4 → ERRATA

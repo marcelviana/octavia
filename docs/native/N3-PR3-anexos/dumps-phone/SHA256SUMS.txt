@@ -1,0 +1,2 @@
+baac2f9a24377abf8ec328e97578c4cf2101827731fc31efc7366afa0afb977c  N3P3-S2-com-edicao-phone-ret.xml
+2b18ef665d203b07d5d758ee62068ec9506f627441797bded154a2f121bb7e0d  N3P3-S2-sem-edicao-S2p-phone-ret.xml

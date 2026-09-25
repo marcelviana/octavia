@@ -1,0 +1,7 @@
+11:42:17 mock modo=escrita-pendurada vazio=False
+11:42:32 toque canto de setlist-00000001 @ 96,474
+11:42:42 toque 'remover-1' @ 1436,581 (RX2N8000F3D)
+N3P3-S2-com-edicao-removendo-rolada-tab-ret mCurrentRotation=ROTATION_0 png=282251 xml=60360 c23ac7e0663d
+11:42:50 rolada capturada 8.3 s depois do toque (prazo do cliente: 20 s)
+11:42:52 mock modo=normal vazio=False
+capturas=1 falhas=0

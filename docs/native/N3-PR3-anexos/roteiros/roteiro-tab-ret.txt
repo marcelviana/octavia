@@ -1,0 +1,35 @@
+09:39:39 toque canto de setlist-00000001 @ 96,474
+N3P3-S2-com-edicao-tab-ret mCurrentRotation=ROTATION_0 png=285236 xml=56712 57fe64b3e993
+09:40:06 toque canto de setlist-00000001 @ 96,474
+09:40:13 toque 'song-1' @ 800,580 (RX2N8000F3D)
+09:40:19 toque 'indice' @ 1103,2345 (RX2N8000F3D)
+N3P3-S2-sem-edicao-S2p-tab-ret mCurrentRotation=ROTATION_0 png=272667 xml=37741 1aa7ac6776d3
+09:40:46 toque canto de setlist-00000001 @ 96,474
+09:40:55 avião=1 (RX2N8000F3D)
+N3P3-S2-com-edicao-aviso-sem-rede-tab-ret mCurrentRotation=ROTATION_0 png=306115 xml=57440 65a28596ddde
+09:41:13 avião=0 (RX2N8000F3D)
+09:41:15 mock modo=escrita-resync-500 vazio=False
+09:41:30 toque canto de setlist-00000001 @ 96,474
+09:41:36 toque 'remover-1' @ 1436,581 (RX2N8000F3D)
+N3P3-S2-com-edicao-salvo-nao-relido-tab-ret mCurrentRotation=ROTATION_0 png=317594 xml=59737 2a2faf9bcc3a
+09:41:50 mock modo=normal vazio=False
+09:41:52 mock modo=escrita-500 vazio=False
+09:42:07 toque canto de setlist-00000001 @ 96,474
+09:42:14 toque 'remover-1' @ 1436,581 (RX2N8000F3D)
+N3P3-S2-com-edicao-falhou-tab-ret mCurrentRotation=ROTATION_0 png=317878 xml=60096 80b466364d5c
+09:42:28 mock modo=normal vazio=False
+09:42:30 mock modo=escrita-429 vazio=False
+09:42:44 toque canto de setlist-00000001 @ 96,474
+09:42:52 toque 'remover-1' @ 1436,581 (RX2N8000F3D)
+N3P3-S2-com-edicao-limite-tab-ret mCurrentRotation=ROTATION_0 png=301012 xml=58010 63d733e25637
+09:43:05 mock modo=normal vazio=False
+09:43:07 mock modo=normal setlists-101
+09:43:22 toque canto de setlist-00000001 @ 96,474
+N3P3-S2-com-edicao-acima-de-100-tab-ret mCurrentRotation=ROTATION_0 png=308242 xml=57722 7c4f1146e4e1
+09:43:39 mock modo=normal vazio=False
+09:43:40 mock modo=escrita-pendurada vazio=False
+09:43:55 toque canto de setlist-00000001 @ 96,474
+09:44:02 toque 'remover-1' @ 1436,581 (RX2N8000F3D)
+N3P3-S2-com-edicao-removendo-tab-ret mCurrentRotation=ROTATION_0 png=285751 xml=56400 02c64583c8a4
+09:44:16 mock modo=normal vazio=False
+capturas=8 falhas=0

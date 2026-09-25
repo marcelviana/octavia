@@ -1,0 +1,13 @@
+09-25 09:58:04.198  6330  6414 I ReactNativeJS: OCTAVIA: faixa=A w=411.4 h=914.3
+09-25 09:58:07.233  6330  6414 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=3 invalidated=0
+09-25 09:58:07.256  6330  6414 I ReactNativeJS: OCTAVIA: cache write kind=content n=12 invalidated=0
+09-25 09:58:22.871  6330  6414 I ReactNativeJS: OCTAVIA: index open
+09-25 09:59:18.083  6330  6414 I ReactNativeJS: OCTAVIA: write op=remove setlist=00000001 items=- status=200 code=- ms=27
+09-25 09:59:18.103  6330  6414 I ReactNativeJS: OCTAVIA: resync kind=setlists reason=write op=remove status=200 setlists=3 ms=19
+09-25 09:59:18.111  6330  6414 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=3 invalidated=1
+09-25 09:59:29.227  7023  7106 I ReactNativeJS: OCTAVIA: faixa=A w=411.4 h=914.3
+09-25 09:59:31.960  7023  7106 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=3 invalidated=1
+09-25 09:59:32.011  7023  7106 I ReactNativeJS: OCTAVIA: cache write kind=content n=12 invalidated=0
+09-25 09:59:47.595  7023  7106 I ReactNativeJS: OCTAVIA: index open
+09-25 09:59:53.265  7023  7106 I ReactNativeJS: OCTAVIA: index jump n=1
+09-25 09:59:59.195  7023  7106 I ReactNativeJS: OCTAVIA: index open

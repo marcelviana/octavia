@@ -1,0 +1,30 @@
+$ npx vitest run --project native-tela apps/native/test/s2-faixa.test.tsx   # commit 1, árvore de 58d2296 + o teste e o duplo
+     × os quatro controles, `Adicionar` e `Apagar` visíveis, e o nome acessível continua o longo 276ms
+     × a grade de duas colunas vira uma; cada `song-<n>` com o seu `remover-<n>` 200ms
+     × vinda do palco: zero controle de escrita, a posição atual marcada, e a coluna única 128ms
+     × sem rede (N3-B-X-sem-rede): a faixa inteira inerte, com os rótulos curtos 139ms
+     × salvo, não relido (N3-B-X-salvo-nao-relido): remover com 2xx e a releitura em 500 242ms
+     × falhou (N3-B-X-falhou): as três orações e `Tentar de novo` 245ms
+     × limite (N3-B-X-limite): a frase com o prazo, sem ação — a amostra que S1 não tem (div. 413) 235ms
+     × acima de 100 (N3-B-X-100): 101 linhas, só `Reordenar` inerte, e a coluna vai até a 101 210ms
+     ✓ rótulos longos, grade de duas colunas; o nome acessível é o mesmo de B 137ms
+     ✓ S2p em C: a grade de duas colunas, sem faixa 131ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL   native-tela  apps/native/test/s2-faixa.test.tsx > N3-B-S2e — a faixa de 64 com os rótulos curtos (N3-D17) > os quatro controles, `Adicionar` e `Apagar` visíveis, e o nome acessível continua o longo
+AssertionError: expected [ 'Adicionar música', …(3) ] to deeply equal [ 'Adicionar', 'Reordenar', …(2) ]
+ FAIL   native-tela  apps/native/test/s2-faixa.test.tsx > N3-B-S2e — coluna única 663 × 116, `remover` no fim de toda linha > a grade de duas colunas vira uma; cada `song-<n>` com o seu `remover-<n>`
+AssertionError: expected '2' to be '1' // Object.is equality
+ FAIL   native-tela  apps/native/test/s2-faixa.test.tsx > N3-B-S2p — a mesma coluna, sem faixa e sem `remover` > vinda do palco: zero controle de escrita, a posição atual marcada, e a coluna única
+AssertionError: expected '2' to be '1' // Object.is equality
+ FAIL   native-tela  apps/native/test/s2-faixa.test.tsx > N3-B-X — os cinco estados de S2 pela `LinhaDeAviso`, com o texto inteiro > sem rede (N3-B-X-sem-rede): a faixa inteira inerte, com os rótulos curtos
+AssertionError: expected [ 'Adicionar música', …(3) ] to deeply equal [ 'Adicionar', 'Reordenar', …(2) ]
+ FAIL   native-tela  apps/native/test/s2-faixa.test.tsx > N3-B-X — os cinco estados de S2 pela `LinhaDeAviso`, com o texto inteiro > salvo, não relido (N3-B-X-salvo-nao-relido): remover com 2xx e a releitura em 500
+AssertionError: expected [ 'Adicionar música', …(3) ] to deeply equal [ 'Adicionar', 'Reordenar', …(2) ]
+ FAIL   native-tela  apps/native/test/s2-faixa.test.tsx > N3-B-X — os cinco estados de S2 pela `LinhaDeAviso`, com o texto inteiro > falhou (N3-B-X-falhou): as três orações e `Tentar de novo`
+AssertionError: expected [ 'Adicionar música', …(3) ] to deeply equal [ 'Adicionar', 'Reordenar', …(2) ]
+ FAIL   native-tela  apps/native/test/s2-faixa.test.tsx > N3-B-X — os cinco estados de S2 pela `LinhaDeAviso`, com o texto inteiro > limite (N3-B-X-limite): a frase com o prazo, sem ação — a amostra que S1 não tem (div. 413)
+AssertionError: expected [ 'Adicionar música', …(3) ] to deeply equal [ 'Adicionar', 'Reordenar', …(2) ]
+ FAIL   native-tela  apps/native/test/s2-faixa.test.tsx > N3-B-X — os cinco estados de S2 pela `LinhaDeAviso`, com o texto inteiro > acima de 100 (N3-B-X-100): 101 linhas, só `Reordenar` inerte, e a coluna vai até a 101
+AssertionError: expected [ 'Adicionar música', …(3) ] to deeply equal [ 'Adicionar', 'Reordenar', …(2) ]
+ Test Files  1 failed (1)
+      Tests  8 failed | 2 passed (10)

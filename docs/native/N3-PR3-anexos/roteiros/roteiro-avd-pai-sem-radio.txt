@@ -1,0 +1,54 @@
+FALHA palco: ESPERA ESGOTADA: 'setlist-00000001'
+08:50:35 avião=0 (emulator-5554)
+08:50:37 mock modo=normal vazio=False
+08:50:39 mock modo=normal vazio=True
+FALHA S1f: ESPERA ESGOTADA: 's1f'
+08:51:26 avião=0 (emulator-5554)
+08:51:27 mock modo=normal vazio=False
+FALHA S2e: ESPERA ESGOTADA: 'setlist-00000001'
+08:52:14 avião=0 (emulator-5554)
+08:52:16 mock modo=normal vazio=False
+FALHA reordenar: ESPERA ESGOTADA: 'setlist-00000001'
+08:53:02 avião=0 (emulator-5554)
+08:53:04 mock modo=normal vazio=False
+FALHA picker: ESPERA ESGOTADA: 'setlist-00000001'
+08:53:51 avião=0 (emulator-5554)
+08:53:53 mock modo=normal vazio=False
+08:54:04 toque 'criar-setlist' @ 1878,188 (emulator-5554)
+N3P3-folha-criar-avd-pai mCurrentRotation=ROTATION_0 png=261664 xml=42893 bbe1f30627c2
+FALHA folha: TOQUE FALHOU: sem 'form-cancelar' (n=1)
+08:54:25 avião=0 (emulator-5554)
+08:54:26 mock modo=normal vazio=False
+FALHA dialogo: ESPERA ESGOTADA: 'setlist-00000001'
+08:55:18 avião=0 (emulator-5554)
+08:55:20 mock modo=normal vazio=False
+08:55:37 toque 'buscar' @ 2295,188 (emulator-5554)
+N3P3-S4-vazio-avd-pai mCurrentRotation=ROTATION_0 png=96678 xml=16617 4e274f25536d
+08:55:50 toque 'campo-busca' @ 1162,152 (emulator-5554)
+N3P3-S4-resultados-avd-pai mCurrentRotation=ROTATION_0 png=106869 xml=18271 b073badc6811
+08:56:05 toque 'fechar-busca' @ 108,152 (emulator-5554)
+capturas=3 falhas=7
+  palco: ESPERA ESGOTADA: 'setlist-00000001'
+  S1f: ESPERA ESGOTADA: 's1f'
+  S2e: ESPERA ESGOTADA: 'setlist-00000001'
+  reordenar: ESPERA ESGOTADA: 'setlist-00000001'
+  picker: ESPERA ESGOTADA: 'setlist-00000001'
+  folha: TOQUE FALHOU: sem 'form-cancelar' (n=1)
+  dialogo: ESPERA ESGOTADA: 'setlist-00000001'
+08:56:14 avião=0 (emulator-5554)
+N3P3-S1-setlists-avd-pai mCurrentRotation=ROTATION_0 png=262013 xml=42893 bbe1f30627c2
+08:56:41 avião=1 (emulator-5554)
+N3P3-S1-aviso-sem-rede-avd-pai mCurrentRotation=ROTATION_0 png=262424 xml=42893 bbe1f30627c2
+08:57:16 avião=0 (emulator-5554)
+08:57:18 mock modo=500-pagina-1 vazio=False
+espera 29s para o cache ter 1 min
+N3P3-S1-S1e-falha-com-cache-avd-pai mCurrentRotation=ROTATION_0 png=261350 xml=42893 bbe1f30627c2
+08:58:16 mock modo=normal vazio=False
+capturas=3
+08:58:18 mock modo=401 vazio=False
+08:58:33 mock modo=normal vazio=False
+FALHA S0frio: ESPERA ESGOTADA: 'entrar'
+08:59:10 avião=0 (emulator-5554)
+08:59:12 mock modo=normal vazio=False
+capturas=0 falhas=1
+  S0frio: ESPERA ESGOTADA: 'entrar'

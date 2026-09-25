@@ -1,0 +1,35 @@
+11:07:44 toque canto de setlist-00000001 @ 96,474
+11:07:53 avião=1 (RX2N8000F3D)
+N3P3-S2-com-edicao-aviso-sem-rede-tab-ret mCurrentRotation=ROTATION_0 png=306067 xml=57440 65a28596ddde
+N3P3-S2-com-edicao-aviso-sem-rede-rolada-tab-ret mCurrentRotation=ROTATION_0 png=308853 xml=57424 16f0f139c11d
+11:08:25 avião=0 (RX2N8000F3D)
+11:08:27 mock modo=escrita-resync-500 vazio=False
+11:08:41 toque canto de setlist-00000001 @ 96,474
+11:08:48 toque 'remover-1' @ 1436,581 (RX2N8000F3D)
+N3P3-S2-com-edicao-salvo-nao-relido-tab-ret mCurrentRotation=ROTATION_0 png=317488 xml=59737 2a2faf9bcc3a
+N3P3-S2-com-edicao-salvo-nao-relido-rolada-tab-ret mCurrentRotation=ROTATION_0 png=320158 xml=59721 aaa7ac8e55f5
+11:09:16 mock modo=normal vazio=False
+11:09:18 mock modo=escrita-500 vazio=False
+11:09:32 toque canto de setlist-00000001 @ 96,474
+11:09:39 toque 'remover-1' @ 1436,581 (RX2N8000F3D)
+N3P3-S2-com-edicao-falhou-tab-ret mCurrentRotation=ROTATION_0 png=318496 xml=60096 80b466364d5c
+N3P3-S2-com-edicao-falhou-rolada-tab-ret mCurrentRotation=ROTATION_0 png=320505 xml=60080 3e6baf229522
+11:10:07 mock modo=normal vazio=False
+11:10:08 mock modo=escrita-429 vazio=False
+11:10:23 toque canto de setlist-00000001 @ 96,474
+11:10:30 toque 'remover-1' @ 1436,581 (RX2N8000F3D)
+N3P3-S2-com-edicao-limite-tab-ret mCurrentRotation=ROTATION_0 png=300402 xml=58010 63d733e25637
+N3P3-S2-com-edicao-limite-rolada-tab-ret mCurrentRotation=ROTATION_0 png=300962 xml=58003 a1f519d7f882
+11:10:58 mock modo=normal vazio=False
+11:10:59 mock modo=normal setlists-101
+11:11:14 toque canto de setlist-00000001 @ 96,474
+N3P3-S2-com-edicao-acima-de-100-tab-ret mCurrentRotation=ROTATION_0 png=307304 xml=57722 7c4f1146e4e1
+N3P3-S2-com-edicao-acima-de-100-rolada-tab-ret mCurrentRotation=ROTATION_0 png=309797 xml=61452 d21547d3f684
+11:11:45 mock modo=normal vazio=False
+11:11:47 mock modo=escrita-pendurada vazio=False
+11:12:02 toque canto de setlist-00000001 @ 96,474
+11:12:09 toque 'remover-1' @ 1436,581 (RX2N8000F3D)
+N3P3-S2-com-edicao-removendo-tab-ret mCurrentRotation=ROTATION_0 png=285725 xml=56400 02c64583c8a4
+N3P3-S2-com-edicao-removendo-rolada-tab-ret mCurrentRotation=ROTATION_0 png=314847 xml=64435 177cc161bba0
+11:12:36 mock modo=normal vazio=False
+capturas=12 falhas=0
