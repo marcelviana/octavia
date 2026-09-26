@@ -320,7 +320,7 @@ Na rodada 2 o worker novo recarregou a aba sozinho (um documento `fromServiceWor
 
 `README.md` (linhas da `main`): `24-30` (a seção *Performance Mode* das features vira uma nota: o palco saiu, tocar é do app nativo) · `38` (*Performance Integration*) · `90` (*Performance Mode* do responsive) · `114-116` (`ALLOWED_PROXY_HOSTS`: não é mais do proxy offline — é a lista de hosts de imagem do `next.config.mjs`) · `125-126` (*Customize Settings … keyboard shortcuts* e *Try Performance Mode*) · `141` (*Start Performance*) · `143-148` (o guia *Performance Mode*) · `177` (*Stage-optimized performance mode*) · `257-264` (*Offline Support* e *Service Worker Updates* viram *Online only*).
 
-`CLAUDE.md` (linhas da `main`): `10` (`pnpm build` sem "+ service worker") · `114` (*Offline Support*: só online desde a I1-PR-3) · `133` (`offline-cache.ts` sai da lista de `/lib`) · `196` (*Performance Mode*: removido do web) · `198` (*Offline Support*: nenhum no web) · `373-399` (*Offline Architecture* e *PWA & Mobile Performance* viram um parágrafo: só online, o worker de auto-destruição e a herança) · `537-538` (`lib/offline-cache.ts` e a linha de aparato do palco web, `components/performance-mode.tsx`, saem de *Important Files*). **Não tocadas** (div. 572): as regras genéricas que ainda falam de cache/offline (*Priority 1/2* de performance, `:325-345`; o item *Offline Support* do checklist, `:519`; *Test offline functionality*, `:505`; *Consider offline implications*, `:528`, `:549`).
+`CLAUDE.md` (linhas da `main`): `10` (`pnpm build` sem "+ service worker") · `114` (*Offline Support*: só online desde a I1-PR-3) · `133` (`offline-cache.ts` sai da lista de `/lib`) · `196` (*Performance Mode*: removido do web) · `198` (*Offline Support*: nenhum no web) · `373-399` (*Offline Architecture* e *PWA & Mobile Performance* viram um parágrafo: só online, o worker de auto-destruição e a herança) · `537-538` (`lib/offline-cache.ts` e a linha de aparato do palco web, `components/performance-mode.tsx`, saem de *Important Files*). **Commit 4 (div. 572, aval do commit 3)** — as regras genéricas de cache/offline, linha a linha (linhas da `main`): `325-345` (*Priority 1: Performance Mode Optimization* e *Priority 2: Content Loading & Caching*, com o exemplo `useOptimizedContent` do IndexedDB) → um parágrafo: *"saíram do web na I1-PR-3 — o web é só online desde a I1-PR-3; tocar ao vivo, sem rede e com cache local, é do app nativo"* · `505` (*6. Test offline functionality*, em *When Refactoring*) → sai · `519` (*[ ] Offline Support*, no checklist de revisão) → sai · `528` (*6. Offline Support: Consider caching implications…*, em *Development Guidelines*) → *"6. Offline Support: nenhum no web — só online desde a I1-PR-3"* (a numeração 1–8 fica) · `549` (*6. Consider offline implications*, em *Common Development Tasks*) → sai. **Nada mais** no `CLAUDE.md`; `:317` (*Test offline scenarios*, em *Mock Patterns*) não estava na lista e ficou (div. 578).
 
 ## 15. Divergências 564–575 (as 550–563 estão na §5)
 
@@ -371,3 +371,36 @@ O bloco ```gates``` do corpo está vazio.
 | testes | Vitest: 1175 → 1082 casos (1090 → 1005 passed, 85 → 77 skipped); a seção *testes* da lista apaga **19** arquivos = 14 de teste do Vitest + 1 bench (`live-music-performance.bench.tsx`) + 1 auxiliar (`bug-reproduction-helpers.ts`) + 3 specs do ux-audit; arquivos do Vitest 119 → 106 (−14 + o CN novo); **8 do Vitest adaptados** (`g-rotas-protegidas`, `next-headers`, `security-headers-csp`, `setlist-service`, `firebase-auth-context`, `use-library-data`, `use-setlist-data`, `content-viewer.refactoring`) + o CN novo reduzido a um modo; ux-audit: **8 specs adaptados** (`harvest`, `harvest-populated`, `a-j1`, `b-pdf`, `cont01-02`, `f-library`, `g-viewer`, `h-perf`) + `recorder.ts` + o config |
 | `git diff --shortstat 089f72c` (base) | preenchido no corpo da PR depois do commit 3 |
 | servidores locais | `next dev`/`next start` em `localhost:3000`, parados ao fim; árvore de apoio `../octavia-i1-pr3-main` (`089f72c`) |
+
+## 18. Aval do commit 3 — `[Marcel, 2026-09-26]`
+
+- **Div. 574**: atualização por **merge de `origin/main` na branch** (sem push forçado); o conflito em `contexts/firebase-auth-context.tsx` se resolve **a favor da PR-1** (o provider inteiro como está na `main`), reaplicando só os cortes desta PR.
+- **Div. 572**: as regras genéricas de cache/offline do `CLAUDE.md` saem ou passam a dizer *"web só online desde a I1-PR-3"*, linha a linha (§14); nada mais no `CLAUDE.md`.
+- **Div. 575**: o aceite A com sessão é do Marcel, **depois** do merge, pelo `aceite/COMO-RODAR.md`.
+- **Divs. 569, 570, 571, 573**: registradas como estão; a 570 com a ressalva *"aceites em `next dev`; o registro do SW não depende do modo"*.
+
+## 19. Commit 4 — o merge da `main` (#336) e o `CLAUDE.md`
+
+`git fetch origin && git merge origin/main` (`b68305b`) → `CONFLICT (content): Merge conflict in contexts/firebase-auth-context.tsx` (o único). Resolução: `git checkout --theirs` (o provider da PR-1) e os três cortes reaplicados — nas linhas **da `main`**: `:18-19` (imports de `clearOfflineContent`/`clearOfflineSetlists`), `:421` (`const uid = user?.uid`, que só a limpeza lia) e `:427-437` (o bloco `Promise.all` de `clearOffline*` no logout). `git diff -U0 origin/main -- contexts/firebase-auth-context.tsx` → `@@ -18,2 +17,0 @@` · `@@ -421 +418,0 @@` · `@@ -427,11 +423,0 @@`, nada mais. `git diff --name-only --diff-filter=U` → vazio. Merge = `ab66e1a` (`46 files changed, 1951 insertions(+), 144 deletions(-)`, o conteúdo da PR-1).
+
+O G-palco no merge acusou o gate da PR-1: `components/auth/__tests__/login-sessao-cn.test.tsx:52-53` fazia `vi.mock` dos dois caches mortos → os dois `vi.mock` saem no próprio merge (div. 576). Depois do merge:
+
+```
+G-palco: PASSA — 0 ocorrências
+tests/gates/i1-visualizador.test.tsx                 6/6
+components/auth/__tests__/login-sessao-cn.test.tsx  15/15   (o CN da PR-1 sobre o provider mergeado)
+pnpm test        Test Files 104 passed | 3 skipped (107) · Tests 1020 passed | 77 skipped (1097)
+tsc (app)        0 erros
+tsc (testes)     103
+pnpm lint        ✔ No ESLint warnings or errors
+pnpm build       ✓ Compiled successfully (sem /performance, /profile, /settings, /setup, /offline, /api/proxy)
+pnpm install --frozen-lockfile --offline   Done
+```
+
+O `CLAUDE.md` (div. 572) vai num commit próprio depois do merge, não dentro dele (div. 577).
+
+| # | origem | o que o prompt presumiu | o que foi medido | destino |
+|---|---|---|---|---|
+| **576** | A | o conflito era só o do provider | o CN da PR-1 (`login-sessao-cn.test.tsx:52-53`) fazia `vi.mock('@/lib/offline-cache')` e `vi.mock('@/lib/offline-setlist-cache')`; o G-palco reprovou (2) | os dois `vi.mock` saem no merge; o CN segue 15/15 |
+| **577** | P | *"Commit 4 — merge da main e CLAUDE.md"*, um commit | o merge e o `CLAUDE.md` são dois commits: o merge carrega só a resolução do conflito (e a 576) | registrado |
+| **578** | D | div. 572 lista `:325-345`, `:505`, `:519`, `:528`, `:549` | há também `:317` (*Test offline scenarios*, *Mock Patterns*) | **não tocada** (*"nada mais no CLAUDE.md"*); fica para o Marcel |

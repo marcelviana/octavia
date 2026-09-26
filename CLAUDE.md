@@ -321,26 +321,8 @@ describe('useContentManagement', () => {
 
 **Music Performance Context**: This app is used during live music performances where lag or failures are unacceptable.
 
-**Priority 1: Performance Mode Optimization**
-- **<100ms response time** for song navigation during performances
-- **Instant rendering** of cached content (IndexedDB priority)
-- **Zero network dependency** during performances
-- **Smooth transitions** between songs in setlists
-
-**Priority 2: Content Loading & Caching**
-```typescript
-// REQUIRED: All content operations must implement caching
-const useOptimizedContent = () => {
-  const [content, setContent] = useState<Content[]>([]);
-  const [loading, setLoading] = useState(true);
-  
-  useEffect(() => {
-    // 1. Load from cache immediately (IndexedDB)
-    // 2. Fetch updates in background if online
-    // 3. Update cache with fresh data
-  }, []);
-};
-```
+**Priority 1 e 2 (palco e cache offline)**: saíram do web na I1-PR-3 — o web é **só online desde
+a I1-PR-3**; tocar ao vivo, sem rede e com cache local, é do app nativo (`apps/native`).
 
 **Priority 3: Component Performance**
 - Use `React.memo` for expensive rendering components
@@ -481,7 +463,6 @@ export async function getUserContent(userId: string): Promise<Content[]> {
 3. Check TypeScript errors
 4. Verify security implications
 5. Update documentation
-6. Test offline functionality
 
 ### Code Review Checklist (NON-NEGOTIABLE)
 
@@ -495,7 +476,6 @@ Before accepting any code changes:
 - [ ] **Accessibility**: Screen reader support and keyboard navigation
 - [ ] **Security**: No sensitive data exposure, proper sanitization
 - [ ] **Component Size**: <150 lines with extracted business logic
-- [ ] **Offline Support**: Considers caching and offline scenarios
 
 ### Development Guidelines
 
@@ -504,7 +484,7 @@ Before accepting any code changes:
 3. **Error Handling**: Generic messages to clients, detailed server-side logging  
 4. **Testing**: 85% coverage target with comprehensive test scenarios
 5. **Performance**: Optimize for live music performance context
-6. **Offline Support**: Consider caching implications for all data flows
+6. **Offline Support**: nenhum no web — só online desde a I1-PR-3
 7. **TypeScript**: Strict typing, no `any` exceptions
 8. **Component Architecture**: Extract hooks, keep components focused
 
@@ -523,4 +503,3 @@ When adding new features:
 3. Create service layer in `/lib` if needed
 4. Build UI components with proper error boundaries
 5. Add comprehensive tests
-6. Consider offline implications
