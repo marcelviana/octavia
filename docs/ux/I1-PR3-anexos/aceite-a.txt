@@ -1,0 +1,55 @@
+# I1-PR3 — aceite A (commit 3), verbatim. Servidor: `next dev -p 3000` na branch (c88353f + os anexos),
+# sem .env* (a árvore só tem .env.example): sem Firebase Admin nem Supabase — o que precisa de sessão é do Marcel (aceite/COMO-RODAR.md).
+# Produção local (`pnpm start`) não serve páginas em http (middleware.ts:23-25 → https) — div. 570.
+
+## 1. Redirects da I1-D22 (aval 3: permanentes)
+# $ curl -sI 'http://localhost:3000/performance?contentId=cn-content-123' | grep -iE '^(HTTP|location)'
+HTTP/1.1 308 Permanent Redirect
+location: /content/cn-content-123?contentId=cn-content-123
+# $ curl -sI 'http://localhost:3000/performance?setlistId=cn-setlist-456&startingSongIndex=2' | grep -iE '^(HTTP|location)'
+HTTP/1.1 308 Permanent Redirect
+location: /setlists?setlistId=cn-setlist-456&startingSongIndex=2
+# $ curl -sI 'http://localhost:3000/performance' | grep -iE '^(HTTP|location)'
+HTTP/1.1 308 Permanent Redirect
+location: /dashboard
+
+## 2. Rotas que morreram → 404
+# $ curl -sI 'http://localhost:3000/profile' | grep -iE '^(HTTP|location)'
+HTTP/1.1 404 Not Found
+# $ curl -sI 'http://localhost:3000/settings' | grep -iE '^(HTTP|location)'
+HTTP/1.1 404 Not Found
+# $ curl -sI 'http://localhost:3000/setup' | grep -iE '^(HTTP|location)'
+HTTP/1.1 404 Not Found
+# $ curl -sI 'http://localhost:3000/offline' | grep -iE '^(HTTP|location)'
+HTTP/1.1 404 Not Found
+# $ curl -sI 'http://localhost:3000/api/proxy' | grep -iE '^(HTTP|location)'
+HTTP/1.1 404 Not Found
+# $ curl -sI 'http://localhost:3000/api/proxy?url=https://example.com/x.pdf' | grep -iE '^(HTTP|location)'
+HTTP/1.1 404 Not Found
+
+## 3. Capturas sem sessão (executor) — aceite/out-publico/
+# $ node docs/ux/I1-PR3-anexos/aceite/aceite-a.mjs publico
+# I1-PR3 aceite A — modo publico — 2026-09-26T18:20:53.426Z · alvo http://localhost:3000 · Chrome do sistema, 1138×800
+## públicas (sem sessão)
+landing                /                                                → /                                        link /login visível · landing.png
+privacy-policy         /privacy-policy                                  → /privacy-policy                          mailto do DPO visível · privacy-policy.png
+## protegidas sem sessão (esperado: /login — o corpo delas é do modo sessao)
+sem sessão /dashboard                         → /login
+sem sessão /library                           → /login
+sem sessão /setlists                          → /login
+sem sessão /content/aceite-sem-sessao         → /login
+sem sessão /content/aceite-sem-sessao/edit    → /login
+## contabilidade
+escrita a /api/* fora de /api/auth/session: 0
+/api/auth/session (cookie, declarado): 0
+requests a octavia.rocks: 0 (abortados no navegador; o esperado é 0)
+outros hosts (fora de localhost): nenhum
+erros de página: nenhum
+resultado: EXIT 0 · 10 s
+
+## 4. Capturas com sessão — /content/[id] × 4, /content/[id]/edit, /setlists, /dashboard, /library
+# PENDENTE DO MARCEL (I1-D35): não há mock de auth no servidor em execução — toda página protegida passa
+# por requirePageUser → getServerSideUser (Firebase Admin, com env). Os mocks de auth que os testes do web
+# usam (src/test-setup.ts:83-107, vi.mock de firebase-auth-context/firebase-server-utils) só existem no Vitest.
+# O que prova hoje que os quatro tipos abrem sem o cache é o CN (cn-visualizador-depois.txt, 6/6).
+# Roteiro: aceite/COMO-RODAR.md → grava em aceite/out-sessao/.

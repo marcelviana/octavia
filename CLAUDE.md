@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ```bash
 # Development
 pnpm dev                    # Start dev server with Next.js
-pnpm build                  # Build for production + service worker
+pnpm build                  # Build for production
 pnpm start                  # Start production server
 pnpm lint                   # Run ESLint
 
@@ -111,7 +111,7 @@ banco** — a fonte é o arquivo de migração. Primeira migração da série:
 - **UI**: Tailwind CSS + Radix UI components (shadcn/ui)
 - **State Management**: React hooks + Context API
 - **Testing**: Vitest (unit) + Playwright (gates do ux-audit, sob demanda)
-- **Offline Support**: Service Worker + IndexedDB caching
+- **Offline Support**: nenhum — o web é **só online desde a I1-PR-3** (PWA, service worker, cache IndexedDB, fila de escrita offline e `/offline` removidos; `public/sw.js` é o worker de auto-destruição até o bloco seguinte ao I1)
 
 ### Directory Structure
 
@@ -130,7 +130,6 @@ banco** — a fonte é o arquivo de migração. Primeira migração da série:
 - `firebase-server-utils.ts` - Server-side auth verification
 - `content-service.ts` - Content management operations
 - `supabase-service.ts` - Database service layer
-- `offline-cache.ts` - IndexedDB caching for offline support
 - Validation with Zod schemas
 
 **`/contexts`** - React context providers for global state
@@ -193,9 +192,9 @@ The app manages musical content (sheet music, lyrics, tabs, chord charts):
 
 1. **Upload Flow**: Files uploaded to Supabase Storage (bucket `content-files`, via `POST /api/storage/upload`) → metadata stored in Supabase
 2. **Content Types**: `Lyrics | Chords | Tab | Sheet` — o enum canônico vive em `/types/content.ts` (fonte única; qualquer schema deriva dele). Nota: versões antigas deste arquivo citavam "tabs, piano, drums" — valores que **nunca existiram no produto** e que originaram os quatro enums divergentes medidos no B2 (achado c2)
-3. **Performance Mode**: Full-screen interface for live performances
+3. **Performance Mode**: removido do web na I1-PR-3 — tocar ao vivo é do app nativo (`apps/native`)
 4. **Setlist Management**: Organize songs for performances
-5. **Offline Support**: Content cached locally via service worker + IndexedDB
+5. **Offline Support**: nenhum no web desde a I1-PR-3 (só online)
 
 ### Key Service Patterns
 
@@ -371,31 +370,11 @@ const LibraryList = () => {
 
 ### Offline Architecture
 
-**Service Worker Strategy**:
-- Cache all performance mode assets
-- Background sync for content updates
-- Fallback to cached versions during network issues
-- Update notifications when fresh content available
-
-**IndexedDB Caching**:
-- **50MB LRU cache** for content files
-- **Priority caching**: Recently accessed and favorited content
-- **Automatic cleanup**: Remove old unused content
-- **Batch operations**: Minimize IndexedDB transactions
-
-**Network Optimization**:
-- Preload next song in setlist during performance
-- Compress images and PDFs for faster loading
-- Use service worker for request interception and caching
-- Implement progressive loading for large files
-
-### PWA & Mobile Performance
-
-- **App-like experience**: Fast startup, smooth animations
-- **Touch optimization**: Performance mode touch controls
-- **Battery efficiency**: Minimize background processing
-- **Storage management**: Automatic cache cleanup
-- **Offline-first**: Core functionality works without network
+O web é **só online desde a I1-PR-3** (I1-D18): o PWA (manifest, service worker, prompt de
+instalação, `/offline`), o cache offline em IndexedDB, a fila de escrita offline e o `/api/proxy`
+foram removidos. `public/sw.js` é um worker de **auto-destruição** (apaga os caches e os IndexedDB
+do cache antigo, desregistra-se) para navegadores que ainda têm o worker velho; ele e o
+`worker-src`/`manifest-src` da CSP saem no bloco seguinte ao I1. Offline é do app nativo.
 
 ## ARCHITECTURAL PATTERNS (from .cursorrules)
 
@@ -534,8 +513,6 @@ Before accepting any code changes:
 - `middleware.ts` - Request preprocessing and auth checks
 - `lib/firebase-server-utils.ts` - Server-side authentication
 - `lib/content-service.ts` - Core content management
-- `lib/offline-cache.ts` - Offline functionality
-- `components/performance-mode.tsx` - Live performance interface
 - `app/api/` - RESTful API routes with authentication
 
 ### Common Development Tasks

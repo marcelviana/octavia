@@ -21,13 +21,7 @@ Octavia is a comprehensive digital music management application designed for mus
 - **Favorites System**: Mark frequently used songs for quick access
 - **Grid & List Views**: Switch between visual layouts for optimal browsing
 
-### 🎭 **Performance Mode**
-- **Distraction-Free Interface**: Full-screen mode optimized for live performances
-- **Auto-Hide Controls**: UI elements fade away during performance for minimal distraction
-- **Keyboard Navigation**: Navigate songs with arrow keys, space bar, and escape
-- **Zoom Controls**: Adjust content size for optimal visibility on stage
-- **Timer Integration**: Track performance time with built-in elapsed timer
-- **Quick Song Switching**: Seamless transitions between songs in setlists
+> The web performance (stage) mode was removed in I1-PR3; performing lives in the native app.
 
 ### 📝 **Setlist Management**
 - **Create & Organize**: Build custom setlists for different venues and occasions
@@ -35,7 +29,6 @@ Octavia is a comprehensive digital music management application designed for mus
 - **Performance Analytics**: Track total duration and song count
 - **Quick Actions**: Duplicate, share, and manage setlists efficiently
 - **Song Addition**: Add songs from your library to existing setlists
-- **Performance Integration**: Launch directly into performance mode from setlists
 
 ### 🎨 **Content Creation & Editing**
 - **Built-in Editors**: Create lyrics sheets, chord charts, and guitar tablatures from scratch
@@ -87,7 +80,6 @@ Octavia is a comprehensive digital music management application designed for mus
 ### **Responsive Design**
 - **Mobile Optimized**: Touch-friendly interface for tablets and phones
 - **Desktop Enhanced**: Full keyboard support and multi-panel layouts
-- **Performance Mode**: Optimized for stage lighting conditions
 - **Accessibility**: Screen reader support and keyboard navigation
 
 ## 🛠️ Technical Stack
@@ -111,9 +103,9 @@ Octavia is a comprehensive digital music management application designed for mus
 2. Click "Download Code" in the top right corner
 3. Follow the shadcn CLI setup instructions
 
-The `ALLOWED_PROXY_HOSTS` variable controls which domains the
-offline cache proxy will fetch from. Add any additional hosts
-you need for external imports (comma‑separated).
+The `ALLOWED_PROXY_HOSTS` variable adds hosts (comma‑separated) to the
+optimized-image allow list in `next.config.mjs`. (The offline cache proxy
+`/api/proxy` was removed in I1-PR3.)
 
 Authentication tokens are now verified directly using the Firebase Admin SDK in
 middleware. No additional URLs are required, and results are cached to allow
@@ -122,8 +114,6 @@ offline access.
 ### First Steps
 1. **Import Content**: Start by uploading your existing sheet music and tabs
 2. **Create Setlists**: Organize songs for your upcoming performances
-3. **Customize Settings**: Adjust display preferences and keyboard shortcuts
-4. **Try Performance Mode**: Test the full-screen performance interface
 
 ## 📖 Usage Guide
 
@@ -138,13 +128,6 @@ offline access.
 2. Click "Create Setlist" and add details
 3. Add songs from your library
 4. Reorder songs by dragging and dropping
-5. Use "Start Performance" for live shows
-
-### **Performance Mode**
-1. Select a setlist or individual song
-2. Click "Performance Mode" or press the play button
-3. Use arrow keys to navigate between songs
-4. Press Escape to exit performance mode
 
 ### **Content Creation**
 1. Click "Add Content" from the sidebar
@@ -174,7 +157,6 @@ offline access.
 - Digital lesson delivery
 
 ### **Live Performers**
-- Stage-optimized performance mode
 - Quick song transitions
 - Backup-free performances
 - Professional presentation
@@ -254,13 +236,9 @@ We welcome contributions! Here's how you can help:
 
 Automated unit tests live in `lib/__tests__` and are executed with [Vitest](https://vitest.dev). Run `npm test` to execute them.
 
-### Offline Support
+### Online only
 
-The application includes an offline mode backed by IndexedDB. A health check endpoint (`/api/health`) lets the client detect when connectivity returns. Library data and setlists viewed while online are cached locally so they can be accessed from the dedicated offline page when the network is unavailable. Cached files are stored as binary Blobs and an LRU policy keeps the total size under 50 MB to avoid quota errors. In addition to IndexedDB, a custom service worker caches key pages and static assets so previously visited screens load even without a network connection.
-
-### Service Worker Updates
-
-The service worker code lives in `worker/index.js`. A small build script copies this file to `public/sw.js` during `pnpm build`, ensuring the deployed worker always matches the source. When a new worker version is available, the app displays an update toast; clicking **Reload** activates the fresh worker immediately.
+Since I1-PR3 the web app is online only: the PWA (manifest, service worker, install prompt), the IndexedDB offline cache, the offline write queue and the `/offline` page were removed. `public/sw.js` is now a self-destroying worker that clears the old caches and unregisters itself in browsers that still have the previous one; it goes away in the block after I1.
 
 ## 🔧 Configuration
 
