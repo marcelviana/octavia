@@ -158,7 +158,7 @@ ou N5 (`N2-ENCERRAMENTO.md` §10.2–§10.8).
 | 3 | ~~**o estouro do LRU fica só em log** (`lru over`), decisão do Marcel (2026-09-23). **Hipótese** a medir: "o indicador ◔ do T1-R17 reflete um `lru over`?"~~ — **fechado no N3 pre-check (#324)**, sem defeito: H-N3-2, `N3-PRECHECK.md` §6.1 (◔ na setlist que perdeu o arquivo, ✓ na que tem os três) | div. 380 | **N3 pre-check** |
 | 4 | o **"Baixar" do S3e pega carona num voo pendurado** (o resto da div. 119 (a)): sem teto de inatividade (div. 126), o toque do usuário não escapa de um download alheio que nunca termina | div. 370 | junto de qualquer volta ao teto de download |
 | 5 | uma medição **fria** do release: o `metro-cache` estava quente nas três corridas, e o `builds.sh` não o apaga | div. 374; `RELEASE-FAIXA.md` | a próxima PR que medir release |
-| 6 | os `X<n>` não renomeados em `apps/native/src/escrita.ts:429` e `screens/Picker.tsx:310` | div. 350(b) | a próxima PR que tocar esses arquivos |
+| 6 | os `X<n>` não renomeados em `apps/native/src/escrita.ts:429` e `screens/Picker.tsx:310` | div. 350(b) | ~~a próxima PR que tocar esses arquivos~~ — **W5** (`N3-ENCERRAMENTO.md` §10.3.5; regra 23, div. 479). A N3-PR6 tocou o `Picker.tsx` sem renomear; hoje `:311` |
 
 ---
 

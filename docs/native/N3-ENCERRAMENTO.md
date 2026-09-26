@@ -17,7 +17,7 @@ errata é reescrito aqui.
   `adb`; `pnpm install --frozen-lockfile --offline`, sem `.env`.
 - **Convenção**: `[medido]` = comando + saída literal, nesta sessão; `[lido]` =
   tirado do documento citado, sem medir de novo.
-- **Divergências desta PR**: **467 a 476** (§12).
+- **Divergências desta PR**: **467 a 479** (§12; 477–479 do segundo commit).
 
 > **"QUANDO NÃO CABE, A COMPOSIÇÃO EMPILHA; O CONTEÚDO NÃO SAI."**
 > — a regra única da folha (`DESIGN-N3/README.md` §1). O bloco a quebrou duas
@@ -215,6 +215,8 @@ orientações, e cada queda de arnês virou divergência com a rodada verbatim
 | 447 | N3-E19 | `DESIGN-N3` §9 |
 | 450 | destino "polimento do nativo, pós-N3" | `DESIGN-N3` §9 |
 | 461 | N3-E20; o (b) de volta ao G-N3 (caso 28) | `DESIGN-N3` §9; `LOGS-OCTAVIA.md` "Errata N3-PR6c" |
+| 467 | regra 22 (o encerramento põe a série do CI em dia) | `CI-FAIXA.md`; `LOGS-OCTAVIA.md` |
+| 471, 472 | regra 23 (herança tem bloco); os dois itens para o W5 | §10.3; `LOGS-OCTAVIA.md` |
 
 ### 4.3 Onde o revisor errou
 
@@ -285,8 +287,8 @@ segundo exemplo**, o picker de antes da N3-E18 (div. 468):
 |---|---|---|---|
 | 28 | 461 (e 445) | N3-PR6b/6c | o **G-N3 calibrado em (e)/(d′) sem o (b)**: a fileira da S5 com 60 (12 marcas fora da janela, nenhum gate as viu) e o picker de antes da E18 (o `Tentar de novo` cortado na borda — o (e) do título pegou o estado, o corte da ação ficou invisível; o (b) dá 6 ali, CN-B4) |
 
-**Regras.** As do N2 eram 9–15; as do N3 entram como **16–21**, na seção nova
-*"As regras que o N3 firmou"*:
+**Regras.** As do N2 eram 9–15; as do N3 entram como **16–23**, na seção nova
+*"As regras que o N3 firmou"* (a 22 e a 23 no segundo commit desta PR):
 
 | # | regra | origem |
 |---|---|---|
@@ -296,6 +298,8 @@ segundo exemplo**, o picker de antes da N3-E18 (div. 468):
 | 19 | medição por régua antes de implementar o que a folha estimou | N3-D23, N3-D26; E3…E12 |
 | 20 | a base do G-inv é mock, não prod | N3-D27 (401) |
 | 21 | tokens por faixa; nenhuma aritmética de largura em tela | N3-D28 (406) |
+| 22 | o encerramento de cada bloco acrescenta as corridas do bloco ao `CI-FAIXA.md` e recalcula a referência; um bloco não encerra com a série desatualizada | 467 |
+| 23 | "a próxima PR que tocar o arquivo" não é destino; todo item de herança tem bloco | 471, 472 |
 
 ---
 
@@ -431,38 +435,23 @@ N3-PR3 e na N3-PR6c).
 
 ---
 
-## 7. A série do CI
+## 7. A série do CI → [`CI-FAIXA.md`](CI-FAIXA.md)
 
-> **O `CI-FAIXA.md` não tem nenhuma corrida do N3** (div. 467): a série de lá
-> termina na **100ª** (`3be7718`, #322), e nem as do W4-b3 (#323) entraram. Esta
-> PR mede as corridas e calcula a referência com elas, **aqui**; escrevê-las no
-> `CI-FAIXA.md` está fora da lista fechada desta PR. Numeração abaixo = a que
-> teriam lá, na ordem.
+**As corridas do bloco estão no `CI-FAIXA.md`**, linhas **101–118** do regime 2
+(as quatro do W4-b3 que também faltavam, 101–104, e as catorze do N3, 105–118), nível
+job, todas `success` `[medido: gh run list --workflow=native.yml --created
+">=2026-09-23T18:00:00Z" · gh run view <id> --json jobs]`. A série tinha ficado parada
+na 100ª (#322) do W4-b2 ao fim do N3 (div. 467); daqui em diante quem a põe em dia é o
+encerramento de cada bloco (regra 22, §5).
 
-Todas as corridas do `android-debug-apk` que **produziram APK** desde a 100ª,
-**nível job** (`startedAt → completedAt`), todas `success`
-`[medido: gh run list --workflow=native.yml --created ">=2026-09-23T18:00:00Z" · gh run view <id> --json jobs]`:
+**A referência, recalculada lá** (cabeçalho do `CI-FAIXA.md`, quartis inclusivos):
 
-| # | run | evento | PR | commit | início (UTC) | job | bloco |
-|---|---|---|---|---|---|---|---|
-| 101 | `35918227089` | push | #322 | `796abe5` | 09-23 20:47 | 12m39s | W4-b2 (merge) |
-| 102 | `35927579912` | PR | #323 | `7ab865c` | 09-23 22:18 | 11m33s | W4-b3 |
-| 103 | `35927852903` | PR | #323 | `0a28628` | 09-23 22:21 | 13m18s | W4-b3 (o push de docs antes do verde, div. 381) |
-| 104 | `35934343181` | push | #323 | `aa91b5d` | 09-23 23:35 | 12m34s | W4-b3 (merge) |
-| 105 | `36059092056` | PR | #326 | `d5cf416` | 09-24 21:04 | 13m17s | **N3** |
-| 106 | `36065585522` | push | #326 | `3a9b24f` | 09-24 22:07 | 12m09s | N3 |
-| 107 | `36077809965` | PR | #327 | `46d47af` | 09-25 00:30 | 13m07s | N3 |
-| 108 | `36130488215` | push | #327 | `58d2296` | 09-25 11:38 | 12m54s | N3 |
-| 109 | `36149790518` | PR | #328 | `5c4d94f` | 09-25 14:47 | 13m27s | N3 |
-| 110 | `36154743385` | push | #328 | `c1d845f` | 09-25 15:31 | 10m52s | N3 |
-| 111 | `36165365239` | PR | #329 | `b2c0d92` | 09-25 17:09 | 13m09s | N3 (o APK passou; o que caiu foi o `build` do CI, div. 432) |
-| 112 | `36169939041` | push | #329 | `59269a0` | 09-25 17:53 | 12m19s | N3 |
-| 113 | `36179065634` | PR | #330 | `b407611` | 09-25 19:20 | 13m46s | N3 |
-| 114 | `36184518653` | push | #330 | `0a71da8` | 09-25 20:14 | 12m30s | N3 |
-| 115 | `36199314490` | PR | #331 | `e283000` | 09-25 23:01 | 9m27s | N3 |
-| 116 | `36200633657` | push | #331 | `73b45ea` | 09-25 23:20 | 10m02s | N3 |
-| 117 | `36240343744` | PR | #333 | `3acee67` | 09-26 11:56 | 13m55s | N3 |
-| 118 | `36241234150` | push | #333 | `53bf0d5` | 09-26 12:13 | 13m15s | N3 (merge; terminou durante esta sessão, 12:26:43Z) |
+```
+n=96   mín 8m09s   máx 14m32s   mediana 12m20,5s   Q1 11m12,2s   Q3 12m55,2s   IQR 1m43s
+```
+
+(Era `n=78 · mediana 12m12s · IQR 1m49s` até a 100ª.) Só as catorze do N3, como
+recorte descritivo: `n=14 · mín 9m27s · máx 13m55s · mediana 13m00,5s · IQR 1m05s`.
 
 **As `skipped` do N3 (o H1 funcionando, não entram na série)**: os seis pushes de
 docs que subiram **depois** do APK verde — `6e229b3` (#326), `33ded27` (#327),
@@ -471,20 +460,11 @@ com o `android-debug-apk` `skipped` em segundos. As PRs só de docs (#324, #325,
 #332) nem disparam o `native.yml` (div. 391). **Nenhum APK do N3 foi gasto por
 push de docs**: a regra 18 (§5) pagou.
 
-**A referência, recalculada** `[medido: quartis inclusivos, como no CI-FAIXA]`:
-
-```
-regime 2 no CI-FAIXA (até a 100ª)   n=78  mín 8m09s  máx 14m32s  mediana 12m12s  Q1 11m01s  Q3 12m50s  IQR 1m49s
-+ as 4 do W4-b3 (101–104)            n=82  mín 8m09s  máx 14m32s  mediana 12m16s  Q1 11m08,8s  Q3 12m50s    IQR 1m41,2s
-+ as 14 do N3 (105–118)             n=96  mín 8m09s  máx 14m32s  mediana 12m20,5s  Q1 11m12,2s  Q3 12m55,2s  IQR 1m43s
-só o N3 (descritivo)                 n=14  mín 9m27s  máx 13m55s  mediana 13m00,5s  Q1 12m11,5s  Q3 13m16,5s  IQR 1m05s
-```
-
 **Nenhum segmento novo**: o N3 não mudou item da lista fechada (nenhum módulo
 nativo, nenhum passo do job, nenhuma toolchain; o dev client só foi
 **reinstalado** no AVD, div. 383, sem módulo novo). A mediana das dez primeiras
-do N3 (105–114) é **13m00,5s**, **fora do IQR** do regime 2 com as do W4-b3 (Q3
-12m50s) por 10,5 s, para cima; como a condição (1) não vale, não há candidato —
+do N3 (105–114) é **13m00,5s**, **fora do IQR** do regime 2 com as do W4-b3 (n=82,
+Q3 12m50s) por 10,5 s, para cima; como a condição (1) não vale, não há candidato —
 é "divergência a investigar" só se o patamar se mantiver, e fica registrado aqui
 com as duas medições ao lado, para o Marcel. As duas mais rápidas do
 bloco (115 e 116, 9m27s e 10m02s) são as da N3-PR6, dentro da faixa.
@@ -591,7 +571,7 @@ superfície:
 | 6 | reordenar, título | 605,8 dp não cabe numa linha de 379 | a barra de A (200) ganha a 2ª linha do título | N3-E9 |
 | 7 | palco | **`busca` e `sair` sem nó**; `indice` cortado (43,4 de 65,8); sair do palco é o `BACK` | `N3-A-S3`: índice, busca e sair na barra de cima (144), leitura na base (N3-D14) | div. 443 |
 | 8 | S5 | alcançável com N = 8; o display de 52 dobra de altura | `N3-A-S5`: display de 32 dp (N3-D18; .2em × .22em é a div. 408) | N3-E3 |
-| 9 | S5 com N grande | **não medida em A**: a fileira de marcas usa 663 (o token de B) numa janela de 411,4 | a fileira de A é token de faixa, como C e B | div. 474 |
+| 9 | S5 com N grande | **não medida em A**: a fileira de marcas usa 663 (o token de B) numa janela de 411,4 — **confirmado como herança do N5** (decisão do Marcel, 2026-09-26) | `N3-A-S5`: a fileira de A é token de faixa, como C e B, com o (b) do G-N3 como gate | div. 474 |
 | 10 | picker com falha | a E18 vale em A: título 151,3 dp no 1º andar, `Tentar de novo` inteiro | `N3-A-P` (os dois andares de A, o molde da E18) | N3-E18 |
 | 11 | S0 | a coluna de 420 encosta nas duas bordas em 411,4 | `N3-A-S0` | pre-check §4.2 |
 | 12 | S4 | passa com (d′) | — | pre-check §5.1 |
@@ -644,6 +624,8 @@ E ainda, para o N5:
 | 1 | **o mock por evento** no `escrita-releitura-fora-de-ordem`: segurar a 1ª releitura **até a 2ª chegar**, não uma janela de 600 ms, com CN que reprova quando a inversão não acontece | div. 432; `N3-REQUISITOS.md` §4 item 9 |
 | 2 | **P1 — o FAB do dev client**: hipótese de aparato; medido em B (nenhum controle sob ele; em B fica sobre o ponto de sem rede do palco) — some pelo menu, ou o arnês toca pela margem | N3-D25; div. 441; `APARATO.md` |
 | 3 | o G5/G6 reconhece linha cortada só pela borda **de baixo** da lista; no dump rolado o corte é pela de cima (a div. 458 não deu destino; posto aqui por ser instrumento) | div. 458 |
+| 4 | **a citação `App.tsx:206` em `StageScreen.tsx:479`**: o `SafeAreaView` está em `App.tsx:309`. O destino era *"a próxima PR que tocar o `StageScreen.tsx`"* — a N3-PR5 tocou e não corrigiu (regra 23) | div. 390; div. 471 |
+| 5 | **o `X3` do `W4-ENCERRAMENTO.md` §7.6** (`screens/Picker.tsx:311`, e o `X1` de `src/escrita.ts:429`): renomear para `extra-<n>` (div. 341). O destino era *"a próxima PR que tocar esses arquivos"* — a N3-PR6 tocou o `Picker.tsx` e não renomeou (regra 23) | `W4-ENCERRAMENTO.md` §7.6; div. 472 |
 
 ### 10.4 Polimento do nativo, pós-N3
 
@@ -653,8 +635,6 @@ E ainda, para o N5:
 | 2 | **alinhar o `8 DE 8` da S5 à linha 1 do palco** em B (hoje 16 dp abaixo: 52,0 × 36,0) | div. 447; N3-E19 (*"sem alinhamento no N3"*) |
 | 3 | o rastreamento do display de S5: a folha diz **.2em**, o app usa **.22em** (`tracking.displayWide`) — decide-se no N5, com o degrau de 32 de A | div. 408 |
 | 4 | o **S0 por logout** mede os campos 0,5 dp (1 px) diferente do S0 frio — não é código; se o G-inv acusar exatamente isso, o S0 se refaz | divs. 404, 437, 452 |
-| 5 | `StageScreen.tsx:479` cita `App.tsx:206` para o `SafeAreaView`; ele está em `App.tsx:309` — o destino era *"a próxima PR que tocar o `StageScreen.tsx`"*, e a N3-PR5 tocou sem corrigir; o destino continua esse | div. 390; div. 471 |
-| 6 | os `X3`/`X1` não renomeados (`screens/Picker.tsx:311`, `src/escrita.ts:429`) — o destino era *"a próxima PR que tocar esses arquivos"*, e a N3-PR6 tocou o `Picker.tsx` sem renomear; o destino continua esse | `W4-ENCERRAMENTO.md` §7.6; div. 472 |
 
 ### 10.5 Bloco web (o próximo, decidido)
 
@@ -693,7 +673,7 @@ O N3 **não tocou** estes — cite-os pela fonte:
 | `N2-ENCERRAMENTO.md` §10.5 | 1 (chevrons e os cinco desabilitados), 2 (tema claro), 3 (`cor.offline`), 5 (opção C do teto), 6 (div. 108), 7 (cobertura dos gates) |
 | `N2-ENCERRAMENTO.md` §10.6 | 1–7 (o 3, *"o aceite no aparelho não se dispensa"*, o N3 confirmou em toda PR) |
 | `N2-ENCERRAMENTO.md` §10.7 | 2 (app iOS) — ver §10.2 acima |
-| `W4-ENCERRAMENTO.md` §7 | 4 (a carona do S3e), 5 (release frio), 6 (ver §10.4.6) |
+| `W4-ENCERRAMENTO.md` §7 | 4 (a carona do S3e), 5 (release frio); o 6 foi para o W5 (§10.3.5) |
 
 **O que o N3 fechou** de heranças anteriores: `N2-ENCERRAMENTO.md` §10.7.1 (o
 tablet em retrato) e `W4-ENCERRAMENTO.md` §7.3 (a hipótese do ◔, H-N3-2) — os
@@ -718,20 +698,23 @@ dois marcados na fonte com a PR.
 
 ---
 
-## 12. Divergências desta PR — 467 a 476
+## 12. Divergências desta PR — 467 a 479
 
 | # | origem | o quê | o que foi feito |
 |---|---|---|---|
-| **467** | P | *"as corridas do N3 no `CI-FAIXA.md` (o executor já as vai lá lendo)"* — `[medido]` a série do `CI-FAIXA.md` termina na **100ª** (`3be7718`, #322): nenhuma corrida do W4-b3 (#323) nem do N3 entrou, e nenhuma PR desde a #322 acrescentou linha. E o `CI-FAIXA.md` está **fora da lista fechada** desta PR | as 18 corridas (101–118) medidas e a referência recalculada na §7, **aqui**; o `CI-FAIXA.md` não foi tocado. **Com o Marcel**: incorporá-las (um commit de uma tabela, numa PR que o toque) e decidir quem acrescenta as linhas daqui em diante |
+| **467** | P | *"as corridas do N3 no `CI-FAIXA.md` (o executor já as vai lá lendo)"* — `[medido]` a série do `CI-FAIXA.md` termina na **100ª** (`3be7718`, #322): nenhuma corrida do W4-b3 (#323) nem do N3 entrou, e nenhuma PR desde a #322 acrescentou linha. E o `CI-FAIXA.md` está **fora da lista fechada** desta PR | as 18 corridas (101–118) medidas e a referência recalculada na §7, **aqui**; o `CI-FAIXA.md` não foi tocado. **Com o Marcel**: incorporá-las (um commit de uma tabela, numa PR que o toque) e decidir quem acrescenta as linhas daqui em diante **FECHADA no segundo commit** (decisão do Marcel): as 101–118 no `CI-FAIXA.md`, a referência recalculada lá (`n=96`), a §7 aponta para o arquivo; e a **regra 22** |
 | **468** | P | *"caso 28 se faltar"* — o 28 **já estava** (N3-PR6c), com um exemplo só, a S5. E o segundo exemplo do prompt, *"o picker de antes da E18"*, não foi invisível ao G-N3: o **(e)=2** (o título sumido) pegou o estado na N3-PR6; o que nenhum gate viu foi o **corte** do `Tentar de novo` na borda — o (b) dá 6 ali (CN-B4) | o segundo exemplo entrou no caso 28 com essa leitura; o texto do caso não foi reescrito, só acrescido |
 | **469** | P | *"regras firmadas no N3 … docs só após APK verde"* — a regra é do **W4-b3** (div. 381, 2026-09-23); o `W4-ENCERRAMENTO.md` §2 a lista entre as regras do bloco, sem número no catálogo. A 16 (check vermelho, div. 432) também vivia só no `APARATO.md` | numeradas como pedido (16–21); a 18 com a origem W4-b3 dita, e o registro de que o N3 foi o primeiro bloco a aplicá-la inteiro (seis `skipped`, zero APK gasto em docs, §7) |
 | **470** | P | *"o '23 testIDs'"* entre os erros do revisor no N3: é a **div. 221 do N2** (origem D, o cabeçalho da folha do `DESIGN-N2`), não uma divergência do N3; nenhum registro do bloco fala em "23 testIDs" `[medido: grep -rn "23 testID" docs/native]` | fora da §4.3; a mais próxima do N3 é a **412** (*"os três testIDs"*), que está lá |
-| **471** | D | a div. 390 dizia *"a próxima PR que tocar o `StageScreen.tsx` corrige"* a citação `App.tsx:206`; a **N3-PR5 (#330) tocou** o arquivo e não corrigiu. Hoje: `StageScreen.tsx:479` cita `App.tsx:206`; o `SafeAreaView` está em `App.tsx:309` `[medido]` | não corrigido (código); §10.4.5 |
-| **472** | D | o `W4-ENCERRAMENTO.md` §7.6 (os `X<n>` não renomeados) tinha destino *"a próxima PR que tocar esses arquivos"*; a **N3-PR6 (#331) tocou o `Picker.tsx`** e não renomeou (`Extra X3`, hoje `Picker.tsx:311`) | não corrigido (código); o §7.6 do W4 fica aberto; §10.4.6 |
+| **471** | D | a div. 390 dizia *"a próxima PR que tocar o `StageScreen.tsx` corrige"* a citação `App.tsx:206`; a **N3-PR5 (#330) tocou** o arquivo e não corrigiu. Hoje: `StageScreen.tsx:479` cita `App.tsx:206`; o `SafeAreaView` está em `App.tsx:309` `[medido]` | não corrigido (código; no 1º commit o destino era §10.4.5). **FECHADA por destino** no segundo commit: **W5, §10.3.4** (regra 23) |
+| **472** | D | o `W4-ENCERRAMENTO.md` §7.6 (os `X<n>` não renomeados) tinha destino *"a próxima PR que tocar esses arquivos"*; a **N3-PR6 (#331) tocou o `Picker.tsx`** e não renomeou (`Extra X3`, hoje `Picker.tsx:311`) | não corrigido (código); no 1º commit o destino era §10.4.6. **FECHADA por destino** no segundo commit: **W5, §10.3.5** (regra 23); o `W4-ENCERRAMENTO.md` §7.6 aponta para lá (div. 479) |
 | **473** | D | o `APARATO.md` estava inconsistente com os anexos em cinco pontos (§9) | **corrigido nesta PR**, um ponto por linha, como o prompt permite |
-| **474** | D | **a S5 com N grande em A não foi medida**: `faixas.A = faixaB` (`theme.ts:292`), então a fileira de marcas em A tem 663 dp numa janela de 411,4 `[medido: leitura do código]`. O A-N3-3 de A mediu a S5 só com N = 8 | registrado; §10.1.9. O (b) do G-N3 a vê, se o dump existir |
+| **474** | D | **a S5 com N grande em A não foi medida**: `faixas.A = faixaB` (`theme.ts:292`), então a fileira de marcas em A tem 663 dp numa janela de 411,4 `[medido: leitura do código]`. O A-N3-3 de A mediu a S5 só com N = 8 | registrado; §10.1.9. O (b) do G-N3 a vê, se o dump existir **Confirmada** no segundo commit (decisão do Marcel): herança do **N5**, §10.1.9 |
 | **475** | P | *"G-N3 (as quatro saídas, consolidado (e)=0 (b)=0)"* — **não existe relatório consolidado do bloco com o (b)**: o de 102 pares é da N3-PR6 (antes do (b)); as sete da 6b e a S5 da 6c ficaram em relatórios próprios. E as sete da 6b, com a `S5-n-grande` de antes do conserto, **reprovam** no G-N3 da `main` ((b)=4) — é o registro do defeito | medido aqui em três corridas (122 pares, (e)=0 · (b)=0), com a da 6b sem a S5 antiga e a S5 da 6c no lugar; a com a S5 antiga como controle (§6) |
 | **476** | P | *"uma superfície por PR com G-inv verde em todo commit"* — o G-inv roda no **commit do código** de cada PR (o commit 2; na PR-6 e na PR-6c também no fim), não em todo commit: o commit 1 (o gate, os CNs) e o de docs não mudam tela | a §11 diz *"no commit do código"* |
+| **477** | D | O cabeçalho do `CI-FAIXA.md` arredondava o quartil que cai entre dois segundos, e não sempre para o mesmo lado: a mediana `n=78` é 12m12,5s e saía **12m12s**; a da série inteira, 11m49,5s, saía **11m50s** `[medido: statistics.quantiles(…, method='inclusive') sobre a tabela]` | o cabeçalho e os recortes passam a levar a décima (`12m20,5s`), com uma linha dizendo por quê; os valores antigos ficam citados ao lado |
+| **478** | P | *"recalcule o cabeçalho de referência do regime 2"* — o mesmo arquivo tem outras duas estatísticas derivadas da série: a linha do regime 2 na tabela de segmentos (82 corridas, 78 na população) e os três **recortes descritivos** (a série inteira, só `pull_request`, desde o `setup-android@v4`). Deixá-los em `n=94/53/49` com a tabela em 112 seria a div. 110 (*"uma estatística que não acompanha a tabela"*) | recalculados também (**extra, declarado aqui**): segmento 100 · 4 · 96; recortes 112 · 62 · 67. A tabela da *"regra aplicada para trás"* não muda: ela avalia as mudanças da div. 366 com as dez corridas **seguintes** a cada uma, todas anteriores à 101 |
+| **479** | D | Com a regra 23, o `W4-ENCERRAMENTO.md` §7.6 continuava com o destino *"a próxima PR que tocar esses arquivos"* — a fonte do item diria o contrário do encerramento | a célula de destino do §7.6 passa a apontar **W5 (`N3-ENCERRAMENTO.md` §10.3.5)**, sem reescrever o item; a linha do `Picker.tsx` fica a de hoje, `:311` |
 
 ---
 
@@ -742,7 +725,7 @@ dois marcados na fonte com a PR.
 | requests a `/api/*` em prod | **0** |
 | comandos a aparelho | **0** — `adb` não invocado |
 | worktree | `../octavia-n3-fim`, **sem** `.env*`; `pnpm install --frozen-lockfile --offline` |
-| arquivos | `N3-ENCERRAMENTO.md` (novo); `LOGS-OCTAVIA.md` (caso 28, regras 16–21); `N3-REQUISITOS.md` (cabeçalho); `N2-ENCERRAMENTO.md` §10.7.1; `W4-ENCERRAMENTO.md` §7.3; `APARATO.md` (div. 473) |
+| arquivos | 1º commit (`e600bc8`): `N3-ENCERRAMENTO.md` (novo); `LOGS-OCTAVIA.md` (caso 28, regras 16–21); `N3-REQUISITOS.md` (cabeçalho); `N2-ENCERRAMENTO.md` §10.7.1; `W4-ENCERRAMENTO.md` §7.3; `APARATO.md` (div. 473). 2º commit: `CI-FAIXA.md` (101–118, referência e recortes); `LOGS-OCTAVIA.md` (regras 22, 23); `W4-ENCERRAMENTO.md` §7.6 (destino); este arquivo (§5, §7, §10, §12) |
 | código | nenhum |
 | bloco `gates` | vazio |
 | APK | nenhum: a PR não toca caminho do `native.yml` |

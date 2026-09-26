@@ -18,14 +18,20 @@ uma referência (div. 80).
 **Nível job** (`startedAt → completedAt` do `android-debug-apk`), as corridas **do
 regime em vigor**, que começa na **#284**: todas as que produziram APK, eventos
 `pull_request` e `push` (`[medido: gh run list --workflow=native.yml · gh run view <id> --json jobs]`).
-Decisão do Marcel, 2026-09-23:
+Decisão do Marcel, 2026-09-23. **Recalculado no encerramento do N3 (2026-09-26, div.
+467)**, com as corridas 101–118 (W4-b3 e N3):
 
 ```
-n=78   mín 8m09s   máx 14m32s   mediana 12m12s   Q1 11m01s   Q3 12m50s   IQR 1m49s
+n=96   mín 8m09s   máx 14m32s   mediana 12m20,5s   Q1 11m12,2s   Q3 12m55,2s   IQR 1m43s
 ```
+
+Até a 100ª (W4-b2) era `n=78 · mín 8m09s · máx 14m32s · mediana 12m12s · Q1 11m01s ·
+Q3 12m50s · IQR 1m49s`. Desde este recálculo os valores levam a décima quando o
+quartil cai no meio de dois segundos (antes eram arredondados, e não sempre para o
+mesmo lado: 12m12,5s saía 12m12s e 11m49,5s saía 11m50s).
 
 Quartis pelo método inclusivo (interpolação linear, `statistics.quantiles(…,
-method='inclusive')`, o "tipo 7"). O regime 2 tem 82 corridas; **4 falhas**
+method='inclusive')`, o "tipo 7"). O regime 2 tem 100 corridas; **4 falhas**
 ficam na tabela, riscadas, e **fora da população**. São as duas **plantadas** da #322
 (o CN da div. 360) e as duas do `setup-android@v3` (#301). Nenhuma produziu APK.
 
@@ -51,7 +57,7 @@ tem hoje **dois** segmentos; a razão do corte está abaixo, `[medido]`.
 | segmento | de | até | corridas | falhas | população | faixa |
 |---|---|---|---|---|---|---|
 | **regime 1** — antes da #284 | a 1ª (`34117343294`, #265) | a 18ª (`34488090147`, #283) | 18 | 2 | 16 | 4m42s–9m26s, mediana 6m57s, IQR 0m51s |
-| **regime 2** — desde a #284 (**a referência**) | a 19ª (`34495434672`, #284) | a última | 82 | 4 | 78 | 8m09s–14m32s, mediana 12m12s, IQR 1m49s |
+| **regime 2** — desde a #284 (**a referência**) | a 19ª (`34495434672`, #284) | a última | 100 | 4 | 96 | 8m09s–14m32s, mediana 12m20,5s, IQR 1m43s |
 
 **A razão do corte `[medido]`.** `git log -- .github/workflows/native.yml` mostra que
 **o workflow não mudou na #284**: entre o `6ccf644` (N0-PR3, 2026-09-07) e o `d83d94f`
@@ -92,9 +98,12 @@ dá "nenhuma" para trás:
 
 | recorte | n | mín | máx | mediana | Q1 | Q3 | IQR |
 |---|---|---|---|---|---|---|---|
-| a série inteira, os dois regimes | 94 | 4m42s | 14m32s | 11m50s | 9m27s | 12m44s | 3m17s |
-| regime 2, só `pull_request` | 53 | 8m09s | 14m31s | 12m10s | 11m07s | 12m50s | 1m43s |
-| regime 2, desde o `setup-android@v4` (#302) | 49 | 8m09s | 14m32s | 12m31s | 10m20s | 12m53s | 2m33s |
+| a série inteira, os dois regimes | 112 | 4m42s | 14m32s | 11m59s | 9m52,5s | 12m50,5s | 2m58s |
+| regime 2, só `pull_request` | 62 | 8m09s | 14m31s | 12m19s | 11m23,8s | 13m05s | 1m41,2s |
+| regime 2, desde o `setup-android@v4` (#302) | 67 | 8m09s | 14m32s | 12m34s | 10m55,5s | 13m08s | 2m12,5s |
+
+(Recalculados com a referência no encerramento do N3. Até a 100ª: 94 · 11m50s · IQR
+3m17s; 53 · 12m10s · IQR 1m43s; 49 · 12m31s · IQR 2m33s.)
 
 **O teto de 14m11s, "intacto" desde a V1**, caiu na corrida 93 (push da #321 na
 `main`, 14m32s). A causa não foi medida.
@@ -227,6 +236,24 @@ Fora da referência, pela razão acima. Ficam aqui, em ordem, e não se apagam.
 | 98 | `35899526353` | PR | #322 | `c547766` | **só fora do filtro** | v4 | 2026-09-23 18:01 | ~~1m09s~~ | **falha plantada** (a mesma) — a sonda: push só de docs com o último APK `failure`, e o APK **rodou** (div. 360) |
 | 99 | `35900151568` | PR | #322 | `32bcd91` | nativo | v4 | 2026-09-23 18:06 | **13m27s** | a reversão da sonda e do plantado; rodou pelo `failure` anterior |
 | 100 | `35901808803` | PR | #322 | `3be7718` | nativo | v4 | 2026-09-23 18:21 | **9m45s** | CN do item 3: o push só toca o `native.yml` |
+| 101 | `35918227089` | push | #322 | `796abe5` | merge na `main` | v4 | 2026-09-23 20:47 | **12m39s** |  |
+| 102 | `35927579912` | PR | #323 | `7ab865c` | abertura | v4 | 2026-09-23 22:18 | **11m33s** | W4-b3 |
+| 103 | `35927852903` | PR | #323 | `0a28628` | **só fora do filtro** | v4 | 2026-09-23 22:21 | **13m18s** | o push de docs subiu com o APK anterior em curso, e o H1 não filtra sem `success` (div. 381) |
+| 104 | `35934343181` | push | #323 | `aa91b5d` | merge na `main` | v4 | 2026-09-23 23:35 | **12m34s** | W4 encerrado |
+| 105 | `36059092056` | PR | #326 | `d5cf416` | abertura | v4 | 2026-09-24 21:04 | **13m17s** | N3-PR1 |
+| 106 | `36065585522` | push | #326 | `3a9b24f` | merge na `main` | v4 | 2026-09-24 22:07 | **12m09s** |  |
+| 107 | `36077809965` | PR | #327 | `46d47af` | abertura | v4 | 2026-09-25 00:30 | **13m07s** | N3-PR2 |
+| 108 | `36130488215` | push | #327 | `58d2296` | merge na `main` | v4 | 2026-09-25 11:38 | **12m54s** |  |
+| 109 | `36149790518` | PR | #328 | `5c4d94f` | abertura | v4 | 2026-09-25 14:47 | **13m27s** | N3-PR3 |
+| 110 | `36154743385` | push | #328 | `c1d845f` | merge na `main` | v4 | 2026-09-25 15:31 | **10m52s** |  |
+| 111 | `36165365239` | PR | #329 | `b2c0d92` | abertura | v4 | 2026-09-25 17:09 | **13m09s** | N3-PR4; o APK passou — o que caiu no mesmo push foi o `build` do workflow `CI` (div. 432) |
+| 112 | `36169939041` | push | #329 | `59269a0` | merge na `main` | v4 | 2026-09-25 17:53 | **12m19s** |  |
+| 113 | `36179065634` | PR | #330 | `b407611` | abertura | v4 | 2026-09-25 19:20 | **13m46s** | N3-PR5 |
+| 114 | `36184518653` | push | #330 | `0a71da8` | merge na `main` | v4 | 2026-09-25 20:14 | **12m30s** |  |
+| 115 | `36199314490` | PR | #331 | `e283000` | abertura | v4 | 2026-09-25 23:01 | **9m27s** | N3-PR6 |
+| 116 | `36200633657` | push | #331 | `73b45ea` | merge na `main` | v4 | 2026-09-25 23:20 | **10m02s** |  |
+| 117 | `36240343744` | PR | #333 | `3acee67` | abertura | v4 | 2026-09-26 11:56 | **13m55s** | N3-PR6c (a #332, só docs, não dispara) |
+| 118 | `36241234150` | push | #333 | `53bf0d5` | merge na `main` | v4 | 2026-09-26 12:13 | **13m15s** | fim do N3 |
 
 ## Como acrescentar uma linha
 
@@ -249,3 +276,11 @@ uma estatística que não acompanha a tabela é a div. 110 outra vez. Corrida
 dispara entra na PR **seguinte** (o precedente do W3, §7). As corridas da #322 entraram até a 100ª. A primeira a entrar
 depois é o push da #322 na `main`. As `skipped` desta PR (a do `bffe173` e a do commit de
 docs das decisões) não entram, pela regra acima.
+
+**Quem acrescenta — regra 22 do `LOGS-OCTAVIA.md`** (decisão do Marcel, 2026-09-26, div.
+467): **o encerramento de cada bloco acrescenta as corridas do bloco ao `CI-FAIXA.md` e
+recalcula a referência; um bloco não encerra com a série desatualizada.** A série ficou
+parada na 100ª do W4-b2 ao N3 inteiro; o encerramento do N3 (#334) pôs as 101–118. A
+corrida que o push do próprio encerramento dispara (nenhuma, se ele é só docs) entra no
+encerramento seguinte. As `skipped` do N3 — os seis pushes de docs das PRs de código,
+depois do APK verde — não entram.

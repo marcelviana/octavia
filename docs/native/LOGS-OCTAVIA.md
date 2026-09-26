@@ -553,10 +553,11 @@ o que a raiz tem. **O aceite é no aparelho**, e o G6 mede o que o músico vê
 (`resource-id` e texto por estado), não o que o log diz que aconteceu. Um CN verde no
 `native-tela` também não substitui o aparelho: ele prova árvore, não tela.
 
-### As regras que o N3 firmou — 16 a 21
+### As regras que o N3 firmou — 16 a 23
 
 *(Encerramento do N3, 2026-09-26; fonte: `N3-ENCERRAMENTO.md` §5.)* Numeradas na
-sequência das do N2. A 18 nasceu no W4-b3 e entra no catálogo aqui (div. 469).
+sequência das do N2. A 18 nasceu no W4-b3 e entra no catálogo aqui (div. 469). A 22 e a
+23 são do segundo commit do encerramento (decisão do Marcel, 2026-09-26).
 
 **16. Check vermelho no CI: classificar antes de agir.** *(Decisão do Marcel,
 2026-09-25; div. 432.)* **(a) árvore** — o commit quebrou algo; **(b) runner** — a
@@ -603,6 +604,22 @@ faixa se decide num ponto só (`faixa.ts`, o único arquivo com 700 e 960, T3-R1
 tela pede `faixas[useFaixa()]` e desenha. Nenhum `width < …` em componente — a regra
 de componente é herança do iOS (N3-D24). O conserto da div. 461 foi um token (C 900 ·
 B 663), não uma conta.
+
+**22. O encerramento de cada bloco acrescenta as corridas do bloco ao
+`CI-FAIXA.md` e recalcula a referência; um bloco não encerra com a série
+desatualizada.** *(Decisão do Marcel, 2026-09-26; div. 467.)* A regra da div. 80
+(número de CI com `n`) só vale se a série estiver em dia, e ninguém tinha a tarefa de
+pô-la em dia: do W4-b2 ao fim do N3 a série ficou parada na 100ª, e o encerramento do
+N3 achou dezoito corridas fora dela (W4-b3 e N3). Agora a tarefa tem dono e momento.
+Texto operacional: [`CI-FAIXA.md`](CI-FAIXA.md), "Como acrescentar uma linha".
+
+**23. "A próxima PR que tocar o arquivo" não é destino; todo item de herança tem
+bloco.** *(Decisão do Marcel, 2026-09-26; divs. 471, 472.)* Um destino que depende de
+alguém passar por ali é uma aposta: a div. 390 (a citação `App.tsx:206` no
+`StageScreen.tsx`) e o `W4-ENCERRAMENTO.md` §7.6 (o `X3` do `Picker.tsx`) tinham esse
+destino, as PRs do N3 tocaram os dois arquivos, e nenhuma corrigiu — o prompt não
+pedia, e o item não estava na lista de ninguém. Herança se escreve com o **bloco** que
+a recebe (N5, W5, bloco D…), e o bloco a lista no pre-check.
 
 ### A regra de método que o padrão implica
 
