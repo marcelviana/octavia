@@ -1,0 +1,220 @@
+# CN de tela do commit 2 (15 casos) sobre o código da main — o arquivo de teste do commit 2 com contexts/, login-panel e lib/firebase-session-cookies.ts da main (git stash); rastro verbatim, sem cor
+# $ NO_COLOR=1 pnpm exec vitest run --project web components/auth/__tests__/login-sessao-cn.test.tsx
+
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-i1-pr1
+
+ ❯ |web| components/auth/__tests__/login-sessao-cn.test.tsx (15 tests | 14 failed) 1603ms
+     × (i/ii) POST 500, usuário persistido: 1 POST, 0 GET /api/profile, 0 navegações, razão visível 100ms
+     × (i/ii) POST 500, login novo: 1 POST, 0 GET /api/profile, 0 navegações, razão visível 132ms
+     × (i/ii) POST 429 (Retry-After: 60), usuário persistido: 1 POST, 0 GET /api/profile, 0 navegações, razão visível 73ms
+     × (i/ii) POST 429 (Retry-After: 60), login novo: 1 POST, 0 GET /api/profile, 0 navegações, razão visível 136ms
+     × (i/ii) POST 401, usuário persistido: 1 POST, 0 GET /api/profile, 0 navegações, razão visível 69ms
+     × (i/ii) POST 401, login novo: 1 POST, 0 GET /api/profile, 0 navegações, razão visível 130ms
+     × (i/ii) POST rede, usuário persistido: 1 POST, 0 GET /api/profile, 0 navegações, razão visível 65ms
+     × (i/ii) POST rede, login novo: 1 POST, 0 GET /api/profile, 0 navegações, razão visível 125ms
+     × (b) cada razão tem a sua frase, e a do 429 leva o Retry-After 268ms
+     ✓ (iii) usuário persistido: 1 POST, navega a /dashboard uma vez, sem alerta 68ms
+     × (iii/a) login novo com o POST pendente: não navega nem lê o perfil antes do 2xx; navega uma vez depois 129ms
+     × (b) 429 sem Retry-After: a frase não inventa prazo 72ms
+     × (iv) "Tentar de novo" depois de um 500: exatamente 1 POST a mais; no 2xx navega uma vez 63ms
+     × (v) renovação que falha fora do /login: linha de aviso no topo, 0 navegações, e nada repete sozinho 115ms
+     × (vi) div. 526: desmontar o provider remove o listener de visibilitychange e o intervalo de 50 min 57ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 14 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — POST /api/auth/session falhando: uma falha é uma tela, não uma volta > (i/ii) POST 500, usuário persistido: 1 POST, 0 GET /api/profile, 0 navegações, razão visível
+ FAIL  |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — POST /api/auth/session falhando: uma falha é uma tela, não uma volta > (i/ii) POST 429 (Retry-After: 60), usuário persistido: 1 POST, 0 GET /api/profile, 0 navegações, razão visível
+ FAIL  |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — POST /api/auth/session falhando: uma falha é uma tela, não uma volta > (i/ii) POST 401, usuário persistido: 1 POST, 0 GET /api/profile, 0 navegações, razão visível
+ FAIL  |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — POST /api/auth/session falhando: uma falha é uma tela, não uma volta > (i/ii) POST rede, usuário persistido: 1 POST, 0 GET /api/profile, 0 navegações, razão visível
+AssertionError: expected { post: 1, getProfile: 1, …(1) } to deeply equal { post: 1, getProfile: +0, …(1) }
+
+- Expected
++ Received
+
+  {
+-   "getProfile": 0,
+-   "navegacoes": [],
++   "getProfile": 1,
++   "navegacoes": [
++     "/dashboard",
++   ],
+    "post": 1,
+  }
+
+ ❯ components/auth/__tests__/login-sessao-cn.test.tsx:207:10
+    205|         getProfile: conta('GET /api/profile'),
+    206|         navegacoes,
+    207|       }).toEqual({ post: 1, getProfile: 0, navegacoes: [] })
+       |          ^
+    208|       expect(textoDoAlerta()).not.toBe('')
+    209|       expect(motivos()).toEqual([frase])
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/14]⎯
+
+ FAIL  |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — POST /api/auth/session falhando: uma falha é uma tela, não uma volta > (i/ii) POST 500, login novo: 1 POST, 0 GET /api/profile, 0 navegações, razão visível
+ FAIL  |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — POST /api/auth/session falhando: uma falha é uma tela, não uma volta > (i/ii) POST 429 (Retry-After: 60), login novo: 1 POST, 0 GET /api/profile, 0 navegações, razão visível
+ FAIL  |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — POST /api/auth/session falhando: uma falha é uma tela, não uma volta > (i/ii) POST 401, login novo: 1 POST, 0 GET /api/profile, 0 navegações, razão visível
+ FAIL  |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — POST /api/auth/session falhando: uma falha é uma tela, não uma volta > (i/ii) POST rede, login novo: 1 POST, 0 GET /api/profile, 0 navegações, razão visível
+AssertionError: expected { post: 1, getProfile: 1, …(1) } to deeply equal { post: 1, getProfile: +0, …(1) }
+
+- Expected
++ Received
+
+  {
+-   "getProfile": 0,
+-   "navegacoes": [],
++   "getProfile": 1,
++   "navegacoes": [
++     "/dashboard",
++   ],
+    "post": 1,
+  }
+
+ ❯ components/auth/__tests__/login-sessao-cn.test.tsx:220:10
+    218|         getProfile: conta('GET /api/profile'),
+    219|         navegacoes,
+    220|       }).toEqual({ post: 1, getProfile: 0, navegacoes: [] })
+       |          ^
+    221|       expect(textoDoAlerta()).not.toBe('')
+    222|       expect(motivos()).toEqual([frase])
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/14]⎯
+
+ FAIL  |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — POST /api/auth/session falhando: uma falha é uma tela, não uma volta > (b) cada razão tem a sua frase, e a do 429 leva o Retry-After
+AssertionError: expected 1 to be 4 // Object.is equality
+
+- Expected
++ Received
+
+- 4
++ 1
+
+ ❯ components/auth/__tests__/login-sessao-cn.test.tsx:242:49
+    240|       vi.unstubAllGlobals()
+    241|     }
+    242|     expect(new Set(Object.values(textos)).size).toBe(falhas.length)
+       |                                                 ^
+    243|     expect(textos['429 (Retry-After: 60)']).toMatch(/\b60\b|\b1 min/)
+    244|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/14]⎯
+
+ FAIL  |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — POST /api/auth/session 2xx: navega uma vez, e só depois do 2xx > (iii/a) login novo com o POST pendente: não navega nem lê o perfil antes do 2xx; navega uma vez depois
+AssertionError: expected { getProfile: 1, …(1) } to deeply equal { getProfile: +0, navegacoes: [] }
+
+- Expected
++ Received
+
+  {
+-   "getProfile": 0,
+-   "navegacoes": [],
++   "getProfile": 1,
++   "navegacoes": [
++     "/dashboard",
++   ],
+  }
+
+ ❯ components/auth/__tests__/login-sessao-cn.test.tsx:263:67
+    261|     // o POST saiu e ainda não respondeu
+    262|     expect(conta('POST /api/auth/session')).toBe(1)
+    263|     expect({ getProfile: conta('GET /api/profile'), navegacoes }).toEq…
+       |                                                                   ^
+    264| 
+    265|     await act(async () => { liberarSessao!() })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/14]⎯
+
+ FAIL  |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — commit 2: frase sem prazo, "Tentar de novo", renovação e limpeza > (b) 429 sem Retry-After: a frase não inventa prazo
+AssertionError: expected [] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+- [
+-   "muitas tentativas de entrar — tente de novo em instantes",
+- ]
++ []
+
+ ❯ components/auth/__tests__/login-sessao-cn.test.tsx:280:23
+    278|     await voltaComUsuarioPersistido()
+    279| 
+    280|     expect(motivos()).toEqual(['muitas tentativas de entrar — tente de…
+       |                       ^
+    281|     expect(navegacoes).toEqual([])
+    282|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/14]⎯
+
+ FAIL  |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — commit 2: frase sem prazo, "Tentar de novo", renovação e limpeza > (iv) "Tentar de novo" depois de um 500: exatamente 1 POST a mais; no 2xx navega uma vez
+AssertionError: expected { post: 1, …(1) } to deeply equal { post: 1, navegacoes: [] }
+
+- Expected
++ Received
+
+  {
+-   "navegacoes": [],
++   "navegacoes": [
++     "/dashboard",
++   ],
+    "post": 1,
+  }
+
+ ❯ components/auth/__tests__/login-sessao-cn.test.tsx:287:67
+    285|     instalarFetch([500, 200])
+    286|     await voltaComUsuarioPersistido()
+    287|     expect({ post: conta('POST /api/auth/session'), navegacoes }).toEq…
+       |                                                                   ^
+    288| 
+    289|     await act(async () => { fireEvent.click(screen.getByRole('button',…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/14]⎯
+
+ FAIL  |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — commit 2: frase sem prazo, "Tentar de novo", renovação e limpeza > (v) renovação que falha fora do /login: linha de aviso no topo, 0 navegações, e nada repete sozinho
+AssertionError: expected [] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+- [
+-   "a sessão não foi renovada: falha no servidor",
+- ]
++ []
+
+ ❯ components/auth/__tests__/login-sessao-cn.test.tsx:316:23
+    314|     await assentar()
+    315|     expect(conta('POST /api/auth/session')).toBe(2)
+    316|     expect(motivos()).toEqual(['a sessão não foi renovada: falha no se…
+       |                       ^
+    317|     expect(navegacoes).toEqual([])
+    318| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/14]⎯
+
+ FAIL  |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — commit 2: frase sem prazo, "Tentar de novo", renovação e limpeza > (vi) div. 526: desmontar o provider remove o listener de visibilitychange e o intervalo de 50 min
+AssertionError: expected [] to deeply equal [ …(1) ]
+
+- Expected
++ Received
+
+- [
+-   [Function handleVisibilityChange],
+- ]
++ []
+
+ ❯ components/auth/__tests__/login-sessao-cn.test.tsx:358:25
+    356| 
+    357|     unmount()
+    358|     expect(vis(remove)).toEqual(vis(add))
+       |                         ^
+    359|     expect(clearInt.mock.calls.map((c) => c[0])).toContain(intervalos[…
+    360|     add.mockRestore(); remove.mockRestore(); setInt.mockRestore(); cle…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/14]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  14 failed | 1 passed (15)
+   Start at  14:01:21
+   Duration  2.60s (transform 180ms, setup 267ms, import 255ms, tests 1.60s, environment 368ms)
+
+# exit: 1

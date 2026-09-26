@@ -1,0 +1,27 @@
+# CN de tela na branch i1/pr1-sessao (commit 2, o conserto) — rastro verbatim, sem cor
+# $ NO_COLOR=1 pnpm exec vitest run --project web components/auth/__tests__/login-sessao-cn.test.tsx --reporter=verbose
+
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-i1-pr1
+
+ ✓ |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — POST /api/auth/session falhando: uma falha é uma tela, não uma volta > (i/ii) POST 500, usuário persistido: 1 POST, 0 GET /api/profile, 0 navegações, razão visível 129ms
+ ✓ |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — POST /api/auth/session falhando: uma falha é uma tela, não uma volta > (i/ii) POST 500, login novo: 1 POST, 0 GET /api/profile, 0 navegações, razão visível 133ms
+ ✓ |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — POST /api/auth/session falhando: uma falha é uma tela, não uma volta > (i/ii) POST 429 (Retry-After: 60), usuário persistido: 1 POST, 0 GET /api/profile, 0 navegações, razão visível 73ms
+ ✓ |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — POST /api/auth/session falhando: uma falha é uma tela, não uma volta > (i/ii) POST 429 (Retry-After: 60), login novo: 1 POST, 0 GET /api/profile, 0 navegações, razão visível 132ms
+ ✓ |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — POST /api/auth/session falhando: uma falha é uma tela, não uma volta > (i/ii) POST 401, usuário persistido: 1 POST, 0 GET /api/profile, 0 navegações, razão visível 73ms
+ ✓ |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — POST /api/auth/session falhando: uma falha é uma tela, não uma volta > (i/ii) POST 401, login novo: 1 POST, 0 GET /api/profile, 0 navegações, razão visível 140ms
+ ✓ |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — POST /api/auth/session falhando: uma falha é uma tela, não uma volta > (i/ii) POST rede, usuário persistido: 1 POST, 0 GET /api/profile, 0 navegações, razão visível 69ms
+ ✓ |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — POST /api/auth/session falhando: uma falha é uma tela, não uma volta > (i/ii) POST rede, login novo: 1 POST, 0 GET /api/profile, 0 navegações, razão visível 133ms
+ ✓ |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — POST /api/auth/session falhando: uma falha é uma tela, não uma volta > (b) cada razão tem a sua frase, e a do 429 leva o Retry-After 271ms
+ ✓ |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — POST /api/auth/session 2xx: navega uma vez, e só depois do 2xx > (iii) usuário persistido: 1 POST, navega a /dashboard uma vez, sem alerta 65ms
+ ✓ |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — POST /api/auth/session 2xx: navega uma vez, e só depois do 2xx > (iii/a) login novo com o POST pendente: não navega nem lê o perfil antes do 2xx; navega uma vez depois 190ms
+ ✓ |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — commit 2: frase sem prazo, "Tentar de novo", renovação e limpeza > (b) 429 sem Retry-After: a frase não inventa prazo 71ms
+ ✓ |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — commit 2: frase sem prazo, "Tentar de novo", renovação e limpeza > (iv) "Tentar de novo" depois de um 500: exatamente 1 POST a mais; no 2xx navega uma vez 154ms
+ ✓ |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — commit 2: frase sem prazo, "Tentar de novo", renovação e limpeza > (v) renovação que falha fora do /login: linha de aviso no topo, 0 navegações, e nada repete sozinho 318ms
+ ✓ |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — commit 2: frase sem prazo, "Tentar de novo", renovação e limpeza > (vi) div. 526: desmontar o provider remove o listener de visibilitychange e o intervalo de 50 min 67ms
+
+ Test Files  1 passed (1)
+      Tests  15 passed (15)
+   Start at  14:01:07
+   Duration  4.87s (transform 200ms, setup 564ms, import 329ms, tests 2.02s, environment 1.76s)
+
+# exit: 0

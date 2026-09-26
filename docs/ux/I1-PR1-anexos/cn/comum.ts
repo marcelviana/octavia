@@ -49,9 +49,11 @@ interface Linha {
 }
 
 export async function rodar(ramo: Ramo, falso: 500 | 429, segundos = 60): Promise<void> {
-  const fase = process.argv[2]
+  // commit 2 (div. 529): sem argumento = `depois` — o aceite é só o depois (o antes está no
+  // probe 1 de prod e no CN-antes.txt); `antes` continua aceito, para rastro
+  const fase = process.argv[2] ?? 'depois'
   if (fase !== 'antes' && fase !== 'depois') {
-    console.error(`uso: pnpm tsx <caminho>/ramo-${ramo}.ts antes|depois   (antes = dev server na main; depois = na branch)`)
+    console.error(`uso: pnpm tsx <caminho>/ramo-${ramo}.ts [depois|antes]   (padrão: depois = dev server na branch)`)
     process.exit(2)
   }
   const aqui = path.dirname(new URL(import.meta.url).pathname)

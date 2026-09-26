@@ -9,6 +9,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useAuth } from "@/contexts/firebase-auth-context"
+import { LinhaDeAviso } from "./linha-de-aviso"
+import { FRASES_SESSAO, fraseDaFalha } from "./frases-sessao"
 import { Music, Lock, Mail } from "lucide-react"
 import Image from "next/image"
 
@@ -19,10 +21,19 @@ export function LoginPanel({ initialError = "" }: { initialError?: string }) {
   const [isLoading, setIsLoading] = useState(false)
   const [hasRedirected, setHasRedirected] = useState(false)
   const router = useRouter()
-  const { signIn, signInWithGoogle, signOut, user, profile, isInitialized, idToken, refreshToken } = useAuth()
+  const { signIn, signInWithGoogle, signOut, user, profile, isInitialized, idToken, refreshToken, sessao, tentarSessaoDeNovo } = useAuth()
+  const sessaoAberta = sessao.estado === "aberta"
+  const falhaDaSessao = sessao.estado === "falhou" ? sessao : null
 
+  // I1-PR1 (b): a falha do POST /api/auth/session devolve a tela ao usuário
   useEffect(() => {
-    if (isInitialized && user && !hasRedirected) {
+    if (falhaDaSessao) setIsLoading(false)
+  }, [falhaDaSessao])
+
+  // I1-PR1 (a): navega uma vez, e só com o cookie aberto (2xx) — nenhum
+  // GET /api/profile antes disso
+  useEffect(() => {
+    if (isInitialized && user && sessaoAberta && !hasRedirected) {
       setHasRedirected(true)
       const handleRedirect = async () => {
         try {
@@ -125,7 +136,7 @@ export function LoginPanel({ initialError = "" }: { initialError?: string }) {
       }
       handleRedirect()
     }
-  }, [user, isInitialized, hasRedirected, idToken, refreshToken])
+  }, [user, isInitialized, sessaoAberta, hasRedirected, idToken, refreshToken])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -163,7 +174,7 @@ export function LoginPanel({ initialError = "" }: { initialError?: string }) {
     }
   }
 
-  if (isInitialized && user) {
+  if (isInitialized && user && sessaoAberta) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 to-orange-100">
         <div className="text-center">
@@ -264,6 +275,12 @@ export function LoginPanel({ initialError = "" }: { initialError?: string }) {
                   />
                 </div>
               </div>
+              {falhaDaSessao && (
+                <LinhaDeAviso
+                  motivo={fraseDaFalha(falhaDaSessao.falha, falhaDaSessao.origem)}
+                  acao={{ rotulo: FRASES_SESSAO["tentar-de-novo"], onPress: () => void tentarSessaoDeNovo() }}
+                />
+              )}
               {error && (
                 <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md text-sm">
                   {error}
