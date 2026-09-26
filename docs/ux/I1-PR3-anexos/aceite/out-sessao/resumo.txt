@@ -1,0 +1,27 @@
+# I1-PR3 aceite A — modo sessao — 2026-09-26T20:52:08.029Z · alvo http://localhost:3000 · Chrome do sistema, 1138×800
+## login pela tela (conta de audit)
+aquecimento: /login carregado em 451 ms
+hidratação do #email: 358 ms
+login: ok → /dashboard
+GET /api/content?search=UX-AUDIT → 200 · 64 content [UX-AUDIT]
+escolhido Lyrics bec4195c-73a6-4365-a5d8-42fedea8bcdf · [UX-AUDIT] BATCH TRES
+escolhido Chords acb8048c-cadf-4571-9efe-481785da0f37 · [UX-AUDIT] Linha de 120 colunas
+escolhido Tab    c40a3784-3bf5-4c13-8b70-69cf62baf5da · [UX-AUDIT] Trenzinho do Caipira
+escolhido Sheet  2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f · [UX-AUDIT] Partitura de 12 páginas · file_url termina em 1786218429715-ux-audit-partitura-12p.pdf
+## visualização /content/[id] — os quatro tipos (I1-D36)
+content-lyrics         /content/bec4195c-73a6-4365-a5d8-42fedea8bcdf    → /content/bec4195c-73a6-4365-a5d8-42fedea8bcdf título visível · content-lyrics.png
+content-chords         /content/acb8048c-cadf-4571-9efe-481785da0f37    → /content/acb8048c-cadf-4571-9efe-481785da0f37 título visível · content-chords.png
+content-tab            /content/c40a3784-3bf5-4c13-8b70-69cf62baf5da    → /content/c40a3784-3bf5-4c13-8b70-69cf62baf5da título visível · content-tab.png
+content-sheet          /content/2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f    → /content/2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f canvas do PDF visível (2); "Failed to load file" na tela: 0 · content-sheet.png
+## as outras telas
+content-edit           /content/2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f/edit → /content/2e98efc7-92ec-4a2b-b11f-8e2a92a9d46f/edit editor montado · content-edit.png
+setlists               /setlists                                        → /setlists                                botões "Start Performance": 0 · setlists.png
+dashboard              /dashboard                                       → /dashboard                               ok · dashboard.png
+library                /library                                         → /library                                 ok · library.png
+## contabilidade
+escrita a /api/* fora de /api/auth/session: 0
+/api/auth/session (cookie, declarado): DELETE /api/auth/session (cookie, declarado) · DELETE /api/auth/session (cookie, declarado) · POST /api/auth/session (cookie, declarado) · POST /api/auth/session (cookie, declarado) · POST /api/auth/session (cookie, declarado) · POST /api/auth/session (cookie, declarado) · POST /api/auth/session (cookie, declarado) · POST /api/auth/session (cookie, declarado) · POST /api/auth/session (cookie, declarado) · POST /api/auth/session (cookie, declarado) · POST /api/auth/session (cookie, declarado) · POST /api/auth/session (cookie, declarado)
+requests a octavia.rocks: 0 (abortados no navegador; o esperado é 0)
+outros hosts (fora de localhost): POST identitytoolkit.googleapis.com ×11 · POST securetoken.googleapis.com ×4 · GET mlxjmpbdchmwplcfislt.supabase.co ×2
+erros de página: nenhum
+resultado: EXIT 0 · 266 s

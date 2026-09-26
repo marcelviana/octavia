@@ -22,4 +22,5 @@ e em `out-publico/`. Esta é a parte que precisa da conta de audit.
    - os outros tipos com `título visível`;
    - `setlists` com `botões "Start Performance": 0`;
    - a contabilidade com 0 escritas e 0 requests a `octavia.rocks`.
-7. Depois diga **"rodei"** na sessão.
+7. A 1ª rodada (2026-09-26) parou antes do login: a hidratação do `#email` não veio em 60 s (`out-sessao-rodada1/`, rastro). O script agora aquece o `/login` e espera até 180 s. Nenhuma credencial foi digitada nessa rodada.
+8. Depois diga **"rodei"** na sessão.

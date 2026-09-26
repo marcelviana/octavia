@@ -294,7 +294,36 @@ O Next **repassa a query** ao destino (`?contentId=…`, `?setlistId=…&startin
 
 Capturas sem sessão (`aceite/out-publico/`, Chrome do sistema, 1138 px): `landing.png` (`/`, página inteira, 1138 × 2670) e `privacy-policy.png` (1138 × 1336); `/dashboard`, `/library`, `/setlists`, `/content/[id]` e `/content/[id]/edit` sem sessão → `/login`. Contabilidade da rodada: 0 escrita, 0 `octavia.rocks`, 0 outro host, 0 erro de página.
 
-**Com sessão — pendente do Marcel** (div. 575): o servidor em execução não tem mock de auth; toda página protegida passa por `requirePageUser` → `getServerSideUser` (Firebase Admin). Os mocks de auth dos testes do web (`src/test-setup.ts:83-107`) só existem no Vitest. O que prova hoje que os quatro tipos abrem sem o cache é o CN (6/6). Roteiro: `aceite/COMO-RODAR.md`; o script grava em `aceite/out-sessao/`.
+**Com sessão — rodado pelo Marcel depois do merge** (div. 575, aval): o servidor em execução não tem mock de auth (os do Vitest, `src/test-setup.ts:83-107`, não se aplicam), então o login é do Marcel, com a conta de audit, pelo `aceite/COMO-RODAR.md` — `pnpm dev` na árvore com o `.env.local` dele, `node …/aceite/aceite-a.mjs sessao`. Saída em `aceite/out-sessao/` (`resumo.txt`, `requests.txt` e 8 PNGs, 1138 × 800, email mascarado):
+
+```
+aquecimento: /login carregado em 451 ms
+hidratação do #email: 358 ms
+login: ok → /dashboard
+GET /api/content?search=UX-AUDIT → 200 · 64 content [UX-AUDIT]
+escolhido Lyrics bec4195c-… · [UX-AUDIT] BATCH TRES
+escolhido Chords acb8048c-… · [UX-AUDIT] Linha de 120 colunas
+escolhido Tab    c40a3784-… · [UX-AUDIT] Trenzinho do Caipira
+escolhido Sheet  2e98efc7-… · [UX-AUDIT] Partitura de 12 páginas · file_url termina em 1786218429715-ux-audit-partitura-12p.pdf
+content-lyrics   /content/bec4195c-…       título visível
+content-chords   /content/acb8048c-…       título visível
+content-tab      /content/c40a3784-…       título visível
+content-sheet    /content/2e98efc7-…       canvas do PDF visível (2); "Failed to load file" na tela: 0
+content-edit     /content/2e98efc7-…/edit  editor montado
+setlists         /setlists                 botões "Start Performance": 0
+dashboard        /dashboard                ok
+library          /library                  ok
+escrita a /api/* fora de /api/auth/session: 0
+requests a octavia.rocks: 0
+outros hosts: POST identitytoolkit.googleapis.com ×11 · POST securetoken.googleapis.com ×4 · GET mlxjmpbdchmwplcfislt.supabase.co ×2
+erros de página: nenhum
+```
+
+**Os quatro tipos abrem depois do corte**, com o PDF renderizado pelo `react-pdf` direto do `file_url` do storage (os 2 `GET` ao `supabase.co`; nenhum `/api/proxy`, nenhum `blob:` de cache) — a I1-D36 provada na tela, não só no CN. `requests.txt`: 189 requests a `localhost:3000` — 177 `GET`, 10 `POST /api/auth/session` e 2 `DELETE /api/auth/session` (cookie, declarados; div. 579); **nenhuma outra escrita**. Os `POST` ao `identitytoolkit`/`securetoken` são o login e a renovação de token do Firebase Auth (não dado do app).
+
+Texto de música nas capturas (regra do `CLAUDE.md`): os corpos são fixtures do projeto — a tablatura é o `TAB_DUMMY` (`scripts/ux-audit/seed.ts:104-110`; o título *"Trenzinho do Caipira"* é só título), a letra é a do lote do `i-add.spec.ts:150-151` (*"Primeira estrofe da música três"*), o PDF é o gerado pelo próprio audit; `dashboard`/`library` mostram títulos, não corpos.
+
+1ª rodada (rastro, `aceite/out-sessao-rodada1/`): parou **antes do login** — `page.waitForFunction: Timeout 60000ms exceeded` na hidratação do `#email`; nenhuma credencial digitada. O executor reproduziu sem login contra o mesmo servidor: hidratou em 483 ms. Div. 580.
 
 ## 13. Aceite B — a auto-destruição do worker (`sw-autodestruicao.txt`, verbatim)
 
@@ -404,3 +433,26 @@ O `CLAUDE.md` (div. 572) vai num commit próprio depois do merge, não dentro de
 | **576** | A | o conflito era só o do provider | o CN da PR-1 (`login-sessao-cn.test.tsx:52-53`) fazia `vi.mock('@/lib/offline-cache')` e `vi.mock('@/lib/offline-setlist-cache')`; o G-palco reprovou (2) | os dois `vi.mock` saem no merge; o CN segue 15/15 |
 | **577** | P | *"Commit 4 — merge da main e CLAUDE.md"*, um commit | o merge e o `CLAUDE.md` são dois commits: o merge carrega só a resolução do conflito (e a 576) | registrado |
 | **578** | D | div. 572 lista `:325-345`, `:505`, `:519`, `:528`, `:549` | há também `:317` (*Test offline scenarios*, *Mock Patterns*) | **não tocada** (*"nada mais no CLAUDE.md"*); fica para o Marcel |
+
+## 20. Commit 5 — aceite A com sessão
+
+A saída está no §12. Mudanças no script entre as duas rodadas (div. 580): aquecimento do `/login` + espera de hidratação de até 180 s, e o `requests.txt` (por contexto, gravado também na falha), testado antes no modo `publico` contra o servidor do Marcel (sem login; o `out-publico/` commitado foi restaurado).
+
+| # | origem | o que o prompt (ou o doc) presumiu | o que foi medido | destino |
+|---|---|---|---|---|
+| **579** | A | aceite A (commit 3): *"/api/auth/session (cookie, declarado): 0"* sem sessão | depois do merge da PR-1, cada `/login` sem sessão manda `DELETE /api/auth/session` (7 na rodada de teste do modo `publico`; 0 antes do merge); com sessão, 10 `POST` + 2 `DELETE` em 9 navegações cheias — um `POST` por carga de documento autenticado | registrado; só cookie (I1-PRECHECK §10), declarado no script |
+| **580** | T | *"`requests.txt`"* no `out-sessao/` | o `aceite-a.mjs` do commit 3 não gravava `requests.txt`, e a 1ª rodada do Marcel parou na hidratação do `/login` (60 s) — `[hipótese]`: primeira compilação do `next dev` recém-subido | script: aquecimento, 180 s e `requests.txt`; 2ª rodada completa |
+
+## 21. Contabilidade final da PR
+
+| item | valor |
+|---|---|
+| requests a `https://octavia.rocks` | **0** (em todas as rodadas) |
+| logins pelo executor | **0** |
+| logins pelo Marcel | **1** (conta de audit, aceite A com sessão, `localhost:3000`) |
+| `.env*` abertos pelo executor | **0** |
+| escritas em dado do app | **0** (o `requests.txt` do aceite com sessão: só `GET` + `/api/auth/session`) |
+| `/api/auth/session` (cookie) | aceite com sessão: 10 `POST` + 2 `DELETE` (div. 579) |
+| leituras de prod pelo servidor local do Marcel | `GET /api/content`, as páginas e o PDF do storage (2 `GET` a `supabase.co`) |
+| arquivos apagados | 69 |
+| `git diff --shortstat origin/main` | no corpo da PR (depois deste commit) |

@@ -57,6 +57,7 @@ let prodAbortados = 0
 const outrosHosts = new Map()
 const escritas = []
 
+let gravarRequests = () => {}
 const browser = await chromium.launch({ channel: 'chrome', headless: !process.env.HEADED })
 let exit = 0
 try {
@@ -70,6 +71,22 @@ try {
     parada = `escrita não declarada ${m} ${u.pathname} (abortada no navegador)`
     return route.abort()
   })
+  // requests.txt: toda request a localhost, registrada por CONTEXTO no evento `request` (a
+  // linha nunca se perde — div. 518 do pre-check); o status vem do `response`.
+  const reqs = []
+  const porReq = new Map()
+  ctx.on('request', (r) => {
+    const u = new URL(r.url())
+    if (u.host !== HOST) return
+    const l = { n: reqs.length + 1, ms: Date.now() - t0, metodo: r.method(), caminho: u.pathname, status: 'pendente' }
+    reqs.push(l); porReq.set(r, l)
+  })
+  ctx.on('response', (resp) => { const l = porReq.get(resp.request()); if (l) l.status = String(resp.status()) })
+  ctx.on('requestfailed', (r) => { const l = porReq.get(r); if (l && l.status === 'pendente') l.status = `FALHA ${r.failure()?.errorText ?? ''}`.trim() })
+  gravarRequests = () => fs.writeFileSync(path.join(tmp, 'requests.txt'),
+    `# I1-PR3 aceite A (${modo}) — requests a ${HOST} (n · ms · método · caminho · status); escrita = método ≠ GET/HEAD\n` +
+    reqs.map((l) => `${String(l.n).padStart(4)} ${String(l.ms).padStart(7)}  ${l.metodo.padEnd(6)} ${l.caminho}  ${l.status}`).join('\n') + '\n' +
+    `# escritas (método ≠ GET/HEAD): ${reqs.filter((l) => !['GET', 'HEAD'].includes(l.metodo)).map((l) => `${l.metodo} ${l.caminho} ${l.status}`).join(' · ') || 'nenhuma'}\n`)
   const page = await ctx.newPage()
   const erros = []
   page.on('pageerror', (e) => erros.push(`pageerror: ${e.message.split('\n')[0].slice(0, 200)}`))
@@ -98,9 +115,18 @@ try {
     }
   } else {
     log('## login pela tela (conta de audit)')
-    await page.goto(`${BASE}/login`, { waitUntil: 'domcontentloaded', timeout: 120_000 })
-    await page.locator('#email').waitFor({ state: 'visible', timeout: 60_000 })
-    await page.waitForFunction(() => { const e = document.querySelector('#email'); return !!e && Object.keys(e).some((k) => k.startsWith('__reactProps')) }, null, { timeout: 60_000 })
+    // 1ª rodada do Marcel (out-sessao-rodada1/): a hidratação do #email não veio em 60 s — o
+    // primeiro acesso ao `next dev` recém-subido compila /login e o bundle do cliente [hipótese];
+    // o executor reproduziu depois, sem login: hidratou em 483 ms. Por isso: aquecimento (uma
+    // carga de /login descartada) e espera de hidratação de até 180 s, com o tempo registrado.
+    const aquece = Date.now()
+    await page.goto(`${BASE}/login`, { waitUntil: 'load', timeout: 240_000 })
+    log(`aquecimento: /login carregado em ${Date.now() - aquece} ms`)
+    const hidrata = Date.now()
+    await page.goto(`${BASE}/login`, { waitUntil: 'domcontentloaded', timeout: 240_000 })
+    await page.locator('#email').waitFor({ state: 'visible', timeout: 180_000 })
+    await page.waitForFunction(() => { const e = document.querySelector('#email'); return !!e && Object.keys(e).some((k) => k.startsWith('__reactProps')) }, null, { timeout: 180_000 })
+    log(`hidratação do #email: ${Date.now() - hidrata} ms`)
     await page.locator('#email').fill(EMAIL)
     await page.locator('#password').fill(SENHA)
     await page.locator('button[type="submit"]').click()
@@ -158,6 +184,7 @@ try {
   log(`ERRO: ${e.message.split('\n')[0]}`)
   exit = 1
 } finally {
+  gravarRequests()
   await browser.close()
   resumo.push(`resultado: EXIT ${exit} · ${Math.round((Date.now() - t0) / 1000)} s`)
   fs.mkdirSync(destino, { recursive: true })
