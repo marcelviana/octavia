@@ -1,0 +1,17 @@
+# gerado por: o mesmo comando de palco-exclusivos.txt (script-a2.txt) — testes Vitest classificados pelos imports diretos
+# SÓ-PALCO = todo import direto de código é exclusivo do palco; TOCA-PALCO = alcança exclusivo, mas importa também outra coisa
+TOCA-PALCO	__tests__/performance-mode/auto-scroll-button-bug.test.tsx	imports-diretos=2	exclusivos-alcançados=1
+SÓ-PALCO	__tests__/performance-mode/chords-display-bug.test.tsx	imports-diretos=1	exclusivos-alcançados=20
+SÓ-PALCO	__tests__/performance-mode/empty-state.test.tsx	imports-diretos=1	exclusivos-alcançados=20
+TOCA-PALCO	components/__tests__/content-display.test.tsx	imports-diretos=2	exclusivos-alcançados=1
+SÓ-PALCO	hooks/__tests__/use-content-renderer.test.ts	imports-diretos=2	exclusivos-alcançados=1
+SÓ-PALCO	hooks/__tests__/use-performance-navigation.test.ts	imports-diretos=1	exclusivos-alcançados=2
+TOCA-PALCO	tests/gates/g-rotas-protegidas.test.ts	imports-diretos=10	exclusivos-alcançados=22
+TOCA-PALCO	tests/hooks/use-content-loading.test.ts	imports-diretos=2	exclusivos-alcançados=3
+SÓ-PALCO	tests/hooks/use-performance-controls.memory.test.ts	imports-diretos=1	exclusivos-alcançados=1
+SÓ-PALCO	tests/hooks/use-performance-monitoring-ui.test.ts	imports-diretos=1	exclusivos-alcançados=1
+
+# testes com nome de palco que não importam código do app (imports-diretos=0 — reproduzem um palco próprio dentro do teste):
+fora	tests/performance/live-music-performance.bench.tsx	imports-diretos=0	exclusivos-alcançados=0
+fora	tests/performance/memory-leak-detection.test.tsx	imports-diretos=0	exclusivos-alcançados=0
+fora	tests/performance/performance-mode-responsiveness.test.tsx	imports-diretos=0	exclusivos-alcançados=0

@@ -1,0 +1,15 @@
+# [commit 3a] SUBSTITUÍDO pelo probe1.ts (I1-D35: roda o Marcel, contra prod — I1-D34). Roteiro mantido como rastro.
+# probe 1 — loop mudo (H-I1-2). ESTADO: NÃO EXECUTADO — bloqueado (bloqueio.txt, div. 509).
+# Escrita declarada ANTES: nenhuma. Condição de parada: qualquer POST|PUT|PATCH|DELETE a /api/* que não seja o
+#   POST /api/auth/session interceptado; em particular POST /api/profile ≠ 0 → parar (login-panel.tsx:52-67).
+# Alvo: preview da PR (UX_AUDIT_BASE_URL) com bypass; conta de audit (perfil existente).
+# Passos (Playwright, Chromium 1138×800, page.on('request') gravando método+caminho+status+t):
+#  A. caminho feliz, sem interceptação: /login → login da audit → contar por 60 s POST /api/auth/session,
+#     GET /api/profile, POST /api/profile, navegações a /dashboard e /login; registrar a ordem
+#     Set-Cookie × window.location (a corrida setSessionCookie × handleRedirect, firebase-auth-context.tsx:130/137,
+#     login-panel.tsx:74).
+#  B. route('**/api/auth/session', POST → 500) (molde tests/ux-audit/session-intercept.ts:21): mesma contagem por
+#     60 s; o que a tela mostra (screenshot a cada navegação); se para.
+#  C. idem com 429 (+ Retry-After).
+# Saída: probe1-requests-{A,B,C}.txt, probe1-console-{A,B,C}.txt, probe1-*.png (só a barra/estado — nada de corpo).
+# Orçamento: B e C consomem 0 da janela SESSION (o POST não chega ao servidor); A consome 1–2 de 120/15 min.

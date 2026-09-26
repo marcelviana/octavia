@@ -1,0 +1,10 @@
+# [commit 3b] CANCELADO pela errata da I1-D14 (o aceite do web não usa aparelho) — não medido. Rastro.
+# probe 5 — largura CSS no Tab S6 (H-I1-4). ESTADO: PENDENTE DO MARCEL (o aparelho não está com o executor;
+#   nenhum adb rodado; APARATO.md: o Tab S6 é o único aparelho físico, docs/native/APARATO.md).
+# Escrita: nenhuma. Alvo: https://octavia.rocks/login (leitura pública, sem login; I1-D34).
+# Passos no Chrome do Tab S6:
+#  1. em pé: barra de endereço → javascript:alert(innerWidth+'x'+innerHeight+' dpr='+devicePixelRatio) (ou DevTools
+#     remoto via chrome://inspect — só com adb, e dizer)
+#  2. deitado: o mesmo
+#  3. colar os dois resultados em faseB/probe5.txt (o modelo já está lá)
+# Esperado (H-I1-4): largura 711 em pé e 1138 deitado (as larguras em dp do app); altura útil menor que a do app.

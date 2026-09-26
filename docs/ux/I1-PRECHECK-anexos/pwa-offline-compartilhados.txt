@@ -1,0 +1,32 @@
+# gerado por: pnpm exec depcruise --config .dependency-cruiser.cjs --output-type json app components hooks lib contexts types middleware.ts tests __tests__ worker > dc-w.json && node script-a24 dc-w.json palco-exclusivos.txt <dir>  (script: script-a24.txt)
+# COMPARTILHADOS (alcançados pelo PWA/offline E por raiz viva — ficam) n=15
+components/ui/button.tsx
+components/ui/card.tsx
+components/ui/toast.tsx
+hooks/use-toast.ts
+lib/api-errors.ts
+lib/debug.ts
+lib/firebase-admin.ts
+lib/firebase-server-utils.ts
+lib/firebase.ts
+lib/logger.ts
+lib/supabase-service.ts
+lib/supabase.ts
+lib/user-rate-limit.ts
+lib/utils.ts
+types/database.types.ts
+
+# IMPORTADORES VIVOS de uma raiz do PWA/offline — o executor da PR-3 os edita (arquivo → o que ele importa que morre) n=10
+app/layout.tsx	→ components/pwa-install-prompt.tsx, components/service-worker-wrapper.tsx
+components/content-edit-page-client.tsx	→ lib/offline-cache.ts
+components/content-page-client.tsx	→ lib/offline-cache.ts
+components/setlist-manager.tsx	→ lib/offline-setlist-cache.ts
+contexts/firebase-auth-context.tsx	→ lib/offline-cache.ts, lib/offline-setlist-cache.ts
+hooks/use-content-actions.ts	→ lib/offline-cache.ts
+hooks/use-library-data.ts	→ lib/offline-cache.ts
+hooks/use-setlist-data.ts	→ lib/offline-cache.ts, lib/offline-setlist-cache.ts
+hooks/useContentFile.ts	→ lib/offline-cache.ts
+lib/content-service.ts	→ lib/offline-queue.ts
+
+# next.config.mjs — PWA: nenhuma linha (grep -nE 'pwa|sw\.js|serviceWorker|manifest' → só o worker do PDF.js, :66, :166-171, que é do react-pdf, não do SW)
+# next.config.mjs:16 source: '/api/:path((?!proxy).*)' — a exclusão do /api/proxy (B7-D3); tests/config/next-headers.test.ts:32-36 a afirma

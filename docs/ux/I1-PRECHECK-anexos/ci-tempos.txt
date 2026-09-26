@@ -1,0 +1,14 @@
+# gerado por: gh run list --workflow=ci.yml --event pull_request --limit 10 --json databaseId,headBranch,createdAt,conclusion,displayTitle; para cada id: gh run view <id> --json databaseId,headBranch,jobs --jq '.jobs[] | [...,.name,.conclusion,.startedAt,.completedAt] | @tsv'; duração = completedAt − startedAt
+# NÃO HÁ JOB DE PLAYWRIGHT no CI (ver playwright-inventario.txt): a série abaixo é do único job do ci.yml, o 'build', como referência de custo
+# id<TAB>branch<TAB>job<TAB>conclusão<TAB>início<TAB>fim<TAB>duração
+36242817299	n3/encerramento	build	success	2026-09-26T12:43:25Z	2026-09-26T12:47:33Z	4m08s
+36241992017	n3/encerramento	build	success	2026-09-26T12:27:52Z	2026-09-26T12:31:54Z	4m02s
+36240343725	n3/pr6c-s5	build	success	2026-09-26T11:55:56Z	2026-09-26T11:59:26Z	3m30s
+36210875584	n3/pr6b-sete	build	success	2026-09-26T02:11:07Z	2026-09-26T02:14:47Z	3m40s
+36200310986	n3/pr6-aceite	build	success	2026-09-25T23:15:50Z	2026-09-25T23:19:04Z	3m14s
+36199314491	n3/pr6-aceite	build	success	2026-09-25T23:01:25Z	2026-09-25T23:05:30Z	4m05s
+36180580590	n3/pr5-palco-provas	build	success	2026-09-25T19:35:11Z	2026-09-25T19:39:15Z	4m04s
+36179065685	n3/pr5-palco-provas	build	success	2026-09-25T19:20:26Z	2026-09-25T19:24:10Z	3m44s
+36169017570	n3/pr4-reordenar-folha	build	success	2026-09-25T17:44:36Z	2026-09-25T17:47:57Z	3m21s
+36165365271	n3/pr4-reordenar-folha	build	success	2026-09-25T17:37:42Z	2026-09-25T17:41:36Z	3m54s
+n=10 min=194s mediana=229s max=248s

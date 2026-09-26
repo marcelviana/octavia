@@ -1,0 +1,311 @@
+# gerado por: node script-a456 dc-all.json palco-exclusivos <dir>  (script: script-a456.txt; grafo do mesmo depcruise da A2)
+# imports nomeados de 'lucide-react' por arquivo; LucideIcon é TIPO (types/content.ts), não ícone
+# imports: 217 · nomes distintos: 86 (85 ícones + o tipo LucideIcon)
+# <svg inline nos arquivos das superfícies: 0 (cut -f1 superficies | xargs grep -c '<svg' | grep -v ':0$' → vazio); outras bibliotecas (react-icons, heroicons, radix-icons): 0
+
+## por nome → superfícies
+AlertCircle            content-editor,upload
+AlertTriangle          content-editor,content-lista,shell
+AlignLeft              content-editor,content-lista,setlists,upload
+ArrowLeft              auth,content-editor,upload
+ArrowRight             content-editor
+ArrowUpDown            content-lista
+BookOpen               content-lista
+Calendar               setlists
+Check                  auth,content-editor,content-lista,outra,setlists,upload
+CheckCircle            auth,outra
+ChevronDown            auth,content-editor,content-lista,outra,upload
+ChevronLeft            auth,content-editor,content-lista
+ChevronRight           content-editor,content-lista,outra,setlists,upload
+ChevronUp              auth,content-editor,content-lista,outra,upload
+Circle                 content-editor,content-lista,outra,setlists,upload
+Clock                  content-editor,content-lista,setlists,shell
+Cloud                  outra
+Copy                   content-editor
+Disc3                  content-editor,content-lista,outra,setlists,upload
+Download               outra,shell
+Edit                   content-lista,setlists
+Eraser                 content-editor
+FileMusic              content-editor,content-lista,setlists,upload
+FileText               content-editor,content-lista,outra,setlists,upload
+Filter                 content-lista
+Folder                 content-editor
+Globe                  outra
+Grid                   content-editor,content-lista,setlists,upload
+GripVertical           content-editor,setlists
+Guitar                 content-editor,content-lista,outra,upload
+Highlighter            content-editor
+Home                   content-editor,content-lista,outra,setlists,upload
+Info                   content-editor
+Library                content-editor,content-lista,outra,setlists,upload
+Loader2                outra,setlists,upload
+Lock                   auth
+LogOut                 auth,content-editor,content-lista,outra,setlists,upload
+LucideIcon             content-editor,content-lista,setlists,upload
+Mail                   auth,outra
+MapPin                 setlists
+Maximize               content-editor
+Menu                   content-editor,content-lista,outra,setlists,upload
+MessageSquare          content-editor
+Mic                    content-editor,content-lista,setlists,upload
+Minimize               content-editor
+Monitor                outra,shell
+MoreHorizontal         content-lista
+MoreVertical           content-lista
+Music                  auth,content-editor,content-lista,outra,setlists,shell,upload
+MusicIcon              content-editor,content-lista,outra,setlists,upload
+Palette                content-editor,outra
+PanelLeftClose         content-editor,content-lista,outra,setlists,upload
+PanelLeftOpen          content-editor,content-lista,outra,setlists,upload
+Pause                  content-editor
+Pen                    content-editor
+Play                   content-editor,setlists
+Plus                   content-editor,content-lista,setlists,upload
+RefreshCw              auth,content-editor,content-lista,outra
+RotateCw               content-editor
+Save                   content-editor
+Search                 content-editor,content-lista,outra,setlists,upload
+Settings               content-editor,content-lista,outra,setlists,upload
+SettingsIcon           outra
+Share                  setlists
+Sliders                content-editor,upload
+Smartphone             shell
+Sparkles               content-editor,setlists,upload
+Square                 content-editor
+Star                   content-editor,content-lista,setlists
+StretchHorizontal      content-editor
+StretchVertical        content-editor
+Tag                    content-editor
+Trash2                 content-editor,content-lista,setlists
+Type                   content-editor
+Upload                 outra,upload
+User                   auth,content-editor,content-lista,outra,setlists,upload
+UserPlus               auth
+Users                  outra
+Volume2                content-editor,outra
+Wifi                   outra,shell
+WifiOff                outra
+X                      auth,content-editor,content-lista,outra,setlists,shell,upload
+XCircle                outra
+Zap                    shell,upload
+ZoomIn                 content-editor
+ZoomOut                content-editor
+
+## nome<TAB>arquivo<TAB>superfícies do arquivo
+AlertCircle	components/add-content/RefactoredAddContent.tsx	upload
+AlertCircle	components/content-creator.tsx	upload
+AlertCircle	components/metadata-form/RefactoredMetadataForm.tsx	upload
+AlertCircle	components/pdf-viewer.tsx	content-editor
+AlertTriangle	components/library/LibraryErrorBoundary.tsx	content-lista
+AlertTriangle	lib/error-boundary.tsx	content-editor,shell
+AlignLeft	types/content.ts	content-lista,content-editor,upload,setlists
+ArrowLeft	app/forgot-password/page.tsx	auth
+ArrowLeft	components/add-content/DetailsStep.tsx	upload
+ArrowLeft	components/add-content/RefactoredAddContent.tsx	upload
+ArrowLeft	components/content-editor.tsx	content-editor
+ArrowLeft	components/content-viewer/ContentHeader.tsx	content-editor
+ArrowLeft	components/metadata-form/RefactoredMetadataForm.tsx	upload
+ArrowRight	components/content-editor.tsx	content-editor
+ArrowUpDown	components/library/LibraryHeader.tsx	content-lista
+BookOpen	components/library/LibraryEmptyState.tsx	content-lista
+BookOpen	components/library/OptimizedLibraryList.tsx	content-lista
+Calendar	components/setlist/setlist-card.tsx	setlists
+Calendar	components/setlist/setlist-details.tsx	setlists
+Check	components/add-content/CompletionStep.tsx	upload
+Check	components/add-content/StepIndicatorComponent.tsx	upload
+Check	components/metadata-form/RefactoredMetadataForm.tsx	upload
+Check	components/ui/checkbox.tsx	content-editor,upload,setlists
+Check	components/ui/dropdown-menu.tsx	content-lista,content-editor,upload,setlists,outra
+Check	components/ui/select.tsx	auth,content-lista,content-editor,upload,outra
+Check	components/unified-metadata-editor.tsx	content-editor
+CheckCircle	app/forgot-password/page.tsx	auth
+CheckCircle	app/setup/page.tsx	outra
+CheckCircle	app/signup/confirm-email/page.tsx	auth
+CheckCircle	app/verify-email/page.tsx	auth
+ChevronDown	components/library/LibraryHeader.tsx	content-lista
+ChevronDown	components/ui/accordion.tsx	content-editor,upload
+ChevronDown	components/ui/select.tsx	auth,content-lista,content-editor,upload,outra
+ChevronDown	components/unified-metadata-editor.tsx	content-editor
+ChevronLeft	components/auth/signup-panel.tsx	auth
+ChevronLeft	components/content-viewer/ContentToolbar.tsx	content-editor
+ChevronLeft	components/pdf-viewer.tsx	content-editor
+ChevronLeft	components/ui/pagination.tsx	content-lista
+ChevronRight	components/content-viewer/ContentToolbar.tsx	content-editor
+ChevronRight	components/pdf-viewer.tsx	content-editor
+ChevronRight	components/ui/dropdown-menu.tsx	content-lista,content-editor,upload,setlists,outra
+ChevronRight	components/ui/pagination.tsx	content-lista
+ChevronUp	components/ui/select.tsx	auth,content-lista,content-editor,upload,outra
+Circle	components/content-editor.tsx	content-editor
+Circle	components/ui/dropdown-menu.tsx	content-lista,content-editor,upload,setlists,outra
+Clock	components/content-editor.tsx	content-editor
+Clock	components/dashboard.tsx	content-lista
+Clock	components/library/OptimizedLibraryList.tsx	content-lista
+Clock	components/pwa-install-prompt.tsx	shell
+Clock	components/setlist/setlist-card.tsx	setlists
+Clock	components/setlist/setlist-details.tsx	setlists
+Clock	components/setlist/song-selection-dialog.tsx	setlists
+Cloud	components/settings/CloudSettings.tsx	outra
+Copy	components/tab-editor.tsx	content-editor
+Disc3	components/bottom-nav.tsx	content-lista,content-editor,upload,setlists,outra
+Disc3	components/sidebar.tsx	content-lista,content-editor,upload,setlists,outra
+Download	app/offline/page.tsx	outra
+Download	components/pwa-install-prompt.tsx	shell
+Download	components/settings/CloudSettings.tsx	outra
+Edit	components/library/OptimizedLibraryList.tsx	content-lista
+Edit	components/setlist/setlist-card.tsx	setlists
+Edit	components/setlist/setlist-details.tsx	setlists
+Eraser	components/content-editor.tsx	content-editor
+FileMusic	types/content.ts	content-lista,content-editor,upload,setlists
+FileText	app/page.tsx	outra
+FileText	components/ProfileForm.tsx	outra
+FileText	components/add-content/ImportModeSelector.tsx	upload
+FileText	components/add-content/StepIndicatorComponent.tsx	upload
+FileText	components/content-creator.tsx	upload
+FileText	components/dashboard.tsx	content-lista
+FileText	components/setlist/setlist-details.tsx	setlists
+FileText	components/unified-metadata-editor.tsx	content-editor
+Filter	components/library/LibraryHeader.tsx	content-lista
+Folder	components/unified-metadata-editor.tsx	content-editor
+Globe	components/ProfileForm.tsx	outra
+Grid	types/content.ts	content-lista,content-editor,upload,setlists
+GripVertical	components/chord-editor.tsx	content-editor
+GripVertical	components/setlist/setlist-details.tsx	setlists
+Guitar	app/page.tsx	outra
+Guitar	components/content-creator.tsx	upload
+Guitar	components/dashboard.tsx	content-lista
+Guitar	components/unified-metadata-editor.tsx	content-editor
+Highlighter	components/content-editor.tsx	content-editor
+Home	components/bottom-nav.tsx	content-lista,content-editor,upload,setlists,outra
+Home	components/sidebar.tsx	content-lista,content-editor,upload,setlists,outra
+Info	components/content-editor.tsx	content-editor
+Info	components/content-viewer/ContentSidebar.tsx	content-editor
+Info	components/unified-metadata-editor.tsx	content-editor
+Library	components/bottom-nav.tsx	content-lista,content-editor,upload,setlists,outra
+Library	components/sidebar.tsx	content-lista,content-editor,upload,setlists,outra
+Loader2	app/setup/page.tsx	outra
+Loader2	components/add-content/FileUploadZone.tsx	upload
+Loader2	components/setlist/setlist-dialog.tsx	setlists
+Loader2	components/setlist/song-selection-dialog.tsx	setlists
+Lock	components/auth/login-panel.tsx	auth
+Lock	components/auth/signup-panel.tsx	auth
+LogOut	app/verify-email/page.tsx	auth
+LogOut	components/user-header.tsx	content-lista,content-editor,upload,setlists,outra
+LucideIcon	types/content.ts	content-lista,content-editor,upload,setlists
+Mail	app/forgot-password/page.tsx	auth
+Mail	app/signup/confirm-email/page.tsx	auth
+Mail	app/verify-email/page.tsx	auth
+Mail	components/ProfileForm.tsx	outra
+Mail	components/auth/login-panel.tsx	auth
+Mail	components/auth/signup-panel.tsx	auth
+MapPin	components/setlist/setlist-details.tsx	setlists
+Maximize	components/pdf-viewer.tsx	content-editor
+Menu	components/header.tsx	content-lista,content-editor,upload,setlists,outra
+MessageSquare	components/content-viewer/ContentSidebar.tsx	content-editor
+Mic	components/dashboard.tsx	content-lista
+Mic	components/unified-metadata-editor.tsx	content-editor
+Mic	types/content.ts	content-lista,content-editor,upload,setlists
+Minimize	components/pdf-viewer.tsx	content-editor
+Monitor	components/pwa-install-prompt.tsx	shell
+Monitor	components/settings/DisplaySettings.tsx	outra
+MoreHorizontal	components/ui/pagination.tsx	content-lista
+MoreVertical	components/library/OptimizedLibraryList.tsx	content-lista
+Music	app/offline/page.tsx	outra
+Music	app/page.tsx	outra
+Music	app/signup/page.tsx	auth
+Music	components/annotation-tools.tsx	content-editor
+Music	components/auth/login-panel.tsx	auth
+Music	components/auth/signup-panel.tsx	auth
+Music	components/content-creator.tsx	upload
+Music	components/dashboard.tsx	content-lista
+Music	components/metadata-form/RefactoredMetadataForm.tsx	upload
+Music	components/pwa-install-prompt.tsx	shell
+Music	components/setlist/setlist-card.tsx	setlists
+Music	components/setlist/setlist-details.tsx	setlists
+Music	components/setlist/song-selection-dialog.tsx	setlists
+Music	components/settings/AudioSettings.tsx	outra
+Music	components/unified-metadata-editor.tsx	content-editor
+MusicIcon	components/bottom-nav.tsx	content-lista,content-editor,upload,setlists,outra
+MusicIcon	components/sidebar.tsx	content-lista,content-editor,upload,setlists,outra
+Palette	components/content-editor.tsx	content-editor
+Palette	components/settings/DisplaySettings.tsx	outra
+PanelLeftClose	components/header.tsx	content-lista,content-editor,upload,setlists,outra
+PanelLeftOpen	components/header.tsx	content-lista,content-editor,upload,setlists,outra
+Pause	components/content-viewer/ContentToolbar.tsx	content-editor
+Pen	components/content-editor.tsx	content-editor
+Play	components/content-viewer/ContentHeader.tsx	content-editor
+Play	components/content-viewer/ContentToolbar.tsx	content-editor
+Play	components/setlist/setlist-card.tsx	setlists
+Play	components/setlist/setlist-details.tsx	setlists
+Plus	components/chord-editor.tsx	content-editor
+Plus	components/content-creator.tsx	upload
+Plus	components/dashboard.tsx	content-lista
+Plus	components/library/LibraryEmptyState.tsx	content-lista
+Plus	components/library/LibraryHeader.tsx	content-lista
+Plus	components/setlist/setlist-details.tsx	setlists
+Plus	components/setlist/setlist-list.tsx	setlists
+Plus	components/tab-editor.tsx	content-editor
+Plus	components/unified-metadata-editor.tsx	content-editor
+RefreshCw	app/offline/page.tsx	outra
+RefreshCw	app/signup/confirm-email/page.tsx	auth
+RefreshCw	app/verify-email/page.tsx	auth
+RefreshCw	components/library/LibraryErrorBoundary.tsx	content-lista
+RefreshCw	components/pdf-viewer.tsx	content-editor
+RefreshCw	components/settings/CloudSettings.tsx	outra
+RotateCw	components/content-editor.tsx	content-editor
+Save	components/content-editor.tsx	content-editor
+Search	components/header.tsx	content-lista,content-editor,upload,setlists,outra
+Search	components/setlist/song-selection-dialog.tsx	setlists
+Settings	components/content-editor.tsx	content-editor
+Settings	components/content-viewer/ContentToolbar.tsx	content-editor
+Settings	components/user-header.tsx	content-lista,content-editor,upload,setlists,outra
+SettingsIcon	components/settings/RefactoredSettings.tsx	outra
+Share	components/setlist/setlist-card.tsx	setlists
+Sliders	components/metadata-form/RefactoredMetadataForm.tsx	upload
+Sliders	components/unified-metadata-editor.tsx	content-editor
+Smartphone	components/pwa-install-prompt.tsx	shell
+Sparkles	components/add-content/CompletionStep.tsx	upload
+Sparkles	components/add-content/ModeSelector.tsx	upload
+Sparkles	components/content-editor.tsx	content-editor
+Sparkles	components/setlist/setlist-card.tsx	setlists
+Square	components/content-editor.tsx	content-editor
+Star	components/content-viewer/ContentHeader.tsx	content-editor
+Star	components/library/OptimizedLibraryList.tsx	content-lista
+Star	components/setlist/setlist-card.tsx	setlists
+Star	components/unified-metadata-editor.tsx	content-editor
+StretchHorizontal	components/pdf-viewer.tsx	content-editor
+StretchVertical	components/pdf-viewer.tsx	content-editor
+Tag	components/unified-metadata-editor.tsx	content-editor
+Trash2	components/chord-editor.tsx	content-editor
+Trash2	components/library/OptimizedLibraryList.tsx	content-lista
+Trash2	components/setlist/setlist-card.tsx	setlists
+Trash2	components/setlist/setlist-details.tsx	setlists
+Trash2	components/tab-editor.tsx	content-editor
+Type	components/content-editor.tsx	content-editor
+Upload	components/add-content/FileUploadZone.tsx	upload
+Upload	components/add-content/ImportModeSelector.tsx	upload
+Upload	components/add-content/StepIndicatorComponent.tsx	upload
+Upload	components/settings/CloudSettings.tsx	outra
+User	components/ProfileForm.tsx	outra
+User	components/auth/signup-panel.tsx	auth
+User	components/user-header.tsx	content-lista,content-editor,upload,setlists,outra
+UserPlus	components/auth/signup-panel.tsx	auth
+Users	app/page.tsx	outra
+Volume2	components/content-viewer/ContentToolbar.tsx	content-editor
+Volume2	components/settings/AudioSettings.tsx	outra
+Wifi	app/offline/page.tsx	outra
+Wifi	components/pwa-install-prompt.tsx	shell
+WifiOff	app/offline/page.tsx	outra
+X	components/content-editor.tsx	content-editor
+X	components/pwa-install-prompt.tsx	shell
+X	components/ui/dialog.tsx	content-lista,content-editor,setlists
+X	components/ui/toast.tsx	auth,content-lista,content-editor,upload,setlists,shell,outra
+X	components/unified-metadata-editor.tsx	content-editor
+XCircle	app/setup/page.tsx	outra
+Zap	components/add-content/ModeSelector.tsx	upload
+Zap	components/pwa-install-prompt.tsx	shell
+ZoomIn	components/content-editor.tsx	content-editor
+ZoomIn	components/content-viewer/ContentToolbar.tsx	content-editor
+ZoomIn	components/pdf-viewer.tsx	content-editor
+ZoomOut	components/content-editor.tsx	content-editor
+ZoomOut	components/content-viewer/ContentToolbar.tsx	content-editor
+ZoomOut	components/pdf-viewer.tsx	content-editor

@@ -347,6 +347,10 @@ Em **2026-09-10**, para destravar o A15, o Marcel criou pelo editor do web, na c
 
 ### Bloco D (web — morre com a web, mas até lá é o que o Marcel usa)
 
+> **Errata do I1 pre-check (2026-09-26, div. 492; I1-D2/I1-D32):** o web não morre —
+> fica com a identidade do nativo; só o palco sai (`docs/ux/I1-PRECHECK.md` §0.1). O título
+> fica como estava.
+
 - **O editor não lista músicas já presentes na setlist**, o que **impede criar um bis pela UI** — embora o backend aceite (a constraint foi dropada no B5). Consequência medida no N1: o A12 só se prova por fixture, e nenhuma das 3 setlists da audit tem bis. **Defeito do web encontrado pelo aceite do nativo.**
 - Poluição de `content_data` pelo editor (`content_data.content_data`, 9 registros) e a limpeza.
 - Cookie de 7 dias × token de 1 h; **login Google não funciona** (H18, cliente OAuth sinalizado para exclusão por inatividade).

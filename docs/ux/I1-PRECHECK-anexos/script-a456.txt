@@ -1,0 +1,58 @@
+// anexo do I1-PRECHECK: texto do script usado na A4/A5/A6 (roda com: node <arquivo>.mjs dc-all.json palco-exclusivos <dir>, da raiz). Rastro, não código do app.
+// A4/A5/A6 — frases, ícones e literais por superfície, sobre o grafo do dependency-cruiser
+import fs from 'node:fs'
+import { createRequire } from 'node:module'; const ts = createRequire(process.cwd() + '/package.json')('typescript')
+const [, , grafo, excluFile, out] = process.argv
+const j = JSON.parse(fs.readFileSync(grafo, 'utf8'))
+const exclusivos = new Set(fs.readFileSync(excluFile, 'utf8').split('\n').filter(Boolean))
+const local = (s) => !s.includes('node_modules') && /^(app|components|hooks|lib|contexts|types|middleware)/.test(s)
+const isTest = (s) => /(__tests__\/|\.test\.|\.spec\.|\.bench\.)/.test(s)
+const adj = new Map()
+for (const m of j.modules) if (local(m.source) && !isTest(m.source)) adj.set(m.source, m.dependencies.map(d => d.resolved).filter(s => local(s) && !isTest(s)))
+const reach = (roots) => { const seen = new Set(); const st = [...roots]; while (st.length) { const x = st.pop(); if (seen.has(x)) continue; seen.add(x); for (const y of adj.get(x) || []) st.push(y) } return seen }
+const SUP = {
+  auth: ['app/login/page.tsx', 'app/signup/page.tsx', 'app/signup/confirm-email/page.tsx', 'app/verify-email/page.tsx', 'app/forgot-password/page.tsx'],
+  'content-lista': ['app/library/page.tsx', 'app/dashboard/page.tsx'],
+  'content-editor': ['app/content/[id]/page.tsx', 'app/content/[id]/edit/page.tsx'],
+  upload: ['app/add-content/page.tsx'],
+  setlists: ['app/setlists/page.tsx'],
+  shell: ['app/layout.tsx'],
+  outra: ['app/page.tsx', 'app/offline/page.tsx', 'app/profile/page.tsx', 'app/settings/page.tsx', 'app/setup/page.tsx', 'app/privacy-policy/page.tsx'],
+}
+const fileSup = new Map()
+for (const [s, roots] of Object.entries(SUP)) for (const f of reach(roots)) { if (exclusivos.has(f)) continue; if (!/\.(tsx|ts)$/.test(f)) continue; if (!fileSup.has(f)) fileSup.set(f, new Set()); fileSup.get(f).add(s) }
+const files = [...fileSup.keys()].sort()
+const PAL = '(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose|black|white)'
+const reHex = /#[0-9a-fA-F]{3,8}\b/g, reFn = /\b(?:rgba?|hsla?)\(/g
+const rePal = new RegExp(`\\b(?:bg|text|border|from|to|via|ring|fill|stroke|outline|shadow|divide|placeholder|decoration|accent|caret)-${PAL}(?:-\\d{2,3})?(?:\\/\\d+)?\\b`, 'g')
+const reFs = /\btext-(?:xs|sm|base|lg|xl|[2-9]xl)\b|\btext-\[\d+(?:\.\d+)?(?:px|rem|em)\]|fontSize:\s*['"\d]/g
+const reSp = /\b(?:p|px|py|pt|pb|pl|pr|m|mx|my|mt|mb|ml|mr|gap|gap-x|gap-y|space-x|space-y)-(?:\d+(?:\.5)?|\[[^\]]+\])/g
+const reRad = /\brounded(?:-(?:none|sm|md|lg|xl|2xl|3xl|full|\[[^\]]+\]))?\b/g
+const cnt = (s, re) => (s.match(re) || []).length
+const ATTR = new Set(['placeholder', 'title', 'aria-label', 'alt', 'label', 'description', 'aria-description'])
+const CALL = /^(setError|setMessage|setSuccess|setStatus|toast|toast\.(error|success|info|warning|message)|alert|confirm)$/
+const lit = []; const ico = []; const fr = []
+for (const f of files) {
+  const src = fs.readFileSync(f, 'utf8')
+  lit.push([f, [...fileSup.get(f)].join(','), cnt(src, reHex), cnt(src, reFn), cnt(src, rePal), cnt(src, reFs), cnt(src, reSp), cnt(src, reRad)])
+  const sf = ts.createSourceFile(f, src, ts.ScriptTarget.Latest, true, f.endsWith('x') ? ts.ScriptKind.TSX : ts.ScriptKind.TS)
+  const line = (n) => sf.getLineAndCharacterOfPosition(n.getStart()).line + 1
+  const push = (n, kind, t) => { t = t.replace(/\s+/g, ' ').trim(); if (/[A-Za-zÀ-ú]{2}/.test(t)) fr.push(`${f}:${line(n)}\t${kind}\t${t}`) }
+  const walk = (n) => {
+    if (ts.isImportDeclaration(n) && n.moduleSpecifier.text === 'lucide-react' && n.importClause?.namedBindings && ts.isNamedImports(n.importClause.namedBindings)) for (const e of n.importClause.namedBindings.elements) ico.push([f, (e.propertyName || e.name).text])
+    if (ts.isJsxText(n)) push(n, 'jsx', n.text)
+    if (ts.isJsxAttribute(n) && ATTR.has(n.name.getText()) && n.initializer) { const i = n.initializer; if (ts.isStringLiteral(i)) push(i, `attr:${n.name.getText()}`, i.text); else if (ts.isJsxExpression(i) && i.expression && (ts.isStringLiteral(i.expression) || ts.isNoSubstitutionTemplateLiteral(i.expression))) push(i, `attr:${n.name.getText()}`, i.expression.text) }
+    if (ts.isCallExpression(n) && CALL.test(n.expression.getText())) for (const a of n.arguments) { if (ts.isStringLiteral(a) || ts.isNoSubstitutionTemplateLiteral(a)) push(a, `call:${n.expression.getText()}`, a.text); if (ts.isObjectLiteralExpression(a)) for (const p of a.properties) if (ts.isPropertyAssignment(p) && /^(title|description)$/.test(p.name.getText()) && (ts.isStringLiteral(p.initializer) || ts.isNoSubstitutionTemplateLiteral(p.initializer))) push(p.initializer, `call:${n.expression.getText()}.${p.name.getText()}`, p.initializer.text) }
+    if (ts.isNewExpression(n) && n.expression.getText() === 'Error' && n.arguments?.[0] && ts.isStringLiteral(n.arguments[0])) push(n.arguments[0], 'new Error', n.arguments[0].text)
+    ts.forEachChild(n, walk)
+  }
+  walk(sf)
+}
+const hdr = (c) => `# gerado por: ${c}\n`
+fs.writeFileSync(`${out}/literais.tsv`, 'arquivo\tsuperficies\thex\trgb/hsl()\tclasse-paleta-tailwind\ttamanho-fonte\tespaco-classe\traio-classe\n' + lit.map(r => r.join('\t')).join('\n') + '\n')
+fs.writeFileSync(`${out}/icones.tsv`, ico.map(([f, n]) => `${n}\t${f}\t${[...fileSup.get(f)].join(',')}`).sort().join('\n') + '\n')
+fs.writeFileSync(`${out}/frases.tsv`, fr.join('\n') + '\n')
+fs.writeFileSync(`${out}/superficies.tsv`, files.map(f => `${f}\t${[...fileSup.get(f)].join(',')}`).join('\n') + '\n')
+const porSup = {}; for (const [f, n] of ico) for (const s of fileSup.get(f)) (porSup[s] ||= new Set()).add(n)
+console.log({ arquivos: files.length, frases: fr.length, importsIcone: ico.length, iconesDistintos: new Set(ico.map(x => x[1])).size, porSuperficie: Object.fromEntries(Object.entries(porSup).map(([k, v]) => [k, v.size])) })
+const tot = lit.reduce((a, r) => a.map((x, i) => x + (r[i + 2] || 0)), [0, 0, 0, 0, 0, 0]); console.log('totais hex,fn,paleta,fonte,espaco,raio', tot)

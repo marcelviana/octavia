@@ -1,0 +1,88 @@
+# gerado por: os comandos abaixo (commit 2, medições 2.2 e 2.3)
+$ grep -nE "localStorage|sessionStorage|cookie|fetch\(|/api/|setItem|getItem|useState|onUpdate" components/settings-page-client.tsx components/settings/*.tsx
+components/settings-page-client.tsx:3:import { useState } from "react"
+components/settings-page-client.tsx:12:  const [activeScreen, setActiveScreen] = useState("settings")
+components/settings/AudioSettings.tsx:13:  onUpdate: (key: string, value: any) => void;
+components/settings/AudioSettings.tsx:16:export function AudioSettings({ settings, onUpdate }: AudioSettingsProps) {
+components/settings/AudioSettings.tsx:33:            onCheckedChange={(checked) => onUpdate("metronome", checked)}
+components/settings/DisplaySettings.tsx:17:  onUpdate: (key: string, value: any) => void;
+components/settings/DisplaySettings.tsx:20:export function DisplaySettings({ settings, onUpdate }: DisplaySettingsProps) {
+components/settings/DisplaySettings.tsx:37:            onCheckedChange={(checked) => onUpdate("darkMode", checked)}
+components/settings/DisplaySettings.tsx:46:              onValueChange={([value]) => onUpdate("defaultZoom", value)}
+components/settings/DisplaySettings.tsx:67:            onCheckedChange={(checked) => onUpdate("autoScroll", checked)}
+components/settings/DisplaySettings.tsx:78:            onCheckedChange={(checked) => onUpdate("performanceMode", checked)}
+components/settings/CloudSettings.tsx:15:  onUpdate: (key: string, value: any) => void;
+components/settings/CloudSettings.tsx:18:export function CloudSettings({ settings, onUpdate }: CloudSettingsProps) {
+components/settings/CloudSettings.tsx:50:            onCheckedChange={(checked) => onUpdate("autoSync", checked)}
+components/settings/CloudSettings.tsx:61:            onCheckedChange={(checked) => onUpdate("cloudSync", checked)}
+components/settings/CloudSettings.tsx:72:            onCheckedChange={(checked) => onUpdate("backupEnabled", checked)}
+components/settings/RefactoredSettings.tsx:3:import { useState } from "react";
+components/settings/RefactoredSettings.tsx:11:  const [settings, setSettings] = useState({
+components/settings/RefactoredSettings.tsx:62:            <DisplaySettings settings={settings} onUpdate={updateSetting} />
+components/settings/RefactoredSettings.tsx:66:            <AudioSettings settings={settings} onUpdate={updateSetting} />
+components/settings/RefactoredSettings.tsx:70:            <CloudSettings settings={settings} onUpdate={updateSetting} />
+
+$ sed -n 11,24p components/settings/RefactoredSettings.tsx
+  const [settings, setSettings] = useState({
+    darkMode: false,
+    autoSync: true,
+    performanceMode: true,
+    defaultZoom: 125,
+    autoScroll: false,
+    metronome: true,
+    backupEnabled: true,
+    cloudSync: false,
+  });
+
+  const updateSetting = (key: string, value: any) => {
+    setSettings((prev) => ({ ...prev, [key]: value }));
+  };
+
+$ git grep -nwE "darkMode|autoSync|performanceMode|defaultZoom|autoScroll|metronome|backupEnabled|cloudSync" -- app components hooks lib contexts types | grep -v components/settings/
+(nenhuma linha)
+
+$ git grep -nE "localStorage|sessionStorage|document\.cookie" -- app components hooks lib contexts | grep -v __tests__
+components/pwa-install-prompt.tsx:35:    const permanentlyDismissed = localStorage.getItem('octavia_install_dismissed')
+components/pwa-install-prompt.tsx:41:    const postponedTimestamp = localStorage.getItem('octavia_install_postponed')
+components/pwa-install-prompt.tsx:71:        const currentlyDismissed = localStorage.getItem('octavia_install_dismissed')
+components/pwa-install-prompt.tsx:72:        const currentlyPostponed = localStorage.getItem('octavia_install_postponed')
+components/pwa-install-prompt.tsx:127:    localStorage.setItem('octavia_install_dismissed', 'true')
+components/pwa-install-prompt.tsx:139:    localStorage.setItem('octavia_install_postponed', Date.now().toString())
+lib/firebase-session-cookies.ts:52:  const cookies = document.cookie.split(';')
+
+$ git grep -nw updateProfile -- app components hooks lib contexts | grep -v __tests__
+components/ProfileForm.tsx:23:  const { user, profile, updateProfile } = useAuth()
+components/ProfileForm.tsx:46:      const { error } = await updateProfile(formData)
+contexts/firebase-auth-context.tsx:14:  updateProfile as updateFirebaseProfile,
+contexts/firebase-auth-context.tsx:48:  updateProfile: (data: Partial<Profile>) => Promise<{ error: any }>
+contexts/firebase-auth-context.tsx:405:  const updateProfile = useCallback(
+contexts/firebase-auth-context.tsx:468:    updateProfile,
+
+$ git grep -nE "api/profile" -- app components hooks lib contexts | grep -v __tests__
+app/api/profile/route.ts:16:// GET /api/profile - Get user profile
+app/api/profile/route.ts:52:// POST /api/profile - Create user profile
+app/api/profile/route.ts:125:// PATCH /api/profile - Update user profile
+components/auth/login-panel.tsx:44:          const res = await fetch('/api/profile', {
+components/auth/login-panel.tsx:53:              const createRes = await fetch('/api/profile', {
+components/auth/login-panel.tsx:81:              const retryRes = await fetch('/api/profile', {
+components/auth/login-panel.tsx:90:                  const createRes = await fetch('/api/profile', {
+contexts/firebase-auth-context.tsx:71:      const response = await fetch('/api/profile', {
+contexts/firebase-auth-context.tsx:141:                const response = await fetch('/api/profile', {
+contexts/firebase-auth-context.tsx:157:                    const retryResponse = await fetch('/api/profile', {
+contexts/firebase-auth-context.tsx:326:        const response = await fetch('/api/profile', {
+contexts/firebase-auth-context.tsx:414:        const response = await fetch('/api/profile', {
+
+$ git grep -nE "profile\??\.(full_name|first_name|last_name|avatar_url|bio|website)" -- app components hooks lib contexts | grep -v __tests__
+components/ProfileForm.tsx:34:        full_name: profile.full_name || "",
+components/ProfileForm.tsx:35:        bio: profile.bio || "",
+components/ProfileForm.tsx:36:        website: profile.website || "",
+components/ProfileForm.tsx:99:                  <AvatarImage src={profile?.avatar_url || ""} />
+components/ProfileForm.tsx:101:                    {profile?.full_name?.charAt(0) || user.email?.charAt(0) || "U"}
+components/ProfileForm.tsx:105:                  <h3 className="text-lg font-semibold text-gray-900">{profile?.full_name || "User"}</h3>
+components/user-header.tsx:38:  const initials = profile?.full_name
+components/user-header.tsx:39:    ? profile.full_name
+components/user-header.tsx:54:            <AvatarImage src={profile?.avatar_url || ""} alt={profile?.full_name || user.email || "User"} />
+components/user-header.tsx:62:            <span>{profile?.full_name || "User"}</span>
+
+$ git grep -nE "href=\"/profile\"" -- app components
+components/user-header.tsx:68:          <Link href="/profile" className="cursor-pointer flex items-center">

@@ -1,0 +1,5 @@
+# probe 1 — console, só error/warning (ms · ramo · tipo · texto)
+   1220  a  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+   1825  a  error   Failed to load resource: the server responded with a status of 400 ()
+  37452  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  99903  c  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.

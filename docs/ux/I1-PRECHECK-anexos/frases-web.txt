@@ -1,0 +1,847 @@
+# gerado por: node script-a456 dc-all.json palco-exclusivos <dir>  (script: script-a456.txt; grafo do mesmo depcruise da A2)
+# superfície de cada arquivo = raízes de onde ele é alcançado (auth, content-lista, content-editor, upload, setlists, shell=app/layout.tsx, outra); exclusivos do palco FORA.
+# extração por AST (TypeScript): texto JSX; atributos placeholder/title/aria-label/alt/label/description; argumentos string e {title,description} de setError/toast/toast.*/alert/confirm; new Error('...')
+# total de ocorrências: 750 · distintas: 591 · arquivos: 87
+# contagem por arquivo (cut -f1 | cut -d: -f1 | sort | uniq -c | sort -rn):
+  58 app/setup/page.tsx
+  52 app/page.tsx
+  30 components/tab-editor.tsx
+  28 components/auth/signup-panel.tsx
+  26 components/dashboard.tsx
+  25 components/unified-metadata-editor.tsx
+  24 components/auth/login-panel.tsx
+  24 app/privacy-policy/page.tsx
+  22 lib/setlist-service.ts
+  21 components/chord-editor.tsx
+  20 components/pwa-install-prompt.tsx
+  18 hooks/use-service-worker.tsx
+  15 components/setlist-manager.tsx
+  14 components/content-viewer/ContentSidebar.tsx
+  14 app/offline/page.tsx
+  13 components/settings/AudioSettings.tsx
+  13 components/ProfileForm.tsx
+  13 app/forgot-password/page.tsx
+  12 lib/content-service.ts
+  12 components/metadata-form/BasicMetadataFields.tsx
+  12 components/library/LibraryHeader.tsx
+  11 components/pdf-viewer.tsx
+  11 components/metadata-form/AdvancedMetadataFields.tsx
+  10 components/settings/CloudSettings.tsx
+  10 components/setlist/setlist-dialog.tsx
+  10 components/setlist/setlist-details.tsx
+  10 app/verify-email/page.tsx
+  10 app/signup/page.tsx
+   9 components/setlist/song-selection-dialog.tsx
+   8 components/settings/DisplaySettings.tsx
+   8 components/setlist/setlist-list.tsx
+   8 app/signup/confirm-email/page.tsx
+   7 lib/firebase-admin.ts
+   7 components/lyrics-editor.tsx
+   7 components/content-creator.tsx
+   6 components/ui/pagination.tsx
+   6 components/metadata-form/RefactoredMetadataForm.tsx
+   6 components/content-viewer/SheetMusicDisplay.tsx
+   6 components/annotation-tools.tsx
+   6 app/content/[id]/edit/page.tsx
+   5 contexts/firebase-auth-context.tsx
+   5 components/settings/RefactoredSettings.tsx
+   5 components/setlist/setlist-card.tsx
+   5 components/delete-content-dialog.tsx
+   5 components/content-viewer/LyricsDisplay.tsx
+   5 components/content-viewer/DeleteDialog.tsx
+   5 components/batch-preview.tsx
+   5 components/add-content/FileUploadZone.tsx
+   4 lib/offline-cache.ts
+   4 lib/error-boundary.tsx
+   4 components/user-header.tsx
+   4 components/library/OptimizedLibraryList.tsx
+   4 components/content-viewer/TabDisplay.tsx
+   4 components/content-viewer/ContentToolbar.tsx
+   4 components/add-content/ModeSelector.tsx
+   3 hooks/useMetadataForm.ts
+   3 hooks/use-setlist-data.ts
+   3 components/providers/session-provider.tsx
+   3 components/library/LibraryErrorBoundary.tsx
+   3 components/header.tsx
+   3 components/editors/content-type-editor.tsx
+   3 components/content-viewer/ChordDisplay.tsx
+   3 components/content-editor.tsx
+   3 components/content-edit-page-client.tsx
+   3 components/add-content/DetailsStep.tsx
+   2 lib/firebase-session-cookies.ts
+   2 lib/content-service-server.ts
+   2 hooks/useContentActions.ts
+   2 components/setlists-page-client.tsx
+   2 components/library/LibraryLoadingState.tsx
+   2 components/library/LibraryEmptyState.tsx
+   2 components/add-content/CompletionStep.tsx
+   2 components/add-content-page-client.tsx
+   1 lib/supabase-service.ts
+   1 lib/pdf-utils.ts
+   1 lib/offline-queue.ts
+   1 hooks/useAddContentLogic.ts
+   1 components/ui/dialog.tsx
+   1 components/sidebar.tsx
+   1 components/settings-page-client.tsx
+   1 components/library-page-client.tsx
+   1 components/content-viewer/ContentHeader.tsx
+   1 components/content-page-client.tsx
+   1 components/add-content/upload-to-storage.ts
+   1 components/add-content/RefactoredAddContent.tsx
+   1 components/add-content/ImportModeSelector.tsx
+   1 components/add-content/ContentTypeSelector.tsx
+
+# interseção exata com os literais de packages/core/src/frases.ts (comm -12): 0
+# distintas com marca de português (grep -ciE '[ãõçáéíóúâêô]| (de|da|do|para|não|uma|com) '): 13
+
+# arquivo:linha<TAB>espécie<TAB>texto
+app/content/[id]/edit/page.tsx:9	jsx	Loading editor...
+app/content/[id]/edit/page.tsx:65	jsx	Loading...
+app/content/[id]/edit/page.tsx:82	jsx	Loading content for editing...
+app/content/[id]/edit/page.tsx:93	jsx	Content Not Found
+app/content/[id]/edit/page.tsx:100	jsx	Go Back
+app/content/[id]/edit/page.tsx:106	jsx	Browse Library
+app/forgot-password/page.tsx:27	call:setError	Password reset is not available
+app/forgot-password/page.tsx:50	jsx	Check Your Email
+app/forgot-password/page.tsx:52	jsx	We&apos;ve sent password reset instructions to
+app/forgot-password/page.tsx:58	jsx	Didn&apos;t receive the email? Check your spam folder or try again.
+app/forgot-password/page.tsx:66	jsx	Try Again
+app/forgot-password/page.tsx:70	jsx	Back to Sign In
+app/forgot-password/page.tsx:91	jsx	Reset Password
+app/forgot-password/page.tsx:94	jsx	Enter your email address and we&apos;ll send you a link to reset your password.
+app/forgot-password/page.tsx:107	jsx	Email Address
+app/forgot-password/page.tsx:114	attr:placeholder	your.email@example.com
+app/forgot-password/page.tsx:131	jsx	Sending...
+app/forgot-password/page.tsx:140	jsx	Remember your password?
+app/forgot-password/page.tsx:145	jsx	Sign in
+app/offline/page.tsx:38	new Error	offline
+app/offline/page.tsx:56	jsx	You&apos;re Offline
+app/offline/page.tsx:60	jsx	No internet connection detected. Some features may be limited, but recently opened files are cached for offline access.
+app/offline/page.tsx:71	jsx	Checking Connection...
+app/offline/page.tsx:76	jsx	Try Again
+app/offline/page.tsx:89	jsx	Available Offline
+app/offline/page.tsx:108	jsx	more items available offline
+app/offline/page.tsx:122	jsx	Offline Setlists
+app/offline/page.tsx:134	jsx	more setlists available offline
+app/offline/page.tsx:145	jsx	What you can do offline:
+app/offline/page.tsx:151	jsx	View automatically cached sheet music and lyrics
+app/offline/page.tsx:155	jsx	Access offline setlists
+app/offline/page.tsx:159	jsx	Use performance mode with cached content
+app/offline/page.tsx:163	jsx	Create and edit notes (syncs when back online)
+app/page.tsx:18	attr:alt	Octavia
+app/page.tsx:27	attr:alt	Octavia
+app/page.tsx:37	jsx	Sign In
+app/page.tsx:43	jsx	Sign Up
+app/page.tsx:60	jsx	🎵 Digital Music Revolution
+app/page.tsx:63	jsx	Your Music Library,
+app/page.tsx:65	jsx	Digitized
+app/page.tsx:69	jsx	Organize, visualize, and share your sheet music, tabs, and lyrics. Perfect for rehearsals and performances with a modern, intuitive interface.
+app/page.tsx:78	jsx	Get Started Free
+app/page.tsx:86	jsx	Sign In
+app/page.tsx:95	attr:alt	Musician performing with digital sheet music on tablet
+app/page.tsx:113	jsx	Why Musicians Choose Octavia
+app/page.tsx:116	jsx	Powerful features designed by musicians, for musicians
+app/page.tsx:124	jsx	Digital Sheet Music
+app/page.tsx:126	jsx	Import and organize all your sheet music, tabs, and lyrics in one beautiful, searchable library.
+app/page.tsx:133	jsx	Smart Annotations
+app/page.tsx:135	jsx	Add notes, highlights, and markings directly onto your digital sheet music for better rehearsals.
+app/page.tsx:142	jsx	Guitar Tabs & More
+app/page.tsx:144	jsx	Support for multiple music formats including guitar tabs, chord charts, and traditional notation.
+app/page.tsx:151	jsx	Multi-User Access
+app/page.tsx:153	jsx	Secure, cloud-based access to your personal music library from any device, anywhere.
+app/page.tsx:166	jsx	Loved by Musicians Everywhere
+app/page.tsx:169	jsx	See what our community is saying about their experience with Octavia
+app/page.tsx:179	jsx	Sarah M.
+app/page.tsx:180	jsx	Classical Guitarist
+app/page.tsx:184	jsx	&ldquo;Octavia has revolutionized how I organize my sheet music. The annotation feature is incredibly useful for marking fingerings and performance notes.&rdquo;
+app/page.tsx:194	jsx	Mike R.
+app/page.tsx:195	jsx	Band Leader
+app/page.tsx:199	jsx	&ldquo;Perfect for managing our band&apos;s repertoire. Being able to access everything from my tablet during rehearsals is a game-changer.&rdquo;
+app/page.tsx:209	jsx	Alex K.
+app/page.tsx:210	jsx	Music Teacher
+app/page.tsx:214	jsx	&ldquo;My students love how organized and accessible all our learning materials are now. The search function saves so much time.&rdquo;
+app/page.tsx:230	jsx	Ready to Organize Your Music?
+app/page.tsx:232	jsx	Join thousands of musicians who use Octavia to manage their sheet music, tabs, and lyrics with style and efficiency.
+app/page.tsx:241	jsx	Create Free Account
+app/page.tsx:249	jsx	Sign In
+app/page.tsx:263	attr:alt	Octavia
+app/page.tsx:271	attr:alt	Octavia
+app/page.tsx:279	jsx	Your digital music companion for rehearsals and performances.
+app/page.tsx:284	jsx	Product
+app/page.tsx:288	jsx	Features
+app/page.tsx:293	jsx	Pricing
+app/page.tsx:298	jsx	FAQ
+app/page.tsx:304	jsx	Company
+app/page.tsx:308	jsx	About
+app/page.tsx:313	jsx	Blog
+app/page.tsx:318	jsx	Contact
+app/page.tsx:324	jsx	Legal
+app/page.tsx:331	jsx	Privacy Policy
+app/page.tsx:336	jsx	Terms
+app/page.tsx:344	jsx	&copy;
+app/page.tsx:344	jsx	Octavia. All rights reserved.
+app/privacy-policy/page.tsx:8	jsx	Privacy Policy / Política de Privacidade
+app/privacy-policy/page.tsx:12	jsx	What data we collect and why / Quais dados coletamos e por quê
+app/privacy-policy/page.tsx:15	jsx	We collect your name, email address, and usage behavior to personalize your experience, provide support, and improve our services.
+app/privacy-policy/page.tsx:19	jsx	Coletamos seu nome, endereço de e-mail e comportamento de uso para personalizar sua experiência, oferecer suporte e aprimorar nossos serviços.
+app/privacy-policy/page.tsx:26	jsx	Legal basis for processing / Base legal para o tratamento
+app/privacy-policy/page.tsx:29	jsx	Under GDPR and LGPD, we process your data with your consent, to fulfill our contract with you, and to comply with legal obligations.
+app/privacy-policy/page.tsx:33	jsx	Conforme o GDPR e a LGPD, tratamos seus dados com seu consentimento, para cumprir nosso contrato com você e para atender a obrigações legais.
+app/privacy-policy/page.tsx:40	jsx	Storage of your data / Armazenamento dos seus dados
+app/privacy-policy/page.tsx:43	jsx	Your information is stored securely on trusted cloud providers. We keep data only as long as necessary for the purposes stated in this policy.
+app/privacy-policy/page.tsx:48	jsx	Suas informações são armazenadas com segurança em provedores de nuvem confiáveis. Mantemos os dados apenas pelo tempo necessário para as finalidades descritas nesta política.
+app/privacy-policy/page.tsx:55	jsx	Your rights / Seus direitos
+app/privacy-policy/page.tsx:58	jsx	You may request access, correction, deletion, or portability of your data. You can also withdraw consent at any time.
+app/privacy-policy/page.tsx:62	jsx	Você pode solicitar acesso, correção, exclusão ou portabilidade dos seus dados. Também é possível revogar o consentimento a qualquer momento.
+app/privacy-policy/page.tsx:69	jsx	Third-party services / Serviços de terceiros
+app/privacy-policy/page.tsx:72	jsx	We use services such as Google Authentication and analytics tools. These providers may process your data according to their own privacy policies.
+app/privacy-policy/page.tsx:77	jsx	Utilizamos serviços como Google Authentication e ferramentas de análise. Esses provedores podem tratar seus dados de acordo com suas próprias políticas de privacidade.
+app/privacy-policy/page.tsx:83	jsx	Contact / Contato
+app/privacy-policy/page.tsx:85	jsx	If you have questions, contact our Data Protection Officer at
+app/privacy-policy/page.tsx:86	jsx	dpo@octavia.app
+app/privacy-policy/page.tsx:89	jsx	Se você tiver dúvidas, entre em contato com nosso Encarregado de Proteção de Dados pelo e-mail
+app/privacy-policy/page.tsx:91	jsx	dpo@octavia.app
+app/privacy-policy/page.tsx:96	jsx	Cookies and consent / Cookies e consentimento
+app/privacy-policy/page.tsx:99	jsx	We use cookies to remember your preferences and understand how the application is used. You can manage cookies in your browser settings.
+app/privacy-policy/page.tsx:103	jsx	Utilizamos cookies para lembrar suas preferências e entender como o aplicativo é utilizado. Você pode gerenciar os cookies nas configurações do seu navegador.
+app/setup/page.tsx:47	jsx	Octavia Setup
+app/setup/page.tsx:50	jsx	Set up your storage bucket for file uploads
+app/setup/page.tsx:56	jsx	What this does:
+app/setup/page.tsx:56	jsx	Creates a storage bucket called &ldquo;content-files&rdquo; in your Supabase project to store uploaded sheet music files.
+app/setup/page.tsx:60	jsx	Requirements:
+app/setup/page.tsx:60	jsx	You need to be connected to your Supabase project with proper credentials.
+app/setup/page.tsx:64	jsx	🔒 Secure Firebase Auth + Supabase Storage
+app/setup/page.tsx:66	jsx	This app uses
+app/setup/page.tsx:66	jsx	Firebase Auth
+app/setup/page.tsx:66	jsx	for user authentication and
+app/setup/page.tsx:66	jsx	Supabase Storage
+app/setup/page.tsx:66	jsx	for file storage. All uploads go through secure API endpoints that validate Firebase tokens server-side before uploading to Supabase.
+app/setup/page.tsx:70	jsx	File uploads will not work until you complete this setup process. If you see 400 errors or permission errors when uploading, this is the cause.
+app/setup/page.tsx:84	jsx	Creating bucket...
+app/setup/page.tsx:113	jsx	Step 2: Storage Policies (Required)
+app/setup/page.tsx:115	jsx	After creating the bucket, you need to set up storage policies to allow uploads:
+app/setup/page.tsx:118	jsx	Go to your Supabase project dashboard
+app/setup/page.tsx:119	jsx	Navigate to
+app/setup/page.tsx:119	jsx	Storage
+app/setup/page.tsx:119	jsx	Policies
+app/setup/page.tsx:120	jsx	Click
+app/setup/page.tsx:120	jsx	&ldquo;New Policy&rdquo;
+app/setup/page.tsx:120	jsx	for the
+app/setup/page.tsx:120	jsx	Objects
+app/setup/page.tsx:120	jsx	table
+app/setup/page.tsx:121	jsx	Select
+app/setup/page.tsx:121	jsx	&ldquo;Create a policy from template&rdquo;
+app/setup/page.tsx:122	jsx	Choose
+app/setup/page.tsx:122	jsx	&ldquo;Allow access to uploads for authenticated users&rdquo;
+app/setup/page.tsx:123	jsx	Click
+app/setup/page.tsx:123	jsx	&ldquo;Use this template&rdquo;
+app/setup/page.tsx:124	jsx	Update the policy to target the
+app/setup/page.tsx:124	jsx	content-files
+app/setup/page.tsx:124	jsx	bucket
+app/setup/page.tsx:125	jsx	Click
+app/setup/page.tsx:125	jsx	&ldquo;Save Policy&rdquo;
+app/setup/page.tsx:129	jsx	Quick SQL Setup (Recommended)
+app/setup/page.tsx:131	jsx	Copy and paste these SQL commands in your Supabase SQL Editor to set up storage policies:
+app/setup/page.tsx:154	jsx	💡 Tip:
+app/setup/page.tsx:154	jsx	If you get &ldquo;policy already exists&rdquo; errors, that&apos;s normal - it means the policies are already set up.
+app/setup/page.tsx:157	jsx	🔑 Service Key:
+app/setup/page.tsx:157	jsx	Make sure your
+app/setup/page.tsx:157	jsx	SUPABASE_SERVICE_ROLE_KEY
+app/setup/page.tsx:157	jsx	environment variable is set for server-side storage operations.
+app/setup/page.tsx:164	jsx	Manual Bucket Setup (Alternative)
+app/setup/page.tsx:166	jsx	If the automatic bucket creation doesn&apos;t work:
+app/setup/page.tsx:169	jsx	Go to your Supabase project dashboard
+app/setup/page.tsx:170	jsx	Navigate to
+app/setup/page.tsx:170	jsx	Storage
+app/setup/page.tsx:170	jsx	in the sidebar
+app/setup/page.tsx:171	jsx	Click
+app/setup/page.tsx:171	jsx	&ldquo;New Bucket&rdquo;
+app/setup/page.tsx:172	jsx	Name it
+app/setup/page.tsx:172	jsx	content-files
+app/setup/page.tsx:173	jsx	Set it to
+app/setup/page.tsx:173	jsx	Public
+app/setup/page.tsx:174	jsx	Click
+app/setup/page.tsx:174	jsx	&ldquo;Create Bucket&rdquo;
+app/signup/confirm-email/page.tsx:42	jsx	Confirm Your Email
+app/signup/confirm-email/page.tsx:44	jsx	We&apos;ve sent a confirmation link to your email. Click the link to activate your account.
+app/signup/confirm-email/page.tsx:47	jsx	Email sent to:
+app/signup/confirm-email/page.tsx:56	jsx	Verification email sent successfully! Please check your inbox.
+app/signup/confirm-email/page.tsx:67	jsx	Go to Login
+app/signup/confirm-email/page.tsx:72	jsx	Didn&apos;t receive the email?
+app/signup/confirm-email/page.tsx:83	jsx	Sending...
+app/signup/confirm-email/page.tsx:88	jsx	Resend Verification Email
+app/signup/page.tsx:28	jsx	Start Your Musical Journey
+app/signup/page.tsx:30	jsx	Join thousands of musicians who trust Octavia to organize their musical content and enhance their practice sessions.
+app/signup/page.tsx:38	jsx	Upload Music
+app/signup/page.tsx:39	jsx	PDF, images & more
+app/signup/page.tsx:47	jsx	Organize
+app/signup/page.tsx:48	jsx	Smart categorization
+app/signup/page.tsx:56	jsx	Perform
+app/signup/page.tsx:57	jsx	Distraction-free mode
+app/signup/page.tsx:65	jsx	Access
+app/signup/page.tsx:66	jsx	Any device, anywhere
+app/verify-email/page.tsx:82	jsx	Verify Your Email
+app/verify-email/page.tsx:84	jsx	Please verify your email address to access Octavia.
+app/verify-email/page.tsx:87	jsx	Email:
+app/verify-email/page.tsx:96	jsx	Verification email sent successfully! Please check your inbox.
+app/verify-email/page.tsx:115	jsx	Checking...
+app/verify-email/page.tsx:120	jsx	I&apos;ve Verified My Email
+app/verify-email/page.tsx:134	jsx	Sending...
+app/verify-email/page.tsx:139	jsx	Resend Verification Email
+app/verify-email/page.tsx:150	jsx	Sign Out
+app/verify-email/page.tsx:155	jsx	Having trouble? Check your spam folder or contact support.
+components/ProfileForm.tsx:49	call:toast.error	Failed to update profile. Please try again.
+components/ProfileForm.tsx:51	call:toast.success	Profile updated successfully!
+components/ProfileForm.tsx:63	call:toast.error	Failed to update profile. Please try again.
+components/ProfileForm.tsx:88	jsx	Profile Settings
+components/ProfileForm.tsx:91	jsx	Update your personal information and preferences
+components/ProfileForm.tsx:114	jsx	Email
+components/ProfileForm.tsx:128	jsx	Display Name
+components/ProfileForm.tsx:136	attr:placeholder	Enter your display name
+components/ProfileForm.tsx:145	jsx	Bio
+components/ProfileForm.tsx:152	attr:placeholder	Tell us about yourself...
+components/ProfileForm.tsx:161	jsx	Website
+components/ProfileForm.tsx:169	attr:placeholder	https://your-website.com
+components/ProfileForm.tsx:196	jsx	Cancel
+components/add-content-page-client.tsx:11	jsx	Loading add content...
+components/add-content-page-client.tsx:48	jsx	Loading...
+components/add-content/CompletionStep.tsx:32	jsx	🎉 Done! Your music is now part of your library.
+components/add-content/CompletionStep.tsx:48	jsx	Go to Library
+components/add-content/ContentTypeSelector.tsx:25	jsx	Content Type
+components/add-content/DetailsStep.tsx:51	jsx	Back
+components/add-content/DetailsStep.tsx:54	jsx	Add Content Details
+components/add-content/DetailsStep.tsx:58	jsx	Fill in the details to help organize and find your Sheet Music in your library.
+components/add-content/FileUploadZone.tsx:61	jsx	Import Music File
+components/add-content/FileUploadZone.tsx:98	jsx	Browse files
+components/add-content/FileUploadZone.tsx:103	attr:aria-label	Upload music file
+components/add-content/FileUploadZone.tsx:112	jsx	Supported formats:
+components/add-content/FileUploadZone.tsx:112	jsx	(max 50MB)
+components/add-content/ImportModeSelector.tsx:36	jsx	Import Type
+components/add-content/ModeSelector.tsx:17	jsx	How would you like to add content?
+components/add-content/ModeSelector.tsx:45	jsx	Create New
+components/add-content/ModeSelector.tsx:52	jsx	Start from scratch and build your content manually with our editor.
+components/add-content/ModeSelector.tsx:84	jsx	Import from File
+components/add-content/RefactoredAddContent.tsx:112	jsx	Back
+components/add-content/upload-to-storage.ts:49	new Error	Failed to get public URL for uploaded file
+components/annotation-tools.tsx:194	attr:alt	Sheet music
+components/annotation-tools.tsx:199	attr:placeholder	blur
+components/annotation-tools.tsx:208	jsx	No sheet music image available
+components/annotation-tools.tsx:236	attr:placeholder	Enter text...
+components/annotation-tools.tsx:248	jsx	Annotations (
+components/annotation-tools.tsx:263	jsx	Remove
+components/auth/login-panel.tsx:40	call:setError	Unable to obtain authentication token
+components/auth/login-panel.tsx:70	new Error	Failed to create profile
+components/auth/login-panel.tsx:107	new Error	Failed to create profile
+components/auth/login-panel.tsx:112	call:setError	Authentication failed. Please sign in again.
+components/auth/login-panel.tsx:116	call:setError	Authentication failed. Please sign in again.
+components/auth/login-panel.tsx:119	call:setError	Failed to fetch profile
+components/auth/login-panel.tsx:171	jsx	Redirecting to dashboard...
+components/auth/login-panel.tsx:176	jsx	Click here if not redirected automatically
+components/auth/login-panel.tsx:197	attr:alt	Octavia Logo
+components/auth/login-panel.tsx:207	jsx	Welcome to Octavia
+components/auth/login-panel.tsx:209	jsx	Your digital music companion
+components/auth/login-panel.tsx:217	jsx	Sign In
+components/auth/login-panel.tsx:220	jsx	Enter your credentials to access your music library
+components/auth/login-panel.tsx:227	jsx	Email
+components/auth/login-panel.tsx:233	attr:placeholder	your.email@example.com
+components/auth/login-panel.tsx:245	jsx	Password
+components/auth/login-panel.tsx:251	jsx	Forgot password?
+components/auth/login-panel.tsx:258	attr:placeholder	Enter your password
+components/auth/login-panel.tsx:280	jsx	Signing in...
+components/auth/login-panel.tsx:291	jsx	or
+components/auth/login-panel.tsx:303	jsx	Loading...
+components/auth/login-panel.tsx:311	jsx	Don&apos;t have an account?
+components/auth/login-panel.tsx:316	jsx	Sign up
+components/auth/login-panel.tsx:324	jsx	© 2025 Octavia Music. All rights reserved.
+components/auth/signup-panel.tsx:34	call:setError	Passwords do not match
+components/auth/signup-panel.tsx:59	call:setError	An unexpected error occurred
+components/auth/signup-panel.tsx:75	attr:alt	Octavia
+components/auth/signup-panel.tsx:85	jsx	Join Octavia
+components/auth/signup-panel.tsx:87	jsx	Create your account to get started
+components/auth/signup-panel.tsx:95	jsx	Sign Up
+components/auth/signup-panel.tsx:97	jsx	Fill in your details to create your account
+components/auth/signup-panel.tsx:110	jsx	First Name
+components/auth/signup-panel.tsx:118	attr:placeholder	John
+components/auth/signup-panel.tsx:127	jsx	Last Name
+components/auth/signup-panel.tsx:133	attr:placeholder	Doe
+components/auth/signup-panel.tsx:142	jsx	Email
+components/auth/signup-panel.tsx:151	attr:placeholder	your.email@example.com
+components/auth/signup-panel.tsx:160	jsx	Primary Instrument
+components/auth/signup-panel.tsx:164	attr:placeholder	Select your primary instrument
+components/auth/signup-panel.tsx:167	jsx	Guitar
+components/auth/signup-panel.tsx:168	jsx	Piano
+components/auth/signup-panel.tsx:169	jsx	Violin
+components/auth/signup-panel.tsx:170	jsx	Drums
+components/auth/signup-panel.tsx:171	jsx	Vocals
+components/auth/signup-panel.tsx:172	jsx	Bass
+components/auth/signup-panel.tsx:173	jsx	Other
+components/auth/signup-panel.tsx:180	jsx	Password
+components/auth/signup-panel.tsx:194	jsx	Password must be at least 6 characters
+components/auth/signup-panel.tsx:199	jsx	Confirm Password
+components/auth/signup-panel.tsx:222	jsx	Creating account...
+components/auth/signup-panel.tsx:235	jsx	Back to login
+components/auth/signup-panel.tsx:242	jsx	© 2025 Octavia Music. All rights reserved.
+components/batch-preview.tsx:52	call:toast.error	Invalid content type
+components/batch-preview.tsx:67	call:toast.error	Failed to import songs
+components/batch-preview.tsx:103	attr:placeholder	Artist
+components/batch-preview.tsx:133	jsx	Back
+components/batch-preview.tsx:143	jsx	Import All
+components/chord-editor.tsx:119	jsx	Song Information
+components/chord-editor.tsx:124	jsx	Title
+components/chord-editor.tsx:132	jsx	Artist
+components/chord-editor.tsx:142	jsx	Key
+components/chord-editor.tsx:145	attr:placeholder	Select key
+components/chord-editor.tsx:196	jsx	Capo
+components/chord-editor.tsx:201	attr:placeholder	Fret
+components/chord-editor.tsx:205	jsx	BPM
+components/chord-editor.tsx:221	jsx	Quick Chords
+components/chord-editor.tsx:247	jsx	Song Sections
+components/chord-editor.tsx:250	jsx	Add Section
+components/chord-editor.tsx:262	attr:placeholder	Section name (e.g., Verse 1, Chorus)
+components/chord-editor.tsx:276	jsx	Chord Progression
+components/chord-editor.tsx:278	attr:placeholder	Am F C G
+components/chord-editor.tsx:288	jsx	Lyrics
+components/chord-editor.tsx:290	attr:placeholder	Enter lyrics for this section...
+components/chord-editor.tsx:305	jsx	Preview
+components/chord-editor.tsx:313	jsx	Key:
+components/chord-editor.tsx:314	jsx	Capo:
+components/chord-editor.tsx:315	jsx	BPM:
+components/chord-editor.tsx:323	jsx	Chords:
+components/content-creator.tsx:87	call:setError	Title is required
+components/content-creator.tsx:105	jsx	Create New Content
+components/content-creator.tsx:106	jsx	Choose the type of musical content you want to create
+components/content-creator.tsx:147	jsx	Editor
+components/content-creator.tsx:151	jsx	Title
+components/content-creator.tsx:159	attr:placeholder	Song title
+components/content-creator.tsx:180	jsx	Next
+components/content-edit-page-client.tsx:12	jsx	Loading editor...
+components/content-edit-page-client.tsx:42	call:toast.success	Changes saved successfully
+components/content-edit-page-client.tsx:46	call:toast.error	Failed to save changes
+components/content-editor.tsx:151	jsx	Last saved:
+components/content-editor.tsx:161	jsx	Unsaved changes
+components/content-editor.tsx:170	jsx	Save Changes
+components/content-page-client.tsx:12	jsx	Loading editor...
+components/content-viewer/ChordDisplay.tsx:10	jsx	Chord Chart
+components/content-viewer/ChordDisplay.tsx:27	jsx	Chords:
+components/content-viewer/ChordDisplay.tsx:111	jsx	Song Structure
+components/content-viewer/ContentHeader.tsx:99	jsx	Performance
+components/content-viewer/ContentSidebar.tsx:18	jsx	Song Details
+components/content-viewer/ContentSidebar.tsx:25	jsx	Album
+components/content-viewer/ContentSidebar.tsx:37	jsx	Difficulty
+components/content-viewer/ContentSidebar.tsx:45	jsx	Genre
+components/content-viewer/ContentSidebar.tsx:59	jsx	Key
+components/content-viewer/ContentSidebar.tsx:69	jsx	Time Signature
+components/content-viewer/ContentSidebar.tsx:79	jsx	Tempo
+components/content-viewer/ContentSidebar.tsx:82	jsx	BPM
+components/content-viewer/ContentSidebar.tsx:93	jsx	Tags
+components/content-viewer/ContentSidebar.tsx:108	jsx	Created
+components/content-viewer/ContentSidebar.tsx:109	jsx	Modified
+components/content-viewer/ContentSidebar.tsx:121	jsx	Performance Notes
+components/content-viewer/ContentSidebar.tsx:133	jsx	No performance notes available
+components/content-viewer/ContentSidebar.tsx:136	jsx	Click Edit to add notes and performance tips
+components/content-viewer/ContentToolbar.tsx:86	jsx	Page
+components/content-viewer/ContentToolbar.tsx:86	jsx	of
+components/content-viewer/ContentToolbar.tsx:97	jsx	Previous
+components/content-viewer/ContentToolbar.tsx:106	jsx	Next
+components/content-viewer/DeleteDialog.tsx:29	jsx	Delete Content
+components/content-viewer/DeleteDialog.tsx:31	jsx	Are you sure you want to delete &quot;
+components/content-viewer/DeleteDialog.tsx:31	jsx	&quot;? This action cannot be undone.
+components/content-viewer/DeleteDialog.tsx:37	jsx	Cancel
+components/content-viewer/DeleteDialog.tsx:40	jsx	Delete
+components/content-viewer/LyricsDisplay.tsx:11	jsx	Lyrics
+components/content-viewer/LyricsDisplay.tsx:23	jsx	No lyrics available
+components/content-viewer/LyricsDisplay.tsx:26	jsx	Add lyrics to help with performance
+components/content-viewer/LyricsDisplay.tsx:34	jsx	Chords
+components/content-viewer/LyricsDisplay.tsx:52	jsx	Chords
+components/content-viewer/SheetMusicDisplay.tsx:24	jsx	Sheet Music
+components/content-viewer/SheetMusicDisplay.tsx:29	jsx	Loading...
+components/content-viewer/SheetMusicDisplay.tsx:58	attr:alt	Sheet music
+components/content-viewer/SheetMusicDisplay.tsx:79	jsx	Failed to load file. Please check the file format or try again later.
+components/content-viewer/SheetMusicDisplay.tsx:96	jsx	No sheet music available
+components/content-viewer/SheetMusicDisplay.tsx:99	jsx	Upload a PDF or image file to display sheet music
+components/content-viewer/TabDisplay.tsx:11	jsx	Tablature
+components/content-viewer/TabDisplay.tsx:59	jsx	Capo:
+components/content-viewer/TabDisplay.tsx:65	jsx	Tuning:
+components/content-viewer/TabDisplay.tsx:74	jsx	Chord Progression
+components/dashboard.tsx:81	attr:aria-label	Dashboard
+components/dashboard.tsx:81	jsx	Dashboard
+components/dashboard.tsx:84	jsx	Add Content
+components/dashboard.tsx:99	jsx	Overview
+components/dashboard.tsx:105	jsx	Recent
+components/dashboard.tsx:111	jsx	Favorites
+components/dashboard.tsx:120	jsx	Total Content
+components/dashboard.tsx:127	jsx	pieces in your library
+components/dashboard.tsx:134	jsx	Setlists
+components/dashboard.tsx:141	jsx	ready for performance
+components/dashboard.tsx:148	jsx	Favorites
+components/dashboard.tsx:155	jsx	marked as favorites
+components/dashboard.tsx:162	jsx	Recent
+components/dashboard.tsx:169	jsx	viewed recently
+components/dashboard.tsx:177	jsx	Recent Content
+components/dashboard.tsx:179	jsx	Your recently viewed music
+components/dashboard.tsx:221	jsx	No recent content
+components/dashboard.tsx:230	jsx	Favorite Content
+components/dashboard.tsx:232	jsx	Your starred music pieces
+components/dashboard.tsx:276	jsx	No favorite content
+components/dashboard.tsx:288	jsx	Recent Content
+components/dashboard.tsx:290	jsx	Your recently accessed music pieces
+components/dashboard.tsx:332	jsx	No recent content
+components/dashboard.tsx:343	jsx	Favorite Content
+components/dashboard.tsx:345	jsx	Your starred music pieces
+components/dashboard.tsx:389	jsx	No favorite content
+components/delete-content-dialog.tsx:18	jsx	Delete Content
+components/delete-content-dialog.tsx:20	jsx	Are you sure you want to delete &quot;
+components/delete-content-dialog.tsx:20	jsx	&quot;? This action cannot be undone.
+components/delete-content-dialog.tsx:24	jsx	Cancel
+components/delete-content-dialog.tsx:25	jsx	Delete
+components/editors/content-type-editor.tsx:72	attr:alt	Sheet music
+components/editors/content-type-editor.tsx:108	jsx	Editor for
+components/editors/content-type-editor.tsx:108	jsx	is not yet implemented.
+components/header.tsx:62	attr:alt	Octavia
+components/header.tsx:71	attr:alt	Octavia
+components/header.tsx:87	attr:placeholder	Search...
+components/library-page-client.tsx:13	jsx	Loading library...
+components/library/LibraryEmptyState.tsx:35	jsx	No content found
+components/library/LibraryEmptyState.tsx:48	jsx	Add Content
+components/library/LibraryErrorBoundary.tsx:56	jsx	Something went wrong
+components/library/LibraryErrorBoundary.tsx:59	jsx	There was an error loading your music library. Please try again.
+components/library/LibraryErrorBoundary.tsx:68	jsx	Try Again
+components/library/LibraryHeader.tsx:74	jsx	Your Music Library
+components/library/LibraryHeader.tsx:77	jsx	Manage and organize all your musical content
+components/library/LibraryHeader.tsx:91	jsx	Filters
+components/library/LibraryHeader.tsx:96	jsx	Filter By
+components/library/LibraryHeader.tsx:99	jsx	Content Type
+components/library/LibraryHeader.tsx:119	jsx	Difficulty
+components/library/LibraryHeader.tsx:148	jsx	Favorites only
+components/library/LibraryHeader.tsx:160	jsx	Sort
+components/library/LibraryHeader.tsx:164	jsx	Most Recent
+components/library/LibraryHeader.tsx:165	jsx	Title (A-Z)
+components/library/LibraryHeader.tsx:166	jsx	Artist (A-Z)
+components/library/LibraryHeader.tsx:177	jsx	Add Content
+components/library/LibraryLoadingState.tsx:12	jsx	Loading your music library...
+components/library/LibraryLoadingState.tsx:15	jsx	Please wait while we fetch your content
+components/library/OptimizedLibraryList.tsx:182	attr:aria-label	More options
+components/library/OptimizedLibraryList.tsx:190	jsx	View
+components/library/OptimizedLibraryList.tsx:194	jsx	Edit
+components/library/OptimizedLibraryList.tsx:203	jsx	Delete
+components/lyrics-editor.tsx:25	jsx	Lyrics Editor
+components/lyrics-editor.tsx:32	attr:placeholder	Enter your lyrics here... Use [Verse 1], [Chorus], [Bridge] etc. for section labels Leave blank lines between sections Use consistent formatting for better readability
+components/lyrics-editor.tsx:40	jsx	Formatting tips:
+components/lyrics-editor.tsx:42	jsx	Use [Section Name] for verse, chorus, bridge labels
+components/lyrics-editor.tsx:43	jsx	Leave blank lines to separate sections
+components/lyrics-editor.tsx:44	jsx	Use consistent indentation for better structure
+components/lyrics-editor.tsx:45	jsx	Add timing notes in parentheses if needed
+components/metadata-form/AdvancedMetadataFields.tsx:39	jsx	Key
+components/metadata-form/AdvancedMetadataFields.tsx:43	attr:placeholder	Select key
+components/metadata-form/AdvancedMetadataFields.tsx:57	jsx	BPM
+components/metadata-form/AdvancedMetadataFields.tsx:71	jsx	Difficulty
+components/metadata-form/AdvancedMetadataFields.tsx:75	attr:placeholder	Select difficulty
+components/metadata-form/AdvancedMetadataFields.tsx:91	jsx	Capo
+components/metadata-form/AdvancedMetadataFields.tsx:98	attr:placeholder	Fret number
+components/metadata-form/AdvancedMetadataFields.tsx:105	jsx	Tuning
+components/metadata-form/AdvancedMetadataFields.tsx:111	attr:placeholder	Standard (EADGBE)
+components/metadata-form/AdvancedMetadataFields.tsx:119	jsx	Time Signature
+components/metadata-form/AdvancedMetadataFields.tsx:137	jsx	Mark as favorite
+components/metadata-form/BasicMetadataFields.tsx:30	jsx	Title *
+components/metadata-form/BasicMetadataFields.tsx:36	attr:placeholder	Enter song title
+components/metadata-form/BasicMetadataFields.tsx:43	jsx	Artist *
+components/metadata-form/BasicMetadataFields.tsx:49	attr:placeholder	Enter artist name
+components/metadata-form/BasicMetadataFields.tsx:57	jsx	Album
+components/metadata-form/BasicMetadataFields.tsx:63	attr:placeholder	Enter album name
+components/metadata-form/BasicMetadataFields.tsx:70	jsx	Genre
+components/metadata-form/BasicMetadataFields.tsx:76	attr:placeholder	Enter genre
+components/metadata-form/BasicMetadataFields.tsx:84	jsx	Year
+components/metadata-form/BasicMetadataFields.tsx:91	attr:placeholder	Enter year
+components/metadata-form/BasicMetadataFields.tsx:98	jsx	Notes
+components/metadata-form/BasicMetadataFields.tsx:104	attr:placeholder	Add any additional notes or comments
+components/metadata-form/RefactoredMetadataForm.tsx:50	jsx	Back
+components/metadata-form/RefactoredMetadataForm.tsx:53	jsx	Add Metadata
+components/metadata-form/RefactoredMetadataForm.tsx:54	jsx	Fill in the details for your content
+components/metadata-form/RefactoredMetadataForm.tsx:76	jsx	Content Details
+components/metadata-form/RefactoredMetadataForm.tsx:95	jsx	Advanced Options
+components/metadata-form/RefactoredMetadataForm.tsx:121	jsx	Cancel
+components/pdf-viewer.tsx:170	jsx	Loading PDF...
+components/pdf-viewer.tsx:171	jsx	URL:
+components/pdf-viewer.tsx:180	jsx	Failed to load PDF
+components/pdf-viewer.tsx:182	jsx	URL:
+components/pdf-viewer.tsx:185	jsx	💡 Try refreshing the page to reload the cached file
+components/pdf-viewer.tsx:197	jsx	Retry
+components/pdf-viewer.tsx:206	jsx	Download
+components/pdf-viewer.tsx:216	jsx	Refresh Page
+components/pdf-viewer.tsx:231	jsx	Page
+components/pdf-viewer.tsx:254	attr:title	Fit width
+components/pdf-viewer.tsx:257	attr:title	Fit page
+components/providers/session-provider.tsx:28	call:setStatus	loading
+components/providers/session-provider.tsx:30	call:setStatus	authenticated
+components/providers/session-provider.tsx:32	call:setStatus	unauthenticated
+components/pwa-install-prompt.tsx:160	attr:aria-label	Remind me later
+components/pwa-install-prompt.tsx:170	jsx	Install Octavia
+components/pwa-install-prompt.tsx:171	jsx	Get the full experience on
+components/pwa-install-prompt.tsx:180	jsx	Perfect for musicians on the go:
+components/pwa-install-prompt.tsx:186	jsx	Works Offline
+components/pwa-install-prompt.tsx:187	jsx	Access your music even without internet
+components/pwa-install-prompt.tsx:194	jsx	Lightning Fast
+components/pwa-install-prompt.tsx:195	jsx	Instant startup, no browser tabs needed
+components/pwa-install-prompt.tsx:202	jsx	Stage Ready
+components/pwa-install-prompt.tsx:203	jsx	Full-screen performance mode optimized for gigs
+components/pwa-install-prompt.tsx:214	jsx	Native Experience
+components/pwa-install-prompt.tsx:229	jsx	iOS Installation:
+components/pwa-install-prompt.tsx:231	jsx	1. Tap the Share button in Safari
+components/pwa-install-prompt.tsx:232	jsx	2. Scroll down and tap &quot;Add to Home Screen&quot;
+components/pwa-install-prompt.tsx:233	jsx	3. Tap &quot;Add&quot; to install Octavia
+components/pwa-install-prompt.tsx:248	jsx	Installing...
+components/pwa-install-prompt.tsx:253	jsx	Install Now
+components/pwa-install-prompt.tsx:264	jsx	Later
+components/pwa-install-prompt.tsx:272	jsx	Never Install
+components/pwa-install-prompt.tsx:278	jsx	Free installation • No app store required • Uninstall anytime
+components/setlist-manager.tsx:99	call:toast.title	Setlist updated successfully
+components/setlist-manager.tsx:119	call:toast.title	Setlist created successfully
+components/setlist-manager.tsx:125	call:toast.title	Failed to save setlist
+components/setlist-manager.tsx:149	call:toast.title	Setlist deleted successfully
+components/setlist-manager.tsx:153	call:toast.title	Failed to delete setlist
+components/setlist-manager.tsx:196	call:toast.title	Failed to add songs
+components/setlist-manager.tsx:221	call:toast.title	Song removed from setlist
+components/setlist-manager.tsx:225	call:toast.title	Failed to remove song
+components/setlist-manager.tsx:238	jsx	Loading...
+components/setlist-manager.tsx:285	jsx	Select a setlist to view its details
+components/setlist-manager.tsx:320	jsx	Delete Setlist
+components/setlist-manager.tsx:322	jsx	Are you sure you want to delete &quot;
+components/setlist-manager.tsx:322	jsx	&quot;? This action cannot be undone.
+components/setlist-manager.tsx:327	jsx	Cancel
+components/setlist-manager.tsx:330	jsx	Delete
+components/setlist/setlist-card.tsx:120	attr:aria-label	Edit setlist
+components/setlist/setlist-card.tsx:132	attr:aria-label	Delete setlist
+components/setlist/setlist-card.tsx:149	jsx	song
+components/setlist/setlist-card.tsx:163	jsx	Recent
+components/setlist/setlist-card.tsx:193	jsx	Start Performance
+components/setlist/setlist-details.tsx:146	jsx	song
+components/setlist/setlist-details.tsx:164	jsx	Edit
+components/setlist/setlist-details.tsx:173	jsx	Start Performance
+components/setlist/setlist-details.tsx:185	jsx	No songs yet
+components/setlist/setlist-details.tsx:187	jsx	Add songs from your library to build this setlist.
+components/setlist/setlist-details.tsx:194	jsx	Add Songs
+components/setlist/setlist-details.tsx:201	jsx	Songs
+components/setlist/setlist-details.tsx:209	jsx	Add Songs
+components/setlist/setlist-details.tsx:279	attr:title	Start performance from this song
+components/setlist/setlist-details.tsx:290	attr:aria-label	Remove song
+components/setlist/setlist-dialog.tsx:123	jsx	Setlist Name
+components/setlist/setlist-dialog.tsx:129	attr:placeholder	e.g., Coffee Shop Acoustic Set
+components/setlist/setlist-dialog.tsx:137	jsx	Description
+components/setlist/setlist-dialog.tsx:143	attr:placeholder	Brief description of this setlist...
+components/setlist/setlist-dialog.tsx:152	jsx	Performance Date
+components/setlist/setlist-dialog.tsx:165	jsx	Venue
+components/setlist/setlist-dialog.tsx:171	attr:placeholder	e.g., The Blue Note
+components/setlist/setlist-dialog.tsx:179	jsx	Notes
+components/setlist/setlist-dialog.tsx:185	attr:placeholder	Any additional notes about this setlist...
+components/setlist/setlist-dialog.tsx:200	jsx	Cancel
+components/setlist/setlist-list.tsx:61	jsx	Error loading setlists
+components/setlist/setlist-list.tsx:69	jsx	Try Again
+components/setlist/setlist-list.tsx:82	jsx	No setlists yet
+components/setlist/setlist-list.tsx:84	jsx	Create your first setlist to organize songs for your performances.
+components/setlist/setlist-list.tsx:92	jsx	Create Your First Setlist
+components/setlist/setlist-list.tsx:103	jsx	Your Setlists
+components/setlist/setlist-list.tsx:105	jsx	setlist
+components/setlist/setlist-list.tsx:113	jsx	Create Setlist
+components/setlist/song-selection-dialog.tsx:122	jsx	Add Songs to Setlist
+components/setlist/song-selection-dialog.tsx:124	jsx	Select songs from your library to add to this setlist.
+components/setlist/song-selection-dialog.tsx:133	attr:placeholder	Search by title, artist, or content type...
+components/setlist/song-selection-dialog.tsx:155	jsx	Select all (
+components/setlist/song-selection-dialog.tsx:155	jsx	songs)
+components/setlist/song-selection-dialog.tsx:165	jsx	Loading songs...
+components/setlist/song-selection-dialog.tsx:239	jsx	Cancel
+components/setlist/song-selection-dialog.tsx:247	jsx	Add
+components/setlist/song-selection-dialog.tsx:247	jsx	Song
+components/setlists-page-client.tsx:15	jsx	Loading setlists...
+components/setlists-page-client.tsx:52	jsx	Loading your setlists...
+components/settings-page-client.tsx:29	jsx	Loading settings...
+components/settings/AudioSettings.tsx:22	jsx	Audio & Performance
+components/settings/AudioSettings.tsx:28	jsx	Built-in Metronome
+components/settings/AudioSettings.tsx:29	jsx	Enable metronome for practice
+components/settings/AudioSettings.tsx:38	jsx	Audio Output Device
+components/settings/AudioSettings.tsx:41	attr:placeholder	Select audio device
+components/settings/AudioSettings.tsx:44	jsx	Default Audio Device
+components/settings/AudioSettings.tsx:45	jsx	Built-in Speakers
+components/settings/AudioSettings.tsx:46	jsx	Headphones
+components/settings/AudioSettings.tsx:52	jsx	Audio Quality
+components/settings/AudioSettings.tsx:55	attr:placeholder	Select quality
+components/settings/AudioSettings.tsx:58	jsx	Low (Faster Loading)
+components/settings/AudioSettings.tsx:59	jsx	Medium
+components/settings/AudioSettings.tsx:60	jsx	High Quality
+components/settings/CloudSettings.tsx:39	jsx	Cloud & Backup
+components/settings/CloudSettings.tsx:45	jsx	Auto Sync
+components/settings/CloudSettings.tsx:46	jsx	Automatically sync changes
+components/settings/CloudSettings.tsx:56	jsx	Cloud Sync
+components/settings/CloudSettings.tsx:57	jsx	Sync data to cloud storage
+components/settings/CloudSettings.tsx:67	jsx	Automatic Backup
+components/settings/CloudSettings.tsx:68	jsx	Create automatic backups
+components/settings/CloudSettings.tsx:84	jsx	Backup
+components/settings/CloudSettings.tsx:93	jsx	Restore
+components/settings/CloudSettings.tsx:102	jsx	Sync Now
+components/settings/DisplaySettings.tsx:26	jsx	Display & Theme
+components/settings/DisplaySettings.tsx:32	jsx	Dark Mode
+components/settings/DisplaySettings.tsx:33	jsx	Switch to dark theme
+components/settings/DisplaySettings.tsx:42	jsx	Default Zoom Level
+components/settings/DisplaySettings.tsx:62	jsx	Auto Scroll
+components/settings/DisplaySettings.tsx:63	jsx	Automatically scroll during performance
+components/settings/DisplaySettings.tsx:73	jsx	Performance Mode
+components/settings/DisplaySettings.tsx:74	jsx	Optimized display for live performance
+components/settings/RefactoredSettings.tsx:32	jsx	Settings
+components/settings/RefactoredSettings.tsx:35	jsx	Customize your Octavia experience
+components/settings/RefactoredSettings.tsx:45	jsx	Display
+components/settings/RefactoredSettings.tsx:51	jsx	Audio
+components/settings/RefactoredSettings.tsx:57	jsx	Cloud & Backup
+components/sidebar.tsx:81	jsx	Navigation
+components/tab-editor.tsx:123	jsx	Tab Information
+components/tab-editor.tsx:128	jsx	Title
+components/tab-editor.tsx:136	jsx	Artist
+components/tab-editor.tsx:146	jsx	Tuning
+components/tab-editor.tsx:152	jsx	Standard (EADGBE)
+components/tab-editor.tsx:153	jsx	Drop D (DADGBE)
+components/tab-editor.tsx:154	jsx	Open G (DGDGBD)
+components/tab-editor.tsx:155	jsx	DADGAD
+components/tab-editor.tsx:160	jsx	Capo
+components/tab-editor.tsx:165	attr:placeholder	Fret
+components/tab-editor.tsx:169	jsx	BPM
+components/tab-editor.tsx:186	jsx	Tablature
+components/tab-editor.tsx:189	jsx	Add Measure
+components/tab-editor.tsx:198	jsx	Measure
+components/tab-editor.tsx:236	jsx	Tablature Tips
+components/tab-editor.tsx:241	jsx	Notation
+components/tab-editor.tsx:243	jsx	• Numbers = fret positions
+components/tab-editor.tsx:244	jsx	• Dashes (-) = empty beats
+components/tab-editor.tsx:245	jsx	• Vertical alignment = simultaneous notes
+components/tab-editor.tsx:246	jsx	• | = measure separators
+components/tab-editor.tsx:250	jsx	Techniques
+components/tab-editor.tsx:252	jsx	• h = hammer-on
+components/tab-editor.tsx:253	jsx	• p = pull-off
+components/tab-editor.tsx:254	jsx	• b = bend
+components/tab-editor.tsx:255	jsx	• ~ = vibrato
+components/tab-editor.tsx:265	jsx	Preview
+components/tab-editor.tsx:273	jsx	Tuning:
+components/tab-editor.tsx:274	jsx	Capo:
+components/tab-editor.tsx:275	jsx	BPM:
+components/tab-editor.tsx:282	jsx	Measure
+components/ui/dialog.tsx:49	jsx	Close
+components/ui/pagination.tsx:10	attr:aria-label	pagination
+components/ui/pagination.tsx:67	attr:aria-label	Go to previous page
+components/ui/pagination.tsx:73	jsx	Previous
+components/ui/pagination.tsx:83	attr:aria-label	Go to next page
+components/ui/pagination.tsx:88	jsx	Next
+components/ui/pagination.tsx:104	jsx	More pages
+components/unified-metadata-editor.tsx:155	jsx	Details
+components/unified-metadata-editor.tsx:157	jsx	Organize and categorize your content
+components/unified-metadata-editor.tsx:174	jsx	Basic Info
+components/unified-metadata-editor.tsx:181	jsx	Title *
+components/unified-metadata-editor.tsx:186	attr:placeholder	Song title
+components/unified-metadata-editor.tsx:191	jsx	Artist
+components/unified-metadata-editor.tsx:196	attr:placeholder	Artist or composer
+components/unified-metadata-editor.tsx:200	jsx	Album
+components/unified-metadata-editor.tsx:205	attr:placeholder	Album or collection
+components/unified-metadata-editor.tsx:210	jsx	Genre
+components/unified-metadata-editor.tsx:216	attr:placeholder	Select genre
+components/unified-metadata-editor.tsx:239	jsx	Musical Info
+components/unified-metadata-editor.tsx:246	jsx	Key
+components/unified-metadata-editor.tsx:252	attr:placeholder	Select key
+components/unified-metadata-editor.tsx:264	jsx	BPM
+components/unified-metadata-editor.tsx:274	jsx	Time Signature
+components/unified-metadata-editor.tsx:292	jsx	Difficulty
+components/unified-metadata-editor.tsx:298	attr:placeholder	Select difficulty
+components/unified-metadata-editor.tsx:321	jsx	Organization
+components/unified-metadata-editor.tsx:329	jsx	Tags
+components/unified-metadata-editor.tsx:335	attr:placeholder	Add a tag
+components/unified-metadata-editor.tsx:364	jsx	Notes
+components/unified-metadata-editor.tsx:369	attr:placeholder	Add any notes about this content...
+components/unified-metadata-editor.tsx:384	jsx	Add to favorites
+components/unified-metadata-editor.tsx:393	jsx	Make this content public (shareable)
+components/user-header.tsx:29	jsx	Sign In
+components/user-header.tsx:32	jsx	Sign Up
+components/user-header.tsx:70	jsx	Profile
+components/user-header.tsx:76	jsx	Sign out
+contexts/firebase-auth-context.tsx:82	new Error	Failed to fetch profile
+contexts/firebase-auth-context.tsx:347	new Error	Failed to create profile in database
+contexts/firebase-auth-context.tsx:408	new Error	Not authenticated
+contexts/firebase-auth-context.tsx:424	new Error	Failed to update profile
+contexts/firebase-auth-context.tsx:479	new Error	useFirebaseAuth must be used within a FirebaseAuthProvider
+hooks/use-service-worker.tsx:32	call:toast.title	Back Online
+hooks/use-service-worker.tsx:33	call:toast.description	Connection restored. Syncing pending changes...
+hooks/use-service-worker.tsx:41	call:toast.title	Gone Offline
+hooks/use-service-worker.tsx:42	call:toast.description	You're now offline. Changes will sync when connection returns.
+hooks/use-service-worker.tsx:57	call:toast.title	Update Available
+hooks/use-service-worker.tsx:58	call:toast.description	A new version is ready.
+hooks/use-service-worker.tsx:74	jsx	Reload
+hooks/use-service-worker.tsx:88	call:toast.title	Service Worker Error
+hooks/use-service-worker.tsx:89	call:toast.description	SW registration failed in development. Check console for details.
+hooks/use-service-worker.tsx:98	call:toast.title	Offline Features Unavailable
+hooks/use-service-worker.tsx:99	call:toast.description	Some offline features may not work properly.
+hooks/use-service-worker.tsx:187	call:toast.title	Offline Mode
+hooks/use-service-worker.tsx:188	call:toast.description	Showing cached content while offline.
+hooks/use-service-worker.tsx:196	jsx	Offline Page
+hooks/use-service-worker.tsx:204	call:toast.title	Cache Error
+hooks/use-service-worker.tsx:205	call:toast.description	Failed to cache some content for offline use.
+hooks/use-service-worker.tsx:212	call:toast.title	Sync Complete
+hooks/use-service-worker.tsx:213	call:toast.description	All pending changes have been synchronized.
+hooks/use-setlist-data.ts:80	call:setError	Couldn't load setlists. Check your connection and try again.
+hooks/use-setlist-data.ts:89	call:setError	Authentication required
+hooks/use-setlist-data.ts:121	call:setError	Couldn't load setlists. Check your connection and try again.
+hooks/useAddContentLogic.ts:153	new Error	No songs found in the file
+hooks/useContentActions.ts:24	call:toast.success	Content deleted successfully
+hooks/useContentActions.ts:27	call:toast.error	Failed to delete content
+hooks/useMetadataForm.ts:60	call:setError	User not authenticated
+hooks/useMetadataForm.ts:65	call:setError	Title and Artist are required
+hooks/useMetadataForm.ts:97	call:setSuccess	Content saved successfully!
+lib/content-service-server.ts:99	new Error	User not authenticated
+lib/content-service-server.ts:116	new Error	Setlist not found
+lib/content-service.ts:119	new Error	User not authenticated
+lib/content-service.ts:233	new Error	User not authenticated
+lib/content-service.ts:241	new Error	Authentication failed
+lib/content-service.ts:400	new Error	Database query timed out
+lib/content-service.ts:413	new Error	Database tables not set up. Please run the setup process.
+lib/content-service.ts:416	new Error	Database access denied. Please check your permissions.
+lib/content-service.ts:465	new Error	User not authenticated
+lib/content-service.ts:483	new Error	Content not found
+lib/content-service.ts:499	new Error	createContent can only be called from the browser
+lib/content-service.ts:552	new Error	Content not found
+lib/content-service.ts:593	new Error	Content not found
+lib/content-service.ts:626	new Error	Supabase client required for getUserStats
+lib/error-boundary.tsx:59	jsx	Something went wrong
+lib/error-boundary.tsx:68	jsx	Error Details (Development Only)
+lib/error-boundary.tsx:83	jsx	Try again
+lib/error-boundary.tsx:90	jsx	Reload page
+lib/firebase-admin.ts:8	new Error	Firebase private key is not set
+lib/firebase-admin.ts:25	new Error	Invalid private key format - must be a PEM formatted private key
+lib/firebase-admin.ts:46	new Error	Firebase Admin SDK can only be used in Node.js runtime, not Edge Runtime
+lib/firebase-admin.ts:59	new Error	Missing Firebase Admin environment variables: FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, FIREBASE_PRIVATE_KEY
+lib/firebase-admin.ts:82	new Error	Firebase Admin Auth can only be used in Node.js runtime
+lib/firebase-admin.ts:96	new Error	Token verification can only be done in Node.js runtime
+lib/firebase-admin.ts:112	new Error	Custom token creation can only be done in Node.js runtime
+lib/firebase-session-cookies.ts:22	new Error	Failed to set session cookie
+lib/firebase-session-cookies.ts:39	new Error	Failed to clear session cookie
+lib/offline-cache.ts:183	call:toast.title	File too large to cache
+lib/offline-cache.ts:184	call:toast.description	This file exceeds the 50MB offline cache limit.
+lib/offline-cache.ts:196	call:toast.title	File too large to cache
+lib/offline-cache.ts:197	call:toast.description	This file exceeds the 50MB offline cache limit.
+lib/offline-queue.ts:32	new Error	request failed
+lib/pdf-utils.ts:20	new Error	PDF.js worker configuration failed
+lib/setlist-service.ts:41	new Error	Firebase auth not initialized
+lib/setlist-service.ts:46	new Error	Firebase user not found
+lib/setlist-service.ts:64	new Error	Failed to load setlists
+lib/setlist-service.ts:71	new Error	Failed to load setlists
+lib/setlist-service.ts:79	new Error	User not authenticated
+lib/setlist-service.ts:85	new Error	Firebase auth not initialized
+lib/setlist-service.ts:90	new Error	Firebase user not found
+lib/setlist-service.ts:122	new Error	User not authenticated
+lib/setlist-service.ts:128	new Error	Firebase auth not initialized
+lib/setlist-service.ts:133	new Error	Firebase user not found
+lib/setlist-service.ts:171	new Error	User not authenticated
+lib/setlist-service.ts:177	new Error	Firebase auth not initialized
+lib/setlist-service.ts:182	new Error	Firebase user not found
+lib/setlist-service.ts:211	new Error	User not authenticated
+lib/setlist-service.ts:217	new Error	Firebase auth not initialized
+lib/setlist-service.ts:222	new Error	Firebase user not found
+lib/setlist-service.ts:248	new Error	User not authenticated
+lib/setlist-service.ts:254	new Error	Firebase auth not initialized
+lib/setlist-service.ts:259	new Error	Firebase user not found
+lib/setlist-service.ts:296	new Error	User not authenticated
+lib/setlist-service.ts:302	new Error	Firebase auth not initialized
+lib/setlist-service.ts:307	new Error	Firebase user not found
+lib/supabase-service.ts:22	new Error	Supabase service role key not configured

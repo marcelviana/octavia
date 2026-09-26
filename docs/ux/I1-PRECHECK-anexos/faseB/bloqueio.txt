@@ -1,0 +1,21 @@
+# gerado por: os comandos abaixo, nesta ordem (2026-09-26). Nenhum request a /api/*; nenhum login.
+$ gh api repos/marcelviana/octavia/deployments --jq '.[0:3][] | [.id,.ref,.environment,.created_at] | @tsv'
+6679479179	e799235015aa8597103b834d5d4970c9c90695ee	Preview	2026-09-26T13:34:19Z
+6679082251	c57d81f3f481293585459a1f689c56133f354264	Production	2026-09-26T12:55:11Z
+6678983924	0222a410a4c2b3dffc7616c7bc21b250372cd5cb	Preview	2026-09-26T12:45:01Z
+$ gh api repos/marcelviana/octavia/deployments/6679479179/statuses --jq '.[0] | [.state,.environment_url] | @tsv'
+success	https://octavia-ez3gkrz5s-marcelvianas-projects.vercel.app
+$ curl -s -o /dev/null -w '%{http_code} %{redirect_url}\n' https://octavia-ez3gkrz5s-marcelvianas-projects.vercel.app/login
+302 https://vercel.com/sso-api?url=https%3A%2F%2Foctavia-ez3gkrz5s-marcelvianas-projects.vercel.app%2Flogin&nonce=<omitido>
+# navegador embutido do app, mesma URL → location.href = https://vercel.com/login?next=/sso-api… ; title "Login – Vercel"
+#   (parado aí: nenhum login na Vercel)
+
+# O preview da PR está sob a proteção da Vercel. O mecanismo do ux-audit atravessa por:
+#   scripts/ux-audit/auth.ts:29-35  bypassHeaders() ← process.env.VERCEL_AUTOMATION_BYPASS_SECRET (só de env, "nunca de arquivo do repo")
+#   tests/ux-audit/auth.setup.ts    cookie _vercel_jwt semeado no storageState
+# e o login da audit por:
+#   scripts/ux-audit/auth.ts:14-16  config({ path: '.env.uxaudit' }) E config({ path: '.env.local' }) — o 2º dá NEXT_PUBLIC_FIREBASE_API_KEY
+#   scripts/ux-audit/auth.ts:68-79  signInWithPassword (Firebase REST) com USER_AUDIT/PASSWORD_AUDIT
+# Faltam ao executor: (1) o bypass secret (não está em arquivo; é dado inline pelo Marcel); (2) o .env.local, que o
+# prompt NÃO autoriza abrir ("o único .env* que o Marcel autoriza abrir" é o .env.uxaudit). Div. 509.
+# Nenhum dos dois foi contornado. .env.uxaudit: NÃO aberto (sem preview alcançável não havia uso para ele).
