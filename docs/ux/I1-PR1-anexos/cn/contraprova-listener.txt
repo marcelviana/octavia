@@ -1,0 +1,41 @@
+# I1-PR1 — contraprova do furo do listener (div. 518) — rastro, rodado pelo executor em 2026-09-26
+# alvo: http://localhost:3000 (pnpm dev na árvore ../octavia-i1-pr1, SEM .env — nenhum login, nenhum request a prod);
+# Chrome do sistema (channel: 'chrome'). O script rodou de docs/ux/I1-PR1-anexos/cn/_contraprova.ts e foi apagado depois;
+# o texto dele está abaixo.
+#
+# $ pnpm tsx docs/ux/I1-PR1-anexos/cn/_contraprova.ts
+{"comRoute":true,"antigo_page_requestfinished":["?cn=2 200","?cn=nav 200"],"novo_ctx_request":["?cn=1","?cn=2","?cn=3","?cn=nav"],"novo_ctx_response":["?cn=1 200","?cn=2 200","?cn=3 200","?cn=nav 200"],"ctx_requestfinished":["?cn=2","?cn=nav"]}
+{"comRoute":false,"antigo_page_requestfinished":["?cn=2 200","?cn=nav 200"],"novo_ctx_request":["?cn=1","?cn=2","?cn=3","?cn=nav"],"novo_ctx_response":["?cn=1 200","?cn=2 200","?cn=3 200","?cn=nav 200"],"ctx_requestfinished":["?cn=2","?cn=nav"]}
+#
+# leitura: cn=1 = fetch cujo corpo a página não lê (só .status); cn=2 = corpo lido (.json());
+# cn=3 = fetch disparado no mesmo tique de uma navegação cheia; cn=nav = a navegação.
+# O listener do probe1.ts (page.on('requestfinished') + await r.response()) só vê cn=2 e cn=nav:
+# o requestfinished NÃO dispara para request cujo corpo não foi lido nem para o cortado pela
+# navegação — com ou sem ctx.route. O novo (ctx.on('request') + ctx.on('response')) vê os quatro,
+# com status. setSessionCookie (lib/firebase-session-cookies.ts:13-23) só olha response.ok — não
+# lê o corpo —, o que casa com o POST /api/auth/session ausente do ramo a do probe 1.
+#
+# --- texto do _contraprova.ts ---
+import { chromium } from '@playwright/test'
+async function main() {
+  const b = await chromium.launch({ channel: 'chrome', headless: true })
+  for (const comRoute of [true, false]) {
+    const ctx = await b.newContext()
+    if (comRoute) await ctx.route('**/*', (r) => r.continue())
+    const page = await ctx.newPage()
+    const antigo: string[] = [], novoReq: string[] = [], novoResp: string[] = [], fin: string[] = []
+    page.on('requestfinished', async (r) => { const st = String((await r.response())?.status() ?? '-'); if (r.url().includes('cn=')) antigo.push(`${new URL(r.url()).search} ${st}`) })
+    ctx.on('request', (r) => { if (r.url().includes('cn=')) novoReq.push(new URL(r.url()).search) })
+    ctx.on('response', (r) => { if (r.url().includes('cn=')) novoResp.push(`${new URL(r.url()).search} ${r.status()}`) })
+    ctx.on('requestfinished', (r) => { if (r.url().includes('cn=')) fin.push(new URL(r.url()).search) })
+    await page.goto('http://localhost:3000/login', { waitUntil: 'domcontentloaded' })
+    await page.evaluate(() => fetch('/api/health?cn=1').then((r) => r.status))
+    await page.evaluate(() => fetch('/api/health?cn=2').then((r) => r.json()))
+    await page.evaluate(() => { void fetch('/api/health?cn=3'); window.location.href = '/login?cn=nav' })
+    await page.waitForURL('**/login?cn=nav'); await page.waitForTimeout(1500)
+    console.log(JSON.stringify({ comRoute, antigo_page_requestfinished: antigo, novo_ctx_request: novoReq, novo_ctx_response: novoResp, ctx_requestfinished: fin }))
+    await ctx.close()
+  }
+  await b.close()
+}
+void main()
