@@ -586,7 +586,7 @@ Todas de fixture do projeto, sem letra de terceiro, em `N3-PRECHECK-anexos/`:
 |---|---|---|---|
 | **H-N3-1** | "o palco em retrato (tablet) passa sem desenho" | **contra a letra da N3-D2**: (a) ≠ 0 em 3 estados; a favor pela classe (só zonas de 15 %) e contra pela barra superior (título elidido) — §4.4 | **decidida: N3-D9** — o palco entra só pela barra superior na faixa média |
 | **H-N3-2** | "o indicador ◔ do T1-R17 reflete um `lru over`?" (`W4-ENCERRAMENTO.md` §7.3) | **fechada, sem defeito**: depois do `lru over`, a setlist cujo arquivo foi despejado mostra **◔ "0 de 1"** e a acima do teto mostra ✓ **com os três arquivos no disco** — nenhum ✓ com arquivo fora (§6.1) | este pre-check |
-| H-N3-3 | o S5 com N ≥ 24 transborda abaixo de ~883 dp (a fileira calcula contra 900 fixos) | `[derivado: faseA/A2.md §2.5]`, não medido (a fixture tem 8) | aceite da PR de implementação do N3 (Fixture de 60) |
+| H-N3-3 | o S5 com N ≥ 24 transborda abaixo de ~883 dp (a fileira calcula contra 900 fixos) | `[derivado: faseA/A2.md §2.5]`, não medido (a fixture tem 8) | aceite da PR de implementação do N3 (Fixture de 60) — **medida na N3-PR6b** (div. 461: em B passa da janela a partir de N = 19, e com 60 o dump tem 48 de 60 marcas) e **fechada na N3-PR6c** (N3-E20: a fileira é token de faixa, 663 em B) |
 | H-N3-4 | o picker em falha (682 dp) cabe em 711 e quebra no celular | `[derivado]`, não medido | aceite do N3 / N5 |
 | H-N3-5 | a faixa > 900 não muda (N3-D3) | linha de base pronta: `B5-baseline/` + `W4B3-anexos/dumps-palco/` | PRs de implementação do N3 (gate) |
 | H-N3-6 | o iPad herda a composição (N3-D5) | não medido: nenhum aparelho iOS; os canvas são de Android | bloco iOS (`N2-ENCERRAMENTO.md` §10.7.2) |

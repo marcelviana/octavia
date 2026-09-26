@@ -1,0 +1,68 @@
+$ sh apps/native/scripts/__cn__/cn-n3pr3.sh   # commit 1
+== nome-acessível
+  CP-A1: exit 0 ✓
+  CP-A1: "nome-acessível=2" ✓
+      (e) TEXTO QUE SOME — REPROVA: 0
+        N3P3-S2-com-edicao-tab-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+      NOME ACESSÍVEL — o texto está no content-desc do nó de mesmo resource-id (N3-D17); não reprova, não soma ao (e): 2
+        N3P3-S2-com-edicao-tab-ret: "Adicionar música" → content-desc de `picker-abrir`
+        N3P3-S2-com-edicao-tab-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+      ROLAGEM — o texto está no dump rolado do mesmo estado; não reprova, não soma ao (e): 2
+        N3P3-S2-com-edicao-tab-ret: "8" → N3P3-S2-com-edicao-rolada-tab-ret
+        N3P3-S2-com-edicao-tab-ret: "Oitava do ensaio" → N3P3-S2-com-edicao-rolada-tab-ret
+      G-N3: (e)=0 · (b)=0 · nome-acessível=2 · rolagem=2 ✓ (d′ e 4 dp não reprovam: triagem e errata)
+  CN-A2: exit 1 ✓
+  CN-A2: ""Adicionar música"" ✓
+      (e) TEXTO QUE SOME — REPROVA: 1
+        N3P3-S2-com-edicao-tab-ret: 1 — "Adicionar música"
+        N3P3-S2-com-edicao-tab-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+      NOME ACESSÍVEL — o texto está no content-desc do nó de mesmo resource-id (N3-D17); não reprova, não soma ao (e): 1
+        N3P3-S2-com-edicao-tab-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+      ROLAGEM — o texto está no dump rolado do mesmo estado; não reprova, não soma ao (e): 2
+        N3P3-S2-com-edicao-tab-ret: "8" → N3P3-S2-com-edicao-rolada-tab-ret
+        N3P3-S2-com-edicao-tab-ret: "Oitava do ensaio" → N3P3-S2-com-edicao-rolada-tab-ret
+      G-N3: REPROVA ✗ — (e)=1 em 1 dump(s) · (b)=0 em 0 dump(s) · nome-acessível=1 · rolagem=2
+  CN-A3: exit 1 ✓
+  CN-A3: ""Adicionar música"" ✓
+      (e) TEXTO QUE SOME — REPROVA: 1
+        N3P3-S2-com-edicao-tab-ret: 1 — "Adicionar música"
+        N3P3-S2-com-edicao-tab-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+      NOME ACESSÍVEL — o texto está no content-desc do nó de mesmo resource-id (N3-D17); não reprova, não soma ao (e): 1
+        N3P3-S2-com-edicao-tab-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+      ROLAGEM — o texto está no dump rolado do mesmo estado; não reprova, não soma ao (e): 2
+        N3P3-S2-com-edicao-tab-ret: "8" → N3P3-S2-com-edicao-rolada-tab-ret
+        N3P3-S2-com-edicao-tab-ret: "Oitava do ensaio" → N3P3-S2-com-edicao-rolada-tab-ret
+      G-N3: REPROVA ✗ — (e)=1 em 1 dump(s) · (b)=0 em 0 dump(s) · nome-acessível=1 · rolagem=2
+== rolagem
+  CP-R1: exit 0 ✓
+  CP-R1: "rolagem=2" ✓
+  CN-R2: exit 1 ✓
+  CN-R2: ""Oitava do ensaio"" ✓
+      (e) TEXTO QUE SOME — REPROVA: 2
+        N3P3-S2-com-edicao-tab-ret: 2 — "8" · "Oitava do ensaio"
+        N3P3-S2-com-edicao-tab-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+      NOME ACESSÍVEL — o texto está no content-desc do nó de mesmo resource-id (N3-D17); não reprova, não soma ao (e): 2
+        N3P3-S2-com-edicao-tab-ret: "Adicionar música" → content-desc de `picker-abrir`
+        N3P3-S2-com-edicao-tab-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+      ROLAGEM — o texto está no dump rolado do mesmo estado; não reprova, não soma ao (e): 0
+      G-N3: REPROVA ✗ — (e)=2 em 1 dump(s) · (b)=0 em 0 dump(s) · nome-acessível=2 · rolagem=0
+  CN-R3: exit 1 ✓
+  CN-R3: ""Oitava do ensaio"" ✓
+      (e) TEXTO QUE SOME — REPROVA: 2
+        N3P3-S2-com-edicao-tab-ret: 2 — "8" · "Oitava do ensaio"
+        N3P3-S2-com-edicao-tab-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+      NOME ACESSÍVEL — o texto está no content-desc do nó de mesmo resource-id (N3-D17); não reprova, não soma ao (e): 2
+        N3P3-S2-com-edicao-tab-ret: "Adicionar música" → content-desc de `picker-abrir`
+        N3P3-S2-com-edicao-tab-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+      ROLAGEM — o texto está no dump rolado do mesmo estado; não reprova, não soma ao (e): 0
+      G-N3: REPROVA ✗ — (e)=2 em 1 dump(s) · (b)=0 em 0 dump(s) · nome-acessível=2 · rolagem=0
+== o conjunto da N3-PR3
+  CP-G1: exit 0 ✓
+  CP-G1: "(e)=0 · (b)=0 · nome-acessível=28 · rolagem=18" ✓
+      G-N3 — 16 par(es) (paisagem × faixa); medidas: docs/native/DESIGN-N3/medidas.json (tolerância 4 dp)
+      G-N3: (e)=0 · (b)=0 · nome-acessível=28 · rolagem=18 ✓ (d′ e 4 dp não reprovam: triagem e errata)
+  CN-G2: exit 1 ✓
+      G-N3: REPROVA ✗ — (e)=18 em 14 dump(s) · (b)=0 em 0 dump(s) · nome-acessível=28 · rolagem=0
+
+cn-n3pr3: todos os controles como esperado ✓
+exit 0

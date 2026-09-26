@@ -1,0 +1,25 @@
+07:33:11 mock normal com setlists-n60.json / content-n60.json
+07:33:33 toque canto de setlist-00000001 @ 96,420
+07:34:08 toque 'song-60' @ 1902,1280 (emulator-5554)
+07:34:15 toque 'borda-avancar' @ 2368,723 (emulator-5554)
+N3P6C-S5-S5-n-grande-avd-pai mCurrentRotation=ROTATION_0 png=102888 xml=34656 872d19ae20cb
+07:34:32 mock modo=normal vazio=False
+07:34:33 mock normal com setlists-n19.json / content-n19.json
+07:34:58 toque canto de setlist-00000001 @ 96,420
+07:35:17 toque 'song-19' @ 1280,1280 (emulator-5554)
+07:35:25 toque 'borda-avancar' @ 2368,723 (emulator-5554)
+N3P6C-S5-S5-n19-avd-pai mCurrentRotation=ROTATION_0 png=101506 xml=21404 6b09e7c6bddd
+07:35:41 mock modo=normal vazio=False
+07:35:42 mock normal com setlists-n18.json / content-n18.json
+07:36:08 toque canto de setlist-00000001 @ 96,420
+07:36:22 toque 'song-18' @ 1902,1280 (emulator-5554)
+07:36:29 toque 'borda-avancar' @ 2368,723 (emulator-5554)
+N3P6C-S5-S5-n18-avd-pai mCurrentRotation=ROTATION_0 png=101043 xml=21082 568674bca73b
+07:36:45 mock modo=normal vazio=False
+07:36:47 mock normal com setlists-n8.json / content-n8.json
+07:37:11 toque canto de setlist-00000001 @ 96,420
+07:37:25 toque 'song-8' @ 1902,1280 (emulator-5554)
+07:37:32 toque 'borda-avancar' @ 2368,723 (emulator-5554)
+N3P6C-S5-S5-n8-avd-pai mCurrentRotation=ROTATION_0 png=99564 xml=17850 572893035237
+07:37:48 mock modo=normal vazio=False
+capturas=4 falhas=0

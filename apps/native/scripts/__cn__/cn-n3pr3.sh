@@ -24,7 +24,7 @@
 #   é do MESMO estado se prova no roteiro e no próprio dump, não aqui; ver o
 #   `removendo-rolada` refeito da N3-PR3, `N3-PR3-anexos/README.md`)
 # o conjunto:
-#   CP-G1  os 16 pares de retrato da N3-PR3 com --rolada          → exit 0, "(e)=0 · nome-acessível=28 · rolagem=18"
+#   CP-G1  os 16 pares de retrato da N3-PR3 com --rolada          → exit 0, "(e)=0 · (b)=0 · nome-acessível=28 · rolagem=18" (o (b), N3-PR6c)
 #   CN-G2  os mesmos sem --rolada                                 → exit 1
 RAIZ=$(git rev-parse --show-toplevel) || exit 1
 cd "$RAIZ" || exit 1
@@ -73,7 +73,7 @@ contem CN-R3 "$TMP/o" '"Oitava do ensaio"'; mostra "$TMP/o"
 
 echo "== o conjunto da N3-PR3"
 node $G --pai $B5 --pai "$A/dumps-pai" --faixa "$A/dumps-ret" --rolada "$A/dumps-ret" > "$TMP/o" 2>&1; confere CP-G1 0 $?
-contem CP-G1 "$TMP/o" "(e)=0 · nome-acessível=28 · rolagem=18"; grep '^G-N3' "$TMP/o" | sed 's/^/      /'
+contem CP-G1 "$TMP/o" "(e)=0 · (b)=0 · nome-acessível=28 · rolagem=18"; grep '^G-N3' "$TMP/o" | sed 's/^/      /'
 node $G --pai $B5 --pai "$A/dumps-pai" --faixa "$A/dumps-ret" > "$TMP/o" 2>&1; confere CN-G2 1 $?
 grep '^G-N3:' "$TMP/o" | sed 's/^/      /'
 

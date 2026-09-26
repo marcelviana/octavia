@@ -1,0 +1,2 @@
+FATAL EXCEPTION no buffer do Tab: 0
+FATAL EXCEPTION no buffer do AVD: 0

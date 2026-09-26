@@ -1,0 +1,89 @@
+# as cópias dos arneses anteriores, como rodaram nesta PR (diff contra o original commitado): nada no que eles medem
+--- docs/native/N3-PR6b-anexos/instrumentos/n3pr6b.py	2026-09-25 23:10:39
++++ copia/n3pr6b.py	2026-09-26 07:32:11
+@@ -28,7 +28,7 @@
+ import roteiro as R
+ 
+ s, saida, suf = sys.argv[2], sys.argv[3], sys.argv[4]
+-r = R.Roteiro(s, saida, "N3P6B", suf)
++r = R.Roteiro(s, saida, "N3P6B", suf)  # o n3pr6c.py troca `s` e `r` pelos dele
+ SCR = os.environ["SCR"]
+ MOCK = os.path.join(SCR, "mock")
+ PKG = "rocks.octavia.app"
+@@ -201,20 +201,21 @@
+     R.mock("normal")
+ 
+ 
+-for nome in sys.argv[5:]:
+-    try:
+-        globals()[nome]()
+-    except Exception as e:  # noqa: BLE001 — registra e segue
+-        r.falhas.append(f"{nome}: {e}"); print(f"FALHA {nome}: {e}", flush=True)
++if __name__ == "__main__":  # N3-PR6c: importável pelo n3pr6c.py sem rodar estado nenhum
++    for nome in sys.argv[5:]:
+         try:
+-            R.aviao(s, False); R.mock("normal")
+-        except Exception:  # noqa: BLE001
+-            pass
+-# fecha no estado da fixture: mock normal e o cache refeito pelo sync
+-try:
+-    R.ir_s1(s)
+-except Exception as e:  # noqa: BLE001
+-    print(f"FALHA fecho: {e}", flush=True)
+-print(f"capturas={len(r.feitos)} falhas={len(r.falhas)}")
+-for f in r.falhas:
+-    print("  " + f)
++            globals()[nome]()
++        except Exception as e:  # noqa: BLE001 — registra e segue
++            r.falhas.append(f"{nome}: {e}"); print(f"FALHA {nome}: {e}", flush=True)
++            try:
++                R.aviao(s, False); R.mock("normal")
++            except Exception:  # noqa: BLE001
++                pass
++    # fecha no estado da fixture: mock normal e o cache refeito pelo sync
++    try:
++        R.ir_s1(s)
++    except Exception as e:  # noqa: BLE001
++        print(f"FALHA fecho: {e}", flush=True)
++    print(f"capturas={len(r.feitos)} falhas={len(r.falhas)}")
++    for f in r.falhas:
++        print("  " + f)
+--- docs/native/N3-PR6-anexos/instrumentos/passada4-final.py	2026-09-25 20:21:04
++++ copia/passada4-final.py	2026-09-26 07:33:02
+@@ -4,7 +4,7 @@
+ sys.path.insert(0, sys.argv[1])
+ import roteiro as R
+ s, saida, suf = sys.argv[2], sys.argv[3], sys.argv[4]
+-r = R.Roteiro(s, saida, "N3P6F", suf)
++r = R.Roteiro(s, saida, "N3P6CF", suf)
+ R.aviao(s, False); R.ir_s1(s); r.cap("S1", "setlists"); t_sync = time.time()
+ R.aviao(s, True); R.ir_s1(s)
+ R.esperar(s, rid="aviso-motivo"); R.esperar(s, texto="sem conexão · última", prazo=30)
+--- docs/native/N3-PRECHECK-anexos/instrumentos/roteiro.py	2026-09-25 20:21:04
++++ copia/roteiro.py	2026-09-26 07:12:21
+@@ -24,13 +24,14 @@
+ import n3  # noqa: E402
+ 
+ AQUI = os.path.dirname(os.path.abspath(__file__))
+-ARVORE = os.path.abspath(os.path.join(AQUI, "../../../.."))
++ARVORE = "<árvore>"
+ SCR = os.environ["SCR"]
++PORTA = os.environ.get("PORTA", "8788")
+ DEEP = "exp+octavia://expo-development-client/?url=http%3A%2F%2Flocalhost%3A8081"
+ 
+ 
+ def mock(modo: str = "normal", vazio: bool = False) -> None:
+-    p = subprocess.run(["lsof", "-tiTCP:8788", "-sTCP:LISTEN"], capture_output=True, text=True).stdout.split()
++    p = subprocess.run(["lsof", f"-tiTCP:{PORTA}", "-sTCP:LISTEN"], capture_output=True, text=True).stdout.split()
+     for pid in p:
+         subprocess.run(["kill", pid])
+     time.sleep(0.6)
+@@ -38,7 +39,7 @@
+     if vazio and not os.path.exists(sl):
+         open(sl, "w").write("[]")
+     log = open(os.path.join(SCR, "mock", f"log-{modo}{'-vazio' if vazio else ''}.txt"), "w")
+-    subprocess.Popen(["python3", os.path.join(ARVORE, "apps/native/src/fixtures/aceite.py"), "servidor", "8788",
++    subprocess.Popen(["python3", os.path.join(ARVORE, "apps/native/src/fixtures/aceite.py"), "servidor", PORTA,
+                       modo, sl, os.path.join(SCR, "mock", "content.json")], stdout=log, stderr=log)
+     time.sleep(1.0)
+     print(f"{time.strftime('%H:%M:%S')} mock modo={modo} vazio={vazio}", flush=True)

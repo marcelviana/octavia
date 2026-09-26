@@ -132,7 +132,9 @@ export const tracking = { display: 0.14, displayWide: 0.22, label: 0.08 } as con
  * e S5 "em B passam", sem token). Na N3-PR6 a S5 passa a ler o token da barra
  * do palco (N3-E17, div. 442): sem salto de 24 dp ao chegar ao fim em B. E
  * o picker ganha o token da linha que falha (N3-E18, div. 445): o aceite
- * completo mediu que "picker, B: passa" só valia no estado base.
+ * completo mediu que "picker, B: passa" só valia no estado base. Na N3-PR6c
+ * a S5 ganha a largura da fileira de marcas (div. 461): a §7.1 do V1 contava
+ * 900 fixos, e com N ≥ 19 a fileira passava da janela de B.
  */
 export interface TokensDaFaixa {
   s1: {
@@ -247,6 +249,18 @@ export interface TokensDaFaixa {
      */
     empilha: boolean
   }
+  s5: {
+    /**
+     * A largura da fileira de marcas de música percorrida (a regra de N
+     * grande, §7.1 do DESIGN-V1: a marca vai de 34 a um piso de 6, com folga
+     * fixa de 5, e acima do último N em que ainda é marca vira uma barra
+     * sólida da largura inteira). 900 em C, como sempre; **663 em B** — a
+     * largura útil da faixa (711,1 − 2 × 24), a mesma da folha. Com 900 em B a
+     * fileira passava da janela a partir de N = 19 (com 60: 48 de 60 marcas
+     * no dump, as das pontas cortadas — div. 461, a H-N3-3 do pre-check).
+     */
+    fileira: number
+  }
 }
 
 const faixaC: TokensDaFaixa = {
@@ -259,6 +273,7 @@ const faixaC: TokensDaFaixa = {
   folha: { largura: 720, topo: 100, alturaMin: 420 },
   picker: { empilhaFalha: false, linhaFalha: 80 },
   palco: { barra: bar.top, empilha: false },
+  s5: { fileira: 900 },
 }
 
 const faixaB: TokensDaFaixa = {
@@ -271,6 +286,7 @@ const faixaB: TokensDaFaixa = {
   folha: { largura: 663, topo: 96, alturaMin: undefined },
   picker: { empilhaFalha: true, linhaFalha: 138.7 },
   palco: { barra: bar.top + space.xl, empilha: true },
+  s5: { fileira: 663 },
 }
 
 export const faixas: Readonly<Record<Faixa, TokensDaFaixa>> = { A: faixaB, B: faixaB, C: faixaC }

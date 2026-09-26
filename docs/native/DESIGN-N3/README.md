@@ -457,4 +457,29 @@ A N3-PR6b não muda código nem medida: as sete molduras do V1 que faltavam, em 
 | **460** | P | A `S2-invalidos` do V1 é o índice **sem** edição (duas colunas, 8 + 2); o S2 que se abre do S1 na `main` é o de **edição** (N2, a faixa de 64/88). E *"9 e 10 sem corpo e sem tipo"*: o `aceite.py` tem três formas de inválido (`no-body`, `no-key`, `unknown-type`). | Capturado o S2 que o S1 abre (o S2e): o objeto da moldura são as **linhas** inválidas, e a linha é o mesmo `Pressable` `song-<n>` (`IndexScreen.tsx:299–308`) com e sem edição — a edição acrescenta o `remover-<n>` ao lado. O S2 sem edição (o índice do palco, S2p) com inválidos não foi capturado. Usadas as duas formas que a moldura nomeia — 9 = `no-body`, 10 = `unknown-type`; a `no-key` fica fora (o V1 a provou no A6, `A6-palco-nokey`). |
 | **461** | D | **A `S5-n-grande` em B: a fileira de marcas passa da janela.** A fileira calcula contra **900 dp fixos** (`FILEIRA`, `EndScreen.tsx:65`, DESIGN-V1 §7.1): com 60 ela mede 895, centrada em 711,1 — no dump de retrato, **48 de 60 marcas**, de 0,0 a 711,1, as das pontas cortadas (7,6 e 8,9 dp); em paisagem, 60 de 60 (121,3 → 1016,4); com 8 (N3-PR6), 8 de 8. Pela fórmula, em B cabe até N = 18 (697) e passa a partir de N = 19 (736); acima de 128 a barra sólida de 900 passa também. É a **H-N3-3** do pre-check (derivada, nunca medida), e a regra da folha (*"o conteúdo não sai"*) quebrada. **Nem o G-N3 nem o G5/G6 a veem**: marca não tem texto nem é alvo. | **Registrada, não consertada** (instrução da PR: o conserto é decisão à parte). Evidência: `N3-PR6b-anexos/s5-marcas.txt`, os quatro dumps `N3P6B-S5-S5-n-grande-*` e os PNGs. **Com o Marcel**: o conserto (a fileira contra a largura da janela, como token de faixa?) e o gate que a veria. |
 
-**Próxima divergência livre: 462.**
+### Decisões do Marcel para a N3-PR6c (2026-09-26)
+
+- O G-N3 ganha o **(b) corte**, que reprova, com contagem própria; e a div. 461 se conserta com a largura da fileira
+  de marcas como **token de faixa** (C 900 · B 663).
+
+### Erratas da N3-PR6c — N3-E20 (N3-D23)
+
+O conserto e o aceite em [`N3-PR6c-anexos/README.md`](../N3-PR6c-anexos/README.md). O `medidas.json` não muda: a
+fileira não é linha da tabela de origem.
+
+| errata | medida | folha → medido | consequência declarada |
+|---|---|---|---|
+| **N3-E20** | a fileira de marcas da S5 em B (a regra de N grande, §7.1 do DESIGN-V1) | *"S5, B: passa"* (a fileira de 900 fixos) → **663**, o token `faixas[…].s5.fileira` (a largura útil de B, a mesma da folha) | **a S5 em B só foi medida com 8 músicas**; com N ≥ 19 a fileira de 900 passava da janela de 711,1 (div. 461). Com 663: N = 60 → 60 de 60 marcas dentro da janela (28,0 → 683,1), marca de **6 dp** (em C, 10); a marca chega ao piso em N = 60 (em C, 82); o último N com marca é **94** (em C, 128), e acima dele a barra sólida tem 663. C: 900, idêntico (G-inv 34/34 e 18/18; a paisagem da S5 com 60, nó a nó, igual à da N3-PR6b) |
+
+### Divergências abertas na N3-PR6c, **462 a 466** — e a 461 fechada
+
+| div. | origem | o que | o que foi feito |
+|---|---|---|---|
+| **461** (fechada) | D | A fileira de marcas da S5 passava da janela de B a partir de N = 19. | **Fechada** pela N3-E20: gate primeiro (o (b) do G-N3 reprovando, `cn-n3pr6c.sh` CN-B1 com (b)=4; o CN de tela `s5-fileira-faixa.test.tsx` reprovando com 895/736/697 > 663), o conserto, e o aceite: N = 60, 19, 18 e 8 em retrato com **(b)=0** nos dois aparelhos. |
+| **462** | P | *"CN: o dump `S5-n-grande` em retrato desta PR → (b)=48 (cole)"*. | O (b) real é **2 por dump** (4 nos dois aparelhos): o uiautomator recorta os `bounds` na tela e **omite** o nó que está inteiro fora dela, e o Fabric achata a árvore (o contêiner da fileira não chega ao dump). Das 60 marcas, 12 não existem no dump e 46 estão inteiras na janela; só as duas das pontas (0,0 → 7,6 e 702,2 → 711,1) carregam a assinatura de corte. O 48 é o número de marcas no dump — e, por coincidência, o (b) do celular do pre-check no CN-N2 do `cn-n3pr1.sh`. O CN colado é o real. |
+| **463** | P | *"(b) como o `inventario.mjs` do pre-check já fazia"*: o (b) de lá tinha **três** partes — sob a barra, borda lateral e **ausente** (o `resource-id` da paisagem que some) — e contava o **novo** contra a paisagem. | Copiadas as duas partes de `bounds` e o "novo" pela mesma assinatura (as zonas do palco encostam na borda por desenho, nas duas orientações). O **ausente fica fora**: depende de rolagem (a lista de ids variáveis do pre-check) e é o que o (e) e o G6 cobrem. Controle: o CT-B5, o (b) do G-N3 igual ao do `B3-inventario.jsonl` sem o ausente, **105 de 105 dumps**. |
+| **464** | P | *"N = 19 e N = 18 (a fronteira da fórmula)"*: a fronteira de 18/19 era a da **janela** (697 cabia em 711,1). Contra a largura útil de B (663), o **18 também não cabia** (697 > 663) — o CN de tela reprovou os três. | Com o token não há fronteira em B até N = 94; o 18 e o 19 ficam como o par que a H-N3-3 e a div. 461 nomearam, e medem **661** e **660**. |
+| **465** | T | A #332 (N3-PR6b) não estava mergeada quando a N3-PR6c começou, e os controles do (b) leem os anexos dela. | A branch nasceu de `origin/main` (`73b45ea`); os anexos da 6b foram extraídos **sem stage** para rodar os controles; antes do commit 4 a branch foi rebaseada **localmente** sobre a cabeça da #332 (`63ea60e`) — ela **nunca tinha subido**, então nada de force. Depois do merge da #332 (merge commit), o rebase sobre a `main` descarta o commit da 6b como já aplicado. |
+| **466** | P | *"O `APARATO.md` ganha a lição da div. 458 se o instrumento do G5/G6 mudou"*. | **Não mudou**: os dumps da S5 não têm rolado, e o G5/G6 rodou como estava (16 de 16). O `APARATO.md` fica como está. |
+
+**Próxima divergência livre: 467.**

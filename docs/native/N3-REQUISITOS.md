@@ -203,3 +203,23 @@ mock (store apagado + `atraso`; store apagado + avião; inválidos `no-body`/`un
 | 11 | em B, o teclado encaixado cobre o rodapé do picker (`Concluir`) | div. 450 | **polimento do nativo, pós-N3** (decisão do Marcel): o rodapé acima do teclado, com aceite nas três faixas |
 | 12 | na S5 em B, o `8 DE 8` centrado nos 88 fica 16 dp abaixo da linha 1 do palco | div. 447 | **fechado**: N3-E19, *"decisão: sem alinhamento no N3"* |
 | 13 | na S5 em B, com N ≥ 19 a fileira de marcas passa da janela (e nenhum gate a vê) | div. 461 | **com o Marcel** (o conserto e o gate) |
+
+## 12. O que a N3-PR6c fechou (o (b) no G-N3 e a fileira da S5 por faixa)
+
+Evidência em [`N3-PR6c-anexos/`](N3-PR6c-anexos/README.md); a errata N3-E20 e as divergências 462–466 no
+`DESIGN-N3/README.md` §9.
+
+| # | estado | evidência |
+|---|---|---|
+| **div. 461** | **fechada** (N3-E20): a fileira de marcas da S5 é token de faixa — 900 em C, **663** em B. Em retrato, Tab = AVD: N = 60 → 60 de 60 marcas dentro da janela (28,0 → 683,1); N = 19 → 660 dp; N = 18 → 661; N = 8 → a de antes | `N3-PR6c-anexos/s5-marcas.txt` |
+| **A-N3-3** | **fechado de novo**: a S5 em B com N = 60, 19, 18 e 8 — G-N3 (e)=0 · **(b)=0**, G5/G6 16 de 16 | `G-N3-S5.txt`, `G5G6-S5.txt` |
+| **A-N3-2** | **fechado** no build do conserto: G-inv **34/34** e **18/18**; a paisagem da S5 com 60, nó a nó, igual à da N3-PR6b | `G-inv-final.txt`, `G-inv-S5-60-pai.txt` |
+| **A-N3-4** | o G-N3 ganha o **(b) corte** (reprova, contagem própria). O consolidado da N3-PR6 (102 pares) dá **(b)=0**; a S5 da N3-PR6b dá (b)=4; o picker de antes da N3-E18, (b)=6; e o (b) é igual ao do pre-check em 105 de 105 dumps | `cn-n3pr6c-commit1.txt` |
+| **H-N3-3** | **fechada como medida**: derivada no pre-check (*"o S5 com N ≥ 24 transborda abaixo de ~883 dp"*), medida na N3-PR6b (em B a partir de N = 19), consertada aqui | `N3-PRECHECK.md` §H |
+
+**Herança** (atualiza o §11):
+
+| # | item | origem | destino |
+|---|---|---|---|
+| 13 | na S5 em B, com N ≥ 19 a fileira de marcas passava da janela | div. 461 | **fechado** (N3-E20) |
+| 14 | os quatro AppleDouble `._*` no cache do app no Tab (163 B cada, a div. 420) | N3-PR6b | **ficam onde estão** (decisão do Marcel): nota para o encerramento do N3 |

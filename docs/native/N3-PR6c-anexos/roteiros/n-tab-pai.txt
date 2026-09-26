@@ -1,0 +1,25 @@
+07:33:11 mock normal com setlists-n60.json / content-n60.json
+07:33:35 toque canto de setlist-00000001 @ 96,420
+07:34:03 toque 'song-60' @ 1902,1307 (RX2N8000F3D)
+07:34:11 toque 'borda-avancar' @ 2368,737 (RX2N8000F3D)
+N3P6C-S5-S5-n-grande-tab-pai mCurrentRotation=ROTATION_90 png=117974 xml=34998 b8f368cae911
+07:34:27 mock modo=normal vazio=False
+07:34:29 mock normal com setlists-n19.json / content-n19.json
+07:34:44 toque canto de setlist-00000001 @ 96,420
+07:34:58 toque 'song-19' @ 1280,1307 (RX2N8000F3D)
+07:35:06 toque 'borda-avancar' @ 2368,737 (RX2N8000F3D)
+N3P6C-S5-S5-n19-tab-pai mCurrentRotation=ROTATION_90 png=116679 xml=21746 cf40cad012fb
+07:35:21 mock modo=normal vazio=False
+07:35:23 mock normal com setlists-n18.json / content-n18.json
+07:35:38 toque canto de setlist-00000001 @ 96,420
+07:35:52 toque 'song-18' @ 1902,1307 (RX2N8000F3D)
+07:36:00 toque 'borda-avancar' @ 2368,737 (RX2N8000F3D)
+N3P6C-S5-S5-n18-tab-pai mCurrentRotation=ROTATION_90 png=115832 xml=21424 5b29a473d4a2
+07:36:15 mock modo=normal vazio=False
+07:36:17 mock normal com setlists-n8.json / content-n8.json
+07:36:31 toque canto de setlist-00000001 @ 96,420
+07:36:46 toque 'song-8' @ 1902,1307 (RX2N8000F3D)
+07:36:54 toque 'borda-avancar' @ 2368,737 (RX2N8000F3D)
+N3P6C-S5-S5-n8-tab-pai mCurrentRotation=ROTATION_90 png=115267 xml=18192 49d77a7e2a50
+07:37:09 mock modo=normal vazio=False
+capturas=4 falhas=0

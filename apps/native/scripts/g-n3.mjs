@@ -35,6 +35,24 @@
  * O `(d)` literal (texto terminando em `…`) é zero por construção no RN (div.
  * 384) e não é critério.
  *
+ * (b) CORTE, N3-PR6c (div. 461). Verbatim do `inventario.mjs` do pre-check, a
+ * parte de `bounds`:
+ *
+ *   (b) corte: nó que passa da janela útil (entra sob a barra de status ou a de
+ *       tarefas — o uiautomator só recorta na TELA) ou que encosta na borda
+ *       esquerda/direita da tela sem ocupar a largura inteira.
+ *
+ *   Conta o NOVO contra a paisagem do mesmo estado, pela assinatura do nó (id,
+ *   texto, nome acessível ou classe) e o lado ("sob barra" / "borda lateral"),
+ *   como o pre-check: as zonas do palco encostam na borda POR DESENHO, nas duas
+ *   orientações. REPROVA, com contagem própria ("(e)=0 · (b)=0 · …"). O
+ *   "ausente" do pre-check (o `resource-id` da paisagem que some) fica fora: é o
+ *   que o (e) e o G6 cobrem. O uiautomator OMITE o nó que está inteiro fora da
+ *   tela: de uma fileira que passa da janela, o (b) vê as pontas cortadas, não
+ *   as que sumiram. Nasceu porque o G-N3 estava calibrado só em (e) e (d′), e a
+ *   fileira de marcas da S5 com 60 passou da janela de B sem gate nenhum ver
+ *   (N3-PR6b) — quem a viu foi um estado do V1 que nenhum roteiro alcançava.
+ *
  * DUAS SAÍDAS DO (e), N3-PR3 (decisão do Marcel, 2026-09-25). Um texto da
  * paisagem que falta no dump da faixa NÃO conta como (e) em dois casos, e só
  * com a prova no próprio dump — cada um com contagem PRÓPRIA no relatório,
@@ -74,10 +92,10 @@
  *             usado é listado com o sha256 (os 12 primeiros)
  *   --medidas o `docs/native/DESIGN-N3/medidas.json` (padrão)
  *
- * Saída literal em cinco blocos, nesta ordem — (e), (d′), 4 dp, nome-acessível,
- * rolagem (os dois últimos DEPOIS do 4 dp: o CT-N3 do `cn-n3pr1.sh` lê o (e)
- * até o cabeçalho do (d′)) — e o veredito. Exit 1 se houver
- * (e); exit 2 se a chamada não mede nada (sem par, diretório vazio).
+ * Saída literal em seis blocos, nesta ordem — (e), (d′), 4 dp, nome-acessível,
+ * rolagem, (b) (os três últimos DEPOIS do 4 dp: o CT-N3 do `cn-n3pr1.sh` lê o
+ * (e) até o cabeçalho do (d′)) — e o veredito. Exit 1 se houver (e) ou (b);
+ * exit 2 se a chamada não mede nada (sem par, diretório vazio).
  */
 import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { basename, join } from 'node:path'
@@ -158,6 +176,8 @@ const r1 = (v) => Math.round(v * 10) / 10
 const larg = (b) => b[2] - b[0]
 const alt = (b) => b[3] - b[1]
 const sig = (n) => n.id || (n.text ? `"${n.text.slice(0, 40)}"` : '') || n.cls
+/** A assinatura do (b), a do `inventario.mjs` (com o nome acessível): a chave do "novo". */
+const sigB = (n) => n.id || (n.text ? `"${n.text.slice(0, 40)}"` : '') || (n.cd ? `[${n.cd.slice(0, 40)}]` : '') || n.cls
 
 function janelaUtil(todos, tela) {
   const vs = todos.filter((n) => n.pkg === PKG && !n.compose && n.cls === 'ViewGroup'
@@ -171,7 +191,15 @@ function medir(arquivo) {
   const app = todos.filter((n) => n.pkg === PKG && !n.compose && larg(n.b) > 0 && alt(n.b) > 0)
   const janela = janelaUtil(todos, tela)
   const textos = app.filter((n) => n.text && n.filhos.length === 0 && n.cls === 'TextView').map((n) => ({ text: n.text, b: n.b, s: sig(n), rid: idAcima(n) }))
-  return { arquivo, tela, janela, app, textos }
+  // (b): o primeiro nó do app é a raiz dele, que tem a tela inteira
+  const cortes = []
+  for (const n of app) {
+    if (n === app[0]) continue
+    const sob = n.b[1] < janela[1] - 0.5 || n.b[3] > janela[3] + 0.5
+    const borda = (n.b[0] <= 0.5 || n.b[2] >= tela[2] - 0.5) && larg(n.b) < larg(tela) - 1
+    if ((sob && alt(n.b) < alt(tela) - 1) || borda) cortes.push({ no: sigB(n), onde: sob ? 'sob barra' : 'borda lateral', b: n.b.map(r1) })
+  }
+  return { arquivo, tela, janela, app, textos, cortes }
 }
 
 // ---- pareamento -------------------------------------------------------------
@@ -245,6 +273,7 @@ const RO = []
 const roladosUsados = new Set()
 const DL = []
 const Q = []
+const B = []
 const vivos = /sincroniz|última|agora|há \d|arquivos baixados/
 for (const { ref, f } of pares) {
   const antes = medir(ref)
@@ -261,6 +290,8 @@ for (const { ref, f } of pares) {
     if (rol && medir(rol).textos.some((u) => u.text === t.text)) { RO.push({ nome, no: t.s, rol: basename(rol, '.xml') }); roladosUsados.add(rol); continue }
     E.push({ nome, no: t.s })
   }
+  const bRef = new Set(antes.cortes.map((x) => x.no + x.onde))
+  for (const x of agora.cortes) if (!bRef.has(x.no + x.onde)) B.push({ nome, ...x })
   for (const t of agora.textos) {
     const r = antes.textos.find((u) => u.text === t.text)
     if (!r) continue
@@ -310,5 +341,13 @@ if (roladosUsados.size) {
   for (const r of [...roladosUsados].sort()) console.log(`    ${createHash('sha256').update(readFileSync(r)).digest('hex').slice(0, 12)}  ${basename(r)}`)
 }
 console.log('')
-if (E.length > 0) { console.log(`G-N3: REPROVA ✗ — (e)=${E.length} em ${porDump.size} dump(s) · nome-acessível=${NA.length} · rolagem=${RO.length}`); process.exitCode = 1 }
-else if (process.exitCode !== 1) console.log(`G-N3: (e)=0 · nome-acessível=${NA.length} · rolagem=${RO.length} ✓ (d′ e 4 dp não reprovam: triagem e errata)`)
+console.log(`(b) CORTE — nó que sai da janela útil ou encosta na borda lateral, NOVO contra a paisagem — REPROVA: ${B.length}`)
+const bPorDump = new Map()
+for (const x of B) bPorDump.set(x.nome, [...(bPorDump.get(x.nome) ?? []), x])
+for (const [n, xs] of bPorDump) {
+  console.log(`  ${n}: ${xs.length}`)
+  for (const x of xs) console.log(`    ${x.no} ${x.onde} [${x.b.join(', ')}]`)
+}
+console.log('')
+if (E.length > 0 || B.length > 0) { console.log(`G-N3: REPROVA ✗ — (e)=${E.length} em ${porDump.size} dump(s) · (b)=${B.length} em ${bPorDump.size} dump(s) · nome-acessível=${NA.length} · rolagem=${RO.length}`); process.exitCode = 1 }
+else if (process.exitCode !== 1) console.log(`G-N3: (e)=0 · (b)=0 · nome-acessível=${NA.length} · rolagem=${RO.length} ✓ (d′ e 4 dp não reprovam: triagem e errata)`)
