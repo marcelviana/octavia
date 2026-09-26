@@ -1,3 +1,4 @@
+# [commit 3a] SUBSTITUÍDO: o probe 2 rodou pelo probe2.ts (saída em probe2-out/). Roteiro mantido como rastro.
 # probe 2 — Google (H-I1-3). ESTADO: NÃO EXECUTADO — bloqueado (bloqueio.txt, div. 509: o preview não abre sem bypass).
 # Escrita declarada: nenhuma (nenhum login). Alvo: preview /login. Parar no primeiro erro de console ou quando a página
 # accounts.google.com abrir; NÃO escolher conta.

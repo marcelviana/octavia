@@ -1,0 +1,32 @@
+# probe 2 — requests (ms desde o início · página · método · status · URL sem query)
+  4324  login  GET     200   https://octavia.rocks/login
+  4750  login  GET     200   https://octavia.rocks/_next/image
+  4754  login  GET     200   https://octavia.rocks/_next/static/css/2ec99a5ad22f3fce.css
+  4954  login  GET     200   https://octavia.rocks/_next/static/chunks/9786-b2afdaea5a0eb7d2.js
+  4963  login  GET     200   https://octavia.rocks/_next/static/chunks/5503-eb5c52f779e2fcaa.js
+  4967  login  GET     200   https://octavia.rocks/_next/static/chunks/9200-e2a0f408aa188175.js
+  4974  login  GET     200   https://octavia.rocks/_next/static/chunks/7121-717004cf736f1ddb.js
+  4978  login  GET     200   https://octavia.rocks/_next/static/chunks/1186-b3a48eb24bcd8c88.js
+  4983  login  GET     200   https://octavia.rocks/_next/static/chunks/webpack-72c68f664fe21925.js
+  4983  login  GET     200   https://octavia.rocks/_next/static/chunks/2344-c12fe549d3107819.js
+  4987  login  GET     200   https://octavia.rocks/_next/static/chunks/offline-cache-06c378be75866536.js
+  4987  login  GET     200   https://octavia.rocks/_next/static/chunks/app/layout-d68874b2bd32bd7f.js
+  5048  login  GET     200   https://octavia.rocks/_next/static/chunks/5046-ea4babaff87e2c39.js
+  5084  login  GET     200   https://octavia.rocks/_next/static/chunks/4509c6e4-73f54872c9e9442b.js
+  5098  login  GET     200   https://octavia.rocks/_next/static/chunks/7772-2cf6954eb331128c.js
+  5098  login  GET     200   https://octavia.rocks/_next/static/chunks/7448-bcd5da1785a387c4.js
+  5120  login  GET     200   https://octavia.rocks/_next/static/chunks/main-app-f1b7c2408bef7ccc.js
+  5142  login  GET     200   https://octavia.rocks/_next/static/chunks/1758-524eac3f40e93b01.js
+  5152  login  GET     200   https://octavia.rocks/_next/static/chunks/app/login/page-9a5118ea6eebbd35.js
+  5190  login  GET     200   https://octavia.rocks/_next/static/chunks/349d079f-9917af1ae10b1acc.js
+  5242  login  GET     200   https://octavia.rocks/_next/static/chunks/5586-05cb081245afe41b.js
+  5406  login  GET     200   https://octavia.rocks/_next/static/chunks/7bcb3702-1e3e64cd82172080.js
+  5507  login  DELETE  200   https://octavia.rocks/api/auth/session
+  5634  login  GET     200   https://octavia.rocks/icons/icon-192x192.webp
+  5651  login  GET     200   https://octavia.rocks/icons/icon-192x192.webp
+  5760  login  GET     200   https://octavia.rocks/forgot-password
+  5901  login  GET     200   https://octavia.rocks/signup
+  6605  login csp GET     FALHA https://apis.google.com/js/api.js
+
+# interceptados no navegador
+  5452  DELETE /api/auth/session → 200 falso no navegador (não chegou a prod)

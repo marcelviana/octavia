@@ -1,0 +1,5 @@
+# probe 2 — console (ms · página · tipo · texto); 2 linhas antes do clique
+  4309  login  warning  Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  4772  login  verbose  [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o
+  6603  login  error    Loading the script 'https://apis.google.com/js/api.js?onload=__iframefcb860800' violates the following Content Security Policy directive: "script-src 'self' 'nonce-nq2hAsCEMKKn+UqeH/ZBXg==' https://*.googleapis.com https://*.gstatic.com https://www.google.com https://cdn.jsdelivr.net https://vercel.live". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The action has been blocked.
+  6640  login  error    CSP-VIOLATION directive=script-src-elem blocked=https://apis.google.com/js/api.js?onload=__iframefcb860800 source=https://octavia.rocks/_next/static/chunks/349d079f-9917af1ae10b1acc.js:1

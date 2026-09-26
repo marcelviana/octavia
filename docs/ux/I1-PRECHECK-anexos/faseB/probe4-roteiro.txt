@@ -1,3 +1,4 @@
+# [commit 3a] SUBSTITUÍDO pelo probe4.ts (I1-D35: roda o Marcel, contra prod — I1-D34). Roteiro mantido como rastro.
 # probe 4 — toasts das setlists (H-I1-5). ESTADO: NÃO EXECUTADO — bloqueado (bloqueio.txt, div. 509).
 # Escrita declarada ANTES (lista fechada): 1 POST /api/setlists (I1-probe4) · 1 PUT /api/setlists/<id> · 1 DELETE
 #   /api/setlists/<id> (aba 1). O DELETE da aba 2 dá 404 e não escreve. Nada da conta principal.

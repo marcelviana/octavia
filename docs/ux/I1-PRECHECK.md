@@ -92,6 +92,15 @@ decisão continua valendo sobre o que foi medido.
 - **I1-D32** `[Marcel, 2026-09-26]` — Errata "morre com a web" (div. 492): **neste commit**, uma nota no topo da seção do Bloco D no `PLANO-TRANSICAO.md` e uma linha ao lado de `N1-ENCERRAMENTO.md:348`, apontando para a I1-D2, **sem reescrever** o texto (o padrão da errata do `N2-ENCERRAMENTO.md` §10.2). Confira as linhas com `grep` antes.
 - **I1-D33** `[Marcel, 2026-09-26]` — Div. 498 (`handleSelectSetlist` para rota inexistente) sai na PR de setlists, declarada.
 
+**Do aval do commit 2** (transcrição do prompt do commit 3):
+
+- **I1-D34** `[Marcel, 2026-09-26]` — A Fase B roda **contra prod** (`https://octavia.rocks`), pela regra 12 do catálogo: os probes 1 e 2 são zero escrita por construção; o probe 4 escreve 3 vezes na **conta de audit**, em recurso descartável criado e apagado no mesmo probe. Nenhum bypass da Vercel; o `.env.local` **não** se abre. Único `.env*` autorizado: `.env.uxaudit`.
+- **I1-D35** `[Marcel, 2026-09-26]` — Probe 2 é do executor (não há login). Probes 1 e 4 são **scripts que o executor escreve e o Marcel executa** (a senha nunca passa pelo executor); a evidência é o que o script grava. Probe 5 é do Marcel no Tab S6.
+- **Errata da I1-D30** `[Marcel, 2026-09-26]` (div. 503): não há par no G1b para `apps/native/test`; a mudança do `faixa.test.ts` é listada no corpo da PR-4. G1b sobre `apps/native/test` é item do W5.
+- **Errata da I1-D25** `[Marcel, 2026-09-26]` (div. 504): as declarações da PR-3 vão no bloco ```gates-web``` do corpo; a PR-5 as lê para trás. O G-rotas vai de 17 a 11 (div. 505): as três entradas de `PAGE_INVOCATIONS` e as linhas de `/performance`, `/settings` e `/profile` em `lib/protected-routes.ts` saem na PR-3, declaradas.
+- **I1-D36** `[Marcel, 2026-09-26]` (div. 506) — A PR-3 tem o requisito *"todo tipo de content abre no visualizador depois do corte"*, provado por CN com um content de cada tipo (PDF incluído). Como o `mimeType` passa a ser derivado sem o `offline-cache` se mede no commit 1 da PR-3; se o registro do content não tiver o tipo do arquivo, é herança D e o corte do `offline-cache` espera.
+- `[Marcel, 2026-09-26]` Div. 507: `PATCH /api/profile` fica sem chamador — rota fica, registrada como "sem chamador", destino D. Div. 508: os `href="#"` da landing morrem no redesenho; o brief recebe a lista.
+
 Leituras do executor sobre as decisões acima, cada uma com a divergência onde mora: o "§2.1 abaixo" da
 I1-D25 é o **2.1 do prompt do commit 2** (a medição do G-rotas, aqui §17.1); a I1-D25 e a I1-D30 pedem
 par do G1b para testes que o G1b não lê (divs. 503, 504); a I1-D23 não cobre os prefixos `/settings`
@@ -132,7 +141,7 @@ presumiu.
 |---|---|---|---|
 | **H-I1-1** | **Pendente de aval (não é decisão)**, transcrita do prompt: *"o Playwright do web passa a rodar só Chromium desktop, com as três larguras do G-faixa como viewports (não como `devices` emulados); WebKit/Firefox saem; a poda é uma PR própria e pequena entre esta e a PR-1, com o tempo do job no CI medido antes e depois como CN."* | **FECHADA pela div. 486 → I1-D16** (commit 2). A premissa já era o estado da `main` (§8): um só config, nenhum WebKit/Firefox/`devices`, nenhum job no CI | — |
 | **H-I1-2** | o **loop mudo** é de navegação e se repete sozinho enquanto o `POST /api/auth/session` falhar: cada volta = 1 `POST /api/auth/session` + 1–2 `GET /api/profile` (+ 1 `POST /api/profile` se o perfil não existir) + 1 navegação cheia a `/dashboard` + 1 redirect a `/login` (§10) | `[hipótese]` pela leitura | Fase B, probe 1 (§14) |
-| **H-I1-3** | o Google falha **no navegador**, pela CSP/COOP de hoje, antes de qualquer coisa do client OAuth: `frame-src` só `'blob:'` bloqueia o iframe de auth do Firebase em `*.firebaseapp.com`; `Cross-Origin-Opener-Policy: same-origin` corta o popup do opener; o `script-src` não inclui `https://apis.google.com`. As três vêm do `8af7f34` (2026-02-26), **a mesma data do último uso do client OAuth** (I1-D6) (§11) | `[hipótese]` pela leitura; a coincidência de data é `[medido]` | Fase B, probe 2 (§14) |
+| **H-I1-3** | o Google falha **no navegador**, pela CSP/COOP de hoje, antes de qualquer coisa do client OAuth: `frame-src` só `'blob:'` bloqueia o iframe de auth do Firebase em `*.firebaseapp.com`; `Cross-Origin-Opener-Policy: same-origin` corta o popup do opener; o `script-src` não inclui `https://apis.google.com`. As três vêm do `8af7f34` (2026-02-26), **a mesma data do último uso do client OAuth** (I1-D6) (§11) | **PARCIAL — confirmada no primeiro ponto** (commit 3a, probe 2): o clique carrega `https://apis.google.com/js/api.js` e a CSP o bloqueia (`script-src`, `CSP-VIOLATION directive=script-src-elem`); nenhum popup abre; a tela diz *"Something went wrong. Please try again."*. O `frame-src` e o COOP **não foram alcançados** (o fluxo morre antes) — ficam não testados | `faseB/probe2-out/`; o resto na PR-2, depois de liberar o `script-src` |
 | **H-I1-4** | a largura CSS do Chrome no Tab S6 é a largura em dp do app (711 em pé, 1138 deitado) — o Chrome não tem barra lateral, então a largura coincide; a altura útil é menor (barra de endereço) | `[hipótese]` | aceite no aparelho (I1-D14): `window.innerWidth`/`innerHeight` na primeira captura |
 | **H-I1-5** | **nenhum toast das setlists aparece**: `components/setlist-manager.tsx:7` importa `toast` de `@/hooks/use-toast` (shadcn), cujo `<Toaster>` (`components/ui/toaster.tsx`) não tem importador; o único montado é o do sonner (`app/layout.tsx:127`) (§3, §12, div. 491) | `[lido]` | Fase B, probe 4, no preview |
 | **H-I1-6** | o Chrome desktop do G-faixa e o Chrome do Tab S6 dão a mesma quebra de linha nas mesmas larguras (fontes do pacote servidas pelo web, não do sistema) | `[hipótese]` | primeira PR de tela: G-faixa × aceite no aparelho |
@@ -829,6 +838,38 @@ prontos em `faseB/probe{1,2,4,5}-roteiro.txt`, com a lista de escrita declarada 
 Estado das hipóteses depois do commit 2: H-I1-1 **fechada** (I1-D16); H-I1-2, H-I1-3 e H-I1-5
 **não testadas** (bloqueio); H-I1-4 **pendente do Marcel**; H-I1-6 fica para a primeira PR de tela.
 
+**Commit 3a — a Fase B contra prod (I1-D34, I1-D35).** Pré-condições `[medido]`:
+`git check-ignore -v .env.uxaudit` → `.gitignore:23:.env*	.env.uxaudit` (ignorado); o arquivo
+existe só no checkout principal (`../octavia/.env.uxaudit`), não na árvore do I1 (div. 510). O
+`ux-audit` monta a URL por `UX_AUDIT_BASE_URL || 'https://octavia.rocks'`
+(`scripts/ux-audit/auth.ts:18`) e faz login por REST com a API key do `.env.local`
+(`:14-16`, `:68-79`); **os scripts deste commit não usam essa forma**: logam **pela tela** do app
+(`#email`, `#password`, `button[type="submit"]` — `components/auth/login-panel.tsx:232,257,273`),
+que é o fluxo que o probe 1 mede — então **nenhuma variável nova** entra no `.env.uxaudit` e a API
+key não é lida de lugar nenhum. O Playwright não tem navegador baixado
+(`~/Library/Caches/ms-playwright` não existe); os scripts usam o Chrome do sistema
+(`channel: 'chrome'`, `Google Chrome 152.0.7977.85`), perfil temporário (div. 512).
+
+| probe | quem | estado | escrita declarada | escrita medida | anexo |
+|---|---|---|---|---|---|
+| 2 — Google | executor | **executado** (2 rodadas; a 1ª tinha um defeito do detector, div. 513) | 0 | **0** — o `DELETE /api/auth/session` que o `/login` deslogado dispara sozinho foi respondido no navegador (`FALSO`), não chegou a prod (div. 511) | `faseB/probe2.ts`, `probe2-out/`, `probe2-rodada1/` |
+| 1 — loop mudo | Marcel | **aguardando o Marcel** (`faseB/probe1.ts`) | 0 (sessão é só cookie; `POST /api/profile` ≠ 0 = parada) | — | `faseB/COMO-RODAR.md` |
+| 4 — toasts das setlists | Marcel | **aguardando o Marcel** (`faseB/probe4.ts`) | 1 POST + 1 PUT + 1 DELETE 200 + 1 DELETE 404 (audit, `I1-probe4`), +1 DELETE de limpeza só se parar no meio | — | idem |
+| 5 — largura no Tab S6 | Marcel | **aguardando o Marcel** | 0 | — | `faseB/probe5-roteiro.txt` → `probe5.txt` |
+
+**Probe 2, o resultado** (`probe2-out/resumo.txt`, `console.txt`): 15 s de janela depois do
+clique; parou no primeiro erro de console (o `GET` de `api.js` falha aos 2190 ms do início do script, `requests.txt`):
+*"Loading the script 'https://apis.google.com/js/api.js?onload=…' violates the following Content
+Security Policy directive: "script-src 'self' 'nonce-…' https://\*.googleapis.com
+https://\*.gstatic.com https://www.google.com https://cdn.jsdelivr.net https://vercel.live""*,
+seguido do `CSP-VIOLATION directive=script-src-elem` do chunk
+`_next/static/chunks/349d079f-….js`. **Nenhum popup** (`context.on('page')` vazio), a página não
+navega, e a tela mostra *"Something went wrong. Please try again."* (`probe2-out/2-depois.png`) — o
+texto genérico de `lib/firebase-errors.ts` (div. 515). Requests da rodada 2: 26 `GET` a
+`octavia.rocks` (página, estáticos, `_next/image`, os prefetch de `/signup` e `/forgot-password`),
+1 `DELETE /api/auth/session` **FALSO** (no navegador), 1 `GET https://apis.google.com/js/api.js`
+**FALHA** (bloqueado pela CSP). Nenhum `POST`.
+
 A tabela abaixo é a proposta do commit 1, mantida como estava.
 
 | # | probe | o que mede | contra o quê | garantia de zero escrita | o que bloqueia |
@@ -879,7 +920,20 @@ A tabela abaixo é a proposta do commit 1, mantida como estava.
 | **506** | P | I1-D18: o cache offline e o `/api/proxy` morrem (offline) | o cache também serve o **visualizador vivo**: `hooks/useContentFile.ts:29` (`getCachedFileInfo`) dá a URL `blob:` e o tipo MIME a `content-viewer/SheetMusicDisplay.tsx:35-41,69-76`; sem ele o visualizador cai em `content.file_url` direto e `mimeType` vira `undefined`. O bucket tem leitura pública (`supabase/storage.dump.sql:1244,1248`) e a CSP tem `*.supabase.co` em `img-src`/`connect-src`, então o direto **deve** abrir `[hipótese]` | aceite da PR-3: PDF e imagem na visualização e no editor, no Tab S6 |
 | **507** | A | I1-D19: `/profile` sai; `/api/profile` fica | o shell vivo liga a página que sai: `components/user-header.tsx:68` (`<Link href="/profile">`); e o `PATCH /api/profile` perde o **único** chamador (`ProfileForm.tsx:46` → `firebase-auth-context.tsx:405-420`) — a rota fica sem cliente | PR-3 edita o `user-header`; a rota órfã fica registrada (I1-D19) |
 | **508** | A | — | a landing tem **7** links `href="#"` sem destino (`grep -c 'href="#"' app/page.tsx` → 7; `:287-335`) | insumo do brief (superfície pública, I1-D19) |
-| **509** | P | Fase B: *"a URL do preview e o bypass são os que o `ux-audit` já usa … `.env.uxaudit` é o único `.env*` autorizado"* | o preview exige o bypass da Vercel (`302 → vercel.com/sso-api`), que não está em arquivo; e o login do `ux-audit` lê também o `.env.local` (`scripts/ux-audit/auth.ts:14-16`). Com o que foi autorizado, nenhum probe do preview roda | probes 1, 2 e 4 esperam o bypass (inline) e uma decisão sobre a API key (§14) |
+| **509** | P | Fase B: *"a URL do preview e o bypass são os que o `ux-audit` já usa … `.env.uxaudit` é o único `.env*` autorizado"* | o preview exige o bypass da Vercel (`302 → vercel.com/sso-api`), que não está em arquivo; e o login do `ux-audit` lê também o `.env.local` (`scripts/ux-audit/auth.ts:14-16`). Com o que foi autorizado, nenhum probe do preview roda | **I1-D34/D35**: a Fase B vai para prod |
+
+**Commit 3a — divergências 510 a 516** (a numeração conferida pela coluna:
+`git grep -nE '^\| \*\*5[0-9][0-9]\*\* \| [A-Z]' docs | sort -t'*' -k3 -n | tail -3` → 507, 508, 509)
+
+| # | origem | o que o prompt (ou o doc) presumiu | o que foi medido | destino |
+|---|---|---|---|---|
+| **510** | T | §1 do prompt do commit 3: o script lê `.env.uxaudit` (implícito: na árvore) | o `.env.uxaudit` existe só em `../octavia/` (checkout principal); a árvore do I1 não o tem (`ls .env.uxaudit` → *No such file*). Está ignorado (`.gitignore:23`) | os scripts procuram `./.env.uxaudit`, depois `../octavia/.env.uxaudit`, ou `UXAUDIT_ENV` |
+| **511** | P | §2: *"Zero escrita: prove com a lista de requests (nenhum `POST`)"* | o `/login` deslogado dispara sozinho `DELETE /api/auth/session` (`clearSessionCookie`, `firebase-auth-context.tsx:187`) — um método de escrita a `/api/*` sem clique nenhum. Foi respondido **no navegador** com 200 falso e não chegou a prod; nenhum `POST` saiu | probes 1 e 4: `POST`/`DELETE` de `/api/auth/session` declarados como não escrita (só cookie, §10) |
+| **512** | T | §2: *"Playwright, Chromium"* | o Playwright não tem navegador baixado (`~/Library/Caches/ms-playwright` ausente); rodou no Chrome do sistema, `channel: 'chrome'`, `Google Chrome 152.0.7977.85` — Chromium de marca, não o do Playwright | registrado; os scripts do Marcel usam o mesmo canal |
+| **513** | T | — | a 1ª rodada do probe 2 acusou *"escrita a prod: 1"* e saiu com exit 1: o detector contava como real o `DELETE` respondido por `route.fulfill` (o `requestfinished` dispara também para ele). O `interceptados` da mesma rodada mostra que não saiu do navegador. Detector corrigido (`FALSO`) e 2ª rodada | 1ª rodada guardada em `faseB/probe2-rodada1/` como rastro |
+| **514** | P | §3 (probe 4): *"abrir dois contextos … Qualquer outra escrita = parada"* | dois contextos são **dois logins**, e cada login faz `POST /api/auth/session` (cookie, não banco — §10). Pela letra, isso seria "outra escrita" | declarado no topo do `probe4.ts` como não escrita; o orçamento de parada vale para o resto de `/api/*` |
+| **515** | A | — | com o Google quebrado, o login mostra só *"Something went wrong. Please try again."* (o fallback de `lib/firebase-errors.ts`) — a falha de CSP não chega à tela com nome | insumo da PR-2 (estado de falha do Google) |
+| **516** | T | §3: scripts de probe como anexo (`faseB/*.ts`), "só docs" | o `tsconfig.json` da raiz inclui `**/*.ts` e só exclui testes, `apps/**` e `packages/**`: os três scripts **entram no type-check do `next build`** do CI (`tsc -p tsconfig.json --noEmit --listFilesOnly \| grep -c I1-PRECHECK` → 3). O `probe4.ts:60` reprovava (`TS2532`, `noUncheckedIndexedAccess`) e foi corrigido antes do commit; `tsc` → 0 erros, `pnpm lint` limpo | anexo `.ts` em `docs/` é código para o CI; a PR-5 decide se `docs/**` sai do `include` |
 
 ---
 
@@ -911,6 +965,18 @@ A tabela abaixo é a proposta do commit 1, mantida como estava.
 | chamadas à API do GitHub | leitura: `gh pr checks 335`, 2 `gh api …/deployments` |
 | comandos locais | `depcruise` (1×, agora com `worker/`); `node script-a24` (do scratchpad) |
 | código | **nenhum**. Arquivos tocados: `docs/ux/I1-PRECHECK.md`, anexos novos (`pwa-offline-exclusivos.txt`, `pwa-offline-compartilhados.txt`, `script-a24.txt`, `settings-profile.txt`, `faseB/*`), e as duas erratas da I1-D32 (`docs/ux/PLANO-TRANSICAO.md`, `docs/native/N1-ENCERRAMENTO.md`) |
+
+**Commit 3a** (2026-09-26):
+
+| item | valor |
+|---|---|
+| requests a `https://octavia.rocks` | **os primeiros do bloco**: probe 2, rodada 1 — 26 `GET` reais + 1 `DELETE /api/auth/session` falso (no navegador); rodada 2 — 26 `GET` reais + 1 `DELETE` falso. Total real: **52 `GET`** (página `/login`, estáticos, `_next/image`, os prefetch de `/signup` e `/forgot-password`); **0** a `/api/*` |
+| requests a terceiros | 2 `GET https://apis.google.com/js/api.js`, os dois bloqueados pela CSP no navegador (não saíram) |
+| escritas | **0** |
+| `.env*` abertos | **0** pelo executor (os scripts do Marcel leem o `.env.uxaudit`; o executor não os rodou) |
+| login | **0** |
+| `adb` | **0** |
+| código | os três scripts de probe em `docs/ux/I1-PRECHECK-anexos/faseB/` (`probe1.ts`, `probe2.ts`, `probe4.ts`) — anexo, fora de `app/`/`lib/`/`components/`/`apps/native`/`packages/`; `tsc --noEmit` limpo sobre os três |
 
 ---
 

@@ -1,3 +1,4 @@
+# [commit 3a] SUBSTITUÍDO pelo probe1.ts (I1-D35: roda o Marcel, contra prod — I1-D34). Roteiro mantido como rastro.
 # probe 1 — loop mudo (H-I1-2). ESTADO: NÃO EXECUTADO — bloqueado (bloqueio.txt, div. 509).
 # Escrita declarada ANTES: nenhuma. Condição de parada: qualquer POST|PUT|PATCH|DELETE a /api/* que não seja o
 #   POST /api/auth/session interceptado; em particular POST /api/profile ≠ 0 → parar (login-panel.tsx:52-67).
