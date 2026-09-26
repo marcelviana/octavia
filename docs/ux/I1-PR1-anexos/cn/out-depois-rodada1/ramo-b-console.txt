@@ -1,0 +1,13 @@
+# CN ramo-b (depois) — console, só error/warning (ms · tipo · texto)
+   8376  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+   8734  warning %c%s%c Server-side user: No session cookie found background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server  
+  10204  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  10434  warning %c%s%c Server-side user: No session cookie found background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server  
+  11557  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  11768  warning %c%s%c Server-side user: No session cookie found background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server  
+  12673  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  12673  warning Failed to set session cookie: 500
+  27447  warning %c%s%c Server-side user: No session cookie found background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server  
+  42545  warning %c%s%c Server-side user: No session cookie found background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server  
+  57709  warning %c%s%c Server-side user: No session cookie found background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server  
+  72912  warning %c%s%c Server-side user: No session cookie found background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server  

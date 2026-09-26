@@ -32,6 +32,7 @@
 import { chromium, type Request } from '@playwright/test'
 import { config } from 'dotenv'
 import fs from 'node:fs'
+import os from 'node:os'
 import path from 'node:path'
 
 const BASE = 'http://localhost:3000'
@@ -61,6 +62,15 @@ export async function rodar(ramo: Ramo, falso: 500 | 429, segundos = 60): Promis
   const soControle = process.env.CN_SO_CONTROLE === '1'
   const out = path.join(aqui, soControle ? 'out-controle' : `out-${fase}`)
   fs.mkdirSync(out, { recursive: true })
+  // div. 531: nada se grava na árvore durante a medição — o `next dev` a vigia, e cada
+  // arquivo novo nela virava um hot update do app/layout e uma "navegação" no log. As
+  // capturas vão para uma pasta temporária e só são copiadas para `out` depois do
+  // `browser.close()`, junto com os .txt.
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), `cn-i1-${ramo}-`))
+  const copiarCapturas = () => {
+    for (const f of fs.readdirSync(tmp)) fs.copyFileSync(path.join(tmp, f), path.join(out, f))
+    fs.rmSync(tmp, { recursive: true, force: true })
+  }
   const pre = `ramo-${ramo}`
 
   let EMAIL = '', SENHA = ''
@@ -153,6 +163,7 @@ export async function rodar(ramo: Ramo, falso: 500 | 429, segundos = 60): Promis
     if (soControle) {
       gravar([`# CN ${pre} — ${fase} — só o controle positivo (CN_SO_CONTROLE=1) — ${new Date().toISOString()} · alvo ${BASE}`, 'resultado: EXIT 0', controle])
       await browser.close()
+      copiarCapturas()
       console.log(`CN ${pre} (${fase}): controle positivo passou — ${controle}`)
       return
     }
@@ -177,9 +188,9 @@ export async function rodar(ramo: Ramo, falso: 500 | 429, segundos = 60): Promis
     while (Date.now() - inicio < segundos * 1000) {
       if (parada) break
       await page.waitForTimeout(1000)
-      if (++s % 15 === 0) await page.screenshot({ path: path.join(out, `${pre}-${String(s).padStart(2, '0')}s.png`), mask }).catch(() => {})
+      if (++s % 15 === 0) await page.screenshot({ path: path.join(tmp, `${pre}-${String(s).padStart(2, '0')}s.png`), mask }).catch(() => {})
     }
-    await page.screenshot({ path: path.join(out, `${pre}-fim.png`), mask }).catch(() => {})
+    await page.screenshot({ path: path.join(tmp, `${pre}-fim.png`), mask }).catch(() => {})
     await page.waitForTimeout(1500) // deixa os `requestfinished` pendentes assentarem antes de contar
 
     const janela = linhas.slice(nAntes)
@@ -196,11 +207,13 @@ export async function rodar(ramo: Ramo, falso: 500 | 429, segundos = 60): Promis
 
     if (postPerfil) parada = parada || `POST /api/profile ≠ 0 (${postPerfil}) — o perfil da audit existe`
 
-    gravar([
+    const urlFim = new URL(page.url()).pathname
+    const resumo = [
       `# CN ${pre} — ${fase} — ${new Date().toISOString()} · alvo ${BASE} · conta de audit · Chrome do sistema`,
       `resultado: ${parada ? `EXIT 1 — ${parada}` : 'EXIT 0'}`,
       controle,
       `interceptação: POST /api/auth/session → ${falso}${falso === 429 ? ' (Retry-After: 60)' : ''} no navegador, ${segundos} s depois do submit`,
+      'capturas: gravadas fora da árvore durante a medição e copiadas ao fim (div. 531)',
       `requests a octavia.rocks: ${prodAbortados} (abortados no navegador; o esperado é 0)`,
       `outros hosts (passaram): ${[...outrosHosts].map(([h, n]) => `${h} ×${n}`).join(' · ') || '(nenhum)'}`,
       '',
@@ -213,19 +226,22 @@ export async function rodar(ramo: Ramo, falso: 500 | 429, segundos = 60): Promis
       `  ${String(alertas.length).padStart(4)}  frase(s) em [role="alert"] ao fim`,
       `  ${String(pendentes).padStart(4)}  linha(s) sem resposta (status pendente) — o furo da div. 518 ficaria aqui, visível`,
       `  frase(s): ${alertas.length ? alertas.map((t) => `"${t}"`).join(' | ') : '(nenhuma)'}`,
-      `  URL ao fim: ${new URL(page.url()).pathname}`,
+      `  URL ao fim: ${urlFim}`,
       `  navegações (ms · caminho): ${navsJanela.map((n) => `${n.ms} ${n.caminho}`).join(' · ') || '(nenhuma)'}`,
       '',
       '## critério (H-I1-7 (d)/(e))',
       `  antes  — ≥ 50 voltas e ≥ 50 GET /api/profile: ${mostraLoop ? 'OBSERVADO' : 'não observado'}`,
       `  depois — 1 POST, 0 GET /api/profile, 0 navegações, 1 frase: ${cumpreDepois ? 'CUMPRE' : 'NÃO CUMPRE'}`,
-    ])
+    ]
     await browser.close()
+    gravar(resumo)
+    copiarCapturas()
     if (parada) { console.error(`CN ${pre}: EXIT 1 — ${parada}`); process.exit(1) }
     console.log(`CN ${pre} (${fase}): exit 0 — ver ${path.relative(process.cwd(), out)}/${pre}-resumo.txt`)
   } catch (e) {
-    gravar([`# CN ${pre} — ${fase} — EXIT 1 em "${passo}": ${String((e as Error)?.message ?? e)}`])
     await browser.close().catch(() => {})
+    gravar([`# CN ${pre} — ${fase} — EXIT 1 em "${passo}": ${String((e as Error)?.message ?? e)}`])
+    copiarCapturas()
     console.error(`CN ${pre}: exit 1 em "${passo}"`)
     process.exit(1)
   }
