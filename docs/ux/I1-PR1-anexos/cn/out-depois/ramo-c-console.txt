@@ -1,0 +1,9 @@
+# CN ramo-c (depois) — console, só error/warning (ms · tipo · texto)
+   4411  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+   4830  warning %c%s%c Server-side user: No session cookie found background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server  
+   5990  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+   6205  warning %c%s%c Server-side user: No session cookie found background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server  
+   7326  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+   7542  warning %c%s%c Server-side user: No session cookie found background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server  
+   8307  error   Failed to load resource: the server responded with a status of 429 (Too Many Requests)
+   8308  warning Failed to set session cookie: 429
