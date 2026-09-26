@@ -1,5 +1,7 @@
 # N3 — requisitos e aceites: faixas de largura
 
+> **Bloco encerrado em 2026-09-26; estado em [`N3-ENCERRAMENTO.md`](N3-ENCERRAMENTO.md).** Este documento fica como estava; a herança do §4 e dos §10–§12 tem destino no §10 do encerramento.
+>
 > **Bloco N3 · PR de desenho** (só docs). Data: 2026-09-24. Base: `origin/main` = `8e38e56` (merge da #324, o pre-check).
 > **O N3 não teve PRD separado; este documento faz esse papel.** Formato: o do [`PRD-TELA-2.md`](PRD-TELA-2.md) — todo requisito `T3-Rn` cita a fonte e tem *Aceite* verificável.
 > **Fontes**: [`N3-PRECHECK.md`](N3-PRECHECK.md) (N3-D0…D11, §3 a tabela por dump, §8 as perguntas), [`DESIGN-N3/README.md`](DESIGN-N3/README.md) (N3-D12…D25, a folha congelada, as medidas a conferir) e os congelados [`DESIGN-V1/`](DESIGN-V1/) e [`DESIGN-N2/`](DESIGN-N2/) (a faixa C).

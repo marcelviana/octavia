@@ -64,7 +64,7 @@ esta página no mesmo commit (regra 9 do `LOGS-OCTAVIA.md`, aplicada aqui).
 | tela | 2560 × 1600 px, densidade 360 → **fator 2,25** | idem | 1080 × 2400 px, densidade 420 → **fator 2,625** |
 | janela do app (paisagem) | 1137,8 × 663,1 dp; **639,1** abaixo da barra de 24 | 1137,8 × 711,1 dp; **627,1** entre as barras de 24 e 60 | 914,3 × 411,4 dp; **371,4** entre a de 24 e a de gestos de 16 |
 | janela do app (retrato, N3) | 711,1 × 1089,8 dp; **1065,8** abaixo da barra de 24 | 711,1 × 1137,8 dp; **1053,8** entre 24 e 60 | 411,4 × 914,3 dp; **874,3** entre 24 e 16 |
-| estado de repouso | bloqueio + tela de 30 s (div. 202); destravar é do Marcel | conta **de audit**, **em avião** (`airplane=1 wifi=0 data=0`) — divs. 200, 292 | sem conta: o S0 é o repouso (o login é do Marcel); rede ligada |
+| estado de repouso | bloqueio + tela de 30 s (div. 202); destravar é do Marcel | conta **de audit**, **em avião** (`airplane=1 wifi=0 data=0`) — divs. 200, 292 | sem conta: o S0 é o repouso (o login é do Marcel); rede ligada; **`accelerometer_rotation` lido 0 e 1 em sessões diferentes** (N3-PR1…PR6) — ler, não supor (div. 473) |
 
 As janelas de retrato e a do celular são do `N3-PRECHECK-anexos/B1-janelas.txt`
 (raiz e janela útil do dump do S1). Criar o celular:
@@ -91,9 +91,11 @@ rastro no AVD, sobe-se com `-no-snapshot-save`: o estado da sessão (rede, rota�
 cache do mock) some no boot seguinte. A data (`lastUpdateTime`) continua sendo
 conferida antes de medir.
 
-O canvas dos desenhos é 1138 × 627 dp, o pior caso (N2-D25). Retrato não tem
-composição — herança registrada em `N2-ENCERRAMENTO.md` §10.7, item 1; o N3
-mede o que isso custa (`N3-PRECHECK.md`).
+O canvas dos desenhos é o pior caso de cada faixa (N2-D25, N3-D8): **C** 1138 × 627 dp
+(paisagem, o congelado V1/N2), **B** 711 × 1054 (tablet em pé, implementada no N3),
+**A** 411 × 874 (celular em pé, desenhada no N3, implementação no N5) — `DESIGN-N3/`.
+*(Encerramento do N3, div. 473: aqui dizia "retrato não tem composição", o que deixou
+de valer na N3-PR6.)*
 
 ## Metro e mock
 
@@ -162,7 +164,10 @@ app parado: `adb exec-out run-as rocks.octavia.app cat files/octavia-<uid>/<arq>
 `files/`; e se regrava por `adb exec-in run-as rocks.octavia.app sh -c "cat >
 files/octavia-<uid>/<arq>" < <cópia>`, conferindo o `md5sum` dos quatro antes e
 depois. O `tar cf -` por `exec-out` sai truncado (div. 419), e um `tar` feito no
-macOS deixa arquivos AppleDouble `._*` no cache (div. 420). No fim: apagar de
+macOS deixa arquivos AppleDouble `._*` no cache (div. 420). **Os quatro `._*` que
+estão hoje em `files/octavia-<uid>/` do Tab** (163 B cada, de 2026-09-14 a
+2026-09-24) são sobras de uma restauração antiga por `tar` e **ficam onde estão, por
+decisão do Marcel** (N3-PR6c): a receita não os apaga nem os repõe. No fim: apagar de
 `files/` o que a fixture baixou e apagar as cópias do host.
 **O app tem uma segunda pasta de arquivos**, a de **demanda** (`cache/octavia-<uid>/files/`,
 `files.ts` `dirDemanda`), fora do `files/octavia-<uid>/` acima (N3-PR5, div. 444): antes de medir,
@@ -177,8 +182,9 @@ diante, a receita de guardar e regravar vale para ela também: o que a fixture d
   direito**: cobre o `apagar` do campo da S4 e do picker e controles da barra
   (divs. 199, 205, 317). Tocar ali abre o menu de desenvolvimento. Limpar campo
   com `KEYCODE_MOVE_END` + `DEL`. Só existe no dev client.
-  **P1 do N3 (N3-D25), hipótese de aparato, sem medida ainda**: em retrato o
-  FAB cobre controles da barra (o `buscar` de S1, o `apagar` do picker). A
+  **P1 do N3 (N3-D25), hipótese de aparato — medida em B, superfície por
+  superfície, nas N3-PR2…PR5 (abaixo); segue hipótese para A (N5)**. A hipótese, como
+  foi escrita na N3-PR1: em retrato o FAB cobre controles da barra (o `buscar` de S1, o `apagar` do picker). A
   N3-PR1 não capturou retrato novo (o G-N3 rodou sobre os dumps do pre-check);
   quem capturar retrato de B primeiro (a PR de S1) mede se o FAB some pelo menu
   do dev client ("Tools button") ou se o arnês toca pela margem. Até lá, alvo
@@ -227,6 +233,10 @@ diante, a receita de guardar e regravar vale para ela também: o que a fixture d
   arnês confirma folha fechada **e** `mInputShown=false` antes de cada toque.
 
 ## O estado de dados do G-inv (N3-PR1, div. 403; revisto na N3-PR2)
+
+**A base**: `N3-PRECHECK-anexos/B5-baseline/` para as telas de lista e do N2, e
+`N3-PRECHECK-anexos/B3-referencia-paisagem/` para o palco — **mock, a mesma fixture**
+(N3-D27, div. 401; regra 20). Os dumps do palco do W4-b3 são de prod e ficam como registro.
 
 O G-inv compara `bounds`, e geometria que depende de **dado** reprova como se
 fosse layout. Para dar idêntico à base, cada aparelho segue o caminho **dela**
