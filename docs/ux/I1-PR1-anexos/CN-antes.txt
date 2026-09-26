@@ -1,0 +1,129 @@
+# CN de tela na main (089f72c), antes do conserto — rastro verbatim, sem cor
+# $ NO_COLOR=1 pnpm exec vitest run --project web components/auth/__tests__/login-sessao-cn.test.tsx
+
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-i1-pr1
+
+ ❯ |web| components/auth/__tests__/login-sessao-cn.test.tsx (11 tests | 10 failed) 1281ms
+     × (i/ii) POST 500, usuário persistido: 1 POST, 0 GET /api/profile, 0 navegações, razão visível 95ms
+     × (i/ii) POST 500, login novo: 1 POST, 0 GET /api/profile, 0 navegações, razão visível 125ms
+     × (i/ii) POST 429 (Retry-After: 60), usuário persistido: 1 POST, 0 GET /api/profile, 0 navegações, razão visível 67ms
+     × (i/ii) POST 429 (Retry-After: 60), login novo: 1 POST, 0 GET /api/profile, 0 navegações, razão visível 125ms
+     × (i/ii) POST 401, usuário persistido: 1 POST, 0 GET /api/profile, 0 navegações, razão visível 68ms
+     × (i/ii) POST 401, login novo: 1 POST, 0 GET /api/profile, 0 navegações, razão visível 125ms
+     × (i/ii) POST rede, usuário persistido: 1 POST, 0 GET /api/profile, 0 navegações, razão visível 71ms
+     × (i/ii) POST rede, login novo: 1 POST, 0 GET /api/profile, 0 navegações, razão visível 127ms
+     × (b) cada razão tem a sua frase, e a do 429 leva o Retry-After 282ms
+     ✓ (iii) usuário persistido: 1 POST, navega a /dashboard uma vez, sem alerta 68ms
+     × (iii/a) login novo com o POST pendente: não navega nem lê o perfil antes do 2xx; navega uma vez depois 126ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 10 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — POST /api/auth/session falhando: uma falha é uma tela, não uma volta > (i/ii) POST 500, usuário persistido: 1 POST, 0 GET /api/profile, 0 navegações, razão visível
+ FAIL  |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — POST /api/auth/session falhando: uma falha é uma tela, não uma volta > (i/ii) POST 429 (Retry-After: 60), usuário persistido: 1 POST, 0 GET /api/profile, 0 navegações, razão visível
+ FAIL  |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — POST /api/auth/session falhando: uma falha é uma tela, não uma volta > (i/ii) POST 401, usuário persistido: 1 POST, 0 GET /api/profile, 0 navegações, razão visível
+ FAIL  |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — POST /api/auth/session falhando: uma falha é uma tela, não uma volta > (i/ii) POST rede, usuário persistido: 1 POST, 0 GET /api/profile, 0 navegações, razão visível
+AssertionError: expected { post: 1, getProfile: 1, …(1) } to deeply equal { post: 1, getProfile: +0, …(1) }
+
+- Expected
++ Received
+
+  {
+-   "getProfile": 0,
+-   "navegacoes": [],
++   "getProfile": 1,
++   "navegacoes": [
++     "/dashboard",
++   ],
+    "post": 1,
+  }
+
+ ❯ components/auth/__tests__/login-sessao-cn.test.tsx:180:10
+    178|         getProfile: conta('GET /api/profile'),
+    179|         navegacoes,
+    180|       }).toEqual({ post: 1, getProfile: 0, navegacoes: [] })
+       |          ^
+    181|       expect(textoDoAlerta()).not.toBe('')
+    182|     })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/10]⎯
+
+ FAIL  |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — POST /api/auth/session falhando: uma falha é uma tela, não uma volta > (i/ii) POST 500, login novo: 1 POST, 0 GET /api/profile, 0 navegações, razão visível
+ FAIL  |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — POST /api/auth/session falhando: uma falha é uma tela, não uma volta > (i/ii) POST 429 (Retry-After: 60), login novo: 1 POST, 0 GET /api/profile, 0 navegações, razão visível
+ FAIL  |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — POST /api/auth/session falhando: uma falha é uma tela, não uma volta > (i/ii) POST 401, login novo: 1 POST, 0 GET /api/profile, 0 navegações, razão visível
+ FAIL  |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — POST /api/auth/session falhando: uma falha é uma tela, não uma volta > (i/ii) POST rede, login novo: 1 POST, 0 GET /api/profile, 0 navegações, razão visível
+AssertionError: expected { post: 1, getProfile: 1, …(1) } to deeply equal { post: 1, getProfile: +0, …(1) }
+
+- Expected
++ Received
+
+  {
+-   "getProfile": 0,
+-   "navegacoes": [],
++   "getProfile": 1,
++   "navegacoes": [
++     "/dashboard",
++   ],
+    "post": 1,
+  }
+
+ ❯ components/auth/__tests__/login-sessao-cn.test.tsx:192:10
+    190|         getProfile: conta('GET /api/profile'),
+    191|         navegacoes,
+    192|       }).toEqual({ post: 1, getProfile: 0, navegacoes: [] })
+       |          ^
+    193|       expect(textoDoAlerta()).not.toBe('')
+    194|     })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/10]⎯
+
+ FAIL  |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — POST /api/auth/session falhando: uma falha é uma tela, não uma volta > (b) cada razão tem a sua frase, e a do 429 leva o Retry-After
+AssertionError: expected 1 to be 4 // Object.is equality
+
+- Expected
++ Received
+
+- 4
++ 1
+
+ ❯ components/auth/__tests__/login-sessao-cn.test.tsx:212:49
+    210|       vi.unstubAllGlobals()
+    211|     }
+    212|     expect(new Set(Object.values(textos)).size).toBe(falhas.length)
+       |                                                 ^
+    213|     expect(textos['429 (Retry-After: 60)']).toMatch(/\b60\b|\b1 min/)
+    214|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/10]⎯
+
+ FAIL  |web| components/auth/__tests__/login-sessao-cn.test.tsx > I1-PR1 CN — POST /api/auth/session 2xx: navega uma vez, e só depois do 2xx > (iii/a) login novo com o POST pendente: não navega nem lê o perfil antes do 2xx; navega uma vez depois
+AssertionError: expected { getProfile: 1, …(1) } to deeply equal { getProfile: +0, navegacoes: [] }
+
+- Expected
++ Received
+
+  {
+-   "getProfile": 0,
+-   "navegacoes": [],
++   "getProfile": 1,
++   "navegacoes": [
++     "/dashboard",
++   ],
+  }
+
+ ❯ components/auth/__tests__/login-sessao-cn.test.tsx:233:67
+    231|     // o POST saiu e ainda não respondeu
+    232|     expect(conta('POST /api/auth/session')).toBe(1)
+    233|     expect({ getProfile: conta('GET /api/profile'), navegacoes }).toEq…
+       |                                                                   ^
+    234| 
+    235|     await act(async () => { liberarSessao!() })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/10]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  10 failed | 1 passed (11)
+   Start at  12:57:09
+   Duration  2.16s (transform 162ms, setup 213ms, import 224ms, tests 1.28s, environment 331ms)
+
+# exit: 1
