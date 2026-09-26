@@ -1,0 +1,56 @@
+# gerado por: grafo do depcruise da A2 (dc-all.json); alcance a partir de toda app/api/**/route.ts (14) + middleware.ts; coluna 2 = se o arquivo TAMBÉM é alcançado por alguma page/layout/loading (server component ou cliente)
+# node -e '...reach([...routes, "middleware.ts"]) ...' (mesmo algoritmo do script-a2.txt, raízes trocadas)
+## (a) alcance do backend: 35 arquivos
+app/api/auth/session/route.ts	so-servidor
+app/api/content/[id]/route.ts	so-servidor
+app/api/content/route.ts	so-servidor
+app/api/health/route.ts	so-servidor
+app/api/profile/route.ts	so-servidor
+app/api/proxy/route.ts	so-servidor
+app/api/setlists/[id]/route.ts	so-servidor
+app/api/setlists/[id]/songs/order/route.ts	so-servidor
+app/api/setlists/[id]/songs/route.ts	so-servidor
+app/api/setlists/route.ts	so-servidor
+app/api/setlists/songs/[songId]/route.ts	so-servidor
+app/api/storage/delete/route.ts	so-servidor
+app/api/storage/list/route.ts	so-servidor
+app/api/storage/upload/route.ts	so-servidor
+lib/api-errors.ts	tambem-paginas
+lib/api-schemas.ts	so-servidor
+lib/api-validation-middleware.ts	so-servidor
+lib/content-data-contract.ts	so-servidor
+lib/content-types.ts	tambem-paginas
+lib/csp-nonce.ts	tambem-paginas
+lib/file-signatures.ts	so-servidor
+lib/firebase-admin.ts	tambem-paginas
+lib/firebase-server-utils.ts	tambem-paginas
+lib/logger.ts	tambem-paginas
+lib/protected-routes.ts	so-servidor
+lib/rpc-errors.ts	so-servidor
+lib/secure-auth-utils.ts	so-servidor
+lib/security-headers.ts	so-servidor
+lib/supabase-service.ts	tambem-paginas
+lib/supabase.ts	tambem-paginas
+lib/user-rate-limit.ts	tambem-paginas
+middleware.ts	so-servidor
+types/content.ts	tambem-paginas
+types/database.types.ts	tambem-paginas
+types/setlist.ts	so-servidor
+
+## (b) git ls-files supabase
+supabase/migrations/20260901102108_b6_setlist_songs_rpc.sql
+supabase/schema.dump.sql
+supabase/storage.dump.sql
+
+## (c) auth/dados do lado do servidor das PÁGINAS (fora do alcance das rotas; lido no grafo: importados só por page.tsx server components)
+lib/require-page-user.ts	← app/{add-content,content/[id],dashboard,library,performance,profile,setlists,settings}/page.tsx
+lib/content-service-server.ts	← app/{content/[id],dashboard,library,performance}/page.tsx
+
+## (d) configuração de servidor
+next.config.mjs	(headers(); gate tests/config/next-headers.test.ts)
+
+## (e) símbolos EXCLUSIVOS DO PALCO dentro de arquivo do núcleo (o grafo é por arquivo e não os vê) [lido]
+lib/content-service-server.ts:91	getSetlistByIdServer — único chamador: app/performance/page.tsx:36
+lib/protected-routes.ts:44	"/performance" em PROTECTED_PAGES
+lib/security-headers.ts:79-85	frame-src 'blob:' — comentário PERF-02: 'o modo performance renderiza PDF num <iframe> ... único iframe do app'
+lib/security-headers.ts:255	no-store para pathname que inclui '/performance'

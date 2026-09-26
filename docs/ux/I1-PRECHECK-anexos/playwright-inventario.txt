@@ -1,0 +1,63 @@
+# gerado por: os comandos abaixo, um por bloco
+# pnpm exec playwright --version
+Version 1.55.0
+
+# for f in $(find tests/ux-audit -name '*.ts' | sort); do printf '%s	%s
+' "$(grep -cE '^\s*(test|setup)(\.(skip|only|fixme))?\(' $f)" $f; done
+1	tests/ux-audit/auth.setup.ts
+1	tests/ux-audit/auth.smoke.spec.ts
+5	tests/ux-audit/fase-d/a-j1.spec.ts
+1	tests/ux-audit/fase-d/add13-14-metadados.spec.ts
+4	tests/ux-audit/fase-d/b-pdf.spec.ts
+3	tests/ux-audit/fase-d/c-offline.spec.ts
+4	tests/ux-audit/fase-d/cont01-02-monoespacado.spec.ts
+7	tests/ux-audit/fase-d/e-setlists.spec.ts
+7	tests/ux-audit/fase-d/f-library.spec.ts
+4	tests/ux-audit/fase-d/g-viewer.spec.ts
+2	tests/ux-audit/fase-d/g2-limiter-unico.spec.ts
+5	tests/ux-audit/fase-d/h-perf.spec.ts
+7	tests/ux-audit/fase-d/i-add.spec.ts
+1	tests/ux-audit/fase-d/i-verify.spec.ts
+0	tests/ux-audit/fase-d/recorder.ts
+1	tests/ux-audit/fase-d/rl-0-verify.spec.ts
+1	tests/ux-audit/fase-d/rl-13.spec.ts
+1	tests/ux-audit/fase-d/rl-auth.spec.ts
+1	tests/ux-audit/fase-d/set23-descricao.spec.ts
+1	tests/ux-audit/harvest-populated.spec.ts
+2	tests/ux-audit/harvest.spec.ts
+1	tests/ux-audit/perf02-gate.spec.ts
+0	tests/ux-audit/session-intercept.ts
+1	tests/ux-audit/set14-gate.spec.ts
+# soma: 61 chamadas test(/setup( em 22 arquivos .spec/.setup
+
+# grep -rnE 'browserName|test\.skip|test\.only|isMobile|devices\[|test\.describe\.configure|test\.fixme' tests/ux-audit
+tests/ux-audit/fase-d/e-setlists.spec.ts:407:      isMobile: true,
+tests/ux-audit/fase-d/e-setlists.spec.ts:542:      isMobile: true,
+tests/ux-audit/fase-d/cont01-02-monoespacado.spec.ts:153:      test.fixme(rotulo === 'tab', 'tab não renderiza no palco — achado novo, ver cabeçalho')
+tests/ux-audit/fase-d/i-verify.spec.ts:40:    isMobile: true,
+tests/ux-audit/fase-d/i-add.spec.ts:183:      isMobile: true,
+tests/ux-audit/fase-d/f-library.spec.ts:248:      isMobile: true,
+
+# grep -c '/performance' tests/ux-audit/*.ts tests/ux-audit/fase-d/*.ts | grep -v ':0$'   (specs que entram no palco — morrem ou encolhem com ele)
+tests/ux-audit/harvest-populated.spec.ts:4
+tests/ux-audit/harvest.spec.ts:1
+tests/ux-audit/perf02-gate.spec.ts:2
+tests/ux-audit/fase-d/a-j1.spec.ts:1
+tests/ux-audit/fase-d/c-offline.spec.ts:3
+tests/ux-audit/fase-d/b-pdf.spec.ts:3
+tests/ux-audit/fase-d/cont01-02-monoespacado.spec.ts:3
+tests/ux-audit/fase-d/g-viewer.spec.ts:2
+tests/ux-audit/fase-d/f-library.spec.ts:2
+tests/ux-audit/fase-d/h-perf.spec.ts:6
+tests/ux-audit/fase-d/recorder.ts:4
+
+# pnpm exec playwright test --config=playwright.ux-audit.config.ts --list 2>&1 | grep -E 'Error:|Total:' | sort | uniq -c
+   9 Error: ENOENT: no such file or directory, open 'tests/ux-audit/.auth/discovery.json'
+   1 Error: tests/ux-audit/.auth/discovery.json não existe — rode antes: pnpm tsx scripts/ux-audit/discover.ts
+   1 Total: 0 tests in 0 files
+
+# grep -nE 'playwright|e2e' .github/workflows/*.yml
+(nenhuma linha)
+# git log --format='%h %ad %s' --date=short -S'playwright' -- .github/workflows
+e6dec0c 2026-08-16 chore(ci): B1.0.1 — remoção da suíte E2E do CI (vermelha desde julho/2025) (#228)
+fc28758 2025-07-16 chore: enhance testing setup with Playwright integration

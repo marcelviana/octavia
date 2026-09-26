@@ -1,0 +1,193 @@
+# gerado por: node script-a456 dc-all.json palco-exclusivos <dir>  (script: script-a456.txt; grafo do mesmo depcruise da A2)
+# contagem por arquivo das superfícies (palco fora). Colunas:
+#  hex = /#[0-9a-fA-F]{3,8}/ · rgb/hsl() = /(rgba?|hsla?)\(/ · classe-paleta-tailwind = (bg|text|border|from|to|via|ring|fill|stroke|...)-<cor da paleta>(-NNN)
+#  tamanho-fonte = text-(xs|sm|base|lg|xl|Nxl) | text-[Npx] | fontSize: · espaco-classe = (p|m|gap|space)-N · raio-classe = rounded(-*)
+# totais (hex, rgb/hsl, paleta, fonte, espaço, raio): 186, 0, 1208, 365, 1003, 197
+# hex distintos mais frequentes (xargs grep -ohE '#[0-9a-fA-F]{3,8}' | sort | uniq -c | sort -rn):
+  37 #2E7CE4
+  30 #1A1F36
+  27 #6B7280
+  21 #E8E3DA
+  11 #F8F9FA
+   9 #A69B8E
+   9 #000000
+   8 #1E5BB8
+   7 #F2EDE5
+   6 #fffcf7
+   6 #fff9f0
+   3 #ffff00
+   2 #fff5e5
+   2 #F39C12
+   1 #ffa500
+   1 #ff00ff
+   1 #ff0000
+   1 #f59e0b
+   1 #8B7D6F
+   1 #00ffff
+   1 #00ff00
+   1 #0000ff
+
+arquivo	superficies	hex	rgb/hsl()	classe-paleta-tailwind	tamanho-fonte	espaco-classe	raio-classe
+app/add-content/page.tsx	upload	0	0	0	0	0	0
+app/content/[id]/edit/page.tsx	content-editor	15	0	2	1	9	4
+app/content/[id]/page.tsx	content-editor	0	0	0	0	0	0
+app/dashboard/page.tsx	content-lista	0	0	0	0	0	0
+app/forgot-password/page.tsx	auth	0	0	40	4	13	2
+app/layout.tsx	shell	1	0	0	0	0	0
+app/library/page.tsx	content-lista	0	0	0	0	0	0
+app/login/page.tsx	auth	0	0	2	0	0	0
+app/offline/page.tsx	outra	1	0	28	3	20	7
+app/page.tsx	outra	0	0	151	19	74	21
+app/privacy-policy/page.tsx	outra	0	0	5	9	20	1
+app/profile/page.tsx	outra	0	0	0	0	0	0
+app/setlists/page.tsx	setlists	0	0	0	0	0	0
+app/settings/page.tsx	outra	0	0	0	0	0	0
+app/setup/page.tsx	outra	0	0	35	13	30	8
+app/signup/confirm-email/page.tsx	auth	0	0	23	5	11	3
+app/signup/page.tsx	auth	0	0	26	6	16	12
+app/verify-email/page.tsx	auth	0	0	25	5	14	3
+components/ProfileForm.tsx	outra	0	0	34	7	15	2
+components/add-content-page-client.tsx	upload	4	0	0	0	1	1
+components/add-content.tsx	upload	0	0	0	0	0	0
+components/add-content/CompletionStep.tsx	upload	0	0	15	5	9	2
+components/add-content/ContentTypeSelector.tsx	upload	0	0	5	2	5	1
+components/add-content/DetailsStep.tsx	upload	0	0	5	2	5	0
+components/add-content/FileUploadZone.tsx	upload	0	0	13	2	7	2
+components/add-content/ImportModeSelector.tsx	upload	0	0	13	3	5	1
+components/add-content/ModeSelector.tsx	upload	0	0	25	5	7	2
+components/add-content/RefactoredAddContent.tsx	upload	0	0	9	1	6	2
+components/add-content/StepIndicatorComponent.tsx	upload	0	0	10	2	4	2
+components/add-content/upload-to-storage.ts	upload	0	0	0	0	0	0
+components/annotation-tools.tsx	content-editor	10	0	5	2	8	3
+components/auth/login-panel.tsx	auth	0	0	57	8	27	7
+components/auth/signup-panel.tsx	auth	0	0	60	6	27	4
+components/batch-preview.tsx	upload	0	0	3	0	10	1
+components/bottom-nav.tsx	content-lista,content-editor,upload,setlists,outra	0	0	7	1	7	1
+components/chord-editor.tsx	content-editor	0	0	7	4	19	2
+components/content-creator.tsx	upload	0	0	12	6	13	0
+components/content-edit-page-client.tsx	content-editor	0	0	0	0	0	0
+components/content-editor.tsx	content-editor	8	0	18	5	19	2
+components/content-page-client.tsx	content-editor	0	0	0	0	0	0
+components/content-viewer.tsx	content-editor	2	0	0	0	2	0
+components/content-viewer/ChordDisplay.tsx	content-editor	0	0	13	13	20	6
+components/content-viewer/ContentDisplay.tsx	content-editor	0	0	2	0	3	0
+components/content-viewer/ContentHeader.tsx	content-editor	0	0	24	3	8	1
+components/content-viewer/ContentSidebar.tsx	content-editor	0	0	31	20	25	2
+components/content-viewer/ContentToolbar.tsx	content-editor	0	0	16	2	9	0
+components/content-viewer/DeleteDialog.tsx	content-editor	0	0	0	0	0	0
+components/content-viewer/LyricsDisplay.tsx	content-editor	0	0	12	5	13	6
+components/content-viewer/SheetMusicDisplay.tsx	content-editor	0	0	12	3	7	4
+components/content-viewer/TabDisplay.tsx	content-editor	0	0	6	5	12	5
+components/dashboard-page-client.tsx	content-lista	0	0	0	0	0	0
+components/dashboard.tsx	content-lista	0	0	89	21	34	12
+components/delete-content-dialog.tsx	content-lista	0	0	0	0	0	0
+components/editors/content-type-editor.tsx	content-editor	1	0	0	0	1	0
+components/header.tsx	content-lista,content-editor,upload,setlists,outra	0	0	10	0	7	0
+components/library-page-client.tsx	content-lista	0	0	1	1	1	1
+components/library.tsx	content-lista	0	0	0	0	0	0
+components/library/LibraryEmptyState.tsx	content-lista	1	0	9	4	9	1
+components/library/LibraryErrorBoundary.tsx	content-lista	0	0	10	4	10	1
+components/library/LibraryHeader.tsx	content-lista	1	0	13	17	38	0
+components/library/LibraryLoadingState.tsx	content-lista	1	0	4	3	6	1
+components/library/LibraryPagination.tsx	content-lista	0	0	0	6	8	0
+components/library/OptimizedLibraryList.tsx	content-lista	3	0	15	8	23	2
+components/library/RefactoredLibrary.tsx	content-lista	2	0	0	0	3	0
+components/lyrics-editor.tsx	content-editor	0	0	1	1	3	0
+components/metadata-form.tsx	upload	0	0	0	0	0	0
+components/metadata-form/AdvancedMetadataFields.tsx	upload	0	0	12	7	9	0
+components/metadata-form/BasicMetadataFields.tsx	upload	0	0	12	6	7	0
+components/metadata-form/RefactoredMetadataForm.tsx	upload	0	0	27	2	14	0
+components/music-text.tsx	content-editor	0	0	0	0	0	0
+components/navigation-container.tsx	content-lista,content-editor,upload,setlists,outra	0	0	0	0	0	0
+components/pdf-viewer.tsx	content-editor	0	0	8	8	13	1
+components/profile-page-client.tsx	outra	2	0	0	0	2	0
+components/providers/session-provider.tsx	shell	0	0	0	0	0	0
+components/pwa-install-prompt.tsx	shell	0	0	43	9	29	6
+components/responsive-layout.tsx	content-lista,content-editor,upload,setlists,outra	1	0	0	0	3	0
+components/service-worker-wrapper.tsx	shell	0	0	0	0	0	0
+components/setlist-manager.tsx	setlists	6	0	0	1	5	2
+components/setlist/index.ts	setlists	0	0	0	0	0	0
+components/setlist/setlist-card.tsx	setlists	26	0	6	6	15	0
+components/setlist/setlist-details.tsx	setlists	31	0	14	8	26	2
+components/setlist/setlist-dialog.tsx	setlists	21	0	2	0	9	0
+components/setlist/setlist-list.tsx	setlists	15	0	4	4	12	2
+components/setlist/song-selection-dialog.tsx	setlists	25	0	11	4	24	1
+components/setlists-page-client.tsx	setlists	4	0	1	1	2	2
+components/settings-page-client.tsx	outra	4	0	0	0	1	1
+components/settings.tsx	outra	0	0	0	0	0	0
+components/settings/AudioSettings.tsx	outra	0	0	10	4	6	0
+components/settings/CloudSettings.tsx	outra	0	0	18	6	11	0
+components/settings/DisplaySettings.tsx	outra	0	0	9	8	9	0
+components/settings/RefactoredSettings.tsx	outra	0	0	15	2	8	0
+components/sidebar.tsx	content-lista,content-editor,upload,setlists,outra	0	0	12	1	8	0
+components/tab-editor.tsx	content-editor	1	0	5	7	21	1
+components/ui/accordion.tsx	content-editor,upload	0	0	0	1	3	0
+components/ui/alert.tsx	auth,upload	0	0	0	1	3	1
+components/ui/avatar.tsx	content-lista,content-editor,upload,setlists,outra	0	0	0	0	0	2
+components/ui/badge.tsx	content-lista,content-editor,setlists	0	0	0	1	2	1
+components/ui/button.tsx	auth,content-lista,content-editor,upload,setlists,shell,outra	0	0	0	1	5	3
+components/ui/card.tsx	auth,content-lista,content-editor,upload,setlists,shell,outra	0	0	0	2	6	1
+components/ui/checkbox.tsx	content-editor,upload,setlists	0	0	0	0	0	1
+components/ui/dialog.tsx	content-lista,content-editor,setlists	0	0	1	2	4	2
+components/ui/dropdown-menu.tsx	content-lista,content-editor,upload,setlists,outra	0	0	0	6	21	6
+components/ui/input.tsx	auth,content-lista,content-editor,upload,setlists,outra	0	0	0	3	2	1
+components/ui/label.tsx	auth,content-editor,upload,setlists,outra	0	0	0	1	0	0
+components/ui/pagination.tsx	content-lista	0	0	0	0	5	0
+components/ui/scroll-area.tsx	content-lista,setlists	0	0	0	0	2	2
+components/ui/select.tsx	auth,content-lista,content-editor,upload,outra	0	0	0	3	13	3
+components/ui/separator.tsx	content-editor	0	0	0	0	0	0
+components/ui/skeleton.tsx	outra	0	0	0	0	0	1
+components/ui/slider.tsx	content-editor,outra	0	0	0	0	0	2
+components/ui/sonner.tsx	shell	0	0	0	0	0	0
+components/ui/switch.tsx	outra	0	0	0	0	0	2
+components/ui/tabs.tsx	content-lista,outra	0	0	0	1	4	2
+components/ui/textarea.tsx	content-editor,upload,setlists,outra	0	0	0	2	2	1
+components/ui/toast.tsx	auth,content-lista,content-editor,upload,setlists,shell,outra	0	0	3	3	6	3
+components/ui/tooltip.tsx	content-lista,content-editor,upload,setlists,outra	0	0	0	1	2	1
+components/unified-metadata-editor.tsx	content-editor	0	0	18	7	34	3
+components/user-header.tsx	content-lista,content-editor,upload,setlists,outra	0	0	2	1	4	2
+contexts/firebase-auth-context.tsx	auth,content-lista,content-editor,upload,setlists,shell,outra	0	0	0	0	0	0
+hooks/use-content-actions.ts	content-lista	0	0	0	0	0	0
+hooks/use-debounce.ts	content-lista	0	0	0	0	0	0
+hooks/use-library-data.ts	content-lista	0	0	0	0	0	0
+hooks/use-navigation-actions.ts	content-lista	0	0	0	0	0	0
+hooks/use-service-worker.tsx	shell	0	0	0	0	0	0
+hooks/use-setlist-data.ts	setlists	0	0	0	0	0	0
+hooks/use-toast.ts	auth,content-lista,content-editor,upload,setlists,shell,outra	0	0	0	0	0	0
+hooks/useAddContentLogic.ts	upload	0	0	0	0	0	0
+hooks/useContentActions.ts	content-editor	0	0	0	0	0	0
+hooks/useContentFile.ts	content-editor	0	0	0	0	0	0
+hooks/useMetadataForm.ts	upload	0	0	0	0	0	0
+lib/api-errors.ts	auth,content-lista,content-editor,upload,setlists,outra	0	0	0	0	0	0
+lib/auth-manager.ts	content-lista,content-editor,upload,setlists	0	0	0	0	0	0
+lib/batch-import.ts	upload	0	0	0	0	0	0
+lib/content-service-server.ts	content-lista,content-editor	0	0	0	0	0	0
+lib/content-service.ts	content-lista,content-editor,upload,setlists	0	0	0	0	0	0
+lib/content-type-styles.ts	content-editor,upload	0	0	20	0	0	0
+lib/content-types.ts	content-lista,content-editor,upload,setlists	0	0	0	0	0	0
+lib/csp-nonce.ts	shell	0	0	0	0	0	0
+lib/debug.ts	auth,content-lista,content-editor,upload,setlists,shell,outra	0	0	0	0	0	0
+lib/error-boundary.tsx	content-editor,shell	0	0	12	3	8	1
+lib/firebase-admin.ts	auth,content-lista,content-editor,upload,setlists,outra	0	0	0	0	0	0
+lib/firebase-errors.ts	auth,content-lista,content-editor,upload,setlists,shell,outra	0	0	0	0	0	0
+lib/firebase-server-utils.ts	auth,content-lista,content-editor,upload,setlists,outra	0	0	0	0	0	0
+lib/firebase-session-cookies.ts	auth,content-lista,content-editor,upload,setlists,shell,outra	0	0	0	0	0	0
+lib/firebase.ts	auth,content-lista,content-editor,upload,setlists,shell,outra	0	0	0	0	0	0
+lib/library-utils.ts	content-lista	0	0	12	0	0	0
+lib/logger.ts	auth,content-lista,content-editor,upload,setlists,shell,outra	0	0	0	0	0	0
+lib/offline-cache.ts	auth,content-lista,content-editor,upload,setlists,shell,outra	0	0	0	0	0	0
+lib/offline-queue.ts	content-lista,content-editor,upload,setlists,shell	0	0	0	0	0	0
+lib/offline-setlist-cache.ts	auth,content-lista,content-editor,upload,setlists,shell,outra	0	0	0	0	0	0
+lib/pdf-utils.ts	upload	0	0	0	0	0	0
+lib/require-page-user.ts	content-lista,content-editor,upload,setlists,outra	0	0	0	0	0	0
+lib/setlist-service.ts	content-lista,content-editor,setlists	0	0	0	0	0	0
+lib/setup-storage.ts	outra	0	0	0	0	0	0
+lib/supabase-service.ts	content-lista,content-editor,upload,setlists,outra	0	0	0	0	0	0
+lib/supabase.ts	content-lista,content-editor,upload,setlists	0	0	0	0	0	0
+lib/user-rate-limit.ts	auth,content-lista,content-editor,upload,setlists,outra	0	0	0	0	0	0
+lib/utils.ts	auth,content-lista,content-editor,upload,setlists,shell,outra	0	0	0	0	0	0
+types/annotations.ts	content-editor	0	0	0	0	0	0
+types/content.ts	content-lista,content-editor,upload,setlists	0	0	28	0	0	0
+types/database.types.ts	content-lista,content-editor,upload,setlists,outra	0	0	0	0	0	0
+types/library.ts	content-lista	0	0	0	0	0	0
+types/performance.ts	setlists	0	0	0	0	0	0

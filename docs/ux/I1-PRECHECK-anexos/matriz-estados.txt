@@ -1,0 +1,416 @@
+# gerado por: LEITURA do código (sem comando único) — agente de leitura desta sessão, sobre a árvore c57d81f; conferência mecânica das citações arquivo:linha:
+#   210 citações distintas; 197 resolvem para UM arquivo e caem dentro do fim dele; 13 são 'page.tsx:N', que o texto situa pelo cabeçalho da seção (não resolvem por nome sozinho)
+#   pontos de maior peso reconferidos à mão nesta sessão: setlist-manager.tsx:7 (use-toast) × app/layout.tsx:127 (Toaster do sonner) × components/ui/toaster.tsx sem importador; FileUploadZone.tsx:112 '(max 50MB)' × lib/api-schemas.ts:259 (4 MiB)
+# [lido] — rastro de leitura, não medição dinâmica; o que a UI de fato mostra se prova na Fase B/aceite
+
+# A3 — Matriz de estados do web (leitura de código)
+
+Árvore lida: `/Users/marcelviana/projects/octavia-i1-precheck` (HEAD `c57d81f`). Só leitura; nenhum arquivo do repositório foi tocado, nenhum servidor rodado, nenhum `.env*` aberto. Modo palco/performance excluído.
+
+Convenções:
+- `arquivo:linha` = linha onde o estado **nasce** (o `if`/ternário/`setError`/`toast`). Quando o texto está em outra linha, as duas aparecem.
+- "sonner" = `toast` de `sonner` (o único `<Toaster>` montado: `app/layout.tsx:127`, importado de `components/ui/sonner`). "use-toast" = `toast` de `@/hooks/use-toast` (shadcn), cujo `<Toaster>` (`components/ui/toaster.tsx`) **não é montado em lugar nenhum**.
+- Não há `error.tsx`, `not-found.tsx`, `global-error.tsx` nem `loading.tsx` em `app/` (fora `app/performance/loading.tsx`). Toda exceção lançada em página server cai na **tela de erro padrão do Next**.
+
+---
+
+### auth
+
+Componentes de tela (`wc -l`):
+
+| arquivo | linhas |
+|---|---|
+| app/login/page.tsx | 22 |
+| components/auth/login-panel.tsx | 329 |
+| app/signup/page.tsx | 75 |
+| components/auth/signup-panel.tsx | 247 |
+| app/signup/confirm-email/page.tsx | 98 |
+| app/verify-email/page.tsx | 161 |
+| app/forgot-password/page.tsx | 154 |
+| (mensagens) lib/firebase-errors.ts | 230 |
+| (mensagens) contexts/firebase-auth-context.tsx | 484 |
+
+Todas as mensagens de erro do Firebase passam por `getErrorMessage` (`lib/firebase-errors.ts:217`), que mapeia código → texto (tabela em `lib/firebase-errors.ts:18-148`) e cai em `'Something went wrong. Please try again.'` (`lib/firebase-errors.ts:190`/`:229`).
+
+**Login** (`/login`)
+
+| estado | espécie | arquivo:linha | texto visível | alcançável? |
+|---|---|---|---|---|
+| vazio | — | não há no código | — | — |
+| carregando (submit) | botão | components/auth/login-panel.tsx:277 | "Signing in..." (spinner no botão) | sim |
+| carregando (Google) | botão | components/auth/login-panel.tsx:300 | "Loading..." | sim |
+| carregando (pós-login, criando/lendo perfil) | tela | components/auth/login-panel.tsx:166 / :171 | "Redirecting to dashboard..." + link "Click here if not redirected automatically" | sim |
+| erro — credencial | 401/auth | contexts/firebase-auth-context.tsx:272 → login-panel.tsx:139 / :267 | "Invalid email or password. Please check your credentials and try again." (auth/invalid-credential); "No account found with this email address…" ; "Incorrect password. Please try again." | sim (inline, caixa vermelha) |
+| erro — limite | 429 | lib/firebase-errors.ts:48 (via :272) | "Too many failed attempts. Please try again later." | sim |
+| erro — rede | rede/offline | lib/firebase-errors.ts:88 (via :272) | "Network error. Please check your connection and try again." | sim |
+| erro — Google popup | auth | contexts/firebase-auth-context.tsx:296 → login-panel.tsx:157 | "Sign-in was cancelled. Please try again." / "Sign-in popup was blocked. Please allow popups and try again." | sim |
+| erro — Firebase não configurado | genérico | contexts/firebase-auth-context.tsx:257 | "Authentication not configured" | só com config ausente |
+| erro — sem token pós-login | 401/auth | components/auth/login-panel.tsx:39-40 | "Unable to obtain authentication token" (na tela "Redirecting…", :178) | sim (raro) |
+| erro — /api/profile 401 após retry | 401/auth | components/auth/login-panel.tsx:112 e :116 | "Authentication failed. Please sign in again." | sim |
+| erro — /api/profile outro status (404/429/5xx) | 5xx/genérico | components/auth/login-panel.tsx:118-119 | "Failed to fetch profile" | sim (429 e 5xx indistintos) |
+| erro — criar perfil falhou | 5xx/genérico | components/auth/login-panel.tsx:69-70 → :123 | "Failed to create profile" | sim |
+| erro — `?error_description=` na URL | genérico | app/login/page.tsx:14-15 → login-panel.tsx:18 | o texto cru do parâmetro | **INALCANÇÁVEL?** nenhum código do app produz `error_description` (resto do fluxo Supabase) |
+| validação | formulário | components/auth/login-panel.tsx:234 / :259 (`required`, `type="email"`) | balão nativo do navegador | sim |
+| sucesso | redirect | components/auth/login-panel.tsx:74 / :110 | `window.location.href = '/dashboard'` (sem toast) | sim |
+
+**Signup** (`/signup`)
+
+| estado | espécie | arquivo:linha | texto visível | alcançável? |
+|---|---|---|---|---|
+| vazio | — | não há no código | — | — |
+| carregando | botão | components/auth/signup-panel.tsx:219 / :222 | "Creating account..." | sim |
+| validação — senhas diferentes | formulário | components/auth/signup-panel.tsx:33-34 | "Passwords do not match" | sim (inline) |
+| validação — campos | formulário | signup-panel.tsx:119, :134, :152, :189-190 (`required`, `minLength={6}`) | balão nativo | sim |
+| erro — e-mail já usado | validação | contexts/firebase-auth-context.tsx:356 → signup-panel.tsx:47-48 | "An account with this email already exists. Please sign in or use a different email." | sim |
+| erro — senha fraca | validação | lib/firebase-errors.ts:36-37 | "Password is too weak. Please choose a stronger password with at least 6 characters." | só se passar do `minLength` nativo |
+| erro — rede | rede/offline | lib/firebase-errors.ts:88 | "Network error. Please check your connection and try again." | sim |
+| erro — 429 | 429 | lib/firebase-errors.ts:48 | "Too many failed attempts. Please try again later." | sim |
+| erro — perfil no Supabase falhou (POST /api/profile !ok, inclui 429/5xx) | 5xx/genérico | contexts/firebase-auth-context.tsx:347 → :356 | "Failed to create profile in database" | sim |
+| erro — exceção | genérico | components/auth/signup-panel.tsx:59 | "An unexpected error occurred" | sim |
+| sucesso | redirect | components/auth/signup-panel.tsx:53-54 (senão :56 `/`) | vai para `/signup/confirm-email` (sem toast) | sim |
+
+**Confirm email** (`/signup/confirm-email`)
+
+| estado | espécie | arquivo:linha | texto visível | alcançável? |
+|---|---|---|---|---|
+| carregando (reenviar) | botão | app/signup/confirm-email/page.tsx:80 / :83 | "Sending..." | sim |
+| erro — reenviar | rede / 429 / genérico | page.tsx:23-24 (mensagem de contexts/firebase-auth-context.tsx:452) | texto mapeado (ex. "Too many failed attempts. Please try again later.") | sim |
+| erro — sem usuário | 401/auth | contexts/firebase-auth-context.tsx:442 | "Not authenticated or Firebase not configured" | sim (se a sessão cair) |
+| erro — exceção | genérico | page.tsx:29 | "An unexpected error occurred" | sim |
+| sucesso | inline | page.tsx:54 / :56 | "Verification email sent successfully! Please check your inbox." | sim |
+
+**Verify email** (`/verify-email`, destino do `requirePageUser` para e-mail não verificado — `lib/require-page-user.ts:36-37`)
+
+| estado | espécie | arquivo:linha | texto visível | alcançável? |
+|---|---|---|---|---|
+| carregando (auth) | tela | app/verify-email/page.tsx:71-72 | nada (`return null`) — e o `useEffect` de :63-65 manda para `/login` quando `user` ainda é nulo | sim (tela em branco) |
+| carregando (checar) | botão | page.tsx:112 / :115 | "Checking..." | sim |
+| carregando (reenviar) | botão | page.tsx:131 / :134 | "Sending..." | sim |
+| erro — ainda não verificado | validação | page.tsx:48 | "Email not verified yet. Please check your inbox and click the verification link." | sim |
+| erro — checar falhou | rede/genérico | page.tsx:51 | "Failed to check verification status" | sim |
+| erro — reenviar | rede/429/genérico | page.tsx:26-27 / :32 | texto mapeado / "An unexpected error occurred" | sim |
+| sucesso — reenviado | inline | page.tsx:94 / :96 | "Verification email sent successfully! Please check your inbox." | sim |
+| sucesso — verificado | redirect | page.tsx:45-46 | vai para `/dashboard` | sim |
+
+**Forgot password** (`/forgot-password`)
+
+| estado | espécie | arquivo:linha | texto visível | alcançável? |
+|---|---|---|---|---|
+| carregando | botão | app/forgot-password/page.tsx:128 / :131 | "Sending..." | sim |
+| erro — não configurado | genérico | page.tsx:26-27 | "Password reset is not available" | só com config ausente |
+| erro — Firebase (rede, 429, e-mail inválido…) | todas indistintas | page.tsx:35-36 | `err.message` **cru** do Firebase (ex. "Firebase: Error (auth/…)"); senão "Failed to send reset email. Please try again." | sim — **não passa por `getErrorMessage`** |
+| validação | formulário | page.tsx:113, :118 (`type="email"`, `required`) | balão nativo | sim |
+| sucesso | tela | page.tsx:42 / :50-52 | "Check Your Email" / "We've sent password reset instructions to {email}" | sim |
+
+---
+
+### content-lista
+
+Componentes de tela (`wc -l`):
+
+| arquivo | linhas |
+|---|---|
+| app/library/page.tsx | 54 |
+| components/library-page-client.tsx | 70 |
+| components/library.tsx (re-export) | 2 |
+| components/library/RefactoredLibrary.tsx | 172 |
+| components/library/LibraryHeader.tsx | 185 |
+| components/library/OptimizedLibraryList.tsx | 255 |
+| components/library/LibraryPagination.tsx | 82 |
+| components/library/LibraryEmptyState.tsx | 55 |
+| components/library/LibraryLoadingState.tsx | 22 |
+| components/library/LibraryErrorBoundary.tsx | 80 |
+| components/delete-content-dialog.tsx | 30 |
+| app/dashboard/page.tsx | 46 |
+| components/dashboard-page-client.tsx | 49 |
+| components/dashboard.tsx | 399 |
+| (casca comum) components/responsive-layout.tsx | 107 |
+| (casca comum) components/header.tsx | 96 |
+| (casca comum) components/navigation-container.tsx | 104 |
+| (casca comum) components/sidebar.tsx | 123 |
+| (casca comum) components/bottom-nav.tsx | 55 |
+| (lógica) hooks/use-library-data.ts | 274 |
+| (lógica) hooks/use-content-actions.ts | 168 |
+
+**Biblioteca** (`/library`)
+
+| estado | espécie | arquivo:linha | texto visível | alcançável? |
+|---|---|---|---|---|
+| carregando — chunk | tela | components/library-page-client.tsx:9 / :13 | "Loading library..." | sim (dynamic `ssr:false`) |
+| carregando — dados | tela | components/library/RefactoredLibrary.tsx:82-83 → :144; texto em LibraryLoadingState.tsx:12 / :15 | "Loading your music library..." / "Please wait while we fetch your content" | sim, só com lista vazia na tela |
+| carregando — revalidação com lista na tela | — | RefactoredLibrary.tsx:148 (lista segue visível) | nenhum indicador | sim |
+| vazio — primeira vez | — | RefactoredLibrary.tsx:77-78 → :146; LibraryEmptyState.tsx:35 / :40 | "No content found" / "Add your first piece of music content to get started" + botão "Add Content" | sim |
+| vazio — com busca/filtro | — | LibraryEmptyState.tsx:38-39 | "No content found" / "Try adjusting your search or filters" | sim |
+| erro — rede/401/429/5xx no fetch do cliente | todas indistintas | hooks/use-library-data.ts:140 → :151-155 (cai no cache IndexedDB) e :158-160 (sem cache: lista vazia) | nenhum texto de erro: mostra o cache, ou o **vazio de primeira vez** | sim — erro vira vazio |
+| erro — página fora do range | 400 | hooks/use-library-data.ts:144-145 | nenhum (volta para página 1) | sim |
+| erro — SSR (`getUserContentPageServer` lança) | 5xx/401 | app/library/page.tsx:35 | tela de erro padrão do Next (não há `error.tsx`) | sim |
+| erro — render | genérico | components/library/LibraryErrorBoundary.tsx:44 / :56 / :59 | "Something went wrong" / "There was an error loading your music library. Please try again." + "Try Again" | só por exceção de render |
+| erro — apagar (auth) | 401/auth | hooks/use-content-actions.ts:78-79 | "Authentication error. Please try logging out and back in." | **INALCANÇÁVEL?** `error` do hook nunca é lido por `RefactoredLibrary.tsx` (só `deleteDialog`/ações, :61-69) |
+| erro — apagar (404) | 404 | hooks/use-content-actions.ts:80-81 | "Content not found. It may have already been deleted." | **INALCANÇÁVEL?** idem |
+| erro — apagar (outros) | 5xx/429 | hooks/use-content-actions.ts:89 / :92 | "Failed to delete content: {msg}" / "Failed to delete content. Please try again." | **INALCANÇÁVEL?** idem; o diálogo fecha igual (:149-150) |
+| erro — favoritar | rede/genérico | hooks/use-content-actions.ts:122 | "Failed to update favorite status. Please try again." | **INALCANÇÁVEL?** idem |
+| confirmação — apagar | diálogo | components/delete-content-dialog.tsx:18 / :20 | "Delete Content" / "Are you sure you want to delete "{título}"? This action cannot be undone." | sim |
+| sucesso — apagar | sonner | hooks/use-content-actions.ts:66 | "\"{título}\" has been deleted" | sim |
+| sucesso — favoritar | sonner | hooks/use-content-actions.ts:112-115 | "\"{título}\" added to favorites" / "\"{título}\" removed from favorites" | sim |
+| limite — página | — | app/library/page.tsx:34 (`pageSize = 20`); paginação some com ≤1 página em LibraryPagination.tsx:23 | nenhum texto | sim |
+| sem rede | — | não há no código (nenhum indicador de offline na casca `responsive-layout`/`header`) | — | — |
+| validação | — | não há no código (busca vai por URL, header.tsx:30) | — | — |
+
+**Dashboard** (`/dashboard`)
+
+| estado | espécie | arquivo:linha | texto visível | alcançável? |
+|---|---|---|---|---|
+| carregando | — | não há no código (tudo SSR, sem `loading.tsx`) | — | — |
+| vazio — recentes | — | components/dashboard.tsx:184 → :221 (aba Overview) e :332 (aba Recent) | "No recent content" | sim |
+| vazio — favoritos | — | components/dashboard.tsx:276 (Overview) e :389 (Favorites) | "No favorite content" (ícone é o caractere ⭐) | sim |
+| vazio — contadores | — | components/dashboard.tsx:125, :139, :153, :167 (`stats?.x \|\| 0`) | "0" | sim |
+| erro — conteúdo (DB) | 5xx | lib/content-service.ts:128-130 | nenhum: devolve `[]` → "No recent content" | sim — erro vira vazio |
+| erro — stats | 5xx | lib/content-service.ts:682-689 | nenhum: devolve zeros | sim — erro vira zero |
+| erro — SSR lança (ex. usuário nulo) | 401/5xx | app/dashboard/page.tsx:24-27 | tela de erro padrão do Next | sim |
+| sem rede / validação / limite / sucesso | — | não há no código | — | — |
+
+---
+
+### content-editor/visualização
+
+Componentes de tela (`wc -l`):
+
+| arquivo | linhas |
+|---|---|
+| app/content/[id]/page.tsx | 28 |
+| components/content-page-client.tsx | 90 |
+| lib/error-boundary.tsx (ErrorBoundary da tela) | 111 |
+| components/content-viewer.tsx | 114 |
+| components/content-viewer/ContentHeader.tsx | 104 |
+| components/content-viewer/ContentToolbar.tsx | 120 (não renderiza: `showToolbar={false}` em content-page-client.tsx:84) |
+| components/content-viewer/ContentDisplay.tsx | 80 |
+| components/content-viewer/SheetMusicDisplay.tsx | 104 |
+| components/content-viewer/TabDisplay.tsx | 91 |
+| components/content-viewer/ChordDisplay.tsx | 131 |
+| components/content-viewer/LyricsDisplay.tsx | 61 |
+| components/content-viewer/ContentSidebar.tsx | 143 |
+| components/content-viewer/DeleteDialog.tsx | 45 |
+| components/pdf-viewer.tsx | 287 |
+| components/music-text.tsx | 38 |
+| app/content/[id]/edit/page.tsx | 115 |
+| components/content-edit-page-client.tsx | 59 |
+| components/content-editor.tsx | 203 |
+| components/editors/content-type-editor.tsx | 112 |
+| components/chord-editor.tsx | 335 |
+| components/tab-editor.tsx | 294 |
+| components/lyrics-editor.tsx | 53 |
+| components/annotation-tools.tsx | 272 |
+| components/unified-metadata-editor.tsx | 402 |
+| (lógica) hooks/useContentFile.ts | 78 |
+| (lógica) hooks/useContentActions.ts | 43 |
+
+**Visualização** (`/content/[id]`)
+
+| estado | espécie | arquivo:linha | texto visível | alcançável? |
+|---|---|---|---|---|
+| carregando — página | — | não há no código (SSR, sem `loading.tsx`) | — | — |
+| carregando — arquivo (Sheet) | — | hooks/useContentFile.ts:15 → SheetMusicDisplay.tsx:26 / :29 | "Loading..." | sim |
+| carregando — PDF | — | components/pdf-viewer.tsx:276 → :170-171 | "Loading PDF..." + "URL: {50 primeiros caracteres}..." | sim |
+| vazio — Sheet sem arquivo nem notação | — | SheetMusicDisplay.tsx:93 / :96 / :99 | "No sheet music available" / "Upload a PDF or image file to display sheet music" | sim |
+| vazio — Lyrics | — | LyricsDisplay.tsx:13 → :23 / :26 | "No lyrics available" / "Add lyrics to help with performance" | sim |
+| vazio — Tab | — | TabDisplay.tsx:26 → :33 em diante | **tablatura-fixture fixa** (E\|--0----3…) mostrada como se fosse conteúdo | sim — vazio sem aviso |
+| vazio — Chords | — | ChordDisplay.tsx:81 → :87-104 | **quatro acordes-fixture** (Am, F, C, G) com diagramas falsos | sim — vazio sem aviso |
+| vazio — notas | — | ContentSidebar.tsx:123 → :133 / :136 | "No performance notes available" / "Click Edit to add notes and performance tips" | sim (mas não há botão Edit nesta tela — ver abaixo) |
+| erro — 404 / de outro usuário | 404 | lib/content-service.ts:452-454 (`.single()` lança) ← app/content/[id]/page.tsx:25 | tela de erro padrão do Next | sim — sem tela própria |
+| erro — cache do arquivo | genérico | hooks/useContentFile.ts:49 → SheetMusicDisplay.tsx:31-33 | mensagem da exceção ou "Failed to load cached file" | sim |
+| erro — formato | validação | SheetMusicDisplay.tsx:76 / :79 | "Failed to load file. Please check the file format or try again later." | sim |
+| erro — PDF | rede/genérico | components/pdf-viewer.tsx:73-89 → :177 em diante | "Failed to load PDF" + detalhe: "PDF file is corrupted or inaccessible. Please try again." / "PDF file format error. Please try again." / "Cached PDF file is corrupted. Please refresh the page." / msg crua + "URL: …" + botão "Retry" | sim |
+| erro — render | genérico | lib/error-boundary.tsx:59 / :61 | "Something went wrong" + `error.message` ou "An unexpected error occurred"; botões "Try again" / "Reload page" | só exceção de render |
+| editar (inline) | — | components/content-page-client.tsx:50-51 / :72-77 ("Loading editor...", :12) | editor inline | **INALCANÇÁVEL?** `onEdit` chega em `ContentViewer` (content-viewer.tsx:23) e nunca é repassado a nenhum filho |
+| erro — salvar edição inline | 5xx | components/content-page-client.tsx:60-61 | nenhum (só `console.error`) | **INALCANÇÁVEL?** mesmo motivo |
+| apagar — diálogo | diálogo | content-viewer.tsx:107-112 / DeleteDialog.tsx:29-31 | "Delete Content" / "Are you sure you want to delete "{título}"? This…" | **INALCANÇÁVEL?** `handleDelete` (content-viewer.tsx:45) não é passado a nenhum botão |
+| apagar — sucesso/erro | sonner | hooks/useContentActions.ts:24 / :27 | "Content deleted successfully" / "Failed to delete content" | **INALCANÇÁVEL?** idem |
+| favoritar | local | hooks/useContentActions.ts:31-33 (TODO: sem API) | só muda o ícone; nada persiste, sem toast | sim — estado falso |
+| sem rede | — | não há no código (lê do cache só o arquivo, useContentFile.ts:29) | — | — |
+| sucesso | — | não há no código | — | — |
+
+**Edição** (`/content/[id]/edit`) — página client, **fora** de `PROTECTED_PAGES` (`lib/protected-routes.ts`); só o middleware otimista a guarda.
+
+| estado | espécie | arquivo:linha | texto visível | alcançável? |
+|---|---|---|---|---|
+| carregando — auth | tela | app/content/[id]/edit/page.tsx:60 / :65 | "Loading..." | sim |
+| carregando — conteúdo | tela | edit/page.tsx:77 / :82 | "Loading content for editing..." | sim |
+| carregando — chunk | — | edit/page.tsx:9 e content-edit-page-client.tsx:12 | "Loading editor..." | sim |
+| sem usuário | 401/auth | edit/page.tsx:72-73 | nada (`return null`) | sim (tela em branco) |
+| erro — carregar (404, 401, 429, 5xx, rede) | todas indistintas | edit/page.tsx:41 → :89 / :93-94 | título "Content Not Found" + "Failed to load content for editing." + "Go Back" / "Browse Library" | sim — rede e 5xx aparecem como "Not Found" |
+| erro — conteúdo nulo | 404 | edit/page.tsx:89 / :94 | "Content Not Found" / "The content you're trying to edit doesn't exist." | só se a API devolver corpo nulo |
+| alterações pendentes | — | components/content-editor.tsx:74-75 → :159-161 | "Unsaved changes" | sim — provavelmente já ao abrir (ver Observações) |
+| salvar desabilitado | — | content-editor.tsx:166 | botão "Save Changes" cinza | sim |
+| carregando — salvar | — | não há no código (botão não entra em estado de envio) | — | — |
+| erro — salvar (404/401/429/5xx/validação) | todas indistintas | components/content-edit-page-client.tsx:44-46 | sonner: "Failed to save changes" | sim |
+| sucesso — salvar | sonner + redirect | content-edit-page-client.tsx:42-43 | "Changes saved successfully" → `/library` | sim |
+| validação (título vazio etc.) | formulário | não há no código (UnifiedMetadataEditor sem `required`/erro) | só o 400 do servidor → "Failed to save changes" | — |
+| tipo sem editor | — | components/editors/content-type-editor.tsx:105-108 | "Editor for {tipo} is not yet implemented." | **INALCANÇÁVEL?** `normalizeContentType` cai em LYRICS no `default` (types/content.ts:140-141) |
+| "Last saved" | — | content-editor.tsx:151 | "Last saved: {hora atual}" | sim — texto falso (é a hora do render) |
+| sem rede | — | não há no código (updateContent enfileira offline em lib/content-service.ts:563, mas lança igual → "Failed to save changes") | — | — |
+
+---
+
+### upload/criação
+
+Componentes de tela (`wc -l`):
+
+| arquivo | linhas |
+|---|---|
+| app/add-content/page.tsx | 12 |
+| components/add-content-page-client.tsx | 69 |
+| components/add-content.tsx (re-export) | 1 |
+| components/add-content/RefactoredAddContent.tsx | 177 |
+| components/add-content/StepIndicatorComponent.tsx | 60 |
+| components/add-content/ContentTypeSelector.tsx | 77 |
+| components/add-content/ModeSelector.tsx | 100 |
+| components/add-content/ImportModeSelector.tsx | 83 |
+| components/add-content/FileUploadZone.tsx | 117 |
+| components/add-content/upload-to-storage.ts | 52 |
+| components/add-content/DetailsStep.tsx | 102 |
+| components/add-content/CompletionStep.tsx | 54 |
+| components/content-creator.tsx | 187 |
+| components/batch-preview.tsx | 148 |
+| components/metadata-form.tsx (re-export) | 1 |
+| components/metadata-form/RefactoredMetadataForm.tsx | 134 |
+| components/metadata-form/BasicMetadataFields.tsx | 109 |
+| components/metadata-form/AdvancedMetadataFields.tsx | 141 |
+| (lógica) hooks/useAddContentLogic.ts | 290 |
+| (lógica) hooks/useMetadataForm.ts | 112 |
+
+Os erros do `POST /api/storage/upload` e do `POST /api/content` chegam à UI como o campo `error` do corpo (`lib/api-errors.ts`): 400 → "Validation failed" (os `details` **não** aparecem), 401 → "Authentication required", 429 → "Rate limit exceeded", 500 → "File upload failed" / "Failed to create content".
+
+| estado | espécie | arquivo:linha | texto visível | alcançável? |
+|---|---|---|---|---|
+| carregando — auth | tela | components/add-content-page-client.tsx:43 / :48 | "Loading..." | sim |
+| carregando — chunk | — | add-content-page-client.tsx:11 | "Loading add content..." | sim |
+| sem usuário | 401/auth | add-content-page-client.tsx:55-56 | nada (`return null`) | improvável (página server já expulsa) |
+| vazio | — | não há no código | — | — |
+| carregando — upload | inline | components/add-content/FileUploadZone.tsx:80 / :89 | spinner + "Uploading file..." | sim |
+| carregando — parse do lote | — | hooks/useAddContentLogic.ts:138 (`isParsing`) | nenhum: `isParsing` não é devolvido pelo hook (:267-290) | sem indicador |
+| carregando — salvar | botão | components/metadata-form/RefactoredMetadataForm.tsx:125 / :128 | "Saving..." | sim |
+| carregando — importar lote | botão | components/batch-preview.tsx:137 / :140 | spinner no "Import All" | sim |
+| validação — extensão | formulário | FileUploadZone.tsx:30-32 | sonner: "Unsupported file type: {nome}. Allowed: .pdf, .docx, .txt" (ou .pdf, .png, .jpg, .jpeg para Sheet) | sim |
+| validação — título (criar) | formulário | components/content-creator.tsx:86-87 → :138-141 | "Title is required" | sim (inline) |
+| validação — título/artista (metadados) | formulário | hooks/useMetadataForm.ts:64-65 | "Title and Artist are required" | **INALCANÇÁVEL?** o botão já fica desabilitado sem título/artista (RefactoredMetadataForm.tsx:125) |
+| limite — tamanho de arquivo | limite | lib/api-schemas.ts:259 (4 MiB) → 400 → upload-to-storage.ts:44 → FileUploadZone.tsx:52 | sonner: "Validation failed" (a mensagem 'File exceeds the 4MB limit' fica nos `details`, que não aparecem). Acima de ~4,5 MB a plataforma devolve 413 sem JSON → "Upload failed with status 413" | sim — e a UI anuncia **"(max 50MB)"** em FileUploadZone.tsx:112 |
+| erro — upload 401 / sem token | 401/auth | upload-to-storage.ts:28-29 / :44 | sonner: mensagem do auth-manager ou "Authentication required to upload files" / "Authentication required" | sim |
+| erro — upload 429 | 429 | app/api/storage/upload/route.ts:19-20 → FileUploadZone.tsx:52 | sonner: "Rate limit exceeded" | sim |
+| erro — upload 5xx | 5xx | route.ts (internalError) → FileUploadZone.tsx:52 | sonner: "File upload failed" | sim |
+| erro — upload sem URL | 5xx | upload-to-storage.ts:48-49 | sonner: "Failed to get public URL for uploaded file" | raro |
+| erro — upload rede | rede/offline | FileUploadZone.tsx:52 | sonner: mensagem do `fetch` (ex. "Failed to fetch") | sim — texto técnico |
+| erro — lote sem músicas | validação | hooks/useAddContentLogic.ts:152-153 → :166 → RefactoredAddContent.tsx:118-124 | "No songs found in the file" (alerta inline, passo 1) | sim |
+| erro — parse do lote | genérico | useAddContentLogic.ts:166 | mensagem da exceção ou "Failed to parse file" | sim |
+| erro — salvar (401/429/400/5xx/rede) | todas pelo texto do servidor | useMetadataForm.ts:98-99 → RefactoredMetadataForm.tsx:58-61 | "Validation failed" / "Rate limit exceeded" / "Failed to create content" / "Failed to fetch" / "Failed to save content" | sim (inline) |
+| erro — salvar (cópia no hook) | — | useAddContentLogic.ts:259 → RefactoredAddContent.tsx:118 | mesmo texto | só aparece ao **voltar** para o passo 1 (erro velho) |
+| sem rede — salvar | rede/offline | lib/content-service.ts:521 (enfileira) e lança igual | "Failed to fetch" (erro), embora o POST tenha ido para a fila | sim — sucesso real mostrado como erro |
+| erro — lote, tipo inválido | validação | components/batch-preview.tsx:52 | sonner: "Invalid content type" | improvável |
+| erro — lote, salvar | todas indistintas | batch-preview.tsx:66-67 | sonner: "Failed to import songs" | sim |
+| sucesso — item (form) | inline | useMetadataForm.ts:97 → RefactoredMetadataForm.tsx:65-68 | "Content saved successfully!" | pisca: logo em seguida `router.push('/content/{id}')` (add-content-page-client.tsx:39) |
+| sucesso — item (passo 3) | tela | RefactoredAddContent.tsx:57-60 → CompletionStep.tsx:32 | "🎉 Done! Your music is now part of your library." / "\"{título}\" by {artista}" / "Your new content is now available in your library" | pisca antes do redirect |
+| sucesso — lote | sonner | batch-preview.tsx:63 | "{n} songs imported successfully" | sim |
+| sucesso — lote (passo 3) | tela | RefactoredAddContent.tsx:58-67 (ramo `Array.isArray`) | "{n} songs imported successfully" / "Import More" | **INALCANÇÁVEL?** o lote grava pela `BatchPreview` e nunca preenche `createdContent`; o passo 3 exige `createdContent` (:57), então a tela cai no passo 1 (:101) |
+| redirect sem id | — | add-content-page-client.tsx:35-37 | nada (só `console.error`) | improvável |
+
+---
+
+### setlists-lista
+
+Componentes de tela (`wc -l`):
+
+| arquivo | linhas |
+|---|---|
+| app/setlists/page.tsx | 14 |
+| components/setlists-page-client.tsx | 68 |
+| components/setlist-manager.tsx | 336 |
+| components/setlist/index.ts | 7 |
+| components/setlist/setlist-list.tsx | 134 |
+| components/setlist/setlist-card.tsx | 199 |
+| components/setlist/setlist-dialog.tsx | 214 |
+| (lógica) hooks/use-setlist-data.ts | 205 |
+
+**Todos os `toast` do `setlist-manager.tsx` usam `@/hooks/use-toast` (linha 7), cujo `<Toaster>` não está montado — nenhum deles aparece na tela.**
+
+| estado | espécie | arquivo:linha | texto visível | alcançável? |
+|---|---|---|---|---|
+| carregando — auth | tela | components/setlists-page-client.tsx:47 / :52 | "Loading your setlists..." | sim |
+| carregando — chunk | — | setlists-page-client.tsx:11 / :15 | "Loading setlists..." | sim |
+| carregando — auth (2ª guarda) | tela | components/setlist-manager.tsx:233 / :238 | "Loading..." | **INALCANÇÁVEL?** o pai (setlists-page-client.tsx:47) já retorna com o mesmo `isLoading` (useAuth === useFirebaseAuth, contexts/firebase-auth-context.tsx:485) |
+| carregando — dados | skeleton | components/setlist/setlist-list.tsx:44-53 | 3 blocos cinza pulsando, **sem texto** | sim (pula se houver cache, use-setlist-data.ts:61-64) |
+| vazio | — | setlist-list.tsx:75 / :82 / :84 | "No setlists yet" / "Create your first setlist to organize songs for your performances." + "Create Your First Setlist" | sim |
+| erro — rede/401/429/5xx sem cache | todas indistintas | hooks/use-setlist-data.ts:120-121 → setlist-list.tsx:57 / :61-62 | "Error loading setlists" / "Couldn't load setlists. Check your connection and try again." + "Try Again" (recarrega a página, :66) | sim |
+| sem rede sem cache | rede/offline | use-setlist-data.ts:76-80 | mesmo texto acima | sim |
+| sem rede com cache | rede/offline | use-setlist-data.ts:61-64 / :76-82 | lista do cache, **sem aviso** de que está desatualizada | sim |
+| erro — exceção geral | genérico | use-setlist-data.ts:139-142 | `err.message` ou "Failed to load data" | sim |
+| erro — sem uid | 401/auth | use-setlist-data.ts:87-89 | "Authentication required" | **INALCANÇÁVEL?** `load` já sai em :41 sem usuário; usuário Firebase sempre tem `uid` |
+| nenhuma selecionada | — | setlist-manager.tsx:282-286 | "Select a setlist to view its details" | sim |
+| validação — criar/editar (nome vazio) | formulário | components/setlist/setlist-dialog.tsx:82-84 e :102 → :204 | botão "Create Setlist"/"Update Setlist" desabilitado, sem mensagem; campo com `required` (:131) | sim |
+| carregando — criar/editar | botão | setlist-dialog.tsx:207 | spinner no botão | sim |
+| erro — criar/editar (401/429/400/5xx/rede) | todas | setlist-manager.tsx:122-128 | use-toast: "Failed to save setlist" + msg | **INALCANÇÁVEL?** Toaster não montado; e como o `catch` engole o erro, o diálogo fecha como se tivesse dado certo (setlist-dialog.tsx:88-89) |
+| sucesso — criar | use-toast | setlist-manager.tsx:119 | "Setlist created successfully" | **INALCANÇÁVEL?** Toaster não montado (a lista atualiza) |
+| sucesso — editar | use-toast | setlist-manager.tsx:99 | "Setlist updated successfully" | **INALCANÇÁVEL?** idem |
+| confirmação — apagar | diálogo | setlist-manager.tsx:317 / :320 / :322 | "Delete Setlist" / "Are you sure you want to delete "{nome}"? This action cannot be undone." | sim |
+| erro — apagar | todas | setlist-manager.tsx:150-155 | use-toast: "Failed to delete setlist" + msg | **INALCANÇÁVEL?** Toaster não montado; o diálogo fica aberto sem explicação |
+| sucesso — apagar | use-toast | setlist-manager.tsx:149 | "Setlist deleted successfully" | **INALCANÇÁVEL?** idem (o item some) |
+| compartilhar | — | components/setlist/setlist-card.tsx:99 | botão Share | **INALCANÇÁVEL?** `onShareSetlist` nunca é passado (setlist-manager.tsx:253-263) |
+| limite | — | não há no código (UI); o servidor limita 100 músicas só na criação em lote (lib/api-schemas.ts:345), que a UI não usa | — | — |
+
+### setlists-edição
+
+Componentes de tela (`wc -l`):
+
+| arquivo | linhas |
+|---|---|
+| components/setlist/setlist-details.tsx | 305 |
+| components/setlist/song-selection-dialog.tsx | 252 |
+| components/setlist/setlist-dialog.tsx (editar) | 214 |
+| components/setlist-manager.tsx (handlers) | 336 |
+
+| estado | espécie | arquivo:linha | texto visível | alcançável? |
+|---|---|---|---|---|
+| vazio — setlist sem músicas | — | components/setlist/setlist-details.tsx:181 / :185-187 | "No songs yet" / "Add songs from your library to build this setlist." + "Add Songs" | sim |
+| performance desabilitada | — | setlist-details.tsx:170 | "Start Performance" cinza sem explicação | sim |
+| adicionar — carregando lista | — | song-selection-dialog.tsx:162-165 | "Loading songs..." | **INALCANÇÁVEL?** `loading` nunca é passado (setlist-manager.tsx:306-314; padrão `false` em :58) |
+| adicionar — vazio | — | song-selection-dialog.tsx:167 / :171 / :176 | "No songs available" / "Add some songs to your library first." | sim — também quando todas as músicas **já estão** na setlist (`excludeSongIds`, setlist-manager.tsx:313), com texto enganoso |
+| adicionar — busca sem resultado | — | song-selection-dialog.tsx:171 / :175 | "No matching songs" / "Try adjusting your search terms." | sim |
+| adicionar — carregando | botão | song-selection-dialog.tsx:243 | botão desabilitado | sim |
+| adicionar — erro (401/429/5xx/rede) | todas | setlist-manager.tsx:193-198 | use-toast: "Failed to add songs" + msg | **INALCANÇÁVEL?** Toaster não montado; o diálogo fecha igual (song-selection-dialog.tsx:105-107) e a falha a meio do laço (:170-184) deixa a tela desalinhada com o servidor |
+| adicionar — sucesso | use-toast | setlist-manager.tsx:190-192 | "Added {n} song(s) to setlist" | **INALCANÇÁVEL?** idem |
+| remover — confirmação | — | não há no código (clique apaga direto, setlist-details.tsx:289) | — | — |
+| remover — botão | — | setlist-details.tsx:288 (`opacity-0 group-hover:opacity-100`; o mesmo no play por música, :277) | ícone de lixeira só no hover | em toque, invisível |
+| remover — erro | todas | setlist-manager.tsx:222-227 | use-toast: "Failed to remove song" + msg | **INALCANÇÁVEL?** Toaster não montado |
+| remover — sucesso | use-toast | setlist-manager.tsx:221 | "Song removed from setlist" | **INALCANÇÁVEL?** idem |
+| reordenar | — | setlist-details.tsx:102-110 (drag) → setlist-manager.tsx:277-279 (TODO, só `console.log`) | arrasto visual (`opacity-50`, :225), nada muda | sim — ação falsa |
+| editar metadados | — | ver linhas "criar/editar" em setlists-lista | — | — |
+| sem rede | — | não há no código (setlist-service não enfileira; falha cai no toast invisível) | — | — |
+| limite | — | não há no código | — | — |
+
+---
+
+### outras
+
+| superfície | estados (uma linha) |
+|---|---|
+| app/profile (`components/profile-page-client.tsx` 84, `components/ProfileForm.tsx` 205) | carregando = skeleton sem texto (profile-page-client.tsx:58); sem usuário = `null` (:74); salvar = "Updating..." (ProfileForm.tsx:181); erro único para tudo = sonner "Failed to update profile. Please try again." (:49, :63); sucesso = sonner "Profile updated successfully!" (:51) + redirect ao dashboard. |
+| app/settings (`components/settings-page-client.tsx` 45, `settings/RefactoredSettings.tsx` 75 + Audio 66/Cloud 108/Display 83) | carregando = "Loading settings..." (settings-page-client.tsx:29); nenhum erro, vazio ou sucesso; as chaves vivem só em `useState` (RefactoredSettings.tsx:11) — nada persiste. |
+| app/offline (page.tsx 172) | tela fixa "You're Offline" (:56); listas de cache só aparecem se houver itens (:84, :117) — sem vazio próprio; "Retry" consulta `/api/health` e, se online com resposta não-ok, o botão fica girando para sempre (`setIsRetrying(false)` só no `catch`, :39-41). |
+| app/setup (page.tsx 182) | carregando = spinner (:83); erro = "Error" + "Failed to create bucket: {msg}" / "Error: {msg}" (:28, :34); sucesso = "Success!" + "Storage bucket "content-files" is ready! You can now upload sheet music files." (:23). Página administrativa, pública. |
+| app/privacy-policy (page.tsx 112) | estática; sem estados. |
+| app/page.tsx — home (350) | estática (marketing); sem estados, sem checagem de sessão. |
+
+---
+
+## Observações
+
+1. **Dois sistemas de toast, um só montado.** `app/layout.tsx:127` monta só o `Toaster` do sonner. O `setlist-manager.tsx` (linha 7) usa `@/hooks/use-toast` (shadcn), sem `<Toaster>` em lugar nenhum: **todo sucesso e todo erro de setlist (criar, editar, apagar, adicionar, remover) é invisível**. Com os `catch` engolindo o erro, os diálogos de criar/editar e de adicionar fecham como se tivesse dado certo. `hooks/use-service-worker.tsx` e `lib/offline-cache.ts` também usam `use-toast`, então os avisos deles também não aparecem.
+2. **Erro vira vazio.** Biblioteca (use-library-data.ts:151-160) e dashboard (content-service.ts:128-130, :682-689) transformam falha de rede/401/429/5xx em "No content found"/"No recent content"/"0". Só as setlists distinguem erro de vazio ("nunca o empty state de primeiro uso", use-setlist-data.ts:78-79).
+3. **Um erro genérico para várias espécies.** A edição de conteúdo mostra "Content Not Found" para rede, 401, 429 e 5xx (edit/page.tsx:41). Salvar a edição dá sempre "Failed to save changes". A lista de setlists dá "Check your connection" também para 401/429/5xx. No login, "Failed to fetch profile" junta 429 e 5xx.
+4. **Texto técnico cru chega ao usuário.** "Validation failed" (sem os `details`), "Rate limit exceeded", "Upload failed with status 413", "Failed to fetch", "Failed to create profile in database", `err.message` do Firebase em forgot-password (sem `getErrorMessage`), "URL: …" no erro e no carregando do PDF, e `error.message` no ErrorBoundary.
+5. **O limite anunciado está errado.** FileUploadZone.tsx:112 diz "(max 50MB)"; o teto real é 4 MiB (lib/api-schemas.ts:259). Estourar dá "Validation failed" ou "Upload failed with status 413", nunca a frase do limite. Não há checagem de tamanho no cliente.
+6. **Vazio falso na visualização.** Tab e Chords vazios mostram fixtures (tablatura e 4 acordes) como se fossem conteúdo (TabDisplay.tsx:33 em diante, ChordDisplay.tsx:87-104). Lyrics e Sheet têm vazio de verdade.
+7. **Ações mortas ou falsas na UI.** Na visualização, editar inline, apagar e o diálogo não são alcançáveis (content-viewer.tsx:23, :45), e favoritar não persiste (useContentActions.ts:33). Em setlists, reordenar é um TODO (setlist-manager.tsx:277-279), o Share nunca aparece, o `loading` do seletor de músicas nunca chega, e o `handleSelectSetlist` de setlists-page-client.tsx:37-39 aponta para `/setlist/{id}`, rota que não existe (e também não é usado). No editor, "Last saved" mostra a hora do render (content-editor.tsx:151) e o badge lê `content.type`, campo que a linha do banco não tem (content-editor.tsx:147), então sai vazio.
+8. **"Unsaved changes" provavelmente já ao abrir.** content-editor.tsx:75 compara o estado normalizado (`null` → `""`) com o conteúdo cru; qualquer campo nulo (album, bpm…) já conta como alteração. O botão Save não tem estado de envio.
+9. **Carregando e erro sem texto.** Skeleton das setlists (setlist-list.tsx:44-53) e do perfil (profile-page-client.tsx:58) não têm texto. `return null` deixa a tela em branco em verify-email (:71-72), na edição (:72-73), em add-content (:55-56) e em setlists (:59-61). Revalidar a biblioteca não tem indicador. Não há nenhum indicador global de offline na casca (`responsive-layout`/`header`).
+10. **Toast vs inline não seguem regra.** Auth, metadados e o erro do passo 1 do add-content são inline. Upload, salvar edição, apagar/favoritar na biblioteca e perfil usam toast (sonner). Setlists usam toast invisível. O erro de salvar do add-content existe duas vezes (inline no form e cópia velha no passo 1). Offline ao salvar conteúdo mostra erro, embora o POST tenha ido para a fila (content-service.ts:521).
+11. **Sem telas de 404/erro/carregando do App Router.** Conteúdo inexistente ou de outro usuário em `/content/[id]` (e qualquer exceção SSR em library/dashboard) cai na tela padrão do Next.
+12. **Idioma.** Toda a UI está em inglês. O mapa `lib/firebase-errors.ts` já tem `translationKey`, mas nada o consome.

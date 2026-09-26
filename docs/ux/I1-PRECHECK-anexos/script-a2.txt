@@ -1,0 +1,27 @@
+// anexo do I1-PRECHECK: texto do script usado na A2 (roda com: node <arquivo>.mjs dc-all.json <dir>). Rastro, não código do app.
+// A2 — alcance do palco sobre o grafo do dependency-cruiser (JSON)
+import fs from 'node:fs'
+const j = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'))
+const local = (s) => !s.includes('node_modules') && /^(app|components|hooks|lib|contexts|types|tests|__tests__|middleware)/.test(s)
+const isTest = (s) => /(^tests\/|^__tests__\/|\.test\.|\.spec\.|\.bench\.)/.test(s)
+const adj = new Map()
+for (const m of j.modules) if (local(m.source)) adj.set(m.source, m.dependencies.map(d => d.resolved).filter(local))
+const reach = (roots) => { const seen = new Set(); const st = [...roots]; while (st.length) { const x = st.pop(); if (seen.has(x)) continue; seen.add(x); for (const y of adj.get(x) || []) if (!isTest(y)) st.push(y) } return seen }
+const all = [...adj.keys()]
+const isRoot = (s) => s === 'middleware.ts' || /^app\/.*\/?(page|layout|loading|route|error|not-found)\.tsx?$/.test(s)
+const palcoRoots = all.filter(s => isRoot(s) && s.startsWith('app/performance/'))
+const outrasRoots = all.filter(s => isRoot(s) && !s.startsWith('app/performance/'))
+const P = reach(palcoRoots), O = reach(outrasRoots)
+const prod = all.filter(s => !isTest(s))
+const exclusivos = prod.filter(s => P.has(s) && !O.has(s)).sort()
+const compart = prod.filter(s => P.has(s) && O.has(s)).sort()
+const orfaos = prod.filter(s => !P.has(s) && !O.has(s)).sort()
+const tests = all.filter(isTest).sort()
+const excl = new Set(exclusivos)
+const tRows = tests.map(t => { const dir = (adj.get(t) || []).filter(y => !isTest(y)); const r = new Set(); for (const d of dir) for (const x of reach([d])) r.add(x); const toca = [...r].filter(x => excl.has(x)); const soPalco = dir.length > 0 && dir.every(d => excl.has(d)); return { t, dir: dir.length, toca: toca.length, soPalco } })
+const out = process.argv[3]
+fs.writeFileSync(`${out}/exclusivos`, exclusivos.join('\n') + '\n')
+fs.writeFileSync(`${out}/compart`, compart.join('\n') + '\n')
+fs.writeFileSync(`${out}/orfaos`, orfaos.join('\n') + '\n')
+fs.writeFileSync(`${out}/testes`, tRows.map(r => `${r.soPalco ? 'SÓ-PALCO' : r.toca ? 'TOCA-PALCO' : 'fora'}\t${r.t}\timports-diretos=${r.dir}\texclusivos-alcançados=${r.toca}`).join('\n') + '\n')
+console.log({ modulosLocais: all.length, prod: prod.length, testes: tests.length, palcoRoots, outrasRoots: outrasRoots.length, P: [...P].length, O: [...O].length, exclusivos: exclusivos.length, compart: compart.length, orfaos: orfaos.length, testesSoPalco: tRows.filter(r => r.soPalco).length, testesTocam: tRows.filter(r => !r.soPalco && r.toca).length })

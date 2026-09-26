@@ -1,0 +1,45 @@
+# gerado por: o mesmo comando de palco-exclusivos.txt (script-a2.txt)
+# COMPARTILHADOS = alcançados pelo palco E por outra raiz. n=22
+components/ui/button.tsx
+components/ui/card.tsx
+lib/api-errors.ts
+lib/auth-manager.ts
+lib/content-service-server.ts
+lib/content-service.ts
+lib/content-types.ts
+lib/debug.ts
+lib/firebase-admin.ts
+lib/firebase-server-utils.ts
+lib/firebase.ts
+lib/logger.ts
+lib/offline-queue.ts
+lib/require-page-user.ts
+lib/setlist-service.ts
+lib/supabase-service.ts
+lib/supabase.ts
+lib/user-rate-limit.ts
+lib/utils.ts
+types/content.ts
+types/database.types.ts
+types/performance.ts
+
+# ÓRFÃOS (alcançados por nenhuma raiz, nem do palco) — só para registro, não são do palco. n=19
+components/library/index.ts
+components/ui/alert-dialog.tsx
+components/ui/aspect-ratio.tsx
+components/ui/breadcrumb.tsx
+components/ui/calendar.tsx
+components/ui/collapsible.tsx
+components/ui/popover.tsx
+components/ui/progress.tsx
+components/ui/resizable.tsx
+components/ui/sheet.tsx
+components/ui/table.tsx
+components/ui/toaster.tsx
+components/ui/toggle.tsx
+contexts/sidebar-context.tsx
+lib/__tests__/api-test-helpers.ts
+lib/__tests__/custom-matchers.ts
+lib/test-utils/api-test-helpers.ts
+lib/test-utils/supabase-mock-factory.ts
+types/pwa.d.ts

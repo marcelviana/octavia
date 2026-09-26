@@ -1,0 +1,26 @@
+# gerado por: pnpm exec depcruise --config .dependency-cruiser.cjs --output-type json app components hooks lib contexts types middleware.ts tests __tests__ > dc-all.json && node script-a2 dc-all.json <saida>   (script: script-a2.txt)
+# raízes do palco: app/performance/page.tsx, app/performance/loading.tsx; demais raízes: 33 (toda page/layout/loading/route fora de app/performance + middleware.ts)
+# EXCLUSIVOS = alcançados só a partir das raízes do palco (testes fora do alcance). n=23
+app/performance/loading.tsx
+app/performance/page.tsx
+components/optimized-performance-mode.tsx
+components/performance-mode/empty-state.tsx
+components/performance-mode/header-controls.tsx
+components/performance-mode/loading-state.tsx
+components/performance-mode/memory-stats.tsx
+components/performance-mode/navigation-controls.tsx
+components/performance-mode/optimized-content-display.tsx
+components/performance-mode/performance-warning.tsx
+components/performance-page-client.tsx
+hooks/use-content-loading.ts
+hooks/use-content-renderer.ts
+hooks/use-keyboard-shortcuts.ts
+hooks/use-performance-controls.ts
+hooks/use-performance-effects.ts
+hooks/use-performance-monitoring-ui.ts
+hooks/use-performance-navigation.ts
+hooks/use-songs-transformation.ts
+hooks/use-wake-lock.ts
+lib/advanced-content-cache.ts
+lib/memory-management.ts
+lib/performance-monitor.ts

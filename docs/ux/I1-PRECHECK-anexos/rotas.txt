@@ -1,0 +1,44 @@
+# gerado por: find app -name 'page.tsx' -o -name 'route.ts' -o -name 'layout.tsx' -o -name 'loading.tsx' -o -name 'error.tsx' -o -name 'not-found.tsx' -o -name 'template.tsx' | sort ; ls middleware.ts
+# (sha do levantamento: c57d81f3f481293585459a1f689c56133f354264)
+app/add-content/page.tsx
+app/api/auth/session/route.ts
+app/api/content/[id]/route.ts
+app/api/content/route.ts
+app/api/health/route.ts
+app/api/profile/route.ts
+app/api/proxy/route.ts
+app/api/setlists/[id]/route.ts
+app/api/setlists/[id]/songs/order/route.ts
+app/api/setlists/[id]/songs/route.ts
+app/api/setlists/route.ts
+app/api/setlists/songs/[songId]/route.ts
+app/api/storage/delete/route.ts
+app/api/storage/list/route.ts
+app/api/storage/upload/route.ts
+app/content/[id]/edit/page.tsx
+app/content/[id]/page.tsx
+app/dashboard/page.tsx
+app/forgot-password/page.tsx
+app/layout.tsx
+app/library/page.tsx
+app/login/page.tsx
+app/offline/page.tsx
+app/page.tsx
+app/performance/loading.tsx
+app/performance/page.tsx
+app/privacy-policy/page.tsx
+app/profile/page.tsx
+app/setlists/page.tsx
+app/settings/page.tsx
+app/setup/page.tsx
+app/signup/confirm-email/page.tsx
+app/signup/page.tsx
+app/verify-email/page.tsx
+middleware.ts
+
+# find app \( -name 'page.tsx' -o -name 'route.ts' -o -name 'layout.tsx' -o -name 'loading.tsx' \) | wc -l
+      34
+# find app -name page.tsx | wc -l
+      18
+# find app -name route.ts | wc -l
+      14
