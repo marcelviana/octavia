@@ -281,7 +281,7 @@ perigoso: um instrumento que mede **mais** do que a coisa medida.
 | 25 | **div. 238** (N2-PR3; o escopo era a 229, N2-PR2) | o **`gate:a20` estendido ao `packages/core/src/frases.ts`** | "o texto de falha da tela 2 está sob o G4". O gate **lia o arquivo e examinava ZERO literais**: 24 arquivos e **72** literais, o mesmo número de antes de o `frases.ts` entrar. As posições da varredura são as do JSX, e o `FRASES` é um objeto chaveado. Com a posição `EXTRAS: valor de chave`: **100** literais, 0 acusações, e o controle negativo ad hoc (três frases trocadas por inglês) acusou. **Gate que lê e não examina é instrumento quebrado** — e é por isso que o `a20` imprime "literais examinados", não "arquivos lidos" (regra 4) |
 | 26 | **div. 282** (N2-PR5) | o **`gate:icones`**: o coletor lê cada estado de um ícone em UMA linha do `dados.ts` | "todo ícone da tela 2 é cobrado contra o anexo D". A primeira forma da `alca`, escrita em várias linhas, passou com **0 acusações e "4/6 cobrados"** — e o `apagar-setlist` da N2-PR4 **estava assim desde que entrou**: só o `inerte` dele era comparado. O desenho estava certo, mas quem dizia isso era a sorte, não o gate. Regra nova `[legível]`: entrada sem `normal` numa linha é ACUSADA; CN ad hoc com 2 acusações. É o 22 no coletor: o que ficou de fora não foi uma população, foi uma **forma de escrever** a mesma entrada |
 | 27 | **div. 294** (N2-PR5) | o **Metro com `CI=1`**, que não observa o disco | "o aparelho está rodando o conserto". Duas tentativas de conserto da div. 286 rodaram o **bundle velho** e "reprovaram" — mediram nada. Achado por `curl …/index.bundle \| grep -c LinhaFlutuante` → `0`. **É o mesmo mecanismo da div. 127 (W1), que já estava escrito aqui, na regra 4** — *"com `CI=1` o Metro não relê o disco"*. O caso não é o instrumento: é **o registro que existia e não estava onde quem subiu o Metro lê** — o 8 e o 20 outra vez. Daí a regra 13 e o [`APARATO.md`](APARATO.md) |
-| 28 | **div. 461** (N3-PR6b; o (b) nasce na N3-PR6c) | o **G-N3**, calibrado em (e) e (d′) — texto que some e texto que encolhe — mais o 4 dp; o (b) corte do pre-check ficou de fora na N3-PR1, *"o G5/G6 da T3-R5 são outro gate"* | "a faixa B não corta nada". O G5/G6 mede **alvo tocável**, e a fileira de marcas da S5 não é texto nem alvo: com 60 músicas ela pedia 895 dp numa janela de 711,1, e 12 marcas saíam da tela **sem gate nenhum ver** — os 102 pares do consolidado passavam com (e)=0. **Quem a viu foi um estado do V1 (`S5-n-grande`) que nenhum roteiro do bloco alcançava**, e a hipótese estava escrita desde o pre-check (H-N3-3), derivada e nunca medida, porque a fixture tinha 8. Um critério que o instrumento de origem tinha e a cópia deixou de fora não some: fica esperando o estado que o exerce. O (b) volta ao G-N3, e o controle dele é o do (e): o mesmo número do `B3-inventario.jsonl`, dump a dump |
+| 28 | **div. 461** (N3-PR6b; o (b) nasce na N3-PR6c) | o **G-N3**, calibrado em (e) e (d′) — texto que some e texto que encolhe — mais o 4 dp; o (b) corte do pre-check ficou de fora na N3-PR1, *"o G5/G6 da T3-R5 são outro gate"* | "a faixa B não corta nada". O G5/G6 mede **alvo tocável**, e a fileira de marcas da S5 não é texto nem alvo: com 60 músicas ela pedia 895 dp numa janela de 711,1, e 12 marcas saíam da tela **sem gate nenhum ver** — os 102 pares do consolidado passavam com (e)=0. **Quem a viu foi um estado do V1 (`S5-n-grande`) que nenhum roteiro do bloco alcançava**, e a hipótese estava escrita desde o pre-check (H-N3-3), derivada e nunca medida, porque a fixture tinha 8. Um critério que o instrumento de origem tinha e a cópia deixou de fora não some: fica esperando o estado que o exerce. O (b) volta ao G-N3, e o controle dele é o do (e): o mesmo número do `B3-inventario.jsonl`, dump a dump**Segundo exemplo** (acrescentado no encerramento do N3, div. 468): **o picker de antes da N3-E18** (div. 445). Ali o G-N3 **viu** o estado — o título sumido é (e)=2 —, mas o que tirava função era o `Tentar de novo` **cortado na borda** da janela de 711,1 (84 dp visíveis), e esse corte nenhum gate via: não é texto que some, e o alvo cortado tinha mais de 48 dp. Com o (b), os mesmos dumps dão **(b)=6** (`picker-estado-1`, `picker-adicionar-1` e o `Tentar de novo` na borda, nos dois aparelhos — o CN-B4 de `N3-PR6c-anexos/cn-n3pr6c-commit1.txt`). Um defeito, dois sintomas: o gate pegou o que tinha critério para pegar |
 
 > **O 19 é o 15 outra vez, e a segunda vez muda o que a primeira parecia ser.** Quando o
 > 15 apareceu, o texto acima o chamou de *"a primeira vez no projeto em que o instrumento
@@ -552,6 +552,74 @@ mostrando a setlist apagada: o cache estava certo, a raiz não era avisada, e S1
 o que a raiz tem. **O aceite é no aparelho**, e o G6 mede o que o músico vê
 (`resource-id` e texto por estado), não o que o log diz que aconteceu. Um CN verde no
 `native-tela` também não substitui o aparelho: ele prova árvore, não tela.
+
+### As regras que o N3 firmou — 16 a 23
+
+*(Encerramento do N3, 2026-09-26; fonte: `N3-ENCERRAMENTO.md` §5.)* Numeradas na
+sequência das do N2. A 18 nasceu no W4-b3 e entra no catálogo aqui (div. 469). A 22 e a
+23 são do segundo commit do encerramento (decisão do Marcel, 2026-09-26).
+
+**16. Check vermelho no CI: classificar antes de agir.** *(Decisão do Marcel,
+2026-09-25; div. 432.)* **(a) árvore** — o commit quebrou algo; **(b) runner** — a
+mesma árvore passaria de novo; **(c) defeito** que os gates locais não pegaram. Sempre
+com o log (`gh pr checks`, `gh run view <id>`, `--log-failed`). **Um rerun só prova
+(b)**, e só junto de 5/5 local e do `diff` mostrando que a PR não toca o caminho —
+nunca sozinho, nunca um segundo rerun. (c) se conserta em commit novo, gate primeiro.
+Texto operacional: [`APARATO.md`](APARATO.md), "Ferramentas".
+
+**17. "Passa" sem estados não é passa.** *(Origem: N3-E18, div. 445; N3-E20, div.
+461.)* Uma superfície que "passa" numa faixa passou **no estado que se mediu**. O
+picker "passava" em B no estado base e quebrava na falha e no limite; a S5 "passava"
+com 8 músicas e transbordava com 19. Dizer que uma tela passa é dizer em **quais
+estados** — os transversais (sem rede, salvo-não-relido, falhou, limite, acima de
+100) e os de **dado** (N grande, título longo, item inválido) —, e o que não se
+mediu é hipótese com dono, não "passa". As duas hipóteses já estavam escritas no
+pre-check (H-N3-3, H-N3-4), derivadas e nunca medidas.
+
+**18. Push de docs só depois do APK verde.** *(Decisão do Marcel, 2026-09-23; div.
+381, W4-b3.)* O H1 só pula o APK quando o último APK da PR já é `success`: um push
+de docs com o APK anterior em curso custa um APK inteiro (13m18s na #323). No N3,
+os seis pushes de docs das PRs de código subiram depois do verde e saíram
+`skipped` (`N3-ENCERRAMENTO.md` §7).
+
+**19. Medir pela régua antes de implementar o que a folha estimou.** *(N3-D23,
+N3-D26.)* A folha estima larguras que ainda não estão em tela nenhuma (`[estimado]`,
+`[soma]`), e estima com os tamanhos que viu, não com os tokens do app (div. 409).
+Antes de a primeira tela mudar, a régua de desenvolvimento mede cada uma com o
+estilo do app, em ordem, e a diferença > 4 dp vira errata **antes** de virar
+layout — foram nove de doze na N3-PR1 (N3-E3…E11), e nenhuma tirou folga abaixo de
+zero. O controle da régua é o régua × dump (13 de 13). Texto operacional:
+[`APARATO.md`](APARATO.md), "A régua de desenvolvimento".
+
+**20. A base de um gate de invariância é reproduzível: mock, não prod.** *(N3-D27;
+div. 401.)* Um dump de prod carrega o dado da conta (a largura de cada título entra
+no `bounds`) e não se tira de novo sem ler prod. A base do G-inv é a do mock, com a
+fixture do projeto; os dumps de prod ficam como registro. E o estado de **dado** da
+base também se reproduz, aparelho por aparelho (div. 403; `APARATO.md`, "O estado de
+dados do G-inv").
+
+**21. Tokens por faixa; nenhuma aritmética de largura em tela.** *(N3-D28; div.
+406.)* O que varia por faixa é token no `theme.ts` (três jogos, C = os de hoje); a
+faixa se decide num ponto só (`faixa.ts`, o único arquivo com 700 e 960, T3-R1); a
+tela pede `faixas[useFaixa()]` e desenha. Nenhum `width < …` em componente — a regra
+de componente é herança do iOS (N3-D24). O conserto da div. 461 foi um token (C 900 ·
+B 663), não uma conta.
+
+**22. O encerramento de cada bloco acrescenta as corridas do bloco ao
+`CI-FAIXA.md` e recalcula a referência; um bloco não encerra com a série
+desatualizada.** *(Decisão do Marcel, 2026-09-26; div. 467.)* A regra da div. 80
+(número de CI com `n`) só vale se a série estiver em dia, e ninguém tinha a tarefa de
+pô-la em dia: do W4-b2 ao fim do N3 a série ficou parada na 100ª, e o encerramento do
+N3 achou dezoito corridas fora dela (W4-b3 e N3). Agora a tarefa tem dono e momento.
+Texto operacional: [`CI-FAIXA.md`](CI-FAIXA.md), "Como acrescentar uma linha".
+
+**23. "A próxima PR que tocar o arquivo" não é destino; todo item de herança tem
+bloco.** *(Decisão do Marcel, 2026-09-26; divs. 471, 472.)* Um destino que depende de
+alguém passar por ali é uma aposta: a div. 390 (a citação `App.tsx:206` no
+`StageScreen.tsx`) e o `W4-ENCERRAMENTO.md` §7.6 (o `X3` do `Picker.tsx`) tinham esse
+destino, as PRs do N3 tocaram os dois arquivos, e nenhuma corrigiu — o prompt não
+pedia, e o item não estava na lista de ninguém. Herança se escreve com o **bloco** que
+a recebe (N5, W5, bloco D…), e o bloco a lista no pre-check.
 
 ### A regra de método que o padrão implica
 
