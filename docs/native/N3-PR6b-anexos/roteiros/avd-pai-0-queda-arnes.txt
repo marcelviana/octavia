@@ -1,0 +1,5 @@
+FALHA S4b S3avulsa invalidos n60 S1d S1a: 'S4b S3avulsa invalidos n60 S1d S1a'
+20:26:37 avião=0 (emulator-5554)
+20:26:39 mock modo=normal vazio=False
+capturas=0 falhas=1
+  S4b S3avulsa invalidos n60 S1d S1a: 'S4b S3avulsa invalidos n60 S1d S1a'

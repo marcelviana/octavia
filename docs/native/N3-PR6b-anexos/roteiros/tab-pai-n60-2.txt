@@ -1,0 +1,7 @@
+22:59:01 mock normal com setlists-60.json / content-60.json
+22:59:16 toque canto de setlist-00000001 @ 96,420
+22:59:45 toque 'song-60' @ 1902,1307 (RX2N8000F3D)
+22:59:53 toque 'borda-avancar' @ 2368,737 (RX2N8000F3D)
+N3P6B-S5-S5-n-grande-tab-pai mCurrentRotation=ROTATION_90 png=116076 xml=34998 b8f368cae911
+23:00:09 mock modo=normal vazio=False
+capturas=1 falhas=0

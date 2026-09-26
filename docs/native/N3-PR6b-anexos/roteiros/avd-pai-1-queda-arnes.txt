@@ -1,0 +1,32 @@
+FALHA S4b: adb shell settings put system user_rotation : Bad arguments
+22:43:15 avião=0 (emulator-5554)
+22:43:17 mock modo=normal vazio=False
+FALHA S3avulsa: adb shell settings put system user_rotation : Bad arguments
+22:43:25 avião=0 (emulator-5554)
+22:43:27 mock modo=normal vazio=False
+22:43:28 mock normal com setlists-invalidos.json / content-invalidos.json
+FALHA invalidos: adb shell settings put system user_rotation : Bad arguments
+22:43:37 avião=0 (emulator-5554)
+22:43:38 mock modo=normal vazio=False
+22:43:40 mock normal com setlists-60.json / content-60.json
+FALHA n60: adb shell settings put system user_rotation : Bad arguments
+22:43:48 avião=0 (emulator-5554)
+22:43:50 mock modo=normal vazio=False
+22:43:54 avião=1 (emulator-5554)
+22:43:56 store apagado em files/octavia-<uid>: antes ['content.json', 'files', 'files-index.json', 'setlists.json'] → depois ['content.json', 'files', 'files-index.json', 'setlists.json']
+FALHA S1d: adb shell settings put system user_rotation : Bad arguments
+22:44:04 avião=0 (emulator-5554)
+22:44:06 mock modo=normal vazio=False
+22:44:08 mock modo=atraso vazio=False
+22:44:09 store apagado em files/octavia-<uid>: antes ['content.json', 'files', 'files-index.json', 'setlists.json'] → depois ['content.json', 'files', 'files-index.json', 'setlists.json']
+FALHA S1a: adb shell settings put system user_rotation : Bad arguments
+22:44:17 avião=0 (emulator-5554)
+22:44:19 mock modo=normal vazio=False
+FALHA fecho: adb shell settings put system user_rotation : Bad arguments
+capturas=0 falhas=6
+  S4b: adb shell settings put system user_rotation : Bad arguments
+  S3avulsa: adb shell settings put system user_rotation : Bad arguments
+  invalidos: adb shell settings put system user_rotation : Bad arguments
+  n60: adb shell settings put system user_rotation : Bad arguments
+  S1d: adb shell settings put system user_rotation : Bad arguments
+  S1a: adb shell settings put system user_rotation : Bad arguments

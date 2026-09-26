@@ -1,0 +1,10 @@
+Fri Sep 25 23:05:06 -03 2026
+reverse: []
+    lastUpdateTime=2026-09-24 14:00:01
+desligado sem salvar (-no-snapshot-save)
+-rw-r--r--@ 1 marcelviana  staff  881129137 Sep 24 14:00 ~/.android/avd/octavia_tab32.avd/snapshots/default_boot/ram.bin
+portas: 0
+.env: ls: <árvore>/apps/native/.env: No such file or directory
+List of devices attached
+RX2N8000F3D	device
+

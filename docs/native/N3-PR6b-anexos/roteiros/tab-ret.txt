@@ -1,0 +1,31 @@
+22:54:21 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+22:54:26 toque 'campo-busca' @ 917,152 (RX2N8000F3D)
+N3P6B-S4-S4b-sem-resultados-tab-ret mCurrentRotation=ROTATION_0 png=107272 xml=15967 b8e5784999b7
+22:54:43 toque 'fechar-busca' @ 108,152 (RX2N8000F3D)
+22:54:59 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+22:55:04 toque 'campo-busca' @ 917,152 (RX2N8000F3D)
+22:55:10 toque 'Segunda do ensaio' @ 741,654 (RX2N8000F3D)
+N3P6B-S3-S3-avulsa-tab-ret mCurrentRotation=ROTATION_0 png=499674 xml=25758 ce7b85e12ebc
+22:55:26 mock normal com setlists-invalidos.json / content-invalidos.json
+22:55:41 toque canto de setlist-00000001 @ 96,474
+N3P6B-S2-S2-invalidos-tab-ret mCurrentRotation=ROTATION_0 png=283425 xml=56713 647742a64b41
+N3P6B-S2-S2-invalidos-rolada-tab-ret mCurrentRotation=ROTATION_0 png=311489 xml=62536 be2ff39adc39
+22:56:13 toque 'song-9' @ 800,1988 (RX2N8000F3D)
+N3P6B-S3-S3-nobody-tab-ret mCurrentRotation=ROTATION_0 png=156935 xml=24160 a0a050e8b47f
+22:56:28 mock modo=normal vazio=False
+22:56:30 mock normal com setlists-60.json / content-60.json
+22:56:45 toque canto de setlist-00000001 @ 96,474
+22:57:13 toque 'song-60' @ 800,2267 (RX2N8000F3D)
+22:57:21 toque 'borda-avancar' @ 1480,1244 (RX2N8000F3D)
+N3P6B-S5-S5-n-grande-tab-ret mCurrentRotation=ROTATION_0 png=114648 xml=31115 105ba42be135
+22:57:37 mock modo=normal vazio=False
+22:57:41 avião=1 (RX2N8000F3D)
+22:57:42 store apagado em files/octavia-<uid>: antes ['content.json', 'files', 'files-index.json', 'setlists.json'] → depois ['files']
+N3P6B-S1-S1d-offline-sem-cache-tab-ret mCurrentRotation=ROTATION_0 png=165984 xml=21711 381e27364426
+22:58:06 avião=0 (RX2N8000F3D)
+22:58:17 mock modo=atraso vazio=False
+22:58:19 store apagado em files/octavia-<uid>: antes ['content.json', 'files', 'files-index.json', 'setlists.json'] → depois ['files']
+22:58:24 s1a na tela 5.3 s depois de abrir (o mock segura 45 s)
+N3P6B-S1-S1a-sincronizando-tab-ret mCurrentRotation=ROTATION_0 png=102790 xml=16899 5bf15d1ec0fe
+22:58:34 mock modo=normal vazio=False
+capturas=8 falhas=0

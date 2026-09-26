@@ -1,0 +1,5 @@
+localhost:8788 1
+octavia.rocks 0
+N3-E17 3
+N3-E18 3
+linhaFalha: 138.7 1

@@ -1,0 +1,105 @@
+$ python3 docs/native/N3-PR6-anexos/instrumentos/g5g6-todos.py docs/native/N3-PR6b-anexos/dumps-pai docs/native/N3-PR6b-anexos/dumps-ret
+G5/G6 — 7 estados, quatro colunas: tab pai · tab ret · avd pai · avd ret
+
+## S1-S1a-sincronizando
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `buscar` | 171.1 × 57.8 | 171.1 × 58.2 | 171.1 × 57.8 | 171.1 × 58.2 |
+  | `criar-setlist` | 152.0 × 57.8 | 152.0 × 58.2 | 152.0 × 57.8 | 152.0 × 58.2 |
+
+## S1-S1d-offline-sem-cache
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `buscar` | 171.1 × 57.8 | 171.1 × 58.2 | 171.1 × 57.8 | 171.1 × 58.2 |
+  | `criar-setlist` | 152.0 × 57.8 | 152.0 × 58.2 | 152.0 × 57.8 | 152.0 × 58.2 |
+  | `tentar` | 222.2 × 56.0 | 222.2 × 56.0 | 222.2 × 56.0 | 222.2 × 56.0 |
+
+## S2-S2-invalidos
+  G5 · tab ret: song-8 663.1 × 21.8 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: remover-7 48.0 × 44.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd pai: remover-8 48.0 × 44.9 — cortado pela rolagem (div. 291), não reprova
+  G5 · avd ret: song-8 663.1 × 9.8 — cortado pela rolagem (div. 291), não reprova
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `buscar` | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 | 210.2 × 57.8 |
+  | `picker-abrir` | 188.9 × 48.0 | 136.0 × 48.0 | 188.9 × 48.0 | 136.0 × 48.0 |
+  | `remover-<n>` | 48.0 × 48.0 ×8 | 48.0 × 48.0 ×7 | 48.0 × 48.0 ×6 · 48.0 × 44.9 ×2 | 48.0 × 48.0 ×7 |
+  | `reordenar` | 143.1 × 48.0 | 143.1 × 48.0 | 143.1 × 48.0 | 143.1 × 48.0 |
+  | `setlist-apagar` | 166.7 × 48.0 | 119.6 × 48.0 | 166.7 × 48.0 | 119.6 × 48.0 |
+  | `setlist-editar` | 193.8 × 48.0 | 193.8 × 48.0 | 193.8 × 48.0 | 193.8 × 48.0 |
+  | `song-<n>` | 536.9 × 116.0 ×6 · 536.9 × 91.1 ×2 | 663.1 × 116.0 ×7 · 663.1 × 21.8 | 536.9 × 116.0 ×6 · 536.9 × 79.1 ×2 | 663.1 × 116.0 ×7 · 663.1 × 9.8 |
+  | `voltar` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## S3-S3-avulsa
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `auto-scroll` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `borda-avancar` | 170.7 × 479.1 | 106.7 × 881.8 | 170.7 × 467.1 | 106.7 × 869.8 |
+  | `borda-voltar` | 170.7 × 479.1 | 106.7 × 881.8 | 170.7 × 467.1 | 106.7 × 869.8 |
+  | `busca` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `indice` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `sair` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `tema` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `zoom-mais` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `zoom-menos` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+
+## S3-S3-nobody
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `auto-scroll` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `borda-avancar` | 170.7 × 479.1 | 106.7 × 881.8 | 170.7 × 467.1 | 106.7 × 869.8 |
+  | `borda-voltar` | 170.7 × 479.1 | 106.7 × 881.8 | 170.7 × 467.1 | 106.7 × 869.8 |
+  | `busca` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `indice` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `sair` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `tema` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `zoom-mais` | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `zoom-menos` | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 | 65.8 × 65.8 |
+
+## S4-S4b-sem-resultados
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `apagar` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `campo-busca` | 900.0 × 48.0 | 473.3 × 48.0 | 900.0 × 48.0 | 473.3 × 48.0 |
+  | `fechar-busca` | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## S5-S5-n-grande
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `borda-voltar` | 170.7 × 479.1 | 106.7 × 881.8 | 170.7 × 467.1 | 106.7 × 869.8 |
+  | `sair` | 118.7 × 64.0 | 118.7 × 64.0 | 118.7 × 64.0 | 118.7 × 64.0 |
+  | `voltar-inicio` | 227.1 × 64.0 | 227.1 × 64.0 | 227.1 × 64.0 | 227.1 × 64.0 |
+
+estados: 7 · células (estado × coluna com dump): 28 de 28
+
+G5: todo alvo ≥ 48 dp ✓ · G6: todo alvo com testID ✓
+exit 0
+
+# os dumps ROLADOS da S2-invalidos (as linhas 9 e 10), fora do G5/G6 acima porque o instrumento pula '-rolada':
+# os alvos < 48 são linhas cortadas pela borda de CIMA da lista de músicas (y 176,0), que o instrumento não reconhece (só a de baixo)
+== N3P6B-S2-S2-invalidos-rolada-avd-pai.xml  lista de músicas y 176.0 → 651.1 (dos 2 ScrollView que contêm song-9, o mais interno)
+  remover-3  y 176.0 → 221.3  h 45.3  ← cortada pela borda de CIMA da lista (div. 291)
+  remover-4  y 176.0 → 221.3  h 45.3  ← cortada pela borda de CIMA da lista (div. 291)
+  song-9     y 511.1 → 627.1  h 116.0
+  remover-9  y 545.3 → 593.3  h 48.0
+  song-10    y 511.1 → 627.1  h 116.0
+  remover-10 y 545.3 → 593.3  h 48.0
+== N3P6B-S2-S2-invalidos-rolada-avd-ret.xml  lista de músicas y 176.0 → 1077.8 (dos 2 ScrollView que contêm song-9, o mais interno)
+  song-3     y 176.0 → 185.8  h 9.8  ← cortada pela borda de CIMA da lista (div. 291)
+  remover-3  y 176.0 → 152.0  h -24.0  ← cortada pela borda de CIMA da lista (div. 291)
+  song-9     y 813.8 → 929.8  h 116.0
+  remover-9  y 848.0 → 896.0  h 48.0
+  song-10    y 937.8 → 1053.8  h 116.0
+  remover-10 y 972.0 → 1020.0  h 48.0
+== N3P6B-S2-S2-invalidos-rolada-tab-pai.xml  lista de músicas y 176.0 → 663.1 (dos 2 ScrollView que contêm song-9, o mais interno)
+  song-9     y 523.1 → 639.1  h 116.0
+  remover-9  y 557.3 → 605.3  h 48.0
+  song-10    y 523.1 → 639.1  h 116.0
+  remover-10 y 557.3 → 605.3  h 48.0
+== N3P6B-S2-S2-invalidos-rolada-tab-ret.xml  lista de músicas y 176.0 → 1089.8 (dos 2 ScrollView que contêm song-9, o mais interno)
+  song-3     y 176.0 → 197.8  h 21.8  ← cortada pela borda de CIMA da lista (div. 291)
+  remover-3  y 176.0 → 164.0  h -12.0  ← cortada pela borda de CIMA da lista (div. 291)
+  song-9     y 825.8 → 941.8  h 116.0
+  remover-9  y 860.0 → 908.0  h 48.0
+  song-10    y 949.8 → 1065.8  h 116.0
+  remover-10 y 984.0 → 1032.0  h 48.0

@@ -1,0 +1,5 @@
+20:25:51 toque 'buscar' @ 2295,188 (emulator-5554)
+20:25:55 toque 'campo-busca' @ 1397,152 (emulator-5554)
+N3P6B-S4-S4b-sem-resultados-avd-pai mCurrentRotation=ROTATION_0 png=96567 xml=15621 eb09de782893
+20:26:11 toque 'fechar-busca' @ 108,152 (emulator-5554)
+capturas=1 falhas=0

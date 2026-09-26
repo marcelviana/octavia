@@ -1,0 +1,28 @@
+--- docs/native/N3-PRECHECK-anexos/instrumentos/roteiro.py	2026-09-25 20:21:04
++++ copia/roteiro.py	2026-09-25 20:24:36
+@@ -24,13 +24,14 @@
+ import n3  # noqa: E402
+ 
+ AQUI = os.path.dirname(os.path.abspath(__file__))
+-ARVORE = os.path.abspath(os.path.join(AQUI, "../../../.."))
++ARVORE = "<árvore>"
+ SCR = os.environ["SCR"]
++PORTA = os.environ.get("PORTA", "8788")
+ DEEP = "exp+octavia://expo-development-client/?url=http%3A%2F%2Flocalhost%3A8081"
+ 
+ 
+ def mock(modo: str = "normal", vazio: bool = False) -> None:
+-    p = subprocess.run(["lsof", "-tiTCP:8788", "-sTCP:LISTEN"], capture_output=True, text=True).stdout.split()
++    p = subprocess.run(["lsof", f"-tiTCP:{PORTA}", "-sTCP:LISTEN"], capture_output=True, text=True).stdout.split()
+     for pid in p:
+         subprocess.run(["kill", pid])
+     time.sleep(0.6)
+@@ -38,7 +39,7 @@
+     if vazio and not os.path.exists(sl):
+         open(sl, "w").write("[]")
+     log = open(os.path.join(SCR, "mock", f"log-{modo}{'-vazio' if vazio else ''}.txt"), "w")
+-    subprocess.Popen(["python3", os.path.join(ARVORE, "apps/native/src/fixtures/aceite.py"), "servidor", "8788",
++    subprocess.Popen(["python3", os.path.join(ARVORE, "apps/native/src/fixtures/aceite.py"), "servidor", PORTA,
+                       modo, sl, os.path.join(SCR, "mock", "content.json")], stdout=log, stderr=log)
+     time.sleep(1.0)
+     print(f"{time.strftime('%H:%M:%S')} mock modo={modo} vazio={vazio}", flush=True)

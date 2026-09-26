@@ -1,0 +1,31 @@
+22:47:54 toque 'buscar' @ 2295,188 (RX2N8000F3D)
+22:47:58 toque 'campo-busca' @ 1397,152 (RX2N8000F3D)
+N3P6B-S4-S4b-sem-resultados-tab-pai mCurrentRotation=ROTATION_90 png=109165 xml=15963 93b2fbdeac73
+22:48:15 toque 'fechar-busca' @ 108,152 (RX2N8000F3D)
+22:48:31 toque 'buscar' @ 2295,188 (RX2N8000F3D)
+22:48:36 toque 'campo-busca' @ 1397,152 (RX2N8000F3D)
+22:48:43 toque 'Segunda do ensaio' @ 1221,654 (RX2N8000F3D)
+N3P6B-S3-S3-avulsa-tab-pai mCurrentRotation=ROTATION_90 png=276228 xml=25758 3cfd598817a7
+22:48:58 mock normal com setlists-invalidos.json / content-invalidos.json
+22:49:13 toque canto de setlist-00000001 @ 96,420
+N3P6B-S2-S2-invalidos-tab-pai mCurrentRotation=ROTATION_90 png=264968 xml=60651 37b3efcd1839
+N3P6B-S2-S2-invalidos-rolada-tab-pai mCurrentRotation=ROTATION_90 png=277906 xml=62509 81c0a236077f
+22:49:46 toque 'song-9' @ 658,1307 (RX2N8000F3D)
+N3P6B-S3-S3-nobody-tab-pai mCurrentRotation=ROTATION_90 png=159659 xml=24160 0a2f471f042b
+22:50:01 mock modo=normal vazio=False
+22:50:03 mock normal com setlists-60.json / content-60.json
+22:50:17 toque canto de setlist-00000001 @ 96,420
+FALHA n60: ROLAGEM ESGOTADA: song-60
+22:52:48 avião=0 (RX2N8000F3D)
+22:52:50 mock modo=normal vazio=False
+22:52:54 avião=1 (RX2N8000F3D)
+22:52:55 store apagado em files/octavia-<uid>: antes ['content.json', 'files', 'files-index.json', 'setlists.json'] → depois ['files']
+N3P6B-S1-S1d-offline-sem-cache-tab-pai mCurrentRotation=ROTATION_90 png=164437 xml=21747 9080a9dc25a7
+22:53:18 avião=0 (RX2N8000F3D)
+22:53:30 mock modo=atraso vazio=False
+22:53:31 store apagado em files/octavia-<uid>: antes ['content.json', 'files', 'files-index.json', 'setlists.json'] → depois ['files']
+22:53:37 s1a na tela 5.3 s depois de abrir (o mock segura 45 s)
+N3P6B-S1-S1a-sincronizando-tab-pai mCurrentRotation=ROTATION_90 png=104466 xml=16919 44eaa1ba8052
+22:53:47 mock modo=normal vazio=False
+capturas=7 falhas=1
+  n60: ROLAGEM ESGOTADA: song-60
