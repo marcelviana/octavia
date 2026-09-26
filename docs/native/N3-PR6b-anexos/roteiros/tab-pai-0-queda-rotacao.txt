@@ -1,0 +1,4 @@
+22:47:07 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+22:47:11 toque 'campo-busca' @ 917,152 (RX2N8000F3D)
+FALHA S4b: ORIENTAÇÃO ERRADA para N3P6B-S4-S4b-sem-resultados-tab-pai: raiz [0, 0, 1600, 2452]
+22:47:30 avião=0 (RX2N8000F3D)

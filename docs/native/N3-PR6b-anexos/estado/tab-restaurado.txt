@@ -1,0 +1,13 @@
+== limpeza: files/<uid>/files e demanda
+cache/<uid>/files:
+
+files/<uid>/files:
+<o arquivo do Marcel>.pdf
+Fri Sep 25 23:04:58 -03 2026
+global stay_on_while_plugged_in=0
+system accelerometer_rotation=1
+system user_rotation=0
+global airplane_mode_on=0
+global wifi_on=1
+global mobile_data=1
+reverse: []

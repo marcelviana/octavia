@@ -180,3 +180,26 @@ Evidência em [`N3-PR6-anexos/`](N3-PR6-anexos/README.md); erratas e divergênci
 | 10 | os 7 estados do V1 sem dump de retrato (`S1a`, `S1d`, `S2-invalidos`, `S3-nobody`, `S3-avulsa`, `S4b`, `S5-n-grande`) — A-N3-5 | N3-PR6 | **encerramento do N3** (decide: arnês novo no bloco, ou herança) |
 | 11 | em B, o teclado encaixado cobre o rodapé do picker (`Concluir`): um gesto a mais no J3 em retrato | div. 450 | **com o Marcel** (desenho) |
 | 12 | na S5 em B, o `8 DE 8` centrado nos 88 fica 16 dp abaixo da linha 1 do palco | div. 447 | **com o Marcel** |
+
+## 11. O que a N3-PR6b fechou (as sete molduras do V1 em retrato) — e o defeito que ela achou
+
+Só aceite, nenhuma linha de código. Evidência em [`N3-PR6b-anexos/`](N3-PR6b-anexos/README.md); a errata N3-E19 e
+as divergências 457–461 no `DESIGN-N3/README.md` §9. As sete que a N3-PR6 deixou abertas, cada uma com a receita no
+mock (store apagado + `atraso`; store apagado + avião; inválidos `no-body`/`unknown-type` na setlist; a busca do S1;
+`xablau`; a setlist de 60), capturadas **nas quatro colunas** (Tab × AVD, paisagem × retrato).
+
+| # | estado | evidência |
+|---|---|---|
+| **A-N3-5** | **fechado**: **as 20 molduras do V1** (as 22 do §7 do DESIGN-V1 menos as duas de proposta, que não existem no app) **e as 18 do N2** alcançadas nas duas orientações do tablet. As sete desta PR: 7 estados × quatro colunas, **28 de 28 células**, todo alvo ≥ 48 dp e com `testID`, os mesmos ids nas quatro; as linhas inválidas (9 e 10) conferidas no rolado. O S0 segue só no AVD (div. 436), como na N3-PR6. **G-N3 das sete: 14 pares, (e)=0 · nome-acessível=4 · rolagem=4 · 4 dp = 0**; (d′) = 10, conferidos no PNG, nenhum defeito | `N3-PR6b-anexos/G5G6.txt`, `G-N3.txt` |
+| **A-N3-3** | **reaberto num ponto**: a `S5-n-grande` em B — a fileira de marcas calcula contra 900 dp fixos e passa da janela de 711,1 a partir de N = 19 (com 60: 48 de 60 marcas no dump, as das pontas cortadas). É a H-N3-3 do pre-check, agora medida. Div. 461; **registrado, não consertado** | `N3-PR6b-anexos/s5-marcas.txt` |
+
+**T3-R5**: atendido. **T3-R3** (B): atendido, salvo a div. 461.
+
+**Herança, com destino** (atualiza o §10):
+
+| # | item | origem | destino |
+|---|---|---|---|
+| 10 | os 7 estados do V1 sem dump de retrato — A-N3-5 | N3-PR6 | **fechado** pela N3-PR6b |
+| 11 | em B, o teclado encaixado cobre o rodapé do picker (`Concluir`) | div. 450 | **polimento do nativo, pós-N3** (decisão do Marcel): o rodapé acima do teclado, com aceite nas três faixas |
+| 12 | na S5 em B, o `8 DE 8` centrado nos 88 fica 16 dp abaixo da linha 1 do palco | div. 447 | **fechado**: N3-E19, *"decisão: sem alinhamento no N3"* |
+| 13 | na S5 em B, com N ≥ 19 a fileira de marcas passa da janela (e nenhum gate a vê) | div. 461 | **com o Marcel** (o conserto e o gate) |

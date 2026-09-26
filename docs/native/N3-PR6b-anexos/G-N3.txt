@@ -1,0 +1,36 @@
+$ node apps/native/scripts/g-n3.mjs --pai docs/native/N3-PR6b-anexos/dumps-pai --faixa docs/native/N3-PR6b-anexos/dumps-ret --rolada docs/native/N3-PR6b-anexos/dumps-rolada
+G-N3 — 14 par(es) (paisagem × faixa); medidas: docs/native/DESIGN-N3/medidas.json (tolerância 4 dp)
+
+(e) TEXTO QUE SOME — REPROVA: 0
+
+(d′) MENOS ESPAÇO QUE NA PAISAGEM — TRIAGEM (confirmar no PNG): 10
+  N3P6B-S1-S1d-offline-sem-cache-avd-ret: aviso-motivo 747.6 → 615.1 dp (altura ×1.9)
+  N3P6B-S1-S1d-offline-sem-cache-tab-ret: aviso-motivo 747.6 → 615.1 dp (altura ×1.9)
+  N3P6B-S2-S2-invalidos-avd-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P6B-S2-S2-invalidos-tab-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N3P6B-S3-S3-avulsa-avd-ret: "Segunda do ensaio · Duo Manacá · Cifra" 808.9 → 663.1 dp
+  N3P6B-S3-S3-avulsa-avd-ret: corpo 906.7 → 647.1 dp (altura ×1.9)
+  N3P6B-S3-S3-avulsa-tab-ret: "Segunda do ensaio · Duo Manacá · Cifra" 808.9 → 663.1 dp
+  N3P6B-S3-S3-avulsa-tab-ret: corpo 906.7 → 647.1 dp (altura ×1.9)
+  N3P6B-S3-S3-nobody-avd-ret: "[FIXTURE] Sem corpo (no-body) · Fixture " 815.1 → 663.1 dp
+  N3P6B-S3-S3-nobody-tab-ret: "[FIXTURE] Sem corpo (no-body) · Fixture " 815.1 → 663.1 dp
+
+4 dp CONTRA A FOLHA — ERRATA CANDIDATA: 0
+
+NOME ACESSÍVEL — o texto está no content-desc do nó de mesmo resource-id (N3-D17); não reprova, não soma ao (e): 4
+  N3P6B-S2-S2-invalidos-avd-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N3P6B-S2-S2-invalidos-avd-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+  N3P6B-S2-S2-invalidos-tab-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N3P6B-S2-S2-invalidos-tab-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+
+ROLAGEM — o texto está no dump rolado do mesmo estado; não reprova, não soma ao (e): 4
+  N3P6B-S2-S2-invalidos-avd-ret: "8" → N3P6B-S2-S2-invalidos-rolada-avd-ret
+  N3P6B-S2-S2-invalidos-avd-ret: "Oitava do ensaio" → N3P6B-S2-S2-invalidos-rolada-avd-ret
+  N3P6B-S2-S2-invalidos-tab-ret: "8" → N3P6B-S2-S2-invalidos-rolada-tab-ret
+  N3P6B-S2-S2-invalidos-tab-ret: "Oitava do ensaio" → N3P6B-S2-S2-invalidos-rolada-tab-ret
+  dumps rolados usados (sha256, 12):
+    ba7b06947561  N3P6B-S2-S2-invalidos-rolada-avd-ret.xml
+    be2ff39adc39  N3P6B-S2-S2-invalidos-rolada-tab-ret.xml
+
+G-N3: (e)=0 · nome-acessível=4 · rolagem=4 ✓ (d′ e 4 dp não reprovam: triagem e errata)
+exit 0

@@ -431,4 +431,30 @@ O aceite completo em B, no Tab S6 e no AVD, retrato e paisagem ([`N3-PR6-anexos/
 | **455** | P | *"G-N3 consolidado: todos os pares da `main` atual, um relatório só"*. | O retrato **inteiro** foi recapturado nesta PR (105 dumps); a paisagem de referência é a `B5-baseline/`, a `B3-referencia-paisagem/`, a passada desta PR e, para os estados que só elas têm (`reordenar-arrastando`, `folha-salvando`, `S2-removendo`, o `placeholder`…), as `dumps-pai/` das N3-PR3…PR5 — a paisagem é invariante (G-inv em toda PR). 102 pares. |
 | **456** | P | A lista fechada era commits 1–4. | Dois commits a mais entre o 2 e o 3, declarados antes: o gate e o conserto da N3-E18. |
 
-**Próxima divergência livre: 457.**
+### Decisões do Marcel para a N3-PR6b (2026-09-25)
+
+- **447** fica como está: *"decisão: sem alinhamento no N3"* — errata **N3-E19** abaixo.
+- **450** registrada com destino **"polimento do nativo, pós-N3"**: o rodapé do picker acima do teclado, com aceite
+  nas três faixas.
+
+### Erratas da N3-PR6b — N3-E19 (N3-D23)
+
+A N3-PR6b não muda código nem medida: as sete molduras do V1 que faltavam, em retrato
+([`N3-PR6b-anexos/README.md`](../N3-PR6b-anexos/README.md)). O `medidas.json` não muda.
+
+| errata | medida | folha → medido | consequência declarada |
+|---|---|---|---|
+| **N3-E19** | o texto da barra superior da S5 em B | N3-E17, *"vazia"* (lida como o conteúdo de C numa linha, div. 447) → o `8 DE 8` e a setlist **centrados nos 88** (y 52,0), **16 dp abaixo** da linha 1 do palco (y 36,0) | **decisão do Marcel: sem alinhamento no N3.** A barra não salta (N3-E17, salto 0); o texto desce 16 dp ao chegar ao fim, e fica assim no bloco. Nada muda no app nem no G-inv |
+
+### Divergências abertas na N3-PR6b, **457 a 461**
+
+| div. | origem | o que | o que foi feito |
+|---|---|---|---|
+| **450** (destino) | A | O teclado encaixado cobre o rodapé do picker em B (o `Concluir`). | **Destino: polimento do nativo, pós-N3** (decisão do Marcel): o rodapé acima do teclado, com aceite nas três faixas. |
+| **457** | T | As rodadas que caíram por arnês: a lista de estados como um argumento só; o `set -- $o` do zsh sem divisão de palavra (`ROT` vazio); o **store que não era apagado** (`adb shell run-as … sh -c rm -f …` junta os argumentos e o `sh -c` recebe só `rm`); a rotação do Tab (retrato = `user_rotation` **0**, paisagem = 1 — o inverso do AVD); a `n60` com o mesmo `updated_at` da de inválidos (o sync compara por `!==` e guardou a de 10). E o Tab que travou entre o destravar e o `stay_on` a 7. | Todas refeitas; cada queda verbatim em `N3-PR6b-anexos/roteiros/`; o `rm` numa string só, e o arnês reprova se sobrar `.json`. A rotação por aparelho e a receita do store apagado entram no `APARATO.md`. Nenhuma é do app. |
+| **458** | T | O `g5g6-todos.py` (N3-PR6) reconhece linha cortada pela rolagem só pela **borda de baixo** da lista; no dump **rolado** da `S2-invalidos` as linhas cortadas estão na borda **de cima** (y 176,0), e o instrumento as reprovaria como alvo pequeno. | O rolado fica fora do G5/G6 (o instrumento pula `-rolada`, como na N3-PR6) e é conferido nó a nó contra a lista de músicas (`N3-PR6b-anexos/G5G6.txt`, fim): as linhas 9 e 10 com 116,0 e `remover-9/10` com 48,0 × 48,0 nas quatro colunas; todo < 48 é corte pela borda de cima. O instrumento não muda nesta PR (só docs). |
+| **459** | P | *"o G-N3 em cada par (paisagem do V1/pre-check × retrato)"*: o pre-check não tem nenhum dos sete estados, e as capturas do V1 (V1-PR7, `dumps-avd/`) são da **conta de audit** (outro dado) num build de 2026-09-13 — o par daria (e) de dado, não de layout (div. 403). | A paisagem de referência é capturada **nesta PR**, com a mesma fixture, nos dois aparelhos: a paisagem é o congelado e é invariante (G-inv 34/34 e 18/18 no fim da N3-PR6, e nenhuma linha de `apps/` mudou desde então). |
+| **460** | P | A `S2-invalidos` do V1 é o índice **sem** edição (duas colunas, 8 + 2); o S2 que se abre do S1 na `main` é o de **edição** (N2, a faixa de 64/88). E *"9 e 10 sem corpo e sem tipo"*: o `aceite.py` tem três formas de inválido (`no-body`, `no-key`, `unknown-type`). | Capturado o S2 que o S1 abre (o S2e): o objeto da moldura são as **linhas** inválidas, e a linha é o mesmo `Pressable` `song-<n>` (`IndexScreen.tsx:299–308`) com e sem edição — a edição acrescenta o `remover-<n>` ao lado. O S2 sem edição (o índice do palco, S2p) com inválidos não foi capturado. Usadas as duas formas que a moldura nomeia — 9 = `no-body`, 10 = `unknown-type`; a `no-key` fica fora (o V1 a provou no A6, `A6-palco-nokey`). |
+| **461** | D | **A `S5-n-grande` em B: a fileira de marcas passa da janela.** A fileira calcula contra **900 dp fixos** (`FILEIRA`, `EndScreen.tsx:65`, DESIGN-V1 §7.1): com 60 ela mede 895, centrada em 711,1 — no dump de retrato, **48 de 60 marcas**, de 0,0 a 711,1, as das pontas cortadas (7,6 e 8,9 dp); em paisagem, 60 de 60 (121,3 → 1016,4); com 8 (N3-PR6), 8 de 8. Pela fórmula, em B cabe até N = 18 (697) e passa a partir de N = 19 (736); acima de 128 a barra sólida de 900 passa também. É a **H-N3-3** do pre-check (derivada, nunca medida), e a regra da folha (*"o conteúdo não sai"*) quebrada. **Nem o G-N3 nem o G5/G6 a veem**: marca não tem texto nem é alvo. | **Registrada, não consertada** (instrução da PR: o conserto é decisão à parte). Evidência: `N3-PR6b-anexos/s5-marcas.txt`, os quatro dumps `N3P6B-S5-S5-n-grande-*` e os PNGs. **Com o Marcel**: o conserto (a fileira contra a largura da janela, como token de faixa?) e o gate que a veria. |
+
+**Próxima divergência livre: 462.**

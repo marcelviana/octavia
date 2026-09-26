@@ -1,0 +1,15 @@
+== files/<uid> depois
+total 146
+drwx------ 2 u0_a292 u0_a292   3488 2026-09-25 22:46 .
+drwx------ 3 u0_a292 u0_a292   3488 2026-09-25 23:00 ..
+-rw------- 1 u0_a292 u0_a292 138916 2026-09-25 16:17 <o arquivo do Marcel>.pdf
+-rw------- 1 u0_a292 u0_a292    643 2026-09-25 22:46 partitura-1p.pdf
+== demanda depois
+total 14
+drwx------ 2 u0_a292 u0_a292       3488 2026-09-25 22:48 .
+drwx------ 3 u0_a292 u0_a292_cache 3488 2026-09-11 09:59 ..
+-rw------- 1 u0_a292 u0_a292       4198 2026-09-25 22:48 partitura-12p.pdf
+== md5 no aparelho depois
+62d555598c8fc1972277edad745e7f6e  files/<uid>/content.json
+10480521b6276d88e1e7966dcb224745  files/<uid>/files-index.json
+42ce8bbdd9d229d91880e3de1d034314  files/<uid>/setlists.json

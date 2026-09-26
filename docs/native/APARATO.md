@@ -133,6 +133,18 @@ restaurar — é a falha que esta regra fecha.
 | túneis | `adb reverse --list` → no fim `adb reverse --remove-all` |
 | segredo | `apps/native/.env` copiado do checkout principal só para o Metro, conferido por sha256, **apagado** no fim (regra 2) |
 
+**Rotação por aparelho** (N3-PR6b, div. 457): no **Tab** o retrato é `user_rotation=0` (raiz 1600 × 2452) e a
+paisagem é **1**; no **AVD** é o inverso (paisagem 0, retrato 1). Com `accelerometer_rotation=0`. O `Roteiro.cap`
+confere a raiz antes de gravar e recusa o nome errado.
+
+**Store apagado** (S1a, S1d; N3-PR6b): com o app parado, `adb shell "run-as rocks.octavia.app sh -c 'rm -f
+files/octavia-<uid>/*.json'"` — **uma string só**: com os argumentos separados, o `adb shell` os junta e o `sh -c`
+recebe só `rm` (apaga nada, sem erro). Conferir com `run-as … ls files/octavia-<uid>` (sobra só `files/`). No Tab,
+antes, a receita de guardar o cache do Marcel (abaixo).
+
+**Tab: `stay_on` a 7 logo depois de ler o estado, antes de pedir o destravar** (N3-PR6b): destravado antes, a tela
+de 30 s apaga no intervalo e trava de novo.
+
 **Avião** (regra 11, div. 290): permitido em aceite **manual** com o estado lido,
 declarado e restaurado; a prova é o `ping` falhando (`connect: Network is
 unreachable`), não o setting (regra 1). Nos automatizados o caminho é o

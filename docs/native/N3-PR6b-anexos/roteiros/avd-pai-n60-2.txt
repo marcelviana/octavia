@@ -1,0 +1,8 @@
+23:00:26 mock normal com setlists-60.json / content-60.json
+23:00:42 toque canto de setlist-00000001 @ 96,420
+23:01:14 toque 'song-60' @ 1902,1280 (emulator-5554)
+23:01:22 toque 'borda-avancar' @ 2368,723 (emulator-5554)
+N3P6B-S5-S5-n-grande-avd-pai mCurrentRotation=ROTATION_0 png=102143 xml=34656 872d19ae20cb
+23:01:37 mock modo=normal vazio=False
+FALHA fecho: ESPERA ESGOTADA: 'criar-setlist'
+capturas=1 falhas=0

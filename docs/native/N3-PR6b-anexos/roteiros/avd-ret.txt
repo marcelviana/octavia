@@ -1,0 +1,31 @@
+22:53:55 toque 'buscar' @ 1335,281 (emulator-5554)
+22:53:59 toque 'campo-busca' @ 917,152 (emulator-5554)
+N3P6B-S4-S4b-sem-resultados-avd-ret mCurrentRotation=ROTATION_90 png=96279 xml=15625 7eb82ea91251
+22:54:16 toque 'fechar-busca' @ 108,152 (emulator-5554)
+22:54:32 toque 'buscar' @ 1335,281 (emulator-5554)
+22:54:36 toque 'campo-busca' @ 917,152 (emulator-5554)
+22:54:43 toque 'Segunda do ensaio' @ 741,654 (emulator-5554)
+N3P6B-S3-S3-avulsa-avd-ret mCurrentRotation=ROTATION_90 png=472327 xml=25416 4b9945b2d93d
+22:54:59 mock normal com setlists-invalidos.json / content-invalidos.json
+22:55:24 toque canto de setlist-00000001 @ 96,474
+N3P6B-S2-S2-invalidos-avd-ret mCurrentRotation=ROTATION_90 png=270064 xml=56371 f78ce339d6c9
+N3P6B-S2-S2-invalidos-rolada-avd-ret mCurrentRotation=ROTATION_90 png=297191 xml=62192 ba7b06947561
+22:55:59 toque 'song-9' @ 800,1961 (emulator-5554)
+N3P6B-S3-S3-nobody-avd-ret mCurrentRotation=ROTATION_90 png=144608 xml=23818 4c6d801d8c1f
+22:56:14 mock modo=normal vazio=False
+22:56:16 mock normal com setlists-60.json / content-60.json
+22:56:40 toque canto de setlist-00000001 @ 96,474
+22:57:13 toque 'song-60' @ 800,2240 (emulator-5554)
+22:57:20 toque 'borda-avancar' @ 1480,1230 (emulator-5554)
+N3P6B-S5-S5-n-grande-avd-ret mCurrentRotation=ROTATION_90 png=103395 xml=30773 9703c88f4501
+22:57:36 mock modo=normal vazio=False
+22:57:40 avião=1 (emulator-5554)
+22:57:42 store apagado em files/octavia-<uid>: antes ['content.json', 'files', 'files-index.json', 'setlists.json'] → depois ['files']
+N3P6B-S1-S1d-offline-sem-cache-avd-ret mCurrentRotation=ROTATION_90 png=156831 xml=21369 0d7c5269a76f
+22:58:14 avião=0 (emulator-5554)
+22:58:36 mock modo=atraso vazio=False
+22:58:37 store apagado em files/octavia-<uid>: antes ['content.json', 'files', 'files-index.json', 'setlists.json'] → depois ['files']
+22:58:51 s1a na tela 14.0 s depois de abrir (o mock segura 45 s)
+N3P6B-S1-S1a-sincronizando-avd-ret mCurrentRotation=ROTATION_90 png=90582 xml=16557 74479cb40b76
+22:59:02 mock modo=normal vazio=False
+capturas=8 falhas=0
