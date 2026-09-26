@@ -1,0 +1,141 @@
+# grafo desta árvore (089f72c):
+# $ pnpm exec depcruise --config .dependency-cruiser.cjs --output-type json app components hooks lib contexts types middleware.ts tests __tests__ worker > dc-w.json
+# $ pnpm exec depcruise ... (sem worker) > dc-all.json
+
+## 1. reprodução dos scripts do pre-check (script-a2.txt, script-a24.txt, sem mudança)
+# $ node a2.mjs dc-all.json a2/
+{
+  modulosLocais: 335,
+  prod: 230,
+  testes: 105,
+  palcoRoots: [ 'app/performance/loading.tsx', 'app/performance/page.tsx' ],
+  outrasRoots: 33,
+  P: 45,
+  O: 188,
+  exclusivos: 23,
+  compart: 22,
+  orfaos: 19,
+  testesSoPalco: 6,
+  testesTocam: 4
+}
+# $ grep -v '^#' docs/ux/I1-PRECHECK-anexos/palco-exclusivos.txt | diff - a2/exclusivos && echo IGUAL
+IGUAL
+# $ node a24.mjs dc-w.json docs/ux/I1-PRECHECK-anexos/palco-exclusivos.txt a24/
+{
+  raizesVivas: 28,
+  alcancePWA: 24,
+  exclusivos: 9,
+  compartilhados: 15,
+  importadoresVivos: 10,
+  testes: 4,
+  exclusivosD19: 14
+}
+# pwa-excl vs anexo:
+IGUAL
+# d19-excl vs anexo:
+IGUAL
+# importadores vivos vs anexo:
+IGUAL
+
+## 2. fecho do corte (script-corte.txt)
+# $ node corte.mjs dc-w.json corte/
+{
+  vivas: 28,
+  mortas: 14,
+  morre: 46,
+  porGrupo: 'palco=23 pwa=9 paginas=14',
+  editar: 10,
+  testes: 14,
+  foraDasVivasNaoMortos: 17
+}
+### morre (grupo, caminho)
+paginas	app/profile/page.tsx
+paginas	app/settings/page.tsx
+paginas	app/setup/page.tsx
+paginas	components/ProfileForm.tsx
+paginas	components/profile-page-client.tsx
+paginas	components/settings-page-client.tsx
+paginas	components/settings.tsx
+paginas	components/settings/AudioSettings.tsx
+paginas	components/settings/CloudSettings.tsx
+paginas	components/settings/DisplaySettings.tsx
+paginas	components/settings/RefactoredSettings.tsx
+paginas	components/ui/skeleton.tsx
+paginas	components/ui/switch.tsx
+paginas	lib/setup-storage.ts
+palco	app/performance/loading.tsx
+palco	app/performance/page.tsx
+palco	components/optimized-performance-mode.tsx
+palco	components/performance-mode/empty-state.tsx
+palco	components/performance-mode/header-controls.tsx
+palco	components/performance-mode/loading-state.tsx
+palco	components/performance-mode/memory-stats.tsx
+palco	components/performance-mode/navigation-controls.tsx
+palco	components/performance-mode/optimized-content-display.tsx
+palco	components/performance-mode/performance-warning.tsx
+palco	components/performance-page-client.tsx
+palco	hooks/use-content-loading.ts
+palco	hooks/use-content-renderer.ts
+palco	hooks/use-keyboard-shortcuts.ts
+palco	hooks/use-performance-controls.ts
+palco	hooks/use-performance-effects.ts
+palco	hooks/use-performance-monitoring-ui.ts
+palco	hooks/use-performance-navigation.ts
+palco	hooks/use-songs-transformation.ts
+palco	hooks/use-wake-lock.ts
+palco	lib/advanced-content-cache.ts
+palco	lib/memory-management.ts
+palco	lib/performance-monitor.ts
+pwa	app/api/proxy/route.ts
+pwa	app/offline/page.tsx
+pwa	components/pwa-install-prompt.tsx
+pwa	components/service-worker-wrapper.tsx
+pwa	hooks/use-service-worker.tsx
+pwa	lib/offline-cache.ts
+pwa	lib/offline-queue.ts
+pwa	lib/offline-setlist-cache.ts
+pwa	worker/index.js
+### importadores vivos de arquivo morto
+app/layout.tsx	→ components/pwa-install-prompt.tsx, components/service-worker-wrapper.tsx
+components/content-edit-page-client.tsx	→ lib/offline-cache.ts
+components/content-page-client.tsx	→ lib/offline-cache.ts
+components/setlist-manager.tsx	→ lib/offline-setlist-cache.ts
+contexts/firebase-auth-context.tsx	→ lib/offline-cache.ts, lib/offline-setlist-cache.ts
+hooks/use-content-actions.ts	→ lib/offline-cache.ts
+hooks/use-library-data.ts	→ lib/offline-cache.ts
+hooks/use-setlist-data.ts	→ lib/offline-cache.ts, lib/offline-setlist-cache.ts
+hooks/useContentFile.ts	→ lib/offline-cache.ts
+lib/content-service.ts	→ lib/offline-queue.ts
+### testes que importam arquivo morto (grafo)
+SÓ-MORTO	__tests__/performance-mode/chords-display-bug.test.tsx	→ components/optimized-performance-mode.tsx
+SÓ-MORTO	__tests__/performance-mode/empty-state.test.tsx	→ components/optimized-performance-mode.tsx
+SÓ-MORTO	app/api/proxy/__tests__/route.test.ts	→ app/api/proxy/route.ts
+SÓ-MORTO	hooks/__tests__/use-content-renderer.test.ts	→ hooks/use-content-renderer.ts, hooks/use-content-renderer.ts
+SÓ-MORTO	hooks/__tests__/use-performance-navigation.test.ts	→ hooks/use-performance-navigation.ts
+SÓ-MORTO	lib/__tests__/offline-setlist-cache.test.ts	→ lib/offline-setlist-cache.ts
+SÓ-MORTO	tests/hooks/use-performance-controls.memory.test.ts	→ hooks/use-performance-controls.ts
+SÓ-MORTO	tests/hooks/use-performance-monitoring-ui.test.ts	→ hooks/use-performance-monitoring-ui.ts
+TOCA	__tests__/performance-mode/auto-scroll-button-bug.test.tsx	→ components/performance-mode/header-controls.tsx
+TOCA	components/__tests__/content-display.test.tsx	→ components/performance-mode/optimized-content-display.tsx
+TOCA	hooks/__tests__/use-library-data.test.tsx	→ lib/offline-cache.ts
+TOCA	hooks/__tests__/use-setlist-data.test.tsx	→ lib/offline-cache.ts, lib/offline-setlist-cache.ts
+TOCA	tests/gates/g-rotas-protegidas.test.ts	→ app/performance/page.tsx, app/profile/page.tsx, app/settings/page.tsx
+TOCA	tests/hooks/use-content-loading.test.ts	→ hooks/use-content-loading.ts
+### produção fora do alcance das vivas e não morta (= os órfãos de hoje; nenhum novo)
+components/library/index.ts
+components/ui/alert-dialog.tsx
+components/ui/aspect-ratio.tsx
+components/ui/breadcrumb.tsx
+components/ui/calendar.tsx
+components/ui/collapsible.tsx
+components/ui/popover.tsx
+components/ui/progress.tsx
+components/ui/resizable.tsx
+components/ui/sheet.tsx
+components/ui/table.tsx
+components/ui/toaster.tsx
+components/ui/toggle.tsx
+contexts/sidebar-context.tsx
+lib/test-utils/api-test-helpers.ts
+lib/test-utils/supabase-mock-factory.ts
+types/pwa.d.ts

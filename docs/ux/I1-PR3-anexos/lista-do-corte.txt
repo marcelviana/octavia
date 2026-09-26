@@ -1,0 +1,173 @@
+# I1-PR3 — lista do corte (commit 1; lista FECHADA — o que o commit 2 apaga e edita)
+# árvore: ../octavia-i1-pr3, branch i1/pr3-corte, criada de origin/main 089f72cdf463b176f34b6dc428ef7373476ff32c
+#
+# Derivação:
+#   (a) grafo — pnpm exec depcruise --config .dependency-cruiser.cjs --output-type json \
+#         app components hooks lib contexts types middleware.ts tests __tests__ worker > dc-w.json
+#       node script-corte dc-w.json <dir>   (script-corte.txt neste anexo)
+#       raízes mortas = app/performance/* (I1-D5) ∪ as 9 do PWA/offline (I1-D18) ∪ app/{profile,settings,setup}/page.tsx (I1-D19);
+#       morre = produção alcançada por raiz morta e NÃO alcançada por raiz viva (28 vivas; o alcance delas não atravessa o que morre).
+#       saída: { vivas: 28, mortas: 14, morre: 46, porGrupo: 'palco=23 pwa=9 paginas=14', editar: 10, testes: 14, foraDasVivasNaoMortos: 17 }
+#       conferência contra o pre-check: os scripts script-a2/script-a24 re-rodados nesta árvore dão palco-exclusivos (23),
+#       pwa-offline-exclusivos (9), exclusivos da I1-D19 (14) e importadores vivos (10) IDÊNTICOS aos anexos (diff vazio).
+#   (b) grep — git grep nas pastas do web (fora docs/, apps/, packages/) por símbolo, rota, string de módulo morto.
+#   Diferença contra o pre-check = divergência (número entre colchetes, ver README do anexo / corpo da PR).
+#
+# Formato (TAB entre colunas). O g-palco.sh lê as linhas MORRE, SIMBOLO e TEXTO; as linhas EDITA e FICA são registro.
+#   MORRE   <grupo>  <caminho>                               o arquivo sai; reprova se existir ou for importado
+#   SIMBOLO <grupo>  <arquivo>  <regex perl, multilinha>    reprova se casar no arquivo
+#   TEXTO   <grupo>  <pathspec> <regex ERE, git grep>        reprova se casar em qualquer arquivo rastreado do pathspec
+#   EDITA   <grupo>  <arquivo:linhas>  <o quê>
+#   FICA    <grupo>  <caminho>  <por quê>
+
+## 1. palco (I1-D5) — os 23 exclusivos do grafo = palco-exclusivos.txt
+MORRE	palco	app/performance/loading.tsx
+MORRE	palco	app/performance/page.tsx
+MORRE	palco	components/optimized-performance-mode.tsx
+MORRE	palco	components/performance-mode/empty-state.tsx
+MORRE	palco	components/performance-mode/header-controls.tsx
+MORRE	palco	components/performance-mode/loading-state.tsx
+MORRE	palco	components/performance-mode/memory-stats.tsx
+MORRE	palco	components/performance-mode/navigation-controls.tsx
+MORRE	palco	components/performance-mode/optimized-content-display.tsx
+MORRE	palco	components/performance-mode/performance-warning.tsx
+MORRE	palco	components/performance-page-client.tsx
+MORRE	palco	hooks/use-content-loading.ts
+MORRE	palco	hooks/use-content-renderer.ts
+MORRE	palco	hooks/use-keyboard-shortcuts.ts
+MORRE	palco	hooks/use-performance-controls.ts
+MORRE	palco	hooks/use-performance-effects.ts
+MORRE	palco	hooks/use-performance-monitoring-ui.ts
+MORRE	palco	hooks/use-performance-navigation.ts
+MORRE	palco	hooks/use-songs-transformation.ts
+MORRE	palco	hooks/use-wake-lock.ts
+MORRE	palco	lib/advanced-content-cache.ts
+MORRE	palco	lib/memory-management.ts
+MORRE	palco	lib/performance-monitor.ts
+
+## 1b. palco — símbolos dentro de arquivo que fica (§2.2, I1-D23, I1-D24, div. 505)
+SIMBOLO	palco	lib/content-service-server.ts	getSetlistByIdServer
+SIMBOLO	palco	lib/protected-routes.ts	["']/performance["']
+SIMBOLO	palco	lib/security-headers.ts	includes\(\s*['"]/performance['"]\s*\)
+SIMBOLO	palco	lib/security-headers.ts	'frame-src'\s*:\s*\[[^\]]*'blob:'
+SIMBOLO	palco	types/performance.ts	interface\s+(PerformanceModeProps|SongData|PerformanceControlsState|ContentCacheState|ContentRenderInfo|NavigationState|PerformanceMetrics)\b
+TEXTO	palco	app components hooks lib contexts types middleware.ts	onEnterPerformance|handleEnterPerformance|handleStartPerformance
+TEXTO	palco	app components hooks lib contexts types middleware.ts	["'`]/performance
+
+EDITA	palco	lib/content-service-server.ts:91-170	getSetlistByIdServer inteira (único chamador: app/performance/page.tsx:36) — declarada (I1-D23)
+EDITA	palco	lib/protected-routes.ts:7-9,44	"/performance" em PROTECTED_PAGES e a NOTA que fala dele — declarada (I1-D23)
+EDITA	palco	lib/security-headers.ts:254-255	o ramo `includes('/performance')` do no-store — declarada (I1-D23)
+EDITA	palco	lib/security-headers.ts:79-85	frame-src: sai 'blob:' e o comentário PERF-02; a diretiva fica ["'none'"] — declarada (I1-D24) [conflito esperado com a PR-2, que acrescenta a esta diretiva]
+EDITA	palco	types/performance.ts:29-104	PerformanceModeProps, SongData, PerformanceControlsState, ContentCacheState, ContentRenderInfo, NavigationState, PerformanceMetrics saem; Content, Setlist, SetlistSong, SetlistWithSongs, SetlistFormData ficam [550]
+EDITA	palco	components/dashboard-page-client.tsx:33-35,42	handleEnterPerformance e a prop
+EDITA	palco	components/dashboard.tsx:37,46	prop onEnterPerformance (e o botão que a chama)
+EDITA	palco	components/content-page-client.tsx:45-48,82	handleEnterPerformance e a prop
+EDITA	palco	components/content-viewer.tsx:14,22,70	prop onEnterPerformance
+EDITA	palco	components/content-viewer/ContentHeader.tsx:16,45,95	prop e o botão
+EDITA	palco	components/setlists-page-client.tsx:37-43,65	handleStartPerformance e a prop (o handleSelectSetlist morto de :37-39 é da PR de setlists — I1-D33 — e fica)
+EDITA	palco	components/setlist-manager.tsx:34,37,262,273-274	prop onEnterPerformance
+EDITA	palco	components/setlist/setlist-list.tsx:26,40,127	prop
+EDITA	palco	components/setlist/setlist-card.tsx:36,60,189	prop e o botão
+EDITA	palco	components/setlist/setlist-details.tsx:35,76,168,278	prop e os dois botões
+EDITA	palco	next.config.mjs:(novo)	redirects(): /performance?contentId=X → /content/X; /performance?setlistId=… → /setlists; /performance → /dashboard — declarado (I1-D22)
+FICA	palco	types/performance.ts	arquivo fica (SetlistWithSongs/SetlistFormData reexportados por components/setlist/index.ts:8)
+FICA	palco	components/pdf-viewer.tsx	tela cheia da visualização e do editor (I1-D27)
+
+## 2. PWA/offline (I1-D18) — os 9 exclusivos do grafo = pwa-offline-exclusivos.txt, mais os de fora do grafo
+MORRE	pwa	app/api/proxy/route.ts
+MORRE	pwa	app/offline/page.tsx
+MORRE	pwa	components/pwa-install-prompt.tsx
+MORRE	pwa	components/service-worker-wrapper.tsx
+MORRE	pwa	hooks/use-service-worker.tsx
+MORRE	pwa	lib/offline-cache.ts
+MORRE	pwa	lib/offline-queue.ts
+MORRE	pwa	lib/offline-setlist-cache.ts
+MORRE	pwa	worker/index.js
+MORRE	pwa	public/sw.js
+MORRE	pwa	public/manifest.json
+MORRE	pwa	scripts/build-sw.js
+MORRE	pwa	hooks/useContentFile.ts
+MORRE	pwa	types/pwa.d.ts
+TEXTO	pwa	package.json knip.json	build-sw
+TEXTO	pwa	app components hooks lib contexts	manifest\.json|["']/sw\.js["']|["']/offline["']
+TEXTO	pwa	next.config.mjs	\(\?!proxy\)
+
+EDITA	pwa	app/layout.tsx:8,10,18,128-129	import e montagem do EnhancedPwaInstallPrompt e do ServiceWorkerWrapper; `manifest: "/manifest.json"`
+EDITA	pwa	package.json:8-9	"build": "pnpm exec next build" (sem o build-sw); "build:sw" sai
+EDITA	pwa	knip.json:6	a entry scripts/build-sw.js
+EDITA	pwa	components/content-edit-page-client.tsx:9,26-30	import e chamada de cacheFileForContent
+EDITA	pwa	components/content-page-client.tsx:6,30-35	import e chamada de cacheFileForContent
+EDITA	pwa	components/content-viewer.tsx:3,33-39	useContentFile sai; o visualizador passa a ler content.file_url direto (I1-D36, medição no README §3)
+EDITA	pwa	components/content-viewer/ContentDisplay.tsx:13-16,32-35,52-58	props offlineUrl/offlineMimeType/isLoadingUrl/urlError saem
+EDITA	pwa	components/content-viewer/SheetMusicDisplay.tsx:8-12,17-20,26-41,68-76	o mesmo; url = content.file_url, tipo pela extensão (isPdfFile/isImageFile sem mimeType — o caminho de hoje sem cache)
+EDITA	pwa	components/setlist-manager.tsx:6,98,118,142,188,219	saveSetlists/removeCachedSetlist
+EDITA	pwa	contexts/firebase-auth-context.tsx:18-19,380-389	SÓ os imports e o bloco de limpeza do cache no logout (clearOfflineContent/clearOfflineSetlists); nada de auth — arquivo também da PR-1, conflito esperado e pequeno
+EDITA	pwa	hooks/use-content-actions.ts:7,58	removeCachedContent
+EDITA	pwa	hooks/use-library-data.ts:5,137-139,150-155	saveContent e o fallback getCachedContent do erro (o ramo do erro fica: lista vazia — §3 item 2 do pre-check, não muda aqui)
+EDITA	pwa	hooks/use-setlist-data.ts:7-8,50-70,130	hidratação cache-first (getCachedSetlists/getCachedContent/replaceSetlists/saveContent)
+EDITA	pwa	lib/content-service.ts:5,521-528,563-570,605-612	enqueueRequest (fila de escrita offline) — o throw fica
+EDITA	pwa	next.config.mjs:10-12,16	a exclusão (?!proxy) e o comentário: source '/api/:path*' — mesmo efeito (a rota não existe) — declarado [552]
+FICA	pwa	public/icons/*	ícones; só o icon-192x192.webp tem leitor vivo (app/layout.tsx:20-22); os outros 10 ficam sem referência de código — a identidade decide [553]
+FICA	pwa	lib/security-headers.ts:89-93	manifest-src 'self' e worker-src (blob: é do PDF.js) — inertes sem PWA; não se tocam [554]
+
+## 3. páginas (I1-D19) — os 14 exclusivos do grafo, menos os dois primitivos que ficam
+MORRE	paginas	app/profile/page.tsx
+MORRE	paginas	app/settings/page.tsx
+MORRE	paginas	app/setup/page.tsx
+MORRE	paginas	components/ProfileForm.tsx
+MORRE	paginas	components/profile-page-client.tsx
+MORRE	paginas	components/settings-page-client.tsx
+MORRE	paginas	components/settings.tsx
+MORRE	paginas	components/settings/AudioSettings.tsx
+MORRE	paginas	components/settings/CloudSettings.tsx
+MORRE	paginas	components/settings/DisplaySettings.tsx
+MORRE	paginas	components/settings/RefactoredSettings.tsx
+MORRE	paginas	lib/setup-storage.ts
+SIMBOLO	paginas	lib/protected-routes.ts	["']/(settings|profile)["']
+TEXTO	paginas	app components hooks lib contexts	href=["']/profile["']
+
+EDITA	paginas	lib/protected-routes.ts:17-18,40-41	"/settings" e "/profile" nas duas listas — declarada (div. 505)
+EDITA	paginas	components/user-header.tsx:67-72	o item de menu com <Link href="/profile"> (div. 507); o import de User e de Link saem se ficarem sem uso
+FICA	paginas	components/ui/skeleton.tsx	primitivo sem uso — fora do escopo (prompt §1)
+FICA	paginas	components/ui/switch.tsx	idem
+FICA	paginas	app/api/profile/route.ts	rota fica; o PATCH fica sem chamador (div. 507, destino D)
+
+## 4. testes (I1-D25 + errata) — um a um
+MORRE	testes	tests/performance/live-music-performance.bench.tsx
+MORRE	testes	tests/performance/memory-leak-detection.test.tsx
+MORRE	testes	tests/performance/performance-mode-responsiveness.test.tsx
+MORRE	testes	__tests__/performance-mode/auto-scroll-button-bug.test.tsx
+MORRE	testes	__tests__/performance-mode/chords-display-bug.test.tsx
+MORRE	testes	__tests__/performance-mode/empty-state.test.tsx
+MORRE	testes	__tests__/performance-mode/bug-reproduction-helpers.ts
+MORRE	testes	hooks/__tests__/use-content-renderer.test.ts
+MORRE	testes	hooks/__tests__/use-performance-navigation.test.ts
+MORRE	testes	tests/hooks/use-performance-controls.memory.test.ts
+MORRE	testes	tests/hooks/use-performance-monitoring-ui.test.ts
+MORRE	testes	tests/hooks/use-content-loading.test.ts
+MORRE	testes	components/__tests__/content-display.test.tsx
+MORRE	testes	app/api/proxy/__tests__/route.test.ts
+MORRE	testes	lib/__tests__/offline-setlist-cache.test.ts
+MORRE	testes	tests/hooks/useContentFile.test.ts
+MORRE	testes	tests/ux-audit/perf02-gate.spec.ts
+MORRE	testes	tests/ux-audit/set14-gate.spec.ts
+MORRE	testes	tests/ux-audit/fase-d/c-offline.spec.ts
+
+EDITA	testes	tests/gates/g-rotas-protegidas.test.ts:52-55,62-63	três entradas de PAGE_INVOCATIONS (/settings, /profile, /performance): 17 → 11 its — declarado
+EDITA	testes	tests/config/next-headers.test.ts:32-37	o caso do /api/proxy vira o caso dos três redirects da I1-D22 (+ a regra /api/:path*)
+EDITA	testes	lib/__tests__/setlist-service.test.ts:129-187	describe 'Server-side operations' (único caso: getSetlistByIdServer) [551]
+EDITA	testes	contexts/__tests__/firebase-auth-context.test.tsx:31-37	os dois vi.mock de offline-cache/offline-setlist-cache
+EDITA	testes	hooks/__tests__/use-library-data.test.tsx	vi.mock do offline-cache e os casos do fallback ao cache
+EDITA	testes	hooks/__tests__/use-setlist-data.test.tsx	vi.mock dos dois caches e os casos da hidratação cache-first
+EDITA	testes	tests/components/content-viewer.refactoring.test.tsx:11,17,45,96-100,346-395,489	o mock de useContentFile e os dois it.skip de offline
+EDITA	testes	tests/gates/i1-visualizador.test.tsx	(novo neste commit) o vi.mock do offline-cache e o modo com-cache saem; fica o sem-cache
+EDITA	testes	playwright.ux-audit.config.ts:~100-112	projetos perf02-gate e set14-gate
+EDITA	testes	tests/ux-audit/harvest.spec.ts:73-76	as células settings, profile, performance, setup
+EDITA	testes	tests/ux-audit/harvest-populated.spec.ts:98,126-128,390-470,521-535	performancePath, as células route 'performance' e a nota do /api/proxy
+EDITA	testes	tests/ux-audit/fase-d/a-j1.spec.ts:19-46,49-112,113-156,157-278	perfPath/waitPerformanceShell; item-01, item-01b (offline/SW), item-02, item-03 saem; item-15 fica
+EDITA	testes	tests/ux-audit/fase-d/b-pdf.spec.ts:32-200	item-04, item-04b, item-05 (palco + /api/proxy) saem; item-06 (viewer) fica
+EDITA	testes	tests/ux-audit/fase-d/cont01-02-monoespacado.spec.ts:24-30,137-172	o bloco palco (com o test.fixme de :153) sai; os dois casos do viewer ficam
+EDITA	testes	tests/ux-audit/fase-d/f-library.spec.ts:136-196	item-26 sai
+EDITA	testes	tests/ux-audit/fase-d/g-viewer.spec.ts:140-185,237-284	o trecho de palco do item-32 e o item-34 saem
+EDITA	testes	tests/ux-audit/fase-d/h-perf.spec.ts:26-184	item-36, item-37, item-38 saem; 39–41 ficam
+EDITA	testes	tests/ux-audit/fase-d/recorder.ts:258-299	gotoPerformance (sem usuário depois do corte)
