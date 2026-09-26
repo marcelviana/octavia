@@ -7,13 +7,6 @@ vi.mock('@/lib/content-service', () => ({
   getUserContentPage: vi.fn()
 }))
 
-// Mock offline cache functions
-vi.mock('@/lib/offline-cache', () => ({
-  saveContent: vi.fn(),
-  getCachedContent: vi.fn(),
-  warmCache: vi.fn().mockResolvedValue(undefined)
-}))
-
 // Mock Next.js navigation
 vi.mock('next/navigation', () => ({
   useSearchParams: () => new URLSearchParams()
@@ -26,19 +19,14 @@ vi.mock('@/hooks/use-debounce', () => ({
 
 describe('useLibraryData', () => {
   let mockGetUserContentPage: any
-  let mockSaveContent: any
-  let mockGetCachedContent: any
 
   beforeEach(async () => {
     vi.clearAllMocks()
     
     // Get the mocked functions
     const contentService = await import('@/lib/content-service')
-    const offlineCache = await import('@/lib/offline-cache')
     
     mockGetUserContentPage = contentService.getUserContentPage as any
-    mockSaveContent = offlineCache.saveContent as any
-    mockGetCachedContent = offlineCache.getCachedContent as any
     
     // Default successful response
     mockGetUserContentPage.mockResolvedValue({
@@ -49,9 +37,6 @@ describe('useLibraryData', () => {
       total: 2,
       totalPages: 1
     })
-    
-    mockSaveContent.mockResolvedValue(undefined)
-    mockGetCachedContent.mockResolvedValue([])
   })
 
   afterEach(() => {

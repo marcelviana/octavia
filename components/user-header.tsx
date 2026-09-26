@@ -12,7 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { User, Settings, LogOut } from "lucide-react"
+import { Settings, LogOut } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export function UserHeader({ compact = false }: { compact?: boolean } = {}) {
@@ -63,13 +63,6 @@ export function UserHeader({ compact = false }: { compact?: boolean } = {}) {
             <span className="text-xs text-gray-500">{user.email}</span>
           </div>
         </DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem asChild>
-          <Link href="/profile" className="cursor-pointer flex items-center">
-            <User className="mr-2 h-4 w-4" />
-            <span>Profile</span>
-          </Link>
-        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => signOut()} className="cursor-pointer">
           <LogOut className="mr-2 h-4 w-4" />

@@ -1,12 +1,11 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Database } from "@/types/database.types";
 import dynamic from "next/dynamic";
 import { ResponsiveLayout } from "@/components/responsive-layout";
 import { updateContent, clearContentCache } from "@/lib/content-service";
 import { toast } from "sonner";
-import { cacheFileForContent } from "@/lib/offline-cache";
 
 const ContentEditor = dynamic(() => import("@/components/content-editor").then(mod => ({ default: mod.ContentEditor })), {
   loading: () => <p>Loading editor...</p>,
@@ -21,13 +20,6 @@ interface ContentEditPageClientProps {
 export default function ContentEditPageClient({ content }: ContentEditPageClientProps) {
   const router = useRouter();
   const [activeScreen, setActiveScreen] = useState("library");
-
-  useEffect(() => {
-    if (!content) return
-    cacheFileForContent(content).catch(err => {
-      console.error('Failed to cache file for content', err)
-    })
-  }, [content])
 
   const handleNavigate = (screen: string) => {
     router.push(`/${screen}`);

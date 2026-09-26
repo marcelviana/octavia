@@ -1,4 +1,5 @@
 # I1-PR3 — lista do corte (commit 1; lista FECHADA — o que o commit 2 apaga e edita)
+# commit 2: atualizada pelo aval do commit 1 [Marcel, 2026-09-26] — itens 2 (public/sw.js vira auto-destruição) e 4 (PERFORMANCE_MODE_TESTING.md e scripts/test-performance-mode.sh entram no palco)
 # árvore: ../octavia-i1-pr3, branch i1/pr3-corte, criada de origin/main 089f72cdf463b176f34b6dc428ef7373476ff32c
 #
 # Derivação:
@@ -44,6 +45,8 @@ MORRE	palco	hooks/use-wake-lock.ts
 MORRE	palco	lib/advanced-content-cache.ts
 MORRE	palco	lib/memory-management.ts
 MORRE	palco	lib/performance-monitor.ts
+MORRE	palco	PERFORMANCE_MODE_TESTING.md
+MORRE	palco	scripts/test-performance-mode.sh
 
 ## 1b. palco — símbolos dentro de arquivo que fica (§2.2, I1-D23, I1-D24, div. 505)
 SIMBOLO	palco	lib/content-service-server.ts	getSetlistByIdServer
@@ -60,7 +63,7 @@ EDITA	palco	lib/security-headers.ts:254-255	o ramo `includes('/performance')` do
 EDITA	palco	lib/security-headers.ts:79-85	frame-src: sai 'blob:' e o comentário PERF-02; a diretiva fica ["'none'"] — declarada (I1-D24) [conflito esperado com a PR-2, que acrescenta a esta diretiva]
 EDITA	palco	types/performance.ts:29-104	PerformanceModeProps, SongData, PerformanceControlsState, ContentCacheState, ContentRenderInfo, NavigationState, PerformanceMetrics saem; Content, Setlist, SetlistSong, SetlistWithSongs, SetlistFormData ficam [550]
 EDITA	palco	components/dashboard-page-client.tsx:33-35,42	handleEnterPerformance e a prop
-EDITA	palco	components/dashboard.tsx:37,46	prop onEnterPerformance (e o botão que a chama)
+EDITA	palco	components/dashboard.tsx:37,46	prop onEnterPerformance (recebida e nunca chamada — não há botão) [566]
 EDITA	palco	components/content-page-client.tsx:45-48,82	handleEnterPerformance e a prop
 EDITA	palco	components/content-viewer.tsx:14,22,70	prop onEnterPerformance
 EDITA	palco	components/content-viewer/ContentHeader.tsx:16,45,95	prop e o botão
@@ -83,7 +86,6 @@ MORRE	pwa	lib/offline-cache.ts
 MORRE	pwa	lib/offline-queue.ts
 MORRE	pwa	lib/offline-setlist-cache.ts
 MORRE	pwa	worker/index.js
-MORRE	pwa	public/sw.js
 MORRE	pwa	public/manifest.json
 MORRE	pwa	scripts/build-sw.js
 MORRE	pwa	hooks/useContentFile.ts
@@ -91,6 +93,8 @@ MORRE	pwa	types/pwa.d.ts
 TEXTO	pwa	package.json knip.json	build-sw
 TEXTO	pwa	app components hooks lib contexts	manifest\.json|["']/sw\.js["']|["']/offline["']
 TEXTO	pwa	next.config.mjs	\(\?!proxy\)
+SIMBOLO	pwa	public/sw.js	addEventListener\(\s*['"](fetch|push|sync|message)['"]
+FICA	pwa	public/sw.js	auto-destruição (aval 2): sem fetch handler; apaga caches e IndexedDB, unregister, recarrega. Sai no bloco seguinte ao I1 (herança)
 
 EDITA	pwa	app/layout.tsx:8,10,18,128-129	import e montagem do EnhancedPwaInstallPrompt e do ServiceWorkerWrapper; `manifest: "/manifest.json"`
 EDITA	pwa	package.json:8-9	"build": "pnpm exec next build" (sem o build-sw); "build:sw" sai
@@ -171,3 +175,13 @@ EDITA	testes	tests/ux-audit/fase-d/f-library.spec.ts:136-196	item-26 sai
 EDITA	testes	tests/ux-audit/fase-d/g-viewer.spec.ts:140-185,237-284	o trecho de palco do item-32 e o item-34 saem
 EDITA	testes	tests/ux-audit/fase-d/h-perf.spec.ts:26-184	item-36, item-37, item-38 saem; 39–41 ficam
 EDITA	testes	tests/ux-audit/fase-d/recorder.ts:258-299	gotoPerformance (sem usuário depois do corte)
+
+## 5. commit 2 — edições que o corte revelou (divergências 564–569)
+EDITA	palco	lib/__tests__/security-headers-csp.test.ts:5-33	o gate do PERF-02 afirmava frame-src ['blob:']; passa a afirmar ["'none'"] (I1-D24) [564]
+EDITA	pwa	knip.json:7,18	também a entry worker/index.js e o project worker/**/*.js (a lista do commit 1 só tinha :6) [567]
+EDITA	pwa	components/setlist-manager.tsx:123,192,220	`setlists` sai das deps de três useCallback: só o saveSetlists o lia (lint exhaustive-deps) [568]
+EDITA	pwa	public/sw.js	reescrito: worker de auto-destruição (aval 2), 33 linhas
+EDITA	paginas	components/user-header.tsx:15	o ícone User sai do import (só o item de menu o usava)
+EDITA	palco	components/content-viewer/ContentHeader.tsx:3	o ícone Play sai do import (só o botão Performance o usava)
+EDITA	palco	components/setlist/setlist-card.tsx:6 e setlist-details.tsx:6	o ícone Play sai do import
+EDITA	pwa	components/content-page-client.tsx:2 e content-edit-page-client.tsx:2	useEffect sai do import (só o cacheFileForContent o usava)

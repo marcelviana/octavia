@@ -250,50 +250,6 @@ export async function gotoRoute(
   return false
 }
 
-/** Shell do modo performance visível (critério de "tela cheia" do J1). */
-export async function waitPerformanceShell(page: Page, timeout = 30_000): Promise<void> {
-  await page.locator('[data-testid="exit-button"]').waitFor({ state: 'visible', timeout })
-}
-
-/**
- * Navega para /performance por deep link, com retry.
- *
- * ACHADO da própria Fase D (primeira execução): o server component de
- * /performance valida a sessão via fetch a /api/auth/verify, que usa o
- * defaultLimiter ANTIGO (por IP, compartilhado entre rotas). Sob tráfego,
- * o verify 429a → getServerSideUser retorna null → redirect("/login") →
- * cookie válido → usuário aterrissa no DASHBOARD. Cada bounce é registrado
- * como evidência; o retry espera a janela do limiter (60s+) esfriar.
- */
-export async function gotoPerformance(
-  page: Page,
-  url: string,
-  rec: ItemRecorder,
-  attempts = 3
-): Promise<boolean> {
-  for (let i = 1; i <= attempts; i++) {
-    await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 90_000 })
-    await page.waitForTimeout(1500)
-    if (!/\/(dashboard|login)/.test(page.url())) {
-      const ok = await waitPerformanceShell(page).then(
-        () => true,
-        () => false
-      )
-      if (ok) {
-        if (i > 1) rec.note(`Deep link /performance só funcionou na tentativa ${i}`)
-        return true
-      }
-    }
-    rec.note(
-      `Deep link /performance BOUNCE (tentativa ${i}/${attempts}): aterrissou em ${page.url()} ` +
-        '— padrão do 429 em /api/auth/verify (limiter compartilhado por IP)'
-    )
-    if (i < attempts) {
-      await page.goto('about:blank').catch(() => {})
-      await page.waitForTimeout(75_000)
-    }
-  }
-  return false
-}
+// (waitPerformanceShell e gotoPerformance saíram com o palco na I1-PR3.)
 
 export { TRACES_DIR }

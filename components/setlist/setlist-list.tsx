@@ -23,7 +23,6 @@ interface SetlistListProps {
   onCreateSetlist: () => void
   onEditSetlist: (setlist: SetlistWithSongs) => void
   onDeleteSetlist: (setlist: SetlistWithSongs) => void
-  onEnterPerformance: (setlist: SetlistWithSongs, startingSongIndex?: number) => void
   onShareSetlist?: (setlist: SetlistWithSongs) => void
   onToggleFavorite?: (setlist: SetlistWithSongs) => void
 }
@@ -37,7 +36,6 @@ export const SetlistList = memo(function SetlistList({
   onCreateSetlist,
   onEditSetlist,
   onDeleteSetlist,
-  onEnterPerformance,
   onShareSetlist,
   onToggleFavorite,
 }: SetlistListProps) {
@@ -124,7 +122,6 @@ export const SetlistList = memo(function SetlistList({
             onSelect={onSelectSetlist}
             onEdit={onEditSetlist}
             onDelete={onDeleteSetlist}
-            onEnterPerformance={onEnterPerformance}
             onShare={onShareSetlist}
             onToggleFavorite={onToggleFavorite}
           />

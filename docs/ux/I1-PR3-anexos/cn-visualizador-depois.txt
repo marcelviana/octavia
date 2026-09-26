@@ -1,0 +1,10 @@
+# $ NO_COLOR=1 pnpm exec vitest run --project web tests/gates/i1-visualizador.test.tsx --reporter=verbose   (commit 2: sem o módulo offline-cache)
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-i1-pr3
+ ✓ |web| tests/gates/i1-visualizador.test.tsx > I1-D36 — visualizador, sem-cache > Lyrics abre 55ms
+ ✓ |web| tests/gates/i1-visualizador.test.tsx > I1-D36 — visualizador, sem-cache > Chords abre 19ms
+ ✓ |web| tests/gates/i1-visualizador.test.tsx > I1-D36 — visualizador, sem-cache > Tab abre 12ms
+ ✓ |web| tests/gates/i1-visualizador.test.tsx > I1-D36 — visualizador, sem-cache > Sheet PDF abre 11ms
+ ✓ |web| tests/gates/i1-visualizador.test.tsx > I1-D36 — visualizador, sem-cache > Sheet imagem abre 12ms
+ ✓ |web| tests/gates/i1-visualizador.test.tsx > I1-D36 — visualizador, sem-cache > controle: Sheet PDF sem extensão na URL 11ms
+ Test Files  1 passed (1)
+      Tests  6 passed (6)

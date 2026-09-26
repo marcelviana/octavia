@@ -1,9 +1,8 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Database } from "@/types/database.types";
 import { ContentViewer } from "@/components/content-viewer";
-import { cacheFileForContent } from "@/lib/offline-cache";
 import { ResponsiveLayout } from "@/components/responsive-layout";
 import dynamic from "next/dynamic";
 import { ErrorBoundary } from "@/lib/error-boundary"
@@ -27,24 +26,12 @@ export default function ContentPageClient({
   const [isEditing, setIsEditing] = useState(false);
   const [activeScreen, setActiveScreen] = useState("library");
 
-  useEffect(() => {
-    if (!initialContent) return
-    cacheFileForContent(initialContent).catch(err => {
-      console.error('Failed to cache file for content', err)
-    })
-  }, [initialContent])
-
   const handleNavigate = (screen: string) => {
     router.push(`/${screen}`);
   };
 
   const handleBack = () => {
     router.back();
-  };
-
-  const handleEnterPerformance = () => {
-    if (!content) return;
-    router.push(`/performance?contentId=${content.id}`);
   };
 
   const handleEdit = () => {
@@ -79,7 +66,6 @@ export default function ContentPageClient({
           <ContentViewer
             content={content}
             onBack={handleBack}
-            onEnterPerformance={handleEnterPerformance}
             onEdit={handleEdit}
             showToolbar={false}
           />

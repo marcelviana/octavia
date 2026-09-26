@@ -1,6 +1,5 @@
 "use client"
 import { useState } from "react"
-import { useContentFile } from "@/hooks/useContentFile"
 import { useContentActions } from "@/hooks/useContentActions"
 import { ContentHeader } from "./content-viewer/ContentHeader"
 import { ContentToolbar } from "./content-viewer/ContentToolbar"
@@ -11,7 +10,6 @@ import { DeleteDialog } from "./content-viewer/DeleteDialog"
 interface ContentViewerProps {
   content: any
   onBack: () => void
-  onEnterPerformance: (content: any) => void
   onEdit?: () => void
   showToolbar?: boolean
 }
@@ -19,7 +17,6 @@ interface ContentViewerProps {
 export function ContentViewer({
   content,
   onBack,
-  onEnterPerformance,
   onEdit,
   showToolbar = true,
 }: ContentViewerProps) {
@@ -31,13 +28,6 @@ export function ContentViewer({
     : 1
 
   // Custom hooks for separated concerns
-  const {
-    offlineUrl,
-    offlineMimeType,
-    isLoadingUrl,
-    urlError
-  } = useContentFile(content.id)
-
   const {
     deleteDialog,
     setDeleteDialog,
@@ -67,7 +57,6 @@ export function ContentViewer({
         content={content}
         isFavorite={isFavorite}
         onBack={onBack}
-        onEnterPerformance={onEnterPerformance}
         onToggleFavorite={toggleFavorite}
       />
 
@@ -92,10 +81,6 @@ export function ContentViewer({
             content={content}
             zoom={zoom}
             currentPage={currentPage}
-            offlineUrl={offlineUrl}
-            offlineMimeType={offlineMimeType}
-            isLoadingUrl={isLoadingUrl}
-            urlError={urlError}
           />
 
           {/* Sidebar with Metadata and Notes */}

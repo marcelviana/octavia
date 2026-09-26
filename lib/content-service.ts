@@ -2,7 +2,6 @@ import logger from "@/lib/logger";
 import type { Database } from "@/types/database.types";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { ContentQueryParams } from "./content-types";
-import { enqueueRequest } from "@/lib/offline-queue";
 import { debug } from "@/lib/debug";
 
 type Content = Database["public"]["Tables"]["content"]["Row"];
@@ -518,14 +517,6 @@ export async function createContent(content: ContentInsert) {
     return await response.json();
   } catch (error) {
     logger.error("Error in createContent:", error);
-    if (typeof window !== "undefined" && !navigator.onLine) {
-      await enqueueRequest({
-        method: "POST",
-        url: "/api/content",
-        body: content,
-        headers: {},
-      });
-    }
     throw error;
   }
 }
@@ -560,14 +551,6 @@ export async function updateContent(id: string, content: ContentUpdate) {
     return await response.json();
   } catch (error) {
     logger.error("Error in updateContent:", error);
-    if (typeof window !== "undefined" && !navigator.onLine) {
-      await enqueueRequest({
-        method: "PUT",
-        url: "/api/content",
-        body: { id, ...content },
-        headers: {},
-      });
-    }
     throw error;
   }
 }
@@ -602,13 +585,6 @@ export async function deleteContent(id: string) {
       return true;
   } catch (error) {
     logger.error("Error in deleteContent:", error);
-    if (typeof window !== "undefined" && !navigator.onLine) {
-      await enqueueRequest({
-        method: "DELETE",
-        url: `/api/content?id=${encodeURIComponent(id)}`,
-        headers: {},
-      });
-    }
     throw error;
   }
 }

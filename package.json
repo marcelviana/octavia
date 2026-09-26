@@ -5,8 +5,7 @@
   "packageManager": "pnpm@10.28.0",
   "scripts": {
     "dev": "NODE_OPTIONS='--no-deprecation' pnpm exec next dev",
-    "build": "pnpm exec next build && node scripts/build-sw.js",
-    "build:sw": "node scripts/build-sw.js",
+    "build": "pnpm exec next build",
     "start": "pnpm exec next start",
     "lint": "pnpm exec next lint",
     "test": "pnpm exec vitest run",

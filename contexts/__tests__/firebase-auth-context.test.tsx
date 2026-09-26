@@ -28,14 +28,6 @@ vi.mock('@/lib/firebase', () => ({
   isFirebaseConfigured: true
 }))
 
-vi.mock('@/lib/offline-cache', () => ({
-  clearOfflineContent: vi.fn()
-}))
-
-vi.mock('@/lib/offline-setlist-cache', () => ({
-  clearOfflineSetlists: vi.fn()
-}))
-
 vi.mock('@/lib/firebase-session-cookies', () => ({
   setSessionCookie: vi.fn(),
   clearSessionCookie: vi.fn()

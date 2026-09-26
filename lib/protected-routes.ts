@@ -3,10 +3,6 @@
  * gate G-rotas (tests/gates/g-rotas-protegidas.test.ts). A paridade
  * middleware↔gate é por construção: quem alterar esta lista altera os
  * dois ao mesmo tempo (B1.2a, docs/ux/PLANO-TRANSICAO.md).
- *
- * NOTA: /performance NÃO está nos prefixos do middleware (estado herdado,
- * preservado na B1.2a — middleware intocado até a B1.2b); a proteção dela
- * é da própria página, e o gate a cobre em PROTECTED_PAGES.
  */
 
 /** Prefixos que o middleware trata como protegidos (redirect → /login). */
@@ -14,8 +10,6 @@ export const PROTECTED_ROUTE_PREFIXES = [
   "/dashboard",
   "/library",
   "/setlists",
-  "/settings",
-  "/profile",
   "/add-content",
   "/content",
 ] as const
@@ -37,9 +31,6 @@ export const PROTECTED_PAGES = [
   "/dashboard",
   "/library",
   "/setlists",
-  "/settings",
-  "/profile",
   "/add-content",
   "/content/[id]",
-  "/performance",
 ] as const

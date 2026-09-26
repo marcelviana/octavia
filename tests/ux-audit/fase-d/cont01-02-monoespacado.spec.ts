@@ -1,5 +1,5 @@
 import { test, expect, type Page } from '@playwright/test'
-import { getBearer, settle, waitPerformanceShell } from './recorder'
+import { getBearer, settle } from './recorder'
 
 /**
  * PR-6 (fila A #8) — regressão de CONT-01 (cifra-string vira parágrafo
@@ -19,16 +19,10 @@ import { getBearer, settle, waitPerformanceShell } from './recorder'
  *   4. tab: as 6 cordas alinhadas — mesmo `offsetLeft`, alturas iguais
  *   5. cifra: nº de linhas renderizadas == nº de `\n` do dado original
  *
- * 1–3 valem para cifra, tab e **modo performance** (o palco, onde o J1 é
- * decidido). No palco os DOIS conteúdos rodam — **tab inclusive**, que é o
- * caso mais frágil (6 cordas) — entrando por `/performance?contentId=` para
- * o alvo ser determinístico. Conteúdo vem do seed
- * (`content_data.chords`/`tablature` são strings) — nada é criado, nada a
- * limpar.
- *
- * PENDÊNCIA DECLARADA: o caso **palco/tab** está marcado `fixme` — a
- * tablatura não chega a ser renderizada no modo performance (achado novo,
- * fora do escopo desta PR; ver comentário no teste).
+ * 1–3 valem para cifra e tab no viewer. (O bloco do palco e o seu
+ * `test.fixme` de palco/tab saíram com o palco na I1-PR3.) Conteúdo vem do
+ * seed (`content_data.chords`/`tablature` são strings) — nada é criado,
+ * nada a limpar.
  */
 
 const CIFRA = '[UX-AUDIT] Águas de Março'
@@ -132,43 +126,4 @@ test.describe('CONT-01/02 — monoespaçado sem wrap (gate, substitui o item 33)
     const larguras = new Set(linhas.map((l) => l.length))
     console.log(`[PR-6] tab → ${linhas.length} cordas, larguras distintas: ${larguras.size}`)
   })
-
-  // PALCO — roda com os DOIS conteúdos, entrando por deep link de conteúdo
-  // único (`/performance?contentId=`), o que torna o alvo determinístico (a
-  // 1ª música da "Show padrão" é o PDF de 12 páginas, não serviria).
-  // A **tab** é obrigatória aqui: 6 cordas alinhadas é o caso mais frágil.
-  for (const { rotulo, titulo, marcador } of [
-    { rotulo: 'tab', titulo: TAB, marcador: 'e|' },
-    { rotulo: 'cifra', titulo: CIFRA, marcador: 'Quando a noite chega' },
-  ]) {
-    test(`palco: ${rotulo} com pre, corte horizontal e scroll`, async ({ page }) => {
-      // ACHADO NOVO (2026-08-12), fora do escopo desta PR: **tablatura não é
-      // renderizada no modo performance**. O palco mostra "No lyrics available
-      // for this song" para conteúdo do tipo Tab, porque
-      // hooks/use-content-loading.ts carrega apenas `content_data.chords` e
-      // `.sections` — nunca `.tablature` — e o use-content-renderer só olha
-      // esses dois campos para ContentType.TAB. Não é word-wrap: é fio
-      // desligado. Enquanto não houver decisão sobre corrigir, este caso fica
-      // como pendência VISÍVEL (fixme), não como falso verde.
-      test.fixme(rotulo === 'tab', 'tab não renderiza no palco — achado novo, ver cabeçalho')
-      test.setTimeout(4 * 60 * 1000)
-      await page.goto('/dashboard', { waitUntil: 'domcontentloaded' })
-      await settle(page, 1500)
-      const id = await idDoConteudo(page, titulo)
-
-      await page.goto(`/performance?contentId=${id}`, { waitUntil: 'domcontentloaded' })
-      await waitPerformanceShell(page)
-      await settle(page, 2000)
-
-      const m = await medirBloco(page, marcador)
-      expect(m, `bloco de ${rotulo} presente no palco`).toBeTruthy()
-      console.log(`[PR-6] palco/${rotulo} → whiteSpace=${m!.whiteSpace} overflowX=${m!.overflowX} ` +
-        `scrollWidth=${m!.scrollWidth} clientWidth=${m!.clientWidth}`)
-
-      expect(m!.whiteSpace, `assert 1 (palco/${rotulo}): white-space pre`).toBe('pre')
-      expect(m!.scrollWidth, `assert 2 (palco/${rotulo}): existe corte horizontal`)
-        .toBeGreaterThan(m!.clientWidth)
-      expect(['auto', 'scroll'], `assert 3 (palco/${rotulo}): scroll horizontal`).toContain(m!.overflowX)
-    })
-  }
 })

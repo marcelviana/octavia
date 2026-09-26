@@ -1,6 +1,6 @@
 "use client"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Play, Star } from "lucide-react"
+import { ArrowLeft, Star } from "lucide-react"
 import { ContentType, getContentTypeIcon, normalizeContentType } from "@/types/content"
 
 interface ContentHeaderProps {
@@ -13,7 +13,6 @@ interface ContentHeaderProps {
   }
   isFavorite: boolean
   onBack: () => void
-  onEnterPerformance: (content: any) => void
   onToggleFavorite: () => void
 }
 
@@ -42,7 +41,6 @@ export function ContentHeader({
   content,
   isFavorite,
   onBack,
-  onEnterPerformance,
   onToggleFavorite
 }: ContentHeaderProps) {
   return (
@@ -87,16 +85,6 @@ export function ContentHeader({
                 isFavorite ? "fill-current" : ""
               }`}
             />
-          </Button>
-
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => onEnterPerformance(content)}
-            className="bg-gradient-to-r from-green-500 to-green-600 text-white hover:from-green-600 hover:to-green-700"
-          >
-            <Play className="w-4 h-4 mr-0 md:mr-2 mr-0" />
-            <span className="hidden md:inline">Performance</span>
           </Button>
         </div>
       </div>

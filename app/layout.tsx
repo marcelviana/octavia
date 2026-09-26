@@ -5,9 +5,7 @@ import "@/lib/logger"
 import { FirebaseAuthProvider } from "@/contexts/firebase-auth-context"
 import { SessionProvider } from "@/components/providers/session-provider"
 import { Toaster } from "@/components/ui/sonner"
-import { EnhancedPwaInstallPrompt } from "@/components/pwa-install-prompt"
 import { ErrorBoundary } from "@/lib/error-boundary"
-import ServiceWorkerWrapper from "@/components/service-worker-wrapper"
 import { getCSPNonce } from "@/lib/csp-nonce"
 
 // Update app/layout.tsx metadata
@@ -15,7 +13,6 @@ export const metadata: Metadata = {
   title: "Octavia - Digital Music Management",
   description: "Organize, visualize, and share your musical content",
   generator: "v0.dev",
-  manifest: "/manifest.json",
   icons: {
     icon: "/icons/icon-192x192.webp", // Updated path
     apple: "/icons/icon-192x192.webp",
@@ -125,8 +122,6 @@ export default async function RootLayout({
           <FirebaseAuthProvider>
             <SessionProvider>{children}</SessionProvider>
             <Toaster richColors position="top-right" />
-            <EnhancedPwaInstallPrompt />
-            <ServiceWorkerWrapper />
           </FirebaseAuthProvider>
         </ErrorBoundary>
       </body>

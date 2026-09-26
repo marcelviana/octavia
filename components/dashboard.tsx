@@ -34,7 +34,6 @@ export type UserStats = {
 interface DashboardProps {
   onNavigate: (screen: string) => void;
   onSelectContent: (content: ContentItem) => void;
-  onEnterPerformance: () => void;
   recentContent: ContentItem[];
   favoriteContent: ContentItem[];
   stats: UserStats | null;
@@ -43,7 +42,6 @@ interface DashboardProps {
 export function Dashboard({
   onNavigate,
   onSelectContent,
-  onEnterPerformance,
   recentContent,
   favoriteContent,
   stats,

@@ -1,122 +1,32 @@
-// Custom service worker for offline support and basic caching
-console.log('Custom worker loaded');
+// Worker de AUTO-DESTRUIÇÃO (I1-PR3, div. 560, aval 2 [Marcel, 2026-09-26]).
+// O web deixou de ser PWA. Navegador que ainda tem o worker antigo (cache-first
+// de `/`) baixa este na checagem de update: ele apaga todos os caches da origem
+// e os IndexedDB do cache offline, desregistra-se e recarrega as abas. Sem
+// `fetch` handler: nada é interceptado. Escrito à mão, não gerado.
+// SAI no bloco seguinte ao I1 (herança nomeada no I1-PR3-anexos/README.md),
+// junto com o `worker-src` da CSP.
+// Bancos: 'localforage' = instância padrão do localforage (lib/offline-cache,
+// lib/offline-setlist-cache, lib/offline-queue); 'octavia-performance-cache'
+// (lib/advanced-content-cache). O 'firebaseLocalStorageDb' (sessão) NÃO se toca.
+const BANCOS = ['localforage', 'octavia-performance-cache']
 
-const CACHE_VERSION = 'v1';
-const CACHE_NAME = `octavia-${CACHE_VERSION}`;
-const STATIC_CACHE = `octavia-static-${CACHE_VERSION}`;
-const PAGE_CACHE = `octavia-pages-${CACHE_VERSION}`;
-const OFFLINE_URL = '/offline';
-// Assets that should be available offline
-const ASSETS = [
-  '/',
-  OFFLINE_URL,
-  '/manifest.json',
-  '/pdf.worker.min.mjs',
-  '/logos/octavia-icon.webp',
-  '/logos/octavia-wordmark.webp',
-  '/icons/icon-192x192.webp',
-  '/icons/icon-512x512.webp',
-];
+const apagarBanco = (nome) =>
+  new Promise((resolve) => {
+    const req = indexedDB.deleteDatabase(nome)
+    req.onsuccess = req.onerror = req.onblocked = () => resolve()
+  })
 
-// Handle any errors during service worker lifecycle
-self.addEventListener('error', (event) => {
-  console.error('Service worker error:', event.error);
-});
+self.addEventListener('install', () => self.skipWaiting())
 
-// Handle unhandled promise rejections (like precaching errors)
-self.addEventListener('unhandledrejection', (event) => {
-  console.error('Service worker unhandled rejection:', event.reason);
-  // Prevent the error from bubbling up
-  event.preventDefault();
-});
-
-// Skip waiting for activation
-self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'SKIP_WAITING') {
-    self.skipWaiting();
-  }
-});
-
-// Pre-cache core assets on install
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS))
-  );
-});
-
-// Clean up old caches
 self.addEventListener('activate', (event) => {
-  console.log('Service worker activated');
-
   event.waitUntil(
     (async () => {
-      const cacheNames = await caches.keys();
-      const keep = [CACHE_NAME, STATIC_CACHE, PAGE_CACHE];
-      const oldCaches = cacheNames.filter(name => !keep.includes(name));
-      await Promise.all(oldCaches.map(name => caches.delete(name)));
-      console.log('Cleaned up old caches:', oldCaches);
-      await self.clients.claim();
+      const nomes = await caches.keys()
+      await Promise.all(nomes.map((n) => caches.delete(n)))
+      await Promise.all(BANCOS.map(apagarBanco))
+      await self.registration.unregister()
+      const abas = await self.clients.matchAll({ type: 'window' })
+      await Promise.all(abas.map((c) => c.navigate(c.url).catch(() => {})))
     })()
-  );
-});
-
-// Serve cached assets and offline page
-self.addEventListener('fetch', (event) => {
-  const { request } = event;
-  if (request.method !== 'GET') return;
-  const url = new URL(request.url);
-
-  // Cache-first for predefined assets
-  if (ASSETS.includes(url.pathname)) {
-    event.respondWith(
-      caches.match(request).then(res => res || fetch(request))
-    );
-    return;
-  }
-
-  // Cache static resources like JS, CSS and images from Next.js
-  if (url.origin === self.location.origin && (url.pathname.startsWith('/_next/static') || url.pathname.startsWith('/_next/image'))) {
-    event.respondWith(
-      (async () => {
-        const cache = await caches.open(STATIC_CACHE);
-        const cached = await cache.match(request);
-        if (cached) return cached;
-        try {
-          const res = await fetch(request);
-          cache.put(request, res.clone());
-          return res;
-        } catch {
-          return fetch(request);
-        }
-      })()
-    );
-    return;
-  }
-
-  // Network-first for navigation requests with offline fallback
-  if (request.mode === 'navigate') {
-    event.respondWith(
-      (async () => {
-        try {
-          const res = await fetch(request);
-          const cache = await caches.open(PAGE_CACHE);
-          cache.put(request, res.clone());
-          return res;
-        } catch (err) {
-          const cache = await caches.open(PAGE_CACHE);
-          const cached = await cache.match(request);
-          if (cached) return cached;
-          const offline = await caches.match(OFFLINE_URL);
-          if (event.clientId) {
-            const client = await self.clients.get(event.clientId);
-            client?.postMessage({ type: 'OFFLINE_FALLBACK', url: request.url });
-          } else {
-            const clients = await self.clients.matchAll();
-            clients.forEach(c => c.postMessage({ type: 'OFFLINE_FALLBACK', url: request.url }));
-          }
-          return offline;
-        }
-      })()
-    );
-  }
-});
+  )
+})
