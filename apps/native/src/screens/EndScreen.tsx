@@ -61,17 +61,23 @@ export interface EndScreenProps {
  * segundo trecho que faz de **128** o último N (folga 1,04) e de 129 o
  * primeiro fora (0,98). Acima disso a fileira vira uma barra sólida de
  * 900 × 3 e a contagem abaixo carrega o número sozinha (`null` aqui).
+ *
+ * Os 900 são os de **C**. A largura da fileira é token de faixa
+ * (`faixas[…].s5.fileira`, N3-PR6c, div. 461): em **B**, 663 — com 900 a
+ * fileira passava da janela de 711,1 a partir de N = 19. Em B os mesmos três
+ * trechos caem noutros N: 8 → 34 dp, a marca chega ao piso em N = 60 (6 dp,
+ * a fileira com 655), e 94 é o último N em que a marca ainda é marca (95 é a
+ * barra sólida de 663).
  */
-const FILEIRA = 900
 const MARCA = { maxima: 34, piso: 6, altura: 3, raio: 2 }
 const FOLGA = 5
 
-function marcas(n: number): { largura: number; folga: number } | null {
+function marcas(n: number, fileira: number): { largura: number; folga: number } | null {
   if (n <= 0) return null
   if (n === 1) return { largura: MARCA.maxima, folga: FOLGA }
-  const cabe = (FILEIRA - FOLGA * (n - 1)) / n
+  const cabe = (fileira - FOLGA * (n - 1)) / n
   if (cabe >= MARCA.piso) return { largura: Math.min(MARCA.maxima, Math.floor(cabe)), folga: FOLGA }
-  const folga = (FILEIRA - MARCA.piso * n) / (n - 1)
+  const folga = (fileira - MARCA.piso * n) / (n - 1)
   return folga >= 1 ? { largura: MARCA.piso, folga: Math.floor(folga * 10) / 10 } : null
 }
 
@@ -80,11 +86,11 @@ function marcas(n: number): { largura: number; folga: number } | null {
  * músicas", e repeti-la seria ler duas vezes a mesma coisa. Nenhuma `View`
  * daqui é nó de texto, então nada entra no `content-desc`.
  */
-function Percorridas({ total }: { total: number }): React.JSX.Element {
-  const m = marcas(total)
-  if (m === null) return <View style={[styles.fileira, styles.barraSolida]} />
+function Percorridas({ total, fileira }: { total: number; fileira: number }): React.JSX.Element {
+  const m = marcas(total, fileira)
+  if (m === null) return <View style={[styles.fileira, styles.barraSolida, { width: fileira, maxWidth: fileira }]} />
   return (
-    <View style={[styles.fileira, { gap: m.folga }]}>
+    <View style={[styles.fileira, { gap: m.folga, maxWidth: fileira }]}>
       {Array.from({ length: total }, (_, i) => (
         <View key={i} style={[styles.marca, { width: m.largura }]} />
       ))}
@@ -109,7 +115,8 @@ export function EndScreen({
   }, [])
   const larguraBorda = meio === null ? 0 : Math.max(meio.largura * 0.15, touch.min)
   const alturaConteudo = meio === null ? 0 : Math.max(meio.altura, touch.min)
-  const t = faixas[useFaixa()].palco
+  const faixa = useFaixa()
+  const t = faixas[faixa].palco
 
   return (
     <View style={styles.tela}>
@@ -123,7 +130,7 @@ export function EndScreen({
       <View style={styles.meio} onLayout={medirMeio}>
         <View style={styles.centro}>
           <View style={styles.bloco}>
-            <Percorridas total={total} />
+            <Percorridas total={total} fileira={faixas[faixa].s5.fileira} />
             <Text style={styles.titulo}>FIM DA SETLIST</Text>
             <View style={styles.contagem}>
               <Icone nome="n-de-musicas" tamanho={20} cor={dark.lineInfo} />
@@ -167,7 +174,7 @@ export function EndScreen({
  * Medidas das molduras `S5` e `S5-n-grande`. Onde a moldura usa um número
  * fora das escalas do `theme.ts`, entra o degrau mais próximo — a regra da
  * **errata E10**; a tabela desta tela está no anexo da PR. Ficam como literal,
- * declarados, os que não têm degrau nem escala: a fileira de 900 e os
+ * declarados, os que não têm degrau nem escala: a fileira (900 em C, token de faixa desde a N3-PR6c) e os
  * 34 · 6 · 5 · 3 · 2 da §7.1, e o corpo 13 do nome da setlist (§4.4
  * "chip / status").
  */
@@ -201,10 +208,10 @@ const styles = StyleSheet.create({
   // o app já tinha, 16 + 24).
   centro: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: space.lg },
   bloco: { alignItems: 'center', gap: space.xl },
-  fileira: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', maxWidth: FILEIRA },
+  // A largura (a `maxWidth` da fileira e a da barra sólida) é o token da faixa (div. 461): 900 em C, 663 em B.
+  fileira: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center' },
   marca: { height: MARCA.altura, borderRadius: MARCA.raio, backgroundColor: dark.accentInk },
   barraSolida: {
-    width: FILEIRA,
     height: MARCA.altura,
     borderRadius: MARCA.raio,
     backgroundColor: dark.accentInk,
