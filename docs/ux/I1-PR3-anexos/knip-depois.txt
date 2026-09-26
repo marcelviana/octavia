@@ -1,0 +1,221 @@
+Unused files (14)
+apps/native/scripts/__cn__/A20Falso.tsx   
+apps/native/scripts/__cn__/IconesFalso.ts 
+apps/native/scripts/g-n3.mjs              
+apps/native/src/fixtures/palco.ts         
+apps/native/test/fake-react-native-pdf.tsx
+apps/native/test/fake-react-native-svg.tsx
+components/library/index.ts               
+scripts/native/token-oracle.ts            
+scripts/storage/reconcile.ts              
+scripts/ux-audit/auth-check.ts            
+scripts/ux-audit/cleanup.ts               
+scripts/ux-audit/discover.ts              
+scripts/ux-audit/probe-auth-limit.ts      
+scripts/ux-audit/seed.ts                  
+Unused dependencies (23)
+@expo-google-fonts/ibm-plex-mono  apps/native/package.json:8:6 
+@expo-google-fonts/manrope        apps/native/package.json:9:6 
+@expo-google-fonts/raleway        apps/native/package.json:10:6
+@hookform/resolvers               package.json:23:6            
+@radix-ui/react-alert-dialog      package.json:25:6            
+@radix-ui/react-aspect-ratio      package.json:26:6            
+@radix-ui/react-collapsible       package.json:29:6            
+@radix-ui/react-context-menu      package.json:30:6            
+@radix-ui/react-popover           package.json:34:6            
+@radix-ui/react-progress          package.json:35:6            
+@radix-ui/react-switch            package.json:41:6            
+@radix-ui/react-toggle            package.json:44:6            
+@types/debug                      package.json:48:6            
+autoprefixer                      package.json:51:6            
+cmdk                              package.json:54:6            
+date-fns                          package.json:55:6            
+immer                             package.json:59:6            
+isomorphic-dompurify              package.json:60:6            
+lru-cache                         package.json:61:6            
+react-day-picker                  package.json:68:6            
+react-hook-form                   package.json:70:6            
+react-resizable-panels            package.json:72:6            
+zustand                           package.json:78:6            
+Unused devDependencies (6)
+@testing-library/react-hooks  package.json:85:6 
+dependency-cruiser            package.json:93:6 
+eslint                        package.json:95:6 
+eslint-config-next            package.json:96:6 
+msw                           package.json:99:6 
+tsx                           package.json:103:6
+Unlisted dependencies (2)
+expo-updates         apps/native/app.json   
+postcss-load-config  postcss.config.mjs:1:10
+Unlisted binaries (2)
+awk       apps/native/test/gates.test.ts
+supabase  package.json                  
+Unused exports (121)
+clearFiles                         function  apps/native/src/files.ts:619:17                  
+app                                          apps/native/src/firebase.ts:30:14                
+urlsGarantidas                     function  apps/native/src/prefetch.ts:61:17                
+ReguaDeDev                         function  apps/native/src/screens/ReguaDeDev.tsx:87:17     
+clear                              function  apps/native/src/store.ts:172:17                  
+cacheDir                           function  apps/native/src/store.ts:178:17                  
+light                                        apps/native/src/theme.ts:36:14                   
+dev                                          apps/native/test/dev-flag.ts:12:14               
+default                            function  apps/native/test/fake-datetimepicker.tsx:24:25   
+FileMode                                     apps/native/test/fake-expo-file-system.ts:108:14 
+__tamanho                          function  apps/native/test/fake-expo-file-system.ts:320:17 
+PanResponder                                 apps/native/test/fake-react-native.tsx:85:14     
+BackHandler                                  apps/native/test/fake-react-native.tsx:91:14     
+View                                         apps/native/test/fake-react-native.tsx:130:14    
+Text                                         apps/native/test/fake-react-native.tsx:131:14    
+ScrollView                                   apps/native/test/fake-react-native.tsx:138:14    
+Image                                        apps/native/test/fake-react-native.tsx:150:14    
+ActivityIndicator                            apps/native/test/fake-react-native.tsx:151:14    
+SafeAreaView                                 apps/native/test/fake-react-native.tsx:152:14    
+Pressable                                    apps/native/test/fake-react-native.tsx:163:14    
+TouchableOpacity                             apps/native/test/fake-react-native.tsx:178:14    
+TextInput                                    apps/native/test/fake-react-native.tsx:185:14    
+Modal                              function  apps/native/test/fake-react-native.tsx:208:17    
+FlatList                           function  apps/native/test/fake-react-native.tsx:219:17    
+StyleSheet                                   apps/native/test/fake-react-native.tsx:240:14    
+Platform                                     apps/native/test/fake-react-native.tsx:247:14    
+Keyboard                                     apps/native/test/fake-react-native.tsx:248:14    
+Dimensions                                   apps/native/test/fake-react-native.tsx:261:14    
+useWindowDimensions                function  apps/native/test/fake-react-native.tsx:262:17    
+testIDs                            function  apps/native/test/tela.tsx:69:17                  
+sanitizeFilename                   function  components/add-content/upload-to-storage.ts:13:17
+PdfViewer                          function  components/pdf-viewer.tsx:50:17                  
+useSession                         function  components/providers/session-provider.tsx:54:17  
+SetlistCard                                  components/setlist/index.ts:1:10                 
+SidebarProvider                    function  contexts/sidebar-context.tsx:12:17               
+useToast                                     hooks/use-toast.ts:194:10                        
+MALFORMED_FIREBASE_TOKEN                     lib/__tests__/api-test-helpers.ts:8:14           
+MOCK_FIREBASE_TOKEN_PAYLOAD                  lib/__tests__/api-test-helpers.ts:14:14          
+mockFirebaseAdmin                            lib/__tests__/api-test-helpers.ts:43:14          
+mockFirebaseServerUtils                      lib/__tests__/api-test-helpers.ts:155:14         
+mockSupabaseStorage                          lib/__tests__/api-test-helpers.ts:299:14         
+mockSupabaseService                          lib/__tests__/api-test-helpers.ts:337:14         
+createSessionCookieRequest                   lib/__tests__/api-test-helpers.ts:490:14         
+TEST_UNVERIFIED_USER                         lib/__tests__/api-test-helpers.ts:520:14         
+TEST_IDS                                     lib/__tests__/api-test-helpers.ts:528:14         
+TEST_SETLIST                                 lib/__tests__/api-test-helpers.ts:551:14         
+expectServerError                            lib/__tests__/api-test-helpers.ts:582:14         
+toBeInFavoriteState                          lib/__tests__/custom-matchers.ts:28:14           
+toBeInLoadingState                           lib/__tests__/custom-matchers.ts:49:14           
+toBeInErrorState                             lib/__tests__/custom-matchers.ts:70:14           
+toBeInteractive                              lib/__tests__/custom-matchers.ts:99:14           
+toBeAccessible                               lib/__tests__/custom-matchers.ts:127:14          
+toShowValidationError                        lib/__tests__/custom-matchers.ts:153:14          
+toBeVisuallySelected                         lib/__tests__/custom-matchers.ts:187:14          
+toBeVisuallyDisabled                         lib/__tests__/custom-matchers.ts:209:14          
+toHaveAriaLabel                              lib/__tests__/custom-matchers.ts:229:14          
+toHaveProperFocus                            lib/__tests__/custom-matchers.ts:253:14          
+toBeInUploadState                            lib/__tests__/custom-matchers.ts:275:14          
+toBeInContentState                           lib/__tests__/custom-matchers.ts:304:14          
+customMatchers                               lib/__tests__/custom-matchers.ts:359:14          
+withIgnoredKeys                    function  lib/api-schemas.ts:91:17                         
+jsonValueSchema                              lib/api-schemas.ts:119:14                        
+contentTypeSchema                            lib/api-schemas.ts:134:14                        
+ALLOWED_UPLOADS                              lib/api-schemas.ts:225:14                        
+withAuth                                     lib/api-validation-middleware.ts:187:14          
+withQueryValidation                          lib/api-validation-middleware.ts:199:14          
+withParamsValidation                         lib/api-validation-middleware.ts:202:14          
+ensureAuthConfigured               function  lib/auth-manager.ts:12:17                        
+debugAuthConfig                    function  lib/auth-manager.ts:71:23                        
+parseTextContent                   function  lib/batch-import.ts:220:17                       
+CONTENT_DATA_KEY                             lib/content-data-contract.ts:22:14               
+checkAuthState                     function  lib/content-service.ts:61:23                     
+getContent                                   lib/content-service.ts:670:14                    
+getNonce                           function  lib/csp-nonce.ts:24:17                           
+useErrorHandler                    function  lib/error-boundary.tsx:103:17                    
+getFirebaseAdminAuth               function  lib/firebase-admin.ts:80:17                      
+createCustomToken                  function  lib/firebase-admin.ts:110:23                     
+FIREBASE_AUTH_ERRORS                         lib/firebase-errors.ts:18:14                     
+extractFirebaseErrorCode           function  lib/firebase-errors.ts:153:17                    
+getFirebaseErrorMessage            function  lib/firebase-errors.ts:182:17                    
+getFirebaseErrorTranslationKey     function  lib/firebase-errors.ts:196:17                    
+isFirebaseAuthError                function  lib/firebase-errors.ts:209:17                    
+isTokenBlacklisted                 function  lib/firebase-server-utils.ts:24:17               
+validateFirebaseTokenServerLegacy            lib/firebase-server-utils.ts:135:14              
+getSessionCookieFromBrowser        function  lib/firebase-session-cookies.ts:49:17            
+app                                          lib/firebase.ts:24:14                            
+db                                           lib/firebase.ts:53:14                            
+default                            variable  lib/firebase.ts:93:16                            
+logger                                       lib/logger.ts:13:14                              
+initializePdfJs                              lib/pdf-utils.ts:32:10                           
+AUTH_ROUTES                                  lib/protected-routes.ts:23:14                    
+blacklistToken                     function  lib/secure-auth-utils.ts:96:17                   
+blacklistUserTokens                function  lib/secure-auth-utils.ts:115:17                  
+getAuthCacheStats                  function  lib/secure-auth-utils.ts:326:17                  
+clearAllAuthCaches                 function  lib/secure-auth-utils.ts:338:17                  
+clearExpiredTokens                 function  lib/secure-auth-utils.ts:345:17                  
+isTokenBlacklisted                           lib/secure-auth-utils.ts:363:10                  
+getUserSessions                    function  lib/secure-auth-utils.ts:365:17                  
+invalidateUserSessions             function  lib/secure-auth-utils.ts:370:17                  
+validateFirebaseTokenServer                  lib/secure-auth-utils.ts:377:14                  
+requireAuthServer                            lib/secure-auth-utils.ts:378:14                  
+getEnvironmentSecurityConfig       function  lib/security-headers.ts:166:17                   
+generateEnhancedCSPHeader          function  lib/security-headers.ts:173:17                   
+applyEnhancedSecurityHeaders       function  lib/security-headers.ts:194:17                   
+logSecurityEvent                   function  lib/security-headers.ts:269:17                   
+generateCSPNonce                             lib/security-headers.ts:289:14                   
+getEnvironmentCSPConfig                      lib/security-headers.ts:290:14                   
+testSupabaseServiceConnection      function  lib/supabase-service.ts:41:23                    
+getSupabaseBrowserClient           function  lib/supabase.ts:20:17                            
+getSessionSafe                     function  lib/supabase.ts:41:23                            
+createMockRequest                  function  lib/test-utils/api-test-helpers.ts:24:17         
+BASE_URL                                     scripts/ux-audit/auth.ts:18:14                   
+sleep                              function  scripts/ux-audit/auth.ts:22:17                   
+bypassHeaders                      function  scripts/ux-audit/auth.ts:31:17                   
+auditEmail                         function  scripts/ux-audit/auth.ts:48:17                   
+apiFetch                           function  scripts/ux-audit/auth.ts:169:23                  
+CONTENT_TYPE_DISPLAY_NAMES                   types/content.ts:16:14                           
+CONTENT_TYPE_IDS                             types/content.ts:30:14                           
+CONTENT_TYPE_ICONS                           types/content.ts:40:14                           
+CONTENT_TYPE_COLORS                          types/content.ts:48:14                           
+Constants                                    types/database.types.ts:469:14                   
+Unused exported types (28)
+ApiOk                interface  apps/native/src/api.ts:139:18                 
+ApiErro              interface  apps/native/src/api.ts:143:18                 
+TintaIcone           type       apps/native/src/icones/dados.ts:19:13         
+RootStackParamList   type       apps/native/src/navigation.tsx:23:13          
+Editando             interface  apps/native/src/screens/FolhaDeCriar.tsx:88:18
+AcaoDoAviso          interface  apps/native/src/screens/LinhaDeAviso.tsx:38:18
+SignInFailure        interface  apps/native/src/session.ts:41:18              
+DateTimePickerEvent  interface  apps/native/test/fake-datetimepicker.tsx:20:18
+EstadoDoGesto        interface  apps/native/test/fake-react-native.tsx:67:18  
+Filters              interface  hooks/use-library-data.ts:18:18               
+Setlist              type       hooks/use-setlist-data.ts:9:13                
+Content              type       hooks/use-setlist-data.ts:10:13               
+SetlistWithSongs     type       hooks/use-setlist-data.ts:11:13               
+ContentDataKey       type       lib/content-data-contract.ts:20:13            
+AlbumField           interface  lib/content-service.ts:69:18                  
+DifficultyField      interface  lib/content-service.ts:73:18                  
+KeyField             interface  lib/content-service.ts:77:18                  
+FirebaseErrorMap     interface  lib/firebase-errors.ts:8:18                   
+OrfaoA               type       scripts/storage/reconcile-core.ts:30:13       
+BaseAnnotation       interface  types/annotations.ts:6:18                     
+Tables               type       types/database.types.ts:356:13                
+TablesInsert         type       types/database.types.ts:385:13                
+TablesUpdate         type       types/database.types.ts:410:13                
+Enums                type       types/database.types.ts:435:13                
+CompositeTypes       type       types/database.types.ts:452:13                
+SortOption           type       types/library.ts:37:13                        
+Setlist              type       types/performance.ts:5:13                     
+SetlistSong          interface  types/performance.ts:8:18                     
+Duplicate exports (11)
+Pressable|TouchableOpacity                                     apps/native/test/fake-react-native.tsx
+PdfViewer|default                                              components/pdf-viewer.tsx             
+useFirebaseAuth|useAuth                                        contexts/firebase-auth-context.tsx    
+getUserContent|getContent                                      lib/content-service.ts                
+validateFirebaseTokenServer|validateFirebaseTokenServerLegacy  lib/firebase-server-utils.ts          
+app|default                                                    lib/firebase.ts                       
+logger|default                                                 lib/logger.ts                         
+validateFirebaseTokenSecure|validateFirebaseTokenServer        lib/secure-auth-utils.ts              
+requireAuthServerSecure|requireAuthServer                      lib/secure-auth-utils.ts              
+applyEnhancedSecurityHeaders|applySecurityHeaders              lib/security-headers.ts               
+getEnvironmentSecurityConfig|getEnvironmentCSPConfig           lib/security-headers.ts               
+Configuration hints (5)
+[middleware.ts, …]        knip.json  Remove, or move unused top-level entry to one of "workspaces"  
+[app/**/*.{ts,tsx}, …]    knip.json  Remove, or move unused top-level project to one of "workspaces"
+domains/**/*.{ts,tsx}     knip.json  Refine project pattern (no matches)                            
+middleware.ts             knip.json  Remove redundant entry pattern                                 
+.css                      knip.json  Compiled extension excluded by project (imports not followed)  

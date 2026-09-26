@@ -19,25 +19,25 @@ const nextConfig = {
   },
   // I1-D22: o palco do web saiu (I1-PR3); a URL antiga redireciona. A ordem
   // importa — a primeira que casa vence; sem parâmetro reconhecido → dashboard.
-  // Temporário (307): a rota pode voltar a existir com outro sentido.
+  // Permanente (308), aval 3 do commit 2 [Marcel, 2026-09-26].
   async redirects() {
     return [
       {
         source: '/performance',
         has: [{ type: 'query', key: 'contentId', value: '(?<contentId>[^/&]+)' }],
         destination: '/content/:contentId',
-        permanent: false,
+        permanent: true,
       },
       {
         source: '/performance',
         has: [{ type: 'query', key: 'setlistId' }],
         destination: '/setlists',
-        permanent: false,
+        permanent: true,
       },
       {
         source: '/performance',
         destination: '/dashboard',
-        permanent: false,
+        permanent: true,
       },
     ]
   },

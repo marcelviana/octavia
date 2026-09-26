@@ -49,12 +49,12 @@ describe('next.config.mjs headers() — B7-PR3', () => {
 })
 
 describe('next.config.mjs redirects() — I1-D22', () => {
-  it('são exatamente três, todos de /performance, temporários, nesta ordem', async () => {
+  it('são exatamente três, todos de /performance, permanentes (308), nesta ordem', async () => {
     const rules = await redirectRules()
     expect(rules.map((r) => [r.source, r.destination, r.permanent])).toEqual([
-      ['/performance', '/content/:contentId', false],
-      ['/performance', '/setlists', false],
-      ['/performance', '/dashboard', false],
+      ['/performance', '/content/:contentId', true],
+      ['/performance', '/setlists', true],
+      ['/performance', '/dashboard', true],
     ])
   })
 

@@ -1,7 +1,7 @@
 import type { Database } from "@/types/database.types"
 
 // Base types from Supabase
-export type Content = Database["public"]["Tables"]["content"]["Row"]
+type Content = Database["public"]["Tables"]["content"]["Row"]
 export type Setlist = Database["public"]["Tables"]["setlists"]["Row"]
 
 // Tipos de setlist (os do modo performance saíram com o palco, I1-PR3)

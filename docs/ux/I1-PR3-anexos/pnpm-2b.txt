@@ -1,0 +1,34 @@
+# commit 2b — localforage sai (aval 4). Em vez de editar package.json + `pnpm install`, rodou `pnpm remove localforage` (mesmo efeito: package.json + lockfile).
+# $ pnpm remove localforage
+ WARN  1 deprecated subdependencies found: glob@10.4.5
+Packages: -2
+--
+ WARN  Issues with peer dependencies found
+.
+├─┬ @testing-library/react-hooks 8.0.1
+│ ├── ✕ unmet peer @types/react@"^16.9.0 || ^17.0.0": found 19.1.13
+│ ├── ✕ unmet peer react@"^16.9.0 || ^17.0.0": found 18.3.1
+│ └── ✕ unmet peer react-dom@"^16.9.0 || ^17.0.0": found 18.3.1
+├─┬ @vitest/coverage-v8 3.2.2
+│ ├── ✕ unmet peer @vitest/browser@3.2.2: found 4.0.16
+│ └── ✕ unmet peer vitest@3.2.2: found 4.0.16
+└─┬ react-day-picker 8.10.1
+  └── ✕ unmet peer date-fns@"^2.28.0 || ^3.0.0": found 4.1.0
+
+dependencies:
+- localforage 1.10.0
+
+Done in 3.9s using pnpm v10.28.0
+
+# o lockfile resultante re-resolvia de carona babel-plugin-react-compiler@1.0.0 → '@babel/types': 7.29.8 (era 7.28.5, dependência do nativo).
+# a linha foi devolvida a 7.28.5 à mão (div. 569); o diff do lockfile fica só localforage + lie:
+# $ git diff --stat pnpm-lock.yaml
+ pnpm-lock.yaml | 17 -----------------
+ 1 file changed, 17 deletions(-)
+# $ pnpm install --frozen-lockfile --offline
+Scope: all 3 workspace projects
+Lockfile is up to date, resolution step is skipped
+Already up to date
+
+Done in 924ms using pnpm v10.28.0
+# exit 0

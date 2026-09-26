@@ -4,8 +4,7 @@
     "middleware.ts",
     "scripts/setup-database.js",
     "scripts/check-supabase.js",
-    "tests/**/*.{ts,tsx}",
-    "__tests__/**/*.{ts,tsx}"
+    "tests/**/*.{ts,tsx}"
   ],
   "project": [
     "app/**/*.{ts,tsx}",
