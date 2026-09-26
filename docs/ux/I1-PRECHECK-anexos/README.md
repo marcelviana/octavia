@@ -32,8 +32,14 @@ Os dois scripts rodaram do scratchpad da sessão, fora do repositório; o texto 
 | `playwright-inventario.txt` | §8 (A8) | os comandos de cada bloco, no próprio arquivo |
 | `ci-tempos.txt` | §8 (A8) | `gh run list --workflow=ci.yml --event pull_request --limit 10` + `gh run view <id> --json jobs` |
 | `g-back-lista.txt` | §9 (A9) | alcance do grafo a partir das 14 rotas + `middleware.ts`; `git ls-files supabase` |
+| `settings-profile.txt` | §17.2–17.3 (commit 2) | os `grep`/`git grep` de cada bloco, no próprio arquivo |
+| `pwa-offline-exclusivos.txt` | §17.4 (commit 2) | `depcruise … worker > dc-w.json && node script-a24 dc-w.json palco-exclusivos.txt <dir>` |
+| `pwa-offline-compartilhados.txt` | §17.4 (commit 2) | idem |
+| `script-a24.txt` | §17.4 | o texto do script da medição 2.4 |
+| `faseB/bloqueio.txt` | §14 (commit 2) | `gh api …/deployments`, `curl` no `/login` do preview (→ SSO da Vercel) |
+| `faseB/probe{1,2,4,5}-roteiro.txt` | §14 | roteiros prontos, com a escrita declarada antes; **nenhum executado** |
 
-## Bloco ```gates``` desta PR (cópia verbatim do corpo)
+## Blocos ```gates``` e ```gates-web``` desta PR (cópia verbatim do corpo)
 
 Regra do `LOGS-OCTAVIA.md` (*"Toda PR copia o seu bloco ```gates``` para o README dos anexos"*,
 decisão do Marcel, 2026-09-23):
@@ -41,3 +47,10 @@ decisão do Marcel, 2026-09-23):
 ```gates
 # I1 pre-check: nenhuma declaração — só docs
 ```
+
+```gates-web
+# I1 pre-check: nenhuma declaração
+```
+
+O bloco ```gates-web``` entrou no corpo no commit 2 (I1-D20): nenhum extrator o lê ainda; o
+`gates-decl.sh` só lê o bloco ```gates```.

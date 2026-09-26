@@ -1,0 +1,35 @@
+// anexo do I1-PRECHECK (commit 2): texto do script da medição 2.4. Rastro, não código do app.
+// 2.4 — alcance do PWA/offline (I1-D18) sobre o grafo do dependency-cruiser, com worker/
+import fs from 'node:fs'
+const [, , grafo, excluPalco, out] = process.argv
+const j = JSON.parse(fs.readFileSync(grafo, 'utf8'))
+const palco = new Set(fs.readFileSync(excluPalco, 'utf8').split('\n').filter(l => l && !l.startsWith('#')))
+const local = (s) => !s.includes('node_modules') && /^(app|components|hooks|lib|contexts|types|tests|__tests__|middleware|worker)/.test(s)
+const isTest = (s) => /(^tests\/|^__tests__\/|__tests__\/|\.test\.|\.spec\.|\.bench\.)/.test(s)
+const adj = new Map()
+for (const m of j.modules) if (local(m.source)) adj.set(m.source, m.dependencies.map(d => d.resolved).filter(local))
+const PWA = ['app/offline/page.tsx', 'worker/index.js', 'components/pwa-install-prompt.tsx', 'components/service-worker-wrapper.tsx', 'hooks/use-service-worker.tsx', 'lib/offline-cache.ts', 'lib/offline-setlist-cache.ts', 'lib/offline-queue.ts', 'app/api/proxy/route.ts']
+const D19 = ['app/profile/page.tsx', 'app/settings/page.tsx', 'app/setup/page.tsx']
+const bloq = new Set([...PWA, ...palco])
+const reach = (roots, bloqueio) => { const seen = new Set(); const st = [...roots]; while (st.length) { const x = st.pop(); if (seen.has(x)) continue; seen.add(x); for (const y of adj.get(x) || []) if (!isTest(y) && !(bloqueio && bloqueio.has(y))) st.push(y) } return seen }
+const all = [...adj.keys()]
+const isRoot = (s) => s === 'middleware.ts' || /^app\/.*\/?(page|layout|loading|route)\.tsx?$/.test(s)
+const vivas = all.filter(s => isRoot(s) && !s.startsWith('app/performance/') && !PWA.includes(s) && !D19.includes(s))
+const P = reach(PWA, palco)
+const V = reach(vivas, bloq)
+const prod = all.filter(s => !isTest(s))
+const exclusivos = prod.filter(s => P.has(s) && !V.has(s)).sort()
+const compart = prod.filter(s => P.has(s) && V.has(s)).sort()
+const pset = new Set(PWA)
+const editar = prod.filter(s => V.has(s) && (adj.get(s) || []).some(y => pset.has(y))).map(s => `${s}\t→ ${(adj.get(s) || []).filter(y => pset.has(y)).join(', ')}`).sort()
+const excl = new Set(exclusivos)
+const testes = all.filter(isTest).map(t => { const d = (adj.get(t) || []).filter(y => !isTest(y)); const h = d.filter(y => excl.has(y)); return h.length ? `${d.every(y => excl.has(y)) ? 'SÓ-PWA' : 'TOCA-PWA'}\t${t}\t→ ${h.join(', ')}` : null }).filter(Boolean).sort()
+// I1-D19: o que só as três páginas alcançam (com PWA e palco já fora)
+const Q = reach(D19, bloq), V2 = reach(vivas, new Set([...bloq, ...D19]))
+const exclD19 = prod.filter(s => Q.has(s) && !V2.has(s) && !P.has(s)).sort()
+fs.writeFileSync(`${out}/pwa-excl`, exclusivos.join('\n') + '\n')
+fs.writeFileSync(`${out}/pwa-comp`, compart.join('\n') + '\n')
+fs.writeFileSync(`${out}/pwa-editar`, editar.join('\n') + '\n')
+fs.writeFileSync(`${out}/pwa-testes`, testes.join('\n') + '\n')
+fs.writeFileSync(`${out}/d19-excl`, exclD19.join('\n') + '\n')
+console.log({ raizesVivas: vivas.length, alcancePWA: P.size, exclusivos: exclusivos.length, compartilhados: compart.length, importadoresVivos: editar.length, testes: testes.length, exclusivosD19: exclD19.length })

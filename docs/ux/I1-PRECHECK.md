@@ -71,6 +71,35 @@ decisão continua valendo sobre o que foi medido.
 - **I1-D14** `[Marcel, 2026-09-26]` — Aceite: Playwright no desktop e **Chrome no Tab S6**, em pé (B) e deitado (C), por superfície, com captura, ao fim de cada PR de tela — o aceite no aparelho não se dispensa (`N2-ENCERRAMENTO.md` §10.6, item 3). Escrita só no **preview da Vercel** com a **conta de audit**; conta principal só leitura ou recurso descartável (regra 12 do catálogo); contagem de escritas no encerramento. Celular real segue a pergunta aberta de `N3-ENCERRAMENTO.md` §10.1.17.
 - **I1-D15** `[Marcel, 2026-09-26]` — Fatiamento: PR-0 pre-check (esta) · PR-1 loop mudo · PR-2 Google · PR-3 corte do palco · PR-4 `packages/identidade` + migração do nativo · brief → desenho → congelamento (só docs) · PR-5 o gate · PR-6…n uma superfície por PR · encerramento `I1-ENCERRAMENTO.md`. PR-1/PR-2 correm enquanto o brief está com o Claude Design; PR-4 pode correr em paralelo com PR-3. **W5** corre à parte. Ordem depois do I1: **N4** (content nos apps), **N5** (celular), iOS.
 
+**Do aval do commit 1** (transcrição do prompt do commit 2; "§n" é seção deste documento):
+
+- **I1-D16** `[Marcel, 2026-09-26]` — Não há PR de poda do Playwright (a H-I1-1 se fecha pela div. 486). O **G-faixa** nasce na PR-5 com **config própria** (`playwright.g-faixa.config.ts`): Chromium, viewports 1138 · 711 · 411, **sem `baseURL` padrão** (env obrigatória; sem ela o comando falha), sem `discovery.json`. Roda contra o **preview da Vercel com `storageState` da conta de audit**, pelo executor, em cada PR de tela; o que se commita é a **medição** (`boundingBox` por superfície × estado × largura, JSON no anexo) e o `gates-web.yml` dá o veredito sobre o JSON commitado. O `ux-audit` fica como está, sem rodar.
+- **I1-D17** `[Marcel, 2026-09-26]` — A língua do web passa a **pt-BR**, neste bloco, superfície por superfície: o `frases-web.txt` é a lista de partida; cada PR de tela entrega as frases dela em pt-BR numa lista declarada (a mesma da I1-D10); o G-tok ganha um irmão — nenhum literal em inglês nos arquivos redesenhados. Não se traduz o que a PR não redesenha. **Exceção**: o texto de `/privacy-policy` não se traduz nem se reescreve (I1-D19).
+- **I1-D18** `[Marcel, 2026-09-26]` — O **PWA morre por inteiro**: manifest, service worker (`worker/index.js`, `public/sw.js`, `scripts/build-sw.js`, registro no layout e hooks), prompt de instalação, página `/offline`. O item 14 do `PLANO-TRANSICAO.md` (popup do Google no PWA instalado, div. 501) deixa de ser caso: não há PWA. **Com eles morrem** o cache offline, a fila de escrita offline e o `/api/proxy` (`lib/offline-cache.ts`, `lib/offline-setlist-cache.ts`, `lib/offline-queue.ts`, `app/api/proxy/route.ts`), removidos na PR-3 com a rota declarada. *(Pergunta 21 do aval; se o Marcel disser o contrário no aval deste commit, a última frase vira herança com destino D.)*
+- **I1-D19** `[Marcel, 2026-09-26]` — Saem na PR-3 as páginas `/profile`, `/settings`, `/setup` e `/offline`. Ficam e entram no redesenho como **superfícies públicas**: a **landing (`/`)** — muito simples, para quem recebe o link (o app pode ser compartilhado com colegas de banda) — e a **`/privacy-policy`, com todo o conteúdo de hoje intacto**, só a identidade visual. O signup fica. As rotas de API (`/api/profile` inclusive) **não** saem: página não é rota.
+- **I1-D20** `[Marcel, 2026-09-26]` — O G-back tem **extrator próprio do web** (`scripts/gates-web/`, workflow `gates-web.yml` fora do `paths` do `native.yml`), lendo um **segundo bloco ```gates-web```** no corpo da PR. O `gates-decl.sh` e o bloco ```gates``` do nativo não mudam. Hipótese a provar na PR-5 com CN: um bloco `gates-web` no corpo não derruba o `gates-nativos`.
+- **I1-D21** `[Marcel, 2026-09-26]` — Escopo do G-back: núcleo = (a) + (b) + (c) + (d) da §9, **com** os 11 arquivos compartilhados; lista derivada do grafo por script commitado e congelada num arquivo; arquivo novo no alcance das rotas reprova sem declaração. Cliente (`lib/setlist-service.ts`, `lib/content-service.ts`) fora.
+- **I1-D22** `[Marcel, 2026-09-26]` — **Errata da I1-D5**: o destino de `?contentId=` é **`/content/[id]`** (a visualização), não `/edit`. `?setlistId=` → `/setlists`; `/performance` sem parâmetro → `/dashboard`. Implementado como `redirects()` no `next.config.mjs`, declarado na PR-3. A ausência de URL própria da setlist (div. 497) é herança com destino **D**.
+- **I1-D23** `[Marcel, 2026-09-26]` — Os símbolos do palco dentro do backend (div. 493: `getSetlistByIdServer`, `"/performance"` em `PROTECTED_PAGES`, o `no-store` de `security-headers.ts:255`) saem na PR-3, **declarados no corpo** no formato que o G-back vai ler.
+- **I1-D24** `[Marcel, 2026-09-26]` — `frame-src`: a PR-2 acrescenta o que o probe 2 medir e **mantém** `'blob:'`; a PR-3 tira o `'blob:'` quando o iframe morre, e leva o `perf02-gate` junto.
+- **I1-D25** `[Marcel, 2026-09-26]` — Testes: os três `tests/performance/*` morrem na PR-3; `auto-scroll-button-bug` e `use-content-loading` morrem; `content-display.test.tsx` adapta (tira o caso do `optimized-content-display`); `g-rotas-protegidas` adapta com **par declarado** (ver §2.1 abaixo). Specs do `ux-audit`: `perf02-gate` (projeto e spec) morre; nos outros nove, o trecho do palco sai; spec que fica vazio morre; o `test.fixme` do `cont01-02` sai.
+- **I1-D26** `[Marcel, 2026-09-26]` — Toaster (div. 491): nenhum toast entra. A folha desenha os estados de falha das setlists (I1-D7 item 3) e a PR de setlists implementa o estado desenhado; o `use-toast` órfão sai nessa PR, declarado.
+- **I1-D27** `[Marcel, 2026-09-26]` — A tela cheia do `pdf-viewer` **fica** (visualização e editor; sem controle de performance).
+- **I1-D28** `[Marcel, 2026-09-26]` — Saem na PR-3 as menções ao palco em superfícies vivas (§2.2): as chaves `Auto Scroll`/`Performance Mode` de `DisplaySettings.tsx` (a página inteira sai pela I1-D19), a frase de `app/offline/page.tsx:159` (sai com a página) e as duas de `pwa-install-prompt.tsx:202-203` (sai com o PWA).
+- **I1-D29** `[Marcel, 2026-09-26]` — "(max 50MB)" (div. 499) é defeito de texto: a PR de upload corrige para o limite real (4 MiB), e a folha já nasce com ele. Requisito, não extra.
+- **I1-D30** `[Marcel, 2026-09-26]` — `faixaDe` e os limiares 700/960 migram para `packages/identidade` na PR-4 (um só ponto de decisão, I1-D7 item 1); `faixa.test.ts:50-54` passa a procurar lá (par declarado no G1b). `useFaixa` fica no nativo.
+- **I1-D31** `[Marcel, 2026-09-26]` — `font` (div. 485): o pacote guarda **família + peso**; o nativo mantém um mapa família+peso → nome do `.ttf` do `expo-font` em `apps/native`, com teste que prova que todo token do pacote tem entrada no mapa; o G-inv prova que nada mudou em dp.
+- **I1-D32** `[Marcel, 2026-09-26]` — Errata "morre com a web" (div. 492): **neste commit**, uma nota no topo da seção do Bloco D no `PLANO-TRANSICAO.md` e uma linha ao lado de `N1-ENCERRAMENTO.md:348`, apontando para a I1-D2, **sem reescrever** o texto (o padrão da errata do `N2-ENCERRAMENTO.md` §10.2). Confira as linhas com `grep` antes.
+- **I1-D33** `[Marcel, 2026-09-26]` — Div. 498 (`handleSelectSetlist` para rota inexistente) sai na PR de setlists, declarada.
+
+Leituras do executor sobre as decisões acima, cada uma com a divergência onde mora: o "§2.1 abaixo" da
+I1-D25 é o **2.1 do prompt do commit 2** (a medição do G-rotas, aqui §17.1); a I1-D25 e a I1-D30 pedem
+par do G1b para testes que o G1b não lê (divs. 503, 504); a I1-D23 não cobre os prefixos `/settings`
+e `/profile` que a I1-D19 obriga a tirar (div. 505). A I1-D32 foi aplicada neste commit:
+`docs/ux/PLANO-TRANSICAO.md` (nota sob `## Bloco D — Morre com a web`, linha 866 antes da nota) e
+`docs/native/N1-ENCERRAMENTO.md` (nota sob `### Bloco D (web — morre com a web…)`, linha 348),
+conferidas por `grep -n` antes; nenhum dos dois tem sha registrado (`grep -rln` nos `SHA256SUMS` → 0).
+
 **Conferência das citações do prompt** (só se cita o que se abriu nesta sessão):
 
 | citação do prompt | conferido em | resultado |
@@ -101,7 +130,7 @@ presumiu.
 
 | id | hipótese | estado | o que a fecha |
 |---|---|---|---|
-| **H-I1-1** | **Pendente de aval (não é decisão)**, transcrita do prompt: *"o Playwright do web passa a rodar só Chromium desktop, com as três larguras do G-faixa como viewports (não como `devices` emulados); WebKit/Firefox saem; a poda é uma PR própria e pequena entre esta e a PR-1, com o tempo do job no CI medido antes e depois como CN."* | **a premissa já é o estado da `main`** (§8, div. 486): um só config, nenhum projeto WebKit/Firefox, nenhum `devices`, nenhum job de Playwright no CI desde a B1.0.1. O que sobra da hipótese é só **pôr as três larguras como viewports** | aval do Marcel sobre o que a "poda" passa a ser (pergunta 13) |
+| **H-I1-1** | **Pendente de aval (não é decisão)**, transcrita do prompt: *"o Playwright do web passa a rodar só Chromium desktop, com as três larguras do G-faixa como viewports (não como `devices` emulados); WebKit/Firefox saem; a poda é uma PR própria e pequena entre esta e a PR-1, com o tempo do job no CI medido antes e depois como CN."* | **FECHADA pela div. 486 → I1-D16** (commit 2). A premissa já era o estado da `main` (§8): um só config, nenhum WebKit/Firefox/`devices`, nenhum job no CI | — |
 | **H-I1-2** | o **loop mudo** é de navegação e se repete sozinho enquanto o `POST /api/auth/session` falhar: cada volta = 1 `POST /api/auth/session` + 1–2 `GET /api/profile` (+ 1 `POST /api/profile` se o perfil não existir) + 1 navegação cheia a `/dashboard` + 1 redirect a `/login` (§10) | `[hipótese]` pela leitura | Fase B, probe 1 (§14) |
 | **H-I1-3** | o Google falha **no navegador**, pela CSP/COOP de hoje, antes de qualquer coisa do client OAuth: `frame-src` só `'blob:'` bloqueia o iframe de auth do Firebase em `*.firebaseapp.com`; `Cross-Origin-Opener-Policy: same-origin` corta o popup do opener; o `script-src` não inclui `https://apis.google.com`. As três vêm do `8af7f34` (2026-02-26), **a mesma data do último uso do client OAuth** (I1-D6) (§11) | `[hipótese]` pela leitura; a coincidência de data é `[medido]` | Fase B, probe 2 (§14) |
 | **H-I1-4** | a largura CSS do Chrome no Tab S6 é a largura em dp do app (711 em pé, 1138 deitado) — o Chrome não tem barra lateral, então a largura coincide; a altura útil é menor (barra de endereço) | `[hipótese]` | aceite no aparelho (I1-D14): `window.innerWidth`/`innerHeight` na primeira captura |
@@ -776,9 +805,31 @@ Numeradas, sem recomendação (a recomendação é do revisor; a decisão é do 
 
 ---
 
-## 14. A14 — Fase B, proposta e não executada
+## 14. A14 — Fase B
 
-Nada desta seção rodou nesta sessão.
+**Commit 2: aprovados os probes 1, 2, 4 e 5 (o 3 não existe, div. 486) — e nenhum rodou.**
+O preview da PR (`https://octavia-ez3gkrz5s-marcelvianas-projects.vercel.app`, deployment
+`6679479179` do `e799235`) está sob a proteção da Vercel: `curl` em `/login` → `302
+https://vercel.com/sso-api?…`; o navegador embutido cai em *"Login – Vercel"*. O mecanismo do
+`ux-audit` atravessa com o `VERCEL_AUTOMATION_BYPASS_SECRET` (só de env,
+`scripts/ux-audit/auth.ts:29-35`) e faz o login da audit lendo **também o `.env.local`**
+(`auth.ts:14-16`, para a `NEXT_PUBLIC_FIREBASE_API_KEY`), que o prompt não autoriza abrir. O
+executor não tem o bypass, não abriu o `.env.local`, não fez login na Vercel e não abriu o
+`.env.uxaudit` (sem preview alcançável ele não tinha uso). Registro:
+[`faseB/bloqueio.txt`](I1-PRECHECK-anexos/faseB/bloqueio.txt); div. 509. Os quatro roteiros ficam
+prontos em `faseB/probe{1,2,4,5}-roteiro.txt`, com a lista de escrita declarada antes.
+
+| probe | estado | escrita declarada | escrita medida |
+|---|---|---|---|
+| 1 — loop mudo | **não executado** (bloqueio) | 0 | 0 |
+| 2 — Google | **não executado** (bloqueio) | 0 | 0 |
+| 4 — toasts das setlists | **não executado** (bloqueio) | 1 POST + 1 PUT + 1 DELETE da audit | 0 |
+| 5 — largura no Tab S6 | **pendente do Marcel** (aparelho não está com o executor; nenhum `adb`) | 0 | 0 |
+
+Estado das hipóteses depois do commit 2: H-I1-1 **fechada** (I1-D16); H-I1-2, H-I1-3 e H-I1-5
+**não testadas** (bloqueio); H-I1-4 **pendente do Marcel**; H-I1-6 fica para a primeira PR de tela.
+
+A tabela abaixo é a proposta do commit 1, mantida como estava.
 
 | # | probe | o que mede | contra o quê | garantia de zero escrita | o que bloqueia |
 |---|---|---|---|---|---|
@@ -815,7 +866,20 @@ Nada desta seção rodou nesta sessão.
 | **498** | A | — | `setlists-page-client.tsx:37-39` (`handleSelectSetlist`) empurra `/setlist/${id}` — **rota inexistente** (`ls app/setlist` → *No such file or directory*) — e o handler não é passado a ninguém (código morto) | PR de setlists (leitura; decisão do Marcel) |
 | **499** | A | — | `components/add-content/FileUploadZone.tsx:112` anuncia *"(max 50MB)"*; o teto do servidor é **4 MiB** (`lib/api-schemas.ts:259`, B5) | pergunta 14 |
 | **500** | P | A10/A14: *"a contagem de requests do loop … só depois de A10 dizer se o handler escreve"* — o handler como única escrita possível | o handler não escreve em banco/storage (§10), mas a **volta do loop** pode escrever: `login-panel.tsx:53-67` faz `POST /api/profile` quando o perfil não existe | a garantia de zero escrita do probe 1 inclui `/api/profile` (§14) |
-| **501** | D | `PLANO-TRANSICAO.md:955-961`: *"Achados que não recebem fix nunca"* — entre eles o **item 14, "popup do Google no PWA instalado"**, porque *"login nativo usa o SDK do Firebase, sem popup de browser"* | a premissa (o web morre) caiu com a I1-D2, e a I1-D6 manda consertar o Google do web — o popup no PWA instalado volta a ser caso do web | pergunta 18 |
+| **501** | D | `PLANO-TRANSICAO.md:955-961`: *"Achados que não recebem fix nunca"* — entre eles o **item 14, "popup do Google no PWA instalado"**, porque *"login nativo usa o SDK do Firebase, sem popup de browser"* | a premissa (o web morre) caiu com a I1-D2, e a I1-D6 manda consertar o Google do web — o popup no PWA instalado volta a ser caso do web | pergunta 18 → **I1-D18** (não há PWA) |
+
+**Commit 2 — divergências 502 a 509**
+
+| # | origem | o que o prompt (ou o doc) presumiu | o que foi medido | destino |
+|---|---|---|---|---|
+| **502** | P | prompt do commit 2: *"`git grep -nE '\*\*50[0-9]\*\*' docs` antes, para conferir"* | o comando acha, além das divs. 500 e 501 (`I1-PRECHECK.md:817-818`), **18 linhas** que não são divergência — status HTTP 500 em negrito (`B3-PRECHECK.md:144`, `B6-DESENHO.md:497-501`, …) e uma medida (`DESIGN-N3/README.md:254`, "**500**" dp) — a mesma classe da div. 480. A última divergência é a 501; a numeração segue em 502 | conferir pela coluna de divergência |
+| **503** | P | I1-D30: *"`faixa.test.ts:50-54` passa a procurar lá (par declarado no G1b)"* | o G1b só lê `packages/core/src/*.test.ts` (`apps/native/scripts/g1.sh:251`, `TESTES=$(git ls-tree … -- packages/core/src \| grep '\.test\.ts$')`); `apps/native/test/` é excluído também do G1a (`g1.sh`, `filtrar()`). Um par declarado para `faixa.test.ts` seria **"PAR DECLARADO E NÃO USADO ✗"** (`g1.sh:325`) e **reprovaria** | PR-4: a edição do `faixa.test.ts` não tem gate que a leia; declarar em texto, não no bloco |
+| **504** | P | I1-D25: *"`g-rotas-protegidas` adapta com par declarado"* | nenhum gate lê teste do web: o G1b é só do core (div. 503), e o extrator do `gates-web` (I1-D20) nasce na **PR-5, depois** da PR-3 | a PR-3 declara o par em texto no corpo; a PR-5 decide se o `gates-web` passa a ler pares |
+| **505** | P | I1-D23: os símbolos do palco no backend são `getSetlistByIdServer`, `"/performance"` em `PROTECTED_PAGES` e o `no-store` de `:255` | com a I1-D19, o G-rotas (`tests/gates/g-rotas-protegidas.test.ts:71-81`) exige que **todo prefixo** de `PROTECTED_ROUTE_PREFIXES` tenha página: `"/settings"` e `"/profile"` (`lib/protected-routes.ts:17-18` e `:40-41`) também têm de sair, e o `PAGE_INVOCATIONS` (`g-rotas…:45-64`) perde **três** entradas, não uma | PR-3, declarado junto da I1-D23 |
+| **506** | P | I1-D18: o cache offline e o `/api/proxy` morrem (offline) | o cache também serve o **visualizador vivo**: `hooks/useContentFile.ts:29` (`getCachedFileInfo`) dá a URL `blob:` e o tipo MIME a `content-viewer/SheetMusicDisplay.tsx:35-41,69-76`; sem ele o visualizador cai em `content.file_url` direto e `mimeType` vira `undefined`. O bucket tem leitura pública (`supabase/storage.dump.sql:1244,1248`) e a CSP tem `*.supabase.co` em `img-src`/`connect-src`, então o direto **deve** abrir `[hipótese]` | aceite da PR-3: PDF e imagem na visualização e no editor, no Tab S6 |
+| **507** | A | I1-D19: `/profile` sai; `/api/profile` fica | o shell vivo liga a página que sai: `components/user-header.tsx:68` (`<Link href="/profile">`); e o `PATCH /api/profile` perde o **único** chamador (`ProfileForm.tsx:46` → `firebase-auth-context.tsx:405-420`) — a rota fica sem cliente | PR-3 edita o `user-header`; a rota órfã fica registrada (I1-D19) |
+| **508** | A | — | a landing tem **7** links `href="#"` sem destino (`grep -c 'href="#"' app/page.tsx` → 7; `:287-335`) | insumo do brief (superfície pública, I1-D19) |
+| **509** | P | Fase B: *"a URL do preview e o bypass são os que o `ux-audit` já usa … `.env.uxaudit` é o único `.env*` autorizado"* | o preview exige o bypass da Vercel (`302 → vercel.com/sso-api`), que não está em arquivo; e o login do `ux-audit` lê também o `.env.local` (`scripts/ux-audit/auth.ts:14-16`). Com o que foi autorizado, nenhum probe do preview roda | probes 1, 2 e 4 esperam o bypass (inline) e uma decisão sobre a API key (§14) |
 
 ---
 
@@ -834,3 +898,141 @@ Nada desta seção rodou nesta sessão.
 | agente de leitura | 1 (a matriz da A3, só leitura, mesma árvore; citações conferidas mecanicamente, §3) |
 | arquivos tocados | `docs/ux/I1-PRECHECK.md` e `docs/ux/I1-PRECHECK-anexos/*` (README + 15 anexos). Nada em `apps/native`, `packages/`, `app/`, `lib/` |
 | workflows | esperado pelos filtros: `CI` (`build`) e `gates` (`gates-nativos`) disparam; `native` **não** (o `paths` dele é `apps/native/**`, `native.yml`, `gates.yml`, `pnpm-workspace.yaml`). O que de fato disparou fica no corpo da PR (a PR é de um commit só) |
+
+**Commit 2** (mesma sessão da árvore, 2026-09-26):
+
+| item | valor |
+|---|---|
+| requests ao preview da Vercel | **1** `curl` `GET /login` (→ `302` para o SSO da Vercel) + 1 navegação do navegador embutido à mesma URL (→ página de login da Vercel; parado aí). **0** a `/api/*` |
+| requests a `https://octavia.rocks` | **0** |
+| escritas | **0** (os probes 1, 2 e 4 não rodaram — §14) |
+| `.env*` abertos | **0** (o `.env.uxaudit` autorizado não foi aberto: sem preview alcançável, não havia uso) |
+| `adb` | **0** (probe 5 pendente do Marcel) |
+| chamadas à API do GitHub | leitura: `gh pr checks 335`, 2 `gh api …/deployments` |
+| comandos locais | `depcruise` (1×, agora com `worker/`); `node script-a24` (do scratchpad) |
+| código | **nenhum**. Arquivos tocados: `docs/ux/I1-PRECHECK.md`, anexos novos (`pwa-offline-exclusivos.txt`, `pwa-offline-compartilhados.txt`, `script-a24.txt`, `settings-profile.txt`, `faseB/*`), e as duas erratas da I1-D32 (`docs/ux/PLANO-TRANSICAO.md`, `docs/native/N1-ENCERRAMENTO.md`) |
+
+---
+
+## 17. Commit 2 — medições complementares (2.1–2.5 do prompt)
+
+### 17.1 G-rotas: a contagem é derivada, o inventário é literal
+
+`tests/gates/g-rotas-protegidas.test.ts` (100 linhas) **não tem contagem literal** de asserções
+(`grep -nE "toHaveLength|\.length|toBe\([0-9]+\)"` → 0). O que é literal é o **inventário**
+`PAGE_INVOCATIONS` (`:45-64`, 8 entradas: `/dashboard`, `/library`, `/setlists`, `/settings`,
+`/profile`, `/add-content`, `/content/[id]`, `/performance`); a paridade com `PROTECTED_PAGES` é
+afirmada em `:71-74` (`Object.keys(PAGE_INVOCATIONS).sort()` `toEqual` `[...PROTECTED_PAGES].sort()`),
+e todo prefixo de `PROTECTED_ROUTE_PREFIXES` precisa de página (`:75-80`). Os `it` são gerados
+por `for … of Object.entries(PAGE_INVOCATIONS)` (`:83-98`, dois por rota): hoje **1 + 2 × 8 = 17**.
+
+Com a PR-3 (I1-D5 + I1-D19) saem `/performance`, `/settings` e `/profile`: **1 + 2 × 5 = 11**, e
+`lib/protected-routes.ts` perde `"/performance"` (`:44`) **e** `"/settings"`/`"/profile"` nas duas
+listas (`:17-18`, `:40-41`) — senão o `:75-80` reprova (div. 505). O par que a I1-D25 pede é de
+**linhas do inventário** (as seis linhas das três entradas saem, nenhuma entra); não há gate que o
+leia antes da PR-5 (div. 504).
+
+### 17.2 `/settings`: o que grava, quem lê
+
+Anexo [`settings-profile.txt`](I1-PRECHECK-anexos/settings-profile.txt). A página
+(`app/settings/page.tsx` → `components/settings-page-client.tsx` → `components/settings.tsx`, que
+reexporta `components/settings/RefactoredSettings.tsx`) **não grava nada fora do React**: as oito
+chaves são `useState` (`RefactoredSettings.tsx:11-20`) e `updateSetting` (`:22-24`) só faz
+`setSettings`. Os três botões de `CloudSettings.tsx` (`:19-32`) fazem `console.log`. `localStorage`,
+`sessionStorage` e `document.cookie` no web inteiro (`git grep`) → só `pwa-install-prompt.tsx` e
+`lib/firebase-session-cookies.ts:52` — nenhum em `components/settings/*`.
+
+| chave | escrita em | lida em (fora de `components/settings/*`) |
+|---|---|---|
+| `darkMode` | estado React, `DisplaySettings.tsx:37` | ninguém |
+| `defaultZoom` | estado React, `DisplaySettings.tsx:46` | ninguém |
+| `autoScroll` | estado React, `DisplaySettings.tsx:67` | ninguém |
+| `performanceMode` | estado React, `DisplaySettings.tsx:78` | ninguém |
+| `metronome` | estado React, `AudioSettings.tsx:33` | ninguém |
+| `autoSync` | estado React, `CloudSettings.tsx:50` | ninguém |
+| `cloudSync` | estado React, `CloudSettings.tsx:61` | ninguém |
+| `backupEnabled` | estado React, `CloudSettings.tsx:72` | ninguém |
+
+`git grep -nwE "darkMode|autoSync|performanceMode|defaultZoom|autoScroll|metronome|backupEnabled|cloudSync" -- app components hooks lib contexts types`
+fora de `components/settings/` → **0 linhas**. Nenhuma chave lida por superfície viva: a página sai
+sem deixar leitor órfão.
+
+### 17.3 `/profile`: o que escreve, o que lê, o que sobra do `/api/profile`
+
+- **Escreve**: `PATCH /api/profile`, por `updateProfile` (`contexts/firebase-auth-context.tsx:405-420`),
+  cujo **único** chamador é `components/ProfileForm.tsx:46` (`git grep -nw updateProfile`). Sem a
+  página, o `PATCH` fica sem cliente (div. 507).
+- **Lê**: o `profile` do contexto (`ProfileForm.tsx:34-36,99-105`).
+- **Quem mais lê o perfil**: `components/user-header.tsx:38-39,54,62` (nome e avatar, shell vivo) —
+  e o mesmo arquivo liga a página que sai (`:68`, div. 507).
+- **O que sobra do `/api/profile`**: `GET` — `firebase-auth-context.tsx:71` (`fetchProfile`), `:141` e
+  `:157` (bootstrap e retry), `login-panel.tsx:44,81`; `POST` (**criador do perfil**, confirmado) —
+  `login-panel.tsx:53-67` e `:90-104` (primeiro login, perfil `null`) e
+  `firebase-auth-context.tsx:326` (signup, com rollback do usuário Firebase se falhar).
+
+### 17.4 O alcance do PWA e do offline
+
+Mesmo grafo da A2, com `worker/` incluído (anexo [`script-a24.txt`](I1-PRECHECK-anexos/script-a24.txt)):
+
+```
+{ raizesVivas: 28, alcancePWA: 24, exclusivos: 9, compartilhados: 15,
+  importadoresVivos: 10, testes: 4, exclusivosD19: 14 }
+```
+
+Raízes vivas = toda `page`/`layout`/`loading`/`route` + `middleware.ts`, menos o palco, as nove
+raízes do PWA/offline e as três páginas da I1-D19; o alcance delas não atravessa o que morre.
+
+| **exclusivos — morrem (9)** · [`pwa-offline-exclusivos.txt`](I1-PRECHECK-anexos/pwa-offline-exclusivos.txt) | **compartilhados — ficam (15)** · [`pwa-offline-compartilhados.txt`](I1-PRECHECK-anexos/pwa-offline-compartilhados.txt) |
+|---|---|
+| `app/api/proxy/route.ts` | `components/ui/button.tsx` |
+| `app/offline/page.tsx` | `components/ui/card.tsx` |
+| `components/pwa-install-prompt.tsx` | `components/ui/toast.tsx` |
+| `components/service-worker-wrapper.tsx` | `hooks/use-toast.ts` |
+| `hooks/use-service-worker.tsx` | `lib/api-errors.ts` |
+| `lib/offline-cache.ts` | `lib/debug.ts` |
+| `lib/offline-queue.ts` | `lib/firebase-admin.ts` |
+| `lib/offline-setlist-cache.ts` | `lib/firebase-server-utils.ts` |
+| `worker/index.js` | `lib/firebase.ts` |
+| | `lib/logger.ts` |
+| | `lib/supabase-service.ts` |
+| | `lib/supabase.ts` |
+| | `lib/user-rate-limit.ts` |
+| | `lib/utils.ts` |
+| | `types/database.types.ts` |
+
+Fora do grafo, mesmo destino: `public/sw.js` (cópia gerada), `scripts/build-sw.js` e
+`public/manifest.json`. O `pnpm build` é `pnpm exec next build && node scripts/build-sw.js`
+(`package.json:8`; `build:sw` em `:9`) — a PR-3 muda o script de build. O `next.config.mjs` não tem
+nada de PWA (o worker de `:66`, `:166-171` é o do PDF.js); tem a exclusão do proxy na regra de
+cabeçalhos (`:16`, `'/api/:path((?!proxy).*)'`), que o `tests/config/next-headers.test.ts:32-36` afirma.
+
+**Importadores vivos que a PR-3 edita (10)**: `app/layout.tsx` (prompt e wrapper do SW),
+`components/content-edit-page-client.tsx:9,27` e `components/content-page-client.tsx:6,32`
+(`cacheFileForContent`), `components/setlist-manager.tsx:6,98,118,142,188,219` (`saveSetlists`,
+`removeCachedSetlist`), `contexts/firebase-auth-context.tsx:18-19,382-385` (limpeza no logout),
+`hooks/use-content-actions.ts:7,58`, `hooks/use-library-data.ts:5,138,153` (é aqui que o erro vira
+cache — §3 item 2), `hooks/use-setlist-data.ts:7-8,58-59,130`, `hooks/useContentFile.ts:2,29`
+(o visualizador — div. 506), `lib/content-service.ts:5,522,564,606` (`enqueueRequest` da escrita
+offline).
+
+**Testes**: pelo grafo, `app/api/proxy/__tests__/route.test.ts` e
+`lib/__tests__/offline-setlist-cache.test.ts` (só PWA/offline — morrem), `hooks/__tests__/use-library-data.test.tsx`
+e `hooks/__tests__/use-setlist-data.test.tsx` (tocam — adaptam); por string (`vi.mock`/texto, fora
+do grafo): `contexts/__tests__/firebase-auth-context.test.tsx:31,35`, `tests/config/next-headers.test.ts`
+e três specs do `ux-audit` (`fase-d/b-pdf`, `harvest-populated`, `perf02-gate`).
+
+**Exclusivos das três páginas da I1-D19** (14, no mesmo anexo): as três `page.tsx`,
+`profile-page-client.tsx`, `ProfileForm.tsx`, `settings-page-client.tsx`, `settings.tsx`,
+`settings/{Audio,Cloud,Display,Refactored}Settings.tsx`, `lib/setup-storage.ts` e dois primitivos
+que ficam sem uso (`components/ui/skeleton.tsx`, `components/ui/switch.tsx`).
+
+### 17.5 As duas públicas
+
+- **`/` — `app/page.tsx`** (350 linhas): server component **estático** — sem `"use client"`, sem
+  hook, sem `fetch`, sem redirect de usuário logado (o comentário `:7-8` diz que é estático de
+  propósito; `/` não está nos prefixos do middleware). Só texto, quatro ícones lucide, `Image`, e
+  links: `/login` ×3, `/signup` ×3, `/privacy-policy` ×1 e **7 `href="#"`** (div. 508).
+- **`/privacy-policy` — `app/privacy-policy/page.tsx`** (112 linhas): `"use client"` (`:1`) sem
+  nenhum hook nem lógica — só texto bilíngue e estilo; sem data, sem versão; dois links para fora,
+  ambos `mailto:dpo@octavia.app` (`:86`, `:91`). O texto cita *"Google Authentication"* entre os
+  serviços de terceiros — fica intacto pela I1-D19.

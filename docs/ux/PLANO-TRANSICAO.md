@@ -865,6 +865,12 @@ cada ✅ e fechar cada ❌/⚠️**. Os números que definem o piso:
 
 ## Bloco D — Morre com a web
 
+> **Errata do I1 pre-check (2026-09-26, div. 492; decisão do Marcel, I1-D2/I1-D32):**
+> o web **não morre**: ganha a identidade visual do nativo e mantém cadastro, edição e
+> auth; só o palco sai (`docs/ux/I1-PRECHECK.md` §0.1). Os itens abaixo seguem valendo
+> com destino **D**. O título fica como estava, para as citações continuarem achando
+> esta seção.
+
 > **Item de abertura do Bloco D — prioridade máxima (registrado no B3,
 > 2026-08-28)**: o **loop mudo do `POST /api/auth/session`** — falha no
 > set do cookie é engolida ([`firebase-session-cookies.ts:22`](../../lib/firebase-session-cookies.ts)

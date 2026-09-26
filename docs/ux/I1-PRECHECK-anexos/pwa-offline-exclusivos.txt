@@ -1,0 +1,51 @@
+# gerado por: pnpm exec depcruise --config .dependency-cruiser.cjs --output-type json app components hooks lib contexts types middleware.ts tests __tests__ worker > dc-w.json && node script-a24 dc-w.json palco-exclusivos.txt <dir>  (script: script-a24.txt)
+# raízes do PWA/offline (I1-D18): app/offline/page.tsx, worker/index.js, components/pwa-install-prompt.tsx, components/service-worker-wrapper.tsx, hooks/use-service-worker.tsx, lib/offline-cache.ts, lib/offline-setlist-cache.ts, lib/offline-queue.ts, app/api/proxy/route.ts
+# raízes VIVAS = toda page/layout/loading/route + middleware.ts, MENOS app/performance/*, as raízes acima e as três páginas da I1-D19 (/profile, /settings, /setup): 28
+# o alcance das vivas não atravessa as raízes do PWA nem os exclusivos do palco (morrem na mesma PR-3)
+# EXCLUSIVOS (morrem) n=9
+app/api/proxy/route.ts
+app/offline/page.tsx
+components/pwa-install-prompt.tsx
+components/service-worker-wrapper.tsx
+hooks/use-service-worker.tsx
+lib/offline-cache.ts
+lib/offline-queue.ts
+lib/offline-setlist-cache.ts
+worker/index.js
+
+# TESTES que importam exclusivo (grafo; SÓ-PWA = todo import de código é exclusivo)
+SÓ-PWA	app/api/proxy/__tests__/route.test.ts	→ app/api/proxy/route.ts
+SÓ-PWA	lib/__tests__/offline-setlist-cache.test.ts	→ lib/offline-setlist-cache.ts
+TOCA-PWA	hooks/__tests__/use-library-data.test.tsx	→ lib/offline-cache.ts
+TOCA-PWA	hooks/__tests__/use-setlist-data.test.tsx	→ lib/offline-cache.ts, lib/offline-setlist-cache.ts
+# testes que citam os módulos por STRING (vi.mock / texto), fora do grafo — git grep -lE 'offline-cache|offline-setlist-cache|offline-queue|use-service-worker|service-worker-wrapper|pwa-install-prompt|api/proxy|app/offline' -- '*.test.*' '*.spec.*' tests __tests__:
+app/api/proxy/__tests__/route.test.ts
+contexts/__tests__/firebase-auth-context.test.tsx
+hooks/__tests__/use-library-data.test.tsx
+hooks/__tests__/use-setlist-data.test.tsx
+lib/__tests__/offline-setlist-cache.test.ts
+tests/config/next-headers.test.ts
+tests/ux-audit/fase-d/b-pdf.spec.ts
+tests/ux-audit/harvest-populated.spec.ts
+tests/ux-audit/perf02-gate.spec.ts
+
+# fora do grafo, mesmo destino (I1-D18):
+public/sw.js	(cópia gerada de worker/index.js)
+scripts/build-sw.js	(9 linhas; package.json:8 "build": "pnpm exec next build && node scripts/build-sw.js"; :9 "build:sw")
+public/manifest.json	(app/layout.tsx:18 manifest: "/manifest.json")
+
+# EXCLUSIVOS DAS TRÊS PÁGINAS DA I1-D19 (alcance de app/{profile,settings,setup}/page.tsx que nenhuma viva alcança, PWA e palco já fora) n=14
+app/profile/page.tsx
+app/settings/page.tsx
+app/setup/page.tsx
+components/ProfileForm.tsx
+components/profile-page-client.tsx
+components/settings-page-client.tsx
+components/settings.tsx
+components/settings/AudioSettings.tsx
+components/settings/CloudSettings.tsx
+components/settings/DisplaySettings.tsx
+components/settings/RefactoredSettings.tsx
+components/ui/skeleton.tsx
+components/ui/switch.tsx
+lib/setup-storage.ts

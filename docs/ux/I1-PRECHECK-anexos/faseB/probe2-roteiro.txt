@@ -1,0 +1,8 @@
+# probe 2 — Google (H-I1-3). ESTADO: NÃO EXECUTADO — bloqueado (bloqueio.txt, div. 509: o preview não abre sem bypass).
+# Escrita declarada: nenhuma (nenhum login). Alvo: preview /login. Parar no primeiro erro de console ou quando a página
+# accounts.google.com abrir; NÃO escolher conta.
+# Registrar: page.on('console') (type error/warning) e securitypolicyviolation (document.addEventListener no
+#   init script: effectiveDirective, blockedURI), o evento popup (context.on('page')) e a URL dele, e o erro que o
+#   login-panel.tsx:157 põe na tela (setError). Esperado pela leitura (§11): violação de frame-src (*.firebaseapp.com),
+#   de script-src (apis.google.com) e/ou auth/popup-closed-by-user por COOP same-origin.
+# Saída: probe2-console.txt, probe2-tela.png (só o bloco do botão e do erro).
