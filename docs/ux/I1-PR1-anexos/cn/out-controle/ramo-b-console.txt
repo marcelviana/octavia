@@ -1,0 +1,5 @@
+# CN ramo-b (antes) — console, só error/warning (ms · tipo · texto)
+    921  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+   1230  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+   1484  warning %c%s%c Server-side user: No session cookie found background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server  
+   1523  warning Firebase not configured - missing environment variables

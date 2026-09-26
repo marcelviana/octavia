@@ -1,0 +1,24 @@
+# CN ramo-b — depois — 2026-09-26T17:53:59.692Z · alvo http://localhost:3000 · conta de audit · Chrome do sistema
+resultado: EXIT 0
+controle positivo: controle-1 no log, status 200 · controle-2 (junto de navegação cheia) no log, status 200
+interceptação: POST /api/auth/session → 500 no navegador, 60 s depois do submit
+capturas: gravadas fora da árvore durante a medição e copiadas ao fim (div. 531)
+requests a octavia.rocks: 0 (abortados no navegador; o esperado é 0)
+outros hosts (passaram): identitytoolkit.googleapis.com ×2
+
+## contagem da janela (depois do submit)
+     1  POST /api/auth/session (falso, não chegou ao servidor)
+     0  GET /api/profile (real, servidor local)
+     0  POST /api/profile
+     0  navegações do quadro principal
+     0  navegações nos últimos 10 s (0 = parou; > 0 = continuava)
+     1  frase(s) em [role="alert"] ao fim
+     0  linha(s) sem resposta (status pendente) — o furo da div. 518 ficaria aqui, visível
+  frase(s): "falha no servidor — a sessão não foi aberta
+Tentar de novo"
+  URL ao fim: /login
+  navegações (ms · caminho): (nenhuma)
+
+## critério (H-I1-7 (d)/(e))
+  antes  — ≥ 50 voltas e ≥ 50 GET /api/profile: não observado
+  depois — 1 POST, 0 GET /api/profile, 0 navegações, 1 frase: CUMPRE
