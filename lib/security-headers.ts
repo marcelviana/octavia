@@ -76,13 +76,9 @@ export const PRODUCTION_SECURITY_CONFIG: EnhancedSecurityConfig = {
         'https://*.googleapis.com',
         'wss://*.supabase.co' // WebSocket connections
       ],
-      'frame-src': [
-        // PERF-02: o modo performance renderiza PDF num <iframe> cujo src é
-        // SEMPRE blob: do próprio origin (via /api/proxy → createObjectURL —
-        // único iframe do app). blob: só é criável por script same-origin;
-        // nada de 'self'/https:/data: — privilégio mínimo.
-        'blob:'
-      ],
+      // I1-PR3 (I1-D24): o único iframe do app (o PDF do palco, PERF-02)
+      // morreu com o palco; sem consumidor, o 'blob:' saiu.
+      'frame-src': ["'none'"],
       'object-src': ["'none'"],
       'base-uri': ["'self'"],
       'form-action': ["'self'"],
@@ -251,8 +247,7 @@ export function applyEnhancedSecurityHeaders(
 
     // Cache control for sensitive pages
     if (request.nextUrl.pathname.includes('/api/') ||
-        request.nextUrl.pathname.includes('/dashboard') ||
-        request.nextUrl.pathname.includes('/performance')) {
+        request.nextUrl.pathname.includes('/dashboard')) {
       response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate')
       response.headers.set('Pragma', 'no-cache')
       response.headers.set('Expires', '0')

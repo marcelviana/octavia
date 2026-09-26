@@ -12,20 +12,6 @@ vi.mock('@/lib/content-service', () => ({
   getUserContentPage: vi.fn()
 }))
 
-// Mock offline setlist cache functions
-vi.mock('@/lib/offline-setlist-cache', () => ({
-  saveSetlists: vi.fn(),
-  replaceSetlists: vi.fn(),
-  getCachedSetlists: vi.fn()
-}))
-
-// Mock offline cache functions
-vi.mock('@/lib/offline-cache', () => ({
-  saveContent: vi.fn(),
-  getCachedContent: vi.fn(),
-  warmCache: vi.fn().mockResolvedValue(undefined)
-}))
-
 // Mock navigator.onLine
 Object.defineProperty(navigator, 'onLine', {
   writable: true,
@@ -35,11 +21,6 @@ Object.defineProperty(navigator, 'onLine', {
 describe('useSetlistData', () => {
   let mockGetUserSetlists: any
   let mockGetUserContentPage: any
-  let mockSaveSetlists: any
-  let mockReplaceSetlists: any
-  let mockGetCachedSetlists: any
-  let mockSaveContent: any
-  let mockGetCachedContent: any
 
   const mockUser = { uid: 'test-user-1', email: 'test@example.com' }
   
@@ -159,16 +140,9 @@ describe('useSetlistData', () => {
     // Get the mocked functions
     const setlistService = await import('@/lib/setlist-service')
     const contentService = await import('@/lib/content-service')
-    const setlistCache = await import('@/lib/offline-setlist-cache')
-    const offlineCache = await import('@/lib/offline-cache')
     
     mockGetUserSetlists = setlistService.getUserSetlists as any
     mockGetUserContentPage = contentService.getUserContentPage as any
-    mockSaveSetlists = setlistCache.saveSetlists as any
-    mockReplaceSetlists = (setlistCache as any).replaceSetlists as any
-    mockGetCachedSetlists = setlistCache.getCachedSetlists as any
-    mockSaveContent = offlineCache.saveContent as any
-    mockGetCachedContent = offlineCache.getCachedContent as any
 
     // Default successful responses
     mockGetUserSetlists.mockResolvedValue(mockSetlistsData)
@@ -177,12 +151,6 @@ describe('useSetlistData', () => {
       total: 2,
       totalPages: 1
     })
-
-    mockSaveSetlists.mockResolvedValue(undefined)
-    mockReplaceSetlists.mockResolvedValue(undefined)
-    mockSaveContent.mockResolvedValue(undefined)
-    mockGetCachedSetlists.mockResolvedValue([])
-    mockGetCachedContent.mockResolvedValue([])
   })
 
   afterEach(() => {
@@ -289,40 +257,10 @@ describe('useSetlistData', () => {
     expect(result.current.content).toEqual(testContent)
   })
 
-  it('handles offline mode by using cached data', async () => {
-    // Set offline mode
-    Object.defineProperty(navigator, 'onLine', { value: false, writable: true })
-    
-    const cachedSetlists = [mockSetlistsData[0]]
-    const cachedContent = [mockContentData[0]]
-    
-    mockGetCachedSetlists.mockResolvedValue(cachedSetlists)
-    mockGetCachedContent.mockResolvedValue(cachedContent)
-
-    const { result } = renderHook(() => useSetlistData(mockUser, true))
-
-    // Give time for offline loading
-    await act(async () => {
-      await new Promise(resolve => setTimeout(resolve, 200))
-    })
-
-    // Should not call network services in offline mode
-    expect(mockGetUserSetlists).not.toHaveBeenCalled()
-    expect(mockGetUserContentPage).not.toHaveBeenCalled()
-    
-    // Should call cache functions
-    expect(mockGetCachedSetlists).toHaveBeenCalled()
-    expect(mockGetCachedContent).toHaveBeenCalled()
-  })
-
-  it('shows error state (never first-use empty state) when network and cache both fail', async () => {
+  it('shows error state (never first-use empty state) when setlists and content both fail', async () => {
     const error = new Error('Network failure')
     mockGetUserSetlists.mockRejectedValue(error)
     mockGetUserContentPage.mockRejectedValue(error)
-
-    // Make cache calls also fail
-    mockGetCachedSetlists.mockRejectedValue(new Error('Cache error'))
-    mockGetCachedContent.mockRejectedValue(new Error('Cache error'))
 
     const { result } = renderHook(() => useSetlistData(mockUser, true))
 
@@ -331,11 +269,8 @@ describe('useSetlistData', () => {
       await new Promise(resolve => setTimeout(resolve, 200))
     })
 
-    // Verify that the hook tried to call all the expected services and cache functions
     expect(mockGetUserSetlists).toHaveBeenCalled()
     expect(mockGetUserContentPage).toHaveBeenCalled()
-    expect(mockGetCachedSetlists).toHaveBeenCalled()
-    expect(mockGetCachedContent).toHaveBeenCalled()
 
     // Empty data + error set: SetlistList renders the error state with
     // retry, not the "No setlists yet" first-use invitation (SET-14)
@@ -344,50 +279,10 @@ describe('useSetlistData', () => {
     expect(result.current.error).toBeTruthy()
   })
 
-  it('hydrates from cache first, then replaces state and cache with the server response', async () => {
-    const cachedSetlists = [mockSetlistsData[1]] // estado antigo no cache
-    mockGetCachedSetlists.mockResolvedValue(cachedSetlists)
-
-    const { result } = renderHook(() => useSetlistData(mockUser, true))
-
-    await act(async () => {
-      await new Promise(resolve => setTimeout(resolve, 300))
-    })
-
-    // Final state is the server's list (replaced, not merged with cache)
-    expect(result.current.setlists).toEqual(mockSetlistsData)
-    expect(result.current.error).toBeNull()
-    // Cache rewritten by replacement: deletions on other devices don't survive
-    expect(mockReplaceSetlists).toHaveBeenCalledWith(mockSetlistsData)
-    expect(mockSaveSetlists).not.toHaveBeenCalled()
-  })
-
-  it('keeps cached setlists visible when the network fails with onLine=true (SET-14)', async () => {
-    // O caso real de palco: wi-fi conectado sem internet — navigator.onLine
-    // é true, o fetch falha, e a lista cacheada deve permanecer na tela
-    const cachedSetlists = [mockSetlistsData[0]]
-    mockGetCachedSetlists.mockResolvedValue(cachedSetlists)
-    mockGetUserSetlists.mockRejectedValue(new TypeError('Failed to fetch'))
-    mockGetUserContentPage.mockRejectedValue(new TypeError('Failed to fetch'))
-
-    const { result } = renderHook(() => useSetlistData(mockUser, true))
-
-    await act(async () => {
-      await new Promise(resolve => setTimeout(resolve, 300))
-    })
-
-    expect(result.current.setlists).toEqual(cachedSetlists)
-    expect(result.current.error).toBeNull() // stale > erro quando há cache
-    expect(result.current.loading).toBe(false)
-    expect(mockReplaceSetlists).not.toHaveBeenCalled() // falha não sobrescreve cache
-  })
-
-  it('shows error state (no fetch, never first-use empty state) when offline with empty cache', async () => {
+  it('shows error state (no fetch, never first-use empty state) when offline', async () => {
     // Modo avião real: onLine=false pula o fetch — sem rejected para tratar,
     // o estado de erro precisa ser declarado no próprio atalho
     Object.defineProperty(navigator, 'onLine', { value: false, writable: true })
-    mockGetCachedSetlists.mockResolvedValue([])
-    mockGetCachedContent.mockResolvedValue([])
 
     const { result } = renderHook(() => useSetlistData(mockUser, true))
 
@@ -402,8 +297,7 @@ describe('useSetlistData', () => {
     expect(result.current.loading).toBe(false)
   })
 
-  it('shows error state when network fails and cache is empty', async () => {
-    mockGetCachedSetlists.mockResolvedValue([])
+  it('shows error state when the network fails', async () => {
     mockGetUserSetlists.mockRejectedValue(new TypeError('Failed to fetch'))
     mockGetUserContentPage.mockRejectedValue(new TypeError('Failed to fetch'))
 
@@ -417,15 +311,4 @@ describe('useSetlistData', () => {
     expect(result.current.error).toBeTruthy()
   })
 
-  it('caches successful data by replacement', async () => {
-    const { result } = renderHook(() => useSetlistData(mockUser, true))
-
-    // Give time for data loading and caching
-    await act(async () => {
-      await new Promise(resolve => setTimeout(resolve, 300))
-    })
-
-    expect(mockReplaceSetlists).toHaveBeenCalledTimes(1)
-    expect(mockSaveContent).toHaveBeenCalledTimes(1)
-  })
 })

@@ -7,14 +7,37 @@ const nextConfig = {
   // /api/* sai com `private, no-store`. Ponto único: nenhum handler emite
   // Cache-Control e o no-store de lib/security-headers.ts nunca chega às
   // rotas (o matcher do middleware exclui /api) — sem isto a Vercel injeta
-  // `public, max-age=0, must-revalidate`. /api/proxy fica de FORA por
-  // decisão: é stream de arquivo do palco e repassa o Cache-Control do
-  // upstream (app/api/proxy/route.ts). Gate: tests/config/next-headers.test.ts.
+  // `public, max-age=0, must-revalidate`. (A exclusão do /api/proxy saiu com
+  // a rota na I1-PR3, aval 1.) Gate: tests/config/next-headers.test.ts.
   async headers() {
     return [
       {
-        source: '/api/:path((?!proxy).*)',
+        source: '/api/:path*',
         headers: [{ key: 'Cache-Control', value: 'private, no-store' }],
+      },
+    ]
+  },
+  // I1-D22: o palco do web saiu (I1-PR3); a URL antiga redireciona. A ordem
+  // importa — a primeira que casa vence; sem parâmetro reconhecido → dashboard.
+  // Permanente (308), aval 3 do commit 2 [Marcel, 2026-09-26].
+  async redirects() {
+    return [
+      {
+        source: '/performance',
+        has: [{ type: 'query', key: 'contentId', value: '(?<contentId>[^/&]+)' }],
+        destination: '/content/:contentId',
+        permanent: true,
+      },
+      {
+        source: '/performance',
+        has: [{ type: 'query', key: 'setlistId' }],
+        destination: '/setlists',
+        permanent: true,
+      },
+      {
+        source: '/performance',
+        destination: '/dashboard',
+        permanent: true,
       },
     ]
   },

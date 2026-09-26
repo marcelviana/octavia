@@ -1,19 +1,16 @@
 import { test, type Page } from '@playwright/test'
 import fs from 'node:fs'
-import { ItemRecorder, trackSessionPosts, settle, gotoPerformance, gotoRoute } from './recorder'
+import { ItemRecorder, trackSessionPosts, settle, gotoRoute } from './recorder'
 import { resolveFaseDDir } from '../../../scripts/ux-audit/fase-d-dirs'
 
 /**
  * Fase D — Grupo F: library e busca (itens 23-29; o 30 cruza com o grupo I).
+ * O item 26 (busca a partir do palco) saiu com o palco na I1-PR3.
  * Prioridade: item 23 (LIB-01 — biblioteca vazia em tablet landscape).
  */
 
-const discovery = JSON.parse(
-  fs.readFileSync('tests/ux-audit/.auth/discovery.json', 'utf-8')
-)
-const SHOW_ID: string = discovery.setlists.show.id
-
 const EVIDENCE_DIR = resolveFaseDDir('evidence')
+
 async function shot(page: Page, name: string): Promise<string> {
   fs.mkdirSync(EVIDENCE_DIR, { recursive: true })
   const file = `${EVIDENCE_DIR}/${name}.png`
@@ -128,67 +125,6 @@ test.describe('Grupo F — library e busca (J5)', () => {
       rec.measure(`busca_${q}`, { resultados: rows, amostra: rows === 0 ? emptyText : undefined })
       if (q === 'ipanma') {
         rec.measure('screenshot_ipanma', await shot(page, 'item-25-ipanma'))
-      }
-    }
-    rec.save(testInfo)
-  })
-
-  test('item-26: existe caminho para busca de dentro do modo performance?', async ({ page }, testInfo) => {
-    const rec = new ItemRecorder(
-      26,
-      'Existe caminho para a busca de dentro do modo performance ("toca aquela!")? Quantos taps?'
-    )
-    trackSessionPosts(page, 'item-26')
-
-    test.setTimeout(10 * 60 * 1000)
-    const entered = await gotoPerformance(page, `/performance?setlistId=${SHOW_ID}&startingSongIndex=1`, rec)
-    if (!entered) {
-      rec.set('inconclusiva')
-      rec.save(testInfo)
-      return
-    }
-    await settle(page, 1500)
-
-    // Inventário dos controles do modo performance: existe busca?
-    const controls = await page.evaluate(() =>
-      Array.from(document.querySelectorAll('button, input, a'))
-        .map((el) => ({
-          tag: el.tagName.toLowerCase(),
-          label:
-            el.getAttribute('aria-label') ||
-            el.getAttribute('data-testid') ||
-            el.getAttribute('placeholder') ||
-            el.textContent?.trim().slice(0, 30) ||
-            '(sem nome)',
-        }))
-        .filter((c) => c.label !== '(sem nome)' || c.tag === 'input')
-    )
-    rec.measure('controles_disponiveis_no_performance', controls)
-    const hasSearch = controls.some((c) => /search|busca/i.test(c.label))
-    rec.measure('busca_dentro_do_performance', hasSearch)
-
-    if (!hasSearch) {
-      // Caminho real: sair → busca do header
-      await rec.tap('tap 1: sair do modo performance (X)', async () => {
-        await page.locator('[data-testid="exit-button"]').click()
-        await page.waitForURL(/^(?!.*\/performance)/, { timeout: 15_000 }).catch(() => {})
-      })
-      await settle(page, 1000)
-      rec.measure('url_apos_exit', page.url())
-      const search = page.getByPlaceholder('Search...').first()
-      const searchVisible = await search.isVisible().catch(() => false)
-      if (searchVisible) {
-        await rec.tap('tap 2: foco na busca', async () => search.click())
-        await rec.tap('tap 3: digitar', async () => search.fill('Asa Branca'))
-        await rec.tap('tap 4: Enter', async () => {
-          await search.press('Enter')
-          await page.waitForURL(/\/library\?search=/, { timeout: 15_000 })
-          await page.getByText('Asa Branca').first().waitFor({ state: 'visible', timeout: 15_000 })
-        })
-        rec.measure('taps_saida_ate_resultado', rec.taps)
-        rec.measure('tempo_ate_resultado_ms', rec.elapsed())
-      } else {
-        rec.note(`Após sair, a tela de destino (${page.url()}) não tem a busca do header visível`)
       }
     }
     rec.save(testInfo)

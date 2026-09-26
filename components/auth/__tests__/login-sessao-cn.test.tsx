@@ -49,8 +49,6 @@ vi.mock('firebase/auth', () => ({
 }))
 
 vi.mock('@/lib/firebase', () => ({ auth: { currentUser: null }, isFirebaseConfigured: true }))
-vi.mock('@/lib/offline-cache', () => ({ clearOfflineContent: vi.fn() }))
-vi.mock('@/lib/offline-setlist-cache', () => ({ clearOfflineSetlists: vi.fn() }))
 vi.mock('@/lib/logger', () => ({ default: { log: vi.fn(), warn: vi.fn(), error: vi.fn() } }))
 vi.mock('next/navigation', () => ({
   useRouter: () => ({ push: vi.fn(), replace: vi.fn(), refresh: vi.fn(), prefetch: vi.fn() }),

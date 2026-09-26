@@ -1,10 +1,12 @@
 import { test, type Page } from '@playwright/test'
 import fs from 'node:fs'
-import { ItemRecorder, trackSessionPosts, settle, gotoPerformance, gotoRoute, getBearer } from './recorder'
+import { ItemRecorder, trackSessionPosts, settle, gotoRoute, getBearer } from './recorder'
 import { resolveFaseDDir } from '../../../scripts/ux-audit/fase-d-dirs'
 
 /**
- * Fase D — Grupo G: viewer e anotações / J2 (itens 31-34).
+ * Fase D — Grupo G: viewer e anotações / J2 (itens 31-33). O item 34
+ * (viewer → Performance) e o trecho de palco do item 32 saíram com o palco
+ * na I1-PR3.
  * Escrita permitida no item 32 (anotação em content_data de item do seed).
  */
 
@@ -137,7 +139,7 @@ test.describe('Grupo G — viewer e anotações (J2)', () => {
           'a anotação do J2 é inalcançável pela UI para cifra. CONT-03 confirmado por inacessibilidade.'
       )
       // Fallback: grava anotação direto em content_data (probe de round-trip),
-      // p/ verificar se ALGUMA anotação persistida aparece no viewer/performance
+      // p/ verificar se ALGUMA anotação persistida aparece no viewer
       const bearer = await getBearer(page)
       const authHeaders = bearer ? { Authorization: `Bearer ${bearer}` } : {}
       const before = await page.request.get(`https://octavia.rocks/api/content/${CHORDS_ID}`, { headers: authHeaders })
@@ -162,7 +164,7 @@ test.describe('Grupo G — viewer e anotações (J2)', () => {
         })
         rec.measure('probe_put_annotation_status', put.status())
         if (put.ok()) {
-          // Reabre viewer e performance: a anotação aparece?
+          // Reabre o viewer: a anotação aparece?
           await page.goto(`/content/${CHORDS_ID}`, { waitUntil: 'domcontentloaded' })
           await settle(page, 2000)
           const viewerHasIt = await page
@@ -170,12 +172,6 @@ test.describe('Grupo G — viewer e anotações (J2)', () => {
             .count()
           rec.measure('anotacao_visivel_no_viewer', viewerHasIt > 0)
           rec.measure('screenshot_viewer_pos_anotacao', await shot(page, 'item-32-viewer-pos-anotacao'))
-
-          const enteredPerf = await gotoPerformance(page, `/performance?contentId=${CHORDS_ID}`, rec)
-          await settle(page, 2000)
-          const perfHasIt = enteredPerf ? await page.getByText('entrar mais suave aqui').count() : -1
-          rec.measure('anotacao_visivel_no_performance', enteredPerf ? perfHasIt > 0 : 'inconclusivo (bounce)')
-          rec.measure('screenshot_perf_pos_anotacao', await shot(page, 'item-32-performance-pos-anotacao'))
         }
       }
     } else {
@@ -231,54 +227,6 @@ test.describe('Grupo G — viewer e anotações (J2)', () => {
     rec.measure('overflow_390px', overflowMobile)
     rec.measure('screenshot_tab_390', await shot(page, 'item-33-tab-390'))
     rec.note('Operabilidade do gesto horizontal em touch físico: MANUAL-CHECKLIST.')
-    rec.save(testInfo)
-  })
-
-  test('item-34: viewer → Performance — latência até tela cheia', async ({ page }, testInfo) => {
-    const rec = new ItemRecorder(
-      34,
-      'Botão Performance do header do viewer: latência até tela cheia (mede J5→J1).'
-    )
-    trackSessionPosts(page, 'item-34')
-
-    // Caminho real J5→J1: dashboard → busca → resultado → viewer → Performance
-    if (!(await gotoRoute(page, '/dashboard', rec))) {
-      rec.set('inconclusiva')
-      rec.save(testInfo)
-      return
-    }
-    const search = page.getByPlaceholder('Search...').first()
-    await search.click()
-    await search.fill('Garota')
-    await search.press('Enter')
-    await page.waitForURL(/\/library\?search=/, { timeout: 20_000 })
-    await settle(page, 2000)
-    await page.getByText('Garota de Ipanema').first().click()
-    await page.waitForURL(/\/content\//, { timeout: 20_000 }).catch(() => {})
-    if (!/\/content\//.test(page.url())) {
-      rec.note(`clicar no resultado não levou ao viewer (url: ${page.url()})`)
-      rec.set('inconclusiva')
-      rec.save(testInfo)
-      return
-    }
-    await settle(page, 2000)
-
-    const perfBtn = page.locator('button:has(svg.lucide-play)').first()
-    await rec.tap('tap: botão Performance', async () => {
-      await perfBtn.click()
-      await page.locator('[data-testid="exit-button"]').waitFor({ state: 'visible', timeout: 30_000 })
-    })
-    rec.measure('shell_visivel_ms', rec.elapsed())
-    // Conteúdo renderizado
-    const t = Date.now()
-    await page
-      .waitForFunction(() => {
-        const el = document.querySelector('[data-testid="optimized-content-display"]')
-        return !!el && ((el.textContent ?? '').trim().length > 20 || !!el.querySelector('iframe, canvas, img'))
-      }, { timeout: 15_000 })
-      .catch(() => rec.note('conteúdo não detectado em 15s'))
-    rec.measure('conteudo_visivel_ms', rec.elapsed())
-    rec.measure('overhead_conteudo_apos_shell_ms', Date.now() - t)
     rec.save(testInfo)
   })
 })

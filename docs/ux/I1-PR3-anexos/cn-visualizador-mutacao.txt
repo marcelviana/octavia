@@ -1,0 +1,35 @@
+# controle negativo do CN (regra 7): mutação temporária, desfeita com git checkout lib/utils.ts
+# $ sed -i '' "s|return urlHasExtension(url, '.pdf')|return false /* MUTACAO CN */|" lib/utils.ts
+diff --git a/lib/utils.ts b/lib/utils.ts
+index 0aec76b..cc1b28a 100644
+--- a/lib/utils.ts
++++ b/lib/utils.ts
+@@ -29,7 +29,7 @@ export function isPdfFile(url: string, mimeType?: string): boolean {
+   }
+   
+   // Fallback to extension check for regular URLs
+-  return urlHasExtension(url, '.pdf')
++  return false /* MUTACAO CN */
+ }
+ 
+ export function isImageFile(url: string, mimeType?: string): boolean {
+# $ NO_COLOR=1 pnpm exec vitest run --project web tests/gates/i1-visualizador.test.tsx --reporter=verbose
+ ✓ |web| tests/gates/i1-visualizador.test.tsx > I1-D36 — visualizador, com-cache > Lyrics abre 56ms
+ ✓ |web| tests/gates/i1-visualizador.test.tsx > I1-D36 — visualizador, com-cache > Chords abre 14ms
+ ✓ |web| tests/gates/i1-visualizador.test.tsx > I1-D36 — visualizador, com-cache > Tab abre 12ms
+ ✓ |web| tests/gates/i1-visualizador.test.tsx > I1-D36 — visualizador, com-cache > Sheet PDF abre 25ms
+ ✓ |web| tests/gates/i1-visualizador.test.tsx > I1-D36 — visualizador, com-cache > Sheet imagem abre 17ms
+ ✓ |web| tests/gates/i1-visualizador.test.tsx > I1-D36 — visualizador, com-cache > controle: Sheet PDF sem extensão na URL 17ms
+ ✓ |web| tests/gates/i1-visualizador.test.tsx > I1-D36 — visualizador, sem-cache > Lyrics abre 11ms
+ ✓ |web| tests/gates/i1-visualizador.test.tsx > I1-D36 — visualizador, sem-cache > Chords abre 9ms
+ ✓ |web| tests/gates/i1-visualizador.test.tsx > I1-D36 — visualizador, sem-cache > Tab abre 18ms
+ × |web| tests/gates/i1-visualizador.test.tsx > I1-D36 — visualizador, sem-cache > Sheet PDF abre 1021ms
+   → Unable to find an element by: [data-testid="pdf-viewer"]
+ ✓ |web| tests/gates/i1-visualizador.test.tsx > I1-D36 — visualizador, sem-cache > Sheet imagem abre 33ms
+ ✓ |web| tests/gates/i1-visualizador.test.tsx > I1-D36 — visualizador, sem-cache > controle: Sheet PDF sem extensão na URL 21ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+TestingLibraryElementError: Unable to find an element by: [data-testid="pdf-viewer"]
+ Test Files  1 failed (1)
+      Tests  1 failed | 11 passed (12)
+Updated 1 path from the index
+# git status --short lib/utils.ts → ''

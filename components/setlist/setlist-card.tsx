@@ -3,7 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import {
-  Play,
   Edit,
   Trash2,
   Clock,
@@ -33,7 +32,6 @@ interface SetlistCardProps {
   onSelect: (setlist: SetlistWithSongs) => void
   onEdit: (setlist: SetlistWithSongs) => void
   onDelete: (setlist: SetlistWithSongs) => void
-  onEnterPerformance: (setlist: SetlistWithSongs, startingSongIndex?: number) => void
   onShare?: (setlist: SetlistWithSongs) => void
   onToggleFavorite?: (setlist: SetlistWithSongs) => void
 }
@@ -57,7 +55,6 @@ export const SetlistCard = memo(function SetlistCard({
   onSelect,
   onEdit,
   onDelete,
-  onEnterPerformance,
   onShare,
   onToggleFavorite,
 }: SetlistCardProps) {
@@ -178,21 +175,6 @@ export const SetlistCard = memo(function SetlistCard({
               )}
             </div>
           )}
-
-          {/* Action Buttons */}
-          <div className="flex gap-2 pt-1">
-            <Button
-              size="sm"
-              className="flex-1 bg-[#2E7CE4] hover:bg-[#1E5BB8] text-white"
-              onClick={(e) => {
-                e.stopPropagation()
-                onEnterPerformance(setlist)
-              }}
-            >
-              <Play className="w-4 h-4 mr-2" />
-              Start Performance
-            </Button>
-          </div>
         </div>
       </CardContent>
     </Card>

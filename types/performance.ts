@@ -1,10 +1,10 @@
 import type { Database } from "@/types/database.types"
 
 // Base types from Supabase
-export type Content = Database["public"]["Tables"]["content"]["Row"]
+type Content = Database["public"]["Tables"]["content"]["Row"]
 export type Setlist = Database["public"]["Tables"]["setlists"]["Row"]
 
-// Enhanced types for performance mode
+// Tipos de setlist (os do modo performance saíram com o palco, I1-PR3)
 export interface SetlistSong {
   id: string
   position: number
@@ -24,81 +24,4 @@ export interface SetlistFormData {
   performance_date: string
   venue: string
   notes: string
-}
-
-// Performance mode specific interfaces
-export interface PerformanceModeProps {
-  onExitPerformance: () => void
-  selectedContent?: Content | null
-  selectedSetlist?: SetlistWithSongs | null
-  startingSongIndex?: number
-}
-
-export interface SongData {
-  id: string
-  title?: string | null
-  artist?: string | null
-  key?: string | null
-  bpm?: number | null
-  time_signature?: string | null
-  content_type?: string | null
-  file_url?: string | null
-  content_data?: {
-    lyrics?: string
-    file?: string
-    chords?: any
-    sections?: any
-  } | null
-}
-
-// Performance controls state
-export interface PerformanceControlsState {
-  zoom: number
-  isPlaying: boolean
-  bpm: number
-  darkSheet: boolean
-  bpmFeedback: string | null
-  showControls: boolean
-}
-
-// Content caching state
-export interface ContentCacheState {
-  sheetUrls: (string | null)[]
-  sheetMimeTypes: (string | null)[]
-  lyricsData: string[]
-  chordsData: Array<{ chords: any; sections: any }>
-  isLoading: boolean
-}
-
-// Content render information
-export interface ContentRenderInfo {
-  renderType: 'pdf' | 'image' | 'lyrics' | 'chords' | 'no-sheet' | 'no-lyrics' | 'unsupported'
-  url?: string
-  mimeType?: string
-  lyricsText?: string
-  chordsData?: any
-  hasContent: boolean
-  sheetUrl: string | null
-  lyricsContent: string
-  contentType: string | null
-  errorInfo?: {
-    url: string
-    mimeType?: string
-  }
-}
-
-// Navigation state
-export interface NavigationState {
-  currentSong: number
-  canGoNext: boolean
-  canGoPrevious: boolean
-  currentSongData: SongData
-}
-
-// Performance metrics (for optimization)
-export interface PerformanceMetrics {
-  navigationTime: number
-  cacheHitRate: number
-  renderTime: number
-  memoryUsage?: number
 }

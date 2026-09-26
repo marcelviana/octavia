@@ -1,0 +1,17 @@
+# $ NO_COLOR=1 pnpm exec vitest run --project web tests/gates/i1-visualizador.test.tsx --reporter=verbose
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-i1-pr3
+ ✓ |web| tests/gates/i1-visualizador.test.tsx > I1-D36 — visualizador, com-cache > Lyrics abre 59ms
+ ✓ |web| tests/gates/i1-visualizador.test.tsx > I1-D36 — visualizador, com-cache > Chords abre 14ms
+ ✓ |web| tests/gates/i1-visualizador.test.tsx > I1-D36 — visualizador, com-cache > Tab abre 13ms
+ ✓ |web| tests/gates/i1-visualizador.test.tsx > I1-D36 — visualizador, com-cache > Sheet PDF abre 24ms
+ ✓ |web| tests/gates/i1-visualizador.test.tsx > I1-D36 — visualizador, com-cache > Sheet imagem abre 16ms
+ ✓ |web| tests/gates/i1-visualizador.test.tsx > I1-D36 — visualizador, com-cache > controle: Sheet PDF sem extensão na URL 17ms
+ ✓ |web| tests/gates/i1-visualizador.test.tsx > I1-D36 — visualizador, sem-cache > Lyrics abre 9ms
+ ✓ |web| tests/gates/i1-visualizador.test.tsx > I1-D36 — visualizador, sem-cache > Chords abre 11ms
+ ✓ |web| tests/gates/i1-visualizador.test.tsx > I1-D36 — visualizador, sem-cache > Tab abre 16ms
+ ✓ |web| tests/gates/i1-visualizador.test.tsx > I1-D36 — visualizador, sem-cache > Sheet PDF abre 12ms
+ ✓ |web| tests/gates/i1-visualizador.test.tsx > I1-D36 — visualizador, sem-cache > Sheet imagem abre 15ms
+ ✓ |web| tests/gates/i1-visualizador.test.tsx > I1-D36 — visualizador, sem-cache > controle: Sheet PDF sem extensão na URL 14ms
+ Test Files  1 passed (1)
+      Tests  12 passed (12)
+   Duration  2.81s (transform 269ms, setup 400ms, import 567ms, tests 220ms, environment 1.47s)

@@ -7,6 +7,9 @@
  * middleware consome (lib/protected-routes.ts). Página protegida nova
  * fora do inventário → o assert de paridade falha.
  *
+ * I1-PR3 (I1-D25, div. 505): /settings, /profile e /performance saíram com
+ * as páginas — inventário 8 → 5, 17 → 11 testes.
+ *
  * CONTROLE NEGATIVO (regra nº 7): contra o main pré-B1.2a este spec FALHA
  * em 6 das 8 páginas (dashboard/library: spinner; setlists/settings/
  * add-content: shell client sem verificação server; profile: redirect só
@@ -49,18 +52,12 @@ const PAGE_INVOCATIONS: Record<string, () => Promise<unknown>> = {
     (await import('@/app/library/page')).default({}),
   '/setlists': async () =>
     (await import('@/app/setlists/page')).default(),
-  '/settings': async () =>
-    (await import('@/app/settings/page')).default(),
-  '/profile': async () =>
-    (await import('@/app/profile/page')).default(),
   '/add-content': async () =>
     (await import('@/app/add-content/page')).default(),
   '/content/[id]': async () =>
     (await import('@/app/content/[id]/page')).default({
       params: Promise.resolve({ id: 'gate-test-id' })
-    }),
-  '/performance': async () =>
-    (await import('@/app/performance/page')).default({})
+    })
 }
 
 describe('G-rotas — toda página protegida expulsa por conta própria', () => {

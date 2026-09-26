@@ -1,0 +1,152 @@
+# $ sh scripts/gates-web/g-palco.sh   (árvore = origin/main 089f72c + os arquivos novos deste commit, stageados; nada apagado)
+G-palco — lista: docs/ux/I1-PR3-anexos/lista-do-corte.txt
+MORRE: 68 caminhos · SIMBOLO: 6 · TEXTO: 6
+
+## 1. MORRE — o arquivo existe
+  ✗ existe: app/performance/loading.tsx
+  ✗ existe: app/performance/page.tsx
+  ✗ existe: components/optimized-performance-mode.tsx
+  ✗ existe: components/performance-mode/empty-state.tsx
+  ✗ existe: components/performance-mode/header-controls.tsx
+  ✗ existe: components/performance-mode/loading-state.tsx
+  ✗ existe: components/performance-mode/memory-stats.tsx
+  ✗ existe: components/performance-mode/navigation-controls.tsx
+  ✗ existe: components/performance-mode/optimized-content-display.tsx
+  ✗ existe: components/performance-mode/performance-warning.tsx
+  ✗ existe: components/performance-page-client.tsx
+  ✗ existe: hooks/use-content-loading.ts
+  ✗ existe: hooks/use-content-renderer.ts
+  ✗ existe: hooks/use-keyboard-shortcuts.ts
+  ✗ existe: hooks/use-performance-controls.ts
+  ✗ existe: hooks/use-performance-effects.ts
+  ✗ existe: hooks/use-performance-monitoring-ui.ts
+  ✗ existe: hooks/use-performance-navigation.ts
+  ✗ existe: hooks/use-songs-transformation.ts
+  ✗ existe: hooks/use-wake-lock.ts
+  ✗ existe: lib/advanced-content-cache.ts
+  ✗ existe: lib/memory-management.ts
+  ✗ existe: lib/performance-monitor.ts
+  ✗ existe: app/api/proxy/route.ts
+  ✗ existe: app/offline/page.tsx
+  ✗ existe: components/pwa-install-prompt.tsx
+  ✗ existe: components/service-worker-wrapper.tsx
+  ✗ existe: hooks/use-service-worker.tsx
+  ✗ existe: lib/offline-cache.ts
+  ✗ existe: lib/offline-queue.ts
+  ✗ existe: lib/offline-setlist-cache.ts
+  ✗ existe: worker/index.js
+  ✗ existe: public/sw.js
+  ✗ existe: public/manifest.json
+  ✗ existe: scripts/build-sw.js
+  ✗ existe: hooks/useContentFile.ts
+  ✗ existe: types/pwa.d.ts
+  ✗ existe: app/profile/page.tsx
+  ✗ existe: app/settings/page.tsx
+  ✗ existe: app/setup/page.tsx
+  ✗ existe: components/ProfileForm.tsx
+  ✗ existe: components/profile-page-client.tsx
+  ✗ existe: components/settings-page-client.tsx
+  ✗ existe: components/settings.tsx
+  ✗ existe: components/settings/AudioSettings.tsx
+  ✗ existe: components/settings/CloudSettings.tsx
+  ✗ existe: components/settings/DisplaySettings.tsx
+  ✗ existe: components/settings/RefactoredSettings.tsx
+  ✗ existe: lib/setup-storage.ts
+  ✗ existe: tests/performance/live-music-performance.bench.tsx
+  ✗ existe: tests/performance/memory-leak-detection.test.tsx
+  ✗ existe: tests/performance/performance-mode-responsiveness.test.tsx
+  ✗ existe: __tests__/performance-mode/auto-scroll-button-bug.test.tsx
+  ✗ existe: __tests__/performance-mode/chords-display-bug.test.tsx
+  ✗ existe: __tests__/performance-mode/empty-state.test.tsx
+  ✗ existe: __tests__/performance-mode/bug-reproduction-helpers.ts
+  ✗ existe: hooks/__tests__/use-content-renderer.test.ts
+  ✗ existe: hooks/__tests__/use-performance-navigation.test.ts
+  ✗ existe: tests/hooks/use-performance-controls.memory.test.ts
+  ✗ existe: tests/hooks/use-performance-monitoring-ui.test.ts
+  ✗ existe: tests/hooks/use-content-loading.test.ts
+  ✗ existe: components/__tests__/content-display.test.tsx
+  ✗ existe: app/api/proxy/__tests__/route.test.ts
+  ✗ existe: lib/__tests__/offline-setlist-cache.test.ts
+  ✗ existe: tests/hooks/useContentFile.test.ts
+  ✗ existe: tests/ux-audit/perf02-gate.spec.ts
+  ✗ existe: tests/ux-audit/set14-gate.spec.ts
+  ✗ existe: tests/ux-audit/fase-d/c-offline.spec.ts
+## 2. MORRE — o arquivo é importado
+  ✗ app/layout.tsx:8 importa components/pwa-install-prompt.tsx  (@/components/pwa-install-prompt)
+  ✗ app/layout.tsx:10 importa components/service-worker-wrapper.tsx  (@/components/service-worker-wrapper)
+  ✗ components/content-edit-page-client.tsx:9 importa lib/offline-cache.ts  (@/lib/offline-cache)
+  ✗ components/content-page-client.tsx:6 importa lib/offline-cache.ts  (@/lib/offline-cache)
+  ✗ components/content-viewer.tsx:3 importa hooks/useContentFile.ts  (@/hooks/useContentFile)
+  ✗ components/setlist-manager.tsx:6 importa lib/offline-setlist-cache.ts  (@/lib/offline-setlist-cache)
+  ✗ contexts/__tests__/firebase-auth-context.test.tsx:31 importa lib/offline-cache.ts  (@/lib/offline-cache)
+  ✗ contexts/__tests__/firebase-auth-context.test.tsx:35 importa lib/offline-setlist-cache.ts  (@/lib/offline-setlist-cache)
+  ✗ contexts/firebase-auth-context.tsx:18 importa lib/offline-cache.ts  (@/lib/offline-cache)
+  ✗ contexts/firebase-auth-context.tsx:19 importa lib/offline-setlist-cache.ts  (@/lib/offline-setlist-cache)
+  ✗ hooks/__tests__/use-library-data.test.tsx:11 importa lib/offline-cache.ts  (@/lib/offline-cache)
+  ✗ hooks/__tests__/use-library-data.test.tsx:37 importa lib/offline-cache.ts  (@/lib/offline-cache)
+  ✗ hooks/__tests__/use-setlist-data.test.tsx:16 importa lib/offline-setlist-cache.ts  (@/lib/offline-setlist-cache)
+  ✗ hooks/__tests__/use-setlist-data.test.tsx:23 importa lib/offline-cache.ts  (@/lib/offline-cache)
+  ✗ hooks/__tests__/use-setlist-data.test.tsx:162 importa lib/offline-setlist-cache.ts  (@/lib/offline-setlist-cache)
+  ✗ hooks/__tests__/use-setlist-data.test.tsx:163 importa lib/offline-cache.ts  (@/lib/offline-cache)
+  ✗ hooks/use-content-actions.ts:7 importa lib/offline-cache.ts  (@/lib/offline-cache)
+  ✗ hooks/use-library-data.ts:5 importa lib/offline-cache.ts  (@/lib/offline-cache)
+  ✗ hooks/use-setlist-data.ts:7 importa lib/offline-setlist-cache.ts  (@/lib/offline-setlist-cache)
+  ✗ hooks/use-setlist-data.ts:8 importa lib/offline-cache.ts  (@/lib/offline-cache)
+  ✗ lib/content-service.ts:5 importa lib/offline-queue.ts  (@/lib/offline-queue)
+  ✗ tests/components/content-viewer.refactoring.test.tsx:11 importa hooks/useContentFile.ts  (@/hooks/useContentFile)
+  ✗ tests/components/content-viewer.refactoring.test.tsx:17 importa hooks/useContentFile.ts  (@/hooks/useContentFile)
+  ✗ tests/gates/g-rotas-protegidas.test.ts:53 importa app/settings/page.tsx  (@/app/settings/page)
+  ✗ tests/gates/g-rotas-protegidas.test.ts:55 importa app/profile/page.tsx  (@/app/profile/page)
+  ✗ tests/gates/g-rotas-protegidas.test.ts:63 importa app/performance/page.tsx  (@/app/performance/page)
+  ✗ tests/gates/i1-visualizador.test.tsx:30 importa lib/offline-cache.ts  (@/lib/offline-cache)
+## 3. SIMBOLO — símbolo morto dentro de arquivo que fica
+  ✗ [palco] lib/content-service-server.ts:91 casa /getSetlistByIdServer/
+  ✗ [palco] lib/protected-routes.ts:44 casa /["']/performance["']/
+  ✗ [palco] lib/security-headers.ts:255 casa /includes\(\s*['"]/performance['"]\s*\)/
+  ✗ [palco] lib/security-headers.ts:79 casa /'frame-src'\s*:\s*\[[^\]]*'blob:'/
+  ✗ [palco] types/performance.ts:30 casa /interface\s+(PerformanceModeProps|SongData|PerformanceControlsState|ContentCacheState|ContentRenderInfo|NavigationState|PerformanceMetrics)/
+  ✗ [paginas] lib/protected-routes.ts:17 casa /["']/(settings|profile)["']/
+## 4. TEXTO — referência a rota/arquivo morto
+  ✗ [palco] /onEnterPerformance|handleEnterPerformance|handleStartPerformance/  components/content-page-client.tsx:45:  const handleEnterPerformance = () => {
+  ✗ [palco] /onEnterPerformance|handleEnterPerformance|handleStartPerformance/  components/content-page-client.tsx:82:            onEnterPerformance={handleEnterPerformance}
+  ✗ [palco] /onEnterPerformance|handleEnterPerformance|handleStartPerformance/  components/content-viewer.tsx:14:  onEnterPerformance: (content: any) => void
+  ✗ [palco] /onEnterPerformance|handleEnterPerformance|handleStartPerformance/  components/content-viewer.tsx:22:  onEnterPerformance,
+  ✗ [palco] /onEnterPerformance|handleEnterPerformance|handleStartPerformance/  components/content-viewer.tsx:70:        onEnterPerformance={onEnterPerformance}
+  ✗ [palco] /onEnterPerformance|handleEnterPerformance|handleStartPerformance/  components/content-viewer/ContentHeader.tsx:16:  onEnterPerformance: (content: any) => void
+  ✗ [palco] /onEnterPerformance|handleEnterPerformance|handleStartPerformance/  components/content-viewer/ContentHeader.tsx:45:  onEnterPerformance,
+  ✗ [palco] /onEnterPerformance|handleEnterPerformance|handleStartPerformance/  components/content-viewer/ContentHeader.tsx:95:            onClick={() => onEnterPerformance(content)}
+  ✗ [palco] /onEnterPerformance|handleEnterPerformance|handleStartPerformance/  components/dashboard-page-client.tsx:33:  const handleEnterPerformance = () => {
+  ✗ [palco] /onEnterPerformance|handleEnterPerformance|handleStartPerformance/  components/dashboard-page-client.tsx:42:        onEnterPerformance={handleEnterPerformance}
+  ✗ [palco] /onEnterPerformance|handleEnterPerformance|handleStartPerformance/  components/dashboard.tsx:37:  onEnterPerformance: () => void;
+  ✗ [palco] /onEnterPerformance|handleEnterPerformance|handleStartPerformance/  components/dashboard.tsx:46:  onEnterPerformance,
+  ✗ [palco] /onEnterPerformance|handleEnterPerformance|handleStartPerformance/  components/setlist-manager.tsx:34:  onEnterPerformance: (setlist: SetlistWithSongs, startingSongIndex?: number) => void
+  ✗ [palco] /onEnterPerformance|handleEnterPerformance|handleStartPerformance/  components/setlist-manager.tsx:37:export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
+  ✗ [palco] /onEnterPerformance|handleEnterPerformance|handleStartPerformance/  components/setlist-manager.tsx:262:            onEnterPerformance={onEnterPerformance}
+  ✗ [palco] /onEnterPerformance|handleEnterPerformance|handleStartPerformance/  components/setlist-manager.tsx:273:              onEnterPerformance={(startingSongIndex) => 
+  ✗ [palco] /onEnterPerformance|handleEnterPerformance|handleStartPerformance/  components/setlist-manager.tsx:274:                onEnterPerformance(selectedSetlist, startingSongIndex)
+  ✗ [palco] /onEnterPerformance|handleEnterPerformance|handleStartPerformance/  components/setlist/setlist-card.tsx:36:  onEnterPerformance: (setlist: SetlistWithSongs, startingSongIndex?: number) => void
+  ✗ [palco] /onEnterPerformance|handleEnterPerformance|handleStartPerformance/  components/setlist/setlist-card.tsx:60:  onEnterPerformance,
+  ✗ [palco] /onEnterPerformance|handleEnterPerformance|handleStartPerformance/  components/setlist/setlist-card.tsx:189:                onEnterPerformance(setlist)
+  ✗ [palco] /onEnterPerformance|handleEnterPerformance|handleStartPerformance/  components/setlist/setlist-details.tsx:35:  onEnterPerformance: (startingSongIndex?: number) => void
+  ✗ [palco] /onEnterPerformance|handleEnterPerformance|handleStartPerformance/  components/setlist/setlist-details.tsx:76:  onEnterPerformance,
+  ✗ [palco] /onEnterPerformance|handleEnterPerformance|handleStartPerformance/  components/setlist/setlist-details.tsx:168:              onClick={() => onEnterPerformance()}
+  ✗ [palco] /onEnterPerformance|handleEnterPerformance|handleStartPerformance/  components/setlist/setlist-details.tsx:278:                              onClick={() => onEnterPerformance(index)}
+  ✗ [palco] /onEnterPerformance|handleEnterPerformance|handleStartPerformance/  components/setlist/setlist-list.tsx:26:  onEnterPerformance: (setlist: SetlistWithSongs, startingSongIndex?: number) => void
+  ✗ [palco] /onEnterPerformance|handleEnterPerformance|handleStartPerformance/  components/setlist/setlist-list.tsx:40:  onEnterPerformance,
+  ✗ [palco] /onEnterPerformance|handleEnterPerformance|handleStartPerformance/  components/setlist/setlist-list.tsx:127:            onEnterPerformance={onEnterPerformance}
+  ✗ [palco] /onEnterPerformance|handleEnterPerformance|handleStartPerformance/  components/setlists-page-client.tsx:41:  const handleStartPerformance = (setlist: any, startingSongIndex?: number) => {
+  ✗ [palco] /onEnterPerformance|handleEnterPerformance|handleStartPerformance/  components/setlists-page-client.tsx:65:      <SetlistManager onEnterPerformance={handleStartPerformance} />
+  ✗ [palco] /["'`]/performance/  components/content-page-client.tsx:47:    router.push(`/performance?contentId=${content.id}`);
+  ✗ [palco] /["'`]/performance/  components/dashboard-page-client.tsx:34:    router.push("/performance");
+  ✗ [palco] /["'`]/performance/  components/setlists-page-client.tsx:42:    const url = `/performance?setlistId=${setlist.id}${startingSongIndex !== undefined ? `&startingSongIndex=${startingSongIndex}` : ''}`
+  ✗ [palco] /["'`]/performance/  lib/protected-routes.ts:44:  "/performance",
+  ✗ [palco] /["'`]/performance/  lib/security-headers.ts:255:        request.nextUrl.pathname.includes('/performance')) {
+  ✗ [pwa] /build-sw/  knip.json:6:    "scripts/build-sw.js",
+  ✗ [pwa] /build-sw/  package.json:8:    "build": "pnpm exec next build && node scripts/build-sw.js",
+  ✗ [pwa] /build-sw/  package.json:9:    "build:sw": "node scripts/build-sw.js",
+  ✗ [pwa] /manifest\.json|["']/sw\.js["']|["']/offline["']/  app/layout.tsx:18:  manifest: "/manifest.json",
+  ✗ [pwa] /\(\?!proxy\)/  next.config.mjs:16:        source: '/api/:path((?!proxy).*)',
+  ✗ [paginas] /href=["']/profile["']/  components/user-header.tsx:68:          <Link href="/profile" className="cursor-pointer flex items-center">
+
+G-palco: REPROVA — 141 ocorrência(s)
+# exit 1

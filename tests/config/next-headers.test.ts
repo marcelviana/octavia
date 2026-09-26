@@ -3,22 +3,35 @@ import nextConfig from '../../next.config.mjs'
 
 /**
  * B7-PR3 — inventário de headers do next.config.mjs (docs/ux/B7-PRECHECK.md
- * H-C1, decisão B7-D3): toda resposta de /api/* EXCETO /api/proxy sai com
- * `Cache-Control: private, no-store`. O proxy fica de fora por decisão
- * (repassa o Cache-Control do upstream — é stream de arquivo do palco).
+ * H-C1, decisão B7-D3): toda resposta de /api/* sai com
+ * `Cache-Control: private, no-store`. Até a I1-PR3 o /api/proxy ficava de
+ * fora; a rota morreu com o PWA (I1-D18) e a exclusão saiu (aval 1 da PR-3).
  *
  * Por que aqui e não no middleware: o matcher do middleware exclui /api,
- * então o no-store de lib/security-headers.ts:256 nunca chega às rotas
+ * então o no-store de lib/security-headers.ts nunca chega às rotas
  * (medido no pre-check). headers() do Next é o ponto único.
  *
- * Commit 1 = it.fails contra o config presente (sem headers()); commit 2 = it.
+ * I1-PR3 (I1-D22): os três redirects da URL antiga do palco.
  */
 
-const SOURCE = '/api/:path((?!proxy).*)'
+const SOURCE = '/api/:path*'
 
-async function headerRules(): Promise<Array<{ source: string; headers: Array<{ key: string; value: string }> }>> {
-  const cfg = nextConfig as { headers?: () => Promise<Array<{ source: string; headers: Array<{ key: string; value: string }> }>> }
+type Regra = { source: string; headers: Array<{ key: string; value: string }> }
+type Redirect = {
+  source: string
+  destination: string
+  permanent: boolean
+  has?: Array<{ type: string; key: string; value?: string }>
+}
+
+async function headerRules(): Promise<Regra[]> {
+  const cfg = nextConfig as { headers?: () => Promise<Regra[]> }
   return typeof cfg.headers === 'function' ? await cfg.headers() : []
+}
+
+async function redirectRules(): Promise<Redirect[]> {
+  const cfg = nextConfig as { redirects?: () => Promise<Redirect[]> }
+  return typeof cfg.redirects === 'function' ? await cfg.redirects() : []
 }
 
 describe('next.config.mjs headers() — B7-PR3', () => {
@@ -29,10 +42,26 @@ describe('next.config.mjs headers() — B7-PR3', () => {
     expect(rule!.headers).toContainEqual({ key: 'Cache-Control', value: 'private, no-store' })
   })
 
-  it('nenhuma regra de headers cobre /api/proxy (exclusão por decisão B7-D3)', async () => {
+  it('nenhuma regra ainda exclui o /api/proxy (a rota não existe)', async () => {
     const rules = await headerRules()
-    expect(rules.length).toBeGreaterThan(0)
-    // Só a regra do /api/* é esperada; nenhuma com source que case o proxy literalmente.
-    expect(rules.some((r) => r.source === '/api/:path*' || r.source === '/api/proxy')).toBe(false)
+    expect(rules.some((r) => r.source.includes('proxy'))).toBe(false)
+  })
+})
+
+describe('next.config.mjs redirects() — I1-D22', () => {
+  it('são exatamente três, todos de /performance, permanentes (308), nesta ordem', async () => {
+    const rules = await redirectRules()
+    expect(rules.map((r) => [r.source, r.destination, r.permanent])).toEqual([
+      ['/performance', '/content/:contentId', true],
+      ['/performance', '/setlists', true],
+      ['/performance', '/dashboard', true],
+    ])
+  })
+
+  it('?contentId= leva ao visualizador do content; ?setlistId= às setlists; sem parâmetro, ao dashboard', async () => {
+    const [porContent, porSetlist, semParam] = await redirectRules()
+    expect(porContent!.has).toEqual([{ type: 'query', key: 'contentId', value: '(?<contentId>[^/&]+)' }])
+    expect(porSetlist!.has).toEqual([{ type: 'query', key: 'setlistId' }])
+    expect(semParam!.has).toBeUndefined()
   })
 })

@@ -38,11 +38,6 @@ export default function SetlistsPageClient() {
     router.push(`/setlist/${setlist.id}`)
   }
 
-  const handleStartPerformance = (setlist: any, startingSongIndex?: number) => {
-    const url = `/performance?setlistId=${setlist.id}${startingSongIndex !== undefined ? `&startingSongIndex=${startingSongIndex}` : ''}`
-    router.push(url)
-  }
-
   // Don't render anything while loading
   if (isLoading) {
     return (
@@ -62,7 +57,7 @@ export default function SetlistsPageClient() {
 
   return (
     <ResponsiveLayout activeScreen={activeScreen} onNavigate={handleNavigate}>
-      <SetlistManager onEnterPerformance={handleStartPerformance} />
+      <SetlistManager />
     </ResponsiveLayout>
   )
 }

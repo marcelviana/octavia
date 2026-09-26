@@ -10,10 +10,6 @@ interface ContentDisplayProps {
   content: any
   zoom: number
   currentPage: number
-  offlineUrl: string | null
-  offlineMimeType: string | null
-  isLoadingUrl: boolean
-  urlError: string | null
 }
 
 const getOrdinalSuffix = (num: number) => {
@@ -29,10 +25,6 @@ export function ContentDisplay({
   content,
   zoom,
   currentPage,
-  offlineUrl,
-  offlineMimeType,
-  isLoadingUrl,
-  urlError
 }: ContentDisplayProps) {
   const contentType = normalizeContentType(content.content_type)
 
@@ -49,13 +41,7 @@ export function ContentDisplay({
           >
             <div className="space-y-6">
               {contentType === ContentType.SHEET && (
-                <SheetMusicDisplay
-                  content={content}
-                  offlineUrl={offlineUrl}
-                  offlineMimeType={offlineMimeType}
-                  isLoadingUrl={isLoadingUrl}
-                  urlError={urlError}
-                />
+                <SheetMusicDisplay content={content} />
               )}
 
               {contentType === ContentType.TAB && (

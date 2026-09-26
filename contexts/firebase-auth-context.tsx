@@ -15,8 +15,6 @@ import {
   sendEmailVerification
 } from "firebase/auth"
 import { auth, isFirebaseConfigured } from "@/lib/firebase"
-import { clearOfflineContent } from "@/lib/offline-cache"
-import { clearOfflineSetlists } from "@/lib/offline-setlist-cache"
 import { setSessionCookie, clearSessionCookie, type FalhaSessao } from "@/lib/firebase-session-cookies"
 import { AvisoDeSessao } from "@/components/auth/aviso-de-sessao"
 import logger from "@/lib/logger"
@@ -418,22 +416,10 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
       logger.log("Signing out Firebase user")
       setIsLoading(true)
 
-      const uid = user?.uid
       await firebaseSignOut(auth)
 
       // Clear session cookie
       await clearSessionCookie()
-
-      try {
-        await Promise.all([
-          clearOfflineContent(uid),
-          clearOfflineSetlists(uid),
-          clearOfflineContent('anon'),
-          clearOfflineSetlists('anon'),
-        ])
-      } catch (err) {
-        logger.warn("Failed to clear offline data:", err)
-      }
 
       logger.log("Firebase sign out successful")
       if (redirectToHome) {

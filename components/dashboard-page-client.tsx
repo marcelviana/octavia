@@ -30,16 +30,11 @@ export default function DashboardPageClient({
     router.push(`/content/${content.id}`);
   };
 
-  const handleEnterPerformance = () => {
-    router.push("/performance");
-  };
-
   return (
     <ResponsiveLayout activeScreen={activeScreen} onNavigate={handleNavigate}>
       <Dashboard
         onNavigate={handleNavigate}
         onSelectContent={handleSelectContent}
-        onEnterPerformance={handleEnterPerformance}
         recentContent={recentContent}
         favoriteContent={favoriteContent}
         stats={stats}

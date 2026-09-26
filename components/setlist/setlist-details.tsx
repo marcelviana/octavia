@@ -3,7 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import {
-  Play,
   Plus,
   GripVertical,
   Edit,
@@ -32,7 +31,6 @@ interface SetlistDetailsProps {
   setlist: SetlistWithSongs
   onAddSongs: () => void
   onEditSetlist: () => void
-  onEnterPerformance: (startingSongIndex?: number) => void
   onRemoveSong: (contentId: string) => void // Content ID, not setlist_songs ID
   onReorderSongs: (songId: string, newPosition: number) => void
   className?: string
@@ -73,7 +71,6 @@ export const SetlistDetails = memo(function SetlistDetails({
   setlist,
   onAddSongs,
   onEditSetlist,
-  onEnterPerformance,
   onRemoveSong,
   onReorderSongs,
   className,
@@ -162,15 +159,6 @@ export const SetlistDetails = memo(function SetlistDetails({
             >
               <Edit className="w-4 h-4 mr-1" />
               Edit
-            </Button>
-            <Button
-              size="sm"
-              onClick={() => onEnterPerformance()}
-              className="bg-[#2E7CE4] hover:bg-[#1E5BB8] text-white"
-              disabled={songs.length === 0}
-            >
-              <Play className="w-4 h-4 mr-1" />
-              Start Performance
             </Button>
           </div>
         </div>
@@ -269,17 +257,6 @@ export const SetlistDetails = memo(function SetlistDetails({
                             >
                               {contentTypeInfo.label}
                             </Badge>
-                            
-                            {/* Quick Performance Button */}
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-7 w-7 opacity-0 group-hover:opacity-100 transition-opacity text-[#6B7280] hover:text-[#2E7CE4] hover:bg-[#2E7CE4]/10"
-                              onClick={() => onEnterPerformance(index)}
-                              title="Start performance from this song"
-                            >
-                              <Play className="w-3.5 h-3.5" />
-                            </Button>
                             
                             {/* Remove Song Button */}
                             <Button

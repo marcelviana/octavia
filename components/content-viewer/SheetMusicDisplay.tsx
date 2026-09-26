@@ -6,82 +6,43 @@ import { isPdfFile, isImageFile } from "@/lib/utils"
 
 interface SheetMusicDisplayProps {
   content: any
-  offlineUrl: string | null
-  offlineMimeType: string | null
-  isLoadingUrl: boolean
-  urlError: string | null
 }
 
-export function SheetMusicDisplay({
-  content,
-  offlineUrl,
-  offlineMimeType,
-  isLoadingUrl,
-  urlError
-}: SheetMusicDisplayProps) {
+// I1-D36 (I1-PR3): o tipo do arquivo sai da extensão de content.file_url
+// (isPdfFile/isImageFile sem mimeType) — o cache offline que dava o blob: e
+// o mimeType morreu com o PWA. URL sem extensão cai em "Failed to load file".
+export function SheetMusicDisplay({ content }: SheetMusicDisplayProps) {
+  const url: string | null = content.file_url || null
+  const isPdf = url ? isPdfFile(url) : false
+  const isImage = url ? isImageFile(url) : false
+
   return (
     <div className="space-y-6">
       <h3 className="text-lg font-semibold">Sheet Music</h3>
 
-      {isLoadingUrl ? (
-        <div className="flex items-center justify-center h-40">
-          <span className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-400"></span>
-          <span className="ml-2 text-orange-500">Loading...</span>
-        </div>
-      ) : urlError ? (
-        <div className="text-center text-red-500 mt-4">
-          {urlError}
-        </div>
-      ) : offlineUrl || content.file_url ? (
+      {url ? (
         <div className="overflow-hidden bg-white/80 backdrop-blur-sm border border-orange-200 rounded-xl shadow">
-          {(() => {
-            const url = offlineUrl || content.file_url
-            if (!url) return null
-
-            const mimeType = offlineUrl ? (offlineMimeType || undefined) : undefined
-            const isPdf = isPdfFile(url, mimeType)
-            const isImage = isImageFile(url, mimeType)
-
-            if (isPdf) {
-              return (
-                <PdfViewer
-                  url={url}
-                  fullscreen
-                  className="w-full h-[calc(100vh-250px)]"
-                />
-              )
-            }
-            if (isImage) {
-              return (
-                <Image
-                  src={url}
-                  alt="Sheet music"
-                  width={800}
-                  height={600}
-                  className="w-full h-auto"
-                />
-              )
-            }
-            return null
-          })()}
-
-          {(() => {
-            const url = offlineUrl || content.file_url
-            if (!url) return null
-
-            const mimeType = offlineUrl ? (offlineMimeType || undefined) : undefined
-            const isPdf = isPdfFile(url, mimeType)
-            const isImage = isImageFile(url, mimeType)
-
-            if ((offlineUrl || content.file_url) && !isPdf && !isImage) {
-              return (
-                <div className="text-center text-red-500 mt-4">
-                  Failed to load file. Please check the file format or try again later.
-                </div>
-              )
-            }
-            return null
-          })()}
+          {isPdf && (
+            <PdfViewer
+              url={url}
+              fullscreen
+              className="w-full h-[calc(100vh-250px)]"
+            />
+          )}
+          {isImage && (
+            <Image
+              src={url}
+              alt="Sheet music"
+              width={800}
+              height={600}
+              className="w-full h-auto"
+            />
+          )}
+          {!isPdf && !isImage && (
+            <div className="text-center text-red-500 mt-4">
+              Failed to load file. Please check the file format or try again later.
+            </div>
+          )}
         </div>
       ) : content.content_data?.notation ? (
         <div className="p-6 bg-white/80 backdrop-blur-sm border border-orange-200 rounded-xl shadow">

@@ -70,10 +70,6 @@ const AUTH_CELLS: Cell[] = [
   },
   { route: 'setlists', state: 'empty', urlPath: '/setlists', authenticated: true },
   { route: 'add-content', state: 'initial', urlPath: '/add-content', authenticated: true },
-  { route: 'settings', state: 'default', urlPath: '/settings', authenticated: true },
-  { route: 'profile', state: 'default', urlPath: '/profile', authenticated: true },
-  { route: 'performance', state: 'empty', urlPath: '/performance', authenticated: true },
-  { route: 'setup', state: 'default', urlPath: '/setup', authenticated: true },
 ]
 
 interface ManifestEntry {

@@ -4,7 +4,6 @@ import { useCallback, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { deleteContent, toggleFavorite, clearContentCache } from '@/lib/content-service';
-import { removeCachedContent } from '@/lib/offline-cache';
 import { ContentItem, LibraryError } from '@/types/library';
 import { useFirebaseAuth } from '@/contexts/firebase-auth-context';
 
@@ -52,13 +51,6 @@ export function useContentActions(
 
     try {
       await deleteContent(content.id);
-      
-      // Clean up cached content
-      try {
-        await removeCachedContent(content.id);
-      } catch (err) {
-        console.error('Failed to remove cached content', err);
-      }
 
       // Clear the content cache to ensure fresh data on reload
       clearContentCache();

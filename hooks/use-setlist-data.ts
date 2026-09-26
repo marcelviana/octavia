@@ -4,8 +4,6 @@ import type React from "react"
 import { useState, useEffect, useRef, useCallback } from "react"
 import { getUserSetlists } from "@/lib/setlist-service"
 import { getUserContentPage } from "@/lib/content-service"
-import { replaceSetlists, getCachedSetlists } from "@/lib/offline-setlist-cache"
-import { saveContent, getCachedContent } from "@/lib/offline-cache"
 import type { Database } from "@/types/database.types"
 
 export type Setlist = Database["public"]["Tables"]["setlists"]["Row"]
@@ -42,43 +40,16 @@ export function useSetlistData(user: any | null, ready: boolean): UseSetlistData
       return
     }
     inProgressRef.current = true
-    
-    // Visível fora do try: decide o tratamento de falha de rede abaixo
-    let hasCachedSets = false
 
     try {
       setLoading(true)
       setError(null)
 
-      // 1. Cache-first: hidrata do IndexedDB antes de qualquer rede. Offline
-      // (ou com rede caída), a tela lista o último estado conhecido —
-      // staleness é aceitável e preferível ao estado vazio de primeiro uso.
-      try {
-        const [cachedSets, cachedContent] = await Promise.all([
-          getCachedSetlists(),
-          getCachedContent(),
-        ])
-        if (cachedSets.length > 0) {
-          hasCachedSets = true
-          setSetlists(cachedSets as SetlistWithSongs[])
-          setLoading(false) // lista imediatamente; a rede revalida por trás
-        }
-        if (cachedContent.length > 0) {
-          setAvailableContent(cachedContent)
-        }
-      } catch (cacheErr) {
-        console.warn("useSetlistData: Failed to hydrate from cache:", cacheErr)
-      }
-
-      // 2. Sem rede declarada, fica no cache. Atalho, não porta: rede caída
-      // com navigator.onLine === true segue para o fetch e cai no rejected
-      // abaixo (o caso real de palco — wi-fi conectado sem internet)
+      // 1. Sem rede declarada: estado de erro, nunca o empty state de
+      // primeiro uso. (O cache offline que hidratava a lista antes da rede
+      // morreu com o PWA na I1-PR3 — o web é só online.)
       if (typeof navigator !== "undefined" && !navigator.onLine) {
-        if (!hasCachedSets) {
-          // Offline sem cache: mesmo estado de erro do rejected sem cache —
-          // nunca o empty state de primeiro uso
-          setError("Couldn't load setlists. Check your connection and try again.")
-        }
+        setError("Couldn't load setlists. Check your connection and try again.")
         return
       }
 
@@ -90,7 +61,7 @@ export function useSetlistData(user: any | null, ready: boolean): UseSetlistData
         return
       }
 
-      // 3. Revalidação pela rede
+      // 2. Rede
       const [setsResult, contentResult] = await Promise.allSettled([
         getUserSetlists(userForQuery),
         getUserContentPage({
@@ -106,41 +77,22 @@ export function useSetlistData(user: any | null, ready: boolean): UseSetlistData
       if (setsResult.status === "fulfilled") {
         const setsData = setsResult.value as SetlistWithSongs[]
         setSetlists(setsData)
-        // A resposta do servidor é a verdade: substitui o cache (sem merge,
-        // senão setlists deletadas em outro dispositivo ressuscitariam)
-        try {
-          await replaceSetlists(setsData as any[])
-        } catch (cacheErr) {
-          console.warn("useSetlistData: Failed to cache setlists:", cacheErr)
-        }
       } else {
         console.error("useSetlistData: Sets loading failed:", setsResult.reason)
-        // Falha de rede nunca vira lista vazia: com cache na tela, mantém;
-        // sem cache, estado de erro — nunca o empty state de primeiro uso
-        if (!hasCachedSets) {
-          setError("Couldn't load setlists. Check your connection and try again.")
-        }
+        // Falha de rede nunca vira lista vazia: estado de erro — nunca o
+        // empty state de primeiro uso
+        setError("Couldn't load setlists. Check your connection and try again.")
       }
 
       if (contentResult.status === "fulfilled") {
         const contentData = contentResult.value.data || []
         setAvailableContent(contentData)
-        try {
-          if (contentData.length > 0) {
-            await saveContent(contentData)
-          }
-        } catch (cacheErr) {
-          console.warn("useSetlistData: Failed to cache content:", cacheErr)
-        }
       } else {
-        // Estado já hidratado do cache no passo 1; só registra
         console.error("useSetlistData: Content loading failed:", contentResult.reason)
       }
     } catch (err: any) {
       console.error("useSetlistData: Error:", err)
-      if (!hasCachedSets) {
-        setError(err?.message ?? "Failed to load data")
-      }
+      setError(err?.message ?? "Failed to load data")
     } finally {
       inProgressRef.current = false
       setLoading(false)

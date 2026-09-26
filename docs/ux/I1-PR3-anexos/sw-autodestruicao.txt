@@ -1,0 +1,285 @@
+# I1-PR3 — aceite B: o worker de auto-destruição (div. 560). Saída verbatim das três rodadas.
+# Script: docs/ux/I1-PR3-anexos/aceite/sw-autodestruicao.mjs (Chrome do sistema, channel 'chrome', headless; perfis persistentes no scratchpad, fora da árvore).
+# Servidores: `next dev -p 3000` — NÃO `pnpm build && pnpm start`: em produção o middleware
+#   redireciona todo http:// para https:// (middleware.ts:23-25) e o localhost responde 200 com corpo
+#   vazio a toda página (medido: '/', '/login', '/privacy-policy' → 200 0B; '/api/health' → 200 15B). Div. 570.
+#   O registro do SW não depende do modo: hooks/use-service-worker.tsx:19-22 o liga também em development.
+# main = ../octavia-i1-pr3-main @ 089f72c · branch = ../octavia-i1-pr3 @ c88353f (+ o script, não commitado ainda)
+# Nenhum login, nenhum .env*, nenhum request fora de localhost:3000. Semeadura declarada no cabeçalho do script.
+
+================================================================================
+## RODADA 1 — main, perfil B (o que a rodada 2 vai verificar)
+# $ node docs/ux/I1-PR3-anexos/aceite/sw-autodestruicao.mjs semear <scratchpad>/perfil-B
+[   773 ms] documento {"rotulo":"semear","url":"/","status":200,"fromServiceWorker":false,"corpoTemLinkDoManifest":true,"bytes":118430}
+[  1870 ms] navigator.serviceWorker.ready → ready
+[  2023 ms] documento {"rotulo":"semear","url":"/","status":200,"fromServiceWorker":true,"corpoTemLinkDoManifest":true,"bytes":118430}
+[  5242 ms] ANTES da semeadura: {
+  "url": "http://localhost:3000/",
+  "controller": "http://localhost:3000/sw.js",
+  "registrations": [
+    {
+      "scope": "http://localhost:3000/",
+      "active": "http://localhost:3000/sw.js",
+      "activeState": "activated",
+      "waiting": null,
+      "installing": null
+    }
+  ],
+  "caches": [
+    "octavia-v1",
+    "octavia-static-v1"
+  ],
+  "indexedDB": [
+    "localforage"
+  ],
+  "domTemLinkDoManifest": true,
+  "cacheDeBarra": {
+    "bytes": 118430,
+    "temLinkDoManifest": true
+  }
+}
+[  5251 ms] SEMEADOS (declarado no cabeçalho): ["octavia-performance-cache","firebaseLocalStorageDb"]
+[  5256 ms] ESTADO FINAL (main): {
+  "url": "http://localhost:3000/",
+  "controller": "http://localhost:3000/sw.js",
+  "registrations": [
+    {
+      "scope": "http://localhost:3000/",
+      "active": "http://localhost:3000/sw.js",
+      "activeState": "activated",
+      "waiting": null,
+      "installing": null
+    }
+  ],
+  "caches": [
+    "octavia-v1",
+    "octavia-static-v1"
+  ],
+  "indexedDB": [
+    "firebaseLocalStorageDb",
+    "localforage",
+    "octavia-performance-cache"
+  ],
+  "domTemLinkDoManifest": true,
+  "cacheDeBarra": {
+    "bytes": 118430,
+    "temLinkDoManifest": true
+  }
+}
+
+================================================================================
+## RODADA 2 — branch COM o worker de auto-destruição, perfil B
+# $ curl -s -o /dev/null -w 'GET /sw.js → %{http_code} %{size_download}B' http://localhost:3000/sw.js
+GET /sw.js → 200 1482B
+# $ node docs/ux/I1-PR3-anexos/aceite/sw-autodestruicao.mjs verificar <scratchpad>/perfil-B
+[  1008 ms] documento {"rotulo":"carga-1","url":"/","status":200,"fromServiceWorker":true,"corpoTemLinkDoManifest":false,"bytes":117770}
+[  1427 ms] CARGA 1 — ao abrir o perfil na branch: {
+  "url": "http://localhost:3000/",
+  "controller": "http://localhost:3000/sw.js",
+  "registrations": [
+    {
+      "scope": "http://localhost:3000/",
+      "active": "http://localhost:3000/sw.js",
+      "activeState": "activated",
+      "waiting": null,
+      "installing": null
+    }
+  ],
+  "caches": [
+    "octavia-v1",
+    "octavia-static-v1"
+  ],
+  "indexedDB": [
+    "firebaseLocalStorageDb",
+    "localforage",
+    "octavia-performance-cache"
+  ],
+  "domTemLinkDoManifest": false,
+  "cacheDeBarra": {
+    "bytes": 118430,
+    "temLinkDoManifest": true
+  }
+}
+[  2832 ms] registration.update() → update() resolvido
+[  3984 ms] documento {"rotulo":"carga-1","url":"/","status":200,"fromServiceWorker":false,"corpoTemLinkDoManifest":false,"bytes":117770}
+[  4353 ms] ESTADO depois da espera (trocou): {
+  "url": "http://localhost:3000/",
+  "controller": null,
+  "registrations": [],
+  "caches": [],
+  "indexedDB": [
+    "firebaseLocalStorageDb"
+  ],
+  "domTemLinkDoManifest": false,
+  "cacheDeBarra": null
+}
+[  4439 ms] documento {"rotulo":"carga-2","url":"/","status":200,"fromServiceWorker":false,"corpoTemLinkDoManifest":false,"bytes":117770}
+[  6167 ms] CARGA 2 — segunda carga de `/`: {
+  "url": "http://localhost:3000/",
+  "controller": null,
+  "registrations": [],
+  "caches": [],
+  "indexedDB": [
+    "firebaseLocalStorageDb"
+  ],
+  "domTemLinkDoManifest": false,
+  "cacheDeBarra": null
+}
+[  6167 ms] VEREDITO DA CARGA 2: {"documentoVeioDoServiceWorker":false,"corpoTemLinkDoManifest":false,"leitura":"HTML da rede, da branch (sem <link rel=\"manifest\">)"}
+
+================================================================================
+## RODADA 3 (CONTROLE) — main, perfil C (semeadura idêntica à do B)
+# $ node docs/ux/I1-PR3-anexos/aceite/sw-autodestruicao.mjs semear <scratchpad>/perfil-C
+[   646 ms] documento {"rotulo":"semear","url":"/","status":200,"fromServiceWorker":false,"corpoTemLinkDoManifest":true,"bytes":118430}
+[  1069 ms] navigator.serviceWorker.ready → ready
+[  1137 ms] documento {"rotulo":"semear","url":"/","status":200,"fromServiceWorker":true,"corpoTemLinkDoManifest":true,"bytes":118430}
+[  4360 ms] ANTES da semeadura: {
+  "url": "http://localhost:3000/",
+  "controller": "http://localhost:3000/sw.js",
+  "registrations": [
+    {
+      "scope": "http://localhost:3000/",
+      "active": "http://localhost:3000/sw.js",
+      "activeState": "activated",
+      "waiting": null,
+      "installing": null
+    }
+  ],
+  "caches": [
+    "octavia-v1",
+    "octavia-static-v1"
+  ],
+  "indexedDB": [
+    "localforage"
+  ],
+  "domTemLinkDoManifest": true,
+  "cacheDeBarra": {
+    "bytes": 118430,
+    "temLinkDoManifest": true
+  }
+}
+[  4370 ms] SEMEADOS (declarado no cabeçalho): ["octavia-performance-cache","firebaseLocalStorageDb"]
+[  4374 ms] ESTADO FINAL (main): {
+  "url": "http://localhost:3000/",
+  "controller": "http://localhost:3000/sw.js",
+  "registrations": [
+    {
+      "scope": "http://localhost:3000/",
+      "active": "http://localhost:3000/sw.js",
+      "activeState": "activated",
+      "waiting": null,
+      "installing": null
+    }
+  ],
+  "caches": [
+    "octavia-v1",
+    "octavia-static-v1"
+  ],
+  "indexedDB": [
+    "firebaseLocalStorageDb",
+    "localforage",
+    "octavia-performance-cache"
+  ],
+  "domTemLinkDoManifest": true,
+  "cacheDeBarra": {
+    "bytes": 118430,
+    "temLinkDoManifest": true
+  }
+}
+
+## RODADA 3 (CONTROLE) — branch com public/sw.js AUSENTE (mv para o scratchpad só nesta rodada), perfil C
+# $ curl -s -o /dev/null -w 'GET /sw.js → %{http_code}' http://localhost:3000/sw.js
+GET /sw.js → 404
+# $ node docs/ux/I1-PR3-anexos/aceite/sw-autodestruicao.mjs verificar <scratchpad>/perfil-C
+[  1024 ms] documento {"rotulo":"carga-1","url":"/","status":200,"fromServiceWorker":true,"corpoTemLinkDoManifest":false,"bytes":117770}
+[  1430 ms] CARGA 1 — ao abrir o perfil na branch: {
+  "url": "http://localhost:3000/",
+  "controller": "http://localhost:3000/sw.js",
+  "registrations": [
+    {
+      "scope": "http://localhost:3000/",
+      "active": "http://localhost:3000/sw.js",
+      "activeState": "activated",
+      "waiting": null,
+      "installing": null
+    }
+  ],
+  "caches": [
+    "octavia-v1",
+    "octavia-static-v1"
+  ],
+  "indexedDB": [
+    "firebaseLocalStorageDb",
+    "localforage",
+    "octavia-performance-cache"
+  ],
+  "domTemLinkDoManifest": false,
+  "cacheDeBarra": {
+    "bytes": 118430,
+    "temLinkDoManifest": true
+  }
+}
+[  3022 ms] registration.update() → update() rejeitado: Failed to update a ServiceWorker for scope ('http://localhost:3000/') with script ('http://localhost:3000/sw.js'): A bad HTTP response code (404) was received when fetching the script.
+[ 33508 ms] ESTADO depois da espera (NÃO trocou em 30 s): {
+  "url": "http://localhost:3000/",
+  "controller": "http://localhost:3000/sw.js",
+  "registrations": [
+    {
+      "scope": "http://localhost:3000/",
+      "active": "http://localhost:3000/sw.js",
+      "activeState": "activated",
+      "waiting": null,
+      "installing": null
+    }
+  ],
+  "caches": [
+    "octavia-v1",
+    "octavia-static-v1"
+  ],
+  "indexedDB": [
+    "firebaseLocalStorageDb",
+    "localforage",
+    "octavia-performance-cache"
+  ],
+  "domTemLinkDoManifest": false,
+  "cacheDeBarra": {
+    "bytes": 118430,
+    "temLinkDoManifest": true
+  }
+}
+[ 33684 ms] documento {"rotulo":"carga-2","url":"/","status":200,"fromServiceWorker":true,"corpoTemLinkDoManifest":false,"bytes":117770}
+[ 35416 ms] CARGA 2 — segunda carga de `/`: {
+  "url": "http://localhost:3000/",
+  "controller": "http://localhost:3000/sw.js",
+  "registrations": [
+    {
+      "scope": "http://localhost:3000/",
+      "active": "http://localhost:3000/sw.js",
+      "activeState": "activated",
+      "waiting": null,
+      "installing": null
+    }
+  ],
+  "caches": [
+    "octavia-v1",
+    "octavia-static-v1"
+  ],
+  "indexedDB": [
+    "firebaseLocalStorageDb",
+    "localforage",
+    "octavia-performance-cache"
+  ],
+  "domTemLinkDoManifest": false,
+  "cacheDeBarra": {
+    "bytes": 118430,
+    "temLinkDoManifest": true
+  }
+}
+[ 35416 ms] VEREDITO DA CARGA 2: {"documentoVeioDoServiceWorker":true,"corpoTemLinkDoManifest":false,"leitura":"HTML servido pelo worker antigo (cache)"}
+# restauração: mv de volta; `git diff --quiet HEAD -- public/sw.js` → idêntico ao HEAD; `git status --short` sem public/
+
+================================================================================
+## RASTRO — primeira passada (script com o marcador no DOM, trocado por o do corpo da resposta):
+# a rodada 3 dessa passada mostrou documento vindo do SW com o DOM já sem <link rel="manifest"> —
+# o DOM não diz de onde o HTML veio. Script corrigido e as três rodadas refeitas com perfis novos (acima).
+# a 1ª tentativa de rodada 1 contra `next start` (produção) está na div. 570: ready → 'timeout 30s', 0 registros.

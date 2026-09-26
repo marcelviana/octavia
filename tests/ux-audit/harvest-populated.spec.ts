@@ -22,9 +22,8 @@ import { interceptSessionEndpoint } from './session-intercept'
  *
  * Somente leitura contra prod. As interações além de goto são leitura de
  * UI: scroll, clique em card/aba/página de PDF, abrir dropdown de filtro,
- * abrir diálogo de edição (SEM salvar), toggles visuais do performance
- * mode (dark sheet/zoom — estado client-side, nenhum request de escrita).
- * Nenhum drag-and-drop, nenhum submit.
+ * abrir diálogo de edição (SEM salvar). (As células do palco — dark sheet,
+ * zoom — saíram com o palco na I1-PR3.) Nenhum drag-and-drop, nenhum submit.
  */
 
 const CAPTURE_DIR = 'docs/ux/capture/populated'
@@ -94,9 +93,8 @@ async function waitForPdfCanvas(page: Page): Promise<void> {
 }
 
 /**
- * Evidência de renderização de PDF: o achado do desktop (B2) é que o
- * canvas do react-pdf nunca aparece em /performance (área em branco),
- * embora o MESMO arquivo renderize em segundos em /content/[id].
+ * Evidência de renderização de PDF (canvas do react-pdf). O achado do B2
+ * (canvas nunca aparece no palco) saiu com o palco na I1-PR3.
  */
 async function inspectPdfRendered(page: Page): Promise<string | null> {
   const canvases = await page.locator('canvas').count()
@@ -121,10 +119,6 @@ async function scrollLibraryListToBottom(page: Page): Promise<void> {
 async function openSetlistDetail(page: Page, name: string): Promise<void> {
   await page.getByText(name, { exact: true }).first().click()
   await settle(page, 1500)
-}
-
-function performancePath(setlistId: string, index: number): string {
-  return `/performance?setlistId=${setlistId}&startingSongIndex=${index}`
 }
 
 /**
@@ -386,83 +380,6 @@ const CELLS: Cell[] = [
       await settle(page, 1200)
     },
   },
-
-  // ---- performance ---------------------------------------------------------------
-  {
-    route: 'performance',
-    state: 'setlist-show-primeira-musica',
-    urlPath: performancePath(setlists.show.id, 0),
-    setlist_id: setlists.show.id,
-    note:
-      'Entrada via setlist Show padrão, 1ª música (que é o PDF de 12 páginas — ' +
-      'também cobre "música com PDF" via setlist)',
-    prepare: waitForPdfCanvas,
-    inspect: inspectPdfRendered,
-  },
-  {
-    route: 'performance',
-    state: 'setlist-show-cifra',
-    urlPath: performancePath(setlists.show.id, indices.show_chords_index),
-    setlist_id: setlists.show.id,
-    note: `Música com cifra (índice ${indices.show_chords_index} da Show padrão)`,
-  },
-  {
-    route: 'performance',
-    state: 'pdf-12paginas-avulso',
-    urlPath: `/performance?contentId=${content.pdf12.id}`,
-    content_id: content.pdf12.id,
-    note: 'PDF de 12 páginas via ?contentId= (caminho de conteúdo avulso)',
-    prepare: waitForPdfCanvas,
-    inspect: inspectPdfRendered,
-  },
-  {
-    route: 'performance',
-    state: 'controles-apos-10s-idle',
-    urlPath: performancePath(setlists.show.id, indices.show_chords_index),
-    setlist_id: setlists.show.id,
-    fullPage: false,
-    note:
-      'Controles visíveis vs. ocultos: NÃO existe auto-hide implementado (showControls ' +
-      'nunca vira false; handleMouseMove órfão) — captura após 10s sem interação como evidência',
-    prepare: async (page) => {
-      await page.waitForTimeout(10_000)
-    },
-  },
-  {
-    route: 'performance',
-    state: 'dark-sheet',
-    urlPath: performancePath(setlists.show.id, indices.show_chords_index),
-    setlist_id: setlists.show.id,
-    note: 'Dark sheet ativo (toggle client-side, sem escrita)',
-    prepare: async (page) => {
-      await settle(page, 1500)
-      await page.locator('[data-testid="dark-mode-toggle"]').click()
-      await settle(page, 800)
-    },
-  },
-  {
-    route: 'performance',
-    state: 'zoom-maximo',
-    urlPath: performancePath(setlists.show.id, indices.show_chords_index),
-    setlist_id: setlists.show.id,
-    note: 'Zoom máximo (10 cliques em "Zoom in": 100% → teto de 200%)',
-    prepare: async (page) => {
-      await settle(page, 1500)
-      const zoomIn = page.getByLabel('Zoom in')
-      for (let i = 0; i < 10; i++) {
-        await zoomIn.click()
-        await page.waitForTimeout(150)
-      }
-      await settle(page, 800)
-    },
-  },
-  {
-    route: 'performance',
-    state: 'setlist-estresse-ultima-musica',
-    urlPath: performancePath(setlists.estresse.id, indices.estresse_last_index),
-    setlist_id: setlists.estresse.id,
-    note: `Última música (${indices.estresse_last_index + 1}/60) — estado de fim de setlist`,
-  },
 ]
 
 // ---------------------------------------------------------------------------
@@ -517,8 +434,7 @@ async function captureCell(page: Page, cell: Cell, testInfo: TestInfo): Promise<
   }
   const notes: string[] = cell.note ? [cell.note] : []
 
-  // Diagnóstico por célula: erros de console/página e respostas não-2xx do
-  // /api/proxy (caminho de arquivo do performance mode) viram notas.
+  // Diagnóstico por célula: erros de console/página viram notas.
   const consoleErrors: string[] = []
   page.on('console', (msg) => {
     if (msg.type() === 'error' && consoleErrors.length < 5) {
@@ -527,12 +443,6 @@ async function captureCell(page: Page, cell: Cell, testInfo: TestInfo): Promise<
   })
   page.on('pageerror', (err) => {
     if (consoleErrors.length < 5) consoleErrors.push(`pageerror: ${err.message.slice(0, 200)}`)
-  })
-  const proxyFailures: string[] = []
-  page.on('response', (res) => {
-    if (res.url().includes('/api/proxy') && !res.ok() && proxyFailures.length < 5) {
-      proxyFailures.push(`HTTP ${res.status()} em ${res.url().slice(0, 160)}`)
-    }
   })
 
   try {
@@ -556,7 +466,6 @@ async function captureCell(page: Page, cell: Cell, testInfo: TestInfo): Promise<
       if (dynamicNote) notes.push(dynamicNote)
     }
 
-    if (proxyFailures.length > 0) notes.push(`api_proxy: ${proxyFailures.join(' | ')}`)
     if (consoleErrors.length > 0) notes.push(`console_errors: ${consoleErrors.join(' | ')}`)
 
     await page.screenshot({ path: files.screenshot, fullPage: cell.fullPage !== false })

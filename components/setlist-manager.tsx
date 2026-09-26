@@ -3,7 +3,6 @@
 import React, { useState, useCallback } from "react"
 import { useFirebaseAuth } from "@/contexts/firebase-auth-context"
 import { useSetlistData } from "@/hooks/use-setlist-data"
-import { saveSetlists, removeCachedSetlist } from "@/lib/offline-setlist-cache"
 import { toast } from "@/hooks/use-toast"
 import {
   createSetlist,
@@ -30,11 +29,7 @@ import {
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 
-interface SetlistManagerProps {
-  onEnterPerformance: (setlist: SetlistWithSongs, startingSongIndex?: number) => void
-}
-
-export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
+export function SetlistManager() {
   const { user, isLoading: authLoading } = useFirebaseAuth()
   const isInitialized = !authLoading
   
@@ -95,7 +90,6 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
             setSelectedSetlist(prev => prev ? { ...prev, ...updatedSetlist } : null)
           }
 
-          await saveSetlists(setlists)
           toast({ title: "Setlist updated successfully" })
         }
       } else {
@@ -115,7 +109,6 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
           }
           
           setSetlists(prev => [setlistWithSongs, ...prev])
-          await saveSetlists([setlistWithSongs, ...setlists])
           toast({ title: "Setlist created successfully" })
         }
       }
@@ -127,7 +120,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
         variant: "destructive",
       })
     }
-  }, [user?.uid, editingSetlist, selectedSetlist, setlists, setSetlists])
+  }, [user?.uid, editingSetlist, selectedSetlist, setSetlists])
 
   const handleDeleteSetlist = useCallback((setlist: SetlistWithSongs) => {
     setDeleteDialogSetlist(setlist)
@@ -139,7 +132,6 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
     try {
       await deleteSetlist(deleteDialogSetlist.id)
       setSetlists(prev => prev.filter(s => s.id !== deleteDialogSetlist.id))
-      await removeCachedSetlist(deleteDialogSetlist.id)
       
       if (selectedSetlist?.id === deleteDialogSetlist.id) {
         setSelectedSetlist(null)
@@ -185,7 +177,6 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
 
       setSelectedSetlist(updatedSetlist)
       setSetlists(prev => prev.map(s => s.id === selectedSetlist.id ? updatedSetlist : s))
-      await saveSetlists(setlists.map(s => s.id === selectedSetlist.id ? updatedSetlist : s))
       
       toast({ 
         title: `Added ${songIds.length} song${songIds.length !== 1 ? 's' : ''} to setlist` 
@@ -198,7 +189,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
         variant: "destructive",
       })
     }
-  }, [selectedSetlist, user?.uid, availableContent, setlists, setSetlists])
+  }, [selectedSetlist, user?.uid, availableContent, setSetlists])
 
   const handleRemoveSongFromSetlist = useCallback(async (songId: string) => {
     if (!selectedSetlist || !user?.uid) return
@@ -216,7 +207,6 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
       
       setSelectedSetlist(updatedSetlist)
       setSetlists(prev => prev.map(s => s.id === selectedSetlist.id ? updatedSetlist : s))
-      await saveSetlists(setlists.map(s => s.id === selectedSetlist.id ? updatedSetlist : s))
       
       toast({ title: "Song removed from setlist" })
     } catch (error) {
@@ -227,7 +217,7 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
         variant: "destructive",
       })
     }
-  }, [selectedSetlist, user?.uid, setlists, setSetlists])
+  }, [selectedSetlist, user?.uid, setSetlists])
 
   // Don't render anything while loading auth
   if (authLoading) {
@@ -259,7 +249,6 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
             onCreateSetlist={handleCreateSetlist}
             onEditSetlist={handleEditSetlist}
             onDeleteSetlist={handleDeleteSetlist}
-            onEnterPerformance={onEnterPerformance}
           />
         </div>
 
@@ -270,9 +259,6 @@ export function SetlistManager({ onEnterPerformance }: SetlistManagerProps) {
               setlist={selectedSetlist}
               onAddSongs={() => setIsAddSongsDialogOpen(true)}
               onEditSetlist={() => handleEditSetlist(selectedSetlist)}
-              onEnterPerformance={(startingSongIndex) => 
-                onEnterPerformance(selectedSetlist, startingSongIndex)
-              }
               onRemoveSong={handleRemoveSongFromSetlist}
               onReorderSongs={(songId, newPosition) => {
                 // TODO: Implement song reordering

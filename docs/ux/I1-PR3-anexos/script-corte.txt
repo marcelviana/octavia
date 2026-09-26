@@ -1,0 +1,34 @@
+// anexo da I1-PR3 (commit 1): script do fecho do corte — roda com: node <arquivo>.mjs dc-w.json <dir>. Rastro, não código do app.
+// I1-PR3 commit 1 — fecho do corte: raízes mortas = palco (I1-D5) ∪ PWA/offline (I1-D18) ∪ páginas (I1-D19);
+// morre = produção alcançada por raiz morta e não alcançada por raiz viva (o alcance das vivas não atravessa o que morre).
+import fs from 'node:fs'
+const [, , grafo, out] = process.argv
+const j = JSON.parse(fs.readFileSync(grafo, 'utf8'))
+const local = (s) => !s.includes('node_modules') && /^(app|components|hooks|lib|contexts|types|tests|__tests__|middleware|worker)/.test(s)
+const isTest = (s) => /(^tests\/|^__tests__\/|__tests__\/|\.test\.|\.spec\.|\.bench\.)/.test(s)
+const adj = new Map()
+for (const m of j.modules) if (local(m.source)) adj.set(m.source, m.dependencies.map(d => d.resolved).filter(local))
+const all = [...adj.keys()]
+const isRoot = (s) => s === 'middleware.ts' || /^app\/.*\/?(page|layout|loading|route)\.tsx?$/.test(s)
+const PALCO = all.filter(s => isRoot(s) && s.startsWith('app/performance/'))
+const PWA = ['app/offline/page.tsx', 'worker/index.js', 'components/pwa-install-prompt.tsx', 'components/service-worker-wrapper.tsx', 'hooks/use-service-worker.tsx', 'lib/offline-cache.ts', 'lib/offline-setlist-cache.ts', 'lib/offline-queue.ts', 'app/api/proxy/route.ts']
+const D19 = ['app/profile/page.tsx', 'app/settings/page.tsx', 'app/setup/page.tsx']
+const grupo = new Map([...PALCO.map(r => [r, 'palco']), ...PWA.map(r => [r, 'pwa']), ...D19.map(r => [r, 'paginas'])])
+const mortas = [...grupo.keys()]
+const reach = (roots, bloq) => { const seen = new Set(); const st = [...roots]; while (st.length) { const x = st.pop(); if (seen.has(x)) continue; seen.add(x); for (const y of adj.get(x) || []) if (!isTest(y) && !(bloq && bloq.has(y))) st.push(y) } return seen }
+const vivas = all.filter(s => isRoot(s) && !grupo.has(s))
+const V = reach(vivas, new Set(mortas))
+const prod = all.filter(s => !isTest(s))
+// grupo de cada morto: a primeira raiz morta (na ordem palco → pwa → páginas) que o alcança
+const alc = { palco: reach(PALCO, new Set([...PWA, ...D19])), pwa: reach(PWA), paginas: reach(D19) }
+const morre = prod.filter(s => !V.has(s) && (alc.palco.has(s) || alc.pwa.has(s) || alc.paginas.has(s)))
+const g = (s) => alc.palco.has(s) ? 'palco' : alc.pwa.has(s) ? 'pwa' : 'paginas'
+const mset = new Set(morre)
+const editar = prod.filter(s => V.has(s) && !mset.has(s) && (adj.get(s) || []).some(y => mset.has(y))).map(s => `${s}\t→ ${(adj.get(s) || []).filter(y => mset.has(y)).join(', ')}`).sort()
+const testes = all.filter(isTest).map(t => { const d = (adj.get(t) || []).filter(y => !isTest(y)); const h = d.filter(y => mset.has(y)); return h.length ? `${d.every(y => mset.has(y)) ? 'SÓ-MORTO' : 'TOCA'}\t${t}\t→ ${h.join(', ')}` : null }).filter(Boolean).sort()
+const orfaosNovos = prod.filter(s => !V.has(s) && !mset.has(s))
+fs.writeFileSync(`${out}/morre`, morre.map(s => `${g(s)}\t${s}`).sort().join('\n') + '\n')
+fs.writeFileSync(`${out}/editar`, editar.join('\n') + '\n')
+fs.writeFileSync(`${out}/testes`, testes.join('\n') + '\n')
+fs.writeFileSync(`${out}/fora-das-vivas`, orfaosNovos.sort().join('\n') + '\n')
+console.log({ vivas: vivas.length, mortas: mortas.length, morre: morre.length, porGrupo: ['palco','pwa','paginas'].map(k => `${k}=${morre.filter(s => g(s) === k).length}`).join(' '), editar: editar.length, testes: testes.length, foraDasVivasNaoMortos: orfaosNovos.length })

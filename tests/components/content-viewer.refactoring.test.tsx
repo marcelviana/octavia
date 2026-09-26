@@ -8,13 +8,11 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { ContentViewer } from '@/components/content-viewer'
-import { useContentFile } from '@/hooks/useContentFile'
 import { useContentActions } from '@/hooks/useContentActions'
 import { ContentHeader } from '@/components/content-viewer/ContentHeader'
 import { ContentToolbar } from '@/components/content-viewer/ContentToolbar'
 
 // Mock the extracted hooks and components
-vi.mock('@/hooks/useContentFile')
 vi.mock('@/hooks/useContentActions')
 
 // Create mock functions for the components
@@ -42,7 +40,6 @@ vi.mock('@/components/content-viewer/DeleteDialog', () => ({
 // Note: useAuth is mocked globally in test-setup.ts - don't override it here
 vi.mock('@/lib/firebase-storage')
 
-const mockUseContentFile = vi.mocked(useContentFile)
 const mockUseContentActions = vi.mocked(useContentActions)
 
 const mockContentHeader = mockContentHeaderImpl
@@ -93,15 +90,6 @@ describe('ContentViewer Refactoring Tests', () => {
   beforeEach(() => {
     vi.clearAllMocks()
 
-    // Mock useContentFile hook with correct return values
-    mockUseContentFile.mockReturnValue({
-      offlineUrl: null,
-      offlineMimeType: null,
-      isLoadingUrl: false,
-      urlError: null,
-      loadOfflineUrl: vi.fn()
-    })
-
     // Mock useContentActions hook
     mockUseContentActions.mockReturnValue({
       deleteDialog: false,
@@ -113,13 +101,12 @@ describe('ContentViewer Refactoring Tests', () => {
     })
 
     // Mock sub-components with correct prop signatures
-    mockContentHeader.mockImplementation(({ content, onBack, onEnterPerformance, onToggleFavorite, isFavorite }) => (
+    mockContentHeader.mockImplementation(({ content, onBack, onToggleFavorite, isFavorite }) => (
       <div data-testid="content-header">
         <button onClick={onBack} data-testid="back-button">Back</button>
         <h1>{content.title}</h1>
         <p>{content.artist}</p>
         <p>{content.content_type}</p>
-        <button onClick={() => onEnterPerformance(content)} data-testid="performance-button">Performance</button>
         <button onClick={onToggleFavorite} data-testid="favorite-button">Favorite</button>
       </div>
     ))
@@ -342,57 +329,6 @@ describe('ContentViewer Refactoring Tests', () => {
     })
   })
 
-  describe('File Loading and Offline Support', () => {
-    it.skip('TODO: Fix useContentFile test - should call useContentFile hook with correct parameters', () => {
-      render(<ContentViewer {...defaultProps} />)
-
-      expect(mockUseContentFile).toHaveBeenCalledWith({
-        content: mockContent,
-        autoLoad: true
-      })
-    })
-
-    it.skip('TODO: Fix loading state test - should display loading state while file loads', () => {
-      mockUseContentFile.mockReturnValue({
-        offlineUrl: null,
-        isLoading: true,
-        error: null,
-        loadOfflineUrl: vi.fn()
-      })
-
-      render(<ContentViewer {...defaultProps} />)
-
-      expect(screen.getByText(/Loading/)).toBeInTheDocument()
-    })
-
-    it.skip('TODO: Fix error state test - should display error state when file fails to load', () => {
-      mockUseContentFile.mockReturnValue({
-        offlineUrl: null,
-        isLoading: false,
-        error: 'Failed to load file',
-        loadOfflineUrl: vi.fn()
-      })
-
-      render(<ContentViewer {...defaultProps} />)
-
-      expect(screen.getByText(/Failed to load file/)).toBeInTheDocument()
-    })
-
-    it.skip('TODO: Fix offline URL test - should use offline URL when available', () => {
-      mockUseContentFile.mockReturnValue({
-        offlineUrl: 'blob:offline-url',
-        isLoading: false,
-        error: null,
-        loadOfflineUrl: vi.fn()
-      })
-
-      render(<ContentViewer {...defaultProps} />)
-
-      const iframe = screen.getByTestId('content-iframe')
-      expect(iframe).toHaveAttribute('src', 'blob:offline-url')
-    })
-  })
-
   describe('Performance Mode Features', () => {
     it.skip('TODO: Fix fullscreen test - should support fullscreen toggle', () => {
       render(<ContentViewer {...defaultProps} />)
@@ -484,19 +420,6 @@ describe('ContentViewer Refactoring Tests', () => {
       expect(screen.getByText('Test Song')).toBeInTheDocument()
     })
 
-    it.skip('TODO: Fix network errors test - should handle network errors gracefully', async () => {
-      mockUseContentFile.mockReturnValue({
-        offlineUrl: null,
-        isLoading: false,
-        error: 'Network error',
-        loadOfflineUrl: vi.fn()
-      })
-
-      render(<ContentViewer {...defaultProps} />)
-
-      expect(screen.getByText(/Network error/)).toBeInTheDocument()
-      expect(screen.getByRole('button', { name: /retry/i })).toBeInTheDocument()
-    })
   })
 
   describe('Component Integration', () => {
@@ -552,22 +475,6 @@ describe('ContentViewer Refactoring Tests', () => {
   })
 
   describe('Memory Management', () => {
-    it.skip('TODO: Fix cleanup test - should cleanup blob URLs on unmount', () => {
-      const revokeObjectURL = vi.spyOn(URL, 'revokeObjectURL')
-
-      mockUseContentFile.mockReturnValue({
-        offlineUrl: 'blob:test-url',
-        isLoading: false,
-        error: null,
-        loadOfflineUrl: vi.fn()
-      })
-
-      const { unmount } = render(<ContentViewer {...defaultProps} />)
-      unmount()
-
-      expect(revokeObjectURL).toHaveBeenCalledWith('blob:test-url')
-    })
-
     it('should not create memory leaks with large content', () => {
       const largeContent = {
         ...mockContent,

@@ -2,7 +2,6 @@
 import { useState, useEffect, useCallback, useRef, type Dispatch, type SetStateAction } from 'react'
 import { useDebounce } from '@/hooks/use-debounce'
 import { getUserContentPage } from '@/lib/content-service'
-import { saveContent, getCachedContent } from '@/lib/offline-cache'
 import { useSearchParams } from 'next/navigation'
 import { debug } from '@/lib/debug'
 
@@ -133,10 +132,6 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
 
       setContent(result.data || [])
       setTotalCount(result.total || 0)
-      
-      if (result.data && result.data.length > 0) {
-        try { await saveContent(result.data) } catch {}
-      }
     } catch (err) {
       console.error('useLibraryData.load: Error loading library data:', err)
       
@@ -146,20 +141,10 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
         return
       }
       
-      // Only fall back to cached content if this is not just a refresh
-      // and we don't already have content displayed
-      if (!forceRefresh || content.length === 0) {
-        try {
-          const cached = await getCachedContent()
-          setContent(cached)
-          setTotalCount(cached.length)
-        } catch {
-          // Only clear content if we have no fallback and no existing content
-          if (content.length === 0) {
-            setContent([])
-            setTotalCount(0)
-          }
-        }
+      // Sem cache offline desde a I1-PR3: sem conteúdo na tela, lista vazia
+      if (content.length === 0) {
+        setContent([])
+        setTotalCount(0)
       }
       // If this is a refresh and we already have content, keep the existing content
       // and just log the error instead of clearing everything
