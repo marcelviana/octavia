@@ -1,0 +1,21 @@
+# CN ramo-b (antes) — requests a localhost:3000 (nº de ordem · ms · método · status · fim · caminho). FALSO-n = respondido no navegador, não chegou ao servidor; status pendente = nenhuma resposta; fim — = nem requestfinished nem requestfailed
+    1     799  GET    200       fim      /login
+    2     945  GET    200       fim      /_next/static/css/app/layout.css
+    3     951  GET    200       fim      /_next/image
+    4     972  GET    200       fim      /_next/static/chunks/webpack.js
+    5     976  GET    pendente  —        /_next/static/chunks/main-app.js
+    6     979  GET    200       fim      /_next/static/chunks/app-pages-internals.js
+    7     981  GET    pendente  —        /_next/static/chunks/app/layout.js
+    8     982  GET    pendente  —        /_next/static/chunks/app/login/page.js
+    9    1037  GET    200       —        /api/health?cn=controle-1
+   10    1103  GET    200       —        /api/health?cn=controle-2
+   11    1110  GET    200       fim      /login?cn=controle-nav
+   12    1239  GET    200       fim      /_next/static/css/app/layout.css
+   13    1240  GET    200       fim      /_next/image
+   14    1246  GET    200       fim      /_next/static/chunks/webpack.js
+   15    1248  GET    200       fim      /_next/static/chunks/main-app.js
+   16    1250  GET    200       fim      /_next/static/chunks/app-pages-internals.js
+   17    1251  GET    200       fim      /_next/static/chunks/app/layout.js
+   18    1253  GET    200       fim      /_next/static/chunks/app/login/page.js
+   19    1572  GET    200       fim      /icons/icon-192x192.webp
+   20    1597  GET    200       fim      /icons/icon-192x192.webp

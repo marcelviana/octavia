@@ -1,0 +1,3 @@
+# CN ramo-b — antes — só o controle positivo (CN_SO_CONTROLE=1) — 2026-09-26T16:00:41.555Z · alvo http://localhost:3000
+resultado: EXIT 0
+controle positivo: controle-1 no log, status 200 · controle-2 (junto de navegação cheia) no log, status 200

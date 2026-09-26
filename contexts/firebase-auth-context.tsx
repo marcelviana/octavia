@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { createContext, useContext, useEffect, useState, useCallback } from "react"
+import { createContext, useContext, useEffect, useState, useCallback, useRef } from "react"
 import { 
   User as FirebaseUser,
   onAuthStateChanged,
@@ -15,7 +15,8 @@ import {
   sendEmailVerification
 } from "firebase/auth"
 import { auth, isFirebaseConfigured } from "@/lib/firebase"
-import { setSessionCookie, clearSessionCookie } from "@/lib/firebase-session-cookies"
+import { setSessionCookie, clearSessionCookie, type FalhaSessao } from "@/lib/firebase-session-cookies"
+import { AvisoDeSessao } from "@/components/auth/aviso-de-sessao"
 import logger from "@/lib/logger"
 import { getErrorMessage } from "@/lib/firebase-errors"
 
@@ -30,6 +31,14 @@ type Profile = {
   bio?: string | null
   website?: string | null
 }
+
+/** I1-PR1 (H-I1-7): o resultado do POST /api/auth/session como estado do provider. */
+export type OrigemSessao = 'abertura' | 'renovacao'
+export type EstadoSessao =
+  | { estado: 'ausente' }
+  | { estado: 'abrindo' }
+  | { estado: 'aberta' }
+  | { estado: 'falhou'; falha: FalhaSessao; origem: OrigemSessao }
 
 type AuthContextType = {
   user: FirebaseUser | null
@@ -46,6 +55,8 @@ type AuthContextType = {
   updateProfile: (data: Partial<Profile>) => Promise<{ error: any }>
   refreshToken: () => Promise<string | null>
   resendVerificationEmail: () => Promise<{ error: any }>
+  sessao: EstadoSessao
+  tentarSessaoDeNovo: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -56,6 +67,7 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
   const [idToken, setIdToken] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [isInitialized, setIsInitialized] = useState(false)
+  const [sessao, setSessao] = useState<EstadoSessao>({ estado: 'ausente' })
 
   // Fetch profile from Supabase using Firebase UID
   const fetchProfile = useCallback(async (firebaseUid: string, token?: string): Promise<Profile | null> => {
@@ -104,150 +116,185 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
     }
   }, [user])
 
+  // I1-PR1 (H-I1-7): refs do ciclo da sessão. `montado` substitui o `mounted`
+  // local do efeito (as funções abaixo vivem fora dele); `suspensa` é o (c):
+  // depois de uma falha, NADA tenta de novo sozinho até o usuário agir.
+  const montado = useRef(true)
+  const suspensa = useRef(false)
+  const emCurso = useRef(false)
+  const ultimaOrigem = useRef<OrigemSessao>('abertura')
+
+  // Fetch profile from Supabase (só depois do 2xx do cookie — I1-PR1 (a))
+  const carregarPerfil = useCallback(async (firebaseUser: FirebaseUser, token: string) => {
+    try {
+      const response = await fetch('/api/profile', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      })
+
+      if (response.ok) {
+        const profileData = await response.json()
+        if (profileData && montado.current) {
+          setProfile(profileData)
+        }
+      } else if (response.status === 401) {
+        // Token might be expired, try refreshing once.
+        logger.warn("Profile fetch unauthorized, attempting token refresh...")
+        try {
+          const freshToken = await getIdToken(firebaseUser, true)
+          const retryResponse = await fetch('/api/profile', {
+            headers: {
+              'Authorization': `Bearer ${freshToken}`,
+            },
+          })
+
+          if (retryResponse.ok) {
+            const profileData = await retryResponse.json()
+            if (profileData && montado.current) {
+              setProfile(profileData)
+              setIdToken(freshToken) // Update the stored token
+            }
+          } else {
+            logger.warn("Profile fetch failed after token refresh:", retryResponse.status)
+          }
+        } catch (refreshError) {
+          logger.warn("Token refresh failed during profile fetch:", refreshError)
+        }
+      } else {
+        logger.warn("Failed to fetch profile:", response.status)
+      }
+    } catch (profileError) {
+      logger.warn("Error fetching profile:", profileError)
+    }
+  }, [])
+
+  // I1-PR1: um POST /api/auth/session → um estado. Nunca repete sozinho.
+  const abrirSessao = useCallback(async (firebaseUser: FirebaseUser, origem: OrigemSessao): Promise<boolean> => {
+    emCurso.current = true
+    ultimaOrigem.current = origem
+    try {
+      const resultado = await setSessionCookie(firebaseUser)
+      if (!montado.current) return false
+      if (resultado.ok) {
+        suspensa.current = false
+        setSessao({ estado: 'aberta' })
+        return true
+      }
+      suspensa.current = true
+      setSessao({ estado: 'falhou', falha: resultado, origem })
+      return false
+    } finally {
+      emCurso.current = false
+    }
+  }, [])
+
+  // Renovação (visibilitychange e intervalo de 50 min): suspensa depois de uma
+  // falha — a linha de aviso mostra a razão e o "Tentar de novo" é do usuário.
+  const renovar = useCallback(async () => {
+    const atual = auth?.currentUser
+    if (!montado.current || !atual || suspensa.current || emCurso.current) return
+    logger.log("Renewing session cookie...")
+    try {
+      const token = await getIdToken(atual, true)
+      setIdToken(token)
+    } catch (error) {
+      logger.warn("Error refreshing token for session renewal:", error)
+    }
+    await abrirSessao(atual, 'renovacao')
+  }, [abrirSessao])
+
+  // "Tentar de novo": uma tentativa, por ação do usuário.
+  const tentarSessaoDeNovo = useCallback(async () => {
+    const atual = auth?.currentUser
+    if (!atual || emCurso.current) return
+    const origem = ultimaOrigem.current
+    setSessao({ estado: 'abrindo' })
+    let token: string | null = null
+    try {
+      token = await getIdToken(atual, true)
+      setIdToken(token)
+    } catch (error) {
+      logger.warn("Error refreshing token before session retry:", error)
+    }
+    const aberta = await abrirSessao(atual, origem)
+    if (aberta && origem === 'abertura' && token) await carregarPerfil(atual, token)
+  }, [abrirSessao, carregarPerfil])
+
   // Initialize Firebase Auth
   useEffect(() => {
-    let mounted = true
+    montado.current = true
+    if (!isFirebaseConfigured || !auth) {
+      return
+    }
+
+    logger.log("Initializing Firebase auth context...")
+
     let unsubscribe: (() => void) | null = null
+    try {
+      // Set up auth state listener
+      unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+        if (!montado.current) return
 
-    const initializeAuth = async () => {
-      try {
-        if (!isFirebaseConfigured || !auth) {
-          return
+        logger.log("Firebase auth state changed:", firebaseUser?.email || 'No user')
+
+        try {
+          if (firebaseUser) {
+            // I1-PR1 (a): o cookie ANTES de qualquer estado que leve a navegação —
+            // o `user` só entra no contexto com o resultado do POST já conhecido.
+            setSessao({ estado: 'abrindo' })
+            const aberta = await abrirSessao(firebaseUser, 'abertura')
+            if (!montado.current) return
+
+            const token = await getIdToken(firebaseUser)
+            setIdToken(token)
+            setUser(firebaseUser)
+
+            // I1-PR1: nenhum GET /api/profile sem o cookie
+            if (aberta) await carregarPerfil(firebaseUser, token)
+          } else {
+            suspensa.current = false
+            setSessao({ estado: 'ausente' })
+            setUser(null)
+            setProfile(null)
+            setIdToken(null)
+
+            // Clear session cookie (div. 527: fica — sincroniza o cookie do servidor
+            // quando o cliente perdeu o usuário)
+            await clearSessionCookie()
+          }
+        } catch (stateError) {
+          logger.warn("Auth state change error:", stateError)
         }
 
-        logger.log("Initializing Firebase auth context...")
-
-        // Set up auth state listener
-        unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-          if (!mounted) return
-
-          logger.log("Firebase auth state changed:", firebaseUser?.email || 'No user')
-
-          try {
-            if (firebaseUser) {
-              setUser(firebaseUser)
-              
-              // Get ID token
-              const token = await getIdToken(firebaseUser)
-              setIdToken(token)
-              
-              // Set session cookie for better UX
-              await setSessionCookie(firebaseUser)
-              
-              // Fetch profile from Supabase
-              try {
-                const response = await fetch('/api/profile', {
-                  headers: {
-                    'Authorization': `Bearer ${token}`,
-                  },
-                })
-                
-                if (response.ok) {
-                  const profileData = await response.json()
-                  if (profileData && mounted) {
-                    setProfile(profileData)
-                  }
-                } else if (response.status === 401) {
-                  // Token might be expired, try refreshing once.
-                  logger.warn("Profile fetch unauthorized, attempting token refresh...")
-                  try {
-                    const freshToken = await getIdToken(firebaseUser, true)
-                    const retryResponse = await fetch('/api/profile', {
-                      headers: {
-                        'Authorization': `Bearer ${freshToken}`,
-                      },
-                    })
-                    
-                    if (retryResponse.ok) {
-                      const profileData = await retryResponse.json()
-                      if (profileData && mounted) {
-                        setProfile(profileData)
-                        setIdToken(freshToken) // Update the stored token
-                      }
-                    } else {
-                      logger.warn("Profile fetch failed after token refresh:", retryResponse.status)
-                    }
-                  } catch (refreshError) {
-                    logger.warn("Token refresh failed during profile fetch:", refreshError)
-                  }
-                } else {
-                  logger.warn("Failed to fetch profile:", response.status)
-                }
-              } catch (profileError) {
-                logger.warn("Error fetching profile:", profileError)
-              }
-            } else {
-              setUser(null)
-              setProfile(null)
-              setIdToken(null)
-              
-              // Clear session cookie
-              await clearSessionCookie()
-            }
-          } catch (stateError) {
-            logger.warn("Auth state change error:", stateError)
-          }
-
-          if (mounted) {
-            setIsLoading(false)
-            setIsInitialized(true)
-          }
-        })
-
-        // Handle visibility change to refresh token
-        const handleVisibilityChange = async () => {
-          if (!document.hidden && mounted && auth?.currentUser) {
-            logger.log("Tab became visible, refreshing token...")
-            try {
-              const token = await getIdToken(auth.currentUser, true)
-              setIdToken(token)
-              await setSessionCookie(auth.currentUser)
-            } catch (error) {
-              logger.warn("Error refreshing token on visibility change:", error)
-            }
-          }
-        }
-
-        document.addEventListener('visibilitychange', handleVisibilityChange)
-
-        // Set up periodic token refresh (every 50 minutes to stay ahead of 1-hour expiration)
-        const tokenRefreshInterval = setInterval(async () => {
-          if (mounted && auth?.currentUser) {
-            logger.log("Periodic token refresh...")
-            try {
-              const token = await getIdToken(auth.currentUser, true)
-              setIdToken(token)
-              await setSessionCookie(auth.currentUser)
-            } catch (error) {
-              logger.warn("Error during periodic token refresh:", error)
-            }
-          }
-        }, 50 * 60 * 1000) // 50 minutes
-
-        return () => {
-          document.removeEventListener('visibilitychange', handleVisibilityChange)
-          clearInterval(tokenRefreshInterval)
-        }
-
-      } catch (error) {
-        logger.warn("Auth initialization failed:", error)
-        if (mounted) {
+        if (montado.current) {
           setIsLoading(false)
           setIsInitialized(true)
         }
-        return undefined
-      }
+      })
+    } catch (error) {
+      logger.warn("Auth initialization failed:", error)
+      setIsLoading(false)
+      setIsInitialized(true)
     }
 
-    initializeAuth()
+    const onVisibilityChange = () => {
+      if (!document.hidden) void renovar()
+    }
+    document.addEventListener('visibilitychange', onVisibilityChange)
 
+    // Periodic renewal (every 50 minutes to stay ahead of 1-hour expiration)
+    const tokenRefreshInterval = setInterval(() => { void renovar() }, 50 * 60 * 1000)
+
+    // Div. 526: a limpeza é o retorno do EFEITO (antes era o retorno de uma
+    // função async, descartado — os dois listeners sobreviviam à desmontagem)
     return () => {
-      mounted = false
-      if (unsubscribe) {
-        unsubscribe()
-      }
+      montado.current = false
+      if (unsubscribe) unsubscribe()
+      document.removeEventListener('visibilitychange', onVisibilityChange)
+      clearInterval(tokenRefreshInterval)
     }
-  }, [])
+  }, [abrirSessao, carregarPerfil, renovar])
 
   const signIn = useCallback(
     async (email: string, password: string) => {
@@ -454,9 +501,16 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
     updateProfile,
     refreshToken,
     resendVerificationEmail,
+    sessao,
+    tentarSessaoDeNovo,
   }
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+  return (
+    <AuthContext.Provider value={value}>
+      <AvisoDeSessao sessao={sessao} onTentarDeNovo={tentarSessaoDeNovo} />
+      {children}
+    </AuthContext.Provider>
+  )
 }
 
 export const useFirebaseAuth = () => {
