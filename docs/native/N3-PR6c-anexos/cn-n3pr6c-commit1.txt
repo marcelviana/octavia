@@ -1,0 +1,46 @@
+$ sh apps/native/scripts/__cn__/cn-n3pr6c.sh   # commit 1
+== CN-B1 — S5-n-grande em retrato (N3-PR6b)
+  CN-B1: exit 1 ✓
+  CN-B1: "(b)=4 em 2 dump(s)" ✓
+      (b) CORTE — nó que sai da janela útil ou encosta na borda lateral, NOVO contra a paisagem — REPROVA: 4
+        N3P6B-S5-S5-n-grande-avd-ret: 2
+          ViewGroup borda lateral [0, 432, 7.6, 435.1]
+          ViewGroup borda lateral [702.2, 432, 711.1, 435.1]
+        N3P6B-S5-S5-n-grande-tab-ret: 2
+          ViewGroup borda lateral [0, 438.2, 7.6, 440.9]
+          ViewGroup borda lateral [702.2, 438.2, 711.1, 440.9]
+      
+      G-N3: REPROVA ✗ — (e)=0 em 0 dump(s) · (b)=4 em 2 dump(s) · nome-acessível=0 · rolagem=0
+== CP-B2 — a paisagem do mesmo estado como faixa
+  CP-B2: exit 0 ✓
+  CP-B2: "(e)=0 · (b)=0" ✓
+      (b) CORTE — nó que sai da janela útil ou encosta na borda lateral, NOVO contra a paisagem — REPROVA: 0
+      
+      G-N3: (e)=0 · (b)=0 · nome-acessível=0 · rolagem=0 ✓ (d′ e 4 dp não reprovam: triagem e errata)
+== CP-B3 — o consolidado da N3-PR6 (102 pares)
+  CP-B3: exit 0 ✓
+  CP-B3: "102 par(es)" ✓
+  CP-B3: "(e)=0 · (b)=0 · nome-acessível=28 · rolagem=18" ✓
+      (b) CORTE — nó que sai da janela útil ou encosta na borda lateral, NOVO contra a paisagem — REPROVA: 0
+      
+      G-N3: (e)=0 · (b)=0 · nome-acessível=28 · rolagem=18 ✓ (d′ e 4 dp não reprovam: triagem e errata)
+== CN-B4 — o picker de antes do conserto da N3-E18
+  CN-B4: exit 1 ✓
+  CN-B4: "(b)=6 em 2 dump(s)" ✓
+      (b) CORTE — nó que sai da janela útil ou encosta na borda lateral, NOVO contra a paisagem — REPROVA: 6
+        N3P6-picker-X-falhou-avd-ret: 3
+          picker-estado-1 borda lateral [227.1, 186.2, 711.1, 234.2]
+          picker-adicionar-1 borda lateral [573.8, 186.2, 711.1, 234.2]
+          "Tentar de novo" borda lateral [626.7, 199.1, 711.1, 220.9]
+        N3P6-picker-X-falhou-tab-ret: 3
+          picker-estado-1 borda lateral [227.1, 186.2, 711.1, 234.2]
+          picker-adicionar-1 borda lateral [573.8, 186.2, 711.1, 234.2]
+          "Tentar de novo" borda lateral [626.7, 199.1, 711.1, 220.9]
+      
+      G-N3: REPROVA ✗ — (e)=2 em 2 dump(s) · (b)=6 em 2 dump(s) · nome-acessível=0 · rolagem=0
+== CT-B5 — o (b) do G-N3 contra o do pre-check, dump a dump
+      105 dumps com referência no B3-inventario.jsonl; (b) somado 56; 0 com contagem diferente
+  CT-B5: exit 0 ✓
+
+cn-n3pr6c: todos os controles como esperado ✓
+exit 0

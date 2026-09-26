@@ -1,0 +1,35 @@
+$ python3 docs/native/N3-PR6-anexos/instrumentos/g5g6-todos.py docs/native/N3-PR6c-anexos/dumps-n-pai docs/native/N3-PR6c-anexos/dumps-n-ret
+G5/G6 — 4 estados, quatro colunas: tab pai · tab ret · avd pai · avd ret
+
+## S5-S5-n-grande
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `borda-voltar` | 170.7 × 479.1 | 106.7 × 881.8 | 170.7 × 467.1 | 106.7 × 869.8 |
+  | `sair` | 118.7 × 64.0 | 118.7 × 64.0 | 118.7 × 64.0 | 118.7 × 64.0 |
+  | `voltar-inicio` | 227.1 × 64.0 | 227.1 × 64.0 | 227.1 × 64.0 | 227.1 × 64.0 |
+
+## S5-S5-n18
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `borda-voltar` | 170.7 × 479.1 | 106.7 × 881.8 | 170.7 × 467.1 | 106.7 × 869.8 |
+  | `sair` | 118.7 × 64.0 | 118.7 × 64.0 | 118.7 × 64.0 | 118.7 × 64.0 |
+  | `voltar-inicio` | 227.1 × 64.0 | 227.1 × 64.0 | 227.1 × 64.0 | 227.1 × 64.0 |
+
+## S5-S5-n19
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `borda-voltar` | 170.7 × 479.1 | 106.7 × 881.8 | 170.7 × 467.1 | 106.7 × 869.8 |
+  | `sair` | 118.7 × 64.0 | 118.7 × 64.0 | 118.7 × 64.0 | 118.7 × 64.0 |
+  | `voltar-inicio` | 227.1 × 64.0 | 227.1 × 64.0 | 227.1 × 64.0 | 227.1 × 64.0 |
+
+## S5-S5-n8
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `borda-voltar` | 170.7 × 479.1 | 106.7 × 881.8 | 170.7 × 467.1 | 106.7 × 869.8 |
+  | `sair` | 118.7 × 64.0 | 118.7 × 64.0 | 118.7 × 64.0 | 118.7 × 64.0 |
+  | `voltar-inicio` | 227.1 × 64.0 | 227.1 × 64.0 | 227.1 × 64.0 | 227.1 × 64.0 |
+
+estados: 4 · células (estado × coluna com dump): 16 de 16
+
+G5: todo alvo ≥ 48 dp ✓ · G6: todo alvo com testID ✓
+exit 0

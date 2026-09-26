@@ -1,0 +1,17 @@
+$ python3 docs/native/N3-PR6b-anexos/instrumentos/s5-marcas.py docs/native/N3-PR6c-anexos/dumps-n-pai/*.xml docs/native/N3-PR6c-anexos/dumps-n-ret/*.xml
+N3P6C-S5-S5-n-grande-avd-pai.xml: janela 1137.8 dp · 60 marcas no dump · larguras [9.8, 10.2] · x 121.3 → 1016.4
+N3P6C-S5-S5-n-grande-tab-pai.xml: janela 1137.8 dp · 60 marcas no dump · larguras [9.8, 10.2] · x 121.3 → 1016.4
+N3P6C-S5-S5-n18-avd-pai.xml: janela 1137.8 dp · 18 marcas no dump · larguras [33.8, 34.2] · x 220.4 → 917.3
+N3P6C-S5-S5-n18-tab-pai.xml: janela 1137.8 dp · 18 marcas no dump · larguras [33.8, 34.2] · x 220.4 → 917.3
+N3P6C-S5-S5-n19-avd-pai.xml: janela 1137.8 dp · 19 marcas no dump · larguras [33.8, 34.2] · x 200.9 → 936.9
+N3P6C-S5-S5-n19-tab-pai.xml: janela 1137.8 dp · 19 marcas no dump · larguras [33.8, 34.2] · x 200.9 → 936.9
+N3P6C-S5-S5-n8-avd-pai.xml: janela 1137.8 dp · 8 marcas no dump · larguras [33.8, 34.2] · x 415.6 → 722.2
+N3P6C-S5-S5-n8-tab-pai.xml: janela 1137.8 dp · 8 marcas no dump · larguras [33.8, 34.2] · x 415.6 → 722.2
+N3P6C-S5-S5-n-grande-avd-ret.xml: janela 711.1 dp · 60 marcas no dump · larguras [5.8, 6.2] · x 28.0 → 683.1
+N3P6C-S5-S5-n-grande-tab-ret.xml: janela 711.1 dp · 60 marcas no dump · larguras [5.8, 6.2] · x 28.0 → 683.1
+N3P6C-S5-S5-n18-avd-ret.xml: janela 711.1 dp · 18 marcas no dump · larguras [32.0] · x 24.9 → 685.8
+N3P6C-S5-S5-n18-tab-ret.xml: janela 711.1 dp · 18 marcas no dump · larguras [32.0] · x 24.9 → 685.8
+N3P6C-S5-S5-n19-avd-ret.xml: janela 711.1 dp · 19 marcas no dump · larguras [29.8, 30.2] · x 25.8 → 686.2
+N3P6C-S5-S5-n19-tab-ret.xml: janela 711.1 dp · 19 marcas no dump · larguras [29.8, 30.2] · x 25.8 → 686.2
+N3P6C-S5-S5-n8-avd-ret.xml: janela 711.1 dp · 8 marcas no dump · larguras [33.8, 34.2] · x 202.2 → 508.9
+N3P6C-S5-S5-n8-tab-ret.xml: janela 711.1 dp · 8 marcas no dump · larguras [33.8, 34.2] · x 202.2 → 508.9

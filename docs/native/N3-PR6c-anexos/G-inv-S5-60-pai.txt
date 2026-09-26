@@ -1,0 +1,8 @@
+$ sh apps/native/scripts/g-inv.sh <6b: N3P6B-S5-S5-n-grande-{tab,avd}-pai> docs/native/N3-PR6c-anexos/dumps-n
+G-inv — invariante C (T3-R2): bounds em dp, nó a nó
+  base:  <cópia dos dois dumps da 6b>
+  novos: docs/native/N3-PR6c-anexos/dumps-n
+  ✓ S5-S5-n-grande-avd-pai: idêntico (100 nós)
+  ✓ S5-S5-n-grande-tab-pai: idêntico (101 nós)
+G-inv: 2 de 2 idênticos
+G-inv: IDÊNTICO EM DP ✓

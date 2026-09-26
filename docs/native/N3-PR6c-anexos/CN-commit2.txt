@@ -1,0 +1,22 @@
+$ npx vitest run --project native-tela apps/native/test/s5-fileira-faixa.test.tsx apps/native/test/s5-faixa.test.tsx --reporter=verbose   # commit 2
+ ✓  native-tela  apps/native/test/s5-faixa.test.tsx > N3-E17 — em B a barra superior da S5 tem a altura da do palco (88), sem conteúdo novo > B: a barra de `8 DE 8` tem 88 — o token `palco.barra` da faixa B 46ms
+ ✓  native-tela  apps/native/test/s5-fileira-faixa.test.tsx > div. 461 — em B a fileira de marcas cabe na largura útil (663) > B, N = 60: as 60 marcas, e a fileira pede ≤ 663 48ms
+ ✓  native-tela  apps/native/test/s5-faixa.test.tsx > N3-E17 — em B a barra superior da S5 tem a altura da do palco (88), sem conteúdo novo > B: "vazia" — os mesmos dois textos de C, numa linha, e mais nada 30ms
+ ✓  native-tela  apps/native/test/s5-faixa.test.tsx > C — a barra de 64, como hoje (CP) > janela de C escrita: 64, o token `palco.barra` de C 27ms
+ ✓  native-tela  apps/native/test/s5-faixa.test.tsx > C — a barra de 64, como hoje (CP) > padrão do duplo: 64, o token `palco.barra` de C 28ms
+ ✓  native-tela  apps/native/test/s5-fileira-faixa.test.tsx > div. 461 — em B a fileira de marcas cabe na largura útil (663) > B, N = 19: as 19 marcas, e a fileira pede ≤ 663 28ms
+ ✓  native-tela  apps/native/test/s5-fileira-faixa.test.tsx > div. 461 — em B a fileira de marcas cabe na largura útil (663) > B, N = 18: as 18 marcas, e a fileira pede ≤ 663 27ms
+ ✓  native-tela  apps/native/test/s5-fileira-faixa.test.tsx > div. 461 — em B a fileira de marcas cabe na largura útil (663) > B, N = 8: as 8 marcas de 34, como hoje (a fileira de 307 já cabia) 28ms
+ ✓  native-tela  apps/native/test/s5-fileira-faixa.test.tsx > C — a fileira de 900, como hoje (CP) > janela de C escrita: N = 60 → 60 marcas de 10 + 5 (895); N = 8 → 34 (307) 35ms
+ ✓  native-tela  apps/native/test/s5-fileira-faixa.test.tsx > C — a fileira de 900, como hoje (CP) > padrão do duplo: N = 60 → 60 marcas de 10 + 5 (895); N = 8 → 34 (307) 34ms
+ Test Files  2 passed (2)
+      Tests  10 passed (10)
+$ npx vitest run --project native --project native-tela
+     ✓ a ordem dos eventos: adicionando… → 201 → relendo… → resync 200 → 2× e 8 músicas  861ms
+ Test Files  21 passed (21)
+      Tests  211 passed (211)
+$ npx vitest run --project core
+ Test Files  17 passed (17)
+      Tests  202 passed (202)
+$ (cd apps/native && npx tsc --noEmit -p .); echo exit=$?
+exit=0

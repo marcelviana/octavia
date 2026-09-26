@@ -1,0 +1,17 @@
+== files/<uid>/files
+total 142
+drwx------ 2 u0_a292 u0_a292   3488 2026-09-25 23:04 .
+drwx------ 3 u0_a292 u0_a292   3488 2026-09-25 23:00 ..
+-rw------- 1 u0_a292 u0_a292 138916 2026-09-25 16:17 <o arquivo do Marcel>.pdf
+== demanda
+total 6
+drwx------ 2 u0_a292 u0_a292       3488 2026-09-25 23:04 .
+drwx------ 3 u0_a292 u0_a292_cache 3488 2026-09-11 09:59 ..
+== md5 no aparelho
+62d555598c8fc1972277edad745e7f6e  files/<uid>/content.json
+10480521b6276d88e1e7966dcb224745  files/<uid>/files-index.json
+42ce8bbdd9d229d91880e3de1d034314  files/<uid>/setlists.json
+== md5 das cópias
+62d555598c8fc1972277edad745e7f6e content.json
+10480521b6276d88e1e7966dcb224745 files-index.json
+42ce8bbdd9d229d91880e3de1d034314 setlists.json

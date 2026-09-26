@@ -1,0 +1,17 @@
+$ node apps/native/scripts/g-n3.mjs --pai docs/native/N3-PR6c-anexos/dumps-n-pai --faixa docs/native/N3-PR6c-anexos/dumps-n-ret
+G-N3 — 8 par(es) (paisagem × faixa); medidas: docs/native/DESIGN-N3/medidas.json (tolerância 4 dp)
+
+(e) TEXTO QUE SOME — REPROVA: 0
+
+(d′) MENOS ESPAÇO QUE NA PAISAGEM — TRIAGEM (confirmar no PNG): 0
+
+4 dp CONTRA A FOLHA — ERRATA CANDIDATA: 0
+
+NOME ACESSÍVEL — o texto está no content-desc do nó de mesmo resource-id (N3-D17); não reprova, não soma ao (e): 0
+
+ROLAGEM — o texto está no dump rolado do mesmo estado; não reprova, não soma ao (e): 0
+
+(b) CORTE — nó que sai da janela útil ou encosta na borda lateral, NOVO contra a paisagem — REPROVA: 0
+
+G-N3: (e)=0 · (b)=0 · nome-acessível=0 · rolagem=0 ✓ (d′ e 4 dp não reprovam: triagem e errata)
+exit 0

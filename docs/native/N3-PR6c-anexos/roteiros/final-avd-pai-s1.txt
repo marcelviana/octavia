@@ -1,0 +1,10 @@
+07:53:13 avião=0 (emulator-5554)
+N3P6CF-S1-setlists-avd-pai mCurrentRotation=ROTATION_0 png=226704 xml=40520 179ed0d01bb5
+07:53:47 avião=1 (emulator-5554)
+N3P6CF-S1-aviso-sem-rede-avd-pai mCurrentRotation=ROTATION_0 png=257089 xml=42982 018ee101e1f1
+07:54:24 avião=0 (emulator-5554)
+07:54:26 mock modo=500-pagina-1 vazio=False
+espera 26s para o cache ter 1 min
+N3P6CF-S1-S1e-falha-com-cache-avd-pai mCurrentRotation=ROTATION_0 png=253854 xml=44543 dd1e04be3f52
+07:55:31 mock modo=normal vazio=False
+capturas=3

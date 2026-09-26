@@ -1,0 +1,13 @@
+$ npx vitest run --project native-tela apps/native/test/s5-fileira-faixa.test.tsx --reporter=verbose   # commit 1 (antes do conserto)
+ ×  native-tela  apps/native/test/s5-fileira-faixa.test.tsx > div. 461 — em B a fileira de marcas cabe na largura útil (663) > B, N = 60: as 60 marcas, e a fileira pede ≤ 663 49ms
+ ×  native-tela  apps/native/test/s5-fileira-faixa.test.tsx > div. 461 — em B a fileira de marcas cabe na largura útil (663) > B, N = 19: as 19 marcas, e a fileira pede ≤ 663 27ms
+ ×  native-tela  apps/native/test/s5-fileira-faixa.test.tsx > div. 461 — em B a fileira de marcas cabe na largura útil (663) > B, N = 18: as 18 marcas, e a fileira pede ≤ 663 27ms
+ ✓  native-tela  apps/native/test/s5-fileira-faixa.test.tsx > div. 461 — em B a fileira de marcas cabe na largura útil (663) > B, N = 8: as 8 marcas de 34, como hoje (a fileira de 307 já cabia) 26ms
+ ✓  native-tela  apps/native/test/s5-fileira-faixa.test.tsx > C — a fileira de 900, como hoje (CP) > janela de C escrita: N = 60 → 60 marcas de 10 + 5 (895); N = 8 → 34 (307) 35ms
+ ✓  native-tela  apps/native/test/s5-fileira-faixa.test.tsx > C — a fileira de 900, como hoje (CP) > padrão do duplo: N = 60 → 60 marcas de 10 + 5 (895); N = 8 → 34 (307) 32ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+AssertionError: expected 895 to be less than or equal to 663
+AssertionError: expected 736 to be less than or equal to 663
+AssertionError: expected 697 to be less than or equal to 663
+ Test Files  1 failed (1)
+      Tests  3 failed | 3 passed (6)
