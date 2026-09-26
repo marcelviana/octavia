@@ -1,0 +1,122 @@
+# probe 1 — console, só error/warning (ms · ramo · tipo · texto)
+   1235  a  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+   5643  a  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  38495  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  39387  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  40134  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  40583  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  41419  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  41841  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  42708  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  43104  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  43909  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  44313  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  45070  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  45455  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  46196  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  46590  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  47385  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  47779  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  48530  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  48912  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  49796  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  50198  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  50963  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  51370  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  52096  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  52492  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  53262  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  53648  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  54376  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  54782  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  55609  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  56010  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  56783  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  57158  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  57890  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  58289  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  59058  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  59463  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  60209  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  60593  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  61354  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  61749  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  62502  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  62893  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  63631  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  64014  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  64776  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  65214  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  65990  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  66389  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  67176  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  67574  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  68291  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  68675  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  69463  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  69857  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  70613  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  71015  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  71754  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  72146  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  72919  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  73313  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  74134  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  74518  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  75287  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  75687  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  76426  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  76840  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  77549  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  77929  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  78730  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  79134  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  79892  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  80295  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  81079  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  81478  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  82201  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  82603  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  83331  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  83746  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  84483  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  84884  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  85770  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  86180  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  86945  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  87344  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  88090  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  88490  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  89435  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  89863  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  90604  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  90988  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  91756  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  92144  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  92907  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  93310  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  94051  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  94469  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  95218  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  95616  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  96457  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  96853  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  97607  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  97987  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+  98734  b  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  99128  b  error   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+ 100647  c  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+ 101570  c  error   Failed to load resource: the server responded with a status of 429 (Too Many Requests)
+ 102320  c  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+ 102845  c  error   Failed to load resource: the server responded with a status of 429 (Too Many Requests)
+ 103768  c  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+ 104233  c  error   Failed to load resource: the server responded with a status of 429 (Too Many Requests)
+ 105065  c  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+ 105458  c  error   Failed to load resource: the server responded with a status of 429 (Too Many Requests)
+ 106181  c  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+ 106609  c  error   Failed to load resource: the server responded with a status of 429 (Too Many Requests)
+ 107402  c  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+ 107813  c  error   Failed to load resource: the server responded with a status of 429 (Too Many Requests)
+ 108646  c  warning Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+ 109066  c  error   Failed to load resource: the server responded with a status of 429 (Too Many Requests)
+ 109557  c  error   Failed to load resource: the server responded with a status of 429 ()

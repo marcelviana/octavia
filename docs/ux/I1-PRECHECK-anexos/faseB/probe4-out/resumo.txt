@@ -1,0 +1,12 @@
+# probe 4 — resumo (2026-09-26T15:13:11.773Z) · alvo https://octavia.rocks · conta de audit · Chrome do sistema
+resultado: EXIT 0
+escritas declaradas: POST /api/setlists → 201 · PUT /api/setlists/[id] → 200 · DELETE /api/setlists/[id] → 200 · DELETE /api/setlists/[id] → 404
+escritas medidas:    POST /api/setlists → 201 · PUT /api/setlists/[id] → 200
+orçamento restante:  {"POST /api/setlists":0,"PUT /api/setlists/[id]":0,"DELETE /api/setlists/[id]":0}
+
+passo 1 (criada): toast=[] · diálogo aberto=não · "I1-probe4" na lista=1
+passo 2 (renomeada): toast=[] · diálogo aberto=não · "I1-probe4 renomeada" na lista=1
+passo 3 (c2-antes): toast=[] · diálogo aberto=não · "I1-probe4 renomeada" na lista=1
+passo 4 (c1-apagada): toast=[] · diálogo aberto=não · "I1-probe4 renomeada" na lista=0
+passo 5 (c2-404): toast=[] · diálogo aberto=["Delete Setlist Are you sure you want to delete \"I1-probe4 renomeada\"? This action cannot be undone. Cancel Delete Close"] · "I1-probe4 renomeada" na lista=1
+prova final: GET /api/setlists → 200; setlists com id 9c6c0dfe-54ec-4566-8218-233e4e1f98f9 ou nome "I1-probe4"/"I1-probe4 renomeada": 0

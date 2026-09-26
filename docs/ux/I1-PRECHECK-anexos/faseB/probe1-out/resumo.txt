@@ -1,0 +1,34 @@
+# probe 1 — resumo (2026-09-26T14:56:14.981Z) · alvo https://octavia.rocks · conta de audit · Chrome do sistema
+resultado: EXIT 0 — três ramos completos
+escritas a /api/* fora de /api/auth/session que chegaram a prod: 0
+
+## ramo a — sem interceptação, 30 s depois do submit
+     1  DELETE /api/auth/session (falso, não chegou a prod)
+     3  GET /api/profile
+     2  navegação /dashboard
+     2  navegação /login
+  URL ao fim: /dashboard
+  alerta na tela ao fim: (nenhum)
+  navegações (ms · caminho):    1236 /login ·    1396 /login ·    5644 /dashboard ·    5959 /dashboard
+  navegações nos últimos 10 s da janela: 0 (0 = o loop parou; > 0 = continuava)
+
+## ramo b — POST /api/auth/session → 500 no navegador, 60 s depois do submit
+     1  DELETE /api/auth/session (falso, não chegou a prod)
+    51  GET /api/profile
+    52  POST /api/auth/session (falso, não chegou a prod)
+   104  navegação /login
+  URL ao fim: /login
+  alerta na tela ao fim: (nenhum)
+  navegações (ms · caminho):   38495 /login ·   38658 /login ·   40134 /login ·   40256 /login ·   41419 /login ·   41511 /login ·   42708 /login ·   42782 /login ·   43909 /login ·   43977 /login ·   45070 /login ·   45141 /login ·   46197 /login ·   46266 /login ·   47386 /login ·   47445 /login ·   48530 /login ·   48598 /login ·   49796 /login ·   49868 /login ·   50963 /login ·   51030 /login ·   52096 /login ·   52169 /login ·   53264 /login ·   53334 /login ·   54376 /login ·   54457 /login ·   55611 /login ·   55691 /login ·   56783 /login ·   56840 /login ·   57890 /login ·   57963 /login ·   59058 /login ·   59129 /login ·   60209 /login ·   60283 /login ·   61355 /login ·   61431 /login ·   62503 /login ·   62575 /login ·   63631 /login ·   63707 /login ·   64777 /login ·   64853 /login ·   65991 /login ·   66060 /login ·   67177 /login ·   67251 /login ·   68291 /login ·   68366 /login ·   69464 /login ·   69541 /login ·   70613 /login ·   70689 /login ·   71754 /login ·   71828 /login ·   72920 /login ·   72992 /login ·   74135 /login ·   74204 /login ·   75287 /login ·   75360 /login ·   76426 /login ·   76508 /login ·   77550 /login ·   77620 /login ·   78730 /login ·   78806 /login ·   79892 /login ·   79970 /login ·   81079 /login ·   81151 /login ·   82201 /login ·   82274 /login ·   83331 /login ·   83410 /login ·   84484 /login ·   84557 /login ·   85770 /login ·   85850 /login ·   86945 /login ·   87028 /login ·   88091 /login ·   88163 /login ·   89435 /login ·   89514 /login ·   90604 /login ·   90673 /login ·   91757 /login ·   91835 /login ·   92908 /login ·   92987 /login ·   94051 /login ·   94127 /login ·   95218 /login ·   95291 /login ·   96458 /login ·   96535 /login ·   97608 /login ·   97670 /login ·   98734 /login ·   98812 /login
+  navegações nos últimos 10 s da janela: 16 (0 = o loop parou; > 0 = continuava)
+
+## ramo c — POST /api/auth/session → 429 no navegador, 60 s depois do submit
+     1  DELETE /api/auth/session (falso, não chegou a prod)
+     6  GET /api/profile
+     7  POST /api/auth/session (falso, não chegou a prod)
+    14  navegação /login
+  URL ao fim: /login
+  alerta na tela ao fim: (nenhum)
+  navegações (ms · caminho):  100647 /login ·  100801 /login ·  102321 /login ·  102458 /login ·  103768 /login ·  103865 /login ·  105065 /login ·  105142 /login ·  106182 /login ·  106255 /login ·  107403 /login ·  107473 /login ·  108646 /login ·  108716 /login
+  navegações nos últimos 10 s da janela: 0 (0 = o loop parou; > 0 = continuava)
+

@@ -1,0 +1,28 @@
+# probe 1 — resumo (2026-09-26T14:47:41.119Z) · alvo https://octavia.rocks · conta de audit · Chrome do sistema
+resultado: EXIT 0 — três ramos completos
+escritas a /api/* fora de /api/auth/session que chegaram a prod: 0
+
+## ramo a — sem interceptação, 30 s depois do submit
+     1  DELETE /api/auth/session (falso, não chegou a prod)
+     2  navegação /login
+  URL ao fim: /login
+  alerta na tela ao fim: (nenhum)
+  navegações (ms · caminho):    1220 /login ·    1507 /login
+  navegações nos últimos 10 s da janela: 0 (0 = o loop parou; > 0 = continuava)
+
+## ramo b — POST /api/auth/session → 500 no navegador, 60 s depois do submit
+     1  DELETE /api/auth/session (falso, não chegou a prod)
+     2  navegação /login
+  URL ao fim: /login
+  alerta na tela ao fim: (nenhum)
+  navegações (ms · caminho):   37453 /login ·   37636 /login
+  navegações nos últimos 10 s da janela: 0 (0 = o loop parou; > 0 = continuava)
+
+## ramo c — POST /api/auth/session → 429 no navegador, 60 s depois do submit
+     1  DELETE /api/auth/session (falso, não chegou a prod)
+     2  navegação /login
+  URL ao fim: /login
+  alerta na tela ao fim: (nenhum)
+  navegações (ms · caminho):   99903 /login ·  100096 /login
+  navegações nos últimos 10 s da janela: 0 (0 = o loop parou; > 0 = continuava)
+

@@ -37,11 +37,12 @@ Os dois scripts rodaram do scratchpad da sessão, fora do repositório; o texto 
 | `pwa-offline-compartilhados.txt` | §17.4 (commit 2) | idem |
 | `script-a24.txt` | §17.4 | o texto do script da medição 2.4 |
 | `faseB/bloqueio.txt` | §14 (commit 2) | `gh api …/deployments`, `curl` no `/login` do preview (→ SSO da Vercel) |
-| `faseB/probe{1,2,4,5}-roteiro.txt` | §14 | roteiros do commit 2 (1, 2 e 4 substituídos pelos scripts do commit 3a; 5 vale) |
+| `faseB/probe{1,2,4,5}-roteiro.txt` | §14 | roteiros do commit 2 (1, 2 e 4 substituídos pelos scripts do commit 3a; 5 cancelado pela errata da I1-D14) |
 | `faseB/probe2.ts` + `faseB/probe2-out/` | §14 (commit 3a) | `pnpm exec tsx docs/ux/I1-PRECHECK-anexos/faseB/probe2.ts` — rodado pelo executor contra `https://octavia.rocks/login` |
 | `faseB/probe2-rodada1/` | §14, div. 513 | a 1ª rodada do mesmo script, antes da correção do detector (rastro) |
 | `faseB/probe1.ts`, `faseB/probe4.ts`, `faseB/COMO-RODAR.md` | §14 (commit 3a) | scripts escritos pelo executor para o Marcel rodar (I1-D35); saída em `probe1-out/` e `probe4-out/` |
-| `faseB/probe5.txt` | §14 | modelo para o Marcel colar o resultado do Tab S6 |
+| `faseB/probe1-out/`, `faseB/probe4-out/` | §14 (commit 3b) | saída dos scripts rodados pelo Marcel (a 3ª rodada do probe 1; a única do probe 4) |
+| `faseB/probe1-rodada1/`, `faseB/probe1-rodada2/` | §15, divs. 520 e 521 | as duas rodadas do probe 1 que falharam por defeito do script (rastro) |
 
 ## Blocos ```gates``` e ```gates-web``` desta PR (cópia verbatim do corpo)
 

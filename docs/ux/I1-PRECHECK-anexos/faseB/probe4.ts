@@ -39,6 +39,7 @@ if (!envPath) { console.error('PARADA: .env.uxaudit não encontrado (use UXAUDIT
 config({ path: envPath, quiet: true })
 const EMAIL = process.env.USER_AUDIT, SENHA = process.env.PASSWORD_AUDIT
 if (!EMAIL || !SENHA) { console.error('PARADA: USER_AUDIT/PASSWORD_AUDIT ausentes no .env.uxaudit'); process.exit(1) }
+if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(EMAIL)) { console.error('PARADA: USER_AUDIT não tem forma de email (aspas ou espaço no .env.uxaudit?) — valor não impresso'); process.exit(1) }
 
 // orçamento de escrita: chave "MÉTODO /padrão" → quantas ainda podem sair
 const orcamento: Record<string, number> = { 'POST /api/setlists': 1, 'PUT /api/setlists/[id]': 1, 'DELETE /api/setlists/[id]': 2 }
@@ -55,7 +56,11 @@ async function contexto(browser: Browser, rotulo: string): Promise<{ ctx: Browse
   await ctx.route('**/api/**', (route) => {
     const r = route.request(), u = new URL(r.url()), m = r.method()
     if (u.host !== 'octavia.rocks' || m === 'GET' || m === 'HEAD') return route.continue()
-    if (u.pathname === '/api/auth/session') return route.continue()
+    if (u.pathname === '/api/auth/session') {
+      // o DELETE que o /login deslogado dispara sozinho: respondido no navegador (div. 511); o POST do login segue
+      if (m === 'DELETE') return route.fulfill({ status: 200, contentType: 'application/json', body: '{"success":true}' })
+      return route.continue()
+    }
     const k = `${m} ${padrao(u.pathname)}`
     if ((orcamento[k] ?? 0) > 0) { orcamento[k] = (orcamento[k] ?? 0) - 1; return route.continue() }
     parada = `escrita fora da lista em "${passo}": ${k}`
@@ -74,12 +79,20 @@ async function contexto(browser: Browser, rotulo: string): Promise<{ ctx: Browse
   page.on('requestfailed', (r) => { const u = new URL(r.url()); if (u.host === 'octavia.rocks') reqs.push(`${ms()}  ${rotulo}  ${r.method().padEnd(6)} FALHA ${u.pathname} ${r.failure()?.errorText ?? ''}`) })
   page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') cons.push(`${ms()}  ${rotulo}  ${m.type().padEnd(7)} ${m.text().slice(0, 400)}`) })
   // login pela UI do app
-  await page.goto(`${BASE}/login`, { waitUntil: 'networkidle', timeout: 60_000 })
+  // commit 3b: espera-se o campo, não 'networkidle' (estourou 60 s na 1ª rodada do probe 1)
+  await page.goto(`${BASE}/login`, { waitUntil: 'domcontentloaded', timeout: 60_000 })
+  await page.locator('#email').waitFor({ state: 'visible', timeout: 60_000 })
+  // commit 3b (2ª rodada do Marcel): preencher ANTES da hidratação do React perde o valor — o input
+  // controlado volta a "" (ramo a: "Please enter a valid email address."; b/c: "Please fill out this field.").
+  // Espera o React ligar os handlers no campo; preenche; confere que ficou (sem imprimir valor).
+  await page.waitForFunction(() => { const e = document.querySelector('#email'); return !!e && Object.keys(e).some((k) => k.startsWith('__reactProps')) }, null, { timeout: 60_000 })
   await page.locator('#email').fill(EMAIL!)
   await page.locator('#password').fill(SENHA!)
+  if ((await page.locator('#email').inputValue()) !== EMAIL || (await page.locator('#password').inputValue()).length !== SENHA!.length) throw new Error('os campos de login não guardaram o valor preenchido')
   await page.locator('button[type="submit"]').click()
   await page.waitForURL('**/dashboard', { timeout: 60_000 })
-  await page.goto(`${BASE}/setlists`, { waitUntil: 'networkidle', timeout: 60_000 })
+  await page.goto(`${BASE}/setlists`, { waitUntil: 'domcontentloaded', timeout: 60_000 })
+  await page.getByRole('button', { name: /create (your first )?setlist/i }).first().waitFor({ state: 'visible', timeout: 60_000 })
   return { ctx, page }
 }
 

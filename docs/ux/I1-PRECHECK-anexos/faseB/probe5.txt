@@ -1,5 +1,0 @@
-# probe 5 — resultado (Marcel cola aqui; roteiro em probe5-roteiro.txt)
-# Chrome do Tab S6, https://octavia.rocks/login, sem login
-EM PÉ:    innerWidth=____  innerHeight=____  devicePixelRatio=____
-DEITADO:  innerWidth=____  innerHeight=____  devicePixelRatio=____
-versão do Chrome: ____

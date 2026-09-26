@@ -101,6 +101,12 @@ decisão continua valendo sobre o que foi medido.
 - **I1-D36** `[Marcel, 2026-09-26]` (div. 506) — A PR-3 tem o requisito *"todo tipo de content abre no visualizador depois do corte"*, provado por CN com um content de cada tipo (PDF incluído). Como o `mimeType` passa a ser derivado sem o `offline-cache` se mede no commit 1 da PR-3; se o registro do content não tiver o tipo do arquivo, é herança D e o corte do `offline-cache` espera.
 - `[Marcel, 2026-09-26]` Div. 507: `PATCH /api/profile` fica sem chamador — rota fica, registrada como "sem chamador", destino D. Div. 508: os `href="#"` da landing morrem no redesenho; o brief recebe a lista.
 
+**Do commit 3b** (transcrição do prompt do commit 3b):
+
+- **Errata da I1-D14** `[Marcel, 2026-09-26]`: o aceite do web é o **G-faixa no Playwright** (Chromium fixado pela config própria da I1-D16, larguras 1138 · 711 · 411) mais a captura por superfície e estado; **nenhum aparelho**. O Tab S6 é só do nativo. A frase *"Chrome no Tab S6, em pé e deitado, por superfície, com captura"* sai da decisão; o resto dela (escrita só no preview/prod com a conta de audit, regra 12, contagem de escritas) fica. A I1-D11 (faixas C e B implementadas) **não muda**.
+- **H-I1-7** `[Marcel, 2026-09-26]` (nova, confirmada pelo probe 1, ramo b): cada volta do loop mudo faz um `GET /api/profile` **real**; o loop consome a cota de perfil do próprio usuário (`lib/user-rate-limit.ts:54`, 60 em 15 min) e "termina" com o usuário preso em `/login` com *"Failed to fetch profile"*. Vira **requisito da PR-1**, registrado na §0.2: (a) navegar só depois do `2xx` do cookie; (b) falha com razão visível; (c) **nenhuma nova tentativa automática** — uma falha é uma tela, não uma volta; (d) o CN da PR-1 é o ramo b (interceptação do `POST /api/auth/session` com 500, 60 s): hoje ≥ 50 voltas, depois 1 request e 1 frase; (e) o ramo c se repete na PR-1 com cota limpa.
+- **Probe 5 cancelado** (pela errata da I1-D14): não medido; H-I1-4 e H-I1-6 "sem objeto"; o `probe5-roteiro.txt` fica como rastro e o `probe5.txt` vazio sai do anexo.
+
 Leituras do executor sobre as decisões acima, cada uma com a divergência onde mora: o "§2.1 abaixo" da
 I1-D25 é o **2.1 do prompt do commit 2** (a medição do G-rotas, aqui §17.1); a I1-D25 e a I1-D30 pedem
 par do G1b para testes que o G1b não lê (divs. 503, 504); a I1-D23 não cobre os prefixos `/settings`
@@ -140,11 +146,12 @@ presumiu.
 | id | hipótese | estado | o que a fecha |
 |---|---|---|---|
 | **H-I1-1** | **Pendente de aval (não é decisão)**, transcrita do prompt: *"o Playwright do web passa a rodar só Chromium desktop, com as três larguras do G-faixa como viewports (não como `devices` emulados); WebKit/Firefox saem; a poda é uma PR própria e pequena entre esta e a PR-1, com o tempo do job no CI medido antes e depois como CN."* | **FECHADA pela div. 486 → I1-D16** (commit 2). A premissa já era o estado da `main` (§8): um só config, nenhum WebKit/Firefox/`devices`, nenhum job no CI | — |
-| **H-I1-2** | o **loop mudo** é de navegação e se repete sozinho enquanto o `POST /api/auth/session` falhar: cada volta = 1 `POST /api/auth/session` + 1–2 `GET /api/profile` (+ 1 `POST /api/profile` se o perfil não existir) + 1 navegação cheia a `/dashboard` + 1 redirect a `/login` (§10) | `[hipótese]` pela leitura | Fase B, probe 1 (§14) |
+| **H-I1-2** | o **loop mudo** é de navegação e se repete sozinho enquanto o `POST /api/auth/session` falhar: cada volta = 1 `POST /api/auth/session` + 1–2 `GET /api/profile` (+ 1 `POST /api/profile` se o perfil não existir) + 1 navegação cheia a `/dashboard` + 1 redirect a `/login` (§10) | **CONFIRMADA pelo ramo b** (commit 3b, probe 1): 52 `POST` falsos, 51 `GET /api/profile` reais, 104 navegações em 60 s, tela em *"Redirecting to dashboard..."* sem mensagem. **Ramo c inconclusivo**: o 429 real da cota de `/api/profile` mascarou o 429 falso a partir da 8ª volta (3 + 51 + 6 = 60) (div. 517). A corrida do caminho feliz não foi observável (div. 518) | `faseB/probe1-out/resumo.txt` |
 | **H-I1-3** | o Google falha **no navegador**, pela CSP/COOP de hoje, antes de qualquer coisa do client OAuth: `frame-src` só `'blob:'` bloqueia o iframe de auth do Firebase em `*.firebaseapp.com`; `Cross-Origin-Opener-Policy: same-origin` corta o popup do opener; o `script-src` não inclui `https://apis.google.com`. As três vêm do `8af7f34` (2026-02-26), **a mesma data do último uso do client OAuth** (I1-D6) (§11) | **PARCIAL — confirmada no primeiro ponto** (commit 3a, probe 2): o clique carrega `https://apis.google.com/js/api.js` e a CSP o bloqueia (`script-src`, `CSP-VIOLATION directive=script-src-elem`); nenhum popup abre; a tela diz *"Something went wrong. Please try again."*. O `frame-src` e o COOP **não foram alcançados** (o fluxo morre antes) — ficam não testados | `faseB/probe2-out/`; o resto na PR-2, depois de liberar o `script-src` |
-| **H-I1-4** | a largura CSS do Chrome no Tab S6 é a largura em dp do app (711 em pé, 1138 deitado) — o Chrome não tem barra lateral, então a largura coincide; a altura útil é menor (barra de endereço) | `[hipótese]` | aceite no aparelho (I1-D14): `window.innerWidth`/`innerHeight` na primeira captura |
-| **H-I1-5** | **nenhum toast das setlists aparece**: `components/setlist-manager.tsx:7` importa `toast` de `@/hooks/use-toast` (shadcn), cujo `<Toaster>` (`components/ui/toaster.tsx`) não tem importador; o único montado é o do sonner (`app/layout.tsx:127`) (§3, §12, div. 491) | `[lido]` | Fase B, probe 4, no preview |
-| **H-I1-6** | o Chrome desktop do G-faixa e o Chrome do Tab S6 dão a mesma quebra de linha nas mesmas larguras (fontes do pacote servidas pelo web, não do sistema) | `[hipótese]` | primeira PR de tela: G-faixa × aceite no aparelho |
+| **H-I1-4** | a largura CSS do Chrome no Tab S6 é a largura em dp do app (711 em pé, 1138 deitado) — o Chrome não tem barra lateral, então a largura coincide; a altura útil é menor (barra de endereço) | **SEM OBJETO** — errata da I1-D14 (commit 3b): o aceite do web não usa aparelho; probe 5 cancelado, não medido | — |
+| **H-I1-5** | **nenhum toast das setlists aparece**: `components/setlist-manager.tsx:7` importa `toast` de `@/hooks/use-toast` (shadcn), cujo `<Toaster>` (`components/ui/toaster.tsx`) não tem importador; o único montado é o do sonner (`app/layout.tsx:127`) (§3, §12, div. 491) | **CONFIRMADA** (commit 3b, probe 4): nenhum toast em criar, renomear e apagar; no `DELETE` da setlist já apagada o diálogo *"Delete Setlist"* **fica aberto, sem texto** (`passo5-c2-404.png`) | `faseB/probe4-out/` |
+| **H-I1-6** | o Chrome desktop do G-faixa e o Chrome do Tab S6 dão a mesma quebra de linha nas mesmas larguras (fontes do pacote servidas pelo web, não do sistema) | **SEM OBJETO** — errata da I1-D14: não há Chrome do Tab S6 no aceite do web | — |
+| **H-I1-7** | `[Marcel, 2026-09-26]` cada volta do loop mudo faz um `GET /api/profile` **real**; o loop consome a cota de perfil do próprio usuário (`lib/user-rate-limit.ts:54`, 60 em 15 min) e "termina" com o usuário preso em `/login` com *"Failed to fetch profile"*. **Requisito da PR-1**: (a) navegar só depois do `2xx` do cookie; (b) falha com razão visível; (c) nenhuma nova tentativa automática — uma falha é uma tela, não uma volta; (d) o CN da PR-1 é o ramo b (`POST /api/auth/session` → 500, 60 s): hoje ≥ 50 voltas, depois 1 request e 1 frase; (e) o ramo c se repete na PR-1 com cota limpa | **CONFIRMADA** (commit 3b): ramo b (51 `GET /api/profile` reais em 60 s) + ramo c (a 61ª leitura levou `429` real — console `status of 429 ()`, tela *"Failed to fetch profile"*, `c-fim.png`) | `faseB/probe1-out/` |
 
 ---
 
@@ -870,6 +877,33 @@ texto genérico de `lib/firebase-errors.ts` (div. 515). Requests da rodada 2: 26
 1 `DELETE /api/auth/session` **FALSO** (no navegador), 1 `GET https://apis.google.com/js/api.js`
 **FALHA** (bloqueado pela CSP). Nenhum `POST`.
 
+**Commit 3b — a Fase B fechada.** Os probes 1 e 4 rodaram pelo Marcel (I1-D35), com os scripts
+deste anexo chamados por caminho absoluto a partir do checkout principal (o `cd` para a árvore não
+pegou no terminal do app). O probe 1 precisou de três rodadas; as duas primeiras falharam por
+defeito do script, não do app (divs. 520, 521), e ficam como rastro.
+
+| probe | quem | estado | escrita declarada | escrita medida | anexo |
+|---|---|---|---|---|---|
+| 1 — loop mudo | Marcel | **executado pelo Marcel** (3ª rodada, `EXIT 0`, os três ramos com login) | 0 | **0** (0 × 0) fora de `/api/auth/session` (`resumo.txt`); os 59 `POST /api/auth/session` dos ramos b/c e os 3 `DELETE` foram respondidos no navegador | `probe1-out/`; rastro `probe1-rodada1/`, `probe1-rodada2/` |
+| 2 — Google | executor | executado (commit 3a) | 0 | 0 | `probe2-out/` |
+| 4 — toasts das setlists | Marcel | **executado pelo Marcel** (`EXIT 0`) | 1 `POST` · 1 `PUT` · 1 `DELETE` 200 · 1 `DELETE` 404 — **4** | **4**: `POST` **201** e `PUT` **200** `[medido: requests.txt]`; `DELETE` 200 e `DELETE` 404 **`[hipótese]`** — os dois passaram pelo filtro de escrita (orçamento terminou em `{0,0,0}`, nenhuma fora da lista) mas não entraram no `requests.txt` (div. 518); o 1º se infere pelo efeito (a setlist sai da lista no passo 4 e a prova final não a acha), o 2º pela razão (já apagada + diálogo aberto). Prova final: `GET /api/setlists` → 200, **0** com o id `9c6c0dfe-54ec-4566-8218-233e4e1f98f9` ou com os nomes `I1-probe4`/`I1-probe4 renomeada` — as 4 escritas desfeitas | `probe4-out/` |
+| 5 — largura no Tab S6 | — | **cancelado pela errata da I1-D14, não medido** | — | — | `probe5-roteiro.txt` (rastro) |
+
+**Probe 1, o resultado** (`probe1-out/resumo.txt`):
+
+| ramo | `POST /api/auth/session` | `GET /api/profile` (real) | navegações | ao fim |
+|---|---|---|---|---|
+| a — sem interceptação, 30 s | **0 no log** (div. 518) — e o `/dashboard` abriu com 200, o que exige o cookie | 3 | `/login` ×2 → `/dashboard` ×2 | fica em `/dashboard` |
+| b — `POST` → 500 no navegador, 60 s | 52 falsos | 51 | 104 a `/login` (~1 volta/s); 16 nos últimos 10 s | **não para**; tela *"Redirecting to dashboard..."* com spinner, sem mensagem (`b-fim.png`) |
+| c — `POST` → 429 no navegador, 60 s | 7 falsos | 6 no log + 1 que só o console mostra (`429 ()`, sem o texto dos falsos) | 14 | parou em ~8 s: *"Failed to fetch profile"* (`c-fim.png`) — o `GET /api/profile` levou **429 real** do servidor (div. 517) |
+
+**Probe 4, o resultado** (`probe4-out/resumo.txt`, capturas `passo1…5`): toast **nenhum** nos
+cinco passos; passo 4 (apagar no contexto 1): a setlist sai da lista, sem texto; passo 5 (apagar
+no contexto 2 a já apagada): *"diálogo aberto=["Delete Setlist Are you sure you want to delete
+"I1-probe4 renomeada"? …"]"* — o diálogo fica, sem mensagem, e a setlist continua na lista dessa
+aba. O status 404 desse `DELETE` é **inferido** (a setlist já não existia; o diálogo só fecha no
+sucesso, `setlist-manager.tsx:148`), não lido do log (div. 518) — `[hipótese]`.
+
 A tabela abaixo é a proposta do commit 1, mantida como estava.
 
 | # | probe | o que mede | contra o quê | garantia de zero escrita | o que bloqueia |
@@ -935,6 +969,17 @@ A tabela abaixo é a proposta do commit 1, mantida como estava.
 | **515** | A | — | com o Google quebrado, o login mostra só *"Something went wrong. Please try again."* (o fallback de `lib/firebase-errors.ts`) — a falha de CSP não chega à tela com nome | insumo da PR-2 (estado de falha do Google) |
 | **516** | T | §3: scripts de probe como anexo (`faseB/*.ts`), "só docs" | o `tsconfig.json` da raiz inclui `**/*.ts` e só exclui testes, `apps/**` e `packages/**`: os três scripts **entram no type-check do `next build`** do CI (`tsc -p tsconfig.json --noEmit --listFilesOnly \| grep -c I1-PRECHECK` → 3). O `probe4.ts:60` reprovava (`TS2532`, `noUncheckedIndexedAccess`) e foi corrigido antes do commit; `tsc` → 0 erros, `pnpm lint` limpo | anexo `.ts` em `docs/` é código para o CI; a PR-5 decide se `docs/**` sai do `include` |
 
+**Commit 3b — divergências 517 a 521** (numeração conferida pela coluna:
+`git grep -nE '^\| \*\*5[0-9][0-9]\*\* \| [A-Z]' docs | sort -t'*' -k3 -n | tail -3` → 514, 515, 516)
+
+| # | origem | o que o prompt (ou o doc) presumiu | o que foi medido | destino |
+|---|---|---|---|---|
+| **517** | T | probe 1, ramo c: medir o loop com o `POST /api/auth/session` em 429 | o ramo c **não mediu o 429 falso**: a cota real de `/api/profile` (60 em 15 min, `lib/user-rate-limit.ts:54`) chegou ao teto dentro do ramo (3 + 51 + 6 = 60), a 61ª leitura levou `429` real (console `status of 429 ()`) e a tela parou em *"Failed to fetch profile"* | repetir o ramo c na PR-1 com cota limpa (H-I1-7 (e)) |
+| **518** | T | os `requests.txt` dos probes 1 e 4 como lista completa | **furo do listener**: o `POST /api/auth/session` do ramo a (o `/dashboard` abriu com 200, o que exige o cookie), a 61ª leitura do ramo c (só no console) e os dois `DELETE` do probe 4 (passaram pelo filtro de escrita — orçamento `{0,0,0}` — e mudaram o estado) **não entraram no `requests.txt`**. Causa `[hipótese]`, pela leitura: o registro é **por `page`**, no `requestfinished` (`probe1.ts:80`, `probe4.ts:70`), num handler `async` que espera `r.response()` **antes** de gravar a linha (`probe1.ts:82`, `probe4.ts:72`) e não tem `try/catch` — se o `r.response()` rejeitar, a linha some sem aviso. Isso casa com o ramo a (a navegação cheia `window.location.href`, `login-panel.tsx:74`, descarta o documento enquanto a resposta do `POST` é lida) e com o ramo c (o `browser.close()` de `probe1.ts:117` logo depois da janela); **não explica** os dois `DELETE` do probe 4 (sem navegação nem fechamento perto). O status dos `DELETE` do probe 4 fica `[hipótese]` (200 pelo efeito, 404 pela razão) | **antes de qualquer reuso do script como CN da PR-1: controle positivo** — uma request conhecida aparece no log (regra 7). O script **não** se conserta nesta PR |
+| **519** | P | prompt do 3b: *"`git check-ignore -v .env.uxaudit` … o §1 do commit 3 mandava e o 3a não reportou"* | o 3a reportou: §14, "Commit 3a", *"`git check-ignore -v .env.uxaudit` → `.gitignore:23:.env*	.env.uxaudit` (ignorado)"*. Medido de novo nesta árvore: `git check-ignore -v .env.uxaudit` → `.gitignore:23:.env*	.env.uxaudit`, exit 0 | nenhum — ignorado pelo padrão `.env*` |
+| **520** | T | probe 1, 1ª rodada do Marcel | parou em *"ramo a"* com `page.goto: Timeout 60000ms exceeded … waiting until "networkidle"` — antes do login (nenhuma senha digitada); o script não gravava `requests.txt` na falha, então o que saiu não está provado: o pior caso é um `DELETE /api/auth/session` real (só cookie, §10). Script corrigido (espera o `#email`, `DELETE` respondido no navegador, log também na falha) | rastro em `faseB/probe1-rodada1/` |
+| **521** | T | probe 1, 2ª rodada do Marcel | `EXIT 0` **sem login** em nenhum ramo: os campos foram preenchidos antes da hidratação do React e voltaram a `""` (ramo a: *"Please enter a valid email address."*, 400 do Firebase; b/c: *"Please fill out this field."*) — o `exit 0` enganava. Script corrigido: espera o React ligar o campo, confere os valores, e ramo sem `GET /api/profile` passa a `exit 1` | rastro em `faseB/probe1-rodada2/` |
+
 ---
 
 ## 16. Contabilidade desta PR
@@ -977,6 +1022,21 @@ A tabela abaixo é a proposta do commit 1, mantida como estava.
 | login | **0** |
 | `adb` | **0** |
 | código | os três scripts de probe em `docs/ux/I1-PRECHECK-anexos/faseB/` (`probe1.ts`, `probe2.ts`, `probe4.ts`) — anexo, fora de `app/`/`lib/`/`components/`/`apps/native`/`packages/`; `tsc --noEmit` limpo sobre os três |
+
+**Commit 3b** (2026-09-26) — contagens pelos `requests.txt` (`grep -v '^#' | awk` por método × falso/real × `/api/*`), **com a ressalva do furo do listener** (div. 518): são pisos, não totais.
+
+| item | valor |
+|---|---|
+| requests a prod — probe 2 | 52 `GET` reais (já no commit 3a) |
+| requests a prod — probe 1, 1ª rodada | **sem registro** (div. 520); pior caso: o `GET /login` e 1 `DELETE /api/auth/session` real (só cookie) |
+| requests a prod — probe 1, 2ª rodada | 78 `GET` reais (páginas e estáticos); 3 `DELETE /api/auth/session` falsos (não saíram); 0 a `/api/*` reais — o login não aconteceu (div. 521) |
+| requests a prod — probe 1, 3ª rodada (a que vale) | 1589 `GET` reais de página/estático · **60 `GET /api/profile`** reais no log **+ 1** que só o console mostra (o `429`) · 59 `POST /api/auth/session` e 3 `DELETE` **falsos** (não saíram) · e **≥ 1 `POST /api/auth/session` real** do ramo a que o log não tem (o cookie que abriu o `/dashboard`) |
+| requests a prod — probe 4 | 181 `GET` de página/estático · 11 `GET /api/*` · 1 `POST /api/setlists` (201) · 1 `PUT` (200) · **2 `DELETE /api/setlists/[id]`** fora do log (div. 518) · os 2 `DELETE /api/auth/session` do log (`200`) são os **falsos** do navegador (o `probe4.ts` não os rotula `FALSO`) · e os 2 `POST /api/auth/session` dos dois logins, fora do log |
+| escritas em prod | **4, todas da conta de audit, todas desfeitas** (probe 4: criar, renomear, apagar; o 4º `DELETE` não escreve) |
+| **cota de `/api/profile` da conta de audit** | **consumida 60/60 (15 min) pelo probe 1 — efeito em prod sem escrita**; a 61ª leitura levou `429` real. O probe 4 rodou depois da janela (15h13 UTC, o probe 1 terminou 14h56 UTC) |
+| `.env*` abertos pelo executor | **0** (os scripts do Marcel leram o `.env.uxaudit`) |
+| execuções dos scripts de login pelo executor | **0** |
+| código | os `probe1.ts`/`probe4.ts` foram corrigidos **entre** as rodadas (divs. 520, 521), antes deste commit; a versão commitada é a que gerou `probe1-out/` e `probe4-out/`. Nenhuma linha fora de `docs/ux/` |
 
 ---
 

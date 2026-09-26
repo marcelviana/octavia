@@ -36,6 +36,7 @@ if (!envPath) { console.error('PARADA: .env.uxaudit não encontrado (use UXAUDIT
 config({ path: envPath, quiet: true })
 const EMAIL = process.env.USER_AUDIT, SENHA = process.env.PASSWORD_AUDIT
 if (!EMAIL || !SENHA) { console.error('PARADA: USER_AUDIT/PASSWORD_AUDIT ausentes no .env.uxaudit'); process.exit(1) }
+if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(EMAIL)) { console.error('PARADA: USER_AUDIT não tem forma de email (aspas ou espaço no .env.uxaudit?) — valor não impresso'); process.exit(1) }
 
 const t0 = Date.now()
 const ms = () => String(Date.now() - t0).padStart(7)
@@ -48,6 +49,7 @@ async function ramo(nome: 'a' | 'b' | 'c', segundos: number, falso?: 500 | 429) 
   const browser = await chromium.launch({ channel: 'chrome', headless: !process.env.HEADED })
   const ctx: BrowserContext = await browser.newContext({ viewport: { width: 1138, height: 800 } })
   const falsos = new WeakSet<Request>()
+  const falsosDel = new WeakSet<Request>() // o DELETE que o /login deslogado dispara sozinho — respondido no navegador (div. 511)
   const conta: Record<string, number> = {}
   const navs: string[] = []
   const soma = (k: string) => { conta[k] = (conta[k] ?? 0) + 1 }
@@ -64,6 +66,10 @@ async function ramo(nome: 'a' | 'b' | 'c', segundos: number, falso?: 500 | 429) 
           body: JSON.stringify({ error: falso === 429 ? 'Too many requests' : 'Internal server error' }),
         })
       }
+      if (m === 'DELETE') {
+        falsosDel.add(r)
+        return route.fulfill({ status: 200, contentType: 'application/json', body: '{"success":true}' })
+      }
       return route.continue()
     }
     parada = `ramo ${nome}: escrita não declarada ${m} ${u.pathname}`
@@ -73,18 +79,25 @@ async function ramo(nome: 'a' | 'b' | 'c', segundos: number, falso?: 500 | 429) 
   const page = await ctx.newPage()
   page.on('requestfinished', async (r) => {
     const u = new URL(r.url())
-    const st = falsos.has(r) ? `FALSO-${falso}` : String((await r.response())?.status() ?? '-')
+    const st = falsos.has(r) ? `FALSO-${falso}` : falsosDel.has(r) ? 'FALSO' : String((await r.response())?.status() ?? '-')
     if (u.host === 'octavia.rocks') reqs.push(`${ms()}  ${nome}  ${r.method().padEnd(6)} ${st.padEnd(9)} ${u.pathname}`)
-    if (u.pathname === '/api/auth/session') soma(`${r.method()} /api/auth/session ${falsos.has(r) ? '(falso, não chegou a prod)' : '(real)'}`)
+    if (u.pathname === '/api/auth/session') soma(`${r.method()} /api/auth/session ${falsos.has(r) || falsosDel.has(r) ? '(falso, não chegou a prod)' : '(real)'}`)
     if (u.pathname === '/api/profile') soma(`${r.method()} /api/profile`)
   })
   page.on('requestfailed', (r) => { const u = new URL(r.url()); if (u.host === 'octavia.rocks') reqs.push(`${ms()}  ${nome}  ${r.method().padEnd(6)} FALHA     ${u.pathname} ${r.failure()?.errorText ?? ''}`) })
   page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') cons.push(`${ms()}  ${nome}  ${m.type().padEnd(7)} ${m.text().slice(0, 400)}`) })
   page.on('framenavigated', (f) => { if (f === page.mainFrame()) { const p = new URL(f.url()).pathname; navs.push(`${ms()} ${p}`); soma(`navegação ${p}`) } })
 
-  await page.goto(`${BASE}/login`, { waitUntil: 'networkidle', timeout: 60_000 })
+  // commit 3b: 'networkidle' estourou 60 s na 1ª rodada do Marcel; espera-se o campo, não a rede parada
+  await page.goto(`${BASE}/login`, { waitUntil: 'domcontentloaded', timeout: 60_000 })
+  await page.locator('#email').waitFor({ state: 'visible', timeout: 60_000 })
+  // commit 3b (2ª rodada do Marcel): preencher ANTES da hidratação do React perde o valor — o input
+  // controlado volta a "" (ramo a: "Please enter a valid email address."; b/c: "Please fill out this field.").
+  // Espera o React ligar os handlers no campo; preenche; confere que ficou (sem imprimir valor).
+  await page.waitForFunction(() => { const e = document.querySelector('#email'); return !!e && Object.keys(e).some((k) => k.startsWith('__reactProps')) }, null, { timeout: 60_000 })
   await page.locator('#email').fill(EMAIL!)
   await page.locator('#password').fill(SENHA!)
+  if ((await page.locator('#email').inputValue()) !== EMAIL || (await page.locator('#password').inputValue()).length !== SENHA!.length) throw new Error('os campos de login não guardaram o valor preenchido')
   const inicio = Date.now()
   await page.locator('button[type="submit"]').click()
   // máscara: o email da audit nunca aparece nas capturas (campo de login e cabeçalho)
@@ -97,6 +110,8 @@ async function ramo(nome: 'a' | 'b' | 'c', segundos: number, falso?: 500 | 429) 
     if (++n % 15 === 0) await page.screenshot({ path: path.join(OUT, `${nome}-${String(n).padStart(2, '0')}s.png`), mask }).catch(() => {})
   }
   await page.screenshot({ path: path.join(OUT, `${nome}-fim.png`), mask }).catch(() => {})
+  // um ramo sem nenhum GET /api/profile não logou (o login-panel.tsx:44 o faz a todo usuário) — não mediu nada
+  if (!parada && !conta['GET /api/profile']) parada = `ramo ${nome}: o login não aconteceu (0 GET /api/profile) — ver ${nome}-fim.png`
   const tela = (await page.locator('[role="alert"]').allInnerTexts().catch(() => [])).join(' | ')
   const url = page.url()
   await browser.close()
@@ -131,6 +146,8 @@ async function main() {
 }
 
 main().catch((e) => {
+  fs.writeFileSync(path.join(OUT, 'requests.txt'), `# probe 1 — requests até a parada (ms · ramo · método · status · caminho)\n${reqs.join('\n')}\n`)
+  fs.writeFileSync(path.join(OUT, 'console.txt'), `# probe 1 — console até a parada\n${cons.join('\n')}\n`)
   fs.writeFileSync(path.join(OUT, 'resumo.txt'), `# probe 1 — EXIT 1 em "${passo}": ${String(e?.message ?? e).replaceAll(SENHA!, '<omitido>').replaceAll(EMAIL!, '<omitido>')}\n`)
   console.error(`probe 1: exit 1 em "${passo}"`)
   process.exit(1)
