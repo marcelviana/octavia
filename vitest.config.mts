@@ -63,6 +63,20 @@ export default defineConfig({
           exclude: ['node_modules/**'],
         },
       },
+      // I1-PR-4 (commit 1): `packages/identidade` — tokens e ícones que web e
+      // nativo dividem (I1-D3). Node puro, como o `core`. Os testes vivem em
+      // `test/`, fora de `src/`: o `igualdade.test.ts` lê o nativo por caminho
+      // relativo, e o `src/` do pacote não pode importar nada do app.
+      {
+        test: {
+          name: 'identidade',
+          environment: 'node',
+          setupFiles: [],
+          globals: false,
+          include: ['packages/identidade/test/**/*.test.ts'],
+          exclude: ['node_modules/**'],
+        },
+      },
       // W1 (commit 1): o terceiro projeto — `apps/native`. Até aqui NENHUM
       // teste de unidade cobria o nativo (`exclude: ['apps/**']` acima), e é
       // por isso que a garantia offline pôde ser falsa sem nada acusar. O
