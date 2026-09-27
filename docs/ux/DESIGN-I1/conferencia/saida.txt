@@ -1,4 +1,4 @@
-$ node --no-warnings docs/ux/DESIGN-I1/conferencia/conferir.mjs   # Node v22.23.1, árvore efde410 + esta PR
+$ node --no-warnings docs/ux/DESIGN-I1/conferencia/conferir.mjs   # Node v22.23.1, commit 2 (erratas I1-E1…E5)
 # Conferência DESIGN-I1 — docs/ux/DESIGN-I1
 
 ## (a) cores — 15 valores no theme.ts (dark ∪ light)
@@ -127,7 +127,7 @@ Matriz: 179 linhas de estado; cruzamento: 191 linhas; por classe: inalc 36 · S 
 | 7-upload | S 14 · S-dec 1 · base 5 |
 | 8-setlists | S 14 · S-dec 4 · base 2 · decidido 1 |
 
-Requisitos no README.md: 282 T-I1-R para 141 estados × 2 faixas
+Requisitos no README.md: 286 T-I1-R para 141 estados × 2 faixas
 
 ## (e) frases
 
@@ -149,7 +149,7 @@ linhas de frase lidas no §5 (sem §5.4): 196 · com marca de inglês fora das a
 | 6: "Salvando…" em EDIT-salvando | 1 |  |
 | 7: "Salvando…" em UP-salvando | 1 |  |
 
-## Achados: 18
+## Achados: 19
 
 - (b) 0-linha-de-aviso: 20 → "entrelinha da LinhaDeAviso" não resolve em token, derivado ou literal com origem
 - (b) 1-auth: 20 → "entrelinha da LinhaDeAviso" não resolve em token, derivado ou literal com origem
@@ -169,4 +169,15 @@ linhas de frase lidas no §5 (sem §5.4): 196 · com marca de inglês fora das a
 - (c) forma sem desenho no dados.ts (10× nas folhas 0,1,4,7): <circle cx="12" cy="12" r="8.5"></circle><path d="M8.4 12.3l2.5 2.5 4.7-5"></path>
 - (c) forma sem desenho no dados.ts (50× nas folhas 6,7,8): <path d="M4.5 12.5l5 5 10-11"></path>
 - (d) estado alcançável sem seção: upload/criação · carregando — parse do lote — período de carga alcançável sem seção — div. 587
+- (d) README.md: 286 T-I1-R × 282 esperados
 exit=1
+
+# ---- anotação (não é saída do script): achado × o que o cobre ----
+# 1–2, 9–14  (b) 20 "entrelinha da LinhaDeAviso" em 0, 1, 4, 5, 6, 7, 8 e no §2.3 (8 achados)  → I1-E5
+# 3–8        (b) 2-landing: 2 e 3 "undefined" (6 achados)                                        → I1-E4
+# 15         (c) "visto" fora do dados.ts por nome                                               → decisão 588 (PR-4)
+# 16         (c) forma garantida r 8,5 (10×, folhas 0, 1, 4, 7)                                  → I1-E3 (decisão 589)
+# 17         (c) forma do visto (50×, folhas 6, 7, 8)                                            → decisão 588 (PR-4)
+# 18         (d) parse do lote alcançável sem seção                                              → I1-E2
+# 19         (d) README.md: 286 T-I1-R × 282 esperados (os 4 por errata)                          → I1-E1 + I1-E2
+# total 19 = 8 + 6 + 1 + 1 + 1 + 1 + 1; nenhum achado sem cobertura; nenhuma divergência nova da conferência.
