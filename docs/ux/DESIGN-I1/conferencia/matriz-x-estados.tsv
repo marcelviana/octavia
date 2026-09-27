@@ -1,0 +1,205 @@
+# Cruzamento: linhas de docs/ux/I1-PRECHECK-anexos/matriz-estados.txt × <section data-estado> das nove folhas.
+# Escrito à mão (é leitura, não medição); o conferir.mjs cobra que (1) toda linha de estado da matriz está aqui,
+# (2) toda seção citada existe na folha, (3) toda seção de estado das folhas aparece aqui. Classes:
+#   S        alcançável na matriz, com seção
+#   S-dec    a matriz não o alcança (INALCANÇÁVEL? / "não há" / sem texto); a folha o desenha por decisão
+#   destino  sucesso ou redirect: o que se vê é a seção de destino
+#   fora-dec alcançável, fora da folha por decisão registrada
+#   fora-I1  morreu no corte da I1-PR3 (I1-D18/I1-D19)
+#   inalc    inalcançável ou "não há no código", sem seção
+#   improv   "improvável" na matriz, sem seção
+#   DIV      alcançável, sem seção e sem decisão — divergência
+#   base · variante · componente · decidido   seção sem linha na matriz (tela "—")
+# Colunas: tela da matriz · estado da matriz · classe · seções (separadas por vírgula) · origem/razão
+tela	estado	classe	secoes	razao
+Login	vazio	inalc		não há no código
+Login	carregando (submit)	S	AUTH-login-entrando
+Login	carregando (Google)	S	AUTH-login-google
+Login	carregando (pós-login, criando/lendo perfil)	S	AUTH-login-redirecionando
+Login	erro — credencial	S	AUTH-login-credencial
+Login	erro — limite	S	AUTH-login-limite,AUTH-login-limite-prazo	resposta 4 (com e sem prazo)
+Login	erro — rede	S	AUTH-login-rede
+Login	erro — Google popup	S	AUTH-login-google-erro	resposta 5
+Login	erro — Firebase não configurado	S	AUTH-login-nao-configurado	só com config ausente
+Login	erro — sem token pós-login	S	AUTH-login-sem-token	resposta 4
+Login	erro — /api/profile 401 após retry	S	AUTH-login-perfil-401
+Login	erro — /api/profile outro status (404/429/5xx)	S	AUTH-login-servidor,AUTH-login-limite,AUTH-login-limite-prazo	nota de AUTH-login-servidor: o 429 vai para -limite
+Login	erro — criar perfil falhou	S	AUTH-login-servidor
+Login	erro — `?error_description=` na URL	inalc		INALCANÇÁVEL? na matriz
+Login	validação	S	AUTH-login-validacao
+Login	sucesso	destino	DASH	redirect ao /dashboard
+Signup	vazio	inalc		não há no código
+Signup	carregando	S	AUTH-signup-criando
+Signup	validação — senhas diferentes	S	AUTH-signup-senhas
+Signup	validação — campos	S	AUTH-signup-validacao
+Signup	erro — e-mail já usado	S	AUTH-signup-email-usado
+Signup	erro — senha fraca	S	AUTH-signup-senha-fraca	só se passar do minLength
+Signup	erro — rede	S	AUTH-signup-rede
+Signup	erro — 429	S	AUTH-signup-limite
+Signup	erro — perfil no Supabase falhou (POST /api/profile !ok, inclui 429/5xx)	S	AUTH-signup-perfil
+Signup	erro — exceção	S	AUTH-signup-excecao
+Signup	sucesso	destino	AUTH-confirm	redirect ao /signup/confirm-email
+Confirm email	carregando (reenviar)	S	AUTH-confirm-enviando
+Confirm email	erro — reenviar	S	AUTH-confirm-erro,AUTH-confirm-erro-rede,AUTH-confirm-excecao	resposta 6 (429 · rede · genérico)
+Confirm email	erro — sem usuário	S	AUTH-confirm-sem-usuario
+Confirm email	erro — exceção	S	AUTH-confirm-excecao
+Confirm email	sucesso	S	AUTH-confirm-sucesso
+Verify email	carregando (auth)	S	AUTH-verify-carregando	resposta 14 (era tela em branco)
+Verify email	carregando (checar)	S	AUTH-verify-checando
+Verify email	carregando (reenviar)	S	AUTH-verify-enviando
+Verify email	erro — ainda não verificado	S	AUTH-verify-nao-verificado
+Verify email	erro — checar falhou	S	AUTH-verify-checar-falhou
+Verify email	erro — reenviar	S	AUTH-verify-reenviar-erro,AUTH-verify-reenviar-limite	rede e 429; o genérico (page.tsx:32) não tem seção — div. 586
+Verify email	sucesso — reenviado	S	AUTH-verify-reenviado
+Verify email	sucesso — verificado	destino	DASH	redirect ao /dashboard
+Forgot password	carregando	S	AUTH-forgot-enviando
+Forgot password	erro — não configurado	S	AUTH-forgot-indisponivel	só com config ausente
+Forgot password	erro — Firebase (rede, 429, e-mail inválido…)	S	AUTH-forgot-erro	motivo.generico (resposta 6)
+Forgot password	validação	S	AUTH-forgot-validacao
+Forgot password	sucesso	S	AUTH-forgot-sucesso
+Biblioteca	carregando — chunk	S	LIB-carregando-chunk
+Biblioteca	carregando — dados	S	LIB-carregando
+Biblioteca	carregando — revalidação com lista na tela	fora-dec		nota de LIB-carregando: "continua sem" indicador
+Biblioteca	vazio — primeira vez	S	LIB-vazio
+Biblioteca	vazio — com busca/filtro	S	LIB-vazio-busca
+Biblioteca	erro — rede/401/429/5xx no fetch do cliente	S	LIB-erro	hoje vira vazio; a folha separa
+Biblioteca	erro — página fora do range	fora-dec		sem estado visível (volta à página 1); nada a desenhar
+Biblioteca	erro — SSR (`getUserContentPageServer` lança)	fora-dec		resposta 30 (tela padrão, sem desenho)
+Biblioteca	erro — render	S	LIB-erro	nota de LIB-erro: a mesma linha com "algo deu errado"
+Biblioteca	erro — apagar (auth)	inalc		INALCANÇÁVEL? na matriz
+Biblioteca	erro — apagar (404)	inalc		INALCANÇÁVEL? na matriz
+Biblioteca	erro — apagar (outros)	inalc		INALCANÇÁVEL? na matriz
+Biblioteca	erro — favoritar	inalc		INALCANÇÁVEL? na matriz
+Biblioteca	confirmação — apagar	S	LIB-apagar
+Biblioteca	sucesso — apagar	fora-dec		resposta 7 (a lista já mudou)
+Biblioteca	sucesso — favoritar	fora-dec		resposta 7 (a lista já mudou)
+Biblioteca	limite — página	S	LIB-vazio	nota de LIB-vazio: paginação some (≤ 1 página)
+Biblioteca	sem rede	inalc		não há no código
+Biblioteca	validação	inalc		não há no código
+Dashboard	carregando	inalc		não há no código
+Dashboard	vazio — recentes	S	DASH-vazio
+Dashboard	vazio — favoritos	S	DASH-vazio-favoritas
+Dashboard	vazio — contadores	S	DASH-vazio
+Dashboard	erro — conteúdo (DB)	S	DASH-erro	hoje vira vazio; a folha separa (resposta 17)
+Dashboard	erro — stats	S	DASH-erro	hoje vira zero; contador em "—"
+Dashboard	erro — SSR lança (ex. usuário nulo)	fora-dec		resposta 30
+Dashboard	sem rede / validação / limite / sucesso	inalc		não há no código
+Visualização	carregando — página	inalc		não há no código
+Visualização	carregando — arquivo (Sheet)	S	VIEW-carregando-arquivo
+Visualização	carregando — PDF	S	VIEW-carregando-pdf
+Visualização	vazio — Sheet sem arquivo nem notação	S	VIEW-vazio-partitura
+Visualização	vazio — Lyrics	S	VIEW-vazio-letra
+Visualização	vazio — Tab	S	VIEW-vazio-tab	frase nova N4
+Visualização	vazio — Chords	S	VIEW-vazio-cifra	frase nova N5
+Visualização	vazio — notas	S	VIEW-letra	nota de VIEW-letra (notas vazias)
+Visualização	erro — 404 / de outro usuário	fora-dec		resposta 30
+Visualização	erro — cache do arquivo	S	VIEW-erro-cache
+Visualização	erro — formato	S	VIEW-erro-formato
+Visualização	erro — PDF	S	VIEW-erro-pdf	resposta 18
+Visualização	erro — render	S	VIEW-erro-render
+Visualização	editar (inline)	inalc		INALCANÇÁVEL? na matriz
+Visualização	erro — salvar edição inline	inalc		INALCANÇÁVEL? na matriz
+Visualização	apagar — diálogo	inalc		INALCANÇÁVEL? na matriz; e resposta 28
+Visualização	apagar — sucesso/erro	inalc		INALCANÇÁVEL? na matriz
+Visualização	favoritar	fora-dec		resposta 20 (Favoritar sai da visualização)
+Visualização	sem rede	inalc		não há no código
+Visualização	sucesso	inalc		não há no código
+Edição	carregando — auth	S	EDIT-carregando-auth
+Edição	carregando — conteúdo	S	EDIT-carregando
+Edição	carregando — chunk	S	EDIT-carregando-editor
+Edição	sem usuário	S	EDIT-sem-usuario	resposta 14
+Edição	erro — carregar (404, 401, 429, 5xx, rede)	S	EDIT-erro-rede,EDIT-erro-auth,EDIT-erro-limite,EDIT-erro-servidor,EDIT-404	por espécie (resposta 6)
+Edição	erro — conteúdo nulo	S	EDIT-404
+Edição	alterações pendentes	S	EDIT-cifra	resposta 21
+Edição	salvar desabilitado	S	EDIT-sem-mudancas	frase nova N6
+Edição	carregando — salvar	S-dec	EDIT-salvando	resposta 22
+Edição	erro — salvar (404/401/429/5xx/validação)	S	EDIT-salvar-erro
+Edição	sucesso — salvar	destino	LIB-salvo	resposta 7
+Edição	validação (título vazio etc.)	inalc		não há no código
+Edição	tipo sem editor	inalc		INALCANÇÁVEL? na matriz
+Edição	"Last saved"	fora-dec		nota de EDIT-cifra: texto falso, sai
+Edição	sem rede	inalc		não há no código
+upload/criação	carregando — auth	S	UP-carregando
+upload/criação	carregando — chunk	S	UP-carregando
+upload/criação	sem usuário	S	UP-carregando	resposta 14
+upload/criação	vazio	inalc		não há no código
+upload/criação	carregando — upload	S	UP-enviando
+upload/criação	carregando — parse do lote	DIV		período de carga alcançável sem seção — div. 587
+upload/criação	carregando — salvar	S	UP-salvando
+upload/criação	carregando — importar lote	S	UP-lote-importando
+upload/criação	validação — extensão	S	UP-extensao
+upload/criação	validação — título (criar)	S	UP-criar-validacao
+upload/criação	validação — título/artista (metadados)	S-dec	UP-detalhes-inativo	nota de UP-detalhes-inativo
+upload/criação	limite — tamanho de arquivo	S	UP-limite	frase nova N8
+upload/criação	erro — upload 401 / sem token	S	UP-envio-servidor
+upload/criação	erro — upload 429	S	UP-envio-servidor
+upload/criação	erro — upload 5xx	S	UP-envio-servidor
+upload/criação	erro — upload sem URL	S	UP-envio-servidor	"raro" na matriz; nota de UP-envio-servidor
+upload/criação	erro — upload rede	S	UP-envio-rede
+upload/criação	erro — lote sem músicas	S	UP-lote-vazio
+upload/criação	erro — parse do lote	S	UP-lote-vazio	variante da nota
+upload/criação	erro — salvar (401/429/400/5xx/rede)	S	UP-salvar-erro
+upload/criação	erro — salvar (cópia no hook)	fora-dec		resposta 24 (defeito, não se desenha)
+upload/criação	sem rede — salvar	S	UP-salvar-erro	a fila offline morreu na I1-PR3: sem rede é falha
+upload/criação	erro — lote, tipo inválido	improv		"improvável" na matriz
+upload/criação	erro — lote, salvar	S	UP-lote-erro
+upload/criação	sucesso — item (form)	S	UP-pronto	nota de UP-pronto: a mesma notícia
+upload/criação	sucesso — item (passo 3)	S	UP-pronto
+upload/criação	sucesso — lote	S	UP-lote-sucesso
+upload/criação	sucesso — lote (passo 3)	inalc		INALCANÇÁVEL? na matriz
+upload/criação	redirect sem id	improv		"improvável" na matriz
+setlists-lista	carregando — auth	S	SET-carregando
+setlists-lista	carregando — chunk	S	SET-carregando
+setlists-lista	carregando — auth (2ª guarda)	inalc		INALCANÇÁVEL? na matriz
+setlists-lista	carregando — dados	S	SET-carregando-dados	três blocos sem texto (nota)
+setlists-lista	vazio	S	SET-vazio
+setlists-lista	erro — rede/401/429/5xx sem cache	S	SET-erro
+setlists-lista	sem rede sem cache	S	SET-erro
+setlists-lista	sem rede com cache	fora-I1		o cache offline morreu na I1-PR3 (hooks/use-setlist-data.ts:49)
+setlists-lista	erro — exceção geral	S	SET-erro	nota de SET-erro
+setlists-lista	erro — sem uid	inalc		INALCANÇÁVEL? na matriz
+setlists-lista	nenhuma selecionada	S	SET-nenhuma
+setlists-lista	validação — criar/editar (nome vazio)	S	SET-criar-validacao	frase nova N7
+setlists-lista	carregando — criar/editar	S	SET-criar-salvando
+setlists-lista	erro — criar/editar (401/429/400/5xx/rede)	S-dec	SET-criar-erro	falha das setlists (toast invisível hoje)
+setlists-lista	sucesso — criar	inalc		INALCANÇÁVEL? na matriz (a lista atualiza)
+setlists-lista	sucesso — editar	inalc		INALCANÇÁVEL? na matriz
+setlists-lista	confirmação — apagar	S	SET-apagar
+setlists-lista	erro — apagar	S-dec	SET-apagar-erro	falha das setlists; resposta 25
+setlists-lista	sucesso — apagar	inalc		INALCANÇÁVEL? na matriz (o item some)
+setlists-lista	compartilhar	inalc		INALCANÇÁVEL? na matriz
+setlists-lista	limite	inalc		não há no código
+setlists-edição	vazio — setlist sem músicas	S	SET-sem-musicas
+setlists-edição	performance desabilitada	fora-I1		o palco saiu do web na I1-PR3
+setlists-edição	adicionar — carregando lista	inalc		INALCANÇÁVEL? na matriz
+setlists-edição	adicionar — vazio	S	SET-adicionar-vazio	frase nova N10
+setlists-edição	adicionar — busca sem resultado	S	SET-adicionar-busca
+setlists-edição	adicionar — carregando	S	SET-adicionar-enviando
+setlists-edição	adicionar — erro (401/429/5xx/rede)	S-dec	SET-adicionar-erro	falha das setlists; resposta 26
+setlists-edição	adicionar — sucesso	inalc		INALCANÇÁVEL? na matriz
+setlists-edição	remover — confirmação	inalc		não há no código
+setlists-edição	remover — botão	S	SET	nota de SET: sempre visível
+setlists-edição	remover — erro	S-dec	SET-remover-erro	falha das setlists
+setlists-edição	remover — sucesso	inalc		INALCANÇÁVEL? na matriz
+setlists-edição	reordenar	fora-dec		resposta 27 (a alça sai; ordem fixa)
+setlists-edição	editar metadados	S	SET-criar	nota de SET-criar: editar é o mesmo diálogo
+setlists-edição	sem rede	inalc		não há no código
+setlists-edição	limite	inalc		não há no código
+outras	app/profile	fora-I1		I1-D19
+outras	app/settings	fora-I1		I1-D19
+outras	app/offline	fora-I1		I1-D18/I1-D19
+outras	app/setup	fora-I1		I1-D19
+outras	app/privacy-policy	S	PRIVACY
+outras	app/page.tsx — home	S	LANDING
+—	—	componente	AVISO-falha,AVISO-falha-sem-acao,AVISO-rede,AVISO-limite,AVISO-sucesso,AVISO-detalhe,AVISO-longo,AVISO-dialogo-apagar	a LinhaDeAviso (F4 do README-design §8); a matriz não tem componente
+—	—	base	AUTH-login,AUTH-signup,AUTH-confirm,AUTH-verify,AUTH-forgot	estado nominal da tela; a matriz lista só os desvios
+—	—	base	DASH,LIB	estado nominal da tela
+—	—	variante	LIB-filtros,LIB-mais	menu aberto (controle da tela)
+—	—	decidido	SESSAO-nao-renovada	resposta 4 (aviso de topo fora do /login)
+—	—	decidido	LIB-salvo	resposta 7 (destino do sucesso de salvar do editor, acima)
+—	—	base	VIEW-cifra,VIEW-tab,VIEW-partitura	estado nominal por tipo (VIEW-letra está acima)
+—	—	variante	VIEW-partitura-cheia	tela cheia do visualizador (fica, pelo brief)
+—	—	base	EDIT-tab,EDIT-letra	estado nominal por tipo (EDIT-cifra está acima)
+—	—	base	UP-como,UP-arquivo,UP-detalhes,UP-criar,UP-lote	passos do fluxo
+—	—	base	SET,SET-adicionar	lista + setlist aberta; picker aberto
+—	—	decidido	SET-ja-apagada	falha das setlists (404; N2-D12)
