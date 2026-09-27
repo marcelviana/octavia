@@ -53,6 +53,11 @@ async function primeiroContent(page: Page, base: URL): Promise<string | null> {
 
 export const SUPERFICIES: Superficie[] = [
   { id: 'login', rota: '/login', sessao: false, publica: true, folha: '1-auth', implementada: false, estados: { base: {} } },
+  // I1-PR6: as outras telas de auth que não pedem sessão (o "antes" medido pelo executor, sem login)
+  { id: 'signup', rota: '/signup', sessao: false, publica: true, folha: '1-auth', implementada: false, estados: { base: {} } },
+  { id: 'forgot-password', rota: '/forgot-password', sessao: false, publica: true, folha: '1-auth', implementada: false, estados: { base: {} } },
+  // sem usuário a página renderiza (só some a linha do e-mail): a base se mede sem conta
+  { id: 'confirm-email', rota: '/signup/confirm-email', sessao: false, publica: true, folha: '1-auth', implementada: false, estados: { base: {} } },
   // as duas públicas da I1-D19 (fora da lista do CN do prompt; entram porque são superfícies do I1 e não pedem sessão)
   { id: 'landing', rota: '/', sessao: false, publica: true, folha: '2-landing', implementada: false, estados: { base: {} } },
   { id: 'privacy-policy', rota: '/privacy-policy', sessao: false, publica: true, folha: '3-privacy-policy', implementada: false, estados: { base: {} } },

@@ -13,7 +13,8 @@
 //     FONTE nem de ESPAÇAMENTO numérico fora das custom properties de
 //     `app/styles/identidade.css` (usar `var(--…)`), e nenhum LITERAL EM
 //     INGLÊS em posição de texto (I1-D17) — o molde do `gate:a20` do nativo
-//     (`apps/native/scripts/a20.mjs`), com as posições do JSX do web.
+//     (`apps/native/scripts/a20.mjs`), com as posições do JSX do web; e
+//     nenhum TOAST (`toast(…)`, `toast.x(…)`, `useToast`; I1-D26, I1-PR6).
 // O "CSS gerado == fonte" é o `packages/identidade/test/css.test.ts`, que o
 // job do G-tok roda à parte (gates-web.yml).
 //
@@ -107,6 +108,9 @@ const POSICOES = [
   { nome: "literal JSX {'…'}", re: /\{\s*(?:"([^"]*)"|'([^']*)'|`([^`$]*)`)\s*\}/g },
   { nome: "atributo", re: /\b(?:aria-label|placeholder|title|alt)\s*=\s*(?:"([^"]*)"|\{\s*'([^']*)'\s*\}|\{\s*"([^"]*)"\s*\}|\{\s*`([^`$]*)`\s*\})/g },
 ]
+// I1-D26 (div. 634) [I1-PR6]: nenhum toast entra — a falha é a `LinhaDeAviso` da folha. Num arquivo
+// da lista, a CHAMADA (`toast(…)`, `toast.error(…)`, …) ou o hook (`useToast`) reprova.
+const TOAST = /\btoast\s*(?:\.\s*\w+\s*)?\(|\buseToast\b/g
 const semComentarios = (s) => s.replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "))
   .replace(/(^|[^:"'`])\/\/[^\n]*/g, (m, p) => p + " ".repeat(m.length - p.length))
 const linha = (src, i) => src.slice(0, i).split("\n").length
@@ -117,7 +121,7 @@ function arquivos() {
   if (!fs.existsSync(LISTA)) { console.error(`g-tok: lista ausente: ${LISTA}`); process.exit(2) }
   const lista = fs.readFileSync(LISTA, "utf8").split("\n").map((l) => l.trim()).filter((l) => l && !l.startsWith("#"))
   if (lista.length === 0) { console.log("  (lista vazia — nenhum arquivo redesenhado ainda)"); return }
-  let literais = 0, textos = 0
+  let literais = 0, textos = 0, toasts = 0
   for (const f of lista) {
     if (!fs.existsSync(f)) { falha(`${f}: está na lista e não existe`); continue }
     const src = semComentarios(fs.readFileSync(f, "utf8"))
@@ -126,6 +130,9 @@ function arquivos() {
       if (vistos.has(`${classe}@${m.index}`)) continue
       vistos.add(`${classe}@${m.index}`)
       literais++; falha(`${f}:${linha(src, m.index)} [${classe}] ${JSON.stringify(m[0])} — use a custom property de app/styles/identidade.css`)
+    }
+    for (const m of src.matchAll(TOAST)) {
+      toasts++; falha(`${f}:${linha(src, m.index)} [toast] ${JSON.stringify(m[0])} — nenhum toast entra (I1-D26): a falha é a LinhaDeAviso`)
     }
     for (const { nome, re } of POSICOES) for (const m of src.matchAll(re)) {
       const s = (m[1] ?? m[2] ?? m[3] ?? m[4] ?? "").trim()
@@ -138,7 +145,7 @@ function arquivos() {
       if (hit && !ANGLICISMOS_DO_PRODUTO.includes(hit)) falha(`${f}:${linha(src, m.index)} [inglês, ${nome}] ${JSON.stringify(s)} ← termo "${hit}"`)
     }
   }
-  console.log(`  arquivos: ${lista.length} · literais de identidade acusados: ${literais} · textos examinados: ${textos} · vocabulário: ${VOCAB.length} · isenções: ${ANGLICISMOS_DO_PRODUTO.length}`)
+  console.log(`  arquivos: ${lista.length} · literais de identidade acusados: ${literais} · toasts: ${toasts} · textos examinados: ${textos} · vocabulário: ${VOCAB.length} · isenções: ${ANGLICISMOS_DO_PRODUTO.length}`)
 }
 
 if (modo !== "--so-arquivos") folha()

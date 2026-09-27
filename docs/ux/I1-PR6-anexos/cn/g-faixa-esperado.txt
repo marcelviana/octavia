@@ -1,0 +1,13 @@
+# G-faixa — o esperado: a própria folha medida (file://, sem servidor, Chromium fixado)
+$ pnpm exec tsx scripts/gates-web/g-faixa-esperado.ts 1-auth 0-linha-de-aviso
+1-auth: 47 seções · 46 com C e B · nós C 526 · nós B 526 → tests/gates-web/esperado/1-auth.json
+  ✗ Tokens: sem a moldura C B
+0-linha-de-aviso: 9 seções · 8 com C e B · nós C 17 · nós B 17 → tests/gates-web/esperado/0-linha-de-aviso.json
+  ✗ Tokens: sem a moldura C B
+# exit: 0
+$ shasum -a 256 docs/ux/DESIGN-I1/1-auth/telas.html docs/ux/DESIGN-I1/0-linha-de-aviso/telas.html
+69515135e2f28e3f2965b8b796c799edfb20deda147a2b49f4bb2a0b75e71f1b  docs/ux/DESIGN-I1/1-auth/telas.html
+a1ff9bcc63e48e27b7d89726f7d8041e5d73462b4dc7765ef79b265cb79e01b2  docs/ux/DESIGN-I1/0-linha-de-aviso/telas.html
+$ grep -E '1-auth|0-linha' docs/ux/DESIGN-I1/SHA256SUMS
+a1ff9bcc63e48e27b7d89726f7d8041e5d73462b4dc7765ef79b265cb79e01b2  0-linha-de-aviso/telas.html
+69515135e2f28e3f2965b8b796c799edfb20deda147a2b49f4bb2a0b75e71f1b  1-auth/telas.html

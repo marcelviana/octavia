@@ -1,0 +1,81 @@
+# G-faixa — o web velho de auth sem sessão, pelo executor, contra o next dev da árvore SEM .env (porta 3106; Firebase desligado)
+$ G_FAIXA_BASE_URL=http://localhost:3106 G_FAIXA_SUPERFICIES=signup,forgot-password,confirm-email G_FAIXA_SAIDA=tests/gates-web/medicoes/antes-1-auth pnpm exec playwright test -c playwright.g-faixa.config.ts scripts/gates-web/g-faixa-medir.ts
+G-faixa · rodada 2026-09-27T21:17:52.161Z · base http://localhost:3106 · saída tests/gates-web/medicoes/antes-1-auth
+
+Running 9 tests using 1 worker
+
+  ✓  1 [C-1138] › scripts/gates-web/g-faixa-medir.ts:96:7 › signup (4.6s)
+  ✓  2 [C-1138] › scripts/gates-web/g-faixa-medir.ts:96:7 › forgot-password (3.2s)
+  ✓  3 [C-1138] › scripts/gates-web/g-faixa-medir.ts:96:7 › confirm-email (3.2s)
+  ✓  4 [B-711] › scripts/gates-web/g-faixa-medir.ts:96:7 › signup (3.3s)
+  ✓  5 [B-711] › scripts/gates-web/g-faixa-medir.ts:96:7 › forgot-password (3.2s)
+  ✓  6 [B-711] › scripts/gates-web/g-faixa-medir.ts:96:7 › confirm-email (3.2s)
+  ✓  7 [A-411] › scripts/gates-web/g-faixa-medir.ts:96:7 › signup (3.4s)
+  ✓  8 [A-411] › scripts/gates-web/g-faixa-medir.ts:96:7 › forgot-password (3.2s)
+  ✓  9 [A-411] › scripts/gates-web/g-faixa-medir.ts:96:7 › confirm-email (3.2s)
+G-faixa · confirm-email · 411: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0 (faixa A: contado à parte)
+G-faixa · confirm-email · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+G-faixa · confirm-email · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+G-faixa · forgot-password · 411: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0 (faixa A: contado à parte)
+G-faixa · forgot-password · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+G-faixa · forgot-password · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+G-faixa · signup · 411: (e)=10 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0 (faixa A: contado à parte)
+G-faixa · signup · 711: (e)=10 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+G-faixa · signup · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+G-faixa · gravado: signup.json, forgot-password.json, confirm-email.json → /Users/marcelviana/projects/octavia-i1-pr6/tests/gates-web/medicoes/antes-1-auth
+
+  9 passed (32.3s)
+
+$ node scripts/gates-web/g-faixa-veredito.mjs tests/gates-web/medicoes/antes-1-auth
+G-faixa (veredito) — tests/gates-web/medicoes/antes-1-auth: 3 medição(ões)
+
+## confirm-email (/signup/confirm-email) — rodada 2026-09-27T21:17:52.161Z · base http://localhost:3106 · commit 98673edb47dbad29cd228d02639b8207e8247c1c+sujo
+  inalcançáveis em A (411) — base: 0 (herança da I1-D11, decisão 619; não reprova)
+  base · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+  base · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+  base · 411 (faixa A — contado à parte): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+
+## forgot-password (/forgot-password) — rodada 2026-09-27T21:17:52.161Z · base http://localhost:3106 · commit 98673edb47dbad29cd228d02639b8207e8247c1c+sujo
+  inalcançáveis em A (411) — base: 0 (herança da I1-D11, decisão 619; não reprova)
+  base · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+  base · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+  base · 411 (faixa A — contado à parte): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+
+## signup (/signup) — rodada 2026-09-27T21:17:52.161Z · base http://localhost:3106 · commit 98673edb47dbad29cd228d02639b8207e8247c1c+sujo
+  inalcançáveis em A (411) — base: 10 (herança da I1-D11, decisão 619; não reprova)
+    · sem nó: "Start Your Musical Journey"
+    · sem nó: "Join thousands of musicians who trust Octavia to organize their musical content "
+    · sem nó: "Upload Music"
+    · sem nó: "PDF, images & more"
+    · sem nó: "Organize"
+    · sem nó: "Smart categorization"
+    · sem nó: "Perform"
+    · sem nó: "Distraction-free mode"
+    · sem nó: "Access"
+    · sem nó: "Any device, anywhere"
+  base · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+  base · 711: (e)=10 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+  ✗ base · 711 (e) sem nó: heading:f3b7ff1a9e96#1 "Start Your Musical Journey"
+  ✗ base · 711 (e) sem nó: texto:097e342a064b#1 "Join thousands of musicians who trust Octavia to organize th"
+  ✗ base · 711 (e) sem nó: heading:0aa6366ea4aa#1 "Upload Music"
+  ✗ base · 711 (e) sem nó: texto:fb9c57bf52dd#1 "PDF, images & more"
+  ✗ base · 711 (e) sem nó: heading:29cc2fca75eb#1 "Organize"
+  ✗ base · 711 (e) sem nó: texto:c32793cc6ea3#1 "Smart categorization"
+  ✗ base · 711 (e) sem nó: heading:6adb770a21ae#1 "Perform"
+  ✗ base · 711 (e) sem nó: texto:d6a814850e48#1 "Distraction-free mode"
+  ✗ base · 711 (e) sem nó: heading:ec5ba0abb717#1 "Access"
+  ✗ base · 711 (e) sem nó: texto:11b584869d17#1 "Any device, anywhere"
+  base · 411 (faixa A — contado à parte): (e)=10 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+    · base · 411 (faixa A — contado à parte) (e) sem nó: heading:f3b7ff1a9e96#1 "Start Your Musical Journey"
+    · base · 411 (faixa A — contado à parte) (e) sem nó: texto:097e342a064b#1 "Join thousands of musicians who trust Octavia to organize th"
+    · base · 411 (faixa A — contado à parte) (e) sem nó: heading:0aa6366ea4aa#1 "Upload Music"
+    · base · 411 (faixa A — contado à parte) (e) sem nó: texto:fb9c57bf52dd#1 "PDF, images & more"
+    · base · 411 (faixa A — contado à parte) (e) sem nó: heading:29cc2fca75eb#1 "Organize"
+    · base · 411 (faixa A — contado à parte) (e) sem nó: texto:c32793cc6ea3#1 "Smart categorization"
+    · base · 411 (faixa A — contado à parte) (e) sem nó: heading:6adb770a21ae#1 "Perform"
+    · base · 411 (faixa A — contado à parte) (e) sem nó: texto:d6a814850e48#1 "Distraction-free mode"
+    · base · 411 (faixa A — contado à parte) (e) sem nó: heading:ec5ba0abb717#1 "Access"
+    · base · 411 (faixa A — contado à parte) (e) sem nó: texto:11b584869d17#1 "Any device, anywhere"
+
+G-faixa: REPROVA — 10 ocorrência(s)
+# exit: 1
