@@ -11,3 +11,10 @@ components/auth/login-panel.tsx
 components/auth/signup-panel.tsx
 components/auth/linha-de-aviso.tsx
 components/auth/frases-sessao.ts
+components/auth/frases-auth.ts
+components/auth/casca-auth.tsx
+components/auth/controles-auth.tsx
+components/auth/seletor-de-instrumento.tsx
+components/auth/use-login.ts
+components/auth/use-signup.ts
+components/identidade/icone.tsx

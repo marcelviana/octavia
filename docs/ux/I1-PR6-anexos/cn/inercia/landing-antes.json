@@ -1,0 +1,1468 @@
+{
+ "superficie": "landing",
+ "rota": "/",
+ "folha": "2-landing",
+ "implementada": false,
+ "publica": true,
+ "rodada": "2026-09-27T21:39:06.059Z",
+ "base": "http://localhost:3106",
+ "chromium": "140.0.7339.16",
+ "commit": "1d4788477fb463ecaa2cac7cb9f2a2286e2acc90+sujo",
+ "controlePositivo": {
+  "1138": {
+   "controle1": "GET 200 falhou net::ERR_ABORTED",
+   "controle2": "GET 200 falhou net::ERR_ABORTED"
+  }
+ },
+ "requests": {
+  "1138": {
+   "linhas": [
+    {
+     "n": 1,
+     "ms": 396,
+     "metodo": "GET",
+     "caminho": "/",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 2,
+     "ms": 4507,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 3,
+     "ms": 4508,
+     "metodo": "GET",
+     "caminho": "/_next/image",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 4,
+     "ms": 4508,
+     "metodo": "GET",
+     "caminho": "/_next/image",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 5,
+     "ms": 4712,
+     "metodo": "GET",
+     "caminho": "/_next/image",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 6,
+     "ms": 4715,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 7,
+     "ms": 4716,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 8,
+     "ms": 4718,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 9,
+     "ms": 4719,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 10,
+     "ms": 4720,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 11,
+     "ms": 4781,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-1",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 12,
+     "ms": 4821,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-2",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 13,
+     "ms": 4830,
+     "metodo": "GET",
+     "caminho": "/",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 14,
+     "ms": 4912,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 15,
+     "ms": 4915,
+     "metodo": "GET",
+     "caminho": "/_next/image",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 16,
+     "ms": 4916,
+     "metodo": "GET",
+     "caminho": "/_next/image",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 17,
+     "ms": 4925,
+     "metodo": "GET",
+     "caminho": "/_next/image",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 18,
+     "ms": 4926,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 19,
+     "ms": 4928,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 20,
+     "ms": 4931,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 21,
+     "ms": 4934,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 22,
+     "ms": 4937,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 23,
+     "ms": 6344,
+     "metodo": "GET",
+     "caminho": "/",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 24,
+     "ms": 6416,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 25,
+     "ms": 6419,
+     "metodo": "GET",
+     "caminho": "/_next/image",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 26,
+     "ms": 6419,
+     "metodo": "GET",
+     "caminho": "/_next/image",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 27,
+     "ms": 6429,
+     "metodo": "GET",
+     "caminho": "/_next/image",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 28,
+     "ms": 6431,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 29,
+     "ms": 6432,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 30,
+     "ms": 6433,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 31,
+     "ms": 6434,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 32,
+     "ms": 6435,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    }
+   ],
+   "outrosHosts": {},
+   "prodAbortados": 0
+  }
+ },
+ "estados": {
+  "base": {
+   "larguras": {
+    "1138": {
+     "url": "/",
+     "viewport": {
+      "w": 1138,
+      "h": 711
+     },
+     "doc": {
+      "scrollWidth": 1138,
+      "clientWidth": 1138
+     },
+     "nos": [
+      {
+       "k": "link:bcc0bcc9140b#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "bcc0bcc9140b",
+       "h_nome": null,
+       "n": 7,
+       "rotulo": "Sign In",
+       "x": 948.6,
+       "y": 16,
+       "w": 75.6,
+       "h": 40,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:47de23586e49#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "47de23586e49",
+       "h_nome": null,
+       "n": 7,
+       "rotulo": "Sign Up",
+       "x": 1040.2,
+       "y": 16,
+       "w": 81.8,
+       "h": 40,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:f125b77efce8#1",
+       "role": "texto",
+       "tag": "div",
+       "testid": null,
+       "h_texto": "f125b77efce8",
+       "h_nome": null,
+       "n": 27,
+       "rotulo": "🎵 Digital Music Revolution",
+       "x": 48,
+       "y": 201.8,
+       "w": 229.2,
+       "h": 42,
+       "sr": false,
+       "clip": {
+        "x": 0,
+        "y": 73,
+        "w": 1138,
+        "h": 641,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:ef6078be439a#1",
+       "role": "heading",
+       "tag": "h1",
+       "testid": null,
+       "h_texto": "ef6078be439a",
+       "h_nome": null,
+       "n": 29,
+       "rotulo": "Your Music Library, Digitized",
+       "x": 48,
+       "y": 267.8,
+       "w": 521,
+       "h": 120,
+       "sr": false,
+       "clip": {
+        "x": 0,
+        "y": 73,
+        "w": 1138,
+        "h": 641,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:8869f5447e66#1",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "8869f5447e66",
+       "h_nome": null,
+       "n": 9,
+       "rotulo": "Digitized",
+       "x": 280.3,
+       "y": 323.8,
+       "w": 250,
+       "h": 67,
+       "sr": false,
+       "clip": {
+        "x": 0,
+        "y": 73,
+        "w": 1138,
+        "h": 641,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:88f31169a726#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "88f31169a726",
+       "h_nome": null,
+       "n": 142,
+       "rotulo": "Organize, visualize, and share your sheet music, tabs, and lyrics. Perfect for rehearsals and performances with a modern, intuitive interface.",
+       "x": 48,
+       "y": 411.8,
+       "w": 521,
+       "h": 97.5,
+       "sr": false,
+       "clip": {
+        "x": 0,
+        "y": 73,
+        "w": 1138,
+        "h": 641,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:6bb5a4a7be14#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "6bb5a4a7be14",
+       "h_nome": null,
+       "n": 16,
+       "rotulo": "Get Started Free",
+       "x": 48,
+       "y": 541.3,
+       "w": 168.3,
+       "h": 44,
+       "sr": false,
+       "clip": {
+        "x": 0,
+        "y": 73,
+        "w": 1138,
+        "h": 641,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:bcc0bcc9140b#2",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "bcc0bcc9140b",
+       "h_nome": null,
+       "n": 7,
+       "rotulo": "Sign In",
+       "x": 232.3,
+       "y": 541.3,
+       "w": 111.6,
+       "h": 44,
+       "sr": false,
+       "clip": {
+        "x": 0,
+        "y": 73,
+        "w": 1138,
+        "h": 641,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:f009da10f37a#1",
+       "role": "heading",
+       "tag": "h2",
+       "testid": null,
+       "h_texto": "f009da10f37a",
+       "h_nome": null,
+       "n": 28,
+       "rotulo": "Why Musicians Choose Octavia",
+       "x": 16,
+       "y": 794,
+       "w": 1106,
+       "h": 40,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:5c224420af71#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "5c224420af71",
+       "h_nome": null,
+       "n": 54,
+       "rotulo": "Powerful features designed by musicians, for musicians",
+       "x": 233,
+       "y": 850,
+       "w": 672,
+       "h": 28,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:abff534c29d2#1",
+       "role": "heading",
+       "tag": "h3",
+       "testid": null,
+       "h_texto": "abff534c29d2",
+       "h_nome": null,
+       "n": 19,
+       "rotulo": "Digital Sheet Music",
+       "x": 49,
+       "y": 1063,
+       "w": 186.5,
+       "h": 28,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:9eab215f227d#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "9eab215f227d",
+       "h_nome": null,
+       "n": 96,
+       "rotulo": "Import and organize all your sheet music, tabs, and lyrics in one beautiful, searchable library.",
+       "x": 49,
+       "y": 1103,
+       "w": 186.5,
+       "h": 104,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:415b8684ebc7#1",
+       "role": "heading",
+       "tag": "h3",
+       "testid": null,
+       "h_texto": "415b8684ebc7",
+       "h_nome": null,
+       "n": 17,
+       "rotulo": "Smart Annotations",
+       "x": 333.5,
+       "y": 1063,
+       "w": 186.5,
+       "h": 28,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:eb7d0d98fa83#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "eb7d0d98fa83",
+       "h_nome": null,
+       "n": 97,
+       "rotulo": "Add notes, highlights, and markings directly onto your digital sheet music for better rehearsals.",
+       "x": 333.5,
+       "y": 1103,
+       "w": 186.5,
+       "h": 104,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:dc0d8daad8de#1",
+       "role": "heading",
+       "tag": "h3",
+       "testid": null,
+       "h_texto": "dc0d8daad8de",
+       "h_nome": null,
+       "n": 18,
+       "rotulo": "Guitar Tabs & More",
+       "x": 618,
+       "y": 1063,
+       "w": 186.5,
+       "h": 28,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:ec501698c879#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "ec501698c879",
+       "h_nome": null,
+       "n": 97,
+       "rotulo": "Support for multiple music formats including guitar tabs, chord charts, and traditional notation.",
+       "x": 618,
+       "y": 1103,
+       "w": 186.5,
+       "h": 104,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:9d8649af7bc7#1",
+       "role": "heading",
+       "tag": "h3",
+       "testid": null,
+       "h_texto": "9d8649af7bc7",
+       "h_nome": null,
+       "n": 17,
+       "rotulo": "Multi-User Access",
+       "x": 902.5,
+       "y": 1063,
+       "w": 186.5,
+       "h": 28,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:3d04d23c8a36#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "3d04d23c8a36",
+       "h_nome": null,
+       "n": 84,
+       "rotulo": "Secure, cloud-based access to your personal music library from any device, anywhere.",
+       "x": 902.5,
+       "y": 1103,
+       "w": 186.5,
+       "h": 104,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:d48ef79886bd#1",
+       "role": "heading",
+       "tag": "h2",
+       "testid": null,
+       "h_texto": "d48ef79886bd",
+       "h_nome": null,
+       "n": 29,
+       "rotulo": "Loved by Musicians Everywhere",
+       "x": 16,
+       "y": 1400,
+       "w": 1106,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 0,
+        "y": 1320,
+        "w": 1138,
+        "h": 568,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:e5b98b359711#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "e5b98b359711",
+       "h_nome": null,
+       "n": 68,
+       "rotulo": "See what our community is saying about their experience with Octavia",
+       "x": 233,
+       "y": 1456,
+       "w": 672,
+       "h": 28,
+       "sr": false,
+       "clip": {
+        "x": 0,
+        "y": 1320,
+        "w": 1138,
+        "h": 568,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:8de0b3c47f11#1",
+       "role": "texto",
+       "tag": "div",
+       "testid": null,
+       "h_texto": "8de0b3c47f11",
+       "h_nome": null,
+       "n": 1,
+       "rotulo": "S",
+       "x": 49,
+       "y": 1581,
+       "w": 48,
+       "h": 48,
+       "sr": false,
+       "clip": {
+        "x": 0,
+        "y": 1320,
+        "w": 1138,
+        "h": 568,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:eca15af8a23a#1",
+       "role": "heading",
+       "tag": "h4",
+       "testid": null,
+       "h_texto": "eca15af8a23a",
+       "h_nome": null,
+       "n": 8,
+       "rotulo": "Sarah M.",
+       "x": 113,
+       "y": 1583,
+       "w": 112,
+       "h": 24,
+       "sr": false,
+       "clip": {
+        "x": 0,
+        "y": 1320,
+        "w": 1138,
+        "h": 568,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:25398cafa669#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "25398cafa669",
+       "h_nome": null,
+       "n": 19,
+       "rotulo": "Classical Guitarist",
+       "x": 113,
+       "y": 1607,
+       "w": 112,
+       "h": 20,
+       "sr": false,
+       "clip": {
+        "x": 0,
+        "y": 1320,
+        "w": 1138,
+        "h": 568,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:6f7d0a55b7ea#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "6f7d0a55b7ea",
+       "h_nome": null,
+       "n": 149,
+       "rotulo": "“Octavia has revolutionized how I organize my sheet music. The annotation feature is incredibly useful for marking fingerings and performance notes.”",
+       "x": 49,
+       "y": 1645,
+       "w": 281.3,
+       "h": 130,
+       "sr": false,
+       "clip": {
+        "x": 0,
+        "y": 1320,
+        "w": 1138,
+        "h": 568,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:08f271887ce9#1",
+       "role": "texto",
+       "tag": "div",
+       "testid": null,
+       "h_texto": "08f271887ce9",
+       "h_nome": null,
+       "n": 1,
+       "rotulo": "M",
+       "x": 428.3,
+       "y": 1581,
+       "w": 48,
+       "h": 48,
+       "sr": false,
+       "clip": {
+        "x": 0,
+        "y": 1320,
+        "w": 1138,
+        "h": 568,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:37cc86313654#1",
+       "role": "heading",
+       "tag": "h4",
+       "testid": null,
+       "h_texto": "37cc86313654",
+       "h_nome": null,
+       "n": 7,
+       "rotulo": "Mike R.",
+       "x": 492.3,
+       "y": 1583,
+       "w": 80.2,
+       "h": 24,
+       "sr": false,
+       "clip": {
+        "x": 0,
+        "y": 1320,
+        "w": 1138,
+        "h": 568,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:7ba518764341#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "7ba518764341",
+       "h_nome": null,
+       "n": 11,
+       "rotulo": "Band Leader",
+       "x": 492.3,
+       "y": 1607,
+       "w": 80.2,
+       "h": 20,
+       "sr": false,
+       "clip": {
+        "x": 0,
+        "y": 1320,
+        "w": 1138,
+        "h": 568,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:d069603b5df2#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "d069603b5df2",
+       "h_nome": null,
+       "n": 129,
+       "rotulo": "“Perfect for managing our band's repertoire. Being able to access everything from my tablet during rehearsals is a game-changer.”",
+       "x": 428.3,
+       "y": 1645,
+       "w": 281.3,
+       "h": 104,
+       "sr": false,
+       "clip": {
+        "x": 0,
+        "y": 1320,
+        "w": 1138,
+        "h": 568,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:559aead08264#1",
+       "role": "texto",
+       "tag": "div",
+       "testid": null,
+       "h_texto": "559aead08264",
+       "h_nome": null,
+       "n": 1,
+       "rotulo": "A",
+       "x": 807.7,
+       "y": 1581,
+       "w": 48,
+       "h": 48,
+       "sr": false,
+       "clip": {
+        "x": 0,
+        "y": 1320,
+        "w": 1138,
+        "h": 568,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:11db0f8ae88f#1",
+       "role": "heading",
+       "tag": "h4",
+       "testid": null,
+       "h_texto": "11db0f8ae88f",
+       "h_nome": null,
+       "n": 7,
+       "rotulo": "Alex K.",
+       "x": 871.7,
+       "y": 1583,
+       "w": 90,
+       "h": 24,
+       "sr": false,
+       "clip": {
+        "x": 0,
+        "y": 1320,
+        "w": 1138,
+        "h": 568,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:1a9e5dd16a85#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "1a9e5dd16a85",
+       "h_nome": null,
+       "n": 13,
+       "rotulo": "Music Teacher",
+       "x": 871.7,
+       "y": 1607,
+       "w": 90,
+       "h": 20,
+       "sr": false,
+       "clip": {
+        "x": 0,
+        "y": 1320,
+        "w": 1138,
+        "h": 568,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:307106a805af#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "307106a805af",
+       "h_nome": null,
+       "n": 123,
+       "rotulo": "“My students love how organized and accessible all our learning materials are now. The search function saves so much time.”",
+       "x": 807.7,
+       "y": 1645,
+       "w": 281.3,
+       "h": 104,
+       "sr": false,
+       "clip": {
+        "x": 0,
+        "y": 1320,
+        "w": 1138,
+        "h": 568,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:668a370c1380#1",
+       "role": "heading",
+       "tag": "h2",
+       "testid": null,
+       "h_texto": "668a370c1380",
+       "h_nome": null,
+       "n": 29,
+       "rotulo": "Ready to Organize Your Music?",
+       "x": 16,
+       "y": 1984,
+       "w": 1106,
+       "h": 48,
+       "sr": false,
+       "clip": {
+        "x": 0,
+        "y": 1888,
+        "w": 1138,
+        "h": 413,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:6335ca3aa9a6#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "6335ca3aa9a6",
+       "h_nome": null,
+       "n": 116,
+       "rotulo": "Join thousands of musicians who use Octavia to manage their sheet music, tabs, and lyrics with style and efficiency.",
+       "x": 185,
+       "y": 2056,
+       "w": 768,
+       "h": 65,
+       "sr": false,
+       "clip": {
+        "x": 0,
+        "y": 1888,
+        "w": 1138,
+        "h": 413,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:a1e1b0fc3641#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "a1e1b0fc3641",
+       "h_nome": null,
+       "n": 19,
+       "rotulo": "Create Free Account",
+       "x": 373.3,
+       "y": 2161,
+       "w": 239.4,
+       "h": 44,
+       "sr": false,
+       "clip": {
+        "x": 0,
+        "y": 1888,
+        "w": 1138,
+        "h": 413,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:bcc0bcc9140b#3",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "bcc0bcc9140b",
+       "h_nome": null,
+       "n": 7,
+       "rotulo": "Sign In",
+       "x": 636.7,
+       "y": 2161,
+       "w": 128,
+       "h": 44,
+       "sr": false,
+       "clip": {
+        "x": 0,
+        "y": 1888,
+        "w": 1138,
+        "h": 413,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:723726c45fc2#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "723726c45fc2",
+       "h_nome": null,
+       "n": 61,
+       "rotulo": "Your digital music companion for rehearsals and performances.",
+       "x": 16,
+       "y": 2421,
+       "w": 320,
+       "h": 52,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:fb9ef894175c#1",
+       "role": "heading",
+       "tag": "h3",
+       "testid": null,
+       "h_texto": "fb9ef894175c",
+       "h_nome": null,
+       "n": 7,
+       "rotulo": "Product",
+       "x": 759.3,
+       "y": 2365,
+       "w": 99.6,
+       "h": 24,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:5697d03daef4#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "5697d03daef4",
+       "h_nome": null,
+       "n": 8,
+       "rotulo": "Features",
+       "x": 759.3,
+       "y": 2408,
+       "w": 63.1,
+       "h": 17,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:dfe95783edfe#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "dfe95783edfe",
+       "h_nome": null,
+       "n": 7,
+       "rotulo": "Pricing",
+       "x": 759.3,
+       "y": 2444,
+       "w": 48.9,
+       "h": 17,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:dbc468a14b60#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "dbc468a14b60",
+       "h_nome": null,
+       "n": 3,
+       "rotulo": "FAQ",
+       "x": 759.3,
+       "y": 2480,
+       "w": 32,
+       "h": 17,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:de4743c87973#1",
+       "role": "heading",
+       "tag": "h3",
+       "testid": null,
+       "h_texto": "de4743c87973",
+       "h_nome": null,
+       "n": 7,
+       "rotulo": "Company",
+       "x": 890.8,
+       "y": 2365,
+       "w": 99.6,
+       "h": 24,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:4efca0d10c5f#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "4efca0d10c5f",
+       "h_nome": null,
+       "n": 5,
+       "rotulo": "About",
+       "x": 890.8,
+       "y": 2408,
+       "w": 41.8,
+       "h": 17,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:8c6bc099534a#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "8c6bc099534a",
+       "h_nome": null,
+       "n": 4,
+       "rotulo": "Blog",
+       "x": 890.8,
+       "y": 2444,
+       "w": 32,
+       "h": 17,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:2b5c3d26721a#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "2b5c3d26721a",
+       "h_nome": null,
+       "n": 7,
+       "rotulo": "Contact",
+       "x": 890.8,
+       "y": 2480,
+       "w": 55.1,
+       "h": 17,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:4787eaf7c938#1",
+       "role": "heading",
+       "tag": "h3",
+       "testid": null,
+       "h_texto": "4787eaf7c938",
+       "h_nome": null,
+       "n": 5,
+       "rotulo": "Legal",
+       "x": 1022.4,
+       "y": 2365,
+       "w": 99.6,
+       "h": 24,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:506ff3946215#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "506ff3946215",
+       "h_nome": null,
+       "n": 14,
+       "rotulo": "Privacy Policy",
+       "x": 1022.4,
+       "y": 2408,
+       "w": 99.6,
+       "h": 17,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:ede548996483#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "ede548996483",
+       "h_nome": null,
+       "n": 5,
+       "rotulo": "Terms",
+       "x": 1022.4,
+       "y": 2444,
+       "w": 43.6,
+       "h": 17,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:40b4d4011239#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "40b4d4011239",
+       "h_nome": null,
+       "n": 36,
+       "rotulo": "© 2026 Octavia. All rights reserved.",
+       "x": 16,
+       "y": 2582,
+       "w": 1106,
+       "h": 24,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:fca0c0beacd0#1",
+       "role": "texto",
+       "tag": "section",
+       "testid": null,
+       "h_texto": null,
+       "h_nome": "fca0c0beacd0",
+       "n": 0,
+       "rotulo": "Notifications alt+T",
+       "x": 0,
+       "y": 2670,
+       "w": 1138,
+       "h": 0,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      }
+     ]
+    }
+   }
+  }
+ }
+}

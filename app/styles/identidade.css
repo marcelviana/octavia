@@ -88,6 +88,15 @@
     --faixa-linha-lista: 80px;
     --faixa-linha-musica: 72px;
     --faixa-empilha: 0;
+    --faixa-marca-largura: 340px;
+    --faixa-marca-altura: 219px;
+    --faixa-coluna-auth: 420px;
+    --faixa-vao-auth: 140px;
+    --faixa-campo-auth: 60px;
+    --faixa-botao-auth: 58px;
+    --faixa-botao-aviso: 36px;
+    --faixa-entrelinha-aviso: 20px;
+    --faixa-limiar-aviso: 320px;
     --faixa-folha-largura: 720px;
     --faixa-folha-topo: 100px;
     --faixa-folha-altura-min: 420px;
@@ -103,6 +112,15 @@
     --faixa-linha-lista: 80px;
     --faixa-linha-musica: 72px;
     --faixa-empilha: 1;
+    --faixa-marca-largura: 340px;
+    --faixa-marca-altura: 219px;
+    --faixa-coluna-auth: 420px;
+    --faixa-vao-auth: 48px;
+    --faixa-campo-auth: 60px;
+    --faixa-botao-auth: 58px;
+    --faixa-botao-aviso: 36px;
+    --faixa-entrelinha-aviso: 20px;
+    --faixa-limiar-aviso: 320px;
     --faixa-folha-largura: 663px;
     --faixa-folha-topo: 96px;
   }
@@ -117,6 +135,15 @@
     --faixa-linha-lista: 80px;
     --faixa-linha-musica: 72px;
     --faixa-empilha: 1;
+    --faixa-marca-largura: 340px;
+    --faixa-marca-altura: 219px;
+    --faixa-coluna-auth: 420px;
+    --faixa-vao-auth: 48px;
+    --faixa-campo-auth: 60px;
+    --faixa-botao-auth: 58px;
+    --faixa-botao-aviso: 36px;
+    --faixa-entrelinha-aviso: 20px;
+    --faixa-limiar-aviso: 320px;
     --faixa-folha-largura: 663px;
     --faixa-folha-topo: 96px;
   }

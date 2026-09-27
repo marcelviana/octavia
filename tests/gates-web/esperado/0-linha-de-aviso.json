@@ -3,6 +3,7 @@
  "arquivo": "docs/ux/DESIGN-I1/0-linha-de-aviso/telas.html",
  "sha256": "a1ff9bcc63e48e27b7d89726f7d8041e5d73462b4dc7765ef79b265cb79e01b2",
  "chromium": "140.0.7339.16",
+ "ancorados": 0,
  "estados": {
   "Tokens": {
    "falta": "sem a moldura C B"

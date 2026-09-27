@@ -172,6 +172,21 @@ não há `T-I1-R` próprio de A; o que o G-faixa medir em 411 é saída contada 
 **286 requisitos** = (141 estados com seção + 2 por errata, I1-E1 e I1-E2) × 2 faixas. O script conta as seções e
 cobra 282; os 4 por errata são o achado coberto pela I1-E1/E2 (§6.3).
 
+**Os nomes das medidas fixas das folhas 0 e 1** `[Marcel, 2026-09-27; I1-PR-6, decisão 2 do aval]` — os literais com
+origem do `README-design.md` §2.3 (que não muda) ganham nome no bloco `web` de `packages/identidade` e custom property
+gerada em `app/styles/identidade.css`. Os requisitos das folhas 0 e 1 se leem com eles:
+
+| nome (`faixas.*.web`) | custom property | C | B | origem (`README-design.md` §2.3) |
+| --- | --- | --- | --- | --- |
+| `marca` | `--faixa-marca-largura` · `--faixa-marca-altura` | 340 × 219 | igual | literal S0 (a marca) |
+| `colunaAuth` | `--faixa-coluna-auth` | 420 | igual | literal S0 (coluna do formulário) |
+| `vaoAuth` | `--faixa-vao-auth` | 140 | `space.xxxl` (48) | literal S0 (vão marca \| formulário, V1 E10); em B a marca sobe |
+| `campoAuth` | `--faixa-campo-auth` | `touch.list + 4` (60) | igual | campo do S0, V1 §5.2 |
+| `botaoAuth` | `--faixa-botao-auth` | `touch.list + 2` (58) | igual | botão secundário do S0, V1 §5.2 |
+| `botaoAviso` | `--faixa-botao-aviso` | 36 | igual | literal N3 (botão de ação da LinhaDeAviso) |
+| `entrelinhaAviso` | `--faixa-entrelinha-aviso` | 20 | igual | literal N3 (T3-R7), I1-E5 |
+| `limiarAviso` | `--faixa-limiar-aviso` | 320 | igual | `web.colunaLateral` como limiar de quebra do texto da LinhaDeAviso, que é "igual" em B (§2.4); em B a `colunaLateral` é `empilha` e não gera propriedade (div. 605) — por isso o nome próprio (I1-PR-6, div. 657) |
+
 ### LinhaDeAviso — `0-linha-de-aviso/telas.html` · T-I1-R1 … T-I1-R16 (8 estados × C, B)
 
 **T-I1-R1 — LinhaDeAviso · C · `AVISO-falha`** `[0-linha-de-aviso/telas.html#AVISO-falha; README-design §2.4, §3]`. Em C (1138 px), o estado *falha · com ação* é a moldura C da seção `AVISO-falha`: composição, tokens da §2.4 e frases da §3. *Aceite*: G-faixa em 1138 px contra a seção (I1-D13, I1-D16) + inventário por estado (I1-D12, errata).

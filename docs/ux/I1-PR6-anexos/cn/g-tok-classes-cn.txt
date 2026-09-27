@@ -1,0 +1,44 @@
+# CN das classes novas do G-tok (decisão 3 do aval): fixture fora da árvore, lista temporária. Reprova() tem de acusar TUDO; Passa() (nomes de token, 0/none/auto/full/frações, var()) não pode acusar nada. `leading-normal` do Tailwind é 1.5 (literal) e reprova; a entrelinha natural da fonte é `leading-natural` (div. 663).
+     1	import { Card } from "@/components/ui/card"
+     2	import { Botao } from "./botao-auth"
+     3	export function Reprova() {
+     4	  return (
+     5	    <div className="w-4 h-10 max-w-md min-h-px size-6 rounded rounded-md rounded-t-lg border border-2 border-t leading-5 leading-tight leading-normal tracking-wide w-[420px] grid-cols-[1fr_320px]"
+     6	      style={{ width: 420, minHeight: 60, borderRadius: 12, lineHeight: 1.5, letterSpacing: "0.2em", borderWidth: 1 }} />
+     7	  )
+     8	}
+     9	export function Passa() {
+    10	  return (
+    11	    <div className="w-web-coluna-auth h-web-campo-auth max-w-web-conteiner min-h-toque-min rounded-raio-control border-hairline border-cor-line-info leading-entrelinha-text leading-web-entrelinha-aviso tracking-display-wide leading-natural w-full h-auto w-1/2 min-w-0 rounded-none border-0 gap-espaco-md p-espaco-xl bg-cor-bg text-tam-label text-cor-muted grid-cols-[var(--faixa-coluna-lateral)_1fr]" />
+    12	  )
+    13	}
+$ G_TOK_ARQUIVOS=<scratch>/lista-classes.txt node scripts/gates-web/g-tok.mjs --so-arquivos
+## (ii) arquivos redesenhados — <scratch>/lista-classes.txt
+  ✗ <scratch>/cn-classes.tsx:5 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/cn-classes.tsx:5 [tamanho] "h-10" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/cn-classes.tsx:5 [tamanho] "max-w-md" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/cn-classes.tsx:5 [tamanho] "min-h-px" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/cn-classes.tsx:5 [tamanho] "size-6" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/cn-classes.tsx:6 [tamanho] "width: 420" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/cn-classes.tsx:6 [tamanho] "minHeight: 60" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/cn-classes.tsx:5 [raio] "rounded" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/cn-classes.tsx:5 [raio] "rounded-md" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/cn-classes.tsx:5 [raio] "rounded-t-lg" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/cn-classes.tsx:6 [raio] "borderRadius: 12" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/cn-classes.tsx:5 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/cn-classes.tsx:5 [borda] "border-2" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/cn-classes.tsx:5 [borda] "border-t" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/cn-classes.tsx:6 [borda] "borderWidth: 1" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/cn-classes.tsx:5 [entrelinha] "leading-5" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/cn-classes.tsx:5 [entrelinha] "leading-tight" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/cn-classes.tsx:5 [entrelinha] "leading-normal" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/cn-classes.tsx:6 [entrelinha] "lineHeight: 1.5" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/cn-classes.tsx:5 [tracking] "tracking-wide" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/cn-classes.tsx:6 [tracking] "letterSpacing: \"0.2" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/cn-classes.tsx:5 [valor arbitrário] "w-[420px]" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/cn-classes.tsx:5 [valor arbitrário] "grid-cols-[1fr_320px]" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/cn-classes.tsx:1 [import de ui] "from \"@/components/ui/card\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  arquivos: 1 · literais de identidade acusados: 23 · toasts: 0 · imports de ui: 1 · textos examinados: 0 · vocabulário: 109 · isenções: 9
+
+G-tok: REPROVA — 24 ocorrência(s)
+# exit: 1

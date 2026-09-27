@@ -3,6 +3,7 @@
  "arquivo": "docs/ux/DESIGN-I1/1-auth/telas.html",
  "sha256": "69515135e2f28e3f2965b8b796c799edfb20deda147a2b49f4bb2a0b75e71f1b",
  "chromium": "140.0.7339.16",
+ "ancorados": 182,
  "estados": {
   "Tokens": {
    "falta": "sem a moldura C B"
@@ -70,6 +71,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 598,
+     "y": 125,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -122,6 +143,26 @@
      "y": 201,
      "w": 104.1,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 228,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -312,6 +353,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 144.5,
+     "y": 392,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -364,6 +425,26 @@
      "y": 468,
      "w": 104.1,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 495,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -556,6 +637,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "cc7094603c42",
+     "h_nome": null,
+     "n": 16,
+     "rotulo": "voce@exemplo.com",
+     "x": 598,
+     "y": 125,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:cc7094603c42#1",
      "role": "texto",
      "tag": "div",
@@ -628,6 +729,26 @@
      "y": 242,
      "w": 104.1,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 269,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -818,6 +939,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "cc7094603c42",
+     "h_nome": null,
+     "n": 16,
+     "rotulo": "voce@exemplo.com",
+     "x": 144.5,
+     "y": 392,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:cc7094603c42#1",
      "role": "texto",
      "tag": "div",
@@ -890,6 +1031,26 @@
      "y": 509,
      "w": 104.1,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 536,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -1082,6 +1243,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 598,
+     "y": 125,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -1134,6 +1315,26 @@
      "y": 201,
      "w": 104.1,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 228,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -1324,6 +1525,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 144.5,
+     "y": 392,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -1376,6 +1597,26 @@
      "y": 468,
      "w": 104.1,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 495,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -1568,6 +1809,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 598,
+     "y": 125,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -1620,6 +1881,26 @@
      "y": 201,
      "w": 104.1,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 228,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -1810,6 +2091,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 144.5,
+     "y": 392,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -1862,6 +2163,26 @@
      "y": 468,
      "w": 104.1,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 495,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -2260,6 +2581,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 598,
+     "y": 125,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -2312,6 +2653,26 @@
      "y": 201,
      "w": 104.1,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 228,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -2542,6 +2903,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 144.5,
+     "y": 392,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -2594,6 +2975,26 @@
      "y": 468,
      "w": 104.1,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 495,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -2826,6 +3227,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 598,
+     "y": 125,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -2878,6 +3299,26 @@
      "y": 201,
      "w": 104.1,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 228,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -3088,6 +3529,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 144.5,
+     "y": 392,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -3140,6 +3601,26 @@
      "y": 468,
      "w": 104.1,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 495,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -3352,6 +3833,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 598,
+     "y": 125,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -3404,6 +3905,26 @@
      "y": 201,
      "w": 104.1,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 228,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -3614,6 +4135,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 144.5,
+     "y": 392,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -3666,6 +4207,26 @@
      "y": 468,
      "w": 104.1,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 495,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -3878,6 +4439,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 598,
+     "y": 125,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -3930,6 +4511,26 @@
      "y": 201,
      "w": 104.1,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 228,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -4140,6 +4741,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 144.5,
+     "y": 392,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -4192,6 +4813,26 @@
      "y": 468,
      "w": 104.1,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 495,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -4404,6 +5045,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 598,
+     "y": 125,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -4456,6 +5117,26 @@
      "y": 201,
      "w": 104.1,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 228,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -4686,6 +5367,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 144.5,
+     "y": 392,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -4738,6 +5439,26 @@
      "y": 468,
      "w": 104.1,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 495,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -4970,6 +5691,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 598,
+     "y": 125,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -5022,6 +5763,26 @@
      "y": 201,
      "w": 104.1,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 228,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -5232,6 +5993,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 144.5,
+     "y": 392,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -5284,6 +6065,26 @@
      "y": 468,
      "w": 104.1,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 495,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -5496,6 +6297,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 598,
+     "y": 125,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -5548,6 +6369,26 @@
      "y": 201,
      "w": 104.1,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 228,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -5758,6 +6599,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 144.5,
+     "y": 392,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -5810,6 +6671,26 @@
      "y": 468,
      "w": 104.1,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 495,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -6022,6 +6903,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 598,
+     "y": 125,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -6074,6 +6975,26 @@
      "y": 201,
      "w": 104.1,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 228,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -6284,6 +7205,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 144.5,
+     "y": 392,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -6336,6 +7277,26 @@
      "y": 468,
      "w": 104.1,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 495,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -6548,6 +7509,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 598,
+     "y": 125,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -6600,6 +7581,26 @@
      "y": 201,
      "w": 104.1,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 228,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -6830,6 +7831,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 144.5,
+     "y": 392,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -6882,6 +7903,26 @@
      "y": 468,
      "w": 104.1,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 495,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -7114,6 +8155,26 @@
      }
     },
     {
+     "k": "t:campo-nome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-nome",
+     "h_texto": "cf9f59045898",
+     "h_nome": null,
+     "n": 6,
+     "rotulo": "Marcel",
+     "x": 598,
+     "y": 125,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:cf9f59045898#1",
      "role": "texto",
      "tag": "div",
@@ -7146,6 +8207,26 @@
      "y": 201,
      "w": 74.7,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-sobrenome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-sobrenome",
+     "h_texto": "83c12268b8f0",
+     "h_nome": null,
+     "n": 5,
+     "rotulo": "Viana",
+     "x": 598,
+     "y": 228,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -7194,6 +8275,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 598,
+     "y": 331,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -7226,6 +8327,26 @@
      "y": 407,
      "w": 137.5,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-instrumento#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-instrumento",
+     "h_texto": "e39dd4017ad9",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "Violão ▾",
+     "x": 598,
+     "y": 434,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -7294,6 +8415,26 @@
      }
     },
     {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 537,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:fb852610a393#1",
      "role": "texto",
      "tag": "div",
@@ -7346,6 +8487,26 @@
      "y": 640,
      "w": 117.9,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-confirmar#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-confirmar",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 667,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -7496,6 +8657,26 @@
      }
     },
     {
+     "k": "t:campo-nome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-nome",
+     "h_texto": "cf9f59045898",
+     "h_nome": null,
+     "n": 6,
+     "rotulo": "Marcel",
+     "x": 144.5,
+     "y": 392,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:cf9f59045898#1",
      "role": "texto",
      "tag": "div",
@@ -7528,6 +8709,26 @@
      "y": 468,
      "w": 74.7,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-sobrenome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-sobrenome",
+     "h_texto": "83c12268b8f0",
+     "h_nome": null,
+     "n": 5,
+     "rotulo": "Viana",
+     "x": 144.5,
+     "y": 495,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -7576,6 +8777,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 144.5,
+     "y": 598,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -7608,6 +8829,26 @@
      "y": 674,
      "w": 137.5,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-instrumento#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-instrumento",
+     "h_texto": "e39dd4017ad9",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "Violão ▾",
+     "x": 144.5,
+     "y": 701,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -7676,6 +8917,26 @@
      }
     },
     {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 804,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:fb852610a393#1",
      "role": "texto",
      "tag": "div",
@@ -7728,6 +8989,26 @@
      "y": 907,
      "w": 117.9,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-confirmar#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-confirmar",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 934,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -7880,6 +9161,26 @@
      }
     },
     {
+     "k": "t:campo-nome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-nome",
+     "h_texto": "cf9f59045898",
+     "h_nome": null,
+     "n": 6,
+     "rotulo": "Marcel",
+     "x": 598,
+     "y": 125,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:cf9f59045898#1",
      "role": "texto",
      "tag": "div",
@@ -7912,6 +9213,26 @@
      "y": 201,
      "w": 74.7,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-sobrenome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-sobrenome",
+     "h_texto": "83c12268b8f0",
+     "h_nome": null,
+     "n": 5,
+     "rotulo": "Viana",
+     "x": 598,
+     "y": 228,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -7960,6 +9281,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 598,
+     "y": 331,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -7992,6 +9333,26 @@
      "y": 407,
      "w": 137.5,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-instrumento#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-instrumento",
+     "h_texto": "e39dd4017ad9",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "Violão ▾",
+     "x": 598,
+     "y": 434,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -8060,6 +9421,26 @@
      }
     },
     {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 537,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:fb852610a393#1",
      "role": "texto",
      "tag": "div",
@@ -8112,6 +9493,26 @@
      "y": 640,
      "w": 117.9,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-confirmar#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-confirmar",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 667,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -8282,6 +9683,26 @@
      }
     },
     {
+     "k": "t:campo-nome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-nome",
+     "h_texto": "cf9f59045898",
+     "h_nome": null,
+     "n": 6,
+     "rotulo": "Marcel",
+     "x": 144.5,
+     "y": 392,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:cf9f59045898#1",
      "role": "texto",
      "tag": "div",
@@ -8314,6 +9735,26 @@
      "y": 468,
      "w": 74.7,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-sobrenome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-sobrenome",
+     "h_texto": "83c12268b8f0",
+     "h_nome": null,
+     "n": 5,
+     "rotulo": "Viana",
+     "x": 144.5,
+     "y": 495,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -8362,6 +9803,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 144.5,
+     "y": 598,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -8394,6 +9855,26 @@
      "y": 674,
      "w": 137.5,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-instrumento#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-instrumento",
+     "h_texto": "e39dd4017ad9",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "Violão ▾",
+     "x": 144.5,
+     "y": 701,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -8462,6 +9943,26 @@
      }
     },
     {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 804,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:fb852610a393#1",
      "role": "texto",
      "tag": "div",
@@ -8514,6 +10015,26 @@
      "y": 907,
      "w": 117.9,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-confirmar#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-confirmar",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 934,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -8686,6 +10207,26 @@
      }
     },
     {
+     "k": "t:campo-nome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-nome",
+     "h_texto": "cf9f59045898",
+     "h_nome": null,
+     "n": 6,
+     "rotulo": "Marcel",
+     "x": 598,
+     "y": 125,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:cf9f59045898#1",
      "role": "texto",
      "tag": "div",
@@ -8718,6 +10259,26 @@
      "y": 201,
      "w": 74.7,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-sobrenome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-sobrenome",
+     "h_texto": "83c12268b8f0",
+     "h_nome": null,
+     "n": 5,
+     "rotulo": "Viana",
+     "x": 598,
+     "y": 228,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -8766,6 +10327,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 598,
+     "y": 331,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -8798,6 +10379,26 @@
      "y": 407,
      "w": 137.5,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-instrumento#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-instrumento",
+     "h_texto": "e39dd4017ad9",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "Violão ▾",
+     "x": 598,
+     "y": 434,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -8866,6 +10467,26 @@
      }
     },
     {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 537,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:fb852610a393#1",
      "role": "texto",
      "tag": "div",
@@ -8918,6 +10539,26 @@
      "y": 640,
      "w": 117.9,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-confirmar#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-confirmar",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 667,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -9088,6 +10729,26 @@
      }
     },
     {
+     "k": "t:campo-nome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-nome",
+     "h_texto": "cf9f59045898",
+     "h_nome": null,
+     "n": 6,
+     "rotulo": "Marcel",
+     "x": 144.5,
+     "y": 392,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:cf9f59045898#1",
      "role": "texto",
      "tag": "div",
@@ -9120,6 +10781,26 @@
      "y": 468,
      "w": 74.7,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-sobrenome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-sobrenome",
+     "h_texto": "83c12268b8f0",
+     "h_nome": null,
+     "n": 5,
+     "rotulo": "Viana",
+     "x": 144.5,
+     "y": 495,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -9168,6 +10849,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 144.5,
+     "y": 598,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -9200,6 +10901,26 @@
      "y": 674,
      "w": 137.5,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-instrumento#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-instrumento",
+     "h_texto": "e39dd4017ad9",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "Violão ▾",
+     "x": 144.5,
+     "y": 701,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -9268,6 +10989,26 @@
      }
     },
     {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 804,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:fb852610a393#1",
      "role": "texto",
      "tag": "div",
@@ -9320,6 +11061,26 @@
      "y": 907,
      "w": 117.9,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-confirmar#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-confirmar",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 934,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -9492,6 +11253,26 @@
      }
     },
     {
+     "k": "t:campo-nome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-nome",
+     "h_texto": "cf9f59045898",
+     "h_nome": null,
+     "n": 6,
+     "rotulo": "Marcel",
+     "x": 598,
+     "y": 125,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:cf9f59045898#1",
      "role": "texto",
      "tag": "div",
@@ -9524,6 +11305,26 @@
      "y": 201,
      "w": 74.7,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-sobrenome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-sobrenome",
+     "h_texto": "83c12268b8f0",
+     "h_nome": null,
+     "n": 5,
+     "rotulo": "Viana",
+     "x": 598,
+     "y": 228,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -9572,6 +11373,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 598,
+     "y": 331,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -9604,6 +11425,26 @@
      "y": 407,
      "w": 137.5,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-instrumento#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-instrumento",
+     "h_texto": "e39dd4017ad9",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "Violão ▾",
+     "x": 598,
+     "y": 434,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -9672,6 +11513,26 @@
      }
     },
     {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 537,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:fb852610a393#1",
      "role": "texto",
      "tag": "div",
@@ -9724,6 +11585,26 @@
      "y": 640,
      "w": 117.9,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-confirmar#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-confirmar",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 667,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -9874,6 +11755,26 @@
      }
     },
     {
+     "k": "t:campo-nome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-nome",
+     "h_texto": "cf9f59045898",
+     "h_nome": null,
+     "n": 6,
+     "rotulo": "Marcel",
+     "x": 144.5,
+     "y": 392,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:cf9f59045898#1",
      "role": "texto",
      "tag": "div",
@@ -9906,6 +11807,26 @@
      "y": 468,
      "w": 74.7,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-sobrenome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-sobrenome",
+     "h_texto": "83c12268b8f0",
+     "h_nome": null,
+     "n": 5,
+     "rotulo": "Viana",
+     "x": 144.5,
+     "y": 495,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -9954,6 +11875,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 144.5,
+     "y": 598,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -9986,6 +11927,26 @@
      "y": 674,
      "w": 137.5,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-instrumento#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-instrumento",
+     "h_texto": "e39dd4017ad9",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "Violão ▾",
+     "x": 144.5,
+     "y": 701,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -10054,6 +12015,26 @@
      }
     },
     {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 804,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:fb852610a393#1",
      "role": "texto",
      "tag": "div",
@@ -10106,6 +12087,26 @@
      "y": 907,
      "w": 117.9,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-confirmar#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-confirmar",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 934,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -10258,6 +12259,26 @@
      }
     },
     {
+     "k": "t:campo-nome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-nome",
+     "h_texto": "cf9f59045898",
+     "h_nome": null,
+     "n": 6,
+     "rotulo": "Marcel",
+     "x": 598,
+     "y": 125,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:cf9f59045898#1",
      "role": "texto",
      "tag": "div",
@@ -10290,6 +12311,26 @@
      "y": 201,
      "w": 74.7,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-sobrenome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-sobrenome",
+     "h_texto": "83c12268b8f0",
+     "h_nome": null,
+     "n": 5,
+     "rotulo": "Viana",
+     "x": 598,
+     "y": 228,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -10338,6 +12379,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 598,
+     "y": 331,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -10370,6 +12431,26 @@
      "y": 407,
      "w": 137.5,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-instrumento#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-instrumento",
+     "h_texto": "e39dd4017ad9",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "Violão ▾",
+     "x": 598,
+     "y": 434,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -10438,6 +12519,26 @@
      }
     },
     {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 537,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:fb852610a393#1",
      "role": "texto",
      "tag": "div",
@@ -10490,6 +12591,26 @@
      "y": 640,
      "w": 117.9,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-confirmar#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-confirmar",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 667,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -10660,6 +12781,26 @@
      }
     },
     {
+     "k": "t:campo-nome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-nome",
+     "h_texto": "cf9f59045898",
+     "h_nome": null,
+     "n": 6,
+     "rotulo": "Marcel",
+     "x": 144.5,
+     "y": 392,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:cf9f59045898#1",
      "role": "texto",
      "tag": "div",
@@ -10692,6 +12833,26 @@
      "y": 468,
      "w": 74.7,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-sobrenome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-sobrenome",
+     "h_texto": "83c12268b8f0",
+     "h_nome": null,
+     "n": 5,
+     "rotulo": "Viana",
+     "x": 144.5,
+     "y": 495,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -10740,6 +12901,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 144.5,
+     "y": 598,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -10772,6 +12953,26 @@
      "y": 674,
      "w": 137.5,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-instrumento#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-instrumento",
+     "h_texto": "e39dd4017ad9",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "Violão ▾",
+     "x": 144.5,
+     "y": 701,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -10840,6 +13041,26 @@
      }
     },
     {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 804,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:fb852610a393#1",
      "role": "texto",
      "tag": "div",
@@ -10892,6 +13113,26 @@
      "y": 907,
      "w": 117.9,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-confirmar#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-confirmar",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 934,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -11064,6 +13305,26 @@
      }
     },
     {
+     "k": "t:campo-nome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-nome",
+     "h_texto": "cf9f59045898",
+     "h_nome": null,
+     "n": 6,
+     "rotulo": "Marcel",
+     "x": 598,
+     "y": 125,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:cf9f59045898#1",
      "role": "texto",
      "tag": "div",
@@ -11096,6 +13357,26 @@
      "y": 201,
      "w": 74.7,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-sobrenome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-sobrenome",
+     "h_texto": "83c12268b8f0",
+     "h_nome": null,
+     "n": 5,
+     "rotulo": "Viana",
+     "x": 598,
+     "y": 228,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -11144,6 +13425,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 598,
+     "y": 331,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -11176,6 +13477,26 @@
      "y": 407,
      "w": 137.5,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-instrumento#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-instrumento",
+     "h_texto": "e39dd4017ad9",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "Violão ▾",
+     "x": 598,
+     "y": 434,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -11244,6 +13565,26 @@
      }
     },
     {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 537,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:fb852610a393#1",
      "role": "texto",
      "tag": "div",
@@ -11296,6 +13637,26 @@
      "y": 640,
      "w": 117.9,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-confirmar#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-confirmar",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 667,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -11466,6 +13827,26 @@
      }
     },
     {
+     "k": "t:campo-nome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-nome",
+     "h_texto": "cf9f59045898",
+     "h_nome": null,
+     "n": 6,
+     "rotulo": "Marcel",
+     "x": 144.5,
+     "y": 392,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:cf9f59045898#1",
      "role": "texto",
      "tag": "div",
@@ -11498,6 +13879,26 @@
      "y": 468,
      "w": 74.7,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-sobrenome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-sobrenome",
+     "h_texto": "83c12268b8f0",
+     "h_nome": null,
+     "n": 5,
+     "rotulo": "Viana",
+     "x": 144.5,
+     "y": 495,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -11546,6 +13947,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 144.5,
+     "y": 598,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -11578,6 +13999,26 @@
      "y": 674,
      "w": 137.5,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-instrumento#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-instrumento",
+     "h_texto": "e39dd4017ad9",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "Violão ▾",
+     "x": 144.5,
+     "y": 701,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -11646,6 +14087,26 @@
      }
     },
     {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 804,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:fb852610a393#1",
      "role": "texto",
      "tag": "div",
@@ -11698,6 +14159,26 @@
      "y": 907,
      "w": 117.9,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-confirmar#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-confirmar",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 934,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -11870,6 +14351,26 @@
      }
     },
     {
+     "k": "t:campo-nome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-nome",
+     "h_texto": "cf9f59045898",
+     "h_nome": null,
+     "n": 6,
+     "rotulo": "Marcel",
+     "x": 598,
+     "y": 125,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:cf9f59045898#1",
      "role": "texto",
      "tag": "div",
@@ -11902,6 +14403,26 @@
      "y": 201,
      "w": 74.7,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-sobrenome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-sobrenome",
+     "h_texto": "83c12268b8f0",
+     "h_nome": null,
+     "n": 5,
+     "rotulo": "Viana",
+     "x": 598,
+     "y": 228,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -11950,6 +14471,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 598,
+     "y": 331,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -11982,6 +14523,26 @@
      "y": 407,
      "w": 137.5,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-instrumento#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-instrumento",
+     "h_texto": "e39dd4017ad9",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "Violão ▾",
+     "x": 598,
+     "y": 434,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -12050,6 +14611,26 @@
      }
     },
     {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 537,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:fb852610a393#1",
      "role": "texto",
      "tag": "div",
@@ -12102,6 +14683,26 @@
      "y": 640,
      "w": 117.9,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-confirmar#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-confirmar",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 667,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -12292,6 +14893,26 @@
      }
     },
     {
+     "k": "t:campo-nome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-nome",
+     "h_texto": "cf9f59045898",
+     "h_nome": null,
+     "n": 6,
+     "rotulo": "Marcel",
+     "x": 144.5,
+     "y": 392,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:cf9f59045898#1",
      "role": "texto",
      "tag": "div",
@@ -12324,6 +14945,26 @@
      "y": 468,
      "w": 74.7,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-sobrenome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-sobrenome",
+     "h_texto": "83c12268b8f0",
+     "h_nome": null,
+     "n": 5,
+     "rotulo": "Viana",
+     "x": 144.5,
+     "y": 495,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -12372,6 +15013,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 144.5,
+     "y": 598,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -12404,6 +15065,26 @@
      "y": 674,
      "w": 137.5,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-instrumento#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-instrumento",
+     "h_texto": "e39dd4017ad9",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "Violão ▾",
+     "x": 144.5,
+     "y": 701,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -12472,6 +15153,26 @@
      }
     },
     {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 804,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:fb852610a393#1",
      "role": "texto",
      "tag": "div",
@@ -12524,6 +15225,26 @@
      "y": 907,
      "w": 117.9,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-confirmar#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-confirmar",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 934,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -12716,6 +15437,26 @@
      }
     },
     {
+     "k": "t:campo-nome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-nome",
+     "h_texto": "cf9f59045898",
+     "h_nome": null,
+     "n": 6,
+     "rotulo": "Marcel",
+     "x": 598,
+     "y": 125,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:cf9f59045898#1",
      "role": "texto",
      "tag": "div",
@@ -12748,6 +15489,26 @@
      "y": 201,
      "w": 74.7,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-sobrenome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-sobrenome",
+     "h_texto": "83c12268b8f0",
+     "h_nome": null,
+     "n": 5,
+     "rotulo": "Viana",
+     "x": 598,
+     "y": 228,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -12796,6 +15557,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 598,
+     "y": 331,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -12828,6 +15609,26 @@
      "y": 407,
      "w": 137.5,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-instrumento#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-instrumento",
+     "h_texto": "e39dd4017ad9",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "Violão ▾",
+     "x": 598,
+     "y": 434,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -12896,6 +15697,26 @@
      }
     },
     {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 537,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:fb852610a393#1",
      "role": "texto",
      "tag": "div",
@@ -12948,6 +15769,26 @@
      "y": 640,
      "w": 117.9,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-confirmar#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-confirmar",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 667,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -13118,6 +15959,26 @@
      }
     },
     {
+     "k": "t:campo-nome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-nome",
+     "h_texto": "cf9f59045898",
+     "h_nome": null,
+     "n": 6,
+     "rotulo": "Marcel",
+     "x": 144.5,
+     "y": 392,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:cf9f59045898#1",
      "role": "texto",
      "tag": "div",
@@ -13150,6 +16011,26 @@
      "y": 468,
      "w": 74.7,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-sobrenome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-sobrenome",
+     "h_texto": "83c12268b8f0",
+     "h_nome": null,
+     "n": 5,
+     "rotulo": "Viana",
+     "x": 144.5,
+     "y": 495,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -13198,6 +16079,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 144.5,
+     "y": 598,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -13230,6 +16131,26 @@
      "y": 674,
      "w": 137.5,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-instrumento#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-instrumento",
+     "h_texto": "e39dd4017ad9",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "Violão ▾",
+     "x": 144.5,
+     "y": 701,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -13298,6 +16219,26 @@
      }
     },
     {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 804,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:fb852610a393#1",
      "role": "texto",
      "tag": "div",
@@ -13350,6 +16291,26 @@
      "y": 907,
      "w": 117.9,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-confirmar#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-confirmar",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 934,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -13522,6 +16483,26 @@
      }
     },
     {
+     "k": "t:campo-nome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-nome",
+     "h_texto": "cf9f59045898",
+     "h_nome": null,
+     "n": 6,
+     "rotulo": "Marcel",
+     "x": 598,
+     "y": 125,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:cf9f59045898#1",
      "role": "texto",
      "tag": "div",
@@ -13554,6 +16535,26 @@
      "y": 201,
      "w": 74.7,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-sobrenome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-sobrenome",
+     "h_texto": "83c12268b8f0",
+     "h_nome": null,
+     "n": 5,
+     "rotulo": "Viana",
+     "x": 598,
+     "y": 228,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -13602,6 +16603,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 598,
+     "y": 331,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -13634,6 +16655,26 @@
      "y": 407,
      "w": 137.5,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-instrumento#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-instrumento",
+     "h_texto": "e39dd4017ad9",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "Violão ▾",
+     "x": 598,
+     "y": 434,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -13702,6 +16743,26 @@
      }
     },
     {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 537,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:fb852610a393#1",
      "role": "texto",
      "tag": "div",
@@ -13754,6 +16815,26 @@
      "y": 640,
      "w": 117.9,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-confirmar#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-confirmar",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 667,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -13944,6 +17025,26 @@
      }
     },
     {
+     "k": "t:campo-nome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-nome",
+     "h_texto": "cf9f59045898",
+     "h_nome": null,
+     "n": 6,
+     "rotulo": "Marcel",
+     "x": 144.5,
+     "y": 392,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:cf9f59045898#1",
      "role": "texto",
      "tag": "div",
@@ -13976,6 +17077,26 @@
      "y": 468,
      "w": 74.7,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-sobrenome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-sobrenome",
+     "h_texto": "83c12268b8f0",
+     "h_nome": null,
+     "n": 5,
+     "rotulo": "Viana",
+     "x": 144.5,
+     "y": 495,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -14024,6 +17145,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 144.5,
+     "y": 598,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -14056,6 +17197,26 @@
      "y": 674,
      "w": 137.5,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-instrumento#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-instrumento",
+     "h_texto": "e39dd4017ad9",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "Violão ▾",
+     "x": 144.5,
+     "y": 701,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -14124,6 +17285,26 @@
      }
     },
     {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 804,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:fb852610a393#1",
      "role": "texto",
      "tag": "div",
@@ -14176,6 +17357,26 @@
      "y": 907,
      "w": 117.9,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-confirmar#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-confirmar",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 934,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -14368,6 +17569,26 @@
      }
     },
     {
+     "k": "t:campo-nome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-nome",
+     "h_texto": "cf9f59045898",
+     "h_nome": null,
+     "n": 6,
+     "rotulo": "Marcel",
+     "x": 598,
+     "y": 125,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:cf9f59045898#1",
      "role": "texto",
      "tag": "div",
@@ -14400,6 +17621,26 @@
      "y": 201,
      "w": 74.7,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-sobrenome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-sobrenome",
+     "h_texto": "83c12268b8f0",
+     "h_nome": null,
+     "n": 5,
+     "rotulo": "Viana",
+     "x": 598,
+     "y": 228,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -14448,6 +17689,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 598,
+     "y": 331,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -14480,6 +17741,26 @@
      "y": 407,
      "w": 137.5,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-instrumento#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-instrumento",
+     "h_texto": "e39dd4017ad9",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "Violão ▾",
+     "x": 598,
+     "y": 434,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -14548,6 +17829,26 @@
      }
     },
     {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 537,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:fb852610a393#1",
      "role": "texto",
      "tag": "div",
@@ -14600,6 +17901,26 @@
      "y": 640,
      "w": 117.9,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-confirmar#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-confirmar",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 598,
+     "y": 667,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -14790,6 +18111,26 @@
      }
     },
     {
+     "k": "t:campo-nome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-nome",
+     "h_texto": "cf9f59045898",
+     "h_nome": null,
+     "n": 6,
+     "rotulo": "Marcel",
+     "x": 144.5,
+     "y": 392,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:cf9f59045898#1",
      "role": "texto",
      "tag": "div",
@@ -14822,6 +18163,26 @@
      "y": 468,
      "w": 74.7,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-sobrenome#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-sobrenome",
+     "h_texto": "83c12268b8f0",
+     "h_nome": null,
+     "n": 5,
+     "rotulo": "Viana",
+     "x": 144.5,
+     "y": 495,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -14870,6 +18231,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 144.5,
+     "y": 598,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -14902,6 +18283,26 @@
      "y": 674,
      "w": 137.5,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-instrumento#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-instrumento",
+     "h_texto": "e39dd4017ad9",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "Violão ▾",
+     "x": 144.5,
+     "y": 701,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -14970,6 +18371,26 @@
      }
     },
     {
+     "k": "t:campo-senha#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-senha",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 804,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:fb852610a393#1",
      "role": "texto",
      "tag": "div",
@@ -15022,6 +18443,26 @@
      "y": 907,
      "w": 117.9,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-confirmar#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-confirmar",
+     "h_texto": "fb852610a393",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "••••••••",
+     "x": 144.5,
+     "y": 934,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -19410,6 +22851,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "cc7094603c42",
+     "h_nome": null,
+     "n": 16,
+     "rotulo": "voce@exemplo.com",
+     "x": 598,
+     "y": 161.8,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:cc7094603c42#1",
      "role": "texto",
      "tag": "div",
@@ -19564,6 +23025,26 @@
      "y": 401.8,
      "w": 40,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "cc7094603c42",
+     "h_nome": null,
+     "n": 16,
+     "rotulo": "voce@exemplo.com",
+     "x": 144.5,
+     "y": 428.8,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -19728,6 +23209,26 @@
      "y": 134.8,
      "w": 40,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "cc7094603c42",
+     "h_nome": null,
+     "n": 16,
+     "rotulo": "voce@exemplo.com",
+     "x": 598,
+     "y": 161.8,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -19910,6 +23411,26 @@
      "y": 401.8,
      "w": 40,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "cc7094603c42",
+     "h_nome": null,
+     "n": 16,
+     "rotulo": "voce@exemplo.com",
+     "x": 144.5,
+     "y": 428.8,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -20102,6 +23623,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 598,
+     "y": 161.8,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -20256,6 +23797,26 @@
      "y": 401.8,
      "w": 40,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 144.5,
+     "y": 428.8,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -20420,6 +23981,26 @@
      "y": 134.8,
      "w": 40,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 598,
+     "y": 161.8,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -20610,6 +24191,26 @@
      }
     },
     {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 144.5,
+     "y": 428.8,
+     "w": 420,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:619dc1a63d3c#1",
      "role": "texto",
      "tag": "div",
@@ -20786,6 +24387,26 @@
      "y": 134.8,
      "w": 40,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 598,
+     "y": 161.8,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {
@@ -20988,6 +24609,26 @@
      "y": 401.8,
      "w": 40,
      "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "t:campo-email#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": "campo-email",
+     "h_texto": "619dc1a63d3c",
+     "h_nome": null,
+     "n": 18,
+     "rotulo": "marcel@exemplo.com",
+     "x": 144.5,
+     "y": 428.8,
+     "w": 420,
+     "h": 60,
      "sr": false,
      "clip": null,
      "corta": {

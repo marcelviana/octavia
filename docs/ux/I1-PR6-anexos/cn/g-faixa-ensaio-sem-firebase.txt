@@ -1,0 +1,745 @@
+# Ensaio do instrumento do aceite — executor, next dev da árvore SEM .env (Firebase desligado), porta 3106, commit 2 antes do commit
+$ G_FAIXA_BASE_URL=http://localhost:3106 G_FAIXA_SUPERFICIES=login,signup,confirm-email,verify-email,forgot-password G_FAIXA_SAIDA=<scratch>/ensaio pnpm exec playwright test -c playwright.g-faixa.config.ts scripts/gates-web/g-faixa-medir.ts
+G-faixa · rodada 2026-09-27T22:54:45.053Z · base http://localhost:3106 · saída ../../../..<scratch>/ensaio
+G-faixa · login · AUTH-login · 1138: começa
+G-faixa · login · AUTH-login · 1138: preparado em 1513 ms
+G-faixa · login · AUTH-login-validacao · 1138: começa
+G-faixa · login · AUTH-login-validacao · 1138: preparado em 2511 ms
+G-faixa · login · AUTH-login-entrando · 1138: começa
+G-faixa · login · AUTH-login-google · 1138: começa
+G-faixa · login · AUTH-login-redirecionando · 1138: começa
+G-faixa · login · AUTH-login-credencial · 1138: começa
+G-faixa · login · AUTH-login-limite-prazo · 1138: começa
+G-faixa · login · AUTH-login-limite · 1138: começa
+G-faixa · login · AUTH-login-rede · 1138: começa
+G-faixa · login · AUTH-login-google-erro · 1138: começa
+G-faixa · login · AUTH-login-nao-configurado · 1138: começa
+G-faixa · login · AUTH-login-nao-configurado · 1138: preparado em 2583 ms
+G-faixa · login · AUTH-login-perfil-401 · 1138: começa
+G-faixa · login · AUTH-login-servidor · 1138: começa
+G-faixa · signup · AUTH-signup · 1138: começa
+G-faixa · signup · AUTH-signup · 1138: preparado em 1489 ms
+G-faixa · signup · AUTH-signup-validacao · 1138: começa
+G-faixa · signup · AUTH-signup-validacao · 1138: preparado em 2563 ms
+G-faixa · signup · AUTH-signup-senhas · 1138: começa
+G-faixa · signup · AUTH-signup-senhas · 1138: preparado em 2601 ms
+G-faixa · signup · AUTH-signup-criando · 1138: começa
+G-faixa · signup · AUTH-signup-email-usado · 1138: começa
+G-faixa · signup · AUTH-signup-senha-fraca · 1138: começa
+G-faixa · signup · AUTH-signup-rede · 1138: começa
+G-faixa · signup · AUTH-signup-limite · 1138: começa
+G-faixa · signup · AUTH-signup-perfil · 1138: começa
+G-faixa · confirm-email · AUTH-confirm · 1138: começa
+G-faixa · confirm-email · AUTH-confirm-enviando · 1138: começa
+G-faixa · confirm-email · AUTH-confirm-sucesso · 1138: começa
+G-faixa · confirm-email · AUTH-confirm-erro · 1138: começa
+G-faixa · confirm-email · AUTH-confirm-erro-rede · 1138: começa
+G-faixa · confirm-email · AUTH-confirm-sem-usuario · 1138: começa
+G-faixa · confirm-email · AUTH-confirm-sem-usuario · 1138: preparado em 2511 ms
+G-faixa · verify-email · AUTH-verify-carregando · 1138: começa
+G-faixa · verify-email · AUTH-verify-carregando · 1138: preparado em 1453 ms
+G-faixa · verify-email · AUTH-verify · 1138: começa
+G-faixa · verify-email · AUTH-verify-checando · 1138: começa
+G-faixa · verify-email · AUTH-verify-enviando · 1138: começa
+G-faixa · verify-email · AUTH-verify-nao-verificado · 1138: começa
+G-faixa · verify-email · AUTH-verify-checar-falhou · 1138: começa
+G-faixa · verify-email · AUTH-verify-reenviar-erro · 1138: começa
+G-faixa · verify-email · AUTH-verify-reenviar-limite · 1138: começa
+G-faixa · verify-email · AUTH-verify-reenviado · 1138: começa
+G-faixa · forgot-password · AUTH-forgot · 1138: começa
+G-faixa · forgot-password · AUTH-forgot · 1138: preparado em 1489 ms
+G-faixa · forgot-password · AUTH-forgot-validacao · 1138: começa
+G-faixa · forgot-password · AUTH-forgot-validacao · 1138: preparado em 2515 ms
+G-faixa · forgot-password · AUTH-forgot-enviando · 1138: começa
+G-faixa · forgot-password · AUTH-forgot-indisponivel · 1138: começa
+G-faixa · forgot-password · AUTH-forgot-indisponivel · 1138: preparado em 2615 ms
+G-faixa · forgot-password · AUTH-forgot-erro · 1138: começa
+G-faixa · forgot-password · AUTH-forgot-sucesso · 1138: começa
+G-faixa · login · AUTH-login · 711: começa
+G-faixa · login · AUTH-login · 711: preparado em 1484 ms
+G-faixa · login · AUTH-login-validacao · 711: começa
+G-faixa · login · AUTH-login-validacao · 711: preparado em 2512 ms
+G-faixa · login · AUTH-login-entrando · 711: começa
+G-faixa · login · AUTH-login-google · 711: começa
+G-faixa · login · AUTH-login-redirecionando · 711: começa
+G-faixa · login · AUTH-login-credencial · 711: começa
+G-faixa · login · AUTH-login-limite-prazo · 711: começa
+G-faixa · login · AUTH-login-limite · 711: começa
+G-faixa · login · AUTH-login-rede · 711: começa
+G-faixa · login · AUTH-login-google-erro · 711: começa
+G-faixa · login · AUTH-login-nao-configurado · 711: começa
+G-faixa · login · AUTH-login-nao-configurado · 711: preparado em 2574 ms
+G-faixa · login · AUTH-login-perfil-401 · 711: começa
+G-faixa · login · AUTH-login-servidor · 711: começa
+G-faixa · signup · AUTH-signup · 711: começa
+G-faixa · signup · AUTH-signup · 711: preparado em 1472 ms
+G-faixa · signup · AUTH-signup-validacao · 711: começa
+G-faixa · signup · AUTH-signup-validacao · 711: preparado em 2551 ms
+G-faixa · signup · AUTH-signup-senhas · 711: começa
+G-faixa · signup · AUTH-signup-senhas · 711: preparado em 2583 ms
+G-faixa · signup · AUTH-signup-criando · 711: começa
+G-faixa · signup · AUTH-signup-email-usado · 711: começa
+G-faixa · signup · AUTH-signup-senha-fraca · 711: começa
+G-faixa · signup · AUTH-signup-rede · 711: começa
+G-faixa · signup · AUTH-signup-limite · 711: começa
+G-faixa · signup · AUTH-signup-perfil · 711: começa
+G-faixa · confirm-email · AUTH-confirm · 711: começa
+G-faixa · confirm-email · AUTH-confirm-enviando · 711: começa
+G-faixa · confirm-email · AUTH-confirm-sucesso · 711: começa
+G-faixa · confirm-email · AUTH-confirm-erro · 711: começa
+G-faixa · confirm-email · AUTH-confirm-erro-rede · 711: começa
+G-faixa · confirm-email · AUTH-confirm-sem-usuario · 711: começa
+G-faixa · confirm-email · AUTH-confirm-sem-usuario · 711: preparado em 2476 ms
+G-faixa · verify-email · AUTH-verify-carregando · 711: começa
+G-faixa · verify-email · AUTH-verify-carregando · 711: preparado em 1446 ms
+G-faixa · verify-email · AUTH-verify · 711: começa
+G-faixa · verify-email · AUTH-verify-checando · 711: começa
+G-faixa · verify-email · AUTH-verify-enviando · 711: começa
+G-faixa · verify-email · AUTH-verify-nao-verificado · 711: começa
+G-faixa · verify-email · AUTH-verify-checar-falhou · 711: começa
+G-faixa · verify-email · AUTH-verify-reenviar-erro · 711: começa
+G-faixa · verify-email · AUTH-verify-reenviar-limite · 711: começa
+G-faixa · verify-email · AUTH-verify-reenviado · 711: começa
+G-faixa · forgot-password · AUTH-forgot · 711: começa
+G-faixa · forgot-password · AUTH-forgot · 711: preparado em 1469 ms
+G-faixa · forgot-password · AUTH-forgot-validacao · 711: começa
+G-faixa · forgot-password · AUTH-forgot-validacao · 711: preparado em 2525 ms
+G-faixa · forgot-password · AUTH-forgot-enviando · 711: começa
+G-faixa · forgot-password · AUTH-forgot-indisponivel · 711: começa
+G-faixa · forgot-password · AUTH-forgot-indisponivel · 711: preparado em 2519 ms
+G-faixa · forgot-password · AUTH-forgot-erro · 711: começa
+G-faixa · forgot-password · AUTH-forgot-sucesso · 711: começa
+G-faixa · login · AUTH-login · 411: começa
+G-faixa · login · AUTH-login · 411: preparado em 1471 ms
+G-faixa · login · AUTH-login-validacao · 411: começa
+G-faixa · login · AUTH-login-validacao · 411: preparado em 2514 ms
+G-faixa · login · AUTH-login-entrando · 411: começa
+G-faixa · login · AUTH-login-google · 411: começa
+G-faixa · login · AUTH-login-redirecionando · 411: começa
+G-faixa · login · AUTH-login-credencial · 411: começa
+G-faixa · login · AUTH-login-limite-prazo · 411: começa
+G-faixa · login · AUTH-login-limite · 411: começa
+G-faixa · login · AUTH-login-rede · 411: começa
+G-faixa · login · AUTH-login-google-erro · 411: começa
+G-faixa · login · AUTH-login-nao-configurado · 411: começa
+G-faixa · login · AUTH-login-nao-configurado · 411: preparado em 2571 ms
+G-faixa · login · AUTH-login-perfil-401 · 411: começa
+G-faixa · login · AUTH-login-servidor · 411: começa
+G-faixa · signup · AUTH-signup · 411: começa
+G-faixa · signup · AUTH-signup · 411: preparado em 1465 ms
+G-faixa · signup · AUTH-signup-validacao · 411: começa
+G-faixa · signup · AUTH-signup-validacao · 411: preparado em 2536 ms
+G-faixa · signup · AUTH-signup-senhas · 411: começa
+G-faixa · signup · AUTH-signup-senhas · 411: preparado em 2599 ms
+G-faixa · signup · AUTH-signup-criando · 411: começa
+G-faixa · signup · AUTH-signup-email-usado · 411: começa
+G-faixa · signup · AUTH-signup-senha-fraca · 411: começa
+G-faixa · signup · AUTH-signup-rede · 411: começa
+G-faixa · signup · AUTH-signup-limite · 411: começa
+G-faixa · signup · AUTH-signup-perfil · 411: começa
+G-faixa · confirm-email · AUTH-confirm · 411: começa
+G-faixa · confirm-email · AUTH-confirm-enviando · 411: começa
+G-faixa · confirm-email · AUTH-confirm-sucesso · 411: começa
+G-faixa · confirm-email · AUTH-confirm-erro · 411: começa
+G-faixa · confirm-email · AUTH-confirm-erro-rede · 411: começa
+G-faixa · confirm-email · AUTH-confirm-sem-usuario · 411: começa
+G-faixa · confirm-email · AUTH-confirm-sem-usuario · 411: preparado em 2495 ms
+G-faixa · verify-email · AUTH-verify-carregando · 411: começa
+G-faixa · verify-email · AUTH-verify-carregando · 411: preparado em 1457 ms
+G-faixa · verify-email · AUTH-verify · 411: começa
+G-faixa · verify-email · AUTH-verify-checando · 411: começa
+G-faixa · verify-email · AUTH-verify-enviando · 411: começa
+G-faixa · verify-email · AUTH-verify-nao-verificado · 411: começa
+G-faixa · verify-email · AUTH-verify-checar-falhou · 411: começa
+G-faixa · verify-email · AUTH-verify-reenviar-erro · 411: começa
+G-faixa · verify-email · AUTH-verify-reenviar-limite · 411: começa
+G-faixa · verify-email · AUTH-verify-reenviado · 411: começa
+G-faixa · forgot-password · AUTH-forgot · 411: começa
+G-faixa · forgot-password · AUTH-forgot · 411: preparado em 1476 ms
+G-faixa · forgot-password · AUTH-forgot-validacao · 411: começa
+G-faixa · forgot-password · AUTH-forgot-validacao · 411: preparado em 2496 ms
+G-faixa · forgot-password · AUTH-forgot-enviando · 411: começa
+G-faixa · forgot-password · AUTH-forgot-indisponivel · 411: começa
+G-faixa · forgot-password · AUTH-forgot-indisponivel · 411: preparado em 2518 ms
+G-faixa · forgot-password · AUTH-forgot-erro · 411: começa
+G-faixa · forgot-password · AUTH-forgot-sucesso · 411: começa
+G-faixa · confirm-email · AUTH-confirm · 411: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · confirm-email · AUTH-confirm · 711: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · confirm-email · AUTH-confirm · 1138: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · confirm-email · AUTH-confirm-enviando · 411: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · confirm-email · AUTH-confirm-enviando · 711: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · confirm-email · AUTH-confirm-enviando · 1138: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · confirm-email · AUTH-confirm-sucesso · 411: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · confirm-email · AUTH-confirm-sucesso · 711: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · confirm-email · AUTH-confirm-sucesso · 1138: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · confirm-email · AUTH-confirm-erro · 411: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · confirm-email · AUTH-confirm-erro · 711: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · confirm-email · AUTH-confirm-erro · 1138: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · confirm-email · AUTH-confirm-erro-rede · 411: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · confirm-email · AUTH-confirm-erro-rede · 711: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · confirm-email · AUTH-confirm-erro-rede · 1138: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · confirm-email · AUTH-confirm-excecao: INALCANÇÁVEL (declarado) — o contexto não lança: o catch da tela não se alcança [hipótese] (div. 640)
+G-faixa · confirm-email · 411: (e)=0 · (b)=4 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0 (faixa A: contado à parte)
+G-faixa · confirm-email · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=3 · saídas: nome-acessível=0 rolagem=0
+G-faixa · confirm-email · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=4 · saídas: nome-acessível=0 rolagem=0
+G-faixa · forgot-password · AUTH-forgot-enviando · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "Enviando…"
+G-faixa · forgot-password · AUTH-forgot-enviando · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "Enviando…"
+G-faixa · forgot-password · AUTH-forgot-enviando · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "Enviando…"
+G-faixa · forgot-password · AUTH-forgot-erro · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "não foi possível enviar o e-mail"
+G-faixa · forgot-password · AUTH-forgot-erro · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "não foi possível enviar o e-mail"
+G-faixa · forgot-password · AUTH-forgot-erro · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "não foi possível enviar o e-mail"
+G-faixa · forgot-password · AUTH-forgot-sucesso · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "enviamos as instruções para"
+G-faixa · forgot-password · AUTH-forgot-sucesso · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "enviamos as instruções para"
+G-faixa · forgot-password · AUTH-forgot-sucesso · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "enviamos as instruções para"
+G-faixa · forgot-password · 411: (e)=0 · (b)=21 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0 (faixa A: contado à parte)
+G-faixa · forgot-password · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=3 · saídas: nome-acessível=0 rolagem=0
+G-faixa · forgot-password · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=4 · saídas: nome-acessível=0 rolagem=0
+G-faixa · login · AUTH-login-entrando · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "Entrando…"
+G-faixa · login · AUTH-login-entrando · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "Entrando…"
+G-faixa · login · AUTH-login-entrando · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "Entrando…"
+G-faixa · login · AUTH-login-google · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "Carregando…"
+G-faixa · login · AUTH-login-google · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "Carregando…"
+G-faixa · login · AUTH-login-google · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "Carregando…"
+G-faixa · login · AUTH-login-redirecionando · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "abrindo o painel…"
+G-faixa · login · AUTH-login-redirecionando · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "abrindo o painel…"
+G-faixa · login · AUTH-login-redirecionando · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "abrindo o painel…"
+G-faixa · login · AUTH-login-sem-token: INALCANÇÁVEL (declarado) — o token do usuário falso sempre existe: "Unable to obtain authentication token" só por mock de SDK [hipótese]
+G-faixa · login · AUTH-login-credencial · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "e-mail ou senha não conferem"
+G-faixa · login · AUTH-login-credencial · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "e-mail ou senha não conferem"
+G-faixa · login · AUTH-login-credencial · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "e-mail ou senha não conferem"
+G-faixa · login · AUTH-login-limite-prazo · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "tente de novo em 2 min"
+G-faixa · login · AUTH-login-limite-prazo · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "tente de novo em 2 min"
+G-faixa · login · AUTH-login-limite-prazo · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "tente de novo em 2 min"
+G-faixa · login · AUTH-login-limite · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "tente de novo em instantes"
+G-faixa · login · AUTH-login-limite · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "tente de novo em instantes"
+G-faixa · login · AUTH-login-limite · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "tente de novo em instantes"
+G-faixa · login · AUTH-login-rede · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "sem conexão — a sessão não foi aberta"
+G-faixa · login · AUTH-login-rede · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "sem conexão — a sessão não foi aberta"
+G-faixa · login · AUTH-login-rede · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "sem conexão — a sessão não foi aberta"
+G-faixa · login · AUTH-login-google-erro · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "o navegador bloqueou a janela do Google"
+G-faixa · login · AUTH-login-google-erro · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "o navegador bloqueou a janela do Google"
+G-faixa · login · AUTH-login-google-erro · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "o navegador bloqueou a janela do Google"
+G-faixa · login · AUTH-login-perfil-401 · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "o servidor não aceitou o login — entre de novo"
+G-faixa · login · AUTH-login-perfil-401 · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "o servidor não aceitou o login — entre de novo"
+G-faixa · login · AUTH-login-perfil-401 · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "o servidor não aceitou o login — entre de novo"
+G-faixa · login · AUTH-login-servidor · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "falha no servidor — a sessão não foi aberta"
+G-faixa · login · AUTH-login-servidor · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "falha no servidor — a sessão não foi aberta"
+G-faixa · login · AUTH-login-servidor · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "falha no servidor — a sessão não foi aberta"
+G-faixa · login · 411: (e)=0 · (b)=30 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0 (faixa A: contado à parte)
+G-faixa · login · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=8 · saídas: nome-acessível=0 rolagem=0
+G-faixa · login · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=9 · saídas: nome-acessível=0 rolagem=0
+G-faixa · signup · AUTH-signup-criando · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "Criando a conta…"
+G-faixa · signup · AUTH-signup-criando · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "Criando a conta…"
+G-faixa · signup · AUTH-signup-criando · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "Criando a conta…"
+G-faixa · signup · AUTH-signup-email-usado · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "já existe uma conta com este e-mail"
+G-faixa · signup · AUTH-signup-email-usado · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "já existe uma conta com este e-mail"
+G-faixa · signup · AUTH-signup-email-usado · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "já existe uma conta com este e-mail"
+G-faixa · signup · AUTH-signup-senha-fraca · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "senha fraca"
+G-faixa · signup · AUTH-signup-senha-fraca · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "senha fraca"
+G-faixa · signup · AUTH-signup-senha-fraca · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "senha fraca"
+G-faixa · signup · AUTH-signup-rede · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "sem conexão — a conta não foi criada"
+G-faixa · signup · AUTH-signup-rede · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "sem conexão — a conta não foi criada"
+G-faixa · signup · AUTH-signup-rede · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "sem conexão — a conta não foi criada"
+G-faixa · signup · AUTH-signup-limite · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "muitas tentativas"
+G-faixa · signup · AUTH-signup-limite · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "muitas tentativas"
+G-faixa · signup · AUTH-signup-limite · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "muitas tentativas"
+G-faixa · signup · AUTH-signup-perfil · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "o perfil não foi criado"
+G-faixa · signup · AUTH-signup-perfil · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "o perfil não foi criado"
+G-faixa · signup · AUTH-signup-perfil · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "o perfil não foi criado"
+G-faixa · signup · AUTH-signup-excecao: INALCANÇÁVEL (declarado) — o contexto não lança (todo catch devolve { error }): o catch da tela não se alcança [hipótese] (div. 640)
+G-faixa · signup · 411: (e)=0 · (b)=51 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0 (faixa A: contado à parte)
+G-faixa · signup · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=3 · saídas: nome-acessível=0 rolagem=0
+G-faixa · signup · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=4 · saídas: nome-acessível=0 rolagem=0
+G-faixa · verify-email · AUTH-verify · 411: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · verify-email · AUTH-verify · 711: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · verify-email · AUTH-verify · 1138: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · verify-email · AUTH-verify-checando · 411: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · verify-email · AUTH-verify-checando · 711: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · verify-email · AUTH-verify-checando · 1138: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · verify-email · AUTH-verify-enviando · 411: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · verify-email · AUTH-verify-enviando · 711: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · verify-email · AUTH-verify-enviando · 1138: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · verify-email · AUTH-verify-nao-verificado · 411: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · verify-email · AUTH-verify-nao-verificado · 711: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · verify-email · AUTH-verify-nao-verificado · 1138: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · verify-email · AUTH-verify-checar-falhou · 411: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · verify-email · AUTH-verify-checar-falhou · 711: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · verify-email · AUTH-verify-checar-falhou · 1138: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · verify-email · AUTH-verify-reenviar-erro · 411: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · verify-email · AUTH-verify-reenviar-erro · 711: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · verify-email · AUTH-verify-reenviar-erro · 1138: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · verify-email · AUTH-verify-reenviar-limite · 411: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · verify-email · AUTH-verify-reenviar-limite · 711: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · verify-email · AUTH-verify-reenviar-limite · 1138: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · verify-email · AUTH-verify-reenviar-excecao: INALCANÇÁVEL (declarado) — o contexto não lança: o catch da tela não se alcança [hipótese] (I1-E1, div. 640)
+G-faixa · verify-email · AUTH-verify-reenviado · 411: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · verify-email · AUTH-verify-reenviado · 711: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · verify-email · AUTH-verify-reenviado · 1138: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+G-faixa · verify-email · 411: (e)=0 · (b)=3 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0 (faixa A: contado à parte)
+G-faixa · verify-email · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+G-faixa · verify-email · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=2 · saídas: nome-acessível=0 rolagem=0
+G-faixa · gravado: login.json, signup.json, confirm-email.json, verify-email.json, forgot-password.json → <scratch>/ensaio
+  15 passed (4.6m)
+
+$ node scripts/gates-web/g-faixa-veredito.mjs <scratch>/ensaio
+G-faixa (veredito) — <scratch>/ensaio: 5 medição(ões)
+
+## confirm-email (/signup/confirm-email) — rodada 2026-09-27T22:54:45.053Z · base http://localhost:3106 · commit 1d4788477fb463ecaa2cac7cb9f2a2286e2acc90+sujo
+  AUTH-confirm · 411: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-confirm · 711: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-confirm · 1138: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-confirm-enviando · 411: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-confirm-enviando · 711: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-confirm-enviando · 1138: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-confirm-sucesso · 411: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-confirm-sucesso · 711: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-confirm-sucesso · 1138: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-confirm-erro · 411: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-confirm-erro · 711: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-confirm-erro · 1138: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-confirm-erro-rede · 411: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-confirm-erro-rede · 711: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-confirm-erro-rede · 1138: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  inalcançáveis em A (411) — AUTH-confirm-sem-usuario: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-confirm-sem-usuario · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=4 · sem par folha/app=1/0 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Octavia" Δ[x,y,w,h]=[1,-30.8,0,0]
+    · errata candidata: "a sessão caiu — entre de novo" Δ[x,y,w,h]=[1,-61.6,0,0]
+    · errata candidata: "Ir para o login" Δ[x,y,w,h]=[1,-61.6,0,0]
+    · errata candidata: "Reenviar o e-mail" Δ[x,y,w,h]=[1,-61.6,0,0]
+    · sem par na folha: "enviamos um link de confirmação para marcel@exemplo.com — ab"
+  AUTH-confirm-sem-usuario · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=3 · sem par folha/app=1/0 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "a sessão caiu — entre de novo" Δ[x,y,w,h]=[1,-61.6,0,0]
+    · errata candidata: "Ir para o login" Δ[x,y,w,h]=[1,-61.6,0,0]
+    · errata candidata: "Reenviar o e-mail" Δ[x,y,w,h]=[1,-61.6,0,0]
+    · sem par na folha: "enviamos um link de confirmação para marcel@exemplo.com — ab"
+  AUTH-confirm-sem-usuario · 411 (faixa A — contado à parte): (e)=0 · (b)=4 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-confirm-sem-usuario · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-confirm-sem-usuario · 411 (faixa A — contado à parte) (b) borda do viewport: heading:74d5a1c36a08#1 "Confirme o e-mail"
+    · AUTH-confirm-sem-usuario · 411 (faixa A — contado à parte) (b) borda do viewport: link:56f343dab3cb#1 "Ir para o login"
+    · AUTH-confirm-sem-usuario · 411 (faixa A — contado à parte) (b) borda do viewport: button:7f3e1e57718b#1 "Reenviar o e-mail"
+  AUTH-confirm-excecao: inalcançável (declarado) — o contexto não lança: o catch da tela não se alcança [hipótese] (div. 640)
+
+## forgot-password (/forgot-password) — rodada 2026-09-27T22:54:45.053Z · base http://localhost:3106 · commit 1d4788477fb463ecaa2cac7cb9f2a2286e2acc90+sujo
+  inalcançáveis em A (411) — AUTH-forgot: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-forgot · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-forgot · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-forgot · 411 (faixa A — contado à parte): (e)=0 · (b)=7 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-forgot · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-forgot · 411 (faixa A — contado à parte) (b) borda do viewport: heading:0d38da44009d#1 "Trocar a senha"
+    · AUTH-forgot · 411 (faixa A — contado à parte) (b) borda do viewport: texto:82eba4497862#1 "digite o e-mail e enviamos um link para trocar a senha"
+    · AUTH-forgot · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-forgot · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-forgot · 411 (faixa A — contado à parte) (b) borda do viewport: button:fc46ef64a63d#1 "Enviar o link"
+    · AUTH-forgot · 411 (faixa A — contado à parte) (b) borda do viewport: texto:5ce9a70c9a7c#1 "Lembrou a senha?"
+  inalcançáveis em A (411) — AUTH-forgot-validacao: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-forgot-validacao · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=4 · sem par folha/app=1/0 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Octavia" Δ[x,y,w,h]=[1,-20.5,0,0]
+    · errata candidata: "Enviar o link" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "Lembrou a senha?" Δ[x,y,w,h]=[1,-41,-0.1,0]
+    · errata candidata: "Entrar" Δ[x,y,w,h]=[0.9,-41,0,0]
+    · sem par na folha: "[balão nativo do navegador — texto do sistema]"
+  AUTH-forgot-validacao · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=3 · sem par folha/app=1/0 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Enviar o link" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "Lembrou a senha?" Δ[x,y,w,h]=[1,-41,-0.1,0]
+    · errata candidata: "Entrar" Δ[x,y,w,h]=[0.9,-41,0,0]
+    · sem par na folha: "[balão nativo do navegador — texto do sistema]"
+  AUTH-forgot-validacao · 411 (faixa A — contado à parte): (e)=0 · (b)=7 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-forgot-validacao · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-forgot-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: heading:0d38da44009d#1 "Trocar a senha"
+    · AUTH-forgot-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: texto:82eba4497862#1 "digite o e-mail e enviamos um link para trocar a senha"
+    · AUTH-forgot-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-forgot-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-forgot-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: button:fc46ef64a63d#1 "Enviar o link"
+    · AUTH-forgot-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: texto:5ce9a70c9a7c#1 "Lembrou a senha?"
+  AUTH-forgot-enviando · 411: não alcançado — o texto esperado não apareceu: "Enviando…"
+  AUTH-forgot-enviando · 711: não alcançado — o texto esperado não apareceu: "Enviando…"
+  AUTH-forgot-enviando · 1138: não alcançado — o texto esperado não apareceu: "Enviando…"
+  inalcançáveis em A (411) — AUTH-forgot-indisponivel: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-forgot-indisponivel · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-forgot-indisponivel · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-forgot-indisponivel · 411 (faixa A — contado à parte): (e)=0 · (b)=7 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-forgot-indisponivel · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-forgot-indisponivel · 411 (faixa A — contado à parte) (b) borda do viewport: heading:0d38da44009d#1 "Trocar a senha"
+    · AUTH-forgot-indisponivel · 411 (faixa A — contado à parte) (b) borda do viewport: texto:82eba4497862#1 "digite o e-mail e enviamos um link para trocar a senha"
+    · AUTH-forgot-indisponivel · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-forgot-indisponivel · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-forgot-indisponivel · 411 (faixa A — contado à parte) (b) borda do viewport: button:fc46ef64a63d#1 "Enviar o link"
+    · AUTH-forgot-indisponivel · 411 (faixa A — contado à parte) (b) borda do viewport: texto:5ce9a70c9a7c#1 "Lembrou a senha?"
+  AUTH-forgot-erro · 411: não alcançado — o texto esperado não apareceu: "não foi possível enviar o e-mail"
+  AUTH-forgot-erro · 711: não alcançado — o texto esperado não apareceu: "não foi possível enviar o e-mail"
+  AUTH-forgot-erro · 1138: não alcançado — o texto esperado não apareceu: "não foi possível enviar o e-mail"
+  AUTH-forgot-sucesso · 411: não alcançado — o texto esperado não apareceu: "enviamos as instruções para"
+  AUTH-forgot-sucesso · 711: não alcançado — o texto esperado não apareceu: "enviamos as instruções para"
+  AUTH-forgot-sucesso · 1138: não alcançado — o texto esperado não apareceu: "enviamos as instruções para"
+
+## login (/login) — rodada 2026-09-27T22:54:45.053Z · base http://localhost:3106 · commit 1d4788477fb463ecaa2cac7cb9f2a2286e2acc90+sujo
+  inalcançáveis em A (411) — AUTH-login: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-login · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=2/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "marcel@exemplo.com"
+    · sem par na folha: "••••••••"
+    · sem par no app: "voce@exemplo.com"
+  AUTH-login · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=2/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "marcel@exemplo.com"
+    · sem par na folha: "••••••••"
+    · sem par no app: "voce@exemplo.com"
+  AUTH-login · 411 (faixa A — contado à parte): (e)=0 · (b)=10 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-login · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-login · 411 (faixa A — contado à parte) (b) borda do viewport: heading:4105811890ae#1 "Entrar"
+    · AUTH-login · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-login · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-login · 411 (faixa A — contado à parte) (b) borda do viewport: label:d482c10b3d4d#1 "Senha"
+    · AUTH-login · 411 (faixa A — contado à parte) (b) borda do viewport: link:6328c0bf79cc#1 "Esqueci a senha"
+    · AUTH-login · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-senha#1 ""
+    · AUTH-login · 411 (faixa A — contado à parte) (b) borda do viewport: button:4105811890ae#1 "Entrar"
+    · AUTH-login · 411 (faixa A — contado à parte) (b) borda do viewport: button:5cfc81b7e7b3#1 "Entrar com Google"
+    · AUTH-login · 411 (faixa A — contado à parte) (b) borda do viewport: texto:4aa8ddd2fd24#1 "Não tem conta?"
+  inalcançáveis em A (411) — AUTH-login-validacao: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-login-validacao · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=9 · sem par folha/app=2/0 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Octavia" Δ[x,y,w,h]=[1,-20.5,0,0]
+    · errata candidata: "Senha" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "Esqueci a senha" Δ[x,y,w,h]=[1.1,-41,-0.1,0]
+    · errata candidata: "" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "Entrar" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "ou" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "Entrar com Google" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "Não tem conta?" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "Criar conta" Δ[x,y,w,h]=[1,-41,0,0]
+    · sem par na folha: "[balão nativo do navegador — texto do sistema]"
+    · sem par na folha: "••••••••"
+  AUTH-login-validacao · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=8 · sem par folha/app=2/0 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Senha" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "Esqueci a senha" Δ[x,y,w,h]=[1.1,-41,-0.1,0]
+    · errata candidata: "" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "Entrar" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "ou" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "Entrar com Google" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "Não tem conta?" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "Criar conta" Δ[x,y,w,h]=[1,-41,0,0]
+    · sem par na folha: "[balão nativo do navegador — texto do sistema]"
+    · sem par na folha: "••••••••"
+  AUTH-login-validacao · 411 (faixa A — contado à parte): (e)=0 · (b)=10 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-login-validacao · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-login-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: heading:4105811890ae#1 "Entrar"
+    · AUTH-login-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-login-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-login-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: label:d482c10b3d4d#1 "Senha"
+    · AUTH-login-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: link:6328c0bf79cc#1 "Esqueci a senha"
+    · AUTH-login-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-senha#1 ""
+    · AUTH-login-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: button:4105811890ae#1 "Entrar"
+    · AUTH-login-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: button:5cfc81b7e7b3#1 "Entrar com Google"
+    · AUTH-login-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: texto:4aa8ddd2fd24#1 "Não tem conta?"
+  AUTH-login-entrando · 411: não alcançado — o texto esperado não apareceu: "Entrando…"
+  AUTH-login-entrando · 711: não alcançado — o texto esperado não apareceu: "Entrando…"
+  AUTH-login-entrando · 1138: não alcançado — o texto esperado não apareceu: "Entrando…"
+  AUTH-login-google · 411: não alcançado — o texto esperado não apareceu: "Carregando…"
+  AUTH-login-google · 711: não alcançado — o texto esperado não apareceu: "Carregando…"
+  AUTH-login-google · 1138: não alcançado — o texto esperado não apareceu: "Carregando…"
+  AUTH-login-redirecionando · 411: não alcançado — o texto esperado não apareceu: "abrindo o painel…"
+  AUTH-login-redirecionando · 711: não alcançado — o texto esperado não apareceu: "abrindo o painel…"
+  AUTH-login-redirecionando · 1138: não alcançado — o texto esperado não apareceu: "abrindo o painel…"
+  AUTH-login-sem-token: inalcançável (declarado) — o token do usuário falso sempre existe: "Unable to obtain authentication token" só por mock de SDK [hipótese]
+  AUTH-login-credencial · 411: não alcançado — o texto esperado não apareceu: "e-mail ou senha não conferem"
+  AUTH-login-credencial · 711: não alcançado — o texto esperado não apareceu: "e-mail ou senha não conferem"
+  AUTH-login-credencial · 1138: não alcançado — o texto esperado não apareceu: "e-mail ou senha não conferem"
+  AUTH-login-limite-prazo · 411: não alcançado — o texto esperado não apareceu: "tente de novo em 2 min"
+  AUTH-login-limite-prazo · 711: não alcançado — o texto esperado não apareceu: "tente de novo em 2 min"
+  AUTH-login-limite-prazo · 1138: não alcançado — o texto esperado não apareceu: "tente de novo em 2 min"
+  AUTH-login-limite · 411: não alcançado — o texto esperado não apareceu: "tente de novo em instantes"
+  AUTH-login-limite · 711: não alcançado — o texto esperado não apareceu: "tente de novo em instantes"
+  AUTH-login-limite · 1138: não alcançado — o texto esperado não apareceu: "tente de novo em instantes"
+  AUTH-login-rede · 411: não alcançado — o texto esperado não apareceu: "sem conexão — a sessão não foi aberta"
+  AUTH-login-rede · 711: não alcançado — o texto esperado não apareceu: "sem conexão — a sessão não foi aberta"
+  AUTH-login-rede · 1138: não alcançado — o texto esperado não apareceu: "sem conexão — a sessão não foi aberta"
+  AUTH-login-google-erro · 411: não alcançado — o texto esperado não apareceu: "o navegador bloqueou a janela do Google"
+  AUTH-login-google-erro · 711: não alcançado — o texto esperado não apareceu: "o navegador bloqueou a janela do Google"
+  AUTH-login-google-erro · 1138: não alcançado — o texto esperado não apareceu: "o navegador bloqueou a janela do Google"
+  inalcançáveis em A (411) — AUTH-login-nao-configurado: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-login-nao-configurado · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=1/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "••••••••"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-login-nao-configurado · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=1/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "••••••••"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-login-nao-configurado · 411 (faixa A — contado à parte): (e)=0 · (b)=10 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-login-nao-configurado · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-login-nao-configurado · 411 (faixa A — contado à parte) (b) borda do viewport: heading:4105811890ae#1 "Entrar"
+    · AUTH-login-nao-configurado · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-login-nao-configurado · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-login-nao-configurado · 411 (faixa A — contado à parte) (b) borda do viewport: label:d482c10b3d4d#1 "Senha"
+    · AUTH-login-nao-configurado · 411 (faixa A — contado à parte) (b) borda do viewport: link:6328c0bf79cc#1 "Esqueci a senha"
+    · AUTH-login-nao-configurado · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-senha#1 ""
+    · AUTH-login-nao-configurado · 411 (faixa A — contado à parte) (b) borda do viewport: button:4105811890ae#1 "Entrar"
+    · AUTH-login-nao-configurado · 411 (faixa A — contado à parte) (b) borda do viewport: button:5cfc81b7e7b3#1 "Entrar com Google"
+    · AUTH-login-nao-configurado · 411 (faixa A — contado à parte) (b) borda do viewport: texto:4aa8ddd2fd24#1 "Não tem conta?"
+  AUTH-login-perfil-401 · 411: não alcançado — o texto esperado não apareceu: "o servidor não aceitou o login — entre de novo"
+  AUTH-login-perfil-401 · 711: não alcançado — o texto esperado não apareceu: "o servidor não aceitou o login — entre de novo"
+  AUTH-login-perfil-401 · 1138: não alcançado — o texto esperado não apareceu: "o servidor não aceitou o login — entre de novo"
+  AUTH-login-servidor · 411: não alcançado — o texto esperado não apareceu: "falha no servidor — a sessão não foi aberta"
+  AUTH-login-servidor · 711: não alcançado — o texto esperado não apareceu: "falha no servidor — a sessão não foi aberta"
+  AUTH-login-servidor · 1138: não alcançado — o texto esperado não apareceu: "falha no servidor — a sessão não foi aberta"
+
+## signup (/signup) — rodada 2026-09-27T22:54:45.053Z · base http://localhost:3106 · commit 1d4788477fb463ecaa2cac7cb9f2a2286e2acc90+sujo
+  inalcançáveis em A (411) — AUTH-signup: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-signup · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=6/2 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Marcel"
+    · sem par na folha: "Viana"
+    · sem par na folha: "marcel@exemplo.com"
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "voce@exemplo.com"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+  AUTH-signup · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=6/2 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Marcel"
+    · sem par na folha: "Viana"
+    · sem par na folha: "marcel@exemplo.com"
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "voce@exemplo.com"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+  AUTH-signup · 411 (faixa A — contado à parte): (e)=0 · (b)=17 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-signup · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-signup · 411 (faixa A — contado à parte) (b) borda do viewport: heading:8cb3525e3b7e#1 "Criar conta"
+    · AUTH-signup · 411 (faixa A — contado à parte) (b) borda do viewport: label:5086900635fe#1 "Nome"
+    · AUTH-signup · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-nome#1 ""
+    · AUTH-signup · 411 (faixa A — contado à parte) (b) borda do viewport: label:c6522465fb9d#1 "Sobrenome"
+    · AUTH-signup · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-sobrenome#1 ""
+    · AUTH-signup · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-signup · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-signup · 411 (faixa A — contado à parte) (b) borda do viewport: label:d46b5db8e172#1 "Instrumento principal"
+    · AUTH-signup · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-instrumento#1 "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro ▾"
+    · AUTH-signup · 411 (faixa A — contado à parte) (b) borda do viewport: label:d482c10b3d4d#1 "Senha"
+    · AUTH-signup · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-senha#1 ""
+    · … e mais 5
+  inalcançáveis em A (411) — AUTH-signup-validacao: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-signup-validacao · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=4 · sem par folha/app=7/2 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Octavia" Δ[x,y,w,h]=[1,-20.5,0,0]
+    · errata candidata: "Criar conta" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "Já tem conta?" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "Voltar para o login" Δ[x,y,w,h]=[1,-41,0,0]
+    · sem par na folha: "Marcel"
+    · sem par na folha: "Viana"
+    · sem par na folha: "marcel@exemplo.com"
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "[balão nativo do navegador — texto do sistema]"
+    · sem par no app: "voce@exemplo.com"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+  AUTH-signup-validacao · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=3 · sem par folha/app=7/2 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Criar conta" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "Já tem conta?" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "Voltar para o login" Δ[x,y,w,h]=[1,-41,0,0]
+    · sem par na folha: "Marcel"
+    · sem par na folha: "Viana"
+    · sem par na folha: "marcel@exemplo.com"
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "[balão nativo do navegador — texto do sistema]"
+    · sem par no app: "voce@exemplo.com"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+  AUTH-signup-validacao · 411 (faixa A — contado à parte): (e)=0 · (b)=17 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-signup-validacao · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-signup-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: heading:8cb3525e3b7e#1 "Criar conta"
+    · AUTH-signup-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: label:5086900635fe#1 "Nome"
+    · AUTH-signup-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-nome#1 ""
+    · AUTH-signup-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: label:c6522465fb9d#1 "Sobrenome"
+    · AUTH-signup-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-sobrenome#1 ""
+    · AUTH-signup-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-signup-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-signup-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: label:d46b5db8e172#1 "Instrumento principal"
+    · AUTH-signup-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-instrumento#1 "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro ▾"
+    · AUTH-signup-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: label:d482c10b3d4d#1 "Senha"
+    · AUTH-signup-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-senha#1 ""
+    · … e mais 5
+  inalcançáveis em A (411) — AUTH-signup-senhas: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-signup-senhas · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=3/3 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "outra-senha-de-exemplo"
+  AUTH-signup-senhas · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=3/3 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "outra-senha-de-exemplo"
+  AUTH-signup-senhas · 411 (faixa A — contado à parte): (e)=0 · (b)=17 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-signup-senhas · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-signup-senhas · 411 (faixa A — contado à parte) (b) borda do viewport: heading:8cb3525e3b7e#1 "Criar conta"
+    · AUTH-signup-senhas · 411 (faixa A — contado à parte) (b) borda do viewport: label:5086900635fe#1 "Nome"
+    · AUTH-signup-senhas · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-nome#1 ""
+    · AUTH-signup-senhas · 411 (faixa A — contado à parte) (b) borda do viewport: label:c6522465fb9d#1 "Sobrenome"
+    · AUTH-signup-senhas · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-sobrenome#1 ""
+    · AUTH-signup-senhas · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-signup-senhas · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-signup-senhas · 411 (faixa A — contado à parte) (b) borda do viewport: label:d46b5db8e172#1 "Instrumento principal"
+    · AUTH-signup-senhas · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-instrumento#1 "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro ▾"
+    · AUTH-signup-senhas · 411 (faixa A — contado à parte) (b) borda do viewport: label:d482c10b3d4d#1 "Senha"
+    · AUTH-signup-senhas · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-senha#1 ""
+    · … e mais 5
+  AUTH-signup-criando · 411: não alcançado — o texto esperado não apareceu: "Criando a conta…"
+  AUTH-signup-criando · 711: não alcançado — o texto esperado não apareceu: "Criando a conta…"
+  AUTH-signup-criando · 1138: não alcançado — o texto esperado não apareceu: "Criando a conta…"
+  AUTH-signup-email-usado · 411: não alcançado — o texto esperado não apareceu: "já existe uma conta com este e-mail"
+  AUTH-signup-email-usado · 711: não alcançado — o texto esperado não apareceu: "já existe uma conta com este e-mail"
+  AUTH-signup-email-usado · 1138: não alcançado — o texto esperado não apareceu: "já existe uma conta com este e-mail"
+  AUTH-signup-senha-fraca · 411: não alcançado — o texto esperado não apareceu: "senha fraca"
+  AUTH-signup-senha-fraca · 711: não alcançado — o texto esperado não apareceu: "senha fraca"
+  AUTH-signup-senha-fraca · 1138: não alcançado — o texto esperado não apareceu: "senha fraca"
+  AUTH-signup-rede · 411: não alcançado — o texto esperado não apareceu: "sem conexão — a conta não foi criada"
+  AUTH-signup-rede · 711: não alcançado — o texto esperado não apareceu: "sem conexão — a conta não foi criada"
+  AUTH-signup-rede · 1138: não alcançado — o texto esperado não apareceu: "sem conexão — a conta não foi criada"
+  AUTH-signup-limite · 411: não alcançado — o texto esperado não apareceu: "muitas tentativas"
+  AUTH-signup-limite · 711: não alcançado — o texto esperado não apareceu: "muitas tentativas"
+  AUTH-signup-limite · 1138: não alcançado — o texto esperado não apareceu: "muitas tentativas"
+  AUTH-signup-perfil · 411: não alcançado — o texto esperado não apareceu: "o perfil não foi criado"
+  AUTH-signup-perfil · 711: não alcançado — o texto esperado não apareceu: "o perfil não foi criado"
+  AUTH-signup-perfil · 1138: não alcançado — o texto esperado não apareceu: "o perfil não foi criado"
+  AUTH-signup-excecao: inalcançável (declarado) — o contexto não lança (todo catch devolve { error }): o catch da tela não se alcança [hipótese] (div. 640)
+
+## verify-email (/verify-email) — rodada 2026-09-27T22:54:45.053Z · base http://localhost:3106 · commit 1d4788477fb463ecaa2cac7cb9f2a2286e2acc90+sujo
+  inalcançáveis em A (411) — AUTH-verify-carregando: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-verify-carregando · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=2 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Confirme o e-mail" Δ[x,y,w,h]=[1,16,0,0]
+    · errata candidata: "carregando…" Δ[x,y,w,h]=[1,16,0,0]
+  AUTH-verify-carregando · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify-carregando · 411 (faixa A — contado à parte): (e)=0 · (b)=3 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-verify-carregando · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-verify-carregando · 411 (faixa A — contado à parte) (b) borda do viewport: heading:74d5a1c36a08#1 "Confirme o e-mail"
+    · AUTH-verify-carregando · 411 (faixa A — contado à parte) (b) borda do viewport: texto:d3f57e1b75a0#1 "carregando…"
+  AUTH-verify · 411: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-verify · 711: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-verify · 1138: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-verify-checando · 411: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-verify-checando · 711: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-verify-checando · 1138: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-verify-enviando · 411: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-verify-enviando · 711: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-verify-enviando · 1138: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-verify-nao-verificado · 411: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-verify-nao-verificado · 711: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-verify-nao-verificado · 1138: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-verify-checar-falhou · 411: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-verify-checar-falhou · 711: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-verify-checar-falhou · 1138: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-verify-reenviar-erro · 411: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-verify-reenviar-erro · 711: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-verify-reenviar-erro · 1138: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-verify-reenviar-limite · 411: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-verify-reenviar-limite · 711: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-verify-reenviar-limite · 1138: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-verify-reenviar-excecao: inalcançável (declarado) — o contexto não lança: o catch da tela não se alcança [hipótese] (I1-E1, div. 640)
+  AUTH-verify-reenviado · 411: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-verify-reenviado · 711: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  AUTH-verify-reenviado · 1138: não alcançado — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+
+## contados à parte (não reprovam): errata candidata 40 · sem par folha 46 · sem par app 18 (C e B) · não medidos 100
+  · confirm-email · AUTH-confirm · 411: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · confirm-email · AUTH-confirm · 711: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · confirm-email · AUTH-confirm · 1138: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · confirm-email · AUTH-confirm-enviando · 411: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · confirm-email · AUTH-confirm-enviando · 711: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · confirm-email · AUTH-confirm-enviando · 1138: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · confirm-email · AUTH-confirm-sucesso · 411: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · confirm-email · AUTH-confirm-sucesso · 711: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · confirm-email · AUTH-confirm-sucesso · 1138: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · confirm-email · AUTH-confirm-erro · 411: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · confirm-email · AUTH-confirm-erro · 711: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · confirm-email · AUTH-confirm-erro · 1138: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · confirm-email · AUTH-confirm-erro-rede · 411: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · confirm-email · AUTH-confirm-erro-rede · 711: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · confirm-email · AUTH-confirm-erro-rede · 1138: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · confirm-email · AUTH-confirm-excecao: INALCANÇÁVEL (declarado) — o contexto não lança: o catch da tela não se alcança [hipótese] (div. 640)
+  · forgot-password · AUTH-forgot-enviando · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "Enviando…"
+  · forgot-password · AUTH-forgot-enviando · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "Enviando…"
+  · forgot-password · AUTH-forgot-enviando · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "Enviando…"
+  · forgot-password · AUTH-forgot-erro · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "não foi possível enviar o e-mail"
+  · forgot-password · AUTH-forgot-erro · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "não foi possível enviar o e-mail"
+  · forgot-password · AUTH-forgot-erro · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "não foi possível enviar o e-mail"
+  · forgot-password · AUTH-forgot-sucesso · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "enviamos as instruções para"
+  · forgot-password · AUTH-forgot-sucesso · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "enviamos as instruções para"
+  · forgot-password · AUTH-forgot-sucesso · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "enviamos as instruções para"
+  · login · AUTH-login-entrando · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "Entrando…"
+  · login · AUTH-login-entrando · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "Entrando…"
+  · login · AUTH-login-entrando · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "Entrando…"
+  · login · AUTH-login-google · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "Carregando…"
+  · login · AUTH-login-google · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "Carregando…"
+  · login · AUTH-login-google · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "Carregando…"
+  · login · AUTH-login-redirecionando · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "abrindo o painel…"
+  · login · AUTH-login-redirecionando · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "abrindo o painel…"
+  · login · AUTH-login-redirecionando · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "abrindo o painel…"
+  · login · AUTH-login-sem-token: INALCANÇÁVEL (declarado) — o token do usuário falso sempre existe: "Unable to obtain authentication token" só por mock de SDK [hipótese]
+  · login · AUTH-login-credencial · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "e-mail ou senha não conferem"
+  · login · AUTH-login-credencial · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "e-mail ou senha não conferem"
+  · login · AUTH-login-credencial · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "e-mail ou senha não conferem"
+  · login · AUTH-login-limite-prazo · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "tente de novo em 2 min"
+  · login · AUTH-login-limite-prazo · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "tente de novo em 2 min"
+  · login · AUTH-login-limite-prazo · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "tente de novo em 2 min"
+  · login · AUTH-login-limite · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "tente de novo em instantes"
+  · login · AUTH-login-limite · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "tente de novo em instantes"
+  · login · AUTH-login-limite · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "tente de novo em instantes"
+  · login · AUTH-login-rede · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "sem conexão — a sessão não foi aberta"
+  · login · AUTH-login-rede · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "sem conexão — a sessão não foi aberta"
+  · login · AUTH-login-rede · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "sem conexão — a sessão não foi aberta"
+  · login · AUTH-login-google-erro · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "o navegador bloqueou a janela do Google"
+  · login · AUTH-login-google-erro · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "o navegador bloqueou a janela do Google"
+  · login · AUTH-login-google-erro · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "o navegador bloqueou a janela do Google"
+  · login · AUTH-login-perfil-401 · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "o servidor não aceitou o login — entre de novo"
+  · login · AUTH-login-perfil-401 · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "o servidor não aceitou o login — entre de novo"
+  · login · AUTH-login-perfil-401 · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "o servidor não aceitou o login — entre de novo"
+  · login · AUTH-login-servidor · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "falha no servidor — a sessão não foi aberta"
+  · login · AUTH-login-servidor · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "falha no servidor — a sessão não foi aberta"
+  · login · AUTH-login-servidor · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "falha no servidor — a sessão não foi aberta"
+  · signup · AUTH-signup-criando · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "Criando a conta…"
+  · signup · AUTH-signup-criando · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "Criando a conta…"
+  · signup · AUTH-signup-criando · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "Criando a conta…"
+  · signup · AUTH-signup-email-usado · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "já existe uma conta com este e-mail"
+  · signup · AUTH-signup-email-usado · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "já existe uma conta com este e-mail"
+  · signup · AUTH-signup-email-usado · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "já existe uma conta com este e-mail"
+  · signup · AUTH-signup-senha-fraca · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "senha fraca"
+  · signup · AUTH-signup-senha-fraca · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "senha fraca"
+  · signup · AUTH-signup-senha-fraca · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "senha fraca"
+  · signup · AUTH-signup-rede · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "sem conexão — a conta não foi criada"
+  · signup · AUTH-signup-rede · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "sem conexão — a conta não foi criada"
+  · signup · AUTH-signup-rede · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "sem conexão — a conta não foi criada"
+  · signup · AUTH-signup-limite · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "muitas tentativas"
+  · signup · AUTH-signup-limite · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "muitas tentativas"
+  · signup · AUTH-signup-limite · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "muitas tentativas"
+  · signup · AUTH-signup-perfil · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "o perfil não foi criado"
+  · signup · AUTH-signup-perfil · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "o perfil não foi criado"
+  · signup · AUTH-signup-perfil · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "o perfil não foi criado"
+  · signup · AUTH-signup-excecao: INALCANÇÁVEL (declarado) — o contexto não lança (todo catch devolve { error }): o catch da tela não se alcança [hipótese] (div. 640)
+  · verify-email · AUTH-verify · 411: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · verify-email · AUTH-verify · 711: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · verify-email · AUTH-verify · 1138: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · verify-email · AUTH-verify-checando · 411: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · verify-email · AUTH-verify-checando · 711: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · verify-email · AUTH-verify-checando · 1138: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · verify-email · AUTH-verify-enviando · 411: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · verify-email · AUTH-verify-enviando · 711: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · verify-email · AUTH-verify-enviando · 1138: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · verify-email · AUTH-verify-nao-verificado · 411: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · verify-email · AUTH-verify-nao-verificado · 711: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · verify-email · AUTH-verify-nao-verificado · 1138: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · verify-email · AUTH-verify-checar-falhou · 411: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · verify-email · AUTH-verify-checar-falhou · 711: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · verify-email · AUTH-verify-checar-falhou · 1138: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · verify-email · AUTH-verify-reenviar-erro · 411: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · verify-email · AUTH-verify-reenviar-erro · 711: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · verify-email · AUTH-verify-reenviar-erro · 1138: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · verify-email · AUTH-verify-reenviar-limite · 411: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · verify-email · AUTH-verify-reenviar-limite · 711: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · verify-email · AUTH-verify-reenviar-limite · 1138: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · verify-email · AUTH-verify-reenviar-excecao: INALCANÇÁVEL (declarado) — o contexto não lança: o catch da tela não se alcança [hipótese] (I1-E1, div. 640)
+  · verify-email · AUTH-verify-reenviado · 411: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · verify-email · AUTH-verify-reenviado · 711: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+  · verify-email · AUTH-verify-reenviado · 1138: NÃO ALCANÇADO — a preparação falhou: o usuário falso não entra: Firebase não configurado neste servidor (sem .env)
+
+G-faixa: PASSA
+veredito 0

@@ -44,6 +44,18 @@ async function main() {
       // página não tem; o transform do Playwright Test não faz isso. Um `__name` identidade basta.
       await page.evaluate('window.__name = (f) => f')
       await page.evaluate(() => document.fonts.ready.then(() => undefined))
+      // âncoras (decisão 7): a caixa do campo recebe o `data-testid` do app, pelo rótulo do irmão anterior
+      const arqAncoras = path.join('tests/gates-web/esperado', `${pasta}.ancoras.json`)
+      const ancoras = fs.existsSync(arqAncoras) ? JSON.parse(fs.readFileSync(arqAncoras, 'utf8')) as { seletor: string; porRotulo: Record<string, string> } : null
+      const ancorados = ancoras ? await page.evaluate(({ seletor, porRotulo }) => {
+        let n = 0
+        for (const cx of document.querySelectorAll(seletor)) {
+          const rotulo = (cx.previousElementSibling as HTMLElement | null)?.innerText.split('\n')[0]?.trim() ?? ''
+          const t = porRotulo[rotulo]
+          if (t) { cx.setAttribute('data-testid', t); n++ }
+        }
+        return n
+      }, ancoras) : 0
       const secoes = await page.evaluate(() => [...document.querySelectorAll('section[data-estado]')].map((s) => s.getAttribute('data-estado') as string))
       const estados: Record<string, { C: ReturnType<typeof paraJson>; B: ReturnType<typeof paraJson> } | { falta: string }> = {}
       for (const secao of secoes) {
@@ -62,12 +74,12 @@ async function main() {
         estados[secao] = falta ? { falta: `sem a moldura ${falta.trim()}` } : (out as { C: ReturnType<typeof paraJson>; B: ReturnType<typeof paraJson> })
       }
       await page.close()
-      const peca = { folha: pasta, arquivo: path.relative(process.cwd(), arq), sha256: sha, chromium: navegador.version(), estados }
+      const peca = { folha: pasta, arquivo: path.relative(process.cwd(), arq), sha256: sha, chromium: navegador.version(), ancorados, estados }
       fs.mkdirSync('tests/gates-web/esperado', { recursive: true })
       const saida = path.join('tests/gates-web/esperado', `${pasta}.json`)
       fs.writeFileSync(saida, JSON.stringify(peca, null, 1) + '\n')
       const n = Object.values(estados).filter((e) => !('falta' in e))
-      console.log(`${pasta}: ${secoes.length} seções · ${n.length} com C e B · nós C ${n.reduce((a, e) => a + (e as { C: unknown[] }).C.length, 0)} · nós B ${n.reduce((a, e) => a + (e as { B: unknown[] }).B.length, 0)} → ${saida}`)
+      console.log(`${pasta}: ${ancorados} caixa(s) de campo ancorada(s) ·`, `${secoes.length} seções · ${n.length} com C e B · nós C ${n.reduce((a, e) => a + (e as { C: unknown[] }).C.length, 0)} · nós B ${n.reduce((a, e) => a + (e as { B: unknown[] }).B.length, 0)} → ${saida}`)
       for (const [s, e] of Object.entries(estados)) if ('falta' in e) console.log(`  ✗ ${s}: ${e.falta}`)
     }
   } finally {

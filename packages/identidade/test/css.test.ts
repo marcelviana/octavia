@@ -24,4 +24,18 @@ describe('app/styles/identidade.css', () => {
     expect(b).not.toContain('--faixa-razao-')
     expect(css.slice(0, css.indexOf('/* faixa C */'))).not.toContain('--faixa-')
   })
+
+  it('as medidas fixas das folhas 0 e 1 (I1-PR-6, decisão 2): em toda faixa, e o vão da auth muda de C para B', () => {
+    const css: string = gerarCss()
+    const faixa = (f: string) => css.slice(css.indexOf(`/* faixa ${f} */`), f === 'A' ? undefined : css.indexOf(`/* faixa ${f === 'C' ? 'B' : 'A'} */`))
+    for (const f of ['C', 'B', 'A']) {
+      for (const l of ['--faixa-marca-largura: 340px;', '--faixa-marca-altura: 219px;', '--faixa-coluna-auth: 420px;',
+        '--faixa-campo-auth: 60px;', '--faixa-botao-auth: 58px;', '--faixa-botao-aviso: 36px;', '--faixa-entrelinha-aviso: 20px;', '--faixa-limiar-aviso: 320px;']) {
+        expect(faixa(f)).toContain(l)
+      }
+    }
+    expect(faixa('C')).toContain('--faixa-vao-auth: 140px;')
+    expect(faixa('B')).toContain('--faixa-vao-auth: 48px;')
+    expect(faixa('A')).toContain('--faixa-vao-auth: 48px;')
+  })
 })

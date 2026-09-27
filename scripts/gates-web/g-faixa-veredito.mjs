@@ -11,6 +11,11 @@
 //   REPROVA também o JSON que não se sustenta: sem controle positivo do
 //   listener (div. 522), com escrita/produção no log de requests, sem a
 //   largura de referência (1138) para o (e), ou Chromium fora do fixado.
+//   I1-PR6: a resposta FABRICADA no navegador (`status: "fabricado …"`) não é
+//   escrita — não saiu; o estado DECLARADO inalcançável e o NÃO ALCANÇADO pela
+//   preparação são LISTADOS e contados à parte (não reprovam: o aceite os
+//   nomeia); a errata candidata e os nós SEM PAR com a folha (decisão 7) são
+//   LISTADOS por estado × largura.
 //
 // Uso (da raiz):  node scripts/gates-web/g-faixa-veredito.mjs [pasta]
 // Sai 0 se passa, 1 se reprova, 2 se o JSON não se lê.
@@ -58,6 +63,8 @@ const nomeDe = (n) => {
 
 let falhas = 0
 const falha = (m) => { console.log(`  ✗ ${m}`); falhas++ }
+const naoMedidos = []
+let erratas = 0, semParFolha = 0, semParApp = 0
 const LIMITE = 12 // ocorrências listadas por (tipo, largura); o resto só conta
 for (const f of arquivos) {
   let s
@@ -67,12 +74,15 @@ for (const f of arquivos) {
   for (const [L, c] of Object.entries(s.controlePositivo ?? {}))
     if (/AUSENTE/.test(`${c.controle1} ${c.controle2}`)) falha(`${L}: controle positivo do listener falhou (${c.controle1} · ${c.controle2})`)
   for (const [L, r] of Object.entries(s.requests ?? {})) {
-    const esc = (r.linhas ?? []).filter((l) => l.caminho.startsWith("/api/") && !["GET", "HEAD", "OPTIONS"].includes(l.metodo) && !l.caminho.startsWith("/api/auth/session"))
+    const esc = (r.linhas ?? []).filter((l) => l.caminho.startsWith("/api/") && !["GET", "HEAD", "OPTIONS"].includes(l.metodo) && !l.caminho.startsWith("/api/auth/session") && !String(l.status).startsWith("fabricado"))
     if (esc.length) falha(`${L}: escrita a /api/* no log: ${esc.map((l) => `${l.metodo} ${l.caminho}`).join(", ")}`)
     if (r.prodAbortados) console.log(`  · ${L}: ${r.prodAbortados} request(s) a octavia.rocks abortado(s) no navegador`)
   }
   for (const [id, estado] of Object.entries(s.estados)) {
     if (estado.pulado) { falha(`${id}: estado não medido — ${estado.pulado}`); continue }
+    if (estado.inalcancavel) { naoMedidos.push(`${s.superficie} · ${id}: INALCANÇÁVEL (declarado) — ${estado.inalcancavel}`); console.log(`  ${id}: inalcançável (declarado) — ${estado.inalcancavel}`); continue }
+    for (const [L, r] of Object.entries(estado.naoAlcancado ?? {})) { naoMedidos.push(`${s.superficie} · ${id} · ${L}: NÃO ALCANÇADO — ${r}`); console.log(`  ${id} · ${L}: não alcançado — ${r}`) }
+    if (Object.keys(estado.larguras ?? {}).length === 0) continue
     if (!estado.larguras[REFERENCIA]) falha(`${id}: sem a medição de ${REFERENCIA} (a referência do (e))`)
     const c = classificarEstado(estado)
     if (c["411"]) {
@@ -86,7 +96,13 @@ for (const f of arquivos) {
     for (const L of Object.keys(c).sort((a, b) => b - a)) {
       const r = c[L]
       const cab = `${id} · ${L}${r.reprova ? "" : " (faixa A — contado à parte)"}`
-      console.log(`  ${cab}: (e)=${r.e.length} · (b)=${r.b.length} · (d′)=${r.dl.length} · errata candidata=${r.errata.length} · saídas: nome-acessível=${r.saidas.nomeAcessivel} rolagem=${r.saidas.rolagem}`)
+      console.log(`  ${cab}: (e)=${r.e.length} · (b)=${r.b.length} · (d′)=${r.dl.length} · errata candidata=${r.errata.length} · sem par folha/app=${r.semPar.folha.length}/${r.semPar.app.length} · saídas: nome-acessível=${r.saidas.nomeAcessivel} rolagem=${r.saidas.rolagem}`)
+      // decisão 7: a errata candidata e os nós sem par com a folha, listados (nunca reprovam — decisão do Marcel)
+      if (r.reprova) { erratas += r.errata.length; semParFolha += r.semPar.folha.length; semParApp += r.semPar.app.length }
+      const nomeNo = (k) => { const n = estado.larguras[L]?.nos.find((x) => x.k === k); return n ? nomeDe(n) : k }
+      for (const o of r.errata) console.log(`    · errata candidata: ${nomeNo(o.k)} Δ[x,y,w,h]=${JSON.stringify(o.delta)}`)
+      for (const o of r.semPar.folha) console.log(`    · sem par na folha: ${o.rotulo !== undefined ? JSON.stringify(String(o.rotulo).slice(0, 60)) : o.k}`)
+      for (const o of r.semPar.app) console.log(`    · sem par no app: ${nomeNo(o.k)}`)
       const rotulo = (k) => {
         const n = estado.larguras[L]?.nos.find((x) => x.k === k) ?? estado.larguras[REFERENCIA]?.nos.find((x) => x.k === k)
         return n?.rotulo !== undefined ? ` "${n.rotulo.slice(0, 60)}"` : n ? ` <${n.tag} ${n.role}, ${n.n} car.>` : ""
@@ -100,6 +116,10 @@ for (const f of arquivos) {
       }
     }
   }
+}
+if (naoMedidos.length || erratas || semParFolha || semParApp) {
+  console.log(`\n## contados à parte (não reprovam): errata candidata ${erratas} · sem par folha ${semParFolha} · sem par app ${semParApp} (C e B) · não medidos ${naoMedidos.length}`)
+  for (const m of naoMedidos) console.log(`  · ${m}`)
 }
 console.log(falhas ? `\nG-faixa: REPROVA — ${falhas} ocorrência(s)` : "\nG-faixa: PASSA")
 process.exit(falhas ? 1 : 0)

@@ -1,6 +1,9 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
 import "./globals.css"
+// I1-PR-6 (decisão 4): a identidade (custom properties geradas de @octavia/identidade) e as três famílias
+import "./styles/identidade.css"
+import "./styles/fontes.css"
 import "@/lib/logger"
 import { FirebaseAuthProvider } from "@/contexts/firebase-auth-context"
 import { SessionProvider } from "@/components/providers/session-provider"

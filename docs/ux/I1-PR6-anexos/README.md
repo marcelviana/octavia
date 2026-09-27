@@ -7,8 +7,8 @@
 > **Convenções** (as do `I1-PRECHECK.md`): `[medido]` = comando + saída literal (em `cn/`); `[lido]` = arquivo:linha;
 > `[hipótese]` = o resto. Divergências **636–655**, numeração conferida pela coluna:
 > `git grep -nE '^\| \*\*6[0-9][0-9]\*\* \| [A-Z]' docs | sort -t'*' -k3 -n | tail -1` → 635.
-> **Estado**: **commit 1 (gate-first)** — nenhuma linha de `app/`, `components/`, `lib/`, `contexts/` mudou.
-> O commit 2 (a implementação) espera o aval da §9.
+> **Estado**: commit 1 (gate-first, `1d47884`) e **commit 2 (a implementação, §11)**; o aceite (§11.6, `COMO-RODAR.md`) é do Marcel, e
+> o commit 3 (veredito e docs) espera o "rodei". Divergências do commit 2: **656–671** (§11.8).
 
 | arquivo | o que é |
 |---|---|
@@ -324,20 +324,31 @@ para `/dashboard`). Para os 10 do verify e os 5 do confirm com usuário, as duas
 | **654** | D | §5.2: `login.razao.sem-token` · *"o servidor não devolveu o token"* | a resposta 4 da rodada 2 manda o sem-token para *"falha no servidor — a sessão não foi aberta"* (e é o que a seção desenha) | a chave fica **sem uso**; a tabela de frases a lista como "não usada (resposta 4)" |
 | **655** | P | *"pop-up do Google bloqueado (`route()` no `apis.google.com`)"* | `auth/popup-blocked` vem do `window.open` devolver `null`, não da rede; bloquear o `apis.google.com` dá outro código `[hipótese]` (cai no genérico) | `addInitScript` com `window.open = () => null` (§7); o `route()` no `apis.google.com` fica como caso do genérico |
 
-## 9. O que espera o aval (antes do commit 2)
+## 9. O aval do commit 1 — decisões `[Marcel, 2026-09-27]`
 
-1. **Mecanismo de estilo** — A (Tailwind com nomes de token → `var()`, `screens` dos `limiares`) ou B (CSS Modules). §3.
-2. **Literais com origem** — no pacote (`--s0-*`, `--aviso-*`, gerados e cobertos pelo `css.test.ts`) ou arquivo à mão. §3 item 3.
-3. **G-tok** — regras (iii) (tamanho/raio/borda/entrelinha/tracking/arbitrário) e (iv) (sem `@/components/ui/*`). §3.
-4. **Fontes e CSS só na casca de auth** (sem tocar o `app/layout.tsx`) e os `.ttf` — copiados para `app/fontes/` ou lidos do `apps/native`. Extra: `package.json` + lockfile (`@octavia/identidade`). §3 itens 4–5.
-5. **Frases** — A1 (mapa pela mensagem) ou A2 (código no contexto). §3.
-6. **Div. 638** (perfil 401/5xx no formulário ou errata) e **639** (código sem seção).
-7. **G-faixa** — o par nó × folha (§5 item 2) e o medidor lendo o `esperado/`.
-8. **Contas** — para os 5 estados do confirm com usuário e os 10 do verify: (i) **conta descartável não verificada**
-   (cria conta no Firebase e escreve o perfil: `POST /api/profile`) ou (ii) **usuário falso** semeado no IndexedDB e
-   respostas fabricadas (zero conta, zero escrita; `[hipótese]` até o Marcel rodar). Sem aval para nenhuma, ficam "não
-   medidos, exigem conta".
-9. **O Google** — o asset em `public/marcas/google.svg` (div. 636).
+(Transcrição do prompt do commit 2; a lista de perguntas do commit 1 fica no histórico do arquivo.)
+
+1. **Estilo**: Tailwind com nomes de token cujo valor é só `var(--…)` (`bg-cor-bg`, `p-espaco-xl`, `w-web-coluna-auth`),
+   faixas geradas dos limiares do pacote. G-tok: classe com nome de token passa; literal e valor arbitrário reprovam.
+2. As medidas fixas da folha viram tokens no bloco **`web`** de `packages/identidade`: `web.marca` (340 × 219),
+   `web.colunaAuth` 420, `web.vaoAuth` 140 (C; em B `space.xxxl`), `web.campoAuth` 60, `web.botaoAuth` 58,
+   `web.botaoAviso` 36, `web.entrelinhaAviso` 20. Gerados no `identidade.css`, cobertos pelo `css.test.ts`; a igualdade
+   atualizada (adição); o `DESIGN-I1/README.md` §4 ganha os nomes (docs, declarado, `SHA256SUMS` regenerado).
+3. `g-tok.mjs` cresce: largura, altura, raio, borda, entrelinha, tracking, valor arbitrário `[...]`, e `import … from
+   '@/components/ui/…'` reprova nos arquivos da lista. CN com fixture para cada classe nova.
+4. `identidade.css` e as três fontes entram pelo **`app/layout.tsx`** (`@font-face` com os `.ttf` de
+   `apps/native/assets/fonts/` copiados para `public/fontes/`, sha256 igual); `@octavia/identidade` no `package.json` da
+   raiz; lockfile — extras declarados. Prova de inércia: a `/` medida em 1138 antes e depois, mesmo resultado.
+5. Frases: **A2** — o contexto devolve **código + mensagem**; o painel escolhe a frase pelo código; a div. 515 fecha; o
+   CN da PR-1 15/15 continua.
+6. Div. 638: o erro de perfil (401/5xx) volta ao **formulário** com a `LinhaDeAviso`; "abrindo o painel…" só sem erro.
+   Div. 639: sem estado novo — `?error_description=` e as genéricas → `motivo.generico`; cadastro sem Firebase →
+   `login.nao-configurado`.
+7. Div. 641: o veredito casa nó por **texto sem papel**, os campos por `data-testid`, e **lista os nós sem par**.
+8. Contas: **(ii)** primeiro (usuário falso + `route()`, zero conta, zero escrita); se não alcançar os 10 do verify e os
+   5 do confirm, **(i)** autorizada: conta descartável não verificada, criada e apagada **pelo Marcel** (1 signup + 1
+   perfil, contados no aceite).
+9. Logo do Google: se `public/marcas/google.svg` existir, usa; senão o quadrado tracejado, div. 636 "Marcel fornece".
 
 ## 10. Contabilidade (commit 1)
 
@@ -350,3 +361,199 @@ para `/dashboard`). Para os 10 do verify e os 5 do confirm com usuário, as duas
 | executor | `next dev` local **sem** `.env` | 1× (porta 3106), parado ao fim: medição das três + capturas |
 | executor | navegador contra a folha | `file://` (sem rede) |
 | — | arquivos fora de `scripts/gates-web/**`, `tests/gates-web/**`, `docs/ux/I1-PR6-anexos/**` | **0** |
+
+## 11. Commit 2 — a implementação `[medido]`
+
+### 11.1 O que mudou, por grupo
+
+| grupo | arquivos | o quê |
+|---|---|---|
+| pacote (decisão 2) | `packages/identidade/src/tokens.ts`, `scripts/gerar-css.mjs`, `test/css.test.ts`, `test/igualdade.test.ts`; `app/styles/identidade.css` (gerado) | bloco `web` + `marca`, `colunaAuth`, `vaoAuth`, `campoAuth`, `botaoAuth`, `botaoAviso`, `entrelinhaAviso` e **`limiarAviso`** (div. 657) → `--faixa-*` nas três faixas; só ADIÇÃO |
+| Tailwind (decisão 1) | `tailwind.config.ts` | chaves com NOME de token → `var(--…)`: `cor-*`, `espaco-*`, `toque-*`, `barra-*`, `web-*`, `tam-*`, `fam-*`, `peso-*`, `entrelinha-*`, `raio-*`, `hairline`, `aviso-respiro` (derivado: `(touch.min − 20) / 2`), `natural` (div. 663); `screens` `c:`/`b:` dos `limiares` |
+| G-tok (decisão 3) | `scripts/gates-web/g-tok.mjs`, `g-tok-arquivos.txt`; `gates-web-decl.sh` | tamanho, raio, borda, entrelinha, tracking, valor arbitrário, `import @/components/ui/*`; a lista cresce **+16** (os 9 do commit 1 + 7 arquivos novos, div. 670); a chave `gtok:` no extrator (div. 664) |
+| layout e fontes (decisão 4) | `app/layout.tsx` (2 imports), `app/styles/fontes.css`, `public/fontes/*.ttf` (6), `package.json`, `pnpm-lock.yaml` | a identidade e as três famílias para o web todo; o CN de inércia (§11.4) |
+| marca | `public/marcas/octavia-dark.png` | cópia de `apps/native/assets/logo-octavia-dark.png` — sha256 `e9b9bd6b…fe4a29` nos dois, o mesmo da `.marca` da folha (§3) |
+| contexto (decisão 5) | `contexts/firebase-auth-context.tsx` | o erro leva `codigo` (`auth/*` do SDK; `octavia/nao-configurado`, `octavia/sem-usuario`, `octavia/perfil`; `desconhecido`) ao lado da `message` de sempre — aditivo |
+| telas | `app/{login,signup,signup/confirm-email,verify-email,forgot-password}/page.tsx`; `components/auth/{login-panel,signup-panel,linha-de-aviso}.tsx`; novos: `casca-auth.tsx`, `controles-auth.tsx`, `seletor-de-instrumento.tsx`, `use-login.ts`, `use-signup.ts`, `frases-auth.ts`, `components/identidade/icone.tsx` | a folha `1-auth` estado a estado; a `LinhaDeAviso` (o MESMO arquivo da PR-1) restilizada e com tipo (falha · sem conexão · limite · sucesso); nenhum `@/components/ui/*`, nenhum toast, nenhum literal |
+| instrumento (decisão 7, 8) | `scripts/gates-web/g-faixa-{auth,esperado,medir,coleta,classificar,veredito,sessao,superficies}.*`, `tests/gates-web/esperado/1-auth.ancoras.json`, `tests/gates-web/g-faixa-classificar.test.ts`, `COMO-RODAR.md` | par por texto sem papel + âncoras `data-testid` + nós sem par listados; os 46 estados + I1-E1 com o mecanismo (ii); um contexto por estado; "não alcançado"/"inalcançável" contados à parte |
+| docs (decisão 2) | `docs/ux/DESIGN-I1/README.md` §4, `SHA256SUMS` | os nomes das medidas; só a linha do `README.md` muda no `SHA256SUMS` (`shasum -c` → 14/14 OK) |
+
+O fluxo não mudou (I1-D9): as mesmas requests, na mesma ordem, com as mesmas condições — o `handleRedirect` do login,
+o `signUp`, o reenviar, o `reload`, o `sendPasswordResetEmail` passaram linha a linha (`use-login.ts`, `use-signup.ts`,
+as páginas). O que muda é a FORMA: a frase pelo código, onde ela aparece, e o *Tentar de novo* que a folha desenha
+(div. 658). Os `id` `#email`/`#password` ficam.
+
+### 11.2 A igualdade — o diff (decisão 2: "cole o diff")
+
+A `linha-de-base.json` **não tem** o bloco `web` (é o snapshot do nativo em `d18b7c4`); o `web` é cobrado pelos objetos
+escritos no próprio `igualdade.test.ts` — é lá que a adição entra; a `linha-de-base.json` fica intacta (div. 656):
+
+```diff
+-    const C = { conteiner: 1138, margem: 32, colunaLateral: 320, razaoListaDetalhe: [2, 3], zonaArquivo: 240, linhaLista: 80, linhaMusica: 72, empilha: false }
+-    const B = { conteiner: null, margem: 24, colunaLateral: 'empilha', razaoListaDetalhe: 'empilha', zonaArquivo: 240, linhaLista: 80, linhaMusica: 72, empilha: true }
++    // I1-PR-6 (decisão 2): as medidas fixas das folhas 0 e 1 — ADIÇÃO; as oito de antes não mudam
++    const auth = { marca: { largura: 340, altura: 219 }, colunaAuth: 420, campoAuth: 60, botaoAuth: 58, botaoAviso: 36, entrelinhaAviso: 20, limiarAviso: 320 }
++    const C = { conteiner: 1138, margem: 32, colunaLateral: 320, razaoListaDetalhe: [2, 3], zonaArquivo: 240, linhaLista: 80, linhaMusica: 72, empilha: false, ...auth, vaoAuth: 140 }
++    const B = { conteiner: null, margem: 24, colunaLateral: 'empilha', razaoListaDetalhe: 'empilha', zonaArquivo: 240, linhaLista: 80, linhaMusica: 72, empilha: true, ...auth, vaoAuth: 48 }
+```
+
+### 11.3 As frases — a lista declarada (I1-D10/D17)
+
+`components/auth/frases-auth.ts`; a frase se escolhe pelo código (`fraseDoErroDeEntrar`, `…DoGoogle`, `…DeCriar`,
+`…DeReenviar`). `login.razao.sem-token` não entra (div. 654). Instrumentos: os VALORES do `<select>` seguem os de hoje
+(`guitar`…`other`), só os rótulos são os da §5.2.
+
+| chave | texto | origem |
+|---|---|---|
+| `motivo.generico` | algo deu errado — tente de novo | §5.1 |
+| `motivo.limite` | muitas tentativas — tente de novo em instantes | §5.1 |
+| `acao.tentar` | Tentar de novo | `frases-sessao.ts` (PR-1), §5.1 |
+| `estado.carregando` | carregando… | §5.1 |
+| `login.credencial` | e-mail ou senha não conferem | §5.2 |
+| `login.sem-conta-email` | nenhuma conta com este e-mail | §5.2 |
+| `login.senha-incorreta` | senha incorreta | §5.2 |
+| `login.google-cancelado` | o login com Google foi cancelado | §5.2 |
+| `login.google-bloqueado` | o navegador bloqueou a janela do Google — libere pop-ups e tente de novo | §5.2 |
+| `login.rotulo` | Entrar | §5.2 |
+| `login.entrar` | Entrar | §5.2 |
+| `login.entrando` | Entrando… | §5.2 |
+| `login.email` | E-mail | §5.2 |
+| `login.email.placeholder` | voce@exemplo.com | §5.2 |
+| `login.senha` | Senha | §5.2 |
+| `login.esqueci` | Esqueci a senha | §5.2 |
+| `login.ou` | ou | §5.2 |
+| `login.google` | Entrar com Google | §5.2 |
+| `login.google.carregando` | Carregando… | §5.2 |
+| `login.sem-conta` | Não tem conta? | §5.2 |
+| `login.criar-conta` | Criar conta | §5.2 |
+| `login.abrindo` | abrindo o painel… | §5.2 |
+| `login.nao-abriu` | Não abriu? | §5.2 |
+| `login.abrir-painel` | Abrir o painel | §5.2 |
+| `login.nao-configurado` | o login não está disponível neste servidor | §5.2 |
+| `signup.rotulo` | Criar conta | §5.2 |
+| `signup.criar` | Criar conta | §5.2 |
+| `signup.nome` | Nome | §5.2 |
+| `signup.sobrenome` | Sobrenome | §5.2 |
+| `signup.instrumento` | Instrumento principal | §5.2 |
+| `signup.senha.dica` | no mínimo 6 caracteres | §5.2 |
+| `signup.confirmar` | Confirmar a senha | §5.2 |
+| `signup.criando` | Criando a conta… | §5.2 |
+| `signup.ja-tem` | Já tem conta? | §5.2 |
+| `signup.voltar` | Voltar para o login | §5.2 |
+| `signup.senhas` | as senhas não conferem | §5.2 |
+| `signup.email-usado` | já existe uma conta com este e-mail — entre ou use outro | §5.2 |
+| `signup.senha-fraca` | senha fraca — use pelo menos 6 caracteres | §5.2 |
+| `signup.rede` | sem conexão — a conta não foi criada | §5.2 |
+| `signup.limite` | muitas tentativas — tente de novo em instantes | §5.2 |
+| `signup.perfil` | falha no servidor — o perfil não foi criado | §5.2 |
+| `confirm.rotulo` | Confirme o e-mail | §5.2 |
+| `confirm.apoio` | enviamos um link de confirmação para {email} — abra o link para ativar a conta | §5.2 |
+| `confirm.ir-login` | Ir para o login | §5.2 |
+| `confirm.nao-recebeu` | Não recebeu o e-mail? | §5.2 |
+| `confirm.reenviar` | Reenviar o e-mail | §5.2 |
+| `confirm.enviando` | Enviando… | §5.2 |
+| `confirm.enviado` | e-mail de confirmação enviado — veja a caixa de entrada | §5.2 |
+| `confirm.rede` | sem conexão — o e-mail não foi enviado | §5.2 |
+| `confirm.sessao-caiu` | a sessão caiu — entre de novo | §5.2 |
+| `verify.apoio` | confirme o e-mail {email} para usar o Octavia | §5.2 |
+| `verify.ja-confirmei` | Já confirmei | §5.2 |
+| `verify.conferindo` | Conferindo… | §5.2 |
+| `verify.sair` | Sair | §5.2 |
+| `verify.ajuda` | problemas? veja o spam ou fale com o suporte | §5.2 |
+| `verify.nao-confirmado` | o e-mail ainda não foi confirmado — abra o link que enviamos | §5.2 |
+| `verify.checar-falhou` | não foi possível conferir a confirmação | §5.2 |
+| `forgot.rotulo` | Trocar a senha | §5.2 |
+| `forgot.apoio` | digite o e-mail e enviamos um link para trocar a senha | §5.2 |
+| `forgot.enviar` | Enviar o link | §5.10 N1 |
+| `forgot.lembrou` | Lembrou a senha? | §5.2 |
+| `forgot.entrar` | Entrar | §5.2 |
+| `forgot.enviando` | Enviando… | §5.2 |
+| `forgot.indisponivel` | a troca de senha não está disponível | §5.2 |
+| `forgot.erro` | não foi possível enviar o e-mail — algo deu errado | §5.2 |
+| `forgot.veja` | Veja o e-mail | §5.2 |
+| `forgot.enviado` | enviamos as instruções para {email} — não chegou? veja o spam ou tente de novo | §5.2 |
+| `forgot.voltar` | Voltar para o login | §5.2 |
+| `marca.octavia` | Octavia | nome acessível da folha (§2.4: "Octavia", "Google") |
+| `marca.google` | Google | nome acessível da folha (§2.4: "Octavia", "Google") |
+
+As sete da sessão (I1-PR-1), intactas em `frases-sessao.ts` e importadas daqui:
+
+| chave | texto |
+|---|---|
+| `rede` | sem conexão — a sessão não foi aberta |
+| `recusado` | o servidor não aceitou o login — entre de novo |
+| `limite-com-prazo` | muitas tentativas de entrar — tente de novo em {N} |
+| `limite-sem-prazo` | muitas tentativas de entrar — tente de novo em instantes |
+| `servidor` | falha no servidor — a sessão não foi aberta |
+| `renovacao` | a sessão não foi renovada: {razão} |
+| `tentar-de-novo` | Tentar de novo |
+
+### 11.4 Os gates — verdes `[medido]`
+
+| gate / suíte | resultado | arquivo |
+|---|---|---|
+| G-tok (lista de auth, 16 arquivos) | **PASSA**: `literais 0 · toasts 0 · imports de ui 0`; (i) 19/19 | `cn/g-tok-depois.txt` |
+| G-tok crescido sobre os 9 da `main` | **REPROVA 613** (238 cor · 136 espaçamento · 93 tamanho · 44 inglês · 35 fonte · 32 raio · 18 import de ui · 15 borda · 1 entrelinha · 1 arbitrário); o gate do commit 1 dava 453 | `cn/g-tok-main-crescido.txt` |
+| CN das classes novas | **REPROVA 24** no lado que reprova; 0 no lado dos nomes de token | `cn/g-tok-classes-cn.txt` |
+| G-back | **PASSA** sem nenhuma linha `gback:` — `app/layout.tsx`, `contexts/`, `package.json`, `tailwind.config.ts` não são núcleo (`g-back-nucleo.txt`) | `cn/g-back-depois.txt` |
+| G-palco | PASSA — 0 | — |
+| `vitest --project identidade` | 38/38 (igualdade, css, fontes) | — |
+| `vitest --project native --project native-tela` | **211/211** | — |
+| `pnpm test` | `Tests 1071 passed \| 77 skipped (1148)`, 108 arquivos — o CN da PR-1 **15/15** | — |
+| `tests/gates-web` (classificador) | 13/13 (os 2 casos novos da decisão 7) | — |
+| `tsc` (raiz, `packages/identidade`, `apps/native`) · `pnpm lint` · `gate:icones` | 0 · limpo · 0 acusações | — |
+| `pnpm build` | `✓ Compiled successfully`; `/login` 5.37 kB · `/signup` 4.83 kB · `/signup/confirm-email` 4.03 kB · `/verify-email` 4.27 kB · `/forgot-password` 4.1 kB | — |
+| CN de inércia do layout | a `/` em 1138, antes × depois: **50 nós, iguais**; controle positivo: o CSS servido tem `--faixa-vao-auth` e `width > 960px`; `/fontes/Manrope_400Regular.ttf` → `200 font/ttf` | `cn/inercia.txt`, `cn/inercia/` |
+
+### 11.5 O ensaio do instrumento — executor, SEM `.env`
+
+O executor não tem Firebase (não abre `.env*`): sem ele o SDK não inicia e o usuário falso não entra. O ensaio prova o
+instrumento e mede o que só existe sem Firebase. Resultado em `cn/g-faixa-ensaio-sem-firebase.txt`. O que ele achou e
+já foi consertado no commit: a casca centralizava na vertical (Δy ≈ 63 em todo nó: `items-start`); o `leading-normal`
+do Tailwind é 1.5, não `normal` (div. 663); a coleta lia o rótulo em caixa alta (div. 662); o `label` do instrumento
+fora da linha do cabeçalho (+282,5 de largura); o rodapé do confirm/verify só no estado base (div. 669); e o medidor
+travava num `route` segurado (div. 661).
+
+### 11.6 Os estados para o aceite
+
+O medidor tem os 46 estados da folha e o da I1-E1. Declarados **inalcançáveis** (não medidos, com a razão no JSON):
+`AUTH-login-sem-token`, `AUTH-signup-excecao`, `AUTH-confirm-excecao`, `AUTH-verify-reenviar-excecao` (div. 640). Só
+**sem** Firebase: `AUTH-login-nao-configurado`, `AUTH-forgot-indisponivel` — com o `.env` do Marcel saem NÃO
+ALCANÇADOS, e o ensaio do executor os mede (§11.5). Os demais, pelo mecanismo (ii) `[hipótese até o "rodei"]`.
+
+### 11.7 Bloco ```gates-web``` e extras
+
+Ver o corpo da PR (copiado no commit 3). Extras declarados: `package.json` e `pnpm-lock.yaml` (`@octavia/identidade`),
+`public/fontes/*.ttf` (sha256 = `apps/native/assets/fonts/`), `public/marcas/octavia-dark.png`,
+`docs/ux/DESIGN-I1/README.md` §4 + `SHA256SUMS`, `scripts/gates-web/gates-web-decl.sh` (`gtok:`), o token
+`web.limiarAviso`.
+
+### 11.8 Divergências — 656 a 671
+
+| # | origem | o que o prompt (ou o doc) presumiu | o que foi medido | destino |
+|---|---|---|---|---|
+| **656** | P | decisão 2: *"`linha-de-base.json` da igualdade atualizada (a mudança é adição)"* | a `linha-de-base.json` é o snapshot do nativo (`d18b7c4`) e não tem `web`; o `web` é cobrado no `igualdade.test.ts` | a adição entrou no teste (§11.2); o JSON fica intacto |
+| **657** | P | decisão 2: sete nomes | a `LinhaDeAviso` quebra com base 320 "igual em B" (§2.4), e em B `colunaLateral` é `empilha` (sem propriedade, div. 605) | 8º nome, `web.limiarAviso` = 320 nas duas faixas; extra declarado |
+| **658** | D | a folha desenha *Tentar de novo* em falhas que hoje não têm botão (signup rede/perfil/genérico, confirm rede/genérico, verify checar/reenviar, forgot erro, login perfil 5xx, rede do *Entrar*) e o tira do 429/401 da sessão (README-design §3, "quando repetir não resolve") | cada *Tentar de novo* chama o MESMO handler que o botão da tela (formulário reenviado, `handleRedirect`, reenviar, `reload`) — uma request por clique, por ação do usuário; o do 429/401 da sessão sai (o CN da PR-1 cobra o do 500 e segue 15/15) | composição, não fluxo — **declarado para o Marcel** |
+| **659** | A | div. 638 | o 429 do perfil vai para a frase do limite; o sem-token e o 404/5xx para "falha no servidor"; o 401 duplo para "o servidor não aceitou" | como a resposta 4 da rodada 2 |
+| **660** | A | — | o `/verify-email` recarregado SEMPRE empurra para `/login` no 1º render (o `user` do provider nasce nulo e a página não espera o `isInitialized`) — defeito de antes | não mexido (I1-D9); o aceite segura a navegação RSC para medir; **herança: destino D** |
+| **661** | T | — | um `route` segurado (nunca respondido) travava o `ctx.close()` seguinte; o poll do IndexedDB podia pendurar | `soltar` aborta os segurados antes de fechar, teto de 15 s no `close`, teto de 2 s por verificação; um contexto por estado (o usuário falso não vaza) |
+| **662** | T | — | a `coletar` usa `innerText`, que aplica `text-transform`: o rótulo "Entrar" em caixa alta virava "ENTRAR" no app e seguia "Entrar" na folha | com transformação, o texto do DOM; o esperado da folha saiu **byte a byte igual** (sha) |
+| **663** | T | — | o `leading-normal` do Tailwind é `line-height: 1.5`; a folha não declara entrelinha no corpo (fica a `normal` da fonte) — Δh de 2 a 4,5 px acumulando na vertical | chave `leading-natural` = `normal`; o G-tok segue reprovando `leading-normal` (é literal) |
+| **664** | P | prompt: *"`gtok: scripts/gates-web/g-tok-arquivos.txt — …`"* no ```gates-web``` | o extrator recusava: `chave desconhecida: gtok` | `gtok:` vira chave de registro (como `grotas:`/`gpalco:`); o `g-back.sh` só lê `gback:` |
+| **665** | P | *"saída `tests/gates-web/medicoes/1-auth.json`"* | o medidor grava um JSON por superfície (como a PR-5) | cinco: `medicoes/{login,signup,confirm-email,verify-email,forgot-password}.json` |
+| **666** | A | — | o veredito da PR-5 REPROVA estado `pulado`; os estados que o mecanismo não alcança (ou que só existem sem Firebase) derrubariam o CI | "não alcançado" e "inalcançável" são LISTADOS e contados à parte, com a razão; `pulado` (rota que não resolveu) segue reprovando |
+| **667** | D | `AUTH-*-validacao` | a folha desenha o balão do navegador como `div` ("[balão nativo do navegador — texto do sistema]"); no app é interface do sistema, fora do DOM | errata candidata (Δy −41 abaixo do campo) — **decisão do Marcel** |
+| **668** | D | `AUTH-verify-carregando` | a moldura C tem o grupo de botões VAZIO, que soma um vão de 32 à coluna (Δy 16 em C) | errata candidata — **decisão do Marcel** |
+| **669** | A | — | sem usuário, a folha do confirm mostra o apoio com o e-mail; o app não tem e-mail a mostrar | sem usuário, sem a frase de apoio (nenhuma frase nova); o rodapé "Não recebeu…"/"problemas?…" só no estado base, como a folha |
+| **670** | P | *"`gtok: … — +9 arquivos de auth`"* | a lista cresce 16: os 9 + `frases-auth`, `casca-auth`, `controles-auth`, `seletor-de-instrumento`, `use-login`, `use-signup`, `components/identidade/icone.tsx` | declarado `+16` |
+| **671** | T | a folha usa `role=status` na `LinhaDeAviso` | o CN da PR-1 conta `[role="alert"]` e lê o motivo no 1º `<span>` | falha/rede/limite ficam `alert`; o sucesso vira `status`; o par com a folha é por texto sem papel (decisão 7) |
+
+### 11.9 Contabilidade (commit 2)
+
+| quem | item | valor |
+|---|---|---|
+| executor | requests a `https://octavia.rocks`, logins, `.env*`, escritas | **0 · 0 · 0 · 0** |
+| executor | `next dev` local **sem** `.env` (porta 3106) | inércia do layout, capturas, o ensaio do instrumento; nenhuma resposta fabricada precisou sair (o SDK não inicia sem `.env`) |
+| executor | contas criadas | **0** |
+

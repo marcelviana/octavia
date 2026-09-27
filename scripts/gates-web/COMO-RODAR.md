@@ -42,6 +42,31 @@ o instrumento não mede). O executor não faz login nem abre `.env*`; esta parte
 Os JSON **não** carregam texto de música: nas superfícies com sessão, o texto de cada nó vai só
 como hash (sha256, 12 hex) e comprimento (regra do `CLAUDE.md`, div. 204 do N2).
 
+## O aceite da I1-PR6 (auth) — Marcel, um comando
+
+As cinco telas de auth, **sem sessão e sem login**: o medidor alcança os estados com o **mecanismo (ii)** do aval
+(`scripts/gates-web/g-faixa-auth.ts`) — um usuário falso (`marcel@exemplo.com`, o dado de exemplo da folha) que o
+próprio navegador "entra" com respostas **fabricadas** do `identitytoolkit`/`securetoken`, e as do app que escreveriam
+(`POST /api/profile`) fabricadas também. **Nada sai para o Google, nenhuma conta, nenhuma escrita**; você não digita
+nada. Um contexto de navegador por estado.
+
+1. Na árvore `../octavia-i1-pr6` (branch `i1/pr6-auth`), com o seu `.env.local` copiado para lá (passo seu — o SDK do
+   Firebase só inicia configurado; sem ele, só os estados "sem Firebase" aparecem), suba **`pnpm dev`** num terminal
+   que fica aberto (porta 3000) e espere o `✓ Ready`.
+2. Em outro terminal, na mesma árvore:
+
+   ```bash
+   G_FAIXA_BASE_URL=http://localhost:3000 G_FAIXA_SUPERFICIES=login,signup,confirm-email,verify-email,forgot-password pnpm exec playwright test -c playwright.g-faixa.config.ts scripts/gates-web/g-faixa-medir.ts
+   ```
+
+3. Leva uns 5 min (três larguras × 46 estados). Grava `tests/gates-web/medicoes/{login,signup,confirm-email,
+   verify-email,forgot-password}.json` — um por tela — e imprime, por estado: medido, **NÃO ALCANÇADO** (com a razão:
+   a preparação falhou, ou o texto esperado não apareceu) ou **INALCANÇÁVEL (declarado)**. Os dois que só existem
+   **sem** Firebase (`AUTH-login-nao-configurado`, `AUTH-forgot-indisponivel`) saem NÃO ALCANÇADOS com o `.env` — é o
+   esperado; o executor os mede à parte, sem `.env`.
+4. Se algum dos 15 estados com usuário (`AUTH-confirm*`, `AUTH-verify*`) sair NÃO ALCANÇADO, a decisão 8 autoriza a
+   conta descartável (i) — decisão sua, na hora. Depois diga **"rodei"**.
+
 ## O resto
 
 | o quê | comando |

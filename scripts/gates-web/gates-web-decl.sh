@@ -16,6 +16,8 @@
 #     gpalco: <texto>                o par do G-rotas e o escopo do G-palco são
 #                                    declarados em texto; o G-palco lê a
 #                                    lista-do-corte.txt, não o corpo)
+#     gtok: <texto>                  registro (I1-PR6, div. 664): o crescimento
+#                                    da lista do G-tok, declarado no corpo
 #     ```
 #
 # Aqui só se recusa o que tornaria a leitura AMBÍGUA: chave desconhecida, valor
@@ -43,7 +45,7 @@ awk '
       if (j <= 1) erro("gback sem \"<caminho> — <razão>\": " v)
       r = substr(v, j + length(" — "))
       if (r !~ /[^[:space:]]/) erro("gback sem razão: " v)
-    } else if (k != "grotas" && k != "gpalco") erro("chave desconhecida: " k)
+    } else if (k != "grotas" && k != "gpalco" && k != "gtok") erro("chave desconhecida: " k)
     print k ": " v
   }
   END {

@@ -18,7 +18,7 @@ import { auth, isFirebaseConfigured } from "@/lib/firebase"
 import { setSessionCookie, clearSessionCookie, type FalhaSessao } from "@/lib/firebase-session-cookies"
 import { AvisoDeSessao } from "@/components/auth/aviso-de-sessao"
 import logger from "@/lib/logger"
-import { getErrorMessage } from "@/lib/firebase-errors"
+import { getErrorMessage, extractFirebaseErrorCode } from "@/lib/firebase-errors"
 
 type Profile = {
   id: string
@@ -39,6 +39,20 @@ export type EstadoSessao =
   | { estado: 'abrindo' }
   | { estado: 'aberta' }
   | { estado: 'falhou'; falha: FalhaSessao; origem: OrigemSessao }
+
+/**
+ * I1-PR-6 (decisão 5 do aval, A2): o erro de auth leva o CÓDIGO junto da
+ * mensagem de sempre — a tela escolhe a frase pelo código (a razão real: pop-up
+ * bloqueado, cancelado, não configurado; div. 515). Aditivo: `message` não muda.
+ * `auth/*` = o código do Firebase; `octavia/*` = os três casos do próprio
+ * contexto; `desconhecido` = sem código (a tela usa `motivo.generico`).
+ */
+export type CodigoErroAuth = string
+export interface ErroDeAuth { message: string; codigo: CodigoErroAuth }
+const NAO_CONFIGURADO: ErroDeAuth = { message: "Authentication not configured", codigo: "octavia/nao-configurado" }
+function erroDeAuth(error: any): ErroDeAuth {
+  return { message: getErrorMessage(error), codigo: extractFirebaseErrorCode(error) ?? error?.codigo ?? "desconhecido" }
+}
 
 type AuthContextType = {
   user: FirebaseUser | null
@@ -299,7 +313,7 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
   const signIn = useCallback(
     async (email: string, password: string) => {
       if (!isFirebaseConfigured || !auth) {
-        return { error: { message: "Authentication not configured" } }
+        return { error: NAO_CONFIGURADO }
       }
 
       try {
@@ -314,7 +328,7 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
       } catch (error: any) {
         logger.error("Firebase sign in error:", error.message)
         setIsLoading(false)
-        return { error: { message: getErrorMessage(error) } }
+        return { error: erroDeAuth(error) }
       }
     },
     [isFirebaseConfigured],
@@ -322,7 +336,7 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
 
   const signInWithGoogle = useCallback(async () => {
     if (!isFirebaseConfigured || !auth) {
-      return { error: { message: "Authentication not configured" } }
+      return { error: NAO_CONFIGURADO }
     }
 
     try {
@@ -338,14 +352,14 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
     } catch (error: any) {
       logger.error("Google sign in error:", error.message)
       setIsLoading(false)
-      return { error: { message: getErrorMessage(error) } }
+      return { error: erroDeAuth(error) }
     }
   }, [isFirebaseConfigured])
 
   const signUp = useCallback(
     async (email: string, password: string, userData: Partial<Profile>) => {
       if (!isFirebaseConfigured || !auth) {
-        return { error: { message: "Authentication not configured" }, data: null }
+        return { error: NAO_CONFIGURADO, data: null }
       }
 
       try {
@@ -389,7 +403,7 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
           } catch (deleteError) {
             logger.error("Failed to delete orphaned Firebase user after profile creation failure:", deleteError)
           }
-          throw new Error('Failed to create profile in database')
+          throw Object.assign(new Error('Failed to create profile in database'), { codigo: 'octavia/perfil' })
         }
 
         logger.log("Firebase sign up successful for:", email)
@@ -398,7 +412,7 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
       } catch (error: any) {
         logger.error("Firebase sign up error:", error.message)
         setIsLoading(false)
-        return { error: { message: getErrorMessage(error) }, data: null }
+        return { error: erroDeAuth(error), data: null }
       }
     },
     [isFirebaseConfigured],
@@ -472,7 +486,7 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
 
   const resendVerificationEmail = useCallback(async () => {
     if (!user || !isFirebaseConfigured || !auth) {
-      return { error: { message: "Not authenticated or Firebase not configured" } }
+      return { error: { message: "Not authenticated or Firebase not configured", codigo: "octavia/sem-usuario" } }
     }
 
     try {
@@ -482,7 +496,7 @@ export function FirebaseAuthProvider({ children }: { children: React.ReactNode }
       return { error: null }
     } catch (error: any) {
       logger.error("Failed to resend verification email:", error.message)
-      return { error: { message: getErrorMessage(error) } }
+      return { error: erroDeAuth(error) }
     }
   }, [user, isFirebaseConfigured])
 

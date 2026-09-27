@@ -305,6 +305,28 @@ export interface TokensDaFaixa {
     linhaMusica: number
     /** Casca em duas linhas, coluna lateral desce, ações do cabeçalho descem, marca sobe. */
     empilha: boolean
+    /**
+     * As medidas fixas das folhas 0 e 1 (I1-PR-6, decisão 2 do aval): os
+     * literais com origem do `README-design.md` §2.3, com nome. Do S0 (V1 E10,
+     * V1 §5.2): a marca 340 × 219, a coluna do formulário 420, o vão marca |
+     * formulário 140 em C (em B a marca sobe e o vão é `space.xxxl`), o campo
+     * `touch.list + 4` e o botão secundário `touch.list + 2`. Do N3: o botão de
+     * ação da `LinhaDeAviso` 36 e a entrelinha dela, 20 (T3-R7, I1-E5).
+     */
+    marca: { readonly largura: number; readonly altura: number }
+    colunaAuth: number
+    vaoAuth: number
+    campoAuth: number
+    botaoAuth: number
+    botaoAviso: number
+    entrelinhaAviso: number
+    /**
+     * O limiar de quebra do bloco de texto da `LinhaDeAviso` — *"flex com base
+     * web.colunaLateral"* em C **e em B** (README-design §2.4: "igual"). Em B a
+     * `colunaLateral` é `'empilha'` e não gera propriedade (div. 605), então o
+     * limiar tem nome próprio, com o mesmo 320 nas duas faixas (div. 657).
+     */
+    limiarAviso: number
   }
 }
 
@@ -322,6 +344,8 @@ const faixaC: TokensDaFaixa = {
   web: {
     conteiner: 1138, margem: space.xxl, colunaLateral: 320, razaoListaDetalhe: [2, 3],
     zonaArquivo: 240, linhaLista: 80, linhaMusica: 72, empilha: false,
+    marca: { largura: 340, altura: 219 }, colunaAuth: 420, vaoAuth: 140,
+    campoAuth: touch.list + 4, botaoAuth: touch.list + 2, botaoAviso: 36, entrelinhaAviso: 20, limiarAviso: 320,
   },
 }
 
@@ -339,6 +363,8 @@ const faixaB: TokensDaFaixa = {
   web: {
     conteiner: null, margem: space.xl, colunaLateral: 'empilha', razaoListaDetalhe: 'empilha',
     zonaArquivo: 240, linhaLista: 80, linhaMusica: 72, empilha: true,
+    marca: { largura: 340, altura: 219 }, colunaAuth: 420, vaoAuth: space.xxxl,
+    campoAuth: touch.list + 4, botaoAuth: touch.list + 2, botaoAviso: 36, entrelinhaAviso: 20, limiarAviso: 320,
   },
 }
 

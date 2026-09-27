@@ -27,7 +27,8 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { CHROMIUM_FIXADO } from '../../playwright.g-faixa.config'
 import { classificarEstado } from './g-faixa-classificar.mjs'
-import { coletar, medirFolha, paraJson } from './g-faixa-coleta'
+import { coletar, paraJson } from './g-faixa-coleta'
+import { soltar } from './g-faixa-auth'
 import { selecionadas, type Superficie } from './g-faixa-superficies'
 
 const BASE = new URL(process.env.G_FAIXA_BASE_URL as string)
@@ -49,13 +50,16 @@ async function assentar(page: Page) {
   }))
 }
 
-/** O log de requests da I1-PR1 (div. 522) e a barreira de escrita. */
-function vigiar(ctx: BrowserContext) {
-  const t0 = Date.now()
-  const linhas: LinhaReq[] = []
-  const porReq = new Map<Request, LinhaReq>()
-  const outros = new Map<string, number>()
-  const estado = { prodAbortados: 0, parada: '' }
+interface Vigia { t0: number; linhas: LinhaReq[]; porReq: Map<Request, LinhaReq>; outros: Map<string, number>; estado: { prodAbortados: 0 | number; parada: string } }
+const novaVigia = (): Vigia => ({ t0: Date.now(), linhas: [], porReq: new Map(), outros: new Map(), estado: { prodAbortados: 0, parada: '' } })
+
+/**
+ * O log de requests da I1-PR1 (div. 522) e a barreira de escrita, num contexto. I1-PR6: vários
+ * contextos (um por estado) escrevem na MESMA vigia; a resposta FABRICADA no navegador
+ * (`x-g-faixa: fabricado`, `g-faixa-auth.ts`) é marcada como tal — não saiu, não é escrita.
+ */
+function vigiar(ctx: BrowserContext, v: Vigia = novaVigia()) {
+  const { t0, linhas, porReq, outros, estado } = v
   void ctx.route('**/*', (route) => {
     const r = route.request(), u = new URL(r.url()), m = r.method()
     if (!PROD && (u.hostname === 'octavia.rocks' || u.hostname.endsWith('.octavia.rocks'))) { estado.prodAbortados++; return route.abort() }
@@ -70,10 +74,10 @@ function vigiar(ctx: BrowserContext) {
     const l: LinhaReq = { n: linhas.length + 1, ms: Date.now() - t0, metodo: r.method(), caminho: u.pathname.replace(/^\/content\/[^/]+/, '/content/[id]') + (u.search.includes('cn=') ? u.search : ''), status: 'pendente', fim: '—' }
     linhas.push(l); porReq.set(r, l)
   })
-  ctx.on('response', (resp) => { const l = porReq.get(resp.request()); if (l) l.status = String(resp.status()) })
+  ctx.on('response', (resp) => { const l = porReq.get(resp.request()); if (l) l.status = resp.headers()['x-g-faixa'] === 'fabricado' ? `fabricado ${resp.status()}` : String(resp.status()) })
   ctx.on('requestfinished', (r) => { const l = porReq.get(r); if (l) l.fim = 'fim' })
   ctx.on('requestfailed', (r) => { const l = porReq.get(r); if (l) { l.fim = `falhou ${r.failure()?.errorText ?? ''}`.trim(); if (l.status === 'pendente') l.status = 'FALHA' } })
-  return { linhas, outros, estado }
+  return v
 }
 
 /** Controle positivo (regra 7): duas requests conhecidas têm de aparecer no log. */
@@ -88,6 +92,18 @@ async function controlePositivo(page: Page, linhas: LinhaReq[], rota: string) {
   return { controle1: c1 ? `${c1.metodo} ${c1.status} ${c1.fim}` : 'AUSENTE', controle2: c2 ? `${c2.metodo} ${c2.status} ${c2.fim}` : 'AUSENTE' }
 }
 
+/** A folha medida (`g-faixa-esperado.ts`) — o esperado da errata candidata (I1-PR6). */
+function lerEsperado(folha: string): { sha256: string; estados: Record<string, { C: unknown[]; B: unknown[] } | { falta: string }> } | null {
+  const f = path.join('tests/gates-web/esperado', `${folha}.json`)
+  return fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')) : null
+}
+
+/** Solta as respostas seguradas (I1-PR6) e fecha o contexto, com teto: um `route` pendurado não trava a rodada. */
+async function fechar(ctx: BrowserContext) {
+  for (const p of ctx.pages()) await soltar(p)
+  await Promise.race([ctx.close(), new Promise((ok) => setTimeout(ok, 15_000))])
+}
+
 const sha = (() => {
   try { return execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim() + (execFileSync('git', ['status', '--porcelain'], { encoding: 'utf8' }).trim() ? '+sujo' : '') } catch { return 'desconhecido' }
 })()
@@ -100,10 +116,17 @@ for (const sup of selecionadas()) {
 
     const navegador = await chromium.launch()
     expect(navegador.version(), 'Chromium do Playwright na versão fixada (div. 512)').toBe(CHROMIUM_FIXADO)
-    const ctx = sup.sessao
-      ? await chromium.launchPersistentContext(PERFIL as string, { viewport: vp, serviceWorkers: 'block' })
-      : await navegador.newContext({ viewport: vp, serviceWorkers: 'block' })
-    const { linhas, outros, estado } = vigiar(ctx)
+    // sessão real: um perfil persistente para a superfície; sem sessão (I1-PR6): um contexto POR ESTADO
+    const vigia = novaVigia()
+    const abrir = async () => {
+      const c = sup.sessao
+        ? await chromium.launchPersistentContext(PERFIL as string, { viewport: vp, serviceWorkers: 'block' })
+        : await navegador.newContext({ viewport: vp, serviceWorkers: 'block' })
+      vigiar(c, vigia)
+      return c
+    }
+    const { linhas, outros, estado } = vigia
+    let ctx = await abrir()
     const page = ctx.pages()[0] ?? (await ctx.newPage())
     try {
       const controle = await controlePositivo(page, linhas, sup.sessao ? '/dashboard' : sup.rota)
@@ -112,23 +135,37 @@ for (const sup of selecionadas()) {
 
       let url: string | null = sup.rota
       if (sup.resolver) url = await sup.resolver(page, BASE)
-      const estados: Record<string, { medicao?: unknown; folha?: unknown; pulado?: string }> = {}
+      const esperado = sup.implementada && sup.folha ? lerEsperado(sup.folha) : null
+      const estados: Record<string, { medicao?: unknown; folha?: unknown; pulado?: string; naoAlcancado?: string; inalcancavel?: string }> = {}
       for (const [id, est] of Object.entries(sup.estados)) {
+        if (est.inalcancavel) { estados[id] = { inalcancavel: est.inalcancavel }; continue }
         if (!url) { estados[id] = { pulado: 'a rota não resolveu (ex.: nenhum content na conta)' }; continue }
-        await page.setViewportSize(vp)
-        await page.goto(new URL(url, BASE).href, { waitUntil: 'domcontentloaded', timeout: 180_000 })
-        await assentar(page)
-        const caiu = sup.sessao && new URL(page.url()).pathname.startsWith('/login')
-        expect(caiu, `a sessão caiu em ${sup.rota} (redirecionou para /login)`).toBe(false)
-        if (est.preparar) { await est.preparar(page); await assentar(page) }
-        const m = await page.evaluate(coletar, null)
+        const t = Date.now()
+        console.log(`G-faixa · ${sup.id} · ${id} · ${largura}: começa`)
+        if (!sup.sessao) { await fechar(ctx); ctx = await abrir() }
+        const p = sup.sessao ? page : await ctx.newPage()
+        try {
+          if (est.antes) await est.antes(p, BASE)
+          await p.setViewportSize(vp)
+          await p.goto(new URL(url, BASE).href, { waitUntil: 'domcontentloaded', timeout: 180_000 })
+          await assentar(p)
+          const caiu = sup.sessao && new URL(p.url()).pathname.startsWith('/login')
+          expect(caiu, `a sessão caiu em ${sup.rota} (redirecionou para /login)`).toBe(false)
+          if (est.preparar) { await est.preparar(p); await assentar(p) }
+        } catch (e) {
+          estados[id] = { naoAlcancado: `a preparação falhou: ${(e as Error).message.split('\n')[0]?.slice(0, 200)}` }
+          continue
+        }
+        if (est.espera && !(await p.getByText(est.espera, { exact: false }).first().isVisible().catch(() => false))) {
+          estados[id] = { naoAlcancado: `o texto esperado não apareceu: "${est.espera}"` }
+          continue
+        }
+        console.log(`G-faixa · ${sup.id} · ${id} · ${largura}: preparado em ${Date.now() - t} ms`)
+        const m = await p.evaluate(coletar, null)
         const medicao = { url: sup.rota, viewport: m.viewport, doc: m.doc, nos: paraJson(m.nos, sup.publica) }
         estados[id] = { medicao }
-        if (sup.implementada && sup.folha && est.secao && largura === 1138) {
-          const pf = await navegador.newPage()
-          estados[id].folha = await medirFolha(pf, sup.folha, est.secao, sup.publica)
-          await pf.close()
-        }
+        const secao = est.secao && esperado?.estados[est.secao]
+        if (secao && 'C' in secao) estados[id].folha = { C: secao.C, B: secao.B, secao: est.secao, sha256: esperado.sha256 }
       }
       expect(estado.parada, 'escrita não declarada').toBe('')
       const peca = {
@@ -144,7 +181,7 @@ for (const sup of selecionadas()) {
         info.annotations.push({ type: `${id} · ${largura}`, description: `(b)=${c?.b.length} · nós=${(e.medicao as { nos: unknown[] }).nos.length} (o (e) e o (d′) saem no fechamento, contra 1138)` })
       }
     } finally {
-      await ctx.close()
+      await fechar(ctx)
       await navegador.close()
     }
   })

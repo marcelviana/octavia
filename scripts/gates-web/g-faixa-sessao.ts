@@ -66,8 +66,11 @@ export default async function preparar(_config: FullConfig): Promise<() => Promi
       const junto = juntar(lista)
       fs.writeFileSync(path.join(saida, `${id}.json`), JSON.stringify(junto, null, 1) + '\n')
       // estado não medido não some do resumo (1ª rodada do CN: o `content` sumiu calado, div. 629)
-      for (const [eid, e] of Object.entries(junto.estados as Record<string, { pulado?: string }>))
+      for (const [eid, e] of Object.entries(junto.estados as Record<string, { pulado?: string; naoAlcancado?: Record<string, string>; inalcancavel?: string }>)) {
         if (e.pulado) console.log(`G-faixa · ${id} · ${eid}: NÃO MEDIDO — ${e.pulado}`)
+        for (const [L, r] of Object.entries(e.naoAlcancado ?? {})) console.log(`G-faixa · ${id} · ${eid} · ${L}: NÃO ALCANÇADO — ${r}`)
+        if (e.inalcancavel) console.log(`G-faixa · ${id} · ${eid}: INALCANÇÁVEL (declarado) — ${e.inalcancavel}`)
+      }
       const r = resumo(junto as never) as Record<string, { e: number; b: number; dl: number; errata: number; nomeAcessivel: number; rolagem: number; reprova: boolean }>
       for (const [L, t] of Object.entries(r))
         console.log(`G-faixa · ${id} · ${L}: (e)=${t.e} · (b)=${t.b} · (d′)=${t.dl} · errata candidata=${t.errata} · saídas: nome-acessível=${t.nomeAcessivel} rolagem=${t.rolagem}${t.reprova ? '' : ' (faixa A: contado à parte)'}`)
@@ -82,14 +85,17 @@ export default async function preparar(_config: FullConfig): Promise<() => Promi
 function juntar(pecas: Record<string, unknown>[]): Record<string, unknown> {
   const [primeira] = pecas
   const out: Record<string, unknown> = { ...(primeira as object), estados: {}, requests: {}, controlePositivo: {} }
-  const estados = out.estados as Record<string, { larguras: Record<string, unknown>; folha?: unknown; pulado?: string }>
+  const estados = out.estados as Record<string, { larguras: Record<string, unknown>; folha?: unknown; pulado?: string; naoAlcancado?: Record<string, string>; inalcancavel?: string }>
   for (const p of pecas) {
     const L = String(p.largura)
-    for (const [id, e] of Object.entries(p.estados as Record<string, { medicao?: unknown; folha?: unknown; pulado?: string }>)) {
+    for (const [id, e] of Object.entries(p.estados as Record<string, { medicao?: unknown; folha?: unknown; pulado?: string; naoAlcancado?: string; inalcancavel?: string }>)) {
       const alvo = (estados[id] ??= { larguras: {} })
       if (e.medicao) alvo.larguras[L] = e.medicao
       if (e.folha) alvo.folha = e.folha
       if (e.pulado) alvo.pulado = e.pulado
+      // I1-PR6: o estado que a preparação não alcançou NESTA largura, e o declarado inalcançável
+      if (e.naoAlcancado) (alvo.naoAlcancado ??= {})[L] = e.naoAlcancado
+      if (e.inalcancavel) alvo.inalcancavel = e.inalcancavel
     }
     ;(out.requests as Record<string, unknown>)[L] = p.requests
     ;(out.controlePositivo as Record<string, unknown>)[L] = p.controlePositivo
