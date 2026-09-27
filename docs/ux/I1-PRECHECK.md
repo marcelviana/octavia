@@ -1162,3 +1162,5 @@ que ficam sem uso (`components/ui/skeleton.tsx`, `components/ui/switch.tsx`).
   nenhum hook nem lógica — só texto bilíngue e estilo; sem data, sem versão; dois links para fora,
   ambos `mailto:dpo@octavia.app` (`:86`, `:91`). O texto cita *"Google Authentication"* entre os
   serviços de terceiros — fica intacto pela I1-D19.
+
+**I1-PR-4** (`packages/identidade` + migração do nativo, PR #339): anexos em [`docs/native/I1-PR4-anexos/`](../native/I1-PR4-anexos/README.md) — o pacote é do nativo tanto quanto do web.
