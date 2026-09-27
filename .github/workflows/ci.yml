@@ -50,8 +50,10 @@ jobs:
     - name: Type-check dos testes (informativo — zerar o passivo e promover a bloqueante, PLANO-TRANSICAO B8)
       run: pnpm exec tsc -p tsconfig.test.json --noEmit
       continue-on-error: true
-    - name: Type-check packages/core
-      run: pnpm exec tsc -p packages/core/tsconfig.json --noEmit
+    - name: Type-check packages/core e packages/identidade
+      run: |
+        pnpm exec tsc -p packages/core/tsconfig.json --noEmit
+        pnpm exec tsc -p packages/identidade/tsconfig.json --noEmit
     # Aqui dentro correm o `gate:a20`, o `gate:icones` e os CN dos dois
     # (`apps/native/test/gates.test.ts`), e o G7 sobre a árvore de trabalho.
     # Este passo NÃO tem `continue-on-error`: um gate que reprova reprova o job.
