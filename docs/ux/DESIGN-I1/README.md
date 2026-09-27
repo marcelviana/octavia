@@ -876,7 +876,7 @@ Origem: **P** premissa do prompt · **D** doc anterior · **A** ambiente, dado r
 
 ## 8 · `SHA256SUMS`
 
-[`SHA256SUMS`](SHA256SUMS) tem o sha256 de todo arquivo desta pasta, menos ele próprio. Para conferir, da pasta:
+[`SHA256SUMS`](SHA256SUMS) tem o sha256 de todo arquivo desta pasta, menos ele próprio, exceto `erratas.json`, que lê a folha e não é a folha (I1-PR-5, div. 627, decisão 614). Para conferir, da pasta:
 
 ```
 shasum -a 256 -c SHA256SUMS

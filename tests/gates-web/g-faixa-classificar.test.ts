@@ -10,7 +10,7 @@ import { classificarEstado, cortes, resumo } from '../../scripts/gates-web/g-fai
 
 interface No {
   k: string; x: number; y: number; w: number; h: number
-  sr?: boolean; clip?: { x: number; y: number; w: number; h: number; rolagem: boolean } | null
+  sr?: boolean; clip?: { x: number; y: number; w: number; h: number; rolagem: boolean; painel?: boolean } | null
   corta?: { x: boolean; y: boolean }; h_texto?: string | null; h_nome?: string | null
 }
 const no = (k: string, x: number, y: number, w: number, h: number, extra: Partial<No> = {}): No =>
@@ -32,6 +32,16 @@ describe('G-faixa — (b) cortes', () => {
     ]))
     expect(r.b.map((o: { k: string }) => o.k)).toEqual(['corta'])
     expect(r.rolagem.map((o: { k: string }) => o.k)).toEqual(['rola'])
+  })
+  it('decisão 621: fora NA HORIZONTAL de contêiner que rola, sem a marca: (b); com data-rolagem="painel": (d′), não (b)', () => {
+    const clip = { x: 0, y: 0, w: 300, h: 200, rolagem: true }
+    const semMarca = cortes(med(711, [no('h', 280, 10, 100, 40, { clip: { ...clip, painel: false } })]))
+    expect(semMarca.b[0]).toMatchObject({ k: 'h', tipo: 'rolagem horizontal de contêiner' })
+    const comMarca = med(711, [no('p', 280, 10, 100, 40, { clip: { ...clip, painel: true } })])
+    expect(cortes(comMarca).b).toEqual([])
+    const c = classificarEstado({ larguras: { 711: comMarca } })
+    expect(c['711'].b).toEqual([])
+    expect(c['711'].dl).toMatchObject([{ k: 'p', painel: expect.stringContaining('decisão 621') }])
   })
   it('texto que transborda o próprio nó com overflow escondido (elidir): (b)', () => {
     expect(cortes(med(711, [no('t', 10, 10, 100, 20, { corta: { x: true, y: false } })])).b[0]).toMatchObject({ tipo: 'conteúdo cortado no próprio nó' })

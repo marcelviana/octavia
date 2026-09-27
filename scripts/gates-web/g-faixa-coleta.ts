@@ -14,7 +14,7 @@ import path from 'node:path'
 export interface NoCru {
   role: string; tag: string; testid: string | null; texto: string; nome: string | null
   x: number; y: number; w: number; h: number; sr: boolean
-  clip: { x: number; y: number; w: number; h: number; rolagem: boolean } | null
+  clip: { x: number; y: number; w: number; h: number; rolagem: boolean; painel: boolean } | null
   corta: { x: boolean; y: boolean }
 }
 
@@ -64,7 +64,7 @@ export function coletar(raizSel: string | null): { nos: NoCru[]; viewport: { w: 
       if (ox2 === 'visible' && oy2 === 'visible') continue
       if (a === document.body || a === document.documentElement) break
       const ar = a.getBoundingClientRect()
-      clip = { x: ar.left + a.clientLeft - ox, y: ar.top + a.clientTop - oy, w: a.clientWidth, h: a.clientHeight, rolagem: /auto|scroll/.test(ox2 + oy2) }
+      clip = { x: ar.left + a.clientLeft - ox, y: ar.top + a.clientTop - oy, w: a.clientWidth, h: a.clientHeight, rolagem: /auto|scroll/.test(ox2 + oy2), painel: a.getAttribute('data-rolagem') === 'painel' }
       break
     }
     const escondeX = /hidden|clip/.test(cs.overflowX), escondeY = /hidden|clip/.test(cs.overflowY)

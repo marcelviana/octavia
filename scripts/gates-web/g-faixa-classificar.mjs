@@ -18,13 +18,17 @@
 //        nome-acessível — o texto de 1138 sumiu na largura W mas existe lá um
 //        nó cujo nome acessível (aria-label) é esse texto (rótulo curto com
 //        nome longo, I1-D7 item 4);
-//        rolagem — o nó está fora da área visível de um contêiner que ROLA
-//        (overflow auto/scroll): não é corte, é rolagem.
+//        rolagem — o nó está fora, NA VERTICAL, da área visível de um contêiner
+//        que ROLA (overflow auto/scroll): não é corte, é rolagem.
+//   Decisão 621 [Marcel, 2026-09-27]: fora NA HORIZONTAL de um contêiner que rola
+//        é (b) "rolagem horizontal de contêiner" — salvo o contêiner marcado
+//        `data-rolagem="painel"` (o corpo de conteúdo da resposta 19 da folha),
+//        que conta como (d′).
 // A faixa A (411) não tem requisito próprio (DESIGN-I1 §4: "o que o G-faixa
 // medir em 411 é saída contada à parte"): o (e)/(b) de 411 é contado, não reprova.
 //
 // Nó cru (o que o medidor grava): { k, role, tag, testid, h_texto, h_nome, n,
-//   x, y, w, h, sr, clip: {x,y,w,h,rolagem} | null, corta: {x,y} }
+//   x, y, w, h, sr, clip: {x,y,w,h,rolagem,painel} | null, corta: {x,y} }
 //   k = chave de identidade estável entre larguras (testid, ou papel + hash do
 //   texto, com o nº da ocorrência); h_texto/h_nome = sha256 (12 hex) do texto
 //   visível e do aria-label — o texto em claro não vai para o JSON de superfície
@@ -44,21 +48,28 @@ export function cortes(medicao) {
   const vw = medicao.viewport.w
   if (medicao.doc.scrollWidth > medicao.doc.clientWidth + TOL_CORTE)
     out.push({ k: "(página)", tipo: "página com rolagem horizontal", de: medicao.doc.clientWidth, para: medicao.doc.scrollWidth })
-  const rolagem = []
+  const rolagem = [], painel = []
   for (const n of medicao.nos) {
     if (!temArea(n) || n.sr) continue
     if (n.x < -TOL_CORTE || n.x + n.w > vw + TOL_CORTE) { out.push({ k: n.k, tipo: "borda do viewport", x: n.x, w: n.w, vw }); continue }
     if (n.clip) {
       const c = n.clip
-      const fora = !dentro(n.x, c.x, c.x + c.w) || !dentro(n.x + n.w, c.x, c.x + c.w) || !dentro(n.y, c.y, c.y + c.h) || !dentro(n.y + n.h, c.y, c.y + c.h)
-      if (fora) {
-        if (c.rolagem) rolagem.push({ k: n.k })
-        else { out.push({ k: n.k, tipo: "borda do contêiner", no: [n.x, n.y, n.w, n.h], clip: [c.x, c.y, c.w, c.h] }); continue }
+      const foraX = !dentro(n.x, c.x, c.x + c.w) || !dentro(n.x + n.w, c.x, c.x + c.w)
+      const foraY = !dentro(n.y, c.y, c.y + c.h) || !dentro(n.y + n.h, c.y, c.y + c.h)
+      if (foraX || foraY) {
+        if (!c.rolagem) { out.push({ k: n.k, tipo: "borda do contêiner", no: [n.x, n.y, n.w, n.h], clip: [c.x, c.y, c.w, c.h] }); continue }
+        // decisão 621 [Marcel, 2026-09-27]: rolagem HORIZONTAL de contêiner é (b), salvo o painel
+        // marcado `data-rolagem="painel"` (o corpo de conteúdo, resposta 19 da folha), que é (d′).
+        // Fora só na vertical, num contêiner que rola, segue saída "rolagem" (N3-D29).
+        // (Um eixo `visible` com o outro `auto` computa `auto`: fora em x num contêiner que rola = rola em x.)
+        if (foraX && c.painel) painel.push({ k: n.k })
+        else if (foraX) { out.push({ k: n.k, tipo: "rolagem horizontal de contêiner", no: [n.x, n.y, n.w, n.h], clip: [c.x, c.y, c.w, c.h] }); continue }
+        else rolagem.push({ k: n.k })
       }
     }
     if (n.corta && (n.corta.x || n.corta.y)) out.push({ k: n.k, tipo: "conteúdo cortado no próprio nó", eixo: n.corta.x ? "x" : "y" })
   }
-  return { b: out, rolagem }
+  return { b: out, rolagem, painel }
 }
 
 /** Classifica um estado inteiro: { larguras: { "1138": medicao, … }, folha?: { C: nos, B: nos } }. */
@@ -68,8 +79,8 @@ export function classificarEstado(estado) {
   const porK = (nos) => new Map(nos.map((n) => [n.k, n]))
   const refK = ref ? porK(ref.nos) : null
   for (const [L, med] of Object.entries(estado.larguras)) {
-    const { b, rolagem } = cortes(med)
-    const e = [], dl = [], nomeAcessivel = []
+    const { b, rolagem, painel } = cortes(med)
+    const e = [], dl = painel.map((o) => ({ k: o.k, painel: "rolagem horizontal do painel marcado (decisão 621)" })), nomeAcessivel = []
     if (refK && L !== REFERENCIA) {
       const aqui = porK(med.nos)
       const nomes = new Set(med.nos.filter(temArea).map((n) => n.h_nome).filter(Boolean))

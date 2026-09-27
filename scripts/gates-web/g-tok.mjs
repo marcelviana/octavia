@@ -99,12 +99,13 @@ const VOCAB = ["loading", "error", "retry", "search", "no results", "cancel", "s
   "favorite", "favorites", "recent", "all", "filter", "sort", "lyrics", "chords", "sheet", "verify", "resend", "check"]
 // As isenções do a20 (anglicismos do produto, lista fechada).
 const ANGLICISMOS_DO_PRODUTO = ["setlist", "setlists", "auto-scroll", "zoom", "email", "tab", "offline", "pdf", "online"]
+// Decisão 622 [Marcel, 2026-09-27]: SÓ em posição de texto, como o `gate:a20` — texto JSX (e o
+// literal `{'…'}` que é texto JSX), `placeholder`, `aria-label`, `title`, `alt`. Identificador,
+// nome de variável e chave de objeto não são texto (CN de falso positivo em docs/ux/I1-PR5-anexos/cn/).
 const POSICOES = [
   { nome: "texto JSX", re: />([^<>{}]*[A-Za-z][^<>{}]*)</g },
   { nome: "literal JSX {'…'}", re: /\{\s*(?:"([^"]*)"|'([^']*)'|`([^`$]*)`)\s*\}/g },
-  { nome: "atributo", re: /\b(?:aria-label|aria-description|placeholder|title|alt|label)\s*=\s*(?:"([^"]*)"|\{\s*'([^']*)'\s*\}|\{\s*"([^"]*)"\s*\}|\{\s*`([^`$]*)`\s*\})/g },
-  { nome: "chave: literal", re: /\b(?:titulo|apoio|texto|rotulo|motivo|title|description|label|message)\s*:\s*(?:'([^']*)'|"([^"]*)"|`([^`$]*)`)/g },
-  { nome: "toast/alert", re: /\b(?:toast(?:\.\w+)?|alert|confirm)\(\s*(?:'([^']*)'|"([^"]*)"|`([^`$]*)`)/g },
+  { nome: "atributo", re: /\b(?:aria-label|placeholder|title|alt)\s*=\s*(?:"([^"]*)"|\{\s*'([^']*)'\s*\}|\{\s*"([^"]*)"\s*\}|\{\s*`([^`$]*)`\s*\})/g },
 ]
 const semComentarios = (s) => s.replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "))
   .replace(/(^|[^:"'`])\/\/[^\n]*/g, (m, p) => p + " ".repeat(m.length - p.length))
