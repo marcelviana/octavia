@@ -1,0 +1,43 @@
+# G-back — o núcleo do backend do web, CONGELADO (I1-PR5; I1-D13, I1-D21).
+# Gerado por: node scripts/gates-web/g-back-derivar.mjs .   sobre origin/main 73612be
+# (a) alcance de app/api/**/route.ts + middleware.ts · (b) git ls-files supabase · (c) lib/require-page-user.ts, lib/content-service-server.ts · (d) next.config.mjs
+# Não editar à mão: regenerar com o script e declarar no bloco gates-web (gback: scripts/gates-web/g-back-nucleo.txt — <razão>).
+app/api/auth/session/route.ts
+app/api/content/[id]/route.ts
+app/api/content/route.ts
+app/api/health/route.ts
+app/api/profile/route.ts
+app/api/setlists/[id]/route.ts
+app/api/setlists/[id]/songs/order/route.ts
+app/api/setlists/[id]/songs/route.ts
+app/api/setlists/route.ts
+app/api/setlists/songs/[songId]/route.ts
+app/api/storage/delete/route.ts
+app/api/storage/list/route.ts
+app/api/storage/upload/route.ts
+lib/api-errors.ts
+lib/api-schemas.ts
+lib/api-validation-middleware.ts
+lib/content-data-contract.ts
+lib/content-service-server.ts
+lib/content-types.ts
+lib/csp-nonce.ts
+lib/file-signatures.ts
+lib/firebase-admin.ts
+lib/firebase-server-utils.ts
+lib/logger.ts
+lib/protected-routes.ts
+lib/require-page-user.ts
+lib/rpc-errors.ts
+lib/secure-auth-utils.ts
+lib/security-headers.ts
+lib/supabase-service.ts
+lib/user-rate-limit.ts
+middleware.ts
+next.config.mjs
+supabase/migrations/20260901102108_b6_setlist_songs_rpc.sql
+supabase/schema.dump.sql
+supabase/storage.dump.sql
+types/content.ts
+types/database.types.ts
+types/setlist.ts

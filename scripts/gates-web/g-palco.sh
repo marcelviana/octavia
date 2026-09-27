@@ -21,7 +21,7 @@ set -eu
 LISTA=${1:-docs/ux/I1-PR3-anexos/lista-do-corte.txt}
 [ -f "$LISTA" ] || { echo "G-palco: lista não encontrada: $LISTA" >&2; exit 2; }
 
-TMP=$(mktemp -t g-palco)
+TMP=$(mktemp "${TMPDIR:-/tmp}/g-palco.XXXXXX")  # portável: o GNU exige XXX no molde (div. 631)
 trap 'rm -f "$TMP" "$TMP.simb" "$TMP.txt"' EXIT
 TAB=$(printf '\t')
 falhas=0

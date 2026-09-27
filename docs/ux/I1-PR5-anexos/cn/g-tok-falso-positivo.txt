@@ -1,0 +1,30 @@
+# G-tok (ii), CN de falso positivo (decisão 622: só posição de texto, como o a20)
+$ cat tests/gates-web/fixtures/g-tok-falso-positivo.tsx
+// G-tok, CN de falso positivo (I1-PR5, decisão 622): palavra do vocabulário em IDENTIFICADOR
+// não é texto e não acusa. O CN acrescenta `<p>New content</p>` e aí acusa. Não é importado.
+interface Props { fileUrl: string }
+
+export function CnFalsoPositivo({ fileUrl }: Props) {
+  const newContent = fileUrl.length > 0
+  return <div data-arquivo={fileUrl}>{newContent ? fileUrl : null}</div>
+}
+
+$ echo tests/gates-web/fixtures/g-tok-falso-positivo.tsx >> scripts/gates-web/g-tok-arquivos.txt
+$ node scripts/gates-web/g-tok.mjs --so-arquivos      # newContent e fileUrl são identificadores: NÃO acusa
+## (ii) arquivos redesenhados — scripts/gates-web/g-tok-arquivos.txt
+  arquivos: 1 · literais de identidade acusados: 0 · textos examinados: 1 · vocabulário: 109 · isenções: 9
+
+G-tok: PASSA
+exit 0
+
+$ echo "export const CnTexto = () => <p>New content</p>" >> tests/gates-web/fixtures/g-tok-falso-positivo.tsx
+$ node scripts/gates-web/g-tok.mjs --so-arquivos      # "New content" em texto JSX: ACUSA
+## (ii) arquivos redesenhados — scripts/gates-web/g-tok-arquivos.txt
+  ✗ tests/gates-web/fixtures/g-tok-falso-positivo.tsx:9 [inglês, texto JSX] "New content" ← termo "content"
+  arquivos: 1 · literais de identidade acusados: 0 · textos examinados: 2 · vocabulário: 109 · isenções: 9
+
+G-tok: REPROVA — 1 ocorrência(s)
+exit 1
+
+$ (restaurados) cmp com as cópias de antes
+iguais

@@ -1,0 +1,18 @@
+$ sh scripts/gates-web/g-back.sh 089f72c c68170b     # SEM o bloco (GATES_WEB_DECL vazio)
+G-back — base 089f72c · head c68170b
+núcleo: congelado 39 · derivação BASE 41 · HEAD 39 · união 42
+declarações gback: 0 caminho(s)
+
+## (i) arquivo do núcleo que mudou
+  ✗ app/api/proxy/route.ts (removido) — SEM DECLARAÇÃO
+  ✗ lib/content-service-server.ts (modificado) — SEM DECLARAÇÃO
+  ✗ lib/protected-routes.ts (modificado) — SEM DECLARAÇÃO
+  ✗ lib/security-headers.ts (modificado) — SEM DECLARAÇÃO
+  ✗ next.config.mjs (modificado) — SEM DECLARAÇÃO
+## (ii) arquivo novo no alcance (derivação do HEAD fora do congelado)
+  ✓ nenhum
+## (iii) declaração órfã (gback: de arquivo que não mudou)
+  ✓ nenhuma
+
+G-back: REPROVA — 5 ocorrência(s)
+exit 1

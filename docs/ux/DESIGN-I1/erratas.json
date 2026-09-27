@@ -1,0 +1,71 @@
+{
+  "_leia": "G-tok (i), I1-PR5: as erratas da folha congelada que cobrem os achados do conferencia/conferir.mjs. Cada entrada casa, por regex sobre a linha do achado (sem o '- ' do começo), EXATAMENTE n achados; achado sem entrada reprova (descoberto), entrada que não casa reprova (errata órfã), n diferente reprova. Fonte das erratas: README.md §2.2 (I1-E1…E6) e §1.4 (decisões 588/589). Fica fora do SHA256SUMS, como o medidas.json do DESIGN-N3: não é a folha, é o que a lê.",
+  "tipos": {
+    "inventario-sem-px": "o inventário da folha declara um px que o arquivo não tem",
+    "declaracao": "o px existe e está declarado, mas a declaração não resolve em token, derivado ou literal com origem",
+    "forma": "um <svg> das folhas sem desenho no catálogo (packages/identidade, via apps/native/src/icones/dados.ts)",
+    "nome-icone": "um nome do README-design §6 sem desenho no catálogo",
+    "estado": "estado alcançável sem seção, ou contagem de T-I1-R diferente de seções × 2 faixas"
+  },
+  "erratas": [
+    {
+      "id": "I1-E1",
+      "tipo": "estado",
+      "div": [586, 593],
+      "o_que_vale": "existe o estado AUTH-verify-reenviar-excecao (C e B): 2 T-I1-R além das seções da folha",
+      "casa": [{ "achado": "^\\(d\\) README\\.md: 286 T-I1-R × 282 esperados$", "n": 1 }]
+    },
+    {
+      "id": "I1-E2",
+      "tipo": "estado",
+      "div": [587],
+      "o_que_vale": "existe o estado UP-lote-lendo (C e B): o parse do lote tem seção pela errata, e 2 T-I1-R além das seções",
+      "casa": [
+        { "achado": "^\\(d\\) estado alcançável sem seção: upload/criação · carregando — parse do lote — ", "n": 1 },
+        { "achado": "^\\(d\\) README\\.md: 286 T-I1-R × 282 esperados$", "n": 1 }
+      ]
+    },
+    {
+      "id": "I1-E3",
+      "tipo": "forma",
+      "div": [589, 596],
+      "o_que_vale": "o garantida do catálogo (r 9 · M8 12.2l2.8 2.8L16.2 9.4) no lugar do de r 8,5 da LinhaDeAviso de sucesso",
+      "casa": [{ "achado": "^\\(c\\) forma sem desenho no dados\\.ts \\(10× nas folhas 0,1,4,7\\): <circle cx=\"12\" cy=\"12\" r=\"8\\.5\"></circle><path d=\"M8\\.4 12\\.3l2\\.5 2\\.5 4\\.7-5\"></path>$", "n": 1 }]
+    },
+    {
+      "id": "I1-E4",
+      "tipo": "inventario-sem-px",
+      "div": [584],
+      "o_que_vale": "as entradas 2 e 3 (undefined) do inventário da landing são inválidas: riscadas",
+      "casa": [{ "achado": "^\\(b\\) 2-landing: (inventário da folha declara [23] \\(\"undefined\"\\), que não aparece como px no arquivo|[23] não está no README §2\\.3|[23] → \"undefined\" não resolve em token, derivado ou literal com origem)$", "n": 6 }]
+    },
+    {
+      "id": "I1-E5",
+      "tipo": "declaracao",
+      "div": [585, 596],
+      "o_que_vale": "entrelinha 20 da LinhaDeAviso = literal do N3 (T3-R7)",
+      "casa": [{ "achado": "^\\(b\\) (0-linha-de-aviso|1-auth|4-content-lista|5-content-visualizacao|6-content-editor|7-upload|8-setlists|README §2\\.3): 20 → \"entrelinha da LinhaDeAviso\" não resolve em token, derivado ou literal com origem$", "n": 8 }]
+    },
+    {
+      "id": "I1-E6",
+      "tipo": "forma",
+      "div": [588, 601, 611],
+      "o_que_vale": "o visto das folhas 6, 7 e 8 é o garantida do catálogo, no tamanho da família (24; 20 onde a folha tem 16)",
+      "casa": [{ "achado": "^\\(c\\) forma sem desenho no dados\\.ts \\(50× nas folhas 6,7,8\\): <path d=\"M4\\.5 12\\.5l5 5 10-11\"></path>$", "n": 1 }]
+    },
+    {
+      "id": "decisao-588",
+      "tipo": "nome-icone",
+      "div": [588],
+      "o_que_vale": "o visto, nomeado no README-design §6, não entra no catálogo por nome: a PR-4 mediu e a I1-E6 o troca pelo garantida",
+      "casa": [{ "achado": "^\\(c\\) §6 nomeia \"visto\", que não está em apps/native/src/icones/dados\\.ts$", "n": 1 }]
+    },
+    {
+      "id": "decisao-589",
+      "tipo": "forma",
+      "div": [589],
+      "o_que_vale": "uma forma só de garantida, a do catálogo (é a I1-E3)",
+      "casa": [{ "achado": "^\\(c\\) forma sem desenho no dados\\.ts \\(10× nas folhas 0,1,4,7\\): <circle cx=\"12\" cy=\"12\" r=\"8\\.5\"></circle>", "n": 1 }]
+    }
+  ]
+}

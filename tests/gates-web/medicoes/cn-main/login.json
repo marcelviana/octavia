@@ -1,0 +1,1890 @@
+{
+ "superficie": "login",
+ "rota": "/login",
+ "folha": "1-auth",
+ "implementada": false,
+ "publica": true,
+ "rodada": "2026-09-27T17:56:53.609Z",
+ "base": "http://localhost:3000",
+ "chromium": "140.0.7339.16",
+ "commit": "73612be4d5d26536e28983eaf803e35394318182+sujo",
+ "controlePositivo": {
+  "411": {
+   "controle1": "GET 200 falhou net::ERR_ABORTED",
+   "controle2": "GET 200 falhou net::ERR_ABORTED"
+  },
+  "711": {
+   "controle1": "GET 200 falhou net::ERR_ABORTED",
+   "controle2": "GET 200 falhou net::ERR_ABORTED"
+  },
+  "1138": {
+   "controle1": "GET 200 falhou net::ERR_ABORTED",
+   "controle2": "GET 200 falhou net::ERR_ABORTED"
+  }
+ },
+ "requests": {
+  "411": {
+   "linhas": [
+    {
+     "n": 1,
+     "ms": 45,
+     "metodo": "GET",
+     "caminho": "/login",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 2,
+     "ms": 108,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 3,
+     "ms": 108,
+     "metodo": "GET",
+     "caminho": "/_next/image",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 4,
+     "ms": 113,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 5,
+     "ms": 115,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 6,
+     "ms": 117,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 7,
+     "ms": 119,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 8,
+     "ms": 120,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/login/page.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 9,
+     "ms": 132,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-1",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 10,
+     "ms": 152,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-2",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 11,
+     "ms": 154,
+     "metodo": "GET",
+     "caminho": "/login",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 12,
+     "ms": 193,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 13,
+     "ms": 196,
+     "metodo": "GET",
+     "caminho": "/_next/image",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 14,
+     "ms": 200,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 15,
+     "ms": 202,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 16,
+     "ms": 202,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 17,
+     "ms": 205,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 18,
+     "ms": 205,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/login/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 19,
+     "ms": 1664,
+     "metodo": "GET",
+     "caminho": "/login",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 20,
+     "ms": 1714,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 21,
+     "ms": 1718,
+     "metodo": "GET",
+     "caminho": "/_next/image",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 22,
+     "ms": 1721,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 23,
+     "ms": 1723,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 24,
+     "ms": 1724,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 25,
+     "ms": 1725,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 26,
+     "ms": 1726,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/login/page.js",
+     "status": "200",
+     "fim": "fim"
+    }
+   ],
+   "outrosHosts": {},
+   "prodAbortados": 0
+  },
+  "711": {
+   "linhas": [
+    {
+     "n": 1,
+     "ms": 48,
+     "metodo": "GET",
+     "caminho": "/login",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 2,
+     "ms": 108,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 3,
+     "ms": 109,
+     "metodo": "GET",
+     "caminho": "/_next/image",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 4,
+     "ms": 114,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 5,
+     "ms": 116,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 6,
+     "ms": 117,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 7,
+     "ms": 118,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 8,
+     "ms": 119,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/login/page.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 9,
+     "ms": 134,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-1",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 10,
+     "ms": 153,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-2",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 11,
+     "ms": 154,
+     "metodo": "GET",
+     "caminho": "/login",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 12,
+     "ms": 195,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 13,
+     "ms": 197,
+     "metodo": "GET",
+     "caminho": "/_next/image",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 14,
+     "ms": 201,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 15,
+     "ms": 202,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 16,
+     "ms": 203,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 17,
+     "ms": 204,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 18,
+     "ms": 205,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/login/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 19,
+     "ms": 1664,
+     "metodo": "GET",
+     "caminho": "/login",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 20,
+     "ms": 1715,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 21,
+     "ms": 1719,
+     "metodo": "GET",
+     "caminho": "/_next/image",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 22,
+     "ms": 1722,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 23,
+     "ms": 1724,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 24,
+     "ms": 1725,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 25,
+     "ms": 1726,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 26,
+     "ms": 1727,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/login/page.js",
+     "status": "200",
+     "fim": "fim"
+    }
+   ],
+   "outrosHosts": {},
+   "prodAbortados": 0
+  },
+  "1138": {
+   "linhas": [
+    {
+     "n": 1,
+     "ms": 155,
+     "metodo": "GET",
+     "caminho": "/login",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 2,
+     "ms": 237,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 3,
+     "ms": 238,
+     "metodo": "GET",
+     "caminho": "/_next/image",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 4,
+     "ms": 250,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 5,
+     "ms": 254,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 6,
+     "ms": 257,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 7,
+     "ms": 259,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 8,
+     "ms": 260,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/login/page.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 9,
+     "ms": 308,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-1",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 10,
+     "ms": 333,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-2",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 11,
+     "ms": 340,
+     "metodo": "GET",
+     "caminho": "/login",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 12,
+     "ms": 387,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 13,
+     "ms": 390,
+     "metodo": "GET",
+     "caminho": "/_next/image",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 14,
+     "ms": 393,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 15,
+     "ms": 394,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 16,
+     "ms": 395,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 17,
+     "ms": 396,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 18,
+     "ms": 396,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/login/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 19,
+     "ms": 1855,
+     "metodo": "GET",
+     "caminho": "/login",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 20,
+     "ms": 1916,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 21,
+     "ms": 1917,
+     "metodo": "GET",
+     "caminho": "/_next/image",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 22,
+     "ms": 1921,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 23,
+     "ms": 1924,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 24,
+     "ms": 1925,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 25,
+     "ms": 1927,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 26,
+     "ms": 1928,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/login/page.js",
+     "status": "200",
+     "fim": "fim"
+    }
+   ],
+   "outrosHosts": {},
+   "prodAbortados": 0
+  }
+ },
+ "estados": {
+  "base": {
+   "larguras": {
+    "411": {
+     "url": "/login",
+     "viewport": {
+      "w": 411,
+      "h": 823
+     },
+     "doc": {
+      "scrollWidth": 411,
+      "clientWidth": 411
+     },
+     "nos": [
+      {
+       "k": "heading:2c82fd4cf591#1",
+       "role": "heading",
+       "tag": "h1",
+       "testid": null,
+       "h_texto": "2c82fd4cf591",
+       "h_nome": null,
+       "n": 18,
+       "rotulo": "Welcome to Octavia",
+       "x": 24,
+       "y": 200,
+       "w": 363,
+       "h": 36,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:e70016b78568#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "e70016b78568",
+       "h_nome": null,
+       "n": 28,
+       "rotulo": "Your digital music companion",
+       "x": 24,
+       "y": 244,
+       "w": 363,
+       "h": 24,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:bcc0bcc9140b#1",
+       "role": "texto",
+       "tag": "div",
+       "testid": null,
+       "h_texto": "bcc0bcc9140b",
+       "h_nome": null,
+       "n": 7,
+       "rotulo": "Sign In",
+       "x": 77,
+       "y": 325,
+       "w": 63.2,
+       "h": 28,
+       "sr": false,
+       "clip": {
+        "x": 25,
+        "y": 301,
+        "w": 361,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:e7a0f890f52a#1",
+       "role": "texto",
+       "tag": "div",
+       "testid": null,
+       "h_texto": "e7a0f890f52a",
+       "h_nome": null,
+       "n": 51,
+       "rotulo": "Enter your credentials to access your music library",
+       "x": 49,
+       "y": 367,
+       "w": 313,
+       "h": 20,
+       "sr": false,
+       "clip": {
+        "x": 25,
+        "y": 301,
+        "w": 361,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "label:969ccbd3cf63#1",
+       "role": "label",
+       "tag": "label",
+       "testid": null,
+       "h_texto": "969ccbd3cf63",
+       "h_nome": null,
+       "n": 5,
+       "rotulo": "Email",
+       "x": 49,
+       "y": 403,
+       "w": 35,
+       "h": 16,
+       "sr": false,
+       "clip": {
+        "x": 25,
+        "y": 301,
+        "w": 361,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "textbox:52bf11c1afe0#1",
+       "role": "textbox",
+       "tag": "input",
+       "testid": null,
+       "h_texto": "52bf11c1afe0",
+       "h_nome": null,
+       "n": 22,
+       "rotulo": "your.email@example.com",
+       "x": 49,
+       "y": 431,
+       "w": 313,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 25,
+        "y": 301,
+        "w": 361,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "label:e7cf3ef4f17c#1",
+       "role": "label",
+       "tag": "label",
+       "testid": null,
+       "h_texto": "e7cf3ef4f17c",
+       "h_nome": null,
+       "n": 8,
+       "rotulo": "Password",
+       "x": 49,
+       "y": 490,
+       "w": 61.5,
+       "h": 14,
+       "sr": false,
+       "clip": {
+        "x": 25,
+        "y": 301,
+        "w": 361,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:30c1d8d3e912#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "30c1d8d3e912",
+       "h_nome": null,
+       "n": 16,
+       "rotulo": "Forgot password?",
+       "x": 249.9,
+       "y": 487,
+       "w": 112.1,
+       "h": 20,
+       "sr": false,
+       "clip": {
+        "x": 25,
+        "y": 301,
+        "w": 361,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "textbox:c06bf9670174#1",
+       "role": "textbox",
+       "tag": "input",
+       "testid": null,
+       "h_texto": "c06bf9670174",
+       "h_nome": null,
+       "n": 19,
+       "rotulo": "Enter your password",
+       "x": 49,
+       "y": 515,
+       "w": 313,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 25,
+        "y": 301,
+        "w": 361,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "button:bcc0bcc9140b#1",
+       "role": "button",
+       "tag": "button",
+       "testid": null,
+       "h_texto": "bcc0bcc9140b",
+       "h_nome": null,
+       "n": 7,
+       "rotulo": "Sign In",
+       "x": 49,
+       "y": 571,
+       "w": 313,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 25,
+        "y": 301,
+        "w": 361,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:7175517a370b#1",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "7175517a370b",
+       "h_nome": null,
+       "n": 2,
+       "rotulo": "or",
+       "x": 191.3,
+       "y": 639,
+       "w": 28.5,
+       "h": 20,
+       "sr": false,
+       "clip": {
+        "x": 25,
+        "y": 301,
+        "w": 361,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "button:cce937e89144#1",
+       "role": "button",
+       "tag": "button",
+       "testid": null,
+       "h_texto": "cce937e89144",
+       "h_nome": null,
+       "n": 20,
+       "rotulo": "Continue with Google",
+       "x": 49,
+       "y": 687,
+       "w": 313,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 25,
+        "y": 301,
+        "w": 361,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:1b545b23fae3#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "1b545b23fae3",
+       "h_nome": null,
+       "n": 22,
+       "rotulo": "Don't have an account?",
+       "x": 49,
+       "y": 743,
+       "w": 313,
+       "h": 24,
+       "sr": false,
+       "clip": {
+        "x": 25,
+        "y": 301,
+        "w": 361,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:5e2b8e96503d#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "5e2b8e96503d",
+       "h_nome": null,
+       "n": 7,
+       "rotulo": "Sign up",
+       "x": 264.4,
+       "y": 746,
+       "w": 54.3,
+       "h": 17,
+       "sr": false,
+       "clip": {
+        "x": 25,
+        "y": 301,
+        "w": 361,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:e5331fd63f37#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "e5331fd63f37",
+       "h_nome": null,
+       "n": 42,
+       "rotulo": "© 2025 Octavia Music. All rights reserved.",
+       "x": 24,
+       "y": 824,
+       "w": 363,
+       "h": 20,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:fca0c0beacd0#1",
+       "role": "texto",
+       "tag": "section",
+       "testid": null,
+       "h_texto": null,
+       "h_nome": "fca0c0beacd0",
+       "n": 0,
+       "rotulo": "Notifications alt+T",
+       "x": 0,
+       "y": 868,
+       "w": 411,
+       "h": 0,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      }
+     ]
+    },
+    "711": {
+     "url": "/login",
+     "viewport": {
+      "w": 711,
+      "h": 1138
+     },
+     "doc": {
+      "scrollWidth": 711,
+      "clientWidth": 711
+     },
+     "nos": [
+      {
+       "k": "heading:2c82fd4cf591#1",
+       "role": "heading",
+       "tag": "h1",
+       "testid": null,
+       "h_texto": "2c82fd4cf591",
+       "h_nome": null,
+       "n": 18,
+       "rotulo": "Welcome to Octavia",
+       "x": 131.5,
+       "y": 335,
+       "w": 448,
+       "h": 36,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:e70016b78568#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "e70016b78568",
+       "h_nome": null,
+       "n": 28,
+       "rotulo": "Your digital music companion",
+       "x": 131.5,
+       "y": 379,
+       "w": 448,
+       "h": 24,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:bcc0bcc9140b#1",
+       "role": "texto",
+       "tag": "div",
+       "testid": null,
+       "h_texto": "bcc0bcc9140b",
+       "h_nome": null,
+       "n": 7,
+       "rotulo": "Sign In",
+       "x": 184.5,
+       "y": 460,
+       "w": 63.2,
+       "h": 28,
+       "sr": false,
+       "clip": {
+        "x": 132.5,
+        "y": 436,
+        "w": 446,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:e7a0f890f52a#1",
+       "role": "texto",
+       "tag": "div",
+       "testid": null,
+       "h_texto": "e7a0f890f52a",
+       "h_nome": null,
+       "n": 51,
+       "rotulo": "Enter your credentials to access your music library",
+       "x": 156.5,
+       "y": 502,
+       "w": 398,
+       "h": 20,
+       "sr": false,
+       "clip": {
+        "x": 132.5,
+        "y": 436,
+        "w": 446,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "label:969ccbd3cf63#1",
+       "role": "label",
+       "tag": "label",
+       "testid": null,
+       "h_texto": "969ccbd3cf63",
+       "h_nome": null,
+       "n": 5,
+       "rotulo": "Email",
+       "x": 156.5,
+       "y": 538,
+       "w": 35,
+       "h": 16,
+       "sr": false,
+       "clip": {
+        "x": 132.5,
+        "y": 436,
+        "w": 446,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "textbox:52bf11c1afe0#1",
+       "role": "textbox",
+       "tag": "input",
+       "testid": null,
+       "h_texto": "52bf11c1afe0",
+       "h_nome": null,
+       "n": 22,
+       "rotulo": "your.email@example.com",
+       "x": 156.5,
+       "y": 566,
+       "w": 398,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 132.5,
+        "y": 436,
+        "w": 446,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "label:e7cf3ef4f17c#1",
+       "role": "label",
+       "tag": "label",
+       "testid": null,
+       "h_texto": "e7cf3ef4f17c",
+       "h_nome": null,
+       "n": 8,
+       "rotulo": "Password",
+       "x": 156.5,
+       "y": 625,
+       "w": 61.5,
+       "h": 14,
+       "sr": false,
+       "clip": {
+        "x": 132.5,
+        "y": 436,
+        "w": 446,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:30c1d8d3e912#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "30c1d8d3e912",
+       "h_nome": null,
+       "n": 16,
+       "rotulo": "Forgot password?",
+       "x": 442.4,
+       "y": 622,
+       "w": 112.1,
+       "h": 20,
+       "sr": false,
+       "clip": {
+        "x": 132.5,
+        "y": 436,
+        "w": 446,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "textbox:c06bf9670174#1",
+       "role": "textbox",
+       "tag": "input",
+       "testid": null,
+       "h_texto": "c06bf9670174",
+       "h_nome": null,
+       "n": 19,
+       "rotulo": "Enter your password",
+       "x": 156.5,
+       "y": 650,
+       "w": 398,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 132.5,
+        "y": 436,
+        "w": 446,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "button:bcc0bcc9140b#1",
+       "role": "button",
+       "tag": "button",
+       "testid": null,
+       "h_texto": "bcc0bcc9140b",
+       "h_nome": null,
+       "n": 7,
+       "rotulo": "Sign In",
+       "x": 156.5,
+       "y": 706,
+       "w": 398,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 132.5,
+        "y": 436,
+        "w": 446,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:7175517a370b#1",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "7175517a370b",
+       "h_nome": null,
+       "n": 2,
+       "rotulo": "or",
+       "x": 341.3,
+       "y": 774,
+       "w": 28.5,
+       "h": 20,
+       "sr": false,
+       "clip": {
+        "x": 132.5,
+        "y": 436,
+        "w": 446,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "button:cce937e89144#1",
+       "role": "button",
+       "tag": "button",
+       "testid": null,
+       "h_texto": "cce937e89144",
+       "h_nome": null,
+       "n": 20,
+       "rotulo": "Continue with Google",
+       "x": 156.5,
+       "y": 822,
+       "w": 398,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 132.5,
+        "y": 436,
+        "w": 446,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:1b545b23fae3#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "1b545b23fae3",
+       "h_nome": null,
+       "n": 22,
+       "rotulo": "Don't have an account?",
+       "x": 156.5,
+       "y": 878,
+       "w": 398,
+       "h": 24,
+       "sr": false,
+       "clip": {
+        "x": 132.5,
+        "y": 436,
+        "w": 446,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:5e2b8e96503d#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "5e2b8e96503d",
+       "h_nome": null,
+       "n": 7,
+       "rotulo": "Sign up",
+       "x": 414.4,
+       "y": 881,
+       "w": 54.3,
+       "h": 17,
+       "sr": false,
+       "clip": {
+        "x": 132.5,
+        "y": 436,
+        "w": 446,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:e5331fd63f37#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "e5331fd63f37",
+       "h_nome": null,
+       "n": 42,
+       "rotulo": "© 2025 Octavia Music. All rights reserved.",
+       "x": 131.5,
+       "y": 959,
+       "w": 448,
+       "h": 20,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:fca0c0beacd0#1",
+       "role": "texto",
+       "tag": "section",
+       "testid": null,
+       "h_texto": null,
+       "h_nome": "fca0c0beacd0",
+       "n": 0,
+       "rotulo": "Notifications alt+T",
+       "x": 0,
+       "y": 1138,
+       "w": 711,
+       "h": 0,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      }
+     ]
+    },
+    "1138": {
+     "url": "/login",
+     "viewport": {
+      "w": 1138,
+      "h": 711
+     },
+     "doc": {
+      "scrollWidth": 1138,
+      "clientWidth": 1138
+     },
+     "nos": [
+      {
+       "k": "heading:2c82fd4cf591#1",
+       "role": "heading",
+       "tag": "h1",
+       "testid": null,
+       "h_texto": "2c82fd4cf591",
+       "h_nome": null,
+       "n": 18,
+       "rotulo": "Welcome to Octavia",
+       "x": 345,
+       "y": 224,
+       "w": 448,
+       "h": 36,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:e70016b78568#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "e70016b78568",
+       "h_nome": null,
+       "n": 28,
+       "rotulo": "Your digital music companion",
+       "x": 345,
+       "y": 268,
+       "w": 448,
+       "h": 24,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:bcc0bcc9140b#1",
+       "role": "texto",
+       "tag": "div",
+       "testid": null,
+       "h_texto": "bcc0bcc9140b",
+       "h_nome": null,
+       "n": 7,
+       "rotulo": "Sign In",
+       "x": 398,
+       "y": 349,
+       "w": 63.2,
+       "h": 28,
+       "sr": false,
+       "clip": {
+        "x": 346,
+        "y": 325,
+        "w": 446,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:e7a0f890f52a#1",
+       "role": "texto",
+       "tag": "div",
+       "testid": null,
+       "h_texto": "e7a0f890f52a",
+       "h_nome": null,
+       "n": 51,
+       "rotulo": "Enter your credentials to access your music library",
+       "x": 370,
+       "y": 391,
+       "w": 398,
+       "h": 20,
+       "sr": false,
+       "clip": {
+        "x": 346,
+        "y": 325,
+        "w": 446,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "label:969ccbd3cf63#1",
+       "role": "label",
+       "tag": "label",
+       "testid": null,
+       "h_texto": "969ccbd3cf63",
+       "h_nome": null,
+       "n": 5,
+       "rotulo": "Email",
+       "x": 370,
+       "y": 427,
+       "w": 35,
+       "h": 16,
+       "sr": false,
+       "clip": {
+        "x": 346,
+        "y": 325,
+        "w": 446,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "textbox:52bf11c1afe0#1",
+       "role": "textbox",
+       "tag": "input",
+       "testid": null,
+       "h_texto": "52bf11c1afe0",
+       "h_nome": null,
+       "n": 22,
+       "rotulo": "your.email@example.com",
+       "x": 370,
+       "y": 455,
+       "w": 398,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 346,
+        "y": 325,
+        "w": 446,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "label:e7cf3ef4f17c#1",
+       "role": "label",
+       "tag": "label",
+       "testid": null,
+       "h_texto": "e7cf3ef4f17c",
+       "h_nome": null,
+       "n": 8,
+       "rotulo": "Password",
+       "x": 370,
+       "y": 514,
+       "w": 61.5,
+       "h": 14,
+       "sr": false,
+       "clip": {
+        "x": 346,
+        "y": 325,
+        "w": 446,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:30c1d8d3e912#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "30c1d8d3e912",
+       "h_nome": null,
+       "n": 16,
+       "rotulo": "Forgot password?",
+       "x": 655.9,
+       "y": 511,
+       "w": 112.1,
+       "h": 20,
+       "sr": false,
+       "clip": {
+        "x": 346,
+        "y": 325,
+        "w": 446,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "textbox:c06bf9670174#1",
+       "role": "textbox",
+       "tag": "input",
+       "testid": null,
+       "h_texto": "c06bf9670174",
+       "h_nome": null,
+       "n": 19,
+       "rotulo": "Enter your password",
+       "x": 370,
+       "y": 539,
+       "w": 398,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 346,
+        "y": 325,
+        "w": 446,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "button:bcc0bcc9140b#1",
+       "role": "button",
+       "tag": "button",
+       "testid": null,
+       "h_texto": "bcc0bcc9140b",
+       "h_nome": null,
+       "n": 7,
+       "rotulo": "Sign In",
+       "x": 370,
+       "y": 595,
+       "w": 398,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 346,
+        "y": 325,
+        "w": 446,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:7175517a370b#1",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "7175517a370b",
+       "h_nome": null,
+       "n": 2,
+       "rotulo": "or",
+       "x": 554.8,
+       "y": 663,
+       "w": 28.5,
+       "h": 20,
+       "sr": false,
+       "clip": {
+        "x": 346,
+        "y": 325,
+        "w": 446,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "button:cce937e89144#1",
+       "role": "button",
+       "tag": "button",
+       "testid": null,
+       "h_texto": "cce937e89144",
+       "h_nome": null,
+       "n": 20,
+       "rotulo": "Continue with Google",
+       "x": 370,
+       "y": 711,
+       "w": 398,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 346,
+        "y": 325,
+        "w": 446,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:1b545b23fae3#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "1b545b23fae3",
+       "h_nome": null,
+       "n": 22,
+       "rotulo": "Don't have an account?",
+       "x": 370,
+       "y": 767,
+       "w": 398,
+       "h": 24,
+       "sr": false,
+       "clip": {
+        "x": 346,
+        "y": 325,
+        "w": 446,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:5e2b8e96503d#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "5e2b8e96503d",
+       "h_nome": null,
+       "n": 7,
+       "rotulo": "Sign up",
+       "x": 627.9,
+       "y": 770,
+       "w": 54.3,
+       "h": 17,
+       "sr": false,
+       "clip": {
+        "x": 346,
+        "y": 325,
+        "w": 446,
+        "h": 490,
+        "rolagem": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:e5331fd63f37#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "e5331fd63f37",
+       "h_nome": null,
+       "n": 42,
+       "rotulo": "© 2025 Octavia Music. All rights reserved.",
+       "x": 345,
+       "y": 848,
+       "w": 448,
+       "h": 20,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:fca0c0beacd0#1",
+       "role": "texto",
+       "tag": "section",
+       "testid": null,
+       "h_texto": null,
+       "h_nome": "fca0c0beacd0",
+       "n": 0,
+       "rotulo": "Notifications alt+T",
+       "x": 0,
+       "y": 916,
+       "w": 1138,
+       "h": 0,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      }
+     ]
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,40 @@
+$ sh scripts/gates-web/g-palco.sh     # na árvore da PR, antes do CN
+G-palco — lista: docs/ux/I1-PR3-anexos/lista-do-corte.txt
+MORRE: 69 caminhos · SIMBOLO: 7 · TEXTO: 6
+
+## 1. MORRE — o arquivo existe
+  ✓ nenhum
+## 2. MORRE — o arquivo é importado
+  ✓ nenhum
+## 3. SIMBOLO — símbolo morto dentro de arquivo que fica
+  ✓ nenhum
+## 4. TEXTO — referência a rota/arquivo morto
+  ✓ nenhum
+
+G-palco: PASSA — 0 ocorrências
+exit 0
+
+$ mkdir app/performance && printf "export default function P() { return null }
+" > app/performance/page.tsx   # nome da lista (MORRE, grupo palco), diretório temporário
+$ sh scripts/gates-web/g-palco.sh
+G-palco — lista: docs/ux/I1-PR3-anexos/lista-do-corte.txt
+MORRE: 69 caminhos · SIMBOLO: 7 · TEXTO: 6
+
+## 1. MORRE — o arquivo existe
+  ✗ existe: app/performance/page.tsx
+## 2. MORRE — o arquivo é importado
+  ✓ nenhum
+## 3. SIMBOLO — símbolo morto dentro de arquivo que fica
+  ✓ nenhum
+## 4. TEXTO — referência a rota/arquivo morto
+  ✓ nenhum
+
+G-palco: REPROVA — 1 ocorrência(s)
+exit 1
+$ rm -r app/performance && git status --short
+(app/ limpo; o resto do status são os arquivos novos desta PR)
+?? docs/ux/I1-PR5-anexos/
+?? scripts/gates-web/g-back-derivar.mjs
+?? scripts/gates-web/g-back-nucleo.txt
+?? scripts/gates-web/g-back.sh
+?? scripts/gates-web/gates-web-decl.sh

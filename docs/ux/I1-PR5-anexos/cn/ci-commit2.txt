@@ -1,0 +1,28 @@
+# CI do commit 2 (86ac70a), PR #340 — prova da div. 631 (g-palco no Linux). Duas corridas: synchronize (push) e edited (corpo atualizado).
+gates	pull_request	success	https://github.com/marcelviana/octavia/actions/runs/36349685302
+gates-web	pull_request	success	https://github.com/marcelviana/octavia/actions/runs/36349685258
+gates	pull_request	success	https://github.com/marcelviana/octavia/actions/runs/36349670976
+gates-web	pull_request	success	https://github.com/marcelviana/octavia/actions/runs/36349670859
+CI	pull_request	success	https://github.com/marcelviana/octavia/actions/runs/36349670906
+## gates-web 36349670859
+g-back	success	https://github.com/marcelviana/octavia/actions/runs/36349670859/job/108705761815
+g-palco	success	https://github.com/marcelviana/octavia/actions/runs/36349670859/job/108705761862
+g-tok	success	https://github.com/marcelviana/octavia/actions/runs/36349670859/job/108705761885
+g-faixa	success	https://github.com/marcelviana/octavia/actions/runs/36349670859/job/108705761925
+## gates-web 36349685258
+g-back	success	https://github.com/marcelviana/octavia/actions/runs/36349685258/job/108705807576
+g-tok	success	https://github.com/marcelviana/octavia/actions/runs/36349685258/job/108705807716
+g-faixa	success	https://github.com/marcelviana/octavia/actions/runs/36349685258/job/108705807721
+g-palco	success	https://github.com/marcelviana/octavia/actions/runs/36349685258/job/108705807747
+## g-palco no Linux (36349670859):
+g-palco	G-palco — nenhum arquivo, import, símbolo ou texto do corte da I1-PR3	2026-09-27T20:53:22.1516131Z MORRE: 69 caminhos · SIMBOLO: 7 · TEXTO: 6
+g-palco	G-palco — nenhum arquivo, import, símbolo ou texto do corte da I1-PR3	2026-09-27T20:53:22.1516784Z ## 1. MORRE — o arquivo existe
+g-palco	G-palco — nenhum arquivo, import, símbolo ou texto do corte da I1-PR3	2026-09-27T20:53:22.1519004Z   ✓ nenhum
+g-palco	G-palco — nenhum arquivo, import, símbolo ou texto do corte da I1-PR3	2026-09-27T20:53:22.1519761Z ## 2. MORRE — o arquivo é importado
+g-palco	G-palco — nenhum arquivo, import, símbolo ou texto do corte da I1-PR3	2026-09-27T20:53:22.2233973Z   ✓ nenhum
+g-palco	G-palco — nenhum arquivo, import, símbolo ou texto do corte da I1-PR3	2026-09-27T20:53:22.2235250Z ## 3. SIMBOLO — símbolo morto dentro de arquivo que fica
+g-palco	G-palco — nenhum arquivo, import, símbolo ou texto do corte da I1-PR3	2026-09-27T20:53:22.2371541Z   ✓ nenhum
+g-palco	G-palco — nenhum arquivo, import, símbolo ou texto do corte da I1-PR3	2026-09-27T20:53:22.2380492Z ## 4. TEXTO — referência a rota/arquivo morto
+g-palco	G-palco — nenhum arquivo, import, símbolo ou texto do corte da I1-PR3	2026-09-27T20:53:22.2643412Z   ✓ nenhum
+g-palco	G-palco — nenhum arquivo, import, símbolo ou texto do corte da I1-PR3	2026-09-27T20:53:22.2652609Z G-palco: PASSA — 0 ocorrências
+# o workflow `native` NÃO disparou.

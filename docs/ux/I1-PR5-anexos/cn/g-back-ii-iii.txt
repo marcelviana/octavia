@@ -1,0 +1,23 @@
+# CN (ii) e (iii) na árvore de trabalho, com mutação temporária desfeita logo depois:
+#   lib/cn-gback-novo.ts (novo) importado por app/api/health/route.ts; declaração órfã de lib/logger.ts
+$ cat decl-cn
+gback: scripts/gates-web/g-back-nucleo.txt — congelado novo (CN)
+gback: lib/logger.ts — declarado sem mudar (CN da órfã)
+$ GATES_WEB_DECL=decl-cn sh scripts/gates-web/g-back.sh origin/main WORKTREE
+G-back — base 73612be · head WORKTREE
+núcleo: congelado 39 · derivação BASE 39 · HEAD 40 · união 41
+declarações gback: 2 caminho(s)
+
+## (i) arquivo do núcleo que mudou
+  ✗ app/api/health/route.ts (modificado) — SEM DECLARAÇÃO
+  ✗ lib/cn-gback-novo.ts (novo) — SEM DECLARAÇÃO
+  ✓ scripts/gates-web/g-back-nucleo.txt (novo) — declarado
+## (ii) arquivo novo no alcance (derivação do HEAD fora do congelado)
+  ✗ lib/cn-gback-novo.ts — FORA DO CONGELADO E SEM DECLARAÇÃO
+## (iii) declaração órfã (gback: de arquivo que não mudou)
+  ✗ lib/logger.ts — DECLARADO E NÃO MUDOU
+
+G-back: REPROVA — 4 ocorrência(s)
+exit 1
+$ git status --short -- app lib   (depois de desfazer)
+(vazio = limpo)

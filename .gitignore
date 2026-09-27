@@ -79,3 +79,8 @@ docs/ux/fase-d/traces/
 # Artefatos gerados da auditoria (logs de comando e grafos do dependency-cruiser) — os .md de .audit/ ficam
 .audit/logs/
 .audit/*.json
+
+# G-faixa (I1-PR5, div. 616/632): o perfil do navegador com a sessão (G_FAIXA_PERFIL).
+# Mora FORA da árvore ($HOME/.octavia-g-faixa-perfil, scripts/gates-web/COMO-RODAR.md) e a
+# config recusa um caminho dentro dela; a linha guarda o nome documentado, se ele cair aqui.
+.octavia-g-faixa-perfil/
