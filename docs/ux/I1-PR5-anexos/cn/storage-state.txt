@@ -1,0 +1,8 @@
+$ node docs/ux/I1-PR5-anexos/storage-state.mjs http://localhost:3000     # next dev local, SEM .env (Firebase desligado), sem login
+Chromium 140.0.7339.16 · base http://localhost:3000
+(0) IndexedDB que o app cria em /login sem Firebase configurado: []
+(1) storageState() sem a opção — origens com indexedDB: 0
+(1) storageState({ indexedDB: true }) — bancos da origem: [{"nome":"firebaseLocalStorageDb","versao":1,"stores":[{"nome":"firebaseLocalStorage","keyPath":"fbase_key","registros":1}]}]
+(1) cookie firebase-session no estado: [{"nome":"firebase-session","httpOnly":true,"valor":"cookie-FALSO"}]
+(2) contexto NOVO com esse storageState — o registro volta igual: true [{"fbase_key":"firebase:authUser:CHAVE-FALSA:[DEFAULT]","value":{"uid":"uid-falso","stsTokenManager":{"refreshToken":"refresh-FALSO","accessToken":"id-FALSO","expirationTime":1}}}]
+(2) o cookie volta: ["cookie-FALSO"]

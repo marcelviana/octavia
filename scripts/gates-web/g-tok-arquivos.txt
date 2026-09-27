@@ -1,0 +1,3 @@
+# G-tok (ii) — os arquivos redesenhados do web (I1-PR5; I1-D13, I1-D17).
+# Um caminho por linha, da raiz. Vazio na I1-PR5: cada PR de superfície acrescenta os seus,
+# e a partir dali nenhum literal de cor/fonte/espaçamento nem texto em inglês entra neles.

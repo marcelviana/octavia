@@ -1,0 +1,50 @@
+# G-faixa nas três superfícies públicas da main (73612be + o instrumento desta PR, nenhuma linha de app/), sem sessão,
+# contra o next dev local SEM .env (Firebase desligado). A saída vai para tests/gates-web/medicoes/cn-main/.
+$ G_FAIXA_BASE_URL=http://localhost:3000 G_FAIXA_SUPERFICIES=login,landing,privacy-policy G_FAIXA_SAIDA=tests/gates-web/medicoes/cn-main pnpm exec playwright test -c playwright.g-faixa.config.ts scripts/gates-web/g-faixa-medir.ts
+G-faixa · rodada 2026-09-27T17:56:53.609Z · base http://localhost:3000 · saída tests/gates-web/medicoes/cn-main
+
+Running 9 tests using 1 worker
+
+  ✓  1 [C-1138] › scripts/gates-web/g-faixa-medir.ts:96:7 › login (3.4s)
+  ✓  2 [C-1138] › scripts/gates-web/g-faixa-medir.ts:96:7 › landing (3.1s)
+  ✓  3 [C-1138] › scripts/gates-web/g-faixa-medir.ts:96:7 › privacy-policy (3.1s)
+  ✓  4 [B-711] › scripts/gates-web/g-faixa-medir.ts:96:7 › login (3.1s)
+  ✓  5 [B-711] › scripts/gates-web/g-faixa-medir.ts:96:7 › landing (3.1s)
+  ✓  6 [B-711] › scripts/gates-web/g-faixa-medir.ts:96:7 › privacy-policy (3.1s)
+  ✓  7 [A-411] › scripts/gates-web/g-faixa-medir.ts:96:7 › login (3.1s)
+  ✓  8 [A-411] › scripts/gates-web/g-faixa-medir.ts:96:7 › landing (3.1s)
+  ✓  9 [A-411] › scripts/gates-web/g-faixa-medir.ts:96:7 › privacy-policy (3.1s)
+G-faixa · landing · 411: (e)=0 · (b)=0 · (d′)=7 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0 (faixa A: contado à parte)
+G-faixa · landing · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+G-faixa · landing · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+G-faixa · login · 411: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0 (faixa A: contado à parte)
+G-faixa · login · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+G-faixa · login · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+G-faixa · privacy-policy · 411: (e)=0 · (b)=0 · (d′)=20 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0 (faixa A: contado à parte)
+G-faixa · privacy-policy · 711: (e)=0 · (b)=0 · (d′)=4 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+G-faixa · privacy-policy · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+G-faixa · gravado: login.json, landing.json, privacy-policy.json → /Users/marcelviana/projects/octavia-i1-pr5/tests/gates-web/medicoes/cn-main
+
+  9 passed (29.9s)
+exit 0
+
+$ node scripts/gates-web/g-faixa-veredito.mjs tests/gates-web/medicoes/cn-main
+G-faixa (veredito) — tests/gates-web/medicoes/cn-main: 3 medição(ões)
+
+## landing (/) — rodada 2026-09-27T17:56:53.609Z · base http://localhost:3000 · commit 73612be4d5d26536e28983eaf803e35394318182+sujo
+  base · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+  base · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+  base · 411 (faixa A — contado à parte): (e)=0 · (b)=0 · (d′)=7 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+
+## login (/login) — rodada 2026-09-27T17:56:53.609Z · base http://localhost:3000 · commit 73612be4d5d26536e28983eaf803e35394318182+sujo
+  base · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+  base · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+  base · 411 (faixa A — contado à parte): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+
+## privacy-policy (/privacy-policy) — rodada 2026-09-27T17:56:53.609Z · base http://localhost:3000 · commit 73612be4d5d26536e28983eaf803e35394318182+sujo
+  base · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+  base · 711: (e)=0 · (b)=0 · (d′)=4 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+  base · 411 (faixa A — contado à parte): (e)=0 · (b)=0 · (d′)=20 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+
+G-faixa: PASSA
+exit 0

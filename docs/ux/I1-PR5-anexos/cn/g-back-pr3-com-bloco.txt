@@ -1,0 +1,30 @@
+$ gh pr view 337 --json body -q .body | sh scripts/gates-web/gates-web-decl.sh > decl337
+gback: app/api/proxy/route.ts — removido, I1-D18
+gback: next.config.mjs — redirects I1-D22; padrão /api sem (?!proxy), aval 1
+gback: next.config.mjs — redirects permanent: true
+gback: lib/content-service-server.ts — getSetlistByIdServer removido, I1-D23
+gback: lib/protected-routes.ts — /performance, /settings, /profile removidos, I1-D23/div. 505
+gback: lib/security-headers.ts — ramo /performance e 'blob:' removidos, I1-D23/D24
+gback: lib/__tests__/security-headers-csp.test.ts — frame-src 'blob:' → 'none', I1-D24 (a PR-2 reabre)
+grotas: tests/gates/g-rotas-protegidas.test.ts — PAGE_INVOCATIONS 8 → 5, 17 → 11 testes, I1-D25
+gpalco: docs/ux/I1-PR3-anexos/lista-do-corte.txt — lista fechada do corte
+
+$ GATES_WEB_DECL=decl337 sh scripts/gates-web/g-back.sh 089f72c c68170b     # COM o bloco original da #337
+G-back — base 089f72c · head c68170b
+núcleo: congelado 39 · derivação BASE 41 · HEAD 39 · união 42
+declarações gback: 6 caminho(s)
+
+## (i) arquivo do núcleo que mudou
+  ✓ app/api/proxy/route.ts (removido) — declarado
+  ✓ lib/content-service-server.ts (modificado) — declarado
+  ✓ lib/protected-routes.ts (modificado) — declarado
+  ✓ lib/security-headers.ts (modificado) — declarado
+  ✓ next.config.mjs (modificado) — declarado
+## (ii) arquivo novo no alcance (derivação do HEAD fora do congelado)
+  ✓ nenhum
+## (iii) declaração órfã (gback: de arquivo que não mudou)
+  · lib/__tests__/security-headers-csp.test.ts — mudou, fora do núcleo: registro (não reprova)
+  ✓ nenhuma
+
+G-back: PASSA
+exit 0

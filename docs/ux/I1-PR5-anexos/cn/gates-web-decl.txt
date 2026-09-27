@@ -1,0 +1,33 @@
+$ printf '```gates-web\ngback: lib/logger.ts\n```\n' | sh scripts/gates-web/gates-web-decl.sh
+gates-web-decl: gback sem "<caminho> — <razão>": lib/logger.ts (linha 2 do corpo)
+exit 1
+$ printf '```gates-web\ngback: lib/logger.ts — \n```\n' | sh scripts/gates-web/gates-web-decl.sh
+gates-web-decl: gback sem razão: lib/logger.ts —  (linha 2 do corpo)
+exit 1
+$ printf '```gates-web\ngtok: x\n```\n' | sh scripts/gates-web/gates-web-decl.sh
+gates-web-decl: chave desconhecida: gtok (linha 2 do corpo)
+exit 1
+$ printf '```gates-web\ngback: a — b\n```\n' | sh scripts/gates-web/gates-web-decl.sh
+gback: a — b
+exit 0
+$ (bloco não fechado)
+gates-web-decl: bloco ```gates-web não fechado (linha 2 do corpo)
+gback: a — b
+exit 1
+$ (dois blocos)
+gates-web-decl: mais de um bloco ```gates-web (linha 3 do corpo)
+exit 1
+
+# I1-D20, local: um corpo com os DOIS blocos — cada extrator lê só o seu
+```gates
+# nada do nativo
+```
+
+```gates-web
+gback: tsconfig.json — exclui docs/**, div. 516
+```
+$ … | sh apps/native/scripts/gates-decl.sh
+exit 0 (0 linhas)
+$ … | sh scripts/gates-web/gates-web-decl.sh
+gback: tsconfig.json — exclui docs/**, div. 516
+exit 0

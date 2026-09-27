@@ -1,0 +1,71 @@
+# tsconfig.json: "docs/**" no exclude (herança da I1-PR3, div. 516). Mesmo .next (o do pnpm build) nos dois lados.
+$ git diff tsconfig.json
+diff --git a/tsconfig.json b/tsconfig.json
+index 10a3d95..57cdda7 100644
+--- a/tsconfig.json
++++ b/tsconfig.json
+@@ -41,6 +41,7 @@
+     "**/*.test.tsx",
+     "**/__mocks__/**",
+     "apps/**",
+-    "packages/**"
++    "packages/**",
++    "docs/**"
+   ]
+ }
+
+$ tsc -p tsconfig.json --noEmit --listFilesOnly | grep -v node_modules | wc -l      # antes (tsconfig da main) · depois
+antes: 239 arquivos · erros tsc: 0 (exit 0)
+depois: 233 arquivos · erros tsc: 0 (exit 0)
+  dos quais em docs/: antes 6 · depois 0
+$ diff antes depois
+163,168d162
+< docs/ux/I1-PR1-anexos/cn/comum.ts
+< docs/ux/I1-PR1-anexos/cn/ramo-b.ts
+< docs/ux/I1-PR1-anexos/cn/ramo-c.ts
+< docs/ux/I1-PRECHECK-anexos/faseB/probe1.ts
+< docs/ux/I1-PRECHECK-anexos/faseB/probe2.ts
+< docs/ux/I1-PRECHECK-anexos/faseB/probe4.ts
+
+$ pnpm build   # antes (tsconfig da main) e depois — exit e tabela de rotas
+antes: 1 × '✓ Compiled successfully' · rotas: 27
+depois: 1 × '✓ Compiled successfully' · rotas: 27
+$ diff <(tabela de rotas antes) <(tabela de rotas depois)
+(vazio — idêntica)
+
+# a tabela (depois):
+Route (app)                                 Size  First Load JS
+┌ ƒ /                                      189 B         111 kB
+├ ƒ /_not-found                            988 B         103 kB
+├ ƒ /add-content                         1.36 kB         315 kB
+├ ƒ /api/auth/session                      178 B         103 kB
+├ ƒ /api/content                           178 B         103 kB
+├ ƒ /api/content/[id]                      178 B         103 kB
+├ ƒ /api/health                            178 B         103 kB
+├ ƒ /api/profile                           178 B         103 kB
+├ ƒ /api/setlists                          178 B         103 kB
+├ ƒ /api/setlists/[id]                     178 B         103 kB
+├ ƒ /api/setlists/[id]/songs               178 B         103 kB
+├ ƒ /api/setlists/[id]/songs/order         178 B         103 kB
+├ ƒ /api/setlists/songs/[songId]           178 B         103 kB
+├ ƒ /api/storage/delete                    178 B         103 kB
+├ ƒ /api/storage/list                      178 B         103 kB
+├ ƒ /api/storage/upload                    178 B         103 kB
+├ ƒ /content/[id]                         119 kB         429 kB
+├ ƒ /content/[id]/edit                    2.1 kB         253 kB
+├ ƒ /dashboard                           4.04 kB         302 kB
+├ ƒ /forgot-password                     4.07 kB         258 kB
+├ ƒ /library                             1.36 kB         315 kB
+├ ƒ /login                               4.97 kB         270 kB
+├ ƒ /privacy-policy                      1.69 kB         104 kB
+├ ƒ /setlists                            1.36 kB         315 kB
+├ ƒ /signup                              11.3 kB         295 kB
+├ ƒ /signup/confirm-email                2.57 kB         262 kB
+└ ƒ /verify-email                        2.88 kB         259 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/4509c6e4-881bd210f85ca13b.js  53.3 kB
+  ├ chunks/5586-bff491f129c489dd.js        46 kB
+  └ other shared chunks (total)          3.15 kB
+
+
+ƒ  (Dynamic)  server-rendered on demand

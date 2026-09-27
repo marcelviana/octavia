@@ -1,0 +1,116 @@
+# I1-PR5 (I1-D13, I1-D16, I1-D20): os quatro gates do web, um job cada.
+#
+#   g-back   — o backend do web não muda sem declaração (scripts/gates-web/g-back.sh);
+#              as exceções vêm do bloco ```gates-web``` do CORPO da PR, extraído pelo
+#              scripts/gates-web/gates-web-decl.sh — o ```gates``` do nativo e o
+#              apps/native/scripts/gates-decl.sh ficam intocados (I1-D20).
+#   g-palco  — o corte da I1-PR3 não volta (scripts/gates-web/g-palco.sh, lista em
+#              docs/ux/I1-PR3-anexos/lista-do-corte.txt).
+#   g-tok    — a folha congelada intacta (shasum -c do DESIGN-I1), os achados da
+#              conferência cobertos pelo erratas.json, os arquivos redesenhados sem
+#              literal de cor/fonte/espaçamento nem texto em inglês, e o CSS gerado
+#              igual à fonte (packages/identidade/test/css.test.ts).
+#   g-faixa  — SÓ O VEREDITO sobre os JSON commitados em tests/gates-web/medicoes/;
+#              a medição (Playwright) é local, nunca aqui (I1-D16).
+#
+# Roda em toda pull_request, inclusive `edited` (editar o corpo muda o que o G-back
+# afirma), e no push da `main`. Todos os jobs rodam em todo evento: um job pulado
+# por `if` no mesmo head apareceria SKIPPED e esconderia um vermelho anterior — a
+# razão do `gates.yml` (W4-b2). O corpo é lido PELA API (o payload de um re-run é
+# o corpo velho), como no `gates.yml`.
+#
+# Sem `paths`: gate que só roda quando o arquivo muda não vê o arquivo novo. E este
+# workflow NÃO está no `paths` do `native.yml` — mexer aqui não dispara APK.
+name: gates-web
+'on':
+  pull_request:
+    types:
+    - opened
+    - synchronize
+    - reopened
+    - edited
+  push:
+    branches:
+    - main
+permissions:
+  contents: read
+  pull-requests: read
+jobs:
+  g-back:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        ref: ${{ github.event.pull_request.head.sha || github.sha }}
+    - uses: pnpm/action-setup@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 22
+        cache: pnpm
+    - name: Install dependencies (o dependency-cruiser do grafo)
+      run: pnpm install --frozen-lockfile
+    - name: A BASE — o ponto de ramificação
+      run: |
+        set -e
+        ALVO="${{ github.event.pull_request.base.sha }}"
+        if [ -z "$ALVO" ]; then ALVO=$(git rev-parse HEAD~1); fi
+        BASE=$(git merge-base "$ALVO" HEAD)
+        echo "BASE=$BASE" >> "$GITHUB_ENV"
+        echo "base=$BASE  head=$(git rev-parse HEAD)"
+    - name: As declarações — o bloco ```gates-web``` do corpo da PR (I1-D20)
+      env:
+        GH_TOKEN: ${{ github.token }}
+        PR: ${{ github.event.pull_request.number }}
+      run: |
+        set -e
+        if [ -n "$PR" ]; then
+          gh api "repos/$GITHUB_REPOSITORY/pulls/$PR" --jq '.body // ""' > "$RUNNER_TEMP/corpo"
+        else
+          gh api "repos/$GITHUB_REPOSITORY/commits/$GITHUB_SHA/pulls" \
+            --jq "[.[] | select(.merge_commit_sha == \"$GITHUB_SHA\")][0].body // \"\"" > "$RUNNER_TEMP/corpo"
+        fi
+        sh scripts/gates-web/gates-web-decl.sh < "$RUNNER_TEMP/corpo" > "$RUNNER_TEMP/decl"
+        echo "GATES_WEB_DECL=$RUNNER_TEMP/decl" >> "$GITHUB_ENV"
+        echo "declarações ($(grep -c . "$RUNNER_TEMP/decl" || true) linhas):"
+        sed 's/^/  /' "$RUNNER_TEMP/decl"
+    - name: G-back — o núcleo do backend do web (congelado ∪ grafo da BASE ∪ grafo do HEAD)
+      run: sh scripts/gates-web/g-back.sh "$BASE" WORKTREE
+
+  g-palco:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 22
+    - name: G-palco — nenhum arquivo, import, símbolo ou texto do corte da I1-PR3
+      run: sh scripts/gates-web/g-palco.sh
+
+  g-tok:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: pnpm/action-setup@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 22
+        cache: pnpm
+    - name: Install dependencies (o tsx que roda o conferir.mjs; o Vitest do css.test)
+      run: pnpm install --frozen-lockfile
+    - name: A folha congelada — shasum -c do DESIGN-I1
+      run: cd docs/ux/DESIGN-I1 && shasum -a 256 -c SHA256SUMS
+    - name: G-tok (i) a folha × erratas.json · (ii) os arquivos redesenhados
+      run: node scripts/gates-web/g-tok.mjs
+    - name: G-tok — CSS gerado == fonte (packages/identidade)
+      run: pnpm exec vitest run --project identidade packages/identidade/test/css.test.ts
+
+  g-faixa:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 22
+    - name: G-faixa — o veredito sobre os JSON commitados (a medição é local, I1-D16)
+      run: node scripts/gates-web/g-faixa-veredito.mjs tests/gates-web/medicoes

@@ -41,6 +41,7 @@
     "**/*.test.tsx",
     "**/__mocks__/**",
     "apps/**",
-    "packages/**"
+    "packages/**",
+    "docs/**"
   ]
 }

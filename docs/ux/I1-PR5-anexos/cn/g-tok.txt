@@ -1,0 +1,103 @@
+# ===== G-tok (i) e (ii) na árvore da PR =====
+$ node scripts/gates-web/g-tok.mjs
+## (i) a folha — conferir.mjs × erratas.json
+  ✓ I1-E1 (estado) cobre 1
+  ✓ I1-E2 (estado) cobre 1
+  ✓ I1-E2 (estado) cobre 1
+  ✓ I1-E3 (forma) cobre 1
+  ✓ I1-E4 (inventario-sem-px) cobre 6
+  ✓ I1-E5 (declaracao) cobre 8
+  ✓ I1-E6 (forma) cobre 1
+  ✓ decisao-588 (nome-icone) cobre 1
+  ✓ decisao-589 (forma) cobre 1
+  achados do conferir: 19 · cobertos: 19 · descobertos: 0 · erratas: 8 · órfãs: 0
+## (ii) arquivos redesenhados — scripts/gates-web/g-tok-arquivos.txt
+  (lista vazia — nenhum arquivo redesenhado ainda)
+
+G-tok: PASSA
+exit 0
+
+# ===== CN (ii): a fixture NA lista =====
+$ echo tests/gates-web/fixtures/g-tok-cn.tsx >> scripts/gates-web/g-tok-arquivos.txt
+$ node scripts/gates-web/g-tok.mjs --so-arquivos
+## (ii) arquivos redesenhados — scripts/gates-web/g-tok-arquivos.txt
+  ✗ tests/gates-web/fixtures/g-tok-cn.tsx:8 [cor] "#ff0000" — use a custom property de app/styles/identidade.css
+  ✗ tests/gates-web/fixtures/g-tok-cn.tsx:4 [tamanho de fonte] "font-size: 14px" — use a custom property de app/styles/identidade.css
+  ✗ tests/gates-web/fixtures/g-tok-cn.tsx:10 [inglês, literal JSX {'…'}] "Loading..." ← termo "loading"
+  arquivos: 1 · literais de identidade acusados: 2 · textos examinados: 1 · vocabulário: 109 · isenções: 9
+
+G-tok: REPROVA — 3 ocorrência(s)
+exit 1
+
+# ===== CN (ii): a fixture FORA da lista (lista restaurada) =====
+$ node scripts/gates-web/g-tok.mjs --so-arquivos
+## (ii) arquivos redesenhados — scripts/gates-web/g-tok-arquivos.txt
+  (lista vazia — nenhum arquivo redesenhado ainda)
+
+G-tok: PASSA
+exit 0
+
+# ===== CN (i): errata tirada (I1-E5 removida do erratas.json) → 8 achados descobertos =====
+$ node scripts/gates-web/g-tok.mjs --so-folha
+## (i) a folha — conferir.mjs × erratas.json
+  ✓ I1-E1 (estado) cobre 1
+  ✓ I1-E2 (estado) cobre 1
+  ✓ I1-E2 (estado) cobre 1
+  ✓ I1-E3 (forma) cobre 1
+  ✓ I1-E4 (inventario-sem-px) cobre 6
+  ✓ I1-E6 (forma) cobre 1
+  ✓ decisao-588 (nome-icone) cobre 1
+  ✓ decisao-589 (forma) cobre 1
+  ✗ ACHADO DESCOBERTO: (b) 0-linha-de-aviso: 20 → "entrelinha da LinhaDeAviso" não resolve em token, derivado ou literal com origem
+  ✗ ACHADO DESCOBERTO: (b) 1-auth: 20 → "entrelinha da LinhaDeAviso" não resolve em token, derivado ou literal com origem
+  ✗ ACHADO DESCOBERTO: (b) 4-content-lista: 20 → "entrelinha da LinhaDeAviso" não resolve em token, derivado ou literal com origem
+  ✗ ACHADO DESCOBERTO: (b) 5-content-visualizacao: 20 → "entrelinha da LinhaDeAviso" não resolve em token, derivado ou literal com origem
+  ✗ ACHADO DESCOBERTO: (b) 6-content-editor: 20 → "entrelinha da LinhaDeAviso" não resolve em token, derivado ou literal com origem
+  ✗ ACHADO DESCOBERTO: (b) 7-upload: 20 → "entrelinha da LinhaDeAviso" não resolve em token, derivado ou literal com origem
+  ✗ ACHADO DESCOBERTO: (b) 8-setlists: 20 → "entrelinha da LinhaDeAviso" não resolve em token, derivado ou literal com origem
+  ✗ ACHADO DESCOBERTO: (b) README §2.3: 20 → "entrelinha da LinhaDeAviso" não resolve em token, derivado ou literal com origem
+  achados do conferir: 19 · cobertos: 11 · descobertos: 8 · erratas: 7 · órfãs: 0
+
+G-tok: REPROVA — 8 ocorrência(s)
+exit 1
+
+# ===== CN (i): errata órfã (entrada que não casa com achado nenhum) e n errado (I1-E4 com n=5) =====
+$ node scripts/gates-web/g-tok.mjs --so-folha
+## (i) a folha — conferir.mjs × erratas.json
+  ✓ I1-E1 (estado) cobre 1
+  ✓ I1-E2 (estado) cobre 1
+  ✓ I1-E2 (estado) cobre 1
+  ✓ I1-E3 (forma) cobre 1
+  ✗ I1-E4 (inventario-sem-px): casa 6 achado(s), declarado n=5 — /^\(b\) 2-landing: (inventário da folha declara [23] \("undefined"\), que não aparece como px no arquivo|[23] não está no README §2\.3|[23] → "undefined" não resolve em token, derivado ou literal com origem)$/
+  ✓ I1-E5 (declaracao) cobre 8
+  ✓ I1-E6 (forma) cobre 1
+  ✓ decisao-588 (nome-icone) cobre 1
+  ✓ decisao-589 (forma) cobre 1
+  ✗ CN-orfa (forma): ERRATA ÓRFÃ — /^\(c\) forma que não existe$/ não casa com nenhum achado
+  achados do conferir: 19 · cobertos: 19 · descobertos: 0 · erratas: 9 · órfãs: 1
+
+G-tok: REPROVA — 2 ocorrência(s)
+exit 1
+
+$ (restaurados) cmp erratas.json e g-tok-arquivos.txt com as cópias de antes do CN
+iguais
+
+# ===== o conferir.mjs pelo tsx dá a mesma saída que o saida.txt congelado (o corpo: o saida.txt tem a linha do comando no topo e a anotação no fim) =====
+$ pnpm exec tsx docs/ux/DESIGN-I1/conferencia/conferir.mjs > atual; sed -n 2,172p docs/ux/DESIGN-I1/conferencia/saida.txt > congelada; diff atual congelada
+diff vazio
+
+# ===== o conferir.mjs pelo node puro, como o cabeçalho dele manda (div. 613) =====
+$ node --no-warnings docs/ux/DESIGN-I1/conferencia/conferir.mjs
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/Users/marcelviana/projects/octavia-i1-pr5/apps/native/src/fontes' imported from /Users/marcelviana/projects/octavia-i1-pr5/apps/native/src/theme.ts
+exit 1
+
+# ===== informativo: o G-tok (ii) sobre três arquivos do web velho (não é CN; mostra que o gate morde o que existe hoje) =====
+$ G_TOK_ARQUIVOS=<components/auth/login-panel.tsx, components/setlist-manager.tsx, app/page.tsx> node scripts/gates-web/g-tok.mjs --so-arquivos | tail -3
+  arquivos: 3 · literais de identidade acusados: 359 · textos examinados: 83 · vocabulário: 109 · isenções: 9
+
+G-tok: REPROVA — 408 ocorrência(s)
+$ … | grep -o "\[[^]]*\]" | sed "s/, .*\]/]/" | sort | uniq -c
+ 215 [cor]
+ 116 [espaçamento]
+  49 [inglês]
+  28 [tamanho de fonte]

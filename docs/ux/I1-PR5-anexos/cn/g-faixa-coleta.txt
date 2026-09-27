@@ -1,0 +1,50 @@
+$ G_FAIXA_BASE_URL=http://localhost G_FAIXA_SUPERFICIES=nenhuma pnpm exec playwright test -c playwright.g-faixa.config.ts tests/gates-web/g-faixa-coleta.cn.ts --project B-711
+G-faixa · rodada 2026-09-27T17:55:38.830Z · base http://localhost · saída tests/gates-web/medicoes
+
+Running 2 tests using 1 worker
+
+{
+  "711": {
+    "e": [
+      "sem nó: Painel",
+      "sem nó: Biblioteca"
+    ],
+    "b": [
+      "página com rolagem horizontal: (página)",
+      "borda do contêiner: Adicionar",
+      "borda do viewport: Apagar setlist",
+      "conteúdo cortado no próprio nó: um aviso comprido que não cabe na linha"
+    ],
+    "saidas": {
+      "nomeAcessivel": 0,
+      "rolagem": 3
+    }
+  },
+  "1138": {
+    "e": [],
+    "b": [
+      "borda do contêiner: Adicionar",
+      "conteúdo cortado no próprio nó: um aviso comprido que não cabe na linha"
+    ],
+    "saidas": {
+      "nomeAcessivel": 0,
+      "rolagem": 3
+    }
+  }
+}
+  ✓  1 [B-711] › tests/gates-web/g-faixa-coleta.cn.ts:33:5 › coleta: (e), (b) e rolagem numa página sintética, em 1138 e 711 (135ms)
+folha 1-auth · AUTH-login: C 12 nós · B 12 nós
+  Octavia x=118 w=340
+  Entrar x=598 w=420
+  E-mail x=598 w=40
+  marcel@exemplo.com x=647 w=354
+  Senha x=598 w=41
+  Esqueci a senha x=913.9 w=104.1
+  •••••••• x=647 w=354
+  Entrar x=598 w=420
+desvio de 5 px no 1º nó → [{"k":"img:e5b3dfe4ee10#1","delta":[5,0,0,0]}]
+  ✓  2 [B-711] › tests/gates-web/g-faixa-coleta.cn.ts:57:5 › folha: a moldura C e a B de AUTH-login medidas; a folha contra si mesma dá 0 errata; 5 px de desvio dá 1 (158ms)
+G-faixa · gravado: nada → /Users/marcelviana/projects/octavia-i1-pr5/tests/gates-web/medicoes
+
+  2 passed (912ms)
+exit 0
