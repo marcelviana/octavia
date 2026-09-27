@@ -111,11 +111,7 @@ for (const sup of selecionadas()) {
       expect(controle, 'controle positivo do listener (div. 522)').not.toMatchObject({ controle2: 'AUSENTE' })
 
       let url: string | null = sup.rota
-      if (sup.resolver) {
-        await page.goto(new URL('/library', BASE).href, { waitUntil: 'domcontentloaded', timeout: 180_000 })
-        await assentar(page)
-        url = await sup.resolver(page)
-      }
+      if (sup.resolver) url = await sup.resolver(page, BASE)
       const estados: Record<string, { medicao?: unknown; folha?: unknown; pulado?: string }> = {}
       for (const [id, est] of Object.entries(sup.estados)) {
         if (!url) { estados[id] = { pulado: 'a rota não resolveu (ex.: nenhum content na conta)' }; continue }

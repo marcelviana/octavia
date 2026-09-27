@@ -31,6 +31,11 @@ export default async function preparar(_config: FullConfig): Promise<() => Promi
   const perfil = process.env.G_FAIXA_PERFIL
   const querSessao = selecionadas().some((s) => s.sessao)
   console.log(`G-faixa · rodada ${process.env.G_FAIXA_RODADA} · base ${new URL(base).origin} · saída ${path.relative(process.cwd(), saida) || '.'}`)
+  // o servidor responde? (sem isto, a 1ª rodada do CN morreu num stack do page.goto: ERR_CONNECTION_REFUSED)
+  if (selecionadas().length) {
+    const ok = await fetch(new URL('/api/health', base), { signal: AbortSignal.timeout(180_000) }).then((r) => r.ok, () => false)
+    if (!ok) throw new Error(`G-faixa: nada responde em ${new URL('/api/health', base).href} — suba o servidor (pnpm dev) e rode de novo. Nenhum navegador foi aberto.`)
+  }
 
   if (querSessao && !perfil) {
     console.log('G-faixa · sem G_FAIXA_PERFIL: as superfícies com sessão ficam de fora nesta rodada (skip, com a razão no relatório)')
@@ -60,6 +65,9 @@ export default async function preparar(_config: FullConfig): Promise<() => Promi
     for (const [id, lista] of porSup) {
       const junto = juntar(lista)
       fs.writeFileSync(path.join(saida, `${id}.json`), JSON.stringify(junto, null, 1) + '\n')
+      // estado não medido não some do resumo (1ª rodada do CN: o `content` sumiu calado, div. 629)
+      for (const [eid, e] of Object.entries(junto.estados as Record<string, { pulado?: string }>))
+        if (e.pulado) console.log(`G-faixa · ${id} · ${eid}: NÃO MEDIDO — ${e.pulado}`)
       const r = resumo(junto as never) as Record<string, { e: number; b: number; dl: number; errata: number; nomeAcessivel: number; rolagem: number; reprova: boolean }>
       for (const [L, t] of Object.entries(r))
         console.log(`G-faixa · ${id} · ${L}: (e)=${t.e} · (b)=${t.b} · (d′)=${t.dl} · errata candidata=${t.errata} · saídas: nome-acessível=${t.nomeAcessivel} rolagem=${t.rolagem}${t.reprova ? '' : ' (faixa A: contado à parte)'}`)

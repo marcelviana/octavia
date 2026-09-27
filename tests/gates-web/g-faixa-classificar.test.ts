@@ -60,6 +60,14 @@ describe('G-faixa — (e), (d′) e as saídas contra 1138', () => {
     expect(c['711'].reprova).toBe(true)
     expect(c['1138'].e).toEqual([]) // a referência não se compara consigo
   })
+  it('o nó existe mas perdeu parte do texto (chave mudou): (e) "texto some do nó", não "sem nó"; texto trocado do mesmo tamanho: (d′)', () => {
+    const card = (k: string, n: number) => ({ ...no(k, 10, 10, 600, 60), role: 'button', tag: 'div', n })
+    const r = med(1138, [card('card-completo', 48), card('rotulo-a', 5)])
+    const b = med(711, [card('card-sem-data', 36), card('rotulo-b', 5)])
+    const c = classificarEstado({ larguras: { 1138: r, 711: b } })
+    expect(c['711'].e).toEqual([{ k: 'card-completo', tipo: 'texto some do nó', n: [48, 36] }])
+    expect(c['711'].dl).toMatchObject([{ k: 'rotulo-a', texto: 'trocado' }])
+  })
   it('a faixa A (411) é contada à parte: reprova=false', () => {
     const c = classificarEstado({ larguras: { 1138: ref, 411: med(411, []) } })
     expect(c['411'].e).toHaveLength(4)

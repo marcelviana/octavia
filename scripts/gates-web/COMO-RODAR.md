@@ -10,8 +10,10 @@ o instrumento não mede). O executor não faz login nem abre `.env*`; esta parte
 
 1. Na árvore `../octavia-i1-pr5` (branch `i1/pr5-gates-web` — é a `main` `73612be` mais o
    instrumento; nenhuma linha de `app/`, `components/`, `lib/` mudou), com o seu `.env.local`
-   copiado para lá (passo seu), suba o servidor: **`pnpm dev`** (porta 3000; `next start` não
-   serve em http local, div. 570 da I1-PR3).
+   copiado para lá (passo seu), suba o servidor num terminal que **fica aberto**: **`pnpm dev`**
+   (porta 3000; `next start` não serve em http local, div. 570 da I1-PR3). Espere o `✓ Ready`.
+   Sem servidor, o comando abaixo para na hora com *"nada responde em …/api/health"* (a 1ª rodada,
+   2026-09-27, morreu em `ERR_CONNECTION_REFUSED`: não havia servidor na porta 3000).
 2. Em outro terminal, na mesma árvore, **o comando** (uma linha):
 
    ```bash

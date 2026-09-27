@@ -73,11 +73,24 @@ export function classificarEstado(estado) {
     if (refK && L !== REFERENCIA) {
       const aqui = porK(med.nos)
       const nomes = new Set(med.nos.filter(temArea).map((n) => n.h_nome).filter(Boolean))
+      // Par ESTRUTURAL (div. 630): a chave muda quando o texto do nó muda, e um controle que só
+      // perdeu parte do texto (o `hidden md:flex` dentro do card) viraria "sem nó". Sem par pela
+      // chave, o nó de mesmo papel+tag na mesma ordem, que também ficou sem par, é o mesmo nó.
+      const grupo = (nos) => { const g = new Map(); for (const n of nos) { const t = `${n.role}|${n.tag}`; g.set(t, [...(g.get(t) ?? []), n]) } return g }
+      const gRef = grupo(ref.nos), gAqui = grupo(med.nos)
+      const semParAqui = new Set(med.nos.filter((n) => !refK.has(n.k)).map((n) => n.k))
+      const parEstrutural = (r) => {
+        const t = `${r.role}|${r.tag}`, i = gRef.get(t).indexOf(r), n = gAqui.get(t)?.[i]
+        return n && semParAqui.has(n.k) ? n : null
+      }
       for (const [k, r] of refK) {
         if (!temArea(r) || r.sr) continue
         const n = aqui.get(k)
         if (!n) {
+          const p = r.h_texto && nomes.has(r.h_texto) ? null : parEstrutural(r)
           if (r.h_texto && nomes.has(r.h_texto)) nomeAcessivel.push({ k })
+          else if (p && temArea(p) && p.n < r.n) e.push({ k, tipo: "texto some do nó", n: [r.n, p.n] })
+          else if (p && temArea(p)) dl.push({ k, de: [r.w, r.h], para: [p.w, p.h], texto: "trocado" })
           else e.push({ k, tipo: "sem nó", ref: [r.x, r.y, r.w, r.h] })
         } else if (!temArea(n)) e.push({ k, tipo: "largura zero", w: n.w, h: n.h })
         else if (n.h > r.h * 1.4 || (n.w < r.w - 1 && n.h > r.h + 1)) dl.push({ k, de: [r.w, r.h], para: [n.w, n.h] })

@@ -1,0 +1,100 @@
+# a linha de base do web velho: o veredito do G-faixa sobre tests/gates-web/medicoes/cn-main/ (CN da main, I1-D13).
+# públicas: executor, sem sessão (rodada 17:56Z); dashboard/library/setlists: Marcel, perfil logado (19:55Z); content: Marcel (20:47Z, depois do conserto do resolvedor, div. 629).
+$ node scripts/gates-web/g-faixa-veredito.mjs tests/gates-web/medicoes/cn-main
+G-faixa (veredito) — tests/gates-web/medicoes/cn-main: 7 medição(ões)
+
+## content (/content/[id]) — rodada 2026-09-27T20:47:52.371Z · base http://localhost:3000 · commit a3b58e99cccecf36a48fbe5ecb5e9af61885b9e8+sujo
+  base · 1138: (e)=0 · (b)=10 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+  ✗ base · 1138 (b) borda do viewport: heading:e8d370949eb4#1 <h3 heading, 11 car.>
+  ✗ base · 1138 (b) borda do viewport: texto:4a46a84458a9#1 <div texto, 255 car.>
+  ✗ base · 1138 (b) borda do viewport: heading:0b0029061b39#1 <h3 heading, 12 car.>
+  ✗ base · 1138 (b) borda do viewport: label:f05e840e0069#1 <label label, 5 car.>
+  ✗ base · 1138 (b) borda do viewport: texto:331e3081d465#1 <p texto, 19 car.>
+  ✗ base · 1138 (b) borda do viewport: texto:72026a1caa20#1 <span texto, 17 car.>
+  ✗ base · 1138 (b) borda do viewport: texto:1056838aaef8#1 <span texto, 18 car.>
+  ✗ base · 1138 (b) borda do viewport: heading:cbfaca9522d6#1 <h3 heading, 17 car.>
+  ✗ base · 1138 (b) borda do viewport: texto:d2ba55e554a6#1 <p texto, 30 car.>
+  ✗ base · 1138 (b) borda do viewport: texto:2e758a0f56bc#1 <p texto, 44 car.>
+  base · 711: (e)=4 · (b)=0 · (d′)=2 · errata candidata=0 · saídas: nome-acessível=0 rolagem=6
+  ✗ base · 711 (e) sem nó: heading:365feefa2df3#1 <h3 heading, 10 car.>
+  ✗ base · 711 (e) sem nó: button:67b696468610#1 <button button, 9 car.>
+  ✗ base · 711 (e) sem nó: button:6a1ad7ecd437#1 <button button, 8 car.>
+  ✗ base · 711 (e) sem nó: button:∅#3 <button button, 0 car.>
+  base · 411 (faixa A — contado à parte): (e)=4 · (b)=0 · (d′)=3 · errata candidata=0 · saídas: nome-acessível=0 rolagem=7
+    · base · 411 (faixa A — contado à parte) (e) sem nó: heading:365feefa2df3#1 <h3 heading, 10 car.>
+    · base · 411 (faixa A — contado à parte) (e) sem nó: button:67b696468610#1 <button button, 9 car.>
+    · base · 411 (faixa A — contado à parte) (e) sem nó: button:6a1ad7ecd437#1 <button button, 8 car.>
+    · base · 411 (faixa A — contado à parte) (e) sem nó: button:∅#3 <button button, 0 car.>
+
+## dashboard (/dashboard) — rodada 2026-09-27T19:55:37.373Z · base http://localhost:3000 · commit a3b58e99cccecf36a48fbe5ecb5e9af61885b9e8+sujo
+  base · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=1
+  base · 711: (e)=3 · (b)=0 · (d′)=2 · errata candidata=0 · saídas: nome-acessível=1 rolagem=6
+  ✗ base · 711 (e) sem nó: button:∅#1 <button button, 0 car.>
+  ✗ base · 711 (e) sem nó: heading:365feefa2df3#1 <h3 heading, 10 car.>
+  ✗ base · 711 (e) sem nó: button:6a1ad7ecd437#1 <button button, 8 car.>
+  base · 411 (faixa A — contado à parte): (e)=3 · (b)=0 · (d′)=2 · errata candidata=0 · saídas: nome-acessível=1 rolagem=11
+    · base · 411 (faixa A — contado à parte) (e) sem nó: button:∅#1 <button button, 0 car.>
+    · base · 411 (faixa A — contado à parte) (e) sem nó: heading:365feefa2df3#1 <h3 heading, 10 car.>
+    · base · 411 (faixa A — contado à parte) (e) sem nó: button:6a1ad7ecd437#1 <button button, 8 car.>
+
+## landing (/) — rodada 2026-09-27T17:56:53.609Z · base http://localhost:3000 · commit 73612be4d5d26536e28983eaf803e35394318182+sujo
+  base · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+  base · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+  base · 411 (faixa A — contado à parte): (e)=0 · (b)=0 · (d′)=7 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+
+## library (/library) — rodada 2026-09-27T19:55:37.373Z · base http://localhost:3000 · commit a3b58e99cccecf36a48fbe5ecb5e9af61885b9e8+sujo
+  base · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=51
+  base · 711: (e)=25 · (b)=0 · (d′)=2 · errata candidata=0 · saídas: nome-acessível=0 rolagem=30
+  ✗ base · 711 (e) sem nó: heading:365feefa2df3#1 <h3 heading, 10 car.>
+  ✗ base · 711 (e) sem nó: button:67b696468610#1 <button button, 9 car.>
+  ✗ base · 711 (e) sem nó: button:6a1ad7ecd437#1 <button button, 8 car.>
+  ✗ base · 711 (e) sem nó: button:546ebb8eb993#1 <button button, 7 car.>
+  ✗ base · 711 (e) texto some do nó: combobox:bec69036aa27#1 <button combobox, 4 car.>
+  ✗ base · 711 (e) texto some do nó: button:9286b0d2a091#1 <div button, 81 car.>
+  ✗ base · 711 (e) texto some do nó: button:c0b6825f9450#1 <div button, 48 car.>
+  ✗ base · 711 (e) texto some do nó: button:eb251c0cbeba#1 <div button, 48 car.>
+  ✗ base · 711 (e) texto some do nó: button:c3b74222db68#1 <div button, 46 car.>
+  ✗ base · 711 (e) texto some do nó: button:98820b35e401#1 <div button, 54 car.>
+  ✗ base · 711 (e) texto some do nó: button:98820b35e401#2 <div button, 54 car.>
+  ✗ base · 711 (e) texto some do nó: button:f865ae897c48#1 <div button, 52 car.>
+  ✗ … e mais 13 (e) em base · 711
+  base · 411 (faixa A — contado à parte): (e)=26 · (b)=0 · (d′)=3 · errata candidata=0 · saídas: nome-acessível=0 rolagem=36
+    · base · 411 (faixa A — contado à parte) (e) sem nó: heading:365feefa2df3#1 <h3 heading, 10 car.>
+    · base · 411 (faixa A — contado à parte) (e) sem nó: button:67b696468610#1 <button button, 9 car.>
+    · base · 411 (faixa A — contado à parte) (e) sem nó: button:6a1ad7ecd437#1 <button button, 8 car.>
+    · base · 411 (faixa A — contado à parte) (e) texto some do nó: button:546ebb8eb993#1 <button button, 7 car.>
+    · base · 411 (faixa A — contado à parte) (e) texto some do nó: combobox:bec69036aa27#1 <button combobox, 4 car.>
+    · base · 411 (faixa A — contado à parte) (e) sem nó: button:5410e096be64#1 <button button, 11 car.>
+    · base · 411 (faixa A — contado à parte) (e) texto some do nó: button:9286b0d2a091#1 <div button, 81 car.>
+    · base · 411 (faixa A — contado à parte) (e) texto some do nó: button:c0b6825f9450#1 <div button, 48 car.>
+    · base · 411 (faixa A — contado à parte) (e) texto some do nó: button:eb251c0cbeba#1 <div button, 48 car.>
+    · base · 411 (faixa A — contado à parte) (e) texto some do nó: button:c3b74222db68#1 <div button, 46 car.>
+    · base · 411 (faixa A — contado à parte) (e) texto some do nó: button:98820b35e401#1 <div button, 54 car.>
+    · base · 411 (faixa A — contado à parte) (e) texto some do nó: button:98820b35e401#2 <div button, 54 car.>
+    · … e mais 14
+
+## login (/login) — rodada 2026-09-27T17:56:53.609Z · base http://localhost:3000 · commit 73612be4d5d26536e28983eaf803e35394318182+sujo
+  base · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+  base · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+  base · 411 (faixa A — contado à parte): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+
+## privacy-policy (/privacy-policy) — rodada 2026-09-27T17:56:53.609Z · base http://localhost:3000 · commit 73612be4d5d26536e28983eaf803e35394318182+sujo
+  base · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+  base · 711: (e)=0 · (b)=0 · (d′)=4 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+  base · 411 (faixa A — contado à parte): (e)=0 · (b)=0 · (d′)=20 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+
+## setlists (/setlists) — rodada 2026-09-27T19:55:37.373Z · base http://localhost:3000 · commit a3b58e99cccecf36a48fbe5ecb5e9af61885b9e8+sujo
+  base · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+  base · 711: (e)=4 · (b)=0 · (d′)=2 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+  ✗ base · 711 (e) sem nó: button:∅#1 <button button, 0 car.>
+  ✗ base · 711 (e) sem nó: heading:365feefa2df3#1 <h3 heading, 10 car.>
+  ✗ base · 711 (e) sem nó: button:67b696468610#1 <button button, 9 car.>
+  ✗ base · 711 (e) sem nó: button:6a1ad7ecd437#1 <button button, 8 car.>
+  base · 411 (faixa A — contado à parte): (e)=4 · (b)=0 · (d′)=2 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0
+    · base · 411 (faixa A — contado à parte) (e) sem nó: button:∅#1 <button button, 0 car.>
+    · base · 411 (faixa A — contado à parte) (e) sem nó: heading:365feefa2df3#1 <h3 heading, 10 car.>
+    · base · 411 (faixa A — contado à parte) (e) sem nó: button:67b696468610#1 <button button, 9 car.>
+    · base · 411 (faixa A — contado à parte) (e) sem nó: button:6a1ad7ecd437#1 <button button, 8 car.>
+
+G-faixa: REPROVA — 46 ocorrência(s)
+exit 1

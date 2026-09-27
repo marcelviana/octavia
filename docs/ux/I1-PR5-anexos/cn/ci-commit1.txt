@@ -1,0 +1,33 @@
+# CI do commit 1 (a3b58e9), PR #340 — o corpo tem os DOIS blocos (```gates``` vazio e ```gates-web```). Leitura única depois de concluído.
+$ gh run list --branch i1/pr5-gates-web
+gates	pull_request	success	https://github.com/marcelviana/octavia/actions/runs/36339237181
+gates-web	pull_request	failure	https://github.com/marcelviana/octavia/actions/runs/36339237239
+CI	pull_request	success	https://github.com/marcelviana/octavia/actions/runs/36339237185
+# o workflow `native` NÃO disparou (a PR não toca nenhum caminho do paths dele).
+
+# CN da I1-D20 — gates-nativos com um bloco ```gates-web``` no corpo: VERDE
+gates-nativos	success	https://github.com/marcelviana/octavia/actions/runs/36339237181/job/108675926973
+^[[36;1mecho "declarações ($(grep -c . "$RUNNER_TEMP/decl" || true) linhas):"^[[0m
+declarações (0 linhas):
+declarações: do corpo da PR (GATES_DECL=/home/runner/work/_temp/decl)
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+  G1b: só adição ✓
+  G2: antes ⊆ depois ✓
+G3 — declarações: do corpo da PR (GATES_DECL=/home/runner/work/_temp/decl)
+  G3: nenhuma linha sumiu ✓
+telas.html: OK
+icones.html: OK
+telas.pdf: OK
+telas.html: OK
+telas.pdf: OK
+telas.html: OK
+telas.pdf: OK
+
+# gates-web no commit 1
+g-faixa	success	https://github.com/marcelviana/octavia/actions/runs/36339237239/job/108675927141
+g-palco	failure	https://github.com/marcelviana/octavia/actions/runs/36339237239/job/108675927250
+g-tok	success	https://github.com/marcelviana/octavia/actions/runs/36339237239/job/108675927269
+g-back	success	https://github.com/marcelviana/octavia/actions/runs/36339237239/job/108675927391
+# g-palco falhou no Linux antes de medir (div. 631):
+mktemp: too few X's in template ‘g-palco’
+##[error]Process completed with exit code 1.

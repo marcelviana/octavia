@@ -25,7 +25,7 @@ export interface Superficie {
   id: string
   /** a rota; `resolver` a troca por uma URL concreta (ex.: o id de um content) */
   rota: string
-  resolver?: (page: Page) => Promise<string | null>
+  resolver?: (page: Page, base: URL) => Promise<string | null>
   sessao: boolean
   publica: boolean
   /** a pasta da folha em docs/ux/DESIGN-I1 */
@@ -34,13 +34,21 @@ export interface Superficie {
   estados: Record<string, Estado>
 }
 
-/** o primeiro `/content/<id>` da biblioteca (sem discovery.json: a conta é a de quem logou no perfil) */
-async function primeiroContent(page: Page): Promise<string | null> {
-  const href = await page.evaluate(() => {
-    const a = [...document.querySelectorAll<HTMLAnchorElement>('a[href^="/content/"]')].find((x) => /^\/content\/[^/?#]+$/.test(x.getAttribute('href') ?? ''))
-    return a?.getAttribute('href') ?? null
-  })
-  return href
+/**
+ * O primeiro `/content/<id>` da conta, sem discovery.json. Os cards da `/library` abrem o content
+ * por `onClick` (`router.push`), sem `<a href>`, e têm Apagar/Editar dentro — clicar é arriscado
+ * (div. 629). O id vem da resposta do `GET /api/content` que a própria `/library` faz: só o `id`,
+ * em memória; o corpo não é gravado (tem título de música).
+ */
+async function primeiroContent(page: Page, base: URL): Promise<string | null> {
+  const resposta = page.waitForResponse(
+    (r) => new URL(r.url()).pathname === '/api/content' && r.request().method() === 'GET' && r.ok(),
+    { timeout: 180_000 },
+  )
+  await page.goto(new URL('/library', base).href, { waitUntil: 'domcontentloaded', timeout: 180_000 })
+  const corpo = (await (await resposta).json().catch(() => null)) as { data?: { id?: unknown }[] } | null
+  const id = corpo?.data?.find((c) => typeof c.id === 'string')?.id
+  return typeof id === 'string' ? `/content/${encodeURIComponent(id)}` : null
 }
 
 export const SUPERFICIES: Superficie[] = [
