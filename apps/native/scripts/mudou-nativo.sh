@@ -7,7 +7,8 @@
 # este script decide, por dentro, se o push DESTE evento mudou o que o APK lê.
 #
 # O QUE CONTA COMO NATIVO: `apps/native/**` (este script incluído), o
-# `pnpm-workspace.yaml` e os DOIS workflows de que o APK e o próprio detector
+# `packages/identidade/**` (os tokens e os ícones do app desde a I1-PR-4,
+# div. 603), o `pnpm-workspace.yaml` e os DOIS workflows de que o APK e o próprio detector
 # dependem — `native.yml` e `gates.yml` (decisão do Marcel, 2026-09-23: mudar o
 # instrumento é mudar o que ele mede, e o APK roda). A lista está escrita também
 # no `paths` do `native.yml`; mudar uma é mudar as duas.
@@ -46,7 +47,7 @@ if [ "$1" = synchronize ] && git merge-base --is-ancestor "$2" "$3" 2>/dev/null;
   else
     D=$(git diff --name-only "$2" "$3")
     echo "último APK desta PR: success. Desde o push anterior ($2..$3):" >&2; printf '%s\n' "$D" | sed 's/^/  /' >&2
-    printf '%s\n' "$D" | grep -qE '^(apps/native/|\.github/workflows/(native|gates)\.yml$|pnpm-workspace\.yaml$)' || N=false
+    printf '%s\n' "$D" | grep -qE '^(apps/native/|packages/identidade/|\.github/workflows/(native|gates)\.yml$|pnpm-workspace\.yaml$)' || N=false
   fi
 else echo "ação '$1' sem push anterior ancestral (div. 353, padrão seguro): roda" >&2; fi
 echo "nativo=$N"

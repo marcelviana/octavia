@@ -32,6 +32,13 @@
 #   CN-H1m  o `native.yml`: o `gates.yml` no `paths` dos dois eventos, e o
 #           `mudou-nativo` com `GH_TOKEN` e `actions: read`.
 #
+#   I1-PR-4 (div. 603): os tokens e os ícones do app moram em
+#   `packages/identidade` — mudar o pacote é mudar o APK.
+#   CP-H1n  synchronize, o push só toca `packages/identidade` → nativo=true
+#   CN-H1o  synchronize, o push só toca `packages/core`       → nativo=false
+#           (o recorte da N1-PR8 continua: o core não entra)
+#   CN-H1p  o `native.yml`: `packages/identidade/**` no `paths` dos dois eventos.
+#
 # H3 — as declarações dos gates saem da `main` e vêm do corpo da PR, num bloco
 # ```gates … ``` lido por `apps/native/scripts/gates-decl.sh`; os scripts as
 # leem de `GATES_DECL`.
@@ -170,6 +177,8 @@ yml()       { printf '\n# cn-w4b2\n' >> .github/workflows/native.yml; }
 workspace() { printf '\n# cn-w4b2\n' >> pnpm-workspace.yaml; }
 gates_yml() { mkdir -p .github/workflows; printf '\n# cn-w4b2\n' >> .github/workflows/gates.yml; }
 detector() { mkdir -p apps/native/scripts; printf '\n# cn-w4b2\n' >> apps/native/scripts/mudou-nativo.sh; }
+identidade() { mkdir -p packages/identidade/src; printf '\n// cn-w4b2\n' >> packages/identidade/src/tokens.ts; }
+so_core()   { mkdir -p packages/core/src; printf '\n// cn-w4b2\n' >> packages/core/src/types.ts; }
 troca()     { for f in "$ALVO" "$TESTE"; do sed 's|cn-w4b2 linha=velha|cn-w4b2 linha=nova|' "$f" > "$f.n" && mv "$f.n" "$f"; done; }
 sem_coment() { grep -vF -- "$COMENT" "$ALVO" > "$ALVO.n"; mv "$ALVO.n" "$ALVO"; }
 REF_DOCS=$(de_base 'só docs' so_docs)
@@ -178,6 +187,8 @@ REF_YML=$(de_base 'native.yml' yml)
 REF_WS=$(de_base 'pnpm-workspace' workspace)
 REF_GATES=$(de_base 'gates.yml' gates_yml)
 REF_DETECTOR=$(de_base 'mudou-nativo.sh' detector)
+REF_IDENTIDADE=$(de_base 'packages/identidade' identidade)
+REF_CORE=$(de_base 'packages/core' so_core)
 REF_TROCA=$(de_base 'velha -> nova (log e teste)' troca)
 REF_SEMCOM=$(de_base 'o comentario com log( SAI' sem_coment)
 # O push forçado: um `antes` que NÃO é ancestral do head. REF_DOCS e
@@ -212,6 +223,8 @@ h1 'CN-H1i  só docs, a PR não tem APK anterior' synchronize "$REF_BASE" "$REF_
 h1 'CN-H1j  só docs, o último APK ainda corre' synchronize "$REF_BASE" "$REF_DOCS" true in_progress
 h1 'CN-H1k  synchronize, só o gates.yml' synchronize "$REF_BASE" "$REF_GATES" true
 h1 'CN-H1l  synchronize, só o mudou-nativo.sh' synchronize "$REF_BASE" "$REF_DETECTOR" true
+h1 'CP-H1n  synchronize, só o packages/identidade' synchronize "$REF_BASE" "$REF_IDENTIDADE" true
+h1 'CN-H1o  synchronize, só o packages/core' synchronize "$REF_BASE" "$REF_CORE" false
 
 titulo 'CN-H1g  o native.yml usa o detector'
 Y="$RAIZ/.github/workflows/native.yml"
@@ -230,6 +243,11 @@ for p in 'GH_TOKEN: ${{ github.token }}' 'actions: read'; do
   if grep -qF -- "$p" "$Y"; then echo "  presente: $p"; else echo "  AUSENTE:  $p"; F=1; fi
 done
 if [ $F -eq 0 ]; then echo "  ✓"; else echo "  *** o native.yml não dá ao detector o que ele precisa ***"; fi
+
+titulo 'CN-H1p  o native.yml: packages/identidade no paths dos dois eventos'
+N=$(grep -c '^    - packages/identidade/\*\*$' "$Y")
+echo "  '- packages/identidade/**' no paths: $N vez(es) (esperado 2: pull_request e push)"
+if [ "$N" -eq 2 ]; then echo "  ✓"; else echo "  *** o native.yml não dispara pelo pacote ***"; fi
 
 # =============================================================================
 # H3

@@ -107,9 +107,15 @@ describe('gate:a20 — nenhum literal de UI em inglês (G4)', () => {
   })
 })
 
+/**
+ * I1-PR-4: o mapa mudou de casa — mora em `@octavia/identidade` (I1-D3), e o
+ * `src/icones/dados.ts` só o reexporta. O gate lê o arquivo do pacote.
+ */
+const MAPA_ICONES = '../../packages/identidade/src/icones.ts'
+
 describe('gate:icones — o mapa contra as fontes congeladas', () => {
   it('o mapa real PASSA — exit 0, zero acusações', () => {
-    const s = rodar('scripts/icones.mjs', 'src/icones/dados.ts')
+    const s = rodar('scripts/icones.mjs', MAPA_ICONES)
     expect(s.status, comSaida(s)).toBe(0)
     expect(acusacoes(s.texto), comSaida(s)).toBe(0)
   })
@@ -148,7 +154,7 @@ describe('gate:icones — o mapa contra as fontes congeladas', () => {
    * são o que impede a lista `PENDENTES` de virar anistia silenciosa.
    */
   it('o catálogo é 39 registros, e os cinco do DESIGN-N2 entram nessa conta', () => {
-    const s = rodar('scripts/icones.mjs', 'src/icones/dados.ts')
+    const s = rodar('scripts/icones.mjs', MAPA_ICONES)
     expect(s.texto, comSaida(s)).toContain('34 registros (V1) + 5 (DESIGN-N2, E17) = 39 registros')
   })
 
@@ -182,7 +188,7 @@ describe('gate:icones — o mapa contra as fontes congeladas', () => {
    * real PASSA" reprovam por `falta no mapa: "adicionar"`.
    */
   it('PENDENTES vazia: zero avisos, 6/6 nomes da tela 2 cobrados, e o gate passa', () => {
-    const s = rodar('scripts/icones.mjs', 'src/icones/dados.ts')
+    const s = rodar('scripts/icones.mjs', MAPA_ICONES)
     expect(s.status, comSaida(s)).toBe(0)
     expect((s.texto.match(/AVISO /g) ?? []).length, comSaida(s)).toBe(0)
     expect(s.texto, comSaida(s)).not.toContain('poda a lista quando desenhar')

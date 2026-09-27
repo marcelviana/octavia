@@ -30,11 +30,17 @@
 #     `mudou-nativo` tem `actions: read` e o `GITHUB_TOKEN`;
 #   • div. 353: push forçado roda (padrão seguro); e push forçado em PR é
 #     contra a regra (`LOGS-OCTAVIA.md`, "Errata W4-b2").
+#
+# I1-PR-4 (div. 603, decisão 5 do aval): `packages/identidade/**` entra no
+# filtro e no detector. Os tokens e os desenhos dos ícones do app moram lá
+# desde esta PR (`theme.ts` e `icones/dados.ts` só reexportam) — mudar o pacote
+# é mudar o APK. O `packages/core/**` continua fora (recorte da N1-PR8).
 name: native
 'on':
   pull_request:
     paths:
     - apps/native/**
+    - packages/identidade/**
     - .github/workflows/native.yml
     - .github/workflows/gates.yml
     - pnpm-workspace.yaml
@@ -43,6 +49,7 @@ name: native
     - main
     paths:
     - apps/native/**
+    - packages/identidade/**
     - .github/workflows/native.yml
     - .github/workflows/gates.yml
     - pnpm-workspace.yaml

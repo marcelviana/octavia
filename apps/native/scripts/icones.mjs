@@ -8,7 +8,8 @@
  * negativo — e entra ANTES do commit que põe ícone novo em tela, pela regra
  * que a PR3 deixou (anexos README, regra 1): o gate vem antes do que ele mede.
  *
- * O que confere, em `src/icones/dados.ts`:
+ * O que confere, no mapa — desde a I1-PR-4, `packages/identidade/src/icones.ts`
+ * (I1-D3); o `src/icones/dados.ts` do app só o reexporta:
  *
  *  1. NOMES — as chaves do mapa são exatamente os nomes da tabela §6.4 do
  *     `DESIGN-V1/README.md` (lida do arquivo, não copiada para cá; `voltar`
@@ -48,7 +49,7 @@
  *     aqui nada cobrava esse ramo (a nota da regra 2 o diz: os estados
  *     `ativo`/`inerte`/`em20` não são cobrados contra o anexo D).
  *
- * Uso:  node scripts/icones.mjs src/icones/dados.ts          → exit 0
+ * Uso:  node scripts/icones.mjs ../../packages/identidade/src/icones.ts → exit 0
  *       node scripts/icones.mjs scripts/__cn__/IconesFalso.ts → o controle
  *                                  negativo: exit 1, 18 acusações
  * Como comando: `pnpm --filter native gate:icones` e `gate:icones:cn`.
@@ -102,7 +103,7 @@ const README = join(RAIZ, 'docs/native/DESIGN-V1/README.md')
 const ANEXO_D = join(RAIZ, 'docs/native/V1-PR3-PRECHECK-anexos/V1-PR3-D-icones-34.txt')
 const TELAS = join(RAIZ, 'docs/native/DESIGN-V1/telas.html')
 const TELAS_N2 = join(RAIZ, 'docs/native/DESIGN-N2/telas.html')
-const MAPA = process.argv[2] ?? 'src/icones/dados.ts'
+const MAPA = process.argv[2] ?? join(RAIZ, 'packages/identidade/src/icones.ts')
 
 /**
  * §6.4, "Fora do catálogo": os desenhos que o `telas.html` tem e o catálogo

@@ -13,7 +13,8 @@
  *
  *  - o PACOTE, com o que ele muda de forma por decisão — `font` em família +
  *    peso (I1-D31), o bloco `web` por faixa (DESIGN-I1 §3), `faixaDe` e os
- *    limiares (I1-D30) e o `visto` (div. 588);
+ *    limiares (I1-D30) e o `TRACO` (que saiu do `Icone.tsx`). O `visto` das
+ *    folhas do I1 NÃO entra (div. 588, decisão (b) do aval; errata I1-E6);
  *  - o NATIVO (`theme.ts`, `icones/dados.ts`), que tem de continuar
  *    exportando exatamente os mesmos valores em dp — inclusive o `font` com os
  *    nomes de `.ttf` do `expo-font`, agora vindos do mapa de `fontes.ts`.
@@ -25,9 +26,25 @@ import * as identidade from '../src/index'
 import * as tema from '../../../apps/native/src/theme'
 import * as dados from '../../../apps/native/src/icones/dados'
 
-const base = JSON.parse(readFileSync(join(__dirname, 'linha-de-base.json'), 'utf8'), (_k, v) =>
-  v !== null && typeof v === 'object' && v.$indefinido === true ? undefined : v,
-)
+/**
+ * O marcador `{"$indefinido": true}` volta a ser uma chave PRESENTE com valor
+ * `undefined`. Não por `reviver` do `JSON.parse`: devolver `undefined` ali
+ * APAGA a chave, e o `toStrictEqual` distingue chave ausente de chave
+ * `undefined` (medido no commit 2: a linha de base perdia o `alturaMin`).
+ */
+function reviver(v: unknown): unknown {
+  if (Array.isArray(v)) return v.map(reviver)
+  if (v === null || typeof v !== 'object') return v
+  const o = v as Record<string, unknown>
+  if (o.$indefinido === true) return undefined
+  const out: Record<string, unknown> = {}
+  for (const k of Object.keys(o)) out[k] = reviver(o[k])
+  return out
+}
+const base = reviver(JSON.parse(readFileSync(join(__dirname, 'linha-de-base.json'), 'utf8'))) as {
+  tokens: Record<string, unknown> & { faixas: Record<string, unknown>; font: unknown }
+  icones: unknown
+}
 
 /** Os tokens que migram SEM mudar de forma (I1-D3). */
 const IGUAIS = [
@@ -74,16 +91,14 @@ describe('pacote ≡ linha de base (em dp)', () => {
     expect([699, 699.9, 700, 960, 960.1, 961].map(identidade.faixaDe)).toEqual(['A', 'A', 'B', 'B', 'C', 'C'])
   })
 
-  it('ícones: os 43 da linha de base, desenho a desenho, mais o visto (div. 588)', () => {
-    const { visto, ...resto } = identidade.desenhos as Record<string, unknown>
-    expect(resto).toStrictEqual(base.icones)
-    expect(Object.keys(resto)).toHaveLength(43)
-    // DESIGN-N2, anexo D, "Exceção declarada · o visto não é amputável (R2·2)":
-    // o inativo é o desenho inteiro com traço 1,25.
-    expect(visto).toStrictEqual({
-      normal: [{ d: 'M4.5 12.5l5 5 10-11' }],
-      inerte: [{ d: 'M4.5 12.5l5 5 10-11', traco: 1.25 }],
-    })
+  it('ícones: os 43 da linha de base, desenho a desenho — e nenhum visto (div. 588, decisão (b))', () => {
+    expect(identidade.desenhos).toStrictEqual(base.icones)
+    expect(identidade.nomesIcones).toHaveLength(43)
+    expect(identidade.nomesIcones).not.toContain('visto')
+  })
+
+  it('TRACO, o envelope por tamanho, veio do Icone.tsx sem mudar (§5.5): 20 → 1,5 · 24 → 1,75 · 28 → 2', () => {
+    expect(identidade.TRACO).toStrictEqual({ 20: 1.5, 24: 1.75, 28: 2 })
   })
 
   it('garantida numa forma só, a do catálogo (div. 589, I1-E3)', () => {

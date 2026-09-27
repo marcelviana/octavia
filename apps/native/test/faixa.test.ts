@@ -33,24 +33,30 @@ describe('faixaDe — as fronteiras (T3-R1)', () => {
 })
 
 /**
- * "Um único ponto de decisão no app" (T3-R1; evidência do A-N3-1): nenhuma
- * tela compara largura por conta própria. O literal dos limiares só pode
- * existir no `faixa.ts`. Varre `src/` e o `App.tsx` como TEXTO (a mesma
- * escolha dos gates: o instrumento lê arquivo, não importa módulo).
+ * "Um único ponto de decisão" (T3-R1; evidência do A-N3-1): nenhuma tela
+ * compara largura por conta própria. Varre `src/` e o `App.tsx` como TEXTO (a
+ * mesma escolha dos gates: o instrumento lê arquivo, não importa módulo).
+ *
+ * I1-PR-4 (I1-D30, errata da I1-D30 / div. 503): o ponto único saiu do app e
+ * foi para `@octavia/identidade`, que web e nativo dividem. O literal dos
+ * limiares não pode mais existir em arquivo NENHUM do app — e tem de existir,
+ * uma vez, no pacote. Antes: `['src/faixa.ts']`; agora: `[]` no app e
+ * `['src/tokens.ts']` no pacote.
  */
 describe('um ponto só', () => {
   const raiz = join(__dirname, '..')
+  const pacote = join(raiz, '..', '..', 'packages', 'identidade')
   const arquivos = (d: string): string[] =>
     readdirSync(d).flatMap((n) => {
       const p = join(d, n)
       if (statSync(p).isDirectory()) return arquivos(p)
       return /\.tsx?$/.test(n) ? [p] : []
     })
+  const comLimiar = (lista: string[], base: string) =>
+    lista.filter((p) => /\b(700|960)\b/.test(readFileSync(p, 'utf8'))).map((p) => p.slice(base.length + 1))
 
-  it('os limiares 700 e 960 aparecem só no src/faixa.ts', () => {
-    const onde = [...arquivos(join(raiz, 'src')), join(raiz, 'App.tsx')]
-      .filter((p) => /\b(700|960)\b/.test(readFileSync(p, 'utf8')))
-      .map((p) => p.slice(raiz.length + 1))
-    expect(onde).toEqual(['src/faixa.ts'])
+  it('os limiares 700 e 960 aparecem só no packages/identidade/src/tokens.ts — nenhum arquivo do app', () => {
+    expect(comLimiar([...arquivos(join(raiz, 'src')), join(raiz, 'App.tsx')], raiz)).toEqual([])
+    expect(comLimiar(arquivos(join(pacote, 'src')), pacote)).toEqual(['src/tokens.ts'])
   })
 })
