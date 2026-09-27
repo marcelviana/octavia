@@ -1,0 +1,172 @@
+$ node --no-warnings docs/ux/DESIGN-I1/conferencia/conferir.mjs   # Node v22.23.1, árvore efde410 + esta PR
+# Conferência DESIGN-I1 — docs/ux/DESIGN-I1
+
+## (a) cores — 15 valores no theme.ts (dark ∪ light)
+
+| folha | #rrggbb (ocorrências) | distintos | fora do theme.ts | rgba() | rgba fora |
+|---|---|---|---|---|---|
+| 0-linha-de-aviso | 385 | 8 | 0 |  | 0 |
+| 1-auth | 2656 | 8 | 0 |  | 0 |
+| 2-landing | 161 | 6 | 0 |  | 0 |
+| 3-privacy-policy | 168 | 6 | 0 |  | 0 |
+| 4-content-lista | 2202 | 8 | 0 | rgba(119,124,232,.12) rgba(16,15,22,.82) | 0 |
+| 5-content-visualizacao | 1478 | 10 | 0 | rgba(119,124,232,.12) | 0 |
+| 6-content-editor | 1858 | 8 | 0 | rgba(119,124,232,.12) | 0 |
+| 7-upload | 1710 | 8 | 0 | rgba(119,124,232,.12) | 0 |
+| 8-setlists | 2965 | 8 | 0 | rgba(119,124,232,.12) rgba(16,15,22,.82) | 0 |
+
+## (b) px
+
+| folha | px distintos no arquivo | entradas no inventário | px sem entrada | entrada sem px | achados (b) |
+|---|---|---|---|---|---|
+| 0-linha-de-aviso | 22 | 22 | 0 | 0 | 1 |
+| 1-auth | 27 | 27 | 0 | 0 | 1 |
+| 2-landing | 22 | 24 | 0 | 2 | 6 |
+| 3-privacy-policy | 17 | 17 | 0 | 0 | 0 |
+| 4-content-lista | 28 | 28 | 0 | 0 | 1 |
+| 5-content-visualizacao | 24 | 24 | 0 | 0 | 1 |
+| 6-content-editor | 27 | 27 | 0 | 0 | 1 |
+| 7-upload | 25 | 25 | 0 | 0 | 1 |
+| 8-setlists | 29 | 29 | 0 | 0 | 1 |
+
+## (c) ícones — por nome (§6)
+
+| nome no §6 | chave | situação |
+|---|---|---|
+| letra | letra | ∈ dados.ts |
+| cifra | cifra | ∈ dados.ts |
+| tab | tab | ∈ dados.ts |
+| partitura | partitura | ∈ dados.ts |
+| busca | busca | ∈ dados.ts |
+| voltar | voltar | ∈ dados.ts |
+| **voltar (variante espelhada)** — Próxima | variante de voltar | declarado |
+| fechar | fechar | ∈ dados.ts |
+| falha | falha | ∈ dados.ts |
+| tentar novamente | tentar-novamente | ∈ dados.ts |
+| sem conexão | sem-conexao | ∈ dados.ts |
+| última sincronização | ultima-sincronizacao | ∈ dados.ts |
+| garantida | garantida | ∈ dados.ts |
+| n.º de músicas | n-de-musicas | ∈ dados.ts |
+| data | data | ∈ dados.ts |
+| local | local | ∈ dados.ts |
+| sem conteúdo | sem-conteudo | ∈ dados.ts |
+| zoom − | zoom-menos | ∈ dados.ts |
+| zoom + | zoom-mais | ∈ dados.ts |
+| sair | sair | ∈ dados.ts |
+| nova setlist | nova-setlist | ∈ dados.ts |
+| renomear | renomear | ∈ dados.ts |
+| apagar setlist | apagar-setlist | ∈ dados.ts |
+| adicionar | adicionar | ∈ dados.ts |
+| remover | remover | ∈ dados.ts |
+| log-in | log-in | ∈ dados.ts |
+| email | email | ∈ dados.ts |
+| senha | senha | ∈ dados.ts |
+| visto | visto | FORA |
+| marca do Google | — | asset de terceiro (declarado) |
+
+## (c) ícones — por forma (todo <svg> das folhas)
+
+| desenho | ocorrências | folhas | situação | forma (início) |
+|---|---|---|---|---|
+| busca | 178 | 4,5,6,7,8 | ∈ dados.ts | <circle cx="10.5" cy="10.5" r="6.5"></circle><path d="M15.5 15.5L21 21"></path> |
+| renomear | 152 | 4,5,8 | ∈ dados.ts | <path d="M4.5 19.5h4L20 8l-4-4L4.5 15.5z"></path><path d="M15 5l4 4"></path> |
+| remover | 130 | 8 | ∈ dados.ts | <circle cx="12" cy="12" r="8.5"></circle><path d="M8 12h8"></path> |
+| apagar-setlist | 104 | 0,4,8 | ∈ dados.ts | <path d="M4.5 7h15M9.5 7V4.8h5V7M6.8 7l1 12.2h8.4l1-12.2"></path><path d="M10.2 10.8v5.4M1 |
+| n-de-musicas | 94 | 8 | ∈ dados.ts | <path d="M4 6.5h10M4 12h10M4 17.5h6"></path><circle cx="17" cy="17.5" r="2.3"></circle><pa |
+| adicionar | 86 | 4,6,7,8 | ∈ dados.ts | <circle cx="12" cy="12" r="8.5"></circle><path d="M12 8v8M8 12h8"></path> |
+| voltar | 84 | 1,4,5,6,7 | ∈ dados.ts | <path d="M10 6l-6 6 6 6M4 12h15"></path> |
+| falha | 78 | 0,1,4,5,6,7,8 | ∈ dados.ts | <path d="M12 4.2l8.4 14.8H3.6z"></path><path d="M12 10v4"></path><circle cx="12" cy="16.9" |
+| tentar-novamente | 66 | 0,1,4,5,6,7,8 | ∈ dados.ts | <path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v4h-4"></path> |
+| senha | 66 | 1 | ∈ dados.ts | <rect x="4.5" y="10.5" width="15" height="9.5" rx="2.5"></rect><path d="M8 10.5V7.8a4 4 0  |
+| email | 56 | 1 | ∈ dados.ts | <rect x="3" y="5.5" width="18" height="13" rx="2.5"></rect><path d="M3.6 6.8L12 13l8.4-6.2 |
+| letra | 50 | 4,5,7 | ∈ dados.ts | <path d="M4 5.25h13M4 9.75h16M4 14.25h10M4 18.75h14"></path> |
+| ? | 50 | 6,7,8 | FORA | <path d="M4.5 12.5l5 5 10-11"></path> |
+| partitura | 48 | 4,5,7 | ∈ dados.ts | <path d="M3 5h18M3 8.5h18M3 12h18M3 15.5h18M3 19h18"></path><circle cx="8.8" cy="15.5" r=" |
+| cifra | 42 | 4,5,7 | ∈ dados.ts | <path d="M4 5h3M11 5h3M18 5h2"></path><path d="M4 9.5h16"></path><path d="M4 14.5h3M12 14. |
+| nova-setlist | 42 | 8 | ∈ dados.ts | <path d="M4 6.5h12M4 12h8M4 17.5h6"></path><path d="M17.5 14v7M14 17.5h7"></path> |
+| log-in | 28 | 1,2 | ∈ dados.ts | <path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 8l4 4-4 4M15 12H4"></path> |
+| sem-conexao | 26 | 0,1,4,6,7,8 | ∈ dados.ts | <path d="M4.5 9.2a11 11 0 0 1 15 0M7.6 12.8a6.6 6.6 0 0 1 8.8 0"></path><circle cx="12" cy |
+| ? | 26 | 4,5,7 | declarado: tab de 20 das folhas — resposta 29: a implementação usa o `d` do catálogo | <path d="M3 6h18M3 10h18M3 14h18M3 18h18"></path><rect x="6" y="4.3" width="4" height="3.4 |
+| sair | 16 | 1 | ∈ dados.ts | <path d="M9 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h3M14 8l4 4-4 4M9 12h9"></path> |
+| ultima-sincronizacao | 14 | 0,1,6 | ∈ dados.ts | <path d="M20.5 12a8.5 8.5 0 1 1-2.5-6M20.5 3.5V6H18"></path><path d="M12 8.5V12l2.6 1.6">< |
+| voltar (espelhado) | 12 | 4,5 | variante declarada | <path d="M10 6l-6 6 6 6M4 12h15"></path> |
+| ? | 10 | 0,1,4,7 | FORA | <circle cx="12" cy="12" r="8.5"></circle><path d="M8.4 12.3l2.5 2.5 4.7-5"></path> |
+| sem-conteudo | 10 | 4,5 | ∈ dados.ts | <path d="M6 3h8l4 4v14H6z"></path><path d="M9 12h6M9 16h4"></path> |
+| data | 8 | 8 | ∈ dados.ts | <rect x="3.5" y="5" width="17" height="15.5" rx="2.5"></rect><path d="M8 3v4M16 3v4M3.5 10 |
+| local | 8 | 8 | ∈ dados.ts | <path d="M12 21c4.6-4.4 7-8 7-11a7 7 0 1 0-14 0c0 3 2.4 6.6 7 11z"></path><circle cx="12"  |
+| zoom-menos | 2 | 5 | ∈ dados.ts | <path d="M3.15 9.3V3.15h6.15M14.7 3.15h6.15V9.3M20.85 14.7v6.15H14.7M9.3 20.85H3.15V14.7"> |
+| zoom-mais | 2 | 5 | ∈ dados.ts | <path d="M3.15 9.3V3.15h6.15M14.7 3.15h6.15V9.3M20.85 14.7v6.15H14.7M9.3 20.85H3.15V14.7"> |
+| fechar | 2 | 5 | ∈ dados.ts | <path d="M6 6l12 12M18 6L6 18"></path> |
+| garantida | 2 | 7 | ∈ dados.ts | <circle cx="12" cy="12" r="9"></circle><path d="M8 12.2l2.8 2.8L16.2 9.4"></path> |
+
+## (d) faixas e estados
+
+| folha | <section data-estado> | §2.4 (título) | §2.4 (lista) | a mais | §2.4 sem seção | sem C+B |
+|---|---|---|---|---|---|---|
+| 0-linha-de-aviso | 9 | 8 | 8 | Tokens | 0 | 0 |
+| 1-auth | 47 | 46 | 46 | Tokens | 0 | 0 |
+| 2-landing | 1 | 1 | 1 | — | 0 | 0 |
+| 3-privacy-policy | 1 | 1 | 1 | — | 0 | 0 |
+| 4-content-lista | 16 | 15 | 15 | Tokens | 0 | 0 |
+| 5-content-visualizacao | 16 | 15 | 15 | Tokens | 0 | 0 |
+| 6-content-editor | 16 | 15 | 15 | Tokens | 0 | 0 |
+| 7-upload | 21 | 20 | 20 | Tokens | 0 | 0 |
+| 8-setlists | 21 | 20 | 20 | Tokens | 0 | 0 |
+
+Matriz: 179 linhas de estado; cruzamento: 191 linhas; por classe: inalc 36 · S 113 · destino 4 · fora-dec 11 · S-dec 6 · DIV 1 · improv 2 · fora-I1 6 · componente 1 · base 6 · variante 2 · decidido 3
+
+| folha | seções por classe |
+|---|---|
+| 0-linha-de-aviso | componente 8 |
+| 1-auth | S 41 · destino 1 · base 5 |
+| 2-landing | S 1 |
+| 3-privacy-policy | S 1 |
+| 4-content-lista | destino 2 · S 9 · base 2 · variante 2 · decidido 2 |
+| 5-content-visualizacao | S 11 · base 3 · variante 1 |
+| 6-content-editor | S 12 · S-dec 1 · base 2 |
+| 7-upload | S 14 · S-dec 1 · base 5 |
+| 8-setlists | S 14 · S-dec 4 · base 2 · decidido 1 |
+
+Requisitos no README.md: 282 T-I1-R para 141 estados × 2 faixas
+
+## (e) frases
+
+linhas de frase lidas no §5 (sem §5.4): 196 · com marca de inglês fora das aspas: 0
+§5.10: N1 N2 N4 N5 N6 N7 N8 N10 N12 · §8 "entra": N1 N2 N4 N5 N6 N7 N8 N10 N12 · "frase nova N…" citadas nas folhas e no §5: N1 N10 N12 N4 N5 N6 N7 N8
+
+## (f) ausências e presenças (texto visível e aria-label, fora das notas)
+
+| verificação | n | seções |
+|---|---|---|
+| 5: Favoritar/Favorita fora das notas | 0 |  |
+| 5: Apagar fora das notas | 0 |  |
+| 5: Download/Refresh (toda a folha) | 0 |  |
+| 5: controles em VIEW-erro-pdf | 4 | Conta de Marcel Viana, Voltar para a biblioteca, Editar, Tentar de novo |
+| 8: alça/reordenar fora das notas | 0 |  |
+| 4: lib.apagado/favoritado/desfavoritado | 0 |  |
+| seções de carga | 12 |  |
+| … sem "carregando…" | 1 | SET-carregando-dados |
+| 6: "Salvando…" em EDIT-salvando | 1 |  |
+| 7: "Salvando…" em UP-salvando | 1 |  |
+
+## Achados: 18
+
+- (b) 0-linha-de-aviso: 20 → "entrelinha da LinhaDeAviso" não resolve em token, derivado ou literal com origem
+- (b) 1-auth: 20 → "entrelinha da LinhaDeAviso" não resolve em token, derivado ou literal com origem
+- (b) 2-landing: inventário da folha declara 2 ("undefined"), que não aparece como px no arquivo
+- (b) 2-landing: inventário da folha declara 3 ("undefined"), que não aparece como px no arquivo
+- (b) 2-landing: 2 não está no README §2.3
+- (b) 2-landing: 2 → "undefined" não resolve em token, derivado ou literal com origem
+- (b) 2-landing: 3 não está no README §2.3
+- (b) 2-landing: 3 → "undefined" não resolve em token, derivado ou literal com origem
+- (b) 4-content-lista: 20 → "entrelinha da LinhaDeAviso" não resolve em token, derivado ou literal com origem
+- (b) 5-content-visualizacao: 20 → "entrelinha da LinhaDeAviso" não resolve em token, derivado ou literal com origem
+- (b) 6-content-editor: 20 → "entrelinha da LinhaDeAviso" não resolve em token, derivado ou literal com origem
+- (b) 7-upload: 20 → "entrelinha da LinhaDeAviso" não resolve em token, derivado ou literal com origem
+- (b) 8-setlists: 20 → "entrelinha da LinhaDeAviso" não resolve em token, derivado ou literal com origem
+- (b) README §2.3: 20 → "entrelinha da LinhaDeAviso" não resolve em token, derivado ou literal com origem
+- (c) §6 nomeia "visto", que não está em apps/native/src/icones/dados.ts
+- (c) forma sem desenho no dados.ts (10× nas folhas 0,1,4,7): <circle cx="12" cy="12" r="8.5"></circle><path d="M8.4 12.3l2.5 2.5 4.7-5"></path>
+- (c) forma sem desenho no dados.ts (50× nas folhas 6,7,8): <path d="M4.5 12.5l5 5 10-11"></path>
+- (d) estado alcançável sem seção: upload/criação · carregando — parse do lote — período de carga alcançável sem seção — div. 587
+exit=1
