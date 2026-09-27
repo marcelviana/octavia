@@ -124,7 +124,7 @@ As 32 respostas às perguntas da rodada 1, aplicadas na rodada 2, e as 9 dos tok
 Na I1-D12, onde se lê *"capturas por estado"*, leia-se **"inventário por estado; captura uma por superfície"**.
 O que se mede por estado é o inventário (`boundingBox`, o G-faixa da I1-D16); a captura (PNG) é uma por superfície.
 
-### 2.2 Erratas da folha — I1-E1…E5 `[Marcel, 2026-09-27]`
+### 2.2 Erratas da folha — I1-E1…E6 `[Marcel, 2026-09-27]`
 
 Colunas: as do prompt do commit 2 (id · o que a folha mostra · o que vale · onde se aplica), mais a divergência e o
 efeito, este na classificação do `N2-ENCERRAMENTO.md` §3 (div. **595**). Nenhum byte dos `telas.html` muda: a errata
@@ -137,6 +137,7 @@ prevalece sobre a folha.
 | **I1-E3** | o ícone da `LinhaDeAviso` de sucesso é um `garantida` de r 8,5 (`M8.4 12.3l2.5 2.5 4.7-5`, do `DESIGN-N2`) | o `garantida` do catálogo (`dados.ts`: r 9 · `M8 12.2l2.8 2.8L16.2 9.4`) | `0-linha-de-aviso` (`AVISO-sucesso`) e, por ser o componente, as mesmas linhas em `1-auth`, `4-content-lista` e `7-upload` — 10 ocorrências (div. **596**) | 589 | leitura |
 | **I1-E4** | o inventário de px da landing declara `2 → undefined` e `3 → undefined` | as duas entradas são inválidas (não existem no arquivo): **riscadas** | `2-landing` | 584 | leitura |
 | **I1-E5** | 20 = *"entrelinha da LinhaDeAviso"*, sem origem | entrelinha 20 = **literal do N3 (T3-R7)** | `0-linha-de-aviso` e, por ser o componente, o mesmo 20 nos inventários de `1-auth`, `4`–`8` e no `README-design.md` §2.3 (div. **596**) | 585 | leitura |
+| **I1-E6** | o **visto** (`M4.5 12.5l5 5 10-11`, do `DESIGN-N2`) no Salvar do editor e do upload, no *Criar* e na validação da setlist e na marca de `SET-adicionar*` — 50 ocorrências, só nas folhas `6`, `7` e `8`; em 24 px (traço 1,75, e 1,25 no inativo) e em **16 px, traço 3** (18×, `SET-adicionar`, `-adicionar-enviando`, `-adicionar-erro`) | vale o **`garantida` do catálogo** (`dados.ts` / `packages/identidade`: r 9 · `M8 12.2l2.8 2.8L16.2 9.4`), o ícone de "salvo/confirmado" do web como do nativo, **no tamanho da família**: 24 onde a folha tem 24; **20** (o menor da família) onde a folha tem 16. O inativo é o desenho inteiro em `lineInfo`, no traço da família (o `garantida` não tem estado `inerte`; é o que o nativo faz) | `6-content-editor`, `7-upload`, `8-setlists` (a I1-PR-4 mediu: 0 ocorrências nas folhas `0`, `1`, `4`, `5` — o sucesso da `LinhaDeAviso` é a I1-E3) | 588, 601, 611 (I1-PR-4) | leitura |
 
 ## 3 · O bloco `web` de tokens — insumo da PR-4 (`packages/identidade`)
 

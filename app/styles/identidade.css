@@ -1,0 +1,123 @@
+/*
+ * GERADO por packages/identidade/scripts/gerar-css.mjs — NÃO EDITAR À MÃO.
+ * Fonte: packages/identidade/src (I1-D3). 1 dp = 1 px. Regenerar:
+ *   pnpm exec tsx packages/identidade/scripts/gerar-css.mjs
+ * O packages/identidade/test/css.test.ts reprova se este arquivo divergir da fonte.
+ */
+:root {
+  /* cores — o tema escuro, a paleta das folhas */
+  --cor-bg: #100F16;
+  --cor-text: #F9F5F1;
+  --cor-accent: #777CE8;
+  --cor-muted: #A9A5B5;
+  --cor-line: #2A2836;
+  --cor-error: #E5686F;
+  --cor-offline: #C9923B;
+  --cor-accent-ink: #777CE8;
+  --cor-error-ink: #E5686F;
+  --cor-offline-ink: #C9923B;
+  --cor-line-info: #6E6A80;
+  /* o claro — só o papel do PDF (DESIGN-I1, README-design, "Cores") */
+  --cor-claro-bg: #F6F1EA;
+  --cor-claro-text: #100F16;
+  --cor-claro-accent: #777CE8;
+  --cor-claro-muted: #5E5A6A;
+  --cor-claro-line: #D6CFC3;
+  --cor-claro-error: #E5686F;
+  --cor-claro-offline: #C9923B;
+  --cor-claro-accent-ink: #4A4FC0;
+  --cor-claro-error-ink: #A32A31;
+  --cor-claro-offline-ink: #7A5410;
+  --cor-claro-line-info: #8E8779;
+  /* fontes — família + peso (I1-D31) */
+  --fonte-display-familia: 'Raleway';
+  --fonte-display-peso: 600;
+  --fonte-display-medium-familia: 'Raleway';
+  --fonte-display-medium-peso: 500;
+  --fonte-ui-familia: 'Manrope';
+  --fonte-ui-peso: 400;
+  --fonte-ui-bold-familia: 'Manrope';
+  --fonte-ui-bold-peso: 600;
+  --fonte-mono-familia: 'IBM Plex Mono';
+  --fonte-mono-peso: 400;
+  --fonte-mono-bold-familia: 'IBM Plex Mono';
+  --fonte-mono-bold-peso: 600;
+  --tamanho-label: 14px;
+  --tamanho-label-small: 12px;
+  --tamanho-body: 16px;
+  --tamanho-body-small: 15px;
+  --tamanho-input: 18px;
+  --tamanho-button: 17px;
+  --tamanho-title: 22px;
+  --tamanho-title-small: 26px;
+  --tamanho-title-large: 28px;
+  --tamanho-display: 52px;
+  --entrelinha-text: 1.55;
+  --entrelinha-tab: 1.45;
+  --tracking-display: 0.14em;
+  --tracking-display-wide: 0.22em;
+  --tracking-label: 0.08em;
+  --zoom-padrao: 22px;
+  --espaco-xs: 4px;
+  --espaco-sm: 8px;
+  --espaco-md: 12px;
+  --espaco-lg: 16px;
+  --espaco-xl: 24px;
+  --espaco-xxl: 32px;
+  --espaco-xxxl: 48px;
+  --raio-chip: 6px;
+  --raio-control: 12px;
+  --raio-pill: 20px;
+  --toque-min: 48px;
+  --toque-list: 56px;
+  --toque-stage: 64px;
+  --barra-top: 64px;
+  --barra-stage: 96px;
+  --barra-hairline: 1px;
+}
+
+/* faixa C */
+@media (width > 960px) {
+  :root {
+    --faixa-conteiner: 1138px;
+    --faixa-margem: 32px;
+    --faixa-coluna-lateral: 320px;
+    --faixa-razao-lista: 2;
+    --faixa-razao-detalhe: 3;
+    --faixa-zona-arquivo: 240px;
+    --faixa-linha-lista: 80px;
+    --faixa-linha-musica: 72px;
+    --faixa-empilha: 0;
+    --faixa-folha-largura: 720px;
+    --faixa-folha-topo: 100px;
+    --faixa-folha-altura-min: 420px;
+  }
+}
+
+/* faixa B */
+@media (700px <= width <= 960px) {
+  :root {
+    --faixa-conteiner: none;
+    --faixa-margem: 24px;
+    --faixa-zona-arquivo: 240px;
+    --faixa-linha-lista: 80px;
+    --faixa-linha-musica: 72px;
+    --faixa-empilha: 1;
+    --faixa-folha-largura: 663px;
+    --faixa-folha-topo: 96px;
+  }
+}
+
+/* faixa A */
+@media (width < 700px) {
+  :root {
+    --faixa-conteiner: none;
+    --faixa-margem: 24px;
+    --faixa-zona-arquivo: 240px;
+    --faixa-linha-lista: 80px;
+    --faixa-linha-musica: 72px;
+    --faixa-empilha: 1;
+    --faixa-folha-largura: 663px;
+    --faixa-folha-topo: 96px;
+  }
+}

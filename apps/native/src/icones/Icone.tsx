@@ -17,9 +17,12 @@
  */
 import Svg, { Circle, Path, Rect } from 'react-native-svg'
 import { colors, type ThemeName } from '../theme'
+import { TRACO, type TamanhoIcone } from '@octavia/identidade'
 import { desenhos, type Desenho, type NomeIcone, type Primitiva } from './dados'
 
-export type TamanhoIcone = 20 | 24 | 28
+// O tamanho e o traço por tamanho moram no pacote desde a I1-PR-4 (o web
+// renderiza a mesma família); reexportados para as telas não mudarem de import.
+export type { TamanhoIcone }
 export type EstadoIcone = 'normal' | 'ativo' | 'inerte'
 
 export interface IconeProps {
@@ -36,9 +39,6 @@ export interface IconeProps {
    */
   fracao?: number
 }
-
-/** §5.5 — o traço é função do tamanho. */
-const TRACO: Record<TamanhoIcone, number> = { 20: 1.5, 24: 1.75, 28: 2 }
 
 /**
  * O arco do `parcial` para uma fração: parte do topo (12, 3) e varre no
