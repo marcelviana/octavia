@@ -15,6 +15,7 @@
 import type { Page } from '@playwright/test'
 import { ESTADOS_CONFIRM, ESTADOS_FORGOT, ESTADOS_LOGIN, ESTADOS_SIGNUP, ESTADOS_VERIFY, paraEstados } from './g-faixa-auth'
 import { ESTADOS_DASH, ESTADOS_LIB } from './g-faixa-lista'
+import { ESTADOS_CONTENT_EDIT, ID_EDITOR } from './g-faixa-conteudo'
 
 export interface Estado {
   /** I1-PR6: antes de carregar a rota — rotas fabricadas, o usuário falso (`g-faixa-auth.ts`) */
@@ -90,6 +91,10 @@ export const SUPERFICIES: Superficie[] = [
     implementada: false,
     estados: { base: {} },
   },
+  // I1-PR10 (commit 1b, decisão 4 do aval): o editor velho, só para a `casca-efeito` do `pdf-viewer` (que a PR-10
+  // restiliza e o editor monta). TUDO fabricado (`g-faixa-conteudo.ts`): o `GET /api/content/g-faixa` com um content
+  // de cada tipo e o arquivo da partitura — nenhuma leitura de content real, nenhuma escrita. Folha 6 = PR-11.
+  { id: 'content-edit', rota: `/content/${ID_EDITOR}/edit`, sessao: true, publica: false, folha: '6-content-editor', implementada: false, estados: ESTADOS_CONTENT_EDIT },
 ]
 
 /** `G_FAIXA_SUPERFICIES=login,dashboard` restringe a rodada. */

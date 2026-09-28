@@ -8,7 +8,7 @@
 > `Done in 12.8s using pnpm v10.28.0`. **Data**: 2026-09-28.
 > **Convenções**: `[medido]` = comando + saída literal (em `cn/`); `[lido]` = arquivo:linha; `[hipótese]` = o resto.
 > Divergências **a partir de 732** (a PR-9 fechou em 731, §18.7 dela).
-> **Estado**: commit 1 (gate-first) — **aguardando o aval** (§9).
+> **Estado**: commit 1 (gate-first, `2420b8d`), aval (§11), commit 1b (instrumento do `content-edit`, §12) — aguardando o "rodei-antes".
 
 | arquivo | o que é |
 |---|---|
@@ -411,3 +411,58 @@ sem tocar o pacote). Os percentuais da folha (60/40/85 %) não entram se a decis
 | executor | `next dev` | nenhum neste commit |
 | — | `packages/identidade` | **não mudou** |
 | — | código do app (`app/`, `components/`, `lib/`, `hooks/`) | **0 linha** — o commit 1 é gate, esperado e docs |
+
+---
+
+## 11. O aval do commit 1 — decisões `[Marcel, 2026-09-28]`
+
+(Transcrição do prompt dos commits 1b/2/3; as perguntas ficam no §9.)
+
+1. **Aceite (a)**: a rota real com o primeiro content de cada tipo da conta, lido pelo SSR (só hash nos JSON); o PDF
+   fabricado (12 páginas via `pdf-lib`, 500, resposta segurada); os quatro vazios, `VIEW-erro-formato` e
+   `VIEW-erro-render` declarados inalcançáveis com sessão, provados no Vitest e na pré-verificação sem sessão
+   **anexada**.
+2. **I1-E15**: `VIEW-erro-cache` e `VIEW-carregando-arquivo` saem da folha (T-I1-R 286 → 282, renumeração
+   registrada); o motivo do erro de PDF vem do `name`: 404/500 → *o arquivo está corrompido ou inacessível*;
+   `InvalidPDFException` → *formato de PDF inválido*; abort → `motivo.rede`; o resto → `motivo.generico`. **Div. 735
+   fechada por este mapa.**
+3. O `pdf-viewer` traz o **próprio fundo** (tokens); no editor velho fica um bloco escuro até a PR-11 — efeito
+   esperado.
+4. **Commit 1b** com o instrumento de `content-edit` (toda fabricada por `GET /api/content/<id>`); o "antes" é do
+   Marcel, sobre o 1b (código = `main`).
+5. **Editar** = link para `/content/[id]/edit`; o editar inline morto sai.
+6. **Voltar** = `router.back()`, nome acessível *Voltar para a biblioteca*.
+7. **I1-E16**: a barra da tela cheia mantém *Anterior* e *Próxima* (I1-D27); o estado de tela cheia vem só do
+   `fullscreenchange`.
+8. **I1-E17**: `VIEW-erro-formato` sem *Tentar de novo* (repetir não muda a extensão).
+9. Imagem de partitura no painel, no lugar do papel; a falha de carga (`onError`, hoje ausente) → `LinhaDeAviso` com
+   `motivo.generico` e *Tentar de novo*.
+10. Dados fora da forma da folha **ficam na tela** no corpo mono; acordes da letra e da tab num **segundo painel
+    *Cifra***, o mesmo componente de painel. **I1-E18**: a folha não desenhou content com dois tipos de dado; o segundo
+    painel segue os `T-I1-R` do painel.
+11. **Bug da tab** (`TabDisplay.tsx:71-77`): consertado com a checagem dos outros componentes; declarado no corpo como
+    mudança de comportamento (crash → render), com teste que reprova na `main`.
+12. PDF sem altura fixa (a folha); o editor mantém o `calc(100vh-250px)` até a PR-11.
+13. Frases novas aprovadas: *Diminuir o zoom* · *Aumentar o zoom* · *capo: nenhum* · *afinação: padrão (EADGBE)* ·
+    *"{n}ª casa"* · rótulos *compasso*, *criado*, *alterado*, *dificuldade*, *álbum*, *gênero*, *tom*, *andamento*
+    (*{x} BPM*), *etiquetas*. Entram na lista de frases novas do bloco.
+14. `SESSAO-nao-renovada` abaixo do cabeçalho em `/content/<id>`.
+15. **Div. 750**: o vocabulário do G-tok ganha as palavras que faltavam e para de acusar as duas expressões JSX —
+    extra declarado, com CN (as frases velhas da visualização acusadas na `main`, antes/depois).
+
+## 12. Commit 1b — o instrumento do `content-edit` (só medição)
+
+| arquivo | o quê |
+|---|---|
+| `scripts/gates-web/g-faixa-conteudo.ts` (novo) | o PDF de 12 páginas gerado com o `pdf-lib` (em memória; `numPages` 12 conferido no pdf.js 4.8.69, 3567 bytes); o `file_url` fabricado (`https://g-faixa.supabase.co/…/g-faixa-partitura-12p.pdf`, host que não existe — o `route()` responde antes de sair); os quatro contents com os exemplos da folha 5; os estados do `content-edit` |
+| `scripts/gates-web/g-faixa-superficies.ts` | a superfície `content-edit` (`/content/g-faixa/edit`, com sessão, `implementada: false`, folha 6) |
+| `scripts/gates-web/COMO-RODAR.md` | a seção *"I1-PR10 antes"* |
+
+Estados: `base-cifra` · `base-letra` · `base-tab` · `base-partitura` (espera o `canvas` do react-pdf — o mesmo seletor
+antes e depois do commit 2) · `erro-pdf` (o arquivo em 500; espera *"Failed to load PDF"* ou *"não foi possível abrir o
+PDF"* — **extra declarado**: o prompt pedia o `base` por tipo; o erro mostra a `LinhaDeAviso` do `pdf-viewer` novo
+dentro do editor velho). O `GET /api/content/g-faixa` é fabricado só para `GET`; qualquer outro método segue para a
+barreira do medidor (abortado, reprova). Nenhuma linha de `app/`, `components/`, `lib/`, `hooks/`. `tsc --noEmit` 0.
+
+**Div. 756** (P): *"divergências continuam da 751"* — o commit 1 foi até a **755** (§8); esta série segue da 756.
+Próxima: **757**.

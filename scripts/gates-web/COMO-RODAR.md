@@ -121,6 +121,28 @@ O `SESSAO-nao-renovada` faz uma renovação real do token no Google (`securetoke
 ~40 cargas (13 estados × 3 larguras + o controle); o 2, ~10. Se um estado sair NÃO ALCANÇADO por 429 de
 `/api/profile`, espere 15 min e repita só a superfície dele. Depois diga **"rodei"**.
 
+## I1-PR10 antes — o editor velho antes do `pdf-viewer` novo (Marcel, um comando)
+
+Na árvore `../octavia-i1-pr10`, **no commit 1b** (branch `i1/pr10-content-view`; o código do app é o da `main` —
+o 1b só acrescenta o instrumento), com o seu `.env.local` copiado para lá (passo seu), **`pnpm dev`** num terminal que
+fica aberto (porta 3000) e o `✓ Ready`. Perfil de sempre (`~/.octavia-g-faixa-perfil`).
+
+```bash
+G_FAIXA_BASE_URL=http://localhost:3000 G_FAIXA_PERFIL="$HOME/.octavia-g-faixa-perfil" G_FAIXA_SUPERFICIES=content-edit G_FAIXA_SAIDA=tests/gates-web/medicoes/casca-efeito/antes pnpm exec playwright test -c playwright.g-faixa.config.ts scripts/gates-web/g-faixa-medir.ts
+```
+
+Mede `/content/g-faixa/edit` nas três larguras, cinco estados: `base-cifra`, `base-letra`, `base-tab`,
+`base-partitura` (o PDF desenhado) e `erro-pdf` (o arquivo responde 500). Grava
+`tests/gates-web/medicoes/casca-efeito/antes/content-edit.json`.
+
+**Tudo fabricado no navegador** (`scripts/gates-web/g-faixa-conteudo.ts`): o `GET /api/content/g-faixa` (um content de
+cada tipo, com os exemplos da folha 5) e o arquivo da partitura (um PDF de 12 páginas gerado em memória com o
+`pdf-lib`, num host do Storage que não existe — o `route()` responde antes de sair). **Nenhuma leitura de content real,
+nenhuma escrita**: o editor não é clicado; um `PUT` que saísse cairia na barreira (abortado, a rodada reprova). Lidos
+de verdade só a sessão (`/api/profile`, o `securetoken`). **Cota**: ~16 cargas (5 estados × 3 larguras + o controle).
+Depois diga **"rodei-antes"**. O "depois" é o mesmo comando com `G_FAIXA_SAIDA=tests/gates-web/medicoes/casca-efeito/depois`,
+no commit 2.
+
 ## O resto
 
 | o quê | comando |
