@@ -1,0 +1,27 @@
+## mutação: app/dashboard/page.tsx com o erro virando vazio (o comportamento de antes: `[]` e quatro zeros)
+@@ -24,8 +24,8 @@
+   // I1-PR-9 (decisão 4 do aval): o serviço LANÇA quando o banco falha; cada parte
+   // (conteúdo, números) que falhar vai ao cliente como erro — vazio ≠ erro (DASH-erro)
+   const [conteudo, numeros] = await Promise.allSettled([
+-    getUserContentServer(cookieStore, requestUrl),
+-    getUserStatsServer(cookieStore, requestUrl),
++    getUserContentServer(cookieStore, requestUrl).catch(() => []),
++    getUserStatsServer(cookieStore, requestUrl).catch(() => ({ totalContent: 0, totalSetlists: 0, favoriteContent: 0, recentlyViewed: 0 })),
+   ])
+   const contentData = (conteudo.status === "fulfilled" ? conteudo.value : []) as ContentItem[];
+   const stats = numeros.status === "fulfilled" ? numeros.value : null;
+
+$ pnpm exec vitest run components/painel
+     ✓ dados: os números e as linhas; nenhuma frase de vazio, nenhuma linha de aviso 53ms
+     ✓ vazio: "0" é dado (o servidor respondeu) e as listas dizem que não há nada 5ms
+     × erro: "—" nos quatro, nenhuma frase de vazio, UMA linha de aviso com Tentar de novo 7ms
+     × erro só nos números: "—" nos contadores e as listas com os dados 5ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+AssertionError: expected [ '0', '0', '0', '0' ] to deeply equal [ '—', '—', '—', '—' ]
+AssertionError: expected [ '0', '0', '0', '0' ] to deeply equal [ '—', '—', '—', '—' ]
+      Tests  2 failed | 2 passed (4)
+# exit: 1
+
+## mutação desfeita
+cmp app/dashboard/page.tsx <cópia da branch> → igual
+      Tests  4 passed (4)

@@ -21,11 +21,14 @@ export default async function DashboardPage() {
   // loops" era defesa da era dos 429 no verify; causa morta na B1.1)
   await requirePageUser(cookieStore)
 
-  const [rawContentData, stats] = await Promise.all([
+  // I1-PR-9 (decisão 4 do aval): o serviço LANÇA quando o banco falha; cada parte
+  // (conteúdo, números) que falhar vai ao cliente como erro — vazio ≠ erro (DASH-erro)
+  const [conteudo, numeros] = await Promise.allSettled([
     getUserContentServer(cookieStore, requestUrl),
     getUserStatsServer(cookieStore, requestUrl),
   ])
-  const contentData = rawContentData as ContentItem[];
+  const contentData = (conteudo.status === "fulfilled" ? conteudo.value : []) as ContentItem[];
+  const stats = numeros.status === "fulfilled" ? numeros.value : null;
 
   const sortedContent = [...contentData].sort(
     (a: ContentItem, b: ContentItem) =>
@@ -41,6 +44,8 @@ export default async function DashboardPage() {
       recentContent={recentContent}
       favoriteContent={favoriteContent}
       stats={stats}
+      erroConteudo={conteudo.status === "rejected"}
+      erroNumeros={numeros.status === "rejected"}
     />
   );
 }

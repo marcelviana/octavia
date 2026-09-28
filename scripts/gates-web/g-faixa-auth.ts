@@ -36,21 +36,21 @@ function tokenFalso(emailVerified: boolean): string {
 }
 
 const CORS = { 'access-control-allow-origin': '*', 'access-control-allow-headers': '*', 'access-control-allow-methods': 'GET, POST, OPTIONS', 'x-g-faixa': 'fabricado' }
-type Resposta = { status?: number; corpo?: unknown; headers?: Record<string, string> } | 'segurar' | 'abortar'
+export type Resposta = { status?: number; corpo?: unknown; headers?: Record<string, string> } | 'segurar' | 'abortar'
 
 /**
  * As respostas SEGURADAS de cada página: nunca respondem enquanto se mede (o "carregando" fica na tela)
  * e são abortadas por `soltar` antes de o contexto fechar — um `route` pendurado trava o `close()`.
  */
 const segurados = new WeakMap<Page, Route[]>()
-const segurar = (page: Page, route: Route) => { segurados.set(page, [...(segurados.get(page) ?? []), route]) }
+export const segurar = (page: Page, route: Route) => { segurados.set(page, [...(segurados.get(page) ?? []), route]) }
 export async function soltar(page: Page) {
   for (const r of segurados.get(page) ?? []) await r.abort().catch(() => {})
   segurados.delete(page)
 }
 
 /** Responde (ou segura, ou aborta) no navegador; o preflight CORS sempre passa. */
-async function responder(route: Route, r: Resposta) {
+export async function responder(route: Route, r: Resposta) {
   if (route.request().method() === 'OPTIONS') return route.fulfill({ status: 204, headers: CORS })
   if (r === 'segurar') return segurar(route.request().frame().page(), route)
   if (r === 'abortar') return route.abort('internetdisconnected')

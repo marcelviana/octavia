@@ -1,9 +1,8 @@
 "use client";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Database } from "@/types/database.types";
 import dynamic from "next/dynamic";
-import { ResponsiveLayout } from "@/components/responsive-layout";
+import { Casca } from "@/components/identidade/casca";
 import { updateContent, clearContentCache } from "@/lib/content-service";
 import { toast } from "sonner";
 
@@ -19,12 +18,6 @@ interface ContentEditPageClientProps {
 
 export default function ContentEditPageClient({ content }: ContentEditPageClientProps) {
   const router = useRouter();
-  const [activeScreen, setActiveScreen] = useState("library");
-
-  const handleNavigate = (screen: string) => {
-    router.push(`/${screen}`);
-  };
-
   const handleSave = async (updatedContent: any) => {
     try {
       console.log('Starting save process for:', content.title)
@@ -44,8 +37,11 @@ export default function ContentEditPageClient({ content }: ContentEditPageClient
   };
 
   return (
-    <ResponsiveLayout activeScreen={activeScreen} onNavigate={handleNavigate}>
+    // I1-PR-9: a casca nova (barra superior) no lugar do ResponsiveLayout; o corpo velho fica como estava, com o fundo de antes (a folha desta tela é de uma PR seguinte)
+    <Casca>
+      <div className="flex-1 bg-[#fffcf7]">
       <ContentEditor content={content} onSave={handleSave} onCancel={handleCancel} />
-    </ResponsiveLayout>
+      </div>
+    </Casca>
   );
 }

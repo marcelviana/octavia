@@ -1,0 +1,26 @@
+$ node scripts/gates-web/g-faixa-veredito.mjs tests/gates-web/medicoes/casca-efeito
+G-faixa (veredito) — tests/gates-web/medicoes/casca-efeito: 2 medição(ões)
+
+## content (/content/[id]) — rodada 2026-09-28T18:48:47.781Z · base http://localhost:3000 · commit b496342ce5ff70a31dd210cb5f06fe9caba44d81+sujo
+  inalcançáveis em A (411) — base: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  base · 1138: (e)=0 · (b)=9 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  ✗ base · 1138 (b) página com rolagem horizontal: (página)
+  ✗ base · 1138 (b) borda do viewport: heading:0b0029061b39#1 <h3 heading, 12 car.>
+  ✗ base · 1138 (b) borda do viewport: label:f05e840e0069#1 <label label, 5 car.>
+  ✗ base · 1138 (b) borda do viewport: texto:331e3081d465#1 <p texto, 19 car.>
+  ✗ base · 1138 (b) borda do viewport: texto:72026a1caa20#1 <span texto, 17 car.>
+  ✗ base · 1138 (b) borda do viewport: texto:1056838aaef8#1 <span texto, 18 car.>
+  ✗ base · 1138 (b) borda do viewport: heading:cbfaca9522d6#1 <h3 heading, 17 car.>
+  ✗ base · 1138 (b) borda do viewport: texto:d2ba55e554a6#1 <p texto, 30 car.>
+  ✗ base · 1138 (b) borda do viewport: texto:2e758a0f56bc#1 <p texto, 44 car.>
+  base · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  base · 411 (faixa A): (e)=0 · (b)=0 · (d′)=2 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+
+## setlists (/setlists) — rodada 2026-09-28T18:48:47.781Z · base http://localhost:3000 · commit b496342ce5ff70a31dd210cb5f06fe9caba44d81+sujo
+  inalcançáveis em A (411) — base: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  base · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  base · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  base · 411 (faixa A): (e)=0 · (b)=0 · (d′)=2 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+
+G-faixa: REPROVA — 9 ocorrência(s)
+# exit: 1

@@ -13,7 +13,7 @@ import { CascaAuth, RodapeAuth, SeparadorAuth } from "./casca-auth"
 import { BotaoPrincipal, BotaoSecundario, CampoAuth, MarcaGoogle, Validacao } from "./controles-auth"
 import { FRASES_AUTH } from "./frases-auth"
 import { FRASES_SESSAO } from "./frases-sessao"
-import { LinhaDeAviso } from "./linha-de-aviso"
+import { LinhaDeAviso } from "@/components/identidade/linha-de-aviso"
 import { useLogin } from "./use-login"
 
 export function LoginPanel({ initialError = "" }: { initialError?: string }) {

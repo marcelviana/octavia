@@ -1,54 +1,37 @@
 "use client";
 
-import React, { memo } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { BookOpen, Plus } from 'lucide-react';
-import { hasActiveFilters } from '@/lib/library-utils';
+/**
+ * O vazio da biblioteca (I1-PR-9; folha 4, `LIB-vazio` e `LIB-vazio-busca`): o
+ * vazio central (README-design §2.4: `sem conteúdo` 28, `font.display` ·
+ * `size.title` · `tracking.display`, apoio `size.body`). De primeira vez, com
+ * *Adicionar* — o único controle do vazio, contorno `accentInk`; com busca ou
+ * filtro, só as frases. Só aparece quando o servidor respondeu nada — a falha é
+ * a `LinhaDeAviso` (`LIB-erro`), nunca este vazio.
+ */
+import React, { memo } from "react";
+import { Icone } from "@/components/identidade/icone";
+import { BotaoAdicionar } from "@/components/identidade/controles";
+import { FRASES_LISTA } from "@/components/library/frases-lista";
+import { hasActiveFilters } from "@/lib/library-utils";
+import type { LibraryFilters } from "@/types/library";
+
+export const CENTRO = "py-espaco-xxxl flex flex-col items-center justify-center gap-espaco-lg text-center";
+export const FRASE_CENTRAL = "font-fam-display font-peso-display text-tam-title tracking-display uppercase text-cor-text leading-natural";
 
 interface LibraryEmptyStateProps {
   searchQuery: string;
-  filters: {
-    contentType: string[];
-    difficulty: string[];
-    key: string[];
-    favorite: boolean;
-  };
-  onAddContent: () => void;
+  filters: LibraryFilters;
 }
 
-const LibraryEmptyState = memo<LibraryEmptyStateProps>(function LibraryEmptyState({
-  searchQuery,
-  filters,
-  onAddContent,
-}) {
-  const hasFiltersActive = hasActiveFilters(filters);
-  const hasSearchOrFilters = searchQuery || hasFiltersActive;
-
+const LibraryEmptyState = memo<LibraryEmptyStateProps>(function LibraryEmptyState({ searchQuery, filters }) {
+  const busca = Boolean(searchQuery) || hasActiveFilters(filters);
   return (
-    <Card className="bg-white/80 backdrop-blur-sm border border-amber-100 shadow-lg">
-      <CardContent className="p-4 sm:p-8 text-center">
-        <div className="w-12 h-12 sm:w-16 sm:h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-          <BookOpen className="w-6 h-6 sm:w-8 sm:h-8 text-amber-600" />
-        </div>
-        <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-1 sm:mb-2">
-          No content found
-        </h3>
-        <p className="text-[#A69B8E] mb-3 sm:mb-4 text-sm">
-          {hasSearchOrFilters
-            ? "Try adjusting your search or filters"
-            : "Add your first piece of music content to get started"}
-        </p>
-        <Button
-          onClick={onAddContent}
-          className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-sm"
-          size="sm"
-        >
-          <Plus className="w-4 h-4 mr-2" />
-          Add Content
-        </Button>
-      </CardContent>
-    </Card>
+    <div className={CENTRO}>
+      {!busca && <Icone nome="sem-conteudo" tamanho={28} className="text-cor-line-info" />}
+      <p className={FRASE_CENTRAL}>{FRASES_LISTA[busca ? "lib.vazio.busca" : "lib.vazio"]}</p>
+      <p className="text-tam-body text-cor-muted">{FRASES_LISTA[busca ? "lib.vazio.busca.apoio" : "lib.vazio.apoio"]}</p>
+      {!busca && <BotaoAdicionar rotulo={FRASES_LISTA["lib.adicionar"]} destaque />}
+    </div>
   );
 });
 

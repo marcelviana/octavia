@@ -144,6 +144,9 @@ for (const sup of selecionadas()) {
         console.log(`G-faixa · ${sup.id} · ${id} · ${largura}: começa`)
         if (!sup.sessao) { await fechar(ctx); ctx = await abrir() }
         const p = sup.sessao ? page : await ctx.newPage()
+        // I1-PR9: com sessão a página é a MESMA entre estados — as rotas fabricadas do estado anterior saem
+        // (as do contexto, a barreira de escrita e o log, ficam) e as respostas seguradas se soltam
+        if (sup.sessao) { await soltar(p); await p.unrouteAll({ behavior: 'ignoreErrors' }) }
         try {
           if (est.antes) await est.antes(p, BASE)
           await p.setViewportSize(vp)

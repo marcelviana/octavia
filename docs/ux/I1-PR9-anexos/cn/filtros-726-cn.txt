@@ -1,0 +1,28 @@
+# CN do 726 (I1-E14) — sem sessão: página de fumaça LOCAL (não commitada, apagada) montando LibraryPageClient com as seis linhas da folha;
+# next dev desta árvore sem .env, porta 3110; Filtros aberto + Cifra marcado (o LIB-filtros da folha); a mesma coletar contra o esperado
+$ pnpm exec tsx filtros.ts
+LIB-filtros · 1138: scrollWidth 1138 (viewport 1138)
+   Δ>4 contra a folha (C): 10
+      "tipo" Δ[-37.1,0,-0.1,0]
+      "Cifra" Δ[-37.1,0,0,0]
+      "Letra" Δ[-37.1,0,0,0]
+      "Tab" Δ[-37.2,0,0,0]
+      "Partitura" Δ[-37.1,0,0,0]
+      "dificuldade" Δ[-37.1,0,-0.1,0]
+      "Iniciante" Δ[-37.1,0,0,0]
+      "Intermediário" Δ[-37.1,0,0,0]
+      "Avançado" Δ[-37.2,0,0,0]
+      "Só as favoritas" Δ[-37.1,0,-0.1,0]
+LIB-filtros · 711: scrollWidth 711 (viewport 711)
+   Δ>4 contra a folha (B): 10
+      "tipo" Δ[-37.1,0,-0.1,0]
+      "Cifra" Δ[-37.1,0,0,0]
+      "Letra" Δ[-37.1,0,0,0]
+      "Tab" Δ[-37.2,0,0,0]
+      "Partitura" Δ[-37.1,0,0,0]
+      "dificuldade" Δ[-37.1,0,-0.1,0]
+      "Iniciante" Δ[-37.1,0,0,0]
+      "Intermediário" Δ[-37.1,0,0,0]
+      "Avançado" Δ[-37.2,0,0,0]
+      "Só as favoritas" Δ[-37.1,0,-0.1,0]
+LIB-filtros · 411: scrollWidth 411 (viewport 411)

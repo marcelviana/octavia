@@ -96,44 +96,46 @@ export async function getUserContent(
   supabase?: SupabaseClient,
   providedUser?: any,
 ) {
-  try {
-    if (!supabase) {
+  if (!supabase) {
+    try {
       const pageData = await getUserContentPage(
         { page: 1, pageSize: 1000, useCache: false },
         undefined,
         undefined,
       );
       return pageData.data || [];
-    }
-    const client = supabase;
-
-    // Use provided user or check authentication
-    let user = providedUser;
-    if (!user) {
-      user = await getAuthenticatedUser();
-    }
-
-    if (!user) {
-      logger.log("User not authenticated, returning empty content");
-      throw new Error("User not authenticated");
-    }
-
-    const { data, error } = await client
-      .from("content")
-      .select("*")
-      .eq("user_id", user.id)
-      .order("created_at", { ascending: false });
-
-    if (error) {
-      logger.error("Error fetching content:", error);
+    } catch (error) {
+      logger.error("Error in getUserContent:", error);
       return [];
     }
+  }
+  const client = supabase;
 
-    return data || [];
-  } catch (error) {
-    logger.error("Error in getUserContent:", error);
+  // Use provided user or check authentication
+  let user = providedUser;
+  if (!user) {
+    user = await getAuthenticatedUser();
+  }
+
+  if (!user) {
+    logger.log("User not authenticated, returning empty content");
     return [];
   }
+
+  // I1-PR-9 (decisão 4 do aval): a falha do banco LANÇA — antes virava `[]`, e o
+  // painel (o único chamador) mostrava "vazio" no lugar do erro (DASH-erro).
+  const { data, error } = await client
+    .from("content")
+    .select("*")
+    .eq("user_id", user.id)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    logger.error("Error fetching content:", error);
+    throw new Error("Failed to fetch content");
+  }
+
+  return data || [];
 }
 
 // Simple in-memory cache for content queries
@@ -229,7 +231,8 @@ export async function getUserContentPage(
     const user = await getAuthenticatedUser();
     if (!user) {
       debug.warn("getUserContentPage: No authenticated user found");
-      throw new Error("User not authenticated");
+      // I1-PR-9 (decisão 6): o erro leva o status — a tela escolhe o motivo por ele
+      throw Object.assign(new Error("User not authenticated"), { status: 401 });
     }
 
     // Get Firebase auth token via auth manager
@@ -237,7 +240,7 @@ export async function getUserContentPage(
     const { token, error: tokenError } = await getValidToken();
     if (!token) {
       debug.error("Failed to get Firebase auth token:", tokenError);
-      throw new Error("Authentication failed");
+      throw Object.assign(new Error("Authentication failed"), { status: 401 });
     }
 
     // Build query parameters
@@ -268,8 +271,9 @@ export async function getUserContentPage(
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      throw new Error(
-        errorData.error || `API request failed: ${response.status}`,
+      throw Object.assign(
+        new Error(errorData.error || `API request failed: ${response.status}`),
+        { status: response.status },
       );
     }
 
@@ -597,66 +601,19 @@ export async function getUserStats(
   supabase?: SupabaseClient,
   providedUser?: any,
 ) {
-  try {
-    if (!supabase) {
-      throw new Error("Supabase client required for getUserStats");
-    }
-    const client = supabase;
+  if (!supabase) {
+    throw new Error("Supabase client required for getUserStats");
+  }
+  const client = supabase;
 
-    // Use provided user or check authentication
-    let user = providedUser;
-    if (!user) {
-      user = await getAuthenticatedUser();
-    }
+  // Use provided user or check authentication
+  let user = providedUser;
+  if (!user) {
+    user = await getAuthenticatedUser();
+  }
 
-    if (!user) {
-      logger.log("User not authenticated for stats");
-      return {
-        totalContent: 0,
-        totalSetlists: 0,
-        favoriteContent: 0,
-        recentlyViewed: 0,
-      };
-    }
-
-    // Get total content count
-    const { count: totalContent } = await client
-      .from("content")
-      .select("*", { count: "exact", head: true })
-      .eq("user_id", user.id);
-
-    // Get favorite content count
-    const { count: favoriteContent } = await client
-      .from("content")
-      .select("*", { count: "exact", head: true })
-      .eq("user_id", user.id)
-      .eq("is_favorite", true);
-
-    // Get setlists count (if table exists)
-    let totalSetlists = 0;
-    try {
-      const { count } = await client
-        .from("setlists")
-        .select("*", { count: "exact", head: true })
-        .eq("user_id", user.id);
-
-      totalSetlists = count || 0;
-    } catch (error) {
-      logger.log("Setlists table not available yet");
-      totalSetlists = 0;
-    }
-
-    // Get recently viewed count (using total content for now)
-    const recentlyViewed = Math.min(totalContent || 0, 10);
-
-    return {
-      totalContent: totalContent || 0,
-      totalSetlists,
-      favoriteContent: favoriteContent || 0,
-      recentlyViewed,
-    };
-  } catch (error) {
-    logger.error("Error getting user stats:", error);
+  if (!user) {
+    logger.log("User not authenticated for stats");
     return {
       totalContent: 0,
       totalSetlists: 0,
@@ -664,6 +621,33 @@ export async function getUserStats(
       recentlyViewed: 0,
     };
   }
+
+  // I1-PR-9 (decisão 4 do aval): cada contagem LÊ o `error` e a falha LANÇA —
+  // antes o `error` nem era lido e a falha virava 0 (o contador "—" do DASH-erro).
+  const contar = async (tabela: "content" | "setlists", soFavoritas = false) => {
+    let q = client.from(tabela).select("*", { count: "exact", head: true }).eq("user_id", user.id);
+    if (soFavoritas) q = q.eq("is_favorite", true);
+    const { count, error } = await q;
+    if (error) {
+      logger.error(`Error counting ${tabela}:`, error);
+      throw new Error("Failed to fetch stats");
+    }
+    return count || 0;
+  };
+
+  const totalContent = await contar("content");
+  const favoriteContent = await contar("content", true);
+  const totalSetlists = await contar("setlists");
+
+  // Get recently viewed count (using total content for now)
+  const recentlyViewed = Math.min(totalContent, 10);
+
+  return {
+    totalContent,
+    totalSetlists,
+    favoriteContent,
+    recentlyViewed,
+  };
 }
 
 // Keep the old function names for backward compatibility

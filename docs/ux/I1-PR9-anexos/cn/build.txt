@@ -1,0 +1,5 @@
+$ pnpm build
+ ✓ Compiled successfully
+├ ƒ /dashboard                           1.63 kB         275 kB
+├ ƒ /library                             1.44 kB         275 kB
+# exit: 0

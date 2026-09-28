@@ -1,9 +1,8 @@
 "use client";
 
 import React, { Component, ReactNode } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { AlertTriangle, RefreshCw } from 'lucide-react';
+import { LinhaDeAviso } from "@/components/identidade/linha-de-aviso";
+import { FRASES_LISTA, comDado } from "@/components/library/frases-lista";
 import { LibraryError } from '@/types/library';
 
 interface Props {
@@ -46,30 +45,12 @@ class LibraryErrorBoundary extends Component<Props, State> {
         return this.props.fallback;
       }
 
+      // I1-PR-9 (nota de `LIB-erro`): o erro de render usa a mesma linha, com "algo deu errado"
       return (
-        <Card className="bg-white/80 backdrop-blur-sm border border-red-100 shadow-lg">
-          <CardContent className="p-4 sm:p-8 text-center">
-            <div className="w-12 h-12 sm:w-16 sm:h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-              <AlertTriangle className="w-6 h-6 sm:w-8 sm:h-8 text-red-600" />
-            </div>
-            <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-1 sm:mb-2">
-              Something went wrong
-            </h3>
-            <p className="text-gray-600 mb-3 sm:mb-4 text-sm">
-              There was an error loading your music library. Please try again.
-            </p>
-            <div className="flex gap-2 justify-center">
-              <Button
-                onClick={this.handleRetry}
-                className="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-sm"
-                size="sm"
-              >
-                <RefreshCw className="w-4 h-4 mr-2" />
-                Try Again
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+        <LinhaDeAviso
+          motivo={comDado("lib.erro", { motivo: FRASES_LISTA["motivo.generico"] })}
+          acao={{ rotulo: FRASES_LISTA["acao.tentar"], onPress: this.handleRetry }}
+        />
       );
     }
 

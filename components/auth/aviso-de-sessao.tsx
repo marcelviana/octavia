@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation"
 import type { EstadoSessao } from "@/contexts/firebase-auth-context"
-import { LinhaDeAviso } from "./linha-de-aviso"
+import { LinhaDeAviso } from "@/components/identidade/linha-de-aviso"
 import { FRASES_SESSAO, fraseDaFalha } from "./frases-sessao"
 
 /**
@@ -11,6 +11,14 @@ import { FRASES_SESSAO, fraseDaFalha } from "./frases-sessao"
  * ou a abertura que falhou numa página já carregada. No /login quem fala é o
  * painel (uma falha, uma frase). Nada navega; o "Tentar de novo" é do usuário.
  */
+/**
+ * I1-PR-9 (decisão 9 do aval): no painel e na biblioteca a linha é desenhada pela
+ * PRÓPRIA tela, abaixo do título (folha 4, `SESSAO-nao-renovada`;
+ * `components/identidade/linha-da-tela.tsx`); nas telas de corpo velho segue aqui,
+ * no topo, até a PR de cada uma.
+ */
+export const ROTAS_QUE_DESENHAM_A_LINHA: readonly string[] = ["/login", "/dashboard", "/library"]
+
 export function AvisoDeSessao({
   sessao,
   onTentarDeNovo,
@@ -19,7 +27,7 @@ export function AvisoDeSessao({
   onTentarDeNovo: () => void
 }) {
   const pathname = usePathname()
-  if (sessao.estado !== "falhou" || pathname === "/login") return null
+  if (sessao.estado !== "falhou" || ROTAS_QUE_DESENHAM_A_LINHA.includes(pathname)) return null
   return (
     <div className="sticky top-0 z-50 p-2">
       <LinhaDeAviso

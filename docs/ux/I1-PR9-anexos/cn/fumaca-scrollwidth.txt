@@ -1,0 +1,27 @@
+# roteiro da pré-verificação sem sessão, com scrollWidth em todo estado × largura (páginas de fumaça locais, não commitadas; next dev sem .env, porta 3110)
+$ pnpm exec tsx cap.ts
+DASH · 1138: scrollWidth 1138
+DASH-erro · 1138: scrollWidth 1138
+DASH-vazio · 1138: scrollWidth 1138
+LIB · 1138: scrollWidth 1138
+LIB-filtros · 1138: scrollWidth 1138
+LIB-mais · 1138: scrollWidth 1138
+LIB-apagar · 1138: scrollWidth 1138
+LIB-vazio · 1138: scrollWidth 1138
+DASH · 711: scrollWidth 711
+DASH-erro · 711: scrollWidth 711
+DASH-vazio · 711: scrollWidth 711
+LIB · 711: scrollWidth 711
+LIB-filtros · 711: scrollWidth 711
+LIB-mais · 711: scrollWidth 711
+LIB-apagar · 711: scrollWidth 711
+LIB-vazio · 711: scrollWidth 711
+DASH · 411: scrollWidth 411
+DASH-erro · 411: scrollWidth 411
+DASH-vazio · 411: scrollWidth 411
+LIB · 411: scrollWidth 411
+LIB-filtros · 411: scrollWidth 411
+LIB-mais · 411: scrollWidth 411
+LIB-apagar · 411: scrollWidth 411
+LIB-vazio · 411: scrollWidth 411
+# exit: 0

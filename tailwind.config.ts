@@ -14,7 +14,7 @@ const porNome = (prefixo: string, obj: object, cssPrefixo = prefixo) =>
   Object.fromEntries(Object.keys(obj).map((k) => [`${prefixo}-${kebab(k)}`, `var(--${cssPrefixo}-${kebab(k)})`]))
 /** As medidas por faixa do bloco `web` que as telas usam como tamanho (`--faixa-*`). */
 const WEB = ["margem", "coluna-lateral", "zona-arquivo", "linha-lista", "linha-musica", "marca-largura", "marca-altura",
-  "coluna-auth", "vao-auth", "campo-auth", "botao-auth", "botao-aviso", "entrelinha-aviso", "limiar-aviso", "folha-largura"]
+  "coluna-auth", "vao-auth", "campo-auth", "botao-auth", "botao-aviso", "entrelinha-aviso", "limiar-aviso", "folha-largura", "folha-topo"]
 const medidas = {
   ...porNome("espaco", space),
   ...porNome("toque", touch),
@@ -29,10 +29,17 @@ const identidade = {
     c: { raw: `(width > ${limiares.bc}px)` },
     b: { raw: `(${limiares.ab}px <= width <= ${limiares.bc}px)` },
   },
-  colors: { cor: Object.fromEntries(Object.keys(dark).map((k) => [kebab(k), `var(--cor-${kebab(k)})`])) },
+  colors: {
+    cor: {
+      ...Object.fromEntries(Object.keys(dark).map((k) => [kebab(k), `var(--cor-${kebab(k)})`])),
+      // I1-PR-9 (folha 4): accent a 12 % (marcado) e bg a 82 % (fundo do diálogo) — `web.alfa*`, color-mix no gerador
+      marcado: "var(--faixa-cor-marcado)",
+      dialogo: "var(--faixa-cor-dialogo)",
+    },
+  },
   spacing: medidas,
   maxWidth: { "web-conteiner": "var(--faixa-conteiner)" },
-  fontSize: porNome("tam", size, "tamanho"),
+  fontSize: { ...porNome("tam", size, "tamanho"), "tam-web-metadado": "var(--faixa-metadado)" },
   fontFamily: Object.fromEntries(Object.keys(font).map((k) => [`fam-${kebab(k)}`, [`var(--fonte-${kebab(k)}-familia)`]])),
   fontWeight: Object.fromEntries(Object.keys(font).map((k) => [`peso-${kebab(k)}`, `var(--fonte-${kebab(k)}-peso)`])),
   // `natural` = a entrelinha da própria fonte (`normal`), a da folha, que não declara entrelinha no corpo — não é

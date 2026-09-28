@@ -80,7 +80,9 @@ describe('pacote ≡ linha de base (em dp)', () => {
 
   it('o bloco web por faixa — DESIGN-I1/README.md §3 (nome · C · B; A segue B)', () => {
     // I1-PR-6 (decisão 2): as medidas fixas das folhas 0 e 1 — ADIÇÃO; as oito de antes não mudam
-    const auth = { marca: { largura: 340, altura: 219 }, colunaAuth: 420, campoAuth: 60, botaoAuth: 58, botaoAviso: 36, entrelinhaAviso: 20, limiarAviso: 320 }
+    const auth = { marca: { largura: 340, altura: 219 }, colunaAuth: 420, campoAuth: 60, botaoAuth: 58, botaoAviso: 36, entrelinhaAviso: 20, limiarAviso: 320,
+      // I1-PR-9 (aval do commit 2, opção 2): o metadado de linha e as duas alfas da folha 4 — ADIÇÃO
+      metadado: 13, alfaMarcado: 0.12, alfaDialogo: 0.82 }
     const C = { conteiner: 1138, margem: 32, colunaLateral: 320, razaoListaDetalhe: [2, 3], zonaArquivo: 240, linhaLista: 80, linhaMusica: 72, empilha: false, ...auth, vaoAuth: 140 }
     const B = { conteiner: null, margem: 24, colunaLateral: 'empilha', razaoListaDetalhe: 'empilha', zonaArquivo: 240, linhaLista: 80, linhaMusica: 72, empilha: true, ...auth, vaoAuth: 48 }
     expect(identidade.faixas.C.web).toStrictEqual(C)

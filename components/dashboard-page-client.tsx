@@ -1,44 +1,14 @@
 "use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Dashboard, ContentItem, UserStats } from "@/components/dashboard";
-import { ResponsiveLayout } from "@/components/responsive-layout";
+import { Dashboard, type DashboardProps } from "@/components/dashboard";
+import { Casca, ConteudoDaCasca } from "@/components/identidade/casca";
 
-interface DashboardPageClientProps {
-  recentContent: ContentItem[];
-  favoriteContent: ContentItem[];
-  stats: UserStats | null;
-}
-
-export default function DashboardPageClient({
-  recentContent,
-  favoriteContent,
-  stats,
-}: DashboardPageClientProps) {
-  const router = useRouter();
-  const [activeScreen, setActiveScreen] = useState("dashboard");
-
-  const handleNavigate = (screen: string) => {
-    if (screen === "dashboard") {
-      setActiveScreen(screen);
-    } else {
-      router.push(`/${screen}`);
-    }
-  };
-
-  const handleSelectContent = (content: ContentItem) => {
-    router.push(`/content/${content.id}`);
-  };
-
+// I1-PR-9: a casca nova (barra superior) no lugar do ResponsiveLayout; a navegação é da casca.
+export default function DashboardPageClient(props: DashboardProps) {
   return (
-    <ResponsiveLayout activeScreen={activeScreen} onNavigate={handleNavigate}>
-      <Dashboard
-        onNavigate={handleNavigate}
-        onSelectContent={handleSelectContent}
-        recentContent={recentContent}
-        favoriteContent={favoriteContent}
-        stats={stats}
-      />
-    </ResponsiveLayout>
+    <Casca>
+      <ConteudoDaCasca>
+        <Dashboard {...props} />
+      </ConteudoDaCasca>
+    </Casca>
   );
 }

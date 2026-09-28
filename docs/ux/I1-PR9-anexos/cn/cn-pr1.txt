@@ -1,0 +1,4 @@
+$ pnpm exec vitest run components/auth/__tests__/login-sessao-cn.test.tsx
+ ✓  web  components/auth/__tests__/login-sessao-cn.test.tsx (15 tests) 1995ms
+     ✓ (v) renovação que falha fora do /login: linha de aviso no topo, 0 navegações, e nada repete sozinho  315ms
+      Tests  15 passed (15)

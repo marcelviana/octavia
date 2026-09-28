@@ -1,53 +1,39 @@
 "use client";
 
-import React, { memo, useMemo } from 'react';
-import { useFirebaseAuth } from '@/contexts/firebase-auth-context';
-import { useLibraryData } from '@/hooks/use-library-data';
-import { useContentActions } from '@/hooks/use-content-actions';
-import { useNavigationActions } from '@/hooks/use-navigation-actions';
-import { DeleteContentDialog } from '@/components/delete-content-dialog';
-import { LibraryProps, ContentItem } from '@/types/library';
-import { 
-  calculateTotalPages, 
-  getLibraryContentIconData,
-  hasActiveFilters 
-} from '@/lib/library-utils';
-
-// Import the new smaller components
-import LibraryHeader from './LibraryHeader';
-import LibraryPagination from './LibraryPagination';
-import LibraryEmptyState from './LibraryEmptyState';
-import LibraryLoadingState from './LibraryLoadingState';
-import LibraryErrorBoundary from './LibraryErrorBoundary';
-import OptimizedLibraryList from './OptimizedLibraryList';
+/**
+ * A BIBLIOTECA (I1-PR-9; folha `4-content-lista`: `LIB`, `LIB-filtros`,
+ * `LIB-mais`, `LIB-carregando`, `LIB-vazio`, `LIB-vazio-busca`, `LIB-erro`,
+ * `LIB-apagar`, `SESSAO-nao-renovada`). O cabeçalho; a linha da tela abaixo dele
+ * (uma por tela: a sessão vence; senão a falha da carga sem lista na tela —
+ * `lib.erro` com o motivo pelo `status`, decisão 6 do aval); o carregando, o
+ * vazio OU a lista (vazio ≠ erro); a paginação; o diálogo de apagar. Os dados, os
+ * filtros, a ordem e as ações são os de antes (`useLibraryData`, `useContentActions`).
+ */
+import React, { memo, useMemo } from "react";
+import { useFirebaseAuth } from "@/contexts/firebase-auth-context";
+import { useLibraryData } from "@/hooks/use-library-data";
+import { useContentActions } from "@/hooks/use-content-actions";
+import { DeleteContentDialog } from "@/components/delete-content-dialog";
+import { LinhaDaTela } from "@/components/identidade/linha-da-tela";
+import { FRASES_LISTA, comDado, especieDaFalha, linhaDaFalha } from "@/components/library/frases-lista";
+import type { LibraryProps } from "@/types/library";
+import { calculateTotalPages } from "@/lib/library-utils";
+import LibraryHeader from "./LibraryHeader";
+import LibraryPagination from "./LibraryPagination";
+import LibraryEmptyState from "./LibraryEmptyState";
+import LibraryLoadingState from "./LibraryLoadingState";
+import LibraryErrorBoundary from "./LibraryErrorBoundary";
+import OptimizedLibraryList from "./OptimizedLibraryList";
 
 const RefactoredLibrary = memo<LibraryProps>(function RefactoredLibrary({
   onSelectContent,
   initialContent,
   initialTotal,
   initialPage,
-  initialPageSize,
   initialSearch,
 }) {
   const { user, isLoading: authLoading } = useFirebaseAuth();
-  const { navigateToAddContent } = useNavigationActions();
-
-  // Library data management
-  const {
-    content,
-    totalCount,
-    page,
-    setPage,
-    pageSize,
-    searchQuery,
-    setSearchQuery,
-    sortBy,
-    setSortBy,
-    selectedFilters,
-    setSelectedFilters,
-    loading,
-    reload,
-  } = useLibraryData({
+  const dados = useLibraryData({
     user,
     ready: !authLoading,
     initialContent,
@@ -56,115 +42,45 @@ const RefactoredLibrary = memo<LibraryProps>(function RefactoredLibrary({
     initialPageSize: 20, // Fixed page size
     initialSearch,
   });
+  const { content, totalCount, page, setPage, pageSize, searchQuery, setSearchQuery, sortBy, setSortBy, selectedFilters, setSelectedFilters, loading, erro, reload } = dados;
 
-  // Content actions (delete, favorite, edit, select)
-  const contentActionsHook = useContentActions(onSelectContent, { onReload: reload });
-  
-  // Adapt hook result to ContentActions interface
-  const contentActions = useMemo(() => ({
-    onSelect: contentActionsHook.selectItem,
-    onEdit: contentActionsHook.editItem,
-    onDelete: contentActionsHook.deleteDialog.open,
-    onToggleFavorite: contentActionsHook.toggleFavoriteItem,
-  }), [contentActionsHook]);
+  const acoesHook = useContentActions(onSelectContent, { onReload: reload });
+  const acoes = useMemo(() => ({
+    onSelect: acoesHook.selectItem,
+    onEdit: acoesHook.editItem,
+    onDelete: acoesHook.deleteDialog.open,
+    onToggleFavorite: acoesHook.toggleFavoriteItem,
+  }), [acoesHook]);
 
-  // Memoized calculations
-  const totalPages = useMemo(() => 
-    calculateTotalPages(totalCount, pageSize), 
-    [totalCount, pageSize]
-  );
-
-  const showEmptyState = useMemo(() => 
-    !loading && content.length === 0,
-    [loading, content.length]
-  );
-
-  const showLoadingState = useMemo(() => 
-    loading && content.length === 0,
-    [loading, content.length]
-  );
-
-  const showContent = useMemo(() => 
-    !showLoadingState && !showEmptyState,
-    [showLoadingState, showEmptyState]
-  );
-
-  // Memoized content icon function
-  const getContentIcon = useMemo(() => {
-    const ContentIcon = (type: string) => {
-      const { IconComponent, className } = getLibraryContentIconData(type);
-      return <IconComponent className={className} />;
-    };
-    ContentIcon.displayName = 'ContentIcon';
-    return ContentIcon;
-  }, []);
-
-  // Header props
-  const headerProps = useMemo(() => ({
-    searchQuery,
-    onSearchChange: setSearchQuery,
-    sortBy,
-    onSortChange: setSortBy,
-    filters: selectedFilters,
-    onFiltersChange: setSelectedFilters,
-    onAddContent: navigateToAddContent,
-  }), [
-    searchQuery,
-    setSearchQuery,
-    sortBy,
-    setSortBy,
-    selectedFilters,
-    setSelectedFilters,
-    navigateToAddContent,
-  ]);
-
-  // Pagination props
-  const paginationProps = useMemo(() => ({
-    currentPage: page,
-    totalPages,
-    totalCount,
-    onPageChange: setPage,
-  }), [page, totalPages, totalCount, setPage]);
-
-  // Empty state props
-  const emptyStateProps = useMemo(() => ({
-    searchQuery,
-    filters: selectedFilters,
-    onAddContent: navigateToAddContent,
-  }), [searchQuery, selectedFilters, navigateToAddContent]);
+  const vazia = content.length === 0;
+  const carregando = loading && vazia;
+  const falha = !loading && vazia && erro ? linhaDaFalha(especieDaFalha(erro)) : null;
 
   return (
     <LibraryErrorBoundary>
-      <div className="p-4 sm:p-4 md:p-6 bg-gradient-to-b from-[#fff9f0] to-[#fff5e5] min-h-full">
-        
-        {/* Header Section */}
-        <LibraryHeader {...headerProps} />
-
-        {/* Content Display */}
-        {showLoadingState && <LibraryLoadingState />}
-        
-        {showEmptyState && <LibraryEmptyState {...emptyStateProps} />}
-        
-        {showContent && (
-          <OptimizedLibraryList
-            content={content}
-            loading={loading}
-            contentActions={contentActions}
-            getContentIcon={getContentIcon}
-          />
-        )}
-
-        {/* Pagination */}
-        <LibraryPagination {...paginationProps} />
-
-        {/* Delete Confirmation Dialog */}
-        <DeleteContentDialog
-          open={contentActionsHook.deleteDialog.isOpen}
-          onOpenChange={contentActionsHook.deleteDialog.close}
-          content={contentActionsHook.deleteDialog.content}
-          onConfirm={contentActionsHook.deleteDialog.confirm}
-        />
-      </div>
+      <LibraryHeader
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        sortBy={sortBy}
+        onSortChange={setSortBy}
+        filters={selectedFilters}
+        onFiltersChange={setSelectedFilters}
+        onAddContent={() => undefined}
+      />
+      <LinhaDaTela
+        rotuloTentar={FRASES_LISTA["acao.tentar"]}
+        falha={falha ? { tipo: falha.tipo, motivo: comDado("lib.erro", { motivo: falha.motivo }), onTentar: falha.tentar ? () => void reload() : undefined } : null}
+      />
+      {carregando && <LibraryLoadingState />}
+      {!loading && vazia && !erro && <LibraryEmptyState searchQuery={searchQuery} filters={selectedFilters} />}
+      {!vazia && <OptimizedLibraryList content={content} contentActions={acoes} />}
+      <LibraryPagination currentPage={page} totalPages={calculateTotalPages(totalCount, pageSize)} totalCount={totalCount} onPageChange={setPage} />
+      <DeleteContentDialog
+        open={acoesHook.deleteDialog.isOpen}
+        onOpenChange={acoesHook.deleteDialog.close}
+        content={acoesHook.deleteDialog.content}
+        onConfirm={acoesHook.deleteDialog.confirm}
+      />
     </LibraryErrorBoundary>
   );
 });

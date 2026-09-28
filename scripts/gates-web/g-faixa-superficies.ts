@@ -14,6 +14,7 @@
  */
 import type { Page } from '@playwright/test'
 import { ESTADOS_CONFIRM, ESTADOS_FORGOT, ESTADOS_LOGIN, ESTADOS_SIGNUP, ESTADOS_VERIFY, paraEstados } from './g-faixa-auth'
+import { ESTADOS_DASH, ESTADOS_LIB } from './g-faixa-lista'
 
 export interface Estado {
   /** I1-PR6: antes de carregar a rota — rotas fabricadas, o usuário falso (`g-faixa-auth.ts`) */
@@ -73,8 +74,11 @@ export const SUPERFICIES: Superficie[] = [
   // I1-PR8: a superfície 3, privacy-policy, IMPLEMENTADA — o único estado da folha `3-privacy-policy`, `PRIVACY`.
   // Estática, sem sessão e sem Firebase: nada a fabricar. O texto é o de antes (I1-D17 exceção, I1-D19).
   { id: 'privacy-policy', rota: '/privacy-policy', sessao: false, publica: true, folha: '3-privacy-policy', implementada: true, estados: { PRIVACY: { secao: 'PRIVACY', espera: 'Cookies and consent / Cookies e consentimento' } } },
-  { id: 'dashboard', rota: '/dashboard', sessao: true, publica: false, folha: '4-content-lista', implementada: false, estados: { base: {} } },
-  { id: 'library', rota: '/library', sessao: true, publica: false, folha: '4-content-lista', implementada: false, estados: { base: {} } },
+  // I1-PR9: a superfície 4, content lista, IMPLEMENTADA — os 15 estados da folha `4-content-lista` com a sessão
+  // real do perfil e as respostas do app fabricadas no navegador (`g-faixa-lista.ts`); `LIB-salvo` nasce na PR-11,
+  // `DASH-vazio`/`DASH-erro` são SSR (inalcançáveis no navegador, provados no Vitest). Zero escrita.
+  { id: 'dashboard', rota: '/dashboard', sessao: true, publica: false, folha: '4-content-lista', implementada: true, estados: ESTADOS_DASH },
+  { id: 'library', rota: '/library', sessao: true, publica: false, folha: '4-content-lista', implementada: true, estados: ESTADOS_LIB },
   { id: 'setlists', rota: '/setlists', sessao: true, publica: false, folha: '8-setlists', implementada: false, estados: { base: {} } },
   {
     id: 'content',

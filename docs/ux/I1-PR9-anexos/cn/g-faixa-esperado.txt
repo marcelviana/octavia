@@ -1,0 +1,4 @@
+$ pnpm exec tsx scripts/gates-web/g-faixa-esperado.ts 4-content-lista
+4-content-lista: 0 caixa(s) de campo ancorada(s) · 16 seções · 15 com C e B · nós C 450 · nós B 450 → tests/gates-web/esperado/4-content-lista.json
+  ✗ Tokens: sem a moldura C B
+# exit: 0

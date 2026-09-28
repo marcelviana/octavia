@@ -2,23 +2,28 @@
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
-import { ResponsiveLayout } from "@/components/responsive-layout";
+import { Casca, ConteudoDaCasca } from "@/components/identidade/casca";
+import LibraryHeader from "@/components/library/LibraryHeader";
+import LibraryLoadingState from "@/components/library/LibraryLoadingState";
+import type { ContentItem } from "@/types/library";
 
-// Bundle splitting: Lazy load management features
+const semAcao = () => undefined;
+const SEM_FILTRO = { contentType: [], difficulty: [], key: [], favorite: false };
+
+// Bundle splitting: Lazy load management features. I1-PR-9 (folha 4, `LIB-carregando-chunk`): enquanto
+// o pedaço carrega, o cabeçalho (inerte) e "carregando a biblioteca…" — no lugar de "Loading library...".
 const Library = dynamic(() => import("@/components/library").then(mod => ({ default: mod.Library })), {
   loading: () => (
-    <div className="flex items-center justify-center min-h-[400px]">
-      <div className="text-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-600 mx-auto mb-2"></div>
-        <p className="text-sm text-muted-foreground">Loading library...</p>
-      </div>
-    </div>
+    <>
+      <LibraryHeader searchQuery="" onSearchChange={semAcao} sortBy="recent" onSortChange={semAcao} filters={SEM_FILTRO} onFiltersChange={semAcao} onAddContent={semAcao} />
+      <LibraryLoadingState />
+    </>
   ),
   ssr: false // Client-side only for better performance
 });
 
 interface LibraryPageClientProps {
-  initialContent: any[]
+  initialContent: ContentItem[]
   initialTotal: number
   initialPage: number
   pageSize: number
@@ -34,7 +39,6 @@ export default function LibraryPageClient({
 }: LibraryPageClientProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [activeScreen, setActiveScreen] = useState("library");
   const [currentSearch, setCurrentSearch] = useState(initialSearch || '');
 
   // Keep current search in sync with URL changes
@@ -43,28 +47,23 @@ export default function LibraryPageClient({
     setCurrentSearch(urlSearch);
   }, [searchParams]);
 
-  const handleNavigate = (screen: string) => {
-    router.push(`/${screen}`);
-  };
-
-  const handleSelectContent = (content: any) => {
+  const handleSelectContent = (content: ContentItem) => {
     router.push(`/content/${content.id}`);
   };
 
+  // I1-PR-9: a casca nova (barra superior) no lugar do ResponsiveLayout; a busca da casca mostra o termo da URL
   return (
-    <ResponsiveLayout 
-      activeScreen={activeScreen} 
-      onNavigate={handleNavigate}
-      initialSearch={currentSearch}
-    >
-      <Library
-        onSelectContent={handleSelectContent}
-        initialContent={initialContent}
-        initialTotal={initialTotal}
-        initialPage={initialPage}
-        initialPageSize={pageSize}
-        initialSearch={initialSearch}
-      />
-    </ResponsiveLayout>
+    <Casca buscaInicial={currentSearch}>
+      <ConteudoDaCasca>
+        <Library
+          onSelectContent={handleSelectContent}
+          initialContent={initialContent}
+          initialTotal={initialTotal}
+          initialPage={initialPage}
+          initialPageSize={pageSize}
+          initialSearch={initialSearch}
+        />
+      </ConteudoDaCasca>
+    </Casca>
   );
 }

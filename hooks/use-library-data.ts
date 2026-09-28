@@ -5,6 +5,15 @@ import { getUserContentPage } from '@/lib/content-service'
 import { useSearchParams } from 'next/navigation'
 import { debug } from '@/lib/debug'
 
+/**
+ * I1-PR-9 (decisão 4/6 do aval; folha 4, `LIB-erro`): a falha da carga SEM lista
+ * na tela deixa de virar o vazio de primeira vez — vira `erro`, com o que a tela
+ * precisa para o motivo (o `status` que o erro leva; rede = o `TypeError` do `fetch`). Com lista
+ * na tela a falha segue muda (a folha: revalidar não tem indicador). O *timeout*
+ * que o serviço devolvia como lista vazia com `error` também é erro (div. 701).
+ */
+export type ErroDaCarga = { status?: number; rede?: boolean }
+
 interface Options {
   user: any | null
   ready: boolean
@@ -36,6 +45,7 @@ export interface UseLibraryDataResult {
   selectedFilters: Filters
   setSelectedFilters: Dispatch<SetStateAction<Filters>>
   loading: boolean
+  erro: ErroDaCarga | null
   reload: () => Promise<void>
 }
 
@@ -75,6 +85,10 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
     favorite: false,
   })
   const [loading, setLoading] = useState(false)
+  const [erro, setErro] = useState<ErroDaCarga | null>(null)
+  // a lista NA TELA agora (o `content` do fechamento do `load` podia ser o de uma carga antiga)
+  const naTelaRef = useRef(initialContent.length)
+  naTelaRef.current = content.length
   const inProgressRef = useRef(false)
   const lastFocusTimeRef = useRef(Date.now())
   
@@ -106,6 +120,12 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
         filters: selectedFilters,
         useCache: !forceRefresh,
       }, undefined, userForQuery)
+
+      if (result.error) {
+        // o timeout do serviço (`content-service.ts`) — antes a lista vazia; agora a falha da carga
+        throw Object.assign(new Error(String(result.error)), { rede: true })
+      }
+      setErro(null)
 
       // Handle different scenarios for empty results
       if (result.data.length === 0) {
@@ -141,10 +161,12 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
         return
       }
       
-      // Sem cache offline desde a I1-PR3: sem conteúdo na tela, lista vazia
-      if (content.length === 0) {
+      // Sem cache offline desde a I1-PR3. Sem conteúdo na tela: a FALHA (LIB-erro), não o vazio
+      if (naTelaRef.current === 0) {
         setContent([])
         setTotalCount(0)
+        const status = (err as { status?: unknown } | null)?.status
+        setErro(typeof status === 'number' ? { status } : { rede: err instanceof TypeError || (err as { rede?: boolean } | null)?.rede === true })
       }
       // If this is a refresh and we already have content, keep the existing content
       // and just log the error instead of clearing everything
@@ -254,6 +276,7 @@ export function useLibraryData(options: Options): UseLibraryDataResult {
     selectedFilters,
     setSelectedFilters,
     loading,
+    erro,
     reload: () => load(true), // Force refresh to bypass cache
   }
 }

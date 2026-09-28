@@ -2,7 +2,6 @@
 
 import { useCallback, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { toast } from 'sonner';
 import { deleteContent, toggleFavorite, clearContentCache } from '@/lib/content-service';
 import { ContentItem, LibraryError } from '@/types/library';
 import { useFirebaseAuth } from '@/contexts/firebase-auth-context';
@@ -55,8 +54,7 @@ export function useContentActions(
       // Clear the content cache to ensure fresh data on reload
       clearContentCache();
 
-      toast.success(`"${content.title}" has been deleted`);
-      
+      // I1-PR-9 (I1-D26; decisão 7 da folha): sem toast — a lista já mostra que a linha saiu
       // Reload content
       try {
         await options.onReload();
@@ -101,12 +99,7 @@ export function useContentActions(
     try {
       await toggleFavorite(content.id, newFavoriteStatus);
       
-      toast.success(
-        newFavoriteStatus 
-          ? `"${content.title}" added to favorites` 
-          : `"${content.title}" removed from favorites`
-      );
-      
+      // I1-PR-9: sem toast — o rótulo Favoritar/Favorita já mudou na lista
       // Force reload to ensure UI is updated with fresh data
       await options.onReload();
     } catch (error) {

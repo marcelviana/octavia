@@ -11,7 +11,7 @@ import Link from "next/link"
 import { CascaAuth, RodapeAuth } from "./casca-auth"
 import { BotaoPrincipal, CampoAuth } from "./controles-auth"
 import { FRASES_AUTH } from "./frases-auth"
-import { LinhaDeAviso } from "./linha-de-aviso"
+import { LinhaDeAviso } from "@/components/identidade/linha-de-aviso"
 import { SeletorDeInstrumento } from "./seletor-de-instrumento"
 import { useSignup } from "./use-signup"
 

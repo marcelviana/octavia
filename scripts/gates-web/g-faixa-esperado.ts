@@ -46,16 +46,22 @@ async function main() {
       await page.evaluate(() => document.fonts.ready.then(() => undefined))
       // âncoras (decisão 7): a caixa do campo recebe o `data-testid` do app, pelo rótulo do irmão anterior
       const arqAncoras = path.join('tests/gates-web/esperado', `${pasta}.ancoras.json`)
-      const ancoras = fs.existsSync(arqAncoras) ? JSON.parse(fs.readFileSync(arqAncoras, 'utf8')) as { seletor: string; porRotulo: Record<string, string> } : null
-      const ancorados = ancoras ? await page.evaluate(({ seletor, porRotulo }) => {
+      // I1-PR9: `porSeletor` — a caixa que a folha desenha com dado de exemplo (a conta "MV") ou cujo texto é
+      // só o placeholder (a busca "Buscar…") recebe o testid do app pelo seletor (e, se dado, o texto visível)
+      const ancoras = fs.existsSync(arqAncoras) ? JSON.parse(fs.readFileSync(arqAncoras, 'utf8')) as { seletor?: string; porRotulo?: Record<string, string>; porSeletor?: { seletor: string; texto?: string; testid: string }[] } : null
+      const ancorados = ancoras ? await page.evaluate(({ seletor, porRotulo, porSeletor }) => {
         let n = 0
-        for (const cx of document.querySelectorAll(seletor)) {
+        if (seletor && porRotulo) for (const cx of document.querySelectorAll(seletor)) {
           const rotulo = (cx.previousElementSibling as HTMLElement | null)?.innerText.split('\n')[0]?.trim() ?? ''
           const t = porRotulo[rotulo]
           if (t) { cx.setAttribute('data-testid', t); n++ }
         }
+        for (const a of porSeletor ?? []) for (const cx of document.querySelectorAll(a.seletor)) {
+          if (a.texto !== undefined && (cx as HTMLElement).innerText.trim() !== a.texto) continue
+          cx.setAttribute('data-testid', a.testid); n++
+        }
         return n
-      }, ancoras) : 0
+      }, { seletor: ancoras.seletor, porRotulo: ancoras.porRotulo, porSeletor: ancoras.porSeletor }) : 0
       const secoes = await page.evaluate(() => [...document.querySelectorAll('section[data-estado]')].map((s) => s.getAttribute('data-estado') as string))
       const estados: Record<string, { C: ReturnType<typeof paraJson>; B: ReturnType<typeof paraJson> } | { falta: string }> = {}
       for (const secao of secoes) {

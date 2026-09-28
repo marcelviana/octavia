@@ -1,9 +1,8 @@
 "use client"
 
-import { useState } from "react"
 import { useRouter } from "next/navigation"
 import dynamic from "next/dynamic"
-import { ResponsiveLayout } from "@/components/responsive-layout"
+import { Casca } from "@/components/identidade/casca"
 import { useAuth } from "@/contexts/firebase-auth-context"
 
 // Bundle splitting: Lazy load setlist management features
@@ -22,17 +21,6 @@ const SetlistManager = dynamic(() => import("@/components/setlist-manager").then
 export default function SetlistsPageClient() {
   const router = useRouter()
   const { user, isLoading } = useAuth()
-  const [activeScreen, setActiveScreen] = useState("setlists")
-
-  // Handle navigation from sidebar
-  const handleNavigate = (screen: string) => {
-    if (screen === "setlists") {
-      setActiveScreen(screen)
-    } else {
-      router.push(`/${screen}`)
-    }
-  }
-
   // Handle setlist selection
   const handleSelectSetlist = (setlist: any) => {
     router.push(`/setlist/${setlist.id}`)
@@ -56,8 +44,11 @@ export default function SetlistsPageClient() {
   }
 
   return (
-    <ResponsiveLayout activeScreen={activeScreen} onNavigate={handleNavigate}>
-      <SetlistManager />
-    </ResponsiveLayout>
+    // I1-PR-9: a casca nova no lugar do ResponsiveLayout; o corpo velho fica como estava, com o fundo de antes
+    <Casca>
+      <div className="flex-1 bg-[#fffcf7]">
+        <SetlistManager />
+      </div>
+    </Casca>
   )
 }
