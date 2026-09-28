@@ -9,7 +9,10 @@
 > **Convenções**: `[medido]` = comando + saída literal (em `cn/`); `[lido]` = arquivo:linha; `[hipótese]` = o resto.
 > Divergências **a partir de 692**, numeração conferida pela coluna:
 > `git grep -nE '^\| \*\*6[0-9][0-9]\*\* \| [A-Z]' docs | … | sort -n | tail -1` → 691.
-> **Estado**: commit 1 (gate-first). Aguarda o aval (§7).
+> **Estado**: commit 1 (gate-first, `174ced3`), commit 2 (a implementação, `e57f5e2`, §9–§11) e **commit 3 (aceite e
+> docs, §12–§17)**. PR [#343](https://github.com/marcelviana/octavia/pull/343). Divergências: 692–695 (§6), **nenhuma
+> nova** no commit 2 (§15). **Veredito do aceite: PASSA — (e) = 0 e (b) = 0 nas TRÊS larguras (1138 · 711 · 411)**; as 45
+> erratas candidatas cobertas pela I1-E12 (§12).
 
 | arquivo | o que é |
 |---|---|
@@ -18,6 +21,10 @@
 | `cn/g-tok-excecao-dentro-cn.txt` · `-fora-cn.txt` · `-orfa-cn.txt` | CN da lista de exceção de inglês (§3) |
 | `cn/g-tok-main.txt` | G-tok (ii) com `app/privacy-policy/page.tsx` na lista, sobre a página da `main` — **REPROVA 36** |
 | `cn/g-faixa-esperado.txt` | a folha `3-privacy-policy` medida → `tests/gates-web/esperado/3-privacy-policy.json` |
+| `cn/privacy-texto-cn.txt` | o CN de igualdade de texto: passa na página velha e na nova; REPROVA com uma palavra trocada (§10) |
+| `cn/g-tok-depois.txt` · `g-back-depois.txt` · `g-palco.txt` · `pnpm-test.txt` · `cn-pr1.txt` · `lint.txt` · `build.txt` | os verdes do commit 2 |
+| `cn/g-faixa-aceite.txt` | o veredito do aceite (os sete JSON), verbatim |
+| `capturas/privacy-policy-{C-1138,B-711,A-411}.png` | uma captura por largura (errata da I1-D12), `next dev` sem `.env` |
 
 ---
 
@@ -161,3 +168,167 @@ cópia dos nós, não à mão.
 | executor | `next dev` local **sem** `.env` (porta 3108; a árvore só tem `.env.example`, `ls`, não aberto) | 1 subida, parada ao fim |
 | executor | navegador | a folha por `file://`; a `/privacy-policy` velha em `localhost:3108` (só `GET` da página) |
 | — | `packages/identidade` | **não mudou** |
+
+---
+
+## 9. O aval do commit 1 — decisões `[Marcel, 2026-09-28]`
+
+1. **Div. 693**: `h1` e `h2` com **`leading-natural`**, como os títulos do auth. **Errata I1-E12** no
+   `docs/ux/DESIGN-I1/README.md` §2.2 e em `erratasFaixa`: *"títulos com entrelinha natural (o padrão do web desde a
+   I1-PR6); a folha `3-privacy-policy` renderizou 1,3 (`h1`) e 1,35 (`h2`) sem token; o Δy acumulado dos nós seguintes é
+   consequência desta errata"* — a cobertura casa todos os Δy dos nós abaixo do primeiro título, em C e B.
+   `SHA256SUMS` regenerado (docs do congelamento).
+2. **Div. 692**: o texto fica **byte a byte**; o respiro antes do e-mail é `ml-espaco-xs`.
+3. **`"use client"`** sai (nenhum hook) — limpeza.
+4. **Div. 694** registrada (661 × 663, contorno da moldura, abaixo da tolerância).
+
+## 10. Commit 2 — o que mudou `[medido]`
+
+| grupo | arquivos | o quê |
+|---|---|---|
+| a tela | `app/privacy-policy/page.tsx` (**112 → 118 linhas**: −2 do `"use client"`, +8 do comentário de cabeçalho) | só classes e tags. `<div>` de fundo → `<main className="min-h-screen bg-cor-bg text-cor-text font-fam-ui font-peso-ui leading-natural py-espaco-xxxl px-web-margem flex justify-center items-start">` (a margem de `web.margem`; `py` = os 48 da moldura); o cartão → coluna `w-web-folha-largura max-w-full flex flex-col gap-espaco-xxl`; `h1` `font-fam-display font-peso-display text-tam-title-large leading-natural`; cada `section` `flex flex-col gap-espaco-md`; `h2` `font-fam-display font-peso-display text-tam-title leading-natural`; os 14 `p` `text-tam-body leading-entrelinha-text`; os 2 `a` `text-cor-accent-ink underline ml-espaco-xs`. A semântica de antes (`h1`, `section`, `h2`, `p`, `a`) fica |
+| o texto | — | **nenhuma linha de texto mudou**: a transformação foi feita por substituição das classes/tags no arquivo velho (script, com contagem de ocorrências), não reescrita. `git diff d57a832 -- app/privacy-policy/page.tsx` fora das linhas de `className`, do cabeçalho e das tags: só `-"use client"`, `-<section>` ×7, `-<p>` ×7 e `</div>` → `</main>` |
+| CN de texto | `tests/gates-web/privacy-texto.test.ts` (novo) | 4 casos: o esperado tem 22 + 2 linhas; o texto de cada bloco (`h1…h6`, `p`, `li`), na ordem do DOM, ≡ `texto-antes.txt`; nenhum texto fora dos blocos; os dois `mailto:` com o mesmo `href`. No jsdom não há `innerText`: a linha é o `textContent` de cada bloco com a mesma normalização — rodado sobre a página VELHA, dá o mesmo que o Chromium deu (a prova de que a normalização reproduz o `innerText`) |
+| medidor | `scripts/gates-web/g-faixa-superficies.ts` | `privacy-policy` implementada: um estado, `PRIVACY` (`secao: 'PRIVACY'`, `espera: 'Cookies and consent / Cookies e consentimento'`) |
+| docs do congelamento | `docs/ux/DESIGN-I1/README.md` §2.2, `erratas.json` (`erratasFaixa`, + o `_leia_faixa`), `SHA256SUMS` | a I1-E12 (`estados: ["PRIVACY"]`, `n: 45`); só a linha do `README.md` muda no `SHA256SUMS` (`c7407aaf…` → `382b3d8f…`); `shasum -a 256 -c` → 14/14 OK |
+
+Zero mudança de comportamento (I1-D9): os dois `mailto:` são os de antes; nenhum link novo; nenhum `@/components/ui/*`,
+nenhum `lucide-react`, nenhum toast. O `"use client"` saiu: a rota vira server component (`ƒ /privacy-policy 183 B`).
+
+### 10.1 O CN de igualdade de texto (`cn/privacy-texto-cn.txt`)
+
+| caso | resultado |
+|---|---|
+| a página **velha** (`git show d57a832:app/privacy-policy/page.tsx` posta no lugar, desfeita) | **4 passed** |
+| a página **nova** | **4 passed** |
+| mutação: `stored securely on` → `stored safely on` na página nova | **1 failed \| 3 passed** — o diff do Vitest mostra `-"Your information is stored securely…"` / `+"…stored safely…"`; `# exit: 1` |
+| mutação desfeita (`cmp` com a cópia da branch → igual) | **4 passed** |
+
+## 11. Os gates — verdes `[medido]`
+
+| gate / suíte | resultado | arquivo |
+|---|---|---|
+| G-tok | **PASSA**: (i) 19/19 cobertos, 0 órfãs; (ii) `arquivos: 20 · literais de identidade acusados: 0 · toasts: 0 · imports de ui: 0 · … · isentos de inglês: 1` | `cn/g-tok-depois.txt` |
+| G-back | **PASSA** sem linha `gback:` — nenhum arquivo do núcleo tocado | `cn/g-back-depois.txt` |
+| G-palco | **PASSA — 0** | `cn/g-palco.txt` |
+| `pnpm test` | `Test Files 109 passed \| 3 skipped (112)` · `Tests 1075 passed \| 77 skipped (1152)` — +1 arquivo, +4 testes (o CN de texto) | `cn/pnpm-test.txt` |
+| CN da PR-1 (`components/auth/__tests__/login-sessao-cn.test.tsx`) | **15/15** | `cn/cn-pr1.txt` |
+| `tsc --noEmit` (raiz) | 0 erros | — |
+| `pnpm lint` | `✔ No ESLint warnings or errors` | `cn/lint.txt` |
+| `pnpm build` | `✓ Compiled successfully`; `├ ƒ /privacy-policy  183 B  103 kB` — dinâmica como toda rota (div. 689) | `cn/build.txt` |
+| `shasum -a 256 -c SHA256SUMS` (DESIGN-I1) | 14/14 OK | — |
+
+## 12. O aceite — o veredito `[medido]`
+
+Rodada do executor: `2026-09-28T14:56:19Z`, `http://localhost:3109` (a 3000 segue com o `next-server` da árvore
+`../octavia-i1-pr6` — não mexido, como a div. 691; a 3108 foi a do commit 1), commit **`e57f5e2`** (árvore limpa, sem
+`+sujo`: os `cn/` novos ficaram fora da árvore durante a rodada), Chromium 140.0.7339.16. **`next dev` sem `.env`**: o log
+não tem *"Environments: …"* e diz *"Firebase not configured - missing environment variables"*. Saída:
+`tests/gates-web/medicoes/privacy-policy.json`. Veredito verbatim (os sete JSON): `cn/g-faixa-aceite.txt`.
+
+```
+$ node scripts/gates-web/g-faixa-veredito.mjs tests/gates-web/medicoes
+## contados à parte (não reprovam): errata candidata 99 · sem par folha 106 · sem par app 74 (C e B) · não medidos 10
+## erratas candidatas sem cobertura (erratasFaixa, div. 681): 0
+G-faixa: PASSA
+# exit: 0
+```
+
+| largura | (e) | (b) | (d′) | errata candidata | sem par folha/app | inalcançáveis em A |
+|---|---|---|---|---|---|---|
+| **1138** (C) | **0** | **0** | 0 | 22 — coberta por I1-E12 | 0 / 0 | — |
+| **711** (B) | **0** | **0** | 3 | 23 — coberta por I1-E12 | 0 / 0 | — |
+| **411** (A) | **0** | **0** | 20 | — | — | **0** |
+
+(99 = as 54 de auth e landing + as 45 da política.) (d′) é triagem, não reprova; a linha de base da página velha era
+0 · 4 · 20 (I1-PR5 §3).
+
+### 12.1 As 45 candidatas × a cascata dos títulos
+
+Cada uma decomposta, componente a componente:
+
+| componente | C (22) | B (23) | explicação |
+|---|---|---|---|
+| **Δy** | −7,1 no 1º parágrafo, depois −3,7 a mais por seção, até **−29,2** | −3,4 no 1º título de seção, −10,8 no 1º parágrafo (o título de duas linhas perde 7,4), até **−32,9** | a cascata: `h1` 33 × 36,4 (−3,4) + cada `h2` 26 × 29,7 (−3,7) — **I1-E12** |
+| **Δh** | −3,7 nos 6 `h2` listados; 0 nos parágrafos e links | −3,7 nos `h2` de uma linha, **−7,4** no de duas; 0 nos parágrafos e links | a entrelinha dos títulos — **I1-E12** |
+| **Δx** | +1 em todos (o contorno da moldura); **+1,8** nos 2 links | 0; **+0,8** nos 2 links | o contorno (como a I1-PR7); nos links, o `ml-espaco-xs` (4 px) no lugar do espaço da folha — **div. 692**, abaixo da tolerância |
+| **Δw** | 0 | **+2** em todo bloco de texto (661 na folha, 663 no app) | **div. 694**, abaixo da tolerância; **nenhuma quebra de linha mudou**: Δh = 0 em todos os 14 parágrafos, nas duas faixas |
+
+**Nenhuma candidata fora da cascata**: nenhum componente acima de 4 px que não seja Δy ou o Δh de um título. O `h1` não é
+candidata (Δh −3,4 e Δy 0, abaixo da tolerância). Sem par folha/app: **0/0** nas duas faixas — o par dos parágrafos de
+contato funciona apesar do espaço (§4). O log de requests: 26 por largura, **0** a `octavia.rocks`, `/api/*` só os dois
+`GET /api/health` do controle positivo — **0 escritas** (os dois `net::ERR_ABORTED` de `main-app.js`/`layout.js` do `next
+dev` são os mesmos do `landing.json`).
+
+**A primeira rodada** (`14:53:11Z`, commit `174ced3+sujo`, a implementação ainda fora do commit) deu o mesmo: (e) = 0 e
+(b) = 0 nas três e as mesmas 45 candidatas, então **sem cobertura** (a I1-E12 ainda não estava no `erratas.json`). Nada a
+consertar; não ficou em `medicoes/` (a regra guarda a rodada que reprova) e a do aceite foi refeita com o commit 2 limpo.
+
+Capturas (uma por largura, `fullPage`): `capturas/privacy-policy-C-1138.png`, `-B-711.png`, `-A-411.png` (o selo "N" no
+canto é o indicador do `next dev`). O texto nelas é o da política, obra do projeto — a regra do anexo sem texto de música
+não se aplica.
+
+## 13. O texto
+
+`texto-antes.txt` (§2) é o esperado; o CN do §10.1 é a prova. As 24 frases do dicionário do pre-check (22 blocos + 2
+e-mails) **ficam todas, sem uma letra mudada**: nenhuma traduzida, nenhuma cortada, nenhuma acrescentada (I1-D17
+exceção, I1-D19, `README-design.md` §5.4). Não há `frases-privacy-policy.ts`: o texto não é frase do produto, é o
+documento, e mora na página.
+
+## 14. G-tok — antes × depois `[medido]`
+
+| lista | gate | resultado | arquivo |
+|---|---|---|---|
+| a fixture (a página da `main`) nas duas listas | CN | `REPROVA — 36` (só literais) | `cn/g-tok-excecao-dentro-cn.txt` |
+| a fixture fora da exceção | CN | `REPROVA — 47` (36 + 11 de inglês) | `cn/g-tok-excecao-fora-cn.txt` |
+| exceção sem arquivo na lista (ii) | CN | `REPROVA — 48` (47 + a órfã) | `cn/g-tok-excecao-orfa-cn.txt` |
+| os 19 de antes + `app/privacy-policy/page.tsx` da `main` | commit 1 | `REPROVA — 36` (todas na política) | `cn/g-tok-main.txt` |
+| os 20 da branch | commit 2 | `PASSA` — `literais 0 · toasts 0 · imports de ui 0 · isentos de inglês 1` | `cn/g-tok-depois.txt` |
+
+## 15. Divergências — nenhuma nova no commit 2; destino das 692–695
+
+| # | destino |
+|---|---|
+| **692** | aplicado: texto byte a byte, respiro `ml-espaco-xs`; no aceite, Δx 1,8 (C) e 0,8 (B) nos links, abaixo da tolerância |
+| **693** | → **I1-E12** (`DESIGN-I1/README.md` §2.2, `erratasFaixa`), cobre as 45 |
+| **694** | registrado: Δw 2 em B em todo bloco, abaixo da tolerância, **sem quebra de linha diferente** (Δh 0 nos parágrafos) |
+| **695** | registrado (§2) |
+
+Próxima divergência: **696**.
+
+## 16. O molde — o que a próxima superfície herda (acréscimo ao §16 da I1-PR-7)
+
+1. **A lista de exceção de inglês existe e tem um item**: `scripts/gates-web/g-tok-sem-ingles.txt` (ou
+   `G_TOK_SEM_INGLES`), hoje só `app/privacy-policy/page.tsx` (I1-D17 exceção). O arquivo nela segue cobrado em tudo o
+   que é literal, toast e import de ui; só o inglês é isento. Entrada fora de `g-tok-arquivos.txt` reprova. Nenhuma
+   outra superfície tem razão para entrar nela — o resto do web é pt-BR (I1-D17).
+2. **Texto que não se reescreve tem CN de igualdade**: congela-se o `innerText` normalizado antes de tocar
+   (`scripts/gates-web/privacy-texto-extrair.ts`) e o Vitest compara bloco a bloco; a transposição é por substituição de
+   classes no arquivo velho, não por reescrita.
+3. **Títulos do web em `leading-natural`** (o auth, a política): uma folha que declare outra entrelinha de título sem
+   token é errata do G-faixa, não token novo, enquanto o pacote não mudar.
+
+### 16.1 Bloco ```gates-web``` e extras (copiados do corpo da PR)
+
+```gates
+# I1-PR-8: nada do nativo
+```
+
+```gates-web
+# I1-PR-8: nenhum arquivo do núcleo do G-back tocado (G-back PASSA sem declaração)
+gtok: scripts/gates-web/g-tok-arquivos.txt — +app/privacy-policy/page.tsx
+gtok: scripts/gates-web/g-tok-sem-ingles.txt — nova lista, I1-D17 exceção
+# extras: docs do congelamento — docs/ux/DESIGN-I1/README.md §2.2 (I1-E12) + erratas.json (erratasFaixa) + SHA256SUMS (só a linha do README.md)
+# tests/gates-web/medicoes/privacy-policy.json — o aceite do executor (next dev sem .env, porta 3109)
+```
+
+## 17. Contabilidade final da I1-PR-8
+
+| quem | item | valor |
+|---|---|---|
+| executor | requests a `https://octavia.rocks` ou preview · logins · `.env*` abertos · escritas · contas | **0 · 0 · 0 · 0 · 0** |
+| executor | `next dev` local **sem** `.env` (a árvore só tem `.env.example`) | 2 subidas: a do commit 1 (3108, `texto-antes.txt`) e a do commit 2 (3109, as duas rodadas + capturas); paradas ao fim |
+| executor | navegador | a folha por `file://`; a política em `localhost:3108`/`3109` |
+| todos | requests a `octavia.rocks` | **0** (`prodAbortados` 0 nas três larguras) |
+| todos | escritas a `/api/*` | **0** (só `GET /api/health` do controle positivo) |
+| — | `packages/identidade` | **não mudou** (sem APK) |

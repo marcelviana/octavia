@@ -1,0 +1,5 @@
+$ pnpm build
+ ✓ Compiled successfully
+┌ ƒ /                                      191 B         111 kB
+├ ƒ /privacy-policy                        183 B         103 kB
+# exit: 0

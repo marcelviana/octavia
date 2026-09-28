@@ -1,0 +1,28 @@
+# CN de igualdade de texto — (1) sobre a página VELHA (git show d57a832:app/privacy-policy/page.tsx, posta no lugar e desfeita): a normalização do jsdom reproduz o innerText do Chromium
+$ pnpm exec vitest run --project web tests/gates-web/privacy-texto.test.ts   # página velha
+ ✓ |web| tests/gates-web/privacy-texto.test.ts (4 tests) 28ms
+      Tests  4 passed (4)
+
+# (2) a página NOVA (a branch)
+$ pnpm exec vitest run --project web tests/gates-web/privacy-texto.test.ts
+ ✓ |web| tests/gates-web/privacy-texto.test.ts (4 tests) 28ms
+      Tests  4 passed (4)
+
+# (3) MUTAÇÃO: uma palavra trocada na página nova ("securely" → "safely"), desfeita depois
+$ sed -i "" "s/stored securely on/stored safely on/" app/privacy-policy/page.tsx && pnpm exec vitest run --project web tests/gates-web/privacy-texto.test.ts
+     ✓ o esperado tem 22 linhas de texto e 2 mailto 1ms
+     × o texto visível ≡ texto-antes.txt, linha a linha 24ms
+     ✓ nenhum texto fora dos blocos 3ms
+     ✓ os dois mailto: com o mesmo href 3ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  |web| tests/gates-web/privacy-texto.test.ts > privacy-policy — o texto de antes, byte a byte > o texto visível ≡ texto-antes.txt, linha a linha
+      Tests  1 failed | 3 passed (4)
+# o diff do Vitest (esperado − / recebido +):
+#   -   "Your information is stored securely on trusted cloud providers. We keep data only as long as necessary for the purposes stated in this policy.",
+#   +   "Your information is stored safely on trusted cloud providers. We keep data only as long as necessary for the purposes stated in this policy.",
+
+# exit: 1
+
+# (4) mutação desfeita (cmp com a cópia da branch):
+igual
+      Tests  4 passed (4)
