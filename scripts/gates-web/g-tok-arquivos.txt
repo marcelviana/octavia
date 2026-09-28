@@ -24,3 +24,23 @@ components/landing/frases-landing.ts
 components/identidade/link-botao.tsx
 # I1-PR8 — superfície 3, privacy-policy (folha 3-privacy-policy); o inglês é isento (g-tok-sem-ingles.txt, I1-D17 exceção)
 app/privacy-policy/page.tsx
+# I1-PR9 — superfície 4, content-lista (folha 4-content-lista): /dashboard e /library, os que sobrevivem
+# (commit 1, gate-first). A casca nova, as frases e o que o commit 2 criar entram no commit 2.
+app/dashboard/page.tsx
+app/library/page.tsx
+components/dashboard-page-client.tsx
+components/dashboard.tsx
+components/library-page-client.tsx
+components/library.tsx
+components/library/index.ts
+components/library/RefactoredLibrary.tsx
+components/library/LibraryHeader.tsx
+components/library/OptimizedLibraryList.tsx
+components/library/LibraryPagination.tsx
+components/library/LibraryEmptyState.tsx
+components/library/LibraryLoadingState.tsx
+components/library/LibraryErrorBoundary.tsx
+components/delete-content-dialog.tsx
+hooks/use-library-data.ts
+hooks/use-content-actions.ts
+lib/library-utils.ts

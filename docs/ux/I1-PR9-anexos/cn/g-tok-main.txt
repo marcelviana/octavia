@@ -1,0 +1,603 @@
+$ node scripts/gates-web/g-tok.mjs --so-arquivos
+## (ii) arquivos redesenhados — scripts/gates-web/g-tok-arquivos.txt
+  ✗ components/dashboard.tsx:81 [cor] "from-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:81 [cor] "to-orange-600" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:81 [cor] "from-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:81 [cor] "to-orange-700" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:92 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:92 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:95 [cor] "from-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:95 [cor] "to-orange-600" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:95 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:95 [cor] "text-amber-700" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:95 [cor] "bg-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:101 [cor] "from-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:101 [cor] "to-orange-600" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:101 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:101 [cor] "text-amber-700" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:101 [cor] "bg-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:107 [cor] "from-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:107 [cor] "to-orange-600" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:107 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:107 [cor] "text-amber-700" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:107 [cor] "bg-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:115 [cor] "bg-white/90" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:115 [cor] "border-amber-100" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:117 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:122 [cor] "text-amber-900" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:125 [cor] "text-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:129 [cor] "bg-white/90" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:129 [cor] "border-amber-100" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:131 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:136 [cor] "text-amber-900" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:139 [cor] "text-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:143 [cor] "bg-white/90" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:143 [cor] "border-amber-100" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:145 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:150 [cor] "text-amber-900" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:153 [cor] "text-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:157 [cor] "bg-white/90" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:157 [cor] "border-amber-100" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:159 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:164 [cor] "text-amber-900" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:167 [cor] "text-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:173 [cor] "bg-white/90" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:173 [cor] "border-amber-100" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:175 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:176 [cor] "text-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:186 [cor] "bg-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:186 [cor] "ring-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:199 [cor] "bg-amber-100" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:204 [cor] "text-gray-900" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:207 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:212 [cor] "text-gray-400" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:217 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:218 [cor] "text-gray-300" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:226 [cor] "bg-white/90" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:226 [cor] "border-amber-100" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:228 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:229 [cor] "text-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:239 [cor] "bg-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:239 [cor] "ring-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:252 [cor] "bg-amber-100" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:257 [cor] "text-gray-900" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:260 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:265 [cor] "text-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:272 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:273 [cor] "text-gray-300" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:284 [cor] "bg-white/90" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:284 [cor] "border-amber-100" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:286 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:287 [cor] "text-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:297 [cor] "bg-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:297 [cor] "ring-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:310 [cor] "bg-amber-100" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:315 [cor] "text-gray-900" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:318 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:323 [cor] "text-gray-400" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:328 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:329 [cor] "text-gray-300" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:339 [cor] "bg-white/90" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:339 [cor] "border-amber-100" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:341 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:342 [cor] "text-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:352 [cor] "bg-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:352 [cor] "ring-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:365 [cor] "bg-amber-100" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:370 [cor] "text-gray-900" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:373 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:378 [cor] "text-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:385 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:386 [cor] "text-gray-300" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:79 [tamanho de fonte] "text-3xl" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:117 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:122 [tamanho de fonte] "text-2xl" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:125 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:131 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:136 [tamanho de fonte] "text-2xl" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:139 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:145 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:150 [tamanho de fonte] "text-2xl" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:153 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:159 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:164 [tamanho de fonte] "text-2xl" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:167 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:204 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:207 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:257 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:260 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:315 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:318 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:370 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:373 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:77 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:77 [espaçamento] "space-y-6" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:82 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:90 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:92 [espaçamento] "p-1" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:113 [espaçamento] "space-y-6" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:114 [espaçamento] "gap-4" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:116 [espaçamento] "pb-2" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:130 [espaçamento] "pb-2" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:144 [espaçamento] "pb-2" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:158 [espaçamento] "pb-2" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:172 [espaçamento] "gap-6" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:181 [espaçamento] "space-y-3" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:186 [espaçamento] "space-x-3" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:186 [espaçamento] "p-2" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:217 [espaçamento] "py-8" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:218 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:234 [espaçamento] "space-y-3" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:239 [espaçamento] "space-x-3" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:239 [espaçamento] "p-2" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:272 [espaçamento] "py-8" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:273 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:283 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:292 [espaçamento] "space-y-3" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:297 [espaçamento] "space-x-3" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:297 [espaçamento] "p-3" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:328 [espaçamento] "py-8" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:329 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:338 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:347 [espaçamento] "space-y-3" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:352 [espaçamento] "space-x-3" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:352 [espaçamento] "p-3" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:385 [espaçamento] "py-8" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:386 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:55 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:55 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:57 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:57 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:59 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:59 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:61 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:61 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:63 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:63 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:82 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:82 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:199 [tamanho] "w-8" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:199 [tamanho] "h-8" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:212 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:212 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:218 [tamanho] "w-12" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:218 [tamanho] "h-12" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:252 [tamanho] "w-8" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:252 [tamanho] "h-8" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:265 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:265 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:273 [tamanho] "w-12" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:273 [tamanho] "h-12" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:310 [tamanho] "w-10" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:310 [tamanho] "h-10" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:323 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:323 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:329 [tamanho] "w-12" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:329 [tamanho] "h-12" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:365 [tamanho] "w-10" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:365 [tamanho] "h-10" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:378 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:378 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:386 [tamanho] "w-12" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:386 [tamanho] "h-12" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:92 [raio] "rounded-xl" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:95 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:101 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:107 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:186 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:199 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:239 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:252 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:297 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:310 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:352 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:365 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:92 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:115 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:129 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:143 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:157 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:173 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:226 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:284 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:339 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:79 [tracking] "tracking-tight" — use a custom property de app/styles/identidade.css
+  ✗ components/dashboard.tsx:10 [import de ui] "from \"@/components/ui/card\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/dashboard.tsx:11 [import de ui] "from \"@/components/ui/tabs\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/dashboard.tsx:12 [import de ui] "from \"@/components/ui/button\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/dashboard.tsx:79 [inglês, texto JSX] "Dashboard" ← termo "dashboard"
+  ✗ components/dashboard.tsx:82 [inglês, texto JSX] "Add Content" ← termo "content"
+  ✗ components/dashboard.tsx:102 [inglês, texto JSX] "Recent" ← termo "recent"
+  ✗ components/dashboard.tsx:108 [inglês, texto JSX] "Favorites" ← termo "favorites"
+  ✗ components/dashboard.tsx:117 [inglês, texto JSX] "Total Content" ← termo "content"
+  ✗ components/dashboard.tsx:125 [inglês, texto JSX] "pieces in your library" ← termo "library"
+  ✗ components/dashboard.tsx:145 [inglês, texto JSX] "Favorites" ← termo "favorites"
+  ✗ components/dashboard.tsx:153 [inglês, texto JSX] "marked as favorites" ← termo "favorites"
+  ✗ components/dashboard.tsx:159 [inglês, texto JSX] "Recent" ← termo "recent"
+  ✗ components/dashboard.tsx:175 [inglês, texto JSX] "Recent Content" ← termo "content"
+  ✗ components/dashboard.tsx:176 [inglês, texto JSX] "Your recently viewed music" ← termo "your"
+  ✗ components/dashboard.tsx:219 [inglês, texto JSX] "No recent content" ← termo "content"
+  ✗ components/dashboard.tsx:228 [inglês, texto JSX] "Favorite Content" ← termo "favorite"
+  ✗ components/dashboard.tsx:229 [inglês, texto JSX] "Your starred music pieces" ← termo "your"
+  ✗ components/dashboard.tsx:274 [inglês, texto JSX] "No favorite content" ← termo "favorite"
+  ✗ components/dashboard.tsx:286 [inglês, texto JSX] "Recent Content" ← termo "content"
+  ✗ components/dashboard.tsx:287 [inglês, texto JSX] "Your recently accessed music pieces" ← termo "your"
+  ✗ components/dashboard.tsx:330 [inglês, texto JSX] "No recent content" ← termo "content"
+  ✗ components/dashboard.tsx:341 [inglês, texto JSX] "Favorite Content" ← termo "favorite"
+  ✗ components/dashboard.tsx:342 [inglês, texto JSX] "Your starred music pieces" ← termo "your"
+  ✗ components/dashboard.tsx:387 [inglês, texto JSX] "No favorite content" ← termo "favorite"
+  ✗ components/dashboard.tsx:79 [inglês, atributo] "Dashboard" ← termo "dashboard"
+  ✗ components/library-page-client.tsx:12 [cor] "border-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ components/library-page-client.tsx:13 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/library-page-client.tsx:12 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ components/library-page-client.tsx:12 [tamanho] "h-8" — use a custom property de app/styles/identidade.css
+  ✗ components/library-page-client.tsx:12 [tamanho] "w-8" — use a custom property de app/styles/identidade.css
+  ✗ components/library-page-client.tsx:12 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ components/library-page-client.tsx:12 [borda] "border-b-2" — use a custom property de app/styles/identidade.css
+  ✗ components/library-page-client.tsx:10 [valor arbitrário] "min-h-[400px]" — use a custom property de app/styles/identidade.css
+  ✗ components/library-page-client.tsx:13 [inglês, texto JSX] "Loading library..." ← termo "loading"
+  ✗ components/library/RefactoredLibrary.tsx:138 [cor] "#fff9f0" — use a custom property de app/styles/identidade.css
+  ✗ components/library/RefactoredLibrary.tsx:138 [cor] "#fff5e5" — use a custom property de app/styles/identidade.css
+  ✗ components/library/RefactoredLibrary.tsx:138 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/RefactoredLibrary.tsx:138 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/RefactoredLibrary.tsx:138 [espaçamento] "p-6" — use a custom property de app/styles/identidade.css
+  ✗ components/library/RefactoredLibrary.tsx:138 [valor arbitrário] "from-[#fff9f0]" — use a custom property de app/styles/identidade.css
+  ✗ components/library/RefactoredLibrary.tsx:138 [valor arbitrário] "to-[#fff5e5]" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:76 [cor] "#A69B8E" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:73 [cor] "from-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:73 [cor] "to-orange-600" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:87 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:87 [cor] "bg-white" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:87 [cor] "bg-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:157 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:157 [cor] "bg-white" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:157 [cor] "bg-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:173 [cor] "from-blue-600" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:173 [cor] "to-indigo-600" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:173 [cor] "from-blue-700" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:173 [cor] "to-indigo-700" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:173 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:73 [tamanho de fonte] "text-xl" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:73 [tamanho de fonte] "text-2xl" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:73 [tamanho de fonte] "text-3xl" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:76 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:76 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:76 [tamanho de fonte] "text-base" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:87 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:87 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:99 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:109 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:119 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:129 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:147 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:157 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:157 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:173 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:173 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:70 [espaçamento] "gap-1" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:70 [espaçamento] "gap-2" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:70 [espaçamento] "gap-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:70 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:70 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:70 [espaçamento] "mb-6" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:71 [espaçamento] "gap-2" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:71 [espaçamento] "gap-3" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:76 [espaçamento] "mt-0.5" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:76 [espaçamento] "mt-1" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:81 [espaçamento] "gap-1" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:81 [espaçamento] "gap-1.5" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:81 [espaçamento] "gap-2" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:87 [espaçamento] "px-1.5" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:87 [espaçamento] "px-2" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:87 [espaçamento] "px-3" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:91 [espaçamento] "ml-1" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:91 [espaçamento] "ml-2" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:92 [espaçamento] "ml-1" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:98 [espaçamento] "p-2" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:99 [espaçamento] "mb-1" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:100 [espaçamento] "gap-1" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:100 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:119 [espaçamento] "mb-1" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:119 [espaçamento] "mt-3" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:120 [espaçamento] "gap-1" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:120 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:139 [espaçamento] "mt-3" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:145 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:157 [espaçamento] "px-1.5" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:157 [espaçamento] "px-2" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:157 [espaçamento] "px-3" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:160 [espaçamento] "ml-2" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:173 [espaçamento] "px-1.5" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:173 [espaçamento] "px-2" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:173 [espaçamento] "px-3" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:176 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:87 [tamanho] "h-7" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:87 [tamanho] "h-8" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:87 [tamanho] "h-9" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:90 [tamanho] "w-3" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:90 [tamanho] "h-3" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:90 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:90 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:92 [tamanho] "w-3" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:92 [tamanho] "h-3" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:92 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:92 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:95 [tamanho] "w-56" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:157 [tamanho] "w-9" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:157 [tamanho] "w-10" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:157 [tamanho] "h-7" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:157 [tamanho] "h-8" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:157 [tamanho] "h-9" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:159 [tamanho] "w-3" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:159 [tamanho] "h-3" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:159 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:159 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:173 [tamanho] "h-7" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:173 [tamanho] "h-8" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:173 [tamanho] "h-9" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:176 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:176 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:71 [valor arbitrário] "min-h-[45px]" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:71 [valor arbitrário] "min-h-[50px]" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:71 [valor arbitrário] "min-h-[60px]" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:76 [valor arbitrário] "text-[#A69B8E]" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:157 [valor arbitrário] "w-[120px]" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryHeader.tsx:4 [import de ui] "from '@/components/ui/button'" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/library/LibraryHeader.tsx:5 [import de ui] "from '@/components/ui/badge'" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/library/LibraryHeader.tsx:12 [import de ui] "from '@/components/ui/select'" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/library/LibraryHeader.tsx:19 [import de ui] "from '@/components/ui/dropdown-menu'" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/library/LibraryHeader.tsx:73 [inglês, texto JSX] "Your Music Library" ← termo "library"
+  ✗ components/library/LibraryHeader.tsx:76 [inglês, texto JSX] "Manage and organize all your musical content" ← termo "content"
+  ✗ components/library/LibraryHeader.tsx:96 [inglês, texto JSX] "Filter By" ← termo "filter"
+  ✗ components/library/LibraryHeader.tsx:99 [inglês, texto JSX] "Content Type" ← termo "content"
+  ✗ components/library/LibraryHeader.tsx:147 [inglês, texto JSX] "Favorites only" ← termo "favorites"
+  ✗ components/library/LibraryHeader.tsx:160 [inglês, texto JSX] "Sort" ← termo "sort"
+  ✗ components/library/LibraryHeader.tsx:164 [inglês, texto JSX] "Most Recent" ← termo "recent"
+  ✗ components/library/LibraryHeader.tsx:165 [inglês, texto JSX] "Title (A-Z)" ← termo "title"
+  ✗ components/library/LibraryHeader.tsx:166 [inglês, texto JSX] "Artist (A-Z)" ← termo "artist"
+  ✗ components/library/LibraryHeader.tsx:177 [inglês, texto JSX] "Add Content" ← termo "content"
+  ✗ components/library/OptimizedLibraryList.tsx:92 [cor] "#A69B8E" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:108 [cor] "#A69B8E" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:148 [cor] "#A69B8E" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:69 [cor] "bg-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:69 [cor] "border-yellow-100" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:80 [cor] "ring-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:89 [cor] "text-gray-900" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:118 [cor] "bg-white" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:136 [cor] "bg-white" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:158 [cor] "bg-amber-100" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:166 [cor] "text-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:166 [cor] "fill-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:167 [cor] "text-gray-400" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:167 [cor] "text-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:198 [cor] "text-red-600" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:231 [cor] "bg-white/90" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:231 [cor] "border-amber-100" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:234 [cor] "divide-amber-100" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:89 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:89 [tamanho de fonte] "text-base" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:92 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:92 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:108 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:118 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:125 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:148 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:69 [espaçamento] "p-3" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:69 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:70 [espaçamento] "gap-3" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:87 [espaçamento] "gap-2" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:92 [espaçamento] "mt-0.5" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:98 [espaçamento] "mx-1" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:108 [espaçamento] "mt-0.5" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:114 [espaçamento] "gap-1.5" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:114 [espaçamento] "mt-2" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:118 [espaçamento] "px-1.5" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:118 [espaçamento] "py-0.5" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:125 [espaçamento] "px-1.5" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:125 [espaçamento] "py-0.5" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:134 [espaçamento] "space-x-2" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:134 [espaçamento] "ml-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:148 [espaçamento] "ml-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:149 [espaçamento] "mr-1" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:154 [espaçamento] "ml-2" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:189 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:193 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:202 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:73 [tamanho] "w-10" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:73 [tamanho] "h-10" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:149 [tamanho] "w-3" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:149 [tamanho] "h-3" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:158 [tamanho] "h-8" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:158 [tamanho] "w-8" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:164 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:164 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:180 [tamanho] "h-8" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:180 [tamanho] "w-8" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:184 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:184 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:189 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:189 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:193 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:193 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:202 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:202 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:73 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:80 [raio] "rounded-md" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:69 [borda] "border-b" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:73 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:73 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:231 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:92 [valor arbitrário] "text-[#A69B8E]" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:93 [valor arbitrário] "max-w-[120px]" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:99 [valor arbitrário] "max-w-[100px]" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:108 [valor arbitrário] "text-[#A69B8E]" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:148 [valor arbitrário] "text-[#A69B8E]" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:236 [valor arbitrário] "max-h-[400px]" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:236 [valor arbitrário] "max-h-[450px]" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:236 [valor arbitrário] "max-h-[500px]" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:237 [valor arbitrário] "h-[70vh]" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:237 [valor arbitrário] "h-[70vh]" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:237 [valor arbitrário] "h-[72vh]" — use a custom property de app/styles/identidade.css
+  ✗ components/library/OptimizedLibraryList.tsx:4 [import de ui] "from '@/components/ui/card'" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/library/OptimizedLibraryList.tsx:5 [import de ui] "from '@/components/ui/button'" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/library/OptimizedLibraryList.tsx:12 [import de ui] "from '@/components/ui/dropdown-menu'" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/library/OptimizedLibraryList.tsx:21 [import de ui] "from '@/components/ui/badge'" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/library/OptimizedLibraryList.tsx:22 [import de ui] "from '@/components/ui/scroll-area'" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/library/OptimizedLibraryList.tsx:189 [inglês, texto JSX] "View" ← termo "view"
+  ✗ components/library/OptimizedLibraryList.tsx:193 [inglês, texto JSX] "Edit" ← termo "edit"
+  ✗ components/library/OptimizedLibraryList.tsx:202 [inglês, texto JSX] "Delete" ← termo "delete"
+  ✗ components/library/LibraryPagination.tsx:49 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryPagination.tsx:49 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryPagination.tsx:60 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryPagination.tsx:60 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryPagination.tsx:71 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryPagination.tsx:71 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryPagination.tsx:42 [espaçamento] "mt-3" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryPagination.tsx:42 [espaçamento] "mt-6" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryPagination.tsx:42 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryPagination.tsx:44 [espaçamento] "gap-1" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryPagination.tsx:49 [espaçamento] "px-2" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryPagination.tsx:49 [espaçamento] "px-3" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryPagination.tsx:71 [espaçamento] "px-2" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryPagination.tsx:71 [espaçamento] "px-3" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryPagination.tsx:49 [tamanho] "h-8" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryPagination.tsx:49 [tamanho] "h-9" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryPagination.tsx:60 [tamanho] "h-8" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryPagination.tsx:60 [tamanho] "w-8" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryPagination.tsx:60 [tamanho] "h-9" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryPagination.tsx:60 [tamanho] "w-9" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryPagination.tsx:71 [tamanho] "h-8" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryPagination.tsx:71 [tamanho] "h-9" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryPagination.tsx:11 [import de ui] "from '@/components/ui/pagination'" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/library/LibraryEmptyState.tsx:37 [cor] "#A69B8E" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:29 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:29 [cor] "border-amber-100" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:31 [cor] "bg-amber-100" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:32 [cor] "text-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:34 [cor] "text-gray-900" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:44 [cor] "from-blue-600" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:44 [cor] "to-indigo-600" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:44 [cor] "from-blue-700" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:44 [cor] "to-indigo-700" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:34 [tamanho de fonte] "text-base" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:34 [tamanho de fonte] "text-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:37 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:44 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:30 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:30 [espaçamento] "p-8" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:31 [espaçamento] "mb-3" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:31 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:34 [espaçamento] "mb-1" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:34 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:37 [espaçamento] "mb-3" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:37 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:47 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:31 [tamanho] "w-12" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:31 [tamanho] "h-12" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:31 [tamanho] "w-16" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:31 [tamanho] "h-16" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:32 [tamanho] "w-6" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:32 [tamanho] "h-6" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:32 [tamanho] "w-8" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:32 [tamanho] "h-8" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:47 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:47 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:31 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:29 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:37 [valor arbitrário] "text-[#A69B8E]" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryEmptyState.tsx:4 [import de ui] "from '@/components/ui/card'" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/library/LibraryEmptyState.tsx:5 [import de ui] "from '@/components/ui/button'" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/library/LibraryEmptyState.tsx:34 [inglês, texto JSX] "No content found" ← termo "content"
+  ✗ components/library/LibraryEmptyState.tsx:47 [inglês, texto JSX] "Add Content" ← termo "content"
+  ✗ components/library/LibraryLoadingState.tsx:14 [cor] "#A69B8E" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryLoadingState.tsx:8 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryLoadingState.tsx:8 [cor] "border-amber-100" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryLoadingState.tsx:10 [cor] "border-t-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryLoadingState.tsx:10 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryLoadingState.tsx:11 [cor] "text-gray-900" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryLoadingState.tsx:11 [tamanho de fonte] "text-base" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryLoadingState.tsx:11 [tamanho de fonte] "text-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryLoadingState.tsx:14 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryLoadingState.tsx:9 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryLoadingState.tsx:9 [espaçamento] "p-8" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryLoadingState.tsx:10 [espaçamento] "mb-3" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryLoadingState.tsx:10 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryLoadingState.tsx:11 [espaçamento] "mb-1" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryLoadingState.tsx:11 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryLoadingState.tsx:10 [tamanho] "w-12" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryLoadingState.tsx:10 [tamanho] "h-12" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryLoadingState.tsx:10 [tamanho] "w-16" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryLoadingState.tsx:10 [tamanho] "h-16" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryLoadingState.tsx:10 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryLoadingState.tsx:8 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryLoadingState.tsx:10 [borda] "border-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryLoadingState.tsx:14 [valor arbitrário] "text-[#A69B8E]" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryLoadingState.tsx:4 [import de ui] "from '@/components/ui/card'" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/library/LibraryLoadingState.tsx:11 [inglês, texto JSX] "Loading your music library..." ← termo "loading"
+  ✗ components/library/LibraryLoadingState.tsx:14 [inglês, texto JSX] "Please wait while we fetch your content" ← termo "content"
+  ✗ components/library/LibraryErrorBoundary.tsx:50 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:50 [cor] "border-red-100" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:52 [cor] "bg-red-100" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:53 [cor] "text-red-600" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:55 [cor] "text-gray-900" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:58 [cor] "text-gray-600" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:64 [cor] "from-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:64 [cor] "to-orange-600" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:64 [cor] "from-amber-700" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:64 [cor] "to-orange-700" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:55 [tamanho de fonte] "text-base" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:55 [tamanho de fonte] "text-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:58 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:64 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:51 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:51 [espaçamento] "p-8" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:52 [espaçamento] "mb-3" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:52 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:55 [espaçamento] "mb-1" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:55 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:58 [espaçamento] "mb-3" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:58 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:61 [espaçamento] "gap-2" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:67 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:52 [tamanho] "w-12" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:52 [tamanho] "h-12" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:52 [tamanho] "w-16" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:52 [tamanho] "h-16" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:53 [tamanho] "w-6" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:53 [tamanho] "h-6" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:53 [tamanho] "w-8" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:53 [tamanho] "h-8" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:67 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:67 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:52 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:50 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/library/LibraryErrorBoundary.tsx:4 [import de ui] "from '@/components/ui/card'" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/library/LibraryErrorBoundary.tsx:5 [import de ui] "from '@/components/ui/button'" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/library/LibraryErrorBoundary.tsx:55 [inglês, texto JSX] "Something went wrong" ← termo "something went wrong"
+  ✗ components/library/LibraryErrorBoundary.tsx:58 [inglês, texto JSX] "There was an error loading your music library. Please try again." ← termo "try again"
+  ✗ components/library/LibraryErrorBoundary.tsx:67 [inglês, texto JSX] "Try Again" ← termo "try again"
+  ✗ components/delete-content-dialog.tsx:3 [import de ui] "from '@/components/ui/dialog'" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/delete-content-dialog.tsx:4 [import de ui] "from '@/components/ui/button'" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/delete-content-dialog.tsx:18 [inglês, texto JSX] "Delete Content" ← termo "content"
+  ✗ components/delete-content-dialog.tsx:24 [inglês, texto JSX] "Cancel" ← termo "cancel"
+  ✗ components/delete-content-dialog.tsx:25 [inglês, texto JSX] "Delete" ← termo "delete"
+  ✗ hooks/use-content-actions.ts:58 [toast] "toast.success(" — nenhum toast entra (I1-D26): a falha é a LinhaDeAviso
+  ✗ hooks/use-content-actions.ts:104 [toast] "toast.success(" — nenhum toast entra (I1-D26): a falha é a LinhaDeAviso
+  ✗ lib/library-utils.ts:81 [cor] "bg-green-100" — use a custom property de app/styles/identidade.css
+  ✗ lib/library-utils.ts:81 [cor] "text-green-800" — use a custom property de app/styles/identidade.css
+  ✗ lib/library-utils.ts:81 [cor] "border-green-200" — use a custom property de app/styles/identidade.css
+  ✗ lib/library-utils.ts:83 [cor] "bg-amber-100" — use a custom property de app/styles/identidade.css
+  ✗ lib/library-utils.ts:83 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ lib/library-utils.ts:83 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ lib/library-utils.ts:85 [cor] "bg-red-100" — use a custom property de app/styles/identidade.css
+  ✗ lib/library-utils.ts:85 [cor] "text-red-800" — use a custom property de app/styles/identidade.css
+  ✗ lib/library-utils.ts:85 [cor] "border-red-200" — use a custom property de app/styles/identidade.css
+  ✗ lib/library-utils.ts:87 [cor] "bg-gray-100" — use a custom property de app/styles/identidade.css
+  ✗ lib/library-utils.ts:87 [cor] "text-gray-800" — use a custom property de app/styles/identidade.css
+  ✗ lib/library-utils.ts:87 [cor] "border-gray-200" — use a custom property de app/styles/identidade.css
+  ✗ lib/library-utils.ts:24 [tamanho] "w-5" — use a custom property de app/styles/identidade.css
+  ✗ lib/library-utils.ts:24 [tamanho] "h-5" — use a custom property de app/styles/identidade.css
+  arquivos: 38 · literais de identidade acusados: 529 · toasts: 2 · imports de ui: 20 · textos examinados: 61 · isentos de inglês (scripts/gates-web/g-tok-sem-ingles.txt): 1 · vocabulário: 109 · isenções: 9
+
+G-tok: REPROVA — 597 ocorrência(s)
+# exit: 1
