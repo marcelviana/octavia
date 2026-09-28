@@ -10,8 +10,11 @@
 > **Convenções**: `[medido]` = comando + saída literal (em `cn/`); `[lido]` = arquivo:linha; `[hipótese]` = o resto.
 > Divergências **a partir de 696**, numeração conferida pela coluna:
 > `git grep -nE '^\| \*\*6[0-9][0-9]\*\* \| [A-Z]' docs | … | sort -n | tail -1` → 695.
-> **Estado**: commit 1 (gate-first, `d991c73`) e **commit 2 (a implementação, §11–§16)**. Divergências: 696–712 (§8),
-> 713–725 (§14). Aguarda o aceite do Marcel (`scripts/gates-web/COMO-RODAR.md`, seção I1-PR9).
+> **Estado**: commit 1 (gate-first, `d991c73`), commit 2 (a implementação, `ed85f23`, §11–§16), commit 2b (`b496342`,
+> divs. 726/727, §17) e **commit 3 (aceite e docs, §18)**. PR [#344](https://github.com/marcelviana/octavia/pull/344).
+> Divergências: 696–712 (§8), 713–725 (§14), 726–727 (§17), 728–731 (§18.7). **Veredito do aceite (rodada 2): PASSA —
+> (e) = 0 e (b) = 0 nas TRÊS larguras (1138 · 711 · 411)**; as 20 erratas candidatas cobertas pela I1-E14; a rodada 1
+> (reprovou no `LIB-filtros`) fica como rastro.
 
 | arquivo | o que é |
 |---|---|
@@ -21,6 +24,11 @@
 | `cn/g-tok-depois.txt` · `g-back-depois.txt` · `g-palco.txt` · `pnpm-test.txt` · `cn-pr1.txt` · `lint.txt` · `build.txt` | os verdes do commit 2 |
 | `cn/painel-mutacao-cn.txt` | o teste do painel reprovando com o erro virando vazio, e passando depois de desfeito |
 | `cn/inercia-publicas.txt` · `cn/inercia-comparar.mjs` | o CN de inércia das públicas (sem `.env`) e o comparador |
+| `cn/filtros-726-cn.txt` | o CN do 726 (commit 2b): `LIB-filtros` sem sessão, `scrollWidth` = viewport e o Δx da âncora direita |
+| `cn/g-faixa-aceite-rodada1.txt` · `cn/g-faixa-aceite.txt` | o veredito do aceite: a rodada 1 (rastro, reprova) e a rodada 2 (PASSA) |
+| `cn/casca-efeito-corpo.mjs` · `cn/casca-efeito-rodada{1,2}.txt` · `cn/casca-efeito-veredito-rodada{1,2}.txt` | o corpo velho × `cn-main`, nó a nó, e o veredito do G-faixa sobre a `casca-efeito` |
+| `cn/cn-main-veredito.txt` | a linha de base recalculada (83) |
+| `cn/fumaca-scrollwidth.txt` · `capturas/*.png` | o roteiro sem sessão com `scrollWidth` (24/24) e as 15 capturas |
 
 ---
 
@@ -624,3 +632,179 @@ todo estado e largura.**
 Verdes: G-tok **PASSA** (49, 0 literais; (i) 19/19) · G-back **PASSA** · G-palco **0** · `pnpm test` 110 | 3 skipped
 (113) · 1089 | 77 skipped (1166) · CN da PR-1 **15/15** · painel **4/4** · `tsc` 0 · lint ✔ · build ✓ (`# exit: 0`) ·
 `shasum -c` 14/14. `packages/identidade` **não mudou** (sem APK novo). Divergências: 726, 727; próxima **728**.
+
+---
+
+## 18. Commit 3 — o aceite e o fecho
+
+### 18.1 Os quatro avais, em uma tabela
+
+| aval | quando | o quê |
+|---|---|---|
+| commit 1 | 2026-09-28 | as 12 decisões do §11 (a casca em todas as páginas com sessão; I1-E13; nada nos corpos velhos; o serviço lança; `DASH-vazio`/`-erro` no Vitest; motivo pelo `status`; apagar/favoritar mudos; `LIB-salvo` na PR-11; a sessão abaixo do título; a linha como a folha; as frases novas; o "sem par" dos dados do `DASH`) |
+| meio do commit 2 | 2026-09-28 | **div. 713 → opção 2**: `web.metadado` 13, `web.alfaMarcado` 0,12, `web.alfaDialogo` 0,82 no pacote, só adição; o `color-mix` no gerador |
+| 1ª rodada do aceite | 2026-09-28 | **div. 726 → (a)**: o menu *Filtros* ancora pela direita, `max-w-full`, quebra em A — **I1-E14**; **div. 727**: a raiz da casca não estiliza texto. Divs. 714 e 716 aceitas |
+| 2ª rodada do aceite | 2026-09-28 | **div. 728 → (a)**: a largura que um corpo fluido ganha em 1138 com a saída da lateral (+144 em duas colunas, +288 em uma) é efeito esperado, contada à parte ("largura liberada") e herdada pela PR-13 |
+
+### 18.2 A casca — a regra
+
+A casca é **só a barra** (`<header>`) e o **contêiner do conteúdo redesenhado** (`ConteudoDaCasca`). **A raiz não estiliza
+texto**: fonte, entrelinha e cor ficam no `<header>` e no `ConteudoDaCasca` (div. 727); as telas de corpo velho herdam
+do `body`, como antes da casca nova, e trazem o próprio fundo (`#fffcf7`) no invólucro. Quem importa a casca: os seis
+*page-clients* com sessão (§1.2). A regra vale para as PRs 10–13: cada uma troca o invólucro `<div className="flex-1
+bg-[#fffcf7]">` pelo `ConteudoDaCasca` quando redesenhar o corpo.
+
+### 18.3 O aceite — rodada 1 (rastro) e rodada 2 (veredito)
+
+**Rodada 1** (`ed85f23`, Marcel): `tests/gates-web/medicoes/rodada1/{dashboard,library}.json` e
+`rodada1/casca-efeito/{setlists,content}.json`; veredito verbatim em `cn/g-faixa-aceite-rodada1.txt`. **REPROVOU**:
+`LIB-filtros` com (b) nas três larguras (`scrollWidth` 1145 · 726 · 468) — div. 726. A `casca-efeito` da rodada 1
+mostrou o vazamento de estilo — div. 727.
+
+**Rodada 2** (`b496342`, Marcel, `2026-09-28T18:21:39Z`; o `+sujo` do JSON é a pasta `rodada1/` ainda fora do commit na
+hora): `tests/gates-web/medicoes/{dashboard,library}.json`. Veredito verbatim em `cn/g-faixa-aceite.txt`:
+
+```
+$ node scripts/gates-web/g-faixa-veredito.mjs tests/gates-web/medicoes
+## contados à parte (não reprovam): errata candidata 119 · sem par folha 162 · sem par app 156 (C e B) · não medidos 16
+## erratas candidatas sem cobertura (erratasFaixa, div. 681): 0
+G-faixa: PASSA
+```
+
+| estado | 1138 (C) | 711 (B) | 411 (A) | sem par folha/app (C e B, cada) |
+|---|---|---|---|---|
+| `DASH` | 0 · 0 · 0 | 0 · 0 · 0 | 0 · 0 · (d′) 2 | 9/10 — os dados reais (item 12) |
+| `DASH-vazio` | INALCANÇÁVEL (declarado): SSR — prova no Vitest | ← | ← | — |
+| `DASH-vazio-favoritas` | NÃO ALCANÇADO: a conta tem favoritas (decisão 5) | ← | ← | — |
+| `DASH-erro` | INALCANÇÁVEL (declarado): SSR — prova no Vitest | ← | ← | — |
+| `SESSAO-nao-renovada` | 0 · 0 · 0 | 0 · 0 · 0 | 0 · 0 · (d′) 2 | 10/11 — os dados + o texto da sessão (div. 718) |
+| `LIB` | 0 · 0 · 0 | 0 · 0 · 0 | 0 · 0 · (d′) 1 | 1/2 — o *Buscar…* da caixa e o campo (div. 719) |
+| `LIB-filtros` | 0 · 0 · **10 candidatas, I1-E14** | 0 · 0 · **10, I1-E14** | 0 · 0 · (d′) 2 | 1/4 |
+| `LIB-mais` · `LIB-carregando-chunk` · `LIB-carregando` · `LIB-vazio` · `LIB-vazio-busca` · `LIB-erro` · `LIB-apagar` | 0 · 0 · 0 | 0 · 0 · 0 | 0 · 0 · (d′) 1–2 | 1/2 |
+| `LIB-salvo` | INALCANÇÁVEL (declarado): nasce na PR-11 | ← | ← | — |
+
+(célula = (e) · (b) · errata candidata; em A, (e) · (b) · (d′), que é triagem.) **(e) = 0 e (b) = 0 nas três larguras, nos
+13 estados medidos.** `LIB-filtros` com **`scrollWidth` 1138 · 711 · 411** (na rodada 1, 1145 · 726 · 468). As 99
+candidatas de auth, landing e política seguem como estavam (99 + 20 = 119).
+
+**Candidatas × cobertura**: as **20** das duas telas são os 10 nós do menu *Filtros* × C e B, cada uma com
+`Δ[x,y,w,h] = [-37.1, 0, ~0, 0]` — **coberta por I1-E14** (`erratasFaixa`, `n: 20`, confirmado). Nenhuma outra.
+
+**Os requests** (o log de cada JSON, as três larguras): `dashboard` — escritas reais a `/api/*` fora da sessão **0**,
+fabricadas 3 (o `POST /api/auth/session` 500 do `SESSAO-nao-renovada`), `prodAbortados` 0, `/api` lido: `GET
+/api/health`, `GET /api/profile`, `POST /api/auth/session` (cookie); `library` — escritas **0**, fabricadas 30 (a
+`GET /api/content` da folha), `prodAbortados` 0.
+
+**Capturas** (`capturas/`, uma por estado × largura dos cinco principais: `DASH`, `DASH-erro`, `LIB`, `LIB-filtros`,
+`LIB-apagar`, em C-1138 · B-711 · A-411 — 15): **do roteiro sem sessão** (páginas de fumaça locais com os dados da
+folha, `next dev` sem `.env`, não commitadas e apagadas) — o medidor com sessão não tira captura, e a conta real não
+entra em anexo (div. 730). O texto nelas é o da folha (obra do projeto). O roteiro, agora com **`scrollWidth` em todo
+estado × largura** (`cn/fumaca-scrollwidth.txt`): **24/24 com `scrollWidth` = viewport** (8 estados × 3 larguras).
+
+### 18.4 `casca-efeito` — rodada 1 × rodada 2 (div. 727, critério da div. 728)
+
+`cn/casca-efeito-corpo.mjs` (anexo, não gate; classifica a "largura liberada" à parte — declarado) sobre o corpo velho
+× `cn-main` (`cn/casca-efeito-rodada2.txt`, `-rodada1.txt`):
+
+```
+setlists · 1138: … mesmo tamanho (±1) 17 · largura liberada 4 [texto/17 271×28→415×28; texto/20 271×28→415×28; texto/49 271×40→415×20; texto/13 271×28→415×28] · tamanho diferente 0 · deslocamento (Δx,Δy): -288,8 ×7 · -144,8 ×5 · -288,-12 ×5
+setlists · 711:  … mesmo tamanho (±1) 21 · largura liberada 0 · tamanho diferente 0 · deslocamento (Δx,Δy): 0,64 ×20 · 0,41 ×1
+setlists · 411:  … mesmo tamanho (±1) 21 · largura liberada 0 · tamanho diferente 0 · deslocamento (Δx,Δy): 0,112 ×20 · 0,89 ×1
+content · 1138:  … mesmo tamanho (±1) 13 · largura liberada 0 · tamanho diferente 0 · deslocamento (Δx,Δy): -288,8 ×12 · 0,0 ×1
+content · 711:   … mesmo tamanho (±1) 13 · largura liberada 0 · tamanho diferente 0 · deslocamento (Δx,Δy): 0,64 ×12 · 0,389 ×1
+content · 411:   … mesmo tamanho (±1) 13 · largura liberada 0 · tamanho diferente 0 · deslocamento (Δx,Δy): 0,112 ×12 · 0,465 ×1
+```
+
+| tela · largura | rodada 1: tamanho diferente | rodada 2: tamanho diferente | rodada 2: largura liberada |
+|---|---|---|---|
+| setlists · 1138 | 4 (e as marcas do vazamento misturadas) | **0** | 4 (div. 728 → PR-13) |
+| setlists · 711 · 411 | 4 · 4 | **0 · 0** | 0 · 0 |
+| content · 1138 · 711 · 411 | 3 · 4 · 2 | **0 · 0 · 0** | 0 |
+
+**Só Δ de posição** (−288 em 1138: a lateral saiu; +64 em 711 e +112 em 411: a barra nova) e a largura liberada da
+`/setlists` em 1138. Os nós que "somem" são todos da casca velha (a busca, as iniciais, *Library*, *Setlists*, *Home*,
+*Add*). Veredito do G-faixa sobre a `casca-efeito` (`cn/casca-efeito-veredito-rodada2.txt`): **(e) = 0 nas duas telas,
+nas três larguras** — as 14 (e) da casca velha (§6) sumiram; o que resta é o **(b) = 9 do `content` em 1138** (era 10
+com a casca velha; o corpo da visualização passa da borda — agora a página rola, antes cortava) → **herança da PR-10**.
+
+### 18.5 `cn-main`
+
+Recalculada (`cn/cn-main-veredito.txt`): **`G-faixa: REPROVA — 83`**, a mesma — é o web velho; nada nela mudou.
+
+### 18.6 As heranças
+
+| herança | destino |
+|---|---|
+| falha ao apagar / ao favoritar na lista: produzidas e mudas (§12.4) | errata de folha na PR que as desenhar, ou bloco D |
+| `LIB-salvo` (a linha de sucesso depois do editor) | PR-11 (editor), com o sinal do editor |
+| o (b) = 9 do `content` em 1138 (o corpo da visualização passa da borda) | PR-10 |
+| a largura liberada da `/setlists` em 1138 (4 nós +144) | PR-13 |
+| `DASH-vazio-favoritas` não medido com esta conta | registrado; o estado está no Vitest do painel pelo vazio das favoritas |
+| o invólucro `flex-1 bg-[#fffcf7]` dos quatro corpos velhos | as PRs 10–13, trocando-o pelo `ConteudoDaCasca` |
+
+### 18.7 Divergências — 696 a 731, com destino
+
+| # | destino |
+|---|---|
+| 696 | registrado (leitura das respostas da §1.1) |
+| 697 | → **I1-E13** (`erratasFrase`) |
+| 698 | → decisão 4: o serviço lança (§12.3) |
+| 699 | → decisão 5: inalcançáveis + Vitest (§13) |
+| 700 · 701 | aplicado: `LIB-erro` na 2ª carga; o *timeout* é rede (§12.3) |
+| 702 | → herança (§18.6) |
+| 703 | → PR-11 (§18.6) |
+| 704 | → decisão 9: a linha da tela (§12.1) |
+| 705 | → decisão 10, corrigida pela 714 |
+| 706 · 707 · 708 | frases novas aprovadas (§12.2) |
+| 709 | aplicado: o enum canônico → ícone e rótulo (`tipoDe`) |
+| 710 · 711 · 712 | registrados |
+| 713 | → opção 2: três tokens no pacote (APK verde, [corrida 36458680620](https://github.com/marcelviana/octavia/actions/runs/36458680620)) |
+| 714 | aceita: o ícone do tipo fica (a folha) |
+| 715 | registrado |
+| 716 | aceita: a (v) do CN da PR-1 em `/setlists`, par no corpo da PR |
+| 717 | aplicado: `aoReclicarAtivo` |
+| 718 · 719 | "sem par" contados à parte (§18.3) |
+| 720 · 721 · 722 · 723 · 725 | aplicados/registrados (§14) |
+| 724 | aplicado; o efeito medido na `casca-efeito` (§18.4) |
+| **726** | → **I1-E14** (commit 2b) |
+| **727** | aplicado (commit 2b); provado na rodada 2 (§18.4) |
+| **728** | → (a): "largura liberada", herança da PR-13 |
+| **729** | **T** — o `next dev` da fumaça abortou (`ERR_ABORTED`) e travou uma carga de forma intermitente ao tirar as capturas → o roteiro ganhou nova tentativa por caso (até 3); nenhum estado precisou mais de uma |
+| **730** | **P** — *"o aceite nas três larguras com capturas"*: o medidor com sessão não tira captura, e captura da conta real não entra em anexo (dados do usuário) → as capturas são do roteiro sem sessão, com os dados da folha, declaradas como tais (§18.3) |
+| **731** | **T** — a rodada 2 diz `commit b496342…+sujo`: na hora, `medicoes/rodada1/` (movida pelo executor antes da regravação) estava fora do commit; nenhum arquivo de código difere de `b496342` → registrado |
+
+Próxima divergência: **732**.
+
+### 18.8 O molde — o que a próxima superfície herda (acréscimo ao §16 da I1-PR-8)
+
+1. **A casca existe** (`components/identidade/casca.tsx`): a superfície com sessão usa `<Casca>` + `ConteudoDaCasca`; a
+   raiz não estiliza texto (§18.2). A navegação, a busca e a conta são dela.
+2. **Controles e menus comuns** em `components/identidade/` (`controles.tsx`: *Adicionar*, o alternável, o título da
+   tela; `menu.tsx`: o menu com Esc e clique fora; `linha-da-tela.tsx`: a linha abaixo do título, a sessão vence).
+3. **Com sessão, os estados se alcançam por respostas fabricadas em sequência** (`g-faixa-lista.ts`): a página é a
+   mesma entre estados e o medidor desfaz as rotas de cada um.
+4. **A pré-verificação sem sessão mede o `scrollWidth` em todo estado × largura**, além do Δ contra a folha — a folha
+   pode passar da própria moldura sem que o Δ acuse (div. 726).
+5. **`casca-efeito`**: toda PR que mexer na casca mede o corpo velho e compara com `cn-main` pelo
+   `cn/casca-efeito-corpo.mjs` — só Δ de posição (e a largura liberada, à parte).
+
+### 18.9 Bloco ```gates-web``` e extras (copiados do corpo da PR)
+
+O do §15, com a linha do commit 2b e a do commit 3:
+
+```
+# commit 2b: o menu Filtros ancora pela direita (I1-E14, div. 726); a raiz da casca não estiliza texto (div. 727)
+# commit 3: tests/gates-web/medicoes/{dashboard,library}.json (aceite, rodada 2) · medicoes/casca-efeito/ (rodada 2) · medicoes/rodada1/ (rastro) · docs/ux/I1-PR9-anexos/{capturas,cn}/ — cn/casca-efeito-corpo.mjs é anexo (não gate), com a "largura liberada" da div. 728
+```
+
+### 18.10 Contabilidade final da I1-PR-9
+
+| quem | item | valor |
+|---|---|---|
+| executor | requests a `https://octavia.rocks` ou preview · logins · `.env*` abertos · escritas · contas | **0 · 0 · 0 · 0 · 0** |
+| executor | `next dev` local **sem** `.env`, porta 3110 (a 3000 é de outro `next-server`, não tocado) | commit 2: 3 subidas (inércia ×2, fumaça); commit 2b: 1 (CN do 726); commit 3: 4 (as capturas; as 3 primeiras pararam pela div. 729 — a 4ª, com nova tentativa por caso, passou 24/24); todas paradas ao fim |
+| executor | páginas de fumaça `app/fumaca-i1pr9/*` | criadas e apagadas a cada uso; **nunca commitadas** |
+| Marcel | rodadas do aceite com sessão (perfil `G_FAIXA_PERFIL`) | 2 × (`dashboard,library` + `setlists,content`) — contas 0, escritas 0 |
+| todos | escritas reais a `/api/*` fora de `/api/auth/session` | **0** (as de `DELETE`/`PUT` de `/api/content` e o `POST` da sessão do `SESSAO-nao-renovada` fabricados no navegador) |
+| todos | requests a `octavia.rocks` | **0** (`prodAbortados` 0) |
+| — | `packages/identidade` | mudou por **adição** no commit 2 (div. 713); APK verde; o nativo não mudou (211/211) |
