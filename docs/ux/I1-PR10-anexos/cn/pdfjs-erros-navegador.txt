@@ -1,0 +1,9 @@
+$ node docs/ux/I1-PR10-anexos/cn/pdfjs-erros-navegador.mjs <pasta local com pdf.min.mjs + pdf.worker.min.mjs de node_modules/pdfjs-dist/build>
+chromium 140.0.7339.16
+HTTP 500 → name=UnexpectedResponseException · message="Unexpected server response (500) while retrieving PDF \"http://arquivo.invalid/partitura.pdf\"." · status=500
+HTTP 404 → name=MissingPDFException · message="Missing PDF \"http://arquivo.invalid/partitura.pdf\"." · status=undefined
+corpo não-PDF (200, HTML) → name=InvalidPDFException · message="Invalid PDF structure." · status=undefined
+rede: abort("failed") → name=UnknownErrorException · message="Failed to fetch" · status=undefined
+rede: abort("internetdisconnected") → name=UnknownErrorException · message="Failed to fetch" · status=undefined
+sem CORS (200 sem access-control-allow-origin) → name=InvalidPDFException · message="Invalid PDF structure." · status=undefined
+# exit: 0

@@ -1,0 +1,379 @@
+$ node scripts/gates-web/g-tok.mjs --so-arquivos
+## (ii) arquivos redesenhados — scripts/gates-web/g-tok-arquivos.txt
+  ✗ components/content-page-client.tsx:54 [cor] "#fffcf7" — use a custom property de app/styles/identidade.css
+  ✗ components/content-page-client.tsx:54 [valor arbitrário] "bg-[#fffcf7]" — use a custom property de app/styles/identidade.css
+  ✗ components/content-page-client.tsx:11 [inglês, texto JSX] "Loading editor..." ← termo "loading"
+  ✗ components/content-viewer.tsx:54 [cor] "#fff9f0" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer.tsx:54 [cor] "#fff5e5" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer.tsx:77 [espaçamento] "p-6" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer.tsx:78 [espaçamento] "gap-6" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer.tsx:78 [tamanho] "max-w-7xl" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer.tsx:54 [valor arbitrário] "from-[#fff9f0]" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer.tsx:54 [valor arbitrário] "to-[#fff5e5]" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:23 [cor] "from-green-500" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:23 [cor] "to-green-600" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:25 [cor] "from-blue-500" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:25 [cor] "to-blue-600" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:27 [cor] "from-purple-500" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:27 [cor] "to-purple-600" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:29 [cor] "from-orange-500" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:29 [cor] "to-orange-600" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:31 [cor] "from-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:31 [cor] "to-orange-600" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:37 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:47 [cor] "bg-white/90" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:47 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:53 [cor] "bg-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:65 [cor] "text-gray-900" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:68 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:79 [cor] "bg-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:80 [cor] "text-yellow-500" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:80 [cor] "text-gray-400" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:65 [tamanho de fonte] "text-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:65 [tamanho de fonte] "text-xl" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:68 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:47 [espaçamento] "py-2" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:49 [espaçamento] "gap-3" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:55 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:74 [espaçamento] "gap-2" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:37 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:37 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:55 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:55 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:58 [tamanho] "w-8" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:58 [tamanho] "h-8" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:84 [tamanho] "w-5" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:84 [tamanho] "h-5" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:58 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:47 [borda] "border-b" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentHeader.tsx:2 [import de ui] "from \"@/components/ui/button\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/content-viewer/ContentDisplay.tsx:33 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentDisplay.tsx:36 [cor] "bg-white" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentDisplay.tsx:36 [espaçamento] "p-8" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentDisplay.tsx:42 [espaçamento] "space-y-6" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentDisplay.tsx:33 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentDisplay.tsx:36 [valor arbitrário] "min-h-[calc(100vh-250px)]" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentDisplay.tsx:2 [import de ui] "from \"@/components/ui/card\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/content-viewer/ContentSidebar.tsx:14 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:14 [cor] "border-blue-200" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:16 [cor] "text-blue-800" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:24 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:27 [cor] "text-blue-800" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:36 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:39 [cor] "text-blue-800" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:44 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:47 [cor] "text-blue-800" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:58 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:61 [cor] "text-blue-800" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:68 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:71 [cor] "text-blue-800" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:78 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:81 [cor] "text-blue-800" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:92 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:97 [cor] "bg-blue-100" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:97 [cor] "text-blue-800" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:106 [cor] "border-gray-200" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:107 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:117 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:117 [cor] "border-green-200" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:119 [cor] "text-green-800" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:124 [cor] "bg-green-50/50" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:124 [cor] "border-green-200" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:125 [cor] "text-green-800" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:130 [cor] "bg-green-50/50" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:130 [cor] "border-green-200" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:131 [cor] "text-gray-400" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:132 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:135 [cor] "text-gray-400" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:16 [tamanho de fonte] "text-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:24 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:27 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:36 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:39 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:44 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:47 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:58 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:61 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:68 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:71 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:78 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:81 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:92 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:97 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:107 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:119 [tamanho de fonte] "text-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:125 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:132 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:135 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:12 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:15 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:16 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:17 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:20 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:33 [espaçamento] "gap-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:55 [espaçamento] "gap-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:95 [espaçamento] "gap-1" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:95 [espaçamento] "mt-1" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:106 [espaçamento] "pt-2" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:106 [espaçamento] "mt-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:118 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:119 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:120 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:124 [espaçamento] "py-6" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:125 [espaçamento] "p-2" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:130 [espaçamento] "py-6" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:131 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:135 [espaçamento] "mt-1" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:12 [tamanho] "w-80" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:17 [tamanho] "w-5" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:17 [tamanho] "h-5" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:120 [tamanho] "w-5" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:120 [tamanho] "h-5" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:131 [tamanho] "w-8" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:131 [tamanho] "h-8" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:124 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:130 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:14 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:106 [borda] "border-t" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:117 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:124 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:130 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ContentSidebar.tsx:2 [import de ui] "from \"@/components/ui/card\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/content-viewer/ContentSidebar.tsx:3 [import de ui] "from \"@/components/ui/badge\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/content-viewer/ContentSidebar.tsx:17 [inglês, texto JSX] "Song Details" ← termo "song"
+  ✗ components/content-viewer/ContentSidebar.tsx:120 [inglês, texto JSX] "Performance Notes" ← termo "notes"
+  ✗ components/content-viewer/ContentSidebar.tsx:132 [inglês, texto JSX] "No performance notes available" ← termo "notes"
+  ✗ components/content-viewer/ContentSidebar.tsx:135 [inglês, texto JSX] "Click Edit to add notes and performance tips" ← termo "notes"
+  ✗ components/content-viewer/ChordDisplay.tsx:18 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:18 [cor] "border-purple-200" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:21 [cor] "text-purple-600" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:26 [cor] "bg-purple-50" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:27 [cor] "text-purple-700" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:49 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:49 [cor] "border-purple-200" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:73 [cor] "text-gray-600" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:84 [cor] "bg-gray-50" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:92 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:92 [cor] "border-purple-200" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:110 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:110 [cor] "border-green-200" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:10 [tamanho de fonte] "text-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:21 [tamanho de fonte] "text-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:27 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:28 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:36 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:51 [tamanho de fonte] "text-xl" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:55 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:65 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:73 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:84 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:94 [tamanho de fonte] "text-xl" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:97 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:112 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:9 [espaçamento] "space-y-6" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:14 [espaçamento] "space-y-6" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:18 [espaçamento] "p-6" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:21 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:26 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:26 [espaçamento] "p-3" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:44 [espaçamento] "gap-6" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:49 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:51 [espaçamento] "mb-3" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:55 [espaçamento] "space-y-1" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:65 [espaçamento] "space-y-1" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:73 [espaçamento] "mt-2" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:84 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:88 [espaçamento] "gap-6" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:92 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:94 [espaçamento] "mb-3" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:97 [espaçamento] "space-y-1" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:110 [espaçamento] "space-y-3" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:110 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:112 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:116 [tamanho] "w-20" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:18 [raio] "rounded-xl" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:26 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:49 [raio] "rounded-xl" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:84 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:92 [raio] "rounded-xl" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:110 [raio] "rounded-xl" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:18 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:49 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:92 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:110 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:36 [entrelinha] "leading-relaxed" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/ChordDisplay.tsx:27 [inglês, texto JSX] "Chords:" ← termo "chords"
+  ✗ components/content-viewer/ChordDisplay.tsx:42 [inglês, texto JSX] ") : Array.isArray(content.content_data?.chords) ? (" ← termo "content"
+  ✗ components/content-viewer/ChordDisplay.tsx:111 [inglês, texto JSX] "Song Structure" ← termo "song"
+  ✗ components/content-viewer/LyricsDisplay.tsx:17 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:17 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:21 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:21 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:22 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:25 [cor] "text-gray-400" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:33 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:33 [cor] "border-blue-200" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:40 [cor] "bg-white" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:51 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:51 [cor] "border-blue-200" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:55 [cor] "bg-gray-50" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:11 [tamanho de fonte] "text-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:17 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:25 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:40 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:55 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:10 [espaçamento] "space-y-6" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:14 [espaçamento] "space-y-6" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:17 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:21 [espaçamento] "p-8" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:25 [espaçamento] "mt-2" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:33 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:34 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:35 [espaçamento] "gap-2" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:40 [espaçamento] "px-2" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:40 [espaçamento] "py-1" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:51 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:52 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:55 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:17 [raio] "rounded-xl" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:21 [raio] "rounded-xl" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:33 [raio] "rounded-xl" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:40 [raio] "rounded" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:51 [raio] "rounded-xl" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:55 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:17 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:21 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:33 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:51 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:17 [entrelinha] "leading-relaxed" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/LyricsDisplay.tsx:11 [inglês, texto JSX] "Lyrics" ← termo "lyrics"
+  ✗ components/content-viewer/LyricsDisplay.tsx:22 [inglês, texto JSX] "No lyrics available" ← termo "lyrics"
+  ✗ components/content-viewer/LyricsDisplay.tsx:25 [inglês, texto JSX] "Add lyrics to help with performance" ← termo "lyrics"
+  ✗ components/content-viewer/LyricsDisplay.tsx:34 [inglês, texto JSX] "Chords" ← termo "chords"
+  ✗ components/content-viewer/LyricsDisplay.tsx:52 [inglês, texto JSX] "Chords" ← termo "chords"
+  ✗ components/content-viewer/TabDisplay.tsx:14 [cor] "bg-gray-50" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/TabDisplay.tsx:30 [cor] "bg-gray-50" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/TabDisplay.tsx:34 [cor] "bg-gray-50" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/TabDisplay.tsx:57 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/TabDisplay.tsx:57 [cor] "border-blue-200" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/TabDisplay.tsx:81 [cor] "bg-gray-200" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/TabDisplay.tsx:11 [tamanho de fonte] "text-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/TabDisplay.tsx:14 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/TabDisplay.tsx:30 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/TabDisplay.tsx:34 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/TabDisplay.tsx:57 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/TabDisplay.tsx:10 [espaçamento] "space-y-6" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/TabDisplay.tsx:14 [espaçamento] "space-y-1" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/TabDisplay.tsx:14 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/TabDisplay.tsx:30 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/TabDisplay.tsx:34 [espaçamento] "space-y-1" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/TabDisplay.tsx:34 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/TabDisplay.tsx:57 [espaçamento] "gap-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/TabDisplay.tsx:57 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/TabDisplay.tsx:72 [espaçamento] "space-y-3" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/TabDisplay.tsx:76 [espaçamento] "gap-2" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/TabDisplay.tsx:81 [espaçamento] "px-3" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/TabDisplay.tsx:81 [espaçamento] "py-1" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/TabDisplay.tsx:14 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/TabDisplay.tsx:30 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/TabDisplay.tsx:34 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/TabDisplay.tsx:57 [raio] "rounded-xl" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/TabDisplay.tsx:81 [raio] "rounded-md" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/TabDisplay.tsx:57 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/SheetMusicDisplay.tsx:24 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/SheetMusicDisplay.tsx:24 [cor] "border-orange-200" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/SheetMusicDisplay.tsx:42 [cor] "text-red-500" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/SheetMusicDisplay.tsx:48 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/SheetMusicDisplay.tsx:48 [cor] "border-orange-200" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/SheetMusicDisplay.tsx:55 [cor] "border-gray-300" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/SheetMusicDisplay.tsx:55 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/SheetMusicDisplay.tsx:56 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/SheetMusicDisplay.tsx:59 [cor] "text-gray-400" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/SheetMusicDisplay.tsx:21 [tamanho de fonte] "text-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/SheetMusicDisplay.tsx:51 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/SheetMusicDisplay.tsx:59 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/SheetMusicDisplay.tsx:20 [espaçamento] "space-y-6" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/SheetMusicDisplay.tsx:42 [espaçamento] "mt-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/SheetMusicDisplay.tsx:48 [espaçamento] "p-6" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/SheetMusicDisplay.tsx:55 [espaçamento] "p-12" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/SheetMusicDisplay.tsx:59 [espaçamento] "mt-2" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/SheetMusicDisplay.tsx:24 [raio] "rounded-xl" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/SheetMusicDisplay.tsx:48 [raio] "rounded-xl" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/SheetMusicDisplay.tsx:55 [raio] "rounded-xl" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/SheetMusicDisplay.tsx:24 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/SheetMusicDisplay.tsx:48 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/SheetMusicDisplay.tsx:55 [borda] "border-2" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/SheetMusicDisplay.tsx:51 [entrelinha] "leading-relaxed" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/SheetMusicDisplay.tsx:29 [valor arbitrário] "h-[calc(100vh-250px)]" — use a custom property de app/styles/identidade.css
+  ✗ components/content-viewer/SheetMusicDisplay.tsx:21 [inglês, texto JSX] "Sheet Music" ← termo "sheet"
+  ✗ components/content-viewer/SheetMusicDisplay.tsx:42 [inglês, texto JSX] "Failed to load file. Please check the file format or try again later." ← termo "try again"
+  ✗ components/content-viewer/SheetMusicDisplay.tsx:46 [inglês, texto JSX] ") : content.content_data?.notation ? (" ← termo "content"
+  ✗ components/content-viewer/SheetMusicDisplay.tsx:56 [inglês, texto JSX] "No sheet music available" ← termo "sheet"
+  ✗ components/content-viewer/SheetMusicDisplay.tsx:59 [inglês, texto JSX] "Upload a PDF or image file to display sheet music" ← termo "upload"
+  ✗ components/content-viewer/SheetMusicDisplay.tsx:35 [inglês, atributo] "Sheet music" ← termo "sheet"
+  ✗ components/pdf-viewer.tsx:169 [cor] "border-blue-500" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:170 [cor] "text-gray-600" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:171 [cor] "text-gray-400" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:178 [cor] "text-red-500" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:180 [cor] "text-gray-900" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:181 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:182 [cor] "text-gray-400" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:184 [cor] "text-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:170 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:171 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:180 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:181 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:182 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:184 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:230 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:246 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:168 [espaçamento] "p-8" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:168 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:177 [espaçamento] "p-8" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:177 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:181 [espaçamento] "mt-1" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:182 [espaçamento] "mt-2" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:184 [espaçamento] "mt-2" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:189 [espaçamento] "space-x-2" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:194 [espaçamento] "space-x-1" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:225 [espaçamento] "py-2" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:225 [espaçamento] "space-x-2" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:226 [espaçamento] "space-x-2" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:242 [espaçamento] "space-x-2" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:169 [tamanho] "h-8" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:169 [tamanho] "w-8" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:178 [tamanho] "w-12" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:178 [tamanho] "h-12" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:196 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:196 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:228 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:228 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:239 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:239 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:244 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:244 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:246 [tamanho] "w-12" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:252 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:252 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:255 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:255 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:258 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:258 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:263 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:263 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:265 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:265 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:169 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:169 [borda] "border-b-2" — use a custom property de app/styles/identidade.css
+  ✗ components/pdf-viewer.tsx:5 [import de ui] "from \"@/components/ui/button\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/pdf-viewer.tsx:170 [inglês, texto JSX] "Loading PDF..." ← termo "loading"
+  ✗ components/pdf-viewer.tsx:180 [inglês, texto JSX] "Failed to load PDF" ← termo "failed"
+  ✗ components/pdf-viewer.tsx:184 [inglês, texto JSX] "💡 Try refreshing the page to reload the cached file" ← termo "page"
+  ✗ components/pdf-viewer.tsx:197 [inglês, texto JSX] "Retry" ← termo "retry"
+  ✗ components/pdf-viewer.tsx:205 [inglês, texto JSX] "Download" ← termo "download"
+  ✗ components/pdf-viewer.tsx:215 [inglês, texto JSX] "Refresh Page" ← termo "refresh"
+  ✗ components/pdf-viewer.tsx:257 [inglês, atributo] "Fit page" ← termo "page"
+  arquivos: 60 · literais de identidade acusados: 342 · toasts: 0 · imports de ui: 5 · textos examinados: 53 · isentos de inglês (scripts/gates-web/g-tok-sem-ingles.txt): 1 · vocabulário: 109 · isenções: 9
+
+G-tok: REPROVA — 373 ocorrência(s)
+# exit: 1

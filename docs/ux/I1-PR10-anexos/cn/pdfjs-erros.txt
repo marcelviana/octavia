@@ -1,0 +1,18 @@
+$ node docs/ux/I1-PR10-anexos/cn/pdfjs-erros.mjs   # pdfjs-dist 4.8.69 (legacy), getDocument({ data })
+corpo HTML (não-PDF) → name=InvalidPDFException · message="Invalid PDF structure."
+corpo vazio → name=InvalidPDFException · message="The PDF file is empty, i.e. its size is zero bytes."
+PDF truncado → name=InvalidPDFException · message="Invalid PDF structure."
+# exit: 0
+
+$ grep -n "class UnexpectedResponseException" -A4 node_modules/pdfjs-dist/legacy/build/pdf.mjs
+5175:class UnexpectedResponseException extends BaseException {
+5176-  constructor(msg, status) {
+5177-    super(msg, "UnexpectedResponseException");
+5178-    this.status = status;
+5179-  }
+14635:  return new UnexpectedResponseException(`Unexpected server response (${status}) while retrieving PDF "${url}".`, status);
+
+$ grep -c "Invalid name" node_modules/pdfjs-dist/build/pdf.worker.min.mjs node_modules/pdfjs-dist/legacy/build/pdf.worker.mjs node_modules/pdfjs-dist/build/pdf.min.mjs
+node_modules/pdfjs-dist/legacy/build/pdf.worker.mjs:0
+node_modules/pdfjs-dist/build/pdf.min.mjs:0
+node_modules/pdfjs-dist/build/pdf.worker.min.mjs:0
