@@ -140,12 +140,18 @@ prevalece sobre a folha.
 | **I1-E6** | o **visto** (`M4.5 12.5l5 5 10-11`, do `DESIGN-N2`) no Salvar do editor e do upload, no *Criar* e na validação da setlist e na marca de `SET-adicionar*` — 50 ocorrências, só nas folhas `6`, `7` e `8`; em 24 px (traço 1,75, e 1,25 no inativo) e em **16 px, traço 3** (18×, `SET-adicionar`, `-adicionar-enviando`, `-adicionar-erro`) | vale o **`garantida` do catálogo** (`dados.ts` / `packages/identidade`: r 9 · `M8 12.2l2.8 2.8L16.2 9.4`), o ícone de "salvo/confirmado" do web como do nativo, **no tamanho da família**: 24 onde a folha tem 24; **20** (o menor da família) onde a folha tem 16. O inativo é o desenho inteiro em `lineInfo`, no traço da família (o `garantida` não tem estado `inerte`; é o que o nativo faz) | `6-content-editor`, `7-upload`, `8-setlists` (a I1-PR-4 mediu: 0 ocorrências nas folhas `0`, `1`, `4`, `5` — o sucesso da `LinhaDeAviso` é a I1-E3) | 588, 601, 611 (I1-PR-4) | leitura |
 
 
-**Do aceite da I1-PR-6** `[Marcel, 2026-09-27; aval do commit 2 da I1-PR-6]` — mesmas colunas:
+**Do aceite da I1-PR-6** `[Marcel, 2026-09-27 (E7, E8) e 2026-09-28 (E9, E10); avais dos commits 2 e 3 da I1-PR-6]` — mesmas colunas:
 
 | id | o que a folha mostra | o que vale | onde se aplica | div. | efeito |
 |---|---|---|---|---|---|
 | **I1-E7** | nos estados `-validacao` do auth, um `div` com *"[balão nativo do navegador — texto do sistema]"* sob o campo (41 px de altura), empurrando o resto da coluna | o balão de validação é do NAVEGADOR (`required`, `type=email`, `minLength`): não é elemento da página e o código não o reproduz; **a seção vale sem ele** (o DOM do estado é o da base) | `1-auth`: `AUTH-login-validacao`, `AUTH-signup-validacao`, `AUTH-forgot-validacao` | 667 (I1-PR-6) | leitura |
 | **I1-E8** | em `AUTH-verify-carregando`, o grupo de botões VAZIO, que soma um vão de `space.xxl` à coluna (Δy 16 em C) | o grupo não existe: **a seção vale sem ele** | `1-auth`: `AUTH-verify-carregando` | 668 (I1-PR-6) | leitura |
+| **I1-E9** | em `AUTH-login-redirecionando`, o mesmo grupo de botões VAZIO (Δy +16/−16 em C, −32 em B) | o grupo não existe: **a seção vale sem ele** | `1-auth`: `AUTH-login-redirecionando` | 675 (I1-PR-6) | leitura |
+| **I1-E10** | em `AUTH-confirm-sem-usuario`, a frase de apoio com o e-mail (*"enviamos um link de confirmação para marcel@exemplo.com…"*) | sem usuário não há e-mail: **a seção vale sem a frase** | `1-auth`: `AUTH-confirm-sem-usuario` | 669 (I1-PR-6) | leitura |
+
+As quatro (I1-E7…E10) são erratas que o **G-faixa** acha (posição contra a moldura), não o `conferir.mjs`: ficam em
+`erratas.json` numa lista própria, `erratasFaixa`, que o G-tok (i) não lê (div. 681); cobrem as 46 erratas candidatas
+do aceite de auth (`docs/ux/I1-PR6-anexos/cn/erratas-faixa-cobertura.txt`).
 
 ## 3 · O bloco `web` de tokens — insumo da PR-4 (`packages/identidade`)
 

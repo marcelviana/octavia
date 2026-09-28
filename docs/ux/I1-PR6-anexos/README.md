@@ -9,8 +9,9 @@
 > `git grep -nE '^\| \*\*6[0-9][0-9]\*\* \| [A-Z]' docs | sort -t'*' -k3 -n | tail -1` → 635.
 > **Estado**: commit 1 (gate-first, `1d47884`), commit 2 (a implementação, `f87b639`, §11) e **commit 3 (aceite e docs,
 > §12–§14)**. APK da corrida [36357168753](https://github.com/marcelviana/octavia/actions/runs/36357168753): verde (Marcel).
-> Divergências: 636–655 (§8), 656–671 (§11.8), **672–676** (§14.6). **Veredito do aceite: PASSA — (e) = 0 e (b) = 0 em
-> 1138 e 711 em todo estado medido** (§14).
+> Divergências: 636–655 (§8), 656–671 (§11.8), 672–676 (§14.6), **677–682** (§15.3, §15.6). Commits 4 (`e45a566`), 4b
+> (`7b6fc20`) e **5 (fecho, só docs)**: a faixa A não quebra. **Veredito do aceite: PASSA — (e) = 0 e (b) = 0 nas TRÊS
+> larguras (1138 · 711 · 411), nos 42 estados medidos** (§15.5).
 
 | arquivo | o que é |
 |---|---|
@@ -622,7 +623,10 @@ visualização, editor, upload, setlists):
    prova que o estado está na tela) e, quando for o caso, `inalcancavel` com a razão. Um contexto por estado nas
    superfícies sem sessão. Resposta fabricada leva `x-g-faixa: fabricado` e não conta como escrita. Com sessão real, o
    perfil persistente da PR-5 segue valendo (a conta de audit; as escritas no preview, I1-D14).
-9. **Contas (ii) antes de (i)** (decisão 8): usuário falso e respostas fabricadas; conta descartável só se o (ii) não
+9. **A faixa A é mecânica** (errata da I1-D11): sem folha — empilha como B (o padrão, sem o `c:`), a coluna na largura
+   do viewport (`max-w-full`) com a margem `web.margem`; **o veredito reprova (e) e (b) em 411** (a página que rola na
+   horizontal é (b)). A lista "inalcançáveis em A" sai por superfície, com 0 como critério.
+10. **Contas (ii) antes de (i)** (decisão 8): usuário falso e respostas fabricadas; conta descartável só se o (ii) não
    alcançar — em auth ele alcançou os 14 alcançáveis dos 15.
 
 ## 13. G-tok — antes × depois `[medido]`
@@ -694,7 +698,7 @@ Contagens `(e)·(b)·(d′) · errata candidata · sem par folha/app`; 411 conta
 | `AUTH-verify-reenviado` | 0·0·0 · 0 · 0/0 | 0·0·0 · 0 · 0/0 | 0·6·0 |
 
 **(e) = 0 e (b) = 0 em 1138 e 711 em todos os 41 estados medidos.** Em **411**, todo estado tem (b) — a página rola na
-horizontal (div. 676, §14.6).
+horizontal (div. 676, §14.6). → **Consertado nos commits 4/4b; o veredito nas três larguras está na §15.5.**
 
 ### 14.2 O alcance — o que o aceite alcançou e o que não
 
@@ -796,9 +800,9 @@ null>(null)`: o `user` nasce nulo) × `:523` (o provider renderiza os filhos sem
 |---|---|---|---|---|
 | **672** | T | `COMO-RODAR.md` (commit 2): *"nada sai para o Google"* | nos estados do *Entrar com Google* o SDK carrega o iframe de auth de verdade: no log, `apis.google.com` ×12, `octavia-27ebb.firebaseapp.com` ×12, `www.googleapis.com` ×6 e **`identitytoolkit.googleapis.com` ×3** — leituras (a janela é segurada/bloqueada no navegador, nenhum login acontece); nenhuma escrita: o único `POST /api/profile` do log é fabricado (×3, `AUTH-signup-perfil`) | registrado; a frase do `COMO-RODAR.md` corrigida no commit 3 (o cabeçalho do `g-faixa-auth.ts` diz o mesmo e fica — commit 3 é só docs; corrige-se na próxima PR que tocar o arquivo) |
 | **673** | A | — | `DELETE /api/auth/session` **real** ×147 no servidor local (72 → 200, **75 → 429**): o `DELETE` sem usuário de toda carga (div. 527) × um contexto novo por estado — o limitador do servidor local passa a responder 429 | não é escrita de dado (limpa cookie) nem afetou estado (o veredito passa); registro |
-| **674** | P | o prompt do "rodei": *"Contas descartáveis criadas por mim: [0 \| 1, apagada; escritas: 1 signup + 1 perfil]"* — as duas opções vieram no texto | os 15 estados com usuário foram medidos pelo (ii); no log, nenhum `POST /api/profile` real e nenhum `accounts:signUp` real (o `identitytoolkit` real ×3 é o do Google, 672) | contabilidade com **0** contas, por inferência do log — **a confirmar pelo Marcel** |
-| **675** | D | `AUTH-login-redirecionando` | a moldura tem o grupo de botões VAZIO da I1-E8 (Δy +16/−16 em C, −32 em B) | errata candidata — **decisão do Marcel** (a I1-E8 cobre só o `verify-carregando`) |
-| **676** | A | I1-D11: *"a faixa A só não quebra"* | em 411 todo estado tem (b): a coluna `web.colunaAuth` (420) e a marca não cabem, e a página rola na horizontal (`AUTH-login`: (b) = 10) — A segue B "por referência" e B não cabe em 411 | contado à parte (decisão 619), não reprova; **decisão do Marcel**: herança "inalcançáveis em A" (I2) ou conserto (a coluna com `max-w-full` em A), que volta ao commit 2 |
+| **674** | P | o prompt do "rodei": *"Contas descartáveis criadas por mim: [0 \| 1, apagada; escritas: 1 signup + 1 perfil]"* — as duas opções vieram no texto | os 15 estados com usuário foram medidos pelo (ii); no log, nenhum `POST /api/profile` real e nenhum `accounts:signUp` real (o `identitytoolkit` real ×3 é o do Google, 672) | contabilidade com **0** contas — **confirmado** `[Marcel, 2026-09-28]`: 0 contas, 0 escritas |
+| **675** | D | `AUTH-login-redirecionando` | a moldura tem o grupo de botões VAZIO da I1-E8 (Δy +16/−16 em C, −32 em B) | **I1-E9** `[Marcel, 2026-09-28]`: o grupo não existe; a seção vale sem ele |
+| **676** | A | I1-D11: *"a faixa A só não quebra"* | em 411 todo estado tem (b): a coluna `web.colunaAuth` (420) e a marca não cabem, e a página rola na horizontal (`AUTH-login`: (b) = 10) — A segue B "por referência" e B não cabe em 411 | **decidido** `[Marcel, 2026-09-28]`: a auth empilha em A nesta PR (commit 4) e o veredito reprova (e) e (b) em 411 (errata da I1-D11; §15) |
 
 ### 14.7 Contabilidade (commit 3 e aceite)
 
@@ -851,8 +855,124 @@ null>(null)`: o `user` nasce nulo) × `:523` (o provider renderiza os filhos sem
 
 | # | origem | o que o prompt (ou o doc) presumiu | o que foi medido | destino |
 |---|---|---|---|---|
-| **677** | P | item 1: *"(e) = 0 e (b) = 0 em 411"* × o título do commit 4: *"o veredito reprova (b) em 411"* e *"as (e) de 411 seguem listadas"* | as duas leituras não coincidem para o (e) | o veredito reprova o (b) de 411 e LISTA o (e) de 411 (as "inalcançáveis em A", decisão 619); para a auth, o commit 5 cobra (e) = 0 e (b) = 0 nas três |
-| **678** | T | *"meça você mesmo … sem `.env`"* | o `.env.local` que o Marcel copiou para a árvore às 08:34 (para o aceite; `ls`, não aberto) é carregado pelo `next dev` (*"Environments: .env.local"*): as capturas do commit 3 e as rodadas do commit 4 do executor rodaram com o Firebase ligado. No log dessas rodadas: prod **0**; escrita real só o cookie da sessão (`DELETE /api/auth/session` 200/429, `POST` abortado); o iframe do Google lido (`identitytoolkit` ×6, leituras); nenhum login, nenhuma conta | registrado; o arquivo não foi tocado (é do Marcel; regra de config local). A prova de C/B ficou maior que a pedida: 41 estados, não só os sem Firebase |
+| **677** | P | item 1: *"(e) = 0 e (b) = 0 em 411"* × o título do commit 4: *"o veredito reprova (b) em 411"* e *"as (e) de 411 seguem listadas"* | as duas leituras não coincidem para o (e) | **decidido** `[Marcel, 2026-09-28]`: em 411 o **(e) também reprova** ("empilha, não esconde" vale em A); a lista das (e) de 411 continua saindo, com 0 como critério — commit 4b (`REPROVAM` = 1138 · 711 · 411) |
+| **678** | T | *"meça você mesmo … sem `.env`"* | o `.env.local` que o Marcel copiou para a árvore às 08:34 (para o aceite; `ls`, não aberto) é carregado pelo `next dev` (*"Environments: .env.local"*): as capturas do commit 3 e as rodadas do commit 4 do executor rodaram com o Firebase ligado. No log dessas rodadas: prod **0**; escrita real só o cookie da sessão (`DELETE /api/auth/session` 200/429, `POST` abortado); o iframe do Google lido (`identitytoolkit` ×6, leituras); nenhum login, nenhuma conta | **decidido** `[Marcel, 2026-09-28]`: o `.env.local` fica na árvore (é do aceite); as provas do commit 4 saíram com o Firebase ligado, **mais amplas do que o pedido** (41 estados em C/B, não só os sem Firebase). Contabilidade dessas rodadas: o Google só lido; o cookie da sessão como única escrita real; prod 0; contas 0 |
 | **679** | P | *"```gates-web``` acrescenta `gfaixa: …`"* | o extrator recusava `gfaixa:` (chave desconhecida) | `gfaixa:` vira chave de registro, como `gtok:` (div. 664) |
 | **680** | A | *"confira que o medidor mescla por largura; se apagar, é divergência e o Marcel roda as três"* | o `juntar` SOBRESCREVIA o JSON (uma rodada de A apagaria C e B) | a mescla entra no commit 4 (instrumento, com CN); mesmo assim o `login` precisa das três larguras pelo item 5 — dois comandos no `COMO-RODAR.md` |
+
+### 15.4 O aval do commit 4 — decisões `[Marcel, 2026-09-28]`
+
+- **677**: em 411 o **(e) também reprova**, não só o (b) — "empilha, não esconde" vale em A. A lista das (e) de 411
+  continua saindo (é a herança), com contagem 0 como critério.
+- **678**: o `.env.local` fica na árvore (é do aceite). As provas do commit 4 saíram com o Firebase ligado, mais amplas
+  do que o pedido; registradas assim, com a contabilidade (Google só lido; cookie como única escrita real; prod 0;
+  contas 0).
+- O "rodei" dos dois comandos: contas **0**, escritas **0**.
+
+### 15.5 O aceite nas três larguras — o veredito `[medido]`
+
+Os cinco JSON, por largura (`rodadas`): **411** das cinco telas em `2026-09-28T12:31:21Z` (`e45a566`, árvore limpa);
+**`login` em 1138/711** refeito em `12:36:20Z` (`e45a566+sujo` — o "sujo" são os cinco JSON que o comando de A acabara
+de gravar, ainda não commitados: div. 682); **as outras quatro em 1138/711** as de `11:37:03Z` (`f87b639`), preservadas
+pela mescla (§15.2; C/B idênticos nó a nó, `cn/commit4-cb-identicos.txt`). Veredito verbatim:
+`cn/g-faixa-aceite-tres.txt`.
+
+```
+$ node scripts/gates-web/g-faixa-veredito.mjs
+## contados à parte (não reprovam): errata candidata 46 · sem par folha 106 · sem par app 74 (C e B) · não medidos 10
+G-faixa: PASSA
+# exit: 0
+```
+
+| tela | estado | 1138 (e·b · errata) | 711 (e·b · errata) | 411 (e·b) |
+|---|---|---|---|---|
+| confirm-email | `AUTH-confirm` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| confirm-email | `AUTH-confirm-enviando` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| confirm-email | `AUTH-confirm-sucesso` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| confirm-email | `AUTH-confirm-erro` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| confirm-email | `AUTH-confirm-erro-rede` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| confirm-email | `AUTH-confirm-sem-usuario` | 0·0 · 4 | 0·0 · 3 | 0·0 |
+| forgot-password | `AUTH-forgot` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| forgot-password | `AUTH-forgot-validacao` | 0·0 · 4 | 0·0 · 3 | 0·0 |
+| forgot-password | `AUTH-forgot-enviando` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| forgot-password | `AUTH-forgot-erro` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| forgot-password | `AUTH-forgot-sucesso` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| login | `AUTH-login` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| login | `AUTH-login-validacao` | 0·0 · 9 | 0·0 · 8 | 0·0 |
+| login | `AUTH-login-entrando` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| login | `AUTH-login-google` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| login | `AUTH-login-redirecionando` | 0·0 · 4 | 0·0 · 2 | 0·0 |
+| login | `AUTH-login-credencial` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| login | `AUTH-login-limite-prazo` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| login | `AUTH-login-limite` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| login | `AUTH-login-rede` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| login | `AUTH-login-google-erro` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| login | `AUTH-login-perfil-401` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| login | `AUTH-login-servidor` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| login | `AUTH-login-google-bloqueado` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| signup | `AUTH-signup` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| signup | `AUTH-signup-validacao` | 0·0 · 4 | 0·0 · 3 | 0·0 |
+| signup | `AUTH-signup-senhas` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| signup | `AUTH-signup-criando` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| signup | `AUTH-signup-email-usado` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| signup | `AUTH-signup-senha-fraca` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| signup | `AUTH-signup-rede` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| signup | `AUTH-signup-limite` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| signup | `AUTH-signup-perfil` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| verify-email | `AUTH-verify-carregando` | 0·0 · 2 | 0·0 · 0 | 0·0 |
+| verify-email | `AUTH-verify` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| verify-email | `AUTH-verify-checando` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| verify-email | `AUTH-verify-enviando` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| verify-email | `AUTH-verify-nao-verificado` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| verify-email | `AUTH-verify-checar-falhou` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| verify-email | `AUTH-verify-reenviar-erro` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| verify-email | `AUTH-verify-reenviar-limite` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+| verify-email | `AUTH-verify-reenviado` | 0·0 · 0 | 0·0 · 0 | 0·0 |
+
+| tela | estados medidos | (e) · (b) em 1138 | em 711 | em 411 |
+|---|---|---|---|---|
+| confirm-email | 6 | 0 · 0 | 0 · 0 | 0 · 0 |
+| forgot-password | 5 | 0 · 0 | 0 · 0 | 0 · 0 |
+| login | 13 | 0 · 0 | 0 · 0 | 0 · 0 |
+| signup | 9 | 0 · 0 | 0 · 0 | 0 · 0 |
+| verify-email | 9 | 0 · 0 | 0 · 0 | 0 · 0 |
+
+
+**(e) = 0 e (b) = 0 nas três larguras em todos os 42 estados medidos** (os 41 de antes + `AUTH-login-google-bloqueado`,
+item 5). Não medidos, como antes: os 2 só sem Firebase (medidos pelo executor, §14.2) e os 4 inalcançáveis declarados.
+
+**O CN do veredito** (errata da I1-D11 + div. 677):
+
+| JSON | veredito antes (só C/B) | com (b) em 411 (commit 4) | com (e) e (b) em 411 (commit 4b) |
+|---|---|---|---|
+| os cinco do aceite de 2026-09-28 (`f87b639`, A de antes) | PASSA | **REPROVA — 383** (todas em 411) | — |
+| os cinco regravados (A de `e45a566`) | — | — | **PASSA** (383 → 0) |
+| fixture: o `AUTH-forgot` com um nó tirado de 411 | — | — | **REPROVA — 1** (`(e) sem nó: "Enviar o link"`; `cn/g-faixa-e-411-cn.txt`) |
+
+**A linha de base do web velho (`cn-main`)**: **46** (só C/B, PR-5) → **46** com o (b) de 411 (o web velho não tinha
+(b) em 411) → **83** com o (e) de 411 (+37: `library` 26, `content` 4, `setlists` 4, `dashboard` 3; `landing`,
+`privacy-policy` e `login` 0) — `cn/g-faixa-cn-main-411.txt`, `cn/g-faixa-cn-main-677.txt`.
+
+**Erratas candidatas recontadas**: **46**, todas cobertas pelas erratas da folha do G-faixa (`erratas.json`,
+`erratasFaixa`): I1-E7 31 (`-validacao` ×3) · I1-E8 2 (`verify-carregando`) · I1-E9 6 (`login-redirecionando`) ·
+I1-E10 7 (`confirm-sem-usuario`); **descobertas 0**; o `google-erro` (agora com a frase da folha) tem 0, e o
+`google-bloqueado` é medido à parte, só (e)/(b), 0 · 0 nas três (`cn/erratas-faixa-cobertura.txt`).
+
+### 15.6 Divergências — 681 e 682
+
+| # | origem | o que o prompt (ou o doc) presumiu | o que foi medido | destino |
+|---|---|---|---|---|
+| **681** | P | commit 5: *"`erratas.json` com E9 e E10"* | o `erratas.json` só tem erratas que casam, por regex, com os achados do `conferir.mjs`; I1-E7…E10 são diferenças de posição do G-faixa (nenhum achado do conferir) — em `erratas` o G-tok (i) as reprovaria como ÓRFÃS; E7 e E8 também não tinham entrado lá | lista própria `erratasFaixa` (E7…E10, com estados e `n`), que o G-tok (i) não lê; a cobertura das 46 conferida por script (`cn/erratas-faixa-cobertura.txt`); G-tok (i) segue PASSA |
+| **682** | T | — | o `login` em 1138/711 saiu `commit e45a566+sujo`: o 2º comando rodou com os cinco JSON do 1º ainda não commitados | registrado; o código medido é o do `e45a566` (os únicos arquivos sujos eram as saídas) |
+
+### 15.7 Contabilidade final da I1-PR6
+
+| quem | item | valor |
+|---|---|---|
+| executor | requests a `https://octavia.rocks` · logins · `.env*` abertos · escritas · contas | **0 · 0 · 0 · 0 · 0** |
+| executor | `next dev` local | sem `.env` até o commit 2; com o `.env.local` do aceite no commit 3 (capturas) e no 4 (provas) — div. 678: Google só lido, cookie da sessão como única escrita real |
+| Marcel | G-faixa contra `localhost:3000` | 3 rodadas: o aceite (C/B/A, 2026-09-28 11:37Z), A das cinco (12:31Z), `login` C/B (12:36Z) |
+| Marcel | contas descartáveis · escritas | **0 · 0** (confirmado) |
+| todos | requests a `octavia.rocks` | **0** (`prodAbortados` 0 em todos os JSON) |
+| todos | escritas a `/api/*` fora de `/api/auth/session` | **0 reais**; as de `POST /api/profile` fabricadas no navegador |
 
