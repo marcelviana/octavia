@@ -140,6 +140,9 @@ for (const sup of selecionadas()) {
       for (const [id, est] of Object.entries(sup.estados)) {
         if (est.inalcancavel) { estados[id] = { inalcancavel: est.inalcancavel }; continue }
         if (!url) { estados[id] = { pulado: 'a rota não resolveu (ex.: nenhum content na conta)' }; continue }
+        // I1-PR10: a URL por estado (o content de cada tipo); sem ela, NÃO ALCANÇADO com a razão
+        const alvo = est.rota ? est.rota() : url
+        if (!alvo) { estados[id] = { naoAlcancado: 'a conta não tem content deste tipo (a descoberta pela /library não achou)' }; continue }
         const t = Date.now()
         console.log(`G-faixa · ${sup.id} · ${id} · ${largura}: começa`)
         if (!sup.sessao) { await fechar(ctx); ctx = await abrir() }
@@ -150,7 +153,7 @@ for (const sup of selecionadas()) {
         try {
           if (est.antes) await est.antes(p, BASE)
           await p.setViewportSize(vp)
-          await p.goto(new URL(url, BASE).href, { waitUntil: 'domcontentloaded', timeout: 180_000 })
+          await p.goto(new URL(alvo, BASE).href, { waitUntil: 'domcontentloaded', timeout: 180_000 })
           await assentar(p)
           const caiu = sup.sessao && new URL(p.url()).pathname.startsWith('/login')
           expect(caiu, `a sessão caiu em ${sup.rota} (redirecionou para /login)`).toBe(false)

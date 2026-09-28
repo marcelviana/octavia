@@ -1,0 +1,64 @@
+$ git rev-parse HEAD   # worktree temporária da main, node_modules da árvore da PR por link, só o arquivo de teste copiado
+8b662fc72ecfba871117d0ab0aab4d5a2c7860d4
+$ pnpm exec vitest run tests/gates/i1-tab-acordes.test.tsx
+ RUN  v4.0.16 /private/tmp/claude-501/-Users-marcelviana-projects-octavia/513cbeab-7cb4-402e-bf33-7ce07dc36cb1/scratchpad/main-8b662fc
+Error: Uncaught [TypeError: content.content_data.chords.map is not a function]
+Error: Uncaught [TypeError: content.content_data.chords.map is not a function]
+ ❯  web  tests/gates/i1-tab-acordes.test.tsx (1 test | 1 failed) 55ms
+     × abre: a tablatura e os acordes na tela, sem cair no limite de render 54ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL   web  tests/gates/i1-tab-acordes.test.tsx > I1-PR-10 — tab com acordes em texto (div. 743) > abre: a tablatura e os acordes na tela, sem cair no limite de render
+TestingLibraryElementError: Unable to find an element with the text: /e\|---0---\|/. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="min-h-[400px] flex items-center justify-center p-8"
+    >
+      <div
+        class="text-center max-w-md"
+      >
+        <svg
+          class="lucide lucide-triangle-alert w-16 h-16 text-red-500 mx-auto mb-4"
+          fill="none"
+          height="24"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"
+          />
+          <path
+            d="M12 9v4"
+          />
+          <path
+            d="M12 17h.01"
+          />
+        </svg>
+        <h3
+          class="text-xl font-bold text-red-800 mb-2"
+        >
+          Something went wrong
+        </h3>
+        <p
+          class="text-red-600 text-sm mb-6"
+        >
+          content.content_data.chords.map is not a function
+        </p>
+        <div
+          class="space-x-3"
+        >
+          <button
+            class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 px-4 py-2 bg-red-600 text-white hover:bg-red-700"
+          >
+            Try again
+          </button>
+          <button
+            class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border bg-background hover:text-accent-foreground h-10 px-4 py-2 border-red-300 text-red-700 hover:bg-red-50"
+          >
+# exit: 1

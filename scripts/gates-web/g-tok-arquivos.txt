@@ -69,3 +69,10 @@ components/content-viewer/LyricsDisplay.tsx
 components/content-viewer/TabDisplay.tsx
 components/content-viewer/SheetMusicDisplay.tsx
 components/pdf-viewer.tsx
+# Commit 2: os que nasceram.
+components/content/frases-visualizacao.ts
+components/content/corpo-de-texto.ts
+components/content/tipos.ts
+components/content/painel.tsx
+components/content/barra-do-pdf.tsx
+components/content/limite-do-corpo.tsx

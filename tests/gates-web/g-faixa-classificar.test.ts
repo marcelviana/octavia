@@ -43,6 +43,19 @@ describe('G-faixa — (b) cortes', () => {
     expect(c['711'].b).toEqual([])
     expect(c['711'].dl).toMatchObject([{ k: 'p', painel: expect.stringContaining('decisão 621') }])
   })
+  it('div. 758 (I1-PR10): além da borda do viewport DENTRO do painel marcado que rola: (d′); sem a marca, ou num contêiner que só corta, segue (b)', () => {
+    const painel = { x: 20, y: 0, w: 371, h: 800, rolagem: true, painel: true }
+    const alem = med(411, [no('span-do-pdf', 300, 10, 200, 20, { clip: painel })]) // 300 + 200 > 411 e > 20 + 371
+    expect(cortes(alem).b).toEqual([])
+    expect(classificarEstado({ larguras: { 411: alem } })['411'].dl).toMatchObject([{ k: 'span-do-pdf', painel: expect.stringContaining('decisão 621') }])
+    expect(cortes(med(411, [no('s', 300, 10, 200, 20, { clip: { ...painel, painel: false } })])).b[0]).toMatchObject({ tipo: 'borda do viewport' })
+    expect(cortes(med(411, [no('c', 300, 10, 200, 20, { clip: { ...painel, rolagem: false } })])).b[0]).toMatchObject({ tipo: 'borda do viewport' })
+    expect(cortes(med(411, [no('livre', 300, 10, 200, 20)])).b[0]).toMatchObject({ tipo: 'borda do viewport' })
+    // o painel ACIMA de outro recorte (a camada de texto dentro da página do PDF, que recorta): vale o `emPainel`
+    const sobPagina = med(411, [no('span', 131, 10, 445, 19, { clip: { x: 50, y: 0, w: 800, h: 1132, rolagem: false, painel: false }, emPainel: { x: 25, y: 0, w: 361, h: 1200 } })])
+    expect(cortes(sobPagina).b).toEqual([])
+    expect(classificarEstado({ larguras: { 411: sobPagina } })['411'].dl).toMatchObject([{ k: 'span', painel: expect.stringContaining('decisão 621') }])
+  })
   it('texto que transborda o próprio nó com overflow escondido (elidir): (b)', () => {
     expect(cortes(med(711, [no('t', 10, 10, 100, 20, { corta: { x: true, y: false } })])).b[0]).toMatchObject({ tipo: 'conteúdo cortado no próprio nó' })
   })

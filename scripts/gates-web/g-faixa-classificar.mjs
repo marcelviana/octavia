@@ -38,7 +38,7 @@
 //   esconde" vale em A. A lista das (e) de 411 continua saindo (é a herança), com contagem 0 como critério.
 //
 // Nó cru (o que o medidor grava): { k, role, tag, testid, h_texto, h_nome, n,
-//   x, y, w, h, sr, clip: {x,y,w,h,rolagem,painel} | null, corta: {x,y} }
+//   x, y, w, h, sr, clip: {x,y,w,h,rolagem,painel} | null, emPainel?: {x,y,w,h} (I1-PR10), corta: {x,y} }
 //   k = chave de identidade estável entre larguras (testid, ou papel + hash do
 //   texto, com o nº da ocorrência); h_texto/h_nome = sha256 (12 hex) do texto
 //   visível e do aria-label — o texto em claro não vai para o JSON de superfície
@@ -77,6 +77,13 @@ export function cortes(medicao) {
   const rolagem = [], painel = []
   for (const n of medicao.nos) {
     if (!temArea(n) || n.sr) continue
+    // I1-PR10 (div. 758): o nó que passa da borda do viewport DENTRO do painel marcado que rola na horizontal (a linha
+    // longa, a página do PDF com zoom) está recortado pelo PAINEL antes do viewport — é a rolagem do painel da decisão
+    // 621, (d′), não (b). Antes a borda do viewport era testada primeiro e o painel nunca chegava a valer para ele.
+    // O painel é o `emPainel` que a coleta grava (o marcado acima do nó, mesmo sob outro recorte — a camada de texto
+    // da página do PDF), ou o próprio recorte, quando é ele o painel.
+    const P = n.emPainel ?? (n.clip?.painel && n.clip.rolagem ? n.clip : null)
+    if (P && (!dentro(n.x, P.x, P.x + P.w) || !dentro(n.x + n.w, P.x, P.x + P.w))) { painel.push({ k: n.k }); continue }
     if (n.x < -TOL_CORTE || n.x + n.w > vw + TOL_CORTE) { out.push({ k: n.k, tipo: "borda do viewport", x: n.x, w: n.w, vw }); continue }
     if (n.clip) {
       const c = n.clip

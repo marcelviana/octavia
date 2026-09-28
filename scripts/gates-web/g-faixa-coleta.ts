@@ -15,6 +15,8 @@ export interface NoCru {
   role: string; tag: string; testid: string | null; texto: string; nome: string | null
   x: number; y: number; w: number; h: number; sr: boolean
   clip: { x: number; y: number; w: number; h: number; rolagem: boolean; painel: boolean } | null
+  /** I1-PR10: o painel marcado que rola, acima do nó (só quando existe) */
+  emPainel?: { x: number; y: number; w: number; h: number }
   corta: { x: boolean; y: boolean }
 }
 
@@ -73,11 +75,19 @@ export function coletar(raizSel: string | null): { nos: NoCru[]; viewport: { w: 
       clip = { x: ar.left + a.clientLeft - ox, y: ar.top + a.clientTop - oy, w: a.clientWidth, h: a.clientHeight, rolagem: /auto|scroll/.test(ox2 + oy2), painel: a.getAttribute('data-rolagem') === 'painel' }
       break
     }
+    // I1-PR10 (div. 758): o painel marcado que rola (`data-rolagem="painel"`, resposta 19) ACIMA do nó, mesmo quando o
+    // recorte mais próximo é outro (a página do PDF recorta a camada de texto dela) — é ele que corta na horizontal
+    let emPainel: NoCru['emPainel']
+    const pa = el.parentElement?.closest('[data-rolagem="painel"]')
+    if (pa && /auto|scroll/.test(getComputedStyle(pa).overflowX)) {
+      const pr = pa.getBoundingClientRect()
+      emPainel = { x: pr.left + pa.clientLeft - ox, y: pr.top + pa.clientTop - oy, w: pa.clientWidth, h: pa.clientHeight }
+    }
     const escondeX = /hidden|clip/.test(cs.overflowX), escondeY = /hidden|clip/.test(cs.overflowY)
     nos.push({
       role: papel(el), tag: el.tagName.toLowerCase(), testid: el.getAttribute('data-testid'), texto, nome: el.getAttribute('aria-label') ?? (el.tagName === 'IMG' ? el.getAttribute('alt') : null),
       x: Math.round((r.left - ox) * 10) / 10, y: Math.round((r.top - oy) * 10) / 10, w: Math.round(r.width * 10) / 10, h: Math.round(r.height * 10) / 10,
-      sr, clip,
+      sr, clip, ...(emPainel ? { emPainel } : {}),
       corta: { x: !!texto && escondeX && he.scrollWidth > he.clientWidth + 1, y: !!texto && escondeY && he.scrollHeight > he.clientHeight + 1 },
     })
   }
@@ -95,7 +105,7 @@ export function paraJson(nos: NoCru[], publica: boolean) {
       k: `${base}#${i}`, role: n.role, tag: n.tag, testid: n.testid,
       h_texto: n.texto ? hash(n.texto) : null, h_nome: n.nome ? hash(n.nome) : null, n: n.texto.length,
       ...(publica ? { rotulo: n.texto || n.nome || '' } : {}),
-      x: n.x, y: n.y, w: n.w, h: n.h, sr: n.sr, clip: n.clip, corta: n.corta,
+      x: n.x, y: n.y, w: n.w, h: n.h, sr: n.sr, clip: n.clip, ...(n.emPainel ? { emPainel: n.emPainel } : {}), corta: n.corta,
     }
   })
 }

@@ -1,62 +1,37 @@
 "use client"
+
+/**
+ * A letra (I1-PR-10; folha 5, `VIEW-letra` / `VIEW-vazio-letra`): o painel *Letra* com o corpo mono 22 (o
+ * `MusicText` de antes — negrito e itálico seguem —, sem quebra, rolando dentro do painel). Os acordes que a letra
+ * traz vão num SEGUNDO painel *Cifra* (decisão 10; I1-E18).
+ */
 import { MusicText } from "@/components/music-text"
+import { CentroDoPainel, CorpoMono, Painel } from "@/components/content/painel"
+import { textoDaLetra, textoDosAcordes } from "@/components/content/corpo-de-texto"
+import { FRASES_VIEW, rotuloDoTipo } from "@/components/content/frases-visualizacao"
+import { dadosDe, type ConteudoVisto } from "@/components/content/tipos"
 
-interface LyricsDisplayProps {
-  content: any
-}
-
-export function LyricsDisplay({ content }: LyricsDisplayProps) {
+export function LyricsDisplay({ content }: { content: ConteudoVisto }) {
+  const dados = dadosDe(content)
+  const letra = textoDaLetra(dados)
+  const acordes = textoDosAcordes(dados?.chords)
   return (
-    <div className="space-y-6">
-      <h3 className="text-lg font-semibold">Lyrics</h3>
-
-      {content.content_data?.lyrics ? (
-        <div className="space-y-6">
-          <MusicText
-            text={content.content_data.lyrics}
-            className="p-4 bg-white/80 backdrop-blur-sm rounded-xl border border-amber-200 shadow text-sm leading-relaxed"
-          />
-        </div>
-      ) : (
-        <div className="p-8 bg-white/80 backdrop-blur-sm border border-amber-200 rounded-xl text-center">
-          <p className="text-gray-500">
-            No lyrics available
-          </p>
-          <p className="text-sm text-gray-400 mt-2">
-            Add lyrics to help with performance
-          </p>
-        </div>
+    <>
+      <Painel rotulo={rotuloDoTipo("Lyrics")} testid="painel-letra">
+        {letra ? (
+          <CorpoMono>
+            {/* o <pre> do MusicText herda o corpo; `font-fam-mono` vence o `pre` do preflight (div. 757) */}
+            <MusicText text={letra} monospace={false} className="whitespace-pre font-fam-mono" />
+          </CorpoMono>
+        ) : (
+          <CentroDoPainel icone frase={FRASES_VIEW["view.vazio.letra"]} apoio={FRASES_VIEW["view.vazio.letra.apoio"]} />
+        )}
+      </Painel>
+      {acordes && (
+        <Painel rotulo={rotuloDoTipo("Chords")} testid="painel-cifra">
+          <CorpoMono>{acordes}</CorpoMono>
+        </Painel>
       )}
-
-      {/* Chord progression for lyrics */}
-      {Array.isArray(content.content_data?.chords) && content.content_data.chords.length > 0 && (
-        <div className="p-4 bg-white/80 backdrop-blur-sm border border-blue-200 rounded-xl shadow">
-          <h4 className="font-semibold mb-2">Chords</h4>
-          <div className="flex flex-wrap gap-2">
-            {content.content_data.chords.map(
-              (chord: string, index: number) => (
-                <span
-                  key={index}
-                  className="px-2 py-1 bg-white rounded font-mono text-sm"
-                >
-                  {chord}
-                </span>
-              ),
-            )}
-          </div>
-        </div>
-      )}
-
-      {typeof content.content_data?.chords === "string" && content.content_data.chords && (
-        <div className="p-4 bg-white/80 backdrop-blur-sm border border-blue-200 rounded-xl shadow">
-          <h4 className="font-semibold mb-2">Chords</h4>
-          {/* CONT-01 (terceiro local da cifra-string): mesmo tratamento do
-              ChordDisplay. A prosa da letra acima segue com wrap normal. */}
-          <div className="font-mono text-sm bg-gray-50 p-4 rounded-lg whitespace-pre overflow-x-auto">
-            {content.content_data.chords}
-          </div>
-        </div>
-      )}
-    </div>
+    </>
   )
 }

@@ -1,0 +1,10 @@
+$ G_FAIXA_BASE_URL=http://localhost:3110 G_FAIXA_SUPERFICIES=landing,login,privacy-policy G_FAIXA_SAIDA=<scratchpad>/inercia pnpm exec playwright test -c playwright.g-faixa.config.ts scripts/gates-web/g-faixa-medir.ts
+# next dev SEM .env (cópia da árvore; o log do next dev não tem "Environments:"), porta 3110; a 3000 é o pnpm dev do Marcel, não tocado
+  9 passed (3.8m)
+
+$ node docs/ux/I1-PR9-anexos/cn/inercia-comparar.mjs <inercia> landing login privacy-policy   # × tests/gates-web/medicoes/*.json commitados
+landing: 3 (estado × largura) medidos nos dois lados · 3 idênticos (nós + doc) · 0 só no commitado (pedem o .env — o usuário falso do auth)
+login: 6 (estado × largura) medidos nos dois lados · 6 idênticos (nós + doc) · 33 só no commitado (pedem o .env — o usuário falso do auth)
+privacy-policy: 3 (estado × largura) medidos nos dois lados · 3 idênticos (nós + doc) · 0 só no commitado (pedem o .env — o usuário falso do auth)
+INÉRCIA: PASSA — nenhum nó mudou
+# exit: 0

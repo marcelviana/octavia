@@ -35,9 +35,9 @@ export async function pdfDe12Paginas(): Promise<Buffer> {
 
 const CORS_ARQUIVO = { 'access-control-allow-origin': '*', 'x-g-faixa': 'fabricado' }
 
-/** O `GET` do arquivo: o PDF gerado, um status de erro, ou segurado (o "carregando o PDF"). */
-export async function arquivo(page: Page, r: 'pdf' | 'segurar' | { status: number }) {
-  await page.route(PDF_URL, async (rt: Route) => {
+/** O `GET` do arquivo (o `url` dado, ou o fabricado): o PDF gerado, um status de erro, ou segurado ("carregando o PDF"). */
+export async function arquivo(page: Page, r: 'pdf' | 'segurar' | { status: number }, url: string = PDF_URL) {
+  await page.route(url, async (rt: Route) => {
     if (rt.request().method() === 'OPTIONS') return rt.fulfill({ status: 204, headers: { ...CORS_ARQUIVO, 'access-control-allow-headers': '*' } })
     if (r === 'segurar') return segurar(page, rt)
     if (r === 'pdf') return rt.fulfill({ status: 200, headers: { ...CORS_ARQUIVO, 'content-type': 'application/pdf' }, body: await pdfDe12Paginas() })
@@ -105,4 +105,74 @@ const ESTADOS_CONTENT_EDIT: Record<string, Estado> = {
   },
 }
 
-export { ESTADOS_CONTENT_EDIT }
+/**
+ * `content` (`/content/[id]`, a visualização — folha 5): a rota é SSR (div. 732), então o content é o REAL da conta,
+ * o primeiro de cada tipo (decisão 1 do aval). Descoberta: a `GET /api/content` que a própria `/library` faz, com
+ * `pageSize` 100 (a mesma leitura, página maior); guarda em memória só `id`, tipo e o `file_url` da partitura — nada
+ * vai para o JSON (a medição grava só hash). O ARQUIVO da partitura é fabricado no `route()` do `file_url` real (o
+ * PDF de 12 páginas gerado; 500; segurado): o PDF da conta não é lido.
+ */
+const achados: Partial<Record<Tipo, { id: string; fileUrl: string | null }>> = {}
+const TIPO_DO_BANCO: Record<string, Tipo> = { Chords: 'cifra', Lyrics: 'letra', Tab: 'tab', Sheet: 'partitura' }
+
+export async function descobrirPorTipo(page: Page, base: URL): Promise<string | null> {
+  await page.route(/\/api\/content\?/, (rt) => {
+    if (rt.request().method() !== 'GET') return rt.fallback()
+    const u = new URL(rt.request().url())
+    u.searchParams.set('page', '1'); u.searchParams.set('pageSize', '100')
+    return rt.continue({ url: u.toString() })
+  })
+  const resposta = page.waitForResponse((r) => new URL(r.url()).pathname === '/api/content' && r.request().method() === 'GET' && r.ok(), { timeout: 180_000 })
+  await page.goto(new URL('/library', base).href, { waitUntil: 'domcontentloaded', timeout: 180_000 })
+  const corpo = (await (await resposta).json().catch(() => null)) as { data?: { id?: unknown; content_type?: unknown; file_url?: unknown }[] } | null
+  await page.unrouteAll({ behavior: 'ignoreErrors' })
+  for (const c of corpo?.data ?? []) {
+    const tipo = TIPO_DO_BANCO[String(c.content_type)]
+    if (!tipo || achados[tipo] || typeof c.id !== 'string') continue
+    const fileUrl = typeof c.file_url === 'string' ? c.file_url : null
+    if (tipo === 'partitura' && !fileUrl?.toLowerCase().split('?')[0]?.endsWith('.pdf')) continue
+    achados[tipo] = { id: c.id, fileUrl }
+  }
+  console.log(`G-faixa · content · achados: ${(Object.keys(achados) as Tipo[]).join(', ') || 'nenhum'} (só id/tipo, em memória)`)
+  const primeiro = Object.values(achados)[0]
+  return primeiro ? `/content/${encodeURIComponent(primeiro.id)}` : null
+}
+
+const rotaDo = (tipo: Tipo) => () => { const a = achados[tipo]; return a ? `/content/${encodeURIComponent(a.id)}` : null }
+const arquivoDaPartitura = (r: 'pdf' | 'segurar' | { status: number }) => async (p: Page) => {
+  const url = achados.partitura?.fileUrl
+  if (url) await arquivo(p, r, url)
+}
+const painel = (testid: string) => async (p: Page) => { await p.getByTestId(testid).first().waitFor({ state: 'visible', timeout: 60_000 }) }
+const pdfAberto = async (p: Page) => { await painel('painel-partitura')(p); await paginaDesenhada(p) }
+
+const INALCANCAVEL_VIEW = (o_que: string) => `${o_que}: a linha do content vem do SSR (div. 732) e a conta não se escreve (decisão 1 do aval) — prova no Vitest components/content/__tests__/visualizacao-estados.test.tsx e na pré-verificação sem sessão (docs/ux/I1-PR10-anexos/pre-verificacao/)`
+const SEM_CODIGO = 'I1-E15: o estado saiu da folha — a cópia no navegador e o hook que a lia morreram na I1-PR-3'
+
+const ESTADOS_CONTENT: Record<string, Estado> = {
+  'VIEW-cifra': { secao: 'VIEW-cifra', rota: rotaDo('cifra'), preparar: painel('painel-cifra') },
+  'VIEW-letra': { secao: 'VIEW-letra', rota: rotaDo('letra'), preparar: painel('painel-letra') },
+  'VIEW-tab': { secao: 'VIEW-tab', rota: rotaDo('tab'), preparar: painel('painel-tab') },
+  'VIEW-partitura': { secao: 'VIEW-partitura', rota: rotaDo('partitura'), antes: arquivoDaPartitura('pdf'), preparar: pdfAberto },
+  'VIEW-partitura-cheia': {
+    secao: 'VIEW-partitura-cheia', rota: rotaDo('partitura'), antes: arquivoDaPartitura('pdf'),
+    preparar: async (p) => {
+      await pdfAberto(p)
+      await p.getByRole('button', { name: 'Tela cheia', exact: true }).click()
+      await p.waitForFunction(() => !!document.fullscreenElement, null, { timeout: 15_000 })
+      await p.getByRole('button', { name: 'Sair da tela cheia' }).waitFor({ state: 'visible', timeout: 15_000 })
+    },
+  },
+  'VIEW-carregando-pdf': { secao: 'VIEW-carregando-pdf', rota: rotaDo('partitura'), antes: arquivoDaPartitura('segurar'), espera: 'carregando o PDF…' },
+  'VIEW-erro-pdf': { secao: 'VIEW-erro-pdf', rota: rotaDo('partitura'), antes: arquivoDaPartitura({ status: 500 }), espera: 'o arquivo está corrompido ou inacessível' },
+  'VIEW-vazio-partitura': { inalcancavel: INALCANCAVEL_VIEW('um content Sheet sem arquivo nem notação') },
+  'VIEW-vazio-letra': { inalcancavel: INALCANCAVEL_VIEW('um content Lyrics sem letra') },
+  'VIEW-vazio-tab': { inalcancavel: INALCANCAVEL_VIEW('um content Tab sem tablatura') },
+  'VIEW-vazio-cifra': { inalcancavel: INALCANCAVEL_VIEW('um content Chords sem cifra') },
+  'VIEW-erro-formato': { inalcancavel: INALCANCAVEL_VIEW('um file_url sem extensão de PDF ou imagem (o upload o recusa, B5)') },
+  'VIEW-erro-render': { inalcancavel: INALCANCAVEL_VIEW('uma exceção de render') },
+  'VIEW-carregando-arquivo': { inalcancavel: SEM_CODIGO },
+  'VIEW-erro-cache': { inalcancavel: SEM_CODIGO },
+}
+
+export { ESTADOS_CONTENT, ESTADOS_CONTENT_EDIT }

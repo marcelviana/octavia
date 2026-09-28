@@ -19,6 +19,9 @@ import { FRASES_SESSAO, fraseDaFalha } from "./frases-sessao"
  */
 export const ROTAS_QUE_DESENHAM_A_LINHA: readonly string[] = ["/login", "/dashboard", "/library"]
 
+/** I1-PR-10 (decisão 14): a visualização `/content/<id>` também desenha a linha (abaixo do cabeçalho); o editor `/content/<id>/edit`, não. */
+export const desenhaNaTela = (caminho: string) => ROTAS_QUE_DESENHAM_A_LINHA.includes(caminho) || /^\/content\/[^/]+$/.test(caminho)
+
 export function AvisoDeSessao({
   sessao,
   onTentarDeNovo,
@@ -27,7 +30,7 @@ export function AvisoDeSessao({
   onTentarDeNovo: () => void
 }) {
   const pathname = usePathname()
-  if (sessao.estado !== "falhou" || ROTAS_QUE_DESENHAM_A_LINHA.includes(pathname)) return null
+  if (sessao.estado !== "falhou" || desenhaNaTela(pathname ?? "")) return null
   return (
     <div className="sticky top-0 z-50 p-2">
       <LinhaDeAviso

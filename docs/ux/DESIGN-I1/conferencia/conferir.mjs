@@ -247,6 +247,9 @@ if (fs.existsSync(README_BLOCO)) {
   req.forEach((m, i) => { if (Number(m[1]) !== i + 1) achado("d", `README.md: T-I1-R${m[1]} fora da sequência (esperado ${i + 1})`) })
   const tem = new Set(req.map((m) => `${m[3]}|${m[2]}`))
   for (const [s] of todasSecoes) for (const fx of ["C", "B"]) if (!tem.has(`${s}|${fx}`)) achado("d", `README.md: sem T-I1-R para ${s} em ${fx}`)
+  // I1-PR10 (div. 760): a regra simétrica — requisito de estado que a folha não tem seção (o que uma errata de estado
+  // acrescenta: I1-E1, I1-E2). Antes só a CONTAGEM o mostrava, e a I1-E15 (que tira dois estados) a fecharia por acaso.
+  for (const m of req) if (!todasSecoes.has(m[3])) achado("d", `README.md: T-I1-R para ${m[3]} em ${m[2]}, estado sem seção na folha`)
   if (nReq !== 2 * todasSecoes.size) achado("d", `README.md: ${nReq} T-I1-R × ${2 * todasSecoes.size} esperados`)
 }
 

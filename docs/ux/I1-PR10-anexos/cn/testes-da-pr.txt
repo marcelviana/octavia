@@ -1,0 +1,10 @@
+$ pnpm exec vitest run components/painel/__tests__/painel-estados.test.tsx tests/gates/i1-visualizador.test.tsx tests/gates/i1-tab-acordes.test.tsx components/content/__tests__/visualizacao-estados.test.tsx tests/components/monospace-rendering.test.tsx tests/gates-web/g-faixa-classificar.test.ts
+ ✓  web  tests/gates-web/g-faixa-classificar.test.ts (14 tests) 8ms
+ ✓  web  tests/components/monospace-rendering.test.tsx (5 tests) 34ms
+ ✓  web  components/painel/__tests__/painel-estados.test.tsx (4 tests) 94ms
+ ✓  web  tests/gates/i1-visualizador.test.tsx (6 tests) 69ms
+ ✓  web  components/content/__tests__/visualizacao-estados.test.tsx (15 tests) 148ms
+ ✓  web  tests/gates/i1-tab-acordes.test.tsx (1 test) 23ms
+ Test Files  6 passed (6)
+      Tests  45 passed (45)
+# exit: 0

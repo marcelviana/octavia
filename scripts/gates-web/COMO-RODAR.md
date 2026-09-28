@@ -143,6 +143,37 @@ de verdade só a sessão (`/api/profile`, o `securetoken`). **Cota**: ~16 cargas
 Depois diga **"rodei-antes"**. O "depois" é o mesmo comando com `G_FAIXA_SAIDA=tests/gates-web/medicoes/casca-efeito/depois`,
 no commit 2.
 
+## I1-PR10 — o aceite da visualização (Marcel, dois comandos)
+
+Na árvore `../octavia-i1-pr10`, **no commit 2** (branch `i1/pr10-content-view`), com o seu `.env.local` e o
+**`pnpm dev` reiniciado** (porta 3000; o `✓ Ready`). Perfil de sempre.
+
+1. **A visualização** (os estados da folha `5-content-visualizacao`, nas três larguras) — grava
+   `tests/gates-web/medicoes/content.json`:
+
+   ```bash
+   G_FAIXA_BASE_URL=http://localhost:3000 G_FAIXA_PERFIL="$HOME/.octavia-g-faixa-perfil" G_FAIXA_SUPERFICIES=content pnpm exec playwright test -c playwright.g-faixa.config.ts scripts/gates-web/g-faixa-medir.ts
+   ```
+
+2. **O editor velho depois do `pdf-viewer` novo** (a `casca-efeito`, o mesmo comando do "antes") — grava
+   `tests/gates-web/medicoes/casca-efeito/depois/content-edit.json`:
+
+   ```bash
+   G_FAIXA_BASE_URL=http://localhost:3000 G_FAIXA_PERFIL="$HOME/.octavia-g-faixa-perfil" G_FAIXA_SUPERFICIES=content-edit G_FAIXA_SAIDA=tests/gates-web/medicoes/casca-efeito/depois pnpm exec playwright test -c playwright.g-faixa.config.ts scripts/gates-web/g-faixa-medir.ts
+   ```
+
+**O que o comando 1 lê de verdade** (decisão 1 do aval): a `/library` faz a `GET /api/content` dela — o medidor a pede
+com `pageSize` 100 e guarda **em memória** só o `id`, o tipo e o `file_url` do primeiro content de cada tipo (cifra,
+letra, tab, partitura em `.pdf`); depois abre `/content/<id>` de cada um, e o **SSR lê a linha** do content (título,
+corpo, detalhes). Os JSON gravam só hash. O **arquivo da partitura não é lido**: o `route()` responde no `file_url` com o
+PDF de 12 páginas gerado (ou 500, ou segura a resposta). Declarados inalcançáveis: os quatro vazios, `VIEW-erro-formato` e
+`VIEW-erro-render` (prova no Vitest e na pré-verificação sem sessão); sem código: `VIEW-carregando-arquivo` e
+`VIEW-erro-cache` (I1-E15). Se a conta não tiver um dos tipos, os estados dele saem NÃO ALCANÇADOS com a razão.
+`VIEW-partitura-cheia` pede a tela cheia do Chromium (o clique em *Tela cheia*).
+
+**Escrita declarada: nenhuma** (a visualização não escreve; o editor não é clicado). **Cota**: o comando 1 faz ~25
+cargas (7 estados × 3 larguras + a `/library` + o controle); o 2, ~16. Depois diga **"rodei"**.
+
 ## O resto
 
 | o quê | comando |

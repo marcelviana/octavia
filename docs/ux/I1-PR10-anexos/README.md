@@ -8,7 +8,9 @@
 > `Done in 12.8s using pnpm v10.28.0`. **Data**: 2026-09-28.
 > **Convenções**: `[medido]` = comando + saída literal (em `cn/`); `[lido]` = arquivo:linha; `[hipótese]` = o resto.
 > Divergências **a partir de 732** (a PR-9 fechou em 731, §18.7 dela).
-> **Estado**: commit 1 (gate-first, `2420b8d`), aval (§11), commit 1b (instrumento do `content-edit`, §12) — aguardando o "rodei-antes".
+> **Estado**: commit 1 (gate-first, `2420b8d`), aval (§11), commit 1b (instrumento do `content-edit`, `e7ab05f`, §12),
+> o "antes" do editor (Marcel, §13) e **commit 2** (a implementação, §14–§20) — aguardando o "rodei". PR
+> [#345](https://github.com/marcelviana/octavia/pull/345).
 
 | arquivo | o que é |
 |---|---|
@@ -464,5 +466,201 @@ PDF"* — **extra declarado**: o prompt pedia o `base` por tipo; o erro mostra a
 dentro do editor velho). O `GET /api/content/g-faixa` é fabricado só para `GET`; qualquer outro método segue para a
 barreira do medidor (abortado, reprova). Nenhuma linha de `app/`, `components/`, `lib/`, `hooks/`. `tsc --noEmit` 0.
 
-**Div. 756** (P): *"divergências continuam da 751"* — o commit 1 foi até a **755** (§8); esta série segue da 756.
-Próxima: **757**.
+**Div. 756** (P): *"divergências continuam da 751"* — o commit 1 foi até a **755** (§8); esta série segue da 756
+(aceita pelo Marcel, origem P). Próxima: **757**.
+
+## 13. O "antes" do editor `[Marcel, 2026-09-28]`
+
+`tests/gates-web/medicoes/casca-efeito/antes/content-edit.json`, sobre o `e7ab05f` (commit limpo, sem `+sujo`): os cinco
+estados (`base-cifra` · `base-letra` · `base-tab` · `base-partitura` · `erro-pdf`) nas três larguras, 66 · 38 · 74 · 41 ·
+45 nós. Requests: `prodAbortados` 0; escritas a `/api/*` só os `POST /api/auth/session` (cookie); fabricadas 5 por largura
+(a `GET /api/content/g-faixa`). Contas 0, escritas 0. Entra neste commit (o dado do "antes").
+
+## 14. Commit 2 — o que mudou `[medido]`
+
+### 14.1 Por grupo
+
+| grupo | arquivos (linhas) | o quê |
+|---|---|---|
+| **a tela** | `content-page-client.tsx` 73 → 22 · `content-viewer.tsx` 99 → 36 · `content-viewer/ContentHeader.tsx` 92 → 48 · `ContentDisplay.tsx` 66 → 32 · `ContentSidebar.tsx` 143 → 36 · `ChordDisplay.tsx` 131 → 20 · `LyricsDisplay.tsx` 61 → 37 · `TabDisplay.tsx` 91 → 43 · `SheetMusicDisplay.tsx` 65 → 74 | a folha 5: casca · cabeçalho (voltar · título · *{artista} · {tipo}* · **Editar** → `/content/[id]/edit`) · corpo **`min-w-0`** e coluna lateral em `web.colunaLateral` (C) / abaixo (B, A) · painéis por tipo com o corpo mono 22 rolando **dentro** (`data-rolagem="painel"`) · *Detalhes* e *Notas de palco* |
+| **nasceram** | `components/content/frases-visualizacao.ts` (133) · `corpo-de-texto.ts` (66) · `tipos.ts` (8) · `painel.tsx` (44) · `barra-do-pdf.tsx` (89) · `limite-do-corpo.tsx` (40) | as frases; o texto do corpo de cada forma de `content_data` (decisão 10); o painel; as barras do PDF (a normal e a da tela cheia, I1-E16); o limite de render do corpo |
+| **o `pdf-viewer`** | `components/pdf-viewer.tsx` 287 → 115 | restilizado **sem mudar o que faz** (§14.3); o próprio fundo (decisão 3) |
+| **morreram** | `content-viewer/ContentToolbar.tsx` (120) · `content-viewer/DeleteDialog.tsx` (45) · `hooks/useContentActions.ts` (43) · `tests/components/content-viewer.refactoring.test.tsx` (550) · o editar inline de `content-page-client.tsx` (`isEditing`, `ContentEditor` por `dynamic`, `updateContent`, *"Loading editor..."*) | nenhum importador sobra (`git grep` → 0) |
+| **sessão** | `components/auth/aviso-de-sessao.tsx` (+4) | `desenhaNaTela`: `/content/<id>` desenha a linha na tela (acima do corpo, abaixo do cabeçalho — decisão 14); `/content/<id>/edit` segue no topo |
+| **`tailwind.config.ts`** | +6/−2 | a paleta clara (`cor-claro-*`, o "papel"), `tam-zoom-padrao` (22) e o `recuo-cabecalho` (`touch.min + space.lg`, derivado) — nomes de token, sem tocar o pacote |
+| **testes** | `components/content/__tests__/visualizacao-estados.test.tsx` (novo, 15) · `tests/gates/i1-tab-acordes.test.tsx` (novo, 1) · `tests/gates/i1-visualizador.test.tsx` (6/6, dois seletores + o mock da sessão) · `tests/components/monospace-rendering.test.tsx` (5/5, adaptado) · `tests/gates-web/g-faixa-classificar.test.ts` (+1) | §15 |
+| **instrumento** | `g-faixa-conteudo.ts` (+ os estados de `content`, a descoberta por tipo) · `g-faixa-superficies.ts` (`content` implementada; `rota` por estado; o `primeiroContent` saiu) · `g-faixa-medir.ts` (+3: a URL por estado) · `g-faixa-coleta.ts` (`emPainel`, div. 758) · `g-faixa-classificar.mjs` (div. 758) · `g-faixa-esperado.ts` (`erratasEstado`) · `g-tok.mjs` (vocabulário, div. 750) · `COMO-RODAR.md` ("I1-PR10") | §16 |
+| **docs do congelamento** | `DESIGN-I1/README.md` (§2.2: I1-E15…E18; §4: 286 → 282, renumerados; §5.1: as frases novas do bloco) · `erratas.json` (`erratas`: I1-E15, e a I1-E1/E2 recasadas; `erratasFaixa`: E16, E17, E18; `erratasEstado`: E15) · `conferencia/conferir.mjs` (+3, div. 760) · `SHA256SUMS` (as linhas do `README.md` e do `conferir.mjs`) | §17 |
+| **esperado** | `tests/gates-web/esperado/5-content-visualizacao.json` regravado sem os dois estados da E15 | 13 estados, 297 nós em C e em B; os de `1-auth` e `4-content-lista` re-medidos com o script novo saem **byte a byte iguais** (`cn/g-faixa-esperado-e15.txt`) |
+
+### 14.2 As frases (`components/content/frases-visualizacao.ts`)
+
+A tabela do §3 vale, com as chaves de lá; o que o aval acrescentou: `view.pdf.zoom.menos`/`.mais` (*Diminuir/Aumentar o
+zoom*) · `view.tab.capo.nenhum` (*nenhum*) · `view.tab.capo.casa` (*{n}ª casa*) · `view.tab.afinacao.padrao` (*padrão
+(EADGBE)*) · `campo.*` (*álbum · dificuldade · gênero · tom · compasso · andamento* + *{x} BPM* · *etiquetas · criado ·
+alterado*) · `view.erro.imagem` (*não foi possível abrir o arquivo — {motivo}*, item 9) · `view.erro.pdf.inacessivel` /
+`.formato` (os motivos da I1-E15). Reusadas da lista: *Anterior*, *Próxima*, *Tentar de novo*, *sem conexão*, *algo deu
+errado* (o genérico curto, na forma composta, como `forgot.erro` e `lib.erro`), *artista desconhecido*, os rótulos de tipo
+e de dificuldade, a data curta. **`view.erro.cache` não existe** (I1-E15). As da §5.6 estão todas lá.
+
+### 14.3 Onde o erro era engolido ou cru — e como ficou
+
+| era (§2.2) | agora |
+|---|---|
+| `pdf-viewer.tsx:79-87` — a frase pela **mensagem**, nunca casava; a mensagem crua + a URL | o motivo pelo **`name`** (`especieDoPdf`): `MissingPDFException`/`UnexpectedResponseException` → *o arquivo está corrompido ou inacessível* · `InvalidPDFException` → *formato de PDF inválido* · `UnknownErrorException` de rede → *sem conexão* (tipo rede) · o resto → *algo deu errado*; sem URL; *Tentar de novo* = a nova carga de antes (`key` com a tentativa) — div. 735 fechada |
+| `pdf-viewer.tsx:113-118` — a recusa da tela cheia muda e o estado marcado antes de entrar | o estado vem só do `fullscreenchange` (I1-E16); a recusa segue sem frase (a folha não tem estado para ela) |
+| `SheetMusicDisplay.tsx:33-39` — a imagem sem `onError` | `onError` → *não foi possível abrir o arquivo — algo deu errado* + *Tentar de novo* (recarrega a imagem) — item 9 |
+| `lib/error-boundary.tsx:61` — o `error.message` cru, a página inteira | o limite do **corpo** (`limite-do-corpo.tsx`): *algo deu errado* + *Tentar de novo*; a casca, o cabeçalho e os detalhes de pé. O `lib/error-boundary.tsx` não mudou (segue o global de `app/layout.tsx`) |
+| `TabDisplay.tsx:71-77` — `chords.map` sem `Array.isArray` derrubava a página | os acordes em texto vão ao painel *Cifra* — **mudança de comportamento declarada** (item 11), com o teste que reprova na `main` (§15) |
+| `SheetMusicDisplay.tsx:41-45` — *"Failed to load file…"* sem ação | `view.erro.formato` na `LinhaDeAviso`, **sem** *Tentar de novo* (I1-E17) |
+| os vazios da tab e da cifra mostravam **fixtures** como conteúdo | o vazio honesto (`view.vazio.tab`, `view.vazio.cifra`) |
+
+**O `pdf-viewer` mantém o que faz** (I1-D9, I1-D27): as páginas (±1, limitadas), o zoom (±0,2 entre 0,5 e 3), *Largura*
+(contêiner ÷ 800) e *Página* (contêiner ÷ 1000), a tela cheia do contêiner, o *Tentar de novo*, o reinício quando a `url`
+muda, a página em `width 800 × escala`. O que muda é de desenho: a barra de texto só com o PDF aberto (a folha não a
+desenha no carregando nem no erro — div. 764); o ajuste escolhido fica marcado (nenhum ao abrir — div. 765); a página no
+"papel" e **alcançável pela rolagem também à esquerda** (div. 759).
+
+## 15. Os testes `[medido]`
+
+| teste | o quê | resultado |
+|---|---|---|
+| `components/content/__tests__/visualizacao-estados.test.tsx` (novo) | os 4 vazios (frase, sem linha de aviso, sem as fixtures velhas); `VIEW-erro-formato` sem *Tentar de novo*; `VIEW-erro-render` com a casca/cabeçalho/detalhes de pé e *Tentar de novo* que volta; as 5 espécies do pdf.js → a frase; a falha do PDF **acima** do painel; a sessão vencendo (uma linha só); *Detalhes* em pt-BR e *Editar* → `/edit`, sem favoritar nem apagar | **15/15** |
+| `tests/gates/i1-tab-acordes.test.tsx` (novo) | a tab com `chords` em texto abre (a tablatura e os acordes na tela, sem o limite de render) | **1/1** aqui; **na `main` reprova** — `cn/tab-acordes-main.txt`: *"Unable to find an element with the text: /e\\|---0---\\|/"*, a tela em *"Something went wrong"*, `# exit: 1` (worktree temporária da `main` `8b662fc`, só o arquivo de teste copiado) |
+| `tests/gates/i1-visualizador.test.tsx` | o CN da I1-D36 — adaptado: *"Failed to load file"* → `view.erro.formato`; o `alt` *"Sheet music"* → *partitura*; + o mock da sessão (a tela a lê) | **6/6** |
+| `tests/components/monospace-rendering.test.tsx` | CONT-01/02 — o texto em `whitespace-pre` dentro de um `overflow-x-auto` **marcado `data-rolagem="painel"`**; o caso da tab em lista passou de *"cada linha `whitespace-nowrap`"* a *"o bloco `whitespace-pre`, uma linha por corda"* | **5/5** |
+| `tests/gates-web/g-faixa-classificar.test.ts` | + o caso da div. 758 | **14/14**; com o classificador velho, o caso novo **reprova** (`cn/classificar-758-cn.txt`, `# exit: 1`) |
+| morreu: `tests/components/content-viewer.refactoring.test.tsx` | 27 casos (9 rodando, 18 `it.skip`) que mocavam `useContentActions`, `ContentHeader`, `ContentToolbar`, `ContentDisplay`, `ContentSidebar`, `DeleteDialog` e o `@/lib/firebase-storage` | — |
+
+A conta: `pnpm test` → `Test Files 111 passed | 3 skipped (114)` · `Tests 1097 passed | 59 skipped (1156)` · `# exit: 0`
+(`cn/pnpm-test.txt`); a PR-9 terminou em 110 / 1089 | 77: +2 arquivos −1; +17 testes −9 rodando; −18 pulados. CN da
+PR-1 **15/15**, painel **4/4** (`cn/cn-pr1.txt`, `cn/testes-da-pr.txt`).
+
+## 16. O instrumento
+
+- **`content`** (`g-faixa-conteudo.ts`, `ESTADOS_CONTENT`): `descobrirPorTipo` abre a `/library` com a `GET /api/content`
+  em `pageSize` 100 (a mesma leitura, página maior) e guarda **em memória** o `id`, o tipo e o `file_url` do 1º content de
+  cada tipo (a partitura, o 1º em `.pdf`); cada estado vai à URL dele (`rota` por estado — `g-faixa-medir.ts` +3). O
+  arquivo da partitura é respondido no `file_url` real pelo `route()` (o PDF de 12 páginas gerado; segurado; 500). Os seis
+  inalcançáveis e os dois da E15 vão declarados.
+- **Div. 758** — o classificador testava a borda do viewport **antes** do painel marcado: a camada de texto da página do
+  PDF (e a linha longa, quando passa da tela) saía (b) em 411. Agora a `coletar` grava `emPainel` (o painel marcado que
+  rola, acima do nó, mesmo sob outro recorte — a página do react-pdf recorta a camada de texto) **só quando existe**, e o
+  classificador o testa antes do viewport. CN (`cn/classificar-758-cn.txt`): o caso novo reprova com o velho; **o veredito
+  sobre todos os JSON commitados sai idêntico** com o velho e o novo; os esperados de `1-auth` e `4-content-lista`
+  re-medidos, byte a byte iguais.
+- **Div. 750 — o vocabulário do G-tok** (item 15 do aval): +24 palavras (*chord chart, chord, tablature, tuning, capo,
+  none, album, key, genre, tags, difficulty, details, structure, progression, modified, fit width, fit page, standard,
+  fret, sheet music, image, cached, reload, format*); o texto JSX colado a `{…}` (*"Page {n} / {N}"*) passa a ser examinado
+  (numa linha, sem parênteses, colchetes nem `?`); a expressão condicional (`?.`, `&&`, `||`, `=>`, `) :`) deixa de ser
+  acusada. CN (`cn/g-tok-vocabulario-cn.txt`), sobre os 11 arquivos da `main`: gate velho **27** acusações de inglês (com
+  os 2 falsos positivos, `ChordDisplay.tsx:42` e `SheetMusicDisplay.tsx:46`); gate novo **39** (sem eles; e com o
+  *"Page"*, o *"Song Details"*, o *"Album"*…). Nos 66 arquivos desta PR: nenhuma acusação nova.
+
+## 17. As erratas e o `conferir.mjs`
+
+- **I1-E15** (estado): em `erratas` (o `conferir.mjs` a acha pelos 4 *"sem T-I1-R para VIEW-erro-cache /
+  VIEW-carregando-arquivo em C/B"*) e em `erratasEstado` (o gerador do esperado não grava as duas seções). A §4 foi
+  **renumerada**, 286 → 282:
+
+  | antes | depois |
+  |---|---|
+  | T-I1-R1 … T-I1-R154 | iguais |
+  | T-I1-R155, T-I1-R156 (`VIEW-carregando-arquivo` C, B) | **saíram** |
+  | T-I1-R157 … T-I1-R166 | T-I1-R155 … T-I1-R164 (−2) |
+  | T-I1-R167, T-I1-R168 (`VIEW-erro-cache` C, B) | **saíram** |
+  | T-I1-R169 … T-I1-R286 | T-I1-R165 … T-I1-R282 (−4) — a folha 5 fecha em 170; o editor passa a 171–200, o upload a 201–242, as setlists a 243–282 |
+
+  Fora da §4 do `DESIGN-I1/README.md` nenhum documento cita T-I1-R acima de 154 (`git grep`: só 95, 111, 112).
+- **Div. 760** — com a E15 a contagem do `conferir.mjs` fecharia **por acaso** (282 × 282: +4 da E1/E2, −4 da E15) e a
+  I1-E1/E2, que casavam com *"286 T-I1-R × 282 esperados"*, ficariam órfãs. O `conferir.mjs` ganha a regra simétrica da
+  que já tinha (+3 linhas): *requisito de estado sem seção na folha*. A I1-E1 passa a cobrir os 2 de
+  `AUTH-verify-reenviar-excecao`, a I1-E2 os 2 de `UP-lote-lendo`. G-tok (i): **26 achados, 26 cobertos, 0 órfãs**
+  (eram 19: −1 da contagem, +4 da E1/E2, +4 da E15).
+- **I1-E16, E17, E18** em `erratasFaixa`, com o `n` da pré-verificação (2, 13, 0) — o aceite confirma.
+- **Proposta, sem decidir — I1-E19** (div. 761): a página do PDF é a do visualizador (`800 × escala`, I1-D9/D27), não
+  *"60 % do painel"*; em B a coluna lateral vem abaixo do painel e desce com a altura da página (Δy +655,8 nos 9 nós de
+  *Detalhes*/*Notas* com o PDF A4 gerado). Sem ela, essas 9 candidatas saem **"sem cobertura"** (contadas à parte; não
+  reprovam). Alternativa: a página a 60 % do painel ao abrir (escala inicial calculada — muda o *100 %* de hoje).
+- `SHA256SUMS`: `README.md` `bde7edd1…` → `bcde6e59…`; `conferencia/conferir.mjs` `e37312df…` → `7585dba2…`;
+  `shasum -a 256 -c` → **14/14 OK**.
+
+## 18. A pré-verificação sem sessão (`pre-verificacao/`) `[medido]`
+
+`next dev -p 3110` **sem `.env`**, numa **cópia** da árvore (worktree do `HEAD` + as mudanças do commit 2 — o `pnpm dev`
+do Marcel roda na árvore da PR, e dois servidores no mesmo `.next` colidem), com `pagina-fumaca.tsx` copiada para
+`app/fumaca-i1pr10/[estado]/page.tsx` (montando o `ContentPageClient` real com `fixtures.ts`, os exemplos da folha) e
+apagada no fim; `rodar.ts` com a mesma `coletar` e o mesmo `classificarEstado` do G-faixa, contra o esperado; o PDF pelo
+`route()`. Saída: `pre-verificacao/saida.txt`; nós: `pre-verificacao/medicoes.json` (texto em claro — só fixture).
+
+```
+TOTAL: 39 (estado × largura) · (e) 0 · (b) 0 · scrollWidth = viewport em 39/39
+```
+
+| estado | C 1138 | B 711 | A 411 |
+|---|---|---|---|
+| `VIEW-cifra` · `-letra` · `-tab` · `-carregando-pdf` · `-erro-pdf` · os 4 vazios · `-erro-render` | 0 · 0 · 0 | 0 · 0 · 0 | 0 · 0 |
+| `VIEW-partitura` | 0 · 0 · 0 | 0 · 0 · **9** (div. 761, I1-E19 proposta) | 0 · 0 |
+| `VIEW-partitura-cheia` | 0 · 0 · **1** (I1-E16) | 0 · 0 · **1** (I1-E16) | 0 · 0 |
+| `VIEW-erro-formato` | 0 · 0 · **2** (I1-E17) | 0 · 0 · **11** (I1-E17) | 0 · 0 |
+
+(célula = (e) · (b) · errata candidata; em A, (e) · (b).) **Sem par**, por estado: *Buscar…* e *MV* da folha (a caixa e as
+iniciais — sem usuário na fumaça); do app, a `<nav>` e o campo da busca (div. 719) e o `section` do painel (o texto todo
+do painel num nó); na partitura, o *"página do PDF (renderização do arquivo)"* da folha × a camada de texto do PDF gerado,
+e o nó do `pdf-viewer` inteiro (tem `data-testid`, então é nó com o texto todo); na tela cheia, os 27 nós da página por trás da *top layer* (a `coletar` percorre o DOM — div. 762).
+
+**O que a pré-verificação achou e consertou antes do commit** (quatro rodadas; a 1ª com (b) 17):
+1. o `overflow-hidden` do `Painel` virava o recorte dos nós da **tela cheia** (a `coletar` sobe pelo DOM; na *top layer*
+   não há recorte de ancestral) — saiu (não recortava nada visível);
+2. a página mais larga que o painel ficava com a **borda esquerda inalcançável** (`flex justify-center` num contêiner que
+   rola — já era assim no visualizador velho e no editor): `mx-auto` no filho (div. 759);
+3. a camada de texto do PDF além do viewport, dentro do painel: a div. 758 (instrumento);
+4. o *Sair da tela cheia* com duas classes de tamanho de fonte (14 e 15; Δw −7,9); e o *"100 %"* em dois nós de texto.
+
+**Capturas** (`capturas/`, 15): `VIEW-cifra`, `VIEW-partitura`, `VIEW-partitura-cheia`, `VIEW-erro-pdf`,
+`VIEW-vazio-letra` × C-1138 · B-711 · A-411 — da fumaça (fixture, sem conta); o "N" no canto é o indicador do `next dev`.
+
+## 19. Os gates — verdes `[medido]`
+
+| gate / suíte | resultado | arquivo |
+|---|---|---|
+| G-tok | **PASSA**: (i) 26/26 cobertos, 0 órfãs; (ii) `arquivos: 66 · literais de identidade acusados: 0 · toasts: 0 · imports de ui: 0` — **373 → 0** (e o vocabulário novo, 133) | `cn/g-tok-depois.txt` |
+| G-back | **PASSA** — nenhum arquivo do núcleo (`GET /api/content/[id]`, `lib/content-service*.ts`, o `app/content/[id]/page.tsx` não mudaram) | `cn/g-back-depois.txt` |
+| G-palco | **PASSA — 0** | `cn/g-palco.txt` |
+| `pnpm test` | `111 passed \| 3 skipped (114)` · `1097 passed \| 59 skipped (1156)` · `# exit: 0` | `cn/pnpm-test.txt` |
+| CN da PR-1 · painel · os testes da PR | 15/15 · 4/4 · 45/45 | `cn/cn-pr1.txt`, `cn/testes-da-pr.txt` |
+| `tsc --noEmit` | 0 erros | `cn/tsc.txt` |
+| `pnpm lint` | `✔ No ESLint warnings or errors` | `cn/lint.txt` |
+| `pnpm build` | `✓ Compiled successfully`; `ƒ /content/[id] 109 kB`; `# exit: 0` (numa cópia da árvore, sem `.env`) | `cn/build.txt` |
+| **CN de inércia das públicas** | `next dev` sem `.env` (cópia, 3110): `/`, `/login`, `/privacy-policy` × os JSON commitados — **12 (estado × largura) nos dois lados, 12 idênticos**; `INÉRCIA: PASSA` | `cn/inercia-publicas.txt` |
+| `shasum -a 256 -c SHA256SUMS` (DESIGN-I1) | 14/14 OK | — |
+
+## 20. Divergências — 757 a 766
+
+| # | origem | o que o prompt (ou o doc) presumiu | o que foi medido | destino |
+|---|---|---|---|---|
+| **757** | T | o corpo mono da letra pelo `MusicText` | o `<pre>` dele recebe a família mono do *preflight* (não a do token), e o `twMerge` do `cn` trata `font-fam-*` e `font-peso-*` como o mesmo grupo (fica só o último) | só `font-fam-mono` passado ao `MusicText` (o peso vem do corpo); `monospace={false}` |
+| **758** | T | decisão 621: *"fora na horizontal do painel marcado é (d′)"* | a borda do viewport era testada antes e o painel não valia para o nó além da tela; e a camada de texto do PDF tem outro recorte mais perto | `emPainel` na `coletar` + o teste antes do viewport; CN (§16) |
+| **759** | A | *"o `pdf-viewer` mantém o que faz"* | a página mais larga que o painel tinha a borda esquerda **fora do alcance da rolagem** (`justify-center` em contêiner que rola), no visualizador e no editor | `mx-auto` no filho — **mudança declarada** (a rolagem passa a alcançar a página inteira) |
+| **760** | A | I1-E15: *"os T-I1-R são renumerados"* | a contagem do `conferir.mjs` fecharia por acaso e a I1-E1/E2 ficariam órfãs | a regra simétrica no `conferir.mjs`; E1/E2 recasadas (§17) |
+| **761** | D | a folha: página do PDF a 60 % do painel | o código: `800 × escala`; em B a coluna lateral desce 655,8 (9 candidatas) | **I1-E19 proposta** — decisão do Marcel |
+| **762** | T | a tela cheia medida como a moldura da folha | a `coletar` percorre o DOM inteiro: a página por trás da *top layer* sai "sem par" (27 nós por largura) | contados à parte (não reprovam) |
+| **763** | D | *"os dois `data-estado` saem da contagem do §2.4"* | o §2.4 que conta estados por folha é o do `README-design.md` (entregue com as folhas, como os `telas.html`); o `DESIGN-I1/README.md` conta na §4 | a §4 atualizada (13 estados, 145–170); o `README-design.md` **não muda** — a errata prevalece (a regra das erratas, §2.2) |
+| **764** | D | — | a barra do PDF aparecia sempre (no carregando e no erro também); a folha só a desenha com o PDF aberto | só com o PDF aberto (desenho; os controles não faziam nada sem páginas) |
+| **765** | D | a folha: *Largura* marcado ao abrir | o código abre em 100 % sem ajuste | o ajuste escolhido fica marcado; nenhum ao abrir (div. 746) |
+| **766** | D | o título do cabeçalho em `line-height: 1.3` | 1,3 não é token | `leading-natural` (o precedente da I1-E12); dentro da tolerância na pré-verificação (0 candidatas) |
+
+Registrados sem divergência nova: as datas nulas de *Detalhes* deixam de aparecer (antes, *"Created 12/31/1969"* — a
+data zero); o `alt` da imagem vira *partitura*; o *favoritar* local e falso e os dois toasts do `useContentActions`
+saíram com ele (I1-D26). Próxima divergência: **767**.
+
+## 21. Contabilidade (commit 2)
+
+| quem | item | valor |
+|---|---|---|
+| executor | requests a `https://octavia.rocks` ou preview · logins · `.env*` abertos · escritas · contas | **0 · 0 · 0 · 0 · 0** |
+| executor | `next dev` **sem** `.env`, porta 3110, **em cópias da árvore** (a 3000 é o `pnpm dev` do Marcel nesta árvore — não tocado) | 2 subidas: a pré-verificação (5 rodadas do roteiro) e a inércia; paradas ao fim; as cópias removidas (`git worktree list` → 0 no *scratchpad*) |
+| executor | `pnpm build` | numa cópia da árvore, sem `.env` |
+| executor | a `main` para o teste da tab | worktree temporária de `8b662fc`, removida |
+| executor | navegador | a folha por `file://`; a fumaça em `localhost:3110`; o PDF respondido pelo `route()` (host que não existe) |
+| — | `packages/identidade` | **não mudou** |

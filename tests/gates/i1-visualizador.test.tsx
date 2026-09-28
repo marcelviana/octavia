@@ -31,6 +31,11 @@ vi.mock('@/components/pdf-viewer', () => ({
   default: ({ url }: { url: string }) => <div data-testid="pdf-viewer" data-url={url} />,
 }))
 
+// I1-PR-10: a tela lê a sessão (a linha abaixo do cabeçalho, decisão 14) — o mock global não tem `sessao`
+vi.mock('@/contexts/firebase-auth-context', () => ({
+  useAuth: () => ({ user: null, profile: null, isLoading: true, signOut: vi.fn(), sessao: { estado: 'aberta' }, tentarSessaoDeNovo: vi.fn() }),
+}))
+
 vi.mock('next/image', () => ({
   // eslint-disable-next-line @next/next/no-img-element
   default: ({ src, alt }: { src: string; alt: string }) => <img src={src} alt={alt} />,
@@ -81,11 +86,11 @@ const CASOS = [
     content: { ...base, id: 'cn-img', title: 'CN partitura imagem', content_type: 'Sheet',
       file_url: `${STORAGE}/1750546056712-cn-imagem.jpg`, content_data: null },
     mime: 'image/jpeg',
-    prova: () => expect(screen.getByAltText('Sheet music')).toBeInTheDocument(),
+    prova: () => expect(screen.getByAltText('partitura')).toBeInTheDocument(),
   },
 ] as const
 
-// Controle: URL sem extensão — sem o cache (que dava o mimeType), cai na frase de falha
+// Controle: URL sem extensão — sem o cache (que dava o mimeType), cai na frase de falha (I1-PR-10: `view.erro.formato`)
 const CONTROLE = {
   ...base, id: 'cn-pdf-sem-ext', title: 'CN controle', content_type: 'Sheet',
   file_url: `${STORAGE}/objeto-sem-extensao`, content_data: null,
@@ -117,7 +122,7 @@ describe('I1-D36 — visualizador, sem-cache', () => {
       montar(caso.content)
       await waitFor(() => caso.prova())
       if (caso.mime) {
-        const alvo = screen.queryByTestId('pdf-viewer') ?? screen.queryByAltText('Sheet music')
+        const alvo = screen.queryByTestId('pdf-viewer') ?? screen.queryByAltText('partitura')
         const url = alvo?.getAttribute('data-url') ?? alvo?.getAttribute('src')
         expect(url).toBe(caso.content.file_url)
       }
@@ -127,6 +132,7 @@ describe('I1-D36 — visualizador, sem-cache', () => {
 
   it('controle: Sheet PDF sem extensão na URL', async () => {
     montar(CONTROLE)
-    await waitFor(() => expect(screen.getByText(/Failed to load file/)).toBeInTheDocument())
+    // I1-PR-10: a frase da folha (`view.erro.formato`); antes, "Failed to load file"
+    await waitFor(() => expect(screen.getByText('não foi possível abrir o arquivo — confira o formato')).toBeInTheDocument())
   })
 })

@@ -1,73 +1,22 @@
 "use client";
-import { useState } from "react";
+
+/**
+ * `/content/[id]` (I1-PR-10): a casca (I1-PR-9) e a visualização pela folha `5-content-visualizacao`. O content vem
+ * do SSR (`app/content/[id]/page.tsx`, div. 732). *Voltar* é o `router.back()` de antes (decisão 6). O editar
+ * inline de antes (`isEditing` + `ContentEditor` + `updateContent`) era inalcançável — o `onEdit` nunca descia a um
+ * botão — e saiu: *Editar* leva a `/content/[id]/edit` (decisão 5, div. 736). O limite de render é o do corpo
+ * (`components/content/limite-do-corpo.tsx`); o global de `app/layout.tsx` segue por cima.
+ */
 import { useRouter } from "next/navigation";
-import type { Database } from "@/types/database.types";
-import { ContentViewer } from "@/components/content-viewer";
 import { Casca } from "@/components/identidade/casca";
-import dynamic from "next/dynamic";
-import { ErrorBoundary } from "@/lib/error-boundary"
+import { ContentViewer } from "@/components/content-viewer";
+import type { ConteudoVisto } from "@/components/content/tipos";
 
-const ContentEditor = dynamic(() => import("@/components/content-editor").then(mod => ({ default: mod.ContentEditor })), {
-  loading: () => <p>Loading editor...</p>,
-});
-import { updateContent } from "@/lib/content-service";
-
-type Content = Database["public"]["Tables"]["content"]["Row"];
-
-interface ContentPageClientProps {
-  content: Content;
-}
-
-export default function ContentPageClient({
-  content: initialContent,
-}: ContentPageClientProps) {
+export default function ContentPageClient({ content }: { content: ConteudoVisto }) {
   const router = useRouter();
-  const [content, setContent] = useState<Content | null>(initialContent);
-  const [isEditing, setIsEditing] = useState(false);
-  const handleBack = () => {
-    router.back();
-  };
-
-  const handleEdit = () => {
-    setIsEditing(true);
-  };
-
-  const handleSaveEdit = async (updatedContent: any) => {
-    try {
-      if (!content) return;
-      await updateContent(content.id, updatedContent);
-      setContent({ ...content, ...updatedContent });
-      setIsEditing(false);
-    } catch (err) {
-      console.error("Error saving content:", err);
-    }
-  };
-
-  const handleCancelEdit = () => {
-    setIsEditing(false);
-  };
-
   return (
-    <ErrorBoundary>
-      {/* I1-PR-9: a casca nova (barra superior) no lugar do ResponsiveLayout; o corpo velho fica como estava, com o fundo de antes (a folha desta tela é de uma PR seguinte) */}
-      <Casca>
-        <div className="flex-1 bg-[#fffcf7]">
-        {isEditing ? (
-          <ContentEditor
-            content={content}
-            onSave={handleSaveEdit}
-            onCancel={handleCancelEdit}
-          />
-        ) : (
-          <ContentViewer
-            content={content}
-            onBack={handleBack}
-            onEdit={handleEdit}
-            showToolbar={false}
-          />
-        )}
-        </div>
-      </Casca>
-    </ErrorBoundary>
+    <Casca>
+      <ContentViewer content={content} onBack={() => router.back()} />
+    </Casca>
   );
 }
