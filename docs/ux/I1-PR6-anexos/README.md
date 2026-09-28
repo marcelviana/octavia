@@ -7,8 +7,10 @@
 > **Convenções** (as do `I1-PRECHECK.md`): `[medido]` = comando + saída literal (em `cn/`); `[lido]` = arquivo:linha;
 > `[hipótese]` = o resto. Divergências **636–655**, numeração conferida pela coluna:
 > `git grep -nE '^\| \*\*6[0-9][0-9]\*\* \| [A-Z]' docs | sort -t'*' -k3 -n | tail -1` → 635.
-> **Estado**: commit 1 (gate-first, `1d47884`) e **commit 2 (a implementação, §11)**; o aceite (§11.6, `COMO-RODAR.md`) é do Marcel, e
-> o commit 3 (veredito e docs) espera o "rodei". Divergências do commit 2: **656–671** (§11.8).
+> **Estado**: commit 1 (gate-first, `1d47884`), commit 2 (a implementação, `f87b639`, §11) e **commit 3 (aceite e docs,
+> §12–§14)**. APK da corrida [36357168753](https://github.com/marcelviana/octavia/actions/runs/36357168753): verde (Marcel).
+> Divergências: 636–655 (§8), 656–671 (§11.8), **672–676** (§14.6). **Veredito do aceite: PASSA — (e) = 0 e (b) = 0 em
+> 1138 e 711 em todo estado medido** (§14).
 
 | arquivo | o que é |
 |---|---|
@@ -350,6 +352,20 @@ para `/dashboard`). Para os 10 do verify e os 5 do confirm com usuário, as duas
    perfil, contados no aceite).
 9. Logo do Google: se `public/marcas/google.svg` existir, usa; senão o quadrado tracejado, div. 636 "Marcel fornece".
 
+### 9.1 O aval do commit 2 — decisões `[Marcel, 2026-09-27]`
+
+- **658**: *Tentar de novo* onde a folha o desenha (signup, confirm, verify, forgot, perfil 5xx), uma request por clique
+  pelo handler da tela; fora do 429 e do 401 da sessão.
+- **660**: o `/verify-email` recarregado mandar para `/login` no primeiro render é defeito antigo → **herança para o
+  bloco D**, com arquivo:linha (§14.5).
+- **667 → I1-E7**: o balão de validação nativo do navegador que a folha desenha não é elemento da página; o código não
+  o reproduz; a seção vale sem ele.
+- **668 → I1-E8**: o grupo de botões vazio em `verify-carregando` não existe; a seção vale sem ele.
+- **657**: `web.limiarAviso` 320 aceito; o `DESIGN-I1/README.md` §4 lista oito.
+
+As duas erratas estão no `docs/ux/DESIGN-I1/README.md` §2.2 (commit 3; só a linha do `README.md` muda no `SHA256SUMS`,
+`shasum -c` → 14/14 OK — docs do congelamento, declarado no corpo).
+
 ## 10. Contabilidade (commit 1)
 
 | quem | item | valor |
@@ -523,7 +539,23 @@ ALCANÇADOS, e o ensaio do executor os mede (§11.5). Os demais, pelo mecanismo 
 
 ### 11.7 Bloco ```gates-web``` e extras
 
-Ver o corpo da PR (copiado no commit 3). Extras declarados: `package.json` e `pnpm-lock.yaml` (`@octavia/identidade`),
+Copiados do corpo da PR (commit 3):
+
+```gates
+# I1-PR-6: só adição no pacote (packages/identidade: tokens do bloco web), G1b — nenhum arquivo de apps/native mudou
+```
+
+```gates-web
+# I1-PR-6: nenhum arquivo do núcleo do G-back tocado (G-back PASSA sem declaração)
+gtok: scripts/gates-web/g-tok-arquivos.txt — +16 arquivos de auth (os 9 do commit 1 + 7 novos, div. 670)
+# extras: package.json e pnpm-lock.yaml (@octavia/identidade) · public/fontes/*.ttf (sha256 = apps/native/assets/fonts) · public/marcas/octavia-dark.png
+# extras: scripts/gates-web/gates-web-decl.sh (chave gtok:, div. 664) · token web.limiarAviso (div. 657)
+# docs do congelamento: docs/ux/DESIGN-I1/README.md §2.2 (I1-E7, I1-E8) e §4 (os oito nomes) + SHA256SUMS (só a linha do README.md)
+# app/layout.tsx (2 imports: identidade.css, fontes.css) — fora do núcleo; CN de inércia em docs/ux/I1-PR6-anexos/cn/inercia.txt
+# tests/gates-web/medicoes/{login,signup,confirm-email,verify-email,forgot-password}.json — o aceite do Marcel (commit 3)
+```
+
+Extras declarados: `package.json` e `pnpm-lock.yaml` (`@octavia/identidade`),
 `public/fontes/*.ttf` (sha256 = `apps/native/assets/fonts/`), `public/marcas/octavia-dark.png`,
 `docs/ux/DESIGN-I1/README.md` §4 + `SHA256SUMS`, `scripts/gates-web/gates-web-decl.sh` (`gtok:`), o token
 `web.limiarAviso`.
@@ -556,4 +588,226 @@ Ver o corpo da PR (copiado no commit 3). Extras declarados: `package.json` e `pn
 | executor | requests a `https://octavia.rocks`, logins, `.env*`, escritas | **0 · 0 · 0 · 0** |
 | executor | `next dev` local **sem** `.env` (porta 3106) | inércia do layout, capturas, o ensaio do instrumento; nenhuma resposta fabricada precisou sair (o SDK não inicia sem `.env`) |
 | executor | contas criadas | **0** |
+
+## 12. O molde — o que as próximas superfícies herdam
+
+Esta foi a primeira PR de superfície; o que ela fixou vale para as sete seguintes (landing, privacy-policy, content-lista,
+visualização, editor, upload, setlists):
+
+1. **Estilo = Tailwind com NOME de token** (decisão 1). Toda classe de identidade é `<utilitário>-<token>` e o valor é
+   `var(--…)` do `app/styles/identidade.css`: `bg-cor-bg`, `text-cor-muted`, `border-cor-line-info`, `p-espaco-xl`,
+   `gap-espaco-md`, `h-toque-list`, `w-web-coluna-auth`, `text-tam-label`, `font-fam-display` + `font-peso-display`,
+   `tracking-display-wide`, `leading-entrelinha-text`, `rounded-raio-control`, `border-hairline`. A faixa é o variante
+   **`c:`** (gerado dos `limiares`, `width > 960`): o padrão é o empilhado (B/A) e `c:` é o lado a lado. Nenhum número
+   no `tailwind.config.ts`; `leading-natural` = a entrelinha da fonte (div. 663).
+2. **Medida fixa da folha = token com nome no pacote** (decisão 2). Um literal com origem que a folha usa vira nome no
+   bloco `web` de `packages/identidade/src/tokens.ts` (`--faixa-*` nas três faixas), com a origem no comentário, o
+   `css.test.ts` e o `igualdade.test.ts` cobrando, e a linha no `DESIGN-I1/README.md` §4. Só adição: o nativo não move
+   (native 211/211).
+3. **O G-tok cresce com a lista**: a PR acrescenta os seus arquivos a `scripts/gates-web/g-tok-arquivos.txt` e declara
+   `gtok:` no ```gates-web```. Reprova: cor/fonte/espaçamento/tamanho/raio/borda/entrelinha/tracking literal, valor
+   arbitrário `[…]` sem `var(`, `toast`/`useToast`, `import @/components/ui/*`, e inglês em posição de texto.
+4. **`app/layout.tsx` já carrega a identidade e as fontes** (decisão 4): nenhuma PR de superfície toca o layout de novo.
+5. **Os componentes da identidade**: `components/identidade/icone.tsx` (ícone do pacote, cor por `text-cor-*`) e
+   `components/auth/linha-de-aviso.tsx` (a `LinhaDeAviso`, um só arquivo, `motivo` · `tipo` · `detalhe` · `acao`; `alert`
+   na falha, `status` no sucesso). Os controles de `components/auth/controles-auth.tsx` são de auth; se outra
+   superfície precisar do mesmo botão, ele sobe para `components/identidade/` numa PR que o declare.
+6. **Frases pelo código**: arquivo `frases-<superficie>.ts` com a tabela chave · texto · origem no README dos anexos
+   (I1-D10/D17); o erro chega com **código** (decisão 5; o contexto de auth já devolve), e a tela escolhe a frase por ele.
+7. **G-faixa, o esperado é a folha**: `pnpm exec tsx scripts/gates-web/g-faixa-esperado.ts <pasta>` grava
+   `tests/gates-web/esperado/<pasta>.json`; onde a folha escreve dado de exemplo (campo), a âncora `data-testid` em
+   `esperado/<pasta>.ancoras.json` e o mesmo `data-testid` no app. O par é por texto sem papel (decisão 7); os nós sem
+   par são listados.
+8. **Os estados se alcançam no medidor**, cada um com `antes` (rotas fabricadas), `preparar`, `espera` (o texto que
+   prova que o estado está na tela) e, quando for o caso, `inalcancavel` com a razão. Um contexto por estado nas
+   superfícies sem sessão. Resposta fabricada leva `x-g-faixa: fabricado` e não conta como escrita. Com sessão real, o
+   perfil persistente da PR-5 segue valendo (a conta de audit; as escritas no preview, I1-D14).
+9. **Contas (ii) antes de (i)** (decisão 8): usuário falso e respostas fabricadas; conta descartável só se o (ii) não
+   alcançar — em auth ele alcançou os 14 alcançáveis dos 15.
+
+## 13. G-tok — antes × depois `[medido]`
+
+| lista | gate | resultado | arquivo |
+|---|---|---|---|
+| os 9 da `main` | commit 1 | `REPROVA — 453` | `cn/g-tok-main.txt` |
+| os 9 da `main` | crescido (decisão 3) | `REPROVA — 613` | `cn/g-tok-main-crescido.txt` |
+| os 16 da branch | crescido | `PASSA` (`literais 0 · toasts 0 · imports de ui 0`) | `cn/g-tok-depois.txt` |
+
+## 14. O aceite — o veredito `[medido]`
+
+Rodada do Marcel: `2026-09-28T11:37:03Z`, `http://localhost:3000`, commit `f87b639` (sem `+sujo`), Chromium
+140.0.7339.16, os cinco JSON em `tests/gates-web/medicoes/`. Veredito: `cn/g-faixa-aceite.txt` (verbatim).
+
+```
+$ node scripts/gates-web/g-faixa-veredito.mjs
+## contados à parte (não reprovam): errata candidata 51 · sem par folha 108 · sem par app 76 (C e B) · não medidos 10
+G-faixa: PASSA
+# exit: 0
+```
+
+### 14.1 Por estado × largura
+
+Contagens `(e)·(b)·(d′) · errata candidata · sem par folha/app`; 411 contado à parte (decisão 619).
+
+| estado | 1138 (e·b·d′ · errata · sem par f/a) | 711 (idem) | 411 (e·b·d′, à parte) |
+|---|---|---|---|
+| `AUTH-confirm` | 0·0·0 · 0 · 0/0 | 0·0·0 · 0 · 0/0 | 0·6·0 |
+| `AUTH-confirm-enviando` | 0·0·0 · 0 · 0/0 | 0·0·0 · 0 · 0/0 | 0·5·0 |
+| `AUTH-confirm-sucesso` | 0·0·0 · 0 · 0/0 | 0·0·0 · 0 · 0/0 | 0·5·0 |
+| `AUTH-confirm-erro` | 0·0·0 · 0 · 0/0 | 0·0·0 · 0 · 0/0 | 0·5·0 |
+| `AUTH-confirm-erro-rede` | 0·0·0 · 0 · 0/0 | 0·0·0 · 0 · 0/0 | 0·5·0 |
+| `AUTH-confirm-sem-usuario` | 0·0·0 · 4 · 1/0 | 0·0·0 · 3 · 1/0 | 0·4·0 |
+| `AUTH-forgot` | 0·0·0 · 0 · 0/0 | 0·0·0 · 0 · 0/0 | 0·7·0 |
+| `AUTH-forgot-validacao` | 0·0·0 · 4 · 1/0 | 0·0·0 · 3 · 1/0 | 0·7·0 |
+| `AUTH-forgot-enviando` | 0·0·0 · 0 · 0/0 | 0·0·0 · 0 · 0/0 | 0·7·0 |
+| `AUTH-forgot-erro` | 0·0·0 · 0 · 0/0 | 0·0·0 · 0 · 0/0 | 0·7·0 |
+| `AUTH-forgot-sucesso` | 0·0·0 · 0 · 0/0 | 0·0·0 · 0 · 0/0 | 0·5·0 |
+| `AUTH-login` | 0·0·0 · 0 · 2/1 | 0·0·0 · 0 · 2/1 | 0·10·0 |
+| `AUTH-login-validacao` | 0·0·0 · 9 · 2/0 | 0·0·0 · 8 · 2/0 | 0·10·0 |
+| `AUTH-login-entrando` | 0·0·0 · 0 · 1/1 | 0·0·0 · 0 · 1/1 | 0·10·0 |
+| `AUTH-login-google` | 0·0·0 · 0 · 2/1 | 0·0·0 · 0 · 2/1 | 0·10·0 |
+| `AUTH-login-redirecionando` | 0·0·0 · 4 · 0/0 | 0·0·0 · 2 · 0/0 | 0·4·0 |
+| `AUTH-login-credencial` | 0·0·0 · 0 · 1/1 | 0·0·0 · 0 · 1/1 | 0·10·0 |
+| `AUTH-login-limite-prazo` | 0·0·0 · 0 · 1/1 | 0·0·0 · 0 · 1/1 | 0·10·0 |
+| `AUTH-login-limite` | 0·0·0 · 0 · 1/1 | 0·0·0 · 0 · 1/1 | 0·10·0 |
+| `AUTH-login-rede` | 0·0·0 · 0 · 1/1 | 0·0·0 · 0 · 1/1 | 0·10·0 |
+| `AUTH-login-google-erro` | 0·0·0 · 3 · 3/2 | 0·0·0 · 2 · 3/2 | 0·11·0 |
+| `AUTH-login-perfil-401` | 0·0·0 · 0 · 2/2 | 0·0·0 · 0 · 2/2 | 0·10·0 |
+| `AUTH-login-servidor` | 0·0·0 · 0 · 2/2 | 0·0·0 · 0 · 2/2 | 0·10·0 |
+| `AUTH-signup` | 0·0·0 · 0 · 6/2 | 0·0·0 · 0 · 6/2 | 0·17·0 |
+| `AUTH-signup-validacao` | 0·0·0 · 4 · 7/2 | 0·0·0 · 3 · 7/2 | 0·17·0 |
+| `AUTH-signup-senhas` | 0·0·0 · 0 · 3/3 | 0·0·0 · 0 · 3/3 | 0·17·0 |
+| `AUTH-signup-criando` | 0·0·0 · 0 · 3/3 | 0·0·0 · 0 · 3/3 | 0·17·0 |
+| `AUTH-signup-email-usado` | 0·0·0 · 0 · 3/3 | 0·0·0 · 0 · 3/3 | 0·17·0 |
+| `AUTH-signup-senha-fraca` | 0·0·0 · 0 · 3/3 | 0·0·0 · 0 · 3/3 | 0·17·0 |
+| `AUTH-signup-rede` | 0·0·0 · 0 · 3/3 | 0·0·0 · 0 · 3/3 | 0·17·0 |
+| `AUTH-signup-limite` | 0·0·0 · 0 · 3/3 | 0·0·0 · 0 · 3/3 | 0·17·0 |
+| `AUTH-signup-perfil` | 0·0·0 · 0 · 3/3 | 0·0·0 · 0 · 3/3 | 0·17·0 |
+| `AUTH-verify-carregando` | 0·0·0 · 2 · 0/0 | 0·0·0 · 0 · 0/0 | 0·3·0 |
+| `AUTH-verify` | 0·0·0 · 0 · 0/0 | 0·0·0 · 0 · 0/0 | 0·7·0 |
+| `AUTH-verify-checando` | 0·0·0 · 0 · 0/0 | 0·0·0 · 0 · 0/0 | 0·6·0 |
+| `AUTH-verify-enviando` | 0·0·0 · 0 · 0/0 | 0·0·0 · 0 · 0/0 | 0·6·0 |
+| `AUTH-verify-nao-verificado` | 0·0·0 · 0 · 0/0 | 0·0·0 · 0 · 0/0 | 0·6·0 |
+| `AUTH-verify-checar-falhou` | 0·0·0 · 0 · 0/0 | 0·0·0 · 0 · 0/0 | 0·6·0 |
+| `AUTH-verify-reenviar-erro` | 0·0·0 · 0 · 0/0 | 0·0·0 · 0 · 0/0 | 0·6·0 |
+| `AUTH-verify-reenviar-limite` | 0·0·0 · 0 · 0/0 | 0·0·0 · 0 · 0/0 | 0·6·0 |
+| `AUTH-verify-reenviado` | 0·0·0 · 0 · 0/0 | 0·0·0 · 0 · 0/0 | 0·6·0 |
+
+**(e) = 0 e (b) = 0 em 1138 e 711 em todos os 41 estados medidos.** Em **411**, todo estado tem (b) — a página rola na
+horizontal (div. 676, §14.6).
+
+### 14.2 O alcance — o que o aceite alcançou e o que não
+
+| grupo | estados | resultado |
+|---|---|---|
+| medidos, nas três larguras | **41** (login 12, signup 9, confirm 6, verify 9, forgot 5) | dos 15 do aval (5 do confirm com usuário + 10 do verify), **14 medidos pelo mecanismo (ii)** — o 15º, `-reenviar-excecao`, é inalcançável; a conta descartável (i) não foi precisa |
+| NÃO ALCANÇADOS (só existem sem Firebase) | `AUTH-login-nao-configurado`, `AUTH-forgot-indisponivel` | com o `.env` do Marcel, o texto esperado não aparece (é o esperado); medidos pelo **executor sem `.env`**: (e)=0 e (b)=0 em 1138 e 711, errata candidata 0 (`cn/g-faixa-ensaio-sem-firebase.txt`) |
+| INALCANÇÁVEIS (declarados) | `AUTH-login-sem-token`, `AUTH-signup-excecao`, `AUTH-confirm-excecao`, `AUTH-verify-reenviar-excecao` | não medidos; a razão no JSON (div. 640; o sem-token só por mock de SDK) |
+
+### 14.3 G-faixa — antes × depois
+
+| superfície | antes, 711 (e · b) | depois, 711 (e · b), todos os estados medidos |
+|---|---|---|
+| `/login` | 0 · 0 (linha de base da PR-5, só `base`) | 0 · 0 (14 estados − 2) |
+| `/signup` | **10** · 0 (a vitrine some) | 0 · 0 (9) |
+| `/forgot-password` | 0 · 0 | 0 · 0 (5) |
+| `/signup/confirm-email` | 0 · 0 (sem usuário) | 0 · 0 (6) |
+| `/verify-email` | não medido (exigia conta) | 0 · 0 (9) |
+
+Capturas (uma por superfície, errata da I1-D12): `capturas-antes/*.png` (web velho) × `capturas-depois/*.png` (estado
+de abertura, C e B, servidor sem `.env`; o `verify-email` em `AUTH-verify-carregando`).
+
+### 14.4 Erratas candidatas — |Δ| > 4 px contra a folha (decisão do Marcel; não decididas aqui)
+
+51, em cinco causas: **(1)** os `-validacao` (35) — o balão da folha, já **I1-E7**; **(2)** `AUTH-verify-carregando`
+(2) — já **I1-E8**; **(3)** `AUTH-login-redirecionando` (6) — a moldura também tem o grupo de botões vazio da I1-E8
+(div. 675); **(4)** `AUTH-login-google-erro` (5) — a folha desenha a variante "cancelado" (uma linha); o aceite provoca
+o "bloqueado" (duas linhas); **(5)** `AUTH-confirm-sem-usuario` (7) — sem usuário não há o apoio com o e-mail (div. 669).
+
+| estado | faixa | nó | esperado (folha) x · y · w · h | medido (app) x · y · w · h | Δ |
+|---|---|---|---|---|---|
+| `AUTH-login-validacao` | C | "Octavia" | 118 · 203 · 340 · 219 | 119 · 182.5 · 340 · 219 | 1 · -20.5 · 0 · 0 |
+| `AUTH-login-validacao` | C | "Senha" | 598 · 242 · 41 · 19 | 599 · 201 · 41 · 19 | 1 · -41 · 0 · 0 |
+| `AUTH-login-validacao` | C | "Esqueci a senha" | 913.9 · 242 · 104.1 · 19 | 915 · 201 · 104 · 19 | 1.1 · -41 · -0.1 · 0 |
+| `AUTH-login-validacao` | C | "" (`campo-senha`) | 598 · 269 · 420 · 60 | 599 · 228 · 420 · 60 | 1 · -41 · 0 · 0 |
+| `AUTH-login-validacao` | C | "Entrar" | 598 · 361 · 420 · 56 | 599 · 320 · 420 · 56 | 1 · -41 · 0 · 0 |
+| `AUTH-login-validacao` | C | "ou" | 799.7 · 433 · 16.6 · 19 | 800.7 · 392 · 16.6 · 19 | 1 · -41 · 0 · 0 |
+| `AUTH-login-validacao` | C | "Entrar com Google" | 598 · 468 · 420 · 58 | 599 · 427 · 420 · 58 | 1 · -41 · 0 · 0 |
+| `AUTH-login-validacao` | C | "Não tem conta?" | 598 · 558 · 101.3 · 19 | 599 · 517 · 101.3 · 19 | 1 · -41 · 0 · 0 |
+| `AUTH-login-validacao` | C | "Criar conta" | 707.3 · 558 · 71.5 · 19 | 708.3 · 517 · 71.5 · 19 | 1 · -41 · 0 · 0 |
+| `AUTH-login-validacao` | B | "Senha" | 144.5 · 509 · 41 · 19 | 145.5 · 468 · 41 · 19 | 1 · -41 · 0 · 0 |
+| `AUTH-login-validacao` | B | "Esqueci a senha" | 460.4 · 509 · 104.1 · 19 | 461.5 · 468 · 104 · 19 | 1.1 · -41 · -0.1 · 0 |
+| `AUTH-login-validacao` | B | "" (`campo-senha`) | 144.5 · 536 · 420 · 60 | 145.5 · 495 · 420 · 60 | 1 · -41 · 0 · 0 |
+| `AUTH-login-validacao` | B | "Entrar" | 144.5 · 628 · 420 · 56 | 145.5 · 587 · 420 · 56 | 1 · -41 · 0 · 0 |
+| `AUTH-login-validacao` | B | "ou" | 346.2 · 700 · 16.6 · 19 | 347.2 · 659 · 16.6 · 19 | 1 · -41 · 0 · 0 |
+| `AUTH-login-validacao` | B | "Entrar com Google" | 144.5 · 735 · 420 · 58 | 145.5 · 694 · 420 · 58 | 1 · -41 · 0 · 0 |
+| `AUTH-login-validacao` | B | "Não tem conta?" | 144.5 · 825 · 101.3 · 19 | 145.5 · 784 · 101.3 · 19 | 1 · -41 · 0 · 0 |
+| `AUTH-login-validacao` | B | "Criar conta" | 253.8 · 825 · 71.5 · 19 | 254.8 · 784 · 71.5 · 19 | 1 · -41 · 0 · 0 |
+| `AUTH-login-redirecionando` | C | "Entrar" | 598 · 88.6 · 420 · 18 | 599 · 104.6 · 420 · 18 | 1 · 16 · 0 · 0 |
+| `AUTH-login-redirecionando` | C | "abrindo o painel…" | 598 · 118.6 · 420 · 24.8 | 599 · 134.6 · 420 · 24.8 | 1 · 16 · 0 · 0 |
+| `AUTH-login-redirecionando` | C | "Não abriu?" | 598 · 207.4 · 68.5 · 19 | 599 · 191.4 · 68.5 · 19 | 1 · -16 · 0 · 0 |
+| `AUTH-login-redirecionando` | C | "Abrir o painel" | 674.5 · 207.4 · 83.5 · 19 | 675.5 · 191.4 · 83.5 · 19 | 1 · -16 · 0 · 0 |
+| `AUTH-login-redirecionando` | B | "Não abriu?" | 144.5 · 433.8 · 68.5 · 19 | 145.5 · 401.8 · 68.5 · 19 | 1 · -32 · 0 · 0 |
+| `AUTH-login-redirecionando` | B | "Abrir o painel" | 221 · 433.8 · 83.5 · 19 | 222 · 401.8 · 83.5 · 19 | 1 · -32 · 0 · 0 |
+| `AUTH-login-google-erro` | C | "Octavia" | 118 · 200.5 · 340 · 219 | 119 · 210.5 · 340 · 219 | 1 · 10 · 0 · 0 |
+| `AUTH-login-google-erro` | C | "Não tem conta?" | 598 · 553 · 101.3 · 19 | 599 · 573 · 101.3 · 19 | 1 · 20 · 0 · 0 |
+| `AUTH-login-google-erro` | C | "Criar conta" | 707.3 · 553 · 71.5 · 19 | 708.3 · 573 · 71.5 · 19 | 1 · 20 · 0 · 0 |
+| `AUTH-login-google-erro` | B | "Não tem conta?" | 144.5 · 820 · 101.3 · 19 | 145.5 · 840 · 101.3 · 19 | 1 · 20 · 0 · 0 |
+| `AUTH-login-google-erro` | B | "Criar conta" | 253.8 · 820 · 71.5 · 19 | 254.8 · 840 · 71.5 · 19 | 1 · 20 · 0 · 0 |
+| `AUTH-signup-validacao` | C | "Octavia" | 118 · 368 · 340 · 219 | 119 · 347.5 · 340 · 219 | 1 · -20.5 · 0 · 0 |
+| `AUTH-signup-validacao` | C | "Criar conta" | 598 · 800 · 420 · 56 | 599 · 759 · 420 · 56 | 1 · -41 · 0 · 0 |
+| `AUTH-signup-validacao` | C | "Já tem conta?" | 598 · 888 · 89.9 · 19 | 599 · 847 · 89.9 · 19 | 1 · -41 · 0 · 0 |
+| `AUTH-signup-validacao` | C | "Voltar para o login" | 695.9 · 888 · 114.3 · 19 | 696.9 · 847 · 114.3 · 19 | 1 · -41 · 0 · 0 |
+| `AUTH-signup-validacao` | B | "Criar conta" | 144.5 · 1067 · 420 · 56 | 145.5 · 1026 · 420 · 56 | 1 · -41 · 0 · 0 |
+| `AUTH-signup-validacao` | B | "Já tem conta?" | 144.5 · 1155 · 89.9 · 19 | 145.5 · 1114 · 89.9 · 19 | 1 · -41 · 0 · 0 |
+| `AUTH-signup-validacao` | B | "Voltar para o login" | 242.4 · 1155 · 114.3 · 19 | 243.4 · 1114 · 114.3 · 19 | 1 · -41 · 0 · 0 |
+| `AUTH-confirm-sem-usuario` | C | "Octavia" | 118 · 100.3 · 340 · 219 | 119 · 69.5 · 340 · 219 | 1 · -30.8 · 0 · 0 |
+| `AUTH-confirm-sem-usuario` | C | "a sessão caiu — entre de novo" | 655 · 174.6 · 191.7 · 20 | 656 · 113 · 191.7 · 20 | 1 · -61.6 · 0 · 0 |
+| `AUTH-confirm-sem-usuario` | C | "Ir para o login" | 598 · 241.6 · 420 · 56 | 599 · 180 · 420 · 56 | 1 · -61.6 · 0 · 0 |
+| `AUTH-confirm-sem-usuario` | C | "Reenviar o e-mail" | 598 · 313.6 · 420 · 58 | 599 · 252 · 420 · 58 | 1 · -61.6 · 0 · 0 |
+| `AUTH-confirm-sem-usuario` | B | "a sessão caiu — entre de novo" | 201.5 · 441.6 · 191.7 · 20 | 202.5 · 380 · 191.7 · 20 | 1 · -61.6 · 0 · 0 |
+| `AUTH-confirm-sem-usuario` | B | "Ir para o login" | 144.5 · 508.6 · 420 · 56 | 145.5 · 447 · 420 · 56 | 1 · -61.6 · 0 · 0 |
+| `AUTH-confirm-sem-usuario` | B | "Reenviar o e-mail" | 144.5 · 580.6 · 420 · 58 | 145.5 · 519 · 420 · 58 | 1 · -61.6 · 0 · 0 |
+| `AUTH-verify-carregando` | C | "Confirme o e-mail" | 598 · 114.1 · 420 · 18 | 599 · 130.1 · 420 · 18 | 1 · 16 · 0 · 0 |
+| `AUTH-verify-carregando` | C | "carregando…" | 598 · 144.1 · 420 · 24.8 | 599 · 160.1 · 420 · 24.8 | 1 · 16 · 0 · 0 |
+| `AUTH-forgot-validacao` | C | "Octavia" | 118 · 115.4 · 340 · 219 | 119 · 94.9 · 340 · 219 | 1 · -20.5 · 0 · 0 |
+| `AUTH-forgot-validacao` | C | "Enviar o link" | 598 · 294.8 · 420 · 56 | 599 · 253.8 · 420 · 56 | 1 · -41 · 0 · 0 |
+| `AUTH-forgot-validacao` | C | "Lembrou a senha?" | 598 · 382.8 · 117.3 · 19 | 599 · 341.8 · 117.2 · 19 | 1 · -41 · -0.1 · 0 |
+| `AUTH-forgot-validacao` | C | "Entrar" | 723.3 · 382.8 · 39.5 · 19 | 724.2 · 341.8 · 39.5 · 19 | 0.9 · -41 · 0 · 0 |
+| `AUTH-forgot-validacao` | B | "Enviar o link" | 144.5 · 561.8 · 420 · 56 | 145.5 · 520.8 · 420 · 56 | 1 · -41 · 0 · 0 |
+| `AUTH-forgot-validacao` | B | "Lembrou a senha?" | 144.5 · 649.8 · 117.3 · 19 | 145.5 · 608.8 · 117.2 · 19 | 1 · -41 · -0.1 · 0 |
+| `AUTH-forgot-validacao` | B | "Entrar" | 269.8 · 649.8 · 39.5 · 19 | 270.7 · 608.8 · 39.5 · 19 | 0.9 · -41 · 0 · 0 |
+
+**Nós sem par** (listados no `cn/g-faixa-aceite.txt`; 108 da folha, 76 do app, C e B): quase todos são o **dado de
+exemplo** da folha (`marcel@exemplo.com` no campo, `••••••••`, `Marcel`, `Viana`, `Violão`) contra o placeholder ou o
+valor digitado no app, e as frases que o aceite provoca diferentes da variante desenhada (Google bloqueado ×
+cancelado; as opções do `<select>`).
+
+### 14.5 Herança 660 — bloco D
+
+`/verify-email` recarregado vai SEMPRE para `/login` no primeiro render: `app/verify-email/page.tsx:73-76` (o efeito
+chama `router.push("/login")` com `user` nulo) × `contexts/firebase-auth-context.tsx:79` (`useState<FirebaseUser |
+null>(null)`: o `user` nasce nulo) × `:523` (o provider renderiza os filhos sem esperar o `isInitialized`). Não mexido
+(I1-D9). **Destino: bloco D.** O aceite segura a navegação RSC para medir (`g-faixa-auth.ts`, `noVerify`).
+
+### 14.6 Divergências — 672 a 676
+
+| # | origem | o que o prompt (ou o doc) presumiu | o que foi medido | destino |
+|---|---|---|---|---|
+| **672** | T | `COMO-RODAR.md` (commit 2): *"nada sai para o Google"* | nos estados do *Entrar com Google* o SDK carrega o iframe de auth de verdade: no log, `apis.google.com` ×12, `octavia-27ebb.firebaseapp.com` ×12, `www.googleapis.com` ×6 e **`identitytoolkit.googleapis.com` ×3** — leituras (a janela é segurada/bloqueada no navegador, nenhum login acontece); nenhuma escrita: o único `POST /api/profile` do log é fabricado (×3, `AUTH-signup-perfil`) | registrado; a frase do `COMO-RODAR.md` corrigida no commit 3 (o cabeçalho do `g-faixa-auth.ts` diz o mesmo e fica — commit 3 é só docs; corrige-se na próxima PR que tocar o arquivo) |
+| **673** | A | — | `DELETE /api/auth/session` **real** ×147 no servidor local (72 → 200, **75 → 429**): o `DELETE` sem usuário de toda carga (div. 527) × um contexto novo por estado — o limitador do servidor local passa a responder 429 | não é escrita de dado (limpa cookie) nem afetou estado (o veredito passa); registro |
+| **674** | P | o prompt do "rodei": *"Contas descartáveis criadas por mim: [0 \| 1, apagada; escritas: 1 signup + 1 perfil]"* — as duas opções vieram no texto | os 15 estados com usuário foram medidos pelo (ii); no log, nenhum `POST /api/profile` real e nenhum `accounts:signUp` real (o `identitytoolkit` real ×3 é o do Google, 672) | contabilidade com **0** contas, por inferência do log — **a confirmar pelo Marcel** |
+| **675** | D | `AUTH-login-redirecionando` | a moldura tem o grupo de botões VAZIO da I1-E8 (Δy +16/−16 em C, −32 em B) | errata candidata — **decisão do Marcel** (a I1-E8 cobre só o `verify-carregando`) |
+| **676** | A | I1-D11: *"a faixa A só não quebra"* | em 411 todo estado tem (b): a coluna `web.colunaAuth` (420) e a marca não cabem, e a página rola na horizontal (`AUTH-login`: (b) = 10) — A segue B "por referência" e B não cabe em 411 | contado à parte (decisão 619), não reprova; **decisão do Marcel**: herança "inalcançáveis em A" (I2) ou conserto (a coluna com `max-w-full` em A), que volta ao commit 2 |
+
+### 14.7 Contabilidade (commit 3 e aceite)
+
+| quem | item | valor |
+|---|---|---|
+| executor | requests a `https://octavia.rocks`, logins, `.env*`, escritas | **0 · 0 · 0 · 0** |
+| executor | `next dev` local sem `.env` | as capturas do depois (porta 3106), parado ao fim |
+| Marcel | G-faixa contra `localhost:3000` | 1 rodada (15 testes: 5 telas × 3 larguras; 41 estados medidos) |
+| Marcel | contas descartáveis · escritas | **0 · 0** pelo log (div. 674, a confirmar) |
+| Marcel | requests a `octavia.rocks` | **0** (`prodAbortados` 0 nos cinco JSON) |
+| — | escritas a `/api/*` fora de `/api/auth/session` | **0 reais**; 3 fabricadas (`POST /api/profile`, no navegador) |
 

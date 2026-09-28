@@ -47,8 +47,9 @@ como hash (sha256, 12 hex) e comprimento (regra do `CLAUDE.md`, div. 204 do N2).
 As cinco telas de auth, **sem sessão e sem login**: o medidor alcança os estados com o **mecanismo (ii)** do aval
 (`scripts/gates-web/g-faixa-auth.ts`) — um usuário falso (`marcel@exemplo.com`, o dado de exemplo da folha) que o
 próprio navegador "entra" com respostas **fabricadas** do `identitytoolkit`/`securetoken`, e as do app que escreveriam
-(`POST /api/profile`) fabricadas também. **Nada sai para o Google, nenhuma conta, nenhuma escrita**; você não digita
-nada. Um contexto de navegador por estado.
+(`POST /api/profile`) fabricadas também. **Nenhuma conta, nenhuma escrita**; você não digita nada. (Correção do commit 3,
+div. 672: nos estados do *Entrar com Google* o SDK lê de verdade o iframe de auth — `apis.google.com`,
+`<projeto>.firebaseapp.com`, `googleapis.com`, `identitytoolkit` — leituras, sem login.) Um contexto de navegador por estado.
 
 1. Na árvore `../octavia-i1-pr6` (branch `i1/pr6-auth`), com o seu `.env.local` copiado para lá (passo seu — o SDK do
    Firebase só inicia configurado; sem ele, só os estados "sem Firebase" aparecem), suba **`pnpm dev`** num terminal

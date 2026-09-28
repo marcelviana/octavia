@@ -139,6 +139,14 @@ prevalece sobre a folha.
 | **I1-E5** | 20 = *"entrelinha da LinhaDeAviso"*, sem origem | entrelinha 20 = **literal do N3 (T3-R7)** | `0-linha-de-aviso` e, por ser o componente, o mesmo 20 nos inventários de `1-auth`, `4`–`8` e no `README-design.md` §2.3 (div. **596**) | 585 | leitura |
 | **I1-E6** | o **visto** (`M4.5 12.5l5 5 10-11`, do `DESIGN-N2`) no Salvar do editor e do upload, no *Criar* e na validação da setlist e na marca de `SET-adicionar*` — 50 ocorrências, só nas folhas `6`, `7` e `8`; em 24 px (traço 1,75, e 1,25 no inativo) e em **16 px, traço 3** (18×, `SET-adicionar`, `-adicionar-enviando`, `-adicionar-erro`) | vale o **`garantida` do catálogo** (`dados.ts` / `packages/identidade`: r 9 · `M8 12.2l2.8 2.8L16.2 9.4`), o ícone de "salvo/confirmado" do web como do nativo, **no tamanho da família**: 24 onde a folha tem 24; **20** (o menor da família) onde a folha tem 16. O inativo é o desenho inteiro em `lineInfo`, no traço da família (o `garantida` não tem estado `inerte`; é o que o nativo faz) | `6-content-editor`, `7-upload`, `8-setlists` (a I1-PR-4 mediu: 0 ocorrências nas folhas `0`, `1`, `4`, `5` — o sucesso da `LinhaDeAviso` é a I1-E3) | 588, 601, 611 (I1-PR-4) | leitura |
 
+
+**Do aceite da I1-PR-6** `[Marcel, 2026-09-27; aval do commit 2 da I1-PR-6]` — mesmas colunas:
+
+| id | o que a folha mostra | o que vale | onde se aplica | div. | efeito |
+|---|---|---|---|---|---|
+| **I1-E7** | nos estados `-validacao` do auth, um `div` com *"[balão nativo do navegador — texto do sistema]"* sob o campo (41 px de altura), empurrando o resto da coluna | o balão de validação é do NAVEGADOR (`required`, `type=email`, `minLength`): não é elemento da página e o código não o reproduz; **a seção vale sem ele** (o DOM do estado é o da base) | `1-auth`: `AUTH-login-validacao`, `AUTH-signup-validacao`, `AUTH-forgot-validacao` | 667 (I1-PR-6) | leitura |
+| **I1-E8** | em `AUTH-verify-carregando`, o grupo de botões VAZIO, que soma um vão de `space.xxl` à coluna (Δy 16 em C) | o grupo não existe: **a seção vale sem ele** | `1-auth`: `AUTH-verify-carregando` | 668 (I1-PR-6) | leitura |
+
 ## 3 · O bloco `web` de tokens — insumo da PR-4 (`packages/identidade`)
 
 Exatamente como o `README-design.md` §2.1:
@@ -174,7 +182,7 @@ cobra 282; os 4 por errata são o achado coberto pela I1-E1/E2 (§6.3).
 
 **Os nomes das medidas fixas das folhas 0 e 1** `[Marcel, 2026-09-27; I1-PR-6, decisão 2 do aval]` — os literais com
 origem do `README-design.md` §2.3 (que não muda) ganham nome no bloco `web` de `packages/identidade` e custom property
-gerada em `app/styles/identidade.css`. Os requisitos das folhas 0 e 1 se leem com eles:
+gerada em `app/styles/identidade.css` — **oito nomes**. Os requisitos das folhas 0 e 1 se leem com eles:
 
 | nome (`faixas.*.web`) | custom property | C | B | origem (`README-design.md` §2.3) |
 | --- | --- | --- | --- | --- |
@@ -185,7 +193,7 @@ gerada em `app/styles/identidade.css`. Os requisitos das folhas 0 e 1 se leem co
 | `botaoAuth` | `--faixa-botao-auth` | `touch.list + 2` (58) | igual | botão secundário do S0, V1 §5.2 |
 | `botaoAviso` | `--faixa-botao-aviso` | 36 | igual | literal N3 (botão de ação da LinhaDeAviso) |
 | `entrelinhaAviso` | `--faixa-entrelinha-aviso` | 20 | igual | literal N3 (T3-R7), I1-E5 |
-| `limiarAviso` | `--faixa-limiar-aviso` | 320 | igual | `web.colunaLateral` como limiar de quebra do texto da LinhaDeAviso, que é "igual" em B (§2.4); em B a `colunaLateral` é `empilha` e não gera propriedade (div. 605) — por isso o nome próprio (I1-PR-6, div. 657) |
+| `limiarAviso` | `--faixa-limiar-aviso` | 320 | igual | `web.colunaLateral` como limiar de quebra do texto da LinhaDeAviso, que é "igual" em B (§2.4); em B a `colunaLateral` é `empilha` e não gera propriedade (div. 605) — por isso o nome próprio (I1-PR-6, div. 657; aceito pelo Marcel no aval do commit 2) |
 
 ### LinhaDeAviso — `0-linha-de-aviso/telas.html` · T-I1-R1 … T-I1-R16 (8 estados × C, B)
 
