@@ -1,0 +1,783 @@
+$ node scripts/gates-web/g-faixa-veredito.mjs   # tests/gates-web/medicoes/*.json — os cinco de auth, rodada do Marcel 2026-09-28T11:37:03Z, localhost:3000, commit f87b639
+G-faixa (veredito) — tests/gates-web/medicoes: 5 medição(ões)
+
+## confirm-email (/signup/confirm-email) — rodada 2026-09-28T11:37:03.880Z · base http://localhost:3000 · commit f87b6395f419f0e880f27adbed533f8e64fe3d62
+  inalcançáveis em A (411) — AUTH-confirm: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-confirm · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-confirm · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-confirm · 411 (faixa A — contado à parte): (e)=0 · (b)=6 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-confirm · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-confirm · 411 (faixa A — contado à parte) (b) borda do viewport: heading:74d5a1c36a08#1 "Confirme o e-mail"
+    · AUTH-confirm · 411 (faixa A — contado à parte) (b) borda do viewport: texto:ff5b18b5c859#1 "enviamos um link de confirmação para marcel@exemplo.com — ab"
+    · AUTH-confirm · 411 (faixa A — contado à parte) (b) borda do viewport: link:56f343dab3cb#1 "Ir para o login"
+    · AUTH-confirm · 411 (faixa A — contado à parte) (b) borda do viewport: button:7f3e1e57718b#1 "Reenviar o e-mail"
+    · AUTH-confirm · 411 (faixa A — contado à parte) (b) borda do viewport: texto:7588faf53c81#1 "Não recebeu o e-mail?"
+  inalcançáveis em A (411) — AUTH-confirm-enviando: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-confirm-enviando · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-confirm-enviando · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-confirm-enviando · 411 (faixa A — contado à parte): (e)=0 · (b)=5 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-confirm-enviando · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-confirm-enviando · 411 (faixa A — contado à parte) (b) borda do viewport: heading:74d5a1c36a08#1 "Confirme o e-mail"
+    · AUTH-confirm-enviando · 411 (faixa A — contado à parte) (b) borda do viewport: texto:ff5b18b5c859#1 "enviamos um link de confirmação para marcel@exemplo.com — ab"
+    · AUTH-confirm-enviando · 411 (faixa A — contado à parte) (b) borda do viewport: link:56f343dab3cb#1 "Ir para o login"
+    · AUTH-confirm-enviando · 411 (faixa A — contado à parte) (b) borda do viewport: button:9415ac2416c5#1 "Enviando…"
+  inalcançáveis em A (411) — AUTH-confirm-sucesso: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-confirm-sucesso · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-confirm-sucesso · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-confirm-sucesso · 411 (faixa A — contado à parte): (e)=0 · (b)=5 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-confirm-sucesso · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-confirm-sucesso · 411 (faixa A — contado à parte) (b) borda do viewport: heading:74d5a1c36a08#1 "Confirme o e-mail"
+    · AUTH-confirm-sucesso · 411 (faixa A — contado à parte) (b) borda do viewport: texto:ff5b18b5c859#1 "enviamos um link de confirmação para marcel@exemplo.com — ab"
+    · AUTH-confirm-sucesso · 411 (faixa A — contado à parte) (b) borda do viewport: link:56f343dab3cb#1 "Ir para o login"
+    · AUTH-confirm-sucesso · 411 (faixa A — contado à parte) (b) borda do viewport: button:7f3e1e57718b#1 "Reenviar o e-mail"
+  inalcançáveis em A (411) — AUTH-confirm-erro: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-confirm-erro · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-confirm-erro · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-confirm-erro · 411 (faixa A — contado à parte): (e)=0 · (b)=5 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-confirm-erro · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-confirm-erro · 411 (faixa A — contado à parte) (b) borda do viewport: heading:74d5a1c36a08#1 "Confirme o e-mail"
+    · AUTH-confirm-erro · 411 (faixa A — contado à parte) (b) borda do viewport: texto:ff5b18b5c859#1 "enviamos um link de confirmação para marcel@exemplo.com — ab"
+    · AUTH-confirm-erro · 411 (faixa A — contado à parte) (b) borda do viewport: link:56f343dab3cb#1 "Ir para o login"
+    · AUTH-confirm-erro · 411 (faixa A — contado à parte) (b) borda do viewport: button:7f3e1e57718b#1 "Reenviar o e-mail"
+  inalcançáveis em A (411) — AUTH-confirm-erro-rede: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-confirm-erro-rede · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-confirm-erro-rede · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-confirm-erro-rede · 411 (faixa A — contado à parte): (e)=0 · (b)=5 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-confirm-erro-rede · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-confirm-erro-rede · 411 (faixa A — contado à parte) (b) borda do viewport: heading:74d5a1c36a08#1 "Confirme o e-mail"
+    · AUTH-confirm-erro-rede · 411 (faixa A — contado à parte) (b) borda do viewport: texto:ff5b18b5c859#1 "enviamos um link de confirmação para marcel@exemplo.com — ab"
+    · AUTH-confirm-erro-rede · 411 (faixa A — contado à parte) (b) borda do viewport: link:56f343dab3cb#1 "Ir para o login"
+    · AUTH-confirm-erro-rede · 411 (faixa A — contado à parte) (b) borda do viewport: button:7f3e1e57718b#1 "Reenviar o e-mail"
+  inalcançáveis em A (411) — AUTH-confirm-sem-usuario: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-confirm-sem-usuario · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=4 · sem par folha/app=1/0 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Octavia" Δ[x,y,w,h]=[1,-30.8,0,0]
+    · errata candidata: "a sessão caiu — entre de novo" Δ[x,y,w,h]=[1,-61.6,0,0]
+    · errata candidata: "Ir para o login" Δ[x,y,w,h]=[1,-61.6,0,0]
+    · errata candidata: "Reenviar o e-mail" Δ[x,y,w,h]=[1,-61.6,0,0]
+    · sem par na folha: "enviamos um link de confirmação para marcel@exemplo.com — ab"
+  AUTH-confirm-sem-usuario · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=3 · sem par folha/app=1/0 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "a sessão caiu — entre de novo" Δ[x,y,w,h]=[1,-61.6,0,0]
+    · errata candidata: "Ir para o login" Δ[x,y,w,h]=[1,-61.6,0,0]
+    · errata candidata: "Reenviar o e-mail" Δ[x,y,w,h]=[1,-61.6,0,0]
+    · sem par na folha: "enviamos um link de confirmação para marcel@exemplo.com — ab"
+  AUTH-confirm-sem-usuario · 411 (faixa A — contado à parte): (e)=0 · (b)=4 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-confirm-sem-usuario · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-confirm-sem-usuario · 411 (faixa A — contado à parte) (b) borda do viewport: heading:74d5a1c36a08#1 "Confirme o e-mail"
+    · AUTH-confirm-sem-usuario · 411 (faixa A — contado à parte) (b) borda do viewport: link:56f343dab3cb#1 "Ir para o login"
+    · AUTH-confirm-sem-usuario · 411 (faixa A — contado à parte) (b) borda do viewport: button:7f3e1e57718b#1 "Reenviar o e-mail"
+  AUTH-confirm-excecao: inalcançável (declarado) — o contexto não lança: o catch da tela não se alcança [hipótese] (div. 640)
+
+## forgot-password (/forgot-password) — rodada 2026-09-28T11:37:03.880Z · base http://localhost:3000 · commit f87b6395f419f0e880f27adbed533f8e64fe3d62
+  inalcançáveis em A (411) — AUTH-forgot: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-forgot · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-forgot · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-forgot · 411 (faixa A — contado à parte): (e)=0 · (b)=7 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-forgot · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-forgot · 411 (faixa A — contado à parte) (b) borda do viewport: heading:0d38da44009d#1 "Trocar a senha"
+    · AUTH-forgot · 411 (faixa A — contado à parte) (b) borda do viewport: texto:82eba4497862#1 "digite o e-mail e enviamos um link para trocar a senha"
+    · AUTH-forgot · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-forgot · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-forgot · 411 (faixa A — contado à parte) (b) borda do viewport: button:fc46ef64a63d#1 "Enviar o link"
+    · AUTH-forgot · 411 (faixa A — contado à parte) (b) borda do viewport: texto:5ce9a70c9a7c#1 "Lembrou a senha?"
+  inalcançáveis em A (411) — AUTH-forgot-validacao: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-forgot-validacao · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=4 · sem par folha/app=1/0 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Octavia" Δ[x,y,w,h]=[1,-20.5,0,0]
+    · errata candidata: "Enviar o link" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "Lembrou a senha?" Δ[x,y,w,h]=[1,-41,-0.1,0]
+    · errata candidata: "Entrar" Δ[x,y,w,h]=[0.9,-41,0,0]
+    · sem par na folha: "[balão nativo do navegador — texto do sistema]"
+  AUTH-forgot-validacao · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=3 · sem par folha/app=1/0 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Enviar o link" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "Lembrou a senha?" Δ[x,y,w,h]=[1,-41,-0.1,0]
+    · errata candidata: "Entrar" Δ[x,y,w,h]=[0.9,-41,0,0]
+    · sem par na folha: "[balão nativo do navegador — texto do sistema]"
+  AUTH-forgot-validacao · 411 (faixa A — contado à parte): (e)=0 · (b)=7 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-forgot-validacao · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-forgot-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: heading:0d38da44009d#1 "Trocar a senha"
+    · AUTH-forgot-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: texto:82eba4497862#1 "digite o e-mail e enviamos um link para trocar a senha"
+    · AUTH-forgot-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-forgot-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-forgot-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: button:fc46ef64a63d#1 "Enviar o link"
+    · AUTH-forgot-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: texto:5ce9a70c9a7c#1 "Lembrou a senha?"
+  inalcançáveis em A (411) — AUTH-forgot-enviando: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-forgot-enviando · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-forgot-enviando · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-forgot-enviando · 411 (faixa A — contado à parte): (e)=0 · (b)=7 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-forgot-enviando · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-forgot-enviando · 411 (faixa A — contado à parte) (b) borda do viewport: heading:0d38da44009d#1 "Trocar a senha"
+    · AUTH-forgot-enviando · 411 (faixa A — contado à parte) (b) borda do viewport: texto:82eba4497862#1 "digite o e-mail e enviamos um link para trocar a senha"
+    · AUTH-forgot-enviando · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-forgot-enviando · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-forgot-enviando · 411 (faixa A — contado à parte) (b) borda do viewport: button:9415ac2416c5#1 "Enviando…"
+    · AUTH-forgot-enviando · 411 (faixa A — contado à parte) (b) borda do viewport: texto:5ce9a70c9a7c#1 "Lembrou a senha?"
+  AUTH-forgot-indisponivel · 411: não alcançado — o texto esperado não apareceu: "a troca de senha não está disponível"
+  AUTH-forgot-indisponivel · 711: não alcançado — o texto esperado não apareceu: "a troca de senha não está disponível"
+  AUTH-forgot-indisponivel · 1138: não alcançado — o texto esperado não apareceu: "a troca de senha não está disponível"
+  inalcançáveis em A (411) — AUTH-forgot-erro: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-forgot-erro · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-forgot-erro · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-forgot-erro · 411 (faixa A — contado à parte): (e)=0 · (b)=7 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-forgot-erro · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-forgot-erro · 411 (faixa A — contado à parte) (b) borda do viewport: heading:0d38da44009d#1 "Trocar a senha"
+    · AUTH-forgot-erro · 411 (faixa A — contado à parte) (b) borda do viewport: texto:82eba4497862#1 "digite o e-mail e enviamos um link para trocar a senha"
+    · AUTH-forgot-erro · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-forgot-erro · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-forgot-erro · 411 (faixa A — contado à parte) (b) borda do viewport: button:fc46ef64a63d#1 "Enviar o link"
+    · AUTH-forgot-erro · 411 (faixa A — contado à parte) (b) borda do viewport: texto:5ce9a70c9a7c#1 "Lembrou a senha?"
+  inalcançáveis em A (411) — AUTH-forgot-sucesso: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-forgot-sucesso · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-forgot-sucesso · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-forgot-sucesso · 411 (faixa A — contado à parte): (e)=0 · (b)=5 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-forgot-sucesso · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-forgot-sucesso · 411 (faixa A — contado à parte) (b) borda do viewport: heading:8dbf95e922eb#1 "Veja o e-mail"
+    · AUTH-forgot-sucesso · 411 (faixa A — contado à parte) (b) borda do viewport: texto:98eab00b49f2#1 "enviamos as instruções para marcel@exemplo.com — não chegou?"
+    · AUTH-forgot-sucesso · 411 (faixa A — contado à parte) (b) borda do viewport: button:6bb3150b9757#1 "Tentar de novo"
+    · AUTH-forgot-sucesso · 411 (faixa A — contado à parte) (b) borda do viewport: link:ad298d175124#1 "Voltar para o login"
+
+## login (/login) — rodada 2026-09-28T11:37:03.880Z · base http://localhost:3000 · commit f87b6395f419f0e880f27adbed533f8e64fe3d62
+  inalcançáveis em A (411) — AUTH-login: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-login · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=2/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "marcel@exemplo.com"
+    · sem par na folha: "••••••••"
+    · sem par no app: "voce@exemplo.com"
+  AUTH-login · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=2/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "marcel@exemplo.com"
+    · sem par na folha: "••••••••"
+    · sem par no app: "voce@exemplo.com"
+  AUTH-login · 411 (faixa A — contado à parte): (e)=0 · (b)=10 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-login · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-login · 411 (faixa A — contado à parte) (b) borda do viewport: heading:4105811890ae#1 "Entrar"
+    · AUTH-login · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-login · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-login · 411 (faixa A — contado à parte) (b) borda do viewport: label:d482c10b3d4d#1 "Senha"
+    · AUTH-login · 411 (faixa A — contado à parte) (b) borda do viewport: link:6328c0bf79cc#1 "Esqueci a senha"
+    · AUTH-login · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-senha#1 ""
+    · AUTH-login · 411 (faixa A — contado à parte) (b) borda do viewport: button:4105811890ae#1 "Entrar"
+    · AUTH-login · 411 (faixa A — contado à parte) (b) borda do viewport: button:5cfc81b7e7b3#1 "Entrar com Google"
+    · AUTH-login · 411 (faixa A — contado à parte) (b) borda do viewport: texto:4aa8ddd2fd24#1 "Não tem conta?"
+  inalcançáveis em A (411) — AUTH-login-validacao: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-login-validacao · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=9 · sem par folha/app=2/0 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Octavia" Δ[x,y,w,h]=[1,-20.5,0,0]
+    · errata candidata: "Senha" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "Esqueci a senha" Δ[x,y,w,h]=[1.1,-41,-0.1,0]
+    · errata candidata: "" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "Entrar" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "ou" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "Entrar com Google" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "Não tem conta?" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "Criar conta" Δ[x,y,w,h]=[1,-41,0,0]
+    · sem par na folha: "[balão nativo do navegador — texto do sistema]"
+    · sem par na folha: "••••••••"
+  AUTH-login-validacao · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=8 · sem par folha/app=2/0 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Senha" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "Esqueci a senha" Δ[x,y,w,h]=[1.1,-41,-0.1,0]
+    · errata candidata: "" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "Entrar" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "ou" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "Entrar com Google" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "Não tem conta?" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "Criar conta" Δ[x,y,w,h]=[1,-41,0,0]
+    · sem par na folha: "[balão nativo do navegador — texto do sistema]"
+    · sem par na folha: "••••••••"
+  AUTH-login-validacao · 411 (faixa A — contado à parte): (e)=0 · (b)=10 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-login-validacao · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-login-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: heading:4105811890ae#1 "Entrar"
+    · AUTH-login-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-login-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-login-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: label:d482c10b3d4d#1 "Senha"
+    · AUTH-login-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: link:6328c0bf79cc#1 "Esqueci a senha"
+    · AUTH-login-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-senha#1 ""
+    · AUTH-login-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: button:4105811890ae#1 "Entrar"
+    · AUTH-login-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: button:5cfc81b7e7b3#1 "Entrar com Google"
+    · AUTH-login-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: texto:4aa8ddd2fd24#1 "Não tem conta?"
+  inalcançáveis em A (411) — AUTH-login-entrando: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-login-entrando · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=1/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "••••••••"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-login-entrando · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=1/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "••••••••"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-login-entrando · 411 (faixa A — contado à parte): (e)=0 · (b)=10 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-login-entrando · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-login-entrando · 411 (faixa A — contado à parte) (b) borda do viewport: heading:4105811890ae#1 "Entrar"
+    · AUTH-login-entrando · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-login-entrando · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-login-entrando · 411 (faixa A — contado à parte) (b) borda do viewport: label:d482c10b3d4d#1 "Senha"
+    · AUTH-login-entrando · 411 (faixa A — contado à parte) (b) borda do viewport: link:6328c0bf79cc#1 "Esqueci a senha"
+    · AUTH-login-entrando · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-senha#1 ""
+    · AUTH-login-entrando · 411 (faixa A — contado à parte) (b) borda do viewport: button:93aad5ac9bad#1 "Entrando…"
+    · AUTH-login-entrando · 411 (faixa A — contado à parte) (b) borda do viewport: button:5cfc81b7e7b3#1 "Entrar com Google"
+    · AUTH-login-entrando · 411 (faixa A — contado à parte) (b) borda do viewport: texto:4aa8ddd2fd24#1 "Não tem conta?"
+  inalcançáveis em A (411) — AUTH-login-google: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-login-google · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=2/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "marcel@exemplo.com"
+    · sem par na folha: "••••••••"
+    · sem par no app: "voce@exemplo.com"
+  AUTH-login-google · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=2/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "marcel@exemplo.com"
+    · sem par na folha: "••••••••"
+    · sem par no app: "voce@exemplo.com"
+  AUTH-login-google · 411 (faixa A — contado à parte): (e)=0 · (b)=10 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-login-google · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-login-google · 411 (faixa A — contado à parte) (b) borda do viewport: heading:4105811890ae#1 "Entrar"
+    · AUTH-login-google · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-login-google · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-login-google · 411 (faixa A — contado à parte) (b) borda do viewport: label:d482c10b3d4d#1 "Senha"
+    · AUTH-login-google · 411 (faixa A — contado à parte) (b) borda do viewport: link:6328c0bf79cc#1 "Esqueci a senha"
+    · AUTH-login-google · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-senha#1 ""
+    · AUTH-login-google · 411 (faixa A — contado à parte) (b) borda do viewport: button:4105811890ae#1 "Entrar"
+    · AUTH-login-google · 411 (faixa A — contado à parte) (b) borda do viewport: button:6cc1bbba0f84#1 "Carregando…"
+    · AUTH-login-google · 411 (faixa A — contado à parte) (b) borda do viewport: texto:4aa8ddd2fd24#1 "Não tem conta?"
+  inalcançáveis em A (411) — AUTH-login-redirecionando: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-login-redirecionando · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=4 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Entrar" Δ[x,y,w,h]=[1,16,0,0]
+    · errata candidata: "abrindo o painel…" Δ[x,y,w,h]=[1,16,0,0]
+    · errata candidata: "Não abriu?" Δ[x,y,w,h]=[1,-16,0,0]
+    · errata candidata: "Abrir o painel" Δ[x,y,w,h]=[1,-16,0,0]
+  AUTH-login-redirecionando · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=2 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Não abriu?" Δ[x,y,w,h]=[1,-32,0,0]
+    · errata candidata: "Abrir o painel" Δ[x,y,w,h]=[1,-32,0,0]
+  AUTH-login-redirecionando · 411 (faixa A — contado à parte): (e)=0 · (b)=4 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-login-redirecionando · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-login-redirecionando · 411 (faixa A — contado à parte) (b) borda do viewport: heading:4105811890ae#1 "Entrar"
+    · AUTH-login-redirecionando · 411 (faixa A — contado à parte) (b) borda do viewport: texto:5ec6f4390a9a#1 "abrindo o painel…"
+    · AUTH-login-redirecionando · 411 (faixa A — contado à parte) (b) borda do viewport: texto:c8442bf47478#1 "Não abriu?"
+  AUTH-login-sem-token: inalcançável (declarado) — o token do usuário falso sempre existe: "Unable to obtain authentication token" só por mock de SDK [hipótese]
+  inalcançáveis em A (411) — AUTH-login-credencial: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-login-credencial · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=1/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "••••••••"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-login-credencial · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=1/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "••••••••"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-login-credencial · 411 (faixa A — contado à parte): (e)=0 · (b)=10 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-login-credencial · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-login-credencial · 411 (faixa A — contado à parte) (b) borda do viewport: heading:4105811890ae#1 "Entrar"
+    · AUTH-login-credencial · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-login-credencial · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-login-credencial · 411 (faixa A — contado à parte) (b) borda do viewport: label:d482c10b3d4d#1 "Senha"
+    · AUTH-login-credencial · 411 (faixa A — contado à parte) (b) borda do viewport: link:6328c0bf79cc#1 "Esqueci a senha"
+    · AUTH-login-credencial · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-senha#1 ""
+    · AUTH-login-credencial · 411 (faixa A — contado à parte) (b) borda do viewport: button:4105811890ae#1 "Entrar"
+    · AUTH-login-credencial · 411 (faixa A — contado à parte) (b) borda do viewport: button:5cfc81b7e7b3#1 "Entrar com Google"
+    · AUTH-login-credencial · 411 (faixa A — contado à parte) (b) borda do viewport: texto:4aa8ddd2fd24#1 "Não tem conta?"
+  inalcançáveis em A (411) — AUTH-login-limite-prazo: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-login-limite-prazo · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=1/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "••••••••"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-login-limite-prazo · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=1/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "••••••••"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-login-limite-prazo · 411 (faixa A — contado à parte): (e)=0 · (b)=10 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-login-limite-prazo · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-login-limite-prazo · 411 (faixa A — contado à parte) (b) borda do viewport: heading:4105811890ae#1 "Entrar"
+    · AUTH-login-limite-prazo · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-login-limite-prazo · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-login-limite-prazo · 411 (faixa A — contado à parte) (b) borda do viewport: label:d482c10b3d4d#1 "Senha"
+    · AUTH-login-limite-prazo · 411 (faixa A — contado à parte) (b) borda do viewport: link:6328c0bf79cc#1 "Esqueci a senha"
+    · AUTH-login-limite-prazo · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-senha#1 ""
+    · AUTH-login-limite-prazo · 411 (faixa A — contado à parte) (b) borda do viewport: button:4105811890ae#1 "Entrar"
+    · AUTH-login-limite-prazo · 411 (faixa A — contado à parte) (b) borda do viewport: button:5cfc81b7e7b3#1 "Entrar com Google"
+    · AUTH-login-limite-prazo · 411 (faixa A — contado à parte) (b) borda do viewport: texto:4aa8ddd2fd24#1 "Não tem conta?"
+  inalcançáveis em A (411) — AUTH-login-limite: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-login-limite · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=1/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "••••••••"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-login-limite · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=1/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "••••••••"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-login-limite · 411 (faixa A — contado à parte): (e)=0 · (b)=10 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-login-limite · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-login-limite · 411 (faixa A — contado à parte) (b) borda do viewport: heading:4105811890ae#1 "Entrar"
+    · AUTH-login-limite · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-login-limite · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-login-limite · 411 (faixa A — contado à parte) (b) borda do viewport: label:d482c10b3d4d#1 "Senha"
+    · AUTH-login-limite · 411 (faixa A — contado à parte) (b) borda do viewport: link:6328c0bf79cc#1 "Esqueci a senha"
+    · AUTH-login-limite · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-senha#1 ""
+    · AUTH-login-limite · 411 (faixa A — contado à parte) (b) borda do viewport: button:4105811890ae#1 "Entrar"
+    · AUTH-login-limite · 411 (faixa A — contado à parte) (b) borda do viewport: button:5cfc81b7e7b3#1 "Entrar com Google"
+    · AUTH-login-limite · 411 (faixa A — contado à parte) (b) borda do viewport: texto:4aa8ddd2fd24#1 "Não tem conta?"
+  inalcançáveis em A (411) — AUTH-login-rede: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-login-rede · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=1/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "••••••••"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-login-rede · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=1/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "••••••••"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-login-rede · 411 (faixa A — contado à parte): (e)=0 · (b)=10 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-login-rede · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-login-rede · 411 (faixa A — contado à parte) (b) borda do viewport: heading:4105811890ae#1 "Entrar"
+    · AUTH-login-rede · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-login-rede · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-login-rede · 411 (faixa A — contado à parte) (b) borda do viewport: label:d482c10b3d4d#1 "Senha"
+    · AUTH-login-rede · 411 (faixa A — contado à parte) (b) borda do viewport: link:6328c0bf79cc#1 "Esqueci a senha"
+    · AUTH-login-rede · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-senha#1 ""
+    · AUTH-login-rede · 411 (faixa A — contado à parte) (b) borda do viewport: button:4105811890ae#1 "Entrar"
+    · AUTH-login-rede · 411 (faixa A — contado à parte) (b) borda do viewport: button:5cfc81b7e7b3#1 "Entrar com Google"
+    · AUTH-login-rede · 411 (faixa A — contado à parte) (b) borda do viewport: texto:4aa8ddd2fd24#1 "Não tem conta?"
+  inalcançáveis em A (411) — AUTH-login-google-erro: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-login-google-erro · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=3 · sem par folha/app=3/2 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Octavia" Δ[x,y,w,h]=[1,10,0,0]
+    · errata candidata: "Não tem conta?" Δ[x,y,w,h]=[1,20,0,0]
+    · errata candidata: "Criar conta" Δ[x,y,w,h]=[1,20,0,0]
+    · sem par na folha: "marcel@exemplo.com"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "o login com Google foi cancelado"
+    · sem par no app: "voce@exemplo.com"
+    · sem par no app: "o navegador bloqueou a janela do Google — libere pop-ups e tente de novo"
+  AUTH-login-google-erro · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=2 · sem par folha/app=3/2 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Não tem conta?" Δ[x,y,w,h]=[1,20,0,0]
+    · errata candidata: "Criar conta" Δ[x,y,w,h]=[1,20,0,0]
+    · sem par na folha: "marcel@exemplo.com"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "o login com Google foi cancelado"
+    · sem par no app: "voce@exemplo.com"
+    · sem par no app: "o navegador bloqueou a janela do Google — libere pop-ups e tente de novo"
+  AUTH-login-google-erro · 411 (faixa A — contado à parte): (e)=0 · (b)=11 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-login-google-erro · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-login-google-erro · 411 (faixa A — contado à parte) (b) borda do viewport: heading:4105811890ae#1 "Entrar"
+    · AUTH-login-google-erro · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-login-google-erro · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-login-google-erro · 411 (faixa A — contado à parte) (b) borda do viewport: label:d482c10b3d4d#1 "Senha"
+    · AUTH-login-google-erro · 411 (faixa A — contado à parte) (b) borda do viewport: link:6328c0bf79cc#1 "Esqueci a senha"
+    · AUTH-login-google-erro · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-senha#1 ""
+    · AUTH-login-google-erro · 411 (faixa A — contado à parte) (b) borda do viewport: button:4105811890ae#1 "Entrar"
+    · AUTH-login-google-erro · 411 (faixa A — contado à parte) (b) borda do viewport: button:5cfc81b7e7b3#1 "Entrar com Google"
+    · AUTH-login-google-erro · 411 (faixa A — contado à parte) (b) borda do viewport: texto:d2543468e4f0#1 "o navegador bloqueou a janela do Google — libere pop-ups e t"
+    · AUTH-login-google-erro · 411 (faixa A — contado à parte) (b) borda do viewport: texto:4aa8ddd2fd24#1 "Não tem conta?"
+  AUTH-login-nao-configurado · 411: não alcançado — o texto esperado não apareceu: "o login não está disponível neste servidor"
+  AUTH-login-nao-configurado · 711: não alcançado — o texto esperado não apareceu: "o login não está disponível neste servidor"
+  AUTH-login-nao-configurado · 1138: não alcançado — o texto esperado não apareceu: "o login não está disponível neste servidor"
+  inalcançáveis em A (411) — AUTH-login-perfil-401: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-login-perfil-401 · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=2/2 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "••••••••"
+    · sem par na folha: "Entrar"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "Entrando…"
+  AUTH-login-perfil-401 · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=2/2 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "••••••••"
+    · sem par na folha: "Entrar"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "Entrando…"
+  AUTH-login-perfil-401 · 411 (faixa A — contado à parte): (e)=0 · (b)=10 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-login-perfil-401 · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-login-perfil-401 · 411 (faixa A — contado à parte) (b) borda do viewport: heading:4105811890ae#1 "Entrar"
+    · AUTH-login-perfil-401 · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-login-perfil-401 · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-login-perfil-401 · 411 (faixa A — contado à parte) (b) borda do viewport: label:d482c10b3d4d#1 "Senha"
+    · AUTH-login-perfil-401 · 411 (faixa A — contado à parte) (b) borda do viewport: link:6328c0bf79cc#1 "Esqueci a senha"
+    · AUTH-login-perfil-401 · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-senha#1 ""
+    · AUTH-login-perfil-401 · 411 (faixa A — contado à parte) (b) borda do viewport: button:93aad5ac9bad#1 "Entrando…"
+    · AUTH-login-perfil-401 · 411 (faixa A — contado à parte) (b) borda do viewport: button:5cfc81b7e7b3#1 "Entrar com Google"
+    · AUTH-login-perfil-401 · 411 (faixa A — contado à parte) (b) borda do viewport: texto:4aa8ddd2fd24#1 "Não tem conta?"
+  inalcançáveis em A (411) — AUTH-login-servidor: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-login-servidor · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=2/2 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "••••••••"
+    · sem par na folha: "Entrar"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "Entrando…"
+  AUTH-login-servidor · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=2/2 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "••••••••"
+    · sem par na folha: "Entrar"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "Entrando…"
+  AUTH-login-servidor · 411 (faixa A — contado à parte): (e)=0 · (b)=10 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-login-servidor · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-login-servidor · 411 (faixa A — contado à parte) (b) borda do viewport: heading:4105811890ae#1 "Entrar"
+    · AUTH-login-servidor · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-login-servidor · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-login-servidor · 411 (faixa A — contado à parte) (b) borda do viewport: label:d482c10b3d4d#1 "Senha"
+    · AUTH-login-servidor · 411 (faixa A — contado à parte) (b) borda do viewport: link:6328c0bf79cc#1 "Esqueci a senha"
+    · AUTH-login-servidor · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-senha#1 ""
+    · AUTH-login-servidor · 411 (faixa A — contado à parte) (b) borda do viewport: button:93aad5ac9bad#1 "Entrando…"
+    · AUTH-login-servidor · 411 (faixa A — contado à parte) (b) borda do viewport: button:5cfc81b7e7b3#1 "Entrar com Google"
+    · AUTH-login-servidor · 411 (faixa A — contado à parte) (b) borda do viewport: texto:4aa8ddd2fd24#1 "Não tem conta?"
+
+## signup (/signup) — rodada 2026-09-28T11:37:03.880Z · base http://localhost:3000 · commit f87b6395f419f0e880f27adbed533f8e64fe3d62
+  inalcançáveis em A (411) — AUTH-signup: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-signup · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=6/2 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Marcel"
+    · sem par na folha: "Viana"
+    · sem par na folha: "marcel@exemplo.com"
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "voce@exemplo.com"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+  AUTH-signup · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=6/2 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Marcel"
+    · sem par na folha: "Viana"
+    · sem par na folha: "marcel@exemplo.com"
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "voce@exemplo.com"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+  AUTH-signup · 411 (faixa A — contado à parte): (e)=0 · (b)=17 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-signup · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-signup · 411 (faixa A — contado à parte) (b) borda do viewport: heading:8cb3525e3b7e#1 "Criar conta"
+    · AUTH-signup · 411 (faixa A — contado à parte) (b) borda do viewport: label:5086900635fe#1 "Nome"
+    · AUTH-signup · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-nome#1 ""
+    · AUTH-signup · 411 (faixa A — contado à parte) (b) borda do viewport: label:c6522465fb9d#1 "Sobrenome"
+    · AUTH-signup · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-sobrenome#1 ""
+    · AUTH-signup · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-signup · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-signup · 411 (faixa A — contado à parte) (b) borda do viewport: label:d46b5db8e172#1 "Instrumento principal"
+    · AUTH-signup · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-instrumento#1 "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro ▾"
+    · AUTH-signup · 411 (faixa A — contado à parte) (b) borda do viewport: label:d482c10b3d4d#1 "Senha"
+    · AUTH-signup · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-senha#1 ""
+    · … e mais 5
+  inalcançáveis em A (411) — AUTH-signup-validacao: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-signup-validacao · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=4 · sem par folha/app=7/2 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Octavia" Δ[x,y,w,h]=[1,-20.5,0,0]
+    · errata candidata: "Criar conta" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "Já tem conta?" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "Voltar para o login" Δ[x,y,w,h]=[1,-41,0,0]
+    · sem par na folha: "Marcel"
+    · sem par na folha: "Viana"
+    · sem par na folha: "marcel@exemplo.com"
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "[balão nativo do navegador — texto do sistema]"
+    · sem par no app: "voce@exemplo.com"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+  AUTH-signup-validacao · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=3 · sem par folha/app=7/2 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Criar conta" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "Já tem conta?" Δ[x,y,w,h]=[1,-41,0,0]
+    · errata candidata: "Voltar para o login" Δ[x,y,w,h]=[1,-41,0,0]
+    · sem par na folha: "Marcel"
+    · sem par na folha: "Viana"
+    · sem par na folha: "marcel@exemplo.com"
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "[balão nativo do navegador — texto do sistema]"
+    · sem par no app: "voce@exemplo.com"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+  AUTH-signup-validacao · 411 (faixa A — contado à parte): (e)=0 · (b)=17 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-signup-validacao · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-signup-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: heading:8cb3525e3b7e#1 "Criar conta"
+    · AUTH-signup-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: label:5086900635fe#1 "Nome"
+    · AUTH-signup-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-nome#1 ""
+    · AUTH-signup-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: label:c6522465fb9d#1 "Sobrenome"
+    · AUTH-signup-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-sobrenome#1 ""
+    · AUTH-signup-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-signup-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-signup-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: label:d46b5db8e172#1 "Instrumento principal"
+    · AUTH-signup-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-instrumento#1 "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro ▾"
+    · AUTH-signup-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: label:d482c10b3d4d#1 "Senha"
+    · AUTH-signup-validacao · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-senha#1 ""
+    · … e mais 5
+  inalcançáveis em A (411) — AUTH-signup-senhas: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-signup-senhas · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=3/3 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "outra-senha-de-exemplo"
+  AUTH-signup-senhas · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=3/3 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "outra-senha-de-exemplo"
+  AUTH-signup-senhas · 411 (faixa A — contado à parte): (e)=0 · (b)=17 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-signup-senhas · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-signup-senhas · 411 (faixa A — contado à parte) (b) borda do viewport: heading:8cb3525e3b7e#1 "Criar conta"
+    · AUTH-signup-senhas · 411 (faixa A — contado à parte) (b) borda do viewport: label:5086900635fe#1 "Nome"
+    · AUTH-signup-senhas · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-nome#1 ""
+    · AUTH-signup-senhas · 411 (faixa A — contado à parte) (b) borda do viewport: label:c6522465fb9d#1 "Sobrenome"
+    · AUTH-signup-senhas · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-sobrenome#1 ""
+    · AUTH-signup-senhas · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-signup-senhas · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-signup-senhas · 411 (faixa A — contado à parte) (b) borda do viewport: label:d46b5db8e172#1 "Instrumento principal"
+    · AUTH-signup-senhas · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-instrumento#1 "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro ▾"
+    · AUTH-signup-senhas · 411 (faixa A — contado à parte) (b) borda do viewport: label:d482c10b3d4d#1 "Senha"
+    · AUTH-signup-senhas · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-senha#1 ""
+    · … e mais 5
+  inalcançáveis em A (411) — AUTH-signup-criando: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-signup-criando · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=3/3 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-signup-criando · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=3/3 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-signup-criando · 411 (faixa A — contado à parte): (e)=0 · (b)=17 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-signup-criando · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-signup-criando · 411 (faixa A — contado à parte) (b) borda do viewport: heading:8cb3525e3b7e#1 "Criar conta"
+    · AUTH-signup-criando · 411 (faixa A — contado à parte) (b) borda do viewport: label:5086900635fe#1 "Nome"
+    · AUTH-signup-criando · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-nome#1 ""
+    · AUTH-signup-criando · 411 (faixa A — contado à parte) (b) borda do viewport: label:c6522465fb9d#1 "Sobrenome"
+    · AUTH-signup-criando · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-sobrenome#1 ""
+    · AUTH-signup-criando · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-signup-criando · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-signup-criando · 411 (faixa A — contado à parte) (b) borda do viewport: label:d46b5db8e172#1 "Instrumento principal"
+    · AUTH-signup-criando · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-instrumento#1 "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro ▾"
+    · AUTH-signup-criando · 411 (faixa A — contado à parte) (b) borda do viewport: label:d482c10b3d4d#1 "Senha"
+    · AUTH-signup-criando · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-senha#1 ""
+    · … e mais 5
+  inalcançáveis em A (411) — AUTH-signup-email-usado: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-signup-email-usado · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=3/3 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-signup-email-usado · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=3/3 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-signup-email-usado · 411 (faixa A — contado à parte): (e)=0 · (b)=17 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-signup-email-usado · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-signup-email-usado · 411 (faixa A — contado à parte) (b) borda do viewport: heading:8cb3525e3b7e#1 "Criar conta"
+    · AUTH-signup-email-usado · 411 (faixa A — contado à parte) (b) borda do viewport: label:5086900635fe#1 "Nome"
+    · AUTH-signup-email-usado · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-nome#1 ""
+    · AUTH-signup-email-usado · 411 (faixa A — contado à parte) (b) borda do viewport: label:c6522465fb9d#1 "Sobrenome"
+    · AUTH-signup-email-usado · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-sobrenome#1 ""
+    · AUTH-signup-email-usado · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-signup-email-usado · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-signup-email-usado · 411 (faixa A — contado à parte) (b) borda do viewport: label:d46b5db8e172#1 "Instrumento principal"
+    · AUTH-signup-email-usado · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-instrumento#1 "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro ▾"
+    · AUTH-signup-email-usado · 411 (faixa A — contado à parte) (b) borda do viewport: label:d482c10b3d4d#1 "Senha"
+    · AUTH-signup-email-usado · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-senha#1 ""
+    · … e mais 5
+  inalcançáveis em A (411) — AUTH-signup-senha-fraca: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-signup-senha-fraca · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=3/3 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-signup-senha-fraca · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=3/3 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-signup-senha-fraca · 411 (faixa A — contado à parte): (e)=0 · (b)=17 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-signup-senha-fraca · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-signup-senha-fraca · 411 (faixa A — contado à parte) (b) borda do viewport: heading:8cb3525e3b7e#1 "Criar conta"
+    · AUTH-signup-senha-fraca · 411 (faixa A — contado à parte) (b) borda do viewport: label:5086900635fe#1 "Nome"
+    · AUTH-signup-senha-fraca · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-nome#1 ""
+    · AUTH-signup-senha-fraca · 411 (faixa A — contado à parte) (b) borda do viewport: label:c6522465fb9d#1 "Sobrenome"
+    · AUTH-signup-senha-fraca · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-sobrenome#1 ""
+    · AUTH-signup-senha-fraca · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-signup-senha-fraca · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-signup-senha-fraca · 411 (faixa A — contado à parte) (b) borda do viewport: label:d46b5db8e172#1 "Instrumento principal"
+    · AUTH-signup-senha-fraca · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-instrumento#1 "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro ▾"
+    · AUTH-signup-senha-fraca · 411 (faixa A — contado à parte) (b) borda do viewport: label:d482c10b3d4d#1 "Senha"
+    · AUTH-signup-senha-fraca · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-senha#1 ""
+    · … e mais 5
+  inalcançáveis em A (411) — AUTH-signup-rede: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-signup-rede · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=3/3 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-signup-rede · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=3/3 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-signup-rede · 411 (faixa A — contado à parte): (e)=0 · (b)=17 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-signup-rede · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-signup-rede · 411 (faixa A — contado à parte) (b) borda do viewport: heading:8cb3525e3b7e#1 "Criar conta"
+    · AUTH-signup-rede · 411 (faixa A — contado à parte) (b) borda do viewport: label:5086900635fe#1 "Nome"
+    · AUTH-signup-rede · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-nome#1 ""
+    · AUTH-signup-rede · 411 (faixa A — contado à parte) (b) borda do viewport: label:c6522465fb9d#1 "Sobrenome"
+    · AUTH-signup-rede · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-sobrenome#1 ""
+    · AUTH-signup-rede · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-signup-rede · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-signup-rede · 411 (faixa A — contado à parte) (b) borda do viewport: label:d46b5db8e172#1 "Instrumento principal"
+    · AUTH-signup-rede · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-instrumento#1 "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro ▾"
+    · AUTH-signup-rede · 411 (faixa A — contado à parte) (b) borda do viewport: label:d482c10b3d4d#1 "Senha"
+    · AUTH-signup-rede · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-senha#1 ""
+    · … e mais 5
+  inalcançáveis em A (411) — AUTH-signup-limite: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-signup-limite · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=3/3 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-signup-limite · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=3/3 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-signup-limite · 411 (faixa A — contado à parte): (e)=0 · (b)=17 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-signup-limite · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-signup-limite · 411 (faixa A — contado à parte) (b) borda do viewport: heading:8cb3525e3b7e#1 "Criar conta"
+    · AUTH-signup-limite · 411 (faixa A — contado à parte) (b) borda do viewport: label:5086900635fe#1 "Nome"
+    · AUTH-signup-limite · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-nome#1 ""
+    · AUTH-signup-limite · 411 (faixa A — contado à parte) (b) borda do viewport: label:c6522465fb9d#1 "Sobrenome"
+    · AUTH-signup-limite · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-sobrenome#1 ""
+    · AUTH-signup-limite · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-signup-limite · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-signup-limite · 411 (faixa A — contado à parte) (b) borda do viewport: label:d46b5db8e172#1 "Instrumento principal"
+    · AUTH-signup-limite · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-instrumento#1 "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro ▾"
+    · AUTH-signup-limite · 411 (faixa A — contado à parte) (b) borda do viewport: label:d482c10b3d4d#1 "Senha"
+    · AUTH-signup-limite · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-senha#1 ""
+    · … e mais 5
+  inalcançáveis em A (411) — AUTH-signup-perfil: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-signup-perfil · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=3/3 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-signup-perfil · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=3/3 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-signup-perfil · 411 (faixa A — contado à parte): (e)=0 · (b)=17 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-signup-perfil · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-signup-perfil · 411 (faixa A — contado à parte) (b) borda do viewport: heading:8cb3525e3b7e#1 "Criar conta"
+    · AUTH-signup-perfil · 411 (faixa A — contado à parte) (b) borda do viewport: label:5086900635fe#1 "Nome"
+    · AUTH-signup-perfil · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-nome#1 ""
+    · AUTH-signup-perfil · 411 (faixa A — contado à parte) (b) borda do viewport: label:c6522465fb9d#1 "Sobrenome"
+    · AUTH-signup-perfil · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-sobrenome#1 ""
+    · AUTH-signup-perfil · 411 (faixa A — contado à parte) (b) borda do viewport: label:2550d962e536#1 "E-mail"
+    · AUTH-signup-perfil · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-email#1 ""
+    · AUTH-signup-perfil · 411 (faixa A — contado à parte) (b) borda do viewport: label:d46b5db8e172#1 "Instrumento principal"
+    · AUTH-signup-perfil · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-instrumento#1 "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro ▾"
+    · AUTH-signup-perfil · 411 (faixa A — contado à parte) (b) borda do viewport: label:d482c10b3d4d#1 "Senha"
+    · AUTH-signup-perfil · 411 (faixa A — contado à parte) (b) borda do viewport: t:campo-senha#1 ""
+    · … e mais 5
+  AUTH-signup-excecao: inalcançável (declarado) — o contexto não lança (todo catch devolve { error }): o catch da tela não se alcança [hipótese] (div. 640)
+
+## verify-email (/verify-email) — rodada 2026-09-28T11:37:03.880Z · base http://localhost:3000 · commit f87b6395f419f0e880f27adbed533f8e64fe3d62
+  inalcançáveis em A (411) — AUTH-verify-carregando: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-verify-carregando · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=2 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Confirme o e-mail" Δ[x,y,w,h]=[1,16,0,0]
+    · errata candidata: "carregando…" Δ[x,y,w,h]=[1,16,0,0]
+  AUTH-verify-carregando · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify-carregando · 411 (faixa A — contado à parte): (e)=0 · (b)=3 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-verify-carregando · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-verify-carregando · 411 (faixa A — contado à parte) (b) borda do viewport: heading:74d5a1c36a08#1 "Confirme o e-mail"
+    · AUTH-verify-carregando · 411 (faixa A — contado à parte) (b) borda do viewport: texto:d3f57e1b75a0#1 "carregando…"
+  inalcançáveis em A (411) — AUTH-verify: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-verify · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify · 411 (faixa A — contado à parte): (e)=0 · (b)=7 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-verify · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-verify · 411 (faixa A — contado à parte) (b) borda do viewport: heading:74d5a1c36a08#1 "Confirme o e-mail"
+    · AUTH-verify · 411 (faixa A — contado à parte) (b) borda do viewport: texto:0806b198a299#1 "confirme o e-mail marcel@exemplo.com para usar o Octavia"
+    · AUTH-verify · 411 (faixa A — contado à parte) (b) borda do viewport: button:083d24eb0450#1 "Já confirmei"
+    · AUTH-verify · 411 (faixa A — contado à parte) (b) borda do viewport: button:7f3e1e57718b#1 "Reenviar o e-mail"
+    · AUTH-verify · 411 (faixa A — contado à parte) (b) borda do viewport: button:2d023dea2a9d#1 "Sair"
+    · AUTH-verify · 411 (faixa A — contado à parte) (b) borda do viewport: texto:62a12257e5ee#1 "problemas? veja o spam ou fale com o suporte"
+  inalcançáveis em A (411) — AUTH-verify-checando: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-verify-checando · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify-checando · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify-checando · 411 (faixa A — contado à parte): (e)=0 · (b)=6 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-verify-checando · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-verify-checando · 411 (faixa A — contado à parte) (b) borda do viewport: heading:74d5a1c36a08#1 "Confirme o e-mail"
+    · AUTH-verify-checando · 411 (faixa A — contado à parte) (b) borda do viewport: texto:0806b198a299#1 "confirme o e-mail marcel@exemplo.com para usar o Octavia"
+    · AUTH-verify-checando · 411 (faixa A — contado à parte) (b) borda do viewport: button:43bf08152a6e#1 "Conferindo…"
+    · AUTH-verify-checando · 411 (faixa A — contado à parte) (b) borda do viewport: button:7f3e1e57718b#1 "Reenviar o e-mail"
+    · AUTH-verify-checando · 411 (faixa A — contado à parte) (b) borda do viewport: button:2d023dea2a9d#1 "Sair"
+  inalcançáveis em A (411) — AUTH-verify-enviando: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-verify-enviando · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify-enviando · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify-enviando · 411 (faixa A — contado à parte): (e)=0 · (b)=6 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-verify-enviando · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-verify-enviando · 411 (faixa A — contado à parte) (b) borda do viewport: heading:74d5a1c36a08#1 "Confirme o e-mail"
+    · AUTH-verify-enviando · 411 (faixa A — contado à parte) (b) borda do viewport: texto:0806b198a299#1 "confirme o e-mail marcel@exemplo.com para usar o Octavia"
+    · AUTH-verify-enviando · 411 (faixa A — contado à parte) (b) borda do viewport: button:083d24eb0450#1 "Já confirmei"
+    · AUTH-verify-enviando · 411 (faixa A — contado à parte) (b) borda do viewport: button:9415ac2416c5#1 "Enviando…"
+    · AUTH-verify-enviando · 411 (faixa A — contado à parte) (b) borda do viewport: button:2d023dea2a9d#1 "Sair"
+  inalcançáveis em A (411) — AUTH-verify-nao-verificado: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-verify-nao-verificado · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify-nao-verificado · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify-nao-verificado · 411 (faixa A — contado à parte): (e)=0 · (b)=6 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-verify-nao-verificado · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-verify-nao-verificado · 411 (faixa A — contado à parte) (b) borda do viewport: heading:74d5a1c36a08#1 "Confirme o e-mail"
+    · AUTH-verify-nao-verificado · 411 (faixa A — contado à parte) (b) borda do viewport: texto:0806b198a299#1 "confirme o e-mail marcel@exemplo.com para usar o Octavia"
+    · AUTH-verify-nao-verificado · 411 (faixa A — contado à parte) (b) borda do viewport: button:083d24eb0450#1 "Já confirmei"
+    · AUTH-verify-nao-verificado · 411 (faixa A — contado à parte) (b) borda do viewport: button:7f3e1e57718b#1 "Reenviar o e-mail"
+    · AUTH-verify-nao-verificado · 411 (faixa A — contado à parte) (b) borda do viewport: button:2d023dea2a9d#1 "Sair"
+  inalcançáveis em A (411) — AUTH-verify-checar-falhou: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-verify-checar-falhou · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify-checar-falhou · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify-checar-falhou · 411 (faixa A — contado à parte): (e)=0 · (b)=6 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-verify-checar-falhou · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-verify-checar-falhou · 411 (faixa A — contado à parte) (b) borda do viewport: heading:74d5a1c36a08#1 "Confirme o e-mail"
+    · AUTH-verify-checar-falhou · 411 (faixa A — contado à parte) (b) borda do viewport: texto:0806b198a299#1 "confirme o e-mail marcel@exemplo.com para usar o Octavia"
+    · AUTH-verify-checar-falhou · 411 (faixa A — contado à parte) (b) borda do viewport: button:083d24eb0450#1 "Já confirmei"
+    · AUTH-verify-checar-falhou · 411 (faixa A — contado à parte) (b) borda do viewport: button:7f3e1e57718b#1 "Reenviar o e-mail"
+    · AUTH-verify-checar-falhou · 411 (faixa A — contado à parte) (b) borda do viewport: button:2d023dea2a9d#1 "Sair"
+  inalcançáveis em A (411) — AUTH-verify-reenviar-erro: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-verify-reenviar-erro · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify-reenviar-erro · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify-reenviar-erro · 411 (faixa A — contado à parte): (e)=0 · (b)=6 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-verify-reenviar-erro · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-verify-reenviar-erro · 411 (faixa A — contado à parte) (b) borda do viewport: heading:74d5a1c36a08#1 "Confirme o e-mail"
+    · AUTH-verify-reenviar-erro · 411 (faixa A — contado à parte) (b) borda do viewport: texto:0806b198a299#1 "confirme o e-mail marcel@exemplo.com para usar o Octavia"
+    · AUTH-verify-reenviar-erro · 411 (faixa A — contado à parte) (b) borda do viewport: button:083d24eb0450#1 "Já confirmei"
+    · AUTH-verify-reenviar-erro · 411 (faixa A — contado à parte) (b) borda do viewport: button:7f3e1e57718b#1 "Reenviar o e-mail"
+    · AUTH-verify-reenviar-erro · 411 (faixa A — contado à parte) (b) borda do viewport: button:2d023dea2a9d#1 "Sair"
+  inalcançáveis em A (411) — AUTH-verify-reenviar-limite: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-verify-reenviar-limite · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify-reenviar-limite · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify-reenviar-limite · 411 (faixa A — contado à parte): (e)=0 · (b)=6 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-verify-reenviar-limite · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-verify-reenviar-limite · 411 (faixa A — contado à parte) (b) borda do viewport: heading:74d5a1c36a08#1 "Confirme o e-mail"
+    · AUTH-verify-reenviar-limite · 411 (faixa A — contado à parte) (b) borda do viewport: texto:0806b198a299#1 "confirme o e-mail marcel@exemplo.com para usar o Octavia"
+    · AUTH-verify-reenviar-limite · 411 (faixa A — contado à parte) (b) borda do viewport: button:083d24eb0450#1 "Já confirmei"
+    · AUTH-verify-reenviar-limite · 411 (faixa A — contado à parte) (b) borda do viewport: button:7f3e1e57718b#1 "Reenviar o e-mail"
+    · AUTH-verify-reenviar-limite · 411 (faixa A — contado à parte) (b) borda do viewport: button:2d023dea2a9d#1 "Sair"
+  AUTH-verify-reenviar-excecao: inalcançável (declarado) — o contexto não lança: o catch da tela não se alcança [hipótese] (I1-E1, div. 640)
+  inalcançáveis em A (411) — AUTH-verify-reenviado: 0 (herança da I1-D11, decisão 619; não reprova)
+  AUTH-verify-reenviado · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify-reenviado · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify-reenviado · 411 (faixa A — contado à parte): (e)=0 · (b)=6 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · AUTH-verify-reenviado · 411 (faixa A — contado à parte) (b) página com rolagem horizontal: (página)
+    · AUTH-verify-reenviado · 411 (faixa A — contado à parte) (b) borda do viewport: heading:74d5a1c36a08#1 "Confirme o e-mail"
+    · AUTH-verify-reenviado · 411 (faixa A — contado à parte) (b) borda do viewport: texto:0806b198a299#1 "confirme o e-mail marcel@exemplo.com para usar o Octavia"
+    · AUTH-verify-reenviado · 411 (faixa A — contado à parte) (b) borda do viewport: button:083d24eb0450#1 "Já confirmei"
+    · AUTH-verify-reenviado · 411 (faixa A — contado à parte) (b) borda do viewport: button:7f3e1e57718b#1 "Reenviar o e-mail"
+    · AUTH-verify-reenviado · 411 (faixa A — contado à parte) (b) borda do viewport: button:2d023dea2a9d#1 "Sair"
+
+## contados à parte (não reprovam): errata candidata 51 · sem par folha 108 · sem par app 76 (C e B) · não medidos 10
+  · confirm-email · AUTH-confirm-excecao: INALCANÇÁVEL (declarado) — o contexto não lança: o catch da tela não se alcança [hipótese] (div. 640)
+  · forgot-password · AUTH-forgot-indisponivel · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "a troca de senha não está disponível"
+  · forgot-password · AUTH-forgot-indisponivel · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "a troca de senha não está disponível"
+  · forgot-password · AUTH-forgot-indisponivel · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "a troca de senha não está disponível"
+  · login · AUTH-login-sem-token: INALCANÇÁVEL (declarado) — o token do usuário falso sempre existe: "Unable to obtain authentication token" só por mock de SDK [hipótese]
+  · login · AUTH-login-nao-configurado · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "o login não está disponível neste servidor"
+  · login · AUTH-login-nao-configurado · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "o login não está disponível neste servidor"
+  · login · AUTH-login-nao-configurado · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "o login não está disponível neste servidor"
+  · signup · AUTH-signup-excecao: INALCANÇÁVEL (declarado) — o contexto não lança (todo catch devolve { error }): o catch da tela não se alcança [hipótese] (div. 640)
+  · verify-email · AUTH-verify-reenviar-excecao: INALCANÇÁVEL (declarado) — o contexto não lança: o catch da tela não se alcança [hipótese] (I1-E1, div. 640)
+
+G-faixa: PASSA
+# exit: 0

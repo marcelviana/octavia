@@ -13,10 +13,17 @@
  * carrega texto de música" (CLAUDE.md, div. 204 do N2).
  */
 import type { Page } from '@playwright/test'
+import { ESTADOS_CONFIRM, ESTADOS_FORGOT, ESTADOS_LOGIN, ESTADOS_SIGNUP, ESTADOS_VERIFY, paraEstados } from './g-faixa-auth'
 
 export interface Estado {
+  /** I1-PR6: antes de carregar a rota — rotas fabricadas, o usuário falso (`g-faixa-auth.ts`) */
+  antes?: (page: Page, base: URL) => Promise<void>
   /** leva a tela, já carregada na rota, ao estado; sem ele, é o estado em que a rota abre */
   preparar?: (page: Page) => Promise<void>
+  /** I1-PR6: o texto que TEM de estar na tela; sem ele o estado é gravado como NÃO ALCANÇADO (com a razão) */
+  espera?: string
+  /** I1-PR6: declarado inalcançável no navegador — não se mede; a razão vai para o JSON e o veredito a lista */
+  inalcancavel?: string
   /** a seção da folha (`<section data-estado>`), quando a superfície estiver implementada */
   secao?: string
 }
@@ -52,7 +59,14 @@ async function primeiroContent(page: Page, base: URL): Promise<string | null> {
 }
 
 export const SUPERFICIES: Superficie[] = [
-  { id: 'login', rota: '/login', sessao: false, publica: true, folha: '1-auth', implementada: false, estados: { base: {} } },
+  // I1-PR6: a superfície 1, auth, IMPLEMENTADA — um estado por seção da folha `1-auth`, alcançado pelo
+  // mecanismo (ii) do aval (usuário falso + respostas fabricadas, `g-faixa-auth.ts`). Um contexto por
+  // estado (o usuário falso fica no IndexedDB e não pode vazar). Sem sessão real: nenhuma conta.
+  { id: 'login', rota: '/login', sessao: false, publica: true, folha: '1-auth', implementada: true, estados: paraEstados(ESTADOS_LOGIN) },
+  { id: 'signup', rota: '/signup', sessao: false, publica: true, folha: '1-auth', implementada: true, estados: paraEstados(ESTADOS_SIGNUP) },
+  { id: 'confirm-email', rota: '/signup/confirm-email', sessao: false, publica: true, folha: '1-auth', implementada: true, estados: paraEstados(ESTADOS_CONFIRM) },
+  { id: 'verify-email', rota: '/verify-email', sessao: false, publica: true, folha: '1-auth', implementada: true, estados: paraEstados(ESTADOS_VERIFY) },
+  { id: 'forgot-password', rota: '/forgot-password', sessao: false, publica: true, folha: '1-auth', implementada: true, estados: paraEstados(ESTADOS_FORGOT) },
   // as duas públicas da I1-D19 (fora da lista do CN do prompt; entram porque são superfícies do I1 e não pedem sessão)
   { id: 'landing', rota: '/', sessao: false, publica: true, folha: '2-landing', implementada: false, estados: { base: {} } },
   { id: 'privacy-policy', rota: '/privacy-policy', sessao: false, publica: true, folha: '3-privacy-policy', implementada: false, estados: { base: {} } },

@@ -13,7 +13,12 @@
 //   (d′) triagem — o resto do que difere: o nó ficou > 40 % mais alto, ou mais
 //        estreito E mais alto (quebrou linha);
 //   errata candidata — contra a folha (a moldura C ou B da seção do estado,
-//        quando a superfície já está implementada): |Δ| > 4 px em x, y, w ou h;
+//        quando a superfície já está implementada): |Δ| > 4 px em x, y, w ou h.
+//        O PAR com a folha (I1-PR6, decisão 7; div. 641) é pelo TEXTO SEM O PAPEL
+//        (a folha é de `div`: "Esqueci a senha" é `texto` lá e `link` aqui) ou,
+//        onde a folha escreve dado de exemplo, pelo `data-testid` da âncora
+//        (`t:<testid>`); nó sem texto nem testid não tem par possível. Os nós SEM
+//        PAR, dos dois lados, são LISTADOS (antes a comparação os pulava calada);
 //   saídas, contadas À PARTE e nunca somadas ao (e)/(b) (a N3-D29):
 //        nome-acessível — o texto de 1138 sumiu na largura W mas existe lá um
 //        nó cujo nome acessível (aria-label) é esse texto (rótulo curto com
@@ -25,7 +30,12 @@
 //        `data-rolagem="painel"` (o corpo de conteúdo da resposta 19 da folha),
 //        que conta como (d′).
 // A faixa A (411) não tem requisito próprio (DESIGN-I1 §4: "o que o G-faixa
-// medir em 411 é saída contada à parte"): o (e)/(b) de 411 é contado, não reprova.
+// medir em 411 é saída contada à parte"): o (e) de 411 é contado, não reprova.
+// ERRATA DA I1-D11 [Marcel, 2026-09-28] (I1-PR6, commit 4): "A só não quebra" = (b) = 0 em 411 —
+//   o (b) de 411 (inclusive a página com rolagem horizontal) REPROVA; o (e) de 411 segue listado
+//   (as "inalcançáveis em A", decisão 619). `reprovaB` diz em que larguras o (b) reprova.
+// DIV. 677 [Marcel, 2026-09-28] (I1-PR6, commit 4b): em 411 o (e) TAMBÉM reprova — "empilha, não
+//   esconde" vale em A. A lista das (e) de 411 continua saindo (é a herança), com contagem 0 como critério.
 //
 // Nó cru (o que o medidor grava): { k, role, tag, testid, h_texto, h_nome, n,
 //   x, y, w, h, sr, clip: {x,y,w,h,rolagem,painel} | null, corta: {x,y} }
@@ -37,9 +47,25 @@
 export const TOL_CORTE = 1 // px — arredondamento de subpixel
 export const TOL_FOLHA = 4 // px — I1-D13
 export const REFERENCIA = "1138"
-export const REPROVAM = ["1138", "711"] // C e B; A (411) é saída contada à parte
+export const REPROVAM = ["1138", "711", "411"] // o (e) reprova nas três (div. 677; em A a lista também sai)
+export const REPROVAM_B = ["1138", "711", "411"] // o (b) reprova nas três (errata da I1-D11)
 
 const temArea = (n) => n && n.w > 0 && n.h > 0
+
+/** A chave do par com a folha: testid, ou o hash do texto (ou do nome acessível) sem o papel, com a ocorrência. */
+export function chavesDeFolha(nos) {
+  const vistos = new Map()
+  const out = []
+  for (const n of nos) {
+    if (!temArea(n) || n.sr) continue
+    const base = n.testid ? `t:${n.testid}` : n.h_texto ? `x:${n.h_texto}` : n.h_nome ? `x:${n.h_nome}` : null
+    if (!base) continue
+    const i = (vistos.get(base) ?? 0) + 1
+    vistos.set(base, i)
+    out.push([`${base}#${i}`, n])
+  }
+  return new Map(out)
+}
 const dentro = (a, lo, hi) => a >= lo - TOL_CORTE && a <= hi + TOL_CORTE
 
 /** (b) de uma medição (uma largura). */
@@ -109,16 +135,19 @@ export function classificarEstado(estado) {
     }
     const faixa = L === "1138" ? "C" : L === "711" ? "B" : null
     const errata = []
+    const semPar = { folha: [], app: [] }
     if (faixa && estado.folha?.[faixa]) {
-      const f = porK(estado.folha[faixa])
-      for (const n of med.nos) {
-        const g = f.get(n.k)
-        if (!g || !temArea(n)) continue
+      const f = chavesDeFolha(estado.folha[faixa])
+      const a = chavesDeFolha(med.nos)
+      for (const [ch, n] of a) {
+        const g = f.get(ch)
+        if (!g) { semPar.app.push({ k: n.k, par: ch }); continue }
         const d = ["x", "y", "w", "h"].map((c) => Math.round((n[c] - g[c]) * 10) / 10)
         if (d.some((v) => Math.abs(v) > TOL_FOLHA)) errata.push({ k: n.k, delta: d })
       }
+      for (const [ch, g] of f) if (!a.has(ch)) semPar.folha.push({ k: g.k, par: ch, rotulo: g.rotulo })
     }
-    res[L] = { e, b, dl, errata, saidas: { nomeAcessivel: nomeAcessivel.length, rolagem: rolagem.length }, reprova: REPROVAM.includes(L) }
+    res[L] = { e, b, dl, errata, semPar, saidas: { nomeAcessivel: nomeAcessivel.length, rolagem: rolagem.length }, reprova: REPROVAM.includes(L), reprovaB: REPROVAM_B.includes(L) }
   }
   return res
 }
@@ -129,8 +158,9 @@ export function resumo(superficie) {
   for (const [id, estado] of Object.entries(superficie.estados)) {
     const c = classificarEstado(estado)
     for (const [L, r] of Object.entries(c)) {
-      const t = (tot[L] ??= { e: 0, b: 0, dl: 0, errata: 0, nomeAcessivel: 0, rolagem: 0, reprova: r.reprova, estados: [] })
+      const t = (tot[L] ??= { e: 0, b: 0, dl: 0, errata: 0, semParFolha: 0, semParApp: 0, nomeAcessivel: 0, rolagem: 0, reprova: r.reprova, reprovaB: r.reprovaB, estados: [] })
       t.e += r.e.length; t.b += r.b.length; t.dl += r.dl.length; t.errata += r.errata.length
+      t.semParFolha += r.semPar.folha.length; t.semParApp += r.semPar.app.length
       t.nomeAcessivel += r.saidas.nomeAcessivel; t.rolagem += r.saidas.rolagem
       t.estados.push(id)
     }

@@ -1,0 +1,12 @@
+{
+  "_": "Âncoras do esperado (I1-PR6, decisão 7 do aval; div. 641): o que a folha escreve com DADO DE EXEMPLO (o valor do campo) não pareia por texto com o app (placeholder ou vazio). A caixa do campo ganha o data-testid que o app também põe — a chave `t:<testid>` casa dos dois lados. Regra: a caixa é `seletor`; o testid sai do rótulo escrito no irmão anterior dela.",
+  "seletor": "div[style*='height:60px']",
+  "porRotulo": {
+    "E-mail": "campo-email",
+    "Senha": "campo-senha",
+    "Nome": "campo-nome",
+    "Sobrenome": "campo-sobrenome",
+    "Instrumento principal": "campo-instrumento",
+    "Confirmar a senha": "campo-confirmar"
+  }
+}

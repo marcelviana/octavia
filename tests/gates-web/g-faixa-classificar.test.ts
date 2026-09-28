@@ -11,7 +11,7 @@ import { classificarEstado, cortes, resumo } from '../../scripts/gates-web/g-fai
 interface No {
   k: string; x: number; y: number; w: number; h: number
   sr?: boolean; clip?: { x: number; y: number; w: number; h: number; rolagem: boolean; painel?: boolean } | null
-  corta?: { x: boolean; y: boolean }; h_texto?: string | null; h_nome?: string | null
+  corta?: { x: boolean; y: boolean }; h_texto?: string | null; h_nome?: string | null; testid?: string | null
 }
 const no = (k: string, x: number, y: number, w: number, h: number, extra: Partial<No> = {}): No =>
   ({ k, x, y, w, h, sr: false, clip: null, corta: { x: false, y: false }, h_texto: k, h_nome: null, ...extra })
@@ -78,10 +78,11 @@ describe('G-faixa — (e), (d′) e as saídas contra 1138', () => {
     expect(c['711'].e).toEqual([{ k: 'card-completo', tipo: 'texto some do nó', n: [48, 36] }])
     expect(c['711'].dl).toMatchObject([{ k: 'rotulo-a', texto: 'trocado' }])
   })
-  it('a faixa A (411) é contada à parte: reprova=false', () => {
+  it('a faixa A (411): o (e) e o (b) reprovam (errata da I1-D11; div. 677)', () => {
     const c = classificarEstado({ larguras: { 1138: ref, 411: med(411, []) } })
     expect(c['411'].e).toHaveLength(4)
-    expect(c['411'].reprova).toBe(false)
+    expect(c['411'].reprova).toBe(true)
+    expect(c['411'].reprovaB).toBe(true)
   })
 })
 
@@ -91,6 +92,23 @@ describe('G-faixa — errata candidata contra a folha (4 px)', () => {
     const folha = { C: [no('a', 36, 64, 200, 48), no('b', 32, 120, 195.9, 48)] }
     const c = classificarEstado({ larguras: { 1138: app }, folha })
     expect(c['1138'].errata).toEqual([{ k: 'b', delta: [0, 0, 4.1, 0] }])
+  })
+
+  it('I1-PR6 (decisão 7): o par é pelo texto SEM o papel — o `texto` da folha casa com o `link` do app', () => {
+    const app = med(1138, [no('link:esqueci#1', 900, 200, 110, 19, { h_texto: 'esqueci' })])
+    const folha = { C: [no('texto:esqueci#1', 913.9, 201, 104.1, 19, { h_texto: 'esqueci' })] }
+    const c = classificarEstado({ larguras: { 1138: app }, folha })
+    expect(c['1138'].errata).toEqual([{ k: 'link:esqueci#1', delta: [-13.9, -1, 5.9, 0] }])
+    expect(c['1138'].semPar).toEqual({ folha: [], app: [] })
+  })
+
+  it('I1-PR6 (decisão 7): a âncora `data-testid` casa o campo; o que não pareia é LISTADO dos dois lados', () => {
+    const app = med(1138, [no('t:campo-email#1', 598, 120, 420, 60, { testid: 'campo-email', h_texto: null }), no('textbox:voce#1', 647, 138, 354, 24, { h_texto: 'voce' })])
+    const folha = { C: [no('t:campo-email#1', 598, 121, 420, 60, { testid: 'campo-email', h_texto: 'marcel' }), no('texto:marcel#1', 647, 143, 354, 24, { h_texto: 'marcel' })] }
+    const c = classificarEstado({ larguras: { 1138: app }, folha })
+    expect(c['1138'].errata).toEqual([])
+    expect(c['1138'].semPar.app.map((o: { k: string }) => o.k)).toEqual(['textbox:voce#1'])
+    expect(c['1138'].semPar.folha.map((o: { k: string }) => o.k)).toEqual(['texto:marcel#1'])
   })
 })
 

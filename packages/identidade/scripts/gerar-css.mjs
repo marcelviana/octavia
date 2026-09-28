@@ -70,6 +70,12 @@ function daFaixa(t) {
   out.push(`  --faixa-linha-lista: ${px(w.linhaLista)};`)
   out.push(`  --faixa-linha-musica: ${px(w.linhaMusica)};`)
   out.push(`  --faixa-empilha: ${w.empilha ? 1 : 0};`)
+  // I1-PR-6 (decisão 2): as medidas fixas das folhas 0 e 1, com nome
+  out.push(`  --faixa-marca-largura: ${px(w.marca.largura)};`)
+  out.push(`  --faixa-marca-altura: ${px(w.marca.altura)};`)
+  for (const k of ['colunaAuth', 'vaoAuth', 'campoAuth', 'botaoAuth', 'botaoAviso', 'entrelinhaAviso', 'limiarAviso']) {
+    out.push(`  --faixa-${kebab(k)}: ${px(w[k])};`)
+  }
   for (const [k, v] of Object.entries(t.folha)) {
     if (v !== undefined) out.push(`  --faixa-folha-${kebab(k)}: ${px(v)};`)
   }

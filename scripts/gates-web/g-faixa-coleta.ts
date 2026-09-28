@@ -55,7 +55,10 @@ export function coletar(raizSel: string | null): { nos: NoCru[]; viewport: { w: 
     const r = el.getBoundingClientRect()
     const he = el as HTMLElement
     const inp = el as HTMLInputElement
-    const texto = limpa(ehControle ? (he.innerText || inp.value || inp.placeholder || el.getAttribute('title') || '') : (el.matches(MARCADO) ? he.innerText : proprio) || '')
+    // I1-PR6 (div. 662): o `innerText` aplica o `text-transform` (o rótulo "Entrar" em caixa alta virava
+    // "ENTRAR" no app e seguia "Entrar" na folha, que o lê como texto próprio) — com transformação, o texto do DOM
+    const visivel = cs.textTransform !== 'none' ? limpa(he.textContent ?? '') : he.innerText
+    const texto = limpa(ehControle ? (visivel || inp.value || inp.placeholder || el.getAttribute('title') || '') : (el.matches(MARCADO) ? visivel : proprio) || '')
     const sr = (r.width <= 1 && r.height <= 1) || /rect\(0(px)?,? 0(px)?,? 0(px)?,? 0(px)?\)/.test(cs.clip) || cs.clipPath === 'inset(50%)'
     let clip: NoCru['clip'] = null
     for (let a = el.parentElement; a && a !== raiz.parentElement; a = a.parentElement) {

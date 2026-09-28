@@ -14,9 +14,6 @@ export default async function LoginPage({ searchParams }: { searchParams?: Promi
   const errorDescription = params?.error_description
   const error = typeof errorDescription === "string" ? errorDescription : ""
 
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 to-orange-100">
-      <LoginPanel initialError={error} />
-    </div>
-  )
+  // I1-PR6: a casca (fundo, marca, coluna) é do painel — CascaAuth
+  return <LoginPanel initialError={error} />
 }

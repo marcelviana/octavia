@@ -1,0 +1,740 @@
+{
+ "folha": "0-linha-de-aviso",
+ "arquivo": "docs/ux/DESIGN-I1/0-linha-de-aviso/telas.html",
+ "sha256": "a1ff9bcc63e48e27b7d89726f7d8041e5d73462b4dc7765ef79b265cb79e01b2",
+ "chromium": "140.0.7339.16",
+ "ancorados": 0,
+ "estados": {
+  "Tokens": {
+   "falta": "sem a moldura C B"
+  },
+  "AVISO-falha": {
+   "C": [
+    {
+     "k": "texto:8166914c57a1#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "8166914c57a1",
+     "h_nome": null,
+     "n": 58,
+     "rotulo": "não foi possível carregar a biblioteca — falha no servidor",
+     "x": 89,
+     "y": 61,
+     "w": 356.7,
+     "h": 20,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "button:6bb3150b9757#1",
+     "role": "button",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "6bb3150b9757",
+     "h_nome": "6bb3150b9757",
+     "n": 14,
+     "rotulo": "Tentar de novo",
+     "x": 929.6,
+     "y": 47,
+     "w": 149.4,
+     "h": 48,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    }
+   ],
+   "B": [
+    {
+     "k": "texto:8166914c57a1#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "8166914c57a1",
+     "h_nome": null,
+     "n": 58,
+     "rotulo": "não foi possível carregar a biblioteca — falha no servidor",
+     "x": 81,
+     "y": 61,
+     "w": 356.7,
+     "h": 20,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "button:6bb3150b9757#1",
+     "role": "button",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "6bb3150b9757",
+     "h_nome": "6bb3150b9757",
+     "n": 14,
+     "rotulo": "Tentar de novo",
+     "x": 510.6,
+     "y": 47,
+     "w": 149.4,
+     "h": 48,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    }
+   ]
+  },
+  "AVISO-falha-sem-acao": {
+   "C": [
+    {
+     "k": "texto:341b45706c93#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "341b45706c93",
+     "h_nome": null,
+     "n": 46,
+     "rotulo": "o servidor não aceitou o login — entre de novo",
+     "x": 89,
+     "y": 47,
+     "w": 292.6,
+     "h": 20,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    }
+   ],
+   "B": [
+    {
+     "k": "texto:341b45706c93#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "341b45706c93",
+     "h_nome": null,
+     "n": 46,
+     "rotulo": "o servidor não aceitou o login — entre de novo",
+     "x": 81,
+     "y": 47,
+     "w": 292.6,
+     "h": 20,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    }
+   ]
+  },
+  "AVISO-rede": {
+   "C": [
+    {
+     "k": "texto:11ee74019182#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "11ee74019182",
+     "h_nome": null,
+     "n": 37,
+     "rotulo": "sem conexão — a sessão não foi aberta",
+     "x": 89,
+     "y": 61,
+     "w": 250.3,
+     "h": 20,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "button:6bb3150b9757#1",
+     "role": "button",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "6bb3150b9757",
+     "h_nome": "6bb3150b9757",
+     "n": 14,
+     "rotulo": "Tentar de novo",
+     "x": 929.6,
+     "y": 47,
+     "w": 149.4,
+     "h": 48,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    }
+   ],
+   "B": [
+    {
+     "k": "texto:11ee74019182#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "11ee74019182",
+     "h_nome": null,
+     "n": 37,
+     "rotulo": "sem conexão — a sessão não foi aberta",
+     "x": 81,
+     "y": 61,
+     "w": 250.3,
+     "h": 20,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "button:6bb3150b9757#1",
+     "role": "button",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "6bb3150b9757",
+     "h_nome": "6bb3150b9757",
+     "n": 14,
+     "rotulo": "Tentar de novo",
+     "x": 510.6,
+     "y": 47,
+     "w": 149.4,
+     "h": 48,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    }
+   ]
+  },
+  "AVISO-limite": {
+   "C": [
+    {
+     "k": "texto:9507ce490b5e#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "9507ce490b5e",
+     "h_nome": null,
+     "n": 52,
+     "rotulo": "muitas tentativas de entrar — tente de novo em 2 min",
+     "x": 89,
+     "y": 47,
+     "w": 339.1,
+     "h": 20,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    }
+   ],
+   "B": [
+    {
+     "k": "texto:9507ce490b5e#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "9507ce490b5e",
+     "h_nome": null,
+     "n": 52,
+     "rotulo": "muitas tentativas de entrar — tente de novo em 2 min",
+     "x": 81,
+     "y": 47,
+     "w": 339.1,
+     "h": 20,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    }
+   ]
+  },
+  "AVISO-sucesso": {
+   "C": [
+    {
+     "k": "texto:856dc0c7fdaa#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "856dc0c7fdaa",
+     "h_nome": null,
+     "n": 55,
+     "rotulo": "e-mail de confirmação enviado — veja a caixa de entrada",
+     "x": 89,
+     "y": 47,
+     "w": 359.6,
+     "h": 20,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    }
+   ],
+   "B": [
+    {
+     "k": "texto:856dc0c7fdaa#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "856dc0c7fdaa",
+     "h_nome": null,
+     "n": 55,
+     "rotulo": "e-mail de confirmação enviado — veja a caixa de entrada",
+     "x": 81,
+     "y": 47,
+     "w": 359.6,
+     "h": 20,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    }
+   ]
+  },
+  "AVISO-detalhe": {
+   "C": [
+    {
+     "k": "texto:ef36202d7d56#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "ef36202d7d56",
+     "h_nome": null,
+     "n": 37,
+     "rotulo": "não foi possível salvar — sem conexão",
+     "x": 89,
+     "y": 49,
+     "w": 241.4,
+     "h": 20,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:776cf351183f#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "776cf351183f",
+     "h_nome": null,
+     "n": 33,
+     "rotulo": "o que você escreveu continua aqui",
+     "x": 89,
+     "y": 73,
+     "w": 241.4,
+     "h": 20,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "button:6bb3150b9757#1",
+     "role": "button",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "6bb3150b9757",
+     "h_nome": "6bb3150b9757",
+     "n": 14,
+     "rotulo": "Tentar de novo",
+     "x": 929.6,
+     "y": 47,
+     "w": 149.4,
+     "h": 48,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    }
+   ],
+   "B": [
+    {
+     "k": "texto:ef36202d7d56#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "ef36202d7d56",
+     "h_nome": null,
+     "n": 37,
+     "rotulo": "não foi possível salvar — sem conexão",
+     "x": 81,
+     "y": 49,
+     "w": 241.4,
+     "h": 20,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:776cf351183f#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "776cf351183f",
+     "h_nome": null,
+     "n": 33,
+     "rotulo": "o que você escreveu continua aqui",
+     "x": 81,
+     "y": 73,
+     "w": 241.4,
+     "h": 20,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "button:6bb3150b9757#1",
+     "role": "button",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "6bb3150b9757",
+     "h_nome": "6bb3150b9757",
+     "n": 14,
+     "rotulo": "Tentar de novo",
+     "x": 510.6,
+     "y": 47,
+     "w": 149.4,
+     "h": 48,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    }
+   ]
+  },
+  "AVISO-longo": {
+   "C": [
+    {
+     "k": "texto:36ff3a337d26#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "36ff3a337d26",
+     "h_nome": null,
+     "n": 122,
+     "rotulo": "não foi possível abrir o PDF — o arquivo está corrompido ou inacessível; a cópia guardada neste navegador também não abriu",
+     "x": 89,
+     "y": 61,
+     "w": 794.9,
+     "h": 20,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "button:6bb3150b9757#1",
+     "role": "button",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "6bb3150b9757",
+     "h_nome": "6bb3150b9757",
+     "n": 14,
+     "rotulo": "Tentar de novo",
+     "x": 929.6,
+     "y": 47,
+     "w": 149.4,
+     "h": 48,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    }
+   ],
+   "B": [
+    {
+     "k": "texto:36ff3a337d26#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "36ff3a337d26",
+     "h_nome": null,
+     "n": 122,
+     "rotulo": "não foi possível abrir o PDF — o arquivo está corrompido ou inacessível; a cópia guardada neste navegador também não abriu",
+     "x": 81,
+     "y": 47,
+     "w": 417.6,
+     "h": 60,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "button:6bb3150b9757#1",
+     "role": "button",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "6bb3150b9757",
+     "h_nome": "6bb3150b9757",
+     "n": 14,
+     "rotulo": "Tentar de novo",
+     "x": 510.6,
+     "y": 53,
+     "w": 149.4,
+     "h": 48,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    }
+   ]
+  },
+  "AVISO-dialogo-apagar": {
+   "C": [
+    {
+     "k": "texto:85bb022e1696#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "85bb022e1696",
+     "h_nome": null,
+     "n": 14,
+     "rotulo": "Apagar setlist",
+     "x": 241,
+     "y": 65,
+     "w": 654,
+     "h": 26,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:022d6ffd8df3#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "022d6ffd8df3",
+     "h_nome": null,
+     "n": 42,
+     "rotulo": "apagar “Show padrão”? não dá para desfazer",
+     "x": 241,
+     "y": 115,
+     "w": 654,
+     "h": 24.8,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:548b1b4bfcaa#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "548b1b4bfcaa",
+     "h_nome": null,
+     "n": 53,
+     "rotulo": "não foi possível apagar a setlist — falha no servidor",
+     "x": 298,
+     "y": 178.8,
+     "w": 323.9,
+     "h": 20,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "button:bb9dbb406dcb#1",
+     "role": "button",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "bb9dbb406dcb",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "Cancelar",
+     "x": 663.6,
+     "y": 237.8,
+     "w": 96,
+     "h": 56,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "button:7d2434081ba5#1",
+     "role": "button",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "7d2434081ba5",
+     "h_nome": null,
+     "n": 6,
+     "rotulo": "Apagar",
+     "x": 775.6,
+     "y": 237.8,
+     "w": 119.4,
+     "h": 56,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    }
+   ],
+   "B": [
+    {
+     "k": "texto:85bb022e1696#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "85bb022e1696",
+     "h_nome": null,
+     "n": 14,
+     "rotulo": "Apagar setlist",
+     "x": 57,
+     "y": 65,
+     "w": 595,
+     "h": 26,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:022d6ffd8df3#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "022d6ffd8df3",
+     "h_nome": null,
+     "n": 42,
+     "rotulo": "apagar “Show padrão”? não dá para desfazer",
+     "x": 57,
+     "y": 115,
+     "w": 595,
+     "h": 24.8,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:548b1b4bfcaa#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "548b1b4bfcaa",
+     "h_nome": null,
+     "n": 53,
+     "rotulo": "não foi possível apagar a setlist — falha no servidor",
+     "x": 114,
+     "y": 178.8,
+     "w": 323.9,
+     "h": 20,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "button:bb9dbb406dcb#1",
+     "role": "button",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "bb9dbb406dcb",
+     "h_nome": null,
+     "n": 8,
+     "rotulo": "Cancelar",
+     "x": 420.6,
+     "y": 237.8,
+     "w": 96,
+     "h": 56,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "button:7d2434081ba5#1",
+     "role": "button",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "7d2434081ba5",
+     "h_nome": null,
+     "n": 6,
+     "rotulo": "Apagar",
+     "x": 532.6,
+     "y": 237.8,
+     "w": 119.4,
+     "h": 56,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,15 @@
+/*
+ * As três famílias da identidade (I1-PR-6, decisão 4 do aval): os mesmos seis
+ * .ttf que o nativo embarca (`apps/native/assets/fonts/`, N1-D6), copiados
+ * byte a byte para `public/fontes/` (sha256 no docs/ux/I1-PR6-anexos/README.md).
+ * Família e peso são os do `font` de @octavia/identidade (I1-D31): quem usa
+ * pede `var(--fonte-<tok>-familia)` + `var(--fonte-<tok>-peso)`. Servidas de
+ * 'self' (CSP font-src). Declarar não pinta nada: a tela velha não pede estas
+ * famílias, e o CN de inércia do layout mede a `/` antes e depois.
+ */
+@font-face { font-family: 'Raleway'; font-weight: 500; font-style: normal; font-display: swap; src: url('/fontes/Raleway_500Medium.ttf') format('truetype'); }
+@font-face { font-family: 'Raleway'; font-weight: 600; font-style: normal; font-display: swap; src: url('/fontes/Raleway_600SemiBold.ttf') format('truetype'); }
+@font-face { font-family: 'Manrope'; font-weight: 400; font-style: normal; font-display: swap; src: url('/fontes/Manrope_400Regular.ttf') format('truetype'); }
+@font-face { font-family: 'Manrope'; font-weight: 600; font-style: normal; font-display: swap; src: url('/fontes/Manrope_600SemiBold.ttf') format('truetype'); }
+@font-face { font-family: 'IBM Plex Mono'; font-weight: 400; font-style: normal; font-display: swap; src: url('/fontes/IBMPlexMono_400Regular.ttf') format('truetype'); }
+@font-face { font-family: 'IBM Plex Mono'; font-weight: 600; font-style: normal; font-display: swap; src: url('/fontes/IBMPlexMono_600SemiBold.ttf') format('truetype'); }

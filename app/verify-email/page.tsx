@@ -1,35 +1,45 @@
 "use client"
 
+/**
+ * `/verify-email` com a identidade da folha `1-auth` (I1-PR6): `AUTH-verify` e
+ * derivados, mais o `AUTH-verify-reenviar-excecao` da errata I1-E1. O fluxo é o
+ * de sempre (I1-D9): o mesmo `user.reload()`, o mesmo reenviar, o mesmo sair e
+ * os mesmos redirecionamentos. Sem usuário, hoje era `return null`: vira
+ * `estado.carregando` (`AUTH-verify-carregando`, resposta 14). Uma linha por
+ * tela; *Tentar de novo* = a mesma ação que falhou (div. 658).
+ */
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import Link from "next/link"
-import { CheckCircle, Mail, RefreshCw, LogOut } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { useAuth } from "@/contexts/firebase-auth-context"
+import { useAuth, type ErroDeAuth } from "@/contexts/firebase-auth-context"
+import { CascaAuth, RodapeAuth } from "@/components/auth/casca-auth"
+import { BotaoPrincipal, BotaoSecundario } from "@/components/auth/controles-auth"
+import { FRASES_AUTH, comDado, fraseDoErroDeReenviar, type FraseDeErro } from "@/components/auth/frases-auth"
+import { LinhaDeAviso } from "@/components/auth/linha-de-aviso"
+
+type Falha = { frase: FraseDeErro; tentar?: () => void }
 
 export default function VerifyEmailPage() {
   const [isResending, setIsResending] = useState(false)
   const [resendSuccess, setResendSuccess] = useState(false)
-  const [resendError, setResendError] = useState<string | null>(null)
+  const [falha, setFalha] = useState<Falha | null>(null)
   const [isChecking, setIsChecking] = useState(false)
   const { resendVerificationEmail, user, signOut } = useAuth()
   const router = useRouter()
 
   const handleResendEmail = async () => {
     setIsResending(true)
-    setResendError(null)
+    setFalha(null)
     setResendSuccess(false)
 
     try {
       const { error } = await resendVerificationEmail()
       if (error) {
-        setResendError(error.message)
+        setFalha({ frase: fraseDoErroDeReenviar((error as ErroDeAuth).codigo), tentar: handleResendEmail })
       } else {
         setResendSuccess(true)
       }
     } catch (err) {
-      setResendError("An unexpected error occurred")
+      setFalha({ frase: fraseDoErroDeReenviar(undefined), tentar: handleResendEmail })
     } finally {
       setIsResending(false)
     }
@@ -40,15 +50,15 @@ export default function VerifyEmailPage() {
     try {
       // Force a token refresh to get the latest email verification status
       await user?.reload()
-      
+
       // Check if email is now verified
       if (user?.emailVerified) {
         router.push("/dashboard")
       } else {
-        setResendError("Email not verified yet. Please check your inbox and click the verification link.")
+        setFalha({ frase: { onde: "linha", tipo: "falha", texto: FRASES_AUTH["verify.nao-confirmado"], tentar: false } })
       }
     } catch (err) {
-      setResendError("Failed to check verification status")
+      setFalha({ frase: { onde: "linha", tipo: "falha", texto: FRASES_AUTH["verify.checar-falhou"], tentar: true }, tentar: handleCheckVerification })
     } finally {
       setIsChecking(false)
     }
@@ -69,94 +79,33 @@ export default function VerifyEmailPage() {
   }, [user, router])
 
   if (!user) {
-    return null // Will redirect to login
+    return <CascaAuth rotulo={FRASES_AUTH["confirm.rotulo"]} apoio={FRASES_AUTH["estado.carregando"]} />
   }
 
+  const f = falha?.frase
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 to-orange-100 p-6">
-      <Card className="w-full max-w-md bg-white/80 backdrop-blur-sm border-amber-200 shadow-lg">
-        <CardHeader className="text-center">
-          <div className="mx-auto w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mb-4">
-            <Mail className="h-6 w-6 text-amber-600" />
-          </div>
-          <CardTitle className="text-xl text-amber-900">Verify Your Email</CardTitle>
-          <CardDescription className="text-amber-700">
-            Please verify your email address to access Octavia.
-            {user?.email && (
-              <span className="block mt-2 text-sm">
-                Email: <span className="font-medium">{user.email}</span>
-              </span>
-            )}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {resendSuccess && (
-              <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-md text-sm">
-                Verification email sent successfully! Please check your inbox.
-              </div>
-            )}
-            
-            {resendError && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md text-sm">
-                {resendError}
-              </div>
-            )}
-
-            <div className="space-y-3">
-              <Button
-                onClick={handleCheckVerification}
-                disabled={isChecking}
-                className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white"
-              >
-                {isChecking ? (
-                  <>
-                    <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
-                    Checking...
-                  </>
-                ) : (
-                  <>
-                    <CheckCircle className="h-4 w-4 mr-2" />
-                    I&apos;ve Verified My Email
-                  </>
-                )}
-              </Button>
-
-              <Button
-                onClick={handleResendEmail}
-                disabled={isResending}
-                variant="outline"
-                className="w-full border-amber-200 text-amber-700 hover:bg-amber-50"
-              >
-                {isResending ? (
-                  <>
-                    <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
-                    Sending...
-                  </>
-                ) : (
-                  <>
-                    <Mail className="h-4 w-4 mr-2" />
-                    Resend Verification Email
-                  </>
-                )}
-              </Button>
-
-              <Button
-                onClick={handleSignOut}
-                variant="ghost"
-                className="w-full text-amber-600 hover:bg-amber-50"
-              >
-                <LogOut className="h-4 w-4 mr-2" />
-                Sign Out
-              </Button>
-            </div>
-
-            <div className="text-center text-sm text-amber-600">
-              <p>Having trouble? Check your spam folder or contact support.</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+    <CascaAuth rotulo={FRASES_AUTH["confirm.rotulo"]} apoio={comDado("verify.apoio", { email: user.email ?? "" })}>
+      {resendSuccess && <LinhaDeAviso tipo="sucesso" motivo={FRASES_AUTH["confirm.enviado"]} />}
+      {f?.onde === "linha" && (
+        <LinhaDeAviso
+          motivo={f.texto}
+          tipo={f.tipo}
+          acao={f.tentar && falha?.tentar ? { rotulo: FRASES_AUTH["acao.tentar"], onPress: () => void falha.tentar?.() } : undefined}
+        />
+      )}
+      <div className="flex flex-col gap-espaco-lg">
+        <BotaoPrincipal type="button" onClick={handleCheckVerification} disabled={isChecking} carregando={isChecking}>
+          {isChecking ? FRASES_AUTH["verify.conferindo"] : FRASES_AUTH["verify.ja-confirmei"]}
+        </BotaoPrincipal>
+        <BotaoSecundario type="button" onClick={handleResendEmail} disabled={isResending} carregando={isResending}>
+          {isResending ? FRASES_AUTH["confirm.enviando"] : FRASES_AUTH["confirm.reenviar"]}
+        </BotaoSecundario>
+        <BotaoSecundario type="button" icone="sair" onClick={handleSignOut}>
+          {FRASES_AUTH["verify.sair"]}
+        </BotaoSecundario>
+      </div>
+      {/* como no confirm: o rodapé só no estado base (`AUTH-verify`) */}
+      {!isChecking && !isResending && !resendSuccess && !falha && <RodapeAuth texto={FRASES_AUTH["verify.ajuda"]} />}
+    </CascaAuth>
   )
-} 
+}

@@ -1,0 +1,20 @@
+# CN da regra do toast (I1-D26, div. 634): fixture fora da árvore, lista temporária
+     1	import { toast } from "sonner"
+     2	import { useToast } from "@/hooks/use-toast"
+     3	export function CnToast() {
+     4	  const { toast: t } = useToast()
+     5	  toast("x"); toast.error("y"); t({ title: "z" })
+     6	  const toaster = 1 // identificador: não é chamada
+     7	  return null
+     8	}
+$ G_TOK_ARQUIVOS=<scratch>/lista-toast.txt node scripts/gates-web/g-tok.mjs --so-arquivos
+## (ii) arquivos redesenhados — <scratch>/lista-toast.txt
+  ✗ <scratch>/toast-fixture.tsx:2 [toast] "useToast" — nenhum toast entra (I1-D26): a falha é a LinhaDeAviso
+  ✗ <scratch>/toast-fixture.tsx:4 [toast] "useToast" — nenhum toast entra (I1-D26): a falha é a LinhaDeAviso
+  ✗ <scratch>/toast-fixture.tsx:5 [toast] "toast(" — nenhum toast entra (I1-D26): a falha é a LinhaDeAviso
+  ✗ <scratch>/toast-fixture.tsx:5 [toast] "toast.error(" — nenhum toast entra (I1-D26): a falha é a LinhaDeAviso
+  arquivos: 1 · literais de identidade acusados: 0 · toasts: 4 · textos examinados: 0 · vocabulário: 109 · isenções: 9
+
+G-tok: REPROVA — 4 ocorrência(s)
+# exit: 1
+# nota: o alias do destructure (`t({…})`, linha 5) não é chamada de `toast` — o `useToast` da linha 4 já reprova; o `import { toast }` sozinho (linha 1) não é chamada; `toaster` (linha 6) é identificador

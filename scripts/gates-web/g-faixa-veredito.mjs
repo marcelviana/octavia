@@ -5,12 +5,20 @@
 // construção). Não abre navegador, não faz request. Recalcula a classificação
 // a partir dos nós crus (`g-faixa-classificar.mjs`) — não confia em resumo
 // gravado — e:
-//   REPROVA em (e) ou (b) nas larguras de C (1138) e B (711);
+//   REPROVA em (e) ou (b) nas três larguras, C (1138), B (711) e A (411) — errata da
+//   I1-D11 [Marcel, 2026-09-28]: "A só não quebra" = (e) = 0 e (b) = 0 em 411, rolagem
+//   horizontal da página incluída (a do (e) em 411 é a div. 677); a lista "inalcançáveis
+//   em A" (decisão 619) continua saindo, com 0 como critério;
 //   CONTA, sem reprovar: (d′), errata candidata (4 px contra a folha), as
-//   saídas nome-acessível e rolagem (N3-D29), e tudo o que a faixa A (411) der;
+//   saídas nome-acessível e rolagem (N3-D29), e o (d′) de 411;
 //   REPROVA também o JSON que não se sustenta: sem controle positivo do
 //   listener (div. 522), com escrita/produção no log de requests, sem a
 //   largura de referência (1138) para o (e), ou Chromium fora do fixado.
+//   I1-PR6: a resposta FABRICADA no navegador (`status: "fabricado …"`) não é
+//   escrita — não saiu; o estado DECLARADO inalcançável e o NÃO ALCANÇADO pela
+//   preparação são LISTADOS e contados à parte (não reprovam: o aceite os
+//   nomeia); a errata candidata e os nós SEM PAR com a folha (decisão 7) são
+//   LISTADOS por estado × largura.
 //
 // Uso (da raiz):  node scripts/gates-web/g-faixa-veredito.mjs [pasta]
 // Sai 0 se passa, 1 se reprova, 2 se o JSON não se lê.
@@ -58,6 +66,8 @@ const nomeDe = (n) => {
 
 let falhas = 0
 const falha = (m) => { console.log(`  ✗ ${m}`); falhas++ }
+const naoMedidos = []
+let erratas = 0, semParFolha = 0, semParApp = 0
 const LIMITE = 12 // ocorrências listadas por (tipo, largura); o resto só conta
 for (const f of arquivos) {
   let s
@@ -67,17 +77,20 @@ for (const f of arquivos) {
   for (const [L, c] of Object.entries(s.controlePositivo ?? {}))
     if (/AUSENTE/.test(`${c.controle1} ${c.controle2}`)) falha(`${L}: controle positivo do listener falhou (${c.controle1} · ${c.controle2})`)
   for (const [L, r] of Object.entries(s.requests ?? {})) {
-    const esc = (r.linhas ?? []).filter((l) => l.caminho.startsWith("/api/") && !["GET", "HEAD", "OPTIONS"].includes(l.metodo) && !l.caminho.startsWith("/api/auth/session"))
+    const esc = (r.linhas ?? []).filter((l) => l.caminho.startsWith("/api/") && !["GET", "HEAD", "OPTIONS"].includes(l.metodo) && !l.caminho.startsWith("/api/auth/session") && !String(l.status).startsWith("fabricado"))
     if (esc.length) falha(`${L}: escrita a /api/* no log: ${esc.map((l) => `${l.metodo} ${l.caminho}`).join(", ")}`)
     if (r.prodAbortados) console.log(`  · ${L}: ${r.prodAbortados} request(s) a octavia.rocks abortado(s) no navegador`)
   }
   for (const [id, estado] of Object.entries(s.estados)) {
     if (estado.pulado) { falha(`${id}: estado não medido — ${estado.pulado}`); continue }
+    if (estado.inalcancavel) { naoMedidos.push(`${s.superficie} · ${id}: INALCANÇÁVEL (declarado) — ${estado.inalcancavel}`); console.log(`  ${id}: inalcançável (declarado) — ${estado.inalcancavel}`); continue }
+    for (const [L, r] of Object.entries(estado.naoAlcancado ?? {})) { naoMedidos.push(`${s.superficie} · ${id} · ${L}: NÃO ALCANÇADO — ${r}`); console.log(`  ${id} · ${L}: não alcançado — ${r}`) }
+    if (Object.keys(estado.larguras ?? {}).length === 0) continue
     if (!estado.larguras[REFERENCIA]) falha(`${id}: sem a medição de ${REFERENCIA} (a referência do (e))`)
     const c = classificarEstado(estado)
     if (c["411"]) {
       const inalc = c["411"].e
-      console.log(`  inalcançáveis em A (411) — ${id}: ${inalc.length} (herança da I1-D11, decisão 619; não reprova)`)
+      console.log(`  inalcançáveis em A (411) — ${id}: ${inalc.length} (herança da I1-D11, decisão 619; reprova desde a div. 677)`)
       for (const o of inalc) {
         const n = estado.larguras[REFERENCIA]?.nos.find((x) => x.k === o.k)
         console.log(`    · ${o.tipo}${o.n ? ` (${o.n[0]} → ${o.n[1]} car.)` : ""}: ${nomeDe(n)}`)
@@ -85,21 +98,31 @@ for (const f of arquivos) {
     }
     for (const L of Object.keys(c).sort((a, b) => b - a)) {
       const r = c[L]
-      const cab = `${id} · ${L}${r.reprova ? "" : " (faixa A — contado à parte)"}`
-      console.log(`  ${cab}: (e)=${r.e.length} · (b)=${r.b.length} · (d′)=${r.dl.length} · errata candidata=${r.errata.length} · saídas: nome-acessível=${r.saidas.nomeAcessivel} rolagem=${r.saidas.rolagem}`)
+      const cab = `${id} · ${L}${L === "411" ? " (faixa A)" : ""}`
+      console.log(`  ${cab}: (e)=${r.e.length} · (b)=${r.b.length} · (d′)=${r.dl.length} · errata candidata=${r.errata.length} · sem par folha/app=${r.semPar.folha.length}/${r.semPar.app.length} · saídas: nome-acessível=${r.saidas.nomeAcessivel} rolagem=${r.saidas.rolagem}`)
+      // decisão 7: a errata candidata e os nós sem par com a folha, listados (nunca reprovam — decisão do Marcel)
+      if (r.reprova) { erratas += r.errata.length; semParFolha += r.semPar.folha.length; semParApp += r.semPar.app.length }
+      const nomeNo = (k) => { const n = estado.larguras[L]?.nos.find((x) => x.k === k); return n ? nomeDe(n) : k }
+      for (const o of r.errata) console.log(`    · errata candidata: ${nomeNo(o.k)} Δ[x,y,w,h]=${JSON.stringify(o.delta)}`)
+      for (const o of r.semPar.folha) console.log(`    · sem par na folha: ${o.rotulo !== undefined ? JSON.stringify(String(o.rotulo).slice(0, 60)) : o.k}`)
+      for (const o of r.semPar.app) console.log(`    · sem par no app: ${nomeNo(o.k)}`)
       const rotulo = (k) => {
         const n = estado.larguras[L]?.nos.find((x) => x.k === k) ?? estado.larguras[REFERENCIA]?.nos.find((x) => x.k === k)
         return n?.rotulo !== undefined ? ` "${n.rotulo.slice(0, 60)}"` : n ? ` <${n.tag} ${n.role}, ${n.n} car.>` : ""
       }
-      for (const [tipo, lista] of [["(e)", r.e], ["(b)", r.b]]) {
+      for (const [tipo, lista, reprova] of [["(e)", r.e, r.reprova], ["(b)", r.b, r.reprovaB]]) {
         lista.slice(0, LIMITE).forEach((o) => {
           const m = `${cab} ${tipo} ${o.tipo}: ${o.k}${rotulo(o.k)}`
-          if (r.reprova) falha(m); else console.log(`    · ${m}`)
+          if (reprova) falha(m); else console.log(`    · ${m}`)
         })
-        if (lista.length > LIMITE) { if (r.reprova) { falhas += lista.length - LIMITE; console.log(`  ✗ … e mais ${lista.length - LIMITE} ${tipo} em ${cab}`) } else console.log(`    · … e mais ${lista.length - LIMITE}`) }
+        if (lista.length > LIMITE) { if (reprova) { falhas += lista.length - LIMITE; console.log(`  ✗ … e mais ${lista.length - LIMITE} ${tipo} em ${cab}`) } else console.log(`    · … e mais ${lista.length - LIMITE}`) }
       }
     }
   }
+}
+if (naoMedidos.length || erratas || semParFolha || semParApp) {
+  console.log(`\n## contados à parte (não reprovam): errata candidata ${erratas} · sem par folha ${semParFolha} · sem par app ${semParApp} (C e B) · não medidos ${naoMedidos.length}`)
+  for (const m of naoMedidos) console.log(`  · ${m}`)
 }
 console.log(falhas ? `\nG-faixa: REPROVA — ${falhas} ocorrência(s)` : "\nG-faixa: PASSA")
 process.exit(falhas ? 1 : 0)

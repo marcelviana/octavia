@@ -1,0 +1,8 @@
+# commit 4 — C e B não se movem: a árvore do commit 4 medida pelo executor em 1138 e 711 (next dev na porta 3106; o .env.local do Marcel estava na árvore e o next o carregou — div. 678) × os JSON do aceite de 2026-09-28 (f87b639), estado a estado, nó a nó
+$ G_FAIXA_BASE_URL=http://localhost:3106 G_FAIXA_SUPERFICIES=login,signup,confirm-email,verify-email,forgot-password G_FAIXA_SAIDA=<scratch>/cb pnpm exec playwright test -c playwright.g-faixa.config.ts scripts/gates-web/g-faixa-medir.ts --project C-1138 --project B-711
+  10 passed (4.7m)
+$ node -e '…compara viewport, doc e nós de cada estado × largura medido nos dois…'
+estados×largura idênticos: 80
+login/AUTH-login-google-erro/1138: 16 × 16 nós, 4 diferentes   ← o item 5 do aval: o estado agora é o CANCELADO (antes, o bloqueado)
+login/AUTH-login-google-erro/711: 16 × 16 nós, 3 diferentes
+# os 80 = os 41 estados medidos × 2 larguras, menos o google-erro (mudado de propósito); AUTH-login-google-bloqueado é novo (sem par ontem)

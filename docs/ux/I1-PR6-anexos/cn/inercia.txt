@@ -1,0 +1,17 @@
+# CN de inércia do app/layout.tsx (decisão 4 do aval): a / (pública, sem sessão) medida pelo G-faixa em 1138
+# ANTES e DEPOIS dos dois imports (identidade.css, fontes.css) — o mesmo next dev da árvore, sem .env, porta 3106.
+# antes: árvore com o pacote e o tailwind.config já estendidos (nada disso alcança a /), layout intacto
+# depois: + os dois imports no layout
+$ G_FAIXA_BASE_URL=http://localhost:3106 G_FAIXA_SUPERFICIES=landing G_FAIXA_SAIDA=<scratch>/inercia-{antes,depois} pnpm exec playwright test -c playwright.g-faixa.config.ts scripts/gates-web/g-faixa-medir.ts --project C-1138
+G-faixa · landing · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · saídas: nome-acessível=0 rolagem=0   (as duas rodadas)
+$ node -e '…compara viewport, doc e nós da medição base/1138 dos dois JSON…'
+nós 50 50 iguais: true
+nós diferentes: 0
+# controle positivo (o layout mudou mesmo o CSS servido):
+$ curl -s http://localhost:3106/_next/static/css/app/layout.css | grep -o 'width > 960px\|--faixa-vao-auth: [0-9]*px' | sort | uniq -c
+   1 --faixa-vao-auth: 140px
+   2 --faixa-vao-auth: 48px
+   1 width > 960px
+$ curl -s -o /dev/null -w '%{http_code} %{content_type}' http://localhost:3106/fontes/Manrope_400Regular.ttf
+200 font/ttf
+# os dois JSON: cn/inercia/landing-{antes,depois}.json (pública: texto em claro, sem dado de usuário)

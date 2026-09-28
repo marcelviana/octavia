@@ -42,6 +42,49 @@ o instrumento não mede). O executor não faz login nem abre `.env*`; esta parte
 Os JSON **não** carregam texto de música: nas superfícies com sessão, o texto de cada nó vai só
 como hash (sha256, 12 hex) e comprimento (regra do `CLAUDE.md`, div. 204 do N2).
 
+## O aceite da I1-PR6 (auth) — Marcel, um comando
+
+As cinco telas de auth, **sem sessão e sem login**: o medidor alcança os estados com o **mecanismo (ii)** do aval
+(`scripts/gates-web/g-faixa-auth.ts`) — um usuário falso (`marcel@exemplo.com`, o dado de exemplo da folha) que o
+próprio navegador "entra" com respostas **fabricadas** do `identitytoolkit`/`securetoken`, e as do app que escreveriam
+(`POST /api/profile`) fabricadas também. **Nenhuma conta, nenhuma escrita**; você não digita nada. (Correção do commit 3,
+div. 672: nos estados do *Entrar com Google* o SDK lê de verdade o iframe de auth — `apis.google.com`,
+`<projeto>.firebaseapp.com`, `googleapis.com`, `identitytoolkit` — leituras, sem login.) Um contexto de navegador por estado.
+
+1. Na árvore `../octavia-i1-pr6` (branch `i1/pr6-auth`), com o seu `.env.local` copiado para lá (passo seu — o SDK do
+   Firebase só inicia configurado; sem ele, só os estados "sem Firebase" aparecem), suba **`pnpm dev`** num terminal
+   que fica aberto (porta 3000) e espere o `✓ Ready`.
+2. Em outro terminal, na mesma árvore:
+
+   ```bash
+   G_FAIXA_BASE_URL=http://localhost:3000 G_FAIXA_SUPERFICIES=login,signup,confirm-email,verify-email,forgot-password pnpm exec playwright test -c playwright.g-faixa.config.ts scripts/gates-web/g-faixa-medir.ts
+   ```
+
+3. Leva uns 5 min (três larguras × 46 estados). Grava `tests/gates-web/medicoes/{login,signup,confirm-email,
+   verify-email,forgot-password}.json` — um por tela — e imprime, por estado: medido, **NÃO ALCANÇADO** (com a razão:
+   a preparação falhou, ou o texto esperado não apareceu) ou **INALCANÇÁVEL (declarado)**. Os dois que só existem
+   **sem** Firebase (`AUTH-login-nao-configurado`, `AUTH-forgot-indisponivel`) saem NÃO ALCANÇADOS com o `.env` — é o
+   esperado; o executor os mede à parte, sem `.env`.
+4. Se algum dos 15 estados com usuário (`AUTH-confirm*`, `AUTH-verify*`) sair NÃO ALCANÇADO, a decisão 8 autoriza a
+   conta descartável (i) — decisão sua, na hora. Depois diga **"rodei"**.
+
+## O aceite em A da I1-PR6 (commit 4) — Marcel, dois comandos
+
+Mesmo `pnpm dev` com o `.env.local`, mesma árvore. A gravação agora **mescla por largura**: uma rodada só de `A-411`
+substitui só a faixa A dos cinco JSON e deixa C e B como estavam (cada largura guarda a sua rodada e o seu commit em
+`rodadas`). O `login` precisa das TRÊS larguras de novo: o item 5 do aval mudou o `AUTH-login-google-erro` (agora o
+*cancelado*) e criou o `AUTH-login-google-bloqueado`.
+
+```bash
+G_FAIXA_BASE_URL=http://localhost:3000 G_FAIXA_SUPERFICIES=login,signup,confirm-email,verify-email,forgot-password pnpm exec playwright test -c playwright.g-faixa.config.ts scripts/gates-web/g-faixa-medir.ts --project A-411
+```
+
+```bash
+G_FAIXA_BASE_URL=http://localhost:3000 G_FAIXA_SUPERFICIES=login pnpm exec playwright test -c playwright.g-faixa.config.ts scripts/gates-web/g-faixa-medir.ts --project C-1138 --project B-711
+```
+
+O `AUTH-login-google-erro` leva ~11 s (o SDK demora a desistir da janela fechada). Depois diga **"rodei"**.
+
 ## O resto
 
 | o quê | comando |

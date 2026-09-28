@@ -1,0 +1,2682 @@
+{
+ "superficie": "signup",
+ "rota": "/signup",
+ "folha": "1-auth",
+ "implementada": false,
+ "publica": true,
+ "rodada": "2026-09-27T21:17:52.161Z",
+ "base": "http://localhost:3106",
+ "chromium": "140.0.7339.16",
+ "commit": "98673edb47dbad29cd228d02639b8207e8247c1c+sujo",
+ "controlePositivo": {
+  "411": {
+   "controle1": "GET 200 falhou net::ERR_ABORTED",
+   "controle2": "GET 200 falhou net::ERR_ABORTED"
+  },
+  "711": {
+   "controle1": "GET 200 falhou net::ERR_ABORTED",
+   "controle2": "GET 200 falhou net::ERR_ABORTED"
+  },
+  "1138": {
+   "controle1": "GET 200 falhou net::ERR_ABORTED",
+   "controle2": "GET 200 falhou net::ERR_ABORTED"
+  }
+ },
+ "requests": {
+  "411": {
+   "linhas": [
+    {
+     "n": 1,
+     "ms": 102,
+     "metodo": "GET",
+     "caminho": "/signup",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 2,
+     "ms": 183,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 3,
+     "ms": 184,
+     "metodo": "GET",
+     "caminho": "/_next/image",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 4,
+     "ms": 192,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 5,
+     "ms": 194,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 6,
+     "ms": 197,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 7,
+     "ms": 198,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 8,
+     "ms": 200,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/signup/page.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 9,
+     "ms": 215,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-1",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 10,
+     "ms": 240,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-2",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 11,
+     "ms": 247,
+     "metodo": "GET",
+     "caminho": "/signup",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 12,
+     "ms": 307,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 13,
+     "ms": 309,
+     "metodo": "GET",
+     "caminho": "/_next/image",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 14,
+     "ms": 316,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 15,
+     "ms": 318,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 16,
+     "ms": 320,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 17,
+     "ms": 321,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 18,
+     "ms": 322,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/signup/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 19,
+     "ms": 1756,
+     "metodo": "GET",
+     "caminho": "/signup",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 20,
+     "ms": 1826,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 21,
+     "ms": 1829,
+     "metodo": "GET",
+     "caminho": "/_next/image",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 22,
+     "ms": 1834,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 23,
+     "ms": 1837,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 24,
+     "ms": 1838,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 25,
+     "ms": 1838,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 26,
+     "ms": 1839,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/signup/page.js",
+     "status": "200",
+     "fim": "fim"
+    }
+   ],
+   "outrosHosts": {},
+   "prodAbortados": 0
+  },
+  "711": {
+   "linhas": [
+    {
+     "n": 1,
+     "ms": 52,
+     "metodo": "GET",
+     "caminho": "/signup",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 2,
+     "ms": 144,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 3,
+     "ms": 145,
+     "metodo": "GET",
+     "caminho": "/_next/image",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 4,
+     "ms": 150,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 5,
+     "ms": 154,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 6,
+     "ms": 157,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 7,
+     "ms": 161,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 8,
+     "ms": 162,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/signup/page.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 9,
+     "ms": 178,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-1",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 10,
+     "ms": 204,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-2",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 11,
+     "ms": 206,
+     "metodo": "GET",
+     "caminho": "/signup",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 12,
+     "ms": 279,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 13,
+     "ms": 281,
+     "metodo": "GET",
+     "caminho": "/_next/image",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 14,
+     "ms": 286,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 15,
+     "ms": 289,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 16,
+     "ms": 290,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 17,
+     "ms": 291,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 18,
+     "ms": 292,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/signup/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 19,
+     "ms": 1710,
+     "metodo": "GET",
+     "caminho": "/signup",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 20,
+     "ms": 1785,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 21,
+     "ms": 1788,
+     "metodo": "GET",
+     "caminho": "/_next/image",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 22,
+     "ms": 1792,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 23,
+     "ms": 1796,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 24,
+     "ms": 1797,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 25,
+     "ms": 1797,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 26,
+     "ms": 1799,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/signup/page.js",
+     "status": "200",
+     "fim": "fim"
+    }
+   ],
+   "outrosHosts": {},
+   "prodAbortados": 0
+  },
+  "1138": {
+   "linhas": [
+    {
+     "n": 1,
+     "ms": 216,
+     "metodo": "GET",
+     "caminho": "/signup",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 2,
+     "ms": 378,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 3,
+     "ms": 380,
+     "metodo": "GET",
+     "caminho": "/_next/image",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 4,
+     "ms": 1249,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 5,
+     "ms": 1256,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 6,
+     "ms": 1257,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 7,
+     "ms": 1259,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 8,
+     "ms": 1262,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/signup/page.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 9,
+     "ms": 1335,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-1",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 10,
+     "ms": 1390,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-2",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 11,
+     "ms": 1404,
+     "metodo": "GET",
+     "caminho": "/signup",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 12,
+     "ms": 1507,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 13,
+     "ms": 1511,
+     "metodo": "GET",
+     "caminho": "/_next/image",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 14,
+     "ms": 1516,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 15,
+     "ms": 1519,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 16,
+     "ms": 1520,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 17,
+     "ms": 1521,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 18,
+     "ms": 1522,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/signup/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 19,
+     "ms": 2913,
+     "metodo": "GET",
+     "caminho": "/signup",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 20,
+     "ms": 2995,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 21,
+     "ms": 2998,
+     "metodo": "GET",
+     "caminho": "/_next/image",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 22,
+     "ms": 3003,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 23,
+     "ms": 3005,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 24,
+     "ms": 3006,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 25,
+     "ms": 3007,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 26,
+     "ms": 3009,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/signup/page.js",
+     "status": "200",
+     "fim": "fim"
+    }
+   ],
+   "outrosHosts": {},
+   "prodAbortados": 0
+  }
+ },
+ "estados": {
+  "base": {
+   "larguras": {
+    "411": {
+     "url": "/signup",
+     "viewport": {
+      "w": 411,
+      "h": 823
+     },
+     "doc": {
+      "scrollWidth": 411,
+      "clientWidth": 411
+     },
+     "nos": [
+      {
+       "k": "heading:bbece91e0e93#1",
+       "role": "heading",
+       "tag": "h1",
+       "testid": null,
+       "h_texto": "bbece91e0e93",
+       "h_nome": null,
+       "n": 12,
+       "rotulo": "Join Octavia",
+       "x": 24,
+       "y": 168,
+       "w": 363,
+       "h": 36,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:f1509a3a350a#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "f1509a3a350a",
+       "h_nome": null,
+       "n": 34,
+       "rotulo": "Create your account to get started",
+       "x": 24,
+       "y": 212,
+       "w": 363,
+       "h": 24,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:47de23586e49#1",
+       "role": "texto",
+       "tag": "div",
+       "testid": null,
+       "h_texto": "47de23586e49",
+       "h_nome": null,
+       "n": 7,
+       "rotulo": "Sign Up",
+       "x": 77,
+       "y": 285,
+       "w": 72,
+       "h": 28,
+       "sr": false,
+       "clip": {
+        "x": 25,
+        "y": 261,
+        "w": 361,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:5be5a65c9b15#1",
+       "role": "texto",
+       "tag": "div",
+       "testid": null,
+       "h_texto": "5be5a65c9b15",
+       "h_nome": null,
+       "n": 43,
+       "rotulo": "Fill in your details to create your account",
+       "x": 49,
+       "y": 327,
+       "w": 313,
+       "h": 20,
+       "sr": false,
+       "clip": {
+        "x": 25,
+        "y": 261,
+        "w": 361,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "label:96ce6e6193a0#1",
+       "role": "label",
+       "tag": "label",
+       "testid": null,
+       "h_texto": "96ce6e6193a0",
+       "h_nome": null,
+       "n": 10,
+       "rotulo": "First Name",
+       "x": 49,
+       "y": 363,
+       "w": 68.5,
+       "h": 16,
+       "sr": false,
+       "clip": {
+        "x": 25,
+        "y": 261,
+        "w": 361,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "textbox:a8cfcd748320#1",
+       "role": "textbox",
+       "tag": "input",
+       "testid": null,
+       "h_texto": "a8cfcd748320",
+       "h_nome": null,
+       "n": 4,
+       "rotulo": "John",
+       "x": 49,
+       "y": 391,
+       "w": 148.5,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 25,
+        "y": 261,
+        "w": 361,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "label:f55563b386a3#1",
+       "role": "label",
+       "tag": "label",
+       "testid": null,
+       "h_texto": "f55563b386a3",
+       "h_nome": null,
+       "n": 9,
+       "rotulo": "Last Name",
+       "x": 213.5,
+       "y": 363,
+       "w": 67.7,
+       "h": 16,
+       "sr": false,
+       "clip": {
+        "x": 25,
+        "y": 261,
+        "w": 361,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "textbox:fd53ef835b15#1",
+       "role": "textbox",
+       "tag": "input",
+       "testid": null,
+       "h_texto": "fd53ef835b15",
+       "h_nome": null,
+       "n": 3,
+       "rotulo": "Doe",
+       "x": 213.5,
+       "y": 391,
+       "w": 148.5,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 25,
+        "y": 261,
+        "w": 361,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "label:969ccbd3cf63#1",
+       "role": "label",
+       "tag": "label",
+       "testid": null,
+       "h_texto": "969ccbd3cf63",
+       "h_nome": null,
+       "n": 5,
+       "rotulo": "Email",
+       "x": 49,
+       "y": 451,
+       "w": 35,
+       "h": 16,
+       "sr": false,
+       "clip": {
+        "x": 25,
+        "y": 261,
+        "w": 361,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "textbox:52bf11c1afe0#1",
+       "role": "textbox",
+       "tag": "input",
+       "testid": null,
+       "h_texto": "52bf11c1afe0",
+       "h_nome": null,
+       "n": 22,
+       "rotulo": "your.email@example.com",
+       "x": 49,
+       "y": 479,
+       "w": 313,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 25,
+        "y": 261,
+        "w": 361,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "label:0e18831966af#1",
+       "role": "label",
+       "tag": "label",
+       "testid": null,
+       "h_texto": "0e18831966af",
+       "h_nome": null,
+       "n": 18,
+       "rotulo": "Primary Instrument",
+       "x": 49,
+       "y": 539,
+       "w": 118.3,
+       "h": 16,
+       "sr": false,
+       "clip": {
+        "x": 25,
+        "y": 261,
+        "w": 361,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "combobox:eb0d86079a0f#1",
+       "role": "combobox",
+       "tag": "button",
+       "testid": null,
+       "h_texto": "eb0d86079a0f",
+       "h_nome": null,
+       "n": 30,
+       "rotulo": "Select your primary instrument",
+       "x": 49,
+       "y": 567,
+       "w": 313,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 25,
+        "y": 261,
+        "w": 361,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "combobox:5777d483a3bb#1",
+       "role": "combobox",
+       "tag": "select",
+       "testid": null,
+       "h_texto": "5777d483a3bb",
+       "h_nome": null,
+       "n": 43,
+       "rotulo": "Guitar Piano Violin Drums Vocals Bass Other",
+       "x": 48,
+       "y": 606,
+       "w": 1,
+       "h": 1,
+       "sr": true,
+       "clip": {
+        "x": 25,
+        "y": 261,
+        "w": 361,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "label:e7cf3ef4f17c#1",
+       "role": "label",
+       "tag": "label",
+       "testid": null,
+       "h_texto": "e7cf3ef4f17c",
+       "h_nome": null,
+       "n": 8,
+       "rotulo": "Password",
+       "x": 49,
+       "y": 627,
+       "w": 61.5,
+       "h": 16,
+       "sr": false,
+       "clip": {
+        "x": 25,
+        "y": 261,
+        "w": 361,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "textbox:∅#1",
+       "role": "textbox",
+       "tag": "input",
+       "testid": null,
+       "h_texto": null,
+       "h_nome": null,
+       "n": 0,
+       "rotulo": "",
+       "x": 49,
+       "y": 655,
+       "w": 313,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 25,
+        "y": 261,
+        "w": 361,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:2005290ddda9#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "2005290ddda9",
+       "h_nome": null,
+       "n": 38,
+       "rotulo": "Password must be at least 6 characters",
+       "x": 49,
+       "y": 703,
+       "w": 313,
+       "h": 16,
+       "sr": false,
+       "clip": {
+        "x": 25,
+        "y": 261,
+        "w": 361,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "label:c292210c4416#1",
+       "role": "label",
+       "tag": "label",
+       "testid": null,
+       "h_texto": "c292210c4416",
+       "h_nome": null,
+       "n": 16,
+       "rotulo": "Confirm Password",
+       "x": 49,
+       "y": 739,
+       "w": 114.4,
+       "h": 16,
+       "sr": false,
+       "clip": {
+        "x": 25,
+        "y": 261,
+        "w": 361,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "textbox:∅#2",
+       "role": "textbox",
+       "tag": "input",
+       "testid": null,
+       "h_texto": null,
+       "h_nome": null,
+       "n": 0,
+       "rotulo": "",
+       "x": 49,
+       "y": 767,
+       "w": 313,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 25,
+        "y": 261,
+        "w": 361,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "button:0dffe234b447#1",
+       "role": "button",
+       "tag": "button",
+       "testid": null,
+       "h_texto": "0dffe234b447",
+       "h_nome": null,
+       "n": 14,
+       "rotulo": "Create Account",
+       "x": 49,
+       "y": 823,
+       "w": 313,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 25,
+        "y": 261,
+        "w": 361,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:3e3806ff1730#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "3e3806ff1730",
+       "h_nome": null,
+       "n": 13,
+       "rotulo": "Back to login",
+       "x": 155.4,
+       "y": 879,
+       "w": 100.2,
+       "h": 20,
+       "sr": false,
+       "clip": {
+        "x": 25,
+        "y": 261,
+        "w": 361,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:e5331fd63f37#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "e5331fd63f37",
+       "h_nome": null,
+       "n": 42,
+       "rotulo": "© 2025 Octavia Music. All rights reserved.",
+       "x": 24,
+       "y": 953,
+       "w": 363,
+       "h": 20,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:fca0c0beacd0#1",
+       "role": "texto",
+       "tag": "section",
+       "testid": null,
+       "h_texto": null,
+       "h_nome": "fca0c0beacd0",
+       "n": 0,
+       "rotulo": "Notifications alt+T",
+       "x": 0,
+       "y": 997,
+       "w": 411,
+       "h": 0,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      }
+     ]
+    },
+    "711": {
+     "url": "/signup",
+     "viewport": {
+      "w": 711,
+      "h": 1138
+     },
+     "doc": {
+      "scrollWidth": 711,
+      "clientWidth": 711
+     },
+     "nos": [
+      {
+       "k": "heading:bbece91e0e93#1",
+       "role": "heading",
+       "tag": "h1",
+       "testid": null,
+       "h_texto": "bbece91e0e93",
+       "h_nome": null,
+       "n": 12,
+       "rotulo": "Join Octavia",
+       "x": 131.5,
+       "y": 238.5,
+       "w": 448,
+       "h": 36,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:f1509a3a350a#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "f1509a3a350a",
+       "h_nome": null,
+       "n": 34,
+       "rotulo": "Create your account to get started",
+       "x": 131.5,
+       "y": 282.5,
+       "w": 448,
+       "h": 24,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:47de23586e49#1",
+       "role": "texto",
+       "tag": "div",
+       "testid": null,
+       "h_texto": "47de23586e49",
+       "h_nome": null,
+       "n": 7,
+       "rotulo": "Sign Up",
+       "x": 184.5,
+       "y": 355.5,
+       "w": 72,
+       "h": 28,
+       "sr": false,
+       "clip": {
+        "x": 132.5,
+        "y": 331.5,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:5be5a65c9b15#1",
+       "role": "texto",
+       "tag": "div",
+       "testid": null,
+       "h_texto": "5be5a65c9b15",
+       "h_nome": null,
+       "n": 43,
+       "rotulo": "Fill in your details to create your account",
+       "x": 156.5,
+       "y": 397.5,
+       "w": 398,
+       "h": 20,
+       "sr": false,
+       "clip": {
+        "x": 132.5,
+        "y": 331.5,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "label:96ce6e6193a0#1",
+       "role": "label",
+       "tag": "label",
+       "testid": null,
+       "h_texto": "96ce6e6193a0",
+       "h_nome": null,
+       "n": 10,
+       "rotulo": "First Name",
+       "x": 156.5,
+       "y": 433.5,
+       "w": 68.5,
+       "h": 16,
+       "sr": false,
+       "clip": {
+        "x": 132.5,
+        "y": 331.5,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "textbox:a8cfcd748320#1",
+       "role": "textbox",
+       "tag": "input",
+       "testid": null,
+       "h_texto": "a8cfcd748320",
+       "h_nome": null,
+       "n": 4,
+       "rotulo": "John",
+       "x": 156.5,
+       "y": 461.5,
+       "w": 191,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 132.5,
+        "y": 331.5,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "label:f55563b386a3#1",
+       "role": "label",
+       "tag": "label",
+       "testid": null,
+       "h_texto": "f55563b386a3",
+       "h_nome": null,
+       "n": 9,
+       "rotulo": "Last Name",
+       "x": 363.5,
+       "y": 433.5,
+       "w": 67.7,
+       "h": 16,
+       "sr": false,
+       "clip": {
+        "x": 132.5,
+        "y": 331.5,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "textbox:fd53ef835b15#1",
+       "role": "textbox",
+       "tag": "input",
+       "testid": null,
+       "h_texto": "fd53ef835b15",
+       "h_nome": null,
+       "n": 3,
+       "rotulo": "Doe",
+       "x": 363.5,
+       "y": 461.5,
+       "w": 191,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 132.5,
+        "y": 331.5,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "label:969ccbd3cf63#1",
+       "role": "label",
+       "tag": "label",
+       "testid": null,
+       "h_texto": "969ccbd3cf63",
+       "h_nome": null,
+       "n": 5,
+       "rotulo": "Email",
+       "x": 156.5,
+       "y": 521.5,
+       "w": 35,
+       "h": 16,
+       "sr": false,
+       "clip": {
+        "x": 132.5,
+        "y": 331.5,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "textbox:52bf11c1afe0#1",
+       "role": "textbox",
+       "tag": "input",
+       "testid": null,
+       "h_texto": "52bf11c1afe0",
+       "h_nome": null,
+       "n": 22,
+       "rotulo": "your.email@example.com",
+       "x": 156.5,
+       "y": 549.5,
+       "w": 398,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 132.5,
+        "y": 331.5,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "label:0e18831966af#1",
+       "role": "label",
+       "tag": "label",
+       "testid": null,
+       "h_texto": "0e18831966af",
+       "h_nome": null,
+       "n": 18,
+       "rotulo": "Primary Instrument",
+       "x": 156.5,
+       "y": 609.5,
+       "w": 118.3,
+       "h": 16,
+       "sr": false,
+       "clip": {
+        "x": 132.5,
+        "y": 331.5,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "combobox:eb0d86079a0f#1",
+       "role": "combobox",
+       "tag": "button",
+       "testid": null,
+       "h_texto": "eb0d86079a0f",
+       "h_nome": null,
+       "n": 30,
+       "rotulo": "Select your primary instrument",
+       "x": 156.5,
+       "y": 637.5,
+       "w": 398,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 132.5,
+        "y": 331.5,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "combobox:5777d483a3bb#1",
+       "role": "combobox",
+       "tag": "select",
+       "testid": null,
+       "h_texto": "5777d483a3bb",
+       "h_nome": null,
+       "n": 43,
+       "rotulo": "Guitar Piano Violin Drums Vocals Bass Other",
+       "x": 155.5,
+       "y": 676.5,
+       "w": 1,
+       "h": 1,
+       "sr": true,
+       "clip": {
+        "x": 132.5,
+        "y": 331.5,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "label:e7cf3ef4f17c#1",
+       "role": "label",
+       "tag": "label",
+       "testid": null,
+       "h_texto": "e7cf3ef4f17c",
+       "h_nome": null,
+       "n": 8,
+       "rotulo": "Password",
+       "x": 156.5,
+       "y": 697.5,
+       "w": 61.5,
+       "h": 16,
+       "sr": false,
+       "clip": {
+        "x": 132.5,
+        "y": 331.5,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "textbox:∅#1",
+       "role": "textbox",
+       "tag": "input",
+       "testid": null,
+       "h_texto": null,
+       "h_nome": null,
+       "n": 0,
+       "rotulo": "",
+       "x": 156.5,
+       "y": 725.5,
+       "w": 398,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 132.5,
+        "y": 331.5,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:2005290ddda9#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "2005290ddda9",
+       "h_nome": null,
+       "n": 38,
+       "rotulo": "Password must be at least 6 characters",
+       "x": 156.5,
+       "y": 773.5,
+       "w": 398,
+       "h": 16,
+       "sr": false,
+       "clip": {
+        "x": 132.5,
+        "y": 331.5,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "label:c292210c4416#1",
+       "role": "label",
+       "tag": "label",
+       "testid": null,
+       "h_texto": "c292210c4416",
+       "h_nome": null,
+       "n": 16,
+       "rotulo": "Confirm Password",
+       "x": 156.5,
+       "y": 809.5,
+       "w": 114.4,
+       "h": 16,
+       "sr": false,
+       "clip": {
+        "x": 132.5,
+        "y": 331.5,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "textbox:∅#2",
+       "role": "textbox",
+       "tag": "input",
+       "testid": null,
+       "h_texto": null,
+       "h_nome": null,
+       "n": 0,
+       "rotulo": "",
+       "x": 156.5,
+       "y": 837.5,
+       "w": 398,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 132.5,
+        "y": 331.5,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "button:0dffe234b447#1",
+       "role": "button",
+       "tag": "button",
+       "testid": null,
+       "h_texto": "0dffe234b447",
+       "h_nome": null,
+       "n": 14,
+       "rotulo": "Create Account",
+       "x": 156.5,
+       "y": 893.5,
+       "w": 398,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 132.5,
+        "y": 331.5,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:3e3806ff1730#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "3e3806ff1730",
+       "h_nome": null,
+       "n": 13,
+       "rotulo": "Back to login",
+       "x": 305.4,
+       "y": 949.5,
+       "w": 100.2,
+       "h": 20,
+       "sr": false,
+       "clip": {
+        "x": 132.5,
+        "y": 331.5,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:e5331fd63f37#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "e5331fd63f37",
+       "h_nome": null,
+       "n": 42,
+       "rotulo": "© 2025 Octavia Music. All rights reserved.",
+       "x": 131.5,
+       "y": 1023.5,
+       "w": 448,
+       "h": 20,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:fca0c0beacd0#1",
+       "role": "texto",
+       "tag": "section",
+       "testid": null,
+       "h_texto": null,
+       "h_nome": "fca0c0beacd0",
+       "n": 0,
+       "rotulo": "Notifications alt+T",
+       "x": 0,
+       "y": 1138,
+       "w": 711,
+       "h": 0,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      }
+     ]
+    },
+    "1138": {
+     "url": "/signup",
+     "viewport": {
+      "w": 1138,
+      "h": 711
+     },
+     "doc": {
+      "scrollWidth": 1138,
+      "clientWidth": 1138
+     },
+     "nos": [
+      {
+       "k": "heading:bbece91e0e93#1",
+       "role": "heading",
+       "tag": "h1",
+       "testid": null,
+       "h_texto": "bbece91e0e93",
+       "h_nome": null,
+       "n": 12,
+       "rotulo": "Join Octavia",
+       "x": 84.5,
+       "y": 192,
+       "w": 448,
+       "h": 36,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:f1509a3a350a#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "f1509a3a350a",
+       "h_nome": null,
+       "n": 34,
+       "rotulo": "Create your account to get started",
+       "x": 84.5,
+       "y": 236,
+       "w": 448,
+       "h": 24,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:47de23586e49#1",
+       "role": "texto",
+       "tag": "div",
+       "testid": null,
+       "h_texto": "47de23586e49",
+       "h_nome": null,
+       "n": 7,
+       "rotulo": "Sign Up",
+       "x": 137.5,
+       "y": 309,
+       "w": 72,
+       "h": 28,
+       "sr": false,
+       "clip": {
+        "x": 85.5,
+        "y": 285,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:5be5a65c9b15#1",
+       "role": "texto",
+       "tag": "div",
+       "testid": null,
+       "h_texto": "5be5a65c9b15",
+       "h_nome": null,
+       "n": 43,
+       "rotulo": "Fill in your details to create your account",
+       "x": 109.5,
+       "y": 351,
+       "w": 398,
+       "h": 20,
+       "sr": false,
+       "clip": {
+        "x": 85.5,
+        "y": 285,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "label:96ce6e6193a0#1",
+       "role": "label",
+       "tag": "label",
+       "testid": null,
+       "h_texto": "96ce6e6193a0",
+       "h_nome": null,
+       "n": 10,
+       "rotulo": "First Name",
+       "x": 109.5,
+       "y": 387,
+       "w": 68.5,
+       "h": 16,
+       "sr": false,
+       "clip": {
+        "x": 85.5,
+        "y": 285,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "textbox:a8cfcd748320#1",
+       "role": "textbox",
+       "tag": "input",
+       "testid": null,
+       "h_texto": "a8cfcd748320",
+       "h_nome": null,
+       "n": 4,
+       "rotulo": "John",
+       "x": 109.5,
+       "y": 415,
+       "w": 191,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 85.5,
+        "y": 285,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "label:f55563b386a3#1",
+       "role": "label",
+       "tag": "label",
+       "testid": null,
+       "h_texto": "f55563b386a3",
+       "h_nome": null,
+       "n": 9,
+       "rotulo": "Last Name",
+       "x": 316.5,
+       "y": 387,
+       "w": 67.7,
+       "h": 16,
+       "sr": false,
+       "clip": {
+        "x": 85.5,
+        "y": 285,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "textbox:fd53ef835b15#1",
+       "role": "textbox",
+       "tag": "input",
+       "testid": null,
+       "h_texto": "fd53ef835b15",
+       "h_nome": null,
+       "n": 3,
+       "rotulo": "Doe",
+       "x": 316.5,
+       "y": 415,
+       "w": 191,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 85.5,
+        "y": 285,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "label:969ccbd3cf63#1",
+       "role": "label",
+       "tag": "label",
+       "testid": null,
+       "h_texto": "969ccbd3cf63",
+       "h_nome": null,
+       "n": 5,
+       "rotulo": "Email",
+       "x": 109.5,
+       "y": 475,
+       "w": 35,
+       "h": 16,
+       "sr": false,
+       "clip": {
+        "x": 85.5,
+        "y": 285,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "textbox:52bf11c1afe0#1",
+       "role": "textbox",
+       "tag": "input",
+       "testid": null,
+       "h_texto": "52bf11c1afe0",
+       "h_nome": null,
+       "n": 22,
+       "rotulo": "your.email@example.com",
+       "x": 109.5,
+       "y": 503,
+       "w": 398,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 85.5,
+        "y": 285,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "label:0e18831966af#1",
+       "role": "label",
+       "tag": "label",
+       "testid": null,
+       "h_texto": "0e18831966af",
+       "h_nome": null,
+       "n": 18,
+       "rotulo": "Primary Instrument",
+       "x": 109.5,
+       "y": 563,
+       "w": 118.3,
+       "h": 16,
+       "sr": false,
+       "clip": {
+        "x": 85.5,
+        "y": 285,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "combobox:eb0d86079a0f#1",
+       "role": "combobox",
+       "tag": "button",
+       "testid": null,
+       "h_texto": "eb0d86079a0f",
+       "h_nome": null,
+       "n": 30,
+       "rotulo": "Select your primary instrument",
+       "x": 109.5,
+       "y": 591,
+       "w": 398,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 85.5,
+        "y": 285,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "combobox:5777d483a3bb#1",
+       "role": "combobox",
+       "tag": "select",
+       "testid": null,
+       "h_texto": "5777d483a3bb",
+       "h_nome": null,
+       "n": 43,
+       "rotulo": "Guitar Piano Violin Drums Vocals Bass Other",
+       "x": 108.5,
+       "y": 630,
+       "w": 1,
+       "h": 1,
+       "sr": true,
+       "clip": {
+        "x": 85.5,
+        "y": 285,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "label:e7cf3ef4f17c#1",
+       "role": "label",
+       "tag": "label",
+       "testid": null,
+       "h_texto": "e7cf3ef4f17c",
+       "h_nome": null,
+       "n": 8,
+       "rotulo": "Password",
+       "x": 109.5,
+       "y": 651,
+       "w": 61.5,
+       "h": 16,
+       "sr": false,
+       "clip": {
+        "x": 85.5,
+        "y": 285,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "textbox:∅#1",
+       "role": "textbox",
+       "tag": "input",
+       "testid": null,
+       "h_texto": null,
+       "h_nome": null,
+       "n": 0,
+       "rotulo": "",
+       "x": 109.5,
+       "y": 679,
+       "w": 398,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 85.5,
+        "y": 285,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:2005290ddda9#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "2005290ddda9",
+       "h_nome": null,
+       "n": 38,
+       "rotulo": "Password must be at least 6 characters",
+       "x": 109.5,
+       "y": 727,
+       "w": 398,
+       "h": 16,
+       "sr": false,
+       "clip": {
+        "x": 85.5,
+        "y": 285,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "label:c292210c4416#1",
+       "role": "label",
+       "tag": "label",
+       "testid": null,
+       "h_texto": "c292210c4416",
+       "h_nome": null,
+       "n": 16,
+       "rotulo": "Confirm Password",
+       "x": 109.5,
+       "y": 763,
+       "w": 114.4,
+       "h": 16,
+       "sr": false,
+       "clip": {
+        "x": 85.5,
+        "y": 285,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "textbox:∅#2",
+       "role": "textbox",
+       "tag": "input",
+       "testid": null,
+       "h_texto": null,
+       "h_nome": null,
+       "n": 0,
+       "rotulo": "",
+       "x": 109.5,
+       "y": 791,
+       "w": 398,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 85.5,
+        "y": 285,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "button:0dffe234b447#1",
+       "role": "button",
+       "tag": "button",
+       "testid": null,
+       "h_texto": "0dffe234b447",
+       "h_nome": null,
+       "n": 14,
+       "rotulo": "Create Account",
+       "x": 109.5,
+       "y": 847,
+       "w": 398,
+       "h": 40,
+       "sr": false,
+       "clip": {
+        "x": 85.5,
+        "y": 285,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:3e3806ff1730#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "3e3806ff1730",
+       "h_nome": null,
+       "n": 13,
+       "rotulo": "Back to login",
+       "x": 258.4,
+       "y": 903,
+       "w": 100.2,
+       "h": 20,
+       "sr": false,
+       "clip": {
+        "x": 85.5,
+        "y": 285,
+        "w": 446,
+        "h": 667,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:e5331fd63f37#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "e5331fd63f37",
+       "h_nome": null,
+       "n": 42,
+       "rotulo": "© 2025 Octavia Music. All rights reserved.",
+       "x": 84.5,
+       "y": 977,
+       "w": 448,
+       "h": 20,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:f3b7ff1a9e96#1",
+       "role": "heading",
+       "tag": "h2",
+       "testid": null,
+       "h_texto": "f3b7ff1a9e96",
+       "h_nome": null,
+       "n": 26,
+       "rotulo": "Start Your Musical Journey",
+       "x": 665,
+       "y": 311.5,
+       "w": 425,
+       "h": 90,
+       "sr": false,
+       "clip": {
+        "x": 617,
+        "y": 0,
+        "w": 521,
+        "h": 1045,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:097e342a064b#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "097e342a064b",
+       "h_nome": null,
+       "n": 116,
+       "rotulo": "Join thousands of musicians who trust Octavia to organize their musical content and enhance their practice sessions.",
+       "x": 665,
+       "y": 425.5,
+       "w": 425,
+       "h": 84,
+       "sr": false,
+       "clip": {
+        "x": 617,
+        "y": 0,
+        "w": 521,
+        "h": 1045,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:0aa6366ea4aa#1",
+       "role": "heading",
+       "tag": "h3",
+       "testid": null,
+       "h_texto": "0aa6366ea4aa",
+       "h_nome": null,
+       "n": 12,
+       "rotulo": "Upload Music",
+       "x": 745.5,
+       "y": 557.5,
+       "w": 108,
+       "h": 24,
+       "sr": false,
+       "clip": {
+        "x": 617,
+        "y": 0,
+        "w": 521,
+        "h": 1045,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:fb9c57bf52dd#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "fb9c57bf52dd",
+       "h_nome": null,
+       "n": 18,
+       "rotulo": "PDF, images & more",
+       "x": 745.5,
+       "y": 581.5,
+       "w": 108,
+       "h": 32,
+       "sr": false,
+       "clip": {
+        "x": 617,
+        "y": 0,
+        "w": 521,
+        "h": 1045,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:29cc2fca75eb#1",
+       "role": "heading",
+       "tag": "h3",
+       "testid": null,
+       "h_texto": "29cc2fca75eb",
+       "h_nome": null,
+       "n": 8,
+       "rotulo": "Organize",
+       "x": 953.5,
+       "y": 557.5,
+       "w": 108,
+       "h": 24,
+       "sr": false,
+       "clip": {
+        "x": 617,
+        "y": 0,
+        "w": 521,
+        "h": 1045,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:c32793cc6ea3#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "c32793cc6ea3",
+       "h_nome": null,
+       "n": 20,
+       "rotulo": "Smart categorization",
+       "x": 953.5,
+       "y": 581.5,
+       "w": 108,
+       "h": 32,
+       "sr": false,
+       "clip": {
+        "x": 617,
+        "y": 0,
+        "w": 521,
+        "h": 1045,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:6adb770a21ae#1",
+       "role": "heading",
+       "tag": "h3",
+       "testid": null,
+       "h_texto": "6adb770a21ae",
+       "h_nome": null,
+       "n": 7,
+       "rotulo": "Perform",
+       "x": 745.5,
+       "y": 661.5,
+       "w": 108,
+       "h": 24,
+       "sr": false,
+       "clip": {
+        "x": 617,
+        "y": 0,
+        "w": 521,
+        "h": 1045,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:d6a814850e48#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "d6a814850e48",
+       "h_nome": null,
+       "n": 21,
+       "rotulo": "Distraction-free mode",
+       "x": 745.5,
+       "y": 685.5,
+       "w": 108,
+       "h": 32,
+       "sr": false,
+       "clip": {
+        "x": 617,
+        "y": 0,
+        "w": 521,
+        "h": 1045,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:ec5ba0abb717#1",
+       "role": "heading",
+       "tag": "h3",
+       "testid": null,
+       "h_texto": "ec5ba0abb717",
+       "h_nome": null,
+       "n": 6,
+       "rotulo": "Access",
+       "x": 953.5,
+       "y": 661.5,
+       "w": 108,
+       "h": 24,
+       "sr": false,
+       "clip": {
+        "x": 617,
+        "y": 0,
+        "w": 521,
+        "h": 1045,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:11b584869d17#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "11b584869d17",
+       "h_nome": null,
+       "n": 20,
+       "rotulo": "Any device, anywhere",
+       "x": 953.5,
+       "y": 685.5,
+       "w": 108,
+       "h": 32,
+       "sr": false,
+       "clip": {
+        "x": 617,
+        "y": 0,
+        "w": 521,
+        "h": 1045,
+        "rolagem": false,
+        "painel": false
+       },
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:fca0c0beacd0#1",
+       "role": "texto",
+       "tag": "section",
+       "testid": null,
+       "h_texto": null,
+       "h_nome": "fca0c0beacd0",
+       "n": 0,
+       "rotulo": "Notifications alt+T",
+       "x": 0,
+       "y": 1045,
+       "w": 1138,
+       "h": 0,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      }
+     ]
+    }
+   }
+  }
+ }
+}

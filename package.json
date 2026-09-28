@@ -20,6 +20,7 @@
     "db:dump:storage": "supabase db dump -s storage -f supabase/storage.dump.sql"
   },
   "dependencies": {
+    "@octavia/identidade": "workspace:*",
     "@hookform/resolvers": "^3.9.1",
     "@radix-ui/react-accordion": "1.2.2",
     "@radix-ui/react-alert-dialog": "1.1.4",

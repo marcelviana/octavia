@@ -1,0 +1,460 @@
+# G-tok (ii) na main (98673ed) com a lista da I1-PR6 — o web velho de auth tem de REPROVAR
+$ node scripts/gates-web/g-tok.mjs --so-arquivos
+## (ii) arquivos redesenhados — scripts/gates-web/g-tok-arquivos.txt
+  ✗ app/login/page.tsx:18 [cor] "from-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ app/login/page.tsx:18 [cor] "to-orange-100" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:16 [cor] "from-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:16 [cor] "to-orange-100" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:18 [cor] "bg-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:19 [cor] "from-amber-600/90" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:19 [cor] "to-orange-700/90" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:21 [cor] "bg-white/10" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:22 [cor] "bg-orange-300/20" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:23 [cor] "bg-amber-300/15" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:24 [cor] "bg-yellow-300/10" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:26 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:33 [cor] "bg-white/20" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:34 [cor] "bg-white/30" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:35 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:39 [cor] "text-white/80" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:42 [cor] "bg-white/20" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:43 [cor] "bg-white/30" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:44 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:48 [cor] "text-white/80" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:51 [cor] "bg-white/20" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:52 [cor] "bg-white/30" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:53 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:57 [cor] "text-white/80" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:60 [cor] "bg-white/20" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:61 [cor] "bg-white/30" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:62 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:66 [cor] "text-white/80" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:28 [tamanho de fonte] "text-4xl" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:29 [tamanho de fonte] "text-lg" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:39 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:48 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:57 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:66 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:21 [espaçamento] "top-16" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:21 [espaçamento] "right-16" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:22 [espaçamento] "top-52" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:22 [espaçamento] "left-16" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:23 [espaçamento] "bottom-16" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:23 [espaçamento] "right-32" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:24 [espaçamento] "bottom-40" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:24 [espaçamento] "left-20" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:26 [espaçamento] "p-12" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:28 [espaçamento] "mb-6" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:29 [espaçamento] "mb-8" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:32 [espaçamento] "gap-4" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:33 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:33 [espaçamento] "space-x-3" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:34 [espaçamento] "p-2" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:42 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:42 [espaçamento] "space-x-3" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:43 [espaçamento] "p-2" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:51 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:51 [espaçamento] "space-x-3" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:52 [espaçamento] "p-2" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:60 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:60 [espaçamento] "space-x-3" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:61 [espaçamento] "p-2" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/page.tsx:28 [inglês, texto JSX] "Start Your Musical Journey" ← termo "your"
+  ✗ app/signup/page.tsx:29 [inglês, texto JSX] "Join thousands of musicians who trust Octavia to organize their musical content and enhance their practice sessions." ← termo "content"
+  ✗ app/signup/page.tsx:38 [inglês, texto JSX] "Upload Music" ← termo "upload"
+  ✗ app/signup/confirm-email/page.tsx:36 [cor] "from-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:36 [cor] "to-orange-100" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:37 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:37 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:39 [cor] "bg-green-100" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:40 [cor] "text-green-600" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:42 [cor] "text-amber-900" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:43 [cor] "text-amber-700" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:55 [cor] "bg-green-50" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:55 [cor] "border-green-200" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:55 [cor] "text-green-700" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:61 [cor] "bg-red-50" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:61 [cor] "border-red-200" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:61 [cor] "text-red-700" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:66 [cor] "from-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:66 [cor] "to-orange-500" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:66 [cor] "from-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:66 [cor] "to-orange-600" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:66 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:71 [cor] "text-amber-700" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:78 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:78 [cor] "text-amber-700" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:78 [cor] "bg-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:42 [tamanho de fonte] "text-xl" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:46 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:55 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:61 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:71 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:36 [espaçamento] "p-6" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:39 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:46 [espaçamento] "mt-2" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:53 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:55 [espaçamento] "px-4" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:55 [espaçamento] "py-3" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:61 [espaçamento] "px-4" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:61 [espaçamento] "py-3" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:71 [espaçamento] "mb-3" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:82 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:87 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ app/signup/confirm-email/page.tsx:42 [inglês, texto JSX] "Confirm Your Email" ← termo "confirm"
+  ✗ app/signup/confirm-email/page.tsx:55 [inglês, texto JSX] "Verification email sent successfully! Please check your inbox." ← termo "successfully"
+  ✗ app/signup/confirm-email/page.tsx:67 [inglês, texto JSX] "Go to Login" ← termo "go to"
+  ✗ app/signup/confirm-email/page.tsx:87 [inglês, texto JSX] "Resend Verification Email" ← termo "resend"
+  ✗ app/verify-email/page.tsx:76 [cor] "from-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:76 [cor] "to-orange-100" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:77 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:77 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:79 [cor] "bg-amber-100" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:80 [cor] "text-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:82 [cor] "text-amber-900" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:83 [cor] "text-amber-700" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:95 [cor] "bg-green-50" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:95 [cor] "border-green-200" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:95 [cor] "text-green-700" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:101 [cor] "bg-red-50" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:101 [cor] "border-red-200" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:101 [cor] "text-red-700" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:110 [cor] "from-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:110 [cor] "to-orange-500" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:110 [cor] "from-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:110 [cor] "to-orange-600" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:110 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:129 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:129 [cor] "text-amber-700" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:129 [cor] "bg-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:147 [cor] "text-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:147 [cor] "bg-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:154 [cor] "text-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:82 [tamanho de fonte] "text-xl" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:86 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:95 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:101 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:154 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:76 [espaçamento] "p-6" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:79 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:86 [espaçamento] "mt-2" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:93 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:95 [espaçamento] "px-4" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:95 [espaçamento] "py-3" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:101 [espaçamento] "px-4" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:101 [espaçamento] "py-3" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:106 [espaçamento] "space-y-3" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:114 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:119 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:133 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:138 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:149 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ app/verify-email/page.tsx:82 [inglês, texto JSX] "Verify Your Email" ← termo "verify"
+  ✗ app/verify-email/page.tsx:95 [inglês, texto JSX] "Verification email sent successfully! Please check your inbox." ← termo "successfully"
+  ✗ app/verify-email/page.tsx:138 [inglês, texto JSX] "Resend Verification Email" ← termo "resend"
+  ✗ app/verify-email/page.tsx:149 [inglês, texto JSX] "Sign Out" ← termo "sign out"
+  ✗ app/verify-email/page.tsx:155 [inglês, texto JSX] "Having trouble? Check your spam folder or contact support." ← termo "check"
+  ✗ app/forgot-password/page.tsx:44 [cor] "from-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:44 [cor] "to-orange-100" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:45 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:45 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:47 [cor] "bg-green-100" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:48 [cor] "text-green-600" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:50 [cor] "text-amber-900" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:51 [cor] "text-amber-700" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:57 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:64 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:64 [cor] "text-amber-700" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:64 [cor] "bg-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:69 [cor] "from-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:69 [cor] "to-orange-500" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:69 [cor] "from-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:69 [cor] "to-orange-600" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:69 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:82 [cor] "from-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:82 [cor] "to-orange-100" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:83 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:83 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:87 [cor] "text-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:87 [cor] "bg-amber-100" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:91 [cor] "text-amber-900" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:93 [cor] "text-amber-700" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:106 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:110 [cor] "text-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:117 [cor] "bg-white" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:117 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:117 [cor] "border-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:117 [cor] "ring-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:125 [cor] "from-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:125 [cor] "to-orange-500" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:125 [cor] "from-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:125 [cor] "to-orange-600" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:125 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:130 [cor] "border-white" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:139 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:143 [cor] "text-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:143 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:50 [tamanho de fonte] "text-xl" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:57 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:91 [tamanho de fonte] "text-xl" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:139 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:44 [espaçamento] "p-6" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:47 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:56 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:60 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:82 [espaçamento] "p-6" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:85 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:86 [espaçamento] "mr-3" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:87 [espaçamento] "p-1" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:98 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:105 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:110 [espaçamento] "left-3" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:110 [espaçamento] "top-1" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:117 [espaçamento] "pl-10" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:125 [espaçamento] "py-2" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:130 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ app/forgot-password/page.tsx:50 [inglês, texto JSX] "Check Your Email" ← termo "check"
+  ✗ app/forgot-password/page.tsx:65 [inglês, texto JSX] "Try Again" ← termo "try again"
+  ✗ app/forgot-password/page.tsx:69 [inglês, texto JSX] "Back to Sign In" ← termo "sign in"
+  ✗ app/forgot-password/page.tsx:91 [inglês, texto JSX] "Reset Password" ← termo "password"
+  ✗ app/forgot-password/page.tsx:106 [inglês, texto JSX] "Email Address" ← termo "email address"
+  ✗ app/forgot-password/page.tsx:144 [inglês, texto JSX] "Sign in" ← termo "sign in"
+  ✗ app/forgot-password/page.tsx:114 [inglês, atributo] "your.email@example.com" ← termo "your"
+  ✗ components/auth/login-panel.tsx:179 [cor] "from-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:179 [cor] "to-orange-100" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:181 [cor] "border-t-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:181 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:182 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:185 [cor] "text-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:185 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:190 [cor] "bg-red-50" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:190 [cor] "border-red-200" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:190 [cor] "text-red-700" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:204 [cor] "bg-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:205 [cor] "bg-amber-100" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:217 [cor] "from-amber-700" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:217 [cor] "to-orange-600" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:220 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:223 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:223 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:223 [cor] "shadow-amber-100/50" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:224 [cor] "from-amber-400" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:224 [cor] "to-orange-500" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:227 [cor] "text-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:228 [cor] "text-amber-900" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:230 [cor] "text-amber-700" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:237 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:241 [cor] "text-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:249 [cor] "bg-white" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:249 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:249 [cor] "border-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:249 [cor] "ring-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:255 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:260 [cor] "text-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:260 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:266 [cor] "text-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:274 [cor] "bg-white" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:274 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:274 [cor] "border-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:274 [cor] "ring-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:285 [cor] "bg-red-50" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:285 [cor] "border-red-200" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:285 [cor] "text-red-700" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:291 [cor] "from-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:291 [cor] "to-orange-500" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:291 [cor] "from-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:291 [cor] "to-orange-600" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:291 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:296 [cor] "border-white" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:305 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:308 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:308 [cor] "text-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:315 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:315 [cor] "bg-white" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:315 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:315 [cor] "bg-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:319 [cor] "border-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:327 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:331 [cor] "text-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:331 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:340 [cor] "text-amber-700" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:185 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:190 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:217 [tamanho de fonte] "text-3xl" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:228 [tamanho de fonte] "text-xl" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:260 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:285 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:308 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:340 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:182 [espaçamento] "mt-4" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:185 [espaçamento] "mt-4" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:190 [espaçamento] "mt-4" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:190 [espaçamento] "px-4" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:190 [espaçamento] "py-3" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:200 [espaçamento] "p-6" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:200 [espaçamento] "p-12" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:202 [espaçamento] "mb-8" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:203 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:205 [espaçamento] "inset-2" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:217 [espaçamento] "mt-4" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:220 [espaçamento] "mt-2" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:225 [espaçamento] "pb-3" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:226 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:227 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:235 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:236 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:241 [espaçamento] "left-3" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:241 [espaçamento] "top-1" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:249 [espaçamento] "pl-10" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:253 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:266 [espaçamento] "left-3" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:266 [espaçamento] "top-1" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:274 [espaçamento] "pl-10" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:285 [espaçamento] "px-4" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:285 [espaçamento] "py-3" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:291 [espaçamento] "py-2" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:296 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:303 [espaçamento] "py-3" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:308 [espaçamento] "px-2" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:319 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:340 [espaçamento] "mt-8" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/login-panel.tsx:182 [inglês, texto JSX] "Redirecting to dashboard..." ← termo "dashboard"
+  ✗ components/auth/login-panel.tsx:217 [inglês, texto JSX] "Welcome to Octavia" ← termo "welcome"
+  ✗ components/auth/login-panel.tsx:220 [inglês, texto JSX] "Your digital music companion" ← termo "your"
+  ✗ components/auth/login-panel.tsx:228 [inglês, texto JSX] "Sign In" ← termo "sign in"
+  ✗ components/auth/login-panel.tsx:230 [inglês, texto JSX] "Enter your credentials to access your music library" ← termo "library"
+  ✗ components/auth/login-panel.tsx:255 [inglês, texto JSX] "Password" ← termo "password"
+  ✗ components/auth/login-panel.tsx:261 [inglês, texto JSX] "Forgot password?" ← termo "password"
+  ✗ components/auth/login-panel.tsx:319 [inglês, texto JSX] "Loading..." ← termo "loading"
+  ✗ components/auth/login-panel.tsx:332 [inglês, texto JSX] "Sign up" ← termo "sign up"
+  ✗ components/auth/login-panel.tsx:341 [inglês, texto JSX] "© 2025 Octavia Music. All rights reserved." ← termo "all"
+  ✗ components/auth/login-panel.tsx:244 [inglês, atributo] "your.email@example.com" ← termo "your"
+  ✗ components/auth/login-panel.tsx:269 [inglês, atributo] "Enter your password" ← termo "password"
+  ✗ components/auth/signup-panel.tsx:71 [cor] "bg-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:72 [cor] "bg-amber-100" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:84 [cor] "from-amber-700" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:84 [cor] "to-orange-600" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:87 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:90 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:90 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:90 [cor] "shadow-amber-100/50" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:91 [cor] "from-amber-400" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:91 [cor] "to-orange-500" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:94 [cor] "text-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:95 [cor] "text-amber-900" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:97 [cor] "text-amber-700" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:102 [cor] "bg-red-50" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:102 [cor] "border-red-200" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:102 [cor] "text-red-700" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:109 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:113 [cor] "text-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:120 [cor] "bg-white" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:120 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:120 [cor] "border-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:120 [cor] "ring-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:126 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:135 [cor] "bg-white" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:135 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:135 [cor] "border-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:135 [cor] "ring-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:141 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:145 [cor] "text-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:153 [cor] "bg-white" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:153 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:153 [cor] "border-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:153 [cor] "ring-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:159 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:163 [cor] "bg-white" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:163 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:163 [cor] "border-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:163 [cor] "ring-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:179 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:183 [cor] "text-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:191 [cor] "bg-white" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:191 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:191 [cor] "border-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:191 [cor] "ring-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:194 [cor] "text-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:198 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:202 [cor] "text-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:209 [cor] "bg-white" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:209 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:209 [cor] "border-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:209 [cor] "ring-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:216 [cor] "from-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:216 [cor] "to-orange-500" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:216 [cor] "from-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:216 [cor] "to-orange-600" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:216 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:221 [cor] "border-white" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:232 [cor] "text-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:232 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:241 [cor] "text-amber-700" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:84 [tamanho de fonte] "text-3xl" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:95 [tamanho de fonte] "text-xl" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:102 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:194 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:232 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:241 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:67 [espaçamento] "p-6" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:67 [espaçamento] "p-12" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:69 [espaçamento] "mb-6" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:70 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:72 [espaçamento] "inset-2" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:84 [espaçamento] "mt-4" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:87 [espaçamento] "mt-2" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:92 [espaçamento] "pb-3" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:93 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:94 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:100 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:102 [espaçamento] "px-4" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:102 [espaçamento] "py-3" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:107 [espaçamento] "gap-4" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:108 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:113 [espaçamento] "left-3" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:113 [espaçamento] "top-1" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:120 [espaçamento] "pl-10" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:125 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:140 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:145 [espaçamento] "left-3" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:145 [espaçamento] "top-1" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:153 [espaçamento] "pl-10" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:158 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:178 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:183 [espaçamento] "left-3" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:183 [espaçamento] "top-1" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:191 [espaçamento] "pl-10" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:197 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:202 [espaçamento] "left-3" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:202 [espaçamento] "top-1" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:209 [espaçamento] "pl-10" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:216 [espaçamento] "py-2" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:221 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:234 [espaçamento] "mr-1" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:241 [espaçamento] "mt-6" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/signup-panel.tsx:87 [inglês, texto JSX] "Create your account to get started" ← termo "get started"
+  ✗ components/auth/signup-panel.tsx:95 [inglês, texto JSX] "Sign Up" ← termo "sign up"
+  ✗ components/auth/signup-panel.tsx:97 [inglês, texto JSX] "Fill in your details to create your account" ← termo "account"
+  ✗ components/auth/signup-panel.tsx:109 [inglês, texto JSX] "First Name" ← termo "name"
+  ✗ components/auth/signup-panel.tsx:126 [inglês, texto JSX] "Last Name" ← termo "name"
+  ✗ components/auth/signup-panel.tsx:179 [inglês, texto JSX] "Password" ← termo "password"
+  ✗ components/auth/signup-panel.tsx:194 [inglês, texto JSX] "Password must be at least 6 characters" ← termo "password"
+  ✗ components/auth/signup-panel.tsx:198 [inglês, texto JSX] "Confirm Password" ← termo "password"
+  ✗ components/auth/signup-panel.tsx:221 [inglês, texto JSX] "Creating account..." ← termo "account"
+  ✗ components/auth/signup-panel.tsx:234 [inglês, texto JSX] "Back to login" ← termo "back to"
+  ✗ components/auth/signup-panel.tsx:242 [inglês, texto JSX] "© 2025 Octavia Music. All rights reserved." ← termo "all"
+  ✗ components/auth/signup-panel.tsx:151 [inglês, atributo] "your.email@example.com" ← termo "your"
+  ✗ components/auth/signup-panel.tsx:164 [inglês, atributo] "Select your primary instrument" ← termo "select"
+  ✗ components/auth/linha-de-aviso.tsx:27 [cor] "bg-red-50" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/linha-de-aviso.tsx:27 [cor] "border-red-200" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/linha-de-aviso.tsx:27 [cor] "text-red-700" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/linha-de-aviso.tsx:35 [cor] "text-red-900" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/linha-de-aviso.tsx:27 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/linha-de-aviso.tsx:27 [espaçamento] "gap-3" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/linha-de-aviso.tsx:27 [espaçamento] "px-4" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/linha-de-aviso.tsx:27 [espaçamento] "py-3" — use a custom property de app/styles/identidade.css
+  ✗ components/auth/linha-de-aviso.tsx:35 [espaçamento] "px-3" — use a custom property de app/styles/identidade.css
+  arquivos: 9 · literais de identidade acusados: 409 · toasts: 0 · textos examinados: 75 · vocabulário: 109 · isenções: 9
+
+G-tok: REPROVA — 453 ocorrência(s)
+# exit: 1

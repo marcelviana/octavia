@@ -1,0 +1,12 @@
+# commit 5 — as erratas candidatas do aceite (cn/g-faixa-aceite-tres.txt) × as erratas da folha do G-faixa (erratas.json, erratasFaixa: I1-E7…E10)
+AUTH-confirm-sem-usuario: 7 → I1-E10
+AUTH-forgot-validacao: 7 → I1-E7
+AUTH-login-validacao: 17 → I1-E7
+AUTH-login-redirecionando: 6 → I1-E9
+AUTH-signup-validacao: 7 → I1-E7
+AUTH-verify-carregando: 2 → I1-E8
+I1-E7: declara 31, casa 31 ✓
+I1-E8: declara 2, casa 2 ✓
+I1-E9: declara 6, casa 6 ✓
+I1-E10: declara 7, casa 7 ✓
+erratas candidatas: 46 · cobertas: 46 · descobertas: 0
