@@ -18,3 +18,5 @@ components/auth/seletor-de-instrumento.tsx
 components/auth/use-login.ts
 components/auth/use-signup.ts
 components/identidade/icone.tsx
+# I1-PR7 — superfície 2, landing (folha 2-landing)
+app/page.tsx

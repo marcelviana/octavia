@@ -1,0 +1,175 @@
+{
+ "folha": "2-landing",
+ "arquivo": "docs/ux/DESIGN-I1/2-landing/telas.html",
+ "sha256": "3f5583acb00447cf450cde6dfe15ca864c5dde7ea7ec9a2c20d8359bcbd30137",
+ "chromium": "140.0.7339.16",
+ "ancorados": 0,
+ "estados": {
+  "LANDING": {
+   "C": [
+    {
+     "k": "texto:11b3592eced2#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "11b3592eced2",
+     "h_nome": null,
+     "n": 62,
+     "rotulo": "organize, veja e compartilhe cifras, letras, tabs e partituras",
+     "x": 598,
+     "y": 48,
+     "w": 420,
+     "h": 63.8,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "button:4105811890ae#1",
+     "role": "button",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "4105811890ae",
+     "h_nome": null,
+     "n": 6,
+     "rotulo": "Entrar",
+     "x": 598,
+     "y": 143.8,
+     "w": 420,
+     "h": 56,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "button:8cb3525e3b7e#1",
+     "role": "button",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "8cb3525e3b7e",
+     "h_nome": null,
+     "n": 11,
+     "rotulo": "Criar conta",
+     "x": 598,
+     "y": 215.8,
+     "w": 420,
+     "h": 58,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "link:31ead7033ed4#1",
+     "role": "link",
+     "tag": "a",
+     "testid": null,
+     "h_texto": "31ead7033ed4",
+     "h_nome": null,
+     "n": 23,
+     "rotulo": "Política de privacidade",
+     "x": 598,
+     "y": 305.8,
+     "w": 420,
+     "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    }
+   ],
+   "B": [
+    {
+     "k": "texto:11b3592eced2#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "11b3592eced2",
+     "h_nome": null,
+     "n": 62,
+     "rotulo": "organize, veja e compartilhe cifras, letras, tabs e partituras",
+     "x": 144.5,
+     "y": 315,
+     "w": 420,
+     "h": 63.8,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "button:4105811890ae#1",
+     "role": "button",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "4105811890ae",
+     "h_nome": null,
+     "n": 6,
+     "rotulo": "Entrar",
+     "x": 144.5,
+     "y": 410.8,
+     "w": 420,
+     "h": 56,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "button:8cb3525e3b7e#1",
+     "role": "button",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "8cb3525e3b7e",
+     "h_nome": null,
+     "n": 11,
+     "rotulo": "Criar conta",
+     "x": 144.5,
+     "y": 482.8,
+     "w": 420,
+     "h": 58,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "link:31ead7033ed4#1",
+     "role": "link",
+     "tag": "a",
+     "testid": null,
+     "h_texto": "31ead7033ed4",
+     "h_nome": null,
+     "n": 23,
+     "rotulo": "Política de privacidade",
+     "x": 144.5,
+     "y": 572.8,
+     "w": 420,
+     "h": 19,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    }
+   ]
+  }
+ }
+}
