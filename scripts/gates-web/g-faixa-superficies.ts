@@ -70,8 +70,9 @@ export const SUPERFICIES: Superficie[] = [
   // I1-PR7: a superfície 2, landing, IMPLEMENTADA — o único estado da folha `2-landing` (div. 683: `LANDING`,
   // não `LAND-*`). Estática, sem sessão e sem Firebase: nada a fabricar.
   { id: 'landing', rota: '/', sessao: false, publica: true, folha: '2-landing', implementada: true, estados: { LANDING: { secao: 'LANDING', espera: 'Criar conta' } } },
-  // a outra pública da I1-D19 (não pede sessão)
-  { id: 'privacy-policy', rota: '/privacy-policy', sessao: false, publica: true, folha: '3-privacy-policy', implementada: false, estados: { base: {} } },
+  // I1-PR8: a superfície 3, privacy-policy, IMPLEMENTADA — o único estado da folha `3-privacy-policy`, `PRIVACY`.
+  // Estática, sem sessão e sem Firebase: nada a fabricar. O texto é o de antes (I1-D17 exceção, I1-D19).
+  { id: 'privacy-policy', rota: '/privacy-policy', sessao: false, publica: true, folha: '3-privacy-policy', implementada: true, estados: { PRIVACY: { secao: 'PRIVACY', espera: 'Cookies and consent / Cookies e consentimento' } } },
   { id: 'dashboard', rota: '/dashboard', sessao: true, publica: false, folha: '4-content-lista', implementada: false, estados: { base: {} } },
   { id: 'library', rota: '/library', sessao: true, publica: false, folha: '4-content-lista', implementada: false, estados: { base: {} } },
   { id: 'setlists', rota: '/setlists', sessao: true, publica: false, folha: '8-setlists', implementada: false, estados: { base: {} } },
