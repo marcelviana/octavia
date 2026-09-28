@@ -811,3 +811,48 @@ null>(null)`: o `user` nasce nulo) × `:523` (o provider renderiza os filhos sem
 | Marcel | requests a `octavia.rocks` | **0** (`prodAbortados` 0 nos cinco JSON) |
 | — | escritas a `/api/*` fora de `/api/auth/session` | **0 reais**; 3 fabricadas (`POST /api/profile`, no navegador) |
 
+## 15. Commits 4 e 5 — a faixa A não quebra (errata da I1-D11)
+
+### 15.1 O aval do commit 3 — decisões `[Marcel, 2026-09-28]`
+
+1. **Errata da I1-D11**: *"A só não quebra"* = **(e) = 0 e (b) = 0 em 411**; rolagem horizontal da página conta como
+   (b). O que A não tem é folha desenhada: a composição em A é a regra 2 da folha ("quando não cabe, empilha") aplicada
+   mecanicamente, sem desenho novo. As (e) de 411 seguem listadas por superfície.
+2. **Div. 676**: a auth empilha em A nesta PR (commit 4).
+3. **Div. 675 → I1-E9**: o grupo de botões vazio em `login-redirecionando` não existe; a seção vale sem ele.
+4. **`confirm-sem-usuario` → I1-E10**: sem usuário não há a frase com o e-mail; a seção vale sem ela.
+5. **`google-erro`**: não é errata. O estado da folha (`login.google-cancelado`, uma linha) se mede com essa frase;
+   `login.google-bloqueado` (duas linhas) é medido à parte, só (e)/(b), sem esperado da folha.
+6. **Div. 674**: 0 contas, 0 escritas — confirmado.
+
+### 15.2 Commit 4 `[medido]`
+
+- **O instrumento primeiro** — `g-faixa-classificar.mjs` (`REPROVAM_B` = 1138 · 711 · **411**) e `g-faixa-veredito.mjs`:
+  o (b) de 411 reprova, com a página que rola na horizontal; o (e) de 411 segue listado (div. 677). **CN**: os cinco JSON
+  do aceite de ontem, que PASSAVAM, agora `REPROVA — 383` — todas em 411, nenhuma em 1138/711
+  (`cn/g-faixa-veredito-411-cn.txt`). A linha de base `cn-main`: **46 → 46** — o web velho não tinha (b) em 411 (a
+  coluna 411 da PR-5 dava (b) = 0 nas sete superfícies; `cn/g-faixa-cn-main-411.txt`).
+- **A composição em A** (`components/auth/casca-auth.tsx`): `px-web-margem` no `<main>` e `max-w-full` no bloco e na
+  coluna — abaixo de 700 px a marca já subia (o padrão é o empilhado); agora a coluna ocupa a largura do viewport menos
+  a margem de B (24). Só classes de nome de token ou palavra-chave; o pacote não mudou (sem APK novo).
+- **C e B não se movem** (`cn/commit4-cb-identicos.txt`): medidos de novo pelo executor em 1138 e 711 × os JSON de
+  ontem — **80 estado × largura idênticos, nó a nó**; os únicos diferentes, `AUTH-login-google-erro` ×2, são o item 5
+  (o estado agora é o *cancelado*).
+- **A mescla por largura** (`g-faixa-sessao.ts`, `mesclar`; div. 680): uma rodada só de A preserva C e B — CN numa cópia
+  dos JSON: **82 medições C/B preservadas, 0 perdidas**; cada largura com a sua rodada e o seu commit (`rodadas`). Na
+  cópia, **(b) = 0 em 411 em todos os estados**; o veredito dela reprova 1 — o `AUTH-login-google-bloqueado` sem 1138
+  (estado novo): o `login` se refaz nas três larguras (`COMO-RODAR.md`).
+- **Item 5** (`g-faixa-auth.ts`): `AUTH-login-google-erro` com a janela FECHADA (`auth/popup-closed-by-user`, ~11 s) e a
+  frase do cancelado, contra a seção; `AUTH-login-google-bloqueado` com a janela bloqueada, `semSecao` (só (e)/(b)).
+- **Verdes**: G-tok PASSA (`cn/g-tok-commit4.txt`); G-back PASSA; G-palco 0; `pnpm test` 1071 passaram · 77 pulados, o
+  CN da PR-1 15/15; `tsc` 0; lint limpo; `pnpm build` compilado; classificador 13/13 (o 411 com `reprovaB`).
+
+### 15.3 Divergências — 677 a 680
+
+| # | origem | o que o prompt (ou o doc) presumiu | o que foi medido | destino |
+|---|---|---|---|---|
+| **677** | P | item 1: *"(e) = 0 e (b) = 0 em 411"* × o título do commit 4: *"o veredito reprova (b) em 411"* e *"as (e) de 411 seguem listadas"* | as duas leituras não coincidem para o (e) | o veredito reprova o (b) de 411 e LISTA o (e) de 411 (as "inalcançáveis em A", decisão 619); para a auth, o commit 5 cobra (e) = 0 e (b) = 0 nas três |
+| **678** | T | *"meça você mesmo … sem `.env`"* | o `.env.local` que o Marcel copiou para a árvore às 08:34 (para o aceite; `ls`, não aberto) é carregado pelo `next dev` (*"Environments: .env.local"*): as capturas do commit 3 e as rodadas do commit 4 do executor rodaram com o Firebase ligado. No log dessas rodadas: prod **0**; escrita real só o cookie da sessão (`DELETE /api/auth/session` 200/429, `POST` abortado); o iframe do Google lido (`identitytoolkit` ×6, leituras); nenhum login, nenhuma conta | registrado; o arquivo não foi tocado (é do Marcel; regra de config local). A prova de C/B ficou maior que a pedida: 41 estados, não só os sem Firebase |
+| **679** | P | *"```gates-web``` acrescenta `gfaixa: …`"* | o extrator recusava `gfaixa:` (chave desconhecida) | `gfaixa:` vira chave de registro, como `gtok:` (div. 664) |
+| **680** | A | *"confira que o medidor mescla por largura; se apagar, é divergência e o Marcel roda as três"* | o `juntar` SOBRESCREVIA o JSON (uma rodada de A apagaria C e B) | a mescla entra no commit 4 (instrumento, com CN); mesmo assim o `login` precisa das três larguras pelo item 5 — dois comandos no `COMO-RODAR.md` |
+

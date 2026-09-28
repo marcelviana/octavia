@@ -68,6 +68,23 @@ div. 672: nos estados do *Entrar com Google* o SDK lê de verdade o iframe de au
 4. Se algum dos 15 estados com usuário (`AUTH-confirm*`, `AUTH-verify*`) sair NÃO ALCANÇADO, a decisão 8 autoriza a
    conta descartável (i) — decisão sua, na hora. Depois diga **"rodei"**.
 
+## O aceite em A da I1-PR6 (commit 4) — Marcel, dois comandos
+
+Mesmo `pnpm dev` com o `.env.local`, mesma árvore. A gravação agora **mescla por largura**: uma rodada só de `A-411`
+substitui só a faixa A dos cinco JSON e deixa C e B como estavam (cada largura guarda a sua rodada e o seu commit em
+`rodadas`). O `login` precisa das TRÊS larguras de novo: o item 5 do aval mudou o `AUTH-login-google-erro` (agora o
+*cancelado*) e criou o `AUTH-login-google-bloqueado`.
+
+```bash
+G_FAIXA_BASE_URL=http://localhost:3000 G_FAIXA_SUPERFICIES=login,signup,confirm-email,verify-email,forgot-password pnpm exec playwright test -c playwright.g-faixa.config.ts scripts/gates-web/g-faixa-medir.ts --project A-411
+```
+
+```bash
+G_FAIXA_BASE_URL=http://localhost:3000 G_FAIXA_SUPERFICIES=login pnpm exec playwright test -c playwright.g-faixa.config.ts scripts/gates-web/g-faixa-medir.ts --project C-1138 --project B-711
+```
+
+O `AUTH-login-google-erro` leva ~11 s (o SDK demora a desistir da janela fechada). Depois diga **"rodei"**.
+
 ## O resto
 
 | o quê | comando |

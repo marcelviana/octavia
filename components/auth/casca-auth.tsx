@@ -6,6 +6,11 @@
  * `web.colunaAuth` (420) com vão `space.xxl`; rótulo da tela em `font.display` ·
  * `size.bodySmall` · `tracking.displayWide` · caixa alta · `muted`; apoio em
  * `size.body` · `lineHeight.text` · `muted`.
+ *
+ * FAIXA A (errata da I1-D11, I1-PR6 commit 4): sem folha desenhada — a regra 2
+ * aplicada mecanicamente: empilha como B, margem `web.margem` e a coluna na
+ * largura do viewport (`max-w-full`). Em C e B o conteúdo cabe e a margem é
+ * simétrica: nada se move (provado pelo G-faixa, 1138 e 711 idênticos).
  */
 import Image from "next/image"
 import { FRASES_AUTH } from "./frases-auth"
@@ -18,12 +23,12 @@ export interface CascaAuthProps {
 
 export function CascaAuth({ rotulo, apoio, children }: CascaAuthProps) {
   return (
-    <main className="min-h-screen bg-cor-bg text-cor-text font-fam-ui font-peso-ui leading-natural py-espaco-xxxl flex justify-center items-start">
-      <div className="flex flex-col c:flex-row items-center gap-web-vao-auth">
+    <main className="min-h-screen bg-cor-bg text-cor-text font-fam-ui font-peso-ui leading-natural py-espaco-xxxl px-web-margem flex justify-center items-start">
+      <div className="max-w-full min-w-0 flex flex-col c:flex-row items-center gap-web-vao-auth">
         <div role="img" aria-label={FRASES_AUTH["marca.octavia"]} className="relative shrink-0 w-web-marca-largura h-web-marca-altura">
           <Image src="/marcas/octavia-dark.png" alt="" fill unoptimized priority />
         </div>
-        <div className="flex flex-col gap-espaco-xxl w-web-coluna-auth">
+        <div className="flex flex-col gap-espaco-xxl w-web-coluna-auth max-w-full">
           <div className="flex flex-col gap-espaco-md">
             <h1 className="font-fam-display font-peso-display text-tam-body-small tracking-display-wide uppercase text-cor-muted">
               {rotulo}

@@ -30,7 +30,10 @@
 //        `data-rolagem="painel"` (o corpo de conteúdo da resposta 19 da folha),
 //        que conta como (d′).
 // A faixa A (411) não tem requisito próprio (DESIGN-I1 §4: "o que o G-faixa
-// medir em 411 é saída contada à parte"): o (e)/(b) de 411 é contado, não reprova.
+// medir em 411 é saída contada à parte"): o (e) de 411 é contado, não reprova.
+// ERRATA DA I1-D11 [Marcel, 2026-09-28] (I1-PR6, commit 4): "A só não quebra" = (b) = 0 em 411 —
+//   o (b) de 411 (inclusive a página com rolagem horizontal) REPROVA; o (e) de 411 segue listado
+//   (as "inalcançáveis em A", decisão 619). `reprovaB` diz em que larguras o (b) reprova.
 //
 // Nó cru (o que o medidor grava): { k, role, tag, testid, h_texto, h_nome, n,
 //   x, y, w, h, sr, clip: {x,y,w,h,rolagem,painel} | null, corta: {x,y} }
@@ -42,7 +45,8 @@
 export const TOL_CORTE = 1 // px — arredondamento de subpixel
 export const TOL_FOLHA = 4 // px — I1-D13
 export const REFERENCIA = "1138"
-export const REPROVAM = ["1138", "711"] // C e B; A (411) é saída contada à parte
+export const REPROVAM = ["1138", "711"] // o (e) reprova em C e B; em A (411) é listado
+export const REPROVAM_B = ["1138", "711", "411"] // o (b) reprova nas três (errata da I1-D11)
 
 const temArea = (n) => n && n.w > 0 && n.h > 0
 
@@ -141,7 +145,7 @@ export function classificarEstado(estado) {
       }
       for (const [ch, g] of f) if (!a.has(ch)) semPar.folha.push({ k: g.k, par: ch, rotulo: g.rotulo })
     }
-    res[L] = { e, b, dl, errata, semPar, saidas: { nomeAcessivel: nomeAcessivel.length, rolagem: rolagem.length }, reprova: REPROVAM.includes(L) }
+    res[L] = { e, b, dl, errata, semPar, saidas: { nomeAcessivel: nomeAcessivel.length, rolagem: rolagem.length }, reprova: REPROVAM.includes(L), reprovaB: REPROVAM_B.includes(L) }
   }
   return res
 }
@@ -152,7 +156,7 @@ export function resumo(superficie) {
   for (const [id, estado] of Object.entries(superficie.estados)) {
     const c = classificarEstado(estado)
     for (const [L, r] of Object.entries(c)) {
-      const t = (tot[L] ??= { e: 0, b: 0, dl: 0, errata: 0, semParFolha: 0, semParApp: 0, nomeAcessivel: 0, rolagem: 0, reprova: r.reprova, estados: [] })
+      const t = (tot[L] ??= { e: 0, b: 0, dl: 0, errata: 0, semParFolha: 0, semParApp: 0, nomeAcessivel: 0, rolagem: 0, reprova: r.reprova, reprovaB: r.reprovaB, estados: [] })
       t.e += r.e.length; t.b += r.b.length; t.dl += r.dl.length; t.errata += r.errata.length
       t.semParFolha += r.semPar.folha.length; t.semParApp += r.semPar.app.length
       t.nomeAcessivel += r.saidas.nomeAcessivel; t.rolagem += r.saidas.rolagem

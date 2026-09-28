@@ -61,7 +61,7 @@ const erroGoogle = (message: string): Resposta => ({ status: 400, corpo: { error
 export interface Fabricas {
   signIn?: Resposta; lookup?: Resposta; signUp?: Resposta; oob?: Resposta
   sessao?: Resposta; perfilGet?: Resposta; perfilPost?: Resposta
-  janela?: 'bloqueada' | 'pendente'
+  janela?: 'bloqueada' | 'pendente' | 'fechada'
   rscLogin?: 'segurar'
 }
 
@@ -81,6 +81,8 @@ export async function fabricar(page: Page, f: Fabricas, emailVerified = false) {
   await page.route(/\/api\/profile$/, (rt) => rt.request().method() === 'GET' ? responder(rt, f.perfilGet ?? { status: 401, corpo: { error: 'Unauthorized' } }) : responder(rt, f.perfilPost ?? { status: 500, corpo: { error: 'x' } }))
   if (f.janela === 'bloqueada') await page.addInitScript(() => { window.open = () => null })
   if (f.janela === 'pendente') await page.addInitScript(() => { window.open = () => ({ closed: false, close() {}, focus() {} }) as unknown as Window })
+  // a janela do Google "fechada pelo usuário": o SDK a vê fechada no próximo poll e desiste com `auth/popup-closed-by-user`
+  if (f.janela === 'fechada') await page.addInitScript(() => { window.open = () => ({ closed: true, close() {}, focus() {} }) as unknown as Window })
   if (f.rscLogin === 'segurar') await page.route(/\/login\?_rsc=/, (rt) => segurar(page, rt))
 }
 
@@ -128,6 +130,8 @@ async function preencherSignup(page: Page, confirmar = SENHA) {
 }
 
 const clicar = (nome: string) => async (page: Page) => { await page.getByRole('button', { name: nome, exact: true }).click({ timeout: 10_000 }) }
+/** Para a resposta que demora (o SDK leva segundos para desistir da janela fechada): espera o texto, com teto. */
+const aguardar = (texto: string, ms = 30_000) => async (page: Page) => { await page.getByText(texto, { exact: false }).first().waitFor({ timeout: ms }).catch(() => {}) }
 const em = (acoes: ((p: Page) => Promise<void>)[]) => async (page: Page) => { for (const a of acoes) await a(page) }
 
 /** Um estado de auth: a seção da folha, as fábricas, se precisa do usuário falso, o que fazer e o que tem de aparecer. */
@@ -137,6 +141,8 @@ export interface EstadoAuth extends Estado {
   espera?: string
   /** declarado: o estado não se alcança no navegador (a razão vai para o JSON e o veredito lista) */
   inalcancavel?: string
+  /** estado sem seção na folha (medido só em (e)/(b), sem esperado) */
+  semSecao?: boolean
 }
 
 const ENTRAR = clicar('Entrar')
@@ -153,7 +159,10 @@ export const ESTADOS_LOGIN: Record<string, EstadoAuth> = {
   'AUTH-login-limite-prazo': loginPreenchido({ sessao: { status: 429, headers: { 'retry-after': '120' } } }, 'tente de novo em 2 min'),
   'AUTH-login-limite': loginPreenchido({ sessao: { status: 429 } }, 'tente de novo em instantes'),
   'AUTH-login-rede': loginPreenchido({ sessao: 'abortar' }, 'sem conexão — a sessão não foi aberta'),
-  'AUTH-login-google-erro': { fabricas: { janela: 'bloqueada' }, preparar: clicar('Google Entrar com Google'), espera: 'o navegador bloqueou a janela do Google' },
+  // decisão 5 do aval do commit 3 [Marcel, 2026-09-28]: a seção da folha é a do CANCELADO (uma linha) e se mede com
+  // ela; o BLOQUEADO (duas linhas) é medido à parte — só (e)/(b), sem esperado da folha (`semSecao`)
+  'AUTH-login-google-erro': { fabricas: { janela: 'fechada' }, preparar: em([clicar('Google Entrar com Google'), aguardar('o login com Google foi cancelado')]), espera: 'o login com Google foi cancelado' },
+  'AUTH-login-google-bloqueado': { fabricas: { janela: 'bloqueada' }, preparar: clicar('Google Entrar com Google'), espera: 'o navegador bloqueou a janela do Google', semSecao: true },
   // só existe SEM Firebase (o `.env` ausente): com ele, a credencial fabricada aparece e o estado sai NÃO ALCANÇADO
   'AUTH-login-nao-configurado': { fabricas: { signIn: erroGoogle('INVALID_LOGIN_CREDENTIALS') }, preparar: em([preencherLogin, ENTRAR]), espera: 'o login não está disponível neste servidor' },
   'AUTH-login-perfil-401': loginPreenchido({}, 'o servidor não aceitou o login — entre de novo'),
@@ -230,7 +239,7 @@ export const ESTADOS_FORGOT: Record<string, EstadoAuth> = {
  */
 export function paraEstados(e: Record<string, EstadoAuth>): Record<string, Estado> {
   return Object.fromEntries(Object.entries(e).map(([k, v]) => [k, {
-    secao: k, preparar: v.preparar, espera: v.espera, inalcancavel: v.inalcancavel,
+    secao: v.semSecao ? undefined : k, preparar: v.preparar, espera: v.espera, inalcancavel: v.inalcancavel,
     antes: async (page: Page, base: URL) => {
       await fabricar(page, v.fabricas ?? {})
       if (v.usuario) await entrarComUsuarioFalso(page, base)

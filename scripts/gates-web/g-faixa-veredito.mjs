@@ -5,7 +5,9 @@
 // construção). Não abre navegador, não faz request. Recalcula a classificação
 // a partir dos nós crus (`g-faixa-classificar.mjs`) — não confia em resumo
 // gravado — e:
-//   REPROVA em (e) ou (b) nas larguras de C (1138) e B (711);
+//   REPROVA em (e) ou (b) nas larguras de C (1138) e B (711), e em (b) na faixa A
+//   (411) — errata da I1-D11 [Marcel, 2026-09-28]: "A só não quebra" = (b) = 0 em 411,
+//   rolagem horizontal da página incluída; o (e) de 411 segue listado (decisão 619);
 //   CONTA, sem reprovar: (d′), errata candidata (4 px contra a folha), as
 //   saídas nome-acessível e rolagem (N3-D29), e tudo o que a faixa A (411) der;
 //   REPROVA também o JSON que não se sustenta: sem controle positivo do
@@ -95,7 +97,7 @@ for (const f of arquivos) {
     }
     for (const L of Object.keys(c).sort((a, b) => b - a)) {
       const r = c[L]
-      const cab = `${id} · ${L}${r.reprova ? "" : " (faixa A — contado à parte)"}`
+      const cab = `${id} · ${L}${r.reprova ? "" : " (faixa A — (b) reprova; (e) listado)"}`
       console.log(`  ${cab}: (e)=${r.e.length} · (b)=${r.b.length} · (d′)=${r.dl.length} · errata candidata=${r.errata.length} · sem par folha/app=${r.semPar.folha.length}/${r.semPar.app.length} · saídas: nome-acessível=${r.saidas.nomeAcessivel} rolagem=${r.saidas.rolagem}`)
       // decisão 7: a errata candidata e os nós sem par com a folha, listados (nunca reprovam — decisão do Marcel)
       if (r.reprova) { erratas += r.errata.length; semParFolha += r.semPar.folha.length; semParApp += r.semPar.app.length }
@@ -107,12 +109,12 @@ for (const f of arquivos) {
         const n = estado.larguras[L]?.nos.find((x) => x.k === k) ?? estado.larguras[REFERENCIA]?.nos.find((x) => x.k === k)
         return n?.rotulo !== undefined ? ` "${n.rotulo.slice(0, 60)}"` : n ? ` <${n.tag} ${n.role}, ${n.n} car.>` : ""
       }
-      for (const [tipo, lista] of [["(e)", r.e], ["(b)", r.b]]) {
+      for (const [tipo, lista, reprova] of [["(e)", r.e, r.reprova], ["(b)", r.b, r.reprovaB]]) {
         lista.slice(0, LIMITE).forEach((o) => {
           const m = `${cab} ${tipo} ${o.tipo}: ${o.k}${rotulo(o.k)}`
-          if (r.reprova) falha(m); else console.log(`    · ${m}`)
+          if (reprova) falha(m); else console.log(`    · ${m}`)
         })
-        if (lista.length > LIMITE) { if (r.reprova) { falhas += lista.length - LIMITE; console.log(`  ✗ … e mais ${lista.length - LIMITE} ${tipo} em ${cab}`) } else console.log(`    · … e mais ${lista.length - LIMITE}`) }
+        if (lista.length > LIMITE) { if (reprova) { falhas += lista.length - LIMITE; console.log(`  ✗ … e mais ${lista.length - LIMITE} ${tipo} em ${cab}`) } else console.log(`    · … e mais ${lista.length - LIMITE}`) }
       }
     }
   }

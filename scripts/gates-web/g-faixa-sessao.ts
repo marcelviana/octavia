@@ -63,8 +63,9 @@ export default async function preparar(_config: FullConfig): Promise<() => Promi
     }
     if (porSup.size) fs.mkdirSync(saida, { recursive: true })
     for (const [id, lista] of porSup) {
-      const junto = juntar(lista)
-      fs.writeFileSync(path.join(saida, `${id}.json`), JSON.stringify(junto, null, 1) + '\n')
+      const arq = path.join(saida, `${id}.json`)
+      const junto = mesclar(fs.existsSync(arq) ? JSON.parse(fs.readFileSync(arq, 'utf8')) : null, juntar(lista))
+      fs.writeFileSync(arq, JSON.stringify(junto, null, 1) + '\n')
       // estado não medido não some do resumo (1ª rodada do CN: o `content` sumiu calado, div. 629)
       for (const [eid, e] of Object.entries(junto.estados as Record<string, { pulado?: string; naoAlcancado?: Record<string, string>; inalcancavel?: string }>)) {
         if (e.pulado) console.log(`G-faixa · ${id} · ${eid}: NÃO MEDIDO — ${e.pulado}`)
@@ -81,8 +82,40 @@ export default async function preparar(_config: FullConfig): Promise<() => Promi
   }
 }
 
+type Junto = Record<string, unknown> & {
+  estados: Record<string, { larguras?: Record<string, unknown>; folha?: unknown; naoAlcancado?: Record<string, string>; [k: string]: unknown }>
+  requests?: Record<string, unknown>; controlePositivo?: Record<string, unknown>; rodadas?: Record<string, { rodada: unknown; commit: unknown }>
+}
+
+/**
+ * I1-PR6 (commit 4): a rodada nova substitui SÓ as larguras que mediu — uma rodada de `--project A-411`
+ * não apaga C e B do JSON já gravado. Cada largura guarda a SUA rodada e o SEU commit (`rodadas`), para
+ * o veredito e o anexo dizerem de onde vem cada medição. O resto (estado sem largura nova) fica como estava.
+ */
+function mesclar(velho: Junto | null, novo: Junto): Junto {
+  const larguras = Object.keys(novo.requests ?? {})
+  const rodadas = { ...(velho?.rodadas ?? {}) }
+  if (velho && !velho.rodadas) for (const L of Object.keys(velho.requests ?? {})) rodadas[L] = { rodada: velho.rodada, commit: velho.commit }
+  for (const L of larguras) rodadas[L] = { rodada: novo.rodada, commit: novo.commit }
+  if (!velho) return { ...novo, rodadas }
+  const fica = (o: Record<string, unknown> | undefined) => Object.fromEntries(Object.entries(o ?? {}).filter(([L]) => !larguras.includes(L)))
+  const estados: Junto['estados'] = {}
+  for (const id of new Set([...Object.keys(velho.estados), ...Object.keys(novo.estados)])) {
+    const v = velho.estados[id] ?? {}, n = novo.estados[id] ?? {}
+    const e = { ...v, ...n, larguras: { ...fica(v.larguras), ...(n.larguras ?? {}) } }
+    const na = { ...fica(v.naoAlcancado), ...(n.naoAlcancado ?? {}) } as Record<string, string>
+    if (Object.keys(na).length) e.naoAlcancado = na; else delete e.naoAlcancado
+    estados[id] = e
+  }
+  return {
+    ...novo, estados, rodadas,
+    requests: { ...fica(velho.requests), ...(novo.requests ?? {}) },
+    controlePositivo: { ...fica(velho.controlePositivo), ...(novo.controlePositivo ?? {}) },
+  }
+}
+
 /** As peças (uma por largura) de uma superfície viram um JSON só. */
-function juntar(pecas: Record<string, unknown>[]): Record<string, unknown> {
+function juntar(pecas: Record<string, unknown>[]): Junto {
   const [primeira] = pecas
   const out: Record<string, unknown> = { ...(primeira as object), estados: {}, requests: {}, controlePositivo: {} }
   const estados = out.estados as Record<string, { larguras: Record<string, unknown>; folha?: unknown; pulado?: string; naoAlcancado?: Record<string, string>; inalcancavel?: string }>
@@ -101,7 +134,7 @@ function juntar(pecas: Record<string, unknown>[]): Record<string, unknown> {
     ;(out.controlePositivo as Record<string, unknown>)[L] = p.controlePositivo
   }
   delete out.largura
-  return out
+  return out as Junto
 }
 
 /** Abre o perfil e diz se `/dashboard` fica (sessão) ou cai em `/login`. Com janela, espera o login. */
