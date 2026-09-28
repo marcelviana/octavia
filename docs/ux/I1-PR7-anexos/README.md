@@ -8,14 +8,21 @@
 > **Convenções**: `[medido]` = comando + saída literal (em `cn/`); `[lido]` = arquivo:linha; `[hipótese]` = o resto.
 > Divergências **a partir de 683**, numeração conferida pela coluna:
 > `git grep -nE '^\| \*\*6[0-9][0-9]\*\* \| [A-Z]' docs | … | sort -n | tail -1` → 682.
-> **Estado**: commit 1 (gate-first) — aguardando o aval.
+> **Estado**: commit 1 (gate-first, `ce617f1`), commit 2 (a implementação, `7ae343e`, §9–§11) e **commit 3 (aceite e
+> docs, §12–§16)**. Divergências: 683–687 (§6), **688–691** (§15). **Veredito do aceite: PASSA — (e) = 0 e (b) = 0 nas
+> TRÊS larguras (1138 · 711 · 411)**; as 8 erratas candidatas cobertas pela I1-E11 (§12).
 
 | arquivo | o que é |
 |---|---|
 | `cn/g-tok-main.txt` | G-tok (ii) na `main` com `app/page.tsx` na lista — **REPROVA 351** |
 | `cn/g-faixa-veredito-cobertura-cn.txt` | o veredito com `erratasFaixa` sobre os cinco JSON de auth commitados — 46 "coberta por", 0 sem cobertura |
 | `cn/g-faixa-veredito-sem-cobertura-cn.txt` | o mesmo veredito sobre uma fixture com UMA diferença fora das `erratasFaixa` — "sem cobertura 1" |
-| `cn/g-faixa-esperado.txt` | a folha `2-landing` medida → `tests/gates-web/esperado/2-landing.json` |
+| `cn/g-faixa-esperado.txt` | a folha `2-landing` medida → `tests/gates-web/esperado/2-landing.json` (commit 1, sem a marca) |
+| `cn/g-faixa-img-alt-antes.txt` · `-depois.txt` | CN da div. 686: `<img alt>` como nó — o caso novo REPROVA na coleta de antes, os 3 casos PASSAM depois |
+| `cn/g-faixa-esperado-img-alt.txt` | a folha re-medida com a regra: `2-landing` ganha a marca (5 nós); `1-auth` **byte a byte igual** |
+| `cn/g-tok-depois.txt` · `g-back-depois.txt` · `g-palco.txt` · `pnpm-test.txt` · `cn-pr1.txt` · `lint.txt` · `build.txt` | os verdes do commit 2 |
+| `cn/g-faixa-aceite.txt` | o veredito do aceite (os seis JSON), verbatim |
+| `capturas/landing-{C-1138,B-711,A-411}.png` | uma captura por largura (errata da I1-D12), `next dev` sem `.env` |
 
 ---
 
@@ -140,3 +147,181 @@ que a landing não tem). Frases em `components/landing/frases-landing.ts` (o pad
 | executor | requests a `https://octavia.rocks` ou preview · logins · `.env*` abertos · escritas · contas | **0 · 0 · 0 · 0 · 0** |
 | executor | navegador | só contra a folha, por `file://` |
 | executor | `next dev` | nenhum neste commit |
+
+---
+
+## 9. O aval do commit 1 — decisões `[Marcel, 2026-09-28]`
+
+1. **Div. 684**: a frase usa **`lineHeight.text`** (1,55; `leading-entrelinha-text`). **Errata I1-E11** no
+   `docs/ux/DESIGN-I1/README.md` §2.2 e em `erratasFaixa` do `erratas.json`: *"a folha `2-landing` renderizou a frase
+   com 1,45; a tabela declara `lineHeight.text` (1,55), que é o que vale"*. `SHA256SUMS` regenerado (docs do
+   congelamento).
+2. **Div. 687**: `LinkBotao` e as classes do principal e do secundário sobem para
+   **`components/identidade/link-botao.tsx`**; o auth importa de lá, mesmas classes, mesmo DOM. `components/identidade/`
+   é a casa dos componentes do molde; a `LinhaDeAviso` fica em `components/auth/` até a superfície que precisar dela.
+3. **Div. 685**: `public/images/band-hero.webp` sai, extra declarado.
+4. **Div. 686**: a coleta trata `<img alt="…">` como nó (nome = `alt`), para que a marca cortada conte como (b). CN com
+   fixture; `esperado/2-landing.json` regravado (a marca entra); a folha `1-auth` re-medida só para conferir.
+
+## 10. Commit 2 — o que mudou `[medido]`
+
+| grupo | arquivos | o quê |
+|---|---|---|
+| a tela | `app/page.tsx` (**350 → 48 linhas**), `components/landing/frases-landing.ts` (novo) | a folha `2-landing`, T-I1-R111 (C) e T-I1-R112 (B): marca \| coluna em C com `gap-web-vao-auth`, empilhada em B/A (o padrão, sem o `c:`); marca `w-web-marca-largura h-web-marca-altura` com o PNG do auth e `alt` = `landing.marca`; coluna `w-web-coluna-auth max-w-full` com `gap-espaco-xxl`; frase `font-fam-display-medium font-peso-display-medium text-tam-title leading-entrelinha-text`; *Entrar* = `LinkBotao principal icone="log-in"` → `/login`; *Criar conta* = `LinkBotao` → `/signup` (grupo `gap-espaco-lg`); o link `text-tam-label text-cor-accent-ink` → `/privacy-policy`. A: `px-web-margem` e `max-w-full` (errata da I1-D11). Server component, sem sessão, sem redirect |
+| identidade (div. 687) | `components/identidade/link-botao.tsx` (novo), `components/auth/controles-auth.tsx`, `app/forgot-password/page.tsx`, `app/signup/confirm-email/page.tsx` | `BOTAO_PRINCIPAL`, `BOTAO_SECUNDARIO` e `LinkBotao` saem de `controles-auth.tsx` (que importa as duas classes-base de lá); as duas páginas de auth importam o `LinkBotao` de `identidade`. As strings de classe são as mesmas, byte a byte |
+| asset (div. 685) | `public/images/band-hero.webp` | apagado (150 720 bytes) |
+| instrumento (div. 686) | `scripts/gates-web/g-faixa-coleta.ts`, `tests/gates-web/g-faixa-coleta.cn.ts`, `tests/gates-web/esperado/2-landing.json` | `img[alt]:not([alt=""])` entra no `MARCADO`, papel `img`, nome = `alt`; `alt=""` segue decorativo (o `CascaAuth` usa `alt=""` dentro do `role=img`) |
+| medidor | `scripts/gates-web/g-faixa-superficies.ts` | `landing` implementada: um estado, `LANDING` (`secao: 'LANDING'`, `espera: 'Criar conta'`) |
+| G-tok | `scripts/gates-web/g-tok-arquivos.txt` | + `components/landing/frases-landing.ts`, + `components/identidade/link-botao.tsx` (o `app/page.tsx` entrou no commit 1) |
+| docs do congelamento | `docs/ux/DESIGN-I1/README.md` §2.2, `erratas.json` (`erratasFaixa`), `SHA256SUMS` | a I1-E11; só a linha do `README.md` muda no `SHA256SUMS` (`d7ade82a…` → `c7407aaf…`); `shasum -a 256 -c` → 14/14 OK |
+
+Zero mudança de comportamento (I1-D9): os três destinos são os de antes; nenhum link novo; nenhum `href="#"`, nenhum
+`@/components/ui/*`, nenhum `lucide-react`, nenhum toast, nenhum literal em inglês na página.
+
+### 10.1 O CN do `<img alt>` (div. 686)
+
+| caso | resultado | arquivo |
+|---|---|---|
+| fixture: `<img alt="Octavia">` 340 × 219 com `margin-left: 200px` num contêiner `overflow: hidden`, mais um `<img alt="">` | coleta de ANTES: **falha** — os nós saem `[]` (a imagem não era vista, o (b) de 411 era 0) | `cn/g-faixa-img-alt-antes.txt` |
+| a mesma, coleta de DEPOIS | nós `["img:Octavia"]`; (b) de 1138 `[]`; (b) de 411 **1** (`borda do viewport`); o `alt=""` fica fora; os dois casos da PR-5/PR-6 seguem verdes — **3 passed** | `cn/g-faixa-img-alt-depois.txt` |
+| a folha `2-landing` re-medida | 4 → **5 nós** em C e em B: a marca, C `x 118 · y 76,9`, B `x 184,5 · y 48`, 340 × 219 | `cn/g-faixa-esperado-img-alt.txt` |
+| a folha `1-auth` re-medida | **byte a byte igual** ao `esperado/1-auth.json` commitado (`cmp` → igual): a marca do auth já era nó (div. 688) | idem |
+
+Os cinco JSON de auth commitados não ganham "sem par folha" novo: o esperado de auth não mudou, e o app de auth tem a
+imagem com `alt=""` (fora) dentro do `role=img` com `aria-label` (dentro, como antes).
+
+## 11. Os gates — verdes `[medido]`
+
+| gate / suíte | resultado | arquivo |
+|---|---|---|
+| G-tok | **PASSA**: (i) 19/19 cobertos, 0 órfãs; (ii) `arquivos: 19 · literais de identidade acusados: 0 · toasts: 0 · imports de ui: 0` | `cn/g-tok-depois.txt` |
+| G-back | **PASSA** sem linha `gback:` — nenhum arquivo do núcleo tocado | `cn/g-back-depois.txt` |
+| G-palco | **PASSA — 0** | `cn/g-palco.txt` |
+| `pnpm test` | `Test Files 108 passed \| 3 skipped (111)` · `Tests 1071 passed \| 77 skipped (1148)` — nenhum teste da landing velha existia, nenhum morreu | `cn/pnpm-test.txt` |
+| CN da PR-1 (`components/auth/__tests__/login-sessao-cn.test.tsx`) | **15/15** | `cn/cn-pr1.txt` |
+| `tsc --noEmit` (raiz) | 0 erros | — |
+| `pnpm lint` | `✔ No ESLint warnings or errors` | `cn/lint.txt` |
+| `pnpm build` | `✓ Compiled successfully`; `┌ ƒ /  190 B  111 kB` — **dinâmica, como todas as rotas** (div. 689) | `cn/build.txt` |
+| `shasum -a 256 -c SHA256SUMS` (DESIGN-I1) | 14/14 OK | — |
+
+## 12. O aceite — o veredito `[medido]`
+
+Rodada do executor: `2026-09-28T14:12:30Z`, `http://localhost:3107` (a 3000 estava ocupada pelo `next-server` da árvore
+`../octavia-i1-pr6` — não mexido; div. 691), commit **`7ae343e`** (árvore limpa, sem `+sujo`), Chromium 140.0.7339.16.
+**`next dev` sem `.env`**: a árvore só tem `.env.example` (`ls`, não aberto); o log do `next dev` **não** tem a linha
+*"Environments: …"* e diz *"Firebase not configured - missing environment variables"*. Saída:
+`tests/gates-web/medicoes/landing.json`. Veredito verbatim (os seis JSON): `cn/g-faixa-aceite.txt`.
+
+```
+$ node scripts/gates-web/g-faixa-veredito.mjs
+## contados à parte (não reprovam): errata candidata 54 · sem par folha 106 · sem par app 74 (C e B) · não medidos 10
+## erratas candidatas sem cobertura (erratasFaixa, div. 681): 0
+G-faixa: PASSA
+# exit: 0
+```
+
+| largura | (e) | (b) | (d′) | errata candidata | sem par folha/app | inalcançáveis em A |
+|---|---|---|---|---|---|---|
+| **1138** (C) | **0** | **0** | 0 | 4 — coberta por I1-E11 | 0 / 0 | — |
+| **711** (B) | **0** | **0** | 0 | 4 — coberta por I1-E11 | 0 / 0 | — |
+| **411** (A) | **0** | **0** | 0 | — | — | **0** |
+
+As 8 candidatas, iguais em C e B: a frase `Δh +4,4`; *Entrar*, *Criar conta* e o link `Δy +4,4` — a entrelinha da
+I1-E11, nada mais. O `Δx 1` de tudo é a borda de 1 px da moldura da folha (abaixo da tolerância de 4). A marca pareia
+(`Δ ≤ 1`) nas duas faixas. O log de requests: 35 por largura, **0** a `octavia.rocks`, `/api/*` só os dois
+`GET /api/health` do controle positivo — **0 escritas**.
+
+**A primeira rodada** (`14:07:22Z`, commit `ce617f1+sujo`, a implementação ainda fora do commit) deu o mesmo:
+(e) = 0 e (b) = 0 nas três, e as mesmas 8 candidatas, então **sem cobertura** (a I1-E11 ainda não estava no
+`erratas.json`). Nada a consertar; por isso não ficou em `medicoes/landing-rodada1/` (a regra guarda a rodada que
+reprova) e a do aceite foi refeita com o commit 2 limpo.
+
+Capturas (uma por largura, `fullPage`): `capturas/landing-C-1138.png`, `landing-B-711.png`, `landing-A-411.png` (o selo
+"N" no canto é o indicador do `next dev`).
+
+## 13. As frases
+
+### 13.1 As cinco (`components/landing/frases-landing.ts`)
+
+| chave | texto | origem |
+|---|---|---|
+| `landing.frase` | organize, veja e compartilhe cifras, letras, tabs e partituras | §5.3 |
+| `landing.entrar` | Entrar | §5.3 (principal, decisão 16) |
+| `landing.criar` | Criar conta | §5.3 (secundário) |
+| `landing.politica` | Política de privacidade | §5.3 |
+| `landing.marca` | Octavia | §5.3 (nome acessível: o `alt` da marca) |
+
+### 13.2 As cortadas
+
+O dicionário do pre-check (`docs/ux/I1-PRECHECK-anexos/frases-web.txt`) tem **52 registros** de `app/page.tsx`: 47
+`jsx` e 5 `attr:alt` (div. 690). **12 viraram as cinco chaves**: *Sign In* ×3 → `landing.entrar`; *Sign Up*, *Get
+Started Free*, *Create Free Account* → `landing.criar`; o *Organize, visualize…* → `landing.frase` (sem o resto);
+*Privacy Policy* → `landing.politica`; `alt` *Octavia* ×4 → `landing.marca`. **40 morreram**:
+
+- cabeçalho e hero (4): *🎵 Digital Music Revolution* · *Your Music Library,* · *Digitized* · o `alt` da foto
+  (*Musician performing with digital sheet music on tablet*);
+- features (10): *Why Musicians Choose Octavia* · *Powerful features designed by musicians, for musicians* · os quatro
+  títulos (*Digital Sheet Music*, *Smart Annotations*, *Guitar Tabs & More*, *Multi-User Access*) e os quatro textos;
+- depoimentos (11): *Loved by Musicians Everywhere* · *See what our community is saying…* · os três nomes (*Sarah M.*,
+  *Mike R.*, *Alex K.*), os três papéis (*Classical Guitarist*, *Band Leader*, *Music Teacher*) e as três citações;
+- CTA (2): *Ready to Organize Your Music?* · *Join thousands of musicians…*;
+- rodapé (13): *Your digital music companion…* · *Product* · *Features* · *Pricing* · *FAQ* · *Company* · *About* ·
+  *Blog* · *Contact* · *Legal* · *Terms* · *©* · *Octavia. All rights reserved.*
+
+(As iniciais *S*, *M*, *A* dos avatares não estão no dicionário — não são frase.) Os 7 `href="#"` morreram com o
+rodapé.
+
+## 14. G-tok — antes × depois `[medido]`
+
+| lista | gate | resultado | arquivo |
+|---|---|---|---|
+| os 16 de auth + `app/page.tsx` da `main` | commit 1 | `REPROVA — 351` (todas em `app/page.tsx`) | `cn/g-tok-main.txt` |
+| os 19 da branch (+ `frases-landing.ts`, + `link-botao.tsx`) | commit 2 | `PASSA` — `literais 0 · toasts 0 · imports de ui 0` | `cn/g-tok-depois.txt` |
+
+## 15. Divergências — 688 a 691
+
+| # | origem | o que o prompt (ou o doc) presumiu | o que foi medido | destino |
+|---|---|---|---|---|
+| **688** | P | item 4: *"re-medir a folha `1-auth` só para conferir que o esperado de auth ganha a marca"* | a marca da `1-auth` é `div role=img aria-label="Octavia"` (a folha não tem nenhum `<img>`): já era nó; o `esperado/1-auth.json` re-medido sai **byte a byte igual** | registrado; nada a fechar na próxima re-medição da auth por causa desta regra |
+| **689** | P | *"a `/` continua estática na tabela de rotas"* | a tabela de rotas marca **todas** as páginas `ƒ` (Dynamic), a `/` inclusive (190 B): o `app/layout.tsx:35` lê o nonce da CSP (`await getCSPNonce()`) para toda rota — já era assim na `main` `[lido]`; nenhuma linha de `app/layout.tsx` mudou | registrado; a página em si continua server component sem sessão, sem `use client` e sem redirect |
+| **690** | P | *"a vitrine (43 frases)"* | o dicionário do pre-check tem **52** registros de `app/page.tsx` (47 `jsx` + 5 `alt`); 12 viraram as cinco chaves e **40** morreram | a contagem do §13.2 |
+| **691** | T | *"G-faixa … contra `localhost:3000`"* | a 3000 estava ocupada pelo `next-server` da árvore `../octavia-i1-pr6` (`lsof`, `cwd`) | medido na **3107**, `next dev` desta árvore, sem `.env`; o servidor alheio não foi tocado (como a div. 644) |
+
+Com destino, as de antes: 683 (`LANDING`, aplicado), 684 (→ I1-E11), 685 (asset apagado), 686 (`<img alt>` é nó), 687
+(`components/identidade/link-botao.tsx`).
+
+## 16. O molde — o que a próxima superfície herda (acréscimo ao §12 da I1-PR-6)
+
+1. **`components/identidade/` é a casa** dos componentes do molde: o que uma segunda superfície precisa sobe para lá,
+   numa PR que o declare (aqui: `link-botao.tsx` — `LinkBotao`, `BOTAO_PRINCIPAL`, `BOTAO_SECUNDARIO`). A
+   `LinhaDeAviso` segue em `components/auth/` até a superfície que precisar dela a mover.
+2. **`<img alt="…">` é nó** do G-faixa (nome = `alt`; `alt=""` é decorativo e fica fora): marca cortada conta como (b).
+3. **O veredito diz a cobertura** de cada errata candidata (`erratasFaixa`, div. 681); uma errata da folha achada pelo
+   G-faixa entra lá com `estados` e `n`, e no `DESIGN-I1/README.md` §2.2.
+
+### 16.1 Bloco ```gates-web``` e extras (copiados do corpo da PR)
+
+```gates
+# I1-PR-7: nada do nativo
+```
+
+```gates-web
+# I1-PR-7: nenhum arquivo do núcleo do G-back tocado (G-back PASSA sem declaração)
+gtok: scripts/gates-web/g-tok-arquivos.txt — +app/page.tsx, +components/landing/frases-landing.ts, +components/identidade/link-botao.tsx
+gfaixa: scripts/gates-web/g-faixa-veredito.mjs — lê erratasFaixa, div. 681
+gfaixa: scripts/gates-web/g-faixa-coleta.ts — img alt como nó, div. 686
+# extras: public/images/band-hero.webp apagado (div. 685)
+# docs do congelamento: docs/ux/DESIGN-I1/README.md §2.2 (I1-E11) + erratas.json (erratasFaixa) + SHA256SUMS (só a linha do README.md)
+# tests/gates-web/medicoes/landing.json — o aceite do executor (next dev sem .env, porta 3107, div. 691)
+```
+
+## 17. Contabilidade final da I1-PR-7
+
+| quem | item | valor |
+|---|---|---|
+| executor | requests a `https://octavia.rocks` ou preview · logins · `.env*` abertos · escritas · contas | **0 · 0 · 0 · 0 · 0** |
+| executor | `next dev` local **sem** `.env` (porta 3107; a árvore só tem `.env.example`) | 2 subidas: a 1ª rodada (14:07Z) e o aceite + capturas (14:12Z); paradas ao fim |
+| executor | navegador | a folha por `file://`; a landing em `localhost:3107` |
+| todos | requests a `octavia.rocks` | **0** (`prodAbortados` 0 nas três larguras) |
+| todos | escritas a `/api/*` | **0** (só `GET /api/health` do controle positivo) |
+| — | `packages/identidade` | **não mudou** (sem APK) |
