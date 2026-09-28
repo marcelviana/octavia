@@ -67,8 +67,10 @@ export const SUPERFICIES: Superficie[] = [
   { id: 'confirm-email', rota: '/signup/confirm-email', sessao: false, publica: true, folha: '1-auth', implementada: true, estados: paraEstados(ESTADOS_CONFIRM) },
   { id: 'verify-email', rota: '/verify-email', sessao: false, publica: true, folha: '1-auth', implementada: true, estados: paraEstados(ESTADOS_VERIFY) },
   { id: 'forgot-password', rota: '/forgot-password', sessao: false, publica: true, folha: '1-auth', implementada: true, estados: paraEstados(ESTADOS_FORGOT) },
-  // as duas públicas da I1-D19 (fora da lista do CN do prompt; entram porque são superfícies do I1 e não pedem sessão)
-  { id: 'landing', rota: '/', sessao: false, publica: true, folha: '2-landing', implementada: false, estados: { base: {} } },
+  // I1-PR7: a superfície 2, landing, IMPLEMENTADA — o único estado da folha `2-landing` (div. 683: `LANDING`,
+  // não `LAND-*`). Estática, sem sessão e sem Firebase: nada a fabricar.
+  { id: 'landing', rota: '/', sessao: false, publica: true, folha: '2-landing', implementada: true, estados: { LANDING: { secao: 'LANDING', espera: 'Criar conta' } } },
+  // a outra pública da I1-D19 (não pede sessão)
   { id: 'privacy-policy', rota: '/privacy-policy', sessao: false, publica: true, folha: '3-privacy-policy', implementada: false, estados: { base: {} } },
   { id: 'dashboard', rota: '/dashboard', sessao: true, publica: false, folha: '4-content-lista', implementada: false, estados: { base: {} } },
   { id: 'library', rota: '/library', sessao: true, publica: false, folha: '4-content-lista', implementada: false, estados: { base: {} } },

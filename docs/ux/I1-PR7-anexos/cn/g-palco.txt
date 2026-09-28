@@ -1,0 +1,5 @@
+$ sh scripts/gates-web/g-palco.sh
+  ✓ nenhum
+
+G-palco: PASSA — 0 ocorrências
+# exit: 0

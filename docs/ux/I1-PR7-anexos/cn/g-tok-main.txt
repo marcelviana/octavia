@@ -1,0 +1,357 @@
+$ node scripts/gates-web/g-tok.mjs --so-arquivos
+## (ii) arquivos redesenhados — scripts/gates-web/g-tok-arquivos.txt
+  ✗ app/page.tsx:11 [cor] "from-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:11 [cor] "via-orange-50" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:11 [cor] "to-red-50" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:13 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:13 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:36 [cor] "text-amber-700" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:36 [cor] "text-amber-900" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:36 [cor] "bg-amber-100" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:40 [cor] "from-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:40 [cor] "to-orange-600" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:40 [cor] "from-amber-700" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:40 [cor] "to-orange-700" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:40 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:52 [cor] "from-amber-100/20" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:52 [cor] "to-orange-100/20" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:53 [cor] "from-amber-200/30" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:53 [cor] "to-orange-200/30" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:54 [cor] "from-red-200/30" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:54 [cor] "to-pink-200/30" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:59 [cor] "from-amber-100" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:59 [cor] "to-orange-100" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:59 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:59 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:62 [cor] "from-gray-900" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:62 [cor] "via-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:62 [cor] "to-orange-800" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:64 [cor] "from-blue-600" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:64 [cor] "to-purple-600" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:68 [cor] "text-gray-700" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:75 [cor] "from-blue-600" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:75 [cor] "to-purple-600" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:75 [cor] "from-blue-700" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:75 [cor] "to-purple-700" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:75 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:83 [cor] "border-amber-300" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:83 [cor] "text-amber-700" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:83 [cor] "bg-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:83 [cor] "border-amber-400" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:92 [cor] "from-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:92 [cor] "to-orange-200" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:100 [cor] "border-white/50" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:109 [cor] "from-white" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:109 [cor] "via-amber-50/50" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:109 [cor] "to-orange-50/50" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:112 [cor] "from-gray-900" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:112 [cor] "to-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:115 [cor] "text-gray-600" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:120 [cor] "from-blue-50" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:120 [cor] "to-blue-100" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:120 [cor] "border-blue-200" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:121 [cor] "from-blue-500" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:121 [cor] "to-blue-600" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:122 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:124 [cor] "text-gray-900" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:125 [cor] "text-gray-700" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:129 [cor] "from-green-50" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:129 [cor] "to-green-100" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:129 [cor] "border-green-200" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:130 [cor] "from-green-500" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:130 [cor] "to-green-600" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:131 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:133 [cor] "text-gray-900" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:134 [cor] "text-gray-700" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:138 [cor] "from-purple-50" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:138 [cor] "to-purple-100" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:138 [cor] "border-purple-200" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:139 [cor] "from-purple-500" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:139 [cor] "to-purple-600" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:140 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:142 [cor] "text-gray-900" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:143 [cor] "text-gray-700" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:147 [cor] "from-orange-50" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:147 [cor] "to-red-100" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:147 [cor] "border-orange-200" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:148 [cor] "from-orange-500" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:148 [cor] "to-red-500" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:149 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:151 [cor] "text-gray-900" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:152 [cor] "text-gray-700" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:161 [cor] "from-amber-100" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:161 [cor] "via-orange-100" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:161 [cor] "to-red-100" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:162 [cor] "from-amber-200/20" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:162 [cor] "to-orange-200/20" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:165 [cor] "from-gray-900" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:165 [cor] "to-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:168 [cor] "text-gray-600" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:173 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:173 [cor] "border-white/50" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:175 [cor] "from-blue-500" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:175 [cor] "to-blue-600" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:175 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:179 [cor] "text-gray-900" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:180 [cor] "text-gray-600" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:183 [cor] "text-gray-700" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:188 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:188 [cor] "border-white/50" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:190 [cor] "from-green-500" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:190 [cor] "to-green-600" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:190 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:194 [cor] "text-gray-900" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:195 [cor] "text-gray-600" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:198 [cor] "text-gray-700" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:203 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:203 [cor] "border-white/50" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:205 [cor] "from-purple-500" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:205 [cor] "to-purple-600" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:205 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:209 [cor] "text-gray-900" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:210 [cor] "text-gray-600" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:213 [cor] "text-gray-700" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:223 [cor] "from-blue-600" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:223 [cor] "via-purple-600" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:223 [cor] "to-blue-700" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:223 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:224 [cor] "from-blue-800/20" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:224 [cor] "to-purple-800/20" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:226 [cor] "bg-white/10" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:227 [cor] "bg-purple-300/20" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:238 [cor] "bg-white" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:238 [cor] "text-blue-600" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:238 [cor] "bg-gray-100" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:246 [cor] "border-white" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:246 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:246 [cor] "bg-white" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:246 [cor] "text-blue-600" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:256 [cor] "from-gray-900" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:256 [cor] "to-gray-800" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:256 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:278 [cor] "text-gray-300" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:284 [cor] "text-amber-400" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:287 [cor] "text-gray-300" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:287 [cor] "text-amber-400" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:292 [cor] "text-gray-300" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:292 [cor] "text-amber-400" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:297 [cor] "text-gray-300" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:297 [cor] "text-amber-400" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:304 [cor] "text-amber-400" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:307 [cor] "text-gray-300" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:307 [cor] "text-amber-400" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:312 [cor] "text-gray-300" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:312 [cor] "text-amber-400" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:317 [cor] "text-gray-300" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:317 [cor] "text-amber-400" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:324 [cor] "text-amber-400" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:329 [cor] "text-gray-300" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:329 [cor] "text-amber-400" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:335 [cor] "text-gray-300" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:335 [cor] "text-amber-400" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:343 [cor] "border-gray-700" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:343 [cor] "text-gray-400" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:62 [tamanho de fonte] "text-4xl" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:62 [tamanho de fonte] "text-6xl" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:68 [tamanho de fonte] "text-xl" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:112 [tamanho de fonte] "text-4xl" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:115 [tamanho de fonte] "text-xl" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:124 [tamanho de fonte] "text-xl" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:133 [tamanho de fonte] "text-xl" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:142 [tamanho de fonte] "text-xl" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:151 [tamanho de fonte] "text-xl" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:165 [tamanho de fonte] "text-4xl" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:168 [tamanho de fonte] "text-xl" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:180 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:195 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:210 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:230 [tamanho de fonte] "text-4xl" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:230 [tamanho de fonte] "text-5xl" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:231 [tamanho de fonte] "text-xl" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:238 [tamanho de fonte] "text-lg" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:246 [tamanho de fonte] "text-lg" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:14 [espaçamento] "px-4" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:14 [espaçamento] "py-4" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:15 [espaçamento] "space-x-2" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:35 [espaçamento] "space-x-4" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:50 [espaçamento] "py-20" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:50 [espaçamento] "px-4" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:53 [espaçamento] "top-20" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:53 [espaçamento] "left-10" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:54 [espaçamento] "bottom-20" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:54 [espaçamento] "right-10" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:58 [espaçamento] "mb-10" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:59 [espaçamento] "px-4" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:59 [espaçamento] "py-2" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:59 [espaçamento] "mb-6" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:62 [espaçamento] "mb-6" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:68 [espaçamento] "mb-8" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:72 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:72 [espaçamento] "space-x-4" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:90 [espaçamento] "pl-10" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:92 [espaçamento] "-inset-4" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:109 [espaçamento] "py-20" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:110 [espaçamento] "px-4" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:111 [espaçamento] "mb-16" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:112 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:119 [espaçamento] "gap-8" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:120 [espaçamento] "p-8" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:121 [espaçamento] "mb-6" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:124 [espaçamento] "mb-3" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:129 [espaçamento] "p-8" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:130 [espaçamento] "mb-6" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:133 [espaçamento] "mb-3" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:138 [espaçamento] "p-8" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:139 [espaçamento] "mb-6" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:142 [espaçamento] "mb-3" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:147 [espaçamento] "p-8" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:148 [espaçamento] "mb-6" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:151 [espaçamento] "mb-3" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:161 [espaçamento] "py-20" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:163 [espaçamento] "px-4" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:164 [espaçamento] "mb-16" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:165 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:172 [espaçamento] "gap-8" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:173 [espaçamento] "p-8" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:174 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:178 [espaçamento] "ml-4" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:188 [espaçamento] "p-8" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:189 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:193 [espaçamento] "ml-4" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:203 [espaçamento] "p-8" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:204 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:208 [espaçamento] "ml-4" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:223 [espaçamento] "py-24" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:226 [espaçamento] "top-20" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:226 [espaçamento] "left-20" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:227 [espaçamento] "bottom-20" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:227 [espaçamento] "right-20" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:229 [espaçamento] "px-4" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:230 [espaçamento] "mb-6" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:231 [espaçamento] "mb-10" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:235 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:235 [espaçamento] "space-x-6" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:238 [espaçamento] "px-8" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:238 [espaçamento] "py-4" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:246 [espaçamento] "px-8" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:246 [espaçamento] "py-4" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:256 [espaçamento] "py-16" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:257 [espaçamento] "px-4" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:259 [espaçamento] "mb-8" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:260 [espaçamento] "space-x-2" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:260 [espaçamento] "mb-6" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:282 [espaçamento] "gap-8" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:284 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:285 [espaçamento] "space-y-3" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:304 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:305 [espaçamento] "space-y-3" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:324 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:325 [espaçamento] "space-y-3" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:343 [espaçamento] "mt-12" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:343 [espaçamento] "pt-8" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:53 [tamanho] "w-72" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:53 [tamanho] "h-72" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:54 [tamanho] "w-96" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:54 [tamanho] "h-96" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:56 [tamanho] "max-w-6xl" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:115 [tamanho] "max-w-2xl" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:121 [tamanho] "w-16" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:121 [tamanho] "h-16" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:122 [tamanho] "w-8" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:122 [tamanho] "h-8" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:130 [tamanho] "w-16" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:130 [tamanho] "h-16" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:131 [tamanho] "w-8" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:131 [tamanho] "h-8" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:139 [tamanho] "w-16" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:139 [tamanho] "h-16" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:140 [tamanho] "w-8" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:140 [tamanho] "h-8" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:148 [tamanho] "w-16" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:148 [tamanho] "h-16" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:149 [tamanho] "w-8" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:149 [tamanho] "h-8" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:168 [tamanho] "max-w-2xl" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:175 [tamanho] "w-12" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:175 [tamanho] "h-12" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:190 [tamanho] "w-12" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:190 [tamanho] "h-12" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:205 [tamanho] "w-12" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:205 [tamanho] "h-12" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:226 [tamanho] "w-64" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:226 [tamanho] "h-64" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:227 [tamanho] "w-80" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:227 [tamanho] "h-80" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:231 [tamanho] "max-w-3xl" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:278 [tamanho] "max-w-xs" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:99 [tamanho] "max-width: 768px" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:53 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:54 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:59 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:92 [raio] "rounded-2xl" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:100 [raio] "rounded-2xl" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:120 [raio] "rounded-2xl" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:121 [raio] "rounded-2xl" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:129 [raio] "rounded-2xl" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:130 [raio] "rounded-2xl" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:138 [raio] "rounded-2xl" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:139 [raio] "rounded-2xl" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:147 [raio] "rounded-2xl" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:148 [raio] "rounded-2xl" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:173 [raio] "rounded-2xl" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:175 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:188 [raio] "rounded-2xl" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:190 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:203 [raio] "rounded-2xl" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:205 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:226 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:227 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:13 [borda] "border-b" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:59 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:83 [borda] "border-2" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:100 [borda] "border-4" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:120 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:129 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:138 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:147 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:173 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:188 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:203 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:246 [borda] "border-2" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:343 [borda] "border-t" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:62 [entrelinha] "leading-tight" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:68 [entrelinha] "leading-relaxed" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:125 [entrelinha] "leading-relaxed" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:134 [entrelinha] "leading-relaxed" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:143 [entrelinha] "leading-relaxed" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:152 [entrelinha] "leading-relaxed" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:183 [entrelinha] "leading-relaxed" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:198 [entrelinha] "leading-relaxed" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:213 [entrelinha] "leading-relaxed" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:231 [entrelinha] "leading-relaxed" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:278 [entrelinha] "leading-relaxed" — use a custom property de app/styles/identidade.css
+  ✗ app/page.tsx:1 [import de ui] "from \"@/components/ui/button\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ app/page.tsx:37 [inglês, texto JSX] "Sign In" ← termo "sign in"
+  ✗ app/page.tsx:43 [inglês, texto JSX] "Sign Up" ← termo "sign up"
+  ✗ app/page.tsx:68 [inglês, texto JSX] "Organize, visualize, and share your sheet music, tabs, and lyrics. Perfect for rehearsals and\n                performances with a modern, intuitive interface." ← termo "lyrics"
+  ✗ app/page.tsx:78 [inglês, texto JSX] "Get Started Free" ← termo "get started"
+  ✗ app/page.tsx:86 [inglês, texto JSX] "Sign In" ← termo "sign in"
+  ✗ app/page.tsx:112 [inglês, texto JSX] "Why Musicians Choose Octavia" ← termo "choose"
+  ✗ app/page.tsx:124 [inglês, texto JSX] "Digital Sheet Music" ← termo "sheet"
+  ✗ app/page.tsx:125 [inglês, texto JSX] "Import and organize all your sheet music, tabs, and lyrics in one beautiful, searchable library." ← termo "library"
+  ✗ app/page.tsx:134 [inglês, texto JSX] "Add notes, highlights, and markings directly onto your digital sheet music for better rehearsals." ← termo "notes"
+  ✗ app/page.tsx:143 [inglês, texto JSX] "Support for multiple music formats including guitar tabs, chord charts, and traditional notation." ← termo "and"
+  ✗ app/page.tsx:152 [inglês, texto JSX] "Secure, cloud-based access to your personal music library from any device, anywhere." ← termo "library"
+  ✗ app/page.tsx:168 [inglês, texto JSX] "See what our community is saying about their experience with Octavia" ← termo "with"
+  ✗ app/page.tsx:230 [inglês, texto JSX] "Ready to Organize Your Music?" ← termo "your"
+  ✗ app/page.tsx:231 [inglês, texto JSX] "Join thousands of musicians who use Octavia to manage their sheet music, tabs, and lyrics with style and\n            efficiency." ← termo "lyrics"
+  ✗ app/page.tsx:241 [inglês, texto JSX] "Create Free Account" ← termo "account"
+  ✗ app/page.tsx:249 [inglês, texto JSX] "Sign In" ← termo "sign in"
+  ✗ app/page.tsx:278 [inglês, texto JSX] "Your digital music companion for rehearsals and performances." ← termo "your"
+  ✗ app/page.tsx:330 [inglês, texto JSX] "Privacy Policy" ← termo "privacy"
+  ✗ app/page.tsx:335 [inglês, texto JSX] "Terms" ← termo "terms"
+  ✗ app/page.tsx:95 [inglês, atributo] "Musician performing with digital sheet music on tablet" ← termo "sheet"
+  arquivos: 17 · literais de identidade acusados: 330 · toasts: 0 · imports de ui: 1 · textos examinados: 50 · vocabulário: 109 · isenções: 9
+
+G-tok: REPROVA — 351 ocorrência(s)
+# exit: 1

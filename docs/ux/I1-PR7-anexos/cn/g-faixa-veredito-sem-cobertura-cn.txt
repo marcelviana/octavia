@@ -1,0 +1,47 @@
+# fixture: tests/gates-web/medicoes/forgot-password.json com UM nó da folha C de AUTH-forgot deslocado 10 px em x (estado fora das erratasFaixa)
+$ node scripts/gates-web/g-faixa-veredito.mjs <fixture>
+G-faixa (veredito) — /private/tmp/claude-501/-Users-marcelviana-projects-octavia/089852a5-6caa-4083-95a5-57a5e8575eaf/scratchpad/fix681: 1 medição(ões)
+
+## forgot-password (/forgot-password) — rodada 2026-09-28T12:31:21.156Z · base http://localhost:3000 · commit e45a5665ec091b1a3229eb6de92e6f71909d2eb4
+  inalcançáveis em A (411) — AUTH-forgot: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-forgot · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=1 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Trocar a senha" Δ[x,y,w,h]=[-9,0,0,0] — sem cobertura
+  AUTH-forgot · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-forgot · 411 (faixa A): (e)=0 · (b)=0 · (d′)=1 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-forgot-validacao: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-forgot-validacao · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=4 · sem par folha/app=1/0 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Octavia" Δ[x,y,w,h]=[1,-20.5,0,0] — coberta por I1-E7
+    · errata candidata: "Enviar o link" Δ[x,y,w,h]=[1,-41,0,0] — coberta por I1-E7
+    · errata candidata: "Lembrou a senha?" Δ[x,y,w,h]=[1,-41,-0.1,0] — coberta por I1-E7
+    · errata candidata: "Entrar" Δ[x,y,w,h]=[0.9,-41,0,0] — coberta por I1-E7
+    · sem par na folha: "[balão nativo do navegador — texto do sistema]"
+  AUTH-forgot-validacao · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=3 · sem par folha/app=1/0 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Enviar o link" Δ[x,y,w,h]=[1,-41,0,0] — coberta por I1-E7
+    · errata candidata: "Lembrou a senha?" Δ[x,y,w,h]=[1,-41,-0.1,0] — coberta por I1-E7
+    · errata candidata: "Entrar" Δ[x,y,w,h]=[0.9,-41,0,0] — coberta por I1-E7
+    · sem par na folha: "[balão nativo do navegador — texto do sistema]"
+  AUTH-forgot-validacao · 411 (faixa A): (e)=0 · (b)=0 · (d′)=1 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-forgot-enviando: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-forgot-enviando · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-forgot-enviando · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-forgot-enviando · 411 (faixa A): (e)=0 · (b)=0 · (d′)=1 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-forgot-indisponivel · 411: não alcançado — o texto esperado não apareceu: "a troca de senha não está disponível"
+  AUTH-forgot-indisponivel · 711: não alcançado — o texto esperado não apareceu: "a troca de senha não está disponível"
+  AUTH-forgot-indisponivel · 1138: não alcançado — o texto esperado não apareceu: "a troca de senha não está disponível"
+  inalcançáveis em A (411) — AUTH-forgot-erro: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-forgot-erro · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-forgot-erro · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-forgot-erro · 411 (faixa A): (e)=0 · (b)=0 · (d′)=2 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-forgot-sucesso: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-forgot-sucesso · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-forgot-sucesso · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-forgot-sucesso · 411 (faixa A): (e)=0 · (b)=0 · (d′)=1 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+
+## contados à parte (não reprovam): errata candidata 8 · sem par folha 2 · sem par app 0 (C e B) · não medidos 3
+## erratas candidatas sem cobertura (erratasFaixa, div. 681): 1
+  · forgot-password · AUTH-forgot-indisponivel · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "a troca de senha não está disponível"
+  · forgot-password · AUTH-forgot-indisponivel · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "a troca de senha não está disponível"
+  · forgot-password · AUTH-forgot-indisponivel · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "a troca de senha não está disponível"
+
+G-faixa: PASSA
+# exit: 0

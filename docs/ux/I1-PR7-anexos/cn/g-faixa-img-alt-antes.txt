@@ -1,0 +1,28 @@
+# ANTES da regra (coleta da main): o CN da div. 686
+$ G_FAIXA_BASE_URL=http://localhost G_FAIXA_SUPERFICIES=nenhuma pnpm exec playwright test -c playwright.g-faixa.config.ts tests/gates-web/g-faixa-coleta.cn.ts --project B-711 -g "img alt"
+
+
+  1) [B-711] › tests/gates-web/g-faixa-coleta.cn.ts:82:5 › coleta: <img alt> é nó; a marca fora do contêiner em 411 dá (b) 1; alt vazio não é nó 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 3
+    + Received  + 1
+
+    - Array [
+    -   "img:Octavia",
+    - ]
+    + Array []
+
+      92 |   const nos = larguras['1138'].nos.map((n) => `${n.role}:${n.rotulo}`)
+      93 |   console.log(JSON.stringify({ nos, b411: c['411'].b }, null, 2))
+    > 94 |   expect(nos).toEqual(['img:Octavia'])
+         |               ^
+      95 |   expect(c['1138'].b).toEqual([])
+      96 |   expect(c['411'].b.map((o: { tipo: string }) => o.tipo)).toEqual(['borda do contêiner'])
+      97 | })
+        at /Users/marcelviana/projects/octavia-i1-pr7/tests/gates-web/g-faixa-coleta.cn.ts:94:15
+
+  1 failed
+    [B-711] › tests/gates-web/g-faixa-coleta.cn.ts:82:5 › coleta: <img alt> é nó; a marca fora do contêiner em 411 dá (b) 1; alt vazio não é nó 
+# exit: 0

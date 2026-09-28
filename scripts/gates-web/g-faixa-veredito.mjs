@@ -19,6 +19,10 @@
 //   preparação são LISTADOS e contados à parte (não reprovam: o aceite os
 //   nomeia); a errata candidata e os nós SEM PAR com a folha (decisão 7) são
 //   LISTADOS por estado × largura.
+//   I1-PR7 (div. 681): cada errata candidata sai com a sua cobertura — "coberta por
+//   I1-E<n>" quando o estado está numa das `erratasFaixa` de
+//   docs/ux/DESIGN-I1/erratas.json, "sem cobertura" quando não; a contagem das sem
+//   cobertura sai à parte (não reprova: o aceite as nomeia, o Marcel decide).
 //
 // Uso (da raiz):  node scripts/gates-web/g-faixa-veredito.mjs [pasta]
 // Sai 0 se passa, 1 se reprova, 2 se o JSON não se lê.
@@ -28,6 +32,7 @@ import path from "node:path"
 import { classificarEstado, REFERENCIA } from "./g-faixa-classificar.mjs"
 
 const PASTA = process.argv[2] ?? "tests/gates-web/medicoes"
+const ERRATAS = process.env.G_FAIXA_ERRATAS ?? "docs/ux/DESIGN-I1/erratas.json"
 const CHROMIUM_FIXADO = "140.0.7339.16" // o mesmo do playwright.g-faixa.config.ts (lido abaixo)
 {
   const cfg = fs.readFileSync("playwright.g-faixa.config.ts", "utf8").match(/CHROMIUM_FIXADO = '([^']+)'/)?.[1]
@@ -64,10 +69,14 @@ const nomeDe = (n) => {
   return `<fora das frases do projeto: ${n.tag} ${n.role}, ${n.n} car., ${n.h_texto ?? n.h_nome}>`
 }
 
+// I1-PR7 (div. 681): as erratas da folha que o G-faixa acha — por estado da folha.
+const erratasFaixa = fs.existsSync(ERRATAS) ? (JSON.parse(fs.readFileSync(ERRATAS, "utf8")).erratasFaixa ?? []) : []
+const coberturaDe = (id, secao) => erratasFaixa.find((e) => (e.estados ?? []).some((x) => x === id || x === secao))?.id
+
 let falhas = 0
 const falha = (m) => { console.log(`  ✗ ${m}`); falhas++ }
 const naoMedidos = []
-let erratas = 0, semParFolha = 0, semParApp = 0
+let erratas = 0, semCobertura = 0, semParFolha = 0, semParApp = 0
 const LIMITE = 12 // ocorrências listadas por (tipo, largura); o resto só conta
 for (const f of arquivos) {
   let s
@@ -101,9 +110,13 @@ for (const f of arquivos) {
       const cab = `${id} · ${L}${L === "411" ? " (faixa A)" : ""}`
       console.log(`  ${cab}: (e)=${r.e.length} · (b)=${r.b.length} · (d′)=${r.dl.length} · errata candidata=${r.errata.length} · sem par folha/app=${r.semPar.folha.length}/${r.semPar.app.length} · saídas: nome-acessível=${r.saidas.nomeAcessivel} rolagem=${r.saidas.rolagem}`)
       // decisão 7: a errata candidata e os nós sem par com a folha, listados (nunca reprovam — decisão do Marcel)
-      if (r.reprova) { erratas += r.errata.length; semParFolha += r.semPar.folha.length; semParApp += r.semPar.app.length }
+      const cobertura = coberturaDe(id, estado.folha?.secao)
+      if (r.reprova) {
+        erratas += r.errata.length; semParFolha += r.semPar.folha.length; semParApp += r.semPar.app.length
+        if (!cobertura) semCobertura += r.errata.length
+      }
       const nomeNo = (k) => { const n = estado.larguras[L]?.nos.find((x) => x.k === k); return n ? nomeDe(n) : k }
-      for (const o of r.errata) console.log(`    · errata candidata: ${nomeNo(o.k)} Δ[x,y,w,h]=${JSON.stringify(o.delta)}`)
+      for (const o of r.errata) console.log(`    · errata candidata: ${nomeNo(o.k)} Δ[x,y,w,h]=${JSON.stringify(o.delta)} — ${cobertura ? `coberta por ${cobertura}` : "sem cobertura"}`)
       for (const o of r.semPar.folha) console.log(`    · sem par na folha: ${o.rotulo !== undefined ? JSON.stringify(String(o.rotulo).slice(0, 60)) : o.k}`)
       for (const o of r.semPar.app) console.log(`    · sem par no app: ${nomeNo(o.k)}`)
       const rotulo = (k) => {
@@ -122,6 +135,7 @@ for (const f of arquivos) {
 }
 if (naoMedidos.length || erratas || semParFolha || semParApp) {
   console.log(`\n## contados à parte (não reprovam): errata candidata ${erratas} · sem par folha ${semParFolha} · sem par app ${semParApp} (C e B) · não medidos ${naoMedidos.length}`)
+  console.log(`## erratas candidatas sem cobertura (erratasFaixa, div. 681): ${semCobertura}`)
   for (const m of naoMedidos) console.log(`  · ${m}`)
 }
 console.log(falhas ? `\nG-faixa: REPROVA — ${falhas} ocorrência(s)` : "\nG-faixa: PASSA")

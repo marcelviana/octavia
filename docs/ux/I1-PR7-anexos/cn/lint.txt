@@ -1,0 +1,4 @@
+> octavia@0.1.0 lint /Users/marcelviana/projects/octavia-i1-pr7
+> pnpm exec next lint
+
+✔ No ESLint warnings or errors

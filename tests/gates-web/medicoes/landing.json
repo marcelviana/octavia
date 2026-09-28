@@ -1,0 +1,1512 @@
+{
+ "superficie": "landing",
+ "rota": "/",
+ "folha": "2-landing",
+ "implementada": true,
+ "publica": true,
+ "rodada": "2026-09-28T14:12:30.831Z",
+ "base": "http://localhost:3107",
+ "chromium": "140.0.7339.16",
+ "commit": "7ae343e2d8da31d530db76cd59ece5ee65baf859",
+ "controlePositivo": {
+  "411": {
+   "controle1": "GET 200 falhou net::ERR_ABORTED",
+   "controle2": "GET 200 falhou net::ERR_ABORTED"
+  },
+  "711": {
+   "controle1": "GET 200 falhou net::ERR_ABORTED",
+   "controle2": "GET 200 falhou net::ERR_ABORTED"
+  },
+  "1138": {
+   "controle1": "GET 200 falhou net::ERR_ABORTED",
+   "controle2": "GET 200 falhou net::ERR_ABORTED"
+  }
+ },
+ "requests": {
+  "411": {
+   "linhas": [
+    {
+     "n": 1,
+     "ms": 70,
+     "metodo": "GET",
+     "caminho": "/",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 2,
+     "ms": 140,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 3,
+     "ms": 142,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 4,
+     "ms": 146,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 5,
+     "ms": 150,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 6,
+     "ms": 154,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 7,
+     "ms": 155,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 8,
+     "ms": 156,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 9,
+     "ms": 162,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_500Medium.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 10,
+     "ms": 163,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 11,
+     "ms": 165,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 12,
+     "ms": 179,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-1",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 13,
+     "ms": 213,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-2",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 14,
+     "ms": 214,
+     "metodo": "GET",
+     "caminho": "/",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 15,
+     "ms": 262,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 16,
+     "ms": 267,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 17,
+     "ms": 271,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 18,
+     "ms": 274,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 19,
+     "ms": 276,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 20,
+     "ms": 277,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 21,
+     "ms": 278,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 22,
+     "ms": 282,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_500Medium.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 23,
+     "ms": 283,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 24,
+     "ms": 283,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 25,
+     "ms": 1787,
+     "metodo": "GET",
+     "caminho": "/",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 26,
+     "ms": 1862,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 27,
+     "ms": 1863,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 28,
+     "ms": 1867,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 29,
+     "ms": 1870,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 30,
+     "ms": 1872,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 31,
+     "ms": 1875,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 32,
+     "ms": 1877,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 33,
+     "ms": 1882,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_500Medium.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 34,
+     "ms": 1883,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 35,
+     "ms": 1884,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim"
+    }
+   ],
+   "outrosHosts": {},
+   "prodAbortados": 0
+  },
+  "711": {
+   "linhas": [
+    {
+     "n": 1,
+     "ms": 62,
+     "metodo": "GET",
+     "caminho": "/",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 2,
+     "ms": 128,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 3,
+     "ms": 129,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 4,
+     "ms": 134,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 5,
+     "ms": 137,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 6,
+     "ms": 140,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 7,
+     "ms": 142,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 8,
+     "ms": 144,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 9,
+     "ms": 149,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_500Medium.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 10,
+     "ms": 152,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 11,
+     "ms": 154,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 12,
+     "ms": 169,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-1",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 13,
+     "ms": 207,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-2",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 14,
+     "ms": 210,
+     "metodo": "GET",
+     "caminho": "/",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 15,
+     "ms": 274,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 16,
+     "ms": 278,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 17,
+     "ms": 284,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 18,
+     "ms": 287,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 19,
+     "ms": 290,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 20,
+     "ms": 294,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 21,
+     "ms": 296,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 22,
+     "ms": 305,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_500Medium.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 23,
+     "ms": 306,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 24,
+     "ms": 306,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 25,
+     "ms": 1789,
+     "metodo": "GET",
+     "caminho": "/",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 26,
+     "ms": 1858,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 27,
+     "ms": 1859,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 28,
+     "ms": 1866,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 29,
+     "ms": 1871,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 30,
+     "ms": 1876,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 31,
+     "ms": 1879,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 32,
+     "ms": 1881,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 33,
+     "ms": 1885,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_500Medium.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 34,
+     "ms": 1886,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 35,
+     "ms": 1888,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim"
+    }
+   ],
+   "outrosHosts": {},
+   "prodAbortados": 0
+  },
+  "1138": {
+   "linhas": [
+    {
+     "n": 1,
+     "ms": 257,
+     "metodo": "GET",
+     "caminho": "/",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 2,
+     "ms": 508,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 3,
+     "ms": 509,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 4,
+     "ms": 517,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 5,
+     "ms": 523,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 6,
+     "ms": 527,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 7,
+     "ms": 529,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 8,
+     "ms": 530,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 9,
+     "ms": 539,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_500Medium.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 10,
+     "ms": 542,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 11,
+     "ms": 544,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 12,
+     "ms": 561,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-1",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 13,
+     "ms": 607,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-2",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 14,
+     "ms": 608,
+     "metodo": "GET",
+     "caminho": "/",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 15,
+     "ms": 664,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 16,
+     "ms": 668,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 17,
+     "ms": 672,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 18,
+     "ms": 677,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 19,
+     "ms": 678,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 20,
+     "ms": 679,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 21,
+     "ms": 680,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 22,
+     "ms": 684,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_500Medium.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 23,
+     "ms": 685,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 24,
+     "ms": 685,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 25,
+     "ms": 2186,
+     "metodo": "GET",
+     "caminho": "/",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 26,
+     "ms": 2253,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 27,
+     "ms": 2254,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 28,
+     "ms": 2258,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 29,
+     "ms": 2261,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 30,
+     "ms": 2264,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 31,
+     "ms": 2267,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 32,
+     "ms": 2267,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 33,
+     "ms": 2272,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_500Medium.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 34,
+     "ms": 2274,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 35,
+     "ms": 2275,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim"
+    }
+   ],
+   "outrosHosts": {},
+   "prodAbortados": 0
+  }
+ },
+ "estados": {
+  "LANDING": {
+   "larguras": {
+    "411": {
+     "url": "/",
+     "viewport": {
+      "w": 411,
+      "h": 823
+     },
+     "doc": {
+      "scrollWidth": 411,
+      "clientWidth": 411
+     },
+     "nos": [
+      {
+       "k": "img:e5b3dfe4ee10#1",
+       "role": "img",
+       "tag": "img",
+       "testid": null,
+       "h_texto": null,
+       "h_nome": "e5b3dfe4ee10",
+       "n": 0,
+       "rotulo": "Octavia",
+       "x": 35.5,
+       "y": 48,
+       "w": 340,
+       "h": 219,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:11b3592eced2#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "11b3592eced2",
+       "h_nome": null,
+       "n": 62,
+       "rotulo": "organize, veja e compartilhe cifras, letras, tabs e partituras",
+       "x": 24,
+       "y": 315,
+       "w": 363,
+       "h": 68.2,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:4105811890ae#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "4105811890ae",
+       "h_nome": null,
+       "n": 6,
+       "rotulo": "Entrar",
+       "x": 24,
+       "y": 415.2,
+       "w": 363,
+       "h": 56,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:8cb3525e3b7e#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "8cb3525e3b7e",
+       "h_nome": null,
+       "n": 11,
+       "rotulo": "Criar conta",
+       "x": 24,
+       "y": 487.2,
+       "w": 363,
+       "h": 58,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:31ead7033ed4#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "31ead7033ed4",
+       "h_nome": null,
+       "n": 23,
+       "rotulo": "Política de privacidade",
+       "x": 24,
+       "y": 577.2,
+       "w": 363,
+       "h": 19,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:fca0c0beacd0#1",
+       "role": "texto",
+       "tag": "section",
+       "testid": null,
+       "h_texto": null,
+       "h_nome": "fca0c0beacd0",
+       "n": 0,
+       "rotulo": "Notifications alt+T",
+       "x": 0,
+       "y": 823,
+       "w": 411,
+       "h": 0,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      }
+     ]
+    },
+    "711": {
+     "url": "/",
+     "viewport": {
+      "w": 711,
+      "h": 1138
+     },
+     "doc": {
+      "scrollWidth": 711,
+      "clientWidth": 711
+     },
+     "nos": [
+      {
+       "k": "img:e5b3dfe4ee10#1",
+       "role": "img",
+       "tag": "img",
+       "testid": null,
+       "h_texto": null,
+       "h_nome": "e5b3dfe4ee10",
+       "n": 0,
+       "rotulo": "Octavia",
+       "x": 185.5,
+       "y": 48,
+       "w": 340,
+       "h": 219,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:11b3592eced2#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "11b3592eced2",
+       "h_nome": null,
+       "n": 62,
+       "rotulo": "organize, veja e compartilhe cifras, letras, tabs e partituras",
+       "x": 145.5,
+       "y": 315,
+       "w": 420,
+       "h": 68.2,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:4105811890ae#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "4105811890ae",
+       "h_nome": null,
+       "n": 6,
+       "rotulo": "Entrar",
+       "x": 145.5,
+       "y": 415.2,
+       "w": 420,
+       "h": 56,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:8cb3525e3b7e#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "8cb3525e3b7e",
+       "h_nome": null,
+       "n": 11,
+       "rotulo": "Criar conta",
+       "x": 145.5,
+       "y": 487.2,
+       "w": 420,
+       "h": 58,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:31ead7033ed4#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "31ead7033ed4",
+       "h_nome": null,
+       "n": 23,
+       "rotulo": "Política de privacidade",
+       "x": 145.5,
+       "y": 577.2,
+       "w": 420,
+       "h": 19,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:fca0c0beacd0#1",
+       "role": "texto",
+       "tag": "section",
+       "testid": null,
+       "h_texto": null,
+       "h_nome": "fca0c0beacd0",
+       "n": 0,
+       "rotulo": "Notifications alt+T",
+       "x": 0,
+       "y": 1138,
+       "w": 711,
+       "h": 0,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      }
+     ]
+    },
+    "1138": {
+     "url": "/",
+     "viewport": {
+      "w": 1138,
+      "h": 711
+     },
+     "doc": {
+      "scrollWidth": 1138,
+      "clientWidth": 1138
+     },
+     "nos": [
+      {
+       "k": "img:e5b3dfe4ee10#1",
+       "role": "img",
+       "tag": "img",
+       "testid": null,
+       "h_texto": null,
+       "h_nome": "e5b3dfe4ee10",
+       "n": 0,
+       "rotulo": "Octavia",
+       "x": 119,
+       "y": 79.1,
+       "w": 340,
+       "h": 219,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:11b3592eced2#1",
+       "role": "texto",
+       "tag": "p",
+       "testid": null,
+       "h_texto": "11b3592eced2",
+       "h_nome": null,
+       "n": 62,
+       "rotulo": "organize, veja e compartilhe cifras, letras, tabs e partituras",
+       "x": 599,
+       "y": 48,
+       "w": 420,
+       "h": 68.2,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:4105811890ae#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "4105811890ae",
+       "h_nome": null,
+       "n": 6,
+       "rotulo": "Entrar",
+       "x": 599,
+       "y": 148.2,
+       "w": 420,
+       "h": 56,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:8cb3525e3b7e#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "8cb3525e3b7e",
+       "h_nome": null,
+       "n": 11,
+       "rotulo": "Criar conta",
+       "x": 599,
+       "y": 220.2,
+       "w": 420,
+       "h": 58,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:31ead7033ed4#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "31ead7033ed4",
+       "h_nome": null,
+       "n": 23,
+       "rotulo": "Política de privacidade",
+       "x": 599,
+       "y": 310.2,
+       "w": 420,
+       "h": 19,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:fca0c0beacd0#1",
+       "role": "texto",
+       "tag": "section",
+       "testid": null,
+       "h_texto": null,
+       "h_nome": "fca0c0beacd0",
+       "n": 0,
+       "rotulo": "Notifications alt+T",
+       "x": 0,
+       "y": 711,
+       "w": 1138,
+       "h": 0,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      }
+     ]
+    }
+   },
+   "folha": {
+    "C": [
+     {
+      "k": "img:e5b3dfe4ee10#1",
+      "role": "img",
+      "tag": "img",
+      "testid": null,
+      "h_texto": null,
+      "h_nome": "e5b3dfe4ee10",
+      "n": 0,
+      "rotulo": "Octavia",
+      "x": 118,
+      "y": 76.9,
+      "w": 340,
+      "h": 219,
+      "sr": false,
+      "clip": null,
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "texto:11b3592eced2#1",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "11b3592eced2",
+      "h_nome": null,
+      "n": 62,
+      "rotulo": "organize, veja e compartilhe cifras, letras, tabs e partituras",
+      "x": 598,
+      "y": 48,
+      "w": 420,
+      "h": 63.8,
+      "sr": false,
+      "clip": null,
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "button:4105811890ae#1",
+      "role": "button",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "4105811890ae",
+      "h_nome": null,
+      "n": 6,
+      "rotulo": "Entrar",
+      "x": 598,
+      "y": 143.8,
+      "w": 420,
+      "h": 56,
+      "sr": false,
+      "clip": null,
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "button:8cb3525e3b7e#1",
+      "role": "button",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "8cb3525e3b7e",
+      "h_nome": null,
+      "n": 11,
+      "rotulo": "Criar conta",
+      "x": 598,
+      "y": 215.8,
+      "w": 420,
+      "h": 58,
+      "sr": false,
+      "clip": null,
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "link:31ead7033ed4#1",
+      "role": "link",
+      "tag": "a",
+      "testid": null,
+      "h_texto": "31ead7033ed4",
+      "h_nome": null,
+      "n": 23,
+      "rotulo": "Política de privacidade",
+      "x": 598,
+      "y": 305.8,
+      "w": 420,
+      "h": 19,
+      "sr": false,
+      "clip": null,
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     }
+    ],
+    "B": [
+     {
+      "k": "img:e5b3dfe4ee10#1",
+      "role": "img",
+      "tag": "img",
+      "testid": null,
+      "h_texto": null,
+      "h_nome": "e5b3dfe4ee10",
+      "n": 0,
+      "rotulo": "Octavia",
+      "x": 184.5,
+      "y": 48,
+      "w": 340,
+      "h": 219,
+      "sr": false,
+      "clip": null,
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "texto:11b3592eced2#1",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "11b3592eced2",
+      "h_nome": null,
+      "n": 62,
+      "rotulo": "organize, veja e compartilhe cifras, letras, tabs e partituras",
+      "x": 144.5,
+      "y": 315,
+      "w": 420,
+      "h": 63.8,
+      "sr": false,
+      "clip": null,
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "button:4105811890ae#1",
+      "role": "button",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "4105811890ae",
+      "h_nome": null,
+      "n": 6,
+      "rotulo": "Entrar",
+      "x": 144.5,
+      "y": 410.8,
+      "w": 420,
+      "h": 56,
+      "sr": false,
+      "clip": null,
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "button:8cb3525e3b7e#1",
+      "role": "button",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "8cb3525e3b7e",
+      "h_nome": null,
+      "n": 11,
+      "rotulo": "Criar conta",
+      "x": 144.5,
+      "y": 482.8,
+      "w": 420,
+      "h": 58,
+      "sr": false,
+      "clip": null,
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "link:31ead7033ed4#1",
+      "role": "link",
+      "tag": "a",
+      "testid": null,
+      "h_texto": "31ead7033ed4",
+      "h_nome": null,
+      "n": 23,
+      "rotulo": "Política de privacidade",
+      "x": 144.5,
+      "y": 572.8,
+      "w": 420,
+      "h": 19,
+      "sr": false,
+      "clip": null,
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     }
+    ],
+    "secao": "LANDING",
+    "sha256": "3f5583acb00447cf450cde6dfe15ca864c5dde7ea7ec9a2c20d8359bcbd30137"
+   }
+  }
+ },
+ "rodadas": {
+  "411": {
+   "rodada": "2026-09-28T14:12:30.831Z",
+   "commit": "7ae343e2d8da31d530db76cd59ece5ee65baf859"
+  },
+  "711": {
+   "rodada": "2026-09-28T14:12:30.831Z",
+   "commit": "7ae343e2d8da31d530db76cd59ece5ee65baf859"
+  },
+  "1138": {
+   "rodada": "2026-09-28T14:12:30.831Z",
+   "commit": "7ae343e2d8da31d530db76cd59ece5ee65baf859"
+  }
+ }
+}

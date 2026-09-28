@@ -1,0 +1,17 @@
+$ pnpm build   (trecho: compilação e as rotas de página)
+   ▲ Next.js 15.2.8
+ ✓ Compiled successfully
+┌ ƒ /                                      190 B         111 kB
+├ ƒ /_not-found                            988 B         103 kB
+├ ƒ /add-content                         1.36 kB         317 kB
+├ ƒ /dashboard                           4.04 kB         305 kB
+├ ƒ /forgot-password                       995 B         260 kB
+├ ƒ /library                             1.36 kB         317 kB
+├ ƒ /login                               2.32 kB         265 kB
+├ ƒ /privacy-policy                      1.69 kB         104 kB
+├ ƒ /setlists                            1.36 kB         317 kB
+├ ƒ /signup                              1.92 kB         265 kB
+├ ƒ /signup/confirm-email                  909 B         264 kB
+└ ƒ /verify-email                        1.16 kB         261 kB
+ƒ  (Dynamic)  server-rendered on demand
+# exit: 0

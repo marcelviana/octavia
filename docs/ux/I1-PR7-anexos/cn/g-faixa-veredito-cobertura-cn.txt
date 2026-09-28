@@ -1,0 +1,432 @@
+$ node scripts/gates-web/g-faixa-veredito.mjs
+G-faixa (veredito) — tests/gates-web/medicoes: 5 medição(ões)
+
+## confirm-email (/signup/confirm-email) — rodada 2026-09-28T12:31:21.156Z · base http://localhost:3000 · commit e45a5665ec091b1a3229eb6de92e6f71909d2eb4
+  inalcançáveis em A (411) — AUTH-confirm: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-confirm · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-confirm · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-confirm · 411 (faixa A): (e)=0 · (b)=0 · (d′)=1 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-confirm-enviando: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-confirm-enviando · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-confirm-enviando · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-confirm-enviando · 411 (faixa A): (e)=0 · (b)=0 · (d′)=1 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-confirm-sucesso: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-confirm-sucesso · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-confirm-sucesso · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-confirm-sucesso · 411 (faixa A): (e)=0 · (b)=0 · (d′)=1 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-confirm-erro: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-confirm-erro · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-confirm-erro · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-confirm-erro · 411 (faixa A): (e)=0 · (b)=0 · (d′)=2 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-confirm-erro-rede: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-confirm-erro-rede · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-confirm-erro-rede · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-confirm-erro-rede · 411 (faixa A): (e)=0 · (b)=0 · (d′)=1 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-confirm-sem-usuario: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-confirm-sem-usuario · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=4 · sem par folha/app=1/0 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Octavia" Δ[x,y,w,h]=[1,-30.8,0,0] — coberta por I1-E10
+    · errata candidata: "a sessão caiu — entre de novo" Δ[x,y,w,h]=[1,-61.6,0,0] — coberta por I1-E10
+    · errata candidata: "Ir para o login" Δ[x,y,w,h]=[1,-61.6,0,0] — coberta por I1-E10
+    · errata candidata: "Reenviar o e-mail" Δ[x,y,w,h]=[1,-61.6,0,0] — coberta por I1-E10
+    · sem par na folha: "enviamos um link de confirmação para marcel@exemplo.com — ab"
+  AUTH-confirm-sem-usuario · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=3 · sem par folha/app=1/0 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "a sessão caiu — entre de novo" Δ[x,y,w,h]=[1,-61.6,0,0] — coberta por I1-E10
+    · errata candidata: "Ir para o login" Δ[x,y,w,h]=[1,-61.6,0,0] — coberta por I1-E10
+    · errata candidata: "Reenviar o e-mail" Δ[x,y,w,h]=[1,-61.6,0,0] — coberta por I1-E10
+    · sem par na folha: "enviamos um link de confirmação para marcel@exemplo.com — ab"
+  AUTH-confirm-sem-usuario · 411 (faixa A): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-confirm-excecao: inalcançável (declarado) — o contexto não lança: o catch da tela não se alcança [hipótese] (div. 640)
+
+## forgot-password (/forgot-password) — rodada 2026-09-28T12:31:21.156Z · base http://localhost:3000 · commit e45a5665ec091b1a3229eb6de92e6f71909d2eb4
+  inalcançáveis em A (411) — AUTH-forgot: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-forgot · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-forgot · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-forgot · 411 (faixa A): (e)=0 · (b)=0 · (d′)=1 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-forgot-validacao: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-forgot-validacao · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=4 · sem par folha/app=1/0 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Octavia" Δ[x,y,w,h]=[1,-20.5,0,0] — coberta por I1-E7
+    · errata candidata: "Enviar o link" Δ[x,y,w,h]=[1,-41,0,0] — coberta por I1-E7
+    · errata candidata: "Lembrou a senha?" Δ[x,y,w,h]=[1,-41,-0.1,0] — coberta por I1-E7
+    · errata candidata: "Entrar" Δ[x,y,w,h]=[0.9,-41,0,0] — coberta por I1-E7
+    · sem par na folha: "[balão nativo do navegador — texto do sistema]"
+  AUTH-forgot-validacao · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=3 · sem par folha/app=1/0 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Enviar o link" Δ[x,y,w,h]=[1,-41,0,0] — coberta por I1-E7
+    · errata candidata: "Lembrou a senha?" Δ[x,y,w,h]=[1,-41,-0.1,0] — coberta por I1-E7
+    · errata candidata: "Entrar" Δ[x,y,w,h]=[0.9,-41,0,0] — coberta por I1-E7
+    · sem par na folha: "[balão nativo do navegador — texto do sistema]"
+  AUTH-forgot-validacao · 411 (faixa A): (e)=0 · (b)=0 · (d′)=1 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-forgot-enviando: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-forgot-enviando · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-forgot-enviando · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-forgot-enviando · 411 (faixa A): (e)=0 · (b)=0 · (d′)=1 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-forgot-indisponivel · 411: não alcançado — o texto esperado não apareceu: "a troca de senha não está disponível"
+  AUTH-forgot-indisponivel · 711: não alcançado — o texto esperado não apareceu: "a troca de senha não está disponível"
+  AUTH-forgot-indisponivel · 1138: não alcançado — o texto esperado não apareceu: "a troca de senha não está disponível"
+  inalcançáveis em A (411) — AUTH-forgot-erro: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-forgot-erro · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-forgot-erro · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-forgot-erro · 411 (faixa A): (e)=0 · (b)=0 · (d′)=2 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-forgot-sucesso: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-forgot-sucesso · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-forgot-sucesso · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-forgot-sucesso · 411 (faixa A): (e)=0 · (b)=0 · (d′)=1 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+
+## login (/login) — rodada 2026-09-28T12:36:20.991Z · base http://localhost:3000 · commit e45a5665ec091b1a3229eb6de92e6f71909d2eb4+sujo
+  inalcançáveis em A (411) — AUTH-login: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-login · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=2/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "marcel@exemplo.com"
+    · sem par na folha: "••••••••"
+    · sem par no app: "voce@exemplo.com"
+  AUTH-login · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=2/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "marcel@exemplo.com"
+    · sem par na folha: "••••••••"
+    · sem par no app: "voce@exemplo.com"
+  AUTH-login · 411 (faixa A): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-login-validacao: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-login-validacao · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=9 · sem par folha/app=2/0 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Octavia" Δ[x,y,w,h]=[1,-20.5,0,0] — coberta por I1-E7
+    · errata candidata: "Senha" Δ[x,y,w,h]=[1,-41,0,0] — coberta por I1-E7
+    · errata candidata: "Esqueci a senha" Δ[x,y,w,h]=[1.1,-41,-0.1,0] — coberta por I1-E7
+    · errata candidata: "" Δ[x,y,w,h]=[1,-41,0,0] — coberta por I1-E7
+    · errata candidata: "Entrar" Δ[x,y,w,h]=[1,-41,0,0] — coberta por I1-E7
+    · errata candidata: "ou" Δ[x,y,w,h]=[1,-41,0,0] — coberta por I1-E7
+    · errata candidata: "Entrar com Google" Δ[x,y,w,h]=[1,-41,0,0] — coberta por I1-E7
+    · errata candidata: "Não tem conta?" Δ[x,y,w,h]=[1,-41,0,0] — coberta por I1-E7
+    · errata candidata: "Criar conta" Δ[x,y,w,h]=[1,-41,0,0] — coberta por I1-E7
+    · sem par na folha: "[balão nativo do navegador — texto do sistema]"
+    · sem par na folha: "••••••••"
+  AUTH-login-validacao · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=8 · sem par folha/app=2/0 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Senha" Δ[x,y,w,h]=[1,-41,0,0] — coberta por I1-E7
+    · errata candidata: "Esqueci a senha" Δ[x,y,w,h]=[1.1,-41,-0.1,0] — coberta por I1-E7
+    · errata candidata: "" Δ[x,y,w,h]=[1,-41,0,0] — coberta por I1-E7
+    · errata candidata: "Entrar" Δ[x,y,w,h]=[1,-41,0,0] — coberta por I1-E7
+    · errata candidata: "ou" Δ[x,y,w,h]=[1,-41,0,0] — coberta por I1-E7
+    · errata candidata: "Entrar com Google" Δ[x,y,w,h]=[1,-41,0,0] — coberta por I1-E7
+    · errata candidata: "Não tem conta?" Δ[x,y,w,h]=[1,-41,0,0] — coberta por I1-E7
+    · errata candidata: "Criar conta" Δ[x,y,w,h]=[1,-41,0,0] — coberta por I1-E7
+    · sem par na folha: "[balão nativo do navegador — texto do sistema]"
+    · sem par na folha: "••••••••"
+  AUTH-login-validacao · 411 (faixa A): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-login-entrando: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-login-entrando · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=1/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "••••••••"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-login-entrando · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=1/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "••••••••"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-login-entrando · 411 (faixa A): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-login-google: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-login-google · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=2/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "marcel@exemplo.com"
+    · sem par na folha: "••••••••"
+    · sem par no app: "voce@exemplo.com"
+  AUTH-login-google · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=2/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "marcel@exemplo.com"
+    · sem par na folha: "••••••••"
+    · sem par no app: "voce@exemplo.com"
+  AUTH-login-google · 411 (faixa A): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-login-redirecionando: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-login-redirecionando · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=4 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Entrar" Δ[x,y,w,h]=[1,16,0,0] — coberta por I1-E9
+    · errata candidata: "abrindo o painel…" Δ[x,y,w,h]=[1,16,0,0] — coberta por I1-E9
+    · errata candidata: "Não abriu?" Δ[x,y,w,h]=[1,-16,0,0] — coberta por I1-E9
+    · errata candidata: "Abrir o painel" Δ[x,y,w,h]=[1,-16,0,0] — coberta por I1-E9
+  AUTH-login-redirecionando · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=2 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Não abriu?" Δ[x,y,w,h]=[1,-32,0,0] — coberta por I1-E9
+    · errata candidata: "Abrir o painel" Δ[x,y,w,h]=[1,-32,0,0] — coberta por I1-E9
+  AUTH-login-redirecionando · 411 (faixa A): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-login-sem-token: inalcançável (declarado) — o token do usuário falso sempre existe: "Unable to obtain authentication token" só por mock de SDK [hipótese]
+  inalcançáveis em A (411) — AUTH-login-credencial: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-login-credencial · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=1/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "••••••••"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-login-credencial · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=1/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "••••••••"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-login-credencial · 411 (faixa A): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-login-limite-prazo: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-login-limite-prazo · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=1/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "••••••••"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-login-limite-prazo · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=1/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "••••••••"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-login-limite-prazo · 411 (faixa A): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-login-limite: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-login-limite · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=1/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "••••••••"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-login-limite · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=1/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "••••••••"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-login-limite · 411 (faixa A): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-login-rede: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-login-rede · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=1/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "••••••••"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-login-rede · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=1/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "••••••••"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-login-rede · 411 (faixa A): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-login-google-erro: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-login-google-erro · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=2/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "marcel@exemplo.com"
+    · sem par na folha: "••••••••"
+    · sem par no app: "voce@exemplo.com"
+  AUTH-login-google-erro · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=2/1 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "marcel@exemplo.com"
+    · sem par na folha: "••••••••"
+    · sem par no app: "voce@exemplo.com"
+  AUTH-login-google-erro · 411 (faixa A): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-login-nao-configurado · 411: não alcançado — o texto esperado não apareceu: "o login não está disponível neste servidor"
+  AUTH-login-nao-configurado · 711: não alcançado — o texto esperado não apareceu: "o login não está disponível neste servidor"
+  AUTH-login-nao-configurado · 1138: não alcançado — o texto esperado não apareceu: "o login não está disponível neste servidor"
+  inalcançáveis em A (411) — AUTH-login-perfil-401: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-login-perfil-401 · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=2/2 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "••••••••"
+    · sem par na folha: "Entrar"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "Entrando…"
+  AUTH-login-perfil-401 · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=2/2 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "••••••••"
+    · sem par na folha: "Entrar"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "Entrando…"
+  AUTH-login-perfil-401 · 411 (faixa A): (e)=0 · (b)=0 · (d′)=1 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-login-servidor: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-login-servidor · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=2/2 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "••••••••"
+    · sem par na folha: "Entrar"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "Entrando…"
+  AUTH-login-servidor · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=2/2 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "••••••••"
+    · sem par na folha: "Entrar"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "Entrando…"
+  AUTH-login-servidor · 411 (faixa A): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-login-google-bloqueado: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-login-google-bloqueado · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-login-google-bloqueado · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-login-google-bloqueado · 411 (faixa A): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+
+## signup (/signup) — rodada 2026-09-28T12:31:21.156Z · base http://localhost:3000 · commit e45a5665ec091b1a3229eb6de92e6f71909d2eb4
+  inalcançáveis em A (411) — AUTH-signup: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-signup · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=6/2 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Marcel"
+    · sem par na folha: "Viana"
+    · sem par na folha: "marcel@exemplo.com"
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "voce@exemplo.com"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+  AUTH-signup · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=6/2 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Marcel"
+    · sem par na folha: "Viana"
+    · sem par na folha: "marcel@exemplo.com"
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "voce@exemplo.com"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+  AUTH-signup · 411 (faixa A): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-signup-validacao: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-signup-validacao · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=4 · sem par folha/app=7/2 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Octavia" Δ[x,y,w,h]=[1,-20.5,0,0] — coberta por I1-E7
+    · errata candidata: "Criar conta" Δ[x,y,w,h]=[1,-41,0,0] — coberta por I1-E7
+    · errata candidata: "Já tem conta?" Δ[x,y,w,h]=[1,-41,0,0] — coberta por I1-E7
+    · errata candidata: "Voltar para o login" Δ[x,y,w,h]=[1,-41,0,0] — coberta por I1-E7
+    · sem par na folha: "Marcel"
+    · sem par na folha: "Viana"
+    · sem par na folha: "marcel@exemplo.com"
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "[balão nativo do navegador — texto do sistema]"
+    · sem par no app: "voce@exemplo.com"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+  AUTH-signup-validacao · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=3 · sem par folha/app=7/2 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Criar conta" Δ[x,y,w,h]=[1,-41,0,0] — coberta por I1-E7
+    · errata candidata: "Já tem conta?" Δ[x,y,w,h]=[1,-41,0,0] — coberta por I1-E7
+    · errata candidata: "Voltar para o login" Δ[x,y,w,h]=[1,-41,0,0] — coberta por I1-E7
+    · sem par na folha: "Marcel"
+    · sem par na folha: "Viana"
+    · sem par na folha: "marcel@exemplo.com"
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "[balão nativo do navegador — texto do sistema]"
+    · sem par no app: "voce@exemplo.com"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+  AUTH-signup-validacao · 411 (faixa A): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-signup-senhas: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-signup-senhas · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=3/3 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "outra-senha-de-exemplo"
+  AUTH-signup-senhas · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=3/3 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "outra-senha-de-exemplo"
+  AUTH-signup-senhas · 411 (faixa A): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-signup-criando: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-signup-criando · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=3/3 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-signup-criando · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=3/3 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-signup-criando · 411 (faixa A): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-signup-email-usado: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-signup-email-usado · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=3/3 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-signup-email-usado · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=3/3 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-signup-email-usado · 411 (faixa A): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-signup-senha-fraca: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-signup-senha-fraca · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=3/3 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-signup-senha-fraca · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=3/3 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-signup-senha-fraca · 411 (faixa A): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-signup-rede: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-signup-rede · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=3/3 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-signup-rede · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=3/3 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-signup-rede · 411 (faixa A): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-signup-limite: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-signup-limite · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=3/3 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-signup-limite · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=3/3 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-signup-limite · 411 (faixa A): (e)=0 · (b)=0 · (d′)=1 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-signup-perfil: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-signup-perfil · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=3/3 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-signup-perfil · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=3/3 · saídas: nome-acessível=0 rolagem=0
+    · sem par na folha: "Violão"
+    · sem par na folha: "••••••••"
+    · sem par na folha: "••••••••"
+    · sem par no app: "Violão/Guitarra Piano Violino Bateria Voz Baixo Outro"
+    · sem par no app: "senha-de-exemplo"
+    · sem par no app: "senha-de-exemplo"
+  AUTH-signup-perfil · 411 (faixa A): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-signup-excecao: inalcançável (declarado) — o contexto não lança (todo catch devolve { error }): o catch da tela não se alcança [hipótese] (div. 640)
+
+## verify-email (/verify-email) — rodada 2026-09-28T12:31:21.156Z · base http://localhost:3000 · commit e45a5665ec091b1a3229eb6de92e6f71909d2eb4
+  inalcançáveis em A (411) — AUTH-verify-carregando: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-verify-carregando · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=2 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+    · errata candidata: "Confirme o e-mail" Δ[x,y,w,h]=[1,16,0,0] — coberta por I1-E8
+    · errata candidata: "carregando…" Δ[x,y,w,h]=[1,16,0,0] — coberta por I1-E8
+  AUTH-verify-carregando · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify-carregando · 411 (faixa A): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-verify: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-verify · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify · 411 (faixa A): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-verify-checando: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-verify-checando · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify-checando · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify-checando · 411 (faixa A): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-verify-enviando: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-verify-enviando · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify-enviando · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify-enviando · 411 (faixa A): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-verify-nao-verificado: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-verify-nao-verificado · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify-nao-verificado · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify-nao-verificado · 411 (faixa A): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-verify-checar-falhou: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-verify-checar-falhou · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify-checar-falhou · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify-checar-falhou · 411 (faixa A): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-verify-reenviar-erro: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-verify-reenviar-erro · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify-reenviar-erro · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify-reenviar-erro · 411 (faixa A): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — AUTH-verify-reenviar-limite: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-verify-reenviar-limite · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify-reenviar-limite · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify-reenviar-limite · 411 (faixa A): (e)=0 · (b)=0 · (d′)=1 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify-reenviar-excecao: inalcançável (declarado) — o contexto não lança: o catch da tela não se alcança [hipótese] (I1-E1, div. 640)
+  inalcançáveis em A (411) — AUTH-verify-reenviado: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  AUTH-verify-reenviado · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify-reenviado · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-verify-reenviado · 411 (faixa A): (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+
+## contados à parte (não reprovam): errata candidata 46 · sem par folha 106 · sem par app 74 (C e B) · não medidos 10
+## erratas candidatas sem cobertura (erratasFaixa, div. 681): 0
+  · confirm-email · AUTH-confirm-excecao: INALCANÇÁVEL (declarado) — o contexto não lança: o catch da tela não se alcança [hipótese] (div. 640)
+  · forgot-password · AUTH-forgot-indisponivel · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "a troca de senha não está disponível"
+  · forgot-password · AUTH-forgot-indisponivel · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "a troca de senha não está disponível"
+  · forgot-password · AUTH-forgot-indisponivel · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "a troca de senha não está disponível"
+  · login · AUTH-login-sem-token: INALCANÇÁVEL (declarado) — o token do usuário falso sempre existe: "Unable to obtain authentication token" só por mock de SDK [hipótese]
+  · login · AUTH-login-nao-configurado · 411: NÃO ALCANÇADO — o texto esperado não apareceu: "o login não está disponível neste servidor"
+  · login · AUTH-login-nao-configurado · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "o login não está disponível neste servidor"
+  · login · AUTH-login-nao-configurado · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "o login não está disponível neste servidor"
+  · signup · AUTH-signup-excecao: INALCANÇÁVEL (declarado) — o contexto não lança (todo catch devolve { error }): o catch da tela não se alcança [hipótese] (div. 640)
+  · verify-email · AUTH-verify-reenviar-excecao: INALCANÇÁVEL (declarado) — o contexto não lança: o catch da tela não se alcança [hipótese] (I1-E1, div. 640)
+
+G-faixa: PASSA
+# exit: 0

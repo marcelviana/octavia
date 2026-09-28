@@ -1,0 +1,3 @@
+$ pnpm exec tsx scripts/gates-web/g-faixa-esperado.ts 2-landing
+2-landing: 0 caixa(s) de campo ancorada(s) · 1 seções · 1 com C e B · nós C 4 · nós B 4 → tests/gates-web/esperado/2-landing.json
+# exit: 0
