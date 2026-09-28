@@ -162,6 +162,15 @@ do aceite de auth (`docs/ux/I1-PR6-anexos/cn/erratas-faixa-cobertura.txt`).
 A I1-E11 também é do G-faixa: entra em `erratasFaixa` e cobre as 8 erratas candidatas do aceite da landing
 (`docs/ux/I1-PR7-anexos/`).
 
+**Do aval da I1-PR-8** `[Marcel, 2026-09-28; aval do commit 1 da I1-PR-8]` — mesmas colunas:
+
+| id | o que a folha mostra | o que vale | onde se aplica | div. | efeito |
+|---|---|---|---|---|---|
+| **I1-E12** | a folha `3-privacy-policy` renderizou o título (`h1`) com `line-height:1.3` e os sete títulos de seção (`h2`) com `1.35`, sem token; a coluna "tokens" e o `README-design.md` §2.4 não declaram entrelinha para eles | títulos com **entrelinha natural** (`leading-natural`, o padrão do web desde a I1-PR6, como os títulos do auth): o título fica 3,4 px mais baixo e cada título de seção 3,7 px (7,4 no de duas linhas em B); o Δy acumulado dos nós seguintes é consequência desta errata | `3-privacy-policy`: `PRIVACY` | 693 (I1-PR-8) | leitura |
+
+A I1-E12 também é do G-faixa: entra em `erratasFaixa` e cobre as 45 erratas candidatas do aceite da política
+(22 em C, 23 em B; `docs/ux/I1-PR8-anexos/`).
+
 ## 3 · O bloco `web` de tokens — insumo da PR-4 (`packages/identidade`)
 
 Exatamente como o `README-design.md` §2.1:

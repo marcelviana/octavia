@@ -1,0 +1,6 @@
+# as 24 frases do dicionário do pre-check (docs/ux/I1-PRECHECK-anexos/frases-web.txt, app/privacy-policy/page.tsx) × texto-antes.txt
+# regra: cada registro, com espaços colapsados, é substring de alguma linha de texto (a primeira que o contém)
+registros do dicionário: 24 · achados no texto-antes: 24 · linhas de texto: 22 · linhas mailto: 2
+linhas sem registro: 0
+linhas com 2+ registros: 18:3
+# nota: a linha 18 soma 3 porque os DOIS registros "dpo@octavia.app" (:86 e :91) casam na primeira linha que os contém; a 19 também contém "dpo@octavia.app" — 22 linhas = 1 título + 7 seções + 14 parágrafos; os 2 e-mails estão dentro de dois parágrafos

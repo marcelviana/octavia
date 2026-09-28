@@ -1,0 +1,9 @@
+$ pnpm test
+     ✓ a RELEITURA tem o mesmo prazo: 2xx com o `GET` mudo vira `ok-nao-relido`  667ms
+     ✓ o prazo da releitura é o do CORE (20 s), e vale também no `reopen`  40262ms
+
+ Test Files  109 passed | 3 skipped (112)
+      Tests  1075 passed | 77 skipped (1152)
+   Start at  11:54:32
+   Duration  64.33s (transform 7.31s, setup 22.59s, import 16.10s, tests 118.04s, environment 54.36s)
+

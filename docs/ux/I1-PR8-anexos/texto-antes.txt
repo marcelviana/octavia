@@ -1,0 +1,24 @@
+Privacy Policy / Política de Privacidade
+What data we collect and why / Quais dados coletamos e por quê
+We collect your name, email address, and usage behavior to personalize your experience, provide support, and improve our services.
+Coletamos seu nome, endereço de e-mail e comportamento de uso para personalizar sua experiência, oferecer suporte e aprimorar nossos serviços.
+Legal basis for processing / Base legal para o tratamento
+Under GDPR and LGPD, we process your data with your consent, to fulfill our contract with you, and to comply with legal obligations.
+Conforme o GDPR e a LGPD, tratamos seus dados com seu consentimento, para cumprir nosso contrato com você e para atender a obrigações legais.
+Storage of your data / Armazenamento dos seus dados
+Your information is stored securely on trusted cloud providers. We keep data only as long as necessary for the purposes stated in this policy.
+Suas informações são armazenadas com segurança em provedores de nuvem confiáveis. Mantemos os dados apenas pelo tempo necessário para as finalidades descritas nesta política.
+Your rights / Seus direitos
+You may request access, correction, deletion, or portability of your data. You can also withdraw consent at any time.
+Você pode solicitar acesso, correção, exclusão ou portabilidade dos seus dados. Também é possível revogar o consentimento a qualquer momento.
+Third-party services / Serviços de terceiros
+We use services such as Google Authentication and analytics tools. These providers may process your data according to their own privacy policies.
+Utilizamos serviços como Google Authentication e ferramentas de análise. Esses provedores podem tratar seus dados de acordo com suas próprias políticas de privacidade.
+Contact / Contato
+If you have questions, contact our Data Protection Officer atdpo@octavia.app.
+Se você tiver dúvidas, entre em contato com nosso Encarregado de Proteção de Dados pelo e-maildpo@octavia.app.
+Cookies and consent / Cookies e consentimento
+We use cookies to remember your preferences and understand how the application is used. You can manage cookies in your browser settings.
+Utilizamos cookies para lembrar suas preferências e entender como o aplicativo é utilizado. Você pode gerenciar os cookies nas configurações do seu navegador.
+mailto mailto:dpo@octavia.app
+mailto mailto:dpo@octavia.app

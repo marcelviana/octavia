@@ -22,3 +22,5 @@ components/identidade/icone.tsx
 app/page.tsx
 components/landing/frases-landing.ts
 components/identidade/link-botao.tsx
+# I1-PR8 — superfície 3, privacy-policy (folha 3-privacy-policy); o inglês é isento (g-tok-sem-ingles.txt, I1-D17 exceção)
+app/privacy-policy/page.tsx

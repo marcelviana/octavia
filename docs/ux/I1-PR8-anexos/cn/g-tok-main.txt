@@ -1,0 +1,42 @@
+$ node scripts/gates-web/g-tok.mjs --so-arquivos   # a lista com app/privacy-policy/page.tsx; o arquivo na lista de exceção
+## (ii) arquivos redesenhados — scripts/gates-web/g-tok-arquivos.txt
+  ✗ app/privacy-policy/page.tsx:5 [cor] "from-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:5 [cor] "to-orange-100" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:6 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:86 [cor] "text-blue-600" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:91 [cor] "text-blue-600" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:7 [tamanho de fonte] "text-3xl" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:7 [tamanho de fonte] "text-4xl" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:11 [tamanho de fonte] "text-2xl" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:25 [tamanho de fonte] "text-2xl" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:39 [tamanho de fonte] "text-2xl" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:54 [tamanho de fonte] "text-2xl" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:68 [tamanho de fonte] "text-2xl" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:83 [tamanho de fonte] "text-2xl" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:95 [tamanho de fonte] "text-2xl" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:5 [espaçamento] "p-6" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:6 [espaçamento] "p-8" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:6 [espaçamento] "space-y-6" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:7 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:11 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:14 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:25 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:28 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:39 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:42 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:54 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:57 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:68 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:71 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:83 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:84 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:86 [espaçamento] "ml-1" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:91 [espaçamento] "ml-1" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:95 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:98 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:6 [tamanho] "max-w-3xl" — use a custom property de app/styles/identidade.css
+  ✗ app/privacy-policy/page.tsx:6 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  arquivos: 20 · literais de identidade acusados: 36 · toasts: 0 · imports de ui: 0 · textos examinados: 1 · isentos de inglês (scripts/gates-web/g-tok-sem-ingles.txt): 1 · vocabulário: 109 · isenções: 9
+
+G-tok: REPROVA — 36 ocorrência(s)
+# exit: 1

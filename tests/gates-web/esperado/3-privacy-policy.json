@@ -1,0 +1,975 @@
+{
+ "folha": "3-privacy-policy",
+ "arquivo": "docs/ux/DESIGN-I1/3-privacy-policy/telas.html",
+ "sha256": "50129c3e0a14513dbca4e35488d2235a6be1e043cf634d41dd1c9c0bd32fab95",
+ "chromium": "140.0.7339.16",
+ "ancorados": 0,
+ "estados": {
+  "PRIVACY": {
+   "C": [
+    {
+     "k": "texto:de84445a0f2e#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "de84445a0f2e",
+     "h_nome": null,
+     "n": 40,
+     "rotulo": "Privacy Policy / Política de Privacidade",
+     "x": 208,
+     "y": 48,
+     "w": 720,
+     "h": 36.4,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:a04a0eaf8571#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "a04a0eaf8571",
+     "h_nome": null,
+     "n": 62,
+     "rotulo": "What data we collect and why / Quais dados coletamos e por quê",
+     "x": 208,
+     "y": 116.4,
+     "w": 720,
+     "h": 29.7,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:eb8fde86c9a1#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "eb8fde86c9a1",
+     "h_nome": null,
+     "n": 130,
+     "rotulo": "We collect your name, email address, and usage behavior to personalize your experience, provide support, and improve our services.",
+     "x": 208,
+     "y": 158.1,
+     "w": 720,
+     "h": 49.6,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:44edd1af5d29#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "44edd1af5d29",
+     "h_nome": null,
+     "n": 142,
+     "rotulo": "Coletamos seu nome, endereço de e-mail e comportamento de uso para personalizar sua experiência, oferecer suporte e aprimorar nossos serviços.",
+     "x": 208,
+     "y": 219.7,
+     "w": 720,
+     "h": 49.6,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:29f04db3929c#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "29f04db3929c",
+     "h_nome": null,
+     "n": 57,
+     "rotulo": "Legal basis for processing / Base legal para o tratamento",
+     "x": 208,
+     "y": 301.3,
+     "w": 720,
+     "h": 29.7,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:809583b7e622#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "809583b7e622",
+     "h_nome": null,
+     "n": 132,
+     "rotulo": "Under GDPR and LGPD, we process your data with your consent, to fulfill our contract with you, and to comply with legal obligations.",
+     "x": 208,
+     "y": 343,
+     "w": 720,
+     "h": 49.6,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:8836c23f6e18#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "8836c23f6e18",
+     "h_nome": null,
+     "n": 141,
+     "rotulo": "Conforme o GDPR e a LGPD, tratamos seus dados com seu consentimento, para cumprir nosso contrato com você e para atender a obrigações legais.",
+     "x": 208,
+     "y": 404.5,
+     "w": 720,
+     "h": 49.6,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:fcc16d3ffa57#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "fcc16d3ffa57",
+     "h_nome": null,
+     "n": 51,
+     "rotulo": "Storage of your data / Armazenamento dos seus dados",
+     "x": 208,
+     "y": 486.1,
+     "w": 720,
+     "h": 29.7,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:2dda2353b94b#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "2dda2353b94b",
+     "h_nome": null,
+     "n": 142,
+     "rotulo": "Your information is stored securely on trusted cloud providers. We keep data only as long as necessary for the purposes stated in this policy.",
+     "x": 208,
+     "y": 527.8,
+     "w": 720,
+     "h": 49.6,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:aba7ade1a63b#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "aba7ade1a63b",
+     "h_nome": null,
+     "n": 174,
+     "rotulo": "Suas informações são armazenadas com segurança em provedores de nuvem confiáveis. Mantemos os dados apenas pelo tempo necessário para as finalidades descritas nesta política.",
+     "x": 208,
+     "y": 589.4,
+     "w": 720,
+     "h": 49.6,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:8911e4ff5dd8#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "8911e4ff5dd8",
+     "h_nome": null,
+     "n": 27,
+     "rotulo": "Your rights / Seus direitos",
+     "x": 208,
+     "y": 671,
+     "w": 720,
+     "h": 29.7,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:a2875182f2b7#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "a2875182f2b7",
+     "h_nome": null,
+     "n": 117,
+     "rotulo": "You may request access, correction, deletion, or portability of your data. You can also withdraw consent at any time.",
+     "x": 208,
+     "y": 712.7,
+     "w": 720,
+     "h": 49.6,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:ceaa346812a2#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "ceaa346812a2",
+     "h_nome": null,
+     "n": 141,
+     "rotulo": "Você pode solicitar acesso, correção, exclusão ou portabilidade dos seus dados. Também é possível revogar o consentimento a qualquer momento.",
+     "x": 208,
+     "y": 774.3,
+     "w": 720,
+     "h": 49.6,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:5d92eeaec11e#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "5d92eeaec11e",
+     "h_nome": null,
+     "n": 44,
+     "rotulo": "Third-party services / Serviços de terceiros",
+     "x": 208,
+     "y": 855.9,
+     "w": 720,
+     "h": 29.7,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:8bc74754dbb9#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "8bc74754dbb9",
+     "h_nome": null,
+     "n": 145,
+     "rotulo": "We use services such as Google Authentication and analytics tools. These providers may process your data according to their own privacy policies.",
+     "x": 208,
+     "y": 897.6,
+     "w": 720,
+     "h": 49.6,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:1b1134199399#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "1b1134199399",
+     "h_nome": null,
+     "n": 167,
+     "rotulo": "Utilizamos serviços como Google Authentication e ferramentas de análise. Esses provedores podem tratar seus dados de acordo com suas próprias políticas de privacidade.",
+     "x": 208,
+     "y": 959.2,
+     "w": 720,
+     "h": 49.6,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:a3ee8448d982#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "a3ee8448d982",
+     "h_nome": null,
+     "n": 17,
+     "rotulo": "Contact / Contato",
+     "x": 208,
+     "y": 1040.8,
+     "w": 720,
+     "h": 29.7,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:d3efe697675a#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "d3efe697675a",
+     "h_nome": null,
+     "n": 63,
+     "rotulo": "If you have questions, contact our Data Protection Officer at .",
+     "x": 208,
+     "y": 1082.5,
+     "w": 720,
+     "h": 24.8,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "link:f1220e88cc26#1",
+     "role": "link",
+     "tag": "a",
+     "testid": null,
+     "h_texto": "f1220e88cc26",
+     "h_nome": null,
+     "n": 15,
+     "rotulo": "dpo@octavia.app",
+     "x": 651.4,
+     "y": 1083.5,
+     "w": 128.5,
+     "h": 22,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:d27254e8fdf3#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "d27254e8fdf3",
+     "h_nome": null,
+     "n": 96,
+     "rotulo": "Se você tiver dúvidas, entre em contato com nosso Encarregado de Proteção de Dados pelo e-mail .",
+     "x": 208,
+     "y": 1119.3,
+     "w": 720,
+     "h": 49.6,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "link:f1220e88cc26#2",
+     "role": "link",
+     "tag": "a",
+     "testid": null,
+     "h_texto": "f1220e88cc26",
+     "h_nome": null,
+     "n": 15,
+     "rotulo": "dpo@octavia.app",
+     "x": 241.1,
+     "y": 1145,
+     "w": 128.5,
+     "h": 22,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:41686f107602#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "41686f107602",
+     "h_nome": null,
+     "n": 45,
+     "rotulo": "Cookies and consent / Cookies e consentimento",
+     "x": 208,
+     "y": 1200.8,
+     "w": 720,
+     "h": 29.7,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:58651f5e9474#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "58651f5e9474",
+     "h_nome": null,
+     "n": 136,
+     "rotulo": "We use cookies to remember your preferences and understand how the application is used. You can manage cookies in your browser settings.",
+     "x": 208,
+     "y": 1242.5,
+     "w": 720,
+     "h": 49.6,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:8565f0e2feff#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "8565f0e2feff",
+     "h_nome": null,
+     "n": 158,
+     "rotulo": "Utilizamos cookies para lembrar suas preferências e entender como o aplicativo é utilizado. Você pode gerenciar os cookies nas configurações do seu navegador.",
+     "x": 208,
+     "y": 1304.1,
+     "w": 720,
+     "h": 49.6,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    }
+   ],
+   "B": [
+    {
+     "k": "texto:de84445a0f2e#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "de84445a0f2e",
+     "h_nome": null,
+     "n": 40,
+     "rotulo": "Privacy Policy / Política de Privacidade",
+     "x": 24,
+     "y": 48,
+     "w": 661,
+     "h": 36.4,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:a04a0eaf8571#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "a04a0eaf8571",
+     "h_nome": null,
+     "n": 62,
+     "rotulo": "What data we collect and why / Quais dados coletamos e por quê",
+     "x": 24,
+     "y": 116.4,
+     "w": 661,
+     "h": 59.4,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:eb8fde86c9a1#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "eb8fde86c9a1",
+     "h_nome": null,
+     "n": 130,
+     "rotulo": "We collect your name, email address, and usage behavior to personalize your experience, provide support, and improve our services.",
+     "x": 24,
+     "y": 187.8,
+     "w": 661,
+     "h": 49.6,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:44edd1af5d29#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "44edd1af5d29",
+     "h_nome": null,
+     "n": 142,
+     "rotulo": "Coletamos seu nome, endereço de e-mail e comportamento de uso para personalizar sua experiência, oferecer suporte e aprimorar nossos serviços.",
+     "x": 24,
+     "y": 249.4,
+     "w": 661,
+     "h": 49.6,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:29f04db3929c#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "29f04db3929c",
+     "h_nome": null,
+     "n": 57,
+     "rotulo": "Legal basis for processing / Base legal para o tratamento",
+     "x": 24,
+     "y": 331,
+     "w": 661,
+     "h": 29.7,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:809583b7e622#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "809583b7e622",
+     "h_nome": null,
+     "n": 132,
+     "rotulo": "Under GDPR and LGPD, we process your data with your consent, to fulfill our contract with you, and to comply with legal obligations.",
+     "x": 24,
+     "y": 372.6,
+     "w": 661,
+     "h": 49.6,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:8836c23f6e18#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "8836c23f6e18",
+     "h_nome": null,
+     "n": 141,
+     "rotulo": "Conforme o GDPR e a LGPD, tratamos seus dados com seu consentimento, para cumprir nosso contrato com você e para atender a obrigações legais.",
+     "x": 24,
+     "y": 434.2,
+     "w": 661,
+     "h": 49.6,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:fcc16d3ffa57#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "fcc16d3ffa57",
+     "h_nome": null,
+     "n": 51,
+     "rotulo": "Storage of your data / Armazenamento dos seus dados",
+     "x": 24,
+     "y": 515.8,
+     "w": 661,
+     "h": 29.7,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:2dda2353b94b#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "2dda2353b94b",
+     "h_nome": null,
+     "n": 142,
+     "rotulo": "Your information is stored securely on trusted cloud providers. We keep data only as long as necessary for the purposes stated in this policy.",
+     "x": 24,
+     "y": 557.5,
+     "w": 661,
+     "h": 49.6,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:aba7ade1a63b#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "aba7ade1a63b",
+     "h_nome": null,
+     "n": 174,
+     "rotulo": "Suas informações são armazenadas com segurança em provedores de nuvem confiáveis. Mantemos os dados apenas pelo tempo necessário para as finalidades descritas nesta política.",
+     "x": 24,
+     "y": 619.1,
+     "w": 661,
+     "h": 74.4,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:8911e4ff5dd8#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "8911e4ff5dd8",
+     "h_nome": null,
+     "n": 27,
+     "rotulo": "Your rights / Seus direitos",
+     "x": 24,
+     "y": 725.5,
+     "w": 661,
+     "h": 29.7,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:a2875182f2b7#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "a2875182f2b7",
+     "h_nome": null,
+     "n": 117,
+     "rotulo": "You may request access, correction, deletion, or portability of your data. You can also withdraw consent at any time.",
+     "x": 24,
+     "y": 767.2,
+     "w": 661,
+     "h": 49.6,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:ceaa346812a2#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "ceaa346812a2",
+     "h_nome": null,
+     "n": 141,
+     "rotulo": "Você pode solicitar acesso, correção, exclusão ou portabilidade dos seus dados. Também é possível revogar o consentimento a qualquer momento.",
+     "x": 24,
+     "y": 828.8,
+     "w": 661,
+     "h": 49.6,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:5d92eeaec11e#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "5d92eeaec11e",
+     "h_nome": null,
+     "n": 44,
+     "rotulo": "Third-party services / Serviços de terceiros",
+     "x": 24,
+     "y": 910.4,
+     "w": 661,
+     "h": 29.7,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:8bc74754dbb9#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "8bc74754dbb9",
+     "h_nome": null,
+     "n": 145,
+     "rotulo": "We use services such as Google Authentication and analytics tools. These providers may process your data according to their own privacy policies.",
+     "x": 24,
+     "y": 952.1,
+     "w": 661,
+     "h": 49.6,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:1b1134199399#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "1b1134199399",
+     "h_nome": null,
+     "n": 167,
+     "rotulo": "Utilizamos serviços como Google Authentication e ferramentas de análise. Esses provedores podem tratar seus dados de acordo com suas próprias políticas de privacidade.",
+     "x": 24,
+     "y": 1013.7,
+     "w": 661,
+     "h": 74.4,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:a3ee8448d982#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "a3ee8448d982",
+     "h_nome": null,
+     "n": 17,
+     "rotulo": "Contact / Contato",
+     "x": 24,
+     "y": 1120,
+     "w": 661,
+     "h": 29.7,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:d3efe697675a#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "d3efe697675a",
+     "h_nome": null,
+     "n": 63,
+     "rotulo": "If you have questions, contact our Data Protection Officer at .",
+     "x": 24,
+     "y": 1161.7,
+     "w": 661,
+     "h": 24.8,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "link:f1220e88cc26#1",
+     "role": "link",
+     "tag": "a",
+     "testid": null,
+     "h_texto": "f1220e88cc26",
+     "h_nome": null,
+     "n": 15,
+     "rotulo": "dpo@octavia.app",
+     "x": 467.4,
+     "y": 1162.7,
+     "w": 128.5,
+     "h": 22,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:d27254e8fdf3#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "d27254e8fdf3",
+     "h_nome": null,
+     "n": 96,
+     "rotulo": "Se você tiver dúvidas, entre em contato com nosso Encarregado de Proteção de Dados pelo e-mail .",
+     "x": 24,
+     "y": 1198.5,
+     "w": 661,
+     "h": 49.6,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "link:f1220e88cc26#2",
+     "role": "link",
+     "tag": "a",
+     "testid": null,
+     "h_texto": "f1220e88cc26",
+     "h_nome": null,
+     "n": 15,
+     "rotulo": "dpo@octavia.app",
+     "x": 108.4,
+     "y": 1224.3,
+     "w": 128.5,
+     "h": 22,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:41686f107602#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "41686f107602",
+     "h_nome": null,
+     "n": 45,
+     "rotulo": "Cookies and consent / Cookies e consentimento",
+     "x": 24,
+     "y": 1280.1,
+     "w": 661,
+     "h": 29.7,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:58651f5e9474#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "58651f5e9474",
+     "h_nome": null,
+     "n": 136,
+     "rotulo": "We use cookies to remember your preferences and understand how the application is used. You can manage cookies in your browser settings.",
+     "x": 24,
+     "y": 1321.8,
+     "w": 661,
+     "h": 49.6,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
+     "k": "texto:8565f0e2feff#1",
+     "role": "texto",
+     "tag": "div",
+     "testid": null,
+     "h_texto": "8565f0e2feff",
+     "h_nome": null,
+     "n": 158,
+     "rotulo": "Utilizamos cookies para lembrar suas preferências e entender como o aplicativo é utilizado. Você pode gerenciar os cookies nas configurações do seu navegador.",
+     "x": 24,
+     "y": 1383.4,
+     "w": 661,
+     "h": 49.6,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    }
+   ]
+  }
+ }
+}

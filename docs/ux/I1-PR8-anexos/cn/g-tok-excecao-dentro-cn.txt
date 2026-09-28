@@ -1,0 +1,43 @@
+# CN da exceção de inglês (I1-D17, exceção; I1-PR8): fixture = cópia de app/privacy-policy/page.tsx da main (d57a832), fora da árvore
+$ G_TOK_ARQUIVOS=<scratch>/lista.txt G_TOK_SEM_INGLES=<scratch>/sem-ingles.txt node scripts/gates-web/g-tok.mjs --so-arquivos   # a fixture NAS DUAS listas
+## (ii) arquivos redesenhados — <scratch>/lista.txt
+  ✗ <scratch>/privacy-fixture.tsx:5 [cor] "from-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:5 [cor] "to-orange-100" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:6 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:86 [cor] "text-blue-600" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:91 [cor] "text-blue-600" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:7 [tamanho de fonte] "text-3xl" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:7 [tamanho de fonte] "text-4xl" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:11 [tamanho de fonte] "text-2xl" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:25 [tamanho de fonte] "text-2xl" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:39 [tamanho de fonte] "text-2xl" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:54 [tamanho de fonte] "text-2xl" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:68 [tamanho de fonte] "text-2xl" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:83 [tamanho de fonte] "text-2xl" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:95 [tamanho de fonte] "text-2xl" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:5 [espaçamento] "p-6" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:6 [espaçamento] "p-8" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:6 [espaçamento] "space-y-6" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:7 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:11 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:14 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:25 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:28 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:39 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:42 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:54 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:57 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:68 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:71 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:83 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:84 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:86 [espaçamento] "ml-1" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:91 [espaçamento] "ml-1" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:95 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:98 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:6 [tamanho] "max-w-3xl" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:6 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  arquivos: 1 · literais de identidade acusados: 36 · toasts: 0 · imports de ui: 0 · textos examinados: 0 · isentos de inglês (<scratch>/sem-ingles.txt): 1 · vocabulário: 109 · isenções: 9
+
+G-tok: REPROVA — 36 ocorrência(s)
+# exit: 1

@@ -1,0 +1,5 @@
+# G-tok (ii) — exceção de inglês (I1-PR8; I1-D17, exceção; I1-D19).
+# Um caminho por linha, da raiz; cada um TEM de estar também em g-tok-arquivos.txt.
+# O arquivo aqui segue cobrado em literal de cor/tamanho/espaçamento/etc., toast e import de ui;
+# o que não se cobra é o inglês: o texto da política de privacidade não se traduz nem se reescreve.
+app/privacy-policy/page.tsx
