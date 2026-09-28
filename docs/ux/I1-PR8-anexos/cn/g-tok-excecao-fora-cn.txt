@@ -1,0 +1,62 @@
+# CN da exceção de inglês — a MESMA fixture FORA da lista de exceção (lista de exceção vazia)
+$ G_TOK_ARQUIVOS=<scratch>/lista.txt G_TOK_SEM_INGLES=<scratch>/sem-ingles-vazia.txt node scripts/gates-web/g-tok.mjs --so-arquivos
+## (ii) arquivos redesenhados — <scratch>/lista.txt
+  ✗ <scratch>/privacy-fixture.tsx:5 [cor] "from-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:5 [cor] "to-orange-100" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:6 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:86 [cor] "text-blue-600" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:91 [cor] "text-blue-600" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:7 [tamanho de fonte] "text-3xl" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:7 [tamanho de fonte] "text-4xl" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:11 [tamanho de fonte] "text-2xl" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:25 [tamanho de fonte] "text-2xl" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:39 [tamanho de fonte] "text-2xl" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:54 [tamanho de fonte] "text-2xl" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:68 [tamanho de fonte] "text-2xl" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:83 [tamanho de fonte] "text-2xl" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:95 [tamanho de fonte] "text-2xl" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:5 [espaçamento] "p-6" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:6 [espaçamento] "p-8" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:6 [espaçamento] "space-y-6" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:7 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:11 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:14 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:25 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:28 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:39 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:42 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:54 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:57 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:68 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:71 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:83 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:84 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:86 [espaçamento] "ml-1" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:91 [espaçamento] "ml-1" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:95 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:98 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:6 [tamanho] "max-w-3xl" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:6 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ <scratch>/privacy-fixture.tsx:7 [inglês, texto JSX] "Privacy Policy / Política de Privacidade" ← termo "privacy"
+  ✗ <scratch>/privacy-fixture.tsx:11 [inglês, texto JSX] "What data we collect and why / Quais dados coletamos e por quê" ← termo "and"
+  ✗ <scratch>/privacy-fixture.tsx:14 [inglês, texto JSX] "We collect your name, email address, and usage behavior to personalize
+            your experience, provide support, and improve our services." ← termo "email address"
+  ✗ <scratch>/privacy-fixture.tsx:28 [inglês, texto JSX] "Under GDPR and LGPD, we process your data with your consent, to
+            fulfill our contract with you, and to comply with legal obligations." ← termo "your"
+  ✗ <scratch>/privacy-fixture.tsx:39 [inglês, texto JSX] "Storage of your data / Armazenamento dos seus dados" ← termo "your"
+  ✗ <scratch>/privacy-fixture.tsx:42 [inglês, texto JSX] "Your information is stored securely on trusted cloud providers. We
+            keep data only as long as necessary for the purposes stated in this
+            policy." ← termo "policy"
+  ✗ <scratch>/privacy-fixture.tsx:54 [inglês, texto JSX] "Your rights / Seus direitos" ← termo "your"
+  ✗ <scratch>/privacy-fixture.tsx:57 [inglês, texto JSX] "You may request access, correction, deletion, or portability of your
+            data. You can also withdraw consent at any time." ← termo "your"
+  ✗ <scratch>/privacy-fixture.tsx:71 [inglês, texto JSX] "We use services such as Google Authentication and analytics tools.
+            These providers may process your data according to their own privacy
+            policies." ← termo "privacy"
+  ✗ <scratch>/privacy-fixture.tsx:95 [inglês, texto JSX] "Cookies and consent / Cookies e consentimento" ← termo "and"
+  ✗ <scratch>/privacy-fixture.tsx:98 [inglês, texto JSX] "We use cookies to remember your preferences and understand how the
+            application is used. You can manage cookies in your browser settings." ← termo "settings"
+  arquivos: 1 · literais de identidade acusados: 36 · toasts: 0 · imports de ui: 0 · textos examinados: 24 · isentos de inglês (<scratch>/sem-ingles-vazia.txt): 0 · vocabulário: 109 · isenções: 9
+
+G-tok: REPROVA — 47 ocorrência(s)
+# exit: 1

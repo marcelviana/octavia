@@ -18,6 +18,11 @@
 //     desde a I1-PR6 (decisão 3), nenhum literal de LARGURA/ALTURA, RAIO, BORDA,
 //     ENTRELINHA, TRACKING nem VALOR ARBITRÁRIO `[…]` sem `var(`, e nenhum import
 //     de `@/components/ui/*`. Classe com NOME de token (tailwind.config.ts) passa.
+// Desde a I1-PR8 (I1-D17, exceção): um arquivo que também está em
+// `scripts/gates-web/g-tok-sem-ingles.txt` segue cobrado em tudo o que é
+// literal, toast e import de ui, mas NÃO em inglês — o texto da política de
+// privacidade não se traduz nem se reescreve (I1-D17, I1-D19). A lista de
+// exceção só aceita arquivo que está na lista (ii): entrada fora dela reprova.
 // O "CSS gerado == fonte" é o `packages/identidade/test/css.test.ts`, que o
 // job do G-tok roda à parte (gates-web.yml).
 //
@@ -29,6 +34,7 @@ import path from "node:path"
 
 const modo = process.argv[2] ?? ""
 const LISTA = process.env.G_TOK_ARQUIVOS ?? "scripts/gates-web/g-tok-arquivos.txt"
+const SEM_INGLES = process.env.G_TOK_SEM_INGLES ?? "scripts/gates-web/g-tok-sem-ingles.txt"
 const ERRATAS = "docs/ux/DESIGN-I1/erratas.json"
 const CONFERIR = "docs/ux/DESIGN-I1/conferencia/conferir.mjs"
 const TSX = path.resolve("node_modules/.bin/tsx")
@@ -143,7 +149,10 @@ function arquivos() {
   if (!fs.existsSync(LISTA)) { console.error(`g-tok: lista ausente: ${LISTA}`); process.exit(2) }
   const lista = fs.readFileSync(LISTA, "utf8").split("\n").map((l) => l.trim()).filter((l) => l && !l.startsWith("#"))
   if (lista.length === 0) { console.log("  (lista vazia — nenhum arquivo redesenhado ainda)"); return }
-  let literais = 0, textos = 0, toasts = 0, importsUi = 0
+  const lerLista = (f) => fs.readFileSync(f, "utf8").split("\n").map((l) => l.trim()).filter((l) => l && !l.startsWith("#"))
+  const semIngles = new Set(fs.existsSync(SEM_INGLES) ? lerLista(SEM_INGLES) : [])
+  for (const f of semIngles) if (!lista.includes(f)) falha(`${f}: está em ${SEM_INGLES} e não na lista (ii) — exceção sem arquivo cobrado`)
+  let literais = 0, textos = 0, toasts = 0, importsUi = 0, isentos = 0
   for (const f of lista) {
     if (!fs.existsSync(f)) { falha(`${f}: está na lista e não existe`); continue }
     const src = semComentarios(fs.readFileSync(f, "utf8"))
@@ -162,6 +171,7 @@ function arquivos() {
     for (const m of src.matchAll(TOAST)) {
       toasts++; falha(`${f}:${linha(src, m.index)} [toast] ${JSON.stringify(m[0])} — nenhum toast entra (I1-D26): a falha é a LinhaDeAviso`)
     }
+    if (semIngles.has(f)) { isentos++; continue } // I1-D17, exceção: literais, toasts e imports cobrados acima; inglês não
     for (const { nome, re } of POSICOES) for (const m of src.matchAll(re)) {
       const s = (m[1] ?? m[2] ?? m[3] ?? m[4] ?? "").trim()
       if (!s || !/[A-Za-z]/.test(s)) continue
@@ -173,7 +183,7 @@ function arquivos() {
       if (hit && !ANGLICISMOS_DO_PRODUTO.includes(hit)) falha(`${f}:${linha(src, m.index)} [inglês, ${nome}] ${JSON.stringify(s)} ← termo "${hit}"`)
     }
   }
-  console.log(`  arquivos: ${lista.length} · literais de identidade acusados: ${literais} · toasts: ${toasts} · imports de ui: ${importsUi} · textos examinados: ${textos} · vocabulário: ${VOCAB.length} · isenções: ${ANGLICISMOS_DO_PRODUTO.length}`)
+  console.log(`  arquivos: ${lista.length} · literais de identidade acusados: ${literais} · toasts: ${toasts} · imports de ui: ${importsUi} · textos examinados: ${textos} · isentos de inglês (${SEM_INGLES}): ${isentos} · vocabulário: ${VOCAB.length} · isenções: ${ANGLICISMOS_DO_PRODUTO.length}`)
 }
 
 if (modo !== "--so-arquivos") folha()

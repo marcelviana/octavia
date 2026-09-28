@@ -1,0 +1,7 @@
+# CN da exceção de inglês — entrada na lista de exceção que NÃO está na lista (ii)
+$ G_TOK_ARQUIVOS=<scratch>/lista.txt G_TOK_SEM_INGLES=<scratch>/sem-ingles-orfa.txt node scripts/gates-web/g-tok.mjs --so-arquivos | grep -E "outro|arquivos:|G-tok"
+  ✗ <scratch>/outro.tsx: está em <scratch>/sem-ingles-orfa.txt e não na lista (ii) — exceção sem arquivo cobrado
+  arquivos: 1 · literais de identidade acusados: 36 · toasts: 0 · imports de ui: 0 · textos examinados: 24 · isentos de inglês (<scratch>/sem-ingles-orfa.txt): 0 · vocabulário: 109 · isenções: 9
+G-tok: REPROVA — 48 ocorrência(s)
+# exit: 1
+# as outras 47 linhas ✗ são as da fixture fora da exceção (36 literais + 11 inglês), iguais às de g-tok-excecao-fora-cn.txt: 47 + 1 = 48
