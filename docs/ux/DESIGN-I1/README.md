@@ -176,7 +176,12 @@ contorno da moldura; o bloco vale 663* (711 − 2 × 24) — Δw 2, abaixo da to
 
 | id | o que a folha mostra | o que vale | onde se aplica | div. | efeito |
 |---|---|---|---|---|---|
+| **I1-E14** | em `LIB-filtros`, o menu *Filtros* ancorado à ESQUERDA dos controles, com a largura do conteúdo (≈ 442 px): ele termina em ≈ 1142 na moldura C (1136 úteis) e em ≈ 723 na B (709) — o excesso está escondido pelo `overflow:hidden` da moldura | o menu *Filtros* **cabe no contêiner**: ancora pela **direita** do cabeçalho (o fim do conteúdo) e não passa da largura dele (`max-w-full`); em A os alternáveis quebram linha. Os nós do menu ficam ≈ 37 px mais à esquerda em C e em B (Δx), com o mesmo y e o mesmo tamanho | `4-content-lista`: `LIB-filtros` | 726 (I1-PR-9) | leitura |
 | **I1-E13** | o `README-design.md` §5.5 dá a conta da casca com o menu *Perfil · Sair* (`casca.conta`) | o menu da conta é **só *Sair***: *Perfil* saiu com a página (I1-D19, I1-PR-3); não há cabeçalho nome + e-mail nem foto no menu — o nome fica no nome acessível *Conta de {nome}*, o gatilho mostra as iniciais | `4-content-lista` e toda tela com a casca (as folhas 5–8) — nenhuma seção desenha o menu aberto | 697 (I1-PR-9) | leitura |
+
+A I1-E14 é do G-faixa: entra em `erratasFaixa` e cobre as erratas candidatas do `LIB-filtros` (os 10 nós do menu,
+em C e em B). Sem ela, o app que segue a folha rola na horizontal nas três larguras (o (b) da 1ª rodada do aceite da
+I1-PR-9, `docs/ux/I1-PR9-anexos/cn/g-faixa-aceite-rodada1.txt`).
 
 A I1-E13 é errata de **frase** (§5.5), não de moldura: nenhuma seção desenha o menu da conta aberto, então não entra
 em `erratasFaixa` (o G-faixa não a acha) nem em `erratas` (o `conferir.mjs` não a acha) — fica na lista

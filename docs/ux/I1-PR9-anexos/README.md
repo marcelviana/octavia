@@ -565,9 +565,10 @@ gfaixa: scripts/gates-web/g-faixa-esperado.ts — âncoras porSeletor (a caixa d
 # extras: tailwind.config.ts — web-folha-topo, cor.marcado, cor.dialogo, tam-web-metadado
 # extras: a LinhaDeAviso movida para components/identidade/ (os seis importadores trocam o caminho)
 # extras: a casca velha morta — components/{responsive-layout,header,navigation-container,sidebar,bottom-nav,user-header}.tsx; os quatro page-clients de corpo velho trocam o invólucro
-# extras: docs do congelamento — docs/ux/DESIGN-I1/README.md §2.2 (I1-E13; a linha da 694 na I1-E12) e §4 (os três nomes) + erratas.json (erratasFrase) + SHA256SUMS (só a linha do README.md)
+# extras: docs do congelamento — docs/ux/DESIGN-I1/README.md §2.2 (I1-E13; I1-E14, div. 726; a linha da 694 na I1-E12) e §4 (os três nomes) + erratas.json (erratasFrase: I1-E13; erratasFaixa: I1-E14) + SHA256SUMS (só a linha do README.md)
 # extras: lib/content-service.ts (fora do núcleo, I1-D21): getUserContent/getUserStats lançam na falha do banco; o erro da carga leva o status
-# pares: use-library-data.test.tsx (+5), content-service.test.ts (+4), login-sessao-cn.test.tsx (a (v) em /setlists, div. 716); novo: components/painel/__tests__/painel-estados.test.tsx
+# pares: use-library-data.test.tsx (+5), content-service.test.ts (+4), login-sessao-cn.test.tsx (a (v) em /setlists, div. 716 — aceita pelo Marcel); novo: components/painel/__tests__/painel-estados.test.tsx
+# commit 2b: o menu Filtros ancora pela direita (I1-E14, div. 726); a raiz da casca não estiliza texto (div. 727)
 ```
 
 ## 16. Contabilidade (commit 2)
@@ -579,3 +580,47 @@ gfaixa: scripts/gates-web/g-faixa-esperado.ts — âncoras porSeletor (a caixa d
 | executor | navegador | a folha por `file://`; as públicas e a fumaça em `localhost:3110` |
 | executor | páginas de fumaça | `app/fumaca-i1pr9/*` criadas e **apagadas** antes do commit (`git status` → 0) |
 | — | `packages/identidade` | **mudou por adição** (div. 713, opção 2 do Marcel): três tokens do bloco `web`; o nativo não os lê (native 211/211) |
+
+---
+
+## 17. Commit 2b — *Filtros* cabe no contêiner (I1-E14); a casca não vaza estilo (div. 727)
+
+**A 1ª rodada do aceite reprovou** (Marcel, `ed85f23`; o veredito verbatim em `cn/g-faixa-aceite-rodada1.txt`; os JSON
+movidos para `tests/gates-web/medicoes/rodada1/` antes da 2ª rodada, como rastro): `LIB-filtros` com (b) nas três
+larguras — a página rolava na horizontal (`scrollWidth` 1145 · 726 · 468). E a `casca-efeito` mostrou o corpo velho com
+caixas de outro tamanho (a raiz da casca passava fonte, entrelinha e cor adiante).
+
+**Decisões** `[Marcel, 2026-09-28]`: **div. 726 → (a)** — o menu *Filtros* ancora pela direita, `max-w-full`, os
+alternáveis quebram linha em A; **I1-E14** no `DESIGN-I1/README.md` §2.2 e em `erratasFaixa`. **Div. 727** — as classes
+de texto saem da raiz da `Casca` e ficam só no `<header>` e no `ConteudoDaCasca`.
+
+O diff das classes (sem os comentários):
+
+```
+-    <div className="min-h-screen bg-cor-bg text-cor-text font-fam-ui font-peso-ui leading-natural flex flex-col">
+-      <header className="border-b-hairline border-cor-line">
++    <div className="min-h-screen bg-cor-bg flex flex-col">
++      <header className="border-b-hairline border-cor-line text-cor-text font-fam-ui font-peso-ui leading-natural">
+-  return <div className="w-full max-w-web-conteiner mx-auto flex flex-col gap-espaco-xl py-espaco-xxl px-web-margem">{children}</div>
++  return <div className="… px-web-margem text-cor-text font-fam-ui font-peso-ui leading-natural">{children}</div>
+-    <PainelDoMenu … className="left-0 mt-espaco-sm p-espaco-xl flex flex-col gap-espaco-lg">
++    <PainelDoMenu … className="right-0 max-w-full mt-espaco-sm p-espaco-xl flex flex-col gap-espaco-lg">
+-    <div className="flex flex-wrap items-center justify-between gap-espaco-lg">      (LibraryHeader: o cabeçalho vira o contêiner do menu)
++    <div className="relative flex flex-wrap items-center justify-between gap-espaco-lg">
+-      <div className="relative flex flex-wrap gap-espaco-lg">
++      <div className="flex flex-wrap gap-espaco-lg">
+```
+
+**CN do 726** (sem sessão, `cn/filtros-726-cn.txt`; página de fumaça local, não commitada): `LIB-filtros` com
+**`scrollWidth` 1138 · 711 · 411** (= o viewport nas três); contra a folha, em C e em B, os 10 nós do menu com **Δx
+−37,1** (Δy 0, tamanho igual) — as 20 candidatas que a I1-E14 cobre (`n: 20`); em A o menu fica na tela e os
+alternáveis quebram linha. **O que a pré-verificação do commit 2 não viu**: ela media Δ contra a folha, não o
+`scrollWidth` do estado aberto — a folha passava da moldura e o Δ era 0. **O roteiro dela agora mede `scrollWidth` em
+todo estado e largura.**
+
+**CN do 727**: fica para o aceite repetido (precisa de sessão) — o critério, aplicado no commit 3 com
+`cn/casca-efeito-corpo.mjs`: *"Δ só de posição, zero de tamanho"* no corpo velho, contra a `cn-main`.
+
+Verdes: G-tok **PASSA** (49, 0 literais; (i) 19/19) · G-back **PASSA** · G-palco **0** · `pnpm test` 110 | 3 skipped
+(113) · 1089 | 77 skipped (1166) · CN da PR-1 **15/15** · painel **4/4** · `tsc` 0 · lint ✔ · build ✓ (`# exit: 0`) ·
+`shasum -c` 14/14. `packages/identidade` **não mudou** (sem APK novo). Divergências: 726, 727; próxima **728**.

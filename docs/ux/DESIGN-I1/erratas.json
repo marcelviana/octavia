@@ -68,14 +68,15 @@
       "casa": [{ "achado": "^\\(c\\) forma sem desenho no dados\\.ts \\(10× nas folhas 0,1,4,7\\): <circle cx=\"12\" cy=\"12\" r=\"8\\.5\"></circle>", "n": 1 }]
     }
   ],
-  "_leia_faixa": "I1-PR6 (commit 5; div. 681): as erratas da folha que o G-FAIXA acha (|Δ| > 4 px contra a moldura), não o conferir.mjs — por isso numa lista à parte, que o G-tok (i) não lê (ele casa só `erratas` com os achados do conferir; uma errata daqui lá seria órfã). Cada uma cobre, pelo estado, as erratas candidatas do veredito do aceite de auth (`n` = quantas, em C e B). Fonte: DESIGN-I1/README.md §2.2. I1-PR7: a I1-E11 cobre as 8 do aceite da landing. I1-PR8: a I1-E12 cobre as 45 do aceite da política (22 em C, 23 em B).",
+  "_leia_faixa": "I1-PR6 (commit 5; div. 681): as erratas da folha que o G-FAIXA acha (|Δ| > 4 px contra a moldura), não o conferir.mjs — por isso numa lista à parte, que o G-tok (i) não lê (ele casa só `erratas` com os achados do conferir; uma errata daqui lá seria órfã). Cada uma cobre, pelo estado, as erratas candidatas do veredito do aceite de auth (`n` = quantas, em C e B). Fonte: DESIGN-I1/README.md §2.2. I1-PR7: a I1-E11 cobre as 8 do aceite da landing. I1-PR8: a I1-E12 cobre as 45 do aceite da política (22 em C, 23 em B). I1-PR9: a I1-E14 cobre as do LIB-filtros (os 10 nós do menu × C e B — n da pré-verificação sem sessão; o aceite confirma).",
   "erratasFaixa": [
     {"id": "I1-E7", "div": [667], "o_que_vale": "o balão de validação é do navegador: não é elemento da página, o código não o reproduz; a seção vale sem ele", "estados": ["AUTH-login-validacao", "AUTH-signup-validacao", "AUTH-forgot-validacao"], "n": 31},
     {"id": "I1-E8", "div": [668], "o_que_vale": "o grupo de botões vazio não existe; a seção vale sem ele", "estados": ["AUTH-verify-carregando"], "n": 2},
     {"id": "I1-E9", "div": [675], "o_que_vale": "o grupo de botões vazio em login-redirecionando não existe; a seção vale sem ele", "estados": ["AUTH-login-redirecionando"], "n": 6},
     {"id": "I1-E10", "div": [669], "o_que_vale": "sem usuário não há a frase com o e-mail; a seção vale sem ela", "estados": ["AUTH-confirm-sem-usuario"], "n": 7},
     {"id": "I1-E11", "div": [684], "o_que_vale": "a folha 2-landing renderizou a frase com 1,45; a tabela declara lineHeight.text (1,55), que é o que vale", "estados": ["LANDING"], "n": 8},
-    {"id": "I1-E12", "div": [693], "o_que_vale": "títulos com entrelinha natural (o padrão do web desde a I1-PR6); a folha 3-privacy-policy renderizou 1,3 (h1) e 1,35 (h2) sem token; o Δy acumulado dos nós seguintes é consequência desta errata", "estados": ["PRIVACY"], "n": 45}
+    {"id": "I1-E12", "div": [693], "o_que_vale": "títulos com entrelinha natural (o padrão do web desde a I1-PR6); a folha 3-privacy-policy renderizou 1,3 (h1) e 1,35 (h2) sem token; o Δy acumulado dos nós seguintes é consequência desta errata", "estados": ["PRIVACY"], "n": 45},
+    {"id": "I1-E14", "div": [726], "o_que_vale": "o menu Filtros cabe no contêiner (âncora direita, max-w-full; em A os alternáveis quebram linha); a folha 4-content-lista o desenhou passando da moldura, escondido pelo overflow:hidden", "estados": ["LIB-filtros"], "n": 20}
   ],
   "_leia_frase": "I1-PR9: as erratas de FRASE (README-design §5) que nenhum gate acha — nenhuma seção desenha o elemento, então nem o conferir.mjs (lista `erratas`) nem o G-faixa (lista `erratasFaixa`) as veem. Registro só; nenhum gate lê esta lista. Fonte: DESIGN-I1/README.md §2.2.",
   "erratasFrase": [

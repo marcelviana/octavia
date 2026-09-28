@@ -21,9 +21,10 @@ const LibraryHeader = memo<LibraryHeaderProps>(function LibraryHeader({ sortBy, 
   const filtros = useMenu();
   const ordem = useMenu();
   return (
-    <div className="flex flex-wrap items-center justify-between gap-espaco-lg">
+    // I1-E14 (div. 726): o cabeçalho é o contêiner do menu Filtros — âncora pela DIREITA, no máximo a largura dele
+    <div className="relative flex flex-wrap items-center justify-between gap-espaco-lg">
       <TituloDaTela>{FRASES_LISTA["lib.titulo"]}</TituloDaTela>
-      <div className="relative flex flex-wrap gap-espaco-lg">
+      <div className="flex flex-wrap gap-espaco-lg">
         <div ref={filtros.ref}>
           <button
             type="button"

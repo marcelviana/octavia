@@ -6,6 +6,8 @@
  * favoritas* —, numa caixa abaixo do controle (vão `space.sm`, respiro
  * `space.xl`, vão interno `space.lg`); cada opção é um alternável `touch.min`. Os
  * mesmos valores de filtro de antes (o enum de `types/content.ts`, `Beginner`…).
+ * I1-E14 (div. 726): a caixa ancora pela DIREITA do cabeçalho e não passa da largura dele (`max-w-full`);
+ * em A os alternáveis quebram linha. A folha a desenhou à esquerda, passando da moldura.
  */
 import React from "react";
 import { Icone } from "@/components/identidade/icone";
@@ -22,7 +24,7 @@ function alternar(lista: string[], valor: string): string[] {
 
 export default function LibraryFiltros({ filters, onFiltersChange }: { filters: LibraryFilters; onFiltersChange: (f: LibraryFilters) => void }) {
   return (
-    <PainelDoMenu rotulo={FRASES_LISTA["lib.filtros"]} className="left-0 mt-espaco-sm p-espaco-xl flex flex-col gap-espaco-lg">
+    <PainelDoMenu rotulo={FRASES_LISTA["lib.filtros"]} className="right-0 max-w-full mt-espaco-sm p-espaco-xl flex flex-col gap-espaco-lg">
       <span className={ROTULO}>{FRASES_LISTA["lib.filtros.tipo"]}</span>
       <div className="flex flex-wrap gap-espaco-sm">
         {TIPOS.map((t) => (

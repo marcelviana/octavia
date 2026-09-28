@@ -16,6 +16,9 @@
  * `sidebar`, `bottom-nav`, `user-header`) nos seis *page-clients* com sessão. A
  * busca vai para `/library?search=` como antes; a navegação vai aos mesmos quatro
  * destinos (por `<Link>`, o ativo pelo caminho). A página rola no documento.
+ *
+ * A REGRA (div. 727): a raiz da casca não estiliza texto (fonte, entrelinha, cor) — só o `<header>` e o
+ * `ConteudoDaCasca`; as telas de corpo velho herdam do `body`, como antes da casca nova.
  */
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
@@ -69,8 +72,9 @@ export interface CascaProps {
 export function Casca({ children, buscaInicial = "", aoReclicarAtivo }: CascaProps) {
   const caminho = usePathname() ?? ""
   return (
-    <div className="min-h-screen bg-cor-bg text-cor-text font-fam-ui font-peso-ui leading-natural flex flex-col">
-      <header className="border-b-hairline border-cor-line">
+    // div. 727: a raiz NÃO estiliza texto — só o header e o conteúdo; o corpo velho herda do `body`, como antes
+    <div className="min-h-screen bg-cor-bg flex flex-col">
+      <header className="border-b-hairline border-cor-line text-cor-text font-fam-ui font-peso-ui leading-natural">
         <div className="w-full max-w-web-conteiner mx-auto flex flex-wrap items-center gap-x-espaco-xl px-web-margem">
           <div role="img" aria-label={FRASES_CASCA["casca.marca.nome"]} className="order-1 h-barra-top flex items-center font-fam-display font-peso-display text-tam-title tracking-display-wide text-cor-text">
             {FRASES_CASCA["casca.marca"]}
@@ -104,5 +108,5 @@ export function Casca({ children, buscaInicial = "", aoReclicarAtivo }: CascaPro
 
 /** O conteúdo das telas redesenhadas: contêiner `web.conteiner`, margem `web.margem`, respiro `space.xxl`, vão `space.xl`. */
 export function ConteudoDaCasca({ children }: { children: React.ReactNode }) {
-  return <div className="w-full max-w-web-conteiner mx-auto flex flex-col gap-espaco-xl py-espaco-xxl px-web-margem">{children}</div>
+  return <div className="w-full max-w-web-conteiner mx-auto flex flex-col gap-espaco-xl py-espaco-xxl px-web-margem text-cor-text font-fam-ui font-peso-ui leading-natural">{children}</div>
 }

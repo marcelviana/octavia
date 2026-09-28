@@ -1,15 +1,5 @@
 $ pnpm build
  ✓ Compiled successfully
-├ ƒ /add-content                         3.29 kB         273 kB
-├ ƒ /api/content/[id]                      183 B         102 kB
-├ ƒ /api/setlists                          183 B         102 kB
-├ ƒ /api/setlists/[id]                     183 B         102 kB
-├ ƒ /api/setlists/[id]/songs               183 B         102 kB
-├ ƒ /api/setlists/[id]/songs/order         183 B         102 kB
-├ ƒ /api/setlists/songs/[songId]           183 B         102 kB
-├ ƒ /content/[id]                         131 kB         410 kB
-├ ƒ /content/[id]/edit                   2.08 kB         256 kB
 ├ ƒ /dashboard                           1.63 kB         275 kB
 ├ ƒ /library                             1.44 kB         275 kB
-├ ƒ /setlists                            3.29 kB         273 kB
 # exit: 0
