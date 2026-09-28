@@ -97,6 +97,9 @@
     --faixa-botao-aviso: 36px;
     --faixa-entrelinha-aviso: 20px;
     --faixa-limiar-aviso: 320px;
+    --faixa-metadado: 13px;
+    --faixa-cor-marcado: color-mix(in srgb, var(--cor-accent) 12%, transparent);
+    --faixa-cor-dialogo: color-mix(in srgb, var(--cor-bg) 82%, transparent);
     --faixa-folha-largura: 720px;
     --faixa-folha-topo: 100px;
     --faixa-folha-altura-min: 420px;
@@ -121,6 +124,9 @@
     --faixa-botao-aviso: 36px;
     --faixa-entrelinha-aviso: 20px;
     --faixa-limiar-aviso: 320px;
+    --faixa-metadado: 13px;
+    --faixa-cor-marcado: color-mix(in srgb, var(--cor-accent) 12%, transparent);
+    --faixa-cor-dialogo: color-mix(in srgb, var(--cor-bg) 82%, transparent);
     --faixa-folha-largura: 663px;
     --faixa-folha-topo: 96px;
   }
@@ -144,6 +150,9 @@
     --faixa-botao-aviso: 36px;
     --faixa-entrelinha-aviso: 20px;
     --faixa-limiar-aviso: 320px;
+    --faixa-metadado: 13px;
+    --faixa-cor-marcado: color-mix(in srgb, var(--cor-accent) 12%, transparent);
+    --faixa-cor-dialogo: color-mix(in srgb, var(--cor-bg) 82%, transparent);
     --faixa-folha-largura: 663px;
     --faixa-folha-topo: 96px;
   }

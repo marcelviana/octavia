@@ -1,29 +1,10 @@
-import { ContentType, getContentTypeIcon, getContentTypeColors } from '@/types/content';
-import { ContentItem } from '@/types/library';
-
 /**
- * Format a date string for display in the library
+ * As contas da biblioteca que não são tela. I1-PR-9: o que era de tela saiu para
+ * `components/library/frases-lista.ts` — a data curta pt-BR (`dataCurta`, no
+ * lugar do `formatLibraryDate` `en-US`), os rótulos dos filtros (`TIPOS`,
+ * `DIFICULDADES`) e o ícone do tipo (`tipoDe`); a cor da dificuldade saiu com o
+ * selo (decisão 10 do aval).
  */
-export function formatLibraryDate(dateString: string): string {
-  const date = new Date(dateString);
-  return date.toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
-}
-
-/**
- * Get content icon component and styling classes for the library
- */
-export function getLibraryContentIconData(type: string) {
-  const IconComponent = getContentTypeIcon(type);
-  const colors = getContentTypeColors(type);
-  return {
-    IconComponent,
-    className: `w-5 h-5 ${colors.primary}`
-  };
-}
 
 /**
  * Calculate total pages based on total count and page size
@@ -70,43 +51,4 @@ export function generatePaginationRange(
   }
 
   return Array.from({ length: maxVisible }, (_, i) => currentPage - 2 + i);
-}
-
-/**
- * Get difficulty badge styling
- */
-export function getDifficultyBadgeClass(difficulty: string): string {
-  switch (difficulty) {
-    case "Beginner":
-      return "bg-green-100 text-green-800 border-green-200";
-    case "Intermediate":
-      return "bg-amber-100 text-amber-800 border-amber-200";
-    case "Advanced":
-      return "bg-red-100 text-red-800 border-red-200";
-    default:
-      return "bg-gray-100 text-gray-800 border-gray-200";
-  }
-}
-
-/**
- * Get content type filter options
- */
-export function getContentTypeFilterOptions() {
-  return [
-    { display: "Tab", value: ContentType.TAB },
-    { display: "Chords", value: ContentType.CHORDS },
-    { display: "Sheet", value: ContentType.SHEET },
-    { display: "Lyrics", value: ContentType.LYRICS },
-  ];
-}
-
-/**
- * Get difficulty filter options
- */
-export function getDifficultyFilterOptions() {
-  return [
-    { display: "Beginner", value: "Beginner" },
-    { display: "Intermediate", value: "Intermediate" },
-    { display: "Advanced", value: "Advanced" },
-  ];
 }

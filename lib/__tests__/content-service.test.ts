@@ -77,6 +77,46 @@ describe('Content Service', () => {
       expect(data).toEqual(mockData)
       vi.resetModules()
     })
+
+    // I1-PR-9 (decisão 4 do aval): a falha do banco LANÇA — antes virava `[]` e o painel mostrava "vazio"
+    it('throws when the database fails (I1-PR-9: vazio ≠ erro)', async () => {
+      const mockClient = {
+        from: vi.fn().mockReturnValue({
+          select: vi.fn().mockReturnValue({
+            eq: vi.fn().mockReturnValue({
+              order: vi.fn().mockResolvedValue({ data: null, error: { message: 'boom' } })
+            })
+          })
+        })
+      }
+      const { getUserContent } = await import('../content-service')
+      await expect(getUserContent(mockClient as unknown as SupabaseClient, { id: 'user1' })).rejects.toThrow('Failed to fetch content')
+    })
+  })
+
+  // I1-PR-9 (decisão 4 do aval): cada contagem lê o `error`; a falha LANÇA — antes o `error` nem era lido e virava 0
+  describe('getUserStats', () => {
+    const cliente = (erroEm: string | null) => ({
+      from: vi.fn((tabela: string) => {
+        const q: Record<string, unknown> = {}
+        const resposta = () => Promise.resolve(tabela === erroEm ? { count: null, error: { message: 'boom' } } : { count: 7, error: null })
+        q.select = vi.fn(() => q)
+        q.eq = vi.fn(() => Object.assign(resposta(), q))
+        return q
+      })
+    })
+
+    it('counts when the database answers', async () => {
+      const { getUserStats } = await import('../content-service')
+      await expect(getUserStats(cliente(null) as unknown as SupabaseClient, { id: 'user1' })).resolves.toEqual({
+        totalContent: 7, totalSetlists: 7, favoriteContent: 7, recentlyViewed: 7,
+      })
+    })
+
+    it.each(['content', 'setlists'])('throws when counting %s fails', async (tabela) => {
+      const { getUserStats } = await import('../content-service')
+      await expect(getUserStats(cliente(tabela) as unknown as SupabaseClient, { id: 'user1' })).rejects.toThrow('Failed to fetch stats')
+    })
   })
 
   describe('getUserContentPage - Search Functionality', () => {

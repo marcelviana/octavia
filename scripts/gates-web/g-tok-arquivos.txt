@@ -9,7 +9,7 @@ app/verify-email/page.tsx
 app/forgot-password/page.tsx
 components/auth/login-panel.tsx
 components/auth/signup-panel.tsx
-components/auth/linha-de-aviso.tsx
+components/identidade/linha-de-aviso.tsx
 components/auth/frases-sessao.ts
 components/auth/frases-auth.ts
 components/auth/casca-auth.tsx
@@ -24,8 +24,8 @@ components/landing/frases-landing.ts
 components/identidade/link-botao.tsx
 # I1-PR8 — superfície 3, privacy-policy (folha 3-privacy-policy); o inglês é isento (g-tok-sem-ingles.txt, I1-D17 exceção)
 app/privacy-policy/page.tsx
-# I1-PR9 — superfície 4, content-lista (folha 4-content-lista): /dashboard e /library, os que sobrevivem
-# (commit 1, gate-first). A casca nova, as frases e o que o commit 2 criar entram no commit 2.
+# I1-PR9 — superfície 4, content-lista (folha 4-content-lista): /dashboard, /library e a casca.
+# Commit 1 (gate-first): os que sobrevivem. Commit 2: a casca, as frases e os que nasceram.
 app/dashboard/page.tsx
 app/library/page.tsx
 components/dashboard-page-client.tsx
@@ -44,3 +44,14 @@ components/delete-content-dialog.tsx
 hooks/use-library-data.ts
 hooks/use-content-actions.ts
 lib/library-utils.ts
+components/identidade/casca.tsx
+components/identidade/conta-da-casca.tsx
+components/identidade/frases-casca.ts
+components/identidade/menu.tsx
+components/identidade/controles.tsx
+components/identidade/linha-da-tela.tsx
+components/painel/contadores-do-painel.tsx
+components/painel/lista-do-painel.tsx
+components/library/frases-lista.ts
+components/library/LibraryFiltros.tsx
+components/library/LinhaDaBiblioteca.tsx

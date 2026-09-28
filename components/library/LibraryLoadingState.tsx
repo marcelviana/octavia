@@ -1,21 +1,19 @@
 "use client";
 
-import React, { memo } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
+/**
+ * O carregando da biblioteca (I1-PR-9; folha 4, `LIB-carregando` e
+ * `LIB-carregando-chunk`): *carregando a biblioteca…* no vazio central — as duas
+ * frases de antes viram uma; o apoio sai (nota da folha).
+ */
+import React, { memo } from "react";
+import { FRASES_LISTA } from "@/components/library/frases-lista";
+import { CENTRO, FRASE_CENTRAL } from "@/components/library/LibraryEmptyState";
 
 const LibraryLoadingState = memo(function LibraryLoadingState() {
   return (
-    <Card className="bg-white/80 backdrop-blur-sm border border-amber-100 shadow-lg">
-      <CardContent className="p-4 sm:p-8 text-center">
-        <div className="w-12 h-12 sm:w-16 sm:h-16 border-4 border-t-amber-600 border-amber-200 rounded-full animate-spin mx-auto mb-3 sm:mb-4"></div>
-        <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-1 sm:mb-2">
-          Loading your music library...
-        </h3>
-        <p className="text-[#A69B8E] text-sm">
-          Please wait while we fetch your content
-        </p>
-      </CardContent>
-    </Card>
+    <div role="status" className={CENTRO}>
+      <p className={FRASE_CENTRAL}>{FRASES_LISTA["lib.carregando"]}</p>
+    </div>
   );
 });
 

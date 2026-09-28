@@ -1,0 +1,15 @@
+$ bash scripts/gates-web/g-palco.sh
+G-palco — lista: docs/ux/I1-PR3-anexos/lista-do-corte.txt
+MORRE: 69 caminhos · SIMBOLO: 7 · TEXTO: 6
+
+## 1. MORRE — o arquivo existe
+  ✓ nenhum
+## 2. MORRE — o arquivo é importado
+  ✓ nenhum
+## 3. SIMBOLO — símbolo morto dentro de arquivo que fica
+  ✓ nenhum
+## 4. TEXTO — referência a rota/arquivo morto
+  ✓ nenhum
+
+G-palco: PASSA — 0 ocorrências
+# exit: 0

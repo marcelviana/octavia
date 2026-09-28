@@ -225,4 +225,50 @@ describe('useLibraryData', () => {
     expect(result.current.content).toEqual(initialContent)
     expect(result.current.totalCount).toBe(2)
   })
+
+  // I1-PR-9 (decisões 4 e 6 do aval; folha 4, LIB-erro): a falha da carga sem lista na tela é ERRO, não vazio
+  describe('I1-PR-9 — vazio ≠ erro', () => {
+    const usuario = { uid: 'u1', email: 'a@b.c' }
+    const montar = (initialContent: any[] = []) => renderHook(() => useLibraryData({
+      user: usuario, ready: true, initialContent, initialTotal: initialContent.length, initialPage: 1, initialPageSize: 20,
+    }))
+
+    it('sem lista na tela, a falha com status vira erro (e não o vazio de primeira vez)', async () => {
+      mockGetUserContentPage.mockRejectedValue(Object.assign(new Error('boom'), { status: 500 }))
+      const { result } = montar()
+      await waitFor(() => expect(result.current.erro).toEqual({ status: 500 }))
+      expect(result.current.content).toEqual([])
+    })
+
+    it('sem lista na tela, o TypeError do fetch é rede', async () => {
+      mockGetUserContentPage.mockRejectedValue(new TypeError('Failed to fetch'))
+      const { result } = montar()
+      await waitFor(() => expect(result.current.erro).toEqual({ rede: true }))
+    })
+
+    it('o timeout que o serviço devolvia como lista vazia com `error` é rede', async () => {
+      mockGetUserContentPage.mockResolvedValue({ data: [], total: 0, totalPages: 0, error: 'Request timed out - please try again' })
+      const { result } = montar()
+      await waitFor(() => expect(result.current.erro).toEqual({ rede: true }))
+    })
+
+    it('o vazio de verdade (o servidor respondeu nada) não é erro', async () => {
+      mockGetUserContentPage.mockResolvedValue({ data: [], total: 0, totalPages: 0 })
+      const { result } = montar()
+      await waitFor(() => expect(mockGetUserContentPage).toHaveBeenCalled())
+      await waitFor(() => expect(result.current.loading).toBe(false))
+      expect(result.current.erro).toBeNull()
+      expect(result.current.content).toEqual([])
+    })
+
+    it('com lista na tela, a falha segue muda: a lista fica e não há erro', async () => {
+      mockGetUserContentPage.mockRejectedValue(Object.assign(new Error('boom'), { status: 500 }))
+      const lista = [{ id: 'c1', title: 'Na tela' }]
+      const { result } = montar(lista)
+      await waitFor(() => expect(mockGetUserContentPage).toHaveBeenCalled())
+      await waitFor(() => expect(result.current.loading).toBe(false))
+      expect(result.current.erro).toBeNull()
+      expect(result.current.content).toEqual(lista)
+    })
+  })
 })

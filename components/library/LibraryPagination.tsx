@@ -1,81 +1,46 @@
 "use client";
 
-import React, { memo } from 'react';
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from '@/components/ui/pagination';
-import { cn } from '@/lib/utils';
-import { LibraryPaginationProps } from '@/types/library';
-import { generatePaginationRange } from '@/lib/library-utils';
+/**
+ * A paginação (I1-PR-9; folha 4, `LIB`; README-design §2.4 "paginação"):
+ * *Anterior* (o `voltar` 20) · as páginas (`touch.min`; a atual marcada) ·
+ * *Próxima* (o voltar espelhado — resposta 11 da folha). O inativo fica em
+ * `muted`/`lineInfo`. Some com ≤ 1 página, como antes.
+ */
+import React, { memo } from "react";
+import { Icone } from "@/components/identidade/icone";
+import { alternavel } from "@/components/identidade/controles";
+import { FRASES_LISTA } from "@/components/library/frases-lista";
+import { generatePaginationRange } from "@/lib/library-utils";
+import type { LibraryPaginationProps } from "@/types/library";
 
-const LibraryPagination = memo<LibraryPaginationProps>(function LibraryPagination({
-  currentPage,
-  totalPages,
-  totalCount,
-  onPageChange,
-}) {
-  // Don't render if there's no content or only one page
-  if (totalCount === 0 || totalPages <= 1) {
-    return null;
-  }
+const PASSO = "h-toque-min px-espaco-md rounded-raio-control border-hairline border-cor-line-info flex items-center gap-espaco-sm text-tam-body-small text-cor-text disabled:text-cor-muted";
 
-  const pageRange = generatePaginationRange(currentPage, totalPages);
-
-  const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      onPageChange(currentPage - 1);
-    }
-  };
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      onPageChange(currentPage + 1);
-    }
-  };
-
+const LibraryPagination = memo<LibraryPaginationProps>(function LibraryPagination({ currentPage, totalPages, totalCount, onPageChange }) {
+  if (totalCount === 0 || totalPages <= 1) return null;
+  const primeira = currentPage === 1;
+  const ultima = currentPage === totalPages;
   return (
-    <div className="mt-3 sm:mt-6 mb-4 flex justify-center">
-      <Pagination>
-        <PaginationContent className="flex-wrap justify-center gap-1">
-          <PaginationItem>
-            <PaginationPrevious
-              className={cn(
-                currentPage === 1 && "pointer-events-none opacity-50",
-                "text-xs sm:text-sm h-8 px-2 sm:h-9 sm:px-3 cursor-pointer"
-              )}
-              onClick={handlePreviousPage}
-            />
-          </PaginationItem>
-          
-          {pageRange.map((pageNum) => (
-            <PaginationItem key={pageNum}>
-              <PaginationLink
-                isActive={currentPage === pageNum}
-                onClick={() => onPageChange(pageNum)}
-                className="text-xs sm:text-sm h-8 w-8 sm:h-9 sm:w-9 cursor-pointer"
-              >
-                {pageNum}
-              </PaginationLink>
-            </PaginationItem>
-          ))}
-          
-          <PaginationItem>
-            <PaginationNext
-              className={cn(
-                currentPage === totalPages && "pointer-events-none opacity-50",
-                "text-xs sm:text-sm h-8 px-2 sm:h-9 sm:px-3 cursor-pointer"
-              )}
-              onClick={handleNextPage}
-            />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
-    </div>
+    <nav className="flex flex-wrap justify-center gap-espaco-sm">
+      <button type="button" disabled={primeira} onClick={() => onPageChange(currentPage - 1)} className={PASSO}>
+        <Icone nome="voltar" tamanho={20} className={primeira ? "text-cor-line-info" : ""} />
+        {FRASES_LISTA["lib.paginas.anterior"]}
+      </button>
+      {generatePaginationRange(currentPage, totalPages).map((n) => (
+        <button
+          key={n}
+          type="button"
+          aria-current={n === currentPage ? "page" : undefined}
+          onClick={() => onPageChange(n)}
+          className={alternavel(n === currentPage, "w-toque-min justify-center text-cor-text")}
+        >
+          {n}
+        </button>
+      ))}
+      <button type="button" disabled={ultima} onClick={() => onPageChange(currentPage + 1)} className={PASSO}>
+        {FRASES_LISTA["lib.paginas.proxima"]}
+        <Icone nome="voltar" tamanho={20} className={`-scale-x-100 ${ultima ? "text-cor-line-info" : ""}`} />
+      </button>
+    </nav>
   );
 });
 

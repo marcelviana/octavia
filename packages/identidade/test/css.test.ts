@@ -38,4 +38,15 @@ describe('app/styles/identidade.css', () => {
     expect(faixa('B')).toContain('--faixa-vao-auth: 48px;')
     expect(faixa('A')).toContain('--faixa-vao-auth: 48px;')
   })
+
+  it('a folha 4 (I1-PR-9): o metadado 13 e as alfas como color-mix do token, em toda faixa', () => {
+    const css: string = gerarCss()
+    for (const f of ['C', 'B', 'A']) {
+      const i = css.indexOf(`/* faixa ${f} */`)
+      const faixa = css.slice(i, f === 'A' ? undefined : css.indexOf('/* faixa', i + 5))
+      expect(faixa).toContain('--faixa-metadado: 13px;')
+      expect(faixa).toContain('--faixa-cor-marcado: color-mix(in srgb, var(--cor-accent) 12%, transparent);')
+      expect(faixa).toContain('--faixa-cor-dialogo: color-mix(in srgb, var(--cor-bg) 82%, transparent);')
+    }
+  })
 })

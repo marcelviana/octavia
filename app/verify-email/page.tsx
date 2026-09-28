@@ -14,7 +14,7 @@ import { useAuth, type ErroDeAuth } from "@/contexts/firebase-auth-context"
 import { CascaAuth, RodapeAuth } from "@/components/auth/casca-auth"
 import { BotaoPrincipal, BotaoSecundario } from "@/components/auth/controles-auth"
 import { FRASES_AUTH, comDado, fraseDoErroDeReenviar, type FraseDeErro } from "@/components/auth/frases-auth"
-import { LinhaDeAviso } from "@/components/auth/linha-de-aviso"
+import { LinhaDeAviso } from "@/components/identidade/linha-de-aviso"
 
 type Falha = { frase: FraseDeErro; tentar?: () => void }
 

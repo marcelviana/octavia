@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Database } from "@/types/database.types";
 import { ContentViewer } from "@/components/content-viewer";
-import { ResponsiveLayout } from "@/components/responsive-layout";
+import { Casca } from "@/components/identidade/casca";
 import dynamic from "next/dynamic";
 import { ErrorBoundary } from "@/lib/error-boundary"
 
@@ -24,12 +24,6 @@ export default function ContentPageClient({
   const router = useRouter();
   const [content, setContent] = useState<Content | null>(initialContent);
   const [isEditing, setIsEditing] = useState(false);
-  const [activeScreen, setActiveScreen] = useState("library");
-
-  const handleNavigate = (screen: string) => {
-    router.push(`/${screen}`);
-  };
-
   const handleBack = () => {
     router.back();
   };
@@ -55,7 +49,9 @@ export default function ContentPageClient({
 
   return (
     <ErrorBoundary>
-      <ResponsiveLayout activeScreen={activeScreen} onNavigate={handleNavigate}>
+      {/* I1-PR-9: a casca nova (barra superior) no lugar do ResponsiveLayout; o corpo velho fica como estava, com o fundo de antes (a folha desta tela é de uma PR seguinte) */}
+      <Casca>
+        <div className="flex-1 bg-[#fffcf7]">
         {isEditing ? (
           <ContentEditor
             content={content}
@@ -70,7 +66,8 @@ export default function ContentPageClient({
             showToolbar={false}
           />
         )}
-      </ResponsiveLayout>
+        </div>
+      </Casca>
     </ErrorBoundary>
   );
 }

@@ -1,0 +1,7 @@
+{
+  "_": "Âncoras do esperado (I1-PR9; o molde da decisão 7 da I1-PR6, div. 641): na casca, a CAIXA da busca (cujo único texto é o placeholder \"Buscar…\") e o botão da conta (as iniciais do exemplo, \"MV\", que não são as da conta que o aceite usa) ganham o data-testid que o app também põe — a chave `t:<testid>` casa dos dois lados. `porSeletor`: o elemento do `seletor` (e, se dado, com o `texto` visível exato) recebe o testid.",
+  "porSeletor": [
+    { "seletor": "div:has(> svg)", "texto": "Buscar…", "testid": "casca-busca" },
+    { "seletor": "[aria-label^='Conta de']", "testid": "casca-conta" }
+  ]
+}

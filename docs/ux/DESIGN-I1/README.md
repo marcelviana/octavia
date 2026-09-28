@@ -169,7 +169,18 @@ A I1-E11 também é do G-faixa: entra em `erratasFaixa` e cobre as 8 erratas can
 | **I1-E12** | a folha `3-privacy-policy` renderizou o título (`h1`) com `line-height:1.3` e os sete títulos de seção (`h2`) com `1.35`, sem token; a coluna "tokens" e o `README-design.md` §2.4 não declaram entrelinha para eles | títulos com **entrelinha natural** (`leading-natural`, o padrão do web desde a I1-PR6, como os títulos do auth): o título fica 3,4 px mais baixo e cada título de seção 3,7 px (7,4 no de duas linhas em B); o Δy acumulado dos nós seguintes é consequência desta errata | `3-privacy-policy`: `PRIVACY` | 693 (I1-PR-8) | leitura |
 
 A I1-E12 também é do G-faixa: entra em `erratasFaixa` e cobre as 45 erratas candidatas do aceite da política
-(22 em C, 23 em B; `docs/ux/I1-PR8-anexos/`).
+(22 em C, 23 em B; `docs/ux/I1-PR8-anexos/`). Na mesma folha, a div. **694** (I1-PR-8): *em B a folha mede 661 pelo
+contorno da moldura; o bloco vale 663* (711 − 2 × 24) — Δw 2, abaixo da tolerância, sem quebra de linha diferente.
+
+**Do aval da I1-PR-9** `[Marcel, 2026-09-28; aval do commit 1 da I1-PR-9]` — mesmas colunas:
+
+| id | o que a folha mostra | o que vale | onde se aplica | div. | efeito |
+|---|---|---|---|---|---|
+| **I1-E13** | o `README-design.md` §5.5 dá a conta da casca com o menu *Perfil · Sair* (`casca.conta`) | o menu da conta é **só *Sair***: *Perfil* saiu com a página (I1-D19, I1-PR-3); não há cabeçalho nome + e-mail nem foto no menu — o nome fica no nome acessível *Conta de {nome}*, o gatilho mostra as iniciais | `4-content-lista` e toda tela com a casca (as folhas 5–8) — nenhuma seção desenha o menu aberto | 697 (I1-PR-9) | leitura |
+
+A I1-E13 é errata de **frase** (§5.5), não de moldura: nenhuma seção desenha o menu da conta aberto, então não entra
+em `erratasFaixa` (o G-faixa não a acha) nem em `erratas` (o `conferir.mjs` não a acha) — fica na lista
+`erratasFrase` do `erratas.json`, que nenhum gate lê.
 
 ## 3 · O bloco `web` de tokens — insumo da PR-4 (`packages/identidade`)
 
@@ -218,6 +229,15 @@ gerada em `app/styles/identidade.css` — **oito nomes**. Os requisitos das folh
 | `botaoAviso` | `--faixa-botao-aviso` | 36 | igual | literal N3 (botão de ação da LinhaDeAviso) |
 | `entrelinhaAviso` | `--faixa-entrelinha-aviso` | 20 | igual | literal N3 (T3-R7), I1-E5 |
 | `limiarAviso` | `--faixa-limiar-aviso` | 320 | igual | `web.colunaLateral` como limiar de quebra do texto da LinhaDeAviso, que é "igual" em B (§2.4); em B a `colunaLateral` é `empilha` e não gera propriedade (div. 605) — por isso o nome próprio (I1-PR-6, div. 657; aceito pelo Marcel no aval do commit 2) |
+
+**Mais três, da folha 4** `[Marcel, 2026-09-28; I1-PR-9, aval do commit 2 — opção 2: só adição, como a decisão 2 da
+I1-PR-6]` — o que a folha `4-content-lista` usa sem token (div. 713):
+
+| nome (`faixas.*.web`) | custom property | C | B | origem |
+| --- | --- | --- | --- | --- |
+| `metadado` | `--faixa-metadado` | 13 | igual | literal V1 §4.4, o metadado de linha (`README-design.md` §2.3: tipo na lista do painel, data na linha da biblioteca) |
+| `alfaMarcado` | `--faixa-cor-marcado` = `color-mix(in srgb, var(--cor-accent) 12%, transparent)` | 0,12 | igual | *accent a 12 % (item marcado)* — `README-design.md`, "Cores" |
+| `alfaDialogo` | `--faixa-cor-dialogo` = `color-mix(in srgb, var(--cor-bg) 82%, transparent)` | 0,82 | igual | *bg a 82 % (fundo do diálogo)* — `README-design.md`, "Cores" |
 
 ### LinhaDeAviso — `0-linha-de-aviso/telas.html` · T-I1-R1 … T-I1-R16 (8 estados × C, B)
 

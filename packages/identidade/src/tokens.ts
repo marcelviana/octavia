@@ -327,6 +327,18 @@ export interface TokensDaFaixa {
      * limiar tem nome próprio, com o mesmo 320 nas duas faixas (div. 657).
      */
     limiarAviso: number
+    /**
+     * A folha 4 (I1-PR-9, aval do commit 2: opção 2 — só adição, como a decisão
+     * 2 da I1-PR-6). `metadado`: o tamanho do metadado de linha (tipo na lista do
+     * painel, data na linha da biblioteca), 13 — literal V1 §4.4 (README-design
+     * §2.3). `alfaMarcado`: o fundo do item marcado — `accent` a 12 % (navegação
+     * ativa, aba ativa, *Favorita*, página atual). `alfaDialogo`: o fundo atrás do
+     * diálogo — `bg` a 82 % (README-design, "Cores"). As duas alfas viram
+     * `color-mix` no gerador; o nativo não as lê.
+     */
+    metadado: number
+    alfaMarcado: number
+    alfaDialogo: number
   }
 }
 
@@ -346,6 +358,7 @@ const faixaC: TokensDaFaixa = {
     zonaArquivo: 240, linhaLista: 80, linhaMusica: 72, empilha: false,
     marca: { largura: 340, altura: 219 }, colunaAuth: 420, vaoAuth: 140,
     campoAuth: touch.list + 4, botaoAuth: touch.list + 2, botaoAviso: 36, entrelinhaAviso: 20, limiarAviso: 320,
+    metadado: 13, alfaMarcado: 0.12, alfaDialogo: 0.82,
   },
 }
 
@@ -365,6 +378,7 @@ const faixaB: TokensDaFaixa = {
     zonaArquivo: 240, linhaLista: 80, linhaMusica: 72, empilha: true,
     marca: { largura: 340, altura: 219 }, colunaAuth: 420, vaoAuth: space.xxxl,
     campoAuth: touch.list + 4, botaoAuth: touch.list + 2, botaoAviso: 36, entrelinhaAviso: 20, limiarAviso: 320,
+    metadado: 13, alfaMarcado: 0.12, alfaDialogo: 0.82,
   },
 }
 

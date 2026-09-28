@@ -10,12 +10,17 @@
 > **Convenções**: `[medido]` = comando + saída literal (em `cn/`); `[lido]` = arquivo:linha; `[hipótese]` = o resto.
 > Divergências **a partir de 696**, numeração conferida pela coluna:
 > `git grep -nE '^\| \*\*6[0-9][0-9]\*\* \| [A-Z]' docs | … | sort -n | tail -1` → 695.
-> **Estado**: commit 1 (gate-first). Divergências: 696–712 (§8). Aguarda o aval (§9).
+> **Estado**: commit 1 (gate-first, `d991c73`) e **commit 2 (a implementação, §11–§16)**. Divergências: 696–712 (§8),
+> 713–725 (§14). Aguarda o aceite do Marcel (`scripts/gates-web/COMO-RODAR.md`, seção I1-PR9).
 
 | arquivo | o que é |
 |---|---|
 | `cn/g-tok-main.txt` | G-tok (ii) com os 18 arquivos que sobrevivem, sobre o código da `main` — **REPROVA 597** |
 | `cn/g-faixa-esperado.txt` | a folha `4-content-lista` medida → `tests/gates-web/esperado/4-content-lista.json` |
+| `cn/g-faixa-esperado-ancoras.txt` | a folha re-medida com as âncoras da casca (`porSeletor`); o `1-auth` byte a byte igual |
+| `cn/g-tok-depois.txt` · `g-back-depois.txt` · `g-palco.txt` · `pnpm-test.txt` · `cn-pr1.txt` · `lint.txt` · `build.txt` | os verdes do commit 2 |
+| `cn/painel-mutacao-cn.txt` | o teste do painel reprovando com o erro virando vazio, e passando depois de desfeito |
+| `cn/inercia-publicas.txt` · `cn/inercia-comparar.mjs` | o CN de inércia das públicas (sem `.env`) e o comparador |
 
 ---
 
@@ -364,3 +369,213 @@ lista em `components/library/frases-lista.ts`; o painel quebrado em partes < 150
 | executor | navegador | só contra a folha, por `file://` (`g-faixa-esperado.ts`) |
 | executor | `next dev` | nenhum neste commit |
 | — | `packages/identidade` | **não mudou**; nenhum token faltou na folha `[hipótese até o commit 2]`: `bar.top`, `touch.*`, `web.linhaLista`, `web.margem`, `web.conteiner`, `folha.*` existem no `identidade.css`; o `tailwind.config.ts` não expõe `--faixa-folha-topo` (a lista `WEB`, `:16-17`, só tem `folha-largura`) — o commit 2 acrescenta o nome à lista (extra declarado, sem tocar o pacote) |
+
+---
+
+## 11. O aval do commit 1 — decisões `[Marcel, 2026-09-28]`
+
+(Transcrição do prompt do commit 2; a lista de perguntas do commit 1 fica no §9.)
+
+1. A casca em **todas** as páginas com sessão; os quatro corpos velhos (`content`, `content-edit`, `add-content`,
+   `setlists`) intactos, medidos em `casca-efeito/`.
+2. **I1-E13**: o menu da conta é só *Sair*; cabeçalho nome/e-mail e foto não existem (`/profile` morreu na PR-3).
+   Errata no `DESIGN-I1/README.md` §2.2 e no `erratas.json`.
+3. Nada muda nos `Alert`/toast das telas de corpo velho.
+4. `lib/content-service.ts`: `getUserContent` e `getUserStats` **lançam** quando o banco falha (único chamador: o
+   painel); `app/dashboard/page.tsx` separa vazio de erro; o núcleo do G-back não muda.
+5. `DASH-vazio` e `DASH-erro` **inalcançáveis no navegador**; prova por teste de render no Vitest dos três estados do
+   painel (dados · vazio · erro). `DASH-vazio-favoritas` só se a conta não tiver favoritas: registrar como medido ou não.
+6. Motivo por espécie na biblioteca pelo `status` levado junto do erro (o padrão da PR-6).
+7. Erros de apagar e favoritar continuam mudos: **herança nomeada** (§12.4).
+8. `LIB-salvo` nasce na PR-11 (editor).
+9. `SESSAO-nao-renovada` abaixo do título no painel e na biblioteca; a falha da sessão vence outra falha na tela.
+10. A linha da biblioteca como a folha: sem ícone de tipo, tom e dificuldade (div. 705) — **ver div. 714**: a folha
+    tem o ícone do tipo; vale a folha.
+11. Frases novas aprovadas (divs. 706–708): `artista desconhecido`; os nomes acessíveis *Favoritar “{título}”* / *Tirar
+    “{título}” das favoritas*; os 12 meses abreviados (`jan`…`dez`) para a data `10 set 2026`.
+12. Nós de dados do `DASH` "sem par" por a conta real não ter os dados da folha: aceito, contados e listados.
+
+**Decisão no meio do commit 2** `[Marcel, 2026-09-28; pergunta do executor, div. 713]` — a folha 4 usa três valores
+sem token (13 px do metadado de linha; `accent` a 12 %; `bg` a 82 %): **opção 2** — `web.metadado` 13,
+`web.alfaMarcado` 0,12, `web.alfaDialogo` 0,82 no bloco `web` de `packages/identidade`, **só adição** (como a decisão 2
+da I1-PR-6); o `color-mix` sai do gerador; o APK constrói; docs depois do verde.
+
+## 12. Commit 2 — o que mudou `[medido]`
+
+### 12.1 Por grupo
+
+| grupo | arquivos | o quê |
+|---|---|---|
+| **pacote** (div. 713) | `packages/identidade/src/tokens.ts` (+14), `scripts/gerar-css.mjs` (+4), `test/css.test.ts` (+11), `test/igualdade.test.ts` (+3/−1); `app/styles/identidade.css` regenerado (+9) | `web.metadado` 13 · `web.alfaMarcado` 0,12 · `web.alfaDialogo` 0,82, iguais nas três faixas; o gerador escreve `--faixa-metadado: 13px`, `--faixa-cor-marcado: color-mix(in srgb, var(--cor-accent) 12%, transparent)`, `--faixa-cor-dialogo: color-mix(in srgb, var(--cor-bg) 82%, transparent)`. Só adição: identidade **39/39** (era 38 + 1 caso novo), native **91/91**, native-tela **120/120** (211, como antes) |
+| `tailwind.config.ts` | +10/−3 | `web-folha-topo` na lista `WEB` (extra do aval); `cor.marcado`, `cor.dialogo` (→ `bg-cor-marcado`, `bg-cor-dialogo`); `fontSize` `tam-web-metadado` |
+| **a casca** | `components/identidade/casca.tsx` (108), `conta-da-casca.tsx` (44), `frases-casca.ts` (26), `menu.tsx` (58), `controles.tsx` (31), `linha-da-tela.tsx` (39) | a barra de `bar.top`: marca `OCTAVIA` (texto, nome acessível *Octavia*) · navegação por `<Link>` (o ativo pelo caminho; `/content/*` acende *Biblioteca*, como o `activeScreen` de antes) · busca (`/library?search=`, a mesma de antes) · conta (iniciais pela regra do `user-header` de antes; menu só *Sair*, I1-E13). Em B/A empilha (`order` + `basis-full`; em A a navegação quebra em duas linhas — regra 2, mecânica). `ConteudoDaCasca` = `web.conteiner` + `web.margem`, respiro `space.xxl`, vão `space.xl`. A página rola no documento (sem o `h-screen overflow-hidden`) |
+| **a casca velha — morreu** | `responsive-layout.tsx` (107), `header.tsx` (96), `navigation-container.tsx` (104), `sidebar.tsx` (123), `bottom-nav.tsx` (55), `user-header.tsx` (74) — **559 linhas** | nenhum importador sobra (`git grep` → 0) |
+| **os quatro corpos velhos** | `content-page-client.tsx` 76 → 73 · `content-edit-page-client.tsx` 51 → 48 · `add-content-page-client.tsx` 69 → 71 · `setlists-page-client.tsx` 63 → 55 | só o invólucro: `<Casca><div className="flex-1 bg-[#fffcf7]">corpo</div></Casca>` (o fundo de antes, que era da raiz do `ResponsiveLayout`); `activeScreen` e o `handleNavigate` sem uso saíram. No upload, *Adicionar* já ativo reinicia o formulário como a lateral fazia (`aoReclicarAtivo`, div. 717). Nenhum deles na lista do G-tok (decisão 3) |
+| **`LinhaDeAviso` movida** | `components/auth/linha-de-aviso.tsx` → `components/identidade/linha-de-aviso.tsx` (`git mv`, 0 linha mudada) | os seis importadores trocam o caminho; o CN da PR-1 15/15 |
+| **sessão** | `components/auth/aviso-de-sessao.tsx` 31 → 39 | `ROTAS_QUE_DESENHAM_A_LINHA` = `/login`, `/dashboard`, `/library`: nessas o topo não desenha; a tela desenha abaixo do título (`LinhaDaTela`, a sessão vence — decisão 9). Nas de corpo velho, o topo de antes |
+| **o painel** | `app/dashboard/page.tsx` 46 → 51 · `dashboard-page-client.tsx` 44 → 14 · `dashboard.tsx` **397 → 92** · `components/painel/contadores-do-painel.tsx` (31) · `lista-do-painel.tsx` (49) | `Promise.allSettled`: cada parte que falha vai ao cliente como `erroConteudo`/`erroNumeros`; contador "—" na falha; lista sem frase de vazio na falha; `dash.erro` com *Tentar de novo* = `router.refresh()`. As linhas abrem `/content/<id>` por `<Link>` (antes `router.push` no clique — o mesmo destino) |
+| **a biblioteca** | `RefactoredLibrary.tsx` 172 → 88 · `LibraryHeader.tsx` 185 → 67 · `OptimizedLibraryList.tsx` 255 → 27 · `LibraryPagination.tsx` 82 → 47 · `LibraryEmptyState.tsx` 55 → 38 · `LibraryLoadingState.tsx` 22 → 20 · `LibraryErrorBoundary.tsx` 80 → 61 · `delete-content-dialog.tsx` 30 → 56 · `library-page-client.tsx` 70 → 69 · novos `LibraryFiltros.tsx` (67), `LinhaDaBiblioteca.tsx` (80), `frases-lista.ts` (123) | a folha. Os mesmos filtros, a mesma ordem, as mesmas três ordenações, a mesma paginação (20 por página), o mesmo diálogo (mesmo contrato `open` · `onOpenChange` · `content` · `onConfirm`). O carregando do *chunk* mostra o cabeçalho inerte + *carregando a biblioteca…* |
+| **dados** | `hooks/use-library-data.ts` 259 → 282 · `hooks/use-content-actions.ts` 160 → 153 · `lib/content-service.ts` 670 → 654 · `lib/library-utils.ts` 112 → 54 | §12.3. Os três toasts saíram (I1-D26). Do `library-utils` saíram o que era tela: `formatLibraryDate` (`en-US` → `dataCurta` pt-BR), `getLibraryContentIconData` (lucide → o ícone do catálogo, `tipoDe`), `getDifficultyBadgeClass` (o selo saiu), `getContentTypeFilterOptions`/`getDifficultyFilterOptions` (→ `TIPOS`/`DIFICULDADES`) — nenhum outro importador |
+| **testes** | `components/painel/__tests__/painel-estados.test.tsx` (novo, 4) · `hooks/__tests__/use-library-data.test.tsx` (+5) · `lib/__tests__/content-service.test.ts` (+4) · `components/auth/__tests__/login-sessao-cn.test.tsx` (a (v), div. 716) | §13 |
+| **medidor** | `scripts/gates-web/g-faixa-lista.ts` (novo, 115) · `g-faixa-superficies.ts` · `g-faixa-medir.ts` (+3) · `g-faixa-auth.ts` (3 `export`) · `g-faixa-esperado.ts` (`porSeletor`) · `tests/gates-web/esperado/4-content-lista.ancoras.json` (novo) + `4-content-lista.json` re-medido | §12.5 |
+| **docs do congelamento** | `docs/ux/DESIGN-I1/README.md` (§2.2: I1-E13 e a linha da 694 na I1-E12; §4: os três nomes da folha 4) · `erratas.json` (lista nova `erratasFrase`, com o `_leia_frase`) · `SHA256SUMS` (só a linha do `README.md`: `382b3d8f…` → `1bef1581…`; `shasum -a 256 -c` → 14/14 OK) | a I1-E13 é de frase: nenhum gate a lê (nem o `conferir.mjs` nem o G-faixa) |
+
+**Os testes da lista velha que morreram: nenhum** (não havia teste de componente da lista, do painel nem da casca —
+§1.1). **Os que ficaram e se adaptaram**, com o par: `use-library-data.test.tsx` (8 → 13: + *sem lista na tela, a
+falha com status vira erro* · *TypeError é rede* · *o timeout é rede* · *o vazio de verdade não é erro* · *com lista na
+tela a falha segue muda*); `content-service.test.ts` (6 → 10: + *getUserContent lança na falha do banco* · *getUserStats
+conta* · *lança na falha de `content`* · *na de `setlists`*); `login-sessao-cn.test.tsx` (15 → 15, a (v) em `/setlists`).
+
+### 12.2 As frases — a lista declarada (I1-D10/D17)
+
+`components/identidade/frases-casca.ts` e `components/library/frases-lista.ts`. Chave · texto · origem (`README-design.md`
+§5.1/§5.5, ou *nova* com a div.):
+
+| chave | texto | de hoje (morreu) |
+|---|---|---|
+| `casca.marca` / `.nome` | OCTAVIA / Octavia (nome acessível) | ícone + *wordmark* `webp` |
+| `casca.painel` · `.biblioteca` · `.setlists` · `.adicionar` | Painel · Biblioteca · Setlists · Adicionar | "Dashboard" · "Library" · "Setlists" · "Add Song" (e "Home"/"Add" da barra de baixo) |
+| `casca.navegacao` | Navegação (nome acessível do `<nav>`) | "Navigation" (o `h3` da lateral) |
+| `casca.buscar` | Buscar… | "Search..." |
+| `casca.conta` | Conta de {nome} (N12) | — (avatar sem nome acessível) |
+| `casca.sair` | Sair | "Sign out" |
+| `dash.titulo` · `dash.adicionar` | Painel · Adicionar | "Dashboard" · "Add Content" |
+| `dash.abas.*` | Visão geral · Recentes · Favoritas | "Overview" · "Recent" · "Favorites" |
+| `dash.cont.*` | conteúdos na biblioteca · setlists · favoritas · vistas há pouco · — (desconhecido) | "Total Content"/"pieces in your library" … |
+| `dash.recentes` · `dash.favoritas` | Recentes · Favoritas | "Recent Content" · "Favorite Content" (+ as descrições) |
+| `dash.vazio.recentes` · `.favoritas` | nada visto recentemente · nenhuma favorita | "No recent content" · "No favorite content" |
+| `dash.erro` | não foi possível carregar o painel — {motivo} | — (o erro virava vazio) |
+| `lib.titulo` · `lib.adicionar` | Biblioteca · Adicionar | "Your Music Library" (+ o subtítulo) · "Add Content" |
+| `lib.filtros` · `.tipo` · `.dificuldade` · `.favoritas` | Filtros · tipo · dificuldade · Só as favoritas | "Filters" · "Content Type" · "Difficulty" · "Favorites only" (+ "Filter By") |
+| `TIPOS` · `DIFICULDADES` | Cifra · Letra · Tab · Partitura · Iniciante · Intermediário · Avançado | "Chords" · "Lyrics" · "Tab" · "Sheet" · "Beginner" … |
+| `lib.ordenar.*` | Mais recentes · Título (A–Z) · Artista (A–Z) | "Most Recent" · "Title (A-Z)" · "Artist (A-Z)" (+ "Sort") |
+| `lib.favoritar` · `lib.favorita` | Favoritar · Favorita (N12) | a estrela sem texto |
+| `lib.favoritar.nome` · `lib.favorita.nome` | Favoritar “{título}” · Tirar “{título}” das favoritas (**nova, div. 707**) | "Add to favorites" · "Remove from favorites" |
+| `lib.mais` · `lib.mais.nome` | Mais · Mais ações para “{título}” | "More options" |
+| `lib.menu.*` | Abrir · Editar · Apagar | "View" · "Edit" · "Delete" |
+| `lib.paginas.*` | Anterior · Próxima | "Previous" · "Next" |
+| `lib.carregando` | carregando a biblioteca… | "Loading library..." · "Loading your music library..." (+ "Please wait…") |
+| `lib.vazio` · `.apoio` | nenhum conteúdo ainda · adicione a primeira música para começar | "No content found" · "Add your first piece…" |
+| `lib.vazio.busca` · `.apoio` | nada encontrado · mude a busca ou os filtros | "No content found" · "Try adjusting your search or filters" |
+| `lib.erro` | não foi possível carregar a biblioteca — {motivo} | — (virava vazio); o *fallback* de render "Something went wrong" / "There was an error loading…" → `lib.erro` com `motivo.generico` |
+| `lib.apagar.titulo` · `.pergunta` · `.confirmar` · `acao.cancelar` | Apagar conteúdo · apagar “{título}”? não dá para desfazer · Apagar · Cancelar | "Delete Content" · "Are you sure…? This action cannot be undone." · "Delete" · "Cancel" |
+| `lib.artista.desconhecido` | artista desconhecido (**nova, div. 706**) | "Unknown Artist" |
+| `MESES` + `dataCurta` | jan … dez → *10 set 2026* (**nova, div. 708**) | `toLocaleDateString("en-US")` → "Sep 10, 2026" |
+| `motivo.rede` · `.auth` · `.limite` · `.servidor` · `.generico` · `acao.tentar` | sem conexão · o servidor não aceitou a sessão — entre de novo · muitas tentativas — tente de novo em instantes · falha no servidor · algo deu errado · Tentar de novo | — |
+
+Morreram sem destino (nenhuma com estado; §3 do commit 1): as descrições dos cartões do painel, *"Manage and organize…"*,
+*"Please wait…"*, os `aria-label` *"View {título} by {artista}"* / *"View {título} content"* / *"Delete {título}"*, os três
+toasts e as cinco mensagens de erro nunca mostradas de `use-content-actions.ts`, *"Sign In"*/*"Sign Up"*/*"User"* do
+`user-header` e o e-mail no menu (I1-E13).
+
+### 12.3 Onde o erro era engolido — e como ficou
+
+| era (§2.2) | agora |
+|---|---|
+| `lib/content-service.ts:127-135` — `getUserContent`: falha do banco → `[]` | **lança** `Failed to fetch content` (a falha do banco); sem usuário segue `[]` (o de antes); o ramo sem `supabase` (sem chamador) segue com o `catch` de antes |
+| `:623-633`, `:637-647`, `:658-666` — `getUserStats`: `error` não lido → 0; `catch` → zeros | as três contagens **leem o `error` e lançam** `Failed to fetch stats`; sem usuário segue zeros |
+| `components/dashboard.tsx` `stats?.x \|\| 0` | `app/dashboard/page.tsx` com `Promise.allSettled` → `erroConteudo`/`erroNumeros`; na falha dos números, "—"; na do conteúdo, nem linha nem frase; uma `dash.erro` |
+| `hooks/use-library-data.ts:145-148` — sem lista, a falha vira o vazio | vira **`erro`** (`{ status }` ou `{ rede }`) e a tela mostra `lib.erro` com o motivo; com lista na tela, segue muda (a folha) |
+| `lib/content-service.ts:269-274` — o status se perdia | o `Error` leva `status` (e os dois `throw` de auth do cliente levam 401) — aditivo |
+| `:301-313` — o *timeout* virava lista vazia com `error` | o hook trata `result.error` como falha de rede (o serviço não mudou nesse ponto) |
+| `use-content-actions.ts` — erros de apagar/favoritar nunca lidos | **ficam mudos** (decisão 7) — §12.4 |
+
+**Motivo por espécie** (`especieDaFalha` + `linhaDaFalha`, `frases-lista.ts`): `TypeError`/*timeout* → *sem conexão*
+(tipo rede, com *Tentar de novo*) · 401/403 → `motivo.auth` (sem ação) · 429 → `motivo.limite` (tipo limite, sem ação) ·
+5xx e o resto → *falha no servidor* (com *Tentar de novo* = `reload()`, uma carga por clique).
+
+### 12.4 A herança do item 7 — **estados sem folha: falha ao apagar / ao favoritar na lista**
+
+`hooks/use-content-actions.ts` produz o erro de apagar (auth, 404 *"já apagado"*, o resto) e o de favoritar e o grava em
+estado que nenhuma tela lê (`RefactoredLibrary.tsx` só usa o diálogo e as ações). Seguem **mudos**, como antes: a
+lista recarrega (ou não) e nada diz por quê. **Destino**: errata de folha na PR que os desenhar (a folha 4 não tem a
+seção; as frases pediriam *"não foi possível apagar — {motivo}"* / *"… favoritar …"*, novas) — ou o **bloco D**.
+
+### 12.5 O medidor e o esperado
+
+- `g-faixa-lista.ts`: os 15 estados (§7 do commit 1, com os ajustes): `GET /api/content` fabricada **em sequência**
+  (1ª, 2ª…; a última se repete) com as seis linhas da folha e `total` 60, ou vazia, ou segurada, ou abortada; o
+  `DELETE`/`PUT` de `/api/content` fabricados 200 em todo estado da biblioteca. `SESSAO-nao-renovada`: a abertura da
+  sessão passa na carga; depois o `POST /api/auth/session` fabricado 500 e um `visibilitychange` (a renovação do
+  provider). Inalcançáveis declarados: `DASH-vazio`, `DASH-erro` (SSR), `LIB-salvo` (PR-11).
+- `g-faixa-medir.ts`: com sessão a página é a mesma entre estados — antes de cada estado, `soltar` + `unrouteAll`
+  (as rotas do contexto — barreira de escrita e log — ficam) (div. 723).
+- Âncoras (`4-content-lista.ancoras.json`, `porSeletor` no `g-faixa-esperado.ts`): a caixa da busca (`casca-busca`) e
+  a conta (`casca-conta`). Re-medida: `4-content-lista: 60 caixa(s) … nós C 465 · nós B 465`; **o `1-auth.json`
+  re-medido com o script novo sai byte a byte igual** (`cn/g-faixa-esperado-ancoras.txt`).
+
+**Pré-verificação do executor (sem sessão, não commitada)**: com páginas de fumaça **locais** (fora do commit, apagadas)
+montando `DashboardPageClient`/`LibraryPageClient` com os dados da folha, `next dev` sem `.env`, a mesma `coletar`
+contra o esperado em 1138 e 711: `DASH`, `DASH-erro`, `DASH-vazio`, `LIB`, `LIB-vazio`, `LIB-filtros`, `LIB-mais`,
+`LIB-apagar`, `LIB-vazio-busca` → **Δ > 4: 0** em todos, sem par só *Buscar…* (o texto de dentro da caixa, div. 719) e
+*MV* (sem usuário na fumaça); `scrollWidth` = largura em 1138, 711 e 411. Achou e consertou dois antes do commit: a
+classe do metadado não existia (a chave `web-metadado` gerava `text-web-metadado`) e a linha do painel em *border-box*
+(56 em vez dos 57 da folha — a cascata dava Δy −7 em B, div. 722); e a navegação em 411 passava da borda (em A ela
+quebra, regra 2).
+
+## 13. Os gates — verdes `[medido]`
+
+| gate / suíte | resultado | arquivo |
+|---|---|---|
+| G-tok | **PASSA**: (i) 19/19 cobertos, 0 órfãs; (ii) `arquivos: 49 · literais de identidade acusados: 0 · toasts: 0 · imports de ui: 0` — **597 → 0** | `cn/g-tok-depois.txt` |
+| G-back | **PASSA** sem linha `gback:` — *"diff vazio no núcleo"*; nenhum arquivo novo no alcance (`lib/content-service.ts` é cliente, fora do núcleo, I1-D21) | `cn/g-back-depois.txt` |
+| G-palco | **PASSA — 0** | `cn/g-palco.txt` |
+| `pnpm test` | `Test Files 110 passed \| 3 skipped (113)` · `Tests 1089 passed \| 77 skipped (1166)` (eram 109/1075: +1 arquivo, +14 testes) | `cn/pnpm-test.txt` |
+| CN da PR-1 | **15/15** (a (v) em `/setlists`, div. 716) | `cn/cn-pr1.txt` |
+| teste do painel | **4/4**; a **mutação** (o erro volta a virar `[]`/zeros na página) → `2 failed \| 2 passed`, `expected [ '0', '0', '0', '0' ] to deeply equal [ '—', '—', '—', '—' ]`, `# exit: 1`; desfeita (`cmp` igual) → 4/4 | `cn/painel-mutacao-cn.txt` |
+| identidade · native · native-tela | 39/39 · 91/91 · 120/120 | — |
+| `tsc --noEmit` | 0 erros | — |
+| `pnpm lint` | `✔ No ESLint warnings or errors` | `cn/lint.txt` |
+| `pnpm build` | `✓ Compiled successfully`; `ƒ /dashboard 1.63 kB`, `ƒ /library 1.44 kB`; `# exit: 0` | `cn/build.txt` |
+| **CN de inércia das públicas** | `next dev` desta árvore sem `.env` (porta 3110), `/`, `/login`, `/privacy-policy` nas três larguras × os JSON commitados: **12 (estado × largura) medidos nos dois lados, 12 idênticos (nós + `doc`)**; os 33 estados de `/login` que pedem o `.env` (o usuário falso) ficam só no commitado. `INÉRCIA: PASSA` | `cn/inercia-publicas.txt`, `cn/inercia-comparar.mjs` |
+| `shasum -a 256 -c SHA256SUMS` (DESIGN-I1) | 14/14 OK | — |
+
+## 14. Divergências — 713 a 725
+
+| # | origem | o que o prompt (ou o doc) presumiu | o que foi medido | destino |
+|---|---|---|---|---|
+| **713** | A | commit 1 §10: *"nenhum token faltou `[hipótese até o commit 2]`"* | a folha usa **13 px** (metadado de linha), **`accent` a 12 %** (marcado) e **`bg` a 82 %** (fundo do diálogo) sem token; o G-tok reprova `text-[13px]` e `rgba()` | parado e perguntado; **opção 2** do Marcel: três tokens no bloco `web` do pacote, só adição (§11) |
+| **714** | A | div. 705 do commit 1 / decisão 10: *"sem ícone de tipo, tom e dificuldade"* | a linha da folha **tem** o ícone do tipo (20, `lineInfo`: cifra, letra, tab, partitura — o `svg` antes do título); só tom e dificuldade não estão | vale a folha (o que a decisão 10 pede): ícone fica, tom e dificuldade saem. O "sem ícone" do §8 do commit 1 era erro de leitura do executor |
+| **715** | P | *"divergências continuam da 711"* | o commit 1 foi até a **712** (711 = o `sidebar-context` órfão; 712 = a seção `Tokens`) | esta série começa em 713 |
+| **716** | A | *"o CN da PR-1 15/15 prova que nada mudou"* | a (v) do CN usa `/dashboard` como "tela fora do `/login`"; pela decisão 9 a linha no `/dashboard` é da tela, não do topo | a (v) passa a `/setlists` (uma tela de corpo velho, onde o topo segue); o mais é igual — 15/15; par declarado |
+| **717** | A | *"a mudança nos corpos velhos é só o invólucro"* | no upload, clicar *Add Song* já estando em `/add-content` reiniciava o formulário (`resetKey`); um `<Link>` para a mesma rota não reinicia | `aoReclicarAtivo` na casca: o upload passa o mesmo reinício — zero mudança |
+| **718** | D | `SESSAO-nao-renovada`: *"a sessão não foi renovada: o servidor não devolveu o token"* | a razão do exemplo é a do sem-token, sem uso (div. 654); o aceite alcança a renovação com 500 → *"a sessão não foi renovada: falha no servidor"* | o nó do texto sai "sem par" (1 por largura); a posição da linha é a mesma |
+| **719** | T | — | a busca da folha é caixa + texto *Buscar…*; no app é `form` + `input` (o placeholder). O texto de dentro da caixa da folha e o `input` não pareiam | âncoras `porSeletor` (a caixa e a conta); o *Buscar…* de dentro da folha e o `input` (`casca-busca-campo`) saem "sem par", 1 + 1 por estado × largura |
+| **720** | A | — | o bloco do título da linha era `role=button` com `tabIndex` (abria o content no clique e no Enter); a folha o desenha como dois textos | o clique no título segue abrindo (o mesmo `onSelect`), sem papel de controle; o caminho de teclado é *Mais → Abrir* (a folha). Registrado |
+| **721** | A | decisão 4: *"lançam quando o banco falha"* | a contagem de setlists tinha um `try/catch` (*"Setlists table not available yet"* → 0) que nunca pegava (o Supabase não lança) | a contagem lê o `error` e lança, como as outras duas |
+| **722** | T | — | a linha da lista do painel da folha é `min-height: 56` em *content-box* + contorno = **57**; em *border-box* (o padrão do web) dava 56 e a cascata Δy −7 em B | `box-content` na linha (57, como a folha) |
+| **723** | T | o medidor com sessão | reusa a mesma página entre estados: as rotas fabricadas de um estado vazavam para o seguinte | `soltar` + `unrouteAll` antes de cada estado com sessão |
+| **724** | A | *"os quatro corpos velhos intactos"* | o `ResponsiveLayout` dava ao corpo o fundo `#fffcf7` e a rolagem interna (`h-screen overflow-hidden`); a casca nova é escura e rola no documento | o fundo de antes num `div` do invólucro (o corpo não muda); a rolagem passa ao documento — o efeito sai na `casca-efeito/` |
+| **725** | D | a folha: conta *MV* (duas letras) | a regra de hoje (`user-header.tsx:38-44`) junta a inicial de **cada** palavra do nome | mantida (zero mudança); a conta é âncora (`casca-conta`), não par por texto |
+
+Próxima divergência: **726**.
+
+## 15. Bloco ```gates-web``` e extras (copiados do corpo da PR)
+
+```gates
+# I1-PR-9: só adição no pacote (packages/identidade: web.metadado, web.alfaMarcado, web.alfaDialogo — div. 713), G1b — nenhum arquivo de apps/native mudou
+```
+
+```gates-web
+# I1-PR-9: nenhum arquivo do núcleo do G-back tocado (G-back PASSA sem declaração)
+gtok: scripts/gates-web/g-tok-arquivos.txt — +29 arquivos: os 18 do commit 1 (app/dashboard/page.tsx, app/library/page.tsx, components/dashboard-page-client.tsx, components/dashboard.tsx, components/library-page-client.tsx, components/library.tsx, components/library/index.ts, components/library/{RefactoredLibrary,LibraryHeader,OptimizedLibraryList,LibraryPagination,LibraryEmptyState,LibraryLoadingState,LibraryErrorBoundary}.tsx, components/delete-content-dialog.tsx, hooks/use-library-data.ts, hooks/use-content-actions.ts, lib/library-utils.ts) e 11 do commit 2 (components/identidade/{casca,conta-da-casca,menu,controles,linha-da-tela}.tsx, components/identidade/frases-casca.ts, components/painel/{contadores-do-painel,lista-do-painel}.tsx, components/library/frases-lista.ts, components/library/{LibraryFiltros,LinhaDaBiblioteca}.tsx); components/auth/linha-de-aviso.tsx → components/identidade/linha-de-aviso.tsx
+gfaixa: scripts/gates-web/g-faixa-medir.ts — com sessão, soltar + unrouteAll antes de cada estado (div. 723); g-faixa-lista.ts novo (os 15 estados da folha 4)
+gfaixa: scripts/gates-web/g-faixa-esperado.ts — âncoras porSeletor (a caixa da busca e a conta da casca); o 1-auth re-medido sai byte a byte igual
+# extras: packages/identidade (web.metadado, web.alfaMarcado, web.alfaDialogo — só adição, div. 713) + app/styles/identidade.css regenerado
+# extras: tailwind.config.ts — web-folha-topo, cor.marcado, cor.dialogo, tam-web-metadado
+# extras: a LinhaDeAviso movida para components/identidade/ (os seis importadores trocam o caminho)
+# extras: a casca velha morta — components/{responsive-layout,header,navigation-container,sidebar,bottom-nav,user-header}.tsx; os quatro page-clients de corpo velho trocam o invólucro
+# extras: docs do congelamento — docs/ux/DESIGN-I1/README.md §2.2 (I1-E13; a linha da 694 na I1-E12) e §4 (os três nomes) + erratas.json (erratasFrase) + SHA256SUMS (só a linha do README.md)
+# extras: lib/content-service.ts (fora do núcleo, I1-D21): getUserContent/getUserStats lançam na falha do banco; o erro da carga leva o status
+# pares: use-library-data.test.tsx (+5), content-service.test.ts (+4), login-sessao-cn.test.tsx (a (v) em /setlists, div. 716); novo: components/painel/__tests__/painel-estados.test.tsx
+```
+
+## 16. Contabilidade (commit 2)
+
+| quem | item | valor |
+|---|---|---|
+| executor | requests a `https://octavia.rocks` ou preview · logins · `.env*` abertos · escritas · contas | **0 · 0 · 0 · 0 · 0** |
+| executor | `next dev` local **sem** `.env` (a árvore só tem `.env.example`) | 3 subidas na porta 3110 (a 3000 é de outro `next-server`, não tocado): inércia (2 rodadas, a 2ª sobre o estado final) e a fumaça local (§12.5); paradas ao fim |
+| executor | navegador | a folha por `file://`; as públicas e a fumaça em `localhost:3110` |
+| executor | páginas de fumaça | `app/fumaca-i1pr9/*` criadas e **apagadas** antes do commit (`git status` → 0) |
+| — | `packages/identidade` | **mudou por adição** (div. 713, opção 2 do Marcel): três tokens do bloco `web`; o nativo não os lê (native 211/211) |

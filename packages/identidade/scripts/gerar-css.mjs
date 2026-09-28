@@ -76,6 +76,10 @@ function daFaixa(t) {
   for (const k of ['colunaAuth', 'vaoAuth', 'campoAuth', 'botaoAuth', 'botaoAviso', 'entrelinhaAviso', 'limiarAviso']) {
     out.push(`  --faixa-${kebab(k)}: ${px(w[k])};`)
   }
+  // I1-PR-9 (folha 4): o metadado de linha e as duas alfas, como color-mix do token de cor
+  out.push(`  --faixa-metadado: ${px(w.metadado)};`)
+  out.push(`  --faixa-cor-marcado: color-mix(in srgb, var(--cor-accent) ${Math.round(w.alfaMarcado * 100)}%, transparent);`)
+  out.push(`  --faixa-cor-dialogo: color-mix(in srgb, var(--cor-bg) ${Math.round(w.alfaDialogo * 100)}%, transparent);`)
   for (const [k, v] of Object.entries(t.folha)) {
     if (v !== undefined) out.push(`  --faixa-folha-${kebab(k)}: ${px(v)};`)
   }

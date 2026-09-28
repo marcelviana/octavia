@@ -85,6 +85,42 @@ G_FAIXA_BASE_URL=http://localhost:3000 G_FAIXA_SUPERFICIES=login pnpm exec playw
 
 O `AUTH-login-google-erro` leva ~11 s (o SDK demora a desistir da janela fechada). Depois diga **"rodei"**.
 
+## O aceite da I1-PR9 (content lista e a casca) — Marcel, dois comandos
+
+Na árvore `../octavia-i1-pr9` (branch `i1/pr9-content-lista`), com o seu `.env.local` copiado para lá (passo seu),
+**`pnpm dev`** num terminal que fica aberto (porta 3000) e o `✓ Ready`. O perfil `G_FAIXA_PERFIL` é o de sempre
+(`~/.octavia-g-faixa-perfil`, com a sessão da conta que você escolheu na PR-5); se a sessão tiver caído, a janela de
+login abre e espera (passo 3 do CN da `main`, acima).
+
+1. **O painel e a biblioteca** (os 15 estados da folha `4-content-lista`, nas três larguras) — grava
+   `tests/gates-web/medicoes/{dashboard,library}.json`:
+
+   ```bash
+   G_FAIXA_BASE_URL=http://localhost:3000 G_FAIXA_PERFIL="$HOME/.octavia-g-faixa-perfil" G_FAIXA_SUPERFICIES=dashboard,library pnpm exec playwright test -c playwright.g-faixa.config.ts scripts/gates-web/g-faixa-medir.ts
+   ```
+
+2. **O efeito da casca nova no corpo velho** (setlists e a visualização, estado `base`; só registro, fora do veredito
+   do CI) — grava `tests/gates-web/medicoes/casca-efeito/{setlists,content}.json`:
+
+   ```bash
+   G_FAIXA_BASE_URL=http://localhost:3000 G_FAIXA_PERFIL="$HOME/.octavia-g-faixa-perfil" G_FAIXA_SUPERFICIES=setlists,content G_FAIXA_SAIDA=tests/gates-web/medicoes/casca-efeito pnpm exec playwright test -c playwright.g-faixa.config.ts scripts/gates-web/g-faixa-medir.ts
+   ```
+
+O que esperar: por estado, medido, **NÃO ALCANÇADO** (com a razão) ou **INALCANÇÁVEL (declarado)**. Declarados:
+`DASH-vazio` e `DASH-erro` (SSR — os dados vêm do Supabase no servidor; a prova é o Vitest do painel) e `LIB-salvo`
+(nasce na PR do editor). `DASH-vazio-favoritas` só se mede se a conta **não** tiver favoritas — com favoritas, sai NÃO
+ALCANÇADO, e é o esperado. A biblioteca mostra por um instante a lista da sua conta (o SSR) e logo as seis linhas da
+folha (a carga do cliente, fabricada).
+
+**Escrita declarada: nenhuma.** A `GET /api/content` da biblioteca é fabricada no navegador (as linhas da folha); o
+`DELETE`/`PUT` de `/api/content` e o `POST /api/auth/session` do `SESSAO-nao-renovada` também — respondem no
+navegador com `x-g-faixa: fabricado` e nada sai. Qualquer outra escrita a `/api/*` é abortada e reprova a rodada.
+O `SESSAO-nao-renovada` faz uma renovação real do token no Google (`securetoken`, leitura) antes do `POST` fabricado.
+
+**Cota**: cada carga com sessão pode ler `/api/profile` (60 em 15 min, `lib/user-rate-limit.ts:54`). O comando 1 faz
+~40 cargas (13 estados × 3 larguras + o controle); o 2, ~10. Se um estado sair NÃO ALCANÇADO por 429 de
+`/api/profile`, espere 15 min e repita só a superfície dele. Depois diga **"rodei"**.
+
 ## O resto
 
 | o quê | comando |
