@@ -5,11 +5,12 @@
 // construção). Não abre navegador, não faz request. Recalcula a classificação
 // a partir dos nós crus (`g-faixa-classificar.mjs`) — não confia em resumo
 // gravado — e:
-//   REPROVA em (e) ou (b) nas larguras de C (1138) e B (711), e em (b) na faixa A
-//   (411) — errata da I1-D11 [Marcel, 2026-09-28]: "A só não quebra" = (b) = 0 em 411,
-//   rolagem horizontal da página incluída; o (e) de 411 segue listado (decisão 619);
+//   REPROVA em (e) ou (b) nas três larguras, C (1138), B (711) e A (411) — errata da
+//   I1-D11 [Marcel, 2026-09-28]: "A só não quebra" = (e) = 0 e (b) = 0 em 411, rolagem
+//   horizontal da página incluída (a do (e) em 411 é a div. 677); a lista "inalcançáveis
+//   em A" (decisão 619) continua saindo, com 0 como critério;
 //   CONTA, sem reprovar: (d′), errata candidata (4 px contra a folha), as
-//   saídas nome-acessível e rolagem (N3-D29), e tudo o que a faixa A (411) der;
+//   saídas nome-acessível e rolagem (N3-D29), e o (d′) de 411;
 //   REPROVA também o JSON que não se sustenta: sem controle positivo do
 //   listener (div. 522), com escrita/produção no log de requests, sem a
 //   largura de referência (1138) para o (e), ou Chromium fora do fixado.
@@ -89,7 +90,7 @@ for (const f of arquivos) {
     const c = classificarEstado(estado)
     if (c["411"]) {
       const inalc = c["411"].e
-      console.log(`  inalcançáveis em A (411) — ${id}: ${inalc.length} (herança da I1-D11, decisão 619; não reprova)`)
+      console.log(`  inalcançáveis em A (411) — ${id}: ${inalc.length} (herança da I1-D11, decisão 619; reprova desde a div. 677)`)
       for (const o of inalc) {
         const n = estado.larguras[REFERENCIA]?.nos.find((x) => x.k === o.k)
         console.log(`    · ${o.tipo}${o.n ? ` (${o.n[0]} → ${o.n[1]} car.)` : ""}: ${nomeDe(n)}`)
@@ -97,7 +98,7 @@ for (const f of arquivos) {
     }
     for (const L of Object.keys(c).sort((a, b) => b - a)) {
       const r = c[L]
-      const cab = `${id} · ${L}${r.reprova ? "" : " (faixa A — (b) reprova; (e) listado)"}`
+      const cab = `${id} · ${L}${L === "411" ? " (faixa A)" : ""}`
       console.log(`  ${cab}: (e)=${r.e.length} · (b)=${r.b.length} · (d′)=${r.dl.length} · errata candidata=${r.errata.length} · sem par folha/app=${r.semPar.folha.length}/${r.semPar.app.length} · saídas: nome-acessível=${r.saidas.nomeAcessivel} rolagem=${r.saidas.rolagem}`)
       // decisão 7: a errata candidata e os nós sem par com a folha, listados (nunca reprovam — decisão do Marcel)
       if (r.reprova) { erratas += r.errata.length; semParFolha += r.semPar.folha.length; semParApp += r.semPar.app.length }

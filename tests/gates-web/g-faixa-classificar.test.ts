@@ -78,11 +78,10 @@ describe('G-faixa — (e), (d′) e as saídas contra 1138', () => {
     expect(c['711'].e).toEqual([{ k: 'card-completo', tipo: 'texto some do nó', n: [48, 36] }])
     expect(c['711'].dl).toMatchObject([{ k: 'rotulo-a', texto: 'trocado' }])
   })
-  it('a faixa A (411): o (e) é contado à parte (reprova=false); o (b) reprova (errata da I1-D11)', () => {
+  it('a faixa A (411): o (e) e o (b) reprovam (errata da I1-D11; div. 677)', () => {
     const c = classificarEstado({ larguras: { 1138: ref, 411: med(411, []) } })
     expect(c['411'].e).toHaveLength(4)
-    expect(c['411'].reprova).toBe(false)
-    // errata da I1-D11 (I1-PR6, commit 4): o (b) de 411 reprova; o (e), não
+    expect(c['411'].reprova).toBe(true)
     expect(c['411'].reprovaB).toBe(true)
   })
 })

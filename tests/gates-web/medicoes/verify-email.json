@@ -4,10 +4,10 @@
  "folha": "1-auth",
  "implementada": true,
  "publica": true,
- "rodada": "2026-09-28T11:37:03.880Z",
+ "rodada": "2026-09-28T12:31:21.156Z",
  "base": "http://localhost:3000",
  "chromium": "140.0.7339.16",
- "commit": "f87b6395f419f0e880f27adbed533f8e64fe3d62",
+ "commit": "e45a5665ec091b1a3229eb6de92e6f71909d2eb4",
  "controlePositivo": {
   "411": {
    "controle1": "GET 200 falhou net::ERR_ABORTED",
@@ -27,7 +27,7 @@
    "linhas": [
     {
      "n": 1,
-     "ms": 52,
+     "ms": 55,
      "metodo": "GET",
      "caminho": "/verify-email",
      "status": "200",
@@ -35,7 +35,7 @@
     },
     {
      "n": 2,
-     "ms": 104,
+     "ms": 381,
      "metodo": "GET",
      "caminho": "/_next/static/css/app/layout.css",
      "status": "200",
@@ -43,7 +43,7 @@
     },
     {
      "n": 3,
-     "ms": 105,
+     "ms": 382,
      "metodo": "GET",
      "caminho": "/marcas/octavia-dark.png",
      "status": "200",
@@ -51,7 +51,7 @@
     },
     {
      "n": 4,
-     "ms": 109,
+     "ms": 386,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/webpack.js",
      "status": "200",
@@ -59,7 +59,7 @@
     },
     {
      "n": 5,
-     "ms": 110,
+     "ms": 387,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/main-app.js",
      "status": "FALHA",
@@ -67,7 +67,7 @@
     },
     {
      "n": 6,
-     "ms": 112,
+     "ms": 389,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app-pages-internals.js",
      "status": "200",
@@ -75,7 +75,7 @@
     },
     {
      "n": 7,
-     "ms": 113,
+     "ms": 389,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/verify-email/page.js",
      "status": "FALHA",
@@ -83,7 +83,7 @@
     },
     {
      "n": 8,
-     "ms": 114,
+     "ms": 390,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/layout.js",
      "status": "FALHA",
@@ -91,7 +91,7 @@
     },
     {
      "n": 9,
-     "ms": 119,
+     "ms": 396,
      "metodo": "GET",
      "caminho": "/fontes/Raleway_600SemiBold.ttf",
      "status": "200",
@@ -99,7 +99,7 @@
     },
     {
      "n": 10,
-     "ms": 121,
+     "ms": 398,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_400Regular.ttf",
      "status": "200",
@@ -107,7 +107,7 @@
     },
     {
      "n": 11,
-     "ms": 125,
+     "ms": 404,
      "metodo": "GET",
      "caminho": "/api/health?cn=controle-1",
      "status": "200",
@@ -115,7 +115,7 @@
     },
     {
      "n": 12,
-     "ms": 148,
+     "ms": 431,
      "metodo": "GET",
      "caminho": "/api/health?cn=controle-2",
      "status": "200",
@@ -123,7 +123,7 @@
     },
     {
      "n": 13,
-     "ms": 149,
+     "ms": 432,
      "metodo": "GET",
      "caminho": "/verify-email",
      "status": "200",
@@ -131,7 +131,7 @@
     },
     {
      "n": 14,
-     "ms": 183,
+     "ms": 506,
      "metodo": "GET",
      "caminho": "/_next/static/css/app/layout.css",
      "status": "200",
@@ -139,7 +139,7 @@
     },
     {
      "n": 15,
-     "ms": 185,
+     "ms": 509,
      "metodo": "GET",
      "caminho": "/marcas/octavia-dark.png",
      "status": "200",
@@ -147,7 +147,7 @@
     },
     {
      "n": 16,
-     "ms": 189,
+     "ms": 519,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/webpack.js",
      "status": "200",
@@ -155,7 +155,7 @@
     },
     {
      "n": 17,
-     "ms": 189,
+     "ms": 522,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/main-app.js",
      "status": "200",
@@ -163,7 +163,7 @@
     },
     {
      "n": 18,
-     "ms": 191,
+     "ms": 524,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app-pages-internals.js",
      "status": "200",
@@ -171,7 +171,7 @@
     },
     {
      "n": 19,
-     "ms": 191,
+     "ms": 525,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/verify-email/page.js",
      "status": "200",
@@ -179,7 +179,7 @@
     },
     {
      "n": 20,
-     "ms": 192,
+     "ms": 525,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/layout.js",
      "status": "200",
@@ -187,7 +187,7 @@
     },
     {
      "n": 21,
-     "ms": 193,
+     "ms": 526,
      "metodo": "GET",
      "caminho": "/fontes/Raleway_600SemiBold.ttf",
      "status": "200",
@@ -195,7 +195,7 @@
     },
     {
      "n": 22,
-     "ms": 194,
+     "ms": 530,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_400Regular.ttf",
      "status": "200",
@@ -203,7 +203,7 @@
     },
     {
      "n": 23,
-     "ms": 456,
+     "ms": 812,
      "metodo": "GET",
      "caminho": "/login",
      "status": "200",
@@ -211,7 +211,7 @@
     },
     {
      "n": 24,
-     "ms": 474,
+     "ms": 847,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/login/page.js",
      "status": "200",
@@ -219,15 +219,15 @@
     },
     {
      "n": 25,
-     "ms": 496,
+     "ms": 859,
      "metodo": "DELETE",
      "caminho": "/api/auth/session",
-     "status": "429",
+     "status": "200",
      "fim": "—"
     },
     {
      "n": 26,
-     "ms": 581,
+     "ms": 981,
      "metodo": "GET",
      "caminho": "/marcas/octavia-dark.png",
      "status": "200",
@@ -235,223 +235,223 @@
     },
     {
      "n": 27,
-     "ms": 590,
-     "metodo": "GET",
-     "caminho": "/marcas/octavia-dark.png",
-     "status": "200",
-     "fim": "fim"
-    },
-    {
-     "n": 28,
-     "ms": 590,
+     "ms": 989,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_600SemiBold.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 29,
-     "ms": 1727,
+     "n": 28,
+     "ms": 2001,
      "metodo": "GET",
      "caminho": "/verify-email",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 30,
-     "ms": 1780,
+     "n": 29,
+     "ms": 2061,
      "metodo": "GET",
      "caminho": "/_next/static/css/app/layout.css",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 31,
-     "ms": 1781,
+     "n": 30,
+     "ms": 2061,
      "metodo": "GET",
      "caminho": "/marcas/octavia-dark.png",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 32,
-     "ms": 1786,
+     "n": 31,
+     "ms": 2065,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/webpack.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 33,
-     "ms": 1787,
+     "n": 32,
+     "ms": 2067,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/main-app.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 34,
-     "ms": 1789,
+     "n": 33,
+     "ms": 2068,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app-pages-internals.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 35,
-     "ms": 1791,
+     "n": 34,
+     "ms": 2071,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/verify-email/page.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 36,
-     "ms": 1791,
+     "n": 35,
+     "ms": 2072,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/layout.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 37,
-     "ms": 1795,
+     "n": 36,
+     "ms": 2076,
      "metodo": "GET",
      "caminho": "/fontes/Raleway_600SemiBold.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 38,
-     "ms": 1796,
+     "n": 37,
+     "ms": 2078,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_400Regular.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 39,
-     "ms": 2065,
+     "n": 38,
+     "ms": 2354,
      "metodo": "GET",
      "caminho": "/login",
      "status": "FALHA",
      "fim": "falhou net::ERR_FAILED"
     },
     {
-     "n": 40,
-     "ms": 2092,
+     "n": 39,
+     "ms": 2386,
      "metodo": "DELETE",
      "caminho": "/api/auth/session",
-     "status": "429",
+     "status": "200",
      "fim": "—"
     },
     {
-     "n": 41,
-     "ms": 3185,
+     "n": 40,
+     "ms": 3464,
      "metodo": "GET",
      "caminho": "/login",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 42,
-     "ms": 3246,
+     "n": 41,
+     "ms": 3533,
      "metodo": "GET",
      "caminho": "/_next/static/css/app/layout.css",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 43,
-     "ms": 3247,
+     "n": 42,
+     "ms": 3533,
      "metodo": "GET",
      "caminho": "/marcas/octavia-dark.png",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 44,
-     "ms": 3250,
+     "n": 43,
+     "ms": 3537,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/webpack.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 45,
-     "ms": 3252,
+     "n": 44,
+     "ms": 3539,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/main-app.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 46,
-     "ms": 3255,
+     "n": 45,
+     "ms": 3541,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app-pages-internals.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 47,
-     "ms": 3256,
+     "n": 46,
+     "ms": 3543,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/layout.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 48,
-     "ms": 3256,
+     "n": 47,
+     "ms": 3543,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/login/page.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 49,
-     "ms": 3263,
+     "n": 48,
+     "ms": 3550,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_400Regular.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 50,
-     "ms": 3265,
+     "n": 49,
+     "ms": 3552,
      "metodo": "GET",
      "caminho": "/fontes/Raleway_600SemiBold.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 51,
-     "ms": 3267,
+     "n": 50,
+     "ms": 3553,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_600SemiBold.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 52,
-     "ms": 3591,
+     "n": 51,
+     "ms": 3859,
      "metodo": "DELETE",
      "caminho": "/api/auth/session",
-     "status": "429",
+     "status": "200",
      "fim": "falhou net::ERR_ABORTED"
     },
     {
-     "n": 53,
-     "ms": 3666,
+     "n": 52,
+     "ms": 3935,
      "metodo": "POST",
      "caminho": "/api/auth/session",
      "status": "fabricado 200",
      "fim": "fim"
     },
     {
+     "n": 53,
+     "ms": 3938,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "fabricado 401",
+     "fim": "fim"
+    },
+    {
      "n": 54,
-     "ms": 3669,
+     "ms": 3943,
      "metodo": "GET",
      "caminho": "/api/profile",
      "status": "fabricado 401",
@@ -459,7 +459,7 @@
     },
     {
      "n": 55,
-     "ms": 3674,
+     "ms": 3944,
      "metodo": "GET",
      "caminho": "/api/profile",
      "status": "fabricado 401",
@@ -467,7 +467,7 @@
     },
     {
      "n": 56,
-     "ms": 3675,
+     "ms": 3947,
      "metodo": "GET",
      "caminho": "/api/profile",
      "status": "fabricado 401",
@@ -475,111 +475,111 @@
     },
     {
      "n": 57,
-     "ms": 3678,
-     "metodo": "GET",
-     "caminho": "/api/profile",
-     "status": "fabricado 401",
-     "fim": "fim"
-    },
-    {
-     "n": 58,
-     "ms": 4178,
+     "ms": 4444,
      "metodo": "GET",
      "caminho": "/verify-email",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 59,
-     "ms": 4224,
+     "n": 58,
+     "ms": 4477,
      "metodo": "GET",
      "caminho": "/_next/static/css/app/layout.css",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 60,
-     "ms": 4226,
+     "n": 59,
+     "ms": 4479,
      "metodo": "GET",
      "caminho": "/marcas/octavia-dark.png",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 61,
-     "ms": 4229,
+     "n": 60,
+     "ms": 4481,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/webpack.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 62,
-     "ms": 4231,
+     "n": 61,
+     "ms": 4483,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/main-app.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 63,
-     "ms": 4233,
+     "n": 62,
+     "ms": 4484,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app-pages-internals.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 64,
-     "ms": 4234,
+     "n": 63,
+     "ms": 4485,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/verify-email/page.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 65,
-     "ms": 4235,
+     "n": 64,
+     "ms": 4486,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/layout.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 66,
-     "ms": 4237,
+     "n": 65,
+     "ms": 4488,
      "metodo": "GET",
      "caminho": "/fontes/Raleway_600SemiBold.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 67,
-     "ms": 4238,
+     "n": 66,
+     "ms": 4489,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_400Regular.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 68,
-     "ms": 4464,
+     "n": 67,
+     "ms": 4722,
      "metodo": "GET",
      "caminho": "/login",
      "status": "FALHA",
      "fim": "falhou net::ERR_FAILED"
     },
     {
-     "n": 69,
-     "ms": 4491,
+     "n": 68,
+     "ms": 4751,
      "metodo": "POST",
      "caminho": "/api/auth/session",
      "status": "fabricado 200",
      "fim": "fim"
     },
     {
+     "n": 69,
+     "ms": 4753,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "fabricado 401",
+     "fim": "fim"
+    },
+    {
      "n": 70,
-     "ms": 4493,
+     "ms": 4757,
      "metodo": "GET",
      "caminho": "/api/profile",
      "status": "fabricado 401",
@@ -587,127 +587,127 @@
     },
     {
      "n": 71,
-     "ms": 4498,
-     "metodo": "GET",
-     "caminho": "/api/profile",
-     "status": "fabricado 401",
-     "fim": "fim"
-    },
-    {
-     "n": 72,
-     "ms": 4512,
+     "ms": 4765,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_600SemiBold.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 73,
-     "ms": 5583,
+     "n": 72,
+     "ms": 5828,
      "metodo": "GET",
      "caminho": "/login",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 74,
-     "ms": 5638,
+     "n": 73,
+     "ms": 5889,
      "metodo": "GET",
      "caminho": "/_next/static/css/app/layout.css",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 75,
-     "ms": 5639,
+     "n": 74,
+     "ms": 5890,
      "metodo": "GET",
      "caminho": "/marcas/octavia-dark.png",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 76,
-     "ms": 5642,
+     "n": 75,
+     "ms": 5893,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/webpack.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 77,
-     "ms": 5643,
+     "n": 76,
+     "ms": 5895,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/main-app.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 78,
-     "ms": 5645,
+     "n": 77,
+     "ms": 5897,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app-pages-internals.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 79,
-     "ms": 5646,
+     "n": 78,
+     "ms": 5898,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/layout.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 80,
-     "ms": 5647,
+     "n": 79,
+     "ms": 5898,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/login/page.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 81,
-     "ms": 5655,
+     "n": 80,
+     "ms": 5906,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_400Regular.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 82,
-     "ms": 5656,
+     "n": 81,
+     "ms": 5908,
      "metodo": "GET",
      "caminho": "/fontes/Raleway_600SemiBold.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 83,
-     "ms": 5658,
+     "n": 82,
+     "ms": 5909,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_600SemiBold.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 84,
-     "ms": 5955,
+     "n": 83,
+     "ms": 6217,
      "metodo": "DELETE",
      "caminho": "/api/auth/session",
-     "status": "429",
+     "status": "200",
      "fim": "falhou net::ERR_ABORTED"
     },
     {
-     "n": 85,
-     "ms": 6032,
+     "n": 84,
+     "ms": 6284,
      "metodo": "POST",
      "caminho": "/api/auth/session",
      "status": "fabricado 200",
      "fim": "fim"
     },
     {
+     "n": 85,
+     "ms": 6287,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "fabricado 401",
+     "fim": "fim"
+    },
+    {
      "n": 86,
-     "ms": 6035,
+     "ms": 6292,
      "metodo": "GET",
      "caminho": "/api/profile",
      "status": "fabricado 401",
@@ -715,7 +715,7 @@
     },
     {
      "n": 87,
-     "ms": 6039,
+     "ms": 6293,
      "metodo": "GET",
      "caminho": "/api/profile",
      "status": "fabricado 401",
@@ -723,7 +723,7 @@
     },
     {
      "n": 88,
-     "ms": 6040,
+     "ms": 6296,
      "metodo": "GET",
      "caminho": "/api/profile",
      "status": "fabricado 401",
@@ -731,111 +731,111 @@
     },
     {
      "n": 89,
-     "ms": 6044,
-     "metodo": "GET",
-     "caminho": "/api/profile",
-     "status": "fabricado 401",
-     "fim": "fim"
-    },
-    {
-     "n": 90,
-     "ms": 6544,
+     "ms": 6796,
      "metodo": "GET",
      "caminho": "/verify-email",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 91,
-     "ms": 6594,
+     "n": 90,
+     "ms": 6832,
      "metodo": "GET",
      "caminho": "/_next/static/css/app/layout.css",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 92,
-     "ms": 6595,
+     "n": 91,
+     "ms": 6834,
      "metodo": "GET",
      "caminho": "/marcas/octavia-dark.png",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 93,
-     "ms": 6597,
+     "n": 92,
+     "ms": 6838,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/webpack.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 94,
-     "ms": 6599,
+     "n": 93,
+     "ms": 6840,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/main-app.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 95,
-     "ms": 6601,
+     "n": 94,
+     "ms": 6842,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app-pages-internals.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 96,
-     "ms": 6602,
+     "n": 95,
+     "ms": 6843,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/verify-email/page.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 97,
-     "ms": 6603,
+     "n": 96,
+     "ms": 6844,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/layout.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 98,
-     "ms": 6605,
+     "n": 97,
+     "ms": 6847,
      "metodo": "GET",
      "caminho": "/fontes/Raleway_600SemiBold.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 99,
-     "ms": 6606,
+     "n": 98,
+     "ms": 6848,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_400Regular.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 100,
-     "ms": 6830,
+     "n": 99,
+     "ms": 7131,
      "metodo": "GET",
      "caminho": "/login",
      "status": "FALHA",
      "fim": "falhou net::ERR_FAILED"
     },
     {
-     "n": 101,
-     "ms": 6857,
+     "n": 100,
+     "ms": 7161,
      "metodo": "POST",
      "caminho": "/api/auth/session",
      "status": "fabricado 200",
      "fim": "fim"
     },
     {
+     "n": 101,
+     "ms": 7163,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "fabricado 401",
+     "fim": "fim"
+    },
+    {
      "n": 102,
-     "ms": 6859,
+     "ms": 7168,
      "metodo": "GET",
      "caminho": "/api/profile",
      "status": "fabricado 401",
@@ -843,127 +843,127 @@
     },
     {
      "n": 103,
-     "ms": 6864,
-     "metodo": "GET",
-     "caminho": "/api/profile",
-     "status": "fabricado 401",
-     "fim": "fim"
-    },
-    {
-     "n": 104,
-     "ms": 6879,
+     "ms": 7180,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_600SemiBold.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 105,
-     "ms": 9003,
+     "n": 104,
+     "ms": 9295,
      "metodo": "GET",
      "caminho": "/login",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 106,
-     "ms": 9061,
+     "n": 105,
+     "ms": 9354,
      "metodo": "GET",
      "caminho": "/_next/static/css/app/layout.css",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 107,
-     "ms": 9062,
+     "n": 106,
+     "ms": 9355,
      "metodo": "GET",
      "caminho": "/marcas/octavia-dark.png",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 108,
-     "ms": 9066,
+     "n": 107,
+     "ms": 9358,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/webpack.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 109,
-     "ms": 9067,
+     "n": 108,
+     "ms": 9360,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/main-app.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 110,
-     "ms": 9069,
+     "n": 109,
+     "ms": 9363,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app-pages-internals.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 111,
-     "ms": 9070,
+     "n": 110,
+     "ms": 9364,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/layout.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 112,
-     "ms": 9070,
+     "n": 111,
+     "ms": 9364,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/login/page.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 113,
-     "ms": 9077,
+     "n": 112,
+     "ms": 9371,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_400Regular.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 114,
-     "ms": 9079,
+     "n": 113,
+     "ms": 9373,
      "metodo": "GET",
      "caminho": "/fontes/Raleway_600SemiBold.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 115,
-     "ms": 9080,
+     "n": 114,
+     "ms": 9374,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_600SemiBold.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 116,
-     "ms": 9384,
+     "n": 115,
+     "ms": 9678,
      "metodo": "DELETE",
      "caminho": "/api/auth/session",
-     "status": "429",
+     "status": "200",
      "fim": "falhou net::ERR_ABORTED"
     },
     {
-     "n": 117,
-     "ms": 9448,
+     "n": 116,
+     "ms": 9751,
      "metodo": "POST",
      "caminho": "/api/auth/session",
      "status": "fabricado 200",
      "fim": "fim"
     },
     {
+     "n": 117,
+     "ms": 9754,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "fabricado 401",
+     "fim": "fim"
+    },
+    {
      "n": 118,
-     "ms": 9451,
+     "ms": 9758,
      "metodo": "GET",
      "caminho": "/api/profile",
      "status": "fabricado 401",
@@ -971,7 +971,7 @@
     },
     {
      "n": 119,
-     "ms": 9455,
+     "ms": 9759,
      "metodo": "GET",
      "caminho": "/api/profile",
      "status": "fabricado 401",
@@ -979,7 +979,7 @@
     },
     {
      "n": 120,
-     "ms": 9456,
+     "ms": 9763,
      "metodo": "GET",
      "caminho": "/api/profile",
      "status": "fabricado 401",
@@ -987,111 +987,111 @@
     },
     {
      "n": 121,
-     "ms": 9459,
-     "metodo": "GET",
-     "caminho": "/api/profile",
-     "status": "fabricado 401",
-     "fim": "fim"
-    },
-    {
-     "n": 122,
-     "ms": 9962,
+     "ms": 10260,
      "metodo": "GET",
      "caminho": "/verify-email",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 123,
-     "ms": 10008,
+     "n": 122,
+     "ms": 10292,
      "metodo": "GET",
      "caminho": "/_next/static/css/app/layout.css",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 124,
-     "ms": 10009,
+     "n": 123,
+     "ms": 10294,
      "metodo": "GET",
      "caminho": "/marcas/octavia-dark.png",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 125,
-     "ms": 10011,
+     "n": 124,
+     "ms": 10296,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/webpack.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 126,
-     "ms": 10013,
+     "n": 125,
+     "ms": 10298,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/main-app.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 127,
-     "ms": 10015,
+     "n": 126,
+     "ms": 10301,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app-pages-internals.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 128,
-     "ms": 10016,
+     "n": 127,
+     "ms": 10303,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/verify-email/page.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 129,
-     "ms": 10017,
+     "n": 128,
+     "ms": 10304,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/layout.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 130,
-     "ms": 10019,
+     "n": 129,
+     "ms": 10307,
      "metodo": "GET",
      "caminho": "/fontes/Raleway_600SemiBold.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 131,
-     "ms": 10020,
+     "n": 130,
+     "ms": 10308,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_400Regular.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 132,
-     "ms": 10274,
+     "n": 131,
+     "ms": 10564,
      "metodo": "GET",
      "caminho": "/login",
      "status": "FALHA",
      "fim": "falhou net::ERR_FAILED"
     },
     {
-     "n": 133,
-     "ms": 10306,
+     "n": 132,
+     "ms": 10594,
      "metodo": "POST",
      "caminho": "/api/auth/session",
      "status": "fabricado 200",
      "fim": "fim"
     },
     {
+     "n": 133,
+     "ms": 10596,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "fabricado 401",
+     "fim": "fim"
+    },
+    {
      "n": 134,
-     "ms": 10310,
+     "ms": 10602,
      "metodo": "GET",
      "caminho": "/api/profile",
      "status": "fabricado 401",
@@ -1099,7 +1099,7 @@
     },
     {
      "n": 135,
-     "ms": 10314,
+     "ms": 10614,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_600SemiBold.ttf",
      "status": "200",
@@ -1107,119 +1107,119 @@
     },
     {
      "n": 136,
-     "ms": 10318,
-     "metodo": "GET",
-     "caminho": "/api/profile",
-     "status": "fabricado 401",
-     "fim": "fim"
-    },
-    {
-     "n": 137,
-     "ms": 12441,
+     "ms": 12724,
      "metodo": "GET",
      "caminho": "/login",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 138,
-     "ms": 12498,
+     "n": 137,
+     "ms": 12786,
      "metodo": "GET",
      "caminho": "/_next/static/css/app/layout.css",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 139,
-     "ms": 12498,
+     "n": 138,
+     "ms": 12787,
      "metodo": "GET",
      "caminho": "/marcas/octavia-dark.png",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 140,
-     "ms": 12501,
+     "n": 139,
+     "ms": 12790,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/webpack.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 141,
-     "ms": 12503,
+     "n": 140,
+     "ms": 12791,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/main-app.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 142,
-     "ms": 12505,
+     "n": 141,
+     "ms": 12793,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app-pages-internals.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 143,
-     "ms": 12506,
+     "n": 142,
+     "ms": 12795,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/layout.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 144,
-     "ms": 12507,
+     "n": 143,
+     "ms": 12797,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/login/page.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 145,
-     "ms": 12515,
+     "n": 144,
+     "ms": 12804,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_400Regular.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 146,
-     "ms": 12517,
+     "n": 145,
+     "ms": 12806,
      "metodo": "GET",
      "caminho": "/fontes/Raleway_600SemiBold.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 147,
-     "ms": 12517,
+     "n": 146,
+     "ms": 12807,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_600SemiBold.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 148,
-     "ms": 12815,
+     "n": 147,
+     "ms": 13116,
      "metodo": "DELETE",
      "caminho": "/api/auth/session",
-     "status": "429",
+     "status": "200",
      "fim": "falhou net::ERR_ABORTED"
     },
     {
-     "n": 149,
-     "ms": 12882,
+     "n": 148,
+     "ms": 13184,
      "metodo": "POST",
      "caminho": "/api/auth/session",
      "status": "fabricado 200",
      "fim": "fim"
     },
     {
+     "n": 149,
+     "ms": 13186,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "fabricado 401",
+     "fim": "fim"
+    },
+    {
      "n": 150,
-     "ms": 12884,
+     "ms": 13191,
      "metodo": "GET",
      "caminho": "/api/profile",
      "status": "fabricado 401",
@@ -1227,7 +1227,7 @@
     },
     {
      "n": 151,
-     "ms": 12889,
+     "ms": 13192,
      "metodo": "GET",
      "caminho": "/api/profile",
      "status": "fabricado 401",
@@ -1235,7 +1235,7 @@
     },
     {
      "n": 152,
-     "ms": 12890,
+     "ms": 13196,
      "metodo": "GET",
      "caminho": "/api/profile",
      "status": "fabricado 401",
@@ -1243,111 +1243,111 @@
     },
     {
      "n": 153,
-     "ms": 12894,
-     "metodo": "GET",
-     "caminho": "/api/profile",
-     "status": "fabricado 401",
-     "fim": "fim"
-    },
-    {
-     "n": 154,
-     "ms": 13390,
+     "ms": 13693,
      "metodo": "GET",
      "caminho": "/verify-email",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 155,
-     "ms": 13426,
+     "n": 154,
+     "ms": 13730,
      "metodo": "GET",
      "caminho": "/_next/static/css/app/layout.css",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 156,
-     "ms": 13427,
+     "n": 155,
+     "ms": 13731,
      "metodo": "GET",
      "caminho": "/marcas/octavia-dark.png",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 157,
-     "ms": 13430,
+     "n": 156,
+     "ms": 13734,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/webpack.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 158,
-     "ms": 13432,
+     "n": 157,
+     "ms": 13736,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/main-app.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 159,
-     "ms": 13434,
+     "n": 158,
+     "ms": 13738,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app-pages-internals.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 160,
-     "ms": 13435,
+     "n": 159,
+     "ms": 13739,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/verify-email/page.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 161,
-     "ms": 13436,
+     "n": 160,
+     "ms": 13740,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/layout.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 162,
-     "ms": 13439,
+     "n": 161,
+     "ms": 13743,
      "metodo": "GET",
      "caminho": "/fontes/Raleway_600SemiBold.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 163,
-     "ms": 13440,
+     "n": 162,
+     "ms": 13744,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_400Regular.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 164,
-     "ms": 13688,
+     "n": 163,
+     "ms": 14002,
      "metodo": "GET",
      "caminho": "/login",
      "status": "FALHA",
      "fim": "falhou net::ERR_FAILED"
     },
     {
-     "n": 165,
-     "ms": 13720,
+     "n": 164,
+     "ms": 14033,
      "metodo": "POST",
      "caminho": "/api/auth/session",
      "status": "fabricado 200",
      "fim": "fim"
     },
     {
+     "n": 165,
+     "ms": 14035,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "fabricado 401",
+     "fim": "fim"
+    },
+    {
      "n": 166,
-     "ms": 13722,
+     "ms": 14040,
      "metodo": "GET",
      "caminho": "/api/profile",
      "status": "fabricado 401",
@@ -1355,127 +1355,127 @@
     },
     {
      "n": 167,
-     "ms": 13725,
-     "metodo": "GET",
-     "caminho": "/api/profile",
-     "status": "fabricado 401",
-     "fim": "fim"
-    },
-    {
-     "n": 168,
-     "ms": 13729,
+     "ms": 14047,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_600SemiBold.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 169,
-     "ms": 15879,
+     "n": 168,
+     "ms": 16167,
      "metodo": "GET",
      "caminho": "/login",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 170,
-     "ms": 15937,
+     "n": 169,
+     "ms": 16233,
      "metodo": "GET",
      "caminho": "/_next/static/css/app/layout.css",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 171,
-     "ms": 15937,
+     "n": 170,
+     "ms": 16235,
      "metodo": "GET",
      "caminho": "/marcas/octavia-dark.png",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 172,
-     "ms": 15941,
+     "n": 171,
+     "ms": 16238,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/webpack.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 173,
-     "ms": 15943,
+     "n": 172,
+     "ms": 16240,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/main-app.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 174,
-     "ms": 15945,
+     "n": 173,
+     "ms": 16243,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app-pages-internals.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 175,
-     "ms": 15946,
+     "n": 174,
+     "ms": 16244,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/layout.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 176,
-     "ms": 15948,
+     "n": 175,
+     "ms": 16245,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/login/page.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 177,
-     "ms": 15953,
+     "n": 176,
+     "ms": 16251,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_400Regular.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 178,
-     "ms": 15954,
+     "n": 177,
+     "ms": 16253,
      "metodo": "GET",
      "caminho": "/fontes/Raleway_600SemiBold.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 179,
-     "ms": 15955,
+     "n": 178,
+     "ms": 16253,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_600SemiBold.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 180,
-     "ms": 16253,
+     "n": 179,
+     "ms": 16562,
      "metodo": "DELETE",
      "caminho": "/api/auth/session",
-     "status": "429",
+     "status": "200",
      "fim": "falhou net::ERR_ABORTED"
     },
     {
-     "n": 181,
-     "ms": 16315,
+     "n": 180,
+     "ms": 16634,
      "metodo": "POST",
      "caminho": "/api/auth/session",
      "status": "fabricado 200",
      "fim": "fim"
     },
     {
+     "n": 181,
+     "ms": 16637,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "fabricado 401",
+     "fim": "fim"
+    },
+    {
      "n": 182,
-     "ms": 16318,
+     "ms": 16642,
      "metodo": "GET",
      "caminho": "/api/profile",
      "status": "fabricado 401",
@@ -1483,7 +1483,7 @@
     },
     {
      "n": 183,
-     "ms": 16322,
+     "ms": 16643,
      "metodo": "GET",
      "caminho": "/api/profile",
      "status": "fabricado 401",
@@ -1491,7 +1491,7 @@
     },
     {
      "n": 184,
-     "ms": 16323,
+     "ms": 16648,
      "metodo": "GET",
      "caminho": "/api/profile",
      "status": "fabricado 401",
@@ -1499,111 +1499,111 @@
     },
     {
      "n": 185,
-     "ms": 16326,
-     "metodo": "GET",
-     "caminho": "/api/profile",
-     "status": "fabricado 401",
-     "fim": "fim"
-    },
-    {
-     "n": 186,
-     "ms": 16828,
+     "ms": 17141,
      "metodo": "GET",
      "caminho": "/verify-email",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 187,
-     "ms": 16873,
+     "n": 186,
+     "ms": 17185,
      "metodo": "GET",
      "caminho": "/_next/static/css/app/layout.css",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 188,
-     "ms": 16874,
+     "n": 187,
+     "ms": 17187,
      "metodo": "GET",
      "caminho": "/marcas/octavia-dark.png",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 189,
-     "ms": 16877,
+     "n": 188,
+     "ms": 17191,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/webpack.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 190,
-     "ms": 16879,
+     "n": 189,
+     "ms": 17193,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/main-app.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 191,
-     "ms": 16880,
+     "n": 190,
+     "ms": 17195,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app-pages-internals.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 192,
-     "ms": 16882,
+     "n": 191,
+     "ms": 17197,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/verify-email/page.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 193,
-     "ms": 16883,
+     "n": 192,
+     "ms": 17199,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/layout.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 194,
-     "ms": 16885,
+     "n": 193,
+     "ms": 17202,
      "metodo": "GET",
      "caminho": "/fontes/Raleway_600SemiBold.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 195,
-     "ms": 16886,
+     "n": 194,
+     "ms": 17203,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_400Regular.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 196,
-     "ms": 17114,
+     "n": 195,
+     "ms": 17465,
      "metodo": "GET",
      "caminho": "/login",
      "status": "FALHA",
      "fim": "falhou net::ERR_FAILED"
     },
     {
-     "n": 197,
-     "ms": 17140,
+     "n": 196,
+     "ms": 17495,
      "metodo": "POST",
      "caminho": "/api/auth/session",
      "status": "fabricado 200",
      "fim": "fim"
     },
     {
+     "n": 197,
+     "ms": 17498,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "fabricado 401",
+     "fim": "fim"
+    },
+    {
      "n": 198,
-     "ms": 17142,
+     "ms": 17503,
      "metodo": "GET",
      "caminho": "/api/profile",
      "status": "fabricado 401",
@@ -1611,127 +1611,127 @@
     },
     {
      "n": 199,
-     "ms": 17147,
-     "metodo": "GET",
-     "caminho": "/api/profile",
-     "status": "fabricado 401",
-     "fim": "fim"
-    },
-    {
-     "n": 200,
-     "ms": 17162,
+     "ms": 17514,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_600SemiBold.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 201,
-     "ms": 19295,
+     "n": 200,
+     "ms": 19632,
      "metodo": "GET",
      "caminho": "/login",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 202,
-     "ms": 19353,
+     "n": 201,
+     "ms": 19695,
      "metodo": "GET",
      "caminho": "/_next/static/css/app/layout.css",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 203,
-     "ms": 19353,
+     "n": 202,
+     "ms": 19696,
      "metodo": "GET",
      "caminho": "/marcas/octavia-dark.png",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 204,
-     "ms": 19357,
+     "n": 203,
+     "ms": 19700,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/webpack.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 205,
-     "ms": 19358,
+     "n": 204,
+     "ms": 19702,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/main-app.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 206,
-     "ms": 19360,
+     "n": 205,
+     "ms": 19704,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app-pages-internals.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 207,
-     "ms": 19361,
+     "n": 206,
+     "ms": 19705,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/layout.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 208,
-     "ms": 19363,
+     "n": 207,
+     "ms": 19707,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/login/page.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 209,
-     "ms": 19369,
+     "n": 208,
+     "ms": 19711,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_400Regular.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 210,
-     "ms": 19371,
+     "n": 209,
+     "ms": 19714,
      "metodo": "GET",
      "caminho": "/fontes/Raleway_600SemiBold.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 211,
-     "ms": 19373,
+     "n": 210,
+     "ms": 19715,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_600SemiBold.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 212,
-     "ms": 19685,
+     "n": 211,
+     "ms": 20024,
      "metodo": "DELETE",
      "caminho": "/api/auth/session",
-     "status": "429",
+     "status": "200",
      "fim": "falhou net::ERR_ABORTED"
     },
     {
-     "n": 213,
-     "ms": 19749,
+     "n": 212,
+     "ms": 20100,
      "metodo": "POST",
      "caminho": "/api/auth/session",
      "status": "fabricado 200",
      "fim": "fim"
     },
     {
+     "n": 213,
+     "ms": 20103,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "fabricado 401",
+     "fim": "fim"
+    },
+    {
      "n": 214,
-     "ms": 19751,
+     "ms": 20108,
      "metodo": "GET",
      "caminho": "/api/profile",
      "status": "fabricado 401",
@@ -1739,7 +1739,7 @@
     },
     {
      "n": 215,
-     "ms": 19756,
+     "ms": 20109,
      "metodo": "GET",
      "caminho": "/api/profile",
      "status": "fabricado 401",
@@ -1747,7 +1747,7 @@
     },
     {
      "n": 216,
-     "ms": 19757,
+     "ms": 20113,
      "metodo": "GET",
      "caminho": "/api/profile",
      "status": "fabricado 401",
@@ -1755,111 +1755,111 @@
     },
     {
      "n": 217,
-     "ms": 19760,
-     "metodo": "GET",
-     "caminho": "/api/profile",
-     "status": "fabricado 401",
-     "fim": "fim"
-    },
-    {
-     "n": 218,
-     "ms": 20260,
+     "ms": 20609,
      "metodo": "GET",
      "caminho": "/verify-email",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 219,
-     "ms": 20304,
+     "n": 218,
+     "ms": 20643,
      "metodo": "GET",
      "caminho": "/_next/static/css/app/layout.css",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 220,
-     "ms": 20306,
+     "n": 219,
+     "ms": 20645,
      "metodo": "GET",
      "caminho": "/marcas/octavia-dark.png",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 221,
-     "ms": 20309,
+     "n": 220,
+     "ms": 20647,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/webpack.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 222,
-     "ms": 20311,
+     "n": 221,
+     "ms": 20649,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/main-app.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 223,
-     "ms": 20313,
+     "n": 222,
+     "ms": 20651,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app-pages-internals.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 224,
-     "ms": 20314,
+     "n": 223,
+     "ms": 20653,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/verify-email/page.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 225,
-     "ms": 20315,
+     "n": 224,
+     "ms": 20654,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/layout.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 226,
-     "ms": 20317,
+     "n": 225,
+     "ms": 20657,
      "metodo": "GET",
      "caminho": "/fontes/Raleway_600SemiBold.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 227,
-     "ms": 20318,
+     "n": 226,
+     "ms": 20658,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_400Regular.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 228,
-     "ms": 20566,
+     "n": 227,
+     "ms": 20891,
      "metodo": "GET",
      "caminho": "/login",
      "status": "FALHA",
      "fim": "falhou net::ERR_FAILED"
     },
     {
-     "n": 229,
-     "ms": 20596,
+     "n": 228,
+     "ms": 20920,
      "metodo": "POST",
      "caminho": "/api/auth/session",
      "status": "fabricado 200",
      "fim": "fim"
     },
     {
+     "n": 229,
+     "ms": 20922,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "fabricado 401",
+     "fim": "fim"
+    },
+    {
      "n": 230,
-     "ms": 20598,
+     "ms": 20926,
      "metodo": "GET",
      "caminho": "/api/profile",
      "status": "fabricado 401",
@@ -1867,143 +1867,143 @@
     },
     {
      "n": 231,
-     "ms": 20602,
-     "metodo": "GET",
-     "caminho": "/api/profile",
-     "status": "fabricado 401",
-     "fim": "fim"
-    },
-    {
-     "n": 232,
-     "ms": 20612,
+     "ms": 20930,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_600SemiBold.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 233,
-     "ms": 21688,
+     "n": 232,
+     "ms": 21991,
      "metodo": "POST",
      "caminho": "/__nextjs_original-stack-frames",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 234,
-     "ms": 21703,
+     "n": 233,
+     "ms": 22003,
      "metodo": "GET",
      "caminho": "/__nextjs_font/geist-latin.woff2",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 235,
-     "ms": 22771,
+     "n": 234,
+     "ms": 23066,
      "metodo": "GET",
      "caminho": "/login",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 236,
-     "ms": 22826,
+     "n": 235,
+     "ms": 23128,
      "metodo": "GET",
      "caminho": "/_next/static/css/app/layout.css",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 237,
-     "ms": 22827,
+     "n": 236,
+     "ms": 23129,
      "metodo": "GET",
      "caminho": "/marcas/octavia-dark.png",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 238,
-     "ms": 22830,
+     "n": 237,
+     "ms": 23132,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/webpack.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 239,
-     "ms": 22831,
+     "n": 238,
+     "ms": 23135,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/main-app.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 240,
-     "ms": 22833,
+     "n": 239,
+     "ms": 23137,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app-pages-internals.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 241,
-     "ms": 22834,
+     "n": 240,
+     "ms": 23138,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/layout.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 242,
-     "ms": 22835,
+     "n": 241,
+     "ms": 23139,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/login/page.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 243,
-     "ms": 22843,
+     "n": 242,
+     "ms": 23145,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_400Regular.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 244,
-     "ms": 22844,
+     "n": 243,
+     "ms": 23146,
      "metodo": "GET",
      "caminho": "/fontes/Raleway_600SemiBold.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 245,
-     "ms": 22845,
+     "n": 244,
+     "ms": 23147,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_600SemiBold.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 246,
-     "ms": 23142,
+     "n": 245,
+     "ms": 23539,
      "metodo": "DELETE",
      "caminho": "/api/auth/session",
-     "status": "429",
+     "status": "200",
      "fim": "falhou net::ERR_ABORTED"
     },
     {
-     "n": 247,
-     "ms": 23215,
+     "n": 246,
+     "ms": 23616,
      "metodo": "POST",
      "caminho": "/api/auth/session",
      "status": "fabricado 200",
      "fim": "fim"
     },
     {
+     "n": 247,
+     "ms": 23619,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "fabricado 401",
+     "fim": "fim"
+    },
+    {
      "n": 248,
-     "ms": 23218,
+     "ms": 23623,
      "metodo": "GET",
      "caminho": "/api/profile",
      "status": "fabricado 401",
@@ -2011,7 +2011,7 @@
     },
     {
      "n": 249,
-     "ms": 23224,
+     "ms": 23624,
      "metodo": "GET",
      "caminho": "/api/profile",
      "status": "fabricado 401",
@@ -2019,7 +2019,7 @@
     },
     {
      "n": 250,
-     "ms": 23224,
+     "ms": 23628,
      "metodo": "GET",
      "caminho": "/api/profile",
      "status": "fabricado 401",
@@ -2027,111 +2027,111 @@
     },
     {
      "n": 251,
-     "ms": 23228,
-     "metodo": "GET",
-     "caminho": "/api/profile",
-     "status": "fabricado 401",
-     "fim": "fim"
-    },
-    {
-     "n": 252,
-     "ms": 23726,
+     "ms": 24128,
      "metodo": "GET",
      "caminho": "/verify-email",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 253,
-     "ms": 23762,
+     "n": 252,
+     "ms": 24178,
      "metodo": "GET",
      "caminho": "/_next/static/css/app/layout.css",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 254,
-     "ms": 23764,
+     "n": 253,
+     "ms": 24180,
      "metodo": "GET",
      "caminho": "/marcas/octavia-dark.png",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 255,
-     "ms": 23767,
+     "n": 254,
+     "ms": 24183,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/webpack.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 256,
-     "ms": 23768,
+     "n": 255,
+     "ms": 24184,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/main-app.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 257,
-     "ms": 23770,
+     "n": 256,
+     "ms": 24186,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app-pages-internals.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 258,
-     "ms": 23771,
+     "n": 257,
+     "ms": 24187,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/verify-email/page.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 259,
-     "ms": 23772,
+     "n": 258,
+     "ms": 24188,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/layout.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 260,
-     "ms": 23775,
+     "n": 259,
+     "ms": 24190,
      "metodo": "GET",
      "caminho": "/fontes/Raleway_600SemiBold.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 261,
-     "ms": 23776,
+     "n": 260,
+     "ms": 24191,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_400Regular.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 262,
-     "ms": 24028,
+     "n": 261,
+     "ms": 24446,
      "metodo": "GET",
      "caminho": "/login",
      "status": "FALHA",
      "fim": "falhou net::ERR_FAILED"
     },
     {
-     "n": 263,
-     "ms": 24058,
+     "n": 262,
+     "ms": 24476,
      "metodo": "POST",
      "caminho": "/api/auth/session",
      "status": "fabricado 200",
      "fim": "fim"
     },
     {
+     "n": 263,
+     "ms": 24478,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "fabricado 401",
+     "fim": "fim"
+    },
+    {
      "n": 264,
-     "ms": 24060,
+     "ms": 24484,
      "metodo": "GET",
      "caminho": "/api/profile",
      "status": "fabricado 401",
@@ -2139,143 +2139,143 @@
     },
     {
      "n": 265,
-     "ms": 24067,
-     "metodo": "GET",
-     "caminho": "/api/profile",
-     "status": "fabricado 401",
-     "fim": "fim"
-    },
-    {
-     "n": 266,
-     "ms": 24078,
+     "ms": 24496,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_600SemiBold.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 267,
-     "ms": 25143,
+     "n": 266,
+     "ms": 25561,
      "metodo": "POST",
      "caminho": "/__nextjs_original-stack-frames",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 268,
-     "ms": 25167,
+     "n": 267,
+     "ms": 25586,
      "metodo": "GET",
      "caminho": "/__nextjs_font/geist-latin.woff2",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 269,
-     "ms": 26224,
+     "n": 268,
+     "ms": 26619,
      "metodo": "GET",
      "caminho": "/login",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 270,
-     "ms": 26281,
+     "n": 269,
+     "ms": 26682,
      "metodo": "GET",
      "caminho": "/_next/static/css/app/layout.css",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 271,
-     "ms": 26281,
+     "n": 270,
+     "ms": 26683,
      "metodo": "GET",
      "caminho": "/marcas/octavia-dark.png",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 272,
-     "ms": 26285,
+     "n": 271,
+     "ms": 26686,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/webpack.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 273,
-     "ms": 26286,
+     "n": 272,
+     "ms": 26688,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/main-app.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 274,
-     "ms": 26288,
+     "n": 273,
+     "ms": 26689,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app-pages-internals.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 275,
-     "ms": 26289,
+     "n": 274,
+     "ms": 26691,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/layout.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 276,
-     "ms": 26290,
+     "n": 275,
+     "ms": 26692,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/login/page.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 277,
-     "ms": 26297,
+     "n": 276,
+     "ms": 26698,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_400Regular.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 278,
-     "ms": 26299,
+     "n": 277,
+     "ms": 26701,
      "metodo": "GET",
      "caminho": "/fontes/Raleway_600SemiBold.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 279,
-     "ms": 26301,
+     "n": 278,
+     "ms": 26703,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_600SemiBold.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 280,
-     "ms": 26601,
+     "n": 279,
+     "ms": 27003,
      "metodo": "DELETE",
      "caminho": "/api/auth/session",
-     "status": "429",
+     "status": "200",
      "fim": "falhou net::ERR_ABORTED"
     },
     {
-     "n": 281,
-     "ms": 26665,
+     "n": 280,
+     "ms": 27065,
      "metodo": "POST",
      "caminho": "/api/auth/session",
      "status": "fabricado 200",
      "fim": "fim"
     },
     {
+     "n": 281,
+     "ms": 27068,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "fabricado 401",
+     "fim": "fim"
+    },
+    {
      "n": 282,
-     "ms": 26667,
+     "ms": 27072,
      "metodo": "GET",
      "caminho": "/api/profile",
      "status": "fabricado 401",
@@ -2283,7 +2283,7 @@
     },
     {
      "n": 283,
-     "ms": 26672,
+     "ms": 27073,
      "metodo": "GET",
      "caminho": "/api/profile",
      "status": "fabricado 401",
@@ -2291,7 +2291,7 @@
     },
     {
      "n": 284,
-     "ms": 26673,
+     "ms": 27076,
      "metodo": "GET",
      "caminho": "/api/profile",
      "status": "fabricado 401",
@@ -2299,111 +2299,111 @@
     },
     {
      "n": 285,
-     "ms": 26677,
-     "metodo": "GET",
-     "caminho": "/api/profile",
-     "status": "fabricado 401",
-     "fim": "fim"
-    },
-    {
-     "n": 286,
-     "ms": 27175,
+     "ms": 27573,
      "metodo": "GET",
      "caminho": "/verify-email",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 287,
-     "ms": 27224,
+     "n": 286,
+     "ms": 27611,
      "metodo": "GET",
      "caminho": "/_next/static/css/app/layout.css",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 288,
-     "ms": 27225,
+     "n": 287,
+     "ms": 27613,
      "metodo": "GET",
      "caminho": "/marcas/octavia-dark.png",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 289,
-     "ms": 27228,
+     "n": 288,
+     "ms": 27616,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/webpack.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 290,
-     "ms": 27230,
+     "n": 289,
+     "ms": 27618,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/main-app.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 291,
-     "ms": 27231,
+     "n": 290,
+     "ms": 27620,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app-pages-internals.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 292,
-     "ms": 27233,
+     "n": 291,
+     "ms": 27622,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/verify-email/page.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 293,
-     "ms": 27234,
+     "n": 292,
+     "ms": 27623,
      "metodo": "GET",
      "caminho": "/_next/static/chunks/app/layout.js",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 294,
-     "ms": 27236,
+     "n": 293,
+     "ms": 27626,
      "metodo": "GET",
      "caminho": "/fontes/Raleway_600SemiBold.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 295,
-     "ms": 27237,
+     "n": 294,
+     "ms": 27627,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_400Regular.ttf",
      "status": "200",
      "fim": "fim"
     },
     {
-     "n": 296,
-     "ms": 27470,
+     "n": 295,
+     "ms": 27856,
      "metodo": "GET",
      "caminho": "/login",
      "status": "pendente",
      "fim": "—"
     },
     {
-     "n": 297,
-     "ms": 27500,
+     "n": 296,
+     "ms": 27885,
      "metodo": "POST",
      "caminho": "/api/auth/session",
      "status": "fabricado 200",
      "fim": "fim"
     },
     {
+     "n": 297,
+     "ms": 27887,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "fabricado 401",
+     "fim": "fim"
+    },
+    {
      "n": 298,
-     "ms": 27502,
+     "ms": 27891,
      "metodo": "GET",
      "caminho": "/api/profile",
      "status": "fabricado 401",
@@ -2411,15 +2411,7 @@
     },
     {
      "n": 299,
-     "ms": 27505,
-     "metodo": "GET",
-     "caminho": "/api/profile",
-     "status": "fabricado 401",
-     "fim": "fim"
-    },
-    {
-     "n": 300,
-     "ms": 27511,
+     "ms": 27896,
      "metodo": "GET",
      "caminho": "/fontes/Manrope_600SemiBold.ttf",
      "status": "200",
@@ -7244,7 +7236,7 @@
       "h": 823
      },
      "doc": {
-      "scrollWidth": 416,
+      "scrollWidth": 411,
       "clientWidth": 411
      },
      "nos": [
@@ -7277,9 +7269,9 @@
        "h_nome": null,
        "n": 17,
        "rotulo": "Confirme o e-mail",
-       "x": -4.5,
+       "x": 24,
        "y": 315,
-       "w": 420,
+       "w": 363,
        "h": 18,
        "sr": false,
        "clip": null,
@@ -7297,9 +7289,9 @@
        "h_nome": null,
        "n": 11,
        "rotulo": "carregando…",
-       "x": -4.5,
+       "x": 24,
        "y": 345,
-       "w": 420,
+       "w": 363,
        "h": 24.8,
        "sr": false,
        "clip": null,
@@ -7655,7 +7647,7 @@
       "h": 823
      },
      "doc": {
-      "scrollWidth": 416,
+      "scrollWidth": 411,
       "clientWidth": 411
      },
      "nos": [
@@ -7688,9 +7680,9 @@
        "h_nome": null,
        "n": 17,
        "rotulo": "Confirme o e-mail",
-       "x": -4.5,
+       "x": 24,
        "y": 315,
-       "w": 420,
+       "w": 363,
        "h": 18,
        "sr": false,
        "clip": null,
@@ -7708,9 +7700,9 @@
        "h_nome": null,
        "n": 56,
        "rotulo": "confirme o e-mail marcel@exemplo.com para usar o Octavia",
-       "x": -4.5,
+       "x": 24,
        "y": 345,
-       "w": 420,
+       "w": 363,
        "h": 49.6,
        "sr": false,
        "clip": null,
@@ -7728,9 +7720,9 @@
        "h_nome": null,
        "n": 12,
        "rotulo": "Já confirmei",
-       "x": -4.5,
+       "x": 24,
        "y": 426.6,
-       "w": 420,
+       "w": 363,
        "h": 56,
        "sr": false,
        "clip": null,
@@ -7748,9 +7740,9 @@
        "h_nome": null,
        "n": 17,
        "rotulo": "Reenviar o e-mail",
-       "x": -4.5,
+       "x": 24,
        "y": 498.6,
-       "w": 420,
+       "w": 363,
        "h": 58,
        "sr": false,
        "clip": null,
@@ -7768,9 +7760,9 @@
        "h_nome": null,
        "n": 4,
        "rotulo": "Sair",
-       "x": -4.5,
+       "x": 24,
        "y": 572.6,
-       "w": 420,
+       "w": 363,
        "h": 58,
        "sr": false,
        "clip": null,
@@ -7788,7 +7780,7 @@
        "h_nome": null,
        "n": 44,
        "rotulo": "problemas? veja o spam ou fale com o suporte",
-       "x": -4.5,
+       "x": 24,
        "y": 662.6,
        "w": 295,
        "h": 19,
@@ -8466,7 +8458,7 @@
       "h": 823
      },
      "doc": {
-      "scrollWidth": 416,
+      "scrollWidth": 411,
       "clientWidth": 411
      },
      "nos": [
@@ -8499,9 +8491,9 @@
        "h_nome": null,
        "n": 17,
        "rotulo": "Confirme o e-mail",
-       "x": -4.5,
+       "x": 24,
        "y": 315,
-       "w": 420,
+       "w": 363,
        "h": 18,
        "sr": false,
        "clip": null,
@@ -8519,9 +8511,9 @@
        "h_nome": null,
        "n": 56,
        "rotulo": "confirme o e-mail marcel@exemplo.com para usar o Octavia",
-       "x": -4.5,
+       "x": 24,
        "y": 345,
-       "w": 420,
+       "w": 363,
        "h": 49.6,
        "sr": false,
        "clip": null,
@@ -8539,9 +8531,9 @@
        "h_nome": null,
        "n": 11,
        "rotulo": "Conferindo…",
-       "x": -4.5,
+       "x": 24,
        "y": 426.6,
-       "w": 420,
+       "w": 363,
        "h": 56,
        "sr": false,
        "clip": null,
@@ -8559,9 +8551,9 @@
        "h_nome": null,
        "n": 17,
        "rotulo": "Reenviar o e-mail",
-       "x": -4.5,
+       "x": 24,
        "y": 498.6,
-       "w": 420,
+       "w": 363,
        "h": 58,
        "sr": false,
        "clip": null,
@@ -8579,9 +8571,9 @@
        "h_nome": null,
        "n": 4,
        "rotulo": "Sair",
-       "x": -4.5,
+       "x": 24,
        "y": 572.6,
-       "w": 420,
+       "w": 363,
        "h": 58,
        "sr": false,
        "clip": null,
@@ -9177,7 +9169,7 @@
       "h": 823
      },
      "doc": {
-      "scrollWidth": 416,
+      "scrollWidth": 411,
       "clientWidth": 411
      },
      "nos": [
@@ -9210,9 +9202,9 @@
        "h_nome": null,
        "n": 17,
        "rotulo": "Confirme o e-mail",
-       "x": -4.5,
+       "x": 24,
        "y": 315,
-       "w": 420,
+       "w": 363,
        "h": 18,
        "sr": false,
        "clip": null,
@@ -9230,9 +9222,9 @@
        "h_nome": null,
        "n": 56,
        "rotulo": "confirme o e-mail marcel@exemplo.com para usar o Octavia",
-       "x": -4.5,
+       "x": 24,
        "y": 345,
-       "w": 420,
+       "w": 363,
        "h": 49.6,
        "sr": false,
        "clip": null,
@@ -9250,9 +9242,9 @@
        "h_nome": null,
        "n": 12,
        "rotulo": "Já confirmei",
-       "x": -4.5,
+       "x": 24,
        "y": 426.6,
-       "w": 420,
+       "w": 363,
        "h": 56,
        "sr": false,
        "clip": null,
@@ -9270,9 +9262,9 @@
        "h_nome": null,
        "n": 9,
        "rotulo": "Enviando…",
-       "x": -4.5,
+       "x": 24,
        "y": 498.6,
-       "w": 420,
+       "w": 363,
        "h": 58,
        "sr": false,
        "clip": null,
@@ -9290,9 +9282,9 @@
        "h_nome": null,
        "n": 4,
        "rotulo": "Sair",
-       "x": -4.5,
+       "x": 24,
        "y": 572.6,
-       "w": 420,
+       "w": 363,
        "h": 58,
        "sr": false,
        "clip": null,
@@ -9888,7 +9880,7 @@
       "h": 823
      },
      "doc": {
-      "scrollWidth": 416,
+      "scrollWidth": 411,
       "clientWidth": 411
      },
      "nos": [
@@ -9921,9 +9913,9 @@
        "h_nome": null,
        "n": 17,
        "rotulo": "Confirme o e-mail",
-       "x": -4.5,
+       "x": 24,
        "y": 315,
-       "w": 420,
+       "w": 363,
        "h": 18,
        "sr": false,
        "clip": null,
@@ -9941,9 +9933,9 @@
        "h_nome": null,
        "n": 56,
        "rotulo": "confirme o e-mail marcel@exemplo.com para usar o Octavia",
-       "x": -4.5,
+       "x": 24,
        "y": 345,
-       "w": 420,
+       "w": 363,
        "h": 49.6,
        "sr": false,
        "clip": null,
@@ -9961,9 +9953,9 @@
        "h_nome": null,
        "n": 60,
        "rotulo": "o e-mail ainda não foi confirmado — abra o link que enviamos",
-       "x": 52.5,
+       "x": 81,
        "y": 441.6,
-       "w": 338,
+       "w": 281,
        "h": 40,
        "sr": false,
        "clip": null,
@@ -9981,9 +9973,9 @@
        "h_nome": null,
        "n": 12,
        "rotulo": "Já confirmei",
-       "x": -4.5,
+       "x": 24,
        "y": 528.6,
-       "w": 420,
+       "w": 363,
        "h": 56,
        "sr": false,
        "clip": null,
@@ -10001,9 +9993,9 @@
        "h_nome": null,
        "n": 17,
        "rotulo": "Reenviar o e-mail",
-       "x": -4.5,
+       "x": 24,
        "y": 600.6,
-       "w": 420,
+       "w": 363,
        "h": 58,
        "sr": false,
        "clip": null,
@@ -10021,9 +10013,9 @@
        "h_nome": null,
        "n": 4,
        "rotulo": "Sair",
-       "x": -4.5,
+       "x": 24,
        "y": 674.6,
-       "w": 420,
+       "w": 363,
        "h": 58,
        "sr": false,
        "clip": null,
@@ -10699,7 +10691,7 @@
       "h": 823
      },
      "doc": {
-      "scrollWidth": 416,
+      "scrollWidth": 411,
       "clientWidth": 411
      },
      "nos": [
@@ -10732,9 +10724,9 @@
        "h_nome": null,
        "n": 17,
        "rotulo": "Confirme o e-mail",
-       "x": -4.5,
+       "x": 24,
        "y": 315,
-       "w": 420,
+       "w": 363,
        "h": 18,
        "sr": false,
        "clip": null,
@@ -10752,9 +10744,9 @@
        "h_nome": null,
        "n": 56,
        "rotulo": "confirme o e-mail marcel@exemplo.com para usar o Octavia",
-       "x": -4.5,
+       "x": 24,
        "y": 345,
-       "w": 420,
+       "w": 363,
        "h": 49.6,
        "sr": false,
        "clip": null,
@@ -10772,7 +10764,7 @@
        "h_nome": null,
        "n": 39,
        "rotulo": "não foi possível conferir a confirmação",
-       "x": 52.5,
+       "x": 81,
        "y": 441.6,
        "w": 246.5,
        "h": 20,
@@ -10792,7 +10784,7 @@
        "h_nome": null,
        "n": 14,
        "rotulo": "Tentar de novo",
-       "x": 20.5,
+       "x": 49,
        "y": 473.6,
        "w": 149.4,
        "h": 48,
@@ -10812,9 +10804,9 @@
        "h_nome": null,
        "n": 12,
        "rotulo": "Já confirmei",
-       "x": -4.5,
+       "x": 24,
        "y": 568.6,
-       "w": 420,
+       "w": 363,
        "h": 56,
        "sr": false,
        "clip": null,
@@ -10832,9 +10824,9 @@
        "h_nome": null,
        "n": 17,
        "rotulo": "Reenviar o e-mail",
-       "x": -4.5,
+       "x": 24,
        "y": 640.6,
-       "w": 420,
+       "w": 363,
        "h": 58,
        "sr": false,
        "clip": null,
@@ -10852,9 +10844,9 @@
        "h_nome": null,
        "n": 4,
        "rotulo": "Sair",
-       "x": -4.5,
+       "x": 24,
        "y": 714.6,
-       "w": 420,
+       "w": 363,
        "h": 58,
        "sr": false,
        "clip": null,
@@ -11610,7 +11602,7 @@
       "h": 823
      },
      "doc": {
-      "scrollWidth": 416,
+      "scrollWidth": 411,
       "clientWidth": 411
      },
      "nos": [
@@ -11643,9 +11635,9 @@
        "h_nome": null,
        "n": 17,
        "rotulo": "Confirme o e-mail",
-       "x": -4.5,
+       "x": 24,
        "y": 315,
-       "w": 420,
+       "w": 363,
        "h": 18,
        "sr": false,
        "clip": null,
@@ -11663,9 +11655,9 @@
        "h_nome": null,
        "n": 56,
        "rotulo": "confirme o e-mail marcel@exemplo.com para usar o Octavia",
-       "x": -4.5,
+       "x": 24,
        "y": 345,
-       "w": 420,
+       "w": 363,
        "h": 49.6,
        "sr": false,
        "clip": null,
@@ -11683,7 +11675,7 @@
        "h_nome": null,
        "n": 38,
        "rotulo": "sem conexão — o e-mail não foi enviado",
-       "x": 52.5,
+       "x": 81,
        "y": 441.6,
        "w": 253,
        "h": 20,
@@ -11703,7 +11695,7 @@
        "h_nome": null,
        "n": 14,
        "rotulo": "Tentar de novo",
-       "x": 20.5,
+       "x": 49,
        "y": 473.6,
        "w": 149.4,
        "h": 48,
@@ -11723,9 +11715,9 @@
        "h_nome": null,
        "n": 12,
        "rotulo": "Já confirmei",
-       "x": -4.5,
+       "x": 24,
        "y": 568.6,
-       "w": 420,
+       "w": 363,
        "h": 56,
        "sr": false,
        "clip": null,
@@ -11743,9 +11735,9 @@
        "h_nome": null,
        "n": 17,
        "rotulo": "Reenviar o e-mail",
-       "x": -4.5,
+       "x": 24,
        "y": 640.6,
-       "w": 420,
+       "w": 363,
        "h": 58,
        "sr": false,
        "clip": null,
@@ -11763,9 +11755,9 @@
        "h_nome": null,
        "n": 4,
        "rotulo": "Sair",
-       "x": -4.5,
+       "x": 24,
        "y": 714.6,
-       "w": 420,
+       "w": 363,
        "h": 58,
        "sr": false,
        "clip": null,
@@ -12521,7 +12513,7 @@
       "h": 823
      },
      "doc": {
-      "scrollWidth": 416,
+      "scrollWidth": 411,
       "clientWidth": 411
      },
      "nos": [
@@ -12554,9 +12546,9 @@
        "h_nome": null,
        "n": 17,
        "rotulo": "Confirme o e-mail",
-       "x": -4.5,
+       "x": 24,
        "y": 315,
-       "w": 420,
+       "w": 363,
        "h": 18,
        "sr": false,
        "clip": null,
@@ -12574,9 +12566,9 @@
        "h_nome": null,
        "n": 56,
        "rotulo": "confirme o e-mail marcel@exemplo.com para usar o Octavia",
-       "x": -4.5,
+       "x": 24,
        "y": 345,
-       "w": 420,
+       "w": 363,
        "h": 49.6,
        "sr": false,
        "clip": null,
@@ -12594,10 +12586,10 @@
        "h_nome": null,
        "n": 46,
        "rotulo": "muitas tentativas — tente de novo em instantes",
-       "x": 52.5,
+       "x": 81,
        "y": 441.6,
-       "w": 304.7,
-       "h": 20,
+       "w": 281,
+       "h": 40,
        "sr": false,
        "clip": null,
        "corta": {
@@ -12614,9 +12606,9 @@
        "h_nome": null,
        "n": 12,
        "rotulo": "Já confirmei",
-       "x": -4.5,
-       "y": 508.6,
-       "w": 420,
+       "x": 24,
+       "y": 528.6,
+       "w": 363,
        "h": 56,
        "sr": false,
        "clip": null,
@@ -12634,9 +12626,9 @@
        "h_nome": null,
        "n": 17,
        "rotulo": "Reenviar o e-mail",
-       "x": -4.5,
-       "y": 580.6,
-       "w": 420,
+       "x": 24,
+       "y": 600.6,
+       "w": 363,
        "h": 58,
        "sr": false,
        "clip": null,
@@ -12654,9 +12646,9 @@
        "h_nome": null,
        "n": 4,
        "rotulo": "Sair",
-       "x": -4.5,
-       "y": 654.6,
-       "w": 420,
+       "x": 24,
+       "y": 674.6,
+       "w": 363,
        "h": 58,
        "sr": false,
        "clip": null,
@@ -13336,7 +13328,7 @@
       "h": 823
      },
      "doc": {
-      "scrollWidth": 416,
+      "scrollWidth": 411,
       "clientWidth": 411
      },
      "nos": [
@@ -13369,9 +13361,9 @@
        "h_nome": null,
        "n": 17,
        "rotulo": "Confirme o e-mail",
-       "x": -4.5,
+       "x": 24,
        "y": 315,
-       "w": 420,
+       "w": 363,
        "h": 18,
        "sr": false,
        "clip": null,
@@ -13389,9 +13381,9 @@
        "h_nome": null,
        "n": 56,
        "rotulo": "confirme o e-mail marcel@exemplo.com para usar o Octavia",
-       "x": -4.5,
+       "x": 24,
        "y": 345,
-       "w": 420,
+       "w": 363,
        "h": 49.6,
        "sr": false,
        "clip": null,
@@ -13409,9 +13401,9 @@
        "h_nome": null,
        "n": 55,
        "rotulo": "e-mail de confirmação enviado — veja a caixa de entrada",
-       "x": 52.5,
+       "x": 81,
        "y": 441.6,
-       "w": 338,
+       "w": 281,
        "h": 40,
        "sr": false,
        "clip": null,
@@ -13429,9 +13421,9 @@
        "h_nome": null,
        "n": 12,
        "rotulo": "Já confirmei",
-       "x": -4.5,
+       "x": 24,
        "y": 528.6,
-       "w": 420,
+       "w": 363,
        "h": 56,
        "sr": false,
        "clip": null,
@@ -13449,9 +13441,9 @@
        "h_nome": null,
        "n": 17,
        "rotulo": "Reenviar o e-mail",
-       "x": -4.5,
+       "x": 24,
        "y": 600.6,
-       "w": 420,
+       "w": 363,
        "h": 58,
        "sr": false,
        "clip": null,
@@ -13469,9 +13461,9 @@
        "h_nome": null,
        "n": 4,
        "rotulo": "Sair",
-       "x": -4.5,
+       "x": 24,
        "y": 674.6,
-       "w": 420,
+       "w": 363,
        "h": 58,
        "sr": false,
        "clip": null,
@@ -14137,6 +14129,20 @@
     "secao": "AUTH-verify-reenviado",
     "sha256": "69515135e2f28e3f2965b8b796c799edfb20deda147a2b49f4bb2a0b75e71f1b"
    }
+  }
+ },
+ "rodadas": {
+  "411": {
+   "rodada": "2026-09-28T12:31:21.156Z",
+   "commit": "e45a5665ec091b1a3229eb6de92e6f71909d2eb4"
+  },
+  "711": {
+   "rodada": "2026-09-28T11:37:03.880Z",
+   "commit": "f87b6395f419f0e880f27adbed533f8e64fe3d62"
+  },
+  "1138": {
+   "rodada": "2026-09-28T11:37:03.880Z",
+   "commit": "f87b6395f419f0e880f27adbed533f8e64fe3d62"
   }
  }
 }

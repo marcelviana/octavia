@@ -74,7 +74,7 @@ export default async function preparar(_config: FullConfig): Promise<() => Promi
       }
       const r = resumo(junto as never) as Record<string, { e: number; b: number; dl: number; errata: number; nomeAcessivel: number; rolagem: number; reprova: boolean }>
       for (const [L, t] of Object.entries(r))
-        console.log(`G-faixa · ${id} · ${L}: (e)=${t.e} · (b)=${t.b} · (d′)=${t.dl} · errata candidata=${t.errata} · saídas: nome-acessível=${t.nomeAcessivel} rolagem=${t.rolagem}${t.reprova ? '' : ' (faixa A: contado à parte)'}`)
+        console.log(`G-faixa · ${id} · ${L}: (e)=${t.e} · (b)=${t.b} · (d′)=${t.dl} · errata candidata=${t.errata} · saídas: nome-acessível=${t.nomeAcessivel} rolagem=${t.rolagem}${L === '411' ? ' (faixa A)' : ''}`)
     }
     const ids = SUPERFICIES.map((s) => s.id).filter((id) => porSup.has(id))
     console.log(`G-faixa · gravado: ${ids.map((id) => `${id}.json`).join(', ') || 'nada'} → ${saida}`)

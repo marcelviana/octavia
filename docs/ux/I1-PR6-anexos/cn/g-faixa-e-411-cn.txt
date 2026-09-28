@@ -1,0 +1,14 @@
+# CN da div. 677 (commit 4b): fixture = o AUTH-forgot do aceite com o botão "Enviar o link" TIRADO da medição de 411 → um (e) em 411; tem de REPROVAR
+$ node scripts/gates-web/g-faixa-veredito.mjs <scratch>/fx
+G-faixa (veredito) — <scratch>/fx: 1 medição(ões)
+
+## fixture-e-411 (/forgot-password) — rodada 2026-09-28T12:31:21.156Z · base http://localhost:3000 · commit e45a5665ec091b1a3229eb6de92e6f71909d2eb4
+  inalcançáveis em A (411) — AUTH-forgot: 1 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+    · sem nó: "Enviar o link"
+  AUTH-forgot · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-forgot · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  AUTH-forgot · 411 (faixa A): (e)=1 · (b)=0 · (d′)=1 · errata candidata=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  ✗ AUTH-forgot · 411 (faixa A) (e) sem nó: button:fc46ef64a63d#1 "Enviar o link"
+
+G-faixa: REPROVA — 1 ocorrência(s)
+# exit: 1

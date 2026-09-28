@@ -34,6 +34,8 @@
 // ERRATA DA I1-D11 [Marcel, 2026-09-28] (I1-PR6, commit 4): "A só não quebra" = (b) = 0 em 411 —
 //   o (b) de 411 (inclusive a página com rolagem horizontal) REPROVA; o (e) de 411 segue listado
 //   (as "inalcançáveis em A", decisão 619). `reprovaB` diz em que larguras o (b) reprova.
+// DIV. 677 [Marcel, 2026-09-28] (I1-PR6, commit 4b): em 411 o (e) TAMBÉM reprova — "empilha, não
+//   esconde" vale em A. A lista das (e) de 411 continua saindo (é a herança), com contagem 0 como critério.
 //
 // Nó cru (o que o medidor grava): { k, role, tag, testid, h_texto, h_nome, n,
 //   x, y, w, h, sr, clip: {x,y,w,h,rolagem,painel} | null, corta: {x,y} }
@@ -45,7 +47,7 @@
 export const TOL_CORTE = 1 // px — arredondamento de subpixel
 export const TOL_FOLHA = 4 // px — I1-D13
 export const REFERENCIA = "1138"
-export const REPROVAM = ["1138", "711"] // o (e) reprova em C e B; em A (411) é listado
+export const REPROVAM = ["1138", "711", "411"] // o (e) reprova nas três (div. 677; em A a lista também sai)
 export const REPROVAM_B = ["1138", "711", "411"] // o (b) reprova nas três (errata da I1-D11)
 
 const temArea = (n) => n && n.w > 0 && n.h > 0
