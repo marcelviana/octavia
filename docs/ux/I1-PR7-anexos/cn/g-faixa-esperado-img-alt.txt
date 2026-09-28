@@ -1,0 +1,5 @@
+$ pnpm exec tsx scripts/gates-web/g-faixa-esperado.ts 2-landing 1-auth
+2-landing: 0 caixa(s) de campo ancorada(s) · 1 seções · 1 com C e B · nós C 5 · nós B 5 → tests/gates-web/esperado/2-landing.json
+1-auth: 182 caixa(s) de campo ancorada(s) · 47 seções · 46 com C e B · nós C 617 · nós B 617 → tests/gates-web/esperado/1-auth.json
+  ✗ Tokens: sem a moldura C B
+# exit: 0

@@ -20,3 +20,5 @@ components/auth/use-signup.ts
 components/identidade/icone.tsx
 # I1-PR7 — superfície 2, landing (folha 2-landing)
 app/page.tsx
+components/landing/frases-landing.ts
+components/identidade/link-botao.tsx

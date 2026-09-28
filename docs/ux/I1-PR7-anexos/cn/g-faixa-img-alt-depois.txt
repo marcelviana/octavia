@@ -1,0 +1,33 @@
+# DEPOIS da regra: o CN inteiro da coleta
+$ G_FAIXA_BASE_URL=http://localhost G_FAIXA_SUPERFICIES=nenhuma pnpm exec playwright test -c playwright.g-faixa.config.ts tests/gates-web/g-faixa-coleta.cn.ts --project B-711
+  ✓  1 [B-711] › tests/gates-web/g-faixa-coleta.cn.ts:33:5 › coleta: (e), (b) e rolagem numa página sintética, em 1138 e 711 (152ms)
+folha 1-auth · AUTH-login: C 12 nós · B 12 nós
+  Octavia x=118 w=340
+  Entrar x=598 w=420
+  E-mail x=598 w=40
+  marcel@exemplo.com x=647 w=354
+  Senha x=598 w=41
+  Esqueci a senha x=913.9 w=104.1
+  •••••••• x=647 w=354
+  Entrar x=598 w=420
+desvio de 5 px no 1º nó → [{"k":"img:e5b3dfe4ee10#1","delta":[5,0,0,0]}]
+  ✓  2 [B-711] › tests/gates-web/g-faixa-coleta.cn.ts:57:5 › folha: a moldura C e a B de AUTH-login medidas; a folha contra si mesma dá 0 errata; 5 px de desvio dá 1 (135ms)
+{
+  "nos": [
+    "img:Octavia"
+  ],
+  "b411": [
+    {
+      "k": "img:e5b3dfe4ee10#1",
+      "tipo": "borda do viewport",
+      "x": 200,
+      "w": 340,
+      "vw": 411
+    }
+  ]
+}
+  ✓  3 [B-711] › tests/gates-web/g-faixa-coleta.cn.ts:82:5 › coleta: <img alt> é nó; a marca fora do contêiner em 411 dá (b) 1; alt vazio não é nó (122ms)
+G-faixa · gravado: nada → /Users/marcelviana/projects/octavia-i1-pr7/tests/gates-web/medicoes
+
+  3 passed (1.1s)
+# exit: 0

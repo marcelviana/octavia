@@ -8,6 +8,26 @@
   "LANDING": {
    "C": [
     {
+     "k": "img:e5b3dfe4ee10#1",
+     "role": "img",
+     "tag": "img",
+     "testid": null,
+     "h_texto": null,
+     "h_nome": "e5b3dfe4ee10",
+     "n": 0,
+     "rotulo": "Octavia",
+     "x": 118,
+     "y": 76.9,
+     "w": 340,
+     "h": 219,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
+    {
      "k": "texto:11b3592eced2#1",
      "role": "texto",
      "tag": "div",
@@ -89,6 +109,26 @@
     }
    ],
    "B": [
+    {
+     "k": "img:e5b3dfe4ee10#1",
+     "role": "img",
+     "tag": "img",
+     "testid": null,
+     "h_texto": null,
+     "h_nome": "e5b3dfe4ee10",
+     "n": 0,
+     "rotulo": "Octavia",
+     "x": 184.5,
+     "y": 48,
+     "w": 340,
+     "h": 219,
+     "sr": false,
+     "clip": null,
+     "corta": {
+      "x": false,
+      "y": false
+     }
+    },
     {
      "k": "texto:11b3592eced2#1",
      "role": "texto",

@@ -9,6 +9,7 @@
  * 20 × 20; sem o asset, o quadrado tracejado da folha — div. 636).
  */
 import { Icone } from "@/components/identidade/icone"
+import { BOTAO_PRINCIPAL as PRINCIPAL, BOTAO_SECUNDARIO as SECUNDARIO } from "@/components/identidade/link-botao"
 import type { NomeIcone } from "@octavia/identidade"
 import { FRASES_AUTH } from "./frases-auth"
 
@@ -61,8 +62,6 @@ interface BotaoProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>,
   carregando?: boolean
 }
 
-const PRINCIPAL = "w-full h-toque-list rounded-raio-control border-hairline flex items-center justify-center gap-espaco-md font-fam-ui-bold font-peso-ui-bold text-tam-button"
-
 export function BotaoPrincipal({ icone, carregando, children, ...botao }: BotaoProps) {
   const ativo = !carregando
   return (
@@ -73,24 +72,12 @@ export function BotaoPrincipal({ icone, carregando, children, ...botao }: BotaoP
   )
 }
 
-const SECUNDARIO = "w-full h-web-botao-auth rounded-raio-control border-hairline border-cor-line-info flex items-center justify-center gap-espaco-md text-tam-body-small"
-
 export function BotaoSecundario({ icone, carregando, children, ...botao }: BotaoProps) {
   return (
     <button {...botao} className={`${SECUNDARIO} ${carregando ? "text-cor-muted" : "text-cor-text"}`}>
       {icone && <Icone nome={icone} tamanho={24} />}
       {children}
     </button>
-  )
-}
-
-/** O link com cara de botão (Ir para o login, Voltar para o login). */
-export function LinkBotao({ principal, icone, children }: { principal?: boolean; icone?: NomeIcone; children: React.ReactNode }) {
-  return (
-    <span className={principal ? `${PRINCIPAL} bg-cor-text border-cor-text text-cor-bg` : `${SECUNDARIO} text-cor-text`}>
-      {icone && <Icone nome={icone} tamanho={24} />}
-      {children}
-    </span>
   )
 }
 

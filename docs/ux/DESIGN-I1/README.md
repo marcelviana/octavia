@@ -153,6 +153,15 @@ As quatro (I1-E7…E10) são erratas que o **G-faixa** acha (posição contra a 
 `erratas.json` numa lista própria, `erratasFaixa`, que o G-tok (i) não lê (div. 681); cobrem as 46 erratas candidatas
 do aceite de auth (`docs/ux/I1-PR6-anexos/cn/erratas-faixa-cobertura.txt`).
 
+**Do aval da I1-PR-7** `[Marcel, 2026-09-28; aval do commit 1 da I1-PR-7]` — mesmas colunas:
+
+| id | o que a folha mostra | o que vale | onde se aplica | div. | efeito |
+|---|---|---|---|---|---|
+| **I1-E11** | a folha `2-landing` renderizou a frase (`landing.frase`, duas linhas) com `line-height:1.45` — 63,8 px de altura; a sua coluna "tokens" e o `README-design.md` §2.4 declaram `lineHeight.text` | vale **`lineHeight.text` (1,55)**, o que a tabela declara: a frase fica 4,4 px mais alta e o que vem abaixo dela (*Entrar*, *Criar conta*, o link da política) desce 4,4 px, em C e em B | `2-landing`: `LANDING` | 684 (I1-PR-7) | leitura |
+
+A I1-E11 também é do G-faixa: entra em `erratasFaixa` e cobre as 8 erratas candidatas do aceite da landing
+(`docs/ux/I1-PR7-anexos/`).
+
 ## 3 · O bloco `web` de tokens — insumo da PR-4 (`packages/identidade`)
 
 Exatamente como o `README-design.md` §2.1:

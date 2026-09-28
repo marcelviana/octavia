@@ -71,3 +71,27 @@ test('folha: a moldura C e a B de AUTH-login medidas; a folha contra si mesma d�
   console.log('desvio de 5 px no 1º nó →', JSON.stringify(e))
   expect(e).toEqual([{ k: C[0]!.k, delta: [5, 0, 0, 0] }])
 })
+
+// I1-PR-7 (div. 686): `<img alt="…">` é nó (nome = alt) — a marca cortada em A conta como (b).
+// A imagem cabe em 1138 e sai da borda do viewport em 411 (o contêiner a recorta: sem rolagem da página); sem a regra, a coleta não a via e o (b) era 0.
+const MARCA = `<!doctype html><html><head><style>body { margin: 0 }</style></head><body>
+  <div style="overflow: hidden"><img alt="Octavia" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" style="display: block; margin-left: 200px; width: 340px; height: 219px"></div>
+  <img alt="" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" style="display: block; width: 20px; height: 20px">
+</body></html>`
+
+test('coleta: <img alt> é nó; a marca fora do contêiner em 411 dá (b) 1; alt vazio não é nó', async ({ browser }) => {
+  const larguras: Record<string, { viewport: unknown; doc: unknown; nos: ReturnType<typeof paraJson> }> = {}
+  for (const w of [1138, 411]) {
+    const page = await browser.newPage({ viewport: { width: w, height: 800 } })
+    await page.setContent(MARCA)
+    const m = await page.evaluate(coletar, null)
+    larguras[String(w)] = { viewport: m.viewport, doc: m.doc, nos: paraJson(m.nos, true) }
+    await page.close()
+  }
+  const c = classificarEstado({ larguras })
+  const nos = larguras['1138'].nos.map((n) => `${n.role}:${n.rotulo}`)
+  console.log(JSON.stringify({ nos, b411: c['411'].b }, null, 2))
+  expect(nos).toEqual(['img:Octavia'])
+  expect(c['1138'].b).toEqual([])
+  expect(c['411'].b.map((o: { tipo: string }) => o.tipo)).toEqual(['borda do viewport'])
+})

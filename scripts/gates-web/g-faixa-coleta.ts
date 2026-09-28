@@ -27,7 +27,9 @@ export function coletar(raizSel: string | null): { nos: NoCru[]; viewport: { w: 
   const ox = raizSel ? rr.left + raiz.clientLeft : -window.scrollX
   const oy = raizSel ? rr.top + raiz.clientTop : -window.scrollY
   const CONTROLE = 'a[href],button,input:not([type=hidden]),select,textarea,summary,[role=button],[role=link],[role=tab],[role=menuitem],[role=checkbox],[role=radio],[role=switch],[role=combobox],[role=textbox],[role=searchbox],[role=slider]'
-  const MARCADO = 'h1,h2,h3,h4,h5,h6,label,[data-testid],[aria-label]'
+  // I1-PR-7 (div. 686): `<img alt="…">` é nó, com o `alt` como nome — a marca cortada conta como (b).
+  // `alt=""` é decorativa e fica fora (o auth usa `alt=""` dentro de um `role=img` com `aria-label`).
+  const MARCADO = 'h1,h2,h3,h4,h5,h6,label,[data-testid],[aria-label],img[alt]:not([alt=""])'
   const IGNORA = new Set(['SCRIPT', 'STYLE', 'NOSCRIPT', 'TEMPLATE', 'svg', 'path', 'circle', 'rect', 'g', 'line', 'polyline', 'polygon'])
   const papel = (el: Element): string => {
     const r = el.getAttribute('role'); if (r) return r
@@ -39,6 +41,7 @@ export function coletar(raizSel: string | null): { nos: NoCru[]; viewport: { w: 
     if (t === 'input') { const ty = (el as HTMLInputElement).type; return ty === 'checkbox' || ty === 'radio' ? ty : ['submit', 'button', 'reset'].includes(ty) ? 'button' : 'textbox' }
     if (/^h[1-6]$/.test(t)) return 'heading'
     if (t === 'label') return 'label'
+    if (t === 'img') return 'img'
     return 'texto'
   }
   const limpa = (s: string) => s.replace(/\s+/g, ' ').trim()
@@ -72,7 +75,7 @@ export function coletar(raizSel: string | null): { nos: NoCru[]; viewport: { w: 
     }
     const escondeX = /hidden|clip/.test(cs.overflowX), escondeY = /hidden|clip/.test(cs.overflowY)
     nos.push({
-      role: papel(el), tag: el.tagName.toLowerCase(), testid: el.getAttribute('data-testid'), texto, nome: el.getAttribute('aria-label'),
+      role: papel(el), tag: el.tagName.toLowerCase(), testid: el.getAttribute('data-testid'), texto, nome: el.getAttribute('aria-label') ?? (el.tagName === 'IMG' ? el.getAttribute('alt') : null),
       x: Math.round((r.left - ox) * 10) / 10, y: Math.round((r.top - oy) * 10) / 10, w: Math.round(r.width * 10) / 10, h: Math.round(r.height * 10) / 10,
       sr, clip,
       corta: { x: !!texto && escondeX && he.scrollWidth > he.clientWidth + 1, y: !!texto && escondeY && he.scrollHeight > he.clientHeight + 1 },
